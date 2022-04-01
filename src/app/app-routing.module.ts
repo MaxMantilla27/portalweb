@@ -1,10 +1,20 @@
 import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import { CommonModule } from '@angular/common';
+import { RouterModule,Routes } from '@angular/router';
+import { HomeComponent } from './Public/Home/home.component';
+import { PublicComponent } from './Public/public.component';
 
-const routes: Routes = [];
+const routes:Routes=[
+  {path:'',loadChildren:()=>import('./Public/public.module').then(m=>m.PublicModule)},
+  {path:'AulaVirtual',loadChildren:()=>import('./aula-virtual/aula-virtual.module').then(m=>m.AulaVirtualModule)},
+  {path:'**',component:PublicComponent}
+]
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  declarations: [],
+  imports: [
+    RouterModule.forRoot(routes/*,{useHash:true}*/)
+  ],
+  exports:[RouterModule]
 })
 export class AppRoutingModule { }
