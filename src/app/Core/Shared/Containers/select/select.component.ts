@@ -1,6 +1,6 @@
-import { Component, Input, OnInit, SimpleChanges, ViewEncapsulation } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, SimpleChanges, ViewEncapsulation } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { Basic, BasicUrl } from 'src/app/Core/Models/BasicDTO';
+import { Basic, BasicUrl, BasicUrlIcon } from 'src/app/Core/Models/BasicDTO';
 
 @Component({
   selector: 'app-select',
@@ -14,18 +14,22 @@ export class SelectComponent implements OnInit {
   @Input() tipo:number=1;
   @Input() label:string='';
   @Input() data:Array<Basic>=[];
-  @Input() dataUrl:Array<BasicUrl>=[];
-  @Input() valueDefecto:number=0;
+  @Input() dataUrl:Array<BasicUrlIcon>=[];
+  @Input() valueDefecto:string="INTC";
 
+  @Output()
+  Cambio: EventEmitter<string> = new EventEmitter<string>();
 
   selected :number= 0;
   Urlselected:string='';
   NameSelected:string='';
+  Iso:string='';
 
   ngOnInit(): void {
   }
   ngOnChanges(changes: SimpleChanges): void {
-    if(this.valueDefecto!=0){
+    console.log(this.dataUrl.length)
+    if(this.dataUrl.length>0){
       this.GetDataFromDatUrl();
     }
 
@@ -37,6 +41,7 @@ export class SelectComponent implements OnInit {
   ChangeSelected(value:any){
 
     this.GetDataFromDatUrl();
+    this.Cambio.emit(this.valueDefecto);
   }
 
 }

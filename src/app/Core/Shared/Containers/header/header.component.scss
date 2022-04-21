@@ -24,9 +24,15 @@ html, body {
   margin: 0px;
 }
 
+.nav-buttons{
+  display: flex;
+  justify-content:  space-evenly;
+  width: 100%;
+}
 
-
-
+.nav-buttons app-button{
+  //margin-right: 20px;
+}
 .mat-sidenav-container  {
   height: 100vh;
 }

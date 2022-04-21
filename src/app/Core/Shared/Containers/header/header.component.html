@@ -30,25 +30,30 @@
         </div>
         <div class="row space-bet">
           <nav>
-            <app-button [Url]="''" [tipo]="2">
-              <ng-container contenidoTag>
-                Inicio
+            <div class="nav-buttons">
+              <app-button [Url]="''" [tipo]="2">
+                <ng-container contenidoTag>
+                  Inicio
+                </ng-container>
+              </app-button>
+              <ng-container *ngFor="let item of expandibles">
+                <app-button *ngIf="item.estatus"  [dataUrl]="item.data" [tipo]="3">
+                  <ng-container contenidodata>
+                    {{item.Nombre}}
+                  </ng-container>
+                </app-button>
               </ng-container>
-            </app-button>
-            <app-button *ngFor="let item of expandibles" [dataUrl]="item.data" [tipo]="3">
-              <ng-container contenidodata>
-                {{item.Nombre}}
-              </ng-container>
-            </app-button>
-            <app-button [Url]="''" [tipo]="2">
-              <ng-container contenidoTag>
-                BS Campus
-              </ng-container>
-            </app-button>
+
+              <app-button [Url]="''" [tipo]="2">
+                <ng-container contenidoTag>
+                  BS Campus
+                </ng-container>
+              </app-button>
+            </div>
             <div class="botones_login">
 
-              <app-select [dataUrl]="paises" [tipo]="3" [valueDefecto]="16">
-              </app-select>
+              <app-select [dataUrl]="paises" [tipo]="3" [valueDefecto]="CodigoIso" (Cambio)="ChangePais($event)" ></app-select>
+
               <app-button [Url]="'/AulaVirtual/Cuenta'" [tipo]="4" [color]="'white'" [background]="'#FCA534'"
                 [border]="'solid 1px #895800'">
                 <ng-container contenidoButton>

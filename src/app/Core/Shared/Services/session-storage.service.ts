@@ -19,5 +19,13 @@ export class SessionStorageService {
     sessionStorage.setItem('Token',btoa(token));
   }
 
+  SessionSetValue(name:string, token: string):void{
+    sessionStorage.setItem(name,token);
+  }
+  SessionGetValue(name:string):string{
+    var value=sessionStorage.getItem(name);
+    if(value==undefined || value==null) return '';
+    return value;
+  }
 
 }

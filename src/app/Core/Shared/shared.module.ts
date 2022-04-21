@@ -23,6 +23,12 @@ import { MatSelectModule } from '@angular/material/select';
 import {MatExpansionModule} from '@angular/material/expansion';
 import { FooterComponent } from './Containers/footer/footer.component';
 
+import {SessionStorageService} from '../Shared/Services/session-storage.service'
+import { PaisService } from './Services/Pais/pais.service';
+import { CarreraProfecionalService } from './Services/Carrera/carrera-profecional.service';
+import { HeaderPermissionsService } from './Services/header-permissions.service';
+import { AreacapasitacionService } from './Services/AreaCapasitacion/areacapasitacion.service';
+
 @NgModule({
   imports: [
     HttpClientModule,
@@ -72,7 +78,13 @@ import { FooterComponent } from './Containers/footer/footer.component';
     MatSelectModule,
     MatExpansionModule,
   ],
-  providers: [],
+  providers: [
+    SessionStorageService,
+    PaisService,
+    CarreraProfecionalService,
+    HeaderPermissionsService,
+    AreacapasitacionService
+  ],
 })
 export class SharedModule {
   constructor() {}

@@ -1,8 +1,23 @@
 @import '~bootstrap/dist/css/bootstrap.css';
+@font-face {
+  font-family: 'poppings';
+  font-style: normal;
+  font-weight: 400;
+  src: url(assets/fuentes/poppings2/poppins-v19-latin-regular.eot);
+  src: url(assets/fuentes/poppings2/poppins-v19-latin-regular.woff2) format('woff2'),
+       url(assets/fuentes/poppings2/poppins-v19-latin-regular.woff) format('woff'),
+       url(assets/fuentes/poppings2/poppins-v19-latin-regular.ttf) format('truetype'),
+       url(assets/fuentes/poppings2/poppins-v19-latin-regular.svg#Poppins) format('svg');
+}
+*{
+  font-family:'poppings'
+}
 html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+body { margin: 0; font-family:'poppings', Roboto, "Helvetica Neue", sans-serif; }
 
 @import "~@angular/material/prebuilt-themes/indigo-pink.css";
+
+$custom-typography: mat-typography-config('poppings');
 
 ::-webkit-scrollbar {
   width: 8px;

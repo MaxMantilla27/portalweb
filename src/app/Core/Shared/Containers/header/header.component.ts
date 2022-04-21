@@ -1,84 +1,128 @@
-import { Component, OnInit } from '@angular/core';
-import { Basic, BasicBotonesExpandibles, BasicUrl } from 'src/app/Core/Models/BasicDTO';
+import { Component, ComponentFactoryResolver, OnInit } from '@angular/core';
+import { Basic, BasicBotonesExpandibles, BasicUrl,BasicUrlIcon } from 'src/app/Core/Models/BasicDTO';
 import {SessionStorageService} from './../../Services/session-storage.service'
+import {PaisService} from './../../Services/Pais/pais.service'
+import { PaisDTO } from 'src/app/Core/Models/PaisDTO';
+import { CarreraProfecionalService } from '../../Services/Carrera/carrera-profecional.service';
+import { HeaderPermissionsService } from '../../Services/header-permissions.service';
+import { AreacapasitacionService } from '../../Services/AreaCapasitacion/areacapasitacion.service';
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
-  styleUrls: ['./header.component.scss'],
-  providers:[SessionStorageService]
+  styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit {
 
-  constructor(private _SessionStorageService:SessionStorageService) { }
-  Formacion: Array<BasicUrl> = [
-    { Nombre: 'Transformación Digital', value: 1, Url: '1' },
-    { Nombre: 'Big Data', value: 1, Url: '1' },
-    { Nombre: 'Seguridad de la Información', value: 1, Url: '1' },
-    { Nombre: 'Continuidad del Negocio', value: 1, Url: '1' },
-    { Nombre: 'Inteligencia Artificial', value: 1, Url: '1' },
-    { Nombre: 'Mantenimiento', value: 1, Url: '1' },
-    { Nombre: 'Construcción', value: 1, Url: '1' },
-    { Nombre: 'Proyectos', value: 1, Url: '1' },
-    { Nombre: 'Seguridad Alimentaria', value: 1, Url: '1' },
-    { Nombre: 'Tecnologías de la Información', value: 1, Url: '1' },
-    { Nombre: 'Calidad', value: 1, Url: '1' },
-    { Nombre: 'Finanzas', value: 1, Url: '1' },
-    { Nombre: 'Gestión Ambiental', value: 1, Url: '1' },
-    { Nombre: 'Seguridad y Salud en el Trabajo', value: 1, Url: '1' },
-    { Nombre: 'Minería', value: 1, Url: '1' },
-    { Nombre: 'Ver Todo', value: 1, Url: '/login', style: { 'font-weight': 'bold' } },
-  ];
-  carreras: Array<BasicUrl> = [
-    { Nombre: 'Carrera Profesional en Administracion de Empresas', value: 1, Url: '1' },
-    { Nombre: 'Carrera Profesional en Desarrollo de Sistemas de Informacion', value: 1, Url: '1' },
-    { Nombre: 'Ver Todo', value: 1, Url: '/login', style: { 'font-weight': 'bold' } },
-  ];
-  tecnica: Array<BasicUrl> = [
-    { Nombre: 'Certificacion en Atencion al cliente', value: 1, Url: '1' },
-    { Nombre: 'Certificacion en promotor de ventas', value: 1, Url: '1' },
-    { Nombre: 'Ver Todo', value: 1, Url: '/login', style: { 'font-weight': 'bold' } },
-  ]
-  paises: Array<BasicUrl> =[
-    { Url: "https://repositorioweb.blob.core.windows.net/repositorioweb/flags/Argentina_flag.png", value: 1, Nombre: "Argentina" },
-    { Url: "https://repositorioweb.blob.core.windows.net/repositorioweb/flags/Bolivia_flag.png", value: 2, Nombre: "Bolivia" },
-    { Url: "https://repositorioweb.blob.core.windows.net/repositorioweb/flags/brazil_flag.png", value: 3, Nombre: "Brazil" },
-    { Url: "https://repositorioweb.blob.core.windows.net/repositorioweb/flags/Chile_flag.png", value: 4, Nombre: "Chile" },
-    { Url: "https://repositorioweb.blob.core.windows.net/repositorioweb/flags/Colombia_flag.png", value: 5, Nombre: "Colombia" },
-    { Url: "https://repositorioweb.blob.core.windows.net/repositorioweb/flags/CostaRica_flag.png", value: 6, Nombre: "Costa Rica" },
-    { Url: "https://repositorioweb.blob.core.windows.net/repositorioweb/flags/Cuba_flag.png", value: 7, Nombre: "Cuba" },
-    { Url: "https://repositorioweb.blob.core.windows.net/repositorioweb/flags/Ecuador_flag.png", value: 8, Nombre: "Ecuador" },
-    { Url: "https://repositorioweb.blob.core.windows.net/repositorioweb/flags/ElSalvador_flag.png", value: 9, Nombre: "El Salvador" },
-    { Url: "https://repositorioweb.blob.core.windows.net/repositorioweb/flags/Guatemala_flag.png", value: 10, Nombre: "Guatemala" },
-    { Url: "https://repositorioweb.blob.core.windows.net/repositorioweb/flags/Honduras_flag.png", value: 11, Nombre: "Honduras" },
-    { Url: "https://repositorioweb.blob.core.windows.net/repositorioweb/flags/Mexico_flag.png", value: 12, Nombre: "Mexico" },
-    { Url: "https://repositorioweb.blob.core.windows.net/repositorioweb/flags/Nicaragua_flag.png", value: 13, Nombre: "Nicaragua" },
-    { Url: "https://repositorioweb.blob.core.windows.net/repositorioweb/flags/Panama_flag.png", value: 14, Nombre: "Panama" },
-    { Url: "https://repositorioweb.blob.core.windows.net/repositorioweb/flags/Paraguay_flag.png", value: 15, Nombre: "Paraguay" },
-    { Url: "https://repositorioweb.blob.core.windows.net/repositorioweb/flags/Peru_flag.png", value: 16, Nombre: "Perú" },
-    { Url: "https://repositorioweb.blob.core.windows.net/repositorioweb/flags/RepublicaDominicana_flag.png", value: 17, Nombre: "Republica Dominicana" },
-    { Url: "https://repositorioweb.blob.core.windows.net/repositorioweb/flags/Uruguay_flag.png", value: 18, Nombre: "Uruguay" },
-    { Url: "https://repositorioweb.blob.core.windows.net/repositorioweb/flags/Venezuela_flag.png", value: 19, Nombre: "Venezuela" },
-    { Url: "https://repositorioweb.blob.core.windows.net/repositorioweb/flags/globe_flag.png", value: 20, Nombre: "Internacional" }
-  ]
-
-  expandibles:Array<BasicBotonesExpandibles>=[
+  public Formacion: Array<BasicUrl> = [];
+  public carreras: Array<BasicUrl> = [];
+  public tecnica: Array<BasicUrl> = [];
+  public paises: Array<BasicUrlIcon>=[] ;
+  public paisesApi:Array<PaisDTO>=[];
+  public expandibles:Array<BasicBotonesExpandibles>=[
     {
       Nombre:'Formacion Continua',
-      data:this.Formacion
+      data:this.Formacion,
+      estatus:true
     },
     {
       Nombre:'Carreras Profecionales',
-      data:this.carreras
+      data:this.carreras,
+      estatus:false
     },
     {
       Nombre:'Educacion Tecnica',
-      data:this.tecnica
+      data:this.tecnica,
+      estatus:false
     }
   ]
-  token:boolean=this._SessionStorageService.validateTokken();
+  public token:boolean=this._SessionStorageService.validateTokken();
+  public CodigoIso:string='INTC';
+
+  constructor(
+    private _SessionStorageService:SessionStorageService,
+    private _PaisService:PaisService,
+    private _CarreraProfecionalService:CarreraProfecionalService,
+    private _HeaderPermissionsService:HeaderPermissionsService,
+    private _AreacapasitacionService:AreacapasitacionService,
+  ) { }
+
   ngOnInit(): void {
     console.log(this.token)
+    this.GetPaises();
+    this.GetCarreras();
+    this.GetAreaCapasitacionList();
   }
-  clickHandler() { }
+  GetPaises(){
+    this._PaisService.GetPaises().subscribe({
+      next:(x)=>{
+        this.paises=x.listaPaisCabeceraDTO.map((p:any)=>{
+          var ps:BasicUrlIcon={Nombre:p.pais,value:p.codigoIso,Url:p.flag,Icon:p.icono};
+          return ps;
+        });
+      },
+      error:(x)=>{console.log(x)}
+    });
+  }
+  GetAreaCapasitacionList(){
+    this._AreacapasitacionService.GetAreaCapasitacionList().subscribe({
+      next:(x)=>{
+        this.Formacion=x.listaareaCapasitacionDTO.map((c:any)=>{
+          var ps:BasicUrl={Nombre:c.nombre,value:c.id,Url:'/programas-certificaciones-cursos/'+c.id};
+          return ps;
+        });
+        this.Formacion.push({ Nombre: 'Ver Todo', value: 1, Url: '/login', style: { 'font-weight': 'bold' } });
+        this.expandibles[0].data=this.Formacion;
+      },
+      error:(x)=>{console.log(x)}
+    });
+  }
+  GetCarrerasProfecionales(){
+    this._CarreraProfecionalService.GetCarreras(11).subscribe({
+      next:(x)=>{
+        this.carreras=x.listaProfesionCabeceraDTO.map((c:any)=>{
+          var ps:BasicUrl={Nombre:c.titulo,value:c.idBusqueda,Url:'/'+c.idBusqueda};
+          return ps;
+        });
+        this.carreras.push({ Nombre: 'Ver Todo', value: 1, Url: '/login', style: { 'font-weight': 'bold' } });
+        this.expandibles[1].estatus=true;
+        this.expandibles[1].data=this.carreras;
+      },
+      error:(x)=>{console.log(x)}
+    });
+  }
+  GetEducacionTecnica(){
+    this._CarreraProfecionalService.GetCarreras(16).subscribe({
+      next:(x)=>{
+        this.tecnica=x.listaProfesionCabeceraDTO.map((c:any)=>{
+          var ps:BasicUrl={Nombre:c.titulo,value:c.idBusqueda,Url:'/'+c.idBusqueda};
+          return ps;
+        });
+        this.tecnica.push({ Nombre: 'Ver Todo', value: 1, Url: '/login', style: { 'font-weight': 'bold' } });
+        this.expandibles[2].estatus=true;
+        this.expandibles[2].data=this.tecnica;
+      },
+      error:(x)=>{console.log(x)}
+    });
+  }
+  GetCarreras(){
+    this.CodigoIso = this._SessionStorageService.SessionGetValue('ISO_PAIS')!=''?this._SessionStorageService.SessionGetValue('ISO_PAIS'):'INTC';
+    if(this._HeaderPermissionsService.ValidateCarrerasTecnicas(this.CodigoIso)){
+      console.log(1)
+      this.GetEducacionTecnica();
+    }else{
+      this.expandibles[2].estatus=false;
+    }
+    if(this._HeaderPermissionsService.ValidateCarreras(this.CodigoIso)){
+      console.log(2)
+      this.GetCarrerasProfecionales();
+    }else{
+      this.expandibles[1].estatus=false;
+    }
+  }
+  ChangePais(e:any){
+    console.log(e)
+    this._SessionStorageService.SessionSetValue('ISO_PAIS',e);
+    this.GetCarreras();
+  }
 }
