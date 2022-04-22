@@ -6,6 +6,7 @@ import { PaisDTO } from 'src/app/Core/Models/PaisDTO';
 import { CarreraProfesionalService } from '../../Services/Carrera/carrera-profesional.service';
 import { HeaderPermissionsService } from '../../Services/header-permissions.service';
 import { AreacapasitacionService } from '../../Services/AreaCapasitacion/areacapasitacion.service';
+import { HelperService } from '../../Services/helper.service';
 
 @Component({
   selector: 'app-header',
@@ -45,6 +46,7 @@ export class HeaderComponent implements OnInit {
     private _CarreraProfesionalService:CarreraProfesionalService,
     private _HeaderPermissionsService:HeaderPermissionsService,
     private _AreacapasitacionService:AreacapasitacionService,
+    private _HelperService :HelperService
   ) { }
 
   ngOnInit(): void {
@@ -54,6 +56,7 @@ export class HeaderComponent implements OnInit {
     this.GetAreaCapasitacionList();
   }
   GetPaises(){
+    this.paises=[];
     this._PaisService.GetPaises().subscribe({
       next:(x)=>{
         this.paises=x.listaPaisCabeceraDTO.map((p:any)=>{
@@ -65,6 +68,7 @@ export class HeaderComponent implements OnInit {
     });
   }
   GetAreaCapasitacionList(){
+    this.Formacion=[];
     this._AreacapasitacionService.GetAreaCapasitacionList().subscribe({
       next:(x)=>{
         this.Formacion=x.listaareaCapasitacionDTO.map((c:any)=>{
@@ -84,9 +88,16 @@ export class HeaderComponent implements OnInit {
           var ps:BasicUrl={Nombre:c.titulo,value:c.idBusqueda,Url:'/'+c.idBusqueda};
           return ps;
         });
+        this._HelperService.enviarArray(this.carreras);
         this.carreras.push({ Nombre: 'Ver Todo', value: 1, Url: '/login', style: { 'font-weight': 'bold' } });
+        if(this.CodigoIso.toLowerCase()=="co"){
+          this.expandibles[1].Nombre='Educacion para el Trabajo';
+        }else{
+          this.expandibles[1].Nombre='Carreras Profecionales';
+        }
         this.expandibles[1].estatus=true;
         this.expandibles[1].data=this.carreras;
+        this._HelperService.enviarAString(this.expandibles[1].Nombre);
       },
       error:(x)=>{console.log(x)}
     });
@@ -101,12 +112,16 @@ export class HeaderComponent implements OnInit {
         this.tecnica.push({ Nombre: 'Ver Todo', value: 1, Url: '/login', style: { 'font-weight': 'bold' } });
         this.expandibles[2].estatus=true;
         this.expandibles[2].data=this.tecnica;
+
       },
       error:(x)=>{console.log(x)}
     });
   }
   GetCarreras(){
+    this.carreras=[];
+    this.tecnica=[];
     this.CodigoIso = this._SessionStorageService.SessionGetValue('ISO_PAIS')!=''?this._SessionStorageService.SessionGetValue('ISO_PAIS'):'INTC';
+    this._SessionStorageService.SessionSetValue('ISO_PAIS',this.CodigoIso);
     if(this._HeaderPermissionsService.ValidateCarrerasTecnicas(this.CodigoIso)){
       console.log(1)
       this.GetEducacionTecnica();
@@ -118,6 +133,7 @@ export class HeaderComponent implements OnInit {
       this.GetCarrerasProfecionales();
     }else{
       this.expandibles[1].estatus=false;
+      this._HelperService.enviarAString('');
     }
   }
   ChangePais(e:any){
