@@ -1,18 +1,100 @@
-.footer {
-  position: relative;
-  padding: 10px 10px 0px 10px;
-  bottom: 0;
-  width: 100%;
-  /* Height of the footer*/
-  height: 300px;
+.footerr {
   background: #f4f4f4;
-  text-overflow: ellipsis;
-  overflow: hidden;
-  white-space: nowrap;
+  .superior {
+    display: flex;
+    justify-content: center;
+    padding-top: 3rem;
+    padding-bottom: 3rem;
+    .item-container {
+      width: 100%;
+      margin-bottom: 2rem;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      .subitem-container {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+    a {
+      text-decoration: none;
+      color: #6A6A6A;
+      &:hover {
+        color: #1A8DF2;
+        text-decoration: underline;
+      }
+    }
+    .titulo-footer {
+      font-weight: bold;
+      font-size: 1.2rem;
+    }
+    .item-footer {
+      font-size: 0.95rem;
+      font-weight: lighter ;
+      padding-top: 0.5rem;
+
+      span {
+        margin-left: 0.5rem;
+      }
+    }
+
+    .redes-container {
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-start;
+      gap: 0.5rem;
+      
+    }
+  }
+  .line {
+    background-color: #C9C9C9;
+    padding: 0.1rem;
+  }
+  .inferior {
+    display: flex;
+    justify-content: center;
+    padding-top: 2rem;
+    padding-bottom: 3rem;
+    .copyrigth {
+      font-size: 0.7rem;
+    }
+    .reclamaciones-container {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      cursor: pointer;
+      gap: 1rem;
+      color: #494949;
+      img {
+        width: 2rem;
+      }
+      &:hover {
+        color: #1A8DF2;
+      }
+    }
+  }
 }
 
 @media screen and (max-width: 1090px) {
   .footer{
     height: 100%;
+  }
+}
+@media screen and (max-width: 576px) {
+  .footerr{
+    .item-container {
+      align-items: center !important;
+      .subitem-container {
+        align-items: center !important;
+      }
+    }
+  }
+  .inferior {
+    padding: 1rem;
+    .reclamaciones-container {
+      margin-top: 1rem;
+      justify-content: center;
+    }
   }
 }

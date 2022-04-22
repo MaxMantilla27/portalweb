@@ -6,6 +6,7 @@ import { HomeComponent } from './Home/home.component';
 import { LoginComponent } from './login/login.component';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { InterceptorService } from './Interceptor/interceptor.service';
+import { CarrerasProfesionalesComponent } from './carreras-profesionales/carreras-profesionales.component';
 
 @NgModule({
   imports: [
@@ -16,7 +17,8 @@ import { InterceptorService } from './Interceptor/interceptor.service';
   declarations: [
     PublicComponent,
     HomeComponent,
-    LoginComponent
+    LoginComponent,
+    CarrerasProfesionalesComponent
   ],
   exports: [],
   providers: [

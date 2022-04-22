@@ -1,0 +1,25 @@
+<div class="carrera-container">
+    <div class="carrera-container__header">
+        <div class="container">
+            <h1>Carreras</h1>
+            <div class="carrera-container__header__title">
+                <h1>Profesionales</h1> <h1 class="carrera-container__header__title__light">(3 años)</h1>
+            </div>
+            <p>Al finalizar obtén tu certificación a nombre de la Nación</p>
+        </div>
+    </div>
+    <div class="carrera-container__content">
+        <div class="container">
+            <div class="row carrera-container__content__card" *ngFor="let item of carreras">
+                <div class="col-md-4 carrera-container__content__card__img-container">
+                    <img [src]="root+item.imagen" alt="{{item.imagenAlt}}">
+                </div>
+                <div class="col-md-8 carrera-container__content__card__text-container">
+                    <h1>{{item.titulo}}</h1>
+                    <p>{{item.descripcion}}</p>
+                    <a routerLink="{{item.urlWeb+'-'+item.idBusqueda}}">Desubre más ></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

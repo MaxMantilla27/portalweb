@@ -25,7 +25,7 @@ import { FooterComponent } from './Containers/footer/footer.component';
 
 import {SessionStorageService} from '../Shared/Services/session-storage.service'
 import { PaisService } from './Services/Pais/pais.service';
-import { CarreraProfecionalService } from './Services/Carrera/carrera-profecional.service';
+import { CarreraProfesionalService } from './Services/Carrera/carrera-profesional.service';
 import { HeaderPermissionsService } from './Services/header-permissions.service';
 import { AreacapasitacionService } from './Services/AreaCapasitacion/areacapasitacion.service';
 
@@ -81,7 +81,7 @@ import { AreacapasitacionService } from './Services/AreaCapasitacion/areacapasit
   providers: [
     SessionStorageService,
     PaisService,
-    CarreraProfecionalService,
+    CarreraProfesionalService,
     HeaderPermissionsService,
     AreacapasitacionService
   ],

@@ -1,0 +1,91 @@
+.carrera-container {
+    &__header {
+        background: #f4f4f4;
+        padding-top: 3rem;
+        padding-bottom: 3rem;
+        &__title {
+            display: flex;
+            align-items: center;
+            &__light {
+                font-weight: 100 !important;
+            }
+        }
+        h1{
+            font-weight: 900;
+        }
+        span {
+            font-weight: lighter;
+        }
+    }
+    &__content {
+        padding-top: 3rem;
+        padding-bottom: 3rem;
+        &__card {
+            margin-bottom: 3rem;
+            &__img-container {
+                margin: 0;
+                padding: 0;
+                img {
+                    width: 100%;
+                    height: 100%;
+                    object-fit: cover;
+                }
+            }
+            &__text-container {
+                background-color: #CFFFE6;
+                padding: 4rem;
+
+                h1 {
+                    font-size: 2rem;
+                    font-weight: 800;
+                    color: #0281F2;
+                }
+                a {
+                    text-decoration: none;
+                    color: #F8893F;
+                    font-weight: 800;
+                    &:hover {
+                        text-decoration: underline;
+                    }
+                }
+                
+            }
+        }
+    }
+    
+}
+.laprueba {
+    background-color: red;
+}
+.img-container-prueba {
+    background-color: aqua;
+    margin: 0;
+    padding: 0;
+    img {
+        width: 100%;
+        height: auto;
+    }
+}
+.prueba_card{
+    height: 200px;
+    background-color: brown;
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 2rem;
+    gap: 3rem;
+    &_text{
+        padding-top: 3rem;
+        padding-bottom: 3rem;
+        padding-right: 1rem;
+        background-color: blue;
+    }
+
+}
+@media screen and (max-width: 770px) {
+    .prueba_card{
+        flex-direction: column;
+        &_text{
+            background-color: blue;
+        }
+    }
+  }
