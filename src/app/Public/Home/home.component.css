@@ -4,9 +4,101 @@
   color: #4a4a49;
 }
 .rowpadd{
-  padding: 45px 60px;
+  padding: 45px 160px;
 }
 .parafop{
   font-size: 22px;
-  font-weight: 600px;
+  font-weight: 600;
+}
+.imgcarousel{
+  height: 130px !important;
+}
+.imgTitle{
+  height: auto;
+  width: 100%;
+}
+.paisesTitle{
+  margin-top: 20px;
+  display: flex;
+  font-size: 15px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.paisesTitleitem{
+  width: 33%;
+  display: flex;
+  align-items: center;
+}
+.paisesTitleitem img{
+  width: 10px;
+  height: auto;
+  margin-right: 10px;
+}
+.subtitulo{
+  font-size: 44px;
+  font-weight: 600;
+  color: #4a4a49;
+}
+.parafoS{
+  font-size: 22px;
+  font-weight: 500;
+  color: #5e5e5d;
+}
+.cardSubtitle{
+  display: flex;
+  align-items: center;
+  background: #cfffe6;
+  padding: 20px 15px;
+  border-radius: 10px;
+  width: 80%;
+  margin: 7px 0px;
+}
+.cardSubtitle img{
+  width: 12%;
+  margin-right: 30px;
+}
+.titleCardSub{
+  font-size: 17px;
+  font-weight: bolder;
+}
+.parafoCardSub{
+  font-size: 16px;
+  text-align: justify;
+}
+.imgfondo{
+  position: absolute;
+  bottom: 50px;
+  right: 0;
+  width: 700px;
+  z-index: -1;
+}
+.cardCarreras{
+  background: #fff8f6;
+  box-shadow: -1px 1px 4px 2px #c6c6c6;
+  border-radius: 5px;
+  display: flex;
+}
+.contenCarreras{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  padding: 20px 60px 20px 20px;
+  width: 60%;
+}
+.titleCarreras{
+  color: #168df3;
+  font-size: 16px;
+  font-weight: 900;
+  margin-bottom: 20px;
+  padding-right: 40px;
+}
+.subtitleCarreras{
+  display: flex;
+  align-items: center;
+  color: #969696;
+}
+.red{
+  color: #ff3d3e;
+  font-weight: 900;
+  margin-top: 30px;
 }

@@ -28,6 +28,10 @@ import { PaisService } from './Services/Pais/pais.service';
 import { CarreraProfecionalService } from './Services/Carrera/carrera-profecional.service';
 import { HeaderPermissionsService } from './Services/header-permissions.service';
 import { AreacapasitacionService } from './Services/AreaCapasitacion/areacapasitacion.service';
+import {IvyCarouselModule} from 'angular-responsive-carousel';
+import { PartnerService } from './Services/Partner/partner.service';
+import { CarouselComponent } from './Containers/Carousel/carousel.component';
+import { HelperService } from './Services/helper.service';
 
 @NgModule({
   imports: [
@@ -51,8 +55,10 @@ import { AreacapasitacionService } from './Services/AreaCapasitacion/areacapasit
     MatMenuModule,
     MatSelectModule,
     MatExpansionModule,
+
+    IvyCarouselModule
   ],
-  declarations: [HeaderComponent, ButtonComponent, SelectComponent, FooterComponent],
+  declarations: [HeaderComponent, ButtonComponent, SelectComponent, FooterComponent, CarouselComponent],
   exports: [
     HttpClientModule,
     RouterModule,
@@ -62,6 +68,7 @@ import { AreacapasitacionService } from './Services/AreaCapasitacion/areacapasit
 
     HeaderComponent,
     FooterComponent,
+    CarouselComponent,
 
     MatTabsModule,
     MatTableModule,
@@ -77,13 +84,16 @@ import { AreacapasitacionService } from './Services/AreaCapasitacion/areacapasit
     MatMenuModule,
     MatSelectModule,
     MatExpansionModule,
+    IvyCarouselModule
   ],
   providers: [
     SessionStorageService,
     PaisService,
     CarreraProfecionalService,
     HeaderPermissionsService,
-    AreacapasitacionService
+    AreacapasitacionService,
+    PartnerService,
+    HelperService
   ],
 })
 export class SharedModule {

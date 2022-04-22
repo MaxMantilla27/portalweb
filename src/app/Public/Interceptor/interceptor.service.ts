@@ -20,7 +20,6 @@ export class InterceptorService implements HttpInterceptor{
   }
   RequestWhitHeaders(request: HttpRequest<any>) {
     const Iso = this._SessionStorageService.SessionGetValue('ISO_PAIS');
-    console.log(Iso);
     return request.clone({
         setHeaders: {
           CodigoISO: ''+Iso

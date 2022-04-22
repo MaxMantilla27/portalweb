@@ -22,3 +22,8 @@ export interface BasicBotonesExpandibles{
   data:Array<BasicUrl>,
   estatus:boolean
 }
+export interface BasicCarousel{
+  path:string,
+  width:number,
+  height:number
+}
