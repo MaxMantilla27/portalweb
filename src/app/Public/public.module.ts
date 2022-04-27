@@ -7,6 +7,8 @@ import { LoginComponent } from './login/login.component';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { InterceptorService } from './Interceptor/interceptor.service';
 import { CarrerasProfesionalesComponent } from './carreras-profesionales/carreras-profesionales.component';
+import { EducacionTecnicaComponent } from './educacion-tecnica/educacion-tecnica.component';
+import { CarreraProfesionalDetalleComponent } from './carreras-profesionales/carrera-profesional-detalle/carrera-profesional-detalle.component';
 
 @NgModule({
   imports: [
@@ -18,7 +20,9 @@ import { CarrerasProfesionalesComponent } from './carreras-profesionales/carrera
     PublicComponent,
     HomeComponent,
     LoginComponent,
-    CarrerasProfesionalesComponent
+    CarrerasProfesionalesComponent,
+    EducacionTecnicaComponent,
+    CarreraProfesionalDetalleComponent,
   ],
   exports: [],
   providers: [

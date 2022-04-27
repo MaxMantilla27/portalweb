@@ -28,10 +28,14 @@ import { PaisService } from './Services/Pais/pais.service';
 import { CarreraProfesionalService } from './Services/Carrera/carrera-profesional.service';
 import { HeaderPermissionsService } from './Services/header-permissions.service';
 import { AreacapasitacionService } from './Services/AreaCapasitacion/areacapasitacion.service';
-import {IvyCarouselModule} from 'angular-responsive-carousel';
 import { PartnerService } from './Services/Partner/partner.service';
 import { CarouselComponent } from './Containers/Carousel/carousel.component';
 import { HelperService } from './Services/helper.service';
+import { DefaultButtonComponent } from './Containers/buttons/default-button/default-button.component';
+import { CustomCardComponent } from './Containers/card/custom-card/custom-card.component';
+import { VistaGenericaProgramaComponent } from './Containers/vista-generica-programa/vista-generica-programa.component';
+import { MigaPanComponent } from './Containers/miga-pan/miga-pan.component';
+import { LinkButtonComponent } from './Containers/buttons/link-button/link-button.component';
 
 @NgModule({
   imports: [
@@ -55,10 +59,8 @@ import { HelperService } from './Services/helper.service';
     MatMenuModule,
     MatSelectModule,
     MatExpansionModule,
-
-    IvyCarouselModule
   ],
-  declarations: [HeaderComponent, ButtonComponent, SelectComponent, FooterComponent, CarouselComponent],
+  declarations: [HeaderComponent, ButtonComponent, SelectComponent, FooterComponent, CarouselComponent, DefaultButtonComponent, CustomCardComponent, VistaGenericaProgramaComponent, MigaPanComponent, LinkButtonComponent],
   exports: [
     HttpClientModule,
     RouterModule,
@@ -84,7 +86,11 @@ import { HelperService } from './Services/helper.service';
     MatMenuModule,
     MatSelectModule,
     MatExpansionModule,
-    IvyCarouselModule
+    DefaultButtonComponent,
+    LinkButtonComponent,
+    CustomCardComponent,
+    VistaGenericaProgramaComponent,
+    MigaPanComponent
   ],
   providers: [
     SessionStorageService,

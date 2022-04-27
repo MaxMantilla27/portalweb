@@ -1,0 +1,8 @@
+<div class="col-md-6 col-lg-4">
+    <div
+    class="btn-general"
+    [ngClass]="{'btn-primary': confs.color === 'primary',
+    'btn-danger': confs.color === 'danger' }">
+        <span routerLink="{{ruta}}"> {{confs.titulo}} ></span>
+    </div>
+</div>
