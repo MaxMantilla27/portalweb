@@ -1,11 +1,11 @@
 <div class="miga-container">
     <div class="miga-container__item" *ngFor="let item of items, let index = index">
         <div *ngIf="index != items.length-1 ">
-            <app-link-button [fontColor]="'#000000'" [fontStyle]="'lighter'" [fontSize]="'1rem'" style="margin-top: 0.15rem" [item]="item"></app-link-button>
+            <app-link-button [fontColor]="'#000000'" [fontStyle]="'lighter'" [fontSize]="'0.7rem'" style="margin-top: 0.15rem" [item]="item"></app-link-button>
         </div>
         <div *ngIf="index == items.length-1 ">
-            <app-link-button [fontColor]="'#000000'" [fontStyle]="'bold'" [fontSize]="'1rem'" style="margin-top: 0.15rem" [item]="item" [link]="false"></app-link-button>
+            <app-link-button [fontColor]="'#000000'" [fontStyle]="'bold'" [fontSize]="'0.7rem'" style="margin-top: 0.15rem" [item]="item" [link]="false"></app-link-button>
         </div>
-        <mat-icon *ngIf="index < items.length-1">keyboard_arrow_right</mat-icon>
+        <mat-icon *ngIf="index < items.length-1" style="font-size: 1.2rem">keyboard_arrow_right</mat-icon>
     </div>
 </div>
