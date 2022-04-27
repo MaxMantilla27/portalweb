@@ -1,17 +1,17 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CarreraProfesionalTecnicaDTO } from 'src/app/Core/Models/ProgramaDTO';
 import { CarreraProfesionalService } from 'src/app/Core/Shared/Services/Carrera/carrera-profesional.service';
 
 @Component({
-  selector: 'app-carreras-profesionales',
-  templateUrl: './carreras-profesionales.component.html',
-  styleUrls: ['./carreras-profesionales.component.scss']
+  selector: 'app-educacion-tecnica',
+  templateUrl: './educacion-tecnica.component.html',
+  styleUrls: ['./educacion-tecnica.component.scss']
 })
-export class CarrerasProfesionalesComponent implements OnInit {
+export class EducacionTecnicaComponent implements OnInit {
 
   public carreras: Array<CarreraProfesionalTecnicaDTO> = [];
   public encabezado: any = {};
-  public confs: Object = {}
+  public confs: Object = {};
   public migaPan: any = []
   constructor(
     private _CarreraProfesionalService: CarreraProfesionalService,
@@ -24,23 +24,23 @@ export class CarrerasProfesionalesComponent implements OnInit {
       color: 'primary'
     }
     this.encabezado = {
-      titulo: 'Carreras Profesionales',
-      duracion: '(3 años)',
-      descripcion: 'Al finalizar obtén tu certificación a nombre de la Nación'
+      titulo: 'Educación técnica',
+      duracion: '',
+      descripcion: ''
     }
     this.migaPan = [
       {
         titulo: 'Inicio',
-        urlWeb: '/',
+        urlWeb: '/'
       },
       {
-        titulo: 'Carreras Profesionales',
-        urlWeb: '/carreras-profesionales'
-      }
+        titulo: 'Educación Técnico Productivo',
+        urlWeb: '/tecnicos-productivos'
+      },
     ]
   }
   getCarreras(){
-    this._CarreraProfesionalService.GetCarrerasVista(11).subscribe({
+    this._CarreraProfesionalService.GetCarrerasVista(16).subscribe({
       next:(x)=>{
         this.carreras = x.listaProfesionVistaDTO.map(function(carrera: any) {
           carrera.imagen = 'https://img.bsginstitute.com/repositorioweb/img/carreras/'  + carrera.imagen

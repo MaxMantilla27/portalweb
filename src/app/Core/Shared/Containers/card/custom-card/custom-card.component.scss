@@ -1,0 +1,34 @@
+.card-container {
+    &__img-container {
+        margin: 0;
+        padding: 0;
+        img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+    }
+    &__information-container {
+        background-color: #CFFFE6;
+        padding: 4rem;
+
+        h1 {
+            font-size: 2rem;
+            font-weight: 800;
+            color: #0281F2;
+        }
+
+        &__button {
+            width: 12rem;
+        }
+        a {
+            text-decoration: none;
+            color: #F8893F;
+            font-weight: 800;
+            &:hover {
+                text-decoration: underline;
+            }
+        }
+        
+    }
+}

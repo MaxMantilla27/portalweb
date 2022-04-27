@@ -1,0 +1,18 @@
+<div class="carrera-container">
+    <app-miga-pan [items]="migaPan"></app-miga-pan>
+    <div class="carrera-container__header">
+        <div class="container">
+            <div class="carrera-container__header__title">
+                <h1>{{encabezado.titulo}} </h1> <h1 class="carrera-container__header__title__light">{{encabezado.duracion}}</h1>
+            </div>
+            <p>{{encabezado.descripcion}}</p>
+        </div>
+    </div>
+    <div class="carrera-container__content">
+        <div class="container">
+            <div class="row carrera-container__content__card" *ngFor="let item of listado">
+                <app-custom-card [item]="item" [confs]="confs"></app-custom-card>
+            </div>
+        </div>
+    </div>
+</div>

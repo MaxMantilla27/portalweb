@@ -1,0 +1,23 @@
+.btn-general {
+    padding: 0.5rem;
+    width: auto;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    cursor: pointer;
+}
+.btn-primary {
+    background-color: #F8893F;
+    color: white;
+    &:hover {
+        background-color: #fb9754;
+      text-decoration: underline;
+    }
+}
+.btn-danger {
+    background-color: red;
+    color: white;
+    &:hover {
+        background-color: rgb(244, 72, 72);
+    }
+}

@@ -1,0 +1,11 @@
+<div class="row card-container">
+    <div class="col-md-4 card-container__img-container">
+        <img [src]="item.imagen" alt="{{item.imagenAlt}}">
+    </div>
+    <div class="col-md-8 card-container__information-container">
+        <app-link-button [fontColor]="'#0281F2'" [fontStyle]="'bold'" [fontSize]="'2rem'" style="margin-top: 0.15rem" [item]="item"></app-link-button>
+        <p>{{item.descripcion}}</p>
+        <app-default-button [confs]="confs" [ruta]="item.urlWeb"></app-default-button>  
+    </div>
+</div>
+    
