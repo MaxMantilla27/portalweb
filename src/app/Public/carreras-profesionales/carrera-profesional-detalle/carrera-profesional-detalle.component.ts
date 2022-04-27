@@ -17,6 +17,7 @@ export class CarreraProfesionalDetalleComponent implements OnInit {
   public generalInformacion: any = [];
   public contenidoCertificacionAdicional: String = '';
   public notaCertificacionAdicional: String = '';
+  public planEstudios: any;
   public rutaImagen: string = 'https://img.bsginstitute.com/repositorioweb/img/carreras/';
 
   public loader: boolean = false
@@ -65,7 +66,13 @@ export class CarreraProfesionalDetalleComponent implements OnInit {
             return contenido
           }
         })
+        //Plan de Estudios
+        //this.planEstudios = this.carrera.contenidoProgramaInformacionDTO[2]
+        this.planEstudios = "<div class='real-contenedor'>"+this.carrera.contenidoProgramaInformacionDTO[2].contenido.replaceAll("<p><strong>","<div class='container-card'><p><strong>").
+        replaceAll("</ul><div class='container-card'>","</ul></div><div class='container-card'>")+"</div></div>"
+        this.planEstudios = this.planEstudios.replaceAll("</strong></p>","</strong></p><div class='line'></div>")
         //Separamos el contenido de la nota en certificaicones adicionales
+        console.log(this.planEstudios)
         this.contenidoCertificacionAdicional = this.carrera.contenidoProgramaInformacionDTO[8].contenido.split("<p>&nbsp;</p><div><p><strong>NOTA</strong>")[0]
         this.notaCertificacionAdicional = this.carrera.contenidoProgramaInformacionDTO[8].contenido.split("<p>&nbsp;</p>")[6]
         this.loader = true

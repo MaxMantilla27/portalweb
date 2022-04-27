@@ -4,7 +4,7 @@
             <app-link-button [fontColor]="'#000000'" [fontStyle]="'lighter'" [fontSize]="'1rem'" style="margin-top: 0.15rem" [item]="item"></app-link-button>
         </div>
         <div *ngIf="index == items.length-1 ">
-            <app-link-button [fontColor]="'#000000'" [fontStyle]="'bold'" [fontSize]="'1rem'" style="margin-top: 0.15rem" [item]="item"></app-link-button>
+            <app-link-button [fontColor]="'#000000'" [fontStyle]="'bold'" [fontSize]="'1rem'" style="margin-top: 0.15rem" [item]="item" [link]="false"></app-link-button>
         </div>
         <mat-icon *ngIf="index < items.length-1">keyboard_arrow_right</mat-icon>
     </div>

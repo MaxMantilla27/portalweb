@@ -69,6 +69,43 @@
         }
       }
     }
+    &__thirdSection {
+      .real-contenedor {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: space-around;
+        gap: 1rem;
+        .container-card {
+          max-width: 30rem;
+          margin-top: 2rem;
+          width: 100%;
+          background-color: #CFFFE6;
+          border-radius: 10px;
+          padding: 3rem;
+          .line {
+            height: 0.1rem;
+            border-radius: 1rem;
+            background-color: #C1DACC;
+            margin-bottom: 2rem;
+          }
+          p strong {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: orange;
+          }
+          ul {
+            margin: 0;
+            padding: 0;
+            list-style-type: none;
+            li {
+              font-size: 0.8rem;
+              margin-bottom: 0.5rem;
+            }
+          }
+        }
+      }
+    }
     &__fourthSection {
       padding-top: 3rem;
       padding-bottom: 3rem;
