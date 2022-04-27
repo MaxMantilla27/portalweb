@@ -18,7 +18,7 @@ const routes:Routes=[
             {path:'programas-certificaciones-cursos/:IdArea',component:ProgramasComponent},
             {path:'login',component:LoginComponent,canActivate:[PublicGuard]},
             {path:'carreras-profesionales',component:CarrerasProfesionalesComponent},
-            {path: 'carreras-profesionales/:urlWeb',component:CarreraProfesionalDetalleComponent},
+            {path: 'carrera/:urlWeb',component:CarreraProfesionalDetalleComponent},
             {path:'tecnicos-productivos', component:EducacionTecnicaComponent},
 
             {path:':AreaCapacitacion/:ProgramaNombre',component:ProgramasDetalleComponent,canActivate:[PublicGuard]}

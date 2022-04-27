@@ -1,6 +1,11 @@
-<a
+<a *ngIf="link"
     class="button-general"
     [ngStyle]="{'color': fontColor,
                 'font-weight': fontStyle,
-                'font-size': fontSize}" 
+                'font-size': fontSize}"
     [routerLink]="item.urlWeb">{{item.titulo}}</a>
+<a *ngIf="!link"
+   class="button-general"
+   [ngStyle]="{'color': fontColor,
+                'font-weight': fontStyle,
+                'font-size': fontSize}">{{item.titulo}}</a>

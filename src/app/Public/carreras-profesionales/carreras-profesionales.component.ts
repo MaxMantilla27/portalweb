@@ -44,8 +44,8 @@ export class CarrerasProfesionalesComponent implements OnInit {
       next:(x)=>{
         this.carreras = x.listaProfesionVistaDTO.map(function(carrera: any) {
           carrera.imagen = 'https://img.bsginstitute.com/repositorioweb/img/carreras/'  + carrera.imagen
-          carrera.urlWeb = carrera.titulo.replace(/ /g, "-")+'-'+carrera.idBusqueda
-          return carrera          
+          carrera.urlWeb = '/carrera/'+carrera.titulo.replace(/ /g, "-")+'-'+carrera.idBusqueda
+          return carrera
         })
       },
       error:(x)=>{console.log(x)}

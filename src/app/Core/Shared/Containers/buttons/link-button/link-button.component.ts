@@ -17,6 +17,8 @@ export class LinkButtonComponent implements OnInit {
   fontStyle: any
   @Input ()
   fontSize: any
+  @Input ()
+  link: boolean = true
   constructor() { }
 
   ngOnInit(): void {

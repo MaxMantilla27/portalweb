@@ -3,7 +3,9 @@
     <mat-spinner></mat-spinner>
   </div>
   <div *ngIf="loader">
-    <app-miga-pan [items]="migaPan"></app-miga-pan>
+    <div class="container breadcrumb">
+      <app-miga-pan [items]="migaPan"></app-miga-pan>
+    </div>
     <div class="carrera-container__header">
       <div class="container rowpadd">
         <div class="row">
@@ -54,13 +56,17 @@
       <div class="carrera-container__content__thirdSection">
         <div class="container rowpadd">
           <h1>Plan de Estudios</h1>
+          <div
+            class="carrera-container__content__thirdSection__information-detail"
+            [innerHTML]="planEstudios">
+          </div>
         </div>
       </div>
       <div class="carrera-container__content__fourthSection">
         <div class="container rowpadd">
           <h1>Certificación</h1>
           <div
-            class="carrera-container__content__thirdSection__information-detail"
+            class="carrera-container__content__fourthSection__information-detail"
             [innerHTML]="carrera.contenidoProgramaInformacionDTO[6]?.contenido">
           </div>
         </div>
