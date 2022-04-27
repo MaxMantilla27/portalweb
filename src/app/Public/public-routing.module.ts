@@ -3,13 +3,19 @@ import {RouterModule,Routes} from '@angular/router';
 import { PublicGuard } from './Guard/public.guard';
 import { HomeComponent } from './Home/home.component';
 import { LoginComponent } from './login/login.component';
+import { ProgramasComponent } from './programas/programas.component';
 import { PublicComponent } from './public.component';
 
 const routes:Routes=[
     {path:'',component:PublicComponent,children:
         [
             {path:'',component:HomeComponent},
-            {path:'login',component:LoginComponent,canActivate:[PublicGuard]}
+            {path:'programas-certificaciones-cursos',component:ProgramasComponent},
+            {path:'programas-certificaciones-cursos/:IdArea',component:ProgramasComponent},
+            {path:'login',component:LoginComponent,canActivate:[PublicGuard]},
+
+
+            {path:':AreaCapacitacion/:ProgramaNombre',component:LoginComponent,canActivate:[PublicGuard]}
         ]
     }
 ];
