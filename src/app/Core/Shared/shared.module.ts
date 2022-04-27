@@ -97,7 +97,7 @@ import {MatSliderModule} from '@angular/material/slider';
     LinkButtonComponent,
     CustomCardComponent,
     VistaGenericaProgramaComponent,
-    MigaPanComponent
+    MigaPanComponent,
     NgbModule,
     CardProgramasComponent,
     SelectComponent,

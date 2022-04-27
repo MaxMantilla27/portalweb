@@ -18,7 +18,7 @@ const routes:Routes=[
             {path:'login',component:LoginComponent,canActivate:[PublicGuard]},
             {path:'carreras-profesionales',component:CarrerasProfesionalesComponent},
             {path: 'carreras-profesionales/:urlWeb',component:CarreraProfesionalDetalleComponent},
-            {path:'tecnicos-productivos', component:EducacionTecnicaComponent}
+            {path:'tecnicos-productivos', component:EducacionTecnicaComponent},
 
             {path:':AreaCapacitacion/:ProgramaNombre',component:LoginComponent,canActivate:[PublicGuard]}
 
