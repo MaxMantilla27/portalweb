@@ -66,8 +66,7 @@ export class CarreraProfesionalDetalleComponent implements OnInit {
             return contenido
           }
         })
-        //Plan de Estudios
-        //this.planEstudios = this.carrera.contenidoProgramaInformacionDTO[2]
+        //Plan de Estudios damos formato para cards
         this.planEstudios = "<div class='real-contenedor'>"+this.carrera.contenidoProgramaInformacionDTO[2].contenido.replaceAll("<p><strong>","<div class='container-card'><p><strong>").
         replaceAll("</ul><div class='container-card'>","</ul></div><div class='container-card'>")+"</div></div>"
         this.planEstudios = this.planEstudios.replaceAll("</strong></p>","</strong></p><div class='line'></div>")
