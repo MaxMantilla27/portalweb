@@ -8,6 +8,7 @@ import { PublicComponent } from './public.component';
 import { CarrerasProfesionalesComponent } from './carreras-profesionales/carreras-profesionales.component'
 import { EducacionTecnicaComponent } from './educacion-tecnica/educacion-tecnica.component';
 import { CarreraProfesionalDetalleComponent } from './carreras-profesionales/carrera-profesional-detalle/carrera-profesional-detalle.component';
+import { ProgramasDetalleComponent } from './programas-detalle/programas-detalle.component';
 
 const routes:Routes=[
     {path:'',component:PublicComponent,children:
@@ -20,7 +21,7 @@ const routes:Routes=[
             {path: 'carreras-profesionales/:urlWeb',component:CarreraProfesionalDetalleComponent},
             {path:'tecnicos-productivos', component:EducacionTecnicaComponent},
 
-            {path:':AreaCapacitacion/:ProgramaNombre',component:LoginComponent,canActivate:[PublicGuard]}
+            {path:':AreaCapacitacion/:ProgramaNombre',component:ProgramasDetalleComponent,canActivate:[PublicGuard]}
 
         ]
     }

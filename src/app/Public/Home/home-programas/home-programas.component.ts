@@ -53,8 +53,10 @@ export class HomeProgramasComponent implements OnInit,OnChanges {
               }
             });
             var urlArea=c.areaCapacitacion.replace(/\s+/g, '-')
-            var urlSubArea=c.nombre.replace(/\s+/g, '-')
-            var ps:CardProgramasDTO={Content:content,Url:'/'+urlArea+'/'+urlSubArea,Img:'https://img.bsginstitute.com/repositorioweb/img/programas/'+c.imagen,ImgAlt:c.imagenAlt,Title:c.nombre};
+            var urlSubArea=c.nombre.replace(' - ', '-')
+            var urlSubArea=urlSubArea.replace(/\s+/g, '-')
+            //console.log('/'+urlArea+'/'+urlSubArea+'-'+c.idBusqueda);
+            var ps:CardProgramasDTO={Content:content,Url:'/'+urlArea+'/'+urlSubArea+'-'+c.idBusqueda,Img:'https://img.bsginstitute.com/repositorioweb/img/programas/'+c.imagen,ImgAlt:c.imagenAlt,Title:c.nombre};
             return ps;
           }
         );

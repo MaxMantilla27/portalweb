@@ -60,13 +60,6 @@ export class ProgramasComponent implements OnInit {
   public resposive=false;
   public innerWidth: any;
   public scrollValue=0;
-  @HostListener('window:scroll', ['$event']) onWindowScroll(e:any) {
-    console.log(e)
-
-    // Your Code Here
-
-  }
-
 
   ngOnInit(): void {
     this.innerWidth = window.innerWidth;
@@ -92,10 +85,8 @@ export class ProgramasComponent implements OnInit {
         this.scrollValue=x;
         if(this.scrollValue>this.positiondivFixed){
           this.fixed=true;
-          console.log(1)
         }else{
           this.fixed=false
-          console.log(2)
         }
       }
     })
@@ -203,7 +194,12 @@ export class ProgramasComponent implements OnInit {
   }
   GetProgramas(){
     this.send.Maximo=this.rangoselect;
-    this.send.idArea=this.IdArea!=''?[parseInt(this.IdArea)]:[];
+    console.log(this.IdArea);
+    this.send.idArea=[parseInt(this.IdArea)];
+    if(Number(this.IdArea)==0 || isNaN(this.IdArea)){
+      this.send.idArea=[];
+      console.log(this.send.idArea);
+    }
     this.send.idSubArea=this.SubAreaSelect;
     this.send.IdCategoria=this.TipoProgramaSelect;
     this.send.Modalidad=this.ModalidadSelect;
@@ -212,7 +208,11 @@ export class ProgramasComponent implements OnInit {
       next:(x)=>{
         this.programas=x.listaProgramasGeneralesTop.map(
           (c:any)=>{
-            var ps:CardProgramasDTO={Content:c.montoPagoDescripcion,Url:'',Img:'https://img.bsginstitute.com/repositorioweb/img/programas/'+c.imagen,ImgAlt:c.imagenAlt,Title:c.nombre};
+
+            var urlArea=c.areaCapacitacion.replace(/\s+/g, '-')
+            var urlSubArea=c.nombre.replace(' - ', '-')
+            var urlSubArea=urlSubArea.replace(/\s+/g, '-')
+            var ps:CardProgramasDTO={Content:c.montoPagoDescripcion,Url:'/'+urlArea+'/'+urlSubArea+'-'+c.idBusqueda,Img:'https://img.bsginstitute.com/repositorioweb/img/programas/'+c.imagen,ImgAlt:c.imagenAlt,Title:c.nombre};
             return ps;
           }
         );

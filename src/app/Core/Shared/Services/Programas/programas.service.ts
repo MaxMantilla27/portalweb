@@ -15,7 +15,7 @@ export class ProgramasService {
     return this.http.get<any>(this.urlBase+'/FiltroProgramas?IdArea='+IdArea);
   }
   public GetProgramas(Json:FiltroProgramasEnvioDTO):Observable<any>{
-
+    console.log(Json)
     return this.http.post<any>(this.urlBase+'/PartialProgramas',Json);
   }
 }

@@ -190,3 +190,18 @@
   color: black;
 }
 
+
+.btn-primary {
+  background-color: #F8893F;
+  color: white;
+  &:hover {
+      background-color: #fb9754 !important;
+    text-decoration: underline !important;
+  }
+  &:focus {
+    color: white;
+    background-color: #F8893F;
+    border-color: transparent;
+    box-shadow: 0 0 0 0 rgb(49 132 253 / 50%);
+  }
+}

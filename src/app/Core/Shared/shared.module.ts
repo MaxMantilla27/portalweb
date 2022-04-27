@@ -39,6 +39,7 @@ import { LinkButtonComponent } from './Containers/buttons/link-button/link-butto
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { CardProgramasComponent } from './Containers/card-programas/card-programas.component';
 import {MatSliderModule} from '@angular/material/slider';
+import { SafeHtmlPipe } from './Pipes/safe-html.pipe';
 
 @NgModule({
   imports: [
@@ -66,7 +67,7 @@ import {MatSliderModule} from '@angular/material/slider';
     MatSliderModule
 
   ],
-  declarations: [HeaderComponent, ButtonComponent, SelectComponent, FooterComponent, CarouselComponent, ButtonComponent, CardProgramasComponent,SelectComponent, DefaultButtonComponent, CustomCardComponent, VistaGenericaProgramaComponent, MigaPanComponent, LinkButtonComponent],
+  declarations: [HeaderComponent, ButtonComponent, SelectComponent, FooterComponent, CarouselComponent, ButtonComponent, CardProgramasComponent,SelectComponent, DefaultButtonComponent, CustomCardComponent, VistaGenericaProgramaComponent, MigaPanComponent, LinkButtonComponent, SafeHtmlPipe],
   exports: [
     HttpClientModule,
     RouterModule,
@@ -101,7 +102,8 @@ import {MatSliderModule} from '@angular/material/slider';
     NgbModule,
     CardProgramasComponent,
     SelectComponent,
-    MatSliderModule
+    MatSliderModule,
+    SafeHtmlPipe
   ],
   providers: [
     SessionStorageService,

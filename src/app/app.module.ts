@@ -12,7 +12,7 @@ import { InterceptorService } from './Public/Interceptor/interceptor.service';
 
 @NgModule({
   declarations: [
-    AppComponent,
+    AppComponent
   ],
   imports: [
     BrowserModule,
