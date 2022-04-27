@@ -1,48 +1,25 @@
-<mat-sidenav-container>
 
-  <mat-sidenav #sidenav mode="over" position='end'>
-    <img src="https://img.bsginstitute.com/repositorioweb/img/logobsg.svg" alt="" width="75%">
-    <hr />
-    <nav>
-      <app-button [Url]="''" (OnClick)="sidenav.toggle()" [tipo]="1">
-        <ng-container contenido>
-          Inicio
-        </ng-container>
-      </app-button>
-      <a routerLink="about" (click)="sidenav.toggle()">About</a>
-      <a routerLink="login" (click)="sidenav.toggle()">Login</a>
-      <a routerLink="sign-up" (click)="sidenav.toggle()">Sign Up</a>
-      <app-button [Url]="'/login'" [tipo]="1" (OnClick)="sidenav.toggle()" >
-        <ng-container contenido>
-          BS Campus
-        </ng-container>
-      </app-button>
-    </nav>
-  </mat-sidenav>
+<mat-toolbar color="primary">
+    <img src="https://img.bsginstitute.com/repositorioweb/img/logobsg.svg" alt="" width="160px">
 
-  <mat-sidenav-content>
-    <mat-toolbar color="primary">
-      <header>
-        <img src="https://img.bsginstitute.com/repositorioweb/img/logobsg.svg" alt="" width="160px">
-
-        <div class="div-icon">
-          <mat-icon (click)="sidenav.toggle()">menu</mat-icon>
-        </div>
-        <div class="row space-bet">
-          <nav>
-            <div class="nav-buttons">
-              <app-button [Url]="''" [tipo]="2">
-                <ng-container contenidoTag>
-                  Inicio
-                </ng-container>
-              </app-button>
-              <ng-container *ngFor="let item of expandibles">
-                <app-button *ngIf="item.estatus"  [dataUrl]="item.data" [tipo]="3">
-                  <ng-container contenidodata>
-                    {{item.Nombre}}
-                  </ng-container>
-                </app-button>
+    <div class="div-icon">
+      <mat-icon (click)="OnClick.emit()">menu</mat-icon>
+    </div>
+    <div class="row space-bet">
+      <nav>
+        <div class="nav-buttons">
+          <app-button [Url]="''" [tipo]="2">
+            <ng-container contenidoTag>
+              Inicio
+            </ng-container>
+          </app-button>
+          <ng-container *ngFor="let item of expandibles">
+            <app-button *ngIf="item.estatus"  [dataUrl]="item.data" [tipo]="3">
+              <ng-container contenidodata>
+                {{item.Nombre}}
               </ng-container>
+            </app-button>
+          </ng-container>
 
               <app-button [Url]="''" [tipo]="2">
                 <ng-container contenidoTag>
@@ -74,14 +51,22 @@
             </div>
           </div> -->
         </div>
-      </header>
-    </mat-toolbar>
-    <section>
-      <ng-content select="[contenido]">
-      </ng-content>
+        <div class="botones_login">
 
-    </section>
+          <app-select [dataUrl]="paises" [tipo]="3" [valueDefecto]="CodigoIso" (Cambio)="ChangePais($event)" ></app-select>
 
-    <app-footer></app-footer>
-  </mat-sidenav-content>
-</mat-sidenav-container>
+          <app-button [Url]="'/AulaVirtual/Cuenta'" [tipo]="4" [color]="'white'" [background]="'#FCA534'"
+            [border]="'solid 1px #895800'">
+            <ng-container contenidoButton>
+              Ingresar
+            </ng-container>
+          </app-button>
+          <app-button [Url]="''" [tipo]="4" [color]="'white'" [background]="'transparent'"
+            [border]="'solid 1px white'">
+            <ng-container contenidoButton>
+              registrate
+            </ng-container>
+          </app-button>
+
+        </div>
+</mat-toolbar>

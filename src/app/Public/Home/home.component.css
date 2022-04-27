@@ -1,17 +1,9 @@
-.titulop{
-  font-size: 60px;
-  font-weight: 800;
-  color: #4a4a49;
-}
-.rowpadd{
-  padding: 45px 160px;
-}
-.parafop{
-  font-size: 22px;
-  font-weight: 600;
-}
+
 .imgcarousel{
-  height: 130px !important;
+  max-width: 100%;
+}
+.contentImgCorousel{
+  padding: 20px 30px;
 }
 .imgTitle{
   height: auto;
@@ -21,7 +13,7 @@
   margin-top: 20px;
   display: flex;
   font-size: 15px;
-  align-items: center;
+
   flex-wrap: wrap;
 }
 .paisesTitleitem{
@@ -29,13 +21,12 @@
   display: flex;
   align-items: center;
 }
-.paisesTitleitem img{
+.paisesimg{
   width: 10px;
   height: auto;
   margin-right: 10px;
 }
 .subtitulo{
-  font-size: 44px;
   font-weight: 600;
   color: #4a4a49;
 }
@@ -50,7 +41,6 @@
   background: #cfffe6;
   padding: 20px 15px;
   border-radius: 10px;
-  width: 80%;
   margin: 7px 0px;
 }
 .cardSubtitle img{
@@ -76,7 +66,16 @@
   background: #fff8f6;
   box-shadow: -1px 1px 4px 2px #c6c6c6;
   border-radius: 5px;
+  justify-content: space-between;
+    width: 95%;
+    height: 100%;
+    margin: 0px;
+}
+.caridiMg{
+  padding: 0pc;
+  margin: 0px;
   display: flex;
+  align-items: end;
 }
 .contenCarreras{
   display: flex;
@@ -101,4 +100,86 @@
   color: #ff3d3e;
   font-weight: 900;
   margin-top: 30px;
+}
+.wrapper{
+  text-align: center;
+}
+.carousel-indicators [data-bs-target]{
+  background-color: #0a86f2;
+  width: 10px;
+  height: 10px;
+
+  border-radius: 50%;
+}
+.carousel-inner{
+  height: 400px;
+    display: flex;
+    align-items: center;
+}
+.carousel-control-prev{
+  width: 35%;
+}
+.carousel-control-next{
+  width: 35%;
+}
+.carousel-control-next-icon{
+  background-image: url(../../../assets/imagenes/felcha1-01.svg);
+}
+
+.carousel-control-prev-icon{
+  background-image: url(../../../assets/imagenes/flecha-02.svg);
+}
+.mat-ink-bar{
+  background-color: #ff4e38 !important;
+}
+.mat-tab-header{
+  border: solid 0px;
+}
+.img4{
+  width: 100%;
+  height: auto;
+}
+.dowload-iconos{
+  height: 100%;
+  display: flex;
+  margin: 20px 0px;
+}
+.iconod{
+  width: 150px;
+  height: auto;
+}
+.titlealumno{
+  color: #359bf5;
+  font-size: 25px;
+  font-weight: 600;
+}
+.cursoalumno{
+  font-size: 12px;
+
+}
+.namalumno{
+
+  font-size: 12px;
+  font-weight: bold;
+}
+.contalumno{
+  height: 100%;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+}
+.imgalumno{
+  max-width: 100%;
+  width: 100%;
+  height: auto;
+  padding: 40px;
+}
+
+.mat-tab-label{
+  opacity: 1 !important;
+}
+.buttontab{
+  background: #00c65a;
 }

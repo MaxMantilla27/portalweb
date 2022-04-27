@@ -1,0 +1,172 @@
+<div class="container">
+  <div class="breadcrumb">
+    <div class="vinculo " routerLink="/">Inicio > </div>
+    <div class="vinculo active">Programas, certificaciónes y cursos </div>
+  </div>
+</div>
+
+<div style="background: #f4f4f4;">
+  <div class="container">
+    <div class="row rowpadd"style="padding-top: 20px;
+    padding-bottom: 20px;">
+      <div class="titulop">{{Title}}</div>
+      <mat-form-field appearance="outline" style="width: 300px;font-size: 13px;">
+        <mat-label>Más áreas de capacitación</mat-label>
+        <mat-select (selectionChange)="AreasCapasitacion($event.value)" [(ngModel)]="IdArea" [disabled]="charge">
+          <mat-option *ngFor="let item of filtros.areaCapacitacion" [value]="item.id">{{item.nombre}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+  </div>
+</div>
+<div [ngClass]="{'fixedDiv': fixed ===true}">
+
+  <div class="container" #fixedelement >
+    <div class="row rowpadd" style="padding-bottom: 0px;padding-top: 0px;">
+
+      <ng-container *ngIf="resposive==true">
+        <mat-accordion style="padding: 0px;">
+          <mat-expansion-panel>
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                <div class="parafop">{{textoResult}}</div>
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+            <div class="row">
+
+              <div class="col-12 col-md-6 col-lg-3" *ngIf="IdArea>0">
+                <mat-form-field appearance="outline" style="width: 100%;font-size: 13px;">
+                  <mat-label>Subareas de {{Title}}</mat-label>
+                  <mat-select #SubAreaMatSelect  (openedChange)="SubAreasChange($event)" [(ngModel)]="SubAreaSelect" multiple [disabled]="charge">
+                    <mat-select-trigger style="display: flex;align-items: end;">
+                      {{SubAreasTrigger}} <div style="font-size: 10px;color: gray;">{{SubAreasTriggerOther}}</div>
+                    </mat-select-trigger>
+                    <mat-option *ngFor="let item of SubAreas" [value]="item.id">{{item.nombre}}</mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+              <div class="col-12 col-md-6 col-lg-3">
+                <mat-form-field appearance="outline" style="width: 100%;font-size: 13px;">
+                  <mat-label>Tipo de programa</mat-label>
+                  <mat-select #TipoProgramaMatSelect (openedChange)="TipoProgramaChange($event)" [(ngModel)]="TipoProgramaSelect" multiple
+                    [disabled]="charge">
+                    <mat-select-trigger style="display: flex;align-items: end;">
+                      {{TipoProgramaTrigger}} <div style="font-size: 10px;color: gray;">{{TipoProgramaTriggerOther}}</div>
+                    </mat-select-trigger>
+                    <mat-option *ngFor="let item of TipoPrograma" [value]="item.id">{{item.nombre}}</mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+              <div class="col-12 col-md-6 col-lg-3">
+                <mat-form-field appearance="outline" style="width: 100%;font-size: 13px;">
+                  <mat-label>Modalidad</mat-label>
+                  <mat-select #ModalidadMatSelect (openedChange)="ModalidadChange($event)" [(ngModel)]="ModalidadSelect" multiple
+                    [disabled]="charge">
+                    <mat-select-trigger style="display: flex;align-items: end;">
+                      {{ModalidadTrigger}} <div style="font-size: 10px;color: gray;">{{ModalidadTriggerOther}}</div>
+                    </mat-select-trigger>
+                    <mat-option *ngFor="let item of Modalidad" [value]="item.id">{{item.nombre}}</mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+              <div class="col-12 col-md-6 col-lg-3">
+                <div class="slider">
+                  <div style="width: auto;">{{monedaRango}}</div>
+                  <div style="width: 500px;">
+                    <mat-slider (change)="onSliderChage($event)" style="width: 100%;" [max]="rangoPrecios" [min]="0"
+                      [(ngModel)]="rangoselect" thumbLabel [disabled]="charge">
+                    </mat-slider>
+                  </div>
+                  <div style="width: auto;">{{rangoselect}}</div>
+                </div>
+
+              </div>
+            </div>
+          </mat-expansion-panel>
+        </mat-accordion>
+      </ng-container>
+      <ng-container *ngIf="resposive==false">
+
+        <div class="parafop" style="padding: 20px;">{{textoResult}}</div>
+        <div class="row">
+
+          <div class="col-12 col-md-6 col-lg-3" *ngIf="IdArea>0">
+            <mat-form-field appearance="outline" style="width: 100%;font-size: 13px;">
+              <mat-label>Subareas de {{Title}}</mat-label>
+              <mat-select #SubAreaMatSelect  (openedChange)="SubAreasChange($event)" [(ngModel)]="SubAreaSelect" multiple [disabled]="charge">
+                <mat-select-trigger style="display: flex;align-items: end;">
+                  {{SubAreasTrigger}} <div style="font-size: 10px;color: gray;">{{SubAreasTriggerOther}}</div>
+                </mat-select-trigger>
+                <mat-option *ngFor="let item of SubAreas" [value]="item.id">{{item.nombre}}</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div class="col-12 col-md-6 col-lg-3">
+            <mat-form-field appearance="outline" style="width: 100%;font-size: 13px;">
+              <mat-label>Tipo de programa</mat-label>
+              <mat-select #TipoProgramaMatSelect (openedChange)="TipoProgramaChange($event)" [(ngModel)]="TipoProgramaSelect" multiple
+                [disabled]="charge">
+                <mat-select-trigger style="display: flex;align-items: end;">
+                  {{TipoProgramaTrigger}} <div style="font-size: 10px;color: gray;">{{TipoProgramaTriggerOther}}</div>
+                </mat-select-trigger>
+                <mat-option *ngFor="let item of TipoPrograma" [value]="item.id">{{item.nombre}}</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div class="col-12 col-md-6 col-lg-3">
+            <mat-form-field appearance="outline" style="width: 100%;font-size: 13px;">
+              <mat-label>Modalidad</mat-label>
+              <mat-select #ModalidadMatSelect (openedChange)="ModalidadChange($event)" [(ngModel)]="ModalidadSelect" multiple
+                [disabled]="charge">
+                <mat-select-trigger style="display: flex;align-items: end;">
+                  {{ModalidadTrigger}} <div style="font-size: 10px;color: gray;">{{ModalidadTriggerOther}}</div>
+                </mat-select-trigger>
+                <mat-option *ngFor="let item of Modalidad" [value]="item.id">{{item.nombre}}</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div class="col-12 col-md-6 col-lg-3">
+            <div class="slider">
+              <div style="width: auto;">{{monedaRango}}</div>
+              <div style="width: 500px;">
+                <mat-slider (change)="onSliderChage($event)" style="width: 100%;" [max]="rangoPrecios" [min]="0"
+                  [(ngModel)]="rangoselect" thumbLabel [disabled]="charge">
+                </mat-slider>
+              </div>
+              <div style="width: auto;">{{rangoselect}}</div>
+            </div>
+
+          </div>
+        </div>
+      </ng-container>
+    </div>
+  </div>
+</div>
+
+<div style="background: #f5f9ff;">
+  <div class="container">
+    <div class="row rowpadd" style="padding-top: 20px;
+    padding-bottom: 20px;">
+      <div class="col-12 col-md-12 col-lg-12 row">
+        <div class="tagitem" *ngFor="let item of TagSubAreas;let i=index">{{item.Nombre}} <i class="material-icons"
+            (click)="RemoveSubArea(i)" style="margin-left: 10px;font-size: 12px;cursor: pointer;">close</i></div>
+        <div class="tagitem" *ngFor="let item of TagModalidad;let i=index">{{item.Nombre}} <i class="material-icons"
+          (click)="RemoveModalidad(i)"style="margin-left: 10px;font-size: 12px;cursor: pointer;">close</i></div>
+        <div class="tagitem" *ngFor="let item of TagTipoPrograma;let i=index">{{item.Nombre}} <i class="material-icons"
+          (click)="RemoveTipoPrograma(i)"style="margin-left: 10px;font-size: 12px;cursor: pointer;">close</i></div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="container">
+  <div class="row rowpadd">
+    <div *ngIf="charge==false && programas.length==0">No existen programas con esas opciones</div>
+    <div *ngIf="charge==true" style="width: 100%;display: flex;justify-content: center;"><mat-spinner></mat-spinner></div>
+    <ng-container *ngIf="charge==false && programas.length>0">
+      <div class="col-12 col-md-6 col-lg-3" *ngFor="let item of programas" style="margin-bottom: 40px;">
+        <app-card-programas [cardContent]="item"></app-card-programas>
+      </div>
+    </ng-container>
+
+  </div>
+</div>

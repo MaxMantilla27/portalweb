@@ -36,6 +36,9 @@ import { CustomCardComponent } from './Containers/card/custom-card/custom-card.c
 import { VistaGenericaProgramaComponent } from './Containers/vista-generica-programa/vista-generica-programa.component';
 import { MigaPanComponent } from './Containers/miga-pan/miga-pan.component';
 import { LinkButtonComponent } from './Containers/buttons/link-button/link-button.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { CardProgramasComponent } from './Containers/card-programas/card-programas.component';
+import {MatSliderModule} from '@angular/material/slider';
 
 @NgModule({
   imports: [
@@ -59,8 +62,11 @@ import { LinkButtonComponent } from './Containers/buttons/link-button/link-butto
     MatMenuModule,
     MatSelectModule,
     MatExpansionModule,
+    NgbModule,
+    MatSliderModule
+
   ],
-  declarations: [HeaderComponent, ButtonComponent, SelectComponent, FooterComponent, CarouselComponent, DefaultButtonComponent, CustomCardComponent, VistaGenericaProgramaComponent, MigaPanComponent, LinkButtonComponent],
+  declarations: [HeaderComponent, ButtonComponent, SelectComponent, FooterComponent, CarouselComponent, ButtonComponent, CardProgramasComponent,SelectComponent, DefaultButtonComponent, CustomCardComponent, VistaGenericaProgramaComponent, MigaPanComponent, LinkButtonComponent],
   exports: [
     HttpClientModule,
     RouterModule,
@@ -71,6 +77,7 @@ import { LinkButtonComponent } from './Containers/buttons/link-button/link-butto
     HeaderComponent,
     FooterComponent,
     CarouselComponent,
+    ButtonComponent,
 
     MatTabsModule,
     MatTableModule,
@@ -91,6 +98,10 @@ import { LinkButtonComponent } from './Containers/buttons/link-button/link-butto
     CustomCardComponent,
     VistaGenericaProgramaComponent,
     MigaPanComponent
+    NgbModule,
+    CardProgramasComponent,
+    SelectComponent,
+    MatSliderModule
   ],
   providers: [
     SessionStorageService,
