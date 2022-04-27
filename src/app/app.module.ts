@@ -8,7 +8,7 @@ import {SharedModule} from './Core/Shared/shared.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { InterceptorService } from './Public/Interceptor/interceptor.service';
-import { IvyCarouselModule } from 'angular-responsive-carousel';
+
 
 @NgModule({
   declarations: [
@@ -19,7 +19,7 @@ import { IvyCarouselModule } from 'angular-responsive-carousel';
     AppRoutingModule,
     SharedModule,
     BrowserAnimationsModule,
-    HttpClientModule
+    HttpClientModule,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: InterceptorService, multi: true }

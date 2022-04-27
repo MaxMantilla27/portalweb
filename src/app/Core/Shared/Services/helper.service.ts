@@ -8,21 +8,35 @@ import { BasicUrl } from '../../Models/BasicDTO';
 export class HelperService {
 
   constructor() { }
-  private msjArray = new ReplaySubject<Array<BasicUrl>>()
-  private msjString = new ReplaySubject<string>()
+  private msjArrayCarrera = new ReplaySubject<Array<BasicUrl>>()
+  private msjArrayFormacion = new ReplaySubject<Array<BasicUrl>>()
+  private msjStringCarrera = new ReplaySubject<string>()
+  private msjScroll = new ReplaySubject<number>()
 
-  public get recibirArray() {
-    return this.msjArray.asObservable()
+  public get recibirArrayCarrera() {
+    return this.msjArrayCarrera.asObservable()
   }
 
-  public enviarArray(arreglo: Array<BasicUrl>): void {
-    this.msjArray.next(arreglo);
+  public enviarArrayCarrera(arreglo: Array<BasicUrl>): void {
+    this.msjArrayCarrera.next(arreglo);
   }
-  public get recibirString() {
-    return this.msjString.asObservable()
+  public get recibirStringCarrera() {
+    return this.msjStringCarrera.asObservable()
+  }
+  public enviarStringCarrera(texto: string): void {
+    this.msjStringCarrera.next(texto);
+  }
+  public get recibirArrayFormacion() {
+    return this.msjArrayFormacion.asObservable()
   }
 
-  public enviarAString(texto: string): void {
-    this.msjString.next(texto);
+  public enviarArrayFormacion(arreglo: Array<BasicUrl>): void {
+    this.msjArrayFormacion.next(arreglo);
+  }
+  public get recibirScroll(){
+    return this.msjScroll.asObservable();
+  }
+  public enviarScroll(scroll: number): void {
+    this.msjScroll.next(scroll);
   }
 }

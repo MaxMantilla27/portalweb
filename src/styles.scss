@@ -12,7 +12,7 @@
 *{
   font-family:'poppings'
 }
-html, body { height: 100%; }
+html, body {}
 body { margin: 0; font-family:'poppings', Roboto, "Helvetica Neue", sans-serif; }
 
 @import "~@angular/material/prebuilt-themes/indigo-pink.css";
@@ -39,3 +39,7 @@ $custom-typography: mat-typography-config('poppings');
 ::-webkit-scrollbar-thumb:hover  {
   background: #555;
 }
+
+/* Importing Bootstrap SCSS file. */
+@import '~bootstrap/scss/bootstrap';
+

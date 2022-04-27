@@ -1,0 +1,39 @@
+.mat-slider-track-fill,.mat-slider-thumb,.mat-slider-thumb-label{
+  background-color: #fca534 !important;
+}
+.slider{
+  display: flex;
+  font-size: 12px;
+  align-items: center;
+  width: 100%;
+}
+.mat-select-arrow-wrapper{
+  display: table-cell !important;
+}
+.tagitem{
+  width: auto;
+  font-size: 12px;
+  background: white;
+  margin-left: 10px;
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.fixedDiv{
+  position: fixed;
+  background: white;
+  z-index: 1;
+  top: 77px;
+  width: calc( 100% - 9px);
+  left: 0;
+  padding-bottom: 20px;
+  box-shadow: -1px 1px 4px 0px #adadad;
+}
+mat-expansion-panel{
+  border: 0px;
+    box-shadow: 0px 0px 0px transparent !important;
+}
+.mat-expansion-panel-header{
+  margin-top:15px ;
+}

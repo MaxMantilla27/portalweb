@@ -6,7 +6,8 @@ export interface BasicUrl{
   Nombre:string,
   value:number,
   Url:string,
-  style?:any
+  style?:any,
+  change?:number
 }
 
 export interface BasicUrlIcon{
@@ -26,4 +27,12 @@ export interface BasicCarousel{
   path:string,
   width:number,
   height:number
+}
+
+export interface CardProgramasDTO{
+  Title:string,
+  Img:string,
+  ImgAlt:string,
+  Url:string,
+  Content:string
 }

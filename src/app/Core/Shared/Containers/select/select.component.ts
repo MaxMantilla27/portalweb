@@ -28,7 +28,6 @@ export class SelectComponent implements OnInit {
   ngOnInit(): void {
   }
   ngOnChanges(changes: SimpleChanges): void {
-    console.log(this.dataUrl.length)
     if(this.dataUrl.length>0){
       this.GetDataFromDatUrl();
     }

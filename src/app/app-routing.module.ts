@@ -6,14 +6,14 @@ import { PublicComponent } from './Public/public.component';
 
 const routes:Routes=[
   {path:'',loadChildren:()=>import('./Public/public.module').then(m=>m.PublicModule)},
-  {path:'AulaVirtual',loadChildren:()=>import('./aula-virtual/aula-virtual.module').then(m=>m.AulaVirtualModule)},
+  {path:'AulaVirtual/**',loadChildren:()=>import('./aula-virtual/aula-virtual.module').then(m=>m.AulaVirtualModule)},
   {path:'**',component:PublicComponent}
 ]
 
 @NgModule({
   declarations: [],
   imports: [
-    RouterModule.forRoot(routes/*,{useHash:true}*/)
+    RouterModule.forRoot(routes, {scrollPositionRestoration: 'top'}/*,{useHash:true}*/)
   ],
   exports:[RouterModule]
 })

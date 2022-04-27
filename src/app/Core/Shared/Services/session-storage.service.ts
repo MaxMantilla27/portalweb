@@ -1,31 +1,49 @@
-import { Injectable } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
+import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SessionStorageService {
-
-  constructor() { }
-  validateTokken(): boolean {
-    var token=sessionStorage.getItem('Token');
-    return (token==undefined || token==null)?false:true;
+  isBrowser: boolean;
+  constructor(@Inject(PLATFORM_ID) platformId: Object) {
+    this.isBrowser = isPlatformBrowser(platformId);
+   }
+   validateTokken(): boolean {
+    if(this.isBrowser){
+      var token=sessionStorage.getItem('Token');
+      return (token==undefined || token==null)?false:true;
+    }else{
+      return false;
+    }
   }
   GetToken():string|null{
-    var token=sessionStorage.getItem('Token');
-    if(token==undefined || token==null) return null;
-    return atob(token)
+    if(this.isBrowser){
+      var token=sessionStorage.getItem('Token');
+      if(token==undefined || token==null) return null;
+      return atob(token)
+    }
+    return 'INTC';
   }
   SetToken(token: string):void{
-    sessionStorage.setItem('Token',btoa(token));
+    if(this.isBrowser){
+      sessionStorage.setItem('Token',btoa(token));
+    }
   }
 
   SessionSetValue(name:string, token: string):void{
-    sessionStorage.setItem(name,token);
+    if(this.isBrowser){
+      sessionStorage.setItem(name,token);
+    }
   }
   SessionGetValue(name:string):string{
-    var value=sessionStorage.getItem(name);
-    if(value==undefined || value==null) return '';
-    return value;
+    if(this.isBrowser){
+
+      var value=sessionStorage.getItem(name);
+      if(value==undefined || value==null) return '';
+      return value;
+    }
+    return 'INTC'
   }
 
 }

@@ -28,10 +28,12 @@ import { PaisService } from './Services/Pais/pais.service';
 import { CarreraProfecionalService } from './Services/Carrera/carrera-profecional.service';
 import { HeaderPermissionsService } from './Services/header-permissions.service';
 import { AreacapasitacionService } from './Services/AreaCapasitacion/areacapasitacion.service';
-import {IvyCarouselModule} from 'angular-responsive-carousel';
 import { PartnerService } from './Services/Partner/partner.service';
 import { CarouselComponent } from './Containers/Carousel/carousel.component';
 import { HelperService } from './Services/helper.service';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { CardProgramasComponent } from './Containers/card-programas/card-programas.component';
+import {MatSliderModule} from '@angular/material/slider';
 
 @NgModule({
   imports: [
@@ -55,10 +57,11 @@ import { HelperService } from './Services/helper.service';
     MatMenuModule,
     MatSelectModule,
     MatExpansionModule,
+    NgbModule,
+    MatSliderModule
 
-    IvyCarouselModule
   ],
-  declarations: [HeaderComponent, ButtonComponent, SelectComponent, FooterComponent, CarouselComponent],
+  declarations: [HeaderComponent, ButtonComponent, SelectComponent, FooterComponent, CarouselComponent,ButtonComponent, CardProgramasComponent,SelectComponent],
   exports: [
     HttpClientModule,
     RouterModule,
@@ -69,6 +72,7 @@ import { HelperService } from './Services/helper.service';
     HeaderComponent,
     FooterComponent,
     CarouselComponent,
+    ButtonComponent,
 
     MatTabsModule,
     MatTableModule,
@@ -84,7 +88,10 @@ import { HelperService } from './Services/helper.service';
     MatMenuModule,
     MatSelectModule,
     MatExpansionModule,
-    IvyCarouselModule
+    NgbModule,
+    CardProgramasComponent,
+    SelectComponent,
+    MatSliderModule
   ],
   providers: [
     SessionStorageService,

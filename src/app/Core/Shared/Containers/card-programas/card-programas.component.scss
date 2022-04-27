@@ -1,0 +1,68 @@
+mat-card{
+  height: 100%;
+  box-shadow: 2px 1px 5px 1px rgb(0 0 0 / 20%), -1px 4px 2px 0px rgb(0 0 0 / 14%), 0px 1px 3px 0px rgb(0 0 0 / 12%) !important;
+}
+.title{
+  color: #148bf3;
+  font-weight: 900;
+  cursor: pointer;
+}
+.title:hover{
+
+  text-decoration: underline;
+}
+mat-card-content{
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.invercion {
+}
+.invercion p {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  display: -moz-box;
+  display: box;
+  -webkit-box-orient: vertical;
+  -moz-box-orient: vertical;
+  box-orient: vertical;
+  -webkit-line-clamp: 5;
+  line-clamp: 5;
+}
+mat-card-footer{
+  text-align: left;
+  padding: 0px 10px;
+  font-size: 12px;
+  color: #a5a5a4;
+}
+.mat-card{
+  display:flex !important;
+  flex-direction: column;
+}
+
+mat-card-header {
+  display: flex;
+  flex-direction: row;
+  flex-shrink: 0;
+}
+mat-card-content{
+  flex-grow: 1;
+  overflow: auto;
+}
+.carousel-indicators{
+  margin: 0px;
+}
+.link{
+  font-size: 14px;
+  color: #ff7c2e;
+  margin: 15px 0px;
+  cursor: pointer;
+}
+.link:hover{
+  text-decoration: underline;
+}
+.carousel-caption{
+  display: none;
+}
