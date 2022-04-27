@@ -8,6 +8,7 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { InterceptorService } from './Interceptor/interceptor.service';
 import { HomeProgramasComponent } from './Home/home-programas/home-programas.component';
 import { ProgramasComponent } from './programas/programas.component';
+import { CarrerasProfesionalesComponent } from './carreras-profesionales/carreras-profesionales.component';
 
 @NgModule({
   imports: [
@@ -20,7 +21,8 @@ import { ProgramasComponent } from './programas/programas.component';
     HomeComponent,
     LoginComponent,
     HomeProgramasComponent,
-    ProgramasComponent
+    ProgramasComponent,
+    CarrerasProfesionalesComponent
   ],
   exports: [],
   providers: [

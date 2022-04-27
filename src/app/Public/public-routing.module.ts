@@ -5,6 +5,7 @@ import { HomeComponent } from './Home/home.component';
 import { LoginComponent } from './login/login.component';
 import { ProgramasComponent } from './programas/programas.component';
 import { PublicComponent } from './public.component';
+import { CarrerasProfesionalesComponent } from './carreras-profesionales/carreras-profesionales.component'
 
 const routes:Routes=[
     {path:'',component:PublicComponent,children:
@@ -13,6 +14,7 @@ const routes:Routes=[
             {path:'programas-certificaciones-cursos',component:ProgramasComponent},
             {path:'programas-certificaciones-cursos/:IdArea',component:ProgramasComponent},
             {path:'login',component:LoginComponent,canActivate:[PublicGuard]},
+            {path:'carreras-profesionales',component:CarrerasProfesionalesComponent},
 
 
             {path:':AreaCapacitacion/:ProgramaNombre',component:LoginComponent,canActivate:[PublicGuard]}

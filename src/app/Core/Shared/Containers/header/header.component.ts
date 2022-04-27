@@ -3,7 +3,7 @@ import { Basic, BasicBotonesExpandibles, BasicUrl,BasicUrlIcon } from 'src/app/C
 import {SessionStorageService} from './../../Services/session-storage.service'
 import {PaisService} from './../../Services/Pais/pais.service'
 import { PaisDTO } from 'src/app/Core/Models/PaisDTO';
-import { CarreraProfecionalService } from '../../Services/Carrera/carrera-profecional.service';
+import { CarreraProfesionalService } from '../../Services/Carrera/carrera-profesional.service';
 import { HeaderPermissionsService } from '../../Services/header-permissions.service';
 import { AreacapasitacionService } from '../../Services/AreaCapasitacion/areacapasitacion.service';
 import { HelperService } from '../../Services/helper.service';
@@ -45,7 +45,7 @@ export class HeaderComponent implements OnInit {
   constructor(
     private _SessionStorageService:SessionStorageService,
     private _PaisService:PaisService,
-    private _CarreraProfecionalService:CarreraProfecionalService,
+    private _CarreraProfesionalService:CarreraProfesionalService,
     private _HeaderPermissionsService:HeaderPermissionsService,
     private _AreacapasitacionService:AreacapasitacionService,
     private _HelperService :HelperService
@@ -92,7 +92,7 @@ export class HeaderComponent implements OnInit {
     });
   }
   GetCarrerasProfecionales(){
-    this._CarreraProfecionalService.GetCarreras(11).subscribe({
+    this._CarreraProfesionalService.GetCarreras(11).subscribe({
       next:(x)=>{
         this.carreras=x.listaProfesionCabeceraDTO.map((c:any)=>{
           var ps:BasicUrl={Nombre:c.titulo,value:c.idBusqueda,Url:'/'+c.idBusqueda};
@@ -113,7 +113,7 @@ export class HeaderComponent implements OnInit {
     });
   }
   GetEducacionTecnica(){
-    this._CarreraProfecionalService.GetCarreras(16).subscribe({
+    this._CarreraProfesionalService.GetCarreras(16).subscribe({
       next:(x)=>{
         this.tecnica=x.listaProfesionCabeceraDTO.map((c:any)=>{
           var ps:BasicUrl={Nombre:c.titulo,value:c.idBusqueda,Url:'/'+c.idBusqueda};

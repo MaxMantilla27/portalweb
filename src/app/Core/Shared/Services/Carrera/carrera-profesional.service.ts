@@ -7,7 +7,7 @@ import { SessionStorageService } from '../session-storage.service';
 @Injectable({
   providedIn: 'root'
 })
-export class CarreraProfecionalService {
+export class CarreraProfesionalService {
   public urlBase=environment.url_api+'CarreraProfesionalTecnica';
   constructor(private http: HttpClient,private _SessionStorageService:SessionStorageService) { }
 
@@ -15,5 +15,10 @@ export class CarreraProfecionalService {
     let params = new HttpParams();
     params=params.append("IdCategoria", IdCategoria.toString());
     return this.http.get<any>(this.urlBase+'/ListProfesionCabecera',{ headers:new HttpHeaders(), params: params });
+  }
+  public GetCarrerasVista(IdCategoria:number):Observable<any> {
+    let params = new HttpParams();
+    params=params.append("IdCategoria", IdCategoria.toString());
+    return this.http.get<any>(this.urlBase+'/ListProfesionVista',{ headers:new HttpHeaders(), params: params });
   }
 }

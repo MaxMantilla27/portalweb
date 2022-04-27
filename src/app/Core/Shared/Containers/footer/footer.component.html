@@ -1,68 +1,97 @@
-<div class="footer">
-  <div class="row">
-    <div class="col-lg-3 col-sm-6">
-      <h4 class="tituloFooter">BSG Institute</h4>
-      <div class="row">
-        <div class="col-sm-12 itemFooter">Valores corporativos</div>
-        <div class="col-sm-12 itemFooter">En números</div>
-        <div class="col-sm-12 itemFooter">Política de calidad</div>
+<div class="footerr">
+  <div class="container superior">
+    <div class="row">
+      <div class="col-lg-3 col-sm-6 col-xs-12">
+        <div class="item-container">
+          <h4 class="titulo-footer">BSG Institute</h4>
+          <div class="row">
+            <div class="col-sm-12 item-footer">
+              <div class="subitem-container">
+                <a href="">Valores corporativos</a>
+              </div>
+            </div>
+            <div class="col-sm-12 item-footer">
+              <div class="subitem-container">
+                <a href="">En números</a>
+              </div>
+            </div>
+            <div class="col-sm-12 item-footer">
+              <div class="subitem-container">
+                <a href="">Política de calidad</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-3 col-sm-6 col-xs-12">
+        <div class="item-container">
+          <h4 class="titulo-footer">Servicios</h4>
+          <div class="row">
+            <div class="col-sm-12 item-footer" *ngFor="let item of servicios">
+              <div class="subitem-container" >
+                <a routerLink="{{item.route}}">{{item.title}}</a> 
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-3 col-sm-6 col-xs-12">
+        <div class="item-container">
+          <h4 class="titulo-footer">Central Telefónica</h4>
+          <div class="row">
+            <div class="subitem-container">
+              <div class="col-sm-12 item-footer" *ngFor="let item of centralTelefonica">
+                <img
+                  alt=""
+                  [src]="item.icono"
+                  width="20rem"
+                />
+                <span>{{item.pais}} {{item.telefono}}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-3 col-sm-6 col-xs-12">
+        <div class="item-container">
+          <h4 class="titulo-footer">Más Información</h4>
+          <div class="row">
+            <div class="subitem-container">
+              <div class="col-sm-12 item-footer">
+                <a href="">CONTÁCTENOS</a>
+              </div>
+              <div class="col-sm-12 item-footer">Siguenos en </div>
+              <div class="col-sm-12 item-footer">
+                <div class="redes-container">
+                  <div class="redes-item"  *ngFor="let item of redesSociales">
+                    <a [href]="item.route" target="_blank"><img [src]="item.icono" alt="{{item.name}}"></a>
+                  </div>
+                </div> 
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
-    <div class="col-lg-3 col-sm-6">
-      <h4 class="tituloFooter">Servicios</h4>
-      <div class="row">
-        <div class="col-sm-12 itemFooter">Carreras Profesionales</div>
-        <div class="col-sm-12 itemFooter">cursosfooter">Formación Continua</div>
-        <div class="col-sm-12 itemFooter">Servicios Corporativos</div>
-        <div class="col-sm-12 itemFooter">Facturación Electrónica</div>
-        <div class="col-sm-12 itemFooter">Transparencia</div>
+  </div>
+  <div class="line">
+  </div>
+  <div class="container inferior">
+    <div class="row">
+      <div class="col-md-8">
+        <span class="copyrigth">
+          © 2020 BSG Institute, todos los derechos reservados • Términos de uso • Política de privacidad <br>
+          PMI, PMP, PMI-RMP, PMI-SP, CAPM, PMBOK, PMI Agile Certified Practitioner (PMI-ACP), Project Management Professional 
+          y el logotipo PMI Registered Education Provider son marcas registradas del Project Management Institute, Inc. <br>
+          The Open Group, TOGAF® and The Open Group Certification logo are trademarks of The Open Group.
+        </span>
       </div>
-    </div>
-    <div class="col-lg-3 col-sm-6">
-      <h4 class="tituloFooter">Central Telefonica</h4>
-      <div class="row">
-        <div class="col-sm-12 itemFooter">
-          <img
-            alt=""
-            src="https://repositorioweb.blob.core.windows.net/repositorioweb/flags/Peru_flag.png"
-            width="25px"
-          />
-          Peru +51(1)1231 221212
-        </div>
-        <div class="col-sm-12 itemFooter">
-          <img
-            alt=""
-            src="https://repositorioweb.blob.core.windows.net/repositorioweb/flags/Colombia_flag.png"
-            width="25px"
-          />
-          Colombia +51(1)1231 221212
-        </div>
-        <div class="col-sm-12 itemFooter">
-          <img
-            alt=""
-            src="https://repositorioweb.blob.core.windows.net/repositorioweb/flags/Bolivia_flag.png"
-            width="25px"
-          />
-          Bolivia +51(1)1231 221212
-        </div>
-        <div class="col-sm-12 itemFooter">
-          <img
-            alt=""
-            src="https://repositorioweb.blob.core.windows.net/repositorioweb/flags/Mexico_flag.png"
-            width="25px"
-          />
-          Mexico +51(1)1231 221212
-        </div>
+      <div class="col-md-4 reclamaciones-container">
+        <img src="../../../../../assets/icons/libro-reclamaciones-icon.svg" alt="">
+          <span class="reclamaciones" routerLink="/carreras-profesionales">
+            Libro de Reclamaciones
+          </span>
       </div>
-    </div>
-    <div class="col-lg-3 col-sm-6">
-      <h4 class="tituloFooter">Mas Informacion</h4>
-      <div class="row">
-        <div class="col-sm-12 itemFooter">Contactenos</div>
-        <div class="col-sm-12 itemFooter">siguenos en </div>
-        <div class="col-sm-12 itemFooter"></div>
-      </div>
-
     </div>
   </div>
 </div>
