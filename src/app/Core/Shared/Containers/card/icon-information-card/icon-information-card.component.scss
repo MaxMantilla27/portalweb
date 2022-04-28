@@ -1,0 +1,22 @@
+.card-container {
+  background-color: #CFFFE6;
+  border-radius: 10px;
+  padding: 1.5rem 2rem;
+  margin-bottom: 1rem;
+  &__img-container {
+    margin: 0;
+    padding: 0;
+    img {
+      width: 100%;
+      height: auto;
+      object-fit: cover;
+    }
+  }
+  span {
+    font-size: 1rem;
+    font-weight: bold;
+  }
+  p {
+    font-weight: lighter;
+  }
+}

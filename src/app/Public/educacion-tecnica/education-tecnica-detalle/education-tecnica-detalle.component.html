@@ -27,7 +27,7 @@
       <div class="carrera-container__content__firstSection container rowpadd">
         <div class="row">
           <div class="col-md-7 carrera-container__content__firstSection__left">
-            <div class="carrera-container__header__information__title" [innerHTML]="carrera.contenidoProgramaInformacionDTO[0]?.contenido">
+            <div class="carrera-container__content__firstSection__left__descripcion" [innerHTML]="carrera.contenidoProgramaInformacionDTO[0]?.contenido">
             </div>
           </div>
           <div class="col-md-5 carrera-container__content__firstSection__right" style="background-color: green">
@@ -80,21 +80,24 @@
       <div class="carrera-container__content__fourthSection">
         <div class="container rowpadd">
           <div class="row">
-            <div class="col-md-4">
-              Imagen
+            <div class="col-md-4 carrera-container__content__fourthSection__img-container" >
+              <img src="/assets/imagenes/certificado-carrera-tecnica-atencion-al-cliente.png" alt="">
             </div>
-            <div class="col-md-8">
+            <div class="col-md-8 carrera-container__content__fourthSection__information-container" >
               <h1>Certificación</h1>
               <div
-                class="carrera-container__content__fourthSection__information-detail"
+                class="carrera-container__content__fourthSection__information-container__detail"
                 [innerHTML]="carrera.contenidoProgramaInformacionDTO[6]?.contenido">
+              </div>
+              <div>
+                <app-default-button [confs]="{color: 'primary', titulo: 'Solicita Información'}"></app-default-button>
               </div>
             </div>
           </div>
         </div>
       </div>
       <div class="carrera-container__content__fiveSection">
-        <h1>Imagen</h1>
+        <img src="/assets/imagenes/arquetipo-atencion-al-cliente-2.png" alt="">
       </div>
     </div>
   </div>

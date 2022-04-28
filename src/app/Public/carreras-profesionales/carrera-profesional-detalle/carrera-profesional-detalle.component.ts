@@ -20,7 +20,7 @@ export class CarreraProfesionalDetalleComponent implements OnInit {
   public planEstudios: any;
   public rutaImagen: string = 'https://img.bsginstitute.com/repositorioweb/img/carreras/';
   // faeke renderiza toda la app public video: string = '<iframe src="player.vimeo.com/video/304251200?title=0&amp;amp;byline=0" width="425" height="350" ></iframe>'
-  public videoPrueba: string = '&lt;iframe src=\"//player.vimeo.com/video/304251200?title=0&amp;amp;byline=0\" width=\"425\" height=\"350\"\"&gt;&lt;/iframe&gt;<vacio></vacio>'
+  public videoPrueba: string = '&lt;iframe src=\"//player.vimeo.com/video/304251200?title=0&amp;amp;byline=0\"\"&gt;&lt;/iframe&gt;<vacio></vacio>'
   public loader: boolean = false
 
   constructor(
