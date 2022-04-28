@@ -1,19 +1,94 @@
+<div class="container">
+  <div class="breadcrumb">
+    <div class="vinculo " routerLink="/">Inicio > </div>
+    <div class="vinculo " routerLink="/programas-certificaciones-cursos">Programas, certificaciónes y cursos > </div>
+    <div class="vinculo active"> &Aacute;rea:{{area}} / Sub &Aacute;rea:{{cabecera.nombreSubArea}}</div>
+  </div>
+</div>
 <div style="background: #f4f4f4;">
   <div class="container">
     <div class="row rowpadd">
       <div class="col-12 col-md-6 col-lg-6">
-        <div [innerHtml]="programa"></div>
+        <div [innerHtml]="cabecera.tituloHtml" class="titlePrograma"></div>
         <div class="row" style="margin-top: 20px;">
           <div class="col-12 col-md-6 col-lg-6">
-            <app-default-button [confs]="{color:'primary',titulo:'Matricularme Ahora'}"  (ButtoclClick)="ObtenerCabeceraProgramaGeneral()"></app-default-button>
+            <app-default-button [confs]="{color:'primary',titulo:'Matricularme Ahora'}"
+              (ButtoclClick)="ObtenerCabeceraProgramaGeneral()"></app-default-button>
           </div>
           <div class="col-12col-md-6 col-lg-6 ">
-            <app-default-button [confs]="{color:'primary',titulo:'Acceso de prueba gratis'}"  (ButtoclClick)="ObtenerCabeceraProgramaGeneral()"></app-default-button>
+            <app-default-button [confs]="{color:'primary',titulo:'Acceso de prueba gratis'}"
+              (ButtoclClick)="ObtenerCabeceraProgramaGeneral()"></app-default-button>
           </div>
         </div>
       </div>
       <div class="col-12 col-md-6 col-lg-6 diviframe" style="position: relative;"
         [innerHtml]="contenidoCabecera | safeHtml">
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="row rowpadd">
+    <div class="col-12 col-md-8 col-lg-8 row" style="align-items: start;">
+      <div class="col-6 InfoProgramContainer" style="align-items: center;">
+        <img class="InfoProgramIcon" src="../../../assets//icons/mexico-icon.svg" alt="">
+        <div class="InfoProgramTitle">Fechas de Inicio:</div>
+        <div style="margin-top: 10px;">
+          <div *ngFor="let item of cabecera.listProgramaEspecificoInformacionDTO" class="infoProgramFechas">
+            <div class="infoProgramTitle">
+              <ng-container *ngIf="item.tipo.toLowerCase()=='online asincronica'">
+                Online a tu ritmo :
+              </ng-container>
+              <ng-container *ngIf="item.tipo.toLowerCase()=='online sincronica'">
+                Online en vivo :
+              </ng-container>
+            </div>
+            <div class="infoProgramText">{{item.fechaInicioTexto}}</div>
+          </div>
+        </div>
+      </div>
+      <div class="col-6 InfoProgramContainer">
+        <img class="InfoProgramIcon" src="../../../assets//icons/mexico-icon.svg" alt="">
+        <div class="InfoProgramTitle">Duraci&oacute;n:</div>
+        <div style="margin-top: 10px;width: 100%;">
+          <div class="infoProgramFechas">
+            <div class="infoProgramText">{{cabecera.duracion}}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-12 col-md-4 col-lg-4" style="position: relative;text-align: center;">
+      <img class="InfoProgramImg" [src]="cabecera.imgPrincipal" alt="">
+    </div>
+  </div>
+</div>
+<div style="background: #f5f9ff;">
+  <div class="container">
+    <div class="row rowpadd">
+      <div class="col-12 col-md-12 col-lg-12 tabprogram">
+        <mat-tab-group mat-align-tabs="start" class="tabprogram">
+          <mat-tab  label="Objetivos" ><div [innerHtml]="seccion.objetivo | safeHtml" style="text-align: justify;
+            padding: 20px 0px;">
+
+          </div></mat-tab>
+          <mat-tab  label="Público Objetivo"><div [innerHtml]="seccion.publicoObjetivo | safeHtml" style="text-align: justify;
+            padding: 20px 0px;">
+
+          </div></mat-tab>
+          <mat-tab  label="Prerrequisitos"><div style="text-align: justify;
+            padding: 20px 0px;">
+              <p>{{prerequisitos.cabecera}}</p>
+              <ul>
+                <li *ngFor="let item of prerequisitos.contenido">{{item}}</li>
+              </ul>
+              <p>{{prerequisitos.piePagina}}</p>
+          </div></mat-tab>
+          <mat-tab  label="Duración y Horarios"><div [innerHtml]="seccion.duracionHorario | safeHtml" style="text-align: justify;
+            padding: 20px 0px;">
+
+          </div></mat-tab>
+        </mat-tab-group>
       </div>
     </div>
   </div>

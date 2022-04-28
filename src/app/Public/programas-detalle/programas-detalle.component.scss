@@ -1,4 +1,4 @@
-.diviframe #presentacionVideo{
+.diviframe #presentacionVideo {
   position: absolute;
   top: 0;
   bottom: 0;
@@ -7,7 +7,79 @@
   height: 100%;
   border: 0;
 }
-.diviframe{
+.diviframe {
   position: relative;
   min-height: 200px;
+  text-align: justify;
+  font-size: 12px;
+}
+.titlePrograma h1 {
+  font-weight: 900;
+  color: #4a4a49;
+}
+.InfoProgramIcon {
+  width: 10%;
+  height: auto;
+  margin-right: 10px;
+}
+.InfoProgramImg {
+  width: 150px;
+    height: auto;
+}
+.InfoProgramTitle {
+  font-weight: bold;
+  color: #6d6d6c;
+}
+.InfoProgramContainer{
+  align-items: center;
+    display: flex;
+    flex-wrap: wrap;
+}
+.infoProgramFechas{
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+.infoProgramTitle{
+  font-size: 14px;
+  color: #8e8e8e;
+  font-weight: 800;
+  margin-right: 10px;
+}
+.infoProgramText{
+  font-size: 14px;
+  color: #8e8e8e;
+}
+.tabprogram mat-tab-group mat-tab-header .mat-tab-label-container .mat-tab-list .mat-tab-labels .mat-tab-label{
+  opacity: 1 !important;
+  padding: 0px !important
+}
+.tabprogram mat-tab-group mat-tab-header .mat-tab-label-container .mat-tab-list .mat-tab-labels .mat-tab-label .mat-tab-label-content{
+  width: 100% !important;
+}
+.tabprogram mat-tab-group mat-tab-header .mat-tab-label-container .mat-tab-list .mat-tab-labels{
+  justify-content: center;
+}
+.tabprogram mat-tab-group mat-tab-header .mat-tab-label-container .mat-tab-list .mat-tab-labels div{
+  width: 25%;
+  font-size: 20px;
+  font-weight: bold;
+  color: #4a4a49;
+}
+.tabprogram mat-tab-group mat-tab-header .mat-tab-label-container .mat-tab-list .mat-tab-labels .mat-tab-label-active{
+  color: #0684f2 !important;
+  text-decoration: underline;
+}
+.tabprogram mat-tab-group mat-tab-header .mat-tab-label-container .mat-tab-list .mat-tab-labels .mat-tab-label-active div{
+  color: #0684f2 !important;
+  text-decoration: underline;
+}
+.tabprogram mat-tab-group mat-tab-header .mat-tab-label-container .mat-tab-list  .mat-ink-bar{
+  display: none;
+}
+.tabprogram mat-tab-group mat-tab-header .mat-tab-label-container .mat-tab-list .mat-tab-labels .mat-ripple:not(:first-child) .mat-tab-label-content{
+  border-left: solid 1px black;
+}
+.tabprogram mat-tab-group mat-tab-header .mat-tab-label-container .mat-tab-list .mat-tab-labels .mat-ripple:not(:last-child) .mat-tab-label-content{
+  border-right: solid 1px black;
 }

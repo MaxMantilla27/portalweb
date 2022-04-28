@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { programaCabeceraDetalleDTO,listaSeccionPrograma, listaPrerrequisitoDTO } from 'src/app/Core/Models/SeccionProgramaDTO';
 import { SeccionProgramaService } from 'src/app/Core/Shared/Services/SeccionPrograma/seccion-programa.service';
 
 @Component({
@@ -15,9 +16,33 @@ export class ProgramasDetalleComponent implements OnInit {
     private _SeccionProgramaService:SeccionProgramaService
     ) { }
   public area='';
-  public programa='';
   public idBusqueda=0;
   public contenidoCabecera='';
+  public cabecera:programaCabeceraDetalleDTO={
+    areaCapacitacion:'',
+    areaDescripcion:'',
+    duracion:'',
+    imagenPrograma:'',
+    imgPrincipal:'',
+    listProgramaEspecificoInformacionDTO:[],
+    nombre:'',
+    nombreSubArea:'',
+    subAreaDescripcion:'',
+    tituloHtml:'',
+  }
+  public seccion:listaSeccionPrograma={
+    duracionHorario:'',
+    metodologiaOnline:'',
+    objetivo:'',
+    publicoObjetivo:'',
+    video:'',
+    vistaPrevia:'',
+  }
+  public prerequisitos:listaPrerrequisitoDTO={
+    cabecera:'',
+    contenido:[],
+    piePagina:''
+  }
   ngOnInit(): void {
 
     this.activatedRoute.params.subscribe({
@@ -30,12 +55,14 @@ export class ProgramasDetalleComponent implements OnInit {
     })
     this.ObtenerCabeceraProgramaGeneral();
     this.ListSeccionPrograma();
+    this.ListPrerrequisito();
   }
   ObtenerCabeceraProgramaGeneral(){
     this._SeccionProgramaService.ObtenerCabeceraProgramaGeneral(this.idBusqueda).subscribe({
       next:(x)=>{
         console.log(x)
-        this.programa=x.programaCabeceraDetalleDTO.tituloHtml
+        this.cabecera=x.programaCabeceraDetalleDTO
+        this.cabecera.imgPrincipal='https://img.bsginstitute.com/repositorioweb/img/partners/'+x.programaCabeceraDetalleDTO.imgPrincipal;
       }
     })
   }
@@ -50,8 +77,16 @@ export class ProgramasDetalleComponent implements OnInit {
           var splitCont=x.listaSeccionPrograma.video.split('</p><p>');
           this.contenidoCabecera=splitCont[splitCont.length-1].split('</p>').join('');
         }
+        this.seccion=x.listaSeccionPrograma;
       }
     })
   }
 
+  ListPrerrequisito(){
+    this._SeccionProgramaService.ListPrerrequisito(this.idBusqueda).subscribe({
+      next:(x)=>{
+        this.prerequisitos=x.listaPrerrequisitoDTO;
+      }
+    })
+  }
 }
