@@ -61,8 +61,7 @@ export class CarreraProfesionalDetalleComponent implements OnInit {
         this.carrera = x.programaInformacionDTO
         //Separamos los contenidos
         this.generalInformacion = this.carrera.contenidoProgramaInformacionDTO.filter(function(contenido: any) {
-          if(contenido.titulo === 'Perfil del Egresado' || contenido.titulo === 'Mercado Laboral'
-            || contenido.titulo === 'Duración y Horarios' || contenido.titulo === 'Mercado Laboral') {
+          if(contenido.titulo === 'Perfil del Egresado' || contenido.titulo === 'Duración y Horarios' || contenido.titulo === 'Mercado Laboral') {
             return contenido
           }
         })
@@ -71,8 +70,8 @@ export class CarreraProfesionalDetalleComponent implements OnInit {
         replaceAll("</ul><div class='container-card'>","</ul></div><div class='container-card'>")+"</div></div>"
         this.planEstudios = this.planEstudios.replaceAll("</strong></p>","</strong></p><div class='line'></div>")
         //Separamos el contenido de la nota en certificaicones adicionales
-        console.log(this.planEstudios)
-        this.contenidoCertificacionAdicional = this.carrera.contenidoProgramaInformacionDTO[8].contenido.split("<p>&nbsp;</p><div><p><strong>NOTA</strong>")[0]
+        this.contenidoCertificacionAdicional = this.carrera.contenidoProgramaInformacionDTO[8].contenido.split("<p>&nbsp;</p><div><p><strong>NOTA</strong>")[0].replaceAll("<div class=\"row\"><div class=\"col-sm-8\"><p><br /></p></div></div>","").replaceAll("<hr />","")
+        console.log(this.contenidoCertificacionAdicional)
         this.notaCertificacionAdicional = this.carrera.contenidoProgramaInformacionDTO[8].contenido.split("<p>&nbsp;</p>")[6]
         this.loader = true
       },

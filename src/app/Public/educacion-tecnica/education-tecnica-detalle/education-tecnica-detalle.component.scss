@@ -70,49 +70,18 @@
       }
     }
     &__thirdSection {
-      .real-contenedor {
-        display: flex;
-        flex-direction: row;
-        flex-wrap: wrap;
-        justify-content: space-around;
-        gap: 1rem;
-        .container-card {
-          max-width: 30rem;
-          margin-top: 2rem;
-          width: 100%;
-          background-color: #CFFFE6;
-          border-radius: 10px;
-          padding: 3rem;
-          transition: transform .2s;
-          &:hover {
-            cursor: pointer;
-            -ms-transform: scale(1.04);
-            /* IE 9 */
-            -webkit-transform: scale(1.04);
-            /* Safari 3-8 */
-            transform: scale(1.04);
-          }
-          .line {
-            height: 0.1rem;
-            border-radius: 1rem;
-            background-color: #C1DACC;
-            margin-bottom: 2rem;
-          }
-          p strong {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: orange;
-          }
-          ul {
-            margin: 0;
-            padding: 0;
-            list-style-type: none;
-            li {
-              font-size: 0.8rem;
-              margin-bottom: 0.5rem;
-            }
-          }
-
+      mat-icon {
+        color:  #2EBBF3;
+        font-size: 1rem;
+        @media (max-width: 780px) {
+          font-size: 0.7rem;
+        }
+      }
+      span {
+        color: #888888;
+        font-size: 1rem;
+        @media (max-width: 780px) {
+          font-size: 0.7rem;
         }
       }
     }
@@ -172,7 +141,6 @@
           }
         }
         .row {
-          margin-bottom: 1rem;
           background-color: #CFFFE6;
           border-radius: 10px;
           padding: 3rem;
@@ -219,5 +187,17 @@
       }
     }
   }
-
+}
+ .mat-expansion-indicator::after {
+   color: red;
+   border-style: solid;
+   border-width: 0 2px 2px 0;
+   content: "";
+   display: inline-block;
+   padding: 3px;
+   transform: rotate(45deg);
+   vertical-align: middle;
+ }
+.mat-expansion-panel-header-description, .mat-expansion-indicator::after {
+  color: red;
 }

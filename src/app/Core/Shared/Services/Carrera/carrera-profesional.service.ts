@@ -29,4 +29,11 @@ export class CarreraProfesionalService {
     console.log(params)
     return this.http.get<any>(this.urlDetalle+'/CarreraProfesionalVista',{ headers:new HttpHeaders(), params: params });
   }
+  public GetEducacionTecnicaDetalle(IdBusqueda:number, Nombre:string):Observable<any> {
+    let params = new HttpParams();
+    params=params.append("IdBusqueda", IdBusqueda.toString());
+    params=params.append("Nombre", Nombre.toString());
+    console.log(params)
+    return this.http.get<any>(this.urlDetalle+'/EducacionTecnicaVista',{ headers:new HttpHeaders(), params: params });
+  }
 }
