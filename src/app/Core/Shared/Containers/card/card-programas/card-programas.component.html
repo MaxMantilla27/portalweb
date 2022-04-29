@@ -1,0 +1,14 @@
+<mat-card class="card-programas">
+  <img mat-card-image [src]="cardContent.Img" [alt]="cardContent.ImgAlt">
+  <mat-card-content>
+    <div class="title" [routerLink]="cardContent.Url">{{cardContent.Title}}</div>
+  </mat-card-content>
+  <mat-card-footer>
+    <div class="invercion">
+
+      <p [innerHTML]="cardContent.Content">
+       </p>
+      <div class="link" [routerLink]="cardContent.Url">M&aacute;s informac&oacute;n ></div>
+    </div>
+  </mat-card-footer>
+</mat-card>

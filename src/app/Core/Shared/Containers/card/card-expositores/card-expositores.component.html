@@ -1,0 +1,7 @@
+<mat-card class="card-expositor">
+  <img mat-card-image [src]="expositor.fotoDocente" >
+  <mat-card-content>
+    <div class="titleExpositor">{{expositor.primerNombre}} {{expositor.apellidoPaterno}} ({{expositor.nombrePais}})</div>
+    <div class="contentExpositor" [innerHtml]="expositor.hojaVidaResumidaPerfil | safeHtml"></div>
+  </mat-card-content>
+</mat-card>
