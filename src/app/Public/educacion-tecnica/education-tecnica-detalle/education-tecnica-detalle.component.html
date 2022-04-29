@@ -52,9 +52,9 @@
       <div class="educacion-tecnica-container__content__thirdSection">
         <div class="container rowpadd">
           <div class="row">
-            <div class="col-lg-8">
+            <div class="col-lg-8 educacion-tecnica-container__content__thirdSection__left">
               <h1 style="padding-bottom: 2rem">Estructura Curricular</h1>
-              <mat-expansion-panel hideToggle *ngFor="let item of estructuraCurricular;let i =index" (opened)="item.opened=true" (closed)="item.opened=false">
+              <mat-expansion-panel class="panel-tecnica" hideToggle                        *ngFor="let item of estructuraCurricular;let i =index" (opened)="item.opened=true" (closed)="item.opened=false">
                 <mat-expansion-panel-header>
                   <mat-panel-title>
                     <div *ngIf="item.opened===true">
@@ -75,8 +75,54 @@
                 [innerHTML]="descripcionEstructuraCurricular">
               </div>
             </div>
-            <div class="col-lg-4">
-              <h1>Formulario</h1>
+            <div class="col-lg-4 educacion-tecnica-container__content__thirdSection__right">
+              <div class="educacion-tecnica-container__content__thirdSection__right__form-container">
+                <div class="educacion-tecnica-container__content__thirdSection__right__form-container__header">
+                  <div class="educacion-tecnica-container__content__thirdSection__right__form-container__header__pregunta">
+                    <div class="educacion-tecnica-container__content__thirdSection__right__form-container__header__pregunta__signo-a">
+                      <h1>¿</h1>
+                    </div>
+                    <div class="educacion-tecnica-container__content__thirdSection__right__form-container__header__pregunta__texto">
+                      <h2>Tienes dudas sobre algún aspecto del programa</h2>
+                    </div>
+                    <div class="educacion-tecnica-container__content__thirdSection__right__form-container__header__pregunta__signo-b">
+                      <h1>?</h1>
+                    </div>
+                  </div>
+                  <p>Registra tus datos para que un asesor especializado pueda ayudarte en todo lo que requieras</p>
+                </div>
+                <div class="educacion-tecnica-container__content__thirdSection__right__form-container__content">
+                  <form class="example-form">
+                    <mat-form-field class="example-full-width" appearance="outline">
+                      <mat-label>Favorite food</mat-label>
+                      <input matInput placeholder="Ex. Pizza" value="Sushi">
+                    </mat-form-field>
+                    <mat-form-field class="example-full-width" appearance="outline">
+                      <mat-label>Favorite food</mat-label>
+                      <input matInput placeholder="Ex. Pizza" value="Sushi">
+                    </mat-form-field>
+                    <mat-form-field class="example-full-width" appearance="outline">
+                      <mat-label>Favorite food</mat-label>
+                      <input matInput placeholder="Ex. Pizza" value="Sushi">
+                    </mat-form-field>
+                    <mat-form-field class="example-full-width" appearance="outline">
+                      <mat-label>Favorite food</mat-label>
+                      <input matInput placeholder="Ex. Pizza" value="Sushi">
+                    </mat-form-field>
+                    <mat-form-field class="example-full-width" appearance="outline">
+                      <mat-label>Favorite food</mat-label>
+                      <input matInput placeholder="Ex. Pizza" value="Sushi">
+                    </mat-form-field>
+                    <mat-form-field class="example-full-width" appearance="outline">
+                      <mat-label>Favorite food</mat-label>
+                      <input matInput placeholder="Ex. Pizza" value="Sushi">
+                    </mat-form-field>
+                    <div class="educacion-tecnica-container__content__thirdSection__right__form-container__content__button">
+                      <app-default-button [confs]="{color: 'primary', titulo: 'Solicitar Información'}" ></app-default-button>
+                    </div>
+                  </form>
+                </div>
+              </div>
             </div>
           </div>
         </div>
