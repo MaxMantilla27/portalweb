@@ -1,9 +1,9 @@
 @media (max-width: 576px) {
   .carousel-control-next{
-    margin-right: -40px !important;
+    margin-right: -25px !important;
   }
   .carousel-control-prev{
-    margin-left: -40px !important;
+    margin-left: -25px !important;
   }
   .rowpadd{
     padding: 45px 10px;
@@ -209,4 +209,21 @@
   margin: 0px;
   padding-top: 4px;
   padding-bottom: 4px;
+}
+
+.carousel-indicators [data-bs-target]{
+  background-color: #0a86f2;
+  width: 10px;
+  height: 10px;
+
+  border-radius: 50%;
+}
+
+
+.carousel-control-next-icon{
+  background-image: url(../assets/imagenes/felcha1-01.svg);
+}
+
+.carousel-control-prev-icon{
+  background-image: url(../assets/imagenes/flecha-02.svg);
 }

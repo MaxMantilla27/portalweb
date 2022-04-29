@@ -68,28 +68,224 @@
     <div class="row rowpadd">
       <div class="col-12 col-md-12 col-lg-12 tabprogram">
         <mat-tab-group mat-align-tabs="start" class="tabprogram">
-          <mat-tab  label="Objetivos" ><div [innerHtml]="seccion.objetivo | safeHtml" style="text-align: justify;
+          <mat-tab label="Objetivos">
+            <div [innerHtml]="seccion.objetivo | safeHtml" style="text-align: justify;
             padding: 20px 0px;">
 
-          </div></mat-tab>
-          <mat-tab  label="Público Objetivo"><div [innerHtml]="seccion.publicoObjetivo | safeHtml" style="text-align: justify;
+            </div>
+          </mat-tab>
+          <mat-tab label="Público Objetivo">
+            <div [innerHtml]="seccion.publicoObjetivo | safeHtml" style="text-align: justify;
             padding: 20px 0px;">
 
-          </div></mat-tab>
-          <mat-tab  label="Prerrequisitos"><div style="text-align: justify;
+            </div>
+          </mat-tab>
+          <mat-tab label="Prerrequisitos">
+            <div style="text-align: justify;
             padding: 20px 0px;">
               <p>{{prerequisitos.cabecera}}</p>
               <ul>
                 <li *ngFor="let item of prerequisitos.contenido">{{item}}</li>
               </ul>
-              <p>{{prerequisitos.piePagina}}</p>
-          </div></mat-tab>
-          <mat-tab  label="Duración y Horarios"><div [innerHtml]="seccion.duracionHorario | safeHtml" style="text-align: justify;
+              <div class="piePagina" [innerHtml]="PrerrequisitosPiePagina | safeHtml"></div>
+            </div>
+          </mat-tab>
+          <mat-tab label="Duración y Horarios">
+            <div [innerHtml]="seccion.duracionHorario | safeHtml" style="text-align: justify;
             padding: 20px 0px;">
 
-          </div></mat-tab>
+            </div>
+          </mat-tab>
         </mat-tab-group>
       </div>
     </div>
+  </div>
+</div>
+
+<div class="container" #formularioPrograma>
+  <div class="row rowpadd">
+    <div class="col-12 col-md-8 col-lg-8">
+      <div style="display: flex;justify-content: space-between;align-items: center;">
+        <div class="subtitulo">Estructura Curricular</div>
+        <app-default-button [confs]="{color:'primary',titulo:'Vista previa'}"
+          (ButtoclClick)="ObtenerCabeceraProgramaGeneral()"></app-default-button>
+      </div>
+      <mat-accordion class="acordionPrograma" multi>
+        <mat-expansion-panel hideToggle *ngFor="let item of estructuraPrograma" (opened)="item.opened=true"
+          (closed)="item.opened=false">
+          <mat-expansion-panel-header [ngStyle]="{'padding': item.opened === false?'30px 24px':'0 24px'}">
+            <mat-panel-title>
+              <div style="display: flex;align-items: center;">
+                <div *ngIf="item.opened" class="estructuraProgramicon">+</div>
+                <div *ngIf="!item.opened" class="estructuraProgramicon">-</div>
+                <div class="estructuraProgramTitle">{{item.titulo}} ({{item.duracion}} horas cronol&oacute;gicas)</div>
+              </div>
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <ul style="margin: 0px;padding-top:20px;padding-bottom:20px;padding-left: 4rem;">
+            <li *ngFor="let itemsubtitle of item.subTitulo" style="color:#a1a1a0">{{itemsubtitle.contenido}}</li>
+          </ul>
+        </mat-expansion-panel>
+      </mat-accordion>
+      <div class="piePagina" [innerHtml]="EstructuraPiePagina | safeHtml"></div>
+    </div>
+    <div class="col-12 col-md-4 col-lg-4">
+      <div class="estructuraProgramForm">
+        <div class="cotentestructuraProgramForm">
+          <div class="question" style="justify-content: start;align-items: center;">
+            <img src="../../../assets/icons/signo-pregunta-abierto-03.svg" alt="">
+          </div>
+          <div>Tienes dudas sobre alg&uacute;n aspecto del programa</div>
+          <div class="question" style="justify-content: end;align-items: center;">
+            <img src="../../../assets/icons/signo-pregunta-cerrado-04.svg" alt="">
+          </div>
+        </div>
+        <div class="subtitleEstruturaProgramForm">
+          registra tus datos para que un asesor especializado pueda ayudarte en todo lo que requieras
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div style="background: #f5f9ff;">
+  <div class="container">
+    <div class="row rowpadd">
+      <div class="col-12 col-md-12 col-lg-12 tabprogram">
+        <div class="subtitulo">Beneficios</div>
+        <p>El programa incluye los siguientes beneficios:</p>
+        <div class="row">
+          <div class="col-12 col-md-4 col-lg-4" *ngFor="let item of beneficios">
+            <div class="cardBeneficiosPrograma">
+              <div class="carsTitleBeneficiosPrograma">{{item.version}}:</div>
+              <ng-container *ngFor="let content of item.contenido">
+                <div class="todoslosBeneficios" *ngIf="content.idBeneficio==-1">{{content.contenido}}</div>
+                <li *ngIf="content.idBeneficio>0">{{content.contenido}}</li>
+              </ng-container>
+
+            </div>
+          </div>
+          <div class="col-12">
+            <div class="piePagina" [innerHtml]="BeneficiosPiePagina | safeHtml"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="container">
+  <div class="row rowpadd">
+    <div class="col-12 col-md-5 col-lg-5">
+      <img src="../../../assets/imagenes/certificado-carrera-tecnica-atencion-al-cliente.png" alt=""
+        style="width: 100%;">
+    </div>
+    <div class="col-12 col-md-7 col-lg-7">
+      <div class="subtitulo">Certificaci&oacute;n</div>
+      <div class="certificadoContent">
+        <div>{{certificado.cabecera}}</div>
+        <li *ngFor="let item of certificado.contenido">{{item}}</li>
+      </div>
+      <div class="piePagina" [innerHtml]="certificado.piePagina | safeHtml"></div>
+
+      <mat-accordion class="acordionPrograma acrdionCertificado" multi>
+        <mat-expansion-panel hideToggle #acodionCertificado>
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              <div style="display: flex;align-items: center;">
+                <div *ngIf="acodionCertificado.opened" class="estructuraProgramicon">+</div>
+                <div *ngIf="!acodionCertificado.opened" class="estructuraProgramicon">-</div>
+                <div class="estructuraProgramTitle" [innerHtml]="certificado.descripcionHeader | safeHtml"></div>
+              </div>
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <div [innerHtml]="certificado.descripcionBody | safeHtml"></div>
+        </mat-expansion-panel>
+      </mat-accordion>
+      <br>
+      <app-default-button [confs]="{color:'primary',titulo:'Solicita Informacion'}"
+        (ButtoclClick)="ScrollTo(formularioPrograma)"></app-default-button>
+    </div>
+  </div>
+</div>
+<div style="background: #f5f9ff;">
+  <div class="container">
+    <div class="row rowpadd">
+      <div class="col-12 col-md-12 col-lg-12 tabprogram">
+        <div class="subtitulo">Expositores</div>
+
+        <div class="carousel-expositores">
+          <ngb-carousel style="width: 99%">
+            <ng-template ngbSlide *ngFor="let ste of stepExpositors">
+              <div class="wrapper" style="display: flex;justify-content: center;">
+                <div class="row" style="align-items: center;width: 95%;justify-content: center;">
+                  <div class="col-12 col-xs-6 col-md-6 col-lg-4" *ngFor="let item of ste" style="height: 100%;">
+                    <app-card-expositores [expositor]="item"></app-card-expositores>
+                  </div>
+                </div>
+              </div>
+              <div class="carousel-caption">
+              </div>
+            </ng-template>
+          </ngb-carousel>
+        </div>
+        <div class="piePagina">
+          <b>NOTA:</b> No necesariamente todos los expositores mencionados participarán en el dictado del programa o
+          sesiones
+          webinar, asimismo se podrá contar con la participación de otros expositores adicionales a los mencionados.
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="container">
+  <div class="row rowpadd" style="position: relative;">
+    <div class="col-12 col-sm-12 col-md-8">
+      <div class="subtitulo">¿Por qu&eacute; elegir BSG Institute?</div>
+      <div class="parafoS">Nuestra metodolog&iacute;a <strong>ExTech Learning</strong> complementa las sesiones de clase
+        con mecanismos de aprendizaje activo.</div>
+      <div class="cardSubtitle">
+        <img src="../../../assets/imagenes/icon-gamification-11.svg" alt="">
+        <div>
+          <div class="titleCardSub"><strong>Gamification</strong></div>
+          <div class="parafoCardSub">Usamos mecanismos de gamificaci&oacute;n estructural y de contenidos con el fin de
+            que tu experiencia de aprendizaje sea mas interactiva</div>
+        </div>
+      </div>
+      <div class="cardSubtitle">
+        <img src="../../../assets/imagenes/icon-Virtual-reality-12.svg" alt="">
+        <div>
+          <div class="titleCardSub"><strong>Virtual reality</strong></div>
+          <div class="parafoCardSub">Acceder&aacute;s a simuladores que cuenta con la tecnologia Oculus Quest 2 una de
+            las mejores disponibles en el mercado</div>
+        </div>
+      </div>
+      <div class="cardSubtitle">
+        <img src="../../../assets/imagenes/icon-Serious-games-13.svg" alt="">
+        <div>
+          <div class="titleCardSub"><strong>Serious games</strong></div>
+          <div class="parafoCardSub">Dispondr&aacute;s de simuladores en linea para recrear entornos reales</div>
+        </div>
+      </div>
+      <div class="cardSubtitle">
+        <img src="../../../assets/imagenes/icon-Reﬂexion-14.svg" alt="">
+        <div>
+          <div class="titleCardSub"><strong>Reflexi&oacute;n</strong></div>
+          <div class="parafoCardSub">Tendr&aacute;s la oportunidad de reflexionar sobre lo aprendido en el desarrollo
+            del curso y puedas compartirlo con tus compa&ntilde;eros</div>
+        </div>
+      </div>
+      <div class="cardSubtitle">
+        <img src="../../../assets/imagenes/icon-Applied-Projects-15.svg" alt="">
+        <div>
+          <div class="titleCardSub"><strong>Applied projects</strong></div>
+          <div class="parafoCardSub">Podr&aacute;s completar una serie de tareas aplicadas que permitiran emplear los
+            conocimientos aprendidos en situaciones reales</div>
+        </div>
+      </div>
+    </div>
+    <div class="col-12  col-sm-12 col-md-4 ">
+      <img class="imgTitle" src="../../../assets/imagenes/extech-learning-09.svg" alt="">
+    </div>
+    <img class="imgfondo" src="../../../assets/imagenes/imagen-realidad-virtual.png" alt="">
   </div>
 </div>

@@ -37,9 +37,10 @@ import { VistaGenericaProgramaComponent } from './Containers/vista-generica-prog
 import { MigaPanComponent } from './Containers/miga-pan/miga-pan.component';
 import { LinkButtonComponent } from './Containers/buttons/link-button/link-button.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { CardProgramasComponent } from './Containers/card-programas/card-programas.component';
+import { CardProgramasComponent } from './Containers/card/card-programas/card-programas.component';
 import {MatSliderModule} from '@angular/material/slider';
 import { SafeHtmlPipe } from './Pipes/safe-html.pipe';
+import { CardExpositoresComponent } from './Containers/card/card-expositores/card-expositores.component';
 import { IconInformationCardComponent } from './Containers/card/icon-information-card/icon-information-card.component';
 
 @NgModule({
@@ -68,7 +69,24 @@ import { IconInformationCardComponent } from './Containers/card/icon-information
     MatSliderModule
 
   ],
-  declarations: [HeaderComponent, ButtonComponent, SelectComponent, FooterComponent, CarouselComponent, ButtonComponent, CardProgramasComponent,SelectComponent, DefaultButtonComponent, CustomCardComponent, VistaGenericaProgramaComponent, MigaPanComponent, LinkButtonComponent, SafeHtmlPipe, IconInformationCardComponent],
+  declarations: [
+    HeaderComponent,
+    ButtonComponent,
+    SelectComponent,
+    FooterComponent,
+    CarouselComponent,
+    ButtonComponent,
+    CardProgramasComponent,
+    SelectComponent,
+    DefaultButtonComponent,
+    CustomCardComponent,
+    VistaGenericaProgramaComponent,
+    MigaPanComponent,
+    LinkButtonComponent,
+    SafeHtmlPipe,
+    CardExpositoresComponent,
+    IconInformationCardComponent
+  ],
   exports: [
     HttpClientModule,
     RouterModule,
@@ -80,6 +98,7 @@ import { IconInformationCardComponent } from './Containers/card/icon-information
     FooterComponent,
     CarouselComponent,
     ButtonComponent,
+    CardExpositoresComponent,
 
     MatTabsModule,
     MatTableModule,

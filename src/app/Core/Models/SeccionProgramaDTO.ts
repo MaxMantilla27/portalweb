@@ -36,3 +36,12 @@ export interface listaPrerrequisitoDTO{
   contenido:Array<string>;
   piePagina:string;
 }
+
+export interface listaCertificacionDTO{
+  cabecera:string;
+  contenido:Array<string>;
+  piePagina:string;
+  descripcion:string;
+  descripcionHeader:string;
+  descripcionBody:string;
+}

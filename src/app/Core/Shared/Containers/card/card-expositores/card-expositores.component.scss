@@ -1,0 +1,22 @@
+.card-expositor{
+  height: 100%;
+  box-shadow: 2px 1px 5px 1px rgb(0 0 0 / 20%), -1px 4px 2px 0px rgb(0 0 0 / 14%), 0px 1px 3px 0px rgb(0 0 0 / 12%) !important;
+}
+.card-expositor .mat-card-image:first-child{
+  padding: 10% 40% 0 40%;
+}
+.card-expositor .mat-card-footer{
+  padding: 20px;
+}
+.titleExpositor{
+  color: #ffaa45;
+  text-align: center;
+  margin: 20px;
+}
+.contentExpositor{
+  font-size: 12px;
+  text-align: center !important;
+}
+p{
+  text-align: center !important;
+}

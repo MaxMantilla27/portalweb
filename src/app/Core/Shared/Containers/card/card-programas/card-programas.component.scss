@@ -1,4 +1,4 @@
-mat-card{
+.card-programas{
   height: 100%;
   box-shadow: 2px 1px 5px 1px rgb(0 0 0 / 20%), -1px 4px 2px 0px rgb(0 0 0 / 14%), 0px 1px 3px 0px rgb(0 0 0 / 12%) !important;
 }
@@ -11,7 +11,7 @@ mat-card{
 
   text-decoration: underline;
 }
-mat-card-content{
+.card-programas mat-card-content{
   text-align: left;
   display: flex;
   flex-direction: column;
@@ -31,7 +31,7 @@ mat-card-content{
   -webkit-line-clamp: 6;
   line-clamp: 6;
 }
-mat-card-footer{
+.card-programas mat-card-footer{
   text-align: left;
   padding: 0px 10px;
   font-size: 12px;
@@ -42,12 +42,12 @@ mat-card-footer{
   flex-direction: column;
 }
 
-mat-card-header {
+.card-programas mat-card-header {
   display: flex;
   flex-direction: row;
   flex-shrink: 0;
 }
-mat-card-content{
+.card-programas mat-card-content{
   flex-grow: 1;
   overflow: auto;
 }
