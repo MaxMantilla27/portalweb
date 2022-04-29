@@ -19,4 +19,8 @@ export class SeccionProgramaService {
   public ListPrerrequisito(IdBusqueda:number):Observable<any>{
     return this.http.get<any>(this.urlBase+'/ListPrerrequisito?IdBusqueda='+IdBusqueda);
   }
+  public ListCertificacion(IdBusqueda:number):Observable<any>{
+    return this.http.get<any>(this.urlBase+'/ListCertificacion?IdBusqueda='+IdBusqueda);
+  }
+
 }

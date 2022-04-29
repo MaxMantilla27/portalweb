@@ -37,9 +37,10 @@ import { VistaGenericaProgramaComponent } from './Containers/vista-generica-prog
 import { MigaPanComponent } from './Containers/miga-pan/miga-pan.component';
 import { LinkButtonComponent } from './Containers/buttons/link-button/link-button.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { CardProgramasComponent } from './Containers/card-programas/card-programas.component';
+import { CardProgramasComponent } from './Containers/card/card-programas/card-programas.component';
 import {MatSliderModule} from '@angular/material/slider';
 import { SafeHtmlPipe } from './Pipes/safe-html.pipe';
+import { CardExpositoresComponent } from './Containers/card/card-expositores/card-expositores.component';
 
 @NgModule({
   imports: [
@@ -67,7 +68,23 @@ import { SafeHtmlPipe } from './Pipes/safe-html.pipe';
     MatSliderModule
 
   ],
-  declarations: [HeaderComponent, ButtonComponent, SelectComponent, FooterComponent, CarouselComponent, ButtonComponent, CardProgramasComponent,SelectComponent, DefaultButtonComponent, CustomCardComponent, VistaGenericaProgramaComponent, MigaPanComponent, LinkButtonComponent, SafeHtmlPipe],
+  declarations: [
+    HeaderComponent,
+    ButtonComponent,
+    SelectComponent,
+    FooterComponent,
+    CarouselComponent,
+    ButtonComponent,
+    CardProgramasComponent,
+    SelectComponent,
+    DefaultButtonComponent,
+    CustomCardComponent,
+    VistaGenericaProgramaComponent,
+    MigaPanComponent,
+    LinkButtonComponent,
+    SafeHtmlPipe,
+    CardExpositoresComponent
+  ],
   exports: [
     HttpClientModule,
     RouterModule,
@@ -79,6 +96,7 @@ import { SafeHtmlPipe } from './Pipes/safe-html.pipe';
     FooterComponent,
     CarouselComponent,
     ButtonComponent,
+    CardExpositoresComponent,
 
     MatTabsModule,
     MatTableModule,
@@ -103,7 +121,8 @@ import { SafeHtmlPipe } from './Pipes/safe-html.pipe';
     CardProgramasComponent,
     SelectComponent,
     MatSliderModule,
-    SafeHtmlPipe
+
+    SafeHtmlPipe,
   ],
   providers: [
     SessionStorageService,

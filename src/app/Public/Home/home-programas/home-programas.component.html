@@ -1,13 +1,15 @@
-<ngb-carousel style="width: 99%" id="carouselProgramas">
-  <ng-template ngbSlide *ngFor="let ste of stepProgramas">
-    <div class="wrapper" style="display: flex;justify-content: center;">
-      <div class="row" style="align-items: center;width: 95%;justify-content: center;" >
-        <div class="col-12 col-xs-6 col-md-6 col-lg-3" *ngFor="let item of ste" style="height: 100%;">
-          <app-card-programas [cardContent]="item"></app-card-programas>
+<div class="carousel-programas">
+  <ngb-carousel style="width: 99%" >
+    <ng-template ngbSlide *ngFor="let ste of stepProgramas">
+      <div class="wrapper" style="display: flex;justify-content: center;">
+        <div class="row" style="align-items: center;width: 95%;justify-content: center;" >
+          <div class="col-12 col-xs-6 col-md-6 col-lg-3" *ngFor="let item of ste" style="height: 100%;">
+            <app-card-programas [cardContent]="item"></app-card-programas>
+          </div>
         </div>
       </div>
-    </div>
-    <div class="carousel-caption">
-    </div>
-  </ng-template>
-</ngb-carousel>
+      <div class="carousel-caption">
+      </div>
+    </ng-template>
+  </ngb-carousel>
+</div>

@@ -30,10 +30,10 @@
   padding-bottom: 20px;
   box-shadow: -1px 1px 4px 0px #adadad;
 }
-mat-expansion-panel{
+.expancionfixed mat-expansion-panel{
   border: 0px;
     box-shadow: 0px 0px 0px transparent !important;
 }
-.mat-expansion-panel-header{
+.expancionfixed mat-expansion-panel .mat-expansion-panel-header{
   margin-top:15px ;
 }
