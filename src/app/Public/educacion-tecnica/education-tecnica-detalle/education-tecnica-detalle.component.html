@@ -30,8 +30,10 @@
             <div class="educacion-tecnica-container__content__firstSection__left__descripcion" [innerHTML]="carrera.contenidoProgramaInformacionDTO[0]?.contenido">
             </div>
           </div>
-          <div class="col-md-5 educacion-tecnica-container__content__firstSection__right" style="background-color: green">
-
+          <div class="col-md-5 educacion-tecnica-container__content__firstSection__right">
+            <app-icon-information-card [item]="{imagen: '/assets/icons/horario-04.svg',imagenAlt: 'Horario',titulo: 'Duración',subtitulo: '6 semestres'}"></app-icon-information-card>
+            <app-icon-information-card [item]="{imagen: '/assets/icons/precio-03.svg',imagenAlt: 'Precio',titulo: 'Pensión',subtitulo: montoPagoPrograma}"></app-icon-information-card>
+            <app-icon-information-card [item]="{imagen: '/assets/icons/calendario-05.svg',imagenAlt: 'Calendario',titulo: 'Inicio ',subtitulo: 'DSADASDADA'}"></app-icon-information-card>
           </div>
         </div>
       </div>
@@ -52,7 +54,7 @@
           <div class="row">
             <div class="col-lg-8">
               <h1 style="padding-bottom: 2rem">Estructura Curricular</h1>
-              <mat-expansion-panel hideToggle *ngFor="let item of planEstudios;let i =index" (opened)="item.opened=true" (closed)="item.opened=false">
+              <mat-expansion-panel hideToggle *ngFor="let item of estructuraCurricular;let i =index" (opened)="item.opened=true" (closed)="item.opened=false">
                 <mat-expansion-panel-header>
                   <mat-panel-title>
                     <div *ngIf="item.opened===true">
@@ -68,13 +70,15 @@
                   <li *ngFor="let subItem of item.subTitulo">{{subItem.contenido}}</li>
                 </ul>
               </mat-expansion-panel>
+              <div
+                class="educacion-tecnica-container__content__fourthSection__information-container__detail"
+                [innerHTML]="descripcionEstructuraCurricular">
+              </div>
             </div>
             <div class="col-lg-4">
               <h1>Formulario</h1>
             </div>
           </div>
-
-
         </div>
       </div>
       <div class="educacion-tecnica-container__content__fourthSection">
@@ -87,7 +91,7 @@
               <h1>Certificación</h1>
               <div
                 class="educacion-tecnica-container__content__fourthSection__information-container__detail"
-                [innerHTML]="carrera.contenidoProgramaInformacionDTO[6]?.contenido">
+                [innerHTML]="certificaciones">
               </div>
               <div>
                 <app-default-button [confs]="{color: 'primary', titulo: 'Solicita Información'}"></app-default-button>

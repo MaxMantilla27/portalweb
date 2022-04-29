@@ -17,7 +17,7 @@
       word-wrap: break-word;
       &__title {
         h1 {
-          color: red !important;
+          text-transform: uppercase;
           font-weight: 800 !important;
         }
       }
@@ -51,6 +51,9 @@
           }
         }
       }
+      &__right {
+        padding-left: 3rem;
+      }
     }
     &__secondSection {
       padding-top: 3rem;
@@ -67,6 +70,11 @@
       }
     }
     &__thirdSection {
+      p {
+        margin-top: 2rem;
+        color: #B0B0B0;
+        font-size: 0.7rem;
+      }
       mat-icon {
         color:  #2EBBF3;
         font-size: 1rem;

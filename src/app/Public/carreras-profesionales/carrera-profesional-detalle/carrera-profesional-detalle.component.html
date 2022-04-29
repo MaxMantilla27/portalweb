@@ -31,9 +31,9 @@
             </div>
           </div>
           <div class="col-md-5 carrera-container__content__firstSection__right">
-            <app-icon-information-card [item]="{imagen: '/assets/icons/horario-04.svg',imagenAlt: 'Horario',titulo: 'Prueba',subtitulo: 'DSADASDADA'}"></app-icon-information-card>
-            <app-icon-information-card [item]="{imagen: '/assets/icons/precio-03.svg',imagenAlt: 'Precio',titulo: 'Prueba',subtitulo: 'DSADASDADA'}"></app-icon-information-card>
-            <app-icon-information-card [item]="{imagen: '/assets/icons/calendario-05.svg',imagenAlt: 'Calendario',titulo: 'Prueba',subtitulo: 'DSADASDADA'}"></app-icon-information-card>
+            <app-icon-information-card [item]="{imagen: '/assets/icons/horario-04.svg',imagenAlt: 'Horario',titulo: 'Duración 3 años',subtitulo: '6 semestres'}"></app-icon-information-card>
+            <app-icon-information-card [item]="{imagen: '/assets/icons/precio-03.svg',imagenAlt: 'Precio',titulo: 'Pensión por Ciclo',subtitulo: montoPagoPrograma}"></app-icon-information-card>
+            <app-icon-information-card [item]="{imagen: '/assets/icons/calendario-05.svg',imagenAlt: 'Calendario',titulo: 'Admisión ',subtitulo: 'DSADASDADA'}"></app-icon-information-card>
           </div>
         </div>
       </div>
@@ -69,7 +69,7 @@
           <h1>Certificación</h1>
           <div
             class="carrera-container__content__fourthSection__information-detail"
-            [innerHTML]="carrera.contenidoProgramaInformacionDTO[6]?.contenido">
+            [innerHTML]="certificaciones">
           </div>
         </div>
       </div>
