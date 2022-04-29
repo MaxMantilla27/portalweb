@@ -41,6 +41,7 @@ import { CardProgramasComponent } from './Containers/card/card-programas/card-pr
 import {MatSliderModule} from '@angular/material/slider';
 import { SafeHtmlPipe } from './Pipes/safe-html.pipe';
 import { CardExpositoresComponent } from './Containers/card/card-expositores/card-expositores.component';
+import { IconInformationCardComponent } from './Containers/card/icon-information-card/icon-information-card.component';
 
 @NgModule({
   imports: [
@@ -83,7 +84,8 @@ import { CardExpositoresComponent } from './Containers/card/card-expositores/car
     MigaPanComponent,
     LinkButtonComponent,
     SafeHtmlPipe,
-    CardExpositoresComponent
+    CardExpositoresComponent,
+    IconInformationCardComponent
   ],
   exports: [
     HttpClientModule,
@@ -121,8 +123,8 @@ import { CardExpositoresComponent } from './Containers/card/card-expositores/car
     CardProgramasComponent,
     SelectComponent,
     MatSliderModule,
-
     SafeHtmlPipe,
+    IconInformationCardComponent
   ],
   providers: [
     SessionStorageService,

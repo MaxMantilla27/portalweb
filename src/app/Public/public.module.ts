@@ -12,6 +12,7 @@ import { CarrerasProfesionalesComponent } from './carreras-profesionales/carrera
 import { EducacionTecnicaComponent } from './educacion-tecnica/educacion-tecnica.component';
 import { CarreraProfesionalDetalleComponent } from './carreras-profesionales/carrera-profesional-detalle/carrera-profesional-detalle.component';
 import { ProgramasDetalleComponent } from './programas-detalle/programas-detalle.component';
+import { EducationTecnicaDetalleComponent } from './educacion-tecnica/education-tecnica-detalle/education-tecnica-detalle.component';
 
 @NgModule({
   imports: [
@@ -29,6 +30,7 @@ import { ProgramasDetalleComponent } from './programas-detalle/programas-detalle
     HomeProgramasComponent,
     ProgramasComponent,
     CarrerasProfesionalesComponent,
+    EducationTecnicaDetalleComponent,
     ProgramasDetalleComponent
   ],
   exports: [],
