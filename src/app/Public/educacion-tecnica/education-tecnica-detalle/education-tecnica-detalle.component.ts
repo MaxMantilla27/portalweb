@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, ViewEncapsulation} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 import {CarreraProfesionalService} from "../../../Core/Shared/Services/Carrera/carrera-profesional.service";
 import {
@@ -8,7 +8,9 @@ import {
 @Component({
   selector: 'app-education-tecnica-detalle',
   templateUrl: './education-tecnica-detalle.component.html',
-  styleUrls: ['./education-tecnica-detalle.component.scss']
+  styleUrls: ['./education-tecnica-detalle.component.scss'],
+  encapsulation: ViewEncapsulation.None,
+
 })
 export class EducationTecnicaDetalleComponent implements OnInit {
 
@@ -38,7 +40,7 @@ export class EducationTecnicaDetalleComponent implements OnInit {
       },
       {
         titulo: 'Educación Técnica',
-        urlWeb: '/tecnico-productivo'
+        urlWeb: '/tecnicos-productivos'
       }
     ]
     this.activatedRoute.params.subscribe((params) => {

@@ -1,4 +1,4 @@
-<div class="carrera-container">
+<div class="educacion-tecnica-container">
   <div *ngIf="!loader" class="loader">
     <mat-spinner></mat-spinner>
   </div>
@@ -6,48 +6,48 @@
     <div class="container breadcrumb">
       <app-miga-pan [items]="migaPan"></app-miga-pan>
     </div>
-    <div class="carrera-container__header">
+    <div class="educacion-tecnica-container__header">
       <div class="container rowpadd">
         <div class="row">
-          <div class="col-md-8 carrera-container__header__information">
-            <div class="carrera-container__header__information__title" [innerHTML]="carrera.programaGeneralInformacionVistaDTO?.tituloHtml">
+          <div class="col-md-8 educacion-tecnica-container__header__information">
+            <div class="educacion-tecnica-container__header__information__title" [innerHTML]="carrera.programaGeneralInformacionVistaDTO?.tituloHtml">
             </div>
-            <div class="carrera-container__header__information__button">
+            <div class="educacion-tecnica-container__header__information__button">
               <app-default-button [confs]="{color: 'primary', titulo: 'Inscribirme Ahora'}"></app-default-button>
             </div>
           </div>
-          <div class="col-md-4 carrera-container__header__img">
+          <div class="col-md-4 educacion-tecnica-container__header__img">
             <img [src]="rutaImagen+carrera.programaGeneralInformacionVistaDTO?.imagenPrograma" alt="">
           </div>
         </div>
 
       </div>
     </div>
-    <div class="carrera-container__content">
-      <div class="carrera-container__content__firstSection container rowpadd">
+    <div class="educacion-tecnica-container__content">
+      <div class="educacion-tecnica-container__content__firstSection container rowpadd">
         <div class="row">
-          <div class="col-md-7 carrera-container__content__firstSection__left">
-            <div class="carrera-container__content__firstSection__left__descripcion" [innerHTML]="carrera.contenidoProgramaInformacionDTO[0]?.contenido">
+          <div class="col-md-7 educacion-tecnica-container__content__firstSection__left">
+            <div class="educacion-tecnica-container__content__firstSection__left__descripcion" [innerHTML]="carrera.contenidoProgramaInformacionDTO[0]?.contenido">
             </div>
           </div>
-          <div class="col-md-5 carrera-container__content__firstSection__right" style="background-color: green">
+          <div class="col-md-5 educacion-tecnica-container__content__firstSection__right" style="background-color: green">
 
           </div>
         </div>
       </div>
-      <div class="carrera-container__content__secondSection">
+      <div class="educacion-tecnica-container__content__secondSection">
         <div class="container rowpadd">
           <div class="row">
             <mat-tab-group>
               <mat-tab *ngFor="let item of generalInformacion" label="{{item.titulo}}">
-                <div class="carrera-container__content__secondSection__item" [innerHTML]="item.contenido">
+                <div class="educacion-tecnica-container__content__secondSection__item" [innerHTML]="item.contenido">
                 </div>
               </mat-tab>
             </mat-tab-group>
           </div>
         </div>
       </div>
-      <div class="carrera-container__content__thirdSection">
+      <div class="educacion-tecnica-container__content__thirdSection">
         <div class="container rowpadd">
           <div class="row">
             <div class="col-lg-8">
@@ -77,16 +77,16 @@
 
         </div>
       </div>
-      <div class="carrera-container__content__fourthSection">
+      <div class="educacion-tecnica-container__content__fourthSection">
         <div class="container rowpadd">
           <div class="row">
-            <div class="col-md-4 carrera-container__content__fourthSection__img-container" >
+            <div class="col-md-4 educacion-tecnica-container__content__fourthSection__img-container" >
               <img src="/assets/imagenes/certificado-carrera-tecnica-atencion-al-cliente.png" alt="">
             </div>
-            <div class="col-md-8 carrera-container__content__fourthSection__information-container" >
+            <div class="col-md-8 educacion-tecnica-container__content__fourthSection__information-container" >
               <h1>Certificación</h1>
               <div
-                class="carrera-container__content__fourthSection__information-container__detail"
+                class="educacion-tecnica-container__content__fourthSection__information-container__detail"
                 [innerHTML]="carrera.contenidoProgramaInformacionDTO[6]?.contenido">
               </div>
               <div>
@@ -96,7 +96,7 @@
           </div>
         </div>
       </div>
-      <div class="carrera-container__content__fiveSection">
+      <div class="educacion-tecnica-container__content__fiveSection">
         <img src="/assets/imagenes/arquetipo-atencion-al-cliente-2.png" alt="">
       </div>
     </div>
