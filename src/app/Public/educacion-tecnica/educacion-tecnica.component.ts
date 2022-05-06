@@ -18,6 +18,7 @@ export class EducacionTecnicaComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    console.log('Nero')
     this.getCarreras();
     this.confs = {
       titulo: 'Descubre Más',
@@ -42,11 +43,13 @@ export class EducacionTecnicaComponent implements OnInit {
   getCarreras(){
     this._CarreraProfesionalService.GetCarrerasVista(16).subscribe({
       next:(x)=>{
+        console.log(x)
         this.carreras = x.listaProfesionVistaDTO.map(function(carrera: any) {
           carrera.imagen = 'https://img.bsginstitute.com/repositorioweb/img/carreras/'  + carrera.imagen
-          carrera.urlWeb = carrera.titulo.replace(/ /g, "-")+'-'+carrera.idBusqueda
-          return carrera          
+          carrera.urlWeb = '/tecnico-productivo/'+carrera.titulo.replace(/ /g, "-")+'-'+carrera.idBusqueda
+          return carrera
         })
+
       },
       error:(x)=>{console.log(x)}
     });

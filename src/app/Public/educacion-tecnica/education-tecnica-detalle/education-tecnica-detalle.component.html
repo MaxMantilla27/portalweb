@@ -1,4 +1,4 @@
-<div class="carrera-container">
+<div class="educacion-tecnica-container">
   <div *ngIf="!loader" class="loader">
     <mat-spinner></mat-spinner>
   </div>
@@ -6,28 +6,28 @@
     <div class="container breadcrumb">
       <app-miga-pan [items]="migaPan"></app-miga-pan>
     </div>
-    <div class="carrera-container__header">
+    <div class="educacion-tecnica-container__header">
       <div class="container rowpadd">
         <div class="row">
-          <div class="col-md-8 carrera-container__header__information">
-            <div class="carrera-container__header__information__title" [innerHTML]="carrera.programaGeneralInformacionVistaDTO?.tituloHtml">
+          <div class="col-md-8 educacion-tecnica-container__header__information">
+            <div class="educacion-tecnica-container__header__information__title" [innerHTML]="carrera.programaGeneralInformacionVistaDTO?.tituloHtml">
             </div>
-            <div class="carrera-container__header__information__button">
+            <div class="educacion-tecnica-container__header__information__button">
               <app-default-button [confs]="{color: 'primary', titulo: 'Inscribirme Ahora'}"></app-default-button>
             </div>
           </div>
-          <div class="col-md-4 carrera-container__header__img">
+          <div class="col-md-4 educacion-tecnica-container__header__img">
             <img [src]="rutaImagen+carrera.programaGeneralInformacionVistaDTO?.imagenPrograma" alt="">
           </div>
         </div>
 
       </div>
     </div>
-    <div class="carrera-container__content">
-      <div class="carrera-container__content__firstSection container rowpadd">
+    <div class="educacion-tecnica-container__content">
+      <div class="educacion-tecnica-container__content__firstSection container rowpadd">
         <div class="row">
-          <div class="col-md-7 carrera-container__content__firstSection__left">
-            <div class="carrera-container__content__firstSection__left__descripcion" [innerHTML]="carrera.contenidoProgramaInformacionDTO[0]?.contenido">
+          <div class="col-md-7 educacion-tecnica-container__content__firstSection__left">
+            <div class="educacion-tecnica-container__content__firstSection__left__descripcion" [innerHTML]="carrera.contenidoProgramaInformacionDTO[0]?.contenido">
             </div>
           </div>
           <div class="col-md-5 carrera-container__content__firstSection__right" >
@@ -41,24 +41,24 @@
           </div>
         </div>
       </div>
-      <div class="carrera-container__content__secondSection">
+      <div class="educacion-tecnica-container__content__secondSection">
         <div class="container rowpadd">
           <div class="row">
             <mat-tab-group>
               <mat-tab *ngFor="let item of generalInformacion" label="{{item.titulo}}">
-                <div class="carrera-container__content__secondSection__item" [innerHTML]="item.contenido">
+                <div class="educacion-tecnica-container__content__secondSection__item" [innerHTML]="item.contenido">
                 </div>
               </mat-tab>
             </mat-tab-group>
           </div>
         </div>
       </div>
-      <div class="carrera-container__content__thirdSection">
+      <div class="educacion-tecnica-container__content__thirdSection">
         <div class="container rowpadd">
           <div class="row">
-            <div class="col-lg-8">
+            <div class="col-lg-8 educacion-tecnica-container__content__thirdSection__left">
               <h1 style="padding-bottom: 2rem">Estructura Curricular</h1>
-              <mat-expansion-panel hideToggle *ngFor="let item of planEstudios;let i =index" (opened)="item.opened=true" (closed)="item.opened=false">
+              <mat-expansion-panel class="panel-tecnica" hideToggle                        *ngFor="let item of estructuraCurricular;let i =index" (opened)="item.opened=true" (closed)="item.opened=false">
                 <mat-expansion-panel-header>
                   <mat-panel-title>
                     <div *ngIf="item.opened===true">
@@ -74,26 +74,74 @@
                   <li *ngFor="let subItem of item.subTitulo">{{subItem.contenido}}</li>
                 </ul>
               </mat-expansion-panel>
+              <div
+                class="educacion-tecnica-container__content__fourthSection__information-container__detail"
+                [innerHTML]="descripcionEstructuraCurricular">
+              </div>
             </div>
-            <div class="col-lg-4">
-              <h1>Formulario</h1>
+            <div class="col-lg-4 educacion-tecnica-container__content__thirdSection__right">
+              <div class="educacion-tecnica-container__content__thirdSection__right__form-container">
+                <div class="educacion-tecnica-container__content__thirdSection__right__form-container__header">
+                  <div class="educacion-tecnica-container__content__thirdSection__right__form-container__header__pregunta">
+                    <div class="educacion-tecnica-container__content__thirdSection__right__form-container__header__pregunta__signo-a">
+                      <h1>¿</h1>
+                    </div>
+                    <div class="educacion-tecnica-container__content__thirdSection__right__form-container__header__pregunta__texto">
+                      <h2>Tienes dudas sobre algún aspecto del programa</h2>
+                    </div>
+                    <div class="educacion-tecnica-container__content__thirdSection__right__form-container__header__pregunta__signo-b">
+                      <h1>?</h1>
+                    </div>
+                  </div>
+                  <p>Registra tus datos para que un asesor especializado pueda ayudarte en todo lo que requieras</p>
+                </div>
+                <div class="educacion-tecnica-container__content__thirdSection__right__form-container__content">
+                  <form class="example-form">
+                    <mat-form-field class="example-full-width" appearance="outline">
+                      <mat-label>Favorite food</mat-label>
+                      <input matInput placeholder="Ex. Pizza" value="Sushi">
+                    </mat-form-field>
+                    <mat-form-field class="example-full-width" appearance="outline">
+                      <mat-label>Favorite food</mat-label>
+                      <input matInput placeholder="Ex. Pizza" value="Sushi">
+                    </mat-form-field>
+                    <mat-form-field class="example-full-width" appearance="outline">
+                      <mat-label>Favorite food</mat-label>
+                      <input matInput placeholder="Ex. Pizza" value="Sushi">
+                    </mat-form-field>
+                    <mat-form-field class="example-full-width" appearance="outline">
+                      <mat-label>Favorite food</mat-label>
+                      <input matInput placeholder="Ex. Pizza" value="Sushi">
+                    </mat-form-field>
+                    <mat-form-field class="example-full-width" appearance="outline">
+                      <mat-label>Favorite food</mat-label>
+                      <input matInput placeholder="Ex. Pizza" value="Sushi">
+                    </mat-form-field>
+                    <mat-form-field class="example-full-width" appearance="outline">
+                      <mat-label>Favorite food</mat-label>
+                      <input matInput placeholder="Ex. Pizza" value="Sushi">
+                    </mat-form-field>
+                    <div class="educacion-tecnica-container__content__thirdSection__right__form-container__content__button">
+                      <app-default-button [confs]="{color: 'primary', titulo: 'Solicitar Información'}" ></app-default-button>
+                    </div>
+                  </form>
+                </div>
+              </div>
             </div>
           </div>
-
-
         </div>
       </div>
-      <div class="carrera-container__content__fourthSection">
+      <div class="educacion-tecnica-container__content__fourthSection">
         <div class="container rowpadd">
           <div class="row">
-            <div class="col-md-4 carrera-container__content__fourthSection__img-container" >
+            <div class="col-md-4 educacion-tecnica-container__content__fourthSection__img-container" >
               <img src="/assets/imagenes/certificado-carrera-tecnica-atencion-al-cliente.png" alt="">
             </div>
-            <div class="col-md-8 carrera-container__content__fourthSection__information-container" >
+            <div class="col-md-8 educacion-tecnica-container__content__fourthSection__information-container" >
               <h1>Certificación</h1>
               <div
-                class="carrera-container__content__fourthSection__information-container__detail"
-                [innerHTML]="carrera.contenidoProgramaInformacionDTO[6]?.contenido">
+                class="educacion-tecnica-container__content__fourthSection__information-container__detail"
+                [innerHTML]="certificaciones">
               </div>
               <div>
                 <app-default-button [confs]="{color: 'primary', titulo: 'Solicita Información'}"></app-default-button>
@@ -102,7 +150,7 @@
           </div>
         </div>
       </div>
-      <div class="carrera-container__content__fiveSection">
+      <div class="educacion-tecnica-container__content__fiveSection">
         <img src="/assets/imagenes/arquetipo-atencion-al-cliente-2.png" alt="">
       </div>
     </div>

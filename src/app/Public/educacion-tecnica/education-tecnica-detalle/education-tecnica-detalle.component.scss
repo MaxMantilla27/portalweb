@@ -6,7 +6,7 @@
   align-items: center;
   justify-content: center;
 }
-.carrera-container {
+.educacion-tecnica-container {
   &__header {
     background: #f4f4f4;
     padding-top: 3rem;
@@ -17,7 +17,6 @@
       word-wrap: break-word;
       &__title {
         h1 {
-          color: red !important;
           font-weight: 800 !important;
         }
       }
@@ -51,6 +50,9 @@
           }
         }
       }
+      &__right {
+        padding-left: 3rem;
+      }
     }
     &__secondSection {
       padding-top: 3rem;
@@ -67,18 +69,84 @@
       }
     }
     &__thirdSection {
-      mat-icon {
-        color:  #2EBBF3;
-        font-size: 1rem;
-        @media (max-width: 780px) {
+      &__left {
+        padding-left: 2rem;
+        padding-right: 2rem;
+        p {
+          margin-top: 2rem;
+          color: #B0B0B0;
           font-size: 0.7rem;
         }
+        mat-icon {
+          color:  #2EBBF3;
+          font-size: 1rem;
+        }
+        span {
+          color: #888888;
+          font-size: 1rem;
+        }
       }
-      span {
-        color: #888888;
-        font-size: 1rem;
-        @media (max-width: 780px) {
-          font-size: 0.7rem;
+      &__right {
+        padding-left: 2rem;
+        padding-right: 2rem;
+        &__form-container {
+          background-color: #CFFFE6;
+          border-radius: 10px;
+          padding: 1rem;
+          &__header {
+            text-align: center;
+            &__pregunta {
+              height: 100%;
+              display: flex;
+              justify-content: space-around;
+              color: #0986F2;
+              &__signo-a {
+                padding: 0;
+                margin: 0;
+                display: flex;
+                align-items: flex-start;
+                h1 {
+                  font-size: 3rem !important;
+                }
+              }
+              &__texto {
+                display: flex;
+                align-items: center !important;
+                justify-content: center !important;
+                word-wrap: break-word;
+                h2 {
+                  padding-left: 2rem;
+                  padding-right: 2rem;
+                  font-weight: 800;
+                  font-size: 1.2rem !important;
+                }
+              }
+              &__signo-b {
+                display: flex;
+                align-items: flex-end;
+                h1 {
+                  font-size: 3rem !important;
+                }
+              }
+            }
+            p {
+              font-size: 0.8rem;
+            }
+          }
+          &__content {
+            text-align: center !important;
+            mat-form-field {
+              width: 100%;
+              font-size: 12px;
+            }
+            .mat-form-field-outline {
+              background-color: white;
+              border-radius: 5px;
+            }
+            &__button {
+              width: 100% !important;
+            }
+          }
         }
       }
     }
@@ -115,3 +183,19 @@
     }
   }
 }
+.panel-tecnica {
+  margin-bottom: 0px;
+  border-radius: 0px;
+  box-shadow: 0px 0px 0px transparent !important;
+  background: #fafafa;
+}
+.panel-tecnica mat-expansion-panel-header{
+  padding: 1rem;
+  border-bottom: 1px solid #dcdcdc;
+  border-top: 1px solid #dcdcdc;
+  height: auto;
+}
+.panel-tecnica  .mat-expansion-panel-content .mat-expansion-panel-body{
+  padding: 2rem !important;
+}
+

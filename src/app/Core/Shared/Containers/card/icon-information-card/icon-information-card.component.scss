@@ -3,10 +3,14 @@
   border-radius: 10px;
   padding: 1.5rem 2rem;
   margin-bottom: 1rem;
+  text-align: center;
+  word-wrap: break-word;
   &__img-container {
     margin: 0;
     padding: 0;
     img {
+      max-width: 81px;
+      max-height: 81px;
       width: 100%;
       height: auto;
       object-fit: cover;
