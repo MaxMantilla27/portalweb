@@ -67,7 +67,7 @@
   <div class="container">
     <div class="row rowpadd">
       <div class="col-12 col-md-12 col-lg-12 tabprogram">
-        <mat-tab-group mat-align-tabs="start" class="tabprogram">
+        <mat-tab-group mat-align-tabs="start" >
           <mat-tab label="Objetivos">
             <div [innerHtml]="seccion.objetivo | safeHtml" style="text-align: justify;
             padding: 20px 0px;">
@@ -105,7 +105,8 @@
 <div class="container" #formularioPrograma>
   <div class="row rowpadd">
     <div class="col-12 col-md-8 col-lg-8">
-      <div style="display: flex;justify-content: space-between;align-items: center;">
+      <div
+        style="display: flex;justify-content: space-between;align-items: center;flex-wrap: wrap; margin-bottom: 20px;">
         <div class="subtitulo">Estructura Curricular</div>
         <app-default-button [confs]="{color:'primary',titulo:'Vista previa'}"
           (ButtoclClick)="ObtenerCabeceraProgramaGeneral()"></app-default-button>
@@ -113,7 +114,7 @@
       <mat-accordion class="acordionPrograma" multi>
         <mat-expansion-panel hideToggle *ngFor="let item of estructuraPrograma" (opened)="item.opened=true"
           (closed)="item.opened=false">
-          <mat-expansion-panel-header [ngStyle]="{'padding': item.opened === false?'30px 24px':'0 24px'}">
+          <mat-expansion-panel-header>
             <mat-panel-title>
               <div style="display: flex;align-items: center;">
                 <div *ngIf="item.opened" class="estructuraProgramicon">+</div>
@@ -187,7 +188,7 @@
       </div>
       <div class="piePagina" [innerHtml]="certificado.piePagina | safeHtml"></div>
 
-      <mat-accordion class="acordionPrograma acrdionCertificado" multi>
+      <mat-accordion class="acordionPrograma acrdionCertificado" multi *ngIf="certificado.descripcionHeader!=undefined">
         <mat-expansion-panel hideToggle #acodionCertificado>
           <mat-expansion-panel-header>
             <mat-panel-title>
@@ -287,5 +288,115 @@
       <img class="imgTitle" src="../../../assets/imagenes/extech-learning-09.svg" alt="">
     </div>
     <img class="imgfondo" src="../../../assets/imagenes/imagen-realidad-virtual.png" alt="">
+  </div>
+</div>
+
+<div style="background: #f5f9ff;">
+  <div class="container">
+    <div class="row rowpadd">
+      <div class="col-12 col-md-12 col-lg-12 tabprogram">
+        <div class="subtitulo">Inversión</div>
+        <h4 style="color: #616161;">Versi&oacute;n B&aacute;sica</h4>
+        <div class="" *ngFor="let item of MontoPago" style="display: flex;align-items: center;">
+          <i class="material-icons iconarrow">arrow_forward_ios</i>
+          <div *ngIf="item.idTipoPago==1" style="color: #616161;">Pago al Contado: {{item.simbolo}}.{{item.cuotas}}
+          </div>
+          <div *ngIf="item.idTipoPago==2" style="color: #616161;">Precio en Cuotas: {{item.simbolo}}.{{item.matricula}}
+            + {{item.nroCuotas}} cuotas mensuales desde {{item.simbolo}}.{{item.cuotas}}</div>
+        </div>
+        <div style="color: #616161;font-size: 14px; margin-top: 40px;margin-bottom: 10px;">Consulte por nuestras
+          opciones de pago personalizadas y flexibles asi como las opciones de descuentos.</div>
+        <app-default-button [confs]="{color:'primary',titulo:'Consutar Opción de Pago Personalizado'}"
+          (ButtoclClick)="ScrollTo(formularioPrograma)"></app-default-button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="container">
+  <div class="row rowpadd">
+    <div class="col-12 col-md-12 col-lg-12 tabprogram">
+      <div class="subtitulo">Formas de Pago</div>
+      <div class="cardFormasPago" style="margin-bottom: 40px;">
+        <img class="imgCardFormasPago" src="../../../assets//icons/mexico-icon.svg" alt="">
+        <div>
+          Puede pagar a trav&eacute;s de <strong>Banco de Cr&eacute;dito - BCP,</strong> solo tiene que solicitar su
+          codigo de pago a uno de nuestros asesores
+        </div>
+      </div>
+    </div>
+    <div class="col-12 col-md-12 col-lg-12" style="    margin-bottom: 10px;">
+      Asi mismo puede <strong>pagar a trav&eacute;s de nuestro sitio web</strong> con los siguientes medios de pago:
+    </div>
+    <div class="col-12 col-md-12 col-lg-12">
+      <div class="cardFormasPago">
+        <i class="material-icons iconarrow">arrow_forward_ios</i>
+        <div class="contentCardFormasPago">
+          <div>Tarjetas de Cr&eacute;dito:</div>
+          <img class="imgCardFormasPago" src="../../../assets//icons/mexico-icon.svg" alt="">
+          <img class="imgCardFormasPago" src="../../../assets//icons/mexico-icon.svg" alt="">
+          <img class="imgCardFormasPago" src="../../../assets//icons/mexico-icon.svg" alt="">
+          <img class="imgCardFormasPago" src="../../../assets//icons/mexico-icon.svg" alt="">
+          <img class="imgCardFormasPago" src="../../../assets//icons/mexico-icon.svg" alt="">
+          <img class="imgCardFormasPago" src="../../../assets//icons/mexico-icon.svg" alt="">
+        </div>
+      </div>
+    </div>
+    <div class="col-12 col-md-6 col-lg-6">
+      <div class="cardFormasPago">
+        <i class="material-icons iconarrow">arrow_forward_ios</i>
+        <div class="contentCardFormasPago">
+          <div>Tarjetas de D&eacute;bito:</div>
+          <img class="imgCardFormasPago" src="../../../assets//icons/mexico-icon.svg" alt="">
+        </div>
+      </div>
+    </div>
+    <div class="col-12 col-md-6 col-lg-6">
+      <div class="cardFormasPago">
+        <i class="material-icons iconarrow">arrow_forward_ios</i>
+        <div class="contentCardFormasPago">
+          <div>Paypal:</div>
+          <img class="imgCardFormasPago" src="../../../assets//icons/mexico-icon.svg" alt="">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div style="background: #f5f9ff;">
+  <div class="container">
+    <div class="row rowpadd" style="align-items: end;">
+      <div class="col-12 col-md-8 col-lg-8">
+        <div class="subtitulo" style="line-height: 44px;">¿Te interesa? Comienza con tu programa ahora mismo</div>
+        <div style="    color: #919395;font-size: 18px;">Reserva tu matricula, y acceda a conocimiento especializado muy
+          valorado en el mercado laboral
+          latinoamericano para mejorar su perfil profesional</div>
+      </div>
+      <div class="col-12 col-md-4 col-lg-4" style="display: flex;justify-content: end;align-items: end;">
+        <app-default-button [confs]="{color:'primary',titulo:'Matricularme Ahora'}"
+          (ButtoclClick)="ScrollTo(formularioPrograma)"></app-default-button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="row rowpadd" style="justify-content: center;">
+    <div class="col-12 col-md-12 col-lg-12" style="margin-bottom: 30px;">
+      <div class="subtitulo">Programas Relacionados</div>
+    </div>
+    <ng-container *ngFor="let item of programasRelacionados;let i=index">
+      <div class="col-12 col-md-6 col-lg-3" *ngIf="i<4"  style="margin-bottom: 40px;">
+        <app-card-programas [cardContent]="item" ></app-card-programas>
+      </div>
+    </ng-container>
+    <div class="col-12 col-md-12 col-lg-12" style="margin-top: 30px;margin-bottom: 30px;">
+      <div class="subtitulo">Tags</div>
+    </div>
+    <div class="col-12 col-md-12 col-lg-12" >
+      <div style="display: flex; align-items: center; justify-content: start;flex-wrap: wrap;">
+        <div *ngFor="let item of tags" style="margin-right: 20px;">
+          <app-tag-button [tag]="item"></app-tag-button>
+        </div>
+      </div>
+    </div>
   </div>
 </div>

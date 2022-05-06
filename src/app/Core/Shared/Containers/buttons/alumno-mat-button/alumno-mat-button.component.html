@@ -1,0 +1,27 @@
+<div mat-button [ngClass]="{'bootoncolor':menuTrigger.menuOpen==true}" [matMenuTriggerFor]="menu"
+  #menuTrigger="matMenuTrigger" class="mat-buttonAlumno">
+  <ng-content select="[contenidodata]">
+  </ng-content>
+  <i class="material-icons" (mouseenter)="menuTrigger.openMenu()"
+    [ngClass]="{'tranformi':menuTrigger.menuOpen==true}">arrow_drop_down</i>
+</div>
+<mat-menu #menu="matMenu" class="contentMat">
+  <span (mouseleave)="menuTrigger.closeMenu()">
+    <div class="matAlumnoHeader">
+      <div class="nombres">{{nombres}}</div>
+      <div class="correo">{{user}}</div>
+    </div>
+    <div class="matAlumnoContent">
+
+      <button *ngFor="let item of buttons" [routerLink]="item.Url" mat-menu-item class="mat-menu-content-button">
+        <i class="material-icons">{{item.Icon}}</i>{{item.Nombre}}
+      </button>
+    </div>
+    <div class="matAlumnoFooter">
+
+      <button [routerLink]="'/'" mat-menu-item class="mat-menu-content-button">
+        <i class="material-icons">logout</i>Cerrar sesión
+      </button>
+    </div>
+  </span>
+</mat-menu>

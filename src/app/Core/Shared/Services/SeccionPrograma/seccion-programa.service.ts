@@ -22,5 +22,10 @@ export class SeccionProgramaService {
   public ListCertificacion(IdBusqueda:number):Observable<any>{
     return this.http.get<any>(this.urlBase+'/ListCertificacion?IdBusqueda='+IdBusqueda);
   }
-
+  public ListMontoPago(IdBusqueda:number):Observable<any>{
+    return this.http.get<any>(this.urlBase+'/ListMontoPago?IdBusqueda='+IdBusqueda);
+  }
+  public ListProgramaRelacionado(IdPGeneral:number):Observable<any>{
+    return this.http.get<any>(this.urlBase+'/ListProgramaRelacionado?IdPGeneral='+IdPGeneral);
+  }
 }

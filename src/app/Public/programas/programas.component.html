@@ -13,6 +13,7 @@
       <mat-form-field appearance="outline" style="width: 300px;font-size: 13px;">
         <mat-label>Más áreas de capacitación</mat-label>
         <mat-select (selectionChange)="AreasCapasitacion($event.value)" [(ngModel)]="IdArea" [disabled]="charge">
+          <mat-option  [value]="0">Todos</mat-option>
           <mat-option *ngFor="let item of filtros.areaCapacitacion" [value]="item.id">{{item.nombre}}</mat-option>
         </mat-select>
       </mat-form-field>
@@ -71,13 +72,13 @@
               </div>
               <div class="col-12 col-md-6 col-lg-3">
                 <div class="slider">
-                  <div style="width: auto;">{{monedaRango}}</div>
-                  <div style="width: 500px;">
-                    <mat-slider (change)="onSliderChage($event)" style="width: 100%;" [max]="rangoPrecios" [min]="0"
+                  <div style="width: 34px;">{{monedaRango}}</div>
+                  <div style="width: calc(100% - 68px);">
+                    <mat-slider (change)="onSliderChage($event)" style="width: 100%;min-width: auto;" [max]="rangoPrecios" [min]="0"
                       [(ngModel)]="rangoselect" thumbLabel [disabled]="charge">
                     </mat-slider>
                   </div>
-                  <div style="width: auto;">{{rangoselect}}</div>
+                  <div style="width: 34px;">{{rangoselect}}</div>
                 </div>
 
               </div>
@@ -127,13 +128,13 @@
           </div>
           <div class="col-12 col-md-6 col-lg-3">
             <div class="slider">
-              <div style="width: auto;">{{monedaRango}}</div>
-              <div style="width: 500px;">
-                <mat-slider (change)="onSliderChage($event)" style="width: 100%;" [max]="rangoPrecios" [min]="0"
+              <div style="width: 34px;">{{monedaRango}}</div>
+              <div style="width: calc(100% - 68px);">
+                <mat-slider (change)="onSliderChage($event)" style="width: 100%;min-width: auto;" [max]="rangoPrecios" [min]="0"
                   [(ngModel)]="rangoselect" thumbLabel [disabled]="charge">
                 </mat-slider>
               </div>
-              <div style="width: auto;">{{rangoselect}}</div>
+              <div style="width: 34px;">{{rangoselect}}</div>
             </div>
 
           </div>

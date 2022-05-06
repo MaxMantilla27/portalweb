@@ -1,4 +1,4 @@
-<a *ngIf="link"
+<a (click)="onCliked.emit()" *ngIf="link"
     class="button-general"
     [ngStyle]="{'color': fontColor,
                 'font-weight': fontStyle,

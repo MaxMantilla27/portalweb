@@ -1,0 +1,11 @@
+<div class="card-wp">
+  <div class="title-card-wp" [routerLink]="'white-paper/'+cardContent.urlWeb+'-'+cardContent.idWeb">{{cardContent.nombre}}</div>
+  <div class="content-card-wp">
+    <div class="img-content-card-wp">
+      <img class="img-card-wp" [src]="'https://repositorioweb.blob.core.windows.net/paper-bs/Paper/imagen/'+cardContent.imgPortada" [alt]="cardContent.imgPortadaAlt">
+
+      <div class="link-card-wp link" [routerLink]="'white-paper/'+cardContent.urlWeb+'-'+cardContent.idWeb">Descargar ></div>
+    </div>
+    <div class="description-content-csrd-wp" [innerHTML]="cardContent.descripcion"></div>
+  </div>
+</div>

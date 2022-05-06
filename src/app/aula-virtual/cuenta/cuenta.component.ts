@@ -10,6 +10,7 @@ export class CuentaComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
+    console.log('cuenta-w')
   }
 
 }

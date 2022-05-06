@@ -31,9 +31,13 @@
             </div>
           </div>
           <div class="col-md-5 carrera-container__content__firstSection__right">
-            <app-icon-information-card [item]="{imagen: '/assets/icons/horario-04.svg',imagenAlt: 'Horario',titulo: 'Prueba',subtitulo: 'DSADASDADA'}"></app-icon-information-card>
-            <app-icon-information-card [item]="{imagen: '/assets/icons/precio-03.svg',imagenAlt: 'Precio',titulo: 'Prueba',subtitulo: 'DSADASDADA'}"></app-icon-information-card>
-            <app-icon-information-card [item]="{imagen: '/assets/icons/calendario-05.svg',imagenAlt: 'Calendario',titulo: 'Prueba',subtitulo: 'DSADASDADA'}"></app-icon-information-card>
+            <app-icon-information-card [item]="{imagen: '/assets/icons/horario-04.svg',imagenAlt: 'Horario',titulo: 'Duracion',
+            subtitulo: carrera.programaGeneralInformacionVistaDTO?.duracion+' años , '+(tonumber(carrera.programaGeneralInformacionVistaDTO?.duracion)*2)+' semestres'}"></app-icon-information-card>
+            <app-icon-information-card [item]="{imagen: '/assets/icons/precio-03.svg',imagenAlt: 'Precio',
+            titulo: 'Pensión por ciclo',
+            subtitulo: '1 matricula de '+carrera.montoPagoProgramaInformacionDTO?.simbolo+'.'+carrera.montoPagoProgramaInformacionDTO?.matricula+' y '+carrera.montoPagoProgramaInformacionDTO?.nroCuotas+' pensiones de '+carrera.montoPagoProgramaInformacionDTO?.simbolo+'.'+carrera.montoPagoProgramaInformacionDTO?.cuotas}"></app-icon-information-card>
+            <app-icon-information-card [item]="{imagen: '/assets/icons/calendario-05.svg',imagenAlt: 'Calendario',titulo: 'Admicion '+fecha.getFullYear(),
+            subtitulo: fechaInicio}"></app-icon-information-card>
           </div>
         </div>
       </div>

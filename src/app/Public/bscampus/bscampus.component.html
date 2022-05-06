@@ -1,0 +1,50 @@
+<div class="container">
+  <div class="container breadcrumb">
+    <app-miga-pan [items]="migaPan"></app-miga-pan>
+  </div>
+</div>
+<div style="background: #f4f4f4;">
+  <div class="container">
+    <div class="row rowpadd">
+      <div class="col-12 col-md-9 col-lg-9">
+        <div class="titulop" >
+          Encuentra todo el conocimiento que necesitas en BS Campus
+        </div>
+        <mat-form-field appearance="outline" style="width: 300px;font-size: 13px;margin-top: 20px;">
+          <mat-label>Área</mat-label>
+          <mat-select [(ngModel)]="IdArea" [disabled]="charge">
+            <mat-option  [value]="0">Todos</mat-option>
+            <mat-option *ngFor="let item of Formacion" [value]="item.value">{{item.Nombre}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="container">
+  <div class="row rowpadd">
+    <div class="col-12 col-md-12 col-lg-12 tabArticulo">
+
+      <mat-tab-group mat-align-tabs="start" class="" [selectedIndex]="index">
+        <mat-tab label="Blogs">
+          <div class="row" style="width: 100%;padding: 0px 5px">
+            <ng-container *ngFor="let item of blog">
+              <div class="col-12 col-md-6 col-lg-4 contentCard" *ngIf="IdArea==0 || IdArea==item.idArea">
+                <app-card-blog  [cardContent]="item"></app-card-blog>
+              </div>
+            </ng-container>
+          </div>
+        </mat-tab>
+        <mat-tab label="White Papers">
+          <div class="row" style="width: 100%;padding: 0px 5px">
+            <ng-container *ngFor="let item of whitePapers">
+              <div class="col-12 col-md-12 col-lg-6 contentCard" *ngIf="IdArea==0 || IdArea==item.idArea">
+                <app-card-white-papers  [cardContent]="item"></app-card-white-papers>
+              </div>
+            </ng-container>
+          </div>
+        </mat-tab>
+      </mat-tab-group>
+    </div>
+  </div>
+</div>

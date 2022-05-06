@@ -1,12 +1,19 @@
 import { Component, EventEmitter, Input, OnInit, Output, SimpleChanges, ViewEncapsulation } from '@angular/core';
 import { FormControl } from '@angular/forms';
+import { MAT_SELECT_CONFIG } from '@angular/material/select';
 import { Basic, BasicUrl, BasicUrlIcon } from 'src/app/Core/Models/BasicDTO';
 
 @Component({
   selector: 'app-select',
   templateUrl: './select.component.html',
   styleUrls: ['./select.component.scss'],
-  encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None,
+  providers: [
+    {
+      provide: MAT_SELECT_CONFIG,
+      useValue: { overlayPanelClass: 'customClass' },
+    },
+  ],
 })
 export class SelectComponent implements OnInit {
 
@@ -16,6 +23,7 @@ export class SelectComponent implements OnInit {
   @Input() data:Array<Basic>=[];
   @Input() dataUrl:Array<BasicUrlIcon>=[];
   @Input() valueDefecto:string="INTC";
+  @Input() token:boolean=false;
 
   @Output()
   Cambio: EventEmitter<string> = new EventEmitter<string>();

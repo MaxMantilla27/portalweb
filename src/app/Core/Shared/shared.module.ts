@@ -42,6 +42,19 @@ import {MatSliderModule} from '@angular/material/slider';
 import { SafeHtmlPipe } from './Pipes/safe-html.pipe';
 import { CardExpositoresComponent } from './Containers/card/card-expositores/card-expositores.component';
 import { IconInformationCardComponent } from './Containers/card/icon-information-card/icon-information-card.component';
+import { TagButtonComponent } from './Containers/buttons/tag-button/tag-button.component';
+import { FormularioComponent } from './Containers/formulario/formulario.component';
+import { AspNetUserService } from './Services/AspNetUser/asp-net-user.service';
+import { AlumnoService } from './Services/Alumno/alumno.service';
+import { AvatarService } from './Services/Avatar/avatar.service';
+import { AlumnoMatButtonComponent } from './Containers/buttons/alumno-mat-button/alumno-mat-button.component';
+import { ArticuloService } from './Services/Articulo/articulo.service';
+import { CardBlogComponent } from './Containers/card/card-blog/card-blog.component';
+import { CardWhitePapersComponent } from './Containers/card/card-white-papers/card-white-papers.component';
+import { RegionService } from './Services/Region/region.service';
+import { DatosPortalService } from './Services/DatosPortal/datos-portal.service';
+import { PoliticaPrivacidadService } from './Services/PoliticaPrivacidad/politica-privacidad.service';
+import { TerminosCondicionesService } from './Services/TerminosCondiciones/terminos-condiciones.service';
 
 @NgModule({
   imports: [
@@ -85,7 +98,12 @@ import { IconInformationCardComponent } from './Containers/card/icon-information
     LinkButtonComponent,
     SafeHtmlPipe,
     CardExpositoresComponent,
-    IconInformationCardComponent
+    IconInformationCardComponent,
+    TagButtonComponent,
+    FormularioComponent,
+    AlumnoMatButtonComponent,
+    CardBlogComponent,
+    CardWhitePapersComponent
   ],
   exports: [
     HttpClientModule,
@@ -99,7 +117,11 @@ import { IconInformationCardComponent } from './Containers/card/icon-information
     CarouselComponent,
     ButtonComponent,
     CardExpositoresComponent,
-
+    TagButtonComponent,
+    FormularioComponent,
+    AlumnoMatButtonComponent,
+    CardBlogComponent,
+    CardWhitePapersComponent,
     MatTabsModule,
     MatTableModule,
     MatProgressSpinnerModule,
@@ -133,7 +155,15 @@ import { IconInformationCardComponent } from './Containers/card/icon-information
     HeaderPermissionsService,
     AreacapasitacionService,
     PartnerService,
-    HelperService
+    HelperService,
+    AspNetUserService,
+    AlumnoService,
+    AvatarService,
+    ArticuloService,
+    RegionService,
+    DatosPortalService,
+    PoliticaPrivacidadService,
+    TerminosCondicionesService
   ],
 })
 export class SharedModule {

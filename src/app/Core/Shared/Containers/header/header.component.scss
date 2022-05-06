@@ -81,8 +81,16 @@ body {
   margin-top: -5px;
   padding-bottom: 20px;
 }
+.subnav{
+  display: flex;
+  justify-content: end;
+
+  width: 100%;
+  margin-bottom: 10px;
+  margin-top: -20px;
+  padding-right: 20px;
+}
 .space-bet {
-  width: 80%;
 }
 .mat-toolbar {
   display: flex;
@@ -113,7 +121,7 @@ body {
 .mat-toolbar-single-row {
   height: auto !important;
   overflow: hidden;
-  height: 77px !important;
+  //height: 77px !important;
 }
 .mat-toolbar nav a:hover {
   border-bottom-color: #f5a623;

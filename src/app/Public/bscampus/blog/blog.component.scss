@@ -1,0 +1,57 @@
+.descripcionBlog{
+
+}
+.descripcionBlog h1{
+  display: none;
+}
+
+.descripcionBlog div{
+  display: none;
+}
+
+.descripcionBlog h2{
+  color: #656564;
+  font-size: 18px;
+  margin-bottom: 20px !important;
+}
+.descripcionBlog p{
+  font-family: 'poppings'!important ;
+    font-size: 14px !important;
+    color: #999999;
+}
+
+.descripcionBlog p span{
+  font-family: 'poppings'!important ;
+    font-size: 14px !important;
+    color: #999999;
+}
+.estructuraBlogForm{
+  width: 100%; background: #cfffe6;border-radius: 10px;padding: 20px 10px;
+}
+.estructuraBlogForm .cotentestructurablogForm{
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  color: #2999f0;
+   font-size: 20px;
+   text-align: center;
+   font-weight: 600;
+   margin-bottom: 10px;
+}
+
+.estructuraBlogForm div .question{
+  display: flex;
+  width: 25%;
+  flex-direction: column;
+}
+.question div{
+  font-size: 40px;
+}
+
+.subtitleEstruturaBlogForm{
+  font-size: 15px;
+    padding: 20px 15px;
+    color: #626b66;
+    font-weight: 300;
+    text-align: center;
+}

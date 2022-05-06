@@ -13,6 +13,15 @@ import { EducacionTecnicaComponent } from './educacion-tecnica/educacion-tecnica
 import { CarreraProfesionalDetalleComponent } from './carreras-profesionales/carrera-profesional-detalle/carrera-profesional-detalle.component';
 import { ProgramasDetalleComponent } from './programas-detalle/programas-detalle.component';
 import { EducationTecnicaDetalleComponent } from './educacion-tecnica/education-tecnica-detalle/education-tecnica-detalle.component';
+import { LibroReclamacionesComponent } from './libro-reclamaciones/libro-reclamaciones.component';
+import { BSCampusComponent } from './bscampus/bscampus.component';
+import { WhitepapersComponent } from './bscampus/whitepapers/whitepapers.component';
+import { BlogComponent } from './bscampus/blog/blog.component';
+import { RegistrarseComponent } from './registrarse/registrarse.component';
+import { TransparenciaComponent } from './transparencia/transparencia.component';
+import { TerminosCondicionesComponent } from './terminos-condiciones/terminos-condiciones.component';
+import { PoliticaPrivacidadComponent } from './politica-privacidad/politica-privacidad.component';
+import { AcercaDeComponent } from './acerca-de/acerca-de.component';
 
 @NgModule({
   imports: [
@@ -31,7 +40,16 @@ import { EducationTecnicaDetalleComponent } from './educacion-tecnica/education-
     ProgramasComponent,
     CarrerasProfesionalesComponent,
     EducationTecnicaDetalleComponent,
-    ProgramasDetalleComponent
+    ProgramasDetalleComponent,
+    LibroReclamacionesComponent,
+    BSCampusComponent,
+    WhitepapersComponent,
+    BlogComponent,
+    RegistrarseComponent,
+    TransparenciaComponent,
+    TerminosCondicionesComponent,
+    PoliticaPrivacidadComponent,
+    AcercaDeComponent
   ],
   exports: [],
   providers: [

@@ -2,15 +2,18 @@ import { isPlatformBrowser } from '@angular/common';
 import { Component, Inject, OnInit, PLATFORM_ID, ViewEncapsulation } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { NgbCarouselConfig } from '@ng-bootstrap/ng-bootstrap';
+import { CardProgramasDTO } from 'src/app/Core/Models/BasicDTO';
 import { BeneficiosDTO } from 'src/app/Core/Models/BeneficiosDTO';
 import { estructuraCursoDTO } from 'src/app/Core/Models/EstructuraProgramaDTO';
 import { listaExpositorDTO } from 'src/app/Core/Models/listaExpositorDTO';
-import { programaCabeceraDetalleDTO,listaSeccionPrograma, listaPrerrequisitoDTO, listaCertificacionDTO } from 'src/app/Core/Models/SeccionProgramaDTO';
+import { listaTagDTO } from 'src/app/Core/Models/listaTagDTO';
+import { programaCabeceraDetalleDTO,listaSeccionPrograma, listaPrerrequisitoDTO, listaCertificacionDTO, listaMontoPagoProgramaInformacionDTO } from 'src/app/Core/Models/SeccionProgramaDTO';
 import { BeneficioService } from 'src/app/Core/Shared/Services/Beneficio/beneficio.service';
 import { ExpositorService } from 'src/app/Core/Shared/Services/Expositor/expositor.service';
 import { ProgramaService } from 'src/app/Core/Shared/Services/Programa/programa.service';
 import { SeccionProgramaService } from 'src/app/Core/Shared/Services/SeccionPrograma/seccion-programa.service';
 import { SilaboService } from 'src/app/Core/Shared/Services/Silabo/silabo.service';
+import { TagService } from 'src/app/Core/Shared/Services/Tag/tag.service';
 
 @Component({
   selector: 'app-programas-detalle',
@@ -28,6 +31,7 @@ export class ProgramasDetalleComponent implements OnInit {
     private _BeneficioService:BeneficioService,
     private _SilaboService:SilaboService,
     private _ExpositorService:ExpositorService,
+    private _TagService:TagService,
     config: NgbCarouselConfig,
     @Inject(PLATFORM_ID) platformId: Object
     ) {
@@ -39,6 +43,7 @@ export class ProgramasDetalleComponent implements OnInit {
   public area='';
   public idBusqueda=0;
   public contenidoCabecera='';
+  public tags:Array<listaTagDTO>=[]
   public cabecera:programaCabeceraDetalleDTO={
     areaCapacitacion:'',
     areaDescripcion:'',
@@ -76,7 +81,9 @@ export class ProgramasDetalleComponent implements OnInit {
   public stepExpositors:Array<Array<listaExpositorDTO>>=[];
   public estructuraPrograma:Array<estructuraCursoDTO>=[];
   public beneficios:Array<BeneficiosDTO>=[]
+  public programasRelacionados:Array<CardProgramasDTO>=[];
   public idPegeneral=0;
+  public MontoPago:Array<listaMontoPagoProgramaInformacionDTO>=[];
   public BeneficiosPiePagina='';
   public EstructuraPiePagina='';
   public PrerrequisitosPiePagina='';
@@ -104,6 +111,8 @@ export class ProgramasDetalleComponent implements OnInit {
     this.ListBeneficioPrograma();
     this.ListCertificacion();
     this.ListExpositor();
+    this.ListMontoPago();
+    this.ListTagProgramaRelacionadoPorIdBusqueda();
   }
   ObtenerCabeceraProgramaGeneral(){
     this._SeccionProgramaService.ObtenerCabeceraProgramaGeneral(this.idBusqueda).subscribe({
@@ -146,6 +155,7 @@ export class ProgramasDetalleComponent implements OnInit {
         })
         this.idPegeneral=x.idPGeneral;
         this.ObtenerSilaboCurso();
+        this.ListProgramaRelacionado();
         //this.prerequisitos=x.listaPrerrequisitoDTO;
       }
     })
@@ -224,17 +234,19 @@ export class ProgramasDetalleComponent implements OnInit {
       next:(x)=>{
         console.log(x)
         this.certificado=x.listaCertificacionDTO
-        var desc=this.certificado.descripcion.split('</strong></p>');
-        if(desc.length>2){
-          this.certificado.descripcionHeader=desc[0]+'</strong></p>'
-          let i=0;
-          this.certificado.descripcionBody='';
-          desc.forEach(d=>{
-            if(i!=0){
-              this.certificado.descripcionBody+=d+'</strong></p>'
-            }
-            i++;
-          })
+        if(this.certificado.descripcion!=null){
+          var desc=this.certificado.descripcion.split('</strong></p>');
+          if(desc.length>2){
+            this.certificado.descripcionHeader=desc[0]+'</strong></p>'
+            let i=0;
+            this.certificado.descripcionBody='';
+            desc.forEach(d=>{
+              if(i!=0){
+                this.certificado.descripcionBody+=d+'</strong></p>'
+              }
+              i++;
+            })
+          }
         }
       }
     })
@@ -260,6 +272,46 @@ export class ProgramasDetalleComponent implements OnInit {
         if(step.length>0){
           this.stepExpositors.push(step);
         }
+      }
+    })
+  }
+  ListMontoPago(){
+    this._SeccionProgramaService.ListMontoPago(this.idBusqueda).subscribe({
+      next:(x)=>{
+        console.log(x)
+        this.MontoPago=x.listaMontoPagoProgramaInformacionDTO
+
+        this.MontoPago.sort(function(a, b) {
+          return a.idTipoPago - b.idTipoPago;
+        });
+      }
+    })
+  }
+  ListProgramaRelacionado(){
+    this._SeccionProgramaService.ListProgramaRelacionado(this.idPegeneral).subscribe({
+      next:(x)=>{
+        console.log(x)
+        this.programasRelacionados=x.listaProgramaRelacionadoDTO.map(
+          (c:any)=>{
+
+            var urlArea=c.areaCapacitacion.replace(/\s+/g, '-')
+            var urlSubArea=c.nombre.replace(' - ', '-')
+            var urlSubArea=urlSubArea.replace(/\s+/g, '-')
+            var ps:CardProgramasDTO={Content:c.montoPagoDescripcion,Url:'/'+urlArea+'/'+urlSubArea+'-'+c.idBusqueda,Img:'https://img.bsginstitute.com/repositorioweb/img/programas/'+c.imagen,ImgAlt:c.imagenAlt,Title:c.nombre};
+            return ps;
+          }
+        );
+      }
+    })
+  }
+  ListTagProgramaRelacionadoPorIdBusqueda(){
+    this._TagService.ListTagProgramaRelacionadoPorIdBusqueda(this.idBusqueda).subscribe({
+      next:(x)=>{
+        console.log(x);
+        this.tags=x.listaTagDTO
+        this.tags.forEach(x=>{
+          x.codigo='/tag/'+x.codigo
+        })
       }
     })
   }

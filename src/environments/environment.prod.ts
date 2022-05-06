@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  url_api:'https://localhost:7177/api'
+  url_api:'https://api-portalweb.bsginstitute.com/api/'
 };

@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 @Component({
   selector: 'app-link-button',
@@ -19,6 +19,11 @@ export class LinkButtonComponent implements OnInit {
   fontSize: any
   @Input ()
   link: boolean = true
+
+
+  @Output()
+  onCliked: EventEmitter<null> = new EventEmitter<null>();
+
   constructor() { }
 
   ngOnInit(): void {

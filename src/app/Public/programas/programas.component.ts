@@ -1,4 +1,5 @@
-import { Component, ElementRef, HostListener, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
+import { Component, ElementRef, HostListener, Inject, OnInit, PLATFORM_ID, ViewChild, ViewEncapsulation } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MatSelect } from '@angular/material/select';
 import { ActivatedRoute } from '@angular/router';
@@ -23,13 +24,17 @@ export class ProgramasComponent implements OnInit {
   @ViewChild('ModalidadMatSelect')
   SelectModalidad!: MatSelect;
   @ViewChild('fixedelement') element!: ElementRef;
+  isBrowser: boolean;
   constructor(
     private activatedRoute:ActivatedRoute,
     private _ProgramasService:ProgramasService,
     private _SessionStorageService:SessionStorageService,
-    private _HelperService:HelperService
-  ) { }
-  public IdArea?:any;
+    private _HelperService:HelperService,
+    @Inject(PLATFORM_ID) platformId: Object
+  ) {
+    this.isBrowser = isPlatformBrowser(platformId);
+  }
+  public IdArea:number=0;
   public Title='Programas, certificaciónes y cursos';
   public filtros:FiltrosProgramasDTO={areaCapacitacion:[],modalidad:[],tipoPrograma:[]};
   public rangoPrecios=9700
@@ -62,8 +67,10 @@ export class ProgramasComponent implements OnInit {
   public scrollValue=0;
 
   ngOnInit(): void {
-    this.innerWidth = window.innerWidth;
-    if(this.innerWidth<768)this.resposive=true;
+    if(this.isBrowser){
+      this.innerWidth = window.innerWidth;
+      if(this.innerWidth<768)this.resposive=true;
+    }
     this.CodigoIso = this._SessionStorageService.SessionGetValue('ISO_PAIS')!=''?this._SessionStorageService.SessionGetValue('ISO_PAIS'):'INTC';
     if(this.CodigoIso.toUpperCase()=='PE'){this.rangoPrecios=16800;this.monedaRango='S/. 0 ';}
     if(this.CodigoIso.toUpperCase()=='CO'){this.rangoPrecios=10000000;this.monedaRango='COL$ 0';}
@@ -74,7 +81,7 @@ export class ProgramasComponent implements OnInit {
         if(x['IdArea']!=undefined){
           this.IdArea=x['IdArea']
         }else{
-          this.IdArea='';
+          this.IdArea=0;
         }
         this.GetProgramas();
         this.GetFiltroProgramas()
@@ -104,7 +111,7 @@ export class ProgramasComponent implements OnInit {
 
         this.Modalidad=this.filtros.modalidad;
         this.TipoPrograma=this.filtros.tipoPrograma;
-        this.IdArea=parseInt(this.IdArea);
+        this.IdArea=this.IdArea;
       }
     })
   }
@@ -112,6 +119,9 @@ export class ProgramasComponent implements OnInit {
     this.IdArea=e;
     var area=this.filtros.areaCapacitacion.find(x=>x.id==this.IdArea);
     this.Title=area==undefined?this.Title:area.nombre;
+    if(this.IdArea==0){
+      this.Title='Programas, certificaciónes y cursos';
+    }
     this.SubAreas=area==undefined?[]:area.subAreaCapacitacion;
     this.SubAreaSelect=[];
     this.GetProgramas();
@@ -195,7 +205,7 @@ export class ProgramasComponent implements OnInit {
   GetProgramas(){
     this.send.Maximo=this.rangoselect;
     console.log(this.IdArea);
-    this.send.idArea=[parseInt(this.IdArea)];
+    this.send.idArea=[this.IdArea];
     if(Number(this.IdArea)==0 || isNaN(this.IdArea)){
       this.send.idArea=[];
       console.log(this.send.idArea);

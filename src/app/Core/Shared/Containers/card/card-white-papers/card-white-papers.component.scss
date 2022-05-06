@@ -1,0 +1,48 @@
+.card-wp{
+  padding: 10px;
+    border-radius: 5px;
+    width: 100%;
+    height: 100%;
+    box-shadow: 2px 1px 1px 1px rgb(0 0 0 / 20%), -1px 1px 1px 0px rgb(0 0 0 / 14%), 0px 1px 3px 0px rgb(0 0 0 / 12%) !important;
+}
+.title-card-wp{
+  font-size: 18px;
+  font-weight: 800;
+  color: #585857;
+  margin: 10px 0px 20px 0px;
+  cursor: pointer;
+}
+
+.title-card-wp:hover{
+  color: #3199f4;
+  text-decoration: underline;
+}
+.content-card-wp{
+  display: flex;
+  align-items: start;
+  justify-content: center;
+}
+.img-content-card-wp{
+  padding: 0px 10px 10px 0px;
+  max-width: 30%;
+}
+.img-card-wp{
+  width: 100%;
+    height: auto;
+}
+
+.link-card-wp{
+  color: #ff7c2d;
+  font-weight: bold;
+  margin-top: 10px;
+  cursor: pointer;
+}
+
+.link-card-wp:hover{
+
+  text-decoration: underline;
+}
+.description-content-csrd-wp{
+  color: #7e7e7d;
+  font-size: 14px;
+}

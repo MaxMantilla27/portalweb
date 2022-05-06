@@ -2,6 +2,7 @@
     <button mat-raised-button
     (click)="ButtoclClick.emit()"
     class="btn-general" [routerLink]="ruta"
+    [style]="style" [disabled]="disabled"
     [ngClass]="{'primary': confs.color === 'primary',
     'danger': confs.color === 'danger' }">
         {{confs.titulo}} >

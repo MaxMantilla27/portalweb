@@ -45,3 +45,11 @@ export interface listaCertificacionDTO{
   descripcionHeader:string;
   descripcionBody:string;
 }
+
+export interface listaMontoPagoProgramaInformacionDTO{
+  cuotas:string;
+  idTipoPago:number;
+  matricula:string;
+  nroCuotas:number;
+  simbolo:string;
+}

@@ -22,7 +22,8 @@ export class CarreraProfesionalDetalleComponent implements OnInit {
   // faeke renderiza toda la app public video: string = '<iframe src="player.vimeo.com/video/304251200?title=0&amp;amp;byline=0" width="425" height="350" ></iframe>'
   public videoPrueba: string = '&lt;iframe src=\"//player.vimeo.com/video/304251200?title=0&amp;amp;byline=0\"\"&gt;&lt;/iframe&gt;<vacio></vacio>'
   public loader: boolean = false
-
+  public fecha=new Date();
+  public fechaInicio='Por definir';
   constructor(
     private router: Router,
     private activatedRoute: ActivatedRoute,
@@ -56,6 +57,9 @@ export class CarreraProfesionalDetalleComponent implements OnInit {
     })
     this.videoPrueba = this.formatVideo(this.videoPrueba)
   }
+  tonumber(valor:any){
+    return parseInt(valor);
+  }
   getCarreraDetalle(idBusqueda:number, nombre:string){
     this._CarreraProfesionalService.GetCarrerasDetalle(idBusqueda, nombre).subscribe({
       next:(x)=>{
@@ -83,6 +87,12 @@ export class CarreraProfesionalDetalleComponent implements OnInit {
         let contenidoCertificacionSplit = this.carrera.contenidoProgramaInformacionDTO[8].contenido.split("<p>&nbsp;</p>")
         this.notaCertificacionAdicional = contenidoCertificacionSplit[contenidoCertificacionSplit.length-1]
         this.loader = true
+        this.carrera.programaEspecificoInformacionDTO?.forEach((element:any) => {
+          var fecha=new Date(element.fechaCreacion);
+          if(fecha.getFullYear()==this.fecha.getFullYear() && element.fechaInicioTexto!=null){
+            this.fechaInicio=element.fechaInicioTexto
+          }
+        });
       },
       error:(x)=>{console.log(x)}
     });

@@ -45,5 +45,10 @@ export class SessionStorageService {
     }
     return 'INTC'
   }
+  SessionDeleteValue(name:string):void{
+    if(this.isBrowser){
+      sessionStorage.removeItem(name)
+    }
+  }
 
 }

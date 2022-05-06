@@ -7,17 +7,17 @@
           <div class="row">
             <div class="col-sm-12 item-footer">
               <div class="subitem-container">
-                <a href="">Valores corporativos</a>
+                <a routerLink="/AcercaBsGrupo">Valores corporativos</a>
               </div>
             </div>
             <div class="col-sm-12 item-footer">
               <div class="subitem-container">
-                <a href="">En números</a>
+                <a routerLink="/AcercaBsGrupo">En números</a>
               </div>
             </div>
             <div class="col-sm-12 item-footer">
               <div class="subitem-container">
-                <a href="">Política de calidad</a>
+                <a routerLink="/AcercaBsGrupo">Política de calidad</a>
               </div>
             </div>
           </div>
@@ -29,7 +29,7 @@
           <div class="row">
             <div class="col-sm-12 item-footer" *ngFor="let item of servicios">
               <div class="subitem-container" >
-                <a routerLink="{{item.route}}">{{item.title}}</a> 
+                <a routerLink="{{item.route}}">{{item.title}}</a>
               </div>
             </div>
           </div>
@@ -66,7 +66,7 @@
                   <div class="redes-item"  *ngFor="let item of redesSociales">
                     <a [href]="item.route" target="_blank"><img [src]="item.icono" alt="{{item.name}}"></a>
                   </div>
-                </div> 
+                </div>
               </div>
             </div>
           </div>
@@ -80,15 +80,15 @@
     <div class="row">
       <div class="col-md-8">
         <span class="copyrigth">
-          © 2020 BSG Institute, todos los derechos reservados • Términos de uso • Política de privacidad <br>
-          PMI, PMP, PMI-RMP, PMI-SP, CAPM, PMBOK, PMI Agile Certified Practitioner (PMI-ACP), Project Management Professional 
+          © 2020 BSG Institute, todos los derechos reservados • <a routerLink="/termino-uso-web">Términos de uso</a>  • <a routerLink="/politica-privacidad">Política de privacidad</a><br>
+          PMI, PMP, PMI-RMP, PMI-SP, CAPM, PMBOK, PMI Agile Certified Practitioner (PMI-ACP), Project Management Professional
           y el logotipo PMI Registered Education Provider son marcas registradas del Project Management Institute, Inc. <br>
           The Open Group, TOGAF® and The Open Group Certification logo are trademarks of The Open Group.
         </span>
       </div>
       <div class="col-md-4 reclamaciones-container">
         <img src="../../../../../assets/icons/libro-reclamaciones-icon.svg" alt="">
-          <span class="reclamaciones" routerLink="/carreras-profesionales">
+          <span class="reclamaciones" routerLink="/LibroReclamacion">
             Libro de Reclamaciones
           </span>
       </div>

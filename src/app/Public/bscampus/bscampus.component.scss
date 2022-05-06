@@ -1,0 +1,36 @@
+
+.tabArticulo mat-tab-group mat-tab-header .mat-tab-label-container .mat-tab-list .mat-tab-labels .mat-tab-label{
+  opacity: 1 !important;
+  padding: 0px !important
+}
+.tabArticulo mat-tab-group mat-tab-header .mat-tab-label-container .mat-tab-list .mat-tab-labels .mat-tab-label .mat-tab-label-content{
+  width: 100% !important;
+}
+.tabArticulo mat-tab-group mat-tab-header {
+  border-bottom:solid 1px transparent
+}
+.tabArticulo mat-tab-group mat-tab-header .mat-tab-label-container .mat-tab-list .mat-tab-labels div{
+  font-size: 20px;
+  font-weight: bold;
+  color: #4a4a49;
+}
+.tabArticulo mat-tab-group mat-tab-header .mat-tab-label-container .mat-tab-list .mat-tab-labels .mat-tab-label-active{
+  color: #0684f2 !important;
+  text-decoration: underline;
+}
+.tabArticulo mat-tab-group mat-tab-header .mat-tab-label-container .mat-tab-list .mat-tab-labels .mat-tab-label-active div{
+  color: #0684f2 !important;
+  text-decoration: underline;
+}
+.tabArticulo mat-tab-group mat-tab-header .mat-tab-label-container .mat-tab-list  .mat-ink-bar{
+  display: none;
+}
+.tabArticulo mat-tab-group mat-tab-header .mat-tab-label-container .mat-tab-list .mat-tab-labels .mat-ripple:not(:first-child) .mat-tab-label-content{
+  border-left: solid 1px black;
+}
+.tabArticulo mat-tab-group mat-tab-header .mat-tab-label-container .mat-tab-list .mat-tab-labels .mat-ripple:not(:last-child) .mat-tab-label-content{
+  border-right: solid 1px black;
+}
+.contentCard{
+  margin: 25px 0px
+}

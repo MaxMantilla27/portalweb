@@ -5,8 +5,8 @@ import { HomeComponent } from './Public/Home/home.component';
 import { PublicComponent } from './Public/public.component';
 
 const routes:Routes=[
+  {path:'AulaVirtual',loadChildren:()=>import('./aula-virtual/aula-virtual.module').then(m=>m.AulaVirtualModule)},
   {path:'',loadChildren:()=>import('./Public/public.module').then(m=>m.PublicModule)},
-  {path:'AulaVirtual/**',loadChildren:()=>import('./aula-virtual/aula-virtual.module').then(m=>m.AulaVirtualModule)},
   {path:'**',component:PublicComponent}
 ]
 

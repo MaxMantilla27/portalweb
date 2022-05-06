@@ -34,7 +34,7 @@ export class FooterComponent implements OnInit {
       },
       {
         title: 'Transparencia',
-        route: '/transparencia'
+        route: '/Transparencia'
       }
     ]
     this.centralTelefonica = [

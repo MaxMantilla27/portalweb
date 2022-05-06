@@ -99,6 +99,7 @@
 .acordionPrograma mat-expansion-panel mat-expansion-panel-header{
   border-bottom: 1px solid #dcdcdc;
   border-top: 1px solid #dcdcdc;
+  height: auto !important;
 }
 .estructuraProgramTitle{
   color: #8d8d8c;
@@ -119,6 +120,7 @@
 .acrdionCertificado mat-expansion-panel mat-expansion-panel-header{
   border-left: 1px solid #dcdcdc;
   border-right: 1px solid #dcdcdc;
+  height: auto !important;
 }
 .estructuraProgramForm{
   background: #cfffe6;
@@ -174,9 +176,6 @@
 .certificadoContent{
   font-size: 15px;
 }
-.certificadoContent div{
-
-}
 .certificadoContent li{
   padding: 0px 20px;
 }
@@ -220,4 +219,33 @@
 .parafoCardSub{
   font-size: 16px;
   text-align: justify;
+}
+
+.iconarrow{
+  color: #616161;
+    font-size: 14px;
+    margin-right: 10px;
+}
+.cardFormasPago{
+  display: flex;
+    background: #cfffe6;
+    padding: 20px 30px;
+    border-radius: 10px;
+    align-items: center;
+    margin: 10px 0px;
+}
+.cardFormasPago .iconarrow{
+  font-size: 20px;
+}
+.contentCardFormasPago{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  flex-wrap: wrap;
+}
+.imgCardFormasPago{
+  width: 40px;
+  height: auto;
+  margin-right: 20px;
 }

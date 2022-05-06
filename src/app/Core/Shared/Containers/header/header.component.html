@@ -1,5 +1,5 @@
 <mat-toolbar color="primary">
-  <img src="https://img.bsginstitute.com/repositorioweb/img/logobsg.svg" alt="" width="160px">
+  <img src="https://img.bsginstitute.com/repositorioweb/img/logobsg.svg" alt=""  [routerLink]="'/'" style="cursor: pointer;" width="160px">
 
   <div class="div-icon">
     <mat-icon (click)="OnClick.emit()">menu</mat-icon>
@@ -20,7 +20,7 @@
           </app-button>
         </ng-container>
 
-        <app-button [Url]="''" [tipo]="2">
+        <app-button [Url]="'/bs-campus'" [tipo]="2">
           <ng-container contenidoTag>
             BS Campus
           </ng-container>
@@ -28,22 +28,28 @@
       </div>
       <div class="botones_login">
 
-        <app-select [dataUrl]="paises" [tipo]="3" [valueDefecto]="CodigoIso" (Cambio)="ChangePais($event)"></app-select>
+        <div *ngIf="token" style="    flex-direction: column; display: flex;justify-content: end;align-items: end;">
+          <app-alumno-mat-button [nombres]="Alumno.nombres+' '+Alumno.apellidos" [user]="Alumno.email">
+            <ng-container contenidodata>
+              <img [src]="urlAvatar" style="width: auto;height: 25px;margin-right: 10px; margin-top: -5px;" alt="">
+              <div>{{Alumno.nombres}}</div>
+            </ng-container>
+          </app-alumno-mat-button>
+        </div>
+        <app-select [dataUrl]="paises" [tipo]="3" [valueDefecto]="CodigoIso"  (Cambio)="ChangePais($event)" [token]="token" *ngIf="!token"></app-select>
 
-        <app-button [Url]="'/AulaVirtual/Cuenta'" [tipo]="4" [color]="'white'" [background]="'#FCA534'"
-          [border]="'solid 1px #895800'">
+        <app-button [Url]="'/login'" [tipo]="4" [color]="'white'" [background]="'#FCA534'"
+          [border]="'solid 1px #895800'" *ngIf="!token">
           <ng-container contenidoButton>
             Ingresar
-          </ng-container>
-        </app-button>
-        <app-button [Url]="''" [tipo]="4" [color]="'white'" [background]="'transparent'" [border]="'solid 1px white'">
-          <ng-container contenidoButton>
-            registrate
           </ng-container>
         </app-button>
 
       </div>
     </nav>
+    <div class="subnav">
+      <app-select [dataUrl]="paises" [tipo]="3" [valueDefecto]="CodigoIso"  (Cambio)="ChangePais($event)" [token]="token" *ngIf="token"></app-select>
+    </div>
     <!-- <div class="navContainer">
             <div class="col-2">
             </div>

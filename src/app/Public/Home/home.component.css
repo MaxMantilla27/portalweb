@@ -1,4 +1,11 @@
+.paisesHome{
+  width: auto;
+  font-size: 18px;
+  color: #828281;
 
+  font-weight: 400;
+  margin-bottom: 10px;
+}
 .imgcarousel{
   max-width: 100%;
 }

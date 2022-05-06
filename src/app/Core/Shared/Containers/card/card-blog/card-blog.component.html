@@ -1,0 +1,15 @@
+<mat-card class="card-programas">
+  <img mat-card-image [src]="'https://img.bsginstitute.com/repositorioweb/img/'+cardContent.imgPortada" [alt]="cardContent.imgPortadaAlt">
+  <mat-card-content>
+    <div class="title" [routerLink]="'blog/'+cardContent.urlWeb+'-'+cardContent.idWeb">{{cardContent.nombre}}</div>
+
+    <p [innerHTML]="cardContent.descripcion">
+    </p>
+  </mat-card-content>
+  <mat-card-footer>
+    <div class="invercion">
+
+      <div class="link" [routerLink]="'blog/'+cardContent.urlWeb+'-'+cardContent.idWeb">Leer m&aacute;s ></div>
+    </div>
+  </mat-card-footer>
+</mat-card>

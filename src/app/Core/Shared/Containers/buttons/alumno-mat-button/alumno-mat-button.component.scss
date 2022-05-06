@@ -1,0 +1,50 @@
+.mat-buttonAlumno .material-icons{
+  color: #d9791a;
+}
+.mat-buttonAlumno{
+  background: #ffffff;
+  color: #747473;
+  font-weight: 700;
+  font-size: 12px;
+  margin-left: 20px;
+  padding: 0px 10px;
+  display: flex;
+  align-items: center;
+  border-radius: 5px;
+}
+.tranformi{
+  transform: rotate(180deg) !important;
+}
+.matAlumnoHeader{
+  text-align: center;
+    padding: 5px 30px;
+    border-bottom: 1px solid #dadada;
+}
+.contentMat {
+  max-width: 380px !important;
+}
+.matAlumnoContent button{
+  display: flex;
+  align-items: center;
+}
+.matAlumnoContent .mat-menu-item {
+  height: 38px !important;
+ }
+.matAlumnoContent button .material-icons{
+ margin-right: 10px;
+}
+.matAlumnoFooter{
+
+  border-top: 1px solid #dadada;
+}
+.matAlumnoFooter button{
+  display: flex;
+  align-items: center;
+  font-weight: bold;
+}
+.matAlumnoFooter .mat-menu-item {
+  height: 38px !important;
+ }
+.matAlumnoFooter button .material-icons{
+ margin-right: 10px;
+}

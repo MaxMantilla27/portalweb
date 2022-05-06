@@ -23,6 +23,8 @@ export class EducationTecnicaDetalleComponent implements OnInit {
 
   public loader: boolean = false
 
+  public fecha=new Date();
+  public fechaInicio='Por definir';
   constructor(
     private router: Router,
     private activatedRoute: ActivatedRoute,
@@ -67,6 +69,12 @@ export class EducationTecnicaDetalleComponent implements OnInit {
           }
         })
         this.getEstructuraCurricularEstudacionTecnica(idBusqueda)
+        this.carrera.programaEspecificoInformacionDTO?.forEach((element:any) => {
+          var fecha=new Date(element.fechaCreacion);
+          if(fecha.getFullYear()==this.fecha.getFullYear() && element.fechaInicioTexto!=null){
+            this.fechaInicio=element.fechaInicioTexto
+          }
+        });
       },
       error:(x)=>{console.log(x)}
     });
@@ -97,5 +105,10 @@ export class EducationTecnicaDetalleComponent implements OnInit {
 
   verifyIndex(event: any) {
     console.log(event)
+  }
+
+  tonumber(valor:any){
+    console.log(valor)
+    return parseInt(valor);
   }
 }
