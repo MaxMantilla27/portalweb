@@ -60,8 +60,6 @@ export class ProgramasComponent implements OnInit {
   public TagSubAreas:Array<Basic>=[]
   public TagModalidad:Array<Basic>=[]
   public TagTipoPrograma:Array<Basic>=[]
-  public positiondivFixed=0;
-  public fixed=false;
   public resposive=false;
   public innerWidth: any;
   public scrollValue=0;
@@ -87,19 +85,8 @@ export class ProgramasComponent implements OnInit {
         this.GetFiltroProgramas()
       }
     })
-    this._HelperService.recibirScroll.subscribe({
-      next:(x)=>{
-        this.scrollValue=x;
-        if(this.scrollValue>this.positiondivFixed){
-          this.fixed=true;
-        }else{
-          this.fixed=false
-        }
-      }
-    })
   }
   ngAfterViewInit() {
-    this.positiondivFixed=this.element.nativeElement.offsetTop;
   }
   GetFiltroProgramas(){
     this._ProgramasService.GetFiltroProgramas(this.IdArea).subscribe({

@@ -21,11 +21,10 @@
 }
 
 .fixedDiv{
-  position: fixed;
+  position: sticky;
   background: white;
   z-index: 1;
-  top: 77px;
-  width: calc( 100% - 9px);
+  top: 72px;
   left: 0;
   padding-bottom: 20px;
   box-shadow: -1px 1px 4px 0px #adadad;

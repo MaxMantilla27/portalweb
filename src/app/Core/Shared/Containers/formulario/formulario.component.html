@@ -4,23 +4,47 @@
       <div *ngFor="let field of fiels; let i=index">
         <div [formGroupName]="i">
           <ng-container *ngIf="Tipo==1">
-
-            <ng-container
-              *ngIf="field.tipo=='' || field.tipo=='text' || field.tipo=='number' || field.tipo=='password'">
-              <mat-form-field appearance="outline" *ngIf="!FormOld">
-                <mat-label>{{field.label}}</mat-label>
-                <input type="{{field.tipo}}" [style]="field.style" formControlName="{{field.nombre}}" matInput />
-                <mat-error *ngIf="userForm.invalid">{{obtenerErrorCampoNombre(i,field.nombre)}}</mat-error>
-              </mat-form-field>
-              <ng-container *ngIf="FormOld">
-                <div class="fieldOld">
+            <ng-container *ngIf="!FormOld">
+              <ng-container
+                *ngIf="field.tipo=='' || field.tipo=='text' || field.tipo=='number' || field.tipo=='password'">
+                <mat-form-field appearance="outline" *ngIf="!FormOld">
+                  <mat-label>{{field.label}}</mat-label>
+                  <input type="{{field.tipo}}" [style]="field.style" formControlName="{{field.nombre}}" matInput />
+                  <mat-error *ngIf="userForm.invalid">{{obtenerErrorCampoNombre(i,field.nombre)}}</mat-error>
+                </mat-form-field>
+              </ng-container>
+              <ng-container *ngIf="field.tipo=='select'">
+                <mat-form-field appearance="outline">
+                  <mat-label>{{field.label}}</mat-label>
+                  <mat-select [style]="field.style" formControlName="{{field.nombre}}"
+                    (selectionChange)="OnSelect.emit({Nombre:field.nombre,value:$event.value})">
+                    <mat-option *ngFor="let option of field.data" [value]="option.value">{{option.Nombre}}</mat-option>
+                  </mat-select>
+                  <mat-error *ngIf="userForm.invalid">{{obtenerErrorCampoNombre(i,field.nombre)}}</mat-error>
+                </mat-form-field>
+              </ng-container>
+            </ng-container>
+            <ng-container *ngIf="FormOld">
+              <div class="fieldOld">
+                <ng-container
+                  *ngIf="field.tipo=='' || field.tipo=='text' || field.tipo=='number' || field.tipo=='password'">
                   <mat-form-field appearance="outline">
                     <mat-label>{{field.label}}</mat-label>
                     <input type="{{field.tipo}}" [style]="field.style" formControlName="{{field.nombre}}" matInput />
                     <mat-error *ngIf="userForm.invalid">{{obtenerErrorCampoNombre(i,field.nombre)}}</mat-error>
                   </mat-form-field>
-                </div>
-              </ng-container>
+                </ng-container>
+                <ng-container *ngIf="field.tipo=='select'">
+                  <mat-form-field appearance="outline">
+                    <mat-label>{{field.label}}</mat-label>
+                    <mat-select [style]="field.style" formControlName="{{field.nombre}}"
+                      (selectionChange)="OnSelect.emit({Nombre:field.nombre,value:$event.value})">
+                      <mat-option *ngFor="let option of field.data" [value]="option.value">{{option.Nombre}}</mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="userForm.invalid">{{obtenerErrorCampoNombre(i,field.nombre)}}</mat-error>
+                  </mat-form-field>
+                </ng-container>
+              </div>
             </ng-container>
           </ng-container>
           <ng-container *ngIf="Tipo==2">
@@ -32,15 +56,17 @@
                   *ngIf="field.tipo=='' || field.tipo=='text' || field.tipo=='number' || field.tipo=='password'">
                   <mat-form-field appearance="outline">
                     <mat-label>{{field.label}}</mat-label>
-                    <input  type="{{field.tipo}}" [style]="field.style" formControlName="{{field.nombre}}" matInput />
+                    <input type="{{field.tipo}}" [style]="field.style" formControlName="{{field.nombre}}" matInput />
                     <mat-error *ngIf="userForm.invalid">{{obtenerErrorCampoNombre(i,field.nombre)}}</mat-error>
                   </mat-form-field>
                 </ng-container>
                 <ng-container *ngIf="field.tipo=='select'">
                   <mat-form-field appearance="outline">
                     <mat-label>{{field.label}}</mat-label>
-                    <mat-select [style]="field.style" formControlName="{{field.nombre}}" (selectionChange)="OnSelect.emit({Nombre:field.nombre,value:$event.value})">
-                      <mat-option *ngFor="let option of field.data" [value]="option.value">{{option.Nombre}}</mat-option>
+                    <mat-select [style]="field.style" formControlName="{{field.nombre}}"
+                      (selectionChange)="OnSelect.emit({Nombre:field.nombre,value:$event.value})">
+                      <mat-option *ngFor="let option of field.data" [value]="option.value">{{option.Nombre}}
+                      </mat-option>
                     </mat-select>
                     <mat-error *ngIf="userForm.invalid">{{obtenerErrorCampoNombre(i,field.nombre)}}</mat-error>
                   </mat-form-field>

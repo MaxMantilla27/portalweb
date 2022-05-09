@@ -30,7 +30,7 @@
 
 <div class="container">
   <div class="row rowpadd">
-    <div class="col-12 col-md-8 col-lg-8 row" style="align-items: start;">
+    <div class="col-12 col-md-8 col-lg-8 row" style="align-items: flex-start;">
       <div class="col-6 InfoProgramContainer" style="align-items: center;">
         <img class="InfoProgramIcon" src="../../../assets//icons/mexico-icon.svg" alt="">
         <div class="InfoProgramTitle">Fechas de Inicio:</div>
@@ -133,11 +133,11 @@
     <div class="col-12 col-md-4 col-lg-4">
       <div class="estructuraProgramForm">
         <div class="cotentestructuraProgramForm">
-          <div class="question" style="justify-content: start;align-items: center;">
+          <div class="question" style="justify-content: flex-start;align-items: center;">
             <img src="../../../assets/icons/signo-pregunta-abierto-03.svg" alt="">
           </div>
           <div>Tienes dudas sobre alg&uacute;n aspecto del programa</div>
-          <div class="question" style="justify-content: end;align-items: center;">
+          <div class="question" style="justify-content: flex-end;align-items: center;">
             <img src="../../../assets/icons/signo-pregunta-cerrado-04.svg" alt="">
           </div>
         </div>
@@ -363,14 +363,14 @@
 </div>
 <div style="background: #f5f9ff;">
   <div class="container">
-    <div class="row rowpadd" style="align-items: end;">
+    <div class="row rowpadd" style="align-items: flex-end;">
       <div class="col-12 col-md-8 col-lg-8">
         <div class="subtitulo" style="line-height: 44px;">¿Te interesa? Comienza con tu programa ahora mismo</div>
         <div style="    color: #919395;font-size: 18px;">Reserva tu matricula, y acceda a conocimiento especializado muy
           valorado en el mercado laboral
           latinoamericano para mejorar su perfil profesional</div>
       </div>
-      <div class="col-12 col-md-4 col-lg-4" style="display: flex;justify-content: end;align-items: end;">
+      <div class="col-12 col-md-4 col-lg-4" style="display: flex;justify-content: flex-end;align-items: flex-end;">
         <app-default-button [confs]="{color:'primary',titulo:'Matricularme Ahora'}"
           (ButtoclClick)="ScrollTo(formularioPrograma)"></app-default-button>
       </div>
@@ -392,7 +392,7 @@
       <div class="subtitulo">Tags</div>
     </div>
     <div class="col-12 col-md-12 col-lg-12" >
-      <div style="display: flex; align-items: center; justify-content: start;flex-wrap: wrap;">
+      <div style="display: flex; align-items: center; justify-content: flex-start;flex-wrap: wrap;">
         <div *ngFor="let item of tags" style="margin-right: 20px;">
           <app-tag-button [tag]="item"></app-tag-button>
         </div>

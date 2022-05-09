@@ -20,7 +20,7 @@
     </div>
   </div>
 </div>
-<div [ngClass]="{'fixedDiv': fixed ===true}">
+<div [ngClass]="'fixedDiv'">
 
   <div class="container" #fixedelement >
     <div class="row rowpadd" style="padding-bottom: 0px;padding-top: 0px;">
@@ -39,7 +39,7 @@
                 <mat-form-field appearance="outline" style="width: 100%;font-size: 13px;">
                   <mat-label>Subareas de {{Title}}</mat-label>
                   <mat-select #SubAreaMatSelect  (openedChange)="SubAreasChange($event)" [(ngModel)]="SubAreaSelect" multiple [disabled]="charge">
-                    <mat-select-trigger style="display: flex;align-items: end;">
+                    <mat-select-trigger style="display: flex;align-items: flex-end;">
                       {{SubAreasTrigger}} <div style="font-size: 10px;color: gray;">{{SubAreasTriggerOther}}</div>
                     </mat-select-trigger>
                     <mat-option *ngFor="let item of SubAreas" [value]="item.id">{{item.nombre}}</mat-option>
@@ -51,7 +51,7 @@
                   <mat-label>Tipo de programa</mat-label>
                   <mat-select #TipoProgramaMatSelect (openedChange)="TipoProgramaChange($event)" [(ngModel)]="TipoProgramaSelect" multiple
                     [disabled]="charge">
-                    <mat-select-trigger style="display: flex;align-items: end;">
+                    <mat-select-trigger style="display: flex;align-items: flex-end;">
                       {{TipoProgramaTrigger}} <div style="font-size: 10px;color: gray;">{{TipoProgramaTriggerOther}}</div>
                     </mat-select-trigger>
                     <mat-option *ngFor="let item of TipoPrograma" [value]="item.id">{{item.nombre}}</mat-option>
@@ -63,7 +63,7 @@
                   <mat-label>Modalidad</mat-label>
                   <mat-select #ModalidadMatSelect (openedChange)="ModalidadChange($event)" [(ngModel)]="ModalidadSelect" multiple
                     [disabled]="charge">
-                    <mat-select-trigger style="display: flex;align-items: end;">
+                    <mat-select-trigger style="display: flex;align-items: flex-end;">
                       {{ModalidadTrigger}} <div style="font-size: 10px;color: gray;">{{ModalidadTriggerOther}}</div>
                     </mat-select-trigger>
                     <mat-option *ngFor="let item of Modalidad" [value]="item.id">{{item.nombre}}</mat-option>
@@ -95,7 +95,7 @@
             <mat-form-field appearance="outline" style="width: 100%;font-size: 13px;">
               <mat-label>Subareas de {{Title}}</mat-label>
               <mat-select #SubAreaMatSelect  (openedChange)="SubAreasChange($event)" [(ngModel)]="SubAreaSelect" multiple [disabled]="charge">
-                <mat-select-trigger style="display: flex;align-items: end;">
+                <mat-select-trigger style="display: flex;align-items: flex-end;">
                   {{SubAreasTrigger}} <div style="font-size: 10px;color: gray;">{{SubAreasTriggerOther}}</div>
                 </mat-select-trigger>
                 <mat-option *ngFor="let item of SubAreas" [value]="item.id">{{item.nombre}}</mat-option>
@@ -107,7 +107,7 @@
               <mat-label>Tipo de programa</mat-label>
               <mat-select #TipoProgramaMatSelect (openedChange)="TipoProgramaChange($event)" [(ngModel)]="TipoProgramaSelect" multiple
                 [disabled]="charge">
-                <mat-select-trigger style="display: flex;align-items: end;">
+                <mat-select-trigger style="display: flex;align-items: flex-end;">
                   {{TipoProgramaTrigger}} <div style="font-size: 10px;color: gray;">{{TipoProgramaTriggerOther}}</div>
                 </mat-select-trigger>
                 <mat-option *ngFor="let item of TipoPrograma" [value]="item.id">{{item.nombre}}</mat-option>
@@ -119,7 +119,7 @@
               <mat-label>Modalidad</mat-label>
               <mat-select #ModalidadMatSelect (openedChange)="ModalidadChange($event)" [(ngModel)]="ModalidadSelect" multiple
                 [disabled]="charge">
-                <mat-select-trigger style="display: flex;align-items: end;">
+                <mat-select-trigger style="display: flex;align-items: flex-end;">
                   {{ModalidadTrigger}} <div style="font-size: 10px;color: gray;">{{ModalidadTriggerOther}}</div>
                 </mat-select-trigger>
                 <mat-option *ngFor="let item of Modalidad" [value]="item.id">{{item.nombre}}</mat-option>

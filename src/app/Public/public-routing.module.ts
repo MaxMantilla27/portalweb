@@ -21,6 +21,7 @@ import { TransparenciaComponent } from './transparencia/transparencia.component'
 import { TerminosCondicionesComponent } from './terminos-condiciones/terminos-condiciones.component';
 import { PoliticaPrivacidadComponent } from './politica-privacidad/politica-privacidad.component';
 import { AcercaDeComponent } from './acerca-de/acerca-de.component';
+import { ContactenosComponent } from './contactenos/contactenos.component';
 
 const routes:Routes=[
     {path:'',component:PublicComponent,children:
@@ -37,6 +38,7 @@ const routes:Routes=[
             {path:'termino-uso-web', component:TerminosCondicionesComponent},
             {path:'politica-privacidad', component:PoliticaPrivacidadComponent},
             {path:'AcercaBsGrupo', component:AcercaDeComponent},
+            {path:'contactenos', component:ContactenosComponent},
 
             {path:'bs-campus/white-paper/:whitepaper', component:WhitepapersComponent},
             {path:'bs-campus/blog/:blog', component:BlogComponent},

@@ -1,0 +1,58 @@
+h2 {
+  color: #0684f2;
+  font-size: 18px;
+  margin-top: 30px;
+  margin-bottom: 20px;
+}
+p {
+  font-size: 14px;
+  color: #9b9b9b;
+}
+b {
+  color: #5b5b5b;
+}
+.mapaSede {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+.mapaSede iframe {
+  display: flex;
+}
+.direccionSede {
+}
+.nameSede{
+  flex-grow: 1;
+}
+
+.estructuraBlogForm{
+  width: 100%; background: #cfffe6;border-radius: 10px;padding: 20px 10px;
+}
+.estructuraBlogForm .cotentestructurablogForm{
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  color: #2999f0;
+   font-size: 20px;
+   text-align: center;
+   font-weight: 600;
+   margin-bottom: 10px;
+}
+
+.estructuraBlogForm div .question{
+  display: flex;
+  width: 25%;
+  flex-direction: column;
+}
+.question div{
+  font-size: 40px;
+}
+
+.subtitleEstruturaBlogForm{
+  font-size: 15px;
+    padding: 20px 15px;
+    color: #626b66;
+    font-weight: 300;
+    text-align: center;
+}

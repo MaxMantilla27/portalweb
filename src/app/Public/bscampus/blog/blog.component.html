@@ -25,11 +25,11 @@
       <div class="estructuraBlogForm">
 
         <div class="cotentestructurablogForm">
-          <div class="question" style="justify-content: start;align-items: center;">
+          <div class="question" style="justify-content: flex-start;align-items: center;">
             <img src="../../../assets/icons/signo-pregunta-abierto-03.svg" alt="">
           </div>
           <div>Deseas conocer mas sobre nuestra oferta de cursos y programas del área de {{area}}</div>
-          <div class="question" style="justify-content: end;align-items: center;">
+          <div class="question" style="justify-content: flex-end;align-items: center;">
             <img src="../../../assets/icons/signo-pregunta-cerrado-04.svg" alt="">
           </div>
         </div>
@@ -54,7 +54,7 @@
     </div>
 
     <div class="col-12 col-md-12 col-lg-12" style="margin-top: 40px;">
-      <div style="display: flex; align-items: center; justify-content: start;flex-wrap: wrap;">
+      <div style="display: flex; align-items: center; justify-content: flex-start;flex-wrap: wrap;">
         <div *ngFor="let item of tags" style="margin-right: 20px;">
           <app-tag-button [tag]="item"></app-tag-button>
         </div>

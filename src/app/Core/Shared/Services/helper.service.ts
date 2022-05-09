@@ -12,6 +12,7 @@ export class HelperService {
   private msjArrayFormacion = new ReplaySubject<Array<BasicUrl>>()
   private msjStringCarrera = new ReplaySubject<string>()
   private msjScroll = new ReplaySubject<number>()
+  private msjScrollFooter = new ReplaySubject<string>()
 
   public get recibirArrayCarrera() {
     return this.msjArrayCarrera.asObservable()
@@ -38,5 +39,11 @@ export class HelperService {
   }
   public enviarScroll(scroll: number): void {
     this.msjScroll.next(scroll);
+  }
+  public get recibirScrollFooter() {
+    return this.msjScrollFooter.asObservable()
+  }
+  public enviarScrollFooter(texto: string): void {
+    this.msjScrollFooter.next(texto);
   }
 }

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { HelperService } from '../../Services/helper.service';
 
 @Component({
   selector: 'app-footer',
@@ -10,7 +11,9 @@ export class FooterComponent implements OnInit {
   servicios: any [] = []
   centralTelefonica: any [] = []
   redesSociales: any [] = []
-  constructor() {
+  constructor(
+    private _HelperService: HelperService,
+  ) {
 
   }
 
@@ -87,6 +90,9 @@ export class FooterComponent implements OnInit {
       },
 
     ]
+  }
+  ScrollTO(scroll:string){
+    this._HelperService.enviarScrollFooter(scroll);
   }
 
 }

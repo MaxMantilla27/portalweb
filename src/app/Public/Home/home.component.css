@@ -8,9 +8,13 @@
 }
 .imgcarousel{
   max-width: 100%;
+  max-height: 100px;
+  object-fit: contain;
 }
 .contentImgCorousel{
   padding: 20px 30px;
+  display: flex;
+    justify-content: center;
 }
 .imgTitle{
   height: auto;
@@ -82,7 +86,7 @@
   padding: 0pc;
   margin: 0px;
   display: flex;
-  align-items: end;
+  align-items: flex-end;
 }
 .contenCarreras{
   display: flex;
@@ -115,6 +119,12 @@
   height: 400px;
     display: flex;
     align-items: center;
+}
+.carrouselCasos ngb-carousel .carousel-inner{
+  height: 100%;
+    display: flex;
+    align-items: center;
+    padding: 20px;
 }
 .carousel-control-prev{
   width: 35%;

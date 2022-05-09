@@ -23,10 +23,6 @@ export class InterceptorService implements HttpInterceptor{
     if(this._SessionStorageService.validateTokken()){
       request = request.clone({ headers: request.headers.set( 'Authorization', 'Bearer '+this._SessionStorageService.GetToken())});
     }
-    return request.clone({
-        setHeaders: {
-          CodigoISO: ''+Iso,
-        }
-    })
+    return request.clone({headers: request.headers.set('CodigoISO', ''+Iso,) })
   }
 }

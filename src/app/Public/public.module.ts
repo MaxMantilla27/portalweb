@@ -22,6 +22,8 @@ import { TransparenciaComponent } from './transparencia/transparencia.component'
 import { TerminosCondicionesComponent } from './terminos-condiciones/terminos-condiciones.component';
 import { PoliticaPrivacidadComponent } from './politica-privacidad/politica-privacidad.component';
 import { AcercaDeComponent } from './acerca-de/acerca-de.component';
+import { ContactenosComponent } from './contactenos/contactenos.component';
+import { TagsComponent } from './tags/tags.component';
 
 @NgModule({
   imports: [
@@ -49,7 +51,9 @@ import { AcercaDeComponent } from './acerca-de/acerca-de.component';
     TransparenciaComponent,
     TerminosCondicionesComponent,
     PoliticaPrivacidadComponent,
-    AcercaDeComponent
+    AcercaDeComponent,
+    ContactenosComponent,
+    TagsComponent
   ],
   exports: [],
   providers: [

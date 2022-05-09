@@ -52,12 +52,16 @@ export class BlogComponent implements OnInit {
   statuscharge = false;
   formVal: boolean = false;
   public formularioContacto:FormularioContactoDTO={
-    nombres:'',
-    apellidos:'',
-    email:'',
-    pais:undefined,
-    region:undefined,
-    telefono:'',
+    Nombres:'',
+    Apellidos:'',
+    Email:'',
+    IdPais:undefined,
+    IdRegion:undefined,
+    Movil:'',
+    IdCargo:undefined,
+    IdAreaFormacion:undefined,
+    IdAreaTrabajo:undefined,
+    IdIndustria:undefined,
   }
   public fileds: Array<formulario> = [];
   ngOnInit(): void {

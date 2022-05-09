@@ -1,9 +1,13 @@
 export interface FormularioContactoDTO
 {
-  nombres:string;
-  apellidos:string;
-  email:string;
-  telefono:string;
-  pais?:number;
-  region?:number;
+  Nombres: string,
+  Apellidos: string,
+  Email: string,
+  IdPais?: number,
+  IdRegion?: number,
+  Movil: string,
+  IdCargo?: number,
+  IdAreaFormacion?: number,
+  IdAreaTrabajo?: number,
+  IdIndustria?: number,
 }
