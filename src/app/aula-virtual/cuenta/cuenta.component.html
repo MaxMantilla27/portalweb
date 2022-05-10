@@ -1,1 +1,40 @@
-<p>cuenta works!</p>
+<div class="container">
+  <div class="container breadcrumb">
+    <app-miga-pan [items]="migaPan"></app-miga-pan>
+  </div>
+</div>
+<div style="background: #f4f4f4;">
+  <div class="container">
+    <div class="row rowpadd">
+      <div class="col-12 col-md-12 col-lg-12">
+        <div class="titulop">
+          Mi Cuenta
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="row rowpadd">
+    <div class="col-12 col-md-12 col-lg-12">
+      <div class="contentTabs">
+        <ng-container *ngFor="let item of tabs; let i=index">
+          <div class="tabs" [ngClass]="{'tabActive': item.activo === true}" (click)="changeTab(i)"
+            [ngStyle]="{'border-right': i<(tabs.length-1)?'1px solid #9b9b9b':''}">{{item.name}}</div>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div style="background: #f5f9ff;">
+  <div class="container">
+    <div class="row rowpadd">
+      <div class="col-12 col-md-12 col-lg-12">
+        <app-cuenta-mi-perfil *ngIf="tabs[0].activo==true"></app-cuenta-mi-perfil>
+        <app-cuenta-mis-pagos *ngIf="tabs[1].activo==true"></app-cuenta-mis-pagos>
+      </div>
+    </div>
+  </div>
+</div>

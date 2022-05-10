@@ -180,7 +180,7 @@ export class HeaderComponent implements OnInit {
           };
           return ps;
         });
-        this._HelperService.enviarArrayCarrera(this.carreras);
+        this._HelperService.enviarArrayCarrera(this.carreras.map((m:any)=>{return m}));
         this.carreras.push({
           Nombre: 'Ver Todo',
           value: 1,

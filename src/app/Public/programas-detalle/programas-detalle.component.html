@@ -10,6 +10,10 @@
     <div class="row rowpadd">
       <div class="col-12 col-md-6 col-lg-6">
         <div [innerHtml]="cabecera.tituloHtml" class="titlePrograma"></div>
+        <div style="    margin: 10px 0px;
+        font-size: 15px;font-weight: 700;">Área: <a style="font-weight: 100;"
+            routerLink="/Area/{{cabecera.areaDescripcion}}">{{cabecera.areaCapacitacion}}</a > | Sub
+          Área: <a style="font-weight: 100;" routerLink="/SubArea/{{cabecera.subAreaDescripcion}}">{{cabecera.nombreSubArea}}</a> </div>
         <div class="row" style="margin-top: 20px;">
           <div class="col-12 col-md-6 col-lg-6">
             <app-default-button [confs]="{color:'primary',titulo:'Matricularme Ahora'}"
@@ -67,7 +71,7 @@
   <div class="container">
     <div class="row rowpadd">
       <div class="col-12 col-md-12 col-lg-12 tabprogram">
-        <mat-tab-group mat-align-tabs="start" >
+        <mat-tab-group mat-align-tabs="start">
           <mat-tab label="Objetivos">
             <div [innerHtml]="seccion.objetivo | safeHtml" style="text-align: justify;
             padding: 20px 0px;">
@@ -384,14 +388,14 @@
       <div class="subtitulo">Programas Relacionados</div>
     </div>
     <ng-container *ngFor="let item of programasRelacionados;let i=index">
-      <div class="col-12 col-md-6 col-lg-3" *ngIf="i<4"  style="margin-bottom: 40px;">
-        <app-card-programas [cardContent]="item" ></app-card-programas>
+      <div class="col-12 col-md-6 col-lg-3" *ngIf="i<4" style="margin-bottom: 40px;">
+        <app-card-programas [cardContent]="item"></app-card-programas>
       </div>
     </ng-container>
     <div class="col-12 col-md-12 col-lg-12" style="margin-top: 30px;margin-bottom: 30px;">
       <div class="subtitulo">Tags</div>
     </div>
-    <div class="col-12 col-md-12 col-lg-12" >
+    <div class="col-12 col-md-12 col-lg-12">
       <div style="display: flex; align-items: center; justify-content: flex-start;flex-wrap: wrap;">
         <div *ngFor="let item of tags" style="margin-right: 20px;">
           <app-tag-button [tag]="item"></app-tag-button>

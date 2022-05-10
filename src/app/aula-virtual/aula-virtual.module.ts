@@ -7,12 +7,17 @@ import { SharedModule } from '../Core/Shared/shared.module';
 import { CuentaComponent } from './cuenta/cuenta.component';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { InterceptorService } from '../Public/Interceptor/interceptor.service';
+import { CuentaMiPerfilComponent } from './cuenta/cuenta-mi-perfil/cuenta-mi-perfil.component';
+import { CuentaMisPagosComponent } from './cuenta/cuenta-mis-pagos/cuenta-mis-pagos.component';
 
 
 @NgModule({
   declarations: [
     AulaVirtualComponent,
-    CuentaComponent
+    CuentaComponent,
+    CuentaMiPerfilComponent,
+    CuentaMisPagosComponent,
+
   ],
   imports: [
     CommonModule,

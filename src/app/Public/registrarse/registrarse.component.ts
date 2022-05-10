@@ -63,10 +63,19 @@ export class RegistrarseComponent implements OnInit {
     this.register=value;
     this._AccountService.RegistrarseAlumno(this.register).subscribe({
       next:x=>{
-        this.statuscharge=false
-        this._SessionStorageService.SetToken(x.token)
-        this.router.navigate(['/AulaVirtual/Cuenta']);
-        console.log(x)
+        console.log(x.excepcionGenerada)
+        if(x.excepcionGenerada!=undefined && x.excepcionGenerada==true){
+          this.statuscharge=false
+          console.log(x)
+          this.errorRegister=x.descripcionGeneral;
+          setTimeout(()=>{
+            this.errorRegister='';
+          },1000000);
+        }else{
+          this.statuscharge=false
+          this._SessionStorageService.SetToken(x.token)
+          this.router.navigate(['/AulaVirtual/Cuenta']);
+        }
       },
       error:e=>{
         this.statuscharge=false
@@ -74,7 +83,7 @@ export class RegistrarseComponent implements OnInit {
         this.errorRegister=e.error.excepcion.descripcionGeneral;
         setTimeout(()=>{
           this.errorRegister='';
-        },10000);
+        },1000000);
       },
       complete:()=>{
         this.statuscharge=false
@@ -228,7 +237,7 @@ export class RegistrarseComponent implements OnInit {
       nombre:"Password",
       tipo:"password",
       valorInicial:"",
-      validate:[Validators.required],
+      validate:[Validators.required,Validators.minLength(6)],
       label:"Password",
     });
   }

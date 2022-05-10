@@ -3,7 +3,7 @@
   </ng-content>
 </a>
 <a [routerLink]="Url" *ngIf="tipo==2" [ngClass]="{'bootoncolor':hover==true}"
-  (mouseenter)="hover=true" (mouseleave)="hover=false" routerLinkActive="active">
+  (mouseenter)="hover=true" (mouseleave)="hover=false" routerLinkActive="active" class="buttonHeader">
   <ng-content select="[contenidoTag]">
   </ng-content>
 </a>

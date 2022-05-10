@@ -1,0 +1,16 @@
+.contentTabs{
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+}
+.tabs{
+  padding: 6px 25px;
+  font-size: 20px;
+  text-align: center;
+  cursor: pointer;
+}
+.tabActive{
+  color: #1189f2;
+  font-weight: 600;
+  text-decoration: underline;
+}

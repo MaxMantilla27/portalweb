@@ -26,7 +26,6 @@ export class ButtonComponent implements OnInit {
   ngOnInit(): void {
   }
   prueba(){
-    console.log(1)
   }
 
 

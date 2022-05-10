@@ -24,6 +24,7 @@ import { PoliticaPrivacidadComponent } from './politica-privacidad/politica-priv
 import { AcercaDeComponent } from './acerca-de/acerca-de.component';
 import { ContactenosComponent } from './contactenos/contactenos.component';
 import { TagsComponent } from './tags/tags.component';
+import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 
 @NgModule({
   imports: [
@@ -53,7 +54,8 @@ import { TagsComponent } from './tags/tags.component';
     PoliticaPrivacidadComponent,
     AcercaDeComponent,
     ContactenosComponent,
-    TagsComponent
+    TagsComponent,
+    ForgotPasswordComponent
   ],
   exports: [],
   providers: [

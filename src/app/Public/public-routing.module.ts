@@ -22,6 +22,8 @@ import { TerminosCondicionesComponent } from './terminos-condiciones/terminos-co
 import { PoliticaPrivacidadComponent } from './politica-privacidad/politica-privacidad.component';
 import { AcercaDeComponent } from './acerca-de/acerca-de.component';
 import { ContactenosComponent } from './contactenos/contactenos.component';
+import { TagsComponent } from './tags/tags.component';
+import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 
 const routes:Routes=[
     {path:'',component:PublicComponent,children:
@@ -39,7 +41,11 @@ const routes:Routes=[
             {path:'politica-privacidad', component:PoliticaPrivacidadComponent},
             {path:'AcercaBsGrupo', component:AcercaDeComponent},
             {path:'contactenos', component:ContactenosComponent},
+            {path:'Account/ForgotPassword', component:ForgotPasswordComponent},
 
+            {path:'SubArea/:nombre', component:TagsComponent},
+            {path:'Area/:nombre', component:TagsComponent},
+            {path:'tag/:nombre', component:TagsComponent},
             {path:'bs-campus/white-paper/:whitepaper', component:WhitepapersComponent},
             {path:'bs-campus/blog/:blog', component:BlogComponent},
 

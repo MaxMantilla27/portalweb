@@ -55,6 +55,7 @@ import { RegionService } from './Services/Region/region.service';
 import { DatosPortalService } from './Services/DatosPortal/datos-portal.service';
 import { PoliticaPrivacidadService } from './Services/PoliticaPrivacidad/politica-privacidad.service';
 import { TerminosCondicionesService } from './Services/TerminosCondiciones/terminos-condiciones.service';
+import { CardArticulosComponent } from './Containers/card/card-articulos/card-articulos.component';
 
 @NgModule({
   imports: [
@@ -103,7 +104,8 @@ import { TerminosCondicionesService } from './Services/TerminosCondiciones/termi
     FormularioComponent,
     AlumnoMatButtonComponent,
     CardBlogComponent,
-    CardWhitePapersComponent
+    CardWhitePapersComponent,
+    CardArticulosComponent,
   ],
   exports: [
     HttpClientModule,
@@ -122,6 +124,8 @@ import { TerminosCondicionesService } from './Services/TerminosCondiciones/termi
     AlumnoMatButtonComponent,
     CardBlogComponent,
     CardWhitePapersComponent,
+    CardArticulosComponent,
+
     MatTabsModule,
     MatTableModule,
     MatProgressSpinnerModule,

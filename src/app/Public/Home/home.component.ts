@@ -60,7 +60,7 @@ export class HomeComponent implements OnInit,AfterViewInit {
       if(this.innerWidth<768)this.seccionStep=1;
     }
     //this.TituloCarreras$ = this._HelperService.recibirString;
-    this._HelperService.recibirStringCarrera.subscribe(x => {this.TituloCarreras=x;if(this.Formacion.length>0){this.Formacion[this.tabindex].change!++;}});
+    this._HelperService.recibirStringCarrera.subscribe(x => {this.TituloCarreras=x});
     this._HelperService.recibirArrayCarrera.subscribe({
       next:(x)=>{
         this.Carreras=x.map((c:any)=>{

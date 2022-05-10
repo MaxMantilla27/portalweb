@@ -1,1 +1,37 @@
-<p>tags works!</p>
+<div class="container">
+  <div class="container breadcrumb">
+    <app-miga-pan [items]="migaPan"></app-miga-pan>
+  </div>
+</div>
+<div style="background: #f4f4f4;">
+  <div class="container">
+    <div class="row rowpadd">
+      <div class="col-12 col-md-12 col-lg-12">
+        <div class="titulop">
+          {{tagTitle}}
+        </div>
+        <div>
+          <div class="tagSubTitle">{{tagSubTitle}}</div>
+        </div>
+        <div style="font-size: 20px;
+        color: #797978;">{{tagDescripcion}}</div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="container">
+  <div class="row rowpadd">
+    <div class="col-12 col-md-12 col-lg-12 pTagTitle">
+      Cursos, Programas y Certificaciones
+    </div>
+    <div class="col-12 col-md-6 col-lg-3" *ngFor="let item of programas" style="margin-bottom: 40px;">
+      <app-card-programas [cardContent]="item"></app-card-programas>
+    </div>
+    <div class="col-12 col-md-12 col-lg-12 pTagTitle">
+      Articulos
+    </div>
+    <div class="col-12 col-md-6 col-lg-4" *ngFor="let item of Articulos" style="margin-bottom: 40px;">
+      <app-card-blog [idTipoArticulo]="item.idArea"  [cardContent]="item"></app-card-blog>
+    </div>
+  </div>
+</div>

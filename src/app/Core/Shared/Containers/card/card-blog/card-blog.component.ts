@@ -11,6 +11,7 @@ export class CardBlogComponent implements OnInit {
   constructor() { }
 
   @Input() cardContent:ArticuloDTO={descripcion:'',descripcionGeneral:'',idArea:0,idWeb:0,imgPortada:'',imgPortadaAlt:'',nombre:'',urlWeb:''};
+  @Input() idTipoArticulo=1;
   ngOnInit(): void {
   }
 

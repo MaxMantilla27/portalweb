@@ -261,3 +261,13 @@
 .subtitulo{
   margin-bottom: 20px;
 }
+.alert-danger {
+  color: #842029;
+  background-color: #f8d7da;
+  border-color: #f5c2c7;
+  position: fixed;
+  top: 100px;
+  left: calc(50% - 200px);
+  width: 400px;
+  z-index: 10000000;
+}

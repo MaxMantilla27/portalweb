@@ -20,8 +20,8 @@
   <div class="row rowpadd" style="justify-content: center;">
     <div class="col-12 col-md-10 col-lg-8">
 
-      <div class="alert alert-danger" role="alert" *ngIf="errorRegister!=''">
-        {{errorRegister}}
+      <div class="alert alert-danger fade" role="alert" *ngIf="errorRegister!=''" style="display: flex;align-items:center;justify-content:space-between;font-size: 14px;">
+        {{errorRegister}} <i class="material-icons" style="margin-left: 20px;cursor: pointer;" (click)="errorRegister=''">close</i>
       </div>
       <app-formulario [model]="register" [InputsDisable]="statuscharge" (OnSubmit)="Register($event)" [Color]="'#f8f8f8'"
         (OnValid)="formVal=$event" [fiels]="fileds" [Tipo]="2" (OnSelect)="SelectChage($event)">

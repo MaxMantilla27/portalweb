@@ -119,7 +119,9 @@ export class ProgramasDetalleComponent implements OnInit {
       next:(x)=>{
         console.log(x)
         this.cabecera=x.programaCabeceraDetalleDTO
-        this.cabecera.imgPrincipal='https://img.bsginstitute.com/repositorioweb/img/partners/'+x.programaCabeceraDetalleDTO.imgPrincipal;
+        if(x.programaCabeceraDetalleDTO.imgPrincipal!=null){
+          this.cabecera.imgPrincipal='https://img.bsginstitute.com/repositorioweb/img/partners/'+x.programaCabeceraDetalleDTO.imgPrincipal;
+        }
       }
     })
   }
@@ -280,10 +282,11 @@ export class ProgramasDetalleComponent implements OnInit {
       next:(x)=>{
         console.log(x)
         this.MontoPago=x.listaMontoPagoProgramaInformacionDTO
-
-        this.MontoPago.sort(function(a, b) {
-          return a.idTipoPago - b.idTipoPago;
-        });
+        if(x.listaMontoPagoProgramaInformacionDTO!=null){
+          this.MontoPago.sort(function(a, b) {
+            return a.idTipoPago - b.idTipoPago;
+          });
+        }
       }
     })
   }
@@ -291,16 +294,18 @@ export class ProgramasDetalleComponent implements OnInit {
     this._SeccionProgramaService.ListProgramaRelacionado(this.idPegeneral).subscribe({
       next:(x)=>{
         console.log(x)
-        this.programasRelacionados=x.listaProgramaRelacionadoDTO.map(
-          (c:any)=>{
+        if(x.listaProgramaRelacionadoDTO!=null){
+          this.programasRelacionados=x.listaProgramaRelacionadoDTO.map(
+            (c:any)=>{
 
-            var urlArea=c.areaCapacitacion.replace(/\s+/g, '-')
-            var urlSubArea=c.nombre.replace(' - ', '-')
-            var urlSubArea=urlSubArea.replace(/\s+/g, '-')
-            var ps:CardProgramasDTO={Content:c.montoPagoDescripcion,Url:'/'+urlArea+'/'+urlSubArea+'-'+c.idBusqueda,Img:'https://img.bsginstitute.com/repositorioweb/img/programas/'+c.imagen,ImgAlt:c.imagenAlt,Title:c.nombre};
-            return ps;
-          }
-        );
+              var urlArea=c.areaCapacitacion.replace(/\s+/g, '-')
+              var urlSubArea=c.nombre.replace(' - ', '-')
+              var urlSubArea=urlSubArea.replace(/\s+/g, '-')
+              var ps:CardProgramasDTO={Content:c.montoPagoDescripcion,Url:'/'+urlArea+'/'+urlSubArea+'-'+c.idBusqueda,Img:'https://img.bsginstitute.com/repositorioweb/img/programas/'+c.imagen,ImgAlt:c.imagenAlt,Title:c.nombre};
+              return ps;
+            }
+          );
+        }
       }
     })
   }

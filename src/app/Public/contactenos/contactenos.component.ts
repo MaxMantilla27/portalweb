@@ -1,7 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Validators } from '@angular/forms';
+import { Basic } from 'src/app/Core/Models/BasicDTO';
+import { ContactenosDTO } from 'src/app/Core/Models/ContactenosDTO';
 import { formulario } from 'src/app/Core/Models/Formulario';
 import { FormularioContactoDTO } from 'src/app/Core/Models/FormularioDTO';
+import { FormularioComponent } from 'src/app/Core/Shared/Containers/formulario/formulario.component';
+import { DatosPortalService } from 'src/app/Core/Shared/Services/DatosPortal/datos-portal.service';
+import { RegionService } from 'src/app/Core/Shared/Services/Region/region.service';
 
 @Component({
   selector: 'app-contactenos',
@@ -10,7 +15,12 @@ import { FormularioContactoDTO } from 'src/app/Core/Models/FormularioDTO';
 })
 export class ContactenosComponent implements OnInit {
 
-  constructor() { }
+  @ViewChild(FormularioComponent)
+  form!: FormularioComponent;
+  constructor(
+    private _DatosPortalService:DatosPortalService,
+    private _RegionService:RegionService
+    ) { }
 
   public migaPan = [
     {
@@ -41,9 +51,79 @@ export class ContactenosComponent implements OnInit {
   }
   ngOnInit(): void {
     this.AddFields();
+    this.ObtenerCombosPortal();
   }
   SetContacto(e:any){
     console.log(e);
+
+  }
+  ObtenerCombosPortal(){
+    this._DatosPortalService.ObtenerCombosPortal().subscribe({
+      next:(x)=>{
+        console.log(x);
+        this.fileds.forEach(r=>{
+          if(r.nombre=='IdPais'){
+            r.data=x.listaPais.map((p:any)=>{
+              var ps:Basic={Nombre:p.pais,value:p.idPais};
+              return ps;
+            })
+          }
+        })
+        this.fileds.forEach(r=>{
+          if(r.nombre=='IdCargo'){
+            r.data=x.listaCargo.map((p:any)=>{
+              var ps:Basic={Nombre:p.cargo,value:p.idCargo};
+              return ps;
+            })
+          }
+        })
+        this.fileds.forEach(r=>{
+          if(r.nombre=='IdAreaFormacion'){
+            r.data=x.listaAreaFormacion.map((p:any)=>{
+              var ps:Basic={Nombre:p.areaFormacion,value:p.idAreaFormacion};
+              return ps;
+            })
+          }
+        })
+        this.fileds.forEach(r=>{
+          if(r.nombre=='IdAreaTrabajo'){
+            r.data=x.listaAreaTrabajo.map((p:any)=>{
+              var ps:Basic={Nombre:p.areaTrabajo,value:p.idAreaTrabajo};
+              return ps;
+            })
+          }
+        })
+        this.fileds.forEach(r=>{
+          if(r.nombre=='IdIndustria'){
+            r.data=x.listaIndustria.map((p:any)=>{
+              var ps:Basic={Nombre:p.industria,value:p.idIndustria};
+              return ps;
+            })
+          }
+        })
+      }
+    })
+  }
+  GetRegionesPorPais(idPais:number){
+    this._RegionService.ObtenerCiudadesPorPais(idPais).subscribe({
+      next:x=>{
+        this.fileds.forEach(r=>{
+          if(r.nombre=='IdRegion'){
+            r.disable=false;
+            r.data=x.map((p:any)=>{
+              var ps:Basic={Nombre:p.nombreCiudad,value:p.idCiudad};
+              return ps;
+            })
+          }
+        })
+        this.form.enablefield('IdRegion');
+      }
+    })
+  }
+  SelectChage(e:any){
+    if(e.Nombre=="IdPais"){
+      this.GetRegionesPorPais(e.value)
+    }
   }
   AddFields(){
 
