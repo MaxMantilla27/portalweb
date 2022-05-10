@@ -17,7 +17,7 @@ export class MiPerfilComponent implements OnInit {
       urlWeb: '/AulaVirtual/MiPerfil',
     },
   ];
-
+  public imgAvtar='';
   public combosPerfil: combosPerfilDTO = {
     listaAreaFormacion:[],
     listaAreaTrabajo:[],
@@ -78,6 +78,7 @@ export class MiPerfilComponent implements OnInit {
         Direccion: this.combosPerfil.datosAlumno.direccion,
       });
     });
+    this._HelperService.recibirDatosAvatar.subscribe(x=>this.imgAvtar=x.UrlAvatar)
   }
   ActualizarUsuario() {}
 

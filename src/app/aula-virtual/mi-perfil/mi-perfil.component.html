@@ -17,11 +17,11 @@
 <div class="container">
   <div class="row rowpadd">
     <div class="col-12 col-md-12 col-lg-12" style="display: flex; align-items: center; justify-content: flex-start;">
-      <img class="imgAvatarPerfil" src="../../../assets/imagenes/calendario-05.svg" alt="">
+      <img class="imgAvatarPerfil" [src]="imgAvtar" alt="">
       <div class="contentPerfilName">
         <div class="name">{{combosPerfil.datosAlumno.nombres}}</div>
 
-        <app-default-button [confs]="{color:'primary',titulo:'Editar Avatar'}" icon="edit"
+        <app-default-button [confs]="{color:'primary',titulo:'Editar Avatar'}" [icon]="'edit'"
         [ruta]="'/AulaVirtual/Avatar'" [style]="'background: #ff894b'"></app-default-button>
       </div>
     </div>

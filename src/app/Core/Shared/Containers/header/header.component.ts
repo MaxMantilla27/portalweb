@@ -20,7 +20,7 @@ import { AreacapasitacionService } from '../../Services/AreaCapasitacion/areacap
 import { HelperService } from '../../Services/helper.service';
 import { AlumnoService } from '../../Services/Alumno/alumno.service';
 import { AvatarService } from '../../Services/Avatar/avatar.service';
-import { AvatarDTO } from 'src/app/Core/Models/Avatar';
+import { AvatarCombosDTO, AvatarDTO } from 'src/app/Core/Models/Avatar';
 import { combosPerfilDTO, datosAlumnoDTO } from 'src/app/Core/Models/AlumnoDTO';
 
 @Component({
@@ -54,6 +54,20 @@ export class HeaderComponent implements OnInit {
     nombres: '',
     telefono: '',
   };
+  public combosAvatar:AvatarCombosDTO={
+    listaAccesorios:[],
+    listaBarbaBigote:[],
+    listaBoca:[],
+    UrlAvatar:'',
+    listaCabello:[],
+    listaCejas:[],
+    listaColorBarbaBigote:[],
+    listaColorCabello:[],
+    listaColorPiel:[],
+    listaColorRopa:[],
+    listaMirada:[],
+    listaRopa:[],
+  }
   public combosPerfil:combosPerfilDTO={
     listaAreaFormacion:[],
     listaAreaTrabajo:[],
@@ -271,11 +285,9 @@ export class HeaderComponent implements OnInit {
   ObtenerCombosPerfil() {
     this._AlumnoService.ObtenerCombosPerfil().subscribe({
       next: (x) => {
-        console.log(x)
         this.Alumno=x.datosAlumno,
         this.combosPerfil=x.combos;
         this.combosPerfil.datosAlumno=this.Alumno;
-        console.log(this.combosPerfil)
         this._HelperService.enviarCombosPerfi(this.combosPerfil)
       },
     });
@@ -283,8 +295,12 @@ export class HeaderComponent implements OnInit {
   ObtenerAvatar() {
     this._AvatarService.ObtenerAvatar().subscribe({
       next: (x) => {
+        console.log(x)
         this.Avatar = x.avatar;
         this.urlAvatar=this._AvatarService.GetUrlImagenAvatar(this.Avatar);
+        this.combosAvatar=x.combos;
+        this.combosAvatar.UrlAvatar=this.urlAvatar
+        this._HelperService.enviarDatosAvatar(this.combosAvatar);
       },
     });
   }
