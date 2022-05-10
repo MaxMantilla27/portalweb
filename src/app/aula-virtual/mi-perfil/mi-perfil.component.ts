@@ -72,6 +72,10 @@ export class MiPerfilComponent implements OnInit {
         Correo: this.combosPerfil.datosAlumno.email,
         Movil: this.combosPerfil.datosAlumno.telefono,
         Genero: this.combosPerfil.datosAlumno.idGenero,
+        Pais: this.combosPerfil.datosAlumno.idPais,
+        Region: this.combosPerfil.datosAlumno.idDepartamento,
+        Ciudad: '',
+        Direccion: this.combosPerfil.datosAlumno.direccion,
       });
     });
   }
