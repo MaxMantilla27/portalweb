@@ -74,7 +74,7 @@ export class LoginComponent implements OnInit {
       next:x=>{
         this.statuscharge=false
         this._SessionStorageService.SetToken(x.token)
-        this.router.navigate(['/AulaVirtual/Cuenta']);
+        this.router.navigate(['/AulaVirtual/MiPerfil']);
         console.log(x)
       },
       error:e=>{

@@ -9,6 +9,7 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { InterceptorService } from '../Public/Interceptor/interceptor.service';
 import { CuentaMiPerfilComponent } from './cuenta/cuenta-mi-perfil/cuenta-mi-perfil.component';
 import { CuentaMisPagosComponent } from './cuenta/cuenta-mis-pagos/cuenta-mis-pagos.component';
+import { MiPerfilComponent } from './mi-perfil/mi-perfil.component';
 
 
 @NgModule({
@@ -17,6 +18,7 @@ import { CuentaMisPagosComponent } from './cuenta/cuenta-mis-pagos/cuenta-mis-pa
     CuentaComponent,
     CuentaMiPerfilComponent,
     CuentaMisPagosComponent,
+    MiPerfilComponent,
 
   ],
   imports: [

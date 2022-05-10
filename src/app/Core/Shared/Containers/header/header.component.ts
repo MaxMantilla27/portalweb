@@ -21,7 +21,7 @@ import { HelperService } from '../../Services/helper.service';
 import { AlumnoService } from '../../Services/Alumno/alumno.service';
 import { AvatarService } from '../../Services/Avatar/avatar.service';
 import { AvatarDTO } from 'src/app/Core/Models/Avatar';
-import { datosAlumnoDTO } from 'src/app/Core/Models/AlumnoDTO';
+import { combosPerfilDTO, datosAlumnoDTO } from 'src/app/Core/Models/AlumnoDTO';
 
 @Component({
   selector: 'app-header',
@@ -54,6 +54,17 @@ export class HeaderComponent implements OnInit {
     nombres: '',
     telefono: '',
   };
+  public combosPerfil:combosPerfilDTO={
+    listaAreaFormacion:[],
+    listaAreaTrabajo:[],
+    listaCargo:[],
+    listaCiudad:[],
+    listaGenero:[],
+    listaIndustria:[],
+    listaPais:[],
+    listaTipoDocumento:[],
+    datosAlumno:this.Alumno
+  }
   public urlAvatar='';
   public Avatar: AvatarDTO = {
     accessories: '',
@@ -260,7 +271,12 @@ export class HeaderComponent implements OnInit {
   ObtenerCombosPerfil() {
     this._AlumnoService.ObtenerCombosPerfil().subscribe({
       next: (x) => {
-        this.Alumno=x.datosAlumno
+        console.log(x)
+        this.Alumno=x.datosAlumno,
+        this.combosPerfil=x.combos;
+        this.combosPerfil.datosAlumno=this.Alumno;
+        console.log(this.combosPerfil)
+        this._HelperService.enviarCombosPerfi(this.combosPerfil)
       },
     });
   }

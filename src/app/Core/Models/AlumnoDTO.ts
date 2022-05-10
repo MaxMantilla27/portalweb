@@ -29,3 +29,14 @@ export interface RegisterDTO {
   IdIndustria?: number,
   Password: string,
 }
+export interface combosPerfilDTO{
+  listaTipoDocumento:Array<any>,
+  listaGenero:Array<any>,
+  listaPais:Array<any>,
+  listaCiudad:Array<any>,
+  listaCargo:Array<any>,
+  listaAreaTrabajo:Array<any>,
+  listaAreaFormacion:Array<any>,
+  listaIndustria:Array<any>,
+  datosAlumno:datosAlumnoDTO
+}

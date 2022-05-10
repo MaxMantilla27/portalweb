@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ReplaySubject, Subject } from 'rxjs';
+import { combosPerfilDTO } from '../../Models/AlumnoDTO';
 import { BasicUrl } from '../../Models/BasicDTO';
 
 @Injectable({
@@ -8,6 +9,7 @@ import { BasicUrl } from '../../Models/BasicDTO';
 export class HelperService {
 
   constructor() { }
+  private msjConbosPerfil = new ReplaySubject<combosPerfilDTO>()
   private msjArrayCarrera = new ReplaySubject<Array<BasicUrl>>()
   private msjArrayFormacion = new ReplaySubject<Array<BasicUrl>>()
   private msjStringCarrera = new ReplaySubject<string>()
@@ -17,7 +19,6 @@ export class HelperService {
   public get recibirArrayCarrera() {
     return this.msjArrayCarrera.asObservable()
   }
-
   public enviarArrayCarrera(arreglo: Array<BasicUrl>): void {
     this.msjArrayCarrera.next(arreglo);
   }
@@ -30,7 +31,6 @@ export class HelperService {
   public get recibirArrayFormacion() {
     return this.msjArrayFormacion.asObservable()
   }
-
   public enviarArrayFormacion(arreglo: Array<BasicUrl>): void {
     this.msjArrayFormacion.next(arreglo);
   }
@@ -45,5 +45,12 @@ export class HelperService {
   }
   public enviarScrollFooter(texto: string): void {
     this.msjScrollFooter.next(texto);
+  }
+
+  public get recibirCombosPerfil() {
+    return this.msjConbosPerfil.asObservable()
+  }
+  public enviarCombosPerfi(combosPerfil: combosPerfilDTO): void {
+    this.msjConbosPerfil.next(combosPerfil);
   }
 }

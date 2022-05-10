@@ -10,6 +10,7 @@ export class DefaultButtonComponent implements OnInit {
   @Input() ruta: any
   @Input() style: string=""
   @Input() disabled: boolean=false
+  @Input() icon: string='keyboard_arrow_right'
   @Output()
   ButtoclClick: EventEmitter<void> = new EventEmitter<void>();
   constructor() { }

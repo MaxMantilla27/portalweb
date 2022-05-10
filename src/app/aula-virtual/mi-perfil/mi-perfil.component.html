@@ -1,0 +1,82 @@
+<div class="container">
+  <div class="container breadcrumb">
+    <app-miga-pan [items]="migaPan"></app-miga-pan>
+  </div>
+</div>
+<div style="background: #f4f4f4;">
+  <div class="container">
+    <div class="row rowpadd">
+      <div class="col-12 col-md-12 col-lg-12">
+        <div class="titulop">
+          Mi Perfil
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="container">
+  <div class="row rowpadd">
+    <div class="col-12 col-md-12 col-lg-12" style="display: flex; align-items: center; justify-content: flex-start;">
+      <img class="imgAvatarPerfil" src="../../../assets/imagenes/calendario-05.svg" alt="">
+      <div class="contentPerfilName">
+        <div class="name">{{combosPerfil.datosAlumno.nombres}}</div>
+
+        <app-default-button [confs]="{color:'primary',titulo:'Editar Avatar'}" icon="edit"
+        [ruta]="'/AulaVirtual/Avatar'" [style]="'background: #ff894b'"></app-default-button>
+      </div>
+    </div>
+    <div class="col-12 col-md-12 col-lg-12">
+      <form (submit)="ActualizarUsuario()" [formGroup]="userForm">
+        <div class="row">
+          <div class="col-12 col-md-6 col-lg-6 fieldOld">
+            <div class="title">Datos Personales</div>
+            <mat-form-field appearance="outline" [floatLabel]="'always'">
+              <mat-label>Nombres</mat-label>
+              <input type="text" placeholder="Nombres"  formControlName="Nombres" matInput />
+              <mat-error *ngIf="userForm.invalid">Debe ingresar sus nombres</mat-error>
+            </mat-form-field>
+            <mat-form-field appearance="outline" [floatLabel]="'always'">
+              <mat-label>Apellido</mat-label>
+              <input type="text" placeholder="Apellido"  formControlName="Apellido" matInput  />
+              <mat-error *ngIf="userForm.invalid">Debe ingresar sus apellidos</mat-error>
+            </mat-form-field>
+            <mat-form-field appearance="outline" [floatLabel]="'always'">
+              <mat-label>Tipo de documento</mat-label>
+              <mat-select formControlName="TipoDocumento" placeholder="Tipo de documento"   >
+                <mat-option *ngFor="let option of combosPerfil.listaTipoDocumento" [value]="option.codigoGuid">{{option.tipoDocumento}}</mat-option>
+              </mat-select>
+              <mat-error *ngIf="userForm.invalid">Debe seleccionar el tipo de documento</mat-error>
+            </mat-form-field>
+            <mat-form-field appearance="outline" [floatLabel]="'always'">
+              <mat-label>N&uacute;mero de documento</mat-label>
+              <input type="text" placeholder="N&uacute;mero de documento"  formControlName="Documento" matInput />
+              <mat-error *ngIf="userForm.invalid">Debe ingresar su numero de documento</mat-error>
+            </mat-form-field>
+            <mat-form-field appearance="outline" [floatLabel]="'always'">
+              <mat-label>Correo Electronico</mat-label>
+              <input type="text" placeholder="Correo Electronico"  formControlName="Correo" matInput />
+              <mat-error *ngIf="userForm.invalid">Debe ingresar su email</mat-error>
+            </mat-form-field>
+            <mat-form-field appearance="outline" [floatLabel]="'always'">
+              <mat-label>Tel&eacute;fono Movil</mat-label>
+              <input type="text" placeholder="Tel&eacute;fono Movil"  formControlName="Movil" matInput />
+              <mat-error *ngIf="userForm.invalid">Debe ingresar su telefono</mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" [floatLabel]="'always'">
+              <mat-label>Genero</mat-label>
+              <mat-select formControlName="Genero" placeholder="Genero"  >
+                <mat-option *ngFor="let option of combosPerfil.listaGenero" [value]="option.idGenero">{{option.genero}}</mat-option>
+              </mat-select>
+              <mat-error *ngIf="userForm.invalid">Debe ingresar sus nombres</mat-error>
+            </mat-form-field>
+          </div>
+
+          <div class="col-12 col-md-6 col-lg-6 fieldOld">
+            <div class="title">Direcci&oacute;n</div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
