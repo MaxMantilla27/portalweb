@@ -1,7 +1,14 @@
-<div class="cursoTitle">texto prueba</div>
-<div>Indicaciones</div>
-<div class="tipoIndicacionTitle">¡Hola! a continuacion te explicamos mediante videos intuitivos como debes
-  realizar tus evaluaciones.
-  <br>
-  Te deseamos existos.
+<div class="cursoTitle">{{TitlePrograma}}</div>
+<div style="    margin: 10px 0px;">Indicaciones</div>
+<div class="tipoIndicacionTitle">
+
+  <img class="ImgIndicacionesContent" [src]="'../../../../assets/icons/'+imgUrl"  alt="" *ngIf="imgUrl!=''">
+  <div>{{title}}</div>
+</div>
+<div>
+  <video controls>
+    <source
+      [src]="videoUrl"
+      type="video/mp4">
+  </video>
 </div>

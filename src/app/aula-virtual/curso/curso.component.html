@@ -15,42 +15,45 @@
               <div class="titleMatr">Indicaciones</div>
             </div>
           </ng-template>
-          <ng-template matTabContent>
-            <div style="padding: 10px 30px;">
-              <div class="cursoTitle">texto prueba</div>
-              <div class="cursoTabDescripcion">¡Hola! a continuacion te explicamos mediante videos intuitivos como debes
-                realizar tus evaluaciones.
-                <br>
-                Te deseamos existos.
+          <div style="padding: 10px 30px;">
+            <div class="cursoTitle">{{programEstructura.programaGeneral}}</div>
+            <div class="cursoTabDescripcion">¡Hola! a continuacion te explicamos mediante videos intuitivos como debes
+              realizar tus evaluaciones.
+              <br>
+              Te deseamos existos.
+            </div>
+            <div class="row">
+              <div class="col-12 col-md-6 col-lg-6" style="margin: 10px 0px;">
+                <app-indicaciones-content [title]="'Preguntas interactivas'" [imgUrl]="'sello.jpg'"
+                  (ButtoclClick)="changeIndexIndicaciones(1)"></app-indicaciones-content>
               </div>
-              <div class="row">
-                <div class="col-12 col-md-6 col-lg-6" style="margin: 10px 0px;">
-                  <app-indicaciones-content [title]="'Preguntas interactivas'" [imgUrl]="'sello.jpg'" (ButtoclClick)="changeIndexIndicaciones(1)"></app-indicaciones-content>
-                </div>
-                <div class="col-12 col-md-6 col-lg-6" style="margin: 10px 0px;">
-                  <app-indicaciones-content [title]="'Crucigramas'" [imgUrl]="'sello.jpg'" (ButtoclClick)="changeIndexIndicaciones(2)"></app-indicaciones-content>
-                </div>
-                <div class="col-12 col-md-6 col-lg-6" style="margin: 10px 0px;">
-                  <app-indicaciones-content [title]="'Tareas'" [imgUrl]="'sello.jpg'" (ButtoclClick)="changeIndexIndicaciones(3)"></app-indicaciones-content>
-                </div>
-                <div class="col-12 col-md-6 col-lg-6" style="margin: 10px 0px;">
-                  <app-indicaciones-content [title]="'Calificar tarea de pares'" [imgUrl]="'sello.jpg'" (ButtoclClick)="changeIndexIndicaciones(4)"></app-indicaciones-content>
-                </div>
+              <div class="col-12 col-md-6 col-lg-6" style="margin: 10px 0px;">
+                <app-indicaciones-content [title]="'Crucigramas'" [imgUrl]="'sello.jpg'"
+                  (ButtoclClick)="changeIndexIndicaciones(2)"></app-indicaciones-content>
+              </div>
+              <div class="col-12 col-md-6 col-lg-6" style="margin: 10px 0px;">
+                <app-indicaciones-content [title]="'Tareas'" [imgUrl]="'sello.jpg'"
+                  (ButtoclClick)="changeIndexIndicaciones(3)"></app-indicaciones-content>
+              </div>
+              <div class="col-12 col-md-6 col-lg-6" style="margin: 10px 0px;">
+                <app-indicaciones-content [title]="'Calificar tarea de pares'" [imgUrl]="'sello.jpg'"
+                  (ButtoclClick)="changeIndexIndicaciones(4)"></app-indicaciones-content>
               </div>
             </div>
-          </ng-template>
+          </div>
         </mat-tab>
-        <mat-tab *ngIf="IndicacionActive==true" >
+        <mat-tab *ngIf="IndicacionActive==true">
           <ng-template mat-tab-label class="tabSubcontent">
             <div class="contentHeaderM subContent">
               <div class="titleMatr">Preguntas interactivas</div>
             </div>
           </ng-template>
-          <ng-template matTabContent>
-            <div style="padding: 10px 30px;">
-              <app-indicaciones-options-content></app-indicaciones-options-content>
-            </div>
-          </ng-template>
+          <div style="padding: 10px 30px;">
+            <app-indicaciones-options-content [videoUrl]="videoPreguntas"
+              [TitlePrograma]="programEstructura.programaGeneral" [title]="'Preguntas Interactivas'"
+              [imgUrl]="'precio-03.svg'">
+            </app-indicaciones-options-content>
+          </div>
         </mat-tab>
         <mat-tab *ngIf="IndicacionActive==true">
           <ng-template mat-tab-label>
@@ -58,9 +61,11 @@
               <div class="titleMatr">Crucigramas</div>
             </div>
           </ng-template>
-          <ng-template matTabContent>
-            <div style="padding: 10px 30px;">Crucigramas</div>
-          </ng-template>
+          <div style="padding: 10px 30px;">
+            <app-indicaciones-options-content [videoUrl]="videoCrucigramas"
+              [TitlePrograma]="programEstructura.programaGeneral" [title]="'Crucigramas'" [imgUrl]="'precio-03.svg'">
+            </app-indicaciones-options-content>
+          </div>
         </mat-tab>
         <mat-tab *ngIf="IndicacionActive==true">
           <ng-template mat-tab-label>
@@ -68,9 +73,11 @@
               <div class="titleMatr">Tareas</div>
             </div>
           </ng-template>
-          <ng-template matTabContent>
-            <div style="padding: 10px 30px;">Tareas</div>
-          </ng-template>
+          <div style="padding: 10px 30px;">
+            <app-indicaciones-options-content [videoUrl]="videoTareas"
+              [TitlePrograma]="programEstructura.programaGeneral" [title]="'Tareas'" [imgUrl]="'precio-03.svg'">
+            </app-indicaciones-options-content>
+          </div>
         </mat-tab>
         <mat-tab *ngIf="IndicacionActive==true">
           <ng-template mat-tab-label>
@@ -78,9 +85,12 @@
               <div class="titleMatr">Calificar tarea de pares</div>
             </div>
           </ng-template>
-          <ng-template matTabContent>
-            <div style="padding: 10px 30px;">Calificar tarea de pares</div>
-          </ng-template>
+          <div style="padding: 10px 30px;">
+            <app-indicaciones-options-content [videoUrl]="videoTrabajoP"
+              [TitlePrograma]="programEstructura.programaGeneral" [title]="'Calificar tarea de pares'"
+              [imgUrl]="'precio-03.svg'">
+            </app-indicaciones-options-content>
+          </div>
         </mat-tab>
         <mat-tab>
           <ng-template mat-tab-label>
@@ -89,9 +99,17 @@
               <div class="titleMatr">Modulos</div>
             </div>
           </ng-template>
-          <ng-template matTabContent>
-            <div style="padding: 10px 30px;">Modulos</div>
-          </ng-template>
+          <div style="padding: 10px 30px;">
+
+            <div class="cursoTitle">{{programEstructura.programaGeneral}}</div>
+            <div class="cursoTabDescripcion">¡Bienvenido! Debes completar los siguientes modulos de tu programa:</div>
+            <div class="cursoTabRemenber">
+              <img src="../../../assets/icons/horario-04.svg" alt="">
+              <div><strong>Recuerda: </strong>Debes completar el curso I, para poder acceder al siguiente curso, y así progresivamente</div>
+            </div>
+            <app-curso-modulos [idMatricula]="idMatricula" [programEstructura]="programEstructura">
+            </app-curso-modulos>
+          </div>
         </mat-tab>
         <mat-tab>
           <ng-template mat-tab-label>
@@ -100,9 +118,7 @@
               <div class="titleMatr">Proyectos de Aplicación</div>
             </div>
           </ng-template>
-          <ng-template matTabContent>
-            <div style="padding: 10px 30px;">Proyectos</div>
-          </ng-template>
+          <div style="padding: 10px 30px;">Proyectos</div>
         </mat-tab>
         <mat-tab>
           <ng-template mat-tab-label>
@@ -111,9 +127,7 @@
               <div class="titleMatr">Certificados</div>
             </div>
           </ng-template>
-          <ng-template matTabContent>
-            <div style="padding: 10px 30px;">Certificados</div>
-          </ng-template>
+          <div style="padding: 10px 30px;">Certificados</div>
         </mat-tab>
         <mat-tab>
           <ng-template mat-tab-label>
@@ -122,9 +136,7 @@
               <div class="titleMatr">Trámites</div>
             </div>
           </ng-template>
-          <ng-template matTabContent>
-            <div style="padding: 10px 30px;">Trámites</div>
-          </ng-template>
+          <div style="padding: 10px 30px;">Trámites</div>
         </mat-tab>
         <mat-tab>
           <ng-template mat-tab-label>
@@ -133,9 +145,7 @@
               <div class="titleMatr">Mis Beneficios</div>
             </div>
           </ng-template>
-          <ng-template matTabContent>
-            <div style="padding: 10px 30px;">Beneficios</div>
-          </ng-template>
+          <div style="padding: 10px 30px;">Beneficios</div>
         </mat-tab>
       </mat-tab-group>
     </div>
