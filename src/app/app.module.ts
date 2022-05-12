@@ -8,6 +8,7 @@ import {SharedModule} from './Core/Shared/shared.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { InterceptorService } from './Public/Interceptor/interceptor.service';
+import { HelperService } from './Core/Shared/Services/helper.service';
 
 
 @NgModule({
@@ -22,7 +23,8 @@ import { InterceptorService } from './Public/Interceptor/interceptor.service';
     HttpClientModule,
   ],
   providers: [
-    { provide: HTTP_INTERCEPTORS, useClass: InterceptorService, multi: true }
+    { provide: HTTP_INTERCEPTORS, useClass: InterceptorService, multi: true },
+    HelperService
   ],
   bootstrap: [AppComponent]
 })

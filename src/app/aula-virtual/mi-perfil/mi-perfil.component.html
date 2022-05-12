@@ -22,58 +22,133 @@
         <div class="name">{{combosPerfil.datosAlumno.nombres}}</div>
 
         <app-default-button [confs]="{color:'primary',titulo:'Editar Avatar'}" [icon]="'edit'"
-        [ruta]="'/AulaVirtual/Avatar'" [style]="'background: #ff894b'"></app-default-button>
+          [ruta]="'/AulaVirtual/Avatar'" [style]="'background: #ff894b'"></app-default-button>
       </div>
     </div>
     <div class="col-12 col-md-12 col-lg-12">
       <form (submit)="ActualizarUsuario()" [formGroup]="userForm">
         <div class="row">
           <div class="col-12 col-md-6 col-lg-6 fieldOld">
-            <div class="title">Datos Personales</div>
+            <div class="titlePerfil">Datos Personales</div>
             <mat-form-field appearance="outline" [floatLabel]="'always'">
               <mat-label>Nombres</mat-label>
-              <input type="text" placeholder="Nombres"  formControlName="Nombres" matInput />
+              <input type="text" placeholder="Nombres" formControlName="Nombres" matInput />
               <mat-error *ngIf="userForm.invalid">Debe ingresar sus nombres</mat-error>
             </mat-form-field>
             <mat-form-field appearance="outline" [floatLabel]="'always'">
               <mat-label>Apellido</mat-label>
-              <input type="text" placeholder="Apellido"  formControlName="Apellido" matInput  />
+              <input type="text" placeholder="Apellido" formControlName="Apellido" matInput />
               <mat-error *ngIf="userForm.invalid">Debe ingresar sus apellidos</mat-error>
             </mat-form-field>
             <mat-form-field appearance="outline" [floatLabel]="'always'">
               <mat-label>Tipo de documento</mat-label>
-              <mat-select formControlName="TipoDocumento" placeholder="Tipo de documento"   >
-                <mat-option *ngFor="let option of combosPerfil.listaTipoDocumento" [value]="option.codigoGuid">{{option.tipoDocumento}}</mat-option>
+              <mat-select formControlName="TipoDocumento" placeholder="Tipo de documento">
+                <mat-option *ngFor="let option of combosPerfil.listaTipoDocumento" [value]="option.codigoGuid">
+                  {{option.tipoDocumento}}</mat-option>
               </mat-select>
               <mat-error *ngIf="userForm.invalid">Debe seleccionar el tipo de documento</mat-error>
             </mat-form-field>
             <mat-form-field appearance="outline" [floatLabel]="'always'">
               <mat-label>N&uacute;mero de documento</mat-label>
-              <input type="text" placeholder="N&uacute;mero de documento"  formControlName="Documento" matInput />
+              <input type="text" placeholder="N&uacute;mero de documento" formControlName="Documento" matInput />
               <mat-error *ngIf="userForm.invalid">Debe ingresar su numero de documento</mat-error>
             </mat-form-field>
             <mat-form-field appearance="outline" [floatLabel]="'always'">
               <mat-label>Correo Electronico</mat-label>
-              <input type="text" placeholder="Correo Electronico"  formControlName="Correo" matInput />
+              <input type="text" placeholder="Correo Electronico" formControlName="Correo" matInput />
               <mat-error *ngIf="userForm.invalid">Debe ingresar su email</mat-error>
             </mat-form-field>
             <mat-form-field appearance="outline" [floatLabel]="'always'">
               <mat-label>Tel&eacute;fono Movil</mat-label>
-              <input type="text" placeholder="Tel&eacute;fono Movil"  formControlName="Movil" matInput />
+              <input type="text" placeholder="Tel&eacute;fono Movil" formControlName="Movil" matInput />
               <mat-error *ngIf="userForm.invalid">Debe ingresar su telefono</mat-error>
             </mat-form-field>
 
             <mat-form-field appearance="outline" [floatLabel]="'always'">
               <mat-label>Genero</mat-label>
-              <mat-select formControlName="Genero" placeholder="Genero"  >
-                <mat-option *ngFor="let option of combosPerfil.listaGenero" [value]="option.idGenero">{{option.genero}}</mat-option>
+              <mat-select formControlName="Genero" placeholder="Genero">
+                <mat-option *ngFor="let option of combosPerfil.listaGenero" [value]="option.idGenero">{{option.genero}}
+                </mat-option>
               </mat-select>
               <mat-error *ngIf="userForm.invalid">Debe ingresar sus nombres</mat-error>
             </mat-form-field>
           </div>
 
           <div class="col-12 col-md-6 col-lg-6 fieldOld">
-            <div class="title">Direcci&oacute;n</div>
+            <div class="titlePerfil">Direcci&oacute;n</div>
+            <mat-form-field appearance="outline" [floatLabel]="'always'">
+              <mat-label>Pa&iacute;s</mat-label>
+              <mat-select formControlName="Pais" placeholder="Pa&iacute;s" (selectionChange)="GetRegionPorPais()">
+                <mat-option *ngFor="let option of combosPerfil.listaPais" [value]="option.idPais">{{option.pais}}
+                </mat-option>
+              </mat-select>
+              <mat-error *ngIf="userForm.invalid">Debe ingresar su pais</mat-error>
+            </mat-form-field>
+            <mat-form-field appearance="outline" [floatLabel]="'always'">
+              <mat-label>Regi&oacute;n</mat-label>
+              <mat-select formControlName="Region" placeholder="Regi&oacute;n">
+                <mat-option *ngFor="let option of combosPerfil.listaCiudad" [value]="option.idCiudad">
+                  {{option.nombreCiudad}}</mat-option>
+              </mat-select>
+              <mat-error *ngIf="userForm.invalid">Debe ingresar su region</mat-error>
+            </mat-form-field>
+            <mat-form-field appearance="outline" [floatLabel]="'always'">
+              <mat-label>Ciudad</mat-label>
+              <input type="text" placeholder="Ciudad" formControlName="Ciudad" matInput />
+              <mat-error *ngIf="userForm.invalid">Debe ingresar su ciudad</mat-error>
+            </mat-form-field>
+            <mat-form-field appearance="outline" [floatLabel]="'always'" style="margin-bottom: 40px;">
+              <mat-label>Direcci&oacute;n</mat-label>
+              <input type="text" placeholder="Direcci&oacute;n" formControlName="Direccion" matInput />
+              <mat-error *ngIf="userForm.invalid">Debe ingresar su direccion</mat-error>
+            </mat-form-field>
+
+            <div class="titlePerfil">Datos Laborales</div>
+            <mat-form-field appearance="outline" [floatLabel]="'always'">
+              <mat-label>Empresa</mat-label>
+              <input type="text" placeholder="Empresa" formControlName="Empresa" matInput />
+              <mat-error *ngIf="userForm.invalid">Debe ingresar su empresa</mat-error>
+            </mat-form-field>
+            <mat-form-field appearance="outline" [floatLabel]="'always'">
+              <mat-label>Cargo</mat-label>
+              <mat-select formControlName="Cargo" placeholder="Cargo">
+                <mat-option *ngFor="let option of combosPerfil.listaCargo" [value]="option.idCargo">{{option.cargo}}
+                </mat-option>
+              </mat-select>
+              <mat-error *ngIf="userForm.invalid">Debe ingresar sus nombres</mat-error>
+            </mat-form-field>
+            <mat-form-field appearance="outline" [floatLabel]="'always'">
+              <mat-label>&Aacute;rea Trabajo</mat-label>
+              <mat-select formControlName="AreaTrabajo" placeholder="&Aacute;rea Trabajo">
+                <mat-option *ngFor="let option of combosPerfil.listaAreaTrabajo" [value]="option.idAreaTrabajo">
+                  {{option.areaTrabajo}}</mat-option>
+              </mat-select>
+              <mat-error *ngIf="userForm.invalid">Debe ingresar sus nombres</mat-error>
+            </mat-form-field>
+            <mat-form-field appearance="outline" [floatLabel]="'always'">
+              <mat-label>&Aacute;rea Formación</mat-label>
+              <mat-select formControlName="AreaFormacion" placeholder="&Aacute;rea Formación">
+                <mat-option *ngFor="let option of combosPerfil.listaAreaFormacion" [value]="option.idAreaFormacion">
+                  {{option.areaFormacion}}</mat-option>
+              </mat-select>
+              <mat-error *ngIf="userForm.invalid">Debe ingresar sus nombres</mat-error>
+            </mat-form-field>
+            <mat-form-field appearance="outline" [floatLabel]="'always'">
+              <mat-label>Industria</mat-label>
+              <mat-select formControlName="Industria" placeholder="Industria">
+                <mat-option *ngFor="let option of combosPerfil.listaIndustria" [value]="option.idIndustria">
+                  {{option.industria}}</mat-option>
+              </mat-select>
+              <mat-error *ngIf="userForm.invalid">Debe ingresar sus nombres</mat-error>
+            </mat-form-field>
+
+            <mat-checkbox color="primary" formControlName="Terminos" class="terminos">
+              Garantizo que toda la información proporcionada es correcta, dado que entiendo que se usará para la
+              elaboración y envío del certificado correspondiente.
+            </mat-checkbox>
+
+            <app-default-button [confs]="{color:'primary',titulo:'Actualizar'}" [disabled]="!userForm.valid"
+              [style]="'width: 100%;margin-top: 20px;'"(ButtoclClick)="ActualizarUsuario()"></app-default-button>
           </div>
         </div>
       </form>

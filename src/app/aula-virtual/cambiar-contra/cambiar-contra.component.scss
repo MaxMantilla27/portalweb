@@ -1,17 +1,5 @@
-.imgAvatarPerfil {
-  height: 150px;
-  width: auto;
-  object-fit: cover;
-}
-.contentPerfilName {
-  margin-left: 30px;
-}
-.contentPerfilName .name {
-  font-size: 20px;
-  font-weight: 600;
-  color: #4e4e4d;
-  margin: 20px 0px;
-}
+
+
 .fieldOld {
   display: flex;
   flex-direction: column;
@@ -70,11 +58,4 @@
   .mat-form-field-outline-end {
     background-color: var(--main-bg-color);
   }
-}
-.terminos label .mat-checkbox-label{
-  white-space: normal !important;
-  font-size: 9px;
-  line-height: 12px;
-  text-align: justify;
-  color: #ababab;
 }

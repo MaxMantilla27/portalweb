@@ -191,11 +191,9 @@ export class ProgramasComponent implements OnInit {
   }
   GetProgramas(){
     this.send.Maximo=this.rangoselect;
-    console.log(this.IdArea);
     this.send.idArea=[this.IdArea];
     if(Number(this.IdArea)==0 || isNaN(this.IdArea)){
       this.send.idArea=[];
-      console.log(this.send.idArea);
     }
     this.send.idSubArea=this.SubAreaSelect;
     this.send.IdCategoria=this.TipoProgramaSelect;

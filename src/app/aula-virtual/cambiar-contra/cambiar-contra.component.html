@@ -1,0 +1,45 @@
+<div class="container">
+  <div class="container breadcrumb">
+    <app-miga-pan [items]="migaPan"></app-miga-pan>
+  </div>
+</div>
+<div style="background: #f4f4f4;">
+  <div class="container">
+    <div class="row rowpadd">
+      <div class="col-12 col-md-12 col-lg-12">
+        <div class="titulop">
+          Cambiar Contraseña
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="container">
+  <div class="row rowpadd">
+    <div class="col-12 col-md-12 col-lg-12">
+      <form (submit)="CambiarContra()" [formGroup]="userForm">
+        <div class="row">
+          <div class="col-12 col-md-6 col-lg-6 fieldOld">
+            <mat-form-field appearance="outline" [floatLabel]="'always'">
+              <mat-label>Contraseña Actual</mat-label>
+              <input type="password" placeholder="Contraseña Actual" formControlName="contraActual" matInput />
+              <mat-error *ngIf="userForm.invalid">{{obtenerErrorCampoNombre('contraActual')}}</mat-error>
+            </mat-form-field>
+            <mat-form-field appearance="outline" [floatLabel]="'always'">
+              <mat-label>Nueva Contraseña</mat-label>
+              <input type="password" placeholder="Nueva Contraseña" formControlName="contraNueva" matInput (change)="passwordChange()" />
+              <mat-error *ngIf="userForm.invalid">{{obtenerErrorCampoNombre('contraNueva')}}</mat-error>
+            </mat-form-field>
+            <mat-form-field appearance="outline" [floatLabel]="'always'">
+              <mat-label>Confirmar Nueva Contraseña</mat-label>
+              <input type="password" placeholder="Confirmar Nueva Contraseña" formControlName="contraNuevaRepeat" matInput />
+              <mat-error *ngIf="userForm.invalid">{{obtenerErrorCampoNombre('contraNuevaRepeat')}}</mat-error>
+            </mat-form-field>
+            <app-default-button [confs]="{color:'primary',titulo:'Guardar'}" [disabled]="!userForm.valid"
+              [style]="'width: 100%;margin-top: 20px;'" ></app-default-button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

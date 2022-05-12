@@ -63,6 +63,7 @@ export class HomeComponent implements OnInit,AfterViewInit {
     this._HelperService.recibirStringCarrera.subscribe(x => {this.TituloCarreras=x});
     this._HelperService.recibirArrayCarrera.subscribe({
       next:(x)=>{
+        console.log(x);
         this.Carreras=x.map((c:any)=>{
           var ps:BasicUrl={Nombre:c.Nombre,value:c.value,Url:c.Url};
           return ps;

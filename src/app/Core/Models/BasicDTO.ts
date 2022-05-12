@@ -29,6 +29,13 @@ export interface BasicCarousel{
   height:number
 }
 
+export interface CardMatriculasDTO{
+  Title:string,
+  Img:string,
+  ImgAlt:string,
+  Tipo:number,
+  Url:string,
+}
 export interface CardProgramasDTO{
   Title:string,
   Img:string,

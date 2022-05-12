@@ -1,1 +1,33 @@
-<router-outlet></router-outlet>
+<mat-sidenav-container>
+
+  <mat-sidenav #sidenav mode="over" position='end'>
+    <img src="https://img.bsginstitute.com/repositorioweb/img/logobsg.svg" alt="" width="75%">
+    <hr />
+    <nav>
+      <app-button [Url]="''" (OnClick)="sidenav.toggle()" [tipo]="1">
+        <ng-container contenido>
+          Inicio
+        </ng-container>
+      </app-button>
+      <a routerLink="about" (click)="sidenav.toggle()">About</a>
+      <a routerLink="login" (click)="sidenav.toggle()">Login</a>
+      <a routerLink="sign-up" (click)="sidenav.toggle()">Sign Up</a>
+      <app-button [Url]="'/login'" [tipo]="1" (OnClick)="sidenav.toggle()" >
+        <ng-container contenido>
+          BS Campus
+        </ng-container>
+      </app-button>
+    </nav>
+  </mat-sidenav>
+
+  <mat-sidenav-content (scroll)="onSideNavScroll($event)" [scrollTop]="0">
+    <app-header (OnClick)="sidenav.toggle()">
+    </app-header>
+    <section>
+
+      <router-outlet></router-outlet>
+    </section>
+
+    <app-footer></app-footer>
+  </mat-sidenav-content>
+</mat-sidenav-container>

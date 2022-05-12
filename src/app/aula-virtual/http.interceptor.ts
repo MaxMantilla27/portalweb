@@ -13,7 +13,7 @@ export class MyHttpInterceptor implements HttpInterceptor {
       headers: request.headers.set('app-authore', 'Dzhavat'),
     });
 
-    console.log('processing request', customReq);
+    //console.log('processing request', customReq);
 
     // pass on the modified request object
     return next.handle(customReq).pipe(

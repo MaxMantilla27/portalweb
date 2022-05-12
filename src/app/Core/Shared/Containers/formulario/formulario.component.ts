@@ -1,6 +1,7 @@
 import { isPlatformBrowser } from '@angular/common';
 import {
   Component,
+  DoCheck,
   ElementRef,
   EventEmitter,
   Inject,
@@ -89,7 +90,21 @@ export class FormularioComponent implements OnChanges, OnInit {
       }
     })
   }
+  changeForm(){
+    console.log(this.userForm)
+    if(this.userForm!=undefined){
+      for (let i = 0; i < this.fiels.length; i++) {
+        let campo = (<FormArray>this.userForm.get('Fields')).controls[i].get(
+          this.fiels[i].nombre
+        );
+        campo?.setValue(this.fiels[i].valorInicial);
+      }
+
+    }
+  }
+
   ngOnChanges(changes: SimpleChanges): void {
+    this.changeForm();
     if (this.userForm != undefined) {
       if (this.InputsDisable == true) {
         this.DisabledFields();

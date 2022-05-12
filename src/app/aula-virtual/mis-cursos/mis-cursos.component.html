@@ -1,0 +1,61 @@
+<div class="container">
+  <div class="container breadcrumb">
+    <app-miga-pan [items]="migaPan"></app-miga-pan>
+  </div>
+</div>
+<div style="background: #f4f4f4;">
+  <div class="container">
+    <div class="row rowpadd">
+      <div class="col-12 col-md-12 col-lg-12">
+        <div class="titulop">
+          Mis Cursos
+        </div>
+        <div style="font-size: 20px;
+        color: #797978;">{{textoBienvenido}}</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="row rowpadd">
+    <div class="col-12 col-md-4 col-lg-4" *ngFor="let item of matriculas" style="margin-bottom: 20px;">
+      <app-card-matriculas [cardContent]="{ Img: 'https://img.bsginstitute.com/repositorioweb/img/programas/'+item.pw_ImgPortada,
+      Title: item.programaGeneral,ImgAlt: '',Tipo:item.tipoModalidad,Url: '/AulaVirtual/MisCursos/'+item.idMatriculaCabecera}">
+
+        <ng-container linkIcons>
+          <button mat-icon-button aria-label="Example icon button with a vertical three dot icon"
+            matTooltip="Indicaciones"
+            matTooltipClass="tootipMatriculas">
+            <img class="iconsCardMatriculas" src="../../../assets/icons/instagram-icon.svg" alt="">
+          </button>
+          <button mat-icon-button aria-label="Example icon button with a vertical three dot icon"
+            matTooltip="Modulos"
+            matTooltipClass="tootipMatriculas">
+            <img class="iconsCardMatriculas" src="../../../assets/icons/instagram-icon.svg" alt="">
+          </button>
+          <button *ngIf="item.proyectoAplicacion" mat-icon-button aria-label="Example icon button with a vertical three dot icon"
+            matTooltip="Proyectos de aplicación"
+            matTooltipClass="tootipMatriculas">
+            <img class="iconsCardMatriculas" src="../../../assets/icons/instagram-icon.svg" alt="">
+          </button>
+          <button mat-icon-button aria-label="Example icon button with a vertical three dot icon"
+            matTooltip="Certificados"
+            matTooltipClass="tootipMatriculas">
+            <img class="iconsCardMatriculas" src="../../../assets/icons/instagram-icon.svg" alt="">
+          </button>
+          <button mat-icon-button aria-label="Example icon button with a vertical three dot icon"
+            matTooltip="Trámites"
+            matTooltipClass="tootipMatriculas">
+            <img class="iconsCardMatriculas" src="../../../assets/icons/instagram-icon.svg" alt="">
+          </button>
+          <button mat-icon-button aria-label="Example icon button with a vertical three dot icon"
+            matTooltip="Mis Beneficios"
+            matTooltipClass="tootipMatriculas">
+            <img class="iconsCardMatriculas" src="../../../assets/icons/instagram-icon.svg" alt="">
+          </button>
+        </ng-container>
+      </app-card-matriculas>
+    </div>
+  </div>
+</div>

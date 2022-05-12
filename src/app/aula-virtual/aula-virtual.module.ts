@@ -10,6 +10,10 @@ import { InterceptorService } from '../Public/Interceptor/interceptor.service';
 import { CuentaMiPerfilComponent } from './cuenta/cuenta-mi-perfil/cuenta-mi-perfil.component';
 import { CuentaMisPagosComponent } from './cuenta/cuenta-mis-pagos/cuenta-mis-pagos.component';
 import { MiPerfilComponent } from './mi-perfil/mi-perfil.component';
+import { CambiarContraComponent } from './cambiar-contra/cambiar-contra.component';
+import { MyHttpInterceptor } from './http.interceptor';
+import { MisCursosComponent } from './mis-cursos/mis-cursos.component';
+import { CursoComponent } from './curso/curso.component';
 
 
 @NgModule({
@@ -19,6 +23,9 @@ import { MiPerfilComponent } from './mi-perfil/mi-perfil.component';
     CuentaMiPerfilComponent,
     CuentaMisPagosComponent,
     MiPerfilComponent,
+    CambiarContraComponent,
+    MisCursosComponent,
+    CursoComponent,
 
   ],
   imports: [
@@ -27,7 +34,9 @@ import { MiPerfilComponent } from './mi-perfil/mi-perfil.component';
     SharedModule,
   ],
   providers: [
-    { provide: HTTP_INTERCEPTORS, useClass: InterceptorService, multi: true }
+    { provide: HTTP_INTERCEPTORS, useClass: InterceptorService, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: MyHttpInterceptor, multi: true },
+
   ],
 })
 export class AulaVirtualModule { }

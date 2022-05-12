@@ -11,7 +11,7 @@ export class SessionStorageService {
    }
    validateTokken(): boolean {
     if(this.isBrowser){
-      var token=sessionStorage.getItem('Token');
+      var token=localStorage.getItem('Token');
       return (token==undefined || token==null)?false:true;
     }else{
       return false;
@@ -19,7 +19,7 @@ export class SessionStorageService {
   }
   GetToken():string|null{
     if(this.isBrowser){
-      var token=sessionStorage.getItem('Token');
+      var token=localStorage.getItem('Token');
       if(token==undefined || token==null) return null;
       return atob(token)
     }
@@ -27,19 +27,24 @@ export class SessionStorageService {
   }
   SetToken(token: string):void{
     if(this.isBrowser){
-      sessionStorage.setItem('Token',btoa(token));
+      localStorage.setItem('Token',btoa(token));
+    }
+  }
+  DeleteToken():void{
+    if(this.isBrowser){
+      localStorage.removeItem('Token');
     }
   }
 
   SessionSetValue(name:string, token: string):void{
     if(this.isBrowser){
-      sessionStorage.setItem(name,token);
+      localStorage.setItem(name,token);
     }
   }
   SessionGetValue(name:string):string{
     if(this.isBrowser){
 
-      var value=sessionStorage.getItem(name);
+      var value=localStorage.getItem(name);
       if(value==undefined || value==null) return '';
       return value;
     }
@@ -47,7 +52,7 @@ export class SessionStorageService {
   }
   SessionDeleteValue(name:string):void{
     if(this.isBrowser){
-      sessionStorage.removeItem(name)
+      localStorage.removeItem(name)
     }
   }
 

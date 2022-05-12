@@ -56,6 +56,8 @@ import { DatosPortalService } from './Services/DatosPortal/datos-portal.service'
 import { PoliticaPrivacidadService } from './Services/PoliticaPrivacidad/politica-privacidad.service';
 import { TerminosCondicionesService } from './Services/TerminosCondiciones/terminos-condiciones.service';
 import { CardArticulosComponent } from './Containers/card/card-articulos/card-articulos.component';
+import { CardMatriculasComponent } from './Containers/card/card-matriculas/card-matriculas.component';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @NgModule({
   imports: [
@@ -80,7 +82,8 @@ import { CardArticulosComponent } from './Containers/card/card-articulos/card-ar
     MatSelectModule,
     MatExpansionModule,
     NgbModule,
-    MatSliderModule
+    MatSliderModule,
+    MatTooltipModule
 
   ],
   declarations: [
@@ -106,6 +109,7 @@ import { CardArticulosComponent } from './Containers/card/card-articulos/card-ar
     CardBlogComponent,
     CardWhitePapersComponent,
     CardArticulosComponent,
+    CardMatriculasComponent,
   ],
   exports: [
     HttpClientModule,
@@ -125,6 +129,7 @@ import { CardArticulosComponent } from './Containers/card/card-articulos/card-ar
     CardBlogComponent,
     CardWhitePapersComponent,
     CardArticulosComponent,
+    CardMatriculasComponent,
 
     MatTabsModule,
     MatTableModule,
@@ -150,7 +155,8 @@ import { CardArticulosComponent } from './Containers/card/card-articulos/card-ar
     SelectComponent,
     MatSliderModule,
     SafeHtmlPipe,
-    IconInformationCardComponent
+    IconInformationCardComponent,
+    MatTooltipModule
   ],
   providers: [
     SessionStorageService,
@@ -159,7 +165,6 @@ import { CardArticulosComponent } from './Containers/card/card-articulos/card-ar
     HeaderPermissionsService,
     AreacapasitacionService,
     PartnerService,
-    HelperService,
     AspNetUserService,
     AlumnoService,
     AvatarService,
