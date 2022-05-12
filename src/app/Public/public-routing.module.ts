@@ -24,6 +24,7 @@ import { AcercaDeComponent } from './acerca-de/acerca-de.component';
 import { ContactenosComponent } from './contactenos/contactenos.component';
 import { TagsComponent } from './tags/tags.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
+import { AvatarComponent } from '../aula-virtual/avatar/avatar.component';
 
 const routes:Routes=[
     {path:'',component:PublicComponent,children:
@@ -42,6 +43,7 @@ const routes:Routes=[
             {path:'AcercaBsGrupo', component:AcercaDeComponent},
             {path:'contactenos', component:ContactenosComponent},
             {path:'Account/ForgotPassword', component:ForgotPasswordComponent},
+            {path:'Avatar', component: AvatarComponent},
 
             {path:'SubArea/:nombre', component:TagsComponent},
             {path:'Area/:nombre', component:TagsComponent},

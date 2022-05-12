@@ -14,6 +14,7 @@ import { CambiarContraComponent } from './cambiar-contra/cambiar-contra.componen
 import { MyHttpInterceptor } from './http.interceptor';
 import { MisCursosComponent } from './mis-cursos/mis-cursos.component';
 import { CursoComponent } from './curso/curso.component';
+import { AvatarComponent } from './avatar/avatar.component';
 import { IndicacionesContentComponent } from './curso/indicaciones-content/indicaciones-content.component';
 import { IndicacionesOptionsContentComponent } from './curso/indicaciones-options-content/indicaciones-options-content.component';
 import { CursoModulosComponent } from './curso/curso-modulos/curso-modulos.component';
@@ -32,6 +33,7 @@ import { CursoModulosComponent } from './curso/curso-modulos/curso-modulos.compo
     IndicacionesContentComponent,
     IndicacionesOptionsContentComponent,
     CursoModulosComponent,
+    AvatarComponent,
 
   ],
   imports: [

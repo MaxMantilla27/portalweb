@@ -1,6 +1,6 @@
 export interface Basic{
   Nombre:string,
-  value:number
+  value:any
 }
 export interface BasicUrl{
   Nombre:string,

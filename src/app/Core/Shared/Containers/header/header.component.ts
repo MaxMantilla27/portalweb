@@ -54,31 +54,6 @@ export class HeaderComponent implements OnInit {
     nombres: '',
     telefono: '',
   };
-  public combosAvatar:AvatarCombosDTO={
-    listaAccesorios:[],
-    listaBarbaBigote:[],
-    listaBoca:[],
-    UrlAvatar:'',
-    listaCabello:[],
-    listaCejas:[],
-    listaColorBarbaBigote:[],
-    listaColorCabello:[],
-    listaColorPiel:[],
-    listaColorRopa:[],
-    listaMirada:[],
-    listaRopa:[],
-  }
-  public combosPerfil:combosPerfilDTO={
-    listaAreaFormacion:[],
-    listaAreaTrabajo:[],
-    listaCargo:[],
-    listaCiudad:[],
-    listaGenero:[],
-    listaIndustria:[],
-    listaPais:[],
-    listaTipoDocumento:[],
-    datosAlumno:this.Alumno
-  }
   public urlAvatar='';
   public Avatar: AvatarDTO = {
     accessories: '',
@@ -96,6 +71,33 @@ export class HeaderComponent implements OnInit {
     skin: '',
     topC: '',
   };
+  public combosAvatar:AvatarCombosDTO={
+    listaAccesorios:[],
+    listaBarbaBigote:[],
+    listaBoca:[],
+    UrlAvatar:'',
+    listaCabello:[],
+    listaCejas:[],
+    listaColorBarbaBigote:[],
+    listaColorCabello:[],
+    listaColorPiel:[],
+    listaColorRopa:[],
+    listaMirada:[],
+    listaRopa:[],
+    DatosAvatar:this.Avatar,
+  }
+  public combosPerfil:combosPerfilDTO={
+    listaAreaFormacion:[],
+    listaAreaTrabajo:[],
+    listaCargo:[],
+    listaCiudad:[],
+    listaGenero:[],
+    listaIndustria:[],
+    listaPais:[],
+    listaTipoDocumento:[],
+    datosAlumno:this.Alumno
+  }
+  
   public expandibles: Array<BasicBotonesExpandibles> = [
     {
       Nombre: 'Formacion Continua',
@@ -300,6 +302,7 @@ export class HeaderComponent implements OnInit {
         this.urlAvatar=this._AvatarService.GetUrlImagenAvatar(this.Avatar);
         this.combosAvatar=x.combos;
         this.combosAvatar.UrlAvatar=this.urlAvatar
+        this.combosAvatar.DatosAvatar=x.avatar
         this._HelperService.enviarDatosAvatar(this.combosAvatar);
       },
     });
