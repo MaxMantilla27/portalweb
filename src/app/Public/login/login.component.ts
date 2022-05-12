@@ -20,6 +20,7 @@ export class LoginComponent implements OnInit {
     ) { }
   formVal:boolean=false;
   statuscharge=false;
+  initValues=false
   public migaPan: any = [];
   public loginSend:loginSendDTO={password:'',username:''}
   public errorLogin=''

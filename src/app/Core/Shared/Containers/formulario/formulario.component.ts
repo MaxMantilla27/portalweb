@@ -53,6 +53,9 @@ export class FormularioComponent implements OnChanges, OnInit {
   @Input()
   InputsDisable!: boolean;
 
+  @Input()
+  ChargeValuesInit: boolean=false;
+
   @Output()
   OnSubmit: EventEmitter<object> = new EventEmitter<object>();
 
