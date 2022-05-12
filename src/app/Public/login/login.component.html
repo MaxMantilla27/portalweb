@@ -26,7 +26,7 @@
         {{errorLogin}}
       </div>
       <app-formulario [model]="login" [InputsDisable]="statuscharge" (OnSubmit)="Login($event)" [Color]="'#f8f8f8'"
-        (OnValid)="formVal=$event" [fiels]="fileds">
+        (OnValid)="formVal=$event" [fiels]="fileds" [ChargeValuesInit]="initValues">
 
         <ng-container contenido>
           <div class="row" style="width: 100%;margin: 20px 0px;">

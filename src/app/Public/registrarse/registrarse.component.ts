@@ -38,6 +38,7 @@ export class RegistrarseComponent implements OnInit {
   ];
   public errorRegister = '';
   statuscharge = false;
+  initValues=false;
   formVal: boolean = false;
   fileds: Array<formulario> = [];
   register: RegisterDTO = {
@@ -58,15 +59,13 @@ export class RegistrarseComponent implements OnInit {
     this.ObtenerCombosPortal();
   }
   Register(value: any) {
-    console.log(value);
+    this.initValues = false;
     this.statuscharge = true;
     this.register = value;
     this._AccountService.RegistrarseAlumno(this.register).subscribe({
       next: (x) => {
-        console.log(x.excepcionGenerada);
         if (x.excepcionGenerada != undefined && x.excepcionGenerada == true) {
           this.statuscharge = false;
-          console.log(x);
           this.errorRegister = x.descripcionGeneral;
           setTimeout(() => {
             this.errorRegister = '';
@@ -92,10 +91,9 @@ export class RegistrarseComponent implements OnInit {
   }
 
   ObtenerCombosPortal() {
-    this.statuscharge = true;
+
     this._DatosPortalService.ObtenerCombosPortal().subscribe({
       next: (x) => {
-        console.log(x);
         this.fileds.forEach((r) => {
           if (r.nombre == 'IdPais') {
             r.data = x.listaPais.map((p: any) => {
@@ -140,7 +138,7 @@ export class RegistrarseComponent implements OnInit {
           }
         });
 
-        this.statuscharge = false;
+        this.initValues = true;
       },
     });
   }

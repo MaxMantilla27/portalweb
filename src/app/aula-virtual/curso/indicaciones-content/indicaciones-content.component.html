@@ -1,0 +1,4 @@
+<div class="contentIndicacionesContent">
+  <img class="ImgIndicacionesContent" [src]="'../../../../assets/imagenes/'+imgUrl"  alt="" *ngIf="imgUrl!=''">
+  <div class="TitleIndicacionesContent" (click)="ButtoclClick.emit()">{{title}}</div>
+</div>

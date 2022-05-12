@@ -17,12 +17,13 @@
   justify-content: flex-start;
   opacity: 1 !important;
   margin-bottom: 20px;
+  padding-left: 0px;
 }
 .tabVertical .mat-tab-header .mat-tab-label-container .mat-tab-list .mat-tab-labels .mat-tab-label .mat-tab-label-content .contentHeaderM{
 
   opacity: 1;
   display: flex;
-  justify-content: start;
+  justify-content: flex-start;
   align-items: flex-start;
   .titleMatr{
     word-break: break-word;
@@ -67,6 +68,9 @@
 .tabVertical .mat-tab-body-wrapper {
   flex: 1 1 auto !important;
 }
+.tabVertical .mat-tab-body-wrapper .mat-tab-body .mat-tab-body-content{
+  overflow: hidden;
+}
 .tabVertical mat-tab-header .mat-tab-label-container .mat-tab-list .mat-tab-labels .mat-tab-label-active{
   background: #f4f4f4;
 }
@@ -74,7 +78,6 @@
   color: #0684f3 !important;
   font-weight: 600;
   text-decoration: underline;
-  opacity: 1;
   .iconIndicaciones{
     background-image: url('../../../assets/imagenes/mexico-05.svg') !important;
   }
@@ -93,4 +96,40 @@
   .iconBeneficios{
     background-image: url('../../../assets/imagenes/mexico-05.svg') !important;
   }
+}
+.ActiveChil{
+  color: #0684f3 !important;
+  font-weight: 600;
+  text-decoration: underline;
+  .iconIndicaciones{
+    background-image: url('../../../assets/imagenes/mexico-05.svg') !important;
+  }
+  .iconModulos{
+    background-image: url('../../../assets/imagenes/mexico-05.svg') !important;
+  }
+  .iconProyectos{
+    background-image: url('../../../assets/imagenes/mexico-05.svg') !important;
+  }
+  .iconCertificados{
+    background-image: url('../../../assets/imagenes/mexico-05.svg') !important;
+  }
+  .iconTramites{
+    background-image: url('../../../assets/imagenes/mexico-05.svg') !important;
+  }
+  .iconBeneficios{
+    background-image: url('../../../assets/imagenes/mexico-05.svg') !important;
+  }
+}
+.subContent{
+  margin-left: 30px;
+}
+.cursoTitle{
+  font-size: 25px;
+  margin-bottom: 10px;
+  font-weight: 600;
+}
+.cursoTabDescripcion{
+  font-size: 14px;
+  color: #929292;
+  margin-bottom: 20px;
 }

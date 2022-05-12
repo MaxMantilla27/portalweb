@@ -14,6 +14,8 @@ import { CambiarContraComponent } from './cambiar-contra/cambiar-contra.componen
 import { MyHttpInterceptor } from './http.interceptor';
 import { MisCursosComponent } from './mis-cursos/mis-cursos.component';
 import { CursoComponent } from './curso/curso.component';
+import { IndicacionesContentComponent } from './curso/indicaciones-content/indicaciones-content.component';
+import { IndicacionesOptionsContentComponent } from './curso/indicaciones-options-content/indicaciones-options-content.component';
 
 
 @NgModule({
@@ -26,6 +28,8 @@ import { CursoComponent } from './curso/curso.component';
     CambiarContraComponent,
     MisCursosComponent,
     CursoComponent,
+    IndicacionesContentComponent,
+    IndicacionesOptionsContentComponent,
 
   ],
   imports: [
