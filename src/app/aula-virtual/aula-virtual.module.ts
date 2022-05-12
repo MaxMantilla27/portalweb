@@ -14,6 +14,7 @@ import { CambiarContraComponent } from './cambiar-contra/cambiar-contra.componen
 import { MyHttpInterceptor } from './http.interceptor';
 import { MisCursosComponent } from './mis-cursos/mis-cursos.component';
 import { CursoComponent } from './curso/curso.component';
+import { AvatarComponent } from './avatar/avatar.component';
 
 
 @NgModule({
@@ -26,6 +27,7 @@ import { CursoComponent } from './curso/curso.component';
     CambiarContraComponent,
     MisCursosComponent,
     CursoComponent,
+    AvatarComponent,
 
   ],
   imports: [

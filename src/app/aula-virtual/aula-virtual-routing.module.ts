@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AulaVirtualComponent } from './aula-virtual.component';
+import { AvatarComponent } from './avatar/avatar.component';
 import { CambiarContraComponent } from './cambiar-contra/cambiar-contra.component';
 import { CuentaComponent } from './cuenta/cuenta.component';
 import { CursoComponent } from './curso/curso.component';
@@ -16,6 +17,7 @@ const routes: Routes = [
         { path: 'MiPerfil', component: MiPerfilComponent},
         { path: 'ChangePassword', component: CambiarContraComponent},
         { path: 'MisCursos', component: MisCursosComponent},
+        { path: 'Avatar', component: AvatarComponent},
 
         { path: 'MisCursos/:IdMatricula', component: CursoComponent},
       ]

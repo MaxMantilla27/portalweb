@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { AvatarDTO } from 'src/app/Core/Models/Avatar';
+import { AvatarDTO, AvatarEnvioDTO } from 'src/app/Core/Models/Avatar';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -29,5 +29,9 @@ export class AvatarService {
     url +=avatar.mouth+'&skinColor=';
     url +=avatar.skin;
     return url;
+  }
+  public ActualizarAvatar(Json:AvatarEnvioDTO):Observable<any>{
+    console.log(Json)
+    return this.http.post<any>(this.urlBase+'/ActualizarAvatar',Json);
   }
 }

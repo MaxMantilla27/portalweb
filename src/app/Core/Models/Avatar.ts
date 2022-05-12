@@ -32,5 +32,20 @@ export interface AvatarCombosDTO{
   listaRopa:Array<any>,
   listaColorRopa:Array<any>,
   listaAccesorios:Array<any>,
-  UrlAvatar:string
+  UrlAvatar:string,
+  DatosAvatar:AvatarDTO,
+}
+
+export interface AvatarEnvioDTO{
+  topC:string,
+  accessories:string,
+  hair_Color:string,
+  facial_Hair:string,
+  facial_Hair_Color:string,
+  clothes:string,
+  clothes_Color:string,
+  eyes:string,
+  eyesbrow:string,
+  mouth:string,
+  skin:string
 }

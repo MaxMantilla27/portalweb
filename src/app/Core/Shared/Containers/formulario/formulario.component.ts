@@ -93,6 +93,7 @@ export class FormularioComponent implements OnChanges, OnInit {
   changeForm(){
     console.log(this.userForm)
     if(this.userForm!=undefined){
+      console.log(this.fiels)
       for (let i = 0; i < this.fiels.length; i++) {
         let campo = (<FormArray>this.userForm.get('Fields')).controls[i].get(
           this.fiels[i].nombre
