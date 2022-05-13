@@ -328,6 +328,7 @@ export class AvatarComponent implements OnInit {
   }
   ActualizarAvatar(value: any) {
     console.log(value);
+    this.initValues = false;
     this.statuscharge = true;
     this.DatosAvatarEnvio = value;
     this._AvatarService.ActualizarAvatar(this.DatosAvatarEnvio).subscribe({
@@ -344,7 +345,6 @@ export class AvatarComponent implements OnInit {
       },
       complete: () => {
         this.statuscharge = false;
-        location.reload();
       },
     });
   }
