@@ -26,12 +26,98 @@
             <div class="row">
                 <div class="titleAvatar">Características</div>
                 <app-formulario [model]="DatosAvatarEnvio" [InputsDisable]="statuscharge" (OnSubmit)="ActualizarAvatar($event)" [Color]="'#f8f8f8'"
-                    (OnValid)="formVal=$event"(OnSelect)="RecargaImagen($event)" [fiels]="fileds" [Tipo]="2" [ChargeValuesInit]="initValues" >
+                    (OnValid)="formVal=$event"(OnSelect)="RecargaImagen($event)" [fiels]="fileds" [Tipo]="1" [ChargeValuesInit]="initValues">
                 <ng-container send>
                     <app-default-button [confs]="{color:'primary',titulo:'Actualizar Avatar'}" [style]="'width: 100%;'" [disabled]="!formVal" ></app-default-button>
                 </ng-container>
             </app-formulario>
             </div>
         </div>
-    </div> 
+    </div>
 </div>
+
+<!--
+<div class="container">
+    <div class="row rowpadd">
+      <div >
+        <img class="imgAvatarPerfil" [src]="imgAvatar" alt="">
+      </div>
+    </div>
+    <div class="col-12 col-md-12 col-lg-12">
+      <form (submit)="ActualizarAvatar()" [formGroup]="userForm">
+        <div class="row">
+          <div class="title">Características</div>
+          <div class="col-12 col-md-6 col-lg-6 fieldOld">
+            <div style="font-size: 15px;color: #797978;">Cabello</div>
+            <mat-form-field appearance="outline" [floatLabel]="'always'">
+                <mat-select formControlName="listaCabello" placeholder="Cabello">
+                  <mat-option *ngFor="let option of combosAvatar.listaCabello" [value]="option.IdAvatarCaracteristica">{{option.valor}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+            <div style="font-size: 15px;color: #797978;">Barba/Bigote</div>
+            <mat-form-field appearance="outline" [floatLabel]="'always'">
+                <mat-select formControlName="listaBarbaBigote" placeholder="Barba/Bigote">
+                  <mat-option *ngFor="let option of combosAvatar.listaBarbaBigote" [value]="option.IdAvatarCaracteristica">{{option.Valor}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+            <div style="font-size: 15px;color: #797978;">Mirada</div>
+            <mat-form-field appearance="outline" [floatLabel]="'always'">
+                <mat-select formControlName="listaMirada" placeholder="Mirada">
+                  <mat-option *ngFor="let option of combosAvatar.listaMirada" [value]="option.IdAvatarCaracteristica">{{option.Valor}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+            <div style="font-size: 15px;color: #797978;">Boca</div>
+            <mat-form-field appearance="outline" [floatLabel]="'always'">
+                <mat-select formControlName="listaBoca" placeholder="Boca">
+                  <mat-option *ngFor="let option of combosAvatar.listaBoca" [value]="option.IdAvatarCaracteristica">{{option.Valor}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+            <div style="font-size: 15px;color: #797978;">Ropa</div>
+            <mat-form-field appearance="outline" [floatLabel]="'always'">
+                <mat-select formControlName="listaRopa" placeholder="Ropa">
+                  <mat-option *ngFor="let option of combosAvatar.listaRopa" [value]="option.IdAvatarCaracteristica">{{option.Valor}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+            <div style="font-size: 15px;color: #797978;">Accesorios</div>
+            <mat-form-field appearance="outline" [floatLabel]="'always'">
+                <mat-select formControlName="listaAccesorios" placeholder="Accesorios">
+                  <mat-option *ngFor="let option of combosAvatar.listaAccesorios" [value]="option.IdAvatarCaracteristica">{{option.Valor}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+        <div class="col-12 col-md-6 col-lg-6 fieldOld">
+            <div style="font-size: 15px;color: #797978;">Color de cabello</div>
+            <mat-form-field appearance="outline" [floatLabel]="'always'">
+                <mat-select formControlName="listaColorCabello" placeholder="Color de cabello">
+                  <mat-option *ngFor="let option of combosAvatar.listaColorCabello" [value]="option.IdAvatarCaracteristica">{{option.Valor}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+            <div style="font-size: 15px;color: #797978;">Color de barba/bigote</div>
+            <mat-form-field appearance="outline" [floatLabel]="'always'">
+                <mat-select formControlName="listaColorBarbaBigote" placeholder="Color de barba/bigote">
+                  <mat-option *ngFor="let option of combosAvatar.listaColorBarbaBigote" [value]="option.IdAvatarCaracteristica">{{option.Valor}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+            <div style="font-size: 15px;color: #797978;">Cejas</div>
+            <mat-form-field appearance="outline" [floatLabel]="'always'">
+                <mat-select formControlName="listaCejas" placeholder="Cejas">
+                  <mat-option *ngFor="let option of combosAvatar.listaCejas" [value]="option.IdAvatarCaracteristica">{{option.Valor}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+            <div style="font-size: 15px;color: #797978;">Color de piel</div>
+            <mat-form-field appearance="outline" [floatLabel]="'always'">
+                <mat-select formControlName="listaColorPiel" placeholder="Color de piel">
+                  <mat-option *ngFor="let option of combosAvatar.listaColorPiel" [value]="option.IdAvatarCaracteristica">{{option.Valor}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+            <div style="font-size: 15px;color: #797978;">Color de Ropa</div>
+            <mat-form-field appearance="outline" [floatLabel]="'always'">
+                <mat-select formControlName="listaColorRopa" placeholder="Color de ropa">
+                  <mat-option *ngFor="let option of combosAvatar.listaColorRopa" [value]="option.IdAvatarCaracteristica">{{option.Valor}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+        </div>
+      </form>
+    </div>
+</div> -->

@@ -1,5 +1,5 @@
 import { isPlatformBrowser } from '@angular/common';
-import { Component, Inject, OnInit, PLATFORM_ID, ViewEncapsulation } from '@angular/core';
+import { AfterViewInit, Component, Inject, OnInit, PLATFORM_ID, ViewEncapsulation } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { HelperService } from './Core/Shared/Services/helper.service';
 
@@ -9,7 +9,7 @@ import { HelperService } from './Core/Shared/Services/helper.service';
   styleUrls: ['./app.component.scss'],
   encapsulation: ViewEncapsulation.None,
 })
-export class AppComponent implements OnInit  {
+export class AppComponent implements OnInit,AfterViewInit  {
   title = 'PortalWeb';
   isBrowser: boolean;
   constructor(

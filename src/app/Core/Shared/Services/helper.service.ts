@@ -62,6 +62,7 @@ export class HelperService {
     return this.msjCombosAvatar.asObservable()
   }
   public enviarDatosAvatar(combosAvatar: AvatarCombosDTO): void {
+    console.log(combosAvatar);
     this.msjCombosAvatar.next(combosAvatar);
   }
   public get recibirImagenAvatar() {
