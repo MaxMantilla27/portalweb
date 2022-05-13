@@ -67,7 +67,7 @@ export class AvatarComponent implements OnInit {
     UrlAvatar:'',
     DatosAvatar: this.datosAvatar,
   };
-  
+  public initValues=false;
   public DatosAvatarEnvio: AvatarEnvioDTO ={
     topC:'',
     accessories:'',
@@ -101,7 +101,6 @@ export class AvatarComponent implements OnInit {
   
  
   ngOnInit(): void {
-    this.statuscharge=true,
     this.AddFields(),
     this._HelperService.recibirDatosAvatar.subscribe(x=>{
       this.datosAvatar=x.DatosAvatar
@@ -209,9 +208,10 @@ export class AvatarComponent implements OnInit {
           })
         };
       })
-      this.statuscharge=false;
+      this.initValues = true;
     });
     console.log(this.combosAvatar)
+    
   }
   
   AddFields()
@@ -307,6 +307,7 @@ export class AvatarComponent implements OnInit {
   }
   ActualizarAvatar(value:any) {
     console.log(value);
+    this.initValues = false;
     this.statuscharge = true;
     this.DatosAvatarEnvio = value;
     this._AvatarService.ActualizarAvatar(this.DatosAvatarEnvio).subscribe({
@@ -322,8 +323,7 @@ export class AvatarComponent implements OnInit {
         }, 1000000);
       },
       complete: () => {
-        this.statuscharge = false;
-        location.reload();
+        this.statuscharge = false;        
       },
     });
   }
