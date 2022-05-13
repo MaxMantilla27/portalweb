@@ -17,6 +17,7 @@ import { CursoComponent } from './curso/curso.component';
 import { AvatarComponent } from './avatar/avatar.component';
 import { IndicacionesContentComponent } from './curso/indicaciones-content/indicaciones-content.component';
 import { IndicacionesOptionsContentComponent } from './curso/indicaciones-options-content/indicaciones-options-content.component';
+import { CursoModulosComponent } from './curso/curso-modulos/curso-modulos.component';
 
 
 @NgModule({
@@ -31,6 +32,7 @@ import { IndicacionesOptionsContentComponent } from './curso/indicaciones-option
     CursoComponent,
     IndicacionesContentComponent,
     IndicacionesOptionsContentComponent,
+    CursoModulosComponent,
     AvatarComponent,
 
   ],

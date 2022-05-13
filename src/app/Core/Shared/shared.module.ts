@@ -58,6 +58,8 @@ import { TerminosCondicionesService } from './Services/TerminosCondiciones/termi
 import { CardArticulosComponent } from './Containers/card/card-articulos/card-articulos.component';
 import { CardMatriculasComponent } from './Containers/card/card-matriculas/card-matriculas.component';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { ProgramaContenidoService } from './Services/ProgramaContenido/programa-contenido.service';
+import {MatProgressBarModule} from '@angular/material/progress-bar';
 
 @NgModule({
   imports: [
@@ -83,7 +85,8 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     MatExpansionModule,
     NgbModule,
     MatSliderModule,
-    MatTooltipModule
+    MatTooltipModule,
+    MatProgressBarModule
 
   ],
   declarations: [
@@ -156,7 +159,8 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     MatSliderModule,
     SafeHtmlPipe,
     IconInformationCardComponent,
-    MatTooltipModule
+    MatTooltipModule,
+    MatProgressBarModule
   ],
   providers: [
     SessionStorageService,
@@ -172,7 +176,8 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     RegionService,
     DatosPortalService,
     PoliticaPrivacidadService,
-    TerminosCondicionesService
+    TerminosCondicionesService,
+    ProgramaContenidoService
   ],
 })
 export class SharedModule {

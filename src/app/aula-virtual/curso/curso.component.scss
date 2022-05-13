@@ -7,33 +7,47 @@
 .tabVertical .mat-tab-header .mat-tab-header-pagination {
   display: none !important;
 }
-.tabVertical .mat-tab-header .mat-tab-label-container .mat-tab-list .mat-tab-labels {
+.tabVertical
+  .mat-tab-header
+  .mat-tab-label-container
+  .mat-tab-list
+  .mat-tab-labels {
   flex-direction: column !important;
   opacity: 1;
   max-width: 180px;
   border-right: 2px solid #d2d2d2;
 }
-.tabVertical .mat-tab-header .mat-tab-label-container .mat-tab-list .mat-tab-labels .mat-tab-label {
+.tabVertical
+  .mat-tab-header
+  .mat-tab-label-container
+  .mat-tab-list
+  .mat-tab-labels
+  .mat-tab-label {
   justify-content: flex-start;
   opacity: 1 !important;
   margin-bottom: 20px;
   padding-left: 0px;
 }
-.tabVertical .mat-tab-header .mat-tab-label-container .mat-tab-list .mat-tab-labels .mat-tab-label .mat-tab-label-content .contentHeaderM{
-
+.tabVertical
+  .mat-tab-header
+  .mat-tab-label-container
+  .mat-tab-list
+  .mat-tab-labels
+  .mat-tab-label
+  .mat-tab-label-content
+  .contentHeaderM {
   opacity: 1;
   display: flex;
   justify-content: flex-start;
   align-items: flex-start;
-  .titleMatr{
+  .titleMatr {
     word-break: break-word;
     white-space: normal;
     /* display: block; */
     width: 150px;
     text-align: left;
   }
-  .iconMat{
-
+  .iconMat {
     background-repeat: no-repeat;
     width: 20px;
     height: 20px;
@@ -41,26 +55,30 @@
     background-position: center;
     margin-right: 10px;
   }
-  .iconIndicaciones{
-    background-image: url('../../../assets/imagenes/peru-04.svg');
+  .iconIndicaciones {
+    background-image: url("../../../assets/imagenes/peru-04.svg");
   }
-  .iconModulos{
-    background-image: url('../../../assets/imagenes/peru-04.svg');
+  .iconModulos {
+    background-image: url("../../../assets/imagenes/peru-04.svg");
   }
-  .iconProyectos{
-    background-image: url('../../../assets/imagenes/peru-04.svg');
+  .iconProyectos {
+    background-image: url("../../../assets/imagenes/peru-04.svg");
   }
-  .iconCertificados{
-    background-image: url('../../../assets/imagenes/peru-04.svg');
+  .iconCertificados {
+    background-image: url("../../../assets/imagenes/peru-04.svg");
   }
-  .iconTramites{
-    background-image: url('../../../assets/imagenes/peru-04.svg');
+  .iconTramites {
+    background-image: url("../../../assets/imagenes/peru-04.svg");
   }
-  .iconBeneficios{
-    background-image: url('../../../assets/imagenes/peru-04.svg');
+  .iconBeneficios {
+    background-image: url("../../../assets/imagenes/peru-04.svg");
   }
 }
-.tabVertical .mat-tab-header .mat-tab-label-container .mat-tab-list .mat-ink-bar {
+.tabVertical
+  .mat-tab-header
+  .mat-tab-label-container
+  .mat-tab-list
+  .mat-ink-bar {
   height: 100%;
   left: 98% !important;
   display: none;
@@ -68,68 +86,97 @@
 .tabVertical .mat-tab-body-wrapper {
   flex: 1 1 auto !important;
 }
-.tabVertical .mat-tab-body-wrapper .mat-tab-body .mat-tab-body-content{
+.tabVertical .mat-tab-body-wrapper .mat-tab-body .mat-tab-body-content {
   overflow: hidden;
 }
-.tabVertical mat-tab-header .mat-tab-label-container .mat-tab-list .mat-tab-labels .mat-tab-label-active{
+.tabVertical
+  mat-tab-header
+  .mat-tab-label-container
+  .mat-tab-list
+  .mat-tab-labels
+  .mat-tab-label-active {
   background: #f4f4f4;
 }
-.tabVertical mat-tab-header .mat-tab-label-container .mat-tab-list .mat-tab-labels .mat-tab-label-active .mat-tab-label-content .contentHeaderM{
+.tabVertical
+  mat-tab-header
+  .mat-tab-label-container
+  .mat-tab-list
+  .mat-tab-labels
+  .mat-tab-label-active
+  .mat-tab-label-content
+  .contentHeaderM {
   color: #0684f3 !important;
   font-weight: 600;
   text-decoration: underline;
-  .iconIndicaciones{
-    background-image: url('../../../assets/imagenes/mexico-05.svg') !important;
+  .iconIndicaciones {
+    background-image: url("../../../assets/imagenes/mexico-05.svg") !important;
   }
-  .iconModulos{
-    background-image: url('../../../assets/imagenes/mexico-05.svg') !important;
+  .iconModulos {
+    background-image: url("../../../assets/imagenes/mexico-05.svg") !important;
   }
-  .iconProyectos{
-    background-image: url('../../../assets/imagenes/mexico-05.svg') !important;
+  .iconProyectos {
+    background-image: url("../../../assets/imagenes/mexico-05.svg") !important;
   }
-  .iconCertificados{
-    background-image: url('../../../assets/imagenes/mexico-05.svg') !important;
+  .iconCertificados {
+    background-image: url("../../../assets/imagenes/mexico-05.svg") !important;
   }
-  .iconTramites{
-    background-image: url('../../../assets/imagenes/mexico-05.svg') !important;
+  .iconTramites {
+    background-image: url("../../../assets/imagenes/mexico-05.svg") !important;
   }
-  .iconBeneficios{
-    background-image: url('../../../assets/imagenes/mexico-05.svg') !important;
+  .iconBeneficios {
+    background-image: url("../../../assets/imagenes/mexico-05.svg") !important;
   }
 }
-.ActiveChil{
+.ActiveChil {
   color: #0684f3 !important;
   font-weight: 600;
   text-decoration: underline;
-  .iconIndicaciones{
-    background-image: url('../../../assets/imagenes/mexico-05.svg') !important;
+  .iconIndicaciones {
+    background-image: url("../../../assets/imagenes/mexico-05.svg") !important;
   }
-  .iconModulos{
-    background-image: url('../../../assets/imagenes/mexico-05.svg') !important;
+  .iconModulos {
+    background-image: url("../../../assets/imagenes/mexico-05.svg") !important;
   }
-  .iconProyectos{
-    background-image: url('../../../assets/imagenes/mexico-05.svg') !important;
+  .iconProyectos {
+    background-image: url("../../../assets/imagenes/mexico-05.svg") !important;
   }
-  .iconCertificados{
-    background-image: url('../../../assets/imagenes/mexico-05.svg') !important;
+  .iconCertificados {
+    background-image: url("../../../assets/imagenes/mexico-05.svg") !important;
   }
-  .iconTramites{
-    background-image: url('../../../assets/imagenes/mexico-05.svg') !important;
+  .iconTramites {
+    background-image: url("../../../assets/imagenes/mexico-05.svg") !important;
   }
-  .iconBeneficios{
-    background-image: url('../../../assets/imagenes/mexico-05.svg') !important;
+  .iconBeneficios {
+    background-image: url("../../../assets/imagenes/mexico-05.svg") !important;
   }
 }
-.subContent{
+.subContent {
   margin-left: 30px;
 }
-.cursoTitle{
+.cursoTitle {
   font-size: 25px;
   margin-bottom: 10px;
   font-weight: 600;
 }
-.cursoTabDescripcion{
+.cursoTabDescripcion {
   font-size: 14px;
   color: #929292;
   margin-bottom: 20px;
+}
+
+.cursoTabRemenber {
+  display: flex;
+  justify-content: flex-start;
+  background: #fff8f0;
+  padding: 5px 10px;
+  margin-bottom: 20px;
+  border: solid 1px #fff4e8;
+}
+.cursoTabRemenber img {
+  width: 15px;
+  margin-right: 10px;
+}
+.cursoTabRemenber div {
+  font-size: 13px;
+  color: #505050;
 }

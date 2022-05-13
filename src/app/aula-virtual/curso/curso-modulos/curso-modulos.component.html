@@ -1,0 +1,27 @@
+<div class="contentCursoModulo" *ngFor="let item of programEstructura.listaCursoMatriculado">
+  <div class="headerCursoModulo">
+    <div class="titleCursoModulo">{{item.programaGeneralHijo}}</div>
+    <div class="estadoCursoModulo" *ngIf="item.progreso!=undefined">
+      <i class="material-icons" *ngIf="item.progreso.progresoVideo[0].porcentaje>=100">check_circle</i>
+      <div *ngIf="item.progreso.progresoVideo[0].porcentaje>=100">Completado</div>
+      <div *ngIf="item.progreso.progresoVideo[0].porcentaje>0 && item.progreso.progresoVideo[0].porcentaje<100">
+        Continuar</div>
+      <div *ngIf="item.progreso.progresoVideo[0].porcentaje==0">Pendiente</div>
+    </div>
+  </div>
+  <div class="contenidoCursoModulo">
+    <div class="contentModulo">
+      <div style="font-size: 14px;
+      color: #909090;
+      font-weight: 600;">Video:</div>
+      <mat-progress-bar mode="determinate"
+        [value]="item.progreso!=undefined?item.progreso.progresoVideo[0].porcentaje:0"></mat-progress-bar>
+        <div style="justify-content: space-between; display: flex;font-size: 12px;color: #909090; font-weight: 600;">
+          <div>0%</div>
+          <div>{{item.progreso!=undefined?item.progreso.progresoVideo[0].porcentaje:0}}%</div>
+        </div>
+    </div>
+
+    <app-default-button [confs]="{color:'primary',titulo:'Ingresar'}" [ruta]="'/'"></app-default-button>
+  </div>
+</div>
