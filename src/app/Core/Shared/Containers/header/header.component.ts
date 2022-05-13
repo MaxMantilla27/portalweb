@@ -97,7 +97,7 @@ export class HeaderComponent implements OnInit {
     listaTipoDocumento:[],
     datosAlumno:this.Alumno
   }
-  
+
   public expandibles: Array<BasicBotonesExpandibles> = [
     {
       Nombre: 'Formacion Continua',

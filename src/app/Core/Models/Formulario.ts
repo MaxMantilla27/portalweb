@@ -10,5 +10,6 @@ export interface formulario
   label:string;
   style?:string;
   data?:Array<Basic>,
-  disable?:boolean
+  disable?:boolean,
+  class?:string
 }

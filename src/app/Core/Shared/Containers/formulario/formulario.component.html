@@ -1,60 +1,15 @@
 <div class="row">
   <form (submit)="EnviarCambios()" [formGroup]="userForm">
     <ng-container formArrayName="Fields">
-      <div *ngFor="let field of fiels; let i=index">
-        <div [formGroupName]="i">
-          <ng-container *ngIf="Tipo==1">
-            <ng-container *ngIf="!FormOld">
-              <ng-container
-                *ngIf="field.tipo=='' || field.tipo=='text' || field.tipo=='number' || field.tipo=='password'">
-                <mat-form-field appearance="outline" *ngIf="!FormOld">
-                  <mat-label>{{field.label}}</mat-label>
-                  <input type="{{field.tipo}}" [style]="field.style" formControlName="{{field.nombre}}" matInput />
-                  <mat-error *ngIf="userForm.invalid">{{obtenerErrorCampoNombre(i,field.nombre)}}</mat-error>
-                </mat-form-field>
-              </ng-container>
-              <ng-container *ngIf="field.tipo=='select'">
-                <mat-form-field appearance="outline">
-                  <mat-label>{{field.label}}</mat-label>
-                  <mat-select [style]="field.style" formControlName="{{field.nombre}}"
-                    (selectionChange)="OnSelect.emit({Nombre:field.nombre,value:$event.value})">
-                    <mat-option *ngFor="let option of field.data" [value]="option.value">{{option.Nombre}}</mat-option>
-                  </mat-select>
-                  <mat-error *ngIf="userForm.invalid">{{obtenerErrorCampoNombre(i,field.nombre)}}</mat-error>
-                </mat-form-field>
-              </ng-container>
-            </ng-container>
-            <ng-container *ngIf="FormOld">
-              <div class="fieldOld">
-                <ng-container
-                  *ngIf="field.tipo=='' || field.tipo=='text' || field.tipo=='number' || field.tipo=='password'">
-                  <mat-form-field appearance="outline">
-                    <mat-label>{{field.label}}</mat-label>
-                    <input type="{{field.tipo}}" [style]="field.style" formControlName="{{field.nombre}}" matInput />
-                    <mat-error *ngIf="userForm.invalid">{{obtenerErrorCampoNombre(i,field.nombre)}}</mat-error>
-                  </mat-form-field>
-                </ng-container>
-                <ng-container *ngIf="field.tipo=='select'">
-                  <mat-form-field appearance="outline">
-                    <mat-label>{{field.label}}</mat-label>
-                    <mat-select [style]="field.style" formControlName="{{field.nombre}}"
-                      (selectionChange)="OnSelect.emit({Nombre:field.nombre,value:$event.value})">
-                      <mat-option *ngFor="let option of field.data" [value]="option.value">{{option.Nombre}}</mat-option>
-                    </mat-select>
-                    <mat-error *ngIf="userForm.invalid">{{obtenerErrorCampoNombre(i,field.nombre)}}</mat-error>
-                  </mat-form-field>
-                </ng-container>
-              </div>
-            </ng-container>
-          </ng-container>
-          <ng-container *ngIf="Tipo==2">
-            <div class="row" style="align-items: center;">
-              <div class="col-12 col-md-3 col-lg-3" style="margin-bottom: 20px;">{{field.label}}</div>
-              <div class="col-12 col-md-9 col-lg-9 fieldOld">
+      <div class="row">
+        <div *ngFor="let field of fiels; let i=index" [class]="field.class==undefined?'col-12 col-md-12 col-lg-12 fieldOld':field.class+' fieldOld'">
+          <div [formGroupName]="i">
+            <ng-container *ngIf="Tipo==1">
 
+              <ng-container *ngIf="!FormOld">
                 <ng-container
                   *ngIf="field.tipo=='' || field.tipo=='text' || field.tipo=='number' || field.tipo=='password'">
-                  <mat-form-field appearance="outline">
+                  <mat-form-field appearance="outline" *ngIf="!FormOld">
                     <mat-label>{{field.label}}</mat-label>
                     <input type="{{field.tipo}}" [style]="field.style" formControlName="{{field.nombre}}" matInput />
                     <mat-error *ngIf="userForm.invalid">{{obtenerErrorCampoNombre(i,field.nombre)}}</mat-error>
@@ -71,14 +26,65 @@
                     <mat-error *ngIf="userForm.invalid">{{obtenerErrorCampoNombre(i,field.nombre)}}</mat-error>
                   </mat-form-field>
                 </ng-container>
+              </ng-container>
+              <ng-container *ngIf="FormOld">
+                <div class="fieldOld">
+                  <ng-container
+                    *ngIf="field.tipo=='' || field.tipo=='text' || field.tipo=='number' || field.tipo=='password'">
+                    <mat-form-field appearance="outline">
+                      <mat-label>{{field.label}}</mat-label>
+                      <input type="{{field.tipo}}" [style]="field.style" formControlName="{{field.nombre}}" matInput />
+                      <mat-error *ngIf="userForm.invalid">{{obtenerErrorCampoNombre(i,field.nombre)}}</mat-error>
+                    </mat-form-field>
+                  </ng-container>
+                  <ng-container *ngIf="field.tipo=='select'">
+                    <mat-form-field appearance="outline">
+                      <mat-label>{{field.label}}</mat-label>
+                      <mat-select [style]="field.style" formControlName="{{field.nombre}}"
+                        (selectionChange)="OnSelect.emit({Nombre:field.nombre,value:$event.value})">
+                        <mat-option *ngFor="let option of field.data" [value]="option.value">{{option.Nombre}}
+                        </mat-option>
+                      </mat-select>
+                      <mat-error *ngIf="userForm.invalid">{{obtenerErrorCampoNombre(i,field.nombre)}}</mat-error>
+                    </mat-form-field>
+                  </ng-container>
+                </div>
+              </ng-container>
+            </ng-container>
+            <ng-container *ngIf="Tipo==2">
+              <div class="row" style="align-items: center;">
+                <div class="col-12 col-md-3 col-lg-3" style="margin-bottom: 20px;">{{field.label}}</div>
+                <div class="col-12 col-md-9 col-lg-9 fieldOld">
+
+                  <ng-container
+                    *ngIf="field.tipo=='' || field.tipo=='text' || field.tipo=='number' || field.tipo=='password'">
+                    <mat-form-field appearance="outline">
+                      <mat-label>{{field.label}}</mat-label>
+                      <input type="{{field.tipo}}" [style]="field.style" formControlName="{{field.nombre}}" matInput />
+                      <mat-error *ngIf="userForm.invalid">{{obtenerErrorCampoNombre(i,field.nombre)}}</mat-error>
+                    </mat-form-field>
+                  </ng-container>
+                  <ng-container *ngIf="field.tipo=='select'">
+                    <mat-form-field appearance="outline">
+                      <mat-label>{{field.label}}</mat-label>
+                      <mat-select [style]="field.style" formControlName="{{field.nombre}}"
+                        (selectionChange)="OnSelect.emit({Nombre:field.nombre,value:$event.value})">
+                        <mat-option *ngFor="let option of field.data" [value]="option.value">{{option.Nombre}}
+                        </mat-option>
+                      </mat-select>
+                      <mat-error *ngIf="userForm.invalid">{{obtenerErrorCampoNombre(i,field.nombre)}}</mat-error>
+                    </mat-form-field>
+                  </ng-container>
+                </div>
               </div>
-            </div>
-          </ng-container>
-          <ng-container *ngIf="field.tipo=='checkbox'">
-            <mat-checkbox color="primary" formControlName="{{field.nombre}}" [style]="field.style">{{field.label}}
-            </mat-checkbox>
-          </ng-container>
+            </ng-container>
+            <ng-container *ngIf="field.tipo=='checkbox'">
+              <mat-checkbox color="primary" formControlName="{{field.nombre}}" [style]="field.style">{{field.label}}
+              </mat-checkbox>
+            </ng-container>
+          </div>
         </div>
+
       </div>
     </ng-container>
 
