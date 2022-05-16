@@ -17,6 +17,8 @@ export class HelperService {
   private msjScroll = new ReplaySubject<number>()
   private msjScrollFooter = new ReplaySubject<string>()
   private msjCombosAvatar = new ReplaySubject<AvatarCombosDTO>()
+  private msjRecarga = new ReplaySubject<boolean>()
+
 
 
   public get recibirArrayCarrera() {
@@ -61,5 +63,11 @@ export class HelperService {
   }
   public enviarDatosAvatar(combosAvatar: AvatarCombosDTO): void {
     this.msjCombosAvatar.next(combosAvatar);
+  }
+  public get recibirImagenAvatar() {
+    return this.msjRecarga.asObservable()
+  }
+  public enviarImagenAvatar(datos: boolean): void {
+    this.msjRecarga.next(datos);
   }
 }
