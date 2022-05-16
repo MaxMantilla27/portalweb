@@ -27,7 +27,17 @@
   opacity: 1 !important;
   margin-bottom: 20px;
   padding-left: 0px;
+  padding-right: 0px;
 }
+.tabVertical
+  .mat-tab-header
+  .mat-tab-label-container
+  .mat-tab-list
+  .mat-tab-labels
+  .mat-tab-label
+  .mat-tab-label-content{
+    width: 100%;
+  }
 .tabVertical
   .mat-tab-header
   .mat-tab-label-container
@@ -40,18 +50,18 @@
   display: flex;
   justify-content: flex-start;
   align-items: flex-start;
+  width: 100%;
   .titleMatr {
     word-break: break-word;
     white-space: normal;
     /* display: block; */
-    width: 150px;
+    width: 148px;
     text-align: left;
   }
   .iconMat {
     background-repeat: no-repeat;
     width: 20px;
     height: 20px;
-    background-size: cover;
     background-position: center;
     margin-right: 10px;
   }
@@ -107,7 +117,11 @@
   .contentHeaderM {
   color: #0684f3 !important;
   font-weight: 600;
-  text-decoration: underline;
+  text-decoration: auto;
+
+  .titleMatr {
+    text-decoration: underline;
+  }
   .iconIndicaciones {
     background-image: url("../../../assets/imagenes/mexico-05.svg") !important;
   }

@@ -19,7 +19,7 @@ export class PublicGuard implements CanActivate {
         if(this._location.path().toString()!=state.url.toString()){
           this.router.navigate([this._location.path().toString()]);
         }else{
-          this._location.back()
+          this.router.navigate(['AulaVirtual/MiPerfil']);
         }
         return false;
       }

@@ -1,11 +1,14 @@
-<a (click)="onCliked.emit()" *ngIf="link"
+<div (click)="onCliked.emit()" *ngIf="link"
     class="button-general"
+    [title]="item.titulo"
+    [ngClass]="{'bcChild': Child === true}"
     [ngStyle]="{'color': fontColor,
                 'font-weight': fontStyle,
                 'font-size': fontSize}"
-    [routerLink]="item.urlWeb">{{item.titulo}}</a>
-<a *ngIf="!link"
+    [routerLink]="item.urlWeb">{{item.titulo}}</div>
+<div *ngIf="!link"
    class="button-general"
+   [title]="item.titulo"
    [ngStyle]="{'color': fontColor,
                 'font-weight': fontStyle,
-                'font-size': fontSize}">{{item.titulo}}</a>
+                'font-size': fontSize}">{{item.titulo}}</div>

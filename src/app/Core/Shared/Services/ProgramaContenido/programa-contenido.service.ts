@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { ParametrosEstructuraEspecificaDTO } from 'src/app/Core/Models/EstructuraEspecificaDTO';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -15,5 +16,10 @@ export class ProgramaContenidoService {
   }
   public ObtenerProgresoAulaVirtual(IdMatriculaCabecera:number):Observable<any>{
     return this.http.get<any>(this.urlBase+'/ObtenerProgresoAulaVirtual?IdMatriculaCabecera='+IdMatriculaCabecera);
+  }
+
+  public ObtenerEstructuraEspecifica(Json:ParametrosEstructuraEspecificaDTO):Observable<any>{
+    console.log(Json)
+    return this.http.post<any>(this.urlBase+'/ObtenerEstructuraEspecifica',Json);
   }
 }

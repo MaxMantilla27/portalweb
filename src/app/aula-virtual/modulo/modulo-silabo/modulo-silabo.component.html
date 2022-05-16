@@ -1,0 +1,63 @@
+<div class="cursoTitle">{{Capitulo}}</div>
+
+<div class="tipoIndicacionTitle">
+
+  <img class="ImgIndicacionesContent" src="../../../../assets/icons/silabo-05.svg">
+  <div>Silabo</div>
+</div>
+<mat-accordion class="acordionSilaboModuloCursos" multi>
+  <ng-container *ngFor="let item of listaSeccionesContenidosDocumento">
+    <ng-container *ngIf="item.order>0 && item.estado==true">
+      <mat-expansion-panel hideToggle (opened)="item.opened=true" (closed)="item.opened=false">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            <div style="display: flex;align-items: center;">
+              <div *ngIf="item.opened" class="estructuraProgramicon iconActive">-</div>
+              <div *ngIf="!item.opened" class="estructuraProgramicon ">+</div>
+              <div class="estructuraProgramTitle" [ngClass]="{'expandActive':item.opened}">{{item.titulo}}</div>
+            </div>
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <div *ngIf="item.titulo!='Beneficios' && item.titulo!='Certificacion' && item.titulo!='Estrutura Curicular'"
+          [innerHtml]="item.contenido | safeHtml" style="padding: 0px 60px 20px;"></div>
+        <div *ngIf="item.titulo=='Beneficios' || item.titulo=='Certificacion'" style="padding: 0px 60px 20px;">
+          <ul>
+            <li *ngFor="let content of item.ArrayContent">{{content}}</li>
+          </ul>
+        </div>
+        <div *ngIf="item.titulo=='Estrutura Curicular'" style="padding: 0px 60px 20px;">
+          <div *ngFor="let est of Estructura">
+            <ng-container *ngIf="est.listaSesiones!=null && est.listaSesiones.length>0 && est.listaSesiones!=undefined">
+              <div style="padding: 5px 0px;    text-decoration: underline;
+              font-weight: 600;">{{est.capitulo}}</div>
+              <div style="padding:5px 20px;">
+
+                <ng-container *ngIf="est.listaSesiones.length!=est.sesiones.length">
+
+                  <div *ngFor="let sesiones of est.sesiones">
+                    {{sesiones}}
+                    <ul>
+                      <ng-container *ngFor="let subsesiones of est.listaSesiones">
+                        <li *ngIf="subsesiones.sesion==sesiones">
+                          {{subsesiones.subSesion}}
+                        </li>
+                      </ng-container>
+                    </ul>
+                  </div>
+                </ng-container>
+
+                <ng-container *ngIf="est.listaSesiones.length==est.sesiones.length">
+
+                  <ul>
+                    <li *ngFor="let sesiones of est.listaSesiones">{{sesiones.sesion}}</li>
+                  </ul>
+                </ng-container>
+              </div>
+            </ng-container>
+          </div>
+
+        </div>
+      </mat-expansion-panel>
+    </ng-container>
+  </ng-container>
+</mat-accordion>

@@ -1,0 +1,123 @@
+<div class="cursoTitle">{{Capitulo}}</div>
+<div class="cursoTabDescripcion">¡Bienvenido! Debes completar los siguientes modulos de tu programa:
+  <br>
+  Recuerda: Debes completar el curso I,para poder acceder al siguiente curso, y asi progresivamente.
+</div>
+<div>
+  <ng-container *ngFor="let item of estructuraCapitulo">
+    <ng-container *ngIf="item.nombre=='Encuesta' && item.capitulo=='Encuesta Inicial'">
+      <div class="TareaYEncuesta">
+        <div ><i class="material-icons" style="color:#fe7112 ;margin-right: 20px;">check_circle</i>{{item.capitulo}}</div>
+      </div>
+    </ng-container>
+  </ng-container>
+
+  <ng-container *ngFor="let item of estructuraCapitulo; let i=index">
+    <ng-container *ngIf="!item.nombre.includes('Encuesta')">
+      <ng-container *ngIf="item.id==0">
+        <div class="contentCapitulo">
+          <div class="hederCapitulo row">
+            <div class="titleCapitulo col-12 col-md-7 col-lg-9">Capitulo {{item.ordenFila}}:
+              {{item.capitulo}}</div>
+            <div class="col-12 col-md-5 col-lg-3" style="display: flex;justify-content: flex-end;align-items: center;">
+              <div class="NSesionCapitulo">{{item.numerosesion}} Sesiones</div>
+              <div class="promedioCapitulo">Promedio: <strong>{{item.promedioCalificacion}}</strong></div>
+            </div>
+          </div>
+          <div class="contentCapituloSesion ">
+            <ng-container *ngIf="item.listaSesiones.length!=item.sesiones.length">
+              <div class="capituloSesion row" *ngFor="let sesiones of item.sesiones">
+                <div class="col-12 col-md-12 col-lg-12" style="margin: 15px 0px;">{{sesiones}}</div>
+                <ng-container *ngFor="let subsesiones of item.listaSesiones">
+                  <ng-container *ngIf="subsesiones.sesion==sesiones">
+                    <div class="capituloSesionesSubsesiones contentModuloSesiones col-12 col-md-7 col-lg-9">
+                      <i class="material-icons playsesion">play_circle</i>
+                      <div style="width: calc( 100% - 35px);">
+                        <div class="tituloSesion" [routerLink]="subsesiones.ordenCapitulo+'/'+subsesiones.ordenFila">{{subsesiones.subSesion}}</div>
+
+                        <mat-progress-bar mode="determinate"
+                          [value]="(subsesiones.totalVisualizado!=undefined)?subsesiones.totalVisualizado:0">
+                        </mat-progress-bar>
+                        <div
+                          style="justify-content: space-between; display: flex;font-size: 12px;color: #909090; font-weight: 600;width: 100%;">
+                          <div>0%</div>
+                          <div>{{(subsesiones.totalVisualizado!=undefined)?subsesiones.totalVisualizado:0}}%
+                          </div>
+                        </div>
+                        <div
+                          style="width: 100%;font-size: 10px;color: #cdcdcd;display: flex;    align-items: flex-end;margin-top: 5px;">
+                          <i class="material-icons" style="margin-right:5px ;">access_time</i>
+                          <div style="font-size: 12px;">({{subsesiones.tiempoSesion}} minutos)</div>
+                        </div>
+                      </div>
+
+                    </div>
+                    <div class="col-12 col-md-5 col-lg-3" style="text-align: right;">
+                      <div *ngIf="subsesiones.calificacion!=0">Calificación:
+                        <strong>{{subsesiones.calificacion}}</strong></div>
+                      <div *ngIf="subsesiones.calificacion==0">Sin Calificación</div>
+                    </div>
+                  </ng-container>
+                </ng-container>
+              </div>
+            </ng-container>
+
+            <ng-container *ngIf="item.listaSesiones.length==item.sesiones.length">
+              <div class="row" style="align-items: center;">
+                <ng-container *ngFor="let sesiones of item.listaSesiones">
+
+                  <div class="col-12 col-md-7 col-lg-9 capituloJustSesion contentModuloSesiones">
+                    <i class="material-icons playsesion">play_circle</i>
+                    <div style="width: calc( 100% - 35px);">
+                      <div class="tituloSesion" [routerLink]="sesiones.ordenCapitulo+'/'+sesiones.ordenFila">{{sesiones.sesion}}</div>
+                      <mat-progress-bar mode="determinate"
+                        [value]="(sesiones.totalVisualizado!=undefined)?sesiones.totalVisualizado:0">
+                      </mat-progress-bar>
+                      <div
+                        style="justify-content: space-between; display: flex;font-size: 12px;color: #909090; font-weight: 600;width: 100%;">
+                        <div>0%</div>
+                        <div>{{(sesiones.totalVisualizado!=undefined)?sesiones.totalVisualizado:0}}%
+                        </div>
+                      </div>
+                      <div
+                        style="width: 100%;font-size: 10px;color: #cdcdcd;display: flex;    align-items: flex-end;margin-top: 5px;">
+                        <i class="material-icons" style="margin-right:5px ;">access_time</i>
+                        <div style="font-size: 12px;">({{sesiones.tiempoSesion}} minutos)</div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-12 col-md-5 col-lg-3" style="text-align: right;">
+                    <div *ngIf="sesiones.calificacion!=0">Calificación: <strong>{{sesiones.calificacion}}</strong></div>
+                    <div *ngIf="sesiones.calificacion==0">Sin Calificación</div>
+                  </div>
+                </ng-container>
+              </div>
+
+            </ng-container>
+          </div>
+        </div>
+        <ng-container *ngFor="let itemT of estructuraCapitulo">
+          <ng-container *ngIf="!itemT.nombre.includes('Encuesta') && itemT.id>0 && itemT.ordenFila==item.ordenFila">
+            <div class="TareaYEncuesta">
+              <div ><i class="material-icons" style="color:#fe7112 ;margin-right: 20px;">check_circle</i>{{item.nombre}}</div>
+            </div>
+          </ng-container>
+        </ng-container>
+      </ng-container>
+    </ng-container>
+  </ng-container>
+
+  <ng-container *ngFor="let item of estructuraCapitulo">
+    <ng-container *ngIf="item.nombre=='Encuesta' && item.capitulo=='Encuesta Intermedia'">
+      <div class="TareaYEncuesta">
+        <div ><i class="material-icons" style="color:#fe7112 ;margin-right: 20px;">check_circle</i>{{item.capitulo}}</div>
+      </div>
+    </ng-container>
+    <ng-container *ngIf="item.nombre=='Encuesta' && item.capitulo=='Encuesta Final'">
+      <div class="TareaYEncuesta">
+        <div ><i class="material-icons" style="color:#fe7112 ;margin-right: 20px;">check_circle</i>{{item.capitulo}}</div>
+      </div>
+    </ng-container>
+  </ng-container>
+</div>

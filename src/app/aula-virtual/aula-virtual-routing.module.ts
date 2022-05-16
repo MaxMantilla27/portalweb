@@ -8,6 +8,8 @@ import { CursoComponent } from './curso/curso.component';
 import { AulaVirtualGuard } from './Guard/aula-virtual.guard';
 import { MiPerfilComponent } from './mi-perfil/mi-perfil.component';
 import { MisCursosComponent } from './mis-cursos/mis-cursos.component';
+import { ModuloComponent } from './modulo/modulo.component';
+import { SesionesComponent } from './sesiones/sesiones.component';
 
 const routes: Routes = [
   {
@@ -20,6 +22,10 @@ const routes: Routes = [
         { path: 'Avatar', component: AvatarComponent},
 
         { path: 'MisCursos/:IdMatricula', component: CursoComponent},
+
+        { path: 'MisCursos/:IdMatricula/:Parametros', component: ModuloComponent},
+
+        { path: 'MisCursos/:IdMatricula/:Parametros/:IdCapitulo/:IdSesion', component: SesionesComponent},
       ]
   }
 ];

@@ -1,39 +1,41 @@
 <div class="container">
-    <div class="container breadcrumb">
-      <app-miga-pan [items]="migaPan"></app-miga-pan>
-    </div>
+  <div class="rowpadd breadcrumb" style="padding-top: 0px !important; padding-bottom: 0px !important;">
+    <app-miga-pan [items]="migaPan"></app-miga-pan>
   </div>
-  <div style="background: #f4f4f4;">
-    <div class="container">
-      <div class="row rowpadd">
-        <div class="col-12 col-md-12 col-lg-12">
-          <div class="titulop">
-            Mi avatar
-          </div>
-          <div style="font-size: 20px;
-          color: #797978;">Personaliza tu avatar, seleccionando las características de tu preferencia</div>
+</div>
+<div style="background: #f4f4f4;">
+  <div class="container">
+    <div class="row rowpadd">
+      <div class="col-12 col-md-12 col-lg-12">
+        <div class="titulop">
+          Mi avatar
         </div>
+        <div style="font-size: 20px;
+          color: #797978;">Personaliza tu avatar, seleccionando las características de tu preferencia</div>
       </div>
     </div>
+  </div>
 </div>
 
 <div class="container">
-    <div class="row rowpadd">
-        <div class="col-12 col-md-12 col-lg-12" style="display: flex; align-items: center; justify-content: center;">
-            <img class="imgAvatarPerfil" [src]="imgAvatar" alt="">
-        </div>
-        <div class="col-12 col-md-12 col-lg-12">
-            <div class="row">
-                <div class="titleAvatar">Características</div>
-                <app-formulario [model]="DatosAvatarEnvio" [InputsDisable]="statuscharge" (OnSubmit)="ActualizarAvatar($event)" [Color]="'#f8f8f8'"
-                    (OnValid)="formVal=$event"(OnSelect)="RecargaImagen($event)" [fiels]="fileds" [Tipo]="1" [ChargeValuesInit]="initValues">
-                <ng-container send>
-                    <app-default-button [confs]="{color:'primary',titulo:'Actualizar Avatar'}" [style]="'width: 100%;'" [disabled]="!formVal" ></app-default-button>
-                </ng-container>
-            </app-formulario>
-            </div>
-        </div>
+  <div class="row rowpadd">
+    <div class="col-12 col-md-12 col-lg-12" style="display: flex; align-items: center; justify-content: center;">
+      <img class="imgAvatarPerfil" [src]="imgAvatar" alt="">
     </div>
+    <div class="col-12 col-md-12 col-lg-12">
+      <div class="row">
+        <div class="titleAvatar">Características</div>
+        <app-formulario [model]="DatosAvatarEnvio" [InputsDisable]="statuscharge" (OnSubmit)="ActualizarAvatar($event)"
+          [Color]="'#f8f8f8'" (OnValid)="formVal=$event" (OnSelect)="RecargaImagen($event)" [fiels]="fileds" [Tipo]="1"
+          [ChargeValuesInit]="initValues">
+          <ng-container send>
+            <app-default-button [confs]="{color:'primary',titulo:'Actualizar Avatar'}" [style]="'width: 100%;'"
+              [disabled]="!formVal"></app-default-button>
+          </ng-container>
+        </app-formulario>
+      </div>
+    </div>
+  </div>
 </div>
 
 <!--

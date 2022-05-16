@@ -55,5 +55,20 @@ export class SessionStorageService {
       localStorage.removeItem(name)
     }
   }
+  SetEstructura(datos:Array<any>):void{
 
+    if(this.isBrowser){
+      sessionStorage.setItem('Estructura',btoa(JSON.stringify(datos)));
+    }
+  }
+
+  getEstructura():Array<any>{
+
+    if(this.isBrowser){
+      var token=sessionStorage.getItem('Estructura');
+      if(token==undefined || token==null) return [];
+      return JSON.parse(atob(token));
+    }
+    return [];
+  }
 }

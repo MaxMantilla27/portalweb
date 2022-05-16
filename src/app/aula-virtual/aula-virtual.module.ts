@@ -18,6 +18,11 @@ import { AvatarComponent } from './avatar/avatar.component';
 import { IndicacionesContentComponent } from './curso/indicaciones-content/indicaciones-content.component';
 import { IndicacionesOptionsContentComponent } from './curso/indicaciones-options-content/indicaciones-options-content.component';
 import { CursoModulosComponent } from './curso/curso-modulos/curso-modulos.component';
+import { ModuloComponent } from './modulo/modulo.component';
+import { ModuloSesionesComponent } from './modulo/modulo-sesiones/modulo-sesiones.component';
+import { SesionesComponent } from './sesiones/sesiones.component';
+import { ModuloSilaboComponent } from './modulo/modulo-silabo/modulo-silabo.component';
+import { ModuloForoComponent } from './modulo/modulo-foro/modulo-foro.component';
 
 
 @NgModule({
@@ -34,6 +39,11 @@ import { CursoModulosComponent } from './curso/curso-modulos/curso-modulos.compo
     IndicacionesOptionsContentComponent,
     CursoModulosComponent,
     AvatarComponent,
+    ModuloComponent,
+    ModuloSesionesComponent,
+    SesionesComponent,
+    ModuloSilaboComponent,
+    ModuloForoComponent,
 
   ],
   imports: [

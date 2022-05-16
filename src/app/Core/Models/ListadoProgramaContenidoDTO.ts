@@ -15,7 +15,8 @@ export interface ListadoCursosHijosDTO {
   idModalidadHijo: number;
   modalidadHijo: string;
   imgPortada: string;
-  progreso:ProgresoAlumnoProgramaAulaVirtualDTO
+  progreso:ProgresoAlumnoProgramaAulaVirtualDTO,
+  params:string
 }
 export interface ProgresoAlumnoProgramaAulaVirtualDTO {
   progresoVideo: Array<ProgresoAlumnoProgramaVideosAulaVirtualDTO>;

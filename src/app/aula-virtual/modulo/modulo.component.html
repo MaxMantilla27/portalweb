@@ -1,0 +1,81 @@
+<div class="container">
+  <div class="rowpadd breadcrumb" style="padding-top: 0px !important; padding-bottom: 0px !important;">
+    <app-miga-pan [items]="migaPan"></app-miga-pan>
+  </div>
+</div>
+<div style="border-top:solid 3px #f4f4f4 ;"></div>
+<div class="container">
+  <div class="row rowpadd">
+    <div class="col-12 col-md-12 col-lg-12">
+      <mat-tab-group class="tabVertical" [(selectedIndex)]="tabIndex" (selectedTabChange)="tabChanged($event)">
+        <mat-tab>
+          <ng-template mat-tab-label>
+            <div class="contentHeaderM">
+              <div class="iconMat iconSesiones"></div>
+              <div class="titleMatr">Sesiones</div>
+            </div>
+          </ng-template>
+          <div style="padding: 10px 30px;">
+            <app-modulo-sesiones [Capitulo]="json.NombreCapitulo" [estructuraCapitulo]="estructuraCapitulo"></app-modulo-sesiones>
+          </div>
+        </mat-tab>
+
+        <mat-tab>
+          <ng-template mat-tab-label>
+            <div class="contentHeaderM">
+              <div class="iconMat iconWebinars"></div>
+              <div class="titleMatr">Webinars</div>
+            </div>
+          </ng-template>
+          <div style="padding: 10px 30px;">
+          </div>
+        </mat-tab>
+        <mat-tab>
+          <ng-template mat-tab-label>
+            <div class="contentHeaderM">
+              <div class="iconMat iconSilabo"></div>
+              <div class="titleMatr">Silabo</div>
+            </div>
+          </ng-template>
+          <div style="padding: 10px 30px;"><app-modulo-silabo [Capitulo]="json.NombreCapitulo" [IdPgeneral]="json.IdPGeneralHijo" [Estructura]="estructuraCapitulo"></app-modulo-silabo></div>
+        </mat-tab>
+        <mat-tab>
+          <ng-template mat-tab-label>
+            <div class="contentHeaderM">
+              <div class="iconMat iconRecursos"></div>
+              <div class="titleMatr">Recursos</div>
+            </div>
+          </ng-template>
+          <div style="padding: 10px 30px;">Recursos</div>
+        </mat-tab>
+        <mat-tab>
+          <ng-template mat-tab-label>
+            <div class="contentHeaderM">
+              <div class="iconMat iconForo"></div>
+              <div class="titleMatr">Foro</div>
+            </div>
+          </ng-template>
+          <div style="padding: 10px 30px;"><app-modulo-foro></app-modulo-foro></div>
+        </mat-tab>
+        <mat-tab>
+          <ng-template mat-tab-label>
+            <div class="contentHeaderM">
+              <div class="iconMat iconCalificaciones"></div>
+              <div class="titleMatr">Calificaciones</div>
+            </div>
+          </ng-template>
+          <div style="padding: 10px 30px;">Calificaciones</div>
+        </mat-tab>
+        <mat-tab>
+          <ng-template mat-tab-label>
+            <div class="contentHeaderM">
+              <div class="iconMat iconAyuda"></div>
+              <div class="titleMatr">Ayuda</div>
+            </div>
+          </ng-template>
+          <div style="padding: 10px 30px;">Ayuda</div>
+        </mat-tab>
+      </mat-tab-group>
+    </div>
+  </div>
+</div>

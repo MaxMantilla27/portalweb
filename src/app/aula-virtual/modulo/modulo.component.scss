@@ -1,0 +1,277 @@
+
+.cursoTitle {
+  font-size: 25px;
+  margin-bottom: 10px;
+  font-weight: 600;
+}
+.cursoTabDescripcion {
+  font-size: 14px;
+  color: #929292;
+  margin-bottom: 40px;
+}
+
+.cursoTabRemenber {
+  display: flex;
+  justify-content: flex-start;
+  background: #fff8f0;
+  padding: 5px 10px;
+  margin-bottom: 20px;
+  border: solid 1px #fff4e8;
+}
+
+.cursoTabRemenber {
+  display: flex;
+  justify-content: flex-start;
+  background: #fff8f0;
+  padding: 5px 10px;
+  margin-bottom: 20px;
+  border: solid 1px #fff4e8;
+}
+.cursoTabRemenber img {
+  width: 15px;
+  margin-right: 10px;
+}
+.cursoTabRemenber div {
+  font-size: 13px;
+  color: #505050;
+}
+
+.tabVertical {
+  flex-direction: row !important;
+}
+.tabVertical .mat-tab-header {
+  border-bottom: none !important;
+}
+.tabVertical .mat-tab-header .mat-tab-header-pagination {
+  display: none !important;
+}
+.tabVertical
+  .mat-tab-header
+  .mat-tab-label-container
+  .mat-tab-list
+  .mat-tab-labels {
+  flex-direction: column !important;
+  opacity: 1;
+  max-width: 180px;
+  border-right: 2px solid #d2d2d2;
+}
+.tabVertical
+  .mat-tab-header
+  .mat-tab-label-container
+  .mat-tab-list
+  .mat-tab-labels
+  .mat-tab-label {
+  justify-content: flex-start;
+  opacity: 1 !important;
+  margin-bottom: 20px;
+  padding-left: 0px;
+  padding-right: 0px;
+}
+.tabVertical
+  .mat-tab-header
+  .mat-tab-label-container
+  .mat-tab-list
+  .mat-tab-labels
+  .mat-tab-label
+  .mat-tab-label-content{
+    width: 100%;
+  }
+.tabVertical
+  .mat-tab-header
+  .mat-tab-label-container
+  .mat-tab-list
+  .mat-tab-labels
+  .mat-tab-label
+  .mat-tab-label-content
+  .contentHeaderM {
+  opacity: 1;
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  width: 100%;
+  .titleMatr {
+    word-break: break-word;
+    white-space: normal;
+    /* display: block; */
+    width: 148px;
+    text-align: left;
+  }
+  .iconMat {
+    background-repeat: no-repeat;
+    width: 20px;
+    height: 20px;
+    background-position: center;
+    margin-right: 10px;
+  }
+  .iconSesiones {
+    background-image: url("../../../assets/imagenes/peru-04.svg");
+  }
+  .iconWebinars {
+    background-image: url("../../../assets/icons/webinar-04.svg");
+  }
+  .iconSilabo {
+    background-image: url("../../../assets/icons/silabo-05.svg");
+  }
+  .iconRecursos {
+    background-image: url("../../../assets/icons/recursos-06.svg");
+  }
+  .iconForo {
+    background-image: url("../../../assets/icons/foro-07.svg");
+  }
+  .iconCalificaciones {
+    background-image: url("../../../assets/icons/calificaciones-08.svg");
+  }
+  .iconAyuda {
+    background-image: url("../../../assets/icons/ayuda-09.svg");
+  }
+}
+.tabVertical
+  .mat-tab-header
+  .mat-tab-label-container
+  .mat-tab-list
+  .mat-ink-bar {
+  height: 100%;
+  left: 98% !important;
+  display: none;
+}
+.tabVertical .mat-tab-body-wrapper {
+  flex: 1 1 auto !important;
+}
+.tabVertical .mat-tab-body-wrapper .mat-tab-body .mat-tab-body-content {
+  overflow: hidden;
+}
+.tabVertical
+  mat-tab-header
+  .mat-tab-label-container
+  .mat-tab-list
+  .mat-tab-labels
+  .mat-tab-label-active {
+  background: #f4f4f4;
+}
+.tabVertical
+  mat-tab-header
+  .mat-tab-label-container
+  .mat-tab-list
+  .mat-tab-labels
+  .mat-tab-label-active
+  .mat-tab-label-content
+  .contentHeaderM {
+  color: #0684f3 !important;
+  font-weight: 600;
+  text-decoration: auto;
+
+  .titleMatr {
+    text-decoration: underline;
+  }
+
+  .iconSesiones {
+    background-image: url("../../../assets/imagenes/mexico-05.svg") !important;
+  }
+  .iconWebinars {
+    background-image: url("../../../assets/icons/webinar-azul-03.svg") !important;
+  }
+  .iconSilabo {
+    background-image: url("../../../assets/icons/silabo-azul-04.svg") !important;
+  }
+  .iconRecursos {
+    background-image: url("../../../assets/icons/recursos-azul-05.svg") !important;
+  }
+  .iconForo {
+    background-image: url("../../../assets/icons/foro-azul-06.svg") !important;
+  }
+  .iconCalificaciones {
+    background-image: url("../../../assets/icons/calificaciones-azul-07.svg") !important;
+  }
+  .iconAyuda {
+    background-image: url("../../../assets/icons/ayuda-azul-08.svg") !important;
+  }
+}
+.ActiveChil {
+  color: #0684f3 !important;
+  font-weight: 600;
+  text-decoration: underline;
+  .iconIndicaciones {
+    background-image: url("../../../assets/imagenes/mexico-05.svg") !important;
+  }
+  .iconModulos {
+    background-image: url("../../../assets/imagenes/mexico-05.svg") !important;
+  }
+  .iconProyectos {
+    background-image: url("../../../assets/imagenes/mexico-05.svg") !important;
+  }
+  .iconCertificados {
+    background-image: url("../../../assets/imagenes/mexico-05.svg") !important;
+  }
+  .iconTramites {
+    background-image: url("../../../assets/imagenes/mexico-05.svg") !important;
+  }
+  .iconBeneficios {
+    background-image: url("../../../assets/imagenes/mexico-05.svg") !important;
+  }
+}
+.subContent {
+  margin-left: 30px;
+}
+.hederCapitulo{
+  display: flex;
+  justify-content: space-between;
+  border-bottom: solid 1px gray;
+  padding-bottom: 10px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.NSesionCapitulo{
+  margin-left: 10px;
+  color: #bcbcbc;
+  font-size: 10px;
+}
+.promedioCapitulo{
+  margin-left: 10px;
+  font-size: 12px;
+  background: #f2f6ff;
+  padding: 2px 3px;
+}
+.titleCapitulo{
+  color: #545454;
+  font-size: 18px;
+  font-weight: 600;
+}
+.playsesion{
+  color: #ff7012;
+  margin-right: 5px;
+}
+.contentCapituloSesion{
+  padding: 10px 0px 30px 0px;
+}
+.capituloSesion{
+  align-items: center;
+  justify-content: space-between;
+}
+.capituloSesionesSubsesiones{
+  padding-left: 40px !important;
+}
+.tituloSesion{
+  color: #898989;
+  font-size: 16px;
+  cursor: pointer;
+  margin-bottom: 5px;
+}
+.tituloSesion:hover{
+  color: #0668bf;
+  font-weight: 600;
+  text-decoration: underline;
+}
+.contentModuloSesiones {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 15px 0px;
+}
+.contentModuloSesiones mat-progress-bar .mat-progress-bar-buffer{
+  background: #e7e7e8 !important;
+}
+.contentModuloSesiones mat-progress-bar{
+  height: 5px !important;
+}
+.contentModuloSesiones mat-progress-bar .mat-progress-bar-fill::after {
+  background-color: #00c356;
+}

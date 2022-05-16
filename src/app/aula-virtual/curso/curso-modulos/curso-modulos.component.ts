@@ -6,6 +6,7 @@ import {
   SimpleChanges,
   ViewEncapsulation,
 } from '@angular/core';
+import { ParametrosEstructuraEspecificaDTO } from 'src/app/Core/Models/EstructuraEspecificaDTO';
 import {
   ProgresoAlumnoProgramaAulaVirtualDTO,
   CursoPadreDTO,
@@ -39,7 +40,7 @@ export class CursoModulosComponent implements OnInit, OnChanges {
   };
   @Input() idMatricula = 0;
   ngOnInit(): void {
-    console.log(this.idMatricula);
+    console.log(this.programEstructura);
     if (this.idMatricula > 0) {
       this.ObtenerProgresoAulaVirtual();
     }

@@ -11,17 +11,25 @@
   </div>
   <div class="contenidoCursoModulo">
     <div class="contentModulo">
-      <div style="font-size: 14px;
-      color: #909090;
-      font-weight: 600;">Video:</div>
+      <div style="font-size: 14px;color: #909090; font-weight: 600;">Video:</div>
       <mat-progress-bar mode="determinate"
-        [value]="(item.progreso!=undefined && item.progreso.progresoVideo.length>0)?item.progreso.progresoVideo[0].porcentaje:0"></mat-progress-bar>
-        <div style="justify-content: space-between; display: flex;font-size: 12px;color: #909090; font-weight: 600;">
-          <div>0%</div>
-          <div>{{(item.progreso!=undefined && item.progreso.progresoVideo.length>0)?item.progreso.progresoVideo[0].porcentaje:0}}%</div>
-        </div>
+        [value]="(item.progreso!=undefined && item.progreso.progresoVideo.length>0)?item.progreso.progresoVideo[0].porcentaje:0">
+      </mat-progress-bar>
+      <div style="justify-content: space-between; display: flex;font-size: 12px;color: #909090; font-weight: 600;">
+        <div>0%</div>
+        <div>{{(item.progreso!=undefined &&
+          item.progreso.progresoVideo.length>0)?item.progreso.progresoVideo[0].porcentaje:0}}%</div>
+      </div>
+      <div style="display: flex;margin-top: 10px;align-items: center;" *ngIf="(item.progreso!=undefined && item.progreso.progresoEncuesta.length>0)">
+        <div style="font-size: 14px;color: #909090; font-weight: 600;">Encuestas:</div>
+        <div style="font-size: 14px;color: #909090;margin-left:10px">Completadas al {{item.progreso.progresoEncuesta[0].completado}}%</div>
+      </div>
+      <div style="display: flex;margin-top: 10px;" *ngIf="(item.progreso!=undefined && item.progreso.progresoTarea.length>0)">
+        <div style="font-size: 14px;color: #909090; font-weight: 600;">Tareas:</div>
+        <div style="font-size: 14px;color: #909090;margin-left:10px">Completadas al {{item.progreso.progresoTarea[0].completado}}%</div>
+      </div>
     </div>
 
-    <app-default-button [confs]="{color:'primary',titulo:'Ingresar'}" [ruta]="'/'"></app-default-button>
+    <app-default-button [confs]="{color:'primary',titulo:'Ingresar'}" [disabled]="item.params==undefined" [ruta]="'/AulaVirtual/MisCursos/'+idMatricula+'/'+item.params" [style]="'padding:0px 20px'"></app-default-button>
   </div>
 </div>

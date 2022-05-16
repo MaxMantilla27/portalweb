@@ -1,0 +1,46 @@
+@media (max-width: 576px) {
+  .rowpadd{
+    padding: 45px 10px 45px 10px;
+  }
+}
+@media (min-width: 576px) {
+  .rowpadd{
+    padding: 45px 20px 45px 20px;
+  }
+}
+@media (min-width: 768px) {
+  .rowpadd{
+    padding: 45px 40px 45px 20px;
+  }
+}
+@media (min-width: 992px) {
+  .rowpadd{
+    padding: 45px 90px 45px 20px;
+  }
+}
+@media (min-width: 1200px) {
+  .rowpadd{
+    padding: 45px 90px 45px 20px;
+  }
+}
+@media (min-width: 1400px) {
+  .rowpadd{
+    padding: 45px 90px 45px 20px !important;
+  }
+}
+.sopoteTecnico {
+  position: fixed;
+  bottom: 30px;
+  right: 50px;
+  width: 80px;
+  background: #ff4e56;
+  height: 80px;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  border-radius: 50%;
+  font-size: 14px;
+  line-height: 12px;
+}

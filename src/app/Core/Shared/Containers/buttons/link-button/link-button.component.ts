@@ -19,6 +19,8 @@ export class LinkButtonComponent implements OnInit {
   fontSize: any
   @Input ()
   link: boolean = true
+  @Input ()
+  Child: boolean = true
 
 
   @Output()
