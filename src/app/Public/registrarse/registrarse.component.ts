@@ -81,6 +81,10 @@ export class RegistrarseComponent implements OnInit {
         } else {
           this.statuscharge = false;
           this._SessionStorageService.SetToken(x.token);
+          this.DatoObservable.datoAvatar=true
+          this.DatoObservable.datoContenido=true
+          this._HelperService.enviarDatoCuenta(this.DatoObservable)
+          console.log(this.DatoObservable);
           this.router.navigate(['/AulaVirtual/MiPerfil']);
         }
       },
@@ -96,10 +100,7 @@ export class RegistrarseComponent implements OnInit {
         this.statuscharge = false;
       },
     });
-    this.DatoObservable.datoAvatar=true
-    this.DatoObservable.datoContenido=true
-    this._HelperService.enviarDatoCuenta(this.DatoObservable)
-    console.log(this.DatoObservable);
+    
   }
 
   ObtenerCombosPortal() {
