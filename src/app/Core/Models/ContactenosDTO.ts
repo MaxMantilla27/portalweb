@@ -1,3 +1,5 @@
+import { NumberSymbol } from "@angular/common";
+
 export interface ContactenosDTO{
   Id?:number,
   IdContactoPortal?:number,
@@ -64,6 +66,7 @@ export interface ContactenosDTO{
   testeo_ab?:string,
 
   //whitepaper
+  IdArticulo?:number,
   NombreWhitePaper?:string,
   urlWhitePaper?:string,
 }
