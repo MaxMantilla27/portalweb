@@ -213,7 +213,6 @@
   font-size: 12px;
 }
 .breadcrumb div{
-  margin-left: 10px;
   color: #c0c0bf;
 }
 .breadcrumb .active{
@@ -356,6 +355,9 @@ html, body {
 }
 .space-bet{
   width: 80%;
+}
+mat-sidenav-content{
+  background: #ffffff;
 }
 .mat-sidenav-container .mat-sidenav-content .mat-toolbar {
   display: flex;

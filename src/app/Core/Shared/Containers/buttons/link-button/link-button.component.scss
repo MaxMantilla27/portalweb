@@ -5,3 +5,10 @@
         text-decoration: underline;
     }
 }
+.bcChild{
+
+  max-width: 200px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}

@@ -1,5 +1,5 @@
 <div class="container">
-  <div class="container breadcrumb">
+  <div class="rowpadd breadcrumb" style="padding-top: 0px !important; padding-bottom: 0px !important;">
     <app-miga-pan [items]="migaPan"></app-miga-pan>
   </div>
 </div>
@@ -13,6 +13,7 @@
             <div class="contentHeaderM" [ngClass]="{'ActiveChil':IndicacionActive==true}">
               <div class="iconMat iconIndicaciones"></div>
               <div class="titleMatr">Indicaciones</div>
+              <i class="material-icons" *ngIf="IndicacionActive==true" style="position: absolute;right: 5px;">keyboard_arrow_up</i>
             </div>
           </ng-template>
           <div style="padding: 10px 30px;">
