@@ -20,11 +20,11 @@
         <div>{{(item.progreso!=undefined &&
           item.progreso.progresoVideo.length>0)?item.progreso.progresoVideo[0].porcentaje:0}}%</div>
       </div>
-      <div style="display: flex;margin-top: 10px;align-items: center;" *ngIf="(item.progreso!=undefined && item.progreso.progresoEncuesta.length>0)">
+      <div style="display: flex;margin-top: 10px;align-items: center;" *ngIf="(item.progreso!=undefined  && item.progreso.progresoEncuesta!=undefined && item.progreso.progresoEncuesta.length>0)">
         <div style="font-size: 14px;color: #909090; font-weight: 600;">Encuestas:</div>
         <div style="font-size: 14px;color: #909090;margin-left:10px">Completadas al {{item.progreso.progresoEncuesta[0].completado}}%</div>
       </div>
-      <div style="display: flex;margin-top: 10px;" *ngIf="(item.progreso!=undefined && item.progreso.progresoTarea.length>0)">
+      <div style="display: flex;margin-top: 10px;" *ngIf="(item.progreso!=undefined && item.progreso.progresoTarea!=undefined  && item.progreso.progresoTarea.length>0)">
         <div style="font-size: 14px;color: #909090; font-weight: 600;">Tareas:</div>
         <div style="font-size: 14px;color: #909090;margin-left:10px">Completadas al {{item.progreso.progresoTarea[0].completado}}%</div>
       </div>

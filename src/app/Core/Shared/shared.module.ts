@@ -60,6 +60,7 @@ import { CardMatriculasComponent } from './Containers/card/card-matriculas/card-
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { ProgramaContenidoService } from './Services/ProgramaContenido/programa-contenido.service';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
+import { ForoCursoService } from './Services/ForoCurso/foro-curso.service';
 
 @NgModule({
   imports: [
@@ -177,7 +178,8 @@ import {MatProgressBarModule} from '@angular/material/progress-bar';
     DatosPortalService,
     PoliticaPrivacidadService,
     TerminosCondicionesService,
-    ProgramaContenidoService
+    ProgramaContenidoService,
+    ForoCursoService
   ],
 })
 export class SharedModule {

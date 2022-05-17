@@ -1,1 +1,41 @@
-<p>modulo-foro works!</p>
+<div class="cursoTitle">{{Capitulo}}</div>
+<div class="row" style="align-items: center;">
+  <div class="tipoIndicacionTitle col-12 col-md-8 col-lg-9">
+    <img class="ImgIndicacionesContent" src="../../../../assets/icons/foro-naranja.svg">
+    <div>Foro</div>
+  </div>
+  <div class="col-12 col-md-4 col-lg-3">
+    <app-default-button  [confs]="{color:'primary',titulo:'Añadir un tema'}" [style]="'width: 100%;'"
+    [style]="'margin-bottom: 0px !important;padding:0px 20px'" [icon]="''"></app-default-button>
+  </div>
+</div>
+<div>
+  <div style="font-weight: 600;
+  border-bottom: 1px solid #e0e0e0;
+  padding-bottom: 5px;
+  margin-top: 20px;
+  margin-bottom: 10px;">Todos los temas</div>
+  <div class="contentForo">
+
+    <div class="foro" *ngFor="let item of foro">
+      <div style="display: flex;align-items: center;justify-content: flex-start;">
+        <img [src]="item.urlAvatar" alt="" style="width: 40px; height: 40px;    margin-right: 10px;">
+        <div>
+          <div class="titleForo">{{item.titulo}}</div>
+          <div class="subTitleForo">{{item.nombres}}</div>
+        </div>
+      </div>
+      <div style="display: flex;justify-content: end;align-items: center;    min-width: 40px;">
+        <img src="../../../../assets/icons/respuestas-foro-28.svg" alt="" style="width: 20px; height: 20px;    margin-right: 10px;">
+        <div class="NRespuestas">{{item.respuestas}}</div>
+      </div>
+    </div>
+    <div  class="paginatorForo">
+        <i class="material-icons paginaForo">keyboard_arrow_left</i>
+      <div class="paginaForo" *ngFor="let pag of paginacion" [ngClass]="{'pagActive': pag === pagina}">
+        {{pag}}
+      </div>
+        <i class="material-icons paginaForo">keyboard_arrow_right</i>
+    </div>
+  </div>
+</div>
