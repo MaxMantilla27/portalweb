@@ -8,6 +8,7 @@ import {
   AvatarEnvioDTO,
 } from 'src/app/Core/Models/Avatar';
 import { Basic } from 'src/app/Core/Models/BasicDTO';
+import { DatoObservableDTO } from 'src/app/Core/Models/DatoObservableDTO';
 import { formulario } from 'src/app/Core/Models/Formulario';
 import { AvatarService } from 'src/app/Core/Shared/Services/Avatar/avatar.service';
 import { HelperService } from 'src/app/Core/Shared/Services/helper.service';
@@ -36,6 +37,10 @@ export class AvatarComponent implements OnInit {
     },
   ];
   public errorActualizacion = '';
+  public DatoObservable: DatoObservableDTO ={
+    datoAvatar: false,
+    datoContenido: false,
+  }
   public datosAvatar: AvatarDTO = {
     idAvatar: 0,
     idAlumno: 0,
@@ -236,15 +241,6 @@ export class AvatarComponent implements OnInit {
       class:'col-12 col-md-6 col-lg-6'
     });
     this.fileds.push({
-      nombre: 'accessories',
-      tipo: 'select',
-      valorInicial: 0,
-      validate: [Validators.required],
-      label: 'Accesorios',
-      data: [],
-      class:'col-12 col-md-6 col-lg-6'
-    });
-    this.fileds.push({
       nombre: 'hair_Color',
       tipo: 'select',
       valorInicial: 0,
@@ -261,31 +257,13 @@ export class AvatarComponent implements OnInit {
       label: 'Barba/Bigote',
       data: [],
       class:'col-12 col-md-6 col-lg-6'
-    });
+    });    
     this.fileds.push({
       nombre: 'facial_Hair_Color',
       tipo: 'select',
       valorInicial: 0,
       validate: [Validators.required],
       label: 'Color de Barba/Bigote',
-      data: [],
-      class:'col-12 col-md-6 col-lg-6'
-    });
-    this.fileds.push({
-      nombre: 'clothes',
-      tipo: 'select',
-      valorInicial: 0,
-      validate: [Validators.required],
-      label: 'Ropa',
-      data: [],
-      class:'col-12 col-md-6 col-lg-6'
-    });
-    this.fileds.push({
-      nombre: 'clothes_Color',
-      tipo: 'select',
-      valorInicial: 0,
-      validate: [Validators.required],
-      label: 'Color de ropa',
       data: [],
       class:'col-12 col-md-6 col-lg-6'
     });
@@ -325,6 +303,33 @@ export class AvatarComponent implements OnInit {
       data: [],
       class:'col-12 col-md-6 col-lg-6'
     });
+    this.fileds.push({
+      nombre: 'clothes',
+      tipo: 'select',
+      valorInicial: 0,
+      validate: [Validators.required],
+      label: 'Ropa',
+      data: [],
+      class:'col-12 col-md-6 col-lg-6'
+    });
+    this.fileds.push({
+      nombre: 'clothes_Color',
+      tipo: 'select',
+      valorInicial: 0,
+      validate: [Validators.required],
+      label: 'Color de ropa',
+      data: [],
+      class:'col-12 col-md-6 col-lg-6'
+    });
+    this.fileds.push({
+      nombre: 'accessories',
+      tipo: 'select',
+      valorInicial: 0,
+      validate: [Validators.required],
+      label: 'Accesorios',
+      data: [],
+      class:'col-12 col-md-6 col-lg-6'
+    });
   }
   ActualizarAvatar(value: any) {
     console.log(value);
@@ -347,7 +352,12 @@ export class AvatarComponent implements OnInit {
         this.statuscharge = false;
       },
     });
+   /*  this._HelperService.recibirDatoCuenta.subscribe(m=>this.DatoObservable.datoAvatar=true) */
+    this.DatoObservable.datoAvatar=true
+    this._HelperService.enviarDatoCuenta(this.DatoObservable)
+    console.log(this.DatoObservable);
   }
+
 
   RecargaImagen(value: any) {
     if (value.Nombre == 'topC') {

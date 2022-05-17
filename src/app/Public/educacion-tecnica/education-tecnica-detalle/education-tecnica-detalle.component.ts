@@ -1,5 +1,14 @@
-import {Component, OnInit, ViewEncapsulation} from '@angular/core';
+import {Component, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
+import { Validators } from '@angular/forms';
 import {ActivatedRoute, Router} from "@angular/router";
+import { Basic } from 'src/app/Core/Models/BasicDTO';
+import { ContactenosDTO } from 'src/app/Core/Models/ContactenosDTO';
+import { formulario } from 'src/app/Core/Models/Formulario';
+import { FormularioContactoDTO } from 'src/app/Core/Models/FormularioDTO';
+import { FormularioComponent } from 'src/app/Core/Shared/Containers/formulario/formulario.component';
+import { DatosPortalService } from 'src/app/Core/Shared/Services/DatosPortal/datos-portal.service';
+import { HelperService } from 'src/app/Core/Shared/Services/Helper/helper.service';
+import { RegionService } from 'src/app/Core/Shared/Services/Region/region.service';
 import {CarreraProfesionalService} from "../../../Core/Shared/Services/Carrera/carrera-profesional.service";
 import {
   EstructuraCurricularService
@@ -32,12 +41,46 @@ export class EducationTecnicaDetalleComponent implements OnInit {
 
   public fecha=new Date();
   public fechaInicio='Por definir';
+  @ViewChild(FormularioComponent)
+  form!: FormularioComponent;
   constructor(
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private _CarreraProfesionalService: CarreraProfesionalService,
     private _EstructuraCurricularService: EstructuraCurricularService,
+    private _RegionService:RegionService,
+    private _DatosPortalService:DatosPortalService,
+    private _HelperService: HelperService,
   ) { }
+
+  statuscharge = false;
+  formVal: boolean = false;
+  public initValues = false;
+  public fileds: Array<formulario> = [];
+  public formularioContacto:FormularioContactoDTO={
+    Nombres:'',
+    Apellidos:'',
+    Email:'',
+    IdPais:0,
+    IdRegion:0,
+    Movil:'',
+    IdCargo:0,
+    IdAreaFormacion:0,
+    IdAreaTrabajo:0,
+    IdIndustria:0
+  }
+  public DatosEnvioFormulario: ContactenosDTO={
+    Nombres:'',
+    Apellidos:'',
+    Correo1:'',
+    IdPais:0,
+    IdRegion:0,
+    Movil:'',
+    IdCargo:0,
+    IdAreaFormacion:0,
+    IdAreaTrabajo:0,
+    IdIndustria:0
+  }
 
   ngOnInit(): void {
     this.migaPan = [
@@ -64,6 +107,8 @@ export class EducationTecnicaDetalleComponent implements OnInit {
       this.getCarreraDetalle(idBusqueda, nombre)
     })
     console.log(this.migaPan)
+    this.AddFields();
+    this.ObtenerCombosPortal();
   }
   getCarreraDetalle(idBusqueda:number, nombre:string){
     this._CarreraProfesionalService.GetEducacionTecnicaDetalle(idBusqueda, nombre).subscribe({
@@ -113,5 +158,172 @@ export class EducationTecnicaDetalleComponent implements OnInit {
   tonumber(valor:any){
     console.log(valor)
     return parseInt(valor);
+  }
+  SetContacto(value:any){
+    this.initValues = false;
+    this.DatosEnvioFormulario.Nombres=value.Nombres;
+    this.DatosEnvioFormulario.Apellidos=value.Apellidos;
+    this.DatosEnvioFormulario.Correo1=value.Email;
+    this.DatosEnvioFormulario.IdPais=value.IdPais;
+    this.DatosEnvioFormulario.IdRegion=value.IdRegion;
+    this.DatosEnvioFormulario.Movil=value.Movil;
+    this.DatosEnvioFormulario.IdCargo=value.IdCargo;
+    this.DatosEnvioFormulario.IdAreaFormacion=value.IdAreaFormacion;
+    this.DatosEnvioFormulario.IdAreaTrabajo=value.IdAreaTrabajo;
+    this.DatosEnvioFormulario.IdIndustria=value.IdIndustria;
+    console.log(this.DatosEnvioFormulario)
+    this._HelperService.EnviarFormulario(this.DatosEnvioFormulario).subscribe({
+      next: (x) => {
+        console.log(x);
+      },
+      complete: () => {
+        this.statuscharge = false;
+      },
+    });
+  }
+  ObtenerCombosPortal(){
+    this._DatosPortalService.ObtenerCombosPortal().subscribe({
+      next:(x)=>{
+        console.log(x);
+        this.fileds.forEach(r=>{
+          if(r.nombre=='IdPais'){
+            r.data=x.listaPais.map((p:any)=>{
+              var ps:Basic={Nombre:p.pais,value:p.idPais};
+              return ps;
+            })
+          }
+        })
+        this.fileds.forEach(r=>{
+          if(r.nombre=='IdCargo'){
+            r.data=x.listaCargo.map((p:any)=>{
+              var ps:Basic={Nombre:p.cargo,value:p.idCargo};
+              return ps;
+            })
+          }
+        })
+        this.fileds.forEach(r=>{
+          if(r.nombre=='IdAreaFormacion'){
+            r.data=x.listaAreaFormacion.map((p:any)=>{
+              var ps:Basic={Nombre:p.areaFormacion,value:p.idAreaFormacion};
+              return ps;
+            })
+          }
+        })
+        this.fileds.forEach(r=>{
+          if(r.nombre=='IdAreaTrabajo'){
+            r.data=x.listaAreaTrabajo.map((p:any)=>{
+              var ps:Basic={Nombre:p.areaTrabajo,value:p.idAreaTrabajo};
+              return ps;
+            })
+          }
+        })
+        this.fileds.forEach(r=>{
+          if(r.nombre=='IdIndustria'){
+            r.data=x.listaIndustria.map((p:any)=>{
+              var ps:Basic={Nombre:p.industria,value:p.idIndustria};
+              return ps;
+            })
+          }
+        })
+      }
+    })
+    this.initValues = true;
+  }
+  GetRegionesPorPais(idPais:number){
+    this._RegionService.ObtenerCiudadesPorPais(idPais).subscribe({
+      next:x=>{
+        this.fileds.forEach(r=>{
+          if(r.nombre=='IdRegion'){
+            r.disable=false;
+            r.data=x.map((p:any)=>{
+              var ps:Basic={Nombre:p.nombreCiudad,value:p.idCiudad};
+              return ps;
+            })
+          }
+        })
+        this.form.enablefield('IdRegion');
+      }
+    })
+  }
+  SelectChage(e:any){
+    if(e.Nombre=="IdPais"){
+      this.GetRegionesPorPais(e.value)
+    }
+  }
+  AddFields(){
+
+    this.fileds.push({
+      nombre:"Nombres",
+      tipo:"text",
+      valorInicial:"",
+      validate:[Validators.required],
+      label:"Nombres",
+    });
+    this.fileds.push({
+      nombre:"Apellidos",
+      tipo:"text",
+      valorInicial:"",
+      validate:[Validators.required],
+      label:"Apellidos",
+
+    });
+    this.fileds.push({
+      nombre:"Email",
+      tipo:"text",
+      valorInicial:"",
+      validate:[Validators.required,Validators.email],
+      label:"E-mail",
+
+    });
+    this.fileds.push({
+      nombre:"IdPais",
+      tipo:"select",
+      valorInicial:"",
+      validate:[Validators.required],
+      label:"Pais",
+    });
+    this.fileds.push({
+      nombre:"IdRegion",
+      tipo:"select",
+      valorInicial:"",
+      validate:[Validators.required],
+      disable:true,
+      label:"Región",
+    });
+    this.fileds.push({
+      nombre:"Movil",
+      tipo:"text",
+      valorInicial:"",
+      validate:[Validators.required],
+      label:"Teléfono Móvil",
+    });
+    this.fileds.push({
+      nombre:"IdCargo",
+      tipo:"select",
+      valorInicial:"",
+      validate:[Validators.required],
+      label:"Cargo",
+    });
+    this.fileds.push({
+      nombre:"IdAreaFormacion",
+      tipo:"select",
+      valorInicial:"",
+      validate:[Validators.required],
+      label:"Área Formación",
+    });
+    this.fileds.push({
+      nombre:"IdAreaTrabajo",
+      tipo:"select",
+      valorInicial:"",
+      validate:[Validators.required],
+      label:"Área Trabajo",
+    });
+    this.fileds.push({
+      nombre:"IdIndustria",
+      tipo:"select",
+      valorInicial:"",
+      validate:[Validators.required],
+      label:"Industria",
+    });
   }
 }

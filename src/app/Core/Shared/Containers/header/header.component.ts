@@ -22,6 +22,7 @@ import { AlumnoService } from '../../Services/Alumno/alumno.service';
 import { AvatarService } from '../../Services/Avatar/avatar.service';
 import { AvatarCombosDTO, AvatarDTO } from 'src/app/Core/Models/Avatar';
 import { combosPerfilDTO, datosAlumnoDTO } from 'src/app/Core/Models/AlumnoDTO';
+import { DatoObservableDTO } from 'src/app/Core/Models/DatoObservableDTO';
 
 @Component({
   selector: 'app-header',
@@ -47,6 +48,7 @@ export class HeaderComponent implements OnInit {
     idAreaTrabajo: 0,
     idCargo: 0,
     idDepartamento: 0,
+    ciudad:'',
     idGenero: 0,
     idIndustria: 0,
     idPais: 0,
@@ -71,6 +73,10 @@ export class HeaderComponent implements OnInit {
     skin: '',
     topC: '',
   };
+  public DatoObservable: DatoObservableDTO ={
+    datoAvatar: false,
+    datoContenido: false,
+  }
   public combosAvatar:AvatarCombosDTO={
     listaAccesorios:[],
     listaBarbaBigote:[],
@@ -137,6 +143,7 @@ export class HeaderComponent implements OnInit {
       this.ObtenerCombosPerfil();
       this.ObtenerAvatar();
     }
+    this.ObtenerObservable();    
   }
   GetPaises() {
     this.paises = [];
@@ -294,6 +301,7 @@ export class HeaderComponent implements OnInit {
       },
     });
   }
+  
   ObtenerAvatar() {
     this._AvatarService.ObtenerAvatar().subscribe({
       next: (x) => {
@@ -306,5 +314,30 @@ export class HeaderComponent implements OnInit {
         this._HelperService.enviarDatosAvatar(this.combosAvatar);
       },
     });
+  }
+  ObtenerObservable(){
+    this._HelperService.recibirDatoCuenta.subscribe({
+      next: (x) => {
+        console.log(x)
+        this.DatoObservable.datoAvatar=x.datoAvatar;
+        this.DatoObservable.datoContenido = x.datoContenido;
+        this.token= this._SessionStorageService.validateTokken();
+        console.log(this.token)
+        if(this.token){
+          if(this.DatoObservable.datoAvatar == true){
+            this.ObtenerAvatar()
+            if(this.DatoObservable.datoContenido == true){
+              this.ObtenerCombosPerfil()
+            }
+          }
+          else{
+            if(this.DatoObservable.datoContenido == true){
+              this.ObtenerCombosPerfil()
+            }
+          }
+        }
+       
+      }
+    })
   }
 }

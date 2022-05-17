@@ -1,8 +1,12 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { Form, FormControl, FormGroup, Validators } from '@angular/forms';
-import { combosPerfilDTO } from 'src/app/Core/Models/AlumnoDTO';
+import { combosPerfilDTO, datosAlumnoEnvioDTO } from 'src/app/Core/Models/AlumnoDTO';
+import { DatoObservableDTO } from 'src/app/Core/Models/DatoObservableDTO';
+import { AlumnoService } from 'src/app/Core/Shared/Services/Alumno/alumno.service';
 import { HelperService } from 'src/app/Core/Shared/Services/helper.service';
 import { RegionService } from 'src/app/Core/Shared/Services/Region/region.service';
+import { SessionStorageService } from 'src/app/Core/Shared/Services/session-storage.service';
+
 
 @Component({
   selector: 'app-mi-perfil',
@@ -12,13 +16,23 @@ import { RegionService } from 'src/app/Core/Shared/Services/Region/region.servic
 })
 export class MiPerfilComponent implements OnInit {
   constructor(private _HelperService: HelperService,
-    private _RegionService:RegionService) {}
+    private _RegionService:RegionService,
+    private _AlumnoService:AlumnoService,
+    private _SessionStorageService:SessionStorageService
+    ) {}
   public migaPan = [
     {
       titulo: 'Mi Perfil',
       urlWeb: '/AulaVirtual/MiPerfil',
     },
   ];
+  public DatoObservable: DatoObservableDTO ={
+    datoAvatar: false,
+    datoContenido: false,
+  }
+  
+  public statuscharge = false;
+  public initValues = false;
   public imgAvtar='';
   public combosPerfil: combosPerfilDTO = {
     listaAreaFormacion:[],
@@ -40,6 +54,7 @@ export class MiPerfilComponent implements OnInit {
       idAreaTrabajo: 0,
       idCargo: 0,
       idDepartamento: 0,
+      ciudad:'',
       idGenero: 0,
       idIndustria: 0,
       idPais: 0,
@@ -47,7 +62,29 @@ export class MiPerfilComponent implements OnInit {
       nombres: '',
       telefono: '',
     },
+    
   };
+
+  public DatosAlumnoEnvio: datosAlumnoEnvioDTO = {
+    nombres: '',
+    apellidos: '',
+    idTipoDocumento: '',
+    dni: '',
+    email: '',
+    telefono: '',
+    idGenero: 0,
+
+    idPais: 0,
+    idDepartamento: 0,
+    ciudad: '',
+    direccion: '',
+
+    empresa: '',
+    idCargo: 0,
+    idAreaTrabajo: 0,
+    idAreaFormacion: 0,
+    idIndustria: 0,
+  }
 
   public userForm :FormGroup=new FormGroup({
     Nombres: new FormControl(this.combosPerfil.datosAlumno.nombres,Validators.required),
@@ -82,7 +119,7 @@ export class MiPerfilComponent implements OnInit {
         Genero: this.combosPerfil.datosAlumno.idGenero,
         Pais: this.combosPerfil.datosAlumno.idPais,
         Region: this.combosPerfil.datosAlumno.idDepartamento,
-        Ciudad: '',
+        Ciudad: this.combosPerfil.datosAlumno.ciudad,
         Direccion: this.combosPerfil.datosAlumno.direccion,
         Empresa: this.combosPerfil.datosAlumno.empresa,
         Cargo: this.combosPerfil.datosAlumno.idCargo,
@@ -94,8 +131,7 @@ export class MiPerfilComponent implements OnInit {
     });
     this._HelperService.recibirDatosAvatar.subscribe(x=>this.imgAvtar=x.UrlAvatar)
   }
-  ActualizarUsuario() {
-  }
+ 
   GetRegionPorPais(){
 
     this._RegionService.ObtenerCiudadesPorPais(this.userForm.get('Pais')?.value).subscribe({
@@ -107,5 +143,37 @@ export class MiPerfilComponent implements OnInit {
         });
       }
     })
+  }
+
+  ActualizarUsuario() {
+    this.DatosAlumnoEnvio.nombres = this.userForm.get('Nombres')?.value;
+    this.DatosAlumnoEnvio.apellidos = this.userForm.get('Apellido')?.value;
+    this.DatosAlumnoEnvio.idTipoDocumento = this.userForm.get('TipoDocumento')?.value;
+    this.DatosAlumnoEnvio.dni = this.userForm.get('Documento')?.value;
+    this.DatosAlumnoEnvio.email = this.userForm.get('Correo')?.value;
+    this.DatosAlumnoEnvio.telefono = this.userForm.get('Movil')?.value;
+    this.DatosAlumnoEnvio.idGenero = this.userForm.get('Genero')?.value;
+
+    this.DatosAlumnoEnvio.idPais = this.userForm.get('Pais')?.value;
+    this.DatosAlumnoEnvio.idDepartamento = this.userForm.get('Region')?.value;
+    this.DatosAlumnoEnvio.ciudad = this.userForm.get('Ciudad')?.value;
+    this.DatosAlumnoEnvio.direccion = this.userForm.get('Direccion')?.value;
+    
+    this.DatosAlumnoEnvio.empresa = this.userForm.get('Empresa')?.value;
+    this.DatosAlumnoEnvio.idCargo = this.userForm.get('Cargo')?.value;
+    this.DatosAlumnoEnvio.idAreaTrabajo = this.userForm.get('AreaTrabajo')?.value;
+    this.DatosAlumnoEnvio.idAreaFormacion = this.userForm.get('AreaFormacion')?.value;
+    this.DatosAlumnoEnvio.idIndustria = this.userForm.get('Industria')?.value;
+    this._AlumnoService.ActualizarPerfilAlumno(this.DatosAlumnoEnvio).subscribe({
+      next: (x) => {
+      },
+      complete: () => {
+        this.statuscharge = false;
+      },
+    });
+    this._SessionStorageService.GetToken();
+    this.DatoObservable.datoContenido=true
+    this._HelperService.enviarDatoCuenta(this.DatoObservable)
+    console.log(this.DatoObservable); 
   }
 }

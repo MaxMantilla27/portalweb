@@ -120,4 +120,5 @@ export class CarreraProfesionalDetalleComponent implements OnInit {
       }
     })
   }
+  
 }

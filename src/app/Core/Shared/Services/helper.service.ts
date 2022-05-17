@@ -3,6 +3,7 @@ import { ReplaySubject, Subject } from 'rxjs';
 import { combosPerfilDTO } from '../../Models/AlumnoDTO';
 import { AvatarCombosDTO } from '../../Models/Avatar';
 import { BasicUrl } from '../../Models/BasicDTO';
+import { DatoObservableDTO } from '../../Models/DatoObservableDTO';
 
 @Injectable({
   providedIn: 'root'
@@ -17,9 +18,7 @@ export class HelperService {
   private msjScroll = new ReplaySubject<number>()
   private msjScrollFooter = new ReplaySubject<string>()
   private msjCombosAvatar = new ReplaySubject<AvatarCombosDTO>()
-  private msjRecarga = new ReplaySubject<boolean>()
-
-
+  private msjRecarga = new ReplaySubject<DatoObservableDTO>()
 
   public get recibirArrayCarrera() {
     return this.msjArrayCarrera.asObservable()
@@ -65,10 +64,10 @@ export class HelperService {
     console.log(combosAvatar);
     this.msjCombosAvatar.next(combosAvatar);
   }
-  public get recibirImagenAvatar() {
+  public get recibirDatoCuenta() {
     return this.msjRecarga.asObservable()
   }
-  public enviarImagenAvatar(datos: boolean): void {
+  public enviarDatoCuenta(datos: DatoObservableDTO): void {
     this.msjRecarga.next(datos);
   }
 }
