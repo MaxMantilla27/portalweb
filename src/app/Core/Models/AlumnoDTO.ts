@@ -9,6 +9,7 @@ export interface datosAlumnoDTO {
   idAreaTrabajo: number,
   idCargo: number,
   idDepartamento: number,
+  ciudad: string,
   idGenero: number,
   idIndustria: number,
   idPais: number,
@@ -39,4 +40,25 @@ export interface combosPerfilDTO{
   listaAreaFormacion:Array<any>,
   listaIndustria:Array<any>,
   datosAlumno:datosAlumnoDTO
+}
+
+export interface datosAlumnoEnvioDTO {
+  nombres: string,
+  apellidos: string,
+  idTipoDocumento: string,
+  dni: string,
+  email: string,
+  telefono: string,
+  idGenero: number,
+
+  idPais: number,
+  idDepartamento: number,
+  ciudad: string,
+  direccion: string,
+
+  empresa: string,
+  idCargo: number,
+  idAreaTrabajo: number,
+  idAreaFormacion: number,
+  idIndustria: number,
 }

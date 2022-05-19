@@ -2,9 +2,11 @@ import { style } from '@angular/animations';
 import { Component, OnInit } from '@angular/core';
 import { Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { DatoObservableDTO } from 'src/app/Core/Models/DatoObservableDTO';
 import { formulario } from 'src/app/Core/Models/Formulario';
 import { login, loginSendDTO } from 'src/app/Core/Models/login';
 import { AspNetUserService } from 'src/app/Core/Shared/Services/AspNetUser/asp-net-user.service';
+import { HelperService } from 'src/app/Core/Shared/Services/helper.service';
 import { SessionStorageService } from 'src/app/Core/Shared/Services/session-storage.service';
 @Component({
   selector: 'app-login',
@@ -16,11 +18,18 @@ export class LoginComponent implements OnInit {
   constructor(
     private router: Router,
     private _AspNetUserService:AspNetUserService,
-    private _SessionStorageService:SessionStorageService
+    private _SessionStorageService:SessionStorageService,
+    private _HelperService: HelperService,
+
     ) { }
   formVal:boolean=false;
   statuscharge=false;
   initValues=false
+  public DatoObservable: DatoObservableDTO ={
+    datoAvatar: false,
+    datoContenido: false,
+  }
+
   public migaPan: any = [];
   public loginSend:loginSendDTO={password:'',username:''}
   public errorLogin=''
@@ -75,8 +84,11 @@ export class LoginComponent implements OnInit {
       next:x=>{
         this.statuscharge=false
         this._SessionStorageService.SetToken(x.token)
+        this.DatoObservable.datoAvatar=true
+        this.DatoObservable.datoContenido=true
+        this._HelperService.enviarDatoCuenta(this.DatoObservable)
+        console.log(this.DatoObservable);
         this.router.navigate(['/AulaVirtual/MiPerfil']);
-        console.log(x)
       },
       error:e=>{
         this.statuscharge=false
@@ -90,6 +102,7 @@ export class LoginComponent implements OnInit {
         this.statuscharge=false
       }
     })
+    
 
   }
   eventoclickout(olo:string){

@@ -3,10 +3,12 @@ import { Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { RegisterDTO } from 'src/app/Core/Models/AlumnoDTO';
 import { Basic } from 'src/app/Core/Models/BasicDTO';
+import { DatoObservableDTO } from 'src/app/Core/Models/DatoObservableDTO';
 import { formulario } from 'src/app/Core/Models/Formulario';
 import { FormularioComponent } from 'src/app/Core/Shared/Containers/formulario/formulario.component';
 import { AccountService } from 'src/app/Core/Shared/Services/Account/account.service';
 import { DatosPortalService } from 'src/app/Core/Shared/Services/DatosPortal/datos-portal.service';
+import { HelperService } from 'src/app/Core/Shared/Services/helper.service';
 import { RegionService } from 'src/app/Core/Shared/Services/Region/region.service';
 import { SessionStorageService } from 'src/app/Core/Shared/Services/session-storage.service';
 
@@ -23,7 +25,9 @@ export class RegistrarseComponent implements OnInit {
     private _SessionStorageService: SessionStorageService,
     private router: Router,
     private _DatosPortalService: DatosPortalService,
-    private _RegionService: RegionService
+    private _RegionService: RegionService,
+    private _HelperService: HelperService,
+    
   ) {}
 
   public migaPan = [
@@ -40,6 +44,10 @@ export class RegistrarseComponent implements OnInit {
   statuscharge = false;
   initValues=false;
   formVal: boolean = false;
+  public DatoObservable: DatoObservableDTO ={
+    datoAvatar: false,
+    datoContenido: false,
+  }
   fileds: Array<formulario> = [];
   register: RegisterDTO = {
     Nombres: '',
@@ -73,7 +81,11 @@ export class RegistrarseComponent implements OnInit {
         } else {
           this.statuscharge = false;
           this._SessionStorageService.SetToken(x.token);
-          this.router.navigate(['/AulaVirtual/Cuenta']);
+          this.DatoObservable.datoAvatar=true
+          this.DatoObservable.datoContenido=true
+          this._HelperService.enviarDatoCuenta(this.DatoObservable)
+          console.log(this.DatoObservable);
+          this.router.navigate(['/AulaVirtual/MiPerfil']);
         }
       },
       error: (e) => {
@@ -88,6 +100,7 @@ export class RegistrarseComponent implements OnInit {
         this.statuscharge = false;
       },
     });
+    
   }
 
   ObtenerCombosPortal() {

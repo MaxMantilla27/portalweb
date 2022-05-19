@@ -7,6 +7,7 @@ import { FormularioContactoDTO } from 'src/app/Core/Models/FormularioDTO';
 import { FormularioComponent } from 'src/app/Core/Shared/Containers/formulario/formulario.component';
 import { DatosPortalService } from 'src/app/Core/Shared/Services/DatosPortal/datos-portal.service';
 import { RegionService } from 'src/app/Core/Shared/Services/Region/region.service';
+import { ContactenosService } from 'src/app/Core/Shared/Services/Contactenos/contactenos.service';
 
 @Component({
   selector: 'app-contactenos',
@@ -19,7 +20,8 @@ export class ContactenosComponent implements OnInit {
   form!: FormularioComponent;
   constructor(
     private _DatosPortalService:DatosPortalService,
-    private _RegionService:RegionService
+    private _RegionService:RegionService,
+    private _ContactenosService:ContactenosService,
     ) { }
 
   public migaPan = [
@@ -35,27 +37,60 @@ export class ContactenosComponent implements OnInit {
 
   statuscharge = false;
   formVal: boolean = false;
-
+  public initValues = false;
   public fileds: Array<formulario> = [];
   public formularioContacto:FormularioContactoDTO={
     Nombres:'',
     Apellidos:'',
     Email:'',
-    IdPais:undefined,
-    IdRegion:undefined,
+    IdPais:0,
+    IdRegion:0,
     Movil:'',
-    IdCargo:undefined,
-    IdAreaFormacion:undefined,
-    IdAreaTrabajo:undefined,
-    IdIndustria:undefined,
+    IdCargo:0,
+    IdAreaFormacion:0,
+    IdAreaTrabajo:0,
+    IdIndustria:0,
+    Comentario:''
+  }
+  public DatosContactenosEnvio: ContactenosDTO={
+    Nombres:'',
+    Apellidos:'',
+    Correo1:'',
+    IdPais:0,
+    IdRegion:0,
+    Movil:'',
+    IdCargo:0,
+    IdAreaFormacion:0,
+    IdAreaTrabajo:0,
+    IdIndustria:0,
+    Comentario:'',
   }
   ngOnInit(): void {
     this.AddFields();
     this.ObtenerCombosPortal();
   }
-  SetContacto(e:any){
-    console.log(e);
-
+  SetContacto(value:any){
+    this.initValues = false;
+    this.DatosContactenosEnvio.Nombres=value.Nombres;
+    this.DatosContactenosEnvio.Apellidos=value.Apellidos;
+    this.DatosContactenosEnvio.Correo1=value.Email;
+    this.DatosContactenosEnvio.IdPais=value.IdPais;
+    this.DatosContactenosEnvio.IdRegion=value.IdRegion;
+    this.DatosContactenosEnvio.Movil=value.Movil;
+    this.DatosContactenosEnvio.IdCargo=value.IdCargo;
+    this.DatosContactenosEnvio.IdAreaFormacion=value.IdAreaFormacion;
+    this.DatosContactenosEnvio.IdAreaTrabajo=value.IdAreaTrabajo;
+    this.DatosContactenosEnvio.IdIndustria=value.IdIndustria;
+    this.DatosContactenosEnvio.Comentario=value.Comentario;
+    console.log(this.DatosContactenosEnvio)
+    this._ContactenosService.EnviarFormulario(this.DatosContactenosEnvio).subscribe({
+      next: (x) => {
+        console.log(x);
+      },
+      complete: () => {
+        this.statuscharge = false;
+      },
+    });
   }
   ObtenerCombosPortal(){
     this._DatosPortalService.ObtenerCombosPortal().subscribe({
@@ -103,6 +138,7 @@ export class ContactenosComponent implements OnInit {
         })
       }
     })
+    this.initValues = true;
   }
   GetRegionesPorPais(idPais:number){
     this._RegionService.ObtenerCiudadesPorPais(idPais).subscribe({
@@ -199,6 +235,13 @@ export class ContactenosComponent implements OnInit {
       valorInicial:"",
       validate:[Validators.required],
       label:"Industria",
+    });
+    this.fileds.push({
+      nombre:"Comentario",
+      tipo:"text",
+      valorInicial:"",
+      validate:[Validators.required],
+      label:"Comentario",
     });
   }
 }

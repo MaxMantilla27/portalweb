@@ -1,6 +1,8 @@
+import { NumberSymbol } from "@angular/common";
+
 export interface ContactenosDTO{
-  Id:number,
-  IdContactoPortal:number,
+  Id?:number,
+  IdContactoPortal?:number,
   Nombres:string,
   Apellidos:string,
   Correo1:string,
@@ -17,12 +19,12 @@ export interface ContactenosDTO{
   Ciudad?:string,
   Direccion?:string,
   IpAddress?:string,
-  FechaCreacion:Date,
-  FechaModificacion:Date,
+  FechaCreacion?:Date,
+  FechaModificacion?:Date,
   IdTipoEstado?:number,
   IdTipoFormulario?:number,
   Interesado?:boolean,
-  Terminos:boolean,
+  Terminos?:boolean,
   IdAlumno?:number,
   NumeroDocumento?:string,
   Comentario?:string,
@@ -30,7 +32,7 @@ export interface ContactenosDTO{
   IdTipoDocumentoPersonal?:number,
   IdTipoDocumento?:any,
   IdSexo?:number,
-  FechaNacimiento:Date,
+  FechaNacimiento?:Date,
   Genero?:string,
 
   IdContactoPortalSegmento?:any,
@@ -45,25 +47,26 @@ export interface ContactenosDTO{
   NombreOrigen?:string,
   NombreFormulario?:string,
   NombreCentroCosto?:string,
-  IdTipoDato:number,  //mkt.T_TipoDato
-  IdFaseOportunidad:number,  //pla.T_FaseOportunidad
+  IdTipoDato?:number,  //mkt.T_TipoDato
+  IdFaseOportunidad?:number,  //pla.T_FaseOportunidad
   IdFormularioPublicidad?:number,  // formualrios de prublicidad
   //
   IdTiempoCapacitacion?:number,
-  ProbabilidadCargo:boolean,
-  ProbabilidadAreaFormacion:boolean,
-  ProbabilidadAreaTrabajo:boolean,
-  ProbabilidadIndustria:boolean,
-  IdInteraccionPublicidad:number,
+  ProbabilidadCargo?:boolean,
+  ProbabilidadAreaFormacion?:boolean,
+  ProbabilidadAreaTrabajo?:boolean,
+  ProbabilidadIndustria?:boolean,
+  IdInteraccionPublicidad?:number,
   UrlOrigen?:string,
   IdCentroCosto?:number,
-  IdPespecifico:number,
+  IdPespecifico?:number,
   UrlBrochure?:string,
   UrlImagen?:string,
   NombreCampania?:string,
   testeo_ab?:string,
 
   //whitepaper
+  IdArticulo?:number,
   NombreWhitePaper?:string,
   urlWhitePaper?:string,
 }

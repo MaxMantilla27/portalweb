@@ -148,6 +148,17 @@
         <div class="subtitleEstruturaProgramForm">
           registra tus datos para que un asesor especializado pueda ayudarte en todo lo que requieras
         </div>
+        <app-formulario [model]="formularioContacto" [InputsDisable]="statuscharge" (OnSubmit)="SetContacto($event)"
+          (OnValid)="formVal=$event" [fiels]="fileds" (OnSelect)="SelectChage($event)">
+
+          <ng-container contenido>
+          </ng-container>
+          <ng-container send>
+            <app-default-button [confs]="{color:'primary',titulo:'Enviar'}" [style]="'width: 100%;'"
+              [disabled]="!formVal"></app-default-button>
+          </ng-container>
+
+        </app-formulario>
       </div>
     </div>
   </div>

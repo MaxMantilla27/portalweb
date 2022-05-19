@@ -10,4 +10,5 @@ export interface FormularioContactoDTO
   IdAreaFormacion?: number,
   IdAreaTrabajo?: number,
   IdIndustria?: number,
+  Comentario?: string,
 }
