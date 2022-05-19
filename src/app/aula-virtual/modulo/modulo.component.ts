@@ -4,7 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { ParametrosEstructuraEspecificaDTO } from 'src/app/Core/Models/EstructuraEspecificaDTO';
 import { ProgramaContenidoService } from 'src/app/Core/Shared/Services/ProgramaContenido/programa-contenido.service';
 import { SessionStorageService } from 'src/app/Core/Shared/Services/session-storage.service';
-import { SesionesComponent } from '../sesiones/sesiones.component';
+
 
 @Component({
   selector: 'app-modulo',
@@ -25,8 +25,9 @@ export class ModuloComponent implements OnInit {
       urlWeb: '/AulaVirtual/MisCursos',
     },
   ];
-  public tabIndex = 4;
+  public tabIndex = 0;
   public idMatricula=0;
+  public idPEspecificoHijo=0;
   public json:ParametrosEstructuraEspecificaDTO={
 
     AccesoPrueba: false,
@@ -36,51 +37,67 @@ export class ModuloComponent implements OnInit {
     IdPEspecificoHijo: 0,
     IdPGeneralHijo: 0,
     NombreCapitulo:'',
-    NombrePrograma:''
+    NombrePrograma:'',
+    idModalidad:1
   }
-  public estructuraCapitulo:Array<any>=[];
+  public estructuraCapitulo:any;
   ngOnInit(): void {
 
     this._ActivatedRoute.params.subscribe({
       next: (x) => {
         this.idMatricula = parseInt(x['IdMatricula']);
-        this.json=JSON.parse(atob(x['Parametros']));
-        console.log(this.json);
-        this.migaPan.push({
-          titulo:this.json.NombrePrograma,
-          urlWeb:'/AulaVirtual/MisCursos/'+this.json.IdMatriculaCabecera
-        },
-        {
-          titulo:this.json.NombreCapitulo,
-          urlWeb:'/AulaVirtual/MisCursos/'+this.json.IdMatriculaCabecera+'/'+atob(x['Parametros']).toString()
-        })
-        this.ObtenerEstructuraEspecifica();
+        this.idPEspecificoHijo=x['idPEspecificoHijo'];
+        console.log(x['idPEspecificoHijo'])
+        this.ObtenerListadoProgramaContenido();
       },
     });
   }
-  ObtenerEstructuraEspecifica(){
-    this._ProgramaContenidoService.ObtenerEstructuraEspecifica(this.json).subscribe({
+  ObtenerEstructuraEspecificaCurso(){
+    this._ProgramaContenidoService.ObtenerEstructuraEspecificaCurso(this.json).subscribe({
       next:x=>{
-        console.log(x)
+        console.log(this.estructuraCapitulo)
         this.estructuraCapitulo=x
         this._SessionStorageService.SetEstructura(this.estructuraCapitulo);
-        var sesion='';
-        this.estructuraCapitulo.forEach(x=>{
-          x.numerosesion=0;
-          x.sesiones=[]
-          if(x.listaSesiones!=null){
-            x.listaSesiones.forEach((sess:any) => {
-              if(sesion!=sess.sesion){
-                x.numerosesion++;
-                sesion=sess.sesion
-                x.sesiones.push(sesion);
-              }
-            });
-            sesion='';
-          }
-        })
+        console.log(this.estructuraCapitulo)
+
       }
     })
+  }
+  ObtenerListadoProgramaContenido() {
+
+    this._ProgramaContenidoService
+      .ObtenerListadoProgramaContenido(this.idMatricula)
+      .subscribe({
+        next: (x) => {
+          console.log(x);
+
+          x.listaCursoMatriculado.forEach((program:any) => {
+            if(this.idPEspecificoHijo==program.idPEspecificoHijo){
+              this.json = {
+                AccesoPrueba: false,
+                IdMatriculaCabecera: x.idMatriculaCabecera,
+                IdPEspecificoPadre: x.idPEspecifico,
+                IdPGeneralPadre: x.idPGeneral,
+                IdPEspecificoHijo: program.idPEspecificoHijo,
+                IdPGeneralHijo: program.idPGeneralHijo,
+                NombreCapitulo:program.programaGeneralHijo,
+                NombrePrograma:x.programaGeneral,
+                idModalidad:x.idModalidad
+              };
+              console.log(this.json);
+              this.migaPan.push({
+                titulo:this.json.NombrePrograma,
+                urlWeb:'/AulaVirtual/MisCursos/'+this.json.IdMatriculaCabecera
+              },
+              {
+                titulo:this.json.NombreCapitulo,
+                urlWeb:'/AulaVirtual/MisCursos/'+this.json.IdMatriculaCabecera+'/'+this.idPEspecificoHijo
+              })
+              this.ObtenerEstructuraEspecificaCurso();
+            }
+          });
+        },
+      });
   }
   tabChanged(tabChangeEvent: MatTabChangeEvent): void {
     console.log('tabChangeEvent => ', tabChangeEvent);

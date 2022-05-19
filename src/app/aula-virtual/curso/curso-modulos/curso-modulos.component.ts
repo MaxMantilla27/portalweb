@@ -13,6 +13,7 @@ import {
   ProgresoAlumnoProgramaVideosAulaVirtualDTO,
 } from 'src/app/Core/Models/ListadoProgramaContenidoDTO';
 import { ProgramaContenidoService } from 'src/app/Core/Shared/Services/ProgramaContenido/programa-contenido.service';
+import { SessionStorageService } from 'src/app/Core/Shared/Services/session-storage.service';
 
 @Component({
   selector: 'app-curso-modulos',
@@ -21,7 +22,10 @@ import { ProgramaContenidoService } from 'src/app/Core/Shared/Services/ProgramaC
   encapsulation: ViewEncapsulation.None,
 })
 export class CursoModulosComponent implements OnInit, OnChanges {
-  constructor(private _ProgramaContenidoService: ProgramaContenidoService) {}
+  constructor(
+    private _ProgramaContenidoService: ProgramaContenidoService,
+    private _SessionStorageService: SessionStorageService
+  ) {}
 
   public progresoPrograma: ProgresoAlumnoProgramaAulaVirtualDTO = {
     progresoEncuesta: [],

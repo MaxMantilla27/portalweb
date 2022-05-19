@@ -144,7 +144,11 @@
 .ActiveChil {
   color: #0684f3 !important;
   font-weight: 600;
-  text-decoration: underline;
+
+  .titleMatr{
+    color: #0684f3 !important;
+    text-decoration: underline;
+  }
   .iconIndicaciones {
     background-image: url("../../../assets/imagenes/mexico-05.svg") !important;
   }

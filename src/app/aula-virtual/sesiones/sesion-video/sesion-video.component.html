@@ -1,0 +1,13 @@
+<div class="cursoTitle">{{json.NombreCapitulo}}</div>
+<div class="row" style="align-items: center;">
+  <div class="tipoIndicacionTitle col-12 col-md-12 col-lg-12">
+    <img class="ImgIndicacionesContent" src="../../../../assets/icons/sesion-naranja.svg">
+    <div><strong>Sesión {{idSesion}}:</strong>{{nombreSesion}}</div>
+  </div>
+  <div class="col-12 col-md-12 col-lg-12">
+    <div style="text-align: right;font-size: 13px;cursor: pointer;" class="vinculo">Siguiente Sesion></div>
+  </div>
+  <div class="">
+    <app-video-brightcove *ngIf="charge==true" [videoData]="videoData"></app-video-brightcove>
+  </div>
+</div>

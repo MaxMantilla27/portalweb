@@ -61,6 +61,9 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { ProgramaContenidoService } from './Services/ProgramaContenido/programa-contenido.service';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
 import { ForoCursoService } from './Services/ForoCurso/foro-curso.service';
+import { VideoBrightcoveComponent } from './Containers/Video/video-brightcove/video-brightcove.component';
+
+
 
 @NgModule({
   imports: [
@@ -114,6 +117,7 @@ import { ForoCursoService } from './Services/ForoCurso/foro-curso.service';
     CardWhitePapersComponent,
     CardArticulosComponent,
     CardMatriculasComponent,
+    VideoBrightcoveComponent,
   ],
   exports: [
     HttpClientModule,
@@ -134,6 +138,7 @@ import { ForoCursoService } from './Services/ForoCurso/foro-curso.service';
     CardWhitePapersComponent,
     CardArticulosComponent,
     CardMatriculasComponent,
+    VideoBrightcoveComponent,
 
     MatTabsModule,
     MatTableModule,

@@ -1,0 +1,42 @@
+.brightcove{
+  width: 100% ;
+  height: auto;
+}
+.video-js{
+  width: 100% !important;
+  height: 400px !important;
+}
+.medioVideo{
+  width: 100% !important;
+  height: auto;
+}
+.containerVideoDiapositiva{
+  width: 100%;
+  height: 500px;
+  display: flex;
+  .containerVideo{
+    width: 45%;
+    max-width: 70%;
+    min-width: 20%;
+    background: blue;
+    height: auto;
+  }
+  .iconResise{
+    width: 10%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: e-resize;
+    img{
+      max-width: 100%;
+      height: 40px;
+    }
+  }
+  .containerDiapitiva{
+    width: 45%;
+    max-width: 70%;
+    min-width: 20%;
+    background: red;
+    height: auto;
+  }
+}

@@ -17,25 +17,33 @@
   margin-bottom: 10px;">Todos los temas</div>
   <div class="contentForo">
 
-    <div class="foro" *ngFor="let item of foro">
-      <div style="display: flex;align-items: center;justify-content: flex-start;">
-        <img [src]="item.urlAvatar" alt="" style="width: 40px; height: 40px;    margin-right: 10px;">
-        <div>
-          <div class="titleForo">{{item.titulo}}</div>
-          <div class="subTitleForo">{{item.nombres}}</div>
+    <ng-container  *ngFor="let item of foro;let i=index">
+
+      <div class="foro" *ngIf="(pagina-1)*4<=i && (pagina)*4>i">
+
+        <div style="display: flex;align-items: center;justify-content: flex-start;">
+          <img [src]="item.urlAvatar" alt="" style="width: 40px; height: 40px;    margin-right: 10px;">
+          <div>
+            <div class="titleForo">{{item.titulo}}</div>
+            <div class="subTitleForo">{{item.nombres}}</div>
+          </div>
+        </div>
+        <div style="display: flex;justify-content: end;align-items: center;    min-width: 40px;">
+          <img src="../../../../assets/icons/respuestas-foro-28.svg" alt="" style="width: 20px; height: 20px;    margin-right: 10px;">
+          <div class="NRespuestas">{{item.respuestas}}</div>
         </div>
       </div>
-      <div style="display: flex;justify-content: end;align-items: center;    min-width: 40px;">
-        <img src="../../../../assets/icons/respuestas-foro-28.svg" alt="" style="width: 20px; height: 20px;    margin-right: 10px;">
-        <div class="NRespuestas">{{item.respuestas}}</div>
-      </div>
-    </div>
+    </ng-container>
     <div  class="paginatorForo">
-        <i class="material-icons paginaForo">keyboard_arrow_left</i>
-      <div class="paginaForo" *ngFor="let pag of paginacion" [ngClass]="{'pagActive': pag === pagina}">
-        {{pag}}
-      </div>
-        <i class="material-icons paginaForo">keyboard_arrow_right</i>
+        <i class="material-icons paginaForo" (click)="minusPage()" >keyboard_arrow_left</i>
+        <ng-container *ngFor="let pag of paginacion">
+
+          <div (click)="page(pag)" class="paginaForo"   [ngClass]="{'pagActive': pag === pagina}" *ngIf="paginaCeil>=(pag/5) && (paginaCeil-1)<=(pag/5)">
+            {{pag}}
+          </div>
+        </ng-container>
+
+        <i class="material-icons paginaForo" (click)="plusPage()">keyboard_arrow_right</i>
     </div>
   </div>
 </div>

@@ -22,4 +22,9 @@ export class ProgramaContenidoService {
     console.log(Json)
     return this.http.post<any>(this.urlBase+'/ObtenerEstructuraEspecifica',Json);
   }
+
+  public ObtenerEstructuraEspecificaCurso(Json:ParametrosEstructuraEspecificaDTO):Observable<any>{
+    console.log(Json)
+    return this.http.post<any>(this.urlBase+'/ObtenerEstructuraEspecificaCurso',Json);
+  }
 }

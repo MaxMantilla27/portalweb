@@ -116,7 +116,8 @@ export class CursoComponent implements OnInit {
               IdPEspecificoHijo: program.idPEspecificoHijo,
               IdPGeneralHijo: program.idPGeneralHijo,
               NombreCapitulo:program.programaGeneralHijo,
-              NombrePrograma:this.programEstructura.programaGeneral
+              NombrePrograma:this.programEstructura.programaGeneral,
+              idModalidad:this.programEstructura.idModalidad
             };
             program.params = btoa(JSON.stringify(params));
           });
