@@ -15,6 +15,9 @@ export class ModuloForoComponent implements OnInit,OnChanges {
   ) { }
 
   @Input() IdPgeneral=0
+  @Input() IdPprincipal=0
+  @Input() IdPEspecificoPadre=0
+  @Input() IdPEspecificoHijo=0
   @Input() Capitulo='';
   public foro:Array<any>=[]
   public paginacion=[1]
@@ -62,5 +65,4 @@ export class ModuloForoComponent implements OnInit,OnChanges {
     this.pagina=p
     this.paginaCeil=Math.ceil(this.pagina/5)
   }
-
 }
