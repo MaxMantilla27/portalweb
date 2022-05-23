@@ -1,0 +1,98 @@
+<div class="row" *ngIf="bloquear==false">
+  <div class="col-12 col-md-9 col-lg-9">
+    <div class="contentCrucigrama">
+      <div style="font-size: 16px;font-weight: 600;color: hsl(147, 100%, 39%);display: flex;    margin-bottom: 15px;">
+        <img style="width: 15px;height: auto;margin-right: 5px;" src="../../../../../assets/icons/reloj-04.svg" alt="">
+        {{crucigrmaAvance.minutos}}:{{crucigrmaAvance.segundos<10?'0'+crucigrmaAvance.segundos:crucigrmaAvance.segundos}}</div>
+      <ng-container *ngFor="let itemY of matris;let indexY=index">
+        <div class="contentY">
+          <ng-container *ngFor="let item of itemY;let indexX=index">
+            <div *ngIf="item.esprimero" (click)="selectPregunta(refEl,item.pregunta,indexY,indexX,item.finalizado)"
+            class="itemCrucigrama esprimero" [ngClass]="{'campo':item.esCampo,'select':item.select,'finalizado':item.finalizado}">
+              <div *ngIf="item.esprimero" class="pregunta">{{item.pregunta}}</div>
+              {{item.valor}}
+            </div>
+            <div *ngIf="!item.esprimero" class="itemCrucigrama" [ngClass]="{'campo':item.esCampo,'select':item.select,'finalizado':item.finalizado}" >
+              {{item.valor}}
+            </div>
+          </ng-container>
+
+        </div>
+      </ng-container>
+    </div>
+  </div>
+  <div class="col-12 col-md-3 col-lg-3" #refEl>
+    <div class="row">
+      <div class="col-6 col-md-12 col-lg-12" style="    display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    margin: 20px 0px;
+    background: #f6f6f6;
+    padding: 20px 10px;">
+        <div style="    text-align: center;
+        color: #00954c;
+        font-weight: 800;
+        line-height: 16px;">NÚMERO DE PISTAS DISPONIBLES:</div>
+        <div class="boxPistas">{{crucigrmaAvance.Pistas}}</div>
+      </div>
+      <div class="col-6 col-md-12 col-lg-12" style="    display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    margin: 20px 0px;
+    background: #f6f6f6;
+    padding: 20px 10px;">
+        <div style="    text-align: center;
+        color: #f40006;
+        font-weight: 800;
+        line-height: 16px;">PUNTOS EN CONTRA:</div>
+        <div class="boxContra">{{crucigrmaAvance.contra}}</div>
+      </div>
+    </div>
+  </div>
+  <div class="col-12 col-md-12 col-lg-12"  >
+
+    <ng-container *ngIf="PreguntaActual!=-1" >
+      <div style="width: 100%;text-align: center;
+      margin: 20px 0px 10px;
+      padding: 10px;
+      background: #ff9f55;
+      color: white;">{{deficnicionActual}}</div>
+      <div style="justify-content: space-between;align-items: center;" class="row fieldCrucigrama" >
+        <mat-form-field appearance="outline" class="col-12 col-md-6 col-lg-6" >
+          <mat-label>respuesta</mat-label>
+          <input type="text" autocomplete="off" [(ngModel)]="valorIngresado" matInput (keyup)="SetValorIngresado()" [disabled]="bloquear"  />
+        </mat-form-field>
+        <div class="col-12 col-md-6 col-lg-6" style="    display: flex;
+        justify-content: space-around;flex-wrap: wrap;">
+          <app-default-button (ButtoclClick)="SendValor()" [confs]="{color:'primary',titulo:'Ingresar Palabra'}" [icon]="''"
+          [disabled]="bloquear"
+          [style]="'background:#007bff;padding: 0px 20px'"></app-default-button>
+          <app-default-button (ButtoclClick)="GetPista()" [confs]="{color:'danger',titulo:'Obtener una Pista'}" [icon]="''"
+          [disabled]="bloquear"
+          [style]="'padding: 0px 20px'"></app-default-button>
+        </div>
+      </div>
+    </ng-container>
+    <div style="width: 100%;display:flex;justify-content: flex-end;border-top: solid 1px #6c6c6c;margin-top: 10px">
+      <app-default-button (ButtoclClick)="saveCrucigrama()" [confs]="{color:'primary',titulo:'Finalizar'}" [icon]="''" [disabled]="bloquear" [style]="'background:#007bff;margin-top:10px'"></app-default-button>
+    </div>
+  </div>
+</div>
+<div *ngIf="bloquear==true">
+  <ng-container *ngIf="rpta==undefined">
+    <div style="    display: flex;justify-content: center;
+    height: 400px;
+    align-items: center;">
+      <mat-spinner style="    width: 100px;height: 100px;"></mat-spinner>
+    </div>
+  </ng-container>
+  <div style="width: 100%;" *ngIf="rpta!=undefined" >
+    <video style="width: 100%;" autoplay >
+      <source  [src]="'https://repositorioweb.blob.core.windows.net/repositorioweb/aulavirtual/feedback/'+rpta.feedBack" type='video/mp4'>
+    </video>
+    <app-default-button (ButtoclClick)="ButtoclClick.emit()" [confs]="{color:'danger',titulo:'Continuar con la sesión'}" [icon]="''"
+    [style]="'padding: 0px 20px;width:100%;margin-top: -10px;'"></app-default-button>
+  </div>
+</div>

@@ -7,25 +7,62 @@
 </ng-container>
 
 <ng-container *ngIf="videoData!=undefined">
-  <div style="display: flex;flex-wrap: wrap;">
-    <div class="containerVideoDiapositiva" *ngIf="tipo==3">
-      <div class="containerVideo" ondrop="true" ondragover="true"
-        [ngStyle]="{'width':whidth>0?'calc(45% - '+whidth+'px)':'calc(45% + '+whidth*-1+'px)'}">
+  <div style="display: flex;flex-wrap: wrap;background: #ededed ;">
+    <div *ngIf="tipo==2" class="containerVideoTotal">
 
-        <video controls #video (timeupdate)="setCurrentTime($event)" id="bc-video" [attr.data-player]="'rEr9tuuTvS'"
-          [attr.data-video-id]="'6306336229112'" [attr.data-account]="6267108632001" data-embed="default"
-          data-application-id class="video-js" [ngClass]="{'medioVideo':tipo==3}">
-        </video>
+    </div>
+    <div class="containerVideoDiapositiva" (mouseleave)="down=false" (mouseup)="down=false"
+      (mousemove)="resise($event)">
+      <div style="display: flex;
+      align-items: center;" [ngClass]="{'containerVideo': tipo == 3}"
+        [ngStyle]="{'width':tipo==3?whidth>0?'calc(45% - '+whidth+'px)':'calc(45% + '+whidth*-1+'px)':tipo==2?'100%':'0px'}">
+        <ng-container *ngIf="videoData.objetoConfigurado.idVideoBrightcove!='0' &&
+          videoData.objetoConfigurado.idVideoBrightcove!=null &&
+          videoData.objetoConfigurado.idVideoBrightcove!=undefined">
+          <video  controls #video (timeupdate)="setCurrentTime($event)" (seeked)="changeTime($event)" height="auto"
+            [currentTime]="tiempovideoinicio" [playbackRate]="1" id="bc-video" [attr.data-player]="playerData.playerId"
+            [attr.data-video-id]="playerData.videoId" [attr.data-account]="playerData.accountId" data-embed="default"
+            data-application-id class="video-js" [ngClass]="{'medioVideo':tipo==3}">
+          </video>
+
+        </ng-container>
+        <ng-container *ngIf="videoData.objetoConfigurado.idVideoBrightcove=='0' ||
+        videoData.objetoConfigurado.idVideoBrightcove==null ||
+        videoData.objetoConfigurado.idVideoBrightcove==undefined">
+          <cloudflare-stream *ngIf="tipo!=4"  id="videoCloud" [autoplay]="autoplay"
+           class="video-js" [controls]="true"  [src]="videoData.idVideo" (timeupdate)="setCurrentTime($event)"
+           #videoCloud style="height: auto !important;"  [currentTime]="tiempovideoinicio"
+           (seeked)="changeTime($event)"></cloudflare-stream>
+          <!-- <video style="width: 100%;" controls>
+            <source [src]="'https://iframe.videodelivery.net/'+videoData.idVideo" type='video/mp4'>
+          </video> -->
+
+        </ng-container>
       </div>
-      <div class="iconResise" (drag)="resise($event)" onmousedown="down=true"  draggable="true"><img
+      <div class="iconResise" *ngIf="tipo==3" (mousedown)="down=true" (mouseup)="down=false" draggable="false">
+        <img (mousedown)="down=true" (mouseup)="down=false" draggable="false"
           src="../../../../../../assets/icons/icono-delizar.png" alt="">
       </div>
-      <div class="containerDiapitiva" ondrop="true" ondragover="true"
+      <div class="containerDiapitiva" *ngIf="tipo==3 || tipo==1"
         [ngStyle]="{'width':whidth<=0?'calc(45% - '+whidth*-1+'px)':'calc(45% + '+whidth+'px)'}">
 
         <img *ngIf="tipo==3 && urlDiapo!=''" [src]="urlDiapo" alt="" style="width: 100%;height: auto;">
       </div>
     </div>
-
   </div>
 </ng-container>
+<div class="row">
+  <div class="col-12 col-md-12 col-lg-12">
+    <input type="range" min="0" [max]="tiempovideo" [(ngModel)]="tiempoactualvideo" #ref
+      (change)="changeBarra(ref.value)" style="width: 100%;">
+    <div style="display: flex;justify-content: center;background: #004b83;font-size: 16px;font-weight: 600;width: 100%;    margin-top: -10px;
+    padding: 10px;">
+
+      <div><i class="material-icons" (click)="minusDiapo()"
+          style="color: white;cursor: pointer;margin-right: 10px;">keyboard_arrow_left</i></div>
+      <div style="color: white">{{diapositivaactual}} / {{numeroDiapositivas}}</div>
+      <div><i class="material-icons" (click)="plusDiapo()"
+          style="color: white;cursor: pointer;margin-left: 10px;">keyboard_arrow_right</i></div>
+    </div>
+  </div>
+</div>

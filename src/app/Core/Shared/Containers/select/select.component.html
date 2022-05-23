@@ -14,7 +14,7 @@
 
     <mat-form-field appearance="fill" class="tranparent">
       <mat-label>{{label}}</mat-label>
-      <mat-select [(ngModel)]="valueDefecto" #select (selectionChange)="ChangeSelected($event.value)" panelClass="myPanelClass">
+      <mat-select #myselsetc [(ngModel)]="valueDefecto" #select (selectionChange)="ChangeSelected($event.value)" panelClass="myPanelClass">
 
         <mat-option *ngFor="let item of dataUrl" [value]="item.value" ><img [src]="item.Url?item.Url:''" alt=""> {{item.Nombre}}</mat-option>
       </mat-select>

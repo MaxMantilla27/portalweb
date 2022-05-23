@@ -15,7 +15,7 @@ export class SesionesComponent implements OnInit {
   constructor(
     private _ActivatedRoute: ActivatedRoute,
     private _ProgramaContenidoService: ProgramaContenidoService,
-    private _SessionStorageService: SessionStorageService
+    private _SessionStorageService: SessionStorageService,
   ) {}
 
   tabLoadTimes: Date[] = [];

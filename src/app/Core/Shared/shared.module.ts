@@ -62,6 +62,12 @@ import { ProgramaContenidoService } from './Services/ProgramaContenido/programa-
 import {MatProgressBarModule} from '@angular/material/progress-bar';
 import { ForoCursoService } from './Services/ForoCurso/foro-curso.service';
 import { VideoBrightcoveComponent } from './Containers/Video/video-brightcove/video-brightcove.component';
+import { CrucigramaComponent } from './Containers/crucigrama/crucigrama.component';
+import { CrucigramaService } from './Services/Crucigrama/crucigrama.service';
+import { SnackBarServiceService } from './Services/SnackBarService/snack-bar-service.service';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { SafePipe } from './Pipes/safe.pipe';
+import { CloudflareStreamModule } from '@cloudflare/stream-angular';
 
 
 
@@ -90,7 +96,9 @@ import { VideoBrightcoveComponent } from './Containers/Video/video-brightcove/vi
     NgbModule,
     MatSliderModule,
     MatTooltipModule,
-    MatProgressBarModule
+    MatProgressBarModule,
+    MatSnackBarModule,
+    CloudflareStreamModule
 
   ],
   declarations: [
@@ -118,6 +126,8 @@ import { VideoBrightcoveComponent } from './Containers/Video/video-brightcove/vi
     CardArticulosComponent,
     CardMatriculasComponent,
     VideoBrightcoveComponent,
+    CrucigramaComponent,
+    SafePipe,
   ],
   exports: [
     HttpClientModule,
@@ -139,6 +149,7 @@ import { VideoBrightcoveComponent } from './Containers/Video/video-brightcove/vi
     CardArticulosComponent,
     CardMatriculasComponent,
     VideoBrightcoveComponent,
+    CrucigramaComponent,
 
     MatTabsModule,
     MatTableModule,
@@ -166,7 +177,10 @@ import { VideoBrightcoveComponent } from './Containers/Video/video-brightcove/vi
     SafeHtmlPipe,
     IconInformationCardComponent,
     MatTooltipModule,
-    MatProgressBarModule
+    MatProgressBarModule,
+    MatSnackBarModule,
+    SafePipe,
+    CloudflareStreamModule
   ],
   providers: [
     SessionStorageService,
@@ -184,7 +198,9 @@ import { VideoBrightcoveComponent } from './Containers/Video/video-brightcove/vi
     PoliticaPrivacidadService,
     TerminosCondicionesService,
     ProgramaContenidoService,
-    ForoCursoService
+    ForoCursoService,
+    CrucigramaService,
+    SnackBarServiceService
   ],
 })
 export class SharedModule {

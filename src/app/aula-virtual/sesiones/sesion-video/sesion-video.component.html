@@ -1,4 +1,5 @@
 <div class="cursoTitle">{{json.NombreCapitulo}}</div>
+<div>Capitulo {{idCapitulo}}:{{NombreCapitulo}} </div>
 <div class="row" style="align-items: center;">
   <div class="tipoIndicacionTitle col-12 col-md-12 col-lg-12">
     <img class="ImgIndicacionesContent" src="../../../../assets/icons/sesion-naranja.svg">
@@ -8,6 +9,12 @@
     <div style="text-align: right;font-size: 13px;cursor: pointer;" class="vinculo">Siguiente Sesion></div>
   </div>
   <div class="">
-    <app-video-brightcove *ngIf="charge==true" [videoData]="videoData"></app-video-brightcove>
+
+    <app-crucigrama (ButtoclClick)="crucigramaData.pendiente=false" *ngIf="crucigramaData!=undefined && crucigramaData.pendiente==true && crucigramaData.existeCrucigrama==true" [json]="json" [Crucigrama]="crucigramaData"></app-crucigrama>
+
+    <ng-container  *ngIf="crucigramaData==undefined || crucigramaData.existeCrucigrama==false || crucigramaData.pendiente==false || crucigramaData.crucigramaDetalle">
+      <app-video-brightcove *ngIf="charge==true" [json]="json" [idCapitulo]="idCapitulo" [idSesion]="idSesion" [videoData]="videoData"></app-video-brightcove>
+    </ng-container>
+
   </div>
 </div>
