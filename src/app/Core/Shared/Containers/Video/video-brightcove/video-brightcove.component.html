@@ -1,0 +1,31 @@
+<ng-container *ngIf="videoData==undefined">
+  <div style="    display: flex;justify-content: center;
+  height: 400px;
+  align-items: center;">
+    <mat-spinner style="    width: 100px;height: 100px;"></mat-spinner>
+  </div>
+</ng-container>
+
+<ng-container *ngIf="videoData!=undefined">
+  <div style="display: flex;flex-wrap: wrap;">
+    <div class="containerVideoDiapositiva" *ngIf="tipo==3">
+      <div class="containerVideo" ondrop="true" ondragover="true"
+        [ngStyle]="{'width':whidth>0?'calc(45% - '+whidth+'px)':'calc(45% + '+whidth*-1+'px)'}">
+
+        <video controls #video (timeupdate)="setCurrentTime($event)" id="bc-video" [attr.data-player]="'rEr9tuuTvS'"
+          [attr.data-video-id]="'6306336229112'" [attr.data-account]="6267108632001" data-embed="default"
+          data-application-id class="video-js" [ngClass]="{'medioVideo':tipo==3}">
+        </video>
+      </div>
+      <div class="iconResise" (drag)="resise($event)" onmousedown="down=true"  draggable="true"><img
+          src="../../../../../../assets/icons/icono-delizar.png" alt="">
+      </div>
+      <div class="containerDiapitiva" ondrop="true" ondragover="true"
+        [ngStyle]="{'width':whidth<=0?'calc(45% - '+whidth*-1+'px)':'calc(45% + '+whidth+'px)'}">
+
+        <img *ngIf="tipo==3 && urlDiapo!=''" [src]="urlDiapo" alt="" style="width: 100%;height: auto;">
+      </div>
+    </div>
+
+  </div>
+</ng-container>

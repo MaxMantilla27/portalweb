@@ -24,6 +24,7 @@ import { SesionesComponent } from './sesiones/sesiones.component';
 import { ModuloSilaboComponent } from './modulo/modulo-silabo/modulo-silabo.component';
 import { ModuloForoComponent } from './modulo/modulo-foro/modulo-foro.component';
 import { ModuloForoInsertComponent } from './modulo/modulo-foro/modulo-foro-insert/modulo-foro-insert/modulo-foro-insert.component';
+import { SesionVideoComponent } from './sesiones/sesion-video/sesion-video.component';
 
 
 @NgModule({
@@ -46,6 +47,7 @@ import { ModuloForoInsertComponent } from './modulo/modulo-foro/modulo-foro-inse
     ModuloSilaboComponent,
     ModuloForoComponent,
     ModuloForoInsertComponent,
+    SesionVideoComponent,
 
   ],
   imports: [

@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { AvatarService } from 'src/app/Core/Shared/Services/Avatar/avatar.service';
 import { ForoCursoService } from 'src/app/Core/Shared/Services/ForoCurso/foro-curso.service';
 
@@ -7,7 +7,7 @@ import { ForoCursoService } from 'src/app/Core/Shared/Services/ForoCurso/foro-cu
   templateUrl: './modulo-foro.component.html',
   styleUrls: ['./modulo-foro.component.scss']
 })
-export class ModuloForoComponent implements OnInit {
+export class ModuloForoComponent implements OnInit,OnChanges {
 
   constructor(
     private _ForoCursoService:ForoCursoService,
@@ -19,8 +19,14 @@ export class ModuloForoComponent implements OnInit {
   public foro:Array<any>=[]
   public paginacion=[1]
   public pagina=1;
+  public paginaCeil=Math.ceil(this.pagina/5)
   ngOnInit(): void {
-    this.ObtenerForoCurso();
+  }
+  ngOnChanges(changes: SimpleChanges): void {
+    if(this.IdPgeneral!=0){
+      this.ObtenerForoCurso()
+    }
+
   }
   ObtenerForoCurso(){
     this._ForoCursoService.ObtenerForoCurso(this.IdPgeneral).subscribe({
@@ -37,6 +43,24 @@ export class ModuloForoComponent implements OnInit {
         }
       }
     })
+  }
+  minusPage(){
+    if(this.pagina>1){
+      this.pagina--
+      this.paginaCeil=Math.ceil(this.pagina/5)
+
+    }
+  }
+  plusPage(){
+    if(this.pagina<Math.ceil(this.foro.length/4)){
+
+      this.pagina++
+      this.paginaCeil=Math.ceil(this.pagina/5)
+    }
+  }
+  page(p:number){
+    this.pagina=p
+    this.paginaCeil=Math.ceil(this.pagina/5)
   }
 
 }

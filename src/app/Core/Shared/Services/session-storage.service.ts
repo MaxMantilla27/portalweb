@@ -48,7 +48,8 @@ export class SessionStorageService {
       if(value==undefined || value==null) return '';
       return value;
     }
-    return 'INTC'
+    if(name.toUpperCase()=='ISO_PAIS')return 'INTC';
+    return '';
   }
   SessionDeleteValue(name:string):void{
     if(this.isBrowser){
@@ -61,14 +62,21 @@ export class SessionStorageService {
       sessionStorage.setItem('Estructura',btoa(JSON.stringify(datos)));
     }
   }
+  DeleteEstructura():void{
 
-  getEstructura():Array<any>{
+    if(this.isBrowser){
+      sessionStorage.removeItem('Estructura');
+    }
+  }
+
+
+  getEstructura():any{
 
     if(this.isBrowser){
       var token=sessionStorage.getItem('Estructura');
-      if(token==undefined || token==null) return [];
+      if(token==undefined || token==null) return null;
       return JSON.parse(atob(token));
     }
-    return [];
+    return null;
   }
 }

@@ -165,7 +165,7 @@
   }
 
   .iconSesiones {
-    background-image: url("../../../assets/imagenes/mexico-05.svg") !important;
+    background-image: url("../../../assets/icons/sesiones-azul-43.svg") !important;
   }
   .iconWebinars {
     background-image: url("../../../assets/icons/webinar-azul-03.svg") !important;
@@ -189,24 +189,31 @@
 .ActiveChil {
   color: #0684f3 !important;
   font-weight: 600;
-  text-decoration: underline;
-  .iconIndicaciones {
-    background-image: url("../../../assets/imagenes/mexico-05.svg") !important;
+
+  .titleMatr{
+    color: #0684f3 !important;
+    text-decoration: underline;
   }
-  .iconModulos {
-    background-image: url("../../../assets/imagenes/mexico-05.svg") !important;
+  .iconSesiones {
+    background-image: url("../../../assets/icons/sesiones-azul-43.svg") !important;
   }
-  .iconProyectos {
-    background-image: url("../../../assets/imagenes/mexico-05.svg") !important;
+  .iconWebinars {
+    background-image: url("../../../assets/icons/webinar-azul-03.svg") !important;
   }
-  .iconCertificados {
-    background-image: url("../../../assets/imagenes/mexico-05.svg") !important;
+  .iconSilabo {
+    background-image: url("../../../assets/icons/silabo-azul-04.svg") !important;
   }
-  .iconTramites {
-    background-image: url("../../../assets/imagenes/mexico-05.svg") !important;
+  .iconRecursos {
+    background-image: url("../../../assets/icons/recursos-azul-05.svg") !important;
   }
-  .iconBeneficios {
-    background-image: url("../../../assets/imagenes/mexico-05.svg") !important;
+  .iconForo {
+    background-image: url("../../../assets/icons/foro-azul-06.svg") !important;
+  }
+  .iconCalificaciones {
+    background-image: url("../../../assets/icons/calificaciones-azul-07.svg") !important;
+  }
+  .iconAyuda {
+    background-image: url("../../../assets/icons/ayuda-azul-08.svg") !important;
   }
 }
 .subContent {

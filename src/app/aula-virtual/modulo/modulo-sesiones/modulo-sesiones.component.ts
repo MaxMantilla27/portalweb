@@ -9,8 +9,10 @@ export class ModuloSesionesComponent implements OnInit {
 
   constructor() { }
   @Input() Capitulo='';
-  @Input() estructuraCapitulo:Array<any>=[];
+  @Input() estructuraCapitulo:any;
+  @Input() idModalidad:number=2
   ngOnInit(): void {
+    console.log(this.estructuraCapitulo)
   }
 
 }
