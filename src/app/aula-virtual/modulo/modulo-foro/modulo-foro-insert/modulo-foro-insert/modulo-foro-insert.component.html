@@ -1,5 +1,5 @@
 <div class="col-12 col-md-12 col-lg-12">
-    <form (submit)="InsertarForo()" [formGroup]="userForm">
+    <form [formGroup]="userForm">
         <div class="container">
             <div class="col-12 col-md-6 col-lg-6 fieldOld">
                 <div class="titleForo">Título del tema: </div>
@@ -14,7 +14,7 @@
                 </mat-form-field>
                 <div class="row" style="margin-top: 20px;">
                   <div class="col-6 col-md-6 col-lg-6">
-                      <app-default-button [confs]="{color:'primary',titulo:'Cerrar'}" [disabled]="!userForm.valid"
+                      <app-default-button [confs]="{color:'primary',titulo:'Cerrar'}"
                       [style]="'width: 100%;margin-top: 20px;'"(ButtoclClick)="InsertarForo()"></app-default-button>
                     </div>
                     <div class="col-6 col-md-6 col-lg-6">

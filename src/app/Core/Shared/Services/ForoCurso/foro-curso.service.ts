@@ -15,7 +15,7 @@ export class ForoCursoService {
   }
   public InsertarForoCursoPorUsuario(Json:ForoDTO):Observable<any>{
     console.log(Json);
-    return this.http.post<any>(this.urlBase+'/ObtenerForoCurso',Json);
+    return this.http.post<any>(this.urlBase+'/InsertarForoCursoPorUsuario',Json);
   }
   public ContenidoPreguntaForoCurso(IdPregunta:number):Observable<any>{
     return this.http.get<any>(this.urlBase+'/ContenidoPreguntaForoCurso?IdPregunta='+IdPregunta);
