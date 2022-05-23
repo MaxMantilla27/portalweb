@@ -1,0 +1,29 @@
+<div class="col-12 col-md-12 col-lg-12">
+    <form (submit)="InsertarForo()" [formGroup]="userForm">
+        <div class="container">
+            <div class="col-12 col-md-6 col-lg-6 fieldOld">
+                <div class="titleForo">Título del tema: </div>
+                <mat-form-field appearance="outline" [floatLabel]="'always'">
+                  <input type="text" placeholder="Título del tema" formControlName="Titulo" matInput />
+                  <mat-error *ngIf="userForm.invalid">Debe ingresar el título del tema</mat-error>
+                </mat-form-field>
+                <div class="titleForo">Mensaje: </div>
+                <mat-form-field appearance="outline" [floatLabel]="'always'">
+                  <input type="text" placeholder="Contenido" formControlName="Contenido" matInput />
+                  <mat-error *ngIf="userForm.invalid">Debe ingresar el contenido de la pregunta para el foro</mat-error>
+                </mat-form-field>
+                <div class="row" style="margin-top: 20px;">
+                  <div class="col-6 col-md-6 col-lg-6">
+                      <app-default-button [confs]="{color:'primary',titulo:'Cerrar'}" [disabled]="!userForm.valid"
+                      [style]="'width: 100%;margin-top: 20px;'"(ButtoclClick)="InsertarForo()"></app-default-button>
+                    </div>
+                    <div class="col-6 col-md-6 col-lg-6">
+                      <app-default-button [confs]="{color:'primary',titulo:'Publica Tema'}" [disabled]="!userForm.valid"
+                      [style]="'width: 100%;margin-top: 20px;'"(ButtoclClick)="InsertarForo()"></app-default-button>
+                    </div>
+                </div>
+          </div>
+          </div>
+    </form>
+</div>
+

@@ -23,6 +23,7 @@ import { ModuloSesionesComponent } from './modulo/modulo-sesiones/modulo-sesione
 import { SesionesComponent } from './sesiones/sesiones.component';
 import { ModuloSilaboComponent } from './modulo/modulo-silabo/modulo-silabo.component';
 import { ModuloForoComponent } from './modulo/modulo-foro/modulo-foro.component';
+import { ModuloForoInsertComponent } from './modulo/modulo-foro/modulo-foro-insert/modulo-foro-insert/modulo-foro-insert.component';
 
 
 @NgModule({
@@ -44,6 +45,7 @@ import { ModuloForoComponent } from './modulo/modulo-foro/modulo-foro.component'
     SesionesComponent,
     ModuloSilaboComponent,
     ModuloForoComponent,
+    ModuloForoInsertComponent,
 
   ],
   imports: [
