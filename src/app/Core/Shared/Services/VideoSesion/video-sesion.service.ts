@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { ParametrosVideoSesionDTO } from 'src/app/Core/Models/EstructuraEspecificaDTO';
+import { ParametrosVideoSesionDTO, RegistroVideoUltimaVisualizacionDTO } from 'src/app/Core/Models/EstructuraEspecificaDTO';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -15,5 +15,8 @@ export class VideoSesionService {
     console.log(Json)
     return this.http.post<any>(this.urlBase+'/ObtenerVideoProgramaCapacitacionSesion',Json);
   }
-
+  public RegistrarUltimaVisualizacionVideo(Json:RegistroVideoUltimaVisualizacionDTO):Observable<any>{
+    console.log(Json)
+    return this.http.post<any>(this.urlBase+'/RegistrarUltimaVisualizacionVideo',Json);
+  }
 }

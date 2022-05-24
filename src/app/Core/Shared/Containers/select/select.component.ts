@@ -1,6 +1,6 @@
-import { Component, EventEmitter, Input, OnInit, Output, SimpleChanges, ViewEncapsulation } from '@angular/core';
+import { AfterViewInit, Component, EventEmitter, Input, OnInit, Output, SimpleChanges, ViewChild, ViewEncapsulation } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { MAT_SELECT_CONFIG } from '@angular/material/select';
+import { MatSelect, MAT_SELECT_CONFIG } from '@angular/material/select';
 import { Basic, BasicUrl, BasicUrlIcon } from 'src/app/Core/Models/BasicDTO';
 
 @Component({
@@ -15,9 +15,25 @@ import { Basic, BasicUrl, BasicUrlIcon } from 'src/app/Core/Models/BasicDTO';
     },
   ],
 })
-export class SelectComponent implements OnInit {
+export class SelectComponent implements OnInit,AfterViewInit {
 
+  @ViewChild('myselsetc') myselsetc!: MatSelect;
   constructor() { }
+  ngAfterViewInit(): void {
+
+    console.log(this.myselsetc)
+    this.myselsetc.openedChange.subscribe((open) => {
+      if (open) {
+        console.log(this.myselsetc.panel.nativeElement.scrollTop)
+
+        this.myselsetc.panel.nativeElement.scrollTop-=50;
+        this.myselsetc.panel.nativeElement.addEventListener(
+          'scroll',
+          (event:any) => (console.log(this.myselsetc.panel.nativeElement.scrollTop))
+        );
+      }
+    });
+  }
   @Input() tipo:number=1;
   @Input() label:string='';
   @Input() data:Array<Basic>=[];

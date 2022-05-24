@@ -1,5 +1,6 @@
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
-import { ParametrosEstructuraEspecificaDTO, ParametrosVideoSesionDTO } from 'src/app/Core/Models/EstructuraEspecificaDTO';
+import { ParametrosCrucigramaVideoSesionDTO, ParametrosEstructuraEspecificaDTO, ParametrosVideoSesionDTO } from 'src/app/Core/Models/EstructuraEspecificaDTO';
+import { CrucigramaService } from 'src/app/Core/Shared/Services/Crucigrama/crucigrama.service';
 import { VideoSesionService } from 'src/app/Core/Shared/Services/VideoSesion/video-sesion.service';
 
 @Component({
@@ -10,7 +11,8 @@ import { VideoSesionService } from 'src/app/Core/Shared/Services/VideoSesion/vid
 export class SesionVideoComponent implements OnInit,OnChanges {
 
   constructor(
-    private _VideoSesionService:VideoSesionService
+    private _VideoSesionService:VideoSesionService,
+    private _CrucigramaService:CrucigramaService
   ) { }
 
   @Input() json: ParametrosEstructuraEspecificaDTO = {
@@ -28,7 +30,15 @@ export class SesionVideoComponent implements OnInit,OnChanges {
   @Input() idCapitulo=0;
   @Input() idSesion=0;
   @Input() charge:boolean|undefined=false;
-  @Input() videoData:any;
+  public videoData:any;
+  @Input() crucigramaData:any;
+  @Input() NombreCapitulo=''
+  public crucigrama:ParametrosCrucigramaVideoSesionDTO={
+    AccesoPrueba:false,
+    IdCapitulo:0,
+    IdPGeneral:0,
+    IdSesion:0
+  }
   public parametros:ParametrosVideoSesionDTO={
     AccesoPrueba:this.json.AccesoPrueba,
     IdCapitulo:this.idCapitulo,
@@ -50,6 +60,12 @@ export class SesionVideoComponent implements OnInit,OnChanges {
       this.parametros.AccesoPrueba=this.json.AccesoPrueba;
       this.parametros.IdMatriculaCabecera=this.json.IdMatriculaCabecera;
       this.parametros.IdPGeneral=this.json.IdPGeneralHijo;
+
+      this.crucigrama.AccesoPrueba=this.json.AccesoPrueba;
+      this.crucigrama.IdCapitulo=this.idCapitulo;
+      this.crucigrama.IdPGeneral=this.json.IdPGeneralHijo;
+      this.crucigrama.IdSesion=this.idSesion;
+      this.ObtenerCrucigramaProgramaCapacitacionSesion()
       this.ObtenerVideoProgramaCapacitacionSesion()
     }
   }
@@ -58,6 +74,14 @@ export class SesionVideoComponent implements OnInit,OnChanges {
       next:x=>{
         console.log(x)
         this.videoData=x;
+      }
+    })
+  }
+  ObtenerCrucigramaProgramaCapacitacionSesion(){
+    this._CrucigramaService.ObtenerCrucigramaProgramaCapacitacionSesion(this.crucigrama).subscribe({
+      next:x=>{
+        console.log(x)
+        this.crucigramaData=x;
       }
     })
   }

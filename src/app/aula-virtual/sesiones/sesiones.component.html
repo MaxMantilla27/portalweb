@@ -63,7 +63,7 @@
                   </ng-template>
                   <div style="padding: 10px 30px">
 
-                      <app-sesion-video [json]="json" [idCapitulo]="item.numeroCapitulo" [charge]="sesion.charge"
+                      <app-sesion-video [json]="json" [idCapitulo]="item.numeroCapitulo" [NombreCapitulo]="item.nombreCapitulo" [charge]="sesion.charge"
                         [idSesion]="sesion.numeroSesion" [nombreSesion]="sesion.nombreSesion"></app-sesion-video>
                   </div>
                 </mat-tab>
@@ -93,7 +93,7 @@
                     <div style="padding: 10px 30px">
 
                       <app-sesion-video [json]="json" [idCapitulo]="item.numeroCapitulo" [charge]="subsesion.charge"
-                        [idSesion]="subsesion.numeroSubSesion" [nombreSesion]="subsesion.nombreSubSesion"></app-sesion-video>
+                        [idSesion]="subsesion.numeroSubSesion" [NombreCapitulo]="item.nombreCapitulo" [nombreSesion]="subsesion.nombreSubSesion"></app-sesion-video>
                     </div>
                   </mat-tab>
                 </ng-container>
