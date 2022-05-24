@@ -19,6 +19,9 @@ export class ModuloForoComponent implements OnInit,OnChanges {
   @Input() IdPEspecificoPadre=0
   @Input() IdPEspecificoHijo=0
   @Input() Capitulo='';
+  public IdForo=0;
+  public NuevoForo =false;
+  public ContenidoForo = false;
   public foro:Array<any>=[]
   public paginacion=[1]
   public pagina=1;
