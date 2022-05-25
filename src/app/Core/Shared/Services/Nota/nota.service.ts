@@ -11,9 +11,9 @@ export class NotaService {
 
   constructor(private http: HttpClient) { }
 
-  public ListadoCriteriosEvaluacionPorCurso(IdMatriculaCabecera:number,Grupo:number):Observable<any>{
+  public ListadoCriteriosEvaluacionPorCurso(IdMatriculaCabecera:number,IdPEspecifico:number,Grupo:number):Observable<any>{
     console.log(IdMatriculaCabecera)
     console.log(Grupo)
-    return this.http.get<any>(this.urlBase+'/ListadoCriteriosEvaluacionPorCurso?IdMatriculaCabecera='+IdMatriculaCabecera+'&Grupo='+Grupo);
+    return this.http.get<any>(this.urlBase+'/ListadoCriteriosEvaluacionPorCurso?IdMatriculaCabecera='+IdMatriculaCabecera+'&IdPEspecifico='+IdPEspecifico+'&Grupo='+Grupo);
   }
 }

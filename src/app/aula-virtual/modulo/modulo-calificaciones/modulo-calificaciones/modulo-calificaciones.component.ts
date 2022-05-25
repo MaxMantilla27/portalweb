@@ -13,9 +13,13 @@ export class ModuloCalificacionesComponent implements OnInit {
   ) { }
 
   @Input() IdMatriculaCabecera=0
+  @Input() IdPEspecifico=0
   @Input() Capitulo=''
+  public criterioPendiente=false;
   public calificacionesCurso:Array<any>=[];
   public calificacionesCursoDetalle:Array<any>=[];
+  public error=false;
+  public mensajeError='';
   public promedio=0;
   public idMatricula=0;
   ngOnInit(): void {
@@ -27,12 +31,14 @@ export class ModuloCalificacionesComponent implements OnInit {
 
   }
   ObtenerCriteriosEvaluacionCurso(){
-    this._NotaService.ListadoCriteriosEvaluacionPorCurso(this.IdMatriculaCabecera,1).subscribe({
+    console.log(this.IdPEspecifico)
+    this._NotaService.ListadoCriteriosEvaluacionPorCurso(this.IdMatriculaCabecera,this.IdPEspecifico,1).subscribe({
       next:x=>{
         this.calificacionesCurso=x;
+        this.error=x.excepcion.excepcionGenerada;
+        this.mensajeError=x.excepcion.descripcionGeneral;
         this.promedio=x.notaCurso;
         this.calificacionesCursoDetalle=x.detalleCalificacion
-        console.log(this.calificacionesCurso)
       }
     })
   }
