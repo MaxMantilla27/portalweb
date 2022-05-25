@@ -43,7 +43,6 @@ export class ModuloForoContenidoComponent implements OnInit {
   ObtenerContenidoForo(){
     this._ForoCursoService.ContenidoPreguntaForoCurso(this.IdPregunta).subscribe({
       next:x=>{
-        console.log(x)
         this.foroContenido=x;
         this.foroContenido.forEach(x=>{
           x.urlAvatar=this._AvatarService.GetUrlImagenAvatar(x.avatar)
@@ -54,7 +53,6 @@ export class ModuloForoContenidoComponent implements OnInit {
   ObtenerRespuestaForo(){
     this._ForoCursoService.PartialRespuestaPregunta(this.IdPgeneral,this.IdPregunta).subscribe({
       next:x=>{
-        console.log(x)
         this.foroRespuesta=x;
         this.foroRespuesta.forEach(x=>{
           x.urlAvatarRespuesta=this._AvatarService.GetUrlImagenAvatar(x.avatar)
@@ -73,7 +71,6 @@ export class ModuloForoContenidoComponent implements OnInit {
 
     this._ForoCursoService.EnviarRegistroRespuestaForo(this.ForoRespuestaEnvio).subscribe({
       next: (x) => {
-        console.log(x);
       },
     });
   }

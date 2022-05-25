@@ -37,7 +37,6 @@ export class ModuloForoComponent implements OnInit,OnChanges {
   ObtenerForoCurso(){
     this._ForoCursoService.ObtenerForoCurso(this.IdPgeneral).subscribe({
       next:x=>{
-        console.log(x)
         this.foro=x
         this.foro.forEach(x=>{
           x.urlAvatar=this._AvatarService.GetUrlImagenAvatar(x.avatar)

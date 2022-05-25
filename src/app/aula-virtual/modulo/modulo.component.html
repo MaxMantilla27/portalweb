@@ -69,7 +69,9 @@
               <div class="titleMatr">Calificaciones</div>
             </div>
           </ng-template>
-          <div style="padding: 10px 30px">Calificaciones</div>
+          <div style="padding: 10px 30px">
+            <app-modulo-calificaciones [Capitulo]="json.NombreCapitulo" [IdMatriculaCabecera]="json.IdMatriculaCabecera"></app-modulo-calificaciones>
+          </div>
         </mat-tab>
         <mat-tab>
           <ng-template mat-tab-label>
