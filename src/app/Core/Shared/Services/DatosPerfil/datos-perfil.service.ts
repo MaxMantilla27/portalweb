@@ -20,4 +20,9 @@ export class DatosPerfilService {
   public RegistroProgramaMatriculadoPorIdMatricula(IdMatriculaCabecera:number):Observable<any>{
     return this.http.get<any>(this.urlBase+'/RegistroProgramaMatriculadoPorIdMatricula?IdMatriculaCabecera='+IdMatriculaCabecera);
   }
+
+  public ListaWebinarProgramaMatriculadoRegistrado(IdMatriculaCabecera:number):Observable<any>{
+    return this.http.get<any>(this.urlBase+'/ListaWebinarProgramaMatriculadoRegistrado?IdMatriculaCabecera='+IdMatriculaCabecera);
+  }
+
 }

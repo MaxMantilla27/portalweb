@@ -14,7 +14,6 @@ export class ForoCursoService {
     return this.http.get<any>(this.urlBase+'/ObtenerForoCurso?IdPGeneral='+IdPGeneral);
   }
   public InsertarForoCursoPorUsuario(Json:ForoDTO):Observable<any>{
-    console.log(Json);
     return this.http.post<any>(this.urlBase+'/InsertarForoCursoPorUsuario',Json);
   }
   public ContenidoPreguntaForoCurso(IdPregunta:number):Observable<any>{
@@ -24,6 +23,6 @@ export class ForoCursoService {
     return this.http.get<any>(this.urlBase+'/PartialRespuestaPregunta?IdPGeneral='+IdPGeneral+'&IdPregunta='+IdPregunta);
   }
   public EnviarRegistroRespuestaForo(Json:ForoRespuestaDTO):Observable<any>{
-    return this.http.post<any>(this.urlBase+'/ObtenerForoCurso',Json);
+    return this.http.post<any>(this.urlBase+'/EnviarRegistroRespuestaForo',Json);
   }
 }

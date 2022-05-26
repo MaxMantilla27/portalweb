@@ -1,0 +1,50 @@
+<div class="cursoTitle">{{Capitulo}}</div>
+<div class="tipoIndicacionTitle col-12 col-md-12 col-lg-12">
+  <img class="ImgIndicacionesContent" src="../../../../assets/icons/star-47.svg">
+  <div>Calificaciones</div>
+</div>
+<div class="CalificacionesEncabezado">
+  Le mostraremos el promedio de las calificaciones que ha obtenido hasta ahora en el desarrollo del curso.
+</div>
+<div class="Calificaciones" style="margin-top: 20px;">
+  <table class="TablaCalificacion">
+    <thead class="TablaCalificacionEncabezado">
+      <tr>
+        <td style="width: 500px;text-align: left;border-radius: 2px;font-weight: bold;"><strong>Criterio de evaluación</strong></td>
+        <td style="width: 250px;text-align: center;border-radius: 2px;font-weight: bold;"><strong>Ponderación</strong></td>
+        <td style="width: 250px;text-align: center;border-radius: 2px;font-weight: bold;"><strong>Calificación</strong></td>
+      </tr>
+    </thead>
+      <tbody class="TablaCalificacionContenido">
+        <ng-container *ngFor="let item of calificacionesCursoDetalle ;let i=index">
+          <tr>
+            <td class="criterio" style="width: 500px;text-align: left;">
+              {{item.criterioEvaluacion}}
+            </td>
+            <td class="criterio" style="width: 250px;text-align: center;">
+              {{item.ponderacion}} %
+            </td>
+            <td class="criterio" style="width: 250px;text-align: center;">
+              <div *ngIf="item.valor==0" criterioPendiente=true>Pendiente</div>
+              <div *ngIf="item.valor!=0">{{item.valor}}</div>
+
+            </td>
+          </tr>
+        </ng-container>
+
+        <tr>
+          <td class="criterio" style="font-weight: bold;width: 500px;text-align: left">
+            Promedio
+          </td>
+          <td class="criterio" style="width: 250px;text-align: center"></td>
+          <td class="criterio" style="width: 250px;text-align: center;">
+            {{promedio}}
+          </td>
+        </tr>
+      </tbody>
+  </table>
+  <div *ngIf="error==true">
+    {{mensajeError}}
+  </div>
+</div>
+

@@ -1,1 +1,68 @@
-<p>modulo-foro-contenido works!</p>
+
+<ng-container *ngFor="let item of foroContenido;let i=index">
+  <div class="foroTitle">Tema: {{item.titulo}}</div>
+  <div class="foroContenido" style="text-align: justify;font-size: 17px;">{{item.contenido}}</div>
+  <div style="display: flex;align-items: center;justify-content: flex-start;margin-top: 20px;">
+    <img [src]="item.urlAvatar" alt="" style="width: 60px; height: 60px;margin-right: 10px;">
+    <div>
+      <div>Por: {{item.usuario}}</div>
+      <div>Fecha: {{item.fecha| date: 'dd/MM/yyyy' }}</div>
+    </div>
+  </div>
+
+  <div class="foroTitleComentario" style="display: flex;align-items: center;width: 90%; margin-left: 10%;height:25px">
+    <div class="col-9" style="display: flex;">
+      <div  style="font-weight: bold; justify-content:left">Comentarios:</div>
+    </div>
+    <div class="col-3" style="display: flex;justify-content: right;">
+      <img src="../../../../assets/icons/respuestas-foro-28.svg" alt="" style="width: 20px; height: 20px;  margin-right: 10px;">
+      <div class="NRespuestas" style="justify-content:end;">{{item.respuestas}} Comentarios</div>
+    </div>
+  </div>
+</ng-container>
+
+<div class="Comentarios"  style="width: 90%; margin-left: 10%;">
+  <ng-container *ngFor="let itemRespuesta of foroRespuesta;let i=index" >
+    <div class="RespuestasForo" style="align-items: center;">
+      <div class="foroContenido" style="text-align: justify;font-size: 17px;">{{itemRespuesta.contenido}}</div>
+      <div style="display: flex;align-items: center;justify-content: flex-start;margin-top: 20px;">
+      <img [src]="itemRespuesta.urlAvatarRespuesta" alt="" style="width: 60px; height: 60px; margin-right: 10px;">
+      <div>
+        <div>Por: {{itemRespuesta.nombres}}</div>
+        <div>Fecha: {{itemRespuesta.fechaCreacion| date: 'dd/MM/yyyy' }}</div>
+      </div>
+    </div>
+    </div>
+  </ng-container>
+</div>
+
+<div class="RegistroComentario" style="width: 90%;  margin-top: 20px; margin-left: 10%;">
+  <ng-container>
+    <div class="foroTitleRespuesta" style="font-weight: bold;">Añade tu comentario: </div>
+    <div class="col-12 col-md-12 col-lg-12">
+      <form [formGroup]="userForm">
+          <div class="container">
+              <div class="col-12 col-md-12 col-lg-12">
+                  <div class="row">
+                    <mat-form-field appearance="outline" [floatLabel]="'always'" style="overflow: auto;">
+                      <input  type="text" formControlName="RespuestaForo" style="height:100px" matInput/>
+                      <mat-error *ngIf="userForm.invalid" >Debe ingresar su comentario en el foro para su envío</mat-error>
+                    </mat-form-field>
+                  </div>
+                  <div class="row" style="margin-top: 20px;">
+                    <div class="col-6 col-md-6 col-lg-6">
+                        <app-default-button onclick="window.history.go(-1)"  [confs]="{color:'primary',titulo:'Cerrar'}"
+                        [style]="'width: 100%;margin-top: 20px;'"></app-default-button>
+                      </div>
+                      <div class="col-6 col-md-6 col-lg-6">
+                        <app-default-button [confs]="{color:'primary',titulo:'Publicar Comentario'}" [disabled]="!userForm.valid"
+                        [style]="'width: 100%;margin-top: 20px;'"(ButtoclClick)="EnviarRespuestaForo()" onclick="window.history.go(-1)"></app-default-button>
+                      </div>
+                  </div>
+            </div>
+            </div>
+      </form>
+  </div>
+  </ng-container>
+
+</div>

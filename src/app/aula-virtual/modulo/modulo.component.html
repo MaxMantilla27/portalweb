@@ -25,10 +25,12 @@
           <ng-template mat-tab-label>
             <div class="contentHeaderM">
               <div class="iconMat iconWebinars"></div>
-              <div class="titleMatr">Webinars</div>
+              <div class="titleMatr">Webinar</div>
             </div>
           </ng-template>
-          <div style="padding: 10px 30px"></div>
+          <div style="padding: 10px 30px">
+            <app-modulo-webinars [Capitulo]="json.NombreCapitulo" [IdMatriculaCabecera]="json.IdMatriculaCabecera"></app-modulo-webinars>
+          </div>
         </mat-tab>
         <mat-tab>
           <ng-template mat-tab-label>
@@ -70,7 +72,9 @@
               <div class="titleMatr">Calificaciones</div>
             </div>
           </ng-template>
-          <div style="padding: 10px 30px">Calificaciones</div>
+          <div style="padding: 10px 30px">
+            <app-modulo-calificaciones [Capitulo]="json.NombreCapitulo" [IdMatriculaCabecera]="json.IdMatriculaCabecera" [IdPEspecifico]="json.IdPEspecificoHijo"></app-modulo-calificaciones>
+          </div>
         </mat-tab>
         <mat-tab>
           <ng-template mat-tab-label>

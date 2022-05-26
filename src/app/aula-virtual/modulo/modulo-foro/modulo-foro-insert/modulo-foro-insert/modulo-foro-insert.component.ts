@@ -22,6 +22,8 @@ export class ModuloForoInsertComponent implements OnInit {
   @Input() IdPgeneral=0;
   @Input() IdPEspecificoPadre=0;
   @Input() IdPEspecificoHijo=0;
+  public NuevoForo =false;
+  public AnadirForo =false;
   public ForoCurso: ForoDTO ={
     idPrincipal:0,
     idCurso: 0,
@@ -31,7 +33,7 @@ export class ModuloForoInsertComponent implements OnInit {
     contenido: ''
   }
   ngOnInit(): void {
-    
+
   }
   InsertarForo(){
     this.ForoCurso.idPrincipal = this.IdPprincipal;

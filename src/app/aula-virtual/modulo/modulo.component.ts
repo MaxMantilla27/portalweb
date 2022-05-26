@@ -47,7 +47,6 @@ export class ModuloComponent implements OnInit {
       next: (x) => {
         this.idMatricula = parseInt(x['IdMatricula']);
         this.idPEspecificoHijo=x['idPEspecificoHijo'];
-        console.log(x['idPEspecificoHijo'])
         this.ObtenerListadoProgramaContenido();
       },
     });
@@ -69,8 +68,6 @@ export class ModuloComponent implements OnInit {
       .ObtenerListadoProgramaContenido(this.idMatricula)
       .subscribe({
         next: (x) => {
-          console.log(x);
-
           x.listaCursoMatriculado.forEach((program:any) => {
             if(this.idPEspecificoHijo==program.idPEspecificoHijo){
               this.json = {
@@ -84,7 +81,6 @@ export class ModuloComponent implements OnInit {
                 NombrePrograma:x.programaGeneral,
                 idModalidad:x.idModalidad
               };
-              console.log(this.json);
               this.migaPan.push({
                 titulo:this.json.NombrePrograma,
                 urlWeb:'/AulaVirtual/MisCursos/'+this.json.IdMatriculaCabecera

@@ -30,4 +30,7 @@ export class ProgramaContenidoService {
     console.log(Json)
     return this.http.post<any>(this.urlBase+'/ObtenerEstructuraEspecificaCurso',Json);
   }
+  public ObtenerCodigoMatriculaAlumno(IdMatriculaCabecera:number):Observable<any>{
+    return this.http.get<any>(this.urlBase+'/ObtenerCodigoMatriculaAlumno?IdMatriculaCabecera='+IdMatriculaCabecera);
+  }
 }

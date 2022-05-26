@@ -1,0 +1,101 @@
+<div class="cursoTitle">{{Capitulo}}</div>
+<div class="row" style="align-items: center;">
+  <div class="tipoIndicacionTitle col-12 col-md-12 col-lg-12">
+    <img class="ImgIndicacionesContent" src="../../../../assets/icons/beneficios-naranja.svg">
+    <div style="font-weight: bold;">Mis Beneficios</div>
+  </div>
+  <div style="text-align: justify;">
+    Para realizar la solicitud registre los datos que les solicitan, esto es necesario para que BSG Institute puedan gestionar sus beneficios ante nuestros partners
+  </div>
+</div>
+<div class="Beneficios">
+  <ng-container *ngFor="let beneficio of Beneficios;let i=index" >
+    <input  type="text" formControlName="IdBeneficio":beneficio.id  matInput/>
+    <div class="row" >
+      <div class="col-md-12">
+        <div class="BeneficioDetalle">
+          <div class="row">
+            <div class="col-md-10">
+              <div class="NombreBeneficio">
+                <div>
+                  {{i+1}}
+                </div>
+                <div>
+                  {{beneficio.nombreBeneficio}}
+                </div>
+              </div>
+            </div>
+            <div class="col-md-2">
+             <ng-container *ngIf="beneficio.idEstadoSolicitud==3">
+              <app-default-button  [confs]="{color:'danger',titulo:'Registrar Datos'}"  [style]="'width: 100%;'"
+              [style]="'margin-bottom: 0px !important;padding:0px 20px'" [icon]="''" (click)="collapse.toggle()" [attr.aria-expanded]="!isCollapsed" >
+              </app-default-button>
+
+             </ng-container>
+             <ng-container *ngIf="beneficio.idEstadoSolicitud==5">
+              <app-default-button  [confs]="{color:'primary',titulo:'Solicitado'}"  [style]="'width: 100%;'"
+              [style]="'margin-bottom: 0px !important;padding:0px 20px'" [icon]="''">
+              </app-default-button>
+             </ng-container>
+            </div>
+          </div>
+          <div #collapse="ngbCollapse" [(ngbCollapse)]="isCollapsed">
+            <form (submit)="EnviarRegistroBeneficio()" [formGroup]="userForm">
+              <div class="row">
+                <div class="col-12 col-md-6 col-lg-6 fieldOld">
+                  <ng-container *ngFor="let datoBeneficio of beneficio.listaDatosAdicionales;let j=index">
+                    <div *ngIf="beneficio.idConfiguracionBeneficioProgramaGeneral==datoBeneficio.idConfiguracionBeneficio">
+                      <div class="col-md-6">
+                        <div *ngIf="datoBeneficio.idDatoAdicional==1">
+                          <p> {{datoBeneficio.campoSolicitado}}</p>
+                          <mat-form-field appearance="outline" [floatLabel]="'always'">
+                            <input type="text" placeholder="Identificador" formControlName="Identificador" matInput />
+                            <mat-error *ngIf="userForm.invalid">Debe ingresar su dentificador</mat-error>
+                          </mat-form-field>
+                        </div>
+                        <div *ngIf="datoBeneficio.idDatoAdicional==2">
+                          <p> {{datoBeneficio.campoSolicitado}}</p>
+                          <mat-form-field appearance="outline" [floatLabel]="'always'">
+                            <input type="text" placeholder="Código" formControlName="Codigo" matInput />
+                            <mat-error *ngIf="userForm.invalid">Debe ingresar su código</mat-error>
+                          </mat-form-field>
+                        </div>
+                        <div *ngIf="datoBeneficio.idDatoAdicional==3">
+                          <p> {{datoBeneficio.campoSolicitado}}</p>
+                          <mat-form-field appearance="outline" [floatLabel]="'always'">
+                            <input type="text" placeholder="Usuario" formControlName="Usuario" matInput />
+                            <mat-error *ngIf="userForm.invalid">Debe ingresar su usuario</mat-error>
+                          </mat-form-field>
+                        </div>
+                        <div *ngIf="datoBeneficio.idDatoAdicional==5">
+                          <p> {{datoBeneficio.campoSolicitado}}</p>
+                          <mat-form-field appearance="outline" [floatLabel]="'always'">
+                            <input type="text" placeholder="Clave" formControlName="Clave" matInput />
+                            <mat-error *ngIf="userForm.invalid">Debe ingresar su clave</mat-error>
+                          </mat-form-field>
+                        </div>
+                        <div *ngIf="datoBeneficio.idDatoAdicional==6" >
+                          <p> Correo Asociado</p>
+                          <mat-form-field appearance="outline" [floatLabel]="'always'">
+                            <input type="text" placeholder="Correo asociado" formControlName="CorreoAsociado" matInput />
+                            <mat-error *ngIf="userForm.invalid">Debe ingresar su correo asociado</mat-error>
+                          </mat-form-field>
+                        </div>
+
+                      </div>
+
+                    </div>
+
+                  </ng-container>
+                  <app-default-button [confs]="{color:'primary',titulo:'EnviarDatos'}" [disabled]="!userForm.valid"
+                                  [style]="'width: 100%;margin-top: 20px;'"(ButtoclClick)="EnviarRegistroBeneficio()" ></app-default-button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+
+</div>
