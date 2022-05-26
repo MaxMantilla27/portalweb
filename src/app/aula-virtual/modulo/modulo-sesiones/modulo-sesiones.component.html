@@ -123,7 +123,7 @@
       <ng-container *ngIf="item.registroEstructuraCursoTarea!=undefined && item.registroEstructuraCursoTarea!=null">
         <ng-container *ngFor="let Tarea of item.registroEstructuraCursoTarea">
           <div class="TareaYEncuesta">
-            <div><i class="material-icons" style="color:#fe7112 ;margin-right: 20px;">check_circle</i>{{Tarea.tarea}}
+            <div [routerLink]="'2/'+Tarea.numeroCapitulo+'/'+Tarea.idTarea"><i class="material-icons" style="color:#fe7112 ;margin-right: 20px;">check_circle</i>{{Tarea.tarea}}
             </div>
           </div>
         </ng-container>

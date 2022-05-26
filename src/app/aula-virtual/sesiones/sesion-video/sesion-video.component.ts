@@ -85,4 +85,11 @@ export class SesionVideoComponent implements OnInit,OnChanges {
       }
     })
   }
+  redondearAbajo(e:number,div:number){
+    var r=Math.floor(e/div)
+    if(r<10){
+      return '0'+r
+    }
+    return r
+  }
 }

@@ -1,4 +1,7 @@
 <div class="contentIndicacionesContent">
-  <img class="ImgIndicacionesContent" [src]="'../../../../assets/imagenes/'+imgUrl"  alt="" *ngIf="imgUrl!=''">
+  <div style="margin-bottom: 20px !important;
+  background: #ff7012;padding: 30px;">
+    <img class="ImgIndicacionesContent" [src]="'../../../../assets/icons/'+imgUrl"  alt="" *ngIf="imgUrl!=''" >
+  </div>
   <div class="TitleIndicacionesContent" (click)="ButtoclClick.emit()">{{title}}</div>
 </div>

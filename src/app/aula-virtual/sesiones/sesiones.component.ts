@@ -15,7 +15,7 @@ export class SesionesComponent implements OnInit {
   constructor(
     private _ActivatedRoute: ActivatedRoute,
     private _ProgramaContenidoService: ProgramaContenidoService,
-    private _SessionStorageService: SessionStorageService,
+    private _SessionStorageService: SessionStorageService
   ) {}
 
   tabLoadTimes: Date[] = [];
@@ -133,16 +133,24 @@ export class SesionesComponent implements OnInit {
   ) {
     this.tipo = tipo;
     this.idSesion = sesion;
-    if (indexSubsesion == -1) {
+    if(tipo==1){
+
+      if (indexSubsesion == -1) {
+        this.estructuraCapitulo.registroEstructuraCursoCapitulo[
+          index
+        ].registroEstructuraCursoSesion[indexSesion].charge = true;
+      } else {
+        this.estructuraCapitulo.registroEstructuraCursoCapitulo[
+          index
+        ].registroEstructuraCursoSesion[
+          indexSesion
+        ].registroEstructuraCursoSubSesion[indexSubsesion].charge = true;
+      }
+    }
+    if(tipo==2){
       this.estructuraCapitulo.registroEstructuraCursoCapitulo[
         index
-      ].registroEstructuraCursoSesion[indexSesion].charge = true;
-    } else {
-      this.estructuraCapitulo.registroEstructuraCursoCapitulo[
-        index
-      ].registroEstructuraCursoSesion[
-        indexSesion
-      ].registroEstructuraCursoSubSesion[indexSubsesion].charge = true;
+      ].registroEstructuraCursoTarea[indexSesion].charge=true
     }
   }
   changeSesion(index: number, sesionIndex: number) {
@@ -202,14 +210,15 @@ export class SesionesComponent implements OnInit {
   OrdenarEstructura() {
     var sesion = '';
     var c = 0;
-    var s = 1;
-    var ss = 1;
+    var s = 0;
+    var ss = 0;
+    var t = 0;
     this.estructuraCapitulo.registroEstructuraCursoCapitulo.forEach(
       (x: any) => {
         x.opened = false;
         if (x.numeroCapitulo == this.idcapitulo) {
           x.opened = true;
-          this.tabIndex = c;
+          this.tabIndex++;
           this.migaPan.push({
             titulo: 'Capitulo ' + x.numeroCapitulo + ': ' + x.nombreCapitulo,
             urlWeb:
@@ -229,16 +238,18 @@ export class SesionesComponent implements OnInit {
             } else {
               x.registroEstructuraCursoEncuesta.forEach((enc: any) => {
                 if (enc.nombreEncuesta == 'Encuesta Inicial') {
+                  console.log(x.registroEstructuraCursoEncuesta)
                   this.tabIndex++;
                 }
               });
             }
           }
-          if (x.registroEstructuraCursoSesion != null && this.tipo == 1) {
+          if (x.registroEstructuraCursoSesion != null) {
             x.registroEstructuraCursoSesion.forEach((sess: any) => {
+              s++;
               if (this.estructuraCapitulo.contineSubSesion == false) {
                 sess.charge = false;
-                if (sess.numeroSesion == this.idSesion) {
+                if (sess.numeroSesion == this.idSesion && this.tipo == 1) {
                   sess.charge = true;
                   this.tabIndex += s;
                   this.migaPan.push({
@@ -262,8 +273,12 @@ export class SesionesComponent implements OnInit {
                 if (sess.registroEstructuraCursoSubSesion != null) {
                   sess.registroEstructuraCursoSubSesion.forEach(
                     (subSes: any) => {
+                      ss++;
                       subSes.charge = false;
-                      if (subSes.numeroSubSesion == this.idSesion) {
+                      if (
+                        subSes.numeroSubSesion == this.idSesion &&
+                        this.tipo == 1
+                      ) {
                         subSes.charge = true;
                         sess.opened = true;
                         this.tabIndex += ss + s;
@@ -286,18 +301,81 @@ export class SesionesComponent implements OnInit {
                             this.idSesion,
                         });
                       }
-                      ss++;
                     }
                   );
                 }
               }
-              s++;
             });
+          }
+          console.log(ss + '-' + s);
+          if (x.registroEstructuraCursoTarea != null) {
+            if (this.tipo == 2) {
+              x.registroEstructuraCursoTarea.forEach((tarea: any) => {
+                t++;
+                tarea.charge = false;
+                if (tarea.idTarea == this.idSesion) {
+                  tarea.charge = true;
+                  this.tabIndex += ss + s + t;
+                  this.migaPan.push({
+                    titulo: tarea.tarea,
+                    urlWeb:
+                      '/AulaVirtual/MisCursos/' +
+                      this.json.IdMatriculaCabecera +
+                      '/' +
+                      this.idPEspecificoHijo +
+                      '/' +
+                      this.tipo +
+                      '/' +
+                      this.idcapitulo +
+                      '/' +
+                      this.idSesion,
+                  });
+                }
+              });
+            }
+          }
+        } else {
+          if (x.numeroCapitulo < this.idcapitulo) {
+            this.tabIndex++;
+            if (x.registroEstructuraCursoEncuesta != null) {
+              x.registroEstructuraCursoEncuesta.forEach((enc: any) => {
+                this.tabIndex++;
+              });
+            }
+            if (x.registroEstructuraCursoSesion != null) {
+              x.registroEstructuraCursoSesion.forEach((sess: any) => {
+                sess.opened = false;
+                if (this.estructuraCapitulo.contineSubSesion == true) {
+                  if (sess.registroEstructuraCursoSubSesion != null) {
+                    sess.registroEstructuraCursoSubSesion.forEach(
+                      (subSes: any) => {
+                        this.tabIndex++;
+                      }
+                    );
+                  }
+                }
+                this.tabIndex++;
+              });
+            }
+            if (x.registroEstructuraCursoTarea != null) {
+              x.registroEstructuraCursoTarea.forEach((tarea: any) => {
+                this.tabIndex++;
+              });
+            }
+          }
+          if(x.numeroCapitulo > this.idcapitulo){
+            if (x.registroEstructuraCursoSesion != null) {
+              x.registroEstructuraCursoSesion.forEach((sess: any) => {
+                sess.opened = false;
+              });
+            }
           }
         }
         c++;
       }
     );
+    this.tabIndex--
+    console.log(this.tabIndex);
   }
   tabChanged(tabChangeEvent: MatTabChangeEvent): void {
     // console.log('tabChangeEvent => ', tabChangeEvent);

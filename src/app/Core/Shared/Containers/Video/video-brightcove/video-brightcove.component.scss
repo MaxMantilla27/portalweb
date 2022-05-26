@@ -41,4 +41,66 @@
     display: flex;
     align-items: center;
   }
+  .preguntaInteractiva{
+    background: white;
+    padding: 0px;
+    .headerPregunta{
+      background: #17a2b8;
+      color: white;
+      text-align: center;
+      width: 100%;
+      padding: 15px;
+      font-size: 20px;
+    }
+    .contentPregunta{
+      min-width: 100px;
+      padding: 20px;
+      .pregunta{
+        font-size: 25px;
+        font-weight: 600;
+        margin: 20px 0px;
+      }
+      .respuestaLista{
+        display: flex;
+        flex-direction: column;
+        padding: 0px 30px;
+        .respuesta{
+          display: flex;
+          align-items: center;
+          justify-content: flex-start;
+          padding: 5px 0px;
+          .material-icons{
+            margin-right: 10px;
+            cursor: pointer;
+          }
+        }
+      }
+    }
+    .footerPregunta{
+      border-top: solid 1px rgb(162, 162, 162);
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      padding: 20px
+    }
+  }
+}
+.fieldPreguntasI .mat-form-field.mat-form-field-appearance-outline > div.mat-form-field-wrapper > div.mat-form-field-flex > div.mat-form-field-infix  { padding: 0.4em 0px }
+.fieldPreguntasI .mat-form-field.mat-form-field-appearance-outline > div.mat-form-field-wrapper > div.mat-form-field-flex > div.mat-form-field-infix > span.mat-form-field-label-wrapper { top: -1.5em; }
+
+.fieldPreguntasI .mat-form-field-appearance-outline.mat-form-field-can-float.mat-form-field-should-float .mat-form-field-label {
+    transform: translateY(-1.1em) scale(.75);
+    width: 133.33333%;
+}
+.fieldPreguntasI .mat-form-field.mat-form-field-appearance-outline > div.mat-form-field-wrapper > div.mat-form-field-flex > .mat-form-field-outline{
+
+  .mat-form-field-outline-start{
+    background-color: var(--main-bg-color);
+  }
+  .mat-form-field-outline-gap{
+    background-color: var(--main-bg-color);
+  }
+  .mat-form-field-outline-end {
+    background-color: var(--main-bg-color);
+  }
 }

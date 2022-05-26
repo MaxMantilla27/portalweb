@@ -68,6 +68,7 @@ import { SnackBarServiceService } from './Services/SnackBarService/snack-bar-ser
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { SafePipe } from './Pipes/safe.pipe';
 import { CloudflareStreamModule } from '@cloudflare/stream-angular';
+import { MaterialAdicionalService } from './Services/MaterialAdicional/material-adicional.service';
 
 
 
@@ -200,7 +201,8 @@ import { CloudflareStreamModule } from '@cloudflare/stream-angular';
     ProgramaContenidoService,
     ForoCursoService,
     CrucigramaService,
-    SnackBarServiceService
+    SnackBarServiceService,
+    MaterialAdicionalService
   ],
 })
 export class SharedModule {

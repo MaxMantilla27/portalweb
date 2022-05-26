@@ -102,16 +102,16 @@
             <!-- tareas -->
             <ng-container
               *ngIf="item.registroEstructuraCursoTarea!=undefined && item.registroEstructuraCursoTarea!=null">
-              <ng-container *ngFor="let tarea of item.registroEstructuraCursoTarea">
+              <ng-container *ngFor="let tarea of item.registroEstructuraCursoTarea;let t=index">
 
                 <mat-tab>
                   <ng-template mat-tab-label>
-                    <div class="contentHeaderM estructuraSubCapitulos" [ngClass]="{'hidetab':item.opened==false}">
+                    <div class="contentHeaderM estructuraSubCapitulos" (click)="changeTab(2,0,i,t,0)" [ngClass]="{'hidetab':item.opened==false}">
                       <div class="titleMatr">{{tarea.tarea}}</div>
                     </div>
                   </ng-template>
                   <div style="padding: 10px 30px">
-                      Content 1 - Loaded: {{getTimeLoaded(1) | date:'medium'}}
+                      <app-sesion-tarea [json]="json" [idCapitulo]="item.numeroCapitulo" [NombreCapitulo]="item.nombreCapitulo" [idtarea]="tarea.idTarea" [charge]="tarea.charge"></app-sesion-tarea>
                   </div>
                 </mat-tab>
               </ng-container>
