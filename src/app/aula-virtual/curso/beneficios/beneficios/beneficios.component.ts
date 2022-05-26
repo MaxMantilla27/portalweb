@@ -20,7 +20,7 @@ export class BeneficiosComponent implements OnInit {
   @Input() Capitulo='';
   @Input() IdMatricula=0;
   public BeneficioIngresado=false;
-  public isCollapsed=true;
+  public BeneficioPendiente=false;
   public CodigoMatricula='';
   public IdBeneficio=0;
   public IdBeneficioDetalle=0;
