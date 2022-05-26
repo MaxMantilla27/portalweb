@@ -17,3 +17,29 @@
   font-size: 18px;
   font-weight: 600;
 }
+.EncabezadoBeneficio{
+  border-bottom: 2px solid #cacaca;
+  font-size: 17px;
+  margin: 25px 0px;
+  display: flex;
+}
+.NumeroBeneficio{
+  margin-right:20px;
+  text-align: center;
+  height: 30px;
+  width: 30px;
+  border-radius: 50%;
+  background: #F4F4F4;
+}
+.IndicacionBeneficio{
+  display: flex;
+  justify-content: flex-start;
+  background: #fff8f0;
+  padding: 5px 10px;
+  margin-bottom: 20px;
+  border: solid 1px #fff4e8;
+  align-items: center;
+  margin-top: 20px;
+  height: 50px;
+}
+

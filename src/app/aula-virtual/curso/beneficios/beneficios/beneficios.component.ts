@@ -1,5 +1,5 @@
 import { Component, Input, OnInit, SimpleChanges } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { DatoAdicionalBeneficioDTO, DetallesDatoAdicionalDTO } from 'src/app/Core/Models/BeneficiosDTO';
 import { BeneficioService } from 'src/app/Core/Shared/Services/Beneficio/beneficio.service';
 import { ProgramaContenidoService } from 'src/app/Core/Shared/Services/ProgramaContenido/programa-contenido.service';
@@ -10,25 +10,24 @@ import { ProgramaContenidoService } from 'src/app/Core/Shared/Services/ProgramaC
   styleUrls: ['./beneficios.component.scss']
 })
 export class BeneficiosComponent implements OnInit {
-  public userForm: FormGroup = new FormGroup({});
+
   constructor(
     private fb: FormBuilder,
     private _BeneficiosService: BeneficioService,
     private _ProgramaContenidoService: ProgramaContenidoService,
-  ) {this.userForm =fb.group({
-    Identificador: [''],
-    Codigo: [''],
-    Usuario: [''],
-    Clave: [''],
-    CorreoAsociado: [''],
-  }); }
+  ) {
+  }
   @Input() Capitulo='';
   @Input() IdMatricula=0;
+  public BeneficioIngresado=false;
   public isCollapsed=true;
   public CodigoMatricula='';
   public IdBeneficio=0;
   public IdBeneficioDetalle=0;
   public Beneficios:Array<any>=[];
+  public ListaDatosAdicionales:Array<any>=[];
+  public AyudaBeneficio=1;
+
 
   public DetalleBeneficiosEnvio: DatoAdicionalBeneficioDTO={
     id:0,
@@ -56,7 +55,14 @@ export class BeneficiosComponent implements OnInit {
     this._BeneficiosService.ListaBeneficioMatriculaAlumnoActivo(this.IdMatricula).subscribe({
       next:x=>{
         this.Beneficios=x
+        this.Beneficios.forEach((y:any)=>{
+          y.listaDatosAdicionales.forEach((z:any)=>{
+            z.value=''
+            z.valid=true
+          })
+        })
         console.log(this.Beneficios);
+        this.ListaDatosAdicionales=x.listaDatosAdicionales;
       }
     })
   }
@@ -73,13 +79,24 @@ export class BeneficiosComponent implements OnInit {
     this.DatosBeneficiosEnvio.idMatriculaCabeceraBeneficios=this.IdBeneficio;
     this.DatosBeneficiosEnvio.idMatriculaCabecera=this.IdMatricula;
     this.DatosBeneficiosEnvio.codigoMatricula=this.CodigoMatricula;
+
     this.DetalleBeneficiosEnvio.id=this.IdBeneficioDetalle;
-    this.DetalleBeneficiosEnvio.contenido=this.userForm.get('Contenido')?.value;
     this.DatosBeneficiosEnvio.datosAdicionales.push(this.DetalleBeneficiosEnvio);
-    console.log(this.DetalleBeneficiosEnvio.contenido)
+    console.log(this.DetalleBeneficiosEnvio)
     this._BeneficiosService.AgregarDetalleDatosAdicionales(this.DatosBeneficiosEnvio).subscribe({
       next: (x) => {
       },
     })
-}
+    console.log(this.BeneficioIngresado)
+  }
+  RecorrerBeneficio(value:any){
+    console.log(value)
+  }
+  chageRadio(value:number){
+    if(value==0){
+      return 1;
+    }
+    return 0;
+  }
+
 }
