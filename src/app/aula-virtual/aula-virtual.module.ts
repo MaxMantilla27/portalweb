@@ -27,6 +27,8 @@ import { ModuloForoInsertComponent } from './modulo/modulo-foro/modulo-foro-inse
 import { SesionVideoComponent } from './sesiones/sesion-video/sesion-video.component';
 import { ModuloForoContenidoComponent } from './modulo/modulo-foro/modulo-foro-contenido/modulo-foro-contenido.component';
 import { ModuloCalificacionesComponent } from './modulo/modulo-calificaciones/modulo-calificaciones/modulo-calificaciones.component';
+import { BeneficiosComponent } from './curso/beneficios/beneficios/beneficios.component';
+import { ModuloWebinarsComponent } from './modulo/modulo-webinars/modulo-webinars/modulo-webinars.component';
 
 
 @NgModule({
@@ -52,6 +54,8 @@ import { ModuloCalificacionesComponent } from './modulo/modulo-calificaciones/mo
     SesionVideoComponent,
     ModuloForoContenidoComponent,
     ModuloCalificacionesComponent,
+    BeneficiosComponent,
+    ModuloWebinarsComponent,
 
   ],
   imports: [

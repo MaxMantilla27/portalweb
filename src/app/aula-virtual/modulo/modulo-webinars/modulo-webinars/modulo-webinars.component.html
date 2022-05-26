@@ -1,0 +1,68 @@
+<div class="cursoTitle">{{Capitulo}}</div>
+<div class="row" style="align-items: center;">
+  <div class="tipoIndicacionTitle col-12 col-md-12 col-lg-12">
+    <img class="ImgIndicacionesContent" src="../../../../assets/icons/webinar-naranja.svg">
+    <div>Webinar</div>
+  </div>
+  <div>
+    Hola {{NombreAlumno}}, tienes programados los siguientes webinars:
+  </div>
+</div>
+
+<div class="Webinars" style="margin-top: 20px;">
+  <table class="TablaWebinar">
+    <thead class="TablaWebinarEncabezado">
+      <tr>
+        <td style="width: 50px;text-align: left;border-radius: 2px;font-weight: bold;"><strong>N°</strong></td>
+        <td style="width: 250px;text-align: center;border-radius: 2px;font-weight: bold;"><strong>Nombre</strong></td>
+        <td style="width: 150px;text-align: center;border-radius: 2px;font-weight: bold;"><strong>Fecha</strong></td>
+        <td style="width: 150px;text-align: center;border-radius: 2px;font-weight: bold;"><strong>Hora</strong></td>
+        <td style="width: 150px;text-align: center;border-radius: 2px;font-weight: bold;"><strong>Estado</strong></td>
+        <td style="width: 150px;text-align: center;border-radius: 2px;font-weight: bold;"><strong></strong></td>
+      </tr>
+    </thead>
+      <tbody class="TablaCalificacionContenido">
+        <ng-container *ngFor="let item of DetallesWebinar ;let i=index">
+          <tr>
+            <td class="webinar" style="width: 50px;text-align: left;">
+              {{i+1}}
+            </td>
+            <td class="webinar" style="width: 250px;text-align: center;">
+              {{item.nombreWebinar}}
+            </td>
+            <td class="webinar" style="width: 200px;text-align: center;">
+              {{item.fechaHoraInicio| date: 'dd/MM/yyyy'}}
+            </td>
+            <td class="webinar" style="width: 200px;text-align: center;">
+              {{item.fechaHoraInicio| date: 'HH/mm/ss'}}
+            </td>
+            <td class="webinar" style="width: 200px;text-align: center;">
+              <div *ngIf="item.esWebinarConfirmado==false">Pendiente
+              </div>
+              <div *ngIf="item.esWebinarConfirmado!=false">Confirmado
+                <img class="ImgIndicacionesContent" src="../../../../assets/icons/positivo-hecho-20.svg">
+              </div>
+            </td>
+            <td class="webinar" style="width: 200px;text-align: center;">
+              <app-default-button [confs]="{color:'primary',titulo:'Ingresar'}" [disabled]="item.esWebinarConfirmado==false"
+              [style]="'width: 100%;margin-top: 20px;'" [ruta]="item.urlWebex">
+              </app-default-button>
+            </td>
+          </tr>
+        </ng-container>
+
+        <!-- <tr>
+          <td class="criterio" style="font-weight: bold;width: 500px;text-align: left">
+            Promedio
+          </td>
+          <td class="criterio" style="width: 250px;text-align: center"></td>
+          <td class="criterio" style="width: 250px;text-align: center;">
+            {{promedio}}
+          </td>
+        </tr> -->
+      </tbody>
+  </table>
+  <!-- <div *ngIf="error==true">
+    {{mensajeError}}
+  </div> -->
+</div>

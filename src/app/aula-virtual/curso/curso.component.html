@@ -150,7 +150,9 @@
               <div class="titleMatr">Mis Beneficios</div>
             </div>
           </ng-template>
-          <div style="padding: 10px 30px;">Beneficios</div>
+          <div style="padding: 10px 30px;">
+            <app-beneficios [IdMatricula]="idMatricula" [Capitulo]="programEstructura.programaGeneral"> </app-beneficios>
+          </div>
         </mat-tab>
       </mat-tab-group>
     </div>

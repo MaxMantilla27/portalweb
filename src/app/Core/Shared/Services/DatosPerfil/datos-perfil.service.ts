@@ -14,4 +14,9 @@ export class DatosPerfilService {
   public DatosPerfil():Observable<any>{
     return this.http.get<any>(this.urlBase+'/DatosPerfil');
   }
+
+  public ListaWebinarProgramaMatriculadoRegistrado(IdMatriculaCabecera:number):Observable<any>{
+    return this.http.get<any>(this.urlBase+'/ListaWebinarProgramaMatriculadoRegistrado?IdMatriculaCabecera='+IdMatriculaCabecera);
+  }
+
 }
