@@ -10,10 +10,41 @@
   </div>
   <div class="">
 
-    <app-crucigrama (ButtoclClick)="crucigramaData.pendiente=false" *ngIf="crucigramaData!=undefined && crucigramaData.pendiente==true && crucigramaData.existeCrucigrama==true" [json]="json" [Crucigrama]="crucigramaData"></app-crucigrama>
+    <app-crucigrama (ButtoclClick)="crucigramaData.pendiente=false"
+      *ngIf="crucigramaData!=undefined && crucigramaData.pendiente==true && crucigramaData.existeCrucigrama==true"
+      [json]="json" [Crucigrama]="crucigramaData"></app-crucigrama>
 
-    <ng-container  *ngIf="crucigramaData==undefined || crucigramaData.existeCrucigrama==false || crucigramaData.pendiente==false || crucigramaData.crucigramaDetalle">
-      <app-video-brightcove *ngIf="charge==true" [json]="json" [idCapitulo]="idCapitulo" [idSesion]="idSesion" [videoData]="videoData"></app-video-brightcove>
+    <ng-container
+      *ngIf="crucigramaData==undefined || crucigramaData.existeCrucigrama==false || crucigramaData.pendiente==false || crucigramaData.crucigramaDetalle">
+      <app-video-brightcove *ngIf="charge==true" [json]="json" [idCapitulo]="idCapitulo" [idSesion]="idSesion"
+        [videoData]="videoData"></app-video-brightcove>
+      <div *ngIf="videoData!=undefined" style="    margin: 30px 0px;display: flex;flex-direction: column;">
+        <div style="display: flex;justify-content: flex-start;align-items: center;    margin-bottom: 10px;">
+          <div style="background-color: #f3f5ff;margin-right: 10px;padding: 5px;display: flex;">
+
+            <img style="width: 15px;height: auto;" src="../../../../assets/icons/duracion-33.svg"
+            alt="">
+          </div>
+          <strong style="margin-right: 10px">Duración:</strong>
+          <div *ngIf="videoData.tiempoTotalVideo<3600" style="color: #949494;">
+            {{redondearAbajo(videoData.tiempoTotalVideo,60)}}:{{(videoData.tiempoTotalVideo%60) | number:'1.0-0'}}</div>
+          <div *ngIf="videoData.tiempoTotalVideo>=3600" style="color: #949494;">
+            {{redondearAbajo(videoData.tiempoTotalVideo,3600)}}:{{redondearAbajo((videoData.tiempoTotalVideo-3600),60)}}:{{(videoData.tiempoTotalVideo%60)
+            | number:'1.0-0'}} </div>
+            <span style="color: #949494;">&nbsp;min</span>
+        </div>
+
+        <div style="display: flex;justify-content: flex-start;align-items: center;">
+          <div style="background-color: #f3f5ff;margin-right: 10px;padding: 5px;display: flex;">
+
+            <img style="width: 15px;height: auto;" src="../../../../assets/icons/descarga-36.svg"
+            alt="">
+          </div>
+          <strong style="margin-right: 10px">Diapositivas:</strong>
+          <a target="_blank" style="color: #949494;text-decoration: none;"
+          [href]="'https://repositorioweb.blob.core.windows.net/repositorioweb/aulavirtual/documento-cursos/AulaVirtual/'+videoData.objetoConfigurado.archivo" >Descarga el material de esta sesión</a>
+        </div>
+      </div>
     </ng-container>
 
   </div>

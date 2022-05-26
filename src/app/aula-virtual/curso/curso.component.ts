@@ -6,6 +6,7 @@ import {
   CursoPadreDTO,
   ProgresoAlumnoProgramaAulaVirtualDTO,
 } from 'src/app/Core/Models/ListadoProgramaContenidoDTO';
+import { DatosPerfilService } from 'src/app/Core/Shared/Services/DatosPerfil/datos-perfil.service';
 import { HelperService } from 'src/app/Core/Shared/Services/helper.service';
 import { ProgramaContenidoService } from 'src/app/Core/Shared/Services/ProgramaContenido/programa-contenido.service';
 
@@ -19,23 +20,16 @@ export class CursoComponent implements OnInit {
   constructor(
     private _HelperService: HelperService,
     private _ProgramaContenidoService: ProgramaContenidoService,
-    private _ActivatedRoute: ActivatedRoute
+    private _ActivatedRoute: ActivatedRoute,
+    private _DatosPerfilService:DatosPerfilService
   ) {}
-  public tabIndex = 1;
+  public tabIndex = 2;
   public IndicacionActive = false;
   public migaPan = [
     {
       titulo: 'Mis Cursos',
       urlWeb: '/AulaVirtual/MisCursos',
-    },
-    {
-      titulo: '',
-      urlWeb: '/',
-    },
-    {
-      titulo: '',
-      urlWeb: '/',
-    },
+    }
   ];
   public idMatricula = 0;
   public datos: any;
@@ -49,6 +43,7 @@ export class CursoComponent implements OnInit {
     modalidad: '',
     programaGeneral: '',
   };
+  public curso:any
   public videoPreguntas =
     'https://repositorioweb.blob.core.windows.net/repositorioweb/aulavirtual/guias/preguntas/preguntas-hombres.mp4';
   public videoCrucigramas =
@@ -61,6 +56,7 @@ export class CursoComponent implements OnInit {
     this._ActivatedRoute.params.subscribe({
       next: (x) => {
         this.idMatricula = parseInt(x['IdMatricula']);
+        this.RegistroProgramaMatriculadoPorIdMatricula();
         this.ObtenerListadoProgramaContenido();
       },
     });
@@ -99,6 +95,14 @@ export class CursoComponent implements OnInit {
     this.IndicacionActive = true;
     this.tabIndex = index;
   }
+  RegistroProgramaMatriculadoPorIdMatricula(){
+    this._DatosPerfilService.RegistroProgramaMatriculadoPorIdMatricula(this.idMatricula).subscribe({
+      next:x=>{
+        console.log(x)
+        this.curso=x
+      }
+    })
+  }
   ObtenerListadoProgramaContenido() {
     this._ProgramaContenidoService
       .ObtenerListadoProgramaContenido(this.idMatricula)
@@ -106,6 +110,11 @@ export class CursoComponent implements OnInit {
         next: (x) => {
           console.log(x);
           this.programEstructura = x;
+          this.migaPan.push(
+            {
+              titulo: this.programEstructura.programaGeneral,
+              urlWeb: '/AulaVirtual/MisCursos/'+this.idMatricula,
+            },)
 
           this.programEstructura.listaCursoMatriculado.forEach((program) => {
             var params: ParametrosEstructuraEspecificaDTO = {

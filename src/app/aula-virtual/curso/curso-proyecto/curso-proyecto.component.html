@@ -1,0 +1,235 @@
+<ng-container *ngIf="curso!=undefined">
+
+  <div class="cursoTitle">{{curso.programaGeneral}}</div>
+  <div class="row" style="align-items: center;" style="margin: 30px 0px 0px;" *ngIf="proyecto!=undefined">
+    <div class="tipoIndicacionTitle col-12 col-md-12 col-lg-12" style="margin:0px;">
+      <img class="ImgIndicacionesContent" src="../../../../assets/icons/proyectos-aplicacion.svg">
+      <div><strong> {{proyecto.datosEvaluacionTrabajo.nombre}}:</strong></div>
+    </div>
+    <div class="col-12 col-md-12 col-lg-12">
+      <div *ngIf="miPerfil!=undefined" style="text-align: left;font-size: 13px;cursor: pointer;margin-top: 20px;" >
+        ¡Muy bien {{miPerfil.datosAlumno.nombres}}! llegamos a la parte final del curso .Es momento de cargar tu Proyecto de Aplicación</div>
+    </div>
+    <div class="col-12 col-md-12 col-lg-12" style="    margin-top: 40px;
+    margin-bottom: 20px;">
+
+      <div style="    font-size: 14px;
+      font-weight: 600;">Elige el archivo a subir:</div>
+    </div>
+    <ng-container *ngIf="progress==0;else cargando" >
+      <div class="col-6 col-md-8 col-lg-9 fieldProyecto">
+
+        <input #fileInput type="file" id="file"
+        (change)="getFileDetails($event)"
+        style="    width: 100%;
+        border: solid 1px #c2c2c2;
+        padding: 7px;
+        border-radius: 5px;">
+          <div *ngIf="!filestatus && fileErrorMsg!=''">{{fileErrorMsg}}</div>
+      </div>
+      <div class="col-6 col-md-4 col-lg-3" style="display: flex;align-items: center;justify-content: flex-end;">
+        <app-default-button [confs]="{color:'primary',titulo:'Enviar'}" [style]="'padding:0px 30px;margin:0px '"
+          [disabled]="!filestatus" (ButtoclClick)="EnviarFile()"></app-default-button>
+      </div>
+    </ng-container>
+    <ng-template #cargando>
+      <div class="col-12 col-md-12 col-lg-12 cargaProyecto">
+        <ng-container *ngIf="progress>=100">
+          <div style="    text-align: center;margin-bottom: 10px;">Cargando</div>
+          <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+        </ng-container>
+        <ng-container *ngIf="progress<100">
+          <div style="    text-align: center;margin-bottom: 10px;">subiendo {{progress}}%</div>
+          <mat-progress-bar mode="determinate" [value]="progress"> </mat-progress-bar>
+        </ng-container>
+
+      </div>
+    </ng-template>
+    <div class="col-12 col-md-12 col-lg-12"> </div>
+    <div class="col-12 col-md-12 col-lg-12">
+      <ng-container *ngIf="proyecto.registroEvaluacionArchivo!=null">
+        <ng-container *ngFor="let proy of proyecto.registroEvaluacionArchivo">
+
+          <table class="tablaProyecto">
+            <tr>
+              <th>Archivo</th>
+              <th>Fecha de envio</th>
+              <th>Fecha de calificación</th>
+              <th>Versión</th>
+              <th>Calificación</th>
+              <th>Estado</th>
+            </tr>
+            <ng-container *ngIf="proyecto.registroEvaluacionArchivo!=null && proyecto.registroEvaluacionArchivo.length>0">
+              <tr>
+                <td>{{proy.nombreArchivo}}</td>
+                <td>{{proy.fechaCreacion | date:"dd/MM/yyyy"}}</td>
+                <td>{{proy.fechaCalificacion==null?'-':proy.fechaCalificacion | date:"dd/MM/yyyy"}}</td>
+                <td>{{proy.version}}</td>
+                <td>{{(proy.notaProyecto==null || proy.notaProyecto.valorEscala==null )
+                  ?'-':proy.notaProyecto.valorEscala}}</td>
+                <td>
+                  <ng-container *ngIf="proy.calificado">
+                    <div style="display: flex;align-items:center;justify-content: space-evenly;">
+
+                      Calificado <i class="material-icons" style="color: #00c355;">check_circle</i>
+                    </div>
+                  </ng-container>
+
+                  <ng-container *ngIf="!proy.calificado">
+                    Sin calificar
+                  </ng-container>
+                </td>
+              </tr>
+            </ng-container>
+          </table>
+          <ng-container *ngIf="proy.notaProyecto.id>0 && proy.notaProyecto!=null">
+            <table class="tablaProyecto" style="    margin-top: 20px">
+              <tr>
+                <th style="text-align: left">Retroalimentación</th>
+              </tr>
+              <ng-container *ngIf="proyecto.registroEvaluacionArchivo!=null && proyecto.registroEvaluacionArchivo.length>0">
+                <tr>
+                  <td style="text-align: left">{{(proy.notaProyecto==null || proy.notaProyecto.retroalimentacion==null )
+                    ?'-':proy.notaProyecto.retroalimentacion}}</td>
+                </tr>
+              </ng-container>
+            </table>
+            <div style="display: flex;justify-content:flex-end">
+              <a style="display: flex;
+              margin-top: 10px;
+              padding: 5px;
+              border-radius: 8px;
+              font-size: 10px;
+              background: #f4f4f4;
+              color: #656565;
+              text-decoration: auto;
+              align-items: center;" [href]="proy.notaProyecto.urlArchivoSubidoRetroalimentacion"
+              target="_blank">
+                <img style="width: 10px;height: auto;margin-right: 5px;" src="../../../../assets/icons/pdf-31.svg" alt="">
+                <div>{{proy.notaProyecto.nombreArchivoRetroalimentacion}}</div>
+              </a>
+            </div>
+          </ng-container>
+        </ng-container>
+      </ng-container>
+
+    </div>
+    <div class="col-12 col-md-12 col-lg-12" style="margin: 50px 0px 10px;">
+      <div class="cabeceraExpandProyecto" [ngClass]="{'cabeceraExpandProyectoOpen':instruccionesAcerca}">
+        <div>Instrucciones acerca del Proyecto</div>
+        <div>
+          <i class="material-icons no-seleccionable " *ngIf="!instruccionesAcerca"
+            (click)="instruccionesAcerca=true">keyboard_arrow_down</i>
+          <i class="material-icons no-seleccionable " *ngIf="instruccionesAcerca"
+            (click)="instruccionesAcerca=false">keyboard_arrow_up</i>
+        </div>
+      </div>
+      <div class="contentCabeceraProyecto" *ngIf="instruccionesAcerca">
+        <ng-container
+          *ngIf="proyecto.datosEvaluacionTrabajo.instruccionesEvaluacion!=null && proyecto.datosEvaluacionTrabajo.instruccionesEvaluacion!=undefined">
+          <div *ngFor="let item of proyecto.datosEvaluacionTrabajo.instruccionesEvaluacion">
+            <ng-container *ngIf="(item.titulo | lowercase).includes('anexo');else other">
+              <div [innerHtml]="item.contenido | safeHtml"></div>
+            </ng-container>
+            <ng-template #other>
+              <ng-container
+                *ngIf="(item.titulo | lowercase).includes('cap') && (item.titulo | lowercase).includes('tulos');else otherCap">
+
+              </ng-container>
+              <ng-template #otherCap>
+                <ng-container *ngIf="item.titulo.includes('Criterios de evaluaci');else noesquema">
+
+
+                  <ng-container
+                    *ngIf="proyecto.criteriosEvaluacion!=null && proyecto.criteriosEvaluacion!=undefined;else sincriterio">
+                    <div class="row" style="border-bottom: 1px solid rgba(0,0,0,.1); padding: 20px 0px;">
+                      <div class="col-md-12">
+                        <h4>
+                          <b [innerHtml]="item.titulo | safeHtml" class="titleCriterio">
+                          </b>
+                        </h4>
+                      </div>
+                      <div class="col-md-12">
+                        <table class="table table-bordered" style="font-size: 14px;
+                        font-weight: 100 !important;">
+                          <thead style="background:#f3f4f5">
+                            <tr>
+                              <th scope="col" class="text-center">Criterios de evaluación</th>
+                              <th scope="col" class="text-center">Ponderación</th>
+                              <th scope="col" class="text-center">Escala de calificación</th>
+                            </tr>
+                          </thead>
+                          <tbody style="    border-top: 0px;">
+                            <tr>
+                              <td>{{proyecto.criteriosEvaluacion.nombreEscalaCalificacion}}</td>
+                              <td class="text-center">
+                                {{proyecto.criteriosEvaluacion.ponderacion}}
+                                </td>
+                              <td class="text-center">
+                                {{minValue(proyecto.criteriosEvaluacion.listaParametroEscalaEvaluacion)}} -
+                                {{maxValue(proyecto.criteriosEvaluacion.listaParametroEscalaEvaluacion)}} </td>
+                            </tr>
+                          </tbody>
+                        </table>
+
+                      </div>
+                    </div>
+                  </ng-container>
+
+                  <ng-template #sincriterio>
+                    <div class="row" style="border-bottom: 1px solid rgba(0,0,0,.1); padding: 20px 0px;">
+                      <div class="col-md-12">
+                        <h4 style="font-weight:400;"  >
+                          <b [innerHtml]="item.titulo | safeHtml" class="titleCriterio"></b>
+                        </h4>
+                      </div>
+                      <div class="col-md-12 contentCriterio" >
+                        <div [innerHtml]="item.contenido.split('font-family:Arial, Helvetica,sans-serif;font-size:small;').join('') | safeHtml" class="contentCriterio"></div>
+
+                      </div>
+                    </div>
+                  </ng-template>
+                </ng-container>
+                <ng-template #noesquema>
+                  <div class="row" style="border-bottom: 1px solid rgba(0,0,0,.1); padding: 20px 0px;">
+                    <div class="col-md-12">
+                      <h4 style="font-weight:400;"  >
+                        <b [innerHtml]="item.titulo | safeHtml" class="titleCriterio"></b>
+                      </h4>
+                    </div>
+                    <div class="col-md-12 contentCriterio">
+                      <div [innerHtml]="item.contenido.split('font-family:Arial, Helvetica,sans-serif;font-size:small;').join('') | safeHtml" class="contentCriterio"></div>
+                    </div>
+                  </div>
+                </ng-template>
+
+              </ng-template>
+            </ng-template>
+
+          </div>
+        </ng-container>
+      </div>
+    </div>
+    <div class="col-12 col-md-12 col-lg-12" style="margin: 10px 0px ;">
+      <div class="cabeceraExpandProyecto" [ngClass]="{'cabeceraExpandProyectoOpen':instruccionesSubir}">
+        <div>Instrucciones para subir el Proyecto</div>
+        <div>
+          <i class="material-icons no-seleccionable " *ngIf="!instruccionesSubir"
+            (click)="instruccionesSubir=true">keyboard_arrow_down</i>
+          <i class="material-icons no-seleccionable " *ngIf="instruccionesSubir"
+            (click)="instruccionesSubir=false">keyboard_arrow_up</i>
+        </div>
+      </div>
+      <div class="contentCabeceraProyecto" *ngIf="instruccionesSubir">
+        Estimado alumno toma lo siguiente en consideracion antes de subir tu archivo
+        <ul>
+          <li>No nombrar tu archivo con caracteres especiales.</li>
+          <li>Que el archivo tenga una capacidad maxima de 150 MB</li>
+          <li>{{proyecto.datosEvaluacionTrabajo.archivoCarpeta}}</li>
+          <li>El plazo maximo en el que se calificara tu proyecto sera de 15 dias</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+</ng-container>

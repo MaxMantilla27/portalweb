@@ -423,3 +423,37 @@ mat-sidenav-content{
     min-height: calc(100% - 377px)
   }
 }
+.no-seleccionable {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+.snackbarCrucigramaSucces{
+  border-color: #c3e6cb;
+  background: #d4edda;
+    color: #155724;
+  div{
+    div{
+      simple-snack-bar{
+        .mat-simple-snackbar-action{
+          color: #155724;
+        }
+      }
+    }
+  }
+}
+.snackbarCrucigramaerror{
+  background: #f8d7da;
+  border-color: #f5c6cb;
+    color: #721c24;
+  div{
+    div{
+      simple-snack-bar{
+        .mat-simple-snackbar-action{
+          color: #721c24;
+        }
+      }
+    }
+  }
+}

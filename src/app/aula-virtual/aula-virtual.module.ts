@@ -26,6 +26,9 @@ import { ModuloForoComponent } from './modulo/modulo-foro/modulo-foro.component'
 import { ModuloForoInsertComponent } from './modulo/modulo-foro/modulo-foro-insert/modulo-foro-insert/modulo-foro-insert.component';
 import { SesionVideoComponent } from './sesiones/sesion-video/sesion-video.component';
 import { ModuloForoContenidoComponent } from './modulo/modulo-foro/modulo-foro-contenido/modulo-foro-contenido.component';
+import { SesionTareaComponent } from './sesiones/sesion-tarea/sesion-tarea.component';
+import { CursoProyectoComponent } from './curso/curso-proyecto/curso-proyecto.component';
+import { ModuloRecursoComponent } from './modulo/modulo-recurso/modulo-recurso.component';
 import { ModuloCalificacionesComponent } from './modulo/modulo-calificaciones/modulo-calificaciones/modulo-calificaciones.component';
 import { BeneficiosComponent } from './curso/beneficios/beneficios/beneficios.component';
 import { ModuloWebinarsComponent } from './modulo/modulo-webinars/modulo-webinars/modulo-webinars.component';
@@ -53,6 +56,9 @@ import { ModuloWebinarsComponent } from './modulo/modulo-webinars/modulo-webinar
     ModuloForoInsertComponent,
     SesionVideoComponent,
     ModuloForoContenidoComponent,
+    SesionTareaComponent,
+    CursoProyectoComponent,
+    ModuloRecursoComponent,
     ModuloCalificacionesComponent,
     BeneficiosComponent,
     ModuloWebinarsComponent,

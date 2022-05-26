@@ -52,7 +52,7 @@ export class CursoModulosComponent implements OnInit, OnChanges {
   ngOnChanges(changes: SimpleChanges): void {}
   ObtenerProgresoAulaVirtual() {
     this._ProgramaContenidoService
-      .ObtenerProgresoAulaVirtual(this.idMatricula)
+      .ProgresoProgramaCursosAulaVirtualAonline(this.idMatricula)
       .subscribe({
         next: (x) => {
           this.progresoPrograma = x;

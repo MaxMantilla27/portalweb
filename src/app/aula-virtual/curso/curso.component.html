@@ -25,19 +25,19 @@
             </div>
             <div class="row">
               <div class="col-12 col-md-6 col-lg-6" style="margin: 10px 0px;">
-                <app-indicaciones-content [title]="'Preguntas interactivas'" [imgUrl]="'sello.jpg'"
+                <app-indicaciones-content [title]="'Preguntas interactivas'" [imgUrl]="'preguntas-interactivas-38.svg'"
                   (ButtoclClick)="changeIndexIndicaciones(1)"></app-indicaciones-content>
               </div>
               <div class="col-12 col-md-6 col-lg-6" style="margin: 10px 0px;">
-                <app-indicaciones-content [title]="'Crucigramas'" [imgUrl]="'sello.jpg'"
+                <app-indicaciones-content [title]="'Crucigramas'" [imgUrl]="'crucigramas-39.svg'"
                   (ButtoclClick)="changeIndexIndicaciones(2)"></app-indicaciones-content>
               </div>
               <div class="col-12 col-md-6 col-lg-6" style="margin: 10px 0px;">
-                <app-indicaciones-content [title]="'Tareas'" [imgUrl]="'sello.jpg'"
+                <app-indicaciones-content [title]="'Tareas'" [imgUrl]="'tareas-indicaciones-40.svg'"
                   (ButtoclClick)="changeIndexIndicaciones(3)"></app-indicaciones-content>
               </div>
               <div class="col-12 col-md-6 col-lg-6" style="margin: 10px 0px;">
-                <app-indicaciones-content [title]="'Calificar tarea de pares'" [imgUrl]="'sello.jpg'"
+                <app-indicaciones-content [title]="'Calificar tarea de pares'" [imgUrl]="'calificar-tareas-41.svg'"
                   (ButtoclClick)="changeIndexIndicaciones(4)"></app-indicaciones-content>
               </div>
             </div>
@@ -54,7 +54,7 @@
             <div style="padding: 10px 30px;">
               <app-indicaciones-options-content [videoUrl]="videoPreguntas"
                 [TitlePrograma]="programEstructura.programaGeneral" [title]="'Preguntas Interactivas'"
-                [imgUrl]="'precio-03.svg'">
+                [imgUrl]="'preguntas-naranja-38.svg'">
               </app-indicaciones-options-content>
             </div>
           </mat-tab>
@@ -66,7 +66,7 @@
             </ng-template>
             <div style="padding: 10px 30px;">
               <app-indicaciones-options-content [videoUrl]="videoCrucigramas"
-                [TitlePrograma]="programEstructura.programaGeneral" [title]="'Crucigramas'" [imgUrl]="'precio-03.svg'">
+                [TitlePrograma]="programEstructura.programaGeneral" [title]="'Crucigramas'" [imgUrl]="'crucigrama-naranja-39.svg'">
               </app-indicaciones-options-content>
             </div>
           </mat-tab>
@@ -78,7 +78,7 @@
             </ng-template>
             <div style="padding: 10px 30px;">
               <app-indicaciones-options-content [videoUrl]="videoTareas"
-                [TitlePrograma]="programEstructura.programaGeneral" [title]="'Tareas'" [imgUrl]="'precio-03.svg'">
+                [TitlePrograma]="programEstructura.programaGeneral" [title]="'Tareas'" [imgUrl]="'tareas-pares-naranja-41.svg'">
               </app-indicaciones-options-content>
             </div>
           </mat-tab>
@@ -91,7 +91,7 @@
             <div style="padding: 10px 30px;">
               <app-indicaciones-options-content [videoUrl]="videoTrabajoP"
                 [TitlePrograma]="programEstructura.programaGeneral" [title]="'Calificar tarea de pares'"
-                [imgUrl]="'precio-03.svg'">
+                [imgUrl]="'tareas-naranja-40.svg'">
               </app-indicaciones-options-content>
             </div>
           </mat-tab>
@@ -123,7 +123,11 @@
               <div class="titleMatr">Proyectos de Aplicación</div>
             </div>
           </ng-template>
-          <div style="padding: 10px 30px;">Proyectos</div>
+          <div style="padding: 10px 30px;">
+            <app-curso-proyecto *ngIf="curso!=undefined" [curso]="curso" [idProyecto]="curso.idProyecto" [idPGeneral]="curso.idPGeneral" [idPEspecifico]="curso.idPEspecifico">
+
+            </app-curso-proyecto>
+          </div>
         </mat-tab>
         <mat-tab>
           <ng-template mat-tab-label>

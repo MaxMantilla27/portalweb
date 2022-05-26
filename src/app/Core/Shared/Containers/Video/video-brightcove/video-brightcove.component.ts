@@ -11,12 +11,15 @@ import {
 } from '@angular/core';
 import { CloudflareStreamComponent, CloudflareStreamService } from '@cloudflare/stream-angular';
 import { ParametrosEstructuraEspecificaDTO, RegistroVideoUltimaVisualizacionDTO } from 'src/app/Core/Models/EstructuraEspecificaDTO';
+import { GrupoPreguntaFiltroDTO, ValidaRespuestaPreguntaDTO } from 'src/app/Core/Models/PreguntaInteractivaDTO';
+import { PreguntaInteractivaService } from '../../../Services/PreguntaInteractiva/pregunta-interactiva.service';
 import { VideoSesionService } from '../../../Services/VideoSesion/video-sesion.service';
 declare var $:any;
 @Component({
   selector: 'app-video-brightcove',
   templateUrl: './video-brightcove.component.html',
-  styleUrls: ['./video-brightcove.component.scss']
+  styleUrls: ['./video-brightcove.component.scss'],
+  encapsulation: ViewEncapsulation.None,
 })
 export class VideoBrightcoveComponent implements OnInit, OnChanges,AfterViewInit {
   @ViewChild('video')
@@ -25,7 +28,8 @@ export class VideoBrightcoveComponent implements OnInit, OnChanges,AfterViewInit
   videoCloud!: CloudflareStreamComponent;
 
   constructor(
-    public _VideoSesionService:VideoSesionService
+    public _VideoSesionService:VideoSesionService,
+    public _PreguntaInteractivaService:PreguntaInteractivaService
   ) {}
   ngAfterViewInit(): void {
   }
@@ -47,6 +51,7 @@ export class VideoBrightcoveComponent implements OnInit, OnChanges,AfterViewInit
   public numeroDiapositivas=0;
   public autoplay=false
   public guardar=false;
+  public valorRespuesta=''
   // +++ Set the data for the player +++
   playerData = {
     accountId: '6267108632001',
@@ -77,6 +82,22 @@ export class VideoBrightcoveComponent implements OnInit, OnChanges,AfterViewInit
     idSesion:0,
     tiempoVisualizacion:0,
   }
+  public paramsPreguntas:GrupoPreguntaFiltroDTO={
+    GrupoPregunta:'',
+    IdPgeneral:0,
+    IdPEspecifico:0
+  }
+  public validatePregunta:ValidaRespuestaPreguntaDTO={
+    IdPEspecifico:0,
+    IdPGeneral:0,
+    IdPregunta:0,
+    IdRespuesta:[],
+    Texto:null,
+  }
+  public grupo=''
+  public chargePreguntas=true;
+  public preguntas:any;
+  public preguntaActual=0;
   ngOnInit(): void {
     //  this.someElement.nativeElement.play();
   }
@@ -112,6 +133,7 @@ export class VideoBrightcoveComponent implements OnInit, OnChanges,AfterViewInit
             tiempo=x.tiempo
             this.urlDiapo = x.rutaDiapositiva;
             this.tipo = x.tipoVista
+            this.grupo=x.urlEvaluacion
           }
         }
         if(x.tipoVista!=4){
@@ -119,7 +141,72 @@ export class VideoBrightcoveComponent implements OnInit, OnChanges,AfterViewInit
           i++;
         }
       });
+      if(this.tipo==4){
+        this.ListaRegistroPreguntaInteractivaPorGrupo();
+      }
     }
+  }
+  chageRespuesta(index:number,tipo:number){
+    var value=this.preguntas[this.preguntaActual].respuestaGrupoPreguntaInteractivaPrograma[index].check;
+    if(tipo!=4){
+      this.preguntas[this.preguntaActual].respuestaGrupoPreguntaInteractivaPrograma.forEach((res:any) => {
+        res.check=false;
+      });
+    }else{
+      this.preguntas[this.preguntaActual].respuestaGrupoPreguntaInteractivaPrograma[index].check=!value
+    }
+
+    this.preguntas[this.preguntaActual].respuestaGrupoPreguntaInteractivaPrograma[index].check=true
+  }
+  ValidarPreguntaInteractiva(){
+    console.log(this.preguntas[this.preguntaActual].tipoRespuesta)
+    this.validatePregunta.IdPregunta=this.preguntas[this.preguntaActual].idPregunta
+    this.validatePregunta.IdPGeneral=this.json.IdPGeneralHijo;
+    this.validatePregunta.IdPEspecifico=this.json.IdPEspecificoHijo;
+    if(this.preguntas[this.preguntaActual].tipoRespuesta>=6 && this.preguntas[this.preguntaActual].tipoRespuesta<=8){
+      this.validatePregunta.Texto=this.valorRespuesta
+    }else{
+      console.log('----------')
+      this.preguntas[this.preguntaActual].respuestaGrupoPreguntaInteractivaPrograma.forEach((res:any) => {
+        console.log(res)
+        if(res.check==true){
+          this.validatePregunta.IdRespuesta.push(res.idRespuesta)
+        }
+      });
+    }
+    this._PreguntaInteractivaService.ValidarPreguntaInteractiva(this.validatePregunta).subscribe({
+      next:x=>{
+        console.log(x)
+      }
+    })
+  }
+  ListaRegistroPreguntaInteractivaPorGrupo(){
+    if(this.chargePreguntas){
+      this.chargePreguntas=false
+      this.paramsPreguntas.IdPgeneral=this.json.IdPGeneralHijo;
+      this.paramsPreguntas.IdPEspecifico=this.json.IdPEspecificoHijo;
+      this.paramsPreguntas.GrupoPregunta=this.grupo
+      this._PreguntaInteractivaService.ListaRegistroPreguntaInteractivaPorGrupo(this.paramsPreguntas).subscribe({
+        next:x=>{
+          this.chargePreguntas=true
+          this.preguntas=x;
+          let i=1;
+          this.preguntas.forEach((element:any) => {
+            if(this.preguntas.length==(i)){
+              if(element.numeroMaximoIntento<=element.intento){
+                this.preguntaActual++;
+              }
+            }
+            element.respuestaGrupoPreguntaInteractivaPrograma.forEach((res:any) => {
+              res.check=false;
+            });
+            i++
+          });
+          console.log(x)
+        }
+      })
+    }
+
   }
   ngOnDestroy() {}
   // +++ Build the player and place in HTML DOM +++
@@ -145,6 +232,11 @@ export class VideoBrightcoveComponent implements OnInit, OnChanges,AfterViewInit
           tiempo=x.tiempo
           this.urlDiapo = x.rutaDiapositiva;
           this.tipo = x.tipoVista
+          this.grupo=x.urlEvaluacion
+          if(this.tipo==4){
+            this.pauseVideo();
+            this.ListaRegistroPreguntaInteractivaPorGrupo();
+          }
         }
       }
     });
@@ -169,7 +261,12 @@ export class VideoBrightcoveComponent implements OnInit, OnChanges,AfterViewInit
         this.diapositivaactual=i
         this.urlDiapo = x.rutaDiapositiva;
         this.tipo = x.tipoVista
+        this.grupo=x.urlEvaluacion
         this.RegistrarUltimaVisualizacionVideo()
+        if(this.tipo==4){
+          this.pauseVideo();
+          this.ListaRegistroPreguntaInteractivaPorGrupo();
+        }
       }
     });
   }
@@ -198,6 +295,7 @@ export class VideoBrightcoveComponent implements OnInit, OnChanges,AfterViewInit
         console.log(this.diapositivas[index])
         this.tipo=this.diapositivas[index].tipoVista;
         this.pauseVideo()
+        this.ListaRegistroPreguntaInteractivaPorGrupo();
       }else{
         this.autoplay=true
         this.diapositivaactual++
@@ -274,7 +372,7 @@ export class VideoBrightcoveComponent implements OnInit, OnChanges,AfterViewInit
       console.log(this.send)
       this._VideoSesionService.RegistrarUltimaVisualizacionVideo(this.send).subscribe({
         next:x=>{
-          this.tiempovideoinicioInicial=Math.ceil(this.tiempovideoinicio)
+          this.tiempovideoinicioInicial=this.send.tiempoVisualizacion
           this.guardar=false
           console.log(x)
         },

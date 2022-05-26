@@ -1,70 +1,71 @@
-import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import {
+  Component,
+  Input,
+  OnChanges,
+  OnInit,
+  SimpleChanges,
+} from '@angular/core';
 import { AvatarService } from 'src/app/Core/Shared/Services/Avatar/avatar.service';
 import { ForoCursoService } from 'src/app/Core/Shared/Services/ForoCurso/foro-curso.service';
 
 @Component({
   selector: 'app-modulo-foro',
   templateUrl: './modulo-foro.component.html',
-  styleUrls: ['./modulo-foro.component.scss']
+  styleUrls: ['./modulo-foro.component.scss'],
 })
-export class ModuloForoComponent implements OnInit,OnChanges {
-
+export class ModuloForoComponent implements OnInit, OnChanges {
   constructor(
-    private _ForoCursoService:ForoCursoService,
-    private _AvatarService:AvatarService
-  ) { }
+    private _ForoCursoService: ForoCursoService,
+    private _AvatarService: AvatarService
+  ) {}
 
-  @Input() IdPgeneral=0
-  @Input() IdPprincipal=0
-  @Input() IdPEspecificoPadre=0
-  @Input() IdPEspecificoHijo=0
-  @Input() Capitulo='';
-  public IdForo=0;
-  public NuevoForo =false;
-  public ContenidoForo = false;
-  public foro:Array<any>=[]
-  public paginacion=[1]
-  public pagina=1;
-  public paginaCeil=Math.ceil(this.pagina/5)
-  ngOnInit(): void {
-  }
+  @Input() IdPgeneral = 0;
+  @Input() IdPprincipal = 0;
+  @Input() IdPEspecificoPadre = 0;
+  @Input() IdPEspecificoHijo = 0;
+  @Input() Capitulo = '';
+  public foro: Array<any> = [];
+  public paginacion = [1];
+  public pagina = 1;
+  public paginaCeil = Math.ceil(this.pagina / 5);
+  ngOnInit(): void {}
   ngOnChanges(changes: SimpleChanges): void {
-    if(this.IdPgeneral!=0){
-      this.ObtenerForoCurso()
+    if (this.IdPgeneral != 0) {
+      this.ObtenerForoCurso();
     }
-
   }
-  ObtenerForoCurso(){
+  ObtenerForoCurso() {
     this._ForoCursoService.ObtenerForoCurso(this.IdPgeneral).subscribe({
-      next:x=>{
-        this.foro=x
-        this.foro.forEach(x=>{
-          x.urlAvatar=this._AvatarService.GetUrlImagenAvatar(x.avatar)
-        })
-        var pag=Math.ceil(this.foro.length/4)
-        this.paginacion=[]
-        for (let index = 0; index < pag; index++) {
-          this.paginacion.push(index+1);
+      next: (x) => {
+        console.log(x);
+        this.foro = x;
+        if (this.foro != null && this.foro != undefined) {
+          this.foro.forEach((x) => {
+            x.urlAvatar = this._AvatarService.GetUrlImagenAvatar(x.avatar);
+          });
+          var pag = Math.ceil(this.foro.length / 4);
+          this.paginacion = [];
+          for (let index = 0; index < pag; index++) {
+            this.paginacion.push(index + 1);
+          }
         }
-      }
-    })
+      },
+    });
   }
-  minusPage(){
-    if(this.pagina>1){
-      this.pagina--
-      this.paginaCeil=Math.ceil(this.pagina/5)
-
+  minusPage() {
+    if (this.pagina > 1) {
+      this.pagina--;
+      this.paginaCeil = Math.ceil(this.pagina / 5);
     }
   }
-  plusPage(){
-    if(this.pagina<Math.ceil(this.foro.length/4)){
-
-      this.pagina++
-      this.paginaCeil=Math.ceil(this.pagina/5)
+  plusPage() {
+    if (this.pagina < Math.ceil(this.foro.length / 4)) {
+      this.pagina++;
+      this.paginaCeil = Math.ceil(this.pagina / 5);
     }
   }
-  page(p:number){
-    this.pagina=p
-    this.paginaCeil=Math.ceil(this.pagina/5)
+  page(p: number) {
+    this.pagina = p;
+    this.paginaCeil = Math.ceil(this.pagina / 5);
   }
 }

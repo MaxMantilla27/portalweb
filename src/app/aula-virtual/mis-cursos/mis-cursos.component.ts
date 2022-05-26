@@ -25,7 +25,7 @@ export class MisCursosComponent implements OnInit {
     this.GetDatosPerfilService();
   }
   GetDatosPerfilService() {
-    this._DatosPerfilService.DatosPerfil().subscribe({
+    this._DatosPerfilService.RegistroProgramaMatriculado().subscribe({
       next: (x) => {
         console.log(x);
         this.matriculas = x;

@@ -19,7 +19,7 @@
         <ng-container *ngIf="videoData.objetoConfigurado.idVideoBrightcove!='0' &&
           videoData.objetoConfigurado.idVideoBrightcove!=null &&
           videoData.objetoConfigurado.idVideoBrightcove!=undefined">
-          <video  controls #video (timeupdate)="setCurrentTime($event)" (seeked)="changeTime($event)" height="auto"
+          <video controls #video (timeupdate)="setCurrentTime($event)" (seeked)="changeTime($event)" height="auto"
             [currentTime]="tiempovideoinicio" [playbackRate]="1" id="bc-video" [attr.data-player]="playerData.playerId"
             [attr.data-video-id]="playerData.videoId" [attr.data-account]="playerData.accountId" data-embed="default"
             data-application-id class="video-js" [ngClass]="{'medioVideo':tipo==3}">
@@ -29,10 +29,9 @@
         <ng-container *ngIf="videoData.objetoConfigurado.idVideoBrightcove=='0' ||
         videoData.objetoConfigurado.idVideoBrightcove==null ||
         videoData.objetoConfigurado.idVideoBrightcove==undefined">
-          <cloudflare-stream *ngIf="tipo!=4"  id="videoCloud" [autoplay]="autoplay"
-           class="video-js" [controls]="true"  [src]="videoData.idVideo" (timeupdate)="setCurrentTime($event)"
-           #videoCloud style="height: auto !important;"  [currentTime]="tiempovideoinicio"
-           (seeked)="changeTime($event)"></cloudflare-stream>
+          <cloudflare-stream *ngIf="tipo!=4" id="videoCloud" [autoplay]="autoplay" class="video-js" [controls]="true"
+            [src]="videoData.idVideo" (timeupdate)="setCurrentTime($event)" #videoCloud style="height: auto !important;"
+            [currentTime]="tiempovideoinicio" (seeked)="changeTime($event)"></cloudflare-stream>
           <!-- <video style="width: 100%;" controls>
             <source [src]="'https://iframe.videodelivery.net/'+videoData.idVideo" type='video/mp4'>
           </video> -->
@@ -47,6 +46,58 @@
         [ngStyle]="{'width':whidth<=0?'calc(45% - '+whidth*-1+'px)':'calc(45% + '+whidth+'px)'}">
 
         <img *ngIf="tipo==3 && urlDiapo!=''" [src]="urlDiapo" alt="" style="width: 100%;height: auto;">
+      </div>
+      <div class="row" style="width: 100%;height: 100%; display: flex; align-items: center;justify-content: center" *ngIf="tipo==4 && preguntas!=undefined && preguntas.length>0">
+
+        <div class="col-12 col-md-10 col-lg-10 preguntaInteractiva" >
+          <div class="headerPregunta">Evaluacion</div>
+
+          <div class="contentPregunta">
+            <div class="pregunta" [innerHtml]="preguntas[preguntaActual].enunciadoPregunta | safeHtml"></div>
+            <div class="respuestaLista">
+              <ng-container *ngIf="preguntas[preguntaActual].tipoRespuesta==4">
+                <div class="respuesta" *ngFor="let respuesta of preguntas[preguntaActual].respuestaGrupoPreguntaInteractivaPrograma;let i=index"
+                (click)="chageRespuesta(i,preguntas[preguntaActual].tipoRespuesta)">
+                  <i class="material-icons" *ngIf="respuesta.check!=true">check_box_outline_blank</i>
+                  <i class="material-icons" *ngIf="respuesta.check==true">check_box</i>
+                  <div [innerHtml]="respuesta.enunciadoRespuesta | safeHtml"></div>
+                </div>
+              </ng-container>
+              <ng-container *ngIf="preguntas[preguntaActual].tipoRespuesta==5 || preguntas[preguntaActual].tipoRespuesta==3">
+                <div class="respuesta" *ngFor="let respuesta of preguntas[preguntaActual].respuestaGrupoPreguntaInteractivaPrograma;let i=index"
+                (click)="chageRespuesta(i,preguntas[preguntaActual].tipoRespuesta)">
+                  <i class="material-icons" *ngIf="respuesta.check!=true">radio_button_unchecked</i>
+                  <i class="material-icons" *ngIf="respuesta.check==true">radio_button_checked</i>
+                  <div [innerHtml]="respuesta.enunciadoRespuesta | safeHtml"></div>
+                </div>
+              </ng-container>
+              <ng-container *ngIf="preguntas[preguntaActual].tipoRespuesta==6 || preguntas[preguntaActual].tipoRespuesta==8">
+                <div class="respuesta fieldPreguntasI" *ngFor="let respuesta of preguntas[preguntaActual].respuestaGrupoPreguntaInteractivaPrograma">
+                  <mat-form-field appearance="outline" class="col-12 col-md-6 col-lg-6" >
+                    <mat-label>respuesta</mat-label>
+                    <input type="text" autocomplete="off" [(ngModel)]="valorRespuesta" matInput />
+                  </mat-form-field>
+                </div>
+              </ng-container>
+              <ng-container *ngIf="preguntas[preguntaActual].tipoRespuesta==7">
+                <div class="respuesta fieldPreguntasI" *ngFor="let respuesta of preguntas[preguntaActual].respuestaGrupoPreguntaInteractivaPrograma">
+                  <mat-form-field appearance="outline" class="col-12 col-md-6 col-lg-6" >
+                    <mat-label>respuesta</mat-label>
+                    <input type="number" autocomplete="off" [(ngModel)]="valorRespuesta" matInput />
+                  </mat-form-field>
+                </div>
+              </ng-container>
+
+
+            </div>
+          </div>
+          <div class="footerPregunta">
+
+            <app-default-button (ButtoclClick)="ValidarPreguntaInteractiva()"
+              [confs]="{color:'primary',titulo:'Siguiente'}" [icon]="''"
+              [style]="'padding: 0px 20px;margin:0px'"></app-default-button>
+          </div>
+        </div>
       </div>
     </div>
   </div>

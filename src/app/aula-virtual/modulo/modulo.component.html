@@ -51,7 +51,8 @@
               <div class="titleMatr">Recursos</div>
             </div>
           </ng-template>
-          <div style="padding: 10px 30px">Recursos</div>
+          <div style="padding: 10px 30px"><app-modulo-recurso [Capitulo]="json.NombreCapitulo" [Estructura]="estructuraCapitulo"
+            [idPEspecifico]="json.IdPEspecificoHijo" [tipo]="json.idModalidad" [idPGeneral]="json.IdPGeneralHijo"></app-modulo-recurso></div>
         </mat-tab>
         <mat-tab>
           <ng-template mat-tab-label>
