@@ -1,6 +1,7 @@
 import { Component, Input, NgModule, OnInit, SimpleChanges } from '@angular/core';
+import { resetFakeAsyncZone } from '@angular/core/testing';
 import { FormBuilder, FormControl, FormGroup, NgModel, Validators } from '@angular/forms';
-import { DatoAdicionalBeneficioDTO, DetallesDatoAdicionalDTO } from 'src/app/Core/Models/BeneficiosDTO';
+import { BeneficiosContenidoDTO, DatoAdicionalBeneficioDTO, DetallesDatoAdicionalDTO } from 'src/app/Core/Models/BeneficiosDTO';
 import { BeneficioService } from 'src/app/Core/Shared/Services/Beneficio/beneficio.service';
 import { ProgramaContenidoService } from 'src/app/Core/Shared/Services/ProgramaContenido/programa-contenido.service';
 
@@ -19,18 +20,10 @@ export class BeneficiosComponent implements OnInit {
   }
   @Input() Capitulo='';
   @Input() IdMatricula=0;
-  public BeneficioIngresado=false;
-  public BeneficioPendiente=false;
   public CodigoMatricula='';
-  public IdBeneficio=0;
-  public IdBeneficioDetalle=0;
-  public prueba='';
-  public Beneficios:Array<any>=[];
-  public ListaDatosAdicionales:Array<any>=[];
+  public BeneficioPendiente=-1;
   public AyudaBeneficio=1;
-
-
-  public DatoBeneficioContenido:Array<any>=[];
+  public Beneficios:Array<any>=[];
   public DatosBeneficiosEnvio:DetallesDatoAdicionalDTO={
     id:0,
     idMatriculaCabeceraBeneficios:0,
@@ -38,17 +31,13 @@ export class BeneficiosComponent implements OnInit {
     codigoMatricula:'',
     datosAdicionales:[],
   }
-
-
   ngOnInit(): void {
   }
   ngOnChanges(changes: SimpleChanges): void {
     if(this.IdMatricula!=0){
       this.ObtenerBeneficiosMatricula();
       this.ObtenerCodigoMatricula();
-      this.RecorrerContenidoBeneficio();
     }
-
   }
   ObtenerBeneficiosMatricula(){
     this._BeneficiosService.ListaBeneficioMatriculaAlumnoActivo(this.IdMatricula).subscribe({
@@ -60,8 +49,6 @@ export class BeneficiosComponent implements OnInit {
             z.valid=true
           })
         })
-        console.log(this.Beneficios);
-        this.ListaDatosAdicionales=x.listaDatosAdicionales;
       }
     })
   }
@@ -73,33 +60,25 @@ export class BeneficiosComponent implements OnInit {
     })
   }
 
-  EnviarRegistroBeneficio(){
-
-    this.DatosBeneficiosEnvio.idMatriculaCabeceraBeneficios=this.IdBeneficio;
-    this.DatosBeneficiosEnvio.idMatriculaCabecera=this.IdMatricula;
-    this.DatosBeneficiosEnvio.codigoMatricula=this.CodigoMatricula;
-    console.log(this.prueba)
-    console.log(this.DatoBeneficioContenido)
-    this.DatosBeneficiosEnvio.datosAdicionales=this.DatoBeneficioContenido;
+  EnviarRegistroBeneficio(i:number){
+    this.RecorrerContenidoBeneficio(i);
     this._BeneficiosService.AgregarDetalleDatosAdicionales(this.DatosBeneficiosEnvio).subscribe({
       next: (x) => {
       },
     })
-    console.log(this.BeneficioIngresado)
   }
-  RecorrerBeneficio(value:any){
-    console.log(value)
-  }
-  chageRadio(value:number){
-    if(value==0){
-      return 1;
-    }
-    return 0;
-  }
-  RecorrerContenidoBeneficio(){
-    this.Beneficios.forEach((x:any)=>{
-      x.value
-      console.log(x.value)
+  RecorrerContenidoBeneficio(i:number){
+    this.Beneficios[i].listaDatosAdicionales.forEach((y:any)=>{
+      if(y.value!=''){
+        this.DatosBeneficiosEnvio.idMatriculaCabeceraBeneficios=this.Beneficios[i].id;
+        this.DatosBeneficiosEnvio.idMatriculaCabecera=this.IdMatricula;
+        this.DatosBeneficiosEnvio.codigoMatricula=this.CodigoMatricula;
+          console.log(y.value)
+      this.DatosBeneficiosEnvio.datosAdicionales.push({id:y.idDatoAdicional,contenido:y.value})
+      }
     })
+  }
+  LimpiarCampos(){
+    this.DatosBeneficiosEnvio.datosAdicionales=[]
   }
 }
