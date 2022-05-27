@@ -11,10 +11,13 @@
                 </div>
                 <div class="titleForo" style="font-weight: bold;">Mensaje: </div>
                 <div class="row">
-                  <mat-form-field appearance="outline" [floatLabel]="'auto'">
+                  <textarea formControlName="Contenido" rows="4" style="width: 100%;"></textarea>
+                  <!-- <mat-form-field appearance="outline" [floatLabel]="'auto'" >
                     <input type="text" placeholder="Contenido" formControlName="Contenido" style=" height:100px" matInput />
-                    <mat-error *ngIf="userForm.invalid">Debe ingresar el contenido de la pregunta para el foro</mat-error>
-                  </mat-form-field>
+                    <mat-error *ngIf="userForm.invalid">
+                      Debe ingresar el contenido de la pregunta para el foro.
+                    </mat-error>
+                  </mat-form-field> -->
                 </div>
                 <div class="row" style="margin-top: 20px;">
                   <div class="col-6 col-md-6 col-lg-6">

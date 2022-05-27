@@ -3,11 +3,11 @@
 
   <!-- Nuevo Foro -->
   <div class="row" style="align-items: center;">
-    <div class="tipoIndicacionTitle col-12 col-md-8 col-lg-9">
+    <div class="tipoIndicacionTitle col-12 col-md-9 col-lg-10">
       <img class="ImgIndicacionesContent" src="../../../../assets/icons/foro-naranja.svg">
       <div>Foro</div>
     </div>
-    <div class="col-12 col-md-4 col-lg-3">
+    <div class="col-12 col-md-3 col-lg-2">
       <app-default-button  (ButtoclClick)="NuevoForo=!NuevoForo" [confs]="{color:'primary',titulo:'Volver'}"  [style]="'width: 100%;'"
       [style]="'margin-bottom: 0px !important;padding:0px 20px'" [icon]="''">
     </app-default-button>
@@ -22,11 +22,11 @@
 
     <!-- Vista de Foro -->
     <div class="row" style="align-items: center;">
-      <div class="tipoIndicacionTitle col-12 col-md-8 col-lg-9">
+      <div class="tipoIndicacionTitle col-12 col-md-9 col-lg-10">
         <img class="ImgIndicacionesContent" src="../../../../assets/icons/foro-naranja.svg">
         <div>Foro</div>
       </div>
-      <div class="col-12 col-md-4 col-lg-3">
+      <div class="col-12 col-md-3 col-lg-2">
         <app-default-button  (ButtoclClick)="NuevoForo=!NuevoForo" [confs]="{color:'primary',titulo:NuevoForo==false?'Añadir un tema':'Volver'}"  [style]="'width: 100%;'"
         [style]="'margin-bottom: 0px !important;padding:0px 20px'" [icon]="''">
       </app-default-button>
@@ -71,9 +71,14 @@
   <!-- Contenido del foro -->
   <ng-container *ngIf="ContenidoForo">
     <div class="row" style="align-items: center;">
-      <div class="tipoIndicacionTitle col-12 col-md-12 col-lg-12">
+      <div class="tipoIndicacionTitle col-12 col-md-19 col-lg-10">
         <img class="ImgIndicacionesContent" src="../../../../assets/icons/foro-naranja.svg">
         <div>Foro</div>
+      </div>
+      <div class="col-12 col-md-3 col-lg-2">
+        <app-default-button  (ButtoclClick)="NuevoForo=!NuevoForo && ContenidoForo=!ContenidoForo" [confs]="{color:'primary',titulo:'Volver'}"  [style]="'width: 100%;'"
+        [style]="'margin-bottom: 0px !important;padding:0px 20px'" [icon]="''">
+      </app-default-button>
       </div>
     </div>
     <app-modulo-foro-contenido

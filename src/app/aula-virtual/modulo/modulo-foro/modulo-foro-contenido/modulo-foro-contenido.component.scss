@@ -19,6 +19,38 @@
 .RespuestasForo{
   margin-top: 10px;
   background-color: #F4F4F4;
-  background-image: -moz-element();
+  border-radius:20px;
+  align-items: center;
+  padding: 20px 40px;
+}
+.foroContenido{
+  text-align: justify;
+  font-size: 17px;
+  margin-top: 15px;
+}
+.triangulo-redondeado,
+.triangulo-redondeado:before,
+.triangulo-redondeado:after {
+  position: relative;
+  display:block;
+	width:  30px;
+	height: 30px;
+	background: #F4F4F4;
+	border-top-right-radius: 7px;
+}
+.triangulo-redondeado {
+  margin: 9px -40px 0 auto;
+  transform: rotate(0deg) skewX(-30deg) scale(1,.866);
+}
+.triangulo-redondeado:before,
+.triangulo-redondeado:after {
+	content: '';
+	position: absolute;
+}
+.triangulo-redondeado:before {
+	transform: rotate(-135deg) skewX(-45deg) scale(1.414,.707) translate(0,-50%);
+}
+.triangulo-redondeado:after {
+	transform: rotate(135deg) skewY(-45deg) scale(.707,1.414) translate(50%);
 }
 

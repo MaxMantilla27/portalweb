@@ -18,6 +18,7 @@ export class ModuloForoInsertComponent implements OnInit {
     Contenido: ['', [Validators.required]],
   });
   }
+
   @Input() IdPprincipal=0;
   @Input() IdPgeneral=0;
   @Input() IdPEspecificoPadre=0;
@@ -41,7 +42,7 @@ export class ModuloForoInsertComponent implements OnInit {
     this.ForoCurso.idPEspecificoPadre = this.IdPEspecificoPadre;
     this.ForoCurso.idPEspecificoHijo = this.IdPEspecificoHijo;
     this.ForoCurso.titulo =this.userForm.get('Titulo')?.value;
-    this.ForoCurso.contenido = this.userForm.get('Contenido')?.value;;
+    this.ForoCurso.contenido = this.userForm.get('Contenido')?.value;
     this._ForoCursoService.InsertarForoCursoPorUsuario(this.ForoCurso).subscribe({
       next: (x) => {
         console.log(x);
