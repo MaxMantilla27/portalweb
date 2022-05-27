@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { EventEmitter, Injectable, Output } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ForoDTO, ForoRespuestaDTO } from 'src/app/Core/Models/ForoDTO';
 import { environment } from 'src/environments/environment';

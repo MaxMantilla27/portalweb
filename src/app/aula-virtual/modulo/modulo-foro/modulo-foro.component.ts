@@ -24,6 +24,7 @@ export class ModuloForoComponent implements OnInit, OnChanges {
   @Input() IdPEspecificoPadre = 0;
   @Input() IdPEspecificoHijo = 0;
   @Input() Capitulo = '';
+  public valorNavegarForoPrincipal=0;
   public NuevoForo=false;
   public ContenidoForo=false;
   public IdForo=0;
@@ -31,15 +32,18 @@ export class ModuloForoComponent implements OnInit, OnChanges {
   public paginacion = [1];
   public pagina = 1;
   public paginaCeil = Math.ceil(this.pagina / 5);
-  ngOnInit(): void {}
+  ngOnInit(
+
+  ): void {}
   ngOnChanges(changes: SimpleChanges): void {
-    if (this.IdPgeneral != 0) {
+    if (this.IdPgeneral != 0 && this.valorNavegarForoPrincipal==0) {
       this.ObtenerForoCurso();
     }
   }
   ObtenerForoCurso() {
     this._ForoCursoService.ObtenerForoCurso(this.IdPgeneral).subscribe({
       next: (x) => {
+
         console.log(x);
         this.foro = x;
         if (this.foro != null && this.foro != undefined) {
@@ -70,5 +74,9 @@ export class ModuloForoComponent implements OnInit, OnChanges {
   page(p: number) {
     this.pagina = p;
     this.paginaCeil = Math.ceil(this.pagina / 5);
+  }
+  RefrescarForo(){
+    this.NuevoForo=false;
+    this.ObtenerForoCurso() ;
   }
 }

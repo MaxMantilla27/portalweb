@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ForoDTO } from 'src/app/Core/Models/ForoDTO';
 import { ForoCursoService } from 'src/app/Core/Shared/Services/ForoCurso/foro-curso.service';
@@ -19,11 +19,12 @@ export class ModuloForoInsertComponent implements OnInit {
     Contenido: ['', [Validators.required]],
   });
   }
-
+  @Input() valorNavegacionForo=-1;
   @Input() IdPprincipal=0;
   @Input() IdPgeneral=0;
   @Input() IdPEspecificoPadre=0;
   @Input() IdPEspecificoHijo=0;
+  @Output() volver:EventEmitter<void>=new EventEmitter<void>();
   public NuevoForo =false;
   public AnadirForo =false;
   public ForoCurso: ForoDTO ={
@@ -47,7 +48,11 @@ export class ModuloForoInsertComponent implements OnInit {
     this._ForoCursoService.InsertarForoCursoPorUsuario(this.ForoCurso).subscribe({
       next: (x) => {
         console.log(x);
+        this.VolverAtras();
       },
     });
+  }
+  VolverAtras(){
+    this.volver.emit()
   }
 }
