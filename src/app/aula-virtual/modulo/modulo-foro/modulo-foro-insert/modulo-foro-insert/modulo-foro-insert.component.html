@@ -11,23 +11,21 @@
                 </div>
                 <div class="titleForo" style="font-weight: bold;">Mensaje: </div>
                 <div class="row">
-                  <textarea formControlName="Contenido" rows="4" style="width: 100%;"></textarea>
-                  <!-- <mat-form-field appearance="outline" [floatLabel]="'auto'" >
-                    <input type="text" placeholder="Contenido" formControlName="Contenido" style=" height:100px" matInput />
-                    <mat-error *ngIf="userForm.invalid">
-                      Debe ingresar el contenido de la pregunta para el foro.
-                    </mat-error>
-                  </mat-form-field> -->
+                  <textarea class="ContenidoPreguntaForo" formControlName="Contenido" rows="4"></textarea>
+                  <mat-error *ngIf="userForm.invalid">Debe ingresar el título del tema</mat-error>
                 </div>
                 <div class="row" style="margin-top: 20px;">
-                  <div class="col-6 col-md-6 col-lg-6">
+                  <div style="width: 50%;"></div>
+                  <div style="width: 50%;display:flex">
+                    <div class="col-6 col-md-6 col-lg-6">
                       <app-default-button onclick="window.history.go(-1)"  [confs]="{color:'primary',titulo:'Cerrar'}"
-                      [style]="'width: 100%;margin-top: 20px;'"></app-default-button>
+                      [style]="'width: 95%;margin-top: 20px;'"></app-default-button>
                     </div>
                     <div class="col-6 col-md-6 col-lg-6">
                       <app-default-button [confs]="{color:'primary',titulo:'Publica Tema'}" [disabled]="!userForm.valid"
-                      [style]="'width: 100%;margin-top: 20px;'"(ButtoclClick)="InsertarForo()" onclick="window.history.go(-1)"></app-default-button>
+                      [style]="'width: 95%;margin-top: 20px;'"(ButtoclClick)="InsertarForo()" onclick="window.history.go(-1)"></app-default-button>
                     </div>
+                  </div>
                 </div>
           </div>
           </div>
