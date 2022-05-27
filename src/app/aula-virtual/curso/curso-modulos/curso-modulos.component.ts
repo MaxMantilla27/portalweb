@@ -44,7 +44,6 @@ export class CursoModulosComponent implements OnInit, OnChanges {
   };
   @Input() idMatricula = 0;
   ngOnInit(): void {
-    console.log(this.programEstructura);
     if (this.idMatricula > 0) {
       this.ObtenerProgresoAulaVirtual();
     }
@@ -57,7 +56,6 @@ export class CursoModulosComponent implements OnInit, OnChanges {
         next: (x) => {
           this.progresoPrograma = x;
           this.AddProgresToProgram();
-          console.log(x);
         },
       });
   }
@@ -85,6 +83,5 @@ export class CursoModulosComponent implements OnInit, OnChanges {
       });
       program.progreso = progresoP;
     });
-    console.log(this.programEstructura);
   }
 }

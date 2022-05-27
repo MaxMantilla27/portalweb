@@ -1,5 +1,5 @@
-import { Component, Input, OnInit, SimpleChanges } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Component, Input, NgModule, OnInit, SimpleChanges } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, NgModel, Validators } from '@angular/forms';
 import { DatoAdicionalBeneficioDTO, DetallesDatoAdicionalDTO } from 'src/app/Core/Models/BeneficiosDTO';
 import { BeneficioService } from 'src/app/Core/Shared/Services/Beneficio/beneficio.service';
 import { ProgramaContenidoService } from 'src/app/Core/Shared/Services/ProgramaContenido/programa-contenido.service';
@@ -24,15 +24,13 @@ export class BeneficiosComponent implements OnInit {
   public CodigoMatricula='';
   public IdBeneficio=0;
   public IdBeneficioDetalle=0;
+  public prueba='';
   public Beneficios:Array<any>=[];
   public ListaDatosAdicionales:Array<any>=[];
   public AyudaBeneficio=1;
 
 
-  public DetalleBeneficiosEnvio: DatoAdicionalBeneficioDTO={
-    id:0,
-    contenido:''
-  }
+  public DatoBeneficioContenido:Array<any>=[];
   public DatosBeneficiosEnvio:DetallesDatoAdicionalDTO={
     id:0,
     idMatriculaCabeceraBeneficios:0,
@@ -48,6 +46,7 @@ export class BeneficiosComponent implements OnInit {
     if(this.IdMatricula!=0){
       this.ObtenerBeneficiosMatricula();
       this.ObtenerCodigoMatricula();
+      this.RecorrerContenidoBeneficio();
     }
 
   }
@@ -79,10 +78,9 @@ export class BeneficiosComponent implements OnInit {
     this.DatosBeneficiosEnvio.idMatriculaCabeceraBeneficios=this.IdBeneficio;
     this.DatosBeneficiosEnvio.idMatriculaCabecera=this.IdMatricula;
     this.DatosBeneficiosEnvio.codigoMatricula=this.CodigoMatricula;
-
-    this.DetalleBeneficiosEnvio.id=this.IdBeneficioDetalle;
-    this.DatosBeneficiosEnvio.datosAdicionales.push(this.DetalleBeneficiosEnvio);
-    console.log(this.DetalleBeneficiosEnvio)
+    console.log(this.prueba)
+    console.log(this.DatoBeneficioContenido)
+    this.DatosBeneficiosEnvio.datosAdicionales=this.DatoBeneficioContenido;
     this._BeneficiosService.AgregarDetalleDatosAdicionales(this.DatosBeneficiosEnvio).subscribe({
       next: (x) => {
       },
@@ -98,5 +96,10 @@ export class BeneficiosComponent implements OnInit {
     }
     return 0;
   }
-
+  RecorrerContenidoBeneficio(){
+    this.Beneficios.forEach((x:any)=>{
+      x.value
+      console.log(x.value)
+    })
+  }
 }

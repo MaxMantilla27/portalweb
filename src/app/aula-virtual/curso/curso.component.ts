@@ -62,7 +62,6 @@ export class CursoComponent implements OnInit {
     });
     this._HelperService.recibirCombosPerfil.subscribe({
       next: (x) => {
-        console.log(x);
 
         this.datos = x;
         if (x.datosAlumno.idGenero != 2) {
@@ -98,7 +97,6 @@ export class CursoComponent implements OnInit {
   RegistroProgramaMatriculadoPorIdMatricula(){
     this._DatosPerfilService.RegistroProgramaMatriculadoPorIdMatricula(this.idMatricula).subscribe({
       next:x=>{
-        console.log(x)
         this.curso=x
       }
     })
@@ -108,7 +106,6 @@ export class CursoComponent implements OnInit {
       .ObtenerListadoProgramaContenido(this.idMatricula)
       .subscribe({
         next: (x) => {
-          console.log(x);
           this.programEstructura = x;
           this.migaPan.push(
             {

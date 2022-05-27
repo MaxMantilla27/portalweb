@@ -32,21 +32,20 @@
                 </div>
               </div>
           </div>
-          <div class="Contenidoeneficio" *ngIf="BeneficioPendiente">
+          <div class="Contenidoeneficio" *ngIf="BeneficioPendiente && beneficio.idEstadoSolicitud==3">
             <mat-checkbox color="primary"  class="terminos">
-              <p style="margin-left: 20px;">Solicito ayuda para la gestión de mi beneficio.</p>
+              <p style="margin-left: 20px;font-size: 15px;">Solicito ayuda para la gestión de mi beneficio.</p>
             </mat-checkbox>
             <div class="IndicacionBeneficio">
               <img class="ImgIndicacionesContent" src="../../../../assets/icons/mano45-naranja-50.svg">
               Dejenos sus datos de acceso en el portal para ayudarlo en su gestión para obtener su beneficio.
             </div>
-            <ng-container *ngFor="let datoBeneficio of beneficio.listaDatosAdicionales;let j=index">
+            <ng-container *ngFor="let datoBeneficio of beneficio.listaDatosAdicionales;let j=index" >
               <div *ngIf="beneficio.idConfiguracionBeneficioProgramaGeneral==datoBeneficio.idConfiguracionBeneficio">
                 <div class="col-md-5" style="display: flex; margin-left: 20px;margin-top: 20px;margin-right: 20px;align-items:center">
                   <p style="margin-right: 20px;"> {{datoBeneficio.campoSolicitado}}:</p>
-                  <mat-form-field appearance="outline" [floatLabel]="'always'">
-                    <input  [name]="datoBeneficio.campoSolicitado" #{{datoBeneficio.campoSolicitado}}="ngModel" type="text" [placeholder]="datoBeneficio.campoSolicitado" [(ngModel)]="datoBeneficio.value"matInput />
-                    <div *ngIf="datoBeneficio.value.lenght>0" BeneficioIngresado=true></div>
+                  <mat-form-field appearance="outline" [floatLabel]="'always'" >
+                    <input  [name]="datoBeneficio.campoSolicitado" #{{datoBeneficio.campoSolicitado}}="ngModel" type="text"  [placeholder]="datoBeneficio.campoSolicitado" [(ngModel)]="datoBeneficio.value" matInput />
                     <mat-error *ngIf="datoBeneficio.valid==false" style="float: right;">Debe ingresar su {{datoBeneficio.campoSolicitado}}</mat-error>
                   </mat-form-field>
 
