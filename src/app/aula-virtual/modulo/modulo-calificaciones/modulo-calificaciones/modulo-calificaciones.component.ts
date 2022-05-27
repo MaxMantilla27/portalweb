@@ -23,9 +23,13 @@ export class ModuloCalificacionesComponent implements OnInit {
   public promedio=0;
   public idMatricula=0;
   ngOnInit(): void {
-    this.ObtenerCriteriosEvaluacionCurso()
   }
+  ngOnChanges(changes: SimpleChanges): void {
+    if(this.IdMatriculaCabecera!=0){
+      this.ObtenerCriteriosEvaluacionCurso()
+    }
 
+  }
   ObtenerCriteriosEvaluacionCurso(){
     this._NotaService.ListadoCriteriosEvaluacionPorCurso(this.IdMatriculaCabecera,this.IdPEspecifico,1).subscribe({
       next:x=>{

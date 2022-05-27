@@ -1,6 +1,7 @@
-import { Component, Input, OnInit, SimpleChanges } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { DatoAdicionalBeneficioDTO, DetallesDatoAdicionalDTO } from 'src/app/Core/Models/BeneficiosDTO';
+import { Component, Input, NgModule, OnInit, SimpleChanges } from '@angular/core';
+import { resetFakeAsyncZone } from '@angular/core/testing';
+import { FormBuilder, FormControl, FormGroup, NgModel, Validators } from '@angular/forms';
+import { BeneficiosContenidoDTO, DatoAdicionalBeneficioDTO, DetallesDatoAdicionalDTO } from 'src/app/Core/Models/BeneficiosDTO';
 import { BeneficioService } from 'src/app/Core/Shared/Services/Beneficio/beneficio.service';
 import { ProgramaContenidoService } from 'src/app/Core/Shared/Services/ProgramaContenido/programa-contenido.service';
 
@@ -10,30 +11,19 @@ import { ProgramaContenidoService } from 'src/app/Core/Shared/Services/ProgramaC
   styleUrls: ['./beneficios.component.scss']
 })
 export class BeneficiosComponent implements OnInit {
-  public userForm: FormGroup = new FormGroup({});
+
   constructor(
     private fb: FormBuilder,
     private _BeneficiosService: BeneficioService,
     private _ProgramaContenidoService: ProgramaContenidoService,
-  ) {this.userForm =fb.group({
-    Identificador: [''],
-    Codigo: [''],
-    Usuario: [''],
-    Clave: [''],
-    CorreoAsociado: [''],
-  }); }
+  ) {
+  }
   @Input() Capitulo='';
   @Input() IdMatricula=0;
-  public isCollapsed=true;
   public CodigoMatricula='';
-  public IdBeneficio=0;
-  public IdBeneficioDetalle=0;
+  public BeneficioPendiente=-1;
+  public AyudaBeneficio=1;
   public Beneficios:Array<any>=[];
-
-  public DetalleBeneficiosEnvio: DatoAdicionalBeneficioDTO={
-    id:0,
-    contenido:''
-  }
   public DatosBeneficiosEnvio:DetallesDatoAdicionalDTO={
     id:0,
     idMatriculaCabeceraBeneficios:0,
@@ -41,8 +31,6 @@ export class BeneficiosComponent implements OnInit {
     codigoMatricula:'',
     datosAdicionales:[],
   }
-
-
   ngOnInit(): void {
   }
   ngOnChanges(changes: SimpleChanges): void {
@@ -50,13 +38,18 @@ export class BeneficiosComponent implements OnInit {
       this.ObtenerBeneficiosMatricula();
       this.ObtenerCodigoMatricula();
     }
-
   }
   ObtenerBeneficiosMatricula(){
     this._BeneficiosService.ListaBeneficioMatriculaAlumnoActivo(this.IdMatricula).subscribe({
       next:x=>{
         this.Beneficios=x
-        console.log(this.Beneficios);
+        console.log(this.Beneficios)
+        this.Beneficios.forEach((y:any)=>{
+          y.listaDatosAdicionales.forEach((z:any)=>{
+            z.value=''
+            z.valid=true
+          })
+        })
       }
     })
   }
@@ -68,18 +61,27 @@ export class BeneficiosComponent implements OnInit {
     })
   }
 
-  EnviarRegistroBeneficio(){
-
-    this.DatosBeneficiosEnvio.idMatriculaCabeceraBeneficios=this.IdBeneficio;
-    this.DatosBeneficiosEnvio.idMatriculaCabecera=this.IdMatricula;
-    this.DatosBeneficiosEnvio.codigoMatricula=this.CodigoMatricula;
-    this.DetalleBeneficiosEnvio.id=this.IdBeneficioDetalle;
-    this.DetalleBeneficiosEnvio.contenido=this.userForm.get('Contenido')?.value;
-    this.DatosBeneficiosEnvio.datosAdicionales.push(this.DetalleBeneficiosEnvio);
-    console.log(this.DetalleBeneficiosEnvio.contenido)
+  EnviarRegistroBeneficio(i:number){
+    this.RecorrerContenidoBeneficio(i);
     this._BeneficiosService.AgregarDetalleDatosAdicionales(this.DatosBeneficiosEnvio).subscribe({
       next: (x) => {
       },
+      complete: () => {
+        this.ObtenerBeneficiosMatricula();
+      },
     })
-}
+
+  }
+  RecorrerContenidoBeneficio(i:number){
+    this.DatosBeneficiosEnvio.datosAdicionales=[]
+    this.Beneficios[i].listaDatosAdicionales.forEach((y:any)=>{
+      if(y.value!=''){
+        this.DatosBeneficiosEnvio.idMatriculaCabeceraBeneficios=this.Beneficios[i].id;
+        this.DatosBeneficiosEnvio.idMatriculaCabecera=this.IdMatricula;
+        this.DatosBeneficiosEnvio.codigoMatricula=this.CodigoMatricula;
+          console.log(y.value)
+      this.DatosBeneficiosEnvio.datosAdicionales.push({id:y.idDatoAdicional,contenido:y.value})
+      }
+    })
+  }
 }

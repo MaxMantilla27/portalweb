@@ -19,20 +19,19 @@ export class ModuloForoComponent implements OnInit, OnChanges {
     private _AvatarService: AvatarService
   ) {}
 
-  @Input() IdPgeneral=0
-  @Input() IdPprincipal=0
-  @Input() IdPEspecificoPadre=0
-  @Input() IdPEspecificoHijo=0
-  @Input() Capitulo='';
+  @Input() IdPgeneral = 0;
+  @Input() IdPprincipal = 0;
+  @Input() IdPEspecificoPadre = 0;
+  @Input() IdPEspecificoHijo = 0;
+  @Input() Capitulo = '';
+  public NuevoForo=false;
+  public ContenidoForo=false;
   public IdForo=0;
-  public NuevoForo =false;
-  public ContenidoForo = false;
-  public foro:Array<any>=[]
-  public paginacion=[1]
-  public pagina=1;
-  public paginaCeil=Math.ceil(this.pagina/5)
-  ngOnInit(): void {
-  }
+  public foro: Array<any> = [];
+  public paginacion = [1];
+  public pagina = 1;
+  public paginaCeil = Math.ceil(this.pagina / 5);
+  ngOnInit(): void {}
   ngOnChanges(changes: SimpleChanges): void {
     if (this.IdPgeneral != 0) {
       this.ObtenerForoCurso();
