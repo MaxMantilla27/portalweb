@@ -62,6 +62,7 @@ export class ModuloForoContenidoComponent implements OnInit {
     })
   }
   EnviarRespuestaForo(){
+    this.ForoRespuestaEnvio.contenido='';
     this.ForoRespuestaEnvio.idForoCurso = this.IdPregunta;
     this.ForoRespuestaEnvio.idPrincipal = this.IdPprincipal;
     this.ForoRespuestaEnvio.idPGeneral = this.IdPgeneral;
@@ -72,8 +73,11 @@ export class ModuloForoContenidoComponent implements OnInit {
 
     this._ForoCursoService.EnviarRegistroRespuestaForo(this.ForoRespuestaEnvio).subscribe({
       next: (x) => {
-        this.volver.emit()
+        this.ObtenerRespuestaForo()
       },
     });
+  }
+  VolverAtras(){
+    this.volver.emit()
   }
 }

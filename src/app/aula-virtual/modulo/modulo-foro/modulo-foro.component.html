@@ -81,7 +81,7 @@
       </app-default-button>
       </div>
     </div>
-    <app-modulo-foro-contenido
+    <app-modulo-foro-contenido (volver)="RefrescarForo()"
           [IdPregunta]="IdForo" [IdPgeneral]="IdPgeneral" [IdPprincipal]="IdPprincipal" [IdPEspecificoPadre]="IdPEspecificoPadre" [IdPEspecificoHijo]="IdPEspecificoHijo">
     </app-modulo-foro-contenido>
   </ng-container>

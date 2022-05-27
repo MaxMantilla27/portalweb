@@ -53,15 +53,15 @@
                     <textarea class="ContenidoRespuestaForo" formControlName="RespuestaForo" rows="4"></textarea>
                   </div>
                   <div class="row" style="margin-top: 20px;">
-                  <div style="width: 50%;"></div>
-                    <div style="width: 50%;display:flex">
+                  <div style="width: 30%;"></div>
+                    <div style="width: 70%;display:flex">
                       <div class="col-6 col-md-6 col-lg-6">
-                        <app-default-button onclick="window.history.go(-1)"  [confs]="{color:'primary',titulo:'Cerrar'}"
+                        <app-default-button (click)="VolverAtras()"  [confs]="{color:'primary',titulo:'Cerrar'}"
                         [style]="'width: 95%;margin-top: 20px;'"></app-default-button>
                       </div>
                       <div class="col-6 col-md-6 col-lg-6">
                         <app-default-button [confs]="{color:'primary',titulo:'Publicar Comentario'}" [disabled]="!userForm.valid"
-                        [style]="'width: 95%;margin-top: 20px;'"(ButtoclClick)="EnviarRespuestaForo()" onclick="window.history.go(-1)"></app-default-button>
+                        [style]="'width: 95%;margin-top: 20px;'"(ButtoclClick)="EnviarRespuestaForo()" ></app-default-button>
                       </div>
                     </div>
                   </div>
