@@ -2,7 +2,7 @@
 <ng-container *ngIf="NuevoForo">
 
   <!-- Nuevo Foro -->
-  <div class="row" style="align-items: center;">
+  <div class="row" style="align-items: center;width: 100%;">
     <div class="tipoIndicacionTitle col-12 col-md-9 col-lg-10">
       <img class="ImgIndicacionesContent" src="../../../../assets/icons/foro-naranja.svg">
       <div>Foro</div>
@@ -13,7 +13,7 @@
     </app-default-button>
     </div>
   </div>
-  <app-modulo-foro-insert
+  <app-modulo-foro-insert (volver)="RefrescarForo()"
   [IdPgeneral]="IdPgeneral" [IdPprincipal]="IdPprincipal" [IdPEspecificoPadre]="IdPEspecificoPadre" [IdPEspecificoHijo]="IdPEspecificoHijo">
 </app-modulo-foro-insert>
 </ng-container>
@@ -21,7 +21,7 @@
   <ng-container *ngIf="!ContenidoForo">
 
     <!-- Vista de Foro -->
-    <div class="row" style="align-items: center;">
+    <div class="row" style="align-items: center;width: 100%;">
       <div class="tipoIndicacionTitle col-12 col-md-9 col-lg-10">
         <img class="ImgIndicacionesContent" src="../../../../assets/icons/foro-naranja.svg">
         <div>Foro</div>
@@ -70,7 +70,7 @@
 
   <!-- Contenido del foro -->
   <ng-container *ngIf="ContenidoForo">
-    <div class="row" style="align-items: center;">
+    <div class="row" style="align-items: center;width: 100%;">
       <div class="tipoIndicacionTitle col-12 col-md-19 col-lg-10">
         <img class="ImgIndicacionesContent" src="../../../../assets/icons/foro-naranja.svg">
         <div>Foro</div>
