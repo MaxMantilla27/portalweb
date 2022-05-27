@@ -124,20 +124,45 @@
             </div>
           </ng-template>
           <div style="padding: 10px 30px;">
-            <app-curso-proyecto *ngIf="curso!=undefined" [curso]="curso" [idProyecto]="curso.idProyecto" [idPGeneral]="curso.idPGeneral" [idPEspecifico]="curso.idPEspecifico">
+            <app-curso-proyecto [curso]="curso" [idProyecto]="curso.idProyecto" [idPGeneral]="curso.idPGeneral" [idPEspecifico]="curso.idPEspecifico">
 
             </app-curso-proyecto>
           </div>
         </mat-tab>
         <mat-tab>
           <ng-template mat-tab-label>
-            <div class="contentHeaderM">
+            <div class="contentHeaderM" [ngClass]="{'ActiveChil':CertificadoActive==true}">
               <div class="iconMat iconCertificados"></div>
               <div class="titleMatr">Certificados</div>
             </div>
           </ng-template>
-          <div style="padding: 10px 30px;">Certificados</div>
+          <div style="padding: 10px 30px;"><app-curso-certificado  [curso]="curso" [idProyecto]="curso.idProyecto" [idPGeneral]="curso.idPGeneral" [idPEspecifico]="curso.idPEspecifico"></app-curso-certificado></div>
         </mat-tab>
+
+        <ng-container *ngIf="CertificadoActive==true">
+
+          <mat-tab >
+            <ng-template mat-tab-label class="tabSubcontent">
+              <div class="contentHeaderM subContent">
+                <div class="titleMatr">Certificado Digital</div>
+              </div>
+            </ng-template>
+            <div style="padding: 10px 30px;">
+              -------------------
+            </div>
+          </mat-tab>
+          <mat-tab >
+            <ng-template mat-tab-label>
+              <div class="contentHeaderM subContent">
+                <div class="titleMatr">Certificado Fisico</div>
+              </div>
+            </ng-template>
+            <div style="padding: 10px 30px;">
+              --------------------
+            </div>
+          </mat-tab>
+        </ng-container>
+
         <mat-tab>
           <ng-template mat-tab-label>
             <div class="contentHeaderM">
