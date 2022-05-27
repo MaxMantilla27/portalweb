@@ -429,6 +429,12 @@ mat-sidenav-content{
   -ms-user-select: none;
   user-select: none;
 }
+.material-icons{
+  -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
 .snackbarCrucigramaSucces{
   border-color: #c3e6cb;
   background: #d4edda;

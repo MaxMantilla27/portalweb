@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ForoRespuestaDTO } from 'src/app/Core/Models/ForoDTO';
 import { AvatarService } from 'src/app/Core/Shared/Services/Avatar/avatar.service';
@@ -24,6 +24,7 @@ export class ModuloForoContenidoComponent implements OnInit {
   @Input() IdPEspecificoPadre=0;
   @Input() IdPEspecificoHijo=0;
   @Input() IdPregunta=0;
+  @Output() volver: EventEmitter<void> = new EventEmitter<void>();
   public esDocente=false;
   public foroContenido:Array<any>=[];
   public foroRespuesta:Array<any>=[];
@@ -71,6 +72,7 @@ export class ModuloForoContenidoComponent implements OnInit {
 
     this._ForoCursoService.EnviarRegistroRespuestaForo(this.ForoRespuestaEnvio).subscribe({
       next: (x) => {
+        this.volver.emit()
       },
     });
   }

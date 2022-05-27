@@ -152,6 +152,11 @@ export class SesionesComponent implements OnInit {
         index
       ].registroEstructuraCursoTarea[indexSesion].charge=true
     }
+    if(tipo==3){
+      this.estructuraCapitulo.registroEstructuraCursoCapitulo[
+        index
+      ].registroEstructuraCursoEncuesta[indexSesion].charge=true
+    }
   }
   changeSesion(index: number, sesionIndex: number) {
     if (
@@ -213,6 +218,7 @@ export class SesionesComponent implements OnInit {
     var s = 0;
     var ss = 0;
     var t = 0;
+    var e=0
     this.estructuraCapitulo.registroEstructuraCursoCapitulo.forEach(
       (x: any) => {
         x.opened = false;
@@ -235,6 +241,30 @@ export class SesionesComponent implements OnInit {
           });
           if (x.registroEstructuraCursoEncuesta != null) {
             if (this.tipo == 3) {
+              x.registroEstructuraCursoEncuesta.forEach((enc: any) => {
+                e++;
+                enc.charge = false;
+                if (enc.idEncuesta == this.idSesion) {
+                  if (enc.nombreEncuesta == 'Encuesta Inicial') {
+                    this.tabIndex+=1;
+                    enc.charge = true;
+                    this.migaPan.push({
+                      titulo: enc.nombreEncuesta,
+                      urlWeb:
+                        '/AulaVirtual/MisCursos/' +
+                        this.json.IdMatriculaCabecera +
+                        '/' +
+                        this.idPEspecificoHijo +
+                        '/' +
+                        this.tipo +
+                        '/' +
+                        this.idcapitulo +
+                        '/' +
+                        this.idSesion,
+                    });
+                  }
+                }
+              });
             } else {
               x.registroEstructuraCursoEncuesta.forEach((enc: any) => {
                 if (enc.nombreEncuesta == 'Encuesta Inicial') {
@@ -374,18 +404,41 @@ export class SesionesComponent implements OnInit {
         c++;
       }
     );
+
+    this.estructuraCapitulo.registroEstructuraCursoCapitulo.forEach(
+      (x: any) => {
+        if (x.numeroCapitulo == this.idcapitulo && x.registroEstructuraCursoEncuesta != null && this.tipo == 3) {
+          x.registroEstructuraCursoEncuesta.forEach((enc: any) => {
+            e++;
+            if (enc.idEncuesta == this.idSesion) {
+              if (enc.nombreEncuesta != 'Encuesta Inicial') {
+                enc.charge = true;
+                this.tabIndex += ss + s + t+e;
+                this.migaPan.push({
+                  titulo: enc.nombreEncuesta,
+                  urlWeb:
+                    '/AulaVirtual/MisCursos/' +
+                    this.json.IdMatriculaCabecera +
+                    '/' +
+                    this.idPEspecificoHijo +
+                    '/' +
+                    this.tipo +
+                    '/' +
+                    this.idcapitulo +
+                    '/' +
+                    this.idSesion,
+                });
+              }
+            }
+          });
+        }
+      }
+    );
     this.tabIndex--
     console.log(this.tabIndex);
   }
   tabChanged(tabChangeEvent: MatTabChangeEvent): void {
     // console.log('tabChangeEvent => ', tabChangeEvent);
     // console.log('index => ', tabChangeEvent.index);
-  }
-  getTimeLoaded(index: number) {
-    if (!this.tabLoadTimes[index]) {
-      this.tabLoadTimes[index] = new Date();
-    }
-
-    return this.tabLoadTimes[index];
   }
 }

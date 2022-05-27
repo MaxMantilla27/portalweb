@@ -29,20 +29,18 @@
             <!-- encuesta incial -->
             <ng-container
               *ngIf="item.registroEstructuraCursoEncuesta!=undefined && item.registroEstructuraCursoEncuesta!=null">
-              <ng-container *ngFor="let Encuesta of item.registroEstructuraCursoEncuesta">
+              <ng-container *ngFor="let Encuesta of item.registroEstructuraCursoEncuesta;let e=index">
                 <ng-container *ngIf="Encuesta.tipoExamen=='Encuesta' && Encuesta.nombreEncuesta=='Encuesta Inicial'">
 
                   <mat-tab>
                     <ng-template mat-tab-label>
-                      <div class="contentHeaderM estructuraSubCapitulos" [ngClass]="{'hidetab':item.opened==false}">
+                      <div class="contentHeaderM estructuraSubCapitulos" (click)="changeTab(3,0,i,e,0)" [ngClass]="{'hidetab':item.opened==false}">
                         <div class="titleMatr">{{Encuesta.nombreEncuesta}}</div>
                       </div>
                     </ng-template>
                     <div style="padding: 10px 30px">
-
-                      <ng-template matTabContent>
-                        Content 1 - Loaded: {{getTimeLoaded(1) | date:'medium'}}
-                      </ng-template>
+                        <app-sesion-encuesta [json]="json" [idCapitulo]="item.numeroCapitulo" [NombreCapitulo]="item.nombreCapitulo" [idEncuesta]="Encuesta.idEncuesta"
+                        [charge]="Encuesta.charge"></app-sesion-encuesta>
                     </div>
                   </mat-tab>
                 </ng-container>
@@ -111,7 +109,8 @@
                     </div>
                   </ng-template>
                   <div style="padding: 10px 30px">
-                      <app-sesion-tarea [json]="json" [idCapitulo]="item.numeroCapitulo" [NombreCapitulo]="item.nombreCapitulo" [idtarea]="tarea.idTarea" [charge]="tarea.charge"></app-sesion-tarea>
+                      <app-sesion-tarea [json]="json" [idCapitulo]="item.numeroCapitulo" [NombreCapitulo]="item.nombreCapitulo" [idtarea]="tarea.idTarea"
+                      [charge]="tarea.charge"></app-sesion-tarea>
                   </div>
                 </mat-tab>
               </ng-container>
@@ -120,20 +119,19 @@
             <!-- encuestas finales -->
             <ng-container
               *ngIf="item.registroEstructuraCursoEncuesta!=undefined && item.registroEstructuraCursoEncuesta!=null">
-              <ng-container *ngFor="let Encuesta of item.registroEstructuraCursoEncuesta">
+              <ng-container *ngFor="let Encuesta of item.registroEstructuraCursoEncuesta;let e=index">
                 <ng-container *ngIf="Encuesta.tipoExamen=='Encuesta' && Encuesta.nombreEncuesta=='Encuesta Intermedia'">
 
                   <mat-tab>
                     <ng-template mat-tab-label>
-                      <div class="contentHeaderM estructuraSubCapitulos" [ngClass]="{'hidetab':item.opened==false}">
+                      <div class="contentHeaderM estructuraSubCapitulos" (click)="changeTab(3,0,i,e,0)" [ngClass]="{'hidetab':item.opened==false}">
                         <div class="titleMatr">{{Encuesta.nombreEncuesta}}</div>
                       </div>
                     </ng-template>
                     <div style="padding: 10px 30px">
 
-                      <ng-template matTabContent>
-                        Content 1 - Loaded: {{getTimeLoaded(1) | date:'medium'}}
-                      </ng-template>
+                        <app-sesion-encuesta [json]="json" [idCapitulo]="item.numeroCapitulo" [NombreCapitulo]="item.nombreCapitulo" [idEncuesta]="Encuesta.idEncuesta"
+                        [charge]="Encuesta.charge"></app-sesion-encuesta>
                     </div>
                   </mat-tab>
                 </ng-container>
@@ -141,15 +139,14 @@
 
                   <mat-tab>
                     <ng-template mat-tab-label>
-                      <div class="contentHeaderM estructuraSubCapitulos" [ngClass]="{'hidetab':item.opened==false}">
+                      <div class="contentHeaderM estructuraSubCapitulos" (click)="changeTab(3,0,i,e,0)" [ngClass]="{'hidetab':item.opened==false}">
                         <div class="titleMatr">{{Encuesta.nombreEncuesta}}</div>
                       </div>
                     </ng-template>
                     <div style="padding: 10px 30px">
 
-                      <ng-template matTabContent>
-                        Content 1 - Loaded: {{getTimeLoaded(1) | date:'medium'}}
-                      </ng-template>
+                        <app-sesion-encuesta [json]="json" [idCapitulo]="item.numeroCapitulo" [NombreCapitulo]="item.nombreCapitulo" [idEncuesta]="Encuesta.idEncuesta"
+                        [charge]="Encuesta.charge"></app-sesion-encuesta>
                     </div>
                   </mat-tab>
                 </ng-container>
