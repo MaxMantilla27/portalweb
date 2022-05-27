@@ -11,7 +11,7 @@
                 </div>
                 <div class="titleForo" style="font-weight: bold;">Mensaje: </div>
                 <div class="row">
-                  <textarea class="ContenidoPreguntaForo" formControlName="Contenido" rows="4"></textarea>
+                  <textarea class="ContenidoPreguntaForo" formControlName="Contenido" rows="4" ></textarea>
                 </div>
                 <div class="row" style="margin-top: 20px;">
                   <div style="width: 50%;"></div>
@@ -22,7 +22,7 @@
                     </div>
                     <div class="col-6 col-md-6 col-lg-6">
                       <app-default-button [confs]="{color:'primary',titulo:'Publica Tema'}" [disabled]="!userForm.valid"
-                      [style]="'width: 95%;margin-top: 20px;'"(ButtoclClick)="InsertarForo()" onclick="window.history.go(-1)"></app-default-button>
+                      [style]="'width: 95%;margin-top: 20px;'"(ButtoclClick)="InsertarForo()"></app-default-button>
                     </div>
                   </div>
                 </div>

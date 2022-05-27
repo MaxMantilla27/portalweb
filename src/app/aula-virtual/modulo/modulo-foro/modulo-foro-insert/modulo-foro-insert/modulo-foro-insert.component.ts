@@ -3,10 +3,11 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { ForoDTO } from 'src/app/Core/Models/ForoDTO';
 import { ForoCursoService } from 'src/app/Core/Shared/Services/ForoCurso/foro-curso.service';
 
+
 @Component({
   selector: 'app-modulo-foro-insert',
   templateUrl: './modulo-foro-insert.component.html',
-  styleUrls: ['./modulo-foro-insert.component.scss']
+  styleUrls: ['./modulo-foro-insert.component.scss'],
 })
 export class ModuloForoInsertComponent implements OnInit {
   public userForm: FormGroup = new FormGroup({});
