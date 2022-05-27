@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { CardMatriculasDTO } from 'src/app/Core/Models/BasicDTO';
 import { DatosPerfilService } from 'src/app/Core/Shared/Services/DatosPerfil/datos-perfil.service';
+import { SessionStorageService } from 'src/app/Core/Shared/Services/session-storage.service';
 
 @Component({
   selector: 'app-mis-cursos',
@@ -9,7 +10,10 @@ import { DatosPerfilService } from 'src/app/Core/Shared/Services/DatosPerfil/dat
   encapsulation: ViewEncapsulation.None,
 })
 export class MisCursosComponent implements OnInit {
-  constructor(private _DatosPerfilService: DatosPerfilService) {}
+  constructor(
+    private _DatosPerfilService: DatosPerfilService,
+    private _SessionStorageService:SessionStorageService
+    ) {}
 
   public migaPan = [
     {
@@ -35,5 +39,8 @@ export class MisCursosComponent implements OnInit {
         console.log(this.matriculas);
       },
     });
+  }
+  saveIndex(index:number){
+    this._SessionStorageService.SessionSetValue('cursoIndex',index.toString());
   }
 }

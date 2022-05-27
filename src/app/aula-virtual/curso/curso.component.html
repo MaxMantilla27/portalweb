@@ -116,7 +116,7 @@
             </app-curso-modulos>
           </div>
         </mat-tab>
-        <mat-tab>
+        <mat-tab  *ngIf="curso!=undefined && curso.proyectoAplicacion">
           <ng-template mat-tab-label>
             <div class="contentHeaderM">
               <div class="iconMat iconProyectos"></div>
@@ -147,7 +147,19 @@
           </ng-template>
           <div style="padding: 10px 30px;">Trámites</div>
         </mat-tab>
-        <mat-tab>
+
+        <mat-tab *ngIf="curso!=undefined && curso.webibarActivo">
+          <ng-template mat-tab-label>
+            <div class="contentHeaderM">
+              <div class="iconMat iconWebinars"></div>
+              <div class="titleMatr">Webinar</div>
+            </div>
+          </ng-template>
+          <div style="padding: 10px 30px">
+            <app-modulo-webinars [Capitulo]="programEstructura.programaGeneral" [IdMatriculaCabecera]="idMatricula"></app-modulo-webinars>
+          </div>
+        </mat-tab>
+        <mat-tab  *ngIf="curso!=undefined && curso.benficioSolicitado">
           <ng-template mat-tab-label>
             <div class="contentHeaderM">
               <div class="iconMat iconBeneficios"></div>
