@@ -9,6 +9,7 @@ import {
 import { DatosPerfilService } from 'src/app/Core/Shared/Services/DatosPerfil/datos-perfil.service';
 import { HelperService } from 'src/app/Core/Shared/Services/helper.service';
 import { ProgramaContenidoService } from 'src/app/Core/Shared/Services/ProgramaContenido/programa-contenido.service';
+import { SessionStorageService } from 'src/app/Core/Shared/Services/session-storage.service';
 
 @Component({
   selector: 'app-curso',
@@ -21,9 +22,10 @@ export class CursoComponent implements OnInit {
     private _HelperService: HelperService,
     private _ProgramaContenidoService: ProgramaContenidoService,
     private _ActivatedRoute: ActivatedRoute,
-    private _DatosPerfilService:DatosPerfilService
+    private _DatosPerfilService:DatosPerfilService,
+    private _SessionStorageService:SessionStorageService
   ) {}
-  public tabIndex = 2;
+  public tabIndex = this._SessionStorageService.SessionGetValue('cursoIndex')==''?0:parseInt(this._SessionStorageService.SessionGetValue('cursoIndex'));
   public IndicacionActive = false;
   public migaPan = [
     {
@@ -44,15 +46,12 @@ export class CursoComponent implements OnInit {
     programaGeneral: '',
   };
   public curso:any
-  public videoPreguntas =
-    'https://repositorioweb.blob.core.windows.net/repositorioweb/aulavirtual/guias/preguntas/preguntas-hombres.mp4';
-  public videoCrucigramas =
-    'https://repositorioweb.blob.core.windows.net/repositorioweb/aulavirtual/guias/crucigrama/crucigrama-hombre.mp4';
-  public videoTareas =
-    'https://repositorioweb.blob.core.windows.net/repositorioweb/aulavirtual/guias/preguntas/preguntas-hombres.mp4';
-  public videoTrabajoP =
-    'https://repositorioweb.blob.core.windows.net/repositorioweb/aulavirtual/guias/preguntas/preguntas-hombres.mp4';
+  public videoPreguntas ='https://repositorioweb.blob.core.windows.net/repositorioweb/aulavirtual/guias/preguntas/preguntas-hombres.mp4';
+  public videoCrucigramas ='https://repositorioweb.blob.core.windows.net/repositorioweb/aulavirtual/guias/crucigrama/crucigrama-hombre.mp4';
+  public videoTareas ='https://repositorioweb.blob.core.windows.net/repositorioweb/aulavirtual/guias/preguntas/preguntas-hombres.mp4';
+  public videoTrabajoP ='https://repositorioweb.blob.core.windows.net/repositorioweb/aulavirtual/guias/preguntas/preguntas-hombres.mp4';
   ngOnInit(): void {
+    this._SessionStorageService.SessionDeleteValue('cursoIndex');
     this._ActivatedRoute.params.subscribe({
       next: (x) => {
         this.idMatricula = parseInt(x['IdMatricula']);
@@ -65,14 +64,10 @@ export class CursoComponent implements OnInit {
 
         this.datos = x;
         if (x.datosAlumno.idGenero != 2) {
-          this.videoPreguntas =
-            'https://repositorioweb.blob.core.windows.net/repositorioweb/aulavirtual/guias/preguntas/preguntas-mujeres.mp4';
-          this.videoCrucigramas =
-            'https://repositorioweb.blob.core.windows.net/repositorioweb/aulavirtual/guias/crucigrama/crucigrama-mujer.mp4';
-          this.videoTareas =
-            'https://repositorioweb.blob.core.windows.net/repositorioweb/aulavirtual/guias/preguntas/preguntas-hombres.mp4';
-          this.videoTrabajoP =
-            'https://repositorioweb.blob.core.windows.net/repositorioweb/aulavirtual/guias/preguntas/preguntas-hombres.mp4';
+          this.videoPreguntas ='https://repositorioweb.blob.core.windows.net/repositorioweb/aulavirtual/guias/preguntas/preguntas-mujeres.mp4';
+          this.videoCrucigramas ='https://repositorioweb.blob.core.windows.net/repositorioweb/aulavirtual/guias/crucigrama/crucigrama-mujer.mp4';
+          this.videoTareas ='https://repositorioweb.blob.core.windows.net/repositorioweb/aulavirtual/guias/preguntas/preguntas-hombres.mp4';
+          this.videoTrabajoP ='https://repositorioweb.blob.core.windows.net/repositorioweb/aulavirtual/guias/preguntas/preguntas-hombres.mp4';
         }
       },
     });
@@ -97,6 +92,7 @@ export class CursoComponent implements OnInit {
   RegistroProgramaMatriculadoPorIdMatricula(){
     this._DatosPerfilService.RegistroProgramaMatriculadoPorIdMatricula(this.idMatricula).subscribe({
       next:x=>{
+        console.log(x)
         this.curso=x
       }
     })

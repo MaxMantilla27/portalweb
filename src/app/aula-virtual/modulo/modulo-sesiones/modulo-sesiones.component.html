@@ -26,7 +26,7 @@
         <ng-container *ngFor="let Encuesta of item.registroEstructuraCursoEncuesta">
           <ng-container *ngIf="Encuesta.tipoExamen=='Encuesta' && Encuesta.nombreEncuesta=='Encuesta Inicial'">
             <div class="TareaYEncuesta">
-              <div><i class="material-icons"
+              <div  [routerLink]="'3/'+Encuesta.numeroCapitulo+'/'+Encuesta.idEncuesta"><i class="material-icons"
                   style="color:#fe7112 ;margin-right: 20px;">check_circle</i>{{Encuesta.nombreEncuesta}}</div>
             </div>
           </ng-container>
@@ -39,7 +39,7 @@
             {{item.nombreCapitulo}}</div>
           <div class="col-12 col-md-5 col-lg-3" style="display: flex;justify-content: flex-end;align-items: center;">
             <div class="NSesionCapitulo">{{item.numerosesion}} Sesiones</div>
-            <div class="promedioCapitulo">Promedio: <strong>{{item.promedioCalificacion}}</strong></div>
+            <div class="promedioCapitulo">Promedio: <strong>{{item.promedioCalificacion | number:'1.0-2'}}</strong></div>
           </div>
         </div>
         <div class="contentCapituloSesion ">
@@ -134,7 +134,7 @@
         <ng-container *ngFor="let Encuesta of item.registroEstructuraCursoEncuesta">
           <ng-container *ngIf="Encuesta.tipoExamen=='Encuesta' && Encuesta.nombreEncuesta=='Encuesta Intermedia'">
             <div class="TareaYEncuesta">
-              <div><i class="material-icons"
+              <div  [routerLink]="'3/'+Encuesta.numeroCapitulo+'/'+Encuesta.idEncuesta"><i class="material-icons"
                   style="color:#fe7112 ;margin-right: 20px;">check_circle</i>{{Encuesta.nombreEncuesta}}</div>
             </div>
           </ng-container>
@@ -142,14 +142,12 @@
         <ng-container *ngFor="let Encuesta of item.registroEstructuraCursoEncuesta">
           <ng-container *ngIf="Encuesta.tipoExamen=='Encuesta' && Encuesta.nombreEncuesta=='Encuesta Final'">
             <div class="TareaYEncuesta">
-              <div><i class="material-icons"
+              <div  [routerLink]="'3/'+Encuesta.numeroCapitulo+'/'+Encuesta.idEncuesta"><i class="material-icons"
                   style="color:#fe7112 ;margin-right: 20px;">check_circle</i>{{Encuesta.nombreEncuesta}}</div>
             </div>
           </ng-container>
         </ng-container>
       </ng-container>
     </ng-container>
-
-
   </ng-container>
 </div>

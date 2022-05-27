@@ -48,8 +48,13 @@
         <img *ngIf="tipo==3 && urlDiapo!=''" [src]="urlDiapo" alt="" style="width: 100%;height: auto;">
       </div>
       <div class="row" style="width: 100%;height: 100%; display: flex; align-items: center;justify-content: center" *ngIf="tipo==4 && preguntas!=undefined && preguntas.length>0">
-
-        <div class="col-12 col-md-10 col-lg-10 preguntaInteractiva" >
+        <div *ngIf="finalizado">
+          <video [src]="videoFinal" autoplay style="    height: auto;
+          width: 100%;" (ended)="videocontinuar=true"></video>
+          <app-default-button *ngIf="videocontinuar" (ButtoclClick)="continuarVideo()" [confs]="{color:'danger',titulo:'Continuar con la sesión'}" [icon]="''"
+          [style]="'padding: 0px 20px;width:100%;margin-top: -8px;border-radius: 0px;'"></app-default-button>
+        </div>
+        <div class="col-12 col-md-10 col-lg-10 preguntaInteractiva" *ngIf="!finalizado">
           <div class="headerPregunta">Evaluacion</div>
 
           <div class="contentPregunta">
@@ -88,13 +93,16 @@
                 </div>
               </ng-container>
 
-
+              <div class="FeddbackCorrecto" *ngIf="feedCorrecto!=''">{{feedCorrecto}}</div>
             </div>
           </div>
           <div class="footerPregunta">
 
-            <app-default-button (ButtoclClick)="ValidarPreguntaInteractiva()"
+            <app-default-button *ngIf="preguntaActual<(preguntas.length-1)" (ButtoclClick)="siguientePregunta()" [disabled]="!preguntas[preguntaActual].valid"
               [confs]="{color:'primary',titulo:'Siguiente'}" [icon]="''"
+              [style]="'padding: 0px 20px;margin:0px'"></app-default-button>
+            <app-default-button *ngIf="preguntaActual==(preguntas.length-1)" (ButtoclClick)="finalizarPreguntas()" [disabled]="!preguntas[preguntaActual].valid"
+              [confs]="{color:'primary',titulo:'Finalizar'}" [icon]="''"
               [style]="'padding: 0px 20px;margin:0px'"></app-default-button>
           </div>
         </div>
@@ -102,7 +110,7 @@
     </div>
   </div>
 </ng-container>
-<div class="row">
+<div class="row" *ngIf="tipo!=4">
   <div class="col-12 col-md-12 col-lg-12">
     <input type="range" min="0" [max]="tiempovideo" [(ngModel)]="tiempoactualvideo" #ref
       (change)="changeBarra(ref.value)" style="width: 100%;">
