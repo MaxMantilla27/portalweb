@@ -43,6 +43,7 @@ export class BeneficiosComponent implements OnInit {
     this._BeneficiosService.ListaBeneficioMatriculaAlumnoActivo(this.IdMatricula).subscribe({
       next:x=>{
         this.Beneficios=x
+        console.log(this.Beneficios)
         this.Beneficios.forEach((y:any)=>{
           y.listaDatosAdicionales.forEach((z:any)=>{
             z.value=''
@@ -65,9 +66,14 @@ export class BeneficiosComponent implements OnInit {
     this._BeneficiosService.AgregarDetalleDatosAdicionales(this.DatosBeneficiosEnvio).subscribe({
       next: (x) => {
       },
+      complete: () => {
+        this.ObtenerBeneficiosMatricula();
+      },
     })
+
   }
   RecorrerContenidoBeneficio(i:number){
+    this.DatosBeneficiosEnvio.datosAdicionales=[]
     this.Beneficios[i].listaDatosAdicionales.forEach((y:any)=>{
       if(y.value!=''){
         this.DatosBeneficiosEnvio.idMatriculaCabeceraBeneficios=this.Beneficios[i].id;
@@ -77,8 +83,5 @@ export class BeneficiosComponent implements OnInit {
       this.DatosBeneficiosEnvio.datosAdicionales.push({id:y.idDatoAdicional,contenido:y.value})
       }
     })
-  }
-  LimpiarCampos(){
-    this.DatosBeneficiosEnvio.datosAdicionales=[]
   }
 }

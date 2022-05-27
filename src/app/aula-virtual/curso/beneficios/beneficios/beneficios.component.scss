@@ -1,7 +1,7 @@
 .EncabezadoBeneficio{
   border-bottom: solid 1px #b2b2b2;
   font-size: 18px;
-  margin: 10px 0px;
+  margin: 5px 0px;
   display: flex;
 }
 .tipoIndicacionTitle {
@@ -25,6 +25,11 @@
   border-radius: 50%;
   background: #F4F4F4;
 }
+.ContenidoBeneficio{
+  margin-top: 20px;
+  margin-bottom: 35px;
+  margin-left: 50px;
+}
 .IndicacionBeneficio{
   display: flex;
   justify-content: flex-start;
@@ -33,7 +38,6 @@
   margin-bottom: 20px;
   border: solid 1px #fff4e8;
   align-items: center;
-  margin-top: 20px;
   height: 50px;
 }
 .cabeceraExpandBeneficio{
@@ -51,5 +55,12 @@
 .cabeceraExpandBeneficioOpen{
   color: #0d6dc2 !important;
 }
+.CamposSolicitados{
+  display: flex;
+  margin-left: 20px;
+  align-items:center;
+  justify-content:space-between;
+}
+
 
 
