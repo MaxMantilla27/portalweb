@@ -33,6 +33,7 @@ import { ModuloCalificacionesComponent } from './modulo/modulo-calificaciones/mo
 import { BeneficiosComponent } from './curso/beneficios/beneficios/beneficios.component';
 import { ModuloWebinarsComponent } from './modulo/modulo-webinars/modulo-webinars/modulo-webinars.component';
 import { SesionEncuestaComponent } from './sesiones/sesion-encuesta/sesion-encuesta.component';
+import { CursoCertificadoComponent } from './curso/curso-certificado/curso-certificado.component';
 
 
 @NgModule({
@@ -64,6 +65,7 @@ import { SesionEncuestaComponent } from './sesiones/sesion-encuesta/sesion-encue
     BeneficiosComponent,
     ModuloWebinarsComponent,
     SesionEncuestaComponent,
+    CursoCertificadoComponent,
 
   ],
   imports: [

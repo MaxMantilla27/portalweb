@@ -25,8 +25,9 @@ export class CursoComponent implements OnInit {
     private _DatosPerfilService:DatosPerfilService,
     private _SessionStorageService:SessionStorageService
   ) {}
-  public tabIndex = this._SessionStorageService.SessionGetValue('cursoIndex')==''?0:parseInt(this._SessionStorageService.SessionGetValue('cursoIndex'));
+  public tabIndex = 0;
   public IndicacionActive = false;
+  public CertificadoActive = false;
   public migaPan = [
     {
       titulo: 'Mis Cursos',
@@ -51,7 +52,6 @@ export class CursoComponent implements OnInit {
   public videoTareas ='https://repositorioweb.blob.core.windows.net/repositorioweb/aulavirtual/guias/preguntas/preguntas-hombres.mp4';
   public videoTrabajoP ='https://repositorioweb.blob.core.windows.net/repositorioweb/aulavirtual/guias/preguntas/preguntas-hombres.mp4';
   ngOnInit(): void {
-    this._SessionStorageService.SessionDeleteValue('cursoIndex');
     this._ActivatedRoute.params.subscribe({
       next: (x) => {
         this.idMatricula = parseInt(x['IdMatricula']);
@@ -71,6 +71,7 @@ export class CursoComponent implements OnInit {
         }
       },
     });
+
   }
   tabChanged(tabChangeEvent: MatTabChangeEvent): void {
     console.log('tabChangeEvent => ', tabChangeEvent);
@@ -80,6 +81,30 @@ export class CursoComponent implements OnInit {
       this.IndicacionActive == true
     ) {
       this.IndicacionActive = false;
+      this.tabIndex-=4
+      console.log(this.tabIndex)
+    }
+
+    if(this.curso!=undefined && this.curso.proyectoAplicacion){
+      if((tabChangeEvent.index >= 6 || tabChangeEvent.index < 3)  && this.CertificadoActive){
+        this.CertificadoActive=false
+        if(tabChangeEvent.index >= 6){
+          this.tabIndex-=2
+        }
+      }
+      if(tabChangeEvent.index == 3 && !this.CertificadoActive){
+        this.CertificadoActive=true
+      }
+    }else{
+      if((tabChangeEvent.index >= 5 || tabChangeEvent.index < 2)   && this.CertificadoActive){
+        this.CertificadoActive=false
+        if(tabChangeEvent.index >= 5){
+          this.tabIndex-=2
+        }
+      }
+      if(tabChangeEvent.index == 2 && !this.CertificadoActive){
+        this.CertificadoActive=true
+      }
     }
   }
   actual(e: any) {
@@ -94,6 +119,40 @@ export class CursoComponent implements OnInit {
       next:x=>{
         console.log(x)
         this.curso=x
+        var valorLoscalS=this._SessionStorageService.SessionGetValue('cursoIndex')==''?0:parseInt(this._SessionStorageService.SessionGetValue('cursoIndex'))
+        if(this.curso!=undefined ){
+          if(this.curso!=undefined ){
+            if(valorLoscalS>1){
+              if(this.curso.proyectoAplicacion){
+                this.tabIndex=valorLoscalS;
+              }else{
+                this.tabIndex=valorLoscalS-1
+              }
+            }
+            if(this.curso.proyectoAplicacion){
+              if(valorLoscalS>4){
+                if(this.curso.webibarActivo){
+                  this.tabIndex=valorLoscalS;
+                }else{
+                  this.tabIndex=valorLoscalS-1
+                }
+              }
+            }else{
+              if(valorLoscalS>3){
+                if(this.curso.webibarActivo){
+                  this.tabIndex=valorLoscalS;
+                }else{
+                  this.tabIndex=valorLoscalS-1
+                }
+              }
+
+            }
+            console.log(this.tabIndex)
+          }
+        }
+
+        //this._SessionStorageService.SessionDeleteValue('cursoIndex');
+
       }
     })
   }
