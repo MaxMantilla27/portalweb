@@ -170,7 +170,9 @@
               <div class="titleMatr">Trámites</div>
             </div>
           </ng-template>
-          <div style="padding: 10px 30px;">Trámites</div>
+          <div style="padding: 10px 30px;">
+          <app-curso-tramites [IdMatricula]="idMatricula" [Capitulo]="programEstructura.programaGeneral"></app-curso-tramites>
+          </div>
         </mat-tab>
 
         <mat-tab *ngIf="curso!=undefined && curso.webibarActivo">
