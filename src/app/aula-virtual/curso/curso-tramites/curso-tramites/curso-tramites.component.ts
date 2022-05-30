@@ -40,6 +40,7 @@ export class CursoTramitesComponent implements OnInit {
     })
   }
   CalcularMontoTotal(){
+    this.PagoTotalTramite=0;
     this.TramitesCurso.forEach((y:any)=>{
       if(y.pagar==true){
         this.PagoTotalTramite=this.PagoTotalTramite+y.tarifario;
