@@ -6,6 +6,7 @@ import {
   CursoPadreDTO,
   ProgresoAlumnoProgramaAulaVirtualDTO,
 } from 'src/app/Core/Models/ListadoProgramaContenidoDTO';
+import { CertificadoService } from 'src/app/Core/Shared/Services/Certificado/certificado.service';
 import { DatosPerfilService } from 'src/app/Core/Shared/Services/DatosPerfil/datos-perfil.service';
 import { HelperService } from 'src/app/Core/Shared/Services/helper.service';
 import { ProgramaContenidoService } from 'src/app/Core/Shared/Services/ProgramaContenido/programa-contenido.service';
@@ -23,7 +24,8 @@ export class CursoComponent implements OnInit {
     private _ProgramaContenidoService: ProgramaContenidoService,
     private _ActivatedRoute: ActivatedRoute,
     private _DatosPerfilService:DatosPerfilService,
-    private _SessionStorageService:SessionStorageService
+    private _SessionStorageService:SessionStorageService,
+    private _CertificadoService:CertificadoService
   ) {}
   public tabIndex = 0;
   public IndicacionActive = false;
@@ -51,12 +53,16 @@ export class CursoComponent implements OnInit {
   public videoCrucigramas ='https://repositorioweb.blob.core.windows.net/repositorioweb/aulavirtual/guias/crucigrama/crucigrama-hombre.mp4';
   public videoTareas ='https://repositorioweb.blob.core.windows.net/repositorioweb/aulavirtual/guias/preguntas/preguntas-hombres.mp4';
   public videoTrabajoP ='https://repositorioweb.blob.core.windows.net/repositorioweb/aulavirtual/guias/preguntas/preguntas-hombres.mp4';
+  public datosCertificado:any;
+  public alertaDigital=false;
+  public alertaFisico=false;
   ngOnInit(): void {
     this._ActivatedRoute.params.subscribe({
       next: (x) => {
         this.idMatricula = parseInt(x['IdMatricula']);
         this.RegistroProgramaMatriculadoPorIdMatricula();
         this.ObtenerListadoProgramaContenido();
+        this.ObtenerDatosCertificado();
       },
     });
     this._HelperService.recibirCombosPerfil.subscribe({
@@ -71,6 +77,30 @@ export class CursoComponent implements OnInit {
         }
       },
     });
+
+  }
+  ObtenerDatosCertificado(){
+    this._CertificadoService.ObtenerDatosCertificado(this.idMatricula).subscribe({
+      next:x=>{
+        console.log(x)
+        this.datosCertificado=x
+      }
+    })
+  }
+  certificadoDigital(){
+    console.log('-------')
+    if(this.datosCertificado!=undefined){
+      if((this.datosCertificado.idEstado_matricula!=5 && this.datosCertificado.idEstado_matricula!=12)){
+        this.alertaDigital=true
+      }
+    }
+  }
+  certificadoFisico(){
+    if(this.datosCertificado!=undefined){
+      if(this.datosCertificado.idSolicitudCertificadoFisico==null || this.datosCertificado.idSolicitudCertificadoFisico==0){
+        this.alertaFisico=true
+      }
+    }
 
   }
   tabChanged(tabChangeEvent: MatTabChangeEvent): void {

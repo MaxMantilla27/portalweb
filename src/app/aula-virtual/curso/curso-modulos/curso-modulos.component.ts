@@ -54,6 +54,7 @@ export class CursoModulosComponent implements OnInit, OnChanges {
       .ProgresoProgramaCursosAulaVirtualAonline(this.idMatricula)
       .subscribe({
         next: (x) => {
+          console.log(x)
           this.progresoPrograma = x;
           this.AddProgresToProgram();
         },
@@ -83,5 +84,6 @@ export class CursoModulosComponent implements OnInit, OnChanges {
       });
       program.progreso = progresoP;
     });
+    console.log(this.programEstructura)
   }
 }

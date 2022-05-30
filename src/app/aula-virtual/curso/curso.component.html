@@ -136,14 +136,22 @@
               <div class="titleMatr">Certificados</div>
             </div>
           </ng-template>
-          <div style="padding: 10px 30px;"><app-curso-certificado  [curso]="curso" [idProyecto]="curso.idProyecto" [idPGeneral]="curso.idPGeneral" [idPEspecifico]="curso.idPEspecifico"></app-curso-certificado></div>
+          <ng-template matTabContent>
+            <div style="padding: 10px 30px;">
+              <app-curso-certificado *ngIf="curso!=undefined"  [alertaDigital]="alertaDigital" [alertaFisico]="alertaFisico"
+              [datosCertificado]="datosCertificado"  [curso]="curso" [idProyecto]="curso.idProyecto" [idPGeneral]="curso.idPGeneral" [idPEspecifico]="curso.idPEspecifico">
+
+              </app-curso-certificado>
+            </div>
+          </ng-template>
+
         </mat-tab>
 
         <ng-container *ngIf="CertificadoActive==true">
 
-          <mat-tab >
+          <mat-tab disabled>
             <ng-template mat-tab-label class="tabSubcontent">
-              <div class="contentHeaderM subContent">
+              <div class="contentHeaderM subContent" style="cursor: pointer;" (click)="certificadoDigital()">
                 <div class="titleMatr">Certificado Digital</div>
               </div>
             </ng-template>
@@ -151,9 +159,9 @@
               -------------------
             </div>
           </mat-tab>
-          <mat-tab >
+          <mat-tab disabled>
             <ng-template mat-tab-label>
-              <div class="contentHeaderM subContent">
+              <div class="contentHeaderM subContent" style="cursor: pointer;" (click)="certificadoFisico()">
                 <div class="titleMatr">Certificado Fisico</div>
               </div>
             </ng-template>

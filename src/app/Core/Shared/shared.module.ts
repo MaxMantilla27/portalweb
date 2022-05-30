@@ -69,6 +69,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { SafePipe } from './Pipes/safe.pipe';
 import { CloudflareStreamModule } from '@cloudflare/stream-angular';
 import { MaterialAdicionalService } from './Services/MaterialAdicional/material-adicional.service';
+import { CertificadoService } from './Services/Certificado/certificado.service';
 
 
 
@@ -202,7 +203,8 @@ import { MaterialAdicionalService } from './Services/MaterialAdicional/material-
     ForoCursoService,
     CrucigramaService,
     SnackBarServiceService,
-    MaterialAdicionalService
+    MaterialAdicionalService,
+    CertificadoService
   ],
 })
 export class SharedModule {
