@@ -1,0 +1,39 @@
+.tipoIndicacionTitle {
+  display: flex;
+  justify-content: flex-start;
+  background: #f2f6ff;
+  height: 50px ;
+}
+.ImgIndicacionesContent{
+  height: 30px !important;
+  margin-bottom: 20px !important;
+  margin-right: 10px;
+}
+.criterio{
+  border-bottom: 1px solid #cacaca;
+  height: 50px;
+}
+.TablaTramitesEncabezado{
+  background-color: #F4F4F4;
+  height: 60px;
+}
+.ResumenPago{
+  display: flex;
+  background-color: #F4F4F4;
+  height: 60px;
+  align-items: center;
+}
+.MontoTramite{
+  display: flex;
+  align-items: center;
+  margin-left:80px;
+}
+.cursoTitle {
+  font-size: 25px;
+  font-weight: 600;
+}
+.TotalPagar{
+  background-color: #F2F6FF;
+  height: 60px;
+}
+

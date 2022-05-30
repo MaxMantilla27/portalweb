@@ -1,0 +1,118 @@
+<div class="cursoTitle">{{Capitulo}}</div>
+<div class="row" style="align-items: center;height: 90px;">
+  <div class="tipoIndicacionTitle col-12 col-md-12 col-lg-12">
+    <img class="ImgIndicacionesContent" src="../../../../assets/icons/tramites-naranja.svg">
+    <div style="font-weight: bold;">Trámites</div>
+  </div>
+</div>
+<ng-container *ngIf="TramitesCurso.length==0">
+  <div style="text-align: justify; margin-bottom: 20px;">
+    No hay ningún tramite administrativo disponible.
+  </div>
+</ng-container>
+<ng-container *ngIf="TramitesCurso.length!=0">
+  <div class="ListaTramites" >
+    <div class="row">
+      <table class="TablaTramites">
+        <thead class="TablaTramitesEncabezado" >
+          <tr>
+            <td style="width: 600px;text-align: left;border-radius: 2px;font-weight: bold;"><strong style=" margin-left: 20px">Descripción</strong></td>
+            <td style="width: 200px;text-align: center;border-radius: 2px;font-weight: bold;"><strong>Costo</strong></td>
+            <td style="width: 200px;text-align: center;border-radius: 2px;font-weight: bold;"><strong>Pagar</strong></td>
+          </tr>
+        </thead>
+        <tbody class="TablaTramitesContenido">
+          <ng-container *ngFor="let item of TramitesCurso ;let i=index">
+            <tr>
+              <td class="criterio" style="width: 600px;text-align: left;">
+                <div style=" margin-left: 20px;margin-top: 20px;margin-bottom: 20px;text-align:justify">
+                  <div>
+                    {{item.concepto}}
+                  </div>
+                  <div style="font-size:11px;">
+                    {{item.descripcion}}
+                  </div>
+                </div>
+              </td>
+              <td class="criterio" style="width: 250px;text-align: center;">
+                <div class="MontoTramite">
+                  <div>
+                    {{item.simboloMoneda}}
+                  </div>
+                  <div style="margin-left: 10px;">
+                    {{item.tarifario}}
+                  </div>
+                </div>
+              </td>
+              <td class="criterio" style="width: 200px;text-align: center;">
+                <div style="display: flex;align-items:center;margin-left: 90px;">
+                  <mat-checkbox (click)="CalcularMontoTotal()" (click)="item.pagar=true" color="primary"  class="PagarTramite" style="display:flex;align-items:center ;" (change)="item.pagar">
+                  </mat-checkbox>
+                </div>
+              </td>
+            </tr>
+          </ng-container>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="PagoTramite" style="margin-top: 40px">
+    <div class="row" style="border: 2px solid #cacaca;">
+      <div class="ResumenPago">
+        <div style=" margin-left: 20px;display:flex;align-items: center;"> Resumen de Pago</div>
+      </div>
+      <div class="row" style="margin-left: 20px;margin-top:30px">
+        <table class="TablaPagos" style="width: 95%;">
+          <thead class="TablaPagosEncabezado" style="border-bottom: 1px solid #cacaca;" >
+            <tr>
+              <td style="width: 500px;text-align: left;border-radius: 2px;font-weight: bold;"><strong style=" margin-left: 20px">Concepto</strong></td>
+              <td style="width: 400px;text-align: center;border-radius: 2px;font-weight: bold;"><strong style=" margin-left: 20px">Monto</strong></td>
+            </tr>
+          </thead>
+          <tbody>
+            <ng-container *ngFor="let item of TramitesCurso ;let i=index">
+              <ng-container *ngIf="item.pagar==true">
+                <tr>
+                  <td class="criterio" style="width: 600px;text-align: left;">
+                    <div style=" margin-left: 20px;margin-top: 20px;margin-bottom: 20px;text-align:justify">
+                      <div>
+                        {{item.concepto}}
+                      </div>
+                    </div>
+                  </td>
+                  <td class="criterio" style="width: 250px;text-align: center;">
+                    <div class="MontoTramite" >
+                      <div style="margin-left: 90px">
+                        {{item.simboloMoneda}}
+                      </div>
+                      <div style="margin-left: 10px;">
+                        {{item.tarifario}}
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+              </ng-container>
+            </ng-container>
+            <tr class="TotalPagar">
+              <td class="criterio" style="font-weight: bold;width: 500px;text-align: left">
+                <div style="margin-left: 20px">
+                  Total a pagar
+                </div>
+              </td>
+              <td class="criterio" style="width: 400px;text-align: center;">
+                {{PagoTotalTramite}}
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="col-12 col-md-12 col-lg-12" style="margin-top:30px">
+        <app-default-button  [confs]="{color:'primary',titulo:'Pagar'}"
+        [style]="'width: 20%;margin-top: 20px; margin-left:40%;'"></app-default-button>
+      </div>
+    </div>
+
+  </div>
+</ng-container>
+
+

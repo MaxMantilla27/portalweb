@@ -77,6 +77,7 @@ export class ModuloForoComponent implements OnInit, OnChanges {
   }
   RefrescarForo(){
     this.NuevoForo=false;
+    this.ContenidoForo=false;
     this.ObtenerForoCurso() ;
   }
 }
