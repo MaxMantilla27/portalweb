@@ -13,12 +13,10 @@ export class CursoTramitesComponent implements OnInit {
   ) { }
   @Input() Capitulo='';
   @Input() IdMatricula=0;
-  public ConceptoPago='';
-  public MontoDetalle=0;
-  public AgregarDetallePagar=false;
-  public TotalTramitesCurso:Array<any>=[];
   public TramitesCurso:Array<any>=[];
   public PagoTotalTramite=0;
+  public SimboloMoneda='';
+
 
   ngOnInit(): void {
   }
@@ -35,30 +33,21 @@ export class CursoTramitesComponent implements OnInit {
         this.TramitesCurso.forEach((y:any)=>{
           y.pagar=false;
         })
-        console.log(this.TramitesCurso)
       }
     })
   }
   CalcularMontoTotal(){
     this.PagoTotalTramite=0;
+    this.SimboloMoneda=''
     this.TramitesCurso.forEach((y:any)=>{
       if(y.pagar==true){
         this.PagoTotalTramite=this.PagoTotalTramite+y.tarifario;
-        console.log(this.PagoTotalTramite)
+        this.SimboloMoneda=y.simboloMoneda
       }
     })
   }
-  /* cambiarEstadoPago(i:number){
-    this.TotalTramitesCurso[i].forEach((y:any)=>{
-      console.log(y)
-      if(y==i){
-        if(y.pagar==true){
-          y.pagar=false;
-        }
-        if(y.pagar==false){
-          y.pagar=true;
-        }
-      }
-    })
-  } */
+  cambiarEstadoPago(i:number){
+    console.log(this.TramitesCurso[i].pagar)
+    this.CalcularMontoTotal();
+  }
 }

@@ -75,6 +75,7 @@ export class BeneficiosComponent implements OnInit {
   RecorrerContenidoBeneficio(i:number){
     this.DatosBeneficiosEnvio.datosAdicionales=[]
     this.Beneficios[i].listaDatosAdicionales.forEach((y:any)=>{
+      console.log(this.Beneficios)
       if(y.value!=''){
         this.DatosBeneficiosEnvio.idMatriculaCabeceraBeneficios=this.Beneficios[i].id;
         this.DatosBeneficiosEnvio.idMatriculaCabecera=this.IdMatricula;

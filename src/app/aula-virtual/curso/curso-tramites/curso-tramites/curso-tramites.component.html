@@ -46,7 +46,7 @@
               </td>
               <td class="criterio" style="width: 200px;text-align: center;">
                 <div style="display: flex;align-items:center;margin-left: 90px;">
-                  <mat-checkbox (click)="CalcularMontoTotal()" (click)="item.pagar=true" color="primary"  class="PagarTramite" style="display:flex;align-items:center ;" (change)="item.pagar">
+                  <mat-checkbox (change)="cambiarEstadoPago(i)" [(ngModel)]="item.pagar" color="primary"  class="PagarTramite" style="display:flex;align-items:center ;" (change)="item.pagar">
                   </mat-checkbox>
                 </div>
               </td>
@@ -100,14 +100,21 @@
                 </div>
               </td>
               <td class="criterio" style="width: 400px;text-align: center;">
-                {{PagoTotalTramite}}
+                <div class="MontoTramite" >
+                  <div style="margin-left: 90px">
+                    {{SimboloMoneda}}
+                  </div>
+                  <div style="margin-left: 10px;">
+                    {{PagoTotalTramite}}
+                  </div>
+                </div>
               </td>
             </tr>
           </tbody>
         </table>
       </div>
       <div class="col-12 col-md-12 col-lg-12" style="margin-top:30px">
-        <app-default-button  [confs]="{color:'primary',titulo:'Pagar'}"
+        <app-default-button  [confs]="{color:'primary',titulo:'Pagar'} "
         [style]="'width: 20%;margin-top: 20px; margin-left:40%;'"></app-default-button>
       </div>
     </div>
