@@ -46,7 +46,7 @@
               </td>
               <td class="criterio" style="width: 200px;text-align: center;">
                 <div style="display: flex;align-items:center;margin-left: 90px;">
-                  <mat-checkbox (click)="CalcularMontoTotal()" (click)="item.pagar=true" color="primary"  class="PagarTramite" style="display:flex;align-items:center ;" (change)="item.pagar">
+                  <mat-checkbox (click)="CalcularMontoTotal()" (click)="cambiarEstadoPago(i)" [(ngModel)]="item.pagar" color="primary"  class="PagarTramite" style="display:flex;align-items:center ;" (change)="item.pagar">
                   </mat-checkbox>
                 </div>
               </td>

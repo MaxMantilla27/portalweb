@@ -15,6 +15,7 @@ export class CursoTramitesComponent implements OnInit {
   @Input() IdMatricula=0;
   public ConceptoPago='';
   public MontoDetalle=0;
+  public indice=0;
   public AgregarDetallePagar=false;
   public TotalTramitesCurso:Array<any>=[];
   public TramitesCurso:Array<any>=[];
@@ -48,17 +49,19 @@ export class CursoTramitesComponent implements OnInit {
       }
     })
   }
-  /* cambiarEstadoPago(i:number){
-    this.TotalTramitesCurso[i].forEach((y:any)=>{
-      console.log(y)
-      if(y==i){
-        if(y.pagar==true){
-          y.pagar=false;
-        }
-        if(y.pagar==false){
-          y.pagar=true;
-        }
+  cambiarEstadoPago(i:number){
+    console.log(this.TramitesCurso[i].pagar)
+    /* if(y.valor==i){
+      console.log(y.valor)
+      if(y.pagar==true){
+        y.pagar=false;
       }
-    })
-  } */
+      if(y.pagar==false){
+        y.pagar=true;
+      }
+    } */
+
+
+
+  }
 }
