@@ -139,7 +139,10 @@
           <ng-template matTabContent>
             <div style="padding: 10px 30px;">
               <app-curso-certificado *ngIf="curso!=undefined"  [alertaDigital]="alertaDigital" [alertaFisico]="alertaFisico"
-              [datosCertificado]="datosCertificado"  [curso]="curso" [idProyecto]="curso.idProyecto" [idPGeneral]="curso.idPGeneral" [idPEspecifico]="curso.idPEspecifico">
+              [datosCertificado]="datosCertificado"  [curso]="curso" [idProyecto]="curso.idProyecto" [idPGeneral]="curso.idPGeneral"
+              [idPEspecifico]="curso.idPEspecifico"
+              [changeOnGenerate]="generateCertificado" (OnGenerate)="ObtenerDatosCertificado()"
+              (OnValidation)="ObtenerDatosCertificado()">
 
               </app-curso-certificado>
             </div>
@@ -149,17 +152,22 @@
 
         <ng-container *ngIf="CertificadoActive==true">
 
-          <mat-tab disabled>
+          <mat-tab
+          [disabled]="datosCertificado==undefined ||
+                        (this.datosCertificado.idEstado_matricula!=5 &&
+                        this.datosCertificado.idEstado_matricula!=12) ||
+                      datosCertificado.nombreArchivo==null">
             <ng-template mat-tab-label class="tabSubcontent">
               <div class="contentHeaderM subContent" style="cursor: pointer;" (click)="certificadoDigital()">
                 <div class="titleMatr">Certificado Digital</div>
               </div>
             </ng-template>
             <div style="padding: 10px 30px;">
-              -------------------
+              <app-curso-certificado-digital *ngIf="curso!=undefined" [datosCertificado]="datosCertificado"  [curso]="curso"
+              [changeOnGenerate]="generateCertificado" (OnGenerate)="ObtenerDatosCertificado()"></app-curso-certificado-digital>
             </div>
           </mat-tab>
-          <mat-tab disabled>
+          <mat-tab [disabled]="datosCertificado==undefined || (this.datosCertificado.idSolicitudCertificadoFisico==null || this.datosCertificado.idSolicitudCertificadoFisico==0)">
             <ng-template mat-tab-label>
               <div class="contentHeaderM subContent" style="cursor: pointer;" (click)="certificadoFisico()">
                 <div class="titleMatr">Certificado Fisico</div>

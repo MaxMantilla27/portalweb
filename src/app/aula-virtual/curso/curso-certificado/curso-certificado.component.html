@@ -3,9 +3,10 @@
   <div class="cursoTitle">{{curso.programaGeneral}}</div>
   <div class="row" style="align-items: center;" style="margin: 30px 0px 0px;">
     <div class="tipoIndicacionTitle col-12 col-md-12 col-lg-12" style="margin:0px;">
-      <img class="ImgIndicacionesContent" src="../../../../assets/icons/certificados-naranja.svg">
+      <img class="ImgIndicacionesContent" src="../../../../assets/icons/certificados-25.svg">
       <div><strong> Certificados</strong></div>
     </div>
+
     <div *ngIf="alertaDigital==true || alertaFisico==true" class="alartasCertificados col-12 col-md-12 col-lg-12" style="margin-top:10px;" >
       <div *ngIf="alertaDigital">
         Aún no puedes descargar tu certificado digital
@@ -16,77 +17,88 @@
         <i class="material-icons" (click)="alertaFisico=false">close</i>
       </div>
     </div>
-    <div class="col-12 col-md-12 col-lg-12">
-      <div style="color: #4a4a4a;
-      font-size: 20px;
-      font-weight: 600;
-      padding-bottom: 5px;
-      border-bottom: solid 1px #ececec;
-      margin: 20px 0px;">Recuerda que para obtener el certificado de tu curso debes cumplir con lo siguiente:</div>
-      <div style="    display: flex;
-      flex-wrap: wrap;
-      justify-content: flex-start;
-      align-items: center;    padding: 20px 0px;
-    border-bottom: solid 1px #ececec;">
-        <div style="font-weight: 600;
-        border-radius: 50%;
-        background: #f4f4f4;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        width: 30px;
-        height: 30px;
-        margin-right: 20px;">1</div>
-        <div style="width: calc( 100% - 50px );">Debes haber completado todas las sesiones, evaluaciones, encuestas y tener tu proyecto de aplicación calificado.</div>
+    <ng-container *ngIf="datosCertificado.idEstado_matricula!=5 && datosCertificado.idEstado_matricula!=12">
+      <div class="col-12 col-md-12 col-lg-12">
+        <div style="color: #4a4a4a;
+        font-size: 20px;
+        font-weight: 600;
+        padding-bottom: 5px;
+        border-bottom: solid 1px #ececec;
+        margin: 20px 0px;">Recuerda que para obtener el certificado de tu curso debes cumplir con lo siguiente:</div>
+        <div style="    display: flex;
+        flex-wrap: wrap;
+        justify-content: flex-start;
+        align-items: center;    padding: 20px 0px;
+      border-bottom: solid 1px #ececec;">
+          <div style="font-weight: 600;
+          border-radius: 50%;
+          background: #f4f4f4;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          width: 30px;
+          height: 30px;
+          margin-right: 20px;">1</div>
+          <div style="width: calc( 100% - 50px );">Debes haber completado todas las sesiones, evaluaciones, encuestas y tener tu proyecto de aplicación calificado.</div>
+
+        </div>
+        <div style="    display: flex;
+        flex-wrap: wrap;
+        justify-content: flex-start;
+        align-items: center;    padding: 20px 0px;
+      border-bottom: solid 1px #ececec;">
+          <div style="font-weight: 600;
+          border-radius: 50%;
+          background: #f4f4f4;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          width: 30px;
+          height: 30px;
+          margin-right: 20px;">2</div>
+          <div style="width: calc( 100% - 50px );">No tener ninguna deuda con nosotros.</div>
+        </div>
+      </div>
+    </ng-container>
+    <ng-container *ngIf="datosCertificado.idEstado_matricula==5 || datosCertificado.idEstado_matricula==12">
+      <div class="col-12 col-md-12 col-lg-12">
+
+        <div style="color: #4a4a4a;
+        font-size: 20px;
+        font-weight: 600;
+        padding-bottom: 5px;
+        border-bottom: solid 1px #ececec;
+        margin: 20px 0px;">Recuerda validar tus datos de identificación como nombres y apellidos con los cuales se emitira tu certificado:</div>
 
       </div>
-      <div style="    display: flex;
-      flex-wrap: wrap;
-      justify-content: flex-start;
-      align-items: center;    padding: 20px 0px;
-    border-bottom: solid 1px #ececec;">
-        <div style="font-weight: 600;
-        border-radius: 50%;
-        background: #f4f4f4;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        width: 30px;
-        height: 30px;
-        margin-right: 20px;">2</div>
-        <div style="width: calc( 100% - 50px );">No tener ninguna deuda con nosotros.</div>
+      <div class="col-12 col-md-12 col-lg-12">
+
+        <app-formulario *ngIf="miPerfil!=undefined" [model]="json" [InputsDisable]="statuscharge" (OnSubmit)="InsertarValidacionDatosAlumno($event)" [Color]="'#f8f8f8'"
+          (OnValid)="formVal=$event" [fiels]="fileds" [Tipo]="2"  [ChargeValuesInit]="initValues">
+
+          <ng-container contenido>
+          </ng-container>
+          <ng-container send>
+            <div style="display: flex;justify-content: flex-end;">
+
+
+              <button mat-raised-button *ngIf="(datosCertificado.idConfirmarDatoAlumnoLog!=null && datosCertificado.idConfirmarDatoAlumnoLog!=0)"
+              (click)="!charge?datosCertificado.nuevaAula==true?GenerarCertificadoPorAlumnoPortalWebPorIdMatricula():GenerarCertificadoPorAlumnoIdMatriculaCabecera():''"
+              class="btn-generar"
+              type="button" [disabled]="charge || datosCertificado.nombreArchivo!=null"
+              style="margin-right: 20px;"
+              >Generar certificado
+              </button>
+              <mat-spinner [diameter]="20" *ngIf="charge"></mat-spinner>
+
+              <app-default-button [confs]="{color:'primary',titulo:'Validar'}" [style]="'padding:0px 20px;'"
+              *ngIf="(datosCertificado.idConfirmarDatoAlumnoLog==null || datosCertificado.idConfirmarDatoAlumnoLog==0)"
+              [disabled]="(datosCertificado.idConfirmarDatoAlumnoLog!=null && datosCertificado.idConfirmarDatoAlumnoLog!=0) || !formVal" ></app-default-button>
+            </div>
+          </ng-container>
+
+        </app-formulario>
       </div>
-    </div>
-
-    <div class="tipoIndicacionTitle col-12 col-md-12 col-lg-12" style="margin:25px 0px;">
-      <img class="ImgIndicacionesContent" src="../../../../assets/icons/certificados-25.svg">
-      <div><strong> Certificados</strong></div>
-    </div>
-    <div class="col-12 col-md-12 col-lg-12">
-
-      <div style="color: #4a4a4a;
-      font-size: 20px;
-      font-weight: 600;
-      padding-bottom: 5px;
-      border-bottom: solid 1px #ececec;
-      margin: 20px 0px;">Recuerda validar tus datos de identificación como nombres y apellidos con los cuales se emitira tu certificado:</div>
-
-    </div>
-    <div class="col-12 col-md-12 col-lg-12">
-
-      <app-formulario *ngIf="miPerfil!=undefined" [model]="json" [InputsDisable]="statuscharge" (OnSubmit)="InsertarValidacionDatosAlumno($event)" [Color]="'#f8f8f8'"
-        (OnValid)="formVal=$event" [fiels]="fileds" [Tipo]="2"  [ChargeValuesInit]="initValues">
-
-        <ng-container contenido>
-        </ng-container>
-        <ng-container send>
-          <div style="display: flex;justify-content: flex-end;">
-
-            <app-default-button [confs]="{color:'primary',titulo:'Validar'}" [style]="'padding:0px 20px;'" [disabled]="!formVal" ></app-default-button>
-          </div>
-        </ng-container>
-
-      </app-formulario>
-    </div>
+    </ng-container>
   </div>
 </ng-container>

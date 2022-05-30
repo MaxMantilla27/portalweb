@@ -24,7 +24,7 @@ const routes: Routes = [
         { path: 'MisCursos/:IdMatricula', component: CursoComponent},
 
         { path: 'MisCursos/:IdMatricula/:idPEspecificoHijo', component: ModuloComponent},
-        //tipo: 1.-sesiones/subsesiones 2.-Tarea 3.-Encuesta
+        //tipo: 1.-sesiones/subsesiones 2.-Tarea 3.-Encuesta 4.- Tarea Calificar
         { path: 'MisCursos/:IdMatricula/:idPEspecificoHijo/:Tipo/:IdCapitulo/:IdSesion', component: SesionesComponent},
       ]
   }

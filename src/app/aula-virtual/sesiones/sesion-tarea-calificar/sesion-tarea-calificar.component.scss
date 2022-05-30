@@ -1,0 +1,29 @@
+
+.vinculo{
+  color: #505050;
+    text-decoration: none;
+}
+
+.vinculo:hover{
+  text-decoration: underline !important;
+}
+
+.tablaTarea{
+  width: calc( 100% - 10px);
+  margin-top: 40px;
+}
+.tablaTarea tr th{
+
+  border: solid 1px #b2b2b2;
+  background: #e7e7e7;
+  text-align: center;
+  padding: 10px;
+}
+
+.tablaTarea tr td{
+  border: solid 1px #b2b2b2;
+  text-align: left;
+  padding: 10px;
+  word-break: break-all;
+  font-size: 12px;
+}

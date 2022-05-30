@@ -157,6 +157,11 @@ export class SesionesComponent implements OnInit {
         index
       ].registroEstructuraCursoEncuesta[indexSesion].charge=true
     }
+    if(tipo==4){
+      this.estructuraCapitulo.registroEstructuraCursoCapitulo[
+        index
+      ].registroCursoTareaCalificar[indexSesion].charge=true
+    }
   }
   changeSesion(index: number, sesionIndex: number) {
     if (
@@ -218,6 +223,7 @@ export class SesionesComponent implements OnInit {
     var s = 0;
     var ss = 0;
     var t = 0;
+    var tc = 0;
     var e=0
     this.estructuraCapitulo.registroEstructuraCursoCapitulo.forEach(
       (x: any) => {
@@ -339,15 +345,41 @@ export class SesionesComponent implements OnInit {
           }
           console.log(ss + '-' + s);
           if (x.registroEstructuraCursoTarea != null) {
+            t++;
             if (this.tipo == 2) {
               x.registroEstructuraCursoTarea.forEach((tarea: any) => {
-                t++;
                 tarea.charge = false;
                 if (tarea.idTarea == this.idSesion) {
                   tarea.charge = true;
                   this.tabIndex += ss + s + t;
                   this.migaPan.push({
                     titulo: tarea.tarea,
+                    urlWeb:
+                      '/AulaVirtual/MisCursos/' +
+                      this.json.IdMatriculaCabecera +
+                      '/' +
+                      this.idPEspecificoHijo +
+                      '/' +
+                      this.tipo +
+                      '/' +
+                      this.idcapitulo +
+                      '/' +
+                      this.idSesion,
+                  });
+                }
+              });
+            }
+          }
+          if (x.registroCursoTareaCalificar != null) {
+            if (this.tipo == 4) {
+              x.registroCursoTareaCalificar.forEach((tareaC: any) => {
+                tc++;
+                tareaC.charge = false;
+                if (tareaC.id == this.idSesion) {
+                  tareaC.charge = true;
+                  this.tabIndex += ss + s + t + tc;
+                  this.migaPan.push({
+                    titulo: 'Calificar '+tareaC.tarea,
                     urlWeb:
                       '/AulaVirtual/MisCursos/' +
                       this.json.IdMatriculaCabecera +
@@ -389,6 +421,11 @@ export class SesionesComponent implements OnInit {
             }
             if (x.registroEstructuraCursoTarea != null) {
               x.registroEstructuraCursoTarea.forEach((tarea: any) => {
+                this.tabIndex++;
+              });
+            }
+            if (x.registroCursoTareaCalificar != null) {
+              x.registroCursoTareaCalificar.forEach((tarea: any) => {
                 this.tabIndex++;
               });
             }

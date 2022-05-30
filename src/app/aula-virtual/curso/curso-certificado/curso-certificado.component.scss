@@ -54,3 +54,13 @@
     background-color: var(--main-bg-color);
   }
 }
+.btn-generar{
+  width: auto;
+  display: flex;
+  justify-content: center;
+  cursor: pointer;
+  max-width: 100%;
+  margin-bottom: 20px;
+  background-color: #F8893F;
+  color: white;
+}
