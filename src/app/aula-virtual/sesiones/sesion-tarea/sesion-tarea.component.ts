@@ -125,7 +125,7 @@ export class SesionTareaComponent implements OnInit,OnChanges {
     }
   }
   EnviarFile(){
-    if(this.tarea.registroEvaluacionArchivo.length>=3){
+    if(this.tarea.registroEvaluacionArchivo!=null && this.tarea.registroEvaluacionArchivo.length>=3 ){
       this._SnackBarServiceService.openSnackBar("Solo tiene 3 intentos para subir su tarea.",'x',15,"snackbarCrucigramaerror");
     }else{
       this.setData()

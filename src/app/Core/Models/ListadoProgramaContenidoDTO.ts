@@ -41,6 +41,7 @@ export interface ProgresoAlumnoProgramaEncuestasAulaVirtualDTO {
   examenProgramados: number;
   examenRealizado: number;
   completado: number;
+  porcentajeAvance:number,
 }
 export interface ProgresoAlumnoProgramaTareasAulaVirtualDTO {
   idMatriculaCabecera: number;
@@ -51,4 +52,5 @@ export interface ProgresoAlumnoProgramaTareasAulaVirtualDTO {
   tareasProgramadas: number;
   tareasRealizadas: number;
   completado: number;
+  porcentajeAvance:number,
 }

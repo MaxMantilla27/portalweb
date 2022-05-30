@@ -92,6 +92,8 @@ export class FormularioComponent implements OnChanges, OnInit {
         this.disableFiled(x.nombre)
       }
     })
+
+    this.OnValid.emit(this.userForm.valid);
   }
   changeForm(){
     console.log(this.userForm)
@@ -103,7 +105,6 @@ export class FormularioComponent implements OnChanges, OnInit {
         );
         campo?.setValue(this.fiels[i].valorInicial);
       }
-
     }
   }
 
