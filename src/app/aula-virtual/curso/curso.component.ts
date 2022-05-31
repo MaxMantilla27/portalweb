@@ -56,6 +56,7 @@ export class CursoComponent implements OnInit {
   public datosCertificado:any;
   public alertaDigital=false;
   public alertaFisico=false;
+  public generateCertificado=true
   ngOnInit(): void {
     this._ActivatedRoute.params.subscribe({
       next: (x) => {
@@ -83,6 +84,10 @@ export class CursoComponent implements OnInit {
     this._CertificadoService.ObtenerDatosCertificado(this.idMatricula).subscribe({
       next:x=>{
         console.log(x)
+        if(this.datosCertificado!=undefined){
+          this.datosCertificado=x
+          this.generateCertificado=false;
+        }
         this.datosCertificado=x
       }
     })
@@ -90,7 +95,7 @@ export class CursoComponent implements OnInit {
   certificadoDigital(){
     console.log('-------')
     if(this.datosCertificado!=undefined){
-      if((this.datosCertificado.idEstado_matricula!=5 && this.datosCertificado.idEstado_matricula!=12)){
+      if((this.datosCertificado.idEstado_matricula!=5 && this.datosCertificado.idEstado_matricula!=12) || this.datosCertificado.nombreArchivo==null){
         this.alertaDigital=true
       }
     }

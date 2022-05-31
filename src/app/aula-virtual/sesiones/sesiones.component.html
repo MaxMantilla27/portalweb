@@ -116,6 +116,24 @@
               </ng-container>
             </ng-container>
 
+            <!-- tareas calificar-->
+            <ng-container
+              *ngIf="item.registroCursoTareaCalificar!=undefined && item.registroCursoTareaCalificar!=null">
+              <ng-container *ngFor="let tareaC of item.registroCursoTareaCalificar;let t=index">
+
+                <mat-tab>
+                  <ng-template mat-tab-label>
+                    <div class="contentHeaderM estructuraSubCapitulos" (click)="changeTab(4,0,i,t,0)" [ngClass]="{'hidetab':item.opened==false}">
+                      <div class="titleMatr">Actividad: Calificar {{tareaC.tarea}}</div>
+                    </div>
+                  </ng-template>
+                  <div style="padding: 10px 30px">
+                      <app-sesion-tarea-calificar [json]="json" [idCapitulo]="item.numeroCapitulo" [NombreCapitulo]="item.nombreCapitulo" [idtarea]="tareaC.idEvaluacion"
+                      [charge]="tareaC.charge" [id]="tareaC.id"></app-sesion-tarea-calificar>
+                  </div>
+                </mat-tab>
+              </ng-container>
+            </ng-container>
             <!-- encuestas finales -->
             <ng-container
               *ngIf="item.registroEstructuraCursoEncuesta!=undefined && item.registroEstructuraCursoEncuesta!=null">

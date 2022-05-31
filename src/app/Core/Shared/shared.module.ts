@@ -70,6 +70,7 @@ import { SafePipe } from './Pipes/safe.pipe';
 import { CloudflareStreamModule } from '@cloudflare/stream-angular';
 import { MaterialAdicionalService } from './Services/MaterialAdicional/material-adicional.service';
 import { CertificadoService } from './Services/Certificado/certificado.service';
+import { CertificadoIntegraService } from './Services/CertificadoIntegra/certificado-integra.service';
 
 
 
@@ -204,7 +205,8 @@ import { CertificadoService } from './Services/Certificado/certificado.service';
     CrucigramaService,
     SnackBarServiceService,
     MaterialAdicionalService,
-    CertificadoService
+    CertificadoService,
+    CertificadoIntegraService
   ],
 })
 export class SharedModule {

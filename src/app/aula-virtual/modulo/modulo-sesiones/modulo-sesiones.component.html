@@ -129,6 +129,18 @@
         </ng-container>
       </ng-container>
 
+      <ng-container *ngIf="item.registroCursoTareaCalificar!=undefined && item.registroCursoTareaCalificar!=null">
+        <ng-container *ngFor="let TareaC of item.registroCursoTareaCalificar">
+          <div class="TareaYEncuesta">
+            <div [routerLink]="'4/'+item.numeroCapitulo+'/'+TareaC.id">
+              <img src="../../../../assets/icons/tareas-23.svg" alt=""> Revision de: {{TareaC.tarea}} <br>
+              <div style="color:#00c356" *ngIf="TareaC.calificado">Calificado</div>
+              <div style="color: #da121a;" *ngIf="!TareaC.calificado">Por calificar</div>
+            </div>
+          </div>
+        </ng-container>
+      </ng-container>
+
       <ng-container
         *ngIf="item.registroEstructuraCursoEncuesta!=undefined && item.registroEstructuraCursoEncuesta!=null">
         <ng-container *ngFor="let Encuesta of item.registroEstructuraCursoEncuesta">

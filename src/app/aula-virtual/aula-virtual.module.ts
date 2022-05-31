@@ -35,6 +35,8 @@ import { ModuloWebinarsComponent } from './modulo/modulo-webinars/modulo-webinar
 import { SesionEncuestaComponent } from './sesiones/sesion-encuesta/sesion-encuesta.component';
 import { CursoCertificadoComponent } from './curso/curso-certificado/curso-certificado.component';
 import { CursoTramitesComponent } from './curso/curso-tramites/curso-tramites/curso-tramites.component';
+import { CursoCertificadoDigitalComponent } from './curso/curso-certificado-digital/curso-certificado-digital.component';
+import { SesionTareaCalificarComponent } from './sesiones/sesion-tarea-calificar/sesion-tarea-calificar.component';
 
 
 @NgModule({
@@ -68,6 +70,8 @@ import { CursoTramitesComponent } from './curso/curso-tramites/curso-tramites/cu
     SesionEncuestaComponent,
     CursoCertificadoComponent,
     CursoTramitesComponent,
+    CursoCertificadoDigitalComponent,
+    SesionTareaCalificarComponent,
 
   ],
   imports: [
