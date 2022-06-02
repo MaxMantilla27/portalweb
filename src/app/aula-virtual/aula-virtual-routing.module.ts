@@ -5,7 +5,11 @@ import { AvatarComponent } from './avatar/avatar.component';
 import { CambiarContraComponent } from './cambiar-contra/cambiar-contra.component';
 import { CuentaComponent } from './cuenta/cuenta.component';
 import { CursoComponent } from './curso/curso.component';
+import { DocenciaComponent } from './docencia/docencia.component';
+import { ErrorPageComponent } from './error-page/error-page.component';
+import { AlumnoGuard } from './Guard/alumno.guard';
 import { AulaVirtualGuard } from './Guard/aula-virtual.guard';
+import { ProveedorGuard } from './Guard/proveedor.guard';
 import { MiPerfilComponent } from './mi-perfil/mi-perfil.component';
 import { MisCursosComponent } from './mis-cursos/mis-cursos.component';
 import { ModuloComponent } from './modulo/modulo.component';
@@ -16,16 +20,19 @@ const routes: Routes = [
     path: '', component: AulaVirtualComponent ,canActivateChild: [AulaVirtualGuard] , children:
       [
         { path: 'Cuenta', component: CuentaComponent},
-        { path: 'MiPerfil', component: MiPerfilComponent},
-        { path: 'ChangePassword', component: CambiarContraComponent},
-        { path: 'MisCursos', component: MisCursosComponent},
-        { path: 'Avatar', component: AvatarComponent},
+        { path: 'MiPerfil', component: MiPerfilComponent,canActivate:[AlumnoGuard]},
+        { path: 'ChangePassword', component: CambiarContraComponent,canActivate:[AlumnoGuard]},
+        { path: 'MisCursos', component: MisCursosComponent,canActivate:[AlumnoGuard]},
+        { path: 'Avatar', component: AvatarComponent,canActivate:[AlumnoGuard]},
+        { path: 'Docencia', component: DocenciaComponent,canActivate:[ProveedorGuard]},
 
-        { path: 'MisCursos/:IdMatricula', component: CursoComponent},
+        { path: 'MisCursos/:IdMatricula', component: CursoComponent,canActivate:[AlumnoGuard]},
 
-        { path: 'MisCursos/:IdMatricula/:idPEspecificoHijo', component: ModuloComponent},
+        { path: 'MisCursos/:IdMatricula/:idPEspecificoHijo', component: ModuloComponent,canActivate:[AlumnoGuard]},
+
         //tipo: 1.-sesiones/subsesiones 2.-Tarea 3.-Encuesta 4.- Tarea Calificar
-        { path: 'MisCursos/:IdMatricula/:idPEspecificoHijo/:Tipo/:IdCapitulo/:IdSesion', component: SesionesComponent},
+        { path: 'MisCursos/:IdMatricula/:idPEspecificoHijo/:Tipo/:IdCapitulo/:IdSesion', component: SesionesComponent,canActivate:[AlumnoGuard]},
+        { path: '**', component: ErrorPageComponent},
       ]
   }
 ];

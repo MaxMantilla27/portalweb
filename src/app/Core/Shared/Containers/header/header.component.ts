@@ -37,6 +37,7 @@ export class HeaderComponent implements OnInit {
   public tecnica: Array<BasicUrl> = [];
   public paises: Array<BasicUrlIcon> = [];
   public paisesApi: Array<PaisDTO> = [];
+  public value:any;
   public Alumno: datosAlumnoDTO = {
     apellidos: '',
     direccion: '',
@@ -55,6 +56,8 @@ export class HeaderComponent implements OnInit {
     idTipoDocumento: '',
     nombres: '',
     telefono: '',
+    cursos:0,
+    idProveedor:0,
   };
   public urlAvatar='';
   public Avatar: AvatarDTO = {
@@ -111,7 +114,7 @@ export class HeaderComponent implements OnInit {
       estatus: true,
     },
     {
-      Nombre: 'Carreras Profecionales',
+      Nombre: 'Carreras Profesionales',
       data: this.carreras,
       estatus: false,
     },
@@ -143,7 +146,7 @@ export class HeaderComponent implements OnInit {
       this.ObtenerCombosPerfil();
       this.ObtenerAvatar();
     }
-    this.ObtenerObservable();    
+    this.ObtenerObservable();
   }
   GetPaises() {
     this.paises = [];
@@ -224,7 +227,7 @@ export class HeaderComponent implements OnInit {
         if (this.CodigoIso.toLowerCase() == 'co') {
           this.expandibles[1].Nombre = 'Educacion para el Trabajo';
         } else {
-          this.expandibles[1].Nombre = 'Carreras Profecionales';
+          this.expandibles[1].Nombre = 'Carreras Profeionales';
         }
         this.expandibles[1].estatus = true;
         this.expandibles[1].data = this.carreras;
@@ -294,14 +297,16 @@ export class HeaderComponent implements OnInit {
   ObtenerCombosPerfil() {
     this._AlumnoService.ObtenerCombosPerfil().subscribe({
       next: (x) => {
+        console.log(x)
         this.Alumno=x.datosAlumno,
+        this.value={IdProveedor:this.Alumno.idProveedor,cursos:this.Alumno.cursos};
         this.combosPerfil=x.combos;
         this.combosPerfil.datosAlumno=this.Alumno;
         this._HelperService.enviarCombosPerfi(this.combosPerfil)
       },
     });
   }
-  
+
   ObtenerAvatar() {
     this._AvatarService.ObtenerAvatar().subscribe({
       next: (x) => {
@@ -335,8 +340,32 @@ export class HeaderComponent implements OnInit {
               this.ObtenerCombosPerfil()
             }
           }
+        }else{
+          this.value=undefined;
+          this.urlAvatar='';
+          this.Alumno={
+            apellidos: '',
+            direccion: '',
+            dni: '',
+            email: '',
+            empresa: '',
+            idAlumno: 0,
+            idAreaFormacion: 0,
+            idAreaTrabajo: 0,
+            idCargo: 0,
+            idDepartamento: 0,
+            ciudad:'',
+            idGenero: 0,
+            idIndustria: 0,
+            idPais: 0,
+            idTipoDocumento: '',
+            nombres: '',
+            telefono: '',
+            cursos:0,
+            idProveedor:0
+          }
         }
-       
+
       }
     })
   }

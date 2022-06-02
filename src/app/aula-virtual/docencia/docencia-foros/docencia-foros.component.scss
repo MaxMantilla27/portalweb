@@ -1,0 +1,25 @@
+.foroContainer{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  cursor: pointer;
+  .infoForo{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    img{
+      width: 30px;
+      height: auto;
+      margin-right: 20px;
+    }
+  }
+}
+.titleForo:hover{
+  text-decoration: underline;
+}
+.foroContainer:hover{
+
+  background: #ededed;
+}
+

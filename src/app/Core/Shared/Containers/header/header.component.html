@@ -29,7 +29,7 @@
       <div class="botones_login">
 
         <div *ngIf="token" style="    flex-direction: column; display: flex;justify-content: flex-end;align-items: flex-end;">
-          <app-alumno-mat-button [nombres]="Alumno.nombres+' '+Alumno.apellidos" [user]="Alumno.email">
+          <app-alumno-mat-button [nombres]="Alumno.nombres+' '+Alumno.apellidos" [user]="Alumno.email" [val]="value">
             <ng-container contenidodata>
               <img [src]="urlAvatar" style="width: auto;height: 25px;margin-right: 10px; margin-top: -5px;" alt="">
               <div>{{Alumno.nombres}}</div>

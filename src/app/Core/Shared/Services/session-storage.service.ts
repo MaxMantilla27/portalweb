@@ -38,7 +38,7 @@ export class SessionStorageService {
 
   SessionSetValue(name:string, token: string):void{
     if(this.isBrowser){
-      localStorage.setItem(name,token);
+      localStorage.setItem(name,btoa(token));
     }
   }
   SessionGetValue(name:string):string{
@@ -46,7 +46,7 @@ export class SessionStorageService {
 
       var value=localStorage.getItem(name);
       if(value==undefined || value==null) return '';
-      return value;
+      return atob(value);
     }
     if(name.toUpperCase()=='ISO_PAIS')return 'INTC';
     return '';
@@ -68,8 +68,6 @@ export class SessionStorageService {
       sessionStorage.removeItem('Estructura');
     }
   }
-
-
   getEstructura():any{
 
     if(this.isBrowser){

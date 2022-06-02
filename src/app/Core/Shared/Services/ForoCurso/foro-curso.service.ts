@@ -25,4 +25,8 @@ export class ForoCursoService {
   public EnviarRegistroRespuestaForo(Json:ForoRespuestaDTO):Observable<any>{
     return this.http.post<any>(this.urlBase+'/EnviarRegistroRespuestaForo',Json);
   }
+  public PartialRespuestaPreguntaDocente(IdPGeneral:number,IdPregunta:number):Observable<any>{
+    return this.http.get<any>(this.urlBase+'/PartialRespuestaPreguntaDocente?IdPGeneral='+IdPGeneral+'&IdPregunta='+IdPregunta);
+  }
+
 }

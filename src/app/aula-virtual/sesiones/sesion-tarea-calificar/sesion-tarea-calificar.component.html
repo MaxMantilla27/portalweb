@@ -3,7 +3,7 @@
 <div class="row" style="align-items: center;" style="margin: 30px 0px 0px;" *ngIf="tarea!=undefined">
   <div class="tipoIndicacionTitle col-12 col-md-12 col-lg-12" style="margin:0px;">
     <img class="ImgIndicacionesContent" src="../../../../assets/icons/tareas-23.svg">
-    <div><strong>Actividad: Calificar {{tarea.datosEvaluacionTrabajo.nombre}}</strong></div>
+    <div><strong>Actividad: Calificar {{tarea.datosTrabajoPares.nombre}}</strong></div>
   </div>
   <div class="col-12 col-md-12 col-lg-12">
     <div style="text-align: right;font-size: 13px;cursor: pointer;" class="vinculo">Siguiente Actividad ></div>
@@ -38,10 +38,22 @@
     <strong>Fecha limite de calificacion: </strong>  &nbsp;{{tareaAc.fechaCalificacionLimite | date:"dd/MM/yyyy"}}
 
   </div>
-  <div class="col-12 col-md-12 col-lg-12" style="display: flex;justify-content: center;margin-top: 20px;">
+  <div class="col-12 col-md-12 col-lg-12" style="display: flex;justify-content: center;margin-top: 20px;" *ngIf="tareaAc!=undefined">
     <img src="../../../../assets/icons/descarga-36.svg" alt="" style="width: 20px;
     margin-right: 20px;">
     <a class="vinculo" [href]="tareaAc.direccionUrl" target="_blank">{{tareaAc.nombreArchivo}}</a>
+  </div>
+  <div class="col-12 col-md-12 col-lg-12" *ngIf="tareaAc!=undefined && tareaAc.calificado==true" style="    padding: 20px;
+  margin-top: 30px;
+  border-color: #c3e6cb;
+  background: #d4edda;
+  color: #3d4245;">
+    <div style="font-weight: 600;">
+      Calificación realizada!!
+    </div>
+    <div style="    font-size: 14px;">
+      La calificación de la tarea se ha guardado correctamente, puedes continuar visualizando las sesiones.
+    </div>
   </div>
   <div class="col-12 col-md-12 col-lg-12" style="display: flex;
   align-items: center;
@@ -59,7 +71,7 @@
     <div style="    font-weight: 600;
     font-size: 18px;">Califica la Tarea</div>
   </div>
-  <div class="col-12 col-md-12 col-lg-12" *ngIf="tareaAc!=undefined && tareaAc.fechaCalificacionLimite!=null" style="
+  <div class="col-12 col-md-12 col-lg-12" *ngIf="tareaAc!=undefined" style="
     margin-left: 50px;
     margin-top: 10px;
     padding: 10px;">
@@ -75,25 +87,27 @@
       </tr>
 
     </table>
+    <ng-container *ngIf="tareaAc!=undefined && tareaAc.calificado==false">
+      <div style="    margin: 30px 0px;
+      font-weight: 600;">Seleccione la calificación para cada criterio de evaluacion , y luego haz clic en "Calificar"</div>
+      <div style="    display: flex;
+      justify-content: space-between;
+      width: calc( 100% - 10px );">
+        <div>{{tarea.criteriosEvaluacion.nombreEscalaCalificacion}}</div>
+        <div>
 
-    <div style="    margin: 30px 0px;
-    font-weight: 600;">Seleccione la calificación para cada criterio de evaluacion , y luego haz clic en "Calificar"</div>
-    <div style="    display: flex;
-    justify-content: space-between;
-    width: calc( 100% - 10px );">
-      <div>{{tarea.criteriosEvaluacion.nombreEscalaCalificacion}}</div>
-      <div>
+          <mat-form-field appearance="outline" style="width: 300px;font-size: 13px;">
+            <mat-label>Calificar</mat-label>
+            <mat-select [(ngModel)]="calificacion" [disabled]="cargaEnvio">
+              <mat-option *ngFor="let item of tarea.criteriosEvaluacion.listaParametroEscalaEvaluacion" [value]="item.id">{{item.valor}}</mat-option>
+            </mat-select>
+          </mat-form-field>
 
-        <mat-form-field appearance="outline" style="width: 300px;font-size: 13px;">
-          <mat-label>Calificar</mat-label>
-          <mat-select [(ngModel)]="calificacion" [disabled]="cargaEnvio">
-            <mat-option *ngFor="let item of tarea.criteriosEvaluacion.listaParametroEscalaEvaluacion" [value]="item.valor">{{item.valor}}</mat-option>
-          </mat-select>
-        </mat-form-field>
-
-        <app-default-button [confs]="{color:'primary',titulo:'Calificar'}" [style]="'padding:0px 30px;margin:0px '"
-        [disabled]="cargaEnvio" (ButtoclClick)="EnviarNota()"></app-default-button>
+          <app-default-button [confs]="{color:'primary',titulo:'Calificar'}" [style]="'padding:0px 30px;margin:0px '"
+          [disabled]="cargaEnvio" (ButtoclClick)="EnviarNota()"></app-default-button>
+        </div>
       </div>
-    </div>
+    </ng-container>
+
   </div>
 </div>
