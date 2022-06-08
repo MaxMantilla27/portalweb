@@ -257,7 +257,7 @@ export class AvatarComponent implements OnInit {
       label: 'Barba/Bigote',
       data: [],
       class:'col-12 col-md-6 col-lg-6'
-    });    
+    });
     this.fileds.push({
       nombre: 'facial_Hair_Color',
       tipo: 'select',
