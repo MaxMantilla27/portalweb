@@ -7,15 +7,23 @@ export interface BasicUrl{
   value:number,
   Url:string,
   style?:any,
-  change?:number
+  change?:boolean
 }
 
 export interface BasicUrlIcon{
   Nombre:string,
   value:string,
   Url:string,
-  Icon?:string,
+  Icon:string,
   style?:any
+}
+export interface PaisesDTO{
+  Nombre:string,
+  value:string,
+  Url:string,
+  Icon?:string,
+  style?:any,
+  PrefijoTelefono:string
 }
 export interface BasicBotonesExpandibles{
   Nombre:string,
@@ -42,4 +50,5 @@ export interface CardProgramasDTO{
   ImgAlt:string,
   Url:string,
   Content:string
+  Inversion:string
 }

@@ -22,68 +22,103 @@
       color: #797978;    margin-bottom: 20px;">Para nosotros es muy importante conocer tus comentarios, opiniones y
         sugerencias</div>
     </div>
-    <div class="col-12 col-md-6 col-lg-8" style="border-top: 1px solid #bababa;">
-      <div class="row">
-        <div class="col-12 col-md-12 col-lg-6">
+    <div class="col-12 col-md-8 col-lg-8">
+      <div class="row rowMapas">
+        <div class="col-10 col-md-11 col-lg-11">
           <div class="mapaSede">
-            <h2 class="nameSede">Arequipa - Perú</h2>
-            <p class="direccionSede">Urb. León XIII Calle 2 N° 107. Cayma <br> Arequipa, Perú <br> <b>Teléfono: +51(54)
-                25-8787</b></p>
-            <iframe
+            <h2 class="nameSede" [ngClass]="{'openIframe':expancion[0]}">Arequipa - Perú</h2>
+            <p class="direccionSede">Urb. León XIII Calle 2 N° 107. Cayma Arequipa, Perú <br>
+              <b>Teléfono: +51(54) 25-8787</b>
+            </p>
+            <iframe [ngStyle]="{'display':expancion[0]?'block':'none'}"
               src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1113.584527487365!2d-71.5503411041777!3d-16.391495307719307!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x91424a60fba7438f%3A0xfa338199798a589d!2sBSG%20Institute!5e0!3m2!1sen!2sus!4v1652105794046!5m2!1sen!2sus"
               width="100%" height="200" style="border:0;" allowfullscreen="" loading="lazy"
               referrerpolicy="no-referrer-when-downgrade"></iframe>
-
           </div>
         </div>
-        <div class="col-12 col-md-12 col-lg-6">
+        <div class="col-2 col-md-1 col-lg-1">
+          <div class="openCloceIframe no-select" [ngClass]="{'openIframe':expancion[0]}">
+            <ng-container *ngIf="!expancion[0]"><strong (click)="expancion[0]=true">+</strong></ng-container>
+            <ng-container *ngIf="expancion[0]"><strong (click)="expancion[0]=false">-</strong></ng-container>
+          </div>
+        </div>
+      </div>
+      <div class="row rowMapas">
+        <div class="col-10 col-md-11 col-lg-11">
           <div class="mapaSede">
-            <h2 class="nameSede">Lima - Perú</h2>
-            <p class="direccionSede">Av. Pardo 650 Miraflores <br> Lima, Perú <br> <b>Teléfono: +51(1) 207-2770</b></p>
-            <iframe
+            <h2 class="nameSede" [ngClass]="{'openIframe':expancion[1]}">Lima - Perú</h2>
+            <p class="direccionSede">Av. Pardo 650 Miraflores Lima, Perú <br> <b>Teléfono: +51(1) 207-2770</b></p>
+            <iframe [ngStyle]="{'display':expancion[1]?'block':'none'}"
               src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3900.9052759614697!2d-77.03688568020594!3d-12.11863336322078!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9105c86a591e03af%3A0x44216f10931e46b7!2sBSG%20Institute!5e0!3m2!1sen!2sus!4v1652105967236!5m2!1sen!2sus"
               width="100%" height="200" style="border:0;" allowfullscreen="" loading="lazy"
               referrerpolicy="no-referrer-when-downgrade"></iframe>
-
           </div>
         </div>
-        <div class="col-12 col-md-12 col-lg-6">
+        <div class="col-2 col-md-1 col-lg-1">
+          <div class="openCloceIframe no-select" [ngClass]="{'openIframe':expancion[1]}">
+            <ng-container *ngIf="!expancion[1]"><strong (click)="expancion[1]=true">+</strong></ng-container>
+            <ng-container *ngIf="expancion[1]"><strong (click)="expancion[1]=false">-</strong></ng-container>
+          </div>
+        </div>
+      </div>
+      <div class="row rowMapas">
+        <div class="col-10 col-md-11 col-lg-11">
           <div class="mapaSede">
-            <h2 class="nameSede">Bogotá - Colombia</h2>
-            <p class="direccionSede">Av. Carrera 45 N° 108-27 <br> Bogotá, Colombia <br> <b>Teléfono:
+            <h2 class="nameSede" [ngClass]="{'openIframe':expancion[2]}">Bogotá - Colombia</h2>
+            <p class="direccionSede">Av. Carrera 45 N° 108-27  Bogotá, Colombia <br> <b>Teléfono:
                 +57(601)381-9462</b></p>
-            <iframe style="width: 100%; height: auto;"
+            <iframe style="width: 100%; height: auto;" [ngStyle]="{'display':expancion[2]?'block':'none'}"
               src="https://maps.google.com/maps?hl=en&q=Ak 45 108-27, Bogotá, Colombia&ie=UTF8&t=m&z=17&iwloc=B&output=embed"
               width="100%" height="200" frameborder="0" style="border:0" allowfullscreen="" loading="lazy"></iframe>
-
           </div>
         </div>
-        <div class="col-12 col-md-12 col-lg-6">
+        <div class="col-2 col-md-1 col-lg-1">
+          <div class="openCloceIframe no-select" [ngClass]="{'openIframe':expancion[2]}">
+            <ng-container *ngIf="!expancion[2]"><strong (click)="expancion[2]=true">+</strong></ng-container>
+            <ng-container *ngIf="expancion[2]"><strong (click)="expancion[2]=false">-</strong></ng-container>
+          </div>
+        </div>
+      </div>
+      <div class="row rowMapas">
+        <div class="col-10 col-md-11 col-lg-11">
           <div class="mapaSede">
-            <h2 class="nameSede">Santa Cruz - Bolivia</h2>
-            <p class="direccionSede">Av. Marcelo Terceros Bánzer 304 (3er anillo externo) <br> esquina Calle Los Pinos
-              <br /> Santa Cruz de la Sierra, Bolivia <br> <b>Teléfono: +59 (1) 7733-8111</b>
+            <h2 class="nameSede" [ngClass]="{'openIframe':expancion[3]}">Santa Cruz - Bolivia</h2>
+            <p class="direccionSede">Av. Marcelo Terceros Bánzer 304 (3er anillo externo)  esquina Calle Los Pinos <br>
+               Santa Cruz de la Sierra, Bolivia  <b>Teléfono: +59 (1) 7733-8111</b>
             </p>
-            <iframe style="width: 100%; height: auto;"
+            <iframe style="width: 100%; height: auto;" [ngStyle]="{'display':expancion[3]?'block':'none'}"
               src="https://maps.google.com/maps?hl=en&q=Av%20Marcelo%20Terceros%20B%C3%A1nzer%20304%2C%20Santa%20Cruz%20de%20la%20Sierra%2C%20Santa%20Cruz%2C%20Bolivia&t=&z=15&ie=UTF8&iwloc=B&output=embed"
               width="100%" height="200" frameborder="0" style="border:0" allowfullscreen="" loading="lazy"></iframe>
 
           </div>
         </div>
-        <div class="col-12 col-md-12 col-lg-6">
+        <div class="col-2 col-md-1 col-lg-1">
+          <div class="openCloceIframe no-select" [ngClass]="{'openIframe':expancion[3]}">
+            <ng-container *ngIf="!expancion[3]"><strong (click)="expancion[3]=true">+</strong></ng-container>
+            <ng-container *ngIf="expancion[3]"><strong (click)="expancion[3]=false">-</strong></ng-container>
+          </div>
+        </div>
+      </div>
+      <div class="row rowMapas">
+        <div class="col-10 col-md-11 col-lg-11">
           <div class="mapaSede">
-            <h2 class="nameSede">Ciudad de México - México</h2>
-            <p class="direccionSede">Montecito N° 38, Piso 33 oficina 4 Colonia Nápoles,<br> World Trade Center,<br>
+            <h2 class="nameSede" [ngClass]="{'openIframe':expancion[4]}">Ciudad de México - México</h2>
+            <p class="direccionSede">Montecito N° 38, Piso 33 oficina 4 Colonia Nápoles, World Trade Center,<br>
               Ciudad de México, México <br> <b>Teléfono: +52 (55) 4000-3255</b> </p>
             <iframe style="width: 100%; height: auto;" width="100%" height="200" frameborder="0" scrolling="no"
-              marginheight="0" marginwidth="0" id="gmap_canvas"
+              marginheight="0" marginwidth="0" id="gmap_canvas" [ngStyle]="{'display':expancion[4]?'block':'none'}"
               src="https://maps.google.com/maps?width=520&amp;height=400&amp;hl=en&amp;q=Montecito%20N%C2%B0%2038,%20Piso%2033%20oficina%204%20Colonia%20N%C3%A1poles,%20World%20Trade%20Center,%20Ciudad%20de%20M%C3%A9xico,%20M%C3%A9xico%20Mexico+(BSG%20Institute)&amp;t=&amp;z=12&amp;ie=UTF8&amp;iwloc=B&amp;output=embed"></iframe>
-
+          </div>
+        </div>
+        <div class="col-2 col-md-1 col-lg-1">
+          <div class="openCloceIframe no-select" [ngClass]="{'openIframe':expancion[4]}">
+            <ng-container *ngIf="!expancion[4]"><strong (click)="expancion[4]=true">+</strong></ng-container>
+            <ng-container *ngIf="expancion[4]"><strong (click)="expancion[4]=false">-</strong></ng-container>
           </div>
         </div>
       </div>
     </div>
-    <div class="col-12 col-md-6 col-lg-4">
+    <div class="col-12 col-md-4 col-lg-4">
 
       <div class="estructuraBlogForm">
 

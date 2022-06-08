@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { CardMatriculasDTO, CardProgramasDTO } from 'src/app/Core/Models/BasicDTO';
+import { CardMatriculasDTO } from 'src/app/Core/Models/BasicDTO';
 
 @Component({
   selector: 'app-card-matriculas',

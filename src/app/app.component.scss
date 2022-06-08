@@ -1,3 +1,8 @@
+.titulop{
+  margin: 20px 0px;
+  font-weight: 800;
+  color: #4a4a49;
+}
 @media (max-width: 576px) {
   .carousel-control-next{
     margin-right: -25px !important;
@@ -10,8 +15,7 @@
   }
   .titulop{
     font-size: 30px;
-    font-weight: 800;
-    color: #4a4a49;
+    line-height: 30px;
   }
   .titulos{
     font-size: 25px;
@@ -21,9 +25,6 @@
   .parafop{
     font-size: 18px;
     font-weight: 600;
-  }
-  .cardSubtitle{
-    width: 100%;
   }
   .subtitulo{
     font-size: 30px;
@@ -44,8 +45,7 @@
   }
   .titulop{
     font-size: 30px;
-    font-weight: 800;
-    color: #4a4a49;
+    line-height: 30px;
   }
   .titulos{
     font-size: 25px;
@@ -55,9 +55,6 @@
   .parafop{
     font-size: 18px;
     font-weight: 600;
-  }
-  .cardSubtitle{
-    width: 100%;
   }
   .subtitulo{
     font-size: 30px;
@@ -78,8 +75,7 @@
   }
   .titulop{
     font-size: 30px;
-    font-weight: 800;
-    color: #4a4a49;
+    line-height: 30px;
   }
   .titulos{
     font-size: 25px;
@@ -89,9 +85,6 @@
   .parafop{
     font-size: 18px;
     font-weight: 600;
-  }
-  .cardSubtitle{
-    width: 100%;
   }
   .subtitulo{
     font-size: 30px;
@@ -112,8 +105,7 @@
   }
   .titulop{
     font-size: 40px;
-    font-weight: 800;
-    color: #4a4a49;
+    line-height: 40px;
   }
   .titulos{
     font-size: 35px;
@@ -123,9 +115,6 @@
   .parafop{
     font-size: 22px;
     font-weight: 600;
-  }
-  .cardSubtitle{
-    width: 80%;
   }
   .subtitulo{
     font-size: 44px;
@@ -146,8 +135,7 @@
   }
   .titulop{
     font-size: 50px;
-    font-weight: 800;
-    color: #4a4a49;
+    line-height: 50px;
   }
   .titulos{
     font-size: 45px;
@@ -157,9 +145,6 @@
   .parafop{
     font-size: 22px;
     font-weight: 600;
-  }
-  .cardSubtitle{
-    width: 80%;
   }
   .subtitulo{
     font-size: 44px;
@@ -180,8 +165,7 @@
   }
   .titulop{
     font-size: 60px;
-    font-weight: 800;
-    color: #4a4a49;
+    line-height: 60px;
   }
   .titulos{
     font-size: 50px;
@@ -191,9 +175,6 @@
   .parafop{
     font-size: 22px;
     font-weight: 600;
-  }
-  .cardSubtitle{
-    width: 80%;
   }
   .subtitulo{
     font-size: 44px;
@@ -242,19 +223,19 @@
 
 .carousel-indicators [data-bs-target]{
   background-color: #0a86f2;
-  width: 10px;
-  height: 10px;
+  width: 6px;
+  height: 6px;
 
   border-radius: 50%;
 }
 
 
 .carousel-control-next-icon{
-  background-image: url(../assets/imagenes/felcha1-01.svg);
+  background-image: url(../assets/icons/flecha-izquierda.svg);
 }
 
 .carousel-control-prev-icon{
-  background-image: url(../assets/imagenes/flecha-02.svg);
+  background-image: url(../assets/icons/flecha-derecha.svg);
 }
 
 .subtitulo{
@@ -346,12 +327,6 @@ html, body {
 .botones_login{
   display: flex;
   align-items: center;
-}
-.col-2{
-  margin-left: 5px;
-  margin-right: 5px;
-  margin-top: -5px;
-  padding-bottom: 20px;
 }
 .space-bet{
   width: 80%;
@@ -462,4 +437,11 @@ mat-sidenav-content{
       }
     }
   }
+}
+.no-select{
+
+  -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }

@@ -1,14 +1,20 @@
 <mat-card class="card-programas">
-  <img mat-card-image [src]="cardContent.Img" [alt]="cardContent.ImgAlt">
+  <div class="chowCOntentImg " style="position: relative;">
+    <img mat-card-image [src]="cardContent.Img" [alt]="cardContent.ImgAlt" >
+    <div class="contenidoCardProgramas" >
+      <div style="position: relative;
+      height: 100%;">{{cardContent.Content}}
+        <div class="vermasInImg" [routerLink]="cardContent.Url">Ver mas +</div>
+      </div>
+    </div>
+  </div>
   <mat-card-content>
     <div class="title" [routerLink]="cardContent.Url">{{cardContent.Title}}</div>
+    <div class="invercion">
+      <p class="" [innerHTML]="cardContent.Inversion | safeHtml"> </p>
+    </div>
   </mat-card-content>
   <mat-card-footer>
-    <div class="invercion">
-
-      <p [innerHTML]="cardContent.Content">
-       </p>
       <div class="link" [routerLink]="cardContent.Url">M&aacute;s informac&oacute;n ></div>
-    </div>
   </mat-card-footer>
 </mat-card>

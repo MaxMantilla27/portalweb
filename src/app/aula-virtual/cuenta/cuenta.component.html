@@ -1,11 +1,11 @@
 <div class="container">
-  <div class="rowpadd breadcrumb" style="padding-top: 0px !important; padding-bottom: 0px !important;">
+  <div class="rowpaddAv breadcrumb" style="padding-top: 0px !important; padding-bottom: 0px !important;">
     <app-miga-pan [items]="migaPan"></app-miga-pan>
   </div>
 </div>
 <div style="background: #f4f4f4;">
   <div class="container">
-    <div class="row rowpadd">
+    <div class="row rowpaddAv">
       <div class="col-12 col-md-12 col-lg-12">
         <div class="titulop">
           Mi Cuenta
@@ -16,7 +16,7 @@
 </div>
 
 <div class="container">
-  <div class="row rowpadd">
+  <div class="row rowpaddAv">
     <div class="col-12 col-md-12 col-lg-12">
       <div class="contentTabs">
         <ng-container *ngFor="let item of tabs; let i=index">
@@ -30,7 +30,7 @@
 
 <div style="background: #f5f9ff;">
   <div class="container">
-    <div class="row rowpadd">
+    <div class="row rowpaddAv">
       <div class="col-12 col-md-12 col-lg-12">
         <app-cuenta-mi-perfil *ngIf="tabs[0].activo==true"></app-cuenta-mi-perfil>
         <app-cuenta-mis-pagos *ngIf="tabs[1].activo==true"></app-cuenta-mis-pagos>

@@ -1,7 +1,7 @@
 import { HttpClient, HttpRequest } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { ParametroObtenerEvaluacionTarea ,ModelTareaEvaluacionTareaDTO} from 'src/app/Core/Models/TareaEvaluacionDTO';
+import { ParametroObtenerEvaluacionTarea ,ModelTareaEvaluacionTareaDTO, ParametroEnvioTrabajoPares} from 'src/app/Core/Models/TareaEvaluacionDTO';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -21,6 +21,10 @@ export class TareaEvaluacionService {
     return this.http.post<any>(this.urlBase+'/ObtenerEvaluacionProyectoAplicacion',Json);
   }
 
+  public ObtenerEvaluacionTrabajoPares(Json:ParametroObtenerEvaluacionTarea):Observable<any>{
+    console.log(Json)
+    return this.http.post<any>(this.urlBase+'/ObtenerEvaluacionTrabajoPares',Json);
+  }
   public EnviarEvaluacionTarea(Json:ModelTareaEvaluacionTareaDTO):Observable<any>{
     console.log(Json)
     const formData: FormData = new FormData();
@@ -38,5 +42,9 @@ export class TareaEvaluacionService {
       responseType: 'json'
     });
     return this.http.request(req)
+  }
+  public EnviarCalificacionTrabajoPares(Json:ParametroEnvioTrabajoPares):Observable<any>{
+    console.log(Json)
+    return this.http.post<any>(this.urlBase+'/EnviarCalificacionTrabajoPares',Json);
   }
 }

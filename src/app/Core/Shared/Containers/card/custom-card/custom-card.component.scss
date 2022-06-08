@@ -1,4 +1,22 @@
 .card-container {
+  display: flex;
+  background: #cfffe6;
+  justify-content: space-between;
+  width: 100%;
+  .cardInfo{
+    padding: 25px 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  .cardImg{
+    img{
+      border-radius: 0px 10px 10px 0px;
+      height: 100%;
+      width: auto;
+    }
+  }
+    border-radius: 10px;
     &__img-container {
         margin: 0;
         padding: 0;
@@ -29,6 +47,6 @@
                 text-decoration: underline;
             }
         }
-        
+
     }
 }

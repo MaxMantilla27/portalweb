@@ -7,10 +7,12 @@ import { HelperService } from 'src/app/Core/Shared/Services/helper.service';
 import { PartnerService } from 'src/app/Core/Shared/Services/Partner/partner.service';
 import { CasosExitoDTO } from 'src/app/Core/Models/CasosExitoDTO';
 import { isPlatformBrowser } from '@angular/common';
+import { SessionStorageService } from 'src/app/Core/Shared/Services/session-storage.service';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
-  styleUrls: ['./home.component.css'],
+  styleUrls: ['./home.component.scss'],
   providers:[NgbCarouselConfig],
   encapsulation: ViewEncapsulation.None,
 })
@@ -25,6 +27,8 @@ export class HomeComponent implements OnInit,AfterViewInit {
   public TituloCarreras = '';
   public tabindex=0;
   public selectFormacion=0;
+  public busqueda=''
+  public inputActive=false
   public cassosExito:Array<CasosExitoDTO>=[
     {Curso:"Curso MS Project aplicado a la Gestión de Proyectos",Genero:'F',Nombre:'KERLY PACHECO',Texto:'La experiencia ha sido muy buena, porque he podido ampliar los conocimientos que tenia.'},
     {Curso:"Diplomado Lean Six Sigma Black Belt",Genero:'F',Nombre:'HEDDY HONORIO',Texto:'La motivación de la certificación internacional que ofrece el programa fue un estímulo muy alto para matricularme'},
@@ -39,6 +43,8 @@ export class HomeComponent implements OnInit,AfterViewInit {
 
     private _PartnerService:PartnerService,
     private _HelperService :HelperService,
+    private _router:Router,
+    private _SessionStorageService:SessionStorageService,
     config: NgbCarouselConfig,
      @Inject(PLATFORM_ID) platformId: Object
   ) {
@@ -52,7 +58,7 @@ export class HomeComponent implements OnInit,AfterViewInit {
     this.tabindex=0
   }
   public innerWidth: any;
-  public seccionStep=5;
+  public seccionStep=4;
   ngOnInit(): void {
     if(this.isBrowser){
       this.innerWidth = window.innerWidth;
@@ -74,18 +80,24 @@ export class HomeComponent implements OnInit,AfterViewInit {
       next:(x)=>{
         this.Formacion=x;
         this.Formacion.forEach(x=>{
-          x.change=0;
+          x.change=false;
         })
         this.tabindex=0;
         this.selectFormacion=this.Formacion[this.tabindex].value;
+        this.Formacion[0].change=true
       }
     });
 
     this.GetImagenPartner();
   }
+  BuscarProgramas(){
+    this._SessionStorageService.SessionSetValue('BusquedaPrograma',this.busqueda);
+    this._router.navigate(['/programas-certificaciones-cursos']);
+  }
   tabChanged = (tabChangeEvent: MatTabChangeEvent): void => {
     this.tabindex=tabChangeEvent.index;
     this.selectFormacion=this.Formacion[this.tabindex].value;
+    this.Formacion[this.tabindex].change=true
   }
   GetImagenPartner(){
     this._PartnerService.GetListPartnerImage().subscribe({

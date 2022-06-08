@@ -1,0 +1,29 @@
+<div class="tilteInter">
+  Foros de cursos
+</div>
+<mat-accordion *ngIf="foros!=undefined" class="example-headers-align" multi >
+  <mat-expansion-panel *ngFor="let item of foros">
+    <mat-expansion-panel-header style="height: auto;
+    padding-top: 20px;
+    padding-bottom: 20px;">
+      <mat-panel-title>
+        {{item.pGeneral}}
+      </mat-panel-title>
+      <mat-panel-description style="justify-content: flex-end;">
+        {{item.listaTemas.length}}
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+    <div>
+      <div class="foroContainer row" (click)="OpenModal(foro)" *ngFor="let foro of item.listaTemas">
+        <div class="infoForo col-12 col-md-12 col-lg-10">
+          <img src="../../../../assets/icons/foro-naranja.svg" alt="">
+          <div class="titleForo">{{foro.titulo}}</div>
+        </div>
+        <div class="col-12 col-md-12 col-lg-2" style="display: flex;justify-content: flex-end; margin: 10px 0px;">
+          <app-default-button [confs]="{color:'primary',titulo:'Ingresar'}" [icon]="''"
+          [style]="'margin: 0px'"></app-default-button>
+        </div>
+      </div>
+    </div>
+  </mat-expansion-panel>
+</mat-accordion>

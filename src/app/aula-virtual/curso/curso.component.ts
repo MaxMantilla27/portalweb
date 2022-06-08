@@ -81,7 +81,7 @@ export class CursoComponent implements OnInit {
 
   }
   ObtenerDatosCertificado(){
-    this._CertificadoService.ObtenerDatosCertificado(this.idMatricula).subscribe({
+    this._CertificadoService.ObtenerDatosCertificadoEnvio(this.idMatricula).subscribe({
       next:x=>{
         console.log(x)
         if(this.datosCertificado!=undefined){
@@ -102,7 +102,7 @@ export class CursoComponent implements OnInit {
   }
   certificadoFisico(){
     if(this.datosCertificado!=undefined){
-      if(this.datosCertificado.idSolicitudCertificadoFisico==null || this.datosCertificado.idSolicitudCertificadoFisico==0){
+      if(this.datosCertificado.nombreArchivo==null){
         this.alertaFisico=true
       }
     }
@@ -186,7 +186,7 @@ export class CursoComponent implements OnInit {
           }
         }
 
-        //this._SessionStorageService.SessionDeleteValue('cursoIndex');
+        this._SessionStorageService.SessionDeleteValue('cursoIndex');
 
       }
     })
@@ -197,6 +197,9 @@ export class CursoComponent implements OnInit {
       .subscribe({
         next: (x) => {
           this.programEstructura = x;
+          this.programEstructura.listaCursoMatriculado.sort(function (a:any, b:any) {
+            return a.orden - b.orden;
+          })
           this.migaPan.push(
             {
               titulo: this.programEstructura.programaGeneral,

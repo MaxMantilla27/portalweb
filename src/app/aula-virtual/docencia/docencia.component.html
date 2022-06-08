@@ -1,0 +1,108 @@
+<div class="container">
+  <div class="rowpaddAv breadcrumb" style="padding-top: 0px !important; padding-bottom: 0px !important;">
+    <app-miga-pan [items]="migaPan"></app-miga-pan>
+  </div>
+</div>
+<div style="border-top:solid 3px #f4f4f4 ;"></div>
+<div class="container" *ngIf="DataProveedor!=undefined">
+  <div class="row rowpaddAv">
+    <div class="col-12 col-md-12 col-lg-12" style="position: relative;">
+      <div class="openClose" [ngClass]="{'reverse':!hide}" (click)="hide=!hide"><i class="material-icons">double_arrow</i></div>
+      <mat-tab-group class="tabVerticalDocente" [(selectedIndex)]="tabIndex" (selectedTabChange)="tabChanged($event)">
+        <mat-tab *ngIf="DataProveedor.aplicaSesionOnlineWebinar">
+          <ng-template mat-tab-label>
+            <div class="contentHeaderM">
+              <i class="material-icons">web</i>
+              <div class="titleMatr" *ngIf="!hide">Sesiones Online/Webinar</div>
+            </div>
+          </ng-template>
+          <div style="padding: 10px 30px;">
+            <app-docencia-sesiones-webinar [IdProveedor]="DataProveedor.id"></app-docencia-sesiones-webinar>
+          </div>
+        </mat-tab>
+        <mat-tab>
+          <ng-template mat-tab-label>
+            <div class="contentHeaderM">
+              <i class="material-icons">content_paste</i>
+              <div class="titleMatr" *ngIf="!hide">Gestión de Notas</div>
+            </div>
+          </ng-template>
+          <div style="padding: 10px 30px;">
+          </div>
+        </mat-tab>
+        <mat-tab>
+          <ng-template mat-tab-label>
+            <div class="contentHeaderM">
+              <i class="material-icons">assistant</i>
+              <div class="titleMatr" *ngIf="!hide">Gestión de Asistencias</div>
+            </div>
+          </ng-template>
+          <div style="padding: 10px 30px;">
+          </div>
+        </mat-tab>
+        <mat-tab>
+          <ng-template mat-tab-label>
+            <div class="contentHeaderM">
+              <i class="material-icons">assessment</i>
+              <div class="titleMatr" *ngIf="!hide">Gestión de Auto Evaluaciones</div>
+            </div>
+          </ng-template>
+          <div style="padding: 10px 30px;">
+          </div>
+        </mat-tab>
+        <mat-tab>
+          <ng-template mat-tab-label>
+            <div class="contentHeaderM">
+              <i class="material-icons">work</i>
+              <div class="titleMatr" *ngIf="!hide">Trabajo de Pares</div>
+            </div>
+          </ng-template>
+          <div style="padding: 10px 30px;">
+          </div>
+        </mat-tab>
+        <mat-tab>
+          <ng-template mat-tab-label>
+            <div class="contentHeaderM">
+              <i class="material-icons">manage_accounts</i>
+              <div class="titleMatr" *ngIf="!hide">Gestión de Sílabos</div>
+            </div>
+          </ng-template>
+          <div style="padding: 10px 30px;">
+          </div>
+        </mat-tab>
+        <mat-tab *ngIf="dataForo!=undefined && dataForo!=null && dataForo.length>0">
+          <ng-template mat-tab-label>
+            <div class="contentHeaderM">
+              <i class="material-icons">forum</i>
+              <div class="titleMatr" *ngIf="!hide">Responder Foros</div>
+            </div>
+          </ng-template>
+          <div style="padding: 10px 30px;
+          min-height: 100%;">
+            <app-docencia-foros [foros]="dataForo"></app-docencia-foros>
+          </div>
+        </mat-tab>
+        <mat-tab>
+          <ng-template mat-tab-label>
+            <div class="contentHeaderM">
+              <i class="material-icons">rate_review</i>
+              <div class="titleMatr" *ngIf="!hide">Calificar Actividades de Evaluación</div>
+            </div>
+          </ng-template>
+          <div style="padding: 10px 30px;">
+          </div>
+        </mat-tab>
+        <mat-tab>
+          <ng-template mat-tab-label>
+            <div class="contentHeaderM">
+              <i class="material-icons">person</i>
+              <div class="titleMatr" *ngIf="!hide">Perfil de Alumno</div>
+            </div>
+          </ng-template>
+          <div style="padding: 10px 30px;">
+          </div>
+        </mat-tab>
+      </mat-tab-group>
+    </div>
+  </div>
+</div>

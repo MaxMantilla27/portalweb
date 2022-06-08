@@ -66,9 +66,11 @@ export class ModuloForoComponent implements OnInit, OnChanges {
     }
   }
   plusPage() {
-    if (this.pagina < Math.ceil(this.foro.length / 4)) {
-      this.pagina++;
-      this.paginaCeil = Math.ceil(this.pagina / 5);
+    if(this.foro!=null){
+      if (this.pagina < Math.ceil(this.foro.length / 4)) {
+        this.pagina++;
+        this.paginaCeil = Math.ceil(this.pagina / 5);
+      }
     }
   }
   page(p: number) {

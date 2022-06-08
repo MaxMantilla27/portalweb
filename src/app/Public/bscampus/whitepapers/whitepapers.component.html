@@ -19,42 +19,47 @@
     <div class="col-12 col-md-7 col-lg-7">
       <div [innerHtml]="descripcion | safeHtml">
       </div>
+
+      <div class="row " style="margin-top: 50px;">
+        <div class="col-12 col-md-5 col-lg-5">
+          <img class="imgWP" [src]="'https://repositorioweb.blob.core.windows.net/paper-bs/Paper/imagen/'+imagen"
+            [alt]="alt" *ngIf="imagen!=''">
+        </div>
+        <div class="col-12 col-md-7 col-lg-7">
+          <div style="padding-left: 1rem;font-size: 20px;font-weight: 900;margin-bottom: 20px;">Contenidos</div>
+          <div class="contentWP" [innerHtml]="contenido| safeHtml">
+          </div>
+        </div>
+      </div>
+
     </div>
     <div class="col-12 col-md-5 col-lg-5">
-      <div class="contentWP" style="width: 100%; background: #cfffe6;border-radius: 10px;padding: 20px 10px;">
+      <div class="contentWP" style="width: 100%; background: #ededed;border-radius: 10px;padding: 20px 10px;">
         <div style="display: flex;justify-content: center;    padding: 0px 70px;align-items: center;">
-          <div style="color: #118bf1;font-weight: 900;font-size: 20px">Descargar White Paper</div>
-          <img style="width: 100px;height: auto;margin: 5px;" src="../../../../assets/icons/facebook-icon.svg" alt="">
+          <div style="color: #118bf1;font-weight: 900;font-size: 20px;text-align: center;">Descargar White Paper</div>
+          <img style="width: 70px;height: auto;margin: 5px;" src="../../../../assets/icons/descarga.svg" alt="">
         </div>
         <app-formulario [model]="formularioContacto" [InputsDisable]="statuscharge" (OnSubmit)="SetContacto($event)"
-                  (OnValid)="formVal=$event" [fiels]="fileds" (OnSelect)="SelectChage($event)">
+          (OnValid)="formVal=$event" [fiels]="fileds" (OnSelect)="SelectChage($event)">
 
-                  <ng-container contenido>
-                  </ng-container>
-                  <ng-container send>
-                    <app-default-button [confs]="{color:'primary',titulo:'Descargar ahora'}" [style]="'width: 100%;'"
-                    [disabled]="!formVal"></app-default-button>
-                  </ng-container>
-            </app-formulario>
+          <ng-container contenido>
+          </ng-container>
+          <ng-container send>
+            <app-default-button [confs]="{color:'primary',titulo:'Descargar ahora'}" [style]="'width: 100%;'"
+              [disabled]="!formVal"></app-default-button>
+          </ng-container>
+        </app-formulario>
       </div>
     </div>
   </div>
 </div>
-
-<div style="background: #f5f9ff;">
+<div style="background: #ffffff;">
   <div class="container">
     <div class="row rowpadd">
-      <div class="col-12 col-md-3 col-lg-3">
-        <img class="imgWP" [src]="'https://repositorioweb.blob.core.windows.net/paper-bs/Paper/imagen/'+imagen"
-          [alt]="alt" *ngIf="imagen!=''">
+      <div class="col-12 col-md-12 col-lg-12" style="margin-top: 30px;margin-bottom: 10px;">
+        <div class="subtitulo">Tags</div>
       </div>
-      <div class="col-12 col-md-9 col-lg-9">
-        <div style="padding-left: 1rem;font-size: 20px;font-weight: 900;margin-bottom: 20px;">Contenidos</div>
-        <div class="contentWP" [innerHtml]="contenido| safeHtml">
-        </div>
-      </div>
-
-      <div class="col-12 col-md-12 col-lg-12" style="margin-top: 40px;">
+      <div class="col-12 col-md-12 col-lg-12">
         <div style="display: flex; align-items: center; justify-content: flex-start;flex-wrap: wrap;">
           <div *ngFor="let item of tags" style="margin-right: 20px;">
             <app-tag-button [tag]="item"></app-tag-button>
@@ -63,3 +68,4 @@
       </div>
     </div>
   </div>
+</div>

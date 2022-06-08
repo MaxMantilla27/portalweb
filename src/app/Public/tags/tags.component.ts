@@ -64,6 +64,7 @@ export class TagsComponent implements OnInit {
         this.programas=x.listaProgramaTemasRelacionados.map(
           (c:any)=>{
             var ps:CardProgramasDTO={
+              Inversion:'',
               Content:c.montoPagoDescripcion,
               Url:c.direccion,
               Img:'https://img.bsginstitute.com/repositorioweb/img/programas/'+c.imagenPrograma,

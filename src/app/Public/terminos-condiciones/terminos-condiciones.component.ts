@@ -30,9 +30,12 @@ export class TerminosCondicionesComponent implements OnInit {
     this._TerminosCondicionesService.ObtenerTerminosCondiciones().subscribe({
       next: (x) => {
         console.log(x);
-        this.nombre=x.nombre
+        this.nombre=this.capitalizeFirstLetter(x.nombre.toLowerCase());
         this.contenido=x.contenido
       },
     });
+  }
+  capitalizeFirstLetter(string:string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
   }
 }

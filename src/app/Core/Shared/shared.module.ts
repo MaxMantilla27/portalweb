@@ -71,6 +71,15 @@ import { CloudflareStreamModule } from '@cloudflare/stream-angular';
 import { MaterialAdicionalService } from './Services/MaterialAdicional/material-adicional.service';
 import { CertificadoService } from './Services/Certificado/certificado.service';
 import { CertificadoIntegraService } from './Services/CertificadoIntegra/certificado-integra.service';
+import { ProveedorGuard } from 'src/app/aula-virtual/Guard/proveedor.guard';
+import { ProveedorService } from './Services/Proveedor/proveedor.service';
+import { ProgramaEspecificoIntegraService } from './Services/ProgramaEspecificoIntegra/programa-especifico-integra.service';
+import { TableComponent } from './Containers/table/table.component';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatSortModule } from '@angular/material/sort';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatmenuComponent } from './Containers/matmenu/matmenu.component';
+import { LibroReclamacionService } from './Services/LibroReclamacion/libro-reclamacion.service';
 
 
 
@@ -101,8 +110,10 @@ import { CertificadoIntegraService } from './Services/CertificadoIntegra/certifi
     MatTooltipModule,
     MatProgressBarModule,
     MatSnackBarModule,
-    CloudflareStreamModule
-
+    CloudflareStreamModule,
+    MatPaginatorModule,
+    MatSortModule,
+    MatDialogModule,
   ],
   declarations: [
     HeaderComponent,
@@ -131,6 +142,8 @@ import { CertificadoIntegraService } from './Services/CertificadoIntegra/certifi
     VideoBrightcoveComponent,
     CrucigramaComponent,
     SafePipe,
+    TableComponent,
+    MatmenuComponent,
   ],
   exports: [
     HttpClientModule,
@@ -153,6 +166,8 @@ import { CertificadoIntegraService } from './Services/CertificadoIntegra/certifi
     CardMatriculasComponent,
     VideoBrightcoveComponent,
     CrucigramaComponent,
+    TableComponent,
+    MatmenuComponent,
 
     MatTabsModule,
     MatTableModule,
@@ -183,7 +198,10 @@ import { CertificadoIntegraService } from './Services/CertificadoIntegra/certifi
     MatProgressBarModule,
     MatSnackBarModule,
     SafePipe,
-    CloudflareStreamModule
+    CloudflareStreamModule,
+    MatPaginatorModule,
+    MatSortModule,
+    MatDialogModule,
   ],
   providers: [
     SessionStorageService,
@@ -206,7 +224,10 @@ import { CertificadoIntegraService } from './Services/CertificadoIntegra/certifi
     SnackBarServiceService,
     MaterialAdicionalService,
     CertificadoService,
-    CertificadoIntegraService
+    CertificadoIntegraService,
+    ProveedorService,
+    ProgramaEspecificoIntegraService,
+    LibroReclamacionService
   ],
 })
 export class SharedModule {

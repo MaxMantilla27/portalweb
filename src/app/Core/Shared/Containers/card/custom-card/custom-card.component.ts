@@ -7,9 +7,9 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class CustomCardComponent implements OnInit {
 
-  @Input() 
+  @Input()
   item: any = {}
-  @Input() 
+  @Input()
   confs: any = {}
   constructor() { }
 

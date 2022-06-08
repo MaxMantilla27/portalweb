@@ -45,7 +45,7 @@ export class AcercaDeComponent implements OnInit,AfterViewInit {
   public imagenes:Array<PartnerImagesDTO>=[];
   public imagenes2:Array<BasicCarousel>=[];
   public step:Array<Array<PartnerImagesDTO>>=[];
-  public seccionStep=5;
+  public seccionStep=4;
   public innerWidth: any;
   ngOnInit(): void {
     //valores numeros calidad

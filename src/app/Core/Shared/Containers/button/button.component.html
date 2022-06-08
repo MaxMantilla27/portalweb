@@ -7,21 +7,24 @@
   <ng-content select="[contenidoTag]">
   </ng-content>
 </a>
+
 <ng-container *ngIf="tipo==3">
-  <a mat-button [ngClass]="{'bootoncolor':menuTrigger.menuOpen==true}" [matMenuTriggerFor]="menu"
-    #menuTrigger="matMenuTrigger">
+  <a mat-button [ngClass]="{'bootoncolor':hover==true}" [matMenuTriggerFor]="menu"
+  (mouseenter)="hover=true" (mouseleave)="hover=false"
+    #menuTrigger="matMenuTrigger" style="
+    margin-right: 20px;">
     <ng-content select="[contenidodata]">
-    </ng-content> <i class="material-icons" (mouseenter)="menuTrigger.openMenu()"
+    </ng-content> <i class="material-icons"
       [ngClass]="{'tranformi':menuTrigger.menuOpen==true}">arrow_drop_down</i>
   </a>
-  <mat-menu #menu="matMenu">
-    <span (mouseleave)="menuTrigger.closeMenu()">
+  <mat-menu #menu="matMenu" backdropClass="custom__menu">
+    <span >
       <button [routerLink]="item.Url" *ngFor="let item of dataUrl" mat-menu-item class="mat-menu-content-button"
         [style]="item.style">{{item.Nombre}}</button>
     </span>
   </mat-menu>
-
 </ng-container>
+
 <button mat-stroked-button *ngIf="tipo==4" [routerLink]="Url"  [ngStyle]="{'color':color,'background':background,'border':border}">
   <ng-content select="[contenidoButton]">
   </ng-content>

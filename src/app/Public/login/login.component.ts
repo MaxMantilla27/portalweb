@@ -82,13 +82,24 @@ export class LoginComponent implements OnInit {
     this.loginSend.username=this.login.Email;
     this._AspNetUserService.Authenticate(this.loginSend).subscribe({
       next:x=>{
+        console.log(x)
         this.statuscharge=false
         this._SessionStorageService.SetToken(x.token)
         this.DatoObservable.datoAvatar=true
         this.DatoObservable.datoContenido=true
         this._HelperService.enviarDatoCuenta(this.DatoObservable)
         console.log(this.DatoObservable);
-        this.router.navigate(['/AulaVirtual/MiPerfil']);
+        this._SessionStorageService.SessionSetValue('IdProveedor',x.idProveedor);
+        this._SessionStorageService.SessionSetValue('Cursos',x.cursos);
+        if(x.idProveedor==0){
+          this.router.navigate(['/AulaVirtual/MiPerfil']);
+        }else{
+          if(x.cursos==0){
+            this.router.navigate(['/AulaVirtual/Docencia']);
+          }else{
+            this.router.navigate(['/AulaVirtual/MiPerfil']);
+          }
+        }
       },
       error:e=>{
         this.statuscharge=false
@@ -102,7 +113,7 @@ export class LoginComponent implements OnInit {
         this.statuscharge=false
       }
     })
-    
+
 
   }
   eventoclickout(olo:string){

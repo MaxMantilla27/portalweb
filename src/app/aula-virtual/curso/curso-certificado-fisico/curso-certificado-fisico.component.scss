@@ -1,0 +1,145 @@
+.tipoIndicacionTitle{
+  display: flex;
+  justify-content: flex-start;
+  background: #f2f6ff;
+    padding: 5px 10px;
+    margin-bottom: 20px;
+}
+.tipoIndicacionTitle img{
+  width: 15px;
+  margin-right: 10px;
+}
+.tipoIndicacionTitle div{
+  font-size: 15px;
+    font-weight: 600;
+    color: #505050;
+}
+.containerform{
+  margin-top: 40px;
+}
+.headerFormSolicitu{
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  margin: 30px 0px;
+  .index{
+    font-weight: 600;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #f4f4f4;
+    border-radius: 50%;
+    margin-right: 20px;
+  }
+  div{
+    font-weight: 600;
+    .material-icons{
+      cursor: pointer;
+    }
+  }
+}
+.contentform{
+  margin-left: 50px;
+  margin-top: 30px;
+}
+.contentform .mat-form-field.mat-form-field-appearance-outline > div.mat-form-field-wrapper > div.mat-form-field-flex > div.mat-form-field-infix  { padding: 0.4em 0px }
+.contentform .mat-form-field.mat-form-field-appearance-outline > div.mat-form-field-wrapper > div.mat-form-field-flex > div.mat-form-field-infix > span.mat-form-field-label-wrapper { top: -1.5em; }
+
+.contentform .mat-form-field-appearance-outline.mat-form-field-can-float.mat-form-field-should-float .mat-form-field-label {
+    transform: translateY(-1.1em) scale(.75);
+    width: 133.33333%;
+}
+.contentform .mat-form-field.mat-form-field-appearance-outline > div.mat-form-field-wrapper > div.mat-form-field-flex > .mat-form-field-outline{
+
+  .mat-form-field-outline-start{
+    background-color: white;
+  }
+  .mat-form-field-outline-gap{
+    background-color: white;
+  }
+  .mat-form-field-outline-end {
+    background-color: white;
+  }
+}
+.contentform .mat-form-field.mat-form-field-appearance-outline > div.mat-form-field-wrapper > div.mat-form-field-flex > div.mat-form-field-infix input { height: 20px; }
+.contentform .mat-form-field.mat-form-field-disabled > div.mat-form-field-wrapper > div.mat-form-field-flex > .mat-form-field-outline{
+
+  .mat-form-field-outline-start{
+    background-color: #f0f0f0;
+  }
+  .mat-form-field-outline-gap{
+    background-color: #f0f0f0;
+  }
+  .mat-form-field-outline-end {
+    background-color: #f0f0f0;
+  }
+}
+
+.rowFormCertFisico{
+  label{
+    padding-bottom: 1.34375em;
+  }
+}
+
+.btn-habilitar{
+  width: auto;
+  display: flex;
+  justify-content: center;
+  cursor: pointer;
+  max-width: 100%;
+  margin-bottom: 20px;
+  background-color: #f4f4f4;
+  color: #F8893F;
+  border: solid 1px #F8893F;
+  box-shadow: none !important;
+  font-weight: 600;
+}
+.mat-checkbox{
+  margin-left: 50px;
+}
+.terminos label .mat-checkbox-label{
+  white-space: normal !important;
+  font-size: 12px;
+  line-height: 13px;
+  text-align: justify;
+  color: #ababab;
+}
+
+.alartasCertificados{
+  div{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 20px 0px;
+    padding: 10px 20px;
+    background: #fff8f0;
+    color: #ff8b9b;
+    border: 1px solid #ffe9d0;
+    i{
+      border-radius: 50%;
+      color: white;
+      background: #ffa1af;
+      padding: 2px;
+      cursor: pointer;
+    }
+  }
+}
+.cardEstadoEnvioCertFisico{
+  background: #f4f4f4;
+  padding: 5px 20px;
+  color: #7c7c7c;
+  display: flex;
+  margin-left: 10px;
+  border-radius: 10px;
+  img{
+    margin-left: 20px;
+    width: 20px;
+  }
+}
+.activeCard{
+  background: #0668bf;
+  color: white;
+}

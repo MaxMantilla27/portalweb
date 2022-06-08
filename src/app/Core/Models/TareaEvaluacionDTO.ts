@@ -16,3 +16,11 @@ export interface ModelTareaEvaluacionTareaDTO {
   idEsquemaEvaluacionPGeneralDetalle: number;
   idEsquemaEvaluacionPGeneralDetalle_Anterior: number;
 }
+export interface ParametroEnvioTrabajoPares{
+
+  IdEvaluacion:number,
+  IdParametroEvaluacion:number,
+  IdEscalaCalificacionDetalle:number,
+  ValorCalificado:number,
+  IdEsquemaEvaluacionPGeneralDetalle:number
+}

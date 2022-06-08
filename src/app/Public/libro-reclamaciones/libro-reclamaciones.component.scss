@@ -1,8 +1,5 @@
 
-.mat-form-field {
-  width: 100%;
-  min-width: 300px;
-}
+
 .titleFormLibro{
   font-size: 30px;
     border-bottom: 1px solid #e9e9e9;
@@ -21,7 +18,37 @@
 .buttonsFormLibro{
   display: flex;
     width: 100%;
-    justify-content: flex-end;
+    justify-content: space-evenly;
     padding: 30px 0px;
     flex-wrap:wrap ;
+}
+.newInpiut .mat-form-field.mat-form-field-appearance-outline > div.mat-form-field-wrapper > div.mat-form-field-flex > div.mat-form-field-infix  { padding: 0.4em 0px }
+.newInpiut .mat-form-field.mat-form-field-appearance-outline > div.mat-form-field-wrapper > div.mat-form-field-flex > div.mat-form-field-prefix { padding: 0.4em 0px;
+  top: 0px;
+  left: -10px;
+}
+
+.newInpiut .mat-form-field.mat-form-field-appearance-outline > div.mat-form-field-wrapper > div.mat-form-field-flex > div.mat-form-field-infix > span.mat-form-field-label-wrapper { top: -1.5em; }
+
+.newInpiut .mat-form-field-appearance-outline.mat-form-field-can-float.mat-form-field-should-float .mat-form-field-label {
+    transform: translateY(-1.1em) scale(.75);
+    width: 133.33333%;
+}
+.mat-input-underline {
+  background-color: #FF0000;    /* replace this color with your accent color hex code */
+}
+:root {
+  --main-bg-color: white;
+}
+.newInpiut .mat-form-field.mat-form-field-appearance-outline > div.mat-form-field-wrapper > div.mat-form-field-flex > .mat-form-field-outline{
+
+  .mat-form-field-outline-start{
+    background-color: var(--main-bg-color);
+  }
+  .mat-form-field-outline-gap{
+    background-color: var(--main-bg-color);
+  }
+  .mat-form-field-outline-end {
+    background-color: var(--main-bg-color);
+  }
 }

@@ -24,13 +24,8 @@ export class SelectComponent implements OnInit,AfterViewInit {
     console.log(this.myselsetc)
     this.myselsetc.openedChange.subscribe((open) => {
       if (open) {
-        console.log(this.myselsetc.panel.nativeElement.scrollTop)
-
         this.myselsetc.panel.nativeElement.scrollTop-=50;
-        this.myselsetc.panel.nativeElement.addEventListener(
-          'scroll',
-          (event:any) => (console.log(this.myselsetc.panel.nativeElement.scrollTop))
-        );
+
       }
     });
   }
@@ -58,7 +53,7 @@ export class SelectComponent implements OnInit,AfterViewInit {
 
   }
   GetDataFromDatUrl(){
-    this.Urlselected=this.dataUrl.filter(x=>x.value==this.valueDefecto)[0].Url;
+    this.Urlselected=this.dataUrl.filter(x=>x.value==this.valueDefecto)[0].Icon;
     this.NameSelected=this.dataUrl.filter(x=>x.value==this.valueDefecto)[0].Nombre;
   }
   ChangeSelected(value:any){

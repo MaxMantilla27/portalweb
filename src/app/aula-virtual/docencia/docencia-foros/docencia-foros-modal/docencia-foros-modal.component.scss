@@ -1,0 +1,35 @@
+.TitleModal {
+  display: flex;
+  color: #ff7012;
+  font-weight: 600;
+  img {
+    width: 30px;
+    margin-right: 20px;
+  }
+}
+.FotterMdal {
+  display: flex;
+  justify-content: flex-end;
+  padding-top: 20px;
+  border-top: solid 1px #c3c3c3;
+  margin-left: 50px;
+}
+.ContentForoModal {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  margin: 20px 0px;
+  img {
+    height: auto;
+  }
+}
+.custom-dialog-container {
+  overflow: auto;
+}
+.Responder {
+  width: 100%;
+  margin-top: 40px;
+  mat-form-field {
+    width: 100%;
+  }
+}

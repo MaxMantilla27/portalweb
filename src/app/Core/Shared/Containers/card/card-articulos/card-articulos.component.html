@@ -3,7 +3,7 @@
   <mat-card-content>
     <div class="title" [routerLink]="cardContent.Url">{{cardContent.Title}}</div>
     <div>
-      <p [innerHTML]="cardContent.Content">
+      <p [innerHTML]="cardContent.Content | safeHtml">
        </p></div>
   </mat-card-content>
   <mat-card-footer>

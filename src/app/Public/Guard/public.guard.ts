@@ -16,11 +16,8 @@ export class PublicGuard implements CanActivate {
   {
     if(this.isBrowser){
       if (this._SessionStorageService.validateTokken()) {
-        if(this._location.path().toString()!=state.url.toString()){
-          this.router.navigate([this._location.path().toString()]);
-        }else{
-          this.router.navigate(['AulaVirtual/MiPerfil']);
-        }
+
+        this.router.navigate(['AulaVirtual/MiPerfil']);
         return false;
       }
     }

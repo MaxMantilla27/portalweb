@@ -10,7 +10,8 @@ import { CardProgramasDTO } from 'src/app/Core/Models/BasicDTO';
 export class CardProgramasComponent implements OnInit {
 
   constructor() { }
-  @Input() cardContent:CardProgramasDTO={Content:'',Img:'',Url:'',Title:'',ImgAlt:''};
+  public hoverimg=false;
+  @Input() cardContent:CardProgramasDTO={Content:'',Img:'',Url:'',Title:'',ImgAlt:'',Inversion:''};
   ngOnInit(): void {
   }
 

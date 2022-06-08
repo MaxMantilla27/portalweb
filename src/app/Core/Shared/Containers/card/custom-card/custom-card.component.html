@@ -1,11 +1,21 @@
-<div class="row card-container">
-    <div class="col-md-4 card-container__img-container">
+<div class="card-container">
+    <!-- <div class="col-md-4 card-container__img-container">
         <img [src]="item.imagen" alt="{{item.imagenAlt}}">
     </div>
     <div class="col-md-8 card-container__information-container">
         <app-link-button [Child]="false" [fontColor]="'#0281F2'" [fontStyle]="'bold'" [fontSize]="'2rem'" style="margin-top: 0.15rem" [item]="item"></app-link-button>
         <p>{{item.descripcion}}</p>
         <app-default-button [confs]="confs" [ruta]="item.urlWeb"></app-default-button>
+    </div> -->
+    <div class="cardInfo">
+      <div>
+        <app-link-button [Child]="false" [fontColor]="'#0281F2'" [fontStyle]="'bold'" [fontSize]="'2rem'" style="margin-top: 0.15rem" [item]="item"></app-link-button>
+        <p style="margin-top:20px;min-height: 100px;">{{item.descripcion}}</p>
+      </div>
+      <app-link-button [fontColor]="'#ff8800'" [Child]="false" [fontStyle]="'bold'" [item]="{titulo:confs.titulo,urlWeb:item.urlWeb,color:confs.color}"></app-link-button>
+    </div>
+    <div class="cardImg">
+      <img [src]="item.imagen" [alt]="item.imagenAlt">
     </div>
 </div>
 

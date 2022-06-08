@@ -28,7 +28,7 @@ import { TagService } from 'src/app/Core/Shared/Services/Tag/tag.service';
   templateUrl: './programas-detalle.component.html',
   styleUrls: ['./programas-detalle.component.scss'],
   encapsulation: ViewEncapsulation.None,
-  
+
 })
 export class ProgramasDetalleComponent implements OnInit {
 
@@ -346,7 +346,7 @@ export class ProgramasDetalleComponent implements OnInit {
               var urlArea=c.areaCapacitacion.replace(/\s+/g, '-')
               var urlSubArea=c.nombre.replace(' - ', '-')
               var urlSubArea=urlSubArea.replace(/\s+/g, '-')
-              var ps:CardProgramasDTO={Content:c.montoPagoDescripcion,Url:'/'+urlArea+'/'+urlSubArea+'-'+c.idBusqueda,Img:'https://img.bsginstitute.com/repositorioweb/img/programas/'+c.imagen,ImgAlt:c.imagenAlt,Title:c.nombre};
+              var ps:CardProgramasDTO={Inversion:c.montoPagoDescripcion,Content:c.montoPagoDescripcion,Url:'/'+urlArea+'/'+urlSubArea+'-'+c.idBusqueda,Img:'https://img.bsginstitute.com/repositorioweb/img/programas/'+c.imagen,ImgAlt:c.imagenAlt,Title:c.nombre};
               return ps;
             }
           );

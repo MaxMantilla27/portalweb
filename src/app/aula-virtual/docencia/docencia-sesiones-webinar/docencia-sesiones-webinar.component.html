@@ -1,0 +1,11 @@
+<!-- <div class="cardSesionesDocencia">
+  <div class="headerCardDocencia">Filtros</div>
+  <div class="contentCardDocencia"></div>
+  <div class="footerCardDocencia"></div>
+</div> -->
+<div class="tableSesionesDocencia">
+  <app-table *ngIf="tableData!=undefined" [tableData]="tableData" [columnHeader]="columnHeader"
+  [tipoContenido]="TipoContenido"
+  [StyleContent]="'    font-size: 12px;padding: 10px;'"
+  [StyleCabecera]="'color: white;background: rgb(3 61 171)'"></app-table>
+</div>

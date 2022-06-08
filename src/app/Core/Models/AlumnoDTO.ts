@@ -15,7 +15,9 @@ export interface datosAlumnoDTO {
   idPais: number,
   idTipoDocumento: string,
   nombres: string,
-  telefono: string
+  telefono: string,
+  idProveedor:number,
+  cursos:number
 }
 export interface RegisterDTO {
   Nombres: string,

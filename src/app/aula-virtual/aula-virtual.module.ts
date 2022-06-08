@@ -37,6 +37,12 @@ import { CursoCertificadoComponent } from './curso/curso-certificado/curso-certi
 import { CursoTramitesComponent } from './curso/curso-tramites/curso-tramites/curso-tramites.component';
 import { CursoCertificadoDigitalComponent } from './curso/curso-certificado-digital/curso-certificado-digital.component';
 import { SesionTareaCalificarComponent } from './sesiones/sesion-tarea-calificar/sesion-tarea-calificar.component';
+import { CursoCertificadoFisicoComponent } from './curso/curso-certificado-fisico/curso-certificado-fisico.component';
+import { DocenciaComponent } from './docencia/docencia.component';
+import { ErrorPageComponent } from './error-page/error-page.component';
+import { DocenciaSesionesWebinarComponent } from './docencia/docencia-sesiones-webinar/docencia-sesiones-webinar.component';
+import { DocenciaForosComponent } from './docencia/docencia-foros/docencia-foros.component';
+import { DocenciaForosModalComponent } from './docencia/docencia-foros/docencia-foros-modal/docencia-foros-modal.component';
 
 
 @NgModule({
@@ -72,6 +78,12 @@ import { SesionTareaCalificarComponent } from './sesiones/sesion-tarea-calificar
     CursoTramitesComponent,
     CursoCertificadoDigitalComponent,
     SesionTareaCalificarComponent,
+    CursoCertificadoFisicoComponent,
+    DocenciaComponent,
+    ErrorPageComponent,
+    DocenciaSesionesWebinarComponent,
+    DocenciaForosComponent,
+    DocenciaForosModalComponent,
 
   ],
   imports: [
@@ -82,7 +94,6 @@ import { SesionTareaCalificarComponent } from './sesiones/sesion-tarea-calificar
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: InterceptorService, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: MyHttpInterceptor, multi: true },
-
   ],
 })
 export class AulaVirtualModule { }

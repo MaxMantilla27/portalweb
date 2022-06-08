@@ -1,8 +1,25 @@
 h2 {
-  color: #0684f2;
+  color: #4c4c4b;
   font-size: 18px;
   margin-top: 30px;
   margin-bottom: 20px;
+  font-weight: 600;
+}
+.rowMapas{
+  border-top: 1px solid #bababa;
+  margin-right: 20px;
+  margin-bottom: 30px;
+}
+.openCloceIframe{
+  color: #4c4c4b;
+  font-size: 30px;
+  margin-top: 18px;
+  margin-bottom: 20px;
+  text-align: right;
+  cursor: pointer;
+}
+.openIframe{
+  color: #0684f2 !important;
 }
 p {
   font-size: 14px;
@@ -22,37 +39,40 @@ b {
 }
 .direccionSede {
 }
-.nameSede{
+.nameSede {
   flex-grow: 1;
 }
 
-.estructuraBlogForm{
-  width: 100%; background: #cfffe6;border-radius: 10px;padding: 20px 10px;
+.estructuraBlogForm {
+  width: 100%;
+  background: #ededed;
+  border-radius: 10px;
+  padding: 20px 10px;
 }
-.estructuraBlogForm .cotentestructurablogForm{
+.estructuraBlogForm .cotentestructurablogForm {
   display: flex;
   justify-content: center;
   width: 100%;
   color: #2999f0;
-   font-size: 20px;
-   text-align: center;
-   font-weight: 600;
-   margin-bottom: 10px;
+  font-size: 20px;
+  text-align: center;
+  font-weight: 600;
+  margin-bottom: 10px;
 }
 
-.estructuraBlogForm div .question{
+.estructuraBlogForm div .question {
   display: flex;
-  width: 25%;
+  width: 10%;
   flex-direction: column;
 }
-.question div{
+.question div {
   font-size: 40px;
 }
 
-.subtitleEstruturaBlogForm{
+.subtitleEstruturaBlogForm {
   font-size: 15px;
-    padding: 20px 15px;
-    color: #626b66;
-    font-weight: 300;
-    text-align: center;
+  padding: 20px 15px;
+  color: #626b66;
+  font-weight: 300;
+  text-align: center;
 }

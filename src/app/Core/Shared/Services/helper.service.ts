@@ -19,6 +19,7 @@ export class HelperService {
   private msjScrollFooter = new ReplaySubject<string>()
   private msjCombosAvatar = new ReplaySubject<AvatarCombosDTO>()
   private msjRecarga = new ReplaySubject<DatoObservableDTO>()
+  private msjPaises = new ReplaySubject<Array<any>>()
 
   public get recibirArrayCarrera() {
     return this.msjArrayCarrera.asObservable()
@@ -68,5 +69,11 @@ export class HelperService {
   }
   public enviarDatoCuenta(datos: DatoObservableDTO): void {
     this.msjRecarga.next(datos);
+  }
+  public get recibirDataPais() {
+    return this.msjPaises.asObservable()
+  }
+  public enviarDataPais(datos: Array<any>): void {
+    this.msjPaises.next(datos);
   }
 }

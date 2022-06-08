@@ -18,7 +18,7 @@ export class HomeProgramasComponent implements OnInit,OnChanges {
     this.isBrowser = isPlatformBrowser(platformId);
   }
   @Input() IdArea:number=0;
-  @Input() change?:number=0;
+  @Input() change:boolean|undefined=false;
   public programas:Array<CardProgramasDTO>=[];
   public stepProgramas:Array<Array<CardProgramasDTO>>=[];
   public innerWidth: any;
@@ -29,15 +29,17 @@ export class HomeProgramasComponent implements OnInit,OnChanges {
       if(this.innerWidth<992)this.seccionStep=2;
       if(this.innerWidth<768)this.seccionStep=1;
     }
-    this.GetProgramasHome();
   }
   ngOnChanges(changes: SimpleChanges): void {
-    this.GetProgramasHome();
+    if(this.change==true){
+      this.GetProgramasHome();
+    }
   }
   GetProgramasHome(){
     var json:ObtenerTopProgramasSendDTO={IdArea:this.IdArea,Top:30};
     this._HomeService.GetProgramasHome(json).subscribe({
       next:(x)=>{
+        console.log(x)
         this.programas=[];
         this.stepProgramas=[];
         this.programas=x.listaProgramasGeneralesTop.map(
@@ -56,7 +58,12 @@ export class HomeProgramasComponent implements OnInit,OnChanges {
             var urlSubArea=c.nombre.replace(' - ', '-')
             var urlSubArea=urlSubArea.replace(/\s+/g, '-')
             //console.log('/'+urlArea+'/'+urlSubArea+'-'+c.idBusqueda);
-            var ps:CardProgramasDTO={Content:content,Url:'/'+urlArea+'/'+urlSubArea+'-'+c.idBusqueda,Img:'https://img.bsginstitute.com/repositorioweb/img/programas/'+c.imagen,ImgAlt:c.imagenAlt,Title:c.nombre};
+            var ps:CardProgramasDTO={
+                Content:c.descripcion,
+                Inversion:content,
+                Url:'/'+urlArea+'/'+urlSubArea+'-'+c.idBusqueda,Img:'https://img.bsginstitute.com/repositorioweb/img/programas/'+c.imagen,
+                ImgAlt:c.imagenAlt,
+                Title:c.nombre};
             return ps;
           }
         );

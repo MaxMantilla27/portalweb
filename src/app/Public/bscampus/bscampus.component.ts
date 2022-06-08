@@ -42,7 +42,7 @@ export class BSCampusComponent implements OnInit {
       next:(x)=>{
         this.Formacion=x;
         this.Formacion.forEach(x=>{
-          x.change=0;
+          x.change=false;
         })
       }
     });

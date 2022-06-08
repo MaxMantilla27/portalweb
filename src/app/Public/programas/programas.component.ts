@@ -57,14 +57,21 @@ export class ProgramasComponent implements OnInit {
   public send:FiltroProgramasEnvioDTO={Minimo:0,Maximo:0,idArea:[],IdCategoria:[],idSubArea:[],Modalidad:[]};
   public charge=false;
   public rangoselect=0;
+  public TagBusqueda:Array<Basic>=[]
+  public TagAreas:Array<Basic>=[]
   public TagSubAreas:Array<Basic>=[]
   public TagModalidad:Array<Basic>=[]
   public TagTipoPrograma:Array<Basic>=[]
   public resposive=false;
   public innerWidth: any;
   public scrollValue=0;
-
+  public expancions=[false,false,false,false]
+  public buscar=''
   ngOnInit(): void {
+    this.buscar=this._SessionStorageService.SessionGetValue('BusquedaPrograma')
+    if(this._SessionStorageService.SessionGetValue('BusquedaPrograma')!=''){
+      this._SessionStorageService.SessionDeleteValue('BusquedaPrograma');
+    }
     if(this.isBrowser){
       this.innerWidth = window.innerWidth;
       if(this.innerWidth<768)this.resposive=true;
@@ -81,43 +88,179 @@ export class ProgramasComponent implements OnInit {
         }else{
           this.IdArea=0;
         }
-        this.GetProgramas();
         this.GetFiltroProgramas()
       }
     })
   }
   ngAfterViewInit() {
   }
+  removeAccents(strng:string){
+    return strng.normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+  }
+  validateSearch(i:number){
+    if(this.removeAccents(this.programas[i].Title).toLowerCase().includes(this.removeAccents(this.buscar).toLowerCase()) ||
+    this.removeAccents(this.programas[i].Content).toLowerCase().includes(this.removeAccents(this.buscar).toLowerCase())){
+      return true
+    }
+    return false
+  }
+  openExpand(i:number){
+    console.log(i)
+
+    if(this.expancions[i]==false){
+      this.expancions=[false,false,false,false]
+      this.expancions[i]=true
+    }else{
+      this.expancions[i]=false
+    }
+  }
   GetFiltroProgramas(){
     this._ProgramasService.GetFiltroProgramas(this.IdArea).subscribe({
       next:(x)=>{
         this.filtros=x.filtros;
-        var area=this.filtros.areaCapacitacion.find(x=>x.id==this.IdArea);
-        this.Title=area==undefined?this.Title:area.nombre;
+        var area:any;
+        this.filtros.areaCapacitacion.forEach(x=>{
+          if(x.id==this.IdArea){
+            x.select=true
+            area=x
+          }
+        })
+        this.GetProgramas();
+        //this.Title=area==undefined?this.Title:area.nombre;
         this.SubAreas=area==undefined?[]:area.subAreaCapacitacion;
 
         this.Modalidad=this.filtros.modalidad;
         this.TipoPrograma=this.filtros.tipoPrograma;
-        this.IdArea=this.IdArea;
       }
     })
+  }
+  SelectMod(index:number){
+    if(this.charge==false){
+      if(this.Modalidad[index].select==true){
+        this.Modalidad[index].select=false
+      }else{
+        this.Modalidad[index].select=true
+      }
+      this.GetProgramas();
+    }
+  }
+  SelectTipoP(index:number){
+    if(this.charge==false){
+      if(this.TipoPrograma[index].select==true){
+        this.TipoPrograma[index].select=false
+      }else{
+        this.TipoPrograma[index].select=true
+      }
+      this.GetProgramas();
+    }
+  }
+  SelectAreas(index:number){
+    if(this.charge==false){
+      if(this.filtros.areaCapacitacion[index].select==true){
+        this.filtros.areaCapacitacion[index].select=false
+        this.filtros.areaCapacitacion[index].subAreaCapacitacion.forEach(x=>{
+          x.select=false
+        })
+      }else{
+        this.filtros.areaCapacitacion[index].select=true
+      }
+      this.GetProgramas();
+    }
+  }
+  SelectSubAreas(index:number,indexSub:number){
+    if(this.charge==false){
+      if(this.filtros.areaCapacitacion[index].subAreaCapacitacion[indexSub].select==true){
+        this.filtros.areaCapacitacion[index].subAreaCapacitacion[indexSub].select=false
+      }else{
+        this.filtros.areaCapacitacion[index].subAreaCapacitacion[indexSub].select=true
+      }
+      this.GetProgramas();
+    }
   }
   AreasCapasitacion(e:any){
     this.IdArea=e;
     var area=this.filtros.areaCapacitacion.find(x=>x.id==this.IdArea);
-    this.Title=area==undefined?this.Title:area.nombre;
-    if(this.IdArea==0){
-      this.Title='Programas, certificaciónes y cursos';
-    }
+    // this.Title=area==undefined?this.Title:area.nombre;
+    // if(this.IdArea==0){
+    //   this.Title='Programas, certificaciónes y cursos';
+    // }
     this.SubAreas=area==undefined?[]:area.subAreaCapacitacion;
     this.SubAreaSelect=[];
     this.GetProgramas();
   }
+  RemoveArea(i:number){
+    console.log(i)
+    if(this.charge==false){
+      this.filtros.areaCapacitacion.forEach(x=>{
+        if(x.id==i){
+          x.select=false
+          x.subAreaCapacitacion.forEach(s=>{
+            s.select=false
+          })
+        }
+      })
+      this.GetProgramas();
+    }
+  }
   RemoveSubArea(i:number){
     if(this.charge==false){
-      this.SelectSubArreas.options.find(x=>x.value==this.SubAreaSelect[i])?.deselect();
-      this.SetSubAreaSelect();
-      this.SetTags();
+      this.filtros.areaCapacitacion.forEach(x=>{
+        if(x.select!=undefined && x.select==true){
+          x.subAreaCapacitacion.forEach(s=>{
+            if(s.id==i){
+              s.select=false
+            }
+          })
+        }
+      })
+      this.GetProgramas();
+    }
+  }
+
+  RemoveModalidad(i:number){
+    if(this.charge==false){
+      this.Modalidad.forEach(x=>{
+        if(x.id==i){
+          x.select=false
+        }
+      })
+      this.GetProgramas();
+    }
+  }
+
+  RemoveTipoPrograma(i:number){
+    if(this.charge==false){
+      this.TipoPrograma.forEach(x=>{
+        if(x.id==i){
+          x.select=false
+        }
+      })
+      this.GetProgramas();
+    }
+  }
+  RemoveAll(){
+    if(this.charge==false){
+      this.filtros.areaCapacitacion.forEach(x=>{
+        if(x.select!=undefined && x.select==true){
+          x.select=false
+          x.subAreaCapacitacion.forEach(s=>{
+            if(s.select!=undefined && s.select==true){
+              s.select=false
+            }
+          })
+        }
+      })
+      this.Modalidad.forEach(x=>{
+        if(x.select!=undefined && x.select==true){
+          x.select=false
+        }
+      })
+      this.TipoPrograma.forEach(x=>{
+        if(x.select!=undefined && x.select==true){
+          x.select=false
+        }
+      })
+      this.buscar='';
       this.GetProgramas();
     }
   }
@@ -127,7 +270,6 @@ export class ProgramasComponent implements OnInit {
   SubAreasChange(event: any) {
     if(!event) {
       this.SetSubAreaSelect();
-      this.SetTags();
       this.GetProgramas();
     }
   }
@@ -144,7 +286,6 @@ export class ProgramasComponent implements OnInit {
   TipoProgramaChange(event: any) {
     if(!event) {
       this.SetTipoProgramSelect();
-      this.SetTags();
       this.GetProgramas();
     }
   }
@@ -157,61 +298,67 @@ export class ProgramasComponent implements OnInit {
       this.TipoProgramaTriggerOther=''
     }
   }
-  RemoveTipoPrograma(i:number){
-    if(this.charge==false){
-      this.SelectTipoPrograma.options.find(x=>x.value==this.TipoProgramaSelect[i])?.deselect();
-      this.SetTipoProgramSelect();
-      this.SetTags();
-      this.GetProgramas();
-    }
-  }
   ModalidadChange(event: any) {
     if(!event) {
-      this.SetModalidadSelect();
-      this.SetTags();
       this.GetProgramas();
     }
   }
-  SetModalidadSelect(){
-    var mod=this.Modalidad.find(x=>x.id==this.ModalidadSelect[0]);
-    this.ModalidadTrigger = mod==undefined?this.Title:mod.nombre;
-    if(this.ModalidadSelect.length>1){
-      this.ModalidadTriggerOther = '(+'+(this.ModalidadSelect.length-1).toString()+' mas)';
-    }else{
-      this.ModalidadTriggerOther=''
-    }
-  }
-  RemoveModalidad(i:number){
-    if(this.charge==false){
-      this.SelectModalidad.options.find(x=>x.value==this.ModalidadSelect[i])?.deselect();
-      this.SetModalidadSelect();
-      this.SetTags();
-      this.GetProgramas();
-    }
-  }
+  // SetModalidadSelect(){
+  //   var mod=this.Modalidad.find(x=>x.id==this.ModalidadSelect[0]);
+  //   this.ModalidadTrigger = mod==undefined?this.Title:mod.nombre;
+  //   if(this.ModalidadSelect.length>1){
+  //     this.ModalidadTriggerOther = '(+'+(this.ModalidadSelect.length-1).toString()+' mas)';
+  //   }else{
+  //     this.ModalidadTriggerOther=''
+  //   }
+  // }
   GetProgramas(){
+    this.textoResult=""
+    this.SetTags();
     this.send.Maximo=this.rangoselect;
-    this.send.idArea=[this.IdArea];
-    if(Number(this.IdArea)==0 || isNaN(this.IdArea)){
-      this.send.idArea=[];
-    }
-    this.send.idSubArea=this.SubAreaSelect;
-    this.send.IdCategoria=this.TipoProgramaSelect;
-    this.send.Modalidad=this.ModalidadSelect;
+    this.send.idArea=[]
+    this.send.idSubArea=[]
+    this.send.IdCategoria=[];
+    this.send.Modalidad=[]
+    this.filtros.areaCapacitacion.forEach(x=>{
+      if(x.select!=undefined && x.select==true){
+        this.send.idArea.push(x.id)
+        x.subAreaCapacitacion.forEach(s=>{
+          if(s.select!=undefined && s.select==true){
+            this.send.idSubArea.push(s.id);
+          }
+        })
+      }
+    })
+    this.TipoPrograma.forEach(x=>{
+      if(x.select!=undefined && x.select==true){
+        this.send.IdCategoria.push(x.id)
+      }
+    })
+    this.Modalidad.forEach(x=>{
+      if(x.select!=undefined && x.select==true){
+        this.send.Modalidad.push(x.id)
+      }
+    })
     this.charge=true;
     this._ProgramasService.GetProgramas(this.send).subscribe({
       next:(x)=>{
+        console.log(x)
         this.programas=x.listaProgramasGeneralesTop.map(
           (c:any)=>{
 
             var urlArea=c.areaCapacitacion.replace(/\s+/g, '-')
             var urlSubArea=c.nombre.replace(' - ', '-')
             var urlSubArea=urlSubArea.replace(/\s+/g, '-')
-            var ps:CardProgramasDTO={Content:c.montoPagoDescripcion,Url:'/'+urlArea+'/'+urlSubArea+'-'+c.idBusqueda,Img:'https://img.bsginstitute.com/repositorioweb/img/programas/'+c.imagen,ImgAlt:c.imagenAlt,Title:c.nombre};
+            var ps:CardProgramasDTO={
+              Inversion:c.montoPagoDescripcion,
+              Content:c.descripcion,
+              Url:'/'+urlArea+'/'+urlSubArea+'-'+c.idBusqueda,
+              Img:'https://img.bsginstitute.com/repositorioweb/img/programas/'+c.imagen,ImgAlt:c.imagenAlt,Title:c.nombre};
             return ps;
           }
         );
-        this.textoResult="Se encontraron "+this.programas.length+" resultados";
+        this.SetCantidadProgramas()
         this.charge=false
       },
       error:(x)=>{
@@ -219,30 +366,42 @@ export class ProgramasComponent implements OnInit {
       }
     })
   }
+  SetCantidadProgramas(){
+    var cantidad=0
+    this.programas.forEach(x=>{
+      if(this.removeAccents(x.Title).toLowerCase().includes(this.removeAccents(this.buscar).toLowerCase()) ||
+      this.removeAccents(x.Content).toLowerCase().includes(this.removeAccents(this.buscar).toLowerCase())){
+        cantidad++
+      }
+    })
+    this.textoResult="Se encontraron "+cantidad+" resultados";
+  }
   SetTags(){
+    this.TagAreas=[]
     this.TagSubAreas=[]
     this.TagTipoPrograma=[]
     this.TagModalidad=[]
-    this.SubAreas.forEach(x=>{
-      this.SubAreaSelect.forEach(s=>{
-        if(x.id==s){
-          this.TagSubAreas.push({value:s,Nombre:x.nombre})
-        }
-      })
+
+    console.log(this.filtros.areaCapacitacion)
+    this.filtros.areaCapacitacion.forEach(x=>{
+      if(x.select!=undefined && x.select==true){
+        this.TagAreas.push({value:x.id,Nombre:x.nombre});
+        x.subAreaCapacitacion.forEach(s=>{
+          if(s.select!=undefined && s.select==true){
+            this.TagSubAreas.push({value:s.id,Nombre:s.nombre})
+          }
+        })
+      }
     })
     this.TipoPrograma.forEach(x=>{
-      this.TipoProgramaSelect.forEach(t=>{
-        if(x.id==t){
-          this.TagTipoPrograma.push({value:t,Nombre:x.nombre})
-        }
-      })
+      if(x.select!=undefined && x.select==true){
+        this.TagTipoPrograma.push({value:x.id,Nombre:x.nombre})
+      }
     })
     this.Modalidad.forEach(x=>{
-      this.ModalidadSelect.forEach(m=>{
-        if(x.id==m){
-          this.TagModalidad.push({value:m,Nombre:x.nombre})
-        }
-      })
+      if(x.select!=undefined && x.select==true){
+        this.TagModalidad.push({value:x.id,Nombre:x.nombre})
+      }
     })
   }
 }

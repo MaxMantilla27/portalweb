@@ -1,0 +1,71 @@
+<div class="TitleModal">
+  <img src="../../../../../assets/icons/foro-naranja.svg" alt="">
+  {{data.titulo}}
+</div>
+<ng-container *ngIf="pregunta==undefined ;else existeForo">
+  <div style="    display: flex;
+    justify-content: center;">
+    <mat-spinner></mat-spinner>
+  </div>
+</ng-container>
+<ng-template #existeForo>
+  <ng-container *ngIf="pregunta==null || pregunta.length==0;else existe">
+    <div style="font-size: 20px;font-weight: 600;"> Ocurrió un error</div>
+    <div>inténtenlo de nuevo más tarde</div>
+  </ng-container>
+  <ng-template #existe>
+    <div class="ContentForoModal row" >
+      <img  class="col-12 col-md-6 col-lg-3" *ngIf="imgForo!=undefined" [src]="imgForo" alt="">
+      <div class="col-12 col-md-6 col-lg-9 contenidoInto">
+        <div class="row" style="font-size: 12px;">
+          <div class="col-12 col-md-4 col-lg-4"><strong style="    margin-right: 10px;">Fecha:</strong>{{pregunta[0].fecha | date:'yyyy-MM-dd'}}</div>
+          <div class="col-12 col-md-8 col-lg-8" style="display: flex;justify-content: flex-end;"><strong style="    margin-right: 10px;">Curso:</strong>{{data.pGeneral}}</div>
+        </div>
+        <div style="    font-weight: 600;
+        margin: 15px 0px;
+        color: #f8893f;">{{pregunta[0].usuario}}</div>
+        <div style="margin-top: 20px;font-size: 14px;" [innerHtml]="pregunta[0].contenido | safeHtml">
+
+        </div>
+      </div>
+      <div class="Responder" >
+
+        <mat-form-field appearance="outline" class="test">
+          <mat-label>Responder</mat-label>
+          <textarea matInput matTextareaAutosize [(ngModel)]="jsonEnvio.contenido"></textarea>
+        </mat-form-field>
+
+      </div>
+    </div>
+  </ng-template>
+
+</ng-template>
+<div class="FotterMdal">
+
+  <app-default-button [confs]="{color:'danger',titulo:'Cerrar'}"
+  (ButtoclClick)="CerrarModal()"
+  [icon]="''" [style]="'margin-right: 10px'">
+  </app-default-button>
+
+  <app-default-button [confs]="{color:'primary',titulo:'Responder'}"
+  (ButtoclClick)="EnviarRegistroRespuestaForo()"
+  [icon]="''" [style]="'padding: 0px 20px'">
+  </app-default-button>
+</div>
+
+<div class="respuestas" style="padding: 20px;">
+  <div *ngFor="let item of respuestas" style="display: flex;
+  justify-content: flex-start;
+  align-items: center;margin-top: 20px;">
+    <img [src]="_AvatarService.GetUrlImagenAvatar(item.avatar)" alt="" style="    width: 50px;
+    margin-right: 20px;">
+    <div style="width: 100%;">
+      <div style="    color: #f8893f;
+      font-weight: 600;">{{item.nombres}}</div>
+      <div style="
+      font-size: 15px;
+      font-style: italic;">{{item.contenido}}</div>
+      <div style="font-size: 12px;text-align: right;"><strong>Fecha:</strong> {{item.fechaCreacion | date:'yyyy-MM-dd'}}</div>
+    </div>
+  </div>
+</div>

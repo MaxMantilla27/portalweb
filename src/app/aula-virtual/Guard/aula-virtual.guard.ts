@@ -15,11 +15,7 @@ export class AulaVirtualGuard implements CanActivate ,CanActivateChild {
   canActivateChild(childRoute: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean | UrlTree | Observable<boolean | UrlTree> | Promise<boolean | UrlTree> {
     if(this.isBrowser){
       if (!this._SessionStorageService.validateTokken()) {
-        if(this._location.path().toString()!=state.url.toString()){
-          this.router.navigate([this._location.path().toString()]);
-        }else{
-          this._location.back()
-        }
+        this.router.navigate(['/login']);
         return false;
       }
     }

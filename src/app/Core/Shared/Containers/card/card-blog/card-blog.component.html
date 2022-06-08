@@ -3,13 +3,13 @@
   <mat-card-content>
     <div class="title" [routerLink]="'/bs-campus/blog/'+cardContent.urlWeb+'-'+cardContent.idWeb">{{cardContent.nombre}}</div>
 
-    <p [innerHTML]="cardContent.descripcion">
+    <p [innerHTML]="cardContent.descripcion | safeHtml">
     </p>
   </mat-card-content>
   <mat-card-footer>
     <div class="invercion">
 
-      <div class="link" [routerLink]="'/bs-campus/blog/'+cardContent.urlWeb+'-'+cardContent.idWeb">Leer m&aacute;s ></div>
+      <div class="link" [routerLink]="'/bs-campus/blog/'+cardContent.urlWeb+'-'+cardContent.idWeb" style="font-weight: 600;">Leer m&aacute;s ></div>
     </div>
   </mat-card-footer>
 </mat-card>
@@ -18,13 +18,13 @@
   <mat-card-content>
     <div class="title" [routerLink]="'/bs-campus/white-paper/'+cardContent.urlWeb+'-'+cardContent.idWeb">{{cardContent.nombre}}</div>
 
-    <p [innerHTML]="cardContent.descripcion">
+    <p [innerHTML]="cardContent.descripcion | safeHtml">
     </p>
   </mat-card-content>
   <mat-card-footer>
     <div class="invercion">
 
-      <div class="link" [routerLink]="'/bs-campus/white-paper/'+cardContent.urlWeb+'-'+cardContent.idWeb">Leer m&aacute;s ></div>
+      <div class="link" [routerLink]="'/bs-campus/white-paper/'+cardContent.urlWeb+'-'+cardContent.idWeb" >Leer m&aacute;s ></div>
     </div>
   </mat-card-footer>
 </mat-card>

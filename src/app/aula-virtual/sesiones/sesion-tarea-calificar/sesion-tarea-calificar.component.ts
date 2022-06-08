@@ -1,6 +1,6 @@
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { ParametrosEstructuraEspecificaDTO } from 'src/app/Core/Models/EstructuraEspecificaDTO';
-import { ParametroObtenerEvaluacionTarea } from 'src/app/Core/Models/TareaEvaluacionDTO';
+import { ParametroEnvioTrabajoPares, ParametroObtenerEvaluacionTarea } from 'src/app/Core/Models/TareaEvaluacionDTO';
 import { SnackBarServiceService } from 'src/app/Core/Shared/Services/SnackBarService/snack-bar-service.service';
 import { TareaEvaluacionService } from 'src/app/Core/Shared/Services/TareaEvaluacion/tarea-evaluacion.service';
 
@@ -38,6 +38,13 @@ export class SesionTareaCalificarComponent implements OnInit,OnChanges {
     idPrincipal:0,
   }
   @Input() charge:boolean|undefined=false;
+  public enviarJson:ParametroEnvioTrabajoPares={
+    IdEscalaCalificacionDetalle:0,
+    IdEsquemaEvaluacionPGeneralDetalle:0,
+    IdEvaluacion:0,
+    IdParametroEvaluacion:0,
+    ValorCalificado:0,
+  }
   public tarea:any
   public tareaAc:any;
   public cargaEnvio=false;
@@ -45,8 +52,8 @@ export class SesionTareaCalificarComponent implements OnInit,OnChanges {
   ngOnInit(): void {
   }
   ngOnChanges(changes: SimpleChanges): void {
-    console.log(this.id)
     if(this.idtarea>0 && this.charge==true){
+      console.log(this.id)
       this.params.idEvaluacion=this.idtarea;
       this.params.idPEspecifico=this.json.IdPEspecificoHijo
       this.params.idPEspecificoPadre=this.json.IdPEspecificoPadre
@@ -56,25 +63,48 @@ export class SesionTareaCalificarComponent implements OnInit,OnChanges {
     }
   }
   ObtenerEvaluacionTarea(){
-    this._TareaEvaluacionService.ObtenerEvaluacionTarea(this.params).subscribe({
+    this._TareaEvaluacionService.ObtenerEvaluacionTrabajoPares(this.params).subscribe({
       next:x=>{
         this.tarea=x
-        if(this.tarea.datosEvaluacionTrabajo!=undefined && this.tarea.datosEvaluacionTrabajo.instruccionesEvaluacion!=undefined &&
-          this.tarea.datosEvaluacionTrabajo!=null && this.tarea.datosEvaluacionTrabajo.instruccionesEvaluacion!=null)
-        this.tarea.datosEvaluacionTrabajo.instruccionesEvaluacion.sort(function (a:any, b:any) {
+        if(this.tarea.datosTrabajoPares!=undefined && this.tarea.datosTrabajoPares.instruccionesEvaluacion!=undefined &&
+          this.tarea.datosTrabajoPares!=null && this.tarea.datosTrabajoPares.instruccionesEvaluacion!=null)
+        this.tarea.datosTrabajoPares.instruccionesEvaluacion.sort(function (a:any, b:any) {
           return a.zonaWeb - b.zonaWeb;
         })
         console.log(this.tarea)
-        this.tarea.registroEvaluacionArchivo.forEach((t:any) => {
+        this.tarea.registroTareaEvaluacionArchivo.forEach((t:any) => {
           if(t.id==this.id){
             this.tareaAc=t
           }
         });
+        console.log(this.tareaAc)
       }
     })
   }
   EnviarNota(){
-
+    this.cargaEnvio=true
+    var cal=0;
+    console.log(this.calificacion)
+    this.tarea.criteriosEvaluacion.listaParametroEscalaEvaluacion.forEach((p:any) => {
+      if(p.id==this.calificacion){
+        cal=p.valor
+      }
+    });
+    this.enviarJson.IdEscalaCalificacionDetalle=this.calificacion
+    this.enviarJson.IdEvaluacion=this.tareaAc.id
+    this.enviarJson.ValorCalificado=cal
+    this.enviarJson.IdParametroEvaluacion=this.tarea.criteriosEvaluacion.idParametroEvaluacion
+    this.enviarJson.IdEsquemaEvaluacionPGeneralDetalle=this.tarea.criteriosEvaluacion.idEsquemaEvaluacionPGeneralDetalle
+    console.log(this.enviarJson);
+    this._TareaEvaluacionService.EnviarCalificacionTrabajoPares(this.enviarJson).subscribe({
+      next:x=>{
+        console.log(x)
+        this.tareaAc.calificado=true
+      },
+      error:x=>{
+        console.log(x)
+      }
+    })
   }
 
 }

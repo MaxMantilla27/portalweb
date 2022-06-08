@@ -30,7 +30,7 @@ export class MiPerfilComponent implements OnInit {
     datoAvatar: false,
     datoContenido: false,
   }
-  
+
   public statuscharge = false;
   public initValues = false;
   public imgAvtar='';
@@ -61,8 +61,10 @@ export class MiPerfilComponent implements OnInit {
       idTipoDocumento: '',
       nombres: '',
       telefono: '',
+      cursos:0,
+      idProveedor:0
     },
-    
+
   };
 
   public DatosAlumnoEnvio: datosAlumnoEnvioDTO = {
@@ -131,7 +133,7 @@ export class MiPerfilComponent implements OnInit {
     });
     this._HelperService.recibirDatosAvatar.subscribe(x=>this.imgAvtar=x.UrlAvatar)
   }
- 
+
   GetRegionPorPais(){
 
     this._RegionService.ObtenerCiudadesPorPais(this.userForm.get('Pais')?.value).subscribe({
@@ -158,7 +160,7 @@ export class MiPerfilComponent implements OnInit {
     this.DatosAlumnoEnvio.idDepartamento = this.userForm.get('Region')?.value;
     this.DatosAlumnoEnvio.ciudad = this.userForm.get('Ciudad')?.value;
     this.DatosAlumnoEnvio.direccion = this.userForm.get('Direccion')?.value;
-    
+
     this.DatosAlumnoEnvio.empresa = this.userForm.get('Empresa')?.value;
     this.DatosAlumnoEnvio.idCargo = this.userForm.get('Cargo')?.value;
     this.DatosAlumnoEnvio.idAreaTrabajo = this.userForm.get('AreaTrabajo')?.value;
@@ -174,6 +176,6 @@ export class MiPerfilComponent implements OnInit {
     this._SessionStorageService.GetToken();
     this.DatoObservable.datoContenido=true
     this._HelperService.enviarDatoCuenta(this.DatoObservable)
-    console.log(this.DatoObservable); 
+    console.log(this.DatoObservable);
   }
 }

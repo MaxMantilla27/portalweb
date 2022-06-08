@@ -10,7 +10,7 @@ export class CardArticulosComponent implements OnInit {
 
   constructor() { }
 
-  @Input() cardContent:CardProgramasDTO={Content:'',Img:'',Url:'',Title:'',ImgAlt:''};
+  @Input() cardContent:CardProgramasDTO={Content:'',Img:'',Url:'',Title:'',ImgAlt:'',Inversion:''};
   ngOnInit(): void {
   }
 
