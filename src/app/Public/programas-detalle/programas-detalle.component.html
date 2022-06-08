@@ -9,7 +9,7 @@
   <div class="container">
     <div class="row rowpadd">
       <div class="col-12 col-md-6 col-lg-6">
-        <div [innerHtml]="cabecera.tituloHtml" class="titlePrograma"></div>
+        <div [innerHtml]="cabecera.tituloHtml | safeHtml" class="titlePrograma"></div>
         <div style="    margin: 10px 0px;
         font-size: 15px;font-weight: 700;">Área: <a style="font-weight: 100;"
             routerLink="/Area/{{cabecera.areaDescripcion}}">{{cabecera.areaCapacitacion}}</a > | Sub

@@ -20,19 +20,19 @@
       <form (submit)="CambiarContra()" [formGroup]="userForm">
         <div class="row">
           <div class="col-12 col-md-6 col-lg-6 fieldOld">
-            <mat-form-field appearance="outline" [floatLabel]="'always'">
+            <mat-form-field appearance="outline" >
               <mat-label>Contraseña Actual</mat-label>
-              <input type="password" placeholder="Contraseña Actual" formControlName="contraActual" matInput />
+              <input type="password"  formControlName="contraActual" matInput />
               <mat-error *ngIf="userForm.invalid">{{obtenerErrorCampoNombre('contraActual')}}</mat-error>
             </mat-form-field>
-            <mat-form-field appearance="outline" [floatLabel]="'always'">
+            <mat-form-field appearance="outline" >
               <mat-label>Nueva Contraseña</mat-label>
-              <input type="password" placeholder="Nueva Contraseña" formControlName="contraNueva" matInput (change)="passwordChange()" />
+              <input type="password"  formControlName="contraNueva" matInput (change)="passwordChange()" />
               <mat-error *ngIf="userForm.invalid">{{obtenerErrorCampoNombre('contraNueva')}}</mat-error>
             </mat-form-field>
-            <mat-form-field appearance="outline" [floatLabel]="'always'">
+            <mat-form-field appearance="outline" >
               <mat-label>Confirmar Nueva Contraseña</mat-label>
-              <input type="password" placeholder="Confirmar Nueva Contraseña" formControlName="contraNuevaRepeat" matInput />
+              <input type="password" formControlName="contraNuevaRepeat" matInput />
               <mat-error *ngIf="userForm.invalid">{{obtenerErrorCampoNombre('contraNuevaRepeat')}}</mat-error>
             </mat-form-field>
             <app-default-button [confs]="{color:'primary',titulo:'Guardar'}" [disabled]="!userForm.valid"

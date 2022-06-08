@@ -78,6 +78,8 @@ import { TableComponent } from './Containers/table/table.component';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatmenuComponent } from './Containers/matmenu/matmenu.component';
+import { LibroReclamacionService } from './Services/LibroReclamacion/libro-reclamacion.service';
 
 
 
@@ -141,6 +143,7 @@ import { MatDialogModule } from '@angular/material/dialog';
     CrucigramaComponent,
     SafePipe,
     TableComponent,
+    MatmenuComponent,
   ],
   exports: [
     HttpClientModule,
@@ -164,6 +167,7 @@ import { MatDialogModule } from '@angular/material/dialog';
     VideoBrightcoveComponent,
     CrucigramaComponent,
     TableComponent,
+    MatmenuComponent,
 
     MatTabsModule,
     MatTableModule,
@@ -222,7 +226,8 @@ import { MatDialogModule } from '@angular/material/dialog';
     CertificadoService,
     CertificadoIntegraService,
     ProveedorService,
-    ProgramaEspecificoIntegraService
+    ProgramaEspecificoIntegraService,
+    LibroReclamacionService
   ],
 })
 export class SharedModule {

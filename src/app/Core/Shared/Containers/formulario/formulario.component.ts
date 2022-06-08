@@ -17,6 +17,7 @@ import {
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Basic } from 'src/app/Core/Models/BasicDTO';
 import { formulario } from 'src/app/Core/Models/Formulario';
+import { HelperService } from '../../Services/helper.service';
 
 @Component({
   selector: 'app-formulario',
@@ -28,7 +29,9 @@ export class FormularioComponent implements OnChanges, OnInit {
   isBrowser: boolean;
   constructor(
     private formBuilder: FormBuilder,
-    @Inject(PLATFORM_ID) platformId: Object
+    @Inject(PLATFORM_ID) platformId: Object,
+    private _HelperService:HelperService
+
   ) {
     this.isBrowser = isPlatformBrowser(platformId);
   }
@@ -65,10 +68,18 @@ export class FormularioComponent implements OnChanges, OnInit {
   @Output()
   OnSelect: EventEmitter<Basic> = new EventEmitter<Basic>();
 
-
+  public paise:Array<any>=[]
+  public paisSelect=0;
+  public pref=''
   //later in the code
   fields: any = {};
   ngOnInit(): void {
+    this._HelperService.recibirDataPais.subscribe({
+      next:x=>{
+        console.log(x)
+        this.paise=x
+      }
+    })
     if(this.isBrowser){
       if(this.Color!=''){
         document.documentElement.style.setProperty('--main-bg-color',this.Color);
@@ -223,5 +234,40 @@ export class FormularioComponent implements OnChanges, OnInit {
   }
   Fields(): FormArray {
     return this.userForm.get('Fields') as FormArray;
+  }
+  IconPaises(){
+    if(this.paise.find(x=>x.idPais==this.paisSelect)!=undefined){
+      return this.paise.find(x=>x.idPais==this.paisSelect).icono
+    }
+    return '';
+  }
+  validatePais(i: number, val: string){
+    var campo = (<FormArray>this.userForm.get('Fields')).controls[i].get(val)?.value.toString();
+    var s=campo.split(' ');
+
+    this.pref=this.PrefPaises()==null?'':this.PrefPaises()+' ';
+    (<FormArray>this.userForm.get('Fields')).controls[i].get(val)?.setValue(this.pref+s.slice(1));
+  }
+
+  PrefPaises():string{
+    if(this.paise.find(x=>x.idPais==this.paisSelect)!=undefined){
+      return this.paise.find(x=>x.idPais==this.paisSelect).prefijoTelefono
+    }
+    return '';
+  }
+  ChangeInpiut(i: number, val: string){
+    var campo = (<FormArray>this.userForm.get('Fields')).controls[i].get(val)?.value.toString();
+    var s =campo.split(' ')
+    if(this.PrefPaises()!=null){
+      if(s[0]!=this.PrefPaises()){
+        if(s[0].length>this.PrefPaises().length){
+          (<FormArray>this.userForm.get('Fields')).controls[i].get(val)?.setValue(s[0].slice(0,this.PrefPaises().length)+' '+campo.slice(this.PrefPaises().length));
+        }else{
+          (<FormArray>this.userForm.get('Fields')).controls[i].get(val)?.setValue(this.PrefPaises()+' ');
+        }
+      } else if(campo==this.PrefPaises()){
+        (<FormArray>this.userForm.get('Fields')).controls[i].get(val)?.setValue(this.PrefPaises()+' ');
+      }
+    }
   }
 }

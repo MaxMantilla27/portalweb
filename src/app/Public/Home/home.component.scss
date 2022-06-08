@@ -1,0 +1,278 @@
+.paisesHome {
+  width: auto;
+  font-size: 14px;
+  color: #828281;
+  font-weight: 400;
+  margin-bottom: 10px;
+  background: #e8f3fc;
+  padding: 5px 10px;
+  border-radius: 15px;
+  margin: 0px 5px 10px 5px;
+}
+.imgcarousel {
+  max-width: 100%;
+  max-height: 100px;
+  object-fit: contain;
+}
+.contentImgCorousel {
+  padding: 20px 30px;
+  display: flex;
+  justify-content: center;
+}
+.imgTitle {
+  height: auto;
+  width: 100%;
+}
+.paisesTitle {
+  margin-top: 20px;
+  display: flex;
+  font-size: 15px;
+
+  flex-wrap: wrap;
+}
+.paisesTitleitem {
+  width: 33%;
+  display: flex;
+  align-items: center;
+}
+.paisesimg {
+  width: 10px;
+  height: auto;
+  margin-right: 3px;
+}
+.subtitulo {
+  font-weight: 600;
+  color: #4a4a49;
+}
+.parafoS {
+
+  font-size: 20px;
+  font-weight: 100;
+  color: #5e5e5d;
+  text-align: center;
+}
+.cardSubtitle {
+  display: flex;
+  align-items: center;
+  background: #cfffe6;
+  padding: 20px;
+  border-radius: 10px;
+}
+.cardSubtitle img {
+  width: 15%;
+  margin-right: 10px;
+}
+.titleCardSub {
+  font-size: 17px;
+  font-weight: bolder;
+  margin-bottom: 10px;
+}
+.parafoCardSub {
+  font-size: 14px;
+  text-align: left;
+  padding-left:10px ;
+}
+.imgfondo {
+  position: absolute;
+  bottom: 50px;
+  right: 0;
+  width: 700px;
+  z-index: -1;
+}
+.cardCarreras {
+  background: #fff8f6;
+  box-shadow: -1px 1px 4px 2px #c6c6c6;
+  border-radius: 5px;
+  justify-content: space-between;
+  width: 95%;
+  height: 100%;
+  margin: 0px;
+}
+.caridiMg {
+  padding: 0pc;
+  margin: 0px;
+  display: flex;
+  align-items: flex-end;
+}
+.contenCarreras {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  padding: 20px 60px 20px 20px;
+  width: 60%;
+}
+.titleCarreras {
+  color: #168df3;
+  font-size: 16px;
+  font-weight: 900;
+  margin-bottom: 20px;
+  padding-right: 40px;
+}
+.cardCarrerasV2{
+  width: 100%;
+  box-shadow: 0px 0px 2px 1px #b6b6b6;
+  text-align: center;
+  padding: 20px 80px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-radius: 5px;
+
+  .titleV2{
+    font-weight: 700;
+    color: #0a86f2;
+  }
+  .underl{
+    width: 70px;
+    font-weight: 600;
+    background: #0a86f2;
+    height: 2px;
+    margin-top: 15px;
+  }
+}
+
+.subtitleCarreras {
+  display: flex;
+  align-items: center;
+  color: #969696;
+}
+.orange{
+  color: #ff8800;
+  font-weight: 900;
+  margin-top: 30px;
+}
+.red {
+  color: #ff3d3e;
+  font-weight: 900;
+  margin-top: 30px;
+}
+.wrapper {
+  text-align: center;
+}
+.carouselImgPartners ngb-carousel .carousel-inner {
+  height: 400px;
+  display: flex;
+  align-items: center;
+}
+.carrouselCasos ngb-carousel .carousel-inner {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  padding: 20px;
+}
+.carousel-control-prev {
+  width: 35%;
+}
+.carousel-control-next {
+  width: 35%;
+}
+
+.tabHome mat-tab-header .mat-tab-label-container .mat-tab-list  .mat-ink-bar{
+  background-color: #ff4e38 !important;
+  height: 3px;
+}
+
+.tabHome mat-tab-header .mat-tab-label-container .mat-tab-list .mat-tab-labels{
+  justify-content: space-around;
+}
+
+.tabHome mat-tab-header .mat-tab-label-container .mat-tab-list .mat-tab-labels .mat-tab-label{
+  min-width: 230px;
+}
+
+.mat-tab-header {
+  border: solid 0px;
+}
+.img4 {
+  width: 100%;
+  height: auto;
+}
+.dowload-iconos {
+  height: 100%;
+  display: flex;
+  margin: 20px 0px;
+}
+.iconod {
+  width: 100%;
+  height: auto;
+}
+.titlealumno {
+  color: #359bf5;
+  font-size: 25px;
+  margin-bottom: 20px;
+}
+.cursoalumno {
+  font-size: 12px;
+}
+.namalumno {
+  font-size: 12px;
+  font-weight: bold;
+}
+.contalumno {
+  height: 100%;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+}
+.imgalumno {
+  max-width: 100%;
+  width: 100%;
+  height: auto;
+  padding: 20px;
+}
+
+.mat-tab-label {
+  opacity: 1 !important;
+}
+.buttontab {
+  background: #00c65a;
+}
+.parafopHome {
+  font-weight: 100;
+  color: #646464;
+  padding-right: 20px;
+}
+.searchButonHome{
+  background-image: url(../../../assets/icons/buscar.svg);
+  background-color: #ff8610;
+  background-repeat: no-repeat;
+  background-position: center;
+  height: 50px;
+  width: 70px;
+  border-radius: 0px 30px 30px 0px;
+  background-size: 25px;
+  border-top: solid 1px #b1b1b1;
+  border-bottom: 1px solid #b1b1b1;
+  border-right: 1px solid  #b1b1b1;
+  cursor: pointer;
+}
+.inputSearchHome{
+  width: 100%;
+  border-radius: 30px 0px 0px 30px;
+  padding: 0px 20px;
+  border-top: solid 1px #b1b1b1;
+  border-bottom: 1px solid #b1b1b1;
+  border-left: 1px solid  #b1b1b1;
+  border-right: none;
+}
+.inputSearchHome::placeholder{
+  color: #b1b1b1;
+}
+.inputSearchHome::-ms-input-placeholder{
+  color: #b1b1b1;
+}
+.inputSearchHome:-ms-input-placeholder{
+  color: #b1b1b1;
+}
+.inputActive{
+  border: 1px solid #ff8610;
+}
+.inputSearchHome:focus-visible{
+  outline: none;
+}
+.contentCarsubtitle{
+  margin: 10px 0px;
+}

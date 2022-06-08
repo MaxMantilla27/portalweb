@@ -1,0 +1,15 @@
+
+<ng-container>
+  <a mat-button [ngClass]="{'bootoncolor':menuTrigger.menuOpen==true}" [matMenuTriggerFor]="menu"
+    #menuTrigger="matMenuTrigger">
+    <ng-content select="[contenidodata]">
+    </ng-content> <i class="material-icons" (mouseenter)="menuTrigger.openMenu()"
+      [ngClass]="{'tranformi':menuTrigger.menuOpen==true}">arrow_drop_down</i>
+  </a>
+  <mat-menu #menu="matMenu" class="custom__menu">
+    <span (mouseleave)="menuTrigger.closeMenu()">
+      <button [routerLink]="item.Url" *ngFor="let item of dataUrl" mat-menu-item class="mat-menu-content-button"
+        [style]="item.style">{{item.Nombre}}</button>
+    </span>
+  </mat-menu>
+</ng-container>

@@ -1,35 +1,50 @@
 <div class="container">
   <div class="row rowpadd" style="align-items: center;">
-    <div class="col-12 col-sm-12 col-md-6">
-      <img class="imgTitle" src="../../../assets/imagenes/postada-imagen.png" alt="">
-    </div>
     <div class="col-12  col-sm-12 col-md-6">
       <div class="titulop">
         Conocimiento para crecer
       </div>
-      <div class="parafop">
-        Obt&eacute;n las habilidades y las certificaciones m&aacute;s demandadas para <strong>profesionales top en latinoam&eacute;rica</strong>
-        <div class="row" style="align-items: center;" style="margin-top: 40px;">
-          <div class="paisesHome"><img class="paisesimg" src="../../../assets/imagenes/peru-04.svg" alt=""> Lima</div>
-          <div class="paisesHome"><img class="paisesimg" src="../../../assets/imagenes/peru-04.svg" alt="">Arequipa</div>
-          <div class="paisesHome"><img class="paisesimg" src="../../../assets/imagenes/mexico-05.svg" alt="">Ciudad de M&eacute;xico
+      <div class="parafop parafopHome">
+        Obt&eacute;n las habilidades y las certificaciones m&aacute;s demandadas para profesionales top en
+        latinoam&eacute;rica.
+        <div class="row" style="align-items: center;" style="margin: 40px 0px;justify-content: space-around;">
+          <div class="paisesHome"><img class="paisesimg" src="../../../assets/imagenes/peru-04.svg" alt=""> Per&uacute;
           </div>
-          <div class="paisesHome"><img class="paisesimg" src="../../../assets/imagenes/colombia-06.svg" alt="">Bogot&aacute;</div>
-          <div class="paisesHome"><img class="paisesimg" src="../../../assets/imagenes/bolivia-07.svg" alt="">Santa Cruz</div>
-          <div class="paisesHome"><img class="paisesimg" src="../../../assets/imagenes/chile-08.svg" alt="">Santiago</div>
+          <div class="paisesHome"><img class="paisesimg" src="../../../assets/imagenes/colombia-06.svg" alt=""> Colombia
+          </div>
+          <div class="paisesHome"><img class="paisesimg" src="../../../assets/imagenes/bolivia-07.svg" alt="">Bolivia
+          </div>
+          <div class="paisesHome"><img class="paisesimg" src="../../../assets/imagenes/mexico-05.svg"
+              alt="">M&eacute;xico</div>
+          <div class="paisesHome"><img class="paisesimg" src="../../../assets/imagenes/chile-08.svg" alt="">Chile</div>
         </div>
       </div>
+    </div>
+
+    <div class="col-12 col-sm-12 col-md-6">
+      <img class="imgTitle" src="../../../assets/imagenes/arquetipos-index.png" alt="">
+    </div>
+    <div class="col-12 col-sm-12 col-md-12" style="    display: flex;    margin-top: 40px;">
+      <input type="text" [ngClass]="{'inputActive':inputActive}" class="inputSearchHome" (focus)="inputActive=true"
+        (focusout)="inputActive=false" [(ngModel)]="busqueda"
+        placeholder="¿Que deseas aprender? descubre más de 200 cursos y programas de capasitación">
+      <div class="searchButonHome" (click)="BuscarProgramas()" [ngClass]="{'inputActive':inputActive}"></div>
     </div>
   </div>
 </div>
 <div style="background: #f5f9ff;">
   <div class="container">
     <div class="row rowpadd" style="justify-content: center;">
+      <div class="col-12  col-sm-12 col-md-12" style="text-align: center;padding: 0px 10px;">
+        <div class="titulop">
+          Obt&eacute;n certificaciones valoradas en toda latinoamerica
+        </div>
+      </div>
       <div class="col-12 col-sm-12 carouselImgPartners" style="    width: 80%;height: 400px">
         <ngb-carousel>
           <ng-template ngbSlide *ngFor="let ste of step">
             <div class="wrapper">
-              <div class="row" style="align-items: center;">
+              <div class="row" style="align-items: center;padding: 0px 30px;">
 
                 <ng-container *ngIf="ste.length>4">
                   <ng-container *ngFor="let item of ste;let i = index">
@@ -46,7 +61,7 @@
                 </ng-container>
 
                 <ng-container *ngIf="ste.length==4">
-                  <div class="col-6 contentImgCorousel" *ngFor="let item of ste">
+                  <div class="col-3 contentImgCorousel" *ngFor="let item of ste">
                     <img class="imgcarousel" [src]="item.imgPrincipal" [alt]="item.imagenAlt" [title]="item.imagenAlt">
                   </div>
                 </ng-container>
@@ -67,54 +82,76 @@
 </div>
 <div class="container">
   <div class="row rowpadd" style="position: relative;">
-    <div class="col-12 col-sm-12 col-md-8">
+    <div class="col-12 col-sm-12 col-md-12" style="text-align: center;margin-bottom: 20px;">
       <div class="subtitulo">¿Por qu&eacute; elegir BSG Institute?</div>
-      <div class="parafoS">Nuestra metodolog&iacute;a <strong>ExTech Learning</strong> complementa las sesiones de clase
-        con mecanismos de aprendizaje activo.</div>
-      <div class="cardSubtitle">
-        <img src="../../../assets/imagenes/icon-gamification-11.svg" alt="">
-        <div>
-          <div class="titleCardSub"><strong>Gamification</strong></div>
-          <div class="parafoCardSub">Usamos mecanismos de gamificaci&oacute;n estructural y de contenidos con el fin de
-            que tu experiencia de aprendizaje sea mas interactiva</div>
+    </div>
+    <div class="col-12 col-sm-12 col-md-12">
+      <div class="row">
+        <div class="col-12 col-sm-12 col-md-6 contentCarsubtitle">
+          <div class="parafoS">Nuestra metodolog&iacute;a <strong>ExTech Learning</strong> complementa las sesiones de
+            clase
+            con mecanismos de aprendizaje activo.</div>
         </div>
-      </div>
-      <div class="cardSubtitle">
-        <img src="../../../assets/imagenes/icon-Virtual-reality-12.svg" alt="">
-        <div>
-          <div class="titleCardSub"><strong>Virtual reality</strong></div>
-          <div class="parafoCardSub">Acceder&aacute;s a simuladores que cuenta con la tecnologia Oculus Quest 2 una de
-            las mejores disponibles en el mercado</div>
+        <div class="col-12 col-sm-12 col-md-6 contentCarsubtitle">
+
+          <div class="cardSubtitle">
+            <img src="../../../assets/imagenes/icon-Reﬂexion-14.svg" alt="">
+            <div>
+              <div class="titleCardSub"><strong>Reflexi&oacute;n</strong></div>
+              <div class="parafoCardSub">Tendr&aacute;s la oportunidad de reflexionar sobre lo aprendido en el
+                desarrollo
+                del curso y puedas compartirlo con tus compa&ntilde;eros</div>
+            </div>
+          </div>
         </div>
-      </div>
-      <div class="cardSubtitle">
-        <img src="../../../assets/imagenes/icon-Serious-games-13.svg" alt="">
-        <div>
-          <div class="titleCardSub"><strong>Serious games</strong></div>
-          <div class="parafoCardSub">Dispondr&aacute;s de simuladores en linea para recrear entornos reales</div>
+        <div class="col-12 col-sm-12 col-md-6 contentCarsubtitle">
+          <div class="cardSubtitle">
+            <img src="../../../assets/imagenes/icon-gamification-11.svg" alt="">
+            <div>
+              <div class="titleCardSub"><strong>Gamification</strong></div>
+              <div class="parafoCardSub">Usamos mecanismos de gamificaci&oacute;n estructural y de contenidos con el fin
+                de
+                que tu experiencia de aprendizaje sea mas interactiva</div>
+            </div>
+          </div>
         </div>
-      </div>
-      <div class="cardSubtitle">
-        <img src="../../../assets/imagenes/icon-Reﬂexion-14.svg" alt="">
-        <div>
-          <div class="titleCardSub"><strong>Reflexi&oacute;n</strong></div>
-          <div class="parafoCardSub">Tendr&aacute;s la oportunidad de reflexionar sobre lo aprendido en el desarrollo
-            del curso y puedas compartirlo con tus compa&ntilde;eros</div>
+        <div class="col-12 col-sm-12 col-md-6 contentCarsubtitle">
+
+          <div class="cardSubtitle">
+            <img src="../../../assets/imagenes/icon-Applied-Projects-15.svg" alt="">
+            <div>
+              <div class="titleCardSub"><strong>Applied projects</strong></div>
+              <div class="parafoCardSub">Podr&aacute;s completar una serie de tareas aplicadas que permitiran emplear
+                los
+                conocimientos aprendidos en situaciones reales</div>
+            </div>
+          </div>
         </div>
-      </div>
-      <div class="cardSubtitle">
-        <img src="../../../assets/imagenes/icon-Applied-Projects-15.svg" alt="">
-        <div>
-          <div class="titleCardSub"><strong>Applied projects</strong></div>
-          <div class="parafoCardSub">Podr&aacute;s completar una serie de tareas aplicadas que permitiran emplear los
-            conocimientos aprendidos en situaciones reales</div>
+        <div class="col-12 col-sm-12 col-md-6 contentCarsubtitle">
+
+          <div class="cardSubtitle" style="    margin-bottom: 20px;">
+            <img src="../../../assets/imagenes/icon-Virtual-reality-12.svg" alt="">
+            <div>
+              <div class="titleCardSub"><strong>Virtual reality</strong></div>
+              <div class="parafoCardSub">Acceder&aacute;s a simuladores que cuenta con la tecnologia Oculus Quest 2 una
+                de
+                las mejores disponibles en el mercado</div>
+            </div>
+          </div>
+          <div class="cardSubtitle">
+            <img src="../../../assets/imagenes/icon-Serious-games-13.svg" alt="">
+            <div>
+              <div class="titleCardSub"><strong>Serious games</strong></div>
+              <div class="parafoCardSub">Dispondr&aacute;s de simuladores en linea para recrear entornos reales</div>
+            </div>
+          </div>
+        </div>
+        <div class="col-12 col-sm-12 col-md-6 contentCarsubtitle">
+          <img class="imgTitle" style="height: 250px" src="../../../assets/imagenes/extech-learning-09.svg" alt="">
         </div>
       </div>
     </div>
-    <div class="col-12  col-sm-12 col-md-4 ">
-      <img class="imgTitle" src="../../../assets/imagenes/extech-learning-09.svg" alt="">
-    </div>
-    <img class="imgfondo" src="../../../assets/imagenes/imagen-realidad-virtual.png" alt="">
+    <!-- <img class="imgfondo" src="../../../assets/imagenes/imagen-realidad-virtual.png" alt=""> -->
   </div>
 </div>
 
@@ -122,13 +159,28 @@
   <div class="container">
     <div class="row rowpadd">
       <div class="col-12 col-sm-12" style="margin-bottom: 30px;">
-        <div class="subtitulo" style="text-align: center;">{{TituloCarreras}}</div>
-        <div class="parafoS" style="text-align: center;">Formamos Profesionales Competitivos</div>
+        <div class="subtitulo" style="text-align: center;    margin: 0px;">{{TituloCarreras}}</div>
+        <div class="parafoS" style="font-size: 22px;">Formamos Profesionales Competitivos</div>
 
       </div>
       <div class="row" style="justify-content: space-between;">
+        <div class="col-12 col-sm-12 col-md-6" *ngFor="let item of Carreras;let i=index"
+          style="display: flex;justify-content: center;flex-wrap: wrap;    padding: 20px 30px;">
+          <img *ngIf="i%2==0" style="width: auto; height: 230px;"
+            src="../../../assets/imagenes/arquetipo-administracion-hombre-index.png" alt="">
+          <img *ngIf="i%2!=0" style="width: auto; height: 230px;"
+            src="../../../assets/imagenes/arquetipo-sistemas-mujer-index.png" alt="">
 
-        <div class="col-12 col-sm-12 col-md-6 " *ngFor="let item of Carreras;let i=index"
+          <div class="cardCarrerasV2">
+            <div class="titleV2">{{item.Nombre}}</div>
+            <div class="underl"></div>
+
+            <div class="subtitleCarreras orange " [routerLink]="item.Url">
+                <div class="vinculo"> M&aacute;s Informaci&oacute;n </div> <i class="material-icons">keyboard_arrow_right</i></div>
+          </div>
+        </div>
+        <!-- <div class="col-12 col-sm-12 col-md-6 " *ngFor="let item of Carreras;let i=index"
+
           style="margin-bottom: 30px;padding: 0px;">
           <div class=" row cardCarreras">
             <div class="contenCarreras col-9 col-sm-9 col-md-9">
@@ -149,8 +201,10 @@
         </div>
         <div class="col-12 col-sm-12 col-md-12">
           <div class="parafoS " style="margin-top: 20px;display: flex;align-items: center;justify-content: center;">
-            <div class="vinculo">Mostrar todas las carreras profesionales</div>  <i class="material-icons">keyboard_arrow_right</i></div>
-        </div>
+            <div class="vinculo">Mostrar todas las carreras profesionales</div> <i
+              class="material-icons">keyboard_arrow_right</i>
+          </div>
+        </div> -->
       </div>
     </div>
   </div>
@@ -159,25 +213,24 @@
 <div class="container">
   <div class="row rowpadd" style="align-items: center;">
     <div class="col-12 col-sm-12" style="margin-bottom: 30px;">
-      <div class="subtitulo" style="text-align: center;">Formaci&oacute;n continua</div>
-      <div class="parafoS" style="text-align: center;">Brindamos capacitaci&oacute;n especializada en diverzas
+      <div class="subtitulo" style="text-align: center;margin: 0px;">Formaci&oacute;n continua</div>
+      <div class="parafoS" style="font-size: 22px;">Brindamos capacitaci&oacute;n especializada en diverzas
         &aacute;reas</div>
     </div>
     <div class="col-12 col-sm-12" style="margin-bottom: 30px;">
 
-      <mat-tab-group mat-align-tabs="start" (selectedTabChange)="tabChanged($event)" [selectedIndex]="tabindex">
+      <mat-tab-group mat-align-tabs="start" class="tabHome" (selectedTabChange)="tabChanged($event)" [selectedIndex]="tabindex">
         <ng-container *ngFor="let item of Formacion;let i = index">
           <mat-tab *ngIf="i<=2" label="{{item.Nombre}}">
-            <ng-template matTabContent>
-              <app-home-programas [IdArea]="item.value" [change]="item.change"></app-home-programas>
-            </ng-template>
+            <app-home-programas [IdArea]="item.value" [change]="item.change"></app-home-programas>
           </mat-tab>
         </ng-container>
-        <mat-tab *ngIf="Formacion.length>0" label="más áreas >" >
+        <mat-tab *ngIf="Formacion.length>0" label="más áreas >">
           <ng-template mat-tab-label>
-              <div >
-                <button class="buttontab" style="background: #00c65a;padding: 0px 40px;" mat-raised-button color="primary" routerLink="/programas-certificaciones-cursos" >más áreas ></button>
-              </div>
+            <div>
+              <button class="buttontab" style="background: #ff8800;padding: 0px 40px;" mat-raised-button color="primary"
+                routerLink="/programas-certificaciones-cursos">más áreas ></button>
+            </div>
           </ng-template>
           <ng-template matTabContent>
 
@@ -188,7 +241,9 @@
 
     <div class="col-12 col-sm-12 col-md-12">
       <div class="parafoS " style="margin-top: 20px;display: flex;align-items: center;justify-content: center;">
-        <div class="vinculo" [routerLink]="'/programas-certificaciones-cursos/'+selectFormacion">Mostrar todos los cursos de esta &aacute;rea </div> <i class="material-icons">keyboard_arrow_right</i></div>
+        <div class="vinculo" [routerLink]="'/programas-certificaciones-cursos/'+selectFormacion">Mostrar todos los
+          cursos de esta &aacute;rea </div> <i class="material-icons">keyboard_arrow_right</i>
+      </div>
     </div>
   </div>
 </div>
@@ -198,18 +253,21 @@
     <div class="row rowpadd">
       <div class="row" style="justify-content: space-between;align-items: center;">
 
-        <div class="col-12 col-sm-12 col-md-12 col-lg-8 " style="margin-bottom: 30px;padding: 0px;">
+        <div class="col-12 col-sm-12 col-md-12 col-lg-8 " style="margin-bottom: 30px;padding: 40px;">
           <img class="img4" src="../../../assets/imagenes//imagen-aprende-a-tu-ritmo.png" alt="">
         </div>
-        <div class="col-12 col-sm-12 col-md-12 col-lg-4 " style="margin-bottom: 30px;padding: 0px;">
-          <div class="subtitulo">Aprende a tu ritmo</div>
-          <div class="parafoS" style="font-size: 17px;">Puedes acceder a tus clases a toda hora <strong>desde cualquier dispositivo</strong>,descargando atrav&eacute;s de nuestra
-            <strong>BS-app</strong></div>
-          <div class="row" style="height: 100%;margin: 20px 0px;">
-            <div class="col-12 col-sm-12 col-md-6 " >
+        <div class="col-12 col-sm-12 col-md-12 col-lg-4 " style="margin-bottom: 30px;padding: 10px;">
+          <div class="subtitulo" style="padding-right: 50px;">Aprende a tu ritmo</div>
+          <div class="parafoS" style="font-size: 17px;
+          text-align: left;font-weight: normal;    margin-bottom: 20px;padding-right: 40px">Puedes acceder a tus clases a toda hora <strong>desde cualquier
+              dispositivo,</strong> descargando atrav&eacute;s de nuestra
+            <strong>BS-app</strong>
+          </div>
+          <div class="row" style="height: 100%">
+            <div class="col-12 col-sm-12 col-md-6 " style="padding: 0px;">
               <img class="iconod" src="../../../assets//imagenes/google-play-badge.png" alt="">
             </div>
-            <div class="col-12 col-sm-12 col-md-6 " >
+            <div class="col-12 col-sm-12 col-md-6 " style="padding: 0px;">
               <img class="iconod" src="../../../assets//imagenes/pngwing.com.png" alt="">
             </div>
           </div>
@@ -221,26 +279,28 @@
 <div class="container">
   <div class="row rowpadd" style="align-items: center;">
     <div class="col-12 col-sm-12" style="margin-bottom: 30px;">
-      <div class="subtitulo" style="text-align: center;">Casos de &eacute;xito</div>
+      <div class="subtitulo" style="text-align: center;margin: 0px;">Casos de &eacute;xito</div>
       <div class="parafoS" style="text-align: center;">mas de 25 mil profesionales capasitados por BSG institute</div>
     </div>
-    <div class="col-12 col-sm-12 carrouselCasos" style="margin-bottom: 30px;" >
+    <div class="col-12 col-sm-12 carrouselCasos" style="margin-bottom: 30px;">
       <ngb-carousel>
         <ng-template ngbSlide *ngFor="let itm of cassosExito">
           <div class="wrapper">
-            <div class="row" style="justify-content: center; align-items: center;">
-              <div class="col-12 col-sm-4 col-md-4">
-                <div style="height: 100%;">
-                  <img class="imgalumno" [src]="itm.Genero=='M'?'../../../assets/imagenes/imagen-alumno.png':'../../../assets/imagenes/testimonio-mujer.png'" alt="">
-                </div>
-              </div>
+            <div class="row" style="justify-content: center; align-items: center;padding: 0px 20px;">
               <div class="col-12 col-sm-8 col-md-8" style="height: 100%;">
                 <div class="contalumno">
                   <div class="titlealumno">"{{itm.Texto}}"</div>
                   <div>
-                  <div class="cursoalumno">{{itm.Curso}}</div>
-                  <div class="namalumno">{{itm.Nombre.toLowerCase()}}</div>
+                    <div class="cursoalumno">{{itm.Curso}}</div>
+                    <div class="namalumno">{{itm.Nombre.toLowerCase()}}</div>
                   </div>
+                </div>
+              </div>
+              <div class="col-12 col-sm-4 col-md-4">
+                <div style="height: 100%;">
+                  <img class="imgalumno"
+                    [src]="itm.Genero=='M'?'../../../assets/imagenes/imagen-alumno.png':'../../../assets/imagenes/testimonio-mujer.png'"
+                    alt="">
                 </div>
               </div>
             </div>

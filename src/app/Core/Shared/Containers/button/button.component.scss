@@ -13,6 +13,7 @@ a {
   border-radius: 0px;
 }
 .bootoncolor{
+  background-size: 100% 1px;
   border-bottom-color: #f5a623 !important;
 }
 .tranformi{
@@ -47,3 +48,14 @@ button{
 .buttonHeader{
   margin-right: 20px;
 }
+a {
+  text-decoration: none;
+  background-image: linear-gradient(currentColor, currentColor);
+  background-position: 0% 100%;
+  background-repeat: no-repeat;
+  background-size: 0% 1px;
+  transition: background-size .3s;
+}
+// a:hover, a:focus {
+//   background-size: 100% 2px;
+// }

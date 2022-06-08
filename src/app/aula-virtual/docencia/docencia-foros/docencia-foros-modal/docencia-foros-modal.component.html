@@ -24,7 +24,7 @@
         <div style="    font-weight: 600;
         margin: 15px 0px;
         color: #f8893f;">{{pregunta[0].usuario}}</div>
-        <div style="margin-top: 20px;font-size: 14px;" [innerHtml]="pregunta[0].contenido">
+        <div style="margin-top: 20px;font-size: 14px;" [innerHtml]="pregunta[0].contenido | safeHtml">
 
         </div>
       </div>

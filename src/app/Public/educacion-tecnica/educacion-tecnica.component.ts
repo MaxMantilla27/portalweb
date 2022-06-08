@@ -21,7 +21,7 @@ export class EducacionTecnicaComponent implements OnInit {
     console.log('Nero')
     this.getCarreras();
     this.confs = {
-      titulo: 'Descubre Más',
+      titulo: 'Descubre Más >',
       color: 'primary'
     }
     this.encabezado = {

@@ -91,20 +91,27 @@
   }
 }
 
-.carouselImgPartners ngb-carousel .carousel-inner{
+.carouselImgPartners ngb-carousel .carousel-inner {
   height: 400px;
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
 }
 
-.contentImgCorousel{
+.contentImgCorousel {
   padding: 20px 30px;
   display: flex;
-    justify-content: center;
+  justify-content: center;
 }
 
-.imgcarousel{
+.imgcarousel {
   max-width: 100%;
   max-height: 100px;
   object-fit: contain;
+}
+.circloAseca {
+  width: 150px;
+  height: 150px;
+  display: flex;
+  background: #cfffe6;
+  padding: 30px;
 }

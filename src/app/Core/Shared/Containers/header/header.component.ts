@@ -152,6 +152,7 @@ export class HeaderComponent implements OnInit {
     this.paises = [];
     this._PaisService.GetPaises().subscribe({
       next: (x) => {
+        console.log(x)
         this.paises = x.listaPaisCabeceraDTO.map((p: any) => {
           var ps: BasicUrlIcon = {
             Nombre: p.pais,
@@ -161,6 +162,7 @@ export class HeaderComponent implements OnInit {
           };
           return ps;
         });
+        this._HelperService.enviarDataPais(x.listaPaisCabeceraDTO);
       },
       error: (x) => {
         console.log(x);
@@ -227,7 +229,7 @@ export class HeaderComponent implements OnInit {
         if (this.CodigoIso.toLowerCase() == 'co') {
           this.expandibles[1].Nombre = 'Educacion para el Trabajo';
         } else {
-          this.expandibles[1].Nombre = 'Carreras Profeionales';
+          this.expandibles[1].Nombre = 'Carreras Profesionales';
         }
         this.expandibles[1].estatus = true;
         this.expandibles[1].data = this.carreras;

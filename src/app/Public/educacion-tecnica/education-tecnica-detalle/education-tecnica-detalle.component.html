@@ -9,127 +9,220 @@
     <div class="educacion-tecnica-container__header">
       <div class="container rowpadd">
         <div class="row">
-          <div class="col-md-8 educacion-tecnica-container__header__information">
-            <div class="educacion-tecnica-container__header__information__title" [innerHTML]="carrera.programaGeneralInformacionVistaDTO?.tituloHtml">
-            </div>
-            <div class="educacion-tecnica-container__header__information__button">
-              <app-default-button [confs]="{color: 'primary', titulo: 'Inscribirme Ahora'}"></app-default-button>
+          <div class="col-md-6 educacion-tecnica-container__header__information">
+            <div class="educacion-tecnica-container__header__information__title"
+              [innerHTML]="carrera.programaGeneralInformacionVistaDTO?.tituloHtml">
             </div>
           </div>
-          <div class="col-md-4 educacion-tecnica-container__header__img">
+          <!-- <div class="col-md-4 educacion-tecnica-container__header__img">
             <img [src]="rutaImagen+carrera.programaGeneralInformacionVistaDTO?.imagenPrograma" alt="">
-          </div>
+          </div> -->
         </div>
 
       </div>
     </div>
     <div class="educacion-tecnica-container__content">
-      <div class="educacion-tecnica-container__content__firstSection container rowpadd">
+      <div class="educacion-tecnica-container__content__firstSection container rowpadd" style="position: relative;">
         <div class="row">
-          <div class="col-md-7 educacion-tecnica-container__content__firstSection__left">
-            <div class="educacion-tecnica-container__content__firstSection__left__descripcion" [innerHTML]="carrera.contenidoProgramaInformacionDTO[0]?.contenido">
+          <div class="col-md-6 educacion-tecnica-container__content__firstSection__left">
+            <div class="educacion-tecnica-container__content__firstSection__left__descripcion"
+              [innerHTML]="carrera.contenidoProgramaInformacionDTO[0]?.contenido">
+            </div>
+            <div class="educacion-tecnica-container__header__information__button">
+              <app-default-button [confs]="{color: 'primary', titulo: 'Inscribirme Ahora'}"></app-default-button>
+              <app-default-button [confs]="{color: 'primary', titulo: 'Descargar Brochure'}"></app-default-button>
             </div>
           </div>
-          <div class="col-md-5 carrera-container__content__firstSection__right" >
+          <!-- <div class="col-md-5 carrera-container__content__firstSection__right">
             <app-icon-information-card [item]="{imagen: '/assets/icons/horario-04.svg',imagenAlt: 'Horario',titulo: 'Duracion',
             subtitulo: carrera.programaGeneralInformacionVistaDTO?.duracion}"></app-icon-information-card>
-            <app-icon-information-card [item]="{imagen: '/assets/icons/precio-03.svg',imagenAlt: 'Precio',
+            <app-icon-information-card
+              [item]="{imagen: '/assets/icons/precio-03.svg',imagenAlt: 'Precio',
             titulo: 'Pensión por ciclo',
-            subtitulo: '1 matricula de '+carrera.montoPagoProgramaInformacionDTO?.simbolo+'.'+carrera.montoPagoProgramaInformacionDTO?.matricula+' y '+carrera.montoPagoProgramaInformacionDTO?.nroCuotas+' pensiones de '+carrera.montoPagoProgramaInformacionDTO?.simbolo+'.'+carrera.montoPagoProgramaInformacionDTO?.cuotas}"></app-icon-information-card>
+            subtitulo: '1 matricula de '+carrera.montoPagoProgramaInformacionDTO?.simbolo+'.'+carrera.montoPagoProgramaInformacionDTO?.matricula+' y '+carrera.montoPagoProgramaInformacionDTO?.nroCuotas+' pensiones de '+carrera.montoPagoProgramaInformacionDTO?.simbolo+'.'+carrera.montoPagoProgramaInformacionDTO?.cuotas}">
+            </app-icon-information-card>
             <app-icon-information-card [item]="{imagen: '/assets/icons/calendario-05.svg',imagenAlt: 'Calendario',titulo: 'Admicion '+fecha.getFullYear(),
             subtitulo: fechaInicio}"></app-icon-information-card>
-          </div>
+          </div> -->
         </div>
+        <img src="../../../../assets/imagenes/arquetipo-atencion-al-cliente.png" alt="" style="    position: absolute;
+        right: 10%;
+        bottom: 0;
+        width: 35%;">
       </div>
-      <div class="educacion-tecnica-container__content__secondSection">
-        <div class="container rowpadd">
+      <div class="divicionAzul ">
+        <div class="container " style="padding-top: 20px;
+        padding-bottom: 20px;">
           <div class="row">
-            <mat-tab-group>
-              <mat-tab *ngFor="let item of generalInformacion" label="{{item.titulo}}">
-                <div class="educacion-tecnica-container__content__secondSection__item" [innerHTML]="item.contenido">
-                </div>
-              </mat-tab>
-            </mat-tab-group>
-          </div>
-        </div>
-      </div>
-      <div class="educacion-tecnica-container__content__thirdSection">
-        <div class="container rowpadd">
-          <div class="row">
-            <div class="col-lg-8 educacion-tecnica-container__content__thirdSection__left">
-              <h1 style="padding-bottom: 2rem">Estructura Curricular</h1>
-              <mat-expansion-panel class="panel-tecnica" hideToggle                        *ngFor="let item of estructuraCurricular;let i =index" (opened)="item.opened=true" (closed)="item.opened=false">
-                <mat-expansion-panel-header>
-                  <mat-panel-title>
-                    <div *ngIf="item.opened===true">
-                      <mat-icon>remove</mat-icon>
-                    </div>
-                    <div *ngIf="item.opened===false">
-                      <mat-icon>add</mat-icon>
-                    </div>
-                    <span>{{item.titulo + ' (' + item.duracion + 'horas académicas)'}}</span>
-                  </mat-panel-title>
-                </mat-expansion-panel-header>
-                <ul>
-                  <li *ngFor="let subItem of item.subTitulo">{{subItem.contenido}}</li>
-                </ul>
-              </mat-expansion-panel>
-              <div
-                class="educacion-tecnica-container__content__fourthSection__information-container__detail"
-                [innerHTML]="descripcionEstructuraCurricular">
-              </div>
-            </div>
-            <div class="col-lg-4 educacion-tecnica-container__content__thirdSection__right">
-              <div class="educacion-tecnica-container__content__thirdSection__right__form-container">
-                <div class="educacion-tecnica-container__content__thirdSection__right__form-container__header">
-                  <div class="educacion-tecnica-container__content__thirdSection__right__form-container__header__pregunta">
-                    <div class="educacion-tecnica-container__content__thirdSection__right__form-container__header__pregunta__signo-a">
-                      <h1>¿</h1>
-                    </div>
-                    <div class="educacion-tecnica-container__content__thirdSection__right__form-container__header__pregunta__texto">
-                      <h2>Tienes dudas sobre algún aspecto del programa</h2>
-                    </div>
-                    <div class="educacion-tecnica-container__content__thirdSection__right__form-container__header__pregunta__signo-b">
-                      <h1>?</h1>
-                    </div>
-                  </div>
-                  <p>Registra tus datos para que un asesor especializado pueda ayudarte en todo lo que requieras</p>
-                </div>
-                <app-formulario [model]="formularioContacto" [InputsDisable]="statuscharge" (OnSubmit)="SetContacto($event)"
-                  (OnValid)="formVal=$event" [fiels]="fileds" (OnSelect)="SelectChage($event)">
-
-                  <ng-container contenido>
-                  </ng-container>
-                  <ng-container send>
-                    <app-default-button [confs]="{color:'primary',titulo:'Enviar'}" [style]="'width: 100%;'"
-                    [disabled]="!formVal"></app-default-button>
-                  </ng-container>
-                </app-formulario>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="educacion-tecnica-container__content__fourthSection">
-        <div class="container rowpadd">
-          <div class="row">
-            <div class="col-md-4 educacion-tecnica-container__content__fourthSection__img-container" >
-              <img src="/assets/imagenes/certificado-carrera-tecnica-atencion-al-cliente.png" alt="">
-            </div>
-            <div class="col-md-8 educacion-tecnica-container__content__fourthSection__information-container" >
-              <h1>Certificación</h1>
-              <div
-                class="educacion-tecnica-container__content__fourthSection__information-container__detail"
-                [innerHTML]="certificaciones">
-              </div>
+            <div class="col-12 col-md-4 col-lg-4 contentdiv">
+              <img src="../../../../assets/icons/icono-reloj-duracion-blanco.svg" alt="">
               <div>
-                <app-default-button [confs]="{color: 'primary', titulo: 'Solicita Información'}"></app-default-button>
+                <div class="titleDiv">Duración</div>
+                <div class="subTitleDiv">{{carrera.programaGeneralInformacionVistaDTO?.duracion}}</div>
+              </div>
+            </div>
+            <div class="col-12 col-md-4 col-lg-4 contentdiv">
+              <img src="../../../../assets/icons/icono-moneda-pension-blanco.svg" alt="">
+              <div>
+                <div class="titleDiv">Pensión por ciclo</div>
+                <div class="subTitleDiv">{{'1 matricula de '+carrera.montoPagoProgramaInformacionDTO?.simbolo+'.'+carrera.montoPagoProgramaInformacionDTO?.matricula+' y '+carrera.montoPagoProgramaInformacionDTO?.nroCuotas+' pensiones de '+carrera.montoPagoProgramaInformacionDTO?.simbolo+'.'+carrera.montoPagoProgramaInformacionDTO?.cuotas}}</div>
+              </div>
+            </div>
+            <div class="col-12 col-md-4 col-lg-4 contentdiv">
+              <img src="../../../../assets/icons/icono-calendario-admision-blanco.svg" alt="">
+              <div>
+                <div class="titleDiv">Admicion</div>
+                <div class="subTitleDiv">{{fechaInicio}}</div>
               </div>
             </div>
           </div>
         </div>
       </div>
-      <div class="educacion-tecnica-container__content__fiveSection">
-        <img src="/assets/imagenes/arquetipo-atencion-al-cliente-2.png" alt="">
+      <div style="position: relative;">
+
+        <!-- <div>
+          <div style="position: absolute;width: 100%;">
+            <div class="container rowpadd">
+              <div class="row">
+                <div class="col-md-7">
+                </div>
+                <div class="col-md-5 educacion-tecnica-container__content__thirdSection__right" >
+                  <div #divFixed id="divFixed" class="educacion-tecnica-container__content__thirdSection__right__form-container">
+                    <div class="educacion-tecnica-container__content__thirdSection__right__form-container__header">
+                      <div
+                        class="educacion-tecnica-container__content__thirdSection__right__form-container__header__pregunta">
+                        <div
+                          class="educacion-tecnica-container__content__thirdSection__right__form-container__header__pregunta__signo-a">
+                          <h1>¿</h1>
+                        </div>
+                        <div
+                          class="educacion-tecnica-container__content__thirdSection__right__form-container__header__pregunta__texto">
+                          <h2>Tienes dudas sobre algún aspecto del programa</h2>
+                        </div>
+                        <div
+                          class="educacion-tecnica-container__content__thirdSection__right__form-container__header__pregunta__signo-b">
+                          <h1>?</h1>
+                        </div>
+                      </div>
+                      <p>Registra tus datos para que un asesor especializado pueda ayudarte en todo lo que requieras</p>
+                    </div>
+                    <app-formulario [model]="formularioContacto" [InputsDisable]="statuscharge"
+                      (OnSubmit)="SetContacto($event)" (OnValid)="formVal=$event" [fiels]="fileds"
+                      (OnSelect)="SelectChage($event)">
+
+                      <ng-container contenido>
+                      </ng-container>
+                      <ng-container send>
+                        <app-default-button [confs]="{color:'primary',titulo:'Enviar'}" [style]="'width: 100%;'"
+                          [disabled]="!formVal"></app-default-button>
+                      </ng-container>
+                    </app-formulario>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div> -->
+        <div class="educacion-tecnica-container__content__secondSection" style="position: relative;">
+
+          <div class="container rowpadd">
+            <div class="row">
+              <div class="col-md-7">
+                <mat-tab-group>
+                  <mat-tab *ngFor="let item of generalInformacion" label="{{item.titulo}}">
+                    <div class="educacion-tecnica-container__content__secondSection__item" [innerHTML]="item.contenido">
+                    </div>
+                  </mat-tab>
+                </mat-tab-group>
+              </div>
+              <div class="col-md-5 educacion-tecnica-container__content__thirdSection__right" >
+                <div #divFixed id="divFixed" class="educacion-tecnica-container__content__thirdSection__right__form-container">
+                  <div class="educacion-tecnica-container__content__thirdSection__right__form-container__header">
+                    <div
+                      class="educacion-tecnica-container__content__thirdSection__right__form-container__header__pregunta">
+                      <div
+                        class="educacion-tecnica-container__content__thirdSection__right__form-container__header__pregunta__signo-a">
+                        <h1>¿</h1>
+                      </div>
+                      <div
+                        class="educacion-tecnica-container__content__thirdSection__right__form-container__header__pregunta__texto">
+                        <h2>Tienes dudas sobre algún aspecto del programa</h2>
+                      </div>
+                      <div
+                        class="educacion-tecnica-container__content__thirdSection__right__form-container__header__pregunta__signo-b">
+                        <h1>?</h1>
+                      </div>
+                    </div>
+                    <p>Registra tus datos para que un asesor especializado pueda ayudarte en todo lo que requieras</p>
+                  </div>
+                  <app-formulario [model]="formularioContacto" [InputsDisable]="statuscharge"
+                    (OnSubmit)="SetContacto($event)" (OnValid)="formVal=$event" [fiels]="fileds"
+                    (OnSelect)="SelectChage($event)">
+
+                    <ng-container contenido>
+                    </ng-container>
+                    <ng-container send>
+                      <app-default-button [confs]="{color:'primary',titulo:'Enviar'}" [style]="'width: 100%;'"
+                        [disabled]="!formVal"></app-default-button>
+                    </ng-container>
+                  </app-formulario>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="educacion-tecnica-container__content__thirdSection">
+          <div class="container rowpadd">
+            <div class="row">
+              <div class="col-md-7 educacion-tecnica-container__content__thirdSection__left">
+                <h1 style="padding-bottom: 2rem">Estructura Curricular</h1>
+                <mat-expansion-panel class="panel-tecnica" hideToggle
+                  *ngFor="let item of estructuraCurricular;let i =index" (opened)="item.opened=true"
+                  (closed)="item.opened=false">
+                  <mat-expansion-panel-header>
+                    <mat-panel-title>
+                      <div *ngIf="item.opened===true">
+                        <mat-icon>remove</mat-icon>
+                      </div>
+                      <div *ngIf="item.opened===false">
+                        <mat-icon>add</mat-icon>
+                      </div>
+                      <span>{{item.titulo + ' (' + item.duracion + 'horas académicas)'}}</span>
+                    </mat-panel-title>
+                  </mat-expansion-panel-header>
+                  <ul>
+                    <li *ngFor="let subItem of item.subTitulo">{{subItem.contenido}}</li>
+                  </ul>
+                </mat-expansion-panel>
+                <div class="educacion-tecnica-container__content__fourthSection__information-container__detail"
+                  [innerHTML]="descripcionEstructuraCurricular">
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="educacion-tecnica-container__content__fourthSection">
+            <div class="container rowpadd">
+              <div class="row">
+                <div class="col-md-7 educacion-tecnica-container__content__fourthSection__information-container">
+                  <h1>Certificación</h1>
+                  <div class="educacion-tecnica-container__content__fourthSection__information-container__detail"
+                    [innerHTML]="certificaciones">
+                  </div>
+                  <div>
+                    <app-default-button [confs]="{color: 'primary', titulo: 'Solicita Información'}"></app-default-button>
+                  </div>
+                </div>
+
+                <div class="col-md-7 educacion-tecnica-container__content__fourthSection__img-container">
+                  <img src="/assets/imagenes/certificado-carrera-tecnica-atencion-al-cliente.png" alt="">
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- <div class="educacion-tecnica-container__content__fiveSection">
+            <img src="/assets/imagenes/arquetipo-atencion-al-cliente-2.png" alt="">
+          </div> -->
+        </div>
       </div>
     </div>
   </div>

@@ -1,44 +1,56 @@
-.card-programas{
+.card-programas {
   height: 100%;
-  box-shadow: 2px 1px 5px 1px rgb(0 0 0 / 20%), -1px 4px 2px 0px rgb(0 0 0 / 14%), 0px 1px 3px 0px rgb(0 0 0 / 12%) !important;
+  box-shadow: 2px 1px 5px 1px rgb(0 0 0 / 20%),
+    -1px 4px 2px 0px rgb(0 0 0 / 14%), 0px 1px 3px 0px rgb(0 0 0 / 12%) !important;
 }
-.title{
+.title {
   color: #148bf3;
   font-weight: 900;
   cursor: pointer;
 }
-.title:hover{
-
+.title:hover {
   text-decoration: underline;
 }
-.card-programas mat-card-content{
+.card-programas mat-card-content {
   text-align: left;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  //justify-content: space-between;
 }
-.invercion {
+.parafoInversion{
+  // overflow: hidden;
+  // text-overflow: ellipsis;
+  // display: -webkit-box;
+  // display: -moz-box;
+  // //display: flex;
+  // -webkit-box-orient: vertical;
+  // -moz-box-orient: vertical;
+  // box-orient: vertical;
+  // -webkit-line-clamp: 6;
+  // line-clamp: 6;
+  font-size: 12px;
 }
 .invercion p {
   overflow: hidden;
   text-overflow: ellipsis;
   display: -webkit-box;
   display: -moz-box;
-  display: flex;
+  //display: flex;
   -webkit-box-orient: vertical;
   -moz-box-orient: vertical;
   box-orient: vertical;
   -webkit-line-clamp: 6;
   line-clamp: 6;
+  font-size: 12px;
 }
-.card-programas mat-card-footer{
+.card-programas mat-card-footer {
   text-align: left;
   padding: 0px 10px;
   font-size: 12px;
   color: #a5a5a4;
 }
-.mat-card{
-  display:flex !important;
+.mat-card {
+  display: flex !important;
   flex-direction: column;
 }
 
@@ -47,22 +59,49 @@
   flex-direction: row;
   flex-shrink: 0;
 }
-.card-programas mat-card-content{
+.card-programas mat-card-content {
   flex-grow: 1;
   overflow: auto;
 }
-.carousel-indicators{
+.carousel-indicators {
   margin: 0px;
 }
-.link{
+.link {
   font-size: 14px;
   color: #ff7c2e;
   margin: 15px 0px;
   cursor: pointer;
 }
-.link:hover{
+.link:hover {
   text-decoration: underline;
 }
-.carousel-caption{
+.carousel-caption {
   display: none;
+}
+.contenidoCardProgramas {
+  opacity: 0;
+  font-size: 10px;
+  cursor: pointer;
+  position: absolute;
+  top: -16px;
+  left: -16px;
+  right: -16px ;
+  background: #5d5d5c;
+  color: white;
+  height: 100%;
+  padding: 10px;
+  text-align: left;
+}
+.vermasInImg {
+  position: absolute;
+  bottom: 0;
+  text-align: center;
+  width: 100%;
+  color: #ff8800;
+  text-decoration:underline;
+}
+.chowCOntentImg:hover {
+  .contenidoCardProgramas {
+    opacity: 1;
+  }
 }

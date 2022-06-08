@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
 import { Validators } from '@angular/forms';
 import {ActivatedRoute, Router} from "@angular/router";
 import { Basic } from 'src/app/Core/Models/BasicDTO';
@@ -81,7 +81,7 @@ export class EducationTecnicaDetalleComponent implements OnInit {
     IdAreaTrabajo:0,
     IdIndustria:0
   }
-
+  public positionDiv=0;
   ngOnInit(): void {
     this.migaPan = [
       {
@@ -292,7 +292,7 @@ export class EducationTecnicaDetalleComponent implements OnInit {
     });
     this.fileds.push({
       nombre:"Movil",
-      tipo:"text",
+      tipo:"phone",
       valorInicial:"",
       validate:[Validators.required],
       label:"Teléfono Móvil",

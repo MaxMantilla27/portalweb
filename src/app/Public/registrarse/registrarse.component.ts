@@ -27,7 +27,7 @@ export class RegistrarseComponent implements OnInit {
     private _DatosPortalService: DatosPortalService,
     private _RegionService: RegionService,
     private _HelperService: HelperService,
-    
+
   ) {}
 
   public migaPan = [
@@ -100,7 +100,7 @@ export class RegistrarseComponent implements OnInit {
         this.statuscharge = false;
       },
     });
-    
+
   }
 
   ObtenerCombosPortal() {
@@ -215,7 +215,7 @@ export class RegistrarseComponent implements OnInit {
     });
     this.fileds.push({
       nombre: 'Movil',
-      tipo: 'text',
+      tipo: 'phone',
       valorInicial: '',
       validate: [Validators.required],
       label: 'Teléfono Móvil',

@@ -2,7 +2,8 @@
   <form (submit)="EnviarCambios()" [formGroup]="userForm">
     <ng-container formArrayName="Fields">
       <div class="row">
-        <div *ngFor="let field of fiels; let i=index" [class]="field.class==undefined?'col-12 col-md-12 col-lg-12 fieldOld':field.class+' fieldOld'">
+        <div *ngFor="let field of fiels; let i=index"
+          [class]="field.class==undefined?'col-12 col-md-12 col-lg-12 fieldOld':field.class+' fieldOld'">
           <div [formGroupName]="i">
             <ng-container *ngIf="Tipo==1">
 
@@ -26,6 +27,25 @@
                     <mat-error *ngIf="userForm.invalid">{{obtenerErrorCampoNombre(i,field.nombre)}}</mat-error>
                   </mat-form-field>
                 </ng-container>
+                <ng-container *ngIf="field.tipo=='phone'">
+                  <div class="row">
+                    <div class="col-3 col-md-3 col-lg-3 fieldOld">
+
+                      <mat-form-field>
+                        <mat-select placeholder="Select offer" formControlName="promo" [(value)]="paisSelect">
+                          <mat-select-trigger>{{IconPaises()}}</mat-select-trigger>
+                          <mat-option *ngFor="let item of paise" [value]="item.idPais">
+                            {{ item.flag }}
+                            <i class="material-icons">
+                              info
+                            </i>
+                          </mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                    </div>
+                  </div>
+                </ng-container>
+
               </ng-container>
               <ng-container *ngIf="FormOld">
                 <div class="fieldOld">
@@ -47,6 +67,35 @@
                       </mat-select>
                       <mat-error *ngIf="userForm.invalid">{{obtenerErrorCampoNombre(i,field.nombre)}}</mat-error>
                     </mat-form-field>
+                  </ng-container>
+
+                  <ng-container *ngIf="field.tipo=='phone'">
+                    <div class="row">
+                      <div class="col-2 col-md-2 col-lg-2 " (click)="select.open()" style="padding-right: 0px;">
+                        <div class="fieldOld contSelectForm" >
+                          <mat-form-field appearance="fill" style="height: 0px; width: 0px;" class="transForm">
+                            <mat-select #myselsetc [(value)]="paisSelect" #select panelClass="myPanelClass"
+                            (selectionChange)="validatePais(i,field.nombre)">
+
+                              <mat-option *ngFor="let item of paise" [value]="item.idPais">
+                                <img [src]="item.flag" alt="" style="    width: 20px;height: 20px;">
+                                {{item.pais}}
+                              </mat-option>
+                            </mat-select>
+                          </mat-form-field>
+                          <div [style]="'background-image: url('+IconPaises()+')'" alt="" class="urlSelect"></div>
+                          <i class="material-icons">arrow_drop_down</i>
+                        </div>
+                      </div>
+                      <div class="col-10 col-md-10 col-lg-10 fieldOld">
+                        <mat-form-field appearance="outline">
+                          <mat-label>{{field.label}}</mat-label>
+                          <!-- <span matPrefix>{{PrefPaises()}}</span> -->
+                          <input type="text" (keyup)="ChangeInpiut(i,field.nombre)" (keydown)="ChangeInpiut(i,field.nombre)" [style]="field.style" formControlName="{{field.nombre}}" matInput />
+                          <mat-error *ngIf="userForm.invalid">{{obtenerErrorCampoNombre(i,field.nombre)}}</mat-error>
+                        </mat-form-field>
+                      </div>
+                    </div>
                   </ng-container>
                 </div>
               </ng-container>
@@ -74,6 +123,10 @@
                       </mat-select>
                       <mat-error *ngIf="userForm.invalid">{{obtenerErrorCampoNombre(i,field.nombre)}}</mat-error>
                     </mat-form-field>
+                  </ng-container>
+
+                  <ng-container *ngIf="field.tipo=='phone'">
+
                   </ng-container>
                 </div>
               </div>

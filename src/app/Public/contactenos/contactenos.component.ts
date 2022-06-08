@@ -34,7 +34,7 @@ export class ContactenosComponent implements OnInit {
       urlWeb: '/contactenos'
     }
   ]
-
+  public expancion=[false,false,false,false,false]
   statuscharge = false;
   formVal: boolean = false;
   public initValues = false;

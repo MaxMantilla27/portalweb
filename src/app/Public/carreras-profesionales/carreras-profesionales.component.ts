@@ -20,7 +20,7 @@ export class CarrerasProfesionalesComponent implements OnInit {
   ngOnInit(): void {
     this.getCarreras();
     this.confs = {
-      titulo: 'Descubre Más',
+      titulo: 'Descubre Más >',
       color: 'primary'
     }
     this.encabezado = {

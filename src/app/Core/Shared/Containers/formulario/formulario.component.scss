@@ -3,10 +3,12 @@
   width: 100%;
   //min-width: 300px;
 }
-.fieldOld{
-
-}
 .fieldOld .mat-form-field.mat-form-field-appearance-outline > div.mat-form-field-wrapper > div.mat-form-field-flex > div.mat-form-field-infix  { padding: 0.4em 0px }
+.fieldOld .mat-form-field.mat-form-field-appearance-outline > div.mat-form-field-wrapper > div.mat-form-field-flex > div.mat-form-field-prefix { padding: 0.4em 0px;
+  top: 0px;
+  left: -10px;
+}
+
 .fieldOld .mat-form-field.mat-form-field-appearance-outline > div.mat-form-field-wrapper > div.mat-form-field-flex > div.mat-form-field-infix > span.mat-form-field-label-wrapper { top: -1.5em; }
 
 .fieldOld .mat-form-field-appearance-outline.mat-form-field-can-float.mat-form-field-should-float .mat-form-field-label {
@@ -30,4 +32,55 @@
   .mat-form-field-outline-end {
     background-color: var(--main-bg-color);
   }
+}
+
+.urlSelect{
+  width: 20px;
+  height: 20px;
+  border-radius: 50% !important;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 20px;
+}
+
+.myPanelClass{
+  // margin-top: 50px;
+  //   margin-left: -40px;
+  //   max-height: 500px !important;
+  //transform-origin:50% 25.25px 0px !important;
+  top: 100px !important;
+}
+.transForm {
+  height: 0px; width: 0px;
+  width: 0px !important;
+  height: 0px;
+}
+.transForm .mat-form-field-wrapper .mat-form-field-flex {
+  height: 0px !important;
+  padding: 0px !important;
+}
+.transForm .mat-select-trigger{
+  visibility: hidden;
+}
+.transForm  .mat-select-arrow-wrapper{
+}
+
+.transForm .mat-form-field-infix {
+  height: 0px;
+  padding: 0px;
+  border: 0px;
+}
+
+.contSelectForm{
+  display: flex;
+  cursor: pointer;
+  justify-content: center;
+  align-items: center;
+  background: #f8f8f8;
+  border: solid 1px #d5d5d5;
+  padding: 0px;
+  border-radius: 5px;
+  height: 40px;
+  margin: 5px 0px 0px 0px;
+  min-width: 50px
 }
