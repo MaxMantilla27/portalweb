@@ -2,7 +2,7 @@
 import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { Basic } from 'src/app/Core/Models/BasicDTO';
+import { Basic, CardProgramasDTO } from 'src/app/Core/Models/BasicDTO';
 import { ContactenosDTO } from 'src/app/Core/Models/ContactenosDTO';
 import { formulario } from 'src/app/Core/Models/Formulario';
 import { FormularioContactoDTO } from 'src/app/Core/Models/FormularioDTO';
@@ -11,6 +11,7 @@ import { FormularioComponent } from 'src/app/Core/Shared/Containers/formulario/f
 import { ArticuloService } from 'src/app/Core/Shared/Services/Articulo/articulo.service';
 import { DatosPortalService } from 'src/app/Core/Shared/Services/DatosPortal/datos-portal.service';
 import { RegionService } from 'src/app/Core/Shared/Services/Region/region.service';
+import { SeccionProgramaService } from 'src/app/Core/Shared/Services/SeccionPrograma/seccion-programa.service';
 import { SessionStorageService } from 'src/app/Core/Shared/Services/session-storage.service';
 import { TagService } from 'src/app/Core/Shared/Services/Tag/tag.service';
 
@@ -30,6 +31,7 @@ export class WhitepapersComponent implements OnInit {
     private _TagService:TagService,
     private _RegionService:RegionService,
     private _DatosPortalService:DatosPortalService,
+    private _SeccionProgramaService:SeccionProgramaService
   ) {}
   public idWeb = 0;
   public UrlWeb='';
@@ -62,6 +64,7 @@ export class WhitepapersComponent implements OnInit {
   statuscharge = false;
   formVal: boolean = false;
   public initValues = false;
+  public programasRelacionados:Array<CardProgramasDTO>=[];
   public fileds: Array<formulario> = [];
   public formularioContacto:FormularioContactoDTO={
     Nombres:'',
@@ -105,6 +108,26 @@ export class WhitepapersComponent implements OnInit {
     this.AddFields();
     this.ObtenerCombosPortal();
   }
+  ListArticuloProgramaRelacionado(id:number){
+    console.log(id)
+    this._SeccionProgramaService.ListArticuloProgramaRelacionado(id).subscribe({
+      next:x=>{
+        console.log(x)
+        if(x.listaProgramaRelacionadoDTO!=null){
+          this.programasRelacionados=x.listaProgramaRelacionadoDTO.map(
+            (c:any)=>{
+
+              var urlArea=c.areaCapacitacion.replace(/\s+/g, '-')
+              var urlSubArea=c.nombre.replace(' - ', '-')
+              var urlSubArea=urlSubArea.replace(/\s+/g, '-')
+              var ps:CardProgramasDTO={Inversion:c.montoPagoDescripcion,Content:c.descripcion,Url:'/'+urlArea+'/'+urlSubArea+'-'+c.idBusqueda,Img:'https://img.bsginstitute.com/repositorioweb/img/programas/'+c.imagen,ImgAlt:c.imagenAlt,Title:c.nombre};
+              return ps;
+            }
+          );
+        }
+      }
+    })
+  }
   ObtenerArticuloDetalleHome(){
     this._ArticuloService.ObtenerArticuloDetalleHome(3,this.idWeb,this.UrlWeb).subscribe({
       next:(x)=>{
@@ -120,6 +143,7 @@ export class WhitepapersComponent implements OnInit {
         this.alt=x.articuloDetalleHomeDTO.articuloDetalle.imgPortadaAlt;
         this.urlDocumento=x.articuloDetalleHomeDTO.articuloDetalle.urlDocumento;
 
+        this.ListArticuloProgramaRelacionado(x.articuloDetalleHomeDTO.articuloDetalle.id);
       }
     })
   }
