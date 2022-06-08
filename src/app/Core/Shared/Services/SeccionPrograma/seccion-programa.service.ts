@@ -28,4 +28,7 @@ export class SeccionProgramaService {
   public ListProgramaRelacionado(IdPGeneral:number):Observable<any>{
     return this.http.get<any>(this.urlBase+'/ListProgramaRelacionado?IdPGeneral='+IdPGeneral);
   }
+  public ListArticuloProgramaRelacionado(IdArticulo:number):Observable<any>{
+    return this.http.get<any>(this.urlBase+'/ListArticuloProgramaRelacionado?IdArticulo='+IdArticulo);
+  }
 }
