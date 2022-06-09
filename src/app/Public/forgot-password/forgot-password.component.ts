@@ -34,7 +34,7 @@ export class ForgotPasswordComponent implements OnInit {
       tipo:"text",
       valorInicial:"",
       validate:[Validators.required,Validators.email],
-      label:"Correo electronico",
+      label:"Correo electrónico",
 
     });
   }

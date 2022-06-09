@@ -195,7 +195,7 @@ export class ProgramasDetalleComponent implements OnInit {
         console.log(x)
         this.cabecera=x.programaCabeceraDetalleDTO
         this.migaPan.push({
-          titulo:'Área:'+this.area+'/ Sub Área:'+this.cabecera.nombreSubArea,
+          titulo:'Área: '+this.area+'/ Subárea: '+this.cabecera.nombreSubArea,
           urlWeb:'/'+this.AraCompleta+'/'+this.nombreProgramCompeto
         })
         if(x.programaCabeceraDetalleDTO.imgPrincipal!=null){
@@ -536,7 +536,7 @@ export class ProgramasDetalleComponent implements OnInit {
       tipo:"select",
       valorInicial:"",
       validate:[Validators.required],
-      label:"Pais",
+      label:"País",
     });
     this.fileds.push({
       nombre:"IdRegion",

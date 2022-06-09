@@ -244,7 +244,7 @@ export class EducationTecnicaDetalleComponent implements OnInit {
       tipo:"select",
       valorInicial:"",
       validate:[Validators.required],
-      label:"Pais",
+      label:"País",
     });
     this.fileds.push({
       nombre:"IdRegion",

@@ -119,7 +119,7 @@ export class HeaderComponent implements OnInit {
       estatus: false,
     },
     {
-      Nombre: 'Educacion Tecnica',
+      Nombre: 'Educación Tecnica',
       data: this.tecnica,
       estatus: false,
     },
@@ -227,7 +227,7 @@ export class HeaderComponent implements OnInit {
           style: { 'font-weight': 'bold' },
         });
         if (this.CodigoIso.toLowerCase() == 'co') {
-          this.expandibles[1].Nombre = 'Educacion para el Trabajo';
+          this.expandibles[1].Nombre = 'Educación para el Trabajo';
         } else {
           this.expandibles[1].Nombre = 'Carreras Profesionales';
         }
