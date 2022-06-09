@@ -1,6 +1,7 @@
 import { isPlatformBrowser } from '@angular/common';
 import { Component, Inject, OnInit, PLATFORM_ID, ViewChild, ViewEncapsulation } from '@angular/core';
 import { Validators } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { NgbCarouselConfig } from '@ng-bootstrap/ng-bootstrap';
 import { Basic, CardProgramasDTO } from 'src/app/Core/Models/BasicDTO';
@@ -8,7 +9,7 @@ import { BeneficiosDTO } from 'src/app/Core/Models/BeneficiosDTO';
 import { ContactenosDTO } from 'src/app/Core/Models/ContactenosDTO';
 import { estructuraCursoDTO } from 'src/app/Core/Models/EstructuraProgramaDTO';
 import { formulario } from 'src/app/Core/Models/Formulario';
-import { FormularioContactoDTO } from 'src/app/Core/Models/FormularioDTO';
+import { FormularioContactoDTO, FormularioContactoShortDTO } from 'src/app/Core/Models/FormularioDTO';
 import { listaExpositorDTO } from 'src/app/Core/Models/listaExpositorDTO';
 import { listaTagDTO } from 'src/app/Core/Models/listaTagDTO';
 import { programaCabeceraDetalleDTO,listaSeccionPrograma, listaPrerrequisitoDTO, listaCertificacionDTO, listaMontoPagoProgramaInformacionDTO } from 'src/app/Core/Models/SeccionProgramaDTO';
@@ -21,7 +22,9 @@ import { ProgramaService } from 'src/app/Core/Shared/Services/Programa/programa.
 import { RegionService } from 'src/app/Core/Shared/Services/Region/region.service';
 import { SeccionProgramaService } from 'src/app/Core/Shared/Services/SeccionPrograma/seccion-programa.service';
 import { SilaboService } from 'src/app/Core/Shared/Services/Silabo/silabo.service';
+import { SnackBarServiceService } from 'src/app/Core/Shared/Services/SnackBarService/snack-bar-service.service';
 import { TagService } from 'src/app/Core/Shared/Services/Tag/tag.service';
+import { VistaPreviaComponent } from './vista-previa/vista-previa.component';
 
 @Component({
   selector: 'app-programas-detalle',
@@ -46,6 +49,8 @@ export class ProgramasDetalleComponent implements OnInit {
     private _RegionService:RegionService,
     private _DatosPortalService:DatosPortalService,
     private _HelperService: HelperService,
+    public dialog: MatDialog,
+    private _SnackBarServiceService:SnackBarServiceService,
     config: NgbCarouselConfig,
     @Inject(PLATFORM_ID) platformId: Object
     ) {
@@ -102,23 +107,31 @@ export class ProgramasDetalleComponent implements OnInit {
   public EstructuraPiePagina='';
   public PrerrequisitosPiePagina='';
   public CertificacionPiePagina='';
-  public seccionStep=3;
+  public seccionStep=2;
   public innerWidth: any;
   statuscharge = false;
   formVal: boolean = false;
   public initValues = false;
+
+  public migaPan = [
+    {
+      titulo: 'Inicio',
+      urlWeb: '/',
+    },
+    {
+      titulo:'Programas, certificaciones y cursos',
+      urlWeb:'/programas-certificaciones-cursos'
+    }
+
+  ]
   public fileds: Array<formulario> = [];
-  public formularioContacto:FormularioContactoDTO={
+  public formularioContacto:FormularioContactoShortDTO={
     Nombres:'',
     Apellidos:'',
     Email:'',
     IdPais:0,
     IdRegion:0,
     Movil:'',
-    IdCargo:0,
-    IdAreaFormacion:0,
-    IdAreaTrabajo:0,
-    IdIndustria:0
   }
   public DatosEnvioFormulario: ContactenosDTO={
     Nombres:'',
@@ -132,7 +145,9 @@ export class ProgramasDetalleComponent implements OnInit {
     IdAreaTrabajo:0,
     IdIndustria:0
   }
-
+  public nombreProgramCompeto=''
+  public AraCompleta=''
+  public vistaPrevia='';
   ngOnInit(): void {
     if(this.isBrowser){
       this.innerWidth = window.innerWidth;
@@ -142,6 +157,8 @@ export class ProgramasDetalleComponent implements OnInit {
     this.activatedRoute.params.subscribe({
       next:(x)=>{
         this.area=x['AreaCapacitacion'].replace('-',' ');
+        this.AraCompleta=x['AreaCapacitacion'];
+        this.nombreProgramCompeto=x['ProgramaNombre']
         var namePrograma=x['ProgramaNombre'].split('-');
         this.idBusqueda=namePrograma[namePrograma.length-1]
 
@@ -159,11 +176,28 @@ export class ProgramasDetalleComponent implements OnInit {
     this.AddFields();
     this.ObtenerCombosPortal();
   }
+
+  OpenModal(): void {
+    const dialogRef = this.dialog.open(VistaPreviaComponent, {
+      width: '500px',
+      data: {url:this.vistaPrevia},
+      panelClass: 'custom-dialog-container'
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+    });
+  }
+
   ObtenerCabeceraProgramaGeneral(){
     this._SeccionProgramaService.ObtenerCabeceraProgramaGeneral(this.idBusqueda).subscribe({
       next:(x)=>{
         console.log(x)
         this.cabecera=x.programaCabeceraDetalleDTO
+        this.migaPan.push({
+          titulo:'Área:'+this.area+'/ Sub Área:'+this.cabecera.nombreSubArea,
+          urlWeb:'/'+this.AraCompleta+'/'+this.nombreProgramCompeto
+        })
         if(x.programaCabeceraDetalleDTO.imgPrincipal!=null){
           this.cabecera.imgPrincipal='https://img.bsginstitute.com/repositorioweb/img/partners/'+x.programaCabeceraDetalleDTO.imgPrincipal;
         }
@@ -198,8 +232,13 @@ export class ProgramasDetalleComponent implements OnInit {
       next:(x)=>{
         this.estructuraPrograma=x.estructuraCurso;
         this.estructuraPrograma.map(x=>{
-          x.opened=false
+          if(this.estructuraPrograma.length>3){
+            x.opened=false
+          }else{
+            x.opened=true
+          }
         })
+        console.log(this.estructuraPrograma)
         this.idPegeneral=x.idPGeneral;
         this.ObtenerSilaboCurso();
         this.ListProgramaRelacionado();
@@ -271,7 +310,14 @@ export class ProgramasDetalleComponent implements OnInit {
         if(piePag!=undefined){
           this.PrerrequisitosPiePagina=piePag.piePagina;
         }
-
+        var vp=x.listaSeccionesContenidosDocumento.find((x:any)=>x.titulo=="Vista Previa")
+        if(vp!=undefined){
+          this.vistaPrevia=vp.contenido.split('<p>').join('').split('</p>').join('')
+          .split('<!--Vacio-->').join('')
+          .split('<vacio></vacio>').join('')
+          .split('http:').join('https:')
+          console.log(this.vistaPrevia)
+        }
       }
     })
 
@@ -386,6 +432,7 @@ export class ProgramasDetalleComponent implements OnInit {
         console.log(x);
       },
       complete: () => {
+        this._SnackBarServiceService.openSnackBar("¡Solicitud enviada!",'x',15,"snackbarCrucigramaSucces");
         this.statuscharge = false;
       },
     });
@@ -501,38 +548,10 @@ export class ProgramasDetalleComponent implements OnInit {
     });
     this.fileds.push({
       nombre:"Movil",
-      tipo:"text",
+      tipo:"phone",
       valorInicial:"",
       validate:[Validators.required],
       label:"Teléfono Móvil",
-    });
-    this.fileds.push({
-      nombre:"IdCargo",
-      tipo:"select",
-      valorInicial:"",
-      validate:[Validators.required],
-      label:"Cargo",
-    });
-    this.fileds.push({
-      nombre:"IdAreaFormacion",
-      tipo:"select",
-      valorInicial:"",
-      validate:[Validators.required],
-      label:"Área Formación",
-    });
-    this.fileds.push({
-      nombre:"IdAreaTrabajo",
-      tipo:"select",
-      valorInicial:"",
-      validate:[Validators.required],
-      label:"Área Trabajo",
-    });
-    this.fileds.push({
-      nombre:"IdIndustria",
-      tipo:"select",
-      valorInicial:"",
-      validate:[Validators.required],
-      label:"Industria",
     });
   }
 }

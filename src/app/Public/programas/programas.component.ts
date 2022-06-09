@@ -35,7 +35,7 @@ export class ProgramasComponent implements OnInit {
     this.isBrowser = isPlatformBrowser(platformId);
   }
   public IdArea:number=0;
-  public Title='Programas, certificaciónes y cursos';
+  public Title='Programas, certificaciones y cursos';
   public filtros:FiltrosProgramasDTO={areaCapacitacion:[],modalidad:[],tipoPrograma:[]};
   public rangoPrecios=9700
   public monedaRango='US$ 0'
@@ -67,6 +67,15 @@ export class ProgramasComponent implements OnInit {
   public scrollValue=0;
   public expancions=[false,false,false,false]
   public buscar=''
+  public cantidadProgramas=0
+
+  public migaPan = [
+    {
+      titulo: 'Inicio',
+      urlWeb: '/',
+    }
+
+  ]
   ngOnInit(): void {
     this.buscar=this._SessionStorageService.SessionGetValue('BusquedaPrograma')
     if(this._SessionStorageService.SessionGetValue('BusquedaPrograma')!=''){
@@ -85,8 +94,20 @@ export class ProgramasComponent implements OnInit {
       next:(x)=>{
         if(x['IdArea']!=undefined){
           this.IdArea=x['IdArea']
+          this.migaPan.push(
+            {
+              titulo: 'Programas, certificaciones y cursos',
+              urlWeb: '/programas-certificaciones-cursos/'+this.IdArea
+            }
+          )
         }else{
           this.IdArea=0;
+          this.migaPan.push(
+            {
+              titulo: 'Programas, certificaciones y cursos',
+              urlWeb: '/programas-certificaciones-cursos'
+            }
+          )
         }
         this.GetFiltroProgramas()
       }
@@ -367,14 +388,14 @@ export class ProgramasComponent implements OnInit {
     })
   }
   SetCantidadProgramas(){
-    var cantidad=0
+    this.cantidadProgramas=0
     this.programas.forEach(x=>{
       if(this.removeAccents(x.Title).toLowerCase().includes(this.removeAccents(this.buscar).toLowerCase()) ||
       this.removeAccents(x.Content).toLowerCase().includes(this.removeAccents(this.buscar).toLowerCase())){
-        cantidad++
+        this.cantidadProgramas++
       }
     })
-    this.textoResult="Se encontraron "+cantidad+" resultados";
+    this.textoResult="Se encontraron "+this.cantidadProgramas+" resultados";
   }
   SetTags(){
     this.TagAreas=[]

@@ -76,6 +76,10 @@
   .limpiarTodo{
     background: transparent !important;
     width: 100%;
+    color: #373737;
+    text-decoration: underline;
+    font-weight: 600;
+    cursor: pointer;
   }
 }
 .filtroElemento {
@@ -110,7 +114,7 @@
   }
 }
 .itemContent:hover {
-  background: #f5f9ff;
+  background: #e6eefa;
   color: #0669bf;
   .nameFiltro {
     text-decoration: underline;

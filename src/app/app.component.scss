@@ -3,19 +3,25 @@
   font-weight: 800;
   color: #4a4a49;
 }
+
+.carousel-control-next{
+  margin-right: 0px !important;
+  justify-content: flex-end;
+    width: 5%;
+}
+.carousel-control-prev{
+  margin-left: 0px !important;
+  justify-content:flex-start;
+  width: 5%;
+}
+
 @media (max-width: 576px) {
-  .carousel-control-next{
-    margin-right: -25px !important;
-  }
-  .carousel-control-prev{
-    margin-left: -25px !important;
-  }
   .rowpadd{
     padding: 45px 10px;
   }
   .titulop{
     font-size: 30px;
-    line-height: 30px;
+    line-height: 40px;
   }
   .titulos{
     font-size: 25px;
@@ -34,18 +40,12 @@
   }
 }
 @media (min-width: 576px) {
-  .carousel-control-next{
-    margin-right: -80px !important;
-  }
-  .carousel-control-prev{
-    margin-left: -80px !important;
-  }
   .rowpadd{
     padding: 45px 20px;
   }
   .titulop{
     font-size: 30px;
-    line-height: 30px;
+    line-height: 40px;
   }
   .titulos{
     font-size: 25px;
@@ -64,18 +64,12 @@
   }
 }
 @media (min-width: 768px) {
-  .carousel-control-next{
-    margin-right: -105px !important;
-  }
-  .carousel-control-prev{
-    margin-left: -105px !important;
-  }
   .rowpadd{
     padding: 45px 40px;
   }
   .titulop{
     font-size: 30px;
-    line-height: 30px;
+    line-height: 40px;
   }
   .titulos{
     font-size: 25px;
@@ -94,18 +88,12 @@
   }
 }
 @media (min-width: 992px) {
-  .carousel-control-next{
-    margin-right: -130px !important;
-  }
-  .carousel-control-prev{
-    margin-left: -130px !important;
-  }
   .rowpadd{
     padding: 45px 80px;
   }
   .titulop{
     font-size: 40px;
-    line-height: 40px;
+    line-height: 50px;
   }
   .titulos{
     font-size: 35px;
@@ -124,18 +112,12 @@
   }
 }
 @media (min-width: 1200px) {
-  .carousel-control-next{
-    margin-right: -155px !important;
-  }
-  .carousel-control-prev{
-    margin-left: -155px !important;
-  }
   .rowpadd{
     padding: 45px 110px;
   }
   .titulop{
     font-size: 50px;
-    line-height: 50px;
+    line-height: 60px;
   }
   .titulos{
     font-size: 45px;
@@ -150,22 +132,16 @@
     font-size: 44px;
   }
   .breadcrumb{
-    padding: 0 120px ;
+    padding: 0 110px ;
   }
 }
 @media (min-width: 1400px) {
-  .carousel-control-next{
-    margin-right: -180px !important;
-  }
-  .carousel-control-prev{
-    margin-left: -180px !important;
-  }
   .rowpadd{
     padding: 45px 130px;
   }
   .titulop{
     font-size: 60px;
-    line-height: 60px;
+    line-height: 80px;
   }
   .titulos{
     font-size: 50px;
@@ -180,7 +156,7 @@
     font-size: 44px;
   }
   .breadcrumb{
-    padding: 0 160px ;
+    padding: 0 130px ;
   }
 }
 
@@ -194,10 +170,10 @@
   font-size: 12px;
 }
 .breadcrumb div{
-  color: #c0c0bf;
+  color: #878787;
 }
 .breadcrumb .active{
-  color: black;
+  color: #4a4a49;
 }
 
 
@@ -409,6 +385,9 @@ mat-sidenav-content{
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
+}
+.mat-drawer-container{
+  color: #4a4a49
 }
 .snackbarCrucigramaSucces{
   border-color: #c3e6cb;

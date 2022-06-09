@@ -6,7 +6,7 @@
       </div>
       <div class="parafop parafopHome">
         Obt&eacute;n las habilidades y las certificaciones m&aacute;s demandadas para profesionales top en
-        latinoam&eacute;rica.
+        Latinoam&eacute;rica.
         <div class="row" style="align-items: center;" style="margin: 40px 0px;justify-content: space-around;">
           <div class="paisesHome"><img class="paisesimg" src="../../../assets/imagenes/peru-04.svg" alt=""> Per&uacute;
           </div>
@@ -26,21 +26,21 @@
     </div>
     <div class="col-12 col-sm-12 col-md-12" style="    display: flex;    margin-top: 40px;">
       <input type="text" [ngClass]="{'inputActive':inputActive}" class="inputSearchHome" (focus)="inputActive=true"
-        (focusout)="inputActive=false" [(ngModel)]="busqueda"
-        placeholder="¿Que deseas aprender? descubre más de 200 cursos y programas de capasitación">
+        (focusout)="inputActive=false" [(ngModel)]="busqueda" (keyup.enter)="BuscarProgramas()"
+        placeholder="¿Qu&eacute; deseas aprender? Descubre más de 200 cursos y programas de capacitaci&oacute;n">
       <div class="searchButonHome" (click)="BuscarProgramas()" [ngClass]="{'inputActive':inputActive}"></div>
     </div>
   </div>
 </div>
-<div style="background: #f5f9ff;">
+<div style="background: #e6eefa;">
   <div class="container">
     <div class="row rowpadd" style="justify-content: center;">
       <div class="col-12  col-sm-12 col-md-12" style="text-align: center;padding: 0px 10px;">
-        <div class="titulop">
-          Obt&eacute;n certificaciones valoradas en toda latinoamerica
+        <div class="subtitulo">
+          Obt&eacute;n certificaciones valoradas en toda Latinoam&eacute;rica
         </div>
       </div>
-      <div class="col-12 col-sm-12 carouselImgPartners" style="    width: 80%;height: 400px">
+      <div class="col-12 col-sm-12 carouselImgPartners" style="    width: 100%;">
         <ngb-carousel>
           <ng-template ngbSlide *ngFor="let ste of step">
             <div class="wrapper">
@@ -100,7 +100,7 @@
               <div class="titleCardSub"><strong>Reflexi&oacute;n</strong></div>
               <div class="parafoCardSub">Tendr&aacute;s la oportunidad de reflexionar sobre lo aprendido en el
                 desarrollo
-                del curso y puedas compartirlo con tus compa&ntilde;eros</div>
+                del curso, y podr&aacute;s compartirlo con tus compa&ntilde;eros</div>
             </div>
           </div>
         </div>
@@ -111,7 +111,7 @@
               <div class="titleCardSub"><strong>Gamification</strong></div>
               <div class="parafoCardSub">Usamos mecanismos de gamificaci&oacute;n estructural y de contenidos con el fin
                 de
-                que tu experiencia de aprendizaje sea mas interactiva</div>
+                que tu experiencia de aprendizaje sea m&aacute;s interactiva</div>
             </div>
           </div>
         </div>
@@ -121,7 +121,7 @@
             <img src="../../../assets/imagenes/icon-Applied-Projects-15.svg" alt="">
             <div>
               <div class="titleCardSub"><strong>Applied projects</strong></div>
-              <div class="parafoCardSub">Podr&aacute;s completar una serie de tareas aplicadas que permitiran emplear
+              <div class="parafoCardSub">Podr&aacute;s completar una serie de tareas aplicadas que permitir&aacute;n emplear
                 los
                 conocimientos aprendidos en situaciones reales</div>
             </div>
@@ -133,7 +133,7 @@
             <img src="../../../assets/imagenes/icon-Virtual-reality-12.svg" alt="">
             <div>
               <div class="titleCardSub"><strong>Virtual reality</strong></div>
-              <div class="parafoCardSub">Acceder&aacute;s a simuladores que cuenta con la tecnologia Oculus Quest 2 una
+              <div class="parafoCardSub">Acceder&aacute;s a simuladores que cuentan con la tecnolog&iacute;a Oculus Quest 2, una
                 de
                 las mejores disponibles en el mercado</div>
             </div>
@@ -142,7 +142,7 @@
             <img src="../../../assets/imagenes/icon-Serious-games-13.svg" alt="">
             <div>
               <div class="titleCardSub"><strong>Serious games</strong></div>
-              <div class="parafoCardSub">Dispondr&aacute;s de simuladores en linea para recrear entornos reales</div>
+              <div class="parafoCardSub">Dispondr&aacute;s de simuladores en l&iacute;nea para recrear entornos reales</div>
             </div>
           </div>
         </div>
@@ -155,7 +155,7 @@
   </div>
 </div>
 
-<div style="background: #f5f9ff;" *ngIf="TituloCarreras!=''">
+<div style="background: #e6eefa;" *ngIf="TituloCarreras!=''">
   <div class="container">
     <div class="row rowpadd">
       <div class="col-12 col-sm-12" style="margin-bottom: 30px;">
@@ -212,43 +212,38 @@
 
 <div class="container">
   <div class="row rowpadd" style="align-items: center;">
-    <div class="col-12 col-sm-12" style="margin-bottom: 30px;">
+    <div class="col-12 col-sm-12" >
       <div class="subtitulo" style="text-align: center;margin: 0px;">Formaci&oacute;n continua</div>
-      <div class="parafoS" style="font-size: 22px;">Brindamos capacitaci&oacute;n especializada en diverzas
+      <div class="parafoS" style="font-size: 22px;">Brindamos capacitaci&oacute;n especializada en diversas
         &aacute;reas</div>
-    </div>
-    <div class="col-12 col-sm-12" style="margin-bottom: 30px;">
-
-      <mat-tab-group mat-align-tabs="start" class="tabHome" (selectedTabChange)="tabChanged($event)" [selectedIndex]="tabindex">
-        <ng-container *ngFor="let item of Formacion;let i = index">
-          <mat-tab *ngIf="i<=2" label="{{item.Nombre}}">
-            <app-home-programas [IdArea]="item.value" [change]="item.change"></app-home-programas>
-          </mat-tab>
-        </ng-container>
-        <mat-tab *ngIf="Formacion.length>0" label="más áreas >">
-          <ng-template mat-tab-label>
-            <div>
-              <button class="buttontab" style="background: #ff8800;padding: 0px 40px;" mat-raised-button color="primary"
-                routerLink="/programas-certificaciones-cursos">más áreas ></button>
-            </div>
-          </ng-template>
-          <ng-template matTabContent>
-
-          </ng-template>
-        </mat-tab>
-      </mat-tab-group>
-    </div>
-
-    <div class="col-12 col-sm-12 col-md-12">
-      <div class="parafoS " style="margin-top: 20px;display: flex;align-items: center;justify-content: center;">
-        <div class="vinculo" [routerLink]="'/programas-certificaciones-cursos/'+selectFormacion">Mostrar todos los
-          cursos de esta &aacute;rea </div> <i class="material-icons">keyboard_arrow_right</i>
-      </div>
     </div>
   </div>
 </div>
+<mat-tab-group mat-align-tabs="start" class="tabHome" (selectedTabChange)="tabChanged($event)" [selectedIndex]="tabindex">
+  <ng-container *ngFor="let item of Formacion;let i = index">
+    <mat-tab  label="{{item.Nombre}}">
 
-<div style="background: #72c9ff;">
+      <div class="parafoS " style="margin-top: 30px;display: flex;align-items: center;justify-content: center;color: #ff8610;">
+        <a class="vinculo" [routerLink]="'/programas-certificaciones-cursos/'+item.value" target="_blank">Mostrar todos los
+          cursos de esta &aacute;rea </a> <i class="material-icons">keyboard_arrow_right</i>
+      </div>
+      <app-home-programas [IdArea]="item.value" [change]="item.change"></app-home-programas>
+    </mat-tab>
+  </ng-container>
+  <!-- <mat-tab *ngIf="Formacion.length>0" label="más áreas >">
+    <ng-template mat-tab-label>
+      <div>
+        <button class="buttontab" style="background: #ff8800;padding: 0px 40px;" mat-raised-button color="primary"
+          routerLink="/programas-certificaciones-cursos">más áreas ></button>
+      </div>
+    </ng-template>
+    <ng-template matTabContent>
+
+    </ng-template>
+  </mat-tab> -->
+</mat-tab-group>
+
+<!-- <div style="background: #72c9ff;">
   <div class="container">
     <div class="row rowpadd">
       <div class="row" style="justify-content: space-between;align-items: center;">
@@ -275,39 +270,41 @@
       </div>
     </div>
   </div>
-</div>
-<div class="container">
-  <div class="row rowpadd" style="align-items: center;">
-    <div class="col-12 col-sm-12" style="margin-bottom: 30px;">
-      <div class="subtitulo" style="text-align: center;margin: 0px;">Casos de &eacute;xito</div>
-      <div class="parafoS" style="text-align: center;">mas de 25 mil profesionales capasitados por BSG institute</div>
-    </div>
-    <div class="col-12 col-sm-12 carrouselCasos" style="margin-bottom: 30px;">
-      <ngb-carousel>
-        <ng-template ngbSlide *ngFor="let itm of cassosExito">
-          <div class="wrapper">
-            <div class="row" style="justify-content: center; align-items: center;padding: 0px 20px;">
-              <div class="col-12 col-sm-8 col-md-8" style="height: 100%;">
-                <div class="contalumno">
-                  <div class="titlealumno">"{{itm.Texto}}"</div>
-                  <div>
-                    <div class="cursoalumno">{{itm.Curso}}</div>
-                    <div class="namalumno">{{itm.Nombre.toLowerCase()}}</div>
+</div> -->
+<div>
+  <div class="container">
+    <div class="row rowpadd" style="align-items: center;">
+      <div class="col-12 col-sm-12" style="margin-bottom: 30px;">
+        <div class="subtitulo" style="text-align: center;margin: 0px;">Casos de &eacute;xito</div>
+        <div class="parafoS" style="text-align: center;">M&aacute;s de 25 mil profesionales capacitados por BSG Institute</div>
+      </div>
+      <div class="col-12 col-sm-12 carrouselCasos" style="margin-bottom: 30px;">
+        <ngb-carousel>
+          <ng-template ngbSlide *ngFor="let itm of cassosExito">
+            <div class="wrapper">
+              <div class="row" style="justify-content: center; align-items: center;padding: 0px 20px;">
+                <div class="col-12 col-sm-8 col-md-8" style="height: 100%;">
+                  <div class="contalumno">
+                    <div class="titlealumno">"{{itm.Texto}}"</div>
+                    <div>
+                      <div class="cursoalumno">{{itm.Curso}}</div>
+                      <div class="namalumno">{{itm.Nombre | capitalice}}</div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-12 col-sm-4 col-md-4">
+                  <div style="height: 100%;">
+                    <img class="imgalumno"
+                      [src]="'../../../assets/imagenes/'+itm.img"
+                      alt="">
                   </div>
                 </div>
               </div>
-              <div class="col-12 col-sm-4 col-md-4">
-                <div style="height: 100%;">
-                  <img class="imgalumno"
-                    [src]="itm.Genero=='M'?'../../../assets/imagenes/imagen-alumno.png':'../../../assets/imagenes/testimonio-mujer.png'"
-                    alt="">
-                </div>
-              </div>
             </div>
-          </div>
-        </ng-template>
-      </ngb-carousel>
-    </div>
+          </ng-template>
+        </ngb-carousel>
+      </div>
 
+    </div>
   </div>
 </div>

@@ -9,12 +9,15 @@
     </div>
   </div>
   <mat-card-content>
-    <div class="title" [routerLink]="cardContent.Url">{{cardContent.Title}}</div>
+    <a class="title" [routerLink]="cardContent.Url" target="_blank">{{cardContent.Title}}</a>
     <div class="invercion">
       <p class="" [innerHTML]="cardContent.Inversion | safeHtml"> </p>
     </div>
   </mat-card-content>
   <mat-card-footer>
-      <div class="link" [routerLink]="cardContent.Url">M&aacute;s informac&oacute;n ></div>
+    <div style="
+    margin: 15px 0px;">
+      <a class="link" [routerLink]="cardContent.Url" target="_blank">M&aacute;s informac&oacute;n ></a>
+    </div>
   </mat-card-footer>
 </mat-card>

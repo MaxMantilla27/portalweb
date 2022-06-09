@@ -12,3 +12,13 @@ export interface FormularioContactoDTO
   IdIndustria?: number,
   Comentario?: string,
 }
+export interface FormularioContactoShortDTO
+{
+
+  Nombres: string,
+  Apellidos: string,
+  Email: string,
+  IdPais?: number,
+  IdRegion?: number,
+  Movil: string,
+}

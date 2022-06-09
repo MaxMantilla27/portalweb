@@ -24,8 +24,12 @@ export class SelectComponent implements OnInit,AfterViewInit {
     console.log(this.myselsetc)
     this.myselsetc.openedChange.subscribe((open) => {
       if (open) {
-        this.myselsetc.panel.nativeElement.scrollTop-=50;
-
+        var itemAc=this.myselsetc.options['_results'].find((x:any)=>x._selected==true);
+        if(itemAc!=undefined){
+          this.myselsetc.panel.nativeElement.scrollTop=itemAc['_element'].nativeElement.offsetTop;
+        }else{
+          this.myselsetc.panel.nativeElement.scrollTop-=120;
+        }
       }
     });
   }

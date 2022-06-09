@@ -5,7 +5,7 @@ import {CarreraProfesionalTecnicaDetalleDTO} from "../../../Core/Models/Programa
 import { FormularioComponent } from 'src/app/Core/Shared/Containers/formulario/formulario.component';
 import { ContactenosDTO } from 'src/app/Core/Models/ContactenosDTO';
 import { formulario } from 'src/app/Core/Models/Formulario';
-import { FormularioContactoDTO } from 'src/app/Core/Models/FormularioDTO';
+import { FormularioContactoDTO,FormularioContactoShortDTO } from 'src/app/Core/Models/FormularioDTO';
 import { Validators } from '@angular/forms';
 import { Basic } from 'src/app/Core/Models/BasicDTO';
 import { RegionService } from 'src/app/Core/Shared/Services/Region/region.service';
@@ -55,17 +55,13 @@ export class CarreraProfesionalDetalleComponent implements OnInit {
   formVal: boolean = false;
   public initValues = false;
   public fileds: Array<formulario> = [];
-  public formularioContacto:FormularioContactoDTO={
+  public formularioContacto:FormularioContactoShortDTO={
     Nombres:'',
     Apellidos:'',
     Email:'',
     IdPais:0,
     IdRegion:0,
-    Movil:'',
-    IdCargo:0,
-    IdAreaFormacion:0,
-    IdAreaTrabajo:0,
-    IdIndustria:0
+    Movil:''
   }
   public DatosEnvioFormulario: ContactenosDTO={
     Nombres:'',
@@ -198,38 +194,6 @@ export class CarreraProfesionalDetalleComponent implements OnInit {
             })
           }
         })
-        this.fileds.forEach(r=>{
-          if(r.nombre=='IdCargo'){
-            r.data=x.listaCargo.map((p:any)=>{
-              var ps:Basic={Nombre:p.cargo,value:p.idCargo};
-              return ps;
-            })
-          }
-        })
-        this.fileds.forEach(r=>{
-          if(r.nombre=='IdAreaFormacion'){
-            r.data=x.listaAreaFormacion.map((p:any)=>{
-              var ps:Basic={Nombre:p.areaFormacion,value:p.idAreaFormacion};
-              return ps;
-            })
-          }
-        })
-        this.fileds.forEach(r=>{
-          if(r.nombre=='IdAreaTrabajo'){
-            r.data=x.listaAreaTrabajo.map((p:any)=>{
-              var ps:Basic={Nombre:p.areaTrabajo,value:p.idAreaTrabajo};
-              return ps;
-            })
-          }
-        })
-        this.fileds.forEach(r=>{
-          if(r.nombre=='IdIndustria'){
-            r.data=x.listaIndustria.map((p:any)=>{
-              var ps:Basic={Nombre:p.industria,value:p.idIndustria};
-              return ps;
-            })
-          }
-        })
       }
     })
     this.initValues = true;
@@ -297,38 +261,10 @@ export class CarreraProfesionalDetalleComponent implements OnInit {
     });
     this.fileds.push({
       nombre:"Movil",
-      tipo:"text",
+      tipo:"phone",
       valorInicial:"",
       validate:[Validators.required],
       label:"Teléfono Móvil",
-    });
-    this.fileds.push({
-      nombre:"IdCargo",
-      tipo:"select",
-      valorInicial:"",
-      validate:[Validators.required],
-      label:"Cargo",
-    });
-    this.fileds.push({
-      nombre:"IdAreaFormacion",
-      tipo:"select",
-      valorInicial:"",
-      validate:[Validators.required],
-      label:"Área Formación",
-    });
-    this.fileds.push({
-      nombre:"IdAreaTrabajo",
-      tipo:"select",
-      valorInicial:"",
-      validate:[Validators.required],
-      label:"Área Trabajo",
-    });
-    this.fileds.push({
-      nombre:"IdIndustria",
-      tipo:"select",
-      valorInicial:"",
-      validate:[Validators.required],
-      label:"Industria",
     });
   }
 }

@@ -80,6 +80,7 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatmenuComponent } from './Containers/matmenu/matmenu.component';
 import { LibroReclamacionService } from './Services/LibroReclamacion/libro-reclamacion.service';
+import { CapitalicePipe } from './Pipes/capitalice.pipe';
 
 
 
@@ -144,6 +145,7 @@ import { LibroReclamacionService } from './Services/LibroReclamacion/libro-recla
     SafePipe,
     TableComponent,
     MatmenuComponent,
+    CapitalicePipe,
   ],
   exports: [
     HttpClientModule,
@@ -202,6 +204,7 @@ import { LibroReclamacionService } from './Services/LibroReclamacion/libro-recla
     MatPaginatorModule,
     MatSortModule,
     MatDialogModule,
+    CapitalicePipe,
   ],
   providers: [
     SessionStorageService,

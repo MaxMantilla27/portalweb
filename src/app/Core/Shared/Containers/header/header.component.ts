@@ -109,7 +109,7 @@ export class HeaderComponent implements OnInit {
 
   public expandibles: Array<BasicBotonesExpandibles> = [
     {
-      Nombre: 'Formacion Continua',
+      Nombre: 'Formación Continua',
       data: this.Formacion,
       estatus: true,
     },

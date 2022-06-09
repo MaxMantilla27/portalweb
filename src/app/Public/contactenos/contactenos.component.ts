@@ -203,7 +203,7 @@ export class ContactenosComponent implements OnInit {
     });
     this.fileds.push({
       nombre:"Movil",
-      tipo:"text",
+      tipo:"phone",
       valorInicial:"",
       validate:[Validators.required],
       label:"Teléfono Móvil",
