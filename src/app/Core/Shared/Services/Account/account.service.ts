@@ -21,4 +21,7 @@ export class AccountService {
     console.log(Json)
     return this.http.post<any>(this.urlBase+'/ActualizarPasswordCuenta',Json);
   }
+  public RegistroCursoAulaVirtualNueva(IdBusqueda:number):Observable<any>{
+    return this.http.get<any>(this.urlBase+'/RegistroCursoAulaVirtualNueva?IdBusqueda='+IdBusqueda);
+  }
 }
