@@ -2,10 +2,16 @@
   <div class="chowCOntentImg " style="position: relative;">
     <img mat-card-image [src]="cardContent.Img" [alt]="cardContent.ImgAlt" >
     <div class="contenidoCardProgramas" >
-      <div style="position: relative;
-      height: 100%;">{{cardContent.Content}}
-        <div class="vermasInImg" [routerLink]="cardContent.Url">Ver m&aacute;s +</div>
+      <div style="overflow: hidden;
+      text-overflow: ellipsis;
+      display: -webkit-box;
+      display: -moz-box;
+      -webkit-box-orient: vertical;
+      box-orient: vertical;
+      -webkit-line-clamp: 5;
+      line-clamp: 5;">{{cardContent.Content}}
       </div>
+      <div class="vermasInImg" [routerLink]="cardContent.Url">Ver m&aacute;s +</div>
     </div>
   </div>
   <mat-card-content>

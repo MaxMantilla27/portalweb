@@ -13,6 +13,7 @@ import { DatosPortalService } from 'src/app/Core/Shared/Services/DatosPortal/dat
 import { RegionService } from 'src/app/Core/Shared/Services/Region/region.service';
 import { SeccionProgramaService } from 'src/app/Core/Shared/Services/SeccionPrograma/seccion-programa.service';
 import { SessionStorageService } from 'src/app/Core/Shared/Services/session-storage.service';
+import { SnackBarServiceService } from 'src/app/Core/Shared/Services/SnackBarService/snack-bar-service.service';
 import { TagService } from 'src/app/Core/Shared/Services/Tag/tag.service';
 
 @Component({
@@ -31,7 +32,8 @@ export class WhitepapersComponent implements OnInit {
     private _TagService:TagService,
     private _RegionService:RegionService,
     private _DatosPortalService:DatosPortalService,
-    private _SeccionProgramaService:SeccionProgramaService
+    private _SeccionProgramaService:SeccionProgramaService,
+    private _SnackBarServiceService:SnackBarServiceService,
   ) {}
   public idWeb = 0;
   public UrlWeb='';
@@ -164,29 +166,35 @@ export class WhitepapersComponent implements OnInit {
     }
   }
   SetContacto(value:any){
-    this.initValues = false;
-    this.DatosEnvioFormulario.Nombres=value.Nombres;
-    this.DatosEnvioFormulario.Apellidos=value.Apellidos;
-    this.DatosEnvioFormulario.Correo1=value.Email;
-    this.DatosEnvioFormulario.IdPais=value.IdPais;
-    this.DatosEnvioFormulario.IdRegion=value.IdRegion;
-    this.DatosEnvioFormulario.Movil=value.Movil;
-    this.DatosEnvioFormulario.IdCargo=value.IdCargo;
-    this.DatosEnvioFormulario.IdAreaFormacion=value.IdAreaFormacion;
-    this.DatosEnvioFormulario.IdAreaTrabajo=value.IdAreaTrabajo;
-    this.DatosEnvioFormulario.IdIndustria=value.IdIndustria;
-    this.DatosEnvioFormulario.IdArticulo=this.idWeb;
-    this.DatosEnvioFormulario.NombreWhitePaper=this.Title;
-    this.DatosEnvioFormulario.urlWhitePaper=this.urlDocumento;
-    console.log(this.DatosEnvioFormulario)
-    this._ArticuloService.EnviarFormulario(this.DatosEnvioFormulario).subscribe({
-      next: (x) => {
-        console.log(x);
-      },
-      complete: () => {
-        this.statuscharge = false;
-      },
-    });
+
+    if(!this.formVal){
+
+      this._SnackBarServiceService.openSnackBar("Debes completar todos los campos",'x',10,"snackbarCrucigramaerror");
+    }else{
+      this.initValues = false;
+      this.DatosEnvioFormulario.Nombres=value.Nombres;
+      this.DatosEnvioFormulario.Apellidos=value.Apellidos;
+      this.DatosEnvioFormulario.Correo1=value.Email;
+      this.DatosEnvioFormulario.IdPais=value.IdPais;
+      this.DatosEnvioFormulario.IdRegion=value.IdRegion;
+      this.DatosEnvioFormulario.Movil=value.Movil;
+      this.DatosEnvioFormulario.IdCargo=value.IdCargo;
+      this.DatosEnvioFormulario.IdAreaFormacion=value.IdAreaFormacion;
+      this.DatosEnvioFormulario.IdAreaTrabajo=value.IdAreaTrabajo;
+      this.DatosEnvioFormulario.IdIndustria=value.IdIndustria;
+      this.DatosEnvioFormulario.IdArticulo=this.idWeb;
+      this.DatosEnvioFormulario.NombreWhitePaper=this.Title;
+      this.DatosEnvioFormulario.urlWhitePaper=this.urlDocumento;
+      console.log(this.DatosEnvioFormulario)
+      this._ArticuloService.EnviarFormulario(this.DatosEnvioFormulario).subscribe({
+        next: (x) => {
+          console.log(x);
+        },
+        complete: () => {
+          this.statuscharge = false;
+        },
+      });
+    }
   }
   ObtenerCombosPortal(){
     this._DatosPortalService.ObtenerCombosPortal().subscribe({

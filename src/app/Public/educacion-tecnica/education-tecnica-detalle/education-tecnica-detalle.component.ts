@@ -9,6 +9,7 @@ import { FormularioComponent } from 'src/app/Core/Shared/Containers/formulario/f
 import { DatosPortalService } from 'src/app/Core/Shared/Services/DatosPortal/datos-portal.service';
 import { HelperService } from 'src/app/Core/Shared/Services/Helper/helper.service';
 import { RegionService } from 'src/app/Core/Shared/Services/Region/region.service';
+import { SnackBarServiceService } from 'src/app/Core/Shared/Services/SnackBarService/snack-bar-service.service';
 import {CarreraProfesionalService} from "../../../Core/Shared/Services/Carrera/carrera-profesional.service";
 import {
   EstructuraCurricularService
@@ -51,6 +52,7 @@ export class EducationTecnicaDetalleComponent implements OnInit {
     private _RegionService:RegionService,
     private _DatosPortalService:DatosPortalService,
     private _HelperService: HelperService,
+    private _SnackBarServiceService:SnackBarServiceService,
   ) { }
 
   statuscharge = false;
@@ -156,26 +158,32 @@ export class EducationTecnicaDetalleComponent implements OnInit {
     return parseInt(valor);
   }
   SetContacto(value:any){
-    this.initValues = false;
-    this.DatosEnvioFormulario.Nombres=value.Nombres;
-    this.DatosEnvioFormulario.Apellidos=value.Apellidos;
-    this.DatosEnvioFormulario.Correo1=value.Email;
-    this.DatosEnvioFormulario.IdPais=value.IdPais;
-    this.DatosEnvioFormulario.IdRegion=value.IdRegion;
-    this.DatosEnvioFormulario.Movil=value.Movil;
-    this.DatosEnvioFormulario.IdCargo=value.IdCargo;
-    this.DatosEnvioFormulario.IdAreaFormacion=value.IdAreaFormacion;
-    this.DatosEnvioFormulario.IdAreaTrabajo=value.IdAreaTrabajo;
-    this.DatosEnvioFormulario.IdIndustria=value.IdIndustria;
-    console.log(this.DatosEnvioFormulario)
-    this._HelperService.EnviarFormulario(this.DatosEnvioFormulario).subscribe({
-      next: (x) => {
-        console.log(x);
-      },
-      complete: () => {
-        this.statuscharge = false;
-      },
-    });
+
+    if(!this.formVal){
+
+      this._SnackBarServiceService.openSnackBar("Debes completar todos los campos",'x',10,"snackbarCrucigramaerror");
+    }else{
+      this.initValues = false;
+      this.DatosEnvioFormulario.Nombres=value.Nombres;
+      this.DatosEnvioFormulario.Apellidos=value.Apellidos;
+      this.DatosEnvioFormulario.Correo1=value.Email;
+      this.DatosEnvioFormulario.IdPais=value.IdPais;
+      this.DatosEnvioFormulario.IdRegion=value.IdRegion;
+      this.DatosEnvioFormulario.Movil=value.Movil;
+      this.DatosEnvioFormulario.IdCargo=value.IdCargo;
+      this.DatosEnvioFormulario.IdAreaFormacion=value.IdAreaFormacion;
+      this.DatosEnvioFormulario.IdAreaTrabajo=value.IdAreaTrabajo;
+      this.DatosEnvioFormulario.IdIndustria=value.IdIndustria;
+      console.log(this.DatosEnvioFormulario)
+      this._HelperService.EnviarFormulario(this.DatosEnvioFormulario).subscribe({
+        next: (x) => {
+          console.log(x);
+        },
+        complete: () => {
+          this.statuscharge = false;
+        },
+      });
+    }
   }
   ObtenerCombosPortal(){
     this._DatosPortalService.ObtenerCombosPortal().subscribe({

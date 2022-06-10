@@ -90,19 +90,17 @@
   top: -16px;
   left: -16px;
   right: -16px ;
-  background: #5d5d5c;
-  color: white;
+  background: #E7E7E7;
+  color: #4a4a49;
   height: 100%;
   padding: 10px;
   text-align: left;
 }
 .vermasInImg {
-  position: absolute;
-  bottom: 0;
-  text-align: center;
   width: 100%;
   color: #ff8800;
-  text-decoration:underline;
+ // margin-top: 10px;
+  text-decoration: underline;
 }
 .chowCOntentImg:hover {
   .contenidoCardProgramas {

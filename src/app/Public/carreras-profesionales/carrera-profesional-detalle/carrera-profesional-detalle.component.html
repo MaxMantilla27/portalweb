@@ -70,7 +70,7 @@
               <img src="../../../../assets/icons/icono-reloj-duracion-blanco.svg" alt="">
               <div>
                 <div class="titleDiv">Duración</div>
-                <div class="subTitleDiv">{{carrera.programaGeneralInformacionVistaDTO?.duracion+' años ,'
+                <div class="subTitleDiv">{{carrera.programaGeneralInformacionVistaDTO?.duracion+','
                   +(tonumber(carrera.programaGeneralInformacionVistaDTO?.duracion)*2)+' semestres'}}</div>
               </div>
             </div>
@@ -79,7 +79,7 @@
               <div>
                 <div class="titleDiv">Pensión por ciclo</div>
                 <div class="subTitleDiv">{{'1 matrícula de '
-                  +carrera.montoPagoProgramaInformacionDTO?.simbolo+'.'+carrera.montoPagoProgramaInformacionDTO?.matricula+'y'
+                  +carrera.montoPagoProgramaInformacionDTO?.simbolo+'.'+carrera.montoPagoProgramaInformacionDTO?.matricula+' y '
                   +carrera.montoPagoProgramaInformacionDTO?.nroCuotas+' pensiones de '
                   +carrera.montoPagoProgramaInformacionDTO?.simbolo+'.'+carrera.montoPagoProgramaInformacionDTO?.cuotas}}
                 </div>
@@ -88,8 +88,8 @@
             <div class="col-12 col-md-4 col-lg-4 contentdiv">
               <img src="../../../../assets/icons/icono-calendario-admision-blanco.svg" alt="">
               <div>
-                <div class="titleDiv">Admicion</div>
-                <div class="subTitleDiv">{{'Admicion '+fecha.getFullYear()}}</div>
+                <div class="titleDiv">Admision</div>
+                <div class="subTitleDiv">{{'Admision '+fecha.getFullYear()}}</div>
               </div>
             </div>
           </div>
@@ -146,7 +146,7 @@
                     </ng-container>
                     <ng-container send>
                       <app-default-button [confs]="{color:'primary',titulo:'Enviar'}" [style]="'width: 100%;'"
-                        [disabled]="!formVal"></app-default-button>
+                        ></app-default-button>
                     </ng-container>
                   </app-formulario>
                 </div>

@@ -6,13 +6,22 @@
     cursor: pointer;
     max-width: 100%;
     margin-bottom: 20px;
+    img{
+      width: 30px;
+    }
+    .mat-button-wrapper{
+      display: flex;
+      align-items: center;
+    }
 }
 .primary {
     background-color: #F8893F;
     color: white;
     &:hover {
         background-color: #fb9754;
-      text-decoration: underline;
+        div{
+          text-decoration: underline;
+        }
     }
 }
 .danger {

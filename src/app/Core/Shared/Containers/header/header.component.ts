@@ -119,7 +119,7 @@ export class HeaderComponent implements OnInit {
       estatus: false,
     },
     {
-      Nombre: 'Educación Tecnica',
+      Nombre: 'Educación Técnica',
       data: this.tecnica,
       estatus: false,
     },

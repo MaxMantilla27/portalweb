@@ -1,4 +1,9 @@
 <div class="container">
+  <div class="phoneCall">
+    <img src="../../../assets/icons/icono-llamada.svg" alt="">
+    <div style="width: calc( 100% - 40px );"> Solicita una llamada</div>
+    <div class="contentHover">Consulta por nuestras facilidades de pago y descuentos</div>
+  </div>
   <div class="container breadcrumb">
     <app-miga-pan [items]="migaPan"></app-miga-pan>
   </div>
@@ -10,8 +15,9 @@
         <div [innerHtml]="cabecera.tituloHtml | safeHtml" class="titlePrograma"></div>
         <div style="    margin: 10px 0px;
         font-size: 15px;font-weight: 700;">Área: <a style="font-weight: 100;"
-            routerLink="/Area/{{cabecera.areaDescripcion}}">{{cabecera.areaCapacitacion}}</a > | Sub
-          Área: <a style="font-weight: 100;" routerLink="/SubArea/{{cabecera.subAreaDescripcion}}">{{cabecera.nombreSubArea}}</a> </div>
+            routerLink="/Area/{{cabecera.areaDescripcion}}">{{cabecera.areaCapacitacion}}</a> | Sub
+          Área: <a style="font-weight: 100;"
+            routerLink="/SubArea/{{cabecera.subAreaDescripcion}}">{{cabecera.nombreSubArea}}</a> </div>
         <div class="row" style="margin-top: 20px;">
           <div class="col-12 col-md-6 col-lg-6">
             <app-default-button [confs]="{color:'primary',titulo:'Matricularme Ahora'}"
@@ -69,7 +75,7 @@
   <div class="container">
     <div class="row rowpadd">
       <div class="col-12 col-md-12 col-lg-12 tabprogram">
-        <mat-tab-group mat-align-tabs="start" >
+        <mat-tab-group mat-align-tabs="start">
           <mat-tab label="Objetivos">
             <div [innerHtml]="seccion.objetivo | safeHtml" style="text-align: left;
             padding: 20px 0px;">
@@ -110,8 +116,10 @@
       <div
         style="display: flex;justify-content: space-between;align-items: center;flex-wrap: wrap; margin-bottom: 20px;">
         <div class="subtitulo">Estructura Curricular</div>
-        <app-default-button [confs]="{color:'primary',titulo:'Vista previa'}"
-          (ButtoclClick)="OpenModal()"></app-default-button>
+        <app-default-button [confs]="{color:'primary',titulo:'Vista \n previa'}" [img]="'vista-previa.svg'"
+          (ButtoclClick)="OpenModal()"
+          [style]="'display: flex;line-height: 20px;padding: 5px 10px;white-space: pre-wrap !important;'">
+        </app-default-button>
       </div>
       <mat-accordion class="acordionPrograma" multi>
         <mat-expansion-panel hideToggle *ngFor="let item of estructuraPrograma" (opened)="item.opened=true"
@@ -121,7 +129,8 @@
               <div style="display: flex;align-items: center;">
                 <div *ngIf="!item.opened" class="estructuraProgramicon">+</div>
                 <div *ngIf="item.opened" class="estructuraProgramicon">-</div>
-                <div class="estructuraProgramTitle">{{item.titulo}} <ng-container *ngIf="item.duracion>0">({{item.duracion}} horas cronol&oacute;gicas)</ng-container>
+                <div class="estructuraProgramTitle">{{item.titulo}} <ng-container *ngIf="item.duracion>0">
+                    ({{item.duracion}} horas cronol&oacute;gicas)</ng-container>
                 </div>
               </div>
             </mat-panel-title>
@@ -153,8 +162,8 @@
           <ng-container contenido>
           </ng-container>
           <ng-container send>
-            <app-default-button [confs]="{color:'primary',titulo:'Enviar'}" [style]="'width: 100%;'"
-              [disabled]="!formVal"></app-default-button>
+            <app-default-button [confs]="{color:'primary',titulo:'Enviar'}" [style]="'width: 100%;'">
+            </app-default-button>
           </ng-container>
 
         </app-formulario>
@@ -171,7 +180,7 @@
         <p>El programa incluye los siguientes beneficios:</p>
         <div class="row">
           <ng-container *ngFor="let item of beneficios">
-            <div class="col-12 col-md-{{12/beneficios.length}} col-lg-{{12/beneficios.length}}" >
+            <div class="col-12 col-md-{{12/beneficios.length}} col-lg-{{12/beneficios.length}}">
               <div class="cardBeneficiosPrograma">
                 <div *ngIf="item.version!='Sin Version'" class="carsTitleBeneficiosPrograma">{{item.version+':'}}</div>
                 <ng-container *ngFor="let content of item.contenido">
@@ -205,19 +214,20 @@
         <li *ngFor="let item of certificado.contenido">{{item}}</li>
       </div>
       <div class="piePagina" [innerHtml]="certificado.piePagina | safeHtml"></div>
+      <div  [innerHtml]="certificado.descripcionLeyenda | safeHtml"></div>
 
-      <mat-accordion class="acordionPrograma acrdionCertificado" multi *ngIf="certificado.descripcionHeader!=undefined">
-        <mat-expansion-panel hideToggle #acodionCertificado>
+      <mat-accordion class="acordionPrograma acrdionCertificado" multi *ngIf="certificado.descripcionHeader!=undefined && certificado.descripcionHeader.length>0">
+        <mat-expansion-panel hideToggle #acodionCertificado *ngFor="let item of certificado.descripcionHeader;let i=index">
           <mat-expansion-panel-header>
             <mat-panel-title>
               <div style="display: flex;align-items: center;">
                 <div *ngIf="acodionCertificado.opened" class="estructuraProgramicon">+</div>
                 <div *ngIf="!acodionCertificado.opened" class="estructuraProgramicon">-</div>
-                <div class="estructuraProgramTitle" [innerHtml]="certificado.descripcionHeader | safeHtml"></div>
+                <div class="estructuraProgramTitle" [innerHtml]="item | safeHtml"></div>
               </div>
             </mat-panel-title>
           </mat-expansion-panel-header>
-          <div [innerHtml]="certificado.descripcionBody | safeHtml"></div>
+          <div [innerHtml]="certificado.descripcionBody[i] | safeHtml"></div>
         </mat-expansion-panel>
       </mat-accordion>
       <br>
@@ -264,71 +274,80 @@
     </div>
     <div class="col-12 col-sm-12 col-md-12">
       <div class="row">
-        <div class="col-12 col-sm-12 col-md-6 contentCarsubtitle">
-          <div class="parafoS">Nuestra metodolog&iacute;a <strong>ExTech Learning</strong> complementa las sesiones de
-            clase
-            con mecanismos de aprendizaje activo.</div>
+        <div class="col-12 col-sm-6 col-md-6">
+          <div class="col-12 col-sm-12 col-md-12 contentCarsubtitle">
+            <img class="imgTitle" style="padding: 10%;" src="../../../assets/imagenes/extech-learning-09.svg" alt="">
+          </div>
+          <div class="col-12 col-sm-12 col-md-12 contentCarsubtitle">
+            <div class="parafoS">Nuestra metodolog&iacute;a <strong>ExTech Learning</strong> complementa las sesiones de
+              clase
+              con mecanismos de aprendizaje activo.</div>
+          </div>
         </div>
-        <div class="col-12 col-sm-12 col-md-6 contentCarsubtitle">
+        <div class="col-12 col-sm-6 col-md-6">
+          <div class="col-12 col-sm-12 col-md-12 contentCarsubtitle">
 
-          <div class="cardSubtitle">
-            <img src="../../../assets/imagenes/icon-Reﬂexion-14.svg" alt="">
-            <div>
-              <div class="titleCardSub"><strong>Reflexi&oacute;n</strong></div>
-              <div class="parafoCardSub">Tendr&aacute;s la oportunidad de reflexionar sobre lo aprendido en el
-                desarrollo
-                del curso y podr&aacute;s compartirlo con tus compa&ntilde;eros</div>
+            <div class="cardSubtitle">
+              <img src="../../../assets/icons/icon-reflexion.svg" alt="">
+              <div>
+                <div class="titleCardSub" style="color: #2b9fe0;"><strong>Reflexi&oacute;n</strong></div>
+                <div class="parafoCardSub">Tendr&aacute;s la oportunidad de reflexionar sobre lo aprendido en el
+                  desarrollo
+                  del curso y podr&aacute;s compartirlo con tus compa&ntilde;eros</div>
+              </div>
             </div>
           </div>
-        </div>
-        <div class="col-12 col-sm-12 col-md-6 contentCarsubtitle">
-          <div class="cardSubtitle">
-            <img src="../../../assets/imagenes/icon-gamification-11.svg" alt="">
-            <div>
-              <div class="titleCardSub"><strong>Gamification</strong></div>
-              <div class="parafoCardSub">Usamos mecanismos de gamificaci&oacute;n estructural y de contenidos con el fin
-                de
-                que tu experiencia de aprendizaje sea m&aacute;s interactiva</div>
-            </div>
-          </div>
-        </div>
-        <div class="col-12 col-sm-12 col-md-6 contentCarsubtitle">
+          <div class="col-12 col-sm-12 col-md-12 contentCarsubtitle">
 
-          <div class="cardSubtitle">
-            <img src="../../../assets/imagenes/icon-Applied-Projects-15.svg" alt="">
-            <div>
-              <div class="titleCardSub"><strong>Applied projects</strong></div>
-              <div class="parafoCardSub">Podr&aacute;s completar una serie de tareas aplicadas que permitiran emplear
-                los
-                conocimientos aprendidos en situaciones reales</div>
+            <div class="cardSubtitle">
+              <img src="../../../assets/icons/icon-Applied-Projects.svg" alt="">
+              <div>
+                <div class="titleCardSub" style="color: #8fc912;"><strong>Applied projects</strong></div>
+                <div class="parafoCardSub">Podr&aacute;s completar una serie de tareas aplicadas que permitiran emplear
+                  los
+                  conocimientos aprendidos en situaciones reales</div>
+              </div>
             </div>
           </div>
-        </div>
-        <div class="col-12 col-sm-12 col-md-6 contentCarsubtitle">
+          <div class="col-12 col-sm-12 col-md-12 contentCarsubtitle">
+            <div class="cardSubtitle">
+              <img src="../../../assets/icons/icon-Gamiﬁcation.svg" alt="">
+              <div>
+                <div class="titleCardSub" style="color: #ffc715;"><strong>Gamification</strong></div>
+                <div class="parafoCardSub">Usamos mecanismos de gamificaci&oacute;n estructural y de contenidos con el
+                  fin
+                  de
+                  que tu experiencia de aprendizaje sea m&aacute;s interactiva</div>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-sm-12 col-md-12 contentCarsubtitle">
 
-          <div class="cardSubtitle" style="    margin-bottom: 20px;">
-            <img src="../../../assets/imagenes/icon-Virtual-reality-12.svg" alt="">
-            <div>
-              <div class="titleCardSub"><strong>Virtual reality</strong></div>
-              <div class="parafoCardSub">Acceder&aacute;s a simuladores que cuenta con la tecnolog&iacute;a Oculus Quest 2, una
-                de
-                las mejores disponibles en el mercado</div>
+            <div class="cardSubtitle" style="    margin-bottom: 20px;">
+              <img src="../../../assets/icons/icon-Virtual-reality.svg" alt="">
+              <div>
+                <div class="titleCardSub" style="color: #2b9fe0;"><strong>Virtual reality</strong></div>
+                <div class="parafoCardSub">Acceder&aacute;s a simuladores que cuenta con la tecnolog&iacute;a Oculus
+                  Quest 2, una
+                  de
+                  las mejores disponibles en el mercado</div>
+              </div>
             </div>
           </div>
-          <div class="cardSubtitle">
-            <img src="../../../assets/imagenes/icon-Serious-games-13.svg" alt="">
-            <div>
-              <div class="titleCardSub"><strong>Serious games</strong></div>
-              <div class="parafoCardSub">Dispondr&aacute;s de simuladores en linea para recrear entornos reales</div>
+          <div class="col-12 col-sm-12 col-md-12 contentCarsubtitle">
+
+            <div class="cardSubtitle">
+              <img src="../../../assets/icons/icon-Serious-games.svg" alt="">
+              <div>
+                <div class="titleCardSub" style="color: #e02107;"><strong>Serious games</strong></div>
+                <div class="parafoCardSub">Dispondr&aacute;s de simuladores en linea para recrear entornos reales</div>
+              </div>
             </div>
           </div>
-        </div>
-        <div class="col-12 col-sm-12 col-md-6 contentCarsubtitle">
-          <img class="imgTitle" style="height: 250px" src="../../../assets/imagenes/extech-learning-09.svg" alt="">
         </div>
       </div>
+      <!-- <img class="imgfondo" src="../../../assets/imagenes/imagen-realidad-virtual.png" alt=""> -->
     </div>
-    <!-- <img class="imgfondo" src="../../../assets/imagenes/imagen-realidad-virtual.png" alt=""> -->
   </div>
 </div>
 <!-- <div class="container">
@@ -394,7 +413,8 @@
           <i class="material-icons iconarrow">arrow_forward_ios</i>
           <div *ngIf="item.idTipoPago==1" style="color: #616161;">Pago al Contado: {{item.simbolo}}.{{item.cuotas}}
           </div>
-          <div *ngIf="item.idTipoPago==2" style="color: #616161;">Precio en Cuotas: {{item.simbolo}}.{{item.matricula}}
+          <div *ngIf="item.idTipoPago==2" style="color: #616161;">Precio en Cuotas:
+            {{item.simbolo}}.{{item.matricula}}
             + {{item.nroCuotas}} cuotas mensuales desde {{item.simbolo}}.{{item.cuotas}}</div>
         </div>
         <div style="color: #616161;font-size: 14px; margin-top: 40px;margin-bottom: 10px;">Consulte por nuestras
@@ -412,10 +432,12 @@
       font-weight: 600;">Modalidades de pago</div>
       <div style="display: flex;
       align-items: center;
-      color: #4a4a49;"><i class="material-icons">keyboard_arrow_right</i>Dep&oacute;sito o pago en una cuenta de BCP:</div>
+      color: #4a4a49;"><i class="material-icons">keyboard_arrow_right</i>Dep&oacute;sito o pago en una cuenta del BCP:
+      </div>
       <div class="cardFormasPago" style="margin-bottom: 40px;">
         <div class="divpagobcp">
-          Puede solicitar su c&oacute;digo de pago, o la información de la cuenta a nuestros asesores para hacer un dep&oacute;sito o transferencia
+          Puedes solicitar tu c&oacute;digo de pago, o la información de la cuenta a nuestros asesores para hacer un
+          dep&oacute;sito o transferencia
         </div>
         <img class="imgCardFormasPago" src="../../../assets//icons/bcp-06.svg" alt="">
       </div>
@@ -424,17 +446,18 @@
 
       <div style="display: flex;
       align-items: center;
-      color: #4a4a49;"><i class="material-icons">keyboard_arrow_right</i>Paga a trav&eacute;s de nuestro sitio web con los siguientes medios de pago:</div>
+      color: #4a4a49;"><i class="material-icons">keyboard_arrow_right</i>Paga a trav&eacute;s de nuestro sitio web con
+        los siguientes medios de pago:</div>
     </div>
     <div class="col-12 col-md-12 col-lg-12">
       <div class="cardFormasPago">
         <div class="contentCardFormasPago">
           <div>Tarjetas de d&eacute;bito o cr&eacute;dito:</div>
           <div class="contentimgtarjetas">
-            <img  src="../../../assets//icons/visa-07.svg" alt="">
-            <img  src="../../../assets//icons/mastercard-08.svg" alt="">
-            <img  src="../../../assets//icons/american-09.svg" alt="">
-            <img  src="../../../assets//icons/dinners-10.svg" alt="">
+            <img src="../../../assets//icons/visa-07.svg" alt="">
+            <img src="../../../assets//icons/mastercard-08.svg" alt="">
+            <img src="../../../assets//icons/american-09.svg" alt="">
+            <img src="../../../assets//icons/dinners-10.svg" alt="">
           </div>
         </div>
       </div>
@@ -464,13 +487,15 @@
     <div class="row rowpadd" style="align-items: flex-end;">
       <div class="col-12 col-md-8 col-lg-8">
         <div class="subtitulo" style="line-height: 44px;">¿Te interesa? Comienza con tu programa ahora mismo</div>
-        <div style="    color: #4a4a49;font-size: 14px;">Reserva tu matr&iacute;cula, y accede a conocimiento especializado muy
+        <div style="    color: #4a4a49;font-size: 14px;">Reserva tu matr&iacute;cula, y accede a conocimiento
+          especializado muy
           valorado en el mercado laboral
           latinoamericano para mejorar tu perfil profesional</div>
       </div>
       <div class="col-12 col-md-4 col-lg-4" style="display: flex;justify-content: flex-end;align-items: flex-end;">
-        <app-default-button [confs]="{color:'primary',titulo:'Matricularme Ahora'}" [style]="'padding: 10px 30px;font-size: 1.2rem;'"
-          (ButtoclClick)="ScrollTo(formularioPrograma)"></app-default-button>
+        <app-default-button [confs]="{color:'primary',titulo:'Matricularme Ahora'}"
+          [style]="'padding: 10px 30px;font-size: 1.2rem;'" (ButtoclClick)="ScrollTo(formularioPrograma)">
+        </app-default-button>
       </div>
     </div>
   </div>

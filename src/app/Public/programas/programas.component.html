@@ -169,6 +169,10 @@
         <div class="filtroHeader">
           <!-- <img src="../../../assets/icons/icono-filtros.svg" alt=""> -->
           <div>Filtros</div>
+
+          <div class="tagitem limpiarTodo" (click)="RemoveAll()"
+          *ngIf="TagAreas.length>0 || TagSubAreas.length>0 || TagModalidad.length>0 || TagTipoPrograma.length>0 || buscar!=''">
+            Limpiar Todo </div>
         </div>
         <div class="filtroTags">
           <div class="foltroEncontrados">{{textoResult}}</div>
@@ -193,9 +197,6 @@
               class="material-icons" (click)="RemoveTipoPrograma(item.value)"
               style="margin-left: 10px;font-size: 12px;cursor: pointer;">close</i></div>
 
-          <div class="tagitem limpiarTodo" (click)="RemoveAll()"
-          *ngIf="TagAreas.length>0 || TagSubAreas.length>0 || TagModalidad.length>0 || TagTipoPrograma.length>0 || buscar!=''">
-            Limpiar Todo </div>
         </div>
 
         <!-- <div class="InputPrograma">

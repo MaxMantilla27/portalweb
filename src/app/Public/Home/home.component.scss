@@ -57,16 +57,17 @@
     text-decoration: underline !important;
   }
 }
-.cardSubtitle {
+.cardSubtitle{
   display: flex;
   align-items: center;
-  background: #f2f0e6;
-  padding: 20px;
+  //background: #f2f0e6;
+  padding: 20px 15px;
   border-radius: 10px;
+  margin: 7px 0px;
 }
-.cardSubtitle img {
-  width: 70px;
-  margin-right: 10px;
+.cardSubtitle img{
+  width: 90px;
+  margin-right: 30px;
 }
 .titleCardSub {
   font-size: 17px;
@@ -74,9 +75,9 @@
   margin-bottom: 10px;
 }
 .parafoCardSub {
-  font-size: 14px;
+  font-size: 16px;
   text-align: left;
-  padding-left: 10px;
+  color: #878787;
 }
 .imgfondo {
   position: absolute;
@@ -213,6 +214,7 @@
   .mat-tab-labels
   .mat-tab-label {
   color: #ff8610;
+  font-weight: 600;
 }
 .tabHome .mat-tab-body-wrapper {
   background: #e6eefa;
@@ -232,7 +234,7 @@
     .mat-tab-body-wrapper {
       mat-tab-body {
         max-width: 100%;
-        padding: 0px 10px;
+        padding: 0px 10px 45px 10px;
       }
     }
   }
@@ -246,7 +248,7 @@
     .mat-tab-body-wrapper {
       mat-tab-body {
         max-width: 540px;
-        padding: 0px 20px;
+        padding: 0px 20px 45px 20px;
       }
     }
   }
@@ -262,7 +264,7 @@
     .mat-tab-body-wrapper {
       mat-tab-body {
         max-width: 720px;
-        padding: 0px 40px;
+        padding: 0px 40px 45px 40px;
       }
     }
   }
@@ -278,7 +280,7 @@
     .mat-tab-body-wrapper {
       mat-tab-body {
         max-width: 960px;
-        padding: 0px 80px;
+        padding: 0px 80px 45px 80px;
       }
     }
   }
@@ -294,7 +296,7 @@
     .mat-tab-body-wrapper {
       mat-tab-body {
         max-width: 1140px;
-        padding: 0px 110px;
+        padding: 0px 110px 45px 110px;
       }
     }
   }
@@ -309,7 +311,7 @@
     .mat-tab-body-wrapper {
       mat-tab-body {
         max-width: 1320px;
-        padding: 0px 130px;
+        padding: 0px 130px 45px 130px;
       }
     }
   }
