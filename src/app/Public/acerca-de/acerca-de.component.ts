@@ -38,7 +38,7 @@ export class AcercaDeComponent implements OnInit,AfterViewInit {
       urlWeb: '/',
     },
     {
-      titulo: 'Acerca BSG Institute',
+      titulo: 'Acerca de BSG Institute',
       urlWeb: '/AcercaBsGrupo'
     }
   ]

@@ -1,21 +1,28 @@
-<div class="carrera-container">
-  <div class="container breadcrumb">
-    <app-miga-pan [items]="migaPan"></app-miga-pan>
+<div class="carrera-container ">
+  <div class="container">
+    <div class="breadcrumb">
+      <app-miga-pan [items]="migaPan"></app-miga-pan>
+    </div>
   </div>
 
   <div class="carrera-container__header">
-    <div class="container rowpadd">
-      <div class="carrera-container__header__title">
-        <h1>{{encabezado.titulo}} </h1>
-        <h1 class="carrera-container__header__title__light">{{encabezado.duracion}}</h1>
+    <div class="container">
+      <div class="rowpadd">
+        <div class="carrera-container__header__title">
+          <h1>{{encabezado.titulo}} </h1>
+          <h1 class="carrera-container__header__title__light">{{encabezado.duracion}}</h1>
+        </div>
       </div>
     </div>
   </div>
   <div class="carrera-container__content">
-    <div class="container rowpadd">
-      <p style="margin-bottom: 50px;">{{encabezado.descripcion}}</p>
-      <div class="carrera-container__content__card" *ngFor="let item of listado" style="width: 100%;">
-        <app-custom-card [item]="item" [confs]="confs"></app-custom-card>
+
+    <div class="container">
+      <div class="rowpadd">
+        <p style="margin-bottom: 50px;">{{encabezado.descripcion}}</p>
+        <div class="carrera-container__content__card" *ngFor="let item of listado" style="width: 100%;">
+          <app-custom-card [item]="item" [confs]="confs"></app-custom-card>
+        </div>
       </div>
     </div>
   </div>

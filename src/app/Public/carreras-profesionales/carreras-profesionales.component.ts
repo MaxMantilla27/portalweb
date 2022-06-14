@@ -26,7 +26,8 @@ export class CarrerasProfesionalesComponent implements OnInit {
     this.encabezado = {
       titulo: 'Carreras Profesionales',
       duracion: '(3 años)',
-      descripcion: 'Al finalizar obtén tu certificación a nombre de la Nación'
+      descripcion: 'Nuestros módulos ocupacionales están enfocados en brindar una formación de primer nivel y han sido '+
+      'desarrollados por expertos en la industria para que nuestros estudiantes desarrollen las habilidades más demandadas en el mercado laboral.'
     }
     this.migaPan = [
       {

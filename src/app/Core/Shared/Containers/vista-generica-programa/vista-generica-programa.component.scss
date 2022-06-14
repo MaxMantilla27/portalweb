@@ -1,38 +1,37 @@
 .carrera-container {
-    &__header {
-        background: #f4f4f4;
-        padding-top: 3rem;
-        padding-bottom: 3rem;
-        &__title {
-            display: flex;
-            align-items: center;
-            flex-wrap: wrap;
-            &__light {
-                font-weight: 100 !important;
-            }
-        }
-        h1{
-            font-weight: 900;
-        }
-        span {
-            font-weight: lighter;
-        }
+  &__header {
+    background: #f4f4f4;
+    // padding-top: 3rem;
+    // padding-bottom: 3rem;
+    &__title {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      &__light {
+        font-weight: 100 !important;
+      }
     }
-    &__content {
-        padding-top: 3rem;
-        padding-bottom: 3rem;
-        &__card {
-            margin-bottom: 3rem;
-        }
+    h1 {
+      font-weight: 900;
     }
-
+    span {
+      font-weight: lighter;
+    }
+  }
+  &__content {
+    // padding-top: 3rem;
+    // padding-bottom: 3rem;
+    &__card {
+      margin-bottom: 3rem;
+    }
+  }
 }
 
 .img-container-prueba {
-    margin: 0;
-    padding: 0;
-    img {
-        width: 100%;
-        height: auto;
-    }
+  margin: 0;
+  padding: 0;
+  img {
+    width: 100%;
+    height: auto;
+  }
 }

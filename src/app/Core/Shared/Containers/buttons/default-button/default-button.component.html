@@ -5,6 +5,7 @@
     [style]="style" [disabled]="disabled"
     [ngClass]="{'primary': confs.color === 'primary',
     'danger': confs.color === 'danger' }">
-        {{confs.titulo}} <i class="material-icons">{{icon}}</i>
+        <div>{{confs.titulo}}</div> <i class="material-icons" *ngIf="img==''">{{icon}}</i>
+        <img *ngIf="img!=''" src="../../../../../../assets/icons/{{img}}" alt="">
     </button>
 

@@ -3,56 +3,63 @@
     <mat-spinner></mat-spinner>
   </div>
   <div *ngIf="loader">
-    <div class="container breadcrumb">
-      <app-miga-pan [items]="migaPan"></app-miga-pan>
+    <div class="container">
+      <div class="container breadcrumb">
+        <app-miga-pan [items]="migaPan"></app-miga-pan>
+      </div>
     </div>
     <div class="carrera-container__header">
-      <div class="container rowpadd">
-        <div class="row">
-          <div class="col-md-6 carrera-container__header__information">
-            <div class="carrera-container__header__information__title"
-              [innerHTML]="carrera.programaGeneralInformacionVistaDTO?.tituloHtml | safeHtml">
+      <div class="container">
+        <div class="rowpadd">
+          <div class="row">
+            <div class="col-md-6 carrera-container__header__information">
+              <div class="carrera-container__header__information__title"
+                [innerHTML]="carrera.programaGeneralInformacionVistaDTO?.tituloHtml | safeHtml">
+              </div>
+              <!-- <div class="carrera-container__header__information__button">
+                <app-default-button [confs]="{color: 'primary', titulo: 'Inscribirme Ahora'}"></app-default-button>
+              </div> -->
             </div>
-            <!-- <div class="carrera-container__header__information__button">
-              <app-default-button [confs]="{color: 'primary', titulo: 'Inscribirme Ahora'}"></app-default-button>
+            <!-- <div class="col-md-4 carrera-container__header__img">
+              <img [src]="rutaImagen+carrera.programaGeneralInformacionVistaDTO?.imagenPrograma" alt="">
             </div> -->
           </div>
-          <!-- <div class="col-md-4 carrera-container__header__img">
-            <img [src]="rutaImagen+carrera.programaGeneralInformacionVistaDTO?.imagenPrograma" alt="">
-          </div> -->
-        </div>
 
+        </div>
       </div>
     </div>
     <div class="carrera-container__content">
-      <div class="carrera-container__content__firstSection container rowpadd" style="position: relative;">
-        <div class="row">
-          <div class="col-md-6 carrera-container__content__firstSection__left">
-            <div class="carrera-container__header__information__title"
-              [innerHTML]="carrera.contenidoProgramaInformacionDTO[4]?.contenido  | safeHtml">
-            </div>
+      <div class="container">
 
-            <div class="carrera-container__header__information__button">
-              <app-default-button [confs]="{color: 'primary', titulo: 'Inscribirme Ahora'}"></app-default-button>
-              <app-default-button [confs]="{color: 'primary', titulo: 'Descargar Brochure'}"></app-default-button>
+        <div class="carrera-container__content__firstSection rowpadd" style="position: relative;">
+          <div class="row">
+            <div class="col-md-6 carrera-container__content__firstSection__left">
+              <div class="carrera-container__header__information__title"
+                [innerHTML]="carrera.contenidoProgramaInformacionDTO[4]?.contenido  | safeHtml">
+              </div>
+
+              <div class="carrera-container__header__information__button">
+                <app-default-button [confs]="{color: 'primary', titulo: 'Inscribirme Ahora'}"></app-default-button>
+                <app-default-button [confs]="{color: 'primary', titulo: 'Descargar Brochure'}"></app-default-button>
+              </div>
             </div>
+            <!-- <div class="col-md-5 carrera-container__content__firstSection__right">
+              <app-icon-information-card [item]="{imagen: '/assets/icons/horario-04.svg',imagenAlt: 'Horario',titulo: 'Duracion',
+              subtitulo: carrera.programaGeneralInformacionVistaDTO?.duracion+' años , '+(tonumber(carrera.programaGeneralInformacionVistaDTO?.duracion)*2)+' semestres'}"></app-icon-information-card>
+              <app-icon-information-card [item]="{imagen: '/assets/icons/precio-03.svg',imagenAlt: 'Precio',
+              titulo: 'Pensión por ciclo',
+              subtitulo: '1 matrícula de '+carrera.montoPagoProgramaInformacionDTO?.simbolo+'.'+carrera.montoPagoProgramaInformacionDTO?.matricula+' y '+
+              carrera.montoPagoProgramaInformacionDTO?.nroCuotas+' pensiones de '+carrera.montoPagoProgramaInformacionDTO?.simbolo+'.'+carrera.montoPagoProgramaInformacionDTO?.cuotas}"></app-icon-information-card>
+              <app-icon-information-card [item]="{imagen: '/assets/icons/calendario-05.svg',imagenAlt: 'Calendario',titulo: 'Admicion '+fecha.getFullYear(),
+              subtitulo: fechaInicio}"></app-icon-information-card>
+            </div> -->
           </div>
-          <!-- <div class="col-md-5 carrera-container__content__firstSection__right">
-            <app-icon-information-card [item]="{imagen: '/assets/icons/horario-04.svg',imagenAlt: 'Horario',titulo: 'Duracion',
-            subtitulo: carrera.programaGeneralInformacionVistaDTO?.duracion+' años , '+(tonumber(carrera.programaGeneralInformacionVistaDTO?.duracion)*2)+' semestres'}"></app-icon-information-card>
-            <app-icon-information-card [item]="{imagen: '/assets/icons/precio-03.svg',imagenAlt: 'Precio',
-            titulo: 'Pensión por ciclo',
-            subtitulo: '1 matricula de '+carrera.montoPagoProgramaInformacionDTO?.simbolo+'.'+carrera.montoPagoProgramaInformacionDTO?.matricula+' y '+
-            carrera.montoPagoProgramaInformacionDTO?.nroCuotas+' pensiones de '+carrera.montoPagoProgramaInformacionDTO?.simbolo+'.'+carrera.montoPagoProgramaInformacionDTO?.cuotas}"></app-icon-information-card>
-            <app-icon-information-card [item]="{imagen: '/assets/icons/calendario-05.svg',imagenAlt: 'Calendario',titulo: 'Admicion '+fecha.getFullYear(),
-            subtitulo: fechaInicio}"></app-icon-information-card>
-          </div> -->
-        </div>
 
-        <img src="../../../../assets/imagenes/arquetipo-administracion-hombre-contenido.png" alt="" style="    position: absolute;
-        right: 10%;
-        bottom: 0;
-        width: 35%;">
+          <img src="../../../../assets/imagenes/arquetipo-administracion-hombre-contenido.png" alt="" style="    position: absolute;
+          right: 10%;
+          bottom: 0;
+          width: 35%;">
+        </div>
       </div>
 
       <div class="divicionAzul ">
@@ -63,7 +70,7 @@
               <img src="../../../../assets/icons/icono-reloj-duracion-blanco.svg" alt="">
               <div>
                 <div class="titleDiv">Duración</div>
-                <div class="subTitleDiv">{{carrera.programaGeneralInformacionVistaDTO?.duracion+' años ,'
+                <div class="subTitleDiv">{{carrera.programaGeneralInformacionVistaDTO?.duracion+','
                   +(tonumber(carrera.programaGeneralInformacionVistaDTO?.duracion)*2)+' semestres'}}</div>
               </div>
             </div>
@@ -71,8 +78,8 @@
               <img src="../../../../assets/icons/icono-moneda-pension-blanco.svg" alt="">
               <div>
                 <div class="titleDiv">Pensión por ciclo</div>
-                <div class="subTitleDiv">{{'1 matricula de '
-                  +carrera.montoPagoProgramaInformacionDTO?.simbolo+'.'+carrera.montoPagoProgramaInformacionDTO?.matricula+'y'
+                <div class="subTitleDiv">{{'1 matrícula de '
+                  +carrera.montoPagoProgramaInformacionDTO?.simbolo+'.'+carrera.montoPagoProgramaInformacionDTO?.matricula+' y '
                   +carrera.montoPagoProgramaInformacionDTO?.nroCuotas+' pensiones de '
                   +carrera.montoPagoProgramaInformacionDTO?.simbolo+'.'+carrera.montoPagoProgramaInformacionDTO?.cuotas}}
                 </div>
@@ -81,104 +88,117 @@
             <div class="col-12 col-md-4 col-lg-4 contentdiv">
               <img src="../../../../assets/icons/icono-calendario-admision-blanco.svg" alt="">
               <div>
-                <div class="titleDiv">Admicion</div>
-                <div class="subTitleDiv">{{'Admicion '+fecha.getFullYear()}}</div>
+                <div class="titleDiv">Admision</div>
+                <div class="subTitleDiv">{{'Admision '+fecha.getFullYear()}}</div>
               </div>
             </div>
           </div>
         </div>
       </div>
       <div class="carrera-container__content__secondSection">
-        <div class="container rowpadd">
-          <div class="row">
 
-            <div class="col-md-7">
-              <mat-tab-group>
-                <mat-tab *ngFor="let item of generalInformacion" label="{{item.titulo}}">
-                  <div class="carrera-container__content__secondSection__item" [innerHTML]="item.contenido  | safeHtml">
-                  </div>
-                </mat-tab>
-                <!-- <mat-tab label="Convalidaciones">
-                  <div class="carrera-container__content__secondSection__item">
-                    <p>¿Quiénes pueden realizar convalidaciones en BSG Institute?</p>
-                    <span>Pueden hacerlo personas que hayan realizado estudios en otros institutos o universidades. Además en BSG Institute validamos tu experiencia laboral.</span>
-                  </div>
-                </mat-tab> -->
-              </mat-tab-group>
-            </div>
+        <div class="container">
+          <div class="rowpadd">
+            <div class="row">
 
-            <div class="col-md-5 educacion-tecnica-container__content__thirdSection__right">
-              <div #divFixed id="divFixed"
-                class="educacion-tecnica-container__content__thirdSection__right__form-container">
-                <div class="educacion-tecnica-container__content__thirdSection__right__form-container__header">
-                  <div
-                    class="educacion-tecnica-container__content__thirdSection__right__form-container__header__pregunta">
-                    <div
-                      class="educacion-tecnica-container__content__thirdSection__right__form-container__header__pregunta__signo-a">
-                      <h1>¿</h1>
+              <div class="col-md-7">
+                <mat-tab-group>
+                  <mat-tab *ngFor="let item of generalInformacion" label="{{item.titulo}}">
+                    <div class="carrera-container__content__secondSection__item" [innerHTML]="item.contenido  | safeHtml">
                     </div>
-                    <div
-                      class="educacion-tecnica-container__content__thirdSection__right__form-container__header__pregunta__texto">
-                      <h2>Tienes dudas sobre algún aspecto del programa</h2>
+                  </mat-tab>
+                  <!-- <mat-tab label="Convalidaciones">
+                    <div class="carrera-container__content__secondSection__item">
+                      <p>¿Quiénes pueden realizar convalidaciones en BSG Institute?</p>
+                      <span>Pueden hacerlo personas que hayan realizado estudios en otros institutos o universidades. Además en BSG Institute validamos tu experiencia laboral.</span>
                     </div>
+                  </mat-tab> -->
+                </mat-tab-group>
+              </div>
+
+              <div class="col-md-5 educacion-tecnica-container__content__thirdSection__right">
+                <div #divFixed id="divFixed"
+                  class="educacion-tecnica-container__content__thirdSection__right__form-container">
+                  <div class="educacion-tecnica-container__content__thirdSection__right__form-container__header">
                     <div
-                      class="educacion-tecnica-container__content__thirdSection__right__form-container__header__pregunta__signo-b">
-                      <h1>?</h1>
+                      class="educacion-tecnica-container__content__thirdSection__right__form-container__header__pregunta">
+                      <div
+                        class="educacion-tecnica-container__content__thirdSection__right__form-container__header__pregunta__signo-a">
+                        <h1>¿</h1>
+                      </div>
+                      <div
+                        class="educacion-tecnica-container__content__thirdSection__right__form-container__header__pregunta__texto">
+                        <h2>Tienes dudas sobre algún aspecto del programa</h2>
+                      </div>
+                      <div
+                        class="educacion-tecnica-container__content__thirdSection__right__form-container__header__pregunta__signo-b">
+                        <h1>?</h1>
+                      </div>
                     </div>
+                    <p>Registra tus datos para que un asesor especializado pueda ayudarte en todo lo que requieras</p>
                   </div>
-                  <p>Registra tus datos para que un asesor especializado pueda ayudarte en todo lo que requieras</p>
+
+                  <app-formulario [model]="formularioContacto" [InputsDisable]="statuscharge"
+                    (OnSubmit)="SetContacto($event)" (OnValid)="formVal=$event" [fiels]="fileds"
+                    (OnSelect)="SelectChage($event)">
+
+                    <ng-container contenido>
+                    </ng-container>
+                    <ng-container send>
+                      <app-default-button [confs]="{color:'primary',titulo:'Enviar'}" [style]="'width: 100%;'"
+                        ></app-default-button>
+                    </ng-container>
+                  </app-formulario>
                 </div>
-
-                <app-formulario [model]="formularioContacto" [InputsDisable]="statuscharge"
-                  (OnSubmit)="SetContacto($event)" (OnValid)="formVal=$event" [fiels]="fileds"
-                  (OnSelect)="SelectChage($event)">
-
-                  <ng-container contenido>
-                  </ng-container>
-                  <ng-container send>
-                    <app-default-button [confs]="{color:'primary',titulo:'Enviar'}" [style]="'width: 100%;'"
-                      [disabled]="!formVal"></app-default-button>
-                  </ng-container>
-                </app-formulario>
               </div>
             </div>
           </div>
         </div>
       </div>
       <div class="carrera-container__content__thirdSection">
-        <div class="container rowpadd">
-          <h1>Plan de Estudios</h1>
-          <div class="carrera-container__content__thirdSection__information-detail"
-            [innerHTML]="planEstudios  | safeHtml">
+        <div class="container">
+          <div class="rowpadd">
+            <h1>Plan de Estudios</h1>
+            <div class="carrera-container__content__thirdSection__information-detail"
+              [innerHTML]="planEstudios  | safeHtml">
+            </div>
           </div>
         </div>
       </div>
       <div class="carrera-container__content__fourthSection">
-        <div class="container rowpadd">
-          <h1>Certificación</h1>
-          <div class="carrera-container__content__fourthSection__information-detail"
-            [innerHTML]="certificaciones  | safeHtml">
+
+        <div class="container">
+          <div class="rowpadd">
+            <h1>Certificación</h1>
+            <div class="carrera-container__content__fourthSection__information-detail"
+              [innerHTML]="certificaciones  | safeHtml">
+            </div>
           </div>
         </div>
       </div>
       <div class="carrera-container__content__fiveSection">
-        <div class="container rowpadd">
-          <h1>Certificaciones Adicionales</h1>
-          <div class="carrera-container__content__fiveSection__information-detail"
-            [innerHTML]="contenidoCertificacionAdicional  | safeHtml">
-          </div>
-          <div class="carrera-container__content__fiveSection__information-note"
-            [innerHTML]="notaCertificacionAdicional  | safeHtml">
-          </div>
-        </div>
-      </div>
-      <div class="carrera-container__content__sixSection">
-        <div class="container rowpadd">
-          <h1>¿ Qué son las certificaciones adicionales ?</h1>
-          <div class="col-md-12 col-lg-12 videoContainer" [innerHtml]="videoPrueba | safeHtml">
+        <div class="container">
+          <div class="rowpadd">
+            <h1>Certificaciones Adicionales</h1>
+            <div class="carrera-container__content__fiveSection__information-detail"
+              [innerHTML]="contenidoCertificacionAdicional  | safeHtml">
+            </div>
+            <div class="carrera-container__content__fiveSection__information-note"
+              [innerHTML]="notaCertificacionAdicional  | safeHtml">
+            </div>
           </div>
         </div>
       </div>
+      <!-- <div class="carrera-container__content__sixSection">
+
+        <div class="container">
+          <div class="rowpadd">
+            <h1>¿ Qué son las certificaciones adicionales ?</h1>
+            <div class="col-md-12 col-lg-12 videoContainer" [innerHtml]="videoPrueba | safeHtml">
+            </div>
+          </div>
+        </div>
+      </div> -->
       <!-- <div class="carrera-container__content__sevenSection">
         <div class="container rowpadd" style="padding-bottom: 0">
           <div class="row">

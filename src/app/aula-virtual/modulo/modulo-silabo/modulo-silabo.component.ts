@@ -42,7 +42,7 @@ export class ModuloSilaboComponent implements OnInit,OnChanges {
           if(x.titulo=="Objetivos"){
             x.order=2;
           }
-          if(x.titulo=="Publico Objetivo"){
+          if(x.titulo=="Público Objetivo"){
             x.order=3;
           }
           if(x.titulo=="Beneficios"){

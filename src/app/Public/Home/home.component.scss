@@ -1,7 +1,7 @@
 .paisesHome {
   width: auto;
   font-size: 14px;
-  color: #828281;
+  color: #878787;
   font-weight: 400;
   margin-bottom: 10px;
   background: #e8f3fc;
@@ -45,22 +45,29 @@
   color: #4a4a49;
 }
 .parafoS {
-
   font-size: 20px;
   font-weight: 100;
-  color: #5e5e5d;
+  color: #4a4a49;
   text-align: center;
+  .vinculo {
+    color: #ff8610;
+    text-decoration: none;
+  }
+  .vinculo:hover {
+    text-decoration: underline !important;
+  }
 }
-.cardSubtitle {
+.cardSubtitle{
   display: flex;
   align-items: center;
-  background: #cfffe6;
-  padding: 20px;
+  //background: #f2f0e6;
+  padding: 20px 15px;
   border-radius: 10px;
+  margin: 7px 0px;
 }
-.cardSubtitle img {
-  width: 15%;
-  margin-right: 10px;
+.cardSubtitle img{
+  width: 90px;
+  margin-right: 30px;
 }
 .titleCardSub {
   font-size: 17px;
@@ -68,9 +75,9 @@
   margin-bottom: 10px;
 }
 .parafoCardSub {
-  font-size: 14px;
+  font-size: 16px;
   text-align: left;
-  padding-left:10px ;
+  color: #878787;
 }
 .imgfondo {
   position: absolute;
@@ -108,7 +115,7 @@
   margin-bottom: 20px;
   padding-right: 40px;
 }
-.cardCarrerasV2{
+.cardCarrerasV2 {
   width: 100%;
   box-shadow: 0px 0px 2px 1px #b6b6b6;
   text-align: center;
@@ -118,12 +125,12 @@
   justify-content: center;
   align-items: center;
   border-radius: 5px;
-
-  .titleV2{
+  background: white;
+  .titleV2 {
     font-weight: 700;
     color: #0a86f2;
   }
-  .underl{
+  .underl {
     width: 70px;
     font-weight: 600;
     background: #0a86f2;
@@ -137,7 +144,7 @@
   align-items: center;
   color: #969696;
 }
-.orange{
+.orange {
   color: #ff8800;
   font-weight: 900;
   margin-top: 30px;
@@ -151,10 +158,12 @@
   text-align: center;
 }
 .carouselImgPartners ngb-carousel .carousel-inner {
-  height: 400px;
+  height: auto;
+  padding: 20px 0px;
   display: flex;
   align-items: center;
 }
+
 .carrouselCasos ngb-carousel .carousel-inner {
   height: 100%;
   display: flex;
@@ -168,17 +177,144 @@
   width: 35%;
 }
 
-.tabHome mat-tab-header .mat-tab-label-container .mat-tab-list  .mat-ink-bar{
-  background-color: #ff4e38 !important;
+.tabHome {
+  align-items: center;
+}
+.tabHome mat-tab-header .mat-tab-label-container .mat-tab-list .mat-ink-bar {
+  //background-color: #ff4e38 !important;
+  background-color: transparent !important;
   height: 3px;
 }
 
-.tabHome mat-tab-header .mat-tab-label-container .mat-tab-list .mat-tab-labels{
+.tabHome mat-tab-header .mat-tab-label-container .mat-tab-list .mat-tab-labels {
   justify-content: space-around;
 }
 
-.tabHome mat-tab-header .mat-tab-label-container .mat-tab-list .mat-tab-labels .mat-tab-label{
+.tabHome
+  mat-tab-header
+  .mat-tab-label-container
+  .mat-tab-list
+  .mat-tab-labels
+  .mat-tab-label {
   min-width: 230px;
+}
+
+.tabHome
+  mat-tab-header
+  .mat-tab-label-container
+  .mat-tab-list
+  .mat-tab-labels
+  .mat-tab-label-active {
+  background: #e6eefa;
+}
+.tabHome
+  mat-tab-header
+  .mat-tab-label-container
+  .mat-tab-list
+  .mat-tab-labels
+  .mat-tab-label {
+  color: #ff8610;
+  font-weight: 600;
+}
+.tabHome .mat-tab-body-wrapper {
+  background: #e6eefa;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+.tabHome .mat-tab-body-wrapper mat-tab-body .mat-tab-body-content {
+  overflow: hidden !important;
+}
+@media (max-width: 576px) {
+  .tabHome {
+    mat-tab-header {
+      max-width: 100%;
+      padding: 0px 10px;
+    }
+    .mat-tab-body-wrapper {
+      mat-tab-body {
+        max-width: 100%;
+        padding: 0px 10px 45px 10px;
+      }
+    }
+  }
+}
+@media (min-width: 576px) {
+  .tabHome {
+    mat-tab-header {
+      max-width: 540px;
+      padding: 0px 20px;
+    }
+    .mat-tab-body-wrapper {
+      mat-tab-body {
+        max-width: 540px;
+        padding: 0px 20px 45px 20px;
+      }
+    }
+  }
+}
+
+// Medium devices (tablets, 768px and up)
+@media (min-width: 768px) {
+  .tabHome {
+    mat-tab-header {
+      max-width: 720px;
+      padding: 0px 40px;
+    }
+    .mat-tab-body-wrapper {
+      mat-tab-body {
+        max-width: 720px;
+        padding: 0px 40px 45px 40px;
+      }
+    }
+  }
+}
+
+// Large devices (desktops, 992px and up)
+@media (min-width: 992px) {
+  .tabHome {
+    mat-tab-header {
+      max-width: 960px;
+      padding: 0px 80px;
+    }
+    .mat-tab-body-wrapper {
+      mat-tab-body {
+        max-width: 960px;
+        padding: 0px 80px 45px 80px;
+      }
+    }
+  }
+}
+
+// Extra large devices (large desktops, 1200px and up)
+@media (min-width: 1200px) {
+  .tabHome {
+    mat-tab-header {
+      max-width: 1140px;
+      padding: 0px 110px;
+    }
+    .mat-tab-body-wrapper {
+      mat-tab-body {
+        max-width: 1140px;
+        padding: 0px 110px 45px 110px;
+      }
+    }
+  }
+}
+
+@media (min-width: 1400px) {
+  .tabHome {
+    mat-tab-header {
+      max-width: 1320px;
+      padding: 0px 130px;
+    }
+    .mat-tab-body-wrapper {
+      mat-tab-body {
+        max-width: 1320px;
+        padding: 0px 130px 45px 130px;
+      }
+    }
+  }
 }
 
 .mat-tab-header {
@@ -235,7 +371,7 @@
   color: #646464;
   padding-right: 20px;
 }
-.searchButonHome{
+.searchButonHome {
   background-image: url(../../../assets/icons/buscar.svg);
   background-color: #ff8610;
   background-repeat: no-repeat;
@@ -244,35 +380,35 @@
   width: 70px;
   border-radius: 0px 30px 30px 0px;
   background-size: 25px;
-  border-top: solid 1px #b1b1b1;
-  border-bottom: 1px solid #b1b1b1;
-  border-right: 1px solid  #b1b1b1;
+  border-top: solid 1px #878787;
+  border-bottom: 1px solid #878787;
+  border-right: 1px solid #878787;
   cursor: pointer;
 }
-.inputSearchHome{
+.inputSearchHome {
   width: 100%;
   border-radius: 30px 0px 0px 30px;
   padding: 0px 20px;
-  border-top: solid 1px #b1b1b1;
-  border-bottom: 1px solid #b1b1b1;
-  border-left: 1px solid  #b1b1b1;
+  border-top: solid 1px #878787;
+  border-bottom: 1px solid #878787;
+  border-left: 1px solid #878787;
   border-right: none;
 }
-.inputSearchHome::placeholder{
-  color: #b1b1b1;
+.inputSearchHome::placeholder {
+  color: #878787;
 }
-.inputSearchHome::-ms-input-placeholder{
-  color: #b1b1b1;
+.inputSearchHome::-ms-input-placeholder {
+  color: #878787;
 }
-.inputSearchHome:-ms-input-placeholder{
-  color: #b1b1b1;
+.inputSearchHome:-ms-input-placeholder {
+  color: #878787;
 }
-.inputActive{
+.inputActive {
   border: 1px solid #ff8610;
 }
-.inputSearchHome:focus-visible{
+.inputSearchHome:focus-visible {
   outline: none;
 }
-.contentCarsubtitle{
+.contentCarsubtitle {
   margin: 10px 0px;
 }

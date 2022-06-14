@@ -27,7 +27,7 @@
         </app-button>
       </div>
       <div class="botones_login">
-
+        <app-select [dataUrl]="paises" [tipo]="3" [valueDefecto]="CodigoIso"  (Cambio)="ChangePais($event)" [token]="token" ></app-select>
         <div *ngIf="token" style="    flex-direction: column; display: flex;justify-content: flex-end;align-items: flex-end;">
           <app-alumno-mat-button [nombres]="Alumno.nombres+' '+Alumno.apellidos" [user]="Alumno.email" [val]="value">
             <ng-container contenidodata>
@@ -36,7 +36,6 @@
             </ng-container>
           </app-alumno-mat-button>
         </div>
-        <app-select [dataUrl]="paises" [tipo]="3" [valueDefecto]="CodigoIso"  (Cambio)="ChangePais($event)" [token]="token" *ngIf="!token"></app-select>
 
         <app-button [Url]="'/login'" [tipo]="4" [color]="'white'" [background]="'#FCA534'"
           [border]="'solid 1px #895800'" *ngIf="!token">
@@ -47,8 +46,8 @@
 
       </div>
     </nav>
-    <div class="subnav">
+    <!-- <div class="subnav">
       <app-select [dataUrl]="paises" [tipo]="3" [valueDefecto]="CodigoIso"  (Cambio)="ChangePais($event)" [token]="token" *ngIf="token"></app-select>
-    </div>
+    </div> -->
   </div>
 </mat-toolbar>

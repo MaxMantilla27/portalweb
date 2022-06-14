@@ -43,6 +43,7 @@
   padding: 20px;
   background: #e7e7e7;
   align-items: center;
+  flex-wrap: wrap;
   img {
     width: 30px;
     margin-right: 20px;
@@ -76,6 +77,10 @@
   .limpiarTodo{
     background: transparent !important;
     width: 100%;
+    color: #373737;
+    text-decoration: underline;
+    font-weight: 600;
+    cursor: pointer;
   }
 }
 .filtroElemento {
@@ -109,8 +114,16 @@
     }
   }
 }
+.limpiarTodo {
+  width: 100%;
+  margin: 10px 0px;
+  background: transparent;
+  font-weight: 100 !important;
+  text-decoration: underline;
+  cursor: pointer;
+}
 .itemContent:hover {
-  background: #f5f9ff;
+  background: #e6eefa;
   color: #0669bf;
   .nameFiltro {
     text-decoration: underline;

@@ -21,6 +21,8 @@ export class LinkButtonComponent implements OnInit {
   link: boolean = true
   @Input ()
   Child: boolean = true
+  @Input ()
+  target=''
 
 
   @Output()

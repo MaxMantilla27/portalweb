@@ -2,19 +2,28 @@
   <div class="chowCOntentImg " style="position: relative;">
     <img mat-card-image [src]="cardContent.Img" [alt]="cardContent.ImgAlt" >
     <div class="contenidoCardProgramas" >
-      <div style="position: relative;
-      height: 100%;">{{cardContent.Content}}
-        <div class="vermasInImg" [routerLink]="cardContent.Url">Ver mas +</div>
+      <div style="overflow: hidden;
+      text-overflow: ellipsis;
+      display: -webkit-box;
+      display: -moz-box;
+      -webkit-box-orient: vertical;
+      box-orient: vertical;
+      -webkit-line-clamp: 5;
+      line-clamp: 5;">{{cardContent.Content}}
       </div>
+      <div class="vermasInImg" [routerLink]="cardContent.Url">Ver m&aacute;s +</div>
     </div>
   </div>
   <mat-card-content>
-    <div class="title" [routerLink]="cardContent.Url">{{cardContent.Title}}</div>
+    <a class="title" [routerLink]="cardContent.Url" target="_blank">{{cardContent.Title}}</a>
     <div class="invercion">
       <p class="" [innerHTML]="cardContent.Inversion | safeHtml"> </p>
     </div>
   </mat-card-content>
   <mat-card-footer>
-      <div class="link" [routerLink]="cardContent.Url">M&aacute;s informac&oacute;n ></div>
+    <div style="
+    margin: 15px 0px;">
+      <a class="link" [routerLink]="cardContent.Url" target="_blank">M&aacute;s informaci&oacute;n ></a>
+    </div>
   </mat-card-footer>
 </mat-card>

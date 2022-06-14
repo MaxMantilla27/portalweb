@@ -107,7 +107,7 @@ export class LibroReclamacionesComponent implements OnInit {
       // this.fechaEnvio.getUTCMinutes() +
       // ':' +
       // this.fechaEnvio.getUTCSeconds() +
-      '<br><br><strong>1. IDENTIFICACION DEL CONSUMIDOR RECLAMANTE</strong>' +
+      '<br><br><strong>1. IDENTIFICACIÓN DEL CONSUMIDOR RECLAMANTE</strong>' +
       '<br><strong>Nombre: </strong>' +
       this.reclamo.Nombre +
       ' ' +
@@ -118,11 +118,11 @@ export class LibroReclamacionesComponent implements OnInit {
       this.reclamo.DNI +
       '<br><strong>Celular: </strong>' +
       this.reclamo.Telefono +
-      '<br><strong>Correo Electronico: </strong>' +
+      '<br><strong>Correo Electrónico: </strong>' +
       this.reclamo.CorreoElectronico +
       '<br><strong>Padre, madre o apoderado (en caso de ser menor de edad): </strong>' +
       this.reclamo.Referente +
-      '<br><br><strong>2. IDENTIFICACION DEL BIEN/SERVICIO CONTRATADO</strong>' +
+      '<br><br><strong>2. IDENTIFICACIÓN DEL BIEN/SERVICIO CONTRATADO</strong>' +
       '<br><strong>Bien o servicio: </strong>' +
       (this.reclamo.IdTipoServicioReclamo == 1 ? 'Bien' : 'Servicio') +
       '<br><strong>Indicar Bien o servicio: </strong>' +
@@ -134,7 +134,7 @@ export class LibroReclamacionesComponent implements OnInit {
       this.reclamo.DetalleReclamo +
       '<br><strong>Pedido: </strong>' +
       this.reclamo.PedidoReclamo +
-      '<br><br><span>Saludos Cordiales,<br>Servicio de atencion al cliente.<br>BSG Institute</span>' +
+      '<br><br><span>Saludos Cordiales,<br>Servicio de atenci&oacute;n al cliente.<br>BSG Institute</span>' +
       "</div><br><br><hr><span style='font-family: Arial;font-size: 10px;line-height: 16px;text-align: justify;color: #82879e;'>Correo enviado al destinatario " +
       this.reclamo.CorreoElectronico +
       ' por nuestra web bsginstitute.com, favor de no responder a este correo debido a que es un sistema de comunicacion e informes.</span>';

@@ -1,10 +1,9 @@
+
 <div class="container">
-  <div class="breadcrumb">
-    <div class="vinculo " routerLink="/">Inicio > </div>
-    <div class="vinculo active">Programas, certificaciónes y cursos </div>
+  <div class="container breadcrumb">
+    <app-miga-pan [items]="migaPan"></app-miga-pan>
   </div>
 </div>
-
 <div style="background: #f4f4f4;">
   <div class="container">
     <div class="row rowpadd" style="padding-top: 20px;
@@ -147,7 +146,7 @@
   </div>
 </div>
 
-<div style="background: #f5f9ff;">
+<div style="background: #e6eefa;">
   <div class="container">
     <div class="row rowpadd" style="padding-top: 20px;
     padding-bottom: 20px;">
@@ -168,11 +167,19 @@
     <div class="col-12 col-md-3 col-lg-3">
       <div style="position: sticky;top: 100px;">
         <div class="filtroHeader">
-          <img src="../../../assets/icons/icono-filtros.svg" alt="">
+          <!-- <img src="../../../assets/icons/icono-filtros.svg" alt=""> -->
           <div>Filtros</div>
+
+          <div class="tagitem limpiarTodo" (click)="RemoveAll()"
+          *ngIf="TagAreas.length>0 || TagSubAreas.length>0 || TagModalidad.length>0 || TagTipoPrograma.length>0 || buscar!=''">
+            Limpiar Todo </div>
         </div>
         <div class="filtroTags">
           <div class="foltroEncontrados">{{textoResult}}</div>
+
+          <div class="tagitem" *ngIf="buscar!=''">{{buscar}} <i class="material-icons"
+            (click)="buscar=''" style="margin-left: 10px;font-size: 12px;cursor: pointer;">close</i>
+          </div>
 
           <div class="tagitem" *ngFor="let item of TagAreas;let i=index">{{item.Nombre}} <i class="material-icons"
               (click)="RemoveArea(item.value)" style="margin-left: 10px;font-size: 12px;cursor: pointer;">close</i>
@@ -190,19 +197,15 @@
               class="material-icons" (click)="RemoveTipoPrograma(item.value)"
               style="margin-left: 10px;font-size: 12px;cursor: pointer;">close</i></div>
 
-          <div class="tagitem limpiarTodo"
-          *ngIf="TagAreas.length>0 || TagSubAreas.length>0 || TagModalidad.length>0 || TagTipoPrograma.length>0 || buscar!=''">
-            Limpiar Todo <i class="material-icons" (click)="RemoveAll()"
-              style="margin-left: 10px;font-size: 12px;cursor: pointer;">close</i></div>
         </div>
 
-        <div class="InputPrograma">
+        <!-- <div class="InputPrograma">
           <mat-form-field style="width: 100%;" appearance="outline">
             <mat-label>Buscar</mat-label>
             <input matInput type="text" [(ngModel)]="buscar" (input)="SetCantidadProgramas()">
             <span matSuffix><i class="material-icons">search</i></span>
           </mat-form-field>
-        </div>
+        </div> -->
         <div class="filtroElemento">
           <div class="ElementoTitle" (click)="openExpand(0)">
             &Aacute;reas de capacitaci&oacute;n
@@ -221,7 +224,7 @@
         </div>
         <div class="filtroElemento">
           <div class="ElementoTitle" (click)="openExpand(1)">
-            Subarea de capacitaci&oacute;n
+            Sub&aacute;rea de capacitaci&oacute;n
             <i *ngIf="!expancions[1]" class="material-icons">keyboard_arrow_down</i>
             <i *ngIf="expancions[1]" class="material-icons">keyboard_arrow_up</i>
           </div>
@@ -277,11 +280,12 @@
 
     <div class="col-12 col-md-9 col-9-3">
       <div class="row">
-        <div *ngIf="charge==false && programas.length==0">No existen programas con los filtros seleccionados</div>
+        <div style="text-align: center;"
+        *ngIf="charge==false && (programas.length==0 || cantidadProgramas==0)">No existen programas con los filtros seleccionados</div>
         <div *ngIf="charge==true" style="width: 100%;display: flex;justify-content: center;">
           <mat-spinner></mat-spinner>
         </div>
-        <ng-container *ngIf="charge==false && programas.length>0">
+        <ng-container *ngIf="charge==false && programas.length>0 && cantidadProgramas>0">
           <ng-container *ngFor="let item of programas;let i=index">
             <div class="col-12 col-md-6 col-lg-4" style="margin-bottom: 40px;" *ngIf="validateSearch(i)">
               <app-card-programas [cardContent]="item"></app-card-programas>

@@ -109,7 +109,7 @@ export class HeaderComponent implements OnInit {
 
   public expandibles: Array<BasicBotonesExpandibles> = [
     {
-      Nombre: 'Formacion Continua',
+      Nombre: 'Formación Continua',
       data: this.Formacion,
       estatus: true,
     },
@@ -119,7 +119,7 @@ export class HeaderComponent implements OnInit {
       estatus: false,
     },
     {
-      Nombre: 'Educacion Tecnica',
+      Nombre: 'Educación Técnica',
       data: this.tecnica,
       estatus: false,
     },
@@ -227,7 +227,7 @@ export class HeaderComponent implements OnInit {
           style: { 'font-weight': 'bold' },
         });
         if (this.CodigoIso.toLowerCase() == 'co') {
-          this.expandibles[1].Nombre = 'Educacion para el Trabajo';
+          this.expandibles[1].Nombre = 'Educación para el Trabajo';
         } else {
           this.expandibles[1].Nombre = 'Carreras Profesionales';
         }

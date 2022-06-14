@@ -7,9 +7,11 @@
   color: #148bf3;
   font-weight: 900;
   cursor: pointer;
+  text-decoration: none;
 }
 .title:hover {
-  text-decoration: underline;
+  color: #148bf3;
+  text-decoration: underline !important;
 }
 .card-programas mat-card-content {
   text-align: left;
@@ -71,9 +73,11 @@
   color: #ff7c2e;
   margin: 15px 0px;
   cursor: pointer;
+  text-decoration: none;
 }
 .link:hover {
-  text-decoration: underline;
+  color: #ff7c2e;
+  text-decoration: underline !important;
 }
 .carousel-caption {
   display: none;
@@ -86,19 +90,17 @@
   top: -16px;
   left: -16px;
   right: -16px ;
-  background: #5d5d5c;
-  color: white;
+  background: #E7E7E7;
+  color: #4a4a49;
   height: 100%;
   padding: 10px;
   text-align: left;
 }
 .vermasInImg {
-  position: absolute;
-  bottom: 0;
-  text-align: center;
   width: 100%;
   color: #ff8800;
-  text-decoration:underline;
+ // margin-top: 10px;
+  text-decoration: underline;
 }
 .chowCOntentImg:hover {
   .contenidoCardProgramas {

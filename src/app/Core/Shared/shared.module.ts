@@ -81,6 +81,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatmenuComponent } from './Containers/matmenu/matmenu.component';
 import { LibroReclamacionService } from './Services/LibroReclamacion/libro-reclamacion.service';
 import { VideoBrightcovePruebaComponent } from './Containers/video-brightcove-prueba/video-brightcove-prueba/video-brightcove-prueba.component';
+import { CapitalicePipe } from './Pipes/capitalice.pipe';
 
 
 
@@ -146,6 +147,7 @@ import { VideoBrightcovePruebaComponent } from './Containers/video-brightcove-pr
     TableComponent,
     MatmenuComponent,
     VideoBrightcovePruebaComponent,
+    CapitalicePipe,
   ],
   exports: [
     HttpClientModule,
@@ -206,6 +208,7 @@ import { VideoBrightcovePruebaComponent } from './Containers/video-brightcove-pr
     MatPaginatorModule,
     MatSortModule,
     MatDialogModule,
+    CapitalicePipe,
   ],
   providers: [
     SessionStorageService,

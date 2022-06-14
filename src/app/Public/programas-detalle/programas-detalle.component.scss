@@ -7,10 +7,47 @@
   height: 100%;
   border: 0;
 }
+.phoneCall{
+  position: absolute;
+    right: 20px;
+    top: 80px;
+    background: #30cc44;
+    color: white;
+    padding: 5px;
+    border-radius: 10px;
+    /* word-break: break-all; */
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 120px;
+    font-size: 10px;
+    font-weight: 600;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    flex-wrap: wrap;
+  img{
+    width: 25px;
+    margin-right: 10px;
+  }
+}
+.phoneCall:hover{
+  .contentHover{
+    display: block  !important;
+  }
+}
+.contentHover{
+  display: none;
+  width: 100%;
+  margin-top: 10px;
+  font-weight: 100;
+    font-size: 9px;
+}
 .diviframe {
   position: relative;
   min-height: 200px;
-  text-align: justify;
+  text-align: left;
   font-size: 12px;
 }
 .titlePrograma h1 {
@@ -18,7 +55,7 @@
   color: #4a4a49;
 }
 .InfoProgramIcon {
-  width: 10%;
+  width: 20px;
   height: auto;
   margin-right: 10px;
 }
@@ -78,27 +115,29 @@
   display: none;
 }
 .tabprogram mat-tab-group mat-tab-header .mat-tab-label-container .mat-tab-list .mat-tab-labels .mat-ripple:not(:first-child) .mat-tab-label-content{
-  border-left: solid 1px black;
+  //border-left: solid 1px #4a4a49;
 }
 .tabprogram mat-tab-group mat-tab-header .mat-tab-label-container .mat-tab-list .mat-tab-labels .mat-ripple:not(:last-child) .mat-tab-label-content{
-  border-right: solid 1px black;
+  border-right: solid 1px #4a4a49;
 }
-
+.tabprogram .mat-tab-body-wrapper mat-tab-body .mat-tab-body-content{
+  overflow: hidden !important;
+}
 
 .acordionPrograma mat-expansion-panel{
 
   margin-bottom: 0px;
   border-radius: 0px;
   box-shadow: 0px 0px 0px transparent !important;
-  background: #fafafa;
+  background: white;
 }
 .acordionPrograma .mat-expansion-panel-spacing{
   margin-top: 0px;
 
 }
 .acordionPrograma mat-expansion-panel mat-expansion-panel-header{
-  border-bottom: 1px solid #dcdcdc;
-  border-top: 1px solid #dcdcdc;
+  // border-bottom: 1px solid #dcdcdc;
+  // border-top: 1px solid #dcdcdc;
   height: auto !important;
 }
 .estructuraProgramTitle{
@@ -123,7 +162,7 @@
   height: auto !important;
 }
 .estructuraProgramForm{
-  background: #cfffe6;
+  background: #ededed;
     width: 100%;
     height: auto;
     border-radius: 20px;
@@ -190,19 +229,20 @@
 .cardSubtitle{
   display: flex;
   align-items: center;
-  background: #cfffe6;
+  //background: #f2f0e6;
   padding: 20px 15px;
   border-radius: 10px;
   margin: 7px 0px;
 }
 .cardSubtitle img{
-  width: 12%;
+  width: 90px;
   margin-right: 30px;
 }
 .parafoS{
-  font-size: 22px;
-  font-weight: 500;
-  color: #5e5e5d;
+  font-size: 20px;
+  font-weight: 100;
+  color: #4a4a49;
+  text-align: center;
 }
 
 .imgfondo{
@@ -218,7 +258,8 @@
 }
 .parafoCardSub{
   font-size: 16px;
-  text-align: justify;
+  text-align: left;
+  color: #878787;
 }
 
 .iconarrow{
@@ -228,11 +269,15 @@
 }
 .cardFormasPago{
   display: flex;
-    background: #cfffe6;
+    background: #f2f0e6;
     padding: 20px 30px;
     border-radius: 10px;
     align-items: center;
     margin: 10px 0px;
+    color: #4a4a49;
+    .divpagobcp{
+      padding-right:40px ;
+    }
 }
 .cardFormasPago .iconarrow{
   font-size: 20px;
@@ -240,12 +285,25 @@
 .contentCardFormasPago{
   display: flex;
   align-items: center;
-  justify-content: space-between;
   width: 100%;
   flex-wrap: wrap;
+  color: #4a4a49;
 }
 .imgCardFormasPago{
-  width: 40px;
+  width: 70px;
+  margin-right: 100px;
   height: auto;
-  margin-right: 20px;
+}
+
+.contentCarsubtitle{
+  margin: 10px 0px;
+}
+.contentimgtarjetas{
+  display: flex;
+  padding: 0px 20px;
+ img{
+
+  width: 60px;
+  margin-right: 40px;
+ }
 }

@@ -28,14 +28,14 @@
           <div class="question" style="justify-content: flex-start;align-items: center;">
             <img src="../../../assets/icons/signo-pregunta-abierto-03.svg" alt="">
           </div>
-          <div>Deseas conocer mas sobre nuestra oferta de cursos y programas del área de {{area}}</div>
+          <div>Deseas conocer m&aacute;s sobre nuestra oferta de cursos y programas del área de {{area}}</div>
           <div class="question" style="justify-content: flex-end;align-items: center;">
             <img src="../../../assets/icons/signo-pregunta-cerrado-04.svg" alt="">
           </div>
         </div>
 
         <div class="subtitleEstruturaBlogForm">
-          registra tus datos para que un asesor especializado pueda ayudarte en todo lo que requieras
+          Registra tus datos para que un asesor especializado pueda ayudarte en todo lo que requieras
         </div>
         <app-formulario [model]="formularioContacto" [InputsDisable]="statuscharge" (OnSubmit)="SetContacto($event)"
                   (OnValid)="formVal=$event" [fiels]="fileds" (OnSelect)="SelectChage($event)">
@@ -44,7 +44,7 @@
               </ng-container>
               <ng-container send>
               <app-default-button [confs]="{color:'primary',titulo:'Solicitar Información'}" [style]="'width: 100%;'"
-                    [disabled]="!formVal"></app-default-button>
+                    ></app-default-button>
               </ng-container>
         </app-formulario>
       </div>

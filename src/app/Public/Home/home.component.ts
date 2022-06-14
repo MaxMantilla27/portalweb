@@ -30,9 +30,9 @@ export class HomeComponent implements OnInit,AfterViewInit {
   public busqueda=''
   public inputActive=false
   public cassosExito:Array<CasosExitoDTO>=[
-    {Curso:"Curso MS Project aplicado a la Gestión de Proyectos",Genero:'F',Nombre:'KERLY PACHECO',Texto:'La experiencia ha sido muy buena, porque he podido ampliar los conocimientos que tenia.'},
-    {Curso:"Diplomado Lean Six Sigma Black Belt",Genero:'F',Nombre:'HEDDY HONORIO',Texto:'La motivación de la certificación internacional que ofrece el programa fue un estímulo muy alto para matricularme'},
-    {Curso:"Diplomado Lean Six Sigma Black Belt",Genero:'M',Nombre:'JORGE ROJAS',Texto:'La gran diferencia con la competencia fue que: uno, la flexibilidad de horarios y número dos, BSG Institute te prepara, te brinda las pautas y te hacen un seguimiento personalizado para acceder a la certificación internacional.'}
+    {Curso:"Curso MS Project aplicado a la Gestión de Proyectos",img:'kerly-pacheco.png',Nombre:'KERLY PACHECO',Texto:'La experiencia ha sido muy buena, porque he podido ampliar los conocimientos que tenia.'},
+    {Curso:"Lean Six Sigma Black Belt",img:'heddy-honorio.png',Nombre:'HEDDY HONORIO',Texto:'La motivación de la certificación internacional que ofrece el programa fue un estímulo muy alto para matricularme'},
+    {Curso:"Lean Six Sigma Black Belt",img:'jorge-rojas.png',Nombre:'JORGE ROJAS',Texto:'La gran diferencia con la competencia fue que: uno, la flexibilidad de horarios y número dos, BSG Institute te prepara, te brinda las pautas y te hacen un seguimiento personalizado para acceder a la certificación internacional.'}
   ];
   imagesc = [
     {title: 'First Slide', short: 'First Slide Short', src: "https://picsum.photos/id/700/900/500"},

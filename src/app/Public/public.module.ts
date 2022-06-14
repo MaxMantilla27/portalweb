@@ -25,6 +25,7 @@ import { AcercaDeComponent } from './acerca-de/acerca-de.component';
 import { ContactenosComponent } from './contactenos/contactenos.component';
 import { TagsComponent } from './tags/tags.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
+import { VistaPreviaComponent } from './programas-detalle/vista-previa/vista-previa.component';
 
 @NgModule({
   imports: [
@@ -55,7 +56,8 @@ import { ForgotPasswordComponent } from './forgot-password/forgot-password.compo
     AcercaDeComponent,
     ContactenosComponent,
     TagsComponent,
-    ForgotPasswordComponent
+    ForgotPasswordComponent,
+    VistaPreviaComponent
   ],
   exports: [],
   providers: [

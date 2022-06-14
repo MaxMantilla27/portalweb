@@ -191,7 +191,7 @@ export class ContactenosComponent implements OnInit {
       tipo:"select",
       valorInicial:"",
       validate:[Validators.required],
-      label:"Pais",
+      label:"País",
     });
     this.fileds.push({
       nombre:"IdRegion",
@@ -203,7 +203,7 @@ export class ContactenosComponent implements OnInit {
     });
     this.fileds.push({
       nombre:"Movil",
-      tipo:"text",
+      tipo:"phone",
       valorInicial:"",
       validate:[Validators.required],
       label:"Teléfono Móvil",
@@ -220,14 +220,14 @@ export class ContactenosComponent implements OnInit {
       tipo:"select",
       valorInicial:"",
       validate:[Validators.required],
-      label:"Área Formación",
+      label:"Área de Formación",
     });
     this.fileds.push({
       nombre:"IdAreaTrabajo",
       tipo:"select",
       valorInicial:"",
       validate:[Validators.required],
-      label:"Área Trabajo",
+      label:"Área de Trabajo",
     });
     this.fileds.push({
       nombre:"IdIndustria",

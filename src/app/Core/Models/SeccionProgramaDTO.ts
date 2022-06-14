@@ -42,8 +42,9 @@ export interface listaCertificacionDTO{
   contenido:Array<string>;
   piePagina:string;
   descripcion:string;
-  descripcionHeader:string;
-  descripcionBody:string;
+  descripcionHeader:Array<string>;
+  descripcionBody:Array<string>;
+  descripcionLeyenda:string
 }
 
 export interface listaMontoPagoProgramaInformacionDTO{
