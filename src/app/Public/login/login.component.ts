@@ -76,10 +76,10 @@ export class LoginComponent implements OnInit {
   }
   Login(value:any){
     console.log(value)
-    this.statuscharge=true
-    this.login=value;
-    this.loginSend.password=this.login.Password;
-    this.loginSend.username=this.login.Email;
+    //this.statuscharge=true
+    //this.login=value;
+    this.loginSend.password=value.Password;
+    this.loginSend.username=value.Email;
     this._AspNetUserService.Authenticate(this.loginSend).subscribe({
       next:x=>{
         console.log(x)

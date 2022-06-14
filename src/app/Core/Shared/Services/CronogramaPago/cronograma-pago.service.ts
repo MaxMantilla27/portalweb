@@ -15,4 +15,11 @@ export class CronogramaPagoService {
   public ObtenerCuotaPagoProcesar(ValorTema:number,Nombre:string):Observable<any>{
     return this.http.post<any>(this.urlBase+'/ObtenerCuotaPagoProcesar',{headers:new HttpHeaders});
   }
+  public ObtenerCronogramaPagoAlumno():Observable<any>{
+    return this.http.get<any>(this.urlBase+'/ObtenerCronogramaPagoAlumno');
+  }
+  public ObtenerCronogramaPagoMatricula(IdMatriculaCabecera:number):Observable<any>{
+    return this.http.get<any>(this.urlBase+'/ObtenerCronogramaPagoMatricula?IdMatriculaCabecera='+IdMatriculaCabecera);
+  }
+
 }

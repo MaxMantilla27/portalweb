@@ -1,6 +1,7 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { MatTabChangeEvent } from '@angular/material/tabs';
 import { ActivatedRoute } from '@angular/router';
+import { Subject, takeUntil } from 'rxjs';
 import { ParametrosEstructuraEspecificaDTO } from 'src/app/Core/Models/EstructuraEspecificaDTO';
 import {
   CursoPadreDTO,
@@ -18,7 +19,8 @@ import { SessionStorageService } from 'src/app/Core/Shared/Services/session-stor
   styleUrls: ['./curso.component.scss'],
   encapsulation: ViewEncapsulation.None,
 })
-export class CursoComponent implements OnInit {
+export class CursoComponent implements OnInit,OnDestroy {
+  private signal$ = new Subject();
   constructor(
     private _HelperService: HelperService,
     private _ProgramaContenidoService: ProgramaContenidoService,
@@ -27,6 +29,10 @@ export class CursoComponent implements OnInit {
     private _SessionStorageService:SessionStorageService,
     private _CertificadoService:CertificadoService
   ) {}
+  ngOnDestroy(): void {
+    this.signal$.next(true);
+    this.signal$.complete();
+  }
   public tabIndex = 0;
   public IndicacionActive = false;
   public CertificadoActive = false;
@@ -58,7 +64,9 @@ export class CursoComponent implements OnInit {
   public alertaFisico=false;
   public generateCertificado=true
   ngOnInit(): void {
-    this._ActivatedRoute.params.subscribe({
+    this._ActivatedRoute.params.pipe(
+      takeUntil(this.signal$)
+    ).subscribe({
       next: (x) => {
         this.idMatricula = parseInt(x['IdMatricula']);
         this.RegistroProgramaMatriculadoPorIdMatricula();

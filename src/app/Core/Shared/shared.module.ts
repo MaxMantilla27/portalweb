@@ -81,6 +81,10 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatmenuComponent } from './Containers/matmenu/matmenu.component';
 import { LibroReclamacionService } from './Services/LibroReclamacion/libro-reclamacion.service';
 import { CapitalicePipe } from './Pipes/capitalice.pipe';
+import { MedioPagoActivoPasarelaService } from './Services/MedioPagoActivoPasarela/medio-pago-activo-pasarela.service';
+import { ImagenTarjetas } from './ImagenTarjetas';
+import { FormaPagoService } from './Services/FormaPago/forma-pago.service';
+import { ChargeComponent } from './Containers/Dialog/charge/charge.component';
 
 
 
@@ -115,6 +119,7 @@ import { CapitalicePipe } from './Pipes/capitalice.pipe';
     MatPaginatorModule,
     MatSortModule,
     MatDialogModule,
+
   ],
   declarations: [
     HeaderComponent,
@@ -146,6 +151,8 @@ import { CapitalicePipe } from './Pipes/capitalice.pipe';
     TableComponent,
     MatmenuComponent,
     CapitalicePipe,
+    ChargeComponent,
+
   ],
   exports: [
     HttpClientModule,
@@ -170,6 +177,7 @@ import { CapitalicePipe } from './Pipes/capitalice.pipe';
     CrucigramaComponent,
     TableComponent,
     MatmenuComponent,
+    ChargeComponent,
 
     MatTabsModule,
     MatTableModule,
@@ -230,7 +238,11 @@ import { CapitalicePipe } from './Pipes/capitalice.pipe';
     CertificadoIntegraService,
     ProveedorService,
     ProgramaEspecificoIntegraService,
-    LibroReclamacionService
+    LibroReclamacionService,
+    MedioPagoActivoPasarelaService,
+    ImagenTarjetas,
+    FormaPagoService,
+
   ],
 })
 export class SharedModule {

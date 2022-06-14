@@ -1,0 +1,113 @@
+<div class="container">
+  <div class="rowpaddAv breadcrumb" style="padding-top: 0px !important; padding-bottom: 0px !important;">
+    <app-miga-pan [items]="migaPan"></app-miga-pan>
+  </div>
+</div>
+<div style="background: #f4f4f4;">
+  <div class="container">
+    <div class="row rowpaddAv">
+      <div class="col-12 col-md-12 col-lg-12">
+        <div class="titulop">
+          Mis Pagos
+        </div>
+        <div style="font-size: 20px;
+        color: #797978;">{{textoBienvenido}}</div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="container">
+  <div class="row rowpaddAv" style="align-items: center;">
+    <ng-container *ngIf="CronogramaPago!=undefined">
+      <div class="COL-12 titleCronograma">
+        {{CronogramaPago.pGeneral}}
+      </div>
+      <div class="col-12 col-md-4 col-lg-3 itemsMisPagos">
+        <img src="../../../assets/icons/positivo-hecho-20.svg" alt="">
+        <div>Cuotas pagadas:</div>
+        <p>{{CronogramaPago.cuotasPagadas}}/{{CronogramaPago.cuotasPendientes}}</p>
+      </div>
+      <div class="col-12 col-md-6 col-lg-6 itemsMisPagos"
+        *ngIf="CronogramaPago.cuotasPagadas<CronogramaPago.cuotasPendientes">
+        <img src="../../../assets/icons/alarma.svg" alt="">
+        <div>Proximo Vencimiento :</div>
+        <p>{{CronogramaPago.fechaVencimiento | date:'dd/MM/yyyy'}}</p>
+      </div>
+      <div class="col-12">
+        <table>
+          <tr>
+            <th>Pagar</th>
+            <th>Nro. Cuota</th>
+            <th>Moneda</th>
+            <th>Monto</th>
+            <th>Mora</th>
+            <!-- <th>Costos Gestión de Cóbranza</th> -->
+            <th>Fecha de Vencimiento</th>
+            <th>Fecha de Pago</th>
+            <th>Estado</th>
+          </tr>
+          <tr *ngFor="let item of CronogramaPago.registroCuota;let i=index"
+            [ngClass]="{'pagoActivo':item.cancelado!=true,'pagoSelect':item.estado==true}"
+            (click)="ChangeEstadoCronograma(i)">
+            <td>
+              <ng-container *ngIf="item.estado==true"><i class="material-icons">check_box</i></ng-container>
+              <ng-container *ngIf="item.estado!=true"><i class="material-icons">check_box_outline_blank</i>
+              </ng-container>
+            </td>
+            <td>{{item.nroCuota}}</td>
+            <td>{{item.nombreMoneda}}</td>
+            <td>{{item.cuota}}</td>
+            <td>{{item.mora}}</td>
+            <td>{{item.fechaVencimiento | date:'dd/MM/yyyy'}}</td>
+            <td>
+              <ng-container *ngIf="item.fechaPago!=null">{{item.fechaPago | date:'dd/MM/yyyy'}}</ng-container>
+            </td>
+            <td>
+              <ng-container *ngIf="item.cancelado==true;else noCancelado">
+                Pagado <img src="../../../assets/icons/positivo-hecho-20.svg" alt="">
+              </ng-container>
+              <ng-template #noCancelado>
+                <ng-container *ngIf="item.estado==true">
+                  Por pagar
+                </ng-container>
+                <ng-container *ngIf="item.estado!=true">
+                  Pendiente
+                </ng-container>
+
+              </ng-template>
+
+            </td>
+          </tr>
+        </table>
+        <div class="row" style="margin-top: 40px;justify-content: center;" *ngIf="total>0">
+          <div class="col-12 col-md-8 col-lg-6 CardPago">
+            <div class="titleCardPago">Resumen de pago</div>
+            <div class="contentCardPago row">
+              <div class="col-12 row sub">
+                <div class="col-8">Concepto</div>
+                <div class="col-4">Monto</div>
+              </div>
+              <ng-container *ngFor="let item of CronogramaPago.registroCuota;let i=index">
+                <div class="col-12 row cen" *ngIf="item.estado==true">
+                  <div class="col-8">Cuota N°{{item.nroCuota}} - {{item.fechaVencimiento | date:'dd/MM/yyyy'}}</div>
+                  <div class="col-4">{{item.simbolo}} {{item.cuota}}</div>
+                </div>
+              </ng-container>
+              <div class="col-12 row tot">
+                <div class="col-8">Total a pagar</div>
+                <div class="col-4">{{CronogramaPago.registroCuota[0].simbolo}} {{total}}</div>
+              </div>
+              <div class="col-12 row bot">
+                <div>
+                  <app-default-button [confs]="{color:'primary',titulo:'Pagar'}"
+                    [style]="'margin-top: 20px;padding: 0px 40px;'" (ButtoclClick)="OpenModal()"></app-default-button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+
+  </div>
+</div>

@@ -1,6 +1,6 @@
 import { Component, Inject, OnInit, ViewEncapsulation } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { DocenciaForosModalComponent } from 'src/app/aula-virtual/docencia/docencia-foros/docencia-foros-modal/docencia-foros-modal.component';
+import { ProgramasDetalleComponent } from '../programas-detalle.component';
 
 @Component({
   selector: 'app-vista-previa',
@@ -11,7 +11,7 @@ import { DocenciaForosModalComponent } from 'src/app/aula-virtual/docencia/docen
 export class VistaPreviaComponent implements OnInit {
 
   constructor(
-    public dialogRef: MatDialogRef<DocenciaForosModalComponent>,
+    public dialogRef: MatDialogRef<ProgramasDetalleComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
   ) { }
 

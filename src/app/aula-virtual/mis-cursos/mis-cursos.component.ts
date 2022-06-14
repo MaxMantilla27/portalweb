@@ -17,7 +17,7 @@ export class MisCursosComponent implements OnInit {
 
   public migaPan = [
     {
-      titulo: 'Mi cursos',
+      titulo: 'Mis cursos',
       urlWeb: '/AulaVirtual/MisCursos',
     },
   ];

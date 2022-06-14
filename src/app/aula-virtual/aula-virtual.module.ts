@@ -43,6 +43,12 @@ import { ErrorPageComponent } from './error-page/error-page.component';
 import { DocenciaSesionesWebinarComponent } from './docencia/docencia-sesiones-webinar/docencia-sesiones-webinar.component';
 import { DocenciaForosComponent } from './docencia/docencia-foros/docencia-foros.component';
 import { DocenciaForosModalComponent } from './docencia/docencia-foros/docencia-foros-modal/docencia-foros-modal.component';
+import { MisPagosComponent } from './mis-pagos/mis-pagos.component';
+import { PagoComponent } from './pago/pago.component';
+import { PagoTarjetaComponent } from './pago/pago-tarjeta/pago-tarjeta.component';
+import { ConfirmacionPagoTarjetaComponent } from './confirmacion-pago-tarjeta/confirmacion-pago-tarjeta.component';
+import { ConfirmacionPagoTarjetaVisaComponent } from './confirmacion-pago-tarjeta-visa/confirmacion-pago-tarjeta-visa.component';
+import { ResultadoPagoComponent } from './resultado-pago/resultado-pago.component';
 
 
 @NgModule({
@@ -84,6 +90,12 @@ import { DocenciaForosModalComponent } from './docencia/docencia-foros/docencia-
     DocenciaSesionesWebinarComponent,
     DocenciaForosComponent,
     DocenciaForosModalComponent,
+    MisPagosComponent,
+    PagoComponent,
+    PagoTarjetaComponent,
+    ConfirmacionPagoTarjetaComponent,
+    ConfirmacionPagoTarjetaVisaComponent,
+    ResultadoPagoComponent,
 
   ],
   imports: [

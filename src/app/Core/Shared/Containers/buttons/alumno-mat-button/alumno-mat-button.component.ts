@@ -37,12 +37,19 @@ export class AlumnoMatButtonComponent implements OnInit,OnChanges {
 
   }
   ngOnChanges(changes: SimpleChanges): void {
+    this.buttons=[];
     if(this.val!=undefined){
       if(this.val.IdProveedor==0){
         this.buttons.push({
           Nombre: 'Mis Cursos',
           Url: '/AulaVirtual/MisCursos',
           Icon: 'play_lesson',
+          value: '',
+        });
+        this.buttons.push({
+          Nombre: 'Mis Pagos',
+          Url: '/AulaVirtual/MisPagos',
+          Icon: 'monetization_on',
           value: '',
         });
         this.buttons.push({
@@ -69,6 +76,12 @@ export class AlumnoMatButtonComponent implements OnInit,OnChanges {
             Nombre: 'Mis Cursos',
             Url: '/AulaVirtual/MisCursos',
             Icon: 'play_lesson',
+            value: '',
+          });
+          this.buttons.push({
+            Nombre: 'Mis Pagos',
+            Url: '/AulaVirtual/MisPagos',
+            Icon: 'monetization_on',
             value: '',
           });
           this.buttons.push({

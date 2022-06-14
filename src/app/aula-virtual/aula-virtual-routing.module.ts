@@ -3,6 +3,8 @@ import { RouterModule, Routes } from '@angular/router';
 import { AulaVirtualComponent } from './aula-virtual.component';
 import { AvatarComponent } from './avatar/avatar.component';
 import { CambiarContraComponent } from './cambiar-contra/cambiar-contra.component';
+import { ConfirmacionPagoTarjetaVisaComponent } from './confirmacion-pago-tarjeta-visa/confirmacion-pago-tarjeta-visa.component';
+import { ConfirmacionPagoTarjetaComponent } from './confirmacion-pago-tarjeta/confirmacion-pago-tarjeta.component';
 import { CuentaComponent } from './cuenta/cuenta.component';
 import { CursoComponent } from './curso/curso.component';
 import { DocenciaComponent } from './docencia/docencia.component';
@@ -12,7 +14,10 @@ import { AulaVirtualGuard } from './Guard/aula-virtual.guard';
 import { ProveedorGuard } from './Guard/proveedor.guard';
 import { MiPerfilComponent } from './mi-perfil/mi-perfil.component';
 import { MisCursosComponent } from './mis-cursos/mis-cursos.component';
+import { MisPagosComponent } from './mis-pagos/mis-pagos.component';
 import { ModuloComponent } from './modulo/modulo.component';
+import { PagoComponent } from './pago/pago.component';
+import { ResultadoPagoComponent } from './resultado-pago/resultado-pago.component';
 import { SesionesComponent } from './sesiones/sesiones.component';
 
 const routes: Routes = [
@@ -25,9 +30,14 @@ const routes: Routes = [
         { path: 'MisCursos', component: MisCursosComponent,canActivate:[AlumnoGuard]},
         { path: 'Avatar', component: AvatarComponent,canActivate:[AlumnoGuard]},
         { path: 'Docencia', component: DocenciaComponent,canActivate:[ProveedorGuard]},
+        { path: 'MisPagos', component: MisPagosComponent,canActivate:[AlumnoGuard]},
 
         { path: 'MisCursos/:IdMatricula', component: CursoComponent,canActivate:[AlumnoGuard]},
+        { path: 'MisPagos/:IdMatricula', component: PagoComponent,canActivate:[AlumnoGuard]},
+        { path: 'PagoExitoso/:Identificador', component: ResultadoPagoComponent,canActivate:[AlumnoGuard]},
 
+        { path: 'MisPagos/:IdMatricula/tarjeta/:Identificador', component: ConfirmacionPagoTarjetaComponent,canActivate:[AlumnoGuard]},
+        { path: 'MisPagos/:IdMatricula/visa/:Identificador', component: ConfirmacionPagoTarjetaVisaComponent,canActivate:[AlumnoGuard]},
         { path: 'MisCursos/:IdMatricula/:idPEspecificoHijo', component: ModuloComponent,canActivate:[AlumnoGuard]},
 
         //tipo: 1.-sesiones/subsesiones 2.-Tarea 3.-Encuesta 4.- Tarea Calificar
