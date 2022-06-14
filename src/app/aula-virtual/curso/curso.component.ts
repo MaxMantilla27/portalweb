@@ -197,6 +197,7 @@ export class CursoComponent implements OnInit {
       .subscribe({
         next: (x) => {
           this.programEstructura = x;
+          console.log(this.programEstructura)
           this.programEstructura.listaCursoMatriculado.sort(function (a:any, b:any) {
             return a.orden - b.orden;
           })

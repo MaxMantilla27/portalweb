@@ -1,0 +1,89 @@
+<div class="container">
+  <div class="rowpaddAv breadcrumb" style="padding-top: 0px !important; padding-bottom: 0px !important;">
+    <app-miga-pan [items]="migaPan"></app-miga-pan>
+  </div>
+</div>
+<div style="border-top:solid 3px #f4f4f4 ;"></div>
+<div class="container">
+  <div class="row rowpaddAv">
+    <div class="col-12 col-md-12 col-lg-12">
+      <mat-tab-group class="tabVertical" [(selectedIndex)]="tabIndex" (selectedTabChange)="tabChanged($event)">
+        <mat-tab>
+          <ng-template mat-tab-label>
+            <div class="contentHeaderM" [ngClass]="{'ActiveChil':IndicacionActive==true}">
+              <div class="iconMat iconIndicaciones"></div>
+              <div class="titleMatr">Indicaciones</div>
+              <i class="material-icons" *ngIf="IndicacionActive==true" style="position: absolute;right: 5px;">keyboard_arrow_up</i>
+            </div>
+          </ng-template>
+          <div style="padding: 10px 30px;">
+            <div class="cursoTitle">{{programaEstructura.programaGeneral}}</div>
+            <div class="cursoTabDescripcion">¡Hola! a continuacion te explicamos mediante videos intuitivos como debes
+              realizar tus evaluaciones.
+              <br>
+              Te deseamos existos.
+            </div>
+            <div class="row">
+              <div class="col-12 col-md-6 col-lg-6" style="margin: 10px 0px;">
+                <app-indicaciones-content [title]="'Preguntas interactivas'" [imgUrl]="'preguntas-interactivas-38.svg'"
+                  (ButtoclClick)="changeIndexIndicaciones(1)"></app-indicaciones-content>
+              </div>
+              <div class="col-12 col-md-6 col-lg-6" style="margin: 10px 0px;">
+                <app-indicaciones-content [title]="'Crucigramas'" [imgUrl]="'crucigramas-39.svg'"
+                  (ButtoclClick)="changeIndexIndicaciones(2)"></app-indicaciones-content>
+              </div>
+            </div>
+          </div>
+        </mat-tab>
+        <ng-container *ngIf="IndicacionActive==true">
+
+          <mat-tab >
+            <ng-template mat-tab-label class="tabSubcontent">
+              <div class="contentHeaderM subContent">
+                <div class="titleMatr">Preguntas interactivas</div>
+              </div>
+            </ng-template>
+            <div style="padding: 10px 30px;">
+              <app-indicaciones-options-content [videoUrl]="videoPreguntas"
+                [TitlePrograma]="programaEstructura.programaGeneral" [title]="'Preguntas Interactivas'"
+                [imgUrl]="'preguntas-naranja-38.svg'">
+              </app-indicaciones-options-content>
+            </div>
+          </mat-tab>
+          <mat-tab >
+            <ng-template mat-tab-label>
+              <div class="contentHeaderM subContent">
+                <div class="titleMatr">Crucigramas</div>
+              </div>
+            </ng-template>
+            <div style="padding: 10px 30px;">
+              <app-indicaciones-options-content [videoUrl]="videoCrucigramas"
+                [TitlePrograma]="programaEstructura.programaGeneral" [title]="'Crucigramas'" [imgUrl]="'crucigrama-naranja-39.svg'">
+              </app-indicaciones-options-content>
+            </div>
+          </mat-tab>
+        </ng-container>
+
+        <mat-tab>
+          <ng-template mat-tab-label>
+            <div class="contentHeaderM">
+              <div class="iconMat iconModulos"></div>
+              <div class="titleMatr">Modulos</div>
+            </div>
+          </ng-template>
+          <div style="padding: 10px 30px;">
+
+            <div class="cursoTitle">{{programaEstructura.programaGeneral}}</div>
+            <div class="cursoTabDescripcion">¡Bienvenido! Debes completar los siguientes modulos de tu programa:</div>
+            <div class="cursoTabRemenber">
+              <img src="../../../assets/icons/horario-04.svg" alt="">
+              <div><strong>Recuerda: </strong>Debes completar el curso I, para poder acceder al siguiente curso, y así progresivamente</div>
+            </div>
+            <app-curso-prueba-modulos [idRegistroPrueba]="idRegistroPrueba" [programaEstructura]="programaEstructura">
+            </app-curso-prueba-modulos>
+          </div>
+        </mat-tab>
+      </mat-tab-group>
+    </div>
+  </div>
+</div>

@@ -22,6 +22,10 @@ import { RegionService } from 'src/app/Core/Shared/Services/Region/region.servic
 import { SeccionProgramaService } from 'src/app/Core/Shared/Services/SeccionPrograma/seccion-programa.service';
 import { SilaboService } from 'src/app/Core/Shared/Services/Silabo/silabo.service';
 import { TagService } from 'src/app/Core/Shared/Services/Tag/tag.service';
+import { AccountService } from 'src/app/Core/Shared/Services/Account/account.service';
+import { Router } from '@angular/router';
+
+
 
 @Component({
   selector: 'app-programas-detalle',
@@ -46,6 +50,8 @@ export class ProgramasDetalleComponent implements OnInit {
     private _RegionService:RegionService,
     private _DatosPortalService:DatosPortalService,
     private _HelperService: HelperService,
+    private _AccountService: AccountService,
+    private _router:Router,
     config: NgbCarouselConfig,
     @Inject(PLATFORM_ID) platformId: Object
     ) {
@@ -170,6 +176,14 @@ export class ProgramasDetalleComponent implements OnInit {
       }
     })
   }
+  RegistrarProgramaPrueba(){
+    this._AccountService.RegistroCursoAulaVirtualNueva(this.idBusqueda).subscribe({
+      next:x=>{
+        this._router.navigate(['/AulaVirtual/MisCursos']);
+      },
+    })
+  }
+
   ListSeccionPrograma(){
     this._SeccionProgramaService.ListSeccionPrograma(this.idBusqueda).subscribe({
       next:(x)=>{

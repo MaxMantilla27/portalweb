@@ -80,6 +80,7 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatmenuComponent } from './Containers/matmenu/matmenu.component';
 import { LibroReclamacionService } from './Services/LibroReclamacion/libro-reclamacion.service';
+import { VideoBrightcovePruebaComponent } from './Containers/video-brightcove-prueba/video-brightcove-prueba/video-brightcove-prueba.component';
 
 
 
@@ -144,6 +145,7 @@ import { LibroReclamacionService } from './Services/LibroReclamacion/libro-recla
     SafePipe,
     TableComponent,
     MatmenuComponent,
+    VideoBrightcovePruebaComponent,
   ],
   exports: [
     HttpClientModule,
@@ -168,6 +170,8 @@ import { LibroReclamacionService } from './Services/LibroReclamacion/libro-recla
     CrucigramaComponent,
     TableComponent,
     MatmenuComponent,
+    VideoBrightcovePruebaComponent,
+
 
     MatTabsModule,
     MatTableModule,

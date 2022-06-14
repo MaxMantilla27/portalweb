@@ -1,0 +1,80 @@
+.tipoIndicacionTitle {
+  display: flex;
+  justify-content: flex-start;
+  background: #f2f6ff;
+  padding: 5px 10px;
+  margin: 30px 0px;
+}
+.tipoIndicacionTitle img {
+  width: 20px;
+  margin-right: 20px;
+}
+.tipoIndicacionTitle div {
+  font-size: 15px;
+  font-weight: 600;
+  color: #505050;
+}
+.foro {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  padding: 15px 20px;
+  align-items: center;
+  cursor: pointer;
+  flex-wrap: wrap;
+}
+.foro:hover {
+  background: #f4f4f4;
+  box-shadow: 0px 0px 4px 1px #bbbbbb;
+  .titleForo {
+    color: #1572c3;
+    font-weight: 600;
+    text-decoration: underline;
+  }
+}
+.titleForo {
+  font-size: 16px;
+  color: #808080;
+  cursor: pointer;
+}
+.titleForo:hover {
+  color: #1572c3;
+  font-weight: 600;
+  text-decoration: underline;
+}
+.subTitleForo {
+  font-size: 12px;
+  color: #a9a9a9;
+}
+.paginatorForo {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-top: 1px solid #e0e0e0;
+  padding-top: 20px;
+}
+.paginaForo {
+  padding: 4px;
+  background: #f4f4f4;
+  margin: 5px;
+  width: 35px;
+  height: 35px;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  border-radius: 5px;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+
+}
+.pagActive {
+  background: #ff7012;
+  color: white;
+}

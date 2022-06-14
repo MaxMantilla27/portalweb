@@ -4,6 +4,7 @@ import { AulaVirtualComponent } from './aula-virtual.component';
 import { AvatarComponent } from './avatar/avatar.component';
 import { CambiarContraComponent } from './cambiar-contra/cambiar-contra.component';
 import { CuentaComponent } from './cuenta/cuenta.component';
+import { CursoPruebaComponent } from './curso-prueba/curso-prueba/curso-prueba.component';
 import { CursoComponent } from './curso/curso.component';
 import { DocenciaComponent } from './docencia/docencia.component';
 import { ErrorPageComponent } from './error-page/error-page.component';
@@ -12,7 +13,9 @@ import { AulaVirtualGuard } from './Guard/aula-virtual.guard';
 import { ProveedorGuard } from './Guard/proveedor.guard';
 import { MiPerfilComponent } from './mi-perfil/mi-perfil.component';
 import { MisCursosComponent } from './mis-cursos/mis-cursos.component';
+import { ModuloPruebaComponent } from './modulo-prueba/modulo-prueba.component';
 import { ModuloComponent } from './modulo/modulo.component';
+import { SesionesPruebaComponent } from './sesiones-prueba/sesiones-prueba.component';
 import { SesionesComponent } from './sesiones/sesiones.component';
 
 const routes: Routes = [
@@ -27,11 +30,14 @@ const routes: Routes = [
         { path: 'Docencia', component: DocenciaComponent,canActivate:[ProveedorGuard]},
 
         { path: 'MisCursos/:IdMatricula', component: CursoComponent,canActivate:[AlumnoGuard]},
+        { path: 'MisCursosPrueba/:IdRegistroPrueba', component: CursoPruebaComponent,canActivate:[AlumnoGuard]},
 
         { path: 'MisCursos/:IdMatricula/:idPEspecificoHijo', component: ModuloComponent,canActivate:[AlumnoGuard]},
+        { path: 'MisCursosPrueba/:IdRegistroPrueba/:idPEspecificoHijo', component: ModuloPruebaComponent,canActivate:[AlumnoGuard]},
 
         //tipo: 1.-sesiones/subsesiones 2.-Tarea 3.-Encuesta 4.- Tarea Calificar
         { path: 'MisCursos/:IdMatricula/:idPEspecificoHijo/:Tipo/:IdCapitulo/:IdSesion', component: SesionesComponent,canActivate:[AlumnoGuard]},
+        { path: 'MisCursosPrueba/:IdRegistroPrueba/:idPEspecificoHijo/:Tipo/:IdCapitulo/:IdSesion', component: SesionesPruebaComponent,canActivate:[AlumnoGuard]},
         { path: '**', component: ErrorPageComponent},
       ]
   }

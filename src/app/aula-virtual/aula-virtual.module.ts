@@ -43,6 +43,16 @@ import { ErrorPageComponent } from './error-page/error-page.component';
 import { DocenciaSesionesWebinarComponent } from './docencia/docencia-sesiones-webinar/docencia-sesiones-webinar.component';
 import { DocenciaForosComponent } from './docencia/docencia-foros/docencia-foros.component';
 import { DocenciaForosModalComponent } from './docencia/docencia-foros/docencia-foros-modal/docencia-foros-modal.component';
+import { CursoPruebaComponent } from './curso-prueba/curso-prueba/curso-prueba.component';
+import { CursoPruebaModulosComponent } from './curso-prueba/curso-prueba/curso-prueba-modulos/curso-prueba-modulos/curso-prueba-modulos.component';
+import { ModuloPruebaComponent } from './modulo-prueba/modulo-prueba.component';
+import { ModuloForoPruebaComponent } from './modulo-prueba/modulo-foro-prueba/modulo-foro-prueba/modulo-foro-prueba.component';
+import { ModuloRecursoPruebaComponent } from './modulo-prueba/modulo-recurso-prueba/modulo-recurso-prueba/modulo-recurso-prueba.component';
+import { ModuloSilaboPruebaComponent } from './modulo-prueba/modulo-silabo-prueba/modulo-silabo-prueba/modulo-silabo-prueba.component';
+import { ModuloSesionesPruebaComponent } from './modulo-prueba/modulo-sesiones-prueba/modulo-sesiones-prueba/modulo-sesiones-prueba.component';
+import { ModuloForoContenidoPruebaComponent } from './modulo-prueba/modulo-foro-prueba/modulo-foro-prueba/modulo-foro-contenido-prueba/modulo-foro-contenido-prueba/modulo-foro-contenido-prueba.component';
+import { SesionesPruebaComponent } from './sesiones-prueba/sesiones-prueba.component';
+import { SesionesVideoPruebaComponent } from './sesiones-prueba/sesiones-video-prueba/sesiones-video-prueba/sesiones-video-prueba.component';
 
 
 @NgModule({
@@ -84,6 +94,16 @@ import { DocenciaForosModalComponent } from './docencia/docencia-foros/docencia-
     DocenciaSesionesWebinarComponent,
     DocenciaForosComponent,
     DocenciaForosModalComponent,
+    CursoPruebaComponent,
+    CursoPruebaModulosComponent,
+    ModuloPruebaComponent,
+    ModuloForoPruebaComponent,
+    ModuloRecursoPruebaComponent,
+    ModuloSilaboPruebaComponent,
+    ModuloSesionesPruebaComponent,
+    ModuloForoContenidoPruebaComponent,
+    SesionesPruebaComponent,
+    SesionesVideoPruebaComponent,
 
   ],
   imports: [
