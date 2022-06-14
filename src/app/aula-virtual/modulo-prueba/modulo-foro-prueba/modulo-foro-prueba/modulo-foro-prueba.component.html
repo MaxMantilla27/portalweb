@@ -1,0 +1,78 @@
+<div class="cursoTitle">{{Capitulo}}</div>
+<ng-container *ngIf="NuevoForo">
+
+  <!-- Nuevo Foro -->
+  <div class="row" style="align-items: center;width: 100%;">
+    <div class="tipoIndicacionTitle col-12 col-md-12 col-lg-12">
+      <img class="ImgIndicacionesContent" src="../../../../assets/icons/foro-naranja.svg">
+      <div>Foro</div>
+    </div>
+  </div>
+  <app-modulo-foro-insert (volver)="RefrescarForo()"
+  [IdPgeneral]="IdPgeneral" [IdPprincipal]="IdPprincipal" [IdPEspecificoPadre]="IdPEspecificoPadre" [IdPEspecificoHijo]="IdPEspecificoHijo">
+</app-modulo-foro-insert>
+</ng-container>
+<ng-container *ngIf="!NuevoForo">
+  <ng-container *ngIf="!ContenidoForo">
+
+    <!-- Vista de Foro -->
+    <div class="row" style="align-items: center;width: 100%;">
+      <div class="tipoIndicacionTitle col-12 col-md-12 col-lg-12">
+        <img class="ImgIndicacionesContent" src="../../../../assets/icons/foro-naranja.svg">
+        <div>Foro</div>
+      </div>
+    </div>
+    <div style="font-weight: 600;
+    border-bottom: 1px solid #e0e0e0;
+    padding-bottom: 5px;
+    margin-top: 20px;
+    margin-bottom: 10px;">Todos los temas</div>
+    <div class="contentForo">
+
+      <ng-container  *ngFor="let item of foro;let i=index">
+
+      <div class="foro" *ngIf="(pagina-1)*4<=i && (pagina)*4>i">
+
+        <div style="display: flex;align-items: center;justify-content: flex-start;">
+          <img [src]="item.urlAvatar" alt="" style="width: 40px; height: 40px;    margin-right: 10px;">
+          <div>
+            <div class="titleForo" (click)="ContenidoForo=!ContenidoForo && IdForo=item.id" >{{item.titulo}}></div>
+            <div class="subTitleForo">{{item.nombres}}</div>
+          </div>
+        </div>
+        <div style="display: flex;justify-content: end;align-items: center;    min-width: 40px;">
+          <img src="../../../../assets/icons/respuestas-foro-28.svg" alt="" style="width: 20px; height: 20px;    margin-right: 10px;">
+          <div class="NRespuestas">{{item.respuestas}}</div>
+        </div>
+      </div>
+    </ng-container>
+    </div>
+    <div  class="paginatorForo">
+      <i class="material-icons paginaForo" (click)="minusPage()" >keyboard_arrow_left</i>
+      <ng-container *ngFor="let pag of paginacion">
+        <div (click)="page(pag)" class="paginaForo"   [ngClass]="{'pagActive': pag === pagina}" *ngIf="paginaCeil>=(pag/5) && (paginaCeil-1)<=(pag/5)">
+          {{pag}}
+        </div>
+      </ng-container>
+      <i class="material-icons paginaForo" (click)="plusPage()">keyboard_arrow_right</i>
+    </div>
+  </ng-container>
+
+  <!-- Contenido del foro -->
+  <ng-container *ngIf="ContenidoForo">
+    <div class="row" style="align-items: center;width: 100%;">
+      <div class="tipoIndicacionTitle col-12 col-md-19 col-lg-10">
+        <img class="ImgIndicacionesContent" src="../../../../assets/icons/foro-naranja.svg">
+        <div>Foro</div>
+      </div>
+      <div class="col-12 col-md-3 col-lg-2">
+        <app-default-button  (ButtoclClick)="NuevoForo=!NuevoForo && ContenidoForo=!ContenidoForo" [confs]="{color:'primary',titulo:'Volver'}"  [style]="'width: 100%;'"
+        [style]="'margin-bottom: 0px !important;padding:0px 20px'" [icon]="''">
+      </app-default-button>
+      </div>
+    </div>
+    <app-modulo-foro-contenido-prueba (volver)="RefrescarForo()"
+          [IdPregunta]="IdForo" [IdPgeneral]="IdPgeneral" [IdPprincipal]="IdPprincipal" [IdPEspecificoPadre]="IdPEspecificoPadre" [IdPEspecificoHijo]="IdPEspecificoHijo">
+    </app-modulo-foro-contenido-prueba>
+  </ng-container>
+</ng-container>

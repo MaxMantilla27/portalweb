@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { CambioPasswordDTO } from 'src/app/Core/Models/AccountDTO';
@@ -22,6 +22,7 @@ export class AccountService {
     return this.http.post<any>(this.urlBase+'/ActualizarPasswordCuenta',Json);
   }
   public RegistroCursoAulaVirtualNueva(IdBusqueda:number):Observable<any>{
-    return this.http.get<any>(this.urlBase+'/RegistroCursoAulaVirtualNueva?IdBusqueda='+IdBusqueda);
+    console.log(IdBusqueda)
+    return this.http.post<any>(this.urlBase+'/RegistroCursoAulaVirtualNueva?IdBusqueda='+IdBusqueda,{headers:new HttpHeaders});
   }
 }

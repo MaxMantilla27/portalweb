@@ -80,6 +80,7 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatmenuComponent } from './Containers/matmenu/matmenu.component';
 import { LibroReclamacionService } from './Services/LibroReclamacion/libro-reclamacion.service';
+import { VideoBrightcovePruebaComponent } from './Containers/video-brightcove-prueba/video-brightcove-prueba/video-brightcove-prueba.component';
 import { CapitalicePipe } from './Pipes/capitalice.pipe';
 import { MedioPagoActivoPasarelaService } from './Services/MedioPagoActivoPasarela/medio-pago-activo-pasarela.service';
 import { ImagenTarjetas } from './ImagenTarjetas';
@@ -150,6 +151,7 @@ import { ChargeComponent } from './Containers/Dialog/charge/charge.component';
     SafePipe,
     TableComponent,
     MatmenuComponent,
+    VideoBrightcovePruebaComponent,
     CapitalicePipe,
     ChargeComponent,
 
@@ -178,6 +180,8 @@ import { ChargeComponent } from './Containers/Dialog/charge/charge.component';
     TableComponent,
     MatmenuComponent,
     ChargeComponent,
+    VideoBrightcovePruebaComponent,
+
 
     MatTabsModule,
     MatTableModule,

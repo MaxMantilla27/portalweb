@@ -33,4 +33,10 @@ export class ProgramaContenidoService {
   public ObtenerCodigoMatriculaAlumno(IdMatriculaCabecera:number):Observable<any>{
     return this.http.get<any>(this.urlBase+'/ObtenerCodigoMatriculaAlumno?IdMatriculaCabecera='+IdMatriculaCabecera);
   }
+  public ObtenerListadoProgramaContenidoPrueba(IdRegistroPrueba:number):Observable<any>{
+    return this.http.get<any>(this.urlBase+'/ObtenerListadoProgramaContenidoPrueba?IdRegistroPrueba='+IdRegistroPrueba);
+  }
+  public ConseguirEstructuraPorPrograma(IdPGeneral:number):Observable<any>{
+    return this.http.get<any>(this.urlBase+'/ConseguirEstructuraPorPrograma?IdPGeneral='+IdPGeneral);
+  }
 }

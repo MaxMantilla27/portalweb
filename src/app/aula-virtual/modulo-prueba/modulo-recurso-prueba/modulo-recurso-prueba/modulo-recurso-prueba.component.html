@@ -1,0 +1,51 @@
+<div class="cursoTitle">{{Capitulo}}</div>
+
+<div class="tipoIndicacionTitle">
+
+  <img class="ImgIndicacionesContent" src="../../../../assets/icons/recursos-azul-05.svg">
+  <div>Recursos</div>
+</div>
+
+<div class="resume" *ngIf="miPerfil!=undefined">¡Hola {{miPerfil.datosAlumno.nombres}}! <br>
+  Te compartimos los siguientes recursos, que te seran de ayuda en el desarrollo del curso</div>
+
+<div class="row">
+  <div class="col-12 col-md-12 col-lg-12">
+    <div class="titleMaterial">Diapositivas</div>
+    <div class="contentMaterial">
+      <ng-container *ngIf="Estructura!=undefined">
+        <div *ngFor="let est of Estructura">
+          <div style="padding: 5px 0px;    text-decoration: underline;
+            font-weight: 600;"></div>
+          <div style="padding:5px 20px;">
+            <div *ngFor="let sesiones of est.listaSesiones" style="display: flex;flex-direction: column;">
+              <ng-container *ngIf="(sesiones.subSesion==null && est.ordenFila==1 && sesiones.ordenFila==1)">
+                {{sesiones.sesion}}
+                <a class="itemMaterial"
+              target="_blank"
+              [href]="'https://repositorioweb.blob.core.windows.net/repositorioweb/aulavirtual/documento-cursos/AulaVirtual/'+sesiones.archivo">
+              <img style="width: 15px;height: auto;margin-right: 15px;" src="../../../../assets/icons/pdf-31.svg" alt="">
+              c1s1.pdf</a>
+              </ng-container>
+              <ng-container *ngIf="(sesiones.subSesion!=null && est.ordenFila==1 && sesiones.ordenFila==1)">
+                {{sesiones.subSesion}}
+
+                  <a class="itemMaterial" target="_blank"
+                  [href]="'https://repositorioweb.blob.core.windows.net/repositorioweb/aulavirtual/documento-cursos/AulaVirtual/'+sesiones.archivo">
+                  <img style="width: 15px;height: auto;margin-right: 15px;" src="../../../../assets/icons/pdf-31.svg" alt="">
+                    c1s1s1.pdf
+                  </a>
+
+              </ng-container>
+
+            </div>
+          </div>
+        </div>
+      </ng-container>
+    </div>
+    <ng-container *ngIf="material!=undefined && material.length>0">
+    </ng-container>
+
+
+  </div>
+</div>

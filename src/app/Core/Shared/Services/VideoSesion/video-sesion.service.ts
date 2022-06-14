@@ -19,4 +19,12 @@ export class VideoSesionService {
     console.log(Json)
     return this.http.post<any>(this.urlBase+'/RegistrarUltimaVisualizacionVideo',Json);
   }
+  public ObtenerVideoProgramaCapacitacionSesionPrueba(Json:ParametrosVideoSesionDTO):Observable<any>{
+    console.log(Json)
+    return this.http.post<any>(this.urlBase+'/ObtenerVideoProgramaCapacitacionSesionPrueba',Json);
+  }
+  public ObtenerConfiguracionVideoSesion(IdPGeneral:number,Fila:number):Observable<any>{
+    return this.http.get<any>(this.urlBase+'/ObtenerConfiguracionVideoSesion?IdPGeneral='+IdPGeneral+'&Fila='+Fila)
+  }
+
 }

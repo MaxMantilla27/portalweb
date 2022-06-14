@@ -40,6 +40,10 @@ import { SeccionProgramaService } from 'src/app/Core/Shared/Services/SeccionProg
 import { SilaboService } from 'src/app/Core/Shared/Services/Silabo/silabo.service';
 import { SnackBarServiceService } from 'src/app/Core/Shared/Services/SnackBarService/snack-bar-service.service';
 import { TagService } from 'src/app/Core/Shared/Services/Tag/tag.service';
+import { AccountService } from 'src/app/Core/Shared/Services/Account/account.service';
+import { Router } from '@angular/router';
+
+
 import { VistaPreviaComponent } from './vista-previa/vista-previa.component';
 
 @Component({
@@ -63,6 +67,8 @@ export class ProgramasDetalleComponent implements OnInit {
     private _RegionService: RegionService,
     private _DatosPortalService: DatosPortalService,
     private _HelperService: HelperService,
+    private _AccountService: AccountService,
+    private _router:Router,
     public dialog: MatDialog,
     private _SnackBarServiceService: SnackBarServiceService,
     config: NgbCarouselConfig,
@@ -188,6 +194,14 @@ export class ProgramasDetalleComponent implements OnInit {
     this.ListTagProgramaRelacionadoPorIdBusqueda();
     this.AddFields();
     this.ObtenerCombosPortal();
+  }
+  
+  RegistrarProgramaPrueba(){
+    this._AccountService.RegistroCursoAulaVirtualNueva(this.idBusqueda).subscribe({
+      next:x=>{
+        this._router.navigate(['/AulaVirtual/MisCursos']);
+      },
+    })
   }
 
   OpenModal(): void {
