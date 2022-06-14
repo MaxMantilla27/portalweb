@@ -20,7 +20,6 @@ import { ModuloComponent } from './modulo/modulo.component';
 import { PagoComponent } from './pago/pago.component';
 import { ResultadoPagoComponent } from './resultado-pago/resultado-pago.component';
 import { ModuloPruebaComponent } from './modulo-prueba/modulo-prueba.component';
-import { ModuloComponent } from './modulo/modulo.component';
 import { SesionesPruebaComponent } from './sesiones-prueba/sesiones-prueba.component';
 import { SesionesComponent } from './sesiones/sesiones.component';
 
