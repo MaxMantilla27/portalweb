@@ -52,3 +52,12 @@ export interface CardProgramasDTO{
   Content:string
   Inversion:string
 }
+
+export interface CardMatriculasPruebaDTO{
+  Title:string,
+  Img:string,
+  ImgAlt:string,
+  Tipo:number,
+  Url:string,
+  Valido:boolean
+}

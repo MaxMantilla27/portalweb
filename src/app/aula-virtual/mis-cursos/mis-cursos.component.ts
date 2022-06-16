@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { CardMatriculasDTO } from 'src/app/Core/Models/BasicDTO';
+import { MatDialog } from '@angular/material/dialog';
 import { CuentaService } from 'src/app/Core/Shared/Services/Cuenta/cuenta.service';
 import { DatosPerfilService } from 'src/app/Core/Shared/Services/DatosPerfil/datos-perfil.service';
 import { SessionStorageService } from 'src/app/Core/Shared/Services/session-storage.service';
@@ -14,7 +14,9 @@ export class MisCursosComponent implements OnInit {
   constructor(
     private _DatosPerfilService: DatosPerfilService,
     private _SessionStorageService:SessionStorageService,
-    private _CuentaService: CuentaService
+    private _CuentaService: CuentaService,
+    public dialog: MatDialog
+
     ) {}
 
   public migaPan = [
@@ -26,6 +28,8 @@ export class MisCursosComponent implements OnInit {
   public textoBienvenido = '';
   public matriculas: Array<any> = [];
   public matriculasPrueba: Array<any> = [];
+  public fecha = new Date();
+
 
   ngOnInit(): void {
     this.textoBienvenido =

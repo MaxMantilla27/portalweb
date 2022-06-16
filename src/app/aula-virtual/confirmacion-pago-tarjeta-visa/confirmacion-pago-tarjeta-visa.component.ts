@@ -1,6 +1,6 @@
 import { DOCUMENT } from '@angular/common';
 import { stringify } from '@angular/compiler/src/util';
-import { Component, Inject, OnInit, Renderer2, ViewEncapsulation } from '@angular/core';
+import { Component, Inject, OnDestroy, OnInit, Renderer2, ViewEncapsulation } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
 import { RegistroProcesoPagoAlumnoDTO, RegistroRespuestaPreProcesoPagoDTO } from 'src/app/Core/Models/ProcesoPagoDTO';
@@ -13,7 +13,7 @@ import { SessionStorageService } from 'src/app/Core/Shared/Services/session-stor
   styleUrls: ['./confirmacion-pago-tarjeta-visa.component.scss'],
   encapsulation: ViewEncapsulation.None,
 })
-export class ConfirmacionPagoTarjetaVisaComponent implements OnInit {
+export class ConfirmacionPagoTarjetaVisaComponent implements OnInit,OnDestroy {
   private signal$ = new Subject();
   constructor(
     private _renderer2: Renderer2,
@@ -22,6 +22,10 @@ export class ConfirmacionPagoTarjetaVisaComponent implements OnInit {
     private _FormaPagoService:FormaPagoService,
     private _SessionStorageService:SessionStorageService
   ) {}
+  ngOnDestroy(): void {
+    this.signal$.next(true)
+    this.signal$.complete()
+  }
   public idMatricula=0
   public json:RegistroRespuestaPreProcesoPagoDTO={
     IdentificadorTransaccion:'',

@@ -1,0 +1,29 @@
+<mat-card class="card-matriculas">
+  <img mat-card-image [src]="cardContent.Img"  [alt]="cardContent.ImgAlt" (error)="updateUrl()">
+  <mat-card-content>
+    <div *ngIf="cardContent.Tipo==2" class="matriculaicon">
+
+      <i class="material-icons matriculaicon" >play_circle_outline</i>
+      <div >Online Sincrónico</div>
+    </div>
+    <div *ngIf="cardContent.Tipo==1" class="matriculaicon">
+      <i class="material-icons" >live_tv</i>
+      <div >Online Asincrónico</div>
+    </div>
+    <ng-container *ngIf="!cardContent.Valido">
+      <div class="title" (click)="OpenModal()">{{cardContent.Title}}</div>
+    </ng-container>
+    <ng-container *ngIf="cardContent.Valido">
+      <div class="title" [routerLink]="cardContent.Url">{{cardContent.Title}}</div>
+    </ng-container>
+
+  </mat-card-content>
+  <mat-card-footer>
+    <div class="invercion">
+      <ng-content  select="[linkIcons]">
+
+      </ng-content>
+
+    </div>
+  </mat-card-footer>
+</mat-card>

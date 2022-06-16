@@ -1,0 +1,42 @@
+<div class="cursoTitle">{{Capitulo}}</div>
+<div class="tipoIndicacionTitle col-12 col-md-12 col-lg-12">
+  <img class="ImgIndicacionesContent" src="../../../../assets/icons/preguntas-naranja-38.svg">
+  <div>Preguntas frecuentes</div>
+</div>
+<ng-container *ngIf="PreguntasFrecuentes==null">
+  <div style="text-align: left; margin-bottom: 20px;">
+    Por el momento el curso no cuenta con preguntas frecuentes.
+  </div>
+</ng-container>
+<ng-container *ngIf="PreguntasFrecuentes!=null">
+  <div style="text-align: left; margin-bottom: 20px;">
+    A continuación se muestran las preguntas frecuentes correspondientes al curso.
+  </div>
+  <div class="PreguntasFrecuentes">
+    <ng-container *ngFor="let item of PreguntasFrecuentes,let i=index">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="row">
+            <div class="CabeceraPregunta">
+              <div class="CabeceraExpandPregunta" [ngClass]="{'CabeceraExpandPreguntaOpen':PreguntaExpand==i}">
+                <div class="PreguntaFrecuenteTitulo" style="display:flex;margin-top: 20px;">
+                  {{item.pregunta}}
+                </div>
+              </div>
+              <div>
+                <i class="material-icons no-seleccionable " *ngIf="PreguntaExpand!=i"
+                  (click)="PreguntaExpand=i" style="margin-top: 20px;">keyboard_arrow_down</i>
+                <i class="material-icons no-seleccionable " *ngIf="PreguntaExpand==i"
+                  (click)="PreguntaExpand=-1" style="margin-top: 20px;">keyboard_arrow_up</i>
+              </div>
+            </div>
+            <div class="ContenidoRespuestaPregunta" *ngIf="PreguntaExpand==i">
+              {{item.respuesta}}
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+</ng-container>

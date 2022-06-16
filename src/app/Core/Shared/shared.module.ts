@@ -86,6 +86,7 @@ import { MedioPagoActivoPasarelaService } from './Services/MedioPagoActivoPasare
 import { ImagenTarjetas } from './ImagenTarjetas';
 import { FormaPagoService } from './Services/FormaPago/forma-pago.service';
 import { ChargeComponent } from './Containers/Dialog/charge/charge.component';
+import { CardMatriculasPruebaComponent } from './Containers/card/card-matriculas-prueba/card-matriculas-prueba/card-matriculas-prueba.component';
 
 
 
@@ -154,6 +155,7 @@ import { ChargeComponent } from './Containers/Dialog/charge/charge.component';
     VideoBrightcovePruebaComponent,
     CapitalicePipe,
     ChargeComponent,
+    CardMatriculasPruebaComponent,
 
   ],
   exports: [
@@ -181,6 +183,8 @@ import { ChargeComponent } from './Containers/Dialog/charge/charge.component';
     MatmenuComponent,
     ChargeComponent,
     VideoBrightcovePruebaComponent,
+    CardMatriculasPruebaComponent,
+
 
 
     MatTabsModule,

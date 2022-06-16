@@ -76,15 +76,48 @@
             <app-modulo-calificaciones [Capitulo]="json.NombreCapitulo" [IdMatriculaCabecera]="json.IdMatriculaCabecera" [IdPEspecifico]="json.IdPEspecificoHijo"></app-modulo-calificaciones>
           </div>
         </mat-tab>
-        <!-- <mat-tab>
+        <mat-tab>
           <ng-template mat-tab-label>
-            <div class="contentHeaderM">
+            <div class="contentHeaderM" [ngClass]="{'ActiveChil':AyudaActive==true}">
               <div class="iconMat iconAyuda"></div>
               <div class="titleMatr">Ayuda</div>
             </div>
           </ng-template>
-          <div style="padding: 10px 30px">Ayuda</div>
-        </mat-tab> -->
+          <div style="padding: 10px 30px">
+            <app-modulo-ayuda [Capitulo]="json.NombreCapitulo" [IdMatriculaCabecera]="json.IdMatriculaCabecera" [IdPGeneral]="json.IdPGeneralHijo" [IdPrincipal]="json.IdPGeneralPadre" [IdPEspecifico]="json.IdPEspecificoHijo"></app-modulo-ayuda>
+          </div>
+        </mat-tab>
+
+
+        <ng-container *ngIf="AyudaActive==true">
+
+          <mat-tab>
+            <ng-template mat-tab-label class="tabSubcontent">
+              <div class="contentHeaderM subContent" style="cursor: pointer;" (click)="alertaPreguntasFrecuentes=!alertaPreguntasFrecuentes">
+                <div class="titleMatr">Preguntas frecuentes</div>
+              </div>
+            </ng-template>
+            <div style="padding: 10px 30px;">
+              <app-modulo-ayuda-preguntas-frecuentes [IdPrincipal]="json.IdPGeneralPadre" [IdPGeneral]="json.IdPGeneralHijo" [Capitulo]="json.NombreCapitulo">
+
+              </app-modulo-ayuda-preguntas-frecuentes>
+            </div>
+          </mat-tab>
+          <mat-tab >
+            <ng-template mat-tab-label>
+              <div class="contentHeaderM subContent" style="cursor: pointer;" (click)="alertaQuejasSugerencias=!alertaQuejasSugerencias">
+                <div class="titleMatr">Quejas y sugerencias</div>
+              </div>
+            </ng-template>
+            <div style="padding: 10px 30px;">
+              <app-modulo-ayuda-quejas-sugerencias [IdPGeneral]="json.IdPGeneralHijo" [IdPEspecifico]="json.IdPEspecificoHijo" [Capitulo]="json.NombreCapitulo">
+
+              </app-modulo-ayuda-quejas-sugerencias>
+            </div>
+          </mat-tab>
+        </ng-container>
+
+
       </mat-tab-group>
     </div>
   </div>

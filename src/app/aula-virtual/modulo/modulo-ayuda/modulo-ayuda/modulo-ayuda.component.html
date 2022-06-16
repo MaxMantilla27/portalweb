@@ -1,0 +1,42 @@
+<ng-container *ngIf="(preguntasFrecuentes==false && quejasSugerencias==false)">
+  <div class="cursoTitle">{{Capitulo}}</div>
+  <div class="tipoIndicacionTitle col-12 col-md-12 col-lg-12">
+    <img class="ImgIndicacionesContent" src="../../../../assets/icons/ayuda-naranja.svg">
+    <div>Ayuda</div>
+  </div>
+  <div class="resume" *ngIf="miPerfil!=undefined">¡Hola {{miPerfil.datosAlumno.nombres}}! <br>
+    Te compartimos los siguientes recursos, que te seran de ayuda en el desarrollo del curso.
+  </div>
+  <div class="TipoAyuda">
+    <div class="row">
+      <div class="col-1 col-md-1 col-lg-1">
+        <img class="ImgAyudaContent" src="../../../../assets/icons/preguntas-naranja-38.svg">
+      </div>
+      <div class="AyudaContent col-11 col-md-11 col-lg-11" (click)="preguntasFrecuentes=!preguntasFrecuentes" (click)="IdPrincipal=IdPrincipal && IdPGeneral=IdPGeneral" (click)="Capitulo=Capitulo">
+        Preguntas frecuentes
+      </div>
+    </div>
+  </div>
+  <div class="TipoAyuda">
+    <div class="row">
+      <div class="col-1 col-md-1 col-lg-1">
+        <img class="ImgAyudaContent" src="../../../../assets/icons/quejas-sugerencias-03.svg">
+      </div>
+      <div class=" AyudaContent col-11 col-md-11 col-lg-11" (click)="quejasSugerencias=!quejasSugerencias" (click)="IdPrincipal=IdPrincipal && IdPGeneral=IdPGeneral" (click)="Capitulo=Capitulo">
+        Quejas y sugerencias
+      </div>
+    </div>
+  </div>
+</ng-container>
+<ng-container *ngIf="preguntasFrecuentes">
+  <app-modulo-ayuda-preguntas-frecuentes [IdPrincipal]="IdPrincipal" [IdPGeneral]="IdPGeneral" [Capitulo]="Capitulo">
+
+  </app-modulo-ayuda-preguntas-frecuentes>
+</ng-container>
+<ng-container *ngIf="quejasSugerencias">
+  <app-modulo-ayuda-quejas-sugerencias (volver)="RefrescarAyuda()" [IdPGeneral]="IdPGeneral" [IdPEspecifico]="IdPEspecifico"  [Capitulo]="Capitulo">
+
+  </app-modulo-ayuda-quejas-sugerencias>
+</ng-container>
+
+
