@@ -6,6 +6,7 @@ import { Subject, takeUntil } from 'rxjs';
 import { RegistroProcesoPagoAlumnoDTO, RegistroRespuestaPreProcesoPagoDTO } from 'src/app/Core/Models/ProcesoPagoDTO';
 import { FormaPagoService } from 'src/app/Core/Shared/Services/FormaPago/forma-pago.service';
 import { SessionStorageService } from 'src/app/Core/Shared/Services/session-storage.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-confirmacion-pago-tarjeta-visa',
@@ -22,6 +23,7 @@ export class ConfirmacionPagoTarjetaVisaComponent implements OnInit {
     private _FormaPagoService:FormaPagoService,
     private _SessionStorageService:SessionStorageService
   ) {}
+  public urlBase=environment.url_portal;
   public idMatricula=0
   public json:RegistroRespuestaPreProcesoPagoDTO={
     IdentificadorTransaccion:'',
@@ -36,7 +38,9 @@ export class ConfirmacionPagoTarjetaVisaComponent implements OnInit {
     RequiereDatosTarjeta:true,
     TransactionToken:'',
     Estado:null,
-    Comprobante:1,
+    Comprobante:false,
+    CodigoTributario:'',
+    RazonSocial:'',
     TarjetaHabiente:{
       Aniho:'',
       CodigoVV:'',
@@ -67,6 +71,12 @@ export class ConfirmacionPagoTarjetaVisaComponent implements OnInit {
       next:x=>{
         console.log(x)
         this.resultVisa=x._Repuesta;
+        this.resultVisa.total=0;
+        this.resultVisa.listaCuota.forEach((l:any) => {
+          this.resultVisa.total+=l.cuotaTotal
+        });
+
+
         this.jsonSave.IdentificadorTransaccion=this.json.IdentificadorTransaccion
         this.jsonSave.MedioCodigo=this.resultVisa.medioCodigo
         this.jsonSave.MedioPago=this.resultVisa.medioPago
@@ -90,10 +100,9 @@ export class ConfirmacionPagoTarjetaVisaComponent implements OnInit {
     script.setAttribute('data-formbuttoncolor','#eea236')
     script.setAttribute('data-merchantname','BSG Institute')
     script.setAttribute('data-purchasenumber',this.resultVisa.procesoPagoBotonVisa.orderVisa.purchaseNumber)
-    script.setAttribute('data-amount',10)
-   // script.setAttribute('data-amount',parseFloat(this.resultVisa.procesoPagoBotonVisa.amount+'.00'))
-    script.setAttribute('data-expirationminutes','15')
-    script.setAttribute('data-timeouturl','/')
+    script.setAttribute('data-amount',parseFloat(this.resultVisa.procesoPagoBotonVisa.amount+'.00'))
+    script.setAttribute('data-expirationminutes','5')
+    script.setAttribute('data-timeouturl',this.urlBase+'/AulaVirtual/MisPagos')
     this._renderer2.appendChild(this._document.getElementById('visa'), script);
   }
   pagar(){

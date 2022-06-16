@@ -1,0 +1,52 @@
+@keyframes slideDown {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0%);
+  }
+}
+
+.cdk-overlay-pane {
+  top: 0 !important;
+  position: absolute !important;
+  transform: translateY(-250%);
+  animation: slideDown 0.2s forwards 0s ease-in;
+}
+
+.cdk-overlay-container > * {
+  animation: none;
+}
+.ElementoContent {
+  max-height: 100% !important;
+  overflow: hidden;
+}
+.mat-bottom-sheet-container {
+  max-height: 90vh;
+  min-height: 380px;
+}
+.footerShetPrograma {
+  position: sticky;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background: white;
+  border-top: solid 1px gray;
+  padding: 10px 30px;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+.FilterPanelProgram {
+  padding: 0px;
+}
+.limpiarTodo {
+  margin: 0px;
+  width: 50%;
+  display: flex;
+  justify-content: center;
+}
+.filtroHeader{
+  justify-content: space-between;
+}

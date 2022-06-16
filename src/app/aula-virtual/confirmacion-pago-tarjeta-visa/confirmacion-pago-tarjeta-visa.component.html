@@ -2,39 +2,119 @@
   <div class="row rowpaddAv">
     <div class="col-12 row">
       <div class="col-12 col-md-12 col-lg-12 titlePagoTarjeta">Confirma tu compra</div>
-      <div class="col-12 col-md-6 col-lg-6 inputPagoVisa">
-        <ng-container *ngIf="resultVisa!=undefined">
-          <mat-form-field appearance="outline" [floatLabel]="'always'" style="width: 100%;">
-            <mat-label>Nombres</mat-label>
-            <input type="text" style="color: #878787;" [value]="resultVisa.registroAlumno.nombre" disabled matInput />
-          </mat-form-field>
-          <mat-form-field appearance="outline" [floatLabel]="'always'" style="width: 100%;">
-            <mat-label>Apellidos</mat-label>
-            <input type="text" style="color: #878787;" [value]="resultVisa.registroAlumno.apellido" disabled matInput />
-          </mat-form-field>
-          <mat-form-field appearance="outline" [floatLabel]="'always'" style="width: 100%;">
-            <mat-label>E-mail</mat-label>
-            <input type="text" style="color: #878787;" [value]="resultVisa.registroAlumno.correo" disabled matInput />
-          </mat-form-field>
-        </ng-container>
-
-        <div class="comprobatePagoTarjeta">
-          <div class="titleComprobantePagoTarjeta">Emitir comprobante</div>
-          <div class="items">
-            <div class="itm no-select" [ngClass]="{'SelectCom':jsonSave.Comprobante==1}">
-              Boleta <i class="material-icons" *ngIf="jsonSave.Comprobante==1">check_circle</i>
-            </div>
-            <div class="itm no-select" [ngClass]="{'SelectCom':jsonSave.Comprobante!=1}">Factura <i
-                class="material-icons" *ngIf="jsonSave.Comprobante!=1">check_circle</i>
+      <div class="col-12 d-md-none d-lg-none" *ngIf="resultVisa!=undefined">
+        <div class="resumenPagoTarjeta" style="padding: 0px">
+          <div class="titleResumenPago">Resumen de tu pago</div>
+          <div class="contentResumenPago">
+            <div class="subtitleResumenPago">{{resultVisa.nombrePrograma}}</div>
+            <div class="ItemsResumenPago row">
+              <div class="col-12 row itms" *ngFor="let item of resultVisa.listaCuota">
+                <div class="col-8">Cuota N°{{item.nroCuota}} - {{item.fechaVencimiento | date:'dd/MM/yyyy'}}</div>
+                <div class="col-4" style="text-align: right;">{{resultVisa.simboloMoneda}} {{item.cuotaTotal}}</div>
+              </div>
+              <div class="col-12 row tot">
+                <div class="col-8">Total a pagar</div>
+                <div class="col-4" style="text-align: right;">{{resultVisa.simboloMoneda}} {{resultVisa.total}}</div>
+              </div>
             </div>
           </div>
         </div>
-        <form ngNoForm (submit)="pagar()" id="visa" [action]="'/AulaVirtual/MisPagos'" style="text-align: center">
+
+        <div class="iconoPagoTarjeta">
+          <div class="imgPagoTarjeta"></div>
+          <div class="textPagoTarjeta">
+            <span>PAGO</span>
+            <span>100%</span>
+            <span>seguro</span>
+          </div>
+          <div class="descPagoTarjeta">
+            <span>Este certificado garantiza la</span>
+            <span>seguridad de todas tus conexiones</span>
+            <span>mediante cifrado</span>
+          </div>
+        </div>
+      </div>
+      <div class="col-12 col-md-6 col-lg-6 inputPagoVisa">
+        <div class="subtitlePagoVisa">Pago realizado por</div>
+        <ng-container *ngIf="resultVisa!=undefined">
+          <mat-form-field appearance="outline" class="disabledInput" [floatLabel]="'always'" style="width: 100%;">
+            <mat-label>Nombres</mat-label>
+            <input type="text" style="color: #878787;" [value]="resultVisa.registroAlumno.nombre" disabled matInput />
+          </mat-form-field>
+          <mat-form-field appearance="outline" class="disabledInput" [floatLabel]="'always'" style="width: 100%;">
+            <mat-label>Apellidos</mat-label>
+            <input type="text" style="color: #878787;" [value]="resultVisa.registroAlumno.apellido" disabled matInput />
+          </mat-form-field>
+          <mat-form-field appearance="outline" class="disabledInput" [floatLabel]="'always'" style="width: 100%;">
+            <mat-label>E-mail</mat-label>
+            <input type="text" style="color: #878787;" [value]="resultVisa.registroAlumno.correo" disabled matInput />
+          </mat-form-field>
+          <ng-container *ngIf="jsonSave.Comprobante!=false">
+            <mat-form-field appearance="outline" [floatLabel]="'always'" style="width: 100%;">
+              <mat-label>Razón Social</mat-label>
+              <input type="text" [(ngModel)]="jsonSave.RazonSocial" placeholder="Razón Social" matInput />
+            </mat-form-field>
+            <mat-form-field appearance="outline" [floatLabel]="'always'" style="width: 100%;">
+              <mat-label>Número Tributario</mat-label>
+              <input type="text" [(ngModel)]="jsonSave.CodigoTributario" placeholder="Número Tributario" matInput />
+            </mat-form-field>
+          </ng-container>
+
+        </ng-container>
+
+        <div class="row comprobatePagoTarjeta">
+          <div class="col-12 col-md-6 col-lg-4">Emitir comprobante</div>
+          <div class="col-12 col-md-6 col-lg-8 items">
+            <div class="itm no-select" [ngClass]="{'SelectCom':jsonSave.Comprobante==false}"
+              (click)="jsonSave.Comprobante=false">
+              Boleta <i class="material-icons" *ngIf="jsonSave.Comprobante==false">check_circle</i>
+            </div>
+            <div class="itm no-select" [ngClass]="{'SelectCom':jsonSave.Comprobante!=false}"
+              (click)="jsonSave.Comprobante=true">Factura <i class="material-icons"
+                *ngIf="jsonSave.Comprobante!=false">check_circle</i>
+            </div>
+          </div>
+        </div>
+        <form ngNoForm (submit)="pagar()" id="visa" action="https://localhost:7177/api/FormaPago/pruebaproceso?Id=1"  [method]="'get'" style="text-align: center;margin-top: 30px;">
 
         </form>
+        <div style="    width: 100%;
+        font-size: 12px;
+        color: #b2b2b2;
+        padding: 20px;">
+          * El monto a cargar sera el cual se detalla arriba en la moneda del programa, el tipo de cambio dependerá del banco que usted utilice.
+        </div>
       </div>
-      <div class="col-12 col-md-6 col-lg-6">
-
+      <div class="d-none col-md-6 d-md-block col-lg-6 d-lg-block" *ngIf="resultVisa!=undefined">
+        <div class="resumenPagoTarjeta">
+          <div class="titleResumenPago">Resumen de tu pago</div>
+          <div class="contentResumenPago">
+            <div class="subtitleResumenPago">{{resultVisa.nombrePrograma}}</div>
+            <div class="ItemsResumenPago row">
+              <div class="col-12 row itms" *ngFor="let item of resultVisa.listaCuota">
+                <div class="col-8">Cuota N°{{item.nroCuota}} - {{item.fechaVencimiento | date:'dd/MM/yyyy'}}</div>
+                <div class="col-4" style="text-align: right;">{{resultVisa.simboloMoneda}} {{item.cuotaTotal}}</div>
+              </div>
+              <div class="col-12 row tot">
+                <div class="col-8">Total a pagar</div>
+                <div class="col-4" style="text-align: right;">{{resultVisa.simboloMoneda}} {{resultVisa.total}}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="iconoPagoTarjeta">
+          <div class="imgPagoTarjeta"></div>
+          <div class="textPagoTarjeta">
+            <span>PAGO</span>
+            <span>100%</span>
+            <span>seguro</span>
+          </div>
+          <div class="descPagoTarjeta">
+            <span>Este certificado garantiza la</span>
+            <span>seguridad de todas tus conexiones</span>
+            <span>mediante cifrado</span>
+          </div>
+        </div>
       </div>
     </div>
   </div>

@@ -86,8 +86,9 @@ import { MedioPagoActivoPasarelaService } from './Services/MedioPagoActivoPasare
 import { ImagenTarjetas } from './ImagenTarjetas';
 import { FormaPagoService } from './Services/FormaPago/forma-pago.service';
 import { ChargeComponent } from './Containers/Dialog/charge/charge.component';
-
-
+import { InputCardDirective } from './Directives/input-card.directive';
+import { InputCardFechaDirective } from './Directives/input-card-fecha.directive';
+import {MatBottomSheetModule} from '@angular/material/bottom-sheet';
 
 @NgModule({
   imports: [
@@ -120,7 +121,7 @@ import { ChargeComponent } from './Containers/Dialog/charge/charge.component';
     MatPaginatorModule,
     MatSortModule,
     MatDialogModule,
-
+    MatBottomSheetModule
   ],
   declarations: [
     HeaderComponent,
@@ -154,6 +155,8 @@ import { ChargeComponent } from './Containers/Dialog/charge/charge.component';
     VideoBrightcovePruebaComponent,
     CapitalicePipe,
     ChargeComponent,
+    InputCardDirective,
+    InputCardFechaDirective,
 
   ],
   exports: [
@@ -182,6 +185,9 @@ import { ChargeComponent } from './Containers/Dialog/charge/charge.component';
     ChargeComponent,
     VideoBrightcovePruebaComponent,
 
+    InputCardDirective,
+
+    CapitalicePipe,
 
     MatTabsModule,
     MatTableModule,
@@ -197,6 +203,7 @@ import { ChargeComponent } from './Containers/Dialog/charge/charge.component';
     MatMenuModule,
     MatSelectModule,
     MatExpansionModule,
+    MatBottomSheetModule,
     DefaultButtonComponent,
     LinkButtonComponent,
     CustomCardComponent,
@@ -216,7 +223,6 @@ import { ChargeComponent } from './Containers/Dialog/charge/charge.component';
     MatPaginatorModule,
     MatSortModule,
     MatDialogModule,
-    CapitalicePipe,
   ],
   providers: [
     SessionStorageService,

@@ -46,7 +46,7 @@ button{
   height: auto;
 }
 .buttonHeader{
-  margin-right: 20px;
+  margin-right: 10px;
 }
 a {
   text-decoration: none;
@@ -59,3 +59,22 @@ a {
 // a:hover, a:focus {
 //   background-size: 100% 2px;
 // }
+.imgbutton{
+  width: 20px;
+
+  margin: 0px 10px;
+}
+@media screen and (max-width: 384px) {
+  .ButtonReplace{
+    display: none;
+  }
+  .imgbutton{
+    display: block;
+  }
+}
+@media screen and (min-width: 384px) {
+
+  .imgbutton{
+    display: none;
+  }
+}

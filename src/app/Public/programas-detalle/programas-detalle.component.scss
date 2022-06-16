@@ -10,7 +10,7 @@
 .phoneCall{
   position: absolute;
     right: 20px;
-    top: 80px;
+    top: 10px;
     background: #30cc44;
     color: white;
     padding: 5px;
@@ -76,6 +76,8 @@
   width: 100%;
   display: flex;
   align-items: center;
+
+  flex-wrap: wrap;
 }
 .infoProgramTitle{
   font-size: 14px;
@@ -93,12 +95,13 @@
 }
 .tabprogram mat-tab-group mat-tab-header .mat-tab-label-container .mat-tab-list .mat-tab-labels .mat-tab-label .mat-tab-label-content{
   width: 100% !important;
+  padding: 20px;
 }
 .tabprogram mat-tab-group mat-tab-header .mat-tab-label-container .mat-tab-list .mat-tab-labels{
   justify-content: center;
 }
-.tabprogram mat-tab-group mat-tab-header .mat-tab-label-container .mat-tab-list .mat-tab-labels div{
-  width: 25%;
+.tabprogram mat-tab-group mat-tab-header .mat-tab-label-container .mat-tab-list .mat-tab-labels .mat-ripple{
+
   font-size: 20px;
   font-weight: bold;
   color: #4a4a49;
@@ -301,8 +304,10 @@
 .contentimgtarjetas{
   display: flex;
   padding: 0px 20px;
+  flex-wrap: wrap;
+  justify-content: center;
  img{
-
+  margin: 10px;
   width: 60px;
   margin-right: 40px;
  }

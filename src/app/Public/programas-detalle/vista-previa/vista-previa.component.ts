@@ -19,4 +19,10 @@ export class VistaPreviaComponent implements OnInit {
     console.log(this.data)
   }
 
+  source: string = '';
+  ejct(e:any){
+    this.source = e.contentWindow.location.href;
+    console.log(e)
+    console.log(this.source)
+  }
 }

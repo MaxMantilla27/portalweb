@@ -1,13 +1,16 @@
 import { isPlatformBrowser } from '@angular/common';
 import { Component, ElementRef, HostListener, Inject, OnInit, PLATFORM_ID, ViewChild, ViewEncapsulation } from '@angular/core';
 import { FormControl } from '@angular/forms';
+import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { MatSelect } from '@angular/material/select';
 import { ActivatedRoute } from '@angular/router';
+import { Subject, takeUntil } from 'rxjs';
 import { Basic, CardProgramasDTO } from 'src/app/Core/Models/BasicDTO';
 import { FiltroProgramasEnvioDTO, FiltrosProgramasDTO, ModalidadDTO, SubAreaCapacitacionDTO,TipoProgramaDTO} from 'src/app/Core/Models/FiltrosProgramasDTO';
 import { HelperService } from 'src/app/Core/Shared/Services/helper.service';
 import { ProgramasService } from 'src/app/Core/Shared/Services/Programas/programas.service';
 import { SessionStorageService } from 'src/app/Core/Shared/Services/session-storage.service';
+import { FiltroProgramasComponent } from './filtro-programas/filtro-programas.component';
 
 @Component({
   selector: 'app-programas',
@@ -17,6 +20,7 @@ import { SessionStorageService } from 'src/app/Core/Shared/Services/session-stor
 })
 export class ProgramasComponent implements OnInit {
 
+  private signal$ = new Subject();
   @ViewChild('SubAreaMatSelect')
   SelectSubArreas!: MatSelect;
   @ViewChild('TipoProgramaMatSelect')
@@ -30,7 +34,8 @@ export class ProgramasComponent implements OnInit {
     private _ProgramasService:ProgramasService,
     private _SessionStorageService:SessionStorageService,
     private _HelperService:HelperService,
-    @Inject(PLATFORM_ID) platformId: Object
+    @Inject(PLATFORM_ID) platformId: Object,
+    private _bottomSheet: MatBottomSheet
   ) {
     this.isBrowser = isPlatformBrowser(platformId);
   }
@@ -424,5 +429,34 @@ export class ProgramasComponent implements OnInit {
         this.TagModalidad.push({value:x.id,Nombre:x.nombre})
       }
     })
+  }
+  openBottomSheet(){
+    if(this.filtros.areaCapacitacion.length>0){
+      const dialogRef = this._bottomSheet.open(FiltroProgramasComponent,{
+        panelClass:'FilterPanelProgram',
+        data: { TagBusqueda:this.TagBusqueda,
+          TagAreas:this.TagAreas,
+          TagSubAreas:this.TagSubAreas,
+          TagModalidad:this.TagModalidad,
+          TagTipoPrograma:this.TagTipoPrograma,
+          filtros:this.filtros,
+          Modalidad:this.Modalidad,
+          TipoPrograma:this.TipoPrograma,
+          buscar:this.buscar,
+          textoResult:this.textoResult },
+      });
+
+      dialogRef.afterDismissed().pipe(takeUntil(this.signal$)).subscribe((result) => {
+        console.log(result);
+        if(result!=undefined){
+          this.filtros = result.filtros;
+          this.Modalidad = result.Modalidad;
+          this.TipoPrograma = result.TipoPrograma;
+          this.buscar = result.buscar;
+          this.GetProgramas();
+        }
+      });
+
+    }
   }
 }

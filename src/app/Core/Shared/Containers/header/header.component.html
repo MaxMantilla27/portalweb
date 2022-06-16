@@ -1,8 +1,29 @@
-<mat-toolbar color="primary">
-  <img src="https://img.bsginstitute.com/repositorioweb/img/logobsg.svg" alt=""  [routerLink]="'/'" style="cursor: pointer;" width="160px">
+<mat-toolbar color="primary" *ngIf="!responsive">
 
   <div class="div-icon">
     <mat-icon (click)="OnClick.emit()">menu</mat-icon>
+  </div>
+  <img class="logoHeader" src="https://img.bsginstitute.com/repositorioweb/img/logobsg.svg" alt="" [routerLink]="'/'">
+
+  <div class="botones_login hideItemHeader">
+    <app-select [dataUrl]="paises" [tipo]="3" [valueDefecto]="CodigoIso" (Cambio)="ChangePais($event)" [token]="token">
+    </app-select>
+    <div *ngIf="token"
+      style="    flex-direction: column; display: flex;justify-content: flex-end;align-items: flex-end;">
+      <app-alumno-mat-button [nombres]="Alumno.nombres+' '+Alumno.apellidos" [user]="Alumno.email" [val]="value">
+        <ng-container contenidodata>
+          <img [src]="urlAvatar" style="width: auto;height: 25px; margin-top: -5px;" alt="">
+          <div class="nombrealumnoHeader">{{Alumno.nombres}}</div>
+        </ng-container>
+      </app-alumno-mat-button>
+    </div>
+
+    <app-button [Url]="'/login'" [tipo]="4" [class]="'ButtonReplace'" [color]="'white'" [background]="'#FCA534'" [border]="'solid 1px #895800'"
+      *ngIf="!token" [img]="'user-azul.svg'">
+      <ng-container contenidoButton>
+        Ingresar
+      </ng-container>
+    </app-button>
   </div>
   <div class="row space-bet">
     <nav>
@@ -19,7 +40,6 @@
             </ng-container>
           </app-button>
         </ng-container>
-
         <app-button [Url]="'/bs-campus'" [tipo]="2">
           <ng-container contenidoTag>
             BS Campus
@@ -27,12 +47,14 @@
         </app-button>
       </div>
       <div class="botones_login">
-        <app-select [dataUrl]="paises" [tipo]="3" [valueDefecto]="CodigoIso"  (Cambio)="ChangePais($event)" [token]="token" ></app-select>
-        <div *ngIf="token" style="    flex-direction: column; display: flex;justify-content: flex-end;align-items: flex-end;">
+        <app-select [dataUrl]="paises" [tipo]="3" [valueDefecto]="CodigoIso" (Cambio)="ChangePais($event)"
+          [token]="token"></app-select>
+        <div *ngIf="token"
+          style="    flex-direction: column; display: flex;justify-content: flex-end;align-items: flex-end;">
           <app-alumno-mat-button [nombres]="Alumno.nombres+' '+Alumno.apellidos" [user]="Alumno.email" [val]="value">
             <ng-container contenidodata>
-              <img [src]="urlAvatar" style="width: auto;height: 25px;margin-right: 10px; margin-top: -5px;" alt="">
-              <div>{{Alumno.nombres}}</div>
+              <img [src]="urlAvatar" style="width: auto;height: 25px; margin-top: -5px;" alt="">
+              <div class="nombrealumnoHeader">{{Alumno.nombres}}</div>
             </ng-container>
           </app-alumno-mat-button>
         </div>
@@ -51,3 +73,40 @@
     </div> -->
   </div>
 </mat-toolbar>
+<div class="menuResponsive" *ngIf="responsive">
+  <app-button [Url]="''" [tipo]="2" (click)="OnClick.emit()">
+    <ng-container contenidoTag>
+      Inicio
+    </ng-container>
+  </app-button>
+  <mat-accordion class="acordionHeader">
+    <mat-expansion-panel *ngFor="let item of expandibles" style="background: transparent;box-shadow: none;">
+      <mat-expansion-panel-header style="background: transparent !important;
+      padding: 15px;
+      color: white;
+      height: auto;">
+        <mat-panel-title>
+          <div class="titleHeaderResposive">{{item.Nombre}}</div>
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+      <div style="max-width: 300px;">
+        <div *ngFor="let cont of item.data" style="color: white;
+        padding: 10px 0px;" [routerLink]="cont.Url" (click)="OnClick.emit()">
+          {{cont.Nombre}}
+        </div>
+      </div>
+    </mat-expansion-panel>
+  </mat-accordion>
+  <!-- <ng-container *ngFor="let item of expandibles">
+    <app-button *ngIf="item.estatus" [dataUrl]="item.data" [tipo]="3">
+      <ng-container contenidodata>
+        {{item.Nombre}}
+      </ng-container>
+    </app-button>
+  </ng-container> -->
+  <app-button [Url]="'/bs-campus'" [tipo]="2" (click)="OnClick.emit()">
+    <ng-container contenidoTag>
+      BS Campus
+    </ng-container>
+  </app-button>
+</div>

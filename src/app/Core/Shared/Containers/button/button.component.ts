@@ -18,6 +18,7 @@ export class ButtonComponent implements OnInit {
   @Input() border:string='';
 
   @Input() class:string='';
+  @Input() img:string='';
   hover : boolean=false;
 
   @Output()

@@ -19,6 +19,7 @@ export interface RegistroPreProcesoPagoCuotaDTO {
   Mora: number;
   MoraCalculada: number;
   CuotaTotal: number;
+  FechaVencimiento:Date;
 }
 export interface RegistroRespuestaPreProcesoPagoDTO {
   IdentificadorTransaccion: string;
@@ -32,8 +33,10 @@ export interface RegistroProcesoPagoAlumnoDTO {
   MedioCodigo: string;
   TransactionToken:string;
   Estado:boolean|null;
-  Comprobante:number;
+  Comprobante:boolean;
   TarjetaHabiente: RegistroProcesoPagoTarjetaHabienteDTO;
+  RazonSocial:string;
+  CodigoTributario:string
 }
 export interface RegistroProcesoPagoTarjetaHabienteDTO {
   Titular: string;

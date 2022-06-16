@@ -26,6 +26,7 @@ import { ContactenosComponent } from './contactenos/contactenos.component';
 import { TagsComponent } from './tags/tags.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { VistaPreviaComponent } from './programas-detalle/vista-previa/vista-previa.component';
+import { FiltroProgramasComponent } from './programas/filtro-programas/filtro-programas.component';
 
 @NgModule({
   imports: [
@@ -57,7 +58,8 @@ import { VistaPreviaComponent } from './programas-detalle/vista-previa/vista-pre
     ContactenosComponent,
     TagsComponent,
     ForgotPasswordComponent,
-    VistaPreviaComponent
+    VistaPreviaComponent,
+    FiltroProgramasComponent
   ],
   exports: [],
   providers: [

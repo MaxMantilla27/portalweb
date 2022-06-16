@@ -160,6 +160,7 @@ export class PagoComponent implements OnInit,OnDestroy {
           Mora: r.mora,
           MoraCalculada: r.moraCalculada,
           CuotaTotal: r.cuota+r.moraCalculada,
+          FechaVencimiento:r.fechaVencimiento
         })
       }
     });

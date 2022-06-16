@@ -2,7 +2,7 @@
   #menuTrigger="matMenuTrigger" class="mat-buttonAlumno">
   <ng-content select="[contenidodata]">
   </ng-content>
-  <i class="material-icons" (mouseenter)="menuTrigger.openMenu()"
+  <i class="material-icons"
     [ngClass]="{'tranformi':menuTrigger.menuOpen==true}">arrow_drop_down</i>
 </div>
 <mat-menu #menu="matMenu" class="contentMat">

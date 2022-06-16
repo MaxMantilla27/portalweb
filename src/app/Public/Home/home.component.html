@@ -27,7 +27,7 @@
     <div class="col-12 col-sm-12 col-md-12" style="    display: flex;    margin-top: 40px;">
       <input type="text" [ngClass]="{'inputActive':inputActive}" class="inputSearchHome" (focus)="inputActive=true"
         (focusout)="inputActive=false" [(ngModel)]="busqueda" (keyup.enter)="BuscarProgramas()"
-        placeholder="¿Qu&eacute; deseas aprender? Descubre más de 200 cursos y programas de capacitaci&oacute;n">
+        placeholder="¿Qu&eacute; te gustaria aprender?">
       <div class="searchButonHome" (click)="BuscarProgramas()" [ngClass]="{'inputActive':inputActive}"></div>
     </div>
   </div>
@@ -172,20 +172,21 @@
         <div class="parafoS" style="font-size: 22px;">Formamos Profesionales Competitivos</div>
 
       </div>
-      <div class="row" style="justify-content: space-between;">
-        <div class="col-12 col-sm-12 col-md-6" *ngFor="let item of Carreras;let i=index"
-          style="display: flex;justify-content: center;flex-wrap: wrap;    padding: 20px 30px;">
-          <img *ngIf="i%2==0" style="width: auto; height: 230px;"
-            src="../../../assets/imagenes/arquetipo-administracion-hombre-index.png" alt="">
-          <img *ngIf="i%2!=0" style="width: auto; height: 230px;"
-            src="../../../assets/imagenes/arquetipo-sistemas-mujer-index.png" alt="">
+      <div class="col-12 row" style="justify-content: space-between;">
+        <div class="col-12 col-sm-12 col-md-6" *ngFor="let item of Carreras;let i=index">
+          <div style="display: flex;justify-content: center;flex-wrap: wrap;    padding: 20px 0px;">
+            <img *ngIf="i%2==0" style="width: auto; height: 230px;"
+              src="../../../assets/imagenes/arquetipo-administracion-hombre-index.png" alt="">
+            <img *ngIf="i%2!=0" style="width: auto; height: 230px;"
+              src="../../../assets/imagenes/arquetipo-sistemas-mujer-index.png" alt="">
 
-          <div class="cardCarrerasV2">
-            <div class="titleV2">{{item.Nombre}}</div>
-            <div class="underl"></div>
+            <div class="cardCarrerasV2">
+              <div class="titleV2">{{item.Nombre}}</div>
+              <div class="underl"></div>
 
-            <div class="subtitleCarreras orange " [routerLink]="item.Url">
-                <div class="vinculo"> M&aacute;s Informaci&oacute;n </div> <i class="material-icons">keyboard_arrow_right</i></div>
+              <div class="subtitleCarreras orange " [routerLink]="item.Url">
+                  <div class="vinculo"> M&aacute;s Informaci&oacute;n </div> <i class="material-icons">keyboard_arrow_right</i></div>
+            </div>
           </div>
         </div>
         <!-- <div class="col-12 col-sm-12 col-md-6 " *ngFor="let item of Carreras;let i=index"

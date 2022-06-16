@@ -2,8 +2,10 @@ import {
   Component,
   ComponentFactoryResolver,
   EventEmitter,
+  Input,
   OnInit,
   Output,
+  ViewEncapsulation,
 } from '@angular/core';
 import {
   Basic,
@@ -30,6 +32,7 @@ import { DatoObservableDTO } from 'src/app/Core/Models/DatoObservableDTO';
   styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent implements OnInit {
+  @Input() responsive:boolean=false;
   @Output()
   OnClick: EventEmitter<boolean> = new EventEmitter<boolean>();
   public Formacion: Array<BasicUrl> = [];

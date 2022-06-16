@@ -1,14 +1,14 @@
 <div class="container">
-  <div class="phoneCall">
-    <img src="../../../assets/icons/icono-llamada.svg" alt="">
-    <div style="width: calc( 100% - 40px );"> Solicita una llamada</div>
-    <div class="contentHover">Consulta por nuestras facilidades de pago y descuentos</div>
-  </div>
   <div class="container breadcrumb">
     <app-miga-pan [items]="migaPan"></app-miga-pan>
   </div>
 </div>
-<div style="background: #f4f4f4;">
+<div style="background: #f4f4f4;position: relative;">
+  <div class="phoneCall">
+    <img src="../../../assets/icons/icono-llamada.svg" alt="">
+    <div style="width: calc( 100% - 40px );"> Solicita una llamada</div>
+    <div class="contentHover" (click)="ScrollTo(formularioPrograma)">Consulta por nuestras facilidades de pago y descuentos</div>
+  </div>
   <div class="container">
     <div class="row rowpadd">
       <div class="col-12 col-md-6 col-lg-6">
@@ -19,11 +19,11 @@
           Área: <a style="font-weight: 100;"
             routerLink="/SubArea/{{cabecera.subAreaDescripcion}}">{{cabecera.nombreSubArea}}</a> </div>
         <div class="row" style="margin-top: 20px;">
-          <div class="col-12 col-md-6 col-lg-6">
+          <div class="col-12 col-md-12 col-lg-6">
             <app-default-button [confs]="{color:'primary',titulo:'Matricularme Ahora'}"
               (ButtoclClick)="ObtenerCabeceraProgramaGeneral()"></app-default-button>
           </div>
-          <div class="col-12col-md-6 col-lg-6 ">
+          <div class="col-12 col-md-12 col-lg-6 ">
             <app-default-button [confs]="{color:'primary',titulo:'Acceso de prueba gratis'}"
               (ButtoclClick)="RegistrarProgramaPrueba()"></app-default-button>
           </div>
@@ -39,11 +39,13 @@
 <div class="container">
   <div class="row rowpadd">
     <div class="col-12 col-md-8 col-lg-8 row" style="align-items: flex-start;">
-      <div class="col-6 InfoProgramContainer" style="align-items: center;">
-        <img class="InfoProgramIcon" src="../../../assets//icons/reloj-04.svg" alt="">
-        <div class="InfoProgramTitle">Fechas de Inicio:</div>
-        <div style="margin-top: 10px;">
-          <div *ngFor="let item of cabecera.listProgramaEspecificoInformacionDTO" class="infoProgramFechas">
+      <div class="col-12 col-md-6 col-lg-6 row" style="align-items: center;margin-bottom: 20px;">
+        <div class="col-12 " style="display: flex">
+          <img class="InfoProgramIcon" src="../../../assets//icons/reloj-04.svg" alt="">
+          <div class="InfoProgramTitle">Fechas de Inicio:</div>
+        </div>
+        <div class="col-12 " style="margin-top: 10px;">
+          <div *ngFor="let item of cabecera.listProgramaEspecificoInformacionDTO" class=" infoProgramFechas ">
             <div class="infoProgramTitle">
               <ng-container *ngIf="item.tipo.toLowerCase()=='online asincronica'">
                 Online a tu ritmo :
@@ -56,9 +58,11 @@
           </div>
         </div>
       </div>
-      <div class="col-6 InfoProgramContainer">
-        <img class="InfoProgramIcon" src="../../../assets//icons/calendar-03.svg" alt="">
-        <div class="InfoProgramTitle">Duraci&oacute;n:</div>
+      <div class="col-12 col-md-6 col-lg-6 row">
+        <div class="col-12 " style="display: flex">
+          <img class="InfoProgramIcon" src="../../../assets//icons/calendar-03.svg" alt="">
+          <div class="InfoProgramTitle">Duraci&oacute;n:</div>
+        </div>
         <div style="margin-top: 10px;width: 100%;">
           <div class="infoProgramFechas">
             <div class="infoProgramText">{{cabecera.duracion}}</div>

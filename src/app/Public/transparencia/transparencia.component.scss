@@ -36,8 +36,17 @@ a:hover{
 }
 .titleth{
   font-size: 12px;
+  min-width: 120px;
 }
 p{
 
   word-break: break-word;
+}
+.table-resposive{
+  overflow: auto;
+  min-width: 100%;
+  width: auto;
+  display: block;
+  overflow-x: auto;
+  //white-space: nowrap;
 }

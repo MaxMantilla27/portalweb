@@ -1,0 +1,125 @@
+<div class="row" style="padding: 20px;width: 100%;">
+  <div class="col-12">
+    <div class="filtroHeader">
+      <!-- <img src="../../../assets/icons/icono-filtros.svg" alt=""> -->
+      <div>Filtros</div>
+      <div>
+        <i class="material-icons" (click)="closeDialog($event)">close</i>
+      </div>
+    </div>
+    <div class="filtroTags">
+      <div class="foltroEncontrados">{{textoResult}}</div>
+
+      <div class="tagitem" *ngIf="buscar!=''">{{buscar}} <i class="material-icons" (click)="buscar=''"
+          style="margin-left: 10px;font-size: 12px;cursor: pointer;">close</i>
+      </div>
+
+      <div class="tagitem" *ngFor="let item of TagAreas;let i=index">{{item.Nombre}} <i class="material-icons"
+          (click)="RemoveArea(item.value)" style="margin-left: 10px;font-size: 12px;cursor: pointer;">close</i>
+      </div>
+
+      <div class="tagitem" *ngFor="let item of TagSubAreas;let i=index">{{item.Nombre}} <i class="material-icons"
+          (click)="RemoveSubArea(item.value)" style="margin-left: 10px;font-size: 12px;cursor: pointer;">close</i>
+      </div>
+
+      <div class="tagitem" *ngFor="let item of TagModalidad;let i=index">{{item.Nombre}} <i class="material-icons"
+          (click)="RemoveModalidad(item.value)" style="margin-left: 10px;font-size: 12px;cursor: pointer;">close</i>
+      </div>
+
+      <div class="tagitem" *ngFor="let item of TagTipoPrograma;let i=index">{{item.Nombre}} <i class="material-icons"
+          (click)="RemoveTipoPrograma(item.value)" style="margin-left: 10px;font-size: 12px;cursor: pointer;">close</i>
+      </div>
+
+    </div>
+
+    <!-- <div class="InputPrograma">
+        <mat-form-field style="width: 100%;" appearance="outline">
+          <mat-label>Buscar</mat-label>
+          <input matInput type="text" [(ngModel)]="buscar" (input)="SetCantidadProgramas()">
+          <span matSuffix><i class="material-icons">search</i></span>
+        </mat-form-field>
+      </div> -->
+    <div class="filtroElemento">
+      <div class="ElementoTitle" (click)="openExpand(0)">
+        &Aacute;reas de capacitaci&oacute;n
+        <i *ngIf="!expancions[0]" class="material-icons">keyboard_arrow_down</i>
+        <i *ngIf="expancions[0]" class="material-icons">keyboard_arrow_up</i>
+      </div>
+      <div class="ElementoContent" *ngIf="expancions[0]">
+        <div *ngFor="let item of filtros.areaCapacitacion;let i=index" class="itemContent" (click)="SelectAreas(i)">
+          <div class="icons">
+            <i *ngIf="!item.select" class="material-icons">check_box_outline_blank</i>
+            <i *ngIf="item.select" class="material-icons" style="color: #0669bf;">check_box</i>
+          </div>
+          <div class="nameFiltro">{{item.nombre}}</div>
+        </div>
+      </div>
+    </div>
+    <div class="filtroElemento">
+      <div class="ElementoTitle" (click)="openExpand(1)">
+        Sub&aacute;rea de capacitaci&oacute;n
+        <i *ngIf="!expancions[1]" class="material-icons">keyboard_arrow_down</i>
+        <i *ngIf="expancions[1]" class="material-icons">keyboard_arrow_up</i>
+      </div>
+      <div class="ElementoContent" *ngIf="expancions[1]">
+        <ng-container *ngFor="let item of filtros.areaCapacitacion;let i=index">
+          <ng-container *ngIf="item.select!=undefined && item.select==true">
+            <div *ngFor="let itemsub of item.subAreaCapacitacion;let j=index" class="itemContent"
+              (click)="SelectSubAreas(i,j)">
+              <div class="icons">
+                <i *ngIf="!itemsub.select" class="material-icons">check_box_outline_blank</i>
+                <i *ngIf="itemsub.select" class="material-icons" style="color: #0669bf;">check_box</i>
+              </div>
+              <div class="nameFiltro">{{itemsub.nombre}}</div>
+            </div>
+          </ng-container>
+        </ng-container>
+      </div>
+    </div>
+    <div class="filtroElemento">
+      <div class="ElementoTitle" (click)="openExpand(2)">
+        Tipo de Programa
+        <i *ngIf="!expancions[2]" class="material-icons">keyboard_arrow_down</i>
+        <i *ngIf="expancions[2]" class="material-icons">keyboard_arrow_up</i>
+      </div>
+      <div class="ElementoContent" *ngIf="expancions[2]">
+        <div *ngFor="let item of TipoPrograma;let i=index" class="itemContent" (click)="SelectTipoP(i)">
+          <div class="icons">
+            <i *ngIf="!item.select" class="material-icons">check_box_outline_blank</i>
+            <i *ngIf="item.select" class="material-icons" style="color: #0669bf;">check_box</i>
+          </div>
+          <div class="nameFiltro">{{item.nombre}}</div>
+        </div>
+      </div>
+    </div>
+    <div class="filtroElemento">
+      <div class="ElementoTitle" (click)="openExpand(3)">
+        Modalidad
+        <i *ngIf="!expancions[3]" class="material-icons">keyboard_arrow_down</i>
+        <i *ngIf="expancions[3]" class="material-icons">keyboard_arrow_up</i>
+      </div>
+      <div class="ElementoContent" *ngIf="expancions[3]">
+        <div *ngFor="let item of Modalidad;let i=index" class="itemContent" (click)="SelectMod(i)">
+          <div class="icons">
+            <i *ngIf="!item.select" class="material-icons">check_box_outline_blank</i>
+            <i *ngIf="item.select" class="material-icons" style="color: #0669bf;">check_box</i>
+          </div>
+          <div class="nameFiltro">{{item.nombre}}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+<div class="footerShetPrograma">
+
+  <div class="tagitem limpiarTodo" (click)="RemoveAll()"
+  *ngIf="TagAreas.length>0 || TagSubAreas.length>0 || TagModalidad.length>0 || TagTipoPrograma.length>0 || buscar!=''">
+  Limpiar Todo </div>
+  <div style="    width: 50%;
+  display: flex;
+  justify-content: center;">
+    <app-default-button [confs]="{color:'primary',titulo:'Aplicar Filtro'}" [icon]="''"
+    (ButtoclClick)="AplicarFiltro()" [style]="'margin:0px'"></app-default-button>
+  </div>
+</div>

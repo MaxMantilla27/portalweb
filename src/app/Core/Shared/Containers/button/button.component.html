@@ -12,7 +12,7 @@
   <a mat-button [ngClass]="{'bootoncolor':hover==true}" [matMenuTriggerFor]="menu"
   (mouseenter)="hover=true" (mouseleave)="hover=false"
     #menuTrigger="matMenuTrigger" style="
-    margin-right: 20px;">
+    margin-right: 10px;">
     <ng-content select="[contenidodata]">
     </ng-content> <i class="material-icons"
       [ngClass]="{'tranformi':menuTrigger.menuOpen==true}">arrow_drop_down</i>
@@ -25,7 +25,12 @@
   </mat-menu>
 </ng-container>
 
-<button mat-stroked-button *ngIf="tipo==4" [routerLink]="Url"  [ngStyle]="{'color':color,'background':background,'border':border}">
-  <ng-content select="[contenidoButton]">
-  </ng-content>
-</button>
+<ng-container *ngIf="tipo==4" >
+  <button mat-stroked-button [routerLink]="Url"  [ngStyle]="{'color':color,'background':background,'border':border}"
+    [ngClass]="class">
+    <ng-content select="[contenidoButton]">
+    </ng-content>
+  </button>
+  <img class="imgbutton" [src]="'../../.././../../assets/icons/'+img" alt="" *ngIf="img!=''" [routerLink]="Url" >
+</ng-container>
+

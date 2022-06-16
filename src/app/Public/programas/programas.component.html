@@ -1,4 +1,3 @@
-
 <div class="container">
   <div class="container breadcrumb">
     <app-miga-pan [items]="migaPan"></app-miga-pan>
@@ -161,24 +160,29 @@
     </div>
   </div>
 </div>-->
+
+<div class="FiltroProgramasResponcive" (click)="openBottomSheet()">
+
+  <img src="../../../assets/icons/icono-filtros.svg" alt="">
+  <div>Filtros</div>
+</div>
 <div class="container">
   <div class="row rowpadd">
-
-    <div class="col-12 col-md-3 col-lg-3">
+    <div class="col-12 col-md-4 col-lg-3 FiltroProgramasFull">
       <div style="position: sticky;top: 100px;">
         <div class="filtroHeader">
           <!-- <img src="../../../assets/icons/icono-filtros.svg" alt=""> -->
           <div>Filtros</div>
 
           <div class="tagitem limpiarTodo" (click)="RemoveAll()"
-          *ngIf="TagAreas.length>0 || TagSubAreas.length>0 || TagModalidad.length>0 || TagTipoPrograma.length>0 || buscar!=''">
+            *ngIf="TagAreas.length>0 || TagSubAreas.length>0 || TagModalidad.length>0 || TagTipoPrograma.length>0 || buscar!=''">
             Limpiar Todo </div>
         </div>
         <div class="filtroTags">
           <div class="foltroEncontrados">{{textoResult}}</div>
 
-          <div class="tagitem" *ngIf="buscar!=''">{{buscar}} <i class="material-icons"
-            (click)="buscar=''" style="margin-left: 10px;font-size: 12px;cursor: pointer;">close</i>
+          <div class="tagitem" *ngIf="buscar!=''">{{buscar}} <i class="material-icons" (click)="buscar=''"
+              style="margin-left: 10px;font-size: 12px;cursor: pointer;">close</i>
           </div>
 
           <div class="tagitem" *ngFor="let item of TagAreas;let i=index">{{item.Nombre}} <i class="material-icons"
@@ -278,10 +282,10 @@
       </div>
     </div>
 
-    <div class="col-12 col-md-9 col-9-3">
+    <div class="col-12 col-md-8 col-9-3">
       <div class="row">
-        <div style="text-align: center;"
-        *ngIf="charge==false && (programas.length==0 || cantidadProgramas==0)">No existen programas con los filtros seleccionados</div>
+        <div style="text-align: center;" *ngIf="charge==false && (programas.length==0 || cantidadProgramas==0)">No
+          existen programas con los filtros seleccionados</div>
         <div *ngIf="charge==true" style="width: 100%;display: flex;justify-content: center;">
           <mat-spinner></mat-spinner>
         </div>
