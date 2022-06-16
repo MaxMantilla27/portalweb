@@ -89,6 +89,9 @@ import { ChargeComponent } from './Containers/Dialog/charge/charge.component';
 import { InputCardDirective } from './Directives/input-card.directive';
 import { InputCardFechaDirective } from './Directives/input-card-fecha.directive';
 import {MatBottomSheetModule} from '@angular/material/bottom-sheet';
+import { CardMatriculasPruebaComponent } from './Containers/card/card-matriculas-prueba/card-matriculas-prueba/card-matriculas-prueba.component';
+
+
 
 @NgModule({
   imports: [
@@ -157,6 +160,7 @@ import {MatBottomSheetModule} from '@angular/material/bottom-sheet';
     ChargeComponent,
     InputCardDirective,
     InputCardFechaDirective,
+    CardMatriculasPruebaComponent,
 
   ],
   exports: [
@@ -184,6 +188,8 @@ import {MatBottomSheetModule} from '@angular/material/bottom-sheet';
     MatmenuComponent,
     ChargeComponent,
     VideoBrightcovePruebaComponent,
+    CardMatriculasPruebaComponent,
+
 
     InputCardDirective,
 

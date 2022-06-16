@@ -28,6 +28,9 @@ export class ModuloComponent implements OnInit {
   public tabIndex = 0;
   public idMatricula=0;
   public idPEspecificoHijo=0;
+  public alertaPreguntasFrecuentes=false
+  public alertaQuejasSugerencias=false
+  public AyudaActive=false
   public json:ParametrosEstructuraEspecificaDTO={
 
     AccesoPrueba: false,
@@ -98,6 +101,9 @@ export class ModuloComponent implements OnInit {
   tabChanged(tabChangeEvent: MatTabChangeEvent): void {
     console.log('tabChangeEvent => ', tabChangeEvent);
     console.log('index => ', tabChangeEvent.index);
+    if(tabChangeEvent.index == 5){
+      this.AyudaActive=true
+    }
   }
 
 }

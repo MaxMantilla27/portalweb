@@ -1,0 +1,42 @@
+<div style="width: 100% ; text-align: right;    padding: 5px;
+height: 30px;
+margin: 0px;"><i class="material-icons" style="cursor: pointer;" (click)="dialogRef.close()">close</i></div>
+<ng-container *ngIf="data!=undefined">
+  <div class="TituloErrorVideo" style="text-align: center;font-weight: bold;font-size: 30px;margin-bottom: 20px;">
+    Reportar Error
+  </div>
+  <div class="col-12 col-md-12 col-lg-12">
+    <form [formGroup]="userForm">
+        <div class="container">
+            <div class="col-12 col-md-12 col-lg-12">
+                <div class="TituloErrorVideo">Detalla tu observación </div>
+                <div class="row">
+                  <mat-form-field appearance="outline" [floatLabel]="'always'">
+                    <input type="text" placeholder="Título del tema" formControlName="Descripcion" matInput  />
+                    <mat-error *ngIf="userForm.invalid">Debe ingresar el título del tema</mat-error>
+                  </mat-form-field>
+                </div>
+                <div class="TituloErrorVideo">¿Como se podría mejorar la observación?</div>
+                <div class="row">
+                  <textarea class="ContenidoPreguntaForo" formControlName="Comentario" rows="4" ></textarea>
+                </div>
+                <div class="row" style="margin-top: 20px;">
+                  <div style="width: 100%;display:flex">
+                    <div class="col-3 col-md-3 col-lg-3"></div>
+                    <div class="col-3 col-md-3 col-lg-3">
+                      <app-default-button  (click)="dialogRef.close()" [confs]="{color:'primary',titulo:'Cancelar'}"
+                      [style]="'width: 95%;margin-top: 20px;'"></app-default-button>
+                    </div>
+                    <div class="col-3 col-md-3 col-lg-3">
+                      <app-default-button [confs]="{color:'primary',titulo:'Enviar'}" [disabled]="!userForm.valid"
+                      [style]="'width: 95%;margin-top: 20px;'"(ButtoclClick)="RegistrarErrorVideoPlayer()"></app-default-button>
+                    </div>
+                    <div class="col-3 col-md-3 col-lg-3"></div>
+                  </div>
+                </div>
+          </div>
+          </div>
+    </form>
+  </div>
+
+</ng-container>

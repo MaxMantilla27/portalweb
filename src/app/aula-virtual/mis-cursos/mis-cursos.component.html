@@ -70,25 +70,26 @@
       </app-card-matriculas>
     </div>
 
-    <div class="col-12 col-md-4 col-lg-4" *ngFor="let item of matriculasPrueba" style="margin-bottom: 20px;">
-      <app-card-matriculas [cardContent]="{ Img: 'https://img.bsginstitute.com/repositorioweb/img/programas/'+item.pw_ImgPortada,
-      Title: item.nombre,ImgAlt: '',Tipo:item.tipoModalidad,Url: '/AulaVirtual/MisCursosPrueba/'+item.idRegistroPrueba}">
+    <div class="col-12 col-md-4 col-lg-4" *ngFor="let itemP of matriculasPrueba" style="margin-bottom: 20px;">
+      <app-card-matriculas-prueba [cardContent]="{ Img: 'https://img.bsginstitute.com/repositorioweb/img/programas/'+itemP.pw_ImgPortada,
+      Title: itemP.nombre,ImgAlt: '',Tipo:itemP.tipoModalidad, Url: '/AulaVirtual/MisCursosPrueba/'+itemP.idRegistroPrueba,Valido:itemP.valido}">
 
         <ng-container linkIcons>
-          <button class="buttonIconCurso" (click)="saveIndex(0)" [routerLink]="'/AulaVirtual/MisCursosPrueba/'+item.idRegistroPrueba"
+          <button class="buttonIconCurso" [disabled]="!itemP.valido" (click)="saveIndex(0)" [routerLink]="'/AulaVirtual/MisCursosPrueba/'+itemP.idRegistroPrueba"
          mat-icon-button aria-label="Example icon button with a vertical three dot icon"
             matTooltip="Indicaciones"
             matTooltipClass="tootipMatriculas">
             <img class="iconsCardMatriculas" src="../../../assets/icons/indicaciones-naranja.svg" alt="">
           </button>
-          <button class="buttonIconCurso" (click)="saveIndex(1)" [routerLink]="'/AulaVirtual/MisCursosPrueba/'+item.idRegistroPrueba"
+
+          <button class="buttonIconCurso" [disabled]="!itemP.valido" (click)="saveIndex(1)" [routerLink]="'/AulaVirtual/MisCursosPrueba/'+itemP.idRegistroPrueba"
          mat-icon-button aria-label="Example icon button with a vertical three dot icon"
             matTooltip="Modulos"
             matTooltipClass="tootipMatriculas">
             <img class="iconsCardMatriculas" src="../../../assets/icons/modulos-naranja.svg" alt="">
           </button>
         </ng-container>
-      </app-card-matriculas>
+      </app-card-matriculas-prueba>
     </div>
   </div>
 </div>

@@ -1,0 +1,35 @@
+.CabeceraPregunta{
+  border-top: solid 2px #b2b2b2;
+  font-size: 18px;
+  margin: 5px;
+  display: flex;
+
+}
+.CabeceraExpandPregunta{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: 700;
+  padding-bottom: 6px;
+  width: 100%;
+}
+.CabeceraExpandPregunta div .material-icons{
+  cursor: pointer;
+  font-size: 30px !important;
+}
+.CabeceraExpandPreguntaOpen{
+  color: #0d6dc2 !important;
+}
+.ContenidoPregunta{
+  margin-top: 20px;
+  margin-bottom: 35px;
+  margin-left: 50px;
+}
+.ContenidoRespuestaPregunta{
+  background-color: #F4F4F4;
+  margin-top:5px;
+  padding: 20px 20px;
+  text-align: justify;
+  margin-bottom: 15px;
+
+}

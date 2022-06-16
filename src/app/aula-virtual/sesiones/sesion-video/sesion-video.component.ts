@@ -1,7 +1,10 @@
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { ParametrosCrucigramaVideoSesionDTO, ParametrosEstructuraEspecificaDTO, ParametrosVideoSesionDTO } from 'src/app/Core/Models/EstructuraEspecificaDTO';
 import { CrucigramaService } from 'src/app/Core/Shared/Services/Crucigrama/crucigrama.service';
 import { VideoSesionService } from 'src/app/Core/Shared/Services/VideoSesion/video-sesion.service';
+import { RegistrarErrorComponent } from './registrar-error/registrar-error/registrar-error.component';
+
 
 @Component({
   selector: 'app-sesion-video',
@@ -12,7 +15,8 @@ export class SesionVideoComponent implements OnInit,OnChanges {
 
   constructor(
     private _VideoSesionService:VideoSesionService,
-    private _CrucigramaService:CrucigramaService
+    private _CrucigramaService:CrucigramaService,
+    public dialog: MatDialog
   ) { }
 
   @Input() json: ParametrosEstructuraEspecificaDTO = {
@@ -33,6 +37,7 @@ export class SesionVideoComponent implements OnInit,OnChanges {
   public videoData:any;
   @Input() crucigramaData:any;
   @Input() NombreCapitulo=''
+  public AbrirModal=false
   public crucigrama:ParametrosCrucigramaVideoSesionDTO={
     AccesoPrueba:false,
     IdCapitulo:0,
@@ -91,5 +96,16 @@ export class SesionVideoComponent implements OnInit,OnChanges {
       return '0'+r
     }
     return r
+  }
+  OpenModal(): void {
+    const dialogRef = this.dialog.open(RegistrarErrorComponent, {
+      width: '500px',
+      data: { IdPGeneral:this.json.IdPGeneralHijo,IdCapitulo:this.idCapitulo ,IdSesion:this.idSesion},
+      panelClass: 'custom-dialog-container',
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      console.log('The dialog was closed');
+    });
   }
 }

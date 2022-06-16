@@ -59,6 +59,11 @@ import { ModuloSesionesPruebaComponent } from './modulo-prueba/modulo-sesiones-p
 import { ModuloForoContenidoPruebaComponent } from './modulo-prueba/modulo-foro-prueba/modulo-foro-prueba/modulo-foro-contenido-prueba/modulo-foro-contenido-prueba/modulo-foro-contenido-prueba.component';
 import { SesionesPruebaComponent } from './sesiones-prueba/sesiones-prueba.component';
 import { SesionesVideoPruebaComponent } from './sesiones-prueba/sesiones-video-prueba/sesiones-video-prueba/sesiones-video-prueba.component';
+import { ModuloAyudaComponent } from './modulo/modulo-ayuda/modulo-ayuda/modulo-ayuda.component';
+import { ModuloAyudaPreguntasFrecuentesComponent } from './modulo/modulo-ayuda/modulo-ayuda/modulo-ayuda-preguntas-frecuentes/modulo-ayuda-preguntas-frecuentes/modulo-ayuda-preguntas-frecuentes.component';
+import { ModuloAyudaQuejasSugerenciasComponent } from './modulo/modulo-ayuda/modulo-ayuda/modulo-ayuda-quejas-sugerencias/modulo-ayuda-quejas-sugerencias/modulo-ayuda-quejas-sugerencias.component';
+import { RegistrarErrorComponent } from './sesiones/sesion-video/registrar-error/registrar-error/registrar-error.component';
+import { VigenciaAccesoPruebaComponent } from './mis-cursos/vigencia-acceso-prueba/vigencia-acceso-prueba/vigencia-acceso-prueba.component';
 
 
 @NgModule({
@@ -116,6 +121,11 @@ import { SesionesVideoPruebaComponent } from './sesiones-prueba/sesiones-video-p
     ModuloForoContenidoPruebaComponent,
     SesionesPruebaComponent,
     SesionesVideoPruebaComponent,
+    ModuloAyudaComponent,
+    ModuloAyudaPreguntasFrecuentesComponent,
+    ModuloAyudaQuejasSugerenciasComponent,
+    RegistrarErrorComponent,
+    VigenciaAccesoPruebaComponent,
 
   ],
   imports: [
@@ -127,5 +137,8 @@ import { SesionesVideoPruebaComponent } from './sesiones-prueba/sesiones-video-p
     { provide: HTTP_INTERCEPTORS, useClass: InterceptorService, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: MyHttpInterceptor, multi: true },
   ],
+  exports:[
+    VigenciaAccesoPruebaComponent
+  ]
 })
 export class AulaVirtualModule { }

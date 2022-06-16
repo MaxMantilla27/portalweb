@@ -1,3 +1,4 @@
+<ng-container *ngIf="AbrirModal==false">
 <div class="cursoTitle">{{json.NombreCapitulo}}</div>
 <div>Capitulo {{idCapitulo}}:{{NombreCapitulo}} </div>
 <div class="row" style="align-items: center;">
@@ -19,6 +20,16 @@
       <app-video-brightcove *ngIf="charge==true" [json]="json" [idCapitulo]="idCapitulo" [idSesion]="idSesion"
         [videoData]="videoData"></app-video-brightcove>
       <div *ngIf="videoData!=undefined" style="    margin: 30px 0px;display: flex;flex-direction: column;">
+        <div class="row" style="display: flex">
+          <div style="width:70%"></div>
+          <div class="ErrorVideoPlayer" style="width:30%;display: flex;" >
+            <img class="IconoErrorVideoPlayer" src="../../../../assets/icons/videos-29.svg">
+            <div (click)="OpenModal()" style="color: #FF7012;margin-left: 10px;margin-top: 8px;">
+             Reportar error en video
+            </div>
+          </div>
+
+        </div>
         <div style="display: flex;justify-content: flex-start;align-items: center;    margin-bottom: 10px;">
           <div style="background-color: #f3f5ff;margin-right: 10px;padding: 5px;display: flex;">
 
@@ -49,3 +60,4 @@
 
   </div>
 </div>
+</ng-container>
