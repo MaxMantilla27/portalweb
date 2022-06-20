@@ -1,9 +1,9 @@
 .FiltroProgramasResponcive {
-  justify-content: center;
+  justify-content: space-evenly;
   align-items: center;
   cursor: pointer;
   position: sticky;
-  top: 76px;
+  top: 0;
   z-index: 200;
   background: white;
   padding: 10px;
@@ -12,6 +12,10 @@
   /* border: solid; */
   width: 100%;
   box-shadow: 0 15px 40px rgb(0 0 0 / 10%);
+  .foltroEncontrados{
+    font-size: 12px;
+    font-weight: 100;
+  }
   img {
     width: 30px;
     margin-right: 20px;

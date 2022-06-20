@@ -1,5 +1,5 @@
 import { HttpEventType, HttpResponse } from '@angular/common/http';
-import { Component, Input, OnChanges, OnInit, SimpleChanges, ViewEncapsulation } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewEncapsulation } from '@angular/core';
 import { ParametrosEstructuraEspecificaDTO } from 'src/app/Core/Models/EstructuraEspecificaDTO';
 import { ModelTareaEvaluacionTareaDTO, ParametroObtenerEvaluacionTarea } from 'src/app/Core/Models/TareaEvaluacionDTO';
 import { SnackBarServiceService } from 'src/app/Core/Shared/Services/SnackBarService/snack-bar-service.service';
@@ -31,6 +31,10 @@ export class SesionTareaComponent implements OnInit,OnChanges {
   @Input() idtarea=0;
   @Input() NombreCapitulo=''
   @Input() idCapitulo=0;
+  @Input() habilitado=false;
+
+  @Output() next: EventEmitter<void> = new EventEmitter<void>();
+  @Output() prev: EventEmitter<void> = new EventEmitter<void>();
   public params:ParametroObtenerEvaluacionTarea={
     idEvaluacion:0,
     idPEspecifico:0,
@@ -61,7 +65,7 @@ export class SesionTareaComponent implements OnInit,OnChanges {
   ngOnInit(): void {
   }
   ngOnChanges(changes: SimpleChanges): void {
-    if(this.idtarea>0 && this.charge==true){
+    if(this.idtarea>0 && this.charge==true && this.habilitado==true){
       this.params.idEvaluacion=this.idtarea;
       this.params.idPEspecifico=this.json.IdPEspecificoHijo
       this.params.idPEspecificoPadre=this.json.IdPEspecificoPadre
@@ -150,5 +154,14 @@ export class SesionTareaComponent implements OnInit,OnChanges {
         }
       })
     }
+  }
+  nextc(){
+    if(this.tarea!=undefined && this.tarea.registroEvaluacionArchivo.length>0){
+
+      this.next.emit();
+    }
+  }
+  prevc(){
+    this.prev.emit();
   }
 }

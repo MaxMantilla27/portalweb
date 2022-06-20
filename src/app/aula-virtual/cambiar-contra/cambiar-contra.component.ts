@@ -46,19 +46,21 @@ export class CambiarContraComponent implements OnInit {
   };
   ngOnInit(): void {}
   CambiarContra() {
-    this.datos.ConfirmPassword = this.userForm.get('contraNuevaRepeat')?.value;
-    this.datos.OldPassword = this.userForm.get('contraActual')?.value;
-    this.datos.NewPassword = this.userForm.get('contraNueva')?.value;
-    this._AccountService.ActualizarPasswordCuenta(this.datos).subscribe({
-      next:x=>{
-        this._SessionStorageService.DeleteToken();
-        this._router.navigate(['/login']);
-      },
-      error:e=>{
-        console.log(e);
+    if(this.userForm.valid){
+      this.datos.ConfirmPassword = this.userForm.get('contraNuevaRepeat')?.value;
+      this.datos.OldPassword = this.userForm.get('contraActual')?.value;
+      this.datos.NewPassword = this.userForm.get('contraNueva')?.value;
+      this._AccountService.ActualizarPasswordCuenta(this.datos).subscribe({
+        next:x=>{
+          this._SessionStorageService.DeleteToken();
+          this._router.navigate(['/login']);
+        },
+        error:e=>{
+          console.log(e);
 
-      }
-    })
+        }
+      })
+    }
   }
   passwordChange() {
     this.userForm.controls['contraNuevaRepeat'].clearValidators();

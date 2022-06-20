@@ -14,6 +14,7 @@ export class ButtonComponent implements OnInit {
   @Input() Url:string='';
   @Input() tipo:number=1;
   @Input() color:string='';
+  @Input() weigth:string='';
   @Input() background:string='';
   @Input() border:string='';
 

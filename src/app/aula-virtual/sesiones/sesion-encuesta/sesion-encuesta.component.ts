@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, OnInit, SimpleChanges, ViewEncapsulation } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewEncapsulation } from '@angular/core';
 import { ParametroEnvioEncuestaDTO, ParametrosEncuestaDTO } from 'src/app/Core/Models/EncuestaDTO';
 import { ParametrosEstructuraEspecificaDTO } from 'src/app/Core/Models/EstructuraEspecificaDTO';
 import { EncuestaService } from 'src/app/Core/Shared/Services/Encuesta/encuesta.service';
@@ -31,7 +31,10 @@ export class SesionEncuestaComponent implements OnInit,OnChanges {
   @Input() idEncuesta=0;
   @Input() NombreCapitulo=''
   @Input() idCapitulo=0;
+  @Input() habilitado=false
   @Input() charge:boolean|undefined=false;
+  @Output() next: EventEmitter<void> = new EventEmitter<void>();
+  @Output() prev: EventEmitter<void> = new EventEmitter<void>();
   public params:ParametrosEncuestaDTO={
     IdEvaluacion:0,
     IdPGeneral:0,
@@ -51,7 +54,7 @@ export class SesionEncuestaComponent implements OnInit,OnChanges {
 
   ngOnChanges(changes: SimpleChanges): void {
     console.log(this.charge)
-    if(this.idEncuesta>0 && this.charge==true){
+    if(this.idEncuesta>0 && this.charge==true && this.habilitado==true){
       this.params.IdEvaluacion=this.idEncuesta;
       this.params.IdPGeneral=this.json.IdPGeneralHijo;
       this.ObtenerEncuestaEvaluacion();
@@ -137,8 +140,22 @@ export class SesionEncuestaComponent implements OnInit,OnChanges {
       this._EncuestaService.EnviarEncuestaEvaluacion(this.jsonEnvio).subscribe({
         next:x=>{
           console.log(x);
+          this.encuesta.contenidoEncuesta=null;
         }
       })
+    }
+  }
+  nextc(){
+    console.log(this.encuesta)
+    if(this.encuesta.contenidoEncuesta==null){
+      if(this.encuesta.datosEncuesta.titulo!='Encuesta Final'){
+        this.next.emit();
+      }
+    }
+  }
+  prevc(){
+    if(this.encuesta.datosEncuesta.titulo!='Encuesta Inicial'){
+      this.prev.emit();
     }
   }
 }

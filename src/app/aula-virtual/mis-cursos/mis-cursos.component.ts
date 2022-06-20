@@ -1,8 +1,10 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import {  Router } from '@angular/router';
 import { CuentaService } from 'src/app/Core/Shared/Services/Cuenta/cuenta.service';
 import { DatosPerfilService } from 'src/app/Core/Shared/Services/DatosPerfil/datos-perfil.service';
 import { SessionStorageService } from 'src/app/Core/Shared/Services/session-storage.service';
+import { VigenciaAccesoPruebaComponent } from './vigencia-acceso-prueba/vigencia-acceso-prueba/vigencia-acceso-prueba.component';
 
 @Component({
   selector: 'app-mis-cursos',
@@ -15,7 +17,8 @@ export class MisCursosComponent implements OnInit {
     private _DatosPerfilService: DatosPerfilService,
     private _SessionStorageService:SessionStorageService,
     private _CuentaService: CuentaService,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private _Router:Router
 
     ) {}
 
@@ -63,5 +66,21 @@ export class MisCursosComponent implements OnInit {
   }
   saveIndex(index:number){
     this._SessionStorageService.SessionSetValue('cursoIndex',index.toString());
+  }
+  saveindexPrueba(index:number,url:string,valid:any){
+    if(!valid){
+      const dialogRef = this.dialog.open(VigenciaAccesoPruebaComponent, {
+        width: '400px',
+        data: { },
+        panelClass: 'dialog-programas-prueba',
+      });
+
+      dialogRef.afterClosed().subscribe((result) => {
+        console.log('The dialog was closed');
+      });
+    }else{
+      this._SessionStorageService.SessionSetValue('cursoIndex',index.toString());
+      this._Router.navigate([url])
+    }
   }
 }

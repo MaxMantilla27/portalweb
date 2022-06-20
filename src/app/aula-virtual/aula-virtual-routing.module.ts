@@ -22,6 +22,7 @@ import { ResultadoPagoComponent } from './resultado-pago/resultado-pago.componen
 import { ModuloPruebaComponent } from './modulo-prueba/modulo-prueba.component';
 import { SesionesPruebaComponent } from './sesiones-prueba/sesiones-prueba.component';
 import { SesionesComponent } from './sesiones/sesiones.component';
+import { CategoriaComponent } from './categoria/categoria.component';
 
 const routes: Routes = [
   {
@@ -34,6 +35,7 @@ const routes: Routes = [
         { path: 'Avatar', component: AvatarComponent,canActivate:[AlumnoGuard]},
         { path: 'Docencia', component: DocenciaComponent,canActivate:[ProveedorGuard]},
         { path: 'MisPagos', component: MisPagosComponent,canActivate:[AlumnoGuard]},
+        { path: 'Categoria', component: CategoriaComponent,canActivate:[AlumnoGuard]},
 
         { path: 'MisCursos/:IdMatricula', component: CursoComponent,canActivate:[AlumnoGuard]},
         { path: 'MisPagos/:IdMatricula', component: PagoComponent,canActivate:[AlumnoGuard]},

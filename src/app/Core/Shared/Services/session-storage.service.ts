@@ -59,7 +59,7 @@ export class SessionStorageService {
   SetEstructura(datos:Array<any>):void{
 
     if(this.isBrowser){
-      sessionStorage.setItem('Estructura',btoa(JSON.stringify(datos)));
+      sessionStorage.setItem('Estructura',btoa(encodeURIComponent(JSON.stringify(datos))));
     }
   }
   DeleteEstructura():void{
@@ -73,7 +73,7 @@ export class SessionStorageService {
     if(this.isBrowser){
       var token=sessionStorage.getItem('Estructura');
       if(token==undefined || token==null) return null;
-      return JSON.parse(atob(token));
+      return JSON.parse(decodeURIComponent(atob(token)));
     }
     return null;
   }

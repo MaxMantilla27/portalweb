@@ -48,6 +48,12 @@
   .mat-buttonAlumno {
     height: 34px;
     margin-left: 0px !important;
+    background: transparent !important;
+    padding: 0px !important
+  }
+  .contSelect{
+    padding: 0px !important;
+    margin: 0px !important;
   }
 }
 @media (min-width: 576px) {
@@ -75,6 +81,7 @@
   }
   .mat-buttonAlumno {
     height: 34px;
+    //background: transparent !important;
   }
 }
 @media (min-width: 768px) {
@@ -287,7 +294,7 @@ body {
 
 .mat-sidenav-container .mat-sidenav {
   background-color: #3f51b5;
-  padding: 10px;
+  //padding: 10px;
   min-width: 150px;
 }
 
@@ -382,10 +389,10 @@ mat-sidenav-content {
   .hideItemHeader{
     display: block;
   }
-  .mat-sidenav-container .mat-sidenav-content .mat-toolbar {
+  .mat-toolbar {
     justify-content: space-between;
     //flex-wrap: wrap;
-    padding: 20px 5px;
+    padding: 20px 10px !important;
   }
   .mat-sidenav-container .mat-sidenav-content .mat-toolbar .div-icon {
     display: block;
@@ -440,6 +447,20 @@ mat-sidenav-content {
     }
   }
 }
+.snackbarCrucigramaInfo{
+  background: #f4f4f4;
+    border-color: #f4f4f4;
+    color: #878787;
+  div {
+    div {
+      simple-snack-bar {
+        .mat-simple-snackbar-action {
+          color: #878787;
+        }
+      }
+    }
+  }
+}
 .snackbarCrucigramaerror {
   background: #f8d7da;
   border-color: #f5c6cb;
@@ -466,7 +487,8 @@ mat-sidenav-content {
 .acordionHeader{
   mat-expansion-panel-header{
     .mat-expansion-indicator::after{
-      color: white;
+      color: #4c4c4b;
+      font-weight: 600;
     }
   }
   .mat-expansion-panel-content {

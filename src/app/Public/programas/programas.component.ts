@@ -10,6 +10,7 @@ import { FiltroProgramasEnvioDTO, FiltrosProgramasDTO, ModalidadDTO, SubAreaCapa
 import { HelperService } from 'src/app/Core/Shared/Services/helper.service';
 import { ProgramasService } from 'src/app/Core/Shared/Services/Programas/programas.service';
 import { SessionStorageService } from 'src/app/Core/Shared/Services/session-storage.service';
+import { SnackBarServiceService } from 'src/app/Core/Shared/Services/SnackBarService/snack-bar-service.service';
 import { FiltroProgramasComponent } from './filtro-programas/filtro-programas.component';
 
 @Component({
@@ -35,7 +36,8 @@ export class ProgramasComponent implements OnInit {
     private _SessionStorageService:SessionStorageService,
     private _HelperService:HelperService,
     @Inject(PLATFORM_ID) platformId: Object,
-    private _bottomSheet: MatBottomSheet
+    private _bottomSheet: MatBottomSheet,
+    private _SnackBarServiceService:SnackBarServiceService,
   ) {
     this.isBrowser = isPlatformBrowser(platformId);
   }
@@ -401,6 +403,7 @@ export class ProgramasComponent implements OnInit {
       }
     })
     this.textoResult="Se encontraron "+this.cantidadProgramas+" resultados";
+    // this._SnackBarServiceService.openSnackBar(this.textoResult,'x',1005,"snackbarCrucigramaInfo",'left');
   }
   SetTags(){
     this.TagAreas=[]

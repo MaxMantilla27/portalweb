@@ -151,7 +151,8 @@ body {
 }
 
 .titleHeaderResposive{
-  color: white;
+  color: #4c4c4b;
+  font-weight: 600;
 }
 .titleHeaderResposive {
   text-decoration: none;
@@ -160,4 +161,18 @@ body {
   background-repeat: no-repeat;
   background-size: 0% 1px;
   transition: background-size .3s;
+}
+.panelHeader{
+  padding: 10px 15px;
+  color: white;
+  height: auto;
+}
+.itemsFooter{
+  margin-top: 40px;
+  border-top: 1px solid #dfdfdf;
+  padding-top: 30px;
+  a{
+    color: #878787;
+    font-size: 14px;
+  }
 }

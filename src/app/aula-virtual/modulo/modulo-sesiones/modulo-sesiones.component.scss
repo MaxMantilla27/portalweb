@@ -1,19 +1,70 @@
-.TareaYEncuesta{
-  padding: 20px;
-  padding: 20px;
-    border: solid 1px #fe7112;
-    margin: 20px 0px;
+.TareaYEncuesta {
+  padding: 20px 0px;
+  font-weight: 600;
+  display: flex;
+  img {
+    width: 20px;
+    margin-right: 10px;
+  }
 }
-.TareaYEncuesta div:hover{
+.TareaYEncuesta div:hover {
   text-decoration: underline;
 }
-.TareaYEncuesta div{
+.TareaYEncuesta div {
   cursor: pointer;
 }
-.TareaYEncuesta{
-  div{
-    img{
+.TareaYEncuesta {
+  div {
+    img {
       width: 18px;
     }
   }
+}
+
+.msjCom {
+  display: flex;
+  background: #fff8f0;
+  padding: 10px 40px;
+  border-radius: 5px;
+  color: #72706d;
+  img {
+    width: 20px;
+    margin-right: 20px;
+  }
+}
+.greay-spinner {
+  position: absolute !important;
+  top: 0;
+  right: 0;
+}
+.progras-spinner {
+  position: absolute !important;
+  top: 0;
+  right: 0;
+}
+.greay-spinner circle,
+.greay-spinner circle {
+  stroke: #dadada !important;
+}
+
+.progras-spinner circle,
+.progras-spinner circle {
+  stroke: #00c356 !important;
+}
+.calificacionpromedio {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  .calificado {
+    background: #0aaff1;
+    color: white;
+    text-align: center;
+    padding: 10px;
+    border-radius: 10px;
+    border: solid #ace3fa 1px;
+  }
+}
+.sesiones:hover{
+  background: #f4f4f4;
+  border-radius: 20px;
 }

@@ -15,7 +15,7 @@
             <mat-tab disabled>
               <ng-template mat-tab-label>
                 <div class="contentHeaderM" [ngClass]="{'ActiveChil':item.opened==true}" (click)="changeCapitulo(i)">
-                  <div class="titleMatr">{{item.nombreCapitulo}}</div>
+                  <div class="titleMatr" style="font-weight: bold;">Capitulo {{item.numeroCapitulo}}: {{item.nombreCapitulo}}</div>
                   <i *ngIf="item.opened==true" class="material-icons">keyboard_arrow_up</i>
                   <i *ngIf="item.opened==false" class="material-icons">keyboard_arrow_down</i>
                 </div>
@@ -32,7 +32,7 @@
               <ng-container *ngFor="let Encuesta of item.registroEstructuraCursoEncuesta;let e=index">
                 <ng-container *ngIf="Encuesta.tipoExamen=='Encuesta' && Encuesta.nombreEncuesta=='Encuesta Inicial'">
 
-                  <mat-tab>
+                  <mat-tab >
                     <ng-template mat-tab-label>
                       <div class="contentHeaderM estructuraSubCapitulos" (click)="changeTab(3,0,i,e,0)" [ngClass]="{'hidetab':item.opened==false}">
                         <div class="titleMatr">{{Encuesta.nombreEncuesta}}</div>
@@ -40,7 +40,8 @@
                     </ng-template>
                     <div style="padding: 10px 30px">
                         <app-sesion-encuesta [json]="json" [idCapitulo]="item.numeroCapitulo" [NombreCapitulo]="item.nombreCapitulo" [idEncuesta]="Encuesta.idEncuesta"
-                        [charge]="Encuesta.charge"></app-sesion-encuesta>
+                        [charge]="Encuesta.charge" [habilitado]="true"
+                        (next)="siguiente(3,i,e,-1)" (prev)="anterior(3,i,e,-1)"></app-sesion-encuesta>
                     </div>
                   </mat-tab>
                 </ng-container>
@@ -52,17 +53,27 @@
             <!--sin subsesion-->
             <ng-container *ngIf="estructuraCapitulo.contineSubSesion==false">
               <ng-container *ngFor="let sesion of item.registroEstructuraCursoSesion;let s=index">
-                <mat-tab>
+                <mat-tab [disabled]="!sesion.habilitado">
                   <ng-template mat-tab-label>
                     <div (click)="changeTab(1,sesion.numeroSesion,i,s,-1)" class="contentHeaderM estructuraSubCapitulos"
                       [ngClass]="{'hidetab':item.opened==false}">
+                      <img *ngIf="sesion.VideoFinish==true" src="../../../assets/icons/positivo-hecho-20.svg" alt="">
+                      <img *ngIf="sesion.VideoFinish!=true" src="../../../assets/icons/videos-29.svg" alt="">
                       <div class="titleMatr">{{sesion.nombreSesion}}</div>
+
+                      <div
+                        style="width: 100%;font-size: 10px;color: #cdcdcd;display: flex;    align-items: flex-end;margin-top: 5px;   padding-left: 15px;">
+                        <i class="material-icons" style="margin-right:5px ;">access_time</i>
+                        <div style="font-size: 12px;">({{sesion.tiempoVideo/60 | number:'0.0-0'}} minutos)</div>
+                      </div>
                     </div>
                   </ng-template>
                   <div style="padding: 10px 30px">
 
                       <app-sesion-video [json]="json" [idCapitulo]="item.numeroCapitulo" [NombreCapitulo]="item.nombreCapitulo" [charge]="sesion.charge"
-                        [idSesion]="sesion.numeroSesion" [nombreSesion]="sesion.nombreSesion"></app-sesion-video>
+                        [idSesion]="sesion.numeroSesion" [nombreSesion]="sesion.nombreSesion"
+                        [habilitado]="sesion.habilitado" [nextChapter]="sesion.nextChapter"
+                        (next)="siguiente(1,i,s,-1)" (prev)="anterior(1,i,s,-1)"></app-sesion-video>
                   </div>
                 </mat-tab>
               </ng-container>
@@ -74,24 +85,34 @@
                   <ng-template mat-tab-label>
                     <div class="contentHeaderM estructuraSubCapitulos" (click)="changeSesion(i,s)"
                       [ngClass]="{'ActiveChil':sesion.opened==true,'hidetab':item.opened==false}">
-                      <div class="titleMatr">{{sesion.nombreSesion}}</div>
+                      <div class="titleMatr">Sesión {{sesion.numeroSesion}}: {{sesion.nombreSesion}}</div>
                       <i *ngIf="sesion.opened==true" class="material-icons">keyboard_arrow_up</i>
                       <i *ngIf="sesion.opened==false" class="material-icons">keyboard_arrow_down</i>
                     </div>
                   </ng-template>
                 </mat-tab>
                 <ng-container *ngFor="let subsesion of sesion.registroEstructuraCursoSubSesion;let ss=index">
-                  <mat-tab>
+                  <mat-tab [disabled]="!subsesion.habilitado">
                     <ng-template mat-tab-label>
                       <div (click)="changeTab(1,subsesion.numeroSubSesion,i,s,ss)" class="contentHeaderM estructuraSubSesiones"
                         [ngClass]="{'hidetab':item.opened==false || sesion.opened==false}">
+                        <img *ngIf="subsesion.VideoFinish==true" src="../../../assets/icons/positivo-hecho-20.svg" alt="">
+                        <img *ngIf="subsesion.VideoFinish!=true" src="../../../assets/icons/videos-29.svg" alt="">
                         <div class="titleMatr">{{subsesion.nombreSubSesion}}</div>
+
+                        <div
+                          style="width: 100%;font-size: 10px;color: #cdcdcd;display: flex;    align-items: flex-end;margin-top: 5px; padding-left: 20px;">
+                          <i class="material-icons" style="margin-right:5px ;">access_time</i>
+                          <div style="font-size: 12px;">({{subsesion.tiempoVideo/60 | number:'0.0-0'}} minutos)</div>
+                        </div>
                       </div>
                     </ng-template>
                     <div style="padding: 10px 30px">
 
                       <app-sesion-video [json]="json" [idCapitulo]="item.numeroCapitulo" [charge]="subsesion.charge"
-                        [idSesion]="subsesion.numeroSubSesion" [NombreCapitulo]="item.nombreCapitulo" [nombreSesion]="subsesion.nombreSubSesion"></app-sesion-video>
+                        [idSesion]="subsesion.numeroSubSesion" [NombreCapitulo]="item.nombreCapitulo" [nombreSesion]="subsesion.nombreSubSesion"
+                        [habilitado]="subsesion.habilitado" [nextChapter]="subsesion.nextChapter"
+                        (next)="siguiente(1,i,s,ss)" (prev)="anterior(1,i,s,ss)"></app-sesion-video>
                     </div>
                   </mat-tab>
                 </ng-container>
@@ -102,7 +123,7 @@
               *ngIf="item.registroEstructuraCursoTarea!=undefined && item.registroEstructuraCursoTarea!=null">
               <ng-container *ngFor="let tarea of item.registroEstructuraCursoTarea;let t=index">
 
-                <mat-tab>
+                <mat-tab [disabled]="!tarea.habilitado">
                   <ng-template mat-tab-label>
                     <div class="contentHeaderM estructuraSubCapitulos" (click)="changeTab(2,0,i,t,0)" [ngClass]="{'hidetab':item.opened==false}">
                       <div class="titleMatr">{{tarea.tarea}}</div>
@@ -110,7 +131,8 @@
                   </ng-template>
                   <div style="padding: 10px 30px">
                       <app-sesion-tarea [json]="json" [idCapitulo]="item.numeroCapitulo" [NombreCapitulo]="item.nombreCapitulo" [idtarea]="tarea.idTarea"
-                      [charge]="tarea.charge"></app-sesion-tarea>
+                      [charge]="tarea.charge" [habilitado]="tarea.habilitado"
+                      (next)="siguiente(2,i,t,-1)" (prev)="anterior(2,i,t,-1)"></app-sesion-tarea>
                   </div>
                 </mat-tab>
               </ng-container>
@@ -121,7 +143,7 @@
               *ngIf="item.registroCursoTareaCalificar!=undefined && item.registroCursoTareaCalificar!=null">
               <ng-container *ngFor="let tareaC of item.registroCursoTareaCalificar;let t=index">
 
-                <mat-tab>
+                <mat-tab [disabled]="!tareaC.habilitado">
                   <ng-template mat-tab-label>
                     <div class="contentHeaderM estructuraSubCapitulos" (click)="changeTab(4,0,i,t,0)" [ngClass]="{'hidetab':item.opened==false}">
                       <div class="titleMatr">Actividad: Calificar {{tareaC.tarea}}</div>
@@ -129,7 +151,8 @@
                   </ng-template>
                   <div style="padding: 10px 30px">
                       <app-sesion-tarea-calificar [json]="json" [idCapitulo]="item.numeroCapitulo" [NombreCapitulo]="item.nombreCapitulo" [idtarea]="tareaC.idEvaluacion"
-                      [charge]="tareaC.charge" [id]="tareaC.id"></app-sesion-tarea-calificar>
+                      [charge]="tareaC.charge" [id]="tareaC.id" [habilitado]="tareaC.habilitado"
+                      (next)="siguiente(4,i,t,-1)" (prev)="anterior(4,i,t,-1)"></app-sesion-tarea-calificar>
                   </div>
                 </mat-tab>
               </ng-container>
@@ -140,7 +163,7 @@
               <ng-container *ngFor="let Encuesta of item.registroEstructuraCursoEncuesta;let e=index">
                 <ng-container *ngIf="Encuesta.tipoExamen=='Encuesta' && Encuesta.nombreEncuesta=='Encuesta Intermedia'">
 
-                  <mat-tab>
+                  <mat-tab [disabled]="!Encuesta.habilitado">
                     <ng-template mat-tab-label>
                       <div class="contentHeaderM estructuraSubCapitulos" (click)="changeTab(3,0,i,e,0)" [ngClass]="{'hidetab':item.opened==false}">
                         <div class="titleMatr">{{Encuesta.nombreEncuesta}}</div>
@@ -149,13 +172,14 @@
                     <div style="padding: 10px 30px">
 
                         <app-sesion-encuesta [json]="json" [idCapitulo]="item.numeroCapitulo" [NombreCapitulo]="item.nombreCapitulo" [idEncuesta]="Encuesta.idEncuesta"
-                        [charge]="Encuesta.charge"></app-sesion-encuesta>
+                        [charge]="Encuesta.charge" [habilitado]="Encuesta.habilitado"
+                        (next)="siguiente(3,i,e,-1)"  (prev)="anterior(3,i,e,-1)"></app-sesion-encuesta>
                     </div>
                   </mat-tab>
                 </ng-container>
                 <ng-container *ngIf="Encuesta.tipoExamen=='Encuesta' && Encuesta.nombreEncuesta=='Encuesta Final'">
 
-                  <mat-tab>
+                  <mat-tab [disabled]="!Encuesta.habilitado">
                     <ng-template mat-tab-label>
                       <div class="contentHeaderM estructuraSubCapitulos" (click)="changeTab(3,0,i,e,0)" [ngClass]="{'hidetab':item.opened==false}">
                         <div class="titleMatr">{{Encuesta.nombreEncuesta}}</div>
@@ -164,7 +188,8 @@
                     <div style="padding: 10px 30px">
 
                         <app-sesion-encuesta [json]="json" [idCapitulo]="item.numeroCapitulo" [NombreCapitulo]="item.nombreCapitulo" [idEncuesta]="Encuesta.idEncuesta"
-                        [charge]="Encuesta.charge"></app-sesion-encuesta>
+                        [charge]="Encuesta.charge" [habilitado]="Encuesta.habilitado"
+                        (next)="siguiente(3,i,e,-1)" (prev)="anterior(3,i,e,-1)"></app-sesion-encuesta>
                     </div>
                   </mat-tab>
                 </ng-container>

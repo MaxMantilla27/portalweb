@@ -66,7 +66,7 @@ export class AlumnoMatButtonComponent implements OnInit,OnChanges {
         });
         this.buttons.push({
           Nombre: 'Categorias',
-          Url: '/',
+          Url: '/AulaVirtual/Categoria',
           Icon: 'badge',
           value: '',
         });
@@ -98,7 +98,7 @@ export class AlumnoMatButtonComponent implements OnInit,OnChanges {
           });
           this.buttons.push({
             Nombre: 'Categorias',
-            Url: '/',
+            Url: '/AulaVirtual/Categoria',
             Icon: 'badge',
             value: '',
           });

@@ -2,9 +2,11 @@ import {
   AfterViewInit,
   Component,
   ElementRef,
+  EventEmitter,
   Input,
   OnChanges,
   OnInit,
+  Output,
   SimpleChanges,
   ViewChild,
   ViewEncapsulation,
@@ -40,6 +42,9 @@ export class VideoBrightcoveComponent implements OnInit, OnChanges,AfterViewInit
 
   @Input()
   public videoData: any;
+  @Input() nextChapter:any;
+  @Output() next: EventEmitter<void> = new EventEmitter<void>();
+  @Output() OnFin: EventEmitter<void> = new EventEmitter<void>();
   public tipo = 2;
   public urlDiapo = '';
   public diapositivas: Array<any> = [];
@@ -57,6 +62,7 @@ export class VideoBrightcoveComponent implements OnInit, OnChanges,AfterViewInit
   public guardar=false;
   public valorRespuesta=''
   public capituloEv=-1;
+  public finish=false
   // +++ Set the data for the player +++
   playerData = {
     accountId: '6267108632001',
@@ -148,6 +154,7 @@ export class VideoBrightcoveComponent implements OnInit, OnChanges,AfterViewInit
       this.diapositivas = this.videoData.objetoConfigurado.configuracion;
       var tiempo=0
       var i=1
+      console.log(this.diapositivas)
       this.diapositivas.forEach((x) => {
 
         if (x.tiempo<=this.tiempovideoinicio) {
@@ -237,6 +244,17 @@ export class VideoBrightcoveComponent implements OnInit, OnChanges,AfterViewInit
       }
     }
   }
+
+  ResponderTexto(){
+    if(!this.valPregunta){
+      this.validatePregunta.IdPregunta=this.preguntas[this.preguntaActual].idPregunta
+      this.validatePregunta.IdPGeneral=this.json.IdPGeneralHijo;
+      this.validatePregunta.IdPEspecifico=this.json.IdPEspecificoHijo;
+      this.validatePregunta.Texto=this.valorRespuesta.toString();
+      console.log(this.validatePregunta)
+      this.ValidarPreguntaInteractiva();
+    }
+  }
   finalizarPreguntas(){
     this.finalizarPerguntas.IdAccesoPrueba=this.json.AccesoPrueba;
     this.finalizarPerguntas.IdPEspecifico=this.json.IdPEspecificoHijo;
@@ -302,6 +320,8 @@ export class VideoBrightcoveComponent implements OnInit, OnChanges,AfterViewInit
       this.paramsPreguntas.GrupoPregunta=this.grupo
       this._PreguntaInteractivaService.ListaRegistroPreguntaInteractivaPorGrupo(this.paramsPreguntas).subscribe({
         next:x=>{
+          console.log(this.preguntaActual)
+          this.preguntaActual=0;
           this.chargePreguntas=true
           this.preguntas=x;
           let i=1;
@@ -332,6 +352,7 @@ export class VideoBrightcoveComponent implements OnInit, OnChanges,AfterViewInit
             }
             i++
           });
+          console.log(this.preguntaActual)
           console.log(x)
         }
       })
@@ -550,5 +571,10 @@ export class VideoBrightcoveComponent implements OnInit, OnChanges,AfterViewInit
       })
     }
 
+  }
+  OnFinish(){
+    this.finish=true;
+    console.log('Finish-------------');
+    this.OnFin.emit()
   }
 }

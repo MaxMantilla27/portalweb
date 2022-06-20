@@ -1,12 +1,17 @@
-<div class="cursoTitle">{{json.NombreCapitulo}}</div>
-<div>Capitulo {{idCapitulo}}:{{NombreCapitulo}} </div>
-<div class="row" style="align-items: center;" style="margin: 30px 0px 0px;" *ngIf="tarea!=undefined">
+<!-- <div class="cursoTitle">{{json.NombreCapitulo}}</div>
+<div>Capitulo {{idCapitulo}}:{{NombreCapitulo}} </div> -->
+<div class="row" style="align-items: center;" style="margin: 30px 0px 0px;" *ngIf="tarea!=undefined && habilitado">
   <div class="tipoIndicacionTitle col-12 col-md-12 col-lg-12" style="margin:0px;">
     <img class="ImgIndicacionesContent" src="../../../../assets/icons/tareas-23.svg">
     <div><strong> {{tarea.datosEvaluacionTrabajo.nombre}}:</strong></div>
   </div>
-  <div class="col-12 col-md-12 col-lg-12">
-    <div style="text-align: right;font-size: 13px;cursor: pointer;" class="vinculo">Siguiente Actividad ></div>
+
+  <div class="col-12 col-md-12 col-lg-12" style="display: flex;justify-content:space-between;padding: 10px;">
+    <div style="text-align: right;font-size: 13px;cursor: pointer;" class="vinculo"
+
+    (click)="prevc()" > < Anterior</div>
+    <div style="text-align: right;font-size: 13px;cursor: pointer;" class="vinculo"
+    (click)="nextc()" *ngIf="tarea!=undefined && tarea.registroEvaluacionArchivo.length>0">Siguiente Sesion></div>
   </div>
   <div class="col-12 col-md-12 col-lg-12" style="    margin-top: 40px;
   margin-bottom: 20px;">
@@ -14,16 +19,14 @@
     <div style="    font-size: 14px;
     font-weight: 600;">Elige el archivo a subir:</div>
   </div>
-  <ng-container *ngIf="progress==0;else cargando" >
+  <ng-container *ngIf="progress==0;else cargando">
     <div class="col-6 col-md-8 col-lg-9 fieldTarea">
 
-      <input #fileInput type="file" id="file"
-      (change)="getFileDetails($event)"
-      style="    width: 100%;
+      <input #fileInput type="file" id="file" (change)="getFileDetails($event)" style="    width: 100%;
       border: solid 1px #c2c2c2;
       padding: 7px;
       border-radius: 5px;">
-        <div *ngIf="!filestatus && fileErrorMsg!=''">{{fileErrorMsg}}</div>
+      <div *ngIf="!filestatus && fileErrorMsg!=''">{{fileErrorMsg}}</div>
     </div>
     <div class="col-6 col-md-4 col-lg-3" style="display: flex;align-items: center;justify-content: flex-end;">
       <app-default-button [confs]="{color:'primary',titulo:'Enviar'}" [style]="'padding:0px 30px;margin:0px '"
@@ -128,7 +131,7 @@
                             <td>{{tarea.criteriosEvaluacion.nombreEscalaCalificacion}}</td>
                             <td class="text-center">
                               {{tarea.criteriosEvaluacion.ponderacion}}
-                              </td>
+                            </td>
                             <td class="text-center">
                               {{minValue(tarea.criteriosEvaluacion.listaParametroEscalaEvaluacion)}} -
                               {{maxValue(tarea.criteriosEvaluacion.listaParametroEscalaEvaluacion)}} </td>
@@ -143,12 +146,14 @@
                 <ng-template #sincriterio>
                   <div class="row" style="border-bottom: 1px solid rgba(0,0,0,.1); padding: 20px 0px;">
                     <div class="col-md-12">
-                      <h4 style="font-weight:400;"  >
+                      <h4 style="font-weight:400;">
                         <b [innerHtml]="item.titulo | safeHtml" class="titleCriterio"></b>
                       </h4>
                     </div>
-                    <div class="col-md-12 contentCriterio" >
-                      <div [innerHtml]="item.contenido.split('font-family:Arial, Helvetica,sans-serif;font-size:small;').join('') | safeHtml" class="contentCriterio"></div>
+                    <div class="col-md-12 contentCriterio">
+                      <div
+                        [innerHtml]="item.contenido.split('font-family:Arial, Helvetica,sans-serif;font-size:small;').join('') | safeHtml"
+                        class="contentCriterio"></div>
 
                     </div>
                   </div>
@@ -157,12 +162,14 @@
               <ng-template #noesquema>
                 <div class="row" style="border-bottom: 1px solid rgba(0,0,0,.1); padding: 20px 0px;">
                   <div class="col-md-12">
-                    <h4 style="font-weight:400;"  >
+                    <h4 style="font-weight:400;">
                       <b [innerHtml]="item.titulo | safeHtml" class="titleCriterio"></b>
                     </h4>
                   </div>
                   <div class="col-md-12 contentCriterio">
-                    <div [innerHtml]="item.contenido.split('font-family:Arial, Helvetica,sans-serif;font-size:small;').join('') | safeHtml" class="contentCriterio"></div>
+                    <div
+                      [innerHtml]="item.contenido.split('font-family:Arial, Helvetica,sans-serif;font-size:small;').join('') | safeHtml"
+                      class="contentCriterio"></div>
 
                   </div>
                 </div>

@@ -54,6 +54,7 @@
   align-items: flex-start;
   width: 100%;
   padding: 10px 10px;
+  flex-wrap: wrap;
   cursor: pointer;
   .titleMatr {
     color: #616161;
@@ -116,11 +117,19 @@
   }
 }
 .estructuraSubCapitulos{
-  padding-left: 30px !important;
+  padding-left: 10px !important;
+  img{
+    width: 15px;
+    margin-right: 5px;
+    margin-top: 5px;
+  }
 }
 .estructuraSubSesiones{
-
-  padding-left: 50px !important;
+  img{
+    width: 15px;
+    margin-right: 5px;
+    margin-top: 5px;
+  }
 }
 .hidetab{
   height: 0px;

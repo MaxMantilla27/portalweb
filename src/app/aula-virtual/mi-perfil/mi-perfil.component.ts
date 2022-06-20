@@ -148,34 +148,36 @@ export class MiPerfilComponent implements OnInit {
   }
 
   ActualizarUsuario() {
-    this.DatosAlumnoEnvio.nombres = this.userForm.get('Nombres')?.value;
-    this.DatosAlumnoEnvio.apellidos = this.userForm.get('Apellido')?.value;
-    this.DatosAlumnoEnvio.idTipoDocumento = this.userForm.get('TipoDocumento')?.value;
-    this.DatosAlumnoEnvio.dni = this.userForm.get('Documento')?.value;
-    this.DatosAlumnoEnvio.email = this.userForm.get('Correo')?.value;
-    this.DatosAlumnoEnvio.telefono = this.userForm.get('Movil')?.value;
-    this.DatosAlumnoEnvio.idGenero = this.userForm.get('Genero')?.value;
+    if(this.userForm.valid){
+      this.DatosAlumnoEnvio.nombres = this.userForm.get('Nombres')?.value;
+      this.DatosAlumnoEnvio.apellidos = this.userForm.get('Apellido')?.value;
+      this.DatosAlumnoEnvio.idTipoDocumento = this.userForm.get('TipoDocumento')?.value;
+      this.DatosAlumnoEnvio.dni = this.userForm.get('Documento')?.value;
+      this.DatosAlumnoEnvio.email = this.userForm.get('Correo')?.value;
+      this.DatosAlumnoEnvio.telefono = this.userForm.get('Movil')?.value;
+      this.DatosAlumnoEnvio.idGenero = this.userForm.get('Genero')?.value;
 
-    this.DatosAlumnoEnvio.idPais = this.userForm.get('Pais')?.value;
-    this.DatosAlumnoEnvio.idDepartamento = this.userForm.get('Region')?.value;
-    this.DatosAlumnoEnvio.ciudad = this.userForm.get('Ciudad')?.value;
-    this.DatosAlumnoEnvio.direccion = this.userForm.get('Direccion')?.value;
+      this.DatosAlumnoEnvio.idPais = this.userForm.get('Pais')?.value;
+      this.DatosAlumnoEnvio.idDepartamento = this.userForm.get('Region')?.value;
+      this.DatosAlumnoEnvio.ciudad = this.userForm.get('Ciudad')?.value;
+      this.DatosAlumnoEnvio.direccion = this.userForm.get('Direccion')?.value;
 
-    this.DatosAlumnoEnvio.empresa = this.userForm.get('Empresa')?.value;
-    this.DatosAlumnoEnvio.idCargo = this.userForm.get('Cargo')?.value;
-    this.DatosAlumnoEnvio.idAreaTrabajo = this.userForm.get('AreaTrabajo')?.value;
-    this.DatosAlumnoEnvio.idAreaFormacion = this.userForm.get('AreaFormacion')?.value;
-    this.DatosAlumnoEnvio.idIndustria = this.userForm.get('Industria')?.value;
-    this._AlumnoService.ActualizarPerfilAlumno(this.DatosAlumnoEnvio).subscribe({
-      next: (x) => {
-      },
-      complete: () => {
-        this.statuscharge = false;
-      },
-    });
-    this._SessionStorageService.GetToken();
-    this.DatoObservable.datoContenido=true
-    this._HelperService.enviarDatoCuenta(this.DatoObservable)
-    console.log(this.DatoObservable);
+      this.DatosAlumnoEnvio.empresa = this.userForm.get('Empresa')?.value;
+      this.DatosAlumnoEnvio.idCargo = this.userForm.get('Cargo')?.value;
+      this.DatosAlumnoEnvio.idAreaTrabajo = this.userForm.get('AreaTrabajo')?.value;
+      this.DatosAlumnoEnvio.idAreaFormacion = this.userForm.get('AreaFormacion')?.value;
+      this.DatosAlumnoEnvio.idIndustria = this.userForm.get('Industria')?.value;
+      this._AlumnoService.ActualizarPerfilAlumno(this.DatosAlumnoEnvio).subscribe({
+        next: (x) => {
+        },
+        complete: () => {
+          this.statuscharge = false;
+        },
+      });
+      this._SessionStorageService.GetToken();
+      this.DatoObservable.datoContenido=true
+      this._HelperService.enviarDatoCuenta(this.DatoObservable)
+      console.log(this.DatoObservable);
+    }
   }
 }

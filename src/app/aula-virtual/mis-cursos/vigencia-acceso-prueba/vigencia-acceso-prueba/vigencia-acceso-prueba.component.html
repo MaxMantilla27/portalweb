@@ -1,29 +1,32 @@
 <ng-container style="background-color: #F2F6FF;">
   <div style="width: 100% ; text-align: right;    padding: 5px;height: 30px;margin: 0px;">
-    <i class="material-icons" style="cursor: pointer;" (click)="dialogRef.close()">close</i></div>
+    <i class="material-icons" style="cursor: pointer;color: #aeb1b5;" (click)="dialogRef.close()">close</i></div>
   <ng-container>
     <div class="CardAccesoPrueba" >
-      <div>
-
-      </div>
-      <div style="text-align: center;font-weight: bold;font-size: 26px;">
+      <div style="display: flex;justify-content: center;font-weight: bold;font-size: 26px;flex-direction: column;
+      align-items: center;">
+        <img src="../../../../../assets/icons/emoticon-triste.svg" style="width: 40px;" alt="">
         Ya no tienes acceso
       </div>
-      <div class="row" style="display: flex;">
-        <div class="col-8 col-md-8 col-lg-8" style="margin-top: 15px;">
+      <div class="row" style="max-width: 100%;color: #aeb1b5;
+      font-weight: 100;
+      font-size: 14px;">
+        <div class="col-12 col-md-12 col-lg-12" style="margin-top: 15px;">
           Si se trata de un error comunicate con soporte técnico.
         </div>
-        <div class="col-4 col-md-4 col-lg-4">
+        <!-- <div class="col-4 col-md-4 col-lg-4">
           <app-default-button [confs]="{color:'primary',titulo:'Soporte técnico'}"
           [style]="'width: 95%;margin-top: 20px;'"></app-default-button>
-        </div>
+        </div> -->
       </div>
-      <div class="row" style="display: flex;">
-        <div class="col-8 col-md-8 col-lg-8" style="margin-top: 15px;">
+      <div class="row" style="max-width: 100%;color: #aeb1b5;
+      font-weight: 100;
+      font-size: 14px;">
+        <div class="col-12 col-md-6 col-lg-7" style="margin-top: 15px;">
           Si quieres saber mas sobre el curso, comunicate con nosotros.
         </div>
-        <div class="col-4 col-md-4 col-lg-4">
-          <app-default-button [confs]="{color:'primary',titulo:'Contáctenos'}"
+        <div class="col-12 col-md-6 col-lg-5">
+          <app-default-button [confs]="{color:'primary',titulo:'Contáctenos'}" [icon]="''"
           [style]="'width: 95%;margin-top: 20px;'"routerLink="/contactenos" (click)="dialogRef.close()" ></app-default-button>
         </div>
       </div>

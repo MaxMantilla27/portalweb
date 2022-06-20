@@ -1,12 +1,21 @@
 <div class="cursoTitle">{{json.NombreCapitulo}}</div>
 <div>Capitulo {{idCapitulo}}:{{NombreCapitulo}} </div>
-<div class="row" style="align-items: center;" style="margin: 30px 0px 0px;" *ngIf="encuesta!=undefined">
+<div class="row" style="align-items: center;" style="margin: 30px 0px 0px;" *ngIf="encuesta!=undefined && habilitado==true">
   <div class="tipoIndicacionTitle col-12 col-md-12 col-lg-12" style="margin:0px;">
     <img class="ImgIndicacionesContent" src="../../../../assets/icons/encuesta-naranja.svg">
     <div><strong> {{encuesta.datosEncuesta.titulo}}:</strong></div>
   </div>
-  <div class="col-12 col-md-12 col-lg-12">
-    <div style="text-align: right;font-size: 13px;cursor: pointer;" class="vinculo">Siguiente Actividad ></div>
+  <div class="col-12 col-md-12 col-lg-12" style="display: flex;justify-content:space-between;padding: 10px;">
+    <div style="text-align: right;font-size: 13px;cursor: pointer;" class="vinculo"
+
+    (click)="prevc()" > <ng-container *ngIf="encuesta.datosEncuesta.titulo!='Encuesta Inicial'">
+
+      < Anterior
+    </ng-container> </div>
+    <div style="text-align: right;font-size: 13px;cursor: pointer;" class="vinculo"
+    *ngIf="encuesta.datosEncuesta.titulo!='Encuesta Final' && encuesta.contenidoEncuesta==null"
+
+    (click)="nextc()"  >Siguiente ></div>
   </div>
   <div class="contentEncuesta" *ngIf="encuesta.contenidoEncuesta!=null">
     <ng-container *ngFor="let enc of encuesta.contenidoEncuesta;let i=index">

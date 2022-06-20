@@ -25,46 +25,78 @@
 
         <ng-container linkIcons>
           <button class="buttonIconCurso" (click)="saveIndex(0)" [routerLink]="'/AulaVirtual/MisCursos/'+item.idMatriculaCabecera"
-         mat-icon-button aria-label="Example icon button with a vertical three dot icon"
+         mat-icon-button
             matTooltip="Indicaciones"
             matTooltipClass="tootipMatriculas">
-            <img class="iconsCardMatriculas" src="../../../assets/icons/indicaciones-naranja.svg" alt="">
+            <div class="contenticonsCard">
+              <div class="iconsCardMatriculas" style="background-image: url(../../../assets/icons/indicaciones-naranja.svg) ;">
+                <!-- <img class="iconsCardMatriculas" src="../../../assets/icons/indicaciones-naranja.svg" alt=""> -->
+              </div>
+            </div>
+
           </button>
           <button class="buttonIconCurso" (click)="saveIndex(1)" [routerLink]="'/AulaVirtual/MisCursos/'+item.idMatriculaCabecera"
-         mat-icon-button aria-label="Example icon button with a vertical three dot icon"
+         mat-icon-button
             matTooltip="Modulos"
             matTooltipClass="tootipMatriculas">
-            <img class="iconsCardMatriculas" src="../../../assets/icons/modulos-naranja.svg" alt="">
+
+            <div class="contenticonsCard">
+              <div class="iconsCardMatriculas" style="background-image: url(../../../assets/icons/modulos-naranja.svg) ;">
+              </div>
+            </div>
+            <!-- <img class="iconsCardMatriculas" src="../../../assets/icons/modulos-naranja.svg" alt=""> -->
           </button>
           <button class="buttonIconCurso" *ngIf="item.proyectoAplicacion" (click)="saveIndex(2)" [routerLink]="'/AulaVirtual/MisCursos/'+item.idMatriculaCabecera"
-         mat-icon-button aria-label="Example icon button with a vertical three dot icon"
+         mat-icon-button
             matTooltip="Proyectos de aplicación"
             matTooltipClass="tootipMatriculas">
-            <img class="iconsCardMatriculas" src="../../../assets/icons/proyectos-aplicacion.svg" alt="">
+
+            <div class="contenticonsCard">
+              <div class="iconsCardMatriculas" style="background-image: url(../../../assets/icons/proyectos-aplicacion.svg) ;">
+              </div>
+            </div>
+            <!-- <img class="iconsCardMatriculas" src="../../../assets/icons/proyectos-aplicacion.svg" alt=""> -->
           </button>
           <button  class="buttonIconCurso" (click)="saveIndex(3)" [routerLink]="'/AulaVirtual/MisCursos/'+item.idMatriculaCabecera"
-         mat-icon-button aria-label="Example icon button with a vertical three dot icon"
+         mat-icon-button
             matTooltip="Certificados"
             matTooltipClass="tootipMatriculas">
-            <img class="iconsCardMatriculas" src="../../../assets/icons/certificados-naranja.svg" alt="">
+
+            <div class="contenticonsCard">
+              <div class="iconsCardMatriculas" style="background-image: url(../../../assets/icons/certificados-naranja.svg) ;">
+              </div>
+            </div>
+            <!-- <img class="iconsCardMatriculas" src="../../../assets/icons/certificados-naranja.svg" alt=""> -->
           </button>
           <button class="buttonIconCurso" (click)="saveIndex(4)" [routerLink]="'/AulaVirtual/MisCursos/'+item.idMatriculaCabecera"
-         mat-icon-button aria-label="Example icon button with a vertical three dot icon"
+         mat-icon-button
             matTooltip="Trámites"
             matTooltipClass="tootipMatriculas">
-            <img class="iconsCardMatriculas" src="../../../assets/icons/tramites-naranja.svg" alt="">
+            <div class="contenticonsCard">
+              <div class="iconsCardMatriculas" style="background-image: url(../../../assets/icons/tramites-naranja.svg) ;">
+              </div>
+            </div>
+            <!-- <img class="iconsCardMatriculas" src="../../../assets/icons/tramites-naranja.svg" alt=""> -->
           </button>
           <button class="buttonIconCurso" *ngIf="item.webibarActivo" (click)="saveIndex(5)" [routerLink]="'/AulaVirtual/MisCursos/'+item.idMatriculaCabecera"
-         mat-icon-button aria-label="Example icon button with a vertical three dot icon"
+         mat-icon-button
             matTooltip="webinars"
             matTooltipClass="tootipMatriculas">
-            <img class="iconsCardMatriculas" src="../../../assets/icons/webinar-naranja.svg" alt="">
+            <div class="contenticonsCard">
+              <div class="iconsCardMatriculas" style="background-image: url(../../../assets/icons/webinar-naranja.svg) ;">
+              </div>
+            </div>
+            <!-- <img class="iconsCardMatriculas" src="../../../assets/icons/webinar-naranja.svg" alt=""> -->
           </button>
           <button class="buttonIconCurso" *ngIf="item.benficioSolicitado" (click)="saveIndex(6)" [routerLink]="'/AulaVirtual/MisCursos/'+item.idMatriculaCabecera"
-         mat-icon-button aria-label="Example icon button with a vertical three dot icon"
+         mat-icon-button
             matTooltip="Mis Beneficios"
             matTooltipClass="tootipMatriculas">
-            <img class="iconsCardMatriculas" src="../../../assets/icons/beneficios-naranja.svg" alt="">
+            <div class="contenticonsCard">
+              <div class="iconsCardMatriculas" style="background-image: url(../../../assets/icons/beneficios-naranja.svg) ;">
+              </div>
+            </div>
+            <!-- <img class="iconsCardMatriculas" src="../../../assets/icons/beneficios-naranja.svg" alt=""> -->
           </button>
         </ng-container>
       </app-card-matriculas>
@@ -75,18 +107,26 @@
       Title: itemP.nombre,ImgAlt: '',Tipo:itemP.tipoModalidad, Url: '/AulaVirtual/MisCursosPrueba/'+itemP.idRegistroPrueba,Valido:itemP.valido}">
 
         <ng-container linkIcons>
-          <button class="buttonIconCurso" [disabled]="!itemP.valido" (click)="saveIndex(0)" [routerLink]="'/AulaVirtual/MisCursosPrueba/'+itemP.idRegistroPrueba"
-         mat-icon-button aria-label="Example icon button with a vertical three dot icon"
+          <button class="buttonIconCurso"  (click)="saveindexPrueba(0,'/AulaVirtual/MisCursosPrueba/'+itemP.idRegistroPrueba,itemP.valido)"
+         mat-icon-button
             matTooltip="Indicaciones"
             matTooltipClass="tootipMatriculas">
-            <img class="iconsCardMatriculas" src="../../../assets/icons/indicaciones-naranja.svg" alt="">
+            <div class="contenticonsCard">
+              <div class="iconsCardMatriculas" style="background-image: url(../../../assets/icons/indicaciones-naranja.svg) ;">
+              </div>
+            </div>
+            <!-- <img class="iconsCardMatriculas" src="../../../assets/icons/indicaciones-naranja.svg" alt=""> -->
           </button>
 
-          <button class="buttonIconCurso" [disabled]="!itemP.valido" (click)="saveIndex(1)" [routerLink]="'/AulaVirtual/MisCursosPrueba/'+itemP.idRegistroPrueba"
-         mat-icon-button aria-label="Example icon button with a vertical three dot icon"
+          <button class="buttonIconCurso"  (click)="saveindexPrueba(1,'/AulaVirtual/MisCursosPrueba/'+itemP.idRegistroPrueba,itemP.valido)"
+         mat-icon-button
             matTooltip="Modulos"
             matTooltipClass="tootipMatriculas">
-            <img class="iconsCardMatriculas" src="../../../assets/icons/modulos-naranja.svg" alt="">
+            <div class="contenticonsCard">
+              <div class="iconsCardMatriculas" style="background-image: url(../../../assets/icons/modulos-naranja.svg) ;">
+              </div>
+            </div>
+            <!-- <img class="iconsCardMatriculas" src="../../../assets/icons/modulos-naranja.svg" alt=""> -->
           </button>
         </ng-container>
       </app-card-matriculas-prueba>

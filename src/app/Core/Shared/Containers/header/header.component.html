@@ -1,3 +1,4 @@
+
 <mat-toolbar color="primary" *ngIf="!responsive">
 
   <div class="div-icon">
@@ -73,29 +74,32 @@
     </div> -->
   </div>
 </mat-toolbar>
-<div class="menuResponsive" *ngIf="responsive">
-  <app-button [Url]="''" [tipo]="2" (click)="OnClick.emit()">
+<div class="menuResponsive" *ngIf="responsive" style="margin-top: 30px;">
+  <app-button [Url]="''" [tipo]="2" (click)="OnClick.emit()" [color]="'#4c4c4b'" [weigth]="'600'">
     <ng-container contenidoTag>
       Inicio
     </ng-container>
   </app-button>
   <mat-accordion class="acordionHeader">
-    <mat-expansion-panel *ngFor="let item of expandibles" style="background: transparent;box-shadow: none;">
-      <mat-expansion-panel-header style="background: transparent !important;
-      padding: 15px;
-      color: white;
-      height: auto;">
-        <mat-panel-title>
-          <div class="titleHeaderResposive">{{item.Nombre}}</div>
-        </mat-panel-title>
-      </mat-expansion-panel-header>
-      <div style="max-width: 300px;">
-        <div *ngFor="let cont of item.data" style="color: white;
-        padding: 10px 0px;" [routerLink]="cont.Url" (click)="OnClick.emit()">
-          {{cont.Nombre}}
+    <ng-container *ngFor="let item of expandibles;let i=index">
+      <mat-expansion-panel *ngIf="item.estatus" style="background: transparent;box-shadow: none;" (opened)="step=i"
+      [expanded]="step===i" (closed)="step=-1">
+        <mat-expansion-panel-header class="panelHeader"
+        [ngStyle]="{'background':step==i?'#e7e7e7':'transparent'}">
+          <mat-panel-title>
+            <div class="titleHeaderResposive">{{item.Nombre}}</div>
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <div style="max-width: 300px;">
+          <div *ngFor="let cont of item.data" style="color: #4c4c4b;
+          padding: 10px 0px;" [routerLink]="cont.Url" (click)="OnClick.emit()"  [style]="cont.style">
+            {{cont.Nombre}}
+          </div>
         </div>
-      </div>
-    </mat-expansion-panel>
+      </mat-expansion-panel>
+
+    </ng-container>
+
   </mat-accordion>
   <!-- <ng-container *ngFor="let item of expandibles">
     <app-button *ngIf="item.estatus" [dataUrl]="item.data" [tipo]="3">
@@ -104,9 +108,16 @@
       </ng-container>
     </app-button>
   </ng-container> -->
-  <app-button [Url]="'/bs-campus'" [tipo]="2" (click)="OnClick.emit()">
+  <app-button [Url]="'/bs-campus'" [tipo]="2" (click)="OnClick.emit()" [color]="'#4c4c4b'" [weigth]="'600'">
     <ng-container contenidoTag>
       BS Campus
     </ng-container>
   </app-button>
+  <div class="itemsFooter">
+    <a routerLink="/AcercaBsGrupo" target="_blank">Acerca de BSG Institute</a>
+    <a routerLink="/contactenos" target="_blank">Contáctenos</a>
+    <a routerLink="/termino-uso-web" target="_blank">Términos de uso</a>
+    <a routerLink="/politica-privacidad" target="_blank">Política de privacidad</a>
+  </div>
 </div>
+

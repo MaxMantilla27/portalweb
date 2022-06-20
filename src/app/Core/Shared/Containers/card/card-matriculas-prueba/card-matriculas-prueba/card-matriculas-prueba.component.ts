@@ -23,9 +23,9 @@ export class CardMatriculasPruebaComponent implements OnInit {
   }
   OpenModal(): void {
     const dialogRef = this.dialog.open(VigenciaAccesoPruebaComponent, {
-      width: '500px',
+      width: '400px',
       data: { },
-      panelClass: 'custom-dialog-container',
+      panelClass: 'dialog-programas-prueba',
     });
 
     dialogRef.afterClosed().subscribe((result) => {

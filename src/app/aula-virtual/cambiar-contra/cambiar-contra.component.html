@@ -18,8 +18,11 @@
   <div class="row rowpaddAv">
     <div class="col-12 col-md-12 col-lg-12">
       <form (submit)="CambiarContra()" [formGroup]="userForm">
-        <div class="row">
-          <div class="col-12 col-md-6 col-lg-6 fieldOld">
+        <div class="row" style="justify-content: center;">
+          <div class="col-12 col-md-10 col-lg-7 fieldOld" style="  padding: 50px 40px;
+          background: #f4f4f4;
+          border: solid 2px #f0f0f0;
+          border-radius: 10px;">
             <mat-form-field appearance="outline" >
               <mat-label>Contraseña Actual</mat-label>
               <input type="password"  formControlName="contraActual" matInput />
@@ -35,7 +38,7 @@
               <input type="password" formControlName="contraNuevaRepeat" matInput />
               <mat-error *ngIf="userForm.invalid">{{obtenerErrorCampoNombre('contraNuevaRepeat')}}</mat-error>
             </mat-form-field>
-            <app-default-button [confs]="{color:'primary',titulo:'Guardar'}" [disabled]="!userForm.valid"
+            <app-default-button [confs]="{color:'primary',titulo:'Cambiar contraseña'}"
               [style]="'width: 100%;margin-top: 20px;'" ></app-default-button>
           </div>
         </div>

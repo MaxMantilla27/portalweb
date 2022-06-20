@@ -1,0 +1,55 @@
+.cardCategorias {
+  border: solid 1px #dadada;
+  padding: 20px 30px;
+  border-radius: 20px;
+  margin-bottom: 40px;
+}
+.titleCardCategorias {
+  text-align: center;
+  font-weight: 600;
+  font-size: 20px;
+  padding: 10px 0px;
+  border-bottom: solid 2px #f4f4f4;
+}
+.CircleImg {
+  border-radius: 50%;
+  height: 40px;
+  width: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+  img {
+    width: 80%;
+  }
+}
+.contentCategoria {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  font-size: 18px;
+  p{
+    font-size: 16px;
+    font-weight: 100;
+    margin-top: 20px;
+    text-align: center;
+  }
+}
+.textCategoria{
+  font-size: 14px;
+  padding: 20px 10px;
+  color: #878787;
+}
+.msjCom{
+  display: flex;
+  background: #fff8f0;
+  padding: 10px 40px;
+  border-radius: 5px;
+  color: #72706d;
+  img{
+    width: 20px;
+    margin-right: 20px;
+  }
+}

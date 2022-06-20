@@ -64,6 +64,7 @@ import { ModuloAyudaPreguntasFrecuentesComponent } from './modulo/modulo-ayuda/m
 import { ModuloAyudaQuejasSugerenciasComponent } from './modulo/modulo-ayuda/modulo-ayuda/modulo-ayuda-quejas-sugerencias/modulo-ayuda-quejas-sugerencias/modulo-ayuda-quejas-sugerencias.component';
 import { RegistrarErrorComponent } from './sesiones/sesion-video/registrar-error/registrar-error/registrar-error.component';
 import { VigenciaAccesoPruebaComponent } from './mis-cursos/vigencia-acceso-prueba/vigencia-acceso-prueba/vigencia-acceso-prueba.component';
+import { CategoriaComponent } from './categoria/categoria.component';
 
 
 @NgModule({
@@ -126,6 +127,7 @@ import { VigenciaAccesoPruebaComponent } from './mis-cursos/vigencia-acceso-prue
     ModuloAyudaQuejasSugerenciasComponent,
     RegistrarErrorComponent,
     VigenciaAccesoPruebaComponent,
+    CategoriaComponent,
 
   ],
   imports: [

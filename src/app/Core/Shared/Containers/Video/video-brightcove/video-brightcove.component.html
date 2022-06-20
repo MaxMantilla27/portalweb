@@ -14,12 +14,12 @@
     <div class="containerVideoDiapositiva" (mouseleave)="down=false" (mouseup)="down=false"
       (mousemove)="resise($event)">
       <div style="display: flex;
-      align-items: center;" [ngClass]="{'containerVideo': tipo == 3}"
+      align-items: center;position: relative;" [ngClass]="{'containerVideo': tipo == 3}"
         [ngStyle]="{'width':tipo==3?whidth>0?'calc(45% - '+whidth+'px)':'calc(45% + '+whidth*-1+'px)':tipo==2?'100%':'0px'}">
         <ng-container *ngIf="videoData.objetoConfigurado.idVideoBrightcove!='0' &&
           videoData.objetoConfigurado.idVideoBrightcove!=null &&
-          videoData.objetoConfigurado.idVideoBrightcove!=undefined">
-          <video controls #video (timeupdate)="setCurrentTime($event)" (seeked)="changeTime($event)" height="auto"
+          videoData.objetoConfigurado.idVideoBrightcove!=undefined" >
+          <video controls #video (timeupdate)="setCurrentTime($event)" (seeked)="changeTime($event)" height="auto" (ended)="OnFinish()"
             [currentTime]="tiempovideoinicio" [playbackRate]="1" id="bc-video" [attr.data-player]="playerData.playerId"
             [attr.data-video-id]="playerData.videoId" [attr.data-account]="playerData.accountId" data-embed="default"
             data-application-id class="video-js" [ngClass]="{'medioVideo':tipo==3}">
@@ -30,6 +30,7 @@
         videoData.objetoConfigurado.idVideoBrightcove==null ||
         videoData.objetoConfigurado.idVideoBrightcove==undefined">
           <cloudflare-stream *ngIf="tipo!=4" id="videoCloud" [autoplay]="autoplay" class="video-js" [controls]="true"
+          (ended)="OnFinish()"
             [src]="videoData.idVideo" (timeupdate)="setCurrentTime($event)" #videoCloud style="height: auto !important;"
             [currentTime]="tiempovideoinicio" (seeked)="changeTime($event)"></cloudflare-stream>
           <!-- <video style="width: 100%;" controls>
@@ -37,6 +38,26 @@
           </video> -->
 
         </ng-container>
+        <ng-container *ngIf="finish && nextChapter!=undefined && nextChapter.name!=null">
+          <div class="finishVideo">
+            <div style="  display: flex;
+            justify-content: center;
+            align-items: flex-start;height: 100%;">
+
+              <img  src="../../../assets/icons/videos-29.svg" alt="" style="width: 50px;margin-right: 20px;">
+              <div style="color: white">
+                <div style="color: #05a74c;
+                font-size: 14px;
+                font-weight: 600;">A continuación</div>
+                <div style="    font-size: 22px;
+                font-weight: 600;">{{nextChapter.name}}</div>
+                <div *ngIf="nextChapter.time" style="font-size: 10px;">({{nextChapter.time | number:'0.0-0'}} minutos)</div>
+                <div class="buttonNextVideo" (click)="next.emit()">Ver ahora ></div>
+              </div>
+            </div>
+          </div>
+        </ng-container>
+
       </div>
       <div class="iconResise" *ngIf="tipo==3" (mousedown)="down=true" (mouseup)="down=false" draggable="false">
         <img (mousedown)="down=true" (mouseup)="down=false" draggable="false"
@@ -77,19 +98,34 @@
                 </div>
               </ng-container>
               <ng-container *ngIf="preguntas[preguntaActual].tipoRespuesta==6 || preguntas[preguntaActual].tipoRespuesta==8">
-                <div class="respuesta fieldPreguntasI" *ngFor="let respuesta of preguntas[preguntaActual].respuestaGrupoPreguntaInteractivaPrograma">
+                <div class="respuesta fieldPreguntasI" style="width: 100%;
+                justify-content: space-between;
+                align-items: center;" *ngFor="let respuesta of preguntas[preguntaActual].respuestaGrupoPreguntaInteractivaPrograma;let i=index">
                   <mat-form-field appearance="outline" class="col-12 col-md-6 col-lg-6" >
                     <mat-label>respuesta</mat-label>
                     <input type="text" autocomplete="off" [(ngModel)]="valorRespuesta" matInput />
                   </mat-form-field>
+
+                  <app-default-button
+                  (ButtoclClick)="ResponderTexto()" [disabled]="valorRespuesta==''"
+                  [confs]="{color:'primary',titulo:'responder'}" [icon]="''"
+                  [style]="'padding: 0px 20px;margin:0px;margin-bottom: 1.34375em;'"></app-default-button>
                 </div>
               </ng-container>
               <ng-container *ngIf="preguntas[preguntaActual].tipoRespuesta==7">
-                <div class="respuesta fieldPreguntasI" *ngFor="let respuesta of preguntas[preguntaActual].respuestaGrupoPreguntaInteractivaPrograma">
+                <div class="respuesta fieldPreguntasI" style="width: 100%;
+                justify-content: space-between;
+                align-items: center;"
+                 *ngFor="let respuesta of preguntas[preguntaActual].respuestaGrupoPreguntaInteractivaPrograma;let i=index">
                   <mat-form-field appearance="outline" class="col-12 col-md-6 col-lg-6" >
                     <mat-label>respuesta</mat-label>
                     <input type="number" autocomplete="off" [(ngModel)]="valorRespuesta" matInput />
                   </mat-form-field>
+
+                  <app-default-button
+                  (ButtoclClick)="ResponderTexto()" [disabled]="valorRespuesta==''"
+                  [confs]="{color:'primary',titulo:'responder'}" [icon]="''"
+                  [style]="'padding: 0px 20px;margin:0px;margin-bottom: 1.34375em;'"></app-default-button>
                 </div>
               </ng-container>
 

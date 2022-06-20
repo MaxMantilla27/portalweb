@@ -1,24 +1,39 @@
 .contentIndicacionesContent{
   display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  /* flex-direction: column; */
+  /* justify-content: center; */
+  /* align-items: center; */
   padding: 20px;
+  background: #f4f4f4;
+  border-radius: 5px;
+  align-items: center;
+  cursor: pointer;
 }
 .ImgIndicacionesContent{
   height: 30px !important;
 
 }
 .TitleIndicacionesContent{
-  color: #959594;
+  color: #ff7012;
   font-weight: 600;
   cursor: pointer;
 }
 .TitleIndicacionesContent:hover{
-  color: #ff7012;
+
   text-decoration: underline;
 }
 
 .contentIndicacionesContent:hover{
   box-shadow: 0px 0px 3px #626261;
+  background: #ff7012;
+  .TitleIndicacionesContent{
+    color: white;
+  }
+}
+.imgIndicaciones{
+  width: 40px;
+  height: 40px;
+  background-repeat:no-repeat ;
+  background-position:center ;
+  margin-right: 20px;
 }

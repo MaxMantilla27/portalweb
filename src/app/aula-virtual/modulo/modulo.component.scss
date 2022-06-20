@@ -228,15 +228,15 @@
   flex-wrap: wrap;
 }
 .NSesionCapitulo{
-  margin-left: 10px;
-  color: #bcbcbc;
-  font-size: 10px;
+  color: #878778;
+  font-size: 12px;
 }
 .promedioCapitulo{
-  margin-left: 10px;
   font-size: 12px;
-  background: #f2f6ff;
-  padding: 2px 3px;
+  background: #0684f2;
+  padding: 5px 20px;
+  border-radius: 20px;
+  color: white;
 }
 .titleCapitulo{
   color: #545454;
@@ -248,14 +248,14 @@
   margin-right: 5px;
 }
 .contentCapituloSesion{
-  padding: 10px 0px 30px 0px;
+  padding: 0px 0px 30px 20px;
 }
 .capituloSesion{
   align-items: center;
   justify-content: space-between;
 }
 .capituloSesionesSubsesiones{
-  padding-left: 40px !important;
+  //padding-left: 40px !important;
 }
 .tituloSesion{
   color: #898989;

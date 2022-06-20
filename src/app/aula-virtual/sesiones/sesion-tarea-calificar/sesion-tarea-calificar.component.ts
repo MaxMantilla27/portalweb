@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { ParametrosEstructuraEspecificaDTO } from 'src/app/Core/Models/EstructuraEspecificaDTO';
 import { ParametroEnvioTrabajoPares, ParametroObtenerEvaluacionTarea } from 'src/app/Core/Models/TareaEvaluacionDTO';
 import { SnackBarServiceService } from 'src/app/Core/Shared/Services/SnackBarService/snack-bar-service.service';
@@ -30,6 +30,10 @@ export class SesionTareaCalificarComponent implements OnInit,OnChanges {
   @Input() NombreCapitulo=''
   @Input() idCapitulo=0;
   @Input() id=0;
+  @Input() habilitado=false;
+
+  @Output() next: EventEmitter<void> = new EventEmitter<void>();
+  @Output() prev: EventEmitter<void> = new EventEmitter<void>();
   public params:ParametroObtenerEvaluacionTarea={
     idEvaluacion:0,
     idPEspecifico:0,
@@ -52,7 +56,7 @@ export class SesionTareaCalificarComponent implements OnInit,OnChanges {
   ngOnInit(): void {
   }
   ngOnChanges(changes: SimpleChanges): void {
-    if(this.idtarea>0 && this.charge==true){
+    if(this.idtarea>0 && this.charge==true && this.habilitado==true){
       console.log(this.id)
       this.params.idEvaluacion=this.idtarea;
       this.params.idPEspecifico=this.json.IdPEspecificoHijo
@@ -106,5 +110,13 @@ export class SesionTareaCalificarComponent implements OnInit,OnChanges {
       }
     })
   }
-
+  nextc(){
+    console.log(this.tareaAc)
+    if(this.tareaAc!=undefined && this.tareaAc.calificado==true){
+      this.next.emit();
+    }
+  }
+  prevc(){
+    this.prev.emit();
+  }
 }

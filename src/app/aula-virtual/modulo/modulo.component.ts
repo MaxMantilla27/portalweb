@@ -57,7 +57,6 @@ export class ModuloComponent implements OnInit {
   ObtenerEstructuraEspecificaCurso(){
     this._ProgramaContenidoService.ObtenerEstructuraEspecificaCurso(this.json).subscribe({
       next:x=>{
-        console.log(this.estructuraCapitulo)
         this.estructuraCapitulo=x
         this._SessionStorageService.SetEstructura(this.estructuraCapitulo);
         console.log(this.estructuraCapitulo)

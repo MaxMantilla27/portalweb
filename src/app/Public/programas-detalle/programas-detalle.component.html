@@ -3,7 +3,7 @@
     <app-miga-pan [items]="migaPan"></app-miga-pan>
   </div>
 </div>
-<div style="background: #f4f4f4;position: relative;">
+<div style="background: #f4f4f4;position: relative;padding: 10px 0px;">
   <div class="phoneCall">
     <img src="../../../assets/icons/icono-llamada.svg" alt="">
     <div style="width: calc( 100% - 40px );"> Solicita una llamada</div>
@@ -20,11 +20,11 @@
             routerLink="/SubArea/{{cabecera.subAreaDescripcion}}">{{cabecera.nombreSubArea}}</a> </div>
         <div class="row" style="margin-top: 20px;">
           <div class="col-12 col-md-12 col-lg-6">
-            <app-default-button [confs]="{color:'primary',titulo:'Matricularme Ahora'}"
+            <app-default-button [confs]="{color:'primary',titulo:'Matricularme Ahora'}" [style]="'width: 100%;'"
               (ButtoclClick)="ObtenerCabeceraProgramaGeneral()"></app-default-button>
           </div>
           <div class="col-12 col-md-12 col-lg-6 ">
-            <app-default-button [confs]="{color:'primary',titulo:'Acceso de prueba gratis'}"
+            <app-default-button [confs]="{color:'primary',titulo:'Acceso de prueba gratis'}" [style]="'width: 100%;'"
               (ButtoclClick)="RegistrarProgramaPrueba()"></app-default-button>
           </div>
         </div>
@@ -235,7 +235,7 @@
         </mat-expansion-panel>
       </mat-accordion>
       <br>
-      <app-default-button [confs]="{color:'primary',titulo:'Solicita Información'}"
+      <app-default-button [confs]="{color:'primary',titulo:'Solicita Información'}" [style]="'width: 100%;'"
         (ButtoclClick)="ScrollTo(formularioPrograma)"></app-default-button>
     </div>
   </div>
@@ -289,35 +289,12 @@
           </div>
         </div>
         <div class="col-12 col-sm-6 col-md-6">
-          <div class="col-12 col-sm-12 col-md-12 contentCarsubtitle">
 
-            <div class="cardSubtitle">
-              <img src="../../../assets/icons/icon-reflexion.svg" alt="">
-              <div>
-                <div class="titleCardSub" style="color: #2b9fe0;"><strong>Reflexi&oacute;n</strong></div>
-                <div class="parafoCardSub">Tendr&aacute;s la oportunidad de reflexionar sobre lo aprendido en el
-                  desarrollo
-                  del curso y podr&aacute;s compartirlo con tus compa&ntilde;eros</div>
-              </div>
-            </div>
-          </div>
-          <div class="col-12 col-sm-12 col-md-12 contentCarsubtitle">
-
-            <div class="cardSubtitle">
-              <img src="../../../assets/icons/icon-Applied-Projects.svg" alt="">
-              <div>
-                <div class="titleCardSub" style="color: #8fc912;"><strong>Applied projects</strong></div>
-                <div class="parafoCardSub">Podr&aacute;s completar una serie de tareas aplicadas que permitiran emplear
-                  los
-                  conocimientos aprendidos en situaciones reales</div>
-              </div>
-            </div>
-          </div>
           <div class="col-12 col-sm-12 col-md-12 contentCarsubtitle">
             <div class="cardSubtitle">
               <img src="../../../assets/icons/icon-Gamiﬁcation.svg" alt="">
               <div>
-                <div class="titleCardSub" style="color: #ffc715;"><strong>Gamification</strong></div>
+                <div class="titleCardSub" style="color: #ffc715;"><strong>Gamificaci&oacute;n</strong></div>
                 <div class="parafoCardSub">Usamos mecanismos de gamificaci&oacute;n estructural y de contenidos con el
                   fin
                   de
@@ -327,10 +304,22 @@
           </div>
           <div class="col-12 col-sm-12 col-md-12 contentCarsubtitle">
 
+            <div class="cardSubtitle">
+              <img src="../../../assets/icons/icon-Serious-games.svg" alt="">
+              <div>
+                <div class="titleCardSub" style="color: #e02107;"><strong>Serious games</strong></div>
+
+                <div class="parafoCardSub">Podr&aacute;s aplicar los conocimientos en la resoluci&oacute;n de problemas como los que tienes que resolver en el
+                  d&iacute;a a d&iacute;a de tu trabajo.</div>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-sm-12 col-md-12 contentCarsubtitle">
+
             <div class="cardSubtitle" style="    margin-bottom: 20px;">
               <img src="../../../assets/icons/icon-Virtual-reality.svg" alt="">
               <div>
-                <div class="titleCardSub" style="color: #2b9fe0;"><strong>Virtual reality</strong></div>
+                <div class="titleCardSub" style="color: #2b9fe0;"><strong>Realidad virtual</strong></div>
                 <div class="parafoCardSub">Acceder&aacute;s a simuladores que cuenta con la tecnolog&iacute;a Oculus
                   Quest 2, una
                   de
@@ -341,10 +330,24 @@
           <div class="col-12 col-sm-12 col-md-12 contentCarsubtitle">
 
             <div class="cardSubtitle">
-              <img src="../../../assets/icons/icon-Serious-games.svg" alt="">
+              <img src="../../../assets/icons/icon-Applied-Projects.svg" alt="">
               <div>
-                <div class="titleCardSub" style="color: #e02107;"><strong>Serious games</strong></div>
-                <div class="parafoCardSub">Dispondr&aacute;s de simuladores en linea para recrear entornos reales</div>
+                <div class="titleCardSub" style="color: #8fc912;"><strong>Proyectos aplicados</strong></div>
+                <div class="parafoCardSub">Podr&aacute;s completar una serie de tareas aplicadas que permitiran emplear
+                  los
+                  conocimientos aprendidos en situaciones reales</div>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-sm-12 col-md-12 contentCarsubtitle">
+
+            <div class="cardSubtitle">
+              <img src="../../../assets/icons/icon-reflexion.svg" alt="">
+              <div>
+                <div class="titleCardSub" style="color: #2b9fe0;"><strong>Aprendizaje Reflexivo</strong></div>
+                <div class="parafoCardSub">Tendr&aacute;s la oportunidad de reflexionar sobre lo aprendido en el
+                  desarrollo
+                  del curso y podr&aacute;s compartirlo con tus compa&ntilde;eros</div>
               </div>
             </div>
           </div>
@@ -438,12 +441,14 @@
       align-items: center;
       color: #4a4a49;"><i class="material-icons">keyboard_arrow_right</i>Dep&oacute;sito o pago en una cuenta del BCP:
       </div>
-      <div class="cardFormasPago" style="margin-bottom: 40px;">
-        <div class="divpagobcp">
+      <div class="row cardFormasPago" style="margin-bottom: 40px;">
+        <div class="col-12 col-md-9 col-lg-9 divpagobcp">
           Puedes solicitar tu c&oacute;digo de pago, o la información de la cuenta a nuestros asesores para hacer un
           dep&oacute;sito o transferencia
         </div>
-        <img class="imgCardFormasPago" src="../../../assets//icons/bcp-06.svg" alt="">
+        <div class="col-12 col-md-3 col-lg-3" style="padding: 0px; margin: 10px 0px;display:flex;justify-content: center;">
+          <img class="imgCardFormasPago" src="../../../assets//icons/bcp-06.svg" alt="">
+        </div>
       </div>
     </div>
     <div class="col-12 col-md-12 col-lg-12" style="    margin-bottom: 10px;">
@@ -496,9 +501,9 @@
           valorado en el mercado laboral
           latinoamericano para mejorar tu perfil profesional</div>
       </div>
-      <div class="col-12 col-md-4 col-lg-4" style="display: flex;justify-content: flex-end;align-items: flex-end;">
+      <div class="col-12 col-md-4 col-lg-4" style="margin-top: 20px;">
         <app-default-button [confs]="{color:'primary',titulo:'Matricularme Ahora'}"
-          [style]="'padding: 10px 30px;font-size: 1.2rem;'" (ButtoclClick)="ScrollTo(formularioPrograma)">
+          [style]="'padding: 10px 30px;font-size: 1.2rem;width: 100%;'" (ButtoclClick)="ScrollTo(formularioPrograma)">
         </app-default-button>
       </div>
     </div>

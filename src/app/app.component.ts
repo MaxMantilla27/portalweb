@@ -1,6 +1,7 @@
 import { isPlatformBrowser } from '@angular/common';
 import { AfterViewInit, Component, Inject, OnInit, PLATFORM_ID, ViewEncapsulation } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
+import { BasicBotonesExpandibles } from './Core/Models/BasicDTO';
 import { HelperService } from './Core/Shared/Services/helper.service';
 
 @Component({
@@ -19,6 +20,23 @@ export class AppComponent implements OnInit,AfterViewInit  {
   ) {
     this.isBrowser = isPlatformBrowser(platformId);
   }
+  public Expandibles:Array<BasicBotonesExpandibles> = [
+    {
+      Nombre: 'Formación Continua',
+      data: [],
+      estatus: true,
+    },
+    {
+      Nombre: 'Carreras Profesionales',
+      data: [],
+      estatus: false,
+    },
+    {
+      Nombre: 'Educación Técnica',
+      data: [],
+      estatus: false,
+    },
+  ];
   ngOnInit() {}
   ngAfterViewInit() {
     this.router.events.subscribe((val) => {
@@ -31,5 +49,9 @@ export class AppComponent implements OnInit,AfterViewInit  {
   }
   onSideNavScroll(event: any) {
     this._HelperService.enviarScroll(event.target.scrollTop);
+  }
+  changeExpandibles(e:any){
+    console.log(e)
+    this.Expandibles=e
   }
 }

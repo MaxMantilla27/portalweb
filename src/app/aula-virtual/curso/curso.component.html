@@ -24,20 +24,24 @@
               Te deseamos existos.
             </div>
             <div class="row">
-              <div class="col-12 col-md-6 col-lg-6" style="margin: 10px 0px;">
-                <app-indicaciones-content [title]="'Preguntas interactivas'" [imgUrl]="'preguntas-interactivas-38.svg'"
+              <div class="col-12 col-md-9 col-lg-9" style="margin: 10px 0px;">
+                <app-indicaciones-content [title]="'Preguntas interactivas'" [imgUrl]="imgsIndocaciones[0]"
+                (HoverIn)='imgsIndocaciones[0]="preguntas-interactivas-38.svg"' (HoverOut)='imgsIndocaciones[0]="preguntas-naranja-38.svg"'
                   (ButtoclClick)="changeIndexIndicaciones(1)"></app-indicaciones-content>
               </div>
-              <div class="col-12 col-md-6 col-lg-6" style="margin: 10px 0px;">
-                <app-indicaciones-content [title]="'Crucigramas'" [imgUrl]="'crucigramas-39.svg'"
+              <div class="col-12 col-md-9 col-lg-9" style="margin: 10px 0px;">
+                <app-indicaciones-content [title]="'Crucigramas'" [imgUrl]="imgsIndocaciones[1]"
+                (HoverIn)='imgsIndocaciones[1]="crucigramas-39.svg"' (HoverOut)='imgsIndocaciones[1]="crucigrama-naranja-39.svg"'
                   (ButtoclClick)="changeIndexIndicaciones(2)"></app-indicaciones-content>
               </div>
-              <div class="col-12 col-md-6 col-lg-6" style="margin: 10px 0px;">
-                <app-indicaciones-content [title]="'Tareas'" [imgUrl]="'tareas-indicaciones-40.svg'"
+              <div class="col-12 col-md-9 col-lg-9" style="margin: 10px 0px;">
+                <app-indicaciones-content [title]="'Tareas'" [imgUrl]="imgsIndocaciones[2]"
+                (HoverIn)='imgsIndocaciones[2]="tareas-indicaciones-40.svg"' (HoverOut)='imgsIndocaciones[2]="tareas-naranja-40.svg"'
                   (ButtoclClick)="changeIndexIndicaciones(3)"></app-indicaciones-content>
               </div>
-              <div class="col-12 col-md-6 col-lg-6" style="margin: 10px 0px;">
-                <app-indicaciones-content [title]="'Calificar tarea de pares'" [imgUrl]="'calificar-tareas-41.svg'"
+              <div class="col-12 col-md-9 col-lg-9" style="margin: 10px 0px;">
+                <app-indicaciones-content [title]="'Calificar tarea de pares'" [imgUrl]="imgsIndocaciones[3]"
+                (HoverIn)='imgsIndocaciones[3]="calificar-tareas-41.svg"' (HoverOut)='imgsIndocaciones[3]="tareas-pares-naranja-41.svg"'
                   (ButtoclClick)="changeIndexIndicaciones(4)"></app-indicaciones-content>
               </div>
             </div>

@@ -35,6 +35,9 @@ export class HeaderComponent implements OnInit {
   @Input() responsive:boolean=false;
   @Output()
   OnClick: EventEmitter<boolean> = new EventEmitter<boolean>();
+  @Output()
+  ChangeExpand: EventEmitter<any> = new EventEmitter<any>();
+
   public Formacion: Array<BasicUrl> = [];
   public carreras: Array<BasicUrl> = [];
   public tecnica: Array<BasicUrl> = [];
@@ -110,7 +113,7 @@ export class HeaderComponent implements OnInit {
     datosAlumno:this.Alumno
   }
 
-  public expandibles: Array<BasicBotonesExpandibles> = [
+  @Input() expandibles: Array<BasicBotonesExpandibles> = [
     {
       Nombre: 'Formación Continua',
       data: this.Formacion,
@@ -129,7 +132,7 @@ export class HeaderComponent implements OnInit {
   ];
   public token: boolean = this._SessionStorageService.validateTokken();
   public CodigoIso: string = 'INTC';
-
+  public step=-1
   constructor(
     private _SessionStorageService: SessionStorageService,
     private _PaisService: PaisService,
@@ -155,7 +158,6 @@ export class HeaderComponent implements OnInit {
     this.paises = [];
     this._PaisService.GetPaises().subscribe({
       next: (x) => {
-        console.log(x)
         this.paises = x.listaPaisCabeceraDTO.map((p: any) => {
           var ps: BasicUrlIcon = {
             Nombre: p.pais,
@@ -293,10 +295,13 @@ export class HeaderComponent implements OnInit {
       this.expandibles[1].estatus = false;
       this._HelperService.enviarStringCarrera('');
     }
+    console.log(this.expandibles)
   }
   ChangePais(e: any) {
+
     this._SessionStorageService.SessionSetValue('ISO_PAIS', e);
     this.GetCarreras();
+    this.ChangeExpand.emit(this.expandibles)
   }
 
   ObtenerCombosPerfil() {

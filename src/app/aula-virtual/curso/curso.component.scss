@@ -34,6 +34,14 @@
   .mat-tab-label-container
   .mat-tab-list
   .mat-tab-labels
+  .mat-tab-label:hover{
+  background: #f4f4f4;
+}
+.tabVertical
+  .mat-tab-header
+  .mat-tab-label-container
+  .mat-tab-list
+  .mat-tab-labels
   .mat-tab-label
   .mat-tab-label-content{
     width: 100%;

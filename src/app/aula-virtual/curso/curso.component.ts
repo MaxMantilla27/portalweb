@@ -42,6 +42,12 @@ export class CursoComponent implements OnInit,OnDestroy {
       urlWeb: '/AulaVirtual/MisCursos',
     }
   ];
+  public imgsIndocaciones=[
+    'preguntas-naranja-38.svg',
+    'crucigrama-naranja-39.svg',
+    'tareas-naranja-40.svg',
+    'tareas-pares-naranja-41.svg',
+  ]
   public idMatricula = 0;
   public datos: any;
   public programEstructura: CursoPadreDTO = {
@@ -190,6 +196,7 @@ export class CursoComponent implements OnInit,OnDestroy {
               }
 
             }
+            this.tabIndex=valorLoscalS;
             console.log(this.tabIndex)
           }
         }
@@ -227,7 +234,8 @@ export class CursoComponent implements OnInit,OnDestroy {
               NombrePrograma:this.programEstructura.programaGeneral,
               idModalidad:this.programEstructura.idModalidad
             };
-            program.params = btoa(JSON.stringify(params));
+            console.log(params)
+            program.params = btoa(encodeURIComponent(JSON.stringify(params)));
           });
         },
       });

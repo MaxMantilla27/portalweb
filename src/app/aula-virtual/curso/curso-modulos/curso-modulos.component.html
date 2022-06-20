@@ -18,19 +18,30 @@
       <div style="justify-content: space-between; display: flex;font-size: 12px;color: #909090; font-weight: 600;">
         <div>0%</div>
         <div>{{(item.progreso!=undefined &&
-          item.progreso.progresoVideo.length>0)?item.progreso.progresoVideo[0].porcentaje:0}}%</div>
+          item.progreso.progresoVideo.length>0)?(item.progreso.progresoVideo[0].porcentaje | number:'1.0-0'):0 }}%</div>
       </div>
       <div style="display: flex;margin-top: 10px;align-items: center;"
         *ngIf="(item.progreso!=undefined  && item.progreso.progresoEncuesta!=undefined && item.progreso.progresoEncuesta.length>0)">
+
+        <i style=" color: #05c254;
+        margin-right: 5px;
+        font-size: 16px !important;" class="material-icons" *ngIf="item.progreso.progresoEncuesta[0].porcentajeAvance>=100">check_circle</i>
         <div style="font-size: 14px;color: #909090; font-weight: 600;">Encuestas:</div>
-        <div style="font-size: 14px;color: #909090;margin-left:10px">Completadas al
-          {{item.progreso.progresoEncuesta[0].porcentajeAvance}}%</div>
+        <div style="font-size: 14px;color: #909090;margin-left:10px">
+
+          Completadas al
+          {{item.progreso.progresoEncuesta[0].porcentajeAvance  | number:'1.0-0'}}%</div>
       </div>
       <div style="display: flex;margin-top: 10px;"
         *ngIf="(item.progreso!=undefined && item.progreso.progresoTarea!=undefined  && item.progreso.progresoTarea.length>0)">
+        <i style="color: #05c254;
+        margin-right: 5px;
+        font-size: 16px !important;" class="material-icons" *ngIf="item.progreso.progresoTarea[0].porcentajeAvance>=100">check_circle</i>
         <div style="font-size: 14px;color: #909090; font-weight: 600;">Tareas:</div>
-        <div style="font-size: 14px;color: #909090;margin-left:10px">Completadas al
-          {{item.progreso.progresoTarea[0].porcentajeAvance}}%</div>
+        <div style="font-size: 14px;color: #909090;margin-left:10px">
+
+          Completadas al
+          {{item.progreso.progresoTarea[0].porcentajeAvance  | number:'1.0-0'}}%</div>
       </div>
     </div>
 

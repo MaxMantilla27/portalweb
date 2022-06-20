@@ -20,12 +20,15 @@
 
 <div class="container">
   <div class="row rowpadd" style="justify-content: center;">
-    <div class="col-12 col-md-8 col-lg-4">
+    <div class="col-12 col-md-10 col-lg-7" style="    background: #f4f4f4;
+    border: 1px solid #e1e1e1;
+    padding: 30px 40px;
+    border-radius: 10px;">
 
       <div class="alert alert-danger" role="alert" *ngIf="errorLogin!=''">
         {{errorLogin}}
       </div>
-      <app-formulario [model]="login" [InputsDisable]="statuscharge" (OnSubmit)="Login($event)" [Color]="'#f8f8f8'"
+      <app-formulario [model]="login" [InputsDisable]="statuscharge" (OnSubmit)="Login($event)" [Color]="'white'"
         (OnValid)="formVal=$event" [fiels]="fileds" [ChargeValuesInit]="initValues">
 
         <ng-container contenido>
@@ -35,7 +38,7 @@
           </div>
         </ng-container>
         <ng-container send>
-          <app-default-button [confs]="{color:'primary',titulo:'Iniciar sesión'}" [style]="'width: 100%;'" [disabled]="!formVal" ></app-default-button>
+          <app-default-button [confs]="{color:'primary',titulo:'Iniciar sesión'}" [style]="'width: 100%;'"  ></app-default-button>
         </ng-container>
 
       </app-formulario>

@@ -11,7 +11,7 @@ import { SessionStorageService } from 'src/app/Core/Shared/Services/session-stor
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
 
@@ -55,7 +55,7 @@ export class LoginComponent implements OnInit {
       tipo:"text",
       valorInicial:"",
       validate:[Validators.required,Validators.email],
-      label:"E-mail",
+      label:"Correo electronico",
 
     });
     this.fileds.push({
@@ -63,7 +63,7 @@ export class LoginComponent implements OnInit {
       tipo:"password",
       valorInicial:"",
       validate:[Validators.required],
-      label:"Password"
+      label:"Contraseña"
     });
     this.fileds.push({
       nombre:"Recordar",
@@ -75,45 +75,47 @@ export class LoginComponent implements OnInit {
     });
   }
   Login(value:any){
-    console.log(value)
-    //this.statuscharge=true
-    //this.login=value;
-    this.loginSend.password=value.Password;
-    this.loginSend.username=value.Email;
-    this._AspNetUserService.Authenticate(this.loginSend).subscribe({
-      next:x=>{
-        console.log(x)
-        this.statuscharge=false
-        this._SessionStorageService.SetToken(x.token)
-        this.DatoObservable.datoAvatar=true
-        this.DatoObservable.datoContenido=true
-        this._HelperService.enviarDatoCuenta(this.DatoObservable)
-        console.log(this.DatoObservable);
-        this._SessionStorageService.SessionSetValue('IdProveedor',x.idProveedor);
-        this._SessionStorageService.SessionSetValue('Cursos',x.cursos);
-        if(x.idProveedor==0){
-          this.router.navigate(['/AulaVirtual/MiPerfil']);
-        }else{
-          if(x.cursos==0){
-            this.router.navigate(['/AulaVirtual/Docencia']);
-          }else{
+    if(this.formVal){
+      console.log(value)
+      //this.statuscharge=true
+      //this.login=value;
+      this.loginSend.password=value.Password;
+      this.loginSend.username=value.Email;
+      this._AspNetUserService.Authenticate(this.loginSend).subscribe({
+        next:x=>{
+          console.log(x)
+          this.statuscharge=false
+          this._SessionStorageService.SetToken(x.token)
+          this.DatoObservable.datoAvatar=true
+          this.DatoObservable.datoContenido=true
+          this._HelperService.enviarDatoCuenta(this.DatoObservable)
+          console.log(this.DatoObservable);
+          this._SessionStorageService.SessionSetValue('IdProveedor',x.idProveedor);
+          this._SessionStorageService.SessionSetValue('Cursos',x.cursos);
+          if(x.idProveedor==0){
             this.router.navigate(['/AulaVirtual/MiPerfil']);
+          }else{
+            if(x.cursos==0){
+              this.router.navigate(['/AulaVirtual/Docencia']);
+            }else{
+              this.router.navigate(['/AulaVirtual/MiPerfil']);
+            }
           }
+        },
+        error:e=>{
+          this.statuscharge=false
+          console.log(e)
+          this.errorLogin=e.error.excepcion.descripcionGeneral;
+          setTimeout(()=>{
+            this.errorLogin='';
+          },10000);
+        },
+        complete:()=>{
+          this.statuscharge=false
         }
-      },
-      error:e=>{
-        this.statuscharge=false
-        console.log(e)
-        this.errorLogin=e.error.excepcion.descripcionGeneral;
-        setTimeout(()=>{
-          this.errorLogin='';
-        },10000);
-      },
-      complete:()=>{
-        this.statuscharge=false
-      }
-    })
+      })
 
+    }
 
   }
   eventoclickout(olo:string){

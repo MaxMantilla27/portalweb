@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ParametrosCrucigramaVideoSesionDTO, ParametrosEstructuraEspecificaDTO, ParametrosVideoSesionDTO } from 'src/app/Core/Models/EstructuraEspecificaDTO';
 import { CrucigramaService } from 'src/app/Core/Shared/Services/Crucigrama/crucigrama.service';
@@ -37,6 +37,10 @@ export class SesionVideoComponent implements OnInit,OnChanges {
   public videoData:any;
   @Input() crucigramaData:any;
   @Input() NombreCapitulo=''
+  @Input() habilitado=false
+  @Input() nextChapter:any;
+  @Output() next: EventEmitter<void> = new EventEmitter<void>();
+  @Output() prev: EventEmitter<void> = new EventEmitter<void>();
   public AbrirModal=false
   public crucigrama:ParametrosCrucigramaVideoSesionDTO={
     AccesoPrueba:false,
@@ -44,6 +48,7 @@ export class SesionVideoComponent implements OnInit,OnChanges {
     IdPGeneral:0,
     IdSesion:0
   }
+  public estadovideo=0;
   public parametros:ParametrosVideoSesionDTO={
     AccesoPrueba:this.json.AccesoPrueba,
     IdCapitulo:this.idCapitulo,
@@ -57,9 +62,9 @@ export class SesionVideoComponent implements OnInit,OnChanges {
     // }
   }
   ngOnChanges(changes: SimpleChanges): void {
-    console.log(this.charge)
+    console.log(this.habilitado)
 
-    if(this.charge==true){
+    if(this.charge==true && this.habilitado==true){
       this.parametros.IdSesion=this.idSesion;
       this.parametros.IdCapitulo=this.idCapitulo;
       this.parametros.AccesoPrueba=this.json.AccesoPrueba;
@@ -79,6 +84,17 @@ export class SesionVideoComponent implements OnInit,OnChanges {
       next:x=>{
         console.log(x)
         this.videoData=x;
+        if(this.videoData!=undefined){
+          var calc=Math.ceil(this.videoData.tiempoVisualizado*100/this.videoData.tiempoTotalVideo);
+          this.estadovideo=calc
+        }
+        if(this.videoData.tiempoTotalVideo>=3600){
+          this.videoData.h=this.redondearAbajo(this.videoData.tiempoTotalVideo,3600)
+          this.videoData.min=this.redondearAbajo(this.videoData.tiempoTotalVideo-3600,60)
+        }else{
+          this.videoData.min=this.redondearAbajo(this.videoData.tiempoTotalVideo,60)
+        }
+        this.videoData.sec=this.redondearAbajo(this.videoData.tiempoTotalVideo%60,1)
       }
     })
   }
@@ -92,6 +108,7 @@ export class SesionVideoComponent implements OnInit,OnChanges {
   }
   redondearAbajo(e:number,div:number){
     var r=Math.floor(e/div)
+    console.log(r)
     if(r<10){
       return '0'+r
     }
@@ -107,5 +124,17 @@ export class SesionVideoComponent implements OnInit,OnChanges {
     dialogRef.afterClosed().subscribe((result) => {
       console.log('The dialog was closed');
     });
+  }
+  nextc(){
+    console.log(this.videoData)
+    if(this.videoData!=undefined){
+      var calc=Math.ceil(this.videoData.tiempoVisualizado*100/this.videoData.tiempoTotalVideo);
+      if(calc>=100){
+        this.next.emit();
+      }
+    }
+  }
+  prevc(){
+    this.prev.emit();
   }
 }
