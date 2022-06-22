@@ -25,6 +25,7 @@ import { ContactenosComponent } from './contactenos/contactenos.component';
 import { TagsComponent } from './tags/tags.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { AvatarComponent } from '../aula-virtual/avatar/avatar.component';
+import { LandingPageInterceptorComponent } from './landing-page/landing-page/landing-page-interceptor/landing-page-interceptor/landing-page-interceptor.component';
 
 const routes:Routes=[
     {path:'',component:PublicComponent,children:
@@ -54,7 +55,7 @@ const routes:Routes=[
             {path:'tecnico-productivo/:urlWeb', component:EducationTecnicaDetalleComponent},
             {path:'carrera/:urlWeb',component:CarreraProfesionalDetalleComponent},
             {path:'programas-certificaciones-cursos/:IdArea',component:ProgramasComponent},
-
+            {path:':IdFormulario', component:LandingPageInterceptorComponent},
             {path:':AreaCapacitacion/:ProgramaNombre',component:ProgramasDetalleComponent}
 
         ]

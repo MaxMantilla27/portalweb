@@ -27,6 +27,8 @@ import { TagsComponent } from './tags/tags.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { VistaPreviaComponent } from './programas-detalle/vista-previa/vista-previa.component';
 import { FiltroProgramasComponent } from './programas/filtro-programas/filtro-programas.component';
+import { LandingPageComponent } from './landing-page/landing-page/landing-page.component';
+import { LandingPageInterceptorComponent } from './landing-page/landing-page/landing-page-interceptor/landing-page-interceptor/landing-page-interceptor.component';
 
 @NgModule({
   imports: [
@@ -59,7 +61,9 @@ import { FiltroProgramasComponent } from './programas/filtro-programas/filtro-pr
     TagsComponent,
     ForgotPasswordComponent,
     VistaPreviaComponent,
-    FiltroProgramasComponent
+    FiltroProgramasComponent,
+    LandingPageComponent,
+    LandingPageInterceptorComponent
   ],
   exports: [],
   providers: [
