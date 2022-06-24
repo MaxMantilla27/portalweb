@@ -48,10 +48,14 @@ export class LandingPageInterceptorComponent implements OnInit {
     })
   }
   OpenModalLandingPage(): void {
-    console.log(this.nombreProgramaLandingPage)
     const dialogRef = this.dialog.open(LandingPageComponent, {
       width: '600px',
-      data: { NombrePrograma:this.nombreProgramaLandingPage},
+      data: { NombrePrograma:this.nombreProgramaLandingPage,
+              IdCategoriaOrigen:this.valorPrograma.idCategoriaOrigen,
+              IdConjuntoAnuncio:this.valorPrograma.idConjuntoAnuncio,
+              IdFormulario:this.valorPrograma.idFormulario,
+              IdCentroCosto:this.valorPrograma.idCentroCosto
+            },
       panelClass: 'dialog-landing-page',
     });
 

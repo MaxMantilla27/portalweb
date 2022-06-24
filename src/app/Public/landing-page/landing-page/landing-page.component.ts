@@ -51,6 +51,15 @@ export class LandingPageComponent implements OnInit {
     IdIndustria:0,
   }
   public DatosLandingPageEnvio: ContactenosDTO={
+    NombrePrograma:'',
+    IdFormularioPublicidad:0,
+    IdCategoriaDato:0,
+    IdCampania:0,
+    IdTipoDato:0,
+    IdFaseOportunidad:0,
+    NombreFormulario:'',
+    NombreOrigen:'',
+    IdCentroCosto:0,
     Nombres:'',
     Apellidos:'',
     Correo1:'',
@@ -126,6 +135,17 @@ export class LandingPageComponent implements OnInit {
   }
   EnviarFormulario(value:any){
     this.initValues = false;
+
+
+    this.DatosLandingPageEnvio.NombrePrograma= this.data.NombrePrograma;
+    this.DatosLandingPageEnvio.IdFormularioPublicidad= this.data.IdFormulario;
+    this.DatosLandingPageEnvio.IdCategoriaDato= this.data.IdCategoriaOrigen;
+    this.DatosLandingPageEnvio.IdCampania= this.data.IdConjuntoAnuncio;
+    this.DatosLandingPageEnvio.IdCentroCosto= this.data.IdCentroCosto;
+    this.DatosLandingPageEnvio.IdTipoDato= 8;
+    this.DatosLandingPageEnvio.IdFaseOportunidad=2;
+    this.DatosLandingPageEnvio.NombreFormulario='publicidad';
+    this.DatosLandingPageEnvio.NombreOrigen='Mailing Bases Propias Formulario Propio';
     this.DatosLandingPageEnvio.Nombres=value.Nombres;
     this.DatosLandingPageEnvio.Apellidos=value.Apellidos;
     this.DatosLandingPageEnvio.Correo1=value.Email;
@@ -136,10 +156,8 @@ export class LandingPageComponent implements OnInit {
     this.DatosLandingPageEnvio.IdAreaFormacion=value.IdAreaFormacion;
     this.DatosLandingPageEnvio.IdAreaTrabajo=value.IdAreaTrabajo;
     this.DatosLandingPageEnvio.IdIndustria=value.IdIndustria;
-    console.log(this.DatosLandingPageEnvio)
     this._LandingPageService.EnviarFormularioLandingPage(this.DatosLandingPageEnvio).subscribe({
       next: (x) => {
-        console.log(x);
       },
       complete: () => {
         this.statuscharge = false;
@@ -150,8 +168,6 @@ export class LandingPageComponent implements OnInit {
 
     this._DatosPortalService.ObtenerCombosPortal().subscribe({
       next:(x)=>{
-        console.log(x);
-
         this.fileds.forEach(r=>{
           if(r.nombre=='IdPais'){
             r.data=x.listaPais.map((p:any)=>{
