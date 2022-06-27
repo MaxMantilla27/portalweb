@@ -1,0 +1,69 @@
+<div class="scroll" style="width: 100%;">
+
+  <ng-container>
+    <div class="row" style="background-color: #AFCA0A;height: 40px;">
+      <div style="color: white; margin-top: 10px;">
+        BSG Institute
+      </div>
+    </div>
+  </ng-container>
+  <ng-container>
+    <div class="row"  style="background-color: #ECEDEF">
+      <div style="text-align: center;margin-top: 15px;margin-bottom: 15px;color:#094D82;font-weight: bold;">
+        {{data.NombrePrograma}}
+      </div>
+      <div style="text-align: center;margin-bottom: 15px;">
+        Por favor complete sus datos para poder hacerle llegar la información	de manera personalizada.
+      </div>
+      <ng-container *ngIf="combosPrevios!=undefined">
+        <div style="text-align: center;margin-bottom: 15px;">
+          <a style="color: #033DAB;" (click)="LimpiarCampos()">[No soy {{FormularioLandingPage.Nombres}}]</a>
+        </div>
+      </ng-container>
+
+    </div>
+  </ng-container>
+
+  <div *ngIf="combosPrevios!=undefined" class="row" style="margin-top: 10px;">
+    <app-formulario style="margin-top: 20px" [model]="FormularioLandingPage" [InputsDisable]="statuscharge"
+      (OnValid)="formVal=$event" [fiels]="fileds" [Tipo]="1" (OnSubmit)="EnviarFormulario($event)" (OnSubmit)="dialogRef.close()" (OnSelect)="SelectChage($event)"  >
+
+      <ng-container contenido>
+      </ng-container>
+
+      <ng-container send>
+        <div>
+          Al hacer clic en "Solicitar Información", Ud. acepta enviar su información a BSG Institute, que se compromete a usarla en conformidad a su Política de Privacidad y su Política de Datos. <a routerLink="/politica-privacidad" target="_blank">Consulte la política de privacidad de BSG Institute...</a>
+        </div>
+        <div class="col-12 col-md-12 col-lg-12">
+          <app-default-button [confs]="{color:'primary',titulo:'Solicitar Información'}" [style]="'width: 100%;'"
+          [disabled]="!formVal"  ></app-default-button>
+        </div>
+
+      </ng-container>
+    </app-formulario>
+  </div>
+  <div *ngIf="combosPrevios==undefined" class="row" style="margin-top: 10px;">
+    <app-formulario style="margin-top: 20px" [model]="FormularioLandingPage" [InputsDisable]="statuscharge"
+      (OnValid)="formVal=$event" [fiels]="fileds" [Tipo]="1" (OnSubmit)="EnviarFormulario($event)" (OnSubmit)="dialogRef.close()" (OnSelect)="SelectChage($event)"  >
+
+      <ng-container contenido>
+      </ng-container>
+
+      <ng-container send>
+        <div>
+          Al hacer clic en "Solicitar Información", Ud. acepta enviar su información a BSG Institute, que se compromete a usarla en conformidad a su Política de Privacidad y su Política de Datos. <a routerLink="/politica-privacidad" target="_blank">Consulte la política de privacidad de BSG Institute...</a>
+        </div>
+        <div class="col-12 col-md-12 col-lg-12">
+          <app-default-button [confs]="{color:'primary',titulo:'Solicitar Información'}" [style]="'width: 100%;'"
+          [disabled]="!formVal"  ></app-default-button>
+        </div>
+
+      </ng-container>
+    </app-formulario>
+  </div>
+  <div class="col-12 col-md-12 col-lg-12">
+    <app-default-button [confs]="{color:'primary',titulo:'Cerrar'}" [icon]="''"
+    [style]="'width: 100%;margin-top: 2px;'" (click)="dialogRef.close()" ></app-default-button>
+  </div>
+</div>

@@ -28,6 +28,8 @@ import { ForgotPasswordComponent } from './forgot-password/forgot-password.compo
 import { VistaPreviaComponent } from './programas-detalle/vista-previa/vista-previa.component';
 import { FiltroProgramasComponent } from './programas/filtro-programas/filtro-programas.component';
 import { ProgramaPagoComponent } from './programas-detalle/programa-pago/programa-pago.component';
+import { LandingPageComponent } from './landing-page/landing-page/landing-page.component';
+import { LandingPageInterceptorComponent } from './landing-page/landing-page/landing-page-interceptor/landing-page-interceptor/landing-page-interceptor.component';
 
 @NgModule({
   imports: [
@@ -61,7 +63,9 @@ import { ProgramaPagoComponent } from './programas-detalle/programa-pago/program
     ForgotPasswordComponent,
     VistaPreviaComponent,
     FiltroProgramasComponent,
-    ProgramaPagoComponent
+    ProgramaPagoComponent,
+    LandingPageComponent,
+    LandingPageInterceptorComponent
   ],
   exports: [],
   providers: [
