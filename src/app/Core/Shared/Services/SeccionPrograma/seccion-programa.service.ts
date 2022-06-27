@@ -31,4 +31,7 @@ export class SeccionProgramaService {
   public ListArticuloProgramaRelacionado(IdArticulo:number):Observable<any>{
     return this.http.get<any>(this.urlBase+'/ListArticuloProgramaRelacionado?IdArticulo='+IdArticulo);
   }
+  public ListMontoPagoCompleto(IdBusqueda:number):Observable<any>{
+    return this.http.get<any>(this.urlBase+'/ListMontoPagoCompleto?IdBusqueda='+IdBusqueda);
+  }
 }

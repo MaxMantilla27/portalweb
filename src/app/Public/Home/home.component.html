@@ -1,9 +1,13 @@
 <div class="container">
   <div class="row rowpadd" style="align-items: center;">
-    <div class="col-12  col-sm-12 col-md-6">
+    <div class="col-12 d-md-none d-lg-none">
+      <img class="imgTitle" src="../../../assets/imagenes/arquetipos-index.png" alt="">
+    </div>
+    <div class="col-12  col-md-6 col-lg-6">
       <div class="titulop">
         Conocimiento para crecer
       </div>
+
       <div class="parafop parafopHome">
         Obt&eacute;n las habilidades y las certificaciones m&aacute;s demandadas para profesionales top en
         Latinoam&eacute;rica.
@@ -21,7 +25,7 @@
       </div>
     </div>
 
-    <div class="col-12 col-sm-12 col-md-6">
+    <div class="d-none col-md-6 d-md-block col-lg-6 d-lg-block">
       <img class="imgTitle" src="../../../assets/imagenes/arquetipos-index.png" alt="">
     </div>
     <div class="col-12 col-sm-12 col-md-12" style="    display: flex;    margin-top: 40px;">
@@ -87,7 +91,7 @@
     </div>
     <div class="col-12 col-sm-12 col-md-12">
       <div class="row">
-        <div class="col-12 col-sm-6 col-md-6">
+        <div class="col-12 col-md-6 col-md-6">
           <div class="col-12 col-sm-12 col-md-12 contentCarsubtitle">
             <img class="imgTitle" style="padding: 10%;" src="../../../assets/imagenes/extech-learning-09.svg" alt="">
           </div>
@@ -97,7 +101,7 @@
               con mecanismos de aprendizaje activo.</div>
           </div>
         </div>
-        <div class="col-12 col-sm-6 col-md-6">
+        <div class="col-12 col-md-6 col-md-6">
 
           <div class="col-12 col-sm-12 col-md-12 contentCarsubtitle">
             <div class="cardSubtitle">
@@ -175,7 +179,8 @@
         <div class="parafoS" style="font-size: 22px;">Formamos Profesionales Competitivos</div>
 
       </div>
-      <div class="col-12 row" style="justify-content: space-between;">
+      <div class="col-12 row" style="justify-content: space-between;    padding: 0px;
+      margin: 0px;">
         <div class="col-12 col-sm-12 col-md-6" *ngFor="let item of Carreras;let i=index">
           <div style="display: flex;justify-content: center;flex-wrap: wrap;    padding: 20px 0px;">
             <img *ngIf="i%2==0" style="width: auto; height: 230px;"

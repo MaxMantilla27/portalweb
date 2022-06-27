@@ -2,7 +2,11 @@
   <div class="col-12">
     <div class="filtroHeader">
       <!-- <img src="../../../assets/icons/icono-filtros.svg" alt=""> -->
-      <div>Filtros</div>
+      <div style="display: flex;align-items: center;">
+
+        <img src="../../../assets/icons/filtro.svg" alt="">
+        <div>FILTROS</div>
+      </div>
       <div>
         <i class="material-icons" (click)="closeDialog($event)">close</i>
       </div>
@@ -113,9 +117,13 @@
 </div>
 <div class="footerShetPrograma">
 
-  <div class="tagitem limpiarTodo" (click)="RemoveAll()"
+  <div style="    width: 50%;
+  display: flex;
+  justify-content: center;"
   *ngIf="TagAreas.length>0 || TagSubAreas.length>0 || TagModalidad.length>0 || TagTipoPrograma.length>0 || buscar!=''">
-  Limpiar Todo </div>
+
+  <app-default-button [confs]="{color:'primary',titulo:'Limpiar Todo'}" [icon]="''"
+  (ButtoclClick)="RemoveAll()" [style]="'margin:0px'"></app-default-button> </div>
   <div style="    width: 50%;
   display: flex;
   justify-content: center;">

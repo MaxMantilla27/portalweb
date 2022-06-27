@@ -1,4 +1,5 @@
-import { Component, Input, OnInit, SimpleChanges } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
+import { Subject, takeUntil } from 'rxjs';
 import { DatosPerfilService } from 'src/app/Core/Shared/Services/DatosPerfil/datos-perfil.service';
 
 @Component({
@@ -6,28 +7,43 @@ import { DatosPerfilService } from 'src/app/Core/Shared/Services/DatosPerfil/dat
   templateUrl: './curso-tramites.component.html',
   styleUrls: ['./curso-tramites.component.scss']
 })
-export class CursoTramitesComponent implements OnInit {
+export class CursoTramitesComponent implements OnInit,OnDestroy {
 
+  private signal$ = new Subject();
   constructor(
     private _DatosPerfilService: DatosPerfilService
   ) { }
+  ngOnDestroy(): void {
+    this.signal$.next(true);
+    this.signal$.complete();
+  }
   @Input() Capitulo='';
   @Input() IdMatricula=0;
   public TramitesCurso:Array<any>=[];
   public PagoTotalTramite=0;
   public SimboloMoneda='';
-
-
+  public tramitesSolicitado:any
+  public charge=false
   ngOnInit(): void {
   }
   ngOnChanges(changes: SimpleChanges): void {
-    if(this.IdMatricula!=0){
-      this.ObtenerTramitesMatricula();
+    if(this.IdMatricula!=0 && !this.charge){
+      this.ObtenerTramitesSolicitadosPorMatricula();
       this.CalcularMontoTotal();
+      this.ObtenerTramitesMatricula()
     }
   }
+  ObtenerTramitesSolicitadosPorMatricula(){
+    this.charge=true
+    this._DatosPerfilService.ObtenerTramitesSolicitadosPorMatricula(this.IdMatricula).pipe(takeUntil(this.signal$)).subscribe({
+      next:x=>{
+        console.log(x);
+        this.tramitesSolicitado=x;
+      }
+    })
+  }
   ObtenerTramitesMatricula(){
-    this._DatosPerfilService.ListaTramiteAdministrativoProgramaMatriculadoRegistrado(this.IdMatricula).subscribe({
+    this._DatosPerfilService.ListaTramiteAdministrativoProgramaMatriculadoRegistrado(this.IdMatricula).pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
         this.TramitesCurso=x;
         this.TramitesCurso.forEach((y:any)=>{

@@ -76,7 +76,6 @@ export class FormularioComponent implements OnChanges, OnInit {
   ngOnInit(): void {
     this._HelperService.recibirDataPais.subscribe({
       next:x=>{
-        console.log(x)
         this.paise=x
       }
     })

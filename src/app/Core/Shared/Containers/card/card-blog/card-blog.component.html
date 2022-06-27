@@ -1,7 +1,9 @@
 <mat-card class="card-programas" *ngIf="idTipoArticulo==1">
-  <img mat-card-image [src]="'https://img.bsginstitute.com/repositorioweb/img/'+cardContent.imgPortada" [alt]="cardContent.imgPortadaAlt">
+  <img mat-card-image [src]="'https://img.bsginstitute.com/repositorioweb/img/'+cardContent.imgPortada"
+    [alt]="cardContent.imgPortadaAlt">
   <mat-card-content>
-    <div class="title" [routerLink]="'/bs-campus/blog/'+cardContent.urlWeb+'-'+cardContent.idWeb">{{cardContent.nombre}}</div>
+    <div class="title" [routerLink]="'/bs-campus/blog/'+cardContent.urlWeb+'-'+cardContent.idWeb">{{cardContent.nombre}}
+    </div>
 
     <p [innerHTML]="cardContent.descripcion | safeHtml">
     </p>
@@ -9,14 +11,22 @@
   <mat-card-footer>
     <div class="invercion">
 
-      <div class="link" [routerLink]="'/bs-campus/blog/'+cardContent.urlWeb+'-'+cardContent.idWeb" style="font-weight: 600;">Leer m&aacute;s ></div>
+      <app-default-button [confs]="{color:'primary',titulo:'Leer m&aacute;s'}"
+        [style]="'width: 100%;'"
+        [ruta]="'/bs-campus/blog/'+cardContent.urlWeb+'-'+cardContent.idWeb">
+      </app-default-button>
+      <!-- <div class="link" [routerLink]="'/bs-campus/blog/'+cardContent.urlWeb+'-'+cardContent.idWeb"
+        style="font-weight: 600;">Leer m&aacute;s ></div> -->
     </div>
   </mat-card-footer>
 </mat-card>
 <mat-card class="card-programas" *ngIf="idTipoArticulo==3">
-  <img mat-card-image class="imgewp" [src]="'https://repositorioweb.blob.core.windows.net/paper-bs/Paper/imagen/'+cardContent.imgPortada" [alt]="cardContent.imgPortadaAlt">
+  <img mat-card-image class="imgewp"
+    [src]="'https://repositorioweb.blob.core.windows.net/paper-bs/Paper/imagen/'+cardContent.imgPortada"
+    [alt]="cardContent.imgPortadaAlt">
   <mat-card-content>
-    <div class="title" [routerLink]="'/bs-campus/white-paper/'+cardContent.urlWeb+'-'+cardContent.idWeb">{{cardContent.nombre}}</div>
+    <div class="title" [routerLink]="'/bs-campus/white-paper/'+cardContent.urlWeb+'-'+cardContent.idWeb">
+      {{cardContent.nombre}}</div>
 
     <p [innerHTML]="cardContent.descripcion | safeHtml">
     </p>
@@ -24,7 +34,8 @@
   <mat-card-footer>
     <div class="invercion">
 
-      <div class="link" [routerLink]="'/bs-campus/white-paper/'+cardContent.urlWeb+'-'+cardContent.idWeb" >Leer m&aacute;s ></div>
+      <div class="link" [routerLink]="'/bs-campus/white-paper/'+cardContent.urlWeb+'-'+cardContent.idWeb">Leer
+        m&aacute;s ></div>
     </div>
   </mat-card-footer>
 </mat-card>

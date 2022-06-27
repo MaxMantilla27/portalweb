@@ -4,7 +4,7 @@ margin-bottom: 10px;">¡Bienvenido! Debes completar los siguientes modulos de tu
   <br>
 </div>
 <div class="msjCom" style="border: solid 2px #fff7ee; padding: 10px;margin-bottom: 20px;">
-  <img src="../../../../assets/icons/alarma.svg" alt="">
+  <img src="../../../../assets/icons/icon-hand.svg" alt="">
   <strong> Recuerda: </strong>Debes completar el curso I,para poder acceder al siguiente curso, y asi progresivamente.
 </div>
 <div *ngIf="estructuraCapitulo!=undefined">
@@ -38,7 +38,7 @@ margin-bottom: 10px;">¡Bienvenido! Debes completar los siguientes modulos de tu
         <i style=" color: #05c254;
         font-size: 16px !important;" class="material-icons" *ngIf="item.visualizadoCapitulo>=100">check_circle</i>
             <div class="promedioCapitulo">
-        Promedio: <strong>{{item.promedioCalificacion | number:'1.0-2'}}</strong>
+        Promedio: <strong>{{item.promedioCalificacion | number:'1.0-0'}}</strong>
             </div>
           </div>
         </div>
@@ -48,7 +48,7 @@ margin-bottom: 10px;">¡Bienvenido! Debes completar los siguientes modulos de tu
           <ng-container *ngFor="let Encuesta of item.registroEstructuraCursoEncuesta">
             <ng-container *ngIf="Encuesta.tipoExamen=='Encuesta' && Encuesta.nombreEncuesta=='Encuesta Inicial'">
               <div class="TareaYEncuesta">
-                <img src="../../../../assets/icons/alarma.svg" alt="">
+                <img src="../../../../assets/icons/icon-like.svg" alt="">
                 <div [routerLink]="'3/'+Encuesta.numeroCapitulo+'/'+Encuesta.idEncuesta">
                   {{Encuesta.nombreEncuesta}}</div>
               </div>
@@ -103,7 +103,7 @@ margin-bottom: 10px;">¡Bienvenido! Debes completar los siguientes modulos de tu
                   </div>
                   <div class="col-12 col-md-5 col-lg-3 calificacionpromedio" >
                     <div *ngIf="subsesiones.promedioCalificacion!=0" class="calificado">Calificación:
-                      <strong>{{subsesiones.promedioCalificacion}}</strong>
+                      <strong>{{subsesiones.promedioCalificacion | number:'0.0-0'}}</strong>
                     </div>
                     <div *ngIf="subsesiones.promedioCalificacion==0">Sin Calificación</div>
                   </div>
@@ -144,7 +144,7 @@ margin-bottom: 10px;">¡Bienvenido! Debes completar los siguientes modulos de tu
 
                   <div class="col-12 col-md-5 col-lg-3 calificacionpromedio">
                     <div *ngIf="sesiones.promedioCalificacion!=0" class="calificado">Calificación:
-                      <strong>{{sesiones.promedioCalificacion}}</strong>
+                      <strong>{{sesiones.promedioCalificacion | number:'0.0-0'}}</strong>
                     </div>
                     <div *ngIf="sesiones.promedioCalificacion==0">Sin Calificación</div>
                   </div>
@@ -184,18 +184,22 @@ margin-bottom: 10px;">¡Bienvenido! Debes completar los siguientes modulos de tu
         <ng-container *ngFor="let Encuesta of item.registroEstructuraCursoEncuesta">
           <ng-container *ngIf="Encuesta.tipoExamen=='Encuesta' && Encuesta.nombreEncuesta=='Encuesta Intermedia'">
             <div class="TareaYEncuesta">
+
+              <img src="../../../../assets/icons/icon-like.svg" alt="">
               <div
-              (click)="IrVideo('2/'+Encuesta.numeroCapitulo+'/'+Encuesta.idTarea,Encuesta.habilitado)"><i class="material-icons"
-                  style="color:#fe7112 ;margin-right: 20px;">check_circle</i>{{Encuesta.nombreEncuesta}}</div>
+              (click)="IrVideo('2/'+Encuesta.numeroCapitulo+'/'+Encuesta.idTarea,Encuesta.habilitado)">
+              {{Encuesta.nombreEncuesta}}</div>
             </div>
           </ng-container>
         </ng-container>
         <ng-container *ngFor="let Encuesta of item.registroEstructuraCursoEncuesta">
           <ng-container *ngIf="Encuesta.tipoExamen=='Encuesta' && Encuesta.nombreEncuesta=='Encuesta Final'">
             <div class="TareaYEncuesta">
+
+              <img src="../../../../assets/icons/icon-like.svg" alt="">
               <div
-              (click)="IrVideo('2/'+Encuesta.numeroCapitulo+'/'+Encuesta.idTarea,Encuesta.habilitado)"><i class="material-icons"
-                  style="color:#fe7112 ;margin-right: 20px;">check_circle</i>{{Encuesta.nombreEncuesta}}</div>
+              (click)="IrVideo('2/'+Encuesta.numeroCapitulo+'/'+Encuesta.idTarea,Encuesta.habilitado)">
+              {{Encuesta.nombreEncuesta}}</div>
             </div>
           </ng-container>
         </ng-container>

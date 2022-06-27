@@ -2,7 +2,8 @@
 <mat-toolbar color="primary" *ngIf="!responsive">
 
   <div class="div-icon">
-    <mat-icon (click)="OnClick.emit()">menu</mat-icon>
+    <img src="../../../../../assets/icons/icono-menu-responsive.svg" alt="" (click)="OnClick.emit()">
+    <!-- <mat-icon (click)="OnClick.emit()">menu</mat-icon> -->
   </div>
   <img class="logoHeader" src="https://img.bsginstitute.com/repositorioweb/img/logobsg.svg" alt="" [routerLink]="'/'">
 
@@ -13,7 +14,7 @@
       style="    flex-direction: column; display: flex;justify-content: flex-end;align-items: flex-end;">
       <app-alumno-mat-button [nombres]="Alumno.nombres+' '+Alumno.apellidos" [user]="Alumno.email" [val]="value">
         <ng-container contenidodata>
-          <img [src]="urlAvatar" style="width: auto;height: 25px; margin-top: -5px;" alt="">
+          <img [src]="urlAvatar" style="width: auto;height: 30px; margin-top: -5px;" alt="">
           <div class="nombrealumnoHeader">{{Alumno.nombres}}</div>
         </ng-container>
       </app-alumno-mat-button>
@@ -54,7 +55,7 @@
           style="    flex-direction: column; display: flex;justify-content: flex-end;align-items: flex-end;">
           <app-alumno-mat-button [nombres]="Alumno.nombres+' '+Alumno.apellidos" [user]="Alumno.email" [val]="value">
             <ng-container contenidodata>
-              <img [src]="urlAvatar" style="width: auto;height: 25px; margin-top: -5px;" alt="">
+              <img [src]="urlAvatar" style="width: auto;height: 30px; margin-top: -5px;" alt="">
               <div class="nombrealumnoHeader">{{Alumno.nombres}}</div>
             </ng-container>
           </app-alumno-mat-button>
@@ -82,8 +83,8 @@
   </app-button>
   <mat-accordion class="acordionHeader">
     <ng-container *ngFor="let item of expandibles;let i=index">
-      <mat-expansion-panel *ngIf="item.estatus" style="background: transparent;box-shadow: none;" (opened)="step=i"
-      [expanded]="step===i" (closed)="step=-1">
+      <mat-expansion-panel *ngIf="item.estatus" style="background: transparent;box-shadow: none;" (opened)="step=i; OpenStep.emit(i)"
+      [expanded]="step===i" (closed)="step=-1;OpenStep.emit(-1)">
         <mat-expansion-panel-header class="panelHeader"
         [ngStyle]="{'background':step==i?'#e7e7e7':'transparent'}">
           <mat-panel-title>

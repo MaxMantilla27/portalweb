@@ -174,10 +174,19 @@ export class PagoComponent implements OnInit,OnDestroy {
         dialogRef.close();
         var sesion=x._Repuesta.identificadorTransaccion;
         this._SessionStorageService.SessionSetValue(sesion,x._Repuesta.requiereDatosTarjeta);
-        if(this.jsonSend.MedioCodigo.toLowerCase()=='vs'){
-          this._router.navigate(['/AulaVirtual/MisPagos/'+this.idMatricula+'/visa/'+sesion]);
-        }else{
+        console.log(tarjeta.idFormaPago)
+        if(tarjeta.idPasarelaPago==7){
+          if(tarjeta.idFormaPago==52){
+            this._router.navigate(['/AulaVirtual/MisPagos/'+this.idMatricula+'/visa/'+sesion]);
+          }
+          if(tarjeta.idFormaPago==48){
+            this._router.navigate(['/AulaVirtual/MisPagos/'+this.idMatricula+'/tarjeta/'+sesion]);
+          }
+        }
+        if(tarjeta.idPasarelaPago==1 || tarjeta.idPasarelaPago==5){
           this._router.navigate(['/AulaVirtual/MisPagos/'+this.idMatricula+'/tarjeta/'+sesion]);
+        }else{
+
         }
       },
       complete:()=>{

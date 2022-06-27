@@ -272,7 +272,6 @@ mat-toolbar {
   background: #033dab !important;
 }
 .div-icon {
-  border: solid 1px rgba(0, 0, 0, 0.1);
   padding: 0px 4px;
 }
 html,
@@ -349,7 +348,7 @@ mat-sidenav-content {
   margin: 20px 0px;
   align-items: center;
 }
-.mat-sidenav-container .mat-sidenav-content .mat-toolbar .div-icon {
+.mat-toolbar .div-icon {
   display: none;
   cursor: pointer;
   font-size: 32px;
@@ -392,9 +391,9 @@ mat-sidenav-content {
   .mat-toolbar {
     justify-content: space-between;
     //flex-wrap: wrap;
-    padding: 20px 10px !important;
+    padding: 17px 10px !important;
   }
-  .mat-sidenav-container .mat-sidenav-content .mat-toolbar .div-icon {
+  .mat-toolbar .div-icon {
     display: block;
     cursor: pointer;
   }

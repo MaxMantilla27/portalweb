@@ -32,7 +32,7 @@
   bottom: 0;
   right: 0;
   background: white;
-  border-top: solid 1px gray;
+  border-top: solid 1px #d2d2d2;
   padding: 10px 30px;
   display: flex;
   align-items: center;
@@ -49,4 +49,5 @@
 }
 .filtroHeader{
   justify-content: space-between;
+  padding: 8px 20px;
 }

@@ -192,6 +192,7 @@ import { CardMatriculasPruebaComponent } from './Containers/card/card-matriculas
 
 
     InputCardDirective,
+    InputCardFechaDirective,
 
     CapitalicePipe,
 

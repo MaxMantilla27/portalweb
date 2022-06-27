@@ -6,6 +6,6 @@
     [ngClass]="{'primary': confs.color === 'primary',
     'danger': confs.color === 'danger' }">
         <div>{{confs.titulo}}</div> <i class="material-icons" *ngIf="img==''">{{icon}}</i>
-        <img *ngIf="img!=''" src="../../../../../../assets/icons/{{img}}" alt="">
+        <img *ngIf="img!=''" src="../../../../../../assets/icons/{{img}}" alt="" style="margin-left: 10px;">
     </button>
 

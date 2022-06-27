@@ -3,11 +3,12 @@
   justify-content: flex-start;
   background: #f2f6ff;
   height: 50px ;
+  align-items: center;
 }
 .ImgIndicacionesContent{
   height: 30px !important;
   margin-bottom: 20px !important;
-  margin-right: 10px;
+  margin-right: 20px;
 }
 .criterio{
   border-bottom: 1px solid #cacaca;
@@ -17,15 +18,22 @@
   background-color: #F4F4F4;
   height: 60px;
 }
+.TablaTramitesContenido{
+  tr{
+    cursor: pointer;
+  }
+}
 .ResumenPago{
   display: flex;
   background-color: #F4F4F4;
   height: 60px;
   align-items: center;
+
+  border-radius: 10px 10px 0px 0px;
 }
 .MontoTramite{
   display: flex;
-  align-items: center;
+  justify-content: center;
   margin-left:80px;
 }
 .cursoTitle {
@@ -37,3 +45,39 @@
   height: 60px;
 }
 
+.subtitleTramites{
+  font-size: 16px;
+  font-weight: 600;
+  margin: 10px 0px 30px;
+  border-bottom: solid 2px #f0f0f0;
+}
+.contenTramistes{
+
+  .itmTRamite{
+    display: flex;
+    align-items: center;
+    a{
+      color: #4a4a49;
+      text-decoration: none;
+    }
+    img{
+      width: 15px;
+      margin-right: 20px;
+    }
+
+  }
+}
+.itmTRamite:hover{
+  a{
+    color: #0d6efd !important;
+    text-decoration: underline !important;
+  }
+}
+.ListaTramites{
+
+  overflow: auto;
+  min-width: 100%;
+  width: auto;
+  display: block;
+  overflow-x: auto;
+}

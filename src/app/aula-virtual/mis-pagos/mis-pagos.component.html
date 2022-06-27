@@ -27,7 +27,7 @@
             <div class="col-12 col-md-6 col-lg-6 itemsMisPagos">
               <img src="../../../assets/icons/positivo-hecho-20.svg" alt="">
               <div>Cuotas pagadas:</div>
-              <p>{{item.cuotasPagadas}}/{{item.cuotasPendientes}}</p>
+              <p>{{item.cuotasPagadas}}/{{item.cuotasPendientes+item.cuotasPagadas}}</p>
             </div>
             <div class="col-12 col-md-6 col-lg-6 itemsMisPagos" *ngIf="item.cuotasPagadas<item.cuotasPendientes">
               <img src="../../../assets/icons/alarma.svg" alt="">

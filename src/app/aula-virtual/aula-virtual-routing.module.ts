@@ -23,6 +23,11 @@ import { ModuloPruebaComponent } from './modulo-prueba/modulo-prueba.component';
 import { SesionesPruebaComponent } from './sesiones-prueba/sesiones-prueba.component';
 import { SesionesComponent } from './sesiones/sesiones.component';
 import { CategoriaComponent } from './categoria/categoria.component';
+import { PagoTarjetaComponent } from './pago/pago-tarjeta/pago-tarjeta.component';
+import { PagoVisaComponent } from './confirmacion-pago-organico/pago-visa/pago-visa.component';
+import { PagoWompiComponent } from './confirmacion-pago-organico/pago-wompi/pago-wompi.component';
+import { PagoConektaComponent } from './confirmacion-pago-organico/pago-conekta/pago-conekta.component';
+import { PagoGeneralComponent } from './confirmacion-pago-organico/pago-general/pago-general.component';
 
 const routes: Routes = [
   {
@@ -37,6 +42,11 @@ const routes: Routes = [
         { path: 'MisPagos', component: MisPagosComponent,canActivate:[AlumnoGuard]},
         { path: 'Categoria', component: CategoriaComponent,canActivate:[AlumnoGuard]},
 
+        { path: 'MisPagos/tarjeta/:Identificador', component: PagoGeneralComponent,canActivate:[AlumnoGuard]},
+        { path: 'MisPagos/visa/:Identificador', component: PagoVisaComponent,canActivate:[AlumnoGuard]},
+        { path: 'MisPagos/wompi/:Identificador', component: PagoWompiComponent,canActivate:[AlumnoGuard]},
+        { path: 'MisPagos/conekta/:Identificador', component: PagoConektaComponent,canActivate:[AlumnoGuard]},
+
         { path: 'MisCursos/:IdMatricula', component: CursoComponent,canActivate:[AlumnoGuard]},
         { path: 'MisPagos/:IdMatricula', component: PagoComponent,canActivate:[AlumnoGuard]},
         { path: 'PagoExitoso/:Identificador', component: ResultadoPagoComponent,canActivate:[AlumnoGuard]},
@@ -44,6 +54,7 @@ const routes: Routes = [
 
         { path: 'MisPagos/:IdMatricula/tarjeta/:Identificador', component: ConfirmacionPagoTarjetaComponent,canActivate:[AlumnoGuard]},
         { path: 'MisPagos/:IdMatricula/visa/:Identificador', component: ConfirmacionPagoTarjetaVisaComponent,canActivate:[AlumnoGuard]},
+
         { path: 'MisCursos/:IdMatricula/:idPEspecificoHijo', component: ModuloComponent,canActivate:[AlumnoGuard]},
         { path: 'MisCursosPrueba/:IdRegistroPrueba/:idPEspecificoHijo', component: ModuloPruebaComponent,canActivate:[AlumnoGuard]},
 

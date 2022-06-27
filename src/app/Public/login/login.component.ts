@@ -6,6 +6,7 @@ import { DatoObservableDTO } from 'src/app/Core/Models/DatoObservableDTO';
 import { formulario } from 'src/app/Core/Models/Formulario';
 import { login, loginSendDTO } from 'src/app/Core/Models/login';
 import { AspNetUserService } from 'src/app/Core/Shared/Services/AspNetUser/asp-net-user.service';
+import { FormaPagoService } from 'src/app/Core/Shared/Services/FormaPago/forma-pago.service';
 import { HelperService } from 'src/app/Core/Shared/Services/helper.service';
 import { SessionStorageService } from 'src/app/Core/Shared/Services/session-storage.service';
 @Component({
@@ -20,6 +21,7 @@ export class LoginComponent implements OnInit {
     private _AspNetUserService:AspNetUserService,
     private _SessionStorageService:SessionStorageService,
     private _HelperService: HelperService,
+    private _FormaPagoService:FormaPagoService
 
     ) { }
   formVal:boolean=false;
@@ -92,15 +94,29 @@ export class LoginComponent implements OnInit {
           console.log(this.DatoObservable);
           this._SessionStorageService.SessionSetValue('IdProveedor',x.idProveedor);
           this._SessionStorageService.SessionSetValue('Cursos',x.cursos);
-          if(x.idProveedor==0){
-            this.router.navigate(['/AulaVirtual/MiPerfil']);
-          }else{
-            if(x.cursos==0){
-              this.router.navigate(['/AulaVirtual/Docencia']);
-            }else{
-              this.router.navigate(['/AulaVirtual/MiPerfil']);
+          var redirect=this._SessionStorageService.SessionGetValue('redirect');
+          var normal=true;
+          if(redirect!=''){
+            if(redirect=='pago'){
+              var jsonEnvioPago=this._SessionStorageService.SessionGetValue('datosTarjeta');
+              if(jsonEnvioPago!=''){
+                normal=false;
+                this._FormaPagoService.PreProcesoPagoOrganicoAlumno(JSON.parse(jsonEnvioPago),null);
+              }
             }
           }
+          if(normal){
+            if(x.idProveedor==0){
+              this.router.navigate(['/AulaVirtual/MiPerfil']);
+            }else{
+              if(x.cursos==0){
+                this.router.navigate(['/AulaVirtual/Docencia']);
+              }else{
+                this.router.navigate(['/AulaVirtual/MiPerfil']);
+              }
+            }
+          }
+
         },
         error:e=>{
           this.statuscharge=false

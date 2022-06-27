@@ -1,7 +1,8 @@
 <div class="cursoTitle">{{Capitulo}}</div>
 <div class="row" style="align-items: center;height: 90px;">
   <div class="tipoIndicacionTitle col-12 col-md-12 col-lg-12">
-    <img class="ImgIndicacionesContent" src="../../../../assets/icons/tramites-naranja.svg">
+    <img class="ImgIndicacionesContent" style="margin-bottom: 0px !important;"
+      src="../../../../assets/icons/tramites-naranja.svg">
     <div style="font-weight: bold;">Trámites</div>
   </div>
 </div>
@@ -11,62 +12,68 @@
   </div>
 </ng-container>
 <ng-container *ngIf="TramitesCurso.length!=0">
-  <div class="ListaTramites" >
-    <div class="row">
-      <table class="TablaTramites">
-        <thead class="TablaTramitesEncabezado" >
+  <div class="subtitleTramites">I. Trámites por solicitar</div>
+  <div style="font-size: 14px;color: #878787;margin-bottom: 10px;">Seleccionar el o los trámites que pagarás</div>
+  <div class="ListaTramites">
+    <table class="TablaTramites">
+      <thead class="TablaTramitesEncabezado">
+        <tr>
+          <td style="width: 200px;text-align: center;border-radius: 2px;font-weight: bold;min-width: 110px;">
+            <strong>Pagar</strong></td>
+          <td style="width: 600px;text-align: left;border-radius: 2px;font-weight: bold;min-width: 320px;"><strong
+              style=" margin-left: 20px">Concepto</strong></td>
+          <td style="width: 200px;text-align: center;border-radius: 2px;font-weight: bold;min-width: 140px;">
+            <strong>Costo</strong></td>
+        </tr>
+      </thead>
+      <tbody class="TablaTramitesContenido">
+        <ng-container *ngFor="let item of TramitesCurso ;let i=index">
           <tr>
-            <td style="width: 600px;text-align: left;border-radius: 2px;font-weight: bold;"><strong style=" margin-left: 20px">Descripción</strong></td>
-            <td style="width: 200px;text-align: center;border-radius: 2px;font-weight: bold;"><strong>Costo</strong></td>
-            <td style="width: 200px;text-align: center;border-radius: 2px;font-weight: bold;"><strong>Pagar</strong></td>
-          </tr>
-        </thead>
-        <tbody class="TablaTramitesContenido">
-          <ng-container *ngFor="let item of TramitesCurso ;let i=index">
-            <tr>
-              <td class="criterio" style="width: 600px;text-align: left;">
-                <div style=" margin-left: 20px;margin-top: 20px;margin-bottom: 20px;text-align:justify">
-                  <div>
-                    {{item.concepto}}
-                  </div>
-                  <div style="font-size:11px;">
+            <td class="criterio" style="width: 200px">
+              <div style="display: flex;justify-content:center">
+                <mat-checkbox (change)="cambiarEstadoPago(i)" [(ngModel)]="item.pagar" color="primary"
+                  class="PagarTramite" style="display:flex;align-items:center ;" (change)="item.pagar">
+                </mat-checkbox>
+              </div>
+            </td>
+            <td class="criterio" style="width: 600px;text-align: left;">
+              <div style=" margin-left: 20px;margin-top: 20px;margin-bottom: 20px;text-align:justify">
+                <div>
+                  {{item.concepto}}
+                </div>
+                <!-- <div style="font-size:11px;">
                     {{item.descripcion}}
-                  </div>
+                  </div> -->
+              </div>
+            </td>
+            <td class="criterio" style="width: 250px;text-align: center;">
+              <div class="MontoTramite">
+                <div>
+                  {{item.simboloMoneda}}
                 </div>
-              </td>
-              <td class="criterio" style="width: 250px;text-align: center;">
-                <div class="MontoTramite">
-                  <div>
-                    {{item.simboloMoneda}}
-                  </div>
-                  <div style="margin-left: 10px;">
-                    {{item.tarifario}}
-                  </div>
+                <div style="margin-left: 10px;">
+                  {{item.tarifario}}
                 </div>
-              </td>
-              <td class="criterio" style="width: 200px;text-align: center;">
-                <div style="display: flex;align-items:center;margin-left: 90px;">
-                  <mat-checkbox (change)="cambiarEstadoPago(i)" [(ngModel)]="item.pagar" color="primary"  class="PagarTramite" style="display:flex;align-items:center ;" (change)="item.pagar">
-                  </mat-checkbox>
-                </div>
-              </td>
-            </tr>
-          </ng-container>
-        </tbody>
-      </table>
-    </div>
+              </div>
+            </td>
+          </tr>
+        </ng-container>
+      </tbody>
+    </table>
   </div>
-  <div class="PagoTramite" style="margin-top: 40px">
-    <div class="row" style="border: 2px solid #cacaca;">
+  <div class="PagoTramite" style="margin-top: 40px" *ngIf="PagoTotalTramite>0">
+    <div class="row" style="border: 2px solid #cacaca;border-radius: 10px;">
       <div class="ResumenPago">
         <div style=" margin-left: 20px;display:flex;align-items: center;"> Resumen de Pago</div>
       </div>
       <div class="row" style="margin-left: 20px;margin-top:30px">
         <table class="TablaPagos" style="width: 95%;">
-          <thead class="TablaPagosEncabezado" style="border-bottom: 1px solid #cacaca;" >
+          <thead class="TablaPagosEncabezado" style="border-bottom: 1px solid #cacaca;">
             <tr>
-              <td style="width: 500px;text-align: left;border-radius: 2px;font-weight: bold;"><strong style=" margin-left: 20px">Concepto</strong></td>
-              <td style="width: 400px;text-align: center;border-radius: 2px;font-weight: bold;"><strong style=" margin-left: 20px">Monto</strong></td>
+              <td style="width: 500px;text-align: left;border-radius: 2px;font-weight: bold;"><strong
+                  style=" margin-left: 20px">Concepto</strong></td>
+              <td style="width: 400px;text-align: center;border-radius: 2px;font-weight: bold;"><strong
+                  style=" margin-left: 20px">Monto</strong></td>
             </tr>
           </thead>
           <tbody>
@@ -81,7 +88,7 @@
                     </div>
                   </td>
                   <td class="criterio" style="width: 250px;text-align: center;">
-                    <div class="MontoTramite" >
+                    <div class="MontoTramite">
                       <div style="margin-left: 90px">
                         {{item.simboloMoneda}}
                       </div>
@@ -100,7 +107,7 @@
                 </div>
               </td>
               <td class="criterio" style="width: 400px;text-align: center;">
-                <div class="MontoTramite" >
+                <div class="MontoTramite">
                   <div style="margin-left: 90px">
                     {{SimboloMoneda}}
                   </div>
@@ -114,11 +121,20 @@
         </table>
       </div>
       <div class="col-12 col-md-12 col-lg-12" style="margin-top:30px">
-        <app-default-button  [confs]="{color:'primary',titulo:'Pagar'}"
-        [style]="'width: 20%;margin-top: 20px; margin-left:40%;'"></app-default-button>
+        <app-default-button [confs]="{color:'primary',titulo:'Pagar'}"
+          [style]="'width: 20%;margin-top: 20px; margin-left:40%;'"></app-default-button>
       </div>
     </div>
   </div>
 </ng-container>
 
-
+<ng-container>
+  <div class="subtitleTramites" style="margin-top: 40px;">II. Trámites solicitados</div>
+  <div class="contenTramistes" *ngIf="tramitesSolicitado!=undefined">
+    <div *ngFor="let item of tramitesSolicitado" class="itmTRamite">
+      <img src="../../../../../assets/icons/pdf-31.svg" alt="">
+      <a [href]="item.ruta+item.nombreArchivo" target="_blank">{{item.descripcion}} {{item.fechaCreacion |
+        date:'dd/MM/yyyy'}}</a>
+    </div>
+  </div>
+</ng-container>

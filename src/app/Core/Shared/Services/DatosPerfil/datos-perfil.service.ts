@@ -27,4 +27,8 @@ export class DatosPerfilService {
   public ListaTramiteAdministrativoProgramaMatriculadoRegistrado(IdMatriculaCabecera:number):Observable<any>{
     return this.http.get<any>(this.urlBase+'/ListaTramiteAdministrativoProgramaMatriculadoRegistrado?IdMatriculaCabecera='+IdMatriculaCabecera);
   }
+  public ObtenerTramitesSolicitadosPorMatricula(IdMatriculaCabecera:number):Observable<any>{
+    return this.http.get<any>(this.urlBase+'/ObtenerTramitesSolicitadosPorMatricula?IdMatriculaCabecera='+IdMatriculaCabecera);
+  }
+
 }

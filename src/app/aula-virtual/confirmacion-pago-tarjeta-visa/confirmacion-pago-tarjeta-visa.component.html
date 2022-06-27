@@ -75,9 +75,14 @@
             </div>
           </div>
         </div>
-        <form ngNoForm (submit)="pagar()" id="visa" action="https://localhost:7177/api/FormaPago/pruebaproceso?Id=1"  [method]="'get'" style="text-align: center;margin-top: 30px;">
+        <form ngNoForm (submit)="pagar()" id="visa"
+        [action]="'https://bsginstitute.com/ProcesoPagoVisa/Index?IdTransaccion='+json.IdentificadorTransaccion"
+        [method]="'post'" style="text-align: center;margin-top: 30px;"
+        target="_blank">
 
         </form>
+
+        <div id="pagoviss"></div>
         <div style="    width: 100%;
         font-size: 12px;
         color: #b2b2b2;

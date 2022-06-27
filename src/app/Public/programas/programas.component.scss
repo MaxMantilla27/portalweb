@@ -1,17 +1,18 @@
 .FiltroProgramasResponcive {
-  justify-content: space-evenly;
+  justify-content: flex-start;
   align-items: center;
   cursor: pointer;
   position: sticky;
   top: 0;
   z-index: 200;
   background: white;
-  padding: 10px;
+  padding: 10px 30px;
   left: 0px;
   right: 0;
+  background: #e7e7e7;
   /* border: solid; */
   width: 100%;
-  box-shadow: 0 15px 40px rgb(0 0 0 / 10%);
+  //box-shadow: 0 15px 40px rgb(0 0 0 / 10%);
   .foltroEncontrados{
     font-size: 12px;
     font-weight: 100;
@@ -24,11 +25,19 @@
     font-weight: 600;
   }
 }
+.textoResultResponsive{
+  padding: 10px 20px;
+  font-weight: 700;
+  font-size: 14px;
+}
 @media (max-width: 768px) {
   .FiltroProgramasFull {
     display: none;
   }
   .FiltroProgramasResponcive {
+    display: flex;
+  }
+  .textoResultResponsive{
     display: flex;
   }
 }
@@ -38,6 +47,9 @@
     display: block;
   }
   .FiltroProgramasResponcive {
+    display: none;
+  }
+  .textoResultResponsive{
     display: none;
   }
 }

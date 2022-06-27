@@ -13,6 +13,7 @@ import { HelperService } from './Core/Shared/Services/helper.service';
 export class AppComponent implements OnInit,AfterViewInit  {
   title = 'PortalWeb';
   isBrowser: boolean;
+  public step=-1;
   constructor(
     private _HelperService: HelperService,
     private router: Router,

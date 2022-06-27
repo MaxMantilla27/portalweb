@@ -18,10 +18,16 @@ export class InputCardFechaDirective {
       if(isNaN(Number(trimmed.slice(trimmed.length-1,trimmed.length)))){
         trimmed = trimmed.slice(0, trimmed.length-1);
       }else{
+        if(trimmed.length==1){
+          var month=input.value.split('/');
+          if(Number(month[0])>1){
+            trimmed = '1';
+          }
+        }
         if(trimmed.length<3){
           var month=input.value.split('/');
-          if(Number(month[0])>12 || Number(month[0])==0){
-
+          if(Number(month[0])>12){
+            trimmed = trimmed.slice(0, trimmed.length-1);
           }
         }
       }

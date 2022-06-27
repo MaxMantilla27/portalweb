@@ -7,7 +7,9 @@
 <div class="container" *ngIf="DataProveedor!=undefined">
   <div class="row rowpaddAv">
     <div class="col-12 col-md-12 col-lg-12" style="position: relative;">
-      <div class="openClose" [ngClass]="{'reverse':!hide}" (click)="hide=!hide"><i class="material-icons">double_arrow</i></div>
+      <div class="openClose" [ngClass]="{'reverse':!hide}" (click)="hide=!hide">
+        <i class="material-icons">double_arrow</i>
+      </div>
       <mat-tab-group class="tabVerticalDocente" [(selectedIndex)]="tabIndex" (selectedTabChange)="tabChanged($event)">
         <mat-tab *ngIf="DataProveedor.aplicaSesionOnlineWebinar">
           <ng-template mat-tab-label>

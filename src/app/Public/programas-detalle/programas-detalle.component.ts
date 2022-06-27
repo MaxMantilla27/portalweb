@@ -2,6 +2,7 @@ import { isPlatformBrowser } from '@angular/common';
 import {
   Component,
   Inject,
+  OnDestroy,
   OnInit,
   PLATFORM_ID,
   ViewChild,
@@ -34,6 +35,7 @@ import { BeneficioService } from 'src/app/Core/Shared/Services/Beneficio/benefic
 import { DatosPortalService } from 'src/app/Core/Shared/Services/DatosPortal/datos-portal.service';
 import { ExpositorService } from 'src/app/Core/Shared/Services/Expositor/expositor.service';
 import { HelperService } from 'src/app/Core/Shared/Services/Helper/helper.service';
+import { HelperService as Help} from 'src/app/Core/Shared/Services/helper.service';
 import { ProgramaService } from 'src/app/Core/Shared/Services/Programa/programa.service';
 import { RegionService } from 'src/app/Core/Shared/Services/Region/region.service';
 import { SeccionProgramaService } from 'src/app/Core/Shared/Services/SeccionPrograma/seccion-programa.service';
@@ -45,6 +47,12 @@ import { Router } from '@angular/router';
 
 
 import { VistaPreviaComponent } from './vista-previa/vista-previa.component';
+import { SessionStorageService } from 'src/app/Core/Shared/Services/session-storage.service';
+import { ProgramaPagoComponent } from './programa-pago/programa-pago.component';
+import { FormaPagoService } from 'src/app/Core/Shared/Services/FormaPago/forma-pago.service';
+import { PagoOrganicoAlumnoDTO } from 'src/app/Core/Models/ProcesoPagoDTO';
+import { Subject, takeUntil } from 'rxjs';
+import { ChargeComponent } from 'src/app/Core/Shared/Containers/Dialog/charge/charge.component';
 
 @Component({
   selector: 'app-programas-detalle',
@@ -52,7 +60,8 @@ import { VistaPreviaComponent } from './vista-previa/vista-previa.component';
   styleUrls: ['./programas-detalle.component.scss'],
   encapsulation: ViewEncapsulation.None,
 })
-export class ProgramasDetalleComponent implements OnInit {
+export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
+  private signal$ = new Subject();
   isBrowser: boolean;
   @ViewChild(FormularioComponent)
   form!: FormularioComponent;
@@ -67,17 +76,44 @@ export class ProgramasDetalleComponent implements OnInit {
     private _RegionService: RegionService,
     private _DatosPortalService: DatosPortalService,
     private _HelperService: HelperService,
+    private _HelperServiceP:Help,
     private _AccountService: AccountService,
     private _router:Router,
     public dialog: MatDialog,
     private _SnackBarServiceService: SnackBarServiceService,
     config: NgbCarouselConfig,
-    @Inject(PLATFORM_ID) platformId: Object
+    @Inject(PLATFORM_ID) platformId: Object,
+    private _SessionStorageService:SessionStorageService,
+    private _FormaPagoService:FormaPagoService
   ) {
     this.isBrowser = isPlatformBrowser(platformId);
     config.interval = 20000;
     config.keyboard = true;
     config.pauseOnHover = true;
+  }
+
+  ngOnDestroy(): void {
+    this.signal$.next(true);
+    this.signal$.complete();
+  }
+  public jsonEnvioPago:PagoOrganicoAlumnoDTO={
+    CodigoBanco:'',
+    IdFormaPago:0,
+    IdMontoPago:0,
+    IdPais:0,
+    IdPasarelaPago:'',
+    IdPEspecifico:0,
+    IdPGeneral:0,
+    MontoTotalPago:0,
+    RequiereTarjeta:true,
+    TipoProveedor:'',
+    WebMoneda:0,
+    MedioCodigo:'',
+    MedioPago:'',
+    Moneda:'',
+    Inicio:'',
+    Tipo:'',
+    Version:'',
   }
   public area = '';
   public idBusqueda = 0;
@@ -168,6 +204,10 @@ export class ProgramasDetalleComponent implements OnInit {
   public nombreProgramCompeto = '';
   public AraCompleta = '';
   public vistaPrevia = '';
+  public Paises:any;
+  public IdPais=-1;
+  public codigoIso:string = 'INTC';
+  public alumno=''
   ngOnInit(): void {
     if (this.isBrowser) {
       this.innerWidth = window.innerWidth;
@@ -183,6 +223,18 @@ export class ProgramasDetalleComponent implements OnInit {
         this.idBusqueda = namePrograma[namePrograma.length - 1];
       },
     });
+
+
+    this._HelperServiceP.recibirDataPais.subscribe({
+      next:x=>{
+        this.Paises=x;
+      }
+    })
+
+    this._HelperServiceP.recibirCombosPerfil.subscribe((x) => {
+
+      this.alumno =x.datosAlumno.nombres;
+    })
     this.ObtenerCabeceraProgramaGeneral();
     this.ListSeccionPrograma();
     this.ListPrerrequisito();
@@ -195,7 +247,7 @@ export class ProgramasDetalleComponent implements OnInit {
     this.AddFields();
     this.ObtenerCombosPortal();
   }
-  
+
   RegistrarProgramaPrueba(){
     this._AccountService.RegistroCursoAulaVirtualNueva(this.idBusqueda).subscribe({
       next:x=>{
@@ -212,10 +264,74 @@ export class ProgramasDetalleComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe((result) => {
-      console.log('The dialog was closed');
     });
   }
+  OpenModalPago(){
+    this.codigoIso =
+      this._SessionStorageService.SessionGetValue('ISO_PAIS') != ''
+        ? this._SessionStorageService.SessionGetValue('ISO_PAIS')
+        : 'INTC';
+    this.IdPais=this.GetIdPaisProCodigo();
+    const dialogRef = this.dialog.open(ProgramaPagoComponent, {
+      width: '900px',
+      data: {
+        idPais: this.IdPais ,
+        idBusqueda:this.idBusqueda,
+        alumno:this.alumno,
+        nombre:this.cabecera.nombre,
+        modalidad:this.cabecera.listProgramaEspecificoInformacionDTO},
+      panelClass: 'programa-pago-dialog-container',
+    });
+    dialogRef.afterClosed().subscribe((result) => {
+      console.log(result)
+      if(result!=undefined){
 
+        this.PreProcesoPagoOrganicoAlumno(result);
+      }
+    });
+  }
+  PreProcesoPagoOrganicoAlumno(tarjeta:any){
+
+    const dialogRef =this.dialog.open(ChargeComponent,{
+      panelClass:'dialog-charge',
+      disableClose:true
+    });
+    //this.jsonEnvioPago.CodigoBanco=tarjeta.medioCodigo;
+    this.jsonEnvioPago.IdFormaPago=tarjeta.idFormaPago;
+    //this.jsonEnvioPago.IdMontoPago=;
+    this.jsonEnvioPago.IdPEspecifico=tarjeta.idPEspecifico;
+    this.jsonEnvioPago.IdPGeneral=this.idPegeneral;
+    this.jsonEnvioPago.IdPais=this.IdPais;
+    this.jsonEnvioPago.IdPasarelaPago=tarjeta.idPasarelaPago.toString();
+    this.jsonEnvioPago.MedioCodigo=tarjeta.medioCodigo;;
+    this.jsonEnvioPago.MedioPago=tarjeta.medioPago;
+    this.jsonEnvioPago.Moneda=tarjeta.moneda;
+    this.jsonEnvioPago.MontoTotalPago=tarjeta.montoTotal;
+    this.jsonEnvioPago.Inicio=tarjeta.inicio;
+    this.jsonEnvioPago.Version=tarjeta.version;
+    this.jsonEnvioPago.Tipo=tarjeta.tipo;
+    //this.jsonEnvioPago.TipoProveedor=;
+    this.jsonEnvioPago.WebMoneda=tarjeta.webMoneda;
+    var token=this._SessionStorageService.validateTokken();
+    if(token){
+      this._FormaPagoService.PreProcesoPagoOrganicoAlumno(this.jsonEnvioPago,dialogRef);
+    }else{
+      this._SessionStorageService.SessionSetValue('redirect','pago');
+      this._SessionStorageService.SessionSetValue('datosTarjeta',JSON.stringify(this.jsonEnvioPago));
+      this._router.navigate(['/login']);
+      dialogRef.close()
+    }
+
+  }
+  GetIdPaisProCodigo():number{
+    var idp=0
+    this.Paises.forEach((p:any)=>{
+      if(p.codigoIso.toLowerCase()==this.codigoIso.toLowerCase()){
+        idp=parseInt(p.idPais);
+      }
+    })
+    return idp;
+  }
   ObtenerCabeceraProgramaGeneral() {
     this._SeccionProgramaService
       .ObtenerCabeceraProgramaGeneral(this.idBusqueda)
@@ -390,7 +506,6 @@ export class ProgramasDetalleComponent implements OnInit {
             .join('')
             .split('http:')
             .join('https:');
-          console.log(this.vistaPrevia);
         }
       },
     });

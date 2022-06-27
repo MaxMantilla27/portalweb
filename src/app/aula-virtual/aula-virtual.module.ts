@@ -65,6 +65,10 @@ import { ModuloAyudaQuejasSugerenciasComponent } from './modulo/modulo-ayuda/mod
 import { RegistrarErrorComponent } from './sesiones/sesion-video/registrar-error/registrar-error/registrar-error.component';
 import { VigenciaAccesoPruebaComponent } from './mis-cursos/vigencia-acceso-prueba/vigencia-acceso-prueba/vigencia-acceso-prueba.component';
 import { CategoriaComponent } from './categoria/categoria.component';
+import { PagoWompiComponent } from './confirmacion-pago-organico/pago-wompi/pago-wompi.component';
+import { PagoVisaComponent } from './confirmacion-pago-organico/pago-visa/pago-visa.component';
+import { PagoConektaComponent } from './confirmacion-pago-organico/pago-conekta/pago-conekta.component';
+import { PagoGeneralComponent } from './confirmacion-pago-organico/pago-general/pago-general.component';
 
 
 @NgModule({
@@ -128,6 +132,10 @@ import { CategoriaComponent } from './categoria/categoria.component';
     RegistrarErrorComponent,
     VigenciaAccesoPruebaComponent,
     CategoriaComponent,
+    PagoWompiComponent,
+    PagoVisaComponent,
+    PagoConektaComponent,
+    PagoGeneralComponent,
 
   ],
   imports: [

@@ -10,7 +10,25 @@ export interface RegistroPreProcesoPagoDTO {
   SimboloMoneda: string;
   ListaCuota: Array<RegistroPreProcesoPagoCuotaDTO>;
 }
-
+export interface PagoOrganicoAlumnoDTO{
+  IdPGeneral:number,
+  IdPEspecifico:number,
+  IdMontoPago:number,
+  MontoTotalPago:number,
+  CodigoBanco:string ,
+  TipoProveedor:string ,
+  IdPasarelaPago:string ,
+  RequiereTarjeta:boolean,
+  IdPais:number,
+  WebMoneda:number,
+  MedioCodigo?:string,
+  MedioPago?:string,
+  Moneda?:string,
+  IdFormaPago:number,
+  Version:string,
+  Tipo:string,
+  Inicio:string,
+}
 export interface RegistroPreProcesoPagoCuotaDTO {
   IdCuota: number;
   NroCuota: number;
@@ -36,7 +54,11 @@ export interface RegistroProcesoPagoAlumnoDTO {
   Comprobante:boolean;
   TarjetaHabiente: RegistroProcesoPagoTarjetaHabienteDTO;
   RazonSocial:string;
-  CodigoTributario:string
+  CodigoTributario:string;
+  IdPasarelaPago:number ,
+  IdentificadorUsuario?:string,
+  DeviceSessionId?:string,
+  TokenId?:string,
 }
 export interface RegistroProcesoPagoTarjetaHabienteDTO {
   Titular: string;
@@ -45,4 +67,5 @@ export interface RegistroProcesoPagoTarjetaHabienteDTO {
   Aniho: string;
   CodigoVV: string;
   NumeroDocumento: string;
+  fecha:string;
 }

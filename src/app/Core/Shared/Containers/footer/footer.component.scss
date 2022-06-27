@@ -33,7 +33,9 @@
       font-size: 0.95rem;
       font-weight: lighter ;
       padding-top: 0.5rem;
-
+      width: 100%;
+      display: flex;
+      //justify-content: center;
       span {
         margin-left: 0.5rem;
       }
@@ -44,7 +46,9 @@
       flex-direction: row;
       justify-content: flex-start;
       gap: 0.5rem;
-
+      width: 100%;
+      justify-content: space-evenly;
+      margin-top: 25px;
     }
   }
   .line {
@@ -62,6 +66,7 @@
     .reclamaciones-container {
       display: flex;
       flex-direction: row;
+      justify-content: flex-start;
       align-items: center;
       cursor: pointer;
       gap: 1rem;
@@ -85,6 +90,9 @@
   .footerr{
     .item-container {
       align-items: center !important;
+      .item-footer{
+        justify-content: center;
+      }
       .subitem-container {
         align-items: center !important;
       }

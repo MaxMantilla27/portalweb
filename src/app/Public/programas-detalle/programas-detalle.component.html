@@ -4,10 +4,34 @@
   </div>
 </div>
 <div style="background: #f4f4f4;position: relative;padding: 10px 0px;">
-  <div class="phoneCall">
-    <img src="../../../assets/icons/icono-llamada.svg" alt="">
-    <div style="width: calc( 100% - 40px );"> Solicita una llamada</div>
-    <div class="contentHover" (click)="ScrollTo(formularioPrograma)">Consulta por nuestras facilidades de pago y descuentos</div>
+  <div class="row" style="padding: 0px;margin: 0px;">
+
+    <div class="d-none col-md-1 d-md-block col-lg-1 d-lg-block" >
+      <div class="phoneCall ">
+        <img src="../../../assets/icons/icono-llamada.svg" alt="">
+        <div style="width: calc( 100% - 40px );"> Solicita una llamada</div>
+        <div class="contentHover" (click)="ScrollTo(formularioPrograma)">Consulta por nuestras facilidades de pago y descuentos</div>
+      </div>
+    </div>
+    <div class="col-12 d-md-none d-lg-none">
+
+      <div class="container">
+        <div class="row rowpadd"  style="position: relative;padding-top: 0px;padding-bottom: 0px;">
+          <div class="phoneCall " (click)="ScrollTo(formularioPrograma)" style="    top: 0;
+          right: 0;
+          width: 100%;
+          justify-content: flex-start;
+          flex-wrap: nowrap;
+          position: relative;">
+            <img src="../../../assets/icons/icono-llamada.svg" alt="">
+            <div>
+              <div style="width: calc( 100% - 40px );"> Solicita una llamada</div>
+              <div style="font-weight: 100;">Consulta por nuestras facilidades de pago y descuentos</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
   <div class="container">
     <div class="row rowpadd">
@@ -21,7 +45,7 @@
         <div class="row" style="margin-top: 20px;">
           <div class="col-12 col-md-12 col-lg-6">
             <app-default-button [confs]="{color:'primary',titulo:'Matricularme Ahora'}" [style]="'width: 100%;'"
-              (ButtoclClick)="ObtenerCabeceraProgramaGeneral()"></app-default-button>
+              (ButtoclClick)="OpenModalPago()" [disabled]="cabecera.listProgramaEspecificoInformacionDTO.length==0"></app-default-button>
           </div>
           <div class="col-12 col-md-12 col-lg-6 ">
             <app-default-button [confs]="{color:'primary',titulo:'Acceso de prueba gratis'}" [style]="'width: 100%;'"
@@ -117,13 +141,15 @@
 <div class="container" #formularioPrograma>
   <div class="row rowpadd">
     <div class="col-12 col-md-8 col-lg-8">
-      <div
+      <div class="row"
         style="display: flex;justify-content: space-between;align-items: center;flex-wrap: wrap; margin-bottom: 20px;">
-        <div class="subtitulo">Estructura Curricular</div>
-        <app-default-button [confs]="{color:'primary',titulo:'Vista \n previa'}" [img]="'vista-previa.svg'"
-          (ButtoclClick)="OpenModal()"
-          [style]="'display: flex;line-height: 20px;padding: 5px 10px;white-space: pre-wrap !important;'">
-        </app-default-button>
+        <div class="col-12 col-md-8 col-lg-9 subtitulo" >Estructura Curricular</div>
+        <div class="col-12 col-md-4 col-lg-3">
+          <app-default-button [confs]="{color:'primary',titulo:'Vista \n previa'}" [img]="'vista-previa.svg'"
+            (ButtoclClick)="OpenModal()"
+            [style]="'display: flex;line-height: 20px;padding: 5px 10px;white-space: pre-wrap !important;width: 100%;'">
+          </app-default-button>
+        </div>
       </div>
       <mat-accordion class="acordionPrograma" multi>
         <mat-expansion-panel hideToggle *ngFor="let item of estructuraPrograma" (opened)="item.opened=true"
@@ -184,7 +210,7 @@
         <p>El programa incluye los siguientes beneficios:</p>
         <div class="row">
           <ng-container *ngFor="let item of beneficios">
-            <div class="col-12 col-md-{{12/beneficios.length}} col-lg-{{12/beneficios.length}}">
+            <div class="col-12 col-md-{{12/beneficios.length}} col-lg-{{12/beneficios.length}}" style="margin: 20px 0px;">
               <div class="cardBeneficiosPrograma">
                 <div *ngIf="item.version!='Sin Version'" class="carsTitleBeneficiosPrograma">{{item.version+':'}}</div>
                 <ng-container *ngFor="let content of item.contenido">
@@ -207,18 +233,21 @@
 </div>
 <div class="container">
   <div class="row rowpadd">
-    <div class="col-12 col-md-5 col-lg-5">
+    <div class="col-12 col-md-5 col-lg-5"></div>
+    <div class="col-12 col-md-7 col-lg-7">
+      <div class="subtitulo">Certificaci&oacute;n</div>
+    </div>
+    <div class="col-12 col-md-5 col-lg-5" style="margin: 20px 0px;">
       <img src="../../../assets/imagenes/certificado-carrera-tecnica-atencion-al-cliente.png" alt=""
         style="width: 100%;">
     </div>
     <div class="col-12 col-md-7 col-lg-7">
-      <div class="subtitulo">Certificaci&oacute;n</div>
       <div class="certificadoContent">
         <div>{{certificado.cabecera}}</div>
         <li *ngFor="let item of certificado.contenido">{{item}}</li>
       </div>
       <div class="piePagina" [innerHtml]="certificado.piePagina | safeHtml"></div>
-      <div  [innerHtml]="certificado.descripcionLeyenda | safeHtml"></div>
+      <div  [innerHtml]="certificado.descripcionLeyenda | safeHtml" style="word-break: break-all;"></div>
 
       <mat-accordion class="acordionPrograma acrdionCertificado" multi *ngIf="certificado.descripcionHeader!=undefined && certificado.descripcionHeader.length>0">
         <mat-expansion-panel hideToggle #acodionCertificado *ngFor="let item of certificado.descripcionHeader;let i=index">
@@ -278,7 +307,7 @@
     </div>
     <div class="col-12 col-sm-12 col-md-12">
       <div class="row">
-        <div class="col-12 col-sm-6 col-md-6">
+        <div class="col-12 col-md-6 col-md-6">
           <div class="col-12 col-sm-12 col-md-12 contentCarsubtitle">
             <img class="imgTitle" style="padding: 10%;" src="../../../assets/imagenes/extech-learning-09.svg" alt="">
           </div>
@@ -288,7 +317,7 @@
               con mecanismos de aprendizaje activo.</div>
           </div>
         </div>
-        <div class="col-12 col-sm-6 col-md-6">
+        <div class="col-12 col-md-6 col-md-6">
 
           <div class="col-12 col-sm-12 col-md-12 contentCarsubtitle">
             <div class="cardSubtitle">
@@ -446,7 +475,7 @@
           Puedes solicitar tu c&oacute;digo de pago, o la información de la cuenta a nuestros asesores para hacer un
           dep&oacute;sito o transferencia
         </div>
-        <div class="col-12 col-md-3 col-lg-3" style="padding: 0px; margin: 10px 0px;display:flex;justify-content: center;">
+        <div class="col-12 col-md-3 col-lg-3" style="padding: 0px; margin: 10px 0px;display:flex;justify-content: flex-start;">
           <img class="imgCardFormasPago" src="../../../assets//icons/bcp-06.svg" alt="">
         </div>
       </div>

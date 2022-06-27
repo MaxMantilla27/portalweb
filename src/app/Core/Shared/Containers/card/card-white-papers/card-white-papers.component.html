@@ -4,8 +4,18 @@
     <div class="col-12 col-md-4 col-lg-4">
       <img class="img-card-wp" [src]="'https://repositorioweb.blob.core.windows.net/paper-bs/Paper/imagen/'+cardContent.imgPortada" [alt]="cardContent.imgPortadaAlt">
 
-      <div class="link-card-wp link" [routerLink]="'white-paper/'+cardContent.urlWeb+'-'+cardContent.idWeb">Descargar ></div>
+
+      <!-- <div class="link-card-wp link" [routerLink]="">Descargar ></div> -->
     </div>
     <div class="col-12 col-md-8 col-lg-8" [innerHTML]="cardContent.descripcion"></div>
+
+  </div>
+  <div class="row" style="margin-top: 10px;">
+    <div class="col-12 col-md-4 col-lg-4">
+      <app-default-button [confs]="{color:'primary',titulo:'Descargar'}"
+        [style]="'width: 100%;'"
+        [ruta]="'white-paper/'+cardContent.urlWeb+'-'+cardContent.idWeb">
+      </app-default-button>
+    </div>
   </div>
 </div>

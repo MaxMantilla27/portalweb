@@ -12,5 +12,8 @@ export class MedioPagoActivoPasarelaService {
   public MedioPagoPasarelaPortalCronograma(IdMatriculaCabecera:number):Observable<any>{
     return this.http.get<any>(this.urlBase+'/MedioPagoPasarelaPortalCronograma?IdMatriculaCabecera='+IdMatriculaCabecera);
   }
+  public MedioPagoActivoPasarelaPortal(IdPais:number):Observable<any>{
+    return this.http.get<any>(this.urlBase+'/MedioPagoActivoPasarelaPortal?IdPais='+IdPais);
+  }
 
 }

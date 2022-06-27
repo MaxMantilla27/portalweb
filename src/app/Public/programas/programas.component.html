@@ -164,18 +164,19 @@
 <div class="FiltroProgramasResponcive" (click)="openBottomSheet()">
 
   <!-- <div class="foltroEncontrados">{{textoResult}}</div> -->
-  <div style="display: flex;justify-content: center;">
-    <img src="../../../assets/icons/icono-filtros.svg" alt="">
+  <div style="display: flex;justify-content: flex-start;align-items: center;">
+    <img src="../../../assets/icons/filtro.svg" alt="">
     <div>FILTROS</div>
   </div>
 </div>
+<div class="textoResultResponsive">{{textoResult}}</div>
 <div class="container">
   <div class="row rowpadd">
     <div class="col-12 col-md-4 col-lg-3 FiltroProgramasFull">
-      <div style="position: sticky;top: 100px;">
+      <div style="position: sticky;top: 10px;">
         <div class="filtroHeader">
           <!-- <img src="../../../assets/icons/icono-filtros.svg" alt=""> -->
-          <div>Filtros</div>
+          <div>FILTROS</div>
 
           <div class="tagitem limpiarTodo" (click)="RemoveAll()"
             *ngIf="TagAreas.length>0 || TagSubAreas.length>0 || TagModalidad.length>0 || TagTipoPrograma.length>0 || buscar!=''">

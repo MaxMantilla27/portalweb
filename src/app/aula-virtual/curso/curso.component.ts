@@ -36,6 +36,7 @@ export class CursoComponent implements OnInit,OnDestroy {
   public tabIndex = 0;
   public IndicacionActive = false;
   public CertificadoActive = false;
+  public hide=false
   public migaPan = [
     {
       titulo: 'Mis Cursos',
@@ -110,6 +111,7 @@ export class CursoComponent implements OnInit,OnDestroy {
     console.log('-------')
     if(this.datosCertificado!=undefined){
       if((this.datosCertificado.idEstado_matricula!=5 && this.datosCertificado.idEstado_matricula!=12) || this.datosCertificado.nombreArchivo==null){
+        this.alertaDigital=false
         this.alertaDigital=true
       }
     }

@@ -37,6 +37,8 @@ export class HeaderComponent implements OnInit {
   OnClick: EventEmitter<boolean> = new EventEmitter<boolean>();
   @Output()
   ChangeExpand: EventEmitter<any> = new EventEmitter<any>();
+  @Output()
+  OpenStep: EventEmitter<number> = new EventEmitter<number>();
 
   public Formacion: Array<BasicUrl> = [];
   public carreras: Array<BasicUrl> = [];

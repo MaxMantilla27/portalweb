@@ -8,6 +8,8 @@ import { FormaPagoService } from 'src/app/Core/Shared/Services/FormaPago/forma-p
 import { SessionStorageService } from 'src/app/Core/Shared/Services/session-storage.service';
 import { environment } from 'src/environments/environment';
 
+declare var payform:any;
+declare var VisanetCheckout:any;
 @Component({
   selector: 'app-confirmacion-pago-tarjeta-visa',
   templateUrl: './confirmacion-pago-tarjeta-visa.component.html',
@@ -45,6 +47,7 @@ export class ConfirmacionPagoTarjetaVisaComponent implements OnInit,OnDestroy {
     Comprobante:false,
     CodigoTributario:'',
     RazonSocial:'',
+    IdPasarelaPago:0,
     TarjetaHabiente:{
       Aniho:'',
       CodigoVV:'',
@@ -52,6 +55,7 @@ export class ConfirmacionPagoTarjetaVisaComponent implements OnInit,OnDestroy {
       NumeroDocumento:'',
       NumeroTarjeta:'',
       Titular:'',
+      fecha:'',
     },
   }
   ngOnInit(): void {
@@ -87,8 +91,9 @@ export class ConfirmacionPagoTarjetaVisaComponent implements OnInit,OnDestroy {
         this.jsonSave.RequiereDatosTarjeta=this.json.RequiereDatosTarjeta
         this.jsonSave.TransactionToken=this.resultVisa.procesoPagoBotonVisa.transactionToken
 
-        this._SessionStorageService.SessionSetValue('datos',JSON.stringify(this.jsonSave));
+        //this._SessionStorageService.SessionSetValue('datos',JSON.stringify(this.jsonSave));
         this.addVisa()
+        //this.SetConfiguration()
       }
     })
   }
@@ -106,10 +111,100 @@ export class ConfirmacionPagoTarjetaVisaComponent implements OnInit,OnDestroy {
     script.setAttribute('data-purchasenumber',this.resultVisa.procesoPagoBotonVisa.orderVisa.purchaseNumber)
     script.setAttribute('data-amount',parseFloat(this.resultVisa.procesoPagoBotonVisa.amount+'.00'))
     script.setAttribute('data-expirationminutes','5')
-    script.setAttribute('data-timeouturl',this.urlBase+'/AulaVirtual/MisPagos')
+    script.setAttribute('data-timeouturl',this.urlBase+'/AulaVirtual/MisPagos/'+this.idMatricula)
+
     this._renderer2.appendChild(this._document.getElementById('visa'), script);
   }
+  addvisa2(){
+    VisanetCheckout.configure({
+      sessiontoken:this.resultVisa.procesoPagoBotonVisa.sessionKey,
+      channel:'web',
+      merchantid:this.resultVisa.procesoPagoBotonVisa.merchanId,
+      purchasenumber:this.resultVisa.procesoPagoBotonVisa.orderVisa.purchaseNumber,
+      amount:parseFloat(this.resultVisa.procesoPagoBotonVisa.amount+'.00'),
+      expirationminutes:'5',
+      timeouturl:this.urlBase+'/AulaVirtual/MisPagos',
+      merchantlogo:'https://img.bsginstitute.com/repositorioweb/img/logobsg.svg',
+      formbuttoncolor:'#eea236',
+      action:'paginaRespuesta',
+      complete: function(params:any) {
+        console.log(params)
+      }
+    });
+    VisanetCheckout.open();
+  }
+
+  // SetConfiguration(){
+  //   console.log(this.resultVisa.procesoPagoBotonVisa)
+  //   var elementStyles = {
+  //     base: {
+  //      color: '#666666',
+  //      fontWeight: 700,
+  //      fontFamily: "'Montserrat', sans-serif",
+  //      fontSize: '16px',
+  //      fontSmoothing: 'antialiased',
+  //      placeholder: {
+  //       color: '#999999',
+  //      },
+  //      autofill: {
+  //       color: '#e39f48',
+  //      },
+  //     },
+  //    invalid: {
+  //     color: '#E25950',
+  //     '::placeholder': {
+  //      color: '#FFCCA5',
+  //      },
+  //     },
+  //    };
+  //   var cardNumber = payform.createElement('cardNumber', {
+  //     style: elementStyles,
+  //     placeholder: 'Nro. Tarjeta',
+  //   }, 'txtNumeroTarjeta');
+
+  //   var cardExpiry = payform.createElement('cardExpiry', {
+  //     style: elementStyles,
+  //     placeholder: 'Mes / Año',
+  //   }, 'txtNumeroTarjeta');
+
+  //   var cardCVV = payform.createElement('cardCVV', {
+  //     style: elementStyles,
+  //     placeholder: 'CVV2',
+  //   }, 'txtCVV');
+
+  //   var configuration = {
+  //     callbackurl: 'paginaRespuesta',
+  //     sessionkey:this.resultVisa.procesoPagoBotonVisa.sessionKey,
+  //     channel: 'pasarela',
+  //     merchantid: this.resultVisa.procesoPagoBotonVisa.merchanId,
+  //     purchasenumber: this.resultVisa.procesoPagoBotonVisa.orderVisa.purchaseNumber,
+  //     amount: parseFloat(this.resultVisa.procesoPagoBotonVisa.amount+'.00'),
+  //     language: 'es',
+  //     recurrencemaxamount: ''
+  //    };
+  //    payform.setConfiguration(configuration);
+  //    payform.createToken([cardNumber, cardExpiry, cardCVV]).then(function (response:any) {
+  //     console.log(response)
+  //     }).catch(function (error:any) {
+  //       console.log(error)
+  //     });
+  //    console.log(payform)
+  // }
+  // pay(){
+  //   var data = {
+  //     name: 'Juan',
+  //     lastName: 'Perez',
+  //     email: 'jperez@test.com'
+  //     };
+  //  /* Caso de uso: Controles independientes */
+  //  payform.createToken(['4551708161768059','03/2028','111'], data).then(function(response:any){
+  //       console.log(response)
+  //     }).catch(function(){
+  //     /* Tú código aquí */
+  //     });
+  // }
   pagar(){
     console.log('asdasdasd')
+
   }
 }

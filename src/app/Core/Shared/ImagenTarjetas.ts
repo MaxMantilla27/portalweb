@@ -12,6 +12,12 @@ export class ImagenTarjetas {
   },{
     codigo:'DC',
     img:'dinners-10.svg'
+  },{
+    codigo:'PSE',
+    img:'pse-colombia.svg'
+  },{
+    codigo:'CN',
+    img:'carnet-mexico.svg'
   }]
   constructor() { }
   GetTarjeta(coidgo:string):string{

@@ -402,7 +402,7 @@ export class ProgramasComponent implements OnInit {
         this.cantidadProgramas++
       }
     })
-    this.textoResult="Se encontraron "+this.cantidadProgramas+" resultados";
+    this.textoResult="Se encontraron ("+this.cantidadProgramas+") resultados";
     // this._SnackBarServiceService.openSnackBar(this.textoResult,'x',1005,"snackbarCrucigramaInfo",'left');
   }
   SetTags(){

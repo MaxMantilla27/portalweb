@@ -118,3 +118,20 @@
     margin: 0px 10px;
   }
 }
+.tipoIndicacionTitle div{
+
+  font-size: 17px;
+  color: #505050;
+}
+
+.openClose {
+  position: absolute;
+  z-index: 2;
+  top: -20px;
+  left: 40px;
+  cursor: pointer;
+}
+.reverse {
+  transform: scaleX(-1);
+  left: 170px;
+}

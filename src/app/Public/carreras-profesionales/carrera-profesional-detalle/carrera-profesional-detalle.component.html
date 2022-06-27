@@ -38,9 +38,13 @@
                 [innerHTML]="carrera.contenidoProgramaInformacionDTO[4]?.contenido  | safeHtml">
               </div>
 
-              <div class="carrera-container__header__information__button">
-                <app-default-button [confs]="{color: 'primary', titulo: 'Inscribirme Ahora'}"></app-default-button>
-                <app-default-button [confs]="{color: 'primary', titulo: 'Descargar Brochure'}"></app-default-button>
+              <div class="carrera-container__header__information__button row">
+                <div class="col-12 col-md-12 col-lg-6">
+                  <app-default-button [confs]="{color: 'primary', titulo: 'Inscribirme Ahora'}" [style]="'width: 100%;'"></app-default-button>
+                </div>
+                <div class="col-12 col-md-12 col-lg-6">
+                  <app-default-button [confs]="{color: 'primary', titulo: 'Descargar Brochure'}" [style]="'width: 100%;'"></app-default-button>
+                </div>
               </div>
             </div>
             <!-- <div class="col-md-5 carrera-container__content__firstSection__right">
@@ -101,18 +105,18 @@
           <div class="rowpadd">
             <div class="row">
 
-              <div class="col-12 col-md-12 col-lg-6">
+              <div class="col-12 col-md-12 col-lg-6" style="padding: 0px;">
                 <mat-tab-group>
                   <mat-tab *ngFor="let item of generalInformacion" label="{{item.titulo}}">
                     <div class="carrera-container__content__secondSection__item" [innerHTML]="item.contenido  | safeHtml">
                     </div>
                   </mat-tab>
-                  <!-- <mat-tab label="Convalidaciones">
+                  <mat-tab label="Convalidaciones">
                     <div class="carrera-container__content__secondSection__item">
                       <p>¿Quiénes pueden realizar convalidaciones en BSG Institute?</p>
                       <span>Pueden hacerlo personas que hayan realizado estudios en otros institutos o universidades. Además en BSG Institute validamos tu experiencia laboral.</span>
                     </div>
-                  </mat-tab> -->
+                  </mat-tab>
                 </mat-tab-group>
               </div>
 
