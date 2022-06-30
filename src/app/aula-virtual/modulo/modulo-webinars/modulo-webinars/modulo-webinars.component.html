@@ -10,22 +10,22 @@
   <div>
     Hola {{NombreAlumno}}, tienes programados los siguientes webinars:
   </div>
-  <div class="Webinars" style="margin-top: 20px;">
+  <div class="table-resposive Webinars" style="margin-top: 20px;">
     <table class="TablaWebinar">
       <thead class="TablaWebinarEncabezado">
         <tr>
-          <td style="width: 50px;text-align: left;border-radius: 2px;font-weight: bold;"><strong>N°</strong></td>
-          <td style="width: 250px;text-align: center;border-radius: 2px;font-weight: bold;"><strong>Nombre</strong></td>
-          <td style="width: 150px;text-align: center;border-radius: 2px;font-weight: bold;"><strong>Fecha</strong></td>
-          <td style="width: 150px;text-align: center;border-radius: 2px;font-weight: bold;"><strong>Hora</strong></td>
-          <td style="width: 150px;text-align: center;border-radius: 2px;font-weight: bold;"><strong>Estado</strong></td>
-          <td style="width: 150px;text-align: center;border-radius: 2px;font-weight: bold;"><strong></strong></td>
+          <td style="width: 50px;text-align: center;border-radius: 2px;font-weight: bold;    min-width: 50px; ;"><strong>N°</strong></td>
+          <td style="width: 250px;text-align: center;border-radius: 2px;font-weight: bold;    min-width: 200px;"><strong>Nombre</strong></td>
+          <td style="width: 150px;text-align: center;border-radius: 2px;font-weight: bold;min-width: 120px;"><strong>Fecha</strong></td>
+          <td style="width: 150px;text-align: center;border-radius: 2px;font-weight: bold;min-width: 120px;"><strong>Hora</strong></td>
+          <td style="width: 150px;text-align: center;border-radius: 2px;font-weight: bold;min-width: 120px;"><strong>Estado</strong></td>
+          <td style="width: 150px;text-align: center;border-radius: 2px;font-weight: bold;min-width: 120px;"><strong></strong></td>
         </tr>
       </thead>
         <tbody class="TablaCalificacionContenido">
           <ng-container *ngFor="let item of DetallesWebinar ;let i=index">
             <tr>
-              <td class="webinar" style="width: 50px;text-align: left;">
+              <td class="webinar" style="width: 50px;text-align: center;">
                 {{i+1}}
               </td>
               <td class="webinar" style="width: 250px;text-align: center;">

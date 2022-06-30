@@ -498,3 +498,12 @@ mat-sidenav-content {
   }
 }
 
+.table-resposive{
+  overflow: auto;
+  min-width: 100%;
+  width: auto;
+  display: block;
+  overflow-x: auto;
+  //white-space: nowrap;
+}
+

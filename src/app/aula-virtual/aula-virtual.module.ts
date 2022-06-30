@@ -69,6 +69,8 @@ import { PagoWompiComponent } from './confirmacion-pago-organico/pago-wompi/pago
 import { PagoVisaComponent } from './confirmacion-pago-organico/pago-visa/pago-visa.component';
 import { PagoConektaComponent } from './confirmacion-pago-organico/pago-conekta/pago-conekta.component';
 import { PagoGeneralComponent } from './confirmacion-pago-organico/pago-general/pago-general.component';
+import { ConfirmacionPagoTarjetaWompiComponent } from './confirmacion-pago-tarjeta-wompi/confirmacion-pago-tarjeta-wompi.component';
+import { ConfirmacionPagoTarjetaConektaComponent } from './confirmacion-pago-tarjeta-conekta/confirmacion-pago-tarjeta-conekta.component';
 
 
 @NgModule({
@@ -136,6 +138,8 @@ import { PagoGeneralComponent } from './confirmacion-pago-organico/pago-general/
     PagoVisaComponent,
     PagoConektaComponent,
     PagoGeneralComponent,
+    ConfirmacionPagoTarjetaWompiComponent,
+    ConfirmacionPagoTarjetaConektaComponent,
 
   ],
   imports: [

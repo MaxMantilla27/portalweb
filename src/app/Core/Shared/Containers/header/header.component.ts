@@ -3,8 +3,11 @@ import {
   ComponentFactoryResolver,
   EventEmitter,
   Input,
+  OnChanges,
+  OnDestroy,
   OnInit,
   Output,
+  SimpleChanges,
   ViewEncapsulation,
 } from '@angular/core';
 import {
@@ -25,14 +28,17 @@ import { AvatarService } from '../../Services/Avatar/avatar.service';
 import { AvatarCombosDTO, AvatarDTO } from 'src/app/Core/Models/Avatar';
 import { combosPerfilDTO, datosAlumnoDTO } from 'src/app/Core/Models/AlumnoDTO';
 import { DatoObservableDTO } from 'src/app/Core/Models/DatoObservableDTO';
+import { GlobalService } from '../../Services/Global/global.service';
+import { delay, firstValueFrom, Subject, takeUntil, tap } from 'rxjs';
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss'],
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent implements OnInit,OnChanges,OnDestroy {
   @Input() responsive:boolean=false;
+  @Input() carga:boolean=false;
   @Output()
   OnClick: EventEmitter<boolean> = new EventEmitter<boolean>();
   @Output()
@@ -40,6 +46,7 @@ export class HeaderComponent implements OnInit {
   @Output()
   OpenStep: EventEmitter<number> = new EventEmitter<number>();
 
+  private signal$ = new Subject();
   public Formacion: Array<BasicUrl> = [];
   public carreras: Array<BasicUrl> = [];
   public tecnica: Array<BasicUrl> = [];
@@ -143,10 +150,40 @@ export class HeaderComponent implements OnInit {
     private _AreacapasitacionService: AreacapasitacionService,
     private _HelperService: HelperService,
     private _AlumnoService: AlumnoService,
-    private _AvatarService: AvatarService
+    private _AvatarService: AvatarService,
+    private _GlobalService:GlobalService
   ) {}
-
+  ngOnChanges(changes: SimpleChanges): void {
+    if(this.carga==true){
+      var usuarioWeb=this._SessionStorageService.SessionGetValue('usuarioWeb');
+      console.log(usuarioWeb)
+      if(usuarioWeb==''){
+        this.RegistroInteraccionInicial();
+      }else{
+        this.GetPaises();
+        this.GetCarreras();
+        this.GetAreaCapasitacionList();
+        if (this.token) {
+          this.ObtenerCombosPerfil();
+          this.ObtenerAvatar();
+        }
+        this.ObtenerObservable();
+      }
+    }
+  }
+  ngOnDestroy(): void {
+    this.signal$.next(true)
+    this.signal$.complete()
+  }
   ngOnInit(): void {
+  }
+
+  async RegistroInteraccionInicial(){
+    await firstValueFrom(this._GlobalService.RegistroInteraccionInicial().pipe(tap((result) => {
+      console.log(result);
+      this._SessionStorageService.SessionSetValue('usuarioWeb',result.identificadorUsuario);
+      this._SessionStorageService.SessionSetValue('ISO_PAIS',result.codigoISO);
+    })));
     this.GetPaises();
     this.GetCarreras();
     this.GetAreaCapasitacionList();
@@ -158,7 +195,7 @@ export class HeaderComponent implements OnInit {
   }
   GetPaises() {
     this.paises = [];
-    this._PaisService.GetPaises().subscribe({
+    this._PaisService.GetPaises().pipe(takeUntil(this.signal$)).subscribe({
       next: (x) => {
         this.paises = x.listaPaisCabeceraDTO.map((p: any) => {
           var ps: BasicUrlIcon = {
@@ -178,7 +215,7 @@ export class HeaderComponent implements OnInit {
   }
   GetAreaCapasitacionList() {
     this.Formacion = [];
-    this._AreacapasitacionService.GetAreaCapasitacionList().subscribe({
+    this._AreacapasitacionService.GetAreaCapasitacionList().pipe(takeUntil(this.signal$)).subscribe({
       next: (x) => {
         this.Formacion = x.listaareaCapasitacionDTO.map((c: any) => {
           var ps: BasicUrl = {
@@ -216,7 +253,7 @@ export class HeaderComponent implements OnInit {
     });
   }
   GetCarrerasProfecionales() {
-    this._CarreraProfesionalService.GetCarreras(11).subscribe({
+    this._CarreraProfesionalService.GetCarreras(11).pipe(takeUntil(this.signal$)).subscribe({
       next: (x) => {
         this.carreras = x.listaProfesionCabeceraDTO.map((c: any) => {
           var ps: BasicUrl = {
@@ -248,7 +285,7 @@ export class HeaderComponent implements OnInit {
     });
   }
   GetEducacionTecnica() {
-    this._CarreraProfesionalService.GetCarreras(16).subscribe({
+    this._CarreraProfesionalService.GetCarreras(16).pipe(takeUntil(this.signal$)).subscribe({
       next: (x) => {
         this.tecnica = x.listaProfesionCabeceraDTO.map((c: any) => {
           var ps: BasicUrl = {
@@ -307,7 +344,7 @@ export class HeaderComponent implements OnInit {
   }
 
   ObtenerCombosPerfil() {
-    this._AlumnoService.ObtenerCombosPerfil().subscribe({
+    this._AlumnoService.ObtenerCombosPerfil().pipe(takeUntil(this.signal$)).subscribe({
       next: (x) => {
         console.log(x)
         this.Alumno=x.datosAlumno,
@@ -320,7 +357,7 @@ export class HeaderComponent implements OnInit {
   }
 
   ObtenerAvatar() {
-    this._AvatarService.ObtenerAvatar().subscribe({
+    this._AvatarService.ObtenerAvatar().pipe(takeUntil(this.signal$)).subscribe({
       next: (x) => {
         console.log(x)
         this.Avatar = x.avatar;
@@ -333,7 +370,7 @@ export class HeaderComponent implements OnInit {
     });
   }
   ObtenerObservable(){
-    this._HelperService.recibirDatoCuenta.subscribe({
+    this._HelperService.recibirDatoCuenta.pipe(takeUntil(this.signal$)).subscribe({
       next: (x) => {
         console.log(x)
         this.DatoObservable.datoAvatar=x.datoAvatar;

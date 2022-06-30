@@ -51,7 +51,7 @@ export class PagoGeneralComponent implements OnInit, OnDestroy {
     CodigoTributario: '',
     RazonSocial: '',
     IdPasarelaPago: 0,
-    IdentificadorUsuario: '99568402-02a6-446e-b292-e91205cba787',
+    IdentificadorUsuario: '',
     TarjetaHabiente: {
       Aniho: '',
       CodigoVV: '',
@@ -105,6 +105,7 @@ export class PagoGeneralComponent implements OnInit, OnDestroy {
             this.resultCard.identificadorTransaccion;
           this.jsonSave.RazonSocial = this.resultCard.identificadorTransaccion;
           this.jsonSave.IdPasarelaPago = this.resultCard.idPasarelaPago;
+          this.jsonSave.IdentificadorUsuario=this._SessionStorageService.SessionGetValue('usuarioWeb');
           if (this.resultCard.idPasarelaPago == 5) {
             this.OpenPayInit();
           }

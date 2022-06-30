@@ -8,13 +8,14 @@
           <div class="contentResumenPago">
             <div class="subtitleResumenPago">{{resultVisa.nombrePrograma}}</div>
             <div class="ItemsResumenPago row">
-              <div class="col-12 row itms" *ngFor="let item of resultVisa.listaCuota">
-                <div class="col-8">{{item.nombre}}</div>
-                <div class="col-4" style="text-align: right;">{{resultVisa.simboloMoneda}} {{item.cuotaTotal}}</div>
+              <div class="col-12 row itms" >
+                <div class="verionPago" style="margin: 10px 0px;
+                font-size: 14px;">{{resultVisa.version}}</div>
+                <div class="inicioPago">INICIO: {{resultVisa.tipo}} - {{resultVisa.inicio}}</div>
               </div>
               <div class="col-12 row tot">
                 <div class="col-8">Total a pagar</div>
-                <div class="col-4" style="text-align: right;">{{resultVisa.simboloMoneda}} {{resultVisa.total}}</div>
+                <div class="col-4" style="text-align: right;">{{resultVisa.moneda}} {{resultVisa.montoTotal}}</div>
               </div>
             </div>
           </div>
@@ -75,12 +76,11 @@
             </div>
           </div>
         </div>
-        <form ngNoForm (submit)="pagar()" id="visa"
-        [action]="'https://bsginstitute.com/ProcesoPagoVisa/Index?IdTransaccion='+json.IdentificadorTransaccion"
-        [method]="'post'" style="text-align: center;margin-top: 30px;"
-        target="_blank">
 
-        </form>
+        <div id="conektaIframeContainer" style="height: 1200px;max-width: 100%;"></div>
+        <div id="conekta" style="text-align: center;margin-top: 30px;">
+
+        </div>
 
         <div id="pagoviss"></div>
         <div style="    width: 100%;
@@ -96,13 +96,14 @@
           <div class="contentResumenPago">
             <div class="subtitleResumenPago">{{resultVisa.nombrePrograma}}</div>
             <div class="ItemsResumenPago row">
-              <div class="col-12 row itms" *ngFor="let item of resultVisa.listaCuota">
-                <div class="col-8">{{item.nombre}}</div>
-                <div class="col-4" style="text-align: right;">{{resultVisa.simboloMoneda}} {{item.cuotaTotal}}</div>
+              <div class="col-12 row itms" >
+                <div class="verionPago" style="margin: 10px 0px;
+                font-size: 14px;">{{resultVisa.version}}</div>
+                <div class="inicioPago">INICIO: {{resultVisa.tipo}} - {{resultVisa.inicio}}</div>
               </div>
               <div class="col-12 row tot">
                 <div class="col-8">Total a pagar</div>
-                <div class="col-4" style="text-align: right;">{{resultVisa.simboloMoneda}} {{resultVisa.total}}</div>
+                <div class="col-4" style="text-align: right;">{{resultVisa.moneda}} {{resultVisa.montoTotal}}</div>
               </div>
             </div>
           </div>

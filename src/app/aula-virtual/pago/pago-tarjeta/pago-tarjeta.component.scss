@@ -7,14 +7,11 @@
 .modalPagoTitle {
   background: #f4f4f4;
   padding: 20px;
+  font-weight: 600;
 }
 .tarjetasModal {
-  display: flex;
   justify-content: center;
   align-items: center;
-  padding: 30px;
-  flex-wrap: wrap;
-  flex-direction: column;
 }
 .tarjetasModal
   .mat-form-field.mat-form-field-appearance-outline

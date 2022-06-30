@@ -20,9 +20,10 @@ export class InterceptorService implements HttpInterceptor{
   }
   RequestWhitHeaders(request: HttpRequest<any>) {
     const Iso = this._SessionStorageService.SessionGetValue('ISO_PAIS');
+    const usuarioWeb = this._SessionStorageService.SessionGetValue('usuarioWeb');
     if(this._SessionStorageService.validateTokken()){
       request = request.clone({ headers: request.headers.set( 'Authorization', 'Bearer '+this._SessionStorageService.GetToken())});
     }
-    return request.clone({headers: request.headers.set('CodigoISO', ''+Iso,) })
+    return request.clone({headers: request.headers.set('CodigoISO', ''+Iso,).set('usuarioWeb',''+usuarioWeb) })
   }
 }

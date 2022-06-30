@@ -48,6 +48,7 @@ export class FormaPagoService {
         var sesion=x._Repuesta.identificadorTransaccion;
         this._SessionStorageService.SessionSetValue(sesion,x._Repuesta.requiereDatosTarjeta);
         console.log(Json.IdFormaPago)
+        this._SessionStorageService.SessionDeleteValue('redirect');
         if(parseInt(Json.IdPasarelaPago)==7){
           if(Json.IdFormaPago==52){
             this._router.navigate(['/AulaVirtual/MisPagos/visa/'+sesion]);
@@ -76,4 +77,8 @@ export class FormaPagoService {
     return this.http.post<any>(this.urlBase+'/ChangeToPending',Json);
   }
 
+  public PreProcesoPagoTramiteAlumno(Json:RegistroPreProcesoPagoDTO):Observable<any>{
+    console.log(Json)
+    return this.http.post<any>(this.urlBase+'/PreProcesoPagoTramiteAlumno',Json);
+  }
 }

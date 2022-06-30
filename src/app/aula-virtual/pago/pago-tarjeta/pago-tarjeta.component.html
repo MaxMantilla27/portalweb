@@ -1,9 +1,9 @@
 <div class="modalPagoTitle">
   Elige tu método de pago
 </div>
-<div class="tarjetasModal" *ngIf="tarjetas!=undefined">
-  <div>
-    <mat-form-field appearance="outline" style="width: 400px;">
+<div class="tarjetasModal row" *ngIf="tarjetas!=undefined" style="margin: 40px 0px 10px;">
+  <div class="col-10 col-md-10 col-lg-8">
+    <mat-form-field appearance="outline" style="width: 100%;">
       <mat-label>Seleccione su medio de pago</mat-label>
       <mat-select (selectionChange)="change()" [(ngModel)]="medioCodigo">
         <mat-select-trigger>
@@ -18,10 +18,12 @@
         <mat-option *ngFor="let item of tarjetas"  [value]="item.medioCodigo">{{item.medioPago}}</mat-option>
       </mat-select>
     </mat-form-field>
-    <i *ngIf="medioCodigo.length>0" class="material-icons" style="margin-left: 10px;
-    color: #01c255;">check_circle</i>
   </div>
-  <div >
-      <app-default-button [confs]="{color:'primary',titulo:'Ir a pagar'}" [style]="'width: 100%;padding: 0px 40px;'" (ButtoclClick)="Pagar()"></app-default-button>
+  <div class="col-1 col-md-1 col-lg-1" style="    padding: 0px;" *ngIf="medioCodigo.length>0">
+    <i  class="material-icons" style="color: #01c255;
+    padding-bottom: 1.14375em;">check_circle</i>
+  </div>
+  <div class="col-12 col-md-12 col-lg-12" style="display: flex;justify-content: center;">
+      <app-default-button [confs]="{color:'primary',titulo:'Ir a pagar'}" [style]="'padding: 0px 40px;'" (ButtoclClick)="Pagar()"></app-default-button>
   </div>
 </div>

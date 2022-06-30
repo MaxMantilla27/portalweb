@@ -46,7 +46,7 @@ export class ResultadoPagoComponent implements OnInit {
         this.img=1
       }
       this.imgAc=this.img+'.png'
-      console.log(this.resultVisa)
+      // console.log(this.resultVisa)
       if(this.resultVisa!=undefined && this.resultVisa.estadoOperacion.toLowerCase()!='pending'){
         clearInterval(interval);
       }
@@ -76,7 +76,7 @@ export class ResultadoPagoComponent implements OnInit {
                 var json=JSON.parse(this._SessionStorageService.SessionGetValue('datosWompi'));
                 console.log(this._router.url.split('id=')[1].split('&')[0]);
                 json.TransactionToken=this._router.url.split('id=')[1].split('&')[0]
-                this.ProcesarPagoAlumnoOrganico(json)
+                this.ProcesarPagoCuotaAlumno(json)
               }else{
                 if(this.resultVisa.idPasarelaPago==6){
                   var js={
@@ -94,7 +94,7 @@ export class ResultadoPagoComponent implements OnInit {
         }
       },
       error:e=>{
-        this._router.navigate([this.ruta])
+        //this._router.navigate([this.ruta])
       }
     })
   }
@@ -167,6 +167,15 @@ export class ResultadoPagoComponent implements OnInit {
   ProcesarPagoAlumnoOrganico(json:any){
     this.intentos++;
     this._FormaPagoService.ProcesarPagoAlumnoOrganico(json).pipe(takeUntil(this.signal$)).subscribe({
+      next:x=>{
+        console.log(x)
+        this.ObtenerPreProcesoPagoCuotaAlumno()
+      }
+    })
+  }
+  ProcesarPagoCuotaAlumno(json:any){
+    this.intentos++;
+    this._FormaPagoService.ProcesarPagoCuotaAlumno(json).pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
         console.log(x)
         this.ObtenerPreProcesoPagoCuotaAlumno()

@@ -1,7 +1,7 @@
 import { DOCUMENT } from '@angular/common';
 import { stringify } from '@angular/compiler/src/util';
 import { Component, Inject, OnDestroy, OnInit, Renderer2, ViewEncapsulation } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
 import { RegistroProcesoPagoAlumnoDTO, RegistroRespuestaPreProcesoPagoDTO } from 'src/app/Core/Models/ProcesoPagoDTO';
 import { FormaPagoService } from 'src/app/Core/Shared/Services/FormaPago/forma-pago.service';
@@ -23,7 +23,8 @@ export class ConfirmacionPagoTarjetaVisaComponent implements OnInit,OnDestroy {
     @Inject(DOCUMENT) private _document: Document,
     private _ActivatedRoute:ActivatedRoute,
     private _FormaPagoService:FormaPagoService,
-    private _SessionStorageService:SessionStorageService
+    private _SessionStorageService:SessionStorageService,
+    private _router:Router
   ) {}
   public urlBase=environment.url_portal;
   ngOnDestroy(): void {
@@ -79,6 +80,10 @@ export class ConfirmacionPagoTarjetaVisaComponent implements OnInit,OnDestroy {
       next:x=>{
         console.log(x)
         this.resultVisa=x._Repuesta;
+
+        if(this.resultVisa.estadoOperacion.toLowerCase()!='sent'){
+          this._router.navigate(['/AulaVirtual/MisCursos/'+this.idMatricula])
+        }
         this.resultVisa.total=0;
         this.resultVisa.listaCuota.forEach((l:any) => {
           this.resultVisa.total+=l.cuotaTotal

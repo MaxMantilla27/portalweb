@@ -62,7 +62,7 @@
     </table>
   </div>
   <div class="PagoTramite" style="margin-top: 40px" *ngIf="PagoTotalTramite>0">
-    <div class="row" style="border: 2px solid #cacaca;border-radius: 10px;">
+    <div class="row" style="border: 2px solid #cacaca;border-radius: 10px;margin: 0px;">
       <div class="ResumenPago">
         <div style=" margin-left: 20px;display:flex;align-items: center;"> Resumen de Pago</div>
       </div>
@@ -81,7 +81,7 @@
               <ng-container *ngIf="item.pagar==true">
                 <tr>
                   <td class="criterio" style="width: 600px;text-align: left;">
-                    <div style=" margin-left: 20px;margin-top: 20px;margin-bottom: 20px;text-align:justify">
+                    <div style=" margin-left: 20px;margin-top: 20px;margin-bottom: 20px;text-align:left">
                       <div>
                         {{item.concepto}}
                       </div>
@@ -89,7 +89,7 @@
                   </td>
                   <td class="criterio" style="width: 250px;text-align: center;">
                     <div class="MontoTramite">
-                      <div style="margin-left: 90px">
+                      <div >
                         {{item.simboloMoneda}}
                       </div>
                       <div style="margin-left: 10px;">
@@ -108,7 +108,7 @@
               </td>
               <td class="criterio" style="width: 400px;text-align: center;">
                 <div class="MontoTramite">
-                  <div style="margin-left: 90px">
+                  <div>
                     {{SimboloMoneda}}
                   </div>
                   <div style="margin-left: 10px;">
@@ -120,9 +120,10 @@
           </tbody>
         </table>
       </div>
-      <div class="col-12 col-md-12 col-lg-12" style="margin-top:30px">
+      <div class="col-12 col-md-12 col-lg-12" style="margin-top:30px;display: flex;
+      justify-content: center;">
         <app-default-button [confs]="{color:'primary',titulo:'Pagar'}"
-          [style]="'width: 20%;margin-top: 20px; margin-left:40%;'"></app-default-button>
+          [style]="'margin-top: 20px;width: 120px;'" (ButtoclClick)="Pagar()"></app-default-button>
       </div>
     </div>
   </div>

@@ -9,7 +9,7 @@
             <div class="subtitleResumenPago">{{resultCard.nombrePrograma}}</div>
             <div class="ItemsResumenPago row">
               <div class="col-12 row itms" *ngFor="let item of resultCard.listaCuota">
-                <div class="col-8">Cuota N°{{item.nroCuota}} - {{item.fechaVencimiento | date:'dd/MM/yyyy'}}</div>
+                <div class="col-8">{{item.nombre}}</div>
                 <div class="col-4" style="text-align: right;">{{resultCard.simboloMoneda}} {{item.cuotaTotal}}</div>
               </div>
               <div class="col-12 row tot">
@@ -122,7 +122,7 @@
             <div class="subtitleResumenPago">{{resultCard.nombrePrograma}}</div>
             <div class="ItemsResumenPago row">
               <div class="col-12 row itms" *ngFor="let item of resultCard.listaCuota">
-                <div class="col-8">Cuota N°{{item.nroCuota}} - {{item.fechaVencimiento | date:'dd/MM/yyyy'}}</div>
+                <div class="col-8">{{item.nombre}}</div>
                 <div class="col-4" style="text-align: right;">{{resultCard.simboloMoneda}} {{item.cuotaTotal}}</div>
               </div>
               <div class="col-12 row tot">

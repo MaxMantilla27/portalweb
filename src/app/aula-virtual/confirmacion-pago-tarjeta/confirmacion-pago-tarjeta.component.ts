@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
 import { RegistroProcesoPagoAlumnoDTO, RegistroRespuestaPreProcesoPagoDTO } from 'src/app/Core/Models/ProcesoPagoDTO';
@@ -14,7 +14,7 @@ declare var OpenPay: any;
   styleUrls: ['./confirmacion-pago-tarjeta.component.scss'],
   encapsulation: ViewEncapsulation.None,
 })
-export class ConfirmacionPagoTarjetaComponent implements OnInit {
+export class ConfirmacionPagoTarjetaComponent implements OnInit,OnDestroy {
 
   private signal$ = new Subject();
   constructor(
@@ -25,7 +25,10 @@ export class ConfirmacionPagoTarjetaComponent implements OnInit {
     private _SnackBarServiceService:SnackBarServiceService,
     private _router:Router
   ) { }
-
+  ngOnDestroy(): void {
+    this.signal$.next(true);
+    this.signal$.complete();
+  }
   public idMatricula=0
   public json:RegistroRespuestaPreProcesoPagoDTO={
     IdentificadorTransaccion:'',
@@ -44,6 +47,7 @@ export class ConfirmacionPagoTarjetaComponent implements OnInit {
     CodigoTributario:'',
     RazonSocial:'',
     IdPasarelaPago:0,
+    IdentificadorUsuario:'',
     TarjetaHabiente:{
       Aniho:'',
       CodigoVV:'',
@@ -79,6 +83,10 @@ export class ConfirmacionPagoTarjetaComponent implements OnInit {
       next:x=>{
         console.log(x)
         this.resultCard=x._Repuesta;
+
+        if(this.resultCard.estadoOperacion.toLowerCase()!='sent'){
+          this._router.navigate(['/AulaVirtual/MisCursos/'+this.idMatricula])
+        }
         this.resultCard.total=0;
         this.resultCard.listaCuota.forEach((l:any) => {
           this.resultCard.total+=l.cuotaTotal
@@ -90,6 +98,7 @@ export class ConfirmacionPagoTarjetaComponent implements OnInit {
         this.jsonSave.CodigoTributario=this.resultCard.identificadorTransaccion
         this.jsonSave.RazonSocial=this.resultCard.identificadorTransaccion
         this.jsonSave.IdPasarelaPago=this.resultCard.idPasarelaPago
+        this.jsonSave.IdentificadorUsuario=this._SessionStorageService.SessionGetValue('usuarioWeb');
         if (this.resultCard.idPasarelaPago == 5) {
           this.OpenPayInit();
         }
@@ -167,9 +176,6 @@ export class ConfirmacionPagoTarjetaComponent implements OnInit {
     }
   }
   Pagar(){
-    this.jsonSave.TarjetaHabiente.NumeroTarjeta=this.NumberT.split('-').join('');
-    this.jsonSave.TarjetaHabiente.Aniho=this.jsonSave.TarjetaHabiente.fecha.split('/')[1];
-    this.jsonSave.TarjetaHabiente.Mes=this.jsonSave.TarjetaHabiente.fecha.split('/')[0];
     this._FormaPagoService.ProcesarPagoCuotaAlumno(this.jsonSave).pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
         console.log(x);

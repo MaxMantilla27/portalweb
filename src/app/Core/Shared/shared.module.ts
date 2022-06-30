@@ -90,6 +90,7 @@ import { InputCardDirective } from './Directives/input-card.directive';
 import { InputCardFechaDirective } from './Directives/input-card-fecha.directive';
 import {MatBottomSheetModule} from '@angular/material/bottom-sheet';
 import { CardMatriculasPruebaComponent } from './Containers/card/card-matriculas-prueba/card-matriculas-prueba/card-matriculas-prueba.component';
+import { GlobalService } from './Services/Global/global.service';
 
 
 
@@ -259,7 +260,7 @@ import { CardMatriculasPruebaComponent } from './Containers/card/card-matriculas
     MedioPagoActivoPasarelaService,
     ImagenTarjetas,
     FormaPagoService,
-
+    GlobalService
   ],
 })
 export class SharedModule {

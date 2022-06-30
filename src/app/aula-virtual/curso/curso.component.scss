@@ -9,13 +9,18 @@
 }
 .tabVertical
   .mat-tab-header
+  .mat-tab-label-container{
+    border-right: 2px solid #d2d2d2;
+  }
+.tabVertical
+  .mat-tab-header
   .mat-tab-label-container
   .mat-tab-list
   .mat-tab-labels {
   flex-direction: column !important;
   opacity: 1;
   max-width: 180px;
-  border-right: 2px solid #d2d2d2;
+  //border-right: 2px solid #d2d2d2;
 }
 .tabVertical
   .mat-tab-header
@@ -27,7 +32,7 @@
   opacity: 1 !important;
   padding-left: 0px;
   padding-right: 0px;
-  min-width: 20px !important;
+  min-width: 0px !important;
   height: auto !important;
 }
 .tabVertical

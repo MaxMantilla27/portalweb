@@ -59,11 +59,23 @@
             <div class="col-12 col-md-5 col-lg-4"><b>Moneda:</b></div>
             <div class="col-12 col-md-7 col-lg-8 itemValueCardPago">{{resultVisa.moneda}}</div>
             <div class="col-12 col-md-5 col-lg-4"><b>Nombres y Apellidos:</b></div>
-            <div class="col-12 col-md-7 col-lg-8 itemValueCardPago"><b>{{resultVisa.registroAlumno.nombre}} {{resultVisa.registroAlumno.apellido}}</b></div>
-            <div class="col-12 col-md-5 col-lg-4"><b>Programa:</b></div>
-            <div class="col-12 col-md-7 col-lg-8 itemValueCardPago">{{resultVisa.nombrePrograma}}</div>
+            <div class="col-12 col-md-7 col-lg-8 itemValueCardPago"><b>{{resultVisa.registroAlumno.nombre}}
+                {{resultVisa.registroAlumno.apellido}}</b></div>
+            <ng-container *ngIf="resultVisa.nombrePrograma!=null">
+              <div class="col-12 col-md-5 col-lg-4"><b>Programa:</b></div>
+              <div class="col-12 col-md-7 col-lg-8 itemValueCardPago">{{resultVisa.nombrePrograma}}</div>
+            </ng-container>
+            <ng-container *ngIf="resultVisa.listaCuota!=null && resultVisa.listaCuota.length>0">
+              <div class="col-12 col-md-5 col-lg-4"><b>Razon:</b></div>
+              <div class="col-12 col-md-7 col-lg-8 itemValueCardPago">
+                <div *ngFor="let item of resultVisa.listaCuota">
+                  {{item.nombre}}
+                </div>
+              </div>
+            </ng-container>
             <div class="col-12 col-md-5 col-lg-4"><b>Fecha de transacción:</b></div>
-            <div class="col-12 col-md-7 col-lg-8 itemValueCardPago">{{resultVisa.fechaTransaccion | date:'dd-MM-yyyy'}}</div>
+            <div class="col-12 col-md-7 col-lg-8 itemValueCardPago">{{resultVisa.fechaTransaccion | date:'dd-MM-yyyy'}}
+            </div>
             <div class="col-12 col-md-5 col-lg-4"><b>Hora de transacción:</b></div>
             <div class="col-12 col-md-7 col-lg-8 itemValueCardPago">{{resultVisa.fechaTransaccion | date:'hh:mm'}}</div>
           </div>

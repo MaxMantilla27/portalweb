@@ -23,7 +23,7 @@ export class SessionStorageService {
       if(token==undefined || token==null) return null;
       return atob(token)
     }
-    return 'INTC';
+    return null;
   }
   SetToken(token: string):void{
     if(this.isBrowser){

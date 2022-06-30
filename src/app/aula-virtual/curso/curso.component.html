@@ -14,15 +14,16 @@
       <mat-tab-group class="tabVertical" [(selectedIndex)]="tabIndex" (selectedTabChange)="tabChanged($event)">
         <mat-tab>
           <ng-template mat-tab-label>
-            <div *ngIf="!hide" class="contentHeaderM"  [ngClass]="{'ActiveChil':IndicacionActive==true}">
+            <div *ngIf="!hide" class="contentHeaderM" [ngClass]="{'ActiveChil':IndicacionActive==true}">
               <div class="iconMat iconIndicaciones"></div>
               <ng-container *ngIf="!hide">
                 <div class="titleMatr">Indicaciones</div>
-                <i class="material-icons" *ngIf="IndicacionActive==true" style="position: absolute;right: 5px;">keyboard_arrow_up</i>
+                <i class="material-icons" *ngIf="IndicacionActive==true"
+                  style="position: absolute;right: 5px;">keyboard_arrow_up</i>
               </ng-container>
             </div>
           </ng-template>
-          <div style="padding: 10px 30px;">
+          <div class="pad-resp">
             <div class="cursoTitle">{{programEstructura.programaGeneral}}</div>
             <div class="cursoTabDescripcion">¡Hola! a continuacion te explicamos mediante videos intuitivos como debes
               realizar tus evaluaciones.
@@ -32,22 +33,26 @@
             <div class="row">
               <div class="col-12 col-md-9 col-lg-9" style="margin: 10px 0px;">
                 <app-indicaciones-content [title]="'Preguntas interactivas'" [imgUrl]="imgsIndocaciones[0]"
-                (HoverIn)='imgsIndocaciones[0]="preguntas-interactivas-38.svg"' (HoverOut)='imgsIndocaciones[0]="preguntas-naranja-38.svg"'
+                  (HoverIn)='imgsIndocaciones[0]="preguntas-interactivas-38.svg"'
+                  (HoverOut)='imgsIndocaciones[0]="preguntas-naranja-38.svg"'
                   (ButtoclClick)="changeIndexIndicaciones(1)"></app-indicaciones-content>
               </div>
               <div class="col-12 col-md-9 col-lg-9" style="margin: 10px 0px;">
                 <app-indicaciones-content [title]="'Crucigramas'" [imgUrl]="imgsIndocaciones[1]"
-                (HoverIn)='imgsIndocaciones[1]="crucigramas-39.svg"' (HoverOut)='imgsIndocaciones[1]="crucigrama-naranja-39.svg"'
+                  (HoverIn)='imgsIndocaciones[1]="crucigramas-39.svg"'
+                  (HoverOut)='imgsIndocaciones[1]="crucigrama-naranja-39.svg"'
                   (ButtoclClick)="changeIndexIndicaciones(2)"></app-indicaciones-content>
               </div>
               <div class="col-12 col-md-9 col-lg-9" style="margin: 10px 0px;">
                 <app-indicaciones-content [title]="'Tareas'" [imgUrl]="imgsIndocaciones[2]"
-                (HoverIn)='imgsIndocaciones[2]="tareas-indicaciones-40.svg"' (HoverOut)='imgsIndocaciones[2]="tareas-naranja-40.svg"'
-                  (ButtoclClick)="changeIndexIndicaciones(3)"></app-indicaciones-content>
+                  (HoverIn)='imgsIndocaciones[2]="tareas-indicaciones-40.svg"'
+                  (HoverOut)='imgsIndocaciones[2]="tareas-naranja-40.svg"' (ButtoclClick)="changeIndexIndicaciones(3)">
+                </app-indicaciones-content>
               </div>
               <div class="col-12 col-md-9 col-lg-9" style="margin: 10px 0px;">
                 <app-indicaciones-content [title]="'Calificar tarea de pares'" [imgUrl]="imgsIndocaciones[3]"
-                (HoverIn)='imgsIndocaciones[3]="calificar-tareas-41.svg"' (HoverOut)='imgsIndocaciones[3]="tareas-pares-naranja-41.svg"'
+                  (HoverIn)='imgsIndocaciones[3]="calificar-tareas-41.svg"'
+                  (HoverOut)='imgsIndocaciones[3]="tareas-pares-naranja-41.svg"'
                   (ButtoclClick)="changeIndexIndicaciones(4)"></app-indicaciones-content>
               </div>
             </div>
@@ -55,50 +60,52 @@
         </mat-tab>
         <ng-container *ngIf="IndicacionActive==true">
 
-          <mat-tab >
+          <mat-tab>
             <ng-template mat-tab-label class="tabSubcontent">
               <div *ngIf="!hide" class="contentHeaderM subContent">
-                <div class="titleMatr"  *ngIf="!hide">Preguntas interactivas</div>
+                <div class="titleMatr" *ngIf="!hide">Preguntas interactivas</div>
               </div>
             </ng-template>
-            <div style="padding: 10px 30px;">
+            <div class="pad-resp">
               <app-indicaciones-options-content [videoUrl]="videoPreguntas"
                 [TitlePrograma]="programEstructura.programaGeneral" [title]="'Preguntas Interactivas'"
                 [imgUrl]="'preguntas-naranja-38.svg'">
               </app-indicaciones-options-content>
             </div>
           </mat-tab>
-          <mat-tab >
+          <mat-tab>
             <ng-template mat-tab-label>
               <div *ngIf="!hide" class="contentHeaderM subContent">
-                <div class="titleMatr"  *ngIf="!hide">Crucigramas</div>
+                <div class="titleMatr" *ngIf="!hide">Crucigramas</div>
               </div>
             </ng-template>
-            <div style="padding: 10px 30px;">
+            <div class="pad-resp">
               <app-indicaciones-options-content [videoUrl]="videoCrucigramas"
-                [TitlePrograma]="programEstructura.programaGeneral" [title]="'Crucigramas'" [imgUrl]="'crucigrama-naranja-39.svg'">
-              </app-indicaciones-options-content>
-            </div>
-          </mat-tab>
-          <mat-tab >
-            <ng-template mat-tab-label>
-              <div *ngIf="!hide" class="contentHeaderM subContent">
-                <div class="titleMatr"  *ngIf="!hide">Tareas</div>
-              </div>
-            </ng-template>
-            <div style="padding: 10px 30px;">
-              <app-indicaciones-options-content [videoUrl]="videoTareas"
-                [TitlePrograma]="programEstructura.programaGeneral" [title]="'Tareas'" [imgUrl]="'tareas-pares-naranja-41.svg'">
+                [TitlePrograma]="programEstructura.programaGeneral" [title]="'Crucigramas'"
+                [imgUrl]="'crucigrama-naranja-39.svg'">
               </app-indicaciones-options-content>
             </div>
           </mat-tab>
           <mat-tab>
             <ng-template mat-tab-label>
               <div *ngIf="!hide" class="contentHeaderM subContent">
-                <div class="titleMatr"  *ngIf="!hide">Calificar tarea de pares</div>
+                <div class="titleMatr" *ngIf="!hide">Tareas</div>
               </div>
             </ng-template>
-            <div style="padding: 10px 30px;">
+            <div class="pad-resp">
+              <app-indicaciones-options-content [videoUrl]="videoTareas"
+                [TitlePrograma]="programEstructura.programaGeneral" [title]="'Tareas'"
+                [imgUrl]="'tareas-pares-naranja-41.svg'">
+              </app-indicaciones-options-content>
+            </div>
+          </mat-tab>
+          <mat-tab>
+            <ng-template mat-tab-label>
+              <div *ngIf="!hide" class="contentHeaderM subContent">
+                <div class="titleMatr" *ngIf="!hide">Calificar tarea de pares</div>
+              </div>
+            </ng-template>
+            <div class="pad-resp">
               <app-indicaciones-options-content [videoUrl]="videoTrabajoP"
                 [TitlePrograma]="programEstructura.programaGeneral" [title]="'Calificar tarea de pares'"
                 [imgUrl]="'tareas-naranja-40.svg'">
@@ -111,30 +118,32 @@
           <ng-template mat-tab-label>
             <div *ngIf="!hide" class="contentHeaderM">
               <div class="iconMat iconModulos"></div>
-              <div class="titleMatr"  *ngIf="!hide">Modulos</div>
+              <div class="titleMatr" *ngIf="!hide">Modulos</div>
             </div>
           </ng-template>
-          <div style="padding: 10px 30px;">
+          <div class="pad-resp">
 
             <div class="cursoTitle">{{programEstructura.programaGeneral}}</div>
             <div class="cursoTabDescripcion">¡Bienvenido! Debes completar los siguientes modulos de tu programa:</div>
             <div class="cursoTabRemenber">
               <img src="../../../assets/icons/horario-04.svg" alt="">
-              <div><strong>Recuerda: </strong>Debes completar el curso I, para poder acceder al siguiente curso, y así progresivamente</div>
+              <div><strong>Recuerda: </strong>Debes completar el curso I, para poder acceder al siguiente curso, y así
+                progresivamente</div>
             </div>
             <app-curso-modulos [idMatricula]="idMatricula" [programEstructura]="programEstructura">
             </app-curso-modulos>
           </div>
         </mat-tab>
-        <mat-tab  *ngIf="curso!=undefined && curso.proyectoAplicacion">
+        <mat-tab *ngIf="curso!=undefined && curso.proyectoAplicacion">
           <ng-template mat-tab-label>
             <div *ngIf="!hide" class="contentHeaderM">
               <div class="iconMat iconProyectos"></div>
-              <div class="titleMatr"  *ngIf="!hide">Proyectos de Aplicación</div>
+              <div class="titleMatr" *ngIf="!hide">Proyectos de Aplicación</div>
             </div>
           </ng-template>
-          <div style="padding: 10px 30px;">
-            <app-curso-proyecto [curso]="curso" [idProyecto]="curso.idProyecto" [idPGeneral]="curso.idPGeneral" [idPEspecifico]="curso.idPEspecifico">
+          <div class="pad-resp">
+            <app-curso-proyecto [curso]="curso" [idProyecto]="curso.idProyecto" [idPGeneral]="curso.idPGeneral"
+              [idPEspecifico]="curso.idPEspecifico">
 
             </app-curso-proyecto>
           </div>
@@ -143,16 +152,16 @@
           <ng-template mat-tab-label>
             <div *ngIf="!hide" class="contentHeaderM" [ngClass]="{'ActiveChil':CertificadoActive==true}">
               <div class="iconMat iconCertificados"></div>
-              <div class="titleMatr"  *ngIf="!hide" >Certificados</div>
+              <div class="titleMatr" *ngIf="!hide">Certificados</div>
             </div>
           </ng-template>
           <ng-template matTabContent>
-            <div style="padding: 10px 30px;">
-              <app-curso-certificado *ngIf="curso!=undefined"  [alertaDigital]="alertaDigital" [alertaFisico]="alertaFisico"
-              [datosCertificado]="datosCertificado"  [curso]="curso" [idProyecto]="curso.idProyecto" [idPGeneral]="curso.idPGeneral"
-              [idPEspecifico]="curso.idPEspecifico"
-              [changeOnGenerate]="generateCertificado" (OnGenerate)="ObtenerDatosCertificado()"
-              (OnValidation)="ObtenerDatosCertificado()">
+            <div class="pad-resp">
+              <app-curso-certificado *ngIf="curso!=undefined" [alertaDigital]="alertaDigital"
+                [alertaFisico]="alertaFisico" [datosCertificado]="datosCertificado" [curso]="curso"
+                [idProyecto]="curso.idProyecto" [idPGeneral]="curso.idPGeneral" [idPEspecifico]="curso.idPEspecifico"
+                [changeOnGenerate]="generateCertificado" (OnGenerate)="ObtenerDatosCertificado()"
+                (OnValidation)="ObtenerDatosCertificado()">
 
               </app-curso-certificado>
             </div>
@@ -162,32 +171,35 @@
 
         <ng-container *ngIf="CertificadoActive==true">
 
-          <mat-tab
-          [disabled]="datosCertificado==undefined ||
+          <mat-tab [disabled]="datosCertificado==undefined ||
                         (this.datosCertificado.idEstado_matricula!=5 &&
                         this.datosCertificado.idEstado_matricula!=12) ||
                       datosCertificado.nombreArchivo==null">
             <ng-template mat-tab-label class="tabSubcontent">
-              <div *ngIf="!hide" class="contentHeaderM subContent" style="cursor: pointer;" (click)="certificadoDigital()">
-                <div class="titleMatr"  *ngIf="!hide" >Certificado Digital</div>
+              <div *ngIf="!hide" class="contentHeaderM subContent" style="cursor: pointer;"
+                (click)="certificadoDigital()">
+                <div class="titleMatr" *ngIf="!hide">Certificado Digital</div>
               </div>
             </ng-template>
-            <div style="padding: 10px 30px;">
-              <app-curso-certificado-digital *ngIf="curso!=undefined" [datosCertificado]="datosCertificado"  [curso]="curso"
-              [changeOnGenerate]="generateCertificado" (OnGenerate)="ObtenerDatosCertificado()"></app-curso-certificado-digital>
+            <div class="pad-resp">
+              <app-curso-certificado-digital *ngIf="curso!=undefined" [datosCertificado]="datosCertificado"
+                [curso]="curso" [changeOnGenerate]="generateCertificado" (OnGenerate)="ObtenerDatosCertificado()">
+              </app-curso-certificado-digital>
             </div>
           </mat-tab>
           <mat-tab [disabled]="datosCertificado==undefined ||  datosCertificado.nombreArchivo==null">
             <ng-template mat-tab-label>
-              <div *ngIf="!hide" class="contentHeaderM subContent" style="cursor: pointer;" (click)="certificadoFisico()">
-                <div class="titleMatr"  *ngIf="!hide">Certificado Fisico</div>
+              <div *ngIf="!hide" class="contentHeaderM subContent" style="cursor: pointer;"
+                (click)="certificadoFisico()">
+                <div class="titleMatr" *ngIf="!hide">Certificado Fisico</div>
               </div>
             </ng-template>
-            <div style="padding: 10px 30px;">
-              <app-curso-certificado-fisico *ngIf="curso!=undefined" [datosCertificado]="datosCertificado"  [curso]="curso"
-              [changeOnGenerate]="generateCertificado" [idPEspecifico]="curso.idPEspecifico"
-              [idMatricula]="curso.idMatriculaCabecera" [idPGeneral]="curso.idPGeneral"
-              [CodigoMatricula]="curso.codigoMatricula" (OnGenerate)="ObtenerDatosCertificado()" ></app-curso-certificado-fisico>
+            <div class="pad-resp">
+              <app-curso-certificado-fisico *ngIf="curso!=undefined" [datosCertificado]="datosCertificado"
+                [curso]="curso" [changeOnGenerate]="generateCertificado" [idPEspecifico]="curso.idPEspecifico"
+                [idMatricula]="curso.idMatriculaCabecera" [idPGeneral]="curso.idPGeneral"
+                [CodigoMatricula]="curso.codigoMatricula" (OnGenerate)="ObtenerDatosCertificado()">
+              </app-curso-certificado-fisico>
             </div>
           </mat-tab>
         </ng-container>
@@ -196,11 +208,12 @@
           <ng-template mat-tab-label>
             <div *ngIf="!hide" class="contentHeaderM">
               <div class="iconMat iconTramites"></div>
-              <div class="titleMatr"  *ngIf="!hide">Trámites</div>
+              <div class="titleMatr" *ngIf="!hide">Trámites</div>
             </div>
           </ng-template>
-          <div style="padding: 10px 30px;">
-          <app-curso-tramites [IdMatricula]="idMatricula" [Capitulo]="programEstructura.programaGeneral"></app-curso-tramites>
+          <div class="pad-resp">
+            <app-curso-tramites [IdMatricula]="idMatricula" [Capitulo]="programEstructura.programaGeneral" [idPGeneral]="programEstructura.idPGeneral">
+            </app-curso-tramites>
           </div>
         </mat-tab>
 
@@ -208,22 +221,24 @@
           <ng-template mat-tab-label>
             <div *ngIf="!hide" class="contentHeaderM">
               <div class="iconMat iconWebinars"></div>
-              <div class="titleMatr"  *ngIf="!hide">Webinar</div>
+              <div class="titleMatr" *ngIf="!hide">Webinar</div>
             </div>
           </ng-template>
           <div style="padding: 10px 30px">
-            <app-modulo-webinars [Capitulo]="programEstructura.programaGeneral" [IdMatriculaCabecera]="idMatricula"></app-modulo-webinars>
+            <app-modulo-webinars [Capitulo]="programEstructura.programaGeneral" [IdMatriculaCabecera]="idMatricula">
+            </app-modulo-webinars>
           </div>
         </mat-tab>
-        <mat-tab  *ngIf="curso!=undefined && curso.benficioSolicitado">
+        <mat-tab *ngIf="curso!=undefined && curso.benficioSolicitado">
           <ng-template mat-tab-label>
             <div *ngIf="!hide" class="contentHeaderM">
               <div class="iconMat iconBeneficios"></div>
-              <div class="titleMatr"  *ngIf="!hide">Mis Beneficios</div>
+              <div class="titleMatr" *ngIf="!hide">Mis Beneficios</div>
             </div>
           </ng-template>
-          <div style="padding: 10px 30px;">
-            <app-beneficios [IdMatricula]="idMatricula" [Capitulo]="programEstructura.programaGeneral"> </app-beneficios>
+          <div class="pad-resp">
+            <app-beneficios [IdMatricula]="idMatricula" [Capitulo]="programEstructura.programaGeneral">
+            </app-beneficios>
           </div>
         </mat-tab>
       </mat-tab-group>

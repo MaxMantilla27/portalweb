@@ -85,9 +85,9 @@ export class PagoComponent implements OnInit,OnDestroy {
         this.jsonSend.IdPGeneral=this.CronogramaPago.idPGeneral
         this.jsonSend.IdMatriculaCabecera=this.CronogramaPago.idMatriculaCabecera
         if(this.CronogramaPago.registroCuota.length>0){
-          this.jsonSend.Moneda=this.CronogramaPago.registroCuota[0].moneda
+          this.jsonSend.Moneda=this.CronogramaPago.registroCuota[0].nombreMoneda
           this.jsonSend.SimboloMoneda=this.CronogramaPago.registroCuota[0].simbolo
-          this.jsonSend.WebMoneda=this._t.GetWebMoneda(this.CronogramaPago.registroCuota[0].moneda).toString();
+          this.jsonSend.WebMoneda=this.CronogramaPago.registroCuota[0].webMoneda;
         }
       }
     })
@@ -152,6 +152,7 @@ export class PagoComponent implements OnInit,OnDestroy {
     });
     this.CronogramaPago.registroCuota.forEach((r:any) => {
       if(r.estado==true){
+        var fecha=new Date(r.fechaVencimiento);
         this.jsonSend.ListaCuota.push({
           IdCuota: r.idCuota,
           NroCuota: r.nroCuota,
@@ -160,7 +161,8 @@ export class PagoComponent implements OnInit,OnDestroy {
           Mora: r.mora,
           MoraCalculada: r.moraCalculada,
           CuotaTotal: r.cuota+r.moraCalculada,
-          FechaVencimiento:r.fechaVencimiento
+          FechaVencimiento:r.fechaVencimiento,
+          Nombre:'Cuota N°'+r.nroCuota+' - '+ ('0' + fecha.getUTCDate()).slice(-2)+ "/" +("0" + (fecha.getUTCMonth()+1)).slice(-2) + "/" +fecha.getUTCFullYear()
         })
       }
     });
@@ -174,7 +176,7 @@ export class PagoComponent implements OnInit,OnDestroy {
         dialogRef.close();
         var sesion=x._Repuesta.identificadorTransaccion;
         this._SessionStorageService.SessionSetValue(sesion,x._Repuesta.requiereDatosTarjeta);
-        console.log(tarjeta.idFormaPago)
+        console.log(parseInt(tarjeta.idPasarelaPago))
         if(tarjeta.idPasarelaPago==7){
           if(tarjeta.idFormaPago==52){
             this._router.navigate(['/AulaVirtual/MisPagos/'+this.idMatricula+'/visa/'+sesion]);
@@ -186,7 +188,15 @@ export class PagoComponent implements OnInit,OnDestroy {
         if(tarjeta.idPasarelaPago==1 || tarjeta.idPasarelaPago==5){
           this._router.navigate(['/AulaVirtual/MisPagos/'+this.idMatricula+'/tarjeta/'+sesion]);
         }else{
-
+          if(parseInt(tarjeta.idPasarelaPago)==2){
+            console.log(1)
+            this._router.navigate(['/AulaVirtual/MisPagos/'+this.idMatricula+'/wompi/'+sesion]);
+          }
+          if(parseInt(tarjeta.idPasarelaPago)==6){
+            this._router.navigate(['/AulaVirtual/MisPagos/'+this.idMatricula+'/conekta/'+sesion]);
+          }
+          if(parseInt(tarjeta.idPasarelaPago)==3){}
+          if(parseInt(tarjeta.idPasarelaPago)==4){}
         }
       },
       complete:()=>{

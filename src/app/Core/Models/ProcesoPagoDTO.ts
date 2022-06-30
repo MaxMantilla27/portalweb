@@ -37,7 +37,8 @@ export interface RegistroPreProcesoPagoCuotaDTO {
   Mora: number;
   MoraCalculada: number;
   CuotaTotal: number;
-  FechaVencimiento:Date;
+  FechaVencimiento?:Date;
+  Nombre:string
 }
 export interface RegistroRespuestaPreProcesoPagoDTO {
   IdentificadorTransaccion: string;

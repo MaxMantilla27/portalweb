@@ -104,6 +104,7 @@ export class LoginComponent implements OnInit {
                 this._FormaPagoService.PreProcesoPagoOrganicoAlumno(JSON.parse(jsonEnvioPago),null);
               }
             }
+            this._SessionStorageService.SessionDeleteValue('redirect');
           }
           if(normal){
             if(x.idProveedor==0){
