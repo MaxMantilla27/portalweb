@@ -116,7 +116,10 @@ export class LandingPageComponent implements OnInit {
       this.FormularioLandingPage.IdAreaTrabajo= this.combosPrevios.idAreaTrabajo,
       this.FormularioLandingPage.IdAreaFormacion= this.combosPrevios.idAreaFormacion,
       this.FormularioLandingPage.IdIndustria= this.combosPrevios.idIndustria
-      })
+      if(this.FormularioLandingPage.IdPais!=undefined){
+        this.GetRegionesPorPais(this.FormularioLandingPage.IdPais);
+      }
+    })
     this.AddFields();
     this.ObtenerCombosPortal();
   }
@@ -131,7 +134,9 @@ export class LandingPageComponent implements OnInit {
       this.FormularioLandingPage.IdCargo= 0,
       this.FormularioLandingPage.IdAreaTrabajo= 0,
       this.FormularioLandingPage.IdAreaFormacion= 0,
-      this.FormularioLandingPage.IdIndustria= 0
+      this.FormularioLandingPage.IdIndustria= 0,
+      this.GetRegionesPorPais(-1);
+
   }
   EnviarFormulario(value:any){
     this.initValues = false;

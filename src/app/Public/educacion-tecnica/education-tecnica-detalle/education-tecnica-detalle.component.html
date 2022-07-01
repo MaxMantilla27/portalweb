@@ -169,17 +169,35 @@
                       </div>
                       <p>Registra tus datos para que un asesor especializado pueda ayudarte en todo lo que requieras</p>
                     </div>
-                    <app-formulario [model]="formularioContacto" [InputsDisable]="statuscharge"
-                      (OnSubmit)="SetContacto($event)" (OnValid)="formVal=$event" [fiels]="fileds"
-                      (OnSelect)="SelectChage($event)">
+                    <ng-container *ngIf="combosPrevios!=undefined">
+                      <app-formulario [model]="formularioContacto" [InputsDisable]="statuscharge" (OnSubmit)="SetContacto($event)"
+                      (OnValid)="formVal=$event" [fiels]="fileds" (OnSelect)="SelectChage($event)">
 
                       <ng-container contenido>
                       </ng-container>
                       <ng-container send>
-                        <app-default-button [confs]="{color:'primary',titulo:'Enviar'}" [style]="'width: 100%;'"
-                          ></app-default-button>
+                        <div style="text-align: center;margin-bottom: 15px;">
+                          <a style="color: #027CFF;font-size: 14px;" (click)="LimpiarCampos()">[No soy {{formularioContacto.Nombres}}]</a>
+                        </div>
+                        <app-default-button [confs]="{color:'primary',titulo:'Enviar'}" [style]="'width: 100%;'">
+                        </app-default-button>
                       </ng-container>
+
                     </app-formulario>
+                    </ng-container>
+                    <ng-container *ngIf="combosPrevios==undefined">
+                      <app-formulario [model]="formularioContacto" [InputsDisable]="statuscharge" (OnSubmit)="SetContacto($event)"
+                      (OnValid)="formVal=$event" [fiels]="fileds" (OnSelect)="SelectChage($event)">
+
+                      <ng-container contenido>
+                      </ng-container>
+                      <ng-container send>
+                        <app-default-button [confs]="{color:'primary',titulo:'Enviar'}" [style]="'width: 100%;'">
+                        </app-default-button>
+                      </ng-container>
+
+                    </app-formulario>
+                    </ng-container>
                   </div>
                 </div>
               </div>

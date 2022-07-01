@@ -11,6 +11,7 @@ import { HelperService } from 'src/app/Core/Shared/Services/Helper/helper.servic
 import { RegionService } from 'src/app/Core/Shared/Services/Region/region.service';
 import { SnackBarServiceService } from 'src/app/Core/Shared/Services/SnackBarService/snack-bar-service.service';
 import {CarreraProfesionalService} from "../../../Core/Shared/Services/Carrera/carrera-profesional.service";
+import { HelperService as Help} from 'src/app/Core/Shared/Services/helper.service';
 import {
   EstructuraCurricularService
 } from "../../../Core/Shared/Services/EstructuraCurricular/estructura-curricular.service";
@@ -53,6 +54,8 @@ export class EducationTecnicaDetalleComponent implements OnInit {
     private _DatosPortalService:DatosPortalService,
     private _HelperService: HelperService,
     private _SnackBarServiceService:SnackBarServiceService,
+    private _HelperServiceP:Help,
+
   ) { }
 
   statuscharge = false;
@@ -80,6 +83,8 @@ export class EducationTecnicaDetalleComponent implements OnInit {
     IdIndustria:0
   }
   public positionDiv=0;
+  public combosPrevios:any
+
   ngOnInit(): void {
     this.migaPan = [
       {
@@ -103,7 +108,20 @@ export class EducationTecnicaDetalleComponent implements OnInit {
         urlWeb: params["urlWeb"]
       })
       this.getCarreraDetalle(idBusqueda, nombre)
-    })
+    });
+    this._HelperServiceP.recibirCombosPerfil.subscribe((x) => {
+      this.combosPrevios=x.datosAlumno;
+      console.log(this.combosPrevios)
+      this.formularioContacto.Nombres= this.combosPrevios.nombres,
+      this.formularioContacto.Apellidos= this.combosPrevios.apellidos,
+      this.formularioContacto.Email= this.combosPrevios.email,
+      this.formularioContacto.IdPais= this.combosPrevios.idPais,
+      this.formularioContacto.IdRegion= this.combosPrevios.idDepartamento,
+      this.formularioContacto.Movil= this.combosPrevios.telefono
+      if(this.formularioContacto.IdPais!=undefined){
+        this.GetRegionesPorPais(this.formularioContacto.IdPais);
+      }
+    });
     console.log(this.migaPan)
     this.AddFields();
     this.ObtenerCombosPortal();
@@ -269,5 +287,15 @@ export class EducationTecnicaDetalleComponent implements OnInit {
       validate:[Validators.required],
       label:"Teléfono Móvil",
     });
+  }
+  LimpiarCampos(){
+    this.combosPrevios=undefined;
+    this.formularioContacto.Nombres= '',
+      this.formularioContacto.Apellidos= '',
+      this.formularioContacto.Email= '',
+      this.formularioContacto.IdPais=0,
+      this.formularioContacto.IdRegion=0,
+      this.formularioContacto.Movil= '',
+      this.GetRegionesPorPais(-1);
   }
 }

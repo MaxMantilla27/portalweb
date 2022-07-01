@@ -39,16 +39,35 @@
           <div style="color: #118bf1;font-weight: 900;font-size: 20px;text-align: center;">Descargar White Paper</div>
           <img style="width: 70px;height: auto;margin: 5px;" src="../../../../assets/icons/descarga.svg" alt="">
         </div>
-        <app-formulario [model]="formularioContacto" [InputsDisable]="statuscharge" (OnSubmit)="SetContacto($event)"
+        <ng-container *ngIf="combosPrevios!=undefined">
+          <app-formulario [model]="formularioContacto" [InputsDisable]="statuscharge" (OnSubmit)="SetContacto($event)"
           (OnValid)="formVal=$event" [fiels]="fileds" (OnSelect)="SelectChage($event)">
 
           <ng-container contenido>
           </ng-container>
           <ng-container send>
-            <app-default-button [confs]="{color:'primary',titulo:'Descargar ahora'}" [style]="'width: 100%;'"
-              ></app-default-button>
+            <div style="text-align: center;margin-bottom: 15px;">
+              <a style="color: #027CFF;font-size: 14px;" (click)="LimpiarCampos()">[No soy {{formularioContacto.Nombres}}]</a>
+            </div>
+            <app-default-button [confs]="{color:'primary',titulo:'Descargar ahora'}" [style]="'width: 100%;'">
+            </app-default-button>
           </ng-container>
+
         </app-formulario>
+        </ng-container>
+        <ng-container *ngIf="combosPrevios==undefined">
+          <app-formulario [model]="formularioContacto" [InputsDisable]="statuscharge" (OnSubmit)="SetContacto($event)"
+          (OnValid)="formVal=$event" [fiels]="fileds" (OnSelect)="SelectChage($event)">
+
+          <ng-container contenido>
+          </ng-container>
+          <ng-container send>
+            <app-default-button [confs]="{color:'primary',titulo:'Descargar ahora'}" [style]="'width: 100%;'">
+            </app-default-button>
+          </ng-container>
+
+        </app-formulario>
+        </ng-container>
       </div>
     </div>
   </div>
