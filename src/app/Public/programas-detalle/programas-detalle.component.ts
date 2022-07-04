@@ -208,6 +208,8 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
   public IdPais=-1;
   public codigoIso:string = 'INTC';
   public alumno=''
+  public combosPrevios:any
+
   ngOnInit(): void {
     if (this.isBrowser) {
       this.innerWidth = window.innerWidth;
@@ -232,8 +234,18 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
     })
 
     this._HelperServiceP.recibirCombosPerfil.subscribe((x) => {
-
       this.alumno =x.datosAlumno.nombres;
+      this.combosPrevios=x.datosAlumno;
+      console.log(this.combosPrevios)
+      this.formularioContacto.Nombres= this.combosPrevios.nombres,
+      this.formularioContacto.Apellidos= this.combosPrevios.apellidos,
+      this.formularioContacto.Email= this.combosPrevios.email,
+      this.formularioContacto.IdPais= this.combosPrevios.idPais,
+      this.formularioContacto.IdRegion= this.combosPrevios.idDepartamento,
+      this.formularioContacto.Movil= this.combosPrevios.telefono
+      if(this.formularioContacto.IdPais!=undefined){
+        this.GetRegionesPorPais(this.formularioContacto.IdPais);
+      }
     })
     this.ObtenerCabeceraProgramaGeneral();
     this.ListSeccionPrograma();
@@ -791,5 +803,15 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
       validate: [Validators.required],
       label: 'Teléfono Móvil',
     });
+  }
+  LimpiarCampos(){
+    this.combosPrevios=undefined;
+    this.formularioContacto.Nombres= '',
+      this.formularioContacto.Apellidos= '',
+      this.formularioContacto.Email= '',
+      this.formularioContacto.IdPais=0,
+      this.formularioContacto.IdRegion=0,
+      this.formularioContacto.Movil= '',
+      this.GetRegionesPorPais(-1);
   }
 }

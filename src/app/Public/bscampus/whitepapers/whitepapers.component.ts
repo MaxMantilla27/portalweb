@@ -15,6 +15,7 @@ import { SeccionProgramaService } from 'src/app/Core/Shared/Services/SeccionProg
 import { SessionStorageService } from 'src/app/Core/Shared/Services/session-storage.service';
 import { SnackBarServiceService } from 'src/app/Core/Shared/Services/SnackBarService/snack-bar-service.service';
 import { TagService } from 'src/app/Core/Shared/Services/Tag/tag.service';
+import { HelperService as Help} from 'src/app/Core/Shared/Services/helper.service';
 
 @Component({
   selector: 'app-whitepapers',
@@ -34,6 +35,8 @@ export class WhitepapersComponent implements OnInit {
     private _DatosPortalService:DatosPortalService,
     private _SeccionProgramaService:SeccionProgramaService,
     private _SnackBarServiceService:SnackBarServiceService,
+    private _HelperServiceP:Help,
+
   ) {}
   public idWeb = 0;
   public UrlWeb='';
@@ -75,10 +78,6 @@ export class WhitepapersComponent implements OnInit {
     IdPais:0,
     IdRegion:0,
     Movil:'',
-    IdCargo:0,
-    IdAreaFormacion:0,
-    IdAreaTrabajo:0,
-    IdIndustria:0
   }
   public DatosEnvioFormulario: ContactenosDTO={
     Nombres:'',
@@ -95,6 +94,8 @@ export class WhitepapersComponent implements OnInit {
     NombreWhitePaper:'',
     urlWhitePaper:''
   }
+  public combosPrevios:any
+
   ngOnInit(): void {
     this.activatedRoute.params.subscribe({
       next: (x) => {
@@ -104,6 +105,19 @@ export class WhitepapersComponent implements OnInit {
         this.Title=whitepaper.slice(0, -1).join(' ')
         this.migaPan[3].titulo=this.Title;
       },
+    });
+    this._HelperServiceP.recibirCombosPerfil.subscribe((x) => {
+      this.combosPrevios=x.datosAlumno;
+      console.log(this.combosPrevios)
+      this.formularioContacto.Nombres= this.combosPrevios.nombres,
+      this.formularioContacto.Apellidos= this.combosPrevios.apellidos,
+      this.formularioContacto.Email= this.combosPrevios.email,
+      this.formularioContacto.IdPais= this.combosPrevios.idPais,
+      this.formularioContacto.IdRegion= this.combosPrevios.idDepartamento,
+      this.formularioContacto.Movil= this.combosPrevios.telefono
+      if(this.formularioContacto.IdPais!=undefined){
+        this.GetRegionesPorPais(this.formularioContacto.IdPais);
+      }
     });
     this.ObtenerArticuloDetalleHome();
     this.ListTagArticuloRelacionadoPorIdWeb();
@@ -312,33 +326,15 @@ export class WhitepapersComponent implements OnInit {
       validate:[Validators.required],
       label:"Teléfono Móvil",
     });
-    this.fileds.push({
-      nombre:"IdCargo",
-      tipo:"select",
-      valorInicial:"",
-      validate:[Validators.required],
-      label:"Cargo",
-    });
-    this.fileds.push({
-      nombre:"IdAreaFormacion",
-      tipo:"select",
-      valorInicial:"",
-      validate:[Validators.required],
-      label:"Área de Formación",
-    });
-    this.fileds.push({
-      nombre:"IdAreaTrabajo",
-      tipo:"select",
-      valorInicial:"",
-      validate:[Validators.required],
-      label:"Área de Trabajo",
-    });
-    this.fileds.push({
-      nombre:"IdIndustria",
-      tipo:"select",
-      valorInicial:"",
-      validate:[Validators.required],
-      label:"Industria",
-    });
+  }
+  LimpiarCampos(){
+    this.combosPrevios=undefined;
+    this.formularioContacto.Nombres= '',
+      this.formularioContacto.Apellidos= '',
+      this.formularioContacto.Email= '',
+      this.formularioContacto.IdPais=0,
+      this.formularioContacto.IdRegion=0,
+      this.formularioContacto.Movil= '',
+      this.GetRegionesPorPais(-1);
   }
 }

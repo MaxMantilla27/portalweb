@@ -12,6 +12,8 @@ import { RegionService } from 'src/app/Core/Shared/Services/Region/region.servic
 import { DatosPortalService } from 'src/app/Core/Shared/Services/DatosPortal/datos-portal.service';
 import { HelperService } from 'src/app/Core/Shared/Services/Helper/helper.service';
 import { SnackBarServiceService } from 'src/app/Core/Shared/Services/SnackBarService/snack-bar-service.service';
+import { HelperService as Help} from 'src/app/Core/Shared/Services/helper.service';
+
 
 @Component({
   selector: 'app-carrera-profesional-detalle',
@@ -51,6 +53,8 @@ export class CarreraProfesionalDetalleComponent implements OnInit {
     private _DatosPortalService:DatosPortalService,
     private _HelperService: HelperService,
     private _SnackBarServiceService:SnackBarServiceService,
+    private _HelperServiceP:Help,
+
   ) { }
 
   statuscharge = false;
@@ -77,6 +81,7 @@ export class CarreraProfesionalDetalleComponent implements OnInit {
     IdAreaTrabajo:0,
     IdIndustria:0
   }
+  public combosPrevios:any
   ngOnInit(): void {
     this.migaPan = [
       {
@@ -101,6 +106,19 @@ export class CarreraProfesionalDetalleComponent implements OnInit {
         urlWeb: params["urlWeb"]
       })
       this.getCarreraDetalle(idBusqueda, nombre)
+    })
+    this._HelperServiceP.recibirCombosPerfil.subscribe((x) => {
+      this.combosPrevios=x.datosAlumno;
+      console.log(this.combosPrevios)
+      this.formularioContacto.Nombres= this.combosPrevios.nombres,
+      this.formularioContacto.Apellidos= this.combosPrevios.apellidos,
+      this.formularioContacto.Email= this.combosPrevios.email,
+      this.formularioContacto.IdPais= this.combosPrevios.idPais,
+      this.formularioContacto.IdRegion= this.combosPrevios.idDepartamento,
+      this.formularioContacto.Movil= this.combosPrevios.telefono
+      if(this.formularioContacto.IdPais!=undefined){
+        this.GetRegionesPorPais(this.formularioContacto.IdPais);
+      }
     })
     this.videoPrueba = this.formatVideo(this.videoPrueba)
     this.AddFields();
@@ -273,5 +291,15 @@ export class CarreraProfesionalDetalleComponent implements OnInit {
       validate:[Validators.required],
       label:"Teléfono Móvil",
     });
+  }
+  LimpiarCampos(){
+    this.combosPrevios=undefined;
+    this.formularioContacto.Nombres= '',
+      this.formularioContacto.Apellidos= '',
+      this.formularioContacto.Email= '',
+      this.formularioContacto.IdPais=0,
+      this.formularioContacto.IdRegion=0,
+      this.formularioContacto.Movil= '',
+      this.GetRegionesPorPais(-1);
   }
 }
