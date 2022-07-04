@@ -5,6 +5,7 @@ import { Subject } from 'rxjs/internal/Subject';
 import {
   RegistroRespuestaPreProcesoPagoDTO,
   RegistroProcesoPagoAlumnoDTO,
+  RegistroProcesoPagoPseDTO,
 } from 'src/app/Core/Models/ProcesoPagoDTO';
 import { FormaPagoService } from 'src/app/Core/Shared/Services/FormaPago/forma-pago.service';
 import { HelperService } from 'src/app/Core/Shared/Services/helper.service';
@@ -52,6 +53,7 @@ export class PagoGeneralComponent implements OnInit, OnDestroy {
     RazonSocial: '',
     IdPasarelaPago: 0,
     IdentificadorUsuario: '',
+    PagoPSE:false,
     TarjetaHabiente: {
       Aniho: '',
       CodigoVV: '',
@@ -62,6 +64,14 @@ export class PagoGeneralComponent implements OnInit, OnDestroy {
       fecha: '',
     },
   };
+  public registroPse:RegistroProcesoPagoPseDTO={
+    BancoPSE:'',
+    NombreTitularPSE:'',
+    NumeroDocumentoPSE:'',
+    TelefonoTitularPSE:'',
+    TipoClientePSE:'',
+    TipoDocumentoPSE:'',
+  }
   public NumberT = '';
   ngOnInit(): void {
     this._HelperService.recibirCombosPerfil
@@ -106,6 +116,8 @@ export class PagoGeneralComponent implements OnInit, OnDestroy {
           this.jsonSave.RazonSocial = this.resultCard.identificadorTransaccion;
           this.jsonSave.IdPasarelaPago = this.resultCard.idPasarelaPago;
           this.jsonSave.IdentificadorUsuario=this._SessionStorageService.SessionGetValue('usuarioWeb');
+
+          this.jsonSave.PagoPSE=(this.resultCard.idPasarelaPago!=1 || this.resultCard.idFormaPago!=65)?false:true;
           if (this.resultCard.idPasarelaPago == 5) {
             this.OpenPayInit();
           }
@@ -131,6 +143,7 @@ export class PagoGeneralComponent implements OnInit, OnDestroy {
       this.Pagar();
 
     }
+    console.log(this.jsonSave)
     var error=(err:any) =>{
       console.log(err);
 
@@ -143,37 +156,95 @@ export class PagoGeneralComponent implements OnInit, OnDestroy {
 
     }
     var validate = true;
-    if (this.jsonSave.TarjetaHabiente.fecha.length < 5) {
+    if(this.resultCard.idPasarelaPago!=1 || this.resultCard.idFormaPago!=65){
+      if (this.jsonSave.TarjetaHabiente.fecha.length < 5) {
+        validate = false;
+        this._SnackBarServiceService.openSnackBar(
+          'Fecha de vencimiento incorrecta',
+          'x',
+          5,
+          'snackbarCrucigramaerror'
+        );
+      }
+      if (this.jsonSave.TarjetaHabiente.CodigoVV.length < 3) {
+        validate = false;
+        this._SnackBarServiceService.openSnackBar(
+          'Numero CVV Incorrecto',
+          'x',
+          5,
+          'snackbarCrucigramaerror'
+        );
+      }
+      if (!this.NumberT.startsWith('34') && this.NumberT.split('-').join('').length < 16) {
+        validate = false;
+        this._SnackBarServiceService.openSnackBar(
+          'Numero de tarjeta Incorrecta',
+          'x',
+          5,
+          'snackbarCrucigramaerror'
+        );
+      }
+      if (this.NumberT.startsWith('34') && this.NumberT.split('-').join('').length < 15) {
+        validate = false;
+        this._SnackBarServiceService.openSnackBar(
+          'Numero de tarjeta Incorrecta',
+          'x',
+          5,
+          'snackbarCrucigramaerror'
+        );
+      }
+    }else{
+      if(this.registroPse.TipoDocumentoPSE==''){
+        validate = false;
+        this._SnackBarServiceService.openSnackBar(
+          'Ingrese su tipo de documento',
+          'x',
+          5,
+          'snackbarCrucigramaerror'
+        );
+      }
+      if(this.registroPse.TipoClientePSE==''){
+        validate = false;
+        this._SnackBarServiceService.openSnackBar(
+          'Ingrese el tipo de cliente',
+          'x',
+          5,
+          'snackbarCrucigramaerror'
+        );
+      }
+      if(this.registroPse.TelefonoTitularPSE==''){
+        validate = false;
+        this._SnackBarServiceService.openSnackBar(
+          'Ingrese su numero celular',
+          'x',
+          5,
+          'snackbarCrucigramaerror'
+        );
+      }
+      if(this.registroPse.BancoPSE==''){
+        validate = false;
+        this._SnackBarServiceService.openSnackBar(
+          'Seleccione su banco',
+          'x',
+          5,
+          'snackbarCrucigramaerror'
+        );
+      }
+    }
+    if(this.jsonSave.TarjetaHabiente.Titular==''){
       validate = false;
       this._SnackBarServiceService.openSnackBar(
-        'Fecha de vencimiento incorrecta',
+        'Ingrese los nombres del titular',
         'x',
         5,
         'snackbarCrucigramaerror'
       );
     }
-    if (this.jsonSave.TarjetaHabiente.CodigoVV.length < 3) {
+    console.log(this.jsonSave.TarjetaHabiente.NumeroDocumento.length)
+    if(this.jsonSave.TarjetaHabiente.NumeroDocumento==null || this.jsonSave.TarjetaHabiente.NumeroDocumento.length<=5){
       validate = false;
       this._SnackBarServiceService.openSnackBar(
-        'Numero CVV Incorrecto',
-        'x',
-        5,
-        'snackbarCrucigramaerror'
-      );
-    }
-    if (!this.NumberT.startsWith('34') && this.NumberT.split('-').join('').length < 16) {
-      validate = false;
-      this._SnackBarServiceService.openSnackBar(
-        'Numero de tarjeta Incorrecta',
-        'x',
-        5,
-        'snackbarCrucigramaerror'
-      );
-    }
-    if (this.NumberT.startsWith('34') && this.NumberT.split('-').join('').length < 15) {
-      validate = false;
-      this._SnackBarServiceService.openSnackBar(
-        'Numero de tarjeta Incorrecta',
+        'Ingrese el documento completo del titular',
         'x',
         5,
         'snackbarCrucigramaerror'
@@ -202,17 +273,21 @@ export class PagoGeneralComponent implements OnInit, OnDestroy {
       }
     }
   }
-  onSuccessOpenPay(){
-
-  }
   Pagar() {
+    this.registroPse.NombreTitularPSE=this.jsonSave.TarjetaHabiente.Titular;
+    this.registroPse.NumeroDocumentoPSE=this.jsonSave.TarjetaHabiente.NumeroDocumento;
+    this.jsonSave.RegistroProcesoPagoPse=this.registroPse;
     this._FormaPagoService.ProcesarPagoAlumnoOrganico(this.jsonSave).pipe(takeUntil(this.signal$)).subscribe({
         next: (x) => {
           console.log(x);
-          this._router.navigate([
-            '/AulaVirtual/PagoExitoso/' +
-              this.jsonSave.IdentificadorTransaccion,
-          ]);
+          if(this.resultCard.idPasarelaPago!=1 || this.resultCard.idFormaPago!=65){
+            this._router.navigate([
+              '/AulaVirtual/PagoExitoso/' +
+                this.jsonSave.IdentificadorTransaccion,
+            ]);
+          }else{
+            location.href=x._Repuesta.urlRedireccionar;
+          }
         },
       });
   }

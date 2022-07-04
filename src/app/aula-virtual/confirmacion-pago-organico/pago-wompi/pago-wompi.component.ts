@@ -44,6 +44,7 @@ export class PagoWompiComponent implements OnInit ,OnDestroy{
     CodigoTributario:'',
     RazonSocial:'',
     IdPasarelaPago:0,
+    PagoPSE:false,
     TarjetaHabiente:{
       Aniho:'',
       CodigoVV:'',

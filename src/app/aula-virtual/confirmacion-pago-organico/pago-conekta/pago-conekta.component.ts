@@ -44,6 +44,7 @@ export class PagoConektaComponent implements OnInit {
     CodigoTributario:'',
     RazonSocial:'',
     IdPasarelaPago:0,
+    PagoPSE:false,
     TarjetaHabiente:{
       Aniho:'',
       CodigoVV:'',

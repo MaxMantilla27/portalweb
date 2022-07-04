@@ -57,9 +57,20 @@ export class AppComponent implements OnInit,AfterViewInit  {
       next:x=>{
       console.log(x);
       this._SessionStorageService.SessionSetValue('usuarioWeb',x.identificadorUsuario);
-      this._SessionStorageService.SessionSetValue('ISO_PAIS',x.codigoISO);
+      var cop=this._SessionStorageService.SessionGetValue('ISO_PAIS');
+      if(cop=='INTC'){
+        this._SessionStorageService.SessionSetValue('ISO_PAIS',x.codigoISO);
+      }
       this.charge=true;
+      this.InsertarContactoPortal();
     }})
+  }
+  InsertarContactoPortal(){
+    this._GlobalService.InsertarContactoPortal().subscribe({
+      next:x=>{
+        console.log(x)
+      }
+    });
   }
   ngAfterViewInit() {
     this.router.events.subscribe((val) => {

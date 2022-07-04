@@ -67,7 +67,9 @@ export class FormaPagoService {
             this._router.navigate(['/AulaVirtual/MisPagos/conekta/'+sesion]);
           }
           if(parseInt(Json.IdPasarelaPago)==3){}
-          if(parseInt(Json.IdPasarelaPago)==4){}
+          if(parseInt(Json.IdPasarelaPago)==4){
+            this._router.navigate(['/AulaVirtual/MisPagos/multipago/'+sesion]);
+          }
         }
       }
     });
@@ -80,5 +82,9 @@ export class FormaPagoService {
   public PreProcesoPagoTramiteAlumno(Json:RegistroPreProcesoPagoDTO):Observable<any>{
     console.log(Json)
     return this.http.post<any>(this.urlBase+'/PreProcesoPagoTramiteAlumno',Json);
+  }
+  public ValidarProcesoPagoCuotaAlumnoOpenPAy(Json:RegistroRespuestaPreProcesoPagoDTO):Observable<any>{
+    console.log(Json)
+    return this.http.post<any>(this.urlBase+'/ValidarProcesoPagoCuotaAlumnoOpenPAy',Json);
   }
 }

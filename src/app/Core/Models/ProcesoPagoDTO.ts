@@ -10,24 +10,24 @@ export interface RegistroPreProcesoPagoDTO {
   SimboloMoneda: string;
   ListaCuota: Array<RegistroPreProcesoPagoCuotaDTO>;
 }
-export interface PagoOrganicoAlumnoDTO{
-  IdPGeneral:number,
-  IdPEspecifico:number,
-  IdMontoPago:number,
-  MontoTotalPago:number,
-  CodigoBanco:string ,
-  TipoProveedor:string ,
-  IdPasarelaPago:string ,
-  RequiereTarjeta:boolean,
-  IdPais:number,
-  WebMoneda:number,
-  MedioCodigo?:string,
-  MedioPago?:string,
-  Moneda?:string,
-  IdFormaPago:number,
-  Version:string,
-  Tipo:string,
-  Inicio:string,
+export interface PagoOrganicoAlumnoDTO {
+  IdPGeneral: number;
+  IdPEspecifico: number;
+  IdMontoPago: number;
+  MontoTotalPago: number;
+  CodigoBanco: string;
+  TipoProveedor: string;
+  IdPasarelaPago: string;
+  RequiereTarjeta: boolean;
+  IdPais: number;
+  WebMoneda: number;
+  MedioCodigo?: string;
+  MedioPago?: string;
+  Moneda?: string;
+  IdFormaPago: number;
+  Version: string;
+  Tipo: string;
+  Inicio: string;
 }
 export interface RegistroPreProcesoPagoCuotaDTO {
   IdCuota: number;
@@ -37,8 +37,8 @@ export interface RegistroPreProcesoPagoCuotaDTO {
   Mora: number;
   MoraCalculada: number;
   CuotaTotal: number;
-  FechaVencimiento?:Date;
-  Nombre:string
+  FechaVencimiento?: Date;
+  Nombre: string;
 }
 export interface RegistroRespuestaPreProcesoPagoDTO {
   IdentificadorTransaccion: string;
@@ -47,19 +47,21 @@ export interface RegistroRespuestaPreProcesoPagoDTO {
 
 export interface RegistroProcesoPagoAlumnoDTO {
   IdentificadorTransaccion: string;
-  RequiereDatosTarjeta:boolean;
+  RequiereDatosTarjeta: boolean;
   MedioPago: string;
   MedioCodigo: string;
-  TransactionToken:string;
-  Estado:boolean|null;
-  Comprobante:boolean;
+  TransactionToken: string;
+  Estado: boolean | null;
+  Comprobante: boolean;
   TarjetaHabiente: RegistroProcesoPagoTarjetaHabienteDTO;
-  RazonSocial:string;
-  CodigoTributario:string;
-  IdPasarelaPago:number ,
-  IdentificadorUsuario?:string,
-  DeviceSessionId?:string,
-  TokenId?:string,
+  RazonSocial: string;
+  CodigoTributario: string;
+  IdPasarelaPago: number;
+  IdentificadorUsuario?: string;
+  DeviceSessionId?: string;
+  TokenId?: string;
+  RegistroProcesoPagoPse?: RegistroProcesoPagoPseDTO;
+  PagoPSE:boolean;
 }
 export interface RegistroProcesoPagoTarjetaHabienteDTO {
   Titular: string;
@@ -68,5 +70,13 @@ export interface RegistroProcesoPagoTarjetaHabienteDTO {
   Aniho: string;
   CodigoVV: string;
   NumeroDocumento: string;
-  fecha:string;
+  fecha: string;
+}
+export interface RegistroProcesoPagoPseDTO {
+  BancoPSE: string;
+  TipoClientePSE: string;
+  TipoDocumentoPSE: string;
+  NumeroDocumentoPSE: string;
+  NombreTitularPSE: string;
+  TelefonoTitularPSE: string;
 }

@@ -71,6 +71,7 @@ import { PagoConektaComponent } from './confirmacion-pago-organico/pago-conekta/
 import { PagoGeneralComponent } from './confirmacion-pago-organico/pago-general/pago-general.component';
 import { ConfirmacionPagoTarjetaWompiComponent } from './confirmacion-pago-tarjeta-wompi/confirmacion-pago-tarjeta-wompi.component';
 import { ConfirmacionPagoTarjetaConektaComponent } from './confirmacion-pago-tarjeta-conekta/confirmacion-pago-tarjeta-conekta.component';
+import { PagoMultipagoComponent } from './confirmacion-pago-organico/pago-multipago/pago-multipago.component';
 
 
 @NgModule({
@@ -140,6 +141,7 @@ import { ConfirmacionPagoTarjetaConektaComponent } from './confirmacion-pago-tar
     PagoGeneralComponent,
     ConfirmacionPagoTarjetaWompiComponent,
     ConfirmacionPagoTarjetaConektaComponent,
+    PagoMultipagoComponent,
 
   ],
   imports: [
