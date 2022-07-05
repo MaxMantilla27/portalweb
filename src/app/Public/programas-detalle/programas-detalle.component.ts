@@ -84,7 +84,7 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
     config: NgbCarouselConfig,
     @Inject(PLATFORM_ID) platformId: Object,
     private _SessionStorageService:SessionStorageService,
-    private _FormaPagoService:FormaPagoService
+    private _FormaPagoService:FormaPagoService,
   ) {
     this.isBrowser = isPlatformBrowser(platformId);
     config.interval = 20000;
@@ -221,8 +221,14 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
         this.area = x['AreaCapacitacion'].replace('-', ' ');
         this.AraCompleta = x['AreaCapacitacion'];
         this.nombreProgramCompeto = x['ProgramaNombre'];
+        console.log(this.nombreProgramCompeto)
         var namePrograma = x['ProgramaNombre'].split('-');
+        console.log(namePrograma)
+
         this.idBusqueda = namePrograma[namePrograma.length - 1];
+      },
+      error: () => {
+        this._router.navigate(['error404']);
       },
     });
 
@@ -248,16 +254,7 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
       }
     })
     this.ObtenerCabeceraProgramaGeneral();
-    this.ListSeccionPrograma();
-    this.ListPrerrequisito();
-    this.EstructuraProgramaPortal();
-    this.ListBeneficioPrograma();
-    this.ListCertificacion();
-    this.ListExpositor();
-    this.ListMontoPago();
-    this.ListTagProgramaRelacionadoPorIdBusqueda();
-    this.AddFields();
-    this.ObtenerCombosPortal();
+
   }
 
   RegistrarProgramaPrueba(){
@@ -350,22 +347,45 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
       .subscribe({
         next: (x) => {
           console.log(x);
-          this.cabecera = x.programaCabeceraDetalleDTO;
-          this.migaPan.push({
-            titulo:
-              'Área: ' +
-              this.area +
-              '/ Subárea: ' +
-              this.cabecera.nombreSubArea,
-            urlWeb: '/' + this.AraCompleta + '/' + this.nombreProgramCompeto,
-          });
-          if (x.programaCabeceraDetalleDTO.imgPrincipal != null) {
-            this.cabecera.imgPrincipal =
-              'https://img.bsginstitute.com/repositorioweb/img/partners/' +
-              x.programaCabeceraDetalleDTO.imgPrincipal;
+
+          if(x.programaCabeceraDetalleDTO!=undefined && this.area==x.programaCabeceraDetalleDTO.areaCapacitacion)
+          {
+            this.cabecera = x.programaCabeceraDetalleDTO;
+            this.migaPan.push({
+              titulo:
+                'Área: ' +
+                this.area +
+                '/ Subárea: ' +
+                this.cabecera.nombreSubArea,
+                urlWeb: '/' + this.AraCompleta + '/' + this.nombreProgramCompeto,
+              });
+            if (x.programaCabeceraDetalleDTO.imgPrincipal != null) {
+              this.cabecera.imgPrincipal =
+                'https://img.bsginstitute.com/repositorioweb/img/partners/' +
+                x.programaCabeceraDetalleDTO.imgPrincipal;
+            };
+            this.ListSeccionPrograma();
+            this.ListPrerrequisito();
+            this.EstructuraProgramaPortal();
+            this.ListBeneficioPrograma();
+            this.ListCertificacion();
+            this.ListExpositor();
+            this.ListMontoPago();
+            this.ListTagProgramaRelacionadoPorIdBusqueda();
+            this.AddFields();
+            this.ObtenerCombosPortal();
+
+          }
+          else{
+          this._router.navigate(['error404']);
+
           }
         },
+        error: () => {
+          this._router.navigate(['error404']);
+        },
       });
+
   }
   ListSeccionPrograma() {
     this._SeccionProgramaService

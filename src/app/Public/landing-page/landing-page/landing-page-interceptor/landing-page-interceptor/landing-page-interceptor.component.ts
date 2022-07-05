@@ -28,23 +28,36 @@ export class LandingPageInterceptorComponent implements OnInit {
   ngOnInit(): void {
     this.activatedRoute.queryParams.subscribe({
       next:(x)=>{
+        console.log(x)
         this.IdFormulario=x['IdFormulario'];
+        console.log(this.IdFormulario)
         if(this.IdFormulario!=undefined){
         this.ObtenerFormularioLandingPage();
-
+        }
+        else{
+          this.router.navigate(['error404']);
         }
       }
     });
   }
-
   ObtenerFormularioLandingPage(){
-    this._LandingPageService.ObtenerFormularioLandingPage(this.IdFormulario).subscribe((x)=>{
-      this.valorPrograma=x;
-      console.log(this.valorPrograma)
-      this.nombreProgramaLandingPage=this.valorPrograma.categoriaNombre.replace(/-/g,' ')
-      console.log(this.nombreProgramaLandingPage)
-      this.OpenModalLandingPage();
-        this.router.navigate(['/'+this.valorPrograma.areaCapacitacion+'/'+this.valorPrograma.categoriaNombre+'-'+this.valorPrograma.idBusqueda]);
+    this._LandingPageService.ObtenerFormularioLandingPage(this.IdFormulario).subscribe({
+      next: x=>{
+        if(x!=undefined)
+        {
+          this.valorPrograma=x;
+          this.nombreProgramaLandingPage=this.valorPrograma.categoriaNombre.replace(/-/g,' ')
+          console.log(this.nombreProgramaLandingPage)
+          this.OpenModalLandingPage();
+          this.router.navigate(['/'+this.valorPrograma.areaCapacitacion+'/'+this.valorPrograma.categoriaNombre+'-'+this.valorPrograma.idBusqueda]);
+        }
+        else{
+          this.router.navigate(['error404']);
+        }
+      },
+      error: () => {
+        this.router.navigate(['error404']);
+      },
     })
   }
   OpenModalLandingPage(): void {

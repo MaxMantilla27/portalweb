@@ -8,6 +8,7 @@ import { FormularioComponent } from 'src/app/Core/Shared/Containers/formulario/f
 import { DatosPortalService } from 'src/app/Core/Shared/Services/DatosPortal/datos-portal.service';
 import { RegionService } from 'src/app/Core/Shared/Services/Region/region.service';
 import { ContactenosService } from 'src/app/Core/Shared/Services/Contactenos/contactenos.service';
+import { HelperService } from 'src/app/Core/Shared/Services/helper.service';
 
 @Component({
   selector: 'app-contactenos',
@@ -22,6 +23,8 @@ export class ContactenosComponent implements OnInit {
     private _DatosPortalService:DatosPortalService,
     private _RegionService:RegionService,
     private _ContactenosService:ContactenosService,
+    private _HelperService: HelperService,
+
     ) { }
 
   public migaPan = [
@@ -65,7 +68,24 @@ export class ContactenosComponent implements OnInit {
     IdIndustria:0,
     Comentario:'',
   }
+  public combosPrevios:any
   ngOnInit(): void {
+    this._HelperService.recibirCombosPerfil.subscribe((x) => {
+      this.combosPrevios=x.datosAlumno;
+      this.formularioContacto.Nombres= this.combosPrevios.nombres,
+      this.formularioContacto.Apellidos= this.combosPrevios.apellidos,
+      this.formularioContacto.Email= this.combosPrevios.email,
+      this.formularioContacto.IdPais= this.combosPrevios.idPais,
+      this.formularioContacto.IdRegion= this.combosPrevios.idDepartamento,
+      this.formularioContacto.Movil= this.combosPrevios.telefono,
+      this.formularioContacto.IdCargo= this.combosPrevios.idCargo,
+      this.formularioContacto.IdAreaTrabajo= this.combosPrevios.idAreaTrabajo,
+      this.formularioContacto.IdAreaFormacion= this.combosPrevios.idAreaFormacion,
+      this.formularioContacto.IdIndustria= this.combosPrevios.idIndustria
+      if(this.formularioContacto.IdPais!=undefined){
+        this.GetRegionesPorPais(this.formularioContacto.IdPais);
+      }
+    })
     this.AddFields();
     this.ObtenerCombosPortal();
   }
@@ -244,4 +264,19 @@ export class ContactenosComponent implements OnInit {
       label:"Comentario",
     });
   }
+  LimpiarCampos(){
+    this.combosPrevios=undefined;
+    this.formularioContacto.Nombres= '',
+    this.formularioContacto.Apellidos= '',
+    this.formularioContacto.Email= '',
+    this.formularioContacto.IdPais= 0,
+    this.formularioContacto.IdRegion= 0,
+    this.formularioContacto.Movil= '',
+    this.formularioContacto.IdCargo= 0,
+    this.formularioContacto.IdAreaTrabajo= 0,
+    this.formularioContacto.IdAreaFormacion= 0,
+    this.formularioContacto.IdIndustria= 0,
+    this.GetRegionesPorPais(-1);
+  }
 }
+
