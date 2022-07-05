@@ -38,20 +38,25 @@ export class ResultadoPagoComponent implements OnInit {
         this.ObtenerPreProcesoPagoCuotaAlumno()
       },
     });
+    this.imgInterval();
 
-    var interval=setInterval(() => {
-
-      this.img++
-      if(this.img>11){
-        this.img=1
+    var interval2=setInterval(()=>{
+      if(this.resultVisa!=undefined && this.resultVisa.estadoOperacion.toLowerCase()=='pending' && this.resultVisa.idPasarelaPago==5){
+        this.ValidarProcesoPagoCuotaAlumnoOpenPAy();
       }
-      this.imgAc=this.img+'.png'
-      // console.log(this.resultVisa)
       if(this.resultVisa!=undefined && this.resultVisa.estadoOperacion.toLowerCase()!='pending'){
-        clearInterval(interval);
+        clearInterval(interval2);
       }
-    }, 80);
+    },15000)
 
+  }
+  ValidarProcesoPagoCuotaAlumnoOpenPAy(){
+    this._FormaPagoService.ValidarProcesoPagoCuotaAlumnoOpenPAy(this.json).pipe(takeUntil(this.signal$)).subscribe({
+      next:x=>{
+        console.log(x)
+        this.ObtenerPreProcesoPagoCuotaAlumno()
+      }
+    })
   }
   ObtenerPreProcesoPagoCuotaAlumno(){
     this.ruta='/AulaVirtual/MisPagos'
@@ -59,7 +64,7 @@ export class ResultadoPagoComponent implements OnInit {
       next:x=>{
         console.log(x)
         if(x._Repuesta.registroAlumno==null){
-          this.ObtenerPreProcesoPagoOrganicoAlumno()
+          //this.ObtenerPreProcesoPagoOrganicoAlumno()
         }else{
           if(x._Repuesta.estadoOperacion==null){
             this._router.navigate([this.ruta])
@@ -82,7 +87,7 @@ export class ResultadoPagoComponent implements OnInit {
                   var js={
                     IdentificadorTransaccion:this.json.IdentificadorTransaccion,
                     RequiereDatosTarjeta:this.json.RequiereDatosTarjeta,
-                    tipo:2
+                    tipo:1
                   }
                   this.ChangeToPending(js);
                 }else{
@@ -105,6 +110,7 @@ export class ResultadoPagoComponent implements OnInit {
         this.resultVisa=x._registro;
         if(this.resultVisa.estadoOperacion.toLowerCase()=='pending'){
           this.verificarEstado(js.tipo);
+          this.imgInterval();
         }
         if(js.tipo==2){
           this.resultVisa.registroAlumno=this.resultVisa.datoAlumno;
@@ -112,13 +118,24 @@ export class ResultadoPagoComponent implements OnInit {
       }
     })
   }
+  imgInterval(){
+
+    var interval=setInterval(() => {
+
+      this.img++
+      if(this.img>11){
+        this.img=1
+      }
+      this.imgAc=this.img+'.png'
+      if(this.resultVisa!=undefined && this.resultVisa.estadoOperacion.toLowerCase()!='pending'){
+        clearInterval(interval);
+      }
+    }, 80);
+  }
   verificarEstado(tipo:number){
     var interval=setInterval(() => {
-      if(tipo==1){
-        this.ObtenerPreProcesoPagoCuotaAlumno();
-      }else{
-        this.ObtenerPreProcesoPagoOrganicoAlumno();
-      }
+      this.ObtenerPreProcesoPagoCuotaAlumno();
+
       console.log(this.resultVisa)
       if(this.resultVisa!=undefined && this.resultVisa.estadoOperacion.toLowerCase()!='pending'){
         clearInterval(interval);

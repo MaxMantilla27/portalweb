@@ -1,6 +1,6 @@
 import { DOCUMENT } from '@angular/common';
 import { Component, Inject, OnDestroy, OnInit, Renderer2, ViewEncapsulation } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
 import { RegistroRespuestaPreProcesoPagoDTO, RegistroProcesoPagoAlumnoDTO } from 'src/app/Core/Models/ProcesoPagoDTO';
 import { FormaPagoService } from 'src/app/Core/Shared/Services/FormaPago/forma-pago.service';
@@ -20,7 +20,8 @@ export class ConfirmacionPagoTarjetaConektaComponent implements OnInit,OnDestroy
     @Inject(DOCUMENT) private _document: Document,
     private _ActivatedRoute:ActivatedRoute,
     private _FormaPagoService:FormaPagoService,
-    private _SessionStorageService:SessionStorageService
+    private _SessionStorageService:SessionStorageService,
+    private _router:Router
   ) {}
   public urlBase=environment.url_portal;
   ngOnDestroy(): void {
@@ -31,6 +32,7 @@ export class ConfirmacionPagoTarjetaConektaComponent implements OnInit,OnDestroy
     IdentificadorTransaccion:'',
     RequiereDatosTarjeta:true
   }
+  public idMatricula=0
   public resultVisa:any
   public url='/AulaVirtual/PagoExitoso/'
   public jsonSave:RegistroProcesoPagoAlumnoDTO={
@@ -44,6 +46,7 @@ export class ConfirmacionPagoTarjetaConektaComponent implements OnInit,OnDestroy
     CodigoTributario:'',
     RazonSocial:'',
     IdPasarelaPago:0,
+    PagoPSE:false,
     TarjetaHabiente:{
       Aniho:'',
       CodigoVV:'',
@@ -57,6 +60,7 @@ export class ConfirmacionPagoTarjetaConektaComponent implements OnInit,OnDestroy
   ngOnInit(): void {
     this._ActivatedRoute.params.pipe(takeUntil(this.signal$)).subscribe({
       next: (x) => {
+        this.idMatricula = parseInt(x['IdMatricula']);
         this.json.IdentificadorTransaccion = x['Identificador'];
         var r= this._SessionStorageService.SessionGetValue(this.json.IdentificadorTransaccion);
         if(r!=''){
@@ -74,9 +78,13 @@ export class ConfirmacionPagoTarjetaConektaComponent implements OnInit,OnDestroy
       next:x=>{
         console.log(x)
         this.resultVisa=x._Repuesta;
+
+        if(this.resultVisa.estadoOperacion.toLowerCase()!='sent'){
+          this._router.navigate(['/AulaVirtual/MisCursos/'+this.idMatricula])
+        }else{
+          this.addConekta()
+        }
         this.resultVisa.total=0;
-
-
         this.jsonSave.IdentificadorTransaccion=this.json.IdentificadorTransaccion
         this.jsonSave.MedioCodigo=this.resultVisa.medioCodigo
         this.jsonSave.MedioPago=this.resultVisa.medioPago
@@ -85,7 +93,6 @@ export class ConfirmacionPagoTarjetaConektaComponent implements OnInit,OnDestroy
         this.jsonSave.IdPasarelaPago=this.resultVisa.idPasarelaPago
 
         this._SessionStorageService.SessionSetValue('datosWompi',JSON.stringify(this.jsonSave));
-        this.addConekta()
         //this.SetConfiguration()
       }
     })
@@ -94,6 +101,7 @@ export class ConfirmacionPagoTarjetaConektaComponent implements OnInit,OnDestroy
 
     let script = this._renderer2.createElement('script');
     script.type="text/javascript"
+    //publicKey: "key_NkUEio2hSx5H1zf7n5KueMw", --key de pruebas
     script.text = `
           window.ConektaCheckoutComponents.Integration({
             targetIFrame: "#conektaIframeContainer",

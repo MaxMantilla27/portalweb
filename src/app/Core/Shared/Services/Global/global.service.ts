@@ -14,4 +14,12 @@ export class GlobalService {
   public RegistroInteraccionInicial():Observable<any>{
     return this.http.get<any>(this.urlBase+'/RegistroInteraccionInicial');
   }
+  public ObtenerCodigoIso():Observable<any>{
+    return this.http.get<any>(this.urlBase+'/ObtenerCodigoIso');
+  }
+
+  public InsertarContactoPortal():Observable<any>{
+    console.log('-----------')
+    return this.http.get<any>(this.urlBase+'/InsertarContactoPortal');
+  }
 }

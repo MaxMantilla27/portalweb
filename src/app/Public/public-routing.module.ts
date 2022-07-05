@@ -47,12 +47,12 @@ const routes:Routes=[
             {path:'Account/ForgotPassword', component:ForgotPasswordComponent},
             {path:'Avatar', component: AvatarComponent},
 
-            {path:'SubArea/:nombre', component:TagsComponent},
-            {path:'Area/:nombre', component:TagsComponent},
-            {path:'tag/:nombre', component:TagsComponent},
             {path:'bs-campus/white-paper/:whitepaper', component:WhitepapersComponent},
             {path:'bs-campus/blog/:blog', component:BlogComponent},
 
+            {path:'SubArea/:nombre', component:TagsComponent},
+            {path:'Area/:nombre', component:TagsComponent},
+            {path:'tag/:nombre', component:TagsComponent},
             {path:'tecnico-productivo/:urlWeb', component:EducationTecnicaDetalleComponent},
             {path:'carrera/:urlWeb',component:CarreraProfesionalDetalleComponent},
             {path:'programas-certificaciones-cursos/:IdArea',component:ProgramasComponent},

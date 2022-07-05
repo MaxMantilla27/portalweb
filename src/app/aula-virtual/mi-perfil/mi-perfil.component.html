@@ -7,7 +7,7 @@
   <div class="container">
     <div class="row rowpaddAv">
       <div class="col-12 col-md-12 col-lg-12">
-        <div class="titulop">
+        <div class="titulop" style="line-height:0px">
           Mi Perfil
         </div>
       </div>
@@ -28,7 +28,7 @@
     <div class="col-12 col-md-12 col-lg-12">
       <form (submit)="ActualizarUsuario()" [formGroup]="userForm">
         <div class="row">
-          <div class="col-12 col-md-6 col-lg-6 fieldOld">
+          <div class="col-12 col-md-6 col-lg-6 fieldOldMiPerfil">
             <div class="titlePerfil">Datos Personales</div>
             <mat-form-field appearance="outline" [floatLabel]="'always'">
               <mat-label>Nombres</mat-label>
@@ -74,7 +74,7 @@
             </mat-form-field>
           </div>
 
-          <div class="col-12 col-md-6 col-lg-6 fieldOld">
+          <div class="col-12 col-md-6 col-lg-6 fieldOldMiPerfil">
             <div class="titlePerfil">Direcci&oacute;n</div>
             <mat-form-field appearance="outline" [floatLabel]="'always'">
               <mat-label>Pa&iacute;s</mat-label>

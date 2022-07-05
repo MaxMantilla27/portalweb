@@ -16,7 +16,7 @@ import { HelperService } from './Core/Shared/Services/helper.service';
     AppComponent
   ],
   imports: [
-    BrowserModule,
+    BrowserModule.withServerTransition({ appId: 'serverApp' }),
     AppRoutingModule,
     SharedModule,
     BrowserAnimationsModule,

@@ -18,6 +18,7 @@ export class AppComponent implements OnInit,AfterViewInit  {
   isBrowser: boolean;
   public charge=false
   public step=-1;
+  public CodigoIso=''
   constructor(
     private _HelperService: HelperService,
     private router: Router,
@@ -46,20 +47,40 @@ export class AppComponent implements OnInit,AfterViewInit  {
   ];
   ngOnInit() {
     var usuarioWeb=this._SessionStorageService.SessionGetValue('usuarioWeb');
-    if(usuarioWeb==''){
-      this.RegistroInteraccionInicial();
+    var codIso=this._SessionStorageService.SessionGetValue('ISO_PAIS');
+    if(usuarioWeb=='' || codIso==''){
+      if(codIso==''){
+        this.ObtenerCodigoIso()
+      }
+      if(usuarioWeb==''){
+        this.RegistroInteraccionInicial();
+      }
     }else{
+      this.CodigoIso=codIso;
       this.charge=true;
     }
+  }
+  ObtenerCodigoIso(){
+    this._GlobalService.ObtenerCodigoIso().subscribe({
+      next:x=>{
+      this._SessionStorageService.SessionSetValue('ISO_PAIS',x.codigoISO);
+      this.CodigoIso=x.codigoISO;
+      this.charge=true;
+    }})
   }
   RegistroInteraccionInicial(){
     this._GlobalService.RegistroInteraccionInicial().subscribe({
       next:x=>{
-      console.log(x);
       this._SessionStorageService.SessionSetValue('usuarioWeb',x.identificadorUsuario);
-      this._SessionStorageService.SessionSetValue('ISO_PAIS',x.codigoISO);
       this.charge=true;
+      this.InsertarContactoPortal();
     }})
+  }
+  InsertarContactoPortal(){
+    this._GlobalService.InsertarContactoPortal().subscribe({
+      next:x=>{
+      }
+    });
   }
   ngAfterViewInit() {
     this.router.events.subscribe((val) => {
@@ -74,7 +95,6 @@ export class AppComponent implements OnInit,AfterViewInit  {
     this._HelperService.enviarScroll(event.target.scrollTop);
   }
   changeExpandibles(e:any){
-    console.log(e)
     this.Expandibles=e
   }
 }

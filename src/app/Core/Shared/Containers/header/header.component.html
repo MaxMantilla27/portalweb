@@ -8,7 +8,7 @@
   <img class="logoHeader" src="https://img.bsginstitute.com/repositorioweb/img/logobsg.svg" alt="" [routerLink]="'/'">
 
   <div class="botones_login hideItemHeader">
-    <app-select [dataUrl]="paises" [tipo]="3" [valueDefecto]="CodigoIso" (Cambio)="ChangePais($event)" [token]="token">
+    <app-select [dataUrl]="paises" [tipo]="3" [valueDefecto]="CodigoIso" (Cambio)="ChangePais($event)" [token]="token" *ngIf="CodigoIso!=''">
     </app-select>
     <div *ngIf="token"
       style="    flex-direction: column; display: flex;justify-content: flex-end;align-items: flex-end;">
@@ -49,7 +49,7 @@
         </app-button>
       </div>
       <div class="botones_login">
-        <app-select [dataUrl]="paises" [tipo]="3" [valueDefecto]="CodigoIso" (Cambio)="ChangePais($event)"
+        <app-select *ngIf="CodigoIso!=''" [dataUrl]="paises" [tipo]="3" [valueDefecto]="CodigoIso" (Cambio)="ChangePais($event)"
           [token]="token"></app-select>
         <div *ngIf="token"
           style="    flex-direction: column; display: flex;justify-content: flex-end;align-items: flex-end;">

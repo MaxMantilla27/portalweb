@@ -48,6 +48,7 @@ export class ConfirmacionPagoTarjetaComponent implements OnInit,OnDestroy {
     RazonSocial:'',
     IdPasarelaPago:0,
     IdentificadorUsuario:'',
+    PagoPSE:false,
     TarjetaHabiente:{
       Aniho:'',
       CodigoVV:'',
@@ -99,6 +100,8 @@ export class ConfirmacionPagoTarjetaComponent implements OnInit,OnDestroy {
         this.jsonSave.RazonSocial=this.resultCard.identificadorTransaccion
         this.jsonSave.IdPasarelaPago=this.resultCard.idPasarelaPago
         this.jsonSave.IdentificadorUsuario=this._SessionStorageService.SessionGetValue('usuarioWeb');
+
+        this.jsonSave.PagoPSE=(this.resultCard.idPasarelaPago!=1 || this.resultCard.idFormaPago!=65)?false:true;
         if (this.resultCard.idPasarelaPago == 5) {
           this.OpenPayInit();
         }

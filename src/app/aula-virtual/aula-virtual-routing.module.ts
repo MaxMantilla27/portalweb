@@ -30,6 +30,7 @@ import { PagoConektaComponent } from './confirmacion-pago-organico/pago-conekta/
 import { PagoGeneralComponent } from './confirmacion-pago-organico/pago-general/pago-general.component';
 import { ConfirmacionPagoTarjetaWompiComponent } from './confirmacion-pago-tarjeta-wompi/confirmacion-pago-tarjeta-wompi.component';
 import { ConfirmacionPagoTarjetaConektaComponent } from './confirmacion-pago-tarjeta-conekta/confirmacion-pago-tarjeta-conekta.component';
+import { PagoMultipagoComponent } from './confirmacion-pago-organico/pago-multipago/pago-multipago.component';
 
 const routes: Routes = [
   {
@@ -48,6 +49,7 @@ const routes: Routes = [
         { path: 'MisPagos/visa/:Identificador', component: PagoVisaComponent,canActivate:[AlumnoGuard]},
         { path: 'MisPagos/wompi/:Identificador', component: PagoWompiComponent,canActivate:[AlumnoGuard]},
         { path: 'MisPagos/conekta/:Identificador', component: PagoConektaComponent,canActivate:[AlumnoGuard]},
+        { path: 'MisPagos/multipago/:Identificador', component: PagoMultipagoComponent,canActivate:[AlumnoGuard]},
 
         { path: 'MisCursos/:IdMatricula', component: CursoComponent,canActivate:[AlumnoGuard]},
         { path: 'MisPagos/:IdMatricula', component: PagoComponent,canActivate:[AlumnoGuard]},
