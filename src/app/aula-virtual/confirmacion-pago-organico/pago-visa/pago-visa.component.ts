@@ -77,10 +77,6 @@ export class PagoVisaComponent implements OnInit,OnDestroy {
         console.log(x)
         this.resultVisa=x._Repuesta;
         this.resultVisa.total=0;
-        this.resultVisa.listaCuota.forEach((l:any) => {
-          this.resultVisa.total+=l.cuotaTotal
-        });
-
 
         this.jsonSave.IdentificadorTransaccion=this.json.IdentificadorTransaccion
         this.jsonSave.MedioCodigo=this.resultVisa.medioCodigo

@@ -106,7 +106,7 @@ export class FormularioComponent implements OnChanges, OnInit {
     this.OnValid.emit(this.userForm.valid);
   }
   changeForm(){
-    console.log(this.userForm)
+    console.log(this.fiels)
     if(this.userForm!=undefined){
       console.log(this.fiels)
       for (let i = 0; i < this.fiels.length; i++) {

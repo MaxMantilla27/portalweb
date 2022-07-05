@@ -58,7 +58,7 @@ export class LoginComponent implements OnInit {
       valorInicial:"",
       validate:[Validators.required,Validators.email],
       label:"Correo electronico",
-
+      focus:true
     });
     this.fileds.push({
       nombre:"Password",

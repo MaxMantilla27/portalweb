@@ -91,6 +91,7 @@ import { InputCardFechaDirective } from './Directives/input-card-fecha.directive
 import {MatBottomSheetModule} from '@angular/material/bottom-sheet';
 import { CardMatriculasPruebaComponent } from './Containers/card/card-matriculas-prueba/card-matriculas-prueba/card-matriculas-prueba.component';
 import { GlobalService } from './Services/Global/global.service';
+import { SoporteTecnicoComponent } from './Containers/soporte-tecnico/soporte-tecnico.component';
 
 
 
@@ -162,6 +163,7 @@ import { GlobalService } from './Services/Global/global.service';
     InputCardDirective,
     InputCardFechaDirective,
     CardMatriculasPruebaComponent,
+    SoporteTecnicoComponent,
 
   ],
   exports: [
@@ -190,7 +192,7 @@ import { GlobalService } from './Services/Global/global.service';
     ChargeComponent,
     VideoBrightcovePruebaComponent,
     CardMatriculasPruebaComponent,
-
+    SoporteTecnicoComponent,
 
     InputCardDirective,
     InputCardFechaDirective,

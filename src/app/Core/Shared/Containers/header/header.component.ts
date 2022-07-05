@@ -39,6 +39,8 @@ import { delay, firstValueFrom, Subject, takeUntil, tap } from 'rxjs';
 export class HeaderComponent implements OnInit,OnChanges,OnDestroy {
   @Input() responsive:boolean=false;
   @Input() carga:boolean=false;
+
+  @Input() CodigoIso: string = '';
   @Output()
   OnClick: EventEmitter<boolean> = new EventEmitter<boolean>();
   @Output()
@@ -140,7 +142,6 @@ export class HeaderComponent implements OnInit,OnChanges,OnDestroy {
     },
   ];
   public token: boolean = this._SessionStorageService.validateTokken();
-  public CodigoIso: string = 'INTC';
   public step=-1
   constructor(
     private _SessionStorageService: SessionStorageService,
@@ -161,7 +162,10 @@ export class HeaderComponent implements OnInit,OnChanges,OnDestroy {
         this.RegistroInteraccionInicial();
       }else{
         this.GetPaises();
-        this.GetCarreras();
+        console.log(this.CodigoIso)
+        if(this.CodigoIso!=''){
+          this.GetCarreras();
+        }
         this.GetAreaCapasitacionList();
         if (this.token) {
           this.ObtenerCombosPerfil();
@@ -316,11 +320,6 @@ export class HeaderComponent implements OnInit,OnChanges,OnDestroy {
   GetCarreras() {
     this.carreras = [];
     this.tecnica = [];
-    this.CodigoIso =
-      this._SessionStorageService.SessionGetValue('ISO_PAIS') != ''
-        ? this._SessionStorageService.SessionGetValue('ISO_PAIS')
-        : 'INTC';
-    this._SessionStorageService.SessionSetValue('ISO_PAIS', this.CodigoIso);
     if (
       this._HeaderPermissionsService.ValidateCarrerasTecnicas(this.CodigoIso)
     ) {
