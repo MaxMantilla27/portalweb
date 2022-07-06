@@ -30,6 +30,7 @@ import { FiltroProgramasComponent } from './programas/filtro-programas/filtro-pr
 import { ProgramaPagoComponent } from './programas-detalle/programa-pago/programa-pago.component';
 import { LandingPageComponent } from './landing-page/landing-page/landing-page.component';
 import { LandingPageInterceptorComponent } from './landing-page/landing-page/landing-page-interceptor/landing-page-interceptor/landing-page-interceptor.component';
+import { PageErrorComponent } from './page-error/page-error/page-error.component';
 
 @NgModule({
   imports: [
@@ -65,7 +66,8 @@ import { LandingPageInterceptorComponent } from './landing-page/landing-page/lan
     FiltroProgramasComponent,
     ProgramaPagoComponent,
     LandingPageComponent,
-    LandingPageInterceptorComponent
+    LandingPageInterceptorComponent,
+    PageErrorComponent
   ],
   exports: [],
   providers: [
