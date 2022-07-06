@@ -57,15 +57,17 @@ export class LoginComponent implements OnInit {
       tipo:"text",
       valorInicial:"",
       validate:[Validators.required,Validators.email],
-      label:"Correo electronico",
-      focus:true
+      label:"Correo electrónico",
+      focus:true,
+      error:"Ingresa tu correo electrónico"
     });
     this.fileds.push({
       nombre:"Password",
       tipo:"password",
       valorInicial:"",
       validate:[Validators.required],
-      label:"Contraseña"
+      label:"Contraseña",
+      error:"Ingresa tu contraseña"
     });
     this.fileds.push({
       nombre:"Recordar",

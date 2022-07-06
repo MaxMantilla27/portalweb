@@ -207,6 +207,10 @@ export class FormularioComponent implements OnChanges, OnInit {
   obtenerErrorCampoNombre(i: number, val: string) {
     var campo = (<FormArray>this.userForm.get('Fields')).controls[i].get(val);
     if (campo!.hasError('required')) {
+      var fls=this.fiels.find(x=>x.nombre==val);
+      if(fls?.error!=undefined){
+        return fls?.error;
+      }
       return 'El campo ' + this.fiels[i].label + ' es requerido';
     }
 

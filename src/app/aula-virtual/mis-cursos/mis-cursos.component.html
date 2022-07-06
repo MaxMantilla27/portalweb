@@ -7,7 +7,7 @@
   <div class="container">
     <div class="row rowpaddAv">
       <div class="col-12 col-md-12 col-lg-12">
-        <div class="titulop">
+        <div class="titulop" style="line-height:0px">
           Mis Cursos
         </div>
         <div style="font-size: 20px;
@@ -37,7 +37,7 @@
           </button>
           <button class="buttonIconCurso" (click)="saveIndex(1)" [routerLink]="'/AulaVirtual/MisCursos/'+item.idMatriculaCabecera"
          mat-icon-button
-            matTooltip="Modulos"
+            matTooltip="Módulos"
             matTooltipClass="tootipMatriculas">
 
             <div class="contenticonsCard">
@@ -48,7 +48,7 @@
           </button>
           <button class="buttonIconCurso" *ngIf="item.proyectoAplicacion" (click)="saveIndex(2)" [routerLink]="'/AulaVirtual/MisCursos/'+item.idMatriculaCabecera"
          mat-icon-button
-            matTooltip="Proyectos de aplicación"
+            matTooltip="Proyecto de aplicación"
             matTooltipClass="tootipMatriculas">
 
             <div class="contenticonsCard">
@@ -80,7 +80,7 @@
           </button>
           <button class="buttonIconCurso" *ngIf="item.webibarActivo" (click)="saveIndex(5)" [routerLink]="'/AulaVirtual/MisCursos/'+item.idMatriculaCabecera"
          mat-icon-button
-            matTooltip="webinars"
+            matTooltip="Webinars"
             matTooltipClass="tootipMatriculas">
             <div class="contenticonsCard">
               <div class="iconsCardMatriculas" style="background-image: url(../../../assets/icons/webinar-naranja.svg) ;">
@@ -120,7 +120,7 @@
 
           <button class="buttonIconCurso"  (click)="saveindexPrueba(1,'/AulaVirtual/MisCursosPrueba/'+itemP.idRegistroPrueba,itemP.valido)"
          mat-icon-button
-            matTooltip="Modulos"
+            matTooltip="Módulos"
             matTooltipClass="tootipMatriculas">
             <div class="contenticonsCard">
               <div class="iconsCardMatriculas" style="background-image: url(../../../assets/icons/modulos-naranja.svg) ;">

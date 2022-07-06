@@ -10,6 +10,7 @@ import { Router } from '@angular/router';
 import { CambioPasswordDTO } from 'src/app/Core/Models/AccountDTO';
 import { AccountService } from 'src/app/Core/Shared/Services/Account/account.service';
 import { SessionStorageService } from 'src/app/Core/Shared/Services/session-storage.service';
+import { SnackBarServiceService } from 'src/app/Core/Shared/Services/SnackBarService/snack-bar-service.service';
 import { ConfirmedValidator } from 'src/app/Core/Shared/Validators/ConfirmedValidator';
 
 @Component({
@@ -24,7 +25,8 @@ export class CambiarContraComponent implements OnInit {
     private fb: FormBuilder,
     private _AccountService: AccountService,
     private _SessionStorageService:SessionStorageService,
-    private _router:Router
+    private _router:Router,
+    private _SnackBarServiceService: SnackBarServiceService,
   ) {
     this.userForm = fb.group({
       contraActual: ['', [Validators.required]],
@@ -52,8 +54,20 @@ export class CambiarContraComponent implements OnInit {
       this.datos.NewPassword = this.userForm.get('contraNueva')?.value;
       this._AccountService.ActualizarPasswordCuenta(this.datos).subscribe({
         next:x=>{
-          this._SessionStorageService.DeleteToken();
-          this._router.navigate(['/login']);
+          console.log(x)
+          if(x.descripcionGeneral!=undefined){
+            this._SnackBarServiceService.openSnackBar(
+              x.descripcionGeneral,
+              'x',
+              10,
+              'snackbarCrucigramaerror'
+            );
+            this.userForm.reset()
+          }else{
+            this._SnackBarServiceService.openSnackBar("Se cambio su contraseña",'x',15,"snackbarCrucigramaSucces");
+            this._SessionStorageService.DeleteToken();
+            this._router.navigate(['/login']);
+          }
         },
         error:e=>{
           console.log(e);
@@ -73,9 +87,16 @@ export class CambiarContraComponent implements OnInit {
   }
   obtenerErrorCampoNombre(val: string) {
     var campo = this.userForm.get(val);
-
     if (campo!.hasError('required')) {
-      return 'El campo es requerido';
+      if(val=='contraActual'){
+        return 'Ingresa tu contraseña actual';
+      }
+      if(val=='contraNueva'){
+        return 'Ingresa tu nueva contraseña';
+      }
+      if(val=='contraNuevaRepeat'){
+        return 'Confirma tu nueva contraseña';
+      }
     }
 
     if (campo!.hasError('ConfirmedValidator')) {

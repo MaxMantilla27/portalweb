@@ -75,7 +75,7 @@
           <app-default-button *ngIf="videocontinuar" (ButtoclClick)="continuarVideo()" [confs]="{color:'danger',titulo:'Continuar con la sesión'}" [icon]="''"
           [style]="'padding: 0px 20px;width:100%;margin-top: -8px;border-radius: 0px;'"></app-default-button>
         </div>
-        <div class="col-12 col-md-10 col-lg-10 preguntaInteractiva" *ngIf="!finalizado">
+        <div class="col-10 col-md-10 col-lg-10 preguntaInteractiva" *ngIf="!finalizado">
           <div class="headerPregunta">Evaluacion</div>
 
           <div class="contentPregunta">
@@ -98,22 +98,23 @@
                 </div>
               </ng-container>
               <ng-container *ngIf="preguntas[preguntaActual].tipoRespuesta==6 || preguntas[preguntaActual].tipoRespuesta==8">
-                <div class="respuesta fieldPreguntasI" style="width: 100%;
+                <div class="respuesta fieldPreguntasI row" style="width: 100%;
                 justify-content: space-between;
                 align-items: center;" *ngFor="let respuesta of preguntas[preguntaActual].respuestaGrupoPreguntaInteractivaPrograma;let i=index">
                   <mat-form-field appearance="outline" class="col-12 col-md-6 col-lg-6" >
                     <mat-label>respuesta</mat-label>
                     <input type="text" autocomplete="off" [(ngModel)]="valorRespuesta" matInput />
                   </mat-form-field>
-
-                  <app-default-button
-                  (ButtoclClick)="ResponderTexto()" [disabled]="valorRespuesta==''"
-                  [confs]="{color:'primary',titulo:'responder'}" [icon]="''"
-                  [style]="'padding: 0px 20px;margin:0px;margin-bottom: 1.34375em;'"></app-default-button>
+                  <div class="col-12 col-md-6 col-lg-6">
+                    <app-default-button
+                    (ButtoclClick)="ResponderTexto()" [disabled]="valorRespuesta==''"
+                    [confs]="{color:'primary',titulo:'responder'}" [icon]="''"
+                    [style]="'padding: 0px 20px;margin:0px;margin-bottom: 1.34375em;'"></app-default-button>
+                  </div>
                 </div>
               </ng-container>
               <ng-container *ngIf="preguntas[preguntaActual].tipoRespuesta==7">
-                <div class="respuesta fieldPreguntasI" style="width: 100%;
+                <div class="respuesta fieldPreguntasI row" style="width: 100%;
                 justify-content: space-between;
                 align-items: center;"
                  *ngFor="let respuesta of preguntas[preguntaActual].respuestaGrupoPreguntaInteractivaPrograma;let i=index">
@@ -121,11 +122,12 @@
                     <mat-label>respuesta</mat-label>
                     <input type="number" autocomplete="off" [(ngModel)]="valorRespuesta" matInput />
                   </mat-form-field>
-
-                  <app-default-button
-                  (ButtoclClick)="ResponderTexto()" [disabled]="valorRespuesta==''"
-                  [confs]="{color:'primary',titulo:'responder'}" [icon]="''"
-                  [style]="'padding: 0px 20px;margin:0px;margin-bottom: 1.34375em;'"></app-default-button>
+                  <div class="col-12 col-md-6 col-lg-6">
+                    <app-default-button
+                    (ButtoclClick)="ResponderTexto()" [disabled]="valorRespuesta==''"
+                    [confs]="{color:'primary',titulo:'responder'}" [icon]="''"
+                    [style]="'padding: 0px 20px;margin:0px;margin-bottom: 1.34375em;'"></app-default-button>
+                  </div>
                 </div>
               </ng-container>
 

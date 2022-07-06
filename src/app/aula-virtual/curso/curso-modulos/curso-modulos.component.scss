@@ -8,7 +8,8 @@
 }
 
 .headerCursoModulo {
-  display: flex;
+  margin: 0px;
+  padding: 0px;
   justify-content: space-between;
   border-bottom: solid 1px #dcdcdc;
   align-items: center;
@@ -19,7 +20,8 @@
 }
 .estadoCursoModulo {
   font-size: 14px;
-  margin-left: 30px;
+  //margin-left: 30px;
+  margin: 10px 0px;
   color: #acadb1;
   display: flex;
   i{
@@ -32,10 +34,10 @@
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  padding: 20px 0px;
+  padding: 20px 0px 0px 0px;
 }
 .contentModulo{
-  width: 70%;
+  margin-bottom: 20px;
 }
 .contentModulo mat-progress-bar .mat-progress-bar-buffer{
   background: #e7e7e8 !important;

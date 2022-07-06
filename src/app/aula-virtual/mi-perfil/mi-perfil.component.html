@@ -16,7 +16,7 @@
 </div>
 <div class="container">
   <div class="row rowpaddAv">
-    <div class="col-12 col-md-12 col-lg-12" style="display: flex; align-items: center; justify-content: flex-start;">
+    <div class="col-12 col-md-12 col-lg-12" style="display: flex; align-items: center; justify-content: flex-start;flex-wrap: wrap;">
       <img class="imgAvatarPerfil" [src]="imgAvtar" alt="">
       <div class="contentPerfilName">
         <div class="name">{{combosPerfil.datosAlumno.nombres}}</div>
@@ -36,8 +36,8 @@
               <mat-error *ngIf="userForm.invalid">Debe ingresar sus nombres</mat-error>
             </mat-form-field>
             <mat-form-field appearance="outline" [floatLabel]="'always'">
-              <mat-label>Apellido</mat-label>
-              <input type="text" placeholder="Apellido" formControlName="Apellido" matInput />
+              <mat-label>Apellidos</mat-label>
+              <input type="text" placeholder="Apellidos" formControlName="Apellido" matInput />
               <mat-error *ngIf="userForm.invalid">Debe ingresar sus apellidos</mat-error>
             </mat-form-field>
             <mat-form-field appearance="outline" [floatLabel]="'always'">
@@ -118,16 +118,16 @@
               <mat-error *ngIf="userForm.invalid">Debe ingresar sus nombres</mat-error>
             </mat-form-field>
             <mat-form-field appearance="outline" [floatLabel]="'always'">
-              <mat-label>&Aacute;rea Trabajo</mat-label>
-              <mat-select formControlName="AreaTrabajo" placeholder="&Aacute;rea Trabajo">
+              <mat-label>&Aacute;rea de Trabajo</mat-label>
+              <mat-select formControlName="AreaTrabajo" placeholder="&Aacute;rea de Trabajo">
                 <mat-option *ngFor="let option of combosPerfil.listaAreaTrabajo" [value]="option.idAreaTrabajo">
                   {{option.areaTrabajo}}</mat-option>
               </mat-select>
               <mat-error *ngIf="userForm.invalid">Debe ingresar sus nombres</mat-error>
             </mat-form-field>
             <mat-form-field appearance="outline" [floatLabel]="'always'">
-              <mat-label>&Aacute;rea Formación</mat-label>
-              <mat-select formControlName="AreaFormacion" placeholder="&Aacute;rea Formación">
+              <mat-label>&Aacute;rea de Formación</mat-label>
+              <mat-select formControlName="AreaFormacion" placeholder="&Aacute;rea de Formación">
                 <mat-option *ngFor="let option of combosPerfil.listaAreaFormacion" [value]="option.idAreaFormacion">
                   {{option.areaFormacion}}</mat-option>
               </mat-select>

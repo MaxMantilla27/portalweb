@@ -13,14 +13,14 @@
         <i class="material-icons" (click)="alertaDigital=false">close</i>
       </div>
       <div *ngIf="alertaFisico">
-        Aún no puedes descargar tu certificado físico
+        Aún no puedes solicitar tu certificado físico
         <i class="material-icons" (click)="alertaFisico=false">close</i>
       </div>
     </div>
     <ng-container *ngIf="datosCertificado.idEstado_matricula!=5 && datosCertificado.idEstado_matricula!=12">
       <div class="col-12 col-md-12 col-lg-12">
         <div style="color: #4a4a4a;
-        font-size: 20px;
+        font-size: 16px;
         font-weight: 600;
         padding-bottom: 5px;
         border-bottom: solid 1px #ececec;

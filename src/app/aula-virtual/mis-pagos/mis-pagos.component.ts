@@ -26,7 +26,7 @@ export class MisPagosComponent implements OnInit {
     this._HelperService.recibirCombosPerfil.subscribe((x) => {
 
       this.textoBienvenido =x.datosAlumno.nombres+
-      ', aquí podrás realizar los pagos de tus cronogramas de cuotas';
+      ', aquí podrás realizar los pagos según tu cronograma de cuotas';
     })
     this.ObtenerCronogramaPagoAlumno()
   }

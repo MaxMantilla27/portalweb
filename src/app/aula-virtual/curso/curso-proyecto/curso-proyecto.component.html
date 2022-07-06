@@ -7,8 +7,8 @@
       <div><strong> {{proyecto.datosEvaluacionTrabajo.nombre}}:</strong></div>
     </div>
     <div class="col-12 col-md-12 col-lg-12">
-      <div *ngIf="miPerfil!=undefined" style="text-align: left;font-size: 13px;cursor: pointer;margin-top: 20px;" >
-        ¡Muy bien {{miPerfil.datosAlumno.nombres}}! llegamos a la parte final del curso .Es momento de cargar tu Proyecto de Aplicación</div>
+      <div *ngIf="miPerfil!=undefined" style="text-align: left;font-size: 13px;margin-top: 20px;" >
+        ¡Muy bien {{miPerfil.datosAlumno.nombres}}! Llegamos a la parte final del curso. Es momento de enviar el Proyecto de Aplicación.</div>
     </div>
     <div class="col-12 col-md-12 col-lg-12" style="    margin-top: 40px;
     margin-bottom: 20px;">
@@ -17,19 +17,29 @@
       font-weight: 600;">Elige el archivo a subir:</div>
     </div>
     <ng-container *ngIf="progress==0;else cargando" >
-      <div class="col-6 col-md-8 col-lg-9 fieldProyecto">
-
+      <div class="col-12 col-md-8 col-lg-9 fieldProyecto" >
+        <div (click)="fileInput.click()" style="height: 38px;width: 100%;border:solid 1px #c2c2c2;border-radius: 5px;display: flex; align-items: center;
+        padding: 0px 5px;cursor: pointer;">
+          <button style="border: solid 1px #767676;
+          margin-right: 5px;    white-space: nowrap;">Seleccionar archivo</button>
+          <div style="    white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          display: -webkit-box;
+          -webkit-line-clamp: 3;
+          -webkit-box-orient: vertical;">{{nombrefile}}</div>
+        </div>
         <input #fileInput type="file" id="file"
         (change)="getFileDetails($event)"
         style="    width: 100%;
         border: solid 1px #c2c2c2;
         padding: 7px;
-        border-radius: 5px;">
+        border-radius: 5px;display: none;">
           <div *ngIf="!filestatus && fileErrorMsg!=''">{{fileErrorMsg}}</div>
       </div>
-      <div class="col-6 col-md-4 col-lg-3" style="display: flex;align-items: center;justify-content: flex-end;">
+      <div class="col-12 col-md-4 col-lg-3" style="display: flex;align-items: center;justify-content: flex-end;">
         <app-default-button [confs]="{color:'primary',titulo:'Enviar'}" [style]="'padding:0px 30px;margin:0px '"
-          [disabled]="!filestatus" (ButtoclClick)="EnviarFile()"></app-default-button>
+          (ButtoclClick)="EnviarFile()"></app-default-button>
       </div>
     </ng-container>
     <ng-template #cargando>
@@ -115,13 +125,12 @@
 
     </div>
     <div class="col-12 col-md-12 col-lg-12" style="margin: 50px 0px 10px;">
-      <div class="cabeceraExpandProyecto" [ngClass]="{'cabeceraExpandProyectoOpen':instruccionesAcerca}">
+      <div class="cabeceraExpandProyecto" [ngClass]="{'cabeceraExpandProyectoOpen':instruccionesAcerca}"
+      (click)="instruccionesAcerca=!instruccionesAcerca">
         <div>Instrucciones acerca del Proyecto</div>
         <div>
-          <i class="material-icons no-seleccionable " *ngIf="!instruccionesAcerca"
-            (click)="instruccionesAcerca=true">keyboard_arrow_down</i>
-          <i class="material-icons no-seleccionable " *ngIf="instruccionesAcerca"
-            (click)="instruccionesAcerca=false">keyboard_arrow_up</i>
+          <i class="material-icons no-seleccionable " *ngIf="!instruccionesAcerca">keyboard_arrow_down</i>
+          <i class="material-icons no-seleccionable " *ngIf="instruccionesAcerca">keyboard_arrow_up</i>
         </div>
       </div>
       <div class="contentCabeceraProyecto" *ngIf="instruccionesAcerca">
@@ -211,13 +220,12 @@
       </div>
     </div>
     <div class="col-12 col-md-12 col-lg-12" style="margin: 10px 0px ;">
-      <div class="cabeceraExpandProyecto" [ngClass]="{'cabeceraExpandProyectoOpen':instruccionesSubir}">
+      <div class="cabeceraExpandProyecto" [ngClass]="{'cabeceraExpandProyectoOpen':instruccionesSubir}"
+      (click)="instruccionesSubir=!instruccionesSubir">
         <div>Instrucciones para subir el Proyecto</div>
         <div>
-          <i class="material-icons no-seleccionable " *ngIf="!instruccionesSubir"
-            (click)="instruccionesSubir=true">keyboard_arrow_down</i>
-          <i class="material-icons no-seleccionable " *ngIf="instruccionesSubir"
-            (click)="instruccionesSubir=false">keyboard_arrow_up</i>
+          <i class="material-icons no-seleccionable " *ngIf="!instruccionesSubir">keyboard_arrow_down</i>
+          <i class="material-icons no-seleccionable " *ngIf="instruccionesSubir">keyboard_arrow_up</i>
         </div>
       </div>
       <div class="contentCabeceraProyecto" *ngIf="instruccionesSubir">

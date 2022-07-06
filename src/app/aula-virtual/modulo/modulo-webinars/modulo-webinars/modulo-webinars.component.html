@@ -1,14 +1,15 @@
 <div class="cursoTitle">{{Capitulo}}</div>
 <div class="row" style="align-items: center;">
   <div class="tipoIndicacionTitle col-12 col-md-12 col-lg-12">
-    <img class="ImgIndicacionesContent" src="../../../../assets/icons/webinar-naranja.svg">
-    <div>Webinar</div>
+    <img src="../../../../assets/icons/webinar-naranja.svg">
+    <div>Webinars</div>
   </div>
 </div>
 
 <ng-container *ngIf="DetallesWebinar.length!=0">
   <div>
-    Hola {{NombreAlumno}}, tienes programados los siguientes webinars:
+    Hola {{NombreAlumno}}, estos son los webinars programados para que puedas conversar con el docente y
+    compañeros sobre tus dudas y apreciaciones del curso:
   </div>
   <div class="table-resposive Webinars" style="margin-top: 20px;">
     <table class="TablaWebinar">
@@ -45,8 +46,8 @@
                 </div>
               </td>
               <td class="webinar" style="width: 200px;text-align: center;">
-                <app-default-button [confs]="{color:'primary',titulo:'Ingresar'}" [disabled]="item.esWebinarConfirmado==false"
-                [style]="'width: 100%;margin-top: 20px;'" [ruta]="item.urlWebex">
+                <app-default-button [confs]="{color:'primary',titulo:'Ingresar'}"
+                [style]="'width: 100%;margin-top: 20px;'" (ButtoclClick)="IrAWebinar(i)" >
                 </app-default-button>
               </td>
             </tr>

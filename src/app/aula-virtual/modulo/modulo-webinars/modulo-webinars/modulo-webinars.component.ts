@@ -1,6 +1,9 @@
 import { Component, Input, OnInit, SimpleChanges } from '@angular/core';
+import { Router } from '@angular/router';
+
 import { DatosPerfilService } from 'src/app/Core/Shared/Services/DatosPerfil/datos-perfil.service';
 import { HelperService } from 'src/app/Core/Shared/Services/helper.service';
+import { SnackBarServiceService } from 'src/app/Core/Shared/Services/SnackBarService/snack-bar-service.service';
 
 @Component({
   selector: 'app-modulo-webinars',
@@ -11,7 +14,9 @@ export class ModuloWebinarsComponent implements OnInit {
 
   constructor(
     private _HelperService:HelperService,
-    private _DatosPerfilService:DatosPerfilService
+    private _DatosPerfilService:DatosPerfilService,
+    private router:Router,
+    private _SnackBarServiceService: SnackBarServiceService,
   ) { }
   @Input() Capitulo='';
   @Input() IdMatriculaCabecera=0;
@@ -37,5 +42,12 @@ export class ModuloWebinarsComponent implements OnInit {
       }
     })
   }
-
+  IrAWebinar(index:number){
+    var w=this.DetallesWebinar[index];
+    if(w.esWebinarConfirmado==false){
+      this._SnackBarServiceService.openSnackBar("El webinar no esta disponible todavia",'x',10,"snackbarCrucigramaerror");
+    }else{
+      this.router.navigate([w.urlWebex]);
+    }
+  }
 }

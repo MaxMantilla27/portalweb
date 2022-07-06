@@ -12,5 +12,6 @@ export interface formulario
   data?:Array<Basic>,
   disable?:boolean,
   class?:string,
-  focus?:boolean
+  focus?:boolean,
+  error?:string
 }

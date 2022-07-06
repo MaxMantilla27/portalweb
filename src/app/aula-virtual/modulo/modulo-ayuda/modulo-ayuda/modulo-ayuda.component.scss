@@ -3,18 +3,15 @@
   background-color: #F4F4F4;
   height: 60px;
   border-radius: 10px;
+  display: flex;
+  align-items: center;
 }
 .ImgAyudaContent{
   height: 30px !important;
-  margin-left: 30px;
-  margin-top: 15px;
 }
 .AyudaContent{
-  width: 500px;
   text-align: left;
   border-radius: 2px;
   font-weight: bold;
-  margin-top: 20px;
-  margin-left: 15px;
 
 }

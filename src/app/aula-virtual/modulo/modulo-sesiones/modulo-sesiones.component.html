@@ -1,11 +1,13 @@
 <div class="cursoTitle">{{Capitulo}}</div>
 <div class="cursoTabDescripcion" style="
-margin-bottom: 10px;">¡Bienvenido! Debes completar los siguientes modulos de tu programa:
+margin-bottom: 10px;">Estas son las actividades de aprendizaje que debes completar.
   <br>
 </div>
 <div class="msjCom" style="border: solid 2px #fff7ee; padding: 10px;margin-bottom: 20px;">
   <img src="../../../../assets/icons/icon-hand.svg" alt="">
-  <strong> Recuerda: </strong>Debes completar el curso I,para poder acceder al siguiente curso, y asi progresivamente.
+  <div>
+    <strong> Recuerda: </strong>Debes completar la sesión 1 para poder acceder a la siguiente actividad, y así progresivamente.
+  </div>
 </div>
 <div *ngIf="estructuraCapitulo!=undefined">
 
@@ -18,7 +20,7 @@ margin-bottom: 10px;">¡Bienvenido! Debes completar los siguientes modulos de tu
       <div class="contentCapitulo">
 
         <div class="hederCapitulo row" style="margin-top: 20px;">
-          <div class="titleCapitulo col-12 col-md-12 col-lg-12">Capitulo {{item.numeroCapitulo}}:
+          <div class="titleCapitulo col-12 col-md-12 col-lg-12">Capítulo {{item.numeroCapitulo}}:
             {{item.nombreCapitulo}}</div>
         </div>
       </div>
@@ -60,7 +62,7 @@ margin-bottom: 10px;">¡Bienvenido! Debes completar los siguientes modulos de tu
             <div class="capituloSesion row" *ngFor="let sesiones of item.registroEstructuraCursoSesion">
               <div class="col-12 col-md-12 col-lg-12"
                 style="margin: 15px 0px;display: flex;justify-content: space-between;font-weight: 600;">
-                {{sesiones.nombreSesion}}
+                Sesión {{sesiones.numeroSesion}}: {{sesiones.nombreSesion}}
                 <div style="display: flex;font-weight: 100;">
                   {{sesiones.subV}}/{{sesiones.registroEstructuraCursoSubSesion.length}}
                   <div style="position: relative;width: 30px;">
@@ -76,7 +78,7 @@ margin-bottom: 10px;">¡Bienvenido! Debes completar los siguientes modulos de tu
               </div>
               <ng-container *ngFor="let subsesiones of sesiones.registroEstructuraCursoSubSesion">
                 <div class="col-12 row sesiones" style="padding: 10px 40px;">
-                  <div class="capituloSesionesSubsesiones contentModuloSesiones col-12 col-md-7 col-lg-9">
+                  <div class="capituloSesionesSubsesiones contentModuloSesiones col-12 col-md-8 col-lg-9">
                     <i class="material-icons playsesion">play_circle</i>
                     <div style="width: calc( 100% - 35px);">
                       <div class="tituloSesion" (click)="IrVideo('1/'+item.numeroCapitulo+'/'+subsesiones.numeroSubSesion,subsesiones.habilitado)">
@@ -101,7 +103,7 @@ margin-bottom: 10px;">¡Bienvenido! Debes completar los siguientes modulos de tu
                     </div>
 
                   </div>
-                  <div class="col-12 col-md-5 col-lg-3 calificacionpromedio" >
+                  <div class="col-12 col-md-4 col-lg-3 calificacionpromedio" >
                     <div *ngIf="subsesiones.promedioCalificacion!=0" class="calificado">Calificación:
                       <strong>{{subsesiones.promedioCalificacion | number:'0.0-0'}}</strong>
                     </div>
@@ -117,11 +119,11 @@ margin-bottom: 10px;">¡Bienvenido! Debes completar los siguientes modulos de tu
               <ng-container *ngFor="let sesiones of item.registroEstructuraCursoSesion">
 
                 <div class="col-12 row sesiones" style="padding: 10px 20px;">
-                  <div class="col-12 col-md-7 col-lg-9 capituloJustSesion contentModuloSesiones">
+                  <div class="col-12 col-md-8 col-lg-9 capituloJustSesion contentModuloSesiones">
                     <i class="material-icons playsesion">play_circle</i>
                     <div style="width: calc( 100% - 35px);">
                       <div class="tituloSesion" (click)="IrVideo('1/'+item.numeroCapitulo+'/'+sesiones.numeroSesion,sesiones.habilitado)">
-                        {{sesiones.nombreSesion}}</div>
+                        Sesión {{sesiones.numeroSesion}}: {{sesiones.nombreSesion}}</div>
                       <mat-progress-bar mode="determinate"
                         [value]="(sesiones.porcentajeVideoVisualizado!=undefined)?sesiones.porcentajeVideoVisualizado:0">
                       </mat-progress-bar>
@@ -142,7 +144,7 @@ margin-bottom: 10px;">¡Bienvenido! Debes completar los siguientes modulos de tu
                     </div>
                   </div>
 
-                  <div class="col-12 col-md-5 col-lg-3 calificacionpromedio">
+                  <div class="col-12 col-md-4 col-lg-3 calificacionpromedio">
                     <div *ngIf="sesiones.promedioCalificacion!=0" class="calificado">Calificación:
                       <strong>{{sesiones.promedioCalificacion | number:'0.0-0'}}</strong>
                     </div>

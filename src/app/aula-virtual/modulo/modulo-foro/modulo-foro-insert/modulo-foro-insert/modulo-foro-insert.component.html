@@ -6,25 +6,22 @@
                 <div class="row">
                   <mat-form-field appearance="outline" [floatLabel]="'always'">
                     <input type="text" placeholder="Título del tema" formControlName="Titulo" matInput  />
-                    <mat-error *ngIf="userForm.invalid">Debe ingresar el título del tema</mat-error>
+                    <mat-error *ngIf="userForm.invalid">Debes ingresar el título del tema</mat-error>
                   </mat-form-field>
                 </div>
                 <div class="titleForo" style="font-weight: bold;">Mensaje: </div>
                 <div class="row">
                   <textarea class="ContenidoPreguntaForo" formControlName="Contenido" rows="4" ></textarea>
                 </div>
-                <div class="row" style="margin-top: 20px;">
-                  <div style="width: 50%;"></div>
-                  <div style="width: 50%;display:flex">
-                    <div class="col-6 col-md-6 col-lg-6">
+                <div class="row" style="margin-top: 20px; justify-content: flex-end;">
+                    <div style="width: auto;">
                       <app-default-button  (click)="VolverAtras()" [confs]="{color:'primary',titulo:'Cerrar'}"
-                      [style]="'width: 95%;margin-top: 20px;'"></app-default-button>
+                      [style]="'margin-top: 10px;'"></app-default-button>
                     </div>
-                    <div class="col-6 col-md-6 col-lg-6">
+                    <div style="width: auto;">
                       <app-default-button [confs]="{color:'primary',titulo:'Publica Tema'}" [disabled]="!userForm.valid"
-                      [style]="'width: 95%;margin-top: 20px;'"(ButtoclClick)="InsertarForo()"></app-default-button>
+                      [style]="'margin-top: 10px;'"(ButtoclClick)="InsertarForo()"></app-default-button>
                     </div>
-                  </div>
                 </div>
           </div>
           </div>

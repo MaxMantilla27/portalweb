@@ -6,6 +6,7 @@ import { AlumnoService } from 'src/app/Core/Shared/Services/Alumno/alumno.servic
 import { HelperService } from 'src/app/Core/Shared/Services/helper.service';
 import { RegionService } from 'src/app/Core/Shared/Services/Region/region.service';
 import { SessionStorageService } from 'src/app/Core/Shared/Services/session-storage.service';
+import { SnackBarServiceService } from 'src/app/Core/Shared/Services/SnackBarService/snack-bar-service.service';
 
 
 @Component({
@@ -18,7 +19,8 @@ export class MiPerfilComponent implements OnInit {
   constructor(private _HelperService: HelperService,
     private _RegionService:RegionService,
     private _AlumnoService:AlumnoService,
-    private _SessionStorageService:SessionStorageService
+    private _SessionStorageService:SessionStorageService,
+    private _SnackBarServiceService: SnackBarServiceService,
     ) {}
   public migaPan = [
     {
@@ -169,6 +171,11 @@ export class MiPerfilComponent implements OnInit {
       this.DatosAlumnoEnvio.idIndustria = this.userForm.get('Industria')?.value;
       this._AlumnoService.ActualizarPerfilAlumno(this.DatosAlumnoEnvio).subscribe({
         next: (x) => {
+          this._SnackBarServiceService.openSnackBar("Los cambios se han guardado correctamente",'x',15,"snackbarCrucigramaSucces");
+        },
+        error:(e)=>{
+
+          this._SnackBarServiceService.openSnackBar("Ocurrió un error interno intenta mas tarde",'x',15,"snackbarCrucigramaerror");
         },
         complete: () => {
           this.statuscharge = false;

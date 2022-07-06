@@ -30,9 +30,7 @@
                   (click)="PreguntaExpand=-1" style="margin-top: 20px;">keyboard_arrow_up</i>
               </div>
             </div>
-            <div class="ContenidoRespuestaPregunta" *ngIf="PreguntaExpand==i">
-              {{item.respuesta}}
-
+            <div class="ContenidoRespuestaPregunta" *ngIf="PreguntaExpand==i" [innerHtml]="item.respuesta | safeHtml">
             </div>
           </div>
         </div>

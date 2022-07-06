@@ -6,16 +6,20 @@
 <div style="border-top: solid 3px #f4f4f4"></div>
 <div class="container">
   <div class="row rowpaddAv">
-    <div class="col-12 col-md-12 col-lg-12">
+    <div class="col-12 col-md-12 col-lg-12"  style="position: relative;">
+
+      <div class="openClose" [ngClass]="{'reverse':!hide}" (click)="hide=!hide">
+        <i class="material-icons">double_arrow</i>
+      </div>
       <mat-tab-group class="tabVertical" [(selectedIndex)]="tabIndex" (selectedTabChange)="tabChanged($event)">
         <mat-tab>
           <ng-template mat-tab-label>
-            <div class="contentHeaderM">
+            <div *ngIf="!hide" class="contentHeaderM">
               <div class="iconMat iconSesiones"></div>
               <div class="titleMatr">Sesiones</div>
             </div>
           </ng-template>
-          <div style="padding: 10px 30px">
+          <div class="pad-resp">
             <app-modulo-sesiones [Capitulo]="json.NombreCapitulo" [idModalidad]="json.idModalidad" [estructuraCapitulo]="estructuraCapitulo">
             </app-modulo-sesiones>
           </div>
@@ -23,68 +27,70 @@
 
         <!-- <mat-tab>
           <ng-template mat-tab-label>
-            <div class="contentHeaderM">
+            <div *ngIf="!hide" class="contentHeaderM">
               <div class="iconMat iconWebinars"></div>
               <div class="titleMatr">Webinar</div>
             </div>
           </ng-template>
-          <div style="padding: 10px 30px">
+          <div class="pad-resp">
             <app-modulo-webinars [Capitulo]="json.NombreCapitulo" [IdMatriculaCabecera]="json.IdMatriculaCabecera"></app-modulo-webinars>
           </div>
         </mat-tab> -->
         <mat-tab>
           <ng-template mat-tab-label>
-            <div class="contentHeaderM">
+            <div *ngIf="!hide" class="contentHeaderM">
               <div class="iconMat iconSilabo"></div>
-              <div class="titleMatr">Silabo</div>
+              <div class="titleMatr">Sílabo</div>
             </div>
           </ng-template>
-          <div style="padding: 10px 30px">
+          <div class="pad-resp">
             <app-modulo-silabo [Capitulo]="json.NombreCapitulo" [IdPgeneral]="json.IdPGeneralHijo"
               [Estructura]="estructuraCapitulo"></app-modulo-silabo>
           </div>
         </mat-tab>
         <mat-tab>
           <ng-template mat-tab-label>
-            <div class="contentHeaderM">
+            <div *ngIf="!hide" class="contentHeaderM">
               <div class="iconMat iconRecursos"></div>
               <div class="titleMatr">Recursos</div>
             </div>
           </ng-template>
-          <div style="padding: 10px 30px"><app-modulo-recurso [Capitulo]="json.NombreCapitulo" [Estructura]="estructuraCapitulo"
+          <div class="pad-resp"><app-modulo-recurso [Capitulo]="json.NombreCapitulo" [Estructura]="estructuraCapitulo"
             [idPEspecifico]="json.IdPEspecificoHijo" [tipo]="json.idModalidad" [idPGeneral]="json.IdPGeneralHijo"></app-modulo-recurso></div>
         </mat-tab>
         <mat-tab>
           <ng-template mat-tab-label>
-            <div class="contentHeaderM">
+            <div *ngIf="!hide" class="contentHeaderM">
               <div class="iconMat iconForo"></div>
               <div class="titleMatr">Foro</div>
             </div>
           </ng-template>
-          <div style="padding: 10px 30px">
+          <div class="pad-resp">
             <app-modulo-foro [Capitulo]="json.NombreCapitulo" [IdPgeneral]="json.IdPGeneralHijo" [IdPprincipal]="json.IdPGeneralPadre" [IdPEspecificoPadre]="json.IdPEspecificoPadre" [IdPEspecificoHijo]="json.IdPEspecificoHijo"></app-modulo-foro>
           </div>
         </mat-tab>
         <mat-tab>
           <ng-template mat-tab-label>
-            <div class="contentHeaderM">
+            <div *ngIf="!hide" class="contentHeaderM">
               <div class="iconMat iconCalificaciones"></div>
               <div class="titleMatr">Calificaciones</div>
             </div>
           </ng-template>
-          <div style="padding: 10px 30px">
+          <div class="pad-resp">
             <app-modulo-calificaciones [Capitulo]="json.NombreCapitulo" [IdMatriculaCabecera]="json.IdMatriculaCabecera" [IdPEspecifico]="json.IdPEspecificoHijo"></app-modulo-calificaciones>
           </div>
         </mat-tab>
         <mat-tab>
           <ng-template mat-tab-label>
-            <div class="contentHeaderM" [ngClass]="{'ActiveChil':AyudaActive==true}">
+            <div *ngIf="!hide" class="contentHeaderM" [ngClass]="{'ActiveChil':AyudaActive==true}">
               <div class="iconMat iconAyuda"></div>
               <div class="titleMatr">Ayuda</div>
             </div>
           </ng-template>
-          <div style="padding: 10px 30px">
-            <app-modulo-ayuda [Capitulo]="json.NombreCapitulo" [IdMatriculaCabecera]="json.IdMatriculaCabecera" [IdPGeneral]="json.IdPGeneralHijo" [IdPrincipal]="json.IdPGeneralPadre" [IdPEspecifico]="json.IdPEspecificoHijo"></app-modulo-ayuda>
+          <div class="pad-resp">
+            <app-modulo-ayuda [Capitulo]="json.NombreCapitulo" [IdMatriculaCabecera]="json.IdMatriculaCabecera"
+            [IdPGeneral]="json.IdPGeneralHijo" [IdPrincipal]="json.IdPGeneralPadre"
+             [IdPEspecifico]="json.IdPEspecificoHijo" (OnChange)="tabIndex=tabIndex+$event"></app-modulo-ayuda>
           </div>
         </mat-tab>
 
@@ -93,7 +99,7 @@
 
           <mat-tab>
             <ng-template mat-tab-label class="tabSubcontent">
-              <div class="contentHeaderM subContent" style="cursor: pointer;" (click)="alertaPreguntasFrecuentes=!alertaPreguntasFrecuentes">
+              <div *ngIf="!hide" class="contentHeaderM subContent" style="cursor: pointer;" (click)="alertaPreguntasFrecuentes=!alertaPreguntasFrecuentes">
                 <div class="titleMatr">Preguntas frecuentes</div>
               </div>
             </ng-template>
@@ -105,7 +111,7 @@
           </mat-tab>
           <mat-tab >
             <ng-template mat-tab-label>
-              <div class="contentHeaderM subContent" style="cursor: pointer;" (click)="alertaQuejasSugerencias=!alertaQuejasSugerencias">
+              <div *ngIf="!hide" class="contentHeaderM subContent" style="cursor: pointer;" (click)="alertaQuejasSugerencias=!alertaQuejasSugerencias">
                 <div class="titleMatr">Quejas y sugerencias</div>
               </div>
             </ng-template>

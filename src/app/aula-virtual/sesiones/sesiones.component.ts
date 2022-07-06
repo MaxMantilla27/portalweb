@@ -35,6 +35,7 @@ export class SesionesComponent implements OnInit {
   public tabIndex = 0;
   public idMatricula = 0;
   public idPEspecificoHijo = 0;
+  public hide=false
   public json: ParametrosEstructuraEspecificaDTO = {
     AccesoPrueba: false,
     IdMatriculaCabecera: 0,

@@ -7,7 +7,7 @@
 </div>
 
 <div class="resume" *ngIf="miPerfil!=undefined">¡Hola {{miPerfil.datosAlumno.nombres}}! <br>
-  Te compartimos los siguientes recursos, que te seran de ayuda en el desarrollo del curso</div>
+  Estos son los recursos que te serán de ayuda en tu aprendizaje.</div>
 
 <div class="row">
   <div class="col-12 col-md-12 col-lg-12">
@@ -15,21 +15,40 @@
     <div class="contentMaterial">
       <ng-container *ngIf="Estructura!=undefined">
         <div *ngFor="let est of Estructura.registroEstructuraCursoCapitulo">
-          <div style="padding: 5px 0px;    text-decoration: underline;
-            font-weight: 600;">{{est.nombreCapitulo}}</div>
-          <div style="padding:5px 20px;">
+          <div style="padding: 5px 0px;font-weight: 600;display: flex;justify-content: space-between;align-items: center;width: 100%;cursor: pointer;"
+          (click)="est.open=(est.open==undefined || est.open==false)?true:false">
+            <div>{{est.nombreCapitulo}}</div>
+
+            <div>
+              <i class="material-icons no-seleccionable " *ngIf="!est.open">keyboard_arrow_down</i>
+              <i class="material-icons no-seleccionable " *ngIf="est.open">keyboard_arrow_up</i>
+            </div>
+          </div>
+          <div style="padding:5px 20px;" *ngIf="est.open==true">
 
             <ng-container *ngIf="Estructura.contineSubSesion==true">
 
               <div *ngFor="let sesiones of est.registroEstructuraCursoSesion" style="display: flex;flex-direction: column;">
-                {{sesiones.nombreSesion}}
-                <ng-container *ngFor="let subsesiones of sesiones.registroEstructuraCursoSubSesion">
-                  <a class="itemMaterial" target="_blank"
-                  [href]="'https://repositorioweb.blob.core.windows.net/repositorioweb/aulavirtual/documento-cursos/AulaVirtual/'+subsesiones.archivo">
-                  <img style="width: 15px;height: auto;margin-right: 15px;" src="../../../../assets/icons/pdf-31.svg" alt="">
-                    {{subsesiones.archivo.split('/')[subsesiones.archivo.split('/').length-1]}}
-                  </a>
+                <div style="padding: 5px 0px;display: flex;justify-content: space-between;align-items:
+                center;width: 100%;cursor: pointer;" (click)="sesiones.open=(sesiones.open==undefined || sesiones.open==false)?true:false">
+                  <div>
+                    {{sesiones.nombreSesion}}
+                  </div>
+                  <div>
+                    <i class="material-icons no-seleccionable " *ngIf="!sesiones.open">keyboard_arrow_down</i>
+                    <i class="material-icons no-seleccionable " *ngIf="sesiones.open">keyboard_arrow_up</i>
+                  </div>
+                </div>
+                <ng-container *ngIf="sesiones.open==true">
+                  <ng-container *ngFor="let subsesiones of sesiones.registroEstructuraCursoSubSesion">
+                    <a class="itemMaterial" target="_blank"
+                    [href]="'https://repositorioweb.blob.core.windows.net/repositorioweb/aulavirtual/documento-cursos/AulaVirtual/'+subsesiones.archivo">
+                    <img style="width: 15px;height: auto;margin-right: 15px;" src="../../../../assets/icons/pdf-31.svg" alt="">
+                      {{subsesiones.archivo.split('/')[subsesiones.archivo.split('/').length-1]}}
+                    </a>
+                  </ng-container>
                 </ng-container>
+
               </div>
             </ng-container>
 

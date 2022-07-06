@@ -3,8 +3,8 @@
   /* flex-direction: column; */
   /* justify-content: center; */
   /* align-items: center; */
-  padding: 20px;
-  background: #f4f4f4;
+  padding: 10px;
+  //background: #f4f4f4;
   border-radius: 5px;
   align-items: center;
   cursor: pointer;
@@ -24,10 +24,11 @@
 }
 
 .contentIndicacionesContent:hover{
-  box-shadow: 0px 0px 3px #626261;
-  background: #ff7012;
+  //box-shadow: 0px 0px 3px #626261;
+  //background: #ff7012;
   .TitleIndicacionesContent{
-    color: white;
+    //color: white;
+    text-decoration: underline;
   }
 }
 .imgIndicaciones{

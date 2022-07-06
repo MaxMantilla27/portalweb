@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { HelperService } from 'src/app/Core/Shared/Services/helper.service';
 
 @Component({
@@ -16,6 +16,7 @@ export class ModuloAyudaComponent implements OnInit {
   @Input() IdPGeneral = 0;
   @Input() IdPrincipal = 0;
   @Input() IdPEspecifico =0;
+  @Output() OnChange = new EventEmitter<number>();
   public miPerfil:any
   public preguntasFrecuentes= false;
   public quejasSugerencias=false;

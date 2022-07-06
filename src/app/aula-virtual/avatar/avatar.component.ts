@@ -13,6 +13,7 @@ import { formulario } from 'src/app/Core/Models/Formulario';
 import { AvatarService } from 'src/app/Core/Shared/Services/Avatar/avatar.service';
 import { HelperService } from 'src/app/Core/Shared/Services/helper.service';
 import { SessionStorageService } from 'src/app/Core/Shared/Services/session-storage.service';
+import { SnackBarServiceService } from 'src/app/Core/Shared/Services/SnackBarService/snack-bar-service.service';
 
 @Component({
   selector: 'app-avatar',
@@ -24,7 +25,8 @@ export class AvatarComponent implements OnInit {
     private _HelperService: HelperService,
     private _AvatarService: AvatarService,
     private _SessionStorageService: SessionStorageService,
-    private router: Router
+    private router: Router,
+    private _SnackBarServiceService: SnackBarServiceService,
   ) {}
   public migaPan = [
     {
@@ -339,6 +341,7 @@ export class AvatarComponent implements OnInit {
     this._AvatarService.ActualizarAvatar(this.DatosAvatarEnvio).subscribe({
       next: (x) => {
         console.log(x);
+        this._SnackBarServiceService.openSnackBar("Se modifico el avatar",'x',15,"snackbarCrucigramaSucces");
       },
       error: (e) => {
         this.statuscharge = false;

@@ -36,7 +36,7 @@ export class MisCursosComponent implements OnInit {
 
   ngOnInit(): void {
     this.textoBienvenido =
-      '!Bienvenido¡ Tienes acceso a los siguientes cursos:';
+      '¡Bienvenido! Tienes acceso a los siguientes cursos:';
     this.GetDatosPerfilService();
     this.ObtenerCursosPrueba();
   }

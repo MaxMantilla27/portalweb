@@ -1,8 +1,9 @@
-<div class="contentIndicacionesContent" (mouseenter)="HoverIn.emit()" (mouseleave)="HoverOut.emit()">
+<!-- <div class="contentIndicacionesContent" (mouseenter)="HoverIn.emit()" (mouseleave)="HoverOut.emit()"> -->
+<div class="contentIndicacionesContent" (click)="ButtoclClick.emit()">
   <div class="imgIndicaciones"
   [ngStyle]="{'background-image': 'url(../../../../assets/icons/'+imgUrl+')'}"
   >
     <!-- <img class="ImgIndicacionesContent" [src]="'../../../../assets/icons/'+imgUrl"  alt="" *ngIf="imgUrl!=''" > -->
   </div>
-  <div class="TitleIndicacionesContent" (click)="ButtoclClick.emit()">{{title}}</div>
+  <div class="TitleIndicacionesContent" >{{title}}</div>
 </div>

@@ -1,6 +1,81 @@
+.tabVertical {
+  flex-direction: row !important;
+}
+.tabVertical .mat-tab-header {
+  border-bottom: none !important;
+}
+.tabVertical .mat-tab-header .mat-tab-header-pagination {
+  display: none !important;
+}
+.tabVertical .mat-tab-header .mat-tab-label-container {
+  border-right: 2px solid #d2d2d2;
+}
+.tabVertical
+  .mat-tab-header
+  .mat-tab-label-container
+  .mat-tab-list
+  .mat-tab-labels {
+  flex-direction: column !important;
+  opacity: 1;
+  max-width: 180px;
+  //border-right: 2px solid #d2d2d2;
+}
+.tabVertical
+  .mat-tab-header
+  .mat-tab-label-container
+  .mat-tab-list
+  .mat-tab-labels
+  .mat-tab-label {
+  justify-content: flex-start;
+  opacity: 1 !important;
+  padding-left: 0px;
+  padding-right: 0px;
+  min-width: 0px !important;
+  height: auto !important;
+}
+.tabVertical
+  .mat-tab-header
+  .mat-tab-label-container
+  .mat-tab-list
+  .mat-tab-labels
+  .mat-tab-label:hover {
+  background: #f4f4f4;
+}
+.tabVertical
+  .mat-tab-header
+  .mat-tab-label-container
+  .mat-tab-list
+  .mat-tab-labels
+  .mat-tab-label
+  .mat-tab-label-content {
+  width: 100%;
+}
 
-.pad-resp{
-  padding:  10px 5px;
+.tabVertical
+  .mat-tab-header
+  .mat-tab-label-container
+  .mat-tab-list
+  .mat-ink-bar {
+  height: 100%;
+  left: 98% !important;
+  display: none;
+}
+.tabVertical .mat-tab-body-wrapper {
+  flex: 1 1 auto !important;
+}
+.tabVertical .mat-tab-body-wrapper .mat-tab-body .mat-tab-body-content {
+  overflow: hidden;
+}
+.tabVertical
+  mat-tab-header
+  .mat-tab-label-container
+  .mat-tab-list
+  .mat-tab-labels
+  .mat-tab-label-active {
+  background: #f4f4f4;
+}
+.pad-resp {
+  padding: 25px 10px;
 }
 
 @media (max-width: 768px) {
@@ -10,6 +85,17 @@
     background: white;
     height: 100%;
     min-width: 2px;
+  }
+
+  .tabVerticalses
+  .mat-tab-header
+  .mat-tab-label-container
+  .mat-tab-list
+  .mat-tab-labels {
+    max-width: 250px !important;
+  }
+  .reverse2 {
+    left: 265px !important;
   }
 }
 @media (max-width: 576px) {
@@ -21,40 +107,40 @@
   .rowpaddAv {
     padding: 45px 20px;
   }
-  .pad-resp{
-    padding:  10px 5px;
+  .pad-resp {
+    padding: 25px 10px;
   }
 }
 @media (min-width: 768px) {
   .rowpaddAv {
     padding: 45px 40px 45px 20px;
   }
-  .pad-resp{
-    padding:  10px 5px;
+  .pad-resp {
+    padding: 25px 10px;
   }
 }
 @media (min-width: 992px) {
   .rowpaddAv {
     padding: 45px 90px 45px 20px;
   }
-  .pad-resp{
-    padding:  10px 10px;
+  .pad-resp {
+    padding: 25px 10px;
   }
 }
 @media (min-width: 1200px) {
   .rowpaddAv {
     padding: 45px 90px 45px 20px;
   }
-  .pad-resp{
-    padding:  10px 20px;
+  .pad-resp {
+    padding: 25px 20px;
   }
 }
 @media (min-width: 1400px) {
   .rowpaddAv {
     padding: 45px 90px 45px 20px !important;
   }
-  .pad-resp{
-    padding:  10px 30px;
+  .pad-resp {
+    padding: 25px 30px;
   }
 }
 .resumenPagoTarjeta {
@@ -83,7 +169,7 @@
         margin: 0px;
         padding: 10px 0px 10px 0px;
         border-top: solid 1px #a6a6a6;
-        div{
+        div {
           padding: 0px;
           margin: 0px;
         }
@@ -93,7 +179,7 @@
         margin: 0px;
         padding: 10px 0px 10px 0px;
         border-top: solid 1px #a6a6a6;
-        div{
+        div {
           padding: 0px;
           margin: 0px;
         }
@@ -101,19 +187,19 @@
     }
   }
 }
-.iconoPagoTarjeta{
+.iconoPagoTarjeta {
   display: flex;
   justify-content: center;
   margin: 20px;
   align-items: center;
-  .imgPagoTarjeta{
+  .imgPagoTarjeta {
     width: 80px;
     height: 80px;
     background-image: url(../../assets/icons/security.svg);
-    background-repeat:no-repeat ;
+    background-repeat: no-repeat;
     background-position: center;
   }
-  .textPagoTarjeta{
+  .textPagoTarjeta {
     display: flex;
     flex-direction: column;
     font-size: 12px;
@@ -121,7 +207,7 @@
     color: #b2b2b2;
     margin: 0px 10px;
   }
-  .descPagoTarjeta{
+  .descPagoTarjeta {
     display: flex;
     flex-direction: column;
     font-size: 10px;
@@ -130,8 +216,7 @@
     margin: 0px 10px;
   }
 }
-.tipoIndicacionTitle div{
-
+.tipoIndicacionTitle div {
   font-size: 17px;
   color: #505050;
 }
@@ -147,4 +232,9 @@
 .reverse {
   transform: scaleX(-1);
   left: 195px;
+}
+
+.reverse2 {
+  transform: scaleX(-1);
+  left: 305px;
 }

@@ -8,8 +8,8 @@
     <div class="col-12 col-md-12 col-lg-12 newInpiut" style="display: flex;margin-bottom: 20px;">
 
       <mat-form-field appearance="outline" [floatLabel]="'always'">
-        <mat-label>Tipo de documento</mat-label>
-        <mat-select formControlName="IdTipoQuejaSugerencia" placeholder="Tipo de documento">
+        <mat-label>Tipo de solicitud</mat-label>
+        <mat-select formControlName="IdTipoQuejaSugerencia" placeholder="Tipo de solicitud">
           <mat-option *ngFor="let option of Tipo" [value]="option.id">
             {{option.nombre}}</mat-option>
         </mat-select>

@@ -25,6 +25,7 @@ export class ModuloComponent implements OnInit {
       urlWeb: '/AulaVirtual/MisCursos',
     },
   ];
+  public hide=false
   public tabIndex = 0;
   public idMatricula=0;
   public idPEspecificoHijo=0;

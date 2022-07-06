@@ -11,7 +11,7 @@
 
     (click)="prevc()" > < Anterior</div>
     <div style="text-align: right;font-size: 13px;cursor: pointer;" class="vinculo"
-    (click)="nextc()" *ngIf="tarea!=undefined && tarea.registroEvaluacionArchivo.length>0">Siguiente Sesion></div>
+    (click)="nextc()" *ngIf="tarea!=undefined && tarea.registroEvaluacionArchivo.length>0">Siguiente ></div>
   </div>
   <div class="col-12 col-md-12 col-lg-12" style="    margin-top: 40px;
   margin-bottom: 20px;">
@@ -21,11 +21,21 @@
   </div>
   <ng-container *ngIf="progress==0;else cargando">
     <div class="col-6 col-md-8 col-lg-9 fieldTarea">
-
+      <div (click)="fileInput.click()" style="height: 38px;width: 100%;border:solid 1px #c2c2c2;border-radius: 5px;display: flex; align-items: center;
+      padding: 0px 5px;cursor: pointer;">
+        <button style="border: solid 1px #767676;
+        margin-right: 5px;    white-space: nowrap;">Seleccionar archivo</button>
+        <div style="    white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;">{{nombrefile}}</div>
+      </div>
       <input #fileInput type="file" id="file" (change)="getFileDetails($event)" style="    width: 100%;
       border: solid 1px #c2c2c2;
       padding: 7px;
-      border-radius: 5px;">
+      border-radius: 5px;display: none;">
       <div *ngIf="!filestatus && fileErrorMsg!=''">{{fileErrorMsg}}</div>
     </div>
     <div class="col-6 col-md-4 col-lg-3" style="display: flex;align-items: center;justify-content: flex-end;">

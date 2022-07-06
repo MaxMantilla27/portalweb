@@ -1,7 +1,7 @@
 <div class="contentCursoModulo" *ngFor="let item of programEstructura.listaCursoMatriculado">
-  <div class="headerCursoModulo">
-    <div class="titleCursoModulo">{{item.programaGeneralHijo}}</div>
-    <div class="estadoCursoModulo" *ngIf="(item.progreso!=undefined && item.progreso.progresoVideo.length>0)">
+  <div class="headerCursoModulo row">
+    <div class="titleCursoModulo col-12 col-md-9 col-lg-10">{{item.programaGeneralHijo}}</div>
+    <div class="estadoCursoModulo col-12 col-md-3 col-lg-2" *ngIf="(item.progreso!=undefined && item.progreso.progresoVideo.length>0)">
       <i class="material-icons" *ngIf="item.progreso.progresoVideo[0].porcentaje>=100">check_circle</i>
       <div *ngIf="item.progreso.progresoVideo[0].porcentaje>=100">Completado</div>
       <div *ngIf="item.progreso.progresoVideo[0].porcentaje>0 && item.progreso.progresoVideo[0].porcentaje<100">
@@ -9,8 +9,9 @@
       <div *ngIf="item.progreso.progresoVideo[0].porcentaje==0">Pendiente</div>
     </div>
   </div>
-  <div class="contenidoCursoModulo">
-    <div class="contentModulo">
+  <div class="contenidoCursoModulo row">
+
+    <div class="contentModulo col-12 col-md-8 col-lg-9">
       <div style="font-size: 14px;color: #909090; font-weight: 600;">Video:</div>
       <mat-progress-bar mode="determinate"
         [value]="(item.progreso!=undefined && item.progreso.progresoVideo.length>0)?item.progreso.progresoVideo[0].porcentaje:0">
@@ -45,8 +46,10 @@
       </div>
     </div>
 
-    <app-default-button [confs]="{color:'primary',titulo:'Ingresar'}" [disabled]="item.params==undefined"
-      [ruta]="'/AulaVirtual/MisCursos/'+idMatricula+'/'+item.idPEspecificoHijo" [style]="'padding:0px 20px'">
-    </app-default-button>
+    <div class="col-12 col-md-4 col-lg-3" style="display: flex;justify-content: flex-end">
+      <app-default-button [confs]="{color:'primary',titulo:'Ingresar'}" [disabled]="item.params==undefined"
+        [ruta]="'/AulaVirtual/MisCursos/'+idMatricula+'/'+item.idPEspecificoHijo" [style]="'padding:0px 20px'">
+      </app-default-button>
+    </div>
   </div>
 </div>

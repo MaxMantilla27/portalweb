@@ -8,8 +8,9 @@
 }
 .containerVideoDiapositiva{
   width: 100%;
-  height: 500px;
+  min-height: 500px;
   display: flex;
+  padding: 10px 0px;
   .containerVideo{
     width: 47%;
     max-width: 74%;
@@ -63,7 +64,7 @@
       .respuestaLista{
         display: flex;
         flex-direction: column;
-        padding: 0px 30px;
+        //padding: 0px 30px;
         .respuesta{
           display: flex;
           align-items: center;

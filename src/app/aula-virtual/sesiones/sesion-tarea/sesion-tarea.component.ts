@@ -49,6 +49,7 @@ export class SesionTareaComponent implements OnInit,OnChanges {
   public tarea:any
   public instruccionesAcerca=false;
   public instruccionesSubir=false
+  public nombrefile='Ningún archivo seleccionado'
   public sendFile:ModelTareaEvaluacionTareaDTO={
     idEsquemaEvaluacionPGeneralDetalle:0,
     idEsquemaEvaluacionPGeneralDetalle_Anterior:0,
@@ -97,6 +98,7 @@ export class SesionTareaComponent implements OnInit,OnChanges {
     for (var i = 0; i < event.target.files.length; i++) {
       this.filestatus=true
       var name = event.target.files[i].name;
+      this.nombrefile=name;
       var type = event.target.files[i].type;
       var size = event.target.files[i].size;
       var modifiedDate = event.target.files[i].lastModifiedDate;
@@ -129,30 +131,34 @@ export class SesionTareaComponent implements OnInit,OnChanges {
     }
   }
   EnviarFile(){
-    if(this.tarea.registroEvaluacionArchivo!=null && this.tarea.registroEvaluacionArchivo.length>=3 ){
-      this._SnackBarServiceService.openSnackBar("Solo tiene 3 intentos para subir su tarea.",'x',15,"snackbarCrucigramaerror");
-    }else{
-      this.setData()
-      console.log(this.sendFile)
-      this._TareaEvaluacionService.EnviarEvaluacionTarea(this.sendFile).subscribe({
-        next:x=>{
-          if (x.type === HttpEventType.UploadProgress) {
-            this.progress = Math.round(100 * x.loaded / x.total);
-            console.log(this.progress)
-          } else if (x instanceof HttpResponse) {
-            this.progress=0;
-            if(x.body==true){
-              this.ObtenerEvaluacionTarea()
-            }else{
-              this._SnackBarServiceService.openSnackBar("Solo tiene 3 intentos para subir su tarea.",'x',15,"snackbarCrucigramaerror");
+    if(this.filestatus){
+      if(this.tarea.registroEvaluacionArchivo!=null && this.tarea.registroEvaluacionArchivo.length>=3 ){
+        this._SnackBarServiceService.openSnackBar("Solo tiene 3 intentos para subir su tarea.",'x',15,"snackbarCrucigramaerror");
+      }else{
+        this.setData()
+        console.log(this.sendFile)
+        this._TareaEvaluacionService.EnviarEvaluacionTarea(this.sendFile).subscribe({
+          next:x=>{
+            if (x.type === HttpEventType.UploadProgress) {
+              this.progress = Math.round(100 * x.loaded / x.total);
+              console.log(this.progress)
+            } else if (x instanceof HttpResponse) {
+              this.progress=0;
+              if(x.body==true){
+                this.ObtenerEvaluacionTarea()
+              }else{
+                this._SnackBarServiceService.openSnackBar("Solo tiene 3 intentos para subir su tarea.",'x',15,"snackbarCrucigramaerror");
+              }
             }
-          }
-        },
-        error:x=>{
-          this.progress=0;
+          },
+          error:x=>{
+            this.progress=0;
 
-        }
-      })
+          }
+        })
+      }
+    }else{
+      this._SnackBarServiceService.openSnackBar("Ningun archivo seleccionado.",'x',15,"snackbarCrucigramaerror");
     }
   }
   nextc(){

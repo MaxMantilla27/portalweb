@@ -272,7 +272,7 @@ export class ModuloSesionesComponent implements OnInit, OnChanges {
     if(habilitado){
       this._Router.navigate([url], {relativeTo: this.r})
     }else{
-      this._SnackBarServiceService.openSnackBar("Complete el ítem anterior",'x',10,"snackbarCrucigramaerror");
+      this._SnackBarServiceService.openSnackBar("Debes completar las actividades anteriores primero",'x',10,"snackbarCrucigramaerror");
     }
   }
 }

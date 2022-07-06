@@ -1,6 +1,5 @@
-
 .cursoTitle {
-  font-size: 25px;
+  font-size: 18px;
   margin-bottom: 10px;
   font-weight: 600;
 }
@@ -10,6 +9,13 @@
   margin-bottom: 40px;
 }
 
+.tabVertical
+  .mat-tab-header
+  .mat-tab-label-container
+  .mat-tab-list
+  .mat-tab-labels {
+  max-width: 180px !important;
+}
 .cursoTabRemenber {
   display: flex;
   justify-content: flex-start;
@@ -35,47 +41,6 @@
   font-size: 13px;
   color: #505050;
 }
-
-.tabVertical {
-  flex-direction: row !important;
-}
-.tabVertical .mat-tab-header {
-  border-bottom: none !important;
-}
-.tabVertical .mat-tab-header .mat-tab-header-pagination {
-  display: none !important;
-}
-.tabVertical
-  .mat-tab-header
-  .mat-tab-label-container
-  .mat-tab-list
-  .mat-tab-labels {
-  flex-direction: column !important;
-  opacity: 1;
-  max-width: 180px;
-  border-right: 2px solid #d2d2d2;
-}
-.tabVertical
-  .mat-tab-header
-  .mat-tab-label-container
-  .mat-tab-list
-  .mat-tab-labels
-  .mat-tab-label {
-  justify-content: flex-start;
-  opacity: 1 !important;
-  margin-bottom: 20px;
-  padding-left: 0px;
-  padding-right: 0px;
-}
-.tabVertical
-  .mat-tab-header
-  .mat-tab-label-container
-  .mat-tab-list
-  .mat-tab-labels
-  .mat-tab-label
-  .mat-tab-label-content{
-    width: 100%;
-  }
 .tabVertical
   .mat-tab-header
   .mat-tab-label-container
@@ -89,11 +54,13 @@
   justify-content: flex-start;
   align-items: flex-start;
   width: 100%;
+  padding: 20px 10px !important;
+  flex-wrap: nowrap !important;
   .titleMatr {
     word-break: break-word;
     white-space: normal;
     /* display: block; */
-    width: 148px;
+    width: 148px !important;
     text-align: left;
   }
   .iconMat {
@@ -124,29 +91,6 @@
   .iconAyuda {
     background-image: url("../../../assets/icons/ayuda-09.svg");
   }
-}
-.tabVertical
-  .mat-tab-header
-  .mat-tab-label-container
-  .mat-tab-list
-  .mat-ink-bar {
-  height: 100%;
-  left: 98% !important;
-  display: none;
-}
-.tabVertical .mat-tab-body-wrapper {
-  flex: 1 1 auto !important;
-}
-.tabVertical .mat-tab-body-wrapper .mat-tab-body .mat-tab-body-content {
-  overflow: hidden;
-}
-.tabVertical
-  mat-tab-header
-  .mat-tab-label-container
-  .mat-tab-list
-  .mat-tab-labels
-  .mat-tab-label-active {
-  background: #f4f4f4;
 }
 .tabVertical
   mat-tab-header
@@ -190,7 +134,7 @@
   color: #0684f3 !important;
   font-weight: 600;
 
-  .titleMatr{
+  .titleMatr {
     color: #0684f3 !important;
     text-decoration: underline;
   }
@@ -219,7 +163,7 @@
 .subContent {
   margin-left: 30px;
 }
-.hederCapitulo{
+.hederCapitulo {
   display: flex;
   justify-content: space-between;
   border-bottom: solid 1px gray;
@@ -227,43 +171,41 @@
   align-items: center;
   flex-wrap: wrap;
 }
-.NSesionCapitulo{
+.NSesionCapitulo {
   color: #878778;
   font-size: 12px;
 }
-.promedioCapitulo{
+.promedioCapitulo {
   font-size: 12px;
   background: #0684f2;
   padding: 5px 20px;
   border-radius: 20px;
   color: white;
 }
-.titleCapitulo{
+.titleCapitulo {
   color: #545454;
   font-size: 18px;
   font-weight: 600;
 }
-.playsesion{
+.playsesion {
   color: #ff7012;
   margin-right: 5px;
 }
-.contentCapituloSesion{
+.contentCapituloSesion {
   padding: 0px 0px 30px 20px;
 }
-.capituloSesion{
+.capituloSesion {
   align-items: center;
   justify-content: space-between;
 }
-.capituloSesionesSubsesiones{
-  //padding-left: 40px !important;
-}
-.tituloSesion{
+
+.tituloSesion {
   color: #898989;
   font-size: 16px;
   cursor: pointer;
   margin-bottom: 5px;
 }
-.tituloSesion:hover{
+.tituloSesion:hover {
   color: #0668bf;
   font-weight: 600;
   text-decoration: underline;
@@ -273,10 +215,10 @@
   flex-wrap: wrap;
   padding: 15px 0px;
 }
-.contentModuloSesiones mat-progress-bar .mat-progress-bar-buffer{
+.contentModuloSesiones mat-progress-bar .mat-progress-bar-buffer {
   background: #e7e7e8 !important;
 }
-.contentModuloSesiones mat-progress-bar{
+.contentModuloSesiones mat-progress-bar {
   height: 5px !important;
 }
 .contentModuloSesiones mat-progress-bar .mat-progress-bar-fill::after {
