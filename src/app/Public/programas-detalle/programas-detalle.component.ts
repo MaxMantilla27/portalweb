@@ -254,7 +254,8 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
       }
     })
     this.ObtenerCabeceraProgramaGeneral();
-
+    this.AddFields();
+    this.ObtenerCombosPortal();
   }
 
   RegistrarProgramaPrueba(){
@@ -372,8 +373,7 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
             this.ListExpositor();
             this.ListMontoPago();
             this.ListTagProgramaRelacionadoPorIdBusqueda();
-            this.AddFields();
-            this.ObtenerCombosPortal();
+
 
           }
           else{
