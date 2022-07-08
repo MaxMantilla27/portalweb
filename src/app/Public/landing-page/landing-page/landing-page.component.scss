@@ -1,12 +1,12 @@
 .dialog-landing-page{
   mat-dialog-container{
     padding: 20px 20px 40px 20px;
-  background: transparent;
-  position: absolute;
-  top: 0px;
-  left: 0px;
-  overflow: auto;
-  justify-content: center;
+    background: transparent;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    overflow: auto;
+    justify-content: center;
   }
 }
 .Encabezado-LandingPage{
@@ -26,7 +26,7 @@
 .InstruccionLP{
   text-align: center;
   font-size: 14px;
-  padding: 0px 83px 12px 83px;
+  padding: 0px 40px 12px 40px;
 }
 .OpcionLP{
   text-align: center;
