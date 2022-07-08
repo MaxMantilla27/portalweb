@@ -1,5 +1,45 @@
-.scroll{
-  height: 510px;
-  width: 800px;
-  text-align: left;
+.dialog-landing-page{
+  mat-dialog-container{
+    padding: 20px 20px 40px 20px;
+  background: transparent;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  overflow: auto;
+  justify-content: center;
+  }
 }
+.Encabezado-LandingPage{
+  color: white;
+  margin-left: 20px;
+  font-size: 19px;
+  padding-top: 10px;
+}
+.NombreProgramaLP{
+  text-align: center;
+  margin-bottom: 15px;
+  color: #094D82;
+  font-weight: bold;
+  padding-top: 15px;
+  font-size: 17px;
+}
+.InstruccionLP{
+  text-align: center;
+  font-size: 14px;
+  padding: 0px 83px 12px 83px;
+}
+.OpcionLP{
+  text-align: center;
+  font-size: 13px;
+  height: 30px;
+  margin-top: 5px;
+}
+.TerminosLP{
+  font-size: 9px;
+  text-align: justify;
+}
+.LandingPageContenedor{
+  padding: 0px 20px;
+  justify-content: center;
+}
+

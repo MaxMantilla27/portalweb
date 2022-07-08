@@ -99,3 +99,26 @@
   max-height: 182px;
   object-fit: cover;
 }
+.text-block {
+  color: white;
+  position: absolute;
+  top: -70px;
+  left: 10px;
+  padding:5px;
+  text-align: center;
+  transform: rotate(-45deg);
+  font-size: 13px;
+  margin-top: 75px;
+  margin-left: -20px;
+}
+#CintaAccesoTemporal {
+  position: absolute;
+  margin-top: -5px;
+  margin-left: -45px;
+  width: 115px;
+  height: 0px;
+  border-right: 35px solid transparent;
+  border-left: 35px solid transparent;
+  border-bottom: 35px solid #FF4E56;
+  transform: rotate(-45deg);
+}

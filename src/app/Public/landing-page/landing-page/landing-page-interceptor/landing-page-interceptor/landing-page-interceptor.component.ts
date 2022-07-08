@@ -62,7 +62,7 @@ export class LandingPageInterceptorComponent implements OnInit {
   }
   OpenModalLandingPage(): void {
     const dialogRef = this.dialog.open(LandingPageComponent, {
-      width: '600px',
+      width: '475px',
       data: { NombrePrograma:this.nombreProgramaLandingPage,
               IdCategoriaOrigen:this.valorPrograma.idCategoriaOrigen,
               IdConjuntoAnuncio:this.valorPrograma.idConjuntoAnuncio,
@@ -73,7 +73,6 @@ export class LandingPageInterceptorComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe((result) => {
-      console.log('The dialog was closed');
     });
   }
 
