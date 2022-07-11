@@ -7,10 +7,12 @@
 <div class="container">
   <div class="row rowpaddAv">
     <div class="col-12 col-md-12 col-lg-12" style="position: relative;">
-
-      <div class="openClose" [ngClass]="{'reverse2':!hide}" (click)="hide=!hide">
-        <i class="material-icons">double_arrow</i>
-      </div>
+      <ng-container *ngIf="estructuraCapitulo!=undefined">
+        <div class="openClose2" [ngClass]="{'reverse2':!hide}" (click)="hide=!hide">
+        <!-- [ngStyle]="{'width':estructuraCapitulo.contineSubSesion==false?'52px':'62px'}"> -->
+          <i class="material-icons">layers</i>
+        </div>
+      </ng-container>
       <mat-tab-group class="tabVerticalses" [(selectedIndex)]="tabIndex" (selectedTabChange)="tabChanged($event)">
         <ng-container *ngIf="estructuraCapitulo!=undefined">
 
@@ -18,10 +20,14 @@
 
             <mat-tab disabled>
               <ng-template mat-tab-label>
-                <div *ngIf="!hide" class="contentHeaderM" [ngClass]="{'ActiveChil':item.opened==true}" (click)="changeCapitulo(i)">
-                  <div class="titleMatr" style="font-weight: bold;">Capitulo {{item.numeroCapitulo}}: {{item.nombreCapitulo}}</div>
-                  <i *ngIf="item.opened==true" class="material-icons">keyboard_arrow_up</i>
-                  <i *ngIf="item.opened==false" class="material-icons">keyboard_arrow_down</i>
+                <div  class="contentHeaderM" [ngClass]="{'ActiveChil':item.opened==true}" (click)="changeCapitulo(i)">
+                  <div class="iconMat iconcapitulo"></div>
+                  <ng-container *ngIf="!hide">
+                    <div class="titleMatr" style="font-weight: bold;">Capitulo {{item.numeroCapitulo}}: {{item.nombreCapitulo}}</div>
+                    <i *ngIf="item.opened==true" class="material-icons">keyboard_arrow_up</i>
+                    <i *ngIf="item.opened==false" class="material-icons">keyboard_arrow_down</i>
+                  </ng-container>
+
                 </div>
               </ng-template>
               <div class="pad-resp">
@@ -38,8 +44,9 @@
 
                   <mat-tab >
                     <ng-template mat-tab-label>
-                      <div *ngIf="!hide" class="contentHeaderM estructuraSubCapitulos" (click)="changeTab(3,0,i,e,0)" [ngClass]="{'hidetab':item.opened==false}">
-                        <div class="titleMatr">{{Encuesta.nombreEncuesta}}</div>
+                      <div  class="contentHeaderM estructuraSubCapitulos" (click)="changeTab(3,0,i,e,0)" [ngClass]="{'hidetab':item.opened==false}">
+                        <div class="iconMat iconencuesta"></div>
+                        <div class="titleMatr" *ngIf="!hide">{{Encuesta.nombreEncuesta}}</div>
                       </div>
                     </ng-template>
                     <div class="pad-resp">
@@ -59,13 +66,13 @@
               <ng-container *ngFor="let sesion of item.registroEstructuraCursoSesion;let s=index">
                 <mat-tab [disabled]="!sesion.habilitado">
                   <ng-template mat-tab-label>
-                    <div (click)="changeTab(1,sesion.numeroSesion,i,s,-1)" *ngIf="!hide" class="contentHeaderM estructuraSubCapitulos"
+                    <div (click)="changeTab(1,sesion.numeroSesion,i,s,-1)" class="contentHeaderM estructuraSubCapitulos"
                       [ngClass]="{'hidetab':item.opened==false}">
-                      <img *ngIf="sesion.VideoFinish==true" src="../../../assets/icons/positivo-hecho-20.svg" alt="">
-                      <img *ngIf="sesion.VideoFinish!=true" src="../../../assets/icons/videos-29.svg" alt="">
-                      <div class="titleMatr">{{sesion.nombreSesion}}</div>
+                      <div *ngIf="sesion.VideoFinish==true" class="iconMat iconVideoFinal"></div>
+                      <div *ngIf="sesion.VideoFinish!=true" class="iconMat iconVideo"></div>
+                      <div *ngIf="!hide" class="titleMatr">{{sesion.nombreSesion}}</div>
 
-                      <div
+                      <div *ngIf="!hide"
                         style="width: 100%;font-size: 10px;color: #cdcdcd;display: flex;    align-items: flex-end;margin-top: 5px;   padding-left: 15px;">
                         <i class="material-icons" style="margin-right:5px ;">access_time</i>
                         <div style="font-size: 12px;">({{sesion.tiempoVideo/60 | number:'0.0-0'}} minutos)</div>
@@ -87,24 +94,27 @@
               <ng-container *ngFor="let sesion of item.registroEstructuraCursoSesion;let s=index">
                 <mat-tab disabled>
                   <ng-template mat-tab-label>
-                    <div *ngIf="!hide" class="contentHeaderM estructuraSubCapitulos" (click)="changeSesion(i,s)"
+                    <div  class="contentHeaderM estructuraSubCapitulos" (click)="changeSesion(i,s)"
                       [ngClass]="{'ActiveChil':sesion.opened==true,'hidetab':item.opened==false}">
-                      <div class="titleMatr">Sesión {{sesion.numeroSesion}}: {{sesion.nombreSesion}}</div>
-                      <i *ngIf="sesion.opened==true" class="material-icons">keyboard_arrow_up</i>
-                      <i *ngIf="sesion.opened==false" class="material-icons">keyboard_arrow_down</i>
+                      <div class="iconMat iconsesion"></div>
+                      <ng-container *ngIf="!hide">
+                        <div class="titleMatr">Sesión {{sesion.numeroSesion}}: {{sesion.nombreSesion}}</div>
+                        <i *ngIf="sesion.opened==true" class="material-icons">keyboard_arrow_up</i>
+                        <i *ngIf="sesion.opened==false" class="material-icons">keyboard_arrow_down</i>
+                      </ng-container>
                     </div>
                   </ng-template>
                 </mat-tab>
                 <ng-container *ngFor="let subsesion of sesion.registroEstructuraCursoSubSesion;let ss=index">
                   <mat-tab [disabled]="!subsesion.habilitado">
                     <ng-template mat-tab-label>
-                      <div (click)="changeTab(1,subsesion.numeroSubSesion,i,s,ss)" *ngIf="!hide" class="contentHeaderM estructuraSubSesiones"
+                      <div (click)="changeTab(1,subsesion.numeroSubSesion,i,s,ss)" class="contentHeaderM estructuraSubSesiones"
                         [ngClass]="{'hidetab':item.opened==false || sesion.opened==false}">
-                        <img *ngIf="subsesion.VideoFinish==true" src="../../../assets/icons/positivo-hecho-20.svg" alt="">
-                        <img *ngIf="subsesion.VideoFinish!=true" src="../../../assets/icons/videos-29.svg" alt="">
-                        <div class="titleMatr">{{subsesion.nombreSubSesion}}</div>
+                        <div *ngIf="subsesion.VideoFinish==true" class="iconMat iconVideoFinal"></div>
+                        <div *ngIf="subsesion.VideoFinish!=true" class="iconMat iconVideo"></div>
+                        <div *ngIf="!hide" class="titleMatr">{{subsesion.nombreSubSesion}}</div>
 
-                        <div
+                        <div *ngIf="!hide"
                           style="width: 100%;font-size: 10px;color: #cdcdcd;display: flex;    align-items: flex-end;margin-top: 5px; padding-left: 20px;">
                           <i class="material-icons" style="margin-right:5px ;">access_time</i>
                           <div style="font-size: 12px;">({{subsesion.tiempoVideo/60 | number:'0.0-0'}} minutos)</div>
@@ -129,8 +139,9 @@
 
                 <mat-tab [disabled]="!tarea.habilitado">
                   <ng-template mat-tab-label>
-                    <div *ngIf="!hide" class="contentHeaderM estructuraSubCapitulos" (click)="changeTab(2,0,i,t,0)" [ngClass]="{'hidetab':item.opened==false}">
-                      <div class="titleMatr">{{tarea.tarea}}</div>
+                    <div  class="contentHeaderM estructuraSubCapitulos" (click)="changeTab(2,0,i,t,0)" [ngClass]="{'hidetab':item.opened==false}">
+                      <div class="iconMat icontarea"></div>
+                      <div *ngIf="!hide" class="titleMatr">{{tarea.tarea}}</div>
                     </div>
                   </ng-template>
                   <div class="pad-resp">
@@ -149,8 +160,10 @@
 
                 <mat-tab [disabled]="!tareaC.habilitado">
                   <ng-template mat-tab-label>
-                    <div *ngIf="!hide" class="contentHeaderM estructuraSubCapitulos" (click)="changeTab(4,0,i,t,0)" [ngClass]="{'hidetab':item.opened==false}">
-                      <div class="titleMatr">Actividad: Calificar {{tareaC.tarea}}</div>
+                    <div class="contentHeaderM estructuraSubCapitulos" (click)="changeTab(4,0,i,t,0)" [ngClass]="{'hidetab':item.opened==false}">
+
+                      <div class="iconMat icontareacalificar"></div>
+                      <div *ngIf="!hide" class="titleMatr">Actividad: Calificar {{tareaC.tarea}}</div>
                     </div>
                   </ng-template>
                   <div class="pad-resp">
@@ -169,8 +182,10 @@
 
                   <mat-tab [disabled]="!Encuesta.habilitado">
                     <ng-template mat-tab-label>
-                      <div *ngIf="!hide" class="contentHeaderM estructuraSubCapitulos" (click)="changeTab(3,0,i,e,0)" [ngClass]="{'hidetab':item.opened==false}">
-                        <div class="titleMatr">{{Encuesta.nombreEncuesta}}</div>
+                      <div  class="contentHeaderM estructuraSubCapitulos" (click)="changeTab(3,0,i,e,0)" [ngClass]="{'hidetab':item.opened==false}">
+
+                        <div class="iconMat iconencuesta"></div>
+                        <div *ngIf="!hide" class="titleMatr">{{Encuesta.nombreEncuesta}}</div>
                       </div>
                     </ng-template>
                     <div class="pad-resp">
@@ -185,8 +200,10 @@
 
                   <mat-tab [disabled]="!Encuesta.habilitado">
                     <ng-template mat-tab-label>
-                      <div *ngIf="!hide" class="contentHeaderM estructuraSubCapitulos" (click)="changeTab(3,0,i,e,0)" [ngClass]="{'hidetab':item.opened==false}">
-                        <div class="titleMatr">{{Encuesta.nombreEncuesta}}</div>
+                      <div  class="contentHeaderM estructuraSubCapitulos" (click)="changeTab(3,0,i,e,0)" [ngClass]="{'hidetab':item.opened==false}">
+
+                        <div class="iconMat iconencuesta"></div>
+                        <div *ngIf="!hide" class="titleMatr">{{Encuesta.nombreEncuesta}}</div>
                       </div>
                     </ng-template>
                     <div class="pad-resp">

@@ -9,12 +9,12 @@
     <div class="col-12 col-md-12 col-lg-12" style="position: relative;">
 
       <div class="openClose" [ngClass]="{'reverse':!hide}" (click)="hide=!hide">
-        <i class="material-icons">double_arrow</i>
+        <i class="material-icons">layers</i>
       </div>
       <mat-tab-group class="tabVertical" [(selectedIndex)]="tabIndex" (selectedTabChange)="tabChanged($event)">
         <mat-tab>
           <ng-template mat-tab-label>
-            <div *ngIf="!hide" class="contentHeaderM" [ngClass]="{'ActiveChil':IndicacionActive==true}">
+            <div class="contentHeaderM" [ngClass]="{'ActiveChil':IndicacionActive==true}">
               <div class="iconMat iconIndicaciones"></div>
               <ng-container *ngIf="!hide">
                 <div class="titleMatr">Indicaciones</div>
@@ -62,7 +62,7 @@
 
           <mat-tab>
             <ng-template mat-tab-label class="tabSubcontent">
-              <div *ngIf="!hide" class="contentHeaderM subContent">
+              <div class="contentHeaderM subContent">
                 <div class="titleMatr" *ngIf="!hide">Preguntas interactivas</div>
               </div>
             </ng-template>
@@ -75,7 +75,7 @@
           </mat-tab>
           <mat-tab>
             <ng-template mat-tab-label>
-              <div *ngIf="!hide" class="contentHeaderM subContent">
+              <div class="contentHeaderM subContent">
                 <div class="titleMatr" *ngIf="!hide">Crucigramas</div>
               </div>
             </ng-template>
@@ -88,7 +88,7 @@
           </mat-tab>
           <mat-tab>
             <ng-template mat-tab-label>
-              <div *ngIf="!hide" class="contentHeaderM subContent">
+              <div class="contentHeaderM subContent">
                 <div class="titleMatr" *ngIf="!hide">Tareas</div>
               </div>
             </ng-template>
@@ -101,7 +101,7 @@
           </mat-tab>
           <mat-tab>
             <ng-template mat-tab-label>
-              <div *ngIf="!hide" class="contentHeaderM subContent">
+              <div class="contentHeaderM subContent">
                 <div class="titleMatr" *ngIf="!hide">Calificar tarea de pares</div>
               </div>
             </ng-template>
@@ -116,7 +116,7 @@
 
         <mat-tab>
           <ng-template mat-tab-label>
-            <div *ngIf="!hide" class="contentHeaderM">
+            <div class="contentHeaderM">
               <div class="iconMat iconModulos"></div>
               <div class="titleMatr" *ngIf="!hide">Módulos</div>
             </div>
@@ -136,7 +136,7 @@
         </mat-tab>
         <mat-tab *ngIf="curso!=undefined && curso.proyectoAplicacion">
           <ng-template mat-tab-label>
-            <div *ngIf="!hide" class="contentHeaderM">
+            <div class="contentHeaderM">
               <div class="iconMat iconProyectos"></div>
               <div class="titleMatr" *ngIf="!hide">Proyecto de Aplicación</div>
             </div>
@@ -150,7 +150,7 @@
         </mat-tab>
         <mat-tab>
           <ng-template mat-tab-label>
-            <div *ngIf="!hide" class="contentHeaderM" [ngClass]="{'ActiveChil':CertificadoActive==true}">
+            <div class="contentHeaderM" [ngClass]="{'ActiveChil':CertificadoActive==true}">
               <div class="iconMat iconCertificados"></div>
               <div class="titleMatr" *ngIf="!hide">Certificados</div>
             </div>
@@ -176,7 +176,7 @@
                         this.datosCertificado.idEstado_matricula!=12) ||
                       datosCertificado.nombreArchivo==null">
             <ng-template mat-tab-label class="tabSubcontent">
-              <div *ngIf="!hide" class="contentHeaderM subContent" style="cursor: pointer;"
+              <div class="contentHeaderM subContent" style="cursor: pointer;"
                 (click)="certificadoDigital()">
                 <div class="titleMatr" *ngIf="!hide">Certificado Digital</div>
               </div>
@@ -189,7 +189,7 @@
           </mat-tab>
           <mat-tab [disabled]="datosCertificado==undefined ||  datosCertificado.nombreArchivo==null">
             <ng-template mat-tab-label>
-              <div *ngIf="!hide" class="contentHeaderM subContent" style="cursor: pointer;"
+              <div class="contentHeaderM subContent" style="cursor: pointer;"
                 (click)="certificadoFisico()">
                 <div class="titleMatr" *ngIf="!hide">Certificado Fisico</div>
               </div>
@@ -206,7 +206,7 @@
 
         <mat-tab>
           <ng-template mat-tab-label>
-            <div *ngIf="!hide" class="contentHeaderM">
+            <div class="contentHeaderM">
               <div class="iconMat iconTramites"></div>
               <div class="titleMatr" *ngIf="!hide">Trámites</div>
             </div>
@@ -219,7 +219,7 @@
 
         <mat-tab *ngIf="curso!=undefined && curso.webibarActivo">
           <ng-template mat-tab-label>
-            <div *ngIf="!hide" class="contentHeaderM">
+            <div class="contentHeaderM">
               <div class="iconMat iconWebinars"></div>
               <div class="titleMatr" *ngIf="!hide">Webinars</div>
             </div>
@@ -231,7 +231,7 @@
         </mat-tab>
         <mat-tab *ngIf="curso!=undefined && curso.benficioSolicitado">
           <ng-template mat-tab-label>
-            <div *ngIf="!hide" class="contentHeaderM">
+            <div class="contentHeaderM">
               <div class="iconMat iconBeneficios"></div>
               <div class="titleMatr" *ngIf="!hide">Mis Beneficios</div>
             </div>
