@@ -257,7 +257,8 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
     this.AddFields();
     this.ObtenerCombosPortal();
     this.ObtenerCabeceraProgramaGeneral();
-
+    this.AddFields();
+    this.ObtenerCombosPortal();
   }
 
   RegistrarProgramaPrueba(){
@@ -375,7 +376,6 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
             this.ListExpositor();
             this.ListMontoPago();
             this.ListTagProgramaRelacionadoPorIdBusqueda();
-
           }
           else{
           this._router.navigate(['error404']);
