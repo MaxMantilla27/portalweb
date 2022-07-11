@@ -9,14 +9,14 @@
     <div class="col-12 col-md-12 col-lg-12"  style="position: relative;">
 
       <div class="openClose" [ngClass]="{'reverse':!hide}" (click)="hide=!hide">
-        <i class="material-icons">double_arrow</i>
+        <i class="material-icons">layers</i>
       </div>
       <mat-tab-group class="tabVertical" [(selectedIndex)]="tabIndex" (selectedTabChange)="tabChanged($event)">
         <mat-tab>
           <ng-template mat-tab-label>
-            <div *ngIf="!hide" class="contentHeaderM">
+            <div  class="contentHeaderM">
               <div class="iconMat iconSesiones"></div>
-              <div class="titleMatr">Sesiones</div>
+              <div *ngIf="!hide" class="titleMatr">Sesiones</div>
             </div>
           </ng-template>
           <div class="pad-resp">
@@ -38,9 +38,9 @@
         </mat-tab> -->
         <mat-tab>
           <ng-template mat-tab-label>
-            <div *ngIf="!hide" class="contentHeaderM">
+            <div  class="contentHeaderM">
               <div class="iconMat iconSilabo"></div>
-              <div class="titleMatr">Sílabo</div>
+              <div *ngIf="!hide" class="titleMatr">Sílabo</div>
             </div>
           </ng-template>
           <div class="pad-resp">
@@ -50,9 +50,9 @@
         </mat-tab>
         <mat-tab>
           <ng-template mat-tab-label>
-            <div *ngIf="!hide" class="contentHeaderM">
+            <div  class="contentHeaderM">
               <div class="iconMat iconRecursos"></div>
-              <div class="titleMatr">Recursos</div>
+              <div *ngIf="!hide" class="titleMatr">Recursos</div>
             </div>
           </ng-template>
           <div class="pad-resp"><app-modulo-recurso [Capitulo]="json.NombreCapitulo" [Estructura]="estructuraCapitulo"
@@ -60,9 +60,9 @@
         </mat-tab>
         <mat-tab>
           <ng-template mat-tab-label>
-            <div *ngIf="!hide" class="contentHeaderM">
+            <div class="contentHeaderM">
               <div class="iconMat iconForo"></div>
-              <div class="titleMatr">Foro</div>
+              <div *ngIf="!hide" class="titleMatr">Foro</div>
             </div>
           </ng-template>
           <div class="pad-resp">
@@ -71,9 +71,9 @@
         </mat-tab>
         <mat-tab>
           <ng-template mat-tab-label>
-            <div *ngIf="!hide" class="contentHeaderM">
+            <div class="contentHeaderM">
               <div class="iconMat iconCalificaciones"></div>
-              <div class="titleMatr">Calificaciones</div>
+              <div *ngIf="!hide" class="titleMatr">Calificaciones</div>
             </div>
           </ng-template>
           <div class="pad-resp">
@@ -82,9 +82,9 @@
         </mat-tab>
         <mat-tab>
           <ng-template mat-tab-label>
-            <div *ngIf="!hide" class="contentHeaderM" [ngClass]="{'ActiveChil':AyudaActive==true}">
+            <div class="contentHeaderM" [ngClass]="{'ActiveChil':AyudaActive==true}">
               <div class="iconMat iconAyuda"></div>
-              <div class="titleMatr">Ayuda</div>
+              <div *ngIf="!hide" class="titleMatr">Ayuda</div>
             </div>
           </ng-template>
           <div class="pad-resp">
@@ -99,8 +99,8 @@
 
           <mat-tab>
             <ng-template mat-tab-label class="tabSubcontent">
-              <div *ngIf="!hide" class="contentHeaderM subContent" style="cursor: pointer;" (click)="alertaPreguntasFrecuentes=!alertaPreguntasFrecuentes">
-                <div class="titleMatr">Preguntas frecuentes</div>
+              <div  class="contentHeaderM subContent" style="cursor: pointer;" (click)="alertaPreguntasFrecuentes=!alertaPreguntasFrecuentes">
+                <div *ngIf="!hide" class="titleMatr">Preguntas frecuentes</div>
               </div>
             </ng-template>
             <div class="pad-resp">
@@ -111,8 +111,8 @@
           </mat-tab>
           <mat-tab >
             <ng-template mat-tab-label>
-              <div *ngIf="!hide" class="contentHeaderM subContent" style="cursor: pointer;" (click)="alertaQuejasSugerencias=!alertaQuejasSugerencias">
-                <div class="titleMatr">Quejas y sugerencias</div>
+              <div class="contentHeaderM subContent" style="cursor: pointer;" (click)="alertaQuejasSugerencias=!alertaQuejasSugerencias">
+                <div *ngIf="!hide" class="titleMatr">Quejas y sugerencias</div>
               </div>
             </ng-template>
             <div class="pad-resp">

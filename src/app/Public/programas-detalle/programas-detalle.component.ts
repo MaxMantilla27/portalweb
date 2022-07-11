@@ -253,6 +253,9 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
         this.GetRegionesPorPais(this.formularioContacto.IdPais);
       }
     })
+
+    this.AddFields();
+    this.ObtenerCombosPortal();
     this.ObtenerCabeceraProgramaGeneral();
 
   }
@@ -372,8 +375,6 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
             this.ListExpositor();
             this.ListMontoPago();
             this.ListTagProgramaRelacionadoPorIdBusqueda();
-            this.AddFields();
-            this.ObtenerCombosPortal();
 
           }
           else{

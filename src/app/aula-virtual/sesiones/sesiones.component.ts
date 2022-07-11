@@ -330,6 +330,7 @@ export class SesionesComponent implements OnInit {
           }
         );
       }
+      console.log(this.estructuraCapitulo);
       this.validateNextVIdeo();
       this.GetNextChapter();
     }
@@ -344,7 +345,7 @@ export class SesionesComponent implements OnInit {
 
     this.estructuraCapitulo.registroEstructuraCursoCapitulo.forEach(
       (c: any) => {
-        var lastCap=this.estructuraCapitulo.registroEstructuraCursoCapitulo
+        var lastCap=this.estructuraCapitulo.registroEstructuraCursoCapitulo.length-1
         c.registroEstructuraCursoSesion.forEach((s: any) => {
           var lastSes=c.registroEstructuraCursoSesion.length-1;
           if (this.estructuraCapitulo.contineSubSesion == true) {

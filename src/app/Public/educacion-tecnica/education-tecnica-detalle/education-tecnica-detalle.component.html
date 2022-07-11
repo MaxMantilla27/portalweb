@@ -245,7 +245,7 @@
                   <div class="col-md-7 educacion-tecnica-container__content__fourthSection__information-container">
                     <h1>Certificación</h1>
                     <div class="educacion-tecnica-container__content__fourthSection__information-container__detail"
-                      [innerHTML]="certificaciones">
+                      [innerHTML]="certificaciones | safeHtml">
                     </div>
                     <div>
                       <!-- <app-default-button [confs]="{color: 'primary', titulo: 'Solicita Información'}">

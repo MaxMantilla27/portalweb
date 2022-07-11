@@ -30,7 +30,7 @@
   opacity: 1 !important;
   padding-left: 0px;
   padding-right: 0px;
-  min-width: 0px !important;
+  min-width: 28px !important;
   height: auto !important;
 }
 .tabVertical
@@ -48,7 +48,7 @@
   .mat-tab-labels
   .mat-tab-label
   .mat-tab-label-content {
-  width: 100%;
+  //width: 100%;
 }
 
 .tabVertical
@@ -75,7 +75,7 @@
   background: #f4f4f4;
 }
 .pad-resp {
-  padding: 25px 10px;
+  padding: 5px 10px 0px 52px;
 }
 
 @media (max-width: 768px) {
@@ -108,7 +108,7 @@
     padding: 45px 20px;
   }
   .pad-resp {
-    padding: 25px 10px;
+    padding: 5px 10px 0px 52px;
   }
 }
 @media (min-width: 768px) {
@@ -116,7 +116,7 @@
     padding: 45px 40px 45px 20px;
   }
   .pad-resp {
-    padding: 25px 10px;
+    padding: 5px 10px;
   }
 }
 @media (min-width: 992px) {
@@ -124,7 +124,7 @@
     padding: 45px 90px 45px 20px;
   }
   .pad-resp {
-    padding: 25px 10px;
+    padding: 5px 10px;
   }
 }
 @media (min-width: 1200px) {
@@ -132,7 +132,7 @@
     padding: 45px 90px 45px 20px;
   }
   .pad-resp {
-    padding: 25px 20px;
+    padding: 5px 20px;
   }
 }
 @media (min-width: 1400px) {
@@ -140,7 +140,7 @@
     padding: 45px 90px 45px 20px !important;
   }
   .pad-resp {
-    padding: 25px 30px;
+    padding: 5px 30px;
   }
 }
 .resumenPagoTarjeta {
@@ -222,19 +222,41 @@
 }
 
 .openClose {
-  position: absolute;
-  z-index: 2;
-  top: 0px;
-  left: 15px;
+  //position: absolute;
   cursor: pointer;
-  z-index: 10000;
+  background: #c3c3c3;
+  border-right: 2px solid #d2d2d2;
+  width: 42px;
+  display: flex;
+  justify-content: center;
+  padding: 5px;
+  img{
+    width: 18px;
+  }
+  .material-icons{
+    font-size: 30px !important;
+  }
+}
+.openClose2 {
+  //position: absolute;
+  cursor: pointer;
+  background: #c3c3c3;
+  border-right: 2px solid #d2d2d2;
+  width: 52px;
+  display: flex;
+  justify-content: center;
+  padding: 5px;
+  img{
+    width: 18px;
+  }
+  .material-icons{
+    font-size: 30px !important;
+  }
 }
 .reverse {
-  transform: scaleX(-1);
-  left: 195px;
+  width: 182px ;
 }
 
 .reverse2 {
-  transform: scaleX(-1);
-  left: 305px;
+  width: 292px !important;
 }

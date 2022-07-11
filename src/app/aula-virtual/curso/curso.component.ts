@@ -135,7 +135,10 @@ export class CursoComponent implements OnInit,OnDestroy {
       this.tabIndex-=4
       console.log(this.tabIndex)
     }
-
+    var masindicacion=0
+    if(this.IndicacionActive){
+      masindicacion=4
+    }
     if(this.curso!=undefined && this.curso.proyectoAplicacion){
       if((tabChangeEvent.index >= 6 || tabChangeEvent.index < 3)  && this.CertificadoActive){
         this.CertificadoActive=false
@@ -143,7 +146,7 @@ export class CursoComponent implements OnInit,OnDestroy {
           this.tabIndex-=2
         }
       }
-      if(tabChangeEvent.index == 3 && !this.CertificadoActive){
+      if(tabChangeEvent.index == (3+masindicacion) && !this.CertificadoActive){
         this.CertificadoActive=true
       }
     }else{
@@ -153,7 +156,7 @@ export class CursoComponent implements OnInit,OnDestroy {
           this.tabIndex-=2
         }
       }
-      if(tabChangeEvent.index == 2 && !this.CertificadoActive){
+      if(tabChangeEvent.index == (2+masindicacion) && !this.CertificadoActive){
         this.CertificadoActive=true
       }
     }

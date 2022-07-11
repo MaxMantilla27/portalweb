@@ -320,13 +320,14 @@ export class HeaderComponent implements OnInit,OnChanges,OnDestroy {
   GetCarreras() {
     this.carreras = [];
     this.tecnica = [];
-    if (
-      this._HeaderPermissionsService.ValidateCarrerasTecnicas(this.CodigoIso)
-    ) {
+    console.log(this.CodigoIso)
+    this.CodigoIso=this._SessionStorageService.SessionGetValue('ISO_PAIS')
+    if (this._HeaderPermissionsService.ValidateCarrerasTecnicas(this.CodigoIso)) {
       this.GetEducacionTecnica();
     } else {
       this.expandibles[2].estatus = false;
     }
+
     if (this._HeaderPermissionsService.ValidateCarreras(this.CodigoIso)) {
       this.GetCarrerasProfecionales();
     } else {

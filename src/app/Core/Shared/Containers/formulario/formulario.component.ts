@@ -18,6 +18,7 @@ import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Basic } from 'src/app/Core/Models/BasicDTO';
 import { formulario } from 'src/app/Core/Models/Formulario';
 import { HelperService } from '../../Services/helper.service';
+import { SessionStorageService } from '../../Services/session-storage.service';
 
 @Component({
   selector: 'app-formulario',
@@ -30,7 +31,8 @@ export class FormularioComponent implements OnChanges, OnInit {
   constructor(
     private formBuilder: FormBuilder,
     @Inject(PLATFORM_ID) platformId: Object,
-    private _HelperService:HelperService
+    private _HelperService:HelperService,
+    private _SessionStorageService:SessionStorageService
 
   ) {
     this.isBrowser = isPlatformBrowser(platformId);
@@ -76,7 +78,23 @@ export class FormularioComponent implements OnChanges, OnInit {
   ngOnInit(): void {
     this._HelperService.recibirDataPais.subscribe({
       next:x=>{
-        this.paise=x
+        this.paise=x;
+        var codigoISo=this._SessionStorageService.SessionGetValue('ISO_PAIS');
+        this.paisSelect=this.paise.find(x=>x.codigoIso==codigoISo).idPais;
+        var index=0
+        this.fiels.forEach((x:any) =>{
+          if(x.tipo=='phone' && this.userForm){
+            this.ChangeInpiut(index,x.nombre)
+          }
+          if(x.nombre.toLowerCase()=='idpais' && this.userForm){
+            let campo = (<FormArray>this.userForm.get('Fields')).controls[index].get(x.nombre);
+            if(campo?.value!=undefined){
+              campo?.setValue(this.paisSelect);
+              this.OnSelect.emit({Nombre:x.nombre,value:this.paisSelect})
+            }
+          }
+          index++
+        })
       }
     })
     if(this.isBrowser){
@@ -106,9 +124,7 @@ export class FormularioComponent implements OnChanges, OnInit {
     this.OnValid.emit(this.userForm.valid);
   }
   changeForm(){
-    console.log(this.fiels)
     if(this.userForm!=undefined){
-      console.log(this.fiels)
       for (let i = 0; i < this.fiels.length; i++) {
         let campo = (<FormArray>this.userForm.get('Fields')).controls[i].get(
           this.fiels[i].nombre
