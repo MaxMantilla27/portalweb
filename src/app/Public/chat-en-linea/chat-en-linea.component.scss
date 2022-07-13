@@ -1,0 +1,46 @@
+.CabeceraInicialChat{
+  z-index: 100;
+  color: white;
+  background: #FF8800;
+  width: 298px;
+  height: 217px;
+  position: fixed;
+  right: 40px;
+  bottom: 0;
+  border-radius: 5px;
+}
+.CabeceraPrincipal{
+  z-index: 100;
+  color: white;
+  background: #FF8800;
+  width: 298px;
+  height: 100px;
+  position: fixed;
+  right: 40px;
+  bottom: 0;
+  border-radius: 5px;
+}
+
+.CabeceraContenido{
+  z-index: 100;
+  width: 298px;
+ /*  height: 388px; */
+  height: 510px;
+  position: fixed;
+  right: 40px;
+  bottom: 0;
+  border-radius: 5px;
+}
+.CabeceraContenidoChat{
+  z-index: 100;
+  width: 298px;
+  height: 385px;
+  position: fixed;
+  right: 40px;
+  bottom: 0;
+  border-radius: 5px;
+}
+.mat-form-field {
+  margin-bottom: -20px;
+  width: 100%;
+}

@@ -2,6 +2,7 @@ import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LandingPageService } from 'src/app/Core/Shared/Services/LandingPage/landing-page.service';
+import { SessionStorageService } from 'src/app/Core/Shared/Services/session-storage.service';
 import { LandingPageComponent } from '../../landing-page.component';
 
 @Component({
@@ -16,6 +17,8 @@ export class LandingPageInterceptorComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private _LandingPageService: LandingPageService,
     public dialog: MatDialog,
+    private _SessionStorage: SessionStorageService,
+
 
     @Inject(PLATFORM_ID) platformId: Object
 
@@ -46,6 +49,8 @@ export class LandingPageInterceptorComponent implements OnInit {
         if(x!=undefined)
         {
           this.valorPrograma=x;
+          this._SessionStorage.SessionSetValue("idCampania",this.valorPrograma.idConjuntoAnuncio)
+          this._SessionStorage.SessionSetValue("idCategoria",this.valorPrograma.idCategoriaOrigen)
           this.nombreProgramaLandingPage=this.valorPrograma.categoriaNombre.replace(/-/g,' ')
           console.log(this.nombreProgramaLandingPage)
           this.OpenModalLandingPage();

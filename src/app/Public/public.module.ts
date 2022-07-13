@@ -31,6 +31,7 @@ import { ProgramaPagoComponent } from './programas-detalle/programa-pago/program
 import { LandingPageComponent } from './landing-page/landing-page/landing-page.component';
 import { LandingPageInterceptorComponent } from './landing-page/landing-page/landing-page-interceptor/landing-page-interceptor/landing-page-interceptor.component';
 import { PageErrorComponent } from './page-error/page-error/page-error.component';
+import { ChatEnLineaComponent } from './chat-en-linea/chat-en-linea.component';
 
 @NgModule({
   imports: [
@@ -67,7 +68,8 @@ import { PageErrorComponent } from './page-error/page-error/page-error.component
     ProgramaPagoComponent,
     LandingPageComponent,
     LandingPageInterceptorComponent,
-    PageErrorComponent
+    PageErrorComponent,
+    ChatEnLineaComponent
   ],
   exports: [],
   providers: [
