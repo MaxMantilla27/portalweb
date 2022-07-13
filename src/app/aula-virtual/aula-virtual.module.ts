@@ -72,6 +72,7 @@ import { PagoGeneralComponent } from './confirmacion-pago-organico/pago-general/
 import { ConfirmacionPagoTarjetaWompiComponent } from './confirmacion-pago-tarjeta-wompi/confirmacion-pago-tarjeta-wompi.component';
 import { ConfirmacionPagoTarjetaConektaComponent } from './confirmacion-pago-tarjeta-conekta/confirmacion-pago-tarjeta-conekta.component';
 import { PagoMultipagoComponent } from './confirmacion-pago-organico/pago-multipago/pago-multipago.component';
+import { ChatPruebaComponent } from './chat-prueba/chat-prueba.component';
 
 
 @NgModule({
@@ -142,6 +143,7 @@ import { PagoMultipagoComponent } from './confirmacion-pago-organico/pago-multip
     ConfirmacionPagoTarjetaWompiComponent,
     ConfirmacionPagoTarjetaConektaComponent,
     PagoMultipagoComponent,
+    ChatPruebaComponent,
 
   ],
   imports: [

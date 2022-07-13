@@ -19,7 +19,9 @@ export class GlobalService {
   }
 
   public InsertarContactoPortal():Observable<any>{
-    console.log('-----------')
     return this.http.get<any>(this.urlBase+'/InsertarContactoPortal');
+  }
+  public ObtenerIdAlumnoPorUsuario():Observable<any>{
+    return this.http.get<any>(this.urlBase+'/ObtenerIdAlumnoPorUsuario');
   }
 }

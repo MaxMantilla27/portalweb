@@ -1,3 +1,8 @@
 <router-outlet></router-outlet>
 
-<app-soporte-tecnico></app-soporte-tecnico>
+<app-soporte-tecnico [cargaChat]="cargaChat" (IsOpen)="OpenChat=$event" [Open]="OpenChat">
+
+  <ng-container contenidoChat>
+    <app-chat (ChargeChat)="cargaChat=$event" (AbrirChat)="OpenChat=true"  [Open]="OpenChat"></app-chat>
+  </ng-container>
+</app-soporte-tecnico>

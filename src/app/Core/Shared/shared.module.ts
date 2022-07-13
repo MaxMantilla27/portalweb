@@ -92,6 +92,8 @@ import {MatBottomSheetModule} from '@angular/material/bottom-sheet';
 import { CardMatriculasPruebaComponent } from './Containers/card/card-matriculas-prueba/card-matriculas-prueba/card-matriculas-prueba.component';
 import { GlobalService } from './Services/Global/global.service';
 import { SoporteTecnicoComponent } from './Containers/soporte-tecnico/soporte-tecnico.component';
+import { ChatDetalleIntegraService } from './Services/ChatDetalleIntegra/chat-detalle-integra.service';
+import { ChatComponent } from './Containers/chat/chat.component';
 
 
 
@@ -164,6 +166,7 @@ import { SoporteTecnicoComponent } from './Containers/soporte-tecnico/soporte-te
     InputCardFechaDirective,
     CardMatriculasPruebaComponent,
     SoporteTecnicoComponent,
+    ChatComponent,
 
   ],
   exports: [
@@ -193,7 +196,7 @@ import { SoporteTecnicoComponent } from './Containers/soporte-tecnico/soporte-te
     VideoBrightcovePruebaComponent,
     CardMatriculasPruebaComponent,
     SoporteTecnicoComponent,
-
+    ChatComponent,
     InputCardDirective,
     InputCardFechaDirective,
 
@@ -262,7 +265,8 @@ import { SoporteTecnicoComponent } from './Containers/soporte-tecnico/soporte-te
     MedioPagoActivoPasarelaService,
     ImagenTarjetas,
     FormaPagoService,
-    GlobalService
+    GlobalService,
+    ChatDetalleIntegraService
   ],
 })
 export class SharedModule {

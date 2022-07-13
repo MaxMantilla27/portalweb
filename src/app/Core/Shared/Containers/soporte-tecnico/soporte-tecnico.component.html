@@ -1,4 +1,22 @@
-<div class="sopoteTecnico">
-  <img src="../../../../../assets/icons/icono-chat-soporte.svg" alt="">
-  <div>Soporte Técnico</div>
-</div>
+
+<ng-container *ngIf="cargaChat==true">
+
+  <div class="chatST" *ngIf="Open">
+    <div style="position: absolute;
+    top: 0px;
+    right: 0px;
+    color: white;
+    font-weight: 600;
+    font-size: 12px;cursor: pointer;
+    padding: 0px 10px;" (click)="Open=false;IsOpen.emit(false)">x</div>
+    <ng-content select="[contenidoChat]">
+    </ng-content>
+  </div>
+  <div class="sopoteTecnico" (click)="Open=true;IsOpen.emit(true)" *ngIf="!Open">
+    <img src="../../../../../assets/icons/icono-chat-soporte.svg" alt="">
+    <div>Soporte Técnico</div>
+  </div>
+</ng-container>
+
+<script src="signalr.js"></script>
+<script src="https://localhost:7120/hubIntegraHub"></script>

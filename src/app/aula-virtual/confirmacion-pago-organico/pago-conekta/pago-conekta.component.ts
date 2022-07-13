@@ -1,5 +1,5 @@
 import { DOCUMENT } from '@angular/common';
-import { Component, Inject, OnInit, Renderer2, ViewEncapsulation } from '@angular/core';
+import { Component, Inject, OnDestroy, OnInit, Renderer2, ViewEncapsulation } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
 import { RegistroRespuestaPreProcesoPagoDTO, RegistroProcesoPagoAlumnoDTO } from 'src/app/Core/Models/ProcesoPagoDTO';
@@ -13,7 +13,7 @@ import { environment } from 'src/environments/environment';
   styleUrls: ['./pago-conekta.component.scss'],
   encapsulation: ViewEncapsulation.None,
 })
-export class PagoConektaComponent implements OnInit {
+export class PagoConektaComponent implements OnInit,OnDestroy {
   private signal$ = new Subject();
   constructor(
     private _renderer2: Renderer2,

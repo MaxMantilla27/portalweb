@@ -2,7 +2,7 @@
 .sopoteTecnico {
   position: fixed;
   bottom: 30px;
-  right: 50px;
+  right: 30px;
   width: 80px;
   background: #ff4e56;
   height: 80px;
@@ -15,12 +15,25 @@
   font-size: 14px;
   line-height: 12px;
   z-index: 200;
+  cursor: pointer;
   img{
     display: none;
   }
 }
-
-@media (max-width: 576px) {
+.chatST{
+  position: fixed;
+  bottom: 0px;
+  right: 20px;
+  width: 300px;
+  background: white;
+  //height: 400px;
+  align-items: center;
+  text-align: center;
+  border-radius: 10px 10px 0px 0px;
+  z-index: 200;
+  box-shadow: 0px 0px 2px 0px #c3c3c3;
+}
+@media (max-width: 690px) {
   .sopoteTecnico {
     border-radius: 0px !important;
     bottom: 0px;
@@ -33,5 +46,9 @@
       width: 20px;
       margin-right: 20px;
     }
+  }
+  .chatST{
+    width: 80%;
+    left: 10%;
   }
 }

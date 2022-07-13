@@ -828,11 +828,11 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
   LimpiarCampos(){
     this.combosPrevios=undefined;
     this.formularioContacto.Nombres= '',
-      this.formularioContacto.Apellidos= '',
-      this.formularioContacto.Email= '',
-      this.formularioContacto.IdPais=0,
-      this.formularioContacto.IdRegion=0,
-      this.formularioContacto.Movil= '',
-      this.GetRegionesPorPais(-1);
+    this.formularioContacto.Apellidos= '',
+    this.formularioContacto.Email= '',
+    this.formularioContacto.IdPais=0,
+    this.formularioContacto.IdRegion=0,
+    this.formularioContacto.Movil= '',
+    this.GetRegionesPorPais(-1);
   }
 }
