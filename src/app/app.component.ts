@@ -19,6 +19,9 @@ export class AppComponent implements OnInit,AfterViewInit  {
   public charge=false
   public step=-1;
   public CodigoIso=''
+  public OpenChat=false;
+  public cargaChat=false;
+  public usuarioWeb=''
   constructor(
     private _HelperService: HelperService,
     private router: Router,
@@ -45,14 +48,26 @@ export class AppComponent implements OnInit,AfterViewInit  {
       estatus: false,
     },
   ];
+  public IdPGeneral=0;
+  public stateToekn=false
   ngOnInit() {
-    var usuarioWeb=this._SessionStorageService.SessionGetValue('usuarioWeb');
+    this.router.events.subscribe((val) => {
+      this.IdPGeneral=0;
+      this.stateToekn=this._SessionStorageService.validateTokken();
+    });
+    this._HelperService.RecibirPGeneral.subscribe({
+      next:x=>{
+        console.log(x);
+        this.IdPGeneral=x
+      }
+    })
+    this.usuarioWeb=this._SessionStorageService.SessionGetValue('usuarioWeb');
     var codIso=this._SessionStorageService.SessionGetValue('ISO_PAIS');
-    if(usuarioWeb=='' || codIso==''){
+    if(this.usuarioWeb=='' || codIso==''){
       if(codIso==''){
         this.ObtenerCodigoIso()
       }
-      if(usuarioWeb==''){
+      if(this.usuarioWeb==''){
         this.RegistroInteraccionInicial();
       }
     }else{
@@ -69,9 +84,11 @@ export class AppComponent implements OnInit,AfterViewInit  {
     }})
   }
   RegistroInteraccionInicial(){
+    console.log(12)
     this._GlobalService.RegistroInteraccionInicial().subscribe({
       next:x=>{
       this._SessionStorageService.SessionSetValue('usuarioWeb',x.identificadorUsuario);
+      this.usuarioWeb=x.identificadorUsuario
       this.charge=true;
       this.InsertarContactoPortal();
     }})

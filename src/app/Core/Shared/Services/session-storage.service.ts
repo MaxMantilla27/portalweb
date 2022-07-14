@@ -36,6 +36,21 @@ export class SessionStorageService {
     }
   }
 
+  SessionSetValueSesionStorage(name:string, token: string):void{
+    if(this.isBrowser){
+      sessionStorage.setItem(name,btoa(token));
+    }
+  }
+  SessionGetValueSesionStorage(name:string):string{
+    if(this.isBrowser){
+
+      var value=sessionStorage.getItem(name);
+      if(value==undefined || value==null) return '';
+      return atob(value);
+    }
+    if(name.toUpperCase()=='ISO_PAIS')return 'INTC';
+    return '';
+  }
   SessionSetValue(name:string, token: string):void{
     if(this.isBrowser){
       localStorage.setItem(name,btoa(token));

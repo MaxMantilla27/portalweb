@@ -32,6 +32,7 @@ import { LandingPageComponent } from './landing-page/landing-page/landing-page.c
 import { LandingPageInterceptorComponent } from './landing-page/landing-page/landing-page-interceptor/landing-page-interceptor/landing-page-interceptor.component';
 import { PageErrorComponent } from './page-error/page-error/page-error.component';
 import { ChatEnLineaComponent } from './chat-en-linea/chat-en-linea.component';
+import { ChatPruebaComponent } from './chat-prueba/chat-prueba.component';
 
 @NgModule({
   imports: [
@@ -69,7 +70,8 @@ import { ChatEnLineaComponent } from './chat-en-linea/chat-en-linea.component';
     LandingPageComponent,
     LandingPageInterceptorComponent,
     PageErrorComponent,
-    ChatEnLineaComponent
+    ChatEnLineaComponent,
+    ChatPruebaComponent
   ],
   exports: [],
   providers: [

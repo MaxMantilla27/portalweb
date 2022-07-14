@@ -1,0 +1,17 @@
+<div class="card CabeceraContenido">
+  <div class="card-body" style="background: #F5F5F5; margin-top: auto;font-size: 13px;text-align: left;">
+    Solo tienes que ingresar tus datos para empezar a conversar ahora mismo
+  </div>
+  <div class="card-footer" style="background: white;">
+    <app-formulario [model]="formularioContactoChat" [InputsDisable]="statuscharge" (OnSubmit)="SetContacto($event)"
+      (OnValid)="formVal=$event" [fiels]="fileds">
+      <ng-container contenido>
+      </ng-container>
+      <ng-container send>
+        <app-default-button style="background:#00B464;color:white;font-size: 15px;"
+          [confs]="{titulo:'Empezar a chatear ahora'}" [style]="'width: 100%;'">
+        </app-default-button>
+      </ng-container>
+    </app-formulario>
+  </div>
+</div>

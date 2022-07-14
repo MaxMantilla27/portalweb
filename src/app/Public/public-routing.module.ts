@@ -27,6 +27,7 @@ import { ForgotPasswordComponent } from './forgot-password/forgot-password.compo
 import { AvatarComponent } from '../aula-virtual/avatar/avatar.component';
 import { LandingPageInterceptorComponent } from './landing-page/landing-page/landing-page-interceptor/landing-page-interceptor/landing-page-interceptor.component';
 import { PageErrorComponent } from './page-error/page-error/page-error.component';
+import { ChatPruebaComponent } from './chat-prueba/chat-prueba.component';
 
 const routes:Routes=[
     {path:'',component:PublicComponent,children:
@@ -46,6 +47,7 @@ const routes:Routes=[
             {path:'contactenos', component:ContactenosComponent},
             {path:'Account/ForgotPassword', component:ForgotPasswordComponent},
             {path:'Avatar', component: AvatarComponent},
+            {path:'ChatEnlinea', component: ChatPruebaComponent},
 
             {path:'bs-campus/white-paper/:whitepaper', component:WhitepapersComponent},
             {path:'bs-campus/blog/:blog', component:BlogComponent},

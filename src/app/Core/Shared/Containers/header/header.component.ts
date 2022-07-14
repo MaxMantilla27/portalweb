@@ -143,6 +143,7 @@ export class HeaderComponent implements OnInit,OnChanges,OnDestroy {
   ];
   public token: boolean = this._SessionStorageService.validateTokken();
   public step=-1
+  @Input() usuarioWeb=''
   constructor(
     private _SessionStorageService: SessionStorageService,
     private _PaisService: PaisService,
@@ -155,24 +156,8 @@ export class HeaderComponent implements OnInit,OnChanges,OnDestroy {
     private _GlobalService:GlobalService
   ) {}
   ngOnChanges(changes: SimpleChanges): void {
-    if(this.carga==true){
-      var usuarioWeb=this._SessionStorageService.SessionGetValue('usuarioWeb');
-      console.log(usuarioWeb)
-      if(usuarioWeb==''){
-        this.RegistroInteraccionInicial();
-      }else{
-        this.GetPaises();
-        console.log(this.CodigoIso)
-        if(this.CodigoIso!=''){
-          this.GetCarreras();
-        }
-        this.GetAreaCapasitacionList();
-        if (this.token) {
-          this.ObtenerCombosPerfil();
-          this.ObtenerAvatar();
-        }
-        this.ObtenerObservable();
-      }
+    if(this.carga==true && this.usuarioWeb!=''){
+      this.RevisarUsuario();
     }
   }
   ngOnDestroy(): void {
@@ -181,7 +166,26 @@ export class HeaderComponent implements OnInit,OnChanges,OnDestroy {
   }
   ngOnInit(): void {
   }
-
+  RevisarUsuario(){
+    var usuarioWeb=''
+    usuarioWeb=this._SessionStorageService.SessionGetValue('usuarioWeb');
+    console.log(usuarioWeb)
+    if(usuarioWeb==''){
+      //this.RevisarUsuario();
+    }else{
+      this.GetPaises();
+      console.log(this.CodigoIso)
+      if(this.CodigoIso!=''){
+        this.GetCarreras();
+      }
+      this.GetAreaCapasitacionList();
+      if (this.token) {
+        this.ObtenerCombosPerfil();
+        this.ObtenerAvatar();
+      }
+      this.ObtenerObservable();
+    }
+  }
   async RegistroInteraccionInicial(){
     await firstValueFrom(this._GlobalService.RegistroInteraccionInicial().pipe(tap((result) => {
       console.log(result);

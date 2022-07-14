@@ -1,5 +1,7 @@
 
-<ng-container *ngIf="cargaChat==true">
+<ng-container *ngIf="cargaChat==true &&
+  ((token==true && (IdPGeneral>0 || rutabase=='AulaVirtual')) ||
+  (token==false && IdPGeneral>0)) ">
 
   <div class="chatST" *ngIf="Open">
     <div style="position: absolute;
@@ -15,6 +17,10 @@
   <div class="sopoteTecnico" (click)="Open=true;IsOpen.emit(true)" *ngIf="!Open">
     <img src="../../../../../assets/icons/icono-chat-soporte.svg" alt="">
     <div>Soporte Técnico</div>
+    <div style="position: absolute;
+    top: 10px;
+    color: red;
+    top:-100px">{{rutabase}}</div>
   </div>
 </ng-container>
 

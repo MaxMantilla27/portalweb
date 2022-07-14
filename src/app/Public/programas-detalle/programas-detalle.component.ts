@@ -439,6 +439,7 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
         });
         console.log(this.estructuraPrograma);
         this.idPegeneral = x.idPGeneral;
+        this._HelperServiceP.enviarPGeneral(this.idPegeneral)
         this.ObtenerSilaboCurso();
         this.ListProgramaRelacionado();
         //this.prerequisitos=x.listaPrerrequisitoDTO;

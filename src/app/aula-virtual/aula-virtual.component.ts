@@ -19,8 +19,6 @@ export class AulaVirtualComponent implements OnInit {
   ) {
 
   }
-  public OpenChat=false;
-  public cargaChat=false;
   ngOnInit(): void {
 
   }

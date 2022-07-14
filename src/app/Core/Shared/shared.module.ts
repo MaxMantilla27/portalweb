@@ -94,6 +94,7 @@ import { GlobalService } from './Services/Global/global.service';
 import { SoporteTecnicoComponent } from './Containers/soporte-tecnico/soporte-tecnico.component';
 import { ChatDetalleIntegraService } from './Services/ChatDetalleIntegra/chat-detalle-integra.service';
 import { ChatComponent } from './Containers/chat/chat.component';
+import { FormChatComponent } from './Containers/form-chat/form-chat.component';
 
 
 
@@ -167,6 +168,7 @@ import { ChatComponent } from './Containers/chat/chat.component';
     CardMatriculasPruebaComponent,
     SoporteTecnicoComponent,
     ChatComponent,
+    FormChatComponent,
 
   ],
   exports: [
@@ -197,6 +199,8 @@ import { ChatComponent } from './Containers/chat/chat.component';
     CardMatriculasPruebaComponent,
     SoporteTecnicoComponent,
     ChatComponent,
+    FormChatComponent,
+
     InputCardDirective,
     InputCardFechaDirective,
 

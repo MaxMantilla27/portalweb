@@ -12,6 +12,7 @@ export class GlobalService {
   constructor(private http: HttpClient) { }
 
   public RegistroInteraccionInicial():Observable<any>{
+    console.log('--------')
     return this.http.get<any>(this.urlBase+'/RegistroInteraccionInicial');
   }
   public ObtenerCodigoIso():Observable<any>{
