@@ -21,7 +21,9 @@
             <mat-tab disabled>
               <ng-template mat-tab-label>
                 <div  class="contentHeaderM" [ngClass]="{'ActiveChil':item.opened==true}" (click)="changeCapitulo(i)">
-                  <div class="iconMat iconcapitulo"></div>
+                  <div class="iconMat"
+                  [matTooltip]="'Capitulo '+item.numeroCapitulo+': '+item.nombreCapitulo"
+                  matTooltipPosition="after"><i class="material-icons">collections_bookmark</i></div>
                   <ng-container *ngIf="!hide">
                     <div class="titleMatr" style="font-weight: bold;">Capitulo {{item.numeroCapitulo}}: {{item.nombreCapitulo}}</div>
                     <i *ngIf="item.opened==true" class="material-icons">keyboard_arrow_up</i>
@@ -45,7 +47,10 @@
                   <mat-tab >
                     <ng-template mat-tab-label>
                       <div  class="contentHeaderM estructuraSubCapitulos" (click)="changeTab(3,0,i,e,0)" [ngClass]="{'hidetab':item.opened==false}">
-                        <div class="iconMat iconencuesta"></div>
+
+                        <div class="iconMat"
+                        [matTooltip]="Encuesta.nombreEncuesta"
+                        matTooltipPosition="after"><i class="material-icons">sentiment_satisfied_alt</i></div>
                         <div class="titleMatr" *ngIf="!hide">{{Encuesta.nombreEncuesta}}</div>
                       </div>
                     </ng-template>
@@ -68,8 +73,12 @@
                   <ng-template mat-tab-label>
                     <div (click)="changeTab(1,sesion.numeroSesion,i,s,-1)" class="contentHeaderM estructuraSubCapitulos"
                       [ngClass]="{'hidetab':item.opened==false}">
-                      <div *ngIf="sesion.VideoFinish==true" class="iconMat iconVideoFinal"></div>
-                      <div *ngIf="sesion.VideoFinish!=true" class="iconMat iconVideo"></div>
+                      <div *ngIf="sesion.VideoFinish==true" class="iconMat iconVideoFinal"
+                      [matTooltip]="sesion.nombreSesion"
+                      matTooltipPosition="after"></div>
+                      <div *ngIf="sesion.VideoFinish!=true" class="iconMat iconVideo"
+                      [matTooltip]="sesion.nombreSesion"
+                      matTooltipPosition="after"></div>
                       <div *ngIf="!hide" class="titleMatr">{{sesion.nombreSesion}}</div>
 
                       <div *ngIf="!hide"
@@ -96,7 +105,9 @@
                   <ng-template mat-tab-label>
                     <div  class="contentHeaderM estructuraSubCapitulos" (click)="changeSesion(i,s)"
                       [ngClass]="{'ActiveChil':sesion.opened==true,'hidetab':item.opened==false}">
-                      <div class="iconMat iconsesion"></div>
+                      <div class="iconMat"
+                      [matTooltip]="'Sesión '+sesion.numeroSesion+': '+sesion.nombreSesion"
+                      matTooltipPosition="after"><i class="material-icons">filter_none</i></div>
                       <ng-container *ngIf="!hide">
                         <div class="titleMatr">Sesión {{sesion.numeroSesion}}: {{sesion.nombreSesion}}</div>
                         <i *ngIf="sesion.opened==true" class="material-icons">keyboard_arrow_up</i>
@@ -110,8 +121,12 @@
                     <ng-template mat-tab-label>
                       <div (click)="changeTab(1,subsesion.numeroSubSesion,i,s,ss)" class="contentHeaderM estructuraSubSesiones"
                         [ngClass]="{'hidetab':item.opened==false || sesion.opened==false}">
-                        <div *ngIf="subsesion.VideoFinish==true" class="iconMat iconVideoFinal"></div>
-                        <div *ngIf="subsesion.VideoFinish!=true" class="iconMat iconVideo"></div>
+                        <div *ngIf="subsesion.VideoFinish==true" class="iconMat iconVideoFinal"
+                        [matTooltip]="subsesion.nombreSubSesion"
+                        matTooltipPosition="after"></div>
+                        <div *ngIf="subsesion.VideoFinish!=true" class="iconMat iconVideo"
+                        [matTooltip]="subsesion.nombreSubSesion"
+                        matTooltipPosition="after"></div>
                         <div *ngIf="!hide" class="titleMatr">{{subsesion.nombreSubSesion}}</div>
 
                         <div *ngIf="!hide"
@@ -140,7 +155,9 @@
                 <mat-tab [disabled]="!tarea.habilitado">
                   <ng-template mat-tab-label>
                     <div  class="contentHeaderM estructuraSubCapitulos" (click)="changeTab(2,0,i,t,0)" [ngClass]="{'hidetab':item.opened==false}">
-                      <div class="iconMat icontarea"></div>
+                      <div class="iconMat"
+                      [matTooltip]="tarea.tarea"
+                      matTooltipPosition="after"><i class="material-icons">edit_note</i></div>
                       <div *ngIf="!hide" class="titleMatr">{{tarea.tarea}}</div>
                     </div>
                   </ng-template>
@@ -162,7 +179,9 @@
                   <ng-template mat-tab-label>
                     <div class="contentHeaderM estructuraSubCapitulos" (click)="changeTab(4,0,i,t,0)" [ngClass]="{'hidetab':item.opened==false}">
 
-                      <div class="iconMat icontareacalificar"></div>
+                      <div class="iconMat"
+                      [matTooltip]="tareaC.tarea"
+                      matTooltipPosition="after"><i class="material-icons">fact_check</i></div>
                       <div *ngIf="!hide" class="titleMatr">Actividad: Calificar {{tareaC.tarea}}</div>
                     </div>
                   </ng-template>
@@ -184,7 +203,9 @@
                     <ng-template mat-tab-label>
                       <div  class="contentHeaderM estructuraSubCapitulos" (click)="changeTab(3,0,i,e,0)" [ngClass]="{'hidetab':item.opened==false}">
 
-                        <div class="iconMat iconencuesta"></div>
+                        <div class="iconMat"
+                        [matTooltip]="Encuesta.nombreEncuesta"
+                        matTooltipPosition="after"><i class="material-icons">sentiment_satisfied_alt</i></div>
                         <div *ngIf="!hide" class="titleMatr">{{Encuesta.nombreEncuesta}}</div>
                       </div>
                     </ng-template>
@@ -202,7 +223,9 @@
                     <ng-template mat-tab-label>
                       <div  class="contentHeaderM estructuraSubCapitulos" (click)="changeTab(3,0,i,e,0)" [ngClass]="{'hidetab':item.opened==false}">
 
-                        <div class="iconMat iconencuesta"></div>
+                        <div class="iconMat"
+                        [matTooltip]="Encuesta.nombreEncuesta"
+                        matTooltipPosition="after"><i class="material-icons">sentiment_satisfied_alt</i></div>
                         <div *ngIf="!hide" class="titleMatr">{{Encuesta.nombreEncuesta}}</div>
                       </div>
                     </ng-template>

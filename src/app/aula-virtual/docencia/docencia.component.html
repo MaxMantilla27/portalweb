@@ -7,8 +7,8 @@
 <div class="container" *ngIf="DataProveedor!=undefined">
   <div class="row rowpaddAv">
     <div class="col-12 col-md-12 col-lg-12" style="position: relative;">
-      <div class="openClose" [ngClass]="{'reverse':!hide}" (click)="hide=!hide">
-        <i class="material-icons">double_arrow</i>
+      <div class="openCloseDocencia" [ngClass]="{'reverseDocencia':!hide}" (click)="hide=!hide">
+        <i class="material-icons">layers</i>
       </div>
       <mat-tab-group class="tabVerticalDocente" [(selectedIndex)]="tabIndex" (selectedTabChange)="tabChanged($event)">
         <mat-tab *ngIf="DataProveedor.aplicaSesionOnlineWebinar">
@@ -30,6 +30,7 @@
             </div>
           </ng-template>
           <div class="pad-resp">
+            <app-docencia-gestion-notas [IdProveedor]="DataProveedor.id"  ></app-docencia-gestion-notas>
           </div>
         </mat-tab>
         <mat-tab>

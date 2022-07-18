@@ -95,6 +95,8 @@ import { SoporteTecnicoComponent } from './Containers/soporte-tecnico/soporte-te
 import { ChatDetalleIntegraService } from './Services/ChatDetalleIntegra/chat-detalle-integra.service';
 import { ChatComponent } from './Containers/chat/chat.component';
 import { FormChatComponent } from './Containers/form-chat/form-chat.component';
+import { ReporteParticipacionExpositorService } from './Services/ReporteParticipacionExpositor/reporte-participacion-expositor.service';
+import { OperacionesNotaService } from './Services/OperacionesNota/operaciones-nota.service';
 
 
 
@@ -270,7 +272,9 @@ import { FormChatComponent } from './Containers/form-chat/form-chat.component';
     ImagenTarjetas,
     FormaPagoService,
     GlobalService,
-    ChatDetalleIntegraService
+    ChatDetalleIntegraService,
+    ReporteParticipacionExpositorService,
+    OperacionesNotaService
   ],
 })
 export class SharedModule {

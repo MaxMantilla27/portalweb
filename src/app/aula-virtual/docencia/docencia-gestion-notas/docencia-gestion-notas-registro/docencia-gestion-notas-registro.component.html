@@ -1,0 +1,64 @@
+<div class="headerRegistroNota">Registro de Notas</div>
+<ng-container *ngIf="listadoNotas!=undefined">
+  <div class="escalaNota">Escala Calificación: {{listadoNotas.EscalaCalificacion}}</div>
+  <div class="contentRegistroNota table-resposive">
+    <table style="width: 100%" class="table">
+      <thead>
+        <tr style="background: #e6eefa;">
+          <th class="text-center" style="min-width: 200px;" rowspan="2"><b>Alumno</b></th>
+          <th class="text-center" style="min-width: 200px;" [colSpan]="listadoNotas.ListadoEvaluaciones.length">
+            <b>Evaluaciones</b></th>
+        </tr>
+        <ng-container *ngIf="listadoNotas.ListadoEvaluaciones.length>0">
+          <tr >
+            <th style="width: 5px;min-width: 60px;text-align: center;" *ngFor="let item of listadoNotas.ListadoEvaluaciones">
+              <ng-container >
+                {{item.Nombre | uppercase }} <br> {{item.Porcentaje}}%
+              </ng-container>
+
+            </th>
+          </tr>
+        </ng-container>
+      </thead>
+      <ng-container *ngIf="listadoNotas.ListadoMatriculas!=null && listadoNotas.ListadoMatriculas.length>0">
+        <tbody>
+          <ng-container *ngFor="let mat of listadoNotas.ListadoMatriculas">
+            <tr>
+              <td>
+                {{mat.Alumno | uppercase}}
+              </td>
+              <td style="text-align: center;">
+                <ng-container *ngIf="mat.edit!=true">
+                  {{mat.NotaNueva}}
+                </ng-container>
+                <ng-container *ngIf="mat.edit==true">
+                  <input type="text" style="width: 100% ; height: 100%;" [value]="mat.notaActual">
+                </ng-container>
+              </td>
+            </tr>
+          </ng-container>
+        </tbody>
+      </ng-container>
+    </table>
+  </div>
+  <div class="buttonsRegistroNota">
+    <div style="margin: 0px 5px;">
+      <app-default-button [confs]="{color:'primary',titulo:'Guardar'}"
+      [style]="'width: 100%;background: #0069d9;border-color: #0062cc;'"
+      (ButtoclClick)="RegistrarNotaDetalleDocente()"
+      [icon]="'check'"></app-default-button>
+    </div>
+    <div style="margin: 0px 5px;">
+      <app-default-button [confs]="{color:'primary',titulo:'Finalizar Registro'}"
+      [style]="'width: 100%;background: #0069d9;border-color: #0062cc;'" [icon]="'check'"></app-default-button>
+    </div>
+    <div style="margin: 0px 5px;">
+      <app-default-button [confs]="{color:'danger',titulo:'cancelar'}"
+      [style]="'width: 100%;'" [icon]="'close'" (ButtoclClick)="dialogRef.close()"></app-default-button>
+    </div>
+  </div>
+</ng-container>
+<ng-container *ngIf="listadoNotas==undefined">
+  <div style="width: 100%;display: flex;justify-content: center;padding: 20px"><mat-spinner></mat-spinner> </div>
+</ng-container>
+

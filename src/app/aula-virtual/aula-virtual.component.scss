@@ -30,8 +30,10 @@
   opacity: 1 !important;
   padding-left: 0px;
   padding-right: 0px;
-  min-width: 28px !important;
+  min-width: 60px !important;
   height: auto !important;
+  width: 100%;
+  justify-content: center;
 }
 .tabVertical
   .mat-tab-header
@@ -75,7 +77,7 @@
   background: #f4f4f4;
 }
 .pad-resp {
-  padding: 5px 10px 0px 52px;
+  padding: 5px 10px 0px 72px;
 }
 
 @media (max-width: 768px) {
@@ -92,7 +94,7 @@
   .mat-tab-label-container
   .mat-tab-list
   .mat-tab-labels {
-    max-width: 250px !important;
+    max-width: 290px !important;
   }
   .reverse2 {
     left: 265px !important;
@@ -108,7 +110,7 @@
     padding: 45px 20px;
   }
   .pad-resp {
-    padding: 5px 10px 0px 52px;
+    padding: 5px 10px 0px 72px;
   }
 }
 @media (min-width: 768px) {
@@ -226,7 +228,7 @@
   cursor: pointer;
   background: #c3c3c3;
   border-right: 2px solid #d2d2d2;
-  width: 42px;
+  width: 62px;
   display: flex;
   justify-content: center;
   padding: 5px;

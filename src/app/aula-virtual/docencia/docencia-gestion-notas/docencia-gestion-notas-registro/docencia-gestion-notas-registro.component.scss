@@ -1,0 +1,49 @@
+.custom-dialog-docente-nota-container{
+  mat-dialog-container{
+    padding: 0px !important;
+    height: auto;
+  }
+}
+.headerRegistroNota{
+  padding: 10px 20px;
+  font-size: 23px;
+  border-bottom: solid 1px #dee2e6;
+  margin-bottom: 20px;
+}
+.escalaNota{
+  display: flex;
+  justify-content: flex-end;
+  font-weight: 700;
+  padding: 10px 10px 0px;
+  font-size: 13px;
+}
+.contentRegistroNota{
+  padding: 10px;
+  .table{
+    thead {
+      tr{
+        background: white !important;
+        th{
+          border-bottom: 2px solid #dee2e6;
+          border: 1px solid #dee2e6;
+        }
+      }
+    }
+    tbody{
+      border-top:none;
+      tr{
+        background: white !important;
+        td{
+          border-bottom: 2px solid #dee2e6;
+          border: 1px solid #dee2e6;
+        }
+      }
+    }
+  }
+}
+.buttonsRegistroNota{
+  display: flex;
+  justify-content: flex-end;
+  padding: 10px;
+  border-top: solid 1px #dee2e6;
+}

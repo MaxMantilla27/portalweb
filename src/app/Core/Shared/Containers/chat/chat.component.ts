@@ -214,9 +214,11 @@ export class ChatComponent implements OnInit,OnDestroy,OnChanges {
       next:x=>{
         console.log(x);
         this.mensajesAnteriore=x
-        if(this.mensajesAnteriore[this.mensajesAnteriore.length-1].NroMensajesSinLeer!=undefined){
-          this.NroMensajesSinLeer=this.mensajesAnteriore[this.mensajesAnteriore.length-1].NroMensajesSinLeer
+        if(this.mensajesAnteriore.length>0){
+          if(this.mensajesAnteriore[this.mensajesAnteriore.length-1].NroMensajesSinLeer!=undefined){
+            this.NroMensajesSinLeer=this.mensajesAnteriore[this.mensajesAnteriore.length-1].NroMensajesSinLeer
 
+          }
         }
 
       }

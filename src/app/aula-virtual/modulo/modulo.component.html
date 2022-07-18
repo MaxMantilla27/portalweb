@@ -15,7 +15,9 @@
         <mat-tab>
           <ng-template mat-tab-label>
             <div  class="contentHeaderM">
-              <div class="iconMat iconSesiones"></div>
+              <div class="iconMat iconSesiones"
+              matTooltip="Sesiones"
+              matTooltipPosition="after"></div>
               <div *ngIf="!hide" class="titleMatr">Sesiones</div>
             </div>
           </ng-template>
@@ -39,7 +41,9 @@
         <mat-tab>
           <ng-template mat-tab-label>
             <div  class="contentHeaderM">
-              <div class="iconMat iconSilabo"></div>
+              <div class="iconMat iconSilabo"
+              matTooltip="Sílabo"
+              matTooltipPosition="after"></div>
               <div *ngIf="!hide" class="titleMatr">Sílabo</div>
             </div>
           </ng-template>
@@ -51,7 +55,9 @@
         <mat-tab>
           <ng-template mat-tab-label>
             <div  class="contentHeaderM">
-              <div class="iconMat iconRecursos"></div>
+              <div class="iconMat iconRecursos"
+              matTooltip="Recursos"
+              matTooltipPosition="after"></div>
               <div *ngIf="!hide" class="titleMatr">Recursos</div>
             </div>
           </ng-template>
@@ -61,7 +67,9 @@
         <mat-tab>
           <ng-template mat-tab-label>
             <div class="contentHeaderM">
-              <div class="iconMat iconForo"></div>
+              <div class="iconMat iconForo"
+              matTooltip="Foro"
+              matTooltipPosition="after"></div>
               <div *ngIf="!hide" class="titleMatr">Foro</div>
             </div>
           </ng-template>
@@ -72,7 +80,9 @@
         <mat-tab>
           <ng-template mat-tab-label>
             <div class="contentHeaderM">
-              <div class="iconMat iconCalificaciones"></div>
+              <div class="iconMat iconCalificaciones"
+              matTooltip="Calificaciones"
+              matTooltipPosition="after"></div>
               <div *ngIf="!hide" class="titleMatr">Calificaciones</div>
             </div>
           </ng-template>
@@ -83,7 +93,9 @@
         <mat-tab>
           <ng-template mat-tab-label>
             <div class="contentHeaderM" [ngClass]="{'ActiveChil':AyudaActive==true}">
-              <div class="iconMat iconAyuda"></div>
+              <div class="iconMat iconAyuda"
+              matTooltip="Ayuda"
+              matTooltipPosition="after"></div>
               <div *ngIf="!hide" class="titleMatr">Ayuda</div>
             </div>
           </ng-template>
@@ -100,6 +112,10 @@
           <mat-tab>
             <ng-template mat-tab-label class="tabSubcontent">
               <div  class="contentHeaderM subContent" style="cursor: pointer;" (click)="alertaPreguntasFrecuentes=!alertaPreguntasFrecuentes">
+
+                <div class="iconMat"
+                matTooltip="Preguntas frecuentes"
+                matTooltipPosition="after"><i class="material-icons">question_answer</i></div>
                 <div *ngIf="!hide" class="titleMatr">Preguntas frecuentes</div>
               </div>
             </ng-template>
@@ -112,6 +128,10 @@
           <mat-tab >
             <ng-template mat-tab-label>
               <div class="contentHeaderM subContent" style="cursor: pointer;" (click)="alertaQuejasSugerencias=!alertaQuejasSugerencias">
+
+                <div class="iconMat"
+                matTooltip="Quejas y sugerencias"
+                matTooltipPosition="after"><i class="material-icons">fmd_bad</i></div>
                 <div *ngIf="!hide" class="titleMatr">Quejas y sugerencias</div>
               </div>
             </ng-template>

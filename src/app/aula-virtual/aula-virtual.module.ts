@@ -72,6 +72,8 @@ import { PagoGeneralComponent } from './confirmacion-pago-organico/pago-general/
 import { ConfirmacionPagoTarjetaWompiComponent } from './confirmacion-pago-tarjeta-wompi/confirmacion-pago-tarjeta-wompi.component';
 import { ConfirmacionPagoTarjetaConektaComponent } from './confirmacion-pago-tarjeta-conekta/confirmacion-pago-tarjeta-conekta.component';
 import { PagoMultipagoComponent } from './confirmacion-pago-organico/pago-multipago/pago-multipago.component';
+import { DocenciaGestionNotasComponent } from './docencia/docencia-gestion-notas/docencia-gestion-notas.component';
+import { DocenciaGestionNotasRegistroComponent } from './docencia/docencia-gestion-notas/docencia-gestion-notas-registro/docencia-gestion-notas-registro.component';
 
 
 
@@ -143,6 +145,8 @@ import { PagoMultipagoComponent } from './confirmacion-pago-organico/pago-multip
     ConfirmacionPagoTarjetaWompiComponent,
     ConfirmacionPagoTarjetaConektaComponent,
     PagoMultipagoComponent,
+    DocenciaGestionNotasComponent,
+    DocenciaGestionNotasRegistroComponent,
 
   ],
   imports: [

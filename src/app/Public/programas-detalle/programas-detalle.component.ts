@@ -257,7 +257,6 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
     this.AddFields();
     this.ObtenerCombosPortal();
     this.ObtenerCabeceraProgramaGeneral();
-    this.AddFields();
     this.ObtenerCombosPortal();
   }
 

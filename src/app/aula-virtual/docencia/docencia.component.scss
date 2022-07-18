@@ -73,6 +73,7 @@
 }
 .tabVerticalDocente .mat-tab-body-wrapper {
   flex: 1 1 auto !important;
+  min-height: 540px;
 }
 .tabVerticalDocente .mat-tab-body-wrapper .mat-tab-body .mat-tab-body-content {
   overflow: hidden;
@@ -101,16 +102,24 @@
     text-decoration: underline;
   }
 }
-.openClose {
-  position: absolute;
-  z-index: 2;
-  top: -20px;
-  left: 40px;
+.openCloseDocencia {
+  //position: absolute;
   cursor: pointer;
+  background: #c3c3c3;
+  border-right: 2px solid #d2d2d2;
+  width: 42px;
+  display: flex;
+  justify-content: center;
+  padding: 5px;
+  img{
+    width: 18px;
+  }
+  .material-icons{
+    font-size: 30px !important;
+  }
 }
-.reverse {
-  transform: scaleX(-1);
-  left: 170px;
+.reverseDocencia {
+  width: 180px ;
 }
 .tilteInter {
   padding: 10px 0px;
