@@ -35,12 +35,23 @@
     padding: 10px 10px 0px 10px;
     font-weight: 600;
     font-size: 20px;
+    position: relative;
     img {
       width: 20%;
       margin-right: 10px;
     }
     .nombreAsesor {
       width: calc(80% - 10px);
+    }
+    .stateAsesor{
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: #c23616;
+      bottom: 5px;
+      left: 52px;
+      border: solid 1px white;
     }
   }
   .textoAsesor {
@@ -130,4 +141,8 @@
       width: 80%;
     }
   }
+}
+
+.OnConected{
+  background: #4cd137 !important;
 }

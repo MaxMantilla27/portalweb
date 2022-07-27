@@ -1,0 +1,11 @@
+
+<div class="tilteInter">
+  Gestión de Asistencias
+</div>
+
+<div class="tableGestionNotas">
+  <app-table *ngIf="notas!=undefined" [tableData]="notas" [columnHeader]="columnHeader"
+  [tipoContenido]="TipoContenido"
+  [StyleContent]="'    font-size: 12px;padding: 10px;'"
+  [StyleCabecera]="'color: white;background: rgb(3 61 171)'" (ButtonClick)="OpenNota($event)"></app-table>
+</div>

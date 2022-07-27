@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ArticuloDTO } from 'src/app/Core/Models/ArticuloDTO';
 import { CardProgramasDTO } from 'src/app/Core/Models/BasicDTO';
+import { SeoService } from 'src/app/Core/Shared/Services/seo.service';
 import { TemasRelacionadosService } from 'src/app/Core/Shared/Services/TemasRelacionados/temas-relacionados.service';
 
 @Component({
@@ -15,6 +17,8 @@ export class TagsComponent implements OnInit {
     private router: Router,
     public _TemasRelacionadosService:TemasRelacionadosService,
     private activatedRoute:ActivatedRoute,
+    private _SeoService:SeoService,
+    private title:Title
   ) { }
   public tipo=1
   public nombre='';
@@ -51,6 +55,7 @@ export class TagsComponent implements OnInit {
     this.activatedRoute.params.subscribe({
       next:(x)=>{
           this.nombre=x['nombre'];
+          this.tagTitle=this.nombre.split('-').join(' ')
           console.log(this.nombre);
           this.TemasRelacionados();
       }
@@ -60,7 +65,30 @@ export class TagsComponent implements OnInit {
     this._TemasRelacionadosService.TemasRelacionados(this.tipo,this.nombre).subscribe({
       next:x=>{
         console.log(x);
+        if(x.parametroSeoProgramaDTO!=undefined){
+          var metas=x.parametroSeoProgramaDTO;
+          if(metas.length>0){
 
+            let mt=metas.find((par:any)=>par.nombre=='Titulo Pestaña')!=undefined?
+                      metas.find((par:any)=>par.nombre=='Titulo Pestaña').descripcion:undefined
+            let t=metas.find((par:any)=>par.nombre=='title')!=undefined?
+                      metas.find((par:any)=>par.nombre=='title').descripcion:undefined
+            let d=metas.find((par:any)=>par.nombre=='description')!=undefined?
+                      metas.find((par:any)=>par.nombre=='description').descripcion:undefined
+            let k=metas.find((par:any)=>par.nombre=='keywords')!=undefined?
+                      metas.find((par:any)=>par.nombre=='keywords').descripcion:undefined
+            console.log(t)
+            this.title.setTitle(t);
+
+            this._SeoService.generateTags({
+              title:mt,
+              slug:this.router.url.toString(),
+              description:d,
+              keywords:k,
+            });
+
+          }
+        }
         this.programas=x.listaProgramaTemasRelacionados.map(
           (c:any)=>{
             var ps:CardProgramasDTO={

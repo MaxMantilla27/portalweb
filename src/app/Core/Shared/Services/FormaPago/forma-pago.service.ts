@@ -49,7 +49,7 @@ export class FormaPagoService {
         this._SessionStorageService.SessionSetValue(sesion,x._Repuesta.requiereDatosTarjeta);
         console.log(Json.IdFormaPago)
         this._SessionStorageService.SessionDeleteValue('redirect');
-        if(parseInt(Json.IdPasarelaPago)==7){
+        if(parseInt(Json.IdPasarelaPago)==7 || parseInt(Json.IdPasarelaPago)==10){
           if(Json.IdFormaPago==52){
             this._router.navigate(['/AulaVirtual/MisPagos/visa/'+sesion]);
           }

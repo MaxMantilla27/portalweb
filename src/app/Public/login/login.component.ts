@@ -1,6 +1,7 @@
 import { style } from '@angular/animations';
 import { Component, OnInit } from '@angular/core';
 import { Validators } from '@angular/forms';
+import { Title, Meta } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { DatoObservableDTO } from 'src/app/Core/Models/DatoObservableDTO';
 import { formulario } from 'src/app/Core/Models/Formulario';
@@ -21,7 +22,9 @@ export class LoginComponent implements OnInit {
     private _AspNetUserService:AspNetUserService,
     private _SessionStorageService:SessionStorageService,
     private _HelperService: HelperService,
-    private _FormaPagoService:FormaPagoService
+    private _FormaPagoService:FormaPagoService,
+    private title:Title,
+    private meta:Meta
 
     ) { }
   formVal:boolean=false;
@@ -42,6 +45,10 @@ export class LoginComponent implements OnInit {
   };
   fileds:Array<formulario>=[];
   ngOnInit(): void {
+    let t:string='Iniciar Sesión'
+    this.title.setTitle(t);
+    this.meta.addTag({name: 'author', content: 'BSG Institute'})
+
     this.migaPan = [
       {
         titulo: 'Inicio',

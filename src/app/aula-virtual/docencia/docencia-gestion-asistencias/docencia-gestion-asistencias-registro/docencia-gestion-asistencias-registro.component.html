@@ -1,0 +1,77 @@
+<div class="headerRegistroNota">Registro de Asistencia</div>
+<ng-container *ngIf="listadoAsistencias!=undefined">
+  <div class="contentRegistroAsistencia ">
+    <ng-container *ngIf="charge==true">
+      <div style="width: 100%;z-index: 10;height: 100%;position: absolute;display: flex;justify-content: center;padding: 20px;align-items: center;
+       background: rgb(0 0 0 / 12%);">
+        <mat-spinner></mat-spinner>
+      </div>
+    </ng-container>
+    <div class="table-resposive">
+
+      <table style="width: 100%" class="table">
+        <thead>
+          <tr style="background: #e6eefa;">
+            <th class="text-center" style="width: 100px;" rowspan="2"><b>Alumno</b></th>
+            <th class="text-center" style="min-width: 200px;" [colSpan]="listadoAsistencias.ListadoSesiones.length">
+              <b>Sesiones</b></th>
+          </tr>
+          <ng-container *ngIf="listadoAsistencias.ListadoSesiones.length>0">
+            <tr >
+              <th style="width: 5px;min-width: 60px;text-align: center;min-width: 200px;" *ngFor="let item of listadoAsistencias.ListadoSesiones">
+                <ng-container >
+                  {{item.FechaHoraInicio | date:'dd/MM/yyyy' }} <br> {{item.FechaHoraInicio | date:'hh:mm'}}
+                </ng-container>
+
+              </th>
+            </tr>
+          </ng-container>
+        </thead>
+        <ng-container *ngIf="listadoAsistencias.ListadoMatriculas!=null && listadoAsistencias.ListadoMatriculas.length>0">
+          <tbody>
+            <ng-container *ngFor="let mat of listadoAsistencias.ListadoMatriculas">
+              <tr>
+                <td>
+                  {{mat.Alumno | uppercase}}
+                </td>
+                <ng-container *ngFor="let matn of mat.asistenciaAlumno">
+                  <td style="text-align: center;">
+                    <ng-container *ngIf="matn.Asistio!=true">
+                      <i class="material-icons" style="cursor: pointer ;" (click)="matn.Asistio=!matn.Asistio">check_box_outline_blank</i>
+                    </ng-container>
+                    <ng-container *ngIf="matn.Asistio==true">
+                      <i class="material-icons" (click)="matn.Asistio=!matn.Asistio" style="color:#0075ff ;cursor: pointer">check_box</i>
+                    </ng-container>
+                  </td>
+                </ng-container>
+              </tr>
+            </ng-container>
+          </tbody>
+        </ng-container>
+      </table>
+    </div>
+  </div>
+
+  <mat-dialog-actions align="end">
+    <div class="buttonsRegistroNota">
+      <div style="margin: 0px 5px;">
+        <app-default-button [confs]="{color:'primary',titulo:'Guardar'}"
+        [style]="'width: 100%;background: #0069d9;border-color: #0062cc;'"
+        (ButtoclClick)="RegistrarAsistenciaDetalleDocente()"
+        [icon]="'check'"></app-default-button>
+      </div>
+      <div style="margin: 0px 5px;">
+        <app-default-button [confs]="{color:'primary',titulo:'Finalizar Registro'}"
+        (ButtoclClick)="ConfirmacionAprobarNotaDetalleDocente()"
+        [style]="'width: 100%;background: #0069d9;border-color: #0062cc;'" [icon]="'check'"></app-default-button>
+      </div>
+      <div style="margin: 0px 5px;">
+        <app-default-button [confs]="{color:'danger',titulo:'cancelar'}"
+        [style]="'width: 100%;'" [icon]="'close'" (ButtoclClick)="charge==false?dialogRef.close():charge=true"></app-default-button>
+      </div>
+    </div>
+  </mat-dialog-actions>
+</ng-container>
+<ng-container *ngIf="listadoAsistencias==undefined">
+  <div style="width: 100%;display: flex;justify-content: center;padding: 20px"><mat-spinner></mat-spinner> </div>
+</ng-container>

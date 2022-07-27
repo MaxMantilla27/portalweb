@@ -36,6 +36,7 @@ export class SesionTareaComponent implements OnInit,OnChanges {
   @Output() next: EventEmitter<void> = new EventEmitter<void>();
   @Output() prev: EventEmitter<void> = new EventEmitter<void>();
   public params:ParametroObtenerEvaluacionTarea={
+    id:0,
     idEvaluacion:0,
     idPEspecifico:0,
     idPEspecificoPadre:0,

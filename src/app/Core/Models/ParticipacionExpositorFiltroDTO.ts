@@ -10,6 +10,7 @@ export interface ParticipacionExpositorFiltroDTO {
   IdCentroCostoD: number;
   IdProveedorOperaciones: string;
   SinNotaAprobada: boolean | null;
+  SinAsistenciaAprobada: boolean | null;
 }
 
 export interface NotaRegistrarDTO {
@@ -17,4 +18,12 @@ export interface NotaRegistrarDTO {
   IdEvaluacion: number;
   IdMatriculaCabecera: number;
   Nota: number;
+}
+
+export interface AsistenciaRegistrarDTO {
+  Id: number;
+  IdPEspecificoSesion: number;
+  IdMatriculaCabecera: number;
+  Asistio: boolean;
+  Justifico: boolean;
 }

@@ -1,0 +1,19 @@
+.HeaderContenidoAutoEvaluacion {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  .titleAuto {
+    font-weight: bolder;
+    color: #117a8b;
+    font-size: 1.5rem;
+    line-height: 1.2;
+  }
+  .buttonAuto {
+    display: flex;
+  }
+}
+.AutoEvaluacionesAcordion {
+  mat-expansion-panel {
+    margin: 10px 0px;
+  }
+}

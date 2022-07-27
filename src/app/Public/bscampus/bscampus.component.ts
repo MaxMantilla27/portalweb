@@ -1,8 +1,10 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 import { ArticuloDTO } from 'src/app/Core/Models/ArticuloDTO';
 import { BasicUrl } from 'src/app/Core/Models/BasicDTO';
 import { ArticuloService } from 'src/app/Core/Shared/Services/Articulo/articulo.service';
 import { HelperService } from 'src/app/Core/Shared/Services/helper.service';
+import { SeoService } from 'src/app/Core/Shared/Services/seo.service';
 import { SessionStorageService } from 'src/app/Core/Shared/Services/session-storage.service';
 
 @Component({
@@ -16,8 +18,10 @@ export class BSCampusComponent implements OnInit {
   constructor(
     private _HelperService :HelperService,
     private _ArticuloService:ArticuloService,
-    private _SessionStorageService:SessionStorageService
-    ) { }
+    private _SessionStorageService:SessionStorageService,
+    private _SeoService:SeoService,
+    private title:Title
+  ) { }
 
   public migaPan: any =  [
     {
@@ -37,6 +41,17 @@ export class BSCampusComponent implements OnInit {
   public whitePapers:Array<ArticuloDTO>=[];
   public index=0;
   ngOnInit(): void {
+
+    let t:string='BS Campus'
+    this.title.setTitle(t);
+
+    this._SeoService.generateTags({
+      title:'BS Campus',
+      slug:'bs-campus',
+      description:'BS Campus permite acceder a blogs, artículos, artículos de opinión, webinars y videos relacionados con nuestras áreas de capacitación',
+      keywords:'bs campus',
+    });
+
 
     this._HelperService.recibirArrayFormacion.subscribe({
       next:(x)=>{

@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Validators } from '@angular/forms';
+import { Title, Meta } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { RegisterDTO } from 'src/app/Core/Models/AlumnoDTO';
 import { Basic } from 'src/app/Core/Models/BasicDTO';
@@ -27,6 +28,8 @@ export class RegistrarseComponent implements OnInit {
     private _DatosPortalService: DatosPortalService,
     private _RegionService: RegionService,
     private _HelperService: HelperService,
+    private title:Title,
+    private meta:Meta
 
   ) {}
 
@@ -63,6 +66,9 @@ export class RegistrarseComponent implements OnInit {
     Password: '',
   };
   ngOnInit(): void {
+    let t:string='Registrarse'
+    this.title.setTitle(t);
+    this.meta.addTag({name: 'author', content: 'BSG Institute'})
     this.AddField();
     this.ObtenerCombosPortal();
   }

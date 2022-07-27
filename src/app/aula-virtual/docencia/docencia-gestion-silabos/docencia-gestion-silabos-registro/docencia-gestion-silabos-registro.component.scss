@@ -1,0 +1,51 @@
+.custom-dialog-docente-silabo-container{
+  mat-dialog-container{
+    padding: 0px !important;
+    height: auto;
+  }
+}
+.contentRegistroNota{
+  position: relative;
+}
+.table-resposive{
+  max-height: 400px;
+  position: relative;
+  table{
+    thead{
+      position: sticky;
+      top: -10px;
+      z-index: 2;
+    }
+  }
+}
+.contentTextEditor{
+  padding: 10px 30px;
+  margin: 10px 0px;
+  position: relative;
+  .titleTextEdir{
+    margin-bottom: 10px;
+    font-weight: 700;
+    font-size: 1.2em;
+  }
+  .buttonAddSilabo{
+    position: absolute;
+    top: 0;
+    right: 30px;
+    background-color: #28a745;
+    border-color: #28a745;
+    padding: 10px;
+    height: 40px;
+    width: 40px;
+    border-radius: 5px;
+    cursor: pointer;
+    i{
+      color: white !important;
+      font-size: 20px !important;
+      font-weight: bold;
+    }
+  }
+}
+.buttonAddSilabo:hover{
+  background-color: #218838;
+    border-color: #1e7e34;
+}

@@ -55,12 +55,6 @@ export class AppComponent implements OnInit,AfterViewInit  {
       this.IdPGeneral=0;
       this.stateToekn=this._SessionStorageService.validateTokken();
     });
-    this._HelperService.RecibirPGeneral.subscribe({
-      next:x=>{
-        console.log(x);
-        this.IdPGeneral=x
-      }
-    })
     this.usuarioWeb=this._SessionStorageService.SessionGetValue('usuarioWeb');
     var codIso=this._SessionStorageService.SessionGetValue('ISO_PAIS');
     if(this.usuarioWeb=='' || codIso==''){

@@ -8,6 +8,7 @@ import { GlobalService } from '../../Services/Global/global.service';
 import { HelperService } from '../../Services/helper.service';
 import { SessionStorageService } from '../../Services/session-storage.service';
 import { HttpEventType, HttpResponse } from '@angular/common/http';
+import { environment } from 'src/environments/environment';
 @Component({
   selector: 'app-chat',
   templateUrl: './chat.component.html',
@@ -29,7 +30,7 @@ export class ChatComponent implements OnInit,OnDestroy,OnChanges {
   }
 
   inputActive=false;
-  mensajesAnteriore:any;
+  mensajesAnteriore:any=[];
   public charge=false
   public idcampania=this._SessionStorageService.SessionGetValue("idCampania")==''?'0':(this._SessionStorageService.SessionGetValue("idCampania"));
   public chatKey = 'lcsk-chatId';
@@ -61,6 +62,10 @@ export class ChatComponent implements OnInit,OnDestroy,OnChanges {
   public NroMensajesSinLeer=-1;
   public ChatID:any;
   public selectedFiles:any
+  public urlSignal=environment.url_signal
+  public msjEnviado='';
+  public configuration:any
+  public lastMsj=''
   @Output()
   ChargeChat: EventEmitter<boolean> = new EventEmitter<boolean>();
   @Output()
@@ -71,11 +76,46 @@ export class ChatComponent implements OnInit,OnDestroy,OnChanges {
     this.signal$.complete()
   }
   ngOnInit(): void {
-    this.ObtenerIdAlumnoPorUsuario(undefined)
+    //this.ObtenerIdAlumnoPorUsuario(undefined)
+    this._HelperService.recibirCombosPerfil.pipe(takeUntil(this.signal$)).subscribe({
+      next:x=>{
+        console.log(x)
+        var listprogramas = [9990, 9991, 9992, 9993];
+        this.idProgramageneral=listprogramas[Math.floor(Math.random() * listprogramas.length)]
+        this.ObtenerDetalleChatPorIdInteraccionControlMensajeSoporte(x.datosAlumno.idAlumno)
+        this.IdAlumno=x.datosAlumno.idAlumno
+        this.idPais=(x.datosAlumno.idPais==-1 || x.datosAlumno.idPais==null)?0:x.datosAlumno.idPais
+        this.nombres=x.datosAlumno.nombres
+        this.apellidos=x.datosAlumno.apellidos
+        this.email=x.datosAlumno.email
+        this.telefono=x.datosAlumno.telefono
+        this.estadoLogueo="true"
+
+        this.hubConnection = new signalR.HubConnectionBuilder()
+        .withAutomaticReconnect()
+        .withUrl(this.urlSignal+"hubIntegraHub?idUsuario=11&&usuarioNombre=Anonimo&&rooms=633").build();
+
+        this.ConectarSocket();
+        this.hubConnection.onclose(() => {
+          setTimeout(()=>{
+            this.ConectarSocket();
+          },10000)
+        });
+
+        this.configuracionSoporte();
+        this.setChat();
+        this.onlineStatus();
+        this.addMessageP();
+        this.eliminaridchat();
+        this.openChatWindow();
+        this.marcarChatAlumnoComoLeidos();
+      }
+    })
   }
   ngOnChanges(changes: SimpleChanges): void {
     if(this.Open && this.stateAsesor){
       setTimeout(() => {
+        console.log(this.contenidoMsj)
         this.contenidoMsj.nativeElement.scrollTop=this.contenidoMsj.nativeElement.scrollHeight
       }, 1);
     }
@@ -103,6 +143,15 @@ export class ChatComponent implements OnInit,OnDestroy,OnChanges {
     }
     this.chatBox="";
   }
+  enviarmsjOff(){
+    this.idInteraccion=this.GetsesionIdInteraccion();
+    if (this.idInteraccion == null || this.idInteraccion == '') {
+      this.crearChatOffline()
+    }else{
+      this.crearChatOfflineSoporte();
+    }
+    this.chatBox="";
+  }
   ObtenerIdAlumnoPorUsuario(IdFaseOportunidadPortal?:string){
     this._GlobalService.ObtenerIdAlumnoPorUsuario().pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
@@ -110,35 +159,7 @@ export class ChatComponent implements OnInit,OnDestroy,OnChanges {
 
         if(x!=null && x.idAlumno!=null && x.idAlumno>0){
 
-          var listprogramas = [9990, 9991, 9992, 9993];
-          this.idProgramageneral=listprogramas[Math.floor(Math.random() * listprogramas.length)]
-          this.ObtenerDetalleChatPorIdInteraccionControlMensajeSoporte(x.idAlumno)
-          this.IdAlumno=x.idAlumno
-          this.idPais=x.idPais==-1?0:x.idPais
-          this.nombres=x.nombres
-          this.apellidos=x.apellidos
-          this.email=x.correo
-          this.telefono=x.telefono
-          this.estadoLogueo="true"
 
-          this.hubConnection = new signalR.HubConnectionBuilder()
-          .withAutomaticReconnect()
-          .withUrl("https://localhost:7120/hubIntegraHub?idUsuario=11&&usuarioNombre=Anonimo&&rooms=633").build();
-
-          this.ConectarSocket(IdFaseOportunidadPortal);
-          this.hubConnection.onclose(() => {
-            setTimeout(()=>{
-              this.ConectarSocket(IdFaseOportunidadPortal);
-            },10000)
-          });
-
-          this.configuracionSoporte();
-          this.setChat();
-          this.onlineStatus();
-          this.addMessageP();
-          this.eliminaridchat();
-          this.openChatWindow();
-          this.marcarChatAlumnoComoLeidos();
 
         }else{
           this.estadoLogueo="false"
@@ -242,6 +263,7 @@ export class ChatComponent implements OnInit,OnDestroy,OnChanges {
             this.idProgramageneral = 9990;
           }
           this.contadoraulavirtual++
+          console.log(this.contadoraulavirtual)
           this.GenerarLogVisitanteAulaVirtual();
         }else{
           console.log("ocultar chat");
@@ -306,12 +328,13 @@ export class ChatComponent implements OnInit,OnDestroy,OnChanges {
       }
 
       setTimeout(() => {
+        console.log(this.contenidoMsj)
         this.contenidoMsj.nativeElement.scrollTop=this.contenidoMsj.nativeElement.scrollHeight
-      }, 1);
+      }, 1000);
     })
   }
   eliminaridchat(){
-    this.hubConnection.on("addMessageP",(x:any)=>{
+    this.hubConnection.on("eliminaridchat",(x:any)=>{
       this.ChatID=null
     })
   }
@@ -331,6 +354,7 @@ export class ChatComponent implements OnInit,OnDestroy,OnChanges {
       this.mensajeStateAsesor='¿En qué puedo ayudarte?'
 
       setTimeout(() => {
+        console.log(this.contenidoMsj)
         this.contenidoMsj.nativeElement.scrollTop=this.contenidoMsj.nativeElement.scrollHeight
       }, 1);
     }else{

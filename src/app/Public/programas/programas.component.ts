@@ -3,12 +3,14 @@ import { Component, ElementRef, HostListener, Inject, OnInit, PLATFORM_ID, ViewC
 import { FormControl } from '@angular/forms';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { MatSelect } from '@angular/material/select';
+import { Title } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
 import { Basic, CardProgramasDTO } from 'src/app/Core/Models/BasicDTO';
 import { FiltroProgramasEnvioDTO, FiltrosProgramasDTO, ModalidadDTO, SubAreaCapacitacionDTO,TipoProgramaDTO} from 'src/app/Core/Models/FiltrosProgramasDTO';
 import { HelperService } from 'src/app/Core/Shared/Services/helper.service';
 import { ProgramasService } from 'src/app/Core/Shared/Services/Programas/programas.service';
+import { SeoService } from 'src/app/Core/Shared/Services/seo.service';
 import { SessionStorageService } from 'src/app/Core/Shared/Services/session-storage.service';
 import { SnackBarServiceService } from 'src/app/Core/Shared/Services/SnackBarService/snack-bar-service.service';
 import { FiltroProgramasComponent } from './filtro-programas/filtro-programas.component';
@@ -38,6 +40,8 @@ export class ProgramasComponent implements OnInit {
     @Inject(PLATFORM_ID) platformId: Object,
     private _bottomSheet: MatBottomSheet,
     private _SnackBarServiceService:SnackBarServiceService,
+    private _SeoService:SeoService,
+    private title:Title
   ) {
     this.isBrowser = isPlatformBrowser(platformId);
   }
@@ -84,6 +88,17 @@ export class ProgramasComponent implements OnInit {
 
   ]
   ngOnInit(): void {
+
+    let t:string='Formación Continua'
+    this.title.setTitle(t);
+
+    this._SeoService.generateTags({
+      title:'Formación Continua',
+      slug:'programas-certificaciones-cursos',
+      description:'Programas, Certificaciones y Cursos en Big Data, Calidad, Proyectos, Minería, TI, Mantenimiento, SST, Seguridad de la Información, Construcción, Finanzas',
+      keywords:'programas, certificaciones, cursos',
+    });
+
     this.buscar=this._SessionStorageService.SessionGetValue('BusquedaPrograma')
     if(this._SessionStorageService.SessionGetValue('BusquedaPrograma')!=''){
       this._SessionStorageService.SessionDeleteValue('BusquedaPrograma');

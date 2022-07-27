@@ -1,10 +1,12 @@
 import { isPlatformBrowser } from '@angular/common';
 import { AfterViewInit, Component, ElementRef, Inject, OnInit, PLATFORM_ID, ViewChild, ViewEncapsulation } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 import { NgbCarouselConfig } from '@ng-bootstrap/ng-bootstrap';
 import { BasicCarousel } from 'src/app/Core/Models/BasicDTO';
 import { PartnerImagesDTO } from 'src/app/Core/Models/PartnerImagesDTO';
 import { HelperService } from 'src/app/Core/Shared/Services/helper.service';
 import { PartnerService } from 'src/app/Core/Shared/Services/Partner/partner.service';
+import { SeoService } from 'src/app/Core/Shared/Services/seo.service';
 
 @Component({
   selector: 'app-acerca-de',
@@ -24,6 +26,8 @@ export class AcercaDeComponent implements OnInit,AfterViewInit {
     @Inject(PLATFORM_ID) platformId: Object,
     private _HelperService :HelperService,
     config: NgbCarouselConfig,
+    private _SeoService:SeoService,
+    private title:Title
   ) {
     this.isBrowser = isPlatformBrowser(platformId);
 
@@ -48,6 +52,18 @@ export class AcercaDeComponent implements OnInit,AfterViewInit {
   public seccionStep=4;
   public innerWidth: any;
   ngOnInit(): void {
+
+
+    let t:string='Acerca de BSG Institute'
+    this.title.setTitle(t);
+
+    this._SeoService.generateTags({
+      title:'Acerca de BSG Institute',
+      slug:'AcercaBsGrupo',
+      description:'Acerca de BSG Institute ofrece mayor información sobre nuestra misión y visión, nuestros valores y política de calidad',
+      keywords:'acerca de bsginstitute, acerca BSG Institute, acerca bsginstitute, acerca BSG Institute',
+    });
+
     //valores numeros calidad
     if(this.isBrowser){
       this.innerWidth = window.innerWidth;

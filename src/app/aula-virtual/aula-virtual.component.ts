@@ -19,7 +19,16 @@ export class AulaVirtualComponent implements OnInit {
   ) {
 
   }
+  public charge=false
+  public step=-1;
+  public CodigoIso=''
+  public OpenChat=false;
+  public cargaChat=false;
   ngOnInit(): void {
 
+  }
+  chatcharge(estado:boolean){
+    console.log('------------'+estado)
+    this.cargaChat=estado
   }
 }

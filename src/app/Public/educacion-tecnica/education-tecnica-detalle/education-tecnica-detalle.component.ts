@@ -15,6 +15,8 @@ import { HelperService as Help} from 'src/app/Core/Shared/Services/helper.servic
 import {
   EstructuraCurricularService
 } from "../../../Core/Shared/Services/EstructuraCurricular/estructura-curricular.service";
+import { Title } from '@angular/platform-browser';
+import { SeoService } from 'src/app/Core/Shared/Services/seo.service';
 
 @Component({
   selector: 'app-education-tecnica-detalle',
@@ -55,7 +57,8 @@ export class EducationTecnicaDetalleComponent implements OnInit {
     private _HelperService: HelperService,
     private _SnackBarServiceService:SnackBarServiceService,
     private _HelperServiceP:Help,
-
+    private _SeoService:SeoService,
+    private title:Title
   ) { }
 
   statuscharge = false;
@@ -129,6 +132,39 @@ export class EducationTecnicaDetalleComponent implements OnInit {
   getCarreraDetalle(idBusqueda:number, nombre:string){
     this._CarreraProfesionalService.GetEducacionTecnicaDetalle(idBusqueda, nombre).subscribe({
       next:(x)=>{
+
+        if(x.programaInformacionDTO!=undefined && x.programaInformacionDTO.parametroSeoProgramaDTO!=undefined){
+          var metas=x.programaInformacionDTO.parametroSeoProgramaDTO;
+          if(metas!=null && metas.length>0){
+
+            let mt=metas.find((par:any)=>par.nombre=='Titulo Pestaña')!=undefined?
+                      metas.find((par:any)=>par.nombre=='Titulo Pestaña').descripcion:undefined
+            let t=metas.find((par:any)=>par.nombre=='title')!=undefined?
+                      metas.find((par:any)=>par.nombre=='title').descripcion:undefined
+            let d=metas.find((par:any)=>par.nombre=='description')!=undefined?
+                      metas.find((par:any)=>par.nombre=='description').descripcion:undefined
+            let k=metas.find((par:any)=>par.nombre=='keywords')!=undefined?
+                      metas.find((par:any)=>par.nombre=='keywords').descripcion:undefined
+            console.log(mt)
+            this.title.setTitle(mt);
+
+            this._SeoService.generateTags({
+              title:t,
+              slug:this.router.url.toString(),
+              description:d,
+              keywords:k,
+              image:'https://img.bsginstitute.com/repositorioweb/img/carreras/'+x.programaInformacionDTO.programaGeneralInformacionVistaDTO.imagenPrograma,
+              ogTitle:mt,
+              twiterTitle:mt,
+              ogDescription:d,
+              twiterDescription:d,
+              imageW:"348",
+              imageH:'220',
+            });
+
+          }
+        }
+
         this.carrera = x.programaInformacionDTO
         //Informacion General
         this.generalInformacion = this.filtrarContenido(this.carrera.contenidoProgramaInformacionDTO, ['Perfil del Egresado', 'Duración y Horarios', 'Mercado Laboral'])

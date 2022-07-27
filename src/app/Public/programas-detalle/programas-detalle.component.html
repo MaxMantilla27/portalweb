@@ -581,9 +581,12 @@
     </div>
   </div>
 </div>
+<ng-container *ngIf="idPegeneral!=0">
+  <app-soporte-tecnico [cargaChat]="true"  (IsOpen)="OpenChat=$event" [Open]="OpenChat" [token]="false" [IdPGeneral]="idPegeneral">
 
-<app-soporte-tecnico>
-  <ng-container contenidoChat>
-    asdasdasd
-  </ng-container>
-</app-soporte-tecnico>
+    <ng-container contenidoChat>
+      <app-chat-portal (ChargeChat)="chatcharge($event)" (AbrirChat)="OpenChat=false"  [idProgramageneral]="idPegeneral" [Open]="OpenChat"></app-chat-portal>
+    </ng-container>
+  </app-soporte-tecnico>
+</ng-container>
+

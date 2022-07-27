@@ -9,6 +9,8 @@ import { DatosPortalService } from 'src/app/Core/Shared/Services/DatosPortal/dat
 import { RegionService } from 'src/app/Core/Shared/Services/Region/region.service';
 import { ContactenosService } from 'src/app/Core/Shared/Services/Contactenos/contactenos.service';
 import { HelperService } from 'src/app/Core/Shared/Services/helper.service';
+import { Title } from '@angular/platform-browser';
+import { SeoService } from 'src/app/Core/Shared/Services/seo.service';
 
 @Component({
   selector: 'app-contactenos',
@@ -24,6 +26,8 @@ export class ContactenosComponent implements OnInit {
     private _RegionService:RegionService,
     private _ContactenosService:ContactenosService,
     private _HelperService: HelperService,
+    private _SeoService:SeoService,
+    private title:Title
 
     ) { }
 
@@ -70,6 +74,21 @@ export class ContactenosComponent implements OnInit {
   }
   public combosPrevios:any
   ngOnInit(): void {
+
+
+    let t:string='BSG Institute - Contáctenos'
+    this.title.setTitle(t);
+
+    this._SeoService.generateTags({
+      title:'BSG Institute - Contáctenos',
+      slug:'contactenos',
+      description:'Programas, Certificaciones y Cursos en Big Data, Analytics, Proyectos, ISO 9001, ISO 14001, OHSAS 18001, ISO 27001, Construcción, Minería.',
+      keywords:'BSG Institute,curso de excel avanzado, curso autocad, curso de excel basico, especializacion en gerencia de proyectos, certificacion itil, especializacion en salud ocupacional, curso ms project,curso revit',
+      ogDescription:'Programas, Certificaciones y Cursos en Big Data, Analytics, Proyectos, ISO 9001, ISO 14001, OHSAS 18001, ISO 27001, Construcción, Minería.',
+      twiterDescription:'Programas, Certificaciones y Cursos en Big Data, Analytics, Proyectos, ISO 9001, ISO 14001, OHSAS 18001, ISO 27001, Construcción, Minería.'
+    });
+
+
     this._HelperService.recibirCombosPerfil.subscribe((x) => {
       this.combosPrevios=x.datosAlumno;
       this.formularioContacto.Nombres= this.combosPrevios.nombres,

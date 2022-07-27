@@ -30,7 +30,8 @@
             </div>
           </ng-template>
           <div class="pad-resp">
-            <app-docencia-gestion-notas [IdProveedor]="DataProveedor.id"  ></app-docencia-gestion-notas>
+            <app-docencia-gestion-notas (OnRecharge)="GenerarReporteFiltradoPortal()" [IdProveedor]="DataProveedor.id"
+            [notas]="notas"  [Correo]="DataProveedor.email" ></app-docencia-gestion-notas>
           </div>
         </mat-tab>
         <mat-tab>
@@ -41,6 +42,7 @@
             </div>
           </ng-template>
           <div class="pad-resp">
+            <app-docencia-gestion-asistencias [IdProveedor]="DataProveedor.id" [Correo]="DataProveedor.email" ></app-docencia-gestion-asistencias>
           </div>
         </mat-tab>
         <mat-tab>
@@ -51,6 +53,7 @@
             </div>
           </ng-template>
           <div class="pad-resp">
+            <app-docencia-gestion-autoevaluaciones [IdProveedor]="DataProveedor.id"></app-docencia-gestion-autoevaluaciones>
           </div>
         </mat-tab>
         <mat-tab>
@@ -61,6 +64,7 @@
             </div>
           </ng-template>
           <div class="pad-resp">
+            <app-docencia-trabajo-pares [IdProveedor]="DataProveedor.id" [Correo]="DataProveedor.email"></app-docencia-trabajo-pares>
           </div>
         </mat-tab>
         <mat-tab>
@@ -71,6 +75,8 @@
             </div>
           </ng-template>
           <div class="pad-resp">
+            <app-docencia-gestion-silabos (OnRecharge)="GenerarReporteFiltradoPortal()" [IdProveedor]="DataProveedor.id"
+            [notas]="notas"  [Correo]="DataProveedor.email" ></app-docencia-gestion-silabos>
           </div>
         </mat-tab>
         <mat-tab *ngIf="dataForo!=undefined && dataForo!=null && dataForo.length>0">
@@ -93,6 +99,7 @@
             </div>
           </ng-template>
           <div class="pad-resp">
+            <app-docencia-actividades-autoevaluacion [IdProveedor]="DataProveedor.id" [Correo]="DataProveedor.email"></app-docencia-actividades-autoevaluacion>
           </div>
         </mat-tab>
         <mat-tab>

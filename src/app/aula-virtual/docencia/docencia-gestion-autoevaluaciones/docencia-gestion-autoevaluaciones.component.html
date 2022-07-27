@@ -1,0 +1,46 @@
+
+<div class="tilteInter">
+  Gestión de Auto Evaluaciones
+</div>
+
+<mat-accordion *ngIf="AutoEv!=undefined" class="AutoEvaluacionesAcordion" multi >
+  <mat-expansion-panel *ngFor="let item of AutoEv,let i=index" (opened)="openTab(item,i)">
+    <mat-expansion-panel-header style="height: auto;
+    padding-top: 20px;
+    padding-bottom: 20px;">
+      <mat-panel-title style="flex-wrap: wrap;">
+        <div style="font-size: 1.25rem;margin-bottom: 0.5rem;
+        font-weight: 500;
+        line-height: 1.2;">Programa: {{item.pGeneral}}</div>
+
+        <p style="width: 100%;font-size: 14px;margin: 0px;">{{item.cursoNombre}}</p>
+      </mat-panel-title>
+      <mat-panel-description style="justify-content: flex-end;">
+
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+    <div>
+      <div class="HeaderContenidoAutoEvaluacion">
+        <div class="titleAuto">Registro de Evaluaciones</div>
+        <div class="buttonAuto">
+          <div style="margin: 0px 5px;">
+            <app-default-button [confs]="{color:'primary',titulo:'Banco de preguntas'}"
+
+            [style]="'width: 100%;background: #138496;border-color: #117a8b;'" [icon]="'view_list'"></app-default-button>
+          </div>
+          <div style="margin: 0px 5px;">
+            <app-default-button [confs]="{color:'primary',titulo:'Nueva evaluación'}"
+            [style]="'width: 100%;background: #138496;border-color: #117a8b;'" [icon]="'add'"></app-default-button>
+          </div>
+        </div>
+      </div>
+      <div class="tableGestionNotas" *ngIf="item.RegistroEv!=undefined && item.RegistroEv.length>0">
+        <app-table [tableData]="item.RegistroEv" [columnHeader]="columnHeader"
+        [tipoContenido]="TipoContenido"
+        [StyleContent]="'    font-size: 12px;padding: 10px;'"
+        [StyleCabecera]="'color: white;background: rgb(3 61 171)'" (ButtonArrayClick)="ButtonsClick($event)"></app-table>
+      </div>
+
+    </div>
+  </mat-expansion-panel>
+</mat-accordion>

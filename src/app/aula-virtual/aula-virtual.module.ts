@@ -74,6 +74,15 @@ import { ConfirmacionPagoTarjetaConektaComponent } from './confirmacion-pago-tar
 import { PagoMultipagoComponent } from './confirmacion-pago-organico/pago-multipago/pago-multipago.component';
 import { DocenciaGestionNotasComponent } from './docencia/docencia-gestion-notas/docencia-gestion-notas.component';
 import { DocenciaGestionNotasRegistroComponent } from './docencia/docencia-gestion-notas/docencia-gestion-notas-registro/docencia-gestion-notas-registro.component';
+import { DocenciaGestionAsistenciasComponent } from './docencia/docencia-gestion-asistencias/docencia-gestion-asistencias.component';
+import { DocenciaGestionAsistenciasRegistroComponent } from './docencia/docencia-gestion-asistencias/docencia-gestion-asistencias-registro/docencia-gestion-asistencias-registro.component';
+import { DocenciaGestionSilabosComponent } from './docencia/docencia-gestion-silabos/docencia-gestion-silabos.component';
+import { DocenciaGestionSilabosRegistroComponent } from './docencia/docencia-gestion-silabos/docencia-gestion-silabos-registro/docencia-gestion-silabos-registro.component';
+import { DocenciaGestionSilabosRegistroAddComponent } from './docencia/docencia-gestion-silabos/docencia-gestion-silabos-registro/docencia-gestion-silabos-registro-add/docencia-gestion-silabos-registro-add.component';
+import { DocenciaGestionAutoevaluacionesComponent } from './docencia/docencia-gestion-autoevaluaciones/docencia-gestion-autoevaluaciones.component';
+import { DocenciaTrabajoParesComponent } from './docencia/docencia-trabajo-pares/docencia-trabajo-pares.component';
+import { DocenciaTareasComponent } from './docencia-tareas/docencia-tareas.component';
+import { DocenciaActividadesAutoevaluacionComponent } from './docencia/docencia-actividades-autoevaluacion/docencia-actividades-autoevaluacion.component';
 
 
 
@@ -147,6 +156,15 @@ import { DocenciaGestionNotasRegistroComponent } from './docencia/docencia-gesti
     PagoMultipagoComponent,
     DocenciaGestionNotasComponent,
     DocenciaGestionNotasRegistroComponent,
+    DocenciaGestionAsistenciasComponent,
+    DocenciaGestionAsistenciasRegistroComponent,
+    DocenciaGestionSilabosComponent,
+    DocenciaGestionSilabosRegistroComponent,
+    DocenciaGestionSilabosRegistroAddComponent,
+    DocenciaGestionAutoevaluacionesComponent,
+    DocenciaTrabajoParesComponent,
+    DocenciaTareasComponent,
+    DocenciaActividadesAutoevaluacionComponent,
 
   ],
   imports: [

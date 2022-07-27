@@ -23,6 +23,7 @@ export class CursoProyectoComponent implements OnInit,OnChanges {
   @Input() curso:any;
   public proyecto:any
   public params: ParametroObtenerEvaluacionTarea = {
+    id:0,
     idEvaluacion: 0,
     idPEspecifico: 0,
     idPEspecificoPadre: 0,

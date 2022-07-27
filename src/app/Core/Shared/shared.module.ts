@@ -97,7 +97,17 @@ import { ChatComponent } from './Containers/chat/chat.component';
 import { FormChatComponent } from './Containers/form-chat/form-chat.component';
 import { ReporteParticipacionExpositorService } from './Services/ReporteParticipacionExpositor/reporte-participacion-expositor.service';
 import { OperacionesNotaService } from './Services/OperacionesNota/operaciones-nota.service';
-
+import { AprovacionComponent } from './Containers/Dialog/aprovacion/aprovacion.component';
+import { OperacionesAsistenciaService } from './Services/OperacionesAsistencia/operaciones-asistencia.service';
+import { OperacionesEvaluacionService } from './Services/OperacionesEvaluacion/operaciones-evaluacion.service';
+import { OperacionesPEspecificoService } from './Services/OperacionesPEspecifico/operaciones-pespecifico.service';
+import { TextHtmlEditorComponent } from './Containers/text-html-editor/text-html-editor.component';
+import { CKEditorModule } from 'ckeditor4-angular';
+import { AutoEvaluacionService } from './Services/AutoEvaluacion/auto-evaluacion.service';
+import { TrabajoDeParesIntegraService } from './Services/TrabajoDeParesIntegra/trabajo-de-pares-integra.service';
+import { IntegraEsquemaEvaluacionService } from './Services/IntegraEsquemaEvaluacion/integra-esquema-evaluacion.service';
+import { ChatPortalComponent } from './Containers/chat-portal/chat-portal.component';
+import { SeoService } from './Services/seo.service';
 
 
 @NgModule({
@@ -131,7 +141,8 @@ import { OperacionesNotaService } from './Services/OperacionesNota/operaciones-n
     MatPaginatorModule,
     MatSortModule,
     MatDialogModule,
-    MatBottomSheetModule
+    MatBottomSheetModule,
+    CKEditorModule
   ],
   declarations: [
     HeaderComponent,
@@ -171,7 +182,9 @@ import { OperacionesNotaService } from './Services/OperacionesNota/operaciones-n
     SoporteTecnicoComponent,
     ChatComponent,
     FormChatComponent,
-
+    AprovacionComponent,
+    TextHtmlEditorComponent,
+    ChatPortalComponent,
   ],
   exports: [
     HttpClientModule,
@@ -202,6 +215,8 @@ import { OperacionesNotaService } from './Services/OperacionesNota/operaciones-n
     SoporteTecnicoComponent,
     ChatComponent,
     FormChatComponent,
+    AprovacionComponent,
+    TextHtmlEditorComponent,
 
     InputCardDirective,
     InputCardFechaDirective,
@@ -242,6 +257,8 @@ import { OperacionesNotaService } from './Services/OperacionesNota/operaciones-n
     MatPaginatorModule,
     MatSortModule,
     MatDialogModule,
+    CKEditorModule,
+    ChatPortalComponent
   ],
   providers: [
     SessionStorageService,
@@ -274,7 +291,14 @@ import { OperacionesNotaService } from './Services/OperacionesNota/operaciones-n
     GlobalService,
     ChatDetalleIntegraService,
     ReporteParticipacionExpositorService,
-    OperacionesNotaService
+    OperacionesNotaService,
+    OperacionesAsistenciaService,
+    OperacionesEvaluacionService,
+    OperacionesPEspecificoService,
+    AutoEvaluacionService,
+    TrabajoDeParesIntegraService,
+    IntegraEsquemaEvaluacionService,
+    SeoService
   ],
 })
 export class SharedModule {

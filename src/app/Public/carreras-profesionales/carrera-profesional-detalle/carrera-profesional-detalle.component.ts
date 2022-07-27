@@ -13,6 +13,8 @@ import { DatosPortalService } from 'src/app/Core/Shared/Services/DatosPortal/dat
 import { HelperService } from 'src/app/Core/Shared/Services/Helper/helper.service';
 import { SnackBarServiceService } from 'src/app/Core/Shared/Services/SnackBarService/snack-bar-service.service';
 import { HelperService as Help} from 'src/app/Core/Shared/Services/helper.service';
+import { Title } from '@angular/platform-browser';
+import { SeoService } from 'src/app/Core/Shared/Services/seo.service';
 
 
 @Component({
@@ -54,6 +56,8 @@ export class CarreraProfesionalDetalleComponent implements OnInit {
     private _HelperService: HelperService,
     private _SnackBarServiceService:SnackBarServiceService,
     private _HelperServiceP:Help,
+    private _SeoService:SeoService,
+    private title:Title
 
   ) { }
 
@@ -130,6 +134,42 @@ export class CarreraProfesionalDetalleComponent implements OnInit {
   getCarreraDetalle(idBusqueda:number, nombre:string){
     this._CarreraProfesionalService.GetCarrerasDetalle(idBusqueda, nombre).subscribe({
       next:(x)=>{
+        console.log(x);
+
+
+        if(x.programaInformacionDTO!=undefined && x.programaInformacionDTO.parametroSeoProgramaDTO!=undefined){
+          var metas=x.programaInformacionDTO.parametroSeoProgramaDTO;
+          if(metas!=null && metas.length>0){
+
+            let mt=metas.find((par:any)=>par.nombre=='Titulo Pestaña')!=undefined?
+                      metas.find((par:any)=>par.nombre=='Titulo Pestaña').descripcion:undefined
+            let t=metas.find((par:any)=>par.nombre=='title')!=undefined?
+                      metas.find((par:any)=>par.nombre=='title').descripcion:undefined
+            let d=metas.find((par:any)=>par.nombre=='description')!=undefined?
+                      metas.find((par:any)=>par.nombre=='description').descripcion:undefined
+            let k=metas.find((par:any)=>par.nombre=='keywords')!=undefined?
+                      metas.find((par:any)=>par.nombre=='keywords').descripcion:undefined
+            console.log(mt)
+            this.title.setTitle(mt);
+
+            this._SeoService.generateTags({
+              title:t,
+              slug:this.router.url.toString(),
+              description:d,
+              keywords:k,
+              image:'https://img.bsginstitute.com/repositorioweb/img/carreras/'+x.programaInformacionDTO.programaGeneralInformacionVistaDTO.imagenPrograma,
+              ogTitle:mt,
+              twiterTitle:mt,
+              ogDescription:d,
+              twiterDescription:d,
+              imageW:"348",
+              imageH:'220',
+            });
+
+          }
+        }
+
+
         this.carrera = x.programaInformacionDTO
         //Informacion General
         this.generalInformacion = this.filtrarContenido(this.carrera.contenidoProgramaInformacionDTO, ['Perfil del Egresado', 'Duración y Horarios', 'Mercado Laboral'])
@@ -137,25 +177,32 @@ export class CarreraProfesionalDetalleComponent implements OnInit {
         this.montoPagoPrograma = `1 matrícula de ${this.carrera.montoPagoProgramaInformacionDTO.simbolo}${Math.round(this.carrera.montoPagoProgramaInformacionDTO.matricula)} y ${this.carrera.montoPagoProgramaInformacionDTO.nroCuotas} pensiones de  ${this.carrera.montoPagoProgramaInformacionDTO.simbolo}${Math.round(this.carrera.montoPagoProgramaInformacionDTO.cuotas)}`
         //Plan de Estudios damos formato para cards
         let almPlanEstudios: any = this.filtrarContenido(this.carrera.contenidoProgramaInformacionDTO, ['Plan de Estudios'])
-        this.planEstudios = "<div class='real-contenedor'>"+ almPlanEstudios[0].contenido.replaceAll("<p><strong>","<div class='container-card'><p><strong>").
-        replaceAll("</ul><div class='container-card'>","</ul></div><div class='container-card'>")+"</div></div>"
+        console.log(almPlanEstudios)
+        this.planEstudios =
+          almPlanEstudios.length>0?
+            "<div class='real-contenedor'>"+
+            almPlanEstudios[0].contenido.replaceAll("<p><strong>","<div class='container-card'><p><strong>").
+            replaceAll("</ul><div class='container-card'>","</ul></div><div class='container-card'>")+"</div></div>"
+          :""
         this.planEstudios = this.planEstudios.replaceAll("</strong></p>","</strong></p><div class='line'></div>")
         //Certificaciones
         let almCerticaciones: any = this.filtrarContenido(this.carrera.contenidoProgramaInformacionDTO, ['Certificaciones'])
-        this.certificaciones = almCerticaciones[0].contenido
+        this.certificaciones = almCerticaciones.length>0?almCerticaciones[0].contenido:''
         //Certificaciones Adicionales
         //Se hace debido a que no podemos separar de manera correcta la información de la nota por la manera en que se creo
         let almCertificacionesAdicionales: any = this.filtrarContenido(this.carrera.contenidoProgramaInformacionDTO, ['Certificaciones\tAdicionales'])
-        let verifyEnd = almCertificacionesAdicionales[0].contenido.indexOf("</div><p><strong>NOTA</strong>")
-        //Para verificar la posicion
-        if(verifyEnd !== -1) {
-          almCertificacionesAdicionales[0].contenido = almCertificacionesAdicionales[0].contenido.replaceAll("</div><p><strong>NOTA</strong>","<p>&nbsp;</p><div><p><strong>NOTA</strong>")+"</div>"
-        }
 
-        //Separamos el contenido de la nota en certificaicones adicionales
-        this.contenidoCertificacionAdicional = almCertificacionesAdicionales[0].contenido.split("<p>&nbsp;</p><div><p><strong>NOTA</strong>")[0].replaceAll("<div class=\"row\"><div class=\"col-sm-8\"><p><br /></p></div></div>","").replaceAll("<hr />","")
-        let contenidoCertificacionSplit = almCertificacionesAdicionales[0].contenido.split("<p>&nbsp;</p>")
-        this.notaCertificacionAdicional = contenidoCertificacionSplit[contenidoCertificacionSplit.length-1]
+        if(almCertificacionesAdicionales.length>0){
+          let verifyEnd = almCertificacionesAdicionales.length>0?almCertificacionesAdicionales[0].contenido.indexOf("</div><p><strong>NOTA</strong>"):-1;
+          //Para verificar la posicion
+          if(verifyEnd !== -1) {
+            almCertificacionesAdicionales[0].contenido = almCertificacionesAdicionales[0].contenido.replaceAll("</div><p><strong>NOTA</strong>","<p>&nbsp;</p><div><p><strong>NOTA</strong>")+"</div>"
+          }
+          //Separamos el contenido de la nota en certificaicones adicionales
+          this.contenidoCertificacionAdicional = almCertificacionesAdicionales[0].contenido.split("<p>&nbsp;</p><div><p><strong>NOTA</strong>")[0].replaceAll("<div class=\"row\"><div class=\"col-sm-8\"><p><br /></p></div></div>","").replaceAll("<hr />","")
+          let contenidoCertificacionSplit = almCertificacionesAdicionales[0].contenido.split("<p>&nbsp;</p>")
+          this.notaCertificacionAdicional = contenidoCertificacionSplit[contenidoCertificacionSplit.length-1]
+        }
         this.loader = true
         this.carrera.programaEspecificoInformacionDTO?.forEach((element:any) => {
           var fecha=new Date(element.fechaCreacion);

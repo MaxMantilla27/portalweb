@@ -53,6 +53,8 @@ import { FormaPagoService } from 'src/app/Core/Shared/Services/FormaPago/forma-p
 import { PagoOrganicoAlumnoDTO } from 'src/app/Core/Models/ProcesoPagoDTO';
 import { Subject, takeUntil } from 'rxjs';
 import { ChargeComponent } from 'src/app/Core/Shared/Containers/Dialog/charge/charge.component';
+import { Title } from '@angular/platform-browser';
+import { SeoService } from 'src/app/Core/Shared/Services/seo.service';
 
 @Component({
   selector: 'app-programas-detalle',
@@ -85,6 +87,8 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
     @Inject(PLATFORM_ID) platformId: Object,
     private _SessionStorageService:SessionStorageService,
     private _FormaPagoService:FormaPagoService,
+    private _SeoService:SeoService,
+    private title:Title
   ) {
     this.isBrowser = isPlatformBrowser(platformId);
     config.interval = 20000;
@@ -92,6 +96,11 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
     config.pauseOnHover = true;
   }
 
+  public charge=false
+  public step=-1;
+  public CodigoIso=''
+  public OpenChat=false;
+  public cargaChat=false;
   ngOnDestroy(): void {
     this.signal$.next(true);
     this.signal$.complete();
@@ -218,8 +227,10 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
     }
     this.activatedRoute.params.subscribe({
       next: (x) => {
-        this.area = x['AreaCapacitacion'].replace('-', ' ');
+        this.area = x['AreaCapacitacion'].split('-').join(' ');
+        console.log('Area----------'+this.area)
         this.AraCompleta = x['AreaCapacitacion'];
+        console.log('AraCompleta----------'+this.AraCompleta)
         this.nombreProgramCompeto = x['ProgramaNombre'];
         console.log(this.nombreProgramCompeto)
         var namePrograma = x['ProgramaNombre'].split('-');
@@ -257,7 +268,6 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
     this.AddFields();
     this.ObtenerCombosPortal();
     this.ObtenerCabeceraProgramaGeneral();
-    this.ObtenerCombosPortal();
   }
 
   RegistrarProgramaPrueba(){
@@ -350,9 +360,40 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
       .subscribe({
         next: (x) => {
           console.log(x);
-
+          console.log(this.area);
+          console.log(x.programaCabeceraDetalleDTO.areaCapacitacion);
           if(x.programaCabeceraDetalleDTO!=undefined && this.area==x.programaCabeceraDetalleDTO.areaCapacitacion)
           {
+            var metas=x.programaCabeceraDetalleDTO.parametroSeoProgramaDTO;
+            if(metas.length>0){
+
+              let mt=metas.find((x:any)=>x.nombre=='Titulo Pestaña')!=undefined?
+                        metas.find((x:any)=>x.nombre=='Titulo Pestaña').descripcion:undefined
+              let t=metas.find((x:any)=>x.nombre=='title')!=undefined?
+                        metas.find((x:any)=>x.nombre=='title').descripcion:undefined
+              let d=metas.find((x:any)=>x.nombre=='description')!=undefined?
+                        metas.find((x:any)=>x.nombre=='description').descripcion:undefined
+              let k=metas.find((x:any)=>x.nombre=='keywords')!=undefined?
+                        metas.find((x:any)=>x.nombre=='keywords').descripcion:undefined
+              console.log(t)
+              this.title.setTitle(t);
+
+              this._SeoService.generateTags({
+                title:mt,
+                slug:'AcercaBsGrupo',
+                image:'https://img.bsginstitute.com/repositorioweb/img/programas/'+x.programaCabeceraDetalleDTO.imagenPrograma,
+                description:d,
+                ogTitle:t,
+                twiterTitle:t,
+                keywords:k,
+                ogDescription:d,
+                twiterDescription:d ,
+                imageW:"348",
+                imageH:'220',
+              });
+
+            }
+
             this.cabecera = x.programaCabeceraDetalleDTO;
             this.migaPan.push({
               titulo:
@@ -377,11 +418,12 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
             this.ListTagProgramaRelacionadoPorIdBusqueda();
           }
           else{
-          this._router.navigate(['error404']);
+            this._router.navigate(['error404']);
 
           }
         },
-        error: () => {
+        error: (e) => {
+          console.log(e)
           this._router.navigate(['error404']);
         },
       });
@@ -438,7 +480,6 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
         });
         console.log(this.estructuraPrograma);
         this.idPegeneral = x.idPGeneral;
-        this._HelperServiceP.enviarPGeneral(this.idPegeneral)
         this.ObtenerSilaboCurso();
         this.ListProgramaRelacionado();
         //this.prerequisitos=x.listaPrerrequisitoDTO;
@@ -639,7 +680,7 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
             this.programasRelacionados = x.listaProgramaRelacionadoDTO.map(
               (c: any) => {
                 var urlArea = c.areaCapacitacion.replace(/\s+/g, '-');
-                var urlSubArea = c.nombre.replace(' - ', '-');
+                var urlSubArea = c.nombre.split(' - ').join('-');
                 var urlSubArea = urlSubArea.replace(/\s+/g, '-');
                 var ps: CardProgramasDTO = {
                   Inversion: c.montoPagoDescripcion,
@@ -665,9 +706,11 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
         next: (x) => {
           console.log(x);
           this.tags = x.listaTagDTO;
-          this.tags.forEach((x) => {
-            x.codigo = '/tag/' + x.codigo;
-          });
+          if(this.tags!=null){
+            this.tags.forEach((x) => {
+              x.codigo = '/tag/' + x.codigo;
+            });
+          }
         },
       });
   }
@@ -834,5 +877,10 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
     this.formularioContacto.IdRegion=0,
     this.formularioContacto.Movil= '',
     this.GetRegionesPorPais(-1);
+  }
+
+  chatcharge(estado:boolean){
+    console.log('------------'+estado)
+    this.cargaChat=estado
   }
 }

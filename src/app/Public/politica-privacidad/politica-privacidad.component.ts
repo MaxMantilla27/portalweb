@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Title, Meta } from '@angular/platform-browser';
 import { PoliticaPrivacidadService } from 'src/app/Core/Shared/Services/PoliticaPrivacidad/politica-privacidad.service';
 
 @Component({
@@ -9,7 +10,9 @@ import { PoliticaPrivacidadService } from 'src/app/Core/Shared/Services/Politica
 })
 export class PoliticaPrivacidadComponent implements OnInit {
   constructor(
-    private _PoliticaPrivacidadService: PoliticaPrivacidadService
+    private _PoliticaPrivacidadService: PoliticaPrivacidadService,
+    private title:Title,
+    private meta:Meta
   ) {}
   public nombre='';
   public contenido=''
@@ -25,6 +28,9 @@ export class PoliticaPrivacidadComponent implements OnInit {
   ]
 
   ngOnInit(): void {
+    let t:string='Politica de Privacidad'
+    this.title.setTitle(t);
+    this.meta.addTag({name: 'author', content: 'BSG Institute'})
     this.ObtenerPoliticaPrivacidad();
   }
   ObtenerPoliticaPrivacidad() {

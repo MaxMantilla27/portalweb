@@ -1,4 +1,5 @@
 export interface ParametroObtenerEvaluacionTarea {
+  id:number,
   idPrincipal: number;
   idPGeneral: number;
   idPEspecificoPadre: number;

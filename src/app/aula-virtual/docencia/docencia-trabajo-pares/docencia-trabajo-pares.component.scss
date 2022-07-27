@@ -1,0 +1,23 @@
+.TrabajoParesAcordion {
+  mat-expansion-panel {
+    margin: 10px 0px;
+  }
+}
+.mat-expansion-indicator::after {
+  color: white !important;
+}
+.mat-expansion-indicator {
+  width: 35px;
+  height: 35px;
+  background-color: #17a2b8;
+  border-color: #17a2b8;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 5px;
+}
+
+.NoCalificado .mat-expansion-indicator {
+  background-color: #dc3545 !important;
+  border-color: #dc3545 !important;
+}

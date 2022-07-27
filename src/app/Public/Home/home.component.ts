@@ -9,6 +9,8 @@ import { CasosExitoDTO } from 'src/app/Core/Models/CasosExitoDTO';
 import { isPlatformBrowser } from '@angular/common';
 import { SessionStorageService } from 'src/app/Core/Shared/Services/session-storage.service';
 import { Router } from '@angular/router';
+import { SeoService } from 'src/app/Core/Shared/Services/seo.service';
+import {Title} from '@angular/platform-browser';
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -46,7 +48,9 @@ export class HomeComponent implements OnInit,AfterViewInit {
     private _router:Router,
     private _SessionStorageService:SessionStorageService,
     config: NgbCarouselConfig,
-     @Inject(PLATFORM_ID) platformId: Object
+     @Inject(PLATFORM_ID) platformId: Object,
+     private _SeoService:SeoService,
+    private title:Title
   ) {
 
     this.isBrowser = isPlatformBrowser(platformId);
@@ -60,6 +64,13 @@ export class HomeComponent implements OnInit,AfterViewInit {
   public innerWidth: any;
   public seccionStep=4;
   ngOnInit(): void {
+    let t:string='BSG Institute'
+    this.title.setTitle(t);
+
+    this._SeoService.generateTags({
+      image:'https://img.bsginstitute.com/repositorioweb/img/capacitacion-bsgrupo.png'
+    });
+
     if(this.isBrowser){
       this.innerWidth = window.innerWidth;
       if(this.innerWidth<992)this.seccionStep=2;

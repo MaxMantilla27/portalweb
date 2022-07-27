@@ -1,0 +1,21 @@
+.custom-dialog-docente-asistencia-container{
+  mat-dialog-container{
+    padding-left: 0px !important;
+    height: auto;
+    padding-right: 0px;
+  }
+}
+.table-resposive{
+  max-height: 400px;
+  position: relative;
+  table{
+    thead{
+      position: sticky;
+      top: -10.5px;
+      z-index: 2;
+    }
+  }
+}
+.contentRegistroAsistencia{
+  position: relative;
+}

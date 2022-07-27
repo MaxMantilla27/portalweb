@@ -1,6 +1,9 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { MatTabChangeEvent } from '@angular/material/tabs';
+import { Subject, takeUntil } from 'rxjs';
+import { ParticipacionExpositorFiltroDTO } from 'src/app/Core/Models/ParticipacionExpositorFiltroDTO';
 import { ProveedorService } from 'src/app/Core/Shared/Services/Proveedor/proveedor.service';
+import { ReporteParticipacionExpositorService } from 'src/app/Core/Shared/Services/ReporteParticipacionExpositor/reporte-participacion-expositor.service';
 
 @Component({
   selector: 'app-docencia',
@@ -8,10 +11,16 @@ import { ProveedorService } from 'src/app/Core/Shared/Services/Proveedor/proveed
   styleUrls: ['./docencia.component.scss'],
   encapsulation: ViewEncapsulation.None,
 })
-export class DocenciaComponent implements OnInit {
+export class DocenciaComponent implements OnInit,OnDestroy {
+  private signal$ = new Subject();
 
+  ngOnDestroy(): void {
+    this.signal$.next(true);
+    this.signal$.complete();
+  }
   constructor(
-    private _ProveedorService:ProveedorService
+    private _ProveedorService:ProveedorService,
+    public _ReporteParticipacionExpositorService: ReporteParticipacionExpositorService,
   ) { }
 
   public migaPan = [
@@ -20,10 +29,25 @@ export class DocenciaComponent implements OnInit {
       urlWeb: '/AulaVirtual/Docencia',
     }
   ];
-  public tabIndex = 0;
+  public json: ParticipacionExpositorFiltroDTO = {
+    IdArea: null,
+    IdCentroCosto: null,
+    IdCodigoBSCiudad: null,
+    IdEstadoPEspecifico: '1,2,3,5',
+    IdModalidadCurso: null,
+    IdPGeneral: null,
+    IdProgramaEspecifico: null,
+    IdProveedorOperaciones: '',
+    IdSubArea: null,
+    IdCentroCostoD: 0,
+    SinNotaAprobada: true,
+    SinAsistenciaAprobada:null
+  };
+  public tabIndex = 7;
   public hide=false
   public DataProveedor:any
   public dataForo:any
+  public notas:any
   ngOnInit(): void {
     this.ObtenerInformacionProveedor();
     this.ObtenerForoProveedor();
@@ -33,6 +57,9 @@ export class DocenciaComponent implements OnInit {
       next:x=>{
         console.log(x)
         this.DataProveedor=x
+
+        this.json.IdProveedorOperaciones = this.DataProveedor.id.toString();
+        this.GenerarReporteFiltradoPortal()
       }
     })
   }
@@ -46,5 +73,17 @@ export class DocenciaComponent implements OnInit {
   }
   tabChanged(tabChangeEvent: MatTabChangeEvent): void {
 
+  }
+
+  GenerarReporteFiltradoPortal() {
+    this._ReporteParticipacionExpositorService
+      .GenerarReporteFiltradoPortal(this.json)
+      .pipe(takeUntil(this.signal$))
+      .subscribe({
+        next: (x) => {
+          this.notas = x;
+          console.log(x);
+        },
+      });
   }
 }

@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Meta, Title } from '@angular/platform-browser';
 import { TerminosCondicionesService } from 'src/app/Core/Shared/Services/TerminosCondiciones/terminos-condiciones.service';
 
 @Component({
@@ -9,7 +10,9 @@ import { TerminosCondicionesService } from 'src/app/Core/Shared/Services/Termino
 })
 export class TerminosCondicionesComponent implements OnInit {
   constructor(
-    private _TerminosCondicionesService: TerminosCondicionesService
+    private _TerminosCondicionesService: TerminosCondicionesService,
+    private title:Title,
+    private meta:Meta
   ) {}
   public nombre='';
   public contenido=''
@@ -24,6 +27,9 @@ export class TerminosCondicionesComponent implements OnInit {
     }
   ]
   ngOnInit(): void {
+    let t:string='Términos de Uso Web'
+    this.title.setTitle(t);
+    this.meta.addTag({name: 'author', content: 'BSG Institute'})
     this.ObtenerTerminosCondiciones();
   }
   ObtenerTerminosCondiciones() {

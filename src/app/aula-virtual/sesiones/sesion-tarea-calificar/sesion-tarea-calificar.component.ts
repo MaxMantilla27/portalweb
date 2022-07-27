@@ -35,6 +35,7 @@ export class SesionTareaCalificarComponent implements OnInit,OnChanges {
   @Output() next: EventEmitter<void> = new EventEmitter<void>();
   @Output() prev: EventEmitter<void> = new EventEmitter<void>();
   public params:ParametroObtenerEvaluacionTarea={
+    id:0,
     idEvaluacion:0,
     idPEspecifico:0,
     idPEspecificoPadre:0,
@@ -58,6 +59,7 @@ export class SesionTareaCalificarComponent implements OnInit,OnChanges {
   ngOnChanges(changes: SimpleChanges): void {
     if(this.idtarea>0 && this.charge==true && this.habilitado==true){
       console.log(this.id)
+      this.params.id=this.id;
       this.params.idEvaluacion=this.idtarea;
       this.params.idPEspecifico=this.json.IdPEspecificoHijo
       this.params.idPEspecificoPadre=this.json.IdPEspecificoPadre
@@ -76,11 +78,13 @@ export class SesionTareaCalificarComponent implements OnInit,OnChanges {
           return a.zonaWeb - b.zonaWeb;
         })
         console.log(this.tarea)
-        this.tarea.registroTareaEvaluacionArchivo.forEach((t:any) => {
-          if(t.id==this.id){
-            this.tareaAc=t
-          }
-        });
+        if( this.tarea.registroTareaEvaluacionArchivo!=null){
+          this.tarea.registroTareaEvaluacionArchivo.forEach((t:any) => {
+            if(t.id==this.id){
+              this.tareaAc=t
+            }
+          });
+        }
         console.log(this.tareaAc)
       }
     })

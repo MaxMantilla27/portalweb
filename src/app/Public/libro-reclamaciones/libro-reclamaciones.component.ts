@@ -1,5 +1,6 @@
 import { DatePipe } from '@angular/common';
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Title, Meta } from '@angular/platform-browser';
 import {
   LibroReclamacionesDTO,
   MensajeCorreoDTO,
@@ -21,6 +22,8 @@ export class LibroReclamacionesComponent implements OnInit {
     private _DatosPortalService: DatosPortalService,
     private _LibroReclamacionService: LibroReclamacionService,
     private _SnackBarServiceService:SnackBarServiceService,
+    private title:Title,
+    private meta:Meta
   ) {}
   pipe = new DatePipe('en-US')
   public migaPan: any = [];
@@ -50,6 +53,10 @@ export class LibroReclamacionesComponent implements OnInit {
   public fechaEnvio = new Date();
   public tipodocumento: any;
   ngOnInit(): void {
+    let t:string='Libro de Reclamaciones'
+    this.title.setTitle(t);
+    this.meta.addTag({name: 'author', content: 'BSG Institute'})
+
     this.ObtenerCombosPortal();
     setInterval(() => {
       this.fecha = new Date();

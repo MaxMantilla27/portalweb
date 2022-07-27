@@ -1,0 +1,147 @@
+.footerChatAula {
+  width: 100%;
+  height: 50px;
+  margin-top: 10px;
+  background: #e4e4e4;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0px 10px;
+  position: relative;
+  .chat-box-textinput {
+    border: none;
+    border-radius: 10px;
+    width: 90%;
+    padding: 4px 10% 4px 10px;
+  }
+  i {
+    color: #ff8610;
+    cursor: pointer;
+  }
+  .addfile {
+    color: black;
+    position: absolute;
+    top: 30%;
+    right: 15%;
+  }
+}
+.headerChatAula {
+  background: #ff8610;
+  border-radius: 8px 8px 0px 0px;
+  .imgAsesor {
+    color: white;
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    font-weight: 600;
+    font-size: 20px;
+    position: relative;
+    img {
+      width: 20%;
+      margin-right: 10px;
+    }
+    .nombreAsesor {
+      width: calc(80% - 10px);
+    }
+    .stateAsesor{
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: #c23616;
+      bottom: 15px;
+      left: 52px;
+      border: solid 1px white;
+    }
+  }
+  .textoAsesor {
+    color: white;
+    font-weight: 600;
+    font-size: 14px;
+    padding: 0px 10px 10px 10px;
+  }
+}
+
+.chat-box-textinput:focus-visible {
+  outline: none;
+}
+.inputActive {
+  border: 1px solid #ff8610 !important;
+}
+.contentChat {
+  width: 100%;
+  height: 100%;
+}
+.mensajeDefecto {
+  margin: 10px;
+  text-align: center;
+  font-size: 11px;
+  color: #aaa;
+}
+.contentChatMsj {
+  width: 100%;
+  height: 200px;
+  overflow: auto;
+}
+.visitanteMsj {
+  max-width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  margin: 10px 0px;
+  margin-right: 10px;
+  .cntnmsj {
+    background: #feeefd;
+  }
+}
+.asesorMsj {
+  max-width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  margin: 10px 0px;
+  margin-left: 10px;
+  .cntnmsj {
+    background: #ecedef;
+  }
+}
+.cntnmsj{
+  width: 75%;
+  padding: 10px;
+  border-radius: 3px;
+  .statemsjleido{
+    display: flex;
+    justify-content: flex-end;
+    position: relative;
+    i{
+      color:#4fc3f7;
+      position: absolute;
+      bottom: 0px;
+      font-size: 11px !important;
+    }
+  }
+  .statemsjnoleido{
+    display: flex;
+    justify-content: flex-end;
+    position: relative;
+    i{
+      color:#92a58c;
+      position: absolute;
+      bottom: 0px;
+      font-size: 11px !important;
+    }
+  }
+  .remitente{
+    font-size: 10px;
+    font-weight: bold;
+    text-align: left;
+  }
+  .msj{
+    font-size: 10px;
+    text-align: left;
+    img{
+      width: 80%;
+    }
+  }
+}
+.OnConected{
+  background: #4cd137 !important;
+}

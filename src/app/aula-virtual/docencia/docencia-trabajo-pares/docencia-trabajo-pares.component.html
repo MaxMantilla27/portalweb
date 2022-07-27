@@ -1,0 +1,67 @@
+<div class="tilteInter">
+  Trabajo de Pares
+</div>
+<mat-tab-group mat-align-tabs="start" class="tabNormal">
+  <mat-tab label="Tareas por calificar">
+    <mat-accordion *ngIf="trabajos!=undefined" class="TrabajoParesAcordion" multi>
+      <mat-expansion-panel *ngFor="let item of trabajos,let i=index" (opened)="openTab(item,i,true)">
+        <mat-expansion-panel-header style="height: auto;
+          padding-top: 20px;
+          padding-bottom: 20px;" [ngClass]="{'NoCalificado': item.tareasPendientes>0}">
+          <mat-panel-title style="flex-wrap: wrap;">
+            <div style="font-size: 1.25rem;margin-bottom: 0.5rem;
+              font-weight: 500;
+              line-height: 1.2;">Programa: {{item.programaGeneral}}</div>
+
+            <p style="width: 100%;font-size: 14px;margin: 0px;">Curso: {{item.programaEspecifico}}</p>
+          </mat-panel-title>
+          <mat-panel-description style="justify-content: flex-end;">
+
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+        <div class="tableGestionNotas" *ngIf="item.alumnos!=undefined && item.alumnos.length>0">
+          <app-table [tableData]="item.alumnos" [columnHeader]="columnHeader" [tipoContenido]="TipoContenido"
+            [StyleContent]="'    font-size: 12px;padding: 10px;'"
+            [StyleCabecera]="'color: white;background: rgb(3 61 171)'" (ButtonClick)="ButtonsClick(i,$event,true)">
+          </app-table>
+        </div>
+      </mat-expansion-panel>
+    </mat-accordion>
+
+    <div style="padding: 40px;
+      text-align: center;" *ngIf="trabajos!=undefined && trabajos.length==0">
+      No se encontraron registros
+    </div>
+  </mat-tab>
+  <mat-tab label="Tareas calificadas">
+    <mat-accordion *ngIf="trabajosNocalificados!=undefined" class="TrabajoParesAcordion" multi>
+      <mat-expansion-panel *ngFor="let item of trabajosNocalificados,let i=index" (opened)="openTab(item,i,false)">
+        <mat-expansion-panel-header style="height: auto;
+          padding-top: 20px;
+          padding-bottom: 20px;" [ngClass]="{'NoCalificado': item.tareasPendientes>0}">
+          <mat-panel-title style="flex-wrap: wrap;">
+            <div style="font-size: 1.25rem;margin-bottom: 0.5rem;
+              font-weight: 500;
+              line-height: 1.2;">Programa: {{item.programaGeneral}}</div>
+
+            <p style="width: 100%;font-size: 14px;margin: 0px;">Curso: {{item.programaEspecifico}}</p>
+          </mat-panel-title>
+          <mat-panel-description style="justify-content: flex-end;">
+
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+        <div class="tableGestionNotas" *ngIf="item.alumnos!=undefined && item.alumnos.length>0">
+          <app-table [tableData]="item.alumnos" [columnHeader]="columnHeader" [tipoContenido]="TipoContenido"
+            [StyleContent]="'    font-size: 12px;padding: 10px;'"
+            [StyleCabecera]="'color: white;background: rgb(3 61 171)'" (ButtonClick)="ButtonsClick(i,$event,false)">
+          </app-table>
+        </div>
+      </mat-expansion-panel>
+    </mat-accordion>
+
+    <div style="padding: 40px;
+      text-align: center;" *ngIf="trabajosNocalificados!=undefined && trabajosNocalificados.length==0">
+      No se encontraron registros
+    </div>
+  </mat-tab>
+</mat-tab-group>

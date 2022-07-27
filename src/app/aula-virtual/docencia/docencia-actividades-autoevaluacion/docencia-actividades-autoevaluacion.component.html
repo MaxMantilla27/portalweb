@@ -1,0 +1,48 @@
+<div class="tilteInter">
+  Calificar Actividades de Evaluación
+</div>
+
+<mat-accordion *ngIf="proyectos!=undefined" class="TrabajoParesAcordion" multi>
+  <mat-expansion-panel *ngFor="let item of proyectos,let i=index" (opened)="openTab(item,i)">
+    <mat-expansion-panel-header style="height: auto;
+    padding-top: 20px;
+    padding-bottom: 20px;" [ngClass]="{'NoCalificado': item.tareasPendientes>0}">
+      <mat-panel-title style="flex-wrap: wrap;">
+        <div style="font-size: 1.25rem;margin-bottom: 0.5rem;
+        font-weight: 500;
+        line-height: 1.2;">Programa: {{item.pGeneral}}</div>
+
+        <p style="width: 100%;font-size: 14px;margin: 0px;">Curso: {{item.pEspecifico}}</p>
+      </mat-panel-title>
+      <mat-panel-description style="justify-content: flex-end;">
+
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+
+    <mat-tab-group mat-align-tabs="start" class="tabNormal">
+      <mat-tab label="Proyectos">
+        <div class="tableGestionNotas" *ngIf="item.alumnos!=undefined && item.alumnos.length>0">
+          <app-table [tableData]="item.alumnos" [columnHeader]="columnHeader" [tipoContenido]="TipoContenido"
+            [StyleContent]="'    font-size: 12px;padding: 10px;'" [StyleCabecera]="'color: white;background: rgb(3 61 171)'"
+            (ButtonClick)="ButtonsClick(i,$event)">
+          </app-table>
+        </div>
+        <div style="padding: 40px;
+        text-align: center;" *ngIf="item.alumnos!=undefined && item.alumnos.length==0">
+          No se encontraron registros
+        </div>
+      </mat-tab>
+      <mat-tab label="Proyectos Antiguos">
+        <div class="tableGestionNotas" *ngIf="item.alumnosAntiguos!=undefined && item.alumnosAntiguos.length>0">
+          <app-table [tableData]="item.alumnosAntiguos" [columnHeader]="columnHeader" [tipoContenido]="TipoContenido"
+            [StyleContent]="'    font-size: 12px;padding: 10px;'" [StyleCabecera]="'color: white;background: rgb(3 61 171)'">
+          </app-table>
+        </div>
+        <div style="padding: 40px;
+        text-align: center;" *ngIf="item.alumnosAntiguos!=undefined && item.alumnosAntiguos.length==0">
+          No se encontraron registros
+        </div>
+      </mat-tab>
+    </mat-tab-group>
+  </mat-expansion-panel>
+</mat-accordion>

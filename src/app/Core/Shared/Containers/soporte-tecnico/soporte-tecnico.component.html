@@ -1,16 +1,16 @@
 
 <ng-container *ngIf="cargaChat==true &&
-  ((token==true && (IdPGeneral>0 || rutabase=='AulaVirtual')) ||
+  (token==true  ||
   (token==false && IdPGeneral>0)) ">
 
   <div class="chatST" *ngIf="Open">
     <div style="position: absolute;
     top: 0px;
     right: 0px;
-    color: white;
+    color: black;
     font-weight: 600;
     font-size: 12px;cursor: pointer;
-    padding: 0px 10px;" (click)="Open=false;IsOpen.emit(false)">x</div>
+    padding: 0px 10px;z-index: 1000000;" (click)="Open=false;IsOpen.emit(false)">x</div>
     <ng-content select="[contenidoChat]">
     </ng-content>
   </div>
@@ -21,4 +21,4 @@
 </ng-container>
 
 <script src="signalr.js"></script>
-<script src="https://localhost:7120/hubIntegraHub"></script>
+<script [src]="urlSignal+'hubIntegraHub'"></script>

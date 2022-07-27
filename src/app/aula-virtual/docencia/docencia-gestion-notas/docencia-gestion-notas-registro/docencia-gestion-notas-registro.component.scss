@@ -4,12 +4,6 @@
     height: auto;
   }
 }
-.headerRegistroNota{
-  padding: 10px 20px;
-  font-size: 23px;
-  border-bottom: solid 1px #dee2e6;
-  margin-bottom: 20px;
-}
 .escalaNota{
   display: flex;
   justify-content: flex-end;
@@ -18,32 +12,16 @@
   font-size: 13px;
 }
 .contentRegistroNota{
-  padding: 10px;
-  .table{
-    thead {
-      tr{
-        background: white !important;
-        th{
-          border-bottom: 2px solid #dee2e6;
-          border: 1px solid #dee2e6;
-        }
-      }
-    }
-    tbody{
-      border-top:none;
-      tr{
-        background: white !important;
-        td{
-          border-bottom: 2px solid #dee2e6;
-          border: 1px solid #dee2e6;
-        }
-      }
+  position: relative;
+}
+.table-resposive{
+  max-height: 400px;
+  position: relative;
+  table{
+    thead{
+      position: sticky;
+      top: -10px;
+      z-index: 2;
     }
   }
-}
-.buttonsRegistroNota{
-  display: flex;
-  justify-content: flex-end;
-  padding: 10px;
-  border-top: solid 1px #dee2e6;
 }

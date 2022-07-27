@@ -9,6 +9,9 @@
         <ng-container *ngIf="estadoLogueo!='false'">
           Soporte Técnico
         </ng-container>
+        <div class="stateAsesor" [ngClass]="{'OnConected': stateAsesor==true}">
+
+        </div>
       </div>
     </div>
     <div class="textoAsesor" *ngIf="estadoLogueo!='false'">Soy {{nombreAsesorSplit[0]}} , {{mensajeStateAsesor}}</div>
@@ -57,19 +60,26 @@
           (focusout)="inputActive=false" placeholder="Escribe tu mensaje aquí " [(ngModel)]="chatBox">
           <i class="material-icons" (click)="enviarmsj()">send</i>
           <i class="material-icons addfile" (click)="fileInput.click()">attach_file</i>
-        <input  #fileInput type="file" style="display:none;" (change)="AgregarArchivoChatSoporte($event)">
+        <input  #fileInput type="file" style="display:none;" accept="image/png, image/gif, image/jpeg" (change)="AgregarArchivoChatSoporte($event)">
       </div>
     </ng-container>
     <ng-container *ngIf="!stateAsesor">
-      <textarea placeholder="Tu Mensaje" [(ngModel)]="chatBox" cols="30" rows="4" style="    width: 90%;
-      margin: 5%;padding: 10px;" (keyup.enter)="enviarmsj()"></textarea>
-      <div style="    width: 100%;
-      display: flex;
-      justify-content: center;
-      margin-bottom: 10%;">
-        <app-default-button  (click)="enviarmsj()" [confs]="{color:'primary',titulo:'Enviar'}" [style]="'padding:0px 30px;margin:0px '"
-        ></app-default-button>
-      </div>
+      <ng-container *ngIf="msjEnviado!=''">
+        <div style="padding: 20px;">
+          {{msjEnviado}}
+        </div>
+      </ng-container>
+      <ng-container *ngIf="msjEnviado==''">
+        <textarea placeholder="Tu Mensaje" [(ngModel)]="chatBox" cols="30" rows="4" style="    width: 90%;
+        margin: 5%;padding: 10px;" (keyup.enter)="enviarmsj()"></textarea>
+        <div style="    width: 100%;
+        display: flex;
+        justify-content: center;
+        margin-bottom: 10%;">
+          <app-default-button  (click)="enviarmsjOff()" [confs]="{color:'primary',titulo:'Enviar'}" [style]="'padding:0px 30px;margin:0px '"
+          ></app-default-button>
+        </div>
+      </ng-container>
     </ng-container>
   </ng-template>
 </div>

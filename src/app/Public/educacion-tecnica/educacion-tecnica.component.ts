@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { Title } from '@angular/platform-browser';
+import { Router } from '@angular/router';
 import { CarreraProfesionalTecnicaDTO } from 'src/app/Core/Models/ProgramaDTO';
 import { CarreraProfesionalService } from 'src/app/Core/Shared/Services/Carrera/carrera-profesional.service';
+import { SeoService } from 'src/app/Core/Shared/Services/seo.service';
 
 @Component({
   selector: 'app-educacion-tecnica',
@@ -15,9 +18,24 @@ export class EducacionTecnicaComponent implements OnInit {
   public migaPan: any = []
   constructor(
     private _CarreraProfesionalService: CarreraProfesionalService,
+    private _SeoService: SeoService,
+    private title: Title,
+    private router: Router,
   ) {}
 
   ngOnInit(): void {
+
+    let t: string = 'Educación Técnico Productiva';
+    this.title.setTitle(t);
+    this._SeoService.generateTags({
+      title: t,
+      slug: this.router.url.toString(),
+      description:
+        'Carreras Profesionales en Administración, Computación, Explotación Minera, Concentración de Minerales y Mantenimiento de Maquinaria en Lima y Arequipa',
+      keywords:
+        'carreras tecnicas, carreras profesionales, carreras para estudiar, carrera profesional',
+    });
+
     console.log('Nero')
     this.getCarreras();
     this.confs = {

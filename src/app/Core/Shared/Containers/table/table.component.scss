@@ -10,3 +10,20 @@
 .mat-sort-header-container{
   justify-content: center !important;
 }
+.table-material{
+  thead{
+    tr{
+      th{
+        box-shadow: inset 1px 1px 0 white, inset -1px -1px 0 white;
+      }
+    }
+  }
+  tbody{
+    tr{
+      td{
+        box-shadow: inset 1px 1px 0 rgb(186 210 255), inset -1px -1px 0 rgb(186 210 255);
+      }
+    }
+  }
+}
+

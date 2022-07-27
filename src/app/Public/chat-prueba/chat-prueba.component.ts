@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import * as signalR from '@microsoft/signalr';
+import { environment } from 'src/environments/environment';
 @Component({
   selector: 'app-chat-prueba',
   templateUrl: './chat-prueba.component.html',
@@ -13,12 +14,13 @@ export class ChatPruebaComponent implements OnInit {
   public rooms=["","","","","","",""]
   public hubConnection: any;
 
+  public urlSignal=environment.url_signal
   ngOnInit(): void {
   }
   concted(){
     this.hubConnection = new signalR.HubConnectionBuilder()
       .withAutomaticReconnect()
-      .withUrl("https://localhost:7120/hubIntegraHub?idUsuario="+this.idUsuario+"&&usuarioNombre="+this.usuarioNombre+"&&rooms="+this.rooms+"").build();
+      .withUrl(this.urlSignal+"hubIntegraHub?idUsuario="+this.idUsuario+"&&usuarioNombre="+this.usuarioNombre+"&&rooms="+this.rooms+"").build();
 
     this.ConectarSocket();
     this.hubConnection.onclose(() => {

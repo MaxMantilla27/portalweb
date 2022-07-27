@@ -11,14 +11,12 @@ import { HelperService } from '../../Services/helper.service';
 export class SoporteTecnicoComponent implements OnInit,OnChanges {
 
   constructor(
-    private router: Router
   ) { }
   ngOnChanges(changes: SimpleChanges): void {
     console.log(this.token)
     console.log(this.IdPGeneral)
     console.log(this.cargaChat)
   }
-  public rutabase=''
   @Input() cargaChat=false
   @Input() Open=false
   @Input() token=false
@@ -26,9 +24,5 @@ export class SoporteTecnicoComponent implements OnInit,OnChanges {
   @Output()
   IsOpen: EventEmitter<boolean> = new EventEmitter<boolean>();
   ngOnInit(): void {
-
-    this.router.events.subscribe((val) => {
-      this.rutabase=this.router.url.split('/')[1]
-    })
   }
 }

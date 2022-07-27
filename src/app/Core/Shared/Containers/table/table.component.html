@@ -1,6 +1,6 @@
 <div style="max-height: 500px;
 overflow: auto;">
-  <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8" style="width: 100%;">
+  <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8 table-material" style="width: 100%;">
 
     <ng-container [matColumnDef]="tableData" *ngFor="let tableData of objectKeys(columnHeader)">
       <th mat-header-cell *matHeaderCellDef mat-sort-header [style]="StyleCabecera" style="text-align: center;"> {{columnHeader[tableData]}} </th>
@@ -31,8 +31,18 @@ overflow: auto;">
             </ng-container>
             <ng-template #buttons>
               <ng-container *ngIf="(tipoContenido[tableData][0] | lowercase )=='buttons';">
-                <app-default-button [confs]="{color:'primary',titulo:tipoContenido[tableData][1]}" [icon]="''"
-                  [style]="'margin: 0px;'" (ButtoclClick)="ButtonClick.emit(element.index)"></app-default-button>
+                <ng-container *ngIf="!IsArray(tipoContenido[tableData][1])">
+                  <app-default-button [confs]="{color:'primary',titulo:tipoContenido[tableData][1]}" [icon]="''"
+                    [style]="'margin: 0px;'" (ButtoclClick)="ButtonClick.emit(element.index)"></app-default-button>
+                </ng-container>
+                <ng-container *ngIf="IsArray(tipoContenido[tableData][1])">
+                  <div style="display: flex;flex-wrap: wrap;justify-content: space-evenly;align-items: center;">
+                    <app-default-button *ngFor="let item of tipoContenido[tableData][1],let indexb=index"
+                    [confs]="{color:'primary',titulo:item}" [icon]="''"
+                      [style]="'margin: 0px;'" (ButtoclClick)="ButtonArrayClick.emit({indexButton:indexb,index:element.index})"></app-default-button>
+                  </div>
+                </ng-container>
+
               </ng-container>
             </ng-template>
 

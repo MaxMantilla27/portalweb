@@ -11,7 +11,7 @@
 
     (click)="prevc()" > < Anterior</div>
     <div style="text-align: right;font-size: 13px;cursor: pointer;" class="vinculo"
-    (click)="nextc()" *ngIf="tarea!=undefined && tarea.registroEvaluacionArchivo.length>0">Siguiente ></div>
+    (click)="nextc()" *ngIf="tarea!=undefined && tarea.registroEvaluacionArchivo!=null && tarea.registroEvaluacionArchivo.length>0">Siguiente ></div>
   </div>
   <div class="col-12 col-md-12 col-lg-12" style="    margin-top: 40px;
   margin-bottom: 20px;">

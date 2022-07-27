@@ -16,6 +16,10 @@ import { SessionStorageService } from 'src/app/Core/Shared/Services/session-stor
 import { SnackBarServiceService } from 'src/app/Core/Shared/Services/SnackBarService/snack-bar-service.service';
 import { TagService } from 'src/app/Core/Shared/Services/Tag/tag.service';
 import { HelperService as Help} from 'src/app/Core/Shared/Services/helper.service';
+import { Title } from '@angular/platform-browser';
+import { SeoService } from 'src/app/Core/Shared/Services/seo.service';
+
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-blog',
@@ -37,7 +41,9 @@ export class BlogComponent implements OnInit {
     private _SeccionProgramaService:SeccionProgramaService,
     private _SnackBarServiceService:SnackBarServiceService,
     private _HelperServiceP:Help,
-
+    private _SeoService:SeoService,
+    private title:Title,
+    private router:Router
   ) {}
   public idWeb = 0;
   public UrlWeb = '';
@@ -146,6 +152,38 @@ export class BlogComponent implements OnInit {
     this._ArticuloService.ObtenerArticuloDetalleHome(1,this.idWeb,this.UrlWeb).subscribe({
       next:(x)=>{
         console.log(x)
+
+        if(x.articuloDetalleHomeDTO!=undefined && x.articuloDetalleHomeDTO.parametroSeo!=undefined){
+          var metas=x.articuloDetalleHomeDTO.parametroSeo;
+          if(metas.length>0){
+
+            let mt=metas.find((par:any)=>par.nombre=='Titulo Pestaña')!=undefined?
+                      metas.find((par:any)=>par.nombre=='Titulo Pestaña').descripcion:undefined
+            let t=metas.find((par:any)=>par.nombre=='title')!=undefined?
+                      metas.find((par:any)=>par.nombre=='title').descripcion:undefined
+            let d=metas.find((par:any)=>par.nombre=='description')!=undefined?
+                      metas.find((par:any)=>par.nombre=='description').descripcion:undefined
+            let k=metas.find((par:any)=>par.nombre=='keywords')!=undefined?
+                      metas.find((par:any)=>par.nombre=='keywords').descripcion:undefined
+            console.log(mt)
+            this.title.setTitle(mt);
+
+            this._SeoService.generateTags({
+              title:t,
+              slug:this.router.url.toString(),
+              description:d,
+              keywords:k,
+              image:'https://img.bsginstitute.com/repositorioweb/img/'+x.articuloDetalleHomeDTO.articuloDetalle.imgPortada,
+              ogTitle:mt,
+              twiterTitle:mt,
+              ogDescription:d,
+              twiterDescription:d,
+              imageW:"348",
+              imageH:'220',
+            });
+
+          }
+        }
         this.migaPan[3].titulo=x.articuloDetalleHomeDTO.articuloDetalle.areaCapacitacion;
         this.Title=x.articuloDetalleHomeDTO.articuloDetalle.nombre;
         this.descripcion=x.articuloDetalleHomeDTO.articuloDetalle.contenido
