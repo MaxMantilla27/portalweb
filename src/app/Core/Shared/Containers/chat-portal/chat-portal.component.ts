@@ -135,18 +135,19 @@ export class ChatPortalComponent implements OnInit,OnDestroy,OnChanges {
   }
 
   ConectarSocket(){
-    this.hubConnection.start()
-      .then((x:any) =>{
+    this.hubConnection.start().then((x:any) =>{
+      console.log(x)
+      if(this.hubConnection.state=='Connected'){
         this.generarLogVisitante()
-      })
-      .catch((err:any) =>console.log('Error while starting connection: ' + err));
+      }
+    })
+    .catch((err:any) =>console.log('Error while starting connection: ' + err));
   }
 
   generarLogVisitante(){
 
     var cookiecontaco = this._SessionStorageService.SessionGetValue("usuarioWeb")
-    console.log(cookiecontaco)
-    console.log(this.hubConnection)
+    console.log(this.hubConnection.state)
 
     this.hubConnection.invoke(
       "generarLogVisitante",
@@ -156,6 +157,8 @@ export class ChatPortalComponent implements OnInit,OnDestroy,OnChanges {
     )
   }
   actualizarDatosAlumno(IdFaseOportunidadPortal:any){
+
+    this.estadoLogueo="true"
     this.hubConnection.invoke("actualizarDatosAlumno",this.IdAlumno,IdFaseOportunidadPortal);
   }
 
