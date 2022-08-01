@@ -364,36 +364,7 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
           console.log(x.programaCabeceraDetalleDTO.areaCapacitacion);
           if(x.programaCabeceraDetalleDTO!=undefined && this.area==x.programaCabeceraDetalleDTO.areaCapacitacion)
           {
-            var metas=x.programaCabeceraDetalleDTO.parametroSeoProgramaDTO;
-            if(metas.length>0){
-
-              let mt=metas.find((x:any)=>x.nombre=='Titulo Pestaña')!=undefined?
-                        metas.find((x:any)=>x.nombre=='Titulo Pestaña').descripcion:undefined
-              let t=metas.find((x:any)=>x.nombre=='title')!=undefined?
-                        metas.find((x:any)=>x.nombre=='title').descripcion:undefined
-              let d=metas.find((x:any)=>x.nombre=='description')!=undefined?
-                        metas.find((x:any)=>x.nombre=='description').descripcion:undefined
-              let k=metas.find((x:any)=>x.nombre=='keywords')!=undefined?
-                        metas.find((x:any)=>x.nombre=='keywords').descripcion:undefined
-              console.log(t)
-              this.title.setTitle(t);
-
-              this._SeoService.generateTags({
-                title:mt,
-                slug:'AcercaBsGrupo',
-                image:'https://img.bsginstitute.com/repositorioweb/img/programas/'+x.programaCabeceraDetalleDTO.imagenPrograma,
-                description:d,
-                ogTitle:t,
-                twiterTitle:t,
-                keywords:k,
-                ogDescription:d,
-                twiterDescription:d ,
-                imageW:"348",
-                imageH:'220',
-              });
-
-            }
-
+            
             this.cabecera = x.programaCabeceraDetalleDTO;
             this.migaPan.push({
               titulo:
