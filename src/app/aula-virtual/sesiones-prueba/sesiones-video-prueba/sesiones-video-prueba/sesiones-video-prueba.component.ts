@@ -1,4 +1,5 @@
-import { Component, Input, OnInit, SimpleChanges, ViewEncapsulation } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit, SimpleChanges, ViewEncapsulation } from '@angular/core';
+import { Subject, takeUntil } from 'rxjs';
 import { ParametrosEstructuraEspecificaDTO, ParametrosVideoSesionDTO } from 'src/app/Core/Models/EstructuraEspecificaDTO';
 import { VideoSesionService } from 'src/app/Core/Shared/Services/VideoSesion/video-sesion.service';
 
@@ -8,11 +9,16 @@ import { VideoSesionService } from 'src/app/Core/Shared/Services/VideoSesion/vid
   styleUrls: ['./sesiones-video-prueba.component.scss'],
   encapsulation: ViewEncapsulation.None,
 })
-export class SesionesVideoPruebaComponent implements OnInit {
+export class SesionesVideoPruebaComponent implements OnInit,OnDestroy {
+  private signal$ = new Subject();
 
   constructor(
     private _VideoSesionService:VideoSesionService,
   ) { }
+  ngOnDestroy(): void {
+    this.signal$.next(true)
+    this.signal$.complete()
+  }
 
   @Input() json: ParametrosEstructuraEspecificaDTO = {
     AccesoPrueba: false,
@@ -58,7 +64,7 @@ export class SesionesVideoPruebaComponent implements OnInit {
   }
   ObtenerVideoProgramaCapacitacionSesion(){
     console.log(this.parametros)
-    this._VideoSesionService.ObtenerVideoProgramaCapacitacionSesionPrueba(this.parametros).subscribe({
+    this._VideoSesionService.ObtenerVideoProgramaCapacitacionSesionPrueba(this.parametros).pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
         console.log(x)
         this.videoData=x;

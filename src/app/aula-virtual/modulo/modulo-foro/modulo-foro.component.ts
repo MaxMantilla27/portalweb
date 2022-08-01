@@ -2,9 +2,11 @@ import {
   Component,
   Input,
   OnChanges,
+  OnDestroy,
   OnInit,
   SimpleChanges,
 } from '@angular/core';
+import { Subject, takeUntil } from 'rxjs';
 import { AvatarService } from 'src/app/Core/Shared/Services/Avatar/avatar.service';
 import { ForoCursoService } from 'src/app/Core/Shared/Services/ForoCurso/foro-curso.service';
 
@@ -13,11 +15,16 @@ import { ForoCursoService } from 'src/app/Core/Shared/Services/ForoCurso/foro-cu
   templateUrl: './modulo-foro.component.html',
   styleUrls: ['./modulo-foro.component.scss'],
 })
-export class ModuloForoComponent implements OnInit, OnChanges {
+export class ModuloForoComponent implements OnInit, OnChanges,OnDestroy {
+  private signal$ = new Subject();
   constructor(
     private _ForoCursoService: ForoCursoService,
     private _AvatarService: AvatarService
   ) {}
+  ngOnDestroy(): void {
+    this.signal$.next(true)
+    this.signal$.complete()
+  }
 
   @Input() IdPgeneral = 0;
   @Input() IdPprincipal = 0;
@@ -41,7 +48,7 @@ export class ModuloForoComponent implements OnInit, OnChanges {
     }
   }
   ObtenerForoCurso() {
-    this._ForoCursoService.ObtenerForoCurso(this.IdPgeneral).subscribe({
+    this._ForoCursoService.ObtenerForoCurso(this.IdPgeneral).pipe(takeUntil(this.signal$)).subscribe({
       next: (x) => {
 
         console.log(x);

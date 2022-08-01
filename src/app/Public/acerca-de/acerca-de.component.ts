@@ -1,7 +1,8 @@
 import { isPlatformBrowser } from '@angular/common';
-import { AfterViewInit, Component, ElementRef, Inject, OnInit, PLATFORM_ID, ViewChild, ViewEncapsulation } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, Inject, OnDestroy, OnInit, PLATFORM_ID, ViewChild, ViewEncapsulation } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { NgbCarouselConfig } from '@ng-bootstrap/ng-bootstrap';
+import { Subject, takeUntil } from 'rxjs';
 import { BasicCarousel } from 'src/app/Core/Models/BasicDTO';
 import { PartnerImagesDTO } from 'src/app/Core/Models/PartnerImagesDTO';
 import { HelperService } from 'src/app/Core/Shared/Services/helper.service';
@@ -14,7 +15,8 @@ import { SeoService } from 'src/app/Core/Shared/Services/seo.service';
   styleUrls: ['./acerca-de.component.scss'],
   encapsulation: ViewEncapsulation.None,
 })
-export class AcercaDeComponent implements OnInit,AfterViewInit {
+export class AcercaDeComponent implements OnInit,AfterViewInit,OnDestroy {
+  private signal$ = new Subject();
 
   @ViewChild('valores') valores!: ElementRef;
   @ViewChild('calidad') calidad!: ElementRef;
@@ -34,6 +36,10 @@ export class AcercaDeComponent implements OnInit,AfterViewInit {
     config.interval = 20000;
     config.keyboard = true;
     config.pauseOnHover = true;
+   }
+   ngOnDestroy(): void {
+     this.signal$.next(true)
+     this.signal$.complete()
    }
 
   public migaPan = [
@@ -74,14 +80,14 @@ export class AcercaDeComponent implements OnInit,AfterViewInit {
   }
   ngAfterViewInit(){
 
-    this._HelperService.recibirScrollFooter.subscribe(x => {
+    this._HelperService.recibirScrollFooter.pipe(takeUntil(this.signal$)).subscribe(x => {
       if(x=='valores') this.valores.nativeElement.scrollIntoView();
       if(x=='numeros') this.numeros.nativeElement.scrollIntoView();
       if(x=='calidad') this.calidad.nativeElement.scrollIntoView();
     });
   }
   GetImagenPartner(){
-    this._PartnerService.GetListPartnerImage().subscribe({
+    this._PartnerService.GetListPartnerImage().pipe(takeUntil(this.signal$)).subscribe({
       next:(x)=>{
         this.imagenes=x.listaPartnerImagenDTO.map((i:any)=>{
           var ps:PartnerImagesDTO={imgPrincipal:'https://img.bsginstitute.com/repositorioweb/img/partners/'+i.imgPrincipal,imagenAlt:i.imagenAlt};

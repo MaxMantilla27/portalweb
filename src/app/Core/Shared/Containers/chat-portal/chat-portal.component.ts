@@ -15,9 +15,8 @@ import { environment } from 'src/environments/environment';
   styleUrls: ['./chat-portal.component.scss']
 })
 export class ChatPortalComponent implements OnInit,OnDestroy,OnChanges {
-
-  @ViewChild('contenidoMsj') contenidoMsj!: ElementRef;
   private signal$ = new Subject();
+  @ViewChild('contenidoMsj') contenidoMsj!: ElementRef;
   public hubConnection: any;
   constructor(
     private _ChatDetalleIntegraService:ChatDetalleIntegraService,
@@ -348,7 +347,7 @@ export class ChatPortalComponent implements OnInit,OnDestroy,OnChanges {
   }
   AdjuntarArchivoChatSoporte(){
 
-    this._ChatDetalleIntegraService.AdjuntarArchivoChatSoporte(this.selectedFiles.item(0)).subscribe({
+    this._ChatDetalleIntegraService.AdjuntarArchivoChatSoporte(this.selectedFiles.item(0)).pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
         console.log(x)
         this.idInteraccion=this.GetsesionIdInteraccion();

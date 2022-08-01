@@ -15,7 +15,7 @@ import { DocenciaGestionSilabosRegistroAddComponent } from './docencia-gestion-s
   encapsulation: ViewEncapsulation.None,
 })
 export class DocenciaGestionSilabosRegistroComponent implements OnInit {
-
+  private signal$ = new Subject();
   constructor(
     public dialogRef: MatDialogRef<DocenciaGestionSilabosRegistroComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -45,7 +45,6 @@ export class DocenciaGestionSilabosRegistroComponent implements OnInit {
     Porcentaje:0,
     Usuario:'',
   }
-  private signal$ = new Subject();
   public charge=false;
   public contenido:any;
   public evaluacion:any;

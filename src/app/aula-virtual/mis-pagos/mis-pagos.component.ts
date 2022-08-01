@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Subject, takeUntil } from 'rxjs';
 import { CronogramaPagoService } from 'src/app/Core/Shared/Services/CronogramaPago/cronograma-pago.service';
 import { HelperService } from 'src/app/Core/Shared/Services/helper.service';
 
@@ -7,12 +8,16 @@ import { HelperService } from 'src/app/Core/Shared/Services/helper.service';
   templateUrl: './mis-pagos.component.html',
   styleUrls: ['./mis-pagos.component.scss']
 })
-export class MisPagosComponent implements OnInit {
-
+export class MisPagosComponent implements OnInit,OnDestroy {
+  private signal$ = new Subject();
   constructor(
     private _HelperService: HelperService,
     private _CronogramaPagoService:CronogramaPagoService
   ) { }
+  ngOnDestroy(): void {
+    this.signal$.next(true)
+    this.signal$.complete()
+  }
 
   public migaPan = [
     {
@@ -23,7 +28,7 @@ export class MisPagosComponent implements OnInit {
   public textoBienvenido = '';
   public misPagos:any
   ngOnInit(): void {
-    this._HelperService.recibirCombosPerfil.subscribe((x) => {
+    this._HelperService.recibirCombosPerfil.pipe(takeUntil(this.signal$)).subscribe((x) => {
 
       this.textoBienvenido =x.datosAlumno.nombres+
       ', aquí podrás realizar los pagos según tu cronograma de cuotas';
@@ -31,7 +36,7 @@ export class MisPagosComponent implements OnInit {
     this.ObtenerCronogramaPagoAlumno()
   }
   ObtenerCronogramaPagoAlumno(){
-    this._CronogramaPagoService.ObtenerCronogramaPagoAlumno().subscribe({
+    this._CronogramaPagoService.ObtenerCronogramaPagoAlumno().pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
         console.log(x)
         this.misPagos=x.cronogramas

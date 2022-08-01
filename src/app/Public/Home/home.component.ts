@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, Inject, OnInit, PLATFORM_ID, ViewEncapsulation } from '@angular/core';
+import { AfterViewInit, Component, Inject, OnDestroy, OnInit, PLATFORM_ID, ViewEncapsulation } from '@angular/core';
 import { MatTabChangeEvent } from '@angular/material/tabs';
 import { NgbCarouselConfig } from '@ng-bootstrap/ng-bootstrap';
 import { BasicCarousel, BasicUrl } from 'src/app/Core/Models/BasicDTO';
@@ -11,6 +11,9 @@ import { SessionStorageService } from 'src/app/Core/Shared/Services/session-stor
 import { Router } from '@angular/router';
 import { SeoService } from 'src/app/Core/Shared/Services/seo.service';
 import {Title} from '@angular/platform-browser';
+import { Subject, takeUntil } from 'rxjs';
+declare const fbq:any;
+
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -18,8 +21,9 @@ import {Title} from '@angular/platform-browser';
   providers:[NgbCarouselConfig],
   encapsulation: ViewEncapsulation.None,
 })
-export class HomeComponent implements OnInit,AfterViewInit {
+export class HomeComponent implements OnInit,AfterViewInit,OnDestroy {
 
+  private signal$ = new Subject();
   isBrowser: boolean;
   public imagenes:Array<PartnerImagesDTO>=[];
   public imagenes2:Array<BasicCarousel>=[];
@@ -58,12 +62,17 @@ export class HomeComponent implements OnInit,AfterViewInit {
     config.keyboard = true;
     config.pauseOnHover = true;
   }
+  ngOnDestroy(): void {
+    this.signal$.next(true)
+    this.signal$.complete()
+  }
   ngAfterViewInit(): void {
     this.tabindex=0
   }
   public innerWidth: any;
   public seccionStep=4;
   ngOnInit(): void {
+
     let t:string='BSG Institute'
     this.title.setTitle(t);
 
@@ -77,8 +86,8 @@ export class HomeComponent implements OnInit,AfterViewInit {
       if(this.innerWidth<768)this.seccionStep=1;
     }
     //this.TituloCarreras$ = this._HelperService.recibirString;
-    this._HelperService.recibirStringCarrera.subscribe(x => {this.TituloCarreras=x});
-    this._HelperService.recibirArrayCarrera.subscribe({
+    this._HelperService.recibirStringCarrera.pipe(takeUntil(this.signal$)).subscribe(x => {this.TituloCarreras=x});
+    this._HelperService.recibirArrayCarrera.pipe(takeUntil(this.signal$)).subscribe({
       next:(x)=>{
         console.log(x);
         this.Carreras=x.map((c:any)=>{
@@ -87,7 +96,7 @@ export class HomeComponent implements OnInit,AfterViewInit {
         });
       }
     });
-    this._HelperService.recibirArrayFormacion.subscribe({
+    this._HelperService.recibirArrayFormacion.pipe(takeUntil(this.signal$)).subscribe({
       next:(x)=>{
         this.Formacion=x;
         this.Formacion.forEach(x=>{
@@ -111,7 +120,7 @@ export class HomeComponent implements OnInit,AfterViewInit {
     this.Formacion[this.tabindex].change=true
   }
   GetImagenPartner(){
-    this._PartnerService.GetListPartnerImage().subscribe({
+    this._PartnerService.GetListPartnerImage().pipe(takeUntil(this.signal$)).subscribe({
       next:(x)=>{
         this.imagenes=x.listaPartnerImagenDTO.map((i:any)=>{
           var ps:PartnerImagesDTO={imgPrincipal:'https://img.bsginstitute.com/repositorioweb/img/partners/'+i.imgPrincipal,imagenAlt:i.imagenAlt};

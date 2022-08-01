@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { Subject } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 import { ReporteParticipacionExpositorService } from 'src/app/Core/Shared/Services/ReporteParticipacionExpositor/reporte-participacion-expositor.service';
 import { DocenciaGestionSilabosRegistroComponent } from './docencia-gestion-silabos-registro/docencia-gestion-silabos-registro.component';
 
@@ -59,7 +59,7 @@ export class DocenciaGestionSilabosComponent implements OnInit,OnChanges,OnDestr
       disableClose: true
     });
 
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().pipe(takeUntil(this.signal$)).subscribe(result => {
       this.OnRecharge.emit();
       //this.GenerarReporteFiltradoPortal();
     });

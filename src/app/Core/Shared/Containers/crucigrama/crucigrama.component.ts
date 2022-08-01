@@ -1,4 +1,5 @@
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewEncapsulation } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges, ViewEncapsulation } from '@angular/core';
+import { Subject, takeUntil } from 'rxjs';
 import { EvaluacionPromedioCrucigramaDTO, ParametrosEstructuraEspecificaDTO } from 'src/app/Core/Models/EstructuraEspecificaDTO';
 import { CrucigramaService } from '../../Services/Crucigrama/crucigrama.service';
 import { SessionStorageService } from '../../Services/session-storage.service';
@@ -10,13 +11,18 @@ import { SnackBarServiceService } from '../../Services/SnackBarService/snack-bar
   styleUrls: ['./crucigrama.component.scss'],
   encapsulation: ViewEncapsulation.None,
 })
-export class CrucigramaComponent implements OnInit,OnChanges {
+export class CrucigramaComponent implements OnInit,OnChanges ,OnDestroy{
+  private signal$ = new Subject();
 
   constructor(
     private _SessionStorageService:SessionStorageService,
     private _SnackBarServiceService:SnackBarServiceService,
     private _CrucigramaService:CrucigramaService
   ) { }
+  ngOnDestroy(): void {
+    this.signal$.next(true)
+    this.signal$.complete()
+  }
   @Input() Crucigrama:any
 
   @Output()
@@ -133,7 +139,7 @@ export class CrucigramaComponent implements OnInit,OnChanges {
     this.jsonEnvio.IdPrincipal=this.json.IdPEspecificoPadre;
     this.jsonEnvio.OrdenFilaCapitulo=this.Crucigrama.objetoCrucigramaPrograma.ordenFilaCapitulo;
     this.jsonEnvio.OrdenFilaSesion=this.Crucigrama.objetoCrucigramaPrograma.ordenFilaSesion;
-    this._CrucigramaService.EnviarFormularioCrucigrama(this.jsonEnvio).subscribe({
+    this._CrucigramaService.EnviarFormularioCrucigrama(this.jsonEnvio).pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
         console.log(x)
         this.rpta=x

@@ -1,4 +1,5 @@
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewEncapsulation } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges, ViewEncapsulation } from '@angular/core';
+import { Subject, takeUntil } from 'rxjs';
 import { ParametroEnvioEncuestaDTO, ParametrosEncuestaDTO } from 'src/app/Core/Models/EncuestaDTO';
 import { ParametrosEstructuraEspecificaDTO } from 'src/app/Core/Models/EstructuraEspecificaDTO';
 import { EncuestaService } from 'src/app/Core/Shared/Services/Encuesta/encuesta.service';
@@ -10,7 +11,8 @@ import { SnackBarServiceService } from 'src/app/Core/Shared/Services/SnackBarSer
   styleUrls: ['./sesion-encuesta.component.scss'],
   encapsulation: ViewEncapsulation.None,
 })
-export class SesionEncuestaComponent implements OnInit,OnChanges {
+export class SesionEncuestaComponent implements OnInit,OnChanges,OnDestroy {
+  private signal$ = new Subject();
 
   constructor(
     private _EncuestaService:EncuestaService,
@@ -49,6 +51,10 @@ export class SesionEncuestaComponent implements OnInit,OnChanges {
   public encuesta:any
   public mensajeError=''
   public preguntaError=0;
+  ngOnDestroy(): void {
+    this.signal$.next(true)
+    this.signal$.complete()
+  }
   ngOnInit(): void {
   }
 
@@ -61,7 +67,7 @@ export class SesionEncuestaComponent implements OnInit,OnChanges {
     }
   }
   ObtenerEncuestaEvaluacion(){
-    this._EncuestaService.ObtenerEncuestaEvaluacion(this.params).subscribe({
+    this._EncuestaService.ObtenerEncuestaEvaluacion(this.params).pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
         console.log(x);
         this.encuesta=x
@@ -137,7 +143,7 @@ export class SesionEncuestaComponent implements OnInit,OnChanges {
     if(estado==false){
       this._SnackBarServiceService.openSnackBar(this.mensajeError,'x',15,"snackbarCrucigramaerror");
     }else{
-      this._EncuestaService.EnviarEncuestaEvaluacion(this.jsonEnvio).subscribe({
+      this._EncuestaService.EnviarEncuestaEvaluacion(this.jsonEnvio).pipe(takeUntil(this.signal$)).subscribe({
         next:x=>{
           console.log(x);
           this.encuesta.contenidoEncuesta=null;

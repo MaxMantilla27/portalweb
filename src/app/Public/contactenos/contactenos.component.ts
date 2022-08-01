@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Validators } from '@angular/forms';
 import { Basic } from 'src/app/Core/Models/BasicDTO';
 import { ContactenosDTO } from 'src/app/Core/Models/ContactenosDTO';
@@ -11,13 +11,16 @@ import { ContactenosService } from 'src/app/Core/Shared/Services/Contactenos/con
 import { HelperService } from 'src/app/Core/Shared/Services/helper.service';
 import { Title } from '@angular/platform-browser';
 import { SeoService } from 'src/app/Core/Shared/Services/seo.service';
+import { Subject, takeUntil } from 'rxjs';
+declare const fbq:any;
 
 @Component({
   selector: 'app-contactenos',
   templateUrl: './contactenos.component.html',
   styleUrls: ['./contactenos.component.scss']
 })
-export class ContactenosComponent implements OnInit {
+export class ContactenosComponent implements OnInit,OnDestroy {
+  private signal$ = new Subject();
 
   @ViewChild(FormularioComponent)
   form!: FormularioComponent;
@@ -31,6 +34,10 @@ export class ContactenosComponent implements OnInit {
 
     ) { }
 
+  ngOnDestroy(): void {
+    this.signal$.next(true)
+    this.signal$.complete()
+  }
   public migaPan = [
     {
       titulo: 'Inicio',
@@ -89,7 +96,7 @@ export class ContactenosComponent implements OnInit {
     });
 
 
-    this._HelperService.recibirCombosPerfil.subscribe((x) => {
+    this._HelperService.recibirCombosPerfil.pipe(takeUntil(this.signal$)).subscribe((x) => {
       this.combosPrevios=x.datosAlumno;
       this.formularioContacto.Nombres= this.combosPrevios.nombres,
       this.formularioContacto.Apellidos= this.combosPrevios.apellidos,
@@ -109,30 +116,43 @@ export class ContactenosComponent implements OnInit {
     this.ObtenerCombosPortal();
   }
   SetContacto(value:any){
-    this.initValues = false;
-    this.DatosContactenosEnvio.Nombres=value.Nombres;
-    this.DatosContactenosEnvio.Apellidos=value.Apellidos;
-    this.DatosContactenosEnvio.Correo1=value.Email;
-    this.DatosContactenosEnvio.IdPais=value.IdPais;
-    this.DatosContactenosEnvio.IdRegion=value.IdRegion;
-    this.DatosContactenosEnvio.Movil=value.Movil;
-    this.DatosContactenosEnvio.IdCargo=value.IdCargo;
-    this.DatosContactenosEnvio.IdAreaFormacion=value.IdAreaFormacion;
-    this.DatosContactenosEnvio.IdAreaTrabajo=value.IdAreaTrabajo;
-    this.DatosContactenosEnvio.IdIndustria=value.IdIndustria;
-    this.DatosContactenosEnvio.Comentario=value.Comentario;
-    console.log(this.DatosContactenosEnvio)
-    this._ContactenosService.EnviarFormulario(this.DatosContactenosEnvio).subscribe({
-      next: (x) => {
-        console.log(x);
-      },
-      complete: () => {
-        this.statuscharge = false;
-      },
-    });
+    if(this.formVal){
+      this.initValues = false;
+      this.DatosContactenosEnvio.Nombres=value.Nombres;
+      this.DatosContactenosEnvio.Apellidos=value.Apellidos;
+      this.DatosContactenosEnvio.Correo1=value.Email;
+      this.DatosContactenosEnvio.IdPais=value.IdPais;
+      this.DatosContactenosEnvio.IdRegion=value.IdRegion;
+      this.DatosContactenosEnvio.Movil=value.Movil;
+      this.DatosContactenosEnvio.IdCargo=value.IdCargo;
+      this.DatosContactenosEnvio.IdAreaFormacion=value.IdAreaFormacion;
+      this.DatosContactenosEnvio.IdAreaTrabajo=value.IdAreaTrabajo;
+      this.DatosContactenosEnvio.IdIndustria=value.IdIndustria;
+      this.DatosContactenosEnvio.Comentario=value.Comentario;
+      console.log(this.DatosContactenosEnvio)
+      this._ContactenosService.EnviarFormulario(this.DatosContactenosEnvio).subscribe({
+        next:x => {
+          console.log(x);
+          console.log('------------------facebook(true)---------------------------');
+          console.log(fbq);
+          fbq('track', 'CompleteRegistration');
+        },
+        // error:(e)=>{
+
+        //   console.log(e);
+        //   console.log('------------------facebook(false)---------------------------');
+        //   console.log(fbq);
+        //   fbq('track', 'CompleteRegistration');
+        // },
+        complete: () => {
+          console.log('------------------facebook(complete)---------------------------');
+          this.statuscharge = false;
+        },
+      });
+    }
   }
   ObtenerCombosPortal(){
-    this._DatosPortalService.ObtenerCombosPortal().subscribe({
+    this._DatosPortalService.ObtenerCombosPortal().pipe(takeUntil(this.signal$)).subscribe({
       next:(x)=>{
         console.log(x);
         this.fileds.forEach(r=>{
@@ -180,7 +200,7 @@ export class ContactenosComponent implements OnInit {
     this.initValues = true;
   }
   GetRegionesPorPais(idPais:number){
-    this._RegionService.ObtenerCiudadesPorPais(idPais).subscribe({
+    this._RegionService.ObtenerCiudadesPorPais(idPais).pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
         this.fileds.forEach(r=>{
           if(r.nombre=='IdRegion'){

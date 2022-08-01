@@ -20,6 +20,7 @@ import { Title } from '@angular/platform-browser';
 import { SeoService } from 'src/app/Core/Shared/Services/seo.service';
 
 import { Router } from '@angular/router';
+import { Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-blog',
@@ -28,6 +29,7 @@ import { Router } from '@angular/router';
   encapsulation: ViewEncapsulation.None,
 })
 export class BlogComponent implements OnInit {
+  private signal$ = new Subject();
   @ViewChild(FormularioComponent)
   form!: FormularioComponent;
   constructor(
@@ -45,6 +47,10 @@ export class BlogComponent implements OnInit {
     private title:Title,
     private router:Router
   ) {}
+  ngOnDestroy(): void {
+    this.signal$.next(true)
+    this.signal$.complete()
+  }
   public idWeb = 0;
   public UrlWeb = '';
   public Title = '';
@@ -101,7 +107,7 @@ export class BlogComponent implements OnInit {
   public combosPrevios:any
 
   ngOnInit(): void {
-    this.activatedRoute.params.subscribe({
+    this.activatedRoute.params.pipe(takeUntil(this.signal$)).subscribe({
       next: (x) => {
         var whitepaper = x['blog'].split('-');
         this.idWeb = whitepaper[whitepaper.length - 1];
@@ -109,7 +115,7 @@ export class BlogComponent implements OnInit {
         this.Title=whitepaper.slice(0, -1).join(' ')
       },
     });
-    this._HelperServiceP.recibirCombosPerfil.subscribe((x) => {
+    this._HelperServiceP.recibirCombosPerfil.pipe(takeUntil(this.signal$)).subscribe((x) => {
       this.combosPrevios=x.datosAlumno;
       console.log(this.combosPrevios)
       this.formularioContacto.Nombres= this.combosPrevios.nombres,
@@ -130,7 +136,7 @@ export class BlogComponent implements OnInit {
 
   ListArticuloProgramaRelacionado(id:number){
     console.log(id)
-    this._SeccionProgramaService.ListArticuloProgramaRelacionado(id).subscribe({
+    this._SeccionProgramaService.ListArticuloProgramaRelacionado(id).pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
         console.log(x)
         if(x.listaProgramaRelacionadoDTO!=null){
@@ -149,7 +155,7 @@ export class BlogComponent implements OnInit {
     })
   }
   ObtenerArticuloDetalleHome(){
-    this._ArticuloService.ObtenerArticuloDetalleHome(1,this.idWeb,this.UrlWeb).subscribe({
+    this._ArticuloService.ObtenerArticuloDetalleHome(1,this.idWeb,this.UrlWeb).pipe(takeUntil(this.signal$)).subscribe({
       next:(x)=>{
         console.log(x)
 
@@ -193,7 +199,7 @@ export class BlogComponent implements OnInit {
     })
   }
   ListTagArticuloRelacionadoPorIdWeb(){
-    this._TagService.ListTagArticuloRelacionadoPorIdWeb(this.idWeb).subscribe({
+    this._TagService.ListTagArticuloRelacionadoPorIdWeb(this.idWeb).pipe(takeUntil(this.signal$)).subscribe({
       next:(x)=>{
         console.log(x)
         this.tags=x.listaTagDTO
@@ -224,7 +230,7 @@ export class BlogComponent implements OnInit {
       this.DatosEnvioFormulario.IdAreaTrabajo=value.IdAreaTrabajo;
       this.DatosEnvioFormulario.IdIndustria=value.IdIndustria;
       console.log(this.DatosEnvioFormulario)
-      this._HelperService.EnviarFormulario(this.DatosEnvioFormulario).subscribe({
+      this._HelperService.EnviarFormulario(this.DatosEnvioFormulario).pipe(takeUntil(this.signal$)).subscribe({
         next: (x) => {
           console.log(x);
         },
@@ -235,7 +241,7 @@ export class BlogComponent implements OnInit {
     }
   }
   ObtenerCombosPortal(){
-    this._DatosPortalService.ObtenerCombosPortal().subscribe({
+    this._DatosPortalService.ObtenerCombosPortal().pipe(takeUntil(this.signal$)).subscribe({
       next:(x)=>{
         console.log(x);
         this.fileds.forEach(r=>{
@@ -251,7 +257,7 @@ export class BlogComponent implements OnInit {
     this.initValues = true;
   }
   GetRegionesPorPais(idPais:number){
-    this._RegionService.ObtenerCiudadesPorPais(idPais).subscribe({
+    this._RegionService.ObtenerCiudadesPorPais(idPais).pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
         this.fileds.forEach(r=>{
           if(r.nombre=='IdRegion'){

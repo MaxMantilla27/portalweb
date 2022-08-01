@@ -1,6 +1,7 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { MatTabChangeEvent } from '@angular/material/tabs';
 import { ActivatedRoute } from '@angular/router';
+import { Subject, takeUntil } from 'rxjs';
 import { ParametrosEstructuraEspecificaDTO } from 'src/app/Core/Models/EstructuraEspecificaDTO';
 import { ProgramaContenidoService } from 'src/app/Core/Shared/Services/ProgramaContenido/programa-contenido.service';
 import { SessionStorageService } from 'src/app/Core/Shared/Services/session-storage.service';
@@ -12,13 +13,17 @@ import { SessionStorageService } from 'src/app/Core/Shared/Services/session-stor
   styleUrls: ['./modulo.component.scss'],
   encapsulation: ViewEncapsulation.None,
 })
-export class ModuloComponent implements OnInit {
-
+export class ModuloComponent implements OnInit,OnDestroy {
+  private signal$ = new Subject();
   constructor(
     private _ActivatedRoute:ActivatedRoute,
     private _ProgramaContenidoService:ProgramaContenidoService,
     private _SessionStorageService:SessionStorageService
   ) { }
+  ngOnDestroy(): void {
+    this.signal$.next(true)
+    this.signal$.complete()
+  }
   public migaPan = [
     {
       titulo: 'Mis Cursos',
@@ -47,7 +52,7 @@ export class ModuloComponent implements OnInit {
   public estructuraCapitulo:any;
   ngOnInit(): void {
 
-    this._ActivatedRoute.params.subscribe({
+    this._ActivatedRoute.params.pipe(takeUntil(this.signal$)).subscribe({
       next: (x) => {
         this.idMatricula = parseInt(x['IdMatricula']);
         this.idPEspecificoHijo=x['idPEspecificoHijo'];
@@ -56,7 +61,7 @@ export class ModuloComponent implements OnInit {
     });
   }
   ObtenerEstructuraEspecificaCurso(){
-    this._ProgramaContenidoService.ObtenerEstructuraEspecificaCurso(this.json).subscribe({
+    this._ProgramaContenidoService.ObtenerEstructuraEspecificaCurso(this.json).pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
         this.estructuraCapitulo=x
         this._SessionStorageService.SetEstructura(this.estructuraCapitulo);
@@ -69,6 +74,7 @@ export class ModuloComponent implements OnInit {
 
     this._ProgramaContenidoService
       .ObtenerListadoProgramaContenido(this.idMatricula)
+      .pipe(takeUntil(this.signal$))
       .subscribe({
         next: (x) => {
           x.listaCursoMatriculado.forEach((program:any) => {

@@ -1,4 +1,5 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
+import { Subject, takeUntil } from 'rxjs';
 import { AvatarService } from 'src/app/Core/Shared/Services/Avatar/avatar.service';
 import { ForoCursoService } from 'src/app/Core/Shared/Services/ForoCurso/foro-curso.service';
 
@@ -7,12 +8,17 @@ import { ForoCursoService } from 'src/app/Core/Shared/Services/ForoCurso/foro-cu
   templateUrl: './modulo-foro-contenido-prueba.component.html',
   styleUrls: ['./modulo-foro-contenido-prueba.component.scss']
 })
-export class ModuloForoContenidoPruebaComponent implements OnInit {
+export class ModuloForoContenidoPruebaComponent implements OnInit,OnDestroy {
+  private signal$ = new Subject();
 
   constructor(
     private _ForoCursoService:ForoCursoService,
     private _AvatarService:AvatarService
   ) {}
+  ngOnDestroy(): void {
+    this.signal$.next(true)
+    this.signal$.complete()
+  }
   @Input() IdPprincipal=0;
   @Input() IdPgeneral=0;
   @Input() IdPEspecificoPadre=0;
@@ -27,7 +33,7 @@ export class ModuloForoContenidoPruebaComponent implements OnInit {
     this.ObtenerRespuestaForo();
   }
   ObtenerContenidoForo(){
-    this._ForoCursoService.ContenidoPreguntaForoCurso(this.IdPregunta).subscribe({
+    this._ForoCursoService.ContenidoPreguntaForoCurso(this.IdPregunta).pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
         this.foroContenido=x;
         this.foroContenido.forEach(x=>{
@@ -37,7 +43,7 @@ export class ModuloForoContenidoPruebaComponent implements OnInit {
     })
   }
   ObtenerRespuestaForo(){
-    this._ForoCursoService.PartialRespuestaPregunta(this.IdPgeneral,this.IdPregunta).subscribe({
+    this._ForoCursoService.PartialRespuestaPregunta(this.IdPgeneral,this.IdPregunta).pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
         this.foroRespuesta=x;
         this.foroRespuesta.forEach(x=>{

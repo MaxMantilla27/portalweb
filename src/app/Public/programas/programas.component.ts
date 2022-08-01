@@ -1,5 +1,5 @@
 import { isPlatformBrowser } from '@angular/common';
-import { Component, ElementRef, HostListener, Inject, OnInit, PLATFORM_ID, ViewChild, ViewEncapsulation } from '@angular/core';
+import { Component, ElementRef, HostListener, Inject, OnDestroy, OnInit, PLATFORM_ID, ViewChild, ViewEncapsulation } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { MatSelect } from '@angular/material/select';
@@ -21,7 +21,7 @@ import { FiltroProgramasComponent } from './filtro-programas/filtro-programas.co
   styleUrls: ['./programas.component.scss'],
   encapsulation: ViewEncapsulation.None,
 })
-export class ProgramasComponent implements OnInit {
+export class ProgramasComponent implements OnInit,OnDestroy {
 
   private signal$ = new Subject();
   @ViewChild('SubAreaMatSelect')
@@ -44,6 +44,10 @@ export class ProgramasComponent implements OnInit {
     private title:Title
   ) {
     this.isBrowser = isPlatformBrowser(platformId);
+  }
+  ngOnDestroy(): void {
+    this.signal$.next(true)
+    this.signal$.complete()
   }
   public IdArea:number=0;
   public Title='Programas, certificaciones y cursos';
@@ -112,7 +116,7 @@ export class ProgramasComponent implements OnInit {
     if(this.CodigoIso.toUpperCase()=='CO'){this.rangoPrecios=10000000;this.monedaRango='COL$ 0';}
     if(this.CodigoIso.toUpperCase()=='BO'){this.rangoPrecios=37300;this.monedaRango='Bs 0 ';}
     this.rangoselect=this.rangoPrecios;
-    this.activatedRoute.params.subscribe({
+    this.activatedRoute.params.pipe(takeUntil(this.signal$)).subscribe({
       next:(x)=>{
         if(x['IdArea']!=undefined){
           this.IdArea=x['IdArea']
@@ -158,7 +162,8 @@ export class ProgramasComponent implements OnInit {
     }
   }
   GetFiltroProgramas(){
-    this._ProgramasService.GetFiltroProgramas(this.IdArea).subscribe({
+    this._ProgramasService.GetFiltroProgramas(this.IdArea)
+    .pipe(takeUntil(this.signal$)).subscribe({
       next:(x)=>{
         this.filtros=x.filtros;
         var area:any;
@@ -384,7 +389,8 @@ export class ProgramasComponent implements OnInit {
       }
     })
     this.charge=true;
-    this._ProgramasService.GetProgramas(this.send).subscribe({
+    this._ProgramasService.GetProgramas(this.send)
+    .pipe(takeUntil(this.signal$)).subscribe({
       next:(x)=>{
         console.log(x)
         this.programas=x.listaProgramasGeneralesTop.map(
@@ -464,7 +470,8 @@ export class ProgramasComponent implements OnInit {
           textoResult:this.textoResult },
       });
 
-      dialogRef.afterDismissed().pipe(takeUntil(this.signal$)).subscribe((result) => {
+      dialogRef.afterDismissed().pipe(takeUntil(this.signal$))
+      .pipe(takeUntil(this.signal$)).subscribe((result) => {
         console.log(result);
         if(result!=undefined){
           this.filtros = result.filtros;

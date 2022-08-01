@@ -1,7 +1,8 @@
+import { isPlatformBrowser } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { Route, Router } from '@angular/router';
-import { Observable, Subject, takeUntil } from 'rxjs';
+import { EMPTY, Observable, Subject, takeUntil } from 'rxjs';
 import { PagoOrganicoAlumnoDTO, RegistroPreProcesoPagoDTO, RegistroProcesoPagoAlumnoDTO, RegistroRespuestaPreProcesoPagoDTO } from 'src/app/Core/Models/ProcesoPagoDTO';
 import { environment } from 'src/environments/environment';
 import { SessionStorageService } from '../session-storage.service';
@@ -10,32 +11,58 @@ import { SessionStorageService } from '../session-storage.service';
   providedIn: 'root'
 })
 export class FormaPagoService {
+  isBrowser: boolean;
   private signal$ = new Subject();
   public urlBase=environment.url_api+'FormaPago';
   constructor(
     private http: HttpClient,
     private _SessionStorageService:SessionStorageService,
-    private _router:Router
-  ) { }
+    private _router:Router,
+    @Inject(PLATFORM_ID) platformId: Object
+  ) {
+    this.isBrowser = isPlatformBrowser(platformId);
+  }
+
   public PreProcesoPagoCuotaAlumno(Json:RegistroPreProcesoPagoDTO):Observable<any>{
-    console.log(Json)
-    return this.http.post<any>(this.urlBase+'/PreProcesoPagoCuotaAlumno',Json);
+
+    if(this.isBrowser){
+      console.log(Json)
+      return this.http.post<any>(this.urlBase+'/PreProcesoPagoCuotaAlumno',Json);
+    }else{
+      return EMPTY;
+    }
   }
   public ObtenerPreProcesoPagoCuotaAlumno(Json:RegistroRespuestaPreProcesoPagoDTO):Observable<any>{
-    console.log(Json)
-    return this.http.post<any>(this.urlBase+'/ObtenerPreProcesoPagoCuotaAlumno',Json);
+    if(this.isBrowser){
+      console.log(Json)
+      return this.http.post<any>(this.urlBase+'/ObtenerPreProcesoPagoCuotaAlumno',Json);
+    }else{
+      return EMPTY;
+    }
   }
   public ObtenerPreProcesoPagoOrganicoAlumno(Json:RegistroRespuestaPreProcesoPagoDTO):Observable<any>{
-    console.log(Json)
-    return this.http.post<any>(this.urlBase+'/ObtenerPreProcesoPagoOrganicoAlumno',Json);
+    if(this.isBrowser){
+      console.log(Json)
+      return this.http.post<any>(this.urlBase+'/ObtenerPreProcesoPagoOrganicoAlumno',Json);
+    }else{
+      return EMPTY;
+    }
   }
   public ProcesarPagoCuotaAlumno(Json:RegistroProcesoPagoAlumnoDTO):Observable<any>{
-    console.log(Json)
-    return this.http.post<any>(this.urlBase+'/ProcesarPagoCuotaAlumno',Json);
+    if(this.isBrowser){
+      console.log(Json)
+      return this.http.post<any>(this.urlBase+'/ProcesarPagoCuotaAlumno',Json);
+    }else{
+      return EMPTY;
+    }
   }
   public ProcesarPagoAlumnoOrganico(Json:RegistroProcesoPagoAlumnoDTO):Observable<any>{
-    console.log(Json)
-    return this.http.post<any>(this.urlBase+'/ProcesarPagoAlumnoOrganico',Json);
+    if(this.isBrowser){
+      console.log(Json)
+      return this.http.post<any>(this.urlBase+'/ProcesarPagoAlumnoOrganico',Json);
+    }else{
+      return EMPTY;
+    }
   }
   public PreProcesoPagoOrganicoAlumno(Json:PagoOrganicoAlumnoDTO,dialogRef:any):void{
     console.log(Json)
@@ -75,16 +102,28 @@ export class FormaPagoService {
     });
   }
   public ChangeToPending(Json:any):Observable<any>{
-    console.log(Json)
-    return this.http.post<any>(this.urlBase+'/ChangeToPending',Json);
+    if(this.isBrowser){
+      console.log(Json)
+      return this.http.post<any>(this.urlBase+'/ChangeToPending',Json);
+    }else{
+      return EMPTY;
+    }
   }
 
   public PreProcesoPagoTramiteAlumno(Json:RegistroPreProcesoPagoDTO):Observable<any>{
-    console.log(Json)
-    return this.http.post<any>(this.urlBase+'/PreProcesoPagoTramiteAlumno',Json);
+    if(this.isBrowser){
+      console.log(Json)
+      return this.http.post<any>(this.urlBase+'/PreProcesoPagoTramiteAlumno',Json);
+    }else{
+      return EMPTY;
+    }
   }
   public ValidarProcesoPagoCuotaAlumnoOpenPAy(Json:RegistroRespuestaPreProcesoPagoDTO):Observable<any>{
-    console.log(Json)
-    return this.http.post<any>(this.urlBase+'/ValidarProcesoPagoCuotaAlumnoOpenPAy',Json);
+    if(this.isBrowser){
+      console.log(Json)
+      return this.http.post<any>(this.urlBase+'/ValidarProcesoPagoCuotaAlumnoOpenPAy',Json);
+    }else{
+      return EMPTY;
+    }
   }
 }

@@ -11,6 +11,7 @@ export class TemasRelacionadosService {
   public urlBase=environment.url_api+'TemasRelacionados';
   constructor(private http: HttpClient) { }
   public TemasRelacionados(ValorTema:number,Nombre:string):Observable<any>{
+    //este es meta
     return this.http.post<any>(this.urlBase+'/TemasRelacionados?ValorTema='+ValorTema+'&Nombre='+Nombre,{headers:new HttpHeaders});
   }
 }

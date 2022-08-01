@@ -1,5 +1,5 @@
 
-import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Basic, CardProgramasDTO } from 'src/app/Core/Models/BasicDTO';
@@ -19,6 +19,7 @@ import { HelperService as Help} from 'src/app/Core/Shared/Services/helper.servic
 import { Title } from '@angular/platform-browser';
 import { SeoService } from 'src/app/Core/Shared/Services/seo.service';
 import { Router } from '@angular/router';
+import { Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-whitepapers',
@@ -26,7 +27,8 @@ import { Router } from '@angular/router';
   styleUrls: ['./whitepapers.component.scss'],
   encapsulation: ViewEncapsulation.None,
 })
-export class WhitepapersComponent implements OnInit {
+export class WhitepapersComponent implements OnInit,OnDestroy {
+  private signal$ = new Subject();
   @ViewChild(FormularioComponent)
   form!: FormularioComponent;
   constructor(
@@ -44,6 +46,10 @@ export class WhitepapersComponent implements OnInit {
     private router:Router
 
   ) {}
+  ngOnDestroy(): void {
+    this.signal$.next(true)
+    this.signal$.complete()
+  }
   public idWeb = 0;
   public UrlWeb='';
   public Title='';
@@ -103,7 +109,7 @@ export class WhitepapersComponent implements OnInit {
   public combosPrevios:any
 
   ngOnInit(): void {
-    this.activatedRoute.params.subscribe({
+    this.activatedRoute.params.pipe(takeUntil(this.signal$)).subscribe({
       next: (x) => {
         var whitepaper = x['whitepaper'].split('-');
         this.idWeb = whitepaper[whitepaper.length - 1];
@@ -112,7 +118,7 @@ export class WhitepapersComponent implements OnInit {
         this.migaPan[3].titulo=this.Title;
       },
     });
-    this._HelperServiceP.recibirCombosPerfil.subscribe((x) => {
+    this._HelperServiceP.recibirCombosPerfil.pipe(takeUntil(this.signal$)).subscribe((x) => {
       this.combosPrevios=x.datosAlumno;
       console.log(this.combosPrevios)
       this.formularioContacto.Nombres= this.combosPrevios.nombres,
@@ -132,7 +138,7 @@ export class WhitepapersComponent implements OnInit {
   }
   ListArticuloProgramaRelacionado(id:number){
     console.log(id)
-    this._SeccionProgramaService.ListArticuloProgramaRelacionado(id).subscribe({
+    this._SeccionProgramaService.ListArticuloProgramaRelacionado(id).pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
         console.log(x)
         if(x.listaProgramaRelacionadoDTO!=null){
@@ -151,7 +157,7 @@ export class WhitepapersComponent implements OnInit {
     })
   }
   ObtenerArticuloDetalleHome(){
-    this._ArticuloService.ObtenerArticuloDetalleHome(3,this.idWeb,this.UrlWeb).subscribe({
+    this._ArticuloService.ObtenerArticuloDetalleHome(3,this.idWeb,this.UrlWeb).pipe(takeUntil(this.signal$)).subscribe({
       next:(x)=>{
         console.log(x)
 
@@ -202,7 +208,7 @@ export class WhitepapersComponent implements OnInit {
     })
   }
   ListTagArticuloRelacionadoPorIdWeb(){
-    this._TagService.ListTagArticuloRelacionadoPorIdWeb(this.idWeb).subscribe({
+    this._TagService.ListTagArticuloRelacionadoPorIdWeb(this.idWeb).pipe(takeUntil(this.signal$)).subscribe({
       next:(x)=>{
         console.log(x)
         this.tags=x.listaTagDTO
@@ -238,7 +244,7 @@ export class WhitepapersComponent implements OnInit {
       this.DatosEnvioFormulario.NombreWhitePaper=this.Title;
       this.DatosEnvioFormulario.urlWhitePaper=this.urlDocumento;
       console.log(this.DatosEnvioFormulario)
-      this._ArticuloService.EnviarFormulario(this.DatosEnvioFormulario).subscribe({
+      this._ArticuloService.EnviarFormulario(this.DatosEnvioFormulario).pipe(takeUntil(this.signal$)).subscribe({
         next: (x) => {
           console.log(x);
         },
@@ -249,7 +255,7 @@ export class WhitepapersComponent implements OnInit {
     }
   }
   ObtenerCombosPortal(){
-    this._DatosPortalService.ObtenerCombosPortal().subscribe({
+    this._DatosPortalService.ObtenerCombosPortal().pipe(takeUntil(this.signal$)).subscribe({
       next:(x)=>{
         console.log(x);
         this.fileds.forEach(r=>{
@@ -297,7 +303,7 @@ export class WhitepapersComponent implements OnInit {
     this.initValues = true;
   }
   GetRegionesPorPais(idPais:number){
-    this._RegionService.ObtenerCiudadesPorPais(idPais).subscribe({
+    this._RegionService.ObtenerCiudadesPorPais(idPais).pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
         this.fileds.forEach(r=>{
           if(r.nombre=='IdRegion'){

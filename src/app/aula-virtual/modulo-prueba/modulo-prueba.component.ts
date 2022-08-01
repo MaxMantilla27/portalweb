@@ -1,6 +1,7 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { MatTabChangeEvent } from '@angular/material/tabs';
 import { ActivatedRoute } from '@angular/router';
+import { Subject, takeUntil } from 'rxjs';
 import { ParametrosEstructuraEspecificaDTO } from 'src/app/Core/Models/EstructuraEspecificaDTO';
 import { CursoPadrePruebaDTO } from 'src/app/Core/Models/ListadoProgramaContenidoPruebaDTO';
 import { ProgramaContenidoService } from 'src/app/Core/Shared/Services/ProgramaContenido/programa-contenido.service';
@@ -13,13 +14,17 @@ import { SessionStorageService } from 'src/app/Core/Shared/Services/session-stor
   encapsulation: ViewEncapsulation.None,
 
 })
-export class ModuloPruebaComponent implements OnInit {
-
+export class ModuloPruebaComponent implements OnInit,OnDestroy {
+  private signal$ = new Subject();
   constructor(
     private _ActivatedRoute:ActivatedRoute,
     private _ProgramaContenidoService:ProgramaContenidoService,
     private _SessionStorageService:SessionStorageService
   ) { }
+  ngOnDestroy(): void {
+    this.signal$.next(true)
+    this.signal$.complete()
+  }
   public migaPan = [
     {
       titulo: 'Mis Cursos prueba',
@@ -54,7 +59,7 @@ export class ModuloPruebaComponent implements OnInit {
   public estructuraCapitulo:any;
   ngOnInit(): void {
 
-    this._ActivatedRoute.params.subscribe({
+    this._ActivatedRoute.params.pipe(takeUntil(this.signal$)).subscribe({
       next: (x) => {
         this.idRegistroPrueba = parseInt(x['IdRegistroPrueba']);
         this.idPEspecificoHijo=x['idPEspecificoHijo'];
@@ -63,7 +68,7 @@ export class ModuloPruebaComponent implements OnInit {
     });
   }
   ObtenerEstructuraEspecificaCurso(){
-    this._ProgramaContenidoService.ConseguirEstructuraPorPrograma(this.programaEstructura.idPGeneral).subscribe({
+    this._ProgramaContenidoService.ConseguirEstructuraPorPrograma(this.programaEstructura.idPGeneral).pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
         console.log(this.estructuraCapitulo)
         this.estructuraCapitulo=x
@@ -76,7 +81,7 @@ export class ModuloPruebaComponent implements OnInit {
   ObtenerListadoProgramaContenido() {
 
     this._ProgramaContenidoService
-      .ObtenerListadoProgramaContenidoPrueba(this.idRegistroPrueba)
+      .ObtenerListadoProgramaContenidoPrueba(this.idRegistroPrueba).pipe(takeUntil(this.signal$))
       .subscribe({
         next: (x) => {
           this.programaEstructura = x;

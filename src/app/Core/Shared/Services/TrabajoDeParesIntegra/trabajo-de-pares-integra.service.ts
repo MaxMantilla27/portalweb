@@ -1,6 +1,7 @@
+import { isPlatformBrowser } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
+import { EMPTY, Observable } from 'rxjs';
 import { TrabajoDeParesActualizacion } from 'src/app/Core/Models/TrabajoDeParesActualizacionDTO';
 import { environment } from 'src/environments/environment';
 
@@ -8,30 +9,60 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root'
 })
 export class TrabajoDeParesIntegraService {
+  isBrowser: boolean;
   public urlBase=environment.url_api+'TrabajoDePares';
-  constructor(private http: HttpClient) { }
+  constructor(
+    private http: HttpClient,
+    @Inject(PLATFORM_ID) platformId: Object
+  ) {
+    this.isBrowser = isPlatformBrowser(platformId);
+  }
 
   public ObtenerProgramaGeneralCentroCostoDocente(IdProveedor:number,Calificados:boolean):Observable<any>{
-    return this.http.get<any>(this.urlBase+'/ObtenerProgramaGeneralCentroCostoDocente?IdProveedor='+IdProveedor+'&Calificados='+Calificados);
+    if(this.isBrowser){
+      return this.http.get<any>(this.urlBase+'/ObtenerProgramaGeneralCentroCostoDocente?IdProveedor='+IdProveedor+'&Calificados='+Calificados);
+    }else{
+      return EMPTY;
+    }
   }
   public ObtenerAlumnoTrabajoPares(IdProveedor:number,IdPEspecifico:number,IdPGeneralPadre:number):Observable<any>{
-    return this.http
-          .get<any>(
-            this.urlBase+'/ObtenerAlumnoTrabajoPares?IdProveedor='+IdProveedor+'&IdPEspecifico='+IdPEspecifico+'&IdPGeneralPadre='+IdPGeneralPadre);
+    if(this.isBrowser){
+      return this.http
+            .get<any>(
+              this.urlBase+'/ObtenerAlumnoTrabajoPares?IdProveedor='+IdProveedor+'&IdPEspecifico='+IdPEspecifico+'&IdPGeneralPadre='+IdPGeneralPadre);
+    }else{
+      return EMPTY;
+    }
   }
   public ObtenerTrabajoParesPorId(IdTarea:number):Observable<any>{
-    return this.http.get<any>(this.urlBase+'/ObtenerTrabajoParesPorId?IdTarea='+IdTarea);
+    if(this.isBrowser){
+      return this.http.get<any>(this.urlBase+'/ObtenerTrabajoParesPorId?IdTarea='+IdTarea);
+    }else{
+      return EMPTY;
+    }
   }
   public ListadoProgramasDocenteFiltrado():Observable<any>{
-    return this.http.get<any>(this.urlBase+'/ListadoProgramasDocenteFiltrado');
+    if(this.isBrowser){
+      return this.http.get<any>(this.urlBase+'/ListadoProgramasDocenteFiltrado');
+    }else{
+      return EMPTY;
+    }
 
   }
   public ListadoAlumnosCalificarPorPespecificoCongelado(IdPEspecifico:number):Observable<any>{
-    return this.http.get<any>(this.urlBase+'/ListadoAlumnosCalificarPorPespecificoCongelado?IdPEspecifico='+IdPEspecifico);
+    if(this.isBrowser){
+      return this.http.get<any>(this.urlBase+'/ListadoAlumnosCalificarPorPespecificoCongelado?IdPEspecifico='+IdPEspecifico);
+    }else{
+      return EMPTY;
+    }
   }
 
   public ListadoActividadesCalificablesDocentePorCurso(idTarea:number ){
-    return this.http.get<any>(this.urlBase+'/ListadoActividadesCalificablesDocentePorCurso?IdTarea='+idTarea);
+    if(this.isBrowser){
+      return this.http.get<any>(this.urlBase+'/ListadoActividadesCalificablesDocentePorCurso?IdTarea='+idTarea);
+    }else{
+      return EMPTY;
+    }
 
   }
 }

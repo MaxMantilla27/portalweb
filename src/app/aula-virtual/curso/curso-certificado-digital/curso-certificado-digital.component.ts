@@ -1,4 +1,5 @@
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges } from '@angular/core';
+import { pipe, Subject, takeUntil } from 'rxjs';
 import { CertificadoIntegraService } from 'src/app/Core/Shared/Services/CertificadoIntegra/certificado-integra.service';
 import { SnackBarServiceService } from 'src/app/Core/Shared/Services/SnackBarService/snack-bar-service.service';
 
@@ -7,12 +8,16 @@ import { SnackBarServiceService } from 'src/app/Core/Shared/Services/SnackBarSer
   templateUrl: './curso-certificado-digital.component.html',
   styleUrls: ['./curso-certificado-digital.component.scss']
 })
-export class CursoCertificadoDigitalComponent implements OnInit {
-
+export class CursoCertificadoDigitalComponent implements OnInit,OnDestroy {
+  private signal$ = new Subject();
   constructor(
     private _CertificadoIntegraService:CertificadoIntegraService,
     private _SnackBarServiceService:SnackBarServiceService,
   ) { }
+  ngOnDestroy(): void {
+    this.signal$.next(true)
+    this.signal$.complete()
+  }
 
   @Input() datosCertificado:any;
   @Input() curso:any;
@@ -25,7 +30,9 @@ export class CursoCertificadoDigitalComponent implements OnInit {
   GenerarCertificadoPorAlumnoIdMatriculaCabecera(){
     console.log(1)
     this.charge=true
-    this._CertificadoIntegraService.GenerarCertificadoPorAlumnoIdMatriculaCabecera(this.datosCertificado.idMatriculaCabecera).subscribe({
+    this._CertificadoIntegraService.GenerarCertificadoPorAlumnoIdMatriculaCabecera(this.datosCertificado.idMatriculaCabecera)
+    .pipe(takeUntil(this.signal$))
+    .subscribe({
       next:x=>{
         console.log(x)
         this.charge=false
@@ -41,7 +48,9 @@ export class CursoCertificadoDigitalComponent implements OnInit {
   GenerarCertificadoPorAlumnoPortalWebPorIdMatricula(){
     console.log(1)
     this.charge=true
-    this._CertificadoIntegraService.GenerarCertificadoPorAlumnoPortalWebPorIdMatricula(this.datosCertificado.idMatriculaCabecera).subscribe({
+    this._CertificadoIntegraService.GenerarCertificadoPorAlumnoPortalWebPorIdMatricula(this.datosCertificado.idMatriculaCabecera)
+    .pipe(takeUntil(this.signal$))
+    .subscribe({
       next:x=>{
         console.log(x)
         this.charge=false

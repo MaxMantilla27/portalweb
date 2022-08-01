@@ -1,6 +1,7 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { Router } from '@angular/router';
+import { Subject, takeUntil } from 'rxjs';
 import { CarreraProfesionalTecnicaDTO } from 'src/app/Core/Models/ProgramaDTO';
 import { CarreraProfesionalService } from 'src/app/Core/Shared/Services/Carrera/carrera-profesional.service';
 import { SeoService } from 'src/app/Core/Shared/Services/seo.service';
@@ -11,7 +12,8 @@ import { SessionStorageService } from 'src/app/Core/Shared/Services/session-stor
   templateUrl: './carreras-profesionales.component.html',
   styleUrls: ['./carreras-profesionales.component.scss'],
 })
-export class CarrerasProfesionalesComponent implements OnInit {
+export class CarrerasProfesionalesComponent implements OnInit ,OnDestroy{
+  private signal$ = new Subject();
   public carreras: Array<CarreraProfesionalTecnicaDTO> = [];
   public encabezado: any = {};
   public confs: Object = {};
@@ -23,6 +25,10 @@ export class CarrerasProfesionalesComponent implements OnInit {
     private router: Router,
     private _SessionStorageService: SessionStorageService
   ) {}
+  ngOnDestroy(): void {
+    this.signal$.next(true)
+    this.signal$.complete()
+  }
 
   ngOnInit(): void {
     this.getCarreras();
@@ -91,7 +97,7 @@ export class CarrerasProfesionalesComponent implements OnInit {
     }
   }
   getCarreras() {
-    this._CarreraProfesionalService.GetCarrerasVista(11).subscribe({
+    this._CarreraProfesionalService.GetCarrerasVista(11).pipe(takeUntil(this.signal$)).subscribe({
       next: (x) => {
         this.carreras = x.listaProfesionVistaDTO.map(function (carrera: any) {
           carrera.imagen =

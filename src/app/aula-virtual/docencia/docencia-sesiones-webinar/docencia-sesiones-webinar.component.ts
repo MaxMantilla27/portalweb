@@ -1,4 +1,5 @@
-import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
+import { Subject, takeUntil } from 'rxjs';
 import { ProgramaEspecificoIntegraService } from 'src/app/Core/Shared/Services/ProgramaEspecificoIntegra/programa-especifico-integra.service';
 
 @Component({
@@ -6,7 +7,8 @@ import { ProgramaEspecificoIntegraService } from 'src/app/Core/Shared/Services/P
   templateUrl: './docencia-sesiones-webinar.component.html',
   styleUrls: ['./docencia-sesiones-webinar.component.scss']
 })
-export class DocenciaSesionesWebinarComponent implements OnInit ,OnChanges{
+export class DocenciaSesionesWebinarComponent implements OnInit ,OnChanges,OnDestroy{
+  private signal$ = new Subject();
   columnHeader = {
     'PEspecificoPadre': 'Nombre Programa',
     'CursoNombre': 'Nombre Curso',
@@ -24,6 +26,10 @@ export class DocenciaSesionesWebinarComponent implements OnInit ,OnChanges{
   constructor(
     private _ProgramaEspecificoIntegraService:ProgramaEspecificoIntegraService
   ) { }
+  ngOnDestroy(): void {
+    this.signal$.next(true)
+    this.signal$.complete()
+  }
   @Input() IdProveedor=0;
   ngOnInit(): void {
   }
@@ -34,7 +40,7 @@ export class DocenciaSesionesWebinarComponent implements OnInit ,OnChanges{
     }
   }
   ObtenerSesionesOnlineWebinarPorProveedor(){
-    this._ProgramaEspecificoIntegraService.ObtenerSesionesOnlineWebinarPorProveedor(this.IdProveedor).subscribe({
+    this._ProgramaEspecificoIntegraService.ObtenerSesionesOnlineWebinarPorProveedor(this.IdProveedor).pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
         this.tableData=x
         this.tableData.forEach((e:any) => {

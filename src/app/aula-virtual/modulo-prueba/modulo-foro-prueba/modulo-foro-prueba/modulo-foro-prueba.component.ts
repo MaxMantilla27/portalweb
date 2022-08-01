@@ -1,4 +1,5 @@
-import { Component, Input, OnInit, SimpleChanges } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
+import { Subject, takeUntil } from 'rxjs';
 import { AvatarService } from 'src/app/Core/Shared/Services/Avatar/avatar.service';
 import { ForoCursoService } from 'src/app/Core/Shared/Services/ForoCurso/foro-curso.service';
 
@@ -7,12 +8,16 @@ import { ForoCursoService } from 'src/app/Core/Shared/Services/ForoCurso/foro-cu
   templateUrl: './modulo-foro-prueba.component.html',
   styleUrls: ['./modulo-foro-prueba.component.scss']
 })
-export class ModuloForoPruebaComponent implements OnInit {
-
+export class ModuloForoPruebaComponent implements OnInit,OnDestroy {
+  private signal$ = new Subject();
   constructor(
     private _ForoCursoService: ForoCursoService,
     private _AvatarService: AvatarService
   ) {}
+  ngOnDestroy(): void {
+    this.signal$.next(true)
+    this.signal$.complete()
+  }
 
   @Input() IdPgeneral = 0;
   @Input() IdPprincipal = 0;
@@ -36,7 +41,7 @@ export class ModuloForoPruebaComponent implements OnInit {
     }
   }
   ObtenerForoCurso() {
-    this._ForoCursoService.ObtenerForoCurso(this.IdPgeneral).subscribe({
+    this._ForoCursoService.ObtenerForoCurso(this.IdPgeneral).pipe(takeUntil(this.signal$)).subscribe({
       next: (x) => {
 
         console.log(x);

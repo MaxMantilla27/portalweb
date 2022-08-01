@@ -1,5 +1,6 @@
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { Subject, takeUntil } from 'rxjs';
 import { ParametrosCrucigramaVideoSesionDTO, ParametrosEstructuraEspecificaDTO, ParametrosVideoSesionDTO } from 'src/app/Core/Models/EstructuraEspecificaDTO';
 import { CrucigramaService } from 'src/app/Core/Shared/Services/Crucigrama/crucigrama.service';
 import { VideoSesionService } from 'src/app/Core/Shared/Services/VideoSesion/video-sesion.service';
@@ -11,7 +12,8 @@ import { RegistrarErrorComponent } from './registrar-error/registrar-error/regis
   templateUrl: './sesion-video.component.html',
   styleUrls: ['./sesion-video.component.scss']
 })
-export class SesionVideoComponent implements OnInit,OnChanges {
+export class SesionVideoComponent implements OnInit,OnChanges,OnDestroy {
+  private signal$ = new Subject();
 
   constructor(
     private _VideoSesionService:VideoSesionService,
@@ -56,6 +58,10 @@ export class SesionVideoComponent implements OnInit,OnChanges {
     IdPGeneral:this.json.IdPGeneralHijo,
     IdSesion:this.idSesion,
   }
+  ngOnDestroy(): void {
+    this.signal$.next(true)
+    this.signal$.complete()
+  }
   ngOnInit(): void {
     // if(this.charge==true){
     //   this.ObtenerVideoProgramaCapacitacionSesion()
@@ -80,7 +86,7 @@ export class SesionVideoComponent implements OnInit,OnChanges {
     }
   }
   ObtenerVideoProgramaCapacitacionSesion(){
-    this._VideoSesionService.ObtenerVideoProgramaCapacitacionSesion(this.parametros).subscribe({
+    this._VideoSesionService.ObtenerVideoProgramaCapacitacionSesion(this.parametros).pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
         console.log(x)
         this.videoData=x;
@@ -99,7 +105,7 @@ export class SesionVideoComponent implements OnInit,OnChanges {
     })
   }
   ObtenerCrucigramaProgramaCapacitacionSesion(){
-    this._CrucigramaService.ObtenerCrucigramaProgramaCapacitacionSesion(this.crucigrama).subscribe({
+    this._CrucigramaService.ObtenerCrucigramaProgramaCapacitacionSesion(this.crucigrama).pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
         console.log(x)
         this.crucigramaData=x;
@@ -121,7 +127,7 @@ export class SesionVideoComponent implements OnInit,OnChanges {
       panelClass: 'custom-dialog-container',
     });
 
-    dialogRef.afterClosed().subscribe((result) => {
+    dialogRef.afterClosed().pipe(takeUntil(this.signal$)).subscribe((result) => {
       console.log('The dialog was closed');
     });
   }

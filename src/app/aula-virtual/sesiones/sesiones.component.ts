@@ -1,6 +1,7 @@
 import {
   Component,
   OnChanges,
+  OnDestroy,
   OnInit,
   SimpleChanges,
   ViewEncapsulation,
@@ -8,6 +9,7 @@ import {
 import { fakeAsync } from '@angular/core/testing';
 import { MatTabChangeEvent } from '@angular/material/tabs';
 import { ActivatedRoute } from '@angular/router';
+import { Subject, takeUntil } from 'rxjs';
 import { ParametrosEstructuraEspecificaDTO } from 'src/app/Core/Models/EstructuraEspecificaDTO';
 import { ProgramaContenidoService } from 'src/app/Core/Shared/Services/ProgramaContenido/programa-contenido.service';
 import { SessionStorageService } from 'src/app/Core/Shared/Services/session-storage.service';
@@ -18,7 +20,8 @@ import { SessionStorageService } from 'src/app/Core/Shared/Services/session-stor
   styleUrls: ['./sesiones.component.scss'],
   encapsulation: ViewEncapsulation.None,
 })
-export class SesionesComponent implements OnInit {
+export class SesionesComponent implements OnInit,OnDestroy {
+  private signal$ = new Subject();
   constructor(
     private _ActivatedRoute: ActivatedRoute,
     private _ProgramaContenidoService: ProgramaContenidoService,
@@ -52,8 +55,12 @@ export class SesionesComponent implements OnInit {
   public idSesion = 0;
   public tipo = 0;
   public nextCapter = { name: '', time: '' };
+  ngOnDestroy(): void {
+    this.signal$.next(true)
+    this.signal$.complete()
+  }
   ngOnInit(): void {
-    this._ActivatedRoute.params.subscribe({
+    this._ActivatedRoute.params.pipe(takeUntil(this.signal$)).subscribe({
       next: (x) => {
         this.idMatricula = parseInt(x['IdMatricula']);
         this.idPEspecificoHijo = x['idPEspecificoHijo'];
@@ -293,7 +300,7 @@ export class SesionesComponent implements OnInit {
   }
   ObtenerEstructuraEspecificaCurso() {
     this._ProgramaContenidoService
-      .ObtenerEstructuraEspecificaCurso(this.json)
+      .ObtenerEstructuraEspecificaCurso(this.json).pipe(takeUntil(this.signal$))
       .subscribe({
         next: (x) => {
           console.log(x);
@@ -818,7 +825,7 @@ export class SesionesComponent implements OnInit {
   }
   ObtenerListadoProgramaContenido() {
     this._ProgramaContenidoService
-      .ObtenerListadoProgramaContenido(this.idMatricula)
+      .ObtenerListadoProgramaContenido(this.idMatricula).pipe(takeUntil(this.signal$))
       .subscribe({
         next: (x) => {
           console.log(x);

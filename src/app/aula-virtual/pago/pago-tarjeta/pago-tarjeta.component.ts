@@ -1,5 +1,6 @@
-import { Component, Inject, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, Inject, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { Subject, takeUntil } from 'rxjs';
 import { ImagenTarjetas } from 'src/app/Core/Shared/ImagenTarjetas';
 import { MedioPagoActivoPasarelaService } from 'src/app/Core/Shared/Services/MedioPagoActivoPasarela/medio-pago-activo-pasarela.service';
 import { SnackBarServiceService } from 'src/app/Core/Shared/Services/SnackBarService/snack-bar-service.service';
@@ -10,7 +11,8 @@ import { SnackBarServiceService } from 'src/app/Core/Shared/Services/SnackBarSer
   styleUrls: ['./pago-tarjeta.component.scss'],
   encapsulation: ViewEncapsulation.None,
 })
-export class PagoTarjetaComponent implements OnInit {
+export class PagoTarjetaComponent implements OnInit ,OnDestroy{
+  private signal$ = new Subject();
 
   constructor(
 
@@ -24,13 +26,17 @@ export class PagoTarjetaComponent implements OnInit {
   public medioPago=''
   public imgMedioPago=''
   public medioCodigo=''
+  ngOnDestroy(): void {
+    this.signal$.next(true)
+    this.signal$.complete()
+  }
   ngOnInit(): void {
     if(this.data.idMatricula!=undefined ){
       this.MedioPagoPasarelaPortalCronograma()
     }
   }
   MedioPagoPasarelaPortalCronograma(){
-    this._MedioPagoActivoPasarelaService.MedioPagoPasarelaPortalCronograma(this.data.idMatricula).subscribe({
+    this._MedioPagoActivoPasarelaService.MedioPagoPasarelaPortalCronograma(this.data.idMatricula).pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
         console.log(x)
         this.tarjetas=x

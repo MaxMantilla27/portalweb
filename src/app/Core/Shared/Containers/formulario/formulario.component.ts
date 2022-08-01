@@ -7,6 +7,7 @@ import {
   Inject,
   Input,
   OnChanges,
+  OnDestroy,
   OnInit,
   Output,
   PLATFORM_ID,
@@ -15,6 +16,7 @@ import {
   ViewEncapsulation,
 } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Subject, takeUntil } from 'rxjs';
 import { Basic } from 'src/app/Core/Models/BasicDTO';
 import { formulario } from 'src/app/Core/Models/Formulario';
 import { HelperService } from '../../Services/helper.service';
@@ -26,7 +28,8 @@ import { SessionStorageService } from '../../Services/session-storage.service';
   styleUrls: ['./formulario.component.scss'],
   encapsulation: ViewEncapsulation.None,
 })
-export class FormularioComponent implements OnChanges, OnInit {
+export class FormularioComponent implements OnChanges, OnInit,OnDestroy {
+  private signal$ = new Subject();
   isBrowser: boolean;
   constructor(
     private formBuilder: FormBuilder,
@@ -38,6 +41,10 @@ export class FormularioComponent implements OnChanges, OnInit {
     this.isBrowser = isPlatformBrowser(platformId);
   }
 
+  ngOnDestroy(): void {
+    this.signal$.next(true)
+    this.signal$.complete()
+  }
   userForm!: FormGroup;
 
   @Input()
@@ -76,7 +83,7 @@ export class FormularioComponent implements OnChanges, OnInit {
   //later in the code
   fields: any = {};
   ngOnInit(): void {
-    this._HelperService.recibirDataPais.subscribe({
+    this._HelperService.recibirDataPais.pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
         this.paise=x;
         var codigoISo=this._SessionStorageService.SessionGetValue('ISO_PAIS');
@@ -112,7 +119,7 @@ export class FormularioComponent implements OnChanges, OnInit {
     });
     this.AddItemsForm();
 
-    this.userForm.valueChanges.subscribe(() => {
+    this.userForm.valueChanges.pipe(takeUntil(this.signal$)).subscribe(() => {
       this.OnValid.emit(this.userForm.valid);
     });
     this.fiels.forEach((x:any) =>{

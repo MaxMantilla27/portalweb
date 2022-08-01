@@ -94,7 +94,7 @@ export class DocenciaGestionNotasComponent implements OnInit, OnChanges, OnDestr
       disableClose: true
     });
 
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().pipe(takeUntil(this.signal$)).subscribe(result => {
       this.OnRecharge.emit();
       //this.GenerarReporteFiltradoPortal();
     });

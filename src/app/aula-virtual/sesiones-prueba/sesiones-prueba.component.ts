@@ -1,6 +1,7 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { MatTabChangeEvent } from '@angular/material/tabs';
 import { ActivatedRoute } from '@angular/router';
+import { Subject, takeUntil } from 'rxjs';
 import { ParametrosEstructuraEspecificaDTO } from 'src/app/Core/Models/EstructuraEspecificaDTO';
 import { CursoPadrePruebaDTO } from 'src/app/Core/Models/ListadoProgramaContenidoPruebaDTO';
 import { ProgramaContenidoService } from 'src/app/Core/Shared/Services/ProgramaContenido/programa-contenido.service';
@@ -13,7 +14,8 @@ import { SessionStorageService } from 'src/app/Core/Shared/Services/session-stor
   encapsulation: ViewEncapsulation.None,
 
 })
-export class SesionesPruebaComponent implements OnInit {
+export class SesionesPruebaComponent implements OnInit,OnDestroy {
+  private signal$ = new Subject();
 
   constructor(
     private _ActivatedRoute: ActivatedRoute,
@@ -57,8 +59,12 @@ export class SesionesPruebaComponent implements OnInit {
   public idcapitulo = 0;
   public idSesion = 0;
   public tipo = 0;
+  ngOnDestroy(): void {
+    this.signal$.next(true)
+    this.signal$.complete()
+  }
   ngOnInit(): void {
-    this._ActivatedRoute.params.subscribe({
+    this._ActivatedRoute.params.pipe(takeUntil(this.signal$)).subscribe({
       next: (x) => {
         this.idRegistroPrueba = parseInt(x['IdRegistroPrueba']);
         this.idPEspecificoHijo = x['idPEspecificoHijo'];
@@ -93,7 +99,7 @@ export class SesionesPruebaComponent implements OnInit {
     ];
   }
   ObtenerEstructuraEspecificaCurso(){
-    this._ProgramaContenidoService.ConseguirEstructuraPorPrograma(this.programaEstructura.idPGeneral).subscribe({
+    this._ProgramaContenidoService.ConseguirEstructuraPorPrograma(this.programaEstructura.idPGeneral).pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
         this.estructuraCapitulo=x
         console.log(this.estructuraCapitulo)
@@ -107,7 +113,7 @@ export class SesionesPruebaComponent implements OnInit {
 
   ObtenerListadoProgramaContenido(){
     this._ProgramaContenidoService
-      .ObtenerListadoProgramaContenidoPrueba(this.idRegistroPrueba)
+      .ObtenerListadoProgramaContenidoPrueba(this.idRegistroPrueba).pipe(takeUntil(this.signal$))
       .subscribe({
         next: (x) => {
           this.programaEstructura = x;

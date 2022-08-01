@@ -1,5 +1,6 @@
-import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { Subject, takeUntil } from 'rxjs';
 import { VigenciaAccesoPruebaComponent } from 'src/app/aula-virtual/mis-cursos/vigencia-acceso-prueba/vigencia-acceso-prueba/vigencia-acceso-prueba.component';
 import { CardMatriculasPruebaDTO } from 'src/app/Core/Models/BasicDTO';
 
@@ -9,12 +10,17 @@ import { CardMatriculasPruebaDTO } from 'src/app/Core/Models/BasicDTO';
   styleUrls: ['./card-matriculas-prueba.component.scss'],
   encapsulation: ViewEncapsulation.None,
 })
-export class CardMatriculasPruebaComponent implements OnInit {
+export class CardMatriculasPruebaComponent implements OnInit,OnDestroy {
+  private signal$ = new Subject();
 
   constructor(
     public dialog: MatDialog
 
   ) { }
+  ngOnDestroy(): void {
+    this.signal$.next(true)
+    this.signal$.complete()
+  }
   @Input() cardContent:CardMatriculasPruebaDTO={Img:'',Title:'',ImgAlt:'',Tipo:1,Url:'',Valido:false};
   ngOnInit(): void {
   }
@@ -28,7 +34,7 @@ export class CardMatriculasPruebaComponent implements OnInit {
       panelClass: 'dialog-programas-prueba',
     });
 
-    dialogRef.afterClosed().subscribe((result) => {
+    dialogRef.afterClosed().pipe(takeUntil(this.signal$)).subscribe((result) => {
       console.log('The dialog was closed');
     });
   }

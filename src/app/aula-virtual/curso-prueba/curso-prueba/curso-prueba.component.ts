@@ -1,6 +1,7 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { MatTabChangeEvent } from '@angular/material/tabs';
 import { ActivatedRoute } from '@angular/router';
+import { Subject, takeUntil } from 'rxjs';
 import { ParametrosEstructuraEspecificaDTO } from 'src/app/Core/Models/EstructuraEspecificaDTO';
 import { CursoPadreDTO } from 'src/app/Core/Models/ListadoProgramaContenidoDTO';
 import { CursoPadrePruebaDTO } from 'src/app/Core/Models/ListadoProgramaContenidoPruebaDTO';
@@ -16,7 +17,8 @@ import { SessionStorageService } from 'src/app/Core/Shared/Services/session-stor
   styleUrls: ['./curso-prueba.component.scss'],
   encapsulation: ViewEncapsulation.None,
 })
-export class CursoPruebaComponent implements OnInit {
+export class CursoPruebaComponent implements OnInit,OnDestroy {
+  private signal$ = new Subject();
 
   constructor(
     private _HelperService: HelperService,
@@ -26,6 +28,10 @@ export class CursoPruebaComponent implements OnInit {
     private _SessionStorageService:SessionStorageService,
     private _cuentaService: CuentaService
   ) {}
+  ngOnDestroy(): void {
+    this.signal$.next(true)
+    this.signal$.complete()
+  }
   public tabIndex = 0;
   public IndicacionActive = false;
   public migaPan = [
@@ -52,14 +58,14 @@ export class CursoPruebaComponent implements OnInit {
   public videoCrucigramas ='https://repositorioweb.blob.core.windows.net/repositorioweb/aulavirtual/guias/crucigrama/crucigrama-hombre.mp4'
 
   ngOnInit(): void {
-    this._ActivatedRoute.params.subscribe({
+    this._ActivatedRoute.params.pipe(takeUntil(this.signal$)).subscribe({
       next: (x) => {
         this.idRegistroPrueba = parseInt(x['IdRegistroPrueba']);
         console.log(this.idRegistroPrueba)
         this.ObtenerListadoProgramaContenidoPrueba();
       },
     });
-    this._HelperService.recibirCombosPerfil.subscribe({
+    this._HelperService.recibirCombosPerfil.pipe(takeUntil(this.signal$)).subscribe({
       next: (x) => {
 
         this.datos = x;
@@ -92,6 +98,7 @@ export class CursoPruebaComponent implements OnInit {
   ObtenerListadoProgramaContenidoPrueba() {
     this._ProgramaContenidoService
       .ObtenerListadoProgramaContenidoPrueba(this.idRegistroPrueba)
+      .pipe(takeUntil(this.signal$))
       .subscribe({
         next: (x) => {
           console.log(x)

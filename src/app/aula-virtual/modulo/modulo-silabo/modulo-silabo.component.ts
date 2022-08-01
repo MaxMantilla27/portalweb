@@ -1,4 +1,5 @@
-import { Component, Input, OnChanges, OnInit, SimpleChanges, ViewEncapsulation } from '@angular/core';
+import { Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges, ViewEncapsulation } from '@angular/core';
+import { Subject, takeUntil } from 'rxjs';
 import { SilaboService } from 'src/app/Core/Shared/Services/Silabo/silabo.service';
 
 @Component({
@@ -7,9 +8,14 @@ import { SilaboService } from 'src/app/Core/Shared/Services/Silabo/silabo.servic
   styleUrls: ['./modulo-silabo.component.scss'],
   encapsulation: ViewEncapsulation.None,
 })
-export class ModuloSilaboComponent implements OnInit,OnChanges {
+export class ModuloSilaboComponent implements OnInit,OnChanges,OnDestroy {
+  private signal$ = new Subject();
 
   constructor(private _SilaboService:SilaboService) { }
+  ngOnDestroy(): void {
+    this.signal$.next(true)
+    this.signal$.complete()
+  }
   @Input() IdPgeneral=0
   @Input() Estructura:any=[]
   @Input() Capitulo='';
@@ -25,7 +31,7 @@ export class ModuloSilaboComponent implements OnInit,OnChanges {
 
   }
   ObtenerSilaboCurso(){
-    this._SilaboService.ObtenerSilaboCurso(this.IdPgeneral).subscribe({
+    this._SilaboService.ObtenerSilaboCurso(this.IdPgeneral).pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
         console.log(x);
         this.listaSeccionesContenidosDocumento=x.listaSeccionesContenidosDocumento;

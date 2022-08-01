@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Subject, takeUntil } from 'rxjs';
 import { ArticuloDTO } from 'src/app/Core/Models/ArticuloDTO';
 import { CardProgramasDTO } from 'src/app/Core/Models/BasicDTO';
 import { SeoService } from 'src/app/Core/Shared/Services/seo.service';
@@ -11,7 +12,8 @@ import { TemasRelacionadosService } from 'src/app/Core/Shared/Services/TemasRela
   templateUrl: './tags.component.html',
   styleUrls: ['./tags.component.scss']
 })
-export class TagsComponent implements OnInit {
+export class TagsComponent implements OnInit,OnDestroy {
+  private signal$ = new Subject();
 
   constructor(
     private router: Router,
@@ -20,6 +22,11 @@ export class TagsComponent implements OnInit {
     private _SeoService:SeoService,
     private title:Title
   ) { }
+
+  ngOnDestroy(): void {
+    this.signal$.next(true);
+    this.signal$.complete();
+  }
   public tipo=1
   public nombre='';
   public tagTitle=''
@@ -52,7 +59,7 @@ export class TagsComponent implements OnInit {
       this.tipo=3
       this.migaPan[1].titulo='Tag'
     }
-    this.activatedRoute.params.subscribe({
+    this.activatedRoute.params.pipe(takeUntil(this.signal$)).subscribe({
       next:(x)=>{
           this.nombre=x['nombre'];
           this.tagTitle=this.nombre.split('-').join(' ')
@@ -62,7 +69,7 @@ export class TagsComponent implements OnInit {
     })
   }
   TemasRelacionados(){
-    this._TemasRelacionadosService.TemasRelacionados(this.tipo,this.nombre).subscribe({
+    this._TemasRelacionadosService.TemasRelacionados(this.tipo,this.nombre).pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
         console.log(x);
         if(x.parametroSeoProgramaDTO!=undefined){

@@ -1,6 +1,7 @@
-import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
+import { Component, Inject, OnDestroy, OnInit, PLATFORM_ID } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Subject, takeUntil } from 'rxjs';
 import { LandingPageService } from 'src/app/Core/Shared/Services/LandingPage/landing-page.service';
 import { SessionStorageService } from 'src/app/Core/Shared/Services/session-storage.service';
 import { LandingPageComponent } from '../../landing-page.component';
@@ -10,7 +11,8 @@ import { LandingPageComponent } from '../../landing-page.component';
   templateUrl: './landing-page-interceptor.component.html',
   styleUrls: ['./landing-page-interceptor.component.scss']
 })
-export class LandingPageInterceptorComponent implements OnInit {
+export class LandingPageInterceptorComponent implements OnInit,OnDestroy {
+  private signal$ = new Subject();
 
   constructor(
     private router: Router,
@@ -23,13 +25,17 @@ export class LandingPageInterceptorComponent implements OnInit {
     @Inject(PLATFORM_ID) platformId: Object
 
   ) { }
+  ngOnDestroy(): void {
+    this.signal$.next(true)
+    this.signal$.complete()
+  }
   public IdFormulario=0;
   public valorPrograma:any;
   public rutaLandingPage='';
   public rutaVariable='';
   public nombreProgramaLandingPage=''
   ngOnInit(): void {
-    this.activatedRoute.queryParams.subscribe({
+    this.activatedRoute.queryParams.pipe(takeUntil(this.signal$)).subscribe({
       next:(x)=>{
         console.log(x)
         this.IdFormulario=x['IdFormulario'];
@@ -44,7 +50,7 @@ export class LandingPageInterceptorComponent implements OnInit {
     });
   }
   ObtenerFormularioLandingPage(){
-    this._LandingPageService.ObtenerFormularioLandingPage(this.IdFormulario).subscribe({
+    this._LandingPageService.ObtenerFormularioLandingPage(this.IdFormulario).pipe(takeUntil(this.signal$)).subscribe({
       next: x=>{
         if(x!=undefined)
         {
@@ -77,7 +83,7 @@ export class LandingPageInterceptorComponent implements OnInit {
       panelClass: 'dialog-landing-page',
     });
 
-    dialogRef.afterClosed().subscribe((result) => {
+    dialogRef.afterClosed().pipe(takeUntil(this.signal$)).subscribe((result) => {
     });
   }
 

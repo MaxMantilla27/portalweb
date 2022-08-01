@@ -1,6 +1,7 @@
-import { Component, EventEmitter, Inject, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Inject, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { Subject, takeUntil } from 'rxjs';
 import { ErrorVideoPlayerDTO } from 'src/app/Core/Models/ErrorVideoPlayerDTO';
 import { VideoSesionService } from 'src/app/Core/Shared/Services/VideoSesion/video-sesion.service';
 import { SesionVideoComponent } from '../../sesion-video.component';
@@ -10,7 +11,8 @@ import { SesionVideoComponent } from '../../sesion-video.component';
   templateUrl: './registrar-error.component.html',
   styleUrls: ['./registrar-error.component.scss']
 })
-export class RegistrarErrorComponent implements OnInit {
+export class RegistrarErrorComponent implements OnInit,OnDestroy {
+  private signal$ = new Subject();
   public userForm: FormGroup = new FormGroup({});
   constructor(
     private fb: FormBuilder,
@@ -32,6 +34,10 @@ export class RegistrarErrorComponent implements OnInit {
     descripcion:'',
     comentario:''
   }
+  ngOnDestroy(): void {
+    this.signal$.next(true)
+    this.signal$.complete()
+  }
   ngOnInit(): void {
   }
 
@@ -42,7 +48,7 @@ export class RegistrarErrorComponent implements OnInit {
     this.RegistroErrorVideo.ordenSesion=this.data.IdSesion,
     this.RegistroErrorVideo.descripcion=this.userForm.get('Descripcion')?.value;
     this.RegistroErrorVideo.comentario=this.userForm.get('Comentario')?.value;
-    this._VideoSesionService.EnviarErrorVideoPlayer(this.RegistroErrorVideo).subscribe({
+    this._VideoSesionService.EnviarErrorVideoPlayer(this.RegistroErrorVideo).pipe(takeUntil(this.signal$)).subscribe({
       next: (x) => {
 
       }

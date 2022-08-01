@@ -5,6 +5,7 @@ import {
   EventEmitter,
   Input,
   OnChanges,
+  OnDestroy,
   OnInit,
   Output,
   SimpleChanges,
@@ -12,6 +13,7 @@ import {
   ViewEncapsulation,
 } from '@angular/core';
 import { CloudflareStreamComponent, CloudflareStreamService } from '@cloudflare/stream-angular';
+import { Subject, takeUntil } from 'rxjs';
 import { ParametrosEstructuraEspecificaDTO, RegistroVideoUltimaVisualizacionDTO } from 'src/app/Core/Models/EstructuraEspecificaDTO';
 import { GrupoPreguntaFiltroDTO, RegistroPreguntaDTO, ValidaRespuestaPreguntaDTO } from 'src/app/Core/Models/PreguntaInteractivaDTO';
 import { HelperService } from '../../../Services/helper.service';
@@ -25,7 +27,8 @@ declare var $:any;
   styleUrls: ['./video-brightcove.component.scss'],
   encapsulation: ViewEncapsulation.None,
 })
-export class VideoBrightcoveComponent implements OnInit, OnChanges,AfterViewInit {
+export class VideoBrightcoveComponent implements OnInit, OnChanges,AfterViewInit,OnDestroy {
+  private signal$ = new Subject();
   @ViewChild('video')
   video!: ElementRef;
   @ViewChild('videoCloud')
@@ -37,6 +40,10 @@ export class VideoBrightcoveComponent implements OnInit, OnChanges,AfterViewInit
     private _SnackBarServiceService:SnackBarServiceService,
     private _HelperService:HelperService
   ) {}
+  ngOnDestroy(): void {
+    this.signal$.next(true)
+    this.signal$.complete()
+  }
   ngAfterViewInit(): void {
   }
 
@@ -128,7 +135,7 @@ export class VideoBrightcoveComponent implements OnInit, OnChanges,AfterViewInit
   public videoFinal=''
   public videocontinuar=false
   ngOnInit(): void {
-    this._HelperService.recibirCombosPerfil.subscribe((x) => {
+    this._HelperService.recibirCombosPerfil.pipe(takeUntil(this.signal$)).subscribe((x) => {
       this.miPerfil=x
     })
   }
@@ -269,7 +276,7 @@ export class VideoBrightcoveComponent implements OnInit, OnChanges,AfterViewInit
     console.log(res)
     this.finalizarPerguntas.IdPregunta=pregun
     this.finalizarPerguntas.IdRespuesta=res
-    this._PreguntaInteractivaService.RegistrarPreguntaInteractiva(this.finalizarPerguntas).subscribe({
+    this._PreguntaInteractivaService.RegistrarPreguntaInteractiva(this.finalizarPerguntas).pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
         console.log(x)
         this.finalizado=true
@@ -284,7 +291,7 @@ export class VideoBrightcoveComponent implements OnInit, OnChanges,AfterViewInit
   }
   ValidarPreguntaInteractiva(){
     this.valPregunta=true;
-    this._PreguntaInteractivaService.ValidarPreguntaInteractiva(this.validatePregunta).subscribe({
+    this._PreguntaInteractivaService.ValidarPreguntaInteractiva(this.validatePregunta).pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
         console.log(x)
         this.preguntas[this.preguntaActual].idRespuesta=x.idRespuesta
@@ -318,7 +325,7 @@ export class VideoBrightcoveComponent implements OnInit, OnChanges,AfterViewInit
       this.paramsPreguntas.IdPgeneral=this.json.IdPGeneralHijo;
       this.paramsPreguntas.IdPEspecifico=this.json.IdPEspecificoHijo;
       this.paramsPreguntas.GrupoPregunta=this.grupo
-      this._PreguntaInteractivaService.ListaRegistroPreguntaInteractivaPorGrupo(this.paramsPreguntas).subscribe({
+      this._PreguntaInteractivaService.ListaRegistroPreguntaInteractivaPorGrupo(this.paramsPreguntas).pipe(takeUntil(this.signal$)).subscribe({
         next:x=>{
           console.log(this.preguntaActual)
           this.preguntaActual=0;
@@ -359,7 +366,6 @@ export class VideoBrightcoveComponent implements OnInit, OnChanges,AfterViewInit
     }
 
   }
-  ngOnDestroy() {}
   // +++ Build the player and place in HTML DOM +++
   changeBarra(e:any){
     this.tiempovideoinicio=e;
@@ -558,7 +564,7 @@ export class VideoBrightcoveComponent implements OnInit, OnChanges,AfterViewInit
       this.send.id=this.videoData.id==null?0:this.videoData.id
       this.send.tiempoVisualizacion=Math.floor(this.tiempoactualvideo)
       console.log(this.send)
-      this._VideoSesionService.RegistrarUltimaVisualizacionVideo(this.send).subscribe({
+      this._VideoSesionService.RegistrarUltimaVisualizacionVideo(this.send).pipe(takeUntil(this.signal$)).subscribe({
         next:x=>{
           this.tiempovideoinicioInicial=this.send.tiempoVisualizacion
           this.guardar=false

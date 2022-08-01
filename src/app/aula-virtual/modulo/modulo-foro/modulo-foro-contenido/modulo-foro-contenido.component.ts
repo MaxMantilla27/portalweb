@@ -1,5 +1,6 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Subject, takeUntil } from 'rxjs';
 import { ForoRespuestaDTO } from 'src/app/Core/Models/ForoDTO';
 import { AvatarService } from 'src/app/Core/Shared/Services/Avatar/avatar.service';
 import { ForoCursoService } from 'src/app/Core/Shared/Services/ForoCurso/foro-curso.service';
@@ -9,7 +10,8 @@ import { ForoCursoService } from 'src/app/Core/Shared/Services/ForoCurso/foro-cu
   templateUrl: './modulo-foro-contenido.component.html',
   styleUrls: ['./modulo-foro-contenido.component.scss']
 })
-export class ModuloForoContenidoComponent implements OnInit {
+export class ModuloForoContenidoComponent implements OnInit,OnDestroy {
+  private signal$ = new Subject();
   public userForm: FormGroup = new FormGroup({});
   constructor(
     private fb: FormBuilder,
@@ -18,6 +20,10 @@ export class ModuloForoContenidoComponent implements OnInit {
   ) {this.userForm =fb.group({
     RespuestaForo: ['', [Validators.required]]
    });
+  }
+  ngOnDestroy(): void {
+    this.signal$.next(true)
+    this.signal$.complete()
   }
   @Input() IdPprincipal=0;
   @Input() IdPgeneral=0;
@@ -42,7 +48,7 @@ export class ModuloForoContenidoComponent implements OnInit {
     this.ObtenerRespuestaForo();
   }
   ObtenerContenidoForo(){
-    this._ForoCursoService.ContenidoPreguntaForoCurso(this.IdPregunta).subscribe({
+    this._ForoCursoService.ContenidoPreguntaForoCurso(this.IdPregunta).pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
         this.foroContenido=x;
         this.foroContenido.forEach(x=>{
@@ -52,7 +58,7 @@ export class ModuloForoContenidoComponent implements OnInit {
     })
   }
   ObtenerRespuestaForo(){
-    this._ForoCursoService.PartialRespuestaPregunta(this.IdPgeneral,this.IdPregunta).subscribe({
+    this._ForoCursoService.PartialRespuestaPregunta(this.IdPgeneral,this.IdPregunta).pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
         this.foroRespuesta=x;
         this.foroRespuesta.forEach(x=>{
@@ -71,7 +77,7 @@ export class ModuloForoContenidoComponent implements OnInit {
     this.ForoRespuestaEnvio.contenido = this.userForm.get('RespuestaForo')?.value;;
     this.ForoRespuestaEnvio.esDocente = this.esDocente;
 
-    this._ForoCursoService.EnviarRegistroRespuestaForo(this.ForoRespuestaEnvio).subscribe({
+    this._ForoCursoService.EnviarRegistroRespuestaForo(this.ForoRespuestaEnvio).pipe(takeUntil(this.signal$)).subscribe({
       next: (x) => {
         this.ObtenerRespuestaForo()
       },
