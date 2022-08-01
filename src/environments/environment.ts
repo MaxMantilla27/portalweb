@@ -4,9 +4,9 @@
 
 export const environment = {
   production: false,
-  url_api:'https://localhost:7177/api/',
-  url_api_integra:'http://localhost:63048/api/',
-  url_portal:'http://localhost:4200/',
+  url_api:'https://api-portalweb.bsginstitute.com/api/',
+  url_api_integra:'https://integrav4-prueba-servicios.bsginstitute.com/api/',
+  url_portal:'https://angular-portal.bsginstitute.com/',
   //url_signal:'https://integrav4-signalrcore.bsginstitute.com/'
   url_signal:'https://localhost:7120/'
 };

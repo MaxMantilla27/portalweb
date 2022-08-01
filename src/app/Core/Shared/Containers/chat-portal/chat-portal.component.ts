@@ -167,7 +167,7 @@ export class ChatPortalComponent implements OnInit,OnDestroy,OnChanges {
   ConectarSocket(IdFaseOportunidadPortal?:string){
     this.hubConnection.start()
       .then((x:any) =>{
-        //this.generarLogVisitante()
+        this.generarLogVisitante()
       })
       .catch((err:any) =>console.log('Error while starting connection: ' + err));
   }
