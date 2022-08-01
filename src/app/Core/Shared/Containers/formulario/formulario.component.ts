@@ -80,6 +80,7 @@ export class FormularioComponent implements OnChanges, OnInit,OnDestroy {
   public paise:Array<any>=[]
   public paisSelect=0;
   public pref=''
+  public min=0
   //later in the code
   fields: any = {};
   ngOnInit(): void {
@@ -89,15 +90,17 @@ export class FormularioComponent implements OnChanges, OnInit,OnDestroy {
         var codigoISo=this._SessionStorageService.SessionGetValue('ISO_PAIS');
         this.paisSelect=this.paise.find(x=>x.codigoIso==codigoISo).idPais;
         var index=0
-        this.fiels.forEach((x:any) =>{
-          if(x.tipo=='phone' && this.userForm){
-            this.ChangeInpiut(index,x.nombre)
+        console.log(this.userForm)
+        this.fiels.forEach((f:any) =>{
+          if(f.tipo=='phone' && this.userForm){
+            console.log('------------------'+index)
+            this.ChangeInpiut(index,f.nombre)
           }
-          if(x.nombre.toLowerCase()=='idpais' && this.userForm){
-            let campo = (<FormArray>this.userForm.get('Fields')).controls[index].get(x.nombre);
+          if(f.nombre.toLowerCase()=='idpais' && this.userForm){
+            let campo = (<FormArray>this.userForm.get('Fields')).controls[index].get(f.nombre);
             if(campo?.value!=undefined){
               campo?.setValue(this.paisSelect);
-              this.OnSelect.emit({Nombre:x.nombre,value:this.paisSelect})
+              this.OnSelect.emit({Nombre:f.nombre,value:this.paisSelect})
             }
           }
           index++
@@ -127,7 +130,15 @@ export class FormularioComponent implements OnChanges, OnInit,OnDestroy {
         this.disableFiled(x.nombre)
       }
     })
-
+    var index=0;
+    console.log(this.userForm)
+    this.fiels.forEach((f:any) =>{
+      if(f.tipo=='phone' && this.userForm){
+        console.log('------------------'+index)
+        this.ChangeInpiut(index,f.nombre)
+      }
+      index++;
+    });
     this.OnValid.emit(this.userForm.valid);
   }
   changeForm(){
@@ -272,9 +283,18 @@ export class FormularioComponent implements OnChanges, OnInit,OnDestroy {
     var s=campo.split(' ');
 
     this.pref=this.PrefPaises()==null?'':this.PrefPaises()+' ';
+    this.min=this.LongCelularPaises()==null?0:this.LongCelularPaises();
+    console.log(this.pref+'---'+this.min);
     (<FormArray>this.userForm.get('Fields')).controls[i].get(val)?.setValue(this.pref+s.slice(1));
+    (<FormArray>this.userForm.get('Fields')).controls[i].get(val)?.clearValidators();
+    (<FormArray>this.userForm.get('Fields')).controls[i].get(val)?.addValidators([Validators.required,Validators.minLength(this.pref.length+1+this.min)]);
   }
-
+  LongCelularPaises():number{
+    if(this.paise.find(x=>x.idPais==this.paisSelect)!=undefined){
+      return this.paise.find(x=>x.idPais==this.paisSelect).longCelular
+    }
+    return 0;
+  }
   PrefPaises():string{
     if(this.paise.find(x=>x.idPais==this.paisSelect)!=undefined){
       return this.paise.find(x=>x.idPais==this.paisSelect).prefijoTelefono
