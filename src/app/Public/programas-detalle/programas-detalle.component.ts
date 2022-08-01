@@ -225,7 +225,7 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
       if (this.innerWidth < 992) this.seccionStep = 2;
       if (this.innerWidth < 768) this.seccionStep = 1;
     }
-    this.activatedRoute.params.subscribe({
+    this.activatedRoute.params.pipe(takeUntil(this.signal$)).subscribe({
       next: (x) => {
         this.area = x['AreaCapacitacion'].split('-').join(' ');
         console.log('Area----------'+this.area)
@@ -244,13 +244,13 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
     });
 
 
-    this._HelperServiceP.recibirDataPais.subscribe({
+    this._HelperServiceP.recibirDataPais.pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
         this.Paises=x;
       }
     })
 
-    this._HelperServiceP.recibirCombosPerfil.subscribe((x) => {
+    this._HelperServiceP.recibirCombosPerfil.pipe(takeUntil(this.signal$)).subscribe((x) => {
       this.alumno =x.datosAlumno.nombres;
       this.combosPrevios=x.datosAlumno;
       console.log(this.combosPrevios)
@@ -271,7 +271,7 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
   }
 
   RegistrarProgramaPrueba(){
-    this._AccountService.RegistroCursoAulaVirtualNueva(this.idBusqueda).subscribe({
+    this._AccountService.RegistroCursoAulaVirtualNueva(this.idBusqueda).pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
         this._router.navigate(['/AulaVirtual/MisCursos']);
       },
@@ -285,7 +285,7 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
       panelClass: 'custom-dialog-container',
     });
 
-    dialogRef.afterClosed().subscribe((result) => {
+    dialogRef.afterClosed().pipe(takeUntil(this.signal$)).subscribe((result) => {
     });
   }
   OpenModalPago(){
@@ -304,7 +304,7 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
         modalidad:this.cabecera.listProgramaEspecificoInformacionDTO},
       panelClass: 'programa-pago-dialog-container',
     });
-    dialogRef.afterClosed().subscribe((result) => {
+    dialogRef.afterClosed().pipe(takeUntil(this.signal$)).subscribe((result) => {
       console.log(result)
       if(result!=undefined){
 
@@ -356,7 +356,7 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
   }
   ObtenerCabeceraProgramaGeneral() {
     this._SeccionProgramaService
-      .ObtenerCabeceraProgramaGeneral(this.idBusqueda)
+      .ObtenerCabeceraProgramaGeneral(this.idBusqueda).pipe(takeUntil(this.signal$))
       .subscribe({
         next: (x) => {
           console.log(x);
@@ -402,7 +402,7 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
   }
   ListSeccionPrograma() {
     this._SeccionProgramaService
-      .ListSeccionPrograma(this.idBusqueda)
+      .ListSeccionPrograma(this.idBusqueda).pipe(takeUntil(this.signal$))
       .subscribe({
         next: (x) => {
           console.log(x);
@@ -432,14 +432,14 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
   }
 
   ListPrerrequisito() {
-    this._SeccionProgramaService.ListPrerrequisito(this.idBusqueda).subscribe({
+    this._SeccionProgramaService.ListPrerrequisito(this.idBusqueda).pipe(takeUntil(this.signal$)).subscribe({
       next: (x) => {
         this.prerequisitos = x.listaPrerrequisitoDTO;
       },
     });
   }
   EstructuraProgramaPortal() {
-    this._ProgramaService.EstructuraProgramaPortal(this.idBusqueda).subscribe({
+    this._ProgramaService.EstructuraProgramaPortal(this.idBusqueda).pipe(takeUntil(this.signal$)).subscribe({
       next: (x) => {
         this.estructuraPrograma = x.estructuraCurso;
         this.estructuraPrograma.map((x) => {
@@ -458,7 +458,7 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
     });
   }
   ListBeneficioPrograma() {
-    this._BeneficioService.ListBeneficioPrograma(this.idBusqueda).subscribe({
+    this._BeneficioService.ListBeneficioPrograma(this.idBusqueda).pipe(takeUntil(this.signal$)).subscribe({
       next: (x) => {
         console.log(x);
         this.beneficios = x.listaBeneficioProgramaDTO;
@@ -506,7 +506,7 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
     });
   }
   ObtenerSilaboCurso() {
-    this._SilaboService.ObtenerSilaboCurso(this.idPegeneral).subscribe({
+    this._SilaboService.ObtenerSilaboCurso(this.idPegeneral).pipe(takeUntil(this.signal$)).subscribe({
       next: (x) => {
         console.log(x);
         var piePag = x.listaSeccionesContenidosDocumento.find(
@@ -556,7 +556,7 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
     });
   }
   ListCertificacion() {
-    this._SeccionProgramaService.ListCertificacion(this.idBusqueda).subscribe({
+    this._SeccionProgramaService.ListCertificacion(this.idBusqueda).pipe(takeUntil(this.signal$)).subscribe({
       next: (x) => {
         console.log(x);
         this.certificado = x.listaCertificacionDTO;
@@ -607,7 +607,7 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
     });
   }
   ListExpositor() {
-    this._ExpositorService.ListExpositor(this.idBusqueda).subscribe({
+    this._ExpositorService.ListExpositor(this.idBusqueda).pipe(takeUntil(this.signal$)).subscribe({
       next: (x) => {
         console.log(x);
         this.expositor = x.listaExpositorDTO;
@@ -629,7 +629,7 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
     });
   }
   ListMontoPago() {
-    this._SeccionProgramaService.ListMontoPago(this.idBusqueda).subscribe({
+    this._SeccionProgramaService.ListMontoPago(this.idBusqueda).pipe(takeUntil(this.signal$)).subscribe({
       next: (x) => {
         console.log(x);
         this.MontoPago = x.listaMontoPagoProgramaInformacionDTO;
@@ -643,7 +643,7 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
   }
   ListProgramaRelacionado() {
     this._SeccionProgramaService
-      .ListProgramaRelacionado(this.idPegeneral)
+      .ListProgramaRelacionado(this.idPegeneral).pipe(takeUntil(this.signal$))
       .subscribe({
         next: (x) => {
           console.log(x);
@@ -672,7 +672,7 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
   }
   ListTagProgramaRelacionadoPorIdBusqueda() {
     this._TagService
-      .ListTagProgramaRelacionadoPorIdBusqueda(this.idBusqueda)
+      .ListTagProgramaRelacionadoPorIdBusqueda(this.idBusqueda).pipe(takeUntil(this.signal$))
       .subscribe({
         next: (x) => {
           console.log(x);
@@ -710,7 +710,7 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
       this.DatosEnvioFormulario.IdIndustria = value.IdIndustria;
       console.log(this.DatosEnvioFormulario);
       this._HelperService
-        .EnviarFormulario(this.DatosEnvioFormulario)
+        .EnviarFormulario(this.DatosEnvioFormulario).pipe(takeUntil(this.signal$))
         .subscribe({
           next: (x) => {
             console.log(x);
@@ -723,7 +723,7 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
     }
   }
   ObtenerCombosPortal() {
-    this._DatosPortalService.ObtenerCombosPortal().subscribe({
+    this._DatosPortalService.ObtenerCombosPortal().pipe(takeUntil(this.signal$)).subscribe({
       next: (x) => {
         console.log(x);
         this.fileds.forEach((r) => {
@@ -774,7 +774,7 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
     this.initValues = true;
   }
   GetRegionesPorPais(idPais: number) {
-    this._RegionService.ObtenerCiudadesPorPais(idPais).subscribe({
+    this._RegionService.ObtenerCiudadesPorPais(idPais).pipe(takeUntil(this.signal$)).subscribe({
       next: (x) => {
         this.fileds.forEach((r) => {
           if (r.nombre == 'IdRegion') {

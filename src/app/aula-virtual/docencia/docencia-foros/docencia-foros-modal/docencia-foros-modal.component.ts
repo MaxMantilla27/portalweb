@@ -1,5 +1,6 @@
-import { Component, Inject, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, Inject, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { Subject, takeUntil } from 'rxjs';
 import { ForoRespuestaDTO } from 'src/app/Core/Models/ForoDTO';
 import { AvatarService } from 'src/app/Core/Shared/Services/Avatar/avatar.service';
 import { ForoCursoService } from 'src/app/Core/Shared/Services/ForoCurso/foro-curso.service';
@@ -10,14 +11,18 @@ import { ForoCursoService } from 'src/app/Core/Shared/Services/ForoCurso/foro-cu
   styleUrls: ['./docencia-foros-modal.component.scss'],
   encapsulation: ViewEncapsulation.None,
 })
-export class DocenciaForosModalComponent implements OnInit {
-
+export class DocenciaForosModalComponent implements OnInit,OnDestroy {
+  private signal$ = new Subject();
   constructor(
     public dialogRef: MatDialogRef<DocenciaForosModalComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private _ForoCursoService:ForoCursoService,
     public _AvatarService:AvatarService
     ) { }
+  ngOnDestroy(): void {
+    this.signal$.next(true)
+    this.signal$.complete()
+  }
   public pregunta:any
   public respuestas:any
   public imgForo:any
@@ -39,7 +44,7 @@ export class DocenciaForosModalComponent implements OnInit {
   }
   ContenidoPreguntaForoCurso(){
     console.log(this.data.idTemaForo)
-    this._ForoCursoService.ContenidoPreguntaForoCurso(this.data.idTemaForo).subscribe({
+    this._ForoCursoService.ContenidoPreguntaForoCurso(this.data.idTemaForo).pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
         console.log(x)
         this.pregunta=x
@@ -53,7 +58,7 @@ export class DocenciaForosModalComponent implements OnInit {
     })
   }
   PartialRespuestaPregunta(){
-    this._ForoCursoService.PartialRespuestaPregunta(this.data.idPGeneral,this.data.idTemaForo).subscribe({
+    this._ForoCursoService.PartialRespuestaPregunta(this.data.idPGeneral,this.data.idTemaForo).pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
         console.log(x)
         this.respuestas=x
@@ -61,7 +66,7 @@ export class DocenciaForosModalComponent implements OnInit {
     })
   }
   EnviarRegistroRespuestaForo(){
-    this._ForoCursoService.EnviarRegistroRespuestaForo(this.jsonEnvio).subscribe({
+    this._ForoCursoService.EnviarRegistroRespuestaForo(this.jsonEnvio).pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
         console.log(x)
         this.CerrarModal()

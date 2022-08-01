@@ -1,6 +1,7 @@
+import { isPlatformBrowser } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
+import { EMPTY, Observable } from 'rxjs';
 import { ErrorVideoPlayerDTO } from 'src/app/Core/Models/ErrorVideoPlayerDTO';
 import { ParametrosVideoSesionDTO, RegistroVideoUltimaVisualizacionDTO } from 'src/app/Core/Models/EstructuraEspecificaDTO';
 import { environment } from 'src/environments/environment';
@@ -9,23 +10,49 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root'
 })
 export class VideoSesionService {
+  isBrowser: boolean;
   public urlBase=environment.url_api+'VideoSesion';
-  constructor(private http: HttpClient) { }
+  constructor(
+    private http: HttpClient,
+    @Inject(PLATFORM_ID) platformId: Object
+  ) {
+    this.isBrowser = isPlatformBrowser(platformId);
+  }
 
   public ObtenerVideoProgramaCapacitacionSesion(Json:ParametrosVideoSesionDTO):Observable<any>{
-    return this.http.post<any>(this.urlBase+'/ObtenerVideoProgramaCapacitacionSesion',Json);
+    if(this.isBrowser){
+      return this.http.post<any>(this.urlBase+'/ObtenerVideoProgramaCapacitacionSesion',Json);
+    }else{
+      return EMPTY;
+    }
   }
   public RegistrarUltimaVisualizacionVideo(Json:RegistroVideoUltimaVisualizacionDTO):Observable<any>{
-    return this.http.post<any>(this.urlBase+'/RegistrarUltimaVisualizacionVideo',Json);
+    if(this.isBrowser){
+      return this.http.post<any>(this.urlBase+'/RegistrarUltimaVisualizacionVideo',Json);
+    }else{
+      return EMPTY;
+    }
   }
   public ObtenerVideoProgramaCapacitacionSesionPrueba(Json:ParametrosVideoSesionDTO):Observable<any>{
-    return this.http.post<any>(this.urlBase+'/ObtenerVideoProgramaCapacitacionSesionPrueba',Json);
+    if(this.isBrowser){
+      return this.http.post<any>(this.urlBase+'/ObtenerVideoProgramaCapacitacionSesionPrueba',Json);
+    }else{
+      return EMPTY;
+    }
   }
   public ObtenerConfiguracionVideoSesion(IdPGeneral:number,Fila:number):Observable<any>{
-    return this.http.get<any>(this.urlBase+'/ObtenerConfiguracionVideoSesion?IdPGeneral='+IdPGeneral+'&Fila='+Fila)
+    if(this.isBrowser){
+      return this.http.get<any>(this.urlBase+'/ObtenerConfiguracionVideoSesion?IdPGeneral='+IdPGeneral+'&Fila='+Fila)
+    }else{
+      return EMPTY;
+    }
   }
   public EnviarErrorVideoPlayer(Json:ErrorVideoPlayerDTO):Observable<any>{
-    return this.http.post<any>(this.urlBase+'/EnviarErrorVideoPlayer',Json);
+    if(this.isBrowser){
+      return this.http.post<any>(this.urlBase+'/EnviarErrorVideoPlayer',Json);
+    }else{
+      return EMPTY;
+    }
   }
 
 

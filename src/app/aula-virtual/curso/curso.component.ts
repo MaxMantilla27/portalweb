@@ -81,7 +81,7 @@ export class CursoComponent implements OnInit,OnDestroy {
         this.ObtenerDatosCertificado();
       },
     });
-    this._HelperService.recibirCombosPerfil.subscribe({
+    this._HelperService.recibirCombosPerfil.pipe(takeUntil(this.signal$)).subscribe({
       next: (x) => {
 
         this.datos = x;
@@ -96,7 +96,7 @@ export class CursoComponent implements OnInit,OnDestroy {
 
   }
   ObtenerDatosCertificado(){
-    this._CertificadoService.ObtenerDatosCertificadoEnvio(this.idMatricula).subscribe({
+    this._CertificadoService.ObtenerDatosCertificadoEnvio(this.idMatricula).pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
         console.log(x)
         if(this.datosCertificado!=undefined){
@@ -169,7 +169,7 @@ export class CursoComponent implements OnInit,OnDestroy {
     this.tabIndex = index;
   }
   RegistroProgramaMatriculadoPorIdMatricula(){
-    this._DatosPerfilService.RegistroProgramaMatriculadoPorIdMatricula(this.idMatricula).subscribe({
+    this._DatosPerfilService.RegistroProgramaMatriculadoPorIdMatricula(this.idMatricula).pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
         console.log(x)
         this.curso=x
@@ -214,6 +214,7 @@ export class CursoComponent implements OnInit,OnDestroy {
   ObtenerListadoProgramaContenido() {
     this._ProgramaContenidoService
       .ObtenerListadoProgramaContenido(this.idMatricula)
+      .pipe(takeUntil(this.signal$))
       .subscribe({
         next: (x) => {
           this.programEstructura = x;

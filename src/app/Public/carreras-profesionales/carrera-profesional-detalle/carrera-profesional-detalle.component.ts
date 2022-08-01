@@ -15,6 +15,7 @@ import { SnackBarServiceService } from 'src/app/Core/Shared/Services/SnackBarSer
 import { HelperService as Help} from 'src/app/Core/Shared/Services/helper.service';
 import { Title } from '@angular/platform-browser';
 import { SeoService } from 'src/app/Core/Shared/Services/seo.service';
+import { Subject, takeUntil } from 'rxjs';
 
 
 @Component({
@@ -24,6 +25,7 @@ import { SeoService } from 'src/app/Core/Shared/Services/seo.service';
   encapsulation: ViewEncapsulation.None,
 })
 export class CarreraProfesionalDetalleComponent implements OnInit {
+  private signal$ = new Subject();
 
   public migaPan: any = [];
   //public carrera: CarreraProfesionalTecnicaDetalleDTO = {};
@@ -60,6 +62,10 @@ export class CarreraProfesionalDetalleComponent implements OnInit {
     private title:Title
 
   ) { }
+  ngOnDestroy(): void {
+    this.signal$.next(true)
+    this.signal$.complete()
+  }
 
   statuscharge = false;
   formVal: boolean = false;
@@ -97,7 +103,7 @@ export class CarreraProfesionalDetalleComponent implements OnInit {
         urlWeb: '/carreras-profesionales'
       }
     ]
-    this.activatedRoute.params.subscribe((params) => {
+    this.activatedRoute.params.pipe(takeUntil(this.signal$)).subscribe((params) => {
       //Lo separamos en partes
       let auxParams = params["urlWeb"].split('-')
       let idBusqueda = auxParams[auxParams.length -1]
@@ -111,7 +117,7 @@ export class CarreraProfesionalDetalleComponent implements OnInit {
       })
       this.getCarreraDetalle(idBusqueda, nombre)
     })
-    this._HelperServiceP.recibirCombosPerfil.subscribe((x) => {
+    this._HelperServiceP.recibirCombosPerfil.pipe(takeUntil(this.signal$)).subscribe((x) => {
       this.combosPrevios=x.datosAlumno;
       console.log(this.combosPrevios)
       this.formularioContacto.Nombres= this.combosPrevios.nombres,
@@ -132,7 +138,7 @@ export class CarreraProfesionalDetalleComponent implements OnInit {
     return parseInt(valor);
   }
   getCarreraDetalle(idBusqueda:number, nombre:string){
-    this._CarreraProfesionalService.GetCarrerasDetalle(idBusqueda, nombre).subscribe({
+    this._CarreraProfesionalService.GetCarrerasDetalle(idBusqueda, nombre).pipe(takeUntil(this.signal$)).subscribe({
       next:(x)=>{
         console.log(x);
 
@@ -244,7 +250,7 @@ export class CarreraProfesionalDetalleComponent implements OnInit {
       this.DatosEnvioFormulario.IdAreaTrabajo=value.IdAreaTrabajo;
       this.DatosEnvioFormulario.IdIndustria=value.IdIndustria;
       console.log(this.DatosEnvioFormulario)
-      this._HelperService.EnviarFormulario(this.DatosEnvioFormulario).subscribe({
+      this._HelperService.EnviarFormulario(this.DatosEnvioFormulario).pipe(takeUntil(this.signal$)).subscribe({
         next: (x) => {
           console.log(x);
         },
@@ -255,7 +261,7 @@ export class CarreraProfesionalDetalleComponent implements OnInit {
     }
   }
   ObtenerCombosPortal(){
-    this._DatosPortalService.ObtenerCombosPortal().subscribe({
+    this._DatosPortalService.ObtenerCombosPortal().pipe(takeUntil(this.signal$)).subscribe({
       next:(x)=>{
         console.log(x);
         this.fileds.forEach(r=>{
@@ -271,7 +277,7 @@ export class CarreraProfesionalDetalleComponent implements OnInit {
     this.initValues = true;
   }
   GetRegionesPorPais(idPais:number){
-    this._RegionService.ObtenerCiudadesPorPais(idPais).subscribe({
+    this._RegionService.ObtenerCiudadesPorPais(idPais).pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
         this.fileds.forEach(r=>{
           if(r.nombre=='IdRegion'){

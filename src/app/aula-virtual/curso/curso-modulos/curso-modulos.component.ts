@@ -2,10 +2,12 @@ import {
   Component,
   Input,
   OnChanges,
+  OnDestroy,
   OnInit,
   SimpleChanges,
   ViewEncapsulation,
 } from '@angular/core';
+import { Subject, takeUntil } from 'rxjs';
 import { ParametrosEstructuraEspecificaDTO } from 'src/app/Core/Models/EstructuraEspecificaDTO';
 import {
   ProgresoAlumnoProgramaAulaVirtualDTO,
@@ -21,11 +23,16 @@ import { SessionStorageService } from 'src/app/Core/Shared/Services/session-stor
   styleUrls: ['./curso-modulos.component.scss'],
   encapsulation: ViewEncapsulation.None,
 })
-export class CursoModulosComponent implements OnInit, OnChanges {
+export class CursoModulosComponent implements OnInit, OnChanges,OnDestroy {
+  private signal$ = new Subject();
   constructor(
     private _ProgramaContenidoService: ProgramaContenidoService,
     private _SessionStorageService: SessionStorageService
   ) {}
+  ngOnDestroy(): void {
+    this.signal$.next(true)
+    this.signal$.complete()
+  }
 
   public progresoPrograma: ProgresoAlumnoProgramaAulaVirtualDTO = {
     progresoEncuesta: [],
@@ -52,6 +59,7 @@ export class CursoModulosComponent implements OnInit, OnChanges {
   ObtenerProgresoAulaVirtual() {
     this._ProgramaContenidoService
       .ProgresoProgramaCursosAulaVirtualAonline(this.idMatricula)
+      .pipe(takeUntil(this.signal$))
       .subscribe({
         next: (x) => {
           console.log(x)

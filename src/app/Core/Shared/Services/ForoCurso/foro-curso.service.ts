@@ -1,6 +1,7 @@
+import { isPlatformBrowser } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
-import { EventEmitter, Injectable, Output } from '@angular/core';
-import { Observable } from 'rxjs';
+import { EventEmitter, Inject, Injectable, Output, PLATFORM_ID } from '@angular/core';
+import { EMPTY, Observable } from 'rxjs';
 import { ForoDTO, ForoRespuestaDTO } from 'src/app/Core/Models/ForoDTO';
 import { environment } from 'src/environments/environment';
 
@@ -8,25 +9,55 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root'
 })
 export class ForoCursoService {
+  isBrowser: boolean;
   public urlBase=environment.url_api+'ForoCurso';
-  constructor(private http: HttpClient) { }
+  constructor(
+    private http: HttpClient,
+    @Inject(PLATFORM_ID) platformId: Object
+  ) {
+    this.isBrowser = isPlatformBrowser(platformId);
+  }
   public ObtenerForoCurso(IdPGeneral:number):Observable<any>{
-    return this.http.get<any>(this.urlBase+'/ObtenerForoCurso?IdPGeneral='+IdPGeneral);
+    if(this.isBrowser){
+      return this.http.get<any>(this.urlBase+'/ObtenerForoCurso?IdPGeneral='+IdPGeneral);
+    }else{
+      return EMPTY;
+    }
   }
   public InsertarForoCursoPorUsuario(Json:ForoDTO):Observable<any>{
-    return this.http.post<any>(this.urlBase+'/InsertarForoCursoPorUsuario',Json);
+    if(this.isBrowser){
+      return this.http.post<any>(this.urlBase+'/InsertarForoCursoPorUsuario',Json);
+    }else{
+      return EMPTY;
+    }
   }
   public ContenidoPreguntaForoCurso(IdPregunta:number):Observable<any>{
-    return this.http.get<any>(this.urlBase+'/ContenidoPreguntaForoCurso?IdPregunta='+IdPregunta);
+    if(this.isBrowser){
+      return this.http.get<any>(this.urlBase+'/ContenidoPreguntaForoCurso?IdPregunta='+IdPregunta);
+    }else{
+      return EMPTY;
+    }
   }
   public PartialRespuestaPregunta(IdPGeneral:number,IdPregunta:number):Observable<any>{
-    return this.http.get<any>(this.urlBase+'/PartialRespuestaPregunta?IdPGeneral='+IdPGeneral+'&IdPregunta='+IdPregunta);
+    if(this.isBrowser){
+      return this.http.get<any>(this.urlBase+'/PartialRespuestaPregunta?IdPGeneral='+IdPGeneral+'&IdPregunta='+IdPregunta);
+    }else{
+      return EMPTY;
+    }
   }
   public EnviarRegistroRespuestaForo(Json:ForoRespuestaDTO):Observable<any>{
-    return this.http.post<any>(this.urlBase+'/EnviarRegistroRespuestaForo',Json);
+    if(this.isBrowser){
+      return this.http.post<any>(this.urlBase+'/EnviarRegistroRespuestaForo',Json);
+    }else{
+      return EMPTY;
+    }
   }
   public PartialRespuestaPreguntaDocente(IdPGeneral:number,IdPregunta:number):Observable<any>{
-    return this.http.get<any>(this.urlBase+'/PartialRespuestaPreguntaDocente?IdPGeneral='+IdPGeneral+'&IdPregunta='+IdPregunta);
+    if(this.isBrowser){
+      return this.http.get<any>(this.urlBase+'/PartialRespuestaPreguntaDocente?IdPGeneral='+IdPGeneral+'&IdPregunta='+IdPregunta);
+    }else{
+      return EMPTY;
+    }
   }
 
 }

@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, Inject, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
 import { Subject, takeUntil } from 'rxjs';
 import { AsistenciaRegistrarDTO } from 'src/app/Core/Models/ParticipacionExpositorFiltroDTO';
@@ -13,8 +13,8 @@ import { SnackBarServiceService } from 'src/app/Core/Shared/Services/SnackBarSer
   styleUrls: ['./docencia-gestion-asistencias-registro.component.scss'],
   encapsulation: ViewEncapsulation.None,
 })
-export class DocenciaGestionAsistenciasRegistroComponent implements OnInit {
-
+export class DocenciaGestionAsistenciasRegistroComponent implements OnInit,OnDestroy {
+  private signal$ = new Subject();
   constructor(
     public dialogRef: MatDialogRef<DocenciaGestionAsistenciasRegistroComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -24,7 +24,6 @@ export class DocenciaGestionAsistenciasRegistroComponent implements OnInit {
     public dialog: MatDialog
   ) { }
 
-  private signal$ = new Subject();
   public asistencias:Array<AsistenciaRegistrarDTO>=[]
   ngOnDestroy(): void {
     this.signal$.next(true);

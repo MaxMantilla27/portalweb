@@ -1,9 +1,11 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { Validators } from '@angular/forms';
+import { Subject, takeUntil } from 'rxjs';
 import { ValidacionChatEnvioDTO, ValidacionChatFormularioDTO } from 'src/app/Core/Models/ChatEnLineaDTO';
 import { formulario } from 'src/app/Core/Models/Formulario';
 import { ChatEnLineaService } from '../../Services/ChatEnLinea/chat-en-linea.service';
 import { SnackBarServiceService } from '../../Services/SnackBarService/snack-bar-service.service';
+declare const fbq:any;
 
 @Component({
   selector: 'app-form-chat',
@@ -11,11 +13,16 @@ import { SnackBarServiceService } from '../../Services/SnackBarService/snack-bar
   styleUrls: ['./form-chat.component.scss']
 })
 export class FormChatComponent implements OnInit,OnChanges {
+  private signal$ = new Subject();
 
   constructor(
     private _ChatEnLinea: ChatEnLineaService,
     private _SnackBarServiceService: SnackBarServiceService,
   ) { }
+  ngOnDestroy(): void {
+    this.signal$.next(true)
+    this.signal$.complete()
+  }
 
   @Input() IdPGeneral=0;
   public chatInicial=false;
@@ -65,8 +72,11 @@ export class FormChatComponent implements OnInit,OnChanges {
       this.DatosEnvioFormulario.Movil = value.Movil;
       this.DatosEnvioFormulario.EstadoAsesor = '1';
       this.DatosEnvioFormulario.IdPrograma = this.IdPGeneral;
-      this._ChatEnLinea.ValidarCrearOportunidadChat(this.DatosEnvioFormulario).subscribe({
+      this._ChatEnLinea.ValidarCrearOportunidadChat(this.DatosEnvioFormulario).pipe(takeUntil(this.signal$)).subscribe({
         next:(x)=>{
+          console.log('------------------facebook(true)---------------------------');
+          console.log(fbq);
+          fbq('track', 'CompleteRegistration');
           console.log(x);
           this.validacionChat=x
           this.SaveForm.emit(x.idFaseOportunidadPortal)

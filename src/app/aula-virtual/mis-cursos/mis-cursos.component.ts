@@ -1,6 +1,7 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import {  Router } from '@angular/router';
+import { Subject, takeUntil } from 'rxjs';
 import { CuentaService } from 'src/app/Core/Shared/Services/Cuenta/cuenta.service';
 import { DatosPerfilService } from 'src/app/Core/Shared/Services/DatosPerfil/datos-perfil.service';
 import { SessionStorageService } from 'src/app/Core/Shared/Services/session-storage.service';
@@ -12,7 +13,8 @@ import { VigenciaAccesoPruebaComponent } from './vigencia-acceso-prueba/vigencia
   styleUrls: ['./mis-cursos.component.scss'],
   encapsulation: ViewEncapsulation.None,
 })
-export class MisCursosComponent implements OnInit {
+export class MisCursosComponent implements OnInit,OnDestroy {
+  private signal$ = new Subject();
   constructor(
     private _DatosPerfilService: DatosPerfilService,
     private _SessionStorageService:SessionStorageService,
@@ -21,6 +23,10 @@ export class MisCursosComponent implements OnInit {
     private _Router:Router
 
     ) {}
+  ngOnDestroy(): void {
+    this.signal$.next(true)
+    this.signal$.complete()
+  }
 
   public migaPan = [
     {
@@ -41,7 +47,7 @@ export class MisCursosComponent implements OnInit {
     this.ObtenerCursosPrueba();
   }
   GetDatosPerfilService() {
-    this._DatosPerfilService.RegistroProgramaMatriculado().subscribe({
+    this._DatosPerfilService.RegistroProgramaMatriculado().pipe(takeUntil(this.signal$)).subscribe({
       next: (x) => {
         console.log(x);
         this.matriculas = x;
@@ -53,7 +59,7 @@ export class MisCursosComponent implements OnInit {
     });
   }
   ObtenerCursosPrueba(){
-    this._CuentaService.ObtenerListaCursosPrueba().subscribe({
+    this._CuentaService.ObtenerListaCursosPrueba().pipe(takeUntil(this.signal$)).subscribe({
       next: (x) => {
         console.log(x);
         this.matriculasPrueba = x;
@@ -75,7 +81,7 @@ export class MisCursosComponent implements OnInit {
         panelClass: 'dialog-programas-prueba',
       });
 
-      dialogRef.afterClosed().subscribe((result) => {
+      dialogRef.afterClosed().pipe(takeUntil(this.signal$)).subscribe((result) => {
         console.log('The dialog was closed');
       });
     }else{

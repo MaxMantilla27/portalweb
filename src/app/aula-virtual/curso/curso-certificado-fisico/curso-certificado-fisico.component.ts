@@ -1,5 +1,6 @@
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewEncapsulation } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges, ViewEncapsulation } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { Subject, takeUntil } from 'rxjs';
 import { combosPerfilDTO } from 'src/app/Core/Models/AlumnoDTO';
 import { InsertarRegistroEnvioFisicoDTO } from 'src/app/Core/Models/CertificadoDTO';
 import { CertificadoService } from 'src/app/Core/Shared/Services/Certificado/certificado.service';
@@ -12,13 +13,18 @@ import { SnackBarServiceService } from 'src/app/Core/Shared/Services/SnackBarSer
   styleUrls: ['./curso-certificado-fisico.component.scss'],
   encapsulation: ViewEncapsulation.None,
 })
-export class CursoCertificadoFisicoComponent implements OnInit ,OnChanges{
+export class CursoCertificadoFisicoComponent implements OnInit,OnDestroy ,OnChanges{
 
+  private signal$ = new Subject();
   constructor(
     private _HelperService: HelperService,
     private _CertificadoService:CertificadoService,
     private _SnackBarServiceService:SnackBarServiceService
   ) { }
+  ngOnDestroy(): void {
+    this.signal$.next(true)
+    this.signal$.complete()
+  }
 
 
   @Input() datosCertificado:any;
@@ -107,7 +113,7 @@ export class CursoCertificadoFisicoComponent implements OnInit ,OnChanges{
     IdSolicitudCertificadoFisico:0
   }
   ngOnInit(): void {
-    this._HelperService.recibirCombosPerfil.subscribe((x) => {
+    this._HelperService.recibirCombosPerfil.pipe(takeUntil(this.signal$)).subscribe((x) => {
       console.log(x);
       this.combosPerfil = x;
       this.userForm.patchValue({
@@ -148,7 +154,7 @@ export class CursoCertificadoFisicoComponent implements OnInit ,OnChanges{
     this.jsonEnvio.IdPGeneral=this.idPGeneral;
     this.jsonEnvio.IdMatriculaCabecera=this.idMatricula;
     this.jsonEnvio.CodigoMatricula=this.CodigoMatricula
-    this._CertificadoService.RegistrarSolicitudCertificadoFisico(this.jsonEnvio).subscribe({
+    this._CertificadoService.RegistrarSolicitudCertificadoFisico(this.jsonEnvio).pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
         console.log(x)
         if(x.mensaje==''){

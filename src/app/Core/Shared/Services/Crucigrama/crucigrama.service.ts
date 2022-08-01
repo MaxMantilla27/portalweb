@@ -1,6 +1,7 @@
+import { isPlatformBrowser } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
+import { EMPTY, Observable } from 'rxjs';
 import { EvaluacionPromedioCrucigramaDTO, ParametrosCrucigramaVideoSesionDTO } from 'src/app/Core/Models/EstructuraEspecificaDTO';
 import { environment } from 'src/environments/environment';
 
@@ -8,15 +9,30 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root'
 })
 export class CrucigramaService {
+  isBrowser: boolean;
   public urlBase=environment.url_api+'Crucigrama';
-  constructor(private http: HttpClient) { }
+
+  constructor(
+    private http: HttpClient,
+    @Inject(PLATFORM_ID) platformId: Object
+  ) {
+    this.isBrowser = isPlatformBrowser(platformId);
+  }
 
   public ObtenerCrucigramaProgramaCapacitacionSesion(Json:ParametrosCrucigramaVideoSesionDTO):Observable<any>{
-    console.log(Json)
-    return this.http.post<any>(this.urlBase+'/ObtenerCrucigramaProgramaCapacitacionSesion',Json);
+    if(this.isBrowser){
+      console.log(Json)
+      return this.http.post<any>(this.urlBase+'/ObtenerCrucigramaProgramaCapacitacionSesion',Json);
+    }else{
+      return EMPTY;
+    }
   }
   public EnviarFormularioCrucigrama(Json:EvaluacionPromedioCrucigramaDTO):Observable<any>{
-    console.log(Json)
-    return this.http.post<any>(this.urlBase+'/EnviarFormularioCrucigrama',Json);
+    if(this.isBrowser){
+      console.log(Json)
+      return this.http.post<any>(this.urlBase+'/EnviarFormularioCrucigrama',Json);
+    }else{
+      return EMPTY;
+    }
   }
 }

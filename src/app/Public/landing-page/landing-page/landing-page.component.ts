@@ -1,7 +1,8 @@
-import { Component, Inject, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import { Component, Inject, OnDestroy, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Router } from '@angular/router';
+import { Subject, takeUntil } from 'rxjs';
 import { combosPerfilDTO } from 'src/app/Core/Models/AlumnoDTO';
 import { Basic } from 'src/app/Core/Models/BasicDTO';
 import { ContactenosDTO } from 'src/app/Core/Models/ContactenosDTO';
@@ -21,7 +22,8 @@ import { LandingPageInterceptorComponent } from './landing-page-interceptor/land
   encapsulation: ViewEncapsulation.None,
 
 })
-export class LandingPageComponent implements OnInit {
+export class LandingPageComponent implements OnInit,OnDestroy {
+  private signal$ = new Subject();
   @ViewChild(FormularioComponent)
   form!: FormularioComponent;
   constructor(
@@ -35,6 +37,10 @@ export class LandingPageComponent implements OnInit {
     public dialogRef: MatDialogRef<LandingPageInterceptorComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
   ) { }
+  ngOnDestroy(): void {
+    this.signal$.next(true)
+    this.signal$.complete()
+  }
   public IdFormulario=0;
   statuscharge = false;
   formVal: boolean = false;
@@ -106,7 +112,7 @@ export class LandingPageComponent implements OnInit {
   };
   public combosPrevios:any
   ngOnInit(): void {
-    this._HelperService.recibirCombosPerfil.subscribe((x) => {
+    this._HelperService.recibirCombosPerfil.pipe(takeUntil(this.signal$)).subscribe((x) => {
       this.combosPrevios=x.datosAlumno;
       this.FormularioLandingPage.Nombres= this.combosPrevios.nombres,
       this.FormularioLandingPage.Apellidos= this.combosPrevios.apellidos,
@@ -163,7 +169,7 @@ export class LandingPageComponent implements OnInit {
     this.DatosLandingPageEnvio.IdAreaFormacion=value.IdAreaFormacion;
     this.DatosLandingPageEnvio.IdAreaTrabajo=value.IdAreaTrabajo;
     this.DatosLandingPageEnvio.IdIndustria=value.IdIndustria;
-    this._LandingPageService.EnviarFormularioLandingPage(this.DatosLandingPageEnvio).subscribe({
+    this._LandingPageService.EnviarFormularioLandingPage(this.DatosLandingPageEnvio).pipe(takeUntil(this.signal$)).subscribe({
       next: (x) => {
       },
       complete: () => {
@@ -173,7 +179,7 @@ export class LandingPageComponent implements OnInit {
   }
   ObtenerCombosPortal(){
 
-    this._DatosPortalService.ObtenerCombosPortal().subscribe({
+    this._DatosPortalService.ObtenerCombosPortal().pipe(takeUntil(this.signal$)).subscribe({
       next:(x)=>{
         this.fileds.forEach(r=>{
           if(r.nombre=='IdPais'){
@@ -220,7 +226,7 @@ export class LandingPageComponent implements OnInit {
     this.initValues = true;
   }
   GetRegionesPorPais(idPais:number){
-    this._RegionService.ObtenerCiudadesPorPais(idPais).subscribe({
+    this._RegionService.ObtenerCiudadesPorPais(idPais).pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
         this.fileds.forEach(r=>{
           if(r.nombre=='IdRegion'){

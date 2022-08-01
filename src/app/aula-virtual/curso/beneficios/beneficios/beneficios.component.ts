@@ -1,6 +1,7 @@
-import { Component, Input, NgModule, OnInit, SimpleChanges } from '@angular/core';
+import { Component, Input, NgModule, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
 import { resetFakeAsyncZone } from '@angular/core/testing';
 import { FormBuilder, FormControl, FormGroup, NgModel, Validators } from '@angular/forms';
+import { Subject, takeUntil } from 'rxjs';
 import { BeneficiosContenidoDTO, DatoAdicionalBeneficioDTO, DetallesDatoAdicionalDTO } from 'src/app/Core/Models/BeneficiosDTO';
 import { BeneficioService } from 'src/app/Core/Shared/Services/Beneficio/beneficio.service';
 import { ProgramaContenidoService } from 'src/app/Core/Shared/Services/ProgramaContenido/programa-contenido.service';
@@ -10,13 +11,18 @@ import { ProgramaContenidoService } from 'src/app/Core/Shared/Services/ProgramaC
   templateUrl: './beneficios.component.html',
   styleUrls: ['./beneficios.component.scss']
 })
-export class BeneficiosComponent implements OnInit {
+export class BeneficiosComponent implements OnInit,OnDestroy {
 
+  private signal$ = new Subject();
   constructor(
     private fb: FormBuilder,
     private _BeneficiosService: BeneficioService,
     private _ProgramaContenidoService: ProgramaContenidoService,
   ) {
+  }
+  ngOnDestroy(): void {
+    this.signal$.next(true)
+    this.signal$.complete()
   }
   @Input() Capitulo='';
   @Input() IdMatricula=0;
@@ -40,7 +46,7 @@ export class BeneficiosComponent implements OnInit {
     }
   }
   ObtenerBeneficiosMatricula(){
-    this._BeneficiosService.ListaBeneficioMatriculaAlumnoActivo(this.IdMatricula).subscribe({
+    this._BeneficiosService.ListaBeneficioMatriculaAlumnoActivo(this.IdMatricula).pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
         this.Beneficios=x
         console.log(this.Beneficios)
@@ -54,7 +60,7 @@ export class BeneficiosComponent implements OnInit {
     })
   }
   ObtenerCodigoMatricula(){
-    this._ProgramaContenidoService.ObtenerCodigoMatriculaAlumno(this.IdMatricula).subscribe({
+    this._ProgramaContenidoService.ObtenerCodigoMatriculaAlumno(this.IdMatricula).pipe(takeUntil(this.signal$)).subscribe({
       next: (x) => {
         this.CodigoMatricula=x.codigoMatricula;
       },
@@ -63,7 +69,7 @@ export class BeneficiosComponent implements OnInit {
 
   EnviarRegistroBeneficio(i:number){
     this.RecorrerContenidoBeneficio(i);
-    this._BeneficiosService.AgregarDetalleDatosAdicionales(this.DatosBeneficiosEnvio).subscribe({
+    this._BeneficiosService.AgregarDetalleDatosAdicionales(this.DatosBeneficiosEnvio).pipe(takeUntil(this.signal$)).subscribe({
       next: (x) => {
       },
       complete: () => {

@@ -1,5 +1,6 @@
-import { Component, Input, OnInit, SimpleChanges } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
 import { Router } from '@angular/router';
+import { Subject, takeUntil } from 'rxjs';
 
 import { DatosPerfilService } from 'src/app/Core/Shared/Services/DatosPerfil/datos-perfil.service';
 import { HelperService } from 'src/app/Core/Shared/Services/helper.service';
@@ -10,7 +11,8 @@ import { SnackBarServiceService } from 'src/app/Core/Shared/Services/SnackBarSer
   templateUrl: './modulo-webinars.component.html',
   styleUrls: ['./modulo-webinars.component.scss']
 })
-export class ModuloWebinarsComponent implements OnInit {
+export class ModuloWebinarsComponent implements OnInit,OnDestroy {
+  private signal$ = new Subject();
 
   constructor(
     private _HelperService:HelperService,
@@ -18,12 +20,16 @@ export class ModuloWebinarsComponent implements OnInit {
     private router:Router,
     private _SnackBarServiceService: SnackBarServiceService,
   ) { }
+  ngOnDestroy(): void {
+    this.signal$.next(true)
+    this.signal$.complete()
+  }
   @Input() Capitulo='';
   @Input() IdMatriculaCabecera=0;
   public NombreAlumno='';
   public DetallesWebinar:Array<any>=[];
   ngOnInit(): void {
-    this._HelperService.recibirCombosPerfil.subscribe(
+    this._HelperService.recibirCombosPerfil.pipe(takeUntil(this.signal$)).subscribe(
       (x) => {
       this.NombreAlumno = x.datosAlumno.nombres;
       console.log(this.NombreAlumno);
@@ -35,7 +41,7 @@ export class ModuloWebinarsComponent implements OnInit {
     }
   }
   ObtenerWebinarMatricula(){
-    this._DatosPerfilService.ListaWebinarProgramaMatriculadoRegistrado(this.IdMatriculaCabecera).subscribe({
+    this._DatosPerfilService.ListaWebinarProgramaMatriculadoRegistrado(this.IdMatriculaCabecera).pipe(takeUntil(this.signal$)).subscribe({
       next:(x)=>{
         this.DetallesWebinar=x;
         console.log(this.DetallesWebinar);

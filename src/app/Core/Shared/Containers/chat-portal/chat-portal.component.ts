@@ -15,9 +15,8 @@ import { environment } from 'src/environments/environment';
   styleUrls: ['./chat-portal.component.scss']
 })
 export class ChatPortalComponent implements OnInit,OnDestroy,OnChanges {
-
-  @ViewChild('contenidoMsj') contenidoMsj!: ElementRef;
   private signal$ = new Subject();
+  @ViewChild('contenidoMsj') contenidoMsj!: ElementRef;
   public hubConnection: any;
   constructor(
     private _ChatDetalleIntegraService:ChatDetalleIntegraService,
@@ -135,36 +134,7 @@ export class ChatPortalComponent implements OnInit,OnDestroy,OnChanges {
     }
   }
 
-  ObtenerIdAlumnoPorUsuario(IdFaseOportunidadPortal?:string){
-    this._GlobalService.ObtenerIdAlumnoPorUsuario().pipe(takeUntil(this.signal$)).subscribe({
-      next:x=>{
-        console.log(x)
-
-        if(x!=null && x.idAlumno!=null && x.idAlumno>0){
-
-          var listprogramas = [9990, 9991, 9992, 9993];
-          this.idProgramageneral=listprogramas[Math.floor(Math.random() * listprogramas.length)]
-          this.IdAlumno=x.idAlumno
-          this.idPais=x.idPais==-1?0:x.idPais
-          this.nombres=x.nombres
-          this.apellidos=x.apellidos
-          this.email=x.correo
-          this.telefono=x.telefono
-          this.estadoLogueo="true"
-          this.generarLogVisitante()
-
-          if(IdFaseOportunidadPortal!=undefined){
-            this.actualizarDatosAlumno(IdFaseOportunidadPortal);
-          }
-
-        }else{
-          this.estadoLogueo="false"
-        }
-
-      }
-    })
-  }
-  ConectarSocket(IdFaseOportunidadPortal?:string){
+  ConectarSocket(){
     this.hubConnection.start()
       .then((x:any) =>{
         this.generarLogVisitante()
@@ -348,7 +318,7 @@ export class ChatPortalComponent implements OnInit,OnDestroy,OnChanges {
   }
   AdjuntarArchivoChatSoporte(){
 
-    this._ChatDetalleIntegraService.AdjuntarArchivoChatSoporte(this.selectedFiles.item(0)).subscribe({
+    this._ChatDetalleIntegraService.AdjuntarArchivoChatSoporte(this.selectedFiles.item(0)).pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
         console.log(x)
         this.idInteraccion=this.GetsesionIdInteraccion();

@@ -1,4 +1,5 @@
-import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
+import { Subject, takeUntil } from 'rxjs';
 import { HelperService } from 'src/app/Core/Shared/Services/helper.service';
 import { MaterialAdicionalService } from 'src/app/Core/Shared/Services/MaterialAdicional/material-adicional.service';
 
@@ -7,12 +8,17 @@ import { MaterialAdicionalService } from 'src/app/Core/Shared/Services/MaterialA
   templateUrl: './modulo-recurso.component.html',
   styleUrls: ['./modulo-recurso.component.scss']
 })
-export class ModuloRecursoComponent implements OnInit,OnChanges {
+export class ModuloRecursoComponent implements OnInit,OnChanges,OnDestroy {
+  private signal$ = new Subject();
 
   constructor(
     private _MaterialAdicionalService:MaterialAdicionalService,
     private _HelperService:HelperService
   ) { }
+  ngOnDestroy(): void {
+    this.signal$.next(true)
+    this.signal$.complete()
+  }
 
   @Input() Estructura:any=[]
   @Input() Capitulo='';
@@ -22,7 +28,7 @@ export class ModuloRecursoComponent implements OnInit,OnChanges {
   public material:any
   public miPerfil:any
   ngOnInit(): void {
-    this._HelperService.recibirCombosPerfil.subscribe((x) => {
+    this._HelperService.recibirCombosPerfil.pipe(takeUntil(this.signal$)).subscribe((x) => {
       this.miPerfil=x
     })
   }
@@ -40,7 +46,7 @@ export class ModuloRecursoComponent implements OnInit,OnChanges {
   }
   //asincronica
   MaterialAdicionalAonline(){
-    this._MaterialAdicionalService.MaterialAdicionalAonline(this.idPGeneral).subscribe({
+    this._MaterialAdicionalService.MaterialAdicionalAonline(this.idPGeneral).pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
         console.log(x)
         this.material=x
@@ -49,7 +55,7 @@ export class ModuloRecursoComponent implements OnInit,OnChanges {
   }
   //sincronica
   MaterialAdicionalOnline(){
-    this._MaterialAdicionalService.MaterialAdicionalOnline(this.idPGeneral,this.idPEspecifico).subscribe({
+    this._MaterialAdicionalService.MaterialAdicionalOnline(this.idPGeneral,this.idPEspecifico).pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
         console.log(x)
         this.material=x

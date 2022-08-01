@@ -1,5 +1,6 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { Title } from '@angular/platform-browser';
+import { Subject, takeUntil } from 'rxjs';
 import { ArticuloDTO } from 'src/app/Core/Models/ArticuloDTO';
 import { BasicUrl } from 'src/app/Core/Models/BasicDTO';
 import { ArticuloService } from 'src/app/Core/Shared/Services/Articulo/articulo.service';
@@ -13,7 +14,8 @@ import { SessionStorageService } from 'src/app/Core/Shared/Services/session-stor
   styleUrls: ['./bscampus.component.scss'],
   encapsulation: ViewEncapsulation.None,
 })
-export class BSCampusComponent implements OnInit {
+export class BSCampusComponent implements OnInit,OnDestroy {
+  private signal$ = new Subject();
 
   constructor(
     private _HelperService :HelperService,
@@ -23,6 +25,10 @@ export class BSCampusComponent implements OnInit {
     private title:Title
   ) { }
 
+  ngOnDestroy(): void {
+    this.signal$.next(true)
+    this.signal$.complete()
+  }
   public migaPan: any =  [
     {
       titulo: 'Inicio',
@@ -53,7 +59,7 @@ export class BSCampusComponent implements OnInit {
     });
 
 
-    this._HelperService.recibirArrayFormacion.subscribe({
+    this._HelperService.recibirArrayFormacion.pipe(takeUntil(this.signal$)).subscribe({
       next:(x)=>{
         this.Formacion=x;
         this.Formacion.forEach(x=>{
@@ -70,7 +76,7 @@ export class BSCampusComponent implements OnInit {
     }
   }
   ListArticuloHome(IdTipoArticulo:number){
-    this._ArticuloService.ListArticuloHome(IdTipoArticulo).subscribe({
+    this._ArticuloService.ListArticuloHome(IdTipoArticulo).pipe(takeUntil(this.signal$)).subscribe({
       next:(x)=>{
         if(IdTipoArticulo==1){
           this.blog=x.listaArticuloHomeDTO

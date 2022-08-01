@@ -1,6 +1,7 @@
+import { isPlatformBrowser } from '@angular/common';
 import { HttpClient, HttpRequest } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
+import { EMPTY, Observable } from 'rxjs';
 import { ParametroObtenerEvaluacionTarea ,ModelTareaEvaluacionTareaDTO, ParametroEnvioTrabajoPares} from 'src/app/Core/Models/TareaEvaluacionDTO';
 import { environment } from 'src/environments/environment';
 
@@ -8,22 +9,40 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root'
 })
 export class TareaEvaluacionService {
+  isBrowser: boolean;
   public urlBase=environment.url_api+'TareaEvaluacion';
-  constructor(private http: HttpClient) { }
+  constructor(
+    private http: HttpClient,
+    @Inject(PLATFORM_ID) platformId: Object
+  ) {
+    this.isBrowser = isPlatformBrowser(platformId);
+  }
 
   public ObtenerEvaluacionTarea(Json:ParametroObtenerEvaluacionTarea):Observable<any>{
-    console.log(Json)
-    return this.http.post<any>(this.urlBase+'/ObtenerEvaluacionTarea',Json);
+    if(this.isBrowser){
+      console.log(Json)
+      return this.http.post<any>(this.urlBase+'/ObtenerEvaluacionTarea',Json);
+    }else{
+      return EMPTY;
+    }
   }
 
   public ObtenerEvaluacionProyectoAplicacion(Json:ParametroObtenerEvaluacionTarea):Observable<any>{
-    console.log(Json)
-    return this.http.post<any>(this.urlBase+'/ObtenerEvaluacionProyectoAplicacion',Json);
+    if(this.isBrowser){
+      console.log(Json)
+      return this.http.post<any>(this.urlBase+'/ObtenerEvaluacionProyectoAplicacion',Json);
+    }else{
+      return EMPTY;
+    }
   }
 
   public ObtenerEvaluacionTrabajoPares(Json:ParametroObtenerEvaluacionTarea):Observable<any>{
-    console.log(Json)
-    return this.http.post<any>(this.urlBase+'/ObtenerEvaluacionTrabajoPares',Json);
+    if(this.isBrowser){
+      console.log(Json)
+      return this.http.post<any>(this.urlBase+'/ObtenerEvaluacionTrabajoPares',Json);
+    }else{
+      return EMPTY;
+    }
   }
   public EnviarEvaluacionTarea(Json:ModelTareaEvaluacionTareaDTO):Observable<any>{
     console.log(Json)
@@ -44,7 +63,11 @@ export class TareaEvaluacionService {
     return this.http.request(req)
   }
   public EnviarCalificacionTrabajoPares(Json:ParametroEnvioTrabajoPares):Observable<any>{
-    console.log(Json)
-    return this.http.post<any>(this.urlBase+'/EnviarCalificacionTrabajoPares',Json);
+    if(this.isBrowser){
+      console.log(Json)
+      return this.http.post<any>(this.urlBase+'/EnviarCalificacionTrabajoPares',Json);
+    }else{
+      return EMPTY;
+    }
   }
 }

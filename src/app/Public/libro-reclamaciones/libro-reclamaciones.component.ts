@@ -1,6 +1,7 @@
 import { DatePipe } from '@angular/common';
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { Title, Meta } from '@angular/platform-browser';
+import { Subject, takeUntil } from 'rxjs';
 import {
   LibroReclamacionesDTO,
   MensajeCorreoDTO,
@@ -16,7 +17,8 @@ import { SnackBarServiceService } from 'src/app/Core/Shared/Services/SnackBarSer
   styleUrls: ['./libro-reclamaciones.component.scss'],
   encapsulation: ViewEncapsulation.None,
 })
-export class LibroReclamacionesComponent implements OnInit {
+export class LibroReclamacionesComponent implements OnInit,OnDestroy {
+  private signal$ = new Subject();
   constructor(
     private _HelperService: HelperService,
     private _DatosPortalService: DatosPortalService,
@@ -25,6 +27,10 @@ export class LibroReclamacionesComponent implements OnInit {
     private title:Title,
     private meta:Meta
   ) {}
+  ngOnDestroy(): void {
+    this.signal$.next(true)
+    this.signal$.complete()
+  }
   pipe = new DatePipe('en-US')
   public migaPan: any = [];
   public fecha = new Date();
@@ -85,6 +91,7 @@ export class LibroReclamacionesComponent implements OnInit {
     console.log(this.reclamo);
     this._LibroReclamacionService
       .RegistrarLibroReclamacion(this.reclamo)
+      .pipe(takeUntil(this.signal$))
       .subscribe({
         next: (x) => {
           console.log(x);
@@ -145,7 +152,7 @@ export class LibroReclamacionesComponent implements OnInit {
       "</div><br><br><hr><span style='font-family: Arial;font-size: 10px;line-height: 16px;text-align: justify;color: #82879e;'>Correo enviado al destinatario " +
       this.reclamo.CorreoElectronico +
       ' por nuestra web bsginstitute.com, favor de no responder a este correo debido a que es un sistema de comunicacion e informes.</span>';
-    this._LibroReclamacionService.EnvioCorreo(this.jsonCorreo).subscribe({
+    this._LibroReclamacionService.EnvioCorreo(this.jsonCorreo).pipe(takeUntil(this.signal$)).subscribe({
       next: (x) => {
         console.log(x);
         if(!x){
@@ -158,7 +165,7 @@ export class LibroReclamacionesComponent implements OnInit {
   }
 
   ObtenerCombosPortal() {
-    this._DatosPortalService.ObtenerCombosPortal().subscribe({
+    this._DatosPortalService.ObtenerCombosPortal().pipe(takeUntil(this.signal$)).subscribe({
       next: (x) => {
         console.log(x);
         this.tipodocumento = x.listaTipoDocumento;

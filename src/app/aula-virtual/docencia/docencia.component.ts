@@ -53,7 +53,7 @@ export class DocenciaComponent implements OnInit,OnDestroy {
     this.ObtenerForoProveedor();
   }
   ObtenerInformacionProveedor(){
-    this._ProveedorService.ObtenerInformacionProveedor().subscribe({
+    this._ProveedorService.ObtenerInformacionProveedor().pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
         console.log(x)
         this.DataProveedor=x
@@ -64,7 +64,7 @@ export class DocenciaComponent implements OnInit,OnDestroy {
     })
   }
   ObtenerForoProveedor(){
-    this._ProveedorService.ObtenerForoProveedor().subscribe({
+    this._ProveedorService.ObtenerForoProveedor().pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
         console.log(x)
         this.dataForo=x

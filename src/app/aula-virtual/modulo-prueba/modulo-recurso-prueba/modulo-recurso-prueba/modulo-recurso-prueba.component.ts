@@ -1,4 +1,5 @@
-import { Component, Input, OnInit, SimpleChanges } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
+import { Subject, takeUntil } from 'rxjs';
 import { HelperService } from 'src/app/Core/Shared/Services/helper.service';
 import { MaterialAdicionalService } from 'src/app/Core/Shared/Services/MaterialAdicional/material-adicional.service';
 import { VideoSesionService } from 'src/app/Core/Shared/Services/VideoSesion/video-sesion.service';
@@ -8,13 +9,18 @@ import { VideoSesionService } from 'src/app/Core/Shared/Services/VideoSesion/vid
   templateUrl: './modulo-recurso-prueba.component.html',
   styleUrls: ['./modulo-recurso-prueba.component.scss']
 })
-export class ModuloRecursoPruebaComponent implements OnInit {
+export class ModuloRecursoPruebaComponent implements OnInit,OnDestroy {
+  private signal$ = new Subject();
 
   constructor(
     private _MaterialAdicionalService:MaterialAdicionalService,
     private _HelperService:HelperService,
     private _VideoSesionService:VideoSesionService,
   ) { }
+  ngOnDestroy(): void {
+    this.signal$.next(true)
+    this.signal$.complete()
+  }
 
   @Input() Estructura:any=[]
   @Input() Capitulo='';
@@ -25,7 +31,7 @@ export class ModuloRecursoPruebaComponent implements OnInit {
   public miPerfil:any
   public Diapositivas:any
   ngOnInit(): void {
-    this._HelperService.recibirCombosPerfil.subscribe((x) => {
+    this._HelperService.recibirCombosPerfil.pipe(takeUntil(this.signal$)).subscribe((x) => {
       this.miPerfil=x
     })
   }
@@ -37,7 +43,7 @@ export class ModuloRecursoPruebaComponent implements OnInit {
 
   }
   ObtenerDiapositivas(){
-    this._VideoSesionService.ObtenerConfiguracionVideoSesion(this.idPGeneral,1).subscribe((x)=>{
+    this._VideoSesionService.ObtenerConfiguracionVideoSesion(this.idPGeneral,1).pipe(takeUntil(this.signal$)).subscribe((x)=>{
       this.Diapositivas=x;
       console.log()
     })

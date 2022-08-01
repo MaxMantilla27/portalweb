@@ -1,4 +1,5 @@
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges } from '@angular/core';
+import { Subject, takeUntil } from 'rxjs';
 import { ParametrosEstructuraEspecificaDTO } from 'src/app/Core/Models/EstructuraEspecificaDTO';
 import { ParametroEnvioTrabajoPares, ParametroObtenerEvaluacionTarea } from 'src/app/Core/Models/TareaEvaluacionDTO';
 import { SnackBarServiceService } from 'src/app/Core/Shared/Services/SnackBarService/snack-bar-service.service';
@@ -9,7 +10,8 @@ import { TareaEvaluacionService } from 'src/app/Core/Shared/Services/TareaEvalua
   templateUrl: './sesion-tarea-calificar.component.html',
   styleUrls: ['./sesion-tarea-calificar.component.scss']
 })
-export class SesionTareaCalificarComponent implements OnInit,OnChanges {
+export class SesionTareaCalificarComponent implements OnInit,OnChanges,OnDestroy {
+  private signal$ = new Subject();
 
   constructor(
     private _TareaEvaluacionService:TareaEvaluacionService,
@@ -54,6 +56,10 @@ export class SesionTareaCalificarComponent implements OnInit,OnChanges {
   public tareaAc:any;
   public cargaEnvio=false;
   public calificacion=0;
+  ngOnDestroy(): void {
+    this.signal$.next(true)
+    this.signal$.complete()
+  }
   ngOnInit(): void {
   }
   ngOnChanges(changes: SimpleChanges): void {
@@ -69,7 +75,7 @@ export class SesionTareaCalificarComponent implements OnInit,OnChanges {
     }
   }
   ObtenerEvaluacionTarea(){
-    this._TareaEvaluacionService.ObtenerEvaluacionTrabajoPares(this.params).subscribe({
+    this._TareaEvaluacionService.ObtenerEvaluacionTrabajoPares(this.params).pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
         this.tarea=x
         if(this.tarea.datosTrabajoPares!=undefined && this.tarea.datosTrabajoPares.instruccionesEvaluacion!=undefined &&
@@ -104,7 +110,7 @@ export class SesionTareaCalificarComponent implements OnInit,OnChanges {
     this.enviarJson.IdParametroEvaluacion=this.tarea.criteriosEvaluacion.idParametroEvaluacion
     this.enviarJson.IdEsquemaEvaluacionPGeneralDetalle=this.tarea.criteriosEvaluacion.idEsquemaEvaluacionPGeneralDetalle
     console.log(this.enviarJson);
-    this._TareaEvaluacionService.EnviarCalificacionTrabajoPares(this.enviarJson).subscribe({
+    this._TareaEvaluacionService.EnviarCalificacionTrabajoPares(this.enviarJson).pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
         console.log(x)
         this.tareaAc.calificado=true

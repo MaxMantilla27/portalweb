@@ -1,5 +1,6 @@
 
 import { Component , OnInit} from '@angular/core';
+declare const fbq:any;
 
 @Component({
   selector: 'app-public',
@@ -10,5 +11,8 @@ export class PublicComponent implements OnInit {
   constructor(
   ) {
   }
-  ngOnInit() {}
+  ngOnInit() {
+    console.log(fbq)
+    fbq('track', 'PageView');
+  }
 }

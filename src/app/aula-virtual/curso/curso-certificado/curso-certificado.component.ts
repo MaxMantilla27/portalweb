@@ -1,5 +1,6 @@
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges } from '@angular/core';
 import { Validators } from '@angular/forms';
+import { Subject, takeUntil } from 'rxjs';
 import { DatosAlumnoValidacionDTO } from 'src/app/Core/Models/CertificadoDTO';
 import { DatoObservableDTO } from 'src/app/Core/Models/DatoObservableDTO';
 import { formulario } from 'src/app/Core/Models/Formulario';
@@ -13,14 +14,18 @@ import { SnackBarServiceService } from 'src/app/Core/Shared/Services/SnackBarSer
   templateUrl: './curso-certificado.component.html',
   styleUrls: ['./curso-certificado.component.scss']
 })
-export class CursoCertificadoComponent implements OnInit,OnChanges {
-
+export class CursoCertificadoComponent implements OnInit,OnChanges,OnDestroy {
+  private signal$ = new Subject();
   constructor(
     private _CertificadoService:CertificadoService,
     private _HelperService:HelperService,
     private _SnackBarServiceService:SnackBarServiceService,
     private _CertificadoIntegraService:CertificadoIntegraService,
   ) { }
+  ngOnDestroy(): void {
+    this.signal$.next(true)
+    this.signal$.complete()
+  }
   @Input() idProyecto:any;
   @Input() idPGeneral=0;;
   @Input() idPEspecifico=0;
@@ -48,7 +53,7 @@ export class CursoCertificadoComponent implements OnInit,OnChanges {
   @Output() OnValidation = new EventEmitter<void>();
   @Output() OnGenerate = new EventEmitter<void>();
   ngOnInit(): void {
-    this._HelperService.recibirCombosPerfil.subscribe((x:any) => {
+    this._HelperService.recibirCombosPerfil.pipe(takeUntil(this.signal$)).subscribe((x:any) => {
       this.json.Nombres=x.datosAlumno.nombres
       this.json.Apellidos=x.datosAlumno.apellidos
 
@@ -77,7 +82,7 @@ export class CursoCertificadoComponent implements OnInit,OnChanges {
     console.log(e)
     this.json.Nombres=e.Nombres
     this.json.Apellidos=e.Apellidos
-    this._CertificadoService.InsertarValidacionDatosAlumno(this.json).subscribe({
+    this._CertificadoService.InsertarValidacionDatosAlumno(this.json).pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
         console.log(x)
         this.DatoObservable.datoContenido=true
@@ -113,7 +118,9 @@ export class CursoCertificadoComponent implements OnInit,OnChanges {
   GenerarCertificadoPorAlumnoIdMatriculaCabecera(){
     console.log(1)
     this.charge=true
-    this._CertificadoIntegraService.GenerarCertificadoPorAlumnoIdMatriculaCabecera(this.datosCertificado.idMatriculaCabecera).subscribe({
+    this._CertificadoIntegraService.GenerarCertificadoPorAlumnoIdMatriculaCabecera(this.datosCertificado.idMatriculaCabecera)
+    .pipe(takeUntil(this.signal$))
+    .subscribe({
       next:x=>{
         console.log(x)
         this.OnGenerate.emit()
@@ -128,7 +135,9 @@ export class CursoCertificadoComponent implements OnInit,OnChanges {
   GenerarCertificadoPorAlumnoPortalWebPorIdMatricula(){
     console.log(1)
     this.charge=true
-    this._CertificadoIntegraService.GenerarCertificadoPorAlumnoPortalWebPorIdMatricula(this.datosCertificado.idMatriculaCabecera).subscribe({
+    this._CertificadoIntegraService.GenerarCertificadoPorAlumnoPortalWebPorIdMatricula(this.datosCertificado.idMatriculaCabecera)
+    .pipe(takeUntil(this.signal$))
+    .subscribe({
       next:x=>{
         console.log(x)
 

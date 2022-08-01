@@ -13,7 +13,7 @@ import { SnackBarServiceService } from 'src/app/Core/Shared/Services/SnackBarSer
   encapsulation: ViewEncapsulation.None,
 })
 export class DocenciaGestionNotasRegistroComponent implements OnInit,OnDestroy {
-
+  private signal$ = new Subject();
   constructor(
     public dialogRef: MatDialogRef<DocenciaGestionNotasRegistroComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -21,7 +21,6 @@ export class DocenciaGestionNotasRegistroComponent implements OnInit,OnDestroy {
     private _SnackBarServiceService: SnackBarServiceService,
     public dialog: MatDialog
   ) { }
-  private signal$ = new Subject();
   public listadoNotas:any
   public notas:Array<NotaRegistrarDTO>=[]
   public charge=false;

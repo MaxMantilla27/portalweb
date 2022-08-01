@@ -1,7 +1,8 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Validators } from '@angular/forms';
 import { Title, Meta } from '@angular/platform-browser';
 import { Router } from '@angular/router';
+import { Subject, takeUntil } from 'rxjs';
 import { RegisterDTO } from 'src/app/Core/Models/AlumnoDTO';
 import { Basic } from 'src/app/Core/Models/BasicDTO';
 import { DatoObservableDTO } from 'src/app/Core/Models/DatoObservableDTO';
@@ -18,7 +19,8 @@ import { SessionStorageService } from 'src/app/Core/Shared/Services/session-stor
   templateUrl: './registrarse.component.html',
   styleUrls: ['./registrarse.component.scss'],
 })
-export class RegistrarseComponent implements OnInit {
+export class RegistrarseComponent implements OnInit,OnDestroy {
+  private signal$ = new Subject();
   @ViewChild(FormularioComponent)
   form!: FormularioComponent;
   constructor(
@@ -33,6 +35,10 @@ export class RegistrarseComponent implements OnInit {
 
   ) {}
 
+  ngOnDestroy(): void {
+    this.signal$.next(true);
+    this.signal$.complete();
+  }
   public migaPan = [
     {
       titulo: 'Inicio',
@@ -76,7 +82,7 @@ export class RegistrarseComponent implements OnInit {
     this.initValues = false;
     this.statuscharge = true;
     this.register = value;
-    this._AccountService.RegistrarseAlumno(this.register).subscribe({
+    this._AccountService.RegistrarseAlumno(this.register).pipe(takeUntil(this.signal$)).subscribe({
       next: (x) => {
         if (x.excepcionGenerada != undefined && x.excepcionGenerada == true) {
           this.statuscharge = false;
@@ -111,7 +117,7 @@ export class RegistrarseComponent implements OnInit {
 
   ObtenerCombosPortal() {
 
-    this._DatosPortalService.ObtenerCombosPortal().subscribe({
+    this._DatosPortalService.ObtenerCombosPortal().pipe(takeUntil(this.signal$)).subscribe({
       next: (x) => {
         this.fileds.forEach((r) => {
           if (r.nombre == 'IdPais') {
@@ -162,7 +168,7 @@ export class RegistrarseComponent implements OnInit {
     });
   }
   GetRegionesPorPais(idPais: number) {
-    this._RegionService.ObtenerCiudadesPorPais(idPais).subscribe({
+    this._RegionService.ObtenerCiudadesPorPais(idPais).pipe(takeUntil(this.signal$)).subscribe({
       next: (x) => {
         this.fileds.forEach((r) => {
           if (r.nombre == 'IdRegion') {

@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { Router } from '@angular/router';
+import { Subject, takeUntil } from 'rxjs';
 import { CarreraProfesionalTecnicaDTO } from 'src/app/Core/Models/ProgramaDTO';
 import { CarreraProfesionalService } from 'src/app/Core/Shared/Services/Carrera/carrera-profesional.service';
 import { SeoService } from 'src/app/Core/Shared/Services/seo.service';
@@ -10,7 +11,8 @@ import { SeoService } from 'src/app/Core/Shared/Services/seo.service';
   templateUrl: './educacion-tecnica.component.html',
   styleUrls: ['./educacion-tecnica.component.scss']
 })
-export class EducacionTecnicaComponent implements OnInit {
+export class EducacionTecnicaComponent implements OnInit,OnDestroy {
+  private signal$ = new Subject();
 
   public carreras: Array<CarreraProfesionalTecnicaDTO> = [];
   public encabezado: any = {};
@@ -22,6 +24,10 @@ export class EducacionTecnicaComponent implements OnInit {
     private title: Title,
     private router: Router,
   ) {}
+  ngOnDestroy(): void {
+    this.signal$.next(true)
+    this.signal$.complete()
+  }
 
   ngOnInit(): void {
 
@@ -61,7 +67,7 @@ export class EducacionTecnicaComponent implements OnInit {
     ]
   }
   getCarreras(){
-    this._CarreraProfesionalService.GetCarrerasVista(16).subscribe({
+    this._CarreraProfesionalService.GetCarrerasVista(16).pipe(takeUntil(this.signal$)).subscribe({
       next:(x)=>{
         console.log(x)
         this.carreras = x.listaProfesionVistaDTO.map(function(carrera: any) {

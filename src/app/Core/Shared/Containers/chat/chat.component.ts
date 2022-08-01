@@ -15,9 +15,9 @@ import { environment } from 'src/environments/environment';
   styleUrls: ['./chat.component.scss']
 })
 export class ChatComponent implements OnInit,OnDestroy,OnChanges {
+  private signal$ = new Subject();
 
   @ViewChild('contenidoMsj') contenidoMsj!: ElementRef;
-  private signal$ = new Subject();
   public hubConnection: any;
   constructor(
     private _ChatDetalleIntegraService:ChatDetalleIntegraService,
@@ -125,7 +125,7 @@ export class ChatComponent implements OnInit,OnDestroy,OnChanges {
   }
 
   ObtenerAsesorChat(){
-    this._ChatEnLinea.ObtenerAsesorChat(this.idProgramageneral).subscribe({
+    this._ChatEnLinea.ObtenerAsesorChat(this.idProgramageneral).pipe(takeUntil(this.signal$)).subscribe({
       next: (x) => {
         this.ChargeChat.emit(true)
         var nombre1 = x.nombreAsesor.split(" ", 3);
@@ -382,7 +382,7 @@ export class ChatComponent implements OnInit,OnDestroy,OnChanges {
   }
   AdjuntarArchivoChatSoporte(){
 
-    this._ChatDetalleIntegraService.AdjuntarArchivoChatSoporte(this.selectedFiles.item(0)).subscribe({
+    this._ChatDetalleIntegraService.AdjuntarArchivoChatSoporte(this.selectedFiles.item(0)).pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
         console.log(x)
         this.idInteraccion=this.GetsesionIdInteraccion();

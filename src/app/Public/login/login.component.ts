@@ -10,6 +10,7 @@ import { AspNetUserService } from 'src/app/Core/Shared/Services/AspNetUser/asp-n
 import { FormaPagoService } from 'src/app/Core/Shared/Services/FormaPago/forma-pago.service';
 import { HelperService } from 'src/app/Core/Shared/Services/helper.service';
 import { SessionStorageService } from 'src/app/Core/Shared/Services/session-storage.service';
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -45,6 +46,8 @@ export class LoginComponent implements OnInit {
   };
   fileds:Array<formulario>=[];
   ngOnInit(): void {
+
+
     let t:string='Iniciar Sesión'
     this.title.setTitle(t);
     this.meta.addTag({name: 'author', content: 'BSG Institute'})

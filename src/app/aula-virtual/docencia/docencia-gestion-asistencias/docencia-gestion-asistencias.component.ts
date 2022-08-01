@@ -85,7 +85,7 @@ export class DocenciaGestionAsistenciasComponent implements OnInit,OnDestroy,OnC
       disableClose: true
     });
 
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().pipe(takeUntil(this.signal$)).subscribe(result => {
       this.GenerarReporteFiltradoPortal();
     });
   }

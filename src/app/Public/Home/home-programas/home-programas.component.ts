@@ -1,5 +1,6 @@
 import { isPlatformBrowser } from '@angular/common';
-import { Component, Inject, Input, OnChanges, OnInit, PLATFORM_ID, SimpleChanges, ViewEncapsulation } from '@angular/core';
+import { Component, Inject, Input, OnChanges, OnDestroy, OnInit, PLATFORM_ID, SimpleChanges, ViewEncapsulation } from '@angular/core';
+import { Subject, takeUntil } from 'rxjs';
 import { CardProgramasDTO } from 'src/app/Core/Models/BasicDTO';
 import { ObtenerTopProgramasSendDTO } from 'src/app/Core/Models/HomeDTO';
 import { ProgramasGeneralDTO } from 'src/app/Core/Models/ProgramasGeneralesDTO';
@@ -11,11 +12,16 @@ import { HomeService } from 'src/app/Core/Shared/Services/Home/home.service';
   styleUrls: ['./home-programas.component.scss'],
   encapsulation: ViewEncapsulation.None,
 })
-export class HomeProgramasComponent implements OnInit,OnChanges {
+export class HomeProgramasComponent implements OnInit,OnChanges,OnDestroy {
+  private signal$ = new Subject();
 
   isBrowser: boolean;
   constructor(private _HomeService:HomeService, @Inject(PLATFORM_ID) platformId: Object) {
     this.isBrowser = isPlatformBrowser(platformId);
+  }
+  ngOnDestroy(): void {
+    this.signal$.next(true)
+    this.signal$.complete()
   }
   @Input() IdArea:number=0;
   @Input() change:boolean|undefined=false;
@@ -37,7 +43,7 @@ export class HomeProgramasComponent implements OnInit,OnChanges {
   }
   GetProgramasHome(){
     var json:ObtenerTopProgramasSendDTO={IdArea:this.IdArea,Top:30};
-    this._HomeService.GetProgramasHome(json).subscribe({
+    this._HomeService.GetProgramasHome(json).pipe(takeUntil(this.signal$)).subscribe({
       next:(x)=>{
         console.log(x)
         this.programas=[];

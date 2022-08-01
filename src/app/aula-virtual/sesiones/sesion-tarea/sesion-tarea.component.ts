@@ -1,5 +1,6 @@
 import { HttpEventType, HttpResponse } from '@angular/common/http';
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewEncapsulation } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges, ViewEncapsulation } from '@angular/core';
+import { Subject, takeUntil } from 'rxjs';
 import { ParametrosEstructuraEspecificaDTO } from 'src/app/Core/Models/EstructuraEspecificaDTO';
 import { ModelTareaEvaluacionTareaDTO, ParametroObtenerEvaluacionTarea } from 'src/app/Core/Models/TareaEvaluacionDTO';
 import { SnackBarServiceService } from 'src/app/Core/Shared/Services/SnackBarService/snack-bar-service.service';
@@ -11,7 +12,8 @@ import { TareaEvaluacionService } from 'src/app/Core/Shared/Services/TareaEvalua
   styleUrls: ['./sesion-tarea.component.scss'],
   encapsulation: ViewEncapsulation.None,
 })
-export class SesionTareaComponent implements OnInit,OnChanges {
+export class SesionTareaComponent implements OnInit,OnChanges,OnDestroy {
+  private signal$ = new Subject();
 
   constructor(
     private _TareaEvaluacionService:TareaEvaluacionService,
@@ -64,6 +66,10 @@ export class SesionTareaComponent implements OnInit,OnChanges {
   }
   public progress=0
   public selectedFiles?: FileList;
+  ngOnDestroy(): void {
+    this.signal$.next(true)
+    this.signal$.complete()
+  }
   ngOnInit(): void {
   }
   ngOnChanges(changes: SimpleChanges): void {
@@ -77,7 +83,7 @@ export class SesionTareaComponent implements OnInit,OnChanges {
     }
   }
   ObtenerEvaluacionTarea(){
-    this._TareaEvaluacionService.ObtenerEvaluacionTarea(this.params).subscribe({
+    this._TareaEvaluacionService.ObtenerEvaluacionTarea(this.params).pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
         this.tarea=x
         if(this.tarea.datosEvaluacionTrabajo!=undefined && this.tarea.datosEvaluacionTrabajo.instruccionesEvaluacion!=undefined &&
@@ -138,7 +144,7 @@ export class SesionTareaComponent implements OnInit,OnChanges {
       }else{
         this.setData()
         console.log(this.sendFile)
-        this._TareaEvaluacionService.EnviarEvaluacionTarea(this.sendFile).subscribe({
+        this._TareaEvaluacionService.EnviarEvaluacionTarea(this.sendFile).pipe(takeUntil(this.signal$)).subscribe({
           next:x=>{
             if (x.type === HttpEventType.UploadProgress) {
               this.progress = Math.round(100 * x.loaded / x.total);

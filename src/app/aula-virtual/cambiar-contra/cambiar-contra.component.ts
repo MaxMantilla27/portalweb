@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import {
   FormArray,
   FormBuilder,
@@ -7,6 +7,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { Router } from '@angular/router';
+import { Subject, takeUntil } from 'rxjs';
 import { CambioPasswordDTO } from 'src/app/Core/Models/AccountDTO';
 import { AccountService } from 'src/app/Core/Shared/Services/Account/account.service';
 import { SessionStorageService } from 'src/app/Core/Shared/Services/session-storage.service';
@@ -19,7 +20,8 @@ import { ConfirmedValidator } from 'src/app/Core/Shared/Validators/ConfirmedVali
   styleUrls: ['./cambiar-contra.component.scss'],
   encapsulation: ViewEncapsulation.None,
 })
-export class CambiarContraComponent implements OnInit {
+export class CambiarContraComponent implements OnInit,OnDestroy {
+  private signal$ = new Subject();
   public userForm: FormGroup = new FormGroup({});
   constructor(
     private fb: FormBuilder,
@@ -33,6 +35,10 @@ export class CambiarContraComponent implements OnInit {
       contraNueva: ['', [Validators.required, Validators.minLength(6)]],
       contraNuevaRepeat: ['', [Validators.required, ConfirmedValidator('')]],
     });
+  }
+  ngOnDestroy(): void {
+    this.signal$.next(true)
+    this.signal$.complete()
   }
 
   public migaPan = [
@@ -52,7 +58,7 @@ export class CambiarContraComponent implements OnInit {
       this.datos.ConfirmPassword = this.userForm.get('contraNuevaRepeat')?.value;
       this.datos.OldPassword = this.userForm.get('contraActual')?.value;
       this.datos.NewPassword = this.userForm.get('contraNueva')?.value;
-      this._AccountService.ActualizarPasswordCuenta(this.datos).subscribe({
+      this._AccountService.ActualizarPasswordCuenta(this.datos).pipe(takeUntil(this.signal$)).subscribe({
         next:x=>{
           console.log(x)
           if(x.descripcionGeneral!=undefined){

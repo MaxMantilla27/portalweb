@@ -1,6 +1,7 @@
+import { isPlatformBrowser } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
+import { EMPTY, Observable } from 'rxjs';
 import { ParametroEnvioEncuestaDTO, ParametrosEncuestaDTO } from 'src/app/Core/Models/EncuestaDTO';
 import { environment } from 'src/environments/environment';
 
@@ -8,15 +9,29 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root'
 })
 export class EncuestaService {
+  isBrowser: boolean;
   public urlBase=environment.url_api+'Encuesta';
-  constructor(private http: HttpClient) { }
+  constructor(
+    private http: HttpClient,
+    @Inject(PLATFORM_ID) platformId: Object
+  ) {
+    this.isBrowser = isPlatformBrowser(platformId);
+  }
 
   public ObtenerEncuestaEvaluacion(Json:ParametrosEncuestaDTO):Observable<any>{
-    console.log(Json)
-    return this.http.post<any>(this.urlBase+'/ObtenerEncuestaEvaluacion',Json);
+    if(this.isBrowser){
+      console.log(Json)
+      return this.http.post<any>(this.urlBase+'/ObtenerEncuestaEvaluacion',Json);
+    }else{
+      return EMPTY;
+    }
   }
   public EnviarEncuestaEvaluacion(Json:ParametroEnvioEncuestaDTO):Observable<any>{
-    console.log(Json)
-    return this.http.post<any>(this.urlBase+'/EnviarEncuestaEvaluacion',Json);
+    if(this.isBrowser){
+      console.log(Json)
+      return this.http.post<any>(this.urlBase+'/EnviarEncuestaEvaluacion',Json);
+    }else{
+      return EMPTY;
+    }
   }
 }

@@ -1,5 +1,6 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { Form, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Subject, takeUntil } from 'rxjs';
 import { combosPerfilDTO, datosAlumnoEnvioDTO } from 'src/app/Core/Models/AlumnoDTO';
 import { DatoObservableDTO } from 'src/app/Core/Models/DatoObservableDTO';
 import { AlumnoService } from 'src/app/Core/Shared/Services/Alumno/alumno.service';
@@ -15,13 +16,18 @@ import { SnackBarServiceService } from 'src/app/Core/Shared/Services/SnackBarSer
   styleUrls: ['./mi-perfil.component.scss'],
   encapsulation: ViewEncapsulation.None,
 })
-export class MiPerfilComponent implements OnInit {
+export class MiPerfilComponent implements OnInit,OnDestroy {
+  private signal$ = new Subject();
   constructor(private _HelperService: HelperService,
     private _RegionService:RegionService,
     private _AlumnoService:AlumnoService,
     private _SessionStorageService:SessionStorageService,
     private _SnackBarServiceService: SnackBarServiceService,
     ) {}
+  ngOnDestroy(): void {
+    this.signal$.next(true)
+    this.signal$.complete()
+  }
   public migaPan = [
     {
       titulo: 'Mi Perfil',
@@ -110,7 +116,7 @@ export class MiPerfilComponent implements OnInit {
     Terminos: new FormControl(this.combosPerfil.datosAlumno.idGenero,Validators.requiredTrue),
   })
   ngOnInit(): void {
-    this._HelperService.recibirCombosPerfil.subscribe((x) => {
+    this._HelperService.recibirCombosPerfil.pipe(takeUntil(this.signal$)).subscribe((x) => {
       console.log(x);
       this.combosPerfil = x;
       this.userForm.patchValue({
@@ -133,12 +139,12 @@ export class MiPerfilComponent implements OnInit {
         Terminos: false,
       });
     });
-    this._HelperService.recibirDatosAvatar.subscribe(x=>this.imgAvtar=x.UrlAvatar)
+    this._HelperService.recibirDatosAvatar.pipe(takeUntil(this.signal$)).subscribe(x=>this.imgAvtar=x.UrlAvatar)
   }
 
   GetRegionPorPais(){
 
-    this._RegionService.ObtenerCiudadesPorPais(this.userForm.get('Pais')?.value).subscribe({
+    this._RegionService.ObtenerCiudadesPorPais(this.userForm.get('Pais')?.value).pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
         console.log(x)
         this.combosPerfil.listaCiudad=x;
@@ -169,7 +175,7 @@ export class MiPerfilComponent implements OnInit {
       this.DatosAlumnoEnvio.idAreaTrabajo = this.userForm.get('AreaTrabajo')?.value;
       this.DatosAlumnoEnvio.idAreaFormacion = this.userForm.get('AreaFormacion')?.value;
       this.DatosAlumnoEnvio.idIndustria = this.userForm.get('Industria')?.value;
-      this._AlumnoService.ActualizarPerfilAlumno(this.DatosAlumnoEnvio).subscribe({
+      this._AlumnoService.ActualizarPerfilAlumno(this.DatosAlumnoEnvio).pipe(takeUntil(this.signal$)).subscribe({
         next: (x) => {
           this._SnackBarServiceService.openSnackBar("Los cambios se han guardado correctamente",'x',15,"snackbarCrucigramaSucces");
         },

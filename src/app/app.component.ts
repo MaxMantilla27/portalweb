@@ -1,7 +1,7 @@
 import { isPlatformBrowser } from '@angular/common';
-import { AfterViewInit, Component, Inject, OnInit, PLATFORM_ID, ViewEncapsulation } from '@angular/core';
+import { AfterViewInit, Component, Inject, OnDestroy, OnInit, PLATFORM_ID, ViewEncapsulation } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
-import { tap } from 'rxjs';
+import { Subject, takeUntil, tap } from 'rxjs';
 import { BasicBotonesExpandibles } from './Core/Models/BasicDTO';
 import { GlobalService } from './Core/Shared/Services/Global/global.service';
 import { HelperService } from './Core/Shared/Services/helper.service';
@@ -13,7 +13,8 @@ import { SessionStorageService } from './Core/Shared/Services/session-storage.se
   styleUrls: ['./app.component.scss'],
   encapsulation: ViewEncapsulation.None,
 })
-export class AppComponent implements OnInit,AfterViewInit  {
+export class AppComponent implements OnInit,AfterViewInit ,OnDestroy {
+  private signal$ = new Subject();
   title = 'PortalWeb';
   isBrowser: boolean;
   public charge=false
@@ -30,6 +31,10 @@ export class AppComponent implements OnInit,AfterViewInit  {
     private _SessionStorageService: SessionStorageService,
   ) {
     this.isBrowser = isPlatformBrowser(platformId);
+  }
+  ngOnDestroy(): void {
+    this.signal$.next(true)
+    this.signal$.complete()
   }
   public Expandibles:Array<BasicBotonesExpandibles> = [
     {
@@ -51,7 +56,7 @@ export class AppComponent implements OnInit,AfterViewInit  {
   public IdPGeneral=0;
   public stateToekn=false
   ngOnInit() {
-    this.router.events.subscribe((val) => {
+    this.router.events.pipe(takeUntil(this.signal$)).subscribe((val) => {
       this.IdPGeneral=0;
       this.stateToekn=this._SessionStorageService.validateTokken();
     });
@@ -70,7 +75,7 @@ export class AppComponent implements OnInit,AfterViewInit  {
     }
   }
   ObtenerCodigoIso(){
-    this._GlobalService.ObtenerCodigoIso().subscribe({
+    this._GlobalService.ObtenerCodigoIso().pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
       this._SessionStorageService.SessionSetValue('ISO_PAIS',x.codigoISO);
       this.CodigoIso=x.codigoISO;
@@ -79,7 +84,7 @@ export class AppComponent implements OnInit,AfterViewInit  {
   }
   RegistroInteraccionInicial(){
     console.log(12)
-    this._GlobalService.RegistroInteraccionInicial().subscribe({
+    this._GlobalService.RegistroInteraccionInicial().pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
       this._SessionStorageService.SessionSetValue('usuarioWeb',x.identificadorUsuario);
       this.usuarioWeb=x.identificadorUsuario
@@ -88,13 +93,13 @@ export class AppComponent implements OnInit,AfterViewInit  {
     }})
   }
   InsertarContactoPortal(){
-    this._GlobalService.InsertarContactoPortal().subscribe({
+    this._GlobalService.InsertarContactoPortal().pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
       }
     });
   }
   ngAfterViewInit() {
-    this.router.events.subscribe((val) => {
+    this.router.events.pipe(takeUntil(this.signal$)).subscribe((val) => {
       if (val instanceof NavigationEnd) {
         if(this.isBrowser){
           document.querySelector('.mat-sidenav-content')!.scrollTop = 0;

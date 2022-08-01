@@ -1,5 +1,6 @@
 import { HttpEventType, HttpResponse } from '@angular/common/http';
-import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
+import { Subject, takeUntil } from 'rxjs';
 import { ParametrosEstructuraEspecificaDTO } from 'src/app/Core/Models/EstructuraEspecificaDTO';
 import { ModelTareaEvaluacionTareaDTO, ParametroObtenerEvaluacionTarea } from 'src/app/Core/Models/TareaEvaluacionDTO';
 import { HelperService } from 'src/app/Core/Shared/Services/helper.service';
@@ -11,12 +12,17 @@ import { TareaEvaluacionService } from 'src/app/Core/Shared/Services/TareaEvalua
   templateUrl: './curso-proyecto.component.html',
   styleUrls: ['./curso-proyecto.component.scss'],
 })
-export class CursoProyectoComponent implements OnInit,OnChanges {
+export class CursoProyectoComponent implements OnInit,OnChanges,OnDestroy {
+  private signal$ = new Subject();
   constructor(
     private _TareaEvaluacionService: TareaEvaluacionService,
     private _SnackBarServiceService: SnackBarServiceService,
     private _HelperService:HelperService
   ) {}
+  ngOnDestroy(): void {
+    this.signal$.next(true)
+    this.signal$.complete()
+  }
   @Input() idProyecto:any;
   @Input() idPGeneral=0;;
   @Input() idPEspecifico=0;
@@ -51,7 +57,7 @@ export class CursoProyectoComponent implements OnInit,OnChanges {
     file:new File([],'')
   }
   ngOnInit(): void {
-    this._HelperService.recibirCombosPerfil.subscribe((x) => {
+    this._HelperService.recibirCombosPerfil.pipe(takeUntil(this.signal$)).subscribe((x) => {
       this.miPerfil=x
     })
   }
@@ -73,7 +79,7 @@ export class CursoProyectoComponent implements OnInit,OnChanges {
     return Math.min(...array.map(o => o.valor))
   }
   ObtenerEvaluacionProyectoAplicacion(){
-    this._TareaEvaluacionService.ObtenerEvaluacionProyectoAplicacion(this.params).subscribe({
+    this._TareaEvaluacionService.ObtenerEvaluacionProyectoAplicacion(this.params).pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
         console.log(x)
         this.proyecto=x
@@ -125,7 +131,7 @@ export class CursoProyectoComponent implements OnInit,OnChanges {
       }else{
         this.setData()
         console.log(this.sendFile)
-        this._TareaEvaluacionService.EnviarEvaluacionTarea(this.sendFile).subscribe({
+        this._TareaEvaluacionService.EnviarEvaluacionTarea(this.sendFile).pipe(takeUntil(this.signal$)).subscribe({
           next:x=>{
             if (x.type === HttpEventType.UploadProgress) {
               this.progress = Math.round(100 * x.loaded / x.total);

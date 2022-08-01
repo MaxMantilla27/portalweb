@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { Meta, Title } from '@angular/platform-browser';
+import { Subject, takeUntil } from 'rxjs';
 import { TerminosCondicionesService } from 'src/app/Core/Shared/Services/TerminosCondiciones/terminos-condiciones.service';
 
 @Component({
@@ -9,11 +10,17 @@ import { TerminosCondicionesService } from 'src/app/Core/Shared/Services/Termino
   encapsulation: ViewEncapsulation.None,
 })
 export class TerminosCondicionesComponent implements OnInit {
+  private signal$ = new Subject();
   constructor(
     private _TerminosCondicionesService: TerminosCondicionesService,
     private title:Title,
     private meta:Meta
   ) {}
+
+  ngOnDestroy(): void {
+    this.signal$.next(true);
+    this.signal$.complete();
+  }
   public nombre='';
   public contenido=''
   public migaPan = [
@@ -33,7 +40,7 @@ export class TerminosCondicionesComponent implements OnInit {
     this.ObtenerTerminosCondiciones();
   }
   ObtenerTerminosCondiciones() {
-    this._TerminosCondicionesService.ObtenerTerminosCondiciones().subscribe({
+    this._TerminosCondicionesService.ObtenerTerminosCondiciones().pipe(takeUntil(this.signal$)).subscribe({
       next: (x) => {
         console.log(x);
         this.nombre=this.capitalizeFirstLetter(x.nombre.toLowerCase());

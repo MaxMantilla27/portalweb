@@ -1,5 +1,6 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Subject, takeUntil } from 'rxjs';
 import { ForoDTO } from 'src/app/Core/Models/ForoDTO';
 import { ForoCursoService } from 'src/app/Core/Shared/Services/ForoCurso/foro-curso.service';
 
@@ -9,7 +10,8 @@ import { ForoCursoService } from 'src/app/Core/Shared/Services/ForoCurso/foro-cu
   templateUrl: './modulo-foro-insert.component.html',
   styleUrls: ['./modulo-foro-insert.component.scss'],
 })
-export class ModuloForoInsertComponent implements OnInit {
+export class ModuloForoInsertComponent implements OnInit,OnDestroy {
+  private signal$ = new Subject();
   public userForm: FormGroup = new FormGroup({});
   constructor(
     private fb: FormBuilder,
@@ -18,6 +20,10 @@ export class ModuloForoInsertComponent implements OnInit {
     Titulo: ['', [Validators.required]],
     Contenido: ['', [Validators.required]],
   });
+  }
+  ngOnDestroy(): void {
+    this.signal$.next(true)
+    this.signal$.complete()
   }
   @Input() valorNavegacionForo=-1;
   @Input() IdPprincipal=0;
@@ -45,7 +51,7 @@ export class ModuloForoInsertComponent implements OnInit {
     this.ForoCurso.idPEspecificoHijo = this.IdPEspecificoHijo;
     this.ForoCurso.titulo =this.userForm.get('Titulo')?.value;
     this.ForoCurso.contenido = this.userForm.get('Contenido')?.value;
-    this._ForoCursoService.InsertarForoCursoPorUsuario(this.ForoCurso).subscribe({
+    this._ForoCursoService.InsertarForoCursoPorUsuario(this.ForoCurso).pipe(takeUntil(this.signal$)).subscribe({
       next: (x) => {
         console.log(x);
         this.VolverAtras();

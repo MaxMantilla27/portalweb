@@ -13,7 +13,7 @@ import { TrabajoDeParesIntegraService } from 'src/app/Core/Shared/Services/Traba
   styleUrls: ['./docencia-tareas.component.scss']
 })
 export class DocenciaTareasComponent implements OnInit,OnDestroy {
-
+  private signal$ = new Subject();
   constructor(
     private _TareaEvaluacionService:TareaEvaluacionService,
     private _SnackBarServiceService:SnackBarServiceService,
@@ -21,7 +21,6 @@ export class DocenciaTareasComponent implements OnInit,OnDestroy {
     private _ActivatedRoute:ActivatedRoute,
     private _OperacionesNotaService:OperacionesNotaService
   ) { }
-  private signal$ = new Subject();
 
   ngOnDestroy(): void {
     this.signal$.next(true);
@@ -134,7 +133,7 @@ export class DocenciaTareasComponent implements OnInit,OnDestroy {
     this.enviarJson.IdParametroEvaluacion=this.tareas.criteriosEvaluacion.idParametroEvaluacion
     this.enviarJson.IdEsquemaEvaluacionPGeneralDetalle=this.tareas.criteriosEvaluacion.idEsquemaEvaluacionPGeneralDetalle
     console.log(this.enviarJson);
-    this._TareaEvaluacionService.EnviarCalificacionTrabajoPares(this.enviarJson).subscribe({
+    this._TareaEvaluacionService.EnviarCalificacionTrabajoPares(this.enviarJson).pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
         console.log(x)
         this.ObtenerEvaluacionTarea()

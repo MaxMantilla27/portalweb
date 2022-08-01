@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, Input, OnInit, SimpleChanges } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Subject, takeUntil } from 'rxjs';
 import { ValidacionChatEnvioDTO, ValidacionChatFormularioDTO } from 'src/app/Core/Models/ChatEnLineaDTO';
 import { formulario } from 'src/app/Core/Models/Formulario';
 import { ChatEnLineaService } from 'src/app/Core/Shared/Services/ChatEnLinea/chat-en-linea.service';
@@ -12,7 +13,8 @@ import { SnackBarServiceService } from 'src/app/Core/Shared/Services/SnackBarSer
   templateUrl: './chat-en-linea.component.html',
   styleUrls: ['./chat-en-linea.component.scss']
 })
-export class ChatEnLineaComponent implements OnInit {
+export class ChatEnLineaComponent implements OnInit,OnDestroy {
+  private signal$ = new Subject();
   public userForm: FormGroup = new FormGroup({});
   constructor(
     private http: HttpClient,
@@ -25,6 +27,10 @@ export class ChatEnLineaComponent implements OnInit {
   ) { this.userForm =fb.group({
     Mensaje: ['', [Validators.required]],
   });
+  }
+  ngOnDestroy(): void {
+    this.signal$.next(true)
+    this.signal$.complete()
   }
   public message ='';
   public messages:any;
@@ -58,7 +64,7 @@ export class ChatEnLineaComponent implements OnInit {
   ngOnInit(): void {
     /* this.ObtenerConfiguracionChat(); */
       this.AddFields();
-      this._HelperService.recibirCombosPerfil.subscribe((x) => {
+      this._HelperService.recibirCombosPerfil.pipe(takeUntil(this.signal$)).subscribe((x) => {
         this.combosPrevios=x.datosAlumno;
         this.formularioContactoChat.Nombres= this.combosPrevios.nombres,
         this.formularioContactoChat.Apellidos= this.combosPrevios.apellidos,
@@ -95,7 +101,7 @@ export class ChatEnLineaComponent implements OnInit {
       this.DatosEnvioFormulario.Movil = value.Movil;
       this.DatosEnvioFormulario.EstadoAsesor = '1';
       this.DatosEnvioFormulario.IdPrograma = this.IdPGeneral;
-      this._ChatEnLinea.ValidarCrearOportunidadChat(this.DatosEnvioFormulario).subscribe({
+      this._ChatEnLinea.ValidarCrearOportunidadChat(this.DatosEnvioFormulario).pipe(takeUntil(this.signal$)).subscribe({
         next:(x)=>{
           this.validacionChat=x
         }
@@ -140,7 +146,7 @@ export class ChatEnLineaComponent implements OnInit {
       this.formularioContactoChat.Movil= ''
   }
   ObtenerAsesorChat(){
-    this._ChatEnLinea.ObtenerAsesorChat(this.IdPGeneral).subscribe({
+    this._ChatEnLinea.ObtenerAsesorChat(this.IdPGeneral).pipe(takeUntil(this.signal$)).subscribe({
       next: (x) => {
         this.nombreAsesor=x.nombreAsesor;
         var Asesor = this.nombreAsesor.split(' ');

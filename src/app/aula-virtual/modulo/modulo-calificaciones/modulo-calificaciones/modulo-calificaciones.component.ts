@@ -1,4 +1,5 @@
-import { Component, Input, OnInit, SimpleChanges } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
+import { Subject, takeUntil } from 'rxjs';
 import { NotaService } from 'src/app/Core/Shared/Services/Nota/nota.service';
 
 @Component({
@@ -6,11 +7,15 @@ import { NotaService } from 'src/app/Core/Shared/Services/Nota/nota.service';
   templateUrl: './modulo-calificaciones.component.html',
   styleUrls: ['./modulo-calificaciones.component.scss']
 })
-export class ModuloCalificacionesComponent implements OnInit {
-
+export class ModuloCalificacionesComponent implements OnInit,OnDestroy {
+  private signal$ = new Subject();
   constructor(
     private _NotaService:NotaService
   ) { }
+  ngOnDestroy(): void {
+    this.signal$.next(true)
+    this.signal$.complete()
+  }
 
   @Input() IdMatriculaCabecera=0
   @Input() IdPEspecifico=0
@@ -31,7 +36,7 @@ export class ModuloCalificacionesComponent implements OnInit {
 
   }
   ObtenerCriteriosEvaluacionCurso(){
-    this._NotaService.ListadoCriteriosEvaluacionPorCurso(this.IdMatriculaCabecera,this.IdPEspecifico,1).subscribe({
+    this._NotaService.ListadoCriteriosEvaluacionPorCurso(this.IdMatriculaCabecera,this.IdPEspecifico,1).pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
         this.calificacionesCurso=x;
         this.error=x.excepcion.excepcionGenerada;

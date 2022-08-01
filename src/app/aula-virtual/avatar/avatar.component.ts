@@ -1,7 +1,8 @@
 import { ThisReceiver } from '@angular/compiler';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { Subject, takeUntil } from 'rxjs';
 import {
   AvatarCombosDTO,
   AvatarDTO,
@@ -20,7 +21,8 @@ import { SnackBarServiceService } from 'src/app/Core/Shared/Services/SnackBarSer
   templateUrl: './avatar.component.html',
   styleUrls: ['./avatar.component.scss'],
 })
-export class AvatarComponent implements OnInit {
+export class AvatarComponent implements OnInit,OnDestroy {
+  private signal$ = new Subject();
   constructor(
     private _HelperService: HelperService,
     private _AvatarService: AvatarService,
@@ -28,6 +30,10 @@ export class AvatarComponent implements OnInit {
     private router: Router,
     private _SnackBarServiceService: SnackBarServiceService,
   ) {}
+  ngOnDestroy(): void {
+    this.signal$.next(true)
+    this.signal$.complete()
+  }
   public migaPan = [
     {
       titulo: 'Mi perfil',
@@ -109,7 +115,7 @@ export class AvatarComponent implements OnInit {
 
   ngOnInit(): void {
     this.AddFields(),
-      this._HelperService.recibirDatosAvatar.subscribe((x) => {
+      this._HelperService.recibirDatosAvatar.pipe(takeUntil(this.signal$)).subscribe((x) => {
         this.datosAvatar = x.DatosAvatar;
         this.imgAvatar = x.UrlAvatar;
         this.combosAvatar = x;
@@ -338,7 +344,7 @@ export class AvatarComponent implements OnInit {
     this.initValues = false;
     this.statuscharge = true;
     this.DatosAvatarEnvio = value;
-    this._AvatarService.ActualizarAvatar(this.DatosAvatarEnvio).subscribe({
+    this._AvatarService.ActualizarAvatar(this.DatosAvatarEnvio).pipe(takeUntil(this.signal$)).subscribe({
       next: (x) => {
         console.log(x);
         this._SnackBarServiceService.openSnackBar("Se modifico el avatar",'x',15,"snackbarCrucigramaSucces");

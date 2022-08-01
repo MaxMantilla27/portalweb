@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, ElementRef, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
 import { Validators } from '@angular/forms';
 import {ActivatedRoute, Router} from "@angular/router";
 import { Basic } from 'src/app/Core/Models/BasicDTO';
@@ -17,6 +17,7 @@ import {
 } from "../../../Core/Shared/Services/EstructuraCurricular/estructura-curricular.service";
 import { Title } from '@angular/platform-browser';
 import { SeoService } from 'src/app/Core/Shared/Services/seo.service';
+import { Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-education-tecnica-detalle',
@@ -25,7 +26,8 @@ import { SeoService } from 'src/app/Core/Shared/Services/seo.service';
   encapsulation: ViewEncapsulation.None,
 
 })
-export class EducationTecnicaDetalleComponent implements OnInit {
+export class EducationTecnicaDetalleComponent implements OnInit,OnDestroy {
+  private signal$ = new Subject();
 
   public migaPan: any = [];
   //public carrera: CarreraProfesionalTecnicaDetalleDTO = {};
@@ -60,6 +62,10 @@ export class EducationTecnicaDetalleComponent implements OnInit {
     private _SeoService:SeoService,
     private title:Title
   ) { }
+  ngOnDestroy(): void {
+    this.signal$.next(true)
+    this.signal$.complete()
+  }
 
   statuscharge = false;
   formVal: boolean = false;
@@ -99,7 +105,7 @@ export class EducationTecnicaDetalleComponent implements OnInit {
         urlWeb: '/tecnicos-productivos'
       }
     ]
-    this.activatedRoute.params.subscribe((params) => {
+    this.activatedRoute.params.pipe(takeUntil(this.signal$)).subscribe((params) => {
       //Lo separamos en partes
       console.log(params)
       let auxParams = params["urlWeb"].split('-')
@@ -112,7 +118,7 @@ export class EducationTecnicaDetalleComponent implements OnInit {
       })
       this.getCarreraDetalle(idBusqueda, nombre)
     });
-    this._HelperServiceP.recibirCombosPerfil.subscribe((x) => {
+    this._HelperServiceP.recibirCombosPerfil.pipe(takeUntil(this.signal$)).subscribe((x) => {
       this.combosPrevios=x.datosAlumno;
       console.log(this.combosPrevios)
       this.formularioContacto.Nombres= this.combosPrevios.nombres,
@@ -130,7 +136,7 @@ export class EducationTecnicaDetalleComponent implements OnInit {
     this.ObtenerCombosPortal();
   }
   getCarreraDetalle(idBusqueda:number, nombre:string){
-    this._CarreraProfesionalService.GetEducacionTecnicaDetalle(idBusqueda, nombre).subscribe({
+    this._CarreraProfesionalService.GetEducacionTecnicaDetalle(idBusqueda, nombre).pipe(takeUntil(this.signal$)).subscribe({
       next:(x)=>{
 
         if(x.programaInformacionDTO!=undefined && x.programaInformacionDTO.parametroSeoProgramaDTO!=undefined){
@@ -186,7 +192,7 @@ export class EducationTecnicaDetalleComponent implements OnInit {
     });
   }
   getEstructuraCurricularEstudacionTecnica(idBusqueda: number) {
-    this._EstructuraCurricularService.GetEstructuraCarreraTecnicaPortal(idBusqueda).subscribe({
+    this._EstructuraCurricularService.GetEstructuraCarreraTecnicaPortal(idBusqueda).pipe(takeUntil(this.signal$)).subscribe({
       next:(x)=>{
         this.estructuraCurricular = x.estructuraCurso
         this.estructuraCurricular.map((x:any)=>{
@@ -229,7 +235,7 @@ export class EducationTecnicaDetalleComponent implements OnInit {
       this.DatosEnvioFormulario.IdAreaTrabajo=value.IdAreaTrabajo;
       this.DatosEnvioFormulario.IdIndustria=value.IdIndustria;
       console.log(this.DatosEnvioFormulario)
-      this._HelperService.EnviarFormulario(this.DatosEnvioFormulario).subscribe({
+      this._HelperService.EnviarFormulario(this.DatosEnvioFormulario).pipe(takeUntil(this.signal$)).subscribe({
         next: (x) => {
           console.log(x);
         },
@@ -240,7 +246,7 @@ export class EducationTecnicaDetalleComponent implements OnInit {
     }
   }
   ObtenerCombosPortal(){
-    this._DatosPortalService.ObtenerCombosPortal().subscribe({
+    this._DatosPortalService.ObtenerCombosPortal().pipe(takeUntil(this.signal$)).subscribe({
       next:(x)=>{
         console.log(x);
         this.fileds.forEach(r=>{
@@ -256,7 +262,7 @@ export class EducationTecnicaDetalleComponent implements OnInit {
     this.initValues = true;
   }
   GetRegionesPorPais(idPais:number){
-    this._RegionService.ObtenerCiudadesPorPais(idPais).subscribe({
+    this._RegionService.ObtenerCiudadesPorPais(idPais).pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
         this.fileds.forEach(r=>{
           if(r.nombre=='IdRegion'){

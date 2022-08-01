@@ -1,28 +1,50 @@
+import { isPlatformBrowser } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
+import { EMPTY, Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class GlobalService {
-
+  isBrowser: boolean;
   public urlBase=environment.url_api+'Global';
-  constructor(private http: HttpClient) { }
+  constructor(
+    private http: HttpClient,
+    @Inject(PLATFORM_ID) platformId: Object
+  ) {
+    this.isBrowser = isPlatformBrowser(platformId);
+  }
 
   public RegistroInteraccionInicial():Observable<any>{
     console.log('--------')
-    return this.http.get<any>(this.urlBase+'/RegistroInteraccionInicial');
+    if(this.isBrowser){
+      return this.http.get<any>(this.urlBase+'/RegistroInteraccionInicial');
+    }else{
+      return EMPTY;
+    }
   }
   public ObtenerCodigoIso():Observable<any>{
-    return this.http.get<any>(this.urlBase+'/ObtenerCodigoIso');
+    if(this.isBrowser){
+      return this.http.get<any>(this.urlBase+'/ObtenerCodigoIso');
+    }else{
+      return EMPTY;
+    }
   }
 
   public InsertarContactoPortal():Observable<any>{
-    return this.http.get<any>(this.urlBase+'/InsertarContactoPortal');
+    if(this.isBrowser){
+      return this.http.get<any>(this.urlBase+'/InsertarContactoPortal');
+    }else{
+      return EMPTY;
+    }
   }
   public ObtenerIdAlumnoPorUsuario():Observable<any>{
-    return this.http.get<any>(this.urlBase+'/ObtenerIdAlumnoPorUsuario');
+    if(this.isBrowser){
+      return this.http.get<any>(this.urlBase+'/ObtenerIdAlumnoPorUsuario');
+    }else{
+      return EMPTY;
+    }
   }
 }

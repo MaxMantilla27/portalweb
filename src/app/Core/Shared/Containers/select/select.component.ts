@@ -1,6 +1,7 @@
-import { AfterViewInit, Component, EventEmitter, Input, OnInit, Output, SimpleChanges, ViewChild, ViewEncapsulation } from '@angular/core';
+import { AfterViewInit, Component, EventEmitter, Input, OnDestroy, OnInit, Output, SimpleChanges, ViewChild, ViewEncapsulation } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MatSelect, MAT_SELECT_CONFIG } from '@angular/material/select';
+import { Subject, takeUntil } from 'rxjs';
 import { Basic, BasicUrl, BasicUrlIcon } from 'src/app/Core/Models/BasicDTO';
 
 @Component({
@@ -15,14 +16,19 @@ import { Basic, BasicUrl, BasicUrlIcon } from 'src/app/Core/Models/BasicDTO';
     },
   ],
 })
-export class SelectComponent implements OnInit,AfterViewInit {
+export class SelectComponent implements OnInit,AfterViewInit,OnDestroy {
+  private signal$ = new Subject();
 
   @ViewChild('myselsetc') myselsetc!: MatSelect;
   constructor() { }
+  ngOnDestroy(): void {
+    this.signal$.next(true)
+    this.signal$.complete()
+  }
   ngAfterViewInit(): void {
 
     console.log(this.myselsetc)
-    this.myselsetc.openedChange.subscribe((open) => {
+    this.myselsetc.openedChange.pipe(takeUntil(this.signal$)).subscribe((open) => {
       if (open) {
         var itemAc=this.myselsetc.options['_results'].find((x:any)=>x._selected==true);
         if(itemAc!=undefined){

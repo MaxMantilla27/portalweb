@@ -1,5 +1,6 @@
-import { Component, ElementRef, Input, OnInit, SimpleChanges, ViewChild, ViewEncapsulation } from '@angular/core';
+import { Component, ElementRef, Input, OnDestroy, OnInit, SimpleChanges, ViewChild, ViewEncapsulation } from '@angular/core';
 import { CloudflareStreamComponent } from '@cloudflare/stream-angular';
+import { Subject, takeUntil } from 'rxjs';
 import { ParametrosEstructuraEspecificaDTO, RegistroVideoUltimaVisualizacionDTO } from 'src/app/Core/Models/EstructuraEspecificaDTO';
 import { HelperService } from '../../../Services/helper.service';
 import { VideoSesionService } from '../../../Services/VideoSesion/video-sesion.service';
@@ -10,7 +11,8 @@ declare var $:any;
   styleUrls: ['./video-brightcove-prueba.component.scss'],
   encapsulation: ViewEncapsulation.None,
 })
-export class VideoBrightcovePruebaComponent implements OnInit {
+export class VideoBrightcovePruebaComponent implements OnInit,OnDestroy {
+  private signal$ = new Subject();
 
   @ViewChild('video')
   video!: ElementRef;
@@ -21,6 +23,10 @@ export class VideoBrightcovePruebaComponent implements OnInit {
     public _VideoSesionService:VideoSesionService,
     private _HelperService:HelperService
   ) {}
+  ngOnDestroy(): void {
+    this.signal$.next(true)
+    this.signal$.complete()
+  }
   ngAfterViewInit(): void {
   }
 
@@ -84,7 +90,7 @@ export class VideoBrightcovePruebaComponent implements OnInit {
   public videoFinal=''
   public videocontinuar=false
   ngOnInit(): void {
-    this._HelperService.recibirCombosPerfil.subscribe((x) => {
+    this._HelperService.recibirCombosPerfil.pipe(takeUntil(this.signal$)).subscribe((x) => {
       this.miPerfil=x
     })
   }
@@ -168,7 +174,6 @@ export class VideoBrightcovePruebaComponent implements OnInit {
     this.playVideo()
   }
 
-  ngOnDestroy() {}
   // +++ Build the player and place in HTML DOM +++
   changeBarra(e:any){
     this.tiempovideoinicio=e;
@@ -345,7 +350,7 @@ export class VideoBrightcovePruebaComponent implements OnInit {
       this.send.id=this.videoData.id==null?0:this.videoData.id
       this.send.tiempoVisualizacion=Math.floor(this.tiempoactualvideo)
       console.log(this.send)
-      this._VideoSesionService.RegistrarUltimaVisualizacionVideo(this.send).subscribe({
+      this._VideoSesionService.RegistrarUltimaVisualizacionVideo(this.send).pipe(takeUntil(this.signal$)).subscribe({
         next:x=>{
           this.tiempovideoinicioInicial=this.send.tiempoVisualizacion
           this.guardar=false
