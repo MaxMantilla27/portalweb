@@ -28,6 +28,7 @@ import { AvatarComponent } from '../aula-virtual/avatar/avatar.component';
 import { LandingPageInterceptorComponent } from './landing-page/landing-page/landing-page-interceptor/landing-page-interceptor/landing-page-interceptor.component';
 import { PageErrorComponent } from './page-error/page-error/page-error.component';
 import { ChatPruebaComponent } from './chat-prueba/chat-prueba.component';
+import { FormularioPublicidadInterceptorComponent } from './FormularioPublicidad/FormularioPublicidadInterceptor/formulario-publicidad-interceptor.component';
 
 const routes:Routes=[
     {path:'',component:PublicComponent,children:
@@ -60,6 +61,7 @@ const routes:Routes=[
             {path:'programas-certificaciones-cursos/:IdArea',component:ProgramasComponent},
             {path:'error404',component:PageErrorComponent},
             {path:':IdFormulario', component:LandingPageInterceptorComponent},
+            {path:'formulario',component:FormularioPublicidadInterceptorComponent},
             {path:':AreaCapacitacion/:ProgramaNombre',component:ProgramasDetalleComponent},
             {path:'**',component:PageErrorComponent},
 

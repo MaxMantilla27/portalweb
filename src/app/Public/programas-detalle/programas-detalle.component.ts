@@ -354,6 +354,9 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
     })
     return idp;
   }
+  removeAccents(strng:string){
+    return strng.normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+  }
   ObtenerCabeceraProgramaGeneral() {
     this._SeccionProgramaService
       .ObtenerCabeceraProgramaGeneral(this.idBusqueda).pipe(takeUntil(this.signal$))
@@ -363,7 +366,7 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
           console.log(x.programaCabeceraDetalleDTO)
           console.log(this.area);
           console.log(x.programaCabeceraDetalleDTO.areaCapacitacion);
-          if(x.programaCabeceraDetalleDTO!=undefined && this.area==x.programaCabeceraDetalleDTO.areaCapacitacion)
+          if(x.programaCabeceraDetalleDTO!=undefined && this.area==this.removeAccents(x.programaCabeceraDetalleDTO.areaCapacitacion))
           {
 
             this.cabecera = x.programaCabeceraDetalleDTO;

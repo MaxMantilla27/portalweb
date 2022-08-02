@@ -33,6 +33,8 @@ import { LandingPageInterceptorComponent } from './landing-page/landing-page/lan
 import { PageErrorComponent } from './page-error/page-error/page-error.component';
 import { ChatEnLineaComponent } from './chat-en-linea/chat-en-linea.component';
 import { ChatPruebaComponent } from './chat-prueba/chat-prueba.component';
+import { FormularioPublicidadComponent } from './FormularioPublicidad/formulario-publicidad.component';
+import { FormularioPublicidadInterceptorComponent } from './FormularioPublicidad/FormularioPublicidadInterceptor/formulario-publicidad-interceptor.component';
 
 @NgModule({
   imports: [
@@ -71,7 +73,9 @@ import { ChatPruebaComponent } from './chat-prueba/chat-prueba.component';
     LandingPageInterceptorComponent,
     PageErrorComponent,
     ChatEnLineaComponent,
-    ChatPruebaComponent
+    ChatPruebaComponent,
+    FormularioPublicidadComponent,
+    FormularioPublicidadInterceptorComponent
   ],
   exports: [],
   providers: [
