@@ -363,7 +363,7 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
           console.log(x.programaCabeceraDetalleDTO)
           console.log(this.area);
           console.log(x.programaCabeceraDetalleDTO.areaCapacitacion);
-          if(x.programaCabeceraDetalleDTO!=undefined && this.area==x.programaCabeceraDetalleDTO.areaDescripcion)
+          if(x.programaCabeceraDetalleDTO!=undefined && this.area==x.programaCabeceraDetalleDTO.areaCapacitacion)
           {
 
             this.cabecera = x.programaCabeceraDetalleDTO;

@@ -49,7 +49,7 @@ export class FormChatComponent implements OnInit,OnChanges {
     IdPrograma:0,
     EstadoAsesor:'',
   };
-  @Output() SaveForm:EventEmitter<string> = new EventEmitter<string>();
+  @Output() SaveForm:EventEmitter<{id:string,idAlumno:number}> = new EventEmitter<{id:string,idAlumno:number}>();
   ngOnInit(): void {
     this.AddFields()
   }
@@ -79,7 +79,7 @@ export class FormChatComponent implements OnInit,OnChanges {
           fbq('track', 'CompleteRegistration');
           console.log(x);
           this.validacionChat=x
-          this.SaveForm.emit(x.idFaseOportunidadPortal)
+          this.SaveForm.emit({id:x.respuesta.id,idAlumno:x.respuesta.idAlumno})
         }
       })
     }

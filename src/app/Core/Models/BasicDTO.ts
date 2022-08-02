@@ -17,6 +17,13 @@ export interface BasicUrlIcon{
   Icon:string,
   style?:any
 }
+export interface PaisesListaDTO{
+  Nombre:string,
+  value:string,
+  Url:string,
+  Icon:string,
+  style?:any
+}
 export interface PaisesDTO{
   Nombre:string,
   value:string,

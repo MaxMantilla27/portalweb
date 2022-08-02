@@ -156,10 +156,10 @@ export class ChatPortalComponent implements OnInit,OnDestroy,OnChanges {
       this.email,this.telefono, 0, 0, this.IdAlumno, this.idcampania
     )
   }
-  actualizarDatosAlumno(IdFaseOportunidadPortal:any){
+  actualizarDatosAlumno(respuesta:any){
 
     this.estadoLogueo="true"
-    this.hubConnection.invoke("actualizarDatosAlumno",this.IdAlumno,IdFaseOportunidadPortal);
+    this.hubConnection.invoke("actualizarDatosAlumno",respuesta.idAlumno,respuesta.id);
   }
 
   mensajeChat(){

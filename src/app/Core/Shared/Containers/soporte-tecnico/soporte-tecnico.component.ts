@@ -21,6 +21,7 @@ export class SoporteTecnicoComponent implements OnInit,OnChanges {
   @Input() Open=false
   @Input() token=false
   @Input() IdPGeneral=0
+  @Input() texto='Soporte Técnico'
   @Output()
   IsOpen: EventEmitter<boolean> = new EventEmitter<boolean>();
   ngOnInit(): void {
