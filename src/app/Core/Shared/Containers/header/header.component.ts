@@ -205,6 +205,7 @@ export class HeaderComponent implements OnInit,OnChanges,OnDestroy {
     this.paises = [];
     this._PaisService.GetPaises().pipe(takeUntil(this.signal$)).subscribe({
       next: (x) => {
+        console.log(x)
         this.paises = x.listaPaisCabeceraDTO.map((p: any) => {
           var ps: BasicUrlIcon = {
             Nombre: p.pais,
