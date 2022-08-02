@@ -360,11 +360,12 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
       .subscribe({
         next: (x) => {
           console.log(x);
+          console.log(x.programaCabeceraDetalleDTO)
           console.log(this.area);
           console.log(x.programaCabeceraDetalleDTO.areaCapacitacion);
-          if(x.programaCabeceraDetalleDTO!=undefined && this.area==x.programaCabeceraDetalleDTO.areaCapacitacion)
+          if(x.programaCabeceraDetalleDTO!=undefined && this.area==x.programaCabeceraDetalleDTO.areaDescripcion)
           {
-            
+
             this.cabecera = x.programaCabeceraDetalleDTO;
             this.migaPan.push({
               titulo:

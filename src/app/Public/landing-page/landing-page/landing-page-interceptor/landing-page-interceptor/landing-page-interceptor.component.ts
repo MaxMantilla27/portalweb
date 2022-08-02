@@ -52,6 +52,7 @@ export class LandingPageInterceptorComponent implements OnInit,OnDestroy {
   ObtenerFormularioLandingPage(){
     this._LandingPageService.ObtenerFormularioLandingPage(this.IdFormulario).pipe(takeUntil(this.signal$)).subscribe({
       next: x=>{
+        console.log(x)
         if(x!=undefined)
         {
           this.valorPrograma=x;
