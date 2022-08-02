@@ -86,6 +86,7 @@ export class FormularioComponent implements OnChanges, OnInit,OnDestroy {
   ngOnInit(): void {
     this._HelperService.recibirDataPais.pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
+        console.log(x)
         this.paise=x;
         var codigoISo=this._SessionStorageService.SessionGetValue('ISO_PAIS');
         this.paisSelect=this.paise.find(x=>x.codigoIso==codigoISo).idPais;
@@ -94,7 +95,7 @@ export class FormularioComponent implements OnChanges, OnInit,OnDestroy {
         this.fiels.forEach((f:any) =>{
           if(f.tipo=='phone' && this.userForm){
             console.log('------------------'+index)
-            this.ChangeInpiut(index,f.nombre)
+            this.validatePais(index,f.nombre)
           }
           if(f.nombre.toLowerCase()=='idpais' && this.userForm){
             let campo = (<FormArray>this.userForm.get('Fields')).controls[index].get(f.nombre);
@@ -135,7 +136,7 @@ export class FormularioComponent implements OnChanges, OnInit,OnDestroy {
     this.fiels.forEach((f:any) =>{
       if(f.tipo=='phone' && this.userForm){
         console.log('------------------'+index)
-        this.ChangeInpiut(index,f.nombre)
+        this.validatePais(index,f.nombre)
       }
       index++;
     });
@@ -250,11 +251,13 @@ export class FormularioComponent implements OnChanges, OnInit,OnDestroy {
 
     if (campo!.hasError('minlength')) {
       let min = campo?.getError('minlength')!.requiredLength;
-      return 'La longitud mínima es de ' + min + ' caracteres';
+      //return 'La longitud mínima es de ' + min + ' caracteres';
+      return 'La longitud es incorecta';
     }
     if (campo!.hasError('maxlength')) {
       let max = campo?.getError('maxlength')!.requiredLength;
-      return 'La longitud maxima es de ' + max + ' caracteres';
+      //return 'La longitud maxima es de ' + max + ' caracteres';
+      return 'La longitud es incorecta';
     }
     if (campo!.hasError('min')) {
       let min = campo?.getError('min')!.min;
@@ -287,7 +290,10 @@ export class FormularioComponent implements OnChanges, OnInit,OnDestroy {
     console.log(this.pref+'---'+this.min);
     (<FormArray>this.userForm.get('Fields')).controls[i].get(val)?.setValue(this.pref+s.slice(1));
     (<FormArray>this.userForm.get('Fields')).controls[i].get(val)?.clearValidators();
-    (<FormArray>this.userForm.get('Fields')).controls[i].get(val)?.addValidators([Validators.required,Validators.minLength(this.pref.length+1+this.min)]);
+    (<FormArray>this.userForm.get('Fields')).controls[i].get(val)?.addValidators([
+      Validators.required,
+      Validators.minLength(this.pref.length+this.min),
+      Validators.maxLength(this.pref.length+this.min)]);
   }
   LongCelularPaises():number{
     if(this.paise.find(x=>x.idPais==this.paisSelect)!=undefined){

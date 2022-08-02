@@ -152,7 +152,7 @@ export class ChatComponent implements OnInit,OnDestroy,OnChanges {
     }
     this.chatBox="";
   }
-  ObtenerIdAlumnoPorUsuario(IdFaseOportunidadPortal?:string){
+  ObtenerIdAlumnoPorUsuario(IdFaseOportunidadPortal?:any){
     this._GlobalService.ObtenerIdAlumnoPorUsuario().pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
         console.log(x)

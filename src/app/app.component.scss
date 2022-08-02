@@ -507,3 +507,7 @@ mat-sidenav-content {
   //white-space: nowrap;
 }
 
+.mat-drawer-inner-container{
+  overflow: visible !important;
+  height:-webkit-fit-content !important;
+}
