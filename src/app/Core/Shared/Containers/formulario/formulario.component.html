@@ -1,5 +1,5 @@
 <div class="row">
-  <form (submit)="EnviarCambios()" [formGroup]="userForm">
+  <form (submit)="EnviarCambios()" [formGroup]="userForm" #f="ngForm">
     <ng-container formArrayName="Fields">
       <div class="row">
         <div *ngFor="let field of fiels; let i=index"

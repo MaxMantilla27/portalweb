@@ -1,4 +1,5 @@
-import { Component, Inject, OnDestroy, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
+import { Component, Inject, OnDestroy, OnInit, PLATFORM_ID, ViewChild, ViewEncapsulation } from '@angular/core';
 import { Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Router } from '@angular/router';
@@ -14,7 +15,8 @@ import { HelperService } from 'src/app/Core/Shared/Services/helper.service';
 import { LandingPageService } from 'src/app/Core/Shared/Services/LandingPage/landing-page.service';
 import { RegionService } from 'src/app/Core/Shared/Services/Region/region.service';
 import { LandingPageInterceptorComponent } from './landing-page-interceptor/landing-page-interceptor/landing-page-interceptor.component';
-
+declare const fbq:any;
+declare const gtag:any;
 @Component({
   selector: 'app-landing-page',
   templateUrl: './landing-page.component.html',
@@ -26,6 +28,7 @@ export class LandingPageComponent implements OnInit,OnDestroy {
   private signal$ = new Subject();
   @ViewChild(FormularioComponent)
   form!: FormularioComponent;
+  isBrowser: boolean;
   constructor(
     private router: Router,
 
@@ -36,7 +39,10 @@ export class LandingPageComponent implements OnInit,OnDestroy {
 
     public dialogRef: MatDialogRef<LandingPageInterceptorComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
-  ) { }
+    @Inject(PLATFORM_ID) platformId: Object,
+  ) {
+    this.isBrowser = isPlatformBrowser(platformId); {}
+  }
   ngOnDestroy(): void {
     this.signal$.next(true)
     this.signal$.complete()
@@ -145,6 +151,23 @@ export class LandingPageComponent implements OnInit,OnDestroy {
     this.DatosLandingPageEnvio.IdIndustria=value.IdIndustria;
     this._LandingPageService.EnviarFormularioLandingPage(this.DatosLandingPageEnvio).pipe(takeUntil(this.signal$)).subscribe({
       next: (x) => {
+
+        if(this.isBrowser){
+          console.log('------------------facebook(true)---------------------------');
+          console.log(fbq);
+
+          fbq('track', 'CompleteRegistration');
+          try{
+            gtag('event', 'conversion', {
+              'send_to': 'AW-991002043/tnStCPDl6HUQu_vF2AM',
+            });
+            gtag('event', 'conversion', {
+                'send_to': 'AW-732083338/jQrVCKmUkqUBEIrpit0C',
+            });
+          }catch(err){
+            console.log(err)
+          }
+        }
       },
       complete: () => {
         this.statuscharge = false;

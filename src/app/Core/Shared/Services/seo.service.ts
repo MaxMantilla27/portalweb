@@ -25,27 +25,27 @@ export class SeoService {
       ...config
     }
     console.log(config);
-    this.meta.updateTag({ name: 'title', content: config.title });
-    this.meta.updateTag({ name: 'description', content: config.description });
-    this.meta.updateTag({ name: 'keywords', content: config.keywords });
-    this.meta.updateTag({ name: 'author', content: config.Author });
+    this.meta.addTag({ name: 'title', content: config.title });
+    this.meta.addTag({ name: 'description', content: config.description });
+    this.meta.addTag({ name: 'keywords', content: config.keywords });
+    this.meta.addTag({ name: 'author', content: config.Author });
 
     if(config.twiterTitle!=undefined && config.twiterTitle!=''){
-      this.meta.updateTag({ name: 'twitter:card', content: 'summary_large_image' });
-      this.meta.updateTag({ name: 'twitter:site', content: 'BS_Grupo' });
-      this.meta.updateTag({ name: 'twitter:title', content: config.twiterTitle });
-      this.meta.updateTag({ name: 'twitter:description', content: config.twiterDescription });
-      this.meta.updateTag({ name: 'twitter:image', content: config.image });
+      this.meta.addTag({ name: 'twitter:card', content: 'summary_large_image' });
+      this.meta.addTag({ name: 'twitter:site', content: 'BS_Grupo' });
+      this.meta.addTag({ name: 'twitter:title', content: config.twiterTitle });
+      this.meta.addTag({ name: 'twitter:description', content: config.twiterDescription });
+      this.meta.addTag({ name: 'twitter:image', content: config.image });
     }
     if(config.ogTitle!=undefined && config.ogTitle!=''){
-      this.meta.updateTag({ property: 'og:type', content: 'website' });
-      this.meta.updateTag({ property: 'og:site_name', content: 'BSG Institute' });
-      this.meta.updateTag({ property: 'og:title', content: config.ogTitle });
-      this.meta.updateTag({ property: 'og:description', content: config.ogDescription });
-      this.meta.updateTag({ property: 'og:image', content: config.image });
-      this.meta.updateTag({ property: 'og:image:width', content:config.imageW });
-      this.meta.updateTag({ property: 'og:image:height', content:config.imageH });
-      this.meta.updateTag({ property: 'og:url', content: this.urlBase+`${config.slug}` });
+      this.meta.addTag({ property: 'og:type', content: 'website' });
+      this.meta.addTag({ property: 'og:site_name', content: 'BSG Institute' });
+      this.meta.addTag({ property: 'og:title', content: config.ogTitle });
+      this.meta.addTag({ property: 'og:description', content: config.ogDescription });
+      this.meta.addTag({ property: 'og:image', content: config.image });
+      this.meta.addTag({ property: 'og:image:width', content:config.imageW });
+      this.meta.addTag({ property: 'og:image:height', content:config.imageH });
+      this.meta.addTag({ property: 'og:url', content: this.urlBase+`${config.slug}` });
     }
   }
 }

@@ -60,8 +60,9 @@ const routes:Routes=[
             {path:'carrera/:urlWeb',component:CarreraProfesionalDetalleComponent},
             {path:'programas-certificaciones-cursos/:IdArea',component:ProgramasComponent},
             {path:'error404',component:PageErrorComponent},
-            {path:':IdFormulario', component:LandingPageInterceptorComponent},
             {path:'publicidad/:formulario',component:FormularioPublicidadInterceptorComponent},
+
+            {path:':IdFormulario', component:LandingPageInterceptorComponent},
             {path:':AreaCapacitacion/:ProgramaNombre',component:ProgramasDetalleComponent},
             {path:'**',component:PageErrorComponent},
 
