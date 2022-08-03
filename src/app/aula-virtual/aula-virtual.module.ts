@@ -83,6 +83,7 @@ import { DocenciaGestionAutoevaluacionesComponent } from './docencia/docencia-ge
 import { DocenciaTrabajoParesComponent } from './docencia/docencia-trabajo-pares/docencia-trabajo-pares.component';
 import { DocenciaTareasComponent } from './docencia-tareas/docencia-tareas.component';
 import { DocenciaActividadesAutoevaluacionComponent } from './docencia/docencia-actividades-autoevaluacion/docencia-actividades-autoevaluacion.component';
+import { ConfirmacionPagoMultipagoComponent } from './confirmacion-pago-multipago/confirmacion-pago-multipago.component';
 
 
 
@@ -165,6 +166,7 @@ import { DocenciaActividadesAutoevaluacionComponent } from './docencia/docencia-
     DocenciaTrabajoParesComponent,
     DocenciaTareasComponent,
     DocenciaActividadesAutoevaluacionComponent,
+    ConfirmacionPagoMultipagoComponent,
 
   ],
   imports: [

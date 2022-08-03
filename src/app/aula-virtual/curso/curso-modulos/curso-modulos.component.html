@@ -1,15 +1,37 @@
 <div class="contentCursoModulo" *ngFor="let item of programEstructura.listaCursoMatriculado">
-  <div class="headerCursoModulo row">
-    <div class="titleCursoModulo col-12 col-md-9 col-lg-10">{{item.programaGeneralHijo}}</div>
-    <div class="estadoCursoModulo col-12 col-md-3 col-lg-2" *ngIf="(item.progreso!=undefined && item.progreso.progresoVideo.length>0)">
-      <i class="material-icons" *ngIf="item.progreso.progresoVideo[0].porcentaje>=100">check_circle</i>
-      <div *ngIf="item.progreso.progresoVideo[0].porcentaje>=100">Completado</div>
-      <div *ngIf="item.progreso.progresoVideo[0].porcentaje>0 && item.progreso.progresoVideo[0].porcentaje<100">
-        Continuar</div>
-      <div *ngIf="item.progreso.progresoVideo[0].porcentaje==0">Pendiente</div>
-    </div>
+  <div class="headerCursoModulo row" [ngStyle]="{'border-bottom': item.idModalidadHijo!=1?'none':'solid 1px #dcdcdc'}">
+    <ng-container *ngIf="item.idModalidadHijo!=1">
+
+      <div class="titleCursoModulo col-12 col-md-8 col-lg-9">
+        {{item.programaGeneralHijo}}
+        <div class="matriculaicon">
+          <i class="material-icons">play_circle_outline</i>
+          <div>Online Sincrónico</div>
+        </div>
+      </div>
+      <div class="col-12 col-md-4 col-lg-3" style="display: flex;justify-content: flex-end;padding: 0px;">
+        <app-default-button [confs]="{color:'primary',titulo:'Ingresar'}" [disabled]="item.params==undefined"
+          [ruta]="'/AulaVirtual/MisCursos/'+idMatricula+'/'+item.idPEspecificoHijo"
+          [style]="'padding:0px 20px;margin:0px'">
+        </app-default-button>
+      </div>
+    </ng-container>
+
+    <ng-container *ngIf="item.idModalidadHijo==1">
+      <div class="titleCursoModulo col-12 col-md-9 col-lg-10">{{item.programaGeneralHijo}}</div>
+      <div class="estadoCursoModulo col-12 col-md-3 col-lg-2"
+        *ngIf="(item.progreso!=undefined && item.progreso.progresoVideo.length>0)">
+        <i class="material-icons" *ngIf="item.progreso.progresoVideo[0].porcentaje>=100">check_circle</i>
+        <div *ngIf="item.progreso.progresoVideo[0].porcentaje>=100">Completado</div>
+        <div *ngIf="item.progreso.progresoVideo[0].porcentaje>0 && item.progreso.progresoVideo[0].porcentaje<100">
+          Continuar</div>
+        <div *ngIf="item.progreso.progresoVideo[0].porcentaje==0">Pendiente</div>
+      </div>
+
+    </ng-container>
+
   </div>
-  <div class="contenidoCursoModulo row">
+  <div class="contenidoCursoModulo row" *ngIf="item.idModalidadHijo==1">
 
     <div class="contentModulo col-12 col-md-8 col-lg-9">
       <div style="font-size: 14px;color: #909090; font-weight: 600;">Video:</div>
@@ -26,23 +48,25 @@
 
         <i style=" color: #05c254;
         margin-right: 5px;
-        font-size: 16px !important;" class="material-icons" *ngIf="item.progreso.progresoEncuesta[0].porcentajeAvance>=100">check_circle</i>
+        font-size: 16px !important;" class="material-icons"
+          *ngIf="item.progreso.progresoEncuesta[0].porcentajeAvance>=100">check_circle</i>
         <div style="font-size: 14px;color: #909090; font-weight: 600;">Encuestas:</div>
         <div style="font-size: 14px;color: #909090;margin-left:10px">
 
           Completadas al
-          {{item.progreso.progresoEncuesta[0].porcentajeAvance  | number:'1.0-0'}}%</div>
+          {{item.progreso.progresoEncuesta[0].porcentajeAvance | number:'1.0-0'}}%</div>
       </div>
       <div style="display: flex;margin-top: 10px;"
         *ngIf="(item.progreso!=undefined && item.progreso.progresoTarea!=undefined  && item.progreso.progresoTarea.length>0)">
         <i style="color: #05c254;
         margin-right: 5px;
-        font-size: 16px !important;" class="material-icons" *ngIf="item.progreso.progresoTarea[0].porcentajeAvance>=100">check_circle</i>
+        font-size: 16px !important;" class="material-icons"
+          *ngIf="item.progreso.progresoTarea[0].porcentajeAvance>=100">check_circle</i>
         <div style="font-size: 14px;color: #909090; font-weight: 600;">Tareas:</div>
         <div style="font-size: 14px;color: #909090;margin-left:10px">
 
           Completadas al
-          {{item.progreso.progresoTarea[0].porcentajeAvance  | number:'1.0-0'}}%</div>
+          {{item.progreso.progresoTarea[0].porcentajeAvance | number:'1.0-0'}}%</div>
       </div>
     </div>
 

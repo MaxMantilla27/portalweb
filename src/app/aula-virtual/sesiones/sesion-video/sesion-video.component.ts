@@ -68,7 +68,6 @@ export class SesionVideoComponent implements OnInit,OnChanges,OnDestroy {
     // }
   }
   ngOnChanges(changes: SimpleChanges): void {
-    console.log(this.habilitado)
 
     if(this.charge==true && this.habilitado==true){
       this.parametros.IdSesion=this.idSesion;

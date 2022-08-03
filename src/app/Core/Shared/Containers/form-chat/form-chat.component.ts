@@ -6,7 +6,7 @@ import { formulario } from 'src/app/Core/Models/Formulario';
 import { ChatEnLineaService } from '../../Services/ChatEnLinea/chat-en-linea.service';
 import { SnackBarServiceService } from '../../Services/SnackBarService/snack-bar-service.service';
 declare const fbq:any;
-
+declare const gtag:any;
 @Component({
   selector: 'app-form-chat',
   templateUrl: './form-chat.component.html',
@@ -77,6 +77,9 @@ export class FormChatComponent implements OnInit,OnChanges {
           console.log('------------------facebook(true)---------------------------');
           console.log(fbq);
           fbq('track', 'CompleteRegistration');
+          gtag('event', 'conversion', {
+            'send_to': 'AW-991002043/tnStCPDl6HUQu_vF2AM',
+          });
           console.log(x);
           this.validacionChat=x
           this.SaveForm.emit({id:x.respuesta.id,idAlumno:x.respuesta.idAlumno})

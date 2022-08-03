@@ -32,6 +32,7 @@ import { ConfirmacionPagoTarjetaWompiComponent } from './confirmacion-pago-tarje
 import { ConfirmacionPagoTarjetaConektaComponent } from './confirmacion-pago-tarjeta-conekta/confirmacion-pago-tarjeta-conekta.component';
 import { PagoMultipagoComponent } from './confirmacion-pago-organico/pago-multipago/pago-multipago.component';
 import { DocenciaTareasComponent } from './docencia-tareas/docencia-tareas.component';
+import { ConfirmacionPagoMultipagoComponent } from './confirmacion-pago-multipago/confirmacion-pago-multipago.component';
 
 
 const routes: Routes = [
@@ -64,6 +65,7 @@ const routes: Routes = [
         { path: 'MisPagos/:IdMatricula/visa/:Identificador', component: ConfirmacionPagoTarjetaVisaComponent,canActivate:[AlumnoGuard]},
         { path: 'MisPagos/:IdMatricula/wompi/:Identificador', component: ConfirmacionPagoTarjetaWompiComponent,canActivate:[AlumnoGuard]},
         { path: 'MisPagos/:IdMatricula/conekta/:Identificador', component: ConfirmacionPagoTarjetaConektaComponent,canActivate:[AlumnoGuard]},
+        { path: 'MisPagos/:IdMatricula/multipago/:Identificador', component: ConfirmacionPagoMultipagoComponent,canActivate:[AlumnoGuard]},
 
         { path: 'MisCursos/:IdMatricula/:idPEspecificoHijo', component: ModuloComponent,canActivate:[AlumnoGuard]},
         { path: 'MisCursosPrueba/:IdRegistroPrueba/:idPEspecificoHijo', component: ModuloPruebaComponent,canActivate:[AlumnoGuard]},

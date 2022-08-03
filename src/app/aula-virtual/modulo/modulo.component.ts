@@ -77,6 +77,7 @@ export class ModuloComponent implements OnInit,OnDestroy {
       .pipe(takeUntil(this.signal$))
       .subscribe({
         next: (x) => {
+          console.log(x)
           x.listaCursoMatriculado.forEach((program:any) => {
             if(this.idPEspecificoHijo==program.idPEspecificoHijo){
               this.json = {
@@ -88,8 +89,9 @@ export class ModuloComponent implements OnInit,OnDestroy {
                 IdPGeneralHijo: program.idPGeneralHijo,
                 NombreCapitulo:program.programaGeneralHijo,
                 NombrePrograma:x.programaGeneral,
-                idModalidad:x.idModalidad
+                idModalidad:program.idModalidadHijo
               };
+              console.log(this.json)
               this.migaPan.push({
                 titulo:this.json.NombrePrograma,
                 urlWeb:'/AulaVirtual/MisCursos/'+this.json.IdMatriculaCabecera

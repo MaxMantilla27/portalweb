@@ -59,7 +59,6 @@ export class SesionEncuestaComponent implements OnInit,OnChanges,OnDestroy {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    console.log(this.charge)
     if(this.idEncuesta>0 && this.charge==true && this.habilitado==true){
       this.params.IdEvaluacion=this.idEncuesta;
       this.params.IdPGeneral=this.json.IdPGeneralHijo;

@@ -196,7 +196,10 @@ export class PagoComponent implements OnInit,OnDestroy {
             this._router.navigate(['/AulaVirtual/MisPagos/'+this.idMatricula+'/conekta/'+sesion]);
           }
           if(parseInt(tarjeta.idPasarelaPago)==3){}
-          if(parseInt(tarjeta.idPasarelaPago)==4){}
+          if(parseInt(tarjeta.idPasarelaPago)==4){
+
+            this._router.navigate(['/AulaVirtual/MisPagos/'+this.idMatricula+'/multipago/'+sesion]);
+          }
         }
       },
       complete:()=>{

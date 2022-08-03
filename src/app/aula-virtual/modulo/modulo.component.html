@@ -22,7 +22,7 @@
             </div>
           </ng-template>
           <div class="pad-resp">
-            <app-modulo-sesiones [Capitulo]="json.NombreCapitulo" [idModalidad]="json.idModalidad" [estructuraCapitulo]="estructuraCapitulo">
+            <app-modulo-sesiones [Capitulo]="json.NombreCapitulo"  [idModalidad]="json.idModalidad" [estructuraCapitulo]="estructuraCapitulo">
             </app-modulo-sesiones>
           </div>
         </mat-tab>
@@ -64,7 +64,7 @@
           <div class="pad-resp"><app-modulo-recurso [Capitulo]="json.NombreCapitulo" [Estructura]="estructuraCapitulo"
             [idPEspecifico]="json.IdPEspecificoHijo" [tipo]="json.idModalidad" [idPGeneral]="json.IdPGeneralHijo"></app-modulo-recurso></div>
         </mat-tab>
-        <mat-tab>
+        <mat-tab *ngIf="json.idModalidad==1">
           <ng-template mat-tab-label>
             <div class="contentHeaderM">
               <div class="iconMat iconForo"
@@ -77,7 +77,7 @@
             <app-modulo-foro [Capitulo]="json.NombreCapitulo" [IdPgeneral]="json.IdPGeneralHijo" [IdPprincipal]="json.IdPGeneralPadre" [IdPEspecificoPadre]="json.IdPEspecificoPadre" [IdPEspecificoHijo]="json.IdPEspecificoHijo"></app-modulo-foro>
           </div>
         </mat-tab>
-        <mat-tab>
+        <mat-tab *ngIf="json.idModalidad==1">
           <ng-template mat-tab-label>
             <div class="contentHeaderM">
               <div class="iconMat iconCalificaciones"

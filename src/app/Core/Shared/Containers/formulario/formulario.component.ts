@@ -86,15 +86,12 @@ export class FormularioComponent implements OnChanges, OnInit,OnDestroy {
   ngOnInit(): void {
     this._HelperService.recibirDataPais.pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
-        console.log(x)
         this.paise=x;
         var codigoISo=this._SessionStorageService.SessionGetValue('ISO_PAIS');
         this.paisSelect=this.paise.find(x=>x.codigoIso==codigoISo).idPais;
         var index=0
-        console.log(this.userForm)
         this.fiels.forEach((f:any) =>{
           if(f.tipo=='phone' && this.userForm){
-            console.log('------------------'+index)
             this.validatePais(index,f.nombre)
           }
           if(f.nombre.toLowerCase()=='idpais' && this.userForm){
@@ -132,10 +129,8 @@ export class FormularioComponent implements OnChanges, OnInit,OnDestroy {
       }
     })
     var index=0;
-    console.log(this.userForm)
     this.fiels.forEach((f:any) =>{
       if(f.tipo=='phone' && this.userForm){
-        console.log('------------------'+index)
         this.validatePais(index,f.nombre)
       }
       index++;
@@ -202,6 +197,12 @@ export class FormularioComponent implements OnChanges, OnInit,OnDestroy {
         if (key == clave[0]) {
           value = element.value[clave[0]];
           obj[key] = value;
+          this.fiels.forEach((f:any) =>{
+            if(f.tipo=='phone' && f.nombre.toLowerCase()==key.toLowerCase()){
+              value = element.value[clave[0]].split(this.pref)[element.value[clave[0]].split(this.pref).length-1];
+              obj[key] = value;
+            }
+          })
         }
       });
     }
@@ -287,7 +288,6 @@ export class FormularioComponent implements OnChanges, OnInit,OnDestroy {
 
     this.pref=this.PrefPaises()==null?'':this.PrefPaises()+' ';
     this.min=this.LongCelularPaises()==null?0:this.LongCelularPaises();
-    console.log(this.pref+'---'+this.min);
     (<FormArray>this.userForm.get('Fields')).controls[i].get(val)?.setValue(this.pref+s.slice(1));
     (<FormArray>this.userForm.get('Fields')).controls[i].get(val)?.clearValidators();
     (<FormArray>this.userForm.get('Fields')).controls[i].get(val)?.addValidators([

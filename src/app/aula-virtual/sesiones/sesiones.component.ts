@@ -74,8 +74,6 @@ export class SesionesComponent implements OnInit,OnDestroy {
   }
 
   siguiente(tipo: number, indexc: number, index: number, indexss: number) {
-    console.log(index);
-    console.log(indexss);
     var maxindexc =
       this.estructuraCapitulo.registroEstructuraCursoCapitulo.length - 1;
     if (tipo == 1) {
@@ -106,7 +104,6 @@ export class SesionesComponent implements OnInit,OnDestroy {
           this.estructuraCapitulo.registroEstructuraCursoCapitulo[indexc]
             .registroEstructuraCursoSesion[index]
             .registroEstructuraCursoSubSesion.length - 1;
-        console.log(maxsubses);
         if (maxsubses == indexss) {
           this.tabIndex++;
           var encuestas =
@@ -154,7 +151,6 @@ export class SesionesComponent implements OnInit,OnDestroy {
       var maxenc =
         this.estructuraCapitulo.registroEstructuraCursoCapitulo[indexc]
           .registroEstructuraCursoEncuesta.length - 1;
-      console.log(name);
       if (name == 'Encuesta Inicial') {
         if (this.estructuraCapitulo.contineSubSesion == true) {
           this.tabIndex++;
@@ -182,7 +178,6 @@ export class SesionesComponent implements OnInit,OnDestroy {
   }
   anterior(tipo: number, indexc: number, index: number, indexss: number) {
     this.tabIndex--;
-    console.log(tipo + '-' + index + '-' + indexss);
     if (tipo == 1) {
       if (indexss == -1) {
         if (index == 0) {
@@ -229,7 +224,6 @@ export class SesionesComponent implements OnInit,OnDestroy {
             if (ndx == this.tabIndex) {
               e.charge = true;
               c.opened = true;
-              console.log(c.opened);
             }
           }
         });
@@ -276,7 +270,6 @@ export class SesionesComponent implements OnInit,OnDestroy {
         ndx++;
       }
     );
-    console.log(this.estructuraCapitulo.registroEstructuraCursoCapitulo);
   }
   migapanbase() {
     this.migaPan = [
@@ -303,7 +296,6 @@ export class SesionesComponent implements OnInit,OnDestroy {
       .ObtenerEstructuraEspecificaCurso(this.json).pipe(takeUntil(this.signal$))
       .subscribe({
         next: (x) => {
-          console.log(x);
           this.estructuraCapitulo = x;
           this.ValidateEstadoVideo();
           this.OrdenarEstructura();
@@ -337,18 +329,17 @@ export class SesionesComponent implements OnInit,OnDestroy {
           }
         );
       }
-      console.log(this.estructuraCapitulo);
       this.validateNextVIdeo();
       this.GetNextChapter();
     }
   }
   GetNextChapter() {
     var cap = 0,
-      ses = 0,
-      subs = 0,
-      enc = 0,
-      tar = 0,
-      tarC = 0;
+    ses = 0,
+    subs = 0,
+    enc = 0,
+    tar = 0,
+    tarC = 0;
 
     this.estructuraCapitulo.registroEstructuraCursoCapitulo.forEach(
       (c: any) => {
@@ -359,7 +350,7 @@ export class SesionesComponent implements OnInit,OnDestroy {
             s.registroEstructuraCursoSubSesion.forEach((ss: any) => {
               var lastSub=s.registroEstructuraCursoSubSesion.length-1
               if(subs==lastSub){
-                if(ses=lastSes){
+                if(ses==lastSes){
                   var next=true
                   if(c.registroEstructuraCursoTarea.length>0){
                     next=false;
@@ -416,8 +407,8 @@ export class SesionesComponent implements OnInit,OnDestroy {
                   }
                 }else{
                   ss.nextChapter={
-                    name:c.registroEstructuraCursoSesion[s+1].registroEstructuraCursoSubSesion[0].nombreSubSesion,
-                    time:Math.ceil(c.registroEstructuraCursoSesion[s+1].registroEstructuraCursoSubSesion[0].tiempoVideo/60)
+                    name:c.registroEstructuraCursoSesion[ses+1].registroEstructuraCursoSubSesion[0].nombreSubSesion,
+                    time:Math.ceil(c.registroEstructuraCursoSesion[ses+1].registroEstructuraCursoSubSesion[0].tiempoVideo/60)
                   }
                 }
               }else{
@@ -821,14 +812,12 @@ export class SesionesComponent implements OnInit,OnDestroy {
         cap++;
       }
     );
-    console.log(this.estructuraCapitulo);
   }
   ObtenerListadoProgramaContenido() {
     this._ProgramaContenidoService
       .ObtenerListadoProgramaContenido(this.idMatricula).pipe(takeUntil(this.signal$))
       .subscribe({
         next: (x) => {
-          console.log(x);
 
           x.listaCursoMatriculado.forEach((program: any) => {
             if (this.idPEspecificoHijo == program.idPEspecificoHijo) {
@@ -847,7 +836,6 @@ export class SesionesComponent implements OnInit,OnDestroy {
               this.migapanbase();
               this.estructuraCapitulo =
                 this._SessionStorageService.getEstructura();
-              console.log(this.estructuraCapitulo);
               if (this.estructuraCapitulo == null) {
                 this.ObtenerEstructuraEspecificaCurso();
               } else {
@@ -1009,7 +997,6 @@ export class SesionesComponent implements OnInit,OnDestroy {
             } else {
               x.registroEstructuraCursoEncuesta.forEach((enc: any) => {
                 if (enc.nombreEncuesta == 'Encuesta Inicial') {
-                  console.log(x.registroEstructuraCursoEncuesta);
                   this.tabIndex++;
                 }
               });
@@ -1078,7 +1065,6 @@ export class SesionesComponent implements OnInit,OnDestroy {
               }
             });
           }
-          console.log(ss + '-' + s);
           if (x.registroEstructuraCursoTarea != null) {
             t++;
             if (this.tipo == 2) {
@@ -1211,7 +1197,6 @@ export class SesionesComponent implements OnInit,OnDestroy {
       }
     );
     this.tabIndex--;
-    console.log(this.tabIndex);
   }
   tabChanged(tabChangeEvent: MatTabChangeEvent): void {
     // console.log('tabChangeEvent => ', tabChangeEvent);
