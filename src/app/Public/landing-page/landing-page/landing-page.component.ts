@@ -127,7 +127,12 @@ export class LandingPageComponent implements OnInit,OnDestroy {
     this.DatosLandingPageEnvio.IdTipoDato= 8;
     this.DatosLandingPageEnvio.IdFaseOportunidad=2;
     this.DatosLandingPageEnvio.NombreFormulario='publicidad';
+    if(this.DatosLandingPageEnvio.IdCategoriaDato==104){
+      this.DatosLandingPageEnvio.NombreOrigen='Adwords Busqueda Formulario Propio';
+    }
+    else{
     this.DatosLandingPageEnvio.NombreOrigen='Mailing Bases Propias Formulario Propio';
+    }
     this.DatosLandingPageEnvio.Nombres=value.Nombres;
     this.DatosLandingPageEnvio.Apellidos=value.Apellidos;
     this.DatosLandingPageEnvio.Correo1=value.Email;
