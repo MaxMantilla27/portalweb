@@ -35,8 +35,8 @@
                 [innerHTML]="carrera.contenidoProgramaInformacionDTO[0]?.contenido">
               </div>
               <div class="educacion-tecnica-container__header__information__button">
-                <app-default-button [confs]="{color: 'primary', titulo: 'Inscribirme Ahora'}"></app-default-button>
-                <app-default-button [confs]="{color: 'primary', titulo: 'Descargar Brochure'}"></app-default-button>
+                <app-default-button [confs]="{color: 'primary', titulo: 'Inscribirme Ahora'}" (click)="ScrollTo(formularioEducacionTecnica)"></app-default-button>
+                <!-- <app-default-button [confs]="{color: 'primary', titulo: 'Descargar Brochure'}"></app-default-button> -->
               </div>
             </div>
             <!-- <div class="col-md-5 carrera-container__content__firstSection__right">
@@ -148,7 +148,7 @@
                     </mat-tab>
                   </mat-tab-group>
                 </div>
-                <div class="col-md-5 educacion-tecnica-container__content__thirdSection__right">
+                <div class="col-md-5 educacion-tecnica-container__content__thirdSection__right" #formularioEducacionTecnica>
                   <div #divFixed id="divFixed"
                     class="educacion-tecnica-container__content__thirdSection__right__form-container">
                     <div class="educacion-tecnica-container__content__thirdSection__right__form-container__header">

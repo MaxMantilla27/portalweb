@@ -212,7 +212,9 @@ export class EducationTecnicaDetalleComponent implements OnInit,OnDestroy {
       }
     })
   }
-
+  ScrollTo(el: HTMLElement) {
+    el.scrollIntoView();
+  }
   tonumber(valor:any){
     console.log(valor)
     return parseInt(valor);

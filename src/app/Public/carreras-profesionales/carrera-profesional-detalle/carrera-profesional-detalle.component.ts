@@ -220,6 +220,9 @@ export class CarreraProfesionalDetalleComponent implements OnInit {
       error:(x)=>{console.log(x)}
     });
   }
+  ScrollTo(el: HTMLElement) {
+    el.scrollIntoView();
+  }
   formatVideo(video: any) {
     return video.split('<p>').join('').split('<vacio></vacio>').join('')
       .split('&lt;').join('<').split("&gt;").join(">").split("src=").join('id=\"presentacionVideo\" src=').split('""').join('"');
