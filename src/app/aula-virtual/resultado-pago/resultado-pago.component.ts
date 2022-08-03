@@ -64,7 +64,7 @@ export class ResultadoPagoComponent implements OnInit {
       next:x=>{
         console.log(x)
         if(x._Repuesta.registroAlumno==null){
-          //this.ObtenerPreProcesoPagoOrganicoAlumno()
+          this.ObtenerPreProcesoPagoOrganicoAlumno()
         }else{
           if(x._Repuesta.estadoOperacion==null){
             this._router.navigate([this.ruta])
@@ -147,7 +147,7 @@ export class ResultadoPagoComponent implements OnInit {
       next:x=>{
         console.log(x)
         if(x._Repuesta.estadoOperacion==null){
-          this._router.navigate([this.ruta])
+          //this._router.navigate([this.ruta])
         }else{
           this.resultVisa=x._Repuesta;
           if(this.resultVisa.estadoOperacion.toLowerCase()=='pending'){
