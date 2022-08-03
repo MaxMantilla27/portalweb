@@ -79,37 +79,6 @@ export class LandingPageComponent implements OnInit,OnDestroy {
     IdAreaTrabajo:0,
     IdIndustria:0,
   }
-  public combosPrecargados: combosPerfilDTO = {
-    listaAreaFormacion:[],
-    listaAreaTrabajo:[],
-    listaCargo:[],
-    listaCiudad:[],
-    listaGenero:[],
-    listaIndustria:[],
-    listaPais:[],
-    listaTipoDocumento:[],
-    datosAlumno: {
-      apellidos: '',
-      direccion: '',
-      dni: '',
-      email: '',
-      empresa: '',
-      idAlumno: 0,
-      idAreaFormacion: 0,
-      idAreaTrabajo: 0,
-      idCargo: 0,
-      idDepartamento: 0,
-      ciudad:'',
-      idGenero: 0,
-      idIndustria: 0,
-      idPais: 0,
-      idTipoDocumento: '',
-      nombres: '',
-      telefono: '',
-      cursos:0,
-      idProveedor:0
-    },
-  };
   public combosPrevios:any
   ngOnInit(): void {
     this._HelperService.recibirCombosPerfil.pipe(takeUntil(this.signal$)).subscribe((x) => {

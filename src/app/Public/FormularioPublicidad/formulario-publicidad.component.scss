@@ -1,0 +1,45 @@
+.dialog-formulario-publicidad{
+  mat-dialog-container{
+    padding: 20px 20px 40px 20px;
+    background: transparent;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    overflow: auto;
+    justify-content: center;
+  }
+}
+.Encabezado-FormularioPublicidad{
+  color: white;
+  margin-left: 20px;
+  font-size: 19px;
+  padding-top: 10px;
+}
+.NombreProgramaFP{
+  text-align: center;
+  margin-bottom: 15px;
+  color: #094D82;
+  font-weight: bold;
+  padding-top: 15px;
+  font-size: 17px;
+}
+.InstruccionFP{
+  text-align: center;
+  font-size: 14px;
+  padding: 0px 40px 12px 40px;
+}
+.OpcionFP{
+  text-align: center;
+  font-size: 13px;
+  height: 30px;
+  margin-top: 5px;
+}
+.TerminosFP{
+  font-size: 9px;
+  text-align: justify;
+}
+.FormularioPublicidadContenedor{
+  padding: 0px 20px;
+  justify-content: center;
+}
+

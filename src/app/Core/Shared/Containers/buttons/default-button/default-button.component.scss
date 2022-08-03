@@ -31,3 +31,13 @@
         background-color: rgb(244, 72, 72);
     }
 }
+.azul {
+  background-color: #094D82;
+  color: white;
+  &:hover {
+      background-color: #094D82;
+      div{
+        text-decoration: underline;
+      }
+  }
+}

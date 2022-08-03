@@ -3,8 +3,10 @@
     (click)="ButtoclClick.emit()"
     class="btn-general" [routerLink]="ruta"
     [style]="style" [disabled]="disabled"
-    [ngClass]="{'primary': confs.color === 'primary',
-    'danger': confs.color === 'danger' }">
+    [ngClass]="{
+      'primary': confs.color === 'primary',
+      'danger': confs.color === 'danger',
+      'azul': confs.color === 'azul' }">
         <div>{{confs.titulo}}</div> <i class="material-icons" *ngIf="img==''">{{icon}}</i>
         <img *ngIf="img!=''" src="../../../../../../assets/icons/{{img}}" alt="" style="margin-left: 10px;">
     </button>
