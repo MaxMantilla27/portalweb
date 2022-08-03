@@ -36,3 +36,17 @@ export interface FormularioLandingPageDTO
   IdAreaTrabajo?: number,
   IdIndustria?: number,
 }
+
+export interface FormularioPublicidadDTO
+{
+  Nombres: string,
+  Apellidos: string,
+  Email: string,
+  IdPais?: number,
+  IdRegion?: number,
+  Movil: string,
+  IdCargo?: number,
+  IdAreaFormacion?: number,
+  IdAreaTrabajo?: number,
+  IdIndustria?: number,
+}
