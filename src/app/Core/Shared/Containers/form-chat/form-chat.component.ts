@@ -1,4 +1,5 @@
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
+import { Component, EventEmitter, Inject, Input, OnChanges, OnInit, Output, PLATFORM_ID, SimpleChanges } from '@angular/core';
 import { Validators } from '@angular/forms';
 import { Subject, takeUntil } from 'rxjs';
 import { ValidacionChatEnvioDTO, ValidacionChatFormularioDTO } from 'src/app/Core/Models/ChatEnLineaDTO';
@@ -15,10 +16,14 @@ declare const gtag:any;
 export class FormChatComponent implements OnInit,OnChanges {
   private signal$ = new Subject();
 
+  isBrowser: boolean;
   constructor(
     private _ChatEnLinea: ChatEnLineaService,
     private _SnackBarServiceService: SnackBarServiceService,
-  ) { }
+    @Inject(PLATFORM_ID) platformId: Object,
+  ) {
+    this.isBrowser = isPlatformBrowser(platformId);
+  }
   ngOnDestroy(): void {
     this.signal$.next(true)
     this.signal$.complete()
@@ -74,12 +79,18 @@ export class FormChatComponent implements OnInit,OnChanges {
       this.DatosEnvioFormulario.IdPrograma = this.IdPGeneral;
       this._ChatEnLinea.ValidarCrearOportunidadChat(this.DatosEnvioFormulario).pipe(takeUntil(this.signal$)).subscribe({
         next:(x)=>{
-          console.log('------------------facebook(true)---------------------------');
-          console.log(fbq);
-          fbq('track', 'CompleteRegistration');
-          gtag('event', 'conversion', {
-            'send_to': 'AW-991002043/tnStCPDl6HUQu_vF2AM',
-          });
+
+          if(this.isBrowser){
+            console.log('------------------facebook(true)---------------------------');
+            console.log(fbq);
+            fbq('track', 'CompleteRegistration');
+            gtag('event', 'conversion', {
+              'send_to': 'AW-991002043/tnStCPDl6HUQu_vF2AM',
+            });
+            gtag('event', 'conversion', {
+                'send_to': 'AW-732083338/jQrVCKmUkqUBEIrpit0C',
+            });
+          }
           console.log(x);
           this.validacionChat=x
           this.SaveForm.emit({id:x.respuesta.id,idAlumno:x.respuesta.idAlumno})

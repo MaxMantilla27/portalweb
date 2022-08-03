@@ -30,6 +30,7 @@ import { SessionStorageService } from '../../Services/session-storage.service';
 })
 export class FormularioComponent implements OnChanges, OnInit,OnDestroy {
   private signal$ = new Subject();
+  @ViewChild('f') myNgForm: any;
   isBrowser: boolean;
   constructor(
     private formBuilder: FormBuilder,
@@ -67,6 +68,10 @@ export class FormularioComponent implements OnChanges, OnInit,OnDestroy {
 
   @Input()
   ChargeValuesInit: boolean=false;
+
+
+  @Input()
+  CleanOnSubmit: boolean=false;
 
   @Output()
   OnSubmit: EventEmitter<object> = new EventEmitter<object>();
@@ -208,7 +213,10 @@ export class FormularioComponent implements OnChanges, OnInit,OnDestroy {
     }
     this.model = obj;
     this.OnSubmit.emit(this.model);
-    //this.userForm.reset();
+    if(this.CleanOnSubmit==true){
+      this.myNgForm.resetForm();
+      //this.userForm.reset();
+    }
   }
 
   disableFiled(name:string){

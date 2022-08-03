@@ -1,4 +1,5 @@
-import { Component, Inject, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
+import { Component, Inject, OnInit, PLATFORM_ID, ViewChild, ViewEncapsulation } from '@angular/core';
 import { Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Router } from '@angular/router';
@@ -13,7 +14,8 @@ import { HelperService } from 'src/app/Core/Shared/Services/helper.service';
 import { LandingPageService } from 'src/app/Core/Shared/Services/LandingPage/landing-page.service';
 import { RegionService } from 'src/app/Core/Shared/Services/Region/region.service';
 import { FormularioPublicidadInterceptorComponent } from './FormularioPublicidadInterceptor/formulario-publicidad-interceptor.component';
-
+declare const fbq:any;
+declare const gtag:any;
 @Component({
   selector: 'app-formulario-publicidad',
   templateUrl: './formulario-publicidad.component.html',
@@ -25,6 +27,7 @@ export class FormularioPublicidadComponent implements OnInit {
   private signal$ = new Subject();
   @ViewChild(FormularioComponent)
   form!: FormularioComponent;
+  isBrowser: boolean;
   constructor(
     private router: Router,
 
@@ -35,7 +38,10 @@ export class FormularioPublicidadComponent implements OnInit {
 
     public dialogRef: MatDialogRef<FormularioPublicidadInterceptorComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
-  ) { }
+    @Inject(PLATFORM_ID) platformId: Object,
+  ) {
+    this.isBrowser = isPlatformBrowser(platformId); {}
+  }
 
   public IdFormulario=0;
   statuscharge = false;
@@ -124,6 +130,24 @@ export class FormularioPublicidadComponent implements OnInit {
     this.DatosLandingPageEnvio.IdIndustria=value.IdIndustria;
     this._LandingPageService.EnviarFormularioLandingPage(this.DatosLandingPageEnvio).pipe(takeUntil(this.signal$)).subscribe({
       next: (x) => {
+
+        if(this.isBrowser){
+          console.log('------------------facebook(true)---------------------------');
+          console.log(fbq);
+          console.log(gtag);
+          fbq('track', 'CompleteRegistration');
+
+          try{
+            gtag('event', 'conversion', {
+              'send_to': 'AW-991002043/tnStCPDl6HUQu_vF2AM',
+            });
+            gtag('event', 'conversion', {
+                'send_to': 'AW-732083338/jQrVCKmUkqUBEIrpit0C',
+            });
+          }catch(err){
+            console.log(err)
+          }
+        }
       },
       complete: () => {
         this.statuscharge = false;

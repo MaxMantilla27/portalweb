@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, Inject, OnDestroy, OnInit, PLATFORM_ID, ViewChild } from '@angular/core';
 import { Validators } from '@angular/forms';
 import { Basic } from 'src/app/Core/Models/BasicDTO';
 import { ContactenosDTO } from 'src/app/Core/Models/ContactenosDTO';
@@ -12,8 +12,10 @@ import { HelperService } from 'src/app/Core/Shared/Services/helper.service';
 import { Title } from '@angular/platform-browser';
 import { SeoService } from 'src/app/Core/Shared/Services/seo.service';
 import { Subject, takeUntil } from 'rxjs';
+import { isPlatformBrowser } from '@angular/common';
 declare const fbq:any;
 
+declare const gtag:any;
 @Component({
   selector: 'app-contactenos',
   templateUrl: './contactenos.component.html',
@@ -22,6 +24,7 @@ declare const fbq:any;
 export class ContactenosComponent implements OnInit,OnDestroy {
   private signal$ = new Subject();
 
+  isBrowser: boolean;
   @ViewChild(FormularioComponent)
   form!: FormularioComponent;
   constructor(
@@ -30,9 +33,12 @@ export class ContactenosComponent implements OnInit,OnDestroy {
     private _ContactenosService:ContactenosService,
     private _HelperService: HelperService,
     private _SeoService:SeoService,
+    @Inject(PLATFORM_ID) platformId: Object,
     private title:Title
 
-    ) { }
+    ) {
+      this.isBrowser = isPlatformBrowser(platformId);
+    }
 
   ngOnDestroy(): void {
     this.signal$.next(true)
@@ -133,9 +139,18 @@ export class ContactenosComponent implements OnInit,OnDestroy {
       this._ContactenosService.EnviarFormulario(this.DatosContactenosEnvio).subscribe({
         next:x => {
           console.log(x);
-          console.log('------------------facebook(true)---------------------------');
-          console.log(fbq);
-          fbq('track', 'CompleteRegistration');
+
+          if(this.isBrowser){
+            console.log('------------------facebook(true)---------------------------');
+            console.log(fbq);
+            fbq('track', 'CompleteRegistration');
+            gtag('event', 'conversion', {
+              'send_to': 'AW-991002043/tnStCPDl6HUQu_vF2AM',
+            });
+            gtag('event', 'conversion', {
+                'send_to': 'AW-732083338/jQrVCKmUkqUBEIrpit0C',
+            });
+          }
         },
         // error:(e)=>{
 

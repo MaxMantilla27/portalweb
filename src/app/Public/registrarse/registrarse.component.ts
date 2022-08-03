@@ -1,4 +1,5 @@
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
+import { Component, Inject, OnDestroy, OnInit, PLATFORM_ID, ViewChild } from '@angular/core';
 import { Validators } from '@angular/forms';
 import { Title, Meta } from '@angular/platform-browser';
 import { Router } from '@angular/router';
@@ -13,7 +14,8 @@ import { DatosPortalService } from 'src/app/Core/Shared/Services/DatosPortal/dat
 import { HelperService } from 'src/app/Core/Shared/Services/helper.service';
 import { RegionService } from 'src/app/Core/Shared/Services/Region/region.service';
 import { SessionStorageService } from 'src/app/Core/Shared/Services/session-storage.service';
-
+declare const fbq:any;
+declare const gtag:any;
 @Component({
   selector: 'app-registrarse',
   templateUrl: './registrarse.component.html',
@@ -23,6 +25,7 @@ export class RegistrarseComponent implements OnInit,OnDestroy {
   private signal$ = new Subject();
   @ViewChild(FormularioComponent)
   form!: FormularioComponent;
+  isBrowser: boolean;
   constructor(
     private _AccountService: AccountService,
     private _SessionStorageService: SessionStorageService,
@@ -31,9 +34,11 @@ export class RegistrarseComponent implements OnInit,OnDestroy {
     private _RegionService: RegionService,
     private _HelperService: HelperService,
     private title:Title,
-    private meta:Meta
-
-  ) {}
+    private meta:Meta,
+    @Inject(PLATFORM_ID) platformId: Object,
+  ) {
+    this.isBrowser = isPlatformBrowser(platformId); {}
+  }
 
   ngOnDestroy(): void {
     this.signal$.next(true);
@@ -91,6 +96,18 @@ export class RegistrarseComponent implements OnInit,OnDestroy {
             this.errorRegister = '';
           }, 1000000);
         } else {
+
+          if(this.isBrowser){
+            console.log('------------------facebook(true)---------------------------');
+            console.log(fbq);
+            fbq('track', 'CompleteRegistration');
+            gtag('event', 'conversion', {
+              'send_to': 'AW-991002043/tnStCPDl6HUQu_vF2AM',
+            });
+            gtag('event', 'conversion', {
+                'send_to': 'AW-732083338/jQrVCKmUkqUBEIrpit0C',
+            });
+          }
           this.statuscharge = false;
           this._SessionStorageService.SetToken(x.token);
           this.DatoObservable.datoAvatar=true

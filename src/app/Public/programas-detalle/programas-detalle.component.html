@@ -187,7 +187,7 @@
           Registra tus datos para que un asesor especializado pueda ayudarte en todo lo que requieras
         </div>
         <ng-container *ngIf="combosPrevios!=undefined">
-          <app-formulario [model]="formularioContacto" [InputsDisable]="statuscharge" (OnSubmit)="SetContacto($event)"
+          <app-formulario [model]="formularioContacto" [InputsDisable]="statuscharge" [CleanOnSubmit]="true" (OnSubmit)="SetContacto($event)"
           (OnValid)="formVal=$event" [fiels]="fileds" (OnSelect)="SelectChage($event)">
 
           <ng-container contenido>
@@ -203,7 +203,7 @@
         </app-formulario>
         </ng-container>
         <ng-container *ngIf="combosPrevios==undefined">
-          <app-formulario [model]="formularioContacto" [InputsDisable]="statuscharge" (OnSubmit)="SetContacto($event)"
+          <app-formulario [model]="formularioContacto" [InputsDisable]="statuscharge" [CleanOnSubmit]="true" (OnSubmit)="SetContacto($event)"
           (OnValid)="formVal=$event" [fiels]="fileds" (OnSelect)="SelectChage($event)">
 
           <ng-container contenido>

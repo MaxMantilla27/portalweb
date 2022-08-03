@@ -55,7 +55,8 @@ import { Subject, takeUntil } from 'rxjs';
 import { ChargeComponent } from 'src/app/Core/Shared/Containers/Dialog/charge/charge.component';
 import { Title } from '@angular/platform-browser';
 import { SeoService } from 'src/app/Core/Shared/Services/seo.service';
-
+declare const fbq:any;
+declare const gtag:any;
 @Component({
   selector: 'app-programas-detalle',
   templateUrl: './programas-detalle.component.html',
@@ -366,7 +367,8 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
           console.log(x.programaCabeceraDetalleDTO)
           console.log(this.area);
           console.log(x.programaCabeceraDetalleDTO.areaCapacitacion);
-          if(x.programaCabeceraDetalleDTO!=undefined && this.area==this.removeAccents(x.programaCabeceraDetalleDTO.areaCapacitacion))
+          if(x.programaCabeceraDetalleDTO!=undefined
+            && this.removeAccents(this.area.toLowerCase())==this.removeAccents(x.programaCabeceraDetalleDTO.areaCapacitacion.toLowerCase()))
           {
 
             this.cabecera = x.programaCabeceraDetalleDTO;
@@ -718,6 +720,18 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
         .subscribe({
           next: (x) => {
             console.log(x);
+            if(this.isBrowser){
+              console.log('------------------facebook(true)---------------------------');
+              console.log(fbq);
+              fbq('track', 'CompleteRegistration');
+              gtag('event', 'conversion', {
+                'send_to': 'AW-991002043/tnStCPDl6HUQu_vF2AM',
+              });
+              gtag('event', 'conversion', {
+                  'send_to': 'AW-732083338/jQrVCKmUkqUBEIrpit0C',
+              });
+            }
+            this._SnackBarServiceService.openSnackBar("¡Solicitud enviada!",'x',15,"snackbarCrucigramaSucces");
           },
           complete: () => {
             //this._SnackBarServiceService.openSnackBar("¡Solicitud enviada!",'x',15,"snackbarCrucigramaSucces");
