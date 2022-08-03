@@ -62,10 +62,10 @@ export class ModuloSesionesComponent implements OnInit, OnChanges {
                           registroEstructuraCursoSesion[lastses].
                           registroEstructuraCursoSubSesion[lastsub].
                           porcentajeVideoVisualizado
-                        )>=100
+                        )>=98
                       ){
-                        if(c.registroEstructuraCursoEncuesta.length>0){
-                          c.registroEstructuraCursoEncuesta.forEach((e:any) => {
+                        if(this.estructuraCapitulo.registroEstructuraCursoCapitulo[cap-1].registroEstructuraCursoEncuesta.length>0){
+                          this.estructuraCapitulo.registroEstructuraCursoCapitulo[cap-1].registroEstructuraCursoEncuesta.forEach((e:any) => {
                             if(e.nombreEncuesta!='Encuesta Inicial'){
                               if(e.encuestaEnviada!=true){
                                 ss.habilitado=false;
@@ -76,8 +76,8 @@ export class ModuloSesionesComponent implements OnInit, OnChanges {
                           ss.habilitado=true
                         }
                         if(ss.habilitado==true){
-                          if(c.registroEstructuraCursoTarea.length>0){
-                            c.registroEstructuraCursoTarea.forEach((t:any) => {
+                          if(this.estructuraCapitulo.registroEstructuraCursoCapitulo[cap-1].registroEstructuraCursoTarea.length>0){
+                            this.estructuraCapitulo.registroEstructuraCursoCapitulo[cap-1].registroEstructuraCursoTarea.forEach((t:any) => {
                               if(t.tareasEnviadas==0){
                                 ss.habilitado=false;
                               }
@@ -87,8 +87,8 @@ export class ModuloSesionesComponent implements OnInit, OnChanges {
                           }
                         }
                         if(s.habilitado==true){
-                          if(c.registroCursoTareaCalificar.length>0){
-                            c.registroCursoTareaCalificar.forEach((tc:any) => {
+                          if(this.estructuraCapitulo.registroEstructuraCursoCapitulo[cap-1].registroCursoTareaCalificar.length>0){
+                            this.estructuraCapitulo.registroEstructuraCursoCapitulo[cap-1].registroCursoTareaCalificar.forEach((tc:any) => {
                               if(!tc.calificado){
                                 ss.habilitado=false;
                               }
@@ -101,12 +101,12 @@ export class ModuloSesionesComponent implements OnInit, OnChanges {
                     }
                   }else{
                     var lastsub=c.registroEstructuraCursoSesion[ses-1].registroEstructuraCursoSubSesion.length-1
-                    if(Math.ceil(c.registroEstructuraCursoSesion[ses-1].registroEstructuraCursoSubSesion[lastsub].porcentajeVideoVisualizado)>=100){
+                    if(Math.ceil(c.registroEstructuraCursoSesion[ses-1].registroEstructuraCursoSubSesion[lastsub].porcentajeVideoVisualizado)>=98){
                       ss.habilitado=true;
                     }
                   }
                 }else{
-                  if(Math.ceil(s.registroEstructuraCursoSubSesion[subs-1].porcentajeVideoVisualizado)>=100){
+                  if(Math.ceil(s.registroEstructuraCursoSubSesion[subs-1].porcentajeVideoVisualizado)>=98){
                     ss.habilitado=true;
                   }
                 }
@@ -130,20 +130,21 @@ export class ModuloSesionesComponent implements OnInit, OnChanges {
                   }
                 }else{
                   var latcap=this.estructuraCapitulo.registroEstructuraCursoCapitulo[cap-1].registroEstructuraCursoSesion.length-1
+                  console.log(this.estructuraCapitulo.registroEstructuraCursoCapitulo[cap-1].registroEstructuraCursoSesion[latcap])
+                  console.log(c)
                   if(
                     Math.ceil(
                       this.estructuraCapitulo.registroEstructuraCursoCapitulo[cap-1].registroEstructuraCursoSesion[latcap].porcentajeVideoVisualizado
-                      )>=100
+                      )>=98
                     ){
                     if(
-                      c.registroCursoTareaCalificar.length>0 ||
-                      c.registroEstructuraCursoEncuesta.length>0 ||
-                      c.registroEstructuraCursoTarea.length>0
+                      this.estructuraCapitulo.registroEstructuraCursoCapitulo[cap-1].registroCursoTareaCalificar.length>0 ||
+                      this.estructuraCapitulo.registroEstructuraCursoCapitulo[cap-1].registroEstructuraCursoEncuesta.length>0 ||
+                      this.estructuraCapitulo.registroEstructuraCursoCapitulo[cap-1].registroEstructuraCursoTarea.length>0
                     ){
-                      var habilitar=false
-                      if(c.registroEstructuraCursoEncuesta.length>0){
-                        c.registroEstructuraCursoEncuesta.forEach((e:any) => {
-                          if(e.nombreEncuesta!='Encuesta Inicial'){
+                      if(this.estructuraCapitulo.registroEstructuraCursoCapitulo[cap-1].registroEstructuraCursoEncuesta.length>0){
+                        this.estructuraCapitulo.registroEstructuraCursoCapitulo[cap-1].registroEstructuraCursoEncuesta.forEach((e:any) => {
+                          if(e.nombreEncuesta!='Encuesta Inicial' ){
                             if(e.encuestaEnviada!=true){
                               s.habilitado=false;
                             }
@@ -153,8 +154,8 @@ export class ModuloSesionesComponent implements OnInit, OnChanges {
                         s.habilitado=true
                       }
                       if(s.habilitado==true){
-                        if(c.registroEstructuraCursoTarea.length>0){
-                          c.registroEstructuraCursoTarea.forEach((t:any) => {
+                        if(this.estructuraCapitulo.registroEstructuraCursoCapitulo[cap-1].registroEstructuraCursoTarea.length>0){
+                          this.estructuraCapitulo.registroEstructuraCursoCapitulo[cap-1].registroEstructuraCursoTarea.forEach((t:any) => {
                             if(t.tareasEnviadas==0){
                               s.habilitado=false;
                             }
@@ -164,8 +165,8 @@ export class ModuloSesionesComponent implements OnInit, OnChanges {
                         }
                       }
                       if(s.habilitado==true){
-                        if(c.registroCursoTareaCalificar.length>0){
-                          c.registroCursoTareaCalificar.forEach((tc:any) => {
+                        if(this.estructuraCapitulo.registroEstructuraCursoCapitulo[cap-1].registroCursoTareaCalificar.length>0){
+                          this.estructuraCapitulo.registroEstructuraCursoCapitulo[cap-1].registroCursoTareaCalificar.forEach((tc:any) => {
                             if(!tc.calificado){
                               s.habilitado=false;
                             }
@@ -181,7 +182,7 @@ export class ModuloSesionesComponent implements OnInit, OnChanges {
 
                 }
               }else{
-                if(Math.ceil(c.registroEstructuraCursoSesion[ses-1].porcentajeVideoVisualizado)>=100){
+                if(Math.ceil(c.registroEstructuraCursoSesion[ses-1].porcentajeVideoVisualizado)>=98){
                   s.habilitado=true;
                 }
               }
@@ -194,17 +195,17 @@ export class ModuloSesionesComponent implements OnInit, OnChanges {
             e.habilitado=false;
             if(e.nombreEncuesta!='Encuesta Inicial'){
               if(enc>0){
-                if(Math.ceil(c.registroEstructuraCursoEncuesta[enc-1].porcentajeVideoVisualizado)>=100){
+                if(Math.ceil(c.registroEstructuraCursoEncuesta[enc-1].porcentajeVideoVisualizado)>=98){
                   e.habilitado=true;
                 }
               }else{
                 if(this.estructuraCapitulo.contineSubSesion==true){
                   var lastSubses=c.registroEstructuraCursoSesion[lastses].registroEstructuraCursoSubSesion.length-1
-                  if(Math.ceil(c.registroEstructuraCursoSesion[lastses].registroEstructuraCursoSubSesion[lastSubses].porcentajeVideoVisualizado)>=100){
+                  if(Math.ceil(c.registroEstructuraCursoSesion[lastses].registroEstructuraCursoSubSesion[lastSubses].porcentajeVideoVisualizado)>=98){
                     e.habilitado=true;
                   }
                 }else{
-                  if(Math.ceil(c.registroEstructuraCursoSesion[lastses].porcentajeVideoVisualizado)>=100){
+                  if(Math.ceil(c.registroEstructuraCursoSesion[lastses].porcentajeVideoVisualizado)>=98){
                     e.habilitado=true;
                   }
                 }
@@ -218,17 +219,17 @@ export class ModuloSesionesComponent implements OnInit, OnChanges {
           c.registroEstructuraCursoTarea.forEach((t:any) => {
             t.habilitado=false;
             if(tar>0){
-              if(Math.ceil(c.registroEstructuraCursoTarea[tar-1].porcentajeVideoVisualizado)>=100){
+              if(Math.ceil(c.registroEstructuraCursoTarea[tar-1].porcentajeVideoVisualizado)>=98){
                 t.habilitado=true;
               }
             }else{
               if(this.estructuraCapitulo.contineSubSesion==true){
                 var lastSubses=c.registroEstructuraCursoSesion[lastses].registroEstructuraCursoSubSesion.length-1
-                if(Math.ceil(c.registroEstructuraCursoSesion[lastses].registroEstructuraCursoSubSesion[lastSubses].porcentajeVideoVisualizado)>=100){
+                if(Math.ceil(c.registroEstructuraCursoSesion[lastses].registroEstructuraCursoSubSesion[lastSubses].porcentajeVideoVisualizado)>=98){
                   t.habilitado=true;
                 }
               }else{
-                if(Math.ceil(c.registroEstructuraCursoSesion[lastses].porcentajeVideoVisualizado)>=100){
+                if(Math.ceil(c.registroEstructuraCursoSesion[lastses].porcentajeVideoVisualizado)>=98){
                   t.habilitado=true;
                 }
               }
@@ -239,17 +240,17 @@ export class ModuloSesionesComponent implements OnInit, OnChanges {
           c.registroCursoTareaCalificar.forEach((t:any) => {
             t.habilitado=false;
             if(tarC>0){
-              if(Math.ceil(c.registroCursoTareaCalificar[tarC-1].porcentajeVideoVisualizado)>=100){
+              if(Math.ceil(c.registroCursoTareaCalificar[tarC-1].porcentajeVideoVisualizado)>=98){
                 t.habilitado=true;
               }
             }else{
               if(this.estructuraCapitulo.contineSubSesion==true){
                 var lastSubses=c.registroEstructuraCursoSesion[lastses].registroEstructuraCursoSubSesion.length-1
-                if(Math.ceil(c.registroEstructuraCursoSesion[lastses].registroEstructuraCursoSubSesion[lastSubses].porcentajeVideoVisualizado)>=100){
+                if(Math.ceil(c.registroEstructuraCursoSesion[lastses].registroEstructuraCursoSubSesion[lastSubses].porcentajeVideoVisualizado)>=98){
                   t.habilitado=true;
                 }
               }else{
-                if(Math.ceil(c.registroEstructuraCursoSesion[lastses].porcentajeVideoVisualizado)>=100){
+                if(Math.ceil(c.registroEstructuraCursoSesion[lastses].porcentajeVideoVisualizado)>=98){
                   t.habilitado=true;
                 }
               }

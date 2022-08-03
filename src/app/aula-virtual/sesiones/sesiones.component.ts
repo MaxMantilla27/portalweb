@@ -310,7 +310,7 @@ export class SesionesComponent implements OnInit,OnDestroy {
             c.registroEstructuraCursoSesion.forEach((s: any) => {
               s.registroEstructuraCursoSubSesion.forEach((ss: any) => {
                 ss.VideoFinish = false;
-                if (Math.ceil(ss.porcentajeVideoVisualizado) >= 100) {
+                if (Math.ceil(ss.porcentajeVideoVisualizado) >= 98) {
                   ss.VideoFinish = true;
                 }
               });
@@ -322,7 +322,7 @@ export class SesionesComponent implements OnInit,OnDestroy {
           (c: any) => {
             c.registroEstructuraCursoSesion.forEach((s: any) => {
               s.VideoFinish = false;
-              if (Math.ceil(s.porcentajeVideoVisualizado) >= 100) {
+              if (Math.ceil(s.porcentajeVideoVisualizado) >= 98) {
                 s.VideoFinish = true;
               }
             });
@@ -503,7 +503,7 @@ export class SesionesComponent implements OnInit,OnDestroy {
             s.subV = 0;
             s.registroEstructuraCursoSubSesion.forEach((ss: any) => {
               ss.habilitado = false;
-              if (Math.ceil(ss.porcentajeVideoVisualizado) >= 100) {
+              if (Math.ceil(ss.porcentajeVideoVisualizado) >= 98) {
                 s.subV++;
               }
 
@@ -538,10 +538,10 @@ export class SesionesComponent implements OnInit,OnDestroy {
                         ].registroEstructuraCursoSesion[lastses]
                           .registroEstructuraCursoSubSesion[lastsub]
                           .porcentajeVideoVisualizado
-                      ) >= 100
+                      ) >= 98
                     ) {
-                      if (c.registroEstructuraCursoEncuesta.length > 0) {
-                        c.registroEstructuraCursoEncuesta.forEach((e: any) => {
+                      if (this.estructuraCapitulo.registroEstructuraCursoCapitulo[cap-1].registroEstructuraCursoEncuesta.length > 0) {
+                        this.estructuraCapitulo.registroEstructuraCursoCapitulo[cap-1].registroEstructuraCursoEncuesta.forEach((e: any) => {
                           if (e.nombreEncuesta != 'Encuesta Inicial') {
                             if (e.encuestaEnviada != true) {
                               ss.habilitado = false;
@@ -552,8 +552,8 @@ export class SesionesComponent implements OnInit,OnDestroy {
                         ss.habilitado = true;
                       }
                       if (ss.habilitado == true) {
-                        if (c.registroEstructuraCursoTarea.length > 0) {
-                          c.registroEstructuraCursoTarea.forEach((t: any) => {
+                        if (this.estructuraCapitulo.registroEstructuraCursoCapitulo[cap-1].registroEstructuraCursoTarea.length > 0) {
+                          this.estructuraCapitulo.registroEstructuraCursoCapitulo[cap-1].registroEstructuraCursoTarea.forEach((t: any) => {
                             if (t.tareasEnviadas == 0) {
                               ss.habilitado = false;
                             }
@@ -563,8 +563,8 @@ export class SesionesComponent implements OnInit,OnDestroy {
                         }
                       }
                       if (s.habilitado == true) {
-                        if (c.registroCursoTareaCalificar.length > 0) {
-                          c.registroCursoTareaCalificar.forEach((tc: any) => {
+                        if (this.estructuraCapitulo.registroEstructuraCursoCapitulo[cap-1].registroCursoTareaCalificar.length > 0) {
+                          this.estructuraCapitulo.registroEstructuraCursoCapitulo[cap-1].registroCursoTareaCalificar.forEach((tc: any) => {
                             if (!tc.calificado) {
                               ss.habilitado = false;
                             }
@@ -584,7 +584,7 @@ export class SesionesComponent implements OnInit,OnDestroy {
                       c.registroEstructuraCursoSesion[ses - 1]
                         .registroEstructuraCursoSubSesion[lastsub]
                         .porcentajeVideoVisualizado
-                    ) >= 100
+                    ) >= 98
                   ) {
                     ss.habilitado = true;
                   }
@@ -594,7 +594,7 @@ export class SesionesComponent implements OnInit,OnDestroy {
                   Math.ceil(
                     s.registroEstructuraCursoSubSesion[subs - 1]
                       .porcentajeVideoVisualizado
-                  ) >= 100
+                  ) >= 98
                 ) {
                   ss.habilitado = true;
                 }
@@ -628,16 +628,15 @@ export class SesionesComponent implements OnInit,OnDestroy {
                       cap - 1
                     ].registroEstructuraCursoSesion[latcap]
                       .porcentajeVideoVisualizado
-                  ) >= 100
+                  ) >= 98
                 ) {
                   if (
-                    c.registroCursoTareaCalificar.length > 0 ||
-                    c.registroEstructuraCursoEncuesta.length > 0 ||
-                    c.registroEstructuraCursoTarea.length > 0
+                    this.estructuraCapitulo.registroEstructuraCursoCapitulo[cap-1].registroCursoTareaCalificar.length > 0 ||
+                    this.estructuraCapitulo.registroEstructuraCursoCapitulo[cap-1].registroEstructuraCursoEncuesta.length > 0 ||
+                    this.estructuraCapitulo.registroEstructuraCursoCapitulo[cap-1].registroEstructuraCursoTarea.length > 0
                   ) {
-                    var habilitar = false;
-                    if (c.registroEstructuraCursoEncuesta.length > 0) {
-                      c.registroEstructuraCursoEncuesta.forEach((e: any) => {
+                    if (this.estructuraCapitulo.registroEstructuraCursoCapitulo[cap-1].registroEstructuraCursoEncuesta.length > 0) {
+                      this.estructuraCapitulo.registroEstructuraCursoCapitulo[cap-1].registroEstructuraCursoEncuesta.forEach((e: any) => {
                         if (e.nombreEncuesta != 'Encuesta Inicial') {
                           if (e.encuestaEnviada != true) {
                             s.habilitado = false;
@@ -648,8 +647,8 @@ export class SesionesComponent implements OnInit,OnDestroy {
                       s.habilitado = true;
                     }
                     if (s.habilitado == true) {
-                      if (c.registroEstructuraCursoTarea.length > 0) {
-                        c.registroEstructuraCursoTarea.forEach((t: any) => {
+                      if (this.estructuraCapitulo.registroEstructuraCursoCapitulo[cap-1].registroEstructuraCursoTarea.length > 0) {
+                        this.estructuraCapitulo.registroEstructuraCursoCapitulo[cap-1].registroEstructuraCursoTarea.forEach((t: any) => {
                           if (t.tareasEnviadas == 0) {
                             s.habilitado = false;
                           }
@@ -659,8 +658,8 @@ export class SesionesComponent implements OnInit,OnDestroy {
                       }
                     }
                     if (s.habilitado == true) {
-                      if (c.registroCursoTareaCalificar.length > 0) {
-                        c.registroCursoTareaCalificar.forEach((tc: any) => {
+                      if (this.estructuraCapitulo.registroEstructuraCursoCapitulo[cap-1].registroCursoTareaCalificar.length > 0) {
+                        this.estructuraCapitulo.registroEstructuraCursoCapitulo[cap-1].registroCursoTareaCalificar.forEach((tc: any) => {
                           if (!tc.calificado) {
                             s.habilitado = false;
                           }
@@ -697,7 +696,7 @@ export class SesionesComponent implements OnInit,OnDestroy {
                 Math.ceil(
                   c.registroEstructuraCursoEncuesta[enc - 1]
                     .porcentajeVideoVisualizado
-                ) >= 100
+                ) >= 98
               ) {
                 e.habilitado = true;
               }
@@ -711,7 +710,7 @@ export class SesionesComponent implements OnInit,OnDestroy {
                     c.registroEstructuraCursoSesion[lastses]
                       .registroEstructuraCursoSubSesion[lastSubses]
                       .porcentajeVideoVisualizado
-                  ) >= 100
+                  ) >= 98
                 ) {
                   e.habilitado = true;
                 }
@@ -720,7 +719,7 @@ export class SesionesComponent implements OnInit,OnDestroy {
                   Math.ceil(
                     c.registroEstructuraCursoSesion[lastses]
                       .porcentajeVideoVisualizado
-                  ) >= 100
+                  ) >= 98
                 ) {
                   e.habilitado = true;
                 }
@@ -738,7 +737,7 @@ export class SesionesComponent implements OnInit,OnDestroy {
               Math.ceil(
                 c.registroEstructuraCursoTarea[tar - 1]
                   .porcentajeVideoVisualizado
-              ) >= 100
+              ) >= 98
             ) {
               t.habilitado = true;
             }
@@ -752,7 +751,7 @@ export class SesionesComponent implements OnInit,OnDestroy {
                   c.registroEstructuraCursoSesion[lastses]
                     .registroEstructuraCursoSubSesion[lastSubses]
                     .porcentajeVideoVisualizado
-                ) >= 100
+                ) >= 98
               ) {
                 t.habilitado = true;
               }
@@ -761,7 +760,7 @@ export class SesionesComponent implements OnInit,OnDestroy {
                 Math.ceil(
                   c.registroEstructuraCursoSesion[lastses]
                     .porcentajeVideoVisualizado
-                ) >= 100
+                ) >= 98
               ) {
                 t.habilitado = true;
               }
@@ -777,7 +776,7 @@ export class SesionesComponent implements OnInit,OnDestroy {
               Math.ceil(
                 c.registroCursoTareaCalificar[tarC - 1]
                   .porcentajeVideoVisualizado
-              ) >= 100
+              ) >= 98
             ) {
               t.habilitado = true;
             }
@@ -791,7 +790,7 @@ export class SesionesComponent implements OnInit,OnDestroy {
                   c.registroEstructuraCursoSesion[lastses]
                     .registroEstructuraCursoSubSesion[lastSubses]
                     .porcentajeVideoVisualizado
-                ) >= 100
+                ) >= 98
               ) {
                 t.habilitado = true;
               }
@@ -800,7 +799,7 @@ export class SesionesComponent implements OnInit,OnDestroy {
                 Math.ceil(
                   c.registroEstructuraCursoSesion[lastses]
                     .porcentajeVideoVisualizado
-                ) >= 100
+                ) >= 98
               ) {
                 t.habilitado = true;
               }
