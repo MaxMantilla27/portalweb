@@ -12,7 +12,7 @@
         <i class="material-icons">layers</i>
       </div>
       <mat-tab-group class="tabVertical" [(selectedIndex)]="tabIndex" (selectedTabChange)="tabChanged($event)">
-        <mat-tab>
+        <mat-tab *ngIf="this.programEstructura.idModalidad!=2">
           <ng-template mat-tab-label>
             <div class="contentHeaderM" [ngClass]="{'ActiveChil':IndicacionActive==true}">
               <div class="iconMat iconIndicaciones"
