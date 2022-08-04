@@ -208,7 +208,7 @@ export class CrucigramaComponent implements OnInit,OnChanges ,OnDestroy{
     console.log(this.matris)
   }
   SendValor(){
-    if(this.valorActual!=this.valorIngresado){
+    if(this.valorActual.toLowerCase()!=this.valorIngresado.toLowerCase()){
       this._SnackBarServiceService.openSnackBar("Oh no! No es la palabra correcta.",'x',5,"snackbarCrucigramaerror");
     }else{
       this._SnackBarServiceService.openSnackBar("Correcto!!!",'x',5,"snackbarCrucigramaSucces");

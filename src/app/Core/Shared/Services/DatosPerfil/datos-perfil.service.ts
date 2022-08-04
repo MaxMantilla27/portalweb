@@ -61,5 +61,19 @@ export class DatosPerfilService {
       return EMPTY;
     }
   }
+  public ListaCursoWebexMatriculado(IdMatriculaCabecera:number):Observable<any>{
+    if(this.isBrowser){
+      return this.http.get<any>(this.urlBase+'/ListaCursoWebexMatriculado?IdMatriculaCabecera='+IdMatriculaCabecera);
+    }else{
+      return EMPTY;
+    }
+  }
+  public ListaSimuladorAsignadoMatriculado(IdMatriculaCabecera:number):Observable<any>{
+    if(this.isBrowser){
+      return this.http.get<any>(this.urlBase+'/ListaSimuladorAsignadoMatriculado?IdMatriculaCabecera='+IdMatriculaCabecera);
+    }else{
+      return EMPTY;
+    }
+  }
 
 }

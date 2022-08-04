@@ -70,6 +70,7 @@ export class VideoBrightcoveComponent implements OnInit, OnChanges,AfterViewInit
   public valorRespuesta=''
   public capituloEv=-1;
   public finish=false
+  public estadoFinalizarPreguntas=false
   // +++ Set the data for the player +++
   playerData = {
     accountId: '6267108632001',
@@ -253,6 +254,7 @@ export class VideoBrightcoveComponent implements OnInit, OnChanges,AfterViewInit
   }
 
   ResponderTexto(){
+    console.log(this.valPregunta)
     if(!this.valPregunta){
       this.validatePregunta.IdPregunta=this.preguntas[this.preguntaActual].idPregunta
       this.validatePregunta.IdPGeneral=this.json.IdPGeneralHijo;
@@ -263,6 +265,7 @@ export class VideoBrightcoveComponent implements OnInit, OnChanges,AfterViewInit
     }
   }
   finalizarPreguntas(){
+    this.estadoFinalizarPreguntas=true
     this.finalizarPerguntas.IdAccesoPrueba=this.json.AccesoPrueba;
     this.finalizarPerguntas.IdPEspecifico=this.json.IdPEspecificoHijo;
     this.finalizarPerguntas.IdPEspecificoPadre=this.json.IdPEspecificoPadre;
@@ -281,6 +284,7 @@ export class VideoBrightcoveComponent implements OnInit, OnChanges,AfterViewInit
         console.log(x)
         this.finalizado=true
         this.videoFinal='https://repositorioweb.blob.core.windows.net/repositorioweb/aulavirtual/feedback/'+x.urlVideo
+        this.estadoFinalizarPreguntas=false
       }
     })
   }
@@ -327,7 +331,8 @@ export class VideoBrightcoveComponent implements OnInit, OnChanges,AfterViewInit
       this.paramsPreguntas.GrupoPregunta=this.grupo
       this._PreguntaInteractivaService.ListaRegistroPreguntaInteractivaPorGrupo(this.paramsPreguntas).pipe(takeUntil(this.signal$)).subscribe({
         next:x=>{
-          console.log(this.preguntaActual)
+          console.log(x)
+          console.log(this.valPregunta)
           this.preguntaActual=0;
           this.chargePreguntas=true
           this.preguntas=x;
@@ -360,6 +365,7 @@ export class VideoBrightcoveComponent implements OnInit, OnChanges,AfterViewInit
             i++
           });
           console.log(this.preguntaActual)
+          console.log(this.valPregunta)
           console.log(x)
         }
       })

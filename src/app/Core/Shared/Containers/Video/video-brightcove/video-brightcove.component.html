@@ -101,12 +101,12 @@
                 <div class="respuesta fieldPreguntasI row" style="width: 100%;
                 justify-content: space-between;
                 align-items: center;" *ngFor="let respuesta of preguntas[preguntaActual].respuestaGrupoPreguntaInteractivaPrograma;let i=index">
-                  <mat-form-field appearance="outline" class="col-12 col-md-6 col-lg-6" >
+                  <mat-form-field  *ngIf="!valPregunta" appearance="outline" class="col-12 col-md-6 col-lg-6" >
                     <mat-label>respuesta</mat-label>
                     <input type="text" autocomplete="off" [(ngModel)]="valorRespuesta" matInput />
                   </mat-form-field>
                   <div class="col-12 col-md-6 col-lg-6">
-                    <app-default-button
+                    <app-default-button *ngIf="!valPregunta"
                     (ButtoclClick)="ResponderTexto()" [disabled]="valorRespuesta==''"
                     [confs]="{color:'primary',titulo:'responder'}" [icon]="''"
                     [style]="'padding: 0px 20px;margin:0px;margin-bottom: 1.34375em;'"></app-default-button>
@@ -118,12 +118,12 @@
                 justify-content: space-between;
                 align-items: center;"
                  *ngFor="let respuesta of preguntas[preguntaActual].respuestaGrupoPreguntaInteractivaPrograma;let i=index">
-                  <mat-form-field appearance="outline" class="col-12 col-md-6 col-lg-6" >
+                  <mat-form-field  *ngIf="!valPregunta" appearance="outline" class="col-12 col-md-6 col-lg-6" >
                     <mat-label>respuesta</mat-label>
                     <input type="number" autocomplete="off" [(ngModel)]="valorRespuesta" matInput />
                   </mat-form-field>
                   <div class="col-12 col-md-6 col-lg-6">
-                    <app-default-button
+                    <app-default-button *ngIf="!valPregunta"
                     (ButtoclClick)="ResponderTexto()" [disabled]="valorRespuesta==''"
                     [confs]="{color:'primary',titulo:'responder'}" [icon]="''"
                     [style]="'padding: 0px 20px;margin:0px;margin-bottom: 1.34375em;'"></app-default-button>

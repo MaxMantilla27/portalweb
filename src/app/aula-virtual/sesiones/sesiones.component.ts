@@ -224,6 +224,7 @@ export class SesionesComponent implements OnInit,OnDestroy {
             if (ndx == this.tabIndex) {
               e.charge = true;
               c.opened = true;
+              e.habilitado=true;
             }
           }
         });
@@ -237,12 +238,14 @@ export class SesionesComponent implements OnInit,OnDestroy {
                 ss.charge = true;
                 s.opened = true;
                 c.opened = true;
+                ss.habilitado=true;
               }
             });
           } else {
             if (ndx == this.tabIndex) {
               s.charge = true;
               c.opened = true;
+              s.habilitado=true;
             }
           }
         });
@@ -251,6 +254,7 @@ export class SesionesComponent implements OnInit,OnDestroy {
           if (ndx == this.tabIndex) {
             t.charge = true;
             c.opened = true;
+            t.habilitado=true;
           }
         });
         c.registroCursoTareaCalificar.forEach((tc: any) => {
@@ -258,6 +262,7 @@ export class SesionesComponent implements OnInit,OnDestroy {
           if (ndx == this.tabIndex) {
             tc.charge = true;
             c.opened = true;
+            tc.habilitado=true;
           }
         });
         c.registroEstructuraCursoEncuesta.forEach((e: any) => {
@@ -265,6 +270,7 @@ export class SesionesComponent implements OnInit,OnDestroy {
           if (ndx == this.tabIndex) {
             e.charge = true;
             c.opened = true;
+            e.habilitado=true;
           }
         });
         ndx++;
@@ -296,6 +302,8 @@ export class SesionesComponent implements OnInit,OnDestroy {
       .ObtenerEstructuraEspecificaCurso(this.json).pipe(takeUntil(this.signal$))
       .subscribe({
         next: (x) => {
+
+          console.log(x)
           this.estructuraCapitulo = x;
           this.ValidateEstadoVideo();
           this.OrdenarEstructura();
@@ -823,7 +831,6 @@ export class SesionesComponent implements OnInit,OnDestroy {
       .ObtenerListadoProgramaContenido(this.idMatricula).pipe(takeUntil(this.signal$))
       .subscribe({
         next: (x) => {
-
           x.listaCursoMatriculado.forEach((program: any) => {
             if (this.idPEspecificoHijo == program.idPEspecificoHijo) {
               this.json = {

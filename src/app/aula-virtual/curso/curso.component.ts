@@ -139,10 +139,15 @@ export class CursoComponent implements OnInit,OnDestroy {
     if(this.IndicacionActive){
       masindicacion=4
     }
+    var noesAonline=0
+    if(this.programEstructura.idModalidad!=1){
+      masindicacion=-1
+      noesAonline=-1
+    }
     if(this.curso!=undefined && this.curso.proyectoAplicacion){
-      if((tabChangeEvent.index >= 6 || tabChangeEvent.index < 3)  && this.CertificadoActive){
+      if((tabChangeEvent.index >= (6+noesAonline) || tabChangeEvent.index < (3+noesAonline))  && this.CertificadoActive){
         this.CertificadoActive=false
-        if(tabChangeEvent.index >= 6){
+        if(tabChangeEvent.index >= (6+noesAonline)){
           this.tabIndex-=2
         }
       }
@@ -150,9 +155,9 @@ export class CursoComponent implements OnInit,OnDestroy {
         this.CertificadoActive=true
       }
     }else{
-      if((tabChangeEvent.index >= 5 || tabChangeEvent.index < 2)   && this.CertificadoActive){
+      if((tabChangeEvent.index >= (5+noesAonline) || tabChangeEvent.index < (2+noesAonline))   && this.CertificadoActive){
         this.CertificadoActive=false
-        if(tabChangeEvent.index >= 5){
+        if(tabChangeEvent.index >= (5+noesAonline)){
           this.tabIndex-=2
         }
       }

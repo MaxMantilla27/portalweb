@@ -1,0 +1,19 @@
+<div class="cursoTitle">{{Capitulo}}</div>
+<div class="row" style="align-items: center;">
+  <div class="tipoIndicacionTitle col-12 col-md-12 col-lg-12">
+    <i class="material-icons">play_lesson</i>
+    <div style="font-weight: bold;">Clases Online</div>
+  </div>
+</div>
+<ng-container *ngIf="clases==undefined || clases.length==0">
+  <div style="text-align: left; margin-bottom: 20px;">
+    Por el momento no cuenta con clases online
+  </div>
+</ng-container>
+<ng-container *ngIf="clases!=undefined && clases.length>0">
+
+  <app-table  [tableData]="clases" [columnHeader]="columnHeader"
+  [tipoContenido]="TipoContenido"
+  [StyleContent]="'    font-size: 12px;padding: 10px;'"
+  [StyleCabecera]="'color: white;background: rgb(3 61 171)'"></app-table>
+</ng-container>

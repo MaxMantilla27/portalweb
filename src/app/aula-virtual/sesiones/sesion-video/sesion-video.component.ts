@@ -142,4 +142,10 @@ export class SesionVideoComponent implements OnInit,OnChanges,OnDestroy {
   prevc(){
     this.prev.emit();
   }
+  onFinishVideo(){
+    console.log(this.videoData);
+    console.log(this.estadovideo);
+    this.estadovideo=100;
+    this.videoData.tiempoVisualizado=this.videoData.tiempoTotalVideo
+  }
 }
