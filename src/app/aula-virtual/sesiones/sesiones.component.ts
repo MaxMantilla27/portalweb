@@ -541,6 +541,7 @@ export class SesionesComponent implements OnInit,OnDestroy {
                       ) >= 98
                     ) {
                       if (this.estructuraCapitulo.registroEstructuraCursoCapitulo[cap-1].registroEstructuraCursoEncuesta.length > 0) {
+                        ss.habilitado = true;
                         this.estructuraCapitulo.registroEstructuraCursoCapitulo[cap-1].registroEstructuraCursoEncuesta.forEach((e: any) => {
                           if (e.nombreEncuesta != 'Encuesta Inicial') {
                             if (e.encuestaEnviada != true) {
@@ -553,6 +554,7 @@ export class SesionesComponent implements OnInit,OnDestroy {
                       }
                       if (ss.habilitado == true) {
                         if (this.estructuraCapitulo.registroEstructuraCursoCapitulo[cap-1].registroEstructuraCursoTarea.length > 0) {
+                          ss.habilitado = true;
                           this.estructuraCapitulo.registroEstructuraCursoCapitulo[cap-1].registroEstructuraCursoTarea.forEach((t: any) => {
                             if (t.tareasEnviadas == 0) {
                               ss.habilitado = false;
@@ -564,6 +566,7 @@ export class SesionesComponent implements OnInit,OnDestroy {
                       }
                       if (s.habilitado == true) {
                         if (this.estructuraCapitulo.registroEstructuraCursoCapitulo[cap-1].registroCursoTareaCalificar.length > 0) {
+                          ss.habilitado = true;
                           this.estructuraCapitulo.registroEstructuraCursoCapitulo[cap-1].registroCursoTareaCalificar.forEach((tc: any) => {
                             if (!tc.calificado) {
                               ss.habilitado = false;
@@ -636,6 +639,7 @@ export class SesionesComponent implements OnInit,OnDestroy {
                     this.estructuraCapitulo.registroEstructuraCursoCapitulo[cap-1].registroEstructuraCursoTarea.length > 0
                   ) {
                     if (this.estructuraCapitulo.registroEstructuraCursoCapitulo[cap-1].registroEstructuraCursoEncuesta.length > 0) {
+                      s.habilitado = true;
                       this.estructuraCapitulo.registroEstructuraCursoCapitulo[cap-1].registroEstructuraCursoEncuesta.forEach((e: any) => {
                         if (e.nombreEncuesta != 'Encuesta Inicial') {
                           if (e.encuestaEnviada != true) {
@@ -648,6 +652,7 @@ export class SesionesComponent implements OnInit,OnDestroy {
                     }
                     if (s.habilitado == true) {
                       if (this.estructuraCapitulo.registroEstructuraCursoCapitulo[cap-1].registroEstructuraCursoTarea.length > 0) {
+                        s.habilitado = true;
                         this.estructuraCapitulo.registroEstructuraCursoCapitulo[cap-1].registroEstructuraCursoTarea.forEach((t: any) => {
                           if (t.tareasEnviadas == 0) {
                             s.habilitado = false;
@@ -659,6 +664,7 @@ export class SesionesComponent implements OnInit,OnDestroy {
                     }
                     if (s.habilitado == true) {
                       if (this.estructuraCapitulo.registroEstructuraCursoCapitulo[cap-1].registroCursoTareaCalificar.length > 0) {
+                        s.habilitado = true;
                         this.estructuraCapitulo.registroEstructuraCursoCapitulo[cap-1].registroCursoTareaCalificar.forEach((tc: any) => {
                           if (!tc.calificado) {
                             s.habilitado = false;

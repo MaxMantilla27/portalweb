@@ -82,7 +82,7 @@
             <div class="col-12 col-md-4 col-lg-4 contentdiv">
               <img src="../../../../assets/icons/icono-calendario-admision-blanco.svg" alt="">
               <div>
-                <div class="titleDiv">Admicion</div>
+                <div class="titleDiv">Admisi&oacute;n</div>
                 <div class="subTitleDiv">{{fechaInicio}}</div>
               </div>
             </div>
@@ -170,7 +170,7 @@
                       <p>Registra tus datos para que un asesor especializado pueda ayudarte en todo lo que requieras</p>
                     </div>
                     <ng-container *ngIf="combosPrevios!=undefined">
-                      <app-formulario [model]="formularioContacto" [InputsDisable]="statuscharge" (OnSubmit)="SetContacto($event)"
+                      <app-formulario [model]="formularioContacto" [CleanOnSubmit]="true"  [InputsDisable]="statuscharge" (OnSubmit)="SetContacto($event)"
                       (OnValid)="formVal=$event" [fiels]="fileds" (OnSelect)="SelectChage($event)">
 
                       <ng-container contenido>
@@ -186,7 +186,7 @@
                     </app-formulario>
                     </ng-container>
                     <ng-container *ngIf="combosPrevios==undefined">
-                      <app-formulario [model]="formularioContacto" [InputsDisable]="statuscharge" (OnSubmit)="SetContacto($event)"
+                      <app-formulario [model]="formularioContacto" [CleanOnSubmit]="true" [InputsDisable]="statuscharge" (OnSubmit)="SetContacto($event)"
                       (OnValid)="formVal=$event" [fiels]="fileds" (OnSelect)="SelectChage($event)">
 
                       <ng-container contenido>

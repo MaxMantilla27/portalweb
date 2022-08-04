@@ -240,6 +240,7 @@ export class EducationTecnicaDetalleComponent implements OnInit,OnDestroy {
       this._HelperService.EnviarFormulario(this.DatosEnvioFormulario).pipe(takeUntil(this.signal$)).subscribe({
         next: (x) => {
           console.log(x);
+          this._SnackBarServiceService.openSnackBar("¡Solicitud enviada!",'x',15,"snackbarCrucigramaSucces");
         },
         complete: () => {
           this.statuscharge = false;

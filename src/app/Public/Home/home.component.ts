@@ -41,9 +41,6 @@ export class HomeComponent implements OnInit,AfterViewInit,OnDestroy {
     {Curso:"Lean Six Sigma Black Belt",img:'jorge-rojas.png',Nombre:'JORGE ROJAS',Texto:'La gran diferencia con la competencia fue que: uno, la flexibilidad de horarios y número dos, BSG Institute te prepara, te brinda las pautas y te hacen un seguimiento personalizado para acceder a la certificación internacional.'}
   ];
   imagesc = [
-    {title: 'First Slide', short: 'First Slide Short', src: "https://picsum.photos/id/700/900/500"},
-    {title: 'Second Slide', short: 'Second Slide Short', src: "https://picsum.photos/id/1011/900/500"},
-    {title: 'Third Slide', short: 'Third Slide Short', src: "https://picsum.photos/id/984/900/500"}
   ];
   constructor(
 

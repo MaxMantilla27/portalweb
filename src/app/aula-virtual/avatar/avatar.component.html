@@ -25,7 +25,7 @@
         <div class="col-12 col-md-12 col-lg-12">
             <div class="row">
                 <div class="titleAvatar">Características</div>
-                <app-formulario [model]="DatosAvatarEnvio" [InputsDisable]="statuscharge" (OnSubmit)="ActualizarAvatar($event)" [Color]="'#f8f8f8'"
+                <app-formulario *ngIf="cargo==true" [model]="DatosAvatarEnvio" [InputsDisable]="statuscharge" (OnSubmit)="ActualizarAvatar($event)" [Color]="'#f8f8f8'"
                     (OnValid)="formVal=$event"(OnSelect)="RecargaImagen($event)" [fiels]="fileds" [Tipo]="1" [ChargeValuesInit]="initValues">
                 <ng-container send >
                   <div class="col-12 col-md-6 col-lg-6">

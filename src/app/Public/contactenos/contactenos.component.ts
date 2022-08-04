@@ -13,6 +13,7 @@ import { Title } from '@angular/platform-browser';
 import { SeoService } from 'src/app/Core/Shared/Services/seo.service';
 import { Subject, takeUntil } from 'rxjs';
 import { isPlatformBrowser } from '@angular/common';
+import { SnackBarServiceService } from 'src/app/Core/Shared/Services/SnackBarService/snack-bar-service.service';
 declare const fbq:any;
 
 declare const gtag:any;
@@ -34,6 +35,7 @@ export class ContactenosComponent implements OnInit,OnDestroy {
     private _HelperService: HelperService,
     private _SeoService:SeoService,
     @Inject(PLATFORM_ID) platformId: Object,
+    private _SnackBarServiceService:SnackBarServiceService,
     private title:Title
 
     ) {
@@ -151,6 +153,7 @@ export class ContactenosComponent implements OnInit,OnDestroy {
                 'send_to': 'AW-732083338/jQrVCKmUkqUBEIrpit0C',
             });
           }
+          this._SnackBarServiceService.openSnackBar("¡Solicitud enviada!",'x',15,"snackbarCrucigramaSucces");
         },
         // error:(e)=>{
 
