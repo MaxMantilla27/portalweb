@@ -16,6 +16,7 @@ import { HelperService as Help} from 'src/app/Core/Shared/Services/helper.servic
 import { Title } from '@angular/platform-browser';
 import { SeoService } from 'src/app/Core/Shared/Services/seo.service';
 import { Subject, takeUntil } from 'rxjs';
+import { SessionStorageService } from 'src/app/Core/Shared/Services/session-storage.service';
 
 
 @Component({
@@ -59,7 +60,9 @@ export class CarreraProfesionalDetalleComponent implements OnInit {
     private _SnackBarServiceService:SnackBarServiceService,
     private _HelperServiceP:Help,
     private _SeoService:SeoService,
-    private title:Title
+    private title:Title,
+    private _SessionStorageService:SessionStorageService,
+
 
   ) { }
   ngOnDestroy(): void {
@@ -91,7 +94,8 @@ export class CarreraProfesionalDetalleComponent implements OnInit {
     IdAreaTrabajo:0,
     IdIndustria:0
   }
-  public combosPrevios:any
+  public combosPrevios:any;
+  public IdPespecificoPrograma=0;
   ngOnInit(): void {
     this.migaPan = [
       {
@@ -141,8 +145,8 @@ export class CarreraProfesionalDetalleComponent implements OnInit {
     this._CarreraProfesionalService.GetCarrerasDetalle(idBusqueda, nombre).pipe(takeUntil(this.signal$)).subscribe({
       next:(x)=>{
         console.log(x);
-
-
+        this.IdPespecificoPrograma = x.programaInformacionDTO.programaEspecificoInformacionDTO[0].id
+        console.log(this.IdPespecificoPrograma)
         if(x.programaInformacionDTO!=undefined && x.programaInformacionDTO.parametroSeoProgramaDTO!=undefined){
           var metas=x.programaInformacionDTO.parametroSeoProgramaDTO;
           if(metas!=null && metas.length>0){
@@ -252,6 +256,14 @@ export class CarreraProfesionalDetalleComponent implements OnInit {
       this.DatosEnvioFormulario.IdAreaFormacion=value.IdAreaFormacion;
       this.DatosEnvioFormulario.IdAreaTrabajo=value.IdAreaTrabajo;
       this.DatosEnvioFormulario.IdIndustria=value.IdIndustria;
+      var IdPespecifico=this._SessionStorageService.SessionGetValueSesionStorage("IdPEspecificoPublicidad");
+      var IdCategoriaDato=this._SessionStorageService.SessionGetValueSesionStorage("idCategoria");
+      this.DatosEnvioFormulario.IdCategoriaDato=IdCategoriaDato==''?0:parseInt(IdCategoriaDato);
+      if(IdPespecifico==''){
+        this.DatosEnvioFormulario.IdPespecifico=this.IdPespecificoPrograma;
+      }else{
+        this.DatosEnvioFormulario.IdPespecifico=parseInt(IdPespecifico)
+      };
       console.log(this.DatosEnvioFormulario)
       this._HelperService.EnviarFormulario(this.DatosEnvioFormulario).pipe(takeUntil(this.signal$)).subscribe({
         next: (x) => {

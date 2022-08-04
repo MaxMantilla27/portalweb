@@ -57,7 +57,7 @@ export class LandingPageInterceptorComponent implements OnInit,OnDestroy {
         {
           this.valorPrograma=x;
           this._SessionStorage.SessionSetValue("idCampania",this.valorPrograma.idConjuntoAnuncio)
-          this._SessionStorage.SessionSetValue("idCategoria",this.valorPrograma.idCategoriaOrigen)
+          this._SessionStorage.SessionSetValueSesionStorage("idCategoria",this.valorPrograma.idCategoriaOrigen)
           this._SessionStorage.SessionSetValueSesionStorage("IdPEspecificoPublicidad",this.valorPrograma.idPEspecifico)
           this.nombreProgramaLandingPage=this.valorPrograma.categoriaNombre.replace(/-/g,' ')
           console.log(this.nombreProgramaLandingPage)
