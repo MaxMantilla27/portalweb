@@ -14,6 +14,7 @@ import { SeoService } from 'src/app/Core/Shared/Services/seo.service';
 import { Subject, takeUntil } from 'rxjs';
 import { isPlatformBrowser } from '@angular/common';
 import { SnackBarServiceService } from 'src/app/Core/Shared/Services/SnackBarService/snack-bar-service.service';
+import { SessionStorageService } from 'src/app/Core/Shared/Services/session-storage.service';
 declare const fbq:any;
 
 declare const gtag:any;
@@ -35,6 +36,7 @@ export class ContactenosComponent implements OnInit,OnDestroy {
     private _HelperService: HelperService,
     private _SeoService:SeoService,
     @Inject(PLATFORM_ID) platformId: Object,
+    private _SessionStorageService:SessionStorageService,
     private _SnackBarServiceService:SnackBarServiceService,
     private title:Title
 
@@ -137,6 +139,14 @@ export class ContactenosComponent implements OnInit,OnDestroy {
       this.DatosContactenosEnvio.IdAreaTrabajo=value.IdAreaTrabajo;
       this.DatosContactenosEnvio.IdIndustria=value.IdIndustria;
       this.DatosContactenosEnvio.Comentario=value.Comentario;
+      var IdPespecifico=this._SessionStorageService.SessionGetValueSesionStorage("IdPEspecificoPublicidad");
+      var IdCategoriaDato=this._SessionStorageService.SessionGetValueSesionStorage("idCategoria");
+      this.DatosContactenosEnvio.IdCategoriaDato=IdCategoriaDato==''?0:parseInt(IdCategoriaDato);
+      if(IdPespecifico==''){
+        this.DatosContactenosEnvio.IdPespecifico=0
+      }else{
+        this.DatosContactenosEnvio.IdPespecifico=parseInt(IdPespecifico)
+      };
       console.log(this.DatosContactenosEnvio)
       this._ContactenosService.EnviarFormulario(this.DatosContactenosEnvio).subscribe({
         next:x => {

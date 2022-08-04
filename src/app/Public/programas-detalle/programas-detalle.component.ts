@@ -217,8 +217,9 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
   public Paises:any;
   public IdPais=-1;
   public codigoIso:string = 'INTC';
-  public alumno=''
-  public combosPrevios:any
+  public alumno='';
+  public combosPrevios:any;
+  public IdPespecificoPrograma=0;
 
   ngOnInit(): void {
     if (this.isBrowser) {
@@ -373,6 +374,7 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
           {
 
             this.cabecera = x.programaCabeceraDetalleDTO;
+            this.IdPespecificoPrograma = x.programaCabeceraDetalleDTO.listProgramaEspecificoInformacionDTO[0].id
             this.migaPan.push({
               titulo:
                 'Área: ' +
@@ -715,7 +717,14 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
       this.DatosEnvioFormulario.IdAreaFormacion = value.IdAreaFormacion;
       this.DatosEnvioFormulario.IdAreaTrabajo = value.IdAreaTrabajo;
       this.DatosEnvioFormulario.IdIndustria = value.IdIndustria;
-      console.log(this.DatosEnvioFormulario);
+      var IdPEspecifico=this._SessionStorageService.SessionGetValueSesionStorage("IdPEspecificoPublicidad");
+      var IdCategoriaDato=this._SessionStorageService.SessionGetValueSesionStorage("idCategoria");
+      this.DatosEnvioFormulario.IdCategoriaDato=IdCategoriaDato==''?0:parseInt(IdCategoriaDato);
+      if(IdPEspecifico==''){
+        this.DatosEnvioFormulario.IdPespecifico=this.IdPespecificoPrograma;
+      }else{
+        this.DatosEnvioFormulario.IdPespecifico=parseInt(IdPEspecifico)
+      };
       this._HelperService
         .EnviarFormulario(this.DatosEnvioFormulario).pipe(takeUntil(this.signal$))
         .subscribe({

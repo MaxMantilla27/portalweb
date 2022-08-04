@@ -118,7 +118,7 @@ export class RegistrarseComponent implements OnInit,OnDestroy {
     this.registerSend.Password=this.register.Password
 
     var idPEspecifico=this._SessionStorageService.SessionGetValueSesionStorage("IdPEspecificoPublicidad");
-    var CategoriaDato=this._SessionStorageService.SessionGetValue("idCategoria");
+    var CategoriaDato=this._SessionStorageService.SessionGetValueSesionStorage("idCategoria");
     this.registerSend.CategoriaDato=CategoriaDato==''?0:parseInt(CategoriaDato);
     if(idPEspecifico==''){
       this.registerSend.IdPEspecifico=0
