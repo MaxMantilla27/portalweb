@@ -217,8 +217,9 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
   public Paises:any;
   public IdPais=-1;
   public codigoIso:string = 'INTC';
-  public alumno=''
-  public combosPrevios:any
+  public alumno='';
+  public combosPrevios:any;
+  public IdPespecifico=0;
 
   ngOnInit(): void {
     if (this.isBrowser) {
@@ -372,6 +373,8 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
           {
 
             this.cabecera = x.programaCabeceraDetalleDTO;
+            this.IdPespecifico = x.programaCabeceraDetalleDTO.listProgramaEspecificoInformacionDTO[0].id
+            console.log(this.IdPespecifico)
             this.migaPan.push({
               titulo:
                 'Área: ' +
@@ -714,6 +717,7 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
       this.DatosEnvioFormulario.IdAreaFormacion = value.IdAreaFormacion;
       this.DatosEnvioFormulario.IdAreaTrabajo = value.IdAreaTrabajo;
       this.DatosEnvioFormulario.IdIndustria = value.IdIndustria;
+      this.DatosEnvioFormulario.IdPespecifico = this.IdPespecifico;
       console.log(this.DatosEnvioFormulario);
       this._HelperService
         .EnviarFormulario(this.DatosEnvioFormulario).pipe(takeUntil(this.signal$))
