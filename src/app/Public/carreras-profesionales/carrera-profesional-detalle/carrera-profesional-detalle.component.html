@@ -143,7 +143,7 @@
                   </div>
 
                   <ng-container *ngIf="combosPrevios!=undefined">
-                    <app-formulario [model]="formularioContacto" [InputsDisable]="statuscharge" (OnSubmit)="SetContacto($event)"
+                    <app-formulario [model]="formularioContacto" [CleanOnSubmit]="true" [InputsDisable]="statuscharge" (OnSubmit)="SetContacto($event)"
                     (OnValid)="formVal=$event" [fiels]="fileds" (OnSelect)="SelectChage($event)">
 
                     <ng-container contenido>
@@ -159,7 +159,7 @@
                   </app-formulario>
                   </ng-container>
                   <ng-container *ngIf="combosPrevios==undefined">
-                    <app-formulario [model]="formularioContacto" [InputsDisable]="statuscharge" (OnSubmit)="SetContacto($event)"
+                    <app-formulario [model]="formularioContacto" [CleanOnSubmit]="true" [InputsDisable]="statuscharge" (OnSubmit)="SetContacto($event)"
                     (OnValid)="formVal=$event" [fiels]="fileds" (OnSelect)="SelectChage($event)">
 
                     <ng-container contenido>

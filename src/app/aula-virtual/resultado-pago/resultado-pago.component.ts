@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
+import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
 import { RegistroRespuestaPreProcesoPagoDTO } from 'src/app/Core/Models/ProcesoPagoDTO';
@@ -12,13 +13,17 @@ import { SessionStorageService } from 'src/app/Core/Shared/Services/session-stor
 })
 export class ResultadoPagoComponent implements OnInit {
   private signal$ = new Subject();
+  isBrowser: boolean;
 
   constructor(
     private _ActivatedRoute:ActivatedRoute,
     private _FormaPagoService:FormaPagoService,
     private _SessionStorageService:SessionStorageService,
-    private _router:Router
-  ) { }
+    private _router:Router,
+    @Inject(PLATFORM_ID) platformId: Object,
+  ) {
+    this.isBrowser = isPlatformBrowser(platformId); {}
+  }
 
   public json:RegistroRespuestaPreProcesoPagoDTO={
     IdentificadorTransaccion:'',
@@ -30,24 +35,25 @@ export class ResultadoPagoComponent implements OnInit {
   img=1;
   imgAc=''
   ngOnInit(): void {
+    if(this.isBrowser){
+      this._ActivatedRoute.params.pipe(takeUntil(this.signal$)).subscribe({
+        next: (x) => {
+          this.json.IdentificadorTransaccion = x['Identificador'];
 
-    this._ActivatedRoute.params.pipe(takeUntil(this.signal$)).subscribe({
-      next: (x) => {
-        this.json.IdentificadorTransaccion = x['Identificador'];
+          this.ObtenerPreProcesoPagoCuotaAlumno()
+        },
+      });
+      this.imgInterval();
 
-        this.ObtenerPreProcesoPagoCuotaAlumno()
-      },
-    });
-    this.imgInterval();
-
-    var interval2=setInterval(()=>{
-      if(this.resultVisa!=undefined && this.resultVisa.estadoOperacion.toLowerCase()=='pending' && this.resultVisa.idPasarelaPago==5){
-        this.ValidarProcesoPagoCuotaAlumnoOpenPAy();
-      }
-      if(this.resultVisa!=undefined && this.resultVisa.estadoOperacion.toLowerCase()!='pending'){
-        clearInterval(interval2);
-      }
-    },15000)
+      var interval2=setInterval(()=>{
+        if(this.resultVisa!=undefined && this.resultVisa.estadoOperacion.toLowerCase()=='pending' && this.resultVisa.idPasarelaPago==5){
+          this.ValidarProcesoPagoCuotaAlumnoOpenPAy();
+        }
+        if(this.resultVisa!=undefined && this.resultVisa.estadoOperacion.toLowerCase()!='pending'){
+          clearInterval(interval2);
+        }
+      },15000)
+    }
 
   }
   ValidarProcesoPagoCuotaAlumnoOpenPAy(){

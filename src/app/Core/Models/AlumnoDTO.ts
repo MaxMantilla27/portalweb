@@ -19,6 +19,20 @@ export interface datosAlumnoDTO {
   idProveedor:number,
   cursos:number
 }
+
+export interface RegisterModuloDTO {
+  Nombres: string,
+  Apellidos: string,
+  Email: string,
+  IdPais?: number,
+  IdRegion?: number,
+  Movil: string,
+  IdCargo?: number,
+  IdAreaFormacion?: number,
+  IdAreaTrabajo?: number,
+  IdIndustria?: number,
+  Password: string,
+}
 export interface RegisterDTO {
   Nombres: string,
   Apellidos: string,
@@ -31,6 +45,9 @@ export interface RegisterDTO {
   IdAreaTrabajo?: number,
   IdIndustria?: number,
   Password: string,
+  CategoriaDato:number,
+  Tipo:string,
+  IdPEspecifico:number,
 }
 export interface combosPerfilDTO{
   listaTipoDocumento:Array<any>,

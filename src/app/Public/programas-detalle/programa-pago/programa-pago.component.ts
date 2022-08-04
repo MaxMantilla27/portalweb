@@ -37,6 +37,7 @@ export class ProgramaPagoComponent implements OnInit ,OnDestroy{
   }
   ngOnInit(): void {
     console.log(this.data)
+    this.data.alumno=this.data.alumno.length>0?this.data.alumno+',':''
     this.MedioPagoActivoPasarelaPortal();
     this.ListMontoPagoCompleto();
   }

@@ -4,7 +4,7 @@ import { Validators } from '@angular/forms';
 import { Title, Meta } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
-import { RegisterDTO } from 'src/app/Core/Models/AlumnoDTO';
+import { RegisterDTO, RegisterModuloDTO } from 'src/app/Core/Models/AlumnoDTO';
 import { Basic } from 'src/app/Core/Models/BasicDTO';
 import { DatoObservableDTO } from 'src/app/Core/Models/DatoObservableDTO';
 import { formulario } from 'src/app/Core/Models/Formulario';
@@ -63,7 +63,8 @@ export class RegistrarseComponent implements OnInit,OnDestroy {
     datoContenido: false,
   }
   fileds: Array<formulario> = [];
-  register: RegisterDTO = {
+
+  register: RegisterModuloDTO = {
     Nombres: '',
     Apellidos: '',
     Email: '',
@@ -76,6 +77,22 @@ export class RegistrarseComponent implements OnInit,OnDestroy {
     IdIndustria: undefined,
     Password: '',
   };
+  registerSend: RegisterDTO = {
+    Nombres: '',
+    Apellidos: '',
+    Email: '',
+    IdPais: undefined,
+    IdRegion: undefined,
+    Movil: '',
+    IdCargo: undefined,
+    IdAreaFormacion: undefined,
+    IdAreaTrabajo: undefined,
+    IdIndustria: undefined,
+    Password: '',
+    CategoriaDato:0,
+    Tipo:'accesopruebagratis',//pago
+    IdPEspecifico:0
+  };
   ngOnInit(): void {
     let t:string='Registrarse'
     this.title.setTitle(t);
@@ -87,7 +104,31 @@ export class RegistrarseComponent implements OnInit,OnDestroy {
     this.initValues = false;
     this.statuscharge = true;
     this.register = value;
-    this._AccountService.RegistrarseAlumno(this.register).pipe(takeUntil(this.signal$)).subscribe({
+
+    this.registerSend.Nombres=this.register.Nombres,
+    this.registerSend.Apellidos=this.register.Apellidos,
+    this.registerSend.Email=this.register.Email,
+    this.registerSend.IdPais=this.register.IdPais,
+    this.registerSend.IdRegion=this.register.IdRegion,
+    this.registerSend.Movil=this.register.Movil,
+    this.registerSend.IdCargo=this.register.IdCargo,
+    this.registerSend.IdAreaFormacion=this.register.IdAreaFormacion,
+    this.registerSend.IdAreaTrabajo=this.register.IdAreaTrabajo,
+    this.registerSend.IdIndustria=this.register.IdIndustria,
+    this.registerSend.Password=this.register.Password
+
+    var idPEspecifico=this._SessionStorageService.SessionGetValueSesionStorage("IdPEspecificoPublicidad");
+    var CategoriaDato=this._SessionStorageService.SessionGetValue("idCategoria");
+    this.registerSend.CategoriaDato=CategoriaDato==''?0:parseInt(CategoriaDato);
+    if(idPEspecifico==''){
+      this.registerSend.IdPEspecifico=0
+      this.registerSend.Tipo=''
+    }else{
+      this.registerSend.IdPEspecifico=parseInt(idPEspecifico)
+      var pago=this._SessionStorageService.SessionGetValueSesionStorage("PagoPublicidad");
+      this.registerSend.Tipo=pago=='1'?'pago':'accesopruebagratis'
+    }
+    this._AccountService.RegistrarseAlumno(this.registerSend).pipe(takeUntil(this.signal$)).subscribe({
       next: (x) => {
         if (x.excepcionGenerada != undefined && x.excepcionGenerada == true) {
           this.statuscharge = false;

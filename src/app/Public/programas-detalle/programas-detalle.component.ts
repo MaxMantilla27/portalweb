@@ -342,6 +342,7 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
       this._SessionStorageService.SessionSetValue('redirect','pago');
       this._SessionStorageService.SessionSetValue('datosTarjeta',JSON.stringify(this.jsonEnvioPago));
       this._router.navigate(['/login']);
+      this._SessionStorageService.SessionSetValueSesionStorage("PagoPublicidad","1");
       dialogRef.close()
     }
 

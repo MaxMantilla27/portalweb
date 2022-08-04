@@ -91,23 +91,26 @@ export class FormularioComponent implements OnChanges, OnInit,OnDestroy {
   ngOnInit(): void {
     this._HelperService.recibirDataPais.pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
-        this.paise=x;
-        var codigoISo=this._SessionStorageService.SessionGetValue('ISO_PAIS');
-        this.paisSelect=this.paise.find(x=>x.codigoIso==codigoISo).idPais;
-        var index=0
-        this.fiels.forEach((f:any) =>{
-          if(f.tipo=='phone' && this.userForm){
-            this.validatePais(index,f.nombre)
-          }
-          if(f.nombre.toLowerCase()=='idpais' && this.userForm){
-            let campo = (<FormArray>this.userForm.get('Fields')).controls[index].get(f.nombre);
-            if(campo?.value!=undefined){
-              campo?.setValue(this.paisSelect);
-              this.OnSelect.emit({Nombre:f.nombre,value:this.paisSelect})
+        console.log(x)
+        if(this.paise.length==0){
+          this.paise=x;
+          var codigoISo=this._SessionStorageService.SessionGetValue('ISO_PAIS');
+          this.paisSelect=this.paise.find(x=>x.codigoIso==codigoISo).idPais;
+          var index=0
+          this.fiels.forEach((f:any) =>{
+            if(f.tipo=='phone' && this.userForm){
+              this.validatePais(index,f.nombre)
             }
-          }
-          index++
-        })
+            if(f.nombre.toLowerCase()=='idpais' && this.userForm){
+              let campo = (<FormArray>this.userForm.get('Fields')).controls[index].get(f.nombre);
+              if(campo?.value!=undefined){
+                campo?.setValue(this.paisSelect);
+                this.OnSelect.emit({Nombre:f.nombre,value:this.paisSelect})
+              }
+            }
+            index++
+          })
+        }
       }
     })
     if(this.isBrowser){
@@ -148,7 +151,7 @@ export class FormularioComponent implements OnChanges, OnInit,OnDestroy {
         let campo = (<FormArray>this.userForm.get('Fields')).controls[i].get(
           this.fiels[i].nombre
         );
-        campo?.setValue(this.fiels[i].valorInicial);
+        //campo?.setValue(this.fiels[i].valorInicial);
       }
     }
   }
@@ -295,8 +298,12 @@ export class FormularioComponent implements OnChanges, OnInit,OnDestroy {
     var s=campo.split(' ');
 
     this.pref=this.PrefPaises()==null?'':this.PrefPaises()+' ';
+    console.log((<FormArray>this.userForm.get('Fields')).controls[i])
+    console.log(this.pref+s.slice(1))
+    console.log(campo)
     this.min=this.LongCelularPaises()==null?0:this.LongCelularPaises();
     (<FormArray>this.userForm.get('Fields')).controls[i].get(val)?.setValue(this.pref+s.slice(1));
+    console.log((<FormArray>this.userForm.get('Fields')).controls[i].get(val)?.value.toString());
     (<FormArray>this.userForm.get('Fields')).controls[i].get(val)?.clearValidators();
     (<FormArray>this.userForm.get('Fields')).controls[i].get(val)?.addValidators([
       Validators.required,
