@@ -77,6 +77,7 @@ export class SesionVideoComponent implements OnInit,OnChanges,OnDestroy {
       this.parametros.AccesoPrueba=this.json.AccesoPrueba;
       this.parametros.IdMatriculaCabecera=this.json.IdMatriculaCabecera;
       this.parametros.IdPGeneral=this.json.IdPGeneralHijo;
+      this.parametros.OrdenSeccion=this.OrdenSeccion;
 
       this.crucigrama.AccesoPrueba=this.json.AccesoPrueba;
       this.crucigrama.IdCapitulo=this.idCapitulo;
