@@ -52,13 +52,13 @@ export class FormularioPublicidadComponent implements OnInit {
     Nombres:'',
     Apellidos:'',
     Email:'',
-    IdPais:0,
-    IdRegion:0,
+    IdPais:undefined,
+    IdRegion:undefined,
     Movil:'',
-    IdCargo:0,
-    IdAreaFormacion:0,
-    IdAreaTrabajo:0,
-    IdIndustria:0,
+    IdCargo:undefined,
+    IdAreaFormacion:undefined,
+    IdAreaTrabajo:undefined,
+    IdIndustria:undefined,
   }
   public DatosLandingPageEnvio: ContactenosDTO={
     NombrePrograma:'',
@@ -73,13 +73,13 @@ export class FormularioPublicidadComponent implements OnInit {
     Nombres:'',
     Apellidos:'',
     Correo1:'',
-    IdPais:0,
-    IdRegion:0,
+    IdPais:undefined,
+    IdRegion:undefined,
     Movil:'',
-    IdCargo:0,
-    IdAreaFormacion:0,
-    IdAreaTrabajo:0,
-    IdIndustria:0,
+    IdCargo:undefined,
+    IdAreaFormacion:undefined,
+    IdAreaTrabajo:undefined,
+    IdIndustria:undefined,
   }
   public combosPrevios:any
 
@@ -101,8 +101,9 @@ export class FormularioPublicidadComponent implements OnInit {
         this.GetRegionesPorPais(this.FormularioPublicidad.IdPais);
       }
     })
-    this.AddFields();
     this.ObtenerCombosPortal();
+
+    this.AddFields();
   }
 
   EnviarFormularioPublicidad(value:any){
