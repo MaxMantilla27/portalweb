@@ -34,6 +34,7 @@ export class ChatPortalComponent implements OnInit,OnDestroy,OnChanges {
   public chatKey = 'lcsk-chatId';
  // public listprogramas = [9990, 9991, 9992, 9993];
   @Input() idProgramageneral=0;
+  @Input() IdPespecificoPrograma=0;
   public contadoraulavirtual=0
   public idInteraccion =this.GetsesionIdInteraccion()
   public idprogramageneralalumno=0

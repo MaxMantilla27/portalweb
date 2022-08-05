@@ -12,4 +12,7 @@ export interface ValidacionChatEnvioDTO{
   IdPrograma?:number,
   EstadoAsesor:string,
   IdUsuario?:string,
+  IdCategoriaDato?:number,
+  IdPespecifico?:number,
+
 }

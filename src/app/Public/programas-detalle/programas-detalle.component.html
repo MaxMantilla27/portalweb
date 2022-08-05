@@ -587,7 +587,7 @@
   <app-soporte-tecnico [cargaChat]="true" [texto]="'Chatea con nosotros'" (IsOpen)="OpenChat=$event" [Open]="OpenChat" [token]="false" [IdPGeneral]="idPegeneral">
 
     <ng-container contenidoChat>
-      <app-chat-portal (ChargeChat)="chatcharge($event)" (AbrirChat)="OpenChat=false"  [idProgramageneral]="idPegeneral" [Open]="OpenChat"></app-chat-portal>
+      <app-chat-portal (ChargeChat)="chatcharge($event)" (AbrirChat)="OpenChat=false"  [idProgramageneral]="idPegeneral" [IdPespecificoPrograma]="IdPespecificoPrograma" [Open]="OpenChat" ></app-chat-portal>
     </ng-container>
   </app-soporte-tecnico>
 </ng-container>

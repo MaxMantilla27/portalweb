@@ -69,6 +69,8 @@ export class FormularioComponent implements OnChanges, OnInit,OnDestroy {
   @Input()
   ChargeValuesInit: boolean=false;
 
+  @Input()
+  ObtenerPrefijo: boolean=false;
 
   @Input()
   CleanOnSubmit: boolean=false;
@@ -205,12 +207,15 @@ export class FormularioComponent implements OnChanges, OnInit,OnDestroy {
         if (key == clave[0]) {
           value = element.value[clave[0]];
           obj[key] = value;
-          this.fiels.forEach((f:any) =>{
-            if(f.tipo=='phone' && f.nombre.toLowerCase()==key.toLowerCase()){
-              value = element.value[clave[0]].split(this.pref)[element.value[clave[0]].split(this.pref).length-1];
-              obj[key] = value;
-            }
-          })
+          if(this.ObtenerPrefijo==false){
+            this.fiels.forEach((f:any) =>{
+              if(f.tipo=='phone' && f.nombre.toLowerCase()==key.toLowerCase()){
+                value = element.value[clave[0]].split(this.pref)[element.value[clave[0]].split(this.pref).length-1];
+                obj[key] = value;
+              }
+            })
+          }
+
         }
       });
     }

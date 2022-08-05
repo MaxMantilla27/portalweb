@@ -5,6 +5,7 @@ import { Subject, takeUntil } from 'rxjs';
 import { ValidacionChatEnvioDTO, ValidacionChatFormularioDTO } from 'src/app/Core/Models/ChatEnLineaDTO';
 import { formulario } from 'src/app/Core/Models/Formulario';
 import { ChatEnLineaService } from '../../Services/ChatEnLinea/chat-en-linea.service';
+import { SessionStorageService } from '../../Services/session-storage.service';
 import { SnackBarServiceService } from '../../Services/SnackBarService/snack-bar-service.service';
 declare const fbq:any;
 declare const gtag:any;
@@ -20,6 +21,7 @@ export class FormChatComponent implements OnInit,OnChanges {
   constructor(
     private _ChatEnLinea: ChatEnLineaService,
     private _SnackBarServiceService: SnackBarServiceService,
+    private _SessionStorageService:SessionStorageService,
     @Inject(PLATFORM_ID) platformId: Object,
   ) {
     this.isBrowser = isPlatformBrowser(platformId);
@@ -30,6 +32,7 @@ export class FormChatComponent implements OnInit,OnChanges {
   }
 
   @Input() IdPGeneral=0;
+  @Input() IdPespecificoPrograma=0;
   public chatInicial=false;
   public chatOpen=false;
   public initValues = false;
@@ -75,8 +78,16 @@ export class FormChatComponent implements OnInit,OnChanges {
       this.DatosEnvioFormulario.Apellidos = value.Apellidos;
       this.DatosEnvioFormulario.Email = value.Email;
       this.DatosEnvioFormulario.Movil = value.Movil;
-      this.DatosEnvioFormulario.EstadoAsesor = '1';
+      this.DatosEnvioFormulario.EstadoAsesor = '0';
       this.DatosEnvioFormulario.IdPrograma = this.IdPGeneral;
+      var IdPespecifico=this._SessionStorageService.SessionGetValueSesionStorage("IdPEspecificoPublicidad");
+      var IdCategoriaDato=this._SessionStorageService.SessionGetValueSesionStorage("idCategoria");
+      this.DatosEnvioFormulario.IdCategoriaDato=IdCategoriaDato==''?0:parseInt(IdCategoriaDato);
+      if(IdPespecifico==''){
+        this.DatosEnvioFormulario.IdPespecifico=this.IdPespecificoPrograma
+      }else{
+        this.DatosEnvioFormulario.IdPespecifico=parseInt(IdPespecifico)
+      };
       this._ChatEnLinea.ValidarCrearOportunidadChat(this.DatosEnvioFormulario).pipe(takeUntil(this.signal$)).subscribe({
         next:(x)=>{
 
