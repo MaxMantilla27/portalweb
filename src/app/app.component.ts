@@ -83,7 +83,6 @@ export class AppComponent implements OnInit,AfterViewInit ,OnDestroy {
     }})
   }
   RegistroInteraccionInicial(){
-    console.log(12)
     this._GlobalService.RegistroInteraccionInicial().pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
       this._SessionStorageService.SessionSetValue('usuarioWeb',x.identificadorUsuario);

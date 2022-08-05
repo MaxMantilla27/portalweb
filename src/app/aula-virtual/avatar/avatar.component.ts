@@ -133,7 +133,6 @@ export class AvatarComponent implements OnInit,OnDestroy {
           this.DatosAvatarEnvio.skin=this.datosAvatar.skin
           this.imgAvatar = x.UrlAvatar;
           this.combosAvatar = x;
-          console.log(x);
           setTimeout(() => {
             this.fileds.forEach((c) => {
               if (c.nombre == 'topC') {
@@ -355,18 +354,15 @@ export class AvatarComponent implements OnInit,OnDestroy {
     });
   }
   ActualizarAvatar(value: any) {
-    console.log(value);
     this.initValues = false;
     this.statuscharge = true;
     this.DatosAvatarEnvio = value;
     this._AvatarService.ActualizarAvatar(this.DatosAvatarEnvio).pipe(takeUntil(this.signal$)).subscribe({
       next: (x) => {
-        console.log(x);
         this._SnackBarServiceService.openSnackBar("Se modifico el avatar",'x',15,"snackbarCrucigramaSucces");
       },
       error: (e) => {
         this.statuscharge = false;
-        console.log(e);
         this.errorActualizacion = e.error.excepcion.descripcionGeneral;
         setTimeout(() => {
           this.errorActualizacion = 'Avatar actualizado correctamente';
@@ -379,7 +375,6 @@ export class AvatarComponent implements OnInit,OnDestroy {
    /*  this._HelperService.recibirDatoCuenta.subscribe(m=>this.DatoObservable.datoAvatar=true) */
     this.DatoObservable.datoAvatar=true
     this._HelperService.enviarDatoCuenta(this.DatoObservable)
-    console.log(this.DatoObservable);
   }
 
 

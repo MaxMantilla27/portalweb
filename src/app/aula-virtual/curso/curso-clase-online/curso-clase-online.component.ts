@@ -29,7 +29,7 @@ export class CursoClaseOnlineComponent implements OnInit,OnDestroy,OnChanges {
   TipoContenido:any={
     'fechaHoraInicio': ['date'],
     'HoraInicio': ['hora'],
-    'Acciones': ['url','UrlWebex'],
+    'Acciones': ['url','urlWebex'],
     //'Acciones': ['buttons'],
   }
   ngOnInit(): void {
@@ -49,7 +49,7 @@ export class CursoClaseOnlineComponent implements OnInit,OnDestroy,OnChanges {
           this.clases.forEach((c:any) => {
             c.HoraInicio=c.fechaHoraInicio;
 
-            c.Acciones=c.UrlWebex==null?'Próximamente':'Ir  a clase'
+            c.Acciones=c.urlWebex==null?'Próximamente':'Ir  a clase'
           });
         }
       },
