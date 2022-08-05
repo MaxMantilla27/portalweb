@@ -35,6 +35,7 @@ export class SesionVideoComponent implements OnInit,OnChanges,OnDestroy {
   @Input() nombreSesion=''
   @Input() idCapitulo=0;
   @Input() idSesion=0;
+  @Input() OrdenSeccion=0;
   @Input() charge:boolean|undefined=false;
   public videoData:any;
   @Input() crucigramaData:any;
@@ -57,6 +58,7 @@ export class SesionVideoComponent implements OnInit,OnChanges,OnDestroy {
     IdMatriculaCabecera:this.json.IdMatriculaCabecera,
     IdPGeneral:this.json.IdPGeneralHijo,
     IdSesion:this.idSesion,
+    OrdenSeccion:this.OrdenSeccion
   }
   ngOnDestroy(): void {
     this.signal$.next(true)
@@ -75,6 +77,7 @@ export class SesionVideoComponent implements OnInit,OnChanges,OnDestroy {
       this.parametros.AccesoPrueba=this.json.AccesoPrueba;
       this.parametros.IdMatriculaCabecera=this.json.IdMatriculaCabecera;
       this.parametros.IdPGeneral=this.json.IdPGeneralHijo;
+      this.parametros.OrdenSeccion=this.OrdenSeccion;
 
       this.crucigrama.AccesoPrueba=this.json.AccesoPrueba;
       this.crucigrama.IdCapitulo=this.idCapitulo;
@@ -141,5 +144,11 @@ export class SesionVideoComponent implements OnInit,OnChanges,OnDestroy {
   }
   prevc(){
     this.prev.emit();
+  }
+  onFinishVideo(){
+    console.log(this.videoData);
+    console.log(this.estadovideo);
+    this.estadovideo=100;
+    this.videoData.tiempoVisualizado=this.videoData.tiempoTotalVideo
   }
 }

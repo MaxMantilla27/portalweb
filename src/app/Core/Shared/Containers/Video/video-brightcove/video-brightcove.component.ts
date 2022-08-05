@@ -70,6 +70,7 @@ export class VideoBrightcoveComponent implements OnInit, OnChanges,AfterViewInit
   public valorRespuesta=''
   public capituloEv=-1;
   public finish=false
+  public estadoFinalizarPreguntas=false
   // +++ Set the data for the player +++
   playerData = {
     accountId: '6267108632001',
@@ -141,6 +142,7 @@ export class VideoBrightcoveComponent implements OnInit, OnChanges,AfterViewInit
   }
   ngOnChanges(changes: SimpleChanges): void {
     if (this.videoData != undefined) {
+      console.log(this.videoData)
       if(this.videoData.objetoConfigurado.idVideoBrightcove!='0' &&
       this.videoData.objetoConfigurado.idVideoBrightcove!=null &&
       this.videoData.objetoConfigurado.idVideoBrightcove!=undefined){
@@ -152,7 +154,13 @@ export class VideoBrightcoveComponent implements OnInit, OnChanges,AfterViewInit
       if( this.videoData.objetoConfigurado.idVideoBrightcove!='' && this.videoData.objetoConfigurado.idVideoBrightcove!=null){
         this.playerData.videoId=this.videoData.objetoConfigurado.idVideoBrightcove
       }
-      this.tiempovideoinicio=this.videoData.tiempoVisualizado
+      var porcentage=(this.videoData.tiempoVisualizado*100)/this.videoData.tiempoTotalVideo
+      console.log(porcentage)
+      if(Math.ceil(porcentage)>98){
+        this.tiempovideoinicio=0
+      }else{
+        this.tiempovideoinicio=this.videoData.tiempoVisualizado
+      }
       this.tiempovideoinicioInicial=Math.ceil(this.videoData.tiempoVisualizado)
       this.tiempovideo=this.videoData.tiempoTotalVideo
       this.tiempoactualvideo=this.videoData.tiempoVisualizado
@@ -253,6 +261,7 @@ export class VideoBrightcoveComponent implements OnInit, OnChanges,AfterViewInit
   }
 
   ResponderTexto(){
+    console.log(this.valPregunta)
     if(!this.valPregunta){
       this.validatePregunta.IdPregunta=this.preguntas[this.preguntaActual].idPregunta
       this.validatePregunta.IdPGeneral=this.json.IdPGeneralHijo;
@@ -263,6 +272,7 @@ export class VideoBrightcoveComponent implements OnInit, OnChanges,AfterViewInit
     }
   }
   finalizarPreguntas(){
+    this.estadoFinalizarPreguntas=true
     this.finalizarPerguntas.IdAccesoPrueba=this.json.AccesoPrueba;
     this.finalizarPerguntas.IdPEspecifico=this.json.IdPEspecificoHijo;
     this.finalizarPerguntas.IdPEspecificoPadre=this.json.IdPEspecificoPadre;
@@ -281,6 +291,7 @@ export class VideoBrightcoveComponent implements OnInit, OnChanges,AfterViewInit
         console.log(x)
         this.finalizado=true
         this.videoFinal='https://repositorioweb.blob.core.windows.net/repositorioweb/aulavirtual/feedback/'+x.urlVideo
+        this.estadoFinalizarPreguntas=false
       }
     })
   }
@@ -327,7 +338,8 @@ export class VideoBrightcoveComponent implements OnInit, OnChanges,AfterViewInit
       this.paramsPreguntas.GrupoPregunta=this.grupo
       this._PreguntaInteractivaService.ListaRegistroPreguntaInteractivaPorGrupo(this.paramsPreguntas).pipe(takeUntil(this.signal$)).subscribe({
         next:x=>{
-          console.log(this.preguntaActual)
+          console.log(x)
+          console.log(this.valPregunta)
           this.preguntaActual=0;
           this.chargePreguntas=true
           this.preguntas=x;
@@ -360,6 +372,7 @@ export class VideoBrightcoveComponent implements OnInit, OnChanges,AfterViewInit
             i++
           });
           console.log(this.preguntaActual)
+          console.log(this.valPregunta)
           console.log(x)
         }
       })

@@ -310,10 +310,16 @@ export class FormularioComponent implements OnChanges, OnInit,OnDestroy {
     (<FormArray>this.userForm.get('Fields')).controls[i].get(val)?.setValue(this.pref+s.slice(1));
     console.log((<FormArray>this.userForm.get('Fields')).controls[i].get(val)?.value.toString());
     (<FormArray>this.userForm.get('Fields')).controls[i].get(val)?.clearValidators();
-    (<FormArray>this.userForm.get('Fields')).controls[i].get(val)?.addValidators([
-      Validators.required,
-      Validators.minLength(this.pref.length+this.min),
-      Validators.maxLength(this.pref.length+this.min)]);
+    if(this.min>0){
+      (<FormArray>this.userForm.get('Fields')).controls[i].get(val)?.addValidators([
+        Validators.required,
+        Validators.minLength(this.pref.length+this.min),
+        Validators.maxLength(this.pref.length+this.min)]);
+    }else{
+
+      (<FormArray>this.userForm.get('Fields')).controls[i].get(val)?.addValidators([
+        Validators.required]);
+    }
   }
   LongCelularPaises():number{
     if(this.paise.find(x=>x.idPais==this.paisSelect)!=undefined){

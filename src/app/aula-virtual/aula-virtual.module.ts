@@ -84,6 +84,8 @@ import { DocenciaTrabajoParesComponent } from './docencia/docencia-trabajo-pares
 import { DocenciaTareasComponent } from './docencia-tareas/docencia-tareas.component';
 import { DocenciaActividadesAutoevaluacionComponent } from './docencia/docencia-actividades-autoevaluacion/docencia-actividades-autoevaluacion.component';
 import { ConfirmacionPagoMultipagoComponent } from './confirmacion-pago-multipago/confirmacion-pago-multipago.component';
+import { CursoClaseOnlineComponent } from './curso/curso-clase-online/curso-clase-online.component';
+import { CursoSimuladoresComponent } from './curso/curso-simuladores/curso-simuladores.component';
 
 
 
@@ -167,6 +169,8 @@ import { ConfirmacionPagoMultipagoComponent } from './confirmacion-pago-multipag
     DocenciaTareasComponent,
     DocenciaActividadesAutoevaluacionComponent,
     ConfirmacionPagoMultipagoComponent,
+    CursoClaseOnlineComponent,
+    CursoSimuladoresComponent,
 
   ],
   imports: [

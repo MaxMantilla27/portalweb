@@ -171,7 +171,10 @@ export class ChatComponent implements OnInit,OnDestroy,OnChanges {
   ConectarSocket(IdFaseOportunidadPortal?:string){
     this.hubConnection.start()
       .then((x:any) =>{
-        this.GenerarLogVisitanteAulaVirtual()
+        console.log(this.hubConnection.state)
+        if(this.hubConnection.state=='Connected'){
+          this.GenerarLogVisitanteAulaVirtual()
+        }
 
         if(IdFaseOportunidadPortal!=undefined){
           this.actualizarDatosAlumno(IdFaseOportunidadPortal);

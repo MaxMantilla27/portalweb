@@ -15,6 +15,7 @@ export interface ParametrosVideoSesionDTO {
   IdCapitulo: number;
   IdSesion: number;
   AccesoPrueba: boolean;
+  OrdenSeccion:number
 }
 export interface  ParametrosCrucigramaVideoSesionDTO
 {

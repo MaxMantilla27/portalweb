@@ -63,9 +63,11 @@ export class MisCursosComponent implements OnInit,OnDestroy {
       next: (x) => {
         console.log(x);
         this.matriculasPrueba = x;
-        this.matriculasPrueba.forEach(p=>{
-          p.tipoModalidad=parseInt(p.tipoModalidad)
-        })
+        if(this.matriculasPrueba!=null){
+          this.matriculasPrueba.forEach(p=>{
+            p.tipoModalidad=parseInt(p.tipoModalidad)
+          })
+        }
         console.log(this.matriculas);
       }
     })

@@ -12,7 +12,7 @@
         <i class="material-icons">layers</i>
       </div>
       <mat-tab-group class="tabVertical" [(selectedIndex)]="tabIndex" (selectedTabChange)="tabChanged($event)">
-        <mat-tab *ngIf="this.programEstructura.idModalidad!=2">
+        <mat-tab *ngIf="programEstructura.idModalidad!=2">
           <ng-template mat-tab-label>
             <div class="contentHeaderM" [ngClass]="{'ActiveChil':IndicacionActive==true}">
               <div class="iconMat iconIndicaciones"
@@ -26,6 +26,7 @@
             </div>
           </ng-template>
           <div class="pad-resp">
+            <app-video-ayuda [sise]="3"></app-video-ayuda>
             <div class="cursoTitle">{{programEstructura.programaGeneral}}</div>
             <div class="cursoTabDescripcion">
               ¡Hola! A continuación te explicamos cómo realizar las evaluaciones que se presentarán de acuerdo a tu avance del curso. Te deseamos éxitos.
@@ -272,6 +273,36 @@
           <div class="pad-resp">
             <app-beneficios [IdMatricula]="idMatricula" [Capitulo]="programEstructura.programaGeneral">
             </app-beneficios>
+          </div>
+        </mat-tab>
+        <mat-tab *ngIf="curso!=undefined && curso.claseWebexActivo==true">
+          <ng-template mat-tab-label>
+            <div class="contentHeaderM">
+
+              <div class="iconMat"
+              [matTooltip]="'Clases Online'"
+              matTooltipPosition="after"><i class="material-icons">play_lesson</i></div>
+              <div class="titleMatr" *ngIf="!hide">Clases Online</div>
+            </div>
+          </ng-template>
+          <div class="pad-resp">
+            <app-curso-clase-online [IdMatricula]="idMatricula" [Capitulo]="programEstructura.programaGeneral">
+            </app-curso-clase-online>
+          </div>
+        </mat-tab>
+        <mat-tab *ngIf="curso!=undefined && curso.simuladorAsignado==true">
+          <ng-template mat-tab-label>
+            <div class="contentHeaderM">
+
+              <div class="iconMat"
+              [matTooltip]="'Clases Online'"
+              matTooltipPosition="after"><i class="material-icons">group_work</i></div>
+              <div class="titleMatr" *ngIf="!hide">Simuladores</div>
+            </div>
+          </ng-template>
+          <div class="pad-resp">
+            <app-curso-simuladores [IdMatricula]="idMatricula" [Capitulo]="programEstructura.programaGeneral">
+            </app-curso-simuladores>
           </div>
         </mat-tab>
       </mat-tab-group>

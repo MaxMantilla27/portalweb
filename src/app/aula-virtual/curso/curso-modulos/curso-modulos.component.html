@@ -19,14 +19,24 @@
 
     <ng-container *ngIf="item.idModalidadHijo==1">
       <div class="titleCursoModulo col-12 col-md-9 col-lg-10">{{item.programaGeneralHijo}}</div>
-      <div class="estadoCursoModulo col-12 col-md-3 col-lg-2"
-        *ngIf="(item.progreso!=undefined && item.progreso.progresoVideo.length>0)">
-        <i class="material-icons" *ngIf="item.progreso.progresoVideo[0].porcentaje>=100">check_circle</i>
-        <div *ngIf="item.progreso.progresoVideo[0].porcentaje>=100">Completado</div>
-        <div *ngIf="item.progreso.progresoVideo[0].porcentaje>0 && item.progreso.progresoVideo[0].porcentaje<100">
-          Continuar</div>
-        <div *ngIf="item.progreso.progresoVideo[0].porcentaje==0">Pendiente</div>
-      </div>
+      <ng-container *ngIf="item.convalidado==true">
+        <div class="estadoCursoModulo col-12 col-md-3 col-lg-2" >
+          <i class="material-icons" >check_circle</i>
+          <div >Completado</div>
+        </div>
+      </ng-container>
+      <ng-container *ngIf="item.convalidado!=true">
+        <div class="estadoCursoModulo col-12 col-md-3 col-lg-2"
+          *ngIf="(item.progreso!=undefined && item.progreso.progresoVideo.length>0)">
+          <i class="material-icons" *ngIf="item.progreso.progresoVideo[0].porcentaje>=100">check_circle</i>
+          <div *ngIf="item.progreso.progresoVideo[0].porcentaje>=100">Completado</div>
+          <div *ngIf="item.progreso.progresoVideo[0].porcentaje>0 && item.progreso.progresoVideo[0].porcentaje<100">
+            Continuar</div>
+          <div *ngIf="item.progreso.progresoVideo[0].porcentaje==0">Pendiente</div>
+        </div>
+      </ng-container>
+
+
 
     </ng-container>
 
@@ -35,44 +45,65 @@
 
     <div class="contentModulo col-12 col-md-8 col-lg-9">
       <div style="font-size: 14px;color: #909090; font-weight: 600;">Video:</div>
-      <mat-progress-bar mode="determinate"
-        [value]="(item.progreso!=undefined && item.progreso.progresoVideo.length>0)?item.progreso.progresoVideo[0].porcentaje:0">
-      </mat-progress-bar>
-      <div style="justify-content: space-between; display: flex;font-size: 12px;color: #909090; font-weight: 600;">
-        <div>0%</div>
-        <div>{{(item.progreso!=undefined &&
-          item.progreso.progresoVideo.length>0)?(item.progreso.progresoVideo[0].porcentaje | number:'1.0-0'):0 }}%</div>
-      </div>
-      <div style="display: flex;margin-top: 10px;align-items: center;"
-        *ngIf="(item.progreso!=undefined  && item.progreso.progresoEncuesta!=undefined && item.progreso.progresoEncuesta.length>0)">
+      <ng-container *ngIf="item.convalidado==true">
+        <mat-progress-bar mode="determinate" [value]="100">
+        </mat-progress-bar>
 
-        <i style=" color: #05c254;
-        margin-right: 5px;
-        font-size: 16px !important;" class="material-icons"
-          *ngIf="item.progreso.progresoEncuesta[0].porcentajeAvance>=100">check_circle</i>
-        <div style="font-size: 14px;color: #909090; font-weight: 600;">Encuestas:</div>
-        <div style="font-size: 14px;color: #909090;margin-left:10px">
+        <div style="justify-content: space-between; display: flex;font-size: 12px;color: #909090; font-weight: 600;">
+          <div>0%</div>
+          <div>100%</div>
+        </div>
+        <div style="    font-size: 11px;
+        font-weight: bold;
+        color: #909090;
+        margin-top: 10px;">
+          Convalidado
+        </div>
+      </ng-container>
+      <ng-container *ngIf="item.convalidado!=true">
+        <mat-progress-bar mode="determinate"
+          [value]="(item.progreso!=undefined && item.progreso.progresoVideo.length>0)?item.progreso.progresoVideo[0].porcentaje:0">
+        </mat-progress-bar>
+        <div style="justify-content: space-between; display: flex;font-size: 12px;color: #909090; font-weight: 600;">
+          <div>0%</div>
+          <div>{{(item.progreso!=undefined &&
+            item.progreso.progresoVideo.length>0)?(item.progreso.progresoVideo[0].porcentaje | number:'1.0-0'):0 }}%</div>
+        </div>
+        <div style="display: flex;margin-top: 10px;align-items: center;"
+          *ngIf="(item.progreso!=undefined  && item.progreso.progresoEncuesta!=undefined && item.progreso.progresoEncuesta.length>0)">
 
-          Completadas al
-          {{item.progreso.progresoEncuesta[0].porcentajeAvance | number:'1.0-0'}}%</div>
-      </div>
-      <div style="display: flex;margin-top: 10px;"
-        *ngIf="(item.progreso!=undefined && item.progreso.progresoTarea!=undefined  && item.progreso.progresoTarea.length>0)">
-        <i style="color: #05c254;
-        margin-right: 5px;
-        font-size: 16px !important;" class="material-icons"
-          *ngIf="item.progreso.progresoTarea[0].porcentajeAvance>=100">check_circle</i>
-        <div style="font-size: 14px;color: #909090; font-weight: 600;">Tareas:</div>
-        <div style="font-size: 14px;color: #909090;margin-left:10px">
+          <i style=" color: #05c254;
+          margin-right: 5px;
+          font-size: 16px !important;" class="material-icons"
+            *ngIf="item.progreso.progresoEncuesta[0].porcentajeAvance>=100">check_circle</i>
+          <div style="font-size: 14px;color: #909090; font-weight: 600;">Encuestas:</div>
+          <div style="font-size: 14px;color: #909090;margin-left:10px">
 
-          Completadas al
-          {{item.progreso.progresoTarea[0].porcentajeAvance | number:'1.0-0'}}%</div>
-      </div>
+            Completadas al
+            {{item.progreso.progresoEncuesta[0].porcentajeAvance | number:'1.0-0'}}%</div>
+        </div>
+        <div style="display: flex;margin-top: 10px;"
+          *ngIf="(item.progreso!=undefined && item.progreso.progresoTarea!=undefined  && item.progreso.progresoTarea.length>0)">
+          <i style="color: #05c254;
+          margin-right: 5px;
+          font-size: 16px !important;" class="material-icons"
+            *ngIf="item.progreso.progresoTarea[0].porcentajeAvance>=100">check_circle</i>
+          <div style="font-size: 14px;color: #909090; font-weight: 600;">Tareas:</div>
+          <div style="font-size: 14px;color: #909090;margin-left:10px">
+
+            Completadas al
+            {{item.progreso.progresoTarea[0].porcentajeAvance | number:'1.0-0'}}%</div>
+        </div>
+      </ng-container>
+
+
+
     </div>
 
     <div class="col-12 col-md-4 col-lg-3" style="display: flex;justify-content: flex-end">
       <app-default-button [confs]="{color:'primary',titulo:'Ingresar'}" [disabled]="item.params==undefined"
-        [ruta]="'/AulaVirtual/MisCursos/'+idMatricula+'/'+item.idPEspecificoHijo" [style]="'padding:0px 20px'">
+        (click)="IrCurso(idMatricula,item.idPEspecificoHijo,item.habilitado==true?true:false)"
+        [style]="'padding:0px 20px'">
       </app-default-button>
     </div>
   </div>

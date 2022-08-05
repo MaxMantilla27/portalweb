@@ -224,6 +224,7 @@ export class SesionesComponent implements OnInit,OnDestroy {
             if (ndx == this.tabIndex) {
               e.charge = true;
               c.opened = true;
+              e.habilitado=true;
             }
           }
         });
@@ -237,12 +238,14 @@ export class SesionesComponent implements OnInit,OnDestroy {
                 ss.charge = true;
                 s.opened = true;
                 c.opened = true;
+                ss.habilitado=true;
               }
             });
           } else {
             if (ndx == this.tabIndex) {
               s.charge = true;
               c.opened = true;
+              s.habilitado=true;
             }
           }
         });
@@ -251,6 +254,7 @@ export class SesionesComponent implements OnInit,OnDestroy {
           if (ndx == this.tabIndex) {
             t.charge = true;
             c.opened = true;
+            t.habilitado=true;
           }
         });
         c.registroCursoTareaCalificar.forEach((tc: any) => {
@@ -258,6 +262,7 @@ export class SesionesComponent implements OnInit,OnDestroy {
           if (ndx == this.tabIndex) {
             tc.charge = true;
             c.opened = true;
+            tc.habilitado=true;
           }
         });
         c.registroEstructuraCursoEncuesta.forEach((e: any) => {
@@ -265,6 +270,7 @@ export class SesionesComponent implements OnInit,OnDestroy {
           if (ndx == this.tabIndex) {
             e.charge = true;
             c.opened = true;
+            e.habilitado=true;
           }
         });
         ndx++;
@@ -296,6 +302,8 @@ export class SesionesComponent implements OnInit,OnDestroy {
       .ObtenerEstructuraEspecificaCurso(this.json).pipe(takeUntil(this.signal$))
       .subscribe({
         next: (x) => {
+
+          console.log(x)
           this.estructuraCapitulo = x;
           this.ValidateEstadoVideo();
           this.OrdenarEstructura();
@@ -503,6 +511,10 @@ export class SesionesComponent implements OnInit,OnDestroy {
             s.subV = 0;
             s.registroEstructuraCursoSubSesion.forEach((ss: any) => {
               ss.habilitado = false;
+
+              if(this.estructuraCapitulo.convalidado==true){
+                ss.habilitado=true;
+              }
               if (Math.ceil(ss.porcentajeVideoVisualizado) >= 98) {
                 s.subV++;
               }
@@ -546,6 +558,9 @@ export class SesionesComponent implements OnInit,OnDestroy {
                           if (e.nombreEncuesta != 'Encuesta Inicial') {
                             if (e.encuestaEnviada != true) {
                               ss.habilitado = false;
+                              if(this.estructuraCapitulo.convalidado==true){
+                                ss.habilitado=true;
+                              }
                             }
                           }
                         });
@@ -558,6 +573,9 @@ export class SesionesComponent implements OnInit,OnDestroy {
                           this.estructuraCapitulo.registroEstructuraCursoCapitulo[cap-1].registroEstructuraCursoTarea.forEach((t: any) => {
                             if (t.tareasEnviadas == 0) {
                               ss.habilitado = false;
+                              if(this.estructuraCapitulo.convalidado==true){
+                                ss.habilitado=true;
+                              }
                             }
                           });
                         } else {
@@ -570,6 +588,9 @@ export class SesionesComponent implements OnInit,OnDestroy {
                           this.estructuraCapitulo.registroEstructuraCursoCapitulo[cap-1].registroCursoTareaCalificar.forEach((tc: any) => {
                             if (!tc.calificado) {
                               ss.habilitado = false;
+                              if(this.estructuraCapitulo.convalidado==true){
+                                ss.habilitado=true;
+                              }
                             }
                           });
                         } else {
@@ -607,6 +628,9 @@ export class SesionesComponent implements OnInit,OnDestroy {
             subs = 0;
           } else {
             s.habilitado = false;
+            if(this.estructuraCapitulo.convalidado==true){
+              s.habilitado=true;
+            }
             if (ses == 0) {
               if (cap == 0) {
                 c.registroEstructuraCursoEncuesta.forEach((e: any) => {
@@ -644,6 +668,9 @@ export class SesionesComponent implements OnInit,OnDestroy {
                         if (e.nombreEncuesta != 'Encuesta Inicial') {
                           if (e.encuestaEnviada != true) {
                             s.habilitado = false;
+                            if(this.estructuraCapitulo.convalidado==true){
+                              s.habilitado=true;
+                            }
                           }
                         }
                       });
@@ -656,6 +683,9 @@ export class SesionesComponent implements OnInit,OnDestroy {
                         this.estructuraCapitulo.registroEstructuraCursoCapitulo[cap-1].registroEstructuraCursoTarea.forEach((t: any) => {
                           if (t.tareasEnviadas == 0) {
                             s.habilitado = false;
+                            if(this.estructuraCapitulo.convalidado==true){
+                              s.habilitado=true;
+                            }
                           }
                         });
                       } else {
@@ -668,6 +698,9 @@ export class SesionesComponent implements OnInit,OnDestroy {
                         this.estructuraCapitulo.registroEstructuraCursoCapitulo[cap-1].registroCursoTareaCalificar.forEach((tc: any) => {
                           if (!tc.calificado) {
                             s.habilitado = false;
+                            if(this.estructuraCapitulo.convalidado==true){
+                              s.habilitado=true;
+                            }
                           }
                         });
                       } else {
@@ -696,6 +729,9 @@ export class SesionesComponent implements OnInit,OnDestroy {
         var lastses = c.registroEstructuraCursoSesion.length - 1;
         c.registroEstructuraCursoEncuesta.forEach((e: any) => {
           e.habilitado = false;
+          if(this.estructuraCapitulo.convalidado==true){
+            e.habilitado=true;
+          }
           if (e.nombreEncuesta != 'Encuesta Inicial') {
             if (enc > 0) {
               if (
@@ -738,6 +774,9 @@ export class SesionesComponent implements OnInit,OnDestroy {
         enc = 0;
         c.registroEstructuraCursoTarea.forEach((t: any) => {
           t.habilitado = false;
+          if(this.estructuraCapitulo.convalidado==true){
+            t.habilitado=true;
+          }
           if (tar > 0) {
             if (
               Math.ceil(
@@ -777,6 +816,9 @@ export class SesionesComponent implements OnInit,OnDestroy {
         tar = 0;
         c.registroCursoTareaCalificar.forEach((t: any) => {
           t.habilitado = false;
+          if(this.estructuraCapitulo.convalidado==true){
+            t.habilitado=true;
+          }
           if (tarC > 0) {
             if (
               Math.ceil(
@@ -823,7 +865,6 @@ export class SesionesComponent implements OnInit,OnDestroy {
       .ObtenerListadoProgramaContenido(this.idMatricula).pipe(takeUntil(this.signal$))
       .subscribe({
         next: (x) => {
-
           x.listaCursoMatriculado.forEach((program: any) => {
             if (this.idPEspecificoHijo == program.idPEspecificoHijo) {
               this.json = {

@@ -108,6 +108,7 @@ import { TrabajoDeParesIntegraService } from './Services/TrabajoDeParesIntegra/t
 import { IntegraEsquemaEvaluacionService } from './Services/IntegraEsquemaEvaluacion/integra-esquema-evaluacion.service';
 import { ChatPortalComponent } from './Containers/chat-portal/chat-portal.component';
 import { SeoService } from './Services/seo.service';
+import { VideoAyudaComponent } from './Containers/video-ayuda/video-ayuda.component';
 
 
 @NgModule({
@@ -185,6 +186,7 @@ import { SeoService } from './Services/seo.service';
     AprovacionComponent,
     TextHtmlEditorComponent,
     ChatPortalComponent,
+    VideoAyudaComponent,
   ],
   exports: [
     HttpClientModule,
@@ -258,7 +260,8 @@ import { SeoService } from './Services/seo.service';
     MatSortModule,
     MatDialogModule,
     CKEditorModule,
-    ChatPortalComponent
+    ChatPortalComponent,
+    VideoAyudaComponent
   ],
   providers: [
     SessionStorageService,

@@ -90,8 +90,8 @@
                   </ng-template>
                   <div class="pad-resp">
 
-                      <app-sesion-video [json]="json" [idCapitulo]="item.numeroCapitulo" [NombreCapitulo]="item.nombreCapitulo" [charge]="sesion.charge"
-                        [idSesion]="sesion.numeroSesion" [nombreSesion]="sesion.nombreSesion"
+                      <app-sesion-video [OrdenSeccion]="sesion.ordenSeccion" [json]="json" [idCapitulo]="item.numeroCapitulo" [NombreCapitulo]="item.nombreCapitulo"
+                        [charge]="sesion.charge" [idSesion]="sesion.numeroSesion" [nombreSesion]="sesion.nombreSesion"
                         [habilitado]="sesion.habilitado" [nextChapter]="sesion.nextChapter"
                         (next)="siguiente(1,i,s,-1)" (prev)="anterior(1,i,s,-1)"></app-sesion-video>
                   </div>
@@ -138,7 +138,7 @@
                     </ng-template>
                     <div class="pad-resp">
 
-                      <app-sesion-video [json]="json" [idCapitulo]="item.numeroCapitulo" [charge]="subsesion.charge"
+                      <app-sesion-video [OrdenSeccion]="subsesion.ordenSeccion" [json]="json" [idCapitulo]="item.numeroCapitulo" [charge]="subsesion.charge"
                         [idSesion]="subsesion.numeroSubSesion" [NombreCapitulo]="item.nombreCapitulo" [nombreSesion]="subsesion.nombreSubSesion"
                         [habilitado]="subsesion.habilitado" [nextChapter]="subsesion.nextChapter"
                         (next)="siguiente(1,i,s,ss)" (prev)="anterior(1,i,s,ss)"></app-sesion-video>

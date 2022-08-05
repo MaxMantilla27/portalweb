@@ -28,7 +28,6 @@ export class AulaVirtualComponent implements OnInit {
 
   }
   chatcharge(estado:boolean){
-    console.log('------------'+estado)
     this.cargaChat=estado
   }
 }

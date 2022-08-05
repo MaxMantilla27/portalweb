@@ -29,7 +29,7 @@ export class PublicGuard implements CanActivate {
         this.DatoObservable.datoContenido=true
         this._HelperService.enviarDatoCuenta(this.DatoObservable)
         console.log(this.DatoObservable);
-        this.router.navigate(['AulaVirtual/MiPerfil']);
+        this.router.navigate(['AulaVirtual/MisCursos']);
         return false;
       }
     }
