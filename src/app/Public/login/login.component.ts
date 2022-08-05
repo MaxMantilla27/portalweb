@@ -120,12 +120,12 @@ export class LoginComponent implements OnInit {
           }
           if(normal){
             if(x.idProveedor==0){
-              this.router.navigate(['/AulaVirtual/MiPerfil']);
+              this.router.navigate(['/AulaVirtual/MisCursos']);
             }else{
               if(x.cursos==0){
                 this.router.navigate(['/AulaVirtual/Docencia']);
               }else{
-                this.router.navigate(['/AulaVirtual/MiPerfil']);
+                this.router.navigate(['/AulaVirtual/MisCursos']);
               }
             }
           }

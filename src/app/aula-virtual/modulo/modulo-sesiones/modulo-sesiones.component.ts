@@ -24,9 +24,9 @@ export class ModuloSesionesComponent implements OnInit, OnChanges {
   ) {}
   ngOnChanges(changes: SimpleChanges): void {
     console.log(this.estructuraCapitulo)
-    if (this.estructuraCapitulo != undefined) {
+    if (this.estructuraCapitulo != undefined && this.estructuraCapitulo.registroEstructuraCursoCapitulo!=null) {
       var cap = 0,ses = 0,subs = 0,enc=0,tar=0,tarC=0;
-
+      console.log(this.estructuraCapitulo);
       this.estructuraCapitulo.registroEstructuraCursoCapitulo.forEach((c: any) => {
           c.registroEstructuraCursoSesion.forEach((s: any) => {
 
@@ -34,6 +34,10 @@ export class ModuloSesionesComponent implements OnInit, OnChanges {
               s.subV = 0;
               s.registroEstructuraCursoSubSesion.forEach((ss: any) => {
                 ss.habilitado=false;
+
+                if(this.estructuraCapitulo.convalidado==true){
+                  ss.habilitado=true;
+                }
                 if (Math.ceil(ss.porcentajeVideoVisualizado) >= 100) {
                   s.subV++;
                 }
@@ -70,6 +74,9 @@ export class ModuloSesionesComponent implements OnInit, OnChanges {
                             if(e.nombreEncuesta!='Encuesta Inicial'){
                               if(e.encuestaEnviada!=true){
                                 ss.habilitado=false;
+                                if(this.estructuraCapitulo.convalidado==true){
+                                  ss.habilitado=true;
+                                }
                               }
                             }
                           });
@@ -82,6 +89,9 @@ export class ModuloSesionesComponent implements OnInit, OnChanges {
                             this.estructuraCapitulo.registroEstructuraCursoCapitulo[cap-1].registroEstructuraCursoTarea.forEach((t:any) => {
                               if(t.tareasEnviadas==0){
                                 ss.habilitado=false;
+                                if(this.estructuraCapitulo.convalidado==true){
+                                  ss.habilitado=true;
+                                }
                               }
                             });
                           }else{
@@ -94,6 +104,9 @@ export class ModuloSesionesComponent implements OnInit, OnChanges {
                             this.estructuraCapitulo.registroEstructuraCursoCapitulo[cap-1].registroCursoTareaCalificar.forEach((tc:any) => {
                               if(!tc.calificado){
                                 ss.habilitado=false;
+                                if(this.estructuraCapitulo.convalidado==true){
+                                  ss.habilitado=true;
+                                }
                               }
                             });
                           }else{
@@ -118,6 +131,9 @@ export class ModuloSesionesComponent implements OnInit, OnChanges {
               subs=0;
             }else{
               s.habilitado=false;
+              if(this.estructuraCapitulo.convalidado==true){
+                s.habilitado=true;
+              }
               if(ses==0){
                 if(cap==0){
                   c.registroEstructuraCursoEncuesta.forEach((e:any) => {
@@ -151,6 +167,9 @@ export class ModuloSesionesComponent implements OnInit, OnChanges {
                           if(e.nombreEncuesta!='Encuesta Inicial' ){
                             if(e.encuestaEnviada!=true){
                               s.habilitado=false;
+                              if(this.estructuraCapitulo.convalidado==true){
+                                s.habilitado=true;
+                              }
                             }
                           }
                         });
@@ -163,6 +182,9 @@ export class ModuloSesionesComponent implements OnInit, OnChanges {
                           this.estructuraCapitulo.registroEstructuraCursoCapitulo[cap-1].registroEstructuraCursoTarea.forEach((t:any) => {
                             if(t.tareasEnviadas==0){
                               s.habilitado=false;
+                              if(this.estructuraCapitulo.convalidado==true){
+                                s.habilitado=true;
+                              }
                             }
                           });
                         }else{
@@ -175,6 +197,9 @@ export class ModuloSesionesComponent implements OnInit, OnChanges {
                           this.estructuraCapitulo.registroEstructuraCursoCapitulo[cap-1].registroCursoTareaCalificar.forEach((tc:any) => {
                             if(!tc.calificado){
                               s.habilitado=false;
+                              if(this.estructuraCapitulo.convalidado==true){
+                                s.habilitado=true;
+                              }
                             }
                           });
                         }else{
@@ -199,6 +224,9 @@ export class ModuloSesionesComponent implements OnInit, OnChanges {
           var lastses=c.registroEstructuraCursoSesion.length-1
           c.registroEstructuraCursoEncuesta.forEach((e:any) => {
             e.habilitado=false;
+            if(this.estructuraCapitulo.convalidado==true){
+              e.habilitado=true;
+            }
             if(e.nombreEncuesta!='Encuesta Inicial'){
               if(enc>0){
                 if(Math.ceil(c.registroEstructuraCursoEncuesta[enc-1].porcentajeVideoVisualizado)>=98){
@@ -224,6 +252,9 @@ export class ModuloSesionesComponent implements OnInit, OnChanges {
           enc=0;
           c.registroEstructuraCursoTarea.forEach((t:any) => {
             t.habilitado=false;
+            if(this.estructuraCapitulo.convalidado==true){
+              t.habilitado=true;
+            }
             if(tar>0){
               if(Math.ceil(c.registroEstructuraCursoTarea[tar-1].porcentajeVideoVisualizado)>=98){
                 t.habilitado=true;
@@ -245,6 +276,9 @@ export class ModuloSesionesComponent implements OnInit, OnChanges {
           tar=0;
           c.registroCursoTareaCalificar.forEach((t:any) => {
             t.habilitado=false;
+            if(this.estructuraCapitulo.convalidado==true){
+              t.habilitado=true;
+            }
             if(tarC>0){
               if(Math.ceil(c.registroCursoTareaCalificar[tarC-1].porcentajeVideoVisualizado)>=98){
                 t.habilitado=true;

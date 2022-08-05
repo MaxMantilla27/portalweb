@@ -7,6 +7,7 @@ import {
   SimpleChanges,
   ViewEncapsulation,
 } from '@angular/core';
+import { Router } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
 import { ParametrosEstructuraEspecificaDTO } from 'src/app/Core/Models/EstructuraEspecificaDTO';
 import {
@@ -27,7 +28,8 @@ export class CursoModulosComponent implements OnInit, OnChanges,OnDestroy {
   private signal$ = new Subject();
   constructor(
     private _ProgramaContenidoService: ProgramaContenidoService,
-    private _SessionStorageService: SessionStorageService
+    private _SessionStorageService: SessionStorageService,
+    private router :Router
   ) {}
   ngOnDestroy(): void {
     this.signal$.next(true)
@@ -69,7 +71,10 @@ export class CursoModulosComponent implements OnInit, OnChanges,OnDestroy {
       });
   }
   AddProgresToProgram() {
+    var index=0;
+    var lastconvalidado=-1;
     this.programEstructura.listaCursoMatriculado.forEach((program) => {
+      program.habilitado=true;
       var progresoP: ProgresoAlumnoProgramaAulaVirtualDTO = {
         progresoEncuesta: [],
         progresoTarea: [],
@@ -91,7 +96,40 @@ export class CursoModulosComponent implements OnInit, OnChanges,OnDestroy {
         }
       });
       program.progreso = progresoP;
+      if(program.convalidado==false && program.idModalidadHijo==1){
+        if(lastconvalidado>-1){
+          var conval=this.programEstructura.listaCursoMatriculado[lastconvalidado]
+          if(conval.progreso.progresoVideo.length>0){
+            if(conval.progreso.progresoVideo[0].porcentaje<=98){
+              program.habilitado=false
+            }
+          }else{
+            program.habilitado=false
+          }
+          if(program.habilitado==true){
+            if(conval.progreso.progresoEncuesta.length>0){
+              if(conval.progreso.progresoEncuesta[0].porcentajeAvance<=98){
+                program.habilitado=false
+              }
+            }
+          }
+          if(program.habilitado==true){
+            if(conval.progreso.progresoTarea.length>0){
+              if(conval.progreso.progresoTarea[0].porcentajeAvance<=98){
+                program.habilitado=false
+              }
+            }
+          }
+        }
+        lastconvalidado=index
+      }
+      index++
     });
     console.log(this.programEstructura)
+  }
+  IrCurso(idMatricula:number,idPEspecificoHijo:number,habilitado:boolean){
+    if(habilitado==true){
+      this.router.navigate(['/AulaVirtual/MisCursos/'+idMatricula+'/'+idPEspecificoHijo])
+    }
   }
 }

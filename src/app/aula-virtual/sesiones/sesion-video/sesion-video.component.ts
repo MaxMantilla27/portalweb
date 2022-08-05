@@ -35,6 +35,7 @@ export class SesionVideoComponent implements OnInit,OnChanges,OnDestroy {
   @Input() nombreSesion=''
   @Input() idCapitulo=0;
   @Input() idSesion=0;
+  @Input() OrdenSeccion=0;
   @Input() charge:boolean|undefined=false;
   public videoData:any;
   @Input() crucigramaData:any;
@@ -57,6 +58,7 @@ export class SesionVideoComponent implements OnInit,OnChanges,OnDestroy {
     IdMatriculaCabecera:this.json.IdMatriculaCabecera,
     IdPGeneral:this.json.IdPGeneralHijo,
     IdSesion:this.idSesion,
+    OrdenSeccion:this.OrdenSeccion
   }
   ngOnDestroy(): void {
     this.signal$.next(true)

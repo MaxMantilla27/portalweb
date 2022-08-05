@@ -10,7 +10,13 @@
     <div class="matAlumnoContent">
 
       <button *ngFor="let item of buttons" [routerLink]="item.Url" mat-menu-item class="mat-menu-content-button">
-        <i class="material-icons">{{item.Icon}}</i>
+        <ng-container *ngIf="item.value!=''">
+          <img class="imgButtonAlumno" [src]="item.value" alt="">
+        </ng-container>
+        <ng-container *ngIf="item.value==''">
+          <i class="material-icons">{{item.Icon}}</i>
+        </ng-container>
+
         <div>{{item.Nombre}}</div>
       </button>
     </div>

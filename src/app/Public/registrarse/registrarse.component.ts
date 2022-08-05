@@ -155,7 +155,7 @@ export class RegistrarseComponent implements OnInit,OnDestroy {
           this.DatoObservable.datoContenido=true
           this._HelperService.enviarDatoCuenta(this.DatoObservable)
           console.log(this.DatoObservable);
-          this.router.navigate(['/AulaVirtual/MiPerfil']);
+          this.router.navigate(['/AulaVirtual/MisCursos']);
         }
       },
       error: (e) => {

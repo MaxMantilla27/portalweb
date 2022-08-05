@@ -19,6 +19,9 @@
 
 <div class="container">
   <div class="row rowpaddAv">
+    <div class="col-12">
+      <app-video-ayuda></app-video-ayuda>
+    </div>
     <div class="col-12 col-md-4 col-lg-4" *ngFor="let item of matriculas" style="margin-bottom: 20px;">
       <app-card-matriculas [cardContent]="{ Img: 'https://img.bsginstitute.com/repositorioweb/img/programas/'+item.pw_ImgPortada,
       Title: item.programaGeneral,ImgAlt: '',Tipo:item.tipoModalidad,Url: '/AulaVirtual/MisCursos/'+item.idMatriculaCabecera}">

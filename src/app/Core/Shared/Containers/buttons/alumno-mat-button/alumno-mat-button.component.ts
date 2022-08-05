@@ -44,31 +44,31 @@ export class AlumnoMatButtonComponent implements OnInit,OnChanges {
           Nombre: 'Mis Cursos',
           Url: '/AulaVirtual/MisCursos',
           Icon: 'play_lesson',
-          value: '',
+          value:'../../../../../../assets/icons/mis-cursos.svg',
         });
         this.buttons.push({
           Nombre: 'Mis Pagos',
           Url: '/AulaVirtual/MisPagos',
           Icon: 'monetization_on',
-          value: '',
+          value: '../../../../../../assets/icons/mis-pagos.svg',
         });
         this.buttons.push({
           Nombre: 'Ver mi perfil',
           Url: '/AulaVirtual/MiPerfil',
           Icon: 'folder_open',
-          value: '',
+          value: '../../../../../../assets/icons/mi-perfil.svg',
         });
         this.buttons.push({
           Nombre: 'Cambiar Contraseña',
           Url: '/AulaVirtual/ChangePassword',
           Icon: 'credit_card',
-          value: '',
+          value: '../../../../../../assets/icons/cambiar-contrasena.svg',
         });
         this.buttons.push({
           Nombre: 'Categorias',
           Url: '/AulaVirtual/Categoria',
           Icon: 'badge',
-          value: '',
+          value: '../../../../../../assets/icons/categorias.svg',
         });
       }else{
         if(this.val.cursos>0){
@@ -76,31 +76,31 @@ export class AlumnoMatButtonComponent implements OnInit,OnChanges {
             Nombre: 'Mis Cursos',
             Url: '/AulaVirtual/MisCursos',
             Icon: 'play_lesson',
-            value: '',
+            value:'../../../../../../assets/icons/mis-cursos.svg',
           });
           this.buttons.push({
             Nombre: 'Mis Pagos',
             Url: '/AulaVirtual/MisPagos',
             Icon: 'monetization_on',
-            value: '',
+            value: '../../../../../../assets/icons/mis-pagos.svg',
           });
           this.buttons.push({
             Nombre: 'Ver mi perfil',
             Url: '/AulaVirtual/MiPerfil',
             Icon: 'folder_open',
-            value: '',
+            value: '../../../../../../assets/icons/mi-perfil.svg',
           });
           this.buttons.push({
             Nombre: 'Cambiar Contraseña',
             Url: '/AulaVirtual/ChangePassword',
             Icon: 'credit_card',
-            value: '',
+            value: '../../../../../../assets/icons/cambiar-contrasena.svg',
           });
           this.buttons.push({
             Nombre: 'Categorias',
             Url: '/AulaVirtual/Categoria',
             Icon: 'badge',
-            value: '',
+            value: '../../../../../../assets/icons/categorias.svg',
           });
         }
         this.buttons.push({

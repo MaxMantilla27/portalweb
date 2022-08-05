@@ -18,7 +18,7 @@ export class ProveedorGuard implements CanActivate {
     var idProveedor=this._SessionStorageService.SessionGetValue('IdProveedor')
     console.log(idProveedor)
     if(idProveedor=='' || parseInt(idProveedor)==0 ){
-      this.router.navigate(['/AulaVirtual/MiPerfil']);
+      this.router.navigate(['/AulaVirtual/MisCursos']);
       return false;
     }
     return true;

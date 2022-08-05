@@ -126,6 +126,7 @@ export class ChatPortalComponent implements OnInit,OnDestroy,OnChanges {
     })
   }
   GetsesionIdInteraccion(){
+    return this.ChatID;
     console.log(this._SessionStorageService.SessionGetValueSesionStorage(this.chatKey))
     if(this._SessionStorageService.SessionGetValueSesionStorage(this.chatKey)==''){
       return '';

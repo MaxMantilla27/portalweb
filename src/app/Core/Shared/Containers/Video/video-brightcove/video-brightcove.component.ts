@@ -142,6 +142,7 @@ export class VideoBrightcoveComponent implements OnInit, OnChanges,AfterViewInit
   }
   ngOnChanges(changes: SimpleChanges): void {
     if (this.videoData != undefined) {
+      console.log(this.videoData)
       if(this.videoData.objetoConfigurado.idVideoBrightcove!='0' &&
       this.videoData.objetoConfigurado.idVideoBrightcove!=null &&
       this.videoData.objetoConfigurado.idVideoBrightcove!=undefined){
@@ -153,7 +154,13 @@ export class VideoBrightcoveComponent implements OnInit, OnChanges,AfterViewInit
       if( this.videoData.objetoConfigurado.idVideoBrightcove!='' && this.videoData.objetoConfigurado.idVideoBrightcove!=null){
         this.playerData.videoId=this.videoData.objetoConfigurado.idVideoBrightcove
       }
-      this.tiempovideoinicio=this.videoData.tiempoVisualizado
+      var porcentage=(this.videoData.tiempoVisualizado*100)/this.videoData.tiempoTotalVideo
+      console.log(porcentage)
+      if(Math.ceil(porcentage)>98){
+        this.tiempovideoinicio=0
+      }else{
+        this.tiempovideoinicio=this.videoData.tiempoVisualizado
+      }
       this.tiempovideoinicioInicial=Math.ceil(this.videoData.tiempoVisualizado)
       this.tiempovideo=this.videoData.tiempoTotalVideo
       this.tiempoactualvideo=this.videoData.tiempoVisualizado
