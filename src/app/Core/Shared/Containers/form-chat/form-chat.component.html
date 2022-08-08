@@ -4,7 +4,7 @@
   </div>
   <div class="card-footer" style="background: white;">
     <app-formulario [model]="formularioContactoChat" [InputsDisable]="statuscharge" (OnSubmit)="SetContacto($event)"
-      (OnValid)="formVal=$event" [fiels]="fileds">
+      (OnValid)="formVal=$event" [fiels]="fileds" [ObtenerPrefijo]="true">
       <ng-container contenido>
       </ng-container>
       <ng-container send>

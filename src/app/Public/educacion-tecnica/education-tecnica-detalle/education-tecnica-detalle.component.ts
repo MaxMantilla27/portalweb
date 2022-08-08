@@ -78,21 +78,21 @@ export class EducationTecnicaDetalleComponent implements OnInit,OnDestroy {
     Nombres:'',
     Apellidos:'',
     Email:'',
-    IdPais:0,
-    IdRegion:0,
+    IdPais:undefined,
+    IdRegion:undefined,
     Movil:'',
   }
   public DatosEnvioFormulario: ContactenosDTO={
     Nombres:'',
     Apellidos:'',
     Correo1:'',
-    IdPais:0,
-    IdRegion:0,
+    IdPais:undefined,
+    IdRegion:undefined,
     Movil:'',
-    IdCargo:0,
-    IdAreaFormacion:0,
-    IdAreaTrabajo:0,
-    IdIndustria:0
+    IdCargo:undefined,
+    IdAreaFormacion:undefined,
+    IdAreaTrabajo:undefined,
+    IdIndustria:undefined
   }
   public positionDiv=0;
   public combosPrevios:any
