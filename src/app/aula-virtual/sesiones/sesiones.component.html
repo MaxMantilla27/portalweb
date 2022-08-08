@@ -7,14 +7,14 @@
 <div class="container">
   <div class="row rowpaddAv">
     <div class="col-12 col-md-12 col-lg-12" style="position: relative;">
-      <ng-container *ngIf="estructuraCapitulo!=undefined">
+      <ng-container *ngIf="estructuraCapitulo!=undefined && estructuraCapitulo!=null">
         <div class="openClose2" [ngClass]="{'reverse2':!hide}" (click)="hide=!hide">
         <!-- [ngStyle]="{'width':estructuraCapitulo.contineSubSesion==false?'52px':'62px'}"> -->
           <i class="material-icons">layers</i>
         </div>
       </ng-container>
       <mat-tab-group class="tabVerticalses" [(selectedIndex)]="tabIndex" (selectedTabChange)="tabChanged($event)">
-        <ng-container *ngIf="estructuraCapitulo!=undefined">
+        <ng-container *ngIf="estructuraCapitulo!=undefined && estructuraCapitulo!=null">
 
           <ng-container *ngFor="let item of estructuraCapitulo.registroEstructuraCursoCapitulo;let i=index">
 

@@ -92,11 +92,11 @@ export class PagoWompiComponent implements OnInit ,OnDestroy{
     })
   }
   addWompi(){
-
+ //pub_test_Q5yDA9xoKdePzhSGeVe9HAez7HgGORGf - prueba
     let script = this._renderer2.createElement('script');
     script.src='https://checkout.wompi.co/widget.js'
     script.setAttribute('data-render','button')
-    script.setAttribute('data-public-key','pub_test_Q5yDA9xoKdePzhSGeVe9HAez7HgGORGf')
+    script.setAttribute('data-public-key','pub_prod_DM8suO85aqiUndaaZVIeQAErQehwf7xE')
     script.setAttribute('data-currency','COP');
     script.setAttribute('data-amount-in-cents',this.resultVisa.montoTotal+'00')
     script.setAttribute('data-reference',this.json.IdentificadorTransaccion)

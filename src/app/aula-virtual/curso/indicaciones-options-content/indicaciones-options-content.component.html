@@ -2,13 +2,19 @@
 <div style="    margin: 10px 0px;">Indicaciones</div>
 <div class="tipoIndicacionTitle">
 
-  <img class="ImgIndicacionesContent" [src]="'../../../../assets/icons/'+imgUrl"  alt="" *ngIf="imgUrl!=''">
+  <img class="ImgIndicacionesContent" [src]="'../../../../assets/icons/'+imgUrl" alt="" *ngIf="imgUrl!=''">
   <div>{{title}}</div>
 </div>
-<div>
+<div *ngIf="videoUrl!=''">
   <video controls>
-    <source
-      [src]="videoUrl"
-      type="video/mp4">
+    <source [src]="videoUrl" type="video/mp4">
   </video>
 </div>
+<ng-container *ngIf="videoUrl==''">
+
+  <div style="    font-weight: bold;
+  font-size: 18px;
+  margin: 20px 0px;">{{TituloContenido}}</div>
+  <p>{{COntenido}}
+  </p>
+</ng-container>

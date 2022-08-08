@@ -55,7 +55,7 @@ export class SesionesPruebaComponent implements OnInit,OnDestroy {
     modalidad: '',
     programaGeneral: '',
   };
-  public estructuraCapitulo: any = [];
+  public estructuraCapitulo: any ;
   public idcapitulo = 0;
   public idSesion = 0;
   public tipo = 0;

@@ -61,6 +61,7 @@ export class SesionesVideoPruebaComponent implements OnInit,OnDestroy {
       this.parametros.AccesoPrueba=this.json.AccesoPrueba;
       this.parametros.IdMatriculaCabecera=this.json.IdMatriculaCabecera;
       this.parametros.IdPGeneral=this.json.IdPGeneralHijo;
+      this.parametros.OrdenSeccion=this.OrdenSeccion;
       this.ObtenerVideoProgramaCapacitacionSesion()
     }
   }

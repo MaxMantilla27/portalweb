@@ -64,12 +64,29 @@ export class CursoComponent implements OnInit,OnDestroy {
   public curso:any
   public videoPreguntas ='https://repositorioweb.blob.core.windows.net/repositorioweb/aulavirtual/guias/preguntas/preguntas-hombres.mp4';
   public videoCrucigramas ='https://repositorioweb.blob.core.windows.net/repositorioweb/aulavirtual/guias/crucigrama/crucigrama-hombre.mp4';
-  public videoTareas ='https://repositorioweb.blob.core.windows.net/repositorioweb/aulavirtual/guias/preguntas/preguntas-hombres.mp4';
-  public videoTrabajoP ='https://repositorioweb.blob.core.windows.net/repositorioweb/aulavirtual/guias/preguntas/preguntas-hombres.mp4';
+  public videoTareas =''//'https://repositorioweb.blob.core.windows.net/repositorioweb/aulavirtual/guias/preguntas/preguntas-hombres.mp4';
+  public videoTrabajoP =''//'https://repositorioweb.blob.core.windows.net/repositorioweb/aulavirtual/guias/preguntas/preguntas-hombres.mp4';
   public datosCertificado:any;
   public alertaDigital=false;
   public alertaFisico=false;
   public generateCertificado=true
+  public contenidotarea=
+  'Primero revisa las instrucciones acerca de la tarea. En estas, se te indicará los objetivos de desempeño, la'+
+  'descripción de la tarea, los entregables, información complementaria y los criterios de evaluación de la tarea.'+
+  'Una vez completes tu tarea, recuerda que el nombre del archivo no debe contener caracteres especiales (como tildes y '+
+  'símbolos).'+
+  'También debes asegurarte que el archivo esté en formato .doc o .pdf y que no pese más de 150 mb.'+
+  'Luego haz clic en el botón de “Seleccionar archivo” y elige el archivo de tu tarea.'+
+  'Una vez se carga, verifica que sea el archivo correcto y haz clic en “Enviar”'+
+  '¡Listo! Recibirás tu calificación en un plazo no mayor a 15 días.'+
+  'Próximamente añadiremos un video sobre estas indicaciones.'
+  public contenidotareapares='Las tareas de pares son las tareas de tus compañeros, y así como tú calificarás su tarea, ellos'+
+  'calificarán la tuya, siguiendo la escala de calificación de acuerdo al cumplimiento de los'+
+  'objetivos de desempeño.'+
+  'Primero descarga el archivo y recuerda que debes hacerlo antes de la fecha límite.'+
+  'Revisa el archivo y la escala de calificación que usarás para puntuar la tarea.'+
+  'Finalmente, selecciona la calificación para cada criterio de evaluación y haz clic en Calificar.'+
+  'Próximamente añadiremos una explicación en vídeo de estas indicaciones.'
   ngOnInit(): void {
     this._ActivatedRoute.params.pipe(
       takeUntil(this.signal$)
@@ -88,8 +105,8 @@ export class CursoComponent implements OnInit,OnDestroy {
         if (x.datosAlumno.idGenero != 2) {
           this.videoPreguntas ='https://repositorioweb.blob.core.windows.net/repositorioweb/aulavirtual/guias/preguntas/preguntas-mujeres.mp4';
           this.videoCrucigramas ='https://repositorioweb.blob.core.windows.net/repositorioweb/aulavirtual/guias/crucigrama/crucigrama-mujer.mp4';
-          this.videoTareas ='https://repositorioweb.blob.core.windows.net/repositorioweb/aulavirtual/guias/preguntas/preguntas-hombres.mp4';
-          this.videoTrabajoP ='https://repositorioweb.blob.core.windows.net/repositorioweb/aulavirtual/guias/preguntas/preguntas-hombres.mp4';
+          this.videoTareas =''//https://repositorioweb.blob.core.windows.net/repositorioweb/aulavirtual/guias/preguntas/preguntas-hombres.mp4';
+          this.videoTrabajoP =''//'https://repositorioweb.blob.core.windows.net/repositorioweb/aulavirtual/guias/preguntas/preguntas-hombres.mp4';
         }
       },
     });

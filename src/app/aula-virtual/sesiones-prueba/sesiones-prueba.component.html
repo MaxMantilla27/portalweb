@@ -8,7 +8,7 @@
   <div class="row rowpaddAv">
     <div class="col-12 col-md-12 col-lg-12">
       <mat-tab-group class="tabVerticalSesiones" [(selectedIndex)]="tabIndex" (selectedTabChange)="tabChanged($event)">
-        <ng-container *ngIf="estructuraCapitulo!=undefined">
+        <ng-container *ngIf="estructuraCapitulo!=undefined && estructuraCapitulo!=null">
 
           <ng-container *ngFor="let item of estructuraCapitulo;let i=index">
 
@@ -40,7 +40,7 @@
                     </ng-template>
                     <div style="padding: 10px 30px">
 
-                        <app-sesiones-video-prueba [json]="json" [idCapitulo]="item.ordenFila" [NombreCapitulo]="item.capitulo" [charge]="sesion.charge"
+                        <app-sesiones-video-prueba [OrdenSeccion]="sesion.ordenSeccion" [json]="json" [idCapitulo]="item.ordenFila" [NombreCapitulo]="item.capitulo" [charge]="sesion.charge"
                           [idSesion]="sesion.ordenFila" [nombreSesion]="sesion.sesion"></app-sesiones-video-prueba>
                     </div>
                   </mat-tab>
@@ -55,7 +55,7 @@
                     </ng-template>
                     <div style="padding: 10px 30px">
 
-                        <app-sesiones-video-prueba [json]="json" [idCapitulo]="item.ordenFila" [NombreCapitulo]="item.capitulo" [charge]="sesion.charge"
+                        <app-sesiones-video-prueba [OrdenSeccion]="sesion.ordenSeccion" [json]="json" [idCapitulo]="item.ordenFila" [NombreCapitulo]="item.capitulo" [charge]="sesion.charge"
                           [idSesion]="sesion.ordenFila" [nombreSesion]="sesion.subSesion"></app-sesiones-video-prueba>
                     </div>
                   </mat-tab>>

@@ -115,7 +115,6 @@ export class ChatComponent implements OnInit,OnDestroy,OnChanges {
   ngOnChanges(changes: SimpleChanges): void {
     if(this.Open && this.stateAsesor){
       setTimeout(() => {
-        console.log(this.contenidoMsj)
         this.contenidoMsj.nativeElement.scrollTop=this.contenidoMsj.nativeElement.scrollHeight
       }, 1);
     }

@@ -50,7 +50,7 @@ export class SesionesComponent implements OnInit,OnDestroy {
     NombrePrograma: '',
     idModalidad: 1,
   };
-  public estructuraCapitulo: any = [];
+  public estructuraCapitulo: any ;
   public idcapitulo = 0;
   public idSesion = 0;
   public tipo = 0;
@@ -882,6 +882,7 @@ export class SesionesComponent implements OnInit,OnDestroy {
               this.migapanbase();
               this.estructuraCapitulo =
                 this._SessionStorageService.getEstructura();
+              console.log('------------'+this.estructuraCapitulo);
               if (this.estructuraCapitulo == null) {
                 this.ObtenerEstructuraEspecificaCurso();
               } else {

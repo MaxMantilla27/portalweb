@@ -8,7 +8,7 @@ import { Component, Input, OnInit } from '@angular/core';
 export class VideoAyudaComponent implements OnInit {
 
   constructor() { }
-  @Input() sise=4
+  @Input() sise=3
   ngOnInit(): void {
   }
 

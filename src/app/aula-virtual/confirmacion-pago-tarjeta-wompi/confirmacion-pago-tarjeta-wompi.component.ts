@@ -103,7 +103,7 @@ export class ConfirmacionPagoTarjetaWompiComponent implements OnInit,OnDestroy {
     let script = this._renderer2.createElement('script');
     script.src='https://checkout.wompi.co/widget.js'
     script.setAttribute('data-render','button')
-    script.setAttribute('data-public-key','pub_test_Q5yDA9xoKdePzhSGeVe9HAez7HgGORGf')
+    script.setAttribute('data-public-key','pub_prod_DM8suO85aqiUndaaZVIeQAErQehwf7xE')
     script.setAttribute('data-currency','COP');
     script.setAttribute('data-amount-in-cents',Math.floor(this.resultVisa.montoTotal*100))
     script.setAttribute('data-reference',this.json.IdentificadorTransaccion)

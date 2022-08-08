@@ -22,6 +22,7 @@ export class CrucigramaComponent implements OnInit,OnChanges ,OnDestroy{
   ngOnDestroy(): void {
     this.signal$.next(true)
     this.signal$.complete()
+    clearInterval(this.interval);
   }
   @Input() Crucigrama:any
 
@@ -63,6 +64,7 @@ export class CrucigramaComponent implements OnInit,OnChanges ,OnDestroy{
     OrdenFilaCapitulo:0,
     OrdenFilaSesion:0,
   }
+  public interval:any
   ngOnInit(): void {
   }
   ngOnChanges(changes: SimpleChanges): void {
@@ -74,8 +76,8 @@ export class CrucigramaComponent implements OnInit,OnChanges ,OnDestroy{
       this.crucigrmaAvance.id=this.Crucigrama.idCrucigramaProgramaCapacitacion
       this.CrearCrucigrama();
       this.SetValorCrucigrama();
-      if(this._SessionStorageService.SessionGetValue(this.crucigrmaAvance.id.toString())!=''){
-        this.crucigrmaAvance=JSON.parse(atob(this._SessionStorageService.SessionGetValue(this.crucigrmaAvance.id.toString())));
+      if(this._SessionStorageService.SessionGetValue('c-'+this.crucigrmaAvance.id.toString()+'ma')!=''){
+        this.crucigrmaAvance=JSON.parse(atob(this._SessionStorageService.SessionGetValue('c-'+this.crucigrmaAvance.id.toString()+'ma')));
         this.AddValoresActuales()
       }
       this.cronometro()
@@ -146,8 +148,9 @@ export class CrucigramaComponent implements OnInit,OnChanges ,OnDestroy{
       }
     })
   }
+
   cronometro(){
-    setInterval(() => {
+    this.interval=setInterval(() => {
       this.crucigrmaAvance.segundos--
       if(this.crucigrmaAvance.segundos<0){
         this.crucigrmaAvance.segundos=59;
@@ -315,7 +318,7 @@ export class CrucigramaComponent implements OnInit,OnChanges ,OnDestroy{
     console.log(this.crucigrmaAvance.valores[index].values)
   }
   saveValues(){
-    this._SessionStorageService.SessionSetValue(this.crucigrmaAvance.id.toString(),btoa(JSON.stringify(this.crucigrmaAvance)))
+    this._SessionStorageService.SessionSetValue('c-'+this.crucigrmaAvance.id.toString()+'ma',btoa(JSON.stringify(this.crucigrmaAvance)))
   }
   SetValorCrucigrama(){
     var x=0;
@@ -328,7 +331,7 @@ export class CrucigramaComponent implements OnInit,OnChanges ,OnDestroy{
         y=cru.pos[1]
         var i=0,p=0
         this.matris[y].forEach(corx=>{
-          if(i>=cru.pos[0] && i<=x){
+          if(i>=cru.pos[0] && i<=x && corx.pregunta==0){
             if(p==0){
               corx.esprimero=true;
               p++;
@@ -345,7 +348,7 @@ export class CrucigramaComponent implements OnInit,OnChanges ,OnDestroy{
         var i=0,p=0
         this.matris.forEach(cory=>{
 
-          if(i>=cru.pos[1] && i<=y){
+          if(i>=cru.pos[1] && i<=y && cory[x].pregunta==0){
             if(p==0){
               cory[x].esprimero=true;
               p++;
@@ -422,5 +425,6 @@ export class CrucigramaComponent implements OnInit,OnChanges ,OnDestroy{
         }
       }
     })
+    console.log(this.matris)
   }
 }

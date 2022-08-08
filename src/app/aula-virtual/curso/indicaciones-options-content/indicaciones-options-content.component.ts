@@ -14,6 +14,8 @@ export class IndicacionesOptionsContentComponent implements OnInit {
   @Input() TitlePrograma=''
   @Input() imgUrl=''
 
+  @Input() TituloContenido=''
+  @Input() COntenido=''
   ngOnInit(): void {
   }
 
