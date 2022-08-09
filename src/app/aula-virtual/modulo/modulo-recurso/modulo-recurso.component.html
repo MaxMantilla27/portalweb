@@ -72,7 +72,7 @@
 
             <a  class="itemMaterial"
             target="_blank"
-            [href]="item.enlaceArchivo.includes('https')?item.enlaceArchivo:'https://repositorioweb.blob.core.windows.net/repositorioweb/aulavirtual/documento-cursos/'+item.enlaceArchivo">
+            [href]="item.enlaceArchivo.includes('https')?item.enlaceArchivo:'https://repositorioweb.blob.core.windows.net/repositorioweb/aulavirtual/material-adiconal/'+item.enlaceArchivo">
             <ng-container *ngIf="item.enlaceArchivo.split('.')[item.enlaceArchivo.split('.').length-1]=='pdf';else doc">
               <img style="width: 15px;height: auto;margin-right: 15px;" src="../../../../assets/icons/pdf-31.svg" alt="">
             </ng-container>

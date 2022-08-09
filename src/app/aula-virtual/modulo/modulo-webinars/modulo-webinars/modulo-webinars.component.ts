@@ -1,5 +1,5 @@
 import { Component, Input, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
 
 import { DatosPerfilService } from 'src/app/Core/Shared/Services/DatosPerfil/datos-perfil.service';
@@ -19,6 +19,7 @@ export class ModuloWebinarsComponent implements OnInit,OnDestroy {
     private _DatosPerfilService:DatosPerfilService,
     private router:Router,
     private _SnackBarServiceService: SnackBarServiceService,
+    private _ActivatedRoute:ActivatedRoute
   ) { }
   ngOnDestroy(): void {
     this.signal$.next(true)
@@ -53,7 +54,7 @@ export class ModuloWebinarsComponent implements OnInit,OnDestroy {
     if(w.esWebinarConfirmado==false){
       this._SnackBarServiceService.openSnackBar("El webinar no esta disponible todavia",'x',10,"snackbarCrucigramaerror");
     }else{
-      this.router.navigate([w.urlWebex]);
+      window.open(w.urlWebex);
     }
   }
 }

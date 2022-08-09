@@ -175,7 +175,7 @@ export class PagoGeneralComponent implements OnInit, OnDestroy {
           'snackbarCrucigramaerror'
         );
       }
-      if (!this.NumberT.startsWith('34') && this.NumberT.split('-').join('').length < 16) {
+      if (!this.NumberT.startsWith('37') && this.NumberT.split('-').join('').length < 16) {
         validate = false;
         this._SnackBarServiceService.openSnackBar(
           'Numero de tarjeta Incorrecta',
@@ -184,7 +184,7 @@ export class PagoGeneralComponent implements OnInit, OnDestroy {
           'snackbarCrucigramaerror'
         );
       }
-      if (this.NumberT.startsWith('34') && this.NumberT.split('-').join('').length < 15) {
+      if (this.NumberT.startsWith('34') && this.NumberT.split('-').join('').length < 14) {
         validate = false;
         this._SnackBarServiceService.openSnackBar(
           'Numero de tarjeta Incorrecta',

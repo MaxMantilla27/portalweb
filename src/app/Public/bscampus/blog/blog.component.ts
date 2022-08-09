@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import { Component, Inject, OnInit, PLATFORM_ID, ViewChild, ViewEncapsulation } from '@angular/core';
 import { Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Basic, CardProgramasDTO } from 'src/app/Core/Models/BasicDTO';
@@ -21,6 +21,9 @@ import { SeoService } from 'src/app/Core/Shared/Services/seo.service';
 
 import { Router } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
+import { isPlatformBrowser } from '@angular/common';
+declare const fbq:any;
+declare const gtag:any;
 
 @Component({
   selector: 'app-blog',
@@ -32,6 +35,7 @@ export class BlogComponent implements OnInit {
   private signal$ = new Subject();
   @ViewChild(FormularioComponent)
   form!: FormularioComponent;
+  isBrowser: boolean;
   constructor(
     private activatedRoute: ActivatedRoute,
     private _ArticuloService: ArticuloService,
@@ -45,8 +49,11 @@ export class BlogComponent implements OnInit {
     private _HelperServiceP:Help,
     private _SeoService:SeoService,
     private title:Title,
+    @Inject(PLATFORM_ID) platformId: Object,
     private router:Router
-  ) {}
+  ) {
+    this.isBrowser = isPlatformBrowser(platformId);
+  }
   ngOnDestroy(): void {
     this.signal$.next(true)
     this.signal$.complete()
@@ -234,6 +241,17 @@ export class BlogComponent implements OnInit {
         next: (x) => {
           console.log(x);
 
+          if(this.isBrowser){
+            console.log('------------------facebook(true)---------------------------');
+            console.log(fbq);
+            fbq('track', 'CompleteRegistration');
+            gtag('event', 'conversion', {
+              'send_to': 'AW-991002043/tnStCPDl6HUQu_vF2AM',
+            });
+            gtag('event', 'conversion', {
+                'send_to': 'AW-732083338/jQrVCKmUkqUBEIrpit0C',
+            });
+          }
           this._SnackBarServiceService.openSnackBar("¡Solicitud enviada!",'x',15,"snackbarCrucigramaSucces");
         },
         complete: () => {

@@ -147,13 +147,23 @@ export class ConfirmacionPagoTarjetaComponent implements OnInit,OnDestroy {
       validate=false;
       this._SnackBarServiceService.openSnackBar("Numero CVV Incorrecto",'x',5,"snackbarCrucigramaerror");
     }
-    if(!this.NumberT.startsWith('34') && this.NumberT.length<19){
-      validate=false;
-      this._SnackBarServiceService.openSnackBar("Numero de tarjeta Incorrecta",'x',5,"snackbarCrucigramaerror");
+    if (!this.NumberT.startsWith('37') && this.NumberT.split('-').join('').length < 16) {
+      validate = false;
+      this._SnackBarServiceService.openSnackBar(
+        'Numero de tarjeta Incorrecta',
+        'x',
+        5,
+        'snackbarCrucigramaerror'
+      );
     }
-    if(this.NumberT.startsWith('34') && this.NumberT.length<17){
-      validate=false;
-      this._SnackBarServiceService.openSnackBar("Numero de tarjeta Incorrecta",'x',5,"snackbarCrucigramaerror");
+    if (this.NumberT.startsWith('34') && this.NumberT.split('-').join('').length < 14) {
+      validate = false;
+      this._SnackBarServiceService.openSnackBar(
+        'Numero de tarjeta Incorrecta',
+        'x',
+        5,
+        'snackbarCrucigramaerror'
+      );
     }
     console.log(validate)
     if(validate){

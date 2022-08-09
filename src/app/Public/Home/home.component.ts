@@ -147,4 +147,5 @@ export class HomeComponent implements OnInit,AfterViewInit,OnDestroy {
       error:(x)=>{console.log(x)}
     });
   }
+
 }

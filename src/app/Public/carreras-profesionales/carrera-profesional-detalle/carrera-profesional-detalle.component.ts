@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import { Component, Inject, OnInit, PLATFORM_ID, ViewChild, ViewEncapsulation } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import {CarreraProfesionalService} from "../../../Core/Shared/Services/Carrera/carrera-profesional.service";
 import {CarreraProfesionalTecnicaDetalleDTO} from "../../../Core/Models/ProgramaDTO";
@@ -17,7 +17,10 @@ import { Title } from '@angular/platform-browser';
 import { SeoService } from 'src/app/Core/Shared/Services/seo.service';
 import { Subject, takeUntil } from 'rxjs';
 import { SessionStorageService } from 'src/app/Core/Shared/Services/session-storage.service';
+import { isPlatformBrowser } from '@angular/common';
 
+declare const fbq:any;
+declare const gtag:any;
 
 @Component({
   selector: 'app-carrera-profesional-detalle',
@@ -50,6 +53,7 @@ export class CarreraProfesionalDetalleComponent implements OnInit {
   public fechaInicio='Por definir';
   @ViewChild(FormularioComponent)
   form!: FormularioComponent;
+  isBrowser: boolean;
   constructor(
     private router: Router,
     private activatedRoute: ActivatedRoute,
@@ -61,10 +65,13 @@ export class CarreraProfesionalDetalleComponent implements OnInit {
     private _HelperServiceP:Help,
     private _SeoService:SeoService,
     private title:Title,
+    @Inject(PLATFORM_ID) platformId: Object,
     private _SessionStorageService:SessionStorageService,
 
 
-  ) { }
+  ) {
+    this.isBrowser = isPlatformBrowser(platformId);
+  }
   ngOnDestroy(): void {
     this.signal$.next(true)
     this.signal$.complete()
@@ -268,6 +275,18 @@ export class CarreraProfesionalDetalleComponent implements OnInit {
       this._HelperService.EnviarFormulario(this.DatosEnvioFormulario).pipe(takeUntil(this.signal$)).subscribe({
         next: (x) => {
           console.log(x);
+
+          if(this.isBrowser){
+            console.log('------------------facebook(true)---------------------------');
+            console.log(fbq);
+            fbq('track', 'CompleteRegistration');
+            gtag('event', 'conversion', {
+              'send_to': 'AW-991002043/tnStCPDl6HUQu_vF2AM',
+            });
+            gtag('event', 'conversion', {
+                'send_to': 'AW-732083338/jQrVCKmUkqUBEIrpit0C',
+            });
+          }
           this._SnackBarServiceService.openSnackBar("¡Solicitud enviada!",'x',15,"snackbarCrucigramaSucces");
         },
         complete: () => {

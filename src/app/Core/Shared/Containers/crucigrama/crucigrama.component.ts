@@ -331,7 +331,7 @@ export class CrucigramaComponent implements OnInit,OnChanges ,OnDestroy{
         y=cru.pos[1]
         var i=0,p=0
         this.matris[y].forEach(corx=>{
-          if(i>=cru.pos[0] && i<=x && corx.pregunta==0){
+          if(i>=cru.pos[0] && i<=x && (corx.pregunta==0 || p==0)){
             if(p==0){
               corx.esprimero=true;
               p++;
@@ -348,7 +348,7 @@ export class CrucigramaComponent implements OnInit,OnChanges ,OnDestroy{
         var i=0,p=0
         this.matris.forEach(cory=>{
 
-          if(i>=cru.pos[1] && i<=y && cory[x].pregunta==0){
+          if(i>=cru.pos[1] && i<=y && (cory[x].pregunta==0 || p==0)){
             if(p==0){
               cory[x].esprimero=true;
               p++;
