@@ -69,7 +69,8 @@ export class HomeComponent implements OnInit,AfterViewInit,OnDestroy {
   public innerWidth: any;
   public seccionStep=4;
   ngOnInit(): void {
-
+    this._SessionStorageService.SessionSetValueCokies('prueba','123',1)
+    console.log('-----------------'+this._SessionStorageService.SessionGetValueCokies('prueba'))
     let t:string='BSG Institute'
     this.title.setTitle(t);
 

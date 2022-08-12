@@ -27,12 +27,12 @@
       <div class="titleTextEdir">Pautas Complementarias</div>
       <app-text-html-editor [(htmlContent)]="contenido.PautaComplementaria"></app-text-html-editor>
     </div>
-    <div class="contentTextEditor" *ngIf="evaluacion!=null && evaluacion.length>0">
+    <div class="contentTextEditor" >
       <div class="titleTextEdir">Criterios de Evaluación</div>
       <div class="buttonAddSilabo" (click)="AgregarEvaluacion(null)">
         <i class="material-icons">add</i>
       </div>
-      <div class="table-resposive">
+      <div class="table-resposive" *ngIf="evaluacion!=null && evaluacion.length>0">
         <table style="width: 100%" class="table">
           <thead>
             <tr style="background: #e6eefa;">

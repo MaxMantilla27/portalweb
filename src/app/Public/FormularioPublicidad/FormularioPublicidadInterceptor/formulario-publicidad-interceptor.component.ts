@@ -60,8 +60,8 @@ export class FormularioPublicidadInterceptorComponent implements OnInit,OnDestro
         {
           this.valorPrograma=x;
           this._SessionStorage.SessionSetValue("idCampania",this.valorPrograma.idConjuntoAnuncio)
-          this._SessionStorage.SessionSetValueSesionStorage("idCategoria",this.valorPrograma.idCategoriaOrigen)
-          this._SessionStorage.SessionSetValueSesionStorage("IdPEspecificoPublicidad",this.valorPrograma.idPEspecifico)
+          this._SessionStorage.SessionSetValueCokies("idCategoria",this.valorPrograma.idCategoriaOrigen,1)
+          this._SessionStorage.SessionSetValueCokies("IdPEspecificoPublicidad",this.valorPrograma.idPEspecifico,1)
           this.nombreProgramaFormularioPublicidad=this.valorPrograma.categoriaNombre.replace(/-/g,' ')
           console.log(this.nombreProgramaFormularioPublicidad)
           this.OpenModalFormularioPublicidad();

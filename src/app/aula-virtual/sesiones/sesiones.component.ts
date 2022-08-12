@@ -11,6 +11,7 @@ import { MatTabChangeEvent } from '@angular/material/tabs';
 import { ActivatedRoute } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
 import { ParametrosEstructuraEspecificaDTO } from 'src/app/Core/Models/EstructuraEspecificaDTO';
+import { AlumnosTest } from 'src/app/Core/Shared/AlumnosTest';
 import { ProgramaContenidoService } from 'src/app/Core/Shared/Services/ProgramaContenido/programa-contenido.service';
 import { SessionStorageService } from 'src/app/Core/Shared/Services/session-storage.service';
 
@@ -25,7 +26,8 @@ export class SesionesComponent implements OnInit,OnDestroy {
   constructor(
     private _ActivatedRoute: ActivatedRoute,
     private _ProgramaContenidoService: ProgramaContenidoService,
-    private _SessionStorageService: SessionStorageService
+    private _SessionStorageService: SessionStorageService,
+    private _AlumnosTest:AlumnosTest
   ) {}
 
   tabLoadTimes: Date[] = [];
@@ -504,6 +506,7 @@ export class SesionesComponent implements OnInit,OnDestroy {
       tar = 0,
       tarC = 0;
 
+    var alumnoTest=this._AlumnosTest.Allpermisions(this.estructuraCapitulo.idAlumno);
     this.estructuraCapitulo.registroEstructuraCursoCapitulo.forEach(
       (c: any) => {
         c.registroEstructuraCursoSesion.forEach((s: any) => {
@@ -512,7 +515,7 @@ export class SesionesComponent implements OnInit,OnDestroy {
             s.registroEstructuraCursoSubSesion.forEach((ss: any) => {
               ss.habilitado = false;
 
-              if(this.estructuraCapitulo.convalidado==true){
+              if(this.estructuraCapitulo.convalidado==true || alumnoTest){
                 ss.habilitado=true;
               }
               if (Math.ceil(ss.porcentajeVideoVisualizado) >= 98) {
@@ -558,7 +561,7 @@ export class SesionesComponent implements OnInit,OnDestroy {
                           if (e.nombreEncuesta != 'Encuesta Inicial') {
                             if (e.encuestaEnviada != true) {
                               ss.habilitado = false;
-                              if(this.estructuraCapitulo.convalidado==true){
+                              if(this.estructuraCapitulo.convalidado==true || alumnoTest){
                                 ss.habilitado=true;
                               }
                             }
@@ -573,7 +576,7 @@ export class SesionesComponent implements OnInit,OnDestroy {
                           this.estructuraCapitulo.registroEstructuraCursoCapitulo[cap-1].registroEstructuraCursoTarea.forEach((t: any) => {
                             if (t.tareasEnviadas == 0) {
                               ss.habilitado = false;
-                              if(this.estructuraCapitulo.convalidado==true){
+                              if(this.estructuraCapitulo.convalidado==true || alumnoTest){
                                 ss.habilitado=true;
                               }
                             }
@@ -588,7 +591,7 @@ export class SesionesComponent implements OnInit,OnDestroy {
                           this.estructuraCapitulo.registroEstructuraCursoCapitulo[cap-1].registroCursoTareaCalificar.forEach((tc: any) => {
                             if (!tc.calificado) {
                               ss.habilitado = false;
-                              if(this.estructuraCapitulo.convalidado==true){
+                              if(this.estructuraCapitulo.convalidado==true || alumnoTest){
                                 ss.habilitado=true;
                               }
                             }
@@ -628,7 +631,7 @@ export class SesionesComponent implements OnInit,OnDestroy {
             subs = 0;
           } else {
             s.habilitado = false;
-            if(this.estructuraCapitulo.convalidado==true){
+            if(this.estructuraCapitulo.convalidado==true || alumnoTest){
               s.habilitado=true;
             }
             if (ses == 0) {
@@ -668,7 +671,7 @@ export class SesionesComponent implements OnInit,OnDestroy {
                         if (e.nombreEncuesta != 'Encuesta Inicial') {
                           if (e.encuestaEnviada != true) {
                             s.habilitado = false;
-                            if(this.estructuraCapitulo.convalidado==true){
+                            if(this.estructuraCapitulo.convalidado==true || alumnoTest){
                               s.habilitado=true;
                             }
                           }
@@ -683,7 +686,7 @@ export class SesionesComponent implements OnInit,OnDestroy {
                         this.estructuraCapitulo.registroEstructuraCursoCapitulo[cap-1].registroEstructuraCursoTarea.forEach((t: any) => {
                           if (t.tareasEnviadas == 0) {
                             s.habilitado = false;
-                            if(this.estructuraCapitulo.convalidado==true){
+                            if(this.estructuraCapitulo.convalidado==true || alumnoTest){
                               s.habilitado=true;
                             }
                           }
@@ -698,7 +701,7 @@ export class SesionesComponent implements OnInit,OnDestroy {
                         this.estructuraCapitulo.registroEstructuraCursoCapitulo[cap-1].registroCursoTareaCalificar.forEach((tc: any) => {
                           if (!tc.calificado) {
                             s.habilitado = false;
-                            if(this.estructuraCapitulo.convalidado==true){
+                            if(this.estructuraCapitulo.convalidado==true || alumnoTest){
                               s.habilitado=true;
                             }
                           }
@@ -729,7 +732,7 @@ export class SesionesComponent implements OnInit,OnDestroy {
         var lastses = c.registroEstructuraCursoSesion.length - 1;
         c.registroEstructuraCursoEncuesta.forEach((e: any) => {
           e.habilitado = false;
-          if(this.estructuraCapitulo.convalidado==true){
+          if(this.estructuraCapitulo.convalidado==true || alumnoTest){
             e.habilitado=true;
           }
           if (e.nombreEncuesta != 'Encuesta Inicial') {
@@ -774,7 +777,7 @@ export class SesionesComponent implements OnInit,OnDestroy {
         enc = 0;
         c.registroEstructuraCursoTarea.forEach((t: any) => {
           t.habilitado = false;
-          if(this.estructuraCapitulo.convalidado==true){
+          if(this.estructuraCapitulo.convalidado==true || alumnoTest){
             t.habilitado=true;
           }
           if (tar > 0) {
@@ -816,7 +819,7 @@ export class SesionesComponent implements OnInit,OnDestroy {
         tar = 0;
         c.registroCursoTareaCalificar.forEach((t: any) => {
           t.habilitado = false;
-          if(this.estructuraCapitulo.convalidado==true){
+          if(this.estructuraCapitulo.convalidado==true || alumnoTest){
             t.habilitado=true;
           }
           if (tarC > 0) {

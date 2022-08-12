@@ -139,8 +139,8 @@ export class ContactenosComponent implements OnInit,OnDestroy {
       this.DatosContactenosEnvio.IdAreaTrabajo=value.IdAreaTrabajo;
       this.DatosContactenosEnvio.IdIndustria=value.IdIndustria;
       this.DatosContactenosEnvio.Comentario=value.Comentario;
-      var IdPespecifico=this._SessionStorageService.SessionGetValueSesionStorage("IdPEspecificoPublicidad");
-      var IdCategoriaDato=this._SessionStorageService.SessionGetValueSesionStorage("idCategoria");
+      var IdPespecifico=this._SessionStorageService.SessionGetValueCokies("IdPEspecificoPublicidad");
+      var IdCategoriaDato=this._SessionStorageService.SessionGetValueCokies("idCategoria");
       this.DatosContactenosEnvio.IdCategoriaDato=IdCategoriaDato==''?0:parseInt(IdCategoriaDato);
       if(IdPespecifico==''){
         this.DatosContactenosEnvio.IdPespecifico=0

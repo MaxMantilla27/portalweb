@@ -70,6 +70,7 @@ export class CursoComponent implements OnInit,OnDestroy {
   public alertaDigital=false;
   public alertaFisico=false;
   public generateCertificado=true
+  public ircas:any
   public contenidotarea=
   '<p style="margin-botton:20px">Primero revisa las instrucciones acerca de la tarea. En estas, se te indicará los objetivos de desempeño, la'+
   'descripción de la tarea, los entregables, información complementaria y los criterios de evaluación de la tarea.'+
@@ -98,6 +99,7 @@ export class CursoComponent implements OnInit,OnDestroy {
         this.RegistroProgramaMatriculadoPorIdMatricula();
         this.ObtenerListadoProgramaContenido();
         this.ObtenerDatosCertificado();
+        this.ObtenerDatosCertificadoIrcaEnvio();
       },
     });
     this._HelperService.recibirCombosPerfil.pipe(takeUntil(this.signal$)).subscribe({
@@ -113,6 +115,14 @@ export class CursoComponent implements OnInit,OnDestroy {
       },
     });
 
+  }
+  ObtenerDatosCertificadoIrcaEnvio(){
+    this._CertificadoService.ObtenerDatosCertificadoIrcaEnvio(this.idMatricula).pipe(takeUntil(this.signal$)).subscribe({
+      next:x=>{
+        console.log(x)
+        this.ircas=x
+      }
+    })
   }
   ObtenerDatosCertificado(){
     this._CertificadoService.ObtenerDatosCertificadoEnvio(this.idMatricula).pipe(takeUntil(this.signal$)).subscribe({
@@ -158,23 +168,27 @@ export class CursoComponent implements OnInit,OnDestroy {
     if(this.IndicacionActive){
       masindicacion=4
     }
+    var esirca=0
+    if(this.ircas!=undefined && this.ircas.length>0){
+      esirca=1
+    }
     var noesAonline=0
     if(this.programEstructura.idModalidad!=1){
       masindicacion=-1
       noesAonline=-1
     }
     if(this.curso!=undefined && this.curso.proyectoAplicacion){
-      if((tabChangeEvent.index >= (6+noesAonline) || tabChangeEvent.index < (3+noesAonline))  && this.CertificadoActive){
+      if((tabChangeEvent.index >= (6+noesAonline+esirca) || tabChangeEvent.index < (3+noesAonline))  && this.CertificadoActive){
         this.CertificadoActive=false
         if(tabChangeEvent.index >= (6+noesAonline)){
           this.tabIndex-=2
         }
       }
-      if(tabChangeEvent.index == (3+masindicacion) && !this.CertificadoActive){
+      if(tabChangeEvent.index == (3+masindicacion+masindicacion) && !this.CertificadoActive){
         this.CertificadoActive=true
       }
     }else{
-      if((tabChangeEvent.index >= (5+noesAonline) || tabChangeEvent.index < (2+noesAonline))   && this.CertificadoActive){
+      if((tabChangeEvent.index >= (5+noesAonline+esirca) || tabChangeEvent.index < (2+noesAonline))   && this.CertificadoActive){
         this.CertificadoActive=false
         if(tabChangeEvent.index >= (5+noesAonline)){
           this.tabIndex-=2

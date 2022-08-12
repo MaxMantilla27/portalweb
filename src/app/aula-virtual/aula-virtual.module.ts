@@ -86,6 +86,7 @@ import { DocenciaActividadesAutoevaluacionComponent } from './docencia/docencia-
 import { ConfirmacionPagoMultipagoComponent } from './confirmacion-pago-multipago/confirmacion-pago-multipago.component';
 import { CursoClaseOnlineComponent } from './curso/curso-clase-online/curso-clase-online.component';
 import { CursoSimuladoresComponent } from './curso/curso-simuladores/curso-simuladores.component';
+import { CursoCertificadoIrcaComponent } from './curso/curso-certificado-irca/curso-certificado-irca.component';
 
 
 
@@ -171,6 +172,7 @@ import { CursoSimuladoresComponent } from './curso/curso-simuladores/curso-simul
     ConfirmacionPagoMultipagoComponent,
     CursoClaseOnlineComponent,
     CursoSimuladoresComponent,
+    CursoCertificadoIrcaComponent,
 
   ],
   imports: [

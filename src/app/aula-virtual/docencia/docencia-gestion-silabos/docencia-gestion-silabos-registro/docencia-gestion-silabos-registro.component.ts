@@ -154,7 +154,7 @@ export class DocenciaGestionSilabosRegistroComponent implements OnInit {
         next:x=>{
           console.log(x)
           this.charge=false
-          this._SnackBarServiceService.openSnackBar("Se elimino correctamente",'x',5,"snackbarCrucigramaSucces");
+          this._SnackBarServiceService.openSnackBar("Se aprobo correctamente",'x',5,"snackbarCrucigramaSucces");
           this.dialogRef.close(true);
         },
         error:e=>{

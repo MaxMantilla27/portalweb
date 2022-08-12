@@ -80,8 +80,8 @@ export class FormChatComponent implements OnInit,OnChanges {
       this.DatosEnvioFormulario.Movil = value.Movil;
       this.DatosEnvioFormulario.EstadoAsesor = '0';
       this.DatosEnvioFormulario.IdPrograma = this.IdPGeneral;
-      var IdPespecifico=this._SessionStorageService.SessionGetValueSesionStorage("IdPEspecificoPublicidad");
-      var IdCategoriaDato=this._SessionStorageService.SessionGetValueSesionStorage("idCategoria");
+      var IdPespecifico=this._SessionStorageService.SessionGetValueCokies("IdPEspecificoPublicidad");
+      var IdCategoriaDato=this._SessionStorageService.SessionGetValueCokies("idCategoria");
       this.DatosEnvioFormulario.IdCategoriaDato=IdCategoriaDato==''?0:parseInt(IdCategoriaDato);
       if(IdPespecifico==''){
         this.DatosEnvioFormulario.IdPespecifico=this.IdPespecificoPrograma

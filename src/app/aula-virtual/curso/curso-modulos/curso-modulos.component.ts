@@ -15,6 +15,7 @@ import {
   CursoPadreDTO,
   ProgresoAlumnoProgramaVideosAulaVirtualDTO,
 } from 'src/app/Core/Models/ListadoProgramaContenidoDTO';
+import { AlumnosTest } from 'src/app/Core/Shared/AlumnosTest';
 import { ProgramaContenidoService } from 'src/app/Core/Shared/Services/ProgramaContenido/programa-contenido.service';
 import { SessionStorageService } from 'src/app/Core/Shared/Services/session-storage.service';
 
@@ -29,7 +30,8 @@ export class CursoModulosComponent implements OnInit, OnChanges,OnDestroy {
   constructor(
     private _ProgramaContenidoService: ProgramaContenidoService,
     private _SessionStorageService: SessionStorageService,
-    private router :Router
+    private router :Router,
+    private _AlumnosTest:AlumnosTest
   ) {}
   ngOnDestroy(): void {
     this.signal$.next(true)
@@ -73,6 +75,7 @@ export class CursoModulosComponent implements OnInit, OnChanges,OnDestroy {
   AddProgresToProgram() {
     var index=0;
     var lastconvalidado=-1;
+    var alumnoTest=this._AlumnosTest.Allpermisions(this.programEstructura.idAlumno);
     this.programEstructura.listaCursoMatriculado.forEach((program) => {
       program.habilitado=true;
       var progresoP: ProgresoAlumnoProgramaAulaVirtualDTO = {
@@ -96,7 +99,7 @@ export class CursoModulosComponent implements OnInit, OnChanges,OnDestroy {
         }
       });
       program.progreso = progresoP;
-      if(program.convalidado==false && program.idModalidadHijo==1){
+      if(program.convalidado==false && program.idModalidadHijo==1 && !alumnoTest){
         if(lastconvalidado>-1){
           var conval=this.programEstructura.listaCursoMatriculado[lastconvalidado]
           if(conval.progreso.progresoVideo.length>0){

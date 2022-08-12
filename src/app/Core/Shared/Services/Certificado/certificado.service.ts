@@ -41,6 +41,14 @@ export class CertificadoService {
       return EMPTY;
     }
   }
+  public ObtenerDatosCertificadoIrcaEnvio(IdMatriculaCabecera:number):Observable<any>{
+    if(this.isBrowser){
+      return this.http.get<any>(this.urlBase+'/ObtenerDatosCertificadoIrcaEnvio?IdMatriculaCabecera='+IdMatriculaCabecera);
+    }else{
+      return EMPTY;
+    }
+  }
+
   public RegistrarSolicitudCertificadoFisico(Json:InsertarRegistroEnvioFisicoDTO):Observable<any>{
     if(this.isBrowser){
       console.log(Json)

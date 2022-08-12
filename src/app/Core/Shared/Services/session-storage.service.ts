@@ -30,27 +30,7 @@ export class SessionStorageService {
       localStorage.setItem('Token',btoa(token));
     }
   }
-  DeleteToken():void{
-    if(this.isBrowser){
-      localStorage.removeItem('Token');
-    }
-  }
 
-  SessionSetValueSesionStorage(name:string, token: string):void{
-    if(this.isBrowser){
-      sessionStorage.setItem(name,btoa(token));
-    }
-  }
-  SessionGetValueSesionStorage(name:string):string{
-    if(this.isBrowser){
-
-      var value=sessionStorage.getItem(name);
-      if(value==undefined || value==null) return '';
-      return atob(value);
-    }
-    if(name.toUpperCase()=='ISO_PAIS')return 'INTC';
-    return '';
-  }
   SessionSetValue(name:string, token: string):void{
     if(this.isBrowser){
       localStorage.setItem(name,btoa(token));
@@ -91,5 +71,59 @@ export class SessionStorageService {
       return JSON.parse(decodeURIComponent(atob(token)));
     }
     return null;
+  }
+  DeleteToken():void{
+    if(this.isBrowser){
+      localStorage.removeItem('Token');
+    }
+  }
+
+  SessionSetValueSesionStorage(name:string, token: string):void{
+    if(this.isBrowser){
+      sessionStorage.setItem(name,btoa(token));
+    }
+  }
+  SessionGetValueSesionStorage(name:string):string{
+    if(this.isBrowser){
+
+      var value=sessionStorage.getItem(name);
+      if(value==undefined || value==null) return '';
+      return atob(value);
+    }
+    if(name.toUpperCase()=='ISO_PAIS')return 'INTC';
+    return '';
+  }
+  SessionSetValueCokies(name:string, token: string,hour:number):void{
+    if(this.isBrowser){
+      let d: Date = new Date();
+      console.log(d);
+      d.setTime(
+        d.getTime() + hour * 1000 * 3600
+      );
+      document.cookie =
+      (name) +
+      '=' +
+      (btoa(token)) +
+      ';' +
+      ('expires=' + d.toUTCString() + ';')
+
+    }
+  }
+  SessionGetValueCokies(name:string):string{
+    if(this.isBrowser){
+      let ca: Array<string> = document.cookie.split(';');
+      let caLen: number = ca.length;
+      let cookieName = `${name}=`;
+      let c: string;
+
+      for (let i: number = 0; i < caLen; i += 1) {
+        c = ca[i].replace(/^\s+/g, '');
+        if (c.indexOf(cookieName) == 0) {
+          return atob(c.substring(cookieName.length, c.length));
+        }
+      }
+      return '';
+    }
+    return '';
   }
 }

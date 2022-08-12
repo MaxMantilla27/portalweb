@@ -68,3 +68,15 @@
   padding: 20px;
   border: solid 1px rgba(0,0,0,.125);
 }
+.mat-form-field.fill-container,
+.mat-form-field.fill-container .mat-form-field-infix,
+.mat-form-field.fill-container .mat-form-field-flex,
+.mat-form-field.fill-container .mat-form-field-wrapper,
+.mat-form-field textarea {
+  height: 100%;
+  width: 100%;
+}
+
+.mat-form-field textarea {
+  height: calc(100% - 25px);
+}
