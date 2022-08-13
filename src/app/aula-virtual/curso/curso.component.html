@@ -232,6 +232,23 @@
               </app-curso-certificado-fisico>
             </div>
           </mat-tab>
+
+          <ng-container *ngIf="ircas!=undefined && ircas.length>0">
+            <mat-tab [disabled]="datosCertificado==undefined ||  datosCertificado.nombreArchivo==null">
+              <ng-template mat-tab-label>
+                <div class="contentHeaderM subContent" style="cursor: pointer;">
+                  <div class="iconMat"
+                  matTooltip="Certificado Fisico"
+                  matTooltipPosition="after"><i class="material-icons">microwave</i></div>
+                  <div class="titleMatr" *ngIf="!hide">Certificados Irca</div>
+                </div>
+              </ng-template>
+              <div class="pad-resp">
+                <app-curso-certificado-irca></app-curso-certificado-irca>
+              </div>
+            </mat-tab>
+
+          </ng-container>
         </ng-container>
 
         <mat-tab>

@@ -8,6 +8,7 @@ import {
 } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ParametrosEstructuraEspecificaDTO } from 'src/app/Core/Models/EstructuraEspecificaDTO';
+import { AlumnosTest } from 'src/app/Core/Shared/AlumnosTest';
 import { SnackBarServiceService } from 'src/app/Core/Shared/Services/SnackBarService/snack-bar-service.service';
 
 @Component({
@@ -20,13 +21,15 @@ export class ModuloSesionesComponent implements OnInit, OnChanges {
   constructor(
     private _Router:Router,
     private _SnackBarServiceService:SnackBarServiceService,
-    private r:ActivatedRoute
+    private r:ActivatedRoute,
+    private _AlumnosTest:AlumnosTest
   ) {}
   ngOnChanges(changes: SimpleChanges): void {
     console.log(this.estructuraCapitulo)
     if (this.estructuraCapitulo != undefined && this.estructuraCapitulo.registroEstructuraCursoCapitulo!=null) {
       var cap = 0,ses = 0,subs = 0,enc=0,tar=0,tarC=0;
       console.log(this.estructuraCapitulo);
+      var alumnoTest=this._AlumnosTest.Allpermisions(this.estructuraCapitulo.idAlumno);
       this.estructuraCapitulo.registroEstructuraCursoCapitulo.forEach((c: any) => {
           c.registroEstructuraCursoSesion.forEach((s: any) => {
 
@@ -35,7 +38,7 @@ export class ModuloSesionesComponent implements OnInit, OnChanges {
               s.registroEstructuraCursoSubSesion.forEach((ss: any) => {
                 ss.habilitado=false;
 
-                if(this.estructuraCapitulo.convalidado==true){
+                if(this.estructuraCapitulo.convalidado==true || alumnoTest){
                   ss.habilitado=true;
                 }
                 if (Math.ceil(ss.porcentajeVideoVisualizado) >= 100) {
@@ -74,7 +77,7 @@ export class ModuloSesionesComponent implements OnInit, OnChanges {
                             if(e.nombreEncuesta!='Encuesta Inicial'){
                               if(e.encuestaEnviada!=true){
                                 ss.habilitado=false;
-                                if(this.estructuraCapitulo.convalidado==true){
+                                if(this.estructuraCapitulo.convalidado==true || alumnoTest){
                                   ss.habilitado=true;
                                 }
                               }
@@ -89,7 +92,7 @@ export class ModuloSesionesComponent implements OnInit, OnChanges {
                             this.estructuraCapitulo.registroEstructuraCursoCapitulo[cap-1].registroEstructuraCursoTarea.forEach((t:any) => {
                               if(t.tareasEnviadas==0){
                                 ss.habilitado=false;
-                                if(this.estructuraCapitulo.convalidado==true){
+                                if(this.estructuraCapitulo.convalidado==true || alumnoTest){
                                   ss.habilitado=true;
                                 }
                               }
@@ -104,7 +107,7 @@ export class ModuloSesionesComponent implements OnInit, OnChanges {
                             this.estructuraCapitulo.registroEstructuraCursoCapitulo[cap-1].registroCursoTareaCalificar.forEach((tc:any) => {
                               if(!tc.calificado){
                                 ss.habilitado=false;
-                                if(this.estructuraCapitulo.convalidado==true){
+                                if(this.estructuraCapitulo.convalidado==true || alumnoTest){
                                   ss.habilitado=true;
                                 }
                               }
@@ -131,7 +134,7 @@ export class ModuloSesionesComponent implements OnInit, OnChanges {
               subs=0;
             }else{
               s.habilitado=false;
-              if(this.estructuraCapitulo.convalidado==true){
+              if(this.estructuraCapitulo.convalidado==true || alumnoTest){
                 s.habilitado=true;
               }
               if(ses==0){
@@ -167,7 +170,7 @@ export class ModuloSesionesComponent implements OnInit, OnChanges {
                           if(e.nombreEncuesta!='Encuesta Inicial' ){
                             if(e.encuestaEnviada!=true){
                               s.habilitado=false;
-                              if(this.estructuraCapitulo.convalidado==true){
+                              if(this.estructuraCapitulo.convalidado==true || alumnoTest){
                                 s.habilitado=true;
                               }
                             }
@@ -182,7 +185,7 @@ export class ModuloSesionesComponent implements OnInit, OnChanges {
                           this.estructuraCapitulo.registroEstructuraCursoCapitulo[cap-1].registroEstructuraCursoTarea.forEach((t:any) => {
                             if(t.tareasEnviadas==0){
                               s.habilitado=false;
-                              if(this.estructuraCapitulo.convalidado==true){
+                              if(this.estructuraCapitulo.convalidado==true || alumnoTest){
                                 s.habilitado=true;
                               }
                             }
@@ -197,7 +200,7 @@ export class ModuloSesionesComponent implements OnInit, OnChanges {
                           this.estructuraCapitulo.registroEstructuraCursoCapitulo[cap-1].registroCursoTareaCalificar.forEach((tc:any) => {
                             if(!tc.calificado){
                               s.habilitado=false;
-                              if(this.estructuraCapitulo.convalidado==true){
+                              if(this.estructuraCapitulo.convalidado==true || alumnoTest){
                                 s.habilitado=true;
                               }
                             }
@@ -224,7 +227,7 @@ export class ModuloSesionesComponent implements OnInit, OnChanges {
           var lastses=c.registroEstructuraCursoSesion.length-1
           c.registroEstructuraCursoEncuesta.forEach((e:any) => {
             e.habilitado=false;
-            if(this.estructuraCapitulo.convalidado==true){
+            if(this.estructuraCapitulo.convalidado==true || alumnoTest){
               e.habilitado=true;
             }
             if(e.nombreEncuesta!='Encuesta Inicial'){
@@ -252,7 +255,7 @@ export class ModuloSesionesComponent implements OnInit, OnChanges {
           enc=0;
           c.registroEstructuraCursoTarea.forEach((t:any) => {
             t.habilitado=false;
-            if(this.estructuraCapitulo.convalidado==true){
+            if(this.estructuraCapitulo.convalidado==true || alumnoTest){
               t.habilitado=true;
             }
             if(tar>0){
@@ -276,7 +279,7 @@ export class ModuloSesionesComponent implements OnInit, OnChanges {
           tar=0;
           c.registroCursoTareaCalificar.forEach((t:any) => {
             t.habilitado=false;
-            if(this.estructuraCapitulo.convalidado==true){
+            if(this.estructuraCapitulo.convalidado==true || alumnoTest){
               t.habilitado=true;
             }
             if(tarC>0){

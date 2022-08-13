@@ -117,15 +117,15 @@ export class RegistrarseComponent implements OnInit,OnDestroy {
     this.registerSend.IdIndustria=this.register.IdIndustria,
     this.registerSend.Password=this.register.Password
 
-    var idPEspecifico=this._SessionStorageService.SessionGetValueSesionStorage("IdPEspecificoPublicidad");
-    var CategoriaDato=this._SessionStorageService.SessionGetValueSesionStorage("idCategoria");
+    var idPEspecifico=this._SessionStorageService.SessionGetValueCokies("IdPEspecificoPublicidad");
+    var CategoriaDato=this._SessionStorageService.SessionGetValueCokies("idCategoria");
     this.registerSend.CategoriaDato=CategoriaDato==''?0:parseInt(CategoriaDato);
     if(idPEspecifico==''){
       this.registerSend.IdPEspecifico=0
       this.registerSend.Tipo=''
     }else{
       this.registerSend.IdPEspecifico=parseInt(idPEspecifico)
-      var pago=this._SessionStorageService.SessionGetValueSesionStorage("PagoPublicidad");
+      var pago=this._SessionStorageService.SessionGetValueCokies("PagoPublicidad");
       this.registerSend.Tipo=pago=='1'?'pago':'accesopruebagratis'
     }
     this._AccountService.RegistrarseAlumno(this.registerSend).pipe(takeUntil(this.signal$)).subscribe({

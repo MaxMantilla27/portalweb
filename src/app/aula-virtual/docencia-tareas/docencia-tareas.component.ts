@@ -1,7 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
+import { ParametroNotaRegistrarV3DTO } from 'src/app/Core/Models/ParticipacionExpositorFiltroDTO';
 import { ParametroEnvioTrabajoPares, ParametroObtenerEvaluacionTarea } from 'src/app/Core/Models/TareaEvaluacionDTO';
+import { HelperService } from 'src/app/Core/Shared/Services/helper.service';
 import { OperacionesNotaService } from 'src/app/Core/Shared/Services/OperacionesNota/operaciones-nota.service';
 import { SnackBarServiceService } from 'src/app/Core/Shared/Services/SnackBarService/snack-bar-service.service';
 import { TareaEvaluacionService } from 'src/app/Core/Shared/Services/TareaEvaluacion/tarea-evaluacion.service';
@@ -19,7 +21,8 @@ export class DocenciaTareasComponent implements OnInit,OnDestroy {
     private _SnackBarServiceService:SnackBarServiceService,
     private _TrabajoDeParesIntegraService:TrabajoDeParesIntegraService,
     private _ActivatedRoute:ActivatedRoute,
-    private _OperacionesNotaService:OperacionesNotaService
+    private _OperacionesNotaService:OperacionesNotaService,
+    private _HelperService: HelperService,
   ) { }
 
   ngOnDestroy(): void {
@@ -54,6 +57,32 @@ export class DocenciaTareasComponent implements OnInit,OnDestroy {
   public tareaAc:any;
   public calificacion=0;
   public cargaEnvio=false;
+  public usuario=''
+  public nota:Array<ParametroNotaRegistrarV3DTO>=[]
+  // {
+  //   Id:0,
+  //   IdPespecifico:0,
+  //   Grupo:0,
+  //   IdMatriculaCabecera:0,
+  //   IdEsquemaEvaluacionPGeneralDetalle:0,
+  //   IdParametroEvaluacion:0,
+  //   IdEscalaCalificacionDetalle:0,
+  //   PortalTareaEvaluacionTareaId:0,
+  //   EsProyectoAnterior:false,
+  //   IdProyectoAplicacionEnvioAnterior:0,
+  //   NombreArchivoRetroalimentacion:'',
+  //   UrlArchivoSubidoRetroalimentacion:'',
+  // }
+  public retroalimentacion=''
+  public retroalimentacionFile:File=new File([],'')
+  public IdMatriculaCabecera=0
+  public EsProyectoAnterior=false
+  public Grupo=1
+  public IdProyectoAplicacionEnvioAnterior=0
+  public nombrefile='Ningún archivo seleccionado'
+  public filestatus=false
+  public fileErrorMsg=''
+  public selectedFiles?: FileList;
   ngOnInit(): void {
 
     this._ActivatedRoute.params.pipe(takeUntil(this.signal$)).subscribe({
@@ -113,6 +142,12 @@ export class DocenciaTareasComponent implements OnInit,OnDestroy {
         this.params.idPEspecificoPadre=x.idPEspecificoPadre
         this.params.idPGeneral=x.idPGeneralHijo
         this.params.idPrincipal=x.idPGeneralPadre
+        this.IdMatriculaCabecera=x.idMatriculaCabecera
+        this.EsProyectoAnterior=x.esProyectoAnterior
+        this.Grupo=x.grupo
+        this.IdProyectoAplicacionEnvioAnterior=x.idProyectoAplicacionEnvioAnterior
+        this.usuario=x.usuario;
+
         this.ObtenerEvaluacionTarea();
       }
     })
@@ -134,6 +169,62 @@ export class DocenciaTareasComponent implements OnInit,OnDestroy {
     this.enviarJson.IdEsquemaEvaluacionPGeneralDetalle=this.tareas.criteriosEvaluacion.idEsquemaEvaluacionPGeneralDetalle
     console.log(this.enviarJson);
     this._TareaEvaluacionService.EnviarCalificacionTrabajoPares(this.enviarJson).pipe(takeUntil(this.signal$)).subscribe({
+      next:x=>{
+        console.log(x)
+        this.ObtenerEvaluacionTarea()
+      },
+      error:x=>{
+        console.log(x)
+      }
+    })
+  }
+
+  getFileDetails(event:any) {
+    for (var i = 0; i < event.target.files.length; i++) {
+      this.filestatus=true
+      var name = event.target.files[i].name;
+      this.nombrefile=name;
+      var type = event.target.files[i].type;
+      var size = event.target.files[i].size;
+      var modifiedDate = event.target.files[i].lastModifiedDate;
+      var extencion=name.split('.')[name.split('.').length-1]
+      if( Math.round((size/1024)/1024)>150){
+        this.fileErrorMsg='El tamaño del archivo no debe superar los 150 MB'
+        this.filestatus=false
+      }
+      this.selectedFiles = event.target.files;
+      // console.log ('Name: ' + name + "\n" +
+      //   'Type: ' + extencion + "\n" +
+      //   'Last-Modified-Date: ' + modifiedDate + "\n" +
+      //   'Size: ' + Math.round((size/1024)/1024) + " MB");
+    }
+  }
+  RegistrarV3(index:number){
+    var tareasDetalle=this.tareaAc[index];
+    console.log(tareasDetalle)
+    var n:ParametroNotaRegistrarV3DTO={
+        Id:0,
+        IdPespecifico:this.tareas.criteriosEvaluacion.idPEspecifico,
+        Grupo:this.Grupo,
+        IdMatriculaCabecera:this.IdMatriculaCabecera,
+        IdEsquemaEvaluacionPGeneralDetalle:this.tareas.criteriosEvaluacion.idEsquemaEvaluacionPGeneralDetalle_Anterior,
+        IdParametroEvaluacion:this.tareas.criteriosEvaluacion.idParametroEvaluacion,
+        IdEscalaCalificacionDetalle:this.calificacion,
+        PortalTareaEvaluacionTareaId:tareasDetalle.id,
+        EsProyectoAnterior:this.EsProyectoAnterior,
+        IdProyectoAplicacionEnvioAnterior:this.IdProyectoAplicacionEnvioAnterior==null?0:this.IdProyectoAplicacionEnvioAnterior,
+        NombreArchivoRetroalimentacion:'',
+        UrlArchivoSubidoRetroalimentacion:'',
+      }
+
+    if(this.selectedFiles){
+      const file: File | null = this.selectedFiles.item(0);
+      if (file) {
+        this.retroalimentacionFile = file;
+      }
+    }
+    this.nota.push(n)
+    this._OperacionesNotaService.RegistrarV3(this.nota,this.tareas.criteriosEvaluacion.idPEspecifico,this.usuario,this.retroalimentacion,this.retroalimentacionFile).pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
         console.log(x)
         this.ObtenerEvaluacionTarea()

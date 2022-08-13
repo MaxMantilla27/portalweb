@@ -45,12 +45,12 @@ export class DocenciaActividadesAutoevaluacionComponent implements OnInit,OnChan
   ListadoProgramasDocenteFiltrado(){
     this._TrabajoDeParesIntegraService.ListadoProgramasDocenteFiltrado().pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
+        console.log(x)
         this.proyectos=x
         this.proyectos.forEach((p:any) => {
           p.alumnos=[]
           p.alumnosAntiguos=[]
         });
-        console.log(x)
       }
     })
   }

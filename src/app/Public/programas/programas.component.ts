@@ -402,7 +402,8 @@ export class ProgramasComponent implements OnInit,OnDestroy {
             var ps:CardProgramasDTO={
               Inversion:c.montoPagoDescripcion,
               Content:c.descripcion,
-              Url:'/'+urlArea+'/'+urlSubArea+'-'+c.idBusqueda,
+              //Url:'/'+urlArea+'/'+urlSubArea+'-'+c.idBusqueda,
+              Url:c.direccion,
               Img:'https://img.bsginstitute.com/repositorioweb/img/programas/'+c.imagen,ImgAlt:c.imagenAlt,Title:c.nombre};
             return ps;
           }

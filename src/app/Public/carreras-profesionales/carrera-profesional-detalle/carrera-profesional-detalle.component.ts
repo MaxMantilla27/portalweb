@@ -263,8 +263,8 @@ export class CarreraProfesionalDetalleComponent implements OnInit {
       this.DatosEnvioFormulario.IdAreaFormacion=value.IdAreaFormacion;
       this.DatosEnvioFormulario.IdAreaTrabajo=value.IdAreaTrabajo;
       this.DatosEnvioFormulario.IdIndustria=value.IdIndustria;
-      var IdPespecifico=this._SessionStorageService.SessionGetValueSesionStorage("IdPEspecificoPublicidad");
-      var IdCategoriaDato=this._SessionStorageService.SessionGetValueSesionStorage("idCategoria");
+      var IdPespecifico=this._SessionStorageService.SessionGetValueCokies("IdPEspecificoPublicidad");
+      var IdCategoriaDato=this._SessionStorageService.SessionGetValueCokies("idCategoria");
       this.DatosEnvioFormulario.IdCategoriaDato=IdCategoriaDato==''?0:parseInt(IdCategoriaDato);
       if(IdPespecifico==''){
         this.DatosEnvioFormulario.IdPespecifico=this.IdPespecificoPrograma;

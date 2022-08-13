@@ -135,6 +135,7 @@ export class VideoBrightcoveComponent implements OnInit, OnChanges,AfterViewInit
   public finalizado=false;
   public videoFinal=''
   public videocontinuar=false
+  public cargaFinalizado=false;
   ngOnInit(): void {
     this._HelperService.recibirCombosPerfil.pipe(takeUntil(this.signal$)).subscribe((x) => {
       this.miPerfil=x
@@ -203,6 +204,10 @@ export class VideoBrightcoveComponent implements OnInit, OnChanges,AfterViewInit
   continuarVideo(){
     var time=0
     var tiempo=0
+    console.log(this.capituloEv)
+    this.finalizado=false
+    this.valPregunta=false
+    this.videocontinuar=false
     this.diapositivas.forEach(x=>{
       if(x.nroDiapositiva==this.capituloEv && parseInt(x.tipoVista)==4){
         x.estadoEval=1;
@@ -229,6 +234,7 @@ export class VideoBrightcoveComponent implements OnInit, OnChanges,AfterViewInit
     })
     this.tipo
     this.playVideo()
+    console.log(this.diapositivas)
   }
   chageRespuesta(index:number,tipo:number){
     if(!this.valPregunta){
@@ -272,6 +278,7 @@ export class VideoBrightcoveComponent implements OnInit, OnChanges,AfterViewInit
     }
   }
   finalizarPreguntas(){
+    this.cargaFinalizado=true
     this.estadoFinalizarPreguntas=true
     this.finalizarPerguntas.IdAccesoPrueba=this.json.AccesoPrueba;
     this.finalizarPerguntas.IdPEspecifico=this.json.IdPEspecificoHijo;
@@ -288,10 +295,15 @@ export class VideoBrightcoveComponent implements OnInit, OnChanges,AfterViewInit
     this.finalizarPerguntas.IdRespuesta=res
     this._PreguntaInteractivaService.RegistrarPreguntaInteractiva(this.finalizarPerguntas).pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
+        this.cargaFinalizado=false
         console.log(x)
         this.finalizado=true
         this.videoFinal='https://repositorioweb.blob.core.windows.net/repositorioweb/aulavirtual/feedback/'+x.urlVideo
         this.estadoFinalizarPreguntas=false
+      },
+      error:c=>{
+
+        this.cargaFinalizado=false
       }
     })
   }
@@ -421,7 +433,7 @@ export class VideoBrightcoveComponent implements OnInit, OnChanges,AfterViewInit
       }
     });
 
-    this.RegistrarUltimaVisualizacionVideo()
+    //this.RegistrarUltimaVisualizacionVideo()
   }
   setCurrentTime(data: any) {
     var tiempo= data.target.currentTime;
@@ -592,6 +604,7 @@ export class VideoBrightcoveComponent implements OnInit, OnChanges,AfterViewInit
 
   }
   OnFinish(){
+    this.RegistrarUltimaVisualizacionVideo()
     this.finish=true;
     console.log('Finish-------------');
     this.OnFin.emit()

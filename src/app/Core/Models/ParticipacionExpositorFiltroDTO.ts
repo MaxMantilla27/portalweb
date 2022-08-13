@@ -27,3 +27,17 @@ export interface AsistenciaRegistrarDTO {
   Asistio: boolean;
   Justifico: boolean;
 }
+export interface ParametroNotaRegistrarV3DTO {
+  Id: number;
+  IdPespecifico: number;
+  Grupo: number;
+  IdMatriculaCabecera: number;
+  IdEsquemaEvaluacionPGeneralDetalle: number;
+  IdParametroEvaluacion: number;
+  IdEscalaCalificacionDetalle?: number;
+  PortalTareaEvaluacionTareaId?: number;
+  EsProyectoAnterior: boolean;
+  IdProyectoAplicacionEnvioAnterior?: number;
+  NombreArchivoRetroalimentacion: string;
+  UrlArchivoSubidoRetroalimentacion: string;
+}

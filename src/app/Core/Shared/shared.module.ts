@@ -109,7 +109,8 @@ import { IntegraEsquemaEvaluacionService } from './Services/IntegraEsquemaEvalua
 import { ChatPortalComponent } from './Containers/chat-portal/chat-portal.component';
 import { SeoService } from './Services/seo.service';
 import { VideoAyudaComponent } from './Containers/video-ayuda/video-ayuda.component';
-
+import { AlumnosTest } from './AlumnosTest';
+import {TextFieldModule} from '@angular/cdk/text-field';
 
 @NgModule({
   imports: [
@@ -143,7 +144,8 @@ import { VideoAyudaComponent } from './Containers/video-ayuda/video-ayuda.compon
     MatSortModule,
     MatDialogModule,
     MatBottomSheetModule,
-    CKEditorModule
+    CKEditorModule,
+    TextFieldModule
   ],
   declarations: [
     HeaderComponent,
@@ -260,6 +262,7 @@ import { VideoAyudaComponent } from './Containers/video-ayuda/video-ayuda.compon
     MatSortModule,
     MatDialogModule,
     CKEditorModule,
+    TextFieldModule,
     ChatPortalComponent,
     VideoAyudaComponent
   ],
@@ -290,6 +293,7 @@ import { VideoAyudaComponent } from './Containers/video-ayuda/video-ayuda.compon
     LibroReclamacionService,
     MedioPagoActivoPasarelaService,
     ImagenTarjetas,
+    AlumnosTest,
     FormaPagoService,
     GlobalService,
     ChatDetalleIntegraService,

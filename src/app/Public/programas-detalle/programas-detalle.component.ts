@@ -415,27 +415,33 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
       .subscribe({
         next: (x) => {
           console.log(x);
-          if (x.listaSeccionPrograma.video.includes('vimeo')) {
-            this.contenidoCabecera = x.listaSeccionPrograma.video
-              .split('<p>')
-              .join('')
-              .split('<vacio></vacio>')
-              .join('')
-              .split('&lt;')
-              .join('<')
-              .split('&gt;')
-              .join('>')
-              .split('src=')
-              .join('id="presentacionVideo" src=')
-              .split('""')
-              .join('"');
-          } else {
-            var splitCont = x.listaSeccionPrograma.video.split('</p><p>');
-            this.contenidoCabecera = splitCont[splitCont.length - 1]
-              .split('</p>')
-              .join('');
+          if(x.listaSeccionPrograma.video!=null){
+            if (x.listaSeccionPrograma.video.includes('vimeo')) {
+              this.contenidoCabecera = x.listaSeccionPrograma.video
+                .split('<p>')
+                .join('')
+                .split('<vacio></vacio>')
+                .join('')
+                .split('&lt;')
+                .join('<')
+                .split('&gt;')
+                .join('>')
+                .split('src=')
+                .join('id="presentacionVideo" src=')
+                .split('""')
+                .join('"');
+            } else {
+              var splitCont = x.listaSeccionPrograma.video.split('</p><p>');
+              this.contenidoCabecera = splitCont[splitCont.length - 1]
+                .split('</p>')
+                .join('');
+            }
           }
           this.seccion = x.listaSeccionPrograma;
+          this.seccion.objetivo=this.seccion.objetivo==null?'':this.seccion.objetivo
+          this.seccion.publicoObjetivo=this.seccion.publicoObjetivo==null?'':this.seccion.publicoObjetivo
+          this.seccion.duracionHorario=this.seccion.duracionHorario==null?'':this.seccion.duracionHorario
+          console.log(this.seccion)
         },
       });
   }
@@ -717,8 +723,8 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
       this.DatosEnvioFormulario.IdAreaFormacion = value.IdAreaFormacion;
       this.DatosEnvioFormulario.IdAreaTrabajo = value.IdAreaTrabajo;
       this.DatosEnvioFormulario.IdIndustria = value.IdIndustria;
-      var IdPEspecifico=this._SessionStorageService.SessionGetValueSesionStorage("IdPEspecificoPublicidad");
-      var IdCategoriaDato=this._SessionStorageService.SessionGetValueSesionStorage("idCategoria");
+      var IdPEspecifico=this._SessionStorageService.SessionGetValueCokies("IdPEspecificoPublicidad");
+      var IdCategoriaDato=this._SessionStorageService.SessionGetValueCokies("idCategoria");
       this.DatosEnvioFormulario.IdCategoriaDato=IdCategoriaDato==''?0:parseInt(IdCategoriaDato);
       if(IdPEspecifico==''){
         this.DatosEnvioFormulario.IdPespecifico=this.IdPespecificoPrograma;
