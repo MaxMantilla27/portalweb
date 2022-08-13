@@ -195,8 +195,8 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
     Nombres: '',
     Apellidos: '',
     Email: '',
-    IdPais: 0,
-    IdRegion: 0,
+    IdPais: undefined,
+    IdRegion: undefined,
     Movil: '',
   };
   public DatosEnvioFormulario: ContactenosDTO = {
@@ -872,8 +872,8 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
     this.formularioContacto.Nombres= '',
     this.formularioContacto.Apellidos= '',
     this.formularioContacto.Email= '',
-    this.formularioContacto.IdPais=0,
-    this.formularioContacto.IdRegion=0,
+    this.formularioContacto.IdPais=undefined,
+    this.formularioContacto.IdRegion=undefined,
     this.formularioContacto.Movil= '',
     this.GetRegionesPorPais(-1);
   }

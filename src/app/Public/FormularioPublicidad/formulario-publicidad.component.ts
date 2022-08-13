@@ -161,13 +161,13 @@ export class FormularioPublicidadComponent implements OnInit {
     this.FormularioPublicidad.Nombres= '',
       this.FormularioPublicidad.Apellidos= '',
       this.FormularioPublicidad.Email= '',
-      this.FormularioPublicidad.IdPais= 0,
-      this.FormularioPublicidad.IdRegion= 0,
+      this.FormularioPublicidad.IdPais= undefined,
+      this.FormularioPublicidad.IdRegion= undefined,
       this.FormularioPublicidad.Movil= '',
-      this.FormularioPublicidad.IdCargo= 0,
-      this.FormularioPublicidad.IdAreaTrabajo= 0,
-      this.FormularioPublicidad.IdAreaFormacion= 0,
-      this.FormularioPublicidad.IdIndustria= 0,
+      this.FormularioPublicidad.IdCargo= undefined,
+      this.FormularioPublicidad.IdAreaTrabajo= undefined,
+      this.FormularioPublicidad.IdAreaFormacion= undefined,
+      this.FormularioPublicidad.IdIndustria= undefined,
       this.GetRegionesPorPais(-1);
 
   }

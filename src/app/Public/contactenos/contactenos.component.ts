@@ -336,13 +336,13 @@ export class ContactenosComponent implements OnInit,OnDestroy {
     this.formularioContacto.Nombres= '',
     this.formularioContacto.Apellidos= '',
     this.formularioContacto.Email= '',
-    this.formularioContacto.IdPais= 0,
-    this.formularioContacto.IdRegion= 0,
+    this.formularioContacto.IdPais= undefined,
+    this.formularioContacto.IdRegion= undefined,
     this.formularioContacto.Movil= '',
-    this.formularioContacto.IdCargo= 0,
-    this.formularioContacto.IdAreaTrabajo= 0,
-    this.formularioContacto.IdAreaFormacion= 0,
-    this.formularioContacto.IdIndustria= 0,
+    this.formularioContacto.IdCargo= undefined,
+    this.formularioContacto.IdAreaTrabajo= undefined,
+    this.formularioContacto.IdAreaFormacion= undefined,
+    this.formularioContacto.IdIndustria= undefined,
     this.GetRegionesPorPais(-1);
   }
 }
