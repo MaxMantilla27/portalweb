@@ -111,13 +111,13 @@ export class LandingPageComponent implements OnInit,OnDestroy {
     this.FormularioLandingPage.Nombres= '',
       this.FormularioLandingPage.Apellidos= '',
       this.FormularioLandingPage.Email= '',
-      this.FormularioLandingPage.IdPais= 0,
-      this.FormularioLandingPage.IdRegion= 0,
+      this.FormularioLandingPage.IdPais= undefined,
+      this.FormularioLandingPage.IdRegion= undefined,
       this.FormularioLandingPage.Movil= '',
-      this.FormularioLandingPage.IdCargo= 0,
-      this.FormularioLandingPage.IdAreaTrabajo= 0,
-      this.FormularioLandingPage.IdAreaFormacion= 0,
-      this.FormularioLandingPage.IdIndustria= 0,
+      this.FormularioLandingPage.IdCargo= undefined,
+      this.FormularioLandingPage.IdAreaTrabajo= undefined,
+      this.FormularioLandingPage.IdAreaFormacion= undefined,
+      this.FormularioLandingPage.IdIndustria= undefined,
       this.GetRegionesPorPais(-1);
 
   }
