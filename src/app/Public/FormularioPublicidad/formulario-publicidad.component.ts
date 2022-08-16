@@ -149,6 +149,7 @@ export class FormularioPublicidadComponent implements OnInit {
             console.log(err)
           }
         }
+        this.dialogRef.close()
       },
       complete: () => {
         this.statuscharge = false;

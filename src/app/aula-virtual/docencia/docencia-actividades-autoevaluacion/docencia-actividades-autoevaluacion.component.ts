@@ -47,10 +47,12 @@ export class DocenciaActividadesAutoevaluacionComponent implements OnInit,OnChan
       next:x=>{
         console.log(x)
         this.proyectos=x
-        this.proyectos.forEach((p:any) => {
-          p.alumnos=[]
-          p.alumnosAntiguos=[]
-        });
+        if(this.proyectos!=null && this.proyectos.length>0){
+          this.proyectos.forEach((p:any) => {
+            p.alumnos=[]
+            p.alumnosAntiguos=[]
+          });
+        }
       }
     })
   }

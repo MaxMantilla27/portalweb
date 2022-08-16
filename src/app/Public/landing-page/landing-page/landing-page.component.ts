@@ -41,7 +41,7 @@ export class LandingPageComponent implements OnInit,OnDestroy {
     @Inject(MAT_DIALOG_DATA) public data: any,
     @Inject(PLATFORM_ID) platformId: Object,
   ) {
-    this.isBrowser = isPlatformBrowser(platformId); {}
+    this.isBrowser = isPlatformBrowser(platformId);
   }
   ngOnDestroy(): void {
     this.signal$.next(true)
@@ -151,7 +151,7 @@ export class LandingPageComponent implements OnInit,OnDestroy {
     this.DatosLandingPageEnvio.IdIndustria=value.IdIndustria;
     this._LandingPageService.EnviarFormularioLandingPage(this.DatosLandingPageEnvio).pipe(takeUntil(this.signal$)).subscribe({
       next: (x) => {
-
+        console.log(x)
         if(this.isBrowser){
           console.log('------------------facebook(true)---------------------------');
           console.log(fbq);
@@ -168,6 +168,7 @@ export class LandingPageComponent implements OnInit,OnDestroy {
             console.log(err)
           }
         }
+        this.dialogRef.close()
       },
       complete: () => {
         this.statuscharge = false;

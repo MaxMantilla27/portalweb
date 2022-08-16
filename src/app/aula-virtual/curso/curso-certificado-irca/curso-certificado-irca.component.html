@@ -1,1 +1,33 @@
-<p>curso-certificado-irca works!</p>
+<div class="cursoTitle">{{Capitulo}}</div>
+<div class="row" style="align-items: center;">
+  <div class="tipoIndicacionTitle col-12 col-md-12 col-lg-12">
+    <i class="material-icons">microwave</i>
+    <div style="font-weight: bold;">Certificados Irca</div>
+  </div>
+</div>
+<ng-container *ngIf="Ircas!=undefined && Ircas.length>0">
+
+  <ng-container *ngFor="let item of Ircas">
+
+    <div class="contentCertificadoDigital" >
+      <div class="statusEnvio">
+        <div class="cardEstadoEnvioCertFisico" [ngClass]="{'activeCard':item.datosCourierEnvio.estadoCourierInt==1}">
+          <div>En ruta</div>
+          <img *ngIf="item.datosCourierEnvio.estadoCourierInt==1" src="../../../../assets/icons/en-ruta-42.svg" alt="">
+          <img *ngIf="item.datosCourierEnvio.estadoCourierInt!=1" src="../../../../assets/icons/camion-gris-42.svg" alt="">
+        </div>
+        <div class="cardEstadoEnvioCertFisico" [ngClass]="{'activeCard':item.datosCourierEnvio.estadoCourierInt==2}">
+          <div>Entregado</div>
+          <img *ngIf="item.datosCourierEnvio.estadoCourierInt==2" src="../../../../assets/icons/positivo-hecho-20.svg" alt="">
+        </div>
+      </div>
+      <div class="cardCertificadoDigital ">
+        <img class="ImgIndicacionesContent" src="../../../../assets/icons/certificado-digital-27.svg">
+        <a class="vinculo"
+          [href]="'https://repositorioweb.blob.core.windows.net/operaciones/comprobantes/'+item.nombreArchivo"
+          target="_blank">
+          {{item.nombre}}</a>
+      </div>
+    </div>
+  </ng-container>
+</ng-container>

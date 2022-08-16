@@ -104,7 +104,7 @@ export class EducationTecnicaDetalleComponent implements OnInit,OnDestroy {
   public positionDiv=0;
   public combosPrevios:any
   public IdPespecificoPrograma=0;
-
+  public idBusqueda=0
   ngOnInit(): void {
     this.migaPan = [
       {
@@ -121,6 +121,7 @@ export class EducationTecnicaDetalleComponent implements OnInit,OnDestroy {
       console.log(params)
       let auxParams = params["urlWeb"].split('-')
       let idBusqueda = auxParams[auxParams.length -1]
+      this.idBusqueda=parseInt(idBusqueda)
       let nombre = auxParams.splice(0,auxParams.length -1).toString().replace(/,/g,' ')
       //Insertamos la ruta en la miga de pan
       this.migaPan.push({

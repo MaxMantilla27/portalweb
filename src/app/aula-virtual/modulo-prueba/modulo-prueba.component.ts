@@ -70,7 +70,6 @@ export class ModuloPruebaComponent implements OnInit,OnDestroy {
   ObtenerEstructuraEspecificaCurso(){
     this._ProgramaContenidoService.ConseguirEstructuraPorPrograma(this.programaEstructura.idPGeneral).pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
-        console.log(this.estructuraCapitulo)
         this.estructuraCapitulo=x
         this._SessionStorageService.SetEstructura(this.estructuraCapitulo);
         console.log(this.estructuraCapitulo)
@@ -84,6 +83,7 @@ export class ModuloPruebaComponent implements OnInit,OnDestroy {
       .ObtenerListadoProgramaContenidoPrueba(this.idRegistroPrueba).pipe(takeUntil(this.signal$))
       .subscribe({
         next: (x) => {
+          console.log(x)
           this.programaEstructura = x;
           this.programaEstructura.listaCursoMatriculado.forEach((program:any) => {
             if(this.idPEspecificoHijo==program.idPEspecificoHijo){

@@ -103,6 +103,7 @@ export class CarreraProfesionalDetalleComponent implements OnInit {
   }
   public combosPrevios:any;
   public IdPespecificoPrograma=0;
+  public idbusqueda=0
   ngOnInit(): void {
     this.migaPan = [
       {
@@ -118,6 +119,7 @@ export class CarreraProfesionalDetalleComponent implements OnInit {
       //Lo separamos en partes
       let auxParams = params["urlWeb"].split('-')
       let idBusqueda = auxParams[auxParams.length -1]
+      this.idbusqueda=parseInt(idBusqueda)
       let nombre = auxParams.splice(0,auxParams.length -1).toString().replace(/,/g,' ')
       //Se elimina el texto por defecto
       let nombreCorto = nombre.replace('Carrera Profesional en','')

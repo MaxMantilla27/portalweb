@@ -99,7 +99,7 @@ export class CursoComponent implements OnInit,OnDestroy {
         this.RegistroProgramaMatriculadoPorIdMatricula();
         this.ObtenerListadoProgramaContenido();
         this.ObtenerDatosCertificado();
-        this.ObtenerDatosCertificadoIrcaEnvio();
+        //this.ObtenerDatosCertificadoIrcaEnvio();
       },
     });
     this._HelperService.recibirCombosPerfil.pipe(takeUntil(this.signal$)).subscribe({
@@ -184,7 +184,7 @@ export class CursoComponent implements OnInit,OnDestroy {
           this.tabIndex-=2
         }
       }
-      if(tabChangeEvent.index == (3+masindicacion+masindicacion) && !this.CertificadoActive){
+      if(tabChangeEvent.index == (3+masindicacion) && !this.CertificadoActive){
         this.CertificadoActive=true
       }
     }else{

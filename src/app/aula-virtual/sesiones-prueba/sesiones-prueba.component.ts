@@ -103,7 +103,14 @@ export class SesionesPruebaComponent implements OnInit,OnDestroy {
       next:x=>{
         this.estructuraCapitulo=x
         console.log(this.estructuraCapitulo)
-
+        let i=0;
+        while(i<this.estructuraCapitulo.length){
+          if(this.estructuraCapitulo[i].id>0){
+            this.estructuraCapitulo.splice(i,1)
+          }else{
+            i++
+          }
+        }
         this._SessionStorageService.SetEstructura(this.estructuraCapitulo);
         console.log(this.estructuraCapitulo)
 
@@ -133,12 +140,7 @@ export class SesionesPruebaComponent implements OnInit,OnDestroy {
               this.migapanbase();
               this.estructuraCapitulo = this._SessionStorageService.getEstructura();
               console.log(this.estructuraCapitulo);
-              if (this.estructuraCapitulo == null) {
-                this.ObtenerEstructuraEspecificaCurso();
-              } else {
-                this.OrdenarEstructura();
-                this._SessionStorageService.DeleteEstructura();
-              }
+              this.ObtenerEstructuraEspecificaCurso();
             }
           });
         },
