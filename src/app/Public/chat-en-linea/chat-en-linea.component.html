@@ -23,21 +23,22 @@
             <img style="height: 80px; width:80px;margin-top: 10px;margin-left: 10px;" src="https://proceso-pago.bsginstitute.com/img-web/chatV2/{{nombre1}}-{{apellido1}}.png" alt="">
           </div>
           <div  style="font-size: 17px;width: 70%;text-align: left;margin-left: 10px;margin-top: 25px;">
-            Chatea en linea con {{nombre1}} {{apellido1}}
+            Chatea en línea con {{nombre1}} {{apellido1}}
           </div>
         </div>
       </div>
     </div>
 
     <ng-container  *ngIf="chatInicial==true && chatOpen==true">
-      <div class="card CabeceraContenido" >
+      <div class="card CabeceraContenido"  style="position: relative;">
+        <app-cargando *ngIf="statuscharge==true"></app-cargando>
         <div class="card-header" (click)="chatOpen=!chatOpen" style="color: white;background: #FF8800;">
           <div style="display: flex;">
             <div style="display: center;width: 30%;">
               <img style="height: 80px; width:80px;" src="https://proceso-pago.bsginstitute.com/img-web/chatV2/{{nombre1}}-{{apellido1}}.png" alt="">
             </div>
             <div  style="font-size: 17px;width: 70%;text-align: left;margin-left: 10px;margin-top: 15px;">
-              Chatea en linea con {{nombre1}} {{apellido1}}
+              Chatea en línea con {{nombre1}} {{apellido1}}
             </div>
           </div>
         </div>
@@ -114,7 +115,7 @@
         <img style="height: 80px; width:80px;margin-top: 10px; margin-left: 10px;" src="https://proceso-pago.bsginstitute.com/img-web/chatV2/{{nombre1}}-{{apellido1}}.png" alt="">
       </div>
       <div  style="font-size: 17px;width: 70%;text-align: left;margin-left: 10px;margin-top: 25px;">
-        Chatea en linea con {{nombre1}} {{apellido1}}
+        Chatea en línea con {{nombre1}} {{apellido1}}
       </div>
     </div>
   </div>

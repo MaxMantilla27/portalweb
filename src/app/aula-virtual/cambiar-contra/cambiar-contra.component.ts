@@ -9,7 +9,9 @@ import {
 import { Router } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
 import { CambioPasswordDTO } from 'src/app/Core/Models/AccountDTO';
+import { DatoObservableDTO } from 'src/app/Core/Models/DatoObservableDTO';
 import { AccountService } from 'src/app/Core/Shared/Services/Account/account.service';
+import { HelperService } from 'src/app/Core/Shared/Services/helper.service';
 import { SessionStorageService } from 'src/app/Core/Shared/Services/session-storage.service';
 import { SnackBarServiceService } from 'src/app/Core/Shared/Services/SnackBarService/snack-bar-service.service';
 import { ConfirmedValidator } from 'src/app/Core/Shared/Validators/ConfirmedValidator';
@@ -29,12 +31,17 @@ export class CambiarContraComponent implements OnInit,OnDestroy {
     private _SessionStorageService:SessionStorageService,
     private _router:Router,
     private _SnackBarServiceService: SnackBarServiceService,
+    private _HelperService: HelperService,
   ) {
     this.userForm = fb.group({
       contraActual: ['', [Validators.required]],
       contraNueva: ['', [Validators.required, Validators.minLength(6)]],
       contraNuevaRepeat: ['', [Validators.required, ConfirmedValidator('')]],
     });
+  }
+  public DatoObservable: DatoObservableDTO ={
+    datoAvatar: false,
+    datoContenido: false,
   }
   ngOnDestroy(): void {
     this.signal$.next(true)
@@ -69,6 +76,7 @@ export class CambiarContraComponent implements OnInit,OnDestroy {
               'snackbarCrucigramaerror'
             );
             this.userForm.reset()
+            this._HelperService.enviarDatoCuenta(this.DatoObservable);
           }else{
             this._SnackBarServiceService.openSnackBar("Se cambio su contraseña",'x',15,"snackbarCrucigramaSucces");
             this._SessionStorageService.DeleteToken();

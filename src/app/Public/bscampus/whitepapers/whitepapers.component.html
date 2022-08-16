@@ -34,7 +34,8 @@
 
     </div>
     <div class="col-12 col-md-5 col-lg-5">
-      <div class="contentWP" style="width: 100%; background: #ededed;border-radius: 10px;padding: 20px 10px;">
+      <div class="contentWP" style="width: 100%; background: #ededed;border-radius: 10px;padding: 20px 10px;" style="position: relative;">
+        <app-cargando *ngIf="cargando==true"></app-cargando>
         <div style="display: flex;justify-content: center;    padding: 0px 70px;align-items: center;">
           <div style="color: #118bf1;font-weight: 900;font-size: 20px;text-align: center;">Descargar White Paper</div>
           <img style="width: 70px;height: auto;margin: 5px;" src="../../../../assets/icons/descarga.svg" alt="">

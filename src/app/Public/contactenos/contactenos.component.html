@@ -118,10 +118,10 @@
         </div>
       </div>
     </div>
-    <div class="col-12 col-md-4 col-lg-4">
+    <div class="col-12 col-md-4 col-lg-4" >
 
-      <div class="estructuraBlogForm">
-
+      <div class="estructuraBlogForm" style="position: relative;">
+        <app-cargando *ngIf="cargando==true"></app-cargando>
         <div class="cotentestructurablogForm">
           <div class="question" style="justify-content: flex-start;align-items: center;">
             <img src="../../../assets/icons/signo-pregunta-abierto-03.svg" alt="">
@@ -153,16 +153,16 @@
         </ng-container>
         <ng-container *ngIf="combosPrevios==undefined">
           <app-formulario [model]="formularioContacto" [CleanOnSubmit]="true" [InputsDisable]="statuscharge" (OnSubmit)="SetContacto($event)"
-          (OnValid)="formVal=$event" [fiels]="fileds" (OnSelect)="SelectChage($event)">
+            (OnValid)="formVal=$event" [fiels]="fileds" (OnSelect)="SelectChage($event)">
 
-          <ng-container contenido>
-          </ng-container>
-          <ng-container send>
-            <app-default-button [confs]="{color:'primary',titulo:'Enviar'}" [style]="'width: 100%;'">
-            </app-default-button>
-          </ng-container>
+            <ng-container contenido>
+            </ng-container>
+            <ng-container send>
+              <app-default-button [confs]="{color:'primary',titulo:'Enviar'}" [style]="'width: 100%;'">
+              </app-default-button>
+            </ng-container>
 
-        </app-formulario>
+          </app-formulario>
         </ng-container>
       </div>
     </div>

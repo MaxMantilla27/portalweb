@@ -173,7 +173,8 @@
       <div class="piePagina" [innerHtml]="EstructuraPiePagina | safeHtml"></div>
     </div>
     <div class="col-12 col-md-4 col-lg-4">
-      <div class="estructuraProgramForm">
+      <div class="estructuraProgramForm" style="position: relative;">
+        <app-cargando *ngIf="statuscharge==true"></app-cargando>
         <div class="cotentestructuraProgramForm">
           <div class="question" style="justify-content: flex-start;align-items: center;">
             <img src="../../../assets/icons/signo-pregunta-abierto-03.svg" alt="">

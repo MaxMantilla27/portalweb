@@ -111,6 +111,7 @@ import { SeoService } from './Services/seo.service';
 import { VideoAyudaComponent } from './Containers/video-ayuda/video-ayuda.component';
 import { AlumnosTest } from './AlumnosTest';
 import {TextFieldModule} from '@angular/cdk/text-field';
+import { CargandoComponent } from './Containers/cargando/cargando.component';
 
 @NgModule({
   imports: [
@@ -189,6 +190,7 @@ import {TextFieldModule} from '@angular/cdk/text-field';
     TextHtmlEditorComponent,
     ChatPortalComponent,
     VideoAyudaComponent,
+    CargandoComponent,
   ],
   exports: [
     HttpClientModule,
@@ -221,6 +223,7 @@ import {TextFieldModule} from '@angular/cdk/text-field';
     FormChatComponent,
     AprovacionComponent,
     TextHtmlEditorComponent,
+    CargandoComponent,
 
     InputCardDirective,
     InputCardFechaDirective,

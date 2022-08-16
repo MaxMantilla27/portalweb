@@ -156,7 +156,7 @@ export class LibroReclamacionesComponent implements OnInit,OnDestroy {
       next: (x) => {
         console.log(x);
         if(!x){
-          this._SnackBarServiceService.openSnackBar("Ocurio un error , comuniquese con su asesor",'x',15,"snackbarCrucigramaerror");
+          this._SnackBarServiceService.openSnackBar("Ocurrió un error, comunícate con tu asesor",'x',15,"snackbarCrucigramaerror");
         }else{
           this._SnackBarServiceService.openSnackBar("Se genero correctamente su reclamo",'x',15,"snackbarCrucigramaSucces");
         }

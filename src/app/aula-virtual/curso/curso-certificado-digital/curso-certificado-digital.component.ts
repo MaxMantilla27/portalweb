@@ -41,7 +41,7 @@ export class CursoCertificadoDigitalComponent implements OnInit,OnDestroy {
       error:x=>{
         console.log(x)
         this.charge=false
-        this._SnackBarServiceService.openSnackBar("Ocurio un error , comuniquese con su asesor",'x',10,"snackbarCrucigramaerror");
+        this._SnackBarServiceService.openSnackBar("Ocurrió un error, comunícate con tu asesor",'x',10,"snackbarCrucigramaerror");
       }
     })
   }
@@ -60,7 +60,7 @@ export class CursoCertificadoDigitalComponent implements OnInit,OnDestroy {
       error:x=>{
         console.log(x)
         this.charge=false
-        this._SnackBarServiceService.openSnackBar("Ocurio un error , comuniquese con su asesor",'x',10,"snackbarCrucigramaerror");
+        this._SnackBarServiceService.openSnackBar("Ocurrió un error, comunícate con tu asesor",'x',10,"snackbarCrucigramaerror");
       }
     })
   }

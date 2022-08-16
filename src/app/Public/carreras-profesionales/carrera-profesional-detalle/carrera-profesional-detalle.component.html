@@ -92,8 +92,8 @@
             <div class="col-12 col-md-4 col-lg-4 contentdiv">
               <img src="../../../../assets/icons/icono-calendario-admision-blanco.svg" alt="">
               <div>
-                <div class="titleDiv">Admision</div>
-                <div class="subTitleDiv">{{'Admision '+fecha.getFullYear()}}</div>
+                <div class="titleDiv">Admisión</div>
+                <div class="subTitleDiv">{{'Admisión '+fecha.getFullYear()}}</div>
               </div>
             </div>
           </div>
@@ -122,7 +122,8 @@
 
               <div class="col-12 col-md-12 col-lg-6 educacion-tecnica-container__content__thirdSection__right" #formularioCarrera>
                 <div #divFixed id="divFixed"
-                  class="educacion-tecnica-container__content__thirdSection__right__form-container">
+                  class="educacion-tecnica-container__content__thirdSection__right__form-container" style="position: relative;">
+                  <app-cargando *ngIf="statuscharge==true"></app-cargando>
                   <div class="educacion-tecnica-container__content__thirdSection__right__form-container__header">
                     <div
                       class="educacion-tecnica-container__content__thirdSection__right__form-container__header__pregunta">

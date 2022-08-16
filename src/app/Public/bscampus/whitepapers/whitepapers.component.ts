@@ -107,6 +107,7 @@ export class WhitepapersComponent implements OnInit,OnDestroy {
     urlWhitePaper:''
   }
   public combosPrevios:any
+  public cargando=false
 
   ngOnInit(): void {
     this.activatedRoute.params.pipe(takeUntil(this.signal$)).subscribe({
@@ -229,6 +230,7 @@ export class WhitepapersComponent implements OnInit,OnDestroy {
 
       this._SnackBarServiceService.openSnackBar("Debes completar todos los campos",'x',10,"snackbarCrucigramaerror");
     }else{
+      this.cargando=true
       this.initValues = false;
       this.DatosEnvioFormulario.Nombres=value.Nombres;
       this.DatosEnvioFormulario.Apellidos=value.Apellidos;
@@ -251,6 +253,7 @@ export class WhitepapersComponent implements OnInit,OnDestroy {
         },
         complete: () => {
           this.statuscharge = false;
+          this.cargando=false
         },
       });
     }

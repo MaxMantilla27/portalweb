@@ -71,7 +71,7 @@ export class CursoCertificadoComponent implements OnInit,OnChanges,OnDestroy {
       this.changeOnGenerate=true
       console.log(this.datosCertificado)
       if(this.datosCertificado.nombreArchivo==null || this.datosCertificado.nombreArchivo==''){
-        this._SnackBarServiceService.openSnackBar("Ocurio un error , comuniquese con su asesor",'x',10,"snackbarCrucigramaerror");
+        this._SnackBarServiceService.openSnackBar("Ocurrió un error, comunícate con tu asesor",'x',10,"snackbarCrucigramaerror");
       }else{
         this._SnackBarServiceService.openSnackBar("Se genero su certificado exitosamente",'x',15,"snackbarCrucigramaSucces");
         window.open('https://repositorioweb.blob.core.windows.net/operaciones/comprobantes/'+this.datosCertificado.nombreArchivo, "_blank");
@@ -92,7 +92,7 @@ export class CursoCertificadoComponent implements OnInit,OnChanges,OnDestroy {
       },
       error:x=>{
 
-        this._SnackBarServiceService.openSnackBar("Ocurio un error , comuniquese con su asesor",'x',10,"snackbarCrucigramaerror");
+        this._SnackBarServiceService.openSnackBar("Ocurrió un error, comunícate con tu asesor",'x',10,"snackbarCrucigramaerror");
       }
     })
   }
@@ -128,7 +128,7 @@ export class CursoCertificadoComponent implements OnInit,OnChanges,OnDestroy {
       error:x=>{
         console.log(x)
         this.charge=false
-        this._SnackBarServiceService.openSnackBar("Ocurio un error , comuniquese con su asesor",'x',10,"snackbarCrucigramaerror");
+        this._SnackBarServiceService.openSnackBar("Ocurrió un error, comunícate con tu asesor",'x',10,"snackbarCrucigramaerror");
       }
     })
   }
@@ -146,7 +146,7 @@ export class CursoCertificadoComponent implements OnInit,OnChanges,OnDestroy {
       error:x=>{
         console.log(x)
         this.charge=false
-        this._SnackBarServiceService.openSnackBar("Ocurio un error , comuniquese con su asesor",'x',10,"snackbarCrucigramaerror");
+        this._SnackBarServiceService.openSnackBar("Ocurrió un error, comunícate con tu asesor",'x',10,"snackbarCrucigramaerror");
       }
     })
   }

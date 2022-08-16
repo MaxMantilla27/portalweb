@@ -44,4 +44,13 @@ export class AccountService {
       return EMPTY;
     }
   }
+  public RecuperarPasswordCuenta(correo:string):Observable<any>{
+    if(this.isBrowser){
+      console.log(correo)
+      return this.http.post<any>(this.urlBase+'/RecuperarPasswordCuenta?correo='+correo,{});
+    }else{
+      return EMPTY;
+    }
+  }
+
 }

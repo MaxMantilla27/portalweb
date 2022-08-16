@@ -88,6 +88,7 @@ export class FormularioComponent implements OnChanges, OnInit,OnDestroy {
   public paisSelect=0;
   public pref=''
   public min=0
+  @Input() cargando=false
   //later in the code
   fields: any = {};
   ngOnInit(): void {
@@ -269,12 +270,20 @@ export class FormularioComponent implements OnChanges, OnInit,OnDestroy {
     if (campo!.hasError('minlength')) {
       let min = campo?.getError('minlength')!.requiredLength;
       //return 'La longitud mínima es de ' + min + ' caracteres';
-      return 'La longitud es incorecta';
+      var fls=this.fiels.find(x=>x.nombre==val);
+      if(fls?.tipo=='phone'){
+        return 'la longitud debe ser de '+(this.min) +' digitos'
+      }
+      return 'La longitud es incorrecta';
     }
     if (campo!.hasError('maxlength')) {
       let max = campo?.getError('maxlength')!.requiredLength;
       //return 'La longitud maxima es de ' + max + ' caracteres';
-      return 'La longitud es incorecta';
+      var fls=this.fiels.find(x=>x.nombre==val);
+      if(fls?.tipo=='phone'){
+        return 'la longitud debe ser de '+(this.min) +' digitos'
+      }
+      return 'La longitud es incorrecta';
     }
     if (campo!.hasError('min')) {
       let min = campo?.getError('min')!.min;

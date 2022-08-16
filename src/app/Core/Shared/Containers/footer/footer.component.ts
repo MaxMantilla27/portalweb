@@ -27,14 +27,14 @@ export class FooterComponent implements OnInit {
         title: 'Formación Continua',
         route: '/programas-certificaciones-cursos'
       },
-      {
-        title: 'Servicios Corporativos',
-        route: '/'
-      },
-      {
-        title: 'Facturación Electrónica',
-        route: '/'
-      },
+      // {
+      //   title: 'Servicios Corporativos',
+      //   route: '/'
+      // },
+      // {
+      //   title: 'Facturación Electrónica',
+      //   route: '/'
+      // },
       {
         title: 'Transparencia',
         route: '/Transparencia'

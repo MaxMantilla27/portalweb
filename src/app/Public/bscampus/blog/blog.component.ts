@@ -112,6 +112,7 @@ export class BlogComponent implements OnInit {
     IdIndustria:undefined
   }
   public combosPrevios:any
+  public cargando=false
 
   ngOnInit(): void {
     this.activatedRoute.params.pipe(takeUntil(this.signal$)).subscribe({
@@ -225,6 +226,7 @@ export class BlogComponent implements OnInit {
 
       this._SnackBarServiceService.openSnackBar("Debes completar todos los campos",'x',10,"snackbarCrucigramaerror");
     }else{
+      this.cargando=true
       this.initValues = false;
       this.DatosEnvioFormulario.Nombres=value.Nombres;
       this.DatosEnvioFormulario.Apellidos=value.Apellidos;
@@ -255,6 +257,7 @@ export class BlogComponent implements OnInit {
           this._SnackBarServiceService.openSnackBar("¡Solicitud enviada!",'x',15,"snackbarCrucigramaSucces");
         },
         complete: () => {
+          this.cargando=false
           this.statuscharge = false;
         },
       });

@@ -90,6 +90,7 @@ export class ContactenosComponent implements OnInit,OnDestroy {
     Comentario:'',
   }
   public combosPrevios:any
+  public cargando=false
   ngOnInit(): void {
 
 
@@ -127,6 +128,7 @@ export class ContactenosComponent implements OnInit,OnDestroy {
   }
   SetContacto(value:any){
     if(this.formVal){
+      this.cargando=true
       this.initValues = false;
       this.DatosContactenosEnvio.Nombres=value.Nombres;
       this.DatosContactenosEnvio.Apellidos=value.Apellidos;
@@ -175,6 +177,7 @@ export class ContactenosComponent implements OnInit,OnDestroy {
         complete: () => {
           console.log('------------------facebook(complete)---------------------------');
           this.statuscharge = false;
+          this.cargando=false
         },
       });
     }
