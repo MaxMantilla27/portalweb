@@ -35,6 +35,7 @@ import { ChatEnLineaComponent } from './chat-en-linea/chat-en-linea.component';
 import { ChatPruebaComponent } from './chat-prueba/chat-prueba.component';
 import { FormularioPublicidadComponent } from './FormularioPublicidad/formulario-publicidad.component';
 import { FormularioPublicidadInterceptorComponent } from './FormularioPublicidad/FormularioPublicidadInterceptor/formulario-publicidad-interceptor.component';
+import { NotificacionWebinarComponent } from './notificacion-webinar/notificacion-webinar.component';
 
 @NgModule({
   imports: [
@@ -75,7 +76,8 @@ import { FormularioPublicidadInterceptorComponent } from './FormularioPublicidad
     ChatEnLineaComponent,
     ChatPruebaComponent,
     FormularioPublicidadComponent,
-    FormularioPublicidadInterceptorComponent
+    FormularioPublicidadInterceptorComponent,
+    NotificacionWebinarComponent
   ],
   exports: [],
   providers: [

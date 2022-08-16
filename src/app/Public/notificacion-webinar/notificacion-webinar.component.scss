@@ -1,0 +1,21 @@
+.titleNotificacion{
+  border-bottom: 1px solid rgba(0,0,0,.1);
+}
+.cardNofication{
+  position: relative;
+  padding: 0.75rem 1.25rem;
+  margin-bottom: 1rem;
+  border: 1px solid transparent;
+  border-radius: 0.25rem;
+  margin-top: 20px;
+}
+.corect{
+  color: #155724;
+  background-color: #d4edda;
+  border-color: #c3e6cb;
+}
+.incorect{
+  color: #721c24;
+  background-color: #f8d7da;
+  border-color: #f5c6cb;
+}

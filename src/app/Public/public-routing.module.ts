@@ -29,6 +29,7 @@ import { LandingPageInterceptorComponent } from './landing-page/landing-page/lan
 import { PageErrorComponent } from './page-error/page-error/page-error.component';
 import { ChatPruebaComponent } from './chat-prueba/chat-prueba.component';
 import { FormularioPublicidadInterceptorComponent } from './FormularioPublicidad/FormularioPublicidadInterceptor/formulario-publicidad-interceptor.component';
+import { NotificacionWebinarComponent } from './notificacion-webinar/notificacion-webinar.component';
 
 const routes:Routes=[
     {path:'',component:PublicComponent,children:
@@ -50,6 +51,7 @@ const routes:Routes=[
             {path:'Avatar', component: AvatarComponent},
             {path:'ChatEnlinea', component: ChatPruebaComponent},
 
+            {path:'NotificacionAlumno/Webinar/:datos', component:NotificacionWebinarComponent},
             {path:'bs-campus/white-paper/:whitepaper', component:WhitepapersComponent},
             {path:'bs-campus/blog/:blog', component:BlogComponent},
 
