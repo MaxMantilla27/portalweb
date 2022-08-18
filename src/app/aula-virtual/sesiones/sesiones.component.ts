@@ -885,7 +885,7 @@ export class SesionesComponent implements OnInit,OnDestroy {
               this.migapanbase();
               this.estructuraCapitulo =
                 this._SessionStorageService.getEstructura();
-              console.log('------------'+this.estructuraCapitulo);
+              console.log(this.estructuraCapitulo);
               if (this.estructuraCapitulo == null) {
                 this.ObtenerEstructuraEspecificaCurso();
               } else {
@@ -1058,6 +1058,7 @@ export class SesionesComponent implements OnInit,OnDestroy {
               if (this.estructuraCapitulo.contineSubSesion == false) {
                 sess.charge = false;
                 if (sess.numeroSesion == this.idSesion && this.tipo == 1) {
+                  console.log(this.tabIndex)
                   sess.charge = true;
                   this.tabIndex += s;
                   // this.migaPan.push({

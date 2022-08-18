@@ -32,6 +32,7 @@ export class FormularioComponent implements OnChanges, OnInit,OnDestroy {
   private signal$ = new Subject();
   @ViewChild('f') myNgForm: any;
   isBrowser: boolean;
+  public changeValidation=false;
   constructor(
     private formBuilder: FormBuilder,
     @Inject(PLATFORM_ID) platformId: Object,
@@ -132,7 +133,10 @@ export class FormularioComponent implements OnChanges, OnInit,OnDestroy {
     this.AddItemsForm();
 
     this.userForm.valueChanges.pipe(takeUntil(this.signal$)).subscribe(() => {
-      this.OnValid.emit(this.userForm.valid);
+
+      if(this.changeValidation==false){
+        this.OnValid.emit(this.userForm.valid);
+      }
     });
     this.fiels.forEach((x:any) =>{
       if(x.disable!=undefined && x.disable==true){
@@ -316,19 +320,23 @@ export class FormularioComponent implements OnChanges, OnInit,OnDestroy {
     console.log(this.pref+s.slice(1))
     console.log(campo)
     this.min=this.LongCelularPaises()==null?0:this.LongCelularPaises();
+    console.log(this.min);
     (<FormArray>this.userForm.get('Fields')).controls[i].get(val)?.setValue(this.pref+s.slice(1));
-    console.log((<FormArray>this.userForm.get('Fields')).controls[i].get(val)?.value.toString());
     (<FormArray>this.userForm.get('Fields')).controls[i].get(val)?.clearValidators();
     if(this.min>0){
+      console.log(this.pref.length+this.min);
       (<FormArray>this.userForm.get('Fields')).controls[i].get(val)?.addValidators([
         Validators.required,
         Validators.minLength(this.pref.length+this.min),
         Validators.maxLength(this.pref.length+this.min)]);
+      this.ChangeInpiut(i,val);
+      this.OnValid.emit(false);
     }else{
-
       (<FormArray>this.userForm.get('Fields')).controls[i].get(val)?.addValidators([
         Validators.required]);
+      this.OnValid.emit(false);
     }
+    (<FormArray>this.userForm.get('Fields')).controls[i].get(val)?.setValue(this.pref);
   }
   LongCelularPaises():number{
     if(this.paise.find(x=>x.idPais==this.paisSelect)!=undefined){

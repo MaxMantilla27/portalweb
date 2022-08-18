@@ -99,7 +99,7 @@ export class CursoComponent implements OnInit,OnDestroy {
         this.RegistroProgramaMatriculadoPorIdMatricula();
         this.ObtenerListadoProgramaContenido();
         this.ObtenerDatosCertificado();
-        //this.ObtenerDatosCertificadoIrcaEnvio();
+        this.ObtenerDatosCertificadoIrcaEnvio();
       },
     });
     this._HelperService.recibirCombosPerfil.pipe(takeUntil(this.signal$)).subscribe({
@@ -156,8 +156,7 @@ export class CursoComponent implements OnInit,OnDestroy {
   tabChanged(tabChangeEvent: MatTabChangeEvent): void {
     console.log('tabChangeEvent => ', tabChangeEvent);
     console.log('index => ', tabChangeEvent.index);
-    if (
-      (tabChangeEvent.index >= 5 || tabChangeEvent.index == 0) &&
+    if ((tabChangeEvent.index >= 5 || tabChangeEvent.index == 0) &&
       this.IndicacionActive == true
     ) {
       this.IndicacionActive = false;
@@ -177,24 +176,28 @@ export class CursoComponent implements OnInit,OnDestroy {
       masindicacion=-1
       noesAonline=-1
     }
+    console.log(this.curso)
+    console.log(this.curso.proyectoAplicacion)
+    console.log(this.programEstructura.idModalidad)
+    console.log(this.ircas)
     if(this.curso!=undefined && this.curso.proyectoAplicacion){
-      if((tabChangeEvent.index >= (6+noesAonline+esirca) || tabChangeEvent.index < (3+noesAonline))  && this.CertificadoActive){
+      if((tabChangeEvent.index >= (7+noesAonline+esirca) || tabChangeEvent.index < (4+noesAonline))  && this.CertificadoActive){
         this.CertificadoActive=false
         if(tabChangeEvent.index >= (6+noesAonline)){
-          this.tabIndex-=2
+          this.tabIndex-=3
         }
       }
-      if(tabChangeEvent.index == (3+masindicacion) && !this.CertificadoActive){
+      if(tabChangeEvent.index == (3+noesAonline) && !this.CertificadoActive){
         this.CertificadoActive=true
       }
     }else{
-      if((tabChangeEvent.index >= (5+noesAonline+esirca) || tabChangeEvent.index < (2+noesAonline))   && this.CertificadoActive){
+      if((tabChangeEvent.index >= (6+noesAonline+esirca) || tabChangeEvent.index < (3+noesAonline))   && this.CertificadoActive){
         this.CertificadoActive=false
         if(tabChangeEvent.index >= (5+noesAonline)){
-          this.tabIndex-=2
+          this.tabIndex-=3
         }
       }
-      if(tabChangeEvent.index == (2+masindicacion) && !this.CertificadoActive){
+      if(tabChangeEvent.index == (2+noesAonline) && !this.CertificadoActive){
         this.CertificadoActive=true
       }
     }

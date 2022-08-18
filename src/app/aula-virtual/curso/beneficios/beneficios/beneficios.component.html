@@ -26,11 +26,11 @@
                     <div class="NumeroBeneficio" >
                       {{i+1}}
                     </div>
-                    <div>
-                      {{beneficio.nombreBeneficio}}
+                    <div [innerHtml]="beneficio.nombreBeneficio | safeHtml">
+
                     </div>
                   </div>
-                  <div>
+                  <div *ngIf="beneficio.listaDatosAdicionales.length>0">
                     <i class="material-icons no-seleccionable " *ngIf="BeneficioPendiente!=i"
                       (click)="BeneficioPendiente=i">keyboard_arrow_down</i>
                     <i class="material-icons no-seleccionable " *ngIf="BeneficioPendiente==i"
@@ -62,7 +62,7 @@
                     </div>
                   </div>
                 </ng-container>
-                <app-default-button [confs]="{color:'primary',titulo:'EnviarDatos'}"
+                <app-default-button [confs]="{color:'primary',titulo:'Enviar Datos'}"
                   [style]="'width: 100%;margin-top: 20px;margin-left: 20px;'"(ButtoclClick)="EnviarRegistroBeneficio(i)" ></app-default-button>
               </div>
             </div>

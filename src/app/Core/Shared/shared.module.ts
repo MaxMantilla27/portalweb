@@ -112,6 +112,7 @@ import { VideoAyudaComponent } from './Containers/video-ayuda/video-ayuda.compon
 import { AlumnosTest } from './AlumnosTest';
 import {TextFieldModule} from '@angular/cdk/text-field';
 import { CargandoComponent } from './Containers/cargando/cargando.component';
+import { ChatZComponent } from './Containers/chat-z/chat-z.component';
 
 @NgModule({
   imports: [
@@ -191,6 +192,7 @@ import { CargandoComponent } from './Containers/cargando/cargando.component';
     ChatPortalComponent,
     VideoAyudaComponent,
     CargandoComponent,
+    //ChatZComponent,
   ],
   exports: [
     HttpClientModule,
@@ -224,6 +226,7 @@ import { CargandoComponent } from './Containers/cargando/cargando.component';
     AprovacionComponent,
     TextHtmlEditorComponent,
     CargandoComponent,
+    //ChatZComponent,
 
     InputCardDirective,
     InputCardFechaDirective,

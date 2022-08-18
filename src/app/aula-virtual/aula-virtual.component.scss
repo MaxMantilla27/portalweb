@@ -64,6 +64,7 @@
 }
 .tabVertical .mat-tab-body-wrapper {
   flex: 1 1 auto !important;
+  min-height: 540px;
 }
 .tabVertical .mat-tab-body-wrapper .mat-tab-body .mat-tab-body-content {
   overflow: hidden;
@@ -102,7 +103,7 @@
 }
 @media (max-width: 576px) {
   .rowpaddAv {
-    padding: 45px 10px 45px 10px;
+    padding: 45px 0px;
   }
 }
 @media (min-width: 576px) {

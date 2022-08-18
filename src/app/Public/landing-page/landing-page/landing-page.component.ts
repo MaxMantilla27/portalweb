@@ -124,7 +124,7 @@ export class LandingPageComponent implements OnInit,OnDestroy {
   EnviarFormulario(value:any){
     this.initValues = false;
 
-
+    this.statuscharge=true;
     this.DatosLandingPageEnvio.NombrePrograma= this.data.NombrePrograma;
     this.DatosLandingPageEnvio.IdFormularioPublicidad= this.data.IdFormulario;
     this.DatosLandingPageEnvio.IdCategoriaDato= this.data.IdCategoriaOrigen;

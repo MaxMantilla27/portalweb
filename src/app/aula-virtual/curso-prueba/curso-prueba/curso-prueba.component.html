@@ -6,7 +6,7 @@
 <div style="border-top:solid 3px #f4f4f4 ;"></div>
 <div class="container">
   <div class="row rowpaddAv">
-    <div class="col-12 col-md-12 col-lg-12">
+    <div class="col-12 col-md-12 col-lg-12" style="padding: 0px;">
       <mat-tab-group class="tabVertical" [(selectedIndex)]="tabIndex" (selectedTabChange)="tabChanged($event)">
         <mat-tab>
           <ng-template mat-tab-label>
@@ -77,7 +77,7 @@
             <div class="cursoTabDescripcion">¡Bienvenido! Debes completar los siguientes modulos de tu programa:</div>
             <div class="cursoTabRemenber">
               <img src="../../../assets/icons/horario-04.svg" alt="">
-              <div><strong>Recuerda: </strong>Debes completar el curso I, para poder acceder al siguiente curso, y así progresivamente</div>
+              <div><strong>Recuerda: </strong>Debes completar el primer curso para poder acceder al siguiente</div>
             </div>
             <app-curso-prueba-modulos [idRegistroPrueba]="idRegistroPrueba" [programaEstructura]="programaEstructura">
             </app-curso-prueba-modulos>

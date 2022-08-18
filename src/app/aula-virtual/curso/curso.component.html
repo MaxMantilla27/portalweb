@@ -6,7 +6,7 @@
 <div style="border-top:solid 3px #f4f4f4 ;"></div>
 <div class="container">
   <div class="row rowpaddAv">
-    <div class="col-12 col-md-12 col-lg-12" style="position: relative;">
+    <div class="col-12 col-md-12 col-lg-12" style="position: relative;padding: 0px;">
 
       <div class="openClose" [ngClass]="{'reverse':!hide}" (click)="hide=!hide">
         <i class="material-icons">layers</i>
@@ -146,8 +146,7 @@
             <div class="cursoTabDescripcion">¡Bienvenido! Debes completar los siguientes módulos de tu programa:</div>
             <div class="cursoTabRemenber">
               <img src="../../../assets/icons/horario-04.svg" alt="">
-              <div><strong>Recuerda: </strong>Debes completar el curso I, para poder acceder al siguiente curso, y así
-                progresivamente</div>
+              <div><strong>Recuerda: </strong>Debes completar el primer curso para poder acceder al siguiente</div>
             </div>
             <app-curso-modulos [idMatricula]="idMatricula" [programEstructura]="programEstructura">
             </app-curso-modulos>
@@ -234,7 +233,7 @@
           </mat-tab>
 
           <ng-container *ngIf="ircas!=undefined && ircas.length>0">
-            <mat-tab [disabled]="datosCertificado==undefined ||  datosCertificado.nombreArchivo==null">
+            <mat-tab>
               <ng-template mat-tab-label>
                 <div class="contentHeaderM subContent" style="cursor: pointer;">
                   <div class="iconMat"

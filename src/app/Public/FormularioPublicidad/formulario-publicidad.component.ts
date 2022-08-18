@@ -109,6 +109,7 @@ export class FormularioPublicidadComponent implements OnInit {
   EnviarFormularioPublicidad(value:any){
     this.initValues = false;
 
+    this.statuscharge=true;
 
     this.DatosLandingPageEnvio.NombrePrograma= this.data.NombrePrograma;
     this.DatosLandingPageEnvio.IdFormularioPublicidad= this.data.IdFormulario;

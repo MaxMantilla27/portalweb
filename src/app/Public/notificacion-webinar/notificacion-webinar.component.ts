@@ -15,6 +15,7 @@ export class NotificacionWebinarComponent implements OnInit,OnDestroy {
     private _RegistroWebinarService:RegistroWebinarService
   ) {}
   ngOnDestroy(): void {
+
     this.signal$.next(true);
     this.signal$.complete();
   }

@@ -339,6 +339,9 @@ export class VideoBrightcoveComponent implements OnInit, OnChanges,AfterViewInit
       error:e=>{
         this.valPregunta=false;
         console.log(e)
+      },
+      complete:()=>{
+        this.valorRespuesta=''
       }
     })
   }
@@ -362,25 +365,35 @@ export class VideoBrightcoveComponent implements OnInit, OnChanges,AfterViewInit
               res.check=false;
             });
           });
+
+          console.log(this.preguntas.length)
+          var brk=false;
           this.preguntas.forEach((element:any) => {
-            if(this.preguntas.length!=(i)){
-              if(element.numeroMaximoIntento<=element.intento || element.correcto){
-                this.preguntaActual++;
-              }
-            }else{
-              if(element.numeroMaximoIntento<=element.intento || element.correcto){
-                var respuestas=this.preguntas[this.preguntas.length-1].idRespuesta.split(',')
-                this.preguntas[this.preguntas.length-1].respuestaGrupoPreguntaInteractivaPrograma.forEach((r:any) => {
-                  respuestas.forEach((res:any) => {
-                    if(parseInt(res)==r.idRespuesta){
-                      r.check=true
-                    }
+            if(!brk){
+              if(this.preguntas.length!=(i)){
+                console.log(this.preguntaActual)
+                if(element.numeroMaximoIntento<=element.intento || element.correcto){
+                  this.preguntaActual++;
+                }else{
+                  brk=true
+                }
+              }else{
+                console.log('-'+this.preguntaActual)
+                if(element.numeroMaximoIntento<=element.intento || element.correcto){
+                  var respuestas=this.preguntas[this.preguntas.length-1].idRespuesta.split(',')
+                  this.preguntas[this.preguntas.length-1].respuestaGrupoPreguntaInteractivaPrograma.forEach((r:any) => {
+                    respuestas.forEach((res:any) => {
+                      if(parseInt(res)==r.idRespuesta){
+                        r.check=true
+                      }
+                    });
                   });
-                });
-                this.preguntas[this.preguntas.length-1].valid=true;
-                this.valPregunta=true;
+                  this.preguntas[this.preguntas.length-1].valid=true;
+                  this.valPregunta=true;
+                }
               }
             }
+
             i++
           });
           console.log(this.preguntaActual)

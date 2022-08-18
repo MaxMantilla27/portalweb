@@ -152,7 +152,7 @@ export class CursoProyectoComponent implements OnInit,OnChanges,OnDestroy {
         })
       }
     }else{
-      this._SnackBarServiceService.openSnackBar("Ningun archivo seleccionado.",'x',15,"snackbarCrucigramaerror");
+      this._SnackBarServiceService.openSnackBar("Ningún archivo seleccionado.",'x',15,"snackbarCrucigramaerror");
     }
   }
 }

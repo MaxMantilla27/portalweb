@@ -23,8 +23,8 @@
         *ngIf="crucigramaData==undefined || crucigramaData.existeCrucigrama==false || crucigramaData.pendiente==false || crucigramaData.crucigramaDetalle">
         <app-video-brightcove [nextChapter]="nextChapter" *ngIf="charge==true" [json]="json" [idCapitulo]="idCapitulo" [idSesion]="idSesion"
           [videoData]="videoData" (next)="nextc()" (OnFin)="onFinishVideo()"></app-video-brightcove>
-        <div *ngIf="videoData!=undefined" style="    margin: 30px 0px;display: flex;flex-direction: column;">
-          <div class="row" style="display: flex;justify-content: flex-end;">
+        <div class="row" *ngIf="videoData!=undefined" style="margin: 30px 0px;display: flex;flex-direction: column;">
+          <div class="col-12 row" style="display: flex;justify-content: flex-end;">
             <div class="ErrorVideoPlayer" style="width:auto;display: flex;">
               <img class="IconoErrorVideoPlayer" src="../../../../assets/icons/videos-29.svg">
               <div (click)="OpenModal()" style="color: #FF7012;margin-left: 10px;margin-top: 8px;">
@@ -32,28 +32,36 @@
               </div>
             </div>
           </div>
-          <div style="display: flex;justify-content: flex-start;align-items: center;    margin-bottom: 10px;">
-            <div style="background-color: #f3f5ff;margin-right: 10px;padding: 5px;display: flex;">
+          <div class="col-12 row" style="margin-top: 30px;">
+            <div class="col-12 col-md-4 col-lg-3" style="display: flex;align-items: center;    margin-bottom: 10px;justify-content: flex-start;">
+              <div style="background-color: #f3f5ff;margin-right: 10px;padding: 5px;display: flex;">
 
-              <img style="width: 15px;height: auto;" src="../../../../assets/icons/duracion-33.svg" alt="">
+                <img style="width: 15px;height: auto;" src="../../../../assets/icons/duracion-33.svg" alt="">
+              </div>
+              <strong style="margin-right: 10px">Duración:</strong>
             </div>
-            <strong style="margin-right: 10px">Duración:</strong>
-            <div *ngIf="videoData.tiempoTotalVideo<3600" style="color: #949494;">
-              {{videoData.min}}:{{videoData.sec}}</div>
-            <div *ngIf="videoData.tiempoTotalVideo>=3600" style="color: #949494;">
-              {{videoData.h}}:{{videoData.min}}:{{videoData.sec}} </div>
-            <span style="color: #949494;">&nbsp;min</span>
+            <div class="col-12 col-md-8 col-lg-9" style="display: flex;align-items: center;    margin-bottom: 10px;justify-content: flex-start;">
+              <div *ngIf="videoData.tiempoTotalVideo<3600" style="color: #949494;">
+                {{videoData.min}}:{{videoData.sec}}</div>
+              <div *ngIf="videoData.tiempoTotalVideo>=3600" style="color: #949494;">
+                {{videoData.h}}:{{videoData.min}}:{{videoData.sec}} </div>
+              <span style="color: #949494;">&nbsp;min</span>
+            </div>
           </div>
 
-          <div style="display: flex;justify-content: flex-start;align-items: center;">
-            <div style="background-color: #f3f5ff;margin-right: 10px;padding: 5px;display: flex;">
+          <div class="col-12 row" style="display: flex;justify-content: flex-start;align-items: center;">
+            <div class="col-12 col-md-4 col-lg-3" style="display: flex;align-items: center;    margin-bottom: 10px;justify-content: flex-start;">
+              <div style="background-color: #f3f5ff;margin-right: 10px;padding: 5px;display: flex;">
 
-              <img style="width: 15px;height: auto;" src="../../../../assets/icons/descarga-36.svg" alt="">
+                <img style="width: 15px;height: auto;" src="../../../../assets/icons/descarga-36.svg" alt="">
+              </div>
+              <strong style="margin-right: 10px">Diapositivas:</strong>
             </div>
-            <strong style="margin-right: 10px">Diapositivas:</strong>
-            <a target="_blank" style="color: #949494;text-decoration: none;"
-              [href]="'https://repositorioweb.blob.core.windows.net/repositorioweb/aulavirtual/documento-cursos/AulaVirtual/'+videoData.objetoConfigurado.archivo">Descarga
-              el material de esta sesión</a>
+            <div class="col-12 col-md-8 col-lg-9" style="display: flex;align-items: center;    margin-bottom: 10px;justify-content: flex-start;">
+              <a target="_blank" style="color: #949494;text-decoration: none;"
+                [href]="'https://repositorioweb.blob.core.windows.net/repositorioweb/aulavirtual/documento-cursos/AulaVirtual/'+videoData.objetoConfigurado.archivo">Descarga
+                el material de esta sesión</a>
+            </div>
           </div>
         </div>
       </ng-container>
