@@ -161,6 +161,9 @@ export class LibroReclamacionesComponent implements OnInit,OnDestroy {
           this._SnackBarServiceService.openSnackBar("Se genero correctamente su reclamo",'x',15,"snackbarCrucigramaSucces");
         }
       },
+      error:e=>{
+        this._SnackBarServiceService.openSnackBar("Se genero correctamente su reclamo",'x',15,"snackbarCrucigramaSucces");
+      }
     });
   }
 

@@ -30,7 +30,7 @@ export class ModuloComponent implements OnInit,OnDestroy {
       urlWeb: '/AulaVirtual/MisCursos',
     },
   ];
-  public hide=false
+  public hide=true
   public tabIndex = 0;
   public idMatricula=0;
   public idPEspecificoHijo=0;

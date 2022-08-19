@@ -1,5 +1,6 @@
 import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { Title } from '@angular/platform-browser';
 import {  Router } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
 import { CuentaService } from 'src/app/Core/Shared/Services/Cuenta/cuenta.service';
@@ -20,9 +21,10 @@ export class MisCursosComponent implements OnInit,OnDestroy {
     private _SessionStorageService:SessionStorageService,
     private _CuentaService: CuentaService,
     public dialog: MatDialog,
-    private _Router:Router
+    private _Router:Router,
+    private title:Title
 
-    ) {}
+  ) {}
   ngOnDestroy(): void {
     this.signal$.next(true)
     this.signal$.complete()
@@ -41,6 +43,10 @@ export class MisCursosComponent implements OnInit,OnDestroy {
 
 
   ngOnInit(): void {
+
+    let t:string='Mis Cursos'
+    this.title.setTitle(t)
+
     this.textoBienvenido =
       '¡Bienvenido! Tienes acceso a los siguientes cursos:';
     this.GetDatosPerfilService();

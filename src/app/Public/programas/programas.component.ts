@@ -1,6 +1,6 @@
 import { isPlatformBrowser } from '@angular/common';
-import { Component, ElementRef, HostListener, Inject, OnDestroy, OnInit, PLATFORM_ID, ViewChild, ViewEncapsulation } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { Component, ElementRef, Inject, OnDestroy, OnInit, PLATFORM_ID, ViewChild, ViewEncapsulation } from '@angular/core';
+
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { MatSelect } from '@angular/material/select';
 import { Title } from '@angular/platform-browser';
@@ -36,10 +36,8 @@ export class ProgramasComponent implements OnInit,OnDestroy {
     private activatedRoute:ActivatedRoute,
     private _ProgramasService:ProgramasService,
     private _SessionStorageService:SessionStorageService,
-    private _HelperService:HelperService,
     @Inject(PLATFORM_ID) platformId: Object,
     private _bottomSheet: MatBottomSheet,
-    private _SnackBarServiceService:SnackBarServiceService,
     private _SeoService:SeoService,
     private title:Title
   ) {

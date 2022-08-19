@@ -36,7 +36,7 @@ export class CursoComponent implements OnInit,OnDestroy {
   public tabIndex = 0;
   public IndicacionActive = false;
   public CertificadoActive = false;
-  public hide=false
+  public hide=true
   public migaPan = [
     {
       titulo: 'Mis Cursos',
@@ -72,23 +72,8 @@ export class CursoComponent implements OnInit,OnDestroy {
   public generateCertificado=true
   public ircas:any
   public contenidotarea=
-  '<p style="margin-botton:20px">Primero revisa las instrucciones acerca de la tarea. En estas, se te indicará los objetivos de desempeño, la'+
-  'descripción de la tarea, los entregables, información complementaria y los criterios de evaluación de la tarea.'+
-  'Una vez completes tu tarea, recuerda que el nombre del archivo no debe contener caracteres especiales (como tildes y '+
-  'símbolos).'+
-  'También debes asegurarte que el archivo esté en formato .doc o .pdf y que no pese más de 150 mb.'+
-  'Luego haz clic en el botón de “Seleccionar archivo” y elige el archivo de tu tarea.'+
-  'Una vez se carga, verifica que sea el archivo correcto y haz clic en “Enviar”'+
-  '¡Listo! Recibirás tu calificación en un plazo no mayor a 15 días.'+
-  'Próximamente añadiremos un video sobre estas indicaciones.</p>'+
   '<iframe src="https://player.vimeo.com/video/737713694?h=ce19c25ba1" width="100%" height="564" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>'
-  public contenidotareapares='Las tareas de pares son las tareas de tus compañeros, y así como tú calificarás su tarea, ellos'+
-  '<p style="margin-botton:20px">calificarán la tuya, siguiendo la escala de calificación de acuerdo al cumplimiento de los'+
-  'objetivos de desempeño.'+
-  'Primero descarga el archivo y recuerda que debes hacerlo antes de la fecha límite.'+
-  'Revisa el archivo y la escala de calificación que usarás para puntuar la tarea.'+
-  'Finalmente, selecciona la calificación para cada criterio de evaluación y haz clic en Calificar.'+
-  'Próximamente añadiremos una explicación en vídeo de estas indicaciones.</p>'+
+  public contenidotareapares=
   '<iframe src="https://player.vimeo.com/video/737722683?h=e768e2bbcc" width="100%"  height="564" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>'
   ngOnInit(): void {
     this._ActivatedRoute.params.pipe(
@@ -181,20 +166,20 @@ export class CursoComponent implements OnInit,OnDestroy {
     console.log(this.programEstructura.idModalidad)
     console.log(this.ircas)
     if(this.curso!=undefined && this.curso.proyectoAplicacion){
-      if((tabChangeEvent.index >= (7+noesAonline+esirca) || tabChangeEvent.index < (4+noesAonline))  && this.CertificadoActive){
+      if((tabChangeEvent.index >= (6+noesAonline+esirca) || tabChangeEvent.index < (4+noesAonline))  && this.CertificadoActive){
         this.CertificadoActive=false
-        if(tabChangeEvent.index >= (6+noesAonline)){
-          this.tabIndex-=3
+        if(tabChangeEvent.index >= (6+noesAonline+esirca)){
+          this.tabIndex-=(2-esirca)
         }
       }
       if(tabChangeEvent.index == (3+noesAonline) && !this.CertificadoActive){
         this.CertificadoActive=true
       }
     }else{
-      if((tabChangeEvent.index >= (6+noesAonline+esirca) || tabChangeEvent.index < (3+noesAonline))   && this.CertificadoActive){
+      if((tabChangeEvent.index >= (5+noesAonline+esirca) || tabChangeEvent.index < (3+noesAonline))   && this.CertificadoActive){
         this.CertificadoActive=false
-        if(tabChangeEvent.index >= (5+noesAonline)){
-          this.tabIndex-=3
+        if(tabChangeEvent.index >= (5+noesAonline+esirca)){
+          this.tabIndex-=(2-esirca)
         }
       }
       if(tabChangeEvent.index == (2+noesAonline) && !this.CertificadoActive){

@@ -3,7 +3,7 @@ import { Component, Inject, OnDestroy, OnInit, PLATFORM_ID, ViewChild } from '@a
 import { Validators } from '@angular/forms';
 import { Title, Meta } from '@angular/platform-browser';
 import { Router } from '@angular/router';
-import { Subject, takeUntil } from 'rxjs';
+import { observable, Subject, takeUntil } from 'rxjs';
 import { RegisterDTO, RegisterModuloDTO } from 'src/app/Core/Models/AlumnoDTO';
 import { Basic } from 'src/app/Core/Models/BasicDTO';
 import { DatoObservableDTO } from 'src/app/Core/Models/DatoObservableDTO';
@@ -14,6 +14,7 @@ import { DatosPortalService } from 'src/app/Core/Shared/Services/DatosPortal/dat
 import { HelperService } from 'src/app/Core/Shared/Services/helper.service';
 import { RegionService } from 'src/app/Core/Shared/Services/Region/region.service';
 import { SessionStorageService } from 'src/app/Core/Shared/Services/session-storage.service';
+import {timer} from 'rxjs'
 declare const fbq:any;
 declare const gtag:any;
 @Component({
@@ -133,9 +134,9 @@ export class RegistrarseComponent implements OnInit,OnDestroy {
         if (x.excepcionGenerada != undefined && x.excepcionGenerada == true) {
           this.statuscharge = false;
           this.errorRegister = x.descripcionGeneral;
-          setTimeout(() => {
+          timer(20000).pipe(takeUntil(this.signal$)).subscribe(_=>{
             this.errorRegister = '';
-          }, 1000000);
+          })
         } else {
 
           if(this.isBrowser){
@@ -162,9 +163,10 @@ export class RegistrarseComponent implements OnInit,OnDestroy {
         this.statuscharge = false;
         console.log(e);
         this.errorRegister = e.error.excepcion.descripcionGeneral;
-        setTimeout(() => {
+        timer(20000).pipe(takeUntil(this.signal$)).subscribe(_=>{
           this.errorRegister = '';
-        }, 1000000);
+        })
+
       },
       complete: () => {
         this.statuscharge = false;

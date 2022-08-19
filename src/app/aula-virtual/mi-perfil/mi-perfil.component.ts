@@ -1,5 +1,6 @@
 import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { Form, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Title } from '@angular/platform-browser';
 import { Subject, takeUntil } from 'rxjs';
 import { combosPerfilDTO, datosAlumnoEnvioDTO } from 'src/app/Core/Models/AlumnoDTO';
 import { DatoObservableDTO } from 'src/app/Core/Models/DatoObservableDTO';
@@ -23,6 +24,7 @@ export class MiPerfilComponent implements OnInit,OnDestroy {
     private _AlumnoService:AlumnoService,
     private _SessionStorageService:SessionStorageService,
     private _SnackBarServiceService: SnackBarServiceService,
+    private title:Title
     ) {}
   ngOnDestroy(): void {
     this.signal$.next(true)
@@ -116,6 +118,8 @@ export class MiPerfilComponent implements OnInit,OnDestroy {
     Terminos: new FormControl(this.combosPerfil.datosAlumno.idGenero,Validators.requiredTrue),
   })
   ngOnInit(): void {
+    let t:string='Ver mi perfil'
+    this.title.setTitle(t)
     this._HelperService.recibirCombosPerfil.pipe(takeUntil(this.signal$)).subscribe((x) => {
       console.log(x);
       this.combosPerfil = x;

@@ -1,4 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 import { Subject, takeUntil } from 'rxjs';
 import { CronogramaPagoService } from 'src/app/Core/Shared/Services/CronogramaPago/cronograma-pago.service';
 import { HelperService } from 'src/app/Core/Shared/Services/helper.service';
@@ -12,7 +13,8 @@ export class MisPagosComponent implements OnInit,OnDestroy {
   private signal$ = new Subject();
   constructor(
     private _HelperService: HelperService,
-    private _CronogramaPagoService:CronogramaPagoService
+    private _CronogramaPagoService:CronogramaPagoService,
+    private title:Title
   ) { }
   ngOnDestroy(): void {
     this.signal$.next(true)
@@ -28,6 +30,10 @@ export class MisPagosComponent implements OnInit,OnDestroy {
   public textoBienvenido = '';
   public misPagos:any
   ngOnInit(): void {
+
+    let t:string='Mis Pagos'
+    this.title.setTitle(t)
+
     this._HelperService.recibirCombosPerfil.pipe(takeUntil(this.signal$)).subscribe((x) => {
 
       this.textoBienvenido =x.datosAlumno.nombres+

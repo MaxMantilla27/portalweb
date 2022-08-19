@@ -1,6 +1,6 @@
 import { Component, ElementRef, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
 import * as signalR from '@microsoft/signalr';
-import { Subject, takeUntil } from 'rxjs';
+import { Subject, takeUntil, timer } from 'rxjs';
 import { datosAlumnoDTO } from 'src/app/Core/Models/AlumnoDTO';
 import { ChatDetalleIntegraService } from '../../Services/ChatDetalleIntegra/chat-detalle-integra.service';
 import { ChatEnLineaService } from '../../Services/ChatEnLinea/chat-en-linea.service';
@@ -97,9 +97,9 @@ export class ChatComponent implements OnInit,OnDestroy,OnChanges {
 
         this.ConectarSocket();
         this.hubConnection.onclose(() => {
-          setTimeout(()=>{
+          timer(10000).pipe(takeUntil(this.signal$)).subscribe(_=>{
             this.ConectarSocket();
-          },10000)
+          })
         });
 
         this.configuracionSoporte();
@@ -114,9 +114,9 @@ export class ChatComponent implements OnInit,OnDestroy,OnChanges {
   }
   ngOnChanges(changes: SimpleChanges): void {
     if(this.Open && this.stateAsesor){
-      setTimeout(() => {
+      timer(1).pipe(takeUntil(this.signal$)).subscribe(_=>{
         this.contenidoMsj.nativeElement.scrollTop=this.contenidoMsj.nativeElement.scrollHeight
-      }, 1);
+      })
     }
     if(this.idProgramageneral>0 && this.estadoLogueo=="false"){
       this.ObtenerAsesorChat();
@@ -329,10 +329,9 @@ export class ChatComponent implements OnInit,OnDestroy,OnChanges {
         this.NroMensajesSinLeer++;
       }
 
-      setTimeout(() => {
-        console.log(this.contenidoMsj)
+      timer(1000).pipe(takeUntil(this.signal$)).subscribe(_=>{
         this.contenidoMsj.nativeElement.scrollTop=this.contenidoMsj.nativeElement.scrollHeight
-      }, 1000);
+      })
     })
   }
   eliminaridchat(){
@@ -355,10 +354,9 @@ export class ChatComponent implements OnInit,OnDestroy,OnChanges {
     if(state){
       this.mensajeStateAsesor='¿En qué puedo ayudarte?'
 
-      setTimeout(() => {
-        console.log(this.contenidoMsj)
+      timer(1).pipe(takeUntil(this.signal$)).subscribe(_=>{
         this.contenidoMsj.nativeElement.scrollTop=this.contenidoMsj.nativeElement.scrollHeight
-      }, 1);
+      })
     }else{
       this.mensajeStateAsesor='no estoy disponible. Por favor deja un mensaje'
     }

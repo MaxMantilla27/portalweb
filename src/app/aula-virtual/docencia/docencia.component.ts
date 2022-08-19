@@ -44,7 +44,7 @@ export class DocenciaComponent implements OnInit,OnDestroy {
     SinAsistenciaAprobada:null
   };
   public tabIndex = 0;
-  public hide=false
+  public hide=true
   public DataProveedor:any
   public dataForo:any
   public notas:any

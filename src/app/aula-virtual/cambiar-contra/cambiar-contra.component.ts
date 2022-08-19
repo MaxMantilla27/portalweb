@@ -6,6 +6,7 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
+import { Title } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
 import { CambioPasswordDTO } from 'src/app/Core/Models/AccountDTO';
@@ -32,6 +33,7 @@ export class CambiarContraComponent implements OnInit,OnDestroy {
     private _router:Router,
     private _SnackBarServiceService: SnackBarServiceService,
     private _HelperService: HelperService,
+    private title:Title
   ) {
     this.userForm = fb.group({
       contraActual: ['', [Validators.required]],
@@ -59,7 +61,10 @@ export class CambiarContraComponent implements OnInit,OnDestroy {
     NewPassword: '',
     OldPassword: '',
   };
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    let t:string='Cambiar Contraseña'
+    this.title.setTitle(t)
+  }
   CambiarContra() {
     if(this.userForm.valid){
       this.datos.ConfirmPassword = this.userForm.get('contraNuevaRepeat')?.value;

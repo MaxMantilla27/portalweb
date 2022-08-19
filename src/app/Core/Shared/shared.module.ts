@@ -113,6 +113,7 @@ import { AlumnosTest } from './AlumnosTest';
 import {TextFieldModule} from '@angular/cdk/text-field';
 import { CargandoComponent } from './Containers/cargando/cargando.component';
 import { ChatZComponent } from './Containers/chat-z/chat-z.component';
+import { LazyLoadImagesDirective } from './Directives/lazy-load-images.directive';
 
 @NgModule({
   imports: [
@@ -181,8 +182,6 @@ import { ChatZComponent } from './Containers/chat-z/chat-z.component';
     VideoBrightcovePruebaComponent,
     CapitalicePipe,
     ChargeComponent,
-    InputCardDirective,
-    InputCardFechaDirective,
     CardMatriculasPruebaComponent,
     SoporteTecnicoComponent,
     ChatComponent,
@@ -192,6 +191,11 @@ import { ChatZComponent } from './Containers/chat-z/chat-z.component';
     ChatPortalComponent,
     VideoAyudaComponent,
     CargandoComponent,
+
+
+    InputCardDirective,
+    InputCardFechaDirective,
+    LazyLoadImagesDirective,
     //ChatZComponent,
   ],
   exports: [
@@ -230,6 +234,7 @@ import { ChatZComponent } from './Containers/chat-z/chat-z.component';
 
     InputCardDirective,
     InputCardFechaDirective,
+    LazyLoadImagesDirective,
 
     CapitalicePipe,
 

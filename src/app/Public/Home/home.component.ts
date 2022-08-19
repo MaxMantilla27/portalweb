@@ -25,8 +25,6 @@ export class HomeComponent implements OnInit,AfterViewInit,OnDestroy {
 
   private signal$ = new Subject();
   isBrowser: boolean;
-  public imagenes:Array<PartnerImagesDTO>=[];
-  public imagenes2:Array<BasicCarousel>=[];
   public step:Array<Array<PartnerImagesDTO>>=[];
   public Carreras: Array<BasicUrl> = [];
   public Formacion: Array<BasicUrl> = [];
@@ -59,6 +57,8 @@ export class HomeComponent implements OnInit,AfterViewInit,OnDestroy {
     config.keyboard = true;
     config.pauseOnHover = true;
   }
+  public imagenes:Array<PartnerImagesDTO>=[];
+  public imagenes2:Array<BasicCarousel>=[];
   ngOnDestroy(): void {
     this.signal$.next(true)
     this.signal$.complete()
@@ -77,6 +77,11 @@ export class HomeComponent implements OnInit,AfterViewInit,OnDestroy {
     this._SeoService.generateTags({
       image:'https://img.bsginstitute.com/repositorioweb/img/capacitacion-bsgrupo.png'
     });
+    this.imagenes=this._SeoService.getimagesPartner();
+    this.imagenes2=this.imagenes.map((img)=>{
+      var ps:BasicCarousel={path:img.imgPrincipal,width:0,height:0};
+      return ps;
+    });;
 
     if(this.isBrowser){
       this.innerWidth = window.innerWidth;
@@ -106,7 +111,7 @@ export class HomeComponent implements OnInit,AfterViewInit,OnDestroy {
       }
     });
 
-    this.GetImagenPartner();
+    this.OrderImages();
   }
   BuscarProgramas(){
     this._SessionStorageService.SessionSetValue('BusquedaPrograma',this.busqueda);
@@ -117,36 +122,39 @@ export class HomeComponent implements OnInit,AfterViewInit,OnDestroy {
     this.selectFormacion=this.Formacion[this.tabindex].value;
     this.Formacion[this.tabindex].change=true
   }
-  GetImagenPartner(){
-    this._PartnerService.GetListPartnerImage().pipe(takeUntil(this.signal$)).subscribe({
-      next:(x)=>{
-        this.imagenes=x.listaPartnerImagenDTO.map((i:any)=>{
-          var ps:PartnerImagesDTO={imgPrincipal:'https://img.bsginstitute.com/repositorioweb/img/partners/'+i.imgPrincipal,imagenAlt:i.imagenAlt};
-          return ps;
-        });
-        this.imagenes2=x.listaPartnerImagenDTO.map((i:any)=>{
-          var ps:BasicCarousel={path:'https://img.bsginstitute.com/repositorioweb/img/partners/'+i.imgPrincipal,width:0,height:0};
-          return ps;
-        });
-        var ind=1;
-        var stepImages:Array<any>=[];
-        this.imagenes.forEach(
-          x=>{
-            stepImages.push(x);
-            if(ind==this.seccionStep){
-              this.step.push(stepImages);
-              stepImages=[];
-              ind=0
-            }
-            ind++
-          }
-        );
-        if(stepImages.length>0){
+  OrderImages(){
+    var ind=1;
+    var stepImages:Array<any>=[];
+    this.imagenes.forEach(
+      x=>{
+        stepImages.push(x);
+        if(ind==this.seccionStep){
           this.step.push(stepImages);
+          stepImages=[];
+          ind=0
         }
-      },
-      error:(x)=>{console.log(x)}
-    });
+        ind++
+      }
+    );
+    if(stepImages.length>0){
+      this.step.push(stepImages);
+    }
   }
+  // GetImagenPartner(){
+  //   this._PartnerService.GetListPartnerImage().pipe(takeUntil(this.signal$)).subscribe({
+  //     next:(x)=>{
+  //       this.imagenes=x.listaPartnerImagenDTO.map((i:any)=>{
+  //         var ps:PartnerImagesDTO={imgPrincipal:'https://img.bsginstitute.com/repositorioweb/img/partners/'+i.imgPrincipal,imagenAlt:i.imagenAlt};
+  //         return ps;
+  //       });
+  //       this.imagenes2=x.listaPartnerImagenDTO.map((i:any)=>{
+  //         var ps:BasicCarousel={path:'https://img.bsginstitute.com/repositorioweb/img/partners/'+i.imgPrincipal,width:0,height:0};
+  //         return ps;
+  //       });
+  //       this.OrderImages()
+  //     },
+  //     error:(x)=>{console.log(x)}
+  //   });
+  // }
 
 }

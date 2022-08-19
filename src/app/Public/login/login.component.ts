@@ -1,8 +1,9 @@
 import { style } from '@angular/animations';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Validators } from '@angular/forms';
 import { Title, Meta } from '@angular/platform-browser';
 import { Router } from '@angular/router';
+import { Subject, takeUntil, timer } from 'rxjs';
 import { DatoObservableDTO } from 'src/app/Core/Models/DatoObservableDTO';
 import { formulario } from 'src/app/Core/Models/Formulario';
 import { login, loginSendDTO } from 'src/app/Core/Models/login';
@@ -16,7 +17,8 @@ import { SessionStorageService } from 'src/app/Core/Shared/Services/session-stor
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent implements OnInit,OnDestroy {
+  private signal$ = new Subject();
 
   constructor(
     private router: Router,
@@ -36,6 +38,10 @@ export class LoginComponent implements OnInit {
     datoContenido: false,
   }
 
+  ngOnDestroy(): void {
+    this.signal$.next(true);
+    this.signal$.complete();
+  }
   public migaPan: any = [];
   public loginSend:loginSendDTO={password:'',username:''}
   public errorLogin=''
@@ -135,9 +141,10 @@ export class LoginComponent implements OnInit {
           this.statuscharge=false
           console.log(e)
           this.errorLogin=e.error.excepcion.descripcionGeneral;
-          setTimeout(()=>{
+
+          timer(20000).pipe(takeUntil(this.signal$)).subscribe(_=>{
             this.errorLogin='';
-          },10000);
+          })
         },
         complete:()=>{
           this.statuscharge=false

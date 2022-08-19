@@ -40,7 +40,7 @@ export class SesionesComponent implements OnInit,OnDestroy {
   public tabIndex = 0;
   public idMatricula = 0;
   public idPEspecificoHijo = 0;
-  public hide=false
+  public hide=true
   public json: ParametrosEstructuraEspecificaDTO = {
     AccesoPrueba: false,
     IdMatriculaCabecera: 0,

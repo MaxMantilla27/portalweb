@@ -115,11 +115,18 @@
   }
 }
 @media (min-width: 768px) {
+  mat-tab-header {
+    z-index: 100;
+    position: absolute !important;
+    background: white;
+    height: 100%;
+    min-width: 2px;
+  }
   .rowpaddAv {
     padding: 45px 40px 45px 20px;
   }
   .pad-resp {
-    padding: 5px 10px;
+    padding: 5px 10px 0px 72px;
   }
 }
 @media (min-width: 992px) {
@@ -127,7 +134,7 @@
     padding: 45px 90px 45px 20px;
   }
   .pad-resp {
-    padding: 5px 10px;
+    padding: 5px 10px 0px 72px;
   }
 }
 @media (min-width: 1200px) {
@@ -135,7 +142,7 @@
     padding: 45px 90px 45px 20px;
   }
   .pad-resp {
-    padding: 5px 20px;
+    padding: 5px 20px 0px 72px;
   }
 }
 @media (min-width: 1400px) {
@@ -143,7 +150,7 @@
     padding: 45px 90px 45px 20px !important;
   }
   .pad-resp {
-    padding: 5px 30px;
+    padding: 5px 30px 0px 72px;
   }
 }
 .resumenPagoTarjeta {

@@ -51,6 +51,10 @@ export class FormaPagoService {
   public ProcesarPagoCuotaAlumno(Json:RegistroProcesoPagoAlumnoDTO):Observable<any>{
     if(this.isBrowser){
       console.log(Json)
+      Json.TarjetaHabiente.NumeroDocumento=Json.TarjetaHabiente.NumeroDocumento.toString();
+      if(Json.RegistroProcesoPagoPse!=undefined){
+        Json.RegistroProcesoPagoPse.NumeroDocumentoPSE=Json.RegistroProcesoPagoPse.NumeroDocumentoPSE.toString();
+      }
       return this.http.post<any>(this.urlBase+'/ProcesarPagoCuotaAlumno',Json);
     }else{
       return EMPTY;
@@ -59,6 +63,10 @@ export class FormaPagoService {
   public ProcesarPagoAlumnoOrganico(Json:RegistroProcesoPagoAlumnoDTO):Observable<any>{
     if(this.isBrowser){
       console.log(Json)
+      Json.TarjetaHabiente.NumeroDocumento=Json.TarjetaHabiente.NumeroDocumento.toString()
+      if(Json.RegistroProcesoPagoPse!=undefined){
+        Json.RegistroProcesoPagoPse.NumeroDocumentoPSE=Json.RegistroProcesoPagoPse.NumeroDocumentoPSE.toString();
+      }
       return this.http.post<any>(this.urlBase+'/ProcesarPagoAlumnoOrganico',Json);
     }else{
       return EMPTY;

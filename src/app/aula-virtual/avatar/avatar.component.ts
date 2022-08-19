@@ -2,7 +2,7 @@ import { ThisReceiver } from '@angular/compiler';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { Subject, takeUntil } from 'rxjs';
+import { Subject, takeUntil, timer } from 'rxjs';
 import {
   AvatarCombosDTO,
   AvatarDTO,
@@ -133,7 +133,7 @@ export class AvatarComponent implements OnInit,OnDestroy {
           this.DatosAvatarEnvio.skin=this.datosAvatar.skin
           this.imgAvatar = x.UrlAvatar;
           this.combosAvatar = x;
-          setTimeout(() => {
+          timer(500).pipe(takeUntil(this.signal$)).subscribe(_=>{
             this.fileds.forEach((c) => {
               if (c.nombre == 'topC') {
                 c.valorInicial = x.DatosAvatar.topC;
@@ -247,7 +247,7 @@ export class AvatarComponent implements OnInit,OnDestroy {
               }
             });
             this.initValues = true;
-          }, 500);
+          })
         }
       });
   }
@@ -364,9 +364,9 @@ export class AvatarComponent implements OnInit,OnDestroy {
       error: (e) => {
         this.statuscharge = false;
         this.errorActualizacion = e.error.excepcion.descripcionGeneral;
-        setTimeout(() => {
+        timer(1000000).pipe(takeUntil(this.signal$)).subscribe(_=>{
           this.errorActualizacion = 'Avatar actualizado correctamente';
-        }, 1000000);
+        })
       },
       complete: () => {
         this.statuscharge = false;

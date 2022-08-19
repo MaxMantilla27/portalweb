@@ -287,8 +287,6 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
       panelClass: 'custom-dialog-container',
     });
 
-    dialogRef.afterClosed().pipe(takeUntil(this.signal$)).subscribe((result) => {
-    });
   }
   OpenModalPago(){
     this.codigoIso =

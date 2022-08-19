@@ -1,6 +1,6 @@
 import { Component, ElementRef, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
 import * as signalR from '@microsoft/signalr';
-import { Subject, takeUntil } from 'rxjs';
+import { Subject, takeUntil, timer } from 'rxjs';
 import { datosAlumnoDTO } from 'src/app/Core/Models/AlumnoDTO';
 import { ChatDetalleIntegraService } from '../../Services/ChatDetalleIntegra/chat-detalle-integra.service';
 import { ChatEnLineaService } from '../../Services/ChatEnLinea/chat-en-linea.service';
@@ -76,9 +76,10 @@ export class ChatPortalComponent implements OnInit,OnDestroy,OnChanges {
   }
   ngOnChanges(changes: SimpleChanges): void {
     if(this.Open && this.stateAsesor){
-      setTimeout(() => {
+
+      timer(1).pipe(takeUntil(this.signal$)).subscribe(_=>{
         this.contenidoMsj.nativeElement.scrollTop=this.contenidoMsj.nativeElement.scrollHeight
-      }, 1);
+      })
     }
     if(this.idProgramageneral>0){
 
@@ -101,10 +102,12 @@ export class ChatPortalComponent implements OnInit,OnDestroy,OnChanges {
         .withUrl(this.urlSignal+"hubIntegraHub?idUsuario=11&&usuarioNombre=Anonimo&&rooms=633").build();
 
         this.ConectarSocket();
+
         this.hubConnection.onclose(() => {
-          setTimeout(()=>{
+
+          timer(10000).pipe(takeUntil(this.signal$)).subscribe(_=>{
             this.ConectarSocket();
-          },10000)
+          })
         });
 
         this.configuracion();
@@ -225,9 +228,9 @@ export class ChatPortalComponent implements OnInit,OnDestroy,OnChanges {
     if(state){
       this.mensajeStateAsesor='¿En qué puedo ayudarte?'
 
-      setTimeout(() => {
+      timer(1).pipe(takeUntil(this.signal$)).subscribe(_=>{
         this.contenidoMsj.nativeElement.scrollTop=this.contenidoMsj.nativeElement.scrollHeight
-      }, 1);
+      })
     }else{
       this.mensajeStateAsesor='no estoy disponible. Por favor deja un mensaje'
     }
@@ -255,9 +258,9 @@ export class ChatPortalComponent implements OnInit,OnDestroy,OnChanges {
         this.NroMensajesSinLeer++;
       }
 
-      setTimeout(() => {
+      timer(100).pipe(takeUntil(this.signal$)).subscribe(_=>{
         this.contenidoMsj.nativeElement.scrollTop=this.contenidoMsj.nativeElement.scrollHeight
-      }, 100);
+      })
     })
   }
   eliminaridchat(){
