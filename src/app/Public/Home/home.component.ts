@@ -101,13 +101,20 @@ export class HomeComponent implements OnInit,AfterViewInit,OnDestroy {
     });
     this._HelperService.recibirArrayFormacion.pipe(takeUntil(this.signal$)).subscribe({
       next:(x)=>{
-        this.Formacion=x;
-        this.Formacion.forEach(x=>{
-          x.change=false;
-        })
-        this.tabindex=0;
-        this.selectFormacion=this.Formacion[this.tabindex].value;
-        this.Formacion[0].change=true
+        if(this.Formacion.length==0){
+          this.Formacion=x;
+          let i=0
+          this.Formacion.forEach(x=>{
+            if(i==0){
+              x.change=true;
+            }else{
+              x.change=false;
+            }
+            i++
+          })
+          this.tabindex=0;
+          this.selectFormacion=this.Formacion[this.tabindex].value;
+        }
       }
     });
 
@@ -120,7 +127,10 @@ export class HomeComponent implements OnInit,AfterViewInit,OnDestroy {
   tabChanged = (tabChangeEvent: MatTabChangeEvent): void => {
     this.tabindex=tabChangeEvent.index;
     this.selectFormacion=this.Formacion[this.tabindex].value;
-    this.Formacion[this.tabindex].change=true
+    if(this.Formacion[this.tabindex].change!=true){
+      console.log(this.Formacion[this.tabindex].change)
+      this.Formacion[this.tabindex].change=true
+    }
   }
   OrderImages(){
     var ind=1;

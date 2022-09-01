@@ -28,7 +28,7 @@ export class ModuloSilaboComponent implements OnInit,OnChanges,OnDestroy {
     if(this.IdPgeneral!=0){
       this.ObtenerSilaboCurso()
     }
-
+    console.log(this.Estructura)
   }
   ObtenerSilaboCurso(){
     this._SilaboService.ObtenerSilaboCurso(this.IdPgeneral).pipe(takeUntil(this.signal$)).subscribe({
@@ -43,6 +43,7 @@ export class ModuloSilaboComponent implements OnInit,OnChanges,OnDestroy {
           x.ArrayContent=[];
           x.estado=true
           if(x.titulo=="Presentacion"){
+            x.titulo="Presentación"
             x.order=1;
           }
           if(x.titulo=="Objetivos"){
@@ -62,6 +63,7 @@ export class ModuloSilaboComponent implements OnInit,OnChanges,OnDestroy {
             }
           }
           if(x.titulo=="Certificacion"){
+            x.titulo="Certificación"
             if(indexC==-1){
               indexC=i
               x.order=5;
@@ -72,12 +74,13 @@ export class ModuloSilaboComponent implements OnInit,OnChanges,OnDestroy {
             }
           }
           if(x.titulo=="Bibliografia"){
+            x.titulo="Bibliografía"
             x.order=6;
           }
           i++
         })
         this.listaSeccionesContenidosDocumento.push({
-          titulo:'Estrutura Curicular',
+          titulo:'Estructura Curicular',
           Contenido:'',
           order:7,
           ArrayContent:[],

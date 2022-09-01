@@ -80,3 +80,44 @@
 .mat-form-field textarea {
   height: calc(100% - 25px);
 }
+.tablaTarea tr td{
+  border: solid 1px #b2b2b2;
+  text-align: center;
+  padding: 10px;
+  word-break: break-all;
+  font-size: 12px;
+}
+.cabeceraExpandTarea{
+  display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: 700;
+
+    padding-bottom: 6px;
+    border-bottom: solid 1px #b2b2b2;
+
+}
+.contentCabeceraTarea{
+  color: #989898;
+}
+.cabeceraExpandTarea div .material-icons{
+  cursor: pointer;
+  font-size: 30px !important;
+}
+.cabeceraExpandTareaOpen{
+  color: #0d6dc2 !important;
+  border-bottom: solid 0px transparent !important;
+}
+.titleCriterio{
+  font-weight: 500;
+  font-size: 24px;
+  color: #2362AD;
+}
+.contentCriterio{
+  p{
+    margin-bottom: 0px;
+  }
+  ul{
+    margin-bottom: 0px;
+  }
+}

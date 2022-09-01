@@ -50,7 +50,6 @@
         </mat-progress-bar>
 
         <div style="justify-content: space-between; display: flex;font-size: 12px;color: #909090; font-weight: 600;">
-          <div>0%</div>
           <div>100%</div>
         </div>
         <div style="    font-size: 11px;
@@ -65,7 +64,6 @@
           [value]="(item.progreso!=undefined && item.progreso.progresoVideo.length>0)?item.progreso.progresoVideo[0].porcentaje:0">
         </mat-progress-bar>
         <div style="justify-content: space-between; display: flex;font-size: 12px;color: #909090; font-weight: 600;">
-          <div>0%</div>
           <div>{{(item.progreso!=undefined &&
             item.progreso.progresoVideo.length>0)?(item.progreso.progresoVideo[0].porcentaje | number:'1.0-0'):0 }}%</div>
         </div>

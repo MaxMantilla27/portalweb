@@ -36,6 +36,8 @@ import { ChatPruebaComponent } from './chat-prueba/chat-prueba.component';
 import { FormularioPublicidadComponent } from './FormularioPublicidad/formulario-publicidad.component';
 import { FormularioPublicidadInterceptorComponent } from './FormularioPublicidad/FormularioPublicidadInterceptor/formulario-publicidad-interceptor.component';
 import { NotificacionWebinarComponent } from './notificacion-webinar/notificacion-webinar.component';
+import { InformacionCertificadoComponent } from './informacion-certificado/informacion-certificado.component';
+import { CompraExitosaOpenPayComponent } from './compra-exitosa-open-pay/compra-exitosa-open-pay.component';
 
 @NgModule({
   imports: [
@@ -77,7 +79,9 @@ import { NotificacionWebinarComponent } from './notificacion-webinar/notificacio
     ChatPruebaComponent,
     FormularioPublicidadComponent,
     FormularioPublicidadInterceptorComponent,
-    NotificacionWebinarComponent
+    NotificacionWebinarComponent,
+    InformacionCertificadoComponent,
+    CompraExitosaOpenPayComponent
   ],
   exports: [],
   providers: [

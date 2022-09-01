@@ -114,6 +114,7 @@ import {TextFieldModule} from '@angular/cdk/text-field';
 import { CargandoComponent } from './Containers/cargando/cargando.component';
 import { ChatZComponent } from './Containers/chat-z/chat-z.component';
 import { LazyLoadImagesDirective } from './Directives/lazy-load-images.directive';
+import { CardBlancComponent } from './Containers/card/card-blanc/card-blanc.component';
 
 @NgModule({
   imports: [
@@ -196,6 +197,7 @@ import { LazyLoadImagesDirective } from './Directives/lazy-load-images.directive
     InputCardDirective,
     InputCardFechaDirective,
     LazyLoadImagesDirective,
+    CardBlancComponent,
     //ChatZComponent,
   ],
   exports: [

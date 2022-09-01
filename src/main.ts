@@ -17,6 +17,10 @@ function bootstrap() {
 if (document.readyState === 'complete') {
   bootstrap();
 } else {
-  document.addEventListener('DOMContentLoaded', bootstrap);
+  document.addEventListener('DOMContentLoaded', () => {
+    platformBrowserDynamic().bootstrapModule(AppModule)
+    .catch(err => console.error(err));
+  });
 }
 
+// Se añade el evento de la carga del contenido del DOM

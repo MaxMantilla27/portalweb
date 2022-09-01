@@ -18,6 +18,7 @@ import {
 import { AlumnosTest } from 'src/app/Core/Shared/AlumnosTest';
 import { ProgramaContenidoService } from 'src/app/Core/Shared/Services/ProgramaContenido/programa-contenido.service';
 import { SessionStorageService } from 'src/app/Core/Shared/Services/session-storage.service';
+import { SnackBarServiceService } from 'src/app/Core/Shared/Services/SnackBarService/snack-bar-service.service';
 
 @Component({
   selector: 'app-curso-modulos',
@@ -30,6 +31,7 @@ export class CursoModulosComponent implements OnInit, OnChanges,OnDestroy {
   constructor(
     private _ProgramaContenidoService: ProgramaContenidoService,
     private _SessionStorageService: SessionStorageService,
+    private _SnackBarServiceService:SnackBarServiceService,
     private router :Router,
     private _AlumnosTest:AlumnosTest
   ) {}
@@ -133,6 +135,8 @@ export class CursoModulosComponent implements OnInit, OnChanges,OnDestroy {
   IrCurso(idMatricula:number,idPEspecificoHijo:number,habilitado:boolean){
     if(habilitado==true){
       this.router.navigate(['/AulaVirtual/MisCursos/'+idMatricula+'/'+idPEspecificoHijo])
+    }else{
+      this._SnackBarServiceService.openSnackBar("Debes completar las actividades anteriores para continuar con esta actividad",'x',10,"snackbarCrucigramaerror");
     }
   }
 }

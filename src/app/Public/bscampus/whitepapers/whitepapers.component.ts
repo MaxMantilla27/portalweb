@@ -108,7 +108,7 @@ export class WhitepapersComponent implements OnInit,OnDestroy {
   }
   public combosPrevios:any
   public cargando=false
-
+  public cleanSub=false
   ngOnInit(): void {
     this.activatedRoute.params.pipe(takeUntil(this.signal$)).subscribe({
       next: (x) => {
@@ -248,6 +248,7 @@ export class WhitepapersComponent implements OnInit,OnDestroy {
       console.log(this.DatosEnvioFormulario)
       this._ArticuloService.EnviarFormulario(this.DatosEnvioFormulario).pipe(takeUntil(this.signal$)).subscribe({
         next: (x) => {
+          this.cleanSub=true
           console.log(x);
           this._SnackBarServiceService.openSnackBar("¡Solicitud enviada!",'x',15,"snackbarCrucigramaSucces");
         },
@@ -373,6 +374,14 @@ export class WhitepapersComponent implements OnInit,OnDestroy {
       valorInicial:"",
       validate:[Validators.required],
       label:"Teléfono Móvil",
+    });
+    this.fileds.push({
+      nombre: 'terminos',
+      tipo: 'terminos',
+      valorInicial: '',
+      validate: [Validators.required,Validators.requiredTrue],
+      label: 'terminos',
+      style:'font-size: 12px;margin-bottom: 20px;'
     });
   }
   LimpiarCampos(){

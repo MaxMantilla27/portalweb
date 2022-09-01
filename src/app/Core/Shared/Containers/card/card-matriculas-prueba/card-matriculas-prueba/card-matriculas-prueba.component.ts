@@ -1,5 +1,6 @@
 import { Component, Input, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { Router } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
 import { VigenciaAccesoPruebaComponent } from 'src/app/aula-virtual/mis-cursos/vigencia-acceso-prueba/vigencia-acceso-prueba/vigencia-acceso-prueba.component';
 import { CardMatriculasPruebaDTO } from 'src/app/Core/Models/BasicDTO';
@@ -14,7 +15,8 @@ export class CardMatriculasPruebaComponent implements OnInit,OnDestroy {
   private signal$ = new Subject();
 
   constructor(
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private _router:Router
 
   ) { }
   ngOnDestroy(): void {
@@ -26,6 +28,9 @@ export class CardMatriculasPruebaComponent implements OnInit,OnDestroy {
   }
   updateUrl() {
     this.cardContent.Img = '../../../../../../assets/imagenes/sello.jpg';
+  }
+  navigate(url:string){
+    this._router.navigate([url])
   }
   OpenModal(): void {
     const dialogRef = this.dialog.open(VigenciaAccesoPruebaComponent, {

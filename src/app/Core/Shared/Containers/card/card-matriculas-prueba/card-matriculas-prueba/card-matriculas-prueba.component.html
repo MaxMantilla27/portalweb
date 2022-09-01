@@ -1,6 +1,6 @@
 <mat-card class="card-matriculas">
 
-  <img mat-card-image [src]="cardContent.Img"  [alt]="cardContent.ImgAlt" (error)="updateUrl()">
+  <img mat-card-image [src]="cardContent.Img" (click)="!cardContent.Valido?OpenModal():navigate(cardContent.Url)"  [alt]="cardContent.ImgAlt" (error)="updateUrl()">
   <div id="CintaAccesoTemporal"></div>
   <div class="text-block">Acceso <br> Temporal</div>
 

@@ -14,7 +14,7 @@
         <div class="contentCapitulo">
 
           <div class="hederCapitulo row" style="margin-top: 20px;">
-            <div class="titleCapitulo col-12 col-md-12 col-lg-12">Capitulo {{item.ordenFila}}:
+            <div class="titleCapitulo col-12 col-md-12 col-lg-12">Capítulo {{item.ordenFila}}:
               {{item.capitulo}}</div>
           </div>
         </div>
@@ -23,15 +23,15 @@
         <div class="contentCapitulo">
 
           <div class="hederCapitulo row">
-            <div class="titleCapitulo col-12 col-md-7 col-lg-9">Capitulo {{item.ordenFila}}:
+            <div class="titleCapitulo col-12 col-md-7 col-lg-9">Capítulo {{item.ordenFila}}:
               {{item.capitulo}}</div>
             <div class="col-12 col-md-5 col-lg-3" style="display: flex;justify-content: flex-end;align-items: center;">
-              <div class="NSesionCapitulo">{{item.listaSesiones.ordenFila}} </div>
+              <div class="NSesionCapitulo">{{item.ordenFila}} </div>
             </div>
           </div>
           <div class="contentCapituloSesion ">
             <div class="capituloSesion row" *ngFor="let sesiones of item.listaSesiones">
-              <ng-container *ngIf="sesiones.subSesion==null">
+              <ng-container *ngIf="sesiones.subSesion==null || sesiones.subSesion==''">
                 <div class="col-12 col-md-7 col-lg-9 capituloJustSesion contentModuloSesiones">
                   <i class="material-icons playsesion">play_circle</i>
                   <div style="width: calc( 100% - 35px);">
@@ -55,7 +55,7 @@
                   </div>
                 </div>
               </ng-container>
-              <ng-container *ngIf="sesiones.subSesion!=null">
+              <ng-container *ngIf="sesiones.subSesion!=null && sesiones.subSesion!=''">
                 <div class="col-12 col-md-12 col-lg-12" style="margin: 15px 0px;"></div>
                 <div class="capituloSesionesSubsesiones contentModuloSesiones col-12 col-md-7 col-lg-9">
                   <i class="material-icons playsesion">play_circle</i>

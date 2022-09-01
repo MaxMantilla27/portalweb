@@ -36,6 +36,7 @@ export class SesionTareaCalificarComponent implements OnInit,OnChanges,OnDestroy
 
   @Output() next: EventEmitter<void> = new EventEmitter<void>();
   @Output() prev: EventEmitter<void> = new EventEmitter<void>();
+  @Output() onFinish: EventEmitter<void> = new EventEmitter<void>();
   public params:ParametroObtenerEvaluacionTarea={
     id:0,
     idEvaluacion:0,
@@ -114,6 +115,7 @@ export class SesionTareaCalificarComponent implements OnInit,OnChanges,OnDestroy
       next:x=>{
         console.log(x)
         this.tareaAc.calificado=true
+        this.onFinish.emit()
       },
       error:x=>{
         console.log(x)

@@ -40,11 +40,30 @@ export class LandingPageInterceptorComponent implements OnInit,OnDestroy {
         console.log(x)
         this.IdFormulario=x['IdFormulario'];
         console.log(this.IdFormulario)
+
         if(this.IdFormulario!=undefined){
-        this.ObtenerFormularioLandingPage();
+          this.ObtenerFormularioLandingPage();
         }
         else{
-          this.router.navigate(['error404']);
+
+          console.log(this.router.url)
+          var base=this.router.url.split('?')
+          console.log(base)
+          if(base.length>1){
+            if(base[0].toLowerCase()=='/informacioncertificado'){
+              var cert=x['cod'].split('.')
+              console.log(cert)
+              if(cert.length>1){
+                this.router.navigate(['Certificado/'+cert[0]+'/'+cert[1]])
+              }else{
+                this.router.navigate(['error404']);
+              }
+            }else{
+              this.router.navigate(['error404']);
+            }
+          }else{
+            this.router.navigate(['error404']);
+          }
         }
       }
     });

@@ -18,14 +18,14 @@
             </div>
           </mat-panel-title>
         </mat-expansion-panel-header>
-        <div *ngIf="item.titulo!='Beneficios' && item.titulo!='Certificacion' && item.titulo!='Estrutura Curicular'"
+        <div *ngIf="item.titulo!='Beneficios' && item.titulo!='Certificacion' && item.titulo!='Estructura Curicular'"
           [innerHtml]="item.contenido | safeHtml" style="padding: 0px 60px 20px;"></div>
         <div *ngIf="item.titulo=='Beneficios' || item.titulo=='Certificacion'" style="padding: 0px 60px 20px;">
           <ul>
             <li *ngFor="let content of item.ArrayContent">{{content}}</li>
           </ul>
         </div>
-        <div *ngIf="item.titulo=='Estrutura Curicular'" style="padding: 0px 60px 20px;">
+        <div *ngIf="item.titulo=='Estructura Curicular'" style="padding: 0px 60px 20px;">
           <ng-container *ngIf="Estructura!=undefined">
 
 

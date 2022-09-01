@@ -5,6 +5,6 @@ import { Directive, ElementRef } from '@angular/core';
 })
 export class LazyLoadImagesDirective {
   constructor(el : ElementRef) {
-    el.nativeElement.setAttribute('loading','lazy')
+   el.nativeElement.setAttribute('loading','lazy')
   }
 }

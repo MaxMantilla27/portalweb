@@ -32,22 +32,30 @@
                 <div class="remitente">{{item.NombreRemitente.split(' ')[0]}}</div>
                 <div class="msj" [innerHtml]="item.Mensaje | safeHtml"></div>
                 <ng-container *ngIf="item.IdRemitente=='visitante'">
-                  <ng-container  *ngIf="(mensajesAnteriore.length-i)>=NroMensajesSinLeer">
-                    <div class="statemsjleido">
-                      <i class="material-icons" style="right: 4px;
-                      z-index: 3;">check</i>
-                      <i class="material-icons" style="right: 1px;
-                      z-index: 4;">check</i>
+                  <ng-container *ngIf="item.estadoEnviado==false">
+                    <div class="statemsjEnviado">
+                      <i class="material-icons">access_time</i>
                     </div>
                   </ng-container>
-                  <ng-container *ngIf="(mensajesAnteriore.length-i)<NroMensajesSinLeer">
-                    <div class="statemsjnoleido">
-                      <i class="material-icons" style="right: 4px;
-                      z-index: 3;">check</i>
-                      <i class="material-icons" style="right: 1px;
-                      z-index: 4;">check</i>
-                    </div>
+                  <ng-container *ngIf="item.estadoEnviado!=false">
+                    <ng-container  *ngIf="(mensajesAnteriore.length-i)>=NroMensajesSinLeer">
+                      <div class="statemsjleido">
+                        <i class="material-icons" style="right: 4px;
+                        z-index: 3;">check</i>
+                        <i class="material-icons" style="right: 1px;
+                        z-index: 4;">check</i>
+                      </div>
+                    </ng-container>
+                    <ng-container *ngIf="(mensajesAnteriore.length-i)<NroMensajesSinLeer">
+                      <div class="statemsjnoleido">
+                        <i class="material-icons" style="right: 4px;
+                        z-index: 3;">check</i>
+                        <i class="material-icons" style="right: 1px;
+                        z-index: 4;">check</i>
+                      </div>
+                    </ng-container>
                   </ng-container>
+
                 </ng-container>
 
               </div>

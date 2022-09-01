@@ -17,17 +17,15 @@
       <div class="row">
         <div class="col-md-12">
           <div class="row">
-            <div class="CabeceraPregunta">
+            <div class="CabeceraPregunta" (click)="PreguntaExpand=PreguntaExpand>-1?-1:i">
               <div class="CabeceraExpandPregunta" [ngClass]="{'CabeceraExpandPreguntaOpen':PreguntaExpand==i}">
                 <div class="PreguntaFrecuenteTitulo" style="display:flex;margin-top: 20px;">
                   {{item.pregunta}}
                 </div>
               </div>
               <div>
-                <i class="material-icons no-seleccionable " *ngIf="PreguntaExpand!=i"
-                  (click)="PreguntaExpand=i" style="margin-top: 20px;">keyboard_arrow_down</i>
-                <i class="material-icons no-seleccionable " *ngIf="PreguntaExpand==i"
-                  (click)="PreguntaExpand=-1" style="margin-top: 20px;">keyboard_arrow_up</i>
+                <i class="material-icons no-seleccionable " *ngIf="PreguntaExpand!=i" style="margin-top: 20px;">keyboard_arrow_down</i>
+                <i class="material-icons no-seleccionable " *ngIf="PreguntaExpand==i" style="margin-top: 20px;">keyboard_arrow_up</i>
               </div>
             </div>
             <div class="ContenidoRespuestaPregunta" *ngIf="PreguntaExpand==i" [innerHtml]="item.respuesta | safeHtml">

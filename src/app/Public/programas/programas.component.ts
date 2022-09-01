@@ -111,7 +111,7 @@ export class ProgramasComponent implements OnInit,OnDestroy {
     }
     this.CodigoIso = this._SessionStorageService.SessionGetValue('ISO_PAIS')!=''?this._SessionStorageService.SessionGetValue('ISO_PAIS'):'INTC';
     if(this.CodigoIso.toUpperCase()=='PE'){this.rangoPrecios=16800;this.monedaRango='S/. 0 ';}
-    if(this.CodigoIso.toUpperCase()=='CO'){this.rangoPrecios=10000000;this.monedaRango='COL$ 0';}
+    if(this.CodigoIso.toUpperCase()=='CO'){this.rangoPrecios=1000000000;this.monedaRango='COL$ 0';}
     if(this.CodigoIso.toUpperCase()=='BO'){this.rangoPrecios=37300;this.monedaRango='Bs 0 ';}
     this.rangoselect=this.rangoPrecios;
     this.activatedRoute.params.pipe(takeUntil(this.signal$)).subscribe({

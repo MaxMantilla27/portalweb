@@ -101,6 +101,9 @@ export class ChatPortalComponent implements OnInit,OnDestroy,OnChanges {
         .withAutomaticReconnect()
         .withUrl(this.urlSignal+"hubIntegraHub?idUsuario=11&&usuarioNombre=Anonimo&&rooms=633").build();
 
+        this.hubConnection.serverTimeoutInMilliseconds = 300000;
+        this.hubConnection.serverTimeoutInMilliseconds = 36000000;
+
         this.ConectarSocket();
 
         this.hubConnection.onclose(() => {
@@ -258,7 +261,7 @@ export class ChatPortalComponent implements OnInit,OnDestroy,OnChanges {
         this.NroMensajesSinLeer++;
       }
 
-      timer(100).pipe(takeUntil(this.signal$)).subscribe(_=>{
+      timer(10000).pipe(takeUntil(this.signal$)).subscribe(_=>{
         this.contenidoMsj.nativeElement.scrollTop=this.contenidoMsj.nativeElement.scrollHeight
       })
     })

@@ -113,7 +113,7 @@ export class BlogComponent implements OnInit {
   }
   public combosPrevios:any
   public cargando=false
-
+  public cleanSub=false
   ngOnInit(): void {
     this.activatedRoute.params.pipe(takeUntil(this.signal$)).subscribe({
       next: (x) => {
@@ -242,7 +242,7 @@ export class BlogComponent implements OnInit {
       this._HelperService.EnviarFormulario(this.DatosEnvioFormulario).pipe(takeUntil(this.signal$)).subscribe({
         next: (x) => {
           console.log(x);
-
+          this.cleanSub=true
           if(this.isBrowser){
             console.log('------------------facebook(true)---------------------------');
             console.log(fbq);
@@ -346,6 +346,14 @@ export class BlogComponent implements OnInit {
       valorInicial:"",
       validate:[Validators.required],
       label:"Teléfono Móvil",
+    });
+    this.fileds.push({
+      nombre: 'terminos',
+      tipo: 'terminos',
+      valorInicial: '',
+      validate: [Validators.required,Validators.requiredTrue],
+      label: 'terminos',
+      style:'font-size: 12px;margin-bottom: 20px;'
     });
   }
   LimpiarCampos(){

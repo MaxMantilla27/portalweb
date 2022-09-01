@@ -175,7 +175,7 @@ export class PagoGeneralComponent implements OnInit, OnDestroy {
           'snackbarCrucigramaerror'
         );
       }
-      if (!this.NumberT.startsWith('37') && this.NumberT.split('-').join('').length < 16) {
+      if (!this.NumberT.startsWith('37') && this.NumberT.split('-').join('').length < 14) {
         validate = false;
         this._SnackBarServiceService.openSnackBar(
           'Numero de tarjeta Incorrecta',
@@ -281,10 +281,11 @@ export class PagoGeneralComponent implements OnInit, OnDestroy {
         next: (x) => {
           console.log(x);
           if(this.resultCard.idPasarelaPago!=1 || this.resultCard.idFormaPago!=65){
-            this._router.navigate([
-              '/AulaVirtual/PagoExitoso/' +
-                this.jsonSave.IdentificadorTransaccion,
-            ]);
+            if(this.resultCard.idPasarelaPago!=5){
+              this._router.navigate(['/AulaVirtual/PagoExitoso/' +this.jsonSave.IdentificadorTransaccion]);
+            }else{
+              location.href=x._Repuesta.urlRedireccionar;
+            }
           }else{
             location.href=x._Repuesta.urlRedireccionar;
           }

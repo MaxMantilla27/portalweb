@@ -78,4 +78,12 @@ export class ProgramaContenidoService {
       return EMPTY;
     }
   }
+
+  public listaRegistroVideoSesionProgramaSincronico(IdPEspecifico:number):Observable<any>{
+    if(this.isBrowser){
+      return this.http.post<any>(this.urlBase+'/listaRegistroVideoSesionProgramaSincronico?IdPEspecifico='+IdPEspecifico,{});
+    }else{
+      return EMPTY;
+    }
+  }
 }

@@ -91,6 +91,7 @@ export class ContactenosComponent implements OnInit,OnDestroy {
   }
   public combosPrevios:any
   public cargando=false
+  public cleanSub=false
   ngOnInit(): void {
 
 
@@ -153,7 +154,7 @@ export class ContactenosComponent implements OnInit,OnDestroy {
       this._ContactenosService.EnviarFormulario(this.DatosContactenosEnvio).subscribe({
         next:x => {
           console.log(x);
-
+          this.cleanSub=true
           if(this.isBrowser){
             console.log('------------------facebook(true)---------------------------');
             console.log(fbq);
@@ -332,6 +333,14 @@ export class ContactenosComponent implements OnInit,OnDestroy {
       valorInicial:"",
       validate:[Validators.required],
       label:"Comentario",
+    });
+    this.fileds.push({
+      nombre: 'terminos',
+      tipo: 'terminos',
+      valorInicial: '',
+      validate: [Validators.required,Validators.requiredTrue],
+      label: 'terminos',
+      style:'font-size: 12px;margin-bottom: 20px;'
     });
   }
   LimpiarCampos(){

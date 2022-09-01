@@ -31,11 +31,13 @@ export class ModuloSesionesComponent implements OnInit, OnChanges {
       console.log(this.estructuraCapitulo);
       var alumnoTest=this._AlumnosTest.Allpermisions(this.estructuraCapitulo.idAlumno);
       this.estructuraCapitulo.registroEstructuraCursoCapitulo.forEach((c: any) => {
+          c.cap=cap
           c.registroEstructuraCursoSesion.forEach((s: any) => {
-
+            s.ses=ses
             if(this.estructuraCapitulo.contineSubSesion==true){
               s.subV = 0;
               s.registroEstructuraCursoSubSesion.forEach((ss: any) => {
+                ss.subs=subs
                 ss.habilitado=false;
 
                 if(this.estructuraCapitulo.convalidado==true || alumnoTest){
@@ -72,7 +74,7 @@ export class ModuloSesionesComponent implements OnInit, OnChanges {
                         )>=98
                       ){
                         if(this.estructuraCapitulo.registroEstructuraCursoCapitulo[cap-1].registroEstructuraCursoEncuesta.length>0){
-                          s.habilitado=true
+                          ss.habilitado=true
                           this.estructuraCapitulo.registroEstructuraCursoCapitulo[cap-1].registroEstructuraCursoEncuesta.forEach((e:any) => {
                             if(e.nombreEncuesta!='Encuesta Inicial'){
                               if(e.encuestaEnviada!=true){
@@ -86,6 +88,9 @@ export class ModuloSesionesComponent implements OnInit, OnChanges {
                         }else{
                           ss.habilitado=true
                         }
+                        console.log(cap)
+                        console.log('enc-'+ss.habilitado)
+                        console.log(this.estructuraCapitulo.registroEstructuraCursoCapitulo[cap-1].registroEstructuraCursoEncuesta)
                         if(ss.habilitado==true){
                           if(this.estructuraCapitulo.registroEstructuraCursoCapitulo[cap-1].registroEstructuraCursoTarea.length>0){
                             s.habilitado=true

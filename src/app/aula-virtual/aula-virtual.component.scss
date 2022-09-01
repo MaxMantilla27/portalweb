@@ -3,12 +3,29 @@
 }
 .tabVertical .mat-tab-header {
   border-bottom: none !important;
+  margin-top: 40px;
 }
 .tabVertical .mat-tab-header .mat-tab-header-pagination {
   display: none !important;
 }
 .tabVertical .mat-tab-header .mat-tab-label-container {
   border-right: 2px solid #d2d2d2;
+}
+.buttonBack{
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  font-size: 14px;
+  color: #ff7012;
+  font-weight: 600;
+  border-bottom: solid 1px transparent;
+  .material-icons{
+    font-weight: 600;
+    font-size: 14px !important;
+  }
+}
+.buttonBack:hover{
+  border-bottom: solid 1px #ff7012;
 }
 .tabVertical
   .mat-tab-header
@@ -78,11 +95,11 @@
   background: #f4f4f4;
 }
 .pad-resp {
-  padding: 5px 10px 0px 72px;
+  padding: 5px 10px 0px 92px;
 }
 
 @media (max-width: 768px) {
-  mat-tab-header {
+  .tabVerticalDocente > mat-tab-header{
     z-index: 100;
     position: absolute !important;
     background: white;
@@ -90,6 +107,20 @@
     min-width: 2px;
   }
 
+  .tabVertical > mat-tab-header{
+    z-index: 100;
+    position: absolute !important;
+    background: white;
+    height: 100%;
+    min-width: 2px;
+  }
+  .tabVerticalses > mat-tab-header{
+    z-index: 100;
+    position: absolute !important;
+    background: white;
+    height: 100%;
+    min-width: 2px;
+  }
   .tabVerticalses
   .mat-tab-header
   .mat-tab-label-container
@@ -111,11 +142,25 @@
     padding: 45px 20px;
   }
   .pad-resp {
-    padding: 5px 10px 0px 72px;
+    padding: 5px 10px 0px 92px;
   }
 }
 @media (min-width: 768px) {
-  mat-tab-header {
+  .tabVertical > mat-tab-header{
+    z-index: 100;
+    position: absolute !important;
+    background: white;
+    height: 100%;
+    min-width: 2px;
+  }
+  .tabVerticalDocente > mat-tab-header{
+    z-index: 100;
+    position: absolute !important;
+    background: white;
+    height: 100%;
+    min-width: 2px;
+  }
+  .tabVerticalses > mat-tab-header{
     z-index: 100;
     position: absolute !important;
     background: white;
@@ -126,7 +171,7 @@
     padding: 45px 40px 45px 20px;
   }
   .pad-resp {
-    padding: 5px 10px 0px 72px;
+    padding: 5px 10px 0px 92px;
   }
 }
 @media (min-width: 992px) {
@@ -134,7 +179,7 @@
     padding: 45px 90px 45px 20px;
   }
   .pad-resp {
-    padding: 5px 10px 0px 72px;
+    padding: 5px 10px 0px 92px;
   }
 }
 @media (min-width: 1200px) {
@@ -142,7 +187,7 @@
     padding: 45px 90px 45px 20px;
   }
   .pad-resp {
-    padding: 5px 20px 0px 72px;
+    padding: 5px 20px 0px 92px;
   }
 }
 @media (min-width: 1400px) {
@@ -150,7 +195,7 @@
     padding: 45px 90px 45px 20px !important;
   }
   .pad-resp {
-    padding: 5px 30px 0px 72px;
+    padding: 5px 30px 0px 92px;
   }
 }
 .resumenPagoTarjeta {
@@ -243,8 +288,17 @@
   img{
     width: 18px;
   }
-  .material-icons{
-    font-size: 30px !important;
+  .contentIconMenu{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 30px;
+    width: 30px;
+    border-radius: 50%;
+    background: #dadada;
+    .material-icons{
+      font-size: 20px !important;
+    }
   }
 }
 .openClose2 {
@@ -259,8 +313,17 @@
   img{
     width: 18px;
   }
-  .material-icons{
-    font-size: 30px !important;
+  .contentIconMenu{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 30px;
+    width: 30px;
+    border-radius: 50%;
+    background: #dadada;
+    .material-icons{
+      font-size: 20px !important;
+    }
   }
 }
 .reverse {

@@ -20,6 +20,7 @@ export class HomeService {
   }
 
   public GetProgramasHome(Json:ObtenerTopProgramasSendDTO):Observable<any>{
+    console.log(Json)
     if(this.isBrowser){
       return this.http.post<any>(this.urlBase+'/ObtenerTopProgramas',Json);
     }else{

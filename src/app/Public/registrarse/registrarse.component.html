@@ -19,7 +19,7 @@
 <div class="container">
   <div class="row rowpadd" style="justify-content: center;" style="position: relative;">
     <app-cargando *ngIf="statuscharge==true"></app-cargando>
-    <div class="col-12 col-md-6 col-lg-6" style="text-align: center;">
+    <div class="col-12 col-md-6 col-lg-6" style="text-align: center;display: flex;flex-direction: column;justify-content: space-between;padding-bottom: 20px;">
       <div style="text-align: center;
       font-size: 20px;
       color: #6b6b6a;
@@ -31,13 +31,13 @@
       <div class="alert alert-danger" role="alert" *ngIf="errorRegister!=''" style="display: flex;align-items:center;justify-content:space-between;font-size: 14px;">
         {{errorRegister}} <i class="material-icons" style="margin-left: 20px;cursor: pointer;" (click)="errorRegister=''">close</i>
       </div>
-      <app-formulario [model]="register" [InputsDisable]="statuscharge" [CleanOnSubmit]="true" (OnSubmit)="Register($event)" [Color]="'#f8f8f8'"
+      <app-formulario [model]="register" [InputsDisable]="statuscharge" [CleanOnSubmit]="cleanSub" (OnSubmit)="Register($event)" [Color]="'#f8f8f8'"
         (OnValid)="formVal=$event" [fiels]="fileds" [Tipo]="1" (OnSelect)="SelectChage($event)" [ChargeValuesInit]="initValues">
 
         <ng-container contenido>
         </ng-container>
         <ng-container send>
-          <app-default-button [confs]="{color:'primary',titulo:'Iniciar sesión'}" [style]="'width: 100%;'" [disabled]="!formVal" ></app-default-button>
+          <app-default-button [confs]="{color:'primary',titulo:'Iniciar sesión'}" [style]="'width: 100%;'"  ></app-default-button>
         </ng-container>
 
       </app-formulario>

@@ -158,7 +158,7 @@ export class CursoCertificadoFisicoComponent implements OnInit,OnDestroy ,OnChan
       next:x=>{
         console.log(x)
         if(x.mensaje==''){
-          this._SnackBarServiceService.openSnackBar("Se genero la solicitud de su certificado satisfactoriamente",'x',15,"snackbarCrucigramaSucces");
+          this._SnackBarServiceService.openSnackBar("Se generó la solicitud de su certificado satisfactoriamente",'x',15,"snackbarCrucigramaSucces");
           this.OnGenerate.emit();
         }else{
           this._SnackBarServiceService.openSnackBar(x.mensaje,'x',15,"snackbarCrucigramaerror");

@@ -6,14 +6,23 @@
 <div style="border-top:solid 3px #f4f4f4 ;"></div>
 <div class="container">
   <div class="row rowpaddAv">
-    <div class="col-12 col-md-12 col-lg-12" style="padding: 0px;">
+    <div class="col-12 col-md-12 col-lg-12" style="position: relative;padding: 0px;">
+
+      <div class="openClose" [ngClass]="{'reverse':!hide}" (click)="hide=!hide">
+        <div class="contentIconMenu">
+          <i class="material-icons" *ngIf="!hide">arrow_back_ios_new</i>
+          <i class="material-icons" *ngIf="hide">arrow_forward_ios</i>
+        </div>
+      </div>
       <mat-tab-group class="tabVertical" [(selectedIndex)]="tabIndex" (selectedTabChange)="tabChanged($event)">
         <mat-tab>
           <ng-template mat-tab-label>
             <div class="contentHeaderM" [ngClass]="{'ActiveChil':IndicacionActive==true}">
               <div class="iconMat iconIndicaciones"></div>
-              <div class="titleMatr">Indicaciones</div>
-              <i class="material-icons" *ngIf="IndicacionActive==true" style="position: absolute;right: 5px;">keyboard_arrow_up</i>
+              <ng-container *ngIf="!hide">
+                <div class="titleMatr">Indicaciones</div>
+                <i class="material-icons" *ngIf="IndicacionActive==true" style="position: absolute;right: 5px;">keyboard_arrow_up</i>
+              </ng-container>
             </div>
           </ng-template>
           <div class="pad-resp">
@@ -68,7 +77,9 @@
           <ng-template mat-tab-label>
             <div class="contentHeaderM">
               <div class="iconMat iconModulos"></div>
-              <div class="titleMatr">Modulos</div>
+              <ng-container *ngIf="!hide">
+                <div class="titleMatr">Modulos</div>
+              </ng-container>
             </div>
           </ng-template>
           <div class="pad-resp">

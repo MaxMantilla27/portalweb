@@ -78,11 +78,30 @@ export class CursoProyectoComponent implements OnInit,OnChanges,OnDestroy {
   minValue(array:Array<any>){
     return Math.min(...array.map(o => o.valor))
   }
+  mensajeError(){
+    this._SnackBarServiceService.openSnackBar('Aún no puedes subir otra versión de tu proyecto, comunícate con tu asistente de atención al cliente.','x',
+    10,'snackbarCrucigramaerror')
+  }
   ObtenerEvaluacionProyectoAplicacion(){
     this._TareaEvaluacionService.ObtenerEvaluacionProyectoAplicacion(this.params).pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
         console.log(x)
         this.proyecto=x
+        this.proyecto.habilitado=true
+        if(this.proyecto.registroEvaluacionArchivo.length>0){
+          if(this.proyecto.registroEvaluacionArchivo[this.proyecto.registroEvaluacionArchivo.length-1].calificado==false){
+            this.proyecto.habilitado=false
+          }else{
+            var nota=this.proyecto.registroEvaluacionArchivo[this.proyecto.registroEvaluacionArchivo.length-1].notaProyecto.valorEscala;
+            if(nota==null){
+              this.proyecto.habilitado=false
+            }else{
+              if(nota>60){
+                this.proyecto.habilitado=false
+              }
+            }
+          }
+        }
       }
     })
   }

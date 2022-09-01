@@ -58,6 +58,8 @@ export class DocenciaTareasComponent implements OnInit,OnDestroy {
   public calificacion=0;
   public cargaEnvio=false;
   public usuario=''
+  public instruccionesAcerca=false;
+  public instruccionesSubir=false
   public nota:Array<ParametroNotaRegistrarV3DTO>=[]
   // {
   //   Id:0,
@@ -233,5 +235,12 @@ export class DocenciaTareasComponent implements OnInit,OnDestroy {
         console.log(x)
       }
     })
+  }
+
+  maxValue(array:Array<any>){
+    return Math.max(...array.map(o => o.valor))
+  }
+  minValue(array:Array<any>){
+    return Math.min(...array.map(o => o.valor))
   }
 }

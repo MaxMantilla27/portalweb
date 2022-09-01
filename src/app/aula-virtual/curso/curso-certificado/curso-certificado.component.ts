@@ -52,6 +52,8 @@ export class CursoCertificadoComponent implements OnInit,OnChanges,OnDestroy {
   public charge=false
   @Output() OnValidation = new EventEmitter<void>();
   @Output() OnGenerate = new EventEmitter<void>();
+  @Output() OnCloseAlertaDigital = new EventEmitter<void>();
+  @Output() OnCloseAlertaFisico = new EventEmitter<void>();
   ngOnInit(): void {
     this._HelperService.recibirCombosPerfil.pipe(takeUntil(this.signal$)).subscribe((x:any) => {
       this.json.Nombres=x.datosAlumno.nombres
@@ -73,7 +75,7 @@ export class CursoCertificadoComponent implements OnInit,OnChanges,OnDestroy {
       if(this.datosCertificado.nombreArchivo==null || this.datosCertificado.nombreArchivo==''){
         this._SnackBarServiceService.openSnackBar("Ocurrió un error, comunícate con tu asesor",'x',10,"snackbarCrucigramaerror");
       }else{
-        this._SnackBarServiceService.openSnackBar("Se genero su certificado exitosamente",'x',15,"snackbarCrucigramaSucces");
+        this._SnackBarServiceService.openSnackBar("Se generó su certificado exitosamente",'x',15,"snackbarCrucigramaSucces");
         window.open('https://repositorioweb.blob.core.windows.net/operaciones/comprobantes/'+this.datosCertificado.nombreArchivo, "_blank");
       }
     }

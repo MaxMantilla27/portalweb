@@ -1,5 +1,5 @@
 <mat-card class="card-matriculas">
-  <img mat-card-image [src]="cardContent.Img"  [alt]="cardContent.ImgAlt" (error)="updateUrl()">
+  <img mat-card-image [src]="cardContent.Img" [routerLink]="cardContent.Url" [alt]="cardContent.ImgAlt" (error)="updateUrl()">
   <mat-card-content>
     <div *ngIf="cardContent.Tipo==2" class="matriculaicon">
 

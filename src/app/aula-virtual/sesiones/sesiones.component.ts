@@ -1,8 +1,12 @@
+import { isPlatformBrowser } from '@angular/common';
 import {
+  AfterViewInit,
   Component,
+  Inject,
   OnChanges,
   OnDestroy,
   OnInit,
+  PLATFORM_ID,
   SimpleChanges,
   ViewEncapsulation,
 } from '@angular/core';
@@ -14,6 +18,7 @@ import { ParametrosEstructuraEspecificaDTO } from 'src/app/Core/Models/Estructur
 import { AlumnosTest } from 'src/app/Core/Shared/AlumnosTest';
 import { ProgramaContenidoService } from 'src/app/Core/Shared/Services/ProgramaContenido/programa-contenido.service';
 import { SessionStorageService } from 'src/app/Core/Shared/Services/session-storage.service';
+import { SnackBarServiceService } from 'src/app/Core/Shared/Services/SnackBarService/snack-bar-service.service';
 
 @Component({
   selector: 'app-sesiones',
@@ -21,14 +26,23 @@ import { SessionStorageService } from 'src/app/Core/Shared/Services/session-stor
   styleUrls: ['./sesiones.component.scss'],
   encapsulation: ViewEncapsulation.None,
 })
-export class SesionesComponent implements OnInit,OnDestroy {
+export class SesionesComponent implements OnInit,OnDestroy,AfterViewInit {
   private signal$ = new Subject();
+  isBrowser: boolean;
   constructor(
     private _ActivatedRoute: ActivatedRoute,
     private _ProgramaContenidoService: ProgramaContenidoService,
     private _SessionStorageService: SessionStorageService,
-    private _AlumnosTest:AlumnosTest
-  ) {}
+    @Inject(PLATFORM_ID) platformId: Object,
+    private _AlumnosTest:AlumnosTest,
+    private _SnackBarServiceService:SnackBarServiceService
+  ) {
+    this.isBrowser = isPlatformBrowser(platformId);
+  }
+  public minH=0
+  ngAfterViewInit(): void {
+
+  }
 
   tabLoadTimes: Date[] = [];
   public migaPan = [
@@ -75,7 +89,8 @@ export class SesionesComponent implements OnInit,OnDestroy {
     });
   }
 
-  siguiente(tipo: number, indexc: number, index: number, indexss: number) {
+  siguiente(tipo: number, indexc: number, index: number, indexss: number,solohabilitar:boolean) {
+    var indexI=this.tabIndex
     var maxindexc =
       this.estructuraCapitulo.registroEstructuraCursoCapitulo.length - 1;
     if (tipo == 1) {
@@ -177,6 +192,9 @@ export class SesionesComponent implements OnInit,OnDestroy {
     }
     this.tabIndex++;
     this.GetvalueByIndex();
+    if(solohabilitar==true){
+      this.tabIndex=indexI;
+    }
   }
   anterior(tipo: number, indexc: number, index: number, indexss: number) {
     this.tabIndex--;
@@ -217,6 +235,8 @@ export class SesionesComponent implements OnInit,OnDestroy {
   }
   GetvalueByIndex() {
     var ndx = 0;
+    console.log(this.tabIndex)
+    console.log(this.estructuraCapitulo.registroEstructuraCursoCapitulo)
     this.estructuraCapitulo.registroEstructuraCursoCapitulo.forEach(
       (c: any) => {
         c.opened = false;
@@ -230,6 +250,7 @@ export class SesionesComponent implements OnInit,OnDestroy {
             }
           }
         });
+        console.log('e-'+ndx)
         c.registroEstructuraCursoSesion.forEach((s: any) => {
           ndx++;
           if (this.estructuraCapitulo.contineSubSesion == true) {
@@ -251,6 +272,7 @@ export class SesionesComponent implements OnInit,OnDestroy {
             }
           }
         });
+        console.log('s-'+ndx)
         c.registroEstructuraCursoTarea.forEach((t: any) => {
           ndx++;
           if (ndx == this.tabIndex) {
@@ -259,6 +281,8 @@ export class SesionesComponent implements OnInit,OnDestroy {
             t.habilitado=true;
           }
         });
+
+        console.log('t-'+ndx)
         c.registroCursoTareaCalificar.forEach((tc: any) => {
           ndx++;
           if (ndx == this.tabIndex) {
@@ -267,15 +291,20 @@ export class SesionesComponent implements OnInit,OnDestroy {
             tc.habilitado=true;
           }
         });
+        console.log('tt-'+ndx)
         c.registroEstructuraCursoEncuesta.forEach((e: any) => {
-          ndx++;
-          if (ndx == this.tabIndex) {
-            e.charge = true;
-            c.opened = true;
-            e.habilitado=true;
+          if (e.nombreEncuesta != 'Encuesta Inicial') {
+            ndx++;
+            if (ndx == this.tabIndex) {
+              e.charge = true;
+              c.opened = true;
+              e.habilitado=true;
+            }
           }
         });
+        console.log('e2-'+ndx)
         ndx++;
+        console.log(ndx)
       }
     );
   }
@@ -898,6 +927,9 @@ export class SesionesComponent implements OnInit,OnDestroy {
         },
       });
   }
+  mensajeDisable(){
+    this._SnackBarServiceService.openSnackBar('Debes completar las actividades anteriores para continuar con esta actividad','x',10,'snackbarCrucigramaerror');
+  }
   changeTab(
     tipo: number,
     sesion: number,
@@ -905,19 +937,15 @@ export class SesionesComponent implements OnInit,OnDestroy {
     indexSesion: number,
     indexSubsesion: number
   ) {
+    console.log('-------------')
     this.tipo = tipo;
     this.idSesion = sesion;
     if (tipo == 1) {
       if (indexSubsesion == -1) {
-        this.estructuraCapitulo.registroEstructuraCursoCapitulo[
-          index
-        ].registroEstructuraCursoSesion[indexSesion].charge = true;
+        this.estructuraCapitulo.registroEstructuraCursoCapitulo[index].registroEstructuraCursoSesion[indexSesion].charge = true;
       } else {
-        this.estructuraCapitulo.registroEstructuraCursoCapitulo[
-          index
-        ].registroEstructuraCursoSesion[
-          indexSesion
-        ].registroEstructuraCursoSubSesion[indexSubsesion].charge = true;
+        this.estructuraCapitulo.registroEstructuraCursoCapitulo[index].
+        registroEstructuraCursoSesion[indexSesion].registroEstructuraCursoSubSesion[indexSubsesion].charge = true;
       }
     }
     if (tipo == 2) {
@@ -1021,7 +1049,6 @@ export class SesionesComponent implements OnInit,OnDestroy {
           if (x.registroEstructuraCursoEncuesta != null) {
             if (this.tipo == 3) {
               x.registroEstructuraCursoEncuesta.forEach((enc: any) => {
-                e++;
                 enc.charge = false;
                 if (enc.idEncuesta == this.idSesion) {
                   if (enc.nombreEncuesta == 'Encuesta Inicial') {
@@ -1117,9 +1144,9 @@ export class SesionesComponent implements OnInit,OnDestroy {
             });
           }
           if (x.registroEstructuraCursoTarea != null) {
-            t++;
-            if (this.tipo == 2) {
-              x.registroEstructuraCursoTarea.forEach((tarea: any) => {
+            x.registroEstructuraCursoTarea.forEach((tarea: any) => {
+              t++;
+              if (this.tipo == 2) {
                 tarea.charge = false;
                 if (tarea.idTarea == this.idSesion) {
                   tarea.charge = true;
@@ -1139,13 +1166,14 @@ export class SesionesComponent implements OnInit,OnDestroy {
                   //     this.idSesion,
                   // });
                 }
-              });
-            }
+              }
+
+            });
           }
           if (x.registroCursoTareaCalificar != null) {
-            if (this.tipo == 4) {
-              x.registroCursoTareaCalificar.forEach((tareaC: any) => {
-                tc++;
+            x.registroCursoTareaCalificar.forEach((tareaC: any) => {
+              tc++;
+              if (this.tipo == 4) {
                 tareaC.charge = false;
                 if (tareaC.id == this.idSesion) {
                   tareaC.charge = true;
@@ -1165,8 +1193,9 @@ export class SesionesComponent implements OnInit,OnDestroy {
                   //     this.idSesion,
                   // });
                 }
-              });
-            }
+              }
+
+            });
           }
         } else {
           if (x.numeroCapitulo < this.idcapitulo) {
@@ -1213,7 +1242,7 @@ export class SesionesComponent implements OnInit,OnDestroy {
         c++;
       }
     );
-
+    console.log(e)
     this.estructuraCapitulo.registroEstructuraCursoCapitulo.forEach(
       (x: any) => {
         if (
@@ -1222,35 +1251,50 @@ export class SesionesComponent implements OnInit,OnDestroy {
           this.tipo == 3
         ) {
           x.registroEstructuraCursoEncuesta.forEach((enc: any) => {
-            e++;
-            if (enc.idEncuesta == this.idSesion) {
-              if (enc.nombreEncuesta != 'Encuesta Inicial') {
-                enc.charge = true;
-                this.tabIndex += ss + s + t + e;
-                // this.migaPan.push({
-                //   titulo: enc.nombreEncuesta,
-                //   urlWeb:
-                //     '/AulaVirtual/MisCursos/' +
-                //     this.json.IdMatriculaCabecera +
-                //     '/' +
-                //     this.idPEspecificoHijo +
-                //     '/' +
-                //     this.tipo +
-                //     '/' +
-                //     this.idcapitulo +
-                //     '/' +
-                //     this.idSesion,
-                // });
-              }
+            if (enc.nombreEncuesta != 'Encuesta Inicial') {
+              e++;
+              if (enc.idEncuesta == this.idSesion) {
+                  console.log('--------------')
+                  console.log(enc)
+                  console.log('--------------')
+                  enc.charge = true;
+                  console.log(this.tabIndex)
+                  console.log(ss+'-' + s+'-' + t+'-' + e+'-'+tc)
+                  this.tabIndex += ss + s + t+e+tc ;
+                  // this.migaPan.push({
+                  //   titulo: enc.nombreEncuesta,
+                  //   urlWeb:
+                  //     '/AulaVirtual/MisCursos/' +
+                  //     this.json.IdMatriculaCabecera +
+                  //     '/' +
+                  //     this.idPEspecificoHijo +
+                  //     '/' +
+                  //     this.tipo +
+                  //     '/' +
+                  //     this.idcapitulo +
+                  //     '/' +
+                  //     this.idSesion,
+                  // });
+                }
             }
           });
         }
       }
     );
     this.tabIndex--;
+    console.log(this.tabIndex)
+    if(this.isBrowser){
+      setTimeout(() => {
+        var element=document.getElementsByClassName('mat-tab-labels')[0]
+
+        console.log(element.clientHeight)
+        this.minH=document.getElementsByClassName('mat-tab-labels')[0].clientHeight
+        console.log(this.minH)
+      }, 1000);
+    }
   }
   tabChanged(tabChangeEvent: MatTabChangeEvent): void {
     // console.log('tabChangeEvent => ', tabChangeEvent);
-    // console.log('index => ', tabChangeEvent.index);
+    console.log('index => ', tabChangeEvent.index);
   }
 }

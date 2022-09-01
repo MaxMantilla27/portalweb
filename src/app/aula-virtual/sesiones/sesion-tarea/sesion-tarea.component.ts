@@ -37,6 +37,7 @@ export class SesionTareaComponent implements OnInit,OnChanges,OnDestroy {
 
   @Output() next: EventEmitter<void> = new EventEmitter<void>();
   @Output() prev: EventEmitter<void> = new EventEmitter<void>();
+  @Output() onFinish: EventEmitter<void> = new EventEmitter<void>();
   public params:ParametroObtenerEvaluacionTarea={
     id:0,
     idEvaluacion:0,
@@ -151,6 +152,7 @@ export class SesionTareaComponent implements OnInit,OnChanges,OnDestroy {
               console.log(this.progress)
             } else if (x instanceof HttpResponse) {
               this.progress=0;
+              this.onFinish.emit()
               if(x.body==true){
                 this.ObtenerEvaluacionTarea()
               }else{

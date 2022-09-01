@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Subject,takeUntil } from 'rxjs';
 import { QuejaSugerenciaDTO } from 'src/app/Core/Models/QuejaSugerenciaDTO';
 import { QuejaSugerenciaService } from 'src/app/Core/Shared/Services/QuejaSugerencia/queja-sugerencia.service';
+import { SnackBarServiceService } from 'src/app/Core/Shared/Services/SnackBarService/snack-bar-service.service';
 
 @Component({
   selector: 'app-modulo-ayuda-quejas-sugerencias',
@@ -14,7 +15,8 @@ export class ModuloAyudaQuejasSugerenciasComponent implements OnInit,OnDestroy {
   public userForm: FormGroup = new FormGroup({});
   constructor(
     private fb: FormBuilder,
-    private _QuejaSugerenciaService:QuejaSugerenciaService
+    private _QuejaSugerenciaService:QuejaSugerenciaService,
+    private _SnackBarServiceService:SnackBarServiceService
   ){ this.userForm =fb.group({
     IdTipoQuejaSugerencia: ['', [Validators.required]],
     Descripcion: ['', [Validators.required]],
@@ -57,7 +59,10 @@ export class ModuloAyudaQuejasSugerenciasComponent implements OnInit,OnDestroy {
     this._QuejaSugerenciaService.RegistrarPortalQuejaSugerencia(this.RegistroQuejaSugerencia).pipe(takeUntil(this.signal$)).subscribe({
       next: (x) => {
         console.log(x);
-        this.VolverAtras();
+        var nametipo=this.Tipo.find((x:any)=>x.id==this.RegistroQuejaSugerencia.idTipoQuejaSugerencia).nombre
+        this.userForm.reset()
+        this._SnackBarServiceService.openSnackBar("La "+nametipo+' se registró correctamente','x',5,"snackbarCrucigramaSucces");
+        //this.VolverAtras();
       },
     })
   }

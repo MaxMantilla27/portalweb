@@ -15,7 +15,7 @@
       (mousemove)="resise($event)">
       <div style="display: flex;
       align-items: center;" [ngClass]="{'containerVideo': tipo == 3}"
-        [ngStyle]="{'width':tipo==3?whidth>0?'calc(45% - '+whidth+'px)':'calc(45% + '+whidth*-1+'px)':tipo==2?'100%':'0px'}">
+        [ngStyle]="{'width':(tipo==3 || tipo==2)?whidth>0?'calc(45% - '+whidth+'px)':'calc(45% + '+whidth*-1+'px)':tipo==2?'100%':'0px'}">
         <ng-container *ngIf="videoData.objetoConfigurado.idVideoBrightcove!='0' &&
           videoData.objetoConfigurado.idVideoBrightcove!=null &&
           videoData.objetoConfigurado.idVideoBrightcove!=undefined">

@@ -22,6 +22,8 @@ export class ChatPruebaComponent implements OnInit {
       .withAutomaticReconnect()
       .withUrl(this.urlSignal+"hubIntegraHub?idUsuario="+this.idUsuario+"&&usuarioNombre="+this.usuarioNombre+"&&rooms="+this.rooms+"").build();
 
+    console.log(this.hubConnection)
+
     this.ConectarSocket();
     this.hubConnection.onclose(() => {
       setTimeout(()=>{

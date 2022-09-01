@@ -1,0 +1,37 @@
+<div class="cursoTitle">{{Capitulo}}</div>
+<div class="row" style="align-items: center;">
+  <div class="tipoIndicacionTitle col-12 col-md-12 col-lg-12">
+    <i class="material-icons">ondemand_video</i>
+    <div style="font-weight: bold;">Clases Grabadas</div>
+  </div>
+</div>
+<ng-container *ngIf="videos!=undefined && videos.length>0 ">
+  <ng-container *ngFor="let item of videos;let i = index">
+    <div class="contentCursoModulo">
+      <div class="headerCursoModulo row" (click)="Open(i)">
+        <div class="titleCursoModulo col-12 col-md-12 col-lg-12 row">
+          {{item.nombreSesion}}
+          <div class="matriculaicon col-11">
+            <div class="fechasVideo row">
+              <div class="col-11 col-md-6 col-lg-6" style="display: flex;">
+                <div style="margin-right: 10px;">fecha inicio:</div>
+                <div>{{item.fechaInicio | date:'yyyy-MM-dd'}}</div>
+              </div>
+              <div class="col-12 col-md-6 col-lg-6" style="display: flex;">
+                <div style="margin-right: 10px;">fecha final:</div>
+                <div>{{item.fechaFin | date:'yyyy-MM-dd'}}</div>
+              </div>
+            </div>
+          </div>
+          <div class="col-1">
+            <i class="material-icons" *ngIf="item.open==false">arrow_drop_down</i>
+            <i class="material-icons" *ngIf="item.open==true">arrow_drop_up</i>
+          </div>
+        </div>
+      </div>
+      <div class="vimeoVideo" *ngIf="item.open==true" [innerHtml]="item.idVideo | safeHtml">
+
+      </div>
+    </div>
+  </ng-container>
+</ng-container>

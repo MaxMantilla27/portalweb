@@ -2,10 +2,10 @@
 <mat-toolbar color="primary" *ngIf="!responsive">
 
   <div class="div-icon">
-    <img src="../../../../../assets/icons/icono-menu-responsive.svg" alt="" (click)="OnClick.emit()">
+    <img src="../../../../../assets/icons/icono-menu-responsive.svg" width="20" height="20" alt="" loading="eager" (click)="OnClick.emit()">
     <!-- <mat-icon (click)="OnClick.emit()">menu</mat-icon> -->
   </div>
-  <img class="logoHeader" src="https://img.bsginstitute.com/repositorioweb/img/logobsg.svg" alt="" [routerLink]="'/'">
+  <img class="logoHeader" src="https://img.bsginstitute.com/repositorioweb/img/logobsg.svg" width="160" loading="eager" [routerLink]="'/'">
 
   <div class="botones_login hideItemHeader">
     <app-select [dataUrl]="paises" [tipo]="3" [valueDefecto]="CodigoIso" (Cambio)="ChangePais($event)" [token]="token" *ngIf="CodigoIso!=''">
@@ -21,7 +21,7 @@
     </div>
 
     <app-button [Url]="'/login'" [tipo]="4" [class]="'ButtonReplace'" [color]="'white'" [background]="'#FCA534'" [border]="'solid 1px #895800'"
-      *ngIf="!token" [img]="'user-azul.svg'">
+      *ngIf="!token" [img]="'user-azul.svg'" >
       <ng-container contenidoButton>
         Ingresar
       </ng-container>

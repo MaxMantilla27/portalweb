@@ -47,7 +47,7 @@
             <app-default-button [confs]="{color:'primary',titulo:'Matricularme Ahora'}" [style]="'width: 100%;'"
               (ButtoclClick)="OpenModalPago()" [disabled]="cabecera.listProgramaEspecificoInformacionDTO.length==0"></app-default-button>
           </div>
-          <div class="col-12 col-md-12 col-lg-6 ">
+          <div class="col-12 col-md-12 col-lg-6 " *ngIf="esAonline==true">
             <app-default-button [confs]="{color:'primary',titulo:'Acceso de prueba gratis'}" [style]="'width: 100%;'"
               (ButtoclClick)="RegistrarProgramaPrueba()"></app-default-button>
           </div>
@@ -188,7 +188,7 @@
           Registra tus datos para que un asesor especializado pueda ayudarte en todo lo que requieras
         </div>
         <ng-container *ngIf="combosPrevios!=undefined">
-          <app-formulario [model]="formularioContacto" [InputsDisable]="statuscharge" [CleanOnSubmit]="true" (OnSubmit)="SetContacto($event)"
+          <app-formulario [model]="formularioContacto" [InputsDisable]="statuscharge" [CleanOnSubmit]="cleanSub" (OnSubmit)="SetContacto($event)"
           (OnValid)="formVal=$event" [fiels]="fileds" (OnSelect)="SelectChage($event)">
 
           <ng-container contenido>
@@ -204,7 +204,7 @@
         </app-formulario>
         </ng-container>
         <ng-container *ngIf="combosPrevios==undefined">
-          <app-formulario [model]="formularioContacto" [InputsDisable]="statuscharge" [CleanOnSubmit]="true" (OnSubmit)="SetContacto($event)"
+          <app-formulario [model]="formularioContacto" [InputsDisable]="statuscharge" [CleanOnSubmit]="cleanSub" (OnSubmit)="SetContacto($event)"
           (OnValid)="formVal=$event" [fiels]="fileds" (OnSelect)="SelectChage($event)">
 
           <ng-container contenido>

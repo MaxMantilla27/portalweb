@@ -15,6 +15,7 @@ import { HelperService } from 'src/app/Core/Shared/Services/helper.service';
 import { RegionService } from 'src/app/Core/Shared/Services/Region/region.service';
 import { SessionStorageService } from 'src/app/Core/Shared/Services/session-storage.service';
 import {timer} from 'rxjs'
+import { SnackBarServiceService } from 'src/app/Core/Shared/Services/SnackBarService/snack-bar-service.service';
 declare const fbq:any;
 declare const gtag:any;
 @Component({
@@ -37,6 +38,7 @@ export class RegistrarseComponent implements OnInit,OnDestroy {
     private title:Title,
     private meta:Meta,
     @Inject(PLATFORM_ID) platformId: Object,
+    private _SnackBarServiceService: SnackBarServiceService,
   ) {
     this.isBrowser = isPlatformBrowser(platformId); {}
   }
@@ -78,6 +80,7 @@ export class RegistrarseComponent implements OnInit,OnDestroy {
     IdIndustria: undefined,
     Password: '',
   };
+  public cleanSub=false
   registerSend: RegisterDTO = {
     Nombres: '',
     Apellidos: '',
@@ -102,76 +105,87 @@ export class RegistrarseComponent implements OnInit,OnDestroy {
     this.ObtenerCombosPortal();
   }
   Register(value: any) {
-    this.initValues = false;
-    this.statuscharge = true;
-    this.register = value;
+    if (!this.formVal) {
+      this._SnackBarServiceService.openSnackBar(
+        'Debes completar todos los campos',
+        'x',
+        10,
+        'snackbarCrucigramaerror'
+      );
+    } else {
+      this.initValues = false;
+      this.statuscharge = true;
+      this.register = value;
 
-    this.registerSend.Nombres=this.register.Nombres,
-    this.registerSend.Apellidos=this.register.Apellidos,
-    this.registerSend.Email=this.register.Email,
-    this.registerSend.IdPais=this.register.IdPais,
-    this.registerSend.IdRegion=this.register.IdRegion,
-    this.registerSend.Movil=this.register.Movil,
-    this.registerSend.IdCargo=this.register.IdCargo,
-    this.registerSend.IdAreaFormacion=this.register.IdAreaFormacion,
-    this.registerSend.IdAreaTrabajo=this.register.IdAreaTrabajo,
-    this.registerSend.IdIndustria=this.register.IdIndustria,
-    this.registerSend.Password=this.register.Password
+      this.registerSend.Nombres=this.register.Nombres,
+      this.registerSend.Apellidos=this.register.Apellidos,
+      this.registerSend.Email=this.register.Email,
+      this.registerSend.IdPais=this.register.IdPais,
+      this.registerSend.IdRegion=this.register.IdRegion,
+      this.registerSend.Movil=this.register.Movil,
+      this.registerSend.IdCargo=this.register.IdCargo,
+      this.registerSend.IdAreaFormacion=this.register.IdAreaFormacion,
+      this.registerSend.IdAreaTrabajo=this.register.IdAreaTrabajo,
+      this.registerSend.IdIndustria=this.register.IdIndustria,
+      this.registerSend.Password=this.register.Password
 
-    var idPEspecifico=this._SessionStorageService.SessionGetValueCokies("IdPEspecificoPublicidad");
-    var CategoriaDato=this._SessionStorageService.SessionGetValueCokies("idCategoria");
-    this.registerSend.CategoriaDato=CategoriaDato==''?0:parseInt(CategoriaDato);
-    if(idPEspecifico==''){
-      this.registerSend.IdPEspecifico=0
-      this.registerSend.Tipo=''
-    }else{
-      this.registerSend.IdPEspecifico=parseInt(idPEspecifico)
-      var pago=this._SessionStorageService.SessionGetValueCokies("PagoPublicidad");
-      this.registerSend.Tipo=pago=='1'?'pago':'accesopruebagratis'
-    }
-    this._AccountService.RegistrarseAlumno(this.registerSend).pipe(takeUntil(this.signal$)).subscribe({
-      next: (x) => {
-        if (x.excepcionGenerada != undefined && x.excepcionGenerada == true) {
+      var idPEspecifico=this._SessionStorageService.SessionGetValueCokies("IdPEspecificoPublicidad");
+      var CategoriaDato=this._SessionStorageService.SessionGetValueCokies("idCategoria");
+      this.registerSend.CategoriaDato=CategoriaDato==''?0:parseInt(CategoriaDato);
+      if(idPEspecifico==''){
+        this.registerSend.IdPEspecifico=0
+        this.registerSend.Tipo=''
+      }else{
+        this.registerSend.IdPEspecifico=parseInt(idPEspecifico)
+        var pago=this._SessionStorageService.SessionGetValueCokies("PagoPublicidad");
+        this.registerSend.Tipo=pago=='1'?'pago':'accesopruebagratis'
+      }
+      this._AccountService.RegistrarseAlumno(this.registerSend).pipe(takeUntil(this.signal$)).subscribe({
+        next: (x) => {
+          if (x.excepcionGenerada != undefined && x.excepcionGenerada == true) {
+            this.statuscharge = false;
+            this.errorRegister = x.descripcionGeneral;
+            timer(20000).pipe(takeUntil(this.signal$)).subscribe(_=>{
+              this.errorRegister = '';
+            })
+          } else {
+
+            this.cleanSub=true
+            if(this.isBrowser){
+              console.log('------------------facebook(true)---------------------------');
+              console.log(fbq);
+              fbq('track', 'CompleteRegistration');
+              gtag('event', 'conversion', {
+                'send_to': 'AW-991002043/tnStCPDl6HUQu_vF2AM',
+              });
+              gtag('event', 'conversion', {
+                  'send_to': 'AW-732083338/jQrVCKmUkqUBEIrpit0C',
+              });
+            }
+            this.statuscharge = false;
+            this._SessionStorageService.SetToken(x.token);
+            this.DatoObservable.datoAvatar=true
+            this.DatoObservable.datoContenido=true
+            this._HelperService.enviarDatoCuenta(this.DatoObservable)
+            console.log(this.DatoObservable);
+            this.router.navigate(['/AulaVirtual/MisCursos']);
+          }
+        },
+        error: (e) => {
           this.statuscharge = false;
-          this.errorRegister = x.descripcionGeneral;
+          console.log(e);
+          this.errorRegister = e.error.excepcion.descripcionGeneral;
           timer(20000).pipe(takeUntil(this.signal$)).subscribe(_=>{
             this.errorRegister = '';
           })
-        } else {
 
-          if(this.isBrowser){
-            console.log('------------------facebook(true)---------------------------');
-            console.log(fbq);
-            fbq('track', 'CompleteRegistration');
-            gtag('event', 'conversion', {
-              'send_to': 'AW-991002043/tnStCPDl6HUQu_vF2AM',
-            });
-            gtag('event', 'conversion', {
-                'send_to': 'AW-732083338/jQrVCKmUkqUBEIrpit0C',
-            });
-          }
+        },
+        complete: () => {
           this.statuscharge = false;
-          this._SessionStorageService.SetToken(x.token);
-          this.DatoObservable.datoAvatar=true
-          this.DatoObservable.datoContenido=true
-          this._HelperService.enviarDatoCuenta(this.DatoObservable)
-          console.log(this.DatoObservable);
-          this.router.navigate(['/AulaVirtual/MisCursos']);
-        }
-      },
-      error: (e) => {
-        this.statuscharge = false;
-        console.log(e);
-        this.errorRegister = e.error.excepcion.descripcionGeneral;
-        timer(20000).pipe(takeUntil(this.signal$)).subscribe(_=>{
-          this.errorRegister = '';
-        })
+        },
+      });
 
-      },
-      complete: () => {
-        this.statuscharge = false;
-      },
-    });
+    }
 
   }
 
@@ -326,6 +340,14 @@ export class RegistrarseComponent implements OnInit,OnDestroy {
       valorInicial: '',
       validate: [Validators.required, Validators.minLength(6)],
       label: 'Password',
+    });
+    this.fileds.push({
+      nombre: 'terminos',
+      tipo: 'terminos',
+      valorInicial: '',
+      validate: [Validators.required,Validators.requiredTrue],
+      label: 'terminos',
+      style:'font-size: 12px;margin-bottom: 20px;'
     });
   }
 }

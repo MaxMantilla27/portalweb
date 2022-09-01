@@ -71,6 +71,7 @@ export class CursoComponent implements OnInit,OnDestroy {
   public alertaFisico=false;
   public generateCertificado=true
   public ircas:any
+  public videosOnline:Array<any>=[]
   public contenidotarea=
   '<iframe src="https://player.vimeo.com/video/737713694?h=ce19c25ba1" width="100%" height="564" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>'
   public contenidotareapares=
@@ -121,11 +122,18 @@ export class CursoComponent implements OnInit,OnDestroy {
       }
     })
   }
+  // listaRegistroVideoSesionProgramaSincronico(){
+  //   this._ProgramaContenidoService.listaRegistroVideoSesionProgramaSincronico(this.curso.idPEspecifico).pipe(takeUntil(this.signal$)).subscribe({
+  //     next:x=>{
+  //       this.videosOnline=x
+  //       console.log(x)
+  //     }
+  //   })
+  // }
   certificadoDigital(){
     console.log('-------')
     if(this.datosCertificado!=undefined){
       if((this.datosCertificado.idEstado_matricula!=5 && this.datosCertificado.idEstado_matricula!=12) || this.datosCertificado.nombreArchivo==null){
-        this.alertaDigital=false
         this.alertaDigital=true
       }
     }
@@ -161,10 +169,6 @@ export class CursoComponent implements OnInit,OnDestroy {
       masindicacion=-1
       noesAonline=-1
     }
-    console.log(this.curso)
-    console.log(this.curso.proyectoAplicacion)
-    console.log(this.programEstructura.idModalidad)
-    console.log(this.ircas)
     if(this.curso!=undefined && this.curso.proyectoAplicacion){
       if((tabChangeEvent.index >= (6+noesAonline+esirca) || tabChangeEvent.index < (4+noesAonline))  && this.CertificadoActive){
         this.CertificadoActive=false
@@ -201,35 +205,34 @@ export class CursoComponent implements OnInit,OnDestroy {
         this.curso=x
         var valorLoscalS=this._SessionStorageService.SessionGetValue('cursoIndex')==''?0:parseInt(this._SessionStorageService.SessionGetValue('cursoIndex'))
         if(this.curso!=undefined ){
-          if(this.curso!=undefined ){
-            if(valorLoscalS>1){
-              if(this.curso.proyectoAplicacion){
+          //this.listaRegistroVideoSesionProgramaSincronico()
+          if(valorLoscalS>1){
+            if(this.curso.proyectoAplicacion){
+              this.tabIndex=valorLoscalS;
+            }else{
+              this.tabIndex=valorLoscalS-1
+            }
+          }
+          if(this.curso.proyectoAplicacion){
+            if(valorLoscalS>4){
+              if(this.curso.webibarActivo){
                 this.tabIndex=valorLoscalS;
               }else{
                 this.tabIndex=valorLoscalS-1
               }
             }
-            if(this.curso.proyectoAplicacion){
-              if(valorLoscalS>4){
-                if(this.curso.webibarActivo){
-                  this.tabIndex=valorLoscalS;
-                }else{
-                  this.tabIndex=valorLoscalS-1
-                }
+          }else{
+            if(valorLoscalS>3){
+              if(this.curso.webibarActivo){
+                this.tabIndex=valorLoscalS;
+              }else{
+                this.tabIndex=valorLoscalS-1
               }
-            }else{
-              if(valorLoscalS>3){
-                if(this.curso.webibarActivo){
-                  this.tabIndex=valorLoscalS;
-                }else{
-                  this.tabIndex=valorLoscalS-1
-                }
-              }
-
             }
-            this.tabIndex=valorLoscalS;
-            console.log(this.tabIndex)
+
           }
+          this.tabIndex=valorLoscalS;
+          console.log(this.tabIndex)
         }
 
         this._SessionStorageService.SessionDeleteValue('cursoIndex');

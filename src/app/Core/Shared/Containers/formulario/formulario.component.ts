@@ -171,6 +171,11 @@ export class FormularioComponent implements OnChanges, OnInit,OnDestroy {
       } else {
         this.EnabledFields();
       }
+      console.log(this.CleanOnSubmit);
+      if(this.CleanOnSubmit==true){
+        this.myNgForm.resetForm();
+      }
+
     }
   }
   AddItemsForm() {
@@ -227,7 +232,6 @@ export class FormularioComponent implements OnChanges, OnInit,OnDestroy {
     this.model = obj;
     this.OnSubmit.emit(this.model);
     if(this.CleanOnSubmit==true){
-      this.myNgForm.resetForm();
       //this.userForm.reset();
     }
   }
@@ -276,7 +280,7 @@ export class FormularioComponent implements OnChanges, OnInit,OnDestroy {
       //return 'La longitud mínima es de ' + min + ' caracteres';
       var fls=this.fiels.find(x=>x.nombre==val);
       if(fls?.tipo=='phone'){
-        return 'la longitud debe ser de '+(this.min) +' digitos'
+        return 'La longitud debe ser de '+(this.min) +' dígitos'
       }
       return 'La longitud es incorrecta';
     }
@@ -285,7 +289,7 @@ export class FormularioComponent implements OnChanges, OnInit,OnDestroy {
       //return 'La longitud maxima es de ' + max + ' caracteres';
       var fls=this.fiels.find(x=>x.nombre==val);
       if(fls?.tipo=='phone'){
-        return 'la longitud debe ser de '+(this.min) +' digitos'
+        return 'La longitud debe ser de '+(this.min) +' dígitos'
       }
       return 'La longitud es incorrecta';
     }

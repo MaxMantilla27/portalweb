@@ -134,4 +134,12 @@ export class FormaPagoService {
       return EMPTY;
     }
   }
+  public ProcesamientoPagoOpenPay(ident:string):Observable<any>{
+    if(this.isBrowser){
+      return this.http.get<any>(this.urlBase+'/ProcesamientoPagoOpenPay?Id='+ident);
+    }else{
+      return EMPTY;
+    }
+  }
+
 }

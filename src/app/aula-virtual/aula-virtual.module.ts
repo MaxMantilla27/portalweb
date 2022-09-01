@@ -87,6 +87,8 @@ import { ConfirmacionPagoMultipagoComponent } from './confirmacion-pago-multipag
 import { CursoClaseOnlineComponent } from './curso/curso-clase-online/curso-clase-online.component';
 import { CursoSimuladoresComponent } from './curso/curso-simuladores/curso-simuladores.component';
 import { CursoCertificadoIrcaComponent } from './curso/curso-certificado-irca/curso-certificado-irca.component';
+import { CursoVideosSincronicoComponent } from './curso/curso-videos-sincronico/curso-videos-sincronico.component';
+import { ModuloVideosSincronicoComponent } from './modulo/modulo-videos-sincronico/modulo-videos-sincronico.component';
 
 
 
@@ -173,6 +175,8 @@ import { CursoCertificadoIrcaComponent } from './curso/curso-certificado-irca/cu
     CursoClaseOnlineComponent,
     CursoSimuladoresComponent,
     CursoCertificadoIrcaComponent,
+    CursoVideosSincronicoComponent,
+    ModuloVideosSincronicoComponent,
 
   ],
   imports: [

@@ -37,6 +37,7 @@ export class ModuloComponent implements OnInit,OnDestroy {
   public alertaPreguntasFrecuentes=false
   public alertaQuejasSugerencias=false
   public AyudaActive=false
+  public videosOnline:Array<any>=[]
   public json:ParametrosEstructuraEspecificaDTO={
 
     AccesoPrueba: false,
@@ -57,8 +58,17 @@ export class ModuloComponent implements OnInit,OnDestroy {
         this.idMatricula = parseInt(x['IdMatricula']);
         this.idPEspecificoHijo=x['idPEspecificoHijo'];
         this.ObtenerListadoProgramaContenido();
+        this.listaRegistroVideoSesionProgramaSincronico();
       },
     });
+  }
+  listaRegistroVideoSesionProgramaSincronico(){
+    this._ProgramaContenidoService.listaRegistroVideoSesionProgramaSincronico(this.idPEspecificoHijo).pipe(takeUntil(this.signal$)).subscribe({
+      next:x=>{
+        this.videosOnline=x
+        console.log(x)
+      }
+    })
   }
   ObtenerEstructuraEspecificaCurso(){
     this._ProgramaContenidoService.ObtenerEstructuraEspecificaCurso(this.json).pipe(takeUntil(this.signal$)).subscribe({
@@ -109,9 +119,20 @@ export class ModuloComponent implements OnInit,OnDestroy {
   tabChanged(tabChangeEvent: MatTabChangeEvent): void {
     console.log('tabChangeEvent => ', tabChangeEvent);
     console.log('index => ', tabChangeEvent.index);
-    if(tabChangeEvent.index == 5){
+    var mod=0
+    if(this.json.idModalidad!=1){
+      mod=-2
+    }
+    if(tabChangeEvent.index == (6+mod)){
       this.AyudaActive=true
     }
-  }
+    if(tabChangeEvent.index < (6+mod)){
+      this.AyudaActive=false
 
+    }
+
+  }
+  returnback(){
+    this._SessionStorageService.SessionSetValue('cursoIndex','1');
+  }
 }

@@ -107,6 +107,17 @@
   width: 75%;
   padding: 10px;
   border-radius: 3px;
+  .statemsjEnviado{
+    display: flex;
+    justify-content: flex-end;
+    position: relative;
+    i{
+      color:#92a58c;
+      position: absolute;
+      bottom: 0px;
+      font-size: 11px !important;
+    }
+  }
   .statemsjleido{
     display: flex;
     justify-content: flex-end;

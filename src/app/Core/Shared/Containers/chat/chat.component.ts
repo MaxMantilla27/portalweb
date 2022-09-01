@@ -76,6 +76,7 @@ export class ChatComponent implements OnInit,OnDestroy,OnChanges {
     this.signal$.complete()
   }
   ngOnInit(): void {
+    this.ObtenerConfiguracionChat();
     //this.ObtenerIdAlumnoPorUsuario(undefined)
     this._HelperService.recibirCombosPerfil.pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
@@ -94,6 +95,11 @@ export class ChatComponent implements OnInit,OnDestroy,OnChanges {
         this.hubConnection = new signalR.HubConnectionBuilder()
         .withAutomaticReconnect()
         .withUrl(this.urlSignal+"hubIntegraHub?idUsuario=11&&usuarioNombre=Anonimo&&rooms=633").build();
+
+
+        this.hubConnection.serverTimeoutInMilliseconds = 300000;
+        this.hubConnection.serverTimeoutInMilliseconds = 36000000;
+
 
         this.ConectarSocket();
         this.hubConnection.onclose(() => {
@@ -134,7 +140,20 @@ export class ChatComponent implements OnInit,OnDestroy,OnChanges {
     })
   }
   enviarmsj(){
+    this.mensajesAnteriore.push({
+      NombreRemitente:this.nombres,
+      Mensaje:this.chatBox,
+      IdRemitente:"visitante",
+      estadoEnviado:false
+    })
+
+    this.NroMensajesSinLeer++;
     this.idInteraccion=this.GetsesionIdInteraccion();
+
+    timer(100).pipe(takeUntil(this.signal$)).subscribe(_=>{
+      this.contenidoMsj.nativeElement.scrollTop=this.contenidoMsj.nativeElement.scrollHeight
+    })
+
     if (this.idInteraccion == null || this.idInteraccion == '') {
       this.mensajeChat()
     }else{
@@ -150,6 +169,14 @@ export class ChatComponent implements OnInit,OnDestroy,OnChanges {
       this.crearChatOfflineSoporte();
     }
     this.chatBox="";
+  }
+  ObtenerConfiguracionChat(){
+    this._ChatEnLinea.ObtenerConfiguracionChat().pipe(takeUntil(this.signal$)).subscribe({
+      next:x=>{
+        console.log(x)
+        this.configuration=x
+      }
+    })
   }
   ObtenerIdAlumnoPorUsuario(IdFaseOportunidadPortal?:any){
     this._GlobalService.ObtenerIdAlumnoPorUsuario().pipe(takeUntil(this.signal$)).subscribe({
@@ -218,11 +245,14 @@ export class ChatComponent implements OnInit,OnDestroy,OnChanges {
     this.hubConnection.invoke("actualizarDatosAlumno",this.IdAlumno,IdFaseOportunidadPortal);
   }
   crearChatOfflineSoporte(){
-    var idProgramaGenetalEstatico = this._SessionStorageService.SessionGetValue("IdPGeneral");
+    var idProgramaGenetalEstatico = parseInt(this._SessionStorageService.SessionGetValue("IdPGeneral"));
     this.hubConnection.invoke("crearChatOfflineSoporte",this.chatBox,idProgramaGenetalEstatico,this.idPais,this.idInteraccion);
   }
   crearChatOffline(){
-    var idProgramaGenetalEstatico = this._SessionStorageService.SessionGetValue("IdPGeneral");
+    var idProgramaGenetalEstatico = parseInt(this._SessionStorageService.SessionGetValue("IdPGeneral"));
+    console.log(idProgramaGenetalEstatico)
+    console.log(this.idPais)
+    console.log(this.chatBox)
     this.hubConnection.invoke("crearChatOffline",this.chatBox,idProgramaGenetalEstatico,this.idPais);
   }
   enviarMensajeVisitanteSoporteArchivo(url:string,idarchivo:number|null,tipo:string){
@@ -238,6 +268,9 @@ export class ChatComponent implements OnInit,OnDestroy,OnChanges {
         console.log(x);
         this.mensajesAnteriore=x
         if(this.mensajesAnteriore.length>0){
+          this.mensajesAnteriore.forEach((m:any) => {
+            m.estadoEnviado=true
+          });
           if(this.mensajesAnteriore[this.mensajesAnteriore.length-1].NroMensajesSinLeer!=undefined){
             this.NroMensajesSinLeer=this.mensajesAnteriore[this.mensajesAnteriore.length-1].NroMensajesSinLeer
 
@@ -288,6 +321,22 @@ export class ChatComponent implements OnInit,OnDestroy,OnChanges {
       if (existing) {
         this.AbrirChat.emit()
       }
+
+      if(!this.stateAsesor){
+        this.msjEnviado=this.configuration.textoSatisfaccionOffline
+        if(this.mensajesAnteriore.length==0){
+          this.mensajesAnteriore.push({
+            NombreRemitente:"",
+            Mensaje:this.configuration.textoInicial,
+            IdRemitente:"asesor",
+          })
+          // this.mensajesAnteriore.push({
+          //   NombreRemitente:this.nombres,
+          //   Mensaje:this.lastMsj,
+          //   IdRemitente:"visitante"
+          // })
+        }
+      }
     })
   }
   onlineStatus(){
@@ -315,21 +364,28 @@ export class ChatComponent implements OnInit,OnDestroy,OnChanges {
         let audio=new Audio('https://integrav4.bsginstitute.com/Content/sounds/newmsg.mp3')
         audio.play();
         this.mensajesAnteriore.push({
-          NombreRemitente:"",
+          NombreRemitente:this.nombreAsesorSplit[0],
           Mensaje:msg,
-          IdRemitente:"asesor"
+          IdRemitente:"asesor",
+          estadoEnviado:true
         })
       }
       if(flagfrom == 1){
-        this.mensajesAnteriore.push({
-          NombreRemitente:this.nombres,
-          Mensaje:msg,
-          IdRemitente:"visitante"
-        })
-        this.NroMensajesSinLeer++;
+        this.mensajesAnteriore.forEach((m:any) => {
+          if(m.estadoEnviado==false){
+            if(m.Mensaje==msg){
+              m.estadoEnviado=true
+            }
+          }
+        });
+        // this.mensajesAnteriore.push({
+        //   NombreRemitente:this.nombres,
+        //   Mensaje:msg,
+        //   IdRemitente:"visitante"
+        // })
       }
 
-      timer(1000).pipe(takeUntil(this.signal$)).subscribe(_=>{
+      timer(100).pipe(takeUntil(this.signal$)).subscribe(_=>{
         this.contenidoMsj.nativeElement.scrollTop=this.contenidoMsj.nativeElement.scrollHeight
       })
     })

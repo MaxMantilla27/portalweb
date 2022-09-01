@@ -11,7 +11,9 @@
     <div class="row" style="align-items: center;" style="margin: 30px 0px 0px;" *ngIf="tareas!=undefined">
       <div class="tipoIndicacionTitle col-12 col-md-12 col-lg-12" style="margin:0px;">
         <img class="ImgIndicacionesContent" src="../../../../assets/icons/tareas-23.svg">
-        <div>Calificacion de tarea de pares</div>
+
+        <div *ngIf="tareas.idTipoEvaluacionTrabajo==1">Calificacion de tarea de pares</div>
+        <div *ngIf="tareas.idTipoEvaluacionTrabajo==2">Calificación de Actividades de Evaluación</div>
       </div>
       <div><strong>{{tareas.datosTrabajoPares.descripcion}}</strong></div>
       <ng-container *ngIf="tareaAc!=undefined">
@@ -31,73 +33,92 @@
               </ng-container>
             </div>
             <div class="tareaParesContent row" *ngIf="item.open==true">
-
-              <div class="col-12 col-md-12 col-lg-12" style="display: flex;
-                  align-items: center;
-                  justify-content: flex-start;
-                  margin-top: 20px;">
-                <div style="    font-weight: 600;
-                    display: flex;
-                    width: 30px;
-                    height: 30px;
-                    background: #f4f4f4;
-                    border-radius: 50%;
-                    align-items: center;
-                    justify-content: center;
-                    margin-right: 20px;">1</div>
-                <div style="font-weight: 600;font-size: 18px;">Descarga la tarea que debes calificar</div>
-              </div>
-              <div class="col-12 col-md-12 col-lg-12" *ngIf="item!=undefined && item.fechaCalificacionLimite!=null" style="
-                    display: flex;
+              <ng-container *ngIf="tareas.idTipoEvaluacionTrabajo==1">
+                <div class="col-12 col-md-12 col-lg-12" style="display: flex;
                     align-items: center;
                     justify-content: flex-start;
-                    margin-left: 50px;
-                    margin-top: 20px;
-                    padding: 10px;
-                    background: #fff8f0;
-                    border: 1px solid #fff1e0;">
-                <img src="../../../../assets/icons/calendario-24.svg" alt="" style="width: 20px;
-                    margin-right: 20px;">
-                <strong>Fecha limite de calificacion: </strong> &nbsp;{{item.fechaCalificacionLimite | date:"dd/MM/yyyy"}}
+                    margin-top: 20px;">
+                  <div style="    font-weight: 600;
+                      display: flex;
+                      width: 30px;
+                      height: 30px;
+                      background: #f4f4f4;
+                      border-radius: 50%;
+                      align-items: center;
+                      justify-content: center;
+                      margin-right: 20px;">1</div>
+                  <div style="font-weight: 600;font-size: 18px;">Descarga la tarea que debes calificar</div>
+                </div>
+                <div class="col-12 col-md-12 col-lg-12" *ngIf="item!=undefined && item.fechaCalificacionLimite!=null" style="
+                      display: flex;
+                      align-items: center;
+                      justify-content: flex-start;
+                      margin-left: 50px;
+                      margin-top: 20px;
+                      padding: 10px;
+                      background: #fff8f0;
+                      border: 1px solid #fff1e0;">
+                  <img src="../../../../assets/icons/calendario-24.svg" alt="" style="width: 20px;
+                      margin-right: 20px;">
+                  <strong>Fecha limite de calificacion: </strong> &nbsp;{{item.fechaCalificacionLimite | date:"dd/MM/yyyy"}}
 
-              </div>
-              <div class="col-12 col-md-12 col-lg-12" style="display: flex;justify-content: center;margin-top: 20px;"
-                *ngIf="item!=undefined">
-                <img src="../../../../assets/icons/descarga-36.svg" alt="" style="width: 20px;
-                    margin-right: 20px;">
-                <a class="vinculo" [href]="item.direccionUrl" target="_blank">{{item.nombreArchivo}}</a>
-              </div>
-              <div class="col-12 col-md-12 col-lg-12" style="display: flex;
-                  align-items: center;
-                  justify-content: flex-start;
-                  margin-top: 60px;" >
-                <div style="    font-weight: 600;
-                    display: flex;
-                    width: 30px;
-                    height: 30px;
-                    background: #f4f4f4;
-                    border-radius: 50%;
+                </div>
+                <div class="col-12 col-md-12 col-lg-12" style="display: flex;justify-content: center;margin-top: 20px;"
+                  *ngIf="item!=undefined">
+                  <img src="../../../../assets/icons/descarga-36.svg" alt="" style="width: 20px;
+                      margin-right: 20px;">
+                  <a class="vinculo" [href]="item.direccionUrl" target="_blank">{{item.nombreArchivo}}</a>
+                </div>
+                <div class="col-12 col-md-12 col-lg-12" style="display: flex;
                     align-items: center;
-                    justify-content: center;
-                    margin-right: 20px;">2</div>
-                <div style="    font-weight: 600;
-                    font-size: 18px;">Califica la Tarea</div>
-              </div>
-              <div class="col-12 col-md-12 col-lg-12" *ngIf="item!=undefined" style="padding-left: 50px;margin-top: 10px;">
-                <p>A continuacion se explica la escala de calificación, que debes considerar para todos los criterios de
-                  evaluación
-                  de la tarea que debes calificar</p>
-                <table class="tablaTarea">
-                  <tr>
-                    <th style="    width: 88%;">Escala de calificación</th>
-                    <th>Puntaje</th>
-                  </tr>
-                  <tr *ngFor="let item of tareas.criteriosEvaluacion.listaParametroEscalaEvaluacion">
-                    <td>{{item.nombre}}</td>
-                    <td>{{item.valor }}</td>
-                  </tr>
+                    justify-content: flex-start;
+                    margin-top: 60px;" >
+                  <div style="    font-weight: 600;
+                      display: flex;
+                      width: 30px;
+                      height: 30px;
+                      background: #f4f4f4;
+                      border-radius: 50%;
+                      align-items: center;
+                      justify-content: center;
+                      margin-right: 20px;">2</div>
+                  <div style="    font-weight: 600;
+                      font-size: 18px;">Califica la Tarea</div>
+                </div>
 
-                </table>
+                <div class="col-12 col-md-12 col-lg-12" *ngIf="item!=undefined" style="padding-left: 50px;margin-top: 10px;">
+                  <p>A continuacion se explica la escala de calificación, que debes considerar para todos los criterios de
+                    evaluación
+                    de la tarea que debes calificar</p>
+                  <table class="tablaTarea">
+                    <tr>
+                      <th style="    width: 88%;">Escala de calificación</th>
+                      <th>Puntaje</th>
+                    </tr>
+                    <tr *ngFor="let item of tareas.criteriosEvaluacion.listaParametroEscalaEvaluacion">
+                      <td>{{item.nombre}}</td>
+                      <td>{{item.valor }}</td>
+                    </tr>
+
+                  </table>
+                </div>
+              </ng-container>
+              <ng-container *ngIf="tareas.idTipoEvaluacionTrabajo==2">
+                <div class="col-12 col-md-12 col-lg-12" *ngIf="item!=undefined" style="padding-left: 50px;margin-top: 10px;">
+                  <div class="row" style="width:100%;justify-content: space-between;">
+                    <div class="col-12 col-md-6 col-lg-6" >
+                      Nombre del archivo
+                    </div>
+                    <div class="col-12 col-md-6 col-lg-6" *ngIf="item!=undefined">
+                      <img src="../../../../assets/icons/descarga-36.svg" alt="" style="width: 20px;
+                          margin-right: 20px;">
+                      <a class="vinculo" [href]="item.direccionUrl" target="_blank">{{item.nombreArchivo}}</a>
+                    </div>
+                  </div>
+                </div>
+              </ng-container>
+              <div class="col-12 col-md-12 col-lg-12" *ngIf="item!=undefined" style="padding-left: 50px;margin-top: 10px;">
+
                 <ng-container *ngIf="item!=undefined && item.calificado==false">
                   <div style="    margin: 30px 0px;
                       font-weight: 600;">Seleccione la calificación para cada criterio de evaluación , y luego haz clic en "Calificar"
@@ -208,6 +229,11 @@
 
               <div class="col-4" style="margin-bottom: 15px;">Fecha de calificación : </div>
               <div class="col-8">{{item.fechaCalificacion | date:"dd/MM/yyyy"}}</div>
+
+              <ng-container *ngIf="tareas.idTipoEvaluacionTrabajo==1">
+                <div class="col-4" style="margin-bottom: 15px;">Nota : </div>
+                <div class="col-8">{{item.nota}}</div>
+              </ng-container>
               <ng-container *ngIf="tareas.idTipoEvaluacionTrabajo==2">
                 <div class="col-4" style="margin-bottom: 15px;">Comentario de Retroalimentación : </div>
                 <div class="col-8">{{item.retroalimentacion}}</div>
@@ -238,6 +264,107 @@
         </ng-container>
       </ng-container>
 
+      <div class="col-12 col-md-12 col-lg-12" style="margin: 50px 0px 10px;">
+        <div class="cabeceraExpandTarea" [ngClass]="{'cabeceraExpandTareaOpen':instruccionesAcerca}">
+          <div>Instrucciones acerca de la tarea</div>
+          <div>
+            <i class="material-icons no-seleccionable " *ngIf="!instruccionesAcerca"
+              (click)="instruccionesAcerca=true">keyboard_arrow_down</i>
+            <i class="material-icons no-seleccionable " *ngIf="instruccionesAcerca"
+              (click)="instruccionesAcerca=false">keyboard_arrow_up</i>
+          </div>
+        </div>
+        <div class="contentCabeceraTarea" *ngIf="instruccionesAcerca">
+          <ng-container
+            *ngIf="tareas.datosTrabajoPares.instruccionesEvaluacion!=null && tareas.datosTrabajoPares.instruccionesEvaluacion!=undefined">
+            <div *ngFor="let item of tareas.datosTrabajoPares.instruccionesEvaluacion">
+              <ng-container *ngIf="(item.titulo | lowercase).includes('anexo');else other">
+                <div [innerHtml]="item.contenido | safeHtml"></div>
+              </ng-container>
+              <ng-template #other>
+                <ng-container
+                  *ngIf="(item.titulo | lowercase).includes('cap') && (item.titulo | lowercase).includes('tulos');else otherCap">
+
+                </ng-container>
+                <ng-template #otherCap>
+                  <ng-container *ngIf="item.titulo.includes('Criterios de evaluaci');else noesquema">
+
+
+                    <ng-container
+                      *ngIf="tareas.criteriosEvaluacion!=null && tareas.criteriosEvaluacion!=undefined;else sincriterio">
+                      <div class="row" style="border-bottom: 1px solid rgba(0,0,0,.1); padding: 20px 0px;">
+                        <div class="col-md-12">
+                          <h4>
+                            <b [innerHtml]="item.titulo | safeHtml" class="titleCriterio">
+                            </b>
+                          </h4>
+                        </div>
+                        <div class="col-md-12">
+                          <table class="table table-bordered" style="font-size: 14px;
+                          font-weight: 100 !important;">
+                            <thead style="background:#f3f4f5">
+                              <tr>
+                                <th scope="col" class="text-center">Criterios de evaluación</th>
+                                <th scope="col" class="text-center">Ponderación</th>
+                                <th scope="col" class="text-center">Escala de calificación</th>
+                              </tr>
+                            </thead>
+                            <tbody style="    border-top: 0px;">
+                              <tr>
+                                <td>{{tareas.criteriosEvaluacion.nombreEscalaCalificacion}}</td>
+                                <td class="text-center">
+                                  {{tareas.criteriosEvaluacion.ponderacion}}
+                                </td>
+                                <td class="text-center">
+                                  {{minValue(tareas.criteriosEvaluacion.listaParametroEscalaEvaluacion)}} -
+                                  {{maxValue(tareas.criteriosEvaluacion.listaParametroEscalaEvaluacion)}} </td>
+                              </tr>
+                            </tbody>
+                          </table>
+
+                        </div>
+                      </div>
+                    </ng-container>
+
+                    <ng-template #sincriterio>
+                      <div class="row" style="border-bottom: 1px solid rgba(0,0,0,.1); padding: 20px 0px;">
+                        <div class="col-md-12">
+                          <h4 style="font-weight:400;">
+                            <b [innerHtml]="item.titulo | safeHtml" class="titleCriterio"></b>
+                          </h4>
+                        </div>
+                        <div class="col-md-12 contentCriterio">
+                          <div
+                            [innerHtml]="item.contenido.split('font-family:Arial, Helvetica,sans-serif;font-size:small;').join('') | safeHtml"
+                            class="contentCriterio"></div>
+
+                        </div>
+                      </div>
+                    </ng-template>
+                  </ng-container>
+                  <ng-template #noesquema>
+                    <div class="row" style="border-bottom: 1px solid rgba(0,0,0,.1); padding: 20px 0px;">
+                      <div class="col-md-12">
+                        <h4 style="font-weight:400;">
+                          <b [innerHtml]="item.titulo | safeHtml" class="titleCriterio"></b>
+                        </h4>
+                      </div>
+                      <div class="col-md-12 contentCriterio">
+                        <div
+                          [innerHtml]="item.contenido.split('font-family:Arial, Helvetica,sans-serif;font-size:small;').join('') | safeHtml"
+                          class="contentCriterio"></div>
+
+                      </div>
+                    </div>
+                  </ng-template>
+
+                </ng-template>
+              </ng-template>
+
+            </div>
+          </ng-container>
+        </div>
+      </div>
 
     </div>
 

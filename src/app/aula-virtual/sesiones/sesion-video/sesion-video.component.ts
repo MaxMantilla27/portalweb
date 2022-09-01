@@ -44,6 +44,7 @@ export class SesionVideoComponent implements OnInit,OnChanges,OnDestroy {
   @Input() nextChapter:any;
   @Output() next: EventEmitter<void> = new EventEmitter<void>();
   @Output() prev: EventEmitter<void> = new EventEmitter<void>();
+  @Output() onFinish: EventEmitter<void> = new EventEmitter<void>();
   public AbrirModal=false
   public crucigrama:ParametrosCrucigramaVideoSesionDTO={
     AccesoPrueba:false,
@@ -98,7 +99,7 @@ export class SesionVideoComponent implements OnInit,OnChanges,OnDestroy {
         }
         if(this.videoData.tiempoTotalVideo>=3600){
           this.videoData.h=this.redondearAbajo(this.videoData.tiempoTotalVideo,3600)
-          this.videoData.min=this.redondearAbajo(this.videoData.tiempoTotalVideo-3600,60)
+          this.videoData.min=this.redondearAbajo(this.videoData.tiempoTotalVideo-(this.videoData.h*3600),60)
         }else{
           this.videoData.min=this.redondearAbajo(this.videoData.tiempoTotalVideo,60)
         }
@@ -148,6 +149,7 @@ export class SesionVideoComponent implements OnInit,OnChanges,OnDestroy {
   onFinishVideo(){
     console.log(this.videoData);
     console.log(this.estadovideo);
+    this.onFinish.emit();
     this.estadovideo=100;
     this.videoData.tiempoVisualizado=this.videoData.tiempoTotalVideo
   }

@@ -37,7 +37,7 @@ export class AvatarComponent implements OnInit,OnDestroy {
   public migaPan = [
     {
       titulo: 'Mi perfil',
-      urlWeb: '/',
+      urlWeb: '/AulaVirtual/MiPerfil',
     },
     {
       titulo: 'Avatar',

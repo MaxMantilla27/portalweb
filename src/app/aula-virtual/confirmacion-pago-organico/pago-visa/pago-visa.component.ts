@@ -98,7 +98,7 @@ export class PagoVisaComponent implements OnInit,OnDestroy {
     script.setAttribute('data-channel','web')
     script.setAttribute('data-merchantid',this.resultVisa.procesoPagoBotonVisa.merchanId)
     script.setAttribute('data-buttonsize','DEFAULT')
-    script.setAttribute('data-merchantlogo','https://img.bsginstitute.com/repositorioweb/img/logobsg.svg')
+    script.setAttribute('data-merchantlogo','https://img.bsginstitute.com/repositorioweb/img/logobsg-visa.svg')
     script.setAttribute('data-formbuttoncolor','#eea236')
     script.setAttribute('data-merchantname','BSG Institute')
     script.setAttribute('data-purchasenumber',this.resultVisa.procesoPagoBotonVisa.orderVisa.purchaseNumber)

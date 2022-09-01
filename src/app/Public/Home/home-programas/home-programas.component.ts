@@ -38,11 +38,13 @@ export class HomeProgramasComponent implements OnInit,OnChanges,OnDestroy {
   }
   ngOnChanges(changes: SimpleChanges): void {
     if(this.change==true){
+      console.log(this.change)
+      console.log(this.IdArea)
       this.GetProgramasHome();
     }
   }
   GetProgramasHome(){
-    var json:ObtenerTopProgramasSendDTO={IdArea:this.IdArea,Top:30};
+    var json:ObtenerTopProgramasSendDTO={IdArea:this.IdArea,Top:10};
     this._HomeService.GetProgramasHome(json).pipe(takeUntil(this.signal$)).subscribe({
       next:(x)=>{
         console.log(x)
@@ -67,7 +69,8 @@ export class HomeProgramasComponent implements OnInit,OnChanges,OnDestroy {
             var ps:CardProgramasDTO={
                 Content:c.descripcion,
                 Inversion:content,
-                Url:'/'+urlArea+'/'+urlSubArea+'-'+c.idBusqueda,Img:'https://img.bsginstitute.com/repositorioweb/img/programas/'+c.imagen,
+                Url:'/'+urlArea+'/'+urlSubArea+'-'+c.idBusqueda,
+                Img:'https://img.bsginstitute.com/repositorioweb/img/programas/'+c.imagen,
                 ImgAlt:c.imagenAlt,
                 Title:c.nombre};
             return ps;
@@ -75,6 +78,14 @@ export class HomeProgramasComponent implements OnInit,OnChanges,OnDestroy {
         );
         var ind=1;
         var step:Array<any>=[];
+        this.programas.push({
+          Content:'',
+          Inversion:'',
+          Url:'/programas-certificaciones-cursos/'+this.IdArea,
+          ImgAlt:'',
+          Title:'',
+          Img:''
+        })
         this.programas.forEach(
           p=>{
             step.push(p);

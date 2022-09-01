@@ -1,7 +1,7 @@
 <ng-container *ngIf="(preguntasFrecuentes==false && quejasSugerencias==false)">
   <div class="cursoTitle">{{Capitulo}}</div>
   <div class="tipoIndicacionTitle col-12 col-md-12 col-lg-12">
-    <img class="ImgIndicacionesContent" src="../../../../assets/icons/ayuda-naranja.svg">
+    <img class="ImgIndicacionesContent" src="../../../../../assets/icons/ayuda-naranja-09.svg">
     <div>Ayuda</div>
   </div>
   <div class="resume" *ngIf="miPerfil!=undefined">¡Hola {{miPerfil.datosAlumno.nombres}}! <br>
@@ -9,22 +9,22 @@
   </div>
   <div class="TipoAyuda">
     <div class="row" style="     width: 100%;   padding: 0px 10px;
-    align-items: center;">
+    align-items: center;cursor: pointer;" (click)="OnChange.emit(1)">
       <div class="col-2 col-md-2 col-lg-2" style="display: flex; justify-content: center; align-items: center;">
         <img class="ImgAyudaContent" src="../../../../assets/icons/preguntas-naranja-38.svg">
       </div>
-      <div class="AyudaContent col-10 col-md-10 col-lg-10" (click)="OnChange.emit(1)" (click)="IdPrincipal=IdPrincipal && IdPGeneral=IdPGeneral" (click)="Capitulo=Capitulo">
+      <div class="AyudaContent col-10 col-md-10 col-lg-10"  (click)="IdPrincipal=IdPrincipal && IdPGeneral=IdPGeneral" (click)="Capitulo=Capitulo">
         Preguntas frecuentes
       </div>
     </div>
   </div>
   <div class="TipoAyuda">
     <div class="row" style="     width: 100%;   padding: 0px 10px;
-    align-items: center;">
+    align-items: center;cursor: pointer;" (click)="OnChange.emit(2)">
       <div class="col-2 col-md-2 col-lg-2" style="display: flex; justify-content: center; align-items: center;">
         <img class="ImgAyudaContent" src="../../../../assets/icons/quejas-sugerencias-03.svg">
       </div>
-      <div class=" AyudaContent col-10 col-md-10 col-lg-10" (click)="OnChange.emit(2)" (click)="IdPrincipal=IdPrincipal && IdPGeneral=IdPGeneral" (click)="Capitulo=Capitulo">
+      <div class=" AyudaContent col-10 col-md-10 col-lg-10"  (click)="IdPrincipal=IdPrincipal && IdPGeneral=IdPGeneral" (click)="Capitulo=Capitulo">
         Quejas y sugerencias
       </div>
     </div>

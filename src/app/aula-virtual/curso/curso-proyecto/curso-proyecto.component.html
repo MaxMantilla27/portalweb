@@ -18,7 +18,7 @@
     </div>
     <ng-container *ngIf="progress==0;else cargando" >
       <div class="col-12 col-md-8 col-lg-9 fieldProyecto" >
-        <div (click)="fileInput.click()" style="height: 38px;width: 100%;border:solid 1px #c2c2c2;border-radius: 5px;display: flex; align-items: center;
+        <div (click)="proyecto.habilitado==true?fileInput.click():mensajeError()" style="height: 38px;width: 100%;border:solid 1px #c2c2c2;border-radius: 5px;display: flex; align-items: center;
         padding: 0px 5px;cursor: pointer;">
           <button style="border: solid 1px #767676;
           margin-right: 5px;    white-space: nowrap;">Seleccionar archivo</button>
@@ -39,7 +39,7 @@
       </div>
       <div class="col-12 col-md-4 col-lg-3" style="display: flex;align-items: center;justify-content: flex-end;">
         <app-default-button [confs]="{color:'primary',titulo:'Enviar'}" [style]="'padding:0px 30px;margin:0px '"
-          (ButtoclClick)="EnviarFile()"></app-default-button>
+          (ButtoclClick)="EnviarFile()" [disabled]="!proyecto.habilitado"></app-default-button>
       </div>
     </ng-container>
     <ng-template #cargando>

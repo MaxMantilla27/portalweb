@@ -7,9 +7,20 @@
 <div class="container">
   <div class="row rowpaddAv">
     <div class="col-12 col-md-12 col-lg-12" style="position: relative;padding: 0px;">
-
-      <div class="openClose" [ngClass]="{'reverse':!hide}" (click)="hide=!hide">
-        <i class="material-icons">layers</i>
+      <div style="width: 100%;display: flex;justify-content: flex-end;padding-right: 30px;">
+        <div class="buttonBack no-select" [routerLink]="'/AulaVirtual/MisCursos'">
+          <i class="material-icons">arrow_back_ios</i>
+          Volver a mis cursos
+        </div>
+      </div>
+      <div style="    display: flex;
+      justify-content: space-between;position: absolute;width: 100%;z-index: 10;">
+        <div class="openClose" [ngClass]="{'reverse':!hide}" (click)="hide=!hide">
+          <div class="contentIconMenu">
+            <i class="material-icons" *ngIf="!hide">arrow_back_ios_new</i>
+            <i class="material-icons" *ngIf="hide">arrow_forward_ios</i>
+          </div>
+        </div>
       </div>
       <mat-tab-group class="tabVertical" [(selectedIndex)]="tabIndex" (selectedTabChange)="tabChanged($event)">
         <mat-tab *ngIf="programEstructura.idModalidad!=2">
@@ -182,7 +193,7 @@
                 [alertaFisico]="alertaFisico" [datosCertificado]="datosCertificado" [curso]="curso"
                 [idProyecto]="curso.idProyecto" [idPGeneral]="curso.idPGeneral" [idPEspecifico]="curso.idPEspecifico"
                 [changeOnGenerate]="generateCertificado" (OnGenerate)="ObtenerDatosCertificado()"
-                (OnValidation)="ObtenerDatosCertificado()">
+                (OnValidation)="ObtenerDatosCertificado()" (OnCloseAlertaDigital)="alertaDigital=false" (OnCloseAlertaFisico)="alertaFisico=false">
 
               </app-curso-certificado>
             </div>
@@ -322,6 +333,21 @@
             </app-curso-simuladores>
           </div>
         </mat-tab>
+        <!-- <mat-tab *ngIf="videosOnline!=undefined && videosOnline.length>0">
+          <ng-template mat-tab-label>
+            <div class="contentHeaderM"
+            [matTooltip]="'Clases Grabadas'"
+            matTooltipPosition="after">
+
+              <div class="iconMat"><i class="material-icons">ondemand_video</i></div>
+              <div class="titleMatr" *ngIf="!hide">Clases Grabadas</div>
+            </div>
+          </ng-template>
+          <div class="pad-resp">
+            <app-curso-videos-sincronico [videos]="videosOnline" [Capitulo]="programEstructura.programaGeneral">
+            </app-curso-videos-sincronico>
+          </div>
+        </mat-tab> -->
       </mat-tab-group>
     </div>
   </div>

@@ -30,6 +30,8 @@ import { PageErrorComponent } from './page-error/page-error/page-error.component
 import { ChatPruebaComponent } from './chat-prueba/chat-prueba.component';
 import { FormularioPublicidadInterceptorComponent } from './FormularioPublicidad/FormularioPublicidadInterceptor/formulario-publicidad-interceptor.component';
 import { NotificacionWebinarComponent } from './notificacion-webinar/notificacion-webinar.component';
+import { InformacionCertificadoComponent } from './informacion-certificado/informacion-certificado.component';
+import { CompraExitosaOpenPayComponent } from './compra-exitosa-open-pay/compra-exitosa-open-pay.component';
 
 const routes:Routes=[
     {path:'',component:PublicComponent,children:
@@ -55,6 +57,8 @@ const routes:Routes=[
             {path:'bs-campus/white-paper/:whitepaper', component:WhitepapersComponent},
             {path:'bs-campus/blog/:blog', component:BlogComponent},
 
+            {path:'CompraExitosaOpenPay/:validate', component:CompraExitosaOpenPayComponent},
+            {path:'Certificado/:IdMatricula/:IdCertificado', component:InformacionCertificadoComponent},
             {path:'SubArea/:nombre', component:TagsComponent},
             {path:'Area/:nombre', component:TagsComponent},
             {path:'tag/:nombre', component:TagsComponent},

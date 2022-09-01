@@ -129,6 +129,7 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
   public idBusqueda = 0;
   public contenidoCabecera = '';
   public tags: Array<listaTagDTO> = [];
+  public esAonline=false
   public cabecera: programaCabeceraDetalleDTO = {
     areaCapacitacion: '',
     areaDescripcion: '',
@@ -179,7 +180,7 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
   statuscharge = false;
   formVal: boolean = false;
   public initValues = false;
-
+  public cleanSub=false
   public migaPan = [
     {
       titulo: 'Inicio',
@@ -402,6 +403,11 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
             }
             this.cabecera = x.programaCabeceraDetalleDTO;
             this.IdPespecificoPrograma = x.programaCabeceraDetalleDTO.listProgramaEspecificoInformacionDTO[0].id
+            this.cabecera.listProgramaEspecificoInformacionDTO.forEach(x=>{
+              if(x.tipo.toLowerCase()=='online asincronica'){
+                this.esAonline=true
+              }
+            })
             this.migaPan.push({
               titulo:
                 'Área: ' +
@@ -739,6 +745,7 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
         'snackbarCrucigramaerror'
       );
     } else {
+      this.statuscharge=true;
       this.initValues = false;
       this.DatosEnvioFormulario.Nombres = value.Nombres;
       this.DatosEnvioFormulario.Apellidos = value.Apellidos;
@@ -762,6 +769,7 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
         .EnviarFormulario(this.DatosEnvioFormulario).pipe(takeUntil(this.signal$))
         .subscribe({
           next: (x) => {
+            this.cleanSub=true
             console.log(x);
             if(this.isBrowser){
               console.log('------------------facebook(true)---------------------------');
@@ -899,6 +907,15 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
       validate: [Validators.required],
       label: 'Teléfono Móvil',
     });
+    this.fileds.push({
+      nombre: 'terminos',
+      tipo: 'terminos',
+      valorInicial: '',
+      validate: [Validators.required,Validators.requiredTrue],
+      label: 'terminos',
+      style:'font-size: 12px;margin-bottom: 20px;'
+    });
+
   }
   LimpiarCampos(){
     this.combosPrevios=undefined;

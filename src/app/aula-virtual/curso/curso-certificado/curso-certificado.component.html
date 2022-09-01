@@ -6,17 +6,24 @@
       <img class="ImgIndicacionesContent" src="../../../../assets/icons/certificados-25.svg">
       <div><strong> Certificados</strong></div>
     </div>
-
-    <div *ngIf="alertaDigital==true || alertaFisico==true" class="alartasCertificados col-12 col-md-12 col-lg-12" style="margin-top:10px;" >
-      <div *ngIf="alertaDigital">
-        Aún no puedes descargar tu certificado digital
-        <i class="material-icons" (click)="alertaDigital=false">close</i>
-      </div>
-      <div *ngIf="alertaFisico">
-        Aún no puedes solicitar tu certificado físico
-        <i class="material-icons" (click)="alertaFisico=false">close</i>
+    <div *ngIf="curso.programaGeneral.toLowerCase().includes('irca')" class="alartasCertificados col-12 col-md-12 col-lg-12" style="margin-top:10px;" >
+      <div>
+        El certificado no está disponible para los cursos IRCA. Consulta con tu coordinadora de atención al cliente
       </div>
     </div>
+    <ng-container *ngIf="!curso.programaGeneral.toLowerCase().includes('irca')">
+      <div *ngIf="alertaDigital==true || alertaFisico==true" class="alartasCertificados col-12 col-md-12 col-lg-12" style="margin-top:10px;" >
+        <div *ngIf="alertaDigital">
+          Aún no puedes descargar tu certificado digital
+          <i class="material-icons" (click)="alertaDigital=false;OnCloseAlertaDigital.emit()">close</i>
+        </div>
+        <div *ngIf="alertaFisico">
+          Aún no puedes solicitar tu certificado físico
+          <i class="material-icons" (click)="alertaFisico=false;OnCloseAlertaFisico.emit()">close</i>
+        </div>
+      </div>
+    </ng-container>
+
     <ng-container *ngIf="datosCertificado.idEstado_matricula!=5 && datosCertificado.idEstado_matricula!=12">
       <div class="col-12 col-md-12 col-lg-12">
         <div style="color: #4a4a4a;
@@ -79,7 +86,7 @@
           <ng-container contenido>
           </ng-container>
           <ng-container send>
-            <div style="display: flex;justify-content: flex-end;">
+            <div style="display: flex;justify-content: flex-end;" *ngIf="!curso.programaGeneral.toLowerCase().includes('irca')">
 
 
               <button mat-raised-button *ngIf="(datosCertificado.idConfirmarDatoAlumnoLog!=null && datosCertificado.idConfirmarDatoAlumnoLog!=0)"

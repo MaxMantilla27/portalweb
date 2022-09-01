@@ -96,6 +96,7 @@ export class VideoBrightcovePruebaComponent implements OnInit,OnDestroy {
   }
   ngOnChanges(changes: SimpleChanges): void {
     if (this.videoData != undefined) {
+      console.log(this.videoData)
       if(this.videoData.objetoConfigurado.idVideoBrightcove!='0' &&
       this.videoData.objetoConfigurado.idVideoBrightcove!=null &&
       this.videoData.objetoConfigurado.idVideoBrightcove!=undefined){
@@ -128,7 +129,7 @@ export class VideoBrightcovePruebaComponent implements OnInit,OnDestroy {
             if(x.tipoVista==4){
               if(parseInt(x.estadoEval)!=1){
                 this.capituloEv=parseInt(x.nroDiapositiva)
-                this.tipo = x.tipoVista
+                this.tipo = 2
               }
             }else{
               this.tipo = x.tipoVista
@@ -141,6 +142,7 @@ export class VideoBrightcovePruebaComponent implements OnInit,OnDestroy {
           i++;
         }
       });
+      console.log(this.tipo)
     }
   }
   continuarVideo(){
@@ -161,7 +163,7 @@ export class VideoBrightcovePruebaComponent implements OnInit,OnDestroy {
           if(x.tipoVista==4){
             if(parseInt(x.estadoEval)!=1){
               this.capituloEv=parseInt(x.nroDiapositiva)
-              this.tipo = x.tipoVista
+              this.tipo = 2
             }
           }else{
             this.tipo = x.tipoVista
@@ -200,7 +202,7 @@ export class VideoBrightcovePruebaComponent implements OnInit,OnDestroy {
           if(x.tipoVista==4){
             if(parseInt(x.estadoEval)!=1){
               this.capituloEv=parseInt(x.nroDiapositiva)
-              this.tipo = x.tipoVista
+              this.tipo =2
             }
           }else{
             this.tipo = x.tipoVista
@@ -233,7 +235,7 @@ export class VideoBrightcovePruebaComponent implements OnInit,OnDestroy {
         if(x.tipoVista==4){
           if(parseInt(x.estadoEval)!=1){
             this.capituloEv=parseInt(x.nroDiapositiva)
-            this.tipo = x.tipoVista
+            this.tipo = 2
           }
         }else{
           this.tipo = x.tipoVista

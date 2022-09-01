@@ -30,7 +30,7 @@ margin-bottom: 10px;">Estas son las actividades de aprendizaje que debes complet
       <div class="contentCapitulo">
 
         <div class="hederCapitulo row">
-          <div class="titleCapitulo col-12 col-md-7 col-lg-9">Capitulo {{item.numeroCapitulo}}:
+          <div class="titleCapitulo col-12 col-md-7 col-lg-9">Capítulo {{item.numeroCapitulo}}:
             {{item.nombreCapitulo}}</div>
           <div class="col-12 col-md-5 col-lg-3"
             style="display: flex;justify-content: space-between;align-items: center;">
@@ -49,10 +49,24 @@ margin-bottom: 10px;">Estas son las actividades de aprendizaje que debes complet
           *ngIf="item.registroEstructuraCursoEncuesta!=undefined && item.registroEstructuraCursoEncuesta!=null">
           <ng-container *ngFor="let Encuesta of item.registroEstructuraCursoEncuesta">
             <ng-container *ngIf="Encuesta.tipoExamen=='Encuesta' && Encuesta.nombreEncuesta=='Encuesta Inicial'">
-              <div class="TareaYEncuesta">
-                <img src="../../../../assets/icons/icon-like.svg" alt="">
-                <div [routerLink]="'3/'+Encuesta.numeroCapitulo+'/'+Encuesta.idEncuesta">
-                  {{Encuesta.nombreEncuesta}}</div>
+              <div class="TareaYEncuesta row" style="justify-content: space-between;    border-bottom: solid 1px gray;">
+                <div class="col-12 col-md-6 col-lg-6" style="display: flex;    align-items: center;">
+                  <img src="../../../../assets/icons/icon-like.svg" alt="">
+                  <div [routerLink]="'3/'+Encuesta.numeroCapitulo+'/'+Encuesta.idEncuesta">
+                    {{Encuesta.nombreEncuesta}}</div>
+                </div>
+                <div class="col-12 col-md-6 col-lg-6" style="display: flex;align-items: center;
+                font-weight: 300; justify-content: flex-end;
+                font-size: 14px;">
+                  <ng-container *ngIf="Encuesta.encuestaEnviada==true">
+                    Realizada
+                    <i class="material-icons" style=" color: #05c254;font-size: 14px !important;
+                    margin-left: 10px" >check_circle</i>
+                  </ng-container>
+                  <ng-container *ngIf="Encuesta.encuestaEnviada==false">
+                    Pendiente
+                  </ng-container>
+                </div>
               </div>
             </ng-container>
           </ng-container>
@@ -89,7 +103,7 @@ margin-bottom: 10px;">Estas son las actividades de aprendizaje que debes complet
                       </mat-progress-bar>
                       <div
                         style="justify-content: space-between; display: flex;font-size: 12px;color: #909090; font-weight: 600;width: 100%;">
-                        <div>0%</div>
+                        <!-- <div>0%</div> -->
                         <div>
                           {{(subsesiones.porcentajeVideoVisualizado!=undefined)?
                             subsesiones.porcentajeVideoVisualizado>100?100:(subsesiones.porcentajeVideoVisualizado | number:'0.0-0'):0}}%
@@ -129,7 +143,7 @@ margin-bottom: 10px;">Estas son las actividades de aprendizaje que debes complet
                       </mat-progress-bar>
                       <div
                         style="justify-content: space-between; display: flex;font-size: 12px;color: #909090; font-weight: 600;width: 100%;">
-                        <div>0%</div>
+                        <!-- <div>0%</div> -->
                         <div>
 
                           {{(sesiones.porcentajeVideoVisualizado!=undefined)?
@@ -173,7 +187,7 @@ margin-bottom: 10px;">Estas son las actividades de aprendizaje que debes complet
           <div class="TareaYEncuesta">
             <div
             (click)="IrVideo('4/'+TareaC.numeroCapitulo+'/'+TareaC.id,TareaC.habilitado)">
-              <img src="../../../../assets/icons/tareas-23.svg" alt=""> Revision de: {{TareaC.tarea}} <br>
+              <img src="../../../../assets/icons/tareas-23.svg" alt=""> Revisión de: {{TareaC.tarea}} <br>
               <div style="color:#00c356" *ngIf="TareaC.calificado">Calificado</div>
               <div style="color: #da121a;" *ngIf="!TareaC.calificado">Por calificar</div>
             </div>
@@ -185,23 +199,52 @@ margin-bottom: 10px;">Estas son las actividades de aprendizaje que debes complet
         *ngIf="item.registroEstructuraCursoEncuesta!=undefined && item.registroEstructuraCursoEncuesta!=null">
         <ng-container *ngFor="let Encuesta of item.registroEstructuraCursoEncuesta">
           <ng-container *ngIf="Encuesta.tipoExamen=='Encuesta' && Encuesta.nombreEncuesta=='Encuesta Intermedia'">
-            <div class="TareaYEncuesta">
+            <div class="TareaYEncuesta row" style="justify-content: space-between;    border-bottom: solid 1px gray;">
 
-              <img src="../../../../assets/icons/icon-like.svg" alt="">
-              <div
-              (click)="IrVideo('3/'+Encuesta.numeroCapitulo+'/'+Encuesta.idEncuesta,Encuesta.habilitado)">
-              {{Encuesta.nombreEncuesta}}</div>
+              <div class="col-12 col-md-6 col-lg-6" style="display: flex;    align-items: center;">
+
+                <img src="../../../../assets/icons/icon-like.svg" alt="">
+                <div
+                (click)="IrVideo('3/'+Encuesta.numeroCapitulo+'/'+Encuesta.idEncuesta,Encuesta.habilitado)">
+                {{Encuesta.nombreEncuesta}}</div>
+              </div>
+              <div class="col-12 col-md-6 col-lg-6" style="display: flex;align-items: center;
+              font-weight: 300;justify-content: flex-end;
+              font-size: 14px;">
+                <ng-container *ngIf="Encuesta.encuestaEnviada==true">
+                  Realizada
+                  <i class="material-icons" style=" color: #05c254;font-size: 14px !important;
+                  margin-left: 10px" >check_circle</i>
+                </ng-container>
+                <ng-container *ngIf="Encuesta.encuestaEnviada==false">
+                  Pendiente
+                </ng-container>
+              </div>
             </div>
           </ng-container>
         </ng-container>
         <ng-container *ngFor="let Encuesta of item.registroEstructuraCursoEncuesta">
           <ng-container *ngIf="Encuesta.tipoExamen=='Encuesta' && Encuesta.nombreEncuesta=='Encuesta Final'">
-            <div class="TareaYEncuesta">
+            <div class="TareaYEncuesta row" style="justify-content: space-between;    border-bottom: solid 1px gray;">
 
-              <img src="../../../../assets/icons/icon-like.svg" alt="">
-              <div
-              (click)="IrVideo('3/'+Encuesta.numeroCapitulo+'/'+Encuesta.idEncuesta,Encuesta.habilitado)">
-              {{Encuesta.nombreEncuesta}}</div>
+              <div class="col-12 col-md-6 col-lg-6" style="display: flex;    align-items: center;">
+                <img src="../../../../assets/icons/icon-like.svg" alt="">
+                <div
+                (click)="IrVideo('3/'+Encuesta.numeroCapitulo+'/'+Encuesta.idEncuesta,Encuesta.habilitado)">
+                {{Encuesta.nombreEncuesta}}</div>
+              </div>
+              <div class="col-12 col-md-6 col-lg-6" style="display: flex;align-items: center;
+              font-weight: 300;justify-content: flex-end;
+              font-size: 14px;">
+                <ng-container *ngIf="Encuesta.encuestaEnviada==true">
+                  Realizada
+                  <i class="material-icons" style=" color: #05c254;font-size: 14px !important;
+                  margin-left: 10px" >check_circle</i>
+                </ng-container>
+                <ng-container *ngIf="Encuesta.encuestaEnviada==false">
+                  Pendiente
+                </ng-container>
+              </div>
             </div>
           </ng-container>
         </ng-container>

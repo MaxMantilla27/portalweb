@@ -29,6 +29,7 @@ export class ForgotPasswordComponent implements OnInit,OnDestroy {
   };
   fileds:Array<formulario>=[];
   public errorLogin=''
+  public cleanSub=false
   public migaPan = [
     {
       titulo: 'Inicio',
@@ -53,6 +54,7 @@ export class ForgotPasswordComponent implements OnInit,OnDestroy {
     this._AccountService.RecuperarPasswordCuenta(e.email).pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
         console.log(x)
+        this.cleanSub=true
         if(x.excepcionGenerada==false){
           this._SnackBarServiceService.openSnackBar(x.descripcionGeneral,'x',15,"snackbarCrucigramaSucces");
         }else{

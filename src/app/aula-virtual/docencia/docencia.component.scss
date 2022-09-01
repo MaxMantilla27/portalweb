@@ -3,6 +3,7 @@
 }
 .tabVerticalDocente > .mat-tab-header {
   border-bottom: none !important;
+  margin-top: 40px;
 }
 .tabVerticalDocente > .mat-tab-header > .mat-tab-header-pagination {
   display: none !important;
@@ -73,7 +74,7 @@
 }
 .tabVerticalDocente > .mat-tab-body-wrapper {
   flex: 1 1 auto !important;
-  min-height: 540px;
+  min-height: 700px;
 }
 .tabVerticalDocente > .mat-tab-body-wrapper .mat-tab-body .mat-tab-body-content {
   overflow: hidden;
@@ -114,8 +115,18 @@
   img {
     width: 18px;
   }
-  .material-icons {
-    font-size: 30px !important;
+
+  .contentIconMenu{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 30px;
+    width: 30px;
+    border-radius: 50%;
+    background: #dadada;
+    .material-icons{
+      font-size: 20px !important;
+    }
   }
 }
 .reverseDocencia {

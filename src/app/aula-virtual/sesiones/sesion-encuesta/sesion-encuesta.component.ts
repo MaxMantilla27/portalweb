@@ -37,6 +37,7 @@ export class SesionEncuestaComponent implements OnInit,OnChanges,OnDestroy {
   @Input() charge:boolean|undefined=false;
   @Output() next: EventEmitter<void> = new EventEmitter<void>();
   @Output() prev: EventEmitter<void> = new EventEmitter<void>();
+  @Output() onFinish: EventEmitter<void> = new EventEmitter<void>();
   public params:ParametrosEncuestaDTO={
     IdEvaluacion:0,
     IdPGeneral:0,
@@ -145,6 +146,7 @@ export class SesionEncuestaComponent implements OnInit,OnChanges,OnDestroy {
       this._EncuestaService.EnviarEncuestaEvaluacion(this.jsonEnvio).pipe(takeUntil(this.signal$)).subscribe({
         next:x=>{
           console.log(x);
+          this.onFinish.emit();
           this.encuesta.contenidoEncuesta=null;
         }
       })

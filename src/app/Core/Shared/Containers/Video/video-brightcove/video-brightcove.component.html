@@ -124,7 +124,7 @@
                    *ngFor="let respuesta of preguntas[preguntaActual].respuestaGrupoPreguntaInteractivaPrograma;let i=index">
                     <mat-form-field  *ngIf="!valPregunta" appearance="outline" class="col-12 col-md-6 col-lg-6" >
                       <mat-label>respuesta</mat-label>
-                      <input type="number" autocomplete="off" [(ngModel)]="valorRespuesta" matInput />
+                      <input type="number"  [(ngModel)]="valorRespuesta" matInput  />
                     </mat-form-field>
                     <div class="col-12 col-md-6 col-lg-6">
                       <app-default-button *ngIf="!valPregunta"
