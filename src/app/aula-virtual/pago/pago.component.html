@@ -17,8 +17,8 @@
   </div>
 </div>
 <div class="container">
-  <div class="row rowpaddAv" style="align-items: center;">
-    <ng-container *ngIf="CronogramaPago!=undefined">
+  <ng-container *ngIf="CronogramaPago!=undefined">
+    <div class="row rowpaddAv" style="align-items: center;">
       <div class="COL-12 titleCronograma">
         {{CronogramaPago.pGeneral}}
       </div>
@@ -33,52 +33,56 @@
         <div>Proximo Vencimiento :</div>
         <p>{{CronogramaPago.fechaVencimiento | date:'dd/MM/yyyy'}}</p>
       </div>
-      <div class="col-12">
-        <table>
-          <tr>
-            <th>Pagar</th>
-            <th>Nro. Cuota</th>
-            <th>Moneda</th>
-            <th>Monto</th>
-            <th>Mora</th>
-            <!-- <th>Costos Gestión de Cóbranza</th> -->
-            <th>Fecha de Vencimiento</th>
-            <th>Fecha de Pago</th>
-            <th>Estado</th>
-          </tr>
-          <tr *ngFor="let item of CronogramaPago.registroCuota;let i=index"
-            [ngClass]="{'pagoActivo':item.cancelado!=true,'pagoSelect':item.estado==true}"
-            (click)="ChangeEstadoCronograma(i)">
-            <td>
-              <ng-container *ngIf="item.estado==true"><i class="material-icons">check_box</i></ng-container>
-              <ng-container *ngIf="item.estado!=true"><i class="material-icons">check_box_outline_blank</i>
-              </ng-container>
-            </td>
-            <td>{{item.nroCuota}}</td>
-            <td>{{item.nombreMoneda}}</td>
-            <td>{{item.cuota}}</td>
-            <td>{{item.mora}}</td>
-            <td>{{item.fechaVencimiento | date:'dd/MM/yyyy'}}</td>
-            <td>
-              <ng-container *ngIf="item.fechaPago!=null">{{item.fechaPago | date:'dd/MM/yyyy'}}</ng-container>
-            </td>
-            <td>
-              <ng-container *ngIf="item.cancelado==true;else noCancelado">
-                Pagado <img src="../../../assets/icons/positivo-hecho-20.svg" alt="">
-              </ng-container>
-              <ng-template #noCancelado>
-                <ng-container *ngIf="item.estado==true">
-                  Por pagar
+      <div class="col-12 ">
+        <div class="table-resposive">
+          <table style="width: 100%" class="table">
+            <thead>
+              <tr>
+                <th style="min-width: 160px;">Pagar</th>
+                <th style="min-width: 60px;">Nro. Cuota</th>
+                <th style="min-width: 60px;">Moneda</th>
+                <th style="min-width: 60px;">Monto</th>
+                <th style="min-width: 60px;">Mora</th>
+                <!-- <th>Costos Gestión de Cóbranza</th> -->
+                <th style="min-width: 60px;">Fecha de Vencimiento</th>
+                <th style="min-width: 60px;">Fecha de Pago</th>
+                <th style="min-width: 60px;">Estado</th>
+              </tr>
+            </thead>
+            <tr *ngFor="let item of CronogramaPago.registroCuota;let i=index"
+              [ngClass]="{'pagoActivo':item.cancelado!=true,'pagoSelect':item.estado==true}"
+              (click)="ChangeEstadoCronograma(i)">
+              <td>
+                <ng-container *ngIf="item.estado==true"><i class="material-icons">check_box</i></ng-container>
+                <ng-container *ngIf="item.estado!=true"><i class="material-icons">check_box_outline_blank</i>
                 </ng-container>
-                <ng-container *ngIf="item.estado!=true">
-                  Pendiente
+              </td>
+              <td>{{item.nroCuota}}</td>
+              <td>{{item.nombreMoneda}}</td>
+              <td>{{item.cuota}}</td>
+              <td>{{item.mora}}</td>
+              <td>{{item.fechaVencimiento | date:'dd/MM/yyyy'}}</td>
+              <td>
+                <ng-container *ngIf="item.fechaPago!=null">{{item.fechaPago | date:'dd/MM/yyyy'}}</ng-container>
+              </td>
+              <td>
+                <ng-container *ngIf="item.cancelado==true;else noCancelado">
+                  Pagado <img src="../../../assets/icons/positivo-hecho-20.svg" alt="">
                 </ng-container>
+                <ng-template #noCancelado>
+                  <ng-container *ngIf="item.estado==true">
+                    Por pagar
+                  </ng-container>
+                  <ng-container *ngIf="item.estado!=true">
+                    Pendiente
+                  </ng-container>
 
-              </ng-template>
+                </ng-template>
 
-            </td>
-          </tr>
-        </table>
+              </td>
+            </tr>
+          </table>
+        </div>
         <div class="row" style="margin-top: 40px;justify-content: center;" *ngIf="total>0">
           <div class="col-12 col-md-8 col-lg-6 CardPago">
             <div class="titleCardPago">Resumen de pago</div>
@@ -107,7 +111,6 @@
           </div>
         </div>
       </div>
-    </ng-container>
-
-  </div>
+    </div>
+  </ng-container>
 </div>

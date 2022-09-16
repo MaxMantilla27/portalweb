@@ -50,6 +50,8 @@ export class DocenciaTareasComponent implements OnInit,OnDestroy {
     IdEvaluacion:0,
     IdParametroEvaluacion:0,
     ValorCalificado:0,
+    Retroalimentacion:'',
+    file:new File([],'')
   }
   public IdTarea=0;
   public tareas:any
@@ -170,13 +172,24 @@ export class DocenciaTareasComponent implements OnInit,OnDestroy {
     this.enviarJson.IdParametroEvaluacion=this.tareas.criteriosEvaluacion.idParametroEvaluacion
     this.enviarJson.IdEsquemaEvaluacionPGeneralDetalle=this.tareas.criteriosEvaluacion.idEsquemaEvaluacionPGeneralDetalle
     console.log(this.enviarJson);
+
+    this.enviarJson.Retroalimentacion=this.retroalimentacion
+    if(this.selectedFiles){
+      const file: File | null = this.selectedFiles.item(0);
+      if (file) {
+        this.enviarJson.file = file;
+      }
+    }
+    console.log(this.enviarJson);
     this._TareaEvaluacionService.EnviarCalificacionTrabajoPares(this.enviarJson).pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
         console.log(x)
         this.ObtenerEvaluacionTarea()
+        this.cargaEnvio=false
       },
       error:x=>{
         console.log(x)
+        this.cargaEnvio=false
       }
     })
   }
@@ -226,7 +239,7 @@ export class DocenciaTareasComponent implements OnInit,OnDestroy {
       }
     }
     this.nota.push(n)
-    this._OperacionesNotaService.RegistrarV3(this.nota,this.tareas.criteriosEvaluacion.idPEspecifico,this.usuario,this.retroalimentacion,this.retroalimentacionFile).pipe(takeUntil(this.signal$)).subscribe({
+    this._OperacionesNotaService.RegistrarV3(this.nota,this.tareas.criteriosEvaluacion.idPEspecifico,this.usuario,this.retroalimentacion,this.retroalimentacionFile,this.IdTarea).pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
         console.log(x)
         this.ObtenerEvaluacionTarea()

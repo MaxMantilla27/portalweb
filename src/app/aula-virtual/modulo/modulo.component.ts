@@ -119,14 +119,18 @@ export class ModuloComponent implements OnInit,OnDestroy {
   tabChanged(tabChangeEvent: MatTabChangeEvent): void {
     console.log('tabChangeEvent => ', tabChangeEvent);
     console.log('index => ', tabChangeEvent.index);
+    console.log(this.json.idModalidad);
     var mod=0
     if(this.json.idModalidad!=1){
       mod=-2
     }
-    if(tabChangeEvent.index == (6+mod)){
+    if(this.videosOnline!=undefined && this.videosOnline.length>0 && this.videosOnline!=null){
+      mod+=1
+    }
+    if(tabChangeEvent.index == (5+mod)){
       this.AyudaActive=true
     }
-    if(tabChangeEvent.index < (6+mod)){
+    if(tabChangeEvent.index < (5+mod)){
       this.AyudaActive=false
 
     }
@@ -134,5 +138,9 @@ export class ModuloComponent implements OnInit,OnDestroy {
   }
   returnback(){
     this._SessionStorageService.SessionSetValue('cursoIndex','1');
+  }
+  cambio(mas:number){
+    console.log(mas)
+    this.tabIndex+=mas
   }
 }

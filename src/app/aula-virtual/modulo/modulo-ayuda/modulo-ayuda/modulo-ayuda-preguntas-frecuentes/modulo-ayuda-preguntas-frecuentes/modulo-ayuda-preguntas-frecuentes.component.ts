@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { Subject,takeUntil } from 'rxjs';
 import { PreguntasFrecuentesCursoService } from 'src/app/Core/Shared/Services/PreguntasFrecuentesCurso/preguntas-frecuentes-curso.service';
 
@@ -19,6 +19,7 @@ export class ModuloAyudaPreguntasFrecuentesComponent implements OnInit,OnDestroy
  @Input() IdPrincipal=0
  @Input() IdPGeneral=0
  @Input() Capitulo=''
+ @Output() Onchange=new EventEmitter<number>();
  public PreguntaExpand=-1;
  public PreguntasFrecuentes:any
   ngOnInit(): void {

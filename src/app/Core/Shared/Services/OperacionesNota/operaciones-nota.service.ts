@@ -64,11 +64,12 @@ export class OperacionesNotaService {
   }
 
 
-  public RegistrarV3(json:Array<ParametroNotaRegistrarV3DTO>,idPEspecifico:number,usuario:string,retroalimentacion:string,file: File):Observable<any>{
+  public RegistrarV3(json:Array<ParametroNotaRegistrarV3DTO>,idPEspecifico:number,usuario:string,retroalimentacion:string,file: File,id:number):Observable<any>{
     if(this.isBrowser){
       console.log(json)
       const formData: FormData = new FormData();
       formData.append("idPEspecifico", idPEspecifico.toString() );
+      formData.append("idTarea", id.toString() );
       formData.append("retroalimentacion", retroalimentacion );
       formData.append("usuario", usuario );
       formData.append("archivos", file );

@@ -81,9 +81,28 @@
           </div>
           <div class="col-10 col-md-10 col-lg-10 preguntaInteractiva" *ngIf="!finalizado">
             <div class="headerPregunta">Evaluación</div>
-
             <div class="contentPregunta">
               <div class="pregunta" [innerHtml]="preguntas[preguntaActual].enunciadoPregunta | safeHtml"></div>
+              <div class="tipo_pregunta">
+                <ng-container *ngIf="preguntas[preguntaActual].tipoRespuesta==7;else texto">
+                  Responde esta pregunta ingresando un número
+                </ng-container>
+                <ng-template #texto>
+                  <ng-container *ngIf="preguntas[preguntaActual].tipoRespuesta==6 || preguntas[preguntaActual].tipoRespuesta==8;else select">
+                    Responde esta pregunta ingresando una palabra
+                  </ng-container>
+                  <ng-template #select>
+                    <ng-container *ngIf="preguntas[this.preguntaActual].numeroRespuestas==1;else select2">
+                      Responde esta pregunta escogiendo solo una alternativa
+                    </ng-container>
+                    <ng-template #select2>
+                      Responde esta pregunta marcando más de una alternativa
+                    </ng-template>
+
+                  </ng-template>
+                </ng-template>
+
+              </div>
               <div class="respuestaLista">
                 <ng-container *ngIf="preguntas[preguntaActual].tipoRespuesta==4">
                   <div class="respuesta" *ngFor="let respuesta of preguntas[preguntaActual].respuestaGrupoPreguntaInteractivaPrograma;let i=index"

@@ -23,5 +23,23 @@ export interface ParametroEnvioTrabajoPares{
   IdParametroEvaluacion:number,
   IdEscalaCalificacionDetalle:number,
   ValorCalificado:number,
-  IdEsquemaEvaluacionPGeneralDetalle:number
+  IdEsquemaEvaluacionPGeneralDetalle:number,
+  file: File,
+  Retroalimentacion: string;
+}
+export interface ParametroEnvioCriterioReflexivo
+{
+  Registros:Array<ListaRespuestaReflexivosDTO> ,
+  IdUsuario:  string ,
+  IdEvaluacion:  number ,
+  IdPGeneral:  number ,
+  IdPEspecifico:  number,
+  IdTareaEvaluacionTarea:number
+}
+export interface ListaRespuestaReflexivosDTO
+{
+  IdParametroEvaluacion:number ,
+  IdEscalaCalificacionDetalle:number ,
+  IdEsquemaEvaluacionPGeneralDetalle:number ,
+  IdEsquemaEvaluacionPGeneralDetalleCongelado:number ,
 }

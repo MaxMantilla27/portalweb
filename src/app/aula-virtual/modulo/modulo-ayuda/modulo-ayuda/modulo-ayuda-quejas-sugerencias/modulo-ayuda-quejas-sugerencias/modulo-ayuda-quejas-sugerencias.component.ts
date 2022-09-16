@@ -30,6 +30,7 @@ export class ModuloAyudaQuejasSugerenciasComponent implements OnInit,OnDestroy {
   @Input() IdPEspecifico=0
   @Input() Capitulo=''
   @Output() volver:EventEmitter<void>=new EventEmitter<void>();
+  @Output() Onchange=new EventEmitter<number>();
 
   public Tipo:any;
   public RegistroQuejaSugerencia:QuejaSugerenciaDTO={

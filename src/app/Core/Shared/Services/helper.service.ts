@@ -20,7 +20,20 @@ export class HelperService {
   private msjCombosAvatar = new ReplaySubject<AvatarCombosDTO>()
   private msjRecarga = new ReplaySubject<DatoObservableDTO>()
   private msjPaises = new ReplaySubject<Array<any>>()
+  private msjChangePais = new ReplaySubject<any>()
 
+  public get recibirChangePais() {
+    return this.msjChangePais.asObservable()
+  }
+  public enviarChangePais(datos: any): void {
+    this.msjChangePais.next(datos);
+  }
+  public get recibirDataPais() {
+    return this.msjPaises.asObservable()
+  }
+  public enviarDataPais(datos: Array<any>): void {
+    this.msjPaises.next(datos);
+  }
   public get recibirArrayCarrera() {
     return this.msjArrayCarrera.asObservable()
   }
@@ -70,10 +83,5 @@ export class HelperService {
   public enviarDatoCuenta(datos: DatoObservableDTO): void {
     this.msjRecarga.next(datos);
   }
-  public get recibirDataPais() {
-    return this.msjPaises.asObservable()
-  }
-  public enviarDataPais(datos: Array<any>): void {
-    this.msjPaises.next(datos);
-  }
+
 }

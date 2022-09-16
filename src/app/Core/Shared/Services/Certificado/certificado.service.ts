@@ -59,7 +59,7 @@ export class CertificadoService {
   }
   public ObtenerInformacionAlumnoCertificado(idMatriculaCabecera:number,codigoCertificado:string):Observable<any>{
     if(this.isBrowser){
-      return this.http.get<any>(this.urlBase+'/ObtenerInformacionAlumnoCertificado?idMatriculaCabecera='+idMatriculaCabecera);
+      return this.http.get<any>(this.urlBase+'/ObtenerInformacionAlumnoCertificado?idMatriculaCabecera='+idMatriculaCabecera+'&codigoCertificado='+codigoCertificado);
     }else{
       return EMPTY;
     }

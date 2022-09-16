@@ -89,6 +89,8 @@ import { CursoSimuladoresComponent } from './curso/curso-simuladores/curso-simul
 import { CursoCertificadoIrcaComponent } from './curso/curso-certificado-irca/curso-certificado-irca.component';
 import { CursoVideosSincronicoComponent } from './curso/curso-videos-sincronico/curso-videos-sincronico.component';
 import { ModuloVideosSincronicoComponent } from './modulo/modulo-videos-sincronico/modulo-videos-sincronico.component';
+import { ResultadoPagoPSEComponent } from './resultado-pago-pse/resultado-pago-pse.component';
+import { RetroalimentacionTareaComponent } from './sesiones/sesion-tarea/retroalimentacion-tarea/retroalimentacion-tarea.component';
 
 
 
@@ -177,6 +179,8 @@ import { ModuloVideosSincronicoComponent } from './modulo/modulo-videos-sincroni
     CursoCertificadoIrcaComponent,
     CursoVideosSincronicoComponent,
     ModuloVideosSincronicoComponent,
+    ResultadoPagoPSEComponent,
+    RetroalimentacionTareaComponent,
 
   ],
   imports: [

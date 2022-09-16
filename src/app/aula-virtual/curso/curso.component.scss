@@ -6,6 +6,18 @@
 .mat-tab-labels {
 max-width: 180px !important;
 }
+
+.msjCom {
+  display: flex;
+  background: #fff8f0;
+  padding: 10px 40px;
+  border-radius: 5px;
+  color: #72706d;
+  img {
+    width: 20px;
+    margin-right: 20px;
+  }
+}
 .tabVertical
   .mat-tab-header
   .mat-tab-label-container
@@ -137,12 +149,12 @@ max-width: 180px !important;
   margin-left: 20px;
 }
 .cursoTitle {
-  font-size: 18px;
+  font-size: 20px;
   margin-bottom: 10px;
   font-weight: 600;
 }
 .cursoTabDescripcion {
-  font-size: 14px;
+  font-size: 18px;
   color: #929292;
   margin-bottom: 20px;
 }

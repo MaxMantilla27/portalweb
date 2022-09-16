@@ -115,6 +115,8 @@ import { CargandoComponent } from './Containers/cargando/cargando.component';
 import { ChatZComponent } from './Containers/chat-z/chat-z.component';
 import { LazyLoadImagesDirective } from './Directives/lazy-load-images.directive';
 import { CardBlancComponent } from './Containers/card/card-blanc/card-blanc.component';
+import { ChargeTextComponent } from './Containers/Dialog/charge-text/charge-text.component';
+import { LoadVerticalComponent } from './Containers/load-vertical/load-vertical.component';
 
 @NgModule({
   imports: [
@@ -198,6 +200,8 @@ import { CardBlancComponent } from './Containers/card/card-blanc/card-blanc.comp
     InputCardFechaDirective,
     LazyLoadImagesDirective,
     CardBlancComponent,
+    ChargeTextComponent,
+    LoadVerticalComponent,
     //ChatZComponent,
   ],
   exports: [
@@ -232,6 +236,7 @@ import { CardBlancComponent } from './Containers/card/card-blanc/card-blanc.comp
     AprovacionComponent,
     TextHtmlEditorComponent,
     CargandoComponent,
+    ChargeTextComponent,
     //ChatZComponent,
 
     InputCardDirective,
@@ -277,7 +282,8 @@ import { CardBlancComponent } from './Containers/card/card-blanc/card-blanc.comp
     CKEditorModule,
     TextFieldModule,
     ChatPortalComponent,
-    VideoAyudaComponent
+    VideoAyudaComponent,
+    LoadVerticalComponent
   ],
   providers: [
     SessionStorageService,

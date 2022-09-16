@@ -1,0 +1,15 @@
+<div class="titleRetro">Retroalimentación</div>
+<div class="contentRetro">
+
+  <div class="retroText" *ngIf="data.retroalimentacion!=null && data.retroalimentacion!=undefined && data.retroalimentacion.length>0">
+    {{data.retroalimentacion}}
+  </div>
+  <div class="retroUrl" *ngIf="data.nombreArchivoRetroalimentacion!=null && data.nombreArchivoRetroalimentacion!=undefined && data.nombreArchivoRetroalimentacion.length>0">
+    <a [href]="data.urlArchivoSubidoRetroalimentacion" target="_blank">{{data.nombreArchivoRetroalimentacion}}</a>
+
+  </div>
+  <div style="width: 100%;display: flex;justify-content: center;">
+    <app-default-button [mat-dialog-close]="true"
+      [confs]="{color:'primary',titulo:'cerrar'}" icon="" [style]="'margin: 0px;'" ></app-default-button>
+  </div>
+</div>

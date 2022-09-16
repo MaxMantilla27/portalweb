@@ -44,7 +44,14 @@
   <div class="contenidoCursoModulo row" *ngIf="item.idModalidadHijo==1">
 
     <div class="contentModulo col-12 col-md-8 col-lg-9">
-      <div style="font-size: 14px;color: #909090; font-weight: 600;">Video:</div>
+      <div style="font-size: 14px;color: #909090; font-weight: 600;display: flex;
+      justify-content: start;
+      align-items: center;">Video:
+
+        <div style="    margin-left: 20px;" *ngIf="!cargaProgrso">
+          <app-load-vertical></app-load-vertical>
+        </div>
+      </div>
       <ng-container *ngIf="item.convalidado==true">
         <mat-progress-bar mode="determinate" [value]="100">
         </mat-progress-bar>
@@ -98,7 +105,7 @@
 
     </div>
 
-    <div class="col-12 col-md-4 col-lg-3" style="display: flex;justify-content: flex-end">
+    <div class="col-12 col-md-4 col-lg-3" style="display: flex;justify-content: flex-end;">
       <app-default-button [confs]="{color:'primary',titulo:'Ingresar'}" [disabled]="item.params==undefined"
         (click)="IrCurso(idMatricula,item.idPEspecificoHijo,item.habilitado==true?true:false)"
         [style]="'padding:0px 20px'">

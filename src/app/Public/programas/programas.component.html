@@ -185,7 +185,7 @@
         <div class="filtroTags">
           <div class="foltroEncontrados">{{textoResult}}</div>
 
-          <div class="tagitem" *ngIf="buscar!=''">{{buscar}} <i class="material-icons" (click)="buscar=''"
+          <div class="tagitem" *ngIf="buscar!=''">{{buscar}} <i class="material-icons" (click)="buscar='';GetProgramas()"
               style="margin-left: 10px;font-size: 12px;cursor: pointer;">close</i>
           </div>
 

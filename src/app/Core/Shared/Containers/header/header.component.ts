@@ -169,12 +169,10 @@ export class HeaderComponent implements OnInit,OnChanges,OnDestroy {
   RevisarUsuario(){
     var usuarioWeb=''
     usuarioWeb=this._SessionStorageService.SessionGetValue('usuarioWeb');
-    console.log(usuarioWeb)
     if(usuarioWeb==''){
       //this.RevisarUsuario();
     }else{
       this.GetPaises();
-      console.log(this.CodigoIso)
       if(this.CodigoIso!=''){
         this.GetCarreras();
       }
@@ -188,7 +186,6 @@ export class HeaderComponent implements OnInit,OnChanges,OnDestroy {
   }
   async RegistroInteraccionInicial(){
     await firstValueFrom(this._GlobalService.RegistroInteraccionInicial().pipe(tap((result) => {
-      console.log(result);
       this._SessionStorageService.SessionSetValue('usuarioWeb',result.identificadorUsuario);
       this._SessionStorageService.SessionSetValue('ISO_PAIS',result.codigoISO);
     })));
@@ -205,7 +202,6 @@ export class HeaderComponent implements OnInit,OnChanges,OnDestroy {
     this.paises = [];
     this._PaisService.GetPaises().pipe(takeUntil(this.signal$)).subscribe({
       next: (x) => {
-        console.log(x)
         this.paises = x.listaPaisCabeceraDTO.map((p: any) => {
           var ps: BasicUrlIcon = {
             Nombre: p.pais,
@@ -218,7 +214,6 @@ export class HeaderComponent implements OnInit,OnChanges,OnDestroy {
         this._HelperService.enviarDataPais(x.listaPaisCabeceraDTO);
       },
       error: (x) => {
-        console.log(x);
       },
     });
   }
@@ -257,7 +252,6 @@ export class HeaderComponent implements OnInit,OnChanges,OnDestroy {
         this.expandibles[0].data = this.Formacion;
       },
       error: (x) => {
-        console.log(x);
       },
     });
   }
@@ -289,7 +283,6 @@ export class HeaderComponent implements OnInit,OnChanges,OnDestroy {
         this._HelperService.enviarStringCarrera(this.expandibles[1].Nombre);
       },
       error: (x) => {
-        console.log(x);
       },
     });
   }
@@ -318,14 +311,12 @@ export class HeaderComponent implements OnInit,OnChanges,OnDestroy {
         this.expandibles[2].data = this.tecnica;
       },
       error: (x) => {
-        console.log(x);
       },
     });
   }
   GetCarreras() {
     this.carreras = [];
     this.tecnica = [];
-    console.log(this.CodigoIso)
     this.CodigoIso=this._SessionStorageService.SessionGetValue('ISO_PAIS')
     if (this._HeaderPermissionsService.ValidateCarrerasTecnicas(this.CodigoIso)) {
       this.GetEducacionTecnica();
@@ -339,11 +330,10 @@ export class HeaderComponent implements OnInit,OnChanges,OnDestroy {
       this.expandibles[1].estatus = false;
       this._HelperService.enviarStringCarrera('');
     }
-    console.log(this.expandibles)
   }
   ChangePais(e: any) {
-
     this._SessionStorageService.SessionSetValue('ISO_PAIS', e);
+    this._HelperService.enviarChangePais(e);
     this.GetCarreras();
     this.ChangeExpand.emit(this.expandibles)
   }
@@ -351,7 +341,6 @@ export class HeaderComponent implements OnInit,OnChanges,OnDestroy {
   ObtenerCombosPerfil() {
     this._AlumnoService.ObtenerCombosPerfil().pipe(takeUntil(this.signal$)).subscribe({
       next: (x) => {
-        console.log(x)
         this.Alumno=x.datosAlumno,
         this.value={IdProveedor:this.Alumno.idProveedor,cursos:this.Alumno.cursos};
         this.combosPerfil=x.combos;
@@ -364,7 +353,6 @@ export class HeaderComponent implements OnInit,OnChanges,OnDestroy {
   ObtenerAvatar() {
     this._AvatarService.ObtenerAvatar().pipe(takeUntil(this.signal$)).subscribe({
       next: (x) => {
-        console.log(x)
         this.Avatar = x.avatar;
         this.urlAvatar=this._AvatarService.GetUrlImagenAvatar(this.Avatar);
         this.combosAvatar=x.combos;
@@ -377,11 +365,9 @@ export class HeaderComponent implements OnInit,OnChanges,OnDestroy {
   ObtenerObservable(){
     this._HelperService.recibirDatoCuenta.pipe(takeUntil(this.signal$)).subscribe({
       next: (x) => {
-        console.log(x)
         this.DatoObservable.datoAvatar=x.datoAvatar;
         this.DatoObservable.datoContenido = x.datoContenido;
         this.token= this._SessionStorageService.validateTokken();
-        console.log(this.token)
         if(this.token){
           if(this.DatoObservable.datoAvatar == true){
             this.ObtenerAvatar()

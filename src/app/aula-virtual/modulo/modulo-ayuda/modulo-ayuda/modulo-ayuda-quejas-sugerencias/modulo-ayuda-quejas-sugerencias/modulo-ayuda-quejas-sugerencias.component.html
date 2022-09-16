@@ -1,7 +1,15 @@
 <div class="cursoTitle">{{Capitulo}}</div>
-<div class="tipoIndicacionTitle col-12 col-md-12 col-lg-12">
-  <img class="ImgIndicacionesContent" src="../../../../assets/icons/ayuda-naranja.svg">
-  <div>Quejas y sugerencias</div>
+
+<div class="col-12 col-md-12 col-lg-12 row">
+  <div class="tipoIndicacionTitle col-12 col-md-9 col-lg-10">
+    <img class="ImgIndicacionesContent" src="../../../../assets/icons/ayuda-naranja.svg">
+    <div>Quejas y sugerencias</div>
+  </div>
+  <div class="col-12 col-md-3 col-lg-2" style="margin: 30px 0px;">
+    <app-default-button  (ButtoclClick)="Onchange.emit(-2)" [confs]="{color:'primary',titulo:'Volver'}"  [style]="'width: 100%;'"
+      [style]="'margin-bottom: 0px !important;padding:0px 20px'" [icon]="''">
+    </app-default-button>
+  </div>
 </div>
 <div class="col-12 col-md-12 col-lg-12">
   <form [formGroup]="userForm">

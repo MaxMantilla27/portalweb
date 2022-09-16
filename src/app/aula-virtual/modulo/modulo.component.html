@@ -129,7 +129,7 @@
           <div class="pad-resp">
             <app-modulo-ayuda [Capitulo]="json.NombreCapitulo" [IdMatriculaCabecera]="json.IdMatriculaCabecera"
             [IdPGeneral]="json.IdPGeneralHijo" [IdPrincipal]="json.IdPGeneralPadre"
-             [IdPEspecifico]="json.IdPEspecificoHijo" (OnChange)="tabIndex=tabIndex+$event"></app-modulo-ayuda>
+             [IdPEspecifico]="json.IdPEspecificoHijo" (OnChange)="cambio($event)"></app-modulo-ayuda>
           </div>
         </mat-tab>
 
@@ -147,7 +147,8 @@
               </div>
             </ng-template>
             <div class="pad-resp">
-              <app-modulo-ayuda-preguntas-frecuentes [IdPrincipal]="json.IdPGeneralPadre" [IdPGeneral]="json.IdPGeneralHijo" [Capitulo]="json.NombreCapitulo">
+              <app-modulo-ayuda-preguntas-frecuentes [IdPrincipal]="json.IdPGeneralPadre" [IdPGeneral]="json.IdPGeneralHijo" [Capitulo]="json.NombreCapitulo"
+              (Onchange)="cambio($event)">
 
               </app-modulo-ayuda-preguntas-frecuentes>
             </div>
@@ -163,7 +164,8 @@
               </div>
             </ng-template>
             <div class="pad-resp">
-              <app-modulo-ayuda-quejas-sugerencias [IdPGeneral]="json.IdPGeneralHijo" [IdPEspecifico]="json.IdPEspecificoHijo" [Capitulo]="json.NombreCapitulo">
+              <app-modulo-ayuda-quejas-sugerencias [IdPGeneral]="json.IdPGeneralHijo" [IdPEspecifico]="json.IdPEspecificoHijo" [Capitulo]="json.NombreCapitulo"
+              (Onchange)="cambio($event)">
 
               </app-modulo-ayuda-quejas-sugerencias>
             </div>

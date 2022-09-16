@@ -1,5 +1,5 @@
 import { isPlatformBrowser } from '@angular/common';
-import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
+import { Component, Inject, OnDestroy, OnInit, PLATFORM_ID } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
 import { RegistroRespuestaPreProcesoPagoDTO } from 'src/app/Core/Models/ProcesoPagoDTO';
@@ -11,7 +11,7 @@ import { SessionStorageService } from 'src/app/Core/Shared/Services/session-stor
   templateUrl: './resultado-pago.component.html',
   styleUrls: ['./resultado-pago.component.scss']
 })
-export class ResultadoPagoComponent implements OnInit {
+export class ResultadoPagoComponent implements OnInit,OnDestroy{
   private signal$ = new Subject();
   isBrowser: boolean;
 
@@ -23,6 +23,10 @@ export class ResultadoPagoComponent implements OnInit {
     @Inject(PLATFORM_ID) platformId: Object,
   ) {
     this.isBrowser = isPlatformBrowser(platformId); {}
+  }
+  ngOnDestroy(): void {
+    this.signal$.next(true)
+    this.signal$.complete()
   }
 
   public json:RegistroRespuestaPreProcesoPagoDTO={

@@ -223,6 +223,13 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
   public IdPespecificoPrograma=0;
 
   ngOnInit(): void {
+
+    this._HelperServiceP.recibirChangePais.pipe(takeUntil(this.signal$)).subscribe((x) => {
+      console.log(x)
+      if (this.isBrowser) {
+        location.reload();
+      }
+    });
     if (this.isBrowser) {
       this.innerWidth = window.innerWidth;
       if (this.innerWidth < 992) this.seccionStep = 2;
@@ -510,45 +517,47 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
       next: (x) => {
         console.log(x);
         this.beneficios = x.listaBeneficioProgramaDTO;
-        let i = 1;
-        var beneficioLista: Array<number> = [];
-        while (i <= 2) {
-          var TipoBeneficio = this.beneficios.find((x) => x.paquete == i);
-          if (TipoBeneficio != undefined) {
-            TipoBeneficio.contenido.forEach((element) => {
-              if (element.idBeneficio > 0) {
-                beneficioLista.push(element.idBeneficio);
-              }
-            });
-            this.beneficios.forEach((x) => {
-              if (x.paquete == i + 1) {
-                var existe = false;
-                x.contenido.forEach((c) => {
-                  if (beneficioLista.indexOf(c.idBeneficio) > -1) {
-                    c.idBeneficio = 0;
-                    existe = true;
-                  }
-                });
-                if (existe) {
-                  if (i == 1) {
-                    x.contenido.unshift({
-                      contenido:
-                        'Todos los beneficios de la versión básica ademas de:',
-                      idBeneficio: -1,
-                    });
-                  }
-                  if (i == 2) {
-                    x.contenido.unshift({
-                      contenido:
-                        'Todos los beneficios de la versión profesional ademas de:',
-                      idBeneficio: -1,
-                    });
+        if(this.beneficios!=null){
+          let i = 1;
+          var beneficioLista: Array<number> = [];
+          while (i <= 2) {
+            var TipoBeneficio = this.beneficios.find((x) => x.paquete == i);
+            if (TipoBeneficio != undefined) {
+              TipoBeneficio.contenido.forEach((element) => {
+                if (element.idBeneficio > 0) {
+                  beneficioLista.push(element.idBeneficio);
+                }
+              });
+              this.beneficios.forEach((x) => {
+                if (x.paquete == i + 1) {
+                  var existe = false;
+                  x.contenido.forEach((c) => {
+                    if (beneficioLista.indexOf(c.idBeneficio) > -1) {
+                      c.idBeneficio = 0;
+                      existe = true;
+                    }
+                  });
+                  if (existe) {
+                    if (i == 1) {
+                      x.contenido.unshift({
+                        contenido:
+                          'Todos los beneficios de la versión básica ademas de:',
+                        idBeneficio: -1,
+                      });
+                    }
+                    if (i == 2) {
+                      x.contenido.unshift({
+                        contenido:
+                          'Todos los beneficios de la versión profesional ademas de:',
+                        idBeneficio: -1,
+                      });
+                    }
                   }
                 }
-              }
-            });
+              });
+            }
+            i++;
           }
-          i++;
         }
       },
     });
@@ -608,7 +617,7 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
       next: (x) => {
         console.log(x);
         this.certificado = x.listaCertificacionDTO;
-        if (this.certificado.descripcion != null) {
+        if (this.certificado!=null && this.certificado.descripcion != null) {
           var descstrong = this.certificado.descripcion.split('<p><strong>');
           var desc = [];
           this.certificado.descripcionHeader=[]

@@ -55,6 +55,7 @@ export class CursoModulosComponent implements OnInit, OnChanges,OnDestroy {
     modalidad: '',
     programaGeneral: '',
   };
+  public cargaProgrso=false
   @Input() idMatricula = 0;
   ngOnInit(): void {
     if (this.idMatricula > 0) {
@@ -68,10 +69,14 @@ export class CursoModulosComponent implements OnInit, OnChanges,OnDestroy {
       .pipe(takeUntil(this.signal$))
       .subscribe({
         next: (x) => {
+          this.cargaProgrso=true
           console.log(x)
           this.progresoPrograma = x;
           this.AddProgresToProgram();
         },
+        complete:()=>{
+          this.cargaProgrso=true
+        }
       });
   }
   AddProgresToProgram() {

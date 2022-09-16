@@ -33,11 +33,16 @@ export class DocenciaActividadesAutoevaluacionComponent implements OnInit,OnChan
 
   columnHeader = {
     alumno: 'Alumno',
+    fechaEnvio: 'Fecha de Envio',
+    fechaCalificacion: 'Fecha Calificacion',
+    calificadoEstado: 'Calificado',
     Acciones: 'Acciones',
   };
 
   TipoContenido: any = {
-    Acciones: ['buttons', 'Calificar'],
+    'fechaCalificacion': ['date'],
+    'fechaEnvio': ['date'],
+    Acciones: ['buttons', 'Calificar']
     //'Acciones': ['buttons'],
   };
   ngOnInit(): void {
@@ -71,7 +76,11 @@ export class DocenciaActividadesAutoevaluacionComponent implements OnInit,OnChan
         this.proyectos[index].alumnos=[]
         this.proyectos[index].alumnosAntiguos=[]
         x.forEach((a:any) => {
-          if(a.idTarea==0 && a.idTarea==null){
+          a.calificadoEstado='No Calificado'
+          if(a.calificado==true){
+            a.calificadoEstado='Calificado'
+          }
+          if(a.idTarea==0 || a.idTarea==null){
             this.proyectos[index].alumnosAntiguos.push(a)
           }else{
             this.proyectos[index].alumnos.push(a)

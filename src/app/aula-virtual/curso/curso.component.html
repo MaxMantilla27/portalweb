@@ -154,9 +154,11 @@
 
             <div class="cursoTitle">{{programEstructura.programaGeneral}}</div>
             <div class="cursoTabDescripcion">¡Bienvenido! Debes completar los siguientes módulos de tu programa:</div>
-            <div class="cursoTabRemenber">
-              <img src="../../../assets/icons/horario-04.svg" alt="">
-              <div><strong>Recuerda: </strong>Debes completar el primer curso para poder acceder al siguiente</div>
+            <div class="msjCom" style="border: solid 2px #fff7ee; padding: 10px;margin-bottom: 20px;">
+              <img src="../../../../assets/icons/icon-hand.svg" alt="">
+              <div>
+                <div><strong>Recuerda: </strong>Debes completar el primer curso para poder acceder al siguiente</div>
+              </div>
             </div>
             <app-curso-modulos [idMatricula]="idMatricula" [programEstructura]="programEstructura">
             </app-curso-modulos>

@@ -128,20 +128,55 @@
                       width: calc( 100% - 10px );
                       flex-wrap: wrap;">
                     <ng-container *ngIf="tareas.idTipoEvaluacionTrabajo==1">
-                      <div>{{tareas.criteriosEvaluacion.nombreEscalaCalificacion}}</div>
-                      <div>
 
-                        <mat-form-field appearance="outline" style="width: 300px;font-size: 13px;">
-                          <mat-label>Calificar</mat-label>
-                          <mat-select [(ngModel)]="calificacion" [disabled]="cargaEnvio">
-                            <mat-option *ngFor="let item of tareas.criteriosEvaluacion.listaParametroEscalaEvaluacion"
-                              [value]="item.id">{{item.valor}}</mat-option>
-                          </mat-select>
-                        </mat-form-field>
+                      <div class="row" style="width:100%;justify-content: space-between;">
+                        <div class="col-12 col-md-6 col-lg-6">{{tareas.criteriosEvaluacion.nombreEscalaCalificacion}}</div>
+                        <div class="col-12 col-md-6 col-lg-6">
 
-                        <app-default-button [confs]="{color:'primary',titulo:'Calificar'}"
-                          [style]="'padding:0px 30px;margin:0px '" [disabled]="cargaEnvio || calificacion==0"
-                          (ButtoclClick)="tareas.idTipoEvaluacionTrabajo==2?RegistrarV3(i):EnviarNota(item.id)"></app-default-button>
+                          <mat-form-field appearance="outline" style="width: 100%;font-size: 13px;">
+                            <mat-label>Calificar</mat-label>
+                            <mat-select [(ngModel)]="calificacion" [disabled]="cargaEnvio">
+                              <mat-option *ngFor="let item of tareas.criteriosEvaluacion.listaParametroEscalaEvaluacion"
+                                [value]="item.id">{{item.valor}}</mat-option>
+                            </mat-select>
+                          </mat-form-field>
+
+                        </div>
+                        <div class="col-12 col-md-6 col-lg-6">Comentario de Retroalimentación</div>
+                        <div class="col-12 col-md-6 col-lg-6">
+                          <mat-form-field appearance="outline" style="width: 100%;font-size: 13px;">
+                            <mat-label>Retroalimentación</mat-label>
+                            <textarea matInput name="Retroalimentación" id="" style="width: 100%;" [(ngModel)]="retroalimentacion" ></textarea>
+                          </mat-form-field>
+
+                        </div>
+                        <div class="col-12 col-md-6 col-lg-6">Archivo de Retroalimentación</div>
+                        <div class="col-12 col-md-6 col-lg-6">
+                          <div (click)="fileInput.click()" style="height: 38px;width: 100%;border:solid 1px #c2c2c2;border-radius: 5px;display: flex; align-items: center;
+                          padding: 0px 5px;cursor: pointer;">
+                            <button style="border: solid 1px #767676;
+                            margin-right: 5px;    white-space: nowrap;">Seleccionar archivo</button>
+                            <div style="    white-space: nowrap;
+                            overflow: hidden;
+                            text-overflow: ellipsis;
+                            display: -webkit-box;
+                            -webkit-line-clamp: 3;
+                            -webkit-box-orient: vertical;">{{nombrefile}}</div>
+                          </div>
+                          <input #fileInput type="file" id="file"
+                          (change)="getFileDetails($event)"
+                          style="    width: 100%;
+                          border: solid 1px #c2c2c2;
+                          padding: 7px;
+                          border-radius: 5px;display: none;">
+                            <div *ngIf="!filestatus && fileErrorMsg!=''">{{fileErrorMsg}}</div>
+                        </div>
+                        <div class="col-12" style="display: flex;justify-content: flex-end;margin-top: 30px;">
+
+                          <app-default-button [confs]="{color:'primary',titulo:'Calificar'}"
+                            [style]="'padding:0px 30px;margin:0px '" [disabled]="cargaEnvio || calificacion==0 "
+                            (ButtoclClick)="tareas.idTipoEvaluacionTrabajo==2?RegistrarV3(i):EnviarNota(item.id)"></app-default-button>
+                        </div>
                       </div>
                     </ng-container>
                     <ng-container *ngIf="tareas.idTipoEvaluacionTrabajo==2">
@@ -266,7 +301,8 @@
 
       <div class="col-12 col-md-12 col-lg-12" style="margin: 50px 0px 10px;">
         <div class="cabeceraExpandTarea" [ngClass]="{'cabeceraExpandTareaOpen':instruccionesAcerca}">
-          <div>Instrucciones acerca de la tarea</div>
+          <div *ngIf="tareas.idTipoEvaluacionTrabajo==1">Instrucciones acerca de la tarea</div>
+          <div *ngIf="tareas.idTipoEvaluacionTrabajo==2">Instrucciones acerca del proyecto</div>
           <div>
             <i class="material-icons no-seleccionable " *ngIf="!instruccionesAcerca"
               (click)="instruccionesAcerca=true">keyboard_arrow_down</i>

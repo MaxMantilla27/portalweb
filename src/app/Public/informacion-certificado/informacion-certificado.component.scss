@@ -1,0 +1,31 @@
+.titleCrt{
+  text-align: center;
+  margin: 20px 10px;
+  font-size: 2rem;
+  font-weight: 500;
+  line-height: 1.2;
+}
+.cardCert{
+  border: 3px solid #224060;
+  border-radius: 10px;
+  min-height: 1px;
+  padding: 1.25rem;
+  .cardTitle{
+    font-weight: bolder;
+    margin-bottom: 0.5rem;
+    position: relative;
+    padding-right: 15px;
+    padding-left: 15px;
+  }
+  .cardValue{
+    font-size: 14px;
+  }
+  .imgCerti{
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 10px;
+    img{
+      width: 100px;
+    }
+  }
+}

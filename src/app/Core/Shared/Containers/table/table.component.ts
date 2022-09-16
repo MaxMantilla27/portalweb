@@ -54,6 +54,11 @@ export class TableComponent implements OnInit,AfterViewInit,OnChanges {
   ngOnChanges(changes: SimpleChanges): void {
     console.log(this.tableData.length)
     if(this.tableData.length!=this.lengthInicial){
+      var i=0
+      this.tableData.forEach((t:any) => {
+        t.index=i;
+        i++
+      });
       this.dataSource = new MatTableDataSource(this.tableData);
       this.changeDetectorRefs.detectChanges();
     }

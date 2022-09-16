@@ -4,6 +4,7 @@ import { Subject, takeUntil } from 'rxjs';
 import { CardProgramasDTO } from 'src/app/Core/Models/BasicDTO';
 import { ObtenerTopProgramasSendDTO } from 'src/app/Core/Models/HomeDTO';
 import { ProgramasGeneralDTO } from 'src/app/Core/Models/ProgramasGeneralesDTO';
+import { HelperService } from 'src/app/Core/Shared/Services/helper.service';
 import { HomeService } from 'src/app/Core/Shared/Services/Home/home.service';
 
 @Component({
@@ -16,7 +17,11 @@ export class HomeProgramasComponent implements OnInit,OnChanges,OnDestroy {
   private signal$ = new Subject();
 
   isBrowser: boolean;
-  constructor(private _HomeService:HomeService, @Inject(PLATFORM_ID) platformId: Object) {
+  constructor(
+    private _HomeService:HomeService,
+    private _HelperService:HelperService,
+    @Inject(PLATFORM_ID) platformId: Object
+  ) {
     this.isBrowser = isPlatformBrowser(platformId);
   }
   ngOnDestroy(): void {
@@ -30,6 +35,12 @@ export class HomeProgramasComponent implements OnInit,OnChanges,OnDestroy {
   public innerWidth: any;
   public seccionStep=4;
   ngOnInit(): void {
+    this._HelperService.recibirChangePais.pipe(takeUntil(this.signal$)).subscribe(x=>{
+      console.log(x)
+      if(this.change==true){
+        this.GetProgramasHome()
+      }
+    })
     if(this.isBrowser){
       this.innerWidth = window.innerWidth;
       if(this.innerWidth<992)this.seccionStep=2;

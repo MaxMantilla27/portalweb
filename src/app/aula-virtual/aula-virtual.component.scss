@@ -95,7 +95,7 @@
   background: #f4f4f4;
 }
 .pad-resp {
-  padding: 5px 10px 0px 92px;
+  padding: 5px 10px 0px 62px;
 }
 
 @media (max-width: 768px) {
@@ -142,7 +142,7 @@
     padding: 45px 20px;
   }
   .pad-resp {
-    padding: 5px 10px 0px 92px;
+    padding: 5px 10px 0px 62px;
   }
 }
 @media (min-width: 768px) {
@@ -150,28 +150,28 @@
     z-index: 100;
     position: absolute !important;
     background: white;
-    height: 100%;
+    height: calc( 100% - 40px );
     min-width: 2px;
   }
   .tabVerticalDocente > mat-tab-header{
     z-index: 100;
     position: absolute !important;
     background: white;
-    height: 100%;
+    height: calc( 100% - 40px );
     min-width: 2px;
   }
   .tabVerticalses > mat-tab-header{
     z-index: 100;
     position: absolute !important;
     background: white;
-    height: 100%;
+    height: calc( 100% - 40px );
     min-width: 2px;
   }
   .rowpaddAv {
     padding: 45px 40px 45px 20px;
   }
   .pad-resp {
-    padding: 5px 10px 0px 92px;
+    padding: 5px 10px 0px 72px;
   }
 }
 @media (min-width: 992px) {
@@ -179,7 +179,7 @@
     padding: 45px 90px 45px 20px;
   }
   .pad-resp {
-    padding: 5px 10px 0px 92px;
+    padding: 5px 10px 0px 72px;
   }
 }
 @media (min-width: 1200px) {
@@ -272,7 +272,7 @@
   }
 }
 .tipoIndicacionTitle div {
-  font-size: 17px;
+  font-size: 18px;
   color: #505050;
 }
 

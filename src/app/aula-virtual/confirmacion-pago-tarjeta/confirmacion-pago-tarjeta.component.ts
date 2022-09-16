@@ -1,7 +1,9 @@
 import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
 import { RegistroProcesoPagoAlumnoDTO, RegistroProcesoPagoPseDTO, RegistroRespuestaPreProcesoPagoDTO } from 'src/app/Core/Models/ProcesoPagoDTO';
+import { ChargeTextComponent } from 'src/app/Core/Shared/Containers/Dialog/charge-text/charge-text.component';
 import { FormaPagoService } from 'src/app/Core/Shared/Services/FormaPago/forma-pago.service';
 import { HelperService } from 'src/app/Core/Shared/Services/helper.service';
 import { SessionStorageService } from 'src/app/Core/Shared/Services/session-storage.service';
@@ -23,7 +25,8 @@ export class ConfirmacionPagoTarjetaComponent implements OnInit,OnDestroy {
     private _SessionStorageService:SessionStorageService,
     private _HelperService: HelperService,
     private _SnackBarServiceService:SnackBarServiceService,
-    private _router:Router
+    private _router:Router,
+    public dialog: MatDialog,
   ) { }
   ngOnDestroy(): void {
     this.signal$.next(true);
@@ -35,7 +38,7 @@ export class ConfirmacionPagoTarjetaComponent implements OnInit,OnDestroy {
     RequiereDatosTarjeta:true
   }
   public resultCard:any
-
+  public oncharge=false
   public jsonSave:RegistroProcesoPagoAlumnoDTO={
     IdentificadorTransaccion:'',
     MedioCodigo:'',
@@ -261,16 +264,26 @@ export class ConfirmacionPagoTarjetaComponent implements OnInit,OnDestroy {
           error
         );
       } else {
-        this.Pagar();
+        if(this.oncharge==false){
+          this.Pagar();
+        }
       }
     }
   }
   Pagar(){
+    this.oncharge=true
+    const dialogRef =this.dialog.open(ChargeTextComponent,{
+      panelClass:'dialog-charge-text',
+      data: { text: 'Procesando pago' },
+      disableClose:true
+    });
     this.registroPse.NombreTitularPSE=this.jsonSave.TarjetaHabiente.Titular;
     this.registroPse.NumeroDocumentoPSE=this.jsonSave.TarjetaHabiente.NumeroDocumento;
     this.jsonSave.RegistroProcesoPagoPse=this.registroPse;
     this._FormaPagoService.ProcesarPagoCuotaAlumno(this.jsonSave).pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
+        this.oncharge=false
+        dialogRef.close()
         console.log(x);
         if(this.resultCard.idPasarelaPago!=1 || this.resultCard.idFormaPago!=65){
           if(this.resultCard.idPasarelaPago!=5){
@@ -281,6 +294,14 @@ export class ConfirmacionPagoTarjetaComponent implements OnInit,OnDestroy {
         }else{
           location.href=x._Repuesta.urlRedireccionar;
         }
+      },
+      error:e=>{
+        this.oncharge=false
+        dialogRef.close()
+      },
+      complete:()=>{
+        this.oncharge=false
+        dialogRef.close()
       }
     })
   }

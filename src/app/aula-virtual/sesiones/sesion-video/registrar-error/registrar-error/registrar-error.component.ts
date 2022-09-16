@@ -50,9 +50,14 @@ export class RegistrarErrorComponent implements OnInit,OnDestroy {
     this.RegistroErrorVideo.comentario=this.userForm.get('Comentario')?.value;
     this._VideoSesionService.EnviarErrorVideoPlayer(this.RegistroErrorVideo).pipe(takeUntil(this.signal$)).subscribe({
       next: (x) => {
-
+        console.log(x)
+      },
+      error:e=>{
+        console.log(e)
+      },
+      complete:()=>{
+          this.dialogRef.close()
       }
     })
-    this.dialogRef.close()
   }
 }

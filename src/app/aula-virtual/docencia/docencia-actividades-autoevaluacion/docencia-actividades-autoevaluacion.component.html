@@ -23,7 +23,7 @@
       <mat-tab label="Proyectos">
         <div class="tableGestionNotas" *ngIf="item.alumnos!=undefined && item.alumnos.length>0">
           <app-table [tableData]="item.alumnos" [columnHeader]="columnHeader" [tipoContenido]="TipoContenido"
-            [StyleContent]="'    font-size: 12px;padding: 10px;'" [StyleCabecera]="'color: white;background: rgb(3 61 171)'"
+            [StyleContent]="'font-size: 12px;padding: 10px;'" [StyleCabecera]="'color: white;background: rgb(3 61 171)'"
             (ButtonClick)="ButtonsClick(i,$event)">
           </app-table>
         </div>
@@ -35,7 +35,7 @@
       <mat-tab label="Proyectos Antiguos">
         <div class="tableGestionNotas" *ngIf="item.alumnosAntiguos!=undefined && item.alumnosAntiguos.length>0">
           <app-table [tableData]="item.alumnosAntiguos" [columnHeader]="columnHeader" [tipoContenido]="TipoContenido"
-            [StyleContent]="'    font-size: 12px;padding: 10px;'" [StyleCabecera]="'color: white;background: rgb(3 61 171)'">
+            [StyleContent]="'font-size: 12px;padding: 10px;'" [StyleCabecera]="'color: white;background: rgb(3 61 171)'">
           </app-table>
         </div>
         <div style="padding: 40px;

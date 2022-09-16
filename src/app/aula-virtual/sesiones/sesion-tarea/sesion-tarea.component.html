@@ -21,7 +21,7 @@
   </div>
   <ng-container *ngIf="progress==0;else cargando">
     <div class="col-6 col-md-8 col-lg-9 fieldTarea">
-      <div (click)="fileInput.click()" style="height: 38px;width: 100%;border:solid 1px #c2c2c2;border-radius: 5px;display: flex; align-items: center;
+      <div (click)="subir==true?fileInput.click():mensajeError()" style="height: 38px;width: 100%;border:solid 1px #c2c2c2;border-radius: 5px;display: flex; align-items: center;
       padding: 0px 5px;cursor: pointer;">
         <button style="border: solid 1px #767676;
         margin-right: 5px;    white-space: nowrap;">Seleccionar archivo</button>
@@ -56,40 +56,49 @@
 
     </div>
   </ng-template>
-  <div class="col-12 col-md-12 col-lg-12"> </div>
   <div class="col-12 col-md-12 col-lg-12">
-    <table class="tablaTarea">
-      <tr>
-        <th>Archivo</th>
-        <th>Fecha de envio</th>
-        <th>Fecha de calificación</th>
-        <th>Versión</th>
-        <th>Calificación</th>
-        <th>Estado</th>
-      </tr>
-      <ng-container *ngIf="tarea.registroEvaluacionArchivo!=null">
-        <tr *ngFor="let item of tarea.registroEvaluacionArchivo">
-          <td>{{item.nombreArchivo}}</td>
-          <td>{{item.fechaCreacion | date:"dd/MM/yyyy"}}</td>
-          <td>{{item.fechaCalificacion==null?'-':item.fechaCalificacion | date:"dd/MM/yyyy"}}</td>
-          <td>{{item.version}}</td>
-          <td>{{item.nota==null?'-':item.nota}}</td>
-          <td>
-            <ng-container *ngIf="item.calificado">
-              <div style="display: flex;align-items:center;justify-content: space-evenly;">
-
-                Calificado <i class="material-icons" style="color: #00c355;">check_circle</i>
-              </div>
-            </ng-container>
-
-            <ng-container *ngIf="!item.calificado">
-              Sin calificar
-            </ng-container>
-          </td>
+    <div class="table-resposive">
+      <table class="table tablaTarea">
+        <tr>
+          <th style="min-width: 170px;">Archivo</th>
+          <th style="min-width: 120px;">Fecha de envio</th>
+          <th style="min-width: 160px;">Fecha de calificación</th>
+          <th style="min-width: 80px;">Versión</th>
+          <th style="min-width: 115px;">Calificación</th>
+          <th style="min-width: 100px;">Retroalimentación</th>
+          <th style="min-width: 100px;">Estado</th>
         </tr>
-      </ng-container>
+        <ng-container *ngIf="tarea.registroEvaluacionArchivo!=null">
+          <tr *ngFor="let item of tarea.registroEvaluacionArchivo;let i=index">
+            <td>{{item.nombreArchivo}}</td>
+            <td>{{item.fechaCreacion | date:"dd/MM/yyyy"}}</td>
+            <td>{{item.fechaCalificacion==null?'-':item.fechaCalificacion | date:"dd/MM/yyyy"}}</td>
+            <td>{{item.version}}</td>
+            <td>{{item.nota==null?'-':item.nota}}</td>
+            <td style="display: flex;
+            justify-content: center;
+            align-items: center;min-height: 73.5px;" >
+              <app-default-button (ButtoclClick)="OpenModalR(i)"
+              *ngIf="(item.nombreArchivoRetroalimentacion!=null && item.nombreArchivoRetroalimentacion!=undefined && item.nombreArchivoRetroalimentacion.length>0)
+              || (item.retroalimentacion!=null && item.retroalimentacion!=undefined && item.retroalimentacion.length>0)"
+                [confs]="{color:'primary',titulo:'ver'}" icon="" [style]="'margin: 0px;'" ></app-default-button>
+            </td>
+            <td>
+              <ng-container *ngIf="item.calificado">
+                <div style="display: flex;align-items:center;justify-content: space-evenly;">
 
-    </table>
+                  Calificado <i class="material-icons" style="color: #00c355;">check_circle</i>
+                </div>
+              </ng-container>
+
+              <ng-container *ngIf="!item.calificado">
+                Sin calificar
+              </ng-container>
+            </td>
+          </tr>
+        </ng-container>
+      </table>
+    </div>
   </div>
   <div class="col-12 col-md-12 col-lg-12" style="margin: 50px 0px 10px;">
     <div class="cabeceraExpandTarea" [ngClass]="{'cabeceraExpandTareaOpen':instruccionesAcerca}">

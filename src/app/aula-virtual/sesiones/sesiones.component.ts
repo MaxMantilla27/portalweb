@@ -1030,6 +1030,7 @@ export class SesionesComponent implements OnInit,OnDestroy,AfterViewInit {
       (x: any) => {
         x.opened = false;
         if (x.numeroCapitulo == this.idcapitulo) {
+          console.log(this.tabIndex)
           x.opened = true;
           this.tabIndex++;
           this.migaPan.push({
@@ -1079,6 +1080,9 @@ export class SesionesComponent implements OnInit,OnDestroy,AfterViewInit {
               });
             }
           }
+
+          console.log(s+'--'+ss)
+          console.log(this.tabIndex)
           if (x.registroEstructuraCursoSesion != null) {
             x.registroEstructuraCursoSesion.forEach((sess: any) => {
               s++;
@@ -1143,6 +1147,8 @@ export class SesionesComponent implements OnInit,OnDestroy,AfterViewInit {
               }
             });
           }
+
+          console.log(s+'--'+ss)
           if (x.registroEstructuraCursoTarea != null) {
             x.registroEstructuraCursoTarea.forEach((tarea: any) => {
               t++;
@@ -1151,6 +1157,8 @@ export class SesionesComponent implements OnInit,OnDestroy,AfterViewInit {
                 if (tarea.idTarea == this.idSesion) {
                   tarea.charge = true;
                   this.tabIndex += ss + s + t;
+
+                  console.log(this.tabIndex)
                   // this.migaPan.push({
                   //   titulo: tarea.tarea,
                   //   urlWeb:
@@ -1170,6 +1178,7 @@ export class SesionesComponent implements OnInit,OnDestroy,AfterViewInit {
 
             });
           }
+          console.log(this.tabIndex)
           if (x.registroCursoTareaCalificar != null) {
             x.registroCursoTareaCalificar.forEach((tareaC: any) => {
               tc++;
@@ -1197,6 +1206,7 @@ export class SesionesComponent implements OnInit,OnDestroy,AfterViewInit {
 
             });
           }
+          console.log(this.tabIndex)
         } else {
           if (x.numeroCapitulo < this.idcapitulo) {
             this.tabIndex++;
@@ -1230,6 +1240,7 @@ export class SesionesComponent implements OnInit,OnDestroy,AfterViewInit {
                 this.tabIndex++;
               });
             }
+            console.log(this.tabIndex)
           }
           if (x.numeroCapitulo > this.idcapitulo) {
             if (x.registroEstructuraCursoSesion != null) {
@@ -1243,6 +1254,7 @@ export class SesionesComponent implements OnInit,OnDestroy,AfterViewInit {
       }
     );
     console.log(e)
+    console.log(this.tabIndex)
     this.estructuraCapitulo.registroEstructuraCursoCapitulo.forEach(
       (x: any) => {
         if (

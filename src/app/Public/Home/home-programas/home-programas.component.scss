@@ -8,6 +8,22 @@
   justify-content: flex-start;
   width: 5%;
 }
+
+.carousel-programas ngb-carousel .carousel-control-prev {
+  display: block;
+}
+.carousel-programas ngb-carousel .carousel-control-next {
+  display: block;
+}
+@media (min-width: 992px) {
+
+  .carousel-programas ngb-carousel .carousel-control-prev {
+    display: none;
+  }
+  .carousel-programas ngb-carousel .carousel-control-next {
+    display: none;
+  }
+}
 .carousel-programas ngb-carousel .carousel-inner {
   padding: 40px 0px;
 }

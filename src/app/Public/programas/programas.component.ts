@@ -39,7 +39,8 @@ export class ProgramasComponent implements OnInit,OnDestroy {
     @Inject(PLATFORM_ID) platformId: Object,
     private _bottomSheet: MatBottomSheet,
     private _SeoService:SeoService,
-    private title:Title
+    private title:Title,
+    private _HelperService:HelperService
   ) {
     this.isBrowser = isPlatformBrowser(platformId);
   }
@@ -90,7 +91,19 @@ export class ProgramasComponent implements OnInit,OnDestroy {
 
   ]
   ngOnInit(): void {
-
+    this._HelperService.recibirChangePais.pipe(takeUntil(this.signal$)).subscribe((x) => {
+      console.log(x)
+      this.rangoPrecios=9700
+      this.CodigoIso = this._SessionStorageService.SessionGetValue('ISO_PAIS')!=''?this._SessionStorageService.SessionGetValue('ISO_PAIS'):'INTC';
+      console.log(this.CodigoIso)
+      if(this.CodigoIso.toUpperCase()=='PE'){this.rangoPrecios=16800;this.monedaRango='S/. 0 ';}
+      if(this.CodigoIso.toUpperCase()=='CO'){this.rangoPrecios=1000000000;this.monedaRango='COL$ 0';}
+      if(this.CodigoIso.toUpperCase()=='BO'){this.rangoPrecios=37300;this.monedaRango='Bs 0 ';}
+      if(this.CodigoIso.toUpperCase()=='MX'){this.rangoPrecios=200000;this.monedaRango='MXN 0 ';}
+      this.rangoselect=this.rangoPrecios;
+      console.log(this.rangoPrecios)
+      this.GetProgramas()
+    });
     let t:string='Formación Continua'
     this.title.setTitle(t);
 
@@ -113,6 +126,7 @@ export class ProgramasComponent implements OnInit,OnDestroy {
     if(this.CodigoIso.toUpperCase()=='PE'){this.rangoPrecios=16800;this.monedaRango='S/. 0 ';}
     if(this.CodigoIso.toUpperCase()=='CO'){this.rangoPrecios=1000000000;this.monedaRango='COL$ 0';}
     if(this.CodigoIso.toUpperCase()=='BO'){this.rangoPrecios=37300;this.monedaRango='Bs 0 ';}
+    if(this.CodigoIso.toUpperCase()=='MX'){this.rangoPrecios=200000;this.monedaRango='MXN 0 ';}
     this.rangoselect=this.rangoPrecios;
     this.activatedRoute.params.pipe(takeUntil(this.signal$)).subscribe({
       next:(x)=>{

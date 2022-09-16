@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges } from '@angular/core';
 import { Subject, takeUntil } from 'rxjs';
 import { ParametrosEstructuraEspecificaDTO } from 'src/app/Core/Models/EstructuraEspecificaDTO';
-import { ParametroEnvioTrabajoPares, ParametroObtenerEvaluacionTarea } from 'src/app/Core/Models/TareaEvaluacionDTO';
+import { ParametroEnvioCriterioReflexivo, ParametroEnvioTrabajoPares, ParametroObtenerEvaluacionTarea } from 'src/app/Core/Models/TareaEvaluacionDTO';
 import { SnackBarServiceService } from 'src/app/Core/Shared/Services/SnackBarService/snack-bar-service.service';
 import { TareaEvaluacionService } from 'src/app/Core/Shared/Services/TareaEvaluacion/tarea-evaluacion.service';
 
@@ -37,6 +37,12 @@ export class SesionTareaCalificarComponent implements OnInit,OnChanges,OnDestroy
   @Output() next: EventEmitter<void> = new EventEmitter<void>();
   @Output() prev: EventEmitter<void> = new EventEmitter<void>();
   @Output() onFinish: EventEmitter<void> = new EventEmitter<void>();
+  public retroalimentacion=''
+  public retroalimentacionFile:File=new File([],'')
+  public nombrefile='Ningún archivo seleccionado'
+  public filestatus=false
+  public fileErrorMsg=''
+  public selectedFiles?: FileList;
   public params:ParametroObtenerEvaluacionTarea={
     id:0,
     idEvaluacion:0,
@@ -52,16 +58,48 @@ export class SesionTareaCalificarComponent implements OnInit,OnChanges,OnDestroy
     IdEvaluacion:0,
     IdParametroEvaluacion:0,
     ValorCalificado:0,
+    Retroalimentacion:'',
+    file:new File([],'')
   }
   public tarea:any
   public tareaAc:any;
   public cargaEnvio=false;
   public calificacion=0;
+  public paramsAr:ParametroEnvioCriterioReflexivo={
+    IdEvaluacion:0,
+    IdPEspecifico:0,
+    IdPGeneral:0,
+    IdUsuario:'',
+    IdTareaEvaluacionTarea:0,
+    Registros:[]
+  }
+  public envioAr=true;
   ngOnDestroy(): void {
     this.signal$.next(true)
     this.signal$.complete()
   }
   ngOnInit(): void {
+  }
+
+  getFileDetails(event:any) {
+    for (var i = 0; i < event.target.files.length; i++) {
+      this.filestatus=true
+      var name = event.target.files[i].name;
+      this.nombrefile=name;
+      var type = event.target.files[i].type;
+      var size = event.target.files[i].size;
+      var modifiedDate = event.target.files[i].lastModifiedDate;
+      var extencion=name.split('.')[name.split('.').length-1]
+      if( Math.round((size/1024)/1024)>150){
+        this.fileErrorMsg='El tamaño del archivo no debe superar los 150 MB'
+        this.filestatus=false
+      }
+      this.selectedFiles = event.target.files;
+      // console.log ('Name: ' + name + "\n" +
+      //   'Type: ' + extencion + "\n" +
+      //   'Last-Modified-Date: ' + modifiedDate + "\n" +
+      //   'Size: ' + Math.round((size/1024)/1024) + " MB");
+    }
   }
   ngOnChanges(changes: SimpleChanges): void {
     if(this.idtarea>0 && this.charge==true && this.habilitado==true){
@@ -92,6 +130,16 @@ export class SesionTareaCalificarComponent implements OnInit,OnChanges,OnDestroy
             }
           });
         }
+        if(this.tarea.criteriosEvaluacionReflexivo!=undefined && this.tarea.criteriosEvaluacionReflexivo.length>0){
+          this.envioAr=true
+          this.tarea.criteriosEvaluacionReflexivo.forEach((c:any) => {
+            c.calificacion=0;
+            if(c.idParametroEvaluacionNota==null || c.idParametroEvaluacionNota==undefined || c.idParametroEvaluacionNota==0){
+              this.envioAr=false
+            }
+          });
+        }
+        console.log(this.envioAr)
         console.log(this.tareaAc)
       }
     })
@@ -110,17 +158,32 @@ export class SesionTareaCalificarComponent implements OnInit,OnChanges,OnDestroy
     this.enviarJson.ValorCalificado=cal
     this.enviarJson.IdParametroEvaluacion=this.tarea.criteriosEvaluacion.idParametroEvaluacion
     this.enviarJson.IdEsquemaEvaluacionPGeneralDetalle=this.tarea.criteriosEvaluacion.idEsquemaEvaluacionPGeneralDetalle
+    this.enviarJson.Retroalimentacion=this.retroalimentacion
+    if(this.selectedFiles){
+      const file: File | null = this.selectedFiles.item(0);
+      if (file) {
+        this.enviarJson.file = file;
+      }
+    }
     console.log(this.enviarJson);
     this._TareaEvaluacionService.EnviarCalificacionTrabajoPares(this.enviarJson).pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
         console.log(x)
         this.tareaAc.calificado=true
-        this.onFinish.emit()
+        if(this.envioAr){
+          this.onFinish.emit()
+        }
+        this.cargaEnvio=false
       },
       error:x=>{
         console.log(x)
+        this.cargaEnvio=false
+      },
+      complete:()=>{
+        this.cargaEnvio=false
       }
     })
+
   }
   nextc(){
     console.log(this.tareaAc)
@@ -130,5 +193,48 @@ export class SesionTareaCalificarComponent implements OnInit,OnChanges,OnDestroy
   }
   prevc(){
     this.prev.emit();
+  }
+  ValidarCriterioReflexivo(){
+    for (let i = 0; i < this.tarea.criteriosEvaluacionReflexivo.length; i++) {
+      if(this.tarea.criteriosEvaluacionReflexivo[i].calificacion==null || this.tarea.criteriosEvaluacionReflexivo[i].calificacion<=0){
+        return false
+      }
+    }
+    return true;
+  }
+  EnviarCriterioReflexivo(){
+    this.cargaEnvio=true
+    console.log(this.ValidarCriterioReflexivo());
+    if(this.ValidarCriterioReflexivo()){
+      this.paramsAr.IdPEspecifico=this.json.IdPEspecificoHijo
+      this.paramsAr.IdTareaEvaluacionTarea=this.tareaAc.id
+      this.tarea.criteriosEvaluacionReflexivo.forEach((x:any) => {
+        this.paramsAr.Registros.push({
+          IdEscalaCalificacionDetalle:x.calificacion,
+          IdEsquemaEvaluacionPGeneralDetalle:x.idEsquemaEvaluacionPGeneralDetalle_Anterior,
+          IdEsquemaEvaluacionPGeneralDetalleCongelado:x.idEsquemaEvaluacionPGeneralDetalle,
+          IdParametroEvaluacion:x.idParametroEvaluacion
+        })
+      });
+      this._TareaEvaluacionService.EnviarCriterioReflexivo(this.paramsAr).pipe(takeUntil(this.signal$)).subscribe({
+        next:x=>{
+          console.log(x)
+          this.cargaEnvio=false
+          if(x==true){
+            this.envioAr=true
+            this._SnackBarServiceService.openSnackBar("Tus respuestas se enviaron correctamente",'x',15,"snackbarCrucigramaSucces");
+            this.onFinish.emit()
+          }
+        },
+        error:e=>{
+          this.cargaEnvio=false
+        },
+        complete:()=>{
+          this.cargaEnvio=false
+        }
+      })
+    }else{
+      this._SnackBarServiceService.openSnackBar("Debe completar todas las preguntas",'x',15,"snackbarCrucigramaerror");
+    }
   }
 }

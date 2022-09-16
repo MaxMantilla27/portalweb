@@ -2,7 +2,7 @@ import { isPlatformBrowser } from '@angular/common';
 import { HttpClient, HttpRequest } from '@angular/common/http';
 import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { EMPTY, Observable } from 'rxjs';
-import { ParametroObtenerEvaluacionTarea ,ModelTareaEvaluacionTareaDTO, ParametroEnvioTrabajoPares} from 'src/app/Core/Models/TareaEvaluacionDTO';
+import { ParametroObtenerEvaluacionTarea ,ModelTareaEvaluacionTareaDTO, ParametroEnvioTrabajoPares, ParametroEnvioCriterioReflexivo} from 'src/app/Core/Models/TareaEvaluacionDTO';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -63,11 +63,29 @@ export class TareaEvaluacionService {
     return this.http.request(req)
   }
   public EnviarCalificacionTrabajoPares(Json:ParametroEnvioTrabajoPares):Observable<any>{
+    console.log(Json)
+    const formData: FormData = new FormData();
+    formData.append('file', Json.file);
+    formData.append('IdEvaluacion', Json.IdEvaluacion.toString());
+    formData.append('IdParametroEvaluacion', Json.IdParametroEvaluacion.toString());
+    formData.append('IdEscalaCalificacionDetalle', Json.IdEscalaCalificacionDetalle.toString());
+    formData.append('ValorCalificado', Json.ValorCalificado.toString());
+    formData.append('IdEsquemaEvaluacionPGeneralDetalle', Json.IdEsquemaEvaluacionPGeneralDetalle.toString());
+    formData.append('Retroalimentacion', Json.Retroalimentacion.toString());
+    const req= new HttpRequest('POST', `${this.urlBase}/EnviarCalificacionTrabajoPares`,formData, {
+      reportProgress: true,
+      responseType: 'json'
+    });
+    return this.http.request(req)
+  }
+
+  public EnviarCriterioReflexivo(Json:ParametroEnvioCriterioReflexivo):Observable<any>{
     if(this.isBrowser){
       console.log(Json)
-      return this.http.post<any>(this.urlBase+'/EnviarCalificacionTrabajoPares',Json);
+      return this.http.post<any>(this.urlBase+'/EnviarCriterioReflexivo',Json);
     }else{
       return EMPTY;
     }
   }
+
 }

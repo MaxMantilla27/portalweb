@@ -1,8 +1,41 @@
 <div class="container">
   <div class="row rowpadd" style="justify-content: center;">
-    <div class="col-10 col-md-8 col-lg-6">
-      <div class="contentCertificado">
+    <div class="col-10 col-md-8 col-lg-8">
+      <div class="contentCertificado" *ngIf="oncharge==true">
+        <ng-container *ngIf="infoCerti!=null">
+          <div class="titleCrt">
+            <ng-container *ngIf="infoCerti.codigoCertificado!=null">
 
+              Información de Certificado Emitido
+            </ng-container>
+            <ng-container *ngIf="infoCerti.codigoCertificado==null">
+              Información de Constancia Emitida
+            </ng-container>
+
+          </div>
+          <div class="cardCert row">
+            <div class="col-12 col-md-6 col-lg-6 cardTitle">Nombres:</div>
+            <div class="col-12 col-md-6 col-lg-6 cardValue">{{infoCerti.nombreAlumno}}</div>
+            <div class="col-12 col-md-6 col-lg-6 cardTitle">Programa:</div>
+            <div class="col-12 col-md-6 col-lg-6 cardValue">{{infoCerti.nombrePrograma}}</div>
+            <div class="col-12 col-md-6 col-lg-6 cardTitle">Fecha de Inicio:</div>
+            <div class="col-12 col-md-6 col-lg-6 cardValue">{{infoCerti.fechaInicioCapacitacion}}</div>
+            <ng-container  *ngIf="infoCerti.fechaFinCapacitacion!=null && infoCerti.fechaFinCapacitacion!=''">
+              <div class="col-12 col-md-6 col-lg-6 cardTitle">Fecha de Termino:</div>
+              <div class="col-12 col-md-6 col-lg-6 cardValue">{{infoCerti.fechaFinCapacitacion}}</div>
+            </ng-container>
+            <ng-container *ngIf="infoCerti.codigoCertificado!=null">
+              <div class="col-12 col-md-6 col-lg-6 cardTitle">Codigo Certificado:</div>
+              <div class="col-12 col-md-6 col-lg-6 cardValue">{{infoCerti.codigoCertificado}}</div>
+            </ng-container>
+            <div class="imgCerti">
+              <img src="../../../assets/icons/icono-certificado.png" alt="">
+            </div>
+          </div>
+        </ng-container>
+        <ng-container *ngIf="infoCerti==null">
+          No existe información del código enviado, por favor comuníquese con su asesor
+        </ng-container>
       </div>
     </div>
   </div>

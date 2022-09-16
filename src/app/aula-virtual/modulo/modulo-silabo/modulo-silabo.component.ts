@@ -80,7 +80,7 @@ export class ModuloSilaboComponent implements OnInit,OnChanges,OnDestroy {
           i++
         })
         this.listaSeccionesContenidosDocumento.push({
-          titulo:'Estructura Curicular',
+          titulo:'Estructura Curricular',
           Contenido:'',
           order:7,
           ArrayContent:[],

@@ -169,21 +169,22 @@ export class CursoComponent implements OnInit,OnDestroy {
       masindicacion=-1
       noesAonline=-1
     }
+    console.log(esirca)
     if(this.curso!=undefined && this.curso.proyectoAplicacion){
-      if((tabChangeEvent.index >= (6+noesAonline+esirca) || tabChangeEvent.index < (4+noesAonline))  && this.CertificadoActive){
+      if((tabChangeEvent.index >= (6+noesAonline+esirca) || tabChangeEvent.index < (3+noesAonline))  && this.CertificadoActive){
         this.CertificadoActive=false
         if(tabChangeEvent.index >= (6+noesAonline+esirca)){
-          this.tabIndex-=(2-esirca)
+          this.tabIndex-=(2+esirca)
         }
       }
       if(tabChangeEvent.index == (3+noesAonline) && !this.CertificadoActive){
         this.CertificadoActive=true
       }
     }else{
-      if((tabChangeEvent.index >= (5+noesAonline+esirca) || tabChangeEvent.index < (3+noesAonline))   && this.CertificadoActive){
+      if((tabChangeEvent.index >= (5+noesAonline+esirca) || tabChangeEvent.index < (2+noesAonline))   && this.CertificadoActive){
         this.CertificadoActive=false
         if(tabChangeEvent.index >= (5+noesAonline+esirca)){
-          this.tabIndex-=(2-esirca)
+          this.tabIndex-=(2+esirca)
         }
       }
       if(tabChangeEvent.index == (2+noesAonline) && !this.CertificadoActive){

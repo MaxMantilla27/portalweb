@@ -1,0 +1,37 @@
+<div class="container" >
+  <div class="row rowpaddAv" style="justify-content: center;">
+    <div class="col-12 col-md-10 col-lg-8" *ngIf="estado==0">
+
+      <div class="titleResultPago">
+        <div>No se realizó el pago</div>
+        <img src="../../../assets/icons/denegado-error-21.svg" alt="">
+      </div>
+      <div class="textResultPago">
+        <ng-container >
+          No hemos podido procesar su pago, debido a un error con su entidad bancaria, comuniquese con ellos para
+          solucionar el error en el pago.
+        </ng-container>
+
+
+        <div class="textC">Si tiene alguna consulta adicional, escriba un correo a: <a
+            href="mailto:matriculas@bsginstitute.com">matriculas@bsginstitute.com</a></div>
+      </div>
+      <app-default-button [confs]="{color:'primary',titulo:'Volver'}" [style]="'margin-top:40px;padding: 0px 40px;'"
+        [ruta]="ruta"></app-default-button>
+
+    </div>
+    <div class="col-12 col-md-10 col-lg-8" *ngIf="estado==1">
+      <div class="titleResultPago">
+        <div>¡Pago exitoso!</div>
+        <img src="../../../assets/icons/positivo-hecho-20.svg" alt="">
+      </div>
+      <div style="margin-top: 5px;
+      font-size: 14px;"> Tu compra ha sido realizada con exito.
+      </div>
+      <div class="contentCardPago">
+        <div style="margin: 20px 0px;
+        font-weight:600;">Detalles del pago realizado:</div>
+      </div>
+    </div>
+  </div>
+</div>

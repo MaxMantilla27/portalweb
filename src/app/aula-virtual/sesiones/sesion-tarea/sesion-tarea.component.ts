@@ -1,10 +1,12 @@
 import { HttpEventType, HttpResponse } from '@angular/common/http';
 import { Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges, ViewEncapsulation } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { Subject, takeUntil } from 'rxjs';
 import { ParametrosEstructuraEspecificaDTO } from 'src/app/Core/Models/EstructuraEspecificaDTO';
 import { ModelTareaEvaluacionTareaDTO, ParametroObtenerEvaluacionTarea } from 'src/app/Core/Models/TareaEvaluacionDTO';
 import { SnackBarServiceService } from 'src/app/Core/Shared/Services/SnackBarService/snack-bar-service.service';
 import { TareaEvaluacionService } from 'src/app/Core/Shared/Services/TareaEvaluacion/tarea-evaluacion.service';
+import { RetroalimentacionTareaComponent } from './retroalimentacion-tarea/retroalimentacion-tarea.component';
 
 @Component({
   selector: 'app-sesion-tarea',
@@ -18,6 +20,7 @@ export class SesionTareaComponent implements OnInit,OnChanges,OnDestroy {
   constructor(
     private _TareaEvaluacionService:TareaEvaluacionService,
     private _SnackBarServiceService:SnackBarServiceService,
+    public dialog: MatDialog,
   ) { }
   @Input() json: ParametrosEstructuraEspecificaDTO = {
     AccesoPrueba: false,
@@ -67,6 +70,7 @@ export class SesionTareaComponent implements OnInit,OnChanges,OnDestroy {
   }
   public progress=0
   public selectedFiles?: FileList;
+  public subir=false;
   ngOnDestroy(): void {
     this.signal$.next(true)
     this.signal$.complete()
@@ -92,7 +96,24 @@ export class SesionTareaComponent implements OnInit,OnChanges,OnDestroy {
         this.tarea.datosEvaluacionTrabajo.instruccionesEvaluacion.sort(function (a:any, b:any) {
           return a.zonaWeb - b.zonaWeb;
         })
+
         console.log(this.tarea)
+        if(this.tarea.registroEvaluacionArchivo==null || this.tarea.registroEvaluacionArchivo.length==0){
+          this.subir=true
+        }else{
+          this.tarea.registroEvaluacionArchivo.forEach((r:any) => {
+            if(r.calificado==true){
+              if(r.nota>6){
+                this.subir=false
+              }else{
+                this.subir=true
+              }
+            }else{
+              this.subir=false
+            }
+          });
+        }
+        console.log(this.subir);
       }
     })
   }
@@ -153,6 +174,8 @@ export class SesionTareaComponent implements OnInit,OnChanges,OnDestroy {
             } else if (x instanceof HttpResponse) {
               this.progress=0;
               this.onFinish.emit()
+              this.filestatus=false;
+              this.nombrefile=''
               if(x.body==true){
                 this.ObtenerEvaluacionTarea()
               }else{
@@ -178,5 +201,17 @@ export class SesionTareaComponent implements OnInit,OnChanges,OnDestroy {
   }
   prevc(){
     this.prev.emit();
+  }
+  mensajeError(){
+    console.log('------')
+    this._SnackBarServiceService.openSnackBar('Aún no puedes subir otra versión de la tarea, comunícate con tu asistente de atención al cliente.','x',
+    1000,'snackbarCrucigramaerror')
+  }
+  OpenModalR(index:number){
+    this.tarea.registroEvaluacionArchivo[index]
+    const dialogRef =this.dialog.open(RetroalimentacionTareaComponent,{
+      panelClass:'dialog-retro-tarea',
+      data: this.tarea.registroEvaluacionArchivo[index],
+    });
   }
 }

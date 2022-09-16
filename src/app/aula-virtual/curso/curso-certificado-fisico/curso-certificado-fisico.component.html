@@ -17,8 +17,8 @@
             width: calc( 100% - 50px);
             justify-content: space-between;border-bottom: 1px solid #b9b9b9;">
               <div>lugar de envio</div>
-              <i *ngIf="expacion[0]" (click)="expacion[0]=false" class="material-icons">keyboard_arrow_down</i>
-              <i *ngIf="!expacion[0]" (click)="expacion[0]=true" class="material-icons">keyboard_arrow_up</i>
+              <i *ngIf="!expacion[0]" (click)="expacion[0]=true" class="material-icons">keyboard_arrow_down</i>
+              <i *ngIf="expacion[0]" (click)="expacion[0]=false" class="material-icons">keyboard_arrow_up</i>
             </div>
           </div>
           <div class="contentform" *ngIf="expacion[0]">
@@ -92,8 +92,8 @@
             width: calc( 100% - 50px);
             justify-content: space-between;border-bottom: 1px solid #b9b9b9;">
               <div>Envio a nombre de</div>
-              <i *ngIf="expacion[1]" (click)="expacion[1]=false" class="material-icons">keyboard_arrow_down</i>
-              <i *ngIf="!expacion[1]" (click)="expacion[1]=true" class="material-icons">keyboard_arrow_up</i>
+              <i *ngIf="!expacion[1]" (click)="expacion[1]=true" class="material-icons">keyboard_arrow_down</i>
+              <i *ngIf="expacion[1]" (click)="expacion[1]=false" class="material-icons">keyboard_arrow_up</i>
             </div>
           </div>
           <div class="contentform" *ngIf="expacion[1]">
@@ -174,8 +174,8 @@
             width: calc( 100% - 50px);
             justify-content: space-between;border-bottom: 1px solid #b9b9b9;">
               <div>Rastrear envío</div>
-              <i *ngIf="expacion[2]" (click)="expacion[2]=false" class="material-icons">keyboard_arrow_down</i>
-              <i *ngIf="!expacion[2]" (click)="expacion[2]=true" class="material-icons">keyboard_arrow_up</i>
+              <i *ngIf="!expacion[2]" (click)="expacion[2]=true" class="material-icons">keyboard_arrow_down</i>
+              <i *ngIf="expacion[2]" (click)="expacion[2]=false" class="material-icons">keyboard_arrow_up</i>
             </div>
           </div>
         </div>
