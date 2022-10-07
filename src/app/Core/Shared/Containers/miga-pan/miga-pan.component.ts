@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { HelperService } from '../../Services/helper.service';
 
 @Component({
   selector: 'app-miga-pan',
@@ -11,7 +12,9 @@ export class MigaPanComponent implements OnInit {
 
   @Input()
   items: any
-  constructor() { }
+  constructor(
+    private _HelperService: HelperService,
+    ) { }
 
   @Output()
   OnClicked: EventEmitter<any> = new EventEmitter<any>();
@@ -20,4 +23,7 @@ export class MigaPanComponent implements OnInit {
     this.tipo = 'secondary'
   }
 
+  EventoInteraccionEducacion(nombre:string){
+    this._HelperService.enviarMsjAcciones({Tag:'Link',Nombre:nombre,Seccion:'Breadcrumb'})
+  }
 }

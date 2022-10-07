@@ -134,9 +134,6 @@ export class FormularioPublicidadComponent implements OnInit {
       next: (x) => {
 
         if(this.isBrowser){
-          console.log('------------------facebook(true)---------------------------');
-          console.log(fbq);
-          console.log(gtag);
           fbq('track', 'CompleteRegistration');
 
           try{
@@ -147,7 +144,6 @@ export class FormularioPublicidadComponent implements OnInit {
                 'send_to': 'AW-732083338/jQrVCKmUkqUBEIrpit0C',
             });
           }catch(err){
-            console.log(err)
           }
         }
         this.dialogRef.close()

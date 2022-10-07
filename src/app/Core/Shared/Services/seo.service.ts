@@ -25,7 +25,6 @@ export class SeoService {
       twiterDescription:'Diplomas y Cursos en Big Data, Ciberseguridad, Cloud, Proyectos, ISO 9001, ISO 14001, OHSAS 18001, ISO 22301, ISO 27001, ISO 50001, Construcción, Minería',
       ...config
     }
-    console.log(config);
     this.meta.addTag({ name: 'title', content: config.title });
     this.meta.addTag({ name: 'description', content: config.description });
     this.meta.addTag({ name: 'keywords', content: config.keywords });

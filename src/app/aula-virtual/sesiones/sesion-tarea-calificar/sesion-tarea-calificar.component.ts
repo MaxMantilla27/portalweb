@@ -203,38 +203,40 @@ export class SesionTareaCalificarComponent implements OnInit,OnChanges,OnDestroy
     return true;
   }
   EnviarCriterioReflexivo(){
-    this.cargaEnvio=true
-    console.log(this.ValidarCriterioReflexivo());
-    if(this.ValidarCriterioReflexivo()){
-      this.paramsAr.IdPEspecifico=this.json.IdPEspecificoHijo
-      this.paramsAr.IdTareaEvaluacionTarea=this.tareaAc.id
-      this.tarea.criteriosEvaluacionReflexivo.forEach((x:any) => {
-        this.paramsAr.Registros.push({
-          IdEscalaCalificacionDetalle:x.calificacion,
-          IdEsquemaEvaluacionPGeneralDetalle:x.idEsquemaEvaluacionPGeneralDetalle_Anterior,
-          IdEsquemaEvaluacionPGeneralDetalleCongelado:x.idEsquemaEvaluacionPGeneralDetalle,
-          IdParametroEvaluacion:x.idParametroEvaluacion
-        })
-      });
-      this._TareaEvaluacionService.EnviarCriterioReflexivo(this.paramsAr).pipe(takeUntil(this.signal$)).subscribe({
-        next:x=>{
-          console.log(x)
-          this.cargaEnvio=false
-          if(x==true){
-            this.envioAr=true
-            this._SnackBarServiceService.openSnackBar("Tus respuestas se enviaron correctamente",'x',15,"snackbarCrucigramaSucces");
-            this.onFinish.emit()
+    if(this.cargaEnvio==false){
+      console.log(this.ValidarCriterioReflexivo());
+      this.cargaEnvio=true
+      if(this.ValidarCriterioReflexivo()){
+        this.paramsAr.IdPEspecifico=this.json.IdPEspecificoHijo
+        this.paramsAr.IdTareaEvaluacionTarea=this.tareaAc.id
+        this.tarea.criteriosEvaluacionReflexivo.forEach((x:any) => {
+          this.paramsAr.Registros.push({
+            IdEscalaCalificacionDetalle:x.calificacion,
+            IdEsquemaEvaluacionPGeneralDetalle:x.idEsquemaEvaluacionPGeneralDetalle_Anterior,
+            IdEsquemaEvaluacionPGeneralDetalleCongelado:x.idEsquemaEvaluacionPGeneralDetalle,
+            IdParametroEvaluacion:x.idParametroEvaluacion
+          })
+        });
+        this._TareaEvaluacionService.EnviarCriterioReflexivo(this.paramsAr).pipe(takeUntil(this.signal$)).subscribe({
+          next:x=>{
+            console.log(x)
+            this.cargaEnvio=false
+            if(x==true){
+              this.envioAr=true
+              this._SnackBarServiceService.openSnackBar("Tus respuestas se enviaron correctamente",'x',15,"snackbarCrucigramaSucces");
+              this.onFinish.emit()
+            }
+          },
+          error:e=>{
+            this.cargaEnvio=false
+          },
+          complete:()=>{
+            this.cargaEnvio=false
           }
-        },
-        error:e=>{
-          this.cargaEnvio=false
-        },
-        complete:()=>{
-          this.cargaEnvio=false
-        }
-      })
-    }else{
-      this._SnackBarServiceService.openSnackBar("Debe completar todas las preguntas",'x',15,"snackbarCrucigramaerror");
+        })
+      }else{
+        this._SnackBarServiceService.openSnackBar("Debe completar todas las preguntas",'x',15,"snackbarCrucigramaerror");
+      }
     }
   }
 }

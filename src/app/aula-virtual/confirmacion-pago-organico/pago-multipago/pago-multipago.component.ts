@@ -90,7 +90,6 @@ export class PagoMultipagoComponent implements OnInit {
       .pipe(takeUntil(this.signal$))
       .subscribe({
         next: (x) => {
-          console.log(x);
           this.resultCard = x._Repuesta;
           this.resultCard.total = 0;
           this.jsonSave.IdentificadorTransaccion =

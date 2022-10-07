@@ -55,6 +55,7 @@ import { Subject, takeUntil } from 'rxjs';
 import { ChargeComponent } from 'src/app/Core/Shared/Containers/Dialog/charge/charge.component';
 import { Title } from '@angular/platform-browser';
 import { SeoService } from 'src/app/Core/Shared/Services/seo.service';
+import { MatTabChangeEvent } from '@angular/material/tabs';
 declare const fbq:any;
 declare const gtag:any;
 @Component({
@@ -224,8 +225,7 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
 
   ngOnInit(): void {
 
-    this._HelperServiceP.recibirChangePais.pipe(takeUntil(this.signal$)).subscribe((x) => {
-      console.log(x)
+    this._HelperServiceP.recibirChangePais().pipe(takeUntil(this.signal$)).subscribe((x) => {
       if (this.isBrowser) {
         location.reload();
       }
@@ -238,13 +238,9 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
     this.activatedRoute.params.pipe(takeUntil(this.signal$)).subscribe({
       next: (x) => {
         this.area = x['AreaCapacitacion'].split('-').join(' ');
-        console.log('Area----------'+this.area)
         this.AraCompleta = x['AreaCapacitacion'];
-        console.log('AraCompleta----------'+this.AraCompleta)
         this.nombreProgramCompeto = x['ProgramaNombre'];
-        console.log(this.nombreProgramCompeto)
         var namePrograma = x['ProgramaNombre'].split('-');
-        console.log(namePrograma)
 
         this.idBusqueda = namePrograma[namePrograma.length - 1];
       },
@@ -263,7 +259,6 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
     this._HelperServiceP.recibirCombosPerfil.pipe(takeUntil(this.signal$)).subscribe((x) => {
       this.alumno =x.datosAlumno.nombres;
       this.combosPrevios=x.datosAlumno;
-      console.log(this.combosPrevios)
       this.formularioContacto.Nombres= this.combosPrevios.nombres,
       this.formularioContacto.Apellidos= this.combosPrevios.apellidos,
       this.formularioContacto.Email= this.combosPrevios.email,
@@ -313,7 +308,6 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
       panelClass: 'programa-pago-dialog-container',
     });
     dialogRef.afterClosed().pipe(takeUntil(this.signal$)).subscribe((result) => {
-      console.log(result)
       if(result!=undefined){
 
         this.PreProcesoPagoOrganicoAlumno(result);
@@ -371,10 +365,6 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
       .ObtenerCabeceraProgramaGeneral(this.idBusqueda).pipe(takeUntil(this.signal$))
       .subscribe({
         next: (x) => {
-          console.log(x);
-          console.log(x.programaCabeceraDetalleDTO)
-          console.log(this.area);
-          console.log(x.programaCabeceraDetalleDTO.areaCapacitacion);
           if(x.programaCabeceraDetalleDTO!=undefined
             && this.removeAccents(this.area.toLowerCase())==this.removeAccents(x.programaCabeceraDetalleDTO.areaCapacitacion.toLowerCase()))
           {
@@ -390,7 +380,6 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
                         metas.find((x:any)=>x.nombre=='description').descripcion:undefined
               let k=metas.find((x:any)=>x.nombre=='keywords')!=undefined?
                         metas.find((x:any)=>x.nombre=='keywords').descripcion:undefined
-              console.log(t)
               this.title.setTitle(t);
 
               this._SeoService.generateTags({
@@ -409,6 +398,8 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
 
             }
             this.cabecera = x.programaCabeceraDetalleDTO;
+            if(this.cabecera.tituloHtml!=null){
+            }
             this.IdPespecificoPrograma = x.programaCabeceraDetalleDTO.listProgramaEspecificoInformacionDTO[0].id
             this.cabecera.listProgramaEspecificoInformacionDTO.forEach(x=>{
               if(x.tipo.toLowerCase()=='online asincronica'){
@@ -443,7 +434,6 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
           }
         },
         error: (e) => {
-          console.log(e)
           this._router.navigate(['error404']);
         },
       });
@@ -454,7 +444,6 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
       .ListSeccionPrograma(this.idBusqueda).pipe(takeUntil(this.signal$))
       .subscribe({
         next: (x) => {
-          console.log(x);
           if(x.listaSeccionPrograma.video!=null){
             if (x.listaSeccionPrograma.video.includes('vimeo')) {
               this.contenidoCabecera = x.listaSeccionPrograma.video
@@ -481,7 +470,7 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
           this.seccion.objetivo=this.seccion.objetivo==null?'':this.seccion.objetivo
           this.seccion.publicoObjetivo=this.seccion.publicoObjetivo==null?'':this.seccion.publicoObjetivo
           this.seccion.duracionHorario=this.seccion.duracionHorario==null?'':this.seccion.duracionHorario
-          console.log(this.seccion)
+
         },
       });
   }
@@ -504,7 +493,6 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
             x.opened = true;
           }
         });
-        console.log(this.estructuraPrograma);
         this.idPegeneral = x.idPGeneral;
         this.ObtenerSilaboCurso();
         this.ListProgramaRelacionado();
@@ -515,7 +503,6 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
   ListBeneficioPrograma() {
     this._BeneficioService.ListBeneficioPrograma(this.idBusqueda).pipe(takeUntil(this.signal$)).subscribe({
       next: (x) => {
-        console.log(x);
         this.beneficios = x.listaBeneficioProgramaDTO;
         if(this.beneficios!=null){
           let i = 1;
@@ -565,7 +552,6 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
   ObtenerSilaboCurso() {
     this._SilaboService.ObtenerSilaboCurso(this.idPegeneral).pipe(takeUntil(this.signal$)).subscribe({
       next: (x) => {
-        console.log(x);
         var piePag = x.listaSeccionesContenidosDocumento.find(
           (x: any) => x.titulo == 'Beneficios'
         );
@@ -615,7 +601,6 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
   ListCertificacion() {
     this._SeccionProgramaService.ListCertificacion(this.idBusqueda).pipe(takeUntil(this.signal$)).subscribe({
       next: (x) => {
-        console.log(x);
         this.certificado = x.listaCertificacionDTO;
         if (this.certificado!=null && this.certificado.descripcion != null) {
           var descstrong = this.certificado.descripcion.split('<p><strong>');
@@ -624,13 +609,11 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
           this.certificado.descripcionBody=[]
           this.certificado.descripcionLeyenda = descstrong[0];
 
-          console.log(descstrong);
           if (descstrong.length > 1) {
             let i = 0;
             descstrong.forEach((d) => {
               if (i != 0) {
                 desc = d.split('</strong></p>');
-                console.log(desc)
                 if (desc.length > 1 && desc[1]!='') {
                   let j = 0;
                   this.certificado.descripcionHeader.push('<p><strong>' + desc[0] );
@@ -648,7 +631,6 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
               }
               i++;
             });
-            console.log(this.certificado);
             // this.certificado.descripcionHeader=desc[0]+'</strong></p>'
             // let i=0;
             // this.certificado.descripcionBody='';
@@ -666,7 +648,6 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
   ListExpositor() {
     this._ExpositorService.ListExpositor(this.idBusqueda).pipe(takeUntil(this.signal$)).subscribe({
       next: (x) => {
-        console.log(x);
         this.expositor = x.listaExpositorDTO;
         var ind = 1;
         var step: Array<any> = [];
@@ -688,7 +669,6 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
   ListMontoPago() {
     this._SeccionProgramaService.ListMontoPago(this.idBusqueda).pipe(takeUntil(this.signal$)).subscribe({
       next: (x) => {
-        console.log(x);
         this.MontoPago = x.listaMontoPagoProgramaInformacionDTO;
         if (x.listaMontoPagoProgramaInformacionDTO != null) {
           this.MontoPago.sort(function (a, b) {
@@ -703,7 +683,6 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
       .ListProgramaRelacionado(this.idPegeneral).pipe(takeUntil(this.signal$))
       .subscribe({
         next: (x) => {
-          console.log(x);
           if (x.listaProgramaRelacionadoDTO != null) {
             this.programasRelacionados = x.listaProgramaRelacionadoDTO.map(
               (c: any) => {
@@ -732,7 +711,6 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
       .ListTagProgramaRelacionadoPorIdBusqueda(this.idBusqueda).pipe(takeUntil(this.signal$))
       .subscribe({
         next: (x) => {
-          console.log(x);
           this.tags = x.listaTagDTO;
           if(this.tags!=null){
             this.tags.forEach((x) => {
@@ -779,10 +757,7 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
         .subscribe({
           next: (x) => {
             this.cleanSub=true
-            console.log(x);
             if(this.isBrowser){
-              console.log('------------------facebook(true)---------------------------');
-              console.log(fbq);
               fbq('track', 'CompleteRegistration');
               gtag('event', 'conversion', {
                 'send_to': 'AW-991002043/tnStCPDl6HUQu_vF2AM',
@@ -803,7 +778,6 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
   ObtenerCombosPortal() {
     this._DatosPortalService.ObtenerCombosPortal().pipe(takeUntil(this.signal$)).subscribe({
       next: (x) => {
-        console.log(x);
         this.fileds.forEach((r) => {
           if (r.nombre == 'IdPais') {
             r.data = x.listaPais.map((p: any) => {
@@ -938,7 +912,27 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
   }
 
   chatcharge(estado:boolean){
-    console.log('------------'+estado)
     this.cargaChat=estado
+  }
+  EventoInteraccionButton(nombre:string){
+    this._HelperServiceP.enviarMsjAcciones({Tag:"Button",Nombre:nombre})
+  }
+  EventoInteraccionTab(nombre:string){
+    this._HelperServiceP.enviarMsjAcciones({Tag:"Tab",Nombre:nombre})
+  }
+
+  EventoInteraccionAccordion(nombre:string,estado:string){
+    this._HelperServiceP.enviarMsjAcciones({Tag:'Accordion',Nombre:nombre,Estado:estado,Seccion:'Estructura Curricular'})
+  }
+  EventoInteraccionAccordionCertificado(nombre:string,estado:string){
+    this._HelperServiceP.enviarMsjAcciones({Tag:'Accordion',Nombre:nombre,Estado:estado,Seccion:'Certificación'})
+  }
+  tabChanged = (tabChangeEvent: MatTabChangeEvent): void => {
+    this.EventoInteraccionTab(tabChangeEvent.tab.textLabel)
+  }
+  EventoInteraccionCarrousel(event:any,nombre:string){
+    if(event.source!='timer'){
+      this._HelperServiceP.enviarMsjAcciones({Tag:'Carousel',Nombre:nombre,Accion:event.source})
+    }
   }
 }

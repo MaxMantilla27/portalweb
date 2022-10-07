@@ -150,14 +150,10 @@ export class ContactenosComponent implements OnInit,OnDestroy {
       }else{
         this.DatosContactenosEnvio.IdPespecifico=parseInt(IdPespecifico)
       };
-      console.log(this.DatosContactenosEnvio)
       this._ContactenosService.EnviarFormulario(this.DatosContactenosEnvio).subscribe({
         next:x => {
-          console.log(x);
           this.cleanSub=true
           if(this.isBrowser){
-            console.log('------------------facebook(true)---------------------------');
-            console.log(fbq);
             fbq('track', 'CompleteRegistration');
             gtag('event', 'conversion', {
               'send_to': 'AW-991002043/tnStCPDl6HUQu_vF2AM',
@@ -169,10 +165,6 @@ export class ContactenosComponent implements OnInit,OnDestroy {
           this._SnackBarServiceService.openSnackBar("¡Solicitud enviada!",'x',15,"snackbarCrucigramaSucces");
         },
         // error:(e)=>{
-
-        //   console.log(e);
-        //   console.log('------------------facebook(false)---------------------------');
-        //   console.log(fbq);
         //   fbq('track', 'CompleteRegistration');
         // },
         complete: () => {

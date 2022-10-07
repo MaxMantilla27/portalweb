@@ -73,7 +73,6 @@ export class PagoConektaComponent implements OnInit,OnDestroy {
   ObtenerPreProcesoPagoOrganicoAlumno(){
     this._FormaPagoService.ObtenerPreProcesoPagoOrganicoAlumno(this.json).pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
-        console.log(x)
         this.resultVisa=x._Repuesta;
         this.resultVisa.total=0;
 
@@ -103,19 +102,15 @@ export class PagoConektaComponent implements OnInit,OnDestroy {
             options: {},
             styles: {},
             onCreateTokenSucceeded: function(token) {
-              console.log(token)
             },
             onCreateTokenError: function(error) {
-              console.log(error)
             },
             onFinalizePayment: function (event) {
-                console.log(event);
                 location.href="`+this.pagar()+`";
             }
         })
     `;
 
-    console.log(script)
     this._renderer2.appendChild(this._document.getElementById('conekta'), script);
   }
   pagar(){

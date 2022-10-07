@@ -42,7 +42,6 @@ export class TerminosCondicionesComponent implements OnInit {
   ObtenerTerminosCondiciones() {
     this._TerminosCondicionesService.ObtenerTerminosCondiciones().pipe(takeUntil(this.signal$)).subscribe({
       next: (x) => {
-        console.log(x);
         this.nombre=this.capitalizeFirstLetter(x.nombre.toLowerCase());
         this.contenido=x.contenido
       },

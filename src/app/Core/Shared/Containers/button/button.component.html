@@ -2,7 +2,7 @@
   <ng-content select="[contenido]">
   </ng-content>
 </a>
-<a [routerLink]="Url" *ngIf="tipo==2" [ngClass]="{'bootoncolor':hover==true}" [ngStyle]="{'color':color,'font-weight':weigth}"
+<a [routerLink]="Url" *ngIf="tipo==2"  [ngClass]="{'bootoncolor':hover==true}" [ngStyle]="{'color':color,'font-weight':weigth}"
   (mouseenter)="hover=true" (mouseleave)="hover=false" routerLinkActive="active" class="buttonHeader">
   <ng-content select="[contenidoTag]">
   </ng-content>
@@ -19,7 +19,7 @@
   </a>
   <mat-menu #menu="matMenu" backdropClass="custom__menu">
     <span >
-      <button [routerLink]="item.Url" *ngFor="let item of dataUrl" mat-menu-item class="mat-menu-content-button"
+      <button (click)="EventoInteraccionEducacion(item.Nombre)" [routerLink]="item.Url" *ngFor="let item of dataUrl" mat-menu-item class="mat-menu-content-button"
         [style]="item.style">{{item.Nombre}}</button>
     </span>
   </mat-menu>

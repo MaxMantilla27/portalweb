@@ -42,7 +42,6 @@ export class ProgramaContenidoService {
 
   public ObtenerEstructuraEspecifica(Json:ParametrosEstructuraEspecificaDTO):Observable<any>{
     if(this.isBrowser){
-      console.log(Json)
       return this.http.post<any>(this.urlBase+'/ObtenerEstructuraEspecifica',Json);
     }else{
       return EMPTY;
@@ -51,7 +50,6 @@ export class ProgramaContenidoService {
 
   public ObtenerEstructuraEspecificaCurso(Json:ParametrosEstructuraEspecificaDTO):Observable<any>{
     if(this.isBrowser){
-      console.log(Json)
       return this.http.post<any>(this.urlBase+'/ObtenerEstructuraEspecificaCurso',Json);
     }else{
       return EMPTY;

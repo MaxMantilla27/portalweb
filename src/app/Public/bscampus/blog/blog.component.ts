@@ -238,14 +238,10 @@ export class BlogComponent implements OnInit {
       this.DatosEnvioFormulario.IdAreaFormacion=value.IdAreaFormacion;
       this.DatosEnvioFormulario.IdAreaTrabajo=value.IdAreaTrabajo;
       this.DatosEnvioFormulario.IdIndustria=value.IdIndustria;
-      console.log(this.DatosEnvioFormulario)
       this._HelperService.EnviarFormulario(this.DatosEnvioFormulario).pipe(takeUntil(this.signal$)).subscribe({
         next: (x) => {
-          console.log(x);
           this.cleanSub=true
           if(this.isBrowser){
-            console.log('------------------facebook(true)---------------------------');
-            console.log(fbq);
             fbq('track', 'CompleteRegistration');
             gtag('event', 'conversion', {
               'send_to': 'AW-991002043/tnStCPDl6HUQu_vF2AM',

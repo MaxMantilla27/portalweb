@@ -92,8 +92,6 @@ export class FormChatComponent implements OnInit,OnChanges {
         next:(x)=>{
 
           if(this.isBrowser){
-            console.log('------------------facebook(true)---------------------------');
-            console.log(fbq);
             fbq('track', 'CompleteRegistration');
             gtag('event', 'conversion', {
               'send_to': 'AW-991002043/tnStCPDl6HUQu_vF2AM',
@@ -102,7 +100,6 @@ export class FormChatComponent implements OnInit,OnChanges {
                 'send_to': 'AW-732083338/jQrVCKmUkqUBEIrpit0C',
             });
           }
-          console.log(x);
           this.validacionChat=x
           this.SaveForm.emit({id:x.respuesta.id,idAlumno:x.respuesta.idAlumno})
         }

@@ -5,7 +5,7 @@
         <div class="row" style="align-items: center;width: 95%;justify-content: center;" >
           <div class="col-12 col-xs-6 col-md-6 col-lg-3" *ngFor="let item of ste" style="height: 100%;">
             <ng-container *ngIf="item.Title!=''">
-              <app-card-programas [cardContent]="item" ></app-card-programas>
+              <app-card-programas [cardContent]="item" [Interaccion]="'Inicio (Formacion continua)'"></app-card-programas>
             </ng-container>
             <ng-container *ngIf="item.Title==''">
               <div class="contentArrow" [routerLink]="item.Url">

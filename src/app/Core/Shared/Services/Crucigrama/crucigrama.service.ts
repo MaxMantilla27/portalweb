@@ -30,6 +30,7 @@ export class CrucigramaService {
   public EnviarFormularioCrucigrama(Json:EvaluacionPromedioCrucigramaDTO):Observable<any>{
     if(this.isBrowser){
       console.log(Json)
+      return this.http.post<any>(this.urlBase+'/EnviarFormularioCrucigramaAula',Json);
       return this.http.post<any>(this.urlBase+'/EnviarFormularioCrucigrama',Json);
     }else{
       return EMPTY;

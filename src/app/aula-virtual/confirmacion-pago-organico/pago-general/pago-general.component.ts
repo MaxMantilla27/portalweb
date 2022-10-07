@@ -107,7 +107,6 @@ export class PagoGeneralComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.signal$))
       .subscribe({
         next: (x) => {
-          console.log(x);
           this.resultCard = x._Repuesta;
           this.resultCard.total = 0;
           this.jsonSave.IdentificadorTransaccion =
@@ -129,7 +128,6 @@ export class PagoGeneralComponent implements OnInit, OnDestroy {
       });
   }
   OpenPayInit() {
-    console.log(OpenPay.deviceData);
 
     OpenPay.setId('mxgmgffnaxu1mosrkhlo');
     OpenPay.setApiKey('pk_c9dfff7c5c9e4a68a7c6083d280ff4db');
@@ -137,19 +135,15 @@ export class PagoGeneralComponent implements OnInit, OnDestroy {
     OpenPay.setSandboxMode(false);
     //Se genera el id de dispositivo
     var deviceSessionId = OpenPay.deviceData.setup('fomrOpenPAy');
-    console.log(OpenPay.getSandboxMode());
     this.jsonSave.DeviceSessionId = deviceSessionId;
   }
   ValidateSave() {
     var succes=(res:any) =>{
-      console.log(res)
       this.jsonSave.TokenId=res.data.id
       this.Pagar();
 
     }
-    console.log(this.jsonSave)
     var error=(err:any) =>{
-      console.log(err);
 
       this._SnackBarServiceService.openSnackBar(
         'Los datos de tarjeta ingresados son incorrectos',
@@ -244,7 +238,6 @@ export class PagoGeneralComponent implements OnInit, OnDestroy {
         'snackbarCrucigramaerror'
       );
     }
-    console.log(this.jsonSave.TarjetaHabiente.NumeroDocumento.length)
     if(this.jsonSave.TarjetaHabiente.NumeroDocumento==null || this.jsonSave.TarjetaHabiente.NumeroDocumento.length<=5){
       validate = false;
       this._SnackBarServiceService.openSnackBar(
@@ -254,7 +247,6 @@ export class PagoGeneralComponent implements OnInit, OnDestroy {
         'snackbarCrucigramaerror'
       );
     }
-    console.log(validate);
     if (validate) {
 
       this.jsonSave.TarjetaHabiente.NumeroTarjeta =this.NumberT.split('-').join('');
@@ -293,7 +285,6 @@ export class PagoGeneralComponent implements OnInit, OnDestroy {
         next: (x) => {
           this.oncharge=false
           dialogRef.close()
-          console.log(x);
           if(this.resultCard.idPasarelaPago!=1 || this.resultCard.idFormaPago!=65){
             if(this.resultCard.idPasarelaPago!=5){
               this._router.navigate(['/AulaVirtual/PagoExitoso/' +this.jsonSave.IdentificadorTransaccion]);

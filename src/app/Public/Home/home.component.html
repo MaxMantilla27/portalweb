@@ -30,9 +30,10 @@
     </div>
     <div class="col-12 col-sm-12 col-md-12" style="    display: flex;    margin-top: 40px;">
       <input type="text" [ngClass]="{'inputActive':inputActive}" class="inputSearchHome" (focus)="inputActive=true"
-        (focusout)="inputActive=false" [(ngModel)]="busqueda" (keyup.enter)="BuscarProgramas()"
+        (focusout)="inputActive=false" [(ngModel)]="busqueda" (keyup.enter)="BuscarProgramas(false)"
+        (click)="EventoInteraccion()"
         placeholder="¿Qu&eacute; te gustar&iacute;a aprender?">
-      <div class="searchButonHome" (click)="BuscarProgramas()" [ngClass]="{'inputActive':inputActive}"></div>
+      <div class="searchButonHome" (click)="BuscarProgramas(true)" [ngClass]="{'inputActive':inputActive}"></div>
     </div>
   </div>
 </div>
@@ -45,7 +46,7 @@
         </div>
       </div>
       <div class="col-12 col-sm-12 carouselImgPartners" style="    width: 100%;">
-        <ngb-carousel>
+        <ngb-carousel (slide)="EventoInteraccionCarrousel($event,'Img Parters')">
           <ng-template ngbSlide *ngFor="let ste of step">
             <div class="wrapper">
               <div class="row" style="align-items: center;padding: 0px 30px;">
@@ -194,7 +195,7 @@
               <div class="titleV2">{{item.Nombre}}</div>
               <div class="underl"></div>
 
-              <div class="subtitleCarreras orange " [routerLink]="item.Url">
+              <div class="subtitleCarreras orange " (click)="EventoInteraccionCarreras(item.Nombre)" [routerLink]="item.Url">
                   <div class="vinculo"> M&aacute;s Informaci&oacute;n </div> <i class="material-icons">keyboard_arrow_right</i></div>
             </div>
           </div>
@@ -230,6 +231,62 @@
   </div>
 </div>
 
+<div *ngIf="TituloEducacion!=''">
+  <div class="container">
+    <div class="row rowpadd">
+      <div class="col-12 col-sm-12" style="margin-bottom: 30px;">
+        <div class="subtitulo" style="text-align: center;    margin: 0px;">{{TituloEducacion}}</div>
+        <div class="parafoS" style="font-size: 22px;">Desarrolla habilidades altamente demandadas en el mercado laboral </div>
+
+      </div>
+      <div class="col-12 row" style="justify-content: space-between;    padding: 0px;
+      margin: 0px;">
+        <div class="col-12 col-sm-12 col-md-6" *ngFor="let item of Educacion;let i=index">
+          <div style="display: flex;justify-content: center;flex-wrap: wrap;    padding: 20px 0px;">
+            <img *ngIf="i%2==0" style="width: auto; height: 230px;"
+              src="../../../assets/imagenes/arquetipo-promotor-ventas-contenido.png" alt="">
+            <img *ngIf="i%2!=0" style="width: auto; height: 230px;"
+              src="../../../assets/imagenes/arquetipo-atencion-al-cliente.png" alt="">
+
+            <div class="cardCarrerasV2">
+              <div class="titleV2">{{item.Nombre}}</div>
+              <div class="underl"></div>
+              <div style="color: #f11f53;font-size: 14px;text-align: center;width: 100%;margin-top: 30px;">50% de descuento en la primera pensión</div>
+              <div class="subtitleCarreras orange " (click)="EventoInteraccionEducacion(item.Nombre)" [routerLink]="item.Url" style="margin-top: 0px;">
+                  <div class="vinculo"> M&aacute;s Informaci&oacute;n </div> <i class="material-icons">keyboard_arrow_right</i></div>
+            </div>
+          </div>
+        </div>
+        <!-- <div class="col-12 col-sm-12 col-md-6 " *ngFor="let item of Carreras;let i=index"
+
+          style="margin-bottom: 30px;padding: 0px;">
+          <div class=" row cardCarreras">
+            <div class="contenCarreras col-9 col-sm-9 col-md-9">
+              <div class="titleCarreras">{{item.Nombre}}</div>
+              <div style="border: solid 2px #168df3;
+            background: #168df3;margin-right: 100px;"></div>
+              <div class="subtitleCarreras">Carrera Profesional <i class="material-icons">keyboard_arrow_right</i></div>
+              <div class="subtitleCarreras red">M&aacute;s Informaci&oacute;n <i
+                  class="material-icons">keyboard_arrow_right</i></div>
+            </div>
+            <div class="col-4 col-sm-4 col-md-4 caridiMg">
+              <img *ngIf="i%2==0" style="margin-left: -20%;width: 120%; height: auto;"
+                src="../../../assets/imagenes/imagen-carrera-adm.png" alt="">
+              <img *ngIf="i%2!=0" style="margin-left: -20%;width: 120%;height: auto;"
+                src="../../../assets/imagenes/imagen-carrera-desarrollo-sistemas.png" alt="">
+            </div>
+          </div>
+        </div>
+        <div class="col-12 col-sm-12 col-md-12">
+          <div class="parafoS " style="margin-top: 20px;display: flex;align-items: center;justify-content: center;">
+            <div class="vinculo">Mostrar todas las carreras profesionales</div> <i
+              class="material-icons">keyboard_arrow_right</i>
+          </div>
+        </div> -->
+      </div>
+    </div>
+  </div>
+</div>
 <div class="container">
   <div class="row rowpadd" style="align-items: center;">
     <div class="col-12 col-sm-12" >
@@ -299,7 +356,7 @@
         <div class="parafoS" style="text-align: center;">M&aacute;s de 25 mil profesionales capacitados por BSG Institute</div>
       </div>
       <div class="col-12 col-sm-12 carrouselCasos" style="margin-bottom: 30px;">
-        <ngb-carousel>
+        <ngb-carousel (slide)="EventoInteraccionCarrousel($event,'Casos Exito')">
           <ng-template ngbSlide *ngFor="let itm of cassosExito">
             <div class="wrapper">
               <div class="row" style="justify-content: center; align-items: center;padding: 0px 20px;">

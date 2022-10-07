@@ -22,7 +22,6 @@ export class AccountService {
 
   public RegistrarseAlumno(Json:RegisterDTO):Observable<any>{
     if(this.isBrowser){
-      console.log(Json)
       return this.http.post<any>(this.urlBase+'/RegistrarseAlumno',Json);
     }else{
       return EMPTY;
@@ -30,7 +29,6 @@ export class AccountService {
   }
   public ActualizarPasswordCuenta(Json:CambioPasswordDTO):Observable<any>{
     if(this.isBrowser){
-      console.log(Json)
       return this.http.post<any>(this.urlBase+'/ActualizarPasswordCuenta',Json);
     }else{
       return EMPTY;
@@ -38,7 +36,6 @@ export class AccountService {
   }
   public RegistroCursoAulaVirtualNueva(IdBusqueda:number):Observable<any>{
     if(this.isBrowser){
-      console.log(IdBusqueda)
       return this.http.post<any>(this.urlBase+'/RegistroCursoAulaVirtualNueva?IdBusqueda='+IdBusqueda,{headers:new HttpHeaders});
     }else{
       return EMPTY;
@@ -46,7 +43,6 @@ export class AccountService {
   }
   public RecuperarPasswordCuenta(correo:string):Observable<any>{
     if(this.isBrowser){
-      console.log(correo)
       return this.http.post<any>(this.urlBase+'/RecuperarPasswordCuenta?correo='+correo,{});
     }else{
       return EMPTY;

@@ -16,13 +16,11 @@ export class VistaPreviaComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    console.log(this.data)
+    console.log(this.data.url)
   }
 
   source: string = '';
-  ejct(e:any){
-    this.source = e.contentWindow.location.href;
-    console.log(e)
-    console.log(this.source)
-  }
+  // ejct(e:any){
+  //   this.source = e.contentWindow.location.href;
+  // }
 }

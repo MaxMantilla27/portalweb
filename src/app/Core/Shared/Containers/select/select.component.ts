@@ -27,7 +27,6 @@ export class SelectComponent implements OnInit,AfterViewInit,OnDestroy {
   }
   ngAfterViewInit(): void {
 
-    console.log(this.myselsetc)
     this.myselsetc.openedChange.pipe(takeUntil(this.signal$)).subscribe((open) => {
       if (open) {
         var itemAc=this.myselsetc.options['_results'].find((x:any)=>x._selected==true);

@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Basic, BasicUrl } from 'src/app/Core/Models/BasicDTO';
+import { HelperService } from '../../Services/helper.service';
 
 @Component({
   selector: 'app-button',
@@ -8,7 +9,9 @@ import { Basic, BasicUrl } from 'src/app/Core/Models/BasicDTO';
 })
 export class ButtonComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    private _HelperService: HelperService,
+  ) { }
   @Input() data:Array<Basic>=[];
   @Input() dataUrl:Array<BasicUrl>=[];
   @Input() Url:string='';
@@ -30,5 +33,8 @@ export class ButtonComponent implements OnInit {
   prueba(){
   }
 
+  EventoInteraccionEducacion(nombre:string){
+    this._HelperService.enviarMsjAcciones({Tag:'Link',Nombre:nombre,Seccion:'Menu cabecera'})
+  }
 
 }

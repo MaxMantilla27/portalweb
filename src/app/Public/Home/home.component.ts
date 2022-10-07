@@ -27,8 +27,10 @@ export class HomeComponent implements OnInit,AfterViewInit,OnDestroy {
   isBrowser: boolean;
   public step:Array<Array<PartnerImagesDTO>>=[];
   public Carreras: Array<BasicUrl> = [];
-  public Formacion: Array<BasicUrl> = [];
   public TituloCarreras = '';
+  public Educacion: Array<BasicUrl> = [];
+  public TituloEducacion = '';
+  public Formacion: Array<BasicUrl> = [];
   public tabindex=0;
   public selectFormacion=0;
   public busqueda=''
@@ -53,7 +55,7 @@ export class HomeComponent implements OnInit,AfterViewInit,OnDestroy {
   ) {
 
     this.isBrowser = isPlatformBrowser(platformId);
-    config.interval = 20000;
+    config.interval = 200000;
     config.keyboard = true;
     config.pauseOnHover = true;
   }
@@ -68,9 +70,9 @@ export class HomeComponent implements OnInit,AfterViewInit,OnDestroy {
   }
   public innerWidth: any;
   public seccionStep=4;
+  public cargaTabs=false
   ngOnInit(): void {
     this._SessionStorageService.SessionSetValueCokies('prueba','123',1)
-    console.log('-----------------'+this._SessionStorageService.SessionGetValueCokies('prueba'))
     let t:string='BSG Institute'
     this.title.setTitle(t);
 
@@ -92,8 +94,16 @@ export class HomeComponent implements OnInit,AfterViewInit,OnDestroy {
     this._HelperService.recibirStringCarrera.pipe(takeUntil(this.signal$)).subscribe(x => {this.TituloCarreras=x});
     this._HelperService.recibirArrayCarrera.pipe(takeUntil(this.signal$)).subscribe({
       next:(x)=>{
-        console.log(x);
         this.Carreras=x.map((c:any)=>{
+          var ps:BasicUrl={Nombre:c.Nombre,value:c.value,Url:c.Url};
+          return ps;
+        });
+      }
+    });
+    this._HelperService.recibirStringEducacion.pipe(takeUntil(this.signal$)).subscribe(x => {this.TituloEducacion=x});
+    this._HelperService.recibirArrayEducacion.pipe(takeUntil(this.signal$)).subscribe({
+      next:(x)=>{
+        this.Educacion=x.map((c:any)=>{
           var ps:BasicUrl={Nombre:c.Nombre,value:c.value,Url:c.Url};
           return ps;
         });
@@ -120,15 +130,26 @@ export class HomeComponent implements OnInit,AfterViewInit,OnDestroy {
 
     this.OrderImages();
   }
-  BuscarProgramas(){
+  BuscarProgramas(esButton:boolean){
+    var obj:any
+    if(esButton){
+      obj={Tag:"Button",Nombre:"Busqueda",valor:this.busqueda}
+    }else{
+      obj={Tag:'Input',Accion:'keyup.enter',Tipo:'text',Nombre:'Busqueda',valor:this.busqueda}
+    }
+    this._HelperService.enviarMsjAcciones(obj)
+
     this._SessionStorageService.SessionSetValue('BusquedaPrograma',this.busqueda);
     this._router.navigate(['/programas-certificaciones-cursos']);
   }
   tabChanged = (tabChangeEvent: MatTabChangeEvent): void => {
+    if(this.cargaTabs){
+      this._HelperService.enviarMsjAcciones({Tag:'Tab',Nombre:tabChangeEvent.tab.textLabel,Seccion:'Formación continua'})
+    }
+    this.cargaTabs=true
     this.tabindex=tabChangeEvent.index;
     this.selectFormacion=this.Formacion[this.tabindex].value;
     if(this.Formacion[this.tabindex].change!=true){
-      console.log(this.Formacion[this.tabindex].change)
       this.Formacion[this.tabindex].change=true
     }
   }
@@ -166,5 +187,19 @@ export class HomeComponent implements OnInit,AfterViewInit,OnDestroy {
   //     error:(x)=>{console.log(x)}
   //   });
   // }
-
+  EventoInteraccion(){
+    this._HelperService.enviarMsjAcciones({Tag:'Input',Accion:'click',Tipo:'text',Nombre:'¿Qué te gustaría aprender?',valor:this.busqueda})
+  }
+  EventoInteraccionCarrousel(event:any,nombre:string){
+    if(event.source!='timer'){
+      this._HelperService.enviarMsjAcciones({Tag:'Carousel',Nombre:nombre,Accion:event.source})
+    }
+  }
+  EventoInteraccionCarreras(nombre:string){
+    this._HelperService.enviarMsjAcciones({Tag:'Link',Nombre:'Más Información',Programa:nombre,Seccion:'Carreras Profesionales'})
+  }
+  EventoInteraccionEducacion(nombre:string){
+    this._HelperService.enviarMsjAcciones({Tag:'Link',Nombre:'Más Información',Programa:nombre,Seccion:'Educación Técnica'})
+  }
 }
+

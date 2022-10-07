@@ -45,7 +45,6 @@ export class TareaEvaluacionService {
     }
   }
   public EnviarEvaluacionTarea(Json:ModelTareaEvaluacionTareaDTO):Observable<any>{
-    console.log(Json)
     const formData: FormData = new FormData();
     formData.append('file', Json.file);
     formData.append('IdPGeneral', Json.idPGeneral.toString());
@@ -63,7 +62,6 @@ export class TareaEvaluacionService {
     return this.http.request(req)
   }
   public EnviarCalificacionTrabajoPares(Json:ParametroEnvioTrabajoPares):Observable<any>{
-    console.log(Json)
     const formData: FormData = new FormData();
     formData.append('file', Json.file);
     formData.append('IdEvaluacion', Json.IdEvaluacion.toString());
@@ -81,7 +79,6 @@ export class TareaEvaluacionService {
 
   public EnviarCriterioReflexivo(Json:ParametroEnvioCriterioReflexivo):Observable<any>{
     if(this.isBrowser){
-      console.log(Json)
       return this.http.post<any>(this.urlBase+'/EnviarCriterioReflexivo',Json);
     }else{
       return EMPTY;

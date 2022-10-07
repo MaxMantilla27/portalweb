@@ -91,17 +91,16 @@ export class ProgramasComponent implements OnInit,OnDestroy {
 
   ]
   ngOnInit(): void {
-    this._HelperService.recibirChangePais.pipe(takeUntil(this.signal$)).subscribe((x) => {
-      console.log(x)
+    this._HelperService.recibirChangePais().pipe(takeUntil(this.signal$)).subscribe((x) => {
       this.rangoPrecios=9700
       this.CodigoIso = this._SessionStorageService.SessionGetValue('ISO_PAIS')!=''?this._SessionStorageService.SessionGetValue('ISO_PAIS'):'INTC';
-      console.log(this.CodigoIso)
+
       if(this.CodigoIso.toUpperCase()=='PE'){this.rangoPrecios=16800;this.monedaRango='S/. 0 ';}
       if(this.CodigoIso.toUpperCase()=='CO'){this.rangoPrecios=1000000000;this.monedaRango='COL$ 0';}
       if(this.CodigoIso.toUpperCase()=='BO'){this.rangoPrecios=37300;this.monedaRango='Bs 0 ';}
       if(this.CodigoIso.toUpperCase()=='MX'){this.rangoPrecios=200000;this.monedaRango='MXN 0 ';}
       this.rangoselect=this.rangoPrecios;
-      console.log(this.rangoPrecios)
+
       this.GetProgramas()
     });
     let t:string='Formación Continua'
@@ -163,15 +162,23 @@ export class ProgramasComponent implements OnInit,OnDestroy {
     }
     return false
   }
-  openExpand(i:number){
-    console.log(i)
+  openExpand(i:number,nombre:string){
 
     if(this.expancions[i]==false){
       this.expancions=[false,false,false,false]
       this.expancions[i]=true
+      this.EventoInteraccionAccordion(nombre,'Abierto')
     }else{
       this.expancions[i]=false
+      this.EventoInteraccionAccordion(nombre,'Cerrado')
     }
+  }
+
+  EventoInteraccionAccordion(nombre:string,estado:string){
+    this._HelperService.enviarMsjAcciones({Tag:'Accordion',Nombre:nombre,Estado:estado})
+  }
+  EventoInteraccionCheckBox(nombre:string,estado:string){
+    this._HelperService.enviarMsjAcciones({Tag:'Checkbox',Nombre:nombre,Estado:estado})
   }
   GetFiltroProgramas(){
     this._ProgramasService.GetFiltroProgramas(this.IdArea)
@@ -203,6 +210,9 @@ export class ProgramasComponent implements OnInit,OnDestroy {
       }
       this.GetProgramas();
     }
+    var estado='Seleccionado'
+    if(this.Modalidad[index].select==false)estado='No Seleccionado';
+    this.EventoInteraccionCheckBox(this.Modalidad[index].nombre,estado)
   }
   SelectTipoP(index:number){
     if(this.charge==false){
@@ -213,6 +223,9 @@ export class ProgramasComponent implements OnInit,OnDestroy {
       }
       this.GetProgramas();
     }
+    var estado='Seleccionado'
+    if(this.TipoPrograma[index].select==false)estado='No Seleccionado';
+    this.EventoInteraccionCheckBox(this.TipoPrograma[index].nombre,estado)
   }
   SelectAreas(index:number){
     if(this.charge==false){
@@ -226,6 +239,9 @@ export class ProgramasComponent implements OnInit,OnDestroy {
       }
       this.GetProgramas();
     }
+    var estado='Seleccionado'
+    if(this.filtros.areaCapacitacion[index].select==false)estado='No Seleccionado';
+    this.EventoInteraccionCheckBox(this.filtros.areaCapacitacion[index].nombre,estado)
   }
   SelectSubAreas(index:number,indexSub:number){
     if(this.charge==false){
@@ -236,6 +252,9 @@ export class ProgramasComponent implements OnInit,OnDestroy {
       }
       this.GetProgramas();
     }
+    var estado='Seleccionado'
+    if(this.filtros.areaCapacitacion[index].subAreaCapacitacion[indexSub].select==false)estado='No Seleccionado';
+    this.EventoInteraccionCheckBox(this.filtros.areaCapacitacion[index].subAreaCapacitacion[indexSub].nombre,estado)
   }
   AreasCapasitacion(e:any){
     this.IdArea=e;
@@ -249,7 +268,6 @@ export class ProgramasComponent implements OnInit,OnDestroy {
     this.GetProgramas();
   }
   RemoveArea(i:number){
-    console.log(i)
     if(this.charge==false){
       this.filtros.areaCapacitacion.forEach(x=>{
         if(x.id==i){
@@ -404,7 +422,6 @@ export class ProgramasComponent implements OnInit,OnDestroy {
     this._ProgramasService.GetProgramas(this.send)
     .pipe(takeUntil(this.signal$)).subscribe({
       next:(x)=>{
-        console.log(x)
         this.programas=x.listaProgramasGeneralesTop.map(
           (c:any)=>{
 
@@ -445,7 +462,6 @@ export class ProgramasComponent implements OnInit,OnDestroy {
     this.TagTipoPrograma=[]
     this.TagModalidad=[]
 
-    console.log(this.filtros.areaCapacitacion)
     this.filtros.areaCapacitacion.forEach(x=>{
       if(x.select!=undefined && x.select==true){
         this.TagAreas.push({value:x.id,Nombre:x.nombre});
@@ -485,7 +501,6 @@ export class ProgramasComponent implements OnInit,OnDestroy {
 
       dialogRef.afterDismissed().pipe(takeUntil(this.signal$))
       .pipe(takeUntil(this.signal$)).subscribe((result) => {
-        console.log(result);
         if(result!=undefined){
           this.filtros = result.filtros;
           this.Modalidad = result.Modalidad;

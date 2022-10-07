@@ -90,7 +90,6 @@ export class ChatPortalComponent implements OnInit,OnDestroy,OnChanges {
     this.ObtenerConfiguracionChat();
     this._HelperService.recibirDataPais.pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
-        console.log(x)
         var CodigoIso=this._SessionStorageService.SessionGetValue('ISO_PAIS')
         x.forEach((p:any) => {
           if(p.codigoIso==CodigoIso){
@@ -127,7 +126,6 @@ export class ChatPortalComponent implements OnInit,OnDestroy,OnChanges {
   ObtenerConfiguracionChat(){
     this._ChatEnLinea.ObtenerConfiguracionChat().pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
-        console.log(x)
         this.configuration=x
       }
     })
@@ -144,18 +142,16 @@ export class ChatPortalComponent implements OnInit,OnDestroy,OnChanges {
 
   ConectarSocket(){
     this.hubConnection.start().then((x:any) =>{
-      console.log(x)
       if(this.hubConnection.state=='Connected'){
         this.generarLogVisitante()
       }
     })
-    .catch((err:any) =>console.log('Error while starting connection: ' + err));
+    .catch((err:any) =>{});
   }
 
   generarLogVisitante(){
 
     var cookiecontaco = this._SessionStorageService.SessionGetValue("usuarioWeb")
-    console.log(this.hubConnection.state)
 
     this.hubConnection.invoke(
       "generarLogVisitante",
@@ -193,7 +189,6 @@ export class ChatPortalComponent implements OnInit,OnDestroy,OnChanges {
   }
   configuracion(){
     this.hubConnection.on("configuracion",(NombreAsesor:any, estado:any)=>{
-      console.log(NombreAsesor+'--'+estado);
       if(estado==false){
         this.ChargeChat.emit(false)
       }else{
@@ -206,7 +201,6 @@ export class ChatPortalComponent implements OnInit,OnDestroy,OnChanges {
   }
   onlineStatus(){
     this.hubConnection.on("onlineStatus",(data:any)=>{
-      console.log(data);
       if(data.status==true){
         if(data.nombreasesor===undefined){
           data.nombreasesor="";
@@ -240,8 +234,7 @@ export class ChatPortalComponent implements OnInit,OnDestroy,OnChanges {
   }
   addMessageP(){
     this.hubConnection.on("addMessageP",(from:any, msg:any, flagfrom:any)=>{
-      console.log(from+'--'+msg+'--'+flagfrom);
-      console.log(this.nombres)
+
       if (flagfrom == 2)//es asesor
       {
         let audio=new Audio('https://integrav4.bsginstitute.com/Content/sounds/newmsg.mp3')
@@ -273,7 +266,7 @@ export class ChatPortalComponent implements OnInit,OnDestroy,OnChanges {
   }
   setChat(){
     this.hubConnection.on("setChat",(id:any, agentName:any, existing:any)=>{
-      console.log(id+'--'+agentName+'--'+existing);
+
       this.ChatID=id
       this._SessionStorageService.SessionSetValueSesionStorage(this.chatKey,id)
       if (existing) {
@@ -303,7 +296,7 @@ export class ChatPortalComponent implements OnInit,OnDestroy,OnChanges {
   }
   marcarChatAlumnoComoLeidos(){
     this.hubConnection.on("marcarChatAlumnoComoLeidos",(x:any)=>{
-      console.log(x);
+
       this.NroMensajesSinLeer=-1
     })
   }
@@ -331,7 +324,6 @@ export class ChatPortalComponent implements OnInit,OnDestroy,OnChanges {
 
     this._ChatDetalleIntegraService.AdjuntarArchivoChatSoporte(this.selectedFiles.item(0)).pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
-        console.log(x)
         this.idInteraccion=this.GetsesionIdInteraccion();
         if (this.idInteraccion == null || this.idInteraccion == '') {
           this.mensajeChatArchivoAdjunto(x.Url, x.IdArchivo, x.Tipo)
@@ -363,6 +355,5 @@ export class ChatPortalComponent implements OnInit,OnDestroy,OnChanges {
     this.chatBox="";
   }
   ampliarImagen(url:string){
-    console.log(url)
   }
 }

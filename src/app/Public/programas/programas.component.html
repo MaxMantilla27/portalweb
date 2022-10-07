@@ -215,7 +215,7 @@
           </mat-form-field>
         </div> -->
         <div class="filtroElemento">
-          <div class="ElementoTitle" (click)="openExpand(0)">
+          <div class="ElementoTitle" (click)="openExpand(0,'Áreas de capacitación')">
             &Aacute;reas de capacitaci&oacute;n
             <i *ngIf="!expancions[0]" class="material-icons">keyboard_arrow_down</i>
             <i *ngIf="expancions[0]" class="material-icons">keyboard_arrow_up</i>
@@ -231,7 +231,7 @@
           </div>
         </div>
         <div class="filtroElemento">
-          <div class="ElementoTitle" (click)="openExpand(1)">
+          <div class="ElementoTitle" (click)="openExpand(1,'Subáreas de capacitación')">
             Sub&aacute;rea de capacitaci&oacute;n
             <i *ngIf="!expancions[1]" class="material-icons">keyboard_arrow_down</i>
             <i *ngIf="expancions[1]" class="material-icons">keyboard_arrow_up</i>
@@ -252,7 +252,7 @@
           </div>
         </div>
         <div class="filtroElemento">
-          <div class="ElementoTitle" (click)="openExpand(2)">
+          <div class="ElementoTitle" (click)="openExpand(2,'Tipo de Programa')">
             Tipo de Programa
             <i *ngIf="!expancions[2]" class="material-icons">keyboard_arrow_down</i>
             <i *ngIf="expancions[2]" class="material-icons">keyboard_arrow_up</i>
@@ -268,7 +268,7 @@
           </div>
         </div>
         <div class="filtroElemento">
-          <div class="ElementoTitle" (click)="openExpand(3)">
+          <div class="ElementoTitle" (click)="openExpand(3,'Modalidad')">
             Modalidad
             <i *ngIf="!expancions[3]" class="material-icons">keyboard_arrow_down</i>
             <i *ngIf="expancions[3]" class="material-icons">keyboard_arrow_up</i>
@@ -296,7 +296,7 @@
         <ng-container *ngIf="charge==false && programas.length>0 && cantidadProgramas>0">
           <ng-container *ngFor="let item of programas;let i=index">
             <div class="col-12 col-md-6 col-lg-4" style="margin-bottom: 40px;" *ngIf="validateSearch(i)">
-              <app-card-programas [cardContent]="item"></app-card-programas>
+              <app-card-programas [cardContent]="item" [Interaccion]="'Programas'"></app-card-programas>
             </div>
           </ng-container>
 

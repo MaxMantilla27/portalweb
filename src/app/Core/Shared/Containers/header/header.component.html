@@ -5,7 +5,8 @@
     <img src="../../../../../assets/icons/icono-menu-responsive.svg" width="20" height="20" alt="" loading="eager" (click)="OnClick.emit()">
     <!-- <mat-icon (click)="OnClick.emit()">menu</mat-icon> -->
   </div>
-  <img class="logoHeader" src="https://img.bsginstitute.com/repositorioweb/img/logobsg.svg" width="160" loading="eager" [routerLink]="'/'">
+  <img class="logoHeader" src="https://img.bsginstitute.com/repositorioweb/img/logobsg.svg"  (click)="EventoInteraccionEducacion('Imagen')"
+  width="160" loading="eager" [routerLink]="'/'">
 
   <div class="botones_login hideItemHeader">
     <app-select [dataUrl]="paises" [tipo]="3" [valueDefecto]="CodigoIso" (Cambio)="ChangePais($event)" [token]="token" *ngIf="CodigoIso!=''">
@@ -20,7 +21,7 @@
       </app-alumno-mat-button>
     </div>
 
-    <app-button [Url]="'/login'" [tipo]="4" [class]="'ButtonReplace'" [color]="'white'" [background]="'#FCA534'" [border]="'solid 1px #895800'"
+    <app-button (click)="EventoInteraccionEducacion('Ingresar')" [Url]="'/login'" [tipo]="4" [class]="'ButtonReplace'" [color]="'white'" [background]="'#FCA534'" [border]="'solid 1px #895800'"
       *ngIf="!token" [img]="'user-azul.svg'" >
       <ng-container contenidoButton>
         Ingresar
@@ -30,7 +31,7 @@
   <div class="row space-bet">
     <nav>
       <div class="nav-buttons">
-        <app-button [Url]="''" [tipo]="2">
+        <app-button (click)="EventoInteraccionEducacion('Inicio')" [Url]="''" [tipo]="2">
           <ng-container contenidoTag>
             Inicio
           </ng-container>
@@ -42,7 +43,7 @@
             </ng-container>
           </app-button>
         </ng-container>
-        <app-button [Url]="'/bs-campus'" [tipo]="2">
+        <app-button  (click)="EventoInteraccionEducacion('BS Campus')" [Url]="'/bs-campus'" [tipo]="2">
           <ng-container contenidoTag>
             BS Campus
           </ng-container>
@@ -61,7 +62,7 @@
           </app-alumno-mat-button>
         </div>
 
-        <app-button [Url]="'/login'" [tipo]="4" [color]="'white'" [background]="'#FCA534'"
+        <app-button (click)="EventoInteraccionEducacion('Ingresar')" [Url]="'/login'" [tipo]="4" [color]="'white'" [background]="'#FCA534'"
           [border]="'solid 1px #895800'" *ngIf="!token">
           <ng-container contenidoButton>
             Ingresar
@@ -75,7 +76,7 @@
     </div> -->
   </div>
 </mat-toolbar>
-<div class="menuResponsive" *ngIf="responsive" style="margin-top: 30px;">
+<div (click)="EventoInteraccionEducacion('Inicio')" class="menuResponsive" *ngIf="responsive" style="margin-top: 30px;">
   <app-button [Url]="''" [tipo]="2" (click)="OnClick.emit()" [color]="'#4c4c4b'" [weigth]="'600'">
     <ng-container contenidoTag>
       Inicio
@@ -93,7 +94,7 @@
         </mat-expansion-panel-header>
         <div style="max-width: 300px;">
           <div *ngFor="let cont of item.data" style="color: #4c4c4b;
-          padding: 10px 0px;" [routerLink]="cont.Url" (click)="OnClick.emit()"  [style]="cont.style">
+          padding: 10px 0px;" (click)="EventoInteraccionEducacion(cont.Nombre)"  [routerLink]="cont.Url" (click)="OnClick.emit()"  [style]="cont.style">
             {{cont.Nombre}}
           </div>
         </div>
@@ -109,16 +110,16 @@
       </ng-container>
     </app-button>
   </ng-container> -->
-  <app-button [Url]="'/bs-campus'" [tipo]="2" (click)="OnClick.emit()" [color]="'#4c4c4b'" [weigth]="'600'">
-    <ng-container contenidoTag>
+  <app-button (click)="EventoInteraccionEducacion('BS Campus')" [Url]="'/bs-campus'" [tipo]="2" (click)="OnClick.emit()" [color]="'#4c4c4b'" [weigth]="'600'">
+    <ng-container contenidoTag >
       BS Campus
     </ng-container>
   </app-button>
   <div class="itemsFooter">
-    <a routerLink="/AcercaBsGrupo" target="_blank">Acerca de BSG Institute</a>
-    <a routerLink="/contactenos" target="_blank">Contáctenos</a>
-    <a routerLink="/termino-uso-web" target="_blank">Términos de uso</a>
-    <a routerLink="/politica-privacidad" target="_blank">Política de privacidad</a>
+    <a routerLink="/AcercaBsGrupo" (click)="EventoInteraccionEducacion('Acerca de BSG Institute')"  target="_blank">Acerca de BSG Institute</a>
+    <a routerLink="/contactenos" (click)="EventoInteraccionEducacion('Contáctenos')"  target="_blank">Contáctenos</a>
+    <a routerLink="/termino-uso-web" (click)="EventoInteraccionEducacion('Términos de uso')"  target="_blank">Términos de uso</a>
+    <a routerLink="/politica-privacidad" (click)="EventoInteraccionEducacion('Política de privacidad')"  target="_blank">Política de privacidad</a>
   </div>
 </div>
 

@@ -151,10 +151,7 @@ export class LandingPageComponent implements OnInit,OnDestroy {
     this.DatosLandingPageEnvio.IdIndustria=value.IdIndustria;
     this._LandingPageService.EnviarFormularioLandingPage(this.DatosLandingPageEnvio).pipe(takeUntil(this.signal$)).subscribe({
       next: (x) => {
-        console.log(x)
         if(this.isBrowser){
-          console.log('------------------facebook(true)---------------------------');
-          console.log(fbq);
 
           fbq('track', 'CompleteRegistration');
           try{
@@ -165,7 +162,6 @@ export class LandingPageComponent implements OnInit,OnDestroy {
                 'send_to': 'AW-732083338/jQrVCKmUkqUBEIrpit0C',
             });
           }catch(err){
-            console.log(err)
           }
         }
         this.dialogRef.close()

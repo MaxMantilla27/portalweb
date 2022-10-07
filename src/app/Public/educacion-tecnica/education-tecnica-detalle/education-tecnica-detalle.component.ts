@@ -42,7 +42,7 @@ export class EducationTecnicaDetalleComponent implements OnInit,OnDestroy {
   public certificaciones: any = [];
   public estructuraCurricular: any = [];
   public descripcionEstructuraCurricular: any;
-
+  public presentacion=''
 
 
   public rutaImagen: string = 'https://img.bsginstitute.com/repositorioweb/img/carreras/';
@@ -119,7 +119,6 @@ export class EducationTecnicaDetalleComponent implements OnInit,OnDestroy {
     ]
     this.activatedRoute.params.pipe(takeUntil(this.signal$)).subscribe((params) => {
       //Lo separamos en partes
-      console.log(params)
       let auxParams = params["urlWeb"].split('-')
       let idBusqueda = auxParams[auxParams.length -1]
       this.idBusqueda=parseInt(idBusqueda)
@@ -133,7 +132,6 @@ export class EducationTecnicaDetalleComponent implements OnInit,OnDestroy {
     });
     this._HelperServiceP.recibirCombosPerfil.pipe(takeUntil(this.signal$)).subscribe((x) => {
       this.combosPrevios=x.datosAlumno;
-      console.log(this.combosPrevios)
       this.formularioContacto.Nombres= this.combosPrevios.nombres,
       this.formularioContacto.Apellidos= this.combosPrevios.apellidos,
       this.formularioContacto.Email= this.combosPrevios.email,
@@ -144,7 +142,6 @@ export class EducationTecnicaDetalleComponent implements OnInit,OnDestroy {
         this.GetRegionesPorPais(this.formularioContacto.IdPais);
       }
     });
-    console.log(this.migaPan)
     this.AddFields();
     this.ObtenerCombosPortal();
   }
@@ -152,7 +149,6 @@ export class EducationTecnicaDetalleComponent implements OnInit,OnDestroy {
     this._CarreraProfesionalService.GetEducacionTecnicaDetalle(idBusqueda, nombre).pipe(takeUntil(this.signal$)).subscribe({
       next:(x)=>{
         this.IdPespecificoPrograma = x.programaInformacionDTO.programaEspecificoInformacionDTO[0].id
-        console.log(this.IdPespecificoPrograma)
         if(x.programaInformacionDTO!=undefined && x.programaInformacionDTO.parametroSeoProgramaDTO!=undefined){
           var metas=x.programaInformacionDTO.parametroSeoProgramaDTO;
           if(metas!=null && metas.length>0){
@@ -165,7 +161,6 @@ export class EducationTecnicaDetalleComponent implements OnInit,OnDestroy {
                       metas.find((par:any)=>par.nombre=='description').descripcion:undefined
             let k=metas.find((par:any)=>par.nombre=='keywords')!=undefined?
                       metas.find((par:any)=>par.nombre=='keywords').descripcion:undefined
-            console.log(mt)
             this.title.setTitle(mt);
 
             this._SeoService.generateTags({
@@ -201,6 +196,10 @@ export class EducationTecnicaDetalleComponent implements OnInit,OnDestroy {
             this.fechaInicio=element.fechaInicioTexto
           }
         });
+        let pres:any=this.filtrarContenido(this.carrera.contenidoProgramaInformacionDTO, ["Presentación"])
+        if(pres.length>0){
+          this.presentacion=pres[0]?.contenido
+        }
       },
       error:(x)=>{console.log(x)}
     });
@@ -230,7 +229,6 @@ export class EducationTecnicaDetalleComponent implements OnInit,OnDestroy {
     el.scrollIntoView();
   }
   tonumber(valor:any){
-    console.log(valor)
     return parseInt(valor);
   }
   SetContacto(value:any){
@@ -258,14 +256,10 @@ export class EducationTecnicaDetalleComponent implements OnInit,OnDestroy {
       }else{
         this.DatosEnvioFormulario.IdPespecifico=parseInt(IdPespecifico)
       };
-      console.log(this.DatosEnvioFormulario)
       this._HelperService.EnviarFormulario(this.DatosEnvioFormulario).pipe(takeUntil(this.signal$)).subscribe({
         next: (x) => {
-          console.log(x);
           this.cleanSub=true
           if(this.isBrowser){
-            console.log('------------------facebook(true)---------------------------');
-            console.log(fbq);
             fbq('track', 'CompleteRegistration');
             gtag('event', 'conversion', {
               'send_to': 'AW-991002043/tnStCPDl6HUQu_vF2AM',
@@ -285,7 +279,6 @@ export class EducationTecnicaDetalleComponent implements OnInit,OnDestroy {
   ObtenerCombosPortal(){
     this._DatosPortalService.ObtenerCombosPortal().pipe(takeUntil(this.signal$)).subscribe({
       next:(x)=>{
-        console.log(x);
         this.fileds.forEach(r=>{
           if(r.nombre=='IdPais'){
             r.data=x.listaPais.map((p:any)=>{

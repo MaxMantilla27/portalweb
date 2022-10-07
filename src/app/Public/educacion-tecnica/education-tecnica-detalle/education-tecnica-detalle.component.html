@@ -32,12 +32,13 @@
           <div class="row">
             <div class="col-md-6 educacion-tecnica-container__content__firstSection__left">
               <div class="educacion-tecnica-container__content__firstSection__left__descripcion"
-                [innerHTML]="carrera.contenidoProgramaInformacionDTO[0]?.contenido">
+                [innerHTML]="presentacion | safeHtml">
               </div>
               <div class="educacion-tecnica-container__header__information__button">
                 <app-default-button [confs]="{color: 'primary', titulo: 'Inscribirme Ahora'}" (click)="ScrollTo(formularioEducacionTecnica)"></app-default-button>
                 <!-- <app-default-button [confs]="{color: 'primary', titulo: 'Descargar Brochure'}"></app-default-button> -->
               </div>
+              <div style="color: #f11f53;font-size: 14px;text-align: center;width: 100%;">Inscríbete ahora y obtén un 50% de descuento en tu primera pensión</div>
             </div>
             <!-- <div class="col-md-5 carrera-container__content__firstSection__right">
               <app-icon-information-card [item]="{imagen: '/assets/icons/horario-04.svg',imagenAlt: 'Horario',titulo: 'Duracion',

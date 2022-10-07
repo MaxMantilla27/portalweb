@@ -96,7 +96,6 @@ export class SessionStorageService {
   SessionSetValueCokies(name:string, token: string,hour:number):void{
     if(this.isBrowser){
       let d: Date = new Date();
-      console.log(d);
       d.setTime(
         d.getTime() + hour * 1000 * 3600
       );

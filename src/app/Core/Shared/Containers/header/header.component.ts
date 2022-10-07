@@ -301,6 +301,7 @@ export class HeaderComponent implements OnInit,OnChanges,OnDestroy {
           };
           return ps;
         });
+        this._HelperService.enviarArrayEducacion(this.tecnica.map((m:any)=>{return m}));
         this.tecnica.push({
           Nombre: 'Ver Todo',
           value: 1,
@@ -309,6 +310,7 @@ export class HeaderComponent implements OnInit,OnChanges,OnDestroy {
         });
         this.expandibles[2].estatus = true;
         this.expandibles[2].data = this.tecnica;
+        this._HelperService.enviarStringEducacion(this.expandibles[2].Nombre);
       },
       error: (x) => {
       },
@@ -322,6 +324,7 @@ export class HeaderComponent implements OnInit,OnChanges,OnDestroy {
       this.GetEducacionTecnica();
     } else {
       this.expandibles[2].estatus = false;
+      this._HelperService.enviarStringEducacion('');
     }
 
     if (this._HeaderPermissionsService.ValidateCarreras(this.CodigoIso)) {
@@ -408,5 +411,8 @@ export class HeaderComponent implements OnInit,OnChanges,OnDestroy {
 
       }
     })
+  }
+  EventoInteraccionEducacion(nombre:string){
+    this._HelperService.enviarMsjAcciones({Tag:'Link',Nombre:nombre,Seccion:'Menu cabecera'})
   }
 }

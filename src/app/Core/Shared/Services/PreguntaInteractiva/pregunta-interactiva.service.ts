@@ -37,6 +37,7 @@ export class PreguntaInteractivaService {
   public RegistrarPreguntaInteractiva(Json:RegistroPreguntaDTO):Observable<any>{
     if(this.isBrowser){
       console.log(Json)
+      return this.http.post<any>(this.urlBase+'/RegistrarPreguntaInteractivaAula',Json);
       return this.http.post<any>(this.urlBase+'/RegistrarPreguntaInteractiva',Json);
     }else{
       return EMPTY;

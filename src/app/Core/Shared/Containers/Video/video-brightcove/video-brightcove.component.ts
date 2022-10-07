@@ -525,7 +525,7 @@ export class VideoBrightcoveComponent implements OnInit, OnChanges,AfterViewInit
     console.log(this.diapositivas)
     console.log(index)
     console.log(this.diapositivaactual)
-    if(this.diapositivaactual<=this.numeroDiapositivas){
+    if(this.diapositivaactual<this.numeroDiapositivas){
       console.log(this.diapositivas[index].tipoVista)
       if(this.diapositivas[index].tipoVista==4 ){
         console.log(this.diapositivas[index].estadoEval)

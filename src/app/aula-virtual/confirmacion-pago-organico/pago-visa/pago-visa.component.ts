@@ -74,7 +74,6 @@ export class PagoVisaComponent implements OnInit,OnDestroy {
   ObtenerPreProcesoPagoOrganicoAlumno(){
     this._FormaPagoService.ObtenerPreProcesoPagoOrganicoAlumno(this.json).pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
-        console.log(x)
         this.resultVisa=x._Repuesta;
         this.resultVisa.total=0;
 

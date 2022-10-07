@@ -63,7 +63,6 @@ export class TagsComponent implements OnInit,OnDestroy {
       next:(x)=>{
           this.nombre=x['nombre'];
           this.tagTitle=this.nombre.split('-').join(' ')
-          console.log(this.nombre);
           this.TemasRelacionados();
       }
     })
@@ -71,7 +70,6 @@ export class TagsComponent implements OnInit,OnDestroy {
   TemasRelacionados(){
     this._TemasRelacionadosService.TemasRelacionados(this.tipo,this.nombre).pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
-        console.log(x);
         if(x.parametroSeoProgramaDTO!=undefined){
           var metas=x.parametroSeoProgramaDTO;
           if(metas.length>0){
@@ -84,7 +82,6 @@ export class TagsComponent implements OnInit,OnDestroy {
                       metas.find((par:any)=>par.nombre=='description').descripcion:undefined
             let k=metas.find((par:any)=>par.nombre=='keywords')!=undefined?
                       metas.find((par:any)=>par.nombre=='keywords').descripcion:undefined
-            console.log(t)
             this.title.setTitle(t);
 
             this._SeoService.generateTags({

@@ -35,8 +35,7 @@ export class HomeProgramasComponent implements OnInit,OnChanges,OnDestroy {
   public innerWidth: any;
   public seccionStep=4;
   ngOnInit(): void {
-    this._HelperService.recibirChangePais.pipe(takeUntil(this.signal$)).subscribe(x=>{
-      console.log(x)
+    this._HelperService.recibirChangePais().pipe(takeUntil(this.signal$)).subscribe(x=>{
       if(this.change==true){
         this.GetProgramasHome()
       }
@@ -49,8 +48,6 @@ export class HomeProgramasComponent implements OnInit,OnChanges,OnDestroy {
   }
   ngOnChanges(changes: SimpleChanges): void {
     if(this.change==true){
-      console.log(this.change)
-      console.log(this.IdArea)
       this.GetProgramasHome();
     }
   }
@@ -58,14 +55,20 @@ export class HomeProgramasComponent implements OnInit,OnChanges,OnDestroy {
     var json:ObtenerTopProgramasSendDTO={IdArea:this.IdArea,Top:10};
     this._HomeService.GetProgramasHome(json).pipe(takeUntil(this.signal$)).subscribe({
       next:(x)=>{
-        console.log(x)
         this.programas=[];
         this.stepProgramas=[];
         this.programas=x.listaProgramasGeneralesTop.map(
           (c:any)=>{
             var content='Inversión <br />';
+            var paquete=5
+            c.tipoPago.forEach((tp:any) => {
+              tp.paquete=tp.paquete==null?0:tp.paquete
+              if(tp.paquete<paquete){
+                paquete=tp.paquete
+              }
+            });
             c.tipoPago.forEach((element: any) => {
-              if(element.paquete==null || element.paquete==1){
+              if(element.paquete==paquete){
                 if(element.tipoPago.toUpperCase()=='CONTADO'){
                   content+='Precio al contado '+element.simbolo+'.'+element.cuotas+'<br />'
                 }else{
@@ -76,7 +79,6 @@ export class HomeProgramasComponent implements OnInit,OnChanges,OnDestroy {
             var urlArea=c.areaCapacitacion.replace(/\s+/g, '-')
             var urlSubArea=c.nombre.replace(' - ', '-')
             var urlSubArea=urlSubArea.replace(/\s+/g, '-')
-            //console.log('/'+urlArea+'/'+urlSubArea+'-'+c.idBusqueda);
             var ps:CardProgramasDTO={
                 Content:c.descripcion,
                 Inversion:content,
@@ -112,7 +114,7 @@ export class HomeProgramasComponent implements OnInit,OnChanges,OnDestroy {
           this.stepProgramas.push(step);
         }
       },
-      error:(x)=>{console.log(x)}
+      error:(x)=>{}
     });
   }
 

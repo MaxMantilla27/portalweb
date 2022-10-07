@@ -11,11 +11,9 @@ import { HelperService } from '../../Services/helper.service';
 export class SoporteTecnicoComponent implements OnInit,OnChanges {
 
   constructor(
+    private _HelperService: HelperService,
   ) { }
   ngOnChanges(changes: SimpleChanges): void {
-    console.log(this.token)
-    console.log(this.IdPGeneral)
-    console.log(this.cargaChat)
   }
   @Input() cargaChat=false
   @Input() Open=false
@@ -25,5 +23,8 @@ export class SoporteTecnicoComponent implements OnInit,OnChanges {
   @Output()
   IsOpen: EventEmitter<boolean> = new EventEmitter<boolean>();
   ngOnInit(): void {
+  }
+  EventoInteraccionButton(nombre:string){
+    this._HelperService.enviarMsjAcciones({Tag:"Button",Nombre:nombre})
   }
 }

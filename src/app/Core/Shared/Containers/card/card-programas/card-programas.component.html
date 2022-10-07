@@ -15,7 +15,7 @@
     </div>
   </div>
   <mat-card-content>
-    <a class="title" [routerLink]="cardContent.Url" target="_blank">{{cardContent.Title}}</a>
+    <a class="title" (click)="EventoInteraccion(cardContent.Title)" [routerLink]="cardContent.Url" target="_blank">{{cardContent.Title}}</a>
     <div class="invercion">
       <p class="" [innerHTML]="cardContent.Inversion | safeHtml"> </p>
     </div>
@@ -23,7 +23,7 @@
   <mat-card-footer>
     <div style="
     margin: 15px 0px;">
-      <a class="link" [routerLink]="cardContent.Url" target="_blank">M&aacute;s informaci&oacute;n ></a>
+      <a class="link" (click)="EventoInteraccion(cardContent.Title)" [routerLink]="cardContent.Url" target="_blank">M&aacute;s informaci&oacute;n ></a>
     </div>
   </mat-card-footer>
 </mat-card>

@@ -72,7 +72,6 @@ export class CambiarContraComponent implements OnInit,OnDestroy {
       this.datos.NewPassword = this.userForm.get('contraNueva')?.value;
       this._AccountService.ActualizarPasswordCuenta(this.datos).pipe(takeUntil(this.signal$)).subscribe({
         next:x=>{
-          console.log(x)
           if(x.descripcionGeneral!=undefined){
             this._SnackBarServiceService.openSnackBar(
               x.descripcionGeneral,
@@ -89,7 +88,6 @@ export class CambiarContraComponent implements OnInit,OnDestroy {
           }
         },
         error:e=>{
-          console.log(e);
 
         }
       })

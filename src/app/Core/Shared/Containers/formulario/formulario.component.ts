@@ -95,7 +95,6 @@ export class FormularioComponent implements OnChanges, OnInit,OnDestroy {
   ngOnInit(): void {
     this._HelperService.recibirDataPais.pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
-        console.log(x)
         if(this.paise.length==0){
           this.paise=x;
           var codigoISo=this._SessionStorageService.SessionGetValue('ISO_PAIS');
@@ -171,7 +170,6 @@ export class FormularioComponent implements OnChanges, OnInit,OnDestroy {
       } else {
         this.EnabledFields();
       }
-      console.log(this.CleanOnSubmit);
       if(this.CleanOnSubmit==true){
         this.myNgForm.resetForm();
       }
@@ -320,15 +318,10 @@ export class FormularioComponent implements OnChanges, OnInit,OnDestroy {
     var s=campo.split(' ');
 
     this.pref=this.PrefPaises()==null?'':this.PrefPaises()+' ';
-    console.log((<FormArray>this.userForm.get('Fields')).controls[i])
-    console.log(this.pref+s.slice(1))
-    console.log(campo)
     this.min=this.LongCelularPaises()==null?0:this.LongCelularPaises();
-    console.log(this.min);
     (<FormArray>this.userForm.get('Fields')).controls[i].get(val)?.setValue(this.pref+s.slice(1));
     (<FormArray>this.userForm.get('Fields')).controls[i].get(val)?.clearValidators();
     if(this.min>0){
-      console.log(this.pref.length+this.min);
       (<FormArray>this.userForm.get('Fields')).controls[i].get(val)?.addValidators([
         Validators.required,
         Validators.minLength(this.pref.length+this.min),

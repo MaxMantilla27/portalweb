@@ -7,7 +7,7 @@
   <div class="row" style="padding: 0px;margin: 0px;">
 
     <div class="d-none col-md-1 d-md-block col-lg-1 d-lg-block" >
-      <div class="phoneCall " (click)="ScrollTo(formularioPrograma)">
+      <div class="phoneCall " (click)="EventoInteraccionButton('Solicita una llamada');ScrollTo(formularioPrograma)">
         <img src="../../../assets/icons/icono-llamada.svg" alt="">
         <div style="width: calc( 100% - 40px );"> Solicita una llamada</div>
         <div class="contentHover" >Consulta por nuestras facilidades de pago y descuentos</div>
@@ -17,7 +17,7 @@
 
       <div class="container">
         <div class="row rowpadd"  style="position: relative;padding-top: 0px;padding-bottom: 0px;">
-          <div class="phoneCall " (click)="ScrollTo(formularioPrograma)" style="    top: 0;
+          <div class="phoneCall " (click)="EventoInteraccionButton('Solicita una llamada');ScrollTo(formularioPrograma)" style="    top: 0;
           right: 0;
           width: 100%;
           justify-content: flex-start;
@@ -45,11 +45,11 @@
         <div class="row" style="margin-top: 20px;">
           <div class="col-12 col-md-12 col-lg-6">
             <app-default-button [confs]="{color:'primary',titulo:'Matricularme Ahora'}" [style]="'width: 100%;'"
-              (ButtoclClick)="OpenModalPago()" [disabled]="cabecera.listProgramaEspecificoInformacionDTO.length==0"></app-default-button>
+              (ButtoclClick)="EventoInteraccionButton('Matricularme Ahora');OpenModalPago()" [disabled]="cabecera.listProgramaEspecificoInformacionDTO.length==0"></app-default-button>
           </div>
           <div class="col-12 col-md-12 col-lg-6 " *ngIf="esAonline==true">
             <app-default-button [confs]="{color:'primary',titulo:'Acceso de prueba gratis'}" [style]="'width: 100%;'"
-              (ButtoclClick)="RegistrarProgramaPrueba()"></app-default-button>
+              (ButtoclClick)="EventoInteraccionButton('Acceso de prueba gratis');RegistrarProgramaPrueba()"></app-default-button>
           </div>
         </div>
       </div>
@@ -103,7 +103,7 @@
   <div class="container">
     <div class="row rowpadd">
       <div class="col-12 col-md-12 col-lg-12 tabprogram">
-        <mat-tab-group mat-align-tabs="start">
+        <mat-tab-group mat-align-tabs="start"  (selectedTabChange)="tabChanged($event)">
           <mat-tab label="Objetivos">
             <div [innerHtml]="seccion.objetivo | safeHtml" style="text-align: left;
             padding: 20px 0px;">
@@ -118,7 +118,7 @@
           </mat-tab>
           <mat-tab label="Prerrequisitos">
             <div style="text-align: left;
-            padding: 20px 0px;">
+            padding: 20px 0px;"  *ngIf="prerequisitos!=undefined && prerequisitos.cabecera!=undefined">
               <p>{{prerequisitos.cabecera}}</p>
               <ul>
                 <li *ngFor="let item of prerequisitos.contenido">{{item}}</li>
@@ -146,14 +146,15 @@
         <div class="col-12 col-md-8 col-lg-9 subtitulo" >Estructura Curricular</div>
         <div class="col-12 col-md-4 col-lg-3">
           <app-default-button [confs]="{color:'primary',titulo:'Vista \n previa'}" [img]="'vista-previa.svg'"
-            (ButtoclClick)="OpenModal()"
+            (ButtoclClick)="EventoInteraccionButton('Vista previa');OpenModal()"
             [style]="'display: flex;line-height: 20px;padding: 5px 10px;white-space: pre-wrap !important;width: 100%;'">
           </app-default-button>
         </div>
       </div>
       <mat-accordion class="acordionPrograma" multi>
-        <mat-expansion-panel hideToggle *ngFor="let item of estructuraPrograma" (opened)="item.opened=true"
-          (closed)="item.opened=false" [expanded]="item.opened==true">
+        <mat-expansion-panel hideToggle *ngFor="let item of estructuraPrograma"
+        (opened)="item.opened=true;EventoInteraccionAccordion(item.titulo,'Abierto')"
+          (closed)="item.opened=false;EventoInteraccionAccordion(item.titulo,'Cerrado')" [expanded]="item.opened==true">
           <mat-expansion-panel-header>
             <mat-panel-title>
               <div style="display: flex;align-items: center;">
@@ -271,7 +272,9 @@
       <div  [innerHtml]="certificado.descripcionLeyenda | safeHtml" style="word-break: break-all;"></div>
 
       <mat-accordion class="acordionPrograma acrdionCertificado" multi *ngIf="certificado.descripcionHeader!=undefined && certificado.descripcionHeader.length>0">
-        <mat-expansion-panel hideToggle #acodionCertificado *ngFor="let item of certificado.descripcionHeader;let i=index">
+        <mat-expansion-panel (opened)="EventoInteraccionAccordionCertificado(item,'Abierto')"
+        (closed)="EventoInteraccionAccordionCertificado(item,'Cerrado')"
+        hideToggle #acodionCertificado *ngFor="let item of certificado.descripcionHeader;let i=index">
           <mat-expansion-panel-header>
             <mat-panel-title>
               <div style="display: flex;align-items: center;">
@@ -286,7 +289,7 @@
       </mat-accordion>
       <br>
       <app-default-button [confs]="{color:'primary',titulo:'Solicita Información'}" [style]="'width: 100%;'"
-        (ButtoclClick)="ScrollTo(formularioPrograma)"></app-default-button>
+        (ButtoclClick)="ScrollTo(formularioPrograma);EventoInteraccionButton('Solicita Información')" ></app-default-button>
     </div>
   </div>
 </div>
@@ -297,7 +300,7 @@
         <div class="subtitulo">Expositores</div>
 
         <div class="carousel-expositores">
-          <ngb-carousel style="width: 99%">
+          <ngb-carousel style="width: 99%" (slide)="EventoInteraccionCarrousel($event,'Expositores')">
             <ng-template ngbSlide *ngFor="let ste of stepExpositors">
               <div class="wrapper" style="display: flex;justify-content: center;">
                 <div class="row" style="align-items: center;width: 95%;justify-content: center;    padding: 30px 0px;">
@@ -569,7 +572,7 @@
     </div>
     <ng-container *ngFor="let item of programasRelacionados;let i=index">
       <div class="col-12 col-md-6 col-lg-3" *ngIf="i<4" style="margin-bottom: 40px;">
-        <app-card-programas [cardContent]="item"></app-card-programas>
+        <app-card-programas [cardContent]="item" [Interaccion]="'Programas Relacionados'"></app-card-programas>
       </div>
     </ng-container>
     <div class="col-12 col-md-12 col-lg-12" style="margin-top: 30px;margin-bottom: 30px;">

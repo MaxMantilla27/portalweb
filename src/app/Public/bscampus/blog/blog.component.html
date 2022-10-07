@@ -91,7 +91,7 @@
     </div>
     <ng-container *ngFor="let item of programasRelacionados;let i=index">
       <div class="col-12 col-md-6 col-lg-3" *ngIf="i<4" style="margin-bottom: 40px;">
-        <app-card-programas [cardContent]="item"></app-card-programas>
+        <app-card-programas [cardContent]="item" [Interaccion]="'Blog'"></app-card-programas>
       </div>
     </ng-container>
   </div>

@@ -95,4 +95,7 @@ export class FooterComponent implements OnInit {
     this._HelperService.enviarScrollFooter(scroll);
   }
 
+  EventoInteraccion(nombre:string){
+    this._HelperService.enviarMsjAcciones({Tag:'Link',Nombre:nombre})
+  }
 }

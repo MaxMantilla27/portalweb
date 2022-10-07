@@ -152,8 +152,6 @@ export class RegistrarseComponent implements OnInit,OnDestroy {
 
             this.cleanSub=true
             if(this.isBrowser){
-              console.log('------------------facebook(true)---------------------------');
-              console.log(fbq);
               fbq('track', 'CompleteRegistration');
               gtag('event', 'conversion', {
                 'send_to': 'AW-991002043/tnStCPDl6HUQu_vF2AM',
@@ -167,13 +165,11 @@ export class RegistrarseComponent implements OnInit,OnDestroy {
             this.DatoObservable.datoAvatar=true
             this.DatoObservable.datoContenido=true
             this._HelperService.enviarDatoCuenta(this.DatoObservable)
-            console.log(this.DatoObservable);
             this.router.navigate(['/AulaVirtual/MisCursos']);
           }
         },
         error: (e) => {
           this.statuscharge = false;
-          console.log(e);
           this.errorRegister = e.error.excepcion.descripcionGeneral;
           timer(20000).pipe(takeUntil(this.signal$)).subscribe(_=>{
             this.errorRegister = '';

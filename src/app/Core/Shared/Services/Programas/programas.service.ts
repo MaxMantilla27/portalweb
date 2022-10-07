@@ -27,7 +27,6 @@ export class ProgramasService {
   }
   public GetProgramas(Json:FiltroProgramasEnvioDTO):Observable<any>{
     if(this.isBrowser){
-      console.log(Json)
       return this.http.post<any>(this.urlBase+'/PartialProgramas',Json);
     }else{
       return EMPTY;

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ReplaySubject, Subject } from 'rxjs';
+import { Observable, ReplaySubject, Subject } from 'rxjs';
 import { combosPerfilDTO } from '../../Models/AlumnoDTO';
 import { AvatarCombosDTO } from '../../Models/Avatar';
 import { BasicUrl } from '../../Models/BasicDTO';
@@ -13,21 +13,40 @@ export class HelperService {
   constructor() { }
   private msjConbosPerfil = new ReplaySubject<combosPerfilDTO>()
   private msjArrayCarrera = new ReplaySubject<Array<BasicUrl>>()
-  private msjArrayFormacion = new ReplaySubject<Array<BasicUrl>>()
   private msjStringCarrera = new ReplaySubject<string>()
+  private msjArrayFormacion = new ReplaySubject<Array<BasicUrl>>()
   private msjScroll = new ReplaySubject<number>()
   private msjScrollFooter = new ReplaySubject<string>()
   private msjCombosAvatar = new ReplaySubject<AvatarCombosDTO>()
   private msjRecarga = new ReplaySubject<DatoObservableDTO>()
   private msjPaises = new ReplaySubject<Array<any>>()
-  private msjChangePais = new ReplaySubject<any>()
+  //private msjChangePais = new ReplaySubject<any>()
+  private msjChangePais=new Subject<any>();
+  private msjArrayEducacion = new ReplaySubject<Array<BasicUrl>>(1)
+  private msjStringEducacion = new ReplaySubject<string>(1)
+  private msjAcciones=new Subject<any>();
 
-  public get recibirChangePais() {
-    return this.msjChangePais.asObservable()
+
+
+  enviarMsjAcciones(data:any):void {
+    this.msjAcciones.next(data);
   }
-  public enviarChangePais(datos: any): void {
-    this.msjChangePais.next(datos);
+  recibirMsjAcciones(): Observable<any> {
+    return this.msjAcciones.asObservable();
   }
+
+  enviarChangePais(data:any):void {
+    this.msjChangePais.next(data);
+  }
+  recibirChangePais(): Observable<any> {
+    return this.msjChangePais.asObservable();
+  }
+  // public get recibirChangePais() {
+  //   return this.msjChangePais.asObservable()
+  // }
+  // public enviarChangePais(datos: any): void {
+  //   this.msjChangePais.next(datos);
+  // }
   public get recibirDataPais() {
     return this.msjPaises.asObservable()
   }
@@ -45,6 +64,18 @@ export class HelperService {
   }
   public enviarStringCarrera(texto: string): void {
     this.msjStringCarrera.next(texto);
+  }
+  public get recibirArrayEducacion() {
+    return this.msjArrayEducacion.asObservable()
+  }
+  public enviarArrayEducacion(arreglo: Array<BasicUrl>): void {
+    this.msjArrayEducacion.next(arreglo);
+  }
+  public get recibirStringEducacion() {
+    return this.msjStringEducacion.asObservable()
+  }
+  public enviarStringEducacion(texto: string): void {
+    this.msjStringEducacion.next(texto);
   }
   public get recibirArrayFormacion() {
     return this.msjArrayFormacion.asObservable()
