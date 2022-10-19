@@ -23,4 +23,18 @@ export class ProgramaService {
       return EMPTY;
     }
   }
+  public VistaPreviaProgramaPadrePortal(PrimerCurso:string):Observable<any>{
+    if(this.isBrowser){
+      return this.http.get<any>(this.urlBase+'/VistaPreviaProgramaPadrePortal?PrimerCurso='+PrimerCurso);
+    }else{
+      return EMPTY;
+    }
+  }
+  public VistaPreviaProgramaPortal(IdBusqueda:number):Observable<any>{
+    if(this.isBrowser){
+      return this.http.get<any>(this.urlBase+'/VistaPreviaProgramaPortal?IdBusqueda='+IdBusqueda);
+    }else{
+      return EMPTY;
+    }
+  }
 }
