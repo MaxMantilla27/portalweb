@@ -19,7 +19,7 @@
         <ng-container *ngIf="videoData.objetoConfigurado.idVideoBrightcove!='0' &&
           videoData.objetoConfigurado.idVideoBrightcove!=null &&
           videoData.objetoConfigurado.idVideoBrightcove!=undefined" >
-          <video controls #video (timeupdate)="setCurrentTime($event)" (seeked)="changeTime($event)" height="auto" (ended)="OnFinish()"
+          <video (play)="EventoInteraccion()"  (volumechange)="EventoInteraccionVolumen()" controls #video (timeupdate)="setCurrentTime($event)" (seeked)="changeTime($event)" height="auto" (ended)="OnFinish()"
             [currentTime]="tiempovideoinicio"  [playbackRate]="1" id="bc-video" [attr.data-player]="playerData.playerId"
             [attr.data-video-id]="playerData.videoId" [attr.data-account]="playerData.accountId" data-embed="default"
             data-application-id class="video-js" [ngClass]="{'medioVideo':tipo==3}">
@@ -29,7 +29,7 @@
         <ng-container *ngIf="videoData.objetoConfigurado.idVideoBrightcove=='0' ||
         videoData.objetoConfigurado.idVideoBrightcove==null ||
         videoData.objetoConfigurado.idVideoBrightcove==undefined">
-          <cloudflare-stream *ngIf="tipo!=4" id="videoCloud" [autoplay]="autoplay" class="video-js" [controls]="true"
+          <cloudflare-stream (play)="EventoInteraccion()" (volumechange)="EventoInteraccionVolumen()"  *ngIf="tipo!=4" id="videoCloud" [autoplay]="autoplay" class="video-js" [controls]="true"
           (ended)="OnFinish()"
             [src]="videoData.idVideo" (timeupdate)="setCurrentTime($event)" #videoCloud style="height: auto !important;"
             [currentTime]="tiempovideoinicio" (seeked)="changeTime($event)"></cloudflare-stream>
@@ -59,7 +59,7 @@
         </ng-container>
 
       </div>
-      <div class="iconResise" *ngIf="tipo==3" (mousedown)="down=true" (mouseup)="down=false" draggable="false">
+      <div (click)="EventoInteraccionDrag()" class="iconResise" *ngIf="tipo==3" (mousedown)="down=true" (mouseup)="down=false" draggable="false">
         <img (mousedown)="down=true" (mouseup)="down=false" draggable="false"
           src="../../../../../../assets/icons/icono-delizar.png" alt="">
       </div>
@@ -143,11 +143,11 @@
                    *ngFor="let respuesta of preguntas[preguntaActual].respuestaGrupoPreguntaInteractivaPrograma;let i=index">
                     <mat-form-field  *ngIf="!valPregunta" appearance="outline" class="col-12 col-md-6 col-lg-6" >
                       <mat-label>respuesta</mat-label>
-                      <input type="number"  [(ngModel)]="valorRespuesta" matInput  />
+                      <input type="number"  [(ngModel)]="valorRespuesta" (input)="ValidarNumero()" matInput  />
                     </mat-form-field>
                     <div class="col-12 col-md-6 col-lg-6">
                       <app-default-button *ngIf="!valPregunta"
-                      (ButtoclClick)="ResponderTexto()" [disabled]="valorRespuesta==''"
+                      (ButtoclClick)="ResponderTexto()" [disabled]="!esnumero"
                       [confs]="{color:'primary',titulo:'responder'}" [icon]="''"
                       [style]="'padding: 0px 20px;margin:0px;margin-bottom: 1.34375em;'"></app-default-button>
                     </div>

@@ -39,7 +39,7 @@
       </div>
       <div class="col-12 col-md-4 col-lg-3" style="display: flex;align-items: center;justify-content: flex-end;">
         <app-default-button [confs]="{color:'primary',titulo:'Enviar'}" [style]="'padding:0px 30px;margin:0px '"
-          (ButtoclClick)="EnviarFile()" [disabled]="!proyecto.habilitado"></app-default-button>
+          (ButtoclClick)="EventoInteraccionButton('Enviar');EnviarFile()" [disabled]="!proyecto.habilitado"></app-default-button>
       </div>
     </ng-container>
     <ng-template #cargando>
@@ -126,7 +126,7 @@
     </div>
     <div class="col-12 col-md-12 col-lg-12" style="margin: 50px 0px 10px;">
       <div class="cabeceraExpandProyecto" [ngClass]="{'cabeceraExpandProyectoOpen':instruccionesAcerca}"
-      (click)="instruccionesAcerca=!instruccionesAcerca">
+      (click)="instruccionesAcerca=!instruccionesAcerca;EventoInteraccionAccordionCertificado('Instrucciones acerca del Proyecto',instruccionesAcerca==true?'Abierto':'Cerrado')">
         <div>Instrucciones acerca del Proyecto</div>
         <div>
           <i class="material-icons no-seleccionable " *ngIf="!instruccionesAcerca">keyboard_arrow_down</i>
@@ -221,7 +221,7 @@
     </div>
     <div class="col-12 col-md-12 col-lg-12" style="margin: 10px 0px ;">
       <div class="cabeceraExpandProyecto" [ngClass]="{'cabeceraExpandProyectoOpen':instruccionesSubir}"
-      (click)="instruccionesSubir=!instruccionesSubir">
+      (click)="instruccionesSubir=!instruccionesSubir;EventoInteraccionAccordionCertificado('Instrucciones para subir el Proyecto',instruccionesSubir==true?'Abierto':'Cerrado')">
         <div>Instrucciones para subir el Proyecto</div>
         <div>
           <i class="material-icons no-seleccionable " *ngIf="!instruccionesSubir">keyboard_arrow_down</i>

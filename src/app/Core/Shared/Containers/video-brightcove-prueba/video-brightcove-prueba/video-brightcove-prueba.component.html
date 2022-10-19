@@ -15,11 +15,11 @@
       (mousemove)="resise($event)">
       <div style="display: flex;
       align-items: center;" [ngClass]="{'containerVideo': tipo == 3}"
-        [ngStyle]="{'width':(tipo==3 || tipo==2)?whidth>0?'calc(45% - '+whidth+'px)':'calc(45% + '+whidth*-1+'px)':tipo==2?'100%':'0px'}">
+        [ngStyle]="{'width':(tipo==3)?whidth>0?'calc(45% - '+whidth+'px)':'calc(45% + '+whidth*-1+'px)':tipo==2?'100%':'0px'}">
         <ng-container *ngIf="videoData.objetoConfigurado.idVideoBrightcove!='0' &&
           videoData.objetoConfigurado.idVideoBrightcove!=null &&
           videoData.objetoConfigurado.idVideoBrightcove!=undefined">
-          <video controls #video (timeupdate)="setCurrentTime($event)" (seeked)="changeTime($event)" height="auto"
+          <video (play)="EventoInteraccion()" controls #video (timeupdate)="setCurrentTime($event)" (seeked)="changeTime($event)" height="auto"
             [currentTime]="tiempovideoinicio" [playbackRate]="1" id="bc-video" [attr.data-player]="playerData.playerId"
             [attr.data-video-id]="playerData.videoId" [attr.data-account]="playerData.accountId" data-embed="default"
             data-application-id class="video-js" [ngClass]="{'medioVideo':tipo==3}">
@@ -29,7 +29,7 @@
         <ng-container *ngIf="videoData.objetoConfigurado.idVideoBrightcove=='0' ||
         videoData.objetoConfigurado.idVideoBrightcove==null ||
         videoData.objetoConfigurado.idVideoBrightcove==undefined">
-          <cloudflare-stream *ngIf="tipo!=4" id="videoCloud" [autoplay]="autoplay" class="video-js" [controls]="true"
+          <cloudflare-stream (play)="EventoInteraccion()" *ngIf="tipo!=4" id="videoCloud" [autoplay]="autoplay" class="video-js" [controls]="true"
             [src]="videoData.idVideo" (timeupdate)="setCurrentTime($event)" #videoCloud style="height: auto !important;"
             [currentTime]="tiempovideoinicio" (seeked)="changeTime($event)"></cloudflare-stream>
           <!-- <video style="width: 100%;" controls>
@@ -38,11 +38,11 @@
 
         </ng-container>
       </div>
-      <div class="iconResise" *ngIf="tipo!=4" (mousedown)="down=true" (mouseup)="down=false" draggable="false">
+      <div class="iconResise" *ngIf="tipo==3" (mousedown)="down=true" (mouseup)="down=false" draggable="false">
         <img (mousedown)="down=true" (mouseup)="down=false" draggable="false"
           src="../../../../../../assets/icons/icono-delizar.png" alt="">
       </div>
-      <div class="containerDiapitiva" *ngIf="tipo!=4"
+      <div class="containerDiapitiva" *ngIf="tipo==3 || tipo==1"
         [ngStyle]="{'width':whidth<=0?'calc(45% - '+whidth*-1+'px)':'calc(45% + '+whidth+'px)'}">
 
         <img *ngIf="urlDiapo!=null" [src]="urlDiapo" alt="" style="width: 100%;height: auto;">

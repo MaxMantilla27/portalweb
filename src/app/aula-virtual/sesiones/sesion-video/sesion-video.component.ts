@@ -3,6 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { Subject, takeUntil } from 'rxjs';
 import { ParametrosCrucigramaVideoSesionDTO, ParametrosEstructuraEspecificaDTO, ParametrosVideoSesionDTO } from 'src/app/Core/Models/EstructuraEspecificaDTO';
 import { CrucigramaService } from 'src/app/Core/Shared/Services/Crucigrama/crucigrama.service';
+import { HelperService } from 'src/app/Core/Shared/Services/helper.service';
 import { VideoSesionService } from 'src/app/Core/Shared/Services/VideoSesion/video-sesion.service';
 import { RegistrarErrorComponent } from './registrar-error/registrar-error/registrar-error.component';
 
@@ -18,6 +19,7 @@ export class SesionVideoComponent implements OnInit,OnChanges,OnDestroy {
   constructor(
     private _VideoSesionService:VideoSesionService,
     private _CrucigramaService:CrucigramaService,
+    private _HelperService:HelperService,
     public dialog: MatDialog
   ) { }
 
@@ -152,5 +154,8 @@ export class SesionVideoComponent implements OnInit,OnChanges,OnDestroy {
     this.onFinish.emit();
     this.estadovideo=100;
     this.videoData.tiempoVisualizado=this.videoData.tiempoTotalVideo
+  }
+  Interaccion(nombre:string){
+    this._HelperService.enviarMsjAcciones({Tag:"Button",Nombre:nombre})
   }
 }

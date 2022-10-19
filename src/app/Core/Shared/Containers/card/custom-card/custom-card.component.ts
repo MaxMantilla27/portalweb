@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { HelperService } from '../../../Services/helper.service';
 
 @Component({
   selector: 'app-custom-card',
@@ -11,9 +12,15 @@ export class CustomCardComponent implements OnInit {
   item: any = {}
   @Input()
   confs: any = {}
-  constructor() { }
+  @Input() Interaccion=''
+  constructor(
+    private _HelperService :HelperService,
+  ) { }
 
   ngOnInit(): void {
   }
 
+  EventoInteraccion(nombre:string){
+    this._HelperService.enviarMsjAcciones({Tag:'Link',Nombre:'Descubre más >',Programa:nombre,Seccion:this.Interaccion})
+  }
 }

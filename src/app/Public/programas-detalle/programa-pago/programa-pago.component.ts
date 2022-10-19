@@ -2,6 +2,7 @@ import { Component, Inject, OnDestroy, OnInit, ViewEncapsulation } from '@angula
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Subject, takeUntil } from 'rxjs';
 import { ImagenTarjetas } from 'src/app/Core/Shared/ImagenTarjetas';
+import { HelperService } from 'src/app/Core/Shared/Services/helper.service';
 import { MedioPagoActivoPasarelaService } from 'src/app/Core/Shared/Services/MedioPagoActivoPasarela/medio-pago-activo-pasarela.service';
 import { SeccionProgramaService } from 'src/app/Core/Shared/Services/SeccionPrograma/seccion-programa.service';
 import { SnackBarServiceService } from 'src/app/Core/Shared/Services/SnackBarService/snack-bar-service.service';
@@ -22,6 +23,7 @@ export class ProgramaPagoComponent implements OnInit ,OnDestroy{
     private _SeccionProgramaService:SeccionProgramaService,
     private _t:ImagenTarjetas,
     private _SnackBarServiceService:SnackBarServiceService,
+    private _HelperService:HelperService
   ) { }
 
   public tarjetas:any;
@@ -36,7 +38,6 @@ export class ProgramaPagoComponent implements OnInit ,OnDestroy{
     this.signal$.complete();
   }
   ngOnInit(): void {
-    console.log(this.data)
     this.data.alumno=this.data.alumno.length>0?this.data.alumno+',':''
     this.MedioPagoActivoPasarelaPortal();
     this.ListMontoPagoCompleto();
@@ -44,7 +45,6 @@ export class ProgramaPagoComponent implements OnInit ,OnDestroy{
   MedioPagoActivoPasarelaPortal(){
     this._MedioPagoActivoPasarelaService.MedioPagoActivoPasarelaPortal(this.data.idPais).pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
-        console.log(x)
         this.tarjetas=x
       }
     })
@@ -53,16 +53,36 @@ export class ProgramaPagoComponent implements OnInit ,OnDestroy{
     this._SeccionProgramaService.ListMontoPagoCompleto(this.data.idBusqueda).pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
         this.formapago=x.listaMontoPagoProgramaInformacionDTO
-        console.log(x)
       }
     })
   }
   change(){
+    this.EventoInteraccionSelect('Selecciona tu metodo de pago',this.medioCodigo)
     this.imgMedioPago=this._t.GetTarjeta(this.medioCodigo)
     this.medioPago=this.tarjetas.find((x:any)=>x.medioCodigo==this.medioCodigo).medioPago
   }
   changeForma(){
+    var fp=this.formapago[this.idFormaPago]
 
+    var value=''
+    if(fp.paquete==1){
+      value='Versión Basica,'
+    }
+    if(fp.paquete==2){
+      value='Versión Profesional,'
+    }
+    if(fp.paquete==3){
+      value='Versión Gerencial,'
+    }
+    if(fp.idTipoPago==1){
+      value+='al Contado: '+fp.simbolo+' '+fp.cuotas
+    }
+    if(fp.idTipoPago==2){
+      value+='pago en 1 matricula de'+
+      fp.simbolo+' '+fp.matricula+
+      ' y '+fp.nroCuotas+' cuotas mensuales de '+fp.simbolo+' '+fp.cuotas
+    }
+    this.EventoInteraccionSelect('Selecciona tu forma de pago',value)
   }
   Pagar(){
     if(this.medioCodigo.length>0){
@@ -99,5 +119,15 @@ export class ProgramaPagoComponent implements OnInit ,OnDestroy{
     }else{
       this._SnackBarServiceService.openSnackBar("Seleccione su medio de pago",'x',10,"snackbarCrucigramaerror");
     }
+  }
+
+  EventoInteraccion(){
+    this._HelperService.enviarMsjAcciones({Tag:'Button',Nombre:'Ir a pagar'})
+  }
+  EventoInteraccionSelect(nombre:string,valor:string){
+    this._HelperService.enviarMsjAcciones({Tag:'Select',Nombre:nombre,Tipo:'Select',Valor:valor})
+  }
+  EventoInteraccionSelectClick(nombre:string){
+    this._HelperService.enviarMsjAcciones({Tag:'Select',Nombre:nombre,Tipo:'Click'})
   }
 }

@@ -9,22 +9,22 @@
   </div>
   <div class="TipoAyuda">
     <div class="row" style="     width: 100%;   padding: 0px 10px;
-    align-items: center;cursor: pointer;" (click)="OnChange.emit(1)">
+    align-items: center;cursor: pointer;" (click)="EventoInteraccionButton('Preguntas frecuentes');OnChange.emit(1)">
       <div class="col-2 col-md-2 col-lg-2" style="display: flex; justify-content: center; align-items: center;">
         <img class="ImgAyudaContent" src="../../../../assets/icons/preguntas-naranja-38.svg">
       </div>
-      <div class="AyudaContent col-10 col-md-10 col-lg-10"  (click)="IdPrincipal=IdPrincipal && IdPGeneral=IdPGeneral" (click)="Capitulo=Capitulo">
+      <div class="AyudaContent col-10 col-md-10 col-lg-10"  (click)="EventoInteraccionButton('Preguntas frecuentes');IdPrincipal=IdPrincipal && IdPGeneral=IdPGeneral" (click)="Capitulo=Capitulo">
         Preguntas frecuentes
       </div>
     </div>
   </div>
   <div class="TipoAyuda">
     <div class="row" style="     width: 100%;   padding: 0px 10px;
-    align-items: center;cursor: pointer;" (click)="OnChange.emit(2)">
+    align-items: center;cursor: pointer;" (click)="EventoInteraccionButton('Quejas y sugerencias');OnChange.emit(2)">
       <div class="col-2 col-md-2 col-lg-2" style="display: flex; justify-content: center; align-items: center;">
         <img class="ImgAyudaContent" src="../../../../assets/icons/quejas-sugerencias-03.svg">
       </div>
-      <div class=" AyudaContent col-10 col-md-10 col-lg-10"  (click)="IdPrincipal=IdPrincipal && IdPGeneral=IdPGeneral" (click)="Capitulo=Capitulo">
+      <div class=" AyudaContent col-10 col-md-10 col-lg-10"  (click)="EventoInteraccionButton('Quejas y sugerencias');IdPrincipal=IdPrincipal && IdPGeneral=IdPGeneral" (click)="Capitulo=Capitulo">
         Quejas y sugerencias
       </div>
     </div>

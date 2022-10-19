@@ -12,11 +12,11 @@
         color: #4a4a49;" >
           Encuentra todo el conocimiento que necesitas en BS Campus
         </div>
-        <mat-form-field appearance="outline" style="width: 300px;font-size: 13px;margin-top: 20px;">
+        <mat-form-field (click)="EventoInteraccionSelectClick()" appearance="outline" style="width: 300px;font-size: 13px;margin-top: 20px;">
           <mat-label>Área</mat-label>
           <mat-select [(ngModel)]="IdArea" [disabled]="charge">
             <mat-option  [value]="0">Todas</mat-option>
-            <mat-option *ngFor="let item of Formacion" [value]="item.value">{{item.Nombre}}</mat-option>
+            <mat-option (click)="EventoInteraccionSelect(item.Nombre)" *ngFor="let item of Formacion" [value]="item.value">{{item.Nombre}}</mat-option>
           </mat-select>
         </mat-form-field>
       </div>
@@ -32,7 +32,7 @@
           <div class="row" style="width: 100%;padding: 0px 5px">
             <ng-container *ngFor="let item of blog">
               <div class="col-12 col-md-6 col-lg-4 contentCard" *ngIf="IdArea==0 || IdArea==item.idArea">
-                <app-card-blog  [cardContent]="item"></app-card-blog>
+                <app-card-blog  [cardContent]="item" [Interaccion]="'Blog'"></app-card-blog>
               </div>
             </ng-container>
           </div>

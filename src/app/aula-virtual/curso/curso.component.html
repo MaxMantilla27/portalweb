@@ -23,9 +23,9 @@
         </div>
       </div>
       <mat-tab-group class="tabVertical" [(selectedIndex)]="tabIndex" (selectedTabChange)="tabChanged($event)">
-        <mat-tab *ngIf="programEstructura.idModalidad!=2">
+        <mat-tab *ngIf="programEstructura.idModalidad!=2" >
           <ng-template mat-tab-label>
-            <div class="contentHeaderM"
+            <div class="contentHeaderM" (click)="InterraccionTab('Indicaciones')"
             matTooltip="Indicaciones"
             matTooltipPosition="after" [ngClass]="{'ActiveChil':IndicacionActive==true}">
               <div class="iconMat iconIndicaciones"></div>
@@ -48,25 +48,26 @@
                 <app-indicaciones-content [title]="'Preguntas interactivas'" [imgUrl]="imgsIndocaciones[0]"
                   (HoverIn)='imgsIndocaciones[0]="preguntas-interactivas-38.svg"'
                   (HoverOut)='imgsIndocaciones[0]="preguntas-naranja-38.svg"'
-                  (ButtoclClick)="changeIndexIndicaciones(1)"></app-indicaciones-content>
+                  (ButtoclClick)="EventoInteraccionButton('Preguntas interactivas');changeIndexIndicaciones(1)"></app-indicaciones-content>
               </div>
               <div class="col-12 col-md-9 col-lg-9" style="margin: 10px 0px;">
                 <app-indicaciones-content [title]="'Crucigramas'" [imgUrl]="imgsIndocaciones[1]"
                   (HoverIn)='imgsIndocaciones[1]="crucigramas-39.svg"'
                   (HoverOut)='imgsIndocaciones[1]="crucigrama-naranja-39.svg"'
-                  (ButtoclClick)="changeIndexIndicaciones(2)"></app-indicaciones-content>
+                  (ButtoclClick)="EventoInteraccionButton('Crucigramas');changeIndexIndicaciones(2)"></app-indicaciones-content>
               </div>
               <div class="col-12 col-md-9 col-lg-9" style="margin: 10px 0px;">
                 <app-indicaciones-content [title]="'Tareas'" [imgUrl]="imgsIndocaciones[2]"
                   (HoverIn)='imgsIndocaciones[2]="tareas-indicaciones-40.svg"'
-                  (HoverOut)='imgsIndocaciones[2]="tareas-naranja-40.svg"' (ButtoclClick)="changeIndexIndicaciones(3)">
+                  (HoverOut)='imgsIndocaciones[2]="tareas-naranja-40.svg"'
+                  (ButtoclClick)="EventoInteraccionButton('Tareas');changeIndexIndicaciones(3)">
                 </app-indicaciones-content>
               </div>
               <div class="col-12 col-md-9 col-lg-9" style="margin: 10px 0px;">
                 <app-indicaciones-content [title]="'Calificar tarea de pares'" [imgUrl]="imgsIndocaciones[3]"
                   (HoverIn)='imgsIndocaciones[3]="calificar-tareas-41.svg"'
                   (HoverOut)='imgsIndocaciones[3]="tareas-pares-naranja-41.svg"'
-                  (ButtoclClick)="changeIndexIndicaciones(4)"></app-indicaciones-content>
+                  (ButtoclClick)="EventoInteraccionButton('Calificar tarea de pares');changeIndexIndicaciones(4)"></app-indicaciones-content>
               </div>
             </div>
           </div>
@@ -75,7 +76,7 @@
 
           <mat-tab>
             <ng-template mat-tab-label class="tabSubcontent">
-              <div class="contentHeaderM subContent"
+              <div class="contentHeaderM subContent" (click)="InterraccionTab('Preguntas interactivas')"
               matTooltip="Preguntas interactivas"
               matTooltipPosition="after">
                 <div class="iconMat"><i class="material-icons">quiz</i></div>
@@ -91,7 +92,7 @@
           </mat-tab>
           <mat-tab>
             <ng-template mat-tab-label>
-              <div class="contentHeaderM subContent"
+              <div class="contentHeaderM subContent" (click)="InterraccionTab('Crucigramas')"
               matTooltip="Crucigramas"
               matTooltipPosition="after">
                 <div class="iconMat"><i class="material-icons">games</i></div>
@@ -107,7 +108,7 @@
           </mat-tab>
           <mat-tab>
             <ng-template mat-tab-label>
-              <div class="contentHeaderM subContent"
+              <div class="contentHeaderM subContent" (click)="InterraccionTab('Tareas')"
               matTooltip="Tareas"
               matTooltipPosition="after">
                 <div class="iconMat"><i class="material-icons">edit_note</i></div>
@@ -124,7 +125,7 @@
           </mat-tab>
           <mat-tab>
             <ng-template mat-tab-label>
-              <div class="contentHeaderM subContent"
+              <div class="contentHeaderM subContent" (click)="InterraccionTab('Calificar tarea de pares')"
               matTooltip="Calificar tarea de pares"
               matTooltipPosition="after">
                 <div class="iconMat"><i class="material-icons">fact_check</i></div>
@@ -143,7 +144,7 @@
 
         <mat-tab>
           <ng-template mat-tab-label>
-            <div class="contentHeaderM"
+            <div class="contentHeaderM" (click)="InterraccionTab('Módulos')"
             matTooltip="Módulos"
             matTooltipPosition="after">
               <div class="iconMat iconModulos"></div>
@@ -166,7 +167,7 @@
         </mat-tab>
         <mat-tab *ngIf="curso!=undefined && curso.proyectoAplicacion">
           <ng-template mat-tab-label>
-            <div class="contentHeaderM"
+            <div class="contentHeaderM" (click)="InterraccionTab('Proyecto de Aplicación')"
             matTooltip="Proyecto de Aplicación"
             matTooltipPosition="after">
               <div class="iconMat iconProyectos"></div>
@@ -182,7 +183,7 @@
         </mat-tab>
         <mat-tab>
           <ng-template mat-tab-label>
-            <div class="contentHeaderM"
+            <div class="contentHeaderM" (click)="InterraccionTab('Certificados')"
             matTooltip="Certificados"
             matTooltipPosition="after" [ngClass]="{'ActiveChil':CertificadoActive==true}">
               <div class="iconMat iconCertificados"></div>
@@ -211,7 +212,7 @@
                       datosCertificado.nombreArchivo==null">
             <ng-template mat-tab-label class="tabSubcontent">
               <div class="contentHeaderM subContent" style="cursor: pointer;"
-                (click)="certificadoDigital()"
+                (click)="InterraccionTab('Certificado Digital');certificadoDigital()"
                 matTooltip="Certificado Digital"
                 matTooltipPosition="after">
 
@@ -227,8 +228,8 @@
           </mat-tab>
           <mat-tab [disabled]="datosCertificado==undefined ||  datosCertificado.nombreArchivo==null">
             <ng-template mat-tab-label>
-              <div class="contentHeaderM subContent" style="cursor: pointer;"
-                (click)="certificadoFisico()"
+              <div class="contentHeaderM subContent"  style="cursor: pointer;"
+                (click)="InterraccionTab('Certificado Fisico');certificadoFisico()"
                 matTooltip="Certificado Fisico"
                 matTooltipPosition="after">
                 <div class="iconMat"><i class="material-icons">contact_mail</i></div>
@@ -247,7 +248,7 @@
           <ng-container *ngIf="ircas!=undefined && ircas.length>0">
             <mat-tab>
               <ng-template mat-tab-label>
-                <div class="contentHeaderM subContent" style="cursor: pointer;"
+                <div class="contentHeaderM subContent" (click)="InterraccionTab('Certificados Irca')" style="cursor: pointer;"
                 matTooltip="Certificados Irca"
                 matTooltipPosition="after">
                   <div class="iconMat"><i class="material-icons">microwave</i></div>
@@ -264,7 +265,7 @@
 
         <mat-tab>
           <ng-template mat-tab-label>
-            <div class="contentHeaderM"
+            <div class="contentHeaderM" (click)="InterraccionTab('Trámites')"
             matTooltip="Trámites"
             matTooltipPosition="after">
               <div class="iconMat iconTramites"></div>
@@ -279,7 +280,7 @@
 
         <mat-tab *ngIf="curso!=undefined && curso.webibarActivo">
           <ng-template mat-tab-label>
-            <div class="contentHeaderM"
+            <div class="contentHeaderM" (click)="InterraccionTab('Webinars')"
             matTooltip="Webinars"
             matTooltipPosition="after">
               <div class="iconMat iconWebinars"></div>
@@ -293,7 +294,7 @@
         </mat-tab>
         <mat-tab *ngIf="curso!=undefined && curso.benficioSolicitado">
           <ng-template mat-tab-label>
-            <div class="contentHeaderM"
+            <div class="contentHeaderM" (click)="InterraccionTab('Mis Beneficios')"
             matTooltip="Mis Beneficios"
             matTooltipPosition="after">
               <div class="iconMat iconBeneficios"></div>
@@ -307,7 +308,7 @@
         </mat-tab>
         <mat-tab *ngIf="curso!=undefined && curso.claseWebexActivo==true">
           <ng-template mat-tab-label>
-            <div class="contentHeaderM"
+            <div class="contentHeaderM" (click)="InterraccionTab('Clases Online')"
             [matTooltip]="'Clases Online'"
             matTooltipPosition="after">
 
@@ -322,7 +323,7 @@
         </mat-tab>
         <mat-tab *ngIf="curso!=undefined && curso.simuladorAsignado==true">
           <ng-template mat-tab-label>
-            <div class="contentHeaderM"
+            <div class="contentHeaderM" (click)="InterraccionTab('Simuladores')"
             [matTooltip]="'Simuladores'"
             matTooltipPosition="after">
 

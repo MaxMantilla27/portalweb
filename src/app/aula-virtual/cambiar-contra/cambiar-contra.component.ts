@@ -11,6 +11,7 @@ import { Router } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
 import { CambioPasswordDTO } from 'src/app/Core/Models/AccountDTO';
 import { DatoObservableDTO } from 'src/app/Core/Models/DatoObservableDTO';
+import { InteraccionFormularioCampoDTO } from 'src/app/Core/Models/Interacciones';
 import { AccountService } from 'src/app/Core/Shared/Services/Account/account.service';
 import { HelperService } from 'src/app/Core/Shared/Services/helper.service';
 import { SessionStorageService } from 'src/app/Core/Shared/Services/session-storage.service';
@@ -41,6 +42,17 @@ export class CambiarContraComponent implements OnInit,OnDestroy {
       contraNuevaRepeat: ['', [Validators.required, ConfirmedValidator('')]],
     });
   }
+
+  public jsonForm:InteraccionFormularioCampoDTO={
+    Acciones:[],
+    AccionesJson:{},
+    IdCategoriaOrigen:null,
+    IdConjuntoAnuncio:null,
+    IdInteraccionPortalPaginaV2:0,
+    IdTipoInteraccionPortalFormulario:0,
+    IdInteraccionPortalV2:0,
+    Nombre:''
+  }
   public DatoObservable: DatoObservableDTO ={
     datoAvatar: false,
     datoContenido: false,
@@ -66,6 +78,7 @@ export class CambiarContraComponent implements OnInit,OnDestroy {
     this.title.setTitle(t)
   }
   CambiarContra() {
+    this.EnviarInteraccion(true)
     if(this.userForm.valid){
       this.datos.ConfirmPassword = this.userForm.get('contraNuevaRepeat')?.value;
       this.datos.OldPassword = this.userForm.get('contraActual')?.value;
@@ -120,5 +133,50 @@ export class CambiarContraComponent implements OnInit,OnDestroy {
       return 'La contraseña ingesada debe ser igual a su nueva contraseña';
     }
     return '';
+  }
+  EnviarInteraccion(enviado:boolean){
+    let objInteraccion:Array<any>=[];
+
+    objInteraccion.push({
+      Tag:'Input',
+      Tipo:'text',
+      Nombre:'Contraseña Actual',
+      valor:this.userForm.get('contraActual')?.value
+    })
+
+    objInteraccion.push({
+      Tag:'Input',
+      Tipo:'text',
+      Nombre:'Nueva Contraseña',
+      valor:this.userForm.get('contraNueva')?.value
+    })
+
+    objInteraccion.push({
+      Tag:'Input',
+      Tipo:'text',
+      Nombre:'Confirma Nueva Contraseña',
+      valor:this.userForm.get('contraNuevaRepeat')?.value
+    })
+    console.log(this.userForm)
+    var tipo=0;
+    if(enviado){
+      if(this.userForm.valid==true){
+        tipo=4
+      }else{
+        tipo=3
+      }
+    }else{
+      if(this.userForm.valid==true){
+        tipo=2
+      }else{
+        tipo=1
+      }
+    }
+    this.jsonForm.AccionesJson=objInteraccion;
+    this.jsonForm.IdCategoriaOrigen=this._SessionStorageService.SessionGetValueCokies("idCategoria");
+    this.jsonForm.IdConjuntoAnuncio=this._SessionStorageService.SessionGetValueCokies("idCampania")
+    this.jsonForm.IdTipoInteraccionPortalFormulario=tipo
+    this.jsonForm.Nombre='Cambiar Contraseña'
+    this._HelperService.enviarMsjForm(this.jsonForm);
   }
 }

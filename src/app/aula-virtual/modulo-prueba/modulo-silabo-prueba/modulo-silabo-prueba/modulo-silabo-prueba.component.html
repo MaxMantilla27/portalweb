@@ -8,7 +8,8 @@
 <mat-accordion class="acordionSilaboModuloCursos" multi>
   <ng-container *ngFor="let item of listaSeccionesContenidosDocumento">
     <ng-container *ngIf="item.order>0 && item.estado==true">
-      <mat-expansion-panel hideToggle (opened)="item.opened=true" (closed)="item.opened=false">
+      <mat-expansion-panel hideToggle (opened)="EventoInteraccionAccordion(item.titulo,'Abierto');item.opened=true"
+      (closed)="EventoInteraccionAccordion(item.titulo,'Cerrado');item.opened=false">
         <mat-expansion-panel-header>
           <mat-panel-title>
             <div style="display: flex;align-items: center;">

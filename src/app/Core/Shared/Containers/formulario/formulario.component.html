@@ -1,4 +1,4 @@
-<div class="row" style="position: relative;">
+<div class="row" style="position: relative;" (click)="ClickIntoForm()">
   <form (submit)="EnviarCambios()" [formGroup]="userForm" #f="ngForm">
     <ng-container formArrayName="Fields">
       <div class="row">

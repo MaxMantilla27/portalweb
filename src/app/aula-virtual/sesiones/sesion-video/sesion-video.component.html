@@ -27,7 +27,7 @@
           <div class="col-12 row" style="display: flex;justify-content: flex-end;">
             <div class="ErrorVideoPlayer" style="width:auto;display: flex;">
               <img class="IconoErrorVideoPlayer" src="../../../../assets/icons/videos-29.svg">
-              <div (click)="OpenModal()" style="color: #FF7012;margin-left: 10px;margin-top: 8px;">
+              <div (click)="Interaccion('Reportar error en video');OpenModal()" style="color: #FF7012;margin-left: 10px;margin-top: 8px;">
                 Reportar error en video
               </div>
             </div>
@@ -58,7 +58,7 @@
               <strong style="margin-right: 10px">Diapositivas:</strong>
             </div>
             <div class="col-12 col-md-8 col-lg-9" style="display: flex;align-items: center;    margin-bottom: 10px;justify-content: flex-start;">
-              <a target="_blank" style="color: #949494;text-decoration: none;"
+              <a target="_blank" (click)="Interaccion('Descarga el material de esta sesión');" style="color: #949494;text-decoration: none;"
                 [href]="'https://repositorioweb.blob.core.windows.net/repositorioweb/aulavirtual/documento-cursos/AulaVirtual/'+videoData.objetoConfigurado.archivo">Descarga
                 el material de esta sesión</a>
             </div>

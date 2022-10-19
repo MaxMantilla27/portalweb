@@ -53,4 +53,5 @@ export interface listaMontoPagoProgramaInformacionDTO{
   matricula:string;
   nroCuotas:number;
   simbolo:string;
+  paquete:number;
 }

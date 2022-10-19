@@ -1,5 +1,5 @@
 <mat-card class="card-matriculas">
-  <img mat-card-image [src]="cardContent.Img" [routerLink]="cardContent.Url" [alt]="cardContent.ImgAlt" (error)="updateUrl()">
+  <img mat-card-image [src]="cardContent.Img" (click)="EventoInteraccion()" [routerLink]="cardContent.Url" [alt]="cardContent.ImgAlt" (error)="updateUrl()">
   <mat-card-content>
     <div *ngIf="cardContent.Tipo==2" class="matriculaicon">
 
@@ -10,7 +10,7 @@
       <i class="material-icons" >live_tv</i>
       <div >Online Asincrónico</div>
     </div>
-    <div class="title" [routerLink]="cardContent.Url">{{cardContent.Title}}</div>
+    <div class="title" (click)="EventoInteraccion()" [routerLink]="cardContent.Url">{{cardContent.Title}}</div>
   </mat-card-content>
   <mat-card-footer>
     <div class="invercion">

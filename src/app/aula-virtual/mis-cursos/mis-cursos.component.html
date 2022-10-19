@@ -27,7 +27,7 @@
       Title: item.programaGeneral,ImgAlt: '',Tipo:item.tipoModalidad,Url: '/AulaVirtual/MisCursos/'+item.idMatriculaCabecera}">
 
         <ng-container linkIcons>
-          <button class="buttonIconCurso" (click)="saveIndex(0)" [routerLink]="'/AulaVirtual/MisCursos/'+item.idMatriculaCabecera"
+          <button class="buttonIconCurso" (click)="EventoInteraccion('Indicaciones',item.programaGeneral);saveIndex(0)" [routerLink]="'/AulaVirtual/MisCursos/'+item.idMatriculaCabecera"
          mat-icon-button
             matTooltip="Indicaciones"
             matTooltipClass="tootipMatriculas">
@@ -38,7 +38,7 @@
             </div>
 
           </button>
-          <button class="buttonIconCurso" (click)="saveIndex(1)" [routerLink]="'/AulaVirtual/MisCursos/'+item.idMatriculaCabecera"
+          <button class="buttonIconCurso" (click)="EventoInteraccion('Módulos',item.programaGeneral);saveIndex(1)" [routerLink]="'/AulaVirtual/MisCursos/'+item.idMatriculaCabecera"
          mat-icon-button
             matTooltip="Módulos"
             matTooltipClass="tootipMatriculas">
@@ -49,7 +49,7 @@
             </div>
             <!-- <img class="iconsCardMatriculas" src="../../../assets/icons/modulos-naranja.svg" alt=""> -->
           </button>
-          <button class="buttonIconCurso" *ngIf="item.proyectoAplicacion" (click)="saveIndex(2)" [routerLink]="'/AulaVirtual/MisCursos/'+item.idMatriculaCabecera"
+          <button class="buttonIconCurso" *ngIf="item.proyectoAplicacion" (click)="EventoInteraccion('Proyecto de aplicación',item.programaGeneral);saveIndex(2)" [routerLink]="'/AulaVirtual/MisCursos/'+item.idMatriculaCabecera"
          mat-icon-button
             matTooltip="Proyecto de aplicación"
             matTooltipClass="tootipMatriculas">
@@ -60,7 +60,7 @@
             </div>
             <!-- <img class="iconsCardMatriculas" src="../../../assets/icons/proyectos-aplicacion.svg" alt=""> -->
           </button>
-          <button  class="buttonIconCurso" (click)="saveIndex(3)" [routerLink]="'/AulaVirtual/MisCursos/'+item.idMatriculaCabecera"
+          <button  class="buttonIconCurso" (click)="EventoInteraccion('Certificados',item.programaGeneral);saveIndex(3)" [routerLink]="'/AulaVirtual/MisCursos/'+item.idMatriculaCabecera"
          mat-icon-button
             matTooltip="Certificados"
             matTooltipClass="tootipMatriculas">
@@ -71,7 +71,7 @@
             </div>
             <!-- <img class="iconsCardMatriculas" src="../../../assets/icons/certificados-naranja.svg" alt=""> -->
           </button>
-          <button class="buttonIconCurso" (click)="saveIndex(4)" [routerLink]="'/AulaVirtual/MisCursos/'+item.idMatriculaCabecera"
+          <button class="buttonIconCurso" (click)="EventoInteraccion('Trámites',item.programaGeneral);saveIndex(4)" [routerLink]="'/AulaVirtual/MisCursos/'+item.idMatriculaCabecera"
          mat-icon-button
             matTooltip="Trámites"
             matTooltipClass="tootipMatriculas">
@@ -81,7 +81,7 @@
             </div>
             <!-- <img class="iconsCardMatriculas" src="../../../assets/icons/tramites-naranja.svg" alt=""> -->
           </button>
-          <button class="buttonIconCurso" *ngIf="item.webibarActivo" (click)="saveIndex(5)" [routerLink]="'/AulaVirtual/MisCursos/'+item.idMatriculaCabecera"
+          <button class="buttonIconCurso" *ngIf="item.webibarActivo" (click)="EventoInteraccion('Webinars',item.programaGeneral);saveIndex(5)" [routerLink]="'/AulaVirtual/MisCursos/'+item.idMatriculaCabecera"
          mat-icon-button
             matTooltip="Webinars"
             matTooltipClass="tootipMatriculas">
@@ -91,7 +91,7 @@
             </div>
             <!-- <img class="iconsCardMatriculas" src="../../../assets/icons/webinar-naranja.svg" alt=""> -->
           </button>
-          <button class="buttonIconCurso" *ngIf="item.benficioSolicitado" (click)="saveIndex(6)" [routerLink]="'/AulaVirtual/MisCursos/'+item.idMatriculaCabecera"
+          <button class="buttonIconCurso" *ngIf="item.benficioSolicitado" (click)="EventoInteraccion('Mis Beneficios',item.programaGeneral);saveIndex(6)" [routerLink]="'/AulaVirtual/MisCursos/'+item.idMatriculaCabecera"
          mat-icon-button
             matTooltip="Mis Beneficios"
             matTooltipClass="tootipMatriculas">
@@ -110,7 +110,7 @@
       Title: itemP.nombre,ImgAlt: '',Tipo:itemP.tipoModalidad, Url: '/AulaVirtual/MisCursosPrueba/'+itemP.idRegistroPrueba,Valido:itemP.valido}">
 
         <ng-container linkIcons>
-          <button class="buttonIconCurso"  (click)="saveindexPrueba(0,'/AulaVirtual/MisCursosPrueba/'+itemP.idRegistroPrueba,itemP.valido)"
+          <button class="buttonIconCurso"  (click)="EventoInteraccion('Indicaciones',itemP.nombre);saveindexPrueba(0,'/AulaVirtual/MisCursosPrueba/'+itemP.idRegistroPrueba,itemP.valido)"
          mat-icon-button
             matTooltip="Indicaciones"
             matTooltipClass="tootipMatriculas">
@@ -121,7 +121,7 @@
             <!-- <img class="iconsCardMatriculas" src="../../../assets/icons/indicaciones-naranja.svg" alt=""> -->
           </button>
 
-          <button class="buttonIconCurso"  (click)="saveindexPrueba(1,'/AulaVirtual/MisCursosPrueba/'+itemP.idRegistroPrueba,itemP.valido)"
+          <button class="buttonIconCurso"  (click)="EventoInteraccion('Módulos',itemP.nombre);saveindexPrueba(1,'/AulaVirtual/MisCursosPrueba/'+itemP.idRegistroPrueba,itemP.valido)"
          mat-icon-button
             matTooltip="Módulos"
             matTooltipClass="tootipMatriculas">

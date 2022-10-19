@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angu
 import { Subject, takeUntil } from 'rxjs';
 import { AvatarService } from 'src/app/Core/Shared/Services/Avatar/avatar.service';
 import { ForoCursoService } from 'src/app/Core/Shared/Services/ForoCurso/foro-curso.service';
+import { HelperService } from 'src/app/Core/Shared/Services/helper.service';
 
 @Component({
   selector: 'app-modulo-foro-contenido-prueba',
@@ -13,7 +14,8 @@ export class ModuloForoContenidoPruebaComponent implements OnInit,OnDestroy {
 
   constructor(
     private _ForoCursoService:ForoCursoService,
-    private _AvatarService:AvatarService
+    private _AvatarService:AvatarService,
+    private _HelperService:HelperService
   ) {}
   ngOnDestroy(): void {
     this.signal$.next(true)
@@ -54,5 +56,8 @@ export class ModuloForoContenidoPruebaComponent implements OnInit,OnDestroy {
   }
   VolverAtras(){
     this.volver.emit()
+  }
+  EventoInteraccionButton(nombre:string){
+    this._HelperService.enviarMsjAcciones({Tag:"Button",Nombre:nombre})
   }
 }

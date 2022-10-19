@@ -192,6 +192,10 @@ export class CursoComponent implements OnInit,OnDestroy {
       }
     }
   }
+  InterraccionTab(nombre:string){
+
+    this._HelperService.enviarMsjAcciones({Tag:'Tab',Nombre:nombre})
+  }
   actual(e: any) {
     console.log(e);
   }
@@ -275,5 +279,8 @@ export class CursoComponent implements OnInit,OnDestroy {
           });
         },
       });
+  }
+  EventoInteraccionButton(nombre:string){
+    this._HelperService.enviarMsjAcciones({Tag:"Button",Nombre:nombre,Seccion:'Indicaciones'})
   }
 }

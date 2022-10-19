@@ -7,6 +7,7 @@ import { Subject, takeUntil, timer } from 'rxjs';
 import { DatoObservableDTO } from 'src/app/Core/Models/DatoObservableDTO';
 import { formulario } from 'src/app/Core/Models/Formulario';
 import { login, loginSendDTO } from 'src/app/Core/Models/login';
+import { AccountService } from 'src/app/Core/Shared/Services/Account/account.service';
 import { AspNetUserService } from 'src/app/Core/Shared/Services/AspNetUser/asp-net-user.service';
 import { FormaPagoService } from 'src/app/Core/Shared/Services/FormaPago/forma-pago.service';
 import { HelperService } from 'src/app/Core/Shared/Services/helper.service';
@@ -27,8 +28,8 @@ export class LoginComponent implements OnInit,OnDestroy {
     private _HelperService: HelperService,
     private _FormaPagoService:FormaPagoService,
     private title:Title,
-    private meta:Meta
-
+    private meta:Meta,
+    private _AccountService:AccountService
     ) { }
   formVal:boolean=false;
   statuscharge=false;
@@ -125,14 +126,32 @@ export class LoginComponent implements OnInit,OnDestroy {
             this._SessionStorageService.SessionDeleteValue('redirect');
           }
           if(normal){
-            if(x.idProveedor==0){
-              this.router.navigate(['/AulaVirtual/MisCursos']);
-            }else{
-              if(x.cursos==0){
-                this.router.navigate(['/AulaVirtual/Docencia']);
-              }else{
+            var ap=this._SessionStorageService.SessionGetValueSesionStorage('accesoPrueba');
+            if(ap==''){
+              if(x.idProveedor==0){
                 this.router.navigate(['/AulaVirtual/MisCursos']);
+              }else{
+                if(x.cursos==0){
+                  this.router.navigate(['/AulaVirtual/Docencia']);
+                }else{
+                  this.router.navigate(['/AulaVirtual/MisCursos']);
+                }
               }
+            }else{
+              this._AccountService.RegistroCursoAulaVirtualNueva(parseInt(ap)).pipe(takeUntil(this.signal$)).subscribe({
+                next:x=>{
+                  this._SessionStorageService.SessionDeleteValueSesionStorage('accesoPrueba')
+                  if(x.idProveedor==0){
+                    this.router.navigate(['/AulaVirtual/MisCursos']);
+                  }else{
+                    if(x.cursos==0){
+                      this.router.navigate(['/AulaVirtual/Docencia']);
+                    }else{
+                      this.router.navigate(['/AulaVirtual/MisCursos']);
+                    }
+                  }
+                },
+              })
             }
           }
 

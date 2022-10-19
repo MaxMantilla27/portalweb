@@ -23,7 +23,7 @@
 
     <div style="padding: 10px 25px;">
       <ng-container *ngIf="combosPrevios!=undefined" style="margin-top: 10px;">
-        <app-formulario style="margin-top: 20px" [model]="FormularioLandingPage" [InputsDisable]="statuscharge"
+        <app-formulario [Interaccion]="'Publicidad-'+data.IdFormulario"  style="margin-top: 20px" [model]="FormularioLandingPage" [InputsDisable]="statuscharge"
           (OnValid)="formVal=$event" [fiels]="fileds" [Tipo]="1" (OnSubmit)="EnviarFormulario($event)"  (OnSelect)="SelectChage($event)"  >
 
           <ng-container contenido>
@@ -35,14 +35,14 @@
             </div>
             <div class="col-12 col-md-12 col-lg-12">
               <app-default-button [confs]="{color:'primary',titulo:'Solicitar Información'}" [style]="'width: 100%;margin-top:10px'"
-              [disabled]="!formVal"  ></app-default-button>
+              ></app-default-button>
             </div>
 
           </ng-container>
         </app-formulario>
         </ng-container>
         <ng-container *ngIf="combosPrevios==undefined" style="margin-top: 10px;">
-        <app-formulario style="margin-top: 20px" [model]="FormularioLandingPage" [InputsDisable]="statuscharge"
+        <app-formulario [Interaccion]="'Publicidad-'+data.IdFormulario"  style="margin-top: 20px" [model]="FormularioLandingPage" [InputsDisable]="statuscharge"
           (OnValid)="formVal=$event" [fiels]="fileds" [Tipo]="1" (OnSubmit)="EnviarFormulario($event)"  (OnSelect)="SelectChage($event)"  >
 
           <ng-container contenido>
@@ -54,7 +54,7 @@
             </div>
             <div class="col-12 col-md-12 col-lg-12">
               <app-default-button [confs]="{color:'primary',titulo:'Solicitar Información'}" [style]="'width: 100%;margin-top:10px'"
-              [disabled]="!formVal"  ></app-default-button>
+               ></app-default-button>
             </div>
           </ng-container>
         </app-formulario>

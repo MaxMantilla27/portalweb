@@ -52,7 +52,10 @@
           <mat-tab >
             <ng-template mat-tab-label class="tabSubcontent">
               <div class="contentHeaderM subContent">
-                <div class="titleMatr">Preguntas interactivas</div>
+                <div class="iconMat"><i class="material-icons">quiz</i></div>
+                <ng-container *ngIf="!hide">
+                  <div class="titleMatr">Preguntas interactivas</div>
+                </ng-container>
               </div>
             </ng-template>
             <div class="pad-resp">
@@ -65,7 +68,10 @@
           <mat-tab >
             <ng-template mat-tab-label>
               <div class="contentHeaderM subContent">
-                <div class="titleMatr">Crucigramas</div>
+                <div class="iconMat"><i class="material-icons">games</i></div>
+                <ng-container *ngIf="!hide">
+                  <div class="titleMatr">Crucigramas</div>
+                </ng-container>
               </div>
             </ng-template>
             <div class="pad-resp">

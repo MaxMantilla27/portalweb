@@ -2,9 +2,12 @@
 import { DatePipe, isPlatformBrowser } from '@angular/common';
 import { Component , HostListener, Inject, OnDestroy, OnInit, PLATFORM_ID} from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
+import { json } from 'express';
 import { filter, Subject, takeUntil } from 'rxjs';
+import { InteraccionFormularioCampoDTO } from '../Core/Models/Interacciones';
 import { HelperService } from '../Core/Shared/Services/helper.service';
 import { InteraccionService } from '../Core/Shared/Services/Interaccion/interaccion.service';
+import { SessionStorageService } from '../Core/Shared/Services/session-storage.service';
 declare const fbq:any;
 
 @Component({
@@ -23,7 +26,8 @@ export class PublicComponent implements OnInit ,OnDestroy{
     @Inject(PLATFORM_ID) platformId: Object,
     private router :Router,
     private _InteraccionService:InteraccionService,
-    private _HelperService:HelperService
+    private _HelperService:HelperService,
+    private _SessionStorageService:SessionStorageService
   ) {
 
     this.isBrowser = isPlatformBrowser(platformId);
@@ -40,18 +44,36 @@ export class PublicComponent implements OnInit ,OnDestroy{
     this.signal$.next(true);
     this.signal$.complete();
     clearInterval(this.interval);
+    clearInterval(this.intervalInicio);
   }
   public rutaAnterior:any=null
   public idInteracionPortal=0
   public idInteraccionPortalPagina=0
   public interval:any
+  public intervalInicio:any
+  public jsonForm:InteraccionFormularioCampoDTO={
+    Acciones:[],
+    AccionesJson:{},
+    IdCategoriaOrigen:null,
+    IdConjuntoAnuncio:null,
+    IdInteraccionPortalPaginaV2:0,
+    IdTipoInteraccionPortalFormulario:0,
+    IdInteraccionPortalV2:0,
+    Nombre:''
+  }
   ngOnInit() {
     var datePipe = new DatePipe('en-US');
     if(this.isBrowser){
       fbq('track', 'PageView');
+      this.intervalInicio= setInterval(()=>{
+        var usuarioWeb=this._SessionStorageService.SessionGetValue('usuarioWeb');
+        if(usuarioWeb!='' && usuarioWeb!=null && usuarioWeb.length>0){
+          this.InsertarInteraccionPortal(this.rutaAnterior)
+          clearInterval(this.intervalInicio);
+        }
+      },100);
 
       this.InsertarInteraccionPortalDetalle(null)
-      this.InsertarInteraccionPortal(this.rutaAnterior)
       this.rutaAnterior=window.location.href
       this.router.events.pipe(filter((event): event is NavigationEnd => event instanceof NavigationEnd),takeUntil(this.signal$)).subscribe((val) => {
         // see also
@@ -72,6 +94,23 @@ export class PublicComponent implements OnInit ,OnDestroy{
               acciones: JSON.stringify(x)
             }
             this.InsertarInteraccionPortalDetalle(object)
+          }
+        }
+      })
+      this._HelperService.recibirMsjForm().pipe(takeUntil(this.signal$)).subscribe({
+        next:x=>{
+          console.log(x)
+          if(this.idInteraccionPortalPagina>0){
+            this.jsonForm=x
+            this.jsonForm.IdInteraccionPortalV2= this.idInteracionPortal;
+            this.jsonForm.IdInteraccionPortalPaginaV2= this.idInteraccionPortalPagina;
+            if(this.jsonForm.IdCategoriaOrigen=='')this.jsonForm.IdCategoriaOrigen=0;
+            if(this.jsonForm.IdConjuntoAnuncio=='')this.jsonForm.IdConjuntoAnuncio=0;
+            this.jsonForm.Acciones=[]
+            this.jsonForm.AccionesJson.forEach((js:any) => {
+              this.jsonForm.Acciones.push(JSON.stringify(js))
+            });
+            this.InsertarInteraccionPortalFormulario()
           }
         }
       })
@@ -113,9 +152,18 @@ export class PublicComponent implements OnInit ,OnDestroy{
       }
     })
   }
+  InsertarInteraccionPortalFormulario(){
+    this._InteraccionService.InsertarInteraccionPortalFormulario(this.jsonForm).pipe(takeUntil(this.signal$)).subscribe({
+      next:x=>{
+      }
+    })
+  }
   ActualizarInteraccionPortal(){
     this._InteraccionService.ActualizarInteraccionPortal(this.idInteraccionPortalPagina).pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
+      },
+      error:e=>{
+        console.log(e)
       }
     })
   }

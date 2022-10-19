@@ -1,5 +1,6 @@
 import { Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges, ViewEncapsulation } from '@angular/core';
 import { Subject, takeUntil } from 'rxjs';
+import { HelperService } from 'src/app/Core/Shared/Services/helper.service';
 import { SilaboService } from 'src/app/Core/Shared/Services/Silabo/silabo.service';
 
 @Component({
@@ -11,7 +12,10 @@ import { SilaboService } from 'src/app/Core/Shared/Services/Silabo/silabo.servic
 export class ModuloSilaboComponent implements OnInit,OnChanges,OnDestroy {
   private signal$ = new Subject();
 
-  constructor(private _SilaboService:SilaboService) { }
+  constructor(
+    private _SilaboService:SilaboService,
+    private _HelperService:HelperService
+  ) { }
   ngOnDestroy(): void {
     this.signal$.next(true)
     this.signal$.complete()
@@ -29,6 +33,9 @@ export class ModuloSilaboComponent implements OnInit,OnChanges,OnDestroy {
       this.ObtenerSilaboCurso()
     }
     console.log(this.Estructura)
+  }
+  EventoInteraccionAccordion(nombre:string,estado:string){
+    this._HelperService.enviarMsjAcciones({Tag:'Accordion',Nombre:nombre,Estado:estado,Seccion:'silabo'})
   }
   ObtenerSilaboCurso(){
     this._SilaboService.ObtenerSilaboCurso(this.IdPgeneral).pipe(takeUntil(this.signal$)).subscribe({

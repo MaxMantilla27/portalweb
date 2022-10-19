@@ -276,11 +276,17 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
   }
 
   RegistrarProgramaPrueba(){
-    this._AccountService.RegistroCursoAulaVirtualNueva(this.idBusqueda).pipe(takeUntil(this.signal$)).subscribe({
-      next:x=>{
-        this._router.navigate(['/AulaVirtual/MisCursos']);
-      },
-    })
+    var token=this._SessionStorageService.validateTokken()
+    if(token){
+      this._AccountService.RegistroCursoAulaVirtualNueva(this.idBusqueda).pipe(takeUntil(this.signal$)).subscribe({
+        next:x=>{
+          this._router.navigate(['/AulaVirtual/MisCursos']);
+        },
+      })
+    }else{
+      this._SessionStorageService.SessionSetValueSesionStorage("accesoPrueba",this.idBusqueda.toString());
+      this._router.navigate(['/login']);
+    }
   }
 
   OpenModal(): void {
@@ -692,7 +698,7 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
                 var ps: CardProgramasDTO = {
                   Inversion: c.montoPagoDescripcion,
                   Content: c.descripcion,
-                  Url: '/' + urlArea + '/' + urlSubArea + '-' + c.idBusqueda,
+                  Url: c.direccion,
                   Img:
                     'https://img.bsginstitute.com/repositorioweb/img/programas/' +
                     c.imagen,
@@ -934,5 +940,8 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
     if(event.source!='timer'){
       this._HelperServiceP.enviarMsjAcciones({Tag:'Carousel',Nombre:nombre,Accion:event.source})
     }
+  }
+  EventoInteraccionLinck(nombre:string,tipo:string){
+    this._HelperServiceP.enviarMsjAcciones({Tag:'Link',Tipo:tipo,Nombre:nombre,Programa:this.cabecera.tituloHtml})
   }
 }

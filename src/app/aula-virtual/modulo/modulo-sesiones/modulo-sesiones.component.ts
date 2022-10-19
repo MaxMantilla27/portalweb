@@ -9,6 +9,7 @@ import {
 import { ActivatedRoute, Router } from '@angular/router';
 import { ParametrosEstructuraEspecificaDTO } from 'src/app/Core/Models/EstructuraEspecificaDTO';
 import { AlumnosTest } from 'src/app/Core/Shared/AlumnosTest';
+import { HelperService } from 'src/app/Core/Shared/Services/helper.service';
 import { SnackBarServiceService } from 'src/app/Core/Shared/Services/SnackBarService/snack-bar-service.service';
 
 @Component({
@@ -22,7 +23,8 @@ export class ModuloSesionesComponent implements OnInit, OnChanges {
     private _Router:Router,
     private _SnackBarServiceService:SnackBarServiceService,
     private r:ActivatedRoute,
-    private _AlumnosTest:AlumnosTest
+    private _AlumnosTest:AlumnosTest,
+    private _HelperService:HelperService
   ) {}
   ngOnChanges(changes: SimpleChanges): void {
     console.log(this.estructuraCapitulo)
@@ -264,7 +266,7 @@ export class ModuloSesionesComponent implements OnInit, OnChanges {
               t.habilitado=true;
             }
             if(tar>0){
-              if(Math.ceil(c.registroEstructuraCursoTarea[tar-1].porcentajeVideoVisualizado)>=98){
+              if(c.registroEstructuraCursoTarea[tar-1].tareasEnviadas==true){
                 t.habilitado=true;
               }
             }else{
@@ -324,5 +326,8 @@ export class ModuloSesionesComponent implements OnInit, OnChanges {
     }else{
       this._SnackBarServiceService.openSnackBar("Debes completar las actividades anteriores primero",'x',10,"snackbarCrucigramaerror");
     }
+  }
+  EventoInteraccion(nombre:string){
+    this._HelperService.enviarMsjAcciones({Tag:'Link',Nombre:nombre,Programa:this.Capitulo})
   }
 }

@@ -10,7 +10,7 @@
         </div>
       </div>
       <div class="col-12 col-md-4 col-lg-3" style="display: flex;justify-content: flex-end;padding: 0px;">
-        <app-default-button [confs]="{color:'primary',titulo:'Ingresar'}" [disabled]="item.params==undefined"
+        <app-default-button (ButtoclClick)="EventoInteraccionButton('Ingresar')" [confs]="{color:'primary',titulo:'Ingresar'}" [disabled]="item.params==undefined"
           [ruta]="'/AulaVirtual/MisCursos/'+idMatricula+'/'+item.idPEspecificoHijo"
           [style]="'padding:0px 20px;margin:0px'">
         </app-default-button>
@@ -106,7 +106,7 @@
     </div>
 
     <div class="col-12 col-md-4 col-lg-3" style="display: flex;justify-content: flex-end;">
-      <app-default-button [confs]="{color:'primary',titulo:'Ingresar'}" [disabled]="item.params==undefined"
+      <app-default-button (ButtoclClick)="EventoInteraccionButton('Ingresar')" [confs]="{color:'primary',titulo:'Ingresar'}" [disabled]="item.params==undefined"
         (click)="IrCurso(idMatricula,item.idPEspecificoHijo,item.habilitado==true?true:false)"
         [style]="'padding:0px 20px'">
       </app-default-button>

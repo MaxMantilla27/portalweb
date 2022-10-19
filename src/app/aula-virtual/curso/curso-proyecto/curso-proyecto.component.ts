@@ -174,4 +174,10 @@ export class CursoProyectoComponent implements OnInit,OnChanges,OnDestroy {
       this._SnackBarServiceService.openSnackBar("Ningún archivo seleccionado.",'x',15,"snackbarCrucigramaerror");
     }
   }
+  EventoInteraccionButton(nombre:string){
+    this._HelperService.enviarMsjAcciones({Tag:"Button",Nombre:nombre,Seccion:'Proyecto'})
+  }
+  EventoInteraccionAccordionCertificado(nombre:string,estado:string){
+    this._HelperService.enviarMsjAcciones({Tag:'Accordion',Nombre:nombre,Estado:estado,Seccion:'Proyecto'})
+  }
 }

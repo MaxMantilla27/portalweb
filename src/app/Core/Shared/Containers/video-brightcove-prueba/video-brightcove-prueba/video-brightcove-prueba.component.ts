@@ -108,7 +108,13 @@ export class VideoBrightcovePruebaComponent implements OnInit,OnDestroy {
       if( this.videoData.objetoConfigurado.idVideoBrightcove!='' && this.videoData.objetoConfigurado.idVideoBrightcove!=null){
         this.playerData.videoId=this.videoData.objetoConfigurado.idVideoBrightcove
       }
-      this.tiempovideoinicio=this.videoData.tiempoVisualizado
+      var porcentage=(this.videoData.tiempoVisualizado*100)/this.videoData.tiempoTotalVideo
+      console.log(porcentage)
+      if(Math.ceil(porcentage)>98){
+        this.tiempovideoinicio=0
+      }else{
+        this.tiempovideoinicio=this.videoData.tiempoVisualizado
+      }
       this.tiempovideoinicioInicial=Math.ceil(this.videoData.tiempoVisualizado)
       this.tiempovideo=this.videoData.tiempoTotalVideo
       this.tiempoactualvideo=this.videoData.tiempoVisualizado
@@ -365,5 +371,8 @@ export class VideoBrightcovePruebaComponent implements OnInit,OnDestroy {
       })
     }
 
+  }
+  EventoInteraccion(){
+    this._HelperService.enviarMsjAcciones({Tag:'Video',Programa:this.json.NombrePrograma,Seccion:'Sesiones'})
   }
 }

@@ -36,7 +36,7 @@
         <div style="display: flex;align-items: center;justify-content: flex-start;">
           <img [src]="item.urlAvatar" alt="" style="width: 40px; height: 40px;    margin-right: 10px;">
           <div>
-            <div class="titleForo" (click)="ContenidoForo=!ContenidoForo && IdForo=item.id" >{{item.titulo}}></div>
+            <div class="titleForo"  (click)="EventoInteraccionButton(item.titulo);ContenidoForo=!ContenidoForo && IdForo=item.id" >{{item.titulo}}></div>
             <div class="subTitleForo">{{item.nombres}}</div>
           </div>
         </div>
@@ -48,13 +48,13 @@
     </ng-container>
     </div>
     <div  class="paginatorForo">
-      <i class="material-icons paginaForo" (click)="minusPage()" >keyboard_arrow_left</i>
+      <i class="material-icons paginaForo" (click)="EventoInteraccionButton('<');minusPage()" >keyboard_arrow_left</i>
       <ng-container *ngFor="let pag of paginacion">
-        <div (click)="page(pag)" class="paginaForo"   [ngClass]="{'pagActive': pag === pagina}" *ngIf="paginaCeil>=(pag/5) && (paginaCeil-1)<=(pag/5)">
+        <div (click)="EventoInteraccionButton(pag+'');page(pag)" class="paginaForo"   [ngClass]="{'pagActive': pag === pagina}" *ngIf="paginaCeil>=(pag/5) && (paginaCeil-1)<=(pag/5)">
           {{pag}}
         </div>
       </ng-container>
-      <i class="material-icons paginaForo" (click)="plusPage()">keyboard_arrow_right</i>
+      <i class="material-icons paginaForo" (click)="EventoInteraccionButton('>');plusPage()">keyboard_arrow_right</i>
     </div>
   </ng-container>
 
@@ -66,7 +66,8 @@
         <div>Foro</div>
       </div>
       <div class="col-12 col-md-3 col-lg-2">
-        <app-default-button  (ButtoclClick)="NuevoForo=!NuevoForo && ContenidoForo=!ContenidoForo" [confs]="{color:'primary',titulo:'Volver'}"  [style]="'width: 100%;'"
+        <app-default-button  (ButtoclClick)="EventoInteraccionButton('Volver');(NuevoForo=!NuevoForo && ContenidoForo=!ContenidoForo)"
+           [confs]="{color:'primary',titulo:'Volver'}"  [style]="'width: 100%;'"
         [style]="'margin-bottom: 0px !important;padding:0px 20px'" [icon]="''">
       </app-default-button>
       </div>

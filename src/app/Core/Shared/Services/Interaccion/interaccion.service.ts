@@ -5,6 +5,7 @@ import { Observable, EMPTY } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { DatePipe, isPlatformBrowser, Location } from '@angular/common';
 import { SessionStorageService } from '../session-storage.service';
+import { InteraccionFormularioCampoDTO } from 'src/app/Core/Models/Interacciones';
 
 @Injectable({
   providedIn: 'root'
@@ -20,7 +21,7 @@ export class InteraccionService {
     this.isBrowser = isPlatformBrowser(platformId);
   }
   public InsertarInteraccionPortal(urlPrev:any,tipo:boolean):Observable<any>{
-    return EMPTY;
+    // return EMPTY;
     if(this.isBrowser){
       var urls={
         UrlAnterior:urlPrev==null?document.referrer:urlPrev,
@@ -33,7 +34,7 @@ export class InteraccionService {
     }
   }
   public ActualizarInteraccionPortal(Id:number):Observable<any>{
-    return EMPTY;
+    // return EMPTY;
     if(this.isBrowser){
       return this.http.get<any>(this.urlBase+'/ActualizarInteraccionPortal?Id='+Id);
     }else{
@@ -41,7 +42,7 @@ export class InteraccionService {
     }
   }
   public InsertarInteraccionPortalDetalle(accion:any):Observable<any>{
-    return EMPTY;
+    // return EMPTY;
     if(this.isBrowser){
       var json=this._SessionStorageService.SessionGetValue("Acciones");
       if(accion==null){
@@ -63,7 +64,7 @@ export class InteraccionService {
         }
         jsonLocal.push(accion)
         console.log(jsonLocal)
-        if(jsonLocal.length>=10){
+        if(jsonLocal.length>=50){
           this._SessionStorageService.SessionDeleteValue("Acciones");
           return this.http.post<any>(this.urlBase+'/InsertarInteraccionPortalDetalle',jsonLocal);
         }else{
@@ -71,6 +72,14 @@ export class InteraccionService {
           return EMPTY;
         }
       }
+    }else{
+      return EMPTY;
+    }
+  }
+  public InsertarInteraccionPortalFormulario(json:InteraccionFormularioCampoDTO):Observable<any>{
+    // return EMPTY;
+    if(this.isBrowser){
+      return this.http.post<any>(this.urlBase+'/InsertarInteraccionPortalFormulario',json);
     }else{
       return EMPTY;
     }

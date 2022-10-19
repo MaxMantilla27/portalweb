@@ -11,6 +11,7 @@ export class VistaGenericaProgramaComponent implements OnInit {
   @Input() listado: any = []
   @Input() confs: any = {}
   @Input() migaPan: any = []
+  @Input() Interaccion=''
   constructor() { }
 
   ngOnInit(): void {

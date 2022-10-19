@@ -62,4 +62,7 @@ export class ModuloRecursoComponent implements OnInit,OnChanges,OnDestroy {
       }
     })
   }
+  EventoInteraccion(nombre:string){
+    this._HelperService.enviarMsjAcciones({Tag:'Link',Nombre:nombre,Programa:this.Capitulo,Seccion:'Recursos'})
+  }
 }

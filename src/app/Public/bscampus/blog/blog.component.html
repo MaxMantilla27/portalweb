@@ -38,7 +38,7 @@
           Registra tus datos para que un asesor especializado pueda ayudarte en todo lo que requieras
         </div>
         <ng-container *ngIf="combosPrevios!=undefined">
-          <app-formulario [model]="formularioContacto" [CleanOnSubmit]="cleanSub" [InputsDisable]="statuscharge" (OnSubmit)="SetContacto($event)"
+          <app-formulario  [Interaccion]="'blog-'+idWeb" [model]="formularioContacto" [CleanOnSubmit]="cleanSub" [InputsDisable]="statuscharge" (OnSubmit)="SetContacto($event)"
           (OnValid)="formVal=$event" [fiels]="fileds" (OnSelect)="SelectChage($event)">
 
           <ng-container contenido>
@@ -54,7 +54,7 @@
         </app-formulario>
         </ng-container>
         <ng-container *ngIf="combosPrevios==undefined">
-          <app-formulario [model]="formularioContacto" [CleanOnSubmit]="cleanSub" [InputsDisable]="statuscharge" (OnSubmit)="SetContacto($event)"
+          <app-formulario [Interaccion]="'blog-'+idWeb" [model]="formularioContacto" [CleanOnSubmit]="cleanSub" [InputsDisable]="statuscharge" (OnSubmit)="SetContacto($event)"
           (OnValid)="formVal=$event" [fiels]="fileds" (OnSelect)="SelectChage($event)">
 
           <ng-container contenido>
@@ -77,7 +77,7 @@
     <div class="col-12 col-md-12 col-lg-12" style="margin-top: 40px;">
       <div style="display: flex; align-items: center; justify-content: flex-start;flex-wrap: wrap;">
         <div *ngFor="let item of tags" style="margin-right: 20px;">
-          <app-tag-button [tag]="item"></app-tag-button>
+          <app-tag-button [tag]="item"  [Interaccion]="'Blog'"></app-tag-button>
         </div>
       </div>
     </div>

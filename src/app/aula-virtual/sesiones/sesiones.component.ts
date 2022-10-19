@@ -810,12 +810,8 @@ export class SesionesComponent implements OnInit,OnDestroy,AfterViewInit {
             t.habilitado=true;
           }
           if (tar > 0) {
-            if (
-              Math.ceil(
-                c.registroEstructuraCursoTarea[tar - 1]
-                  .porcentajeVideoVisualizado
-              ) >= 98
-            ) {
+
+            if(c.registroEstructuraCursoTarea[tar-1].tareasEnviadas==true){
               t.habilitado = true;
             }
           } else {
