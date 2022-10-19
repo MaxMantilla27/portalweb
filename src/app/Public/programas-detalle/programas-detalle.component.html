@@ -144,7 +144,7 @@
       <div class="row"
         style="display: flex;justify-content: space-between;align-items: center;flex-wrap: wrap; margin-bottom: 20px;">
         <div class="col-12 col-md-8 col-lg-9 subtitulo" >Estructura Curricular</div>
-        <div class="col-12 col-md-4 col-lg-3">
+        <div *ngIf="ExisteVideo==true" class="col-12 col-md-4 col-lg-3">
           <app-default-button [confs]="{color:'primary',titulo:'Vista \n previa'}" [img]="'vista-previa.svg'"
             (ButtoclClick)="EventoInteraccionButton('Vista previa');OpenModal()"
             [style]="'display: flex;line-height: 20px;padding: 5px 10px;white-space: pre-wrap !important;width: 100%;'">

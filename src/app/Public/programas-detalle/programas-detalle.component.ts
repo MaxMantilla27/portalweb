@@ -222,6 +222,9 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
   public alumno='';
   public combosPrevios:any;
   public IdPespecificoPrograma=0;
+  public VistaPreviaPortal='';
+  public PrimerCurso='';
+  public ExisteVideo=false;
 
   ngOnInit(): void {
 
@@ -291,8 +294,8 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
 
   OpenModal(): void {
     const dialogRef = this.dialog.open(VistaPreviaComponent, {
-      width: '500px',
-      data: { url: this.vistaPrevia },
+      width: '561px',
+      data: { url: this.VistaPreviaPortal },
       panelClass: 'custom-dialog-container',
     });
 
@@ -491,6 +494,7 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
   EstructuraProgramaPortal() {
     this._ProgramaService.EstructuraProgramaPortal(this.idBusqueda).pipe(takeUntil(this.signal$)).subscribe({
       next: (x) => {
+        this.PrimerCurso=x.estructuraCurso[0].titulo
         this.estructuraPrograma = x.estructuraCurso;
         this.estructuraPrograma.map((x) => {
           if (this.estructuraPrograma.length > 3) {
@@ -502,6 +506,8 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
         this.idPegeneral = x.idPGeneral;
         this.ObtenerSilaboCurso();
         this.ListProgramaRelacionado();
+        this.VistaPreviaProgramaPortal();
+
         //this.prerequisitos=x.listaPrerrequisitoDTO;
       },
     });
@@ -558,6 +564,7 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
   ObtenerSilaboCurso() {
     this._SilaboService.ObtenerSilaboCurso(this.idPegeneral).pipe(takeUntil(this.signal$)).subscribe({
       next: (x) => {
+        console.log(x)
         var piePag = x.listaSeccionesContenidosDocumento.find(
           (x: any) => x.titulo == 'Beneficios'
         );
@@ -943,5 +950,41 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
   }
   EventoInteraccionLinck(nombre:string,tipo:string){
     this._HelperServiceP.enviarMsjAcciones({Tag:'Link',Tipo:tipo,Nombre:nombre,Programa:this.cabecera.tituloHtml})
+  }
+  VistaPreviaProgramaPortal(){
+    this.VistaPreviaPortal='https://players.brightcove.net/6267108632001/default_default/index.html?videoId=';
+    console.log(this.PrimerCurso)
+    if(this.PrimerCurso.includes('Curso')){
+      this._ProgramaService.VistaPreviaProgramaPadrePortal(this.PrimerCurso).pipe(takeUntil(this.signal$)).subscribe({
+        next:x=>{
+          console.log(x)
+          if(x!=undefined || x!=null){
+            if(x.videoIdBrightcove==undefined || x.videoIdBrightcove ==null ||x.videoIdBrightcove=='' ||x.videoIdBrightcove=='0'){
+              this.ExisteVideo=false;
+            }
+            else{
+              this.ExisteVideo=true;
+              this.VistaPreviaPortal=this.VistaPreviaPortal+x.videoIdBrightcove
+            }
+          }
+        },
+      })
+    }
+    else{
+      this._ProgramaService.VistaPreviaProgramaPortal(this.idBusqueda).pipe(takeUntil(this.signal$)).subscribe({
+        next:x=>{
+          console.log(x)
+          if(x!=undefined || x!=null){
+            if(x.videoIdBrightcove==undefined || x.videoIdBrightcove ==null ||x.videoIdBrightcove=='' ||x.videoIdBrightcove=='0'){
+              this.ExisteVideo=false;
+            }
+            else{
+              this.ExisteVideo=true;
+              this.VistaPreviaPortal=this.VistaPreviaPortal+x.videoIdBrightcove
+            }
+          }
+        },
+      })
+    }
   }
 }
