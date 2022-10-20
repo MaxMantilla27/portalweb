@@ -6,7 +6,7 @@
   <div>{{title}}</div>
 </div>
 <div *ngIf="videoUrl!=''">
-  <video controls>
+  <video controls (play)="EventoInteraccion()">
     <source [src]="videoUrl" type="video/mp4">
   </video>
 </div>

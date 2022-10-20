@@ -5,6 +5,7 @@ import {  Router } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
 import { CuentaService } from 'src/app/Core/Shared/Services/Cuenta/cuenta.service';
 import { DatosPerfilService } from 'src/app/Core/Shared/Services/DatosPerfil/datos-perfil.service';
+import { HelperService } from 'src/app/Core/Shared/Services/helper.service';
 import { SessionStorageService } from 'src/app/Core/Shared/Services/session-storage.service';
 import { VigenciaAccesoPruebaComponent } from './vigencia-acceso-prueba/vigencia-acceso-prueba/vigencia-acceso-prueba.component';
 
@@ -22,8 +23,8 @@ export class MisCursosComponent implements OnInit,OnDestroy {
     private _CuentaService: CuentaService,
     public dialog: MatDialog,
     private _Router:Router,
-    private title:Title
-
+    private title:Title,
+    private _HelperService:HelperService
   ) {}
   ngOnDestroy(): void {
     this.signal$.next(true)
@@ -55,26 +56,22 @@ export class MisCursosComponent implements OnInit,OnDestroy {
   GetDatosPerfilService() {
     this._DatosPerfilService.RegistroProgramaMatriculado().pipe(takeUntil(this.signal$)).subscribe({
       next: (x) => {
-        console.log(x);
         this.matriculas = x;
         this.matriculas.forEach(p=>{
           p.tipoModalidad=parseInt(p.tipoModalidad)
         })
-        console.log(this.matriculas);
       },
     });
   }
   ObtenerCursosPrueba(){
     this._CuentaService.ObtenerListaCursosPrueba().pipe(takeUntil(this.signal$)).subscribe({
       next: (x) => {
-        console.log(x);
         this.matriculasPrueba = x;
         if(this.matriculasPrueba!=null){
           this.matriculasPrueba.forEach(p=>{
             p.tipoModalidad=parseInt(p.tipoModalidad)
           })
         }
-        console.log(this.matriculas);
       }
     })
   }
@@ -90,11 +87,13 @@ export class MisCursosComponent implements OnInit,OnDestroy {
       });
 
       dialogRef.afterClosed().pipe(takeUntil(this.signal$)).subscribe((result) => {
-        console.log('The dialog was closed');
       });
     }else{
       this._SessionStorageService.SessionSetValue('cursoIndex',index.toString());
       this._Router.navigate([url])
     }
+  }
+  EventoInteraccion(nombre:string,programa:string){
+    this._HelperService.enviarMsjAcciones({Tag:'Link',Nombre:nombre,Programa:programa})
   }
 }

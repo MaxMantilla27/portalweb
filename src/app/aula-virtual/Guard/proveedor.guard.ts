@@ -16,7 +16,6 @@ export class ProveedorGuard implements CanActivate {
   canActivate(route: ActivatedRouteSnapshot,state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree
   {
     var idProveedor=this._SessionStorageService.SessionGetValue('IdProveedor')
-    console.log(idProveedor)
     if(idProveedor=='' || parseInt(idProveedor)==0 ){
       this.router.navigate(['/AulaVirtual/MisCursos']);
       return false;

@@ -91,4 +91,10 @@ export class BSCampusComponent implements OnInit,OnDestroy {
     });
 
   }
+  EventoInteraccionSelect(valor:string){
+    this._HelperService.enviarMsjAcciones({Tag:'Select',Nombre:'Área',Tipo:'Select',Valor:valor})
+  }
+  EventoInteraccionSelectClick(){
+    this._HelperService.enviarMsjAcciones({Tag:'Select',Nombre:'Áreas',Tipo:'Click'})
+  }
 }

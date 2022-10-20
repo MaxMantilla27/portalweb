@@ -7,10 +7,12 @@
     <div class="numberInput" [ngClass]="{'numberImputActive':idPEspecifico>0}">1</div>
   </div>
   <div class="col-10 col-md-10 col-lg-10 contentOrganico">
-    <mat-form-field appearance="outline" >
+    <mat-form-field appearance="outline" (click)="EventoInteraccionSelectClick('Selecciona la modalidad')">
       <mat-label> < Selecciona la modalidad ></mat-label>
       <mat-select  [(ngModel)]="idPEspecifico">
-        <mat-option *ngFor="let item of data.modalidad"  [value]="item.id">{{item.tipo}} - {{item.fechaInicioTexto}}</mat-option>
+        <mat-option
+        (click)="EventoInteraccionSelect('Selecciona la modalidad',item.tipo+' - '+item.fechaInicioTexto)" *ngFor="let item of data.modalidad"
+        [value]="item.id">{{item.tipo}} - {{item.fechaInicioTexto}}</mat-option>
       </mat-select>
     </mat-form-field>
   </div>
@@ -19,10 +21,10 @@
     <div class="numberInput" [ngClass]="{'numberImputActive':idFormaPago>-1}">2</div>
   </div>
   <div class="col-10 col-md-10 col-lg-10 contentOrganico">
-    <mat-form-field appearance="outline" >
+    <mat-form-field appearance="outline" (click)="EventoInteraccionSelectClick('Selecciona tu forma de pago')">
       <mat-label>< Selecciona tu forma de pago ></mat-label>
       <mat-select (selectionChange)="changeForma()" [(ngModel)]="idFormaPago">
-        <mat-option *ngFor="let item of formapago;let i=index"  [value]="i">
+        <mat-option *ngFor="let item of formapago;let i=index"  [value]="i" >
 
           <ng-container *ngIf="item.paquete==1">
             Versión Basica,
@@ -51,7 +53,7 @@
     <div class="numberInput" [ngClass]="{'numberImputActive':medioCodigo!=''}">3</div>
   </div>
   <div class="col-10 col-md-10 col-lg-10 contentOrganico">
-    <mat-form-field appearance="outline" >
+    <mat-form-field appearance="outline" (click)="EventoInteraccionSelectClick('Selecciona tu metodo de pago')">
       <mat-label> < Selecciona tu metodo de pago > </mat-label>
       <mat-select (selectionChange)="change()" [(ngModel)]="medioCodigo">
         <mat-select-trigger>
@@ -68,6 +70,6 @@
     </mat-form-field>
   </div>
   <div class="col-12" style="display: flex;justify-content: center;" *ngIf="medioCodigo!='' && idPEspecifico>0 && idFormaPago>-1"  >
-    <app-default-button  [confs]="{color:'primary',titulo:'Ir a pagar'}" [style]="'padding: 0px 40px;'" (ButtoclClick)="Pagar()"></app-default-button>
+    <app-default-button  [confs]="{color:'primary',titulo:'Ir a pagar'}" [style]="'padding: 0px 40px;'" (ButtoclClick)="EventoInteraccion();Pagar()"></app-default-button>
   </div>
 </div>

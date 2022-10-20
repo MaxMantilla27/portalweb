@@ -7,6 +7,7 @@ import { RegistroPreProcesoPagoDTO } from 'src/app/Core/Models/ProcesoPagoDTO';
 import { ChargeComponent } from 'src/app/Core/Shared/Containers/Dialog/charge/charge.component';
 import { DatosPerfilService } from 'src/app/Core/Shared/Services/DatosPerfil/datos-perfil.service';
 import { FormaPagoService } from 'src/app/Core/Shared/Services/FormaPago/forma-pago.service';
+import { HelperService } from 'src/app/Core/Shared/Services/helper.service';
 import { SessionStorageService } from 'src/app/Core/Shared/Services/session-storage.service';
 
 @Component({
@@ -22,7 +23,8 @@ export class CursoTramitesComponent implements OnInit,OnDestroy {
     public dialog: MatDialog,
     public _FormaPagoService:FormaPagoService,
     private _router:Router,
-    private _SessionStorageService:SessionStorageService
+    private _SessionStorageService:SessionStorageService,
+    private _HelperService:HelperService
   ) { }
   ngOnDestroy(): void {
     this.signal$.next(true);
@@ -110,6 +112,7 @@ export class CursoTramitesComponent implements OnInit,OnDestroy {
     dialogRef.afterClosed().pipe(takeUntil(this.signal$)).subscribe((result) => {
       console.log(result);
       if(result!=undefined){
+        this.EventoInteraccionButton('Ir a pagar')
         this.PreProcesoPagoTramiteAlumno(result);
       }
     });
@@ -175,5 +178,11 @@ export class CursoTramitesComponent implements OnInit,OnDestroy {
         dialogRef.close();
       }
     })
+  }
+  EventoInteraccionCheckBox(nombre:string){
+    this._HelperService.enviarMsjAcciones({Tag:'Checkbox',Nombre:nombre,Seccion:'Tramites'})
+  }
+  EventoInteraccionButton(nombre:string){
+    this._HelperService.enviarMsjAcciones({Tag:"Button",Nombre:nombre,Seccion:'Tramites'})
   }
 }

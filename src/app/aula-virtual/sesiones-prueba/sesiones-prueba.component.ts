@@ -27,7 +27,7 @@ export class SesionesPruebaComponent implements OnInit,OnDestroy {
   public migaPan = [
     {
       titulo: 'Mis Cursos',
-      urlWeb: '/AulaVirtual/MisCursosPrueba',
+      urlWeb: '/AulaVirtual/MisCursos',
     },
   ];
   public tabIndex = 0;
@@ -59,6 +59,7 @@ export class SesionesPruebaComponent implements OnInit,OnDestroy {
   public idcapitulo = 0;
   public idSesion = 0;
   public tipo = 0;
+  public tineSubsecion=false
   ngOnDestroy(): void {
     this.signal$.next(true)
     this.signal$.complete()
@@ -71,6 +72,7 @@ export class SesionesPruebaComponent implements OnInit,OnDestroy {
         this.idcapitulo = parseInt(x['IdCapitulo']);
         this.idSesion = parseInt(x['IdSesion']);
         this.tipo = parseInt(x['Tipo']);
+        console.log(this.tabIndex)
         console.log(this.idcapitulo)
         console.log(this.idSesion)
 
@@ -82,7 +84,7 @@ export class SesionesPruebaComponent implements OnInit,OnDestroy {
     this.migaPan = [
       {
         titulo: 'Mis Cursos',
-        urlWeb: '/AulaVirtual/MisCursosPrueba',
+        urlWeb: '/AulaVirtual/MisCursos',
       },
       {
         titulo: this.json.NombrePrograma,
@@ -112,8 +114,20 @@ export class SesionesPruebaComponent implements OnInit,OnDestroy {
           }
         }
         this._SessionStorageService.SetEstructura(this.estructuraCapitulo);
-        console.log(this.estructuraCapitulo)
-
+        this.tabIndex=this.idSesion
+        var sesionOrden=this.estructuraCapitulo[0].listaSesiones[this.tabIndex-1].ordenFila
+        var indexS=this.tabIndex-1
+        if(this.estructuraCapitulo.length>0 && this.estructuraCapitulo!=undefined){
+          if(this.estructuraCapitulo[0].listaSesiones!=undefined && this.estructuraCapitulo[0].listaSesiones.length>0){
+            if(this.estructuraCapitulo[0].listaSesiones[0].subSesion!=null && this.estructuraCapitulo[0].listaSesiones[0].subSesion!=''){
+              this.tineSubsecion=true
+              this.tabIndex+=1
+              indexS=this.tabIndex-2
+              sesionOrden=this.estructuraCapitulo[0].listaSesiones[this.tabIndex-2].ordenFila
+            }
+          }
+        }
+        this.changeTab(1,sesionOrden,0,indexS,-1)
       }
     })
   }
@@ -222,6 +236,14 @@ export class SesionesPruebaComponent implements OnInit,OnDestroy {
     });
     this.estructuraCapitulo[index].opened =
       !this.estructuraCapitulo[index].opened;
+  }
+  Opensesion(index:number){
+    if (this.estructuraCapitulo[index].openedSesion ==true ) {
+      this.estructuraCapitulo[index].openedSesion =false
+    }else{
+      this.estructuraCapitulo[index].openedSesion =true
+    }
+
   }
   OrdenarEstructura() {
     var sesion = '';

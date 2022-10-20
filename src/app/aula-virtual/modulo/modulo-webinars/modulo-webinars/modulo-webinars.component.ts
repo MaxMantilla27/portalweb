@@ -57,4 +57,7 @@ export class ModuloWebinarsComponent implements OnInit,OnDestroy {
       window.open(w.urlWebex);
     }
   }
+  EventoInteraccionButton(nombre:string){
+    this._HelperService.enviarMsjAcciones({Tag:"Button",Nombre:nombre,Seccion:'Webinars'})
+  }
 }

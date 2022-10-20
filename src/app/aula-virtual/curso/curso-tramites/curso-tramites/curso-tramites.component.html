@@ -31,7 +31,7 @@
           <tr>
             <td class="criterio" style="width: 200px">
               <div style="display: flex;justify-content:center">
-                <mat-checkbox (change)="cambiarEstadoPago(i)" [(ngModel)]="item.pagar" color="primary"
+                <mat-checkbox (change)="EventoInteraccionCheckBox(item.concepto);cambiarEstadoPago(i)" [(ngModel)]="item.pagar" color="primary"
                   class="PagarTramite" style="display:flex;align-items:center ;" (change)="item.pagar">
                 </mat-checkbox>
               </div>
@@ -123,7 +123,7 @@
       <div class="col-12 col-md-12 col-lg-12" style="margin-top:30px;display: flex;
       justify-content: center;">
         <app-default-button [confs]="{color:'primary',titulo:'Pagar'}"
-          [style]="'margin-top: 20px;width: 120px;'" (ButtoclClick)="Pagar()"></app-default-button>
+          [style]="'margin-top: 20px;width: 120px;'" (ButtoclClick)="EventoInteraccionButton('Pagar');Pagar()"></app-default-button>
       </div>
     </div>
   </div>

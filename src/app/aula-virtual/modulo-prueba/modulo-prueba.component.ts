@@ -28,8 +28,8 @@ export class ModuloPruebaComponent implements OnInit,OnDestroy {
   public hide=true
   public migaPan = [
     {
-      titulo: 'Mis Cursos prueba',
-      urlWeb: '/AulaVirtual/MisCursosPrueba',
+      titulo: 'Mis Cursos',
+      urlWeb: '/AulaVirtual/MisCursos',
     },
   ];
   public tabIndex = 0;

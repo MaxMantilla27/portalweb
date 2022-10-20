@@ -165,7 +165,19 @@ export class RegistrarseComponent implements OnInit,OnDestroy {
             this.DatoObservable.datoAvatar=true
             this.DatoObservable.datoContenido=true
             this._HelperService.enviarDatoCuenta(this.DatoObservable)
-            this.router.navigate(['/AulaVirtual/MisCursos']);
+
+            var ap=this._SessionStorageService.SessionGetValueSesionStorage('accesoPrueba');
+
+            if(ap==''){
+              this.router.navigate(['/AulaVirtual/MisCursos']);
+            }else{
+              this._AccountService.RegistroCursoAulaVirtualNueva(parseInt(ap)).pipe(takeUntil(this.signal$)).subscribe({
+                next:x=>{
+                  this._SessionStorageService.SessionDeleteValueSesionStorage('accesoPrueba')
+                  this.router.navigate(['/AulaVirtual/MisCursos']);
+                },
+              })
+            }
           }
         },
         error: (e) => {

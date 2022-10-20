@@ -80,7 +80,6 @@ export class ChatComponent implements OnInit,OnDestroy,OnChanges {
     //this.ObtenerIdAlumnoPorUsuario(undefined)
     this._HelperService.recibirCombosPerfil.pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
-        console.log(x)
         var listprogramas = [9990, 9991, 9992, 9993];
         this.idProgramageneral=listprogramas[Math.floor(Math.random() * listprogramas.length)]
         this.ObtenerDetalleChatPorIdInteraccionControlMensajeSoporte(x.datosAlumno.idAlumno)
@@ -173,7 +172,6 @@ export class ChatComponent implements OnInit,OnDestroy,OnChanges {
   ObtenerConfiguracionChat(){
     this._ChatEnLinea.ObtenerConfiguracionChat().pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
-        console.log(x)
         this.configuration=x
       }
     })
@@ -181,7 +179,6 @@ export class ChatComponent implements OnInit,OnDestroy,OnChanges {
   ObtenerIdAlumnoPorUsuario(IdFaseOportunidadPortal?:any){
     this._GlobalService.ObtenerIdAlumnoPorUsuario().pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
-        console.log(x)
 
         if(x!=null && x.idAlumno!=null && x.idAlumno>0){
 
@@ -197,7 +194,6 @@ export class ChatComponent implements OnInit,OnDestroy,OnChanges {
   ConectarSocket(IdFaseOportunidadPortal?:string){
     this.hubConnection.start()
       .then((x:any) =>{
-        console.log(this.hubConnection.state)
         if(this.hubConnection.state=='Connected'){
           this.GenerarLogVisitanteAulaVirtual()
         }
@@ -206,7 +202,7 @@ export class ChatComponent implements OnInit,OnDestroy,OnChanges {
           this.actualizarDatosAlumno(IdFaseOportunidadPortal);
         }
       })
-      .catch((err:any) =>console.log('Error while starting connection: ' + err));
+      .catch((err:any) =>{});
   }
 
   GenerarLogVisitanteAulaVirtual(){
@@ -221,7 +217,6 @@ export class ChatComponent implements OnInit,OnDestroy,OnChanges {
       idProgramaGenetalEstatico=this.idProgramageneral;
     }
     var cookiecontaco = this._SessionStorageService.SessionGetValue("usuarioWeb")
-    console.log(cookiecontaco)
     this.hubConnection.invoke(
       "GenerarLogVisitanteAulaVirtual",
       document.location.href, document.referrer, "Arequipa", "Arequipa", "Peru",
@@ -250,9 +245,6 @@ export class ChatComponent implements OnInit,OnDestroy,OnChanges {
   }
   crearChatOffline(){
     var idProgramaGenetalEstatico = parseInt(this._SessionStorageService.SessionGetValue("IdPGeneral"));
-    console.log(idProgramaGenetalEstatico)
-    console.log(this.idPais)
-    console.log(this.chatBox)
     this.hubConnection.invoke("crearChatOffline",this.chatBox,idProgramaGenetalEstatico,this.idPais);
   }
   enviarMensajeVisitanteSoporteArchivo(url:string,idarchivo:number|null,tipo:string){
@@ -265,7 +257,6 @@ export class ChatComponent implements OnInit,OnDestroy,OnChanges {
     this.charge=true
     this._ChatDetalleIntegraService.ObtenerDetalleChatPorIdInteraccionControlMensajeSoporte(idAlumno).pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
-        console.log(x);
         this.mensajesAnteriore=x
         if(this.mensajesAnteriore.length>0){
           this.mensajesAnteriore.forEach((m:any) => {
@@ -282,7 +273,6 @@ export class ChatComponent implements OnInit,OnDestroy,OnChanges {
   }
   configuracionSoporte(){
     this.hubConnection.on("configuracionSoporte",(NombreAsesor:any, estado:any, idPGeneral:any)=>{
-      console.log(NombreAsesor+'--'+estado+'--'+idPGeneral);
       if(estado==false){
         if(this.contadoraulavirtual<4){
           if (this.idProgramageneral == 9990) {
@@ -298,10 +288,8 @@ export class ChatComponent implements OnInit,OnDestroy,OnChanges {
             this.idProgramageneral = 9990;
           }
           this.contadoraulavirtual++
-          console.log(this.contadoraulavirtual)
           this.GenerarLogVisitanteAulaVirtual();
         }else{
-          console.log("ocultar chat");
           this.ChargeChat.emit(false)
         }
       }else{
@@ -315,7 +303,6 @@ export class ChatComponent implements OnInit,OnDestroy,OnChanges {
   }
   setChat(){
     this.hubConnection.on("setChat",(id:any, agentName:any, existing:any)=>{
-      console.log(id+'--'+agentName+'--'+existing);
       this.ChatID=id
       this._SessionStorageService.SessionSetValueSesionStorage(this.chatKey,id)
       if (existing) {
@@ -341,7 +328,6 @@ export class ChatComponent implements OnInit,OnDestroy,OnChanges {
   }
   onlineStatus(){
     this.hubConnection.on("onlineStatus",(data:any)=>{
-      console.log(data);
       if(data.status==true){
         if(data.nombreasesor===undefined){
           data.nombreasesor="";
@@ -357,8 +343,6 @@ export class ChatComponent implements OnInit,OnDestroy,OnChanges {
   }
   addMessageP(){
     this.hubConnection.on("addMessageP",(from:any, msg:any, flagfrom:any)=>{
-      console.log(from+'--'+msg+'--'+flagfrom);
-      console.log(this.nombres)
       if (flagfrom == 2)//es asesor
       {
         let audio=new Audio('https://integrav4.bsginstitute.com/Content/sounds/newmsg.mp3')
@@ -402,7 +386,6 @@ export class ChatComponent implements OnInit,OnDestroy,OnChanges {
   }
   marcarChatAlumnoComoLeidos(){
     this.hubConnection.on("marcarChatAlumnoComoLeidos",(x:any)=>{
-      console.log(x);
       this.NroMensajesSinLeer=-1
     })
   }
@@ -440,7 +423,6 @@ export class ChatComponent implements OnInit,OnDestroy,OnChanges {
 
     this._ChatDetalleIntegraService.AdjuntarArchivoChatSoporte(this.selectedFiles.item(0)).pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
-        console.log(x)
         this.idInteraccion=this.GetsesionIdInteraccion();
         if (this.idInteraccion == null || this.idInteraccion == '') {
           this.mensajeChatArchivoAdjunto(x.Url, x.IdArchivo, x.Tipo)
@@ -467,5 +449,14 @@ export class ChatComponent implements OnInit,OnDestroy,OnChanges {
     }else{
       return this._SessionStorageService.SessionGetValueSesionStorage(this.chatKey)
     }
+  }
+  BuscarProgramas(esButton:boolean){
+    var obj:any
+    if(esButton){
+      obj={Tag:"Button",Nombre:"Enviar>",valor:this.chatBox,Seccion:'Chat'}
+    }else{
+      obj={Tag:'Input',Accion:'keyup.enter',Tipo:'text',Nombre:'Chat',valor:this.chatBox,Seccion:'Chat'}
+    }
+    this._HelperService.enviarMsjAcciones(obj)
   }
 }

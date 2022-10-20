@@ -49,7 +49,7 @@ margin-bottom: 10px;">Estas son las actividades de aprendizaje que debes complet
           *ngIf="item.registroEstructuraCursoEncuesta!=undefined && item.registroEstructuraCursoEncuesta!=null">
           <ng-container *ngFor="let Encuesta of item.registroEstructuraCursoEncuesta">
             <ng-container *ngIf="Encuesta.tipoExamen=='Encuesta' && Encuesta.nombreEncuesta=='Encuesta Inicial'">
-              <div [routerLink]="'3/'+Encuesta.numeroCapitulo+'/'+Encuesta.idEncuesta" class="TareaYEncuesta row" style="justify-content: space-between;    border-bottom: solid 1px gray;">
+              <div (click)="EventoInteraccion(Encuesta.nombreEncuesta)" [routerLink]="'3/'+Encuesta.numeroCapitulo+'/'+Encuesta.idEncuesta" class="TareaYEncuesta row" style="justify-content: space-between;    border-bottom: solid 1px gray;">
                 <div class="col-12 col-md-6 col-lg-6 inhover"  style="display: flex;    align-items: center;">
                   <img src="../../../../assets/icons/icon-like.svg" alt="">
                   <div >
@@ -95,7 +95,7 @@ margin-bottom: 10px;">Estas son las actividades de aprendizaje que debes complet
                   <div class="capituloSesionesSubsesiones contentModuloSesiones col-12 col-md-8 col-lg-9">
                     <i class="material-icons playsesion">play_circle</i>
                     <div style="width: calc( 100% - 35px);">
-                      <div class="tituloSesion" (click)="IrVideo('1/'+item.numeroCapitulo+'/'+subsesiones.numeroSubSesion,subsesiones.habilitado)">
+                      <div class="tituloSesion" (click)="EventoInteraccion(subsesiones.nombreSubSesion);IrVideo('1/'+item.numeroCapitulo+'/'+subsesiones.numeroSubSesion,subsesiones.habilitado)">
                         {{subsesiones.nombreSubSesion}}</div>
 
                       <mat-progress-bar mode="determinate"
@@ -136,7 +136,7 @@ margin-bottom: 10px;">Estas son las actividades de aprendizaje que debes complet
                   <div class="col-12 col-md-8 col-lg-9 capituloJustSesion contentModuloSesiones">
                     <i class="material-icons playsesion">play_circle</i>
                     <div style="width: calc( 100% - 35px);">
-                      <div class="tituloSesion" (click)="IrVideo('1/'+item.numeroCapitulo+'/'+sesiones.numeroSesion,sesiones.habilitado)">
+                      <div class="tituloSesion" (click)="EventoInteraccion(sesiones.nombreSesion);IrVideo('1/'+item.numeroCapitulo+'/'+sesiones.numeroSesion,sesiones.habilitado)">
                         Sesión {{sesiones.numeroSesion}}: {{sesiones.nombreSesion}}</div>
                       <mat-progress-bar mode="determinate"
                         [value]="(sesiones.porcentajeVideoVisualizado!=undefined)?sesiones.porcentajeVideoVisualizado:0">
@@ -173,7 +173,7 @@ margin-bottom: 10px;">Estas son las actividades de aprendizaje que debes complet
       </div>
       <ng-container *ngIf="item.registroEstructuraCursoTarea!=undefined && item.registroEstructuraCursoTarea!=null">
         <ng-container *ngFor="let Tarea of item.registroEstructuraCursoTarea">
-          <div class="TareaYEncuesta" (click)="IrVideo('2/'+Tarea.numeroCapitulo+'/'+Tarea.idTarea,Tarea.habilitado)">
+          <div class="TareaYEncuesta" (click)="EventoInteraccion(Tarea.tarea);IrVideo('2/'+Tarea.numeroCapitulo+'/'+Tarea.idTarea,Tarea.habilitado)">
             <div ><i class="material-icons"style="color:#fe7112 ;margin-right: 20px;">check_circle</i>{{Tarea.tarea}}
               <div style="color:#00c356" *ngIf="Tarea.tareasEnviadas>0">Enviado</div>
             </div>
@@ -183,7 +183,7 @@ margin-bottom: 10px;">Estas son las actividades de aprendizaje que debes complet
 
       <ng-container *ngIf="item.registroCursoTareaCalificar!=undefined && item.registroCursoTareaCalificar!=null">
         <ng-container *ngFor="let TareaC of item.registroCursoTareaCalificar">
-          <div class="TareaYEncuesta" (click)="IrVideo('4/'+TareaC.numeroCapitulo+'/'+TareaC.id,TareaC.habilitado)">
+          <div class="TareaYEncuesta" (click)="EventoInteraccion(TareaC.tarea);IrVideo('4/'+TareaC.numeroCapitulo+'/'+TareaC.id,TareaC.habilitado)">
             <div class="inhover">
               <img src="../../../../assets/icons/tareas-23.svg" alt=""> Revisión de: {{TareaC.tarea}} <br>
               <div style="color:#00c356" *ngIf="TareaC.calificado">Calificado</div>
@@ -198,7 +198,7 @@ margin-bottom: 10px;">Estas son las actividades de aprendizaje que debes complet
         <ng-container *ngFor="let Encuesta of item.registroEstructuraCursoEncuesta">
           <ng-container *ngIf="Encuesta.tipoExamen=='Encuesta' && Encuesta.nombreEncuesta=='Encuesta Intermedia'">
             <div class="TareaYEncuesta row" style="justify-content: space-between;    border-bottom: solid 1px gray;"
-            (click)="IrVideo('3/'+Encuesta.numeroCapitulo+'/'+Encuesta.idEncuesta,Encuesta.habilitado)">
+            (click)="EventoInteraccion(Encuesta.nombreEncuesta);IrVideo('3/'+Encuesta.numeroCapitulo+'/'+Encuesta.idEncuesta,Encuesta.habilitado)">
               <div class="col-12 col-md-6 col-lg-6 inhover" style="display: flex;    align-items: center;">
                 <img src="../../../../assets/icons/icon-like.svg" alt="">
                 <div>{{Encuesta.nombreEncuesta}}</div>
@@ -221,7 +221,7 @@ margin-bottom: 10px;">Estas son las actividades de aprendizaje que debes complet
         <ng-container *ngFor="let Encuesta of item.registroEstructuraCursoEncuesta">
           <ng-container *ngIf="Encuesta.tipoExamen=='Encuesta' && Encuesta.nombreEncuesta=='Encuesta Final'">
             <div class="TareaYEncuesta row" style="justify-content: space-between;    border-bottom: solid 1px gray;"
-            (click)="IrVideo('3/'+Encuesta.numeroCapitulo+'/'+Encuesta.idEncuesta,Encuesta.habilitado)">
+            (click)="EventoInteraccion(Encuesta.nombreEncuesta);IrVideo('3/'+Encuesta.numeroCapitulo+'/'+Encuesta.idEncuesta,Encuesta.habilitado)">
 
               <div class="col-12 col-md-6 col-lg-6 inhover" style="display: flex;    align-items: center;">
                 <img src="../../../../assets/icons/icon-like.svg" alt="">

@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ArticuloDTO } from 'src/app/Core/Models/ArticuloDTO';
+import { HelperService } from '../../../Services/helper.service';
 
 @Component({
   selector: 'app-card-white-papers',
@@ -8,7 +9,9 @@ import { ArticuloDTO } from 'src/app/Core/Models/ArticuloDTO';
 })
 export class CardWhitePapersComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    private _HelperService :HelperService,
+    ) { }
 
   @Input() cardContent:ArticuloDTO={descripcion:'',descripcionGeneral:'',idArea:0,idWeb:0,imgPortada:'',imgPortadaAlt:'',nombre:'',urlWeb:''};
   ngOnInit(): void {
@@ -16,4 +19,7 @@ export class CardWhitePapersComponent implements OnInit {
     this.cardContent.imgPortada=this.cardContent.imgPortada.split('´').join('');
   }
 
+  EventoInteraccion(nombre:string){
+    this._HelperService.enviarMsjAcciones({Tag:'Link',Nombre:'Descargar >',Programa:nombre,Seccion:'White Papers'})
+  }
 }

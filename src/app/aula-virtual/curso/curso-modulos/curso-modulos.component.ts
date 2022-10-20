@@ -16,6 +16,7 @@ import {
   ProgresoAlumnoProgramaVideosAulaVirtualDTO,
 } from 'src/app/Core/Models/ListadoProgramaContenidoDTO';
 import { AlumnosTest } from 'src/app/Core/Shared/AlumnosTest';
+import { HelperService } from 'src/app/Core/Shared/Services/helper.service';
 import { ProgramaContenidoService } from 'src/app/Core/Shared/Services/ProgramaContenido/programa-contenido.service';
 import { SessionStorageService } from 'src/app/Core/Shared/Services/session-storage.service';
 import { SnackBarServiceService } from 'src/app/Core/Shared/Services/SnackBarService/snack-bar-service.service';
@@ -33,7 +34,8 @@ export class CursoModulosComponent implements OnInit, OnChanges,OnDestroy {
     private _SessionStorageService: SessionStorageService,
     private _SnackBarServiceService:SnackBarServiceService,
     private router :Router,
-    private _AlumnosTest:AlumnosTest
+    private _AlumnosTest:AlumnosTest,
+    private _HelperService:HelperService
   ) {}
   ngOnDestroy(): void {
     this.signal$.next(true)
@@ -143,5 +145,8 @@ export class CursoModulosComponent implements OnInit, OnChanges,OnDestroy {
     }else{
       this._SnackBarServiceService.openSnackBar("Debes completar las actividades anteriores para continuar con esta actividad",'x',10,"snackbarCrucigramaerror");
     }
+  }
+  EventoInteraccionButton(nombre:string){
+    this._HelperService.enviarMsjAcciones({Tag:"Button",Nombre:nombre,Seccion:'Modulos'})
   }
 }

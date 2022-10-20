@@ -34,7 +34,7 @@
         <div class="carrera-container__content__firstSection rowpadd" style="position: relative;">
           <div class="row">
             <div class="col-md-6 carrera-container__content__firstSection__left">
-              <div class="carrera-container__header__information__title"
+              <div class="carrera-container__header__information__title" *ngIf="carrera.contenidoProgramaInformacionDTO[4]?.contenido!=null"
                 [innerHTML]="carrera.contenidoProgramaInformacionDTO[4]?.contenido  | safeHtml">
               </div>
 
@@ -144,33 +144,33 @@
                   </div>
 
                   <ng-container *ngIf="combosPrevios!=undefined">
-                    <app-formulario [model]="formularioContacto" [CleanOnSubmit]="cleanSub" [InputsDisable]="statuscharge" (OnSubmit)="SetContacto($event)"
-                    (OnValid)="formVal=$event" [fiels]="fileds" (OnSelect)="SelectChage($event)">
+                    <app-formulario [Interaccion]="'CarreraProfesional-'+idbusqueda" [model]="formularioContacto" [CleanOnSubmit]="cleanSub" [InputsDisable]="statuscharge" (OnSubmit)="SetContacto($event)"
+                      (OnValid)="formVal=$event" [fiels]="fileds" (OnSelect)="SelectChage($event)">
 
-                    <ng-container contenido>
-                    </ng-container>
-                    <ng-container send>
-                      <div style="text-align: center;margin-bottom: 15px;">
-                        <a style="color: #027CFF;font-size: 14px;" (click)="LimpiarCampos()">[No soy {{formularioContacto.Nombres}}]</a>
-                      </div>
-                      <app-default-button [confs]="{color:'primary',titulo:'Enviar'}" [style]="'width: 100%;'">
-                      </app-default-button>
-                    </ng-container>
+                      <ng-container contenido>
+                      </ng-container>
+                      <ng-container send>
+                        <div style="text-align: center;margin-bottom: 15px;">
+                          <a style="color: #027CFF;font-size: 14px;" (click)="LimpiarCampos()">[No soy {{formularioContacto.Nombres}}]</a>
+                        </div>
+                        <app-default-button [confs]="{color:'primary',titulo:'Enviar'}" [style]="'width: 100%;'">
+                        </app-default-button>
+                      </ng-container>
 
-                  </app-formulario>
+                    </app-formulario>
                   </ng-container>
                   <ng-container *ngIf="combosPrevios==undefined">
-                    <app-formulario [model]="formularioContacto" [CleanOnSubmit]="cleanSub" [InputsDisable]="statuscharge" (OnSubmit)="SetContacto($event)"
-                    (OnValid)="formVal=$event" [fiels]="fileds" (OnSelect)="SelectChage($event)">
+                    <app-formulario [Interaccion]="'CarreraProfesional-'+idbusqueda" [model]="formularioContacto" [CleanOnSubmit]="cleanSub" [InputsDisable]="statuscharge" (OnSubmit)="SetContacto($event)"
+                      (OnValid)="formVal=$event" [fiels]="fileds" (OnSelect)="SelectChage($event)">
 
-                    <ng-container contenido>
-                    </ng-container>
-                    <ng-container send>
-                      <app-default-button [confs]="{color:'primary',titulo:'Enviar'}" [style]="'width: 100%;'">
-                      </app-default-button>
-                    </ng-container>
+                      <ng-container contenido>
+                      </ng-container>
+                      <ng-container send>
+                        <app-default-button [confs]="{color:'primary',titulo:'Enviar'}" [style]="'width: 100%;'">
+                        </app-default-button>
+                      </ng-container>
 
-                  </app-formulario>
+                    </app-formulario>
                   </ng-container>
                 </div>
               </div>

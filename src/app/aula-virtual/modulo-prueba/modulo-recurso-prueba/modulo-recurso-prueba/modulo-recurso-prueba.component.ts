@@ -45,7 +45,9 @@ export class ModuloRecursoPruebaComponent implements OnInit,OnDestroy {
   ObtenerDiapositivas(){
     this._VideoSesionService.ObtenerConfiguracionVideoSesion(this.idPGeneral,1).pipe(takeUntil(this.signal$)).subscribe((x)=>{
       this.Diapositivas=x;
-      console.log()
     })
+  }
+  EventoInteraccion(nombre:string){
+    this._HelperService.enviarMsjAcciones({Tag:'Link',Nombre:nombre,Programa:this.Capitulo,Seccion:'Recursos'})
   }
 }

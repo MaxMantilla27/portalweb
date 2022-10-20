@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { HelperService } from 'src/app/Core/Shared/Services/helper.service';
 
 @Component({
   selector: 'app-indicaciones-options-content',
@@ -7,7 +8,9 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class IndicacionesOptionsContentComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    private _HelperService :HelperService,
+  ) { }
 
   @Input() title=''
   @Input() videoUrl=''
@@ -18,5 +21,7 @@ export class IndicacionesOptionsContentComponent implements OnInit {
   @Input() COntenido=''
   ngOnInit(): void {
   }
-
+  EventoInteraccion(){
+    this._HelperService.enviarMsjAcciones({Tag:'Video',Programa:this.TitlePrograma,Seccion:this.title})
+  }
 }

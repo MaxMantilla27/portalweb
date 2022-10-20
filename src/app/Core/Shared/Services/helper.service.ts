@@ -25,9 +25,16 @@ export class HelperService {
   private msjArrayEducacion = new ReplaySubject<Array<BasicUrl>>(1)
   private msjStringEducacion = new ReplaySubject<string>(1)
   private msjAcciones=new Subject<any>();
+  private msjAccionesForm=new Subject<any>();
 
 
 
+  enviarMsjForm(data:any):void {
+    this.msjAccionesForm.next(data);
+  }
+  recibirMsjForm(): Observable<any> {
+    return this.msjAccionesForm.asObservable();
+  }
   enviarMsjAcciones(data:any):void {
     this.msjAcciones.next(data);
   }

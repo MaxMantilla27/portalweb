@@ -38,9 +38,9 @@
       <div class="col-12 col-md-6 col-lg-6">
         <div [innerHtml]="cabecera.tituloHtml | safeHtml" class="titlePrograma"></div>
         <div style="    margin: 10px 0px;
-        font-size: 15px;font-weight: 700;">Área: <a style="font-weight: 100;"
+        font-size: 15px;font-weight: 700;">Área: <a (click)="EventoInteraccionLinck(cabecera.areaCapacitacion,'Área')" style="font-weight: 100;"
             routerLink="/Area/{{cabecera.areaDescripcion}}">{{cabecera.areaCapacitacion}}</a> | Sub
-          Área: <a style="font-weight: 100;"
+          Área: <a (click)="EventoInteraccionLinck(cabecera.nombreSubArea,'Sub Área')"  style="font-weight: 100;"
             routerLink="/SubArea/{{cabecera.subAreaDescripcion}}">{{cabecera.nombreSubArea}}</a> </div>
         <div class="row" style="margin-top: 20px;">
           <div class="col-12 col-md-12 col-lg-6">
@@ -189,7 +189,7 @@
           Registra tus datos para que un asesor especializado pueda ayudarte en todo lo que requieras
         </div>
         <ng-container *ngIf="combosPrevios!=undefined">
-          <app-formulario [model]="formularioContacto" [InputsDisable]="statuscharge" [CleanOnSubmit]="cleanSub" (OnSubmit)="SetContacto($event)"
+          <app-formulario [Interaccion]="'Programas-'+idBusqueda" [model]="formularioContacto" [InputsDisable]="statuscharge" [CleanOnSubmit]="cleanSub" (OnSubmit)="SetContacto($event)"
           (OnValid)="formVal=$event" [fiels]="fileds" (OnSelect)="SelectChage($event)">
 
           <ng-container contenido>
@@ -205,7 +205,7 @@
         </app-formulario>
         </ng-container>
         <ng-container *ngIf="combosPrevios==undefined">
-          <app-formulario [model]="formularioContacto" [InputsDisable]="statuscharge" [CleanOnSubmit]="cleanSub" (OnSubmit)="SetContacto($event)"
+          <app-formulario  [Interaccion]="'Programas-'+idBusqueda" [model]="formularioContacto" [InputsDisable]="statuscharge" [CleanOnSubmit]="cleanSub" (OnSubmit)="SetContacto($event)"
           (OnValid)="formVal=$event" [fiels]="fileds" (OnSelect)="SelectChage($event)">
 
           <ng-container contenido>
@@ -470,7 +470,17 @@
     <div class="row rowpadd">
       <div class="col-12 col-md-12 col-lg-12 tabprogram">
         <div class="subtitulo">Inversi&oacute;n</div>
-        <h4 style="color: #616161;">Versi&oacute;n B&aacute;sica</h4>
+        <h4 style="color: #616161;" *ngIf="MontoPago!=null && MontoPago.length>0">
+          <ng-container *ngIf="MontoPago[0].paquete==1">
+            Versi&oacute;n B&aacute;sica
+          </ng-container>
+          <ng-container *ngIf="MontoPago[0].paquete==2">
+            Versión Profesional,
+          </ng-container>
+          <ng-container *ngIf="MontoPago[0].paquete==3">
+            Versión Gerencial,
+          </ng-container>
+        </h4>
         <div class="" *ngFor="let item of MontoPago" style="display: flex;align-items: center;margin-bottom: 10px;">
           <i class="material-icons iconarrow">arrow_forward_ios</i>
           <div *ngIf="item.idTipoPago==1" style="color: #616161;">Pago al Contado: {{item.simbolo}}.{{item.cuotas}}
@@ -482,7 +492,7 @@
         <div style="color: #616161;font-size: 14px; margin-top: 40px;margin-bottom: 10px;">Consulte por nuestras
           opciones de pago personalizadas y flexibles as&iacute; como las opciones de descuentos.</div>
         <app-default-button [confs]="{color:'primary',titulo:'Consutar Opción de Pago Personalizado'}"
-          (ButtoclClick)="ScrollTo(formularioPrograma)"></app-default-button>
+          (ButtoclClick)="EventoInteraccionButton('Consutar Opción de Pago Personalizado');ScrollTo(formularioPrograma)"></app-default-button>
       </div>
     </div>
   </div>
@@ -558,7 +568,8 @@
       </div>
       <div class="col-12 col-md-4 col-lg-4" style="margin-top: 20px;">
         <app-default-button [confs]="{color:'primary',titulo:'Matricularme Ahora'}"
-          [style]="'padding: 10px 30px;font-size: 1.2rem;width: 100%;'" (ButtoclClick)="ScrollTo(formularioPrograma)">
+          [style]="'padding: 10px 30px;font-size: 1.2rem;width: 100%;'"
+          (ButtoclClick)="EventoInteraccionButton('¿Te interesa? Comienza con tu programa ahora mismo');ScrollTo(formularioPrograma)">
         </app-default-button>
       </div>
     </div>
@@ -581,7 +592,7 @@
     <div class="col-12 col-md-12 col-lg-12">
       <div style="display: flex; align-items: center; justify-content: flex-start;flex-wrap: wrap;">
         <div *ngFor="let item of tags" style="margin-right: 20px;">
-          <app-tag-button [tag]="item"></app-tag-button>
+          <app-tag-button [tag]="item" [Interaccion]="'Programas Relacionados'" ></app-tag-button>
         </div>
       </div>
     </div>

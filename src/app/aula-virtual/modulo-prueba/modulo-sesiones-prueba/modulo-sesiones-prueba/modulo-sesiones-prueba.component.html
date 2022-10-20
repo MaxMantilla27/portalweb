@@ -30,7 +30,13 @@
             </div>
           </div>
           <div class="contentCapituloSesion ">
+            <ng-container *ngIf="item.listaSesiones!=null && item.listaSesiones.length>0 && item.listaSesiones[0].subSesion!=null && item.listaSesiones[0].subSesion!=''">
+              <div class="col-12 col-md-12 col-lg-12"
+              style="margin: 15px 0px;display: flex;justify-content: space-between;font-weight: 600;">
+              Sesión  {{item.listaSesiones[0].sesion}}</div>
+            </ng-container>
             <div class="capituloSesion row" *ngFor="let sesiones of item.listaSesiones">
+
               <ng-container *ngIf="sesiones.subSesion==null || sesiones.subSesion==''">
                 <div class="col-12 col-md-7 col-lg-9 capituloJustSesion contentModuloSesiones">
                   <i class="material-icons playsesion">play_circle</i>

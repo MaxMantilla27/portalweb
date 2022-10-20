@@ -3,6 +3,7 @@ import { MatTabChangeEvent } from '@angular/material/tabs';
 import { ActivatedRoute } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
 import { ParametrosEstructuraEspecificaDTO } from 'src/app/Core/Models/EstructuraEspecificaDTO';
+import { HelperService } from 'src/app/Core/Shared/Services/helper.service';
 import { ProgramaContenidoService } from 'src/app/Core/Shared/Services/ProgramaContenido/programa-contenido.service';
 import { SessionStorageService } from 'src/app/Core/Shared/Services/session-storage.service';
 
@@ -18,7 +19,8 @@ export class ModuloComponent implements OnInit,OnDestroy {
   constructor(
     private _ActivatedRoute:ActivatedRoute,
     private _ProgramaContenidoService:ProgramaContenidoService,
-    private _SessionStorageService:SessionStorageService
+    private _SessionStorageService:SessionStorageService,
+    private _HelperService:HelperService
   ) { }
   ngOnDestroy(): void {
     this.signal$.next(true)
@@ -142,5 +144,9 @@ export class ModuloComponent implements OnInit,OnDestroy {
   cambio(mas:number){
     console.log(mas)
     this.tabIndex+=mas
+  }
+  InterraccionTab(nombre:string){
+
+    this._HelperService.enviarMsjAcciones({Tag:'Tab',Nombre:nombre})
   }
 }

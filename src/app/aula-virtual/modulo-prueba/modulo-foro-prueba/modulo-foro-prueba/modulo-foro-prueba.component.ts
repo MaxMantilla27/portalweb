@@ -2,6 +2,7 @@ import { Component, Input, OnDestroy, OnInit, SimpleChanges } from '@angular/cor
 import { Subject, takeUntil } from 'rxjs';
 import { AvatarService } from 'src/app/Core/Shared/Services/Avatar/avatar.service';
 import { ForoCursoService } from 'src/app/Core/Shared/Services/ForoCurso/foro-curso.service';
+import { HelperService } from 'src/app/Core/Shared/Services/helper.service';
 
 @Component({
   selector: 'app-modulo-foro-prueba',
@@ -12,7 +13,8 @@ export class ModuloForoPruebaComponent implements OnInit,OnDestroy {
   private signal$ = new Subject();
   constructor(
     private _ForoCursoService: ForoCursoService,
-    private _AvatarService: AvatarService
+    private _AvatarService: AvatarService,
+    private _HelperService:HelperService
   ) {}
   ngOnDestroy(): void {
     this.signal$.next(true)
@@ -81,5 +83,8 @@ export class ModuloForoPruebaComponent implements OnInit,OnDestroy {
     this.NuevoForo=false;
     this.ContenidoForo=false;
     this.ObtenerForoCurso() ;
+  }
+  EventoInteraccionButton(nombre:string){
+    this._HelperService.enviarMsjAcciones({Tag:"Button",Nombre:nombre,Seccion:'Foro'})
   }
 }

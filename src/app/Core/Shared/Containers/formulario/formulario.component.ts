@@ -19,6 +19,7 @@ import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Subject, takeUntil } from 'rxjs';
 import { Basic } from 'src/app/Core/Models/BasicDTO';
 import { formulario } from 'src/app/Core/Models/Formulario';
+import { InteraccionFormularioCampoDTO } from 'src/app/Core/Models/Interacciones';
 import { HelperService } from '../../Services/helper.service';
 import { SessionStorageService } from '../../Services/session-storage.service';
 
@@ -44,6 +45,7 @@ export class FormularioComponent implements OnChanges, OnInit,OnDestroy {
   }
 
   ngOnDestroy(): void {
+    clearInterval(this.interval);
     this.signal$.next(true)
     this.signal$.complete()
   }
@@ -76,6 +78,9 @@ export class FormularioComponent implements OnChanges, OnInit,OnDestroy {
   @Input()
   CleanOnSubmit: boolean=false;
 
+  @Input()
+  Interaccion: any;
+
   @Output()
   OnSubmit: EventEmitter<object> = new EventEmitter<object>();
 
@@ -92,6 +97,17 @@ export class FormularioComponent implements OnChanges, OnInit,OnDestroy {
   @Input() cargando=false
   //later in the code
   fields: any = {};
+  public interval:any
+  public jsonForm:InteraccionFormularioCampoDTO={
+    Acciones:[],
+    AccionesJson:{},
+    IdCategoriaOrigen:null,
+    IdConjuntoAnuncio:null,
+    IdInteraccionPortalPaginaV2:0,
+    IdTipoInteraccionPortalFormulario:0,
+    IdInteraccionPortalV2:0,
+    Nombre:''
+  }
   ngOnInit(): void {
     this._HelperService.recibirDataPais.pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
@@ -172,6 +188,13 @@ export class FormularioComponent implements OnChanges, OnInit,OnDestroy {
       }
       if(this.CleanOnSubmit==true){
         this.myNgForm.resetForm();
+        var index=0
+        this.fiels.forEach((f:any) =>{
+          if(f.tipo=='phone' && this.userForm){
+            this.validatePais(index,f.nombre)
+          }
+          index++
+        })
       }
 
     }
@@ -223,7 +246,6 @@ export class FormularioComponent implements OnChanges, OnInit,OnDestroy {
               }
             })
           }
-
         }
       });
     }
@@ -232,8 +254,81 @@ export class FormularioComponent implements OnChanges, OnInit,OnDestroy {
     if(this.CleanOnSubmit==true){
       //this.userForm.reset();
     }
+    if(this.Interaccion!=undefined){
+      this.EnvioInteraccion(true);
+    }
   }
+  ClickIntoForm(){
+    if(this.interval==undefined){
+      var i = 0;
+      this.interval=setInterval(()=>{
+        i++;
+        if(i==60){
+          this.EnvioInteraccion(false);
+        }
+      },1000);
+    }
+  }
+  EnvioInteraccion(enviado:boolean){
+    let objInteraccion:Array<any>=[];
+    for (let i = 0; i < (<FormArray>this.userForm.get('Fields')).length; i++) {
+      const element = (<FormArray>this.userForm.get('Fields')).at(i);
+      let clave = Object.keys(element.value);
+      var value = element.value[clave[0]];
+      if(this.ObtenerPrefijo==false){
+        this.fiels.forEach((f:any) =>{
+          if(f.tipo=='phone' && f.nombre.toLowerCase()==clave[0].toLowerCase()){
+            value = element.value[clave[0]].split(this.pref)[element.value[clave[0]].split(this.pref).length-1];
+          }
+        })
+      }
+      this.fiels.forEach((f:any) =>{
+        if(f.nombre.toLowerCase()==clave[0].toLowerCase()){
 
+          var tipo='Input'
+          if(f.tipo=='checkbox'){
+            tipo='checkbox'
+          }
+          if(f.tipo.toLowerCase()=='password'){
+            let cantV=value.length
+            let v=''
+            for(let i=0; i<cantV;i++){
+              v+='*'
+            }
+            value=v;
+          }
+          objInteraccion.push({
+            Tag:tipo,
+            Tipo:f.tipo,
+            Nombre:f.label,
+            valor:value
+          })
+        }
+      })
+    }
+    var tipo=0;
+    if(enviado){
+      if(this.userForm.valid==true){
+        tipo=4
+      }else{
+        tipo=3
+      }
+    }else{
+      if(this.userForm.valid==true){
+        tipo=2
+      }else{
+        tipo=1
+      }
+    }
+    this.jsonForm.AccionesJson=objInteraccion;
+    this.jsonForm.IdCategoriaOrigen=this._SessionStorageService.SessionGetValueCokies("idCategoria");
+    this.jsonForm.IdConjuntoAnuncio=this._SessionStorageService.SessionGetValueCokies("idCampania")
+    this.jsonForm.IdTipoInteraccionPortalFormulario=tipo
+    this.jsonForm.Nombre=this.Interaccion
+    this._HelperService.enviarMsjForm(this.jsonForm);
+    clearInterval(this.interval)
+    this.interval=undefined
+  }
   disableFiled(name:string){
 
     for (let i = 0; i < this.fiels.length; i++) {
@@ -314,7 +409,8 @@ export class FormularioComponent implements OnChanges, OnInit,OnDestroy {
     return '';
   }
   validatePais(i: number, val: string){
-    var campo = (<FormArray>this.userForm.get('Fields')).controls[i].get(val)?.value.toString();
+    var c=(<FormArray>this.userForm.get('Fields')).controls[i].get(val)?.value;
+    var campo =c==null?'':c.toString();
     var s=campo.split(' ');
 
     this.pref=this.PrefPaises()==null?'':this.PrefPaises()+' ';

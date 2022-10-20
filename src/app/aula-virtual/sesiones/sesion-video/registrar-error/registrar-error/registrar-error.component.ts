@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Subject, takeUntil } from 'rxjs';
 import { ErrorVideoPlayerDTO } from 'src/app/Core/Models/ErrorVideoPlayerDTO';
+import { HelperService } from 'src/app/Core/Shared/Services/helper.service';
 import { VideoSesionService } from 'src/app/Core/Shared/Services/VideoSesion/video-sesion.service';
 import { SesionVideoComponent } from '../../sesion-video.component';
 
@@ -18,6 +19,7 @@ export class RegistrarErrorComponent implements OnInit,OnDestroy {
     private fb: FormBuilder,
     protected _VideoSesionService:VideoSesionService,
     public dialogRef: MatDialogRef<SesionVideoComponent>,
+    private _HelperService:HelperService,
     @Inject(MAT_DIALOG_DATA) public data: any,
   ){ this.userForm =fb.group({
     Descripcion: ['', [Validators.required]],
@@ -48,6 +50,8 @@ export class RegistrarErrorComponent implements OnInit,OnDestroy {
     this.RegistroErrorVideo.ordenSesion=this.data.IdSesion,
     this.RegistroErrorVideo.descripcion=this.userForm.get('Descripcion')?.value;
     this.RegistroErrorVideo.comentario=this.userForm.get('Comentario')?.value;
+    this._HelperService.enviarMsjAcciones({Tag:"Button",Nombre:'Publica Tema',Seccion:'Foro',
+    valorDescripcion:this.RegistroErrorVideo.descripcion,valorComentario:this.RegistroErrorVideo.comentario})
     this._VideoSesionService.EnviarErrorVideoPlayer(this.RegistroErrorVideo).pipe(takeUntil(this.signal$)).subscribe({
       next: (x) => {
         console.log(x)

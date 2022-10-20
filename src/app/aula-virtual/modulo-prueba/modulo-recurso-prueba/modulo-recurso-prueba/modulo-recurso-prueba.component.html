@@ -21,19 +21,19 @@
             <div *ngFor="let sesiones of est.listaSesiones" style="display: flex;flex-direction: column;">
               <ng-container *ngIf="(sesiones.subSesion==null && est.ordenFila==1 && sesiones.ordenFila==1)">
                 {{sesiones.sesion}}
-                <a class="itemMaterial"
+                <a class="itemMaterial" (click)="EventoInteraccion(sesiones.sesion)"
               target="_blank"
               [href]="'https://repositorioweb.blob.core.windows.net/repositorioweb/aulavirtual/documento-cursos/AulaVirtual/'+sesiones.archivo">
               <img style="width: 15px;height: auto;margin-right: 15px;" src="../../../../assets/icons/pdf-31.svg" alt="">
-              c1s1.pdf</a>
+              {{sesiones.sesion}}</a>
               </ng-container>
               <ng-container *ngIf="(sesiones.subSesion!=null && est.ordenFila==1 && sesiones.ordenFila==1)">
                 {{sesiones.subSesion}}
 
-                  <a class="itemMaterial" target="_blank"
+                  <a class="itemMaterial" target="_blank" (click)="EventoInteraccion(sesiones.sesion)"
                   [href]="'https://repositorioweb.blob.core.windows.net/repositorioweb/aulavirtual/documento-cursos/AulaVirtual/'+sesiones.archivo">
                   <img style="width: 15px;height: auto;margin-right: 15px;" src="../../../../assets/icons/pdf-31.svg" alt="">
-                    c1s1s1.pdf
+                  {{sesiones.sesion}}
                   </a>
 
               </ng-container>

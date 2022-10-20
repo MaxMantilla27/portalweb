@@ -36,8 +36,8 @@ export class CursoPruebaComponent implements OnInit,OnDestroy {
   public IndicacionActive = false;
   public migaPan = [
     {
-      titulo: 'Mis Cursos Prueba',
-      urlWeb: '/AulaVirtual/MisCursosPrueba',
+      titulo: 'Mis Cursos',
+      urlWeb: '/AulaVirtual/MisCursos',
     }
   ];
   public idMatricula = 0;

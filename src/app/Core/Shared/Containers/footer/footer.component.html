@@ -62,7 +62,7 @@
             </div>
             <div class="subitem-container">
               <div class="col-sm-12 item-footer">
-                <a routerLink="/contactenos" target="_blank">Contáctenos</a>
+                <a routerLink="/contactenos" (click)="EventoInteraccion('Contáctenos')" target="_blank">Contáctenos</a>
               </div>
               <div class="col-sm-12 item-footer">S&iacute;guenos en: </div>
               <div class="col-sm-12 item-footer">
@@ -98,7 +98,7 @@
       </div>
       <div class="col-md-4 reclamaciones-container">
         <img src="../../../../../assets/icons/libro-reclamaciones-icon.svg" alt="">
-        <span class="reclamaciones" routerLink="/LibroReclamacion">
+        <span class="reclamaciones" (click)="EventoInteraccion('Libro de Reclamaciones')" routerLink="/LibroReclamacion">
           Libro de Reclamaciones
         </span>
       </div>

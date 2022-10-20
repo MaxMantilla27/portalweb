@@ -14,6 +14,7 @@ import { DatosPortalService } from 'src/app/Core/Shared/Services/DatosPortal/dat
 import { HelperService } from 'src/app/Core/Shared/Services/helper.service';
 import { LandingPageService } from 'src/app/Core/Shared/Services/LandingPage/landing-page.service';
 import { RegionService } from 'src/app/Core/Shared/Services/Region/region.service';
+import { SnackBarServiceService } from 'src/app/Core/Shared/Services/SnackBarService/snack-bar-service.service';
 import { LandingPageInterceptorComponent } from './landing-page-interceptor/landing-page-interceptor/landing-page-interceptor.component';
 declare const fbq:any;
 declare const gtag:any;
@@ -36,6 +37,7 @@ export class LandingPageComponent implements OnInit,OnDestroy {
     private _RegionService:RegionService,
     private _LandingPageService:LandingPageService,
     private _HelperService: HelperService,
+    private _SnackBarServiceService: SnackBarServiceService,
 
     public dialogRef: MatDialogRef<LandingPageInterceptorComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -122,54 +124,58 @@ export class LandingPageComponent implements OnInit,OnDestroy {
 
   }
   EnviarFormulario(value:any){
-    this.initValues = false;
+    if(this.formVal){
+      this.initValues = false;
 
-    this.statuscharge=true;
-    this.DatosLandingPageEnvio.NombrePrograma= this.data.NombrePrograma;
-    this.DatosLandingPageEnvio.IdFormularioPublicidad= this.data.IdFormulario;
-    this.DatosLandingPageEnvio.IdCategoriaDato= this.data.IdCategoriaOrigen;
-    this.DatosLandingPageEnvio.IdCampania= this.data.IdConjuntoAnuncio;
-    this.DatosLandingPageEnvio.IdCentroCosto= this.data.IdCentroCosto;
-    this.DatosLandingPageEnvio.IdTipoDato= 8;
-    this.DatosLandingPageEnvio.IdFaseOportunidad=2;
-    this.DatosLandingPageEnvio.NombreFormulario='publicidad';
-    if(this.DatosLandingPageEnvio.IdCategoriaDato==104){
-      this.DatosLandingPageEnvio.NombreOrigen='Adwords Busqueda Formulario Propio';
-    }
-    else{
-    this.DatosLandingPageEnvio.NombreOrigen='Mailing Bases Propias Formulario Propio';
-    }
-    this.DatosLandingPageEnvio.Nombres=value.Nombres;
-    this.DatosLandingPageEnvio.Apellidos=value.Apellidos;
-    this.DatosLandingPageEnvio.Correo1=value.Email;
-    this.DatosLandingPageEnvio.IdPais=value.IdPais;
-    this.DatosLandingPageEnvio.IdRegion=value.IdRegion;
-    this.DatosLandingPageEnvio.Movil=value.Movil;
-    this.DatosLandingPageEnvio.IdCargo=value.IdCargo;
-    this.DatosLandingPageEnvio.IdAreaFormacion=value.IdAreaFormacion;
-    this.DatosLandingPageEnvio.IdAreaTrabajo=value.IdAreaTrabajo;
-    this.DatosLandingPageEnvio.IdIndustria=value.IdIndustria;
-    this._LandingPageService.EnviarFormularioLandingPage(this.DatosLandingPageEnvio).pipe(takeUntil(this.signal$)).subscribe({
-      next: (x) => {
-        if(this.isBrowser){
+      this.statuscharge=true;
+      this.DatosLandingPageEnvio.NombrePrograma= this.data.NombrePrograma;
+      this.DatosLandingPageEnvio.IdFormularioPublicidad= this.data.IdFormulario;
+      this.DatosLandingPageEnvio.IdCategoriaDato= this.data.IdCategoriaOrigen;
+      this.DatosLandingPageEnvio.IdCampania= this.data.IdConjuntoAnuncio;
+      this.DatosLandingPageEnvio.IdCentroCosto= this.data.IdCentroCosto;
+      this.DatosLandingPageEnvio.IdTipoDato= 8;
+      this.DatosLandingPageEnvio.IdFaseOportunidad=2;
+      this.DatosLandingPageEnvio.NombreFormulario='publicidad';
+      if(this.DatosLandingPageEnvio.IdCategoriaDato==104){
+        this.DatosLandingPageEnvio.NombreOrigen='Adwords Busqueda Formulario Propio';
+      }
+      else{
+      this.DatosLandingPageEnvio.NombreOrigen='Mailing Bases Propias Formulario Propio';
+      }
+      this.DatosLandingPageEnvio.Nombres=value.Nombres;
+      this.DatosLandingPageEnvio.Apellidos=value.Apellidos;
+      this.DatosLandingPageEnvio.Correo1=value.Email;
+      this.DatosLandingPageEnvio.IdPais=value.IdPais;
+      this.DatosLandingPageEnvio.IdRegion=value.IdRegion;
+      this.DatosLandingPageEnvio.Movil=value.Movil;
+      this.DatosLandingPageEnvio.IdCargo=value.IdCargo;
+      this.DatosLandingPageEnvio.IdAreaFormacion=value.IdAreaFormacion;
+      this.DatosLandingPageEnvio.IdAreaTrabajo=value.IdAreaTrabajo;
+      this.DatosLandingPageEnvio.IdIndustria=value.IdIndustria;
+      this._LandingPageService.EnviarFormularioLandingPage(this.DatosLandingPageEnvio).pipe(takeUntil(this.signal$)).subscribe({
+        next: (x) => {
+          if(this.isBrowser){
 
-          fbq('track', 'CompleteRegistration');
-          try{
-            gtag('event', 'conversion', {
-              'send_to': 'AW-991002043/tnStCPDl6HUQu_vF2AM',
-            });
-            gtag('event', 'conversion', {
-                'send_to': 'AW-732083338/jQrVCKmUkqUBEIrpit0C',
-            });
-          }catch(err){
+            fbq('track', 'CompleteRegistration');
+            try{
+              gtag('event', 'conversion', {
+                'send_to': 'AW-991002043/tnStCPDl6HUQu_vF2AM',
+              });
+              gtag('event', 'conversion', {
+                  'send_to': 'AW-732083338/jQrVCKmUkqUBEIrpit0C',
+              });
+            }catch(err){
+            }
           }
-        }
-        this.dialogRef.close()
-      },
-      complete: () => {
-        this.statuscharge = false;
-      },
-    });
+          this.dialogRef.close()
+        },
+        complete: () => {
+          this.statuscharge = false;
+        },
+      });
+    }else{
+      this._SnackBarServiceService.openSnackBar("Debes completar todos los campos",'x',15,"snackbarCrucigramaerror");
+    }
   }
   ObtenerCombosPortal(){
 

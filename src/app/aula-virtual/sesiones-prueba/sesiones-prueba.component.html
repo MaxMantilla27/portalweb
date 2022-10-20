@@ -27,6 +27,21 @@
                 </div>
               </mat-tab>
 
+              <ng-container *ngIf="tineSubsecion==true">
+                <mat-tab disabled>
+                  <ng-template mat-tab-label>
+                    <div class="contentHeaderM estructuraSubCapitulos" [ngClass]="{'ActiveChil':item.openedSesion==true,'hidetab':item.opened==false}" (click)="Opensesion(i)">
+                      <div class="titleMatr">{{item.listaSesiones[0].sesion}}</div>
+                      <i *ngIf="item.openedSesion==true" class="material-icons">keyboard_arrow_up</i>
+                      <i *ngIf="item.openedSesion==false" class="material-icons">keyboard_arrow_down</i>
+                    </div>
+                  </ng-template>
+                  <div style="padding: 10px 30px">
+                    <ng-template matTabContent>
+                    </ng-template>
+                  </div>
+                </mat-tab>
+              </ng-container>
 
               <!-- sesiones y subsesiones -->
               <ng-container *ngFor="let sesion of item.listaSesiones;let s=index">
@@ -48,8 +63,8 @@
                 <ng-container *ngIf="sesion.subSesion!=null && sesion.subSesion!=''">
                   <mat-tab>
                     <ng-template mat-tab-label>
-                      <div (click)="changeTab(1,sesion.ordenFila,i,s,-1)" class="contentHeaderM estructuraSubCapitulos"
-                        [ngClass]="{'hidetab':item.opened==false}">
+                      <div (click)="changeTab(1,sesion.ordenFila,i,s,-1)" class="contentHeaderM estructuraSubSesiones"
+                        [ngClass]="{'hidetab':item.openedSesion==false || item.opened==false}">
                         <div class="titleMatr">{{sesion.subSesion}}</div>
                       </div>
                     </ng-template>

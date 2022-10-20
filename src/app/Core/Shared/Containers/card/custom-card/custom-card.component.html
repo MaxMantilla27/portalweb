@@ -13,7 +13,7 @@
         <p style="margin-top:20px;min-height: 100px;">{{item.descripcion}}</p>
       </div>
 
-      <app-default-button [confs]="{color:'primary',titulo:confs.titulo}"  [style]="'padding: 0px 30px;'" [icon]="''"
+      <app-default-button [confs]="{color:'primary',titulo:confs.titulo}" (ButtoclClick)="EventoInteraccion(item.titulo)"  [style]="'padding: 0px 30px;'" [icon]="''"
       [ruta]="item.urlWeb"></app-default-button>
       <!-- <app-link-button [target]="'_blank'" [fontColor]="'#ff8800'" [Child]="false" [fontStyle]="'bold'" [item]="{titulo:confs.titulo,urlWeb:item.urlWeb,color:confs.color}"></app-link-button> -->
     </div>

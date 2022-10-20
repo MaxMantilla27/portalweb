@@ -279,7 +279,12 @@ export class VideoBrightcoveComponent implements OnInit, OnChanges,AfterViewInit
       }
     }
   }
-
+  public esnumero=false
+  ValidarNumero(){
+    console.log(parseInt(this.valorRespuesta))
+    console.log(isNaN(parseInt(this.valorRespuesta)))
+    this.esnumero=!isNaN(parseInt(this.valorRespuesta))
+  }
   ResponderTexto(){
     console.log(this.valPregunta)
     if(!this.valPregunta){
@@ -669,5 +674,16 @@ export class VideoBrightcoveComponent implements OnInit, OnChanges,AfterViewInit
     this.finish=true;
     console.log('Finish-------------');
     this.OnFin.emit()
+  }
+  EventoInteraccion(){
+    this._HelperService.enviarMsjAcciones({Tag:'Video',Programa:this.json.NombrePrograma,Seccion:'Sesiones'})
+  }
+  EventoInteraccionVolumen(){
+    console.log(event)
+    this._HelperService.enviarMsjAcciones({Tag:'Video(volumen)',Programa:this.json.NombrePrograma,Seccion:'Sesiones'})
+  }
+  EventoInteraccionDrag(){
+    console.log(event)
+    this._HelperService.enviarMsjAcciones({Tag:'Drag',Programa:this.json.NombrePrograma,Seccion:'Sesiones'})
   }
 }

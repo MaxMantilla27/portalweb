@@ -3,6 +3,7 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { Subject, takeUntil } from 'rxjs';
 import { ForoDTO } from 'src/app/Core/Models/ForoDTO';
 import { ForoCursoService } from 'src/app/Core/Shared/Services/ForoCurso/foro-curso.service';
+import { HelperService } from 'src/app/Core/Shared/Services/helper.service';
 
 
 @Component({
@@ -15,7 +16,8 @@ export class ModuloForoInsertComponent implements OnInit,OnDestroy {
   public userForm: FormGroup = new FormGroup({});
   constructor(
     private fb: FormBuilder,
-    private _ForoCursoService: ForoCursoService
+    private _ForoCursoService: ForoCursoService,
+    private _HelperService:HelperService
   ) { this.userForm =fb.group({
     Titulo: ['', [Validators.required]],
     Contenido: ['', [Validators.required]],
@@ -51,6 +53,7 @@ export class ModuloForoInsertComponent implements OnInit,OnDestroy {
     this.ForoCurso.idPEspecificoHijo = this.IdPEspecificoHijo;
     this.ForoCurso.titulo =this.userForm.get('Titulo')?.value;
     this.ForoCurso.contenido = this.userForm.get('Contenido')?.value;
+    this._HelperService.enviarMsjAcciones({Tag:"Button",Nombre:'Publica Tema',Seccion:'Foro',valorTitulo:this.ForoCurso.titulo,valorContenido:this.ForoCurso.contenido})
     this._ForoCursoService.InsertarForoCursoPorUsuario(this.ForoCurso).pipe(takeUntil(this.signal$)).subscribe({
       next: (x) => {
         console.log(x);
@@ -61,4 +64,8 @@ export class ModuloForoInsertComponent implements OnInit,OnDestroy {
   VolverAtras(){
     this.volver.emit()
   }
+  EventoInteraccionButton(nombre:string){
+    this._HelperService.enviarMsjAcciones({Tag:"Button",Nombre:nombre,Seccion:'Foro'})
+  }
+
 }

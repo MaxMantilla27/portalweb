@@ -78,6 +78,11 @@ export class SessionStorageService {
     }
   }
 
+  SessionDeleteValueSesionStorage(name:string):void{
+    if(this.isBrowser){
+      sessionStorage.removeItem(name)
+    }
+  }
   SessionSetValueSesionStorage(name:string, token: string):void{
     if(this.isBrowser){
       sessionStorage.setItem(name,btoa(token));
