@@ -8,6 +8,7 @@
   align-items: center;
   padding: 0px 10px;
   position: relative;
+  border-radius: 0px 0px 10px 10px;
   .chat-box-textinput {
     border: none;
     border-radius: 10px;
@@ -26,7 +27,7 @@
   }
 }
 .headerChatAula {
-  background: #ff8610;
+  background: #ff4e55;
   border-radius: 8px 8px 0px 0px;
   .imgAsesor {
     color: white;
@@ -42,6 +43,7 @@
     }
     .nombreAsesor {
       width: calc(80% - 10px);
+      text-align: justify;
     }
     .stateAsesor{
       position: absolute;

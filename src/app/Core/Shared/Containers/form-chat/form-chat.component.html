@@ -1,8 +1,8 @@
 <div class="card CabeceraContenido">
-  <div class="card-body" style="background: #F5F5F5; margin-top: auto;font-size: 13px;text-align: left;">
+  <div class="card-body" style="background: #F5F5F5; margin-top: auto;font-size: 13px;text-align: left;margin-top: -10px;width: 101%; margin-left: -1px; padding: 5px 15px 5px 15px;">
     Solo tienes que ingresar tus datos para empezar a conversar ahora mismo
   </div>
-  <div class="card-footer" style="background: white;">
+  <div class="card-footer" style="background: white;margin-bottom: 10px;padding-bottom: 0px;padding-top: 0px;">
     <app-formulario [model]="formularioContactoChat" [InputsDisable]="statuscharge" (OnSubmit)="SetContacto($event)"
       (OnValid)="formVal=$event" [fiels]="fileds" [ObtenerPrefijo]="true">
       <ng-container contenido>
