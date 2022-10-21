@@ -3,9 +3,9 @@
   position: fixed;
   bottom: 30px;
   right: 30px;
-  width: 85px;
+  width: 90px;
   background: #ff4e56;
-  height: 80px;
+  height: 90px;
   color: white;
   display: flex;
   justify-content: center;
@@ -22,14 +22,14 @@
 }
 .chatST{
   position: fixed;
-  bottom: 0px;
+  bottom: 70px;
   right: 20px;
   width: 300px;
   background: white;
   //height: 400px;
   align-items: center;
   text-align: center;
-  margin-bottom: 50px;
+  //margin-bottom: 50px;
   border-radius: 10px 10px 10px 10px;
   z-index: 200;
   box-shadow: 0px 0px 2px 0px #c3c3c3;
@@ -51,5 +51,6 @@
   .chatST{
     width: 80%;
     left: 10%;
+    bottom: 0px;
   }
 }
