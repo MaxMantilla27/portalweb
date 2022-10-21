@@ -4,26 +4,13 @@
   (token==false && IdPGeneral>0)) ">
 
   <div class="chatST" *ngIf="Open" style="box-shadow: 0px 1px 4px #838383;">
+    <div class="cerrarChatMedia" (click)="EventoInteraccionButton('Cerrar Chat');Open=false;IsOpen.emit(false)">X</div>
     <ng-content select="[contenidoChat]">
     </ng-content>
-    
+
   </div>
-  <div *ngIf="Open">
-    <div style="position: fixed;
-    /* top: 0; */
-    bottom: 20px;
-    right: 30px;
-    color: white;
-    font-size: 25px;
-    cursor: pointer;
-    z-index: 1000000;
-    background: #ff4e55;
-    border-radius: 50%;
-    width: 40px;
-    height: 40px;
-    display: flex;
-    justify-content: center;
-    align-items: center;" (click)="EventoInteraccionButton('Cerrar Chat');Open=false;IsOpen.emit(false)">X</div>
+  <div  *ngIf="Open">
+    <div class="cerrarChat" (click)="EventoInteraccionButton('Cerrar Chat');Open=false;IsOpen.emit(false)">X</div>
   </div>
   <div class="sopoteTecnico" (click)="EventoInteraccionButton(texto);Open=true;IsOpen.emit(true)" *ngIf="!Open">
     <div>
