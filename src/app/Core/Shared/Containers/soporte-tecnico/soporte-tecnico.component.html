@@ -3,20 +3,27 @@
   (token==true  ||
   (token==false && IdPGeneral>0)) ">
 
-  <div class="chatST" *ngIf="Open">
+  <div class="chatST" *ngIf="Open" style="box-shadow: 0px 1px 4px #838383;">
     <ng-content select="[contenidoChat]">
     </ng-content>
-
+    
   </div>
   <div *ngIf="Open">
     <div style="position: fixed;
-    top: 92%;
+    /* top: 0; */
+    bottom: 20px;
     right: 30px;
     color: white;
-    font-size: 25px;cursor: pointer;
-    padding: 0px 10px;z-index: 1000000;
+    font-size: 25px;
+    cursor: pointer;
+    z-index: 1000000;
     background: #ff4e55;
-    border-radius: 48%;" (click)="EventoInteraccionButton('Cerrar Chat');Open=false;IsOpen.emit(false)">X</div>
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;" (click)="EventoInteraccionButton('Cerrar Chat');Open=false;IsOpen.emit(false)">X</div>
   </div>
   <div class="sopoteTecnico" (click)="EventoInteraccionButton(texto);Open=true;IsOpen.emit(true)" *ngIf="!Open">
     <div>
