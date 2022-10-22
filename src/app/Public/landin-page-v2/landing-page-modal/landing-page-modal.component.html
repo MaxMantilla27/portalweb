@@ -1,0 +1,60 @@
+<div class="LandingPageContenedor row" [ngStyle]="{'background': fondoColor}"  style="position: relative; " >
+    <app-cargando *ngIf="statuscharge==true" ></app-cargando>
+
+
+    <div [ngStyle]="Plantilla" class="col-12 col-md-8" 
+    style="background: #f4f4f4 ;width: 475px; position: relative; border-radius: 10px; padding: 20px 35px; ">
+      <button
+      style="position:absolute; right:20px; top:20px;"
+      type="button"
+      class="btn-close btn-close-black"
+      aria-label="Close"
+      (click)="dialogRef.close()"
+    ></button>
+
+      <div>
+
+        <div class="InstruccionLP" *ngIf="Cabecera!='' && Cabecera!=null" [ngStyle]="Cabecera">
+            {{data.valorPrograma.cabecera}}
+          </div>
+        <div class="NombreProgramaLP" [ngStyle]="Titulo">
+          {{data.valorPrograma.titulo}}
+        </div>
+        <div class="InstruccionLP" *ngIf="Subitutlo!='' && Subitutlo!=null" [ngStyle]="Subitutlo">
+            {{data.valorPrograma.subtitulo}}
+        </div>
+  
+      </div>
+  
+      <div style="padding: 10px 25px;">
+       
+          <app-formulario *ngIf="obj!=undefined" [Interaccion]="'Publicidad-'+data.IdFormulario"  style="margin-top: 20px" 
+          [model]="obj" [InputsDisable]="statuscharge"
+            (OnValid)="formVal=$event" [fiels]="fileds" [Tipo]="1"   (OnSubmit)="EnviarFormulario($event)" >
+  
+            <ng-container contenido>
+            </ng-container>
+            
+            
+            <ng-container send>
+                <div class="col-12 col-md-12 col-lg-12">
+                    <!-- <app-default-button [confs]="{color:'primary',titulo:'Solicitar Información'}" [style]="Boton" style="width:100%; "
+                    ></app-default-button> -->
+                    <button [ngStyle]="Boton" style="width:100%; background-color: orange; border-radius: 5px; margin-bottom: 10px;"> Solicitar Información </button>
+                  </div>
+              <div class="TerminosLP">
+                Al hacer clic en "Solicitar Información", Ud. acepta enviar su información a BSG Institute, que se compromete a usarla en conformidad a su Política de Privacidad y su Política de Datos. <a routerLink="/politica-privacidad" target="_blank">Consulte la política de privacidad de BSG Institute...</a>
+              </div>
+       
+  
+            </ng-container>
+          </app-formulario>
+
+
+      </div>
+    </div>
+  
+  
+  
+  </div>
+  

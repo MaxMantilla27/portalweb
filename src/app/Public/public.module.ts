@@ -38,6 +38,9 @@ import { FormularioPublicidadInterceptorComponent } from './FormularioPublicidad
 import { NotificacionWebinarComponent } from './notificacion-webinar/notificacion-webinar.component';
 import { InformacionCertificadoComponent } from './informacion-certificado/informacion-certificado.component';
 import { CompraExitosaOpenPayComponent } from './compra-exitosa-open-pay/compra-exitosa-open-pay.component';
+import { LandinPageV2Component } from './landin-page-v2/landin-page-v2.component';
+import { LandingPageModalComponent } from './landin-page-v2/landing-page-modal/landing-page-modal.component';
+
 
 @NgModule({
   imports: [
@@ -81,7 +84,9 @@ import { CompraExitosaOpenPayComponent } from './compra-exitosa-open-pay/compra-
     FormularioPublicidadInterceptorComponent,
     NotificacionWebinarComponent,
     InformacionCertificadoComponent,
-    CompraExitosaOpenPayComponent
+    CompraExitosaOpenPayComponent,
+    LandinPageV2Component,
+    LandingPageModalComponent
   ],
   exports: [],
   providers: [

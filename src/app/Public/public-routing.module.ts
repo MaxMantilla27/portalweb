@@ -32,6 +32,7 @@ import { FormularioPublicidadInterceptorComponent } from './FormularioPublicidad
 import { NotificacionWebinarComponent } from './notificacion-webinar/notificacion-webinar.component';
 import { InformacionCertificadoComponent } from './informacion-certificado/informacion-certificado.component';
 import { CompraExitosaOpenPayComponent } from './compra-exitosa-open-pay/compra-exitosa-open-pay.component';
+import { LandinPageV2Component } from './landin-page-v2/landin-page-v2.component';
 
 const routes:Routes=[
     {path:'',component:PublicComponent,children:
@@ -52,6 +53,7 @@ const routes:Routes=[
             {path:'Account/ForgotPassword', component:ForgotPasswordComponent},
             {path:'Avatar', component: AvatarComponent},
             {path:'ChatEnlinea', component: ChatPruebaComponent},
+            {path:'LandingPage/:IdFormulario', component: LandinPageV2Component},
 
             {path:'NotificacionAlumno/Webinar/:datos', component:NotificacionWebinarComponent},
             {path:'bs-campus/white-paper/:whitepaper', component:WhitepapersComponent},

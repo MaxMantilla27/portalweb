@@ -12,6 +12,12 @@
 :root {
   --main-bg-color: white;
 }
+.fieldOld .mat-form-field.mat-form-field-appearance-outline > div.mat-form-field-wrapper{
+  padding-bottom: 1rem;
+}
+.fieldOld .mat-form-field.mat-form-field-appearance-outline > div.mat-form-field-wrapper >div.mat-form-field-subscript-wrapper{
+  font-size: 60% !important;
+}
 .fieldOld .mat-form-field.mat-form-field-appearance-outline > div.mat-form-field-wrapper > div.mat-form-field-flex > div.mat-form-field-infix  { padding: 0.4em 0px }
 .fieldOld .mat-form-field.mat-form-field-appearance-outline > div.mat-form-field-wrapper > div.mat-form-field-flex > div.mat-form-field-prefix { padding: 0.4em 0px;
   top: 0px;
