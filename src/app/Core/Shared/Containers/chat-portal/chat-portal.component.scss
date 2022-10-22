@@ -38,12 +38,14 @@
     font-size: 20px;
     position: relative;
     img {
-      width: 20%;
-      margin-right: 10px;
+      width: 55px;
+      height: 55px;
     }
     .nombreAsesor {
-      width: calc(80% - 10px);
-      text-align: justify;
+      width: calc(80% - 15px);
+      text-align: left;
+      font-size: 16px;
+      padding: 10px 10px;
     }
     .stateAsesor{
       position: absolute;

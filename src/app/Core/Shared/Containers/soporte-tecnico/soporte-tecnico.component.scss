@@ -3,9 +3,9 @@
   position: fixed;
   bottom: 30px;
   right: 30px;
-  width: 85px;
+  width: 90px;
   background: #ff4e56;
-  height: 80px;
+  height: 90px;
   color: white;
   display: flex;
   justify-content: center;
@@ -22,17 +22,36 @@
 }
 .chatST{
   position: fixed;
-  bottom: 0px;
+  bottom: 70px;
   right: 20px;
   width: 300px;
   background: white;
   //height: 400px;
   align-items: center;
   text-align: center;
-  margin-bottom: 50px;
+  //margin-bottom: 50px;
   border-radius: 10px 10px 10px 10px;
   z-index: 200;
   box-shadow: 0px 0px 2px 0px #c3c3c3;
+}
+.cerrarChat{
+  position: fixed;
+  bottom: 20px;
+  right: 30px;
+  color: white;
+  font-size: 25px;
+  cursor: pointer;
+  z-index: 1000000;
+  background: #ff4e55;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.cerrarChatMedia{
+  display: none;
 }
 @media (max-width: 690px) {
   .sopoteTecnico {
@@ -51,5 +70,21 @@
   .chatST{
     width: 80%;
     left: 10%;
+    bottom: 0px;
+  }
+  .cerrarChat{
+    display: none;
+  }
+  .cerrarChatMedia{
+    display: block;
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    color: black;
+    font-weight: 600;
+    font-size: 12px;
+    cursor: pointer;
+    padding: 0px 10px;z-index: 1000000;
   }
 }
+
