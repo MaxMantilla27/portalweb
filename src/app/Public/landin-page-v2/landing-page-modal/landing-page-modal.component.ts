@@ -75,6 +75,7 @@ export class LandingPageModalComponent implements OnInit, OnDestroy {
       }
       if(this.obj.Apellidos!=undefined){
         this.obj.Apellidos=this.combosPrevios.apellidos
+        console.log(obj.Apellidos)
       }
       if(this.obj.Email!=undefined){
         this.obj.Email=this.combosPrevios.email

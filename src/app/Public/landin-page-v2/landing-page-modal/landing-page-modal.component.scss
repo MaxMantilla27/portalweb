@@ -1,47 +1,51 @@
-.dialog-landing-page{
-    mat-dialog-container{
-      padding: 20px 20px 40px 20px;
-      background: transparent;
-      position: absolute;
-      top: 0px;
-      left: 0px;
-      overflow: auto;
-      justify-content: center;
-    }
-  }
-  .Encabezado-LandingPage{
-    color: white;
-    margin-left: 20px;
-    font-size: 19px;
-    padding-top: 10px;
-  }
-  .NombreProgramaLP{
-    text-align: center;
-    color: #094D82;
-    font-weight: bold;
-    padding-bottom: 12px;
-    font-size: 17px;
-    line-height: 25px;
-  }
-  .InstruccionLP{
-    text-align: center;
-    font-size: 14px;
-    padding: 0px 25px 12px 25px;
-    line-height: 25px;
-  }
-  .OpcionLP{
-    text-align: center;
-    font-size: 13px;
-    height: 30px;
-    margin-top: 5px;
-  }
-  .TerminosLP{
-    font-size: 9px;
-    text-align: justify;
-  }
-  .LandingPageContenedor{
-    padding: 0px 20px;
+.dialog-landing-page {
+  mat-dialog-container {
+    padding: 20px 20px 40px 20px;
+    background: transparent;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    overflow: auto;
     justify-content: center;
   }
-  
-  
+}
+.Encabezado-LandingPage {
+  color: white;
+  margin-left: 20px;
+  font-size: 19px;
+  padding-top: 10px;
+}
+.NombreProgramaLP {
+  text-align: center;
+  color: #094d82;
+  font-weight: bold;
+  padding-bottom: 12px;
+  font-size: 17px;
+  line-height: 25px;
+}
+.InstruccionLP {
+  text-align: center;
+  font-size: 14px;
+  padding: 0px 25px 12px 25px;
+  line-height: 25px;
+}
+.OpcionLP {
+  text-align: center;
+  font-size: 13px;
+  height: 30px;
+  margin-top: 5px;
+}
+.TerminosLP {
+  font-size: 9px;
+  text-align: justify;
+}
+.LandingPageContenedor {
+  padding: 0px 20px;
+  justify-content: center;
+}
+.btnIto{
+  width:100%; background-color: orange; border-radius: 5px; margin-bottom: 10px; 
+}
+.btnIto:hover{
+  text-decoration: underline;
+}

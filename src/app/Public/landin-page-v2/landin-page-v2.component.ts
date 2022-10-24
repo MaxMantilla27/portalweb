@@ -44,7 +44,7 @@ export class LandinPageV2Component implements OnInit, OnDestroy {
         if (this.IdFormulario != undefined) {
           this.ObtenerFormularioLandingPageV2();
         } else {
-         // this.router.navigate(['error404']);
+         this.router.navigate(['error404']);
         }
       },
     });
@@ -82,20 +82,20 @@ export class LandinPageV2Component implements OnInit, OnDestroy {
               this.valorPrograma.categoriaNombre.replace(/-/g, ' ');
             console.log(this.nombreProgramaLandingPage);
             this.OpenModalLandingPage();
-            // this.router.navigate([
-            //   '/' +
-            //     this.valorPrograma.areaCapacitacion +
-            //     '/' +
-            //     this.valorPrograma.categoriaNombre +
-            //     '-' +
-            //     this.valorPrograma.idBusqueda,
-            // ]);
+            this.router.navigate([
+              '/' +
+                this.valorPrograma.areaCapacitacion +
+                '/' +
+                this.valorPrograma.categoriaNombre +
+                '-' +
+                this.valorPrograma.idBusqueda,
+            ]);
           } else {
-           // this.router.navigate(['error404']);
+           this.router.navigate(['error404']);
           }
         },
         error: () => {
-         // this.router.navigate(['error404']);
+         this.router.navigate(['error404']);
         },
       });
   }

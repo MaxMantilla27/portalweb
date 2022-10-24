@@ -41,8 +41,24 @@
           </ng-container>
         </app-formulario>
         </ng-container>
-        <ng-container *ngIf="combosPrevios==undefined" style="margin-top: 10px;">
-        <app-formulario [Interaccion]="'Publicidad-'+data.IdFormulario"  style="margin-top: 20px" [model]="FormularioLandingPage" [InputsDisable]="statuscharge"
+        <ng-container *ngIf="combosPrevios!=undefined" style="margin-top: 10px;">
+          <app-formulario [Interaccion]="'Publicidad-'+data.IdFormulario"  style="margin-top: 20px" [model]="FormularioLandingPage" [InputsDisable]="statuscharge"
+          (OnValid)="formVal=$event" [fiels]="fileds" [Tipo]="1" (OnSubmit)="EnviarFormulario($event)"  (OnSelect)="SelectChage($event)"  >
+
+          <ng-container contenido>
+          </ng-container>
+
+          <ng-container send>
+            <div class="TerminosLP">
+              Al hacer clic en "Solicitar Información", Ud. acepta enviar su información a BSG Institute, que se compromete a usarla en conformidad a su Política de Privacidad y su Política de Datos. <a routerLink="/politica-privacidad" target="_blank">Consulte la política de privacidad de BSG Institute...</a>
+            </div>
+            <div class="col-12 col-md-12 col-lg-12">
+              <app-default-button [confs]="{color:'primary',titulo:'Solicitar Información'}" [style]="'width: 100%;margin-top:10px'"
+               ></app-default-button>
+            </div>
+          </ng-container>
+        </app-formulario>
+        <app-formulario *ngIf="combosPrevios==undefined" [Interaccion]="'Publicidad-'+data.IdFormulario"  style="margin-top: 20px" [model]="FormularioLandingPage" [InputsDisable]="statuscharge"
           (OnValid)="formVal=$event" [fiels]="fileds" [Tipo]="1" (OnSubmit)="EnviarFormulario($event)"  (OnSelect)="SelectChage($event)"  >
 
           <ng-container contenido>
@@ -61,7 +77,7 @@
         </ng-container>
 
         <div class="col-12 col-md-12 col-lg-12">
-          <div (click)="dialogRef.close()" style=" cursor:pointer;text-align: center;">
+          <div (click)="dialogRef.close()" style=" font-size:11px; cursor:pointer;text-align: center;">
             [Cerrar]
           </div>
         </div>
