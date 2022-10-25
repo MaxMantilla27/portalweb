@@ -81,7 +81,7 @@ export class LandingPageInterceptorComponent implements OnInit,OnDestroy {
           this.nombreProgramaLandingPage=this.valorPrograma.categoriaNombre.replace(/-/g,' ')
           console.log(this.nombreProgramaLandingPage)
           this.OpenModalLandingPage();
-         // this.router.navigate(['/'+this.valorPrograma.areaCapacitacion+'/'+this.valorPrograma.categoriaNombre+'-'+this.valorPrograma.idBusqueda]);
+          this.router.navigate(['/'+this.valorPrograma.areaCapacitacion+'/'+this.valorPrograma.categoriaNombre+'-'+this.valorPrograma.idBusqueda]);
         }
         else{
           this.router.navigate(['error404']);

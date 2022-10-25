@@ -1,6 +1,6 @@
 .dialog-landing-page {
   mat-dialog-container {
-    padding: 20px 20px 40px 20px;
+    padding: 0px;
     background: transparent;
     position: absolute;
     top: 0px;
@@ -42,9 +42,10 @@
 .LandingPageContenedor {
   padding: 0px 20px;
   justify-content: center;
+  margin: 0px;
 }
 .btnIto{
-  width:100%; background-color: orange; border-radius: 5px; margin-bottom: 10px; 
+  width:100%; background-color: orange; border-radius: 5px; margin-bottom: 10px;
 }
 .btnIto:hover{
   text-decoration: underline;
