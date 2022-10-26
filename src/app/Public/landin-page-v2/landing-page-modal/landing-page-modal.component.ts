@@ -81,7 +81,7 @@ export class LandingPageModalComponent implements OnInit, OnDestroy {
         this.obj.Email=this.combosPrevios.email
       }
       if(this.obj.IdPais!=undefined){
-        this.obj.IdPais=this.combosPrevios.idPais  
+        this.obj.IdPais=this.combosPrevios.idPais
       }
       if(this.obj.IdRegion!=undefined){
         this.obj.IdRegion=this.combosPrevios.idDepartamento
@@ -112,7 +112,7 @@ export class LandingPageModalComponent implements OnInit, OnDestroy {
     this.Secciones.forEach((x:any) => {
       this.cambios(i);
       i++;
-    }); 
+    });
   }
 
   public IdFormulario = 0;
@@ -236,6 +236,10 @@ export class LandingPageModalComponent implements OnInit, OnDestroy {
       if (obj['background-fondo']) {
         console.log(obj);
         this.fondoColor = obj['background-fondo'];
+        if(this.fondoColor!=undefined && this.fondoColor!=null && this.fondoColor.length>0){
+          console.log(this.fondoColor)
+          this.fondoColor=this.fondoColor+'50'
+        }
       }
       this.Plantilla = obj;
       console.log(this.fondoColor)
