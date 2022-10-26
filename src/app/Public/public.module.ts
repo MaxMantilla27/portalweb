@@ -40,6 +40,7 @@ import { InformacionCertificadoComponent } from './informacion-certificado/infor
 import { CompraExitosaOpenPayComponent } from './compra-exitosa-open-pay/compra-exitosa-open-pay.component';
 import { LandinPageV2Component } from './landin-page-v2/landin-page-v2.component';
 import { LandingPageModalComponent } from './landin-page-v2/landing-page-modal/landing-page-modal.component';
+import { TarifaGestionComponent } from './tarifa-gestion/tarifa-gestion.component';
 
 
 @NgModule({
@@ -86,7 +87,8 @@ import { LandingPageModalComponent } from './landin-page-v2/landing-page-modal/l
     InformacionCertificadoComponent,
     CompraExitosaOpenPayComponent,
     LandinPageV2Component,
-    LandingPageModalComponent
+    LandingPageModalComponent,
+    TarifaGestionComponent
   ],
   exports: [],
   providers: [

@@ -1,0 +1,37 @@
+
+<div class="container">
+    <div class="row rowpadd">
+      <div class="col-12">
+
+        <h2 class="text-center" style="font-size: 18px;color: #f5a623;font-weight: 700; margin-bottom: 50px;">
+            Tarifario de Tasas Académicas y Administrativas
+        </h2>
+        <table class="table table-bordered" style="    border: 1px solid #dee2e6; color: #212529; font-size:14px; font-weight: lighter;">
+          <thead class="text-center" style="background: #ffd800">
+            <tr>
+              <th>Nº</th>
+              <th>CONCEPTO</th>
+              <th>DESCRIPCION</th>
+              <th style="width: 120px">MONTO</th>
+            </tr>
+          </thead>
+          <tbody>
+            <ng-container *ngFor="let item of tarifas; let i = index">
+              <tr>
+                <td>{{ i + 1 }}</td>
+        
+                <td>{{ item.concepto }}</td>
+        
+                <td>{{ item.descripcion }}</td>
+        
+                <td class="text-center">
+                  <b> {{ item.monto }}</b>
+                </td>
+              </tr>
+            </ng-container>
+          </tbody>
+        </table>
+        <h3 style="color: #212529; font-size:14px ">La empresa se reserva el derecho de cambiar las tasas sin previo aviso.</h3>
+      </div>
+    </div>
+</div>

@@ -33,12 +33,14 @@ import { NotificacionWebinarComponent } from './notificacion-webinar/notificacio
 import { InformacionCertificadoComponent } from './informacion-certificado/informacion-certificado.component';
 import { CompraExitosaOpenPayComponent } from './compra-exitosa-open-pay/compra-exitosa-open-pay.component';
 import { LandinPageV2Component } from './landin-page-v2/landin-page-v2.component';
+import { TarifaGestionComponent } from './tarifa-gestion/tarifa-gestion.component';
 
 const routes:Routes=[
     {path:'',component:PublicComponent,children:
         [
             {path:'',component:HomeComponent},
             {path:'programas-certificaciones-cursos',component:ProgramasComponent},
+            {path:'TarifasdeGestion', component: TarifaGestionComponent},
             {path:'login',component:LoginComponent,canActivate:[PublicGuard]},
             {path:'Registrarse', component:RegistrarseComponent ,canActivate:[PublicGuard]},
             {path:'carreras-profesionales',component:CarrerasProfesionalesComponent},
