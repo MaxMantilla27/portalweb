@@ -162,11 +162,11 @@ export class LandingPageModalComponent implements OnInit, OnDestroy {
       this.initValues = false;
 
       this.statuscharge=true;
-      this.DatosLandingPageEnvio.NombrePrograma= this.data.valorPrograma.NombrePrograma;
-      this.DatosLandingPageEnvio.IdFormularioPublicidad= this.data.valorPrograma.IdFormulario;
-      this.DatosLandingPageEnvio.IdCategoriaDato= this.data.valorPrograma.IdCategoriaOrigen;
-      this.DatosLandingPageEnvio.IdCampania= this.data.valorPrograma.IdConjuntoAnuncio;
-      this.DatosLandingPageEnvio.IdCentroCosto= this.data.valorPrograma.IdCentroCosto;
+      this.DatosLandingPageEnvio.NombrePrograma= this.data.valorPrograma.nombrePrograma;
+      this.DatosLandingPageEnvio.IdFormularioPublicidad= this.data.valorPrograma.idFormulario;
+      this.DatosLandingPageEnvio.IdCategoriaDato= this.data.valorPrograma.idCategoriaOrigen;
+      this.DatosLandingPageEnvio.IdCampania= this.data.valorPrograma.idConjuntoAnuncio;
+      this.DatosLandingPageEnvio.IdCentroCosto= this.data.valorPrograma.idCentroCosto;
       this.DatosLandingPageEnvio.IdTipoDato= 8;
       this.DatosLandingPageEnvio.IdFaseOportunidad=2;
       this.DatosLandingPageEnvio.NombreFormulario='publicidad';
@@ -174,7 +174,7 @@ export class LandingPageModalComponent implements OnInit, OnDestroy {
         this.DatosLandingPageEnvio.NombreOrigen='Adwords Busqueda Formulario Propio';
       }
       else{
-      this.DatosLandingPageEnvio.NombreOrigen='Mailing Bases Propias Formulario Propio';
+        this.DatosLandingPageEnvio.NombreOrigen='Mailing Bases Propias Formulario Propio';
       }
       this.DatosLandingPageEnvio.Nombres=value.Nombres;
       this.DatosLandingPageEnvio.Apellidos=value.Apellidos;
