@@ -8,13 +8,13 @@
     <div class="row rowpadd">
       <div class="col-12 col-md-12 col-lg-12">
         <div class="titulop">
-          {{tagTitle}}
+          Blogs, Artículos, Cursos, Programas, Certificaciones relacionados con {{tagTitle}}
         </div>
         <div>
           <div class="tagSubTitle">{{tagSubTitle}}</div>
         </div>
         <div style="font-size: 20px;
-        color: #797978;">{{tagDescripcion}}</div>
+        color: #797978;text-align: justify;"[innerHtml]="tagDescripcion | safeHtml">{{tagDescripcion}}</div>
       </div>
     </div>
   </div>
@@ -22,7 +22,7 @@
 <div class="container">
   <div class="row rowpadd">
     <div class="col-12 col-md-12 col-lg-12 pTagTitle">
-      Cursos, Programas y Certificaciones
+      Cursos, Programas, Certificaciones
     </div>
     <div class="col-12 col-md-6 col-lg-3" *ngFor="let item of programas" style="margin-bottom: 40px;">
       <app-card-programas [cardContent]="item" [Interaccion]="'Tags(programas relacionados)'"></app-card-programas>
