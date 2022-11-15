@@ -78,6 +78,16 @@ export class AppComponent implements OnInit,AfterViewInit ,OnDestroy {
     this._GlobalService.ObtenerCodigoIso().pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
       this._SessionStorageService.SessionSetValue('ISO_PAIS',x.codigoISO);
+      this._SessionStorageService.SessionSetValue('NombreForm','');
+      this._SessionStorageService.SessionSetValue('ApellidoForm','');
+      this._SessionStorageService.SessionSetValue('EmailForm','');
+      this._SessionStorageService.SessionSetValue('IdPaisForm','0');
+      this._SessionStorageService.SessionSetValue('IdRegionForm','0');
+      this._SessionStorageService.SessionSetValue('MovilForm','');
+      this._SessionStorageService.SessionSetValue('IdCargoForm','0');
+      this._SessionStorageService.SessionSetValue('IdAreaFormacionForm','0');
+      this._SessionStorageService.SessionSetValue('IdAreaTrabajoForm','0');
+      this._SessionStorageService.SessionSetValue('IdIndustriaForm','0');
       this.CodigoIso=x.codigoISO;
       this.charge=true;
     }})

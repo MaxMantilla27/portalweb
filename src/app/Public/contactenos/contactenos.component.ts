@@ -15,6 +15,7 @@ import { Subject, takeUntil } from 'rxjs';
 import { isPlatformBrowser } from '@angular/common';
 import { SnackBarServiceService } from 'src/app/Core/Shared/Services/SnackBarService/snack-bar-service.service';
 import { SessionStorageService } from 'src/app/Core/Shared/Services/session-storage.service';
+import { DatosFormularioDTO } from 'src/app/Core/Models/DatosFormularioDTO';
 declare const fbq:any;
 
 declare const gtag:any;
@@ -92,6 +93,7 @@ export class ContactenosComponent implements OnInit,OnDestroy {
   public combosPrevios:any
   public cargando=false
   public cleanSub=false
+  public CompleteLocalStorage=false;
   ngOnInit(): void {
 
 
@@ -106,8 +108,7 @@ export class ContactenosComponent implements OnInit,OnDestroy {
       ogDescription:'Programas, Certificaciones y Cursos en Big Data, Analytics, Proyectos, ISO 9001, ISO 14001, OHSAS 18001, ISO 27001, Construcción, Minería.',
       twiterDescription:'Programas, Certificaciones y Cursos en Big Data, Analytics, Proyectos, ISO 9001, ISO 14001, OHSAS 18001, ISO 27001, Construcción, Minería.'
     });
-
-
+    this.obtenerFormularioCompletado();
     this._HelperService.recibirCombosPerfil.pipe(takeUntil(this.signal$)).subscribe((x) => {
       this.combosPrevios=x.datosAlumno;
       this.formularioContacto.Nombres= this.combosPrevios.nombres,
@@ -123,9 +124,35 @@ export class ContactenosComponent implements OnInit,OnDestroy {
       if(this.formularioContacto.IdPais!=undefined){
         this.GetRegionesPorPais(this.formularioContacto.IdPais);
       }
+      this.CompleteLocalStorage=false;
     })
     this.AddFields();
     this.ObtenerCombosPortal();
+  }
+  obtenerFormularioCompletado(){
+    this.formularioContacto.Nombres=this._SessionStorageService.SessionGetValue('NombreForm');
+    this.formularioContacto.Apellidos=this._SessionStorageService.SessionGetValue('ApellidoForm');
+    this.formularioContacto.Email=this._SessionStorageService.SessionGetValue('EmailForm');
+    this.formularioContacto.IdPais=parseInt(this._SessionStorageService.SessionGetValue('IdPaisForm'));
+    this.formularioContacto.IdRegion=parseInt(this._SessionStorageService.SessionGetValue('IdRegionForm'));
+    this.formularioContacto.Movil=this._SessionStorageService.SessionGetValue('MovilForm');
+    this.formularioContacto.IdCargo=parseInt(this._SessionStorageService.SessionGetValue('IdCargoForm'));
+    this.formularioContacto.IdAreaFormacion=parseInt(this._SessionStorageService.SessionGetValue('IdAreaFormacionForm'));
+    this.formularioContacto.IdAreaTrabajo=parseInt(this._SessionStorageService.SessionGetValue('IdAreaTrabajoForm'));
+    this.formularioContacto.IdIndustria=parseInt(this._SessionStorageService.SessionGetValue('IdIndustriaForm'));
+    if(this.formularioContacto.IdPais!=undefined)
+      {
+        this.GetRegionesPorPais(this.formularioContacto.IdPais);
+      }
+    if(this.formularioContacto.Nombres!='' ||
+    this.formularioContacto.Apellidos!='' ||
+    this.formularioContacto.Email!='' ||
+    this.formularioContacto.IdCargo!=0 ||
+    this.formularioContacto.IdAreaFormacion!=0 ||
+    this.formularioContacto.IdAreaTrabajo!=0 ||
+    this.formularioContacto.IdIndustria!=0){
+      this.CompleteLocalStorage=true;
+    }
   }
   SetContacto(value:any){
     if(this.formVal){
@@ -150,9 +177,22 @@ export class ContactenosComponent implements OnInit,OnDestroy {
       }else{
         this.DatosContactenosEnvio.IdPespecifico=parseInt(IdPespecifico)
       };
+      console.log(this.DatosContactenosEnvio)
       this._ContactenosService.EnviarFormulario(this.DatosContactenosEnvio).subscribe({
         next:x => {
-          this.cleanSub=true
+          this.cleanSub=false;
+          this._SessionStorageService.SessionSetValue('NombreForm',this.DatosContactenosEnvio.Nombres);
+          this._SessionStorageService.SessionSetValue('ApellidoForm',this.DatosContactenosEnvio.Apellidos);
+          this._SessionStorageService.SessionSetValue('EmailForm',this.DatosContactenosEnvio.Correo1);
+          this._SessionStorageService.SessionSetValue('IdPaisForm',String(this.DatosContactenosEnvio.IdPais));
+          this._SessionStorageService.SessionSetValue('IdRegionForm',String(this.DatosContactenosEnvio.IdRegion));
+          this._SessionStorageService.SessionSetValue('MovilForm',this.DatosContactenosEnvio.Movil);
+          this._SessionStorageService.SessionSetValue('IdCargoForm',String(this.DatosContactenosEnvio.IdCargo));
+          this._SessionStorageService.SessionSetValue('IdAreaFormacionForm',String(this.DatosContactenosEnvio.IdAreaFormacion));
+          this._SessionStorageService.SessionSetValue('IdAreaTrabajoForm',String(this.DatosContactenosEnvio.IdAreaTrabajo));
+          this._SessionStorageService.SessionSetValue('IdIndustriaForm',String(this.DatosContactenosEnvio.IdIndustria));
+          this.CompleteLocalStorage=true;
+          this.formularioContacto.Comentario= '';
           if(this.isBrowser){
             fbq('track', 'CompleteRegistration');
             gtag('event', 'conversion', {
@@ -170,7 +210,8 @@ export class ContactenosComponent implements OnInit,OnDestroy {
         complete: () => {
           console.log('------------------facebook(complete)---------------------------');
           this.statuscharge = false;
-          this.cargando=false
+          this.cargando=false;
+          this.obtenerFormularioCompletado();
         },
       });
     }
@@ -336,6 +377,17 @@ export class ContactenosComponent implements OnInit,OnDestroy {
     });
   }
   LimpiarCampos(){
+    this.CompleteLocalStorage=false;
+    this._SessionStorageService.SessionSetValue('NombreForm','');
+    this._SessionStorageService.SessionSetValue('ApellidoForm','');
+    this._SessionStorageService.SessionSetValue('EmailForm','');
+    this._SessionStorageService.SessionSetValue('IdPaisForm','0');
+    this._SessionStorageService.SessionSetValue('IdRegionForm','0');
+    this._SessionStorageService.SessionSetValue('MovilForm','');
+    this._SessionStorageService.SessionSetValue('IdCargoForm','0');
+    this._SessionStorageService.SessionSetValue('IdAreaFormacionForm','0');
+    this._SessionStorageService.SessionSetValue('IdAreaTrabajoForm','0');
+    this._SessionStorageService.SessionSetValue('IdIndustriaForm','0');
     this.combosPrevios=undefined;
     this.formularioContacto.Nombres= '',
     this.formularioContacto.Apellidos= '',
@@ -347,6 +399,7 @@ export class ContactenosComponent implements OnInit,OnDestroy {
     this.formularioContacto.IdAreaTrabajo= undefined,
     this.formularioContacto.IdAreaFormacion= undefined,
     this.formularioContacto.IdIndustria= undefined,
+    this.formularioContacto.Comentario= '',
     this.GetRegionesPorPais(-1);
   }
 }
