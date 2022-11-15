@@ -207,7 +207,8 @@ export class CrucigramaComponent implements OnInit,OnChanges ,OnDestroy{
 
       el.scrollIntoView();
     }
-    this.valorIngresado=this.crucigrmaAvance.valores[pregunta-1].values
+    this.valorIngresado=this.GetValorMatris().trim()==''?'':this.GetValorMatris()
+    //this.valorIngresado=this.crucigrmaAvance.valores[pregunta-1].values
     console.log(this.matris)
   }
   SendValor(){
@@ -254,11 +255,28 @@ export class CrucigramaComponent implements OnInit,OnChanges ,OnDestroy{
     var valorAtualL=this.valorActual.length;
     if(valorAtualL>=this.valorIngresado.length && this.valorActual!=this.valorIngresado){
       var str=this.valorActual.substring(0,this.valorIngresado.length)
+      console.log(str.toLowerCase());
+      console.log(this.valorIngresado.toLowerCase());
+      console.log(this.valorIngresado.toLowerCase()==str.toLowerCase());
       if(this.valorIngresado.length>0){
-        if(this.valorIngresado==str){
+        if(this.valorIngresado.toLowerCase()==str.toLowerCase()){
           this.valorIngresado=this.valorActual.substring(0,this.valorIngresado.length+1)
         }else{
-          this.valorIngresado=this.valorActual.substring(0,1)
+
+          var nuevaPAl=''
+          var seagrego=false
+          for (var i = 0; i < this.valorIngresado.length; i++) {
+            var char=this.valorIngresado[i].toLocaleLowerCase();
+            if(char!=str[i].toLocaleLowerCase() && seagrego==false){
+              seagrego=true;
+              nuevaPAl+=str[i]
+            }else{
+              nuevaPAl+=this.valorIngresado[i]
+            }
+          }
+          console.log(nuevaPAl)
+          this.valorIngresado=nuevaPAl
+          //this.valorIngresado=this.valorActual.substring(0,1)
         }
       }else{
         this.valorIngresado=this.valorActual.substring(0,1)
@@ -273,6 +291,22 @@ export class CrucigramaComponent implements OnInit,OnChanges ,OnDestroy{
       this.crucigrmaAvance.valores[this.PreguntaActual-1].values=this.valorIngresado;
       this.crucigrmaAvance.valores[this.PreguntaActual-1].ayuda=true;
     }
+  }
+  GetValorMatris():string{
+    var valor=''
+    var k=0
+    var ultimo=0
+    for (var i = 0; i < this.matris.length; i++) {
+      for (var j = 0;j < this.matris[i].length; j++) {
+        if(this.matris[i][j].select==true){
+          k++
+          ultimo=this.matris[i][j].valor==''?ultimo:k
+          valor+=this.matris[i][j].valor==''?' ':this.matris[i][j].valor
+        }
+      }
+    }
+    valor=valor.substring(0,(ultimo))
+    return valor;
   }
   addValorImputCrucigrama(valori:string,index:number){
     var palabraL=valori.length

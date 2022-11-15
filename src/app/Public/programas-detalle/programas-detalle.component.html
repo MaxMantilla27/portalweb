@@ -93,10 +93,15 @@
           </div>
         </div>
       </div>
+
+      <div class="col-12" style=" color: red;" *ngIf="MontoPago.length>0 && MontoPago[0].porcentajeDescuento!=null && MontoPago[0].porcentajeDescuento!=0">
+        {{MontoPago[0].textoCabeceraDescuento}}
+      </div>
     </div>
     <div class="col-12 col-md-4 col-lg-4" style="position: relative;text-align: center;">
       <img class="InfoProgramImg" [src]="cabecera.imgPrincipal" alt="">
     </div>
+
   </div>
 </div>
 <div style="background: #e6eefa;">
@@ -483,7 +488,21 @@
         </h4>
         <div class="" *ngFor="let item of MontoPago" style="display: flex;align-items: center;margin-bottom: 10px;">
           <i class="material-icons iconarrow">arrow_forward_ios</i>
-          <div *ngIf="item.idTipoPago==1" style="color: #616161;">Pago al Contado: {{item.simbolo}}.{{item.cuotas}}
+          <div *ngIf="item.idTipoPago==1" style="color: #616161;">
+            <ng-container *ngIf="item.porcentajeDescuento==null || item.porcentajeDescuento==0">
+              Pago al Contado: {{item.simbolo}}.{{item.cuotas}}
+            </ng-container>
+            <ng-container *ngIf="item.porcentajeDescuento!=null && item.porcentajeDescuento!=0" >
+              <ng-container *ngIf="MontoPago.length>1">
+                <ng-container *ngFor="let item2 of MontoPago">
+                  <div *ngIf="item2.idTipoPago==2" [innerHtml]="'Pago al Contado: <strike>'+item.simbolo+' '+item.cuotas+'</strike> '+item2.montoPagoDescripcion | safeHtml"></div>
+                </ng-container>
+              </ng-container>
+              <ng-container *ngIf="MontoPago.length==1">
+                <div [innerHtml]="item.montoPagoDescripcion | safeHtml"></div>
+              </ng-container>
+            </ng-container>
+            <div ></div>
           </div>
           <div *ngIf="item.idTipoPago==2" style="color: #616161;">Precio en Cuotas:
             {{item.simbolo}}.{{item.matricula}}

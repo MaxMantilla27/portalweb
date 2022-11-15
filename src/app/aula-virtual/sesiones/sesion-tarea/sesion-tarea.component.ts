@@ -4,6 +4,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { Subject, takeUntil } from 'rxjs';
 import { ParametrosEstructuraEspecificaDTO } from 'src/app/Core/Models/EstructuraEspecificaDTO';
 import { ModelTareaEvaluacionTareaDTO, ParametroObtenerEvaluacionTarea } from 'src/app/Core/Models/TareaEvaluacionDTO';
+import { EliminarComponent } from 'src/app/Core/Shared/Containers/Dialog/eliminar/eliminar.component';
 import { SnackBarServiceService } from 'src/app/Core/Shared/Services/SnackBarService/snack-bar-service.service';
 import { TareaEvaluacionService } from 'src/app/Core/Shared/Services/TareaEvaluacion/tarea-evaluacion.service';
 import { RetroalimentacionTareaComponent } from './retroalimentacion-tarea/retroalimentacion-tarea.component';
@@ -178,8 +179,18 @@ export class SesionTareaComponent implements OnInit,OnChanges,OnDestroy {
               this.nombrefile=''
               if(x.body==true){
                 this.ObtenerEvaluacionTarea()
+                //this._SnackBarServiceService.openSnackBar(x.body.mensaje,'x',20,"snackbarCrucigramaSucces");
               }else{
-                this._SnackBarServiceService.openSnackBar("Solo tiene 3 intentos para subir su tarea.",'x',15,"snackbarCrucigramaerror");
+                if(x.body==false){
+                  this._SnackBarServiceService.openSnackBar("Solo tiene 3 intentos para subir su tarea.",'x',15,"snackbarCrucigramaerror");
+                }else{
+                  if(x.body.estado==true){
+                    this.ObtenerEvaluacionTarea()
+                    this._SnackBarServiceService.openSnackBar(x.body.mensaje,'x',20,"snackbarCrucigramaSucces");
+                  }else{
+                    this._SnackBarServiceService.openSnackBar(x.body.mensaje,'x',20,"snackbarCrucigramaerror");
+                  }
+                }
               }
             }
           },
@@ -201,6 +212,37 @@ export class SesionTareaComponent implements OnInit,OnChanges,OnDestroy {
   }
   prevc(){
     this.prev.emit();
+  }
+  OpenModalDelete(tarea:any){
+    const dialogRef = this.dialog.open(EliminarComponent, {
+      width: '550px',
+      data: {
+        titulo:'¿Está seguro de eliminar la tarea registrada?',
+        sub:'¡No podrás revertir esta acción!'},
+      panelClass: 'custom-dialog-eliminar',
+    });
+
+    dialogRef.afterClosed().pipe(takeUntil(this.signal$)).subscribe(result => {
+      if(result==true){
+        this.DeleteTarea(tarea)
+      }
+    });
+
+
+  }
+  DeleteTarea(tarea:any){
+    console.log(tarea)
+    this._TareaEvaluacionService.DeleteEvaluacionTareaEvaluacionTarea(tarea.id).pipe(takeUntil(this.signal$)).subscribe({
+      next:x=>{
+        console.log(x)
+        if(x.estado==true){
+          this.ObtenerEvaluacionTarea()
+          this._SnackBarServiceService.openSnackBar(x.mensaje,'x',20,"snackbarCrucigramaSucces");
+        }else{
+          this._SnackBarServiceService.openSnackBar(x.mensaje,'x',20,"snackbarCrucigramaerror");
+        }
+      }
+    })
   }
   mensajeError(){
     console.log('------')

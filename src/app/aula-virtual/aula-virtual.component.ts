@@ -81,13 +81,12 @@ export class AulaVirtualComponent implements OnInit ,OnDestroy{
       this.InsertarInteraccionPortal(this.rutaAnterior)
       this.rutaAnterior=window.location.href
       this.router.events.pipe(filter((event): event is NavigationEnd => event instanceof NavigationEnd),takeUntil(this.signal$)).subscribe((val) => {
-        // see also
-          if(this.idInteraccionPortalPagina>0){
-            this.ActualizarInteraccionPortal()
-          }
-          this.InsertarInteraccionPortalDetalle(null)
-          this.InsertarInteraccionPortal(this.rutaAnterior)
-          this.rutaAnterior=window.location.href
+        if(this.idInteraccionPortalPagina>0){
+          this.ActualizarInteraccionPortal()
+        }
+        this.InsertarInteraccionPortalDetalle(null)
+        this.InsertarInteraccionPortal(this.rutaAnterior)
+        this.rutaAnterior=window.location.href
       });
       this._HelperService.recibirMsjAcciones().pipe(takeUntil(this.signal$)).subscribe({
         next:x=>{
@@ -102,7 +101,6 @@ export class AulaVirtualComponent implements OnInit ,OnDestroy{
           }
         }
       })
-
       this._HelperService.recibirMsjForm().pipe(takeUntil(this.signal$)).subscribe({
         next:x=>{
           console.log(x)
@@ -170,7 +168,6 @@ export class AulaVirtualComponent implements OnInit ,OnDestroy{
     })
   }
   ActualizarInteraccionPortal(){
-    console.log(this.idInteraccionPortalPagina)
     this._InteraccionService.ActualizarInteraccionPortal(this.idInteraccionPortalPagina).pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
       }

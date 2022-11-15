@@ -15,7 +15,7 @@
               </div>
               <div class="col-12 row tot">
                 <div class="col-8">Total a pagar</div>
-                <div class="col-4" style="text-align: right;">{{resultVisa.moneda}} {{resultVisa.montoTotal}}</div>
+                <div class="col-4" style="text-align: right;">{{resultVisa.moneda}} {{resultVisa.montoTotal | number : '1.2-2'}}</div>
               </div>
             </div>
           </div>
@@ -99,11 +99,11 @@
               <div class="col-12 row itms" >
                 <div class="verionPago" style="margin: 10px 0px;
                 font-size: 14px;">{{resultVisa.version}}</div>
-                <div class="inicioPago">INICIO: {{resultVisa.tipo}} - {{resultVisa.inicio}}</div>
+                <div class="inicioPago">INICIO: {{resultVisa.tipo}} - {{resultVisa.inicio }}</div>
               </div>
               <div class="col-12 row tot">
                 <div class="col-8">Total a pagar</div>
-                <div class="col-4" style="text-align: right;">{{resultVisa.moneda}} {{resultVisa.montoTotal}}</div>
+                <div class="col-4" style="text-align: right;">{{resultVisa.moneda}} {{resultVisa.montoTotal | number : '1.2-2'}}</div>
               </div>
             </div>
           </div>

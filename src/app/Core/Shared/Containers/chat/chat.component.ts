@@ -9,6 +9,7 @@ import { HelperService } from '../../Services/helper.service';
 import { SessionStorageService } from '../../Services/session-storage.service';
 import { HttpEventType, HttpResponse } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
+import { ActivatedRoute, Router } from '@angular/router';
 @Component({
   selector: 'app-chat',
   templateUrl: './chat.component.html',
@@ -25,6 +26,8 @@ export class ChatComponent implements OnInit,OnDestroy,OnChanges {
     private _SessionStorageService:SessionStorageService,
     private _GlobalService:GlobalService,
     private _ChatEnLinea: ChatEnLineaService,
+    private _ActivatedRoute:ActivatedRoute,
+    private _Router:Router
   ) {
 
   }
@@ -76,6 +79,37 @@ export class ChatComponent implements OnInit,OnDestroy,OnChanges {
     this.signal$.complete()
   }
   ngOnInit(): void {
+    this._HelperService.recibirMsjChat().pipe(takeUntil(this.signal$)).subscribe({
+      next:x=>{
+        console.log(x);
+        if(x.idMatriculaCabecera!=undefined){
+          this.idMatriculaCabecera=x.idMatriculaCabecera
+        }
+        if(x.idcentrocosto!=undefined){
+          this.idcentrocosto=x.idcentrocosto
+        }
+        if(x.idcoordinadora!=undefined){
+          this.idcoordinadora=x.idcoordinadora
+        }
+        if(x.idcursoprogramageneralalumno!=undefined){
+          this.idcursoprogramageneralalumno=x.idcursoprogramageneralalumno
+        }
+        if(x.idprogramageneralalumno!=undefined){
+          this.idprogramageneralalumno=x.idprogramageneralalumno
+        }
+        if(x.idcapitulo!=undefined){
+          this.idcapitulo=x.idcapitulo
+        }
+        if(x.idsesion!=undefined){
+          this.idsesion=x.idsesion
+        }
+        if(this.hubConnection.state=='Connected'){
+          this.GenerarLogVisitanteAulaVirtual()
+        }
+
+      }
+    })
+    console.log(this._Router.url.split('/'));
     this.ObtenerConfiguracionChat();
     //this.ObtenerIdAlumnoPorUsuario(undefined)
     this._HelperService.recibirCombosPerfil.pipe(takeUntil(this.signal$)).subscribe({

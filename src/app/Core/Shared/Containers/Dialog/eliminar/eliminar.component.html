@@ -1,0 +1,18 @@
+<div class="row" style="align-items: center;">
+  <div class="col-4 col-md-3 col-lg-2">
+    <div class="Alert">!</div>
+  </div>
+  <div class="col-8 col-md-9 col-lg-10">
+    <div class="title">
+      {{data.titulo}}
+    </div>
+    <div class="subtitle">
+      {{data.sub}}
+    </div>
+  </div>
+  <div class="col-12 footerButtos">
+
+    <app-default-button (ButtoclClick)="cerrar(true)" [confs]="{color:'primary',titulo:'Aceptar'}" [icon]="''" [style]="'background: #4c5fc0;    margin: 0px;'"></app-default-button>
+    <app-default-button (ButtoclClick)="cerrar(true)" [confs]="{color:'primary',titulo:'Cancelar'}" [icon]="''" [style]="'background: #dd3333;    margin: 0px;'"></app-default-button>
+  </div>
+</div>

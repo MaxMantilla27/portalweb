@@ -54,4 +54,9 @@ export interface listaMontoPagoProgramaInformacionDTO{
   nroCuotas:number;
   simbolo:string;
   paquete:number;
+  porcentajeDescuento:number;
+  precio:number;
+  precioDescuento:number;
+  textoCabeceraDescuento:string;
+  montoPagoDescripcion:string;
 }

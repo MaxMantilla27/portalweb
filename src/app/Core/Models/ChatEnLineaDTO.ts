@@ -13,6 +13,16 @@ export interface ValidacionChatEnvioDTO{
   EstadoAsesor:string,
   IdUsuario?:string,
   IdCategoriaDato?:number,
+  IdCampania?:number,
   IdPespecifico?:number,
 
+}
+export interface SetChat{
+  idprogramageneralalumno?:number,
+  idcursoprogramageneralalumno?:number,
+  idcapitulo?:number,
+  idsesion?:number,
+  idMatriculaCabecera?:number,
+  idcentrocosto?:number,
+  idcoordinadora?:number,
 }
