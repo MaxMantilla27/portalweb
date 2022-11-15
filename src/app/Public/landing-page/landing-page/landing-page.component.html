@@ -16,13 +16,18 @@
       </div>
       <ng-container *ngIf="combosPrevios!=undefined">
         <div class="OpcionLP">
-          <a style="color: #033DAB;" (click)="LimpiarCampos()">[No soy {{FormularioLandingPage.Nombres}}]</a>
+          <a style="color: #033DAB;cursor: pointer;" (click)="LimpiarCampos()">[No soy {{FormularioLandingPage.Nombres}}]</a>
+        </div>
+      </ng-container>
+      <ng-container *ngIf="combosPrevios==undefined && CompleteLocalStorage==true">
+        <div class="OpcionLP">
+          <a style="color: #033DAB;cursor: pointer;" (click)="LimpiarCampos()">[No soy {{FormularioLandingPage.Nombres}}]</a>
         </div>
       </ng-container>
     </div>
 
     <div style="padding: 10px 25px;">
-      <ng-container *ngIf="combosPrevios==undefined" style="margin-top: 10px;">
+      <ng-container *ngIf="combosPrevios!=undefined" style="margin-top: 10px;">
         <app-formulario [Interaccion]="'Publicidad-'+data.IdFormulario" style="margin-top: 20px"
           [model]="FormularioLandingPage" [InputsDisable]="statuscharge" (OnValid)="formVal=$event" [fiels]="fileds"
           [Tipo]="1" (OnSubmit)="EnviarFormulario($event)" (OnSelect)="SelectChage($event)">
@@ -45,7 +50,30 @@
           </ng-container>
         </app-formulario>
       </ng-container>
-      <ng-container *ngIf="combosPrevios!=undefined" style="margin-top: 10px;">
+      <ng-container *ngIf="combosPrevios==undefined && CompleteLocalStorage==true" style="margin-top: 10px;">
+        <app-formulario [Interaccion]="'Publicidad-'+data.IdFormulario" style="margin-top: 20px"
+          [model]="FormularioLandingPage" [InputsDisable]="statuscharge" (OnValid)="formVal=$event" [fiels]="fileds"
+          [Tipo]="1" (OnSubmit)="EnviarFormulario($event)" (OnSelect)="SelectChage($event)">
+
+          <ng-container contenido>
+          </ng-container>
+
+          <ng-container send>
+            <div class="TerminosLP">
+              Al hacer clic en "Solicitar Información", Ud. acepta enviar su información a BSG Institute, que se
+              compromete a usarla en conformidad a su Política de Privacidad y su Política de Datos. <a
+                routerLink="/politica-privacidad" target="_blank">Consulte la política de privacidad de BSG
+                Institute...</a>
+            </div>
+            <div class="col-12 col-md-12 col-lg-12">
+              <app-default-button [confs]="{color:'primary',titulo:'Solicitar Información'}"
+                [style]="'width: 100%;margin-top:10px'"></app-default-button>
+            </div>
+
+          </ng-container>
+        </app-formulario>
+      </ng-container>
+      <ng-container *ngIf="combosPrevios==undefined && CompleteLocalStorage==false" style="margin-top: 10px;">
         <app-formulario [Interaccion]="'Publicidad-'+data.IdFormulario" style="margin-top: 20px"
           [model]="FormularioLandingPage" [InputsDisable]="statuscharge" (OnValid)="formVal=$event" [fiels]="fileds"
           [Tipo]="1" (OnSubmit)="EnviarFormulario($event)" (OnSelect)="SelectChage($event)">

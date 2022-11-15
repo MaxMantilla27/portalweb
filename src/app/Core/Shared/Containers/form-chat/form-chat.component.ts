@@ -58,12 +58,24 @@ export class FormChatComponent implements OnInit,OnChanges {
     EstadoAsesor:'',
   };
   @Output() SaveForm:EventEmitter<{id:string,idAlumno:number}> = new EventEmitter<{id:string,idAlumno:number}>();
+  public CompleteLocalStorage=false;
   ngOnInit(): void {
-    this.AddFields()
+    this.AddFields();
+    this.obtenerFormularioCompletado();
   }
   ngOnChanges(changes: SimpleChanges): void {
   }
-
+  obtenerFormularioCompletado(){
+    this.formularioContactoChat.Nombres=this._SessionStorageService.SessionGetValue('NombreForm');
+    this.formularioContactoChat.Apellidos=this._SessionStorageService.SessionGetValue('ApellidoForm');
+    this.formularioContactoChat.Email=this._SessionStorageService.SessionGetValue('EmailForm');
+    this.formularioContactoChat.Movil=this._SessionStorageService.SessionGetValue('MovilForm');
+    if(this.formularioContactoChat.Nombres!='' ||
+    this.formularioContactoChat.Apellidos!='' ||
+    this.formularioContactoChat.Email!=''){
+      this.CompleteLocalStorage=true;
+    }
+  }
   SetContacto(value: any) {
     if (!this.formVal) {
       // this._SnackBarServiceService.openSnackBar(
@@ -92,7 +104,11 @@ export class FormChatComponent implements OnInit,OnChanges {
       this.DatosEnvioFormulario.IdCampania=parseInt(idcampania)
       this._ChatEnLinea.ValidarCrearOportunidadChat(this.DatosEnvioFormulario).pipe(takeUntil(this.signal$)).subscribe({
         next:(x)=>{
-
+          this._SessionStorageService.SessionSetValue('NombreForm',this.DatosEnvioFormulario.Nombres);
+          this._SessionStorageService.SessionSetValue('ApellidoForm',this.DatosEnvioFormulario.Apellidos);
+          this._SessionStorageService.SessionSetValue('EmailForm',this.DatosEnvioFormulario.Email);
+          this._SessionStorageService.SessionSetValue('MovilForm',this.DatosEnvioFormulario.Movil);
+          this.CompleteLocalStorage=true;
           if(this.isBrowser){
             fbq('track', 'CompleteRegistration');
             gtag('event', 'conversion', {
@@ -104,7 +120,11 @@ export class FormChatComponent implements OnInit,OnChanges {
           }
           this.validacionChat=x
           this.SaveForm.emit({id:x.respuesta.id,idAlumno:x.respuesta.idAlumno})
-        }
+        },
+        complete: () => {
+          this.statuscharge = false;
+          this.obtenerFormularioCompletado();
+        },
       })
     }
   }
@@ -138,5 +158,22 @@ export class FormChatComponent implements OnInit,OnChanges {
       validate: [Validators.required],
       label: 'Teléfono Móvil',
     });
+  }
+  LimpiarCampos(){
+    this.CompleteLocalStorage=false;
+    this._SessionStorageService.SessionSetValue('NombreForm','');
+    this._SessionStorageService.SessionSetValue('ApellidoForm','');
+    this._SessionStorageService.SessionSetValue('EmailForm','');
+    this._SessionStorageService.SessionSetValue('IdPaisForm','0');
+    this._SessionStorageService.SessionSetValue('IdRegionForm','0');
+    this._SessionStorageService.SessionSetValue('MovilForm','');
+    this._SessionStorageService.SessionSetValue('IdCargoForm','0');
+    this._SessionStorageService.SessionSetValue('IdAreaFormacionForm','0');
+    this._SessionStorageService.SessionSetValue('IdAreaTrabajoForm','0');
+    this._SessionStorageService.SessionSetValue('IdIndustriaForm','0');
+    this.DatosEnvioFormulario.Nombres= '';
+    this.DatosEnvioFormulario.Apellidos= '';
+    this.DatosEnvioFormulario.Email= '';
+    this.DatosEnvioFormulario.Movil= '';
   }
 }

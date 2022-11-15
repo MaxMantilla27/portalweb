@@ -105,6 +105,8 @@ export class CarreraProfesionalDetalleComponent implements OnInit {
   public IdPespecificoPrograma=0;
   public idbusqueda=0
   public cleanSub=false
+  public CompleteLocalStorage=false;
+
   ngOnInit(): void {
     this.migaPan = [
       {
@@ -131,6 +133,7 @@ export class CarreraProfesionalDetalleComponent implements OnInit {
       })
       this.getCarreraDetalle(idBusqueda, nombre)
     })
+    this.obtenerFormularioCompletado();
     this._HelperServiceP.recibirCombosPerfil.pipe(takeUntil(this.signal$)).subscribe((x) => {
       this.combosPrevios=x.datosAlumno;
       console.log(this.combosPrevios)
@@ -143,6 +146,7 @@ export class CarreraProfesionalDetalleComponent implements OnInit {
       if(this.formularioContacto.IdPais!=undefined){
         this.GetRegionesPorPais(this.formularioContacto.IdPais);
       }
+      this.CompleteLocalStorage=false;
     })
     this.videoPrueba = this.formatVideo(this.videoPrueba)
     this.AddFields();
@@ -250,6 +254,23 @@ export class CarreraProfesionalDetalleComponent implements OnInit {
       }
     })
   }
+  obtenerFormularioCompletado(){
+    this.formularioContacto.Nombres=this._SessionStorageService.SessionGetValue('NombreForm');
+    this.formularioContacto.Apellidos=this._SessionStorageService.SessionGetValue('ApellidoForm');
+    this.formularioContacto.Email=this._SessionStorageService.SessionGetValue('EmailForm');
+    this.formularioContacto.IdPais=parseInt(this._SessionStorageService.SessionGetValue('IdPaisForm'));
+    this.formularioContacto.IdRegion=parseInt(this._SessionStorageService.SessionGetValue('IdRegionForm'));
+    this.formularioContacto.Movil=this._SessionStorageService.SessionGetValue('MovilForm');
+    if(this.formularioContacto.IdPais!=undefined)
+      {
+        this.GetRegionesPorPais(this.formularioContacto.IdPais);
+      }
+    if(this.formularioContacto.Nombres!='' ||
+    this.formularioContacto.Apellidos!='' ||
+    this.formularioContacto.Email!=''){
+      this.CompleteLocalStorage=true;
+    }
+  }
   SetContacto(value:any){
     if(!this.formVal){
 
@@ -276,7 +297,14 @@ export class CarreraProfesionalDetalleComponent implements OnInit {
       };
       this._HelperService.EnviarFormulario(this.DatosEnvioFormulario).pipe(takeUntil(this.signal$)).subscribe({
         next: (x) => {
-          this.cleanSub=true
+          this.cleanSub=false;
+          this._SessionStorageService.SessionSetValue('NombreForm',this.DatosEnvioFormulario.Nombres);
+          this._SessionStorageService.SessionSetValue('ApellidoForm',this.DatosEnvioFormulario.Apellidos);
+          this._SessionStorageService.SessionSetValue('EmailForm',this.DatosEnvioFormulario.Correo1);
+          this._SessionStorageService.SessionSetValue('IdPaisForm',String(this.DatosEnvioFormulario.IdPais));
+          this._SessionStorageService.SessionSetValue('IdRegionForm',String(this.DatosEnvioFormulario.IdRegion));
+          this._SessionStorageService.SessionSetValue('MovilForm',this.DatosEnvioFormulario.Movil);
+          this.CompleteLocalStorage=true;
           if(this.isBrowser){
             fbq('track', 'CompleteRegistration');
             gtag('event', 'conversion', {
@@ -290,6 +318,7 @@ export class CarreraProfesionalDetalleComponent implements OnInit {
         },
         complete: () => {
           this.statuscharge = false;
+          this.obtenerFormularioCompletado();
         },
       });
     }
@@ -388,13 +417,24 @@ export class CarreraProfesionalDetalleComponent implements OnInit {
     });
   }
   LimpiarCampos(){
+    this.CompleteLocalStorage=false;
+    this._SessionStorageService.SessionSetValue('NombreForm','');
+    this._SessionStorageService.SessionSetValue('ApellidoForm','');
+    this._SessionStorageService.SessionSetValue('EmailForm','');
+    this._SessionStorageService.SessionSetValue('IdPaisForm','0');
+    this._SessionStorageService.SessionSetValue('IdRegionForm','0');
+    this._SessionStorageService.SessionSetValue('MovilForm','');
+    this._SessionStorageService.SessionSetValue('IdCargoForm','0');
+    this._SessionStorageService.SessionSetValue('IdAreaFormacionForm','0');
+    this._SessionStorageService.SessionSetValue('IdAreaTrabajoForm','0');
+    this._SessionStorageService.SessionSetValue('IdIndustriaForm','0');
     this.combosPrevios=undefined;
     this.formularioContacto.Nombres= '',
-      this.formularioContacto.Apellidos= '',
-      this.formularioContacto.Email= '',
-      this.formularioContacto.IdPais=undefined,
-      this.formularioContacto.IdRegion=undefined,
-      this.formularioContacto.Movil= '',
-      this.GetRegionesPorPais(-1);
+    this.formularioContacto.Apellidos= '',
+    this.formularioContacto.Email= '',
+    this.formularioContacto.IdPais=undefined,
+    this.formularioContacto.IdRegion=undefined,
+    this.formularioContacto.Movil= '',
+    this.GetRegionesPorPais(-1);
   }
 }

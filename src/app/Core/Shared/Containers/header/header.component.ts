@@ -30,6 +30,7 @@ import { combosPerfilDTO, datosAlumnoDTO } from 'src/app/Core/Models/AlumnoDTO';
 import { DatoObservableDTO } from 'src/app/Core/Models/DatoObservableDTO';
 import { GlobalService } from '../../Services/Global/global.service';
 import { delay, firstValueFrom, Subject, takeUntil, tap } from 'rxjs';
+import { DatosFormularioDTO } from 'src/app/Core/Models/DatosFormularioDTO';
 
 @Component({
   selector: 'app-header',
@@ -97,6 +98,18 @@ export class HeaderComponent implements OnInit,OnChanges,OnDestroy {
     datoAvatar: false,
     datoContenido: false,
   }
+  public DatoFormularioCompletar: DatosFormularioDTO ={
+    nombres:'',
+    apellidos:'',
+    email:'',
+    idPais:0,
+    idRegion:0,
+    movil:'',
+    idCargo:0,
+    idAreaFormacion:0,
+    idAreaTrabajo:0,
+    idIndustria:0,
+  }
   public combosAvatar:AvatarCombosDTO={
     listaAccesorios:[],
     listaBarbaBigote:[],
@@ -156,6 +169,7 @@ export class HeaderComponent implements OnInit,OnChanges,OnDestroy {
     private _GlobalService:GlobalService
   ) {}
   ngOnChanges(changes: SimpleChanges): void {
+    console.log(changes)
     if(this.carga==true && this.usuarioWeb!=''){
       this.RevisarUsuario();
     }
@@ -188,6 +202,16 @@ export class HeaderComponent implements OnInit,OnChanges,OnDestroy {
     await firstValueFrom(this._GlobalService.RegistroInteraccionInicial().pipe(tap((result) => {
       this._SessionStorageService.SessionSetValue('usuarioWeb',result.identificadorUsuario);
       this._SessionStorageService.SessionSetValue('ISO_PAIS',result.codigoISO);
+      this._SessionStorageService.SessionSetValue('NombreForm','');
+      this._SessionStorageService.SessionSetValue('ApellidoForm','');
+      this._SessionStorageService.SessionSetValue('EmailForm','');
+      this._SessionStorageService.SessionSetValue('IdPaisForm','0');
+      this._SessionStorageService.SessionSetValue('IdRegionForm','0');
+      this._SessionStorageService.SessionSetValue('MovilForm','');
+      this._SessionStorageService.SessionSetValue('IdCargoForm','0');
+      this._SessionStorageService.SessionSetValue('IdAreaFormacionForm','0');
+      this._SessionStorageService.SessionSetValue('IdAreaTrabajoForm','0');
+      this._SessionStorageService.SessionSetValue('IdIndustriaForm','0');
     })));
     this.GetPaises();
     this.GetCarreras();
@@ -197,6 +221,7 @@ export class HeaderComponent implements OnInit,OnChanges,OnDestroy {
       this.ObtenerAvatar();
     }
     this.ObtenerObservable();
+
   }
   GetPaises() {
     this.paises = [];
