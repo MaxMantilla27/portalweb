@@ -290,7 +290,7 @@
         <li *ngFor="let item of certificado.contenido">{{item}}</li>
       </div>
       <div class="piePagina" [innerHtml]="certificado.piePagina | safeHtml"></div>
-      <div  [innerHtml]="certificado.descripcionLeyenda | safeHtml" style="word-break: break-all;"></div>
+      <div  [innerHtml]="certificado.descripcionLeyenda | safeHtml" style="text-align: justify;"></div>
 
       <mat-accordion class="acordionPrograma acrdionCertificado" multi *ngIf="certificado.descripcionHeader!=undefined && certificado.descripcionHeader.length>0">
         <mat-expansion-panel (opened)="EventoInteraccionAccordionCertificado(item,'Abierto')"
