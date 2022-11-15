@@ -3,6 +3,7 @@ import { Observable, ReplaySubject, Subject } from 'rxjs';
 import { combosPerfilDTO } from '../../Models/AlumnoDTO';
 import { AvatarCombosDTO } from '../../Models/Avatar';
 import { BasicUrl } from '../../Models/BasicDTO';
+import { SetChat } from '../../Models/ChatEnLineaDTO';
 import { DatoObservableDTO } from '../../Models/DatoObservableDTO';
 
 @Injectable({
@@ -26,9 +27,16 @@ export class HelperService {
   private msjStringEducacion = new ReplaySubject<string>(1)
   private msjAcciones=new Subject<any>();
   private msjAccionesForm=new Subject<any>();
+  private msjChat=new Subject<SetChat>();
 
 
 
+  enviarMsjChat(data:SetChat):void {
+    this.msjChat.next(data);
+  }
+  recibirMsjChat(): Observable<any> {
+    return this.msjChat.asObservable();
+  }
   enviarMsjForm(data:any):void {
     this.msjAccionesForm.next(data);
   }

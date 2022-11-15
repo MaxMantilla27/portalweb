@@ -247,6 +247,7 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
         var namePrograma = x['ProgramaNombre'].split('-');
 
         this.idBusqueda = namePrograma[namePrograma.length - 1];
+
       },
       error: () => {
         this._router.navigate(['error404']);
@@ -274,10 +275,10 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
       }
       this.CompleteLocalStorage=false;
     })
-
     this.AddFields();
     this.ObtenerCombosPortal();
     this.ObtenerCabeceraProgramaGeneral();
+
   }
 
   RegistrarProgramaPrueba(){
@@ -778,12 +779,14 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
       this.DatosEnvioFormulario.IdIndustria = value.IdIndustria;
       var IdPEspecifico=this._SessionStorageService.SessionGetValueCokies("IdPEspecificoPublicidad");
       var IdCategoriaDato=this._SessionStorageService.SessionGetValueCokies("idCategoria");
+      var idcampania=this._SessionStorageService.SessionGetValueCokies("idCampania");
       this.DatosEnvioFormulario.IdCategoriaDato=IdCategoriaDato==''?0:parseInt(IdCategoriaDato);
       if(IdPEspecifico==''){
         this.DatosEnvioFormulario.IdPespecifico=this.IdPespecificoPrograma;
       }else{
         this.DatosEnvioFormulario.IdPespecifico=parseInt(IdPEspecifico)
       };
+      this.DatosEnvioFormulario.IdCampania = parseInt(idcampania);
       this._HelperService
         .EnviarFormulario(this.DatosEnvioFormulario).pipe(takeUntil(this.signal$))
         .subscribe({

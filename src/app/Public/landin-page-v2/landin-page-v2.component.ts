@@ -29,6 +29,7 @@ export class LandinPageV2Component implements OnInit, OnDestroy {
 
     @Inject(PLATFORM_ID) platformId: Object
   ) {}
+  public tecnicas=[7758,7757]
   ngOnDestroy(): void {
     this.signal$.next(true);
     this.signal$.complete();
@@ -64,9 +65,10 @@ export class LandinPageV2Component implements OnInit, OnDestroy {
           console.log(x);
           if (x != undefined) {
             this.valorPrograma = x;
-            this._SessionStorage.SessionSetValue(
+            this._SessionStorage.SessionSetValueCokies(
               'idCampania',
-              this.valorPrograma.idConjuntoAnuncio
+              this.valorPrograma.idConjuntoAnuncio,
+              1
             );
             this._SessionStorage.SessionSetValueCokies(
               'idCategoria',
@@ -82,14 +84,19 @@ export class LandinPageV2Component implements OnInit, OnDestroy {
               this.valorPrograma.categoriaNombre.replace(/-/g, ' ');
             console.log(this.nombreProgramaLandingPage);
             this.OpenModalLandingPage();
-            this.router.navigate([
-              '/' +
-                this.valorPrograma.areaCapacitacion +
+            if(this.tecnicas.find(element => element ==x.idBusqueda)){
+              this.router.navigate(['/tecnico-productivo/'+this.valorPrograma.categoriaNombre+'-'+this.valorPrograma.idBusqueda]);
+
+            }else{
+              this.router.navigate([
                 '/' +
-                this.valorPrograma.categoriaNombre +
-                '-' +
-                this.valorPrograma.idBusqueda,
-            ]);
+                  this.valorPrograma.areaCapacitacion +
+                  '/' +
+                  this.valorPrograma.categoriaNombre +
+                  '-' +
+                  this.valorPrograma.idBusqueda,
+              ]);
+            }
           } else {
            this.router.navigate(['error404']);
           }

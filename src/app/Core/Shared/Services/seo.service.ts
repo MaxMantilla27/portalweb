@@ -1,4 +1,5 @@
-import { Injectable } from '@angular/core';
+import { DOCUMENT } from '@angular/common';
+import { Inject, Injectable } from '@angular/core';
 import {Meta} from '@angular/platform-browser'
 import { environment } from 'src/environments/environment';
 import { PartnerImagesDTO } from '../../Models/PartnerImagesDTO';
@@ -8,7 +9,10 @@ import { PartnerImagesDTO } from '../../Models/PartnerImagesDTO';
 export class SeoService {
 
   public urlBase=environment.url_portal;
-  constructor(private meta:Meta) { }
+  constructor(
+    private meta:Meta,
+    @Inject(DOCUMENT) private doc: any
+  ) { }
   generateTags(config:any){
     config={
       title:'BSG Institute - Conocimiento para Crecer',
@@ -47,6 +51,7 @@ export class SeoService {
       this.meta.addTag({ property: 'og:image:height', content:config.imageH });
       this.meta.addTag({ property: 'og:url', content: this.urlBase+`${config.slug}` });
     }
+    this.createLinkForCanonicalURL()
   }
   getimagesPartner(){
     var img:Array<PartnerImagesDTO>=[ {
@@ -127,5 +132,10 @@ export class SeoService {
     }]
     return img;
   }
-
+  createLinkForCanonicalURL() {
+    let link: HTMLLinkElement = this.doc.createElement('link');
+    link.setAttribute('rel', 'canonical');
+    this.doc.head.appendChild(link);
+    link.setAttribute('href', this.doc.URL);
+  }
 }

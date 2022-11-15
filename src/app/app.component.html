@@ -2,9 +2,9 @@
 <app-header (OnClick)="sidenav.toggle()" (ChangeExpand)="changeExpandibles($event)" [usuarioWeb]="usuarioWeb"
 [carga]="charge" [CodigoIso]="CodigoIso">
 </app-header>
-<mat-sidenav-container style="max-height: calc(100vh - 74px);">
+<mat-sidenav-container style="height:100%">
 
-  <mat-sidenav #sidenav mode="over" position='start' style="max-width: 70%;background: white !important;"
+  <mat-sidenav #sidenav mode="over" position='start' style="max-width: 70%;background: white !important;    position: fixed;margin-top: 60px;"
   [ngStyle]="{'height':step==-1?'fit-content':'auto'}">
     <!-- <div style="display: flex;
     align-items: center;
@@ -21,7 +21,7 @@
     </nav>
   </mat-sidenav>
 
-  <mat-sidenav-content (scroll)="onSideNavScroll($event)" [scrollTop]="0"  >
+  <mat-sidenav-content (scroll)="onSideNavScroll($event)" [scrollTop]="0" style="overflow: hidden;" >
     <section>
 
       <router-outlet></router-outlet>

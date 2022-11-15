@@ -1,0 +1,32 @@
+.Alert{
+  display: flex;
+  height: 0;
+  padding: calc( 50% - 2px ) 0px;
+  justify-content: center;
+  align-items: center;
+  border: solid 2px #f8c291;
+  border-radius: 50%;
+  color: #f8c291;
+  font-size: 50px;
+}
+.title{
+  font-size: 16px;
+  font-weight: 600;
+  color: #888888;
+}
+.sub{
+  font-size: 14px;
+  color: #888888;
+}
+.footerButtos{
+  margin-top: 20px;
+  border-top: 2px solid #c2c2c2;
+  padding: 20px 30px 0px 30px;
+  display: flex;
+  justify-content: space-evenly;
+}
+.custom-dialog-eliminar{
+  mat-dialog-container{
+    border-radius: 20px;
+  }
+}

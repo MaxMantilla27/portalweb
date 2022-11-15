@@ -11,7 +11,7 @@
       -webkit-line-clamp: 5;
       line-clamp: 5;">{{cardContent.Content}}
       </div>
-      <div class="vermasInImg" [routerLink]="cardContent.Url">Ver m&aacute;s +</div>
+      <div class="vermasInImg" (click)="nvigate(cardContent.Url)" >Ver m&aacute;s +</div>
     </div>
   </div>
   <mat-card-content>

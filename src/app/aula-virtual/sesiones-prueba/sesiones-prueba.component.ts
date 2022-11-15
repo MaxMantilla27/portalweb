@@ -212,13 +212,11 @@ export class SesionesPruebaComponent implements OnInit,OnDestroy {
         }
       );
     }
-
     this.migapanbase();
     this.migaPan.push({
       titulo:
         'Capitulo ' +
-        this.estructuraCapitulo[index]
-          .idCapitulo +
+        index+1 +
         ': ' +
         this.estructuraCapitulo[index]
           .capitulo,

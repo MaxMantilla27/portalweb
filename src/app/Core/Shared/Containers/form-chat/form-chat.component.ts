@@ -94,12 +94,14 @@ export class FormChatComponent implements OnInit,OnChanges {
       this.DatosEnvioFormulario.IdPrograma = this.IdPGeneral;
       var IdPespecifico=this._SessionStorageService.SessionGetValueCokies("IdPEspecificoPublicidad");
       var IdCategoriaDato=this._SessionStorageService.SessionGetValueCokies("idCategoria");
+      var idcampania=this._SessionStorageService.SessionGetValueCokies("idCampania");
       this.DatosEnvioFormulario.IdCategoriaDato=IdCategoriaDato==''?0:parseInt(IdCategoriaDato);
       if(IdPespecifico==''){
         this.DatosEnvioFormulario.IdPespecifico=this.IdPespecificoPrograma
       }else{
         this.DatosEnvioFormulario.IdPespecifico=parseInt(IdPespecifico)
       };
+      this.DatosEnvioFormulario.IdCampania=parseInt(idcampania)
       this._ChatEnLinea.ValidarCrearOportunidadChat(this.DatosEnvioFormulario).pipe(takeUntil(this.signal$)).subscribe({
         next:(x)=>{
           this._SessionStorageService.SessionSetValue('NombreForm',this.DatosEnvioFormulario.Nombres);
