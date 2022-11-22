@@ -133,13 +133,13 @@ export class ContactenosComponent implements OnInit,OnDestroy {
     this.formularioContacto.Nombres=this._SessionStorageService.SessionGetValue('NombreForm');
     this.formularioContacto.Apellidos=this._SessionStorageService.SessionGetValue('ApellidoForm');
     this.formularioContacto.Email=this._SessionStorageService.SessionGetValue('EmailForm');
-    this.formularioContacto.IdPais=parseInt(this._SessionStorageService.SessionGetValue('IdPaisForm'));
-    this.formularioContacto.IdRegion=parseInt(this._SessionStorageService.SessionGetValue('IdRegionForm'));
+    this.formularioContacto.IdPais=this._SessionStorageService.SessionGetValue('IdPaisForm')=='0'?undefined:parseInt(this._SessionStorageService.SessionGetValue('IdPaisForm'));
+    this.formularioContacto.IdRegion=this._SessionStorageService.SessionGetValue('IdRegionForm')=='0'?undefined:parseInt(this._SessionStorageService.SessionGetValue('IdRegionForm'));
     this.formularioContacto.Movil=this._SessionStorageService.SessionGetValue('MovilForm');
-    this.formularioContacto.IdCargo=parseInt(this._SessionStorageService.SessionGetValue('IdCargoForm'));
-    this.formularioContacto.IdAreaFormacion=parseInt(this._SessionStorageService.SessionGetValue('IdAreaFormacionForm'));
-    this.formularioContacto.IdAreaTrabajo=parseInt(this._SessionStorageService.SessionGetValue('IdAreaTrabajoForm'));
-    this.formularioContacto.IdIndustria=parseInt(this._SessionStorageService.SessionGetValue('IdIndustriaForm'));
+    this.formularioContacto.IdCargo=this._SessionStorageService.SessionGetValue('IdCargoForm')=='0'?undefined:parseInt(this._SessionStorageService.SessionGetValue('IdCargoForm'));
+    this.formularioContacto.IdAreaFormacion=this._SessionStorageService.SessionGetValue('IdAreaFormacionForm')=='0'?undefined:parseInt(this._SessionStorageService.SessionGetValue('IdAreaFormacionForm'));
+    this.formularioContacto.IdAreaTrabajo=this._SessionStorageService.SessionGetValue('IdAreaTrabajoForm')=='0'?undefined:parseInt(this._SessionStorageService.SessionGetValue('IdAreaTrabajoForm'));
+    this.formularioContacto.IdIndustria=this._SessionStorageService.SessionGetValue('IdIndustriaForm')=='0'?undefined:parseInt(this._SessionStorageService.SessionGetValue('IdIndustriaForm'));
     if(this.formularioContacto.IdPais!=undefined)
       {
         this.GetRegionesPorPais(this.formularioContacto.IdPais);

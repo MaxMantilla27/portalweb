@@ -3,6 +3,7 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dial
 import { Subject, takeUntil } from 'rxjs';
 import { NotaRegistrarDTO } from 'src/app/Core/Models/ParticipacionExpositorFiltroDTO';
 import { AprovacionComponent } from 'src/app/Core/Shared/Containers/Dialog/aprovacion/aprovacion.component';
+import { NotaService } from 'src/app/Core/Shared/Services/Nota/nota.service';
 import { OperacionesNotaService } from 'src/app/Core/Shared/Services/OperacionesNota/operaciones-nota.service';
 import { SnackBarServiceService } from 'src/app/Core/Shared/Services/SnackBarService/snack-bar-service.service';
 
@@ -19,7 +20,8 @@ export class DocenciaGestionNotasRegistroComponent implements OnInit,OnDestroy {
     @Inject(MAT_DIALOG_DATA) public data: any,
     public _OperacionesNotaService:OperacionesNotaService,
     private _SnackBarServiceService: SnackBarServiceService,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private _NotaService:NotaService
   ) { }
   public listadoNotas:any
   public notas:Array<NotaRegistrarDTO>=[]
@@ -31,8 +33,15 @@ export class DocenciaGestionNotasRegistroComponent implements OnInit,OnDestroy {
   ngOnInit(): void {
     console.log(this.data)
     this.ListadoNotaProcesar(this.data.IdPEspecifico,this.data.grupo)
+    this.ListadoNotaProcesar2(this.data.IdPEspecifico,this.data.grupo)
   }
-
+  ListadoNotaProcesar2(idPEspecifico:number,grupo:number){
+    this._NotaService.ListadoNotaProcesar(idPEspecifico,grupo).pipe(takeUntil(this.signal$)).subscribe({
+      next:x=>{
+        console.log(x)
+      }
+    })
+  }
   ListadoNotaProcesar(idPEspecifico:number,grupo:number){
     this._OperacionesNotaService.ListadoNotaProcesar(idPEspecifico,grupo).pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{

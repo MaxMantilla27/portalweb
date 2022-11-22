@@ -53,16 +53,6 @@ export class InterceptorService implements HttpInterceptor {
   RequestWhitHeaders(request: HttpRequest<any>) {
     const Iso = this._SessionStorageService.SessionGetValue('ISO_PAIS');
     const usuarioWeb = this._SessionStorageService.SessionGetValue('usuarioWeb');
-    const NombreForm = this._SessionStorageService.SessionGetValue('NombreForm');
-    const ApellidoForm = this._SessionStorageService.SessionGetValue('ApellidoForm');
-    const EmailForm = this._SessionStorageService.SessionGetValue('EmailForm');
-    const IdPaisForm = this._SessionStorageService.SessionGetValue('IdPaisForm');
-    const IdRegionForm = this._SessionStorageService.SessionGetValue('IdRegionForm');
-    const MovilForm = this._SessionStorageService.SessionGetValue('MovilForm');
-    const IdCargoForm = this._SessionStorageService.SessionGetValue('IdCargoForm');
-    const IdAreaFormacionForm = this._SessionStorageService.SessionGetValue('IdAreaFormacionForm');
-    const IdAreaTrabajoForm = this._SessionStorageService.SessionGetValue('IdAreaTrabajoForm');
-    const IdIndustriaForm = this._SessionStorageService.SessionGetValue('IdIndustriaForm');
 
     if (this._SessionStorageService.validateTokken()) {
       request = request.clone({
@@ -76,16 +66,7 @@ export class InterceptorService implements HttpInterceptor {
       headers: request.headers
         .set('CodigoISO', '' + Iso)
         .set('usuarioWeb', '' + usuarioWeb)
-        .set('NombreForm', '' + NombreForm)
-        .set('ApellidoForm', '' + ApellidoForm)
-        .set('IdEmailForm', '' + EmailForm)
-        .set('IdPaisForm', '' + IdPaisForm)
-        .set('IdRegionForm', '' + IdRegionForm)
-        .set('MovilForm', '' + MovilForm)
-        .set('IdCargoForm', '' + IdCargoForm)
-        .set('IdAreaFormacionForm', '' + IdAreaFormacionForm)
-        .set('IdAreaTrabajoForm', '' + IdAreaTrabajoForm)
-        .set('IdIndustriaForm', '' + IdIndustriaForm),
+
     });
   }
 }

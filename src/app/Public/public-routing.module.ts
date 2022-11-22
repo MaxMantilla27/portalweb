@@ -42,6 +42,7 @@ const routes:Routes=[
             {path:'programas-certificaciones-cursos',component:ProgramasComponent},
             {path:'TarifasdeGestion', component: TarifaGestionComponent},
             {path:'login',component:LoginComponent,canActivate:[PublicGuard]},
+            {path:'Iniciar-Sesion',component:LoginComponent,canActivate:[PublicGuard]},
             {path:'Registrarse', component:RegistrarseComponent ,canActivate:[PublicGuard]},
             {path:'carreras-profesionales',component:CarrerasProfesionalesComponent},
             {path:'tecnicos-productivos', component:EducacionTecnicaComponent},

@@ -114,13 +114,13 @@ export class FormularioPublicidadComponent implements OnInit {
     this.FormularioPublicidad.Nombres=this._SessionStorageService.SessionGetValue('NombreForm');
     this.FormularioPublicidad.Apellidos=this._SessionStorageService.SessionGetValue('ApellidoForm');
     this.FormularioPublicidad.Email=this._SessionStorageService.SessionGetValue('EmailForm');
-    this.FormularioPublicidad.IdPais=parseInt(this._SessionStorageService.SessionGetValue('IdPaisForm'));
-    this.FormularioPublicidad.IdRegion=parseInt(this._SessionStorageService.SessionGetValue('IdRegionForm'));
+    this.FormularioPublicidad.IdPais=this._SessionStorageService.SessionGetValue('IdPaisForm')=='0'?undefined:parseInt(this._SessionStorageService.SessionGetValue('IdPaisForm'));
+    this.FormularioPublicidad.IdRegion=this._SessionStorageService.SessionGetValue('IdRegionForm')=='0'?undefined:parseInt(this._SessionStorageService.SessionGetValue('IdRegionForm'));
     this.FormularioPublicidad.Movil=this._SessionStorageService.SessionGetValue('MovilForm');
-    this.FormularioPublicidad.IdCargo=parseInt(this._SessionStorageService.SessionGetValue('IdCargoForm'));
-    this.FormularioPublicidad.IdAreaFormacion=parseInt(this._SessionStorageService.SessionGetValue('IdAreaFormacionForm'));
-    this.FormularioPublicidad.IdAreaTrabajo=parseInt(this._SessionStorageService.SessionGetValue('IdAreaTrabajoForm'));
-    this.FormularioPublicidad.IdIndustria=parseInt(this._SessionStorageService.SessionGetValue('IdIndustriaForm'));
+    this.FormularioPublicidad.IdCargo=this._SessionStorageService.SessionGetValue('IdCargoForm')=='0'?undefined:parseInt(this._SessionStorageService.SessionGetValue('IdCargoForm'));
+    this.FormularioPublicidad.IdAreaFormacion=this._SessionStorageService.SessionGetValue('IdAreaFormacionForm')=='0'?undefined:parseInt(this._SessionStorageService.SessionGetValue('IdAreaFormacionForm'));
+    this.FormularioPublicidad.IdAreaTrabajo=this._SessionStorageService.SessionGetValue('IdAreaTrabajoForm')=='0'?undefined:parseInt(this._SessionStorageService.SessionGetValue('IdAreaTrabajoForm'));
+    this.FormularioPublicidad.IdIndustria=this._SessionStorageService.SessionGetValue('IdIndustriaForm')=='0'?undefined:parseInt(this._SessionStorageService.SessionGetValue('IdIndustriaForm'));
     if(this.FormularioPublicidad.IdPais!=undefined)
       {
         this.GetRegionesPorPais(this.FormularioPublicidad.IdPais);

@@ -111,6 +111,7 @@ export class FormularioComponent implements OnChanges, OnInit,OnDestroy {
   ngOnInit(): void {
     this._HelperService.recibirDataPais.pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
+        console.log(x)
         if(this.paise.length==0){
           this.paise=x;
           var codigoISo=this._SessionStorageService.SessionGetValue('ISO_PAIS');
