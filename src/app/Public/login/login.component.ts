@@ -5,9 +5,11 @@ import { Title, Meta } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { Subject, takeUntil, timer } from 'rxjs';
 import { DatoObservableDTO } from 'src/app/Core/Models/DatoObservableDTO';
+import { DatosFormularioDTO } from 'src/app/Core/Models/DatosFormularioDTO';
 import { formulario } from 'src/app/Core/Models/Formulario';
 import { login, loginSendDTO } from 'src/app/Core/Models/login';
 import { AccountService } from 'src/app/Core/Shared/Services/Account/account.service';
+import { AlumnoService } from 'src/app/Core/Shared/Services/Alumno/alumno.service';
 import { AspNetUserService } from 'src/app/Core/Shared/Services/AspNetUser/asp-net-user.service';
 import { FormaPagoService } from 'src/app/Core/Shared/Services/FormaPago/forma-pago.service';
 import { HelperService } from 'src/app/Core/Shared/Services/helper.service';
@@ -29,7 +31,9 @@ export class LoginComponent implements OnInit,OnDestroy {
     private _FormaPagoService:FormaPagoService,
     private title:Title,
     private meta:Meta,
-    private _AccountService:AccountService
+    private _AccountService:AccountService,
+    private _AlumnoService: AlumnoService,
+
     ) { }
   formVal:boolean=false;
   statuscharge=false;
@@ -52,6 +56,18 @@ export class LoginComponent implements OnInit,OnDestroy {
     Recordar:false,
   };
   fileds:Array<formulario>=[];
+  public datos: DatosFormularioDTO ={
+    nombres:'',
+    apellidos:'',
+    email:'',
+    idPais:undefined,
+    idRegion:undefined,
+    movil:'',
+    idCargo:undefined,
+    idAreaFormacion:undefined,
+    idAreaTrabajo:undefined,
+    idIndustria:undefined,
+  }
   ngOnInit(): void {
 
 
@@ -107,6 +123,24 @@ export class LoginComponent implements OnInit,OnDestroy {
           console.log(x)
           this.statuscharge=false
           this._SessionStorageService.SetToken(x.token)
+          console.log('entra')
+          this._AlumnoService.ObtenerCombosPerfil().subscribe({
+            next: (x) => {
+              this.datos.nombres = x.datosAlumno.nombres;
+              this.datos.apellidos = x.datosAlumno.apellidos;
+              this.datos.email = x.datosAlumno.email;
+              this.datos.idPais = x.datosAlumno.idPais;
+              this.datos.idRegion = x.datosAlumno.idDepartamento;
+              this.datos.movil = x.datosAlumno.telefono;
+              this.datos.idCargo = x.datosAlumno.idCargo;
+              this.datos.idAreaFormacion = x.datosAlumno.idAreaFormacion;
+              this.datos.idAreaTrabajo = x.datosAlumno.idAreaTrabajo;
+              this.datos.idIndustria = x.datosAlumno.idIndustria
+
+              this._SessionStorageService.SessionSetValue('DatosFormulario',JSON.stringify(this.datos));
+            }
+          });
+          console.log('sale')
           this.DatoObservable.datoAvatar=true
           this.DatoObservable.datoContenido=true
           this._HelperService.enviarDatoCuenta(this.DatoObservable)
@@ -154,7 +188,6 @@ export class LoginComponent implements OnInit,OnDestroy {
               })
             }
           }
-
         },
         error:e=>{
           this.statuscharge=false
@@ -168,7 +201,8 @@ export class LoginComponent implements OnInit,OnDestroy {
         complete:()=>{
           this.statuscharge=false
         }
-      })
+      });
+
 
     }
 
