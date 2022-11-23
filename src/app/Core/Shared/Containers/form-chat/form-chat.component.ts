@@ -3,6 +3,7 @@ import { Component, EventEmitter, Inject, Input, OnChanges, OnInit, Output, PLAT
 import { Validators } from '@angular/forms';
 import { Subject, takeUntil } from 'rxjs';
 import { ValidacionChatEnvioDTO, ValidacionChatFormularioDTO } from 'src/app/Core/Models/ChatEnLineaDTO';
+import { DatosFormularioDTO } from 'src/app/Core/Models/DatosFormularioDTO';
 import { formulario } from 'src/app/Core/Models/Formulario';
 import { ChatEnLineaService } from '../../Services/ChatEnLinea/chat-en-linea.service';
 import { SessionStorageService } from '../../Services/session-storage.service';
@@ -59,6 +60,18 @@ export class FormChatComponent implements OnInit,OnChanges {
   };
   @Output() SaveForm:EventEmitter<{id:string,idAlumno:number}> = new EventEmitter<{id:string,idAlumno:number}>();
   public CompleteLocalStorage=false;
+  public datos: DatosFormularioDTO ={
+    nombres:'',
+    apellidos:'',
+    email:'',
+    idPais:undefined,
+    idRegion:undefined,
+    movil:'',
+    idCargo:undefined,
+    idAreaFormacion:undefined,
+    idAreaTrabajo:undefined,
+    idIndustria:undefined,
+  }
   ngOnInit(): void {
     this.AddFields();
     this.obtenerFormularioCompletado();
@@ -66,14 +79,19 @@ export class FormChatComponent implements OnInit,OnChanges {
   ngOnChanges(changes: SimpleChanges): void {
   }
   obtenerFormularioCompletado(){
-    this.formularioContactoChat.Nombres=this._SessionStorageService.SessionGetValue('NombreForm');
-    this.formularioContactoChat.Apellidos=this._SessionStorageService.SessionGetValue('ApellidoForm');
-    this.formularioContactoChat.Email=this._SessionStorageService.SessionGetValue('EmailForm');
-    this.formularioContactoChat.Movil=this._SessionStorageService.SessionGetValue('MovilForm');
-    if(this.formularioContactoChat.Nombres!='' ||
-    this.formularioContactoChat.Apellidos!='' ||
-    this.formularioContactoChat.Email!=''){
+    var DatosFormulario = this._SessionStorageService.SessionGetValue('DatosFormulario');
+    console.log(DatosFormulario)
+    if(DatosFormulario!=''){
+      var datos = JSON.parse(DatosFormulario);
+      console.log(datos)
+      this.formularioContactoChat.Nombres=datos.nombres;
+      this.formularioContactoChat.Apellidos=datos.apellidos;
+      this.formularioContactoChat.Email=datos.email;
+      this.formularioContactoChat.Movil=datos.movil;
       this.CompleteLocalStorage=true;
+    }
+    else{
+      this.CompleteLocalStorage=false;
     }
   }
   SetContacto(value: any) {
@@ -104,11 +122,22 @@ export class FormChatComponent implements OnInit,OnChanges {
       this.DatosEnvioFormulario.IdCampania=parseInt(idcampania)
       this._ChatEnLinea.ValidarCrearOportunidadChat(this.DatosEnvioFormulario).pipe(takeUntil(this.signal$)).subscribe({
         next:(x)=>{
-          this._SessionStorageService.SessionSetValue('NombreForm',this.DatosEnvioFormulario.Nombres);
-          this._SessionStorageService.SessionSetValue('ApellidoForm',this.DatosEnvioFormulario.Apellidos);
-          this._SessionStorageService.SessionSetValue('EmailForm',this.DatosEnvioFormulario.Email);
-          this._SessionStorageService.SessionSetValue('MovilForm',this.DatosEnvioFormulario.Movil);
-          this.CompleteLocalStorage=true;
+          this.datos.nombres = this.DatosEnvioFormulario.Nombres;
+            this.datos.apellidos = this.DatosEnvioFormulario.Apellidos;
+            this.datos.email = this.DatosEnvioFormulario.Email;
+            this.datos.movil = this.DatosEnvioFormulario.Movil;
+            var DatosFormulario = this._SessionStorageService.SessionGetValue('DatosFormulario');
+            if(DatosFormulario!=''){
+              var datosPrevios = JSON.parse(DatosFormulario);
+              this.datos.idCargo=datosPrevios.idCargo;
+              this.datos.idPais=datosPrevios.idPais;
+              this.datos.idRegion=datosPrevios.idRegion;
+              this.datos.idAreaFormacion=datosPrevios.idAreaFormacion;
+              this.datos.idAreaTrabajo=datosPrevios.idAreaTrabajo;
+              this.datos.idIndustria=datosPrevios.idIndustria;
+            }
+            this._SessionStorageService.SessionSetValue('DatosFormulario',JSON.stringify(this.datos));
+            this.CompleteLocalStorage=true;
           if(this.isBrowser){
             fbq('track', 'CompleteRegistration');
             gtag('event', 'conversion', {
@@ -161,16 +190,7 @@ export class FormChatComponent implements OnInit,OnChanges {
   }
   LimpiarCampos(){
     this.CompleteLocalStorage=false;
-    this._SessionStorageService.SessionSetValue('NombreForm','');
-    this._SessionStorageService.SessionSetValue('ApellidoForm','');
-    this._SessionStorageService.SessionSetValue('EmailForm','');
-    this._SessionStorageService.SessionSetValue('IdPaisForm','0');
-    this._SessionStorageService.SessionSetValue('IdRegionForm','0');
-    this._SessionStorageService.SessionSetValue('MovilForm','');
-    this._SessionStorageService.SessionSetValue('IdCargoForm','0');
-    this._SessionStorageService.SessionSetValue('IdAreaFormacionForm','0');
-    this._SessionStorageService.SessionSetValue('IdAreaTrabajoForm','0');
-    this._SessionStorageService.SessionSetValue('IdIndustriaForm','0');
+    this._SessionStorageService.SessionDeleteValue('DatosFormulario');
     this.DatosEnvioFormulario.Nombres= '';
     this.DatosEnvioFormulario.Apellidos= '';
     this.DatosEnvioFormulario.Email= '';

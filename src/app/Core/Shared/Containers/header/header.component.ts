@@ -202,16 +202,6 @@ export class HeaderComponent implements OnInit,OnChanges,OnDestroy {
     await firstValueFrom(this._GlobalService.RegistroInteraccionInicial().pipe(tap((result) => {
       this._SessionStorageService.SessionSetValue('usuarioWeb',result.identificadorUsuario);
       this._SessionStorageService.SessionSetValue('ISO_PAIS',result.codigoISO);
-      this._SessionStorageService.SessionSetValue('NombreForm','');
-      this._SessionStorageService.SessionSetValue('ApellidoForm','');
-      this._SessionStorageService.SessionSetValue('EmailForm','');
-      this._SessionStorageService.SessionSetValue('IdPaisForm','0');
-      this._SessionStorageService.SessionSetValue('IdRegionForm','0');
-      this._SessionStorageService.SessionSetValue('MovilForm','');
-      this._SessionStorageService.SessionSetValue('IdCargoForm','0');
-      this._SessionStorageService.SessionSetValue('IdAreaFormacionForm','0');
-      this._SessionStorageService.SessionSetValue('IdAreaTrabajoForm','0');
-      this._SessionStorageService.SessionSetValue('IdIndustriaForm','0');
     })));
     this.GetPaises();
     this.GetCarreras();
@@ -369,6 +359,7 @@ export class HeaderComponent implements OnInit,OnChanges,OnDestroy {
   ObtenerCombosPerfil() {
     this._AlumnoService.ObtenerCombosPerfil().pipe(takeUntil(this.signal$)).subscribe({
       next: (x) => {
+        console.log(x)
         this.Alumno=x.datosAlumno,
         this.value={IdProveedor:this.Alumno.idProveedor,cursos:this.Alumno.cursos};
         this.combosPerfil=x.combos;

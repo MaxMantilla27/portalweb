@@ -44,16 +44,7 @@ export class SessionStorageService {
       return atob(value);
     }
     if(name.toUpperCase()=='ISO_PAIS')return 'INTC';
-    if(name.toUpperCase()=='NombreForm')return '';
-    if(name.toUpperCase()=='ApellidoForm')return '';
-    if(name.toUpperCase()=='EmailForm')return '';
-    if(name.toUpperCase()=='IdPaisForm')return '0';
-    if(name.toUpperCase()=='IdRegionForm')return '0';
-    if(name.toUpperCase()=='MovilForm')return '';
-    if(name.toUpperCase()=='IdCargoForm')return '0';
-    if(name.toUpperCase()=='IdAreaFormacionForm')return '0';
-    if(name.toUpperCase()=='IdAreaTrabajoForm')return '0';
-    if(name.toUpperCase()=='IdIndustriaForm')return '0';
+    if(name.toUpperCase()=='DatosFormulario')return '';
     return '';
   }
   SessionDeleteValue(name:string):void{
@@ -106,16 +97,6 @@ export class SessionStorageService {
       return atob(value);
     }
     if(name.toUpperCase()=='ISO_PAIS')return 'INTC';
-    if(name.toUpperCase()=='NombreForm')return '';
-    if(name.toUpperCase()=='ApellidoForm')return '';
-    if(name.toUpperCase()=='EmailForm')return '';
-    if(name.toUpperCase()=='IdPaisForm')return '0';
-    if(name.toUpperCase()=='IdRegionForm')return '0';
-    if(name.toUpperCase()=='MovilForm')return '';
-    if(name.toUpperCase()=='IdCargoForm')return '0';
-    if(name.toUpperCase()=='IdAreaFormacionForm')return '0';
-    if(name.toUpperCase()=='IdAreaTrabajoForm')return '0';
-    if(name.toUpperCase()=='IdIndustriaForm')return '0';
     return '';
   }
   SessionSetValueCokies(name:string, token: string,hour:number):void{
