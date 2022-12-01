@@ -27,12 +27,47 @@
         <div>Cuotas pagadas:</div>
         <p>{{CronogramaPago.cuotasPagadas}}/{{CronogramaPago.cuotasPagadas+CronogramaPago.cuotasPendientes}}</p>
       </div>
-      <div class="col-12 col-md-6 col-lg-6 itemsMisPagos"
-        *ngIf="CronogramaPago.cuotasPagadas<CronogramaPago.cuotasPendientes">
-        <img src="../../../assets/icons/alarma.svg" alt="">
-        <div>Proximo Vencimiento :</div>
-        <p>{{CronogramaPago.fechaVencimiento | date:'dd/MM/yyyy'}}</p>
+      <div class="col-12 col-md-4 col-lg-4 itemsMisPagos"
+        >
+        <ng-container *ngIf="CronogramaPago.cuotasPagadas<CronogramaPago.cuotasPendientes">
+          <img src="../../../assets/icons/alarma.svg" alt="">
+          <div>Proximo Vencimiento :</div>
+          <p>{{CronogramaPago.fechaVencimiento | date:'dd/MM/yyyy'}}</p>
+        </ng-container>
+        
+        
       </div>
+      <ng-container *ngIf="email=='pruebaxjrivera@bsginstitute.net'">
+        <ng-container style="justify-content: flex-end;" *ngIf="EstadoAfiliado!=undefined && CronogramaPago!=undefined">
+          <ng-container *ngIf="CronogramaPago.cuotasPendientes>0 || EstadoAfiliado==true">
+            <div class="col-12 col-md-2 col-lg-2 itemsMisPagos" >
+              <div>Estado :</div>
+              <ng-container #Desafiliado *ngIf="EstadoAfiliado==false">
+                <p >Desafiliado&nbsp;&nbsp;</p>
+                <img src="../../../assets/icons/denegado-error-21.svg" alt="">
+              </ng-container>
+              <ng-container #Afiliado *ngIf="EstadoAfiliado==true">
+                <p >Afiliado&nbsp;&nbsp;</p>
+                <img src="../../../assets/icons/positivo-hecho-20.svg" alt="">
+              </ng-container>
+            </div>
+            <div class="col-12 col-md-2 col-lg-2 itemsMisPagos" #aqui>
+              <div *ngIf="EstadoAfiliado==false">
+                <app-default-button [confs]="{color:'primary',titulo:'Afíliate al pago recurrente'}"
+                [style]="'margin-top: 20px;padding: 0px 40px;'" (ButtoclClick)="OpenModalMetodoPagoSucripcion()"  >
+                </app-default-button>
+              </div>
+              <div *ngIf="EstadoAfiliado==true">
+                <button type="button" class="btn btn-link" (click)="OpenModalEliminarSuscripcion()" >Desafiliarse</button>
+              </div>
+            </div>
+          </ng-container>
+        </ng-container>
+      </ng-container>
+      
+      
+      
+
       <div class="col-12 ">
         <div class="table-resposive">
           <table style="width: 100%" class="table">

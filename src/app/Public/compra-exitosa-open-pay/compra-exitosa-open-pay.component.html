@@ -1,3 +1,4 @@
+<br>
 <div class="container" *ngIf="resultVisa!=undefined">
   <div class="row rowpaddAv" style="justify-content: center;">
     <div class="col-12 col-md-10 col-lg-8" *ngIf="resultVisa.estadoOperacion!='Processed'">
@@ -16,16 +17,26 @@
 
       <ng-container *ngIf="resultVisa.estadoOperacion!='Pending'">
         <div class="titleResultPago">
-          <div>No se realizó el pago</div>
+          <div *ngIf="tipoRespuesta!='AF'">No se realizó el pago</div>
+          <div *ngIf="tipoRespuesta=='AF'">No se realizó la afiliación</div>
           <img src="../../../assets/icons/denegado-error-21.svg" alt="">
         </div>
         <div class="textResultPago">
-          <ng-container *ngIf="resultVisa.estadoOperacion =='No Process'">
+          <ng-container *ngIf="resultVisa.estadoOperacion =='No Process' && tipoRespuesta!='AF'">
             No hemos podido procesar su pago, debido a un error con su entidad bancaria, comuniquese con ellos para
             solucionar el error en el pago.
           </ng-container>
-          <ng-container *ngIf="resultVisa.estadoOperacion=='Declinado'">
+          <ng-container *ngIf="resultVisa.estadoOperacion =='No Process' && tipoRespuesta=='AF'">
+            No hemos podido procesar su afiliación, debido a un error con su entidad bancaria, comuniquese con ellos para
+            solucionar el error en el pago.
+          </ng-container>
+          <ng-container *ngIf="resultVisa.estadoOperacion=='Declinado'  && tipoRespuesta!='AF'">
             No hemos podido procesar su pago, debido a un error en nuestra plataforma de pagos.
+            <br>
+            Escribanos a nuestro chat de soporte técnico para poder ayudarlo.
+          </ng-container>
+          <ng-container *ngIf="resultVisa.estadoOperacion=='Declinado'  && tipoRespuesta=='AF'">
+            No hemos podido procesar su afiliación, debido a un error en nuestra plataforma de pagos.
             <br>
             Escribanos a nuestro chat de soporte técnico para poder ayudarlo.
           </ng-container>
@@ -44,8 +55,12 @@
         <img src="../../../assets/icons/positivo-hecho-20.svg" alt="">
       </div>
       <div style="margin-top: 5px;
-      font-size: 14px;">
+      font-size: 14px;"  *ngIf="tipoRespuesta!='AF'">
         {{resultVisa.registroAlumno.nombre}}, tu compra ha sido realizada con exito.
+      </div>
+      <div style="margin-top: 5px;
+      font-size: 14px;"  *ngIf="tipoRespuesta=='AF'">
+        {{resultVisa.registroAlumno.nombre}}, tu afiliación y primer pago recurrente ha sido realizada con exito.
       </div>
       <div class="contentCardPago">
         <div style="margin: 20px 0px;
@@ -55,7 +70,8 @@
             <div class="col-12 col-md-5 col-lg-4"><b>Nro. de Compra:</b></div>
             <div class="col-12 col-md-7 col-lg-8 itemValueCardPago">{{resultVisa.identificadorTransaccion}}</div>
             <div class="col-12 col-md-5 col-lg-4"><b>Monto:</b></div>
-            <div class="col-12 col-md-7 col-lg-8 itemValueCardPago">{{resultVisa.montoTotal}}</div>
+            <div class="col-12 col-md-7 col-lg-8 itemValueCardPago" *ngIf="tipoRespuesta!='AF'">{{resultVisa.montoTotal}}</div>
+            <div class="col-12 col-md-7 col-lg-8 itemValueCardPago" *ngIf="tipoRespuesta=='AF'">{{resultOpenPay.cuotaTotal}}</div>
             <div class="col-12 col-md-5 col-lg-4"><b>Moneda:</b></div>
             <div class="col-12 col-md-7 col-lg-8 itemValueCardPago">{{resultVisa.moneda}}</div>
             <div class="col-12 col-md-5 col-lg-4"><b>Nombres y Apellidos:</b></div>
@@ -65,12 +81,15 @@
               <div class="col-12 col-md-5 col-lg-4"><b>Programa:</b></div>
               <div class="col-12 col-md-7 col-lg-8 itemValueCardPago">{{resultVisa.nombrePrograma}}</div>
             </ng-container>
-            <ng-container *ngIf="resultVisa.listaCuota!=null && resultVisa.listaCuota.length>0">
+            <ng-container *ngIf="resultVisa.listaCuota!=null && resultVisa.listaCuota.length>0 ">
               <div class="col-12 col-md-5 col-lg-4"><b>Razon:</b></div>
-              <div class="col-12 col-md-7 col-lg-8 itemValueCardPago">
+              <div class="col-12 col-md-7 col-lg-8 itemValueCardPago" *ngIf="tipoRespuesta!='AF'">
                 <div *ngFor="let item of resultVisa.listaCuota">
                   {{item.nombre}}
                 </div>
+              </div>
+              <div class="col-12 col-md-7 col-lg-8 itemValueCardPago" *ngIf="tipoRespuesta=='AF'">
+                {{resultOpenPay.nombre}}
               </div>
             </ng-container>
             <div class="col-12 col-md-5 col-lg-4"><b>Fecha de transacción:</b></div>
@@ -78,8 +97,16 @@
             </div>
             <div class="col-12 col-md-5 col-lg-4"><b>Hora de transacción:</b></div>
             <div class="col-12 col-md-7 col-lg-8 itemValueCardPago">{{resultVisa.fechaTransaccion | date:'hh:mm'}}</div>
+            <ng-container *ngIf="tipoRespuesta=='AF'">
+              <div class="col-12 col-md-5 col-lg-4"><b>Pago recurrente:</b></div>
+              <div class="col-12 col-md-7 col-lg-8 itemValueCardPago">Activado</div>
+            </ng-container>
+            
+            
           </div>
         </div>
+        <app-default-button [confs]="{color:'primary',titulo:'Volver'}" [style]="'margin-top:40px;padding: 0px 40px;'"
+            [ruta]="ruta"></app-default-button>
       </div>
     </div>
   </div>
