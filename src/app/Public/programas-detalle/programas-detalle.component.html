@@ -285,13 +285,12 @@
         style="width: 100%;">
     </div>
     <div class="col-12 col-md-7 col-lg-7">
-      <div class="certificadoContent">
+      <div >
         <div>{{certificado.cabecera}}</div>
         <li *ngFor="let item of certificado.contenido">{{item}}</li>
       </div>
-      <div class="piePagina" [innerHtml]="certificado.piePagina | safeHtml"></div>
-      <div  [innerHtml]="certificado.descripcionLeyenda | safeHtml" style="text-align: justify;"></div>
-
+      <div  [innerHtml]="certificado.piePagina | safeHtml"></div>
+<!--
       <mat-accordion class="acordionPrograma acrdionCertificado" multi *ngIf="certificado.descripcionHeader!=undefined && certificado.descripcionHeader.length>0">
         <mat-expansion-panel (opened)="EventoInteraccionAccordionCertificado(item,'Abierto')"
         (closed)="EventoInteraccionAccordionCertificado(item,'Cerrado')"
@@ -307,10 +306,13 @@
           </mat-expansion-panel-header>
           <div [innerHtml]="certificado.descripcionBody[i] | safeHtml"></div>
         </mat-expansion-panel>
-      </mat-accordion>
+      </mat-accordion> -->
       <br>
       <app-default-button [confs]="{color:'primary',titulo:'Solicita Información'}" [style]="'width: 100%;'"
         (ButtoclClick)="ScrollTo(formularioPrograma);EventoInteraccionButton('Solicita Información')" ></app-default-button>
+    </div>
+    <div class="col-12">
+      <div  [innerHtml]="certificado.descripcionLeyenda | safeHtml" style="text-align: justify;"></div>
     </div>
   </div>
 </div>

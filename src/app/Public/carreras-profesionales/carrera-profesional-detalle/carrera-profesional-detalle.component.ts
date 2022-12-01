@@ -235,8 +235,13 @@ export class CarreraProfesionalDetalleComponent implements OnInit {
             almCertificacionesAdicionales[0].contenido = almCertificacionesAdicionales[0].contenido.replaceAll("</div><p><strong>NOTA</strong>","<p>&nbsp;</p><div><p><strong>NOTA</strong>")+"</div>"
           }
           //Separamos el contenido de la nota en certificaicones adicionales
-          this.contenidoCertificacionAdicional = almCertificacionesAdicionales[0].contenido.split("<p>&nbsp;</p><div><p><strong>NOTA</strong>")[0].replaceAll("<div class=\"row\"><div class=\"col-sm-8\"><p><br /></p></div></div>","").replaceAll("<hr />","")
+          this.contenidoCertificacionAdicional = almCertificacionesAdicionales[0].contenido.split("<strong>NOTA</strong>")[0].replaceAll("<div class=\"row\"><div class=\"col-sm-8\"><p><br /></p></div></div>","").replaceAll("<hr />","")
+
           let contenidoCertificacionSplit = almCertificacionesAdicionales[0].contenido.split("<p>&nbsp;</p>")
+          console.log(contenidoCertificacionSplit)
+          if(contenidoCertificacionSplit.length<=2){
+            contenidoCertificacionSplit = almCertificacionesAdicionales[0].contenido.split("<p><strong>&nbsp;</strong></p>")
+          }
           this.notaCertificacionAdicional = contenidoCertificacionSplit[contenidoCertificacionSplit.length-1]
         }
         this.loader = true

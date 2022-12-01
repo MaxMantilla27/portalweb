@@ -9,6 +9,7 @@ export interface programaCabeceraDetalleDTO{
   subAreaDescripcion:string,
   tituloHtml:string,
   listProgramaEspecificoInformacionDTO:Array<listProgramaEspecificoInformacionDTO>,
+  idPartner:any
 }
 export interface listaSeccionPrograma{
   duracionHorario:string,

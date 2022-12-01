@@ -94,6 +94,7 @@ export class FormularioComponent implements OnChanges, OnInit,OnDestroy {
   public paisSelect=0;
   public pref=''
   public min=0
+  public max=0
   @Input() cargando=false
   //later in the code
   fields: any = {};
@@ -374,7 +375,7 @@ export class FormularioComponent implements OnChanges, OnInit,OnDestroy {
       //return 'La longitud mínima es de ' + min + ' caracteres';
       var fls=this.fiels.find(x=>x.nombre==val);
       if(fls?.tipo=='phone'){
-        return 'La longitud debe ser de '+(this.min) +' dígitos'
+        return 'La longitud debe ser de '+(this.min) +' dígitos minimo'
       }
       return 'La longitud es incorrecta';
     }
@@ -383,7 +384,7 @@ export class FormularioComponent implements OnChanges, OnInit,OnDestroy {
       //return 'La longitud maxima es de ' + max + ' caracteres';
       var fls=this.fiels.find(x=>x.nombre==val);
       if(fls?.tipo=='phone'){
-        return 'La longitud debe ser de '+(this.min) +' dígitos'
+        return 'La longitud debe ser de '+(this.max) +' dígitos maximo'
       }
       return 'La longitud es incorrecta';
     }
@@ -419,20 +420,37 @@ export class FormularioComponent implements OnChanges, OnInit,OnDestroy {
     (<FormArray>this.userForm.get('Fields')).controls[i].get(val)?.setValue(this.pref+s.slice(1));
     (<FormArray>this.userForm.get('Fields')).controls[i].get(val)?.clearValidators();
     if(this.min>0){
-      (<FormArray>this.userForm.get('Fields')).controls[i].get(val)?.addValidators([
-        Validators.required,
-        Validators.minLength(this.pref.length+this.min),
-        Validators.maxLength(this.pref.length+this.min)]);
-      this.ChangeInpiut(i,val);
-      this.OnValid.emit(false);
+      this.max=this.MaxLongCelularPaises()==null?0:this.MaxLongCelularPaises();
+
+      if(this.min>0){
+        (<FormArray>this.userForm.get('Fields')).controls[i].get(val)?.addValidators([
+          Validators.required,
+          Validators.minLength(this.pref.length+this.min),
+          Validators.maxLength(this.pref.length+this.max)]);
+        this.ChangeInpiut(i,val);
+        this.OnValid.emit(false);
+      }else{
+        (<FormArray>this.userForm.get('Fields')).controls[i].get(val)?.addValidators([
+          Validators.required,
+          Validators.minLength(this.pref.length+this.min),
+          Validators.maxLength(this.pref.length+this.min)]);
+        this.ChangeInpiut(i,val);
+        this.OnValid.emit(false);
+      }
     }else{
       (<FormArray>this.userForm.get('Fields')).controls[i].get(val)?.addValidators([
         Validators.required]);
       this.OnValid.emit(false);
     }
-    (<FormArray>this.userForm.get('Fields')).controls[i].get(val)?.setValue(this.pref);
+    (<FormArray>this.userForm.get('Fields')).controls[i].get(val)?.setValue(this.pref+(s.length>1?s[1]:''));
   }
   LongCelularPaises():number{
+    if(this.paise.find(x=>x.idPais==this.paisSelect)!=undefined){
+      return this.paise.find(x=>x.idPais==this.paisSelect).longCelularAlterno
+    }
+    return 0;
+  }
+  MaxLongCelularPaises():number{
     if(this.paise.find(x=>x.idPais==this.paisSelect)!=undefined){
       return this.paise.find(x=>x.idPais==this.paisSelect).longCelular
     }
@@ -447,15 +465,25 @@ export class FormularioComponent implements OnChanges, OnInit,OnDestroy {
   ChangeInpiut(i: number, val: string){
     var campo = (<FormArray>this.userForm.get('Fields')).controls[i].get(val)?.value.toString();
     var s =campo.split(' ')
+    console.log(s)
     if(this.PrefPaises()!=null){
       if(s[0]!=this.PrefPaises()){
         if(s[0].length>this.PrefPaises().length){
-          (<FormArray>this.userForm.get('Fields')).controls[i].get(val)?.setValue(s[0].slice(0,this.PrefPaises().length)+' '+campo.slice(this.PrefPaises().length));
+          (<FormArray>this.userForm.get('Fields')).controls[i].get(val)?.setValue(
+              s[0].slice(0,this.PrefPaises().length)+' '+campo.slice(this.PrefPaises().length)
+          );
+          console.log(1)
         }else{
           (<FormArray>this.userForm.get('Fields')).controls[i].get(val)?.setValue(this.PrefPaises()+' ');
+          console.log(2)
         }
       } else if(campo==this.PrefPaises()){
         (<FormArray>this.userForm.get('Fields')).controls[i].get(val)?.setValue(this.PrefPaises()+' ');
+        console.log(3)
+      }else{
+        (<FormArray>this.userForm.get('Fields')).controls[i].get(val)?.setValue(
+            s[0].slice(0,this.PrefPaises().length)+' '+s[1].trim()
+        );
       }
     }
   }

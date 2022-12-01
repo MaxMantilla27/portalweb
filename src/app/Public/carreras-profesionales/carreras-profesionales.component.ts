@@ -40,9 +40,9 @@ export class CarrerasProfesionalesComponent implements OnInit ,OnDestroy{
     this.encabezado = {
       titulo: 'Carreras Profesionales',
       duracion: '(3 años)',
-      descripcion:
-        'Nuestros módulos ocupacionales están enfocados en brindar una formación de primer nivel y han sido ' +
-        'desarrollados por expertos en la industria para que nuestros estudiantes desarrollen las habilidades más demandadas en el mercado laboral.',
+      descripcion: 'Nuestras carreras profesionales están enfocadas en brindar una formación de primer nivel y '+
+      'buscan desarrollar las capacidades de nuestros estudiantes para generar proyectos de emprendimiento e innovación '+
+      'que lleven a la creación de nuevas empresas. '
     };
 
     this.migaPan = [

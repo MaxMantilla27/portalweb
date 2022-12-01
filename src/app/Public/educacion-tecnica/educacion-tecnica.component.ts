@@ -51,9 +51,9 @@ export class EducacionTecnicaComponent implements OnInit,OnDestroy {
     this.encabezado = {
       titulo: 'Educación técnica',
       duracion: '',
-      descripcion: 'Nuestras carreras profesionales están enfocadas en brindar una formación de primer nivel y '+
-      'buscan desarrollar las capacidades de nuestros estudiantes para generar proyectos de emprendimiento e innovación '+
-      'que lleven a la creación de nuevas empresas. '
+      descripcion:
+        'Nuestros módulos ocupacionales están enfocados en brindar una formación de primer nivel y han sido ' +
+        'desarrollados por expertos en la industria para que nuestros estudiantes desarrollen las habilidades más demandadas en el mercado laboral.',
     }
     this.migaPan = [
       {
