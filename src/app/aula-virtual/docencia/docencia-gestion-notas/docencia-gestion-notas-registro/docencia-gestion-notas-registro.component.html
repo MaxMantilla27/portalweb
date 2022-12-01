@@ -13,12 +13,12 @@
         <thead>
           <tr style="background: #e6eefa;">
             <th class="text-center" style="min-width: 200px;" rowspan="2"><b>Alumno</b></th>
-            <th class="text-center" style="min-width: 200px;" [colSpan]="listadoNotas.ListadoEvaluaciones.length">
+            <th class="text-center" style="min-width: 200px;" [colSpan]="listadoNotas.listadoEvaluaciones.length">
               <b>Evaluaciones</b></th>
           </tr>
-          <ng-container *ngIf="listadoNotas.ListadoEvaluaciones.length>0">
+          <ng-container *ngIf="listadoNotas.listadoEvaluaciones.length>0">
             <tr >
-              <th style="width: 5px;min-width: 60px;text-align: center;" *ngFor="let item of listadoNotas.ListadoEvaluaciones">
+              <th style="width: 5px;min-width: 60px;text-align: center;" *ngFor="let item of listadoNotas.listadoEvaluaciones">
                 <ng-container >
                   {{item.Nombre | uppercase }} <br> {{item.Porcentaje}}%
                 </ng-container>
@@ -27,12 +27,12 @@
             </tr>
           </ng-container>
         </thead>
-        <ng-container *ngIf="listadoNotas.ListadoMatriculas!=null && listadoNotas.ListadoMatriculas.length>0">
+        <ng-container *ngIf="listadoNotas.listadoMatriculas!=null && listadoNotas.listadoMatriculas.length>0">
           <tbody>
-            <ng-container *ngFor="let mat of listadoNotas.ListadoMatriculas">
+            <ng-container *ngFor="let mat of listadoNotas.listadoMatriculas">
               <tr>
                 <td>
-                  {{mat.Alumno | uppercase}}
+                  {{mat.alumno | uppercase}}
                 </td>
                 <ng-container *ngFor="let matn of mat.notaActual">
                   <td style="text-align: center;">

@@ -33,53 +33,59 @@ export class DocenciaGestionNotasRegistroComponent implements OnInit,OnDestroy {
   ngOnInit(): void {
     console.log(this.data)
     this.ListadoNotaProcesar(this.data.IdPEspecifico,this.data.grupo)
-    this.ListadoNotaProcesar2(this.data.IdPEspecifico,this.data.grupo)
+    //this.ListadoNotaProcesar2(this.data.IdPEspecifico,this.data.grupo)
   }
   ListadoNotaProcesar2(idPEspecifico:number,grupo:number){
-    this._NotaService.ListadoNotaProcesar(idPEspecifico,grupo).pipe(takeUntil(this.signal$)).subscribe({
+    this._OperacionesNotaService.ListadoNotaProcesar(idPEspecifico,grupo).pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
         console.log(x)
       }
     })
   }
   ListadoNotaProcesar(idPEspecifico:number,grupo:number){
-    this._OperacionesNotaService.ListadoNotaProcesar(idPEspecifico,grupo).pipe(takeUntil(this.signal$)).subscribe({
+    this._NotaService.ListadoNotaProcesar(idPEspecifico,grupo).pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
         console.log(x)
         this.listadoNotas=x;
-        this.listadoNotas.ListadoMatriculas.forEach((mat:any) => {
+        if(this.listadoNotas.listadoEvaluaciones==null)this.listadoNotas.listadoEvaluaciones=[];
+        if(this.listadoNotas.listadoNotas==null)this.listadoNotas.listadoNotas=[];
+        if(this.listadoNotas.listadoMatriculas==null)this.listadoNotas.listadoMatriculas=[];
+        if(this.listadoNotas.listadoSesiones==null)this.listadoNotas.listadoSesiones=[];
+        if(this.listadoNotas.listadoAsistencias==null)this.listadoNotas.listadoAsistencias=[];
+        this.listadoNotas.listadoMatriculas.forEach((mat:any) => {
           mat.notaActual=[];
-          this.listadoNotas.ListadoEvaluaciones.forEach((evl:any) => {
-            if(evl.Nombre.toUpperCase().includes('ASISTENCIA')){
+          this.listadoNotas.listadoEvaluaciones.forEach((evl:any) => {
+            if(evl.nombre.toUpperCase().includes('ASISTENCIA')){
               var totalasistencia=
-                  this.listadoNotas.ListadoAsistencias.filter((f:any)=> f.Asistio == true && f.IdMatriculaCabecera == mat.IdMatriculaCabecera).length;
+                  this.listadoNotas.listadoAsistencias.filter((f:any)=> f.asistio == true && f.idMatriculaCabecera == mat.idMatriculaCabecera).length;
               var nota=0;
-              if(this.listadoNotas.ListadoSesiones!=null && this.listadoNotas.ListadoSesiones.length>0){
+              if(this.listadoNotas.listadoSesiones!=null && this.listadoNotas.listadoSesiones.length>0){
                 console.log(totalasistencia)
-                nota=Math.round((((totalasistencia*1)/(this.listadoNotas.ListadoSesiones.length)) * (this.listadoNotas.EscalaCalificacion))* 10)/10;
+                nota=Math.round((((totalasistencia*1)/(this.listadoNotas.listadoSesiones.length)) * (this.listadoNotas.escalaCalificacion))* 10)/10;
                 console.log(nota)
               }
               mat.notaActual.push({
                 nota:nota,
                 Id:0,
-                IdEvaluacion:evl.Id,IdMatriculaCabecera:mat.IdMatriculaCabecera,
+                IdEvaluacion:evl.id,
+                IdMatriculaCabecera:mat.idMatriculaCabecera,
                 edit:false});
             }else{
-              if(this.listadoNotas.ListadoNotas.filter((w:any) => w.IdEvaluacion == evl.Id && w.IdMatriculaCabecera == mat.IdMatriculaCabecera).length>0){
-                var notas=this.listadoNotas.ListadoNotas.filter((w:any) => w.IdEvaluacion == evl.Id && w.IdMatriculaCabecera == mat.IdMatriculaCabecera)[0]
+              if(this.listadoNotas.listadoNotas.filter((w:any) => w.idEvaluacion == evl.id && w.idMatriculaCabecera == mat.idMatriculaCabecera).length>0){
+                var notas=this.listadoNotas.listadoNotas.filter((w:any) => w.idEvaluacion == evl.id && w.idMatriculaCabecera == mat.idMatriculaCabecera)[0]
 
                 mat.notaActual.push({
-                  nota:(notas.Nota!=null && notas.Nota>0)?notas.Nota:0,
-                  Id:notas.Id,
-                  IdEvaluacion:notas.IdEvaluacion,
-                  IdMatriculaCabecera:mat.IdMatriculaCabecera,
+                  nota:(notas.nota!=null && notas.nota>0)?notas.nota:0,
+                  Id:notas.id,
+                  IdEvaluacion:notas.idEvaluacion,
+                  IdMatriculaCabecera:mat.idMatriculaCabecera,
                   edit:true});
               }else{
                 mat.notaActual.push({
                   nota:0,
                   Id:0,
-                  IdEvaluacion:evl.Id,
-                  IdMatriculaCabecera:mat.IdMatriculaCabecera,
+                  IdEvaluacion:evl.id,
+                  IdMatriculaCabecera:mat.idMatriculaCabecera,
                   edit:true});
               }
             }
@@ -93,7 +99,7 @@ export class DocenciaGestionNotasRegistroComponent implements OnInit,OnDestroy {
     if(this.charge==false){
       this.charge=true;
       this.notas=[];
-      this.listadoNotas.ListadoMatriculas.forEach((mat:any) => {
+      this.listadoNotas.listadoMatriculas.forEach((mat:any) => {
         mat.notaActual.forEach((nta:any) => {
           if(nta.edit==true){
             this.notas.push({
@@ -149,7 +155,7 @@ export class DocenciaGestionNotasRegistroComponent implements OnInit,OnDestroy {
   AprobarNotaDetalleDocente(){
     this.charge=true;
     this.notas=[];
-    this.listadoNotas.ListadoMatriculas.forEach((mat:any) => {
+    this.listadoNotas.listadoMatriculas.forEach((mat:any) => {
       mat.notaActual.forEach((nta:any) => {
         if(nta.edit==true){
           this.notas.push({
