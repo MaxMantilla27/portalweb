@@ -207,6 +207,12 @@ export class CursoComponent implements OnInit,OnDestroy {
     this._DatosPerfilService.RegistroProgramaMatriculadoPorIdMatricula(this.idMatricula).pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
         console.log(x)
+        this._HelperService.enviarMsjChat({
+          idMatriculaCabecera:x.idMatriculaCabecera,
+          idprogramageneralalumno:x.idPGeneral,
+          idcoordinadora:x.idAsesor,
+          idcentrocosto:x.idCentroCosto
+        });
         this.curso=x
         var valorLoscalS=this._SessionStorageService.SessionGetValue('cursoIndex')==''?0:parseInt(this._SessionStorageService.SessionGetValue('cursoIndex'))
         if(this.curso!=undefined ){

@@ -7,6 +7,7 @@ import { Subject, takeUntil } from 'rxjs';
 import { combosPerfilDTO } from 'src/app/Core/Models/AlumnoDTO';
 import { Basic } from 'src/app/Core/Models/BasicDTO';
 import { ContactenosDTO } from 'src/app/Core/Models/ContactenosDTO';
+import { DatosFormularioDTO } from 'src/app/Core/Models/DatosFormularioDTO';
 import { formulario } from 'src/app/Core/Models/Formulario';
 import { FormularioLandingPageDTO } from 'src/app/Core/Models/FormularioDTO';
 import { FormularioComponent } from 'src/app/Core/Shared/Containers/formulario/formulario.component';
@@ -14,6 +15,7 @@ import { DatosPortalService } from 'src/app/Core/Shared/Services/DatosPortal/dat
 import { HelperService } from 'src/app/Core/Shared/Services/helper.service';
 import { LandingPageService } from 'src/app/Core/Shared/Services/LandingPage/landing-page.service';
 import { RegionService } from 'src/app/Core/Shared/Services/Region/region.service';
+import { SessionStorageService } from 'src/app/Core/Shared/Services/session-storage.service';
 import { SnackBarServiceService } from 'src/app/Core/Shared/Services/SnackBarService/snack-bar-service.service';
 import { LandingPageInterceptorComponent } from './landing-page-interceptor/landing-page-interceptor/landing-page-interceptor.component';
 declare const fbq:any;
@@ -38,6 +40,8 @@ export class LandingPageComponent implements OnInit,OnDestroy {
     private _LandingPageService:LandingPageService,
     private _HelperService: HelperService,
     private _SnackBarServiceService: SnackBarServiceService,
+    private _SessionStorageService:SessionStorageService,
+
 
     public dialogRef: MatDialogRef<LandingPageInterceptorComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -88,45 +92,86 @@ export class LandingPageComponent implements OnInit,OnDestroy {
     IdIndustria:undefined,
   }
   public combosPrevios:any
+  public CompleteLocalStorage=false;
+  public datos: DatosFormularioDTO ={
+    nombres:'',
+    apellidos:'',
+    email:'',
+    idPais:undefined,
+    idRegion:undefined,
+    movil:'',
+    idCargo:undefined,
+    idAreaFormacion:undefined,
+    idAreaTrabajo:undefined,
+    idIndustria:undefined,
+  }
   ngOnInit(): void {
-    this._HelperService.recibirCombosPerfil.pipe(takeUntil(this.signal$)).subscribe((x) => {
-      this.combosPrevios=x.datosAlumno;
-      this.FormularioLandingPage.Nombres= this.combosPrevios.nombres,
-      this.FormularioLandingPage.Apellidos= this.combosPrevios.apellidos,
-      this.FormularioLandingPage.Email= this.combosPrevios.email,
-      this.FormularioLandingPage.IdPais= this.combosPrevios.idPais,
-      this.FormularioLandingPage.IdRegion= this.combosPrevios.idDepartamento,
-      this.FormularioLandingPage.Movil= this.combosPrevios.telefono,
-      this.FormularioLandingPage.IdCargo= this.combosPrevios.idCargo,
-      this.FormularioLandingPage.IdAreaTrabajo= this.combosPrevios.idAreaTrabajo,
-      this.FormularioLandingPage.IdAreaFormacion= this.combosPrevios.idAreaFormacion,
-      this.FormularioLandingPage.IdIndustria= this.combosPrevios.idIndustria
-      if(this.FormularioLandingPage.IdPais!=undefined){
-        this.GetRegionesPorPais(this.FormularioLandingPage.IdPais);
-      }
-    })
+    this.obtenerFormularioCompletado();
+    // this._HelperService.recibirCombosPerfil.pipe(takeUntil(this.signal$)).subscribe((x) => {
+    //   this.combosPrevios=x.datosAlumno;
+    //   this.FormularioLandingPage.Nombres= this.combosPrevios.nombres,
+    //   this.FormularioLandingPage.Apellidos= this.combosPrevios.apellidos,
+    //   this.FormularioLandingPage.Email= this.combosPrevios.email,
+    //   this.FormularioLandingPage.IdPais= this.combosPrevios.idPais,
+    //   this.FormularioLandingPage.IdRegion= this.combosPrevios.idDepartamento,
+    //   this.FormularioLandingPage.Movil= this.combosPrevios.telefono,
+    //   this.FormularioLandingPage.IdCargo= this.combosPrevios.idCargo,
+    //   this.FormularioLandingPage.IdAreaTrabajo= this.combosPrevios.idAreaTrabajo,
+    //   this.FormularioLandingPage.IdAreaFormacion= this.combosPrevios.idAreaFormacion,
+    //   this.FormularioLandingPage.IdIndustria= this.combosPrevios.idIndustria
+    //   if(this.FormularioLandingPage.IdPais!=undefined){
+    //     this.GetRegionesPorPais(this.FormularioLandingPage.IdPais);
+    //   }
+    //   this.CompleteLocalStorage=false;
+    // })
     this.AddFields();
     this.ObtenerCombosPortal();
   }
+  obtenerFormularioCompletado(){
+    var DatosFormulario = this._SessionStorageService.SessionGetValue('DatosFormulario');
+    console.log(DatosFormulario)
+    if(DatosFormulario!=''){
+      var datos = JSON.parse(DatosFormulario);
+      console.log(datos)
+      this.FormularioLandingPage.Nombres=datos.nombres;
+      this.FormularioLandingPage.Apellidos=datos.apellidos;
+      this.FormularioLandingPage.Email=datos.email;
+      this.FormularioLandingPage.IdPais=datos.idPais;
+      this.FormularioLandingPage.IdRegion=datos.idRegion;
+      this.FormularioLandingPage.Movil=datos.movil;
+      this.FormularioLandingPage.IdCargo=datos.idCargo;
+      this.FormularioLandingPage.IdAreaFormacion=datos.idAreaFormacion;
+      this.FormularioLandingPage.IdAreaTrabajo=datos.idAreaTrabajo;
+      this.FormularioLandingPage.IdIndustria=datos.idIndustria;
+      if(this.FormularioLandingPage.IdPais!=undefined){
+        this.GetRegionesPorPais(this.FormularioLandingPage.IdPais);
+      }
+      this.CompleteLocalStorage=true;
+    }
+    else{
+      this.CompleteLocalStorage=false;
+    }
+  }
   LimpiarCampos(){
+    this.CompleteLocalStorage=false;
+    this._SessionStorageService.SessionDeleteValue('DatosFormulario')
     this.combosPrevios=undefined;
     this.FormularioLandingPage.Nombres= '',
-      this.FormularioLandingPage.Apellidos= '',
-      this.FormularioLandingPage.Email= '',
-      this.FormularioLandingPage.IdPais= undefined,
-      this.FormularioLandingPage.IdRegion= undefined,
-      this.FormularioLandingPage.Movil= '',
-      this.FormularioLandingPage.IdCargo= undefined,
-      this.FormularioLandingPage.IdAreaTrabajo= undefined,
-      this.FormularioLandingPage.IdAreaFormacion= undefined,
-      this.FormularioLandingPage.IdIndustria= undefined,
-      this.GetRegionesPorPais(-1);
+    this.FormularioLandingPage.Apellidos= '',
+    this.FormularioLandingPage.Email= '',
+    this.FormularioLandingPage.IdPais= undefined,
+    this.FormularioLandingPage.IdRegion= undefined,
+    this.FormularioLandingPage.Movil= '',
+    this.FormularioLandingPage.IdCargo= undefined,
+    this.FormularioLandingPage.IdAreaTrabajo= undefined,
+    this.FormularioLandingPage.IdAreaFormacion= undefined,
+    this.FormularioLandingPage.IdIndustria= undefined,
+    this.GetRegionesPorPais(-1);
 
   }
   EnviarFormulario(value:any){
     if(this.formVal){
       this.initValues = false;
-
       this.statuscharge=true;
       this.DatosLandingPageEnvio.NombrePrograma= this.data.NombrePrograma;
       this.DatosLandingPageEnvio.IdFormularioPublicidad= this.data.IdFormulario;
@@ -154,8 +199,19 @@ export class LandingPageComponent implements OnInit,OnDestroy {
       this.DatosLandingPageEnvio.IdIndustria=value.IdIndustria;
       this._LandingPageService.EnviarFormularioLandingPage(this.DatosLandingPageEnvio).pipe(takeUntil(this.signal$)).subscribe({
         next: (x) => {
+          this.datos.nombres = this.DatosLandingPageEnvio.Nombres;
+          this.datos.apellidos = this.DatosLandingPageEnvio.Apellidos;
+          this.datos.email = this.DatosLandingPageEnvio.Correo1;
+          this.datos.idPais = this.DatosLandingPageEnvio.IdPais;
+          this.datos.idRegion = this.DatosLandingPageEnvio.IdRegion;
+          this.datos.movil = this.DatosLandingPageEnvio.Movil;
+          this.datos.idCargo = this.DatosLandingPageEnvio.IdCargo;
+          this.datos.idAreaFormacion = this.DatosLandingPageEnvio.IdAreaFormacion;
+          this.datos.idAreaTrabajo = this.DatosLandingPageEnvio.IdAreaTrabajo;
+          this.datos.idIndustria = this.DatosLandingPageEnvio.IdIndustria
+          this._SessionStorageService.SessionSetValue('DatosFormulario',JSON.stringify(this.datos));
+          this.CompleteLocalStorage=true;
           if(this.isBrowser){
-
             fbq('track', 'CompleteRegistration');
             try{
               gtag('event', 'conversion', {
@@ -171,6 +227,7 @@ export class LandingPageComponent implements OnInit,OnDestroy {
         },
         complete: () => {
           this.statuscharge = false;
+          this.obtenerFormularioCompletado();
         },
       });
     }else{

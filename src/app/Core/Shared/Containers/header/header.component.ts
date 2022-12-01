@@ -30,6 +30,7 @@ import { combosPerfilDTO, datosAlumnoDTO } from 'src/app/Core/Models/AlumnoDTO';
 import { DatoObservableDTO } from 'src/app/Core/Models/DatoObservableDTO';
 import { GlobalService } from '../../Services/Global/global.service';
 import { delay, firstValueFrom, Subject, takeUntil, tap } from 'rxjs';
+import { DatosFormularioDTO } from 'src/app/Core/Models/DatosFormularioDTO';
 
 @Component({
   selector: 'app-header',
@@ -97,6 +98,18 @@ export class HeaderComponent implements OnInit,OnChanges,OnDestroy {
     datoAvatar: false,
     datoContenido: false,
   }
+  public DatoFormularioCompletar: DatosFormularioDTO ={
+    nombres:'',
+    apellidos:'',
+    email:'',
+    idPais:0,
+    idRegion:0,
+    movil:'',
+    idCargo:0,
+    idAreaFormacion:0,
+    idAreaTrabajo:0,
+    idIndustria:0,
+  }
   public combosAvatar:AvatarCombosDTO={
     listaAccesorios:[],
     listaBarbaBigote:[],
@@ -156,6 +169,7 @@ export class HeaderComponent implements OnInit,OnChanges,OnDestroy {
     private _GlobalService:GlobalService
   ) {}
   ngOnChanges(changes: SimpleChanges): void {
+    console.log(changes)
     if(this.carga==true && this.usuarioWeb!=''){
       this.RevisarUsuario();
     }
@@ -197,6 +211,7 @@ export class HeaderComponent implements OnInit,OnChanges,OnDestroy {
       this.ObtenerAvatar();
     }
     this.ObtenerObservable();
+
   }
   GetPaises() {
     this.paises = [];
@@ -344,6 +359,7 @@ export class HeaderComponent implements OnInit,OnChanges,OnDestroy {
   ObtenerCombosPerfil() {
     this._AlumnoService.ObtenerCombosPerfil().pipe(takeUntil(this.signal$)).subscribe({
       next: (x) => {
+        console.log(x)
         this.Alumno=x.datosAlumno,
         this.value={IdProveedor:this.Alumno.idProveedor,cursos:this.Alumno.cursos};
         this.combosPerfil=x.combos;

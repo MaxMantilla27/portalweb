@@ -10,11 +10,11 @@
             <div class="ItemsResumenPago row">
               <div class="col-12 row itms" *ngFor="let item of resultVisa.listaCuota">
                 <div class="col-8">{{item.nombre}}</div>
-                <div class="col-4" style="text-align: right;">{{resultVisa.simboloMoneda}} {{item.cuotaTotal}}</div>
+                <div class="col-4" style="text-align: right;">{{resultVisa.simboloMoneda}} {{item.cuotaTotal | number : '1.2-2'}}</div>
               </div>
               <div class="col-12 row tot">
                 <div class="col-8">Total a pagar</div>
-                <div class="col-4" style="text-align: right;">{{resultVisa.simboloMoneda}} {{resultVisa.total}}</div>
+                <div class="col-4" style="text-align: right;">{{resultVisa.simboloMoneda}} {{resultVisa.total | number : '1.2-2'}}</div>
               </div>
             </div>
           </div>
@@ -98,11 +98,11 @@
             <div class="ItemsResumenPago row">
               <div class="col-12 row itms" *ngFor="let item of resultVisa.listaCuota">
                 <div class="col-8">{{item.nombre}}</div>
-                <div class="col-4" style="text-align: right;">{{resultVisa.simboloMoneda}} {{item.cuotaTotal}}</div>
+                <div class="col-4" style="text-align: right;">{{resultVisa.simboloMoneda}} {{item.cuotaTotal | number : '1.2-2'}}</div>
               </div>
               <div class="col-12 row tot">
                 <div class="col-8">Total a pagar</div>
-                <div class="col-4" style="text-align: right;">{{resultVisa.simboloMoneda}} {{resultVisa.total}}</div>
+                <div class="col-4" style="text-align: right;">{{resultVisa.simboloMoneda}} {{resultVisa.total | number : '1.2-2'}}</div>
               </div>
             </div>
           </div>

@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
 import { Basic } from 'src/app/Core/Models/BasicDTO';
 import { ContactenosDTO } from 'src/app/Core/Models/ContactenosDTO';
+import { DatosFormularioDTO } from 'src/app/Core/Models/DatosFormularioDTO';
 import { formulario } from 'src/app/Core/Models/Formulario';
 import { FormularioPublicidadDTO } from 'src/app/Core/Models/FormularioDTO';
 import { FormularioComponent } from 'src/app/Core/Shared/Containers/formulario/formulario.component';
@@ -13,6 +14,7 @@ import { DatosPortalService } from 'src/app/Core/Shared/Services/DatosPortal/dat
 import { HelperService } from 'src/app/Core/Shared/Services/helper.service';
 import { LandingPageService } from 'src/app/Core/Shared/Services/LandingPage/landing-page.service';
 import { RegionService } from 'src/app/Core/Shared/Services/Region/region.service';
+import { SessionStorageService } from 'src/app/Core/Shared/Services/session-storage.service';
 import { FormularioPublicidadInterceptorComponent } from './FormularioPublicidadInterceptor/formulario-publicidad-interceptor.component';
 declare const fbq:any;
 declare const gtag:any;
@@ -35,6 +37,7 @@ export class FormularioPublicidadComponent implements OnInit {
     private _RegionService:RegionService,
     private _LandingPageService:LandingPageService,
     private _HelperService: HelperService,
+    private _SessionStorageService:SessionStorageService,
 
     public dialogRef: MatDialogRef<FormularioPublicidadInterceptorComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -81,36 +84,72 @@ export class FormularioPublicidadComponent implements OnInit {
     IdAreaTrabajo:undefined,
     IdIndustria:undefined,
   }
-  public combosPrevios:any
-
+  public combosPrevios:any;
+  public CompleteLocalStorage=false;
+  public datos: DatosFormularioDTO ={
+    nombres:'',
+    apellidos:'',
+    email:'',
+    idPais:undefined,
+    idRegion:undefined,
+    movil:'',
+    idCargo:undefined,
+    idAreaFormacion:undefined,
+    idAreaTrabajo:undefined,
+    idIndustria:undefined,
+  }
   ngOnInit(): void {
-    this._HelperService.recibirCombosPerfil.pipe(takeUntil(this.signal$)).subscribe((x) => {
-      this.combosPrevios=x.datosAlumno;
-      console.log(this.combosPrevios)
-      this.FormularioPublicidad.Nombres= this.combosPrevios.nombres,
-      this.FormularioPublicidad.Apellidos= this.combosPrevios.apellidos,
-      this.FormularioPublicidad.Email= this.combosPrevios.email,
-      this.FormularioPublicidad.IdPais= this.combosPrevios.idPais,
-      this.FormularioPublicidad.IdRegion= this.combosPrevios.idDepartamento,
-      this.FormularioPublicidad.Movil= this.combosPrevios.telefono,
-      this.FormularioPublicidad.IdCargo= this.combosPrevios.idCargo,
-      this.FormularioPublicidad.IdAreaTrabajo= this.combosPrevios.idAreaTrabajo,
-      this.FormularioPublicidad.IdAreaFormacion= this.combosPrevios.idAreaFormacion,
-      this.FormularioPublicidad.IdIndustria= this.combosPrevios.idIndustria
-      if(this.FormularioPublicidad.IdPais!=undefined){
-        this.GetRegionesPorPais(this.FormularioPublicidad.IdPais);
-      }
-    })
+    this.obtenerFormularioCompletado();
+    // this._HelperService.recibirCombosPerfil.pipe(takeUntil(this.signal$)).subscribe((x) => {
+    //   this.combosPrevios=x.datosAlumno;
+    //   console.log(this.combosPrevios)
+    //   this.FormularioPublicidad.Nombres= this.combosPrevios.nombres,
+    //   this.FormularioPublicidad.Apellidos= this.combosPrevios.apellidos,
+    //   this.FormularioPublicidad.Email= this.combosPrevios.email,
+    //   this.FormularioPublicidad.IdPais= this.combosPrevios.idPais,
+    //   this.FormularioPublicidad.IdRegion= this.combosPrevios.idDepartamento,
+    //   this.FormularioPublicidad.Movil= this.combosPrevios.telefono,
+    //   this.FormularioPublicidad.IdCargo= this.combosPrevios.idCargo,
+    //   this.FormularioPublicidad.IdAreaTrabajo= this.combosPrevios.idAreaTrabajo,
+    //   this.FormularioPublicidad.IdAreaFormacion= this.combosPrevios.idAreaFormacion,
+    //   this.FormularioPublicidad.IdIndustria= this.combosPrevios.idIndustria
+    //   if(this.FormularioPublicidad.IdPais!=undefined){
+    //     this.GetRegionesPorPais(this.FormularioPublicidad.IdPais);
+    //   }
+    //   this.CompleteLocalStorage=false;
+    // })
     this.ObtenerCombosPortal();
 
     this.AddFields();
   }
-
+  obtenerFormularioCompletado(){
+    var DatosFormulario = this._SessionStorageService.SessionGetValue('DatosFormulario');
+    console.log(DatosFormulario)
+    if(DatosFormulario!=''){
+      var datos = JSON.parse(DatosFormulario);
+      console.log(datos)
+      this.FormularioPublicidad.Nombres=datos.nombres;
+      this.FormularioPublicidad.Apellidos=datos.apellidos;
+      this.FormularioPublicidad.Email=datos.email;
+      this.FormularioPublicidad.IdPais=datos.idPais;
+      this.FormularioPublicidad.IdRegion=datos.idRegion;
+      this.FormularioPublicidad.Movil=datos.movil;
+      this.FormularioPublicidad.IdCargo=datos.idCargo;
+      this.FormularioPublicidad.IdAreaFormacion=datos.idAreaFormacion;
+      this.FormularioPublicidad.IdAreaTrabajo=datos.idAreaTrabajo;
+      this.FormularioPublicidad.IdIndustria=datos.idIndustria;
+      if(this.FormularioPublicidad.IdPais!=undefined){
+        this.GetRegionesPorPais(this.FormularioPublicidad.IdPais);
+      }
+      this.CompleteLocalStorage=true;
+    }
+    else{
+      this.CompleteLocalStorage=false;
+    }
+  }
   EnviarFormularioPublicidad(value:any){
     this.initValues = false;
-
     this.statuscharge=true;
-
     this.DatosLandingPageEnvio.NombrePrograma= this.data.NombrePrograma;
     this.DatosLandingPageEnvio.IdFormularioPublicidad= this.data.IdFormulario;
     this.DatosLandingPageEnvio.IdCategoriaDato= this.data.IdCategoriaOrigen;
@@ -132,7 +171,18 @@ export class FormularioPublicidadComponent implements OnInit {
     this.DatosLandingPageEnvio.IdIndustria=value.IdIndustria;
     this._LandingPageService.EnviarFormularioLandingPage(this.DatosLandingPageEnvio).pipe(takeUntil(this.signal$)).subscribe({
       next: (x) => {
-
+        this.datos.nombres = this.DatosLandingPageEnvio.Nombres;
+        this.datos.apellidos = this.DatosLandingPageEnvio.Apellidos;
+        this.datos.email = this.DatosLandingPageEnvio.Correo1;
+        this.datos.idPais = this.DatosLandingPageEnvio.IdPais;
+        this.datos.idRegion = this.DatosLandingPageEnvio.IdRegion;
+        this.datos.movil = this.DatosLandingPageEnvio.Movil;
+        this.datos.idCargo = this.DatosLandingPageEnvio.IdCargo;
+        this.datos.idAreaFormacion = this.DatosLandingPageEnvio.IdAreaFormacion;
+        this.datos.idAreaTrabajo = this.DatosLandingPageEnvio.IdAreaTrabajo;
+        this.datos.idIndustria = this.DatosLandingPageEnvio.IdIndustria
+        this._SessionStorageService.SessionSetValue('DatosFormulario',JSON.stringify(this.datos));
+        this.CompleteLocalStorage=true;
         if(this.isBrowser){
           fbq('track', 'CompleteRegistration');
 
@@ -150,23 +200,26 @@ export class FormularioPublicidadComponent implements OnInit {
       },
       complete: () => {
         this.statuscharge = false;
+        this.obtenerFormularioCompletado();
       },
     });
   }
 
   LimpiarCampos(){
+    this.CompleteLocalStorage=false;
+    this._SessionStorageService.SessionDeleteValue('DatosFormulario');
     this.combosPrevios=undefined;
     this.FormularioPublicidad.Nombres= '',
-      this.FormularioPublicidad.Apellidos= '',
-      this.FormularioPublicidad.Email= '',
-      this.FormularioPublicidad.IdPais= undefined,
-      this.FormularioPublicidad.IdRegion= undefined,
-      this.FormularioPublicidad.Movil= '',
-      this.FormularioPublicidad.IdCargo= undefined,
-      this.FormularioPublicidad.IdAreaTrabajo= undefined,
-      this.FormularioPublicidad.IdAreaFormacion= undefined,
-      this.FormularioPublicidad.IdIndustria= undefined,
-      this.GetRegionesPorPais(-1);
+    this.FormularioPublicidad.Apellidos= '',
+    this.FormularioPublicidad.Email= '',
+    this.FormularioPublicidad.IdPais= undefined,
+    this.FormularioPublicidad.IdRegion= undefined,
+    this.FormularioPublicidad.Movil= '',
+    this.FormularioPublicidad.IdCargo= undefined,
+    this.FormularioPublicidad.IdAreaTrabajo= undefined,
+    this.FormularioPublicidad.IdAreaFormacion= undefined,
+    this.FormularioPublicidad.IdIndustria= undefined,
+    this.GetRegionesPorPais(-1);
 
   }
   ObtenerCombosPortal(){

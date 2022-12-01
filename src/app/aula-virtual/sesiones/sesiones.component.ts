@@ -16,6 +16,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
 import { ParametrosEstructuraEspecificaDTO } from 'src/app/Core/Models/EstructuraEspecificaDTO';
 import { AlumnosTest } from 'src/app/Core/Shared/AlumnosTest';
+import { HelperService } from 'src/app/Core/Shared/Services/helper.service';
 import { ProgramaContenidoService } from 'src/app/Core/Shared/Services/ProgramaContenido/programa-contenido.service';
 import { SessionStorageService } from 'src/app/Core/Shared/Services/session-storage.service';
 import { SnackBarServiceService } from 'src/app/Core/Shared/Services/SnackBarService/snack-bar-service.service';
@@ -35,6 +36,7 @@ export class SesionesComponent implements OnInit,OnDestroy,AfterViewInit {
     private _SessionStorageService: SessionStorageService,
     @Inject(PLATFORM_ID) platformId: Object,
     private _AlumnosTest:AlumnosTest,
+    private _HelperService:HelperService,
     private _SnackBarServiceService:SnackBarServiceService
   ) {
     this.isBrowser = isPlatformBrowser(platformId);
@@ -907,6 +909,15 @@ export class SesionesComponent implements OnInit,OnDestroy,AfterViewInit {
                 idModalidad: x.idModalidad,
               };
 
+              this._HelperService.enviarMsjChat({
+                idMatriculaCabecera:x.idMatriculaCabecera,
+                idprogramageneralalumno:x.idPGeneral,
+                idcoordinadora:x.idAsesor,
+                idcentrocosto:x.idCentroCosto,
+                idcapitulo:this.idcapitulo,
+                idsesion:this.idSesion,
+                idcursoprogramageneralalumno:program.idPGeneralHijo
+              });
               this.migapanbase();
               this.estructuraCapitulo =
                 this._SessionStorageService.getEstructura();

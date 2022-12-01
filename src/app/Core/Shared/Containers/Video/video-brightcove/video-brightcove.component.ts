@@ -396,6 +396,7 @@ export class VideoBrightcoveComponent implements OnInit, OnChanges,AfterViewInit
                   if(element.numeroMaximoIntento<=element.intento || element.correcto){
                     this.preguntaActual++;
                   }else{
+                    this.valPregunta=false;
                     brk=true
                   }
                 }else{
@@ -411,6 +412,8 @@ export class VideoBrightcoveComponent implements OnInit, OnChanges,AfterViewInit
                     });
                     this.preguntas[this.preguntas.length-1].valid=true;
                     this.valPregunta=true;
+                  }else{
+                    this.valPregunta=false;
                   }
                 }
               }

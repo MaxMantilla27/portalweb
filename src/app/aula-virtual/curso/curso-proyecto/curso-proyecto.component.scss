@@ -74,3 +74,17 @@
     margin-bottom: 0px;
   }
 }
+
+.buttonTrash{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 40px;
+  background-color: #dc3545 !important;
+  margin: 0px calc( 50% - 20px );
+  border-radius: 5px;
+  cursor: pointer;
+}
+.buttonTrash:hover{
+  border:solid 1px #dc3545 !important;;
+}

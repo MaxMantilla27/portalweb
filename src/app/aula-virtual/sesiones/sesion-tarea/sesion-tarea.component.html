@@ -60,17 +60,18 @@
     <div class="table-resposive">
       <table class="table tablaTarea">
         <tr>
-          <th style="min-width: 170px;">Archivo</th>
+          <th style="min-width: 150px;">Archivo</th>
           <th style="min-width: 120px;">Fecha de envio</th>
           <th style="min-width: 160px;">Fecha de calificación</th>
           <th style="min-width: 80px;">Versión</th>
           <th style="min-width: 115px;">Calificación</th>
           <th style="min-width: 100px;">Retroalimentación</th>
-          <th style="min-width: 100px;">Estado</th>
+          <th style="min-width: 150px;">Estado</th>
+          <th style="min-width: 100px;">Acción</th>
         </tr>
         <ng-container *ngIf="tarea.registroEvaluacionArchivo!=null">
           <tr *ngFor="let item of tarea.registroEvaluacionArchivo;let i=index">
-            <td>{{item.nombreArchivo}}</td>
+            <td><a [href]="item.direccionUrl" target="_blank">{{item.nombreArchivo}}</a> </td>
             <td>{{item.fechaCreacion | date:"dd/MM/yyyy"}}</td>
             <td>{{item.fechaCalificacion==null?'-':item.fechaCalificacion | date:"dd/MM/yyyy"}}</td>
             <td>{{item.version}}</td>
@@ -94,6 +95,11 @@
               <ng-container *ngIf="!item.calificado">
                 Sin calificar
               </ng-container>
+            </td>
+            <td>
+              <div class="buttonTrash" (click)="OpenModalDelete(item)">
+                <i class="material-icons" [ngStyle]="{'color': item.estadoEliminar==true?'white':'#dadada'}">delete</i>
+              </div>
             </td>
           </tr>
         </ng-container>
@@ -212,12 +218,12 @@
       </div>
     </div>
     <div class="contentCabeceraTarea" *ngIf="instruccionesSubir">
-      Estimado alumno toma lo siguiente en consideracion antes de subir tu archivo
+      Estimado alumno toma lo siguiente en consideración antes de subir tu archivo
       <ul>
         <li>No nombrar tu archivo con caracteres especiales.</li>
-        <li>Que el archivo tenga una capacidad maxima de 150 MB</li>
+        <li>Que el archivo tenga una capacidad máxima de 150 MB</li>
         <li>{{tarea.datosEvaluacionTrabajo.archivoCarpeta}}</li>
-        <li>El plazo maximo en el que se calificara tu tarea sera de 15 dias</li>
+        <li>El plazo máximo en el que se cálificara tu tarea será de 15 días</li>
       </ul>
     </div>
   </div>

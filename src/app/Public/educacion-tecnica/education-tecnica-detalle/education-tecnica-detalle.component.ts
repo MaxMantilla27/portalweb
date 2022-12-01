@@ -20,6 +20,7 @@ import { SeoService } from 'src/app/Core/Shared/Services/seo.service';
 import { Subject, takeUntil } from 'rxjs';
 import { SessionStorageService } from 'src/app/Core/Shared/Services/session-storage.service';
 import { isPlatformBrowser } from '@angular/common';
+import { DatosFormularioDTO } from 'src/app/Core/Models/DatosFormularioDTO';
 
 declare const fbq:any;
 declare const gtag:any;
@@ -106,6 +107,19 @@ export class EducationTecnicaDetalleComponent implements OnInit,OnDestroy {
   public IdPespecificoPrograma=0;
   public idBusqueda=0
   public cleanSub=false
+  public CompleteLocalStorage=false;
+  public datos: DatosFormularioDTO ={
+    nombres:'',
+    apellidos:'',
+    email:'',
+    idPais:undefined,
+    idRegion:undefined,
+    movil:'',
+    idCargo:undefined,
+    idAreaFormacion:undefined,
+    idAreaTrabajo:undefined,
+    idIndustria:undefined,
+  }
   ngOnInit(): void {
     this.migaPan = [
       {
@@ -130,18 +144,20 @@ export class EducationTecnicaDetalleComponent implements OnInit,OnDestroy {
       })
       this.getCarreraDetalle(idBusqueda, nombre)
     });
-    this._HelperServiceP.recibirCombosPerfil.pipe(takeUntil(this.signal$)).subscribe((x) => {
-      this.combosPrevios=x.datosAlumno;
-      this.formularioContacto.Nombres= this.combosPrevios.nombres,
-      this.formularioContacto.Apellidos= this.combosPrevios.apellidos,
-      this.formularioContacto.Email= this.combosPrevios.email,
-      this.formularioContacto.IdPais= this.combosPrevios.idPais,
-      this.formularioContacto.IdRegion= this.combosPrevios.idDepartamento,
-      this.formularioContacto.Movil= this.combosPrevios.telefono
-      if(this.formularioContacto.IdPais!=undefined){
-        this.GetRegionesPorPais(this.formularioContacto.IdPais);
-      }
-    });
+    this.obtenerFormularioCompletado();
+    // this._HelperServiceP.recibirCombosPerfil.pipe(takeUntil(this.signal$)).subscribe((x) => {
+    //   this.combosPrevios=x.datosAlumno;
+    //   this.formularioContacto.Nombres= this.combosPrevios.nombres,
+    //   this.formularioContacto.Apellidos= this.combosPrevios.apellidos,
+    //   this.formularioContacto.Email= this.combosPrevios.email,
+    //   this.formularioContacto.IdPais= this.combosPrevios.idPais,
+    //   this.formularioContacto.IdRegion= this.combosPrevios.idDepartamento,
+    //   this.formularioContacto.Movil= this.combosPrevios.telefono
+    //   if(this.formularioContacto.IdPais!=undefined){
+    //     this.GetRegionesPorPais(this.formularioContacto.IdPais);
+    //   }
+    //   this.CompleteLocalStorage=false;
+    // });
     this.AddFields();
     this.ObtenerCombosPortal();
   }
@@ -231,6 +247,27 @@ export class EducationTecnicaDetalleComponent implements OnInit,OnDestroy {
   tonumber(valor:any){
     return parseInt(valor);
   }
+  obtenerFormularioCompletado(){
+    var DatosFormulario = this._SessionStorageService.SessionGetValue('DatosFormulario');
+    console.log(DatosFormulario)
+    if(DatosFormulario!=''){
+      var datos = JSON.parse(DatosFormulario);
+      console.log(datos)
+      this.formularioContacto.Nombres=datos.nombres;
+      this.formularioContacto.Apellidos=datos.apellidos;
+      this.formularioContacto.Email=datos.email;
+      this.formularioContacto.IdPais=datos.idPais;
+      this.formularioContacto.IdRegion=datos.idRegion;
+      this.formularioContacto.Movil=datos.movil;
+      if(this.formularioContacto.IdPais!=undefined){
+        this.GetRegionesPorPais(this.formularioContacto.IdPais);
+      }
+      this.CompleteLocalStorage=true;
+    }
+    else{
+      this.CompleteLocalStorage=false;
+    }
+  }
   SetContacto(value:any){
 
     if(!this.formVal){
@@ -258,7 +295,23 @@ export class EducationTecnicaDetalleComponent implements OnInit,OnDestroy {
       };
       this._HelperService.EnviarFormulario(this.DatosEnvioFormulario).pipe(takeUntil(this.signal$)).subscribe({
         next: (x) => {
-          this.cleanSub=true
+          this.cleanSub=false;
+          this.datos.nombres = this.DatosEnvioFormulario.Nombres;
+            this.datos.apellidos = this.DatosEnvioFormulario.Apellidos;
+            this.datos.email = this.DatosEnvioFormulario.Correo1;
+            this.datos.idPais = this.DatosEnvioFormulario.IdPais;
+            this.datos.idRegion = this.DatosEnvioFormulario.IdRegion;
+            this.datos.movil = this.DatosEnvioFormulario.Movil;
+            var DatosFormulario = this._SessionStorageService.SessionGetValue('DatosFormulario');
+            if(DatosFormulario!=''){
+              var datosPrevios = JSON.parse(DatosFormulario);
+              this.datos.idCargo=datosPrevios.idCargo;
+              this.datos.idAreaFormacion=datosPrevios.idAreaFormacion;
+              this.datos.idAreaTrabajo=datosPrevios.idAreaTrabajo;
+              this.datos.idIndustria=datosPrevios.idIndustria;
+            }
+            this._SessionStorageService.SessionSetValue('DatosFormulario',JSON.stringify(this.datos));
+            this.CompleteLocalStorage=true;
           if(this.isBrowser){
             fbq('track', 'CompleteRegistration');
             gtag('event', 'conversion', {
@@ -272,6 +325,7 @@ export class EducationTecnicaDetalleComponent implements OnInit,OnDestroy {
         },
         complete: () => {
           this.statuscharge = false;
+          this.obtenerFormularioCompletado();
         },
       });
     }
@@ -369,13 +423,15 @@ export class EducationTecnicaDetalleComponent implements OnInit,OnDestroy {
     });
   }
   LimpiarCampos(){
+    this.CompleteLocalStorage=false;
+    this._SessionStorageService.SessionDeleteValue('DatosFormulario');
     this.combosPrevios=undefined;
     this.formularioContacto.Nombres= '',
-      this.formularioContacto.Apellidos= '',
-      this.formularioContacto.Email= '',
-      this.formularioContacto.IdPais=undefined,
-      this.formularioContacto.IdRegion=undefined,
-      this.formularioContacto.Movil= '',
-      this.GetRegionesPorPais(-1);
+    this.formularioContacto.Apellidos= '',
+    this.formularioContacto.Email= '',
+    this.formularioContacto.IdPais=undefined,
+    this.formularioContacto.IdRegion=undefined,
+    this.formularioContacto.Movil= '',
+    this.GetRegionesPorPais(-1);
   }
 }

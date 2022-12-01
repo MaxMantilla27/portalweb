@@ -3,6 +3,7 @@ import { Component, EventEmitter, Inject, Input, OnChanges, OnInit, Output, PLAT
 import { Validators } from '@angular/forms';
 import { Subject, takeUntil } from 'rxjs';
 import { ValidacionChatEnvioDTO, ValidacionChatFormularioDTO } from 'src/app/Core/Models/ChatEnLineaDTO';
+import { DatosFormularioDTO } from 'src/app/Core/Models/DatosFormularioDTO';
 import { formulario } from 'src/app/Core/Models/Formulario';
 import { ChatEnLineaService } from '../../Services/ChatEnLinea/chat-en-linea.service';
 import { SessionStorageService } from '../../Services/session-storage.service';
@@ -58,12 +59,41 @@ export class FormChatComponent implements OnInit,OnChanges {
     EstadoAsesor:'',
   };
   @Output() SaveForm:EventEmitter<{id:string,idAlumno:number}> = new EventEmitter<{id:string,idAlumno:number}>();
+  public CompleteLocalStorage=false;
+  public datos: DatosFormularioDTO ={
+    nombres:'',
+    apellidos:'',
+    email:'',
+    idPais:undefined,
+    idRegion:undefined,
+    movil:'',
+    idCargo:undefined,
+    idAreaFormacion:undefined,
+    idAreaTrabajo:undefined,
+    idIndustria:undefined,
+  }
   ngOnInit(): void {
-    this.AddFields()
+    this.AddFields();
+    this.obtenerFormularioCompletado();
   }
   ngOnChanges(changes: SimpleChanges): void {
   }
-
+  obtenerFormularioCompletado(){
+    var DatosFormulario = this._SessionStorageService.SessionGetValue('DatosFormulario');
+    console.log(DatosFormulario)
+    if(DatosFormulario!=''){
+      var datos = JSON.parse(DatosFormulario);
+      console.log(datos)
+      this.formularioContactoChat.Nombres=datos.nombres;
+      this.formularioContactoChat.Apellidos=datos.apellidos;
+      this.formularioContactoChat.Email=datos.email;
+      this.formularioContactoChat.Movil=datos.movil;
+      this.CompleteLocalStorage=true;
+    }
+    else{
+      this.CompleteLocalStorage=false;
+    }
+  }
   SetContacto(value: any) {
     if (!this.formVal) {
       // this._SnackBarServiceService.openSnackBar(
@@ -82,15 +112,32 @@ export class FormChatComponent implements OnInit,OnChanges {
       this.DatosEnvioFormulario.IdPrograma = this.IdPGeneral;
       var IdPespecifico=this._SessionStorageService.SessionGetValueCokies("IdPEspecificoPublicidad");
       var IdCategoriaDato=this._SessionStorageService.SessionGetValueCokies("idCategoria");
+      var idcampania=this._SessionStorageService.SessionGetValueCokies("idCampania");
       this.DatosEnvioFormulario.IdCategoriaDato=IdCategoriaDato==''?0:parseInt(IdCategoriaDato);
       if(IdPespecifico==''){
         this.DatosEnvioFormulario.IdPespecifico=this.IdPespecificoPrograma
       }else{
         this.DatosEnvioFormulario.IdPespecifico=parseInt(IdPespecifico)
       };
+      this.DatosEnvioFormulario.IdCampania=parseInt(idcampania)
       this._ChatEnLinea.ValidarCrearOportunidadChat(this.DatosEnvioFormulario).pipe(takeUntil(this.signal$)).subscribe({
         next:(x)=>{
-
+          this.datos.nombres = this.DatosEnvioFormulario.Nombres;
+            this.datos.apellidos = this.DatosEnvioFormulario.Apellidos;
+            this.datos.email = this.DatosEnvioFormulario.Email;
+            this.datos.movil = this.DatosEnvioFormulario.Movil;
+            var DatosFormulario = this._SessionStorageService.SessionGetValue('DatosFormulario');
+            if(DatosFormulario!=''){
+              var datosPrevios = JSON.parse(DatosFormulario);
+              this.datos.idCargo=datosPrevios.idCargo;
+              this.datos.idPais=datosPrevios.idPais;
+              this.datos.idRegion=datosPrevios.idRegion;
+              this.datos.idAreaFormacion=datosPrevios.idAreaFormacion;
+              this.datos.idAreaTrabajo=datosPrevios.idAreaTrabajo;
+              this.datos.idIndustria=datosPrevios.idIndustria;
+            }
+            this._SessionStorageService.SessionSetValue('DatosFormulario',JSON.stringify(this.datos));
+            this.CompleteLocalStorage=true;
           if(this.isBrowser){
             fbq('track', 'CompleteRegistration');
             gtag('event', 'conversion', {
@@ -102,7 +149,11 @@ export class FormChatComponent implements OnInit,OnChanges {
           }
           this.validacionChat=x
           this.SaveForm.emit({id:x.respuesta.id,idAlumno:x.respuesta.idAlumno})
-        }
+        },
+        complete: () => {
+          this.statuscharge = false;
+          this.obtenerFormularioCompletado();
+        },
       })
     }
   }
@@ -136,5 +187,13 @@ export class FormChatComponent implements OnInit,OnChanges {
       validate: [Validators.required],
       label: 'Teléfono Móvil',
     });
+  }
+  LimpiarCampos(){
+    this.CompleteLocalStorage=false;
+    this._SessionStorageService.SessionDeleteValue('DatosFormulario');
+    this.DatosEnvioFormulario.Nombres= '';
+    this.DatosEnvioFormulario.Apellidos= '';
+    this.DatosEnvioFormulario.Email= '';
+    this.DatosEnvioFormulario.Movil= '';
   }
 }

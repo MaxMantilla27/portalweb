@@ -24,4 +24,12 @@ export class NotaService {
       return EMPTY;
     }
   }
+
+  public ListadoNotaProcesar(idPEspecifico:number,grupo:number):Observable<any>{
+    if(this.isBrowser){
+      return this.http.get<any>(this.urlBase+'/ListadoNotaProcesar?idPespecifico='+idPEspecifico+ "&grupo=" +grupo);
+    }else{
+      return EMPTY;
+    }
+  }
 }

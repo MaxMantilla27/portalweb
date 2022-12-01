@@ -117,6 +117,7 @@ import { LazyLoadImagesDirective } from './Directives/lazy-load-images.directive
 import { CardBlancComponent } from './Containers/card/card-blanc/card-blanc.component';
 import { ChargeTextComponent } from './Containers/Dialog/charge-text/charge-text.component';
 import { LoadVerticalComponent } from './Containers/load-vertical/load-vertical.component';
+import { EliminarComponent } from './Containers/Dialog/eliminar/eliminar.component';
 
 @NgModule({
   imports: [
@@ -202,6 +203,7 @@ import { LoadVerticalComponent } from './Containers/load-vertical/load-vertical.
     CardBlancComponent,
     ChargeTextComponent,
     LoadVerticalComponent,
+    EliminarComponent,
     //ChatZComponent,
   ],
   exports: [
@@ -283,7 +285,8 @@ import { LoadVerticalComponent } from './Containers/load-vertical/load-vertical.
     TextFieldModule,
     ChatPortalComponent,
     VideoAyudaComponent,
-    LoadVerticalComponent
+    LoadVerticalComponent,
+    EliminarComponent,
   ],
   providers: [
     SessionStorageService,

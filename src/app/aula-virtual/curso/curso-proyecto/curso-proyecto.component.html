@@ -68,6 +68,7 @@
               <th>Versión</th>
               <th>Calificación</th>
               <th>Estado</th>
+              <th style="min-width: 100px;">Acción</th>
             </tr>
             <ng-container *ngIf="proyecto.registroEvaluacionArchivo!=null && proyecto.registroEvaluacionArchivo.length>0">
               <tr>
@@ -88,6 +89,11 @@
                   <ng-container *ngIf="!proy.calificado">
                     Sin calificar
                   </ng-container>
+                </td>
+                <td>
+                  <div class="buttonTrash" (click)="OpenModalDelete(proy)">
+                    <i class="material-icons" [ngStyle]="{'color': proy.estadoEliminar==true?'white':'#dadada'}">delete</i>
+                  </div>
                 </td>
               </tr>
             </ng-container>
@@ -232,9 +238,9 @@
         Estimado alumno toma lo siguiente en consideracion antes de subir tu archivo
         <ul>
           <li>No nombrar tu archivo con caracteres especiales.</li>
-          <li>Que el archivo tenga una capacidad maxima de 150 MB</li>
+          <li>Que el archivo tenga una capacidad máxima de 150 MB</li>
           <li>{{proyecto.datosEvaluacionTrabajo.archivoCarpeta}}</li>
-          <li>El plazo maximo en el que se calificara tu proyecto sera de 15 dias</li>
+          <li>El plazo máximo en el que se cálificara tu proyecto sera de 15 días</li>
         </ul>
       </div>
     </div>

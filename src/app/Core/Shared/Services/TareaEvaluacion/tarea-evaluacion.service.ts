@@ -85,4 +85,12 @@ export class TareaEvaluacionService {
     }
   }
 
+  public DeleteEvaluacionTareaEvaluacionTarea(IdTareaEvaluacionTarea:number):Observable<any>{
+    if(this.isBrowser){
+      return this.http.get<any>(this.urlBase+'/DeleteEvaluacionTareaEvaluacionTarea?IdTareaEvaluacionTarea='+IdTareaEvaluacionTarea);
+    }else{
+      return EMPTY;
+    }
+  }
+
 }

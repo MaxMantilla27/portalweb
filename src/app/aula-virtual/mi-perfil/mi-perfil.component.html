@@ -55,7 +55,7 @@
             </mat-form-field>
             <mat-form-field appearance="outline" [floatLabel]="'always'">
               <mat-label>Correo Electr&oacute;nico</mat-label>
-              <input type="text" placeholder="Correo Electr&oacute;nico" formControlName="Correo" matInput />
+              <input type="text" [disabled]="true" placeholder="Correo Electr&oacute;nico" formControlName="Correo" matInput />
               <mat-error *ngIf="userForm.invalid">Debe ingresar su email</mat-error>
             </mat-form-field>
             <mat-form-field appearance="outline" [floatLabel]="'always'">

@@ -65,7 +65,8 @@ export class InterceptorService implements HttpInterceptor {
     return request.clone({
       headers: request.headers
         .set('CodigoISO', '' + Iso)
-        .set('usuarioWeb', '' + usuarioWeb),
+        .set('usuarioWeb', '' + usuarioWeb)
+
     });
   }
 }

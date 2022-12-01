@@ -1,8 +1,10 @@
 import { HttpEventType, HttpResponse } from '@angular/common/http';
 import { Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { Subject, takeUntil } from 'rxjs';
 import { ParametrosEstructuraEspecificaDTO } from 'src/app/Core/Models/EstructuraEspecificaDTO';
 import { ModelTareaEvaluacionTareaDTO, ParametroObtenerEvaluacionTarea } from 'src/app/Core/Models/TareaEvaluacionDTO';
+import { EliminarComponent } from 'src/app/Core/Shared/Containers/Dialog/eliminar/eliminar.component';
 import { HelperService } from 'src/app/Core/Shared/Services/helper.service';
 import { SnackBarServiceService } from 'src/app/Core/Shared/Services/SnackBarService/snack-bar-service.service';
 import { TareaEvaluacionService } from 'src/app/Core/Shared/Services/TareaEvaluacion/tarea-evaluacion.service';
@@ -17,6 +19,7 @@ export class CursoProyectoComponent implements OnInit,OnChanges,OnDestroy {
   constructor(
     private _TareaEvaluacionService: TareaEvaluacionService,
     private _SnackBarServiceService: SnackBarServiceService,
+    public dialog: MatDialog,
     private _HelperService:HelperService
   ) {}
   ngOnDestroy(): void {
@@ -159,8 +162,18 @@ export class CursoProyectoComponent implements OnInit,OnChanges,OnDestroy {
               this.progress=0;
               if(x.body==true){
                 this.ObtenerEvaluacionProyectoAplicacion()
+                //this._SnackBarServiceService.openSnackBar(x.body.mensaje,'x',20,"snackbarCrucigramaSucces");
               }else{
-                this._SnackBarServiceService.openSnackBar("Solo tiene 2 intentos para subir su proyecto.",'x',15,"snackbarCrucigramaerror");
+                if(x.body==false){
+                  this._SnackBarServiceService.openSnackBar("Solo tiene 3 intentos para subir su tarea.",'x',15,"snackbarCrucigramaerror");
+                }else{
+                  if(x.body.estado==true){
+                    this.ObtenerEvaluacionProyectoAplicacion()
+                    this._SnackBarServiceService.openSnackBar(x.body.mensaje,'x',20,"snackbarCrucigramaSucces");
+                  }else{
+                    this._SnackBarServiceService.openSnackBar(x.body.mensaje,'x',20,"snackbarCrucigramaerror");
+                  }
+                }
               }
             }
           },
@@ -179,5 +192,36 @@ export class CursoProyectoComponent implements OnInit,OnChanges,OnDestroy {
   }
   EventoInteraccionAccordionCertificado(nombre:string,estado:string){
     this._HelperService.enviarMsjAcciones({Tag:'Accordion',Nombre:nombre,Estado:estado,Seccion:'Proyecto'})
+  }
+  OpenModalDelete(tarea:any){
+    const dialogRef = this.dialog.open(EliminarComponent, {
+      width: '550px',
+      data: {
+        titulo:'¿Está seguro de eliminar la tarea registrada?',
+        sub:'¡No podrás revertir esta acción!'},
+      panelClass: 'custom-dialog-eliminar',
+    });
+
+    dialogRef.afterClosed().pipe(takeUntil(this.signal$)).subscribe(result => {
+      if(result==true){
+        this.DeleteTarea(tarea)
+      }
+    });
+
+
+  }
+  DeleteTarea(tarea:any){
+    console.log(tarea)
+    this._TareaEvaluacionService.DeleteEvaluacionTareaEvaluacionTarea(tarea.id).pipe(takeUntil(this.signal$)).subscribe({
+      next:x=>{
+        console.log(x)
+        if(x.estado==true){
+          this.ObtenerEvaluacionProyectoAplicacion()
+          this._SnackBarServiceService.openSnackBar(x.mensaje,'x',20,"snackbarCrucigramaSucces");
+        }else{
+          this._SnackBarServiceService.openSnackBar(x.mensaje,'x',20,"snackbarCrucigramaerror");
+        }
+      }
+    })
   }
 }

@@ -44,6 +44,7 @@ export class SessionStorageService {
       return atob(value);
     }
     if(name.toUpperCase()=='ISO_PAIS')return 'INTC';
+    if(name.toUpperCase()=='DatosFormulario')return '';
     return '';
   }
   SessionDeleteValue(name:string):void{

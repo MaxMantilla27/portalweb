@@ -112,6 +112,13 @@ export class ModuloComponent implements OnInit,OnDestroy {
                 titulo:this.json.NombreCapitulo,
                 urlWeb:'/AulaVirtual/MisCursos/'+this.json.IdMatriculaCabecera+'/'+this.idPEspecificoHijo
               })
+              this._HelperService.enviarMsjChat({
+                idMatriculaCabecera:x.idMatriculaCabecera,
+                idprogramageneralalumno:x.idPGeneral,
+                idcoordinadora:x.idAsesor,
+                idcentrocosto:x.idCentroCosto,
+                idcursoprogramageneralalumno:program.idPGeneralHijo
+              });
               this.ObtenerEstructuraEspecificaCurso();
             }
           });

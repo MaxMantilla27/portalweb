@@ -22,7 +22,12 @@ export class TarifaGestionComponent implements OnInit {
   public tarifas:any
 
   ngOnInit(): void {
-    this.ObtenerTarifas()
+    this._HelperService.recibirDataPais.pipe(takeUntil(this.signal$)).subscribe({
+      next:x=>{
+       console.log(x)
+       this.ObtenerTarifas()
+      }
+    })
     this._HelperService.recibirChangePais().pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
         this.Paises=x;
@@ -31,7 +36,7 @@ export class TarifaGestionComponent implements OnInit {
       }
     })
 
-   
+
   }
   ObtenerTarifas(){
     this._TarifaGestionService.ObtenerTarifas().pipe(takeUntil(this.signal$)).subscribe({

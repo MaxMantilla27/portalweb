@@ -70,6 +70,7 @@ export class TagsComponent implements OnInit,OnDestroy {
   TemasRelacionados(){
     this._TemasRelacionadosService.TemasRelacionados(this.tipo,this.nombre).pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
+        console.log(x)
         if(x.parametroSeoProgramaDTO!=undefined){
           var metas=x.parametroSeoProgramaDTO;
           if(metas.length>0){
@@ -120,6 +121,9 @@ export class TagsComponent implements OnInit,OnDestroy {
             return ps;
           }
         );
+        if(x.tema!=''){
+          this.tagDescripcion=x.tema.descripcion;
+        }
       }
     })
   }

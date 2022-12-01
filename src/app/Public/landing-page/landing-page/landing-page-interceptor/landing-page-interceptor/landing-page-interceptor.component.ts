@@ -34,6 +34,7 @@ export class LandingPageInterceptorComponent implements OnInit,OnDestroy {
   public rutaLandingPage='';
   public rutaVariable='';
   public nombreProgramaLandingPage=''
+  public tecnicas=[7758,7757]
   ngOnInit(): void {
     this.activatedRoute.queryParams.pipe(takeUntil(this.signal$)).subscribe({
       next:(x)=>{
@@ -75,13 +76,18 @@ export class LandingPageInterceptorComponent implements OnInit,OnDestroy {
         if(x!=undefined)
         {
           this.valorPrograma=x;
-          this._SessionStorage.SessionSetValue("idCampania",this.valorPrograma.idConjuntoAnuncio)
+          this._SessionStorage.SessionSetValueCokies("idCampania",this.valorPrograma.idConjuntoAnuncio,1)
           this._SessionStorage.SessionSetValueCokies("idCategoria",this.valorPrograma.idCategoriaOrigen,1)
           this._SessionStorage.SessionSetValueCokies("IdPEspecificoPublicidad",this.valorPrograma.idPEspecifico,1)
           this.nombreProgramaLandingPage=this.valorPrograma.categoriaNombre.replace(/-/g,' ')
           console.log(this.nombreProgramaLandingPage)
           this.OpenModalLandingPage();
-          this.router.navigate(['/'+this.valorPrograma.areaCapacitacion+'/'+this.valorPrograma.categoriaNombre+'-'+this.valorPrograma.idBusqueda]);
+          if(this.tecnicas.find(element => element ==x.idBusqueda)){
+            this.router.navigate(['/tecnico-productivo/'+this.valorPrograma.categoriaNombre+'-'+this.valorPrograma.idBusqueda]);
+
+          }else{
+            this.router.navigate(['/'+this.valorPrograma.areaCapacitacion+'/'+this.valorPrograma.categoriaNombre+'-'+this.valorPrograma.idBusqueda]);
+          }
         }
         else{
           this.router.navigate(['error404']);
