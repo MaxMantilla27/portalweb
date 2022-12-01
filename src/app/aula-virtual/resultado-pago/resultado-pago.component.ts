@@ -24,6 +24,7 @@ export class ResultadoPagoComponent implements OnInit,OnDestroy{
   ) {
     this.isBrowser = isPlatformBrowser(platformId); {}
   }
+
   ngOnDestroy(): void {
     this.signal$.next(true)
     this.signal$.complete()
@@ -33,20 +34,32 @@ export class ResultadoPagoComponent implements OnInit,OnDestroy{
     IdentificadorTransaccion:'',
     RequiereDatosTarjeta:true
   }
+
+  public tipoRespuesta = null
   public resultVisa:any
   public ruta=''
   intentos=0;
   img=1;
   imgAc=''
   ngOnInit(): void {
+    console.log(this._router.url);
     if(this.isBrowser){
       this._ActivatedRoute.params.pipe(takeUntil(this.signal$)).subscribe({
         next: (x) => {
+          console.log("Identificador",x)
           this.json.IdentificadorTransaccion = x['Identificador'];
-
-          this.ObtenerPreProcesoPagoCuotaAlumno()
+          this._ActivatedRoute.queryParams.pipe(takeUntil(this.signal$)).subscribe({
+            next: (x) => {
+              
+              console.log("tipo",this.tipoRespuesta )
+              this.tipoRespuesta = x['tipo']
+            this.ObtenerPreProcesoPagoCuotaAlumno()
+            },
+          });
+          
         },
       });
+      
       this.imgInterval();
 
       var interval2=setInterval(()=>{
@@ -60,6 +73,7 @@ export class ResultadoPagoComponent implements OnInit,OnDestroy{
     }
 
   }
+
   ValidarProcesoPagoCuotaAlumnoOpenPAy(){
     this._FormaPagoService.ValidarProcesoPagoCuotaAlumnoOpenPAy(this.json).pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
@@ -72,7 +86,9 @@ export class ResultadoPagoComponent implements OnInit,OnDestroy{
     this.ruta='/AulaVirtual/MisPagos'
     this._FormaPagoService.ObtenerPreProcesoPagoCuotaAlumno(this.json).pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
-        console.log(x)
+        console.log("REPUESTA-PREPROCESO",x._Repuesta.listaCuota)
+        var menor = x._Repuesta.listaCuota[0].nombre
+        console.log("REPUESTA-PREPROCESO",menor)
         if(x._Repuesta.registroAlumno==null){
           this.ObtenerPreProcesoPagoOrganicoAlumno()
         }else{

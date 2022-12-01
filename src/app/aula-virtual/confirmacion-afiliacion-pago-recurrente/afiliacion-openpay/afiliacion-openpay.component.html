@@ -1,0 +1,170 @@
+<div class="container">
+    <div class="row rowpaddAv">
+      <div class="col-12 row" *ngIf="resultCard!=undefined">
+        <div class="col-12 col-md-12 col-lg-12 titlePagoTarjeta">Confirma tu afiliación</div>
+        <div class="col-12 d-md-none d-lg-none" >
+          <div class="resumenPagoTarjeta" style="padding: 0px">
+            <div class="titleResumenPago">Resumen de tu afiliación</div>
+            <div class="contentResumenPago">
+              <div class="subtitleResumenPago">{{resultCard.nombrePrograma}}</div>
+              <div class="col-12">Pagos durante el periodo de afiliación</div>
+              <div class="ItemsResumenPago row">
+                <div class="col-12 row itms" *ngFor="let item of resultCard.listaCuota">
+                  <div class="col-8">{{item.nombre}}</div>
+                  <div class="col-4" style="text-align: right;">{{resultCard.simboloMoneda}} {{item.cuotaTotal}}</div>
+                </div>
+                <div class="col-12 row tot">
+                  <div class="col-8">Total a pagar</div>
+                  <div class="col-4" style="text-align: right;">{{resultCard.simboloMoneda}} {{resultCard.total}}</div>
+                </div>
+              </div>
+            </div>
+          </div>
+  
+          <div class="iconoPagoTarjeta">
+            <div class="imgPagoTarjeta"></div>
+            <div class="textPagoTarjeta">
+              <span>PAGO</span>
+              <span>100%</span>
+              <span>seguro</span>
+            </div>
+            <div class="descPagoTarjeta">
+              <span>Este certificado garantiza la</span>
+              <span>seguridad de todas tus conexiones</span>
+              <span>mediante cifrado</span>
+            </div>
+          </div>
+        </div>
+        <div class="col-12 col-md-6 col-lg-6 inputPagoVisa row">
+          <div class="subtitlePagoVisa">Ingresa los datos de tu tarjeta de crédito o débito {{resultCard.medioPago | capitalice}}</div>
+          <form id="fomrOpenPAy" class="row">
+              <mat-form-field class="col-12" appearance="outline" [floatLabel]="'always'" style="width: 100%;">
+              <mat-label>Titular de la Tarjeta</mat-label>
+              <input type="text" placeholder="Nombre como aparece en la tarjeta" [ngModelOptions]="{standalone: true}"
+              [(ngModel)]="jsonSave.TarjetaHabiente.Titular" matInput >
+            </mat-form-field>
+            <mat-form-field class="col-12" appearance="outline" [floatLabel]="'always'" style="width: 100%;">
+              <mat-label>Documento de Identidad</mat-label>
+              <input type="text"  placeholder="N° de Documento" [ngModelOptions]="{standalone: true}"
+              [(ngModel)]="jsonSave.TarjetaHabiente.NumeroDocumento" matInput >
+            </mat-form-field>
+
+            <!-- <div class="col-6 col-md-6 col-lg-6"> 
+              <mat-form-field class="col-6" appearance="outline" [floatLabel]="'always'" style="width: 100%;">
+                <mat-label>Documento de Identidad</mat-label>
+                <input type="text"  placeholder="N° de Documento" [ngModelOptions]="{standalone: true}"
+                [(ngModel)]="jsonSave.TarjetaHabiente.NumeroDocumento" matInput >
+              </mat-form-field>
+            </div> -->
+            <!-- <div class="col-6 col-md-6 col-lg-6"> 
+              <mat-form-field class="col-6" appearance="outline" [floatLabel]="'always'" style="width: 100%;">
+                <mat-label>Fecha final de afiliación</mat-label>
+                <input type="date"  placeholder="N° de Documento" [ngModelOptions]="{standalone: true}"
+                [(ngModel)]="jsonSave.FechaFinalAfiliacion" min="2017-04-01" max={{FechaMax}} matInput >
+              </mat-form-field>
+            </div> -->
+            
+  
+            <ng-container >
+              <mat-form-field class="col-12" appearance="outline" [floatLabel]="'always'" style="width: 100%;">
+                <mat-label>Número de tarjeta</mat-label>
+                <input type="text" placeholder="Número de tarjeta" [ngModelOptions]="{standalone: true}"
+                [(ngModel)]="NumberT" matInput appInputCard>
+              </mat-form-field>
+              <div class="col-6 col-md-6 col-lg-6">
+  
+                <mat-form-field  appearance="outline" [floatLabel]="'always'" style="width: 100%;">
+                  <mat-label>Fecha de vencimiento MM/AA</mat-label>
+                  <input type="text" placeholder="MM/AA" [ngModelOptions]="{standalone: true}"
+                  [(ngModel)]="jsonSave.TarjetaHabiente.fecha" matInput appInputCardFecha>
+                </mat-form-field>
+              </div>
+  
+              <div class="col-6 col-md-6 col-lg-6">
+                <mat-form-field appearance="outline" [floatLabel]="'always'" style="width: 100%;">
+                  <mat-label>CVV</mat-label>
+                  <input type="text" placeholder="CVV" [ngModelOptions]="{standalone: true}"
+                  [(ngModel)]="jsonSave.TarjetaHabiente.CodigoVV" matInput [maxLength]="4">
+                </mat-form-field>
+              </div>
+            </ng-container>
+  
+  
+            <ng-container *ngIf="jsonSave.Comprobante!=false">
+              <mat-form-field appearance="outline" [floatLabel]="'always'" style="width: 100%;">
+                <mat-label>Razón Social</mat-label>
+                <input type="text" [(ngModel)]="jsonSave.RazonSocial" placeholder="Razón Social" matInput
+                [ngModelOptions]="{standalone: true}" />
+              </mat-form-field>
+              <mat-form-field appearance="outline" [floatLabel]="'always'" style="width: 100%;">
+                <mat-label>Número Tributario</mat-label>
+                <input type="text" [(ngModel)]="jsonSave.CodigoTributario" [ngModelOptions]="{standalone: true}"
+                placeholder="Número Tributario" matInput />
+              </mat-form-field>
+            </ng-container>
+  
+  
+            <div class="row comprobatePagoTarjeta">
+              <div class="col-12 col-md-6 col-lg-4">Emitir comprobante</div>
+              <div class="col-12 col-md-6 col-lg-8 items">
+                <div class="itm no-select" [ngClass]="{'SelectCom':jsonSave.Comprobante==false}"
+                  (click)="jsonSave.Comprobante=false">
+                  Boleta <i class="material-icons" *ngIf="jsonSave.Comprobante==false">check_circle</i>
+                </div>
+                <div class="itm no-select" [ngClass]="{'SelectCom':jsonSave.Comprobante!=false}"
+                  (click)="jsonSave.Comprobante=true">Factura <i class="material-icons"
+                    *ngIf="jsonSave.Comprobante!=false">check_circle</i>
+                </div>
+              </div>
+            </div>
+            <div class="col-12 row" style="justify-content: center;">
+              <div class="col-12 col-md-10 col-lg-10">
+                <app-default-button [confs]="{color:'primary',titulo:'Afiliarme ahora'}"
+                  [style]="'margin-top: 20px;margin-bottom: 0px;width:100%'" (ButtoclClick)="ValidateSave()"></app-default-button>
+              </div>
+            </div>
+          </form>
+          <div style="    width: 100%;
+          font-size: 12px;
+          color: #b2b2b2;
+          padding: 20px;">
+            * El monto a cargar sera el cual se detalla arriba en la moneda del programa, el tipo de cambio dependerá del banco que usted utilice.
+          </div>
+  
+        </div>
+        <div class="d-none col-md-6 d-md-block col-lg-6 d-lg-block">
+          <div class="resumenPagoTarjeta">
+            <div class="titleResumenPago">Resumen de tu afiliación</div>
+            <div class="contentResumenPago">
+              <div class="subtitleResumenPago">{{resultCard.nombrePrograma}}</div>
+              <div class="col-12">Pagos durante el periodo de afiliación</div>
+
+              <div class="ItemsResumenPago row">
+                <div class="col-12 row itms" *ngFor="let item of resultCard.listaCuota">
+                  <div class="col-8">{{item.nombre}}</div>
+                  <div class="col-4" style="text-align: right;">{{resultCard.simboloMoneda}} {{item.cuotaTotal}}</div>
+                </div>
+                <div class="col-12 row tot">
+                  <div class="col-8">Total a pagar</div>
+                  <div class="col-4" style="text-align: right;">{{resultCard.simboloMoneda}} {{resultCard.total}}</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="iconoPagoTarjeta">
+            <div class="imgPagoTarjeta"></div>
+            <div class="textPagoTarjeta">
+              <span>PAGO</span>
+              <span>100%</span>
+              <span>seguro</span>
+            </div>
+            <div class="descPagoTarjeta">
+              <span>Este certificado garantiza la</span>
+              <span>seguridad de todas tus conexiones</span>
+              <span>mediante cifrado</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

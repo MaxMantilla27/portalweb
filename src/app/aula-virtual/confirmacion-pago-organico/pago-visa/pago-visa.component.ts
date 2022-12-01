@@ -21,7 +21,8 @@ export class PagoVisaComponent implements OnInit,OnDestroy {
     @Inject(DOCUMENT) private _document: Document,
     private _ActivatedRoute:ActivatedRoute,
     private _FormaPagoService:FormaPagoService,
-    private _SessionStorageService:SessionStorageService
+    private _SessionStorageService:SessionStorageService,
+    
   ) {}
   public urlBase=environment.url_portal;
   ngOnDestroy(): void {

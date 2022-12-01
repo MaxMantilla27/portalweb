@@ -1,0 +1,113 @@
+
+<div class="container" *ngIf="resultProceso!=undefined">
+  <div class="row rowpaddAv" style="justify-content: center;">
+    <div class="col-12 col-md-10 col-lg-8" *ngIf="resultProceso.estadoOperacion!='Processed'">  
+      <ng-container >
+        <div class="titleResultPago">
+          <div>No se realizó el pago</div>
+          <img src="../../../assets/icons/denegado-error-21.svg" alt="">
+        </div>
+        <div class="textResultPago">
+          <ng-container >
+            No hemos podido procesar su pago, debido a un error con su entidad bancaria o al rechazo de la compra.
+          </ng-container>
+          <div class="textC">Si tiene alguna consulta adicional, escriba un correo a: <a
+              href="mailto:matriculas@bsginstitute.com">matriculas@bsginstitute.com</a></div>
+        </div>
+      </ng-container>
+      <ng-container *ngIf="resultProceso.tipoPago=='Organico'">
+          <app-default-button [confs]="{color:'primary',titulo:'Volver'}" [style]="'margin-top:40px;padding: 0px 40px;'"
+              [ruta]="url" ></app-default-button>
+        </ng-container>
+         <ng-container *ngIf="resultProceso.tipoPago=='Cronograma'">
+          <div class="col-12 col-md-10 col-lg-10">
+              <app-default-button [confs]="{color:'primary',titulo:'Volver'}"
+                [style]="'margin-top: 20px;margin-bottom: 0px;width:20%'" (ButtoclClick)="redireccionarAPagos()"></app-default-button>
+            </div>
+         </ng-container>
+
+    </div>
+    <div class="col-12 col-md-10 col-lg-8" *ngIf="resultProceso.estadoOperacion=='Processed'">
+      <div class="titleResultPago">
+        <div>¡Pago exitoso!</div>
+        <img src="../../../assets/icons/positivo-hecho-20.svg" alt="">
+      </div>
+      <div style="margin-top: 5px;
+      font-size: 14px;" *ngIf="resultProceso.tipoPago=='Organico'">
+        {{resultProceso.registroAlumno.nombre}}, tu compra ha sido realizada con exito.
+      </div>
+      <div style="margin-top: 5px;
+      font-size: 14px;" *ngIf="resultProceso.tipoPago=='Cronograma'">
+        {{resultProceso.registroAlumno.nombre}}, tu compra ha sido realizada con exito.
+      </div>
+      <div class="contentCardPago">
+        <div style="margin: 20px 0px;
+        font-weight:600;">Detalles del pago realizado:</div>
+        <div class="cardPago">
+          <div class="row" style="align-items: center;" *ngIf="resultProceso.tipoPago=='Organico'">
+            <div class="col-12 col-md-5 col-lg-4"><b>Nro. de Compra:</b></div>
+            <div class="col-12 col-md-7 col-lg-8 itemValueCardPago">{{resultProceso.identificadorTransaccion}}</div>
+            <div class="col-12 col-md-5 col-lg-4"><b>Monto:</b></div>
+            <div class="col-12 col-md-7 col-lg-8 itemValueCardPago">{{resultProceso.montoTotal}}</div>
+            <div class="col-12 col-md-5 col-lg-4"><b>Moneda:</b></div>
+            <div class="col-12 col-md-7 col-lg-8 itemValueCardPago">{{resultProceso.moneda}}</div>
+            <div class="col-12 col-md-5 col-lg-4"><b>Nombres y Apellidos:</b></div>
+            <div class="col-12 col-md-7 col-lg-8 itemValueCardPago">{{resultProceso.registroAlumno.nombre}}
+                {{resultProceso.registroAlumno.apellido}}</div>
+            <ng-container *ngIf="resultProceso.nombrePrograma!=null">
+              <div class="col-12 col-md-5 col-lg-4"><b>Programa:</b></div>
+              <div class="col-12 col-md-7 col-lg-8 itemValueCardPago">{{resultProceso.nombrePrograma}}</div>
+            </ng-container>
+            <div class="col-12 col-md-5 col-lg-4"><b>Fecha de transacción:</b></div>
+            <div class="col-12 col-md-7 col-lg-8 itemValueCardPago">{{resultProceso.fechaTransaccion | date:'dd-MM-yyyy'}}
+            </div>
+            <div class="col-12 col-md-5 col-lg-4"><b>Hora de transacción:</b></div>
+            <div class="col-12 col-md-7 col-lg-8 itemValueCardPago">{{resultProceso.fechaTransaccion | date:'hh:mm'}}</div>
+          </div>
+          <div class="row" style="align-items: center;" *ngIf="resultProceso.tipoPago=='Cronograma'">
+              <div class="col-12 col-md-5 col-lg-4"><b>Nro. de Compra:</b></div>
+            <div class="col-12 col-md-7 col-lg-8 itemValueCardPago">{{resultProceso.identificadorTransaccion}}</div>
+            <div class="col-12 col-md-5 col-lg-4"><b>Monto:</b></div>
+            <div class="col-12 col-md-7 col-lg-8 itemValueCardPago">{{resultProceso.montoTotal}}</div>
+            <div class="col-12 col-md-5 col-lg-4"><b>Moneda:</b></div>
+            <div class="col-12 col-md-7 col-lg-8 itemValueCardPago">{{resultProceso.moneda}}</div>
+            <div class="col-12 col-md-5 col-lg-4"><b>Nombres y Apellidos:</b></div>
+            <div class="col-12 col-md-7 col-lg-8 itemValueCardPago">{{resultProceso.registroAlumno.nombre}}
+                {{resultProceso.registroAlumno.apellido}}</div>
+            <ng-container *ngIf="resultProceso.nombrePrograma!=null">
+              <div class="col-12 col-md-5 col-lg-4"><b>Programa:</b></div>
+              <div class="col-12 col-md-7 col-lg-8 itemValueCardPago">{{resultProceso.nombrePrograma}}</div>
+            </ng-container>
+            <ng-container *ngIf="resultProceso.listaCuota!=null && resultProceso.listaCuota.length>0">
+              <div class="col-12 col-md-5 col-lg-4"><b>Razon:</b></div>
+              <div class="col-12 col-md-7 col-lg-8 itemValueCardPago">
+                <div *ngFor="let item of resultProceso.listaCuota">
+                  {{item.nombre}}
+                </div>
+              </div>
+            </ng-container>
+            <div class="col-12 col-md-5 col-lg-4"><b>Fecha de transacción:</b></div>
+            <div class="col-12 col-md-7 col-lg-8 itemValueCardPago">{{resultProceso.fechaTransaccion | date:'dd-MM-yyyy'}}
+            </div>
+            <div class="col-12 col-md-5 col-lg-4"><b>Hora de transacción:</b></div>
+            <div class="col-12 col-md-7 col-lg-8 itemValueCardPago">{{resultProceso.fechaTransaccion | date:'hh:mm'}}</div>
+        </div>
+        <ng-container *ngIf="resultProceso.tipoPago=='Organico'">
+          <app-default-button [confs]="{color:'primary',titulo:'Volver'}" [style]="'margin-top:40px;padding: 0px 40px;'"
+              [ruta]="url" ></app-default-button>
+        </ng-container>
+         <ng-container *ngIf="resultProceso.tipoPago=='Cronograma'">
+          <div class="col-12 col-md-10 col-lg-10">
+              <app-default-button [confs]="{color:'primary',titulo:'Volver'}"
+                [style]="'margin-top: 20px;margin-bottom: 0px;width:20%'" (ButtoclClick)="redireccionarAPagos()"></app-default-button>
+            </div>
+         </ng-container>
+        
+      </div>
+    </div>
+    
+          
+    
+  </div>
+  
+</div>

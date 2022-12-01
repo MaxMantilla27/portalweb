@@ -1,8 +1,10 @@
 import { isPlatformBrowser } from '@angular/common';
 import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
 import { RegistroRespuestaPreProcesoPagoDTO } from 'src/app/Core/Models/ProcesoPagoDTO';
+import { ChargeComponent } from 'src/app/Core/Shared/Containers/Dialog/charge/charge.component';
 import { FormaPagoService } from 'src/app/Core/Shared/Services/FormaPago/forma-pago.service';
 import { SessionStorageService } from 'src/app/Core/Shared/Services/session-storage.service';
 
@@ -21,6 +23,7 @@ export class CompraExitosaOpenPayComponent implements OnInit {
     private _SessionStorageService:SessionStorageService,
     private _router:Router,
     @Inject(PLATFORM_ID) platformId: Object,
+    private dialog:MatDialog
   ) {
     this.isBrowser = isPlatformBrowser(platformId); {}
   }
@@ -29,8 +32,11 @@ export class CompraExitosaOpenPayComponent implements OnInit {
     IdentificadorTransaccion:'',
     RequiereDatosTarjeta:true
   }
+  dialogRef:any
+  public tipoRespuesta = null
   public resultVisa:any
-  public ruta=''
+  public resultOpenPay :any
+  public ruta='/AulaVirtual/MisPagos'
   intentos=0;
   img=1;
   imgAc=''
@@ -40,11 +46,16 @@ export class CompraExitosaOpenPayComponent implements OnInit {
       this._ActivatedRoute.queryParams.pipe(takeUntil(this.signal$)).subscribe({
         next: (x) => {
           this.id = x['id'];
+          this.tipoRespuesta = x['tipo']
+          this.dialogRef =this.dialog.open(ChargeComponent,{
+            panelClass:'dialog-charge',
+            disableClose:true
+          });
           this.ProcesamientoPagoOpenPay()
         },
       });
-      this.imgInterval();
 
+      this.imgInterval();
       // var interval2=setInterval(()=>{
       //   if(this.resultVisa!=undefined && this.resultVisa.estadoOperacion.toLowerCase()=='pending' && this.resultVisa.idPasarelaPago==5){
       //     this.ProcesamientoPagoOpenPay();
@@ -57,14 +68,28 @@ export class CompraExitosaOpenPayComponent implements OnInit {
 
   }
   ProcesamientoPagoOpenPay(){
-    this._FormaPagoService.ProcesamientoPagoOpenPay(this.id).pipe(takeUntil(this.signal$)).subscribe({
-      next:x=>{
-        console.log(x)
-        this.json.IdentificadorTransaccion=x._Repuesta.identificadorTransaccion
-        this.ObtenerPreProcesoPagoCuotaAlumno()
-      }
-    })
+    if(this.tipoRespuesta=="AF")
+    {
+      this._FormaPagoService.ProcesamientoAfiliacionOpenPay(this.id).pipe(takeUntil(this.signal$)).subscribe({
+        next:x=>{
+          console.log(x)
+          this.resultOpenPay = JSON.parse(x._Repuesta.pagoAfiliacion)
+          console.log("ResultadoOpen", this.resultOpenPay)
+          this.json.IdentificadorTransaccion=x._Repuesta.identificadorTransaccion
+          this.ObtenerPreProcesoPagoCuotaAlumno()
+        }
+      })
+    }
+    else{
+      this._FormaPagoService.ProcesamientoPagoOpenPay(this.id).pipe(takeUntil(this.signal$)).subscribe({
+        next:x=>{
+          this.json.IdentificadorTransaccion=x._Repuesta.identificadorTransaccion
+          this.ObtenerPreProcesoPagoCuotaAlumno()
+        }
+      })
+    }
   }
+
   ObtenerPreProcesoPagoCuotaAlumno(){
     this.ruta='/AulaVirtual/MisPagos'
     this._FormaPagoService.ObtenerPreProcesoPagoCuotaAlumno(this.json).pipe(takeUntil(this.signal$)).subscribe({
@@ -81,6 +106,7 @@ export class CompraExitosaOpenPayComponent implements OnInit {
             }
           }
         }
+        this.dialogRef.close()
       },
       error:e=>{
         //this._router.navigate([this.ruta])
@@ -101,6 +127,7 @@ export class CompraExitosaOpenPayComponent implements OnInit {
       }
     }, 80);
   }
+
   ObtenerPreProcesoPagoOrganicoAlumno(){
     this._FormaPagoService.ObtenerPreProcesoPagoOrganicoAlumno(this.json).pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{

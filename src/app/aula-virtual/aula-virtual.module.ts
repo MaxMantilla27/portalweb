@@ -91,6 +91,15 @@ import { CursoVideosSincronicoComponent } from './curso/curso-videos-sincronico/
 import { ModuloVideosSincronicoComponent } from './modulo/modulo-videos-sincronico/modulo-videos-sincronico.component';
 import { ResultadoPagoPSEComponent } from './resultado-pago-pse/resultado-pago-pse.component';
 import { RetroalimentacionTareaComponent } from './sesiones/sesion-tarea/retroalimentacion-tarea/retroalimentacion-tarea.component';
+import { PagoWebpayComponent } from './confirmacion-pago-organico/pago-webpay/pago-webpay.component';
+import { ResultadoPagoWebpayComponent } from './resultado-pago-webpay/resultado-pago-webpay.component';
+import { ConfirmacionPagoWebpayComponent } from './confirmacion-pago-webpay/confirmacion-pago-webpay.component';
+import { ConfirmacionPagoIzipayComponent } from './confirmacion-pago-izipay/confirmacion-pago-izipay.component';
+import { ConfirmacionPagoKlapComponent } from './confirmacion-pago-klap/confirmacion-pago-klap.component';
+import { ResultadoPagoKlapComponent } from './resultado-pago-klap/resultado-pago-klap.component';
+import { AfiliacionOpenpayComponent } from './confirmacion-afiliacion-pago-recurrente/afiliacion-openpay/afiliacion-openpay.component';
+import { DesafiliacionOpenpayComponent } from './confirmacion-desafiliacion-pago-recurrente/desafiliacion-openpay/desafiliacion-openpay.component';
+import { AfiliacionVisaComponent } from './confirmacion-afiliacion-pago-recurrente/afiliacion-visa/afiliacion-visa.component';
 
 
 
@@ -181,6 +190,15 @@ import { RetroalimentacionTareaComponent } from './sesiones/sesion-tarea/retroal
     ModuloVideosSincronicoComponent,
     ResultadoPagoPSEComponent,
     RetroalimentacionTareaComponent,
+    PagoWebpayComponent,
+    ResultadoPagoWebpayComponent,
+    ConfirmacionPagoWebpayComponent,
+    ConfirmacionPagoIzipayComponent,
+    ConfirmacionPagoKlapComponent,
+    ResultadoPagoKlapComponent,
+    AfiliacionOpenpayComponent,
+    DesafiliacionOpenpayComponent,
+    AfiliacionVisaComponent,
 
   ],
   imports: [

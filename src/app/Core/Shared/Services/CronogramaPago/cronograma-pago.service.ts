@@ -46,4 +46,19 @@ export class CronogramaPagoService {
     }
   }
 
+  public ValidacionSuscripcion(idMat:number):Observable<any>{
+    if(this.isBrowser){
+      return this.http.get<any>(this.urlBase+'/VerificarAfiliacionAlumno?IdMatriculaCabecera='+idMat);
+    }else{
+      return EMPTY;
+    }
+  }
+  public EliminarSuscripcion():Observable<any>{
+    if(this.isBrowser){
+      return this.http.delete<any>(this.urlBase+'/EliminarAfiliacionAlumno');
+    }else{
+      return EMPTY;
+    }
+  }
+
 }

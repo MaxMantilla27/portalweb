@@ -103,6 +103,7 @@ export class ConfirmacionPagoTarjetaVisaComponent implements OnInit,OnDestroy {
       }
     })
   }
+  
   addVisa(){
 
     let script = this._renderer2.createElement('script');
