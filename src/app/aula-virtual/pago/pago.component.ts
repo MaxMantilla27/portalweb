@@ -63,6 +63,7 @@ export class PagoComponent implements OnInit,OnDestroy {
   public EstadoAfiliado:any;
   public idPais=0
   public email=""
+  public idAlumno:any
 
   ngOnInit(): void {
     this._HelperService.recibirCombosPerfil.pipe(takeUntil(this.signal$)).subscribe((x) => {
@@ -121,18 +122,16 @@ export class PagoComponent implements OnInit,OnDestroy {
           }
         })
       }
-    })
-      console.log("ENTRO HASTA LA VALIDACION",this.idPais)
-      // if(this.idPais = 51 )
-      
+    }) 
   }
   ObtenerCronogramaPagoMatricula(){
     this._CronogramaPagoService.ObtenerCronogramaPagoMatricula(this.idMatricula).pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
-        console.log("Cronograma",x)
+        
         if(x.cronogramas!=undefined){
           this.CronogramaPago=x.cronogramas.listaCronogramaAlumno
-          console.log("ListaCronograma: ",this.CronogramaPago)
+          this.idAlumno = this.CronogramaPago.idAlumno
+          
           this.migaPan.push({
             titulo: x.cronogramas.listaCronogramaAlumno.pGeneral,
             urlWeb: '/AulaVirtual/MisPagos/'+this.idMatricula,
@@ -204,8 +203,9 @@ export class PagoComponent implements OnInit,OnDestroy {
 
 
   OpenModalMetodoPagoSucripcion(): void {
-    // 
-    if(!(this.CronogramaPago.cuotasPagadas<this.CronogramaPago.cuotasPendientes))
+    var fechaActual = new Date()
+    var fechaVencimiento = new Date(this.CronogramaPago.fechaVencimiento)
+    if(fechaActual<fechaVencimiento)
     {
       const dialogRef = this.dialog.open(PagoTarjetaComponent, {
       
