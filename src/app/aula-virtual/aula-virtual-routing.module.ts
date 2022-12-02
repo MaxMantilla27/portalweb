@@ -34,6 +34,15 @@ import { PagoMultipagoComponent } from './confirmacion-pago-organico/pago-multip
 import { DocenciaTareasComponent } from './docencia-tareas/docencia-tareas.component';
 import { ConfirmacionPagoMultipagoComponent } from './confirmacion-pago-multipago/confirmacion-pago-multipago.component';
 import { ResultadoPagoPSEComponent } from './resultado-pago-pse/resultado-pago-pse.component';
+import { PagoWebpayComponent } from './confirmacion-pago-organico/pago-webpay/pago-webpay.component';
+import { ResultadoPagoWebpayComponent } from './resultado-pago-webpay/resultado-pago-webpay.component';
+import { ConfirmacionPagoWebpayComponent } from './confirmacion-pago-webpay/confirmacion-pago-webpay.component';
+import { ConfirmacionPagoIzipayComponent } from './confirmacion-pago-izipay/confirmacion-pago-izipay.component';
+import { ConfirmacionPagoKlapComponent } from './confirmacion-pago-klap/confirmacion-pago-klap.component';
+import { ResultadoPagoKlapComponent } from './resultado-pago-klap/resultado-pago-klap.component';
+import { AfiliacionOpenpayComponent } from './confirmacion-afiliacion-pago-recurrente/afiliacion-openpay/afiliacion-openpay.component';
+import { DesafiliacionOpenpayComponent } from './confirmacion-desafiliacion-pago-recurrente/desafiliacion-openpay/desafiliacion-openpay.component';
+import { AfiliacionVisaComponent } from './confirmacion-afiliacion-pago-recurrente/afiliacion-visa/afiliacion-visa.component';
 
 
 const routes: Routes = [
@@ -54,6 +63,8 @@ const routes: Routes = [
         { path: 'MisPagos/wompi/:Identificador', component: PagoWompiComponent,canActivate:[AlumnoGuard]},
         { path: 'MisPagos/conekta/:Identificador', component: PagoConektaComponent,canActivate:[AlumnoGuard]},
         { path: 'MisPagos/multipago/:Identificador', component: PagoMultipagoComponent,canActivate:[AlumnoGuard]},
+        { path: 'MisPagos/webpay/:Identificador', component: PagoWebpayComponent,canActivate:[AlumnoGuard]},
+        { path: 'MisPagos/webpayResultado', component: ResultadoPagoWebpayComponent},
 
         { path: 'MisCursos/:IdMatricula', component: CursoComponent,canActivate:[AlumnoGuard]},
         { path: 'MisPagos/:IdMatricula', component: PagoComponent,canActivate:[AlumnoGuard]},
@@ -61,6 +72,7 @@ const routes: Routes = [
 
         { path: 'PagoExitosoPse/:estado', component: ResultadoPagoPSEComponent,canActivate:[AlumnoGuard]},
         { path: 'PagoExitoso/:Identificador', component: ResultadoPagoComponent,canActivate:[AlumnoGuard]},
+        { path: 'PagoExitosoKlap/:Identificador', component: ResultadoPagoKlapComponent,canActivate:[AlumnoGuard]},
         { path: 'MisCursosPrueba/:IdRegistroPrueba', component: CursoPruebaComponent,canActivate:[AlumnoGuard]},
 
         { path: 'MisPagos/:IdMatricula/tarjeta/:Identificador', component: ConfirmacionPagoTarjetaComponent,canActivate:[AlumnoGuard]},
@@ -68,6 +80,16 @@ const routes: Routes = [
         { path: 'MisPagos/:IdMatricula/wompi/:Identificador', component: ConfirmacionPagoTarjetaWompiComponent,canActivate:[AlumnoGuard]},
         { path: 'MisPagos/:IdMatricula/conekta/:Identificador', component: ConfirmacionPagoTarjetaConektaComponent,canActivate:[AlumnoGuard]},
         { path: 'MisPagos/:IdMatricula/multipago/:Identificador', component: ConfirmacionPagoMultipagoComponent,canActivate:[AlumnoGuard]},
+        { path: 'MisPagos/:IdMatricula/webpay/:Identificador', component: ConfirmacionPagoWebpayComponent,canActivate:[AlumnoGuard]},
+        { path: 'MisPagos/:IdMatricula/izipay/:Identificador', component: ConfirmacionPagoIzipayComponent,canActivate:[AlumnoGuard]},
+        { path: 'MisPagos/:IdMatricula/klap/:Identificador', component: ConfirmacionPagoKlapComponent,canActivate:[AlumnoGuard]},
+
+        // Afiliaciones a Pagos Recurrentes
+        { path: 'MisPagos/Afiliacion/:IdMatricula/openpay/:Identificador', component: AfiliacionOpenpayComponent,canActivate:[AlumnoGuard]},
+        { path: 'MisPagos/Afiliacion/:IdMatricula/visa/:Identificador', component: AfiliacionVisaComponent,canActivate:[AlumnoGuard]},
+
+        // Desafiliaciones a Pagos Recurrentes
+        { path: 'MisPagos/Desafiliacion/:IdMatricula/openpay/:Identificador', component: DesafiliacionOpenpayComponent,canActivate:[AlumnoGuard]},
 
         { path: 'MisCursos/:IdMatricula/:idPEspecificoHijo', component: ModuloComponent,canActivate:[AlumnoGuard]},
         { path: 'MisCursosPrueba/:IdRegistroPrueba/:idPEspecificoHijo', component: ModuloPruebaComponent,canActivate:[AlumnoGuard]},

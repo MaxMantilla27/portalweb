@@ -1,4 +1,4 @@
-import { Component, Inject, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, Inject, Input, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Subject, takeUntil } from 'rxjs';
 import { ImagenTarjetas } from 'src/app/Core/Shared/ImagenTarjetas';
@@ -15,13 +15,13 @@ export class PagoTarjetaComponent implements OnInit ,OnDestroy{
   private signal$ = new Subject();
 
   constructor(
-
     public dialogRef: MatDialogRef<PagoTarjetaComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private _MedioPagoActivoPasarelaService:MedioPagoActivoPasarelaService,
     private _t:ImagenTarjetas,
     private _SnackBarServiceService:SnackBarServiceService,
   ) { }
+  public tituloBotonModal:string=this.data.tituloBotonModal?this.data.tituloBotonModal:"Ir a pagar"
   public tarjetas:any;
   public medioPago=''
   public imgMedioPago=''

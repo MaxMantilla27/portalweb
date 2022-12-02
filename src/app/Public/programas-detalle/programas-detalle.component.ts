@@ -143,6 +143,7 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
     nombreSubArea: '',
     subAreaDescripcion: '',
     tituloHtml: '',
+    idPartner:0
   };
   public seccion: listaSeccionPrograma = {
     duracionHorario: '',
@@ -424,12 +425,14 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
             this.cabecera = x.programaCabeceraDetalleDTO;
             if(this.cabecera.tituloHtml!=null){
             }
-            this.IdPespecificoPrograma = x.programaCabeceraDetalleDTO.listProgramaEspecificoInformacionDTO[0].id
-            this.cabecera.listProgramaEspecificoInformacionDTO.forEach(x=>{
-              if(x.tipo.toLowerCase()=='online asincronica'){
-                this.esAonline=true
-              }
-            })
+            if(x.programaCabeceraDetalleDTO.listProgramaEspecificoInformacionDTO.length>0){
+              this.IdPespecificoPrograma = x.programaCabeceraDetalleDTO.listProgramaEspecificoInformacionDTO[0].id
+              this.cabecera.listProgramaEspecificoInformacionDTO.forEach(x=>{
+                if(x.tipo.toLowerCase()=='online asincronica'){
+                  this.esAonline=true
+                }
+              })
+            }
             this.migaPan.push({
               titulo:
                 'Área: ' +
@@ -534,43 +537,84 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
         if(this.beneficios!=null){
           let i = 1;
           var beneficioLista: Array<number> = [];
-          while (i <= 2) {
-            var TipoBeneficio = this.beneficios.find((x) => x.paquete == i);
-            if (TipoBeneficio != undefined) {
-              TipoBeneficio.contenido.forEach((element) => {
-                if (element.idBeneficio > 0) {
-                  beneficioLista.push(element.idBeneficio);
-                }
-              });
-              this.beneficios.forEach((x) => {
-                if (x.paquete == i + 1) {
-                  var existe = false;
-                  x.contenido.forEach((c) => {
-                    if (beneficioLista.indexOf(c.idBeneficio) > -1) {
-                      c.idBeneficio = 0;
-                      existe = true;
-                    }
-                  });
-                  if (existe) {
-                    if (i == 1) {
-                      x.contenido.unshift({
-                        contenido:
+          if(this.cabecera.idPartner==78 && this.beneficios.length>=3){
+            while (i <= 2) {
+              var TipoBeneficio = this.beneficios.find((x) => x.paquete == 1);
+              if (TipoBeneficio != undefined) {
+                TipoBeneficio.contenido.forEach((element) => {
+                  if (element.idBeneficio > 0) {
+                    beneficioLista.push(element.idBeneficio);
+                  }
+                });
+                this.beneficios.forEach((x) => {
+                  if (x.paquete == i + 1) {
+                    var existe = false;
+                    x.contenido.forEach((c) => {
+                      if (beneficioLista.indexOf(c.idBeneficio) > -1) {
+                        c.idBeneficio = 0;
+                        existe = true;
+                      }
+                    });
+                    if (existe) {
+                      if (i == 1) {
+                        x.contenido.unshift({
+                          contenido:
+                            'Todos los beneficios de la versión básica ademas de:',
+                          idBeneficio: -1,
+                        });
+                      }
+                      if (i == 2) {
+                        x.contenido.unshift({
+                          contenido:
                           'Todos los beneficios de la versión básica ademas de:',
-                        idBeneficio: -1,
-                      });
-                    }
-                    if (i == 2) {
-                      x.contenido.unshift({
-                        contenido:
-                          'Todos los beneficios de la versión profesional ademas de:',
-                        idBeneficio: -1,
-                      });
+                          idBeneficio: -1,
+                        });
+                      }
                     }
                   }
-                }
-              });
+                });
+              }
+              i++;
             }
-            i++;
+          }else{
+            while (i <= 2) {
+              var TipoBeneficio = this.beneficios.find((x) => x.paquete == i);
+              if (TipoBeneficio != undefined) {
+                TipoBeneficio.contenido.forEach((element) => {
+                  if (element.idBeneficio > 0) {
+                    beneficioLista.push(element.idBeneficio);
+                  }
+                });
+                this.beneficios.forEach((x) => {
+                  if (x.paquete == i + 1) {
+                    var existe = false;
+                    x.contenido.forEach((c) => {
+                      if (beneficioLista.indexOf(c.idBeneficio) > -1) {
+                        c.idBeneficio = 0;
+                        existe = true;
+                      }
+                    });
+                    if (existe) {
+                      if (i == 1) {
+                        x.contenido.unshift({
+                          contenido:
+                            'Todos los beneficios de la versión básica ademas de:',
+                          idBeneficio: -1,
+                        });
+                      }
+                      if (i == 2) {
+                        x.contenido.unshift({
+                          contenido:
+                            'Todos los beneficios de la versión profesional ademas de:',
+                          idBeneficio: -1,
+                        });
+                      }
+                    }
+                  }
+                });
+              }
+              i++;
+            }
           }
         }
       },
@@ -635,40 +679,40 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
           var desc = [];
           this.certificado.descripcionHeader=[]
           this.certificado.descripcionBody=[]
-          this.certificado.descripcionLeyenda = descstrong[0];
+          this.certificado.descripcionLeyenda = this.certificado.descripcion;
 
-          if (descstrong.length > 1) {
-            let i = 0;
-            descstrong.forEach((d) => {
-              if (i != 0) {
-                desc = d.split('</strong></p>');
-                if (desc.length > 1 && desc[1]!='') {
-                  let j = 0;
-                  this.certificado.descripcionHeader.push('<p><strong>' + desc[0] );
-                  let dc = '';
-                  desc.forEach((d2) => {
-                    if (j != 0) {
-                      dc += d2 + '</strong></p>';
-                    }
-                    j++;
-                  });
-                  this.certificado.descripcionBody.push(dc);
-                }else{
-                  this.certificado.descripcionLeyenda+='<br><strong>'+desc[0]+'<strong>';
-                }
-              }
-              i++;
-            });
-            // this.certificado.descripcionHeader=desc[0]+'</strong></p>'
-            // let i=0;
-            // this.certificado.descripcionBody='';
-            // desc.forEach(d=>{
-            //   if(i!=0){
-            //     this.certificado.descripcionBody+=d+'</strong></p>'
-            //   }
-            //   i++;
-            // })
-          }
+          // if (descstrong.length > 1) {
+          //   let i = 0;
+          //   descstrong.forEach((d) => {
+          //     if (i != 0) {
+          //       desc = d.split('</strong></p>');
+          //       if (desc.length > 1 && desc[1]!='') {
+          //         let j = 0;
+          //         this.certificado.descripcionHeader.push('<p><strong>' + desc[0] );
+          //         let dc = '';
+          //         desc.forEach((d2) => {
+          //           if (j != 0) {
+          //             dc += d2 + '</strong></p>';
+          //           }
+          //           j++;
+          //         });
+          //         this.certificado.descripcionBody.push(dc);
+          //       }else{
+          //         this.certificado.descripcionLeyenda+='<br><strong>'+desc[0]+'<strong>';
+          //       }
+          //     }
+          //     i++;
+          //   });
+          //   // this.certificado.descripcionHeader=desc[0]+'</strong></p>'
+          //   // let i=0;
+          //   // this.certificado.descripcionBody='';
+          //   // desc.forEach(d=>{
+          //   //   if(i!=0){
+          //   //     this.certificado.descripcionBody+=d+'</strong></p>'
+          //   //   }
+          //   //   i++;
+          //   // })
+          // }
         }
       },
     });

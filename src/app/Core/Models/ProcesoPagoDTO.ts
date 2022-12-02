@@ -62,6 +62,7 @@ export interface RegistroProcesoPagoAlumnoDTO {
   TokenId?: string;
   RegistroProcesoPagoPse?: RegistroProcesoPagoPseDTO;
   PagoPSE:boolean;
+  FechaFinalAfiliacion?: string|Date;
 }
 export interface RegistroProcesoPagoTarjetaHabienteDTO {
   Titular: string;

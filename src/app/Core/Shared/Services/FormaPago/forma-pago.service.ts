@@ -24,7 +24,6 @@ export class FormaPagoService {
   }
 
   public PreProcesoPagoCuotaAlumno(Json:RegistroPreProcesoPagoDTO):Observable<any>{
-
     if(this.isBrowser){
       console.log(Json)
       return this.http.post<any>(this.urlBase+'/PreProcesoPagoCuotaAlumno',Json);
@@ -32,6 +31,16 @@ export class FormaPagoService {
       return EMPTY;
     }
   }
+
+  public PreProcesoAfiliacionAlumno(Json:RegistroPreProcesoPagoDTO):Observable<any>{
+    if(this.isBrowser){
+      console.log(Json)
+      return this.http.post<any>(this.urlBase+'/PreProcesoAfiliacionPagoRecurrenteAlunmo',Json);
+    }else{
+      return EMPTY;
+    }
+  }
+
   public ObtenerPreProcesoPagoCuotaAlumno(Json:RegistroRespuestaPreProcesoPagoDTO):Observable<any>{
     if(this.isBrowser){
       console.log(Json)
@@ -48,6 +57,18 @@ export class FormaPagoService {
       return EMPTY;
     }
   }
+
+
+
+  public ObtenerPreProcesoPagoAlumnoWebPay(Json:any):Observable<any>{
+    if(this.isBrowser){
+      console.log(Json)
+      return this.http.post<any>(this.urlBase+'/ObtenerProcesoOrganicoPreValidacionWebPay',Json);
+    }else{
+      return EMPTY;
+    }
+  }
+
   public ProcesarPagoCuotaAlumno(Json:RegistroProcesoPagoAlumnoDTO):Observable<any>{
     if(this.isBrowser){
       console.log(Json)
@@ -72,6 +93,17 @@ export class FormaPagoService {
       return EMPTY;
     }
   }
+
+  public ProcesarAfiliacionPagoRecurrenteAlumno(Json:any):Observable<any>{
+    if(this.isBrowser){
+      return this.http.post<any>(this.urlBase+'/ProcesarAfiliacionPagoRecurrenteAlumno',Json)
+    }else{
+      return EMPTY;
+    }
+    
+  }
+
+
   public PreProcesoPagoOrganicoAlumno(Json:PagoOrganicoAlumnoDTO,dialogRef:any):void{
     console.log(Json)
     this.http.post<any>(this.urlBase+'/PreProcesoPagoOrganicoAlumno',Json).pipe(takeUntil(this.signal$)).subscribe({
@@ -105,6 +137,9 @@ export class FormaPagoService {
           if(parseInt(Json.IdPasarelaPago)==4){
             this._router.navigate(['/AulaVirtual/MisPagos/multipago/'+sesion]);
           }
+          if(parseInt(Json.IdPasarelaPago)==11){
+            this._router.navigate(['/AulaVirtual/MisPagos/webpay/'+sesion]);
+          }
         }
       }
     });
@@ -126,6 +161,7 @@ export class FormaPagoService {
       return EMPTY;
     }
   }
+
   public ValidarProcesoPagoCuotaAlumnoOpenPAy(Json:RegistroRespuestaPreProcesoPagoDTO):Observable<any>{
     if(this.isBrowser){
       console.log(Json)
@@ -134,9 +170,52 @@ export class FormaPagoService {
       return EMPTY;
     }
   }
+
+  public ValidarProcesoAfiliacionAlumnoOpenPAy(Json:RegistroRespuestaPreProcesoPagoDTO):Observable<any>{
+    if(this.isBrowser){
+      console.log(Json)
+      return this.http.post<any>(this.urlBase+'/ValidarProcesoAfiliacionOpenPay',Json);
+    }else{
+      return EMPTY;
+    }
+  }
+
   public ProcesamientoPagoOpenPay(ident:string):Observable<any>{
     if(this.isBrowser){
       return this.http.get<any>(this.urlBase+'/ProcesamientoPagoOpenPay?Id='+ident);
+    }else{
+      return EMPTY;
+    }
+  }
+  public ProcesamientoAfiliacionOpenPay(ident:string):Observable<any>{
+    if(this.isBrowser){
+      return this.http.get<any>(this.urlBase+'/ValidarProcesoAfiliacionOpenPay?Id='+ident);
+    }else{
+      return EMPTY;
+    }
+  }
+
+  public ObtenerConfirmacionWebPay(token_ws:string):Observable<any>{
+    if(this.isBrowser){
+      return this.http.get<any>(this.urlBase+'/ConfirmarTransaccionWebPay?token_ws='+token_ws);
+    }else{
+      return EMPTY;
+    }
+  }
+
+  public ProcesarPagoConfirmadoKlap(Json:any):Observable<any>{
+    if(this.isBrowser){
+      console.log(Json)
+      return this.http.post<any>(this.urlBase+'/ProcesarPagoConfirmadoKlap',Json);
+    }else{
+      return EMPTY;
+    }
+  }
+
+  public ConsultarPagoKlap(Json:any):Observable<any>{
+    if(this.isBrowser){
+      console.log(Json)
+      return this.http.post<any>(this.urlBase+'/ConsultarEstadoTransaccionKlap',Json);
     }else{
       return EMPTY;
     }
