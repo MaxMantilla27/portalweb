@@ -14,5 +14,6 @@ export interface ForoRespuestaDTO{
     idPEspecificoPadre: number,
     idPEspecificoHijo: number,
     contenido: string,
-    esDocente: boolean
+    esDocente: boolean,
+    estadoCerrado:number,
 }

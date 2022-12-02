@@ -1,4 +1,4 @@
-import { LOCALE_ID, NgModule } from '@angular/core';
+import { ErrorHandler, LOCALE_ID, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -12,6 +12,7 @@ import { HelperService } from './Core/Shared/Services/helper.service';
 
 import localeEs from "@angular/common/locales/es";
 import { registerLocaleData } from "@angular/common";
+import { GlobalErrorHandler } from './global-error.service';
 registerLocaleData(localeEs, "es");
 
 @NgModule({
@@ -28,6 +29,7 @@ registerLocaleData(localeEs, "es");
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: InterceptorService, multi: true },
     { provide: LOCALE_ID, useValue: "es" },
+    {provide: ErrorHandler, useClass: GlobalErrorHandler},
     HelperService
   ],
   bootstrap: [AppComponent]
