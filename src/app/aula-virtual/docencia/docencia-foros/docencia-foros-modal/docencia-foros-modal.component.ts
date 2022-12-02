@@ -34,7 +34,9 @@ export class DocenciaForosModalComponent implements OnInit,OnDestroy {
     idPEspecificoPadre:0,
     idPGeneral:0,
     idPrincipal:0,
+    estadoCerrado:0,
   }
+  public ForoCerrado=false
   ngOnInit(): void {
     this.jsonEnvio.idPGeneral=this.data.idPGeneral
     this.jsonEnvio.idForoCurso=this.data.idTemaForo
@@ -48,6 +50,7 @@ export class DocenciaForosModalComponent implements OnInit,OnDestroy {
       next:x=>{
         console.log(x)
         this.pregunta=x
+        this.ForoCerrado=x[0].foroCerrado;
         if(this.pregunta!=null && this.pregunta.length>0){
           this.imgForo=this._AvatarService.GetUrlImagenAvatar(this.pregunta[0].avatar)
         }
@@ -66,6 +69,7 @@ export class DocenciaForosModalComponent implements OnInit,OnDestroy {
     })
   }
   EnviarRegistroRespuestaForo(){
+    this.jsonEnvio.estadoCerrado=1;
     this._ForoCursoService.EnviarRegistroRespuestaForo(this.jsonEnvio).pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
         console.log(x)

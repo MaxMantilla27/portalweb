@@ -41,8 +41,10 @@ export class ModuloForoContenidoComponent implements OnInit,OnDestroy {
     idPEspecificoPadre: 0,
     idPEspecificoHijo: 0,
     contenido: '',
-    esDocente: false
+    esDocente: false,
+    estadoCerrado:0,
   }
+  public ForoCerrado=false;
   ngOnInit(): void {
     this.ObtenerContenidoForo();
     this.ObtenerRespuestaForo();
@@ -51,6 +53,8 @@ export class ModuloForoContenidoComponent implements OnInit,OnDestroy {
     this._ForoCursoService.ContenidoPreguntaForoCurso(this.IdPregunta).pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
         this.foroContenido=x;
+        this.ForoCerrado=x[0].foroCerrado;
+        console.log(this.ForoCerrado)
         this.foroContenido.forEach(x=>{
           x.urlAvatar=this._AvatarService.GetUrlImagenAvatar(x.avatar)
         })
@@ -76,6 +80,7 @@ export class ModuloForoContenidoComponent implements OnInit,OnDestroy {
     this.ForoRespuestaEnvio.idPEspecificoHijo = this.IdPEspecificoHijo;
     this.ForoRespuestaEnvio.contenido = this.userForm.get('RespuestaForo')?.value;;
     this.ForoRespuestaEnvio.esDocente = this.esDocente;
+    this.ForoRespuestaEnvio.estadoCerrado = 0;
 
     this._ForoCursoService.EnviarRegistroRespuestaForo(this.ForoRespuestaEnvio).pipe(takeUntil(this.signal$)).subscribe({
       next: (x) => {
