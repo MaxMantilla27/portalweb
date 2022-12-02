@@ -20,7 +20,7 @@ export class ResultadoPagoKlapComponent implements OnInit {
   ) { }
 
   resultProceso:any;
-  resultKlap:any; 
+  resultKlap:any;
   url=''
   dialogRef:any
 
