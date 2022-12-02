@@ -87,7 +87,7 @@ export class PagoComponent implements OnInit,OnDestroy {
       data: { text: 'Procesando Desafiliación' },
       disableClose:true
     });
-    this._CronogramaPagoService.EliminarSuscripcion().pipe(takeUntil(this.signal$)).subscribe({
+    this._CronogramaPagoService.EliminarSuscripcion(this.idMatricula).pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
         console.log("RespuestaEliminacion :",x)
         console.log(x._Repuesta.estadoOperacion)
