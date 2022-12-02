@@ -65,7 +65,7 @@ export class ResultadoPagoWebpayComponent implements OnInit {
   }
 
   redireccionarAPagos(){
-    let url = "http://localhost:4200/AulaVirtual/MisPagos";
+    let url = "https://img.bsgrupo.com/AulaVirtual/MisPagos";
     //let url = "https://bsginstitute.com/AulaVirtual/MisPagos";
     window.location.href =url;
   }
