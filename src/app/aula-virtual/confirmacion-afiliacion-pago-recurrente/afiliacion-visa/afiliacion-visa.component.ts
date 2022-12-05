@@ -111,6 +111,10 @@ export class AfiliacionVisaComponent implements OnInit,OnDestroy {
   }
 
   addVisa(){
+    let scriptHeader1 = this._renderer2.createElement('script');
+    scriptHeader1.type="text/javascript"
+    scriptHeader1.src='https://static-content-qas.vnforapps.com/vTokenSandbox/js/checkout.js'
+    this._renderer2.appendChild(this._document.getElementById('header'), scriptHeader1);
     let action = 'https://proceso-pago.bsginstitute.com/ProcesoPagoVisa/Recurrente?IdTransaccion='+this.json.IdentificadorTransaccion
     let timeouturl = this.urlBase+'AulaVirtual/MisPagos/'+this.idMatricula
     let logo = 'https://img.bsginstitute.com/repositorioweb/img/logobsg-visa.svg'
