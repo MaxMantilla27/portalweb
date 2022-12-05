@@ -37,6 +37,7 @@ export class CarreraProfesionalDetalleComponent implements OnInit {
   public carrera: any = {};
 
   //Secciones
+  public generalPresentacion: any = [];
   public generalInformacion: any = [];
   public montoPagoPrograma: any = {};
   public planEstudios: any;
@@ -171,8 +172,10 @@ export class CarreraProfesionalDetalleComponent implements OnInit {
     this._CarreraProfesionalService.GetCarrerasDetalle(idBusqueda, nombre).pipe(takeUntil(this.signal$)).subscribe({
       next:(x)=>{
         console.log(x);
-        this.IdPespecificoPrograma = x.programaInformacionDTO.programaEspecificoInformacionDTO[0].id
+        if(x.programaInformacionDTO.programaEspecificoInformacionDTO.length!=0){
+          this.IdPespecificoPrograma = x.programaInformacionDTO.programaEspecificoInformacionDTO[0].id
         console.log(this.IdPespecificoPrograma)
+        }
         if(x.programaInformacionDTO!=undefined && x.programaInformacionDTO.parametroSeoProgramaDTO!=undefined){
           var metas=x.programaInformacionDTO.parametroSeoProgramaDTO;
           if(metas!=null && metas.length>0){
@@ -207,22 +210,52 @@ export class CarreraProfesionalDetalleComponent implements OnInit {
 
 
         this.carrera = x.programaInformacionDTO
+        // Presentación
+        this.generalPresentacion = this.filtrarContenido(this.carrera.contenidoProgramaInformacionDTO, ['Enfasis en Emprendimiento e Innovación'])
+        if(this.generalPresentacion.length==0)
+        {
+          this.generalPresentacion = this.filtrarContenido(this.carrera.contenidoProgramaInformacionDTO, ['Presentación'])
+        }
+
         //Informacion General
         this.generalInformacion = this.filtrarContenido(this.carrera.contenidoProgramaInformacionDTO, ['Perfil del Egresado', 'Duración y Horarios', 'Mercado Laboral'])
         //Montos pago
         this.montoPagoPrograma = `1 matrícula de ${this.carrera.montoPagoProgramaInformacionDTO.simbolo}${Math.round(this.carrera.montoPagoProgramaInformacionDTO.matricula)} y ${this.carrera.montoPagoProgramaInformacionDTO.nroCuotas} pensiones de  ${this.carrera.montoPagoProgramaInformacionDTO.simbolo}${Math.round(this.carrera.montoPagoProgramaInformacionDTO.cuotas)}`
         //Plan de Estudios damos formato para cards
         let almPlanEstudios: any = this.filtrarContenido(this.carrera.contenidoProgramaInformacionDTO, ['Plan de Estudios'])
-        console.log(almPlanEstudios)
+        if(almPlanEstudios.length==0){
+          almPlanEstudios = this.filtrarContenido(this.carrera.contenidoProgramaInformacionDTO, ['Estructura Curricular'])
+          console.log(almPlanEstudios)
+          this.planEstudios =
+          almPlanEstudios.length>0?
+            "<div class='real-contenedor'>"+
+            almPlanEstudios[0].contenido.replaceAll("</strong><strong>","").replaceAll("</strong> <strong>"," ").replaceAll("<p><strong>","<div class='container-card'><p><strong>").
+            replaceAll("</ul>","</ul></div>")+"</div></div>"
+          :""
+          console.log(this.planEstudios)
+        this.planEstudios = this.planEstudios.replaceAll("</strong></p>","</strong></p><div class='line'></div>")
+        console.log(this.planEstudios)
+
+        }
+        else if(almPlanEstudios!=0){
         this.planEstudios =
           almPlanEstudios.length>0?
             "<div class='real-contenedor'>"+
             almPlanEstudios[0].contenido.replaceAll("<p><strong>","<div class='container-card'><p><strong>").
             replaceAll("</ul><div class='container-card'>","</ul></div><div class='container-card'>")+"</div></div>"
           :""
+          console.log(this.planEstudios)
+
         this.planEstudios = this.planEstudios.replaceAll("</strong></p>","</strong></p><div class='line'></div>")
+        console.log(this.planEstudios)
+
+        }
+
         //Certificaciones
         let almCerticaciones: any = this.filtrarContenido(this.carrera.contenidoProgramaInformacionDTO, ['Certificaciones'])
+        if(almCerticaciones.length==0){
+          almCerticaciones = this.filtrarContenido(this.carrera.contenidoProgramaInformacionDTO, ['Certificación'])
+        }
         this.certificaciones = almCerticaciones.length>0?almCerticaciones[0].contenido:''
         //Certificaciones Adicionales
         //Se hace debido a que no podemos separar de manera correcta la información de la nota por la manera en que se creo
