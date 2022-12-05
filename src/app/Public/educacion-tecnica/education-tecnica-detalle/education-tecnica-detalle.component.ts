@@ -164,7 +164,10 @@ export class EducationTecnicaDetalleComponent implements OnInit,OnDestroy {
   getCarreraDetalle(idBusqueda:number, nombre:string){
     this._CarreraProfesionalService.GetEducacionTecnicaDetalle(idBusqueda, nombre).pipe(takeUntil(this.signal$)).subscribe({
       next:(x)=>{
-        this.IdPespecificoPrograma = x.programaInformacionDTO.programaEspecificoInformacionDTO[0].id
+        if(x.programaInformacionDTO.programaEspecificoInformacionDTO.length!=0){
+          this.IdPespecificoPrograma = x.programaInformacionDTO.programaEspecificoInformacionDTO[0].id
+        console.log(this.IdPespecificoPrograma)
+        }
         if(x.programaInformacionDTO!=undefined && x.programaInformacionDTO.parametroSeoProgramaDTO!=undefined){
           var metas=x.programaInformacionDTO.parametroSeoProgramaDTO;
           if(metas!=null && metas.length>0){

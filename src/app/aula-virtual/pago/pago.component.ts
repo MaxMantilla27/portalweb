@@ -196,6 +196,7 @@ export class PagoComponent implements OnInit,OnDestroy {
     dialogRef.afterClosed().pipe(takeUntil(this.signal$)).subscribe((result) => {
       console.log("preprocesoPago",result);
       if(result!=undefined){
+        this.jsonSend.ListaCuota=[]
         this.PreProcesoPagoCuotaAlumno(result);
       }
     });
