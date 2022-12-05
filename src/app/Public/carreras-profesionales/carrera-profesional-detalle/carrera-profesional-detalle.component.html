@@ -34,8 +34,8 @@
         <div class="carrera-container__content__firstSection rowpadd" style="position: relative;">
           <div class="row">
             <div class="col-md-6 carrera-container__content__firstSection__left">
-              <div class="carrera-container__header__information__title" *ngIf="carrera.contenidoProgramaInformacionDTO[4]?.contenido!=null"
-                [innerHTML]="carrera.contenidoProgramaInformacionDTO[4]?.contenido  | safeHtml">
+              <div class="carrera-container__header__information__title" *ngIf="generalPresentacion[0]?.contenido!=null"
+                [innerHTML]="generalPresentacion[0]?.contenido  | safeHtml">
               </div>
 
               <div class="carrera-container__header__information__button row">
@@ -215,7 +215,7 @@
           </div>
         </div>
       </div>
-      <div class="carrera-container__content__fiveSection">
+      <div *ngIf="contenidoCertificacionAdicional.length>0"  class="carrera-container__content__fiveSection">
         <div class="container">
           <div class="rowpadd">
             <h1>Certificaciones Adicionales</h1>

@@ -8,7 +8,7 @@ export const environment = {
   //url_api:'http://localhost:7177/api/',
   url_api_integra:'http://localhost:63048/api/',
   //url_portal:'https://angular-portal.bsginstitute.com/',
-  url_portal:'https://img.bsgrupo.com/',
+  url_portal:'https://bsginstitute.com/',
   //url_portal:'http://localhost:4200/',
  // url_signal:'https://integrav4-signalrcore.bsginstitute.com/'
   url_signal:'https://localhost:7120/'

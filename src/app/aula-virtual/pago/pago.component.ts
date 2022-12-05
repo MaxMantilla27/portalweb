@@ -63,7 +63,7 @@ export class PagoComponent implements OnInit,OnDestroy {
   public EstadoAfiliado:any;
   public idPais=0
   public email=""
-  public idAlumno:any
+  public idAlumno:any=0
 
   ngOnInit(): void {
     this._HelperService.recibirCombosPerfil.pipe(takeUntil(this.signal$)).subscribe((x) => {
@@ -122,16 +122,16 @@ export class PagoComponent implements OnInit,OnDestroy {
           }
         })
       }
-    }) 
+    })
   }
   ObtenerCronogramaPagoMatricula(){
     this._CronogramaPagoService.ObtenerCronogramaPagoMatricula(this.idMatricula).pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
-        
+
         if(x.cronogramas!=undefined){
           this.CronogramaPago=x.cronogramas.listaCronogramaAlumno
           this.idAlumno = this.CronogramaPago.idAlumno
-          
+
           this.migaPan.push({
             titulo: x.cronogramas.listaCronogramaAlumno.pGeneral,
             urlWeb: '/AulaVirtual/MisPagos/'+this.idMatricula,
@@ -209,13 +209,13 @@ export class PagoComponent implements OnInit,OnDestroy {
     if(fechaActual<fechaVencimiento)
     {
       const dialogRef = this.dialog.open(PagoTarjetaComponent, {
-      
+
         width: '600px',
         data: { idMatricula: this.idMatricula,tituloBotonModal:'Ir a afiliarse' },
         panelClass: 'dialog-Tarjeta',
        // disableClose:true
       });
-  
+
       dialogRef.afterClosed().pipe(takeUntil(this.signal$)).subscribe((result) => {
         console.log("Suscripcion",result);
         if(result!=undefined){
@@ -227,7 +227,7 @@ export class PagoComponent implements OnInit,OnDestroy {
     else{
       this._SnackBarServiceService.openSnackBar("Lo sentimos, para afiliarte al pago recurrente es obligatorio estar al dia con los pagos cronograma.",'x',10,"snackbarCrucigramaerror");
     }
-    
+
   }
 
   OpenModalEliminarSuscripcion(): void {
@@ -245,7 +245,7 @@ export class PagoComponent implements OnInit,OnDestroy {
     });
   }
 
-  
+
 
   PreProcesoAfiliacionPagoRecurrente(tarjeta:any){
     const dialogRef =this.dialog.open(ChargeComponent,{
