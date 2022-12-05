@@ -2,7 +2,7 @@
 
 <div class="container" *ngIf="resultWebpay!=undefined && resultProceso!=undefined">
     <div class="row rowpaddAv" style="justify-content: center;">
-      <div class="col-12 col-md-10 col-lg-8" *ngIf="resultWebpay.responseCode!=0">  
+      <div class="col-12 col-md-10 col-lg-8" *ngIf="resultWebpay.responseCode!=0">
         <ng-container >
           <div class="titleResultPago">
             <div>No se realizó el pago</div>
@@ -16,7 +16,7 @@
             <ng-container *ngIf="resultWebpay.responseCode==-1 && resultWebpay.vci=='TSN'">
               No hemos podido procesar su pago, debido a que se ha cancelado el proceso.
             </ng-container>
-  
+
             <div class="textC">Si tiene alguna consulta adicional, escriba un correo a: <a
                 href="mailto:matriculas@bsginstitute.com">matriculas@bsginstitute.com</a></div>
           </div>
@@ -31,7 +31,7 @@
                   [style]="'margin-top: 20px;margin-bottom: 0px;width:20%'" (ButtoclClick)="redireccionarAPagos()"></app-default-button>
               </div>
            </ng-container>
-  
+
       </div>
       <div class="col-12 col-md-10 col-lg-8" *ngIf="resultWebpay.responseCode==0">
         <div class="titleResultPago">
@@ -108,16 +108,16 @@
                   [style]="'margin-top: 20px;margin-bottom: 0px;width:20%'" (ButtoclClick)="redireccionarAPagos()"></app-default-button>
               </div>
            </ng-container>
-          
+
         </div>
       </div>
-      
-            
-      
+
+
+
     </div>
-    
+
   </div>
-  
+</div>
 
 
 

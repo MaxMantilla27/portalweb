@@ -1059,7 +1059,6 @@ export class SesionesComponent implements OnInit,OnDestroy,AfterViewInit {
               x.registroEstructuraCursoEncuesta.forEach((enc: any) => {
                 enc.charge = false;
                 if (enc.idEncuesta == this.idSesion) {
-                  if (enc.nombreEncuesta == 'Encuesta Inicial') {
                     this.tabIndex += 1;
                     enc.charge = true;
                     this.migaPan.push({
@@ -1076,7 +1075,6 @@ export class SesionesComponent implements OnInit,OnDestroy,AfterViewInit {
                         '/' +
                         this.idSesion,
                     });
-                  }
                 }
               });
             } else {
@@ -1300,6 +1298,7 @@ export class SesionesComponent implements OnInit,OnDestroy,AfterViewInit {
         }
       }
     );
+
     this.tabIndex--;
     console.log(this.tabIndex)
     if(this.isBrowser){

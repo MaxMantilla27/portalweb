@@ -23,7 +23,6 @@ import { ModuloPruebaComponent } from './modulo-prueba/modulo-prueba.component';
 import { SesionesPruebaComponent } from './sesiones-prueba/sesiones-prueba.component';
 import { SesionesComponent } from './sesiones/sesiones.component';
 import { CategoriaComponent } from './categoria/categoria.component';
-import { PagoTarjetaComponent } from './pago/pago-tarjeta/pago-tarjeta.component';
 import { PagoVisaComponent } from './confirmacion-pago-organico/pago-visa/pago-visa.component';
 import { PagoWompiComponent } from './confirmacion-pago-organico/pago-wompi/pago-wompi.component';
 import { PagoConektaComponent } from './confirmacion-pago-organico/pago-conekta/pago-conekta.component';

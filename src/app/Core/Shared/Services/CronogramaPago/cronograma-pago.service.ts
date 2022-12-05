@@ -53,9 +53,9 @@ export class CronogramaPagoService {
       return EMPTY;
     }
   }
-  public EliminarSuscripcion():Observable<any>{
+  public EliminarSuscripcion(idMat:number):Observable<any>{
     if(this.isBrowser){
-      return this.http.delete<any>(this.urlBase+'/EliminarAfiliacionAlumno');
+      return this.http.get<any>(this.urlBase+'/EliminarAfiliacionAlumno?IdMatriculaCabecera='+idMat);
     }else{
       return EMPTY;
     }

@@ -20,7 +20,7 @@ export class ResultadoPagoKlapComponent implements OnInit {
   ) { }
 
   resultProceso:any;
-  resultKlap:any; 
+  resultKlap:any;
   url=''
   dialogRef:any
 
@@ -69,7 +69,7 @@ export class ResultadoPagoKlapComponent implements OnInit {
 
 
   redireccionarAPagos(){
-    let url = "http://localhost:4200/AulaVirtual/MisPagos";
+    let url = "https://img.bsgrupo.com/AulaVirtual/MisPagos";
     //let url = "https://bsginstitute.com/AulaVirtual/MisPagos";
     window.location.href =url;
   }
