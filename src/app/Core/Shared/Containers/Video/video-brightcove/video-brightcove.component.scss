@@ -1,17 +1,17 @@
-.brightcove{
-  width: 100% ;
+.brightcove {
+  width: 100%;
   height: auto;
 }
-.video-js{
+.video-js {
   width: 100% !important;
   height: 400px !important;
 }
-.containerVideoDiapositiva{
+.containerVideoDiapositiva {
   width: 100%;
   min-height: 500px;
   display: flex;
   padding: 10px 0px;
-  .containerVideo{
+  .containerVideo {
     width: 47%;
     max-width: 74%;
     min-width: 20%;
@@ -19,7 +19,7 @@
     display: flex;
     align-items: center;
   }
-  .iconResise{
+  .iconResise {
     width: 6%;
     display: flex;
     justify-content: center;
@@ -29,12 +29,12 @@
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
-    img{
+    img {
       max-width: 100%;
       height: 20px;
     }
   }
-  .containerDiapitiva{
+  .containerDiapitiva {
     width: 47%;
     max-width: 74%;
     min-width: 20%;
@@ -42,10 +42,10 @@
     display: flex;
     align-items: center;
   }
-  .preguntaInteractiva{
+  .preguntaInteractiva {
     background: white;
     padding: 0px;
-    .headerPregunta{
+    .headerPregunta {
       background: #17a2b8;
       color: white;
       text-align: center;
@@ -53,92 +53,188 @@
       padding: 15px;
       font-size: 20px;
     }
-    .contentPregunta{
+    .contentPregunta {
       min-width: 100px;
       padding: 20px;
-      .pregunta{
+      .pregunta {
         font-size: 25px;
         font-weight: 600;
         margin: 20px 0px;
       }
-      .tipo_pregunta{
+      .tipo_pregunta {
         margin-top: -10px;
         margin-bottom: 20px;
       }
-      .respuestaLista{
+      .respuestaLista {
         display: flex;
         flex-direction: column;
         //padding: 0px 30px;
-        .respuesta{
+        .respuesta {
           display: flex;
           align-items: center;
           justify-content: flex-start;
           padding: 5px 0px;
-          .material-icons{
+          .material-icons {
             margin-right: 10px;
             cursor: pointer;
           }
         }
       }
     }
-    .footerPregunta{
+    .footerPregunta {
       border-top: solid 1px rgb(162, 162, 162);
       display: flex;
       align-items: center;
       justify-content: flex-end;
-      padding: 20px
+      padding: 20px;
     }
   }
 }
-.fieldPreguntasI .mat-form-field.mat-form-field-appearance-outline > div.mat-form-field-wrapper > div.mat-form-field-flex > div.mat-form-field-infix  { padding: 0.4em 0px }
-.fieldPreguntasI .mat-form-field.mat-form-field-appearance-outline > div.mat-form-field-wrapper > div.mat-form-field-flex > div.mat-form-field-infix > span.mat-form-field-label-wrapper { top: -1.5em; }
-
-.fieldPreguntasI .mat-form-field-appearance-outline.mat-form-field-can-float.mat-form-field-should-float .mat-form-field-label {
-    transform: translateY(-1.1em) scale(.75);
-    width: 133.33333%;
+.fieldPreguntasI
+  .mat-form-field.mat-form-field-appearance-outline
+  > div.mat-form-field-wrapper
+  > div.mat-form-field-flex
+  > div.mat-form-field-infix {
+  padding: 0.4em 0px;
 }
-.fieldPreguntasI .mat-form-field.mat-form-field-appearance-outline > div.mat-form-field-wrapper > div.mat-form-field-flex > .mat-form-field-outline{
+.fieldPreguntasI
+  .mat-form-field.mat-form-field-appearance-outline
+  > div.mat-form-field-wrapper
+  > div.mat-form-field-flex
+  > div.mat-form-field-infix
+  > span.mat-form-field-label-wrapper {
+  top: -1.5em;
+}
 
-  .mat-form-field-outline-start{
+.fieldPreguntasI
+  .mat-form-field-appearance-outline.mat-form-field-can-float.mat-form-field-should-float
+  .mat-form-field-label {
+  transform: translateY(-1.1em) scale(0.75);
+  width: 133.33333%;
+}
+.fieldPreguntasI
+  .mat-form-field.mat-form-field-appearance-outline
+  > div.mat-form-field-wrapper
+  > div.mat-form-field-flex
+  > .mat-form-field-outline {
+  .mat-form-field-outline-start {
     background-color: var(--main-bg-color);
   }
-  .mat-form-field-outline-gap{
+  .mat-form-field-outline-gap {
     background-color: var(--main-bg-color);
   }
   .mat-form-field-outline-end {
     background-color: var(--main-bg-color);
   }
 }
-.FeddbackCorrecto{
+.FeddbackCorrecto {
   font-size: 10px;
   padding: 10px;
   border-color: #c3e6cb;
   background: #d4edda;
   color: #155724;
   border-radius: 5px;
-
 }
-.finishVideo{
-  width: 100%;height: 100%;
-  background:#2f2f2fe6;
+.finishVideo {
+  width: 100%;
+  height: 100%;
+  background: #414141ab;
   position: absolute;
-  align-items: flex-start;
-  padding-top: 20%;
+  padding: 20%;
+  align-items: flex;
 }
-.buttonNextVideo{
-  margin-top: 20px;
+.buttonNextVideo {
   cursor: pointer;
+  //text-decoration: underline;
+  color: white;
+  margin-top: 5px;
 }
-.buttonNextVideo:hover{
+.buttonNextVideo:hover {
   text-decoration: underline;
 }
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
-    /* display: none; <- Crashes Chrome on hover */
-    -webkit-appearance: none;
-    margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
+  /* display: none; <- Crashes Chrome on hover */
+  -webkit-appearance: none;
+  margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
 }
+.imgPlayButton {
+  cursor: pointer;
+}
+@keyframes color-me-in {
+  /* You could think of as "step 1" */
+  0% {
+    left: 0px
+  }
+  // /* You could think of as "step 2" */
+  // 10% {
+  //   -webkit-mask-image: linear-gradient(to left, #ffffffd9 90%, #000000);
+  // }
+  // /* You could think of as "step 2" */
+  // 20% {
+  //   -webkit-mask-image: linear-gradient(to left, #ffffffd9 80%, #000000);
+  // }
+  // /* You could think of as "step 2" */
+  // 30% {
+  //   -webkit-mask-image: linear-gradient(to left, #ffffffd9 70%, #000000);
+  // }
+  // /* You could think of as "step 2" */
+  // 40% {
+  //   -webkit-mask-image: linear-gradient(to left, #ffffffd9 60%, #000000);
+  // }
+  // /* You could think of as "step 2" */
+  // 50% {
+  //   -webkit-mask-image: linear-gradient(to left, #ffffffd9 50%, #000000);
+  // }
+  // /* You could think of as "step 2" */
+  // 60% {
+  //   -webkit-mask-image: linear-gradient(to left, #ffffffd9 40%, #000000);
+  // }
+  // /* You could think of as "step 2" */
+  // 70% {
+  //   -webkit-mask-image: linear-gradient(to left, #ffffffd9 30%, #000000);
+  // }
+  // /* You could think of as "step 2" */
+  // 80% {
+  //   -webkit-mask-image: linear-gradient(to left, #ffffffd9 20%, #000000);
+  // }
+  // /* You could think of as "step 2" */
+  // 90% {
+  //   -webkit-mask-image: linear-gradient(to left, #ffffffd9 10%, #000000);
+  // }
+  /* You could think of as "step 2" */
+  100% {
 
-input[type=number] {
-    -moz-appearance:textfield; /* Firefox */
+    left: 100%;
+  }
+}
+.OverimgOpcity{
+  height: 100%;
+  width: 100%;
+  background: transparent;
+  position: absolute;
+  background: #e7e7e770;
+  z-index: 2;
+  top: 0;
+  left: 100%;
+  animation: color-me-in 3s;
+  animation-play-state: running;
+}
+.finishVideo:hover{
+  .OverimgOpcity{
+    animation-play-state: paused;
+  }
+}
+.imgOpcity {
+  width: 100%;
+  height: 80px;
+  position: absolute;
+  border-radius: 50%;
+  z-index: 1;
+  top: 0;
+  overflow: hidden;
+  cursor: pointer;
+}
+input[type="number"] {
+  -moz-appearance: textfield; /* Firefox */
 }

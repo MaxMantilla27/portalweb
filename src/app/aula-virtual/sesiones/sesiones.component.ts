@@ -506,7 +506,7 @@ export class SesionesComponent implements OnInit,OnDestroy,AfterViewInit {
                     name:this.estructuraCapitulo
                             .registroEstructuraCursoCapitulo[cap+1]
                             .registroEstructuraCursoSesion[0]
-                            .nombreSubSesion,
+                            .nombreSesion,
                     time:Math.ceil(this.estructuraCapitulo
                                   .registroEstructuraCursoCapitulo[cap+1]
                                   .registroEstructuraCursoSesion[0]
@@ -516,7 +516,7 @@ export class SesionesComponent implements OnInit,OnDestroy,AfterViewInit {
               }
             }else{
               s.nextChapter={
-                name:c.registroEstructuraCursoSesion[ses+1].nombreSubSesion,
+                name:c.registroEstructuraCursoSesion[ses+1].nombreSesion,
                 time:Math.ceil(c.registroEstructuraCursoSesion[ses+1].tiempoVideo/60)
               }
             }
@@ -528,6 +528,7 @@ export class SesionesComponent implements OnInit,OnDestroy,AfterViewInit {
         cap++;
       }
     );
+    console.log(this.estructuraCapitulo)
   }
   validateNextVIdeo() {
     var cap = 0,
