@@ -23,6 +23,7 @@ export class PagoTarjetaComponent implements OnInit ,OnDestroy{
   ) { }
   public tituloBotonModal:string=this.data.tituloBotonModal?this.data.tituloBotonModal:"Ir a pagar"
   public tarjetas:any;
+  public tipo:string=this.data.tipo?this.data.tipo:"CR"
   public medioPago=''
   public imgMedioPago=''
   public medioCodigo=''
@@ -31,8 +32,12 @@ export class PagoTarjetaComponent implements OnInit ,OnDestroy{
     this.signal$.complete()
   }
   ngOnInit(): void {
+    console.log("hello")
     if(this.data.idMatricula!=undefined ){
+      if(this.tipo=="CR")
       this.MedioPagoPasarelaPortalCronograma()
+      else if(this.tipo=="AF")
+      this.MedioPagoPasarelaPortalRecurrente()
     }
   }
   MedioPagoPasarelaPortalCronograma(){
@@ -43,6 +48,15 @@ export class PagoTarjetaComponent implements OnInit ,OnDestroy{
       }
     })
   }
+  MedioPagoPasarelaPortalRecurrente(){
+    this._MedioPagoActivoPasarelaService.MedioPagoPasarelaPortalRecurrente(this.data.idMatricula).pipe(takeUntil(this.signal$)).subscribe({
+      next:x=>{
+        console.log(x)
+        this.tarjetas=x
+      }
+    })
+  }
+
   change(){
     this.imgMedioPago=this._t.GetTarjeta(this.medioCodigo)
     this.medioPago=this.tarjetas.find((x:any)=>x.medioCodigo==this.medioCodigo).medioPago
