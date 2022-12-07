@@ -24,6 +24,13 @@ export class MedioPagoActivoPasarelaService {
       return EMPTY;
     }
   }
+  public MedioPagoPasarelaPortalRecurrente(IdMatriculaCabecera:number):Observable<any>{
+    if(this.isBrowser){
+      return this.http.get<any>(this.urlBase+'/MedioPagoPasarelaPortalRecurrente?IdMatriculaCabecera='+IdMatriculaCabecera);
+    }else{
+      return EMPTY;
+    }
+  }
   public MedioPagoActivoPasarelaPortal(IdPais:number):Observable<any>{
     if(this.isBrowser){
       return this.http.get<any>(this.urlBase+'/MedioPagoActivoPasarelaPortal?IdPais='+IdPais);
