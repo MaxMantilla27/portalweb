@@ -71,6 +71,7 @@ export class VideoBrightcoveComponent implements OnInit, OnChanges,AfterViewInit
   public valorRespuestaNumero=0
   public capituloEv=-1;
   public finish=false
+  public animation=0
   public estadoFinalizarPreguntas=false
   // +++ Set the data for the player +++
   playerData = {
@@ -675,8 +676,13 @@ export class VideoBrightcoveComponent implements OnInit, OnChanges,AfterViewInit
   OnFinish(){
     this.RegistrarUltimaVisualizacionVideo()
     this.finish=true;
+    this.tipo=2
+    console.log(this.nextChapter)
     console.log('Finish-------------');
     this.OnFin.emit()
+    setTimeout(() => {
+      //this.next.emit()
+    }, 3600);
   }
   EventoInteraccion(){
     this._HelperService.enviarMsjAcciones({Tag:'Video',Programa:this.json.NombrePrograma,Seccion:'Sesiones'})
