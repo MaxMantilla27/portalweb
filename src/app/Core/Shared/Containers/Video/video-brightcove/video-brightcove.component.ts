@@ -41,6 +41,7 @@ export class VideoBrightcoveComponent implements OnInit, OnChanges,AfterViewInit
     private _HelperService:HelperService
   ) {}
   ngOnDestroy(): void {
+    clearTimeout(this.timeo)
     this.signal$.next(true)
     this.signal$.complete()
   }
@@ -138,6 +139,9 @@ export class VideoBrightcoveComponent implements OnInit, OnChanges,AfterViewInit
   public videoFinal=''
   public videocontinuar=false
   public cargaFinalizado=false;
+  public timeo:any
+  public GetTIme:any;
+  public TiempoRestante=3600;
   ngOnInit(): void {
     this._HelperService.recibirCombosPerfil.pipe(takeUntil(this.signal$)).subscribe((x) => {
       this.miPerfil=x
@@ -680,8 +684,9 @@ export class VideoBrightcoveComponent implements OnInit, OnChanges,AfterViewInit
     console.log(this.nextChapter)
     console.log('Finish-------------');
     this.OnFin.emit()
-    setTimeout(() => {
-      //this.next.emit()
+    this.GetTIme=new Date().getTime();
+    this.timeo=setTimeout(() => {
+      this.CambioTab()
     }, 3600);
   }
   EventoInteraccion(){
@@ -692,7 +697,27 @@ export class VideoBrightcoveComponent implements OnInit, OnChanges,AfterViewInit
     this._HelperService.enviarMsjAcciones({Tag:'Video(volumen)',Programa:this.json.NombrePrograma,Seccion:'Sesiones'})
   }
   EventoInteraccionDrag(){
-    console.log(event)
     this._HelperService.enviarMsjAcciones({Tag:'Drag',Programa:this.json.NombrePrograma,Seccion:'Sesiones'})
+  }
+  TimerPause(){
+    clearTimeout(this.timeo)
+    var _now = new Date().getTime();
+    this.TiempoRestante-=(_now-this.GetTIme);
+    console.log(this.TiempoRestante)
+  }
+  TimerResume(){
+    if(this.TiempoRestante>0){
+      this.GetTIme=new Date();
+      this.timeo=setTimeout(() => {
+        this.CambioTab()
+      }, this.TiempoRestante);
+    }
+  }
+  CambioTab(){
+    this.tiempovideoinicio=0
+    this.finish=false;
+    this.TiempoRestante=3600
+    clearTimeout(this.timeo)
+    this.next.emit()
   }
 }

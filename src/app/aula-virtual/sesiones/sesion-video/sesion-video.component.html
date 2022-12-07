@@ -6,11 +6,10 @@
       <img class="ImgIndicacionesContent" src="../../../../assets/icons/sesion-naranja.svg">
       <div>{{nombreSesion}}</div>
     </div>
-    <div class="col-12 col-md-12 col-lg-12" style="display: flex;justify-content:space-between;padding: 10px;">
-      <div style="text-align: right;font-size: 13px;cursor: pointer;" class="vinculo"
-
+    <div class="col-12 col-md-12 col-lg-12" style="display: flex;justify-content:space-between;padding: 10px;background:#f2f6ff ;">
+      <div style="text-align: right;font-size: 13px;cursor: pointer;" class="chipButton vinculo"
       (click)="prevc()" > <ng-container *ngIf="charge && videoData!=undefined">< Anterior</ng-container> </div>
-      <div style="text-align: right;font-size: 13px;cursor: pointer;" class="vinculo"
+      <div style="text-align: right;font-size: 13px;cursor: pointer;" class="chipButton vinculo"
       (click)="nextc()" *ngIf="estadovideo>=100">Siguiente ></div>
     </div>
     <div class="">
