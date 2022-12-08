@@ -333,3 +333,38 @@
 .reverse2 {
   width: 292px !important;
 }
+
+.chipButton{
+  background: #0684f2;
+    /* padding: 3px 15px; */
+    font-size: 13px;
+    cursor: pointer;
+    text-align: center;
+    color: white;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 120px;
+    height: 30px;
+}
+.elipsis{
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.elipsis-100{
+  width: 100px;
+}
+.elipsis-200{
+  width: 200px;
+}
+.elipsis-300{
+  width: 300px;
+}
+.elipsis-400{
+  width: 400px;
+}
+.elipsis-500{
+  width: 500px;
+}
