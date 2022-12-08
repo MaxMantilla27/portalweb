@@ -22,7 +22,7 @@ export class PagoVisaComponent implements OnInit,OnDestroy {
     private _ActivatedRoute:ActivatedRoute,
     private _FormaPagoService:FormaPagoService,
     private _SessionStorageService:SessionStorageService,
-    
+
   ) {}
   public urlBase=environment.url_portal;
   ngOnDestroy(): void {
@@ -86,7 +86,6 @@ export class PagoVisaComponent implements OnInit,OnDestroy {
 
         //this._SessionStorageService.SessionSetValue('datos',JSON.stringify(this.jsonSave));
         this.addVisa()
-        //this.SetConfiguration()
       }
     })
   }

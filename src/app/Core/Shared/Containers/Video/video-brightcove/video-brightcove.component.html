@@ -15,11 +15,12 @@
       (mousemove)="resise($event)">
       <div style="display: flex;
       align-items: center;position: relative;" [ngClass]="{'containerVideo': tipo == 3}"
-        [ngStyle]="{'width':tipo==3?whidth>0?'calc(45% - '+whidth+'px)':'calc(45% + '+whidth*-1+'px)':tipo==2?'100%':'0px'}">
+        [ngStyle]="{'width':(tipo==3)?whidth>0?'calc(45% - '+whidth+'px)':'calc(45% + '+whidth*-1+'px)':tipo==2?'100%':'0px'}">
         <ng-container *ngIf="videoData.objetoConfigurado.idVideoBrightcove!='0' &&
           videoData.objetoConfigurado.idVideoBrightcove!=null &&
           videoData.objetoConfigurado.idVideoBrightcove!=undefined" >
-          <video (play)="EventoInteraccion()"  (volumechange)="EventoInteraccionVolumen()" controls #video (timeupdate)="setCurrentTime($event)" (seeked)="changeTime($event)" height="auto" (ended)="OnFinish()"
+          <video (play)="EventoInteraccion()"  (volumechange)="EventoInteraccionVolumen()" controls #video (timeupdate)="setCurrentTime($event)"
+          (seeked)="changeTime($event)" height="auto" (ended)="OnFinish()"
             [currentTime]="tiempovideoinicio"  [playbackRate]="1" id="bc-video" [attr.data-player]="playerData.playerId"
             [attr.data-video-id]="playerData.videoId" [attr.data-account]="playerData.accountId" data-embed="default"
             data-application-id class="video-js" [ngClass]="{'medioVideo':tipo==3}">
@@ -29,7 +30,8 @@
         <ng-container *ngIf="videoData.objetoConfigurado.idVideoBrightcove=='0' ||
         videoData.objetoConfigurado.idVideoBrightcove==null ||
         videoData.objetoConfigurado.idVideoBrightcove==undefined">
-          <cloudflare-stream (play)="EventoInteraccion()" (volumechange)="EventoInteraccionVolumen()"  *ngIf="tipo!=4" id="videoCloud" [autoplay]="autoplay" class="video-js" [controls]="true"
+          <cloudflare-stream (play)="EventoInteraccion()" (volumechange)="EventoInteraccionVolumen()"  *ngIf="tipo!=4" id="videoCloud"
+          [autoplay]="autoplay" class="video-js" [controls]="true"
           (ended)="OnFinish()"
             [src]="videoData.idVideo" (timeupdate)="setCurrentTime($event)" #videoCloud style="height: auto !important;"
             [currentTime]="tiempovideoinicio" (seeked)="changeTime($event)"></cloudflare-stream>
@@ -40,19 +42,27 @@
         </ng-container>
         <ng-container *ngIf="finish && nextChapter!=undefined && nextChapter.name!=null">
           <div class="finishVideo">
-            <div style="  display: flex;
+            <div  style="  display: flex;
             justify-content: center;
-            align-items: flex-start;height: 100%;">
-
-              <img  src="../../../assets/icons/videos-29.svg" alt="" style="width: 50px;margin-right: 20px;">
+            align-items: center;height: 100%;">
+              <div style="margin-right: 20px;    display: flex;
+              flex-direction: column;
+              justify-content: center;
+              align-items: center;position:relative;">
+                <!-- <div class="imgOpcity" (click)="next.emit()">
+                  <div class="OverimgOpcity"></div>
+                </div> -->
+                <img class="imgPlayButton" src="../../../assets/icons/videos-29.svg" alt="" style="width: 80px;">
+                <div class="buttonNextVideo vinculo"  (click)="next.emit()">Ver ahora</div>
+              </div>
               <div style="color: white">
                 <div style="color: #05a74c;
                 font-size: 14px;
-                font-weight: 600;">A continuación</div>
+                font-weight: 600;    margin-bottom: 10px;">
+                A continuación, en 3, 2, 1 </div>
                 <div style="    font-size: 22px;
                 font-weight: 600;">{{nextChapter.name}}</div>
                 <div *ngIf="nextChapter.time" style="font-size: 10px;">({{nextChapter.time | number:'0.0-0'}} minutos)</div>
-                <div class="buttonNextVideo" (click)="next.emit()">Ver ahora ></div>
               </div>
             </div>
           </div>
