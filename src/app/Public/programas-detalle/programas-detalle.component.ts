@@ -240,6 +240,7 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
     idAreaTrabajo:undefined,
     idIndustria:undefined,
   }
+  public certificadoVacio=false;
   ngOnInit(): void {
 
     this._HelperServiceP.recibirChangePais().pipe(takeUntil(this.signal$)).subscribe((x) => {
@@ -674,7 +675,8 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
     this._SeccionProgramaService.ListCertificacion(this.idBusqueda).pipe(takeUntil(this.signal$)).subscribe({
       next: (x) => {
         this.certificado = x.listaCertificacionDTO;
-        if (this.certificado!=null && this.certificado.descripcion != null) {
+        console.log(this.certificado)
+        if (this.certificado!=null && this.certificado.descripcion != null && this.certificado.contenido.length!=0) {
           var descstrong = this.certificado.descripcion.split('<p><strong>');
           var desc = [];
           this.certificado.descripcionHeader=[]
@@ -713,6 +715,9 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
           //   //   i++;
           //   // })
           // }
+        }
+        else{
+          this.certificadoVacio=true;
         }
       },
     });
