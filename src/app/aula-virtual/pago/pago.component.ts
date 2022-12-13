@@ -288,6 +288,9 @@ export class PagoComponent implements OnInit,OnDestroy {
             this._router.navigate(['/AulaVirtual/MisPagos/Afiliacion/'+this.idMatricula+'/visa/'+sesion]);
           }
         }
+        else if(tarjeta.idPasarelaPago==13){ //IziPay
+            this._router.navigate(['/AulaVirtual/MisPagos/Afiliacion/'+this.idMatricula+'/izipay/'+sesion]);
+        }
       }
     })
   }

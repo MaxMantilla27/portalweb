@@ -86,9 +86,6 @@ export class ResultadoPagoComponent implements OnInit,OnDestroy{
     this.ruta='/AulaVirtual/MisPagos'
     this._FormaPagoService.ObtenerPreProcesoPagoCuotaAlumno(this.json).pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
-        console.log("REPUESTA-PREPROCESO",x._Repuesta.listaCuota)
-        var menor = x._Repuesta.listaCuota[0].nombre
-        console.log("REPUESTA-PREPROCESO",menor)
         if(x._Repuesta.registroAlumno==null){
           this.ObtenerPreProcesoPagoOrganicoAlumno()
         }else{
