@@ -95,7 +95,7 @@
   background: #f4f4f4;
 }
 .pad-resp {
-  padding: 5px 10px 0px 62px;
+  padding: 5px 10px 0px 10px;
 }
 
 @media (max-width: 768px) {
@@ -116,7 +116,7 @@
   }
   .tabVerticalses > mat-tab-header{
     z-index: 100;
-    position: absolute !important;
+    //position: absolute !important;
     background: white;
     height: 100%;
     min-width: 2px;
@@ -142,7 +142,7 @@
     padding: 45px 20px;
   }
   .pad-resp {
-    padding: 5px 10px 0px 62px;
+    padding: 5px 10px 0px 10px;
   }
 }
 @media (min-width: 768px) {
@@ -162,7 +162,7 @@
   }
   .tabVerticalses > mat-tab-header{
     z-index: 100;
-    position: absolute !important;
+   // position: absolute !important;
     background: white;
     height: calc( 100% - 40px );
     min-width: 2px;
@@ -171,7 +171,7 @@
     padding: 45px 40px 45px 20px;
   }
   .pad-resp {
-    padding: 5px 10px 0px 72px;
+    padding: 5px 10px 0px 10px;
   }
 }
 @media (min-width: 992px) {
@@ -179,7 +179,7 @@
     padding: 45px 90px 45px 20px;
   }
   .pad-resp {
-    padding: 5px 10px 0px 72px;
+    padding: 5px 10px 0px 10px;
   }
 }
 @media (min-width: 1200px) {
@@ -187,7 +187,7 @@
     padding: 45px 90px 45px 20px;
   }
   .pad-resp {
-    padding: 5px 20px 0px 92px;
+    padding: 5px 20px 0px 20px;
   }
 }
 @media (min-width: 1400px) {
@@ -195,7 +195,7 @@
     padding: 45px 90px 45px 20px !important;
   }
   .pad-resp {
-    padding: 5px 30px 0px 92px;
+    padding: 5px 20px 0px 20px;
   }
 }
 .resumenPagoTarjeta {

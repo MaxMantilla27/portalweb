@@ -21,6 +21,7 @@ import { PreguntaInteractivaService } from '../../../Services/PreguntaInteractiv
 import { SnackBarServiceService } from '../../../Services/SnackBarService/snack-bar-service.service';
 import { VideoSesionService } from '../../../Services/VideoSesion/video-sesion.service';
 declare var $:any;
+import videojs from 'video.js';
 @Component({
   selector: 'app-video-brightcove',
   templateUrl: './video-brightcove.component.html',
@@ -47,7 +48,9 @@ export class VideoBrightcoveComponent implements OnInit, OnChanges,AfterViewInit
   }
   ngAfterViewInit(): void {
   }
-
+  OnError(e:any){
+    console.log(e)
+  }
   @Input()
   public videoData: any;
   @Input() nextChapter:any;
@@ -142,6 +145,20 @@ export class VideoBrightcoveComponent implements OnInit, OnChanges,AfterViewInit
   public timeo:any
   public GetTIme:any;
   public TiempoRestante=3600;
+  player!: videojs.Player;
+  options:{
+    fluid: boolean,
+    aspectRatio: string,
+    autoplay: boolean,
+    sources: {
+        src: string,
+        type: string,
+    }[],
+}={
+  autoplay: true, sources: [{ src: '/path/to/video.mp4', type: 'video/mp4' }],
+  fluid: false,
+  aspectRatio: '16:9'
+};
   ngOnInit(): void {
     this._HelperService.recibirCombosPerfil.pipe(takeUntil(this.signal$)).subscribe((x) => {
       this.miPerfil=x
@@ -149,7 +166,6 @@ export class VideoBrightcoveComponent implements OnInit, OnChanges,AfterViewInit
   }
   ngOnChanges(changes: SimpleChanges): void {
     if (this.videoData != undefined) {
-      console.log(this.videoData)
       if(this.videoData.objetoConfigurado.idVideoBrightcove!='0' &&
       this.videoData.objetoConfigurado.idVideoBrightcove!=null &&
       this.videoData.objetoConfigurado.idVideoBrightcove!=undefined){

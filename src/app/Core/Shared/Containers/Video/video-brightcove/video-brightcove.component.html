@@ -20,10 +20,10 @@
           videoData.objetoConfigurado.idVideoBrightcove!=null &&
           videoData.objetoConfigurado.idVideoBrightcove!=undefined" >
           <video (play)="EventoInteraccion()"  (volumechange)="EventoInteraccionVolumen()" controls #video (timeupdate)="setCurrentTime($event)"
-          (seeked)="changeTime($event)" height="auto" (ended)="OnFinish()"
+          (seeked)="changeTime($event)" height="auto" (ended)="OnFinish()" (error)="OnError($event)" (load)="OnError($event)"
             [currentTime]="tiempovideoinicio"  [playbackRate]="1" id="bc-video" [attr.data-player]="playerData.playerId"
             [attr.data-video-id]="playerData.videoId" [attr.data-account]="playerData.accountId" data-embed="default"
-            data-application-id class="video-js" [ngClass]="{'medioVideo':tipo==3}">
+            data-application-id class="video-js" [ngClass]="{'medioVideo':tipo==3}" data-setup="{}">
           </video>
 
         </ng-container>

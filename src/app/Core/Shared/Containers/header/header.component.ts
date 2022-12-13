@@ -273,6 +273,7 @@ export class HeaderComponent implements OnInit,OnChanges,OnDestroy {
   GetCarrerasProfecionales() {
     this._CarreraProfesionalService.GetCarreras(11).pipe(takeUntil(this.signal$)).subscribe({
       next: (x) => {
+        console.log(x)
         this.carreras = x.listaProfesionCabeceraDTO.map((c: any) => {
           var ps: BasicUrl = {
             Nombre: c.titulo,
