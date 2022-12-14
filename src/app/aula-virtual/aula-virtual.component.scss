@@ -148,7 +148,7 @@
 @media (min-width: 768px) {
   .tabVertical > mat-tab-header{
     z-index: 100;
-    position: absolute !important;
+    //position: absolute !important;
     background: white;
     height: calc( 100% - 40px );
     min-width: 2px;
@@ -304,12 +304,14 @@
 .openClose2 {
   //position: absolute;
   cursor: pointer;
-  background: #c3c3c3;
+  background: #0684f2;
   border-right: 2px solid #d2d2d2;
   width: 52px;
   display: flex;
-  justify-content: center;
-  padding: 5px;
+  justify-content: space-around;
+  padding: 10px;
+  color: white;
+  align-items: center;
   img{
     width: 18px;
   }

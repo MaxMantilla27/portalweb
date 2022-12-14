@@ -59,7 +59,7 @@
                 <div style="color: #05a74c;
                 font-size: 14px;
                 font-weight: 600;    margin-bottom: 10px;">
-                A continuación, en 3, 2, 1 </div>
+                A continuación, en {{valueCount/1000  | number:'0.0-0'}} </div>
                 <div style="    font-size: 22px;
                 font-weight: 600;">{{nextChapter.name}}</div>
                 <div *ngIf="nextChapter.time" style="font-size: 10px;">({{nextChapter.time | number:'0.0-0'}} minutos)</div>

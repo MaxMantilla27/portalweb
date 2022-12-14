@@ -36,7 +36,10 @@ export class CursoComponent implements OnInit,OnDestroy {
   public tabIndex = 0;
   public IndicacionActive = false;
   public CertificadoActive = false;
-  public hide=true
+  public hide=false
+
+  public indexIndicacions=0
+  public indexAyuda=0
   public migaPan = [
     {
       titulo: 'Mis Cursos',
@@ -51,6 +54,9 @@ export class CursoComponent implements OnInit,OnDestroy {
   ]
   public idMatricula = 0;
   public datos: any;
+  public AyudaActive=false
+  public alertaPreguntasFrecuentes=false
+  public alertaQuejasSugerencias=false
   public programEstructura: CursoPadreDTO = {
     idAlumno: 0,
     idMatriculaCabecera: 0,
@@ -61,7 +67,21 @@ export class CursoComponent implements OnInit,OnDestroy {
     modalidad: '',
     programaGeneral: '',
   };
+  public json:ParametrosEstructuraEspecificaDTO={
+
+    AccesoPrueba: false,
+    IdMatriculaCabecera: 0,
+    IdPEspecificoPadre: 0,
+    IdPGeneralPadre: 0,
+    IdPEspecificoHijo: 0,
+    IdPGeneralHijo: 0,
+    NombreCapitulo:'',
+    NombrePrograma:'',
+    idModalidad:1
+  }
+  public estructuraCapitulo:any;
   public curso:any
+  public EsCurso:any
   public videoPreguntas ='https://repositorioweb.blob.core.windows.net/repositorioweb/aulavirtual/guias/preguntas/preguntas-hombres.mp4';
   public videoCrucigramas ='https://repositorioweb.blob.core.windows.net/repositorioweb/aulavirtual/guias/crucigrama/crucigrama-hombre.mp4';
   public videoTareas =''//'https://repositorioweb.blob.core.windows.net/repositorioweb/aulavirtual/guias/preguntas/preguntas-hombres.mp4';
@@ -149,12 +169,24 @@ export class CursoComponent implements OnInit,OnDestroy {
   tabChanged(tabChangeEvent: MatTabChangeEvent): void {
     console.log('tabChangeEvent => ', tabChangeEvent);
     console.log('index => ', tabChangeEvent.index);
-    if ((tabChangeEvent.index >= 5 || tabChangeEvent.index == 0) &&
-      this.IndicacionActive == true
-    ) {
-      this.IndicacionActive = false;
-      this.tabIndex-=4
-      console.log(this.tabIndex)
+    if(this.IndicacionActive==true){
+      if (this.indexIndicacions>0 && (tabChangeEvent.index >= this.indexIndicacions+5 || tabChangeEvent.index <= this.indexIndicacions) &&
+        this.IndicacionActive == true
+      ) {
+        this.IndicacionActive = false;
+        this.tabIndex=this.indexIndicacions
+        console.log(this.tabIndex)
+      }
+    }
+    if(this.AyudaActive==true){
+      console.log(this.indexAyuda)
+      if (this.indexAyuda>0 && (tabChangeEvent.index >= this.indexAyuda+3 || tabChangeEvent.index <= this.indexAyuda) &&
+        this.AyudaActive == true
+      ) {
+        this.AyudaActive = false;
+        this.tabIndex=this.indexAyuda
+        console.log(this.tabIndex)
+      }
     }
     var masindicacion=0
     if(this.IndicacionActive){
@@ -169,28 +201,45 @@ export class CursoComponent implements OnInit,OnDestroy {
       masindicacion=-1
       noesAonline=-1
     }
+    var TProyecto=0
+    if(this.curso.proyectoAplicacion){
+      TProyecto=1
+    }
     console.log(esirca)
-    if(this.curso!=undefined && this.curso.proyectoAplicacion){
-      if((tabChangeEvent.index >= (6+noesAonline+esirca) || tabChangeEvent.index < (3+noesAonline))  && this.CertificadoActive){
-        this.CertificadoActive=false
-        if(tabChangeEvent.index >= (6+noesAonline+esirca)){
-          this.tabIndex-=(2+esirca)
-        }
-      }
-      if(tabChangeEvent.index == (3+noesAonline) && !this.CertificadoActive){
-        this.CertificadoActive=true
-      }
-    }else{
-      if((tabChangeEvent.index >= (5+noesAonline+esirca) || tabChangeEvent.index < (2+noesAonline))   && this.CertificadoActive){
-        this.CertificadoActive=false
-        if(tabChangeEvent.index >= (5+noesAonline+esirca)){
-          this.tabIndex-=(2+esirca)
-        }
-      }
-      if(tabChangeEvent.index == (2+noesAonline) && !this.CertificadoActive){
-        this.CertificadoActive=true
+    var escurso=0
+    if(this.EsCurso==true){
+      escurso=3
+    }
+    if((tabChangeEvent.index >= (4+TProyecto+noesAonline+esirca) || tabChangeEvent.index < (1+TProyecto+noesAonline))   && this.CertificadoActive){
+      this.CertificadoActive=false
+      if(tabChangeEvent.index >= (4+TProyecto+noesAonline+esirca)){
+        this.tabIndex-=(2+esirca)
       }
     }
+    if(tabChangeEvent.index == (1+TProyecto+noesAonline) && !this.CertificadoActive){
+      this.CertificadoActive=true
+    }
+    // if(this.curso!=undefined && this.curso.proyectoAplicacion){
+    //   if((tabChangeEvent.index >= (6+noesAonline+esirca) || tabChangeEvent.index < (3+noesAonline))  && this.CertificadoActive){
+    //     this.CertificadoActive=false
+    //     if(tabChangeEvent.index >= (6+noesAonline+esirca)){
+    //       this.tabIndex-=(2+esirca)
+    //     }
+    //   }
+    //   if(tabChangeEvent.index == (2+noesAonline) && !this.CertificadoActive){
+    //     this.CertificadoActive=true
+    //   }
+    // }else{
+    //   if((tabChangeEvent.index >= (5+noesAonline+esirca) || tabChangeEvent.index < (2+noesAonline))   && this.CertificadoActive){
+    //     this.CertificadoActive=false
+    //     if(tabChangeEvent.index >= (5+noesAonline+esirca)){
+    //       this.tabIndex-=(2+esirca)
+    //     }
+    //   }
+    //   if(tabChangeEvent.index == (1+noesAonline) && !this.CertificadoActive){
+    //     this.CertificadoActive=true
+    //   }
+    // }
   }
   InterraccionTab(nombre:string){
 
@@ -200,8 +249,18 @@ export class CursoComponent implements OnInit,OnDestroy {
     console.log(e);
   }
   changeIndexIndicaciones(index: number) {
+    if(this.indexIndicacions==0){
+      this.indexIndicacions=this.tabIndex
+    }
     this.IndicacionActive = true;
-    this.tabIndex = index;
+    this.tabIndex = this.indexIndicacions+index;
+  }
+  changeIndexAyuda() {
+    if(this.indexAyuda==0){
+      this.indexAyuda=this.tabIndex
+    }
+    this.AyudaActive = true;
+    console.log(this.indexAyuda)
   }
   RegistroProgramaMatriculadoPorIdMatricula(){
     this._DatosPerfilService.RegistroProgramaMatriculadoPorIdMatricula(this.idMatricula).pipe(takeUntil(this.signal$)).subscribe({
@@ -259,32 +318,81 @@ export class CursoComponent implements OnInit,OnDestroy {
         next: (x) => {
           this.programEstructura = x;
           console.log(this.programEstructura)
-          this.programEstructura.listaCursoMatriculado.sort(function (a:any, b:any) {
-            return a.orden - b.orden;
-          })
-          this.migaPan.push(
-            {
-              titulo: this.programEstructura.programaGeneral,
-              urlWeb: '/AulaVirtual/MisCursos/'+this.idMatricula,
-            },)
+          if(this.programEstructura.listaCursoMatriculado!=null && this.programEstructura.listaCursoMatriculado.length>1){
+            this.EsCurso=false
+            this.programEstructura.listaCursoMatriculado.sort(function (a:any, b:any) {
+              return a.orden - b.orden;
+            })
+            this.migaPan.push(
+              {
+                titulo: this.programEstructura.programaGeneral,
+                urlWeb: '/AulaVirtual/MisCursos/'+this.idMatricula,
+              },)
 
-          this.programEstructura.listaCursoMatriculado.forEach((program) => {
-            var params: ParametrosEstructuraEspecificaDTO = {
+            this.programEstructura.listaCursoMatriculado.forEach((program) => {
+              var params: ParametrosEstructuraEspecificaDTO = {
+                AccesoPrueba: false,
+                IdMatriculaCabecera: this.programEstructura.idMatriculaCabecera,
+                IdPEspecificoPadre: this.programEstructura.idPEspecifico,
+                IdPGeneralPadre: this.programEstructura.idPGeneral,
+                IdPEspecificoHijo: program.idPEspecificoHijo,
+                IdPGeneralHijo: program.idPGeneralHijo,
+                NombreCapitulo:program.programaGeneralHijo,
+                NombrePrograma:this.programEstructura.programaGeneral,
+                idModalidad:this.programEstructura.idModalidad
+              };
+              console.log(params)
+              program.params = btoa(encodeURIComponent(JSON.stringify(params)));
+            });
+          }else{
+            this.EsCurso=true
+            this.json = {
               AccesoPrueba: false,
-              IdMatriculaCabecera: this.programEstructura.idMatriculaCabecera,
-              IdPEspecificoPadre: this.programEstructura.idPEspecifico,
-              IdPGeneralPadre: this.programEstructura.idPGeneral,
-              IdPEspecificoHijo: program.idPEspecificoHijo,
-              IdPGeneralHijo: program.idPGeneralHijo,
-              NombreCapitulo:program.programaGeneralHijo,
-              NombrePrograma:this.programEstructura.programaGeneral,
-              idModalidad:this.programEstructura.idModalidad
+              IdMatriculaCabecera: x.idMatriculaCabecera,
+              IdPEspecificoPadre: x.idPEspecifico,
+              IdPGeneralPadre: x.idPGeneral,
+              IdPEspecificoHijo: this.programEstructura.listaCursoMatriculado[0].idPEspecificoHijo,
+              IdPGeneralHijo: this.programEstructura.listaCursoMatriculado[0].idPGeneralHijo,
+              NombreCapitulo:this.programEstructura.listaCursoMatriculado[0].programaGeneralHijo,
+              NombrePrograma:x.programaGeneral,
+              idModalidad:this.programEstructura.listaCursoMatriculado[0].idModalidadHijo
             };
-            console.log(params)
-            program.params = btoa(encodeURIComponent(JSON.stringify(params)));
-          });
+            console.log(this.json)
+            this.migaPan.push(
+            // {
+            //   titulo:this.json.NombrePrograma,
+            //   urlWeb:'/AulaVirtual/MisCursos/'+this.json.IdMatriculaCabecera
+            // },
+            {
+              titulo:this.json.NombreCapitulo,
+              urlWeb:'/AulaVirtual/MisCursos/'+this.json.IdMatriculaCabecera
+            })
+            this._HelperService.enviarMsjChat({
+              idMatriculaCabecera:x.idMatriculaCabecera,
+              idprogramageneralalumno:x.idPGeneral,
+              idcoordinadora:x.idAsesor,
+              idcentrocosto:x.idCentroCosto,
+              idcursoprogramageneralalumno:this.programEstructura.listaCursoMatriculado[0].idPGeneralHijo
+            });
+            this.ObtenerEstructuraEspecificaCurso();
+          }
+
         },
       });
+  }
+  ObtenerEstructuraEspecificaCurso(){
+    this._ProgramaContenidoService.ObtenerEstructuraEspecificaCurso(this.json).pipe(takeUntil(this.signal$)).subscribe({
+      next:x=>{
+        this.estructuraCapitulo=x
+        this._SessionStorageService.SetEstructura(this.estructuraCapitulo);
+        console.log(this.estructuraCapitulo)
+
+      }
+    })
+  }
+  cambio(mas:number){
+    console.log(mas)
+    this.tabIndex+=mas
   }
   EventoInteraccionButton(nombre:string){
     this._HelperService.enviarMsjAcciones({Tag:"Button",Nombre:nombre,Seccion:'Indicaciones'})

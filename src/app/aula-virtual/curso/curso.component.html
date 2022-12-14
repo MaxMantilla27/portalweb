@@ -23,126 +23,104 @@
         </div>
       </div>
       <mat-tab-group class="tabVertical" [(selectedIndex)]="tabIndex" (selectedTabChange)="tabChanged($event)">
-        <mat-tab *ngIf="programEstructura.idModalidad!=2" >
-          <ng-template mat-tab-label>
-            <div class="contentHeaderM" (click)="InterraccionTab('Indicaciones')"
-            matTooltip="Indicaciones"
-            matTooltipPosition="after" [ngClass]="{'ActiveChil':IndicacionActive==true}">
-              <div class="iconMat iconIndicaciones"></div>
-              <ng-container *ngIf="!hide">
-                <div class="titleMatr">Indicaciones</div>
-                <i class="material-icons" *ngIf="IndicacionActive==true"
-                  style="position: absolute;right: 5px;">keyboard_arrow_up</i>
-              </ng-container>
+        <ng-container *ngIf="EsCurso==true">
+          <mat-tab>
+            <ng-template mat-tab-label>
+              <div  class="contentHeaderM" (click)="InterraccionTab('Sesiones')">
+                <div class="iconMat iconSesiones"
+                matTooltip="Sesiones"
+                matTooltipPosition="after"></div>
+                <div *ngIf="!hide" class="titleMatr">Sesiones</div>
+              </div>
+            </ng-template>
+            <div class="pad-resp">
+              <app-modulo-sesiones [Capitulo]="json.NombreCapitulo"  [idModalidad]="json.idModalidad" [estructuraCapitulo]="estructuraCapitulo">
+              </app-modulo-sesiones>
             </div>
-          </ng-template>
-          <div class="pad-resp">
-            <app-video-ayuda [sise]="3"></app-video-ayuda>
-            <div class="cursoTitle">{{programEstructura.programaGeneral}}</div>
-            <div class="cursoTabDescripcion">
-              ¡Hola! A continuación te explicamos cómo realizar las evaluaciones que se presentarán de acuerdo a tu avance del curso. Te deseamos éxitos.
-              <br>
-            </div>
-            <div class="row">
-              <div class="col-12 col-md-9 col-lg-9" style="margin: 10px 0px;">
-                <app-indicaciones-content [title]="'Preguntas interactivas'" [imgUrl]="imgsIndocaciones[0]"
-                  (HoverIn)='imgsIndocaciones[0]="preguntas-interactivas-38.svg"'
-                  (HoverOut)='imgsIndocaciones[0]="preguntas-naranja-38.svg"'
-                  (ButtoclClick)="EventoInteraccionButton('Preguntas interactivas');changeIndexIndicaciones(1)"></app-indicaciones-content>
-              </div>
-              <div class="col-12 col-md-9 col-lg-9" style="margin: 10px 0px;">
-                <app-indicaciones-content [title]="'Crucigramas'" [imgUrl]="imgsIndocaciones[1]"
-                  (HoverIn)='imgsIndocaciones[1]="crucigramas-39.svg"'
-                  (HoverOut)='imgsIndocaciones[1]="crucigrama-naranja-39.svg"'
-                  (ButtoclClick)="EventoInteraccionButton('Crucigramas');changeIndexIndicaciones(2)"></app-indicaciones-content>
-              </div>
-              <div class="col-12 col-md-9 col-lg-9" style="margin: 10px 0px;">
-                <app-indicaciones-content [title]="'Tareas'" [imgUrl]="imgsIndocaciones[2]"
-                  (HoverIn)='imgsIndocaciones[2]="tareas-indicaciones-40.svg"'
-                  (HoverOut)='imgsIndocaciones[2]="tareas-naranja-40.svg"'
-                  (ButtoclClick)="EventoInteraccionButton('Tareas');changeIndexIndicaciones(3)">
-                </app-indicaciones-content>
-              </div>
-              <div class="col-12 col-md-9 col-lg-9" style="margin: 10px 0px;">
-                <app-indicaciones-content [title]="'Calificar tarea de pares'" [imgUrl]="imgsIndocaciones[3]"
-                  (HoverIn)='imgsIndocaciones[3]="calificar-tareas-41.svg"'
-                  (HoverOut)='imgsIndocaciones[3]="tareas-pares-naranja-41.svg"'
-                  (ButtoclClick)="EventoInteraccionButton('Calificar tarea de pares');changeIndexIndicaciones(4)"></app-indicaciones-content>
-              </div>
-            </div>
-          </div>
-        </mat-tab>
-        <ng-container *ngIf="IndicacionActive==true">
+          </mat-tab>
 
-          <mat-tab>
-            <ng-template mat-tab-label class="tabSubcontent">
-              <div class="contentHeaderM subContent" (click)="InterraccionTab('Preguntas interactivas')"
-              matTooltip="Preguntas interactivas"
-              matTooltipPosition="after">
-                <div class="iconMat"><i class="material-icons">quiz</i></div>
-                <div class="titleMatr" *ngIf="!hide">Preguntas interactivas</div>
+          <!-- <mat-tab>
+            <ng-template mat-tab-label>
+              <div *ngIf="!hide" class="contentHeaderM">
+                <div class="iconMat iconWebinars"></div>
+                <div class="titleMatr">Webinar</div>
               </div>
             </ng-template>
             <div class="pad-resp">
-              <app-indicaciones-options-content [videoUrl]="videoPreguntas"
-                [TitlePrograma]="programEstructura.programaGeneral" [title]="'Preguntas Interactivas'"
-                [imgUrl]="'preguntas-naranja-38.svg'">
-              </app-indicaciones-options-content>
+              <app-modulo-webinars [Capitulo]="json.NombreCapitulo" [IdMatriculaCabecera]="json.IdMatriculaCabecera"></app-modulo-webinars>
+            </div>
+          </mat-tab> -->
+          <mat-tab>
+            <ng-template mat-tab-label>
+              <div  class="contentHeaderM" (click)="InterraccionTab('Sílabo')">
+                <div class="iconMat iconSilabo"
+                matTooltip="Sílabo"
+                matTooltipPosition="after"></div>
+                <div *ngIf="!hide" class="titleMatr">Sílabo</div>
+              </div>
+            </ng-template>
+            <div class="pad-resp">
+              <app-modulo-silabo [Capitulo]="json.NombreCapitulo" [IdPgeneral]="json.IdPGeneralHijo"
+                [Estructura]="estructuraCapitulo"></app-modulo-silabo>
             </div>
           </mat-tab>
           <mat-tab>
             <ng-template mat-tab-label>
-              <div class="contentHeaderM subContent" (click)="InterraccionTab('Crucigramas')"
-              matTooltip="Crucigramas"
-              matTooltipPosition="after">
-                <div class="iconMat"><i class="material-icons">games</i></div>
-                <div class="titleMatr" *ngIf="!hide">Crucigramas</div>
+              <div  class="contentHeaderM" (click)="InterraccionTab('Recursos')">
+                <div class="iconMat iconRecursos"
+                matTooltip="Recursos"
+                matTooltipPosition="after"></div>
+                <div *ngIf="!hide" class="titleMatr">Recursos</div>
+              </div>
+            </ng-template>
+            <div class="pad-resp"><app-modulo-recurso [Capitulo]="json.NombreCapitulo" [Estructura]="estructuraCapitulo"
+              [idPEspecifico]="json.IdPEspecificoHijo" [tipo]="json.idModalidad" [idPGeneral]="json.IdPGeneralHijo"></app-modulo-recurso></div>
+          </mat-tab>
+          <mat-tab *ngIf="json.idModalidad==1">
+            <ng-template mat-tab-label>
+              <div class="contentHeaderM" (click)="InterraccionTab('Foro')">
+                <div class="iconMat iconForo"
+                matTooltip="Foro"
+                matTooltipPosition="after"></div>
+                <div *ngIf="!hide" class="titleMatr">Foro</div>
               </div>
             </ng-template>
             <div class="pad-resp">
-              <app-indicaciones-options-content [videoUrl]="videoCrucigramas"
-                [TitlePrograma]="programEstructura.programaGeneral" [title]="'Crucigramas'"
-                [imgUrl]="'crucigrama-naranja-39.svg'">
-              </app-indicaciones-options-content>
+              <app-modulo-foro [Capitulo]="json.NombreCapitulo" [IdPgeneral]="json.IdPGeneralHijo" [IdPprincipal]="json.IdPGeneralPadre" [IdPEspecificoPadre]="json.IdPEspecificoPadre" [IdPEspecificoHijo]="json.IdPEspecificoHijo"></app-modulo-foro>
             </div>
           </mat-tab>
-          <mat-tab>
+          <mat-tab *ngIf="json.idModalidad==1">
             <ng-template mat-tab-label>
-              <div class="contentHeaderM subContent" (click)="InterraccionTab('Tareas')"
-              matTooltip="Tareas"
-              matTooltipPosition="after">
-                <div class="iconMat"><i class="material-icons">edit_note</i></div>
-                <div class="titleMatr" *ngIf="!hide">Tareas</div>
+              <div class="contentHeaderM" (click)="InterraccionTab('Calificaciones')">
+                <div class="iconMat iconCalificaciones"
+                matTooltip="Calificaciones"
+                matTooltipPosition="after"></div>
+                <div *ngIf="!hide" class="titleMatr">Calificaciones</div>
               </div>
             </ng-template>
             <div class="pad-resp">
-              <app-indicaciones-options-content [videoUrl]="videoTareas"
-                [TitlePrograma]="programEstructura.programaGeneral" [title]="'Tareas'"
-                [imgUrl]="'tareas-pares-naranja-41.svg'" [TituloContenido]="'¿Cómo presentar las tareas?'"
-                [COntenido]="contenidotarea">
-              </app-indicaciones-options-content>
+              <app-modulo-calificaciones [Capitulo]="json.NombreCapitulo" [IdMatriculaCabecera]="json.IdMatriculaCabecera" [IdPEspecifico]="json.IdPEspecificoHijo"></app-modulo-calificaciones>
             </div>
           </mat-tab>
-          <mat-tab>
+          <mat-tab *ngIf="videosOnline!=undefined && videosOnline.length>0">
             <ng-template mat-tab-label>
-              <div class="contentHeaderM subContent" (click)="InterraccionTab('Calificar tarea de pares')"
-              matTooltip="Calificar tarea de pares"
+              <div class="contentHeaderM" (click)="InterraccionTab('Clases Grabadas')"
+              [matTooltip]="'Clases Grabadas'"
               matTooltipPosition="after">
-                <div class="iconMat"><i class="material-icons">fact_check</i></div>
-                <div class="titleMatr" *ngIf="!hide">Calificar tarea de pares</div>
+
+                <div class="iconMat"><i class="material-icons">ondemand_video</i></div>
+                <div class="titleMatr" *ngIf="!hide">Clases Grabadas</div>
               </div>
             </ng-template>
             <div class="pad-resp">
-              <app-indicaciones-options-content [videoUrl]="videoTrabajoP"
-                [TitlePrograma]="programEstructura.programaGeneral" [title]="'Calificar tarea de pares'"
-                [imgUrl]="'tareas-naranja-40.svg'" [TituloContenido]="'Califica las tareas de pares'"
-                [COntenido]="contenidotareapares">
-              </app-indicaciones-options-content>
+              <app-modulo-videos-sincronico [videos]="videosOnline" [Capitulo]="json.NombreCapitulo">
+              </app-modulo-videos-sincronico>
             </div>
           </mat-tab>
         </ng-container>
 
-        <mat-tab>
+
+        <mat-tab *ngIf="EsCurso==false">
           <ng-template mat-tab-label>
             <div class="contentHeaderM" (click)="InterraccionTab('Módulos')"
             matTooltip="Módulos"
@@ -351,6 +329,182 @@
             </app-curso-videos-sincronico>
           </div>
         </mat-tab> -->
+        <mat-tab *ngIf="programEstructura.idModalidad!=2" >
+          <ng-template mat-tab-label>
+            <div class="contentHeaderM" (click)="InterraccionTab('Indicaciones')"
+            matTooltip="Indicaciones"
+            matTooltipPosition="after" [ngClass]="{'ActiveChil':IndicacionActive==true}">
+              <div class="iconMat iconIndicaciones"></div>
+              <ng-container *ngIf="!hide">
+                <div class="titleMatr">Indicaciones</div>
+                <i class="material-icons" *ngIf="IndicacionActive==true"
+                  style="position: absolute;right: 5px;">keyboard_arrow_up</i>
+              </ng-container>
+            </div>
+          </ng-template>
+          <div class="pad-resp">
+            <app-video-ayuda [sise]="3"></app-video-ayuda>
+            <div class="cursoTitle">{{programEstructura.programaGeneral}}</div>
+            <div class="cursoTabDescripcion">
+              ¡Hola! A continuación te explicamos cómo realizar las evaluaciones que se presentarán de acuerdo a tu avance del curso. Te deseamos éxitos.
+              <br>
+            </div>
+            <div class="row">
+              <div class="col-12 col-md-9 col-lg-9" style="margin: 10px 0px;">
+                <app-indicaciones-content [title]="'Preguntas interactivas'" [imgUrl]="imgsIndocaciones[0]"
+                  (HoverIn)='imgsIndocaciones[0]="preguntas-interactivas-38.svg"'
+                  (HoverOut)='imgsIndocaciones[0]="preguntas-naranja-38.svg"'
+                  (ButtoclClick)="EventoInteraccionButton('Preguntas interactivas');changeIndexIndicaciones(1)"></app-indicaciones-content>
+              </div>
+              <div class="col-12 col-md-9 col-lg-9" style="margin: 10px 0px;">
+                <app-indicaciones-content [title]="'Crucigramas'" [imgUrl]="imgsIndocaciones[1]"
+                  (HoverIn)='imgsIndocaciones[1]="crucigramas-39.svg"'
+                  (HoverOut)='imgsIndocaciones[1]="crucigrama-naranja-39.svg"'
+                  (ButtoclClick)="EventoInteraccionButton('Crucigramas');changeIndexIndicaciones(2)"></app-indicaciones-content>
+              </div>
+              <div class="col-12 col-md-9 col-lg-9" style="margin: 10px 0px;">
+                <app-indicaciones-content [title]="'Tareas'" [imgUrl]="imgsIndocaciones[2]"
+                  (HoverIn)='imgsIndocaciones[2]="tareas-indicaciones-40.svg"'
+                  (HoverOut)='imgsIndocaciones[2]="tareas-naranja-40.svg"'
+                  (ButtoclClick)="EventoInteraccionButton('Tareas');changeIndexIndicaciones(3)">
+                </app-indicaciones-content>
+              </div>
+              <div class="col-12 col-md-9 col-lg-9" style="margin: 10px 0px;">
+                <app-indicaciones-content [title]="'Calificar tarea de pares'" [imgUrl]="imgsIndocaciones[3]"
+                  (HoverIn)='imgsIndocaciones[3]="calificar-tareas-41.svg"'
+                  (HoverOut)='imgsIndocaciones[3]="tareas-pares-naranja-41.svg"'
+                  (ButtoclClick)="EventoInteraccionButton('Calificar tarea de pares');changeIndexIndicaciones(4)"></app-indicaciones-content>
+              </div>
+            </div>
+          </div>
+        </mat-tab>
+        <ng-container *ngIf="IndicacionActive==true">
+
+          <mat-tab>
+            <ng-template mat-tab-label class="tabSubcontent">
+              <div class="contentHeaderM subContent" (click)="InterraccionTab('Preguntas interactivas')"
+              matTooltip="Preguntas interactivas"
+              matTooltipPosition="after">
+                <div class="iconMat"><i class="material-icons">quiz</i></div>
+                <div class="titleMatr" *ngIf="!hide">Preguntas interactivas</div>
+              </div>
+            </ng-template>
+            <div class="pad-resp">
+              <app-indicaciones-options-content [videoUrl]="videoPreguntas"
+                [TitlePrograma]="programEstructura.programaGeneral" [title]="'Preguntas Interactivas'"
+                [imgUrl]="'preguntas-naranja-38.svg'">
+              </app-indicaciones-options-content>
+            </div>
+          </mat-tab>
+          <mat-tab>
+            <ng-template mat-tab-label>
+              <div class="contentHeaderM subContent" (click)="InterraccionTab('Crucigramas')"
+              matTooltip="Crucigramas"
+              matTooltipPosition="after">
+                <div class="iconMat"><i class="material-icons">games</i></div>
+                <div class="titleMatr" *ngIf="!hide">Crucigramas</div>
+              </div>
+            </ng-template>
+            <div class="pad-resp">
+              <app-indicaciones-options-content [videoUrl]="videoCrucigramas"
+                [TitlePrograma]="programEstructura.programaGeneral" [title]="'Crucigramas'"
+                [imgUrl]="'crucigrama-naranja-39.svg'">
+              </app-indicaciones-options-content>
+            </div>
+          </mat-tab>
+          <mat-tab>
+            <ng-template mat-tab-label>
+              <div class="contentHeaderM subContent" (click)="InterraccionTab('Tareas')"
+              matTooltip="Tareas"
+              matTooltipPosition="after">
+                <div class="iconMat"><i class="material-icons">edit_note</i></div>
+                <div class="titleMatr" *ngIf="!hide">Tareas</div>
+              </div>
+            </ng-template>
+            <div class="pad-resp">
+              <app-indicaciones-options-content [videoUrl]="videoTareas"
+                [TitlePrograma]="programEstructura.programaGeneral" [title]="'Tareas'"
+                [imgUrl]="'tareas-pares-naranja-41.svg'" [TituloContenido]="'¿Cómo presentar las tareas?'"
+                [COntenido]="contenidotarea">
+              </app-indicaciones-options-content>
+            </div>
+          </mat-tab>
+          <mat-tab>
+            <ng-template mat-tab-label>
+              <div class="contentHeaderM subContent" (click)="InterraccionTab('Calificar tarea de pares')"
+              matTooltip="Calificar tarea de pares"
+              matTooltipPosition="after">
+                <div class="iconMat"><i class="material-icons">fact_check</i></div>
+                <div class="titleMatr" *ngIf="!hide">Calificar tarea de pares</div>
+              </div>
+            </ng-template>
+            <div class="pad-resp">
+              <app-indicaciones-options-content [videoUrl]="videoTrabajoP"
+                [TitlePrograma]="programEstructura.programaGeneral" [title]="'Calificar tarea de pares'"
+                [imgUrl]="'tareas-naranja-40.svg'" [TituloContenido]="'Califica las tareas de pares'"
+                [COntenido]="contenidotareapares">
+              </app-indicaciones-options-content>
+            </div>
+          </mat-tab>
+        </ng-container>
+
+        <ng-container *ngIf="EsCurso==true">
+
+          <mat-tab >
+            <ng-template mat-tab-label>
+              <div class="contentHeaderM" (click)="InterraccionTab('Ayuda');" [ngClass]="{'ActiveChil':AyudaActive==true}">
+                <div class="iconMat iconAyuda"
+                matTooltip="Ayuda"
+                matTooltipPosition="after"></div>
+                <div *ngIf="!hide" class="titleMatr">Ayuda</div>
+              </div>
+            </ng-template>
+            <div class="pad-resp">
+              <app-modulo-ayuda [Capitulo]="json.NombreCapitulo" [IdMatriculaCabecera]="json.IdMatriculaCabecera"
+              [IdPGeneral]="json.IdPGeneralHijo" [IdPrincipal]="json.IdPGeneralPadre"
+               [IdPEspecifico]="json.IdPEspecificoHijo" (OnChange)="cambio($event)"></app-modulo-ayuda>
+            </div>
+          </mat-tab>
+
+
+          <ng-container *ngIf="AyudaActive==true">
+
+            <mat-tab >
+              <ng-template mat-tab-label class="tabSubcontent">
+                <div  class="contentHeaderM subContent" (click)="InterraccionTab('Preguntas frecuentes')" style="cursor: pointer;" (click)="alertaPreguntasFrecuentes=!alertaPreguntasFrecuentes">
+
+                  <div class="iconMat"
+                  matTooltip="Preguntas frecuentes"
+                  matTooltipPosition="after"><i class="material-icons">question_answer</i></div>
+                  <div *ngIf="!hide" class="titleMatr">Preguntas frecuentes</div>
+                </div>
+              </ng-template>
+              <div class="pad-resp">
+                <app-modulo-ayuda-preguntas-frecuentes [IdPrincipal]="json.IdPGeneralPadre" [IdPGeneral]="json.IdPGeneralHijo" [Capitulo]="json.NombreCapitulo"
+                (Onchange)="cambio($event)">
+
+                </app-modulo-ayuda-preguntas-frecuentes>
+              </div>
+            </mat-tab>
+            <mat-tab >
+              <ng-template mat-tab-label>
+                <div class="contentHeaderM subContent" (click)="InterraccionTab('Quejas y sugerencias')" style="cursor: pointer;" (click)="alertaQuejasSugerencias=!alertaQuejasSugerencias">
+
+                  <div class="iconMat"
+                  matTooltip="Quejas y sugerencias"
+                  matTooltipPosition="after"><i class="material-icons">fmd_bad</i></div>
+                  <div *ngIf="!hide" class="titleMatr">Quejas y sugerencias</div>
+                </div>
+              </ng-template>
+              <div class="pad-resp">
+                <app-modulo-ayuda-quejas-sugerencias [IdPGeneral]="json.IdPGeneralHijo" [IdPEspecifico]="json.IdPEspecificoHijo" [Capitulo]="json.NombreCapitulo"
+                (Onchange)="cambio($event)">
+
+                </app-modulo-ayuda-quejas-sugerencias>
+              </div>
+            </mat-tab>
+          </ng-container>
+        </ng-container>
       </mat-tab-group>
     </div>
   </div>

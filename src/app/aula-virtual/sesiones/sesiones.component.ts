@@ -97,14 +97,9 @@ export class SesionesComponent implements OnInit,OnDestroy,AfterViewInit {
       this.estructuraCapitulo.registroEstructuraCursoCapitulo.length - 1;
     if (tipo == 1) {
       if (indexss == -1) {
-        var maxses =
-          this.estructuraCapitulo.registroEstructuraCursoCapitulo[indexc]
-            .registroEstructuraCursoSesion.length - 1;
-        var encuestas = this.estructuraCapitulo.registroEstructuraCursoCapitulo[
-          indexc
-        ].registroEstructuraCursoEncuesta.filter(
-          (x: any) => x.nombreEncuesta != 'Encuesta Inicial'
-        ).length;
+        this.estructuraCapitulo.registroEstructuraCursoCapitulo[indexc].registroEstructuraCursoSesion[index].VideoFinish=true
+        var maxses =this.estructuraCapitulo.registroEstructuraCursoCapitulo[indexc].registroEstructuraCursoSesion.length - 1;
+        var encuestas = this.estructuraCapitulo.registroEstructuraCursoCapitulo[indexc].registroEstructuraCursoEncuesta.filter((x: any) => x.nombreEncuesta != 'Encuesta Inicial').length;
         if (
           maxses == index &&
           this.estructuraCapitulo.registroEstructuraCursoCapitulo[indexc]
@@ -116,6 +111,7 @@ export class SesionesComponent implements OnInit,OnDestroy,AfterViewInit {
           this.tabIndex++;
         }
       } else {
+        this.estructuraCapitulo.registroEstructuraCursoCapitulo[indexc].registroEstructuraCursoSesion[index].registroEstructuraCursoSubSesion[indexss].VideoFinish=true
         var maxses =
           this.estructuraCapitulo.registroEstructuraCursoCapitulo[indexc]
             .registroEstructuraCursoSesion.length - 1;
