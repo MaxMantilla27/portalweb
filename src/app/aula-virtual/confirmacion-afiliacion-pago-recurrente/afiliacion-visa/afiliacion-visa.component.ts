@@ -104,7 +104,7 @@ export class AfiliacionVisaComponent implements OnInit,OnDestroy {
         // this._renderer2.appendChild(this._document.getElementById('header'), scriptHeader1);
         let scriptHeader1 = this._renderer2.createElement('script');
         scriptHeader1.type="text/javascript"
-        scriptHeader1.src='https://static-content-qas.vnforapps.com/vTokenSandbox/js/checkout.js'
+        scriptHeader1.src='https://static-content.vnforapps.com/vToken/js/checkout.js'
         this._renderer2.appendChild(this._document.getElementById('header'), scriptHeader1);
       }
     })
