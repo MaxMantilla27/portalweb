@@ -2,25 +2,35 @@
 <div>Capítulo {{idCapitulo}}:{{NombreCapitulo}} </div>
 <div class="row" style="align-items: center;" style="margin: 30px 0px 0px;"
   *ngIf="tarea!=undefined && habilitado==true">
-  <div class="tipoIndicacionTitle col-12 col-md-12 col-lg-12" style="margin:0px;">
-    <img class="ImgIndicacionesContent" src="../../../../assets/icons/tareas-23.svg">
-    <div><strong>Actividad: Calificar {{tarea.datosTrabajoPares.nombre}}</strong></div>
-  </div>
 
-  <div class="col-12 col-md-12 col-lg-12" style="display: flex;justify-content:space-between;padding: 10px;">
-    <div style="text-align: right;font-size: 13px;cursor: pointer;" class="vinculo" (click)="prevc()">
-      < Anterior</div>
-        <div style="text-align: right;font-size: 13px;cursor: pointer;" class="vinculo" (click)="nextc()"
-          *ngIf="tareaAc!=undefined && tareaAc.calificado==true && envioAr">Siguiente ></div>
-    </div>
+    <div class="col-12 col-md-12 col-lg-12 row"
+      style="display: flex;justify-content:space-between;padding: 5px 10px;background:#f2f6ff ;align-items: center;    margin: 0px;">
+      <div class="chipButton vinculo col-6 col-md-3 col-lg-2" (click)="prevc()">
+        < Anterior </div>
+          <div class="d-none col-md-6 d-md-block  col-lg-8 d-lg-block ">
+            <div style="display: flex;
+        justify-content: center;margin: 0px" class="tipoIndicacionTitle ">
+              <img class="ImgIndicacionesContent" src="../../../../assets/icons/sesion-naranja.svg">
+              <div class="elipsis">{{tarea.datosTrabajoPares.nombre}}</div>
+            </div>
+          </div>
+          <div class="col-6 col-md-3 col-lg-2" style="    display: flex;
+      justify-content: right;    padding: 0;">
+            <div class="chipButton vinculo" (click)="nextc()"
+              *ngIf="tareaAc!=undefined && tareaAc.calificado==true && envioAr">Siguiente ></div>
+          </div>
+          <div class="tipoIndicacionTitle col-12 d-md-none d-lg-none">
+            <img class="ImgIndicacionesContent" src="../../../../assets/icons/sesion-naranja.svg">
+            <div class="elipsis">{{tarea.datosTrabajoPares.nombre}}</div>
+          </div>
+      </div>
+      <div class="col-12 col-md-12 col-lg-12 row" style="align-items: center; margin-top: 60px;">
 
-    <div class="col-12 col-md-12 col-lg-12 row" style="align-items: center; margin-top: 60px;">
-
-      <div class="col-2 col-md-1 col-1" style="
+        <div class="col-2 col-md-1 col-1" style="
       display: flex;
       align-items: center;
       justify-content: center;">
-        <div style="font-weight: 600;
+          <div style="font-weight: 600;
         width: 30px;
         height: 30px;
         background: #f4f4f4;
@@ -28,13 +38,13 @@
         display: flex;
         align-items: center;
         justify-content: center;">
-          1
+            1
+          </div>
         </div>
+        <div style="font-weight: 600;font-size: 18px;" class="col-10 col-md-11 col-lg-11">Descarga la tarea que debes
+          calificar</div>
       </div>
-      <div style="font-weight: 600;font-size: 18px;" class="col-10 col-md-11 col-lg-11">Descarga la tarea que debes
-        calificar</div>
-    </div>
-    <div class="col-12 col-md-12 col-lg-12" *ngIf="tareaAc!=undefined && tareaAc.fechaCalificacionLimite!=null" style="
+      <div class="col-12 col-md-12 col-lg-12" *ngIf="tareaAc!=undefined && tareaAc.fechaCalificacionLimite!=null" style="
   display: flex;
   align-items: center;
   justify-content: flex-start;
@@ -43,25 +53,25 @@
   padding: 10px;
   background: #fff8f0;
   border: 1px solid #fff1e0;">
-      <img src="../../../../assets/icons/calendario-24.svg" alt="" style="width: 20px;
+        <img src="../../../../assets/icons/calendario-24.svg" alt="" style="width: 20px;
     margin-right: 20px;">
-      <strong>Fecha limite de calificacion: </strong> &nbsp;{{tareaAc.fechaCalificacionLimite | date:"dd/MM/yyyy"}}
+        <strong>Fecha limite de calificacion: </strong> &nbsp;{{tareaAc.fechaCalificacionLimite | date:"dd/MM/yyyy"}}
 
-    </div>
-    <div class="col-12 col-md-12 col-lg-12" style="display: flex;justify-content: center;margin-top: 20px;"
-      *ngIf="tareaAc!=undefined">
-      <img src="../../../../assets/icons/descarga-36.svg" alt="" style="width: 20px;
+      </div>
+      <div class="col-12 col-md-12 col-lg-12" style="display: flex;justify-content: center;margin-top: 20px;"
+        *ngIf="tareaAc!=undefined">
+        <img src="../../../../assets/icons/descarga-36.svg" alt="" style="width: 20px;
     margin-right: 20px;">
-      <a class="vinculo" [href]="tareaAc.direccionUrl" target="_blank">{{tareaAc.nombreArchivo}}</a>
-    </div>
+        <a class="vinculo" [href]="tareaAc.direccionUrl" target="_blank">{{tareaAc.nombreArchivo}}</a>
+      </div>
 
-    <ng-container *ngIf="tareaAc!=undefined && tareaAc.calificado==false">
-      <div class="col-12 row" style="margin-top: 60px;">
-        <div class="col-2 col-md-1 col-1" style="
+      <ng-container *ngIf="tareaAc!=undefined && tareaAc.calificado==false">
+        <div class="col-12 row" style="margin-top: 60px;">
+          <div class="col-2 col-md-1 col-1" style="
         display: flex;
         align-items: center;
         justify-content: center;">
-          <div style="font-weight: 600;
+            <div style="font-weight: 600;
           width: 30px;
           height: 30px;
           background: #f4f4f4;
@@ -69,144 +79,146 @@
           display: flex;
           align-items: center;
           justify-content: center;">
-            2
+              2
+            </div>
           </div>
+          <div style="font-weight: 600;font-size: 18px;" class="col-10 col-md-11 col-lg-11">Califica la Tarea</div>
         </div>
-        <div style="font-weight: 600;font-size: 18px;" class="col-10 col-md-11 col-lg-11">Califica la Tarea</div>
-      </div>
-      <div class="col-0 col-md-1 col-1"></div>
-      <div class="col-12 col-md-11 col-lg-11" *ngIf="tareaAc!=undefined" style="margin-top: 10px;">
-        <p>A continuacion se explica la escala de calificación, que debes considerar para todos los criterios de
-          evaluación
-          de la tarea que debes calificar</p>
+        <div class="col-0 col-md-1 col-1"></div>
+        <div class="col-12 col-md-11 col-lg-11" *ngIf="tareaAc!=undefined" style="margin-top: 10px;">
+          <p>A continuacion se explica la escala de calificación, que debes considerar para todos los criterios de
+            evaluación
+            de la tarea que debes calificar</p>
 
-        <div class="table-resposive">
-          <table class="table tablaTarea">
-            <tr>
-              <th style="min-width: 630px">Escala de calificación</th>
-              <th style="min-width: 105px">Puntaje</th>
-            </tr>
-            <tr *ngFor="let item of tarea.criteriosEvaluacion.listaParametroEscalaEvaluacion">
-              <td>{{item.nombre}}</td>
-              <td>{{item.valor }}</td>
-            </tr>
+          <div class="table-resposive">
+            <table class="table tablaTarea">
+              <tr>
+                <th style="min-width: 630px">Escala de calificación</th>
+                <th style="min-width: 105px">Puntaje</th>
+              </tr>
+              <tr *ngFor="let item of tarea.criteriosEvaluacion.listaParametroEscalaEvaluacion">
+                <td>{{item.nombre}}</td>
+                <td>{{item.valor }}</td>
+              </tr>
 
-          </table>
-        </div>
-        <div class="row" style="width: 100%;">
+            </table>
+          </div>
+          <div class="row" style="width: 100%;">
 
-          <div class="col-12" style="    margin: 30px 0px;
+            <div class="col-12" style="    margin: 30px 0px;
           font-weight: 600;">Seleccione la calificación para cada criterio de evaluación , y luego haz clic en
-            "Calificar"
-          </div>
-          <div class="col-12 col-md-6 col-lg-6">{{tarea.criteriosEvaluacion.nombreEscalaCalificacion}}</div>
-          <div class="col-12 col-md-6 col-lg-6">
+              "Calificar"
+            </div>
+            <div class="col-12 col-md-6 col-lg-6">{{tarea.criteriosEvaluacion.nombreEscalaCalificacion}}</div>
+            <div class="col-12 col-md-6 col-lg-6">
 
-            <mat-form-field appearance="outline" style="width: 100%;font-size: 13px;    padding: 0px 10px;">
-              <mat-label>Calificar</mat-label>
-              <mat-select [(ngModel)]="calificacion" [disabled]="cargaEnvio">
-                <mat-option *ngFor="let item of tarea.criteriosEvaluacion.listaParametroEscalaEvaluacion"
-                  [value]="item.id">{{item.valor}}</mat-option>
-              </mat-select>
-            </mat-form-field>
-          </div>
-          <div class="col-12 col-md-6 col-lg-6">Comentario de Retroalimentación</div>
-          <div class="col-12 col-md-6 col-lg-6">
-            <mat-form-field appearance="outline" style="width: 100%;font-size: 13px;    padding: 0px 10px;">
-              <mat-label>Retroalimentación</mat-label>
-              <textarea matInput name="Retroalimentación" id="" style="width: 100%;"
-                [(ngModel)]="retroalimentacion"></textarea>
-            </mat-form-field>
+              <mat-form-field appearance="outline" style="width: 100%;font-size: 13px;    padding: 0px 10px;">
+                <mat-label>Calificar</mat-label>
+                <mat-select [(ngModel)]="calificacion" [disabled]="cargaEnvio">
+                  <mat-option *ngFor="let item of tarea.criteriosEvaluacion.listaParametroEscalaEvaluacion"
+                    [value]="item.id">{{item.valor}}</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div class="col-12 col-md-6 col-lg-6">Comentario de Retroalimentación</div>
+            <div class="col-12 col-md-6 col-lg-6">
+              <mat-form-field appearance="outline" style="width: 100%;font-size: 13px;    padding: 0px 10px;">
+                <mat-label>Retroalimentación</mat-label>
+                <textarea matInput name="Retroalimentación" id="" style="width: 100%;"
+                  [(ngModel)]="retroalimentacion"></textarea>
+              </mat-form-field>
 
-          </div>
-          <div class="col-12 col-md-6 col-lg-6">Archivo de Retroalimentación</div>
-          <div class="col-12 col-md-6 col-lg-6" style="     padding-right: 20px;">
-            <div (click)="fileInput.click()" style="height: 38px;width: 100%;border:solid 1px #c2c2c2;border-radius: 5px;display: flex; align-items: center;
+            </div>
+            <div class="col-12 col-md-6 col-lg-6">Archivo de Retroalimentación</div>
+            <div class="col-12 col-md-6 col-lg-6" style="     padding-right: 20px;">
+              <div (click)="fileInput.click()" style="height: 38px;width: 100%;border:solid 1px #c2c2c2;border-radius: 5px;display: flex; align-items: center;
             padding: 0px 5px;cursor: pointer;  padding: 0px 10px; ">
-              <button style="border: solid 1px #767676;
+                <button style="border: solid 1px #767676;
               margin-right: 5px;    white-space: nowrap;">Seleccionar archivo</button>
-              <div style="    white-space: nowrap;
+                <div style="    white-space: nowrap;
               overflow: hidden;
               text-overflow: ellipsis;
               display: -webkit-box;
               -webkit-line-clamp: 3;
               -webkit-box-orient: vertical;">{{nombrefile}}</div>
-            </div>
-            <input #fileInput type="file" id="file" (change)="getFileDetails($event)" style="    width: 100%;
+              </div>
+              <input #fileInput type="file" id="file" (change)="getFileDetails($event)" style="    width: 100%;
             border: solid 1px #c2c2c2;
             padding: 7px;
             border-radius: 5px;display: none;">
-            <div *ngIf="!filestatus && fileErrorMsg!=''">{{fileErrorMsg}}</div>
-          </div>
-          <div class="col-12" style="display: flex;justify-content: flex-end;margin-top: 30px;">
-            <app-default-button [confs]="{color:'primary',titulo:'Calificar'}" [style]="'padding:0px 30px;margin:0px '"
-              [disabled]="cargaEnvio || calificacion==0" (ButtoclClick)="EnviarNota()"></app-default-button>
+              <div *ngIf="!filestatus && fileErrorMsg!=''">{{fileErrorMsg}}</div>
+            </div>
+            <div class="col-12" style="display: flex;justify-content: flex-end;margin-top: 30px;">
+              <app-default-button [confs]="{color:'primary',titulo:'Calificar'}"
+                [style]="'padding:0px 30px;margin:0px '" [disabled]="cargaEnvio || calificacion==0"
+                (ButtoclClick)="EnviarNota()"></app-default-button>
+            </div>
           </div>
         </div>
-      </div>
-    </ng-container>
-    <ng-container *ngIf="tareaAc!=undefined && tareaAc.calificado==true">
-      <ng-container *ngIf="!envioAr; else fin">
-        <div class="col-12">
+      </ng-container>
+      <ng-container *ngIf="tareaAc!=undefined && tareaAc.calificado==true">
+        <ng-container *ngIf="!envioAr; else fin">
+          <div class="col-12">
 
-          <div class="col-12 col-md-12 col-lg-12" *ngIf="tareaAc!=undefined && tareaAc.calificado==true" style="    padding: 20px;
+            <div class="col-12 col-md-12 col-lg-12" *ngIf="tareaAc!=undefined && tareaAc.calificado==true" style="    padding: 20px;
         margin-top: 30px;
         border-color: #b8daff;
         background: #cce5ff;
         color: #004085;">
-            <div style="font-weight: 600;">
-              A un paso de concluir!!
-            </div>
-            <div style="    font-size: 14px;">
-              Registra las siguientes preguntas reflexivas para culminar de forma exitosa.
+              <div style="font-weight: 600;">
+                A un paso de concluir!!
+              </div>
+              <div style="    font-size: 14px;">
+                Registra las siguientes preguntas reflexivas para culminar de forma exitosa.
+              </div>
             </div>
           </div>
-        </div>
-        <div class="col-12"
-          *ngIf="tarea.criteriosEvaluacionReflexivo!=undefined && tarea.criteriosEvaluacionReflexivo.length>0">
+          <div class="col-12"
+            *ngIf="tarea.criteriosEvaluacionReflexivo!=undefined && tarea.criteriosEvaluacionReflexivo.length>0">
 
-          <ng-container *ngIf="!envioAr">
-            <div class="cardApredizageReflexivo">
-              <div class="headerAr">Ejercicios de Aprendizaje Reflexivo</div>
-              <div class="row itemAr" *ngFor="let item of tarea.criteriosEvaluacionReflexivo">
-                <div class="col-12 col-md-8 col-lg-8">{{item.nombreParametroEvaluacion}}</div>
-                <div class="col-12 col-md-4 col-lg-4">
+            <ng-container *ngIf="!envioAr">
+              <div class="cardApredizageReflexivo">
+                <div class="headerAr">Ejercicios de Aprendizaje Reflexivo</div>
+                <div class="row itemAr" *ngFor="let item of tarea.criteriosEvaluacionReflexivo">
+                  <div class="col-12 col-md-8 col-lg-8">{{item.nombreParametroEvaluacion}}</div>
+                  <div class="col-12 col-md-4 col-lg-4">
 
-                  <mat-form-field appearance="outline" style="width: 100%;font-size: 13px;    padding: 0px 10px;">
-                    <mat-label>{{item.nombreEscalaCalificacion}}</mat-label>
-                    <mat-select [(ngModel)]="item.calificacion" [disabled]="cargaEnvio">
-                      <mat-option *ngFor="let opt of item.listaParametroEscalaEvaluacion" [value]="opt.id">{{opt.nombre}}
-                      </mat-option>
-                    </mat-select>
-                  </mat-form-field>
+                    <mat-form-field appearance="outline" style="width: 100%;font-size: 13px;    padding: 0px 10px;">
+                      <mat-label>{{item.nombreEscalaCalificacion}}</mat-label>
+                      <mat-select [(ngModel)]="item.calificacion" [disabled]="cargaEnvio">
+                        <mat-option *ngFor="let opt of item.listaParametroEscalaEvaluacion"
+                          [value]="opt.id">{{opt.nombre}}
+                        </mat-option>
+                      </mat-select>
+                    </mat-form-field>
 
+                  </div>
+                  <hr>
                 </div>
-                <hr>
+                <div class="footlerAr">
+                  <app-default-button [confs]="{color:'primary',titulo:'Enviar'}"
+                    [style]="'padding:0px 30px;margin:0px;color: #fff;background-color: #17a2b8;border-color: #17a2b8; '"
+                    (ButtoclClick)="EnviarCriterioReflexivo()"></app-default-button>
+                </div>
               </div>
-              <div class="footlerAr">
-                <app-default-button [confs]="{color:'primary',titulo:'Enviar'}"
-                  [style]="'padding:0px 30px;margin:0px;color: #fff;background-color: #17a2b8;border-color: #17a2b8; '"
-                  (ButtoclClick)="EnviarCriterioReflexivo()"></app-default-button>
-              </div>
-            </div>
-          </ng-container>
-        </div>
-      </ng-container>
-      <ng-template #fin>
-        <div class="col-12 col-md-12 col-lg-12" *ngIf="tareaAc!=undefined && tareaAc.calificado==true" style="    padding: 20px;
+            </ng-container>
+          </div>
+        </ng-container>
+        <ng-template #fin>
+          <div class="col-12 col-md-12 col-lg-12" *ngIf="tareaAc!=undefined && tareaAc.calificado==true" style="    padding: 20px;
       margin-top: 30px;
       border-color: #c3e6cb;
       background: #d4edda;
       color: #3d4245;">
-          <div style="font-weight: 600;">
-            Calificación realizada!!
+            <div style="font-weight: 600;">
+              Calificación realizada!!
+            </div>
+            <div style="    font-size: 14px;">
+              La calificación de la tarea se ha guardado correctamente, puedes continuar visualizando las sesiones.
+            </div>
           </div>
-          <div style="    font-size: 14px;">
-            La calificación de la tarea se ha guardado correctamente, puedes continuar visualizando las sesiones.
-          </div>
-        </div>
-      </ng-template>
+        </ng-template>
 
-    </ng-container>
+      </ng-container>
 
-  </div>
+    </div>

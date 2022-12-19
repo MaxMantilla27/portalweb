@@ -30,6 +30,7 @@ import { SnackBarServiceService } from 'src/app/Core/Shared/Services/SnackBarSer
 export class SesionesComponent implements OnInit,OnDestroy,AfterViewInit {
   private signal$ = new Subject();
   isBrowser: boolean;
+  public escurso=true
   constructor(
     private _ActivatedRoute: ActivatedRoute,
     private _ProgramaContenidoService: ProgramaContenidoService,
@@ -56,7 +57,7 @@ export class SesionesComponent implements OnInit,OnDestroy,AfterViewInit {
   public tabIndex = 0;
   public idMatricula = 0;
   public idPEspecificoHijo = 0;
-  public hide=true
+  public hide=false
   public json: ParametrosEstructuraEspecificaDTO = {
     AccesoPrueba: false,
     IdMatriculaCabecera: 0,
@@ -97,14 +98,12 @@ export class SesionesComponent implements OnInit,OnDestroy,AfterViewInit {
       this.estructuraCapitulo.registroEstructuraCursoCapitulo.length - 1;
     if (tipo == 1) {
       if (indexss == -1) {
-        var maxses =
-          this.estructuraCapitulo.registroEstructuraCursoCapitulo[indexc]
-            .registroEstructuraCursoSesion.length - 1;
-        var encuestas = this.estructuraCapitulo.registroEstructuraCursoCapitulo[
-          indexc
-        ].registroEstructuraCursoEncuesta.filter(
-          (x: any) => x.nombreEncuesta != 'Encuesta Inicial'
-        ).length;
+        if(this.estructuraCapitulo.registroEstructuraCursoCapitulo[indexc].registroEstructuraCursoSesion[index].VideoFinish!=false){
+          this.MigrarEstadoVideoEstructuraPorCurso();
+        }
+        this.estructuraCapitulo.registroEstructuraCursoCapitulo[indexc].registroEstructuraCursoSesion[index].VideoFinish=true
+        var maxses =this.estructuraCapitulo.registroEstructuraCursoCapitulo[indexc].registroEstructuraCursoSesion.length - 1;
+        var encuestas = this.estructuraCapitulo.registroEstructuraCursoCapitulo[indexc].registroEstructuraCursoEncuesta.filter((x: any) => x.nombreEncuesta != 'Encuesta Inicial').length;
         if (
           maxses == index &&
           this.estructuraCapitulo.registroEstructuraCursoCapitulo[indexc]
@@ -116,6 +115,7 @@ export class SesionesComponent implements OnInit,OnDestroy,AfterViewInit {
           this.tabIndex++;
         }
       } else {
+        this.estructuraCapitulo.registroEstructuraCursoCapitulo[indexc].registroEstructuraCursoSesion[index].registroEstructuraCursoSubSesion[indexss].VideoFinish=true
         var maxses =
           this.estructuraCapitulo.registroEstructuraCursoCapitulo[indexc]
             .registroEstructuraCursoSesion.length - 1;
@@ -320,15 +320,17 @@ export class SesionesComponent implements OnInit,OnDestroy,AfterViewInit {
         titulo: this.json.NombrePrograma,
         urlWeb: '/AulaVirtual/MisCursos/' + this.json.IdMatriculaCabecera,
       },
-      {
+    ];
+    if(this.escurso==false){
+      this.migaPan.push({
         titulo: this.json.NombreCapitulo,
         urlWeb:
           '/AulaVirtual/MisCursos/' +
           this.json.IdMatriculaCabecera +
           '/' +
           this.idPEspecificoHijo,
-      },
-    ];
+      })
+    }
   }
   ObtenerEstructuraEspecificaCurso() {
     this._ProgramaContenidoService
@@ -896,6 +898,11 @@ export class SesionesComponent implements OnInit,OnDestroy,AfterViewInit {
       .ObtenerListadoProgramaContenido(this.idMatricula).pipe(takeUntil(this.signal$))
       .subscribe({
         next: (x) => {
+          if(x.listaCursoMatriculado.length>1){
+            this.escurso=false
+          }else{
+            this.escurso=true
+          }
           x.listaCursoMatriculado.forEach((program: any) => {
             if (this.idPEspecificoHijo == program.idPEspecificoHijo) {
               this.json = {
@@ -1315,5 +1322,14 @@ export class SesionesComponent implements OnInit,OnDestroy,AfterViewInit {
   tabChanged(tabChangeEvent: MatTabChangeEvent): void {
     // console.log('tabChangeEvent => ', tabChangeEvent);
     console.log('index => ', tabChangeEvent.index);
+  }
+  MigrarEstadoVideoEstructuraPorCurso(){
+    this._ProgramaContenidoService.MigrarEstadoVideoEstructuraPorCurso(this.idMatricula,this.json.IdPGeneralHijo).pipe(takeUntil(this.signal$)).subscribe(
+      {
+        next:x=>{
+          console.log(x)
+        }
+      }
+    )
   }
 }

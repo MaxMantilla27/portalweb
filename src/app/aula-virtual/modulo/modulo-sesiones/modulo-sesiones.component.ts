@@ -317,12 +317,14 @@ export class ModuloSesionesComponent implements OnInit, OnChanges {
   @Input() Capitulo = '';
   @Input() estructuraCapitulo: any;
   @Input() idModalidad: number = 2;
+  @Input() IdMatriculaCabecera=0;
   ngOnInit(): void {
   }
   IrVideo(url:string,habilitado:boolean){
-    console.log(habilitado)
+    console.log(url)
     if(habilitado){
-      this._Router.navigate([url], {relativeTo: this.r})
+      this._Router.navigate(['AulaVirtual/MisCursos/'+this.IdMatriculaCabecera+'/'+this.estructuraCapitulo.idPEspecificoHijo+'/'+url])
+      //this._Router.navigate([url], {relativeTo: this.r})
     }else{
       this._SnackBarServiceService.openSnackBar("Debes completar las actividades anteriores primero",'x',10,"snackbarCrucigramaerror");
     }

@@ -18,7 +18,8 @@ export interface ListadoCursosHijosDTO {
   progreso:ProgresoAlumnoProgramaAulaVirtualDTO,
   params:string,
   convalidado:boolean,
-  habilitado?:Boolean
+  habilitado?:Boolean,
+  porcentaje:number
 }
 export interface ProgresoAlumnoProgramaAulaVirtualDTO {
   progresoVideo: Array<ProgresoAlumnoProgramaVideosAulaVirtualDTO>;

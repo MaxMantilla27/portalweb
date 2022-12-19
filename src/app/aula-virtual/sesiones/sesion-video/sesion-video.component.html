@@ -2,18 +2,31 @@
   <!-- <div class="cursoTitle">{{json.NombreCapitulo}}</div>
   <div>Capítulo {{idCapitulo}}:{{NombreCapitulo}} </div> -->
   <div class="row" style="align-items: center;" *ngIf="charge && habilitado">
-    <div class="tipoIndicacionTitle col-12 col-md-12 col-lg-12">
+    <!-- <div class="tipoIndicacionTitle col-12 col-md-12 col-lg-12">
       <img class="ImgIndicacionesContent" src="../../../../assets/icons/sesion-naranja.svg">
       <div>{{nombreSesion}}</div>
+    </div> -->
+    <div class="col-12 col-md-12 col-lg-12 row" style="display: flex;justify-content:space-between;padding: 5px 10px;background:#f2f6ff ;align-items: center;    margin: 0px;">
+      <div  class=" vinculo col-6 col-md-3 col-lg-2" [ngClass]="{'chipButton': charge && videoData!=undefined}" (click)="prevc()" >
+        <ng-container *ngIf="charge && videoData!=undefined">< Anterior</ng-container>
+      </div>
+      <div class="d-none col-md-6 d-md-block  col-lg-8 d-lg-block " >
+        <div style="display: flex;
+        justify-content: center;margin: 0px"  class="tipoIndicacionTitle ">
+        <img class="ImgIndicacionesContent" src="../../../../assets/icons/sesion-naranja.svg">
+        <div class="elipsis">{{nombreSesion}}</div>
+        </div>
+      </div>
+      <div class="col-6 col-md-3 col-lg-2" style="    display: flex;
+      justify-content: right;    padding: 0;">
+        <div class="chipButton vinculo" (click)="nextc()" *ngIf="estadovideo>=100">Siguiente ></div>
+      </div>
+      <div class="tipoIndicacionTitle col-12 d-md-none d-lg-none">
+        <img class="ImgIndicacionesContent" src="../../../../assets/icons/sesion-naranja.svg">
+        <div class="elipsis">{{nombreSesion}}</div>
+      </div>
     </div>
-    <div class="col-12 col-md-12 col-lg-12" style="display: flex;justify-content:space-between;padding: 10px;">
-      <div style="text-align: right;font-size: 13px;cursor: pointer;" class="vinculo"
-
-      (click)="prevc()" > <ng-container *ngIf="charge && videoData!=undefined">< Anterior</ng-container> </div>
-      <div style="text-align: right;font-size: 13px;cursor: pointer;" class="vinculo"
-      (click)="nextc()" *ngIf="estadovideo>=100">Siguiente ></div>
-    </div>
-    <div class="">
+    <div style="padding: 0px;">
 
       <app-crucigrama (ButtoclClick)="crucigramaData.pendiente=false"
         *ngIf="crucigramaData!=undefined && crucigramaData.pendiente==true && crucigramaData.existeCrucigrama==true"

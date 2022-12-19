@@ -1,47 +1,61 @@
-<div class="contentCursoModulo" *ngFor="let item of programEstructura.listaCursoMatriculado">
-  <div class="headerCursoModulo row" [ngStyle]="{'border-bottom': item.idModalidadHijo!=1?'none':'solid 1px #dcdcdc'}">
-    <ng-container *ngIf="item.idModalidadHijo!=1">
-
-      <div class="titleCursoModulo col-12 col-md-8 col-lg-9">
-        {{item.programaGeneralHijo}}
-        <div class="matriculaicon">
-          <i class="material-icons">play_circle_outline</i>
-          <div>Online Sincrónico</div>
-        </div>
+<div class="contentCursoModulo" *ngFor="let item of programEstructura.listaCursoMatriculado; let i=index">
+  <div class="headerCursoModulo row">
+    <div class="col-12 col-md-8 col-lg-10 row" style="align-items: center;">
+      <div class="NumberCursoModulo col-2 col-md-1 col-lg-1">
+        {{i+1}}
       </div>
-      <div class="col-12 col-md-4 col-lg-3" style="display: flex;justify-content: flex-end;padding: 0px;">
-        <app-default-button (ButtoclClick)="EventoInteraccionButton('Ingresar')" [confs]="{color:'primary',titulo:'Ingresar'}" [disabled]="item.params==undefined"
-          [ruta]="'/AulaVirtual/MisCursos/'+idMatricula+'/'+item.idPEspecificoHijo"
-          [style]="'padding:0px 20px;margin:0px'">
-        </app-default-button>
-      </div>
-    </ng-container>
-
-    <ng-container *ngIf="item.idModalidadHijo==1">
-      <div class="titleCursoModulo col-12 col-md-9 col-lg-10">{{item.programaGeneralHijo}}</div>
-      <ng-container *ngIf="item.convalidado==true">
-        <div class="estadoCursoModulo col-12 col-md-3 col-lg-2" >
-          <i class="material-icons" >check_circle</i>
-          <div >Completado</div>
+      <ng-container *ngIf="item.idModalidadHijo!=1">
+        <div class="titleCursoModulo col-10 col-md-11 col-lg-11">
+          {{item.programaGeneralHijo}}
+          <div class="matriculaicon">
+            <i class="material-icons">play_circle_outline</i>
+            <div>Online Sincrónico</div>
+          </div>
         </div>
       </ng-container>
-      <ng-container *ngIf="item.convalidado!=true">
-        <div class="estadoCursoModulo col-12 col-md-3 col-lg-2"
-          *ngIf="(item.progreso!=undefined && item.progreso.progresoVideo.length>0)">
-          <i class="material-icons" *ngIf="item.progreso.progresoVideo[0].porcentaje>=100">check_circle</i>
-          <div *ngIf="item.progreso.progresoVideo[0].porcentaje>=100">Completado</div>
-          <div *ngIf="item.progreso.progresoVideo[0].porcentaje>0 && item.progreso.progresoVideo[0].porcentaje<100">
-            Continuar</div>
-          <div *ngIf="item.progreso.progresoVideo[0].porcentaje==0">Pendiente</div>
+      <ng-container *ngIf="item.idModalidadHijo==1">
+        <div class="titleCursoModulo col-10 col-md-11 col-lg-11">{{item.programaGeneralHijo}}</div>
+
+        <div class="col-2 col-md-1 col-lg-1">
         </div>
+        <div class="col-12 col-md-2 col-lg-2"
+          style="    margin: 10px 0px;font-size: 10px;font-weight: 600;color: #8d8789;display: flex;    align-items: flex-end;margin-top: 5px;">
+          <div style="font-size: 12px;">Avance {{item.porcentaje | number:'1.0-0'}}%</div>
+        </div>
+        <div class="col-12 col-md-7 col-lg-7 contentModuloSesiones" >
+          <mat-progress-bar mode="determinate" class="progrees-modulo" style="    border-radius: 10px;"
+            [value]="(item.porcentaje!=undefined)?item.porcentaje:0">
+          </mat-progress-bar>
+        </div>
+        <ng-container *ngIf="item.convalidado==true">
+          <div class="estadoCursoModulo col-12 col-md-2 col-lg-2">
+            <i class="material-icons">check_circle</i>
+            <div>Completado</div>
+          </div>
+        </ng-container>
+        <ng-container *ngIf="item.convalidado!=true">
+          <div class="estadoCursoModulo col-12 col-md-2 col-lg-2"
+            *ngIf="(item.porcentaje!=undefined && item.porcentaje>-1)">
+            <i class="material-icons" *ngIf="item.porcentaje>=100">check_circle</i>
+            <div *ngIf="item.porcentaje>=100">Completado</div>
+            <div *ngIf="item.porcentaje>0 && item.porcentaje<100">
+              Visualizando</div>
+            <div *ngIf="item.porcentaje==0">Pendiente</div>
+          </div>
+        </ng-container>
       </ng-container>
+    </div>
+    <div class="col-12 col-md-4 col-lg-2" style="display: flex;justify-content: flex-end;padding: 0px;">
+      <app-default-button (ButtoclClick)="EventoInteraccionButton('Ingresar')"
+        [disabled]="item.params==undefined"
+        (click)="IrCurso(idMatricula,item.idPEspecificoHijo,item.habilitado==true?true:false)"
+        [confs]="{color:'primary',titulo:'Ingresar'}" [disabled]="item.params==undefined"
 
-
-
-    </ng-container>
-
+        [style]="'padding:0px 20px;margin:0px'">
+      </app-default-button>
+    </div>
   </div>
-  <div class="contenidoCursoModulo row" *ngIf="item.idModalidadHijo==1">
+  <!-- <div class="contenidoCursoModulo row" *ngIf="item.idModalidadHijo==1">
 
     <div class="contentModulo col-12 col-md-8 col-lg-9">
       <div style="font-size: 14px;color: #909090; font-weight: 600;display: flex;
@@ -111,5 +125,5 @@
         [style]="'padding:0px 20px'">
       </app-default-button>
     </div>
-  </div>
+  </div> -->
 </div>

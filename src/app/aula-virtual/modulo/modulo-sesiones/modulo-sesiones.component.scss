@@ -2,7 +2,7 @@
   padding: 20px 0px;
   font-weight: 600;
   display: flex;
-  margin-bottom: 20px;
+  //margin-bottom: 20px;
   img {
     width: 20px;
     margin-right: 10px;
@@ -54,7 +54,7 @@
 }
 .calificacionpromedio {
   display: flex;
-  justify-content: flex-end;
+  //justify-content: flex-end;
   align-items: center;
   .calificado {
     background: #0aaff1;
@@ -68,4 +68,14 @@
 .sesiones:hover{
   background: #f4f4f4;
   border-radius: 20px;
+}
+.VideoCalificacion{
+  display: flex;
+  color: #666666;
+  i{
+    margin-right: 10px;
+  }
+}
+.VideoFinalizadoCalificacion{
+  color: #0684f2 !important;
 }

@@ -58,10 +58,12 @@ export class CursoModulosComponent implements OnInit, OnChanges,OnDestroy {
     programaGeneral: '',
   };
   public cargaProgrso=false
+  public progressProgram:any
   @Input() idMatricula = 0;
   ngOnInit(): void {
     if (this.idMatricula > 0) {
-      this.ObtenerProgresoAulaVirtual();
+     // this.ObtenerProgresoAulaVirtual();
+      this.ProgresoProgramaCursosAulaVirtualAonlinePorEstadoVideo();
     }
   }
   ngOnChanges(changes: SimpleChanges): void {}
@@ -80,6 +82,66 @@ export class CursoModulosComponent implements OnInit, OnChanges,OnDestroy {
           this.cargaProgrso=true
         }
       });
+  }
+  ProgresoProgramaCursosAulaVirtualAonlinePorEstadoVideo() {
+    this.cargaProgrso=false
+    this._ProgramaContenidoService
+      .ProgresoProgramaCursosAulaVirtualAonlinePorEstadoVideo(this.idMatricula)
+      .pipe(takeUntil(this.signal$))
+      .subscribe({
+        next: (x) => {
+          this.cargaProgrso=true
+          console.log(x)
+          this.progressProgram=x
+          this.AddProgresToProgramV2();
+        },
+        complete:()=>{
+          this.cargaProgrso=true
+        }
+      });
+  }
+  AddProgresToProgramV2() {
+    var index=0;
+    var lastconvalidado=-1;
+    var alumnoTest=this._AlumnosTest.Allpermisions(this.programEstructura.idAlumno);
+    var cantidad :number =0
+    var cantidadRealizada:number=0
+    this.programEstructura.listaCursoMatriculado.forEach((program) => {
+      cantidad=0
+      cantidadRealizada=0
+      program.habilitado=true;
+      this.progressProgram.progresoEncuesta.forEach((encuesta:any) => {
+        if (program.idPGeneralHijo == encuesta.idPGeneralHijo) {
+          cantidad+=encuesta.examenProgramados
+          cantidadRealizada+=encuesta.examenRealizado
+        }
+      });
+      this.progressProgram.progresoTarea.forEach((tarea:any) => {
+        if (program.idPGeneralHijo == tarea.idPGeneralHijo) {
+          cantidad+=tarea.tareasProgramadas
+          cantidadRealizada+=tarea.tareasRealizadas
+        }
+      });
+      this.progressProgram.progresoVideo.forEach((video:any) => {
+        if (program.idPGeneralHijo == video.idPGeneralHijo) {
+          cantidad+=video.videosTotal
+          cantidadRealizada+=video.videosTerminados
+        }
+      });
+      program.porcentaje = cantidadRealizada*100/cantidad;
+
+      if(program.convalidado==false && program.idModalidadHijo==1 && !alumnoTest){
+        if(lastconvalidado>-1){
+          var conval=this.programEstructura.listaCursoMatriculado[lastconvalidado]
+          if(conval.porcentaje<=998){
+            program.habilitado=false
+          }
+        }
+        lastconvalidado=index
+      }
+      index++
+    });
+    console.log(this.programEstructura)
   }
   AddProgresToProgram() {
     var index=0;
@@ -140,6 +202,7 @@ export class CursoModulosComponent implements OnInit, OnChanges,OnDestroy {
     console.log(this.programEstructura)
   }
   IrCurso(idMatricula:number,idPEspecificoHijo:number,habilitado:boolean){
+    console.log('---------'+habilitado+'---------------')
     if(habilitado==true){
       this.router.navigate(['/AulaVirtual/MisCursos/'+idMatricula+'/'+idPEspecificoHijo])
     }else{

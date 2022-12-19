@@ -21,6 +21,7 @@ import { PreguntaInteractivaService } from '../../../Services/PreguntaInteractiv
 import { SnackBarServiceService } from '../../../Services/SnackBarService/snack-bar-service.service';
 import { VideoSesionService } from '../../../Services/VideoSesion/video-sesion.service';
 declare var $:any;
+import videojs from 'video.js';
 @Component({
   selector: 'app-video-brightcove',
   templateUrl: './video-brightcove.component.html',
@@ -41,12 +42,16 @@ export class VideoBrightcoveComponent implements OnInit, OnChanges,AfterViewInit
     private _HelperService:HelperService
   ) {}
   ngOnDestroy(): void {
+    clearTimeout(this.timeo)
+    clearTimeout(this.timeo2)
     this.signal$.next(true)
     this.signal$.complete()
   }
   ngAfterViewInit(): void {
   }
-
+  OnError(e:any){
+    console.log(e)
+  }
   @Input()
   public videoData: any;
   @Input() nextChapter:any;
@@ -73,6 +78,7 @@ export class VideoBrightcoveComponent implements OnInit, OnChanges,AfterViewInit
   public finish=false
   public animation=0
   public estadoFinalizarPreguntas=false
+  public valueCount=3
   // +++ Set the data for the player +++
   playerData = {
     accountId: '6267108632001',
@@ -138,6 +144,24 @@ export class VideoBrightcoveComponent implements OnInit, OnChanges,AfterViewInit
   public videoFinal=''
   public videocontinuar=false
   public cargaFinalizado=false;
+  public timeo:any
+  public timeo2:any
+  public GetTIme:any;
+  public TiempoRestante=3000;
+  player!: videojs.Player;
+  options:{
+    fluid: boolean,
+    aspectRatio: string,
+    autoplay: boolean,
+    sources: {
+        src: string,
+        type: string,
+    }[],
+}={
+  autoplay: true, sources: [{ src: '/path/to/video.mp4', type: 'video/mp4' }],
+  fluid: false,
+  aspectRatio: '16:9'
+};
   ngOnInit(): void {
     this._HelperService.recibirCombosPerfil.pipe(takeUntil(this.signal$)).subscribe((x) => {
       this.miPerfil=x
@@ -145,7 +169,6 @@ export class VideoBrightcoveComponent implements OnInit, OnChanges,AfterViewInit
   }
   ngOnChanges(changes: SimpleChanges): void {
     if (this.videoData != undefined) {
-      console.log(this.videoData)
       if(this.videoData.objetoConfigurado.idVideoBrightcove!='0' &&
       this.videoData.objetoConfigurado.idVideoBrightcove!=null &&
       this.videoData.objetoConfigurado.idVideoBrightcove!=undefined){
@@ -680,9 +703,15 @@ export class VideoBrightcoveComponent implements OnInit, OnChanges,AfterViewInit
     console.log(this.nextChapter)
     console.log('Finish-------------');
     this.OnFin.emit()
-    setTimeout(() => {
-      //this.next.emit()
-    }, 3600);
+    this.GetTIme=new Date().getTime();
+    this.valueCount=3000
+    this.timeo2=setInterval(()=>{
+      this.valueCount-=100
+      console.log(this.valueCount)
+    },100)
+    this.timeo=setTimeout(() => {
+      this.CambioTab()
+    }, 3000);
   }
   EventoInteraccion(){
     this._HelperService.enviarMsjAcciones({Tag:'Video',Programa:this.json.NombrePrograma,Seccion:'Sesiones'})
@@ -692,7 +721,32 @@ export class VideoBrightcoveComponent implements OnInit, OnChanges,AfterViewInit
     this._HelperService.enviarMsjAcciones({Tag:'Video(volumen)',Programa:this.json.NombrePrograma,Seccion:'Sesiones'})
   }
   EventoInteraccionDrag(){
-    console.log(event)
     this._HelperService.enviarMsjAcciones({Tag:'Drag',Programa:this.json.NombrePrograma,Seccion:'Sesiones'})
+  }
+  TimerPause(){
+    clearTimeout(this.timeo)
+    clearTimeout(this.timeo2)
+    var _now = new Date().getTime();
+    this.TiempoRestante-=(_now-this.GetTIme);
+    console.log(this.TiempoRestante)
+  }
+  TimerResume(){
+    if(this.TiempoRestante>0){
+      this.GetTIme=new Date();
+      this.timeo2=setInterval(()=>{
+        this.valueCount-=100
+        console.log(this.valueCount)
+      },100)
+      this.timeo=setTimeout(() => {
+        this.CambioTab()
+      }, this.TiempoRestante);
+    }
+  }
+  CambioTab(){
+    this.tiempovideoinicio=0
+    this.finish=false;
+    this.TiempoRestante=3000
+    clearTimeout(this.timeo)
+    this.next.emit()
   }
 }

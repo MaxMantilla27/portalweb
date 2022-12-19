@@ -1,7 +1,7 @@
 <div class="cursoTitle">{{json.NombreCapitulo}}</div>
 <div>Capítulo {{idCapitulo}}:{{NombreCapitulo}} </div>
 <div class="row" style="align-items: center;" style="margin: 30px 0px 0px;" *ngIf="encuesta!=undefined && habilitado==true">
-  <div class="tipoIndicacionTitle col-12 col-md-12 col-lg-12" style="margin:0px;">
+  <!-- <div class="tipoIndicacionTitle col-12 col-md-12 col-lg-12" style="margin:0px;">
     <img class="ImgIndicacionesContent" src="../../../../assets/icons/encuesta-naranja.svg">
     <div><strong> {{encuesta.datosEncuesta.titulo}}:</strong></div>
   </div>
@@ -16,6 +16,29 @@
     *ngIf="encuesta.datosEncuesta.titulo!='Encuesta Final' && encuesta.contenidoEncuesta==null"
 
     (click)="nextc()"  >Siguiente ></div>
+  </div> -->
+
+  <div class="col-12 col-md-12 col-lg-12 row"
+  style="display: flex;justify-content:space-between;padding: 5px 10px;background:#f2f6ff ;align-items: center;    margin: 0px;">
+    <div  class=" vinculo col-6 col-md-3 col-lg-2" [ngClass]="{'chipButton': encuesta.datosEncuesta.titulo!='Encuesta Inicial'}" (click)="prevc()" >
+      <ng-container *ngIf="encuesta.datosEncuesta.titulo!='Encuesta Inicial'">< Anterior</ng-container>
+    </div>
+    <div class="d-none col-md-6 d-md-block  col-lg-8 d-lg-block " >
+      <div style="display: flex;
+      justify-content: center;margin: 0px"  class="tipoIndicacionTitle ">
+      <img class="ImgIndicacionesContent" src="../../../../assets/icons/sesion-naranja.svg">
+      <div class="elipsis">{{encuesta.datosEncuesta.titulo}}</div>
+      </div>
+    </div>
+    <div class="col-6 col-md-3 col-lg-2" style="    display: flex;
+    justify-content: right;    padding: 0;">
+      <div class="chipButton vinculo" (click)="nextc()"
+      *ngIf="encuesta.datosEncuesta.titulo!='Encuesta Final' && encuesta.contenidoEncuesta==null">Siguiente ></div>
+    </div>
+    <div class="tipoIndicacionTitle col-12 d-md-none d-lg-none">
+      <img class="ImgIndicacionesContent" src="../../../../assets/icons/sesion-naranja.svg">
+      <div class="elipsis">{{encuesta.datosEncuesta.titulo}}</div>
+    </div>
   </div>
   <div class="contentEncuesta" *ngIf="encuesta.contenidoEncuesta!=null">
     <ng-container *ngFor="let enc of encuesta.contenidoEncuesta;let i=index">

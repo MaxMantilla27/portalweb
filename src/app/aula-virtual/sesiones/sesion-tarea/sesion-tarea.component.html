@@ -1,7 +1,7 @@
 <!-- <div class="cursoTitle">{{json.NombreCapitulo}}</div>
 <div>Capítulo {{idCapitulo}}:{{NombreCapitulo}} </div> -->
 <div class="row" style="align-items: center;" style="margin: 30px 0px 0px;" *ngIf="tarea!=undefined && habilitado">
-  <div class="tipoIndicacionTitle col-12 col-md-12 col-lg-12" style="margin:0px;">
+  <!-- <div class="tipoIndicacionTitle col-12 col-md-12 col-lg-12" style="margin:0px;">
     <img class="ImgIndicacionesContent" src="../../../../assets/icons/tareas-23.svg">
     <div><strong> {{tarea.datosEvaluacionTrabajo.nombre}}:</strong></div>
   </div>
@@ -12,6 +12,27 @@
     (click)="prevc()" > < Anterior</div>
     <div style="text-align: right;font-size: 13px;cursor: pointer;" class="vinculo"
     (click)="nextc()" *ngIf="tarea!=undefined && tarea.registroEvaluacionArchivo!=null && tarea.registroEvaluacionArchivo.length>0">Siguiente ></div>
+  </div> -->
+
+  <div class="col-12 col-md-12 col-lg-12 row" style="display: flex;justify-content:space-between;padding: 5px 10px;background:#f2f6ff ;align-items: center;    margin: 0px;">
+    <div  class="chipButton vinculo col-6 col-md-3 col-lg-2 " (click)="prevc()" >< Anterior
+    </div>
+    <div class="d-none col-md-6 d-md-block  col-lg-8 d-lg-block " >
+      <div style="display: flex;
+      justify-content: center;margin: 0px;"  class="tipoIndicacionTitle ">
+      <img class="ImgIndicacionesContent" src="../../../../assets/icons/sesion-naranja.svg">
+      <div class="elipsis">{{tarea.datosEvaluacionTrabajo.nombre}}</div>
+      </div>
+    </div>
+    <div class="col-6 col-md-3 col-lg-2" style="    display: flex;
+    justify-content: right;    padding: 0;">
+      <div class="chipButton vinculo" (click)="nextc()"
+      *ngIf="tarea!=undefined && tarea.registroEvaluacionArchivo!=null && tarea.registroEvaluacionArchivo.length>0">Siguiente ></div>
+    </div>
+    <div class="tipoIndicacionTitle col-12 d-md-none d-lg-none">
+      <img class="ImgIndicacionesContent" src="../../../../assets/icons/sesion-naranja.svg">
+      <div class="elipsis">{{tarea.datosEvaluacionTrabajo.nombre}}</div>
+    </div>
   </div>
   <div class="col-12 col-md-12 col-lg-12" style="    margin-top: 40px;
   margin-bottom: 20px;">

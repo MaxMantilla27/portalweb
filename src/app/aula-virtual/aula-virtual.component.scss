@@ -3,7 +3,7 @@
 }
 .tabVertical .mat-tab-header {
   border-bottom: none !important;
-  margin-top: 40px;
+  margin-top: 50px;
 }
 .tabVertical .mat-tab-header .mat-tab-header-pagination {
   display: none !important;
@@ -50,7 +50,7 @@
   min-width: 60px !important;
   height: auto !important;
   width: 100%;
-  justify-content: center;
+  //justify-content: center;
 }
 .tabVertical
   .mat-tab-header
@@ -93,15 +93,16 @@
   .mat-tab-labels
   .mat-tab-label-active {
   background: #f4f4f4;
+  box-shadow: inset 8px 0px 0 #3390ff;
 }
 .pad-resp {
-  padding: 5px 10px 0px 62px;
+  padding: 5px 10px 0px 10px;
 }
 
 @media (max-width: 768px) {
   .tabVerticalDocente > mat-tab-header{
     z-index: 100;
-    position: absolute !important;
+    //position: absolute !important;
     background: white;
     height: 100%;
     min-width: 2px;
@@ -109,14 +110,14 @@
 
   .tabVertical > mat-tab-header{
     z-index: 100;
-    position: absolute !important;
+    //position: absolute !important;
     background: white;
     height: 100%;
     min-width: 2px;
   }
   .tabVerticalses > mat-tab-header{
     z-index: 100;
-    position: absolute !important;
+    //position: absolute !important;
     background: white;
     height: 100%;
     min-width: 2px;
@@ -142,27 +143,27 @@
     padding: 45px 20px;
   }
   .pad-resp {
-    padding: 5px 10px 0px 62px;
+    padding: 5px 10px 0px 10px;
   }
 }
 @media (min-width: 768px) {
   .tabVertical > mat-tab-header{
     z-index: 100;
-    position: absolute !important;
+    //position: absolute !important;
     background: white;
     height: calc( 100% - 40px );
     min-width: 2px;
   }
   .tabVerticalDocente > mat-tab-header{
     z-index: 100;
-    position: absolute !important;
+    //position: absolute !important;
     background: white;
     height: calc( 100% - 40px );
     min-width: 2px;
   }
   .tabVerticalses > mat-tab-header{
     z-index: 100;
-    position: absolute !important;
+   // position: absolute !important;
     background: white;
     height: calc( 100% - 40px );
     min-width: 2px;
@@ -171,7 +172,7 @@
     padding: 45px 40px 45px 20px;
   }
   .pad-resp {
-    padding: 5px 10px 0px 72px;
+    padding: 5px 10px 0px 10px;
   }
 }
 @media (min-width: 992px) {
@@ -179,7 +180,7 @@
     padding: 45px 90px 45px 20px;
   }
   .pad-resp {
-    padding: 5px 10px 0px 72px;
+    padding: 5px 10px 0px 10px;
   }
 }
 @media (min-width: 1200px) {
@@ -187,7 +188,7 @@
     padding: 45px 90px 45px 20px;
   }
   .pad-resp {
-    padding: 5px 20px 0px 92px;
+    padding: 5px 20px 0px 20px;
   }
 }
 @media (min-width: 1400px) {
@@ -195,7 +196,7 @@
     padding: 45px 90px 45px 20px !important;
   }
   .pad-resp {
-    padding: 5px 30px 0px 92px;
+    padding: 5px 20px 0px 20px;
   }
 }
 .resumenPagoTarjeta {
@@ -286,12 +287,14 @@
 .openClose {
   //position: absolute;
   cursor: pointer;
-  background: #c3c3c3;
+  background: #0684f2;
   border-right: 2px solid #d2d2d2;
   width: 62px;
   display: flex;
-  justify-content: center;
-  padding: 5px;
+  justify-content: space-around;
+  padding: 10px;
+  color: white;
+  align-items: center;
   img{
     width: 18px;
   }
@@ -302,21 +305,24 @@
     height: 30px;
     width: 30px;
     border-radius: 50%;
-    background: #dadada;
+    background: white;
     .material-icons{
       font-size: 20px !important;
+      color: #0684f2;
     }
   }
 }
 .openClose2 {
   //position: absolute;
   cursor: pointer;
-  background: #c3c3c3;
+  background: #0684f2;
   border-right: 2px solid #d2d2d2;
   width: 52px;
   display: flex;
-  justify-content: center;
-  padding: 5px;
+  justify-content: space-around;
+  padding: 10px;
+  color: white;
+  align-items: center;
   img{
     width: 18px;
   }
@@ -327,16 +333,52 @@
     height: 30px;
     width: 30px;
     border-radius: 50%;
-    background: #dadada;
+    background: white;
     .material-icons{
       font-size: 20px !important;
+      color: #0684f2;
     }
   }
 }
 .reverse {
-  width: 182px ;
+  width: 292px !important;
 }
 
 .reverse2 {
   width: 292px !important;
+}
+
+.chipButton{
+  background: #0684f2;
+    /* padding: 3px 15px; */
+    font-size: 13px;
+    cursor: pointer;
+    text-align: center;
+    color: white;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 120px;
+    height: 30px;
+}
+.elipsis{
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.elipsis-100{
+  width: 100px;
+}
+.elipsis-200{
+  width: 200px;
+}
+.elipsis-300{
+  width: 300px;
+}
+.elipsis-400{
+  width: 400px;
+}
+.elipsis-500{
+  width: 500px;
 }
