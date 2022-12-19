@@ -1,0 +1,68 @@
+<div style="display: flex;justify-content: center;">
+  <div class="estructuraProgramFormPopup" style="position: relative;">
+    <div style="text-align: end">
+      <div class="botonCerrarformularioPopPup" (click)="dialogRef.close()">
+        X
+      </div>
+    </div>
+    <app-cargando *ngIf="statuscharge==true"></app-cargando>
+    <div class="cotentestructuraProgramFormPopPup">
+      <div class="questionPopPup" style="justify-content: flex-start;align-items: center;">
+        <img src="../../../../assets/icons/signo-pregunta-abierto-03.svg" alt="">
+      </div>
+      <div style="display: flex;align-items: center;">Necesitas más información</div>
+      <div class="questionPopPup" style="justify-content: flex-end;align-items: center;">
+        <img src="../../../../assets/icons/signo-pregunta-cerrado-04.svg" alt="">
+      </div>
+    </div>
+    <div class="subtitleEstruturaProgramForm">
+      Registra tus datos para que un asesor especializado pueda ayudarte en todo lo que requieras
+    </div>
+    <ng-container *ngIf="combosPrevios!=undefined">
+      <app-formulario-pop-up [Interaccion]="'Programas-'+data.IdBusqueda" [model]="formularioContacto" [InputsDisable]="statuscharge" [CleanOnSubmit]="cleanSub" (OnSubmit)="SetContacto($event)"
+      (OnValid)="formVal=$event" [fiels]="fileds" (OnSelect)="SelectChage($event)">
+
+      <ng-container contenido>
+      </ng-container>
+      <ng-container send>
+        <div style="text-align: center;margin-bottom: 15px;" >
+          <a style="color: #027CFF;font-size: 14px;cursor: pointer;" (click)="LimpiarCampos()">[No soy {{formularioContacto.Nombres}}]</a>
+        </div>
+        <app-default-button [confs]="{color:'primary',titulo:'Enviar'}" [style]="'width: 100%;'">
+        </app-default-button>
+      </ng-container>
+
+    </app-formulario-pop-up>
+    </ng-container>
+    <ng-container *ngIf="combosPrevios==undefined && CompleteLocalStorage==true">
+      <app-formulario-pop-up [Interaccion]="'Programas-'+data.IdBusqueda" [model]="formularioContacto" [InputsDisable]="statuscharge" [CleanOnSubmit]="cleanSub" (OnSubmit)="SetContacto($event)"
+      (OnValid)="formVal=$event" [fiels]="fileds" (OnSelect)="SelectChage($event)">
+
+      <ng-container contenido>
+      </ng-container>
+      <ng-container send>
+        <div style="text-align: center;margin-bottom: 15px;" >
+          <a style="color: #027CFF;font-size: 14px;cursor: pointer;" (click)="LimpiarCampos()">[No soy {{formularioContacto.Nombres}}]</a>
+        </div>
+        <app-default-button [confs]="{color:'primary',titulo:'Enviar'}" [style]="'width: 100%;'">
+        </app-default-button>
+      </ng-container>
+
+    </app-formulario-pop-up>
+    </ng-container>
+    <ng-container *ngIf="combosPrevios==undefined && CompleteLocalStorage==false">
+      <app-formulario-pop-up  [Interaccion]="'Programas-'+data.IdBusqueda" [model]="formularioContacto" [InputsDisable]="statuscharge" [CleanOnSubmit]="cleanSub" (OnSubmit)="SetContacto($event)"
+      (OnValid)="formVal=$event" [fiels]="fileds" (OnSelect)="SelectChage($event)">
+
+      <ng-container contenido>
+      </ng-container>
+      <ng-container send>
+        <app-default-button [confs]="{color:'primary',titulo:'Enviar'}" [style]="'width: 100%;'">
+        </app-default-button>
+      </ng-container>
+
+    </app-formulario-pop-up>
+    </ng-container>
+  </div>
+
+</div>

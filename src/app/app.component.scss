@@ -24,7 +24,7 @@
 @media (max-width: 576px) {
 
   .rowpadd {
-    padding: 45px 10px;
+    padding: 50px 10px;
   }
   .titulop {
     font-size: 30px;
@@ -58,7 +58,7 @@
 }
 @media (min-width: 576px) {
   .rowpadd {
-    padding: 45px 20px;
+    padding: 50px 20px;
   }
   .titulop {
     font-size: 30px;
@@ -86,7 +86,7 @@
 }
 @media (min-width: 768px) {
   .rowpadd {
-    padding: 45px 40px;
+    padding: 50px 40px;
   }
   .titulop {
     font-size: 30px;
@@ -110,7 +110,7 @@
 }
 @media (min-width: 992px) {
   .rowpadd {
-    padding: 45px 80px;
+    padding: 50px 80px;
   }
   .titulop {
     font-size: 40px;
@@ -146,7 +146,7 @@
     display: block;
   }
   .rowpadd {
-    padding: 45px 110px;
+    padding: 50px 110px;
   }
   .titulop {
     font-size: 50px;
@@ -170,7 +170,7 @@
 }
 @media (min-width: 1400px) {
   .rowpadd {
-    padding: 45px 130px;
+    padding: 50px 130px;
   }
   .titulop {
     font-size: 60px;
@@ -238,11 +238,13 @@
 }
 
 .carousel-control-next-icon {
-  background-image: url(../assets/icons/flecha-izquierda.svg);
+  // background-image: url(../assets/icons/flecha-izquierda.svg);
+  background-image: url(../assets/icons/derecha.png);
 }
 
 .carousel-control-prev-icon {
-  background-image: url(../assets/icons/flecha-derecha.svg);
+  // background-image: url(../assets/icons/flecha-derecha.svg);
+  background-image: url(../assets/icons/izquierda.png);
 }
 
 .subtitulo {

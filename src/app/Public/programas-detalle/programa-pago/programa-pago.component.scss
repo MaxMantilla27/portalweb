@@ -1,12 +1,18 @@
 .programa-pago-dialog-container{
   mat-dialog-container{
-    padding: 0px !important;
     border-radius: 20px;
+    padding: 80px 20px 20px 20px;
+    background: transparent;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    overflow: auto;
   }
 }
 .headerPagoOrganico{
   background: #f4f4f4;
   padding: 30px;
+  border-radius: 20px 20px 0px 0px;
   h2{
     font-size: 30px;
     font-weight: 900;
@@ -91,4 +97,14 @@
   .mat-form-field-outline-end {
     background-color: var(--main-bg-color);
   }
+}
+.botonCerrarModalPago{
+  font-size:20px;
+  cursor:pointer;
+  font-weight: bold;
+  color:#868687;
+  width:10px;
+  margin-left: 50rem;
+  margin-top: -10px;
+  margin-bottom: -5px;
 }

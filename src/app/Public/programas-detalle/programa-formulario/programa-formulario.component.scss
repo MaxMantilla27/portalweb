@@ -1,0 +1,50 @@
+.formulario-container{
+  mat-dialog-container{
+    padding: 20px 20px 40px 20px;
+    background: transparent;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    overflow: auto;
+  }
+}
+.estructuraProgramFormPopup {
+  background: #ededed;
+  width: 21rem;
+  height: auto;
+  border-radius: 20px;
+  padding: 20px 20px;
+}
+.estructuraProgramFormPopup .cotentestructuraProgramFormPopPup {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  color: #2999f0;
+  font-size: 20px;
+  text-align: center;
+  font-weight: 600;
+}
+
+.estructuraProgramFormPopup div .questionPopPup {
+  display: flex;
+  width: 25%;
+  flex-direction: column;
+}
+.subtitleEstruturaProgramForm {
+  font-size: 15px;
+  padding: 20px 0px;
+  color: #626b66;
+  font-weight: 300;
+  text-align: center;
+}
+.botonCerrarformularioPopPup{
+  font-size:15px;
+  cursor:pointer;
+  font-weight: bold;
+  color:#868687;
+  width:10px;
+  margin-left: 18rem;
+  margin-top: -10px;
+  margin-bottom: 5px;
+}
+

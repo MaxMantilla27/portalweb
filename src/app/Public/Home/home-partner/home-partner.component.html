@@ -1,0 +1,48 @@
+<div style="background: #e6eefa;">
+    <div class="container">
+      <div class="row rowpadd" style="justify-content: center;">
+        <div class="col-12  col-sm-12 col-md-12" style="text-align: center;padding: 0px 10px;">
+          <div class="subtitulo">
+            Obt&eacute;n certificaciones valoradas en toda Latinoam&eacute;rica
+          </div>
+        </div>
+        <div class="col-12 col-sm-12 carouselImgPartners" style="    width: 100%;">
+          <ngb-carousel (slide)="EventoInteraccionCarrousel($event,'Img Parters')">
+            <ng-template ngbSlide *ngFor="let ste of step">
+              <div class="wrapper">
+                <div class="row" style="align-items: center;padding: 0px 30px;">
+
+                  <ng-container *ngIf="ste.length>4">
+                    <ng-container *ngFor="let item of ste;let i = index">
+
+                      <div class="col-4 contentImgCorousel" *ngIf="i<=2">
+                        <img class="imgcarousel" [src]="item.imgPrincipal" [alt]="item.imagenAlt"
+                          [title]="item.imagenAlt">
+                      </div>
+                      <div class="col-6 contentImgCorousel" *ngIf="i>2">
+                        <img class="imgcarousel" [src]="item.imgPrincipal" [alt]="item.imagenAlt"
+                          [title]="item.imagenAlt">
+                      </div>
+                    </ng-container>
+                  </ng-container>
+
+                  <ng-container *ngIf="ste.length==4">
+                    <div class="col-3 contentImgCorousel" *ngFor="let item of ste">
+                      <img class="imgcarousel" [src]="item.imgPrincipal" [alt]="item.imagenAlt" [title]="item.imagenAlt">
+                    </div>
+                  </ng-container>
+                  <ng-container *ngIf="ste.length<=3">
+                    <div class="col-{{12/ste.length}} contentImgCorousel" *ngFor="let item of ste">
+                      <img class="imgcarousel" [src]="item.imgPrincipal" [alt]="item.imagenAlt" [title]="item.imagenAlt">
+                    </div>
+                  </ng-container>
+                </div>
+              </div>
+              <div class="carousel-caption">
+              </div>
+            </ng-template>
+          </ngb-carousel>
+        </div>
+      </div>
+    </div>
+  </div>

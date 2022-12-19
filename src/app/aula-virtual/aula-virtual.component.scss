@@ -254,6 +254,13 @@
     background-repeat: no-repeat;
     background-position: center;
   }
+  .imgPagoTarjetaVerde {
+    width: 80px;
+    height: 80px;
+    background-image: url(../../assets/icons/security-verde.svg);
+    background-repeat: no-repeat;
+    background-position: center;
+  }
   .textPagoTarjeta {
     display: flex;
     flex-direction: column;

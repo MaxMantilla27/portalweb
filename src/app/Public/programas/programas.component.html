@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container"#filtroPrograma>
   <div class="container breadcrumb">
     <app-miga-pan [items]="migaPan"></app-miga-pan>
   </div>
@@ -170,7 +170,7 @@
   </div>
 </div>
 <div class="textoResultResponsive">{{textoResult}}</div>
-<div class="container">
+<div class="container" >
   <div class="row rowpadd">
     <div class="col-12 col-md-4 col-lg-3 FiltroProgramasFull">
       <div style="position: sticky;top: 10px;">
@@ -286,7 +286,7 @@
       </div>
     </div>
 
-    <div class="col-12 col-md-8 col-9-3">
+    <div class="col-12 col-md-8 col-lg-9">
       <div class="row">
         <div style="text-align: center;" *ngIf="charge==false && (programas.length==0 || cantidadProgramas==0)">No
           existen programas con los filtros seleccionados</div>
@@ -304,5 +304,12 @@
       </div>
     </div>
 
-  </div>
+    <div class="contentArrow" style="display: flex;">
+      <div class="arrow"(click)="ScrollTo(filtroPrograma)" >
+        <i class="material-icons" style="font-size: 40px !important;">expand_less</i>
+      </div>
+      <div class="textArrow" (click)="ScrollTo(filtroPrograma)">
+        Inicio
+      </div>
+    </div>
 </div>

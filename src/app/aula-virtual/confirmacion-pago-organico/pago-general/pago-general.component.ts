@@ -114,8 +114,7 @@ export class PagoGeneralComponent implements OnInit, OnDestroy {
           this.jsonSave.MedioCodigo = this.resultCard.medioCodigo;
           this.jsonSave.MedioPago = this.resultCard.medioPago;
           this.jsonSave.RequiereDatosTarjeta = this.json.RequiereDatosTarjeta;
-          this.jsonSave.CodigoTributario =
-            this.resultCard.identificadorTransaccion;
+          this.jsonSave.CodigoTributario = this.resultCard.identificadorTransaccion;
           this.jsonSave.RazonSocial = this.resultCard.identificadorTransaccion;
           this.jsonSave.IdPasarelaPago = this.resultCard.idPasarelaPago;
           this.jsonSave.IdentificadorUsuario=this._SessionStorageService.SessionGetValue('usuarioWeb');

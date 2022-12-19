@@ -1,0 +1,45 @@
+<div class="container">
+  <div class="row rowpadd" style="align-items: center">
+    <div class="col-12 col-sm-12">
+      <div class="subtitulo" style="text-align: center; margin: 0px">
+        Formación continua
+      </div>
+      <div class="parafoS" style="font-size: 22px">
+        Brindamos capacitación especializada en diversas áreas
+      </div>
+    </div>
+  </div>
+</div>
+<mat-tab-group
+  mat-align-tabs="start"
+  class="tabHome"
+  (selectedTabChange)="tabChanged($event)"
+  [selectedIndex]="tabindex"
+>
+  <ng-container *ngFor="let item of Formacion; let i = index">
+    <mat-tab label="{{ item.Nombre }}">
+      <div
+        class="parafoS"
+        style="
+          margin-top: 30px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          color: #ff8610;
+        "
+      >
+        <a
+          class="vinculo"
+          [routerLink]="'/programas-certificaciones-cursos/' + item.value"
+          target="_blank"
+          >Mostrar todos los cursos de esta área
+        </a>
+        <i class="material-icons">keyboard_arrow_right</i>
+      </div>
+      <app-home-programas
+        [IdArea]="item.value"
+        [change]="item.change"
+      ></app-home-programas>
+    </mat-tab>
+  </ng-container>
+</mat-tab-group>

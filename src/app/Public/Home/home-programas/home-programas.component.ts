@@ -32,6 +32,7 @@ export class HomeProgramasComponent implements OnInit,OnChanges,OnDestroy {
   @Input() change:boolean|undefined=false;
   public programas:Array<CardProgramasDTO>=[];
   public stepProgramas:Array<Array<CardProgramasDTO>>=[];
+  public stepProgramasVerMas:Array<Array<CardProgramasDTO>>=[];
   public innerWidth: any;
   public seccionStep=4;
   ngOnInit(): void {
@@ -52,11 +53,13 @@ export class HomeProgramasComponent implements OnInit,OnChanges,OnDestroy {
     }
   }
   GetProgramasHome(){
-    var json:ObtenerTopProgramasSendDTO={IdArea:this.IdArea,Top:10};
+    var json:ObtenerTopProgramasSendDTO={IdArea:this.IdArea,Top:20};
     this._HomeService.GetProgramasHome(json).pipe(takeUntil(this.signal$)).subscribe({
       next:(x)=>{
+        console.log(x)
         this.programas=[];
         this.stepProgramas=[];
+        this.stepProgramasVerMas=[];
         this.programas=x.listaProgramasGeneralesTop.map(
           (c:any)=>{
             var content='Inversión <br />';
@@ -102,7 +105,7 @@ export class HomeProgramasComponent implements OnInit,OnChanges,OnDestroy {
         this.programas.forEach(
           p=>{
             step.push(p);
-            if(ind==this.seccionStep){
+            if(ind==this.seccionStep && p.Title!=''){
               this.stepProgramas.push(step);
               step=[];
               ind=0
@@ -111,8 +114,10 @@ export class HomeProgramasComponent implements OnInit,OnChanges,OnDestroy {
           }
         );
         if(step.length>0){
-          this.stepProgramas.push(step);
+          this.stepProgramasVerMas.push(step);
         }
+        console.log(this.stepProgramas)
+        console.log(this.stepProgramasVerMas)
       },
       error:(x)=>{}
     });

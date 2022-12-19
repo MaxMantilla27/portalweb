@@ -1,0 +1,42 @@
+<div>
+  <div class="container">
+    <div class="row rowpadd" style="align-items: center">
+      <div class="col-12 col-sm-12" style="margin-bottom: 30px">
+        <div class="subtitulo" style="text-align: center; margin: 0px">
+          Casos de éxito
+        </div>
+        <div class="parafoS" style="text-align: center">
+          Más de 25 mil profesionales capacitados por BSG Institute
+        </div>
+      </div>
+      <div class="col-12 col-sm-12 carrouselCasos" style="margin-bottom: 30px">
+        <ngb-carousel (slide)="EventoInteraccionCarrousel($event, 'Casos Exito')">
+          <ng-template ngbSlide *ngFor="let item of casosExito">
+            <div class="wrapper">
+              <div class="row" style="justify-content: center;align-items: center;padding: 0px 20px;">
+                <div class="col-12 col-sm-8 col-md-8" style="height: 100%">
+                  <div class="contalumno">
+                    <div class="titlealumno">"{{ item.Texto }}"</div>
+                    <div>
+                      <div class="cursoalumno">{{ item.Curso }}</div>
+                      <div class="namalumno">{{ item.Nombre | capitalice }}</div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-12 col-sm-4 col-md-4">
+                  <div style="height: 100%">
+                    <img
+                      class="imgalumno"
+                      [src]="'../../../assets/imagenes/' + item.img"
+                      alt=""
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </ng-template>
+        </ngb-carousel>
+      </div>
+    </div>
+  </div>
+</div>

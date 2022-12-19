@@ -1,0 +1,30 @@
+<div style="background: #e6eefa" *ngIf="TituloEducacion!=''">
+    <div class="container">
+      <div class="row rowpadd">
+        <div class="col-12 col-sm-12" style="margin-bottom: 30px;">
+          <div class="subtitulo" style="text-align: center;    margin: 0px;">{{TituloEducacion}}</div>
+          <div class="parafoS" style="font-size: 22px;">Desarrolla habilidades altamente demandadas en el mercado laboral </div>
+
+        </div>
+        <div class="col-12 row" style="justify-content: space-between;    padding: 0px;
+        margin: 0px;">
+          <div class="col-12 col-sm-12 col-md-6" *ngFor="let item of Educacion;let i=index">
+            <div style="display: flex;justify-content: center;flex-wrap: wrap;    padding: 20px 0px;">
+              <img *ngIf="i%2==0" style="width: auto; height: 230px;"
+                src="../../../assets/imagenes/arquetipo-promotor-ventas-contenido.png" alt="">
+              <img *ngIf="i%2!=0" style="width: auto; height: 230px;"
+                src="../../../assets/imagenes/arquetipo-atencion-al-cliente.png" alt="">
+
+              <div class="cardCarrerasV2">
+                <div class="titleV2">{{item.Nombre}}</div>
+                <div class="underl"></div>
+                <div style="color: #f11f53;font-size: 14px;text-align: center;width: 100%;margin-top: 30px;">50% de descuento en la primera pensión</div>
+                <div class="subtitleCarreras orange " (click)="EventoInteraccionEducacion(item.Nombre)" [routerLink]="item.Url" style="margin-top: 0px;">
+                    <div class="vinculo"> Más Información </div> <i class="material-icons">keyboard_arrow_right</i></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

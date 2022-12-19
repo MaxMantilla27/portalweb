@@ -69,14 +69,22 @@
   margin: 0px;
 }
 .link {
-  font-size: 14px;
-  color: #ff7c2e;
-  margin: 15px 0px;
+  border-radius: 20px;
+  background-color: #F8893F;
+  color: white;
+  margin: 15px 0px 0px 0px;
   cursor: pointer;
   text-decoration: none;
+  display: flex;
+  height: 35px;
+  align-items: center;
+  font-weight: 100;
+  font-size: 15px;
+  justify-content: center;
 }
 .link:hover {
-  color: #ff7c2e;
+  background-color: #ff963e;
+  color: white;
   text-decoration: underline !important;
 }
 .carousel-caption {

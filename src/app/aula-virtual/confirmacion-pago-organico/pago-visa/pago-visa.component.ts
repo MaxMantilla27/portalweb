@@ -83,7 +83,8 @@ export class PagoVisaComponent implements OnInit,OnDestroy {
         this.jsonSave.MedioPago=this.resultVisa.medioPago
         this.jsonSave.RequiereDatosTarjeta=this.json.RequiereDatosTarjeta
         this.jsonSave.TransactionToken=this.resultVisa.procesoPagoBotonVisa.transactionToken
-
+        // this.jsonSave.CodigoTributario = this.resultVisa.identificadorTransaccion;
+        // this.jsonSave.RazonSocial = this.resultVisa.identificadorTransaccion;
         //this._SessionStorageService.SessionSetValue('datos',JSON.stringify(this.jsonSave));
         this.addVisa()
       }
