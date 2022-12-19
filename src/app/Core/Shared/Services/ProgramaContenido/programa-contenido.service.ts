@@ -39,6 +39,13 @@ export class ProgramaContenidoService {
       return EMPTY;
     }
   }
+  public ProgresoProgramaCursosAulaVirtualAonlinePorEstadoVideo(IdMatriculaCabecera:number):Observable<any>{
+    if(this.isBrowser){
+      return this.http.get<any>(this.urlBase+'/ProgresoProgramaCursosAulaVirtualAonlinePorEstadoVideo?IdMatriculaCabecera='+IdMatriculaCabecera);
+    }else{
+      return EMPTY;
+    }
+  }
 
   public ObtenerEstructuraEspecifica(Json:ParametrosEstructuraEspecificaDTO):Observable<any>{
     if(this.isBrowser){
@@ -58,6 +65,13 @@ export class ProgramaContenidoService {
   public ObtenerCodigoMatriculaAlumno(IdMatriculaCabecera:number):Observable<any>{
     if(this.isBrowser){
       return this.http.get<any>(this.urlBase+'/ObtenerCodigoMatriculaAlumno?IdMatriculaCabecera='+IdMatriculaCabecera);
+    }else{
+      return EMPTY;
+    }
+  }
+  public MigrarEstadoVideoEstructuraPorCurso(IdMatriculaCabecera:number,IdPGeneral:number):Observable<any>{
+    if(this.isBrowser){
+      return this.http.get<any>(this.urlBase+'/MigrarEstadoVideoEstructuraPorCurso?IdMatriculaCabecera='+IdMatriculaCabecera+'&IdPGeneral='+IdPGeneral);
     }else{
       return EMPTY;
     }

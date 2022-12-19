@@ -40,6 +40,7 @@ export class CursoComponent implements OnInit,OnDestroy {
 
   public indexIndicacions=0
   public indexAyuda=0
+  public indexCertificado=0
   public migaPan = [
     {
       titulo: 'Mis Cursos',
@@ -169,56 +170,77 @@ export class CursoComponent implements OnInit,OnDestroy {
   tabChanged(tabChangeEvent: MatTabChangeEvent): void {
     console.log('tabChangeEvent => ', tabChangeEvent);
     console.log('index => ', tabChangeEvent.index);
-    if(this.IndicacionActive==true){
-      if (this.indexIndicacions>0 && (tabChangeEvent.index >= this.indexIndicacions+5 || tabChangeEvent.index <= this.indexIndicacions) &&
-        this.IndicacionActive == true
-      ) {
-        this.IndicacionActive = false;
-        this.tabIndex=this.indexIndicacions
-        console.log(this.tabIndex)
-      }
-    }
-    if(this.AyudaActive==true){
-      console.log(this.indexAyuda)
-      if (this.indexAyuda>0 && (tabChangeEvent.index >= this.indexAyuda+3 || tabChangeEvent.index <= this.indexAyuda) &&
-        this.AyudaActive == true
-      ) {
-        this.AyudaActive = false;
-        this.tabIndex=this.indexAyuda
-        console.log(this.tabIndex)
-      }
-    }
-    var masindicacion=0
-    if(this.IndicacionActive){
-      masindicacion=4
-    }
+
     var esirca=0
     if(this.ircas!=undefined && this.ircas.length>0){
       esirca=1
     }
-    var noesAonline=0
-    if(this.programEstructura.idModalidad!=1){
-      masindicacion=-1
-      noesAonline=-1
+    var OpenCertificado=0
+
+    if(this.CertificadoActive==true){
+      OpenCertificado=2
     }
-    var TProyecto=0
-    if(this.curso.proyectoAplicacion){
-      TProyecto=1
+    if (this.indexIndicacions>0 && (tabChangeEvent.index >= this.indexIndicacions+5 || tabChangeEvent.index <= this.indexIndicacions) &&
+      this.IndicacionActive == true
+    ) {
+      this.IndicacionActive = false;
+      //this.tabIndex=this.indexIndicacions
+      console.log(this.tabIndex)
     }
-    console.log(esirca)
-    var escurso=0
-    if(this.EsCurso==true){
-      escurso=3
-    }
-    if((tabChangeEvent.index >= (4+TProyecto+noesAonline+esirca) || tabChangeEvent.index < (1+TProyecto+noesAonline))   && this.CertificadoActive){
-      this.CertificadoActive=false
-      if(tabChangeEvent.index >= (4+TProyecto+noesAonline+esirca)){
-        this.tabIndex-=(2+esirca)
+    if(this.AyudaActive==true){
+      if(this.indexAyuda==0){
+        this.indexAyuda=this.tabIndex-(esirca+OpenCertificado)
+
+      }
+      console.log(this.indexAyuda )
+      if (this.indexAyuda>0 && (tabChangeEvent.index >= this.indexAyuda+3 || tabChangeEvent.index < this.indexAyuda))
+      {
+        this.AyudaActive = false;
+        this.indexAyuda=0
+        console.log(this.tabIndex)
       }
     }
-    if(tabChangeEvent.index == (1+TProyecto+noesAonline) && !this.CertificadoActive){
-      this.CertificadoActive=true
+    // var masindicacion=0
+    // if(this.IndicacionActive){
+    //   masindicacion=4
+    // }
+    // var noesAonline=0
+    // if(this.programEstructura.idModalidad!=1){
+    //   masindicacion=-1
+    //   noesAonline=-1
+    // }
+    // var TProyecto=0
+    // if(this.curso.proyectoAplicacion){
+    //   TProyecto=1
+    // }
+    console.log(esirca)
+    //var escurso=0
+    // if(this.EsCurso==true){
+    //   escurso=3
+    // }
+    if(this.CertificadoActive==true){
+      if(this.indexCertificado==0){
+        this.indexCertificado=this.tabIndex
+      }
+      console.log(this.indexCertificado )
+      if (this.indexCertificado>0 && (tabChangeEvent.index >= (this.indexCertificado+3+esirca) || tabChangeEvent.index < this.indexCertificado))
+      {
+        this.CertificadoActive = false;
+        this.indexCertificado=0
+        if(tabChangeEvent.index < this.indexCertificado){
+          this.tabIndex-=(2+esirca)
+        }
+        console.log(this.tabIndex)
+      }
     }
+    // if((tabChangeEvent.index >= (4+TProyecto+noesAonline+esirca) || tabChangeEvent.index < (1+TProyecto+noesAonline))   && this.CertificadoActive){
+    //   this.CertificadoActive=false
+    //   if(tabChangeEvent.index >= (4+TProyecto+noesAonline+esirca)){
+    //   }
+    // }
+    // if(tabChangeEvent.index == (1+TProyecto+noesAonline) && !this.CertificadoActive){
+    //   this.CertificadoActive=true
+    // }
     // if(this.curso!=undefined && this.curso.proyectoAplicacion){
     //   if((tabChangeEvent.index >= (6+noesAonline+esirca) || tabChangeEvent.index < (3+noesAonline))  && this.CertificadoActive){
     //     this.CertificadoActive=false
@@ -256,11 +278,15 @@ export class CursoComponent implements OnInit,OnDestroy {
     this.tabIndex = this.indexIndicacions+index;
   }
   changeIndexAyuda() {
-    if(this.indexAyuda==0){
-      this.indexAyuda=this.tabIndex
-    }
+    // if(this.indexAyuda==0){
+    //   this.indexAyuda=this.tabIndex
+    // }
     this.AyudaActive = true;
     console.log(this.indexAyuda)
+  }
+  changeIndexCertificado() {
+    this.CertificadoActive = true;
+    console.log(this.indexCertificado)
   }
   RegistroProgramaMatriculadoPorIdMatricula(){
     this._DatosPerfilService.RegistroProgramaMatriculadoPorIdMatricula(this.idMatricula).pipe(takeUntil(this.signal$)).subscribe({

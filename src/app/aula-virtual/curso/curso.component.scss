@@ -4,7 +4,7 @@
 .mat-tab-label-container
 .mat-tab-list
 .mat-tab-labels {
-max-width: 180px !important;
+  max-width: 290px;
 }
 
 .msjCom {
@@ -31,13 +31,13 @@ max-width: 180px !important;
   justify-content: flex-start;
   align-items: stretch;
   width: 100%;
-  padding: 20px 10px !important;
+  padding: 20px !important;
   flex-wrap: nowrap !important;
   .titleMatr {
     word-break: break-word;
     white-space: normal;
     /* display: block; */
-    width: 148px !important;
+    width: 248px !important;
     text-align: left;
     margin-left: 10px;
   }
@@ -255,7 +255,7 @@ max-width: 180px !important;
   font-size: 12px;
   background: #0684f2;
   padding: 5px 20px;
-  border-radius: 20px;
+  border-radius: 10px;
   color: white;
 }
 .titleCapitulo {

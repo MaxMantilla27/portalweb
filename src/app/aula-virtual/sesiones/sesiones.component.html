@@ -12,7 +12,7 @@
 
         <div style="width: 100%;display: flex;justify-content: flex-end;padding-right: 30px;">
           <div class="buttonBack no-select"
-            [routerLink]="'/AulaVirtual/MisCursos/' + json.IdMatriculaCabecera+'/'+idPEspecificoHijo">
+            [routerLink]="'/AulaVirtual/MisCursos/' + json.IdMatriculaCabecera+(escurso!=true?'/'+idPEspecificoHijo:'')">
             <i class="material-icons">arrow_back_ios</i>
             Volver a sesiones
           </div>
@@ -22,8 +22,8 @@
           <div class="openClose2" [ngClass]="{'reverse2':!hide}" (click)="hide=!hide">
             <div *ngIf="!hide"> Menú Navegación</div>
             <div class="contentIconMenu">
-              <i class="material-icons" *ngIf="!hide">arrow_back_ios_new</i>
-              <i class="material-icons" *ngIf="hide">arrow_forward_ios</i>
+              <i class="material-icons" *ngIf="!hide">arrow_back</i>
+              <i class="material-icons" *ngIf="hide">arrow_forward</i>
             </div>
           </div>
         </div>

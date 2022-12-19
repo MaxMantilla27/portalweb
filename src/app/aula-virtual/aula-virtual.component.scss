@@ -3,7 +3,7 @@
 }
 .tabVertical .mat-tab-header {
   border-bottom: none !important;
-  margin-top: 40px;
+  margin-top: 50px;
 }
 .tabVertical .mat-tab-header .mat-tab-header-pagination {
   display: none !important;
@@ -50,7 +50,7 @@
   min-width: 60px !important;
   height: auto !important;
   width: 100%;
-  justify-content: center;
+  //justify-content: center;
 }
 .tabVertical
   .mat-tab-header
@@ -93,6 +93,7 @@
   .mat-tab-labels
   .mat-tab-label-active {
   background: #f4f4f4;
+  box-shadow: inset 8px 0px 0 #3390ff;
 }
 .pad-resp {
   padding: 5px 10px 0px 10px;
@@ -101,7 +102,7 @@
 @media (max-width: 768px) {
   .tabVerticalDocente > mat-tab-header{
     z-index: 100;
-    position: absolute !important;
+    //position: absolute !important;
     background: white;
     height: 100%;
     min-width: 2px;
@@ -109,7 +110,7 @@
 
   .tabVertical > mat-tab-header{
     z-index: 100;
-    position: absolute !important;
+    //position: absolute !important;
     background: white;
     height: 100%;
     min-width: 2px;
@@ -155,7 +156,7 @@
   }
   .tabVerticalDocente > mat-tab-header{
     z-index: 100;
-    position: absolute !important;
+    //position: absolute !important;
     background: white;
     height: calc( 100% - 40px );
     min-width: 2px;
@@ -279,12 +280,14 @@
 .openClose {
   //position: absolute;
   cursor: pointer;
-  background: #c3c3c3;
+  background: #0684f2;
   border-right: 2px solid #d2d2d2;
   width: 62px;
   display: flex;
-  justify-content: center;
-  padding: 5px;
+  justify-content: space-around;
+  padding: 10px;
+  color: white;
+  align-items: center;
   img{
     width: 18px;
   }
@@ -295,9 +298,10 @@
     height: 30px;
     width: 30px;
     border-radius: 50%;
-    background: #dadada;
+    background: white;
     .material-icons{
       font-size: 20px !important;
+      color: #0684f2;
     }
   }
 }
@@ -322,14 +326,15 @@
     height: 30px;
     width: 30px;
     border-radius: 50%;
-    background: #dadada;
+    background: white;
     .material-icons{
       font-size: 20px !important;
+      color: #0684f2;
     }
   }
 }
 .reverse {
-  width: 182px ;
+  width: 292px !important;
 }
 
 .reverse2 {
