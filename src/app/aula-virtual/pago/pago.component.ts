@@ -10,6 +10,7 @@ import { ImagenTarjetas } from 'src/app/Core/Shared/ImagenTarjetas';
 import { CronogramaPagoService } from 'src/app/Core/Shared/Services/CronogramaPago/cronograma-pago.service';
 import { FormaPagoService } from 'src/app/Core/Shared/Services/FormaPago/forma-pago.service';
 import { HelperService } from 'src/app/Core/Shared/Services/helper.service';
+import { MedioPagoActivoPasarelaService } from 'src/app/Core/Shared/Services/MedioPagoActivoPasarela/medio-pago-activo-pasarela.service';
 import { SessionStorageService } from 'src/app/Core/Shared/Services/session-storage.service';
 import { SnackBarServiceService } from 'src/app/Core/Shared/Services/SnackBarService/snack-bar-service.service';
 import { PagoTarjetaComponent } from './pago-tarjeta/pago-tarjeta.component';
@@ -31,7 +32,8 @@ export class PagoComponent implements OnInit,OnDestroy {
     public _FormaPagoService:FormaPagoService,
     private _t:ImagenTarjetas,
     private _router:Router,
-    private _SessionStorageService:SessionStorageService
+    private _SessionStorageService:SessionStorageService,
+    private _MedioPagoActivoPasarelaService:MedioPagoActivoPasarelaService,
   ) { }
   ngOnDestroy(): void {
     this.signal$.next(true);
@@ -55,6 +57,7 @@ export class PagoComponent implements OnInit,OnDestroy {
     SimboloMoneda:'',
     WebMoneda:'',
   }
+  public idPasarela:number=0
   public dialogRef:any
   public idMatricula=0
   public textoBienvenido = '';
@@ -75,6 +78,7 @@ export class PagoComponent implements OnInit,OnDestroy {
     this._ActivatedRoute.params.pipe(takeUntil(this.signal$)).subscribe({
       next: (x) => {
         this.idMatricula = parseInt(x['IdMatricula']);
+        this.ObtenerPasarela()
         this.VerificarEstadoAfiliacion()
         this.ObtenerCronogramaPagoMatricula()
       },
@@ -127,7 +131,7 @@ export class PagoComponent implements OnInit,OnDestroy {
   ObtenerCronogramaPagoMatricula(){
     this._CronogramaPagoService.ObtenerCronogramaPagoMatricula(this.idMatricula).pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
-
+        console.log(x)
         if(x.cronogramas!=undefined){
           this.CronogramaPago=x.cronogramas.listaCronogramaAlumno
           this.idAlumno = this.CronogramaPago.idAlumno
@@ -184,6 +188,14 @@ export class PagoComponent implements OnInit,OnDestroy {
         this.total+=r.cuota
       }
     });
+  }
+  ObtenerPasarela(){
+    this._MedioPagoActivoPasarelaService.MedioPagoPasarelaPortalRecurrente(this.idMatricula).pipe(takeUntil(this.signal$)).subscribe({
+      next:x=>{
+        console.log("tarjeta",x)
+        this.idPasarela=x[0].idPasarelaPago?x[0].idPasarelaPago:0
+      }
+    })
   }
   OpenModal(): void {
     const dialogRef = this.dialog.open(PagoTarjetaComponent, {
