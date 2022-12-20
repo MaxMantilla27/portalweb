@@ -64,9 +64,6 @@ export class AfiliacionVisaComponent implements OnInit,OnDestroy {
   }
 
   ngOnInit(): void {
-    this._HelperService.recibirCombosPerfil.pipe(takeUntil(this.signal$)).subscribe((x) => {
-      console.log("ALUMNO-DATOS :",x)
-    })
     this._ActivatedRoute.params.pipe(takeUntil(this.signal$)).subscribe({
       next: (x) => {
         this.idMatricula = parseInt(x['IdMatricula']);
@@ -95,26 +92,25 @@ export class AfiliacionVisaComponent implements OnInit,OnDestroy {
         this.resultVisa.listaCuota.forEach((l:any) => {
           this.resultVisa.total+=l.cuotaTotal
         });
-
-
         this.jsonSave.IdentificadorTransaccion=this.json.IdentificadorTransaccion
         this.jsonSave.MedioCodigo=this.resultVisa.medioCodigo
         this.jsonSave.MedioPago=this.resultVisa.medioPago
         this.jsonSave.RequiereDatosTarjeta=this.json.RequiereDatosTarjeta
         this.jsonSave.TransactionToken=this.resultVisa.procesoPagoBotonVisa.transactionToken
 
-        //this._SessionStorageService.SessionSetValue('datos',JSON.stringify(this.jsonSave));
-        //this.addVisa()
-        //this.SetConfiguration()
+        // let scriptHeader1 = this._renderer2.createElement('script');
+        // scriptHeader1.type="text/javascript"
+        // scriptHeader1.src='https://static-content-qas.vnforapps.com/vTokenSandbox/js/checkout.js'
+        // this._renderer2.appendChild(this._document.getElementById('header'), scriptHeader1);
+        let scriptHeader1 = this._renderer2.createElement('script');
+        scriptHeader1.type="text/javascript"
+        scriptHeader1.src='https://static-content.vnforapps.com/vToken/js/checkout.js'
+        this._renderer2.appendChild(this._document.getElementById('header'), scriptHeader1);
       }
     })
   }
 
   addVisa(){
-    let scriptHeader1 = this._renderer2.createElement('script');
-    scriptHeader1.type="text/javascript"
-    scriptHeader1.src='https://static-content-qas.vnforapps.com/vTokenSandbox/js/checkout.js'
-    this._renderer2.appendChild(this._document.getElementById('header'), scriptHeader1);
     let action = 'https://proceso-pago.bsginstitute.com/ProcesoPagoVisa/Recurrente?IdTransaccion='+this.json.IdentificadorTransaccion
     let timeouturl = this.urlBase+'AulaVirtual/MisPagos/'+this.idMatricula
     let logo = 'https://img.bsginstitute.com/repositorioweb/img/logobsg-visa.svg'
