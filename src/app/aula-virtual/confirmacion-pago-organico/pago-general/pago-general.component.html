@@ -181,20 +181,43 @@
           </div>
         </div>
         <div class="iconoPagoTarjeta">
-          <div *ngIf="
-                jsonSave.TarjetaHabiente.Titular=='' ||
-                jsonSave.TarjetaHabiente.NumeroDocumento.length<=5 ||
-                NumberT.split('-').join('').length<=13 ||
-                jsonSave.TarjetaHabiente.fecha.length<=4 ||
-                jsonSave.TarjetaHabiente.CodigoVV.length<=2"
-                class="imgPagoTarjeta"></div>
-          <div *ngIf="
-                jsonSave.TarjetaHabiente.Titular!='' &&
-                jsonSave.TarjetaHabiente.NumeroDocumento.length>=6 &&
-                NumberT.split('-').join('').length>=14 &&
-                jsonSave.TarjetaHabiente.fecha.length>=5 &&
-                jsonSave.TarjetaHabiente.CodigoVV.length>=3"
+          <div *ngIf="jsonSave.Comprobante==false">
+            <div *ngIf="
+              jsonSave.TarjetaHabiente.Titular=='' ||
+              jsonSave.TarjetaHabiente.NumeroDocumento.length<=5 ||
+              NumberT.split('-').join('').length<=13 ||
+              jsonSave.TarjetaHabiente.fecha.length<=4 ||
+              jsonSave.TarjetaHabiente.CodigoVV.length<=2"
+              class="imgPagoTarjeta"></div>
+            <div *ngIf="
+              jsonSave.TarjetaHabiente.Titular!='' &&
+              jsonSave.TarjetaHabiente.NumeroDocumento.length>=6 &&
+              NumberT.split('-').join('').length>=14 &&
+              jsonSave.TarjetaHabiente.fecha.length>=5 &&
+              jsonSave.TarjetaHabiente.CodigoVV.length>=3"
               class="imgPagoTarjetaVerde"></div>
+          </div>
+          <div *ngIf="jsonSave.Comprobante==true">
+            <div *ngIf="
+              jsonSave.TarjetaHabiente.Titular=='' ||
+              jsonSave.TarjetaHabiente.NumeroDocumento.length<=5 ||
+              NumberT.split('-').join('').length<=13 ||
+              jsonSave.TarjetaHabiente.fecha.length<=4 ||
+              jsonSave.TarjetaHabiente.CodigoVV.length<=2 ||
+              jsonSave.RazonSocial.length==0 ||
+              jsonSave.CodigoTributario.length==0"
+              class="imgPagoTarjeta"></div>
+            <div *ngIf="
+              jsonSave.TarjetaHabiente.Titular!='' &&
+              jsonSave.TarjetaHabiente.NumeroDocumento.length>=6 &&
+              NumberT.split('-').join('').length>=14 &&
+              jsonSave.TarjetaHabiente.fecha.length>=5 &&
+              jsonSave.TarjetaHabiente.CodigoVV.length>=3 &&
+              jsonSave.RazonSocial.length!=0 &&
+              jsonSave.CodigoTributario.length!=0"
+              class="imgPagoTarjetaVerde"></div>
+          </div>
+
           <div class="textPagoTarjeta">
             <span>PAGO</span>
             <span>100%</span>
