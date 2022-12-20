@@ -123,11 +123,14 @@
               <mat-label>Razón Social</mat-label>
               <input type="text" [(ngModel)]="jsonSave.RazonSocial" placeholder="Razón Social" [ngModelOptions]="{standalone: true}"
                 matInput />
+              <i *ngIf="jsonSave.RazonSocial.length!=0" style="font-size: 15px !important;margin-left: 10px;color: #02c158;" class="material-icons" >check_circle</i>
             </mat-form-field>
             <mat-form-field appearance="outline" [floatLabel]="'always'" style="width: 100%;">
               <mat-label>Número Tributario</mat-label>
               <input type="text" [(ngModel)]="jsonSave.CodigoTributario" placeholder="Número Tributario" [ngModelOptions]="{standalone: true}"
                 matInput />
+              <i *ngIf="jsonSave.CodigoTributario.length!=0" style="font-size: 15px !important;margin-left: 10px;color: #02c158;" class="material-icons" >check_circle</i>
+
             </mat-form-field>
           </ng-container>
 

@@ -105,6 +105,7 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
   public CodigoIso=''
   public OpenChat=false;
   public cargaChat=false;
+  public rutaProgramaDetalle:any;
   ngOnDestroy(): void {
     this.signal$.next(true);
     this.signal$.complete();
@@ -244,7 +245,6 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
   public porcentajeDescuento='';
   public textoDescuento='';
   ngOnInit(): void {
-
     this._HelperServiceP.recibirChangePais().pipe(takeUntil(this.signal$)).subscribe((x) => {
       if (this.isBrowser) {
         location.reload();
@@ -257,6 +257,8 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
     }
     this.activatedRoute.params.pipe(takeUntil(this.signal$)).subscribe({
       next: (x) => {
+        console.log(x)
+        this.rutaProgramaDetalle=x
         this.area = x['AreaCapacitacion'].split('-').join(' ');
         this.AraCompleta = x['AreaCapacitacion'];
         this.nombreProgramCompeto = x['ProgramaNombre'];
@@ -294,7 +296,6 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
     this.AddFields();
     this.ObtenerCombosPortal();
     this.ObtenerCabeceraProgramaGeneral();
-
   }
 
   RegistrarProgramaPrueba(){
@@ -341,7 +342,8 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
         idBusqueda:this.idBusqueda,
         alumno:this.alumno,
         nombre:this.cabecera.nombre,
-        modalidad:this.cabecera.listProgramaEspecificoInformacionDTO},
+        modalidad:this.cabecera.listProgramaEspecificoInformacionDTO,
+        rutaProgramaDetalle:this.rutaProgramaDetalle},
       panelClass: 'programa-pago-dialog-container',
     });
     dialogRef.afterClosed().pipe(takeUntil(this.signal$)).subscribe((result) => {
@@ -376,6 +378,8 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
     var token=this._SessionStorageService.validateTokken();
     if(token){
       this._FormaPagoService.PreProcesoPagoOrganicoAlumno(this.jsonEnvioPago,dialogRef);
+      this._SessionStorageService.SessionSetValue('urlRedireccionErrorPago',JSON.stringify(this.rutaProgramaDetalle));
+
     }else{
       this._SessionStorageService.SessionSetValue('redirect','pago');
       this._SessionStorageService.SessionSetValue('datosTarjeta',JSON.stringify(this.jsonEnvioPago));
@@ -467,10 +471,10 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
             this.ListExpositor();
             this.ListMontoPago();
             this.ListTagProgramaRelacionadoPorIdBusqueda();
+            this.obtenerErrorPagoModal();
           }
           else{
             this._router.navigate(['error404']);
-
           }
         },
         error: (e) => {
@@ -510,10 +514,6 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
           this.seccion.objetivo=this.seccion.objetivo==null?'':this.seccion.objetivo
           this.seccion.publicoObjetivo=this.seccion.publicoObjetivo==null?'':this.seccion.publicoObjetivo
           this.seccion.duracionHorario=this.seccion.duracionHorario==null?'':this.seccion.duracionHorario
-          console.log(this.seccion.objetivo)
-          console.log(this.seccion.publicoObjetivo)
-          console.log(this.seccion.duracionHorario)
-
         },
       });
   }
@@ -1114,5 +1114,17 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
       })
     }
     console.log(this. VistaPreviaPortal)
+  }
+  obtenerErrorPagoModal(){
+    var ModalReintento = this._SessionStorageService.SessionGetValue('urlRedireccionErrorPagoModal');
+    if(ModalReintento!=''){
+      var abrirModalReintento = JSON.parse(ModalReintento);
+      console.log(abrirModalReintento)
+      if(abrirModalReintento==true){
+        console.log('hola')
+        this.OpenModalPago();
+      }
+      this._SessionStorageService.SessionDeleteValue('urlRedireccionErrorPagoModal')
+    }
   }
 }
