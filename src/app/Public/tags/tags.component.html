@@ -28,10 +28,21 @@
       <app-card-programas [cardContent]="item" [Interaccion]="'Tags(programas relacionados)'"></app-card-programas>
     </div>
     <div class="col-12 col-md-12 col-lg-12 pTagTitle">
-      Articulos
+      Blog
     </div>
-    <div class="col-12 col-md-6 col-lg-4" *ngFor="let item of Articulos" style="margin-bottom: 40px;">
-      <app-card-blog [idTipoArticulo]="item.idArea"  [cardContent]="item"></app-card-blog>
+    <ng-container   *ngFor="let item of Articulos" >
+      <div *ngIf="item.idArea==1" class="col-12 col-md-6 col-lg-4" style="margin-bottom: 40px;">
+        <app-card-blog [idTipoArticulo]="item.idArea"  [cardContent]="item"></app-card-blog>
+      </div>
+    </ng-container>
+    <div class="col-12 col-md-12 col-lg-12 pTagTitle">
+      White Papers
     </div>
+    <ng-container *ngFor="let item of Articulos" >
+      <div class="col-12 col-md-6 col-lg-6" *ngIf="item.idArea!=1" style="margin-bottom: 40px;">
+        <app-card-white-papers  [cardContent]="item"></app-card-white-papers>
+      </div>
+    </ng-container>
   </div>
 </div>
+<app-scroll-top></app-scroll-top>

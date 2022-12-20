@@ -122,6 +122,7 @@ import { CertificadoIntegraPortalService } from './Services/CertificadoIntegraPo
 import { DefaultButtonFlechaComponent } from './Containers/buttons/default-button-flecha/default-button-flecha.component';
 import { FormularioAzulComponent } from './Containers/formulario-azul/formulario-azul.component';
 import { FormularioPopUpComponent } from './Containers/formulario-pop-up/formulario-pop-up.component';
+import { ScrollTopComponent } from './Containers/scroll-top/scroll-top.component';
 
 @NgModule({
   imports: [
@@ -211,6 +212,7 @@ import { FormularioPopUpComponent } from './Containers/formulario-pop-up/formula
     DefaultButtonFlechaComponent,
     FormularioAzulComponent,
     FormularioPopUpComponent,
+    ScrollTopComponent,
     //ChatZComponent,
   ],
   exports: [
@@ -296,7 +298,8 @@ import { FormularioPopUpComponent } from './Containers/formulario-pop-up/formula
     EliminarComponent,
     DefaultButtonFlechaComponent,
     FormularioAzulComponent,
-    FormularioPopUpComponent
+    FormularioPopUpComponent,
+    ScrollTopComponent,
   ],
   providers: [
     SessionStorageService,

@@ -1,4 +1,5 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
+import { Component, HostListener, Inject, OnDestroy, OnInit, PLATFORM_ID } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
@@ -13,15 +14,18 @@ import { TemasRelacionadosService } from 'src/app/Core/Shared/Services/TemasRela
   styleUrls: ['./tags.component.scss']
 })
 export class TagsComponent implements OnInit,OnDestroy {
+  isBrowser: boolean;
   private signal$ = new Subject();
-
   constructor(
     private router: Router,
     public _TemasRelacionadosService:TemasRelacionadosService,
     private activatedRoute:ActivatedRoute,
     private _SeoService:SeoService,
-    private title:Title
-  ) { }
+    private title:Title,
+    @Inject(PLATFORM_ID) platformId: Object
+  ) {
+    this.isBrowser = isPlatformBrowser(platformId);
+  }
 
   ngOnDestroy(): void {
     this.signal$.next(true);
@@ -34,7 +38,7 @@ export class TagsComponent implements OnInit,OnDestroy {
   public tagDescripcion=''
   public programas:Array<CardProgramasDTO>=[];
   public Articulos:Array<ArticuloDTO>=[];
-
+  public scroll=0
   public migaPan = [
     {
       titulo: 'Inicio',
