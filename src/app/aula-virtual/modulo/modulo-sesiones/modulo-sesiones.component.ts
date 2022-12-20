@@ -159,8 +159,7 @@ export class ModuloSesionesComponent implements OnInit, OnChanges {
                   }
                 }else{
                   var latcap=this.estructuraCapitulo.registroEstructuraCursoCapitulo[cap-1].registroEstructuraCursoSesion.length-1
-                  console.log(this.estructuraCapitulo.registroEstructuraCursoCapitulo[cap-1].registroEstructuraCursoSesion[latcap])
-                  console.log(c)
+
                   if(
                     Math.ceil(
                       this.estructuraCapitulo.registroEstructuraCursoCapitulo[cap-1].registroEstructuraCursoSesion[latcap].porcentajeVideoVisualizado

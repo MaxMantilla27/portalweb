@@ -1,25 +1,17 @@
 import { DOCUMENT } from '@angular/common';
-import {
-  AfterViewInit,
-  Component,
-  Inject,
-  OnDestroy,
-  OnInit,
-  Renderer2,
-} from '@angular/core';
+import { AfterViewInit, Component, Inject, OnDestroy, OnInit, Renderer2 } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Subject, takeUntil, timeout } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 import { RegistroRespuestaPreProcesoPagoDTO } from 'src/app/Core/Models/ProcesoPagoDTO';
 import { FormaPagoService } from 'src/app/Core/Shared/Services/FormaPago/forma-pago.service';
 import { SessionStorageService } from 'src/app/Core/Shared/Services/session-storage.service';
 
 @Component({
-  selector: 'app-confirmacion-pago-izipay',
-  templateUrl: './confirmacion-pago-izipay.component.html',
-  styleUrls: ['./confirmacion-pago-izipay.component.scss'],
+  selector: 'app-afiliacion-izipay',
+  templateUrl: './afiliacion-izipay.component.html',
+  styleUrls: ['./afiliacion-izipay.component.scss']
 })
-export class ConfirmacionPagoIzipayComponent
-  implements OnInit, OnDestroy, AfterViewInit
+export class AfiliacionIzipayComponent implements OnInit, OnDestroy, AfterViewInit
 {
   private signal$ = new Subject();
   constructor(
@@ -66,6 +58,10 @@ export class ConfirmacionPagoIzipayComponent
       .subscribe({
         next: (x) => {
           this.resultPreValidacion = x._Repuesta;
+          this.resultPreValidacion.total=0;
+          this.resultPreValidacion.listaCuota.forEach((l:any) => {
+            this.resultPreValidacion.total+=l.cuotaTotal
+          });
           this.iniciarScripsIzipay();
           // KR.setFormConfig(config);
         },
@@ -81,9 +77,9 @@ export class ConfirmacionPagoIzipayComponent
       this.resultPreValidacion.procesoPagoBotonIziPay.publicKey
     );
     script1.setAttribute('kr-post-url-success', 
-    'https://proceso-pago.bsginstitute.com/ProcesoPagoIziPay/Cronograma?IdTransaccion='+this.json.IdentificadorTransaccion);
+    'https://proceso-pago.bsginstitute.com/ProcesoPagoIziPay/Recurrente?IdTransaccion='+this.json.IdentificadorTransaccion);
     script1.setAttribute('kr-post-url-refused', 
-    'https://proceso-pago.bsginstitute.com/ProcesoPagoIziPay/Cronograma?IdTransaccion='+this.json.IdentificadorTransaccion);
+    'https://proceso-pago.bsginstitute.com/ProcesoPagoIziPay/Recurrente?IdTransaccion='+this.json.IdentificadorTransaccion);
     this._renderer2.appendChild(
       this._document.getElementById('header'),
       script1
@@ -105,17 +101,4 @@ export class ConfirmacionPagoIzipayComponent
       this.resultPreValidacion.procesoPagoBotonIziPay.formToken
     );
   }
-
-  config={
-    "merchant": {
-      "header": {
-        "image": {
-          "type": "logo",
-          "visibility": true,
-          "src": "https://www.logomoose.com/wp-content/uploads/2018/02/logomoosedogandowl-011.jpg"
-        }
-      }
-    }
-  }
-
 }

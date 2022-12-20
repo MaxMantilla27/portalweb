@@ -1,20 +1,29 @@
 <mat-card class="card-matriculas">
-  <img mat-card-image [src]="cardContent.Img" (click)="EventoInteraccion()" [routerLink]="cardContent.Url" [alt]="cardContent.ImgAlt" (error)="updateUrl()">
+  <img mat-card-image [src]="cardContent.Img" (click)="EventoInteraccion()" [routerLink]="cardContent.Url"
+    [alt]="cardContent.ImgAlt" (error)="updateUrl()">
   <mat-card-content>
     <div *ngIf="cardContent.Tipo==2" class="matriculaicon">
 
-      <i class="material-icons matriculaicon" >play_circle_outline</i>
-      <div >Online Sincrónico</div>
+      <i class="material-icons matriculaicon">play_circle_outline</i>
+      <div>Online Sincrónico</div>
     </div>
     <div *ngIf="cardContent.Tipo==1" class="matriculaicon">
-      <i class="material-icons" >live_tv</i>
-      <div >Online Asincrónico</div>
+      <i class="material-icons">live_tv</i>
+      <div>Online Asincrónico</div>
     </div>
     <div class="title" (click)="EventoInteraccion()" [routerLink]="cardContent.Url">{{cardContent.Title}}</div>
   </mat-card-content>
   <mat-card-footer>
     <div class="invercion">
-      <ng-content  select="[linkIcons]">
+      <div class="progressMat">
+        <mat-progress-bar mode="determinate" class="progrees-modulo" style="    border-radius: 10px;height: 8px;"
+          [value]="(matricula.Procent!=undefined)?matricula.Procent:0">
+        </mat-progress-bar>
+        <div class="nrito">
+          {{matricula.Procent | number:'1.0-0'}} %
+        </div>
+      </div>
+      <ng-content select="[linkIcons]">
 
       </ng-content>
 

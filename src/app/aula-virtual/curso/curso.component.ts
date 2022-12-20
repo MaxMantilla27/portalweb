@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, ElementRef, OnDestroy, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { MatTabChangeEvent } from '@angular/material/tabs';
 import { ActivatedRoute } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
@@ -21,13 +21,23 @@ import { SessionStorageService } from 'src/app/Core/Shared/Services/session-stor
 })
 export class CursoComponent implements OnInit,OnDestroy {
   private signal$ = new Subject();
+
+  @ViewChild('indicaciones') indicaciones!: ElementRef;
+  @ViewChild('sesiones') sesiones!: ElementRef;
+  @ViewChild('modulos') modulos!: ElementRef;
+  @ViewChild('proyectos') proyectos!: ElementRef;
+  @ViewChild('certificados') certificados!: ElementRef;
+  @ViewChild('tramites') tramites!: ElementRef;
+  @ViewChild('webinars') webinars!: ElementRef;
+  @ViewChild('beneficios') beneficios!: ElementRef;
+
   constructor(
     private _HelperService: HelperService,
     private _ProgramaContenidoService: ProgramaContenidoService,
     private _ActivatedRoute: ActivatedRoute,
     private _DatosPerfilService:DatosPerfilService,
     private _SessionStorageService:SessionStorageService,
-    private _CertificadoService:CertificadoService
+    private _CertificadoService:CertificadoService,
   ) {}
   ngOnDestroy(): void {
     this.signal$.next(true);
@@ -104,7 +114,7 @@ export class CursoComponent implements OnInit,OnDestroy {
       next: (x) => {
         this.idMatricula = parseInt(x['IdMatricula']);
         this.RegistroProgramaMatriculadoPorIdMatricula();
-        this.ObtenerListadoProgramaContenido();
+        //this.ObtenerListadoProgramaContenido();
         this.ObtenerDatosCertificado();
         this.ObtenerDatosCertificadoIrcaEnvio();
       },
@@ -130,6 +140,46 @@ export class CursoComponent implements OnInit,OnDestroy {
         this.ircas=x
       }
     })
+  }
+  Redirect(){
+
+    var valorLoscalS=this._SessionStorageService.SessionGetValue('cursoIndex')==''?0:parseInt(this._SessionStorageService.SessionGetValue('cursoIndex'))
+    console.log(valorLoscalS);
+    console.log(this.modulos);
+    if(valorLoscalS<2){
+      if(this.EsCurso==true){
+        this.sesiones.nativeElement.click()
+      }else{
+        this.modulos.nativeElement.click()
+      }
+    }else{
+      if(valorLoscalS==2){
+        if(this.proyectos!=undefined){
+          this.proyectos.nativeElement.click()
+        }
+      }
+      if(valorLoscalS==3){
+        if(this.certificados!=undefined){
+          this.certificados.nativeElement.click()
+        }
+      }
+      if(valorLoscalS==4){
+        if(this.tramites!=undefined){
+          this.tramites.nativeElement.click()
+        }
+      }
+      if(valorLoscalS==5){
+        if(this.webinars!=undefined){
+          this.webinars.nativeElement.click()
+        }
+      }
+      if(valorLoscalS==6){
+        if(this.beneficios!=undefined){
+          this.beneficios.nativeElement.click()
+        }
+      }
+    }
+    this._SessionStorageService.SessionDeleteValue('cursoIndex');
   }
   ObtenerDatosCertificado(){
     this._CertificadoService.ObtenerDatosCertificadoEnvio(this.idMatricula).pipe(takeUntil(this.signal$)).subscribe({
@@ -299,39 +349,39 @@ export class CursoComponent implements OnInit,OnDestroy {
           idcentrocosto:x.idCentroCosto
         });
         this.curso=x
-        var valorLoscalS=this._SessionStorageService.SessionGetValue('cursoIndex')==''?0:parseInt(this._SessionStorageService.SessionGetValue('cursoIndex'))
-        if(this.curso!=undefined ){
-          //this.listaRegistroVideoSesionProgramaSincronico()
-          if(valorLoscalS>1){
-            if(this.curso.proyectoAplicacion){
-              this.tabIndex=valorLoscalS;
-            }else{
-              this.tabIndex=valorLoscalS-1
-            }
-          }
-          if(this.curso.proyectoAplicacion){
-            if(valorLoscalS>4){
-              if(this.curso.webibarActivo){
-                this.tabIndex=valorLoscalS;
-              }else{
-                this.tabIndex=valorLoscalS-1
-              }
-            }
-          }else{
-            if(valorLoscalS>3){
-              if(this.curso.webibarActivo){
-                this.tabIndex=valorLoscalS;
-              }else{
-                this.tabIndex=valorLoscalS-1
-              }
-            }
 
-          }
-          this.tabIndex=valorLoscalS;
-          console.log(this.tabIndex)
-        }
+        this.ObtenerListadoProgramaContenido();
+        // if(this.curso!=undefined ){
+        //   //this.listaRegistroVideoSesionProgramaSincronico()
+        //   if(valorLoscalS>1){
+        //     if(this.curso.proyectoAplicacion){
+        //       this.tabIndex=valorLoscalS;
+        //     }else{
+        //       this.tabIndex=valorLoscalS-1
+        //     }
+        //   }
+        //   if(this.curso.proyectoAplicacion){
+        //     if(valorLoscalS>4){
+        //       if(this.curso.webibarActivo){
+        //         this.tabIndex=valorLoscalS;
+        //       }else{
+        //         this.tabIndex=valorLoscalS-1
+        //       }
+        //     }
+        //   }else{
+        //     if(valorLoscalS>3){
+        //       if(this.curso.webibarActivo){
+        //         this.tabIndex=valorLoscalS;
+        //       }else{
+        //         this.tabIndex=valorLoscalS-1
+        //       }
+        //     }
 
-        this._SessionStorageService.SessionDeleteValue('cursoIndex');
+        //   }
+        //   this.tabIndex=valorLoscalS;
+        //   console.log(this.tabIndex)
+        // }
+
 
       }
     })
@@ -402,6 +452,9 @@ export class CursoComponent implements OnInit,OnDestroy {
             });
             this.ObtenerEstructuraEspecificaCurso();
           }
+          setTimeout(() => {
+            this.Redirect();
+          }, 1000);
 
         },
       });

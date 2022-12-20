@@ -23,7 +23,7 @@
       <!-- <app-video-ayuda></app-video-ayuda> -->
     </div>
     <div class="col-12 col-md-4 col-lg-4" *ngFor="let item of matriculas" style="margin-bottom: 20px;">
-      <app-card-matriculas [cardContent]="{ Img: 'https://img.bsginstitute.com/repositorioweb/img/programas/'+item.pw_ImgPortada,
+      <app-card-matriculas [matricula]="item" [cardContent]="{ Img: 'https://img.bsginstitute.com/repositorioweb/img/programas/'+item.pw_ImgPortada,
       Title: item.programaGeneral,ImgAlt: '',Tipo:item.tipoModalidad,Url: '/AulaVirtual/MisCursos/'+item.idMatriculaCabecera}">
 
         <ng-container linkIcons>
@@ -40,11 +40,12 @@
           </button>
           <button class="buttonIconCurso" (click)="EventoInteraccion('Módulos',item.programaGeneral);saveIndex(1)" [routerLink]="'/AulaVirtual/MisCursos/'+item.idMatriculaCabecera"
          mat-icon-button
-            matTooltip="Módulos"
+            [matTooltip]="item.cantidad>1?'Módulos':'Sesiones'"
             matTooltipClass="tootipMatriculas">
 
             <div class="contenticonsCard">
-              <div class="iconsCardMatriculas" style="background-image: url(../../../assets/icons/modulos-naranja.svg) ;">
+              <div class="iconsCardMatriculas"
+              [style]="item.cantidad>1?'background-image: url(../../../assets/icons/modulos-naranja.svg) ;':'background-image: url(../../../assets/icons/sesion-naranja.svg);'">
               </div>
             </div>
             <!-- <img class="iconsCardMatriculas" src="../../../assets/icons/modulos-naranja.svg" alt=""> -->

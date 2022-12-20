@@ -118,6 +118,7 @@ import { CardBlancComponent } from './Containers/card/card-blanc/card-blanc.comp
 import { ChargeTextComponent } from './Containers/Dialog/charge-text/charge-text.component';
 import { LoadVerticalComponent } from './Containers/load-vertical/load-vertical.component';
 import { EliminarComponent } from './Containers/Dialog/eliminar/eliminar.component';
+import { CertificadoIntegraPortalService } from './Services/CertificadoIntegraPortal/certificado-integra-portal.service';
 import { DefaultButtonFlechaComponent } from './Containers/buttons/default-button-flecha/default-button-flecha.component';
 import { FormularioAzulComponent } from './Containers/formulario-azul/formulario-azul.component';
 import { FormularioPopUpComponent } from './Containers/formulario-pop-up/formulario-pop-up.component';
@@ -336,7 +337,8 @@ import { FormularioPopUpComponent } from './Containers/formulario-pop-up/formula
     AutoEvaluacionService,
     TrabajoDeParesIntegraService,
     IntegraEsquemaEvaluacionService,
-    SeoService
+    SeoService,
+    CertificadoIntegraPortalService
   ],
 })
 export class SharedModule {

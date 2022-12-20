@@ -100,6 +100,8 @@ import { ResultadoPagoKlapComponent } from './resultado-pago-klap/resultado-pago
 import { AfiliacionOpenpayComponent } from './confirmacion-afiliacion-pago-recurrente/afiliacion-openpay/afiliacion-openpay.component';
 import { DesafiliacionOpenpayComponent } from './confirmacion-desafiliacion-pago-recurrente/desafiliacion-openpay/desafiliacion-openpay.component';
 import { AfiliacionVisaComponent } from './confirmacion-afiliacion-pago-recurrente/afiliacion-visa/afiliacion-visa.component';
+import { ResultadoPagoIzipayComponent } from './resultado-pago-izipay/resultado-pago-izipay.component';
+import { AfiliacionIzipayComponent } from './confirmacion-afiliacion-pago-recurrente/afiliacion-izipay/afiliacion-izipay.component';
 
 
 
@@ -199,6 +201,8 @@ import { AfiliacionVisaComponent } from './confirmacion-afiliacion-pago-recurren
     AfiliacionOpenpayComponent,
     DesafiliacionOpenpayComponent,
     AfiliacionVisaComponent,
+    ResultadoPagoIzipayComponent,
+    AfiliacionIzipayComponent,
 
   ],
   imports: [

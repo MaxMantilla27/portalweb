@@ -354,11 +354,9 @@
     </div>
   </div>
 </div>
-<div class="container" *ngIf="certificado!=null">
-  <div class="row rowpadd">
-    <div class="col-12 col-md-5 col-lg-5">
-      <div class="subtitulo">Certificación</div>
-    </div>
+<div class="container" >
+  <div *ngIf="certificadoVacio==false" class="row rowpadd">
+    <div class="col-12 col-md-5 col-lg-5"></div>
     <div class="col-12 col-md-7 col-lg-7">
     </div>
     <div class="col-12 col-md-5 col-lg-5" style="margin: 20px 0px;">
@@ -400,6 +398,9 @@
     <div class="col-12">
 
     </div>
+  </div>
+  <div *ngIf="certificadoVacio==true" class="row rowpadd" style="padding: 10px;">
+
   </div>
 </div>
 <div style="background: #e6eefa;">
