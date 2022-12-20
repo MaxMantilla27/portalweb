@@ -1,11 +1,12 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
 import { CardMatriculasDTO } from 'src/app/Core/Models/BasicDTO';
 import { HelperService } from '../../../Services/helper.service';
 
 @Component({
   selector: 'app-card-matriculas',
   templateUrl: './card-matriculas.component.html',
-  styleUrls: ['./card-matriculas.component.scss']
+  styleUrls: ['./card-matriculas.component.scss'],
+  encapsulation: ViewEncapsulation.None,
 })
 export class CardMatriculasComponent implements OnInit {
 
@@ -14,6 +15,7 @@ export class CardMatriculasComponent implements OnInit {
   ) { }
 
   @Input() cardContent:CardMatriculasDTO={Img:'',Title:'',ImgAlt:'',Tipo:1,Url:''};
+  @Input() matricula:any
   ngOnInit(): void {
   }
   updateUrl() {

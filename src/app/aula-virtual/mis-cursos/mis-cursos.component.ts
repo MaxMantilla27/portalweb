@@ -59,7 +59,22 @@ export class MisCursosComponent implements OnInit,OnDestroy {
         this.matriculas = x;
         this.matriculas.forEach(p=>{
           p.tipoModalidad=parseInt(p.tipoModalidad)
+          p.Procent=0;
+          var total=0;
+          var toralR=0;
+          total+=p.videosTotal==null?0:p.videosTotal
+          total+=p.examenProgramados==null?0:p.examenProgramados
+          total+=p.tareasProgramadas==null?0:p.tareasProgramadas
+
+          toralR+=p.videosTerminados==null?0:p.videosTerminados
+          toralR+=p.examenRealizado==null?0:p.examenRealizado
+          toralR+=p.tareasRealizadas==null?0:p.tareasRealizadas
+
+          if(total>0){
+            p.Procent=toralR*100/total;
+          }
         })
+        console.log(this.matriculas);
       },
     });
   }

@@ -118,6 +118,7 @@ import { CardBlancComponent } from './Containers/card/card-blanc/card-blanc.comp
 import { ChargeTextComponent } from './Containers/Dialog/charge-text/charge-text.component';
 import { LoadVerticalComponent } from './Containers/load-vertical/load-vertical.component';
 import { EliminarComponent } from './Containers/Dialog/eliminar/eliminar.component';
+import { CertificadoIntegraPortalService } from './Services/CertificadoIntegraPortal/certificado-integra-portal.service';
 
 @NgModule({
   imports: [
@@ -327,7 +328,8 @@ import { EliminarComponent } from './Containers/Dialog/eliminar/eliminar.compone
     AutoEvaluacionService,
     TrabajoDeParesIntegraService,
     IntegraEsquemaEvaluacionService,
-    SeoService
+    SeoService,
+    CertificadoIntegraPortalService
   ],
 })
 export class SharedModule {
