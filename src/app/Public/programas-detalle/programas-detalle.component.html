@@ -315,10 +315,10 @@
       </mat-accordion>
       <div class="piePagina" [innerHtml]="EstructuraPiePagina | safeHtml"></div>
     </div>
-    <div  class="col-12 col-md-4 col-lg-4" *ngIf="ExisteVideo==true" >
-      <ng-container>
+    <div  class="col-12 col-md-12 col-lg-4 ContenidoVistaPrevia" *ngIf="ExisteVideo==true">
       <iframe #myIframe id="myIframe" id="cartoonVideo"[src]="VistaPreviaPortal | safe" class="embed-responsive-item" frameborder="5" allowfullscreen></iframe>
-      </ng-container>
+
+
     </div>
   </div>
 </div>
