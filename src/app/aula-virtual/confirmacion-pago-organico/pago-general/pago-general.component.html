@@ -53,8 +53,9 @@
 
           <mat-form-field class="col-12" appearance="outline" [floatLabel]="'always'" style="width: 100%;">
             <mat-label>Titular de la Tarjeta</mat-label>
-            <input type="text" placeholder="Nombre como aparece en la tarjeta" [ngModelOptions]="{standalone: true}"
+            <input style="display: flex;" type="text" placeholder="Nombre como aparece en la tarjeta" [ngModelOptions]="{standalone: true}"
             [(ngModel)]="jsonSave.TarjetaHabiente.Titular" matInput >
+            <i *ngIf="jsonSave.TarjetaHabiente.Titular!=''" style="font-size: 15px !important;margin-left: 10px;color: #02c158;" class="material-icons" >check_circle</i>
           </mat-form-field>
 
           <ng-container *ngIf="resultCard.idPasarelaPago==1 && resultCard.idFormaPago==65">
@@ -87,6 +88,7 @@
             <mat-label>Documento de Identidad</mat-label>
             <input type="text" placeholder="N° de Documento" [ngModelOptions]="{standalone: true}"
             [(ngModel)]="jsonSave.TarjetaHabiente.NumeroDocumento" matInput >
+            <i *ngIf="jsonSave.TarjetaHabiente.NumeroDocumento.length>=6" style="font-size: 15px !important;margin-left: 10px;color: #02c158;" class="material-icons" >check_circle</i>
           </mat-form-field>
           <ng-container *ngIf="resultCard.idPasarelaPago!=1 || resultCard.idFormaPago!=65">
 
@@ -94,6 +96,7 @@
               <mat-label>Número de tarjeta</mat-label>
               <input type="text" placeholder="Número de tarjeta" [ngModelOptions]="{standalone: true}"
               [(ngModel)]="NumberT" matInput appInputCard>
+              <i *ngIf="NumberT.split('-').join('').length>=14" style="font-size: 15px !important;margin-left: 10px;color: #02c158;" class="material-icons" >check_circle</i>
             </mat-form-field>
             <div class="col-6 col-md-6 col-lg-6">
 
@@ -101,6 +104,7 @@
                 <mat-label>Fecha de vencimiento MM/AA</mat-label>
                 <input type="text" placeholder="MM/AA" [ngModelOptions]="{standalone: true}"
                 [(ngModel)]="jsonSave.TarjetaHabiente.fecha" matInput appInputCardFecha>
+                <i *ngIf="jsonSave.TarjetaHabiente.fecha.length>=5" style="font-size: 15px !important;margin-left: 10px;color: #02c158;" class="material-icons" >check_circle</i>
               </mat-form-field>
             </div>
 
@@ -109,6 +113,7 @@
                 <mat-label>CVV</mat-label>
                 <input type="text" placeholder="CVV" [ngModelOptions]="{standalone: true}"
                 [(ngModel)]="jsonSave.TarjetaHabiente.CodigoVV" matInput [maxLength]="4">
+                <i *ngIf="jsonSave.TarjetaHabiente.CodigoVV.length>=3" style="font-size: 15px !important;margin-left: 10px;color: #02c158;" class="material-icons" >check_circle</i>
               </mat-form-field>
             </div>
           </ng-container>
@@ -173,7 +178,20 @@
           </div>
         </div>
         <div class="iconoPagoTarjeta">
-          <div class="imgPagoTarjeta"></div>
+          <div *ngIf="
+                jsonSave.TarjetaHabiente.Titular=='' ||
+                jsonSave.TarjetaHabiente.NumeroDocumento.length<=5 ||
+                NumberT.split('-').join('').length<=13 ||
+                jsonSave.TarjetaHabiente.fecha.length<=4 ||
+                jsonSave.TarjetaHabiente.CodigoVV.length<=2"
+                class="imgPagoTarjeta"></div>
+          <div *ngIf="
+                jsonSave.TarjetaHabiente.Titular!='' &&
+                jsonSave.TarjetaHabiente.NumeroDocumento.length>=6 &&
+                NumberT.split('-').join('').length>=14 &&
+                jsonSave.TarjetaHabiente.fecha.length>=5 &&
+                jsonSave.TarjetaHabiente.CodigoVV.length>=3"
+              class="imgPagoTarjetaVerde"></div>
           <div class="textPagoTarjeta">
             <span>PAGO</span>
             <span>100%</span>

@@ -41,3 +41,13 @@
       }
   }
 }
+.verde {
+  background-color: #4EC25B;
+  color: white;
+  &:hover {
+      background-color: #5DCF6A;
+      div{
+        text-decoration: underline;
+      }
+  }
+}

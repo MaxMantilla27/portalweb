@@ -57,6 +57,7 @@ import { Title } from '@angular/platform-browser';
 import { SeoService } from 'src/app/Core/Shared/Services/seo.service';
 import { MatTabChangeEvent } from '@angular/material/tabs';
 import { DatosFormularioDTO } from 'src/app/Core/Models/DatosFormularioDTO';
+import { ProgramaFormularioComponent } from './programa-formulario/programa-formulario.component';
 declare const fbq:any;
 declare const gtag:any;
 @Component({
@@ -240,6 +241,8 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
     idAreaTrabajo:undefined,
     idIndustria:undefined,
   }
+  public porcentajeDescuento='';
+  public textoDescuento='';
   ngOnInit(): void {
 
     this._HelperServiceP.recibirChangePais().pipe(takeUntil(this.signal$)).subscribe((x) => {
@@ -313,6 +316,15 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
       width: '561px',
       data: { url: this.VistaPreviaPortal },
       panelClass: 'custom-dialog-container',
+    });
+
+  }
+  OpenModalFormulario(): void {
+    const dialogRef = this.dialog.open(ProgramaFormularioComponent, {
+      width: '400px',height:'570px',
+      data: { IdPespecificoPrograma:this.IdPespecificoPrograma,
+              IdBusqueda:this.idBusqueda },
+      panelClass: 'formulario-container',
     });
 
   }
@@ -423,6 +435,7 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
 
             }
             this.cabecera = x.programaCabeceraDetalleDTO;
+            console.log(this.cabecera)
             if(this.cabecera.tituloHtml!=null){
             }
             if(x.programaCabeceraDetalleDTO.listProgramaEspecificoInformacionDTO.length>0){
@@ -497,6 +510,9 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
           this.seccion.objetivo=this.seccion.objetivo==null?'':this.seccion.objetivo
           this.seccion.publicoObjetivo=this.seccion.publicoObjetivo==null?'':this.seccion.publicoObjetivo
           this.seccion.duracionHorario=this.seccion.duracionHorario==null?'':this.seccion.duracionHorario
+          console.log(this.seccion.objetivo)
+          console.log(this.seccion.publicoObjetivo)
+          console.log(this.seccion.duracionHorario)
 
         },
       });
@@ -506,6 +522,7 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
     this._SeccionProgramaService.ListPrerrequisito(this.idBusqueda).pipe(takeUntil(this.signal$)).subscribe({
       next: (x) => {
         this.prerequisitos = x.listaPrerrequisitoDTO;
+        console.log(this.prerequisitos)
       },
     });
   }
@@ -514,6 +531,7 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
       next: (x) => {
         this.PrimerCurso=x.estructuraCurso[0].titulo
         this.estructuraPrograma = x.estructuraCurso;
+        console.log(this.estructuraPrograma)
         this.estructuraPrograma.map((x) => {
           if (this.estructuraPrograma.length > 3) {
             x.opened = false;
@@ -534,6 +552,7 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
     this._BeneficioService.ListBeneficioPrograma(this.idBusqueda).pipe(takeUntil(this.signal$)).subscribe({
       next: (x) => {
         this.beneficios = x.listaBeneficioProgramaDTO;
+        console.log(this.beneficios)
         if(this.beneficios!=null){
           let i = 1;
           var beneficioLista: Array<number> = [];
@@ -742,6 +761,13 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
     this._SeccionProgramaService.ListMontoPago(this.idBusqueda).pipe(takeUntil(this.signal$)).subscribe({
       next: (x) => {
         this.MontoPago = x.listaMontoPagoProgramaInformacionDTO;
+        console.log(this.MontoPago)
+        if(this.MontoPago[0].textoCabeceraDescuento!=null ||this.MontoPago[0].textoCabeceraDescuento!=undefined){
+          var descuento = this.MontoPago[0].textoCabeceraDescuento
+          var descuentoSplit = descuento.split('%')
+          this.porcentajeDescuento = descuentoSplit[0]
+          this.textoDescuento = descuentoSplit[1]
+        }
         if (x.listaMontoPagoProgramaInformacionDTO != null) {
           this.MontoPago.sort(function (a, b) {
             return a.idTipoPago - b.idTipoPago;
@@ -1087,5 +1113,6 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
         },
       })
     }
+    console.log(this. VistaPreviaPortal)
   }
 }

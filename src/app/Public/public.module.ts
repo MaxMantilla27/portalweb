@@ -41,6 +41,13 @@ import { CompraExitosaOpenPayComponent } from './compra-exitosa-open-pay/compra-
 import { LandinPageV2Component } from './landin-page-v2/landin-page-v2.component';
 import { LandingPageModalComponent } from './landin-page-v2/landing-page-modal/landing-page-modal.component';
 import { TarifaGestionComponent } from './tarifa-gestion/tarifa-gestion.component';
+import { HomePartnerComponent } from './Home/home-partner/home-partner.component';
+import { HomeCasosExitosComponent } from './Home/home-casos-exitos/home-casos-exitos.component';
+import { HomeLearningComponent } from './Home/home-learning/home-learning.component';
+import { HomeCarrerasProfesionalesComponent } from './Home/home-carreras-profesionales/home-carreras-profesionales.component';
+import { HomeEducacionTecnicaComponent } from './Home/home-educacion-tecnica/home-educacion-tecnica.component';
+import { HomeFormacionContinuaComponent } from './Home/home-formacion-continua/home-formacion-continua.component';
+import { ProgramaFormularioComponent } from './programas-detalle/programa-formulario/programa-formulario.component';
 
 
 @NgModule({
@@ -88,7 +95,14 @@ import { TarifaGestionComponent } from './tarifa-gestion/tarifa-gestion.componen
     CompraExitosaOpenPayComponent,
     LandinPageV2Component,
     LandingPageModalComponent,
-    TarifaGestionComponent
+    TarifaGestionComponent,
+    HomePartnerComponent,
+    HomeCasosExitosComponent,
+    HomeLearningComponent,
+    HomeCarrerasProfesionalesComponent,
+    HomeEducacionTecnicaComponent,
+    HomeFormacionContinuaComponent,
+    ProgramaFormularioComponent
   ],
   exports: [],
   providers: [

@@ -270,7 +270,7 @@ export class HeaderComponent implements OnInit,OnChanges,OnDestroy {
       },
     });
   }
-  GetCarrerasProfecionales() {
+  GetCarrerasProfesionales() {
     this._CarreraProfesionalService.GetCarreras(11).pipe(takeUntil(this.signal$)).subscribe({
       next: (x) => {
         console.log(x)
@@ -344,7 +344,7 @@ export class HeaderComponent implements OnInit,OnChanges,OnDestroy {
     }
 
     if (this._HeaderPermissionsService.ValidateCarreras(this.CodigoIso)) {
-      this.GetCarrerasProfecionales();
+      this.GetCarrerasProfesionales();
     } else {
       this.expandibles[1].estatus = false;
       this._HelperService.enviarStringCarrera('');

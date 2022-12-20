@@ -20,7 +20,7 @@
               </div>
             </div>
           </div>
-  
+
           <div class="iconoPagoTarjeta">
             <div class="imgPagoTarjeta"></div>
             <div class="textPagoTarjeta">
@@ -49,22 +49,22 @@
               [(ngModel)]="jsonSave.TarjetaHabiente.NumeroDocumento" matInput >
             </mat-form-field>
 
-            <!-- <div class="col-6 col-md-6 col-lg-6"> 
+            <!-- <div class="col-6 col-md-6 col-lg-6">
               <mat-form-field class="col-6" appearance="outline" [floatLabel]="'always'" style="width: 100%;">
                 <mat-label>Documento de Identidad</mat-label>
                 <input type="text"  placeholder="N° de Documento" [ngModelOptions]="{standalone: true}"
                 [(ngModel)]="jsonSave.TarjetaHabiente.NumeroDocumento" matInput >
               </mat-form-field>
             </div> -->
-            <!-- <div class="col-6 col-md-6 col-lg-6"> 
+            <!-- <div class="col-6 col-md-6 col-lg-6">
               <mat-form-field class="col-6" appearance="outline" [floatLabel]="'always'" style="width: 100%;">
                 <mat-label>Fecha final de afiliación</mat-label>
                 <input type="date"  placeholder="N° de Documento" [ngModelOptions]="{standalone: true}"
                 [(ngModel)]="jsonSave.FechaFinalAfiliacion" min="2017-04-01" max={{FechaMax}} matInput >
               </mat-form-field>
             </div> -->
-            
-  
+
+
             <ng-container >
               <mat-form-field class="col-12" appearance="outline" [floatLabel]="'always'" style="width: 100%;">
                 <mat-label>Número de tarjeta</mat-label>
@@ -72,14 +72,14 @@
                 [(ngModel)]="NumberT" matInput appInputCard>
               </mat-form-field>
               <div class="col-6 col-md-6 col-lg-6">
-  
+
                 <mat-form-field  appearance="outline" [floatLabel]="'always'" style="width: 100%;">
                   <mat-label>Fecha de vencimiento MM/AA</mat-label>
                   <input type="text" placeholder="MM/AA" [ngModelOptions]="{standalone: true}"
                   [(ngModel)]="jsonSave.TarjetaHabiente.fecha" matInput appInputCardFecha>
                 </mat-form-field>
               </div>
-  
+
               <div class="col-6 col-md-6 col-lg-6">
                 <mat-form-field appearance="outline" [floatLabel]="'always'" style="width: 100%;">
                   <mat-label>CVV</mat-label>
@@ -88,8 +88,8 @@
                 </mat-form-field>
               </div>
             </ng-container>
-  
-  
+
+
             <ng-container *ngIf="jsonSave.Comprobante!=false">
               <mat-form-field appearance="outline" [floatLabel]="'always'" style="width: 100%;">
                 <mat-label>Razón Social</mat-label>
@@ -102,8 +102,8 @@
                 placeholder="Número Tributario" matInput />
               </mat-form-field>
             </ng-container>
-  
-  
+
+
             <div class="row comprobatePagoTarjeta">
               <div class="col-12 col-md-6 col-lg-4">Emitir comprobante</div>
               <div class="col-12 col-md-6 col-lg-8 items">
@@ -130,7 +130,7 @@
           padding: 20px;">
             * El monto a cargar sera el cual se detalla arriba en la moneda del programa, el tipo de cambio dependerá del banco que usted utilice.
           </div>
-  
+
         </div>
         <div class="d-none col-md-6 d-md-block col-lg-6 d-lg-block">
           <div class="resumenPagoTarjeta">

@@ -422,6 +422,7 @@ export class ProgramasComponent implements OnInit,OnDestroy {
     this._ProgramasService.GetProgramas(this.send)
     .pipe(takeUntil(this.signal$)).subscribe({
       next:(x)=>{
+        console.log(x)
         this.programas=x.listaProgramasGeneralesTop.map(
           (c:any)=>{
 
@@ -512,4 +513,8 @@ export class ProgramasComponent implements OnInit,OnDestroy {
 
     }
   }
+  ScrollTo(el: HTMLElement) {
+    el.scrollIntoView();
+  }
 }
+

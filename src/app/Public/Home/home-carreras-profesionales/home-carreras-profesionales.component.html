@@ -1,0 +1,59 @@
+<div *ngIf="TituloCarreras != ''">
+  <div class="container">
+    <div class="row rowpadd">
+      <div class="col-12 col-sm-12" style="margin-bottom: 30px">
+        <div class="subtitulo" style="text-align: center; margin: 0px">
+          {{ TituloCarreras }}
+        </div>
+        <div class="parafoS" style="font-size: 22px">
+          Formamos Profesionales Competitivos
+        </div>
+      </div>
+      <div
+        class="col-12 row"
+        style="justify-content: space-between; padding: 0px; margin: 0px"
+      >
+        <div
+          class="col-12 col-sm-12 col-md-6"
+          *ngFor="let item of Carreras; let i = index"
+        >
+          <div
+            style="
+              display: flex;
+              justify-content: center;
+              flex-wrap: wrap;
+              padding: 20px 0px;
+            "
+          >
+            <img
+              *ngIf="i % 2 == 0"
+              style="width: auto; height: 230px"
+              src="../../../assets/imagenes/arquetipo-administracion-hombre-index.png"
+              alt=""
+            />
+            <img
+              *ngIf="i % 2 != 0"
+              style="width: auto; height: 230px"
+              src="../../../assets/imagenes/arquetipo-mujer-home.png"
+              alt=""
+            />
+
+            <div class="cardCarrerasV2">
+              <div class="titleV2">{{ item.Nombre }}</div>
+              <div class="underl"></div>
+
+              <div
+                class="subtitleCarreras orange"
+                (click)="EventoInteraccionCarreras(item.Nombre)"
+                [routerLink]="item.Url"
+              >
+                <div class="vinculo">M&aacute;s Informaci&oacute;n</div>
+                <i class="material-icons">keyboard_arrow_right</i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
