@@ -16,6 +16,8 @@ import { HelperService } from 'src/app/Core/Shared/Services/Helper/helper.servic
 import { HelperService as Help} from 'src/app/Core/Shared/Services/helper.service';
 import { DatosPortalService } from 'src/app/Core/Shared/Services/DatosPortal/datos-portal.service';
 import { Validators } from '@angular/forms';
+import { FormularioAzulComponent } from 'src/app/Core/Shared/Containers/formulario-azul/formulario-azul.component';
+import { FormularioPopUpComponent } from 'src/app/Core/Shared/Containers/formulario-pop-up/formulario-pop-up.component';
 
 declare const fbq:any;
 declare const gtag:any;
@@ -31,8 +33,8 @@ declare const gtag:any;
 export class ProgramaFormularioComponent implements OnInit, OnDestroy {
   private signal$ = new Subject();
   isBrowser: boolean;
-  @ViewChild(FormularioComponent)
-  form!: FormularioComponent;
+  @ViewChild(FormularioPopUpComponent)
+  form!: FormularioPopUpComponent;
 
   constructor(
     public dialogRef: MatDialogRef<ProgramasDetalleComponent>,

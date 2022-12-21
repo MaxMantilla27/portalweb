@@ -280,6 +280,7 @@ export class ContactenosComponent implements OnInit,OnDestroy {
   GetRegionesPorPais(idPais:number){
     this._RegionService.ObtenerCiudadesPorPais(idPais).pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
+        console.log(x)
         this.fileds.forEach(r=>{
           if(r.nombre=='IdRegion'){
             r.disable=false;
@@ -331,12 +332,12 @@ export class ContactenosComponent implements OnInit,OnDestroy {
       label:"País",
     });
     this.fileds.push({
-      nombre:"IdRegion",
-      tipo:"select",
-      valorInicial:"",
-      validate:[Validators.required],
-      disable:true,
-      label:"Región",
+      nombre: 'IdRegion',
+      tipo: 'select',
+      valorInicial: '',
+      validate: [Validators.required],
+      disable: true,
+      label: 'Región',
     });
     this.fileds.push({
       nombre:"Movil",
