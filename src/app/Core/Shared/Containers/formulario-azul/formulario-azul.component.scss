@@ -12,19 +12,38 @@
 :root {
   --main-bg-color: white;
 }
-.fieldOldAzul .mat-form-field.mat-form-field-appearance-outline  .mat-form-field-outline{
-  top: 0.7rem;
+// .fieldOldAzul .mat-form-field.mat-form-field-appearance-outline  .mat-form-field-outline{
+//   top: 0.7rem;
+// }
+.fieldOldAzul .mat-form-field.mat-form-field-invalid .mat-form-field-label.mat-accent,
+.mat-form-field.mat-form-field-invalid .mat-form-field-label .mat-form-field-required-marker{
+  color: transparent !important;
+}
+.fieldOldAzul .mat-form-field.mat-form-field-appearance-outline.mat-form-field-can-float.mat-form-field-should-float .mat-form-field-label{
+  transform: translateY(-1.59375em) scale(0.75);
 }
 .fieldOldAzul .mat-form-field.mat-form-field-appearance-outline.mat-form-field-can-float.mat-form-field-should-float .mat-form-field-outline-gap{
   border-top: solid 2px currentColor !important;
 }
 .fieldOldAzul .mat-form-field.mat-form-field-appearance-outline > div.mat-form-field-wrapper{
-  padding-bottom: 1rem;
+  padding-bottom: 0.9rem;
 }
 .fieldOldAzul .mat-form-field.mat-form-field-appearance-outline > div.mat-form-field-wrapper >div.mat-form-field-subscript-wrapper{
   font-size: 60% !important;
+  position: relative !important;
 }
-.fieldOldAzul .mat-form-field.mat-form-field-appearance-outline > div.mat-form-field-wrapper > div.mat-form-field-flex > div.mat-form-field-infix  { padding: 0.4em 0px }
+.fieldOldAzul .mat-form-field.mat-form-field-appearance-outline > div.mat-form-field-wrapper > div.mat-form-field-flex > div.mat-form-field-infix  {
+   padding: 0.4em 0px;
+   border-top: 0.65em solid transparent !important;
+  span{
+    label{
+      .mat-placeholder-required{
+        color: transparent !important;
+        display: none;
+      }
+    }
+  }
+}
 .fieldOldAzul .mat-form-field.mat-form-field-appearance-outline > div.mat-form-field-wrapper > div.mat-form-field-flex > div.mat-form-field-prefix { padding: 0.4em 0px;
   top: 0px;
   left: -10px;
@@ -89,7 +108,7 @@
   white-space: nowrap;
   color: #FF0000;
 }
-.contSelectForm{
+.contSelectFormAzul{
   display: flex;
   cursor: pointer;
   justify-content: center;
@@ -98,7 +117,7 @@
   border: solid 1px #d5d5d5;
   padding: 0px;
   border-radius: 5px;
-  height: 40px;
+  height: 35px;
   margin: 5px 0px 0px 0px;
   min-width: 50px
 }
