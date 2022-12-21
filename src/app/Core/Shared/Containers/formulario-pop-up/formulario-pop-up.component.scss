@@ -40,13 +40,21 @@
    padding: 0.4em 0px;
    border-top: 0.65em solid transparent !important;
   span{
-    label{
+    .mat-form-field-label{
+      color: #027CFF;
       .mat-placeholder-required{
         color: transparent !important;
         display: none;
       }
     }
   }
+}
+.fieldOldPopUp .mat-form-field-invalid.mat-form-field-appearance-outline > div.mat-form-field-wrapper > div.mat-form-field-flex > div.mat-form-field-infix  {
+ span{
+   .mat-form-field-label{
+     color: #f44336 !important;
+   }
+ }
 }
 .fieldOldPopUp .mat-form-field.mat-form-field-appearance-outline > div.mat-form-field-wrapper > div.mat-form-field-flex > div.mat-form-field-prefix { padding: 0.4em 0px;
   top: 0px;
