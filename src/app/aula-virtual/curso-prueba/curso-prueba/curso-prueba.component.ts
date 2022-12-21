@@ -57,7 +57,7 @@ export class CursoPruebaComponent implements OnInit,OnDestroy {
   public videoPreguntas ='https://repositorioweb.blob.core.windows.net/repositorioweb/aulavirtual/guias/preguntas/preguntas-hombres.mp4';
   public videoCrucigramas ='https://repositorioweb.blob.core.windows.net/repositorioweb/aulavirtual/guias/crucigrama/crucigrama-hombre.mp4'
 
-  public hide=true
+  public hide=false
   ngOnInit(): void {
     this._ActivatedRoute.params.pipe(takeUntil(this.signal$)).subscribe({
       next: (x) => {
@@ -110,7 +110,7 @@ export class CursoPruebaComponent implements OnInit,OnDestroy {
           this.migaPan.push(
             {
               titulo: this.programaEstructura.programaGeneral,
-              urlWeb: '/AulaVirtual/MisCursos/'+this.idRegistroPrueba,
+              urlWeb: '/AulaVirtual/MisCursosPrueba/'+this.idRegistroPrueba,
             },)
 
           this.programaEstructura.listaCursoMatriculado.forEach((program) => {

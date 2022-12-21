@@ -133,7 +133,7 @@ export class CursoModulosComponent implements OnInit, OnChanges,OnDestroy {
       if(program.convalidado==false && program.idModalidadHijo==1 && !alumnoTest){
         if(lastconvalidado>-1){
           var conval=this.programEstructura.listaCursoMatriculado[lastconvalidado]
-          if(conval.porcentaje<=998){
+          if(conval.porcentaje<=98){
             program.habilitado=false
           }
         }

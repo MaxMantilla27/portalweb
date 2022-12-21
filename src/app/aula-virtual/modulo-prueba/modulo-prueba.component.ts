@@ -25,7 +25,7 @@ export class ModuloPruebaComponent implements OnInit,OnDestroy {
     this.signal$.next(true)
     this.signal$.complete()
   }
-  public hide=true
+  public hide=false
   public migaPan = [
     {
       titulo: 'Mis Cursos',

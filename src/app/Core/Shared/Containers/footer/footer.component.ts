@@ -60,6 +60,11 @@ export class FooterComponent implements OnInit {
         icono: '../../../../../assets/icons/mexico-icon.svg',
         pais: 'México',
         telefono: '+52(55) 4000-3255'
+      },
+      {
+        icono: '../../../../../assets/icons/chile-icon.svg',
+        pais: 'Chile',
+        telefono: '+56 (2) 2760 9120'
       }
     ]
     this.redesSociales = [

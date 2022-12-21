@@ -1,4 +1,5 @@
 import { Component, ElementRef, OnDestroy, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { MatTabChangeEvent } from '@angular/material/tabs';
 import { ActivatedRoute } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
@@ -7,6 +8,7 @@ import {
   CursoPadreDTO,
   ProgresoAlumnoProgramaAulaVirtualDTO,
 } from 'src/app/Core/Models/ListadoProgramaContenidoDTO';
+import { ChargeComponent } from 'src/app/Core/Shared/Containers/Dialog/charge/charge.component';
 import { CertificadoService } from 'src/app/Core/Shared/Services/Certificado/certificado.service';
 import { DatosPerfilService } from 'src/app/Core/Shared/Services/DatosPerfil/datos-perfil.service';
 import { HelperService } from 'src/app/Core/Shared/Services/helper.service';
@@ -38,6 +40,7 @@ export class CursoComponent implements OnInit,OnDestroy {
     private _DatosPerfilService:DatosPerfilService,
     private _SessionStorageService:SessionStorageService,
     private _CertificadoService:CertificadoService,
+    public dialog: MatDialog,
   ) {}
   ngOnDestroy(): void {
     this.signal$.next(true);
@@ -108,6 +111,7 @@ export class CursoComponent implements OnInit,OnDestroy {
   public contenidotareapares=
   '<iframe src="https://player.vimeo.com/video/737722683?h=e768e2bbcc" width="100%"  height="564" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>'
   ngOnInit(): void {
+
     this._ActivatedRoute.params.pipe(
       takeUntil(this.signal$)
     ).subscribe({
@@ -180,6 +184,7 @@ export class CursoComponent implements OnInit,OnDestroy {
       }
     }
     this._SessionStorageService.SessionDeleteValue('cursoIndex');
+    this.dialogRef.close();
   }
   ObtenerDatosCertificado(){
     this._CertificadoService.ObtenerDatosCertificadoEnvio(this.idMatricula).pipe(takeUntil(this.signal$)).subscribe({
@@ -338,7 +343,12 @@ export class CursoComponent implements OnInit,OnDestroy {
     this.CertificadoActive = true;
     console.log(this.indexCertificado)
   }
+  public dialogRef:any;
   RegistroProgramaMatriculadoPorIdMatricula(){
+    this.dialogRef =this.dialog.open(ChargeComponent,{
+      panelClass:'dialog-charge',
+      disableClose:true
+    });
     this._DatosPerfilService.RegistroProgramaMatriculadoPorIdMatricula(this.idMatricula).pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
         console.log(x)
