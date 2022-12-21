@@ -15,7 +15,7 @@
         <img src="../../../assets/icons/signo-pregunta-cerrado-naranja.svg" alt="">
       </div>
     </div>
-    <div class="subtitleEstruturaProgramForm">
+    <div class="subtitleEstruturaProgramFormAzul">
       Registra tus datos para que un asesor especializado pueda ayudarte en todo lo que requieras
     </div>
     <ng-container *ngIf="combosPrevios!=undefined">
@@ -130,7 +130,7 @@
       <div class="container">
         <div class="row rowpadd">
           <div class="col-12 col-md-8 col-lg-8 row" style="align-items: flex-start;">
-            <div class="col-12 col-md-10 col-lg-10" style="position: relative;text-align: center;margin-bottom: 20px;">
+            <div class="col-12 col-md-10 col-lg-10" style="position: relative;text-align: center;margin-bottom: 40px;">
               <img class="InfoProgramImg" [src]="cabecera.imgPrincipal" alt="">
             </div>
             <div class="col-12 col-md-6 col-lg-6 row" style="align-items: center;margin-bottom: 20px;">
@@ -183,7 +183,7 @@
                       <img src="../../../assets/icons/signo-pregunta-cerrado-naranja.svg" alt="">
                     </div>
                   </div>
-                  <div class="subtitleEstruturaProgramForm">
+                  <div class="subtitleEstruturaProgramFormAzul">
                     Registra tus datos para que un asesor especializado pueda ayudarte en todo lo que requieras
                   </div>
                   <ng-container *ngIf="combosPrevios!=undefined">
@@ -287,7 +287,7 @@
         style="display: flex;justify-content: space-between;align-items: center;flex-wrap: wrap; margin-bottom: 20px;">
         <div class="col-12 col-md-12 col-lg-12 subtitulo" >Estructura Curricular</div>
       </div>
-    <div class="col-12 col-md-8 col-lg-8">
+    <div class="col-12 col-md-12 col-lg-8">
       <mat-accordion class="acordionPrograma" multi>
         <mat-expansion-panel hideToggle *ngFor="let item of estructuraPrograma"
         (opened)="item.opened=true;EventoInteraccionAccordion(item.titulo,'Abierto')"
@@ -315,7 +315,7 @@
       </mat-accordion>
       <div class="piePagina" [innerHtml]="EstructuraPiePagina | safeHtml"></div>
     </div>
-    <div  class="col-12 col-md-12 col-lg-4 ContenidoVistaPrevia" *ngIf="ExisteVideo==true">
+    <div style="display: flex;justify-content: center;"  class="col-12 col-md-12 col-lg-4 ContenidoVistaPrevia" *ngIf="ExisteVideo==true">
       <iframe #myIframe id="myIframe" id="cartoonVideo"[src]="VistaPreviaPortal | safe" class="embed-responsive-item" frameborder="5" allowfullscreen></iframe>
 
 
@@ -356,14 +356,16 @@
 </div>
 <div class="container" >
   <div *ngIf="certificadoVacio==false" class="row rowpadd">
-    <div class="col-12 col-md-5 col-lg-5"></div>
+    <div class="col-12 col-md-5 col-lg-5">
+      <div class="subtitulo">Certificación</div>
+    </div>
     <div class="col-12 col-md-7 col-lg-7">
     </div>
     <div class="col-12 col-md-5 col-lg-5" style="margin: 20px 0px;">
       <img src="../../../assets/imagenes/imagen-certificado-pagina-web.png" alt=""
         style="width: 100%;">
     </div>
-    <div class="col-12 col-md-7 col-lg-7">
+    <div class="col-12 col-md-7 col-lg-7" style="margin: 20px 0px;">
       <div >
         <div>{{certificado.cabecera}}</div>
         <div class="puntoAzulLista" *ngFor="let item of certificado.contenido">
@@ -372,8 +374,6 @@
           </ul>
         </div>
       </div>
-      <div  [innerHtml]="certificado.piePagina | safeHtml"></div><br>
-      <div class="puntoAzulLista"  [innerHtml]="certificado.descripcionLeyenda | safeHtml" style="text-align: justify;"></div>
 <!--
       <mat-accordion class="acordionPrograma acrdionCertificado" multi *ngIf="certificado.descripcionHeader!=undefined && certificado.descripcionHeader.length>0">
         <mat-expansion-panel (opened)="EventoInteraccionAccordionCertificado(item,'Abierto')"
@@ -391,12 +391,14 @@
           <div [innerHtml]="certificado.descripcionBody[i] | safeHtml"></div>
         </mat-expansion-panel>
       </mat-accordion> -->
-      <br>
-      <app-default-button-flecha [confs]="{color:'primary',titulo:'Solicita Información'}" [style]="'width: 50%;border-radius:20px'"
-        (ButtoclClick)="EventoInteraccionButton('Solicita Información') ;OpenModalFormulario()" ></app-default-button-flecha>
     </div>
     <div class="col-12">
-
+      <div  [innerHtml]="certificado.piePagina | safeHtml"></div><br>
+      <div class="puntoAzulLista"  [innerHtml]="certificado.descripcionLeyenda | safeHtml" style="text-align: justify;"></div>
+      <div style="display: flex;justify-content: center;margin-top: 20px;">
+        <app-default-button-flecha [confs]="{color:'primary',titulo:'Solicita Información'}" [style]="'width:20rem;border-radius:20px'"
+        (ButtoclClick)="EventoInteraccionButton('Solicita Información') ;OpenModalFormulario()" ></app-default-button-flecha>
+      </div>
     </div>
   </div>
   <div *ngIf="certificadoVacio==true" class="row rowpadd" style="padding: 10px;">

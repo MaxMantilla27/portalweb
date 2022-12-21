@@ -58,6 +58,7 @@ import { SeoService } from 'src/app/Core/Shared/Services/seo.service';
 import { MatTabChangeEvent } from '@angular/material/tabs';
 import { DatosFormularioDTO } from 'src/app/Core/Models/DatosFormularioDTO';
 import { ProgramaFormularioComponent } from './programa-formulario/programa-formulario.component';
+import { FormularioAzulComponent } from 'src/app/Core/Shared/Containers/formulario-azul/formulario-azul.component';
 declare const fbq:any;
 declare const gtag:any;
 @Component({
@@ -69,8 +70,8 @@ declare const gtag:any;
 export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
   private signal$ = new Subject();
   isBrowser: boolean;
-  @ViewChild(FormularioComponent)
-  form!: FormularioComponent;
+  @ViewChild(FormularioAzulComponent)
+  form!: FormularioAzulComponent;
   constructor(
     private activatedRoute: ActivatedRoute,
     private _SeccionProgramaService: SeccionProgramaService,
@@ -280,20 +281,6 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
       }
     })
     this.obtenerFormularioCompletado();
-    // this._HelperServiceP.recibirCombosPerfil.pipe(takeUntil(this.signal$)).subscribe((x) => {
-    //   this.alumno =x.datosAlumno.nombres;
-    //   this.combosPrevios=x.datosAlumno;
-    //   this.formularioContacto.Nombres= this.combosPrevios.nombres,
-    //   this.formularioContacto.Apellidos= this.combosPrevios.apellidos,
-    //   this.formularioContacto.Email= this.combosPrevios.email,
-    //   this.formularioContacto.IdPais= this.combosPrevios.idPais,
-    //   this.formularioContacto.IdRegion= this.combosPrevios.idDepartamento,
-    //   this.formularioContacto.Movil= this.combosPrevios.telefono
-    //   if(this.formularioContacto.IdPais!=undefined){
-    //     this.GetRegionesPorPais(this.formularioContacto.IdPais);
-    //   }
-    //   this.CompleteLocalStorage=false;
-    // })
     this.AddFields();
     this.ObtenerCombosPortal();
     this.ObtenerCabeceraProgramaGeneral();
@@ -786,6 +773,7 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
       .ListProgramaRelacionado(this.idPegeneral).pipe(takeUntil(this.signal$))
       .subscribe({
         next: (x) => {
+          console.log(x)
           if (x.listaProgramaRelacionadoDTO != null) {
             this.programasRelacionados = x.listaProgramaRelacionadoDTO.map(
               (c: any) => {
@@ -918,105 +906,74 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
         });
     }
   }
-  ObtenerCombosPortal() {
+  ObtenerCombosPortal(){
     this._DatosPortalService.ObtenerCombosPortal().pipe(takeUntil(this.signal$)).subscribe({
-      next: (x) => {
-        this.fileds.forEach((r) => {
-          if (r.nombre == 'IdPais') {
-            r.data = x.listaPais.map((p: any) => {
-              var ps: Basic = { Nombre: p.pais, value: p.idPais };
+      next:(x)=>{
+        console.log(x);
+        this.fileds.forEach(r=>{
+          if(r.nombre=='IdPais'){
+            r.data=x.listaPais.map((p:any)=>{
+              var ps:Basic={Nombre:p.pais,value:p.idPais};
               return ps;
-            });
+            })
           }
-        });
-        this.fileds.forEach((r) => {
-          if (r.nombre == 'IdCargo') {
-            r.data = x.listaCargo.map((p: any) => {
-              var ps: Basic = { Nombre: p.cargo, value: p.idCargo };
-              return ps;
-            });
-          }
-        });
-        this.fileds.forEach((r) => {
-          if (r.nombre == 'IdAreaFormacion') {
-            r.data = x.listaAreaFormacion.map((p: any) => {
-              var ps: Basic = {
-                Nombre: p.areaFormacion,
-                value: p.idAreaFormacion,
-              };
-              return ps;
-            });
-          }
-        });
-        this.fileds.forEach((r) => {
-          if (r.nombre == 'IdAreaTrabajo') {
-            r.data = x.listaAreaTrabajo.map((p: any) => {
-              var ps: Basic = { Nombre: p.areaTrabajo, value: p.idAreaTrabajo };
-              return ps;
-            });
-          }
-        });
-        this.fileds.forEach((r) => {
-          if (r.nombre == 'IdIndustria') {
-            r.data = x.listaIndustria.map((p: any) => {
-              var ps: Basic = { Nombre: p.industria, value: p.idIndustria };
-              return ps;
-            });
-          }
-        });
-      },
-    });
+        })
+      }
+    })
     this.initValues = true;
   }
-  GetRegionesPorPais(idPais: number) {
+  GetRegionesPorPais(idPais:number){
     this._RegionService.ObtenerCiudadesPorPais(idPais).pipe(takeUntil(this.signal$)).subscribe({
-      next: (x) => {
-        this.fileds.forEach((r) => {
-          if (r.nombre == 'IdRegion') {
-            r.disable = false;
-            r.data = x.map((p: any) => {
-              var ps: Basic = { Nombre: p.nombreCiudad, value: p.idCiudad };
+      next:x=>{
+        console.log(x)
+        this.fileds.forEach(r=>{
+          if(r.nombre=='IdRegion'){
+            r.disable=false;
+            r.data=x.map((p:any)=>{
+              var ps:Basic={Nombre:p.nombreCiudad,value:p.idCiudad};
               return ps;
-            });
+            })
           }
-        });
+        })
         this.form.enablefield('IdRegion');
-      },
-    });
+      }
+    })
   }
-  SelectChage(e: any) {
-    if (e.Nombre == 'IdPais') {
-      this.GetRegionesPorPais(e.value);
+  SelectChage(e:any){
+    if(e.Nombre=="IdPais"){
+      this.GetRegionesPorPais(e.value)
     }
   }
   AddFields() {
     this.fileds.push({
-      nombre: 'Nombres',
-      tipo: 'text',
-      valorInicial: '',
-      validate: [Validators.required],
-      label: 'Nombres',
+      nombre:"Nombres",
+      tipo:"text",
+      valorInicial:"",
+      validate:[Validators.required],
+      label:"Nombres",
     });
     this.fileds.push({
-      nombre: 'Apellidos',
-      tipo: 'text',
-      valorInicial: '',
-      validate: [Validators.required],
-      label: 'Apellidos',
+      nombre:"Apellidos",
+      tipo:"text",
+      valorInicial:"",
+      validate:[Validators.required],
+      label:"Apellidos",
+
     });
     this.fileds.push({
-      nombre: 'Email',
-      tipo: 'text',
-      valorInicial: '',
-      validate: [Validators.required, Validators.email],
-      label: 'E-mail',
+      nombre:"Email",
+      tipo:"text",
+      valorInicial:"",
+      validate:[Validators.required,Validators.email],
+      label:"E-mail",
+
     });
     this.fileds.push({
-      nombre: 'IdPais',
-      tipo: 'select',
-      valorInicial: '',
-      validate: [Validators.required],
-      label: 'País',
+      nombre:"IdPais",
+      tipo:"select",
+      valorInicial:"",
+      validate:[Validators.required],
+      label:"País",
     });
     this.fileds.push({
       nombre: 'IdRegion',
@@ -1027,11 +984,11 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
       label: 'Región',
     });
     this.fileds.push({
-      nombre: 'Movil',
-      tipo: 'phone',
-      valorInicial: '',
-      validate: [Validators.required],
-      label: 'Teléfono Móvil',
+      nombre:"Movil",
+      tipo:"phone",
+      valorInicial:"",
+      validate:[Validators.required],
+      label:"Teléfono Móvil",
     });
     this.fileds.push({
       nombre: 'terminos',
@@ -1041,7 +998,6 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
       label: 'terminos',
       style:'font-size: 12px;margin-bottom: 20px;'
     });
-
   }
   LimpiarCampos(){
     this.CompleteLocalStorage=false;

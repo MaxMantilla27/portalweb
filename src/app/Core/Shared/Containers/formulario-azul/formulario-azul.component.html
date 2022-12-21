@@ -3,7 +3,7 @@
     <ng-container formArrayName="Fields">
       <div class="row">
         <div *ngFor="let field of fiels; let i=index"
-          [class]="field.class==undefined?'col-12 col-md-12 col-lg-12 fieldOld':field.class+' fieldOld'">
+          [class]="field.class==undefined?'col-12 col-md-12 col-lg-12 fieldOldAzul':field.class+' fieldOldAzul'">
           <div [formGroupName]="i">
             <ng-container *ngIf="Tipo==1">
 
@@ -29,7 +29,7 @@
                 </ng-container>
                 <ng-container *ngIf="field.tipo=='phone'">
                   <div class="row">
-                    <div class="col-3 col-md-3 col-lg-3 fieldOld">
+                    <div class="col-3 col-md-3 col-lg-3 fieldOldAzul">
 
                       <mat-form-field>
                         <mat-select placeholder="Select offer" formControlName="promo" [(value)]="paisSelect">
@@ -48,18 +48,18 @@
 
               </ng-container>
               <ng-container *ngIf="FormOld">
-                <div class="fieldOld">
+                <div class="fieldOldAzul">
                   <ng-container
                     *ngIf="field.tipo=='' || field.tipo=='text' || field.tipo=='number' || field.tipo=='password'">
                     <mat-form-field appearance="outline">
-                      <mat-label style="color: white;">{{field.label}}</mat-label>
+                      <mat-label style="color: #dbdad9;">{{field.label}}</mat-label>
                       <input type="{{field.tipo}}" [autofocus]="field.focus" [style]="field.style" formControlName="{{field.nombre}}" matInput />
                       <mat-error *ngIf="userForm.invalid">{{obtenerErrorCampoNombre(i,field.nombre)}}</mat-error>
                     </mat-form-field>
                   </ng-container>
                   <ng-container *ngIf="field.tipo=='select'">
                     <mat-form-field appearance="outline">
-                      <mat-label style="color: white;">{{field.label}}</mat-label>
+                      <mat-label style="color: #dbdad9;">{{field.label}}</mat-label>
                       <mat-select [style]="field.style" formControlName="{{field.nombre}}"
                         (selectionChange)="OnSelect.emit({Nombre:field.nombre,value:$event.value})">
                         <mat-option *ngFor="let option of field.data" [value]="option.value">{{option.Nombre}}
@@ -72,7 +72,7 @@
                   <ng-container *ngIf="field.tipo=='phone'">
                     <div class="row">
                       <div class="col-2 col-md-2 col-lg-2 " (click)="select.open()" style="padding-right: 0px;">
-                        <div class="fieldOld contSelectForm" >
+                        <div class="fieldOldAzul contSelectForm" >
                           <mat-form-field appearance="fill" style="height: 0px; width: 0px;" class="transForm">
                             <mat-select #myselsetc [(value)]="paisSelect" #select panelClass="myPanelClass"
                             (selectionChange)="validatePais(i,field.nombre)">
@@ -87,9 +87,9 @@
                           <i class="material-icons">arrow_drop_down</i>
                         </div>
                       </div>
-                      <div class="col-10 col-md-10 col-lg-10 fieldOld">
+                      <div class="col-10 col-md-10 col-lg-10 fieldOldAzul">
                         <mat-form-field appearance="outline">
-                          <mat-label style="color: white;">{{field.label}}</mat-label>
+                          <mat-label style="color: #dbdad9;">{{field.label}}</mat-label>
                           <!-- <span matPrefix>{{PrefPaises()}}</span> -->
                           <input type="text" [autofocus]="field.focus" (keyup)="ChangeInpiut(i,field.nombre)" (keydown)="ChangeInpiut(i,field.nombre)" [style]="field.style" formControlName="{{field.nombre}}" matInput />
                           <mat-error *ngIf="userForm.invalid">{{obtenerErrorCampoNombre(i,field.nombre)}}</mat-error>
@@ -103,7 +103,7 @@
             <ng-container *ngIf="Tipo==2">
               <div class="row" style="align-items: center;">
                 <div class="col-12 col-md-3 col-lg-3" style="margin-bottom: 20px;">{{field.label}}</div>
-                <div class="col-12 col-md-9 col-lg-9 fieldOld">
+                <div class="col-12 col-md-9 col-lg-9 fieldOldAzul">
 
                   <ng-container
                     *ngIf="field.tipo=='' || field.tipo=='text' || field.tipo=='number' || field.tipo=='password'">
