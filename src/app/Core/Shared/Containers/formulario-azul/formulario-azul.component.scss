@@ -1,12 +1,12 @@
 
-.mat-form-field {
+.fieldOldAzul .mat-form-field {
   width: 100%;
   //min-width: 300px;
-  margin-bottom:-4px;
+  margin-bottom:-2px;
 
 }
 
-.mat-input-underline {
+.fieldOldAzul .mat-input-underline {
   background-color: #FF0000;    /* replace this color with your accent color hex code */
 }
 :root {
@@ -85,9 +85,10 @@
   padding: 0px;
   border: 0px;
 }
-.mat-error{
+.fieldOldAzul .mat-error{
   white-space: nowrap;
   color: #FF0000;
+  margin-top: -2px;
 }
 .contSelectForm{
   display: flex;

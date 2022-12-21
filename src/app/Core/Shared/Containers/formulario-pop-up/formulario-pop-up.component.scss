@@ -2,7 +2,7 @@
 .mat-form-field {
   width: 100%;
   //min-width: 300px;
-  margin-bottom:-4px;
+  margin-bottom:-2px;
 
 }
 
@@ -12,8 +12,11 @@
 :root {
   --main-bg-color: white;
 }
-.mat-form-field-appearance-outline  .mat-form-field-outline{
+.fieldOldPopUp .mat-form-field.mat-form-field-appearance-outline  .mat-form-field-outline{
   top: 0.7rem;
+}
+.fieldOldPopUp .mat-form-field.mat-form-field-appearance-outline.mat-form-field-can-float.mat-form-field-should-float .mat-form-field-outline-gap{
+  border-top: solid 2px currentColor !important;
 }
 .fieldOldPopUp .mat-form-field.mat-form-field-appearance-outline > div.mat-form-field-wrapper{
   padding-bottom: 1rem;
@@ -82,9 +85,10 @@
   padding: 0px;
   border: 0px;
 }
-.mat-error{
+.fieldOldPopUp.mat-error{
   white-space: nowrap;
   color: #FF0000;
+  margin-top: -2px !important;
 }
 .contSelectForm{
   display: flex;
