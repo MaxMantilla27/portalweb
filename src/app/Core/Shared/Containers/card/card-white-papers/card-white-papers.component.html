@@ -1,5 +1,5 @@
 <div class="card-wp">
-  <div class="title-card-wp" (click)="EventoInteraccion(cardContent.nombre)" [routerLink]="'white-paper/'+cardContent.urlWeb+'-'+cardContent.idWeb">{{cardContent.nombre}}</div>
+  <div class="title-card-wp" (click)="EventoInteraccion(cardContent.nombre)" [routerLink]="'/bs-campus/white-paper/'+cardContent.urlWeb+'-'+cardContent.idWeb">{{cardContent.nombre}}</div>
   <div class="row content-card-wp">
     <div class="col-12 col-md-4 col-lg-4">
       <img class="img-card-wp" [src]="'https://repositorioweb.blob.core.windows.net/paper-bs/Paper/imagen/'+cardContent.imgPortada" [alt]="cardContent.imgPortadaAlt">
@@ -15,7 +15,7 @@
       <app-default-button [confs]="{color:'primary',titulo:'Descargar'}"
         [style]="'width: 100%;'"
         (ButtoclClick)="EventoInteraccion(cardContent.nombre)"
-        [ruta]="'white-paper/'+cardContent.urlWeb+'-'+cardContent.idWeb">
+        [ruta]="'/bs-campus/white-paper/'+cardContent.urlWeb+'-'+cardContent.idWeb">
       </app-default-button>
     </div>
   </div>

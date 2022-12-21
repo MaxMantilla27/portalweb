@@ -110,6 +110,7 @@ export class TagsComponent implements OnInit,OnDestroy {
             return ps;
           }
         );
+        console.log(x.listaArticuloTemasRelacionados)
         this.Articulos=x.listaArticuloTemasRelacionados.map(
           (c:any)=>{
             var ps:ArticuloDTO={
@@ -120,8 +121,9 @@ export class TagsComponent implements OnInit,OnDestroy {
               urlWeb:c.direccion,
               descripcionGeneral:'',
               idArea:parseInt(c.idTipoArticulo),
-              nombre:''
+              nombre:c.titulo
             };
+            console.log(ps)
             return ps;
           }
         );

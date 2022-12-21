@@ -8,27 +8,27 @@
     <app-cargando *ngIf="statuscharge==true"></app-cargando>
     <div class="cotentestructuraProgramForm">
       <div class="question" style="justify-content: flex-start;align-items: center;">
-        <img src="../../../assets/icons/signo-pregunta-abierto-naranja.svg" alt="">
+        <img src="../../../assets/icons/signo-pregunta-abierto-03.svg" alt="">
       </div>
       <div>Tienes dudas sobre algún aspecto del programa</div>
       <div class="question" style="justify-content: flex-end;align-items: center;">
-        <img src="../../../assets/icons/signo-pregunta-cerrado-naranja.svg" alt="">
+        <img src="../../../assets/icons/signo-pregunta-cerrado-04.svg" alt="">
       </div>
     </div>
     <div class="subtitleEstruturaProgramFormAzul">
       Registra tus datos para que un asesor especializado pueda ayudarte en todo lo que requieras
     </div>
     <ng-container *ngIf="combosPrevios!=undefined">
-      <app-formulario-azul style="background-color: blue;" [Interaccion]="'Programas-'+idBusqueda" [model]="formularioContacto" [InputsDisable]="statuscharge" [CleanOnSubmit]="cleanSub" (OnSubmit)="SetContacto($event)"
+      <app-formulario-azul  [Interaccion]="'Programas-'+idBusqueda" [model]="formularioContacto" [InputsDisable]="statuscharge" [CleanOnSubmit]="cleanSub" (OnSubmit)="SetContacto($event)"
       (OnValid)="formVal=$event" [fiels]="fileds" (OnSelect)="SelectChage($event)">
 
       <ng-container contenido>
       </ng-container>
       <ng-container send>
         <div style="text-align: center;" >
-          <a style="color: white;font-size: 14px;cursor: pointer;" (click)="LimpiarCampos()">[No soy {{formularioContacto.Nombres}}]</a>
+          <a style="color: #027CFF;font-size: 14px;cursor: pointer;" (click)="LimpiarCampos()">[No soy {{formularioContacto.Nombres}}]</a>
         </div>
-        <app-default-button [confs]="{color:'primary',titulo:'Enviar'}" [style]="'width: 100%;'">
+        <app-default-button [confs]="{color:'primary',titulo:'Enviar'}" [style]="'width: 100%;margin-bottom: -2px;'">
         </app-default-button>
       </ng-container>
 
@@ -42,9 +42,9 @@
       </ng-container>
       <ng-container send>
         <div style="text-align: center;" >
-          <a style="color: white;font-size: 14px;cursor: pointer;" (click)="LimpiarCampos()">[No soy {{formularioContacto.Nombres}}]</a>
+          <a style="color: #027CFF;font-size: 14px;cursor: pointer;" (click)="LimpiarCampos()">[No soy {{formularioContacto.Nombres}}]</a>
         </div>
-        <app-default-button [confs]="{color:'primary',titulo:'Enviar'}" [style]="'width: 100%;'">
+        <app-default-button [confs]="{color:'primary',titulo:'Enviar'}" [style]="'width: 100%;margin-bottom: -2px;'">
         </app-default-button>
       </ng-container>
 
@@ -57,7 +57,7 @@
       <ng-container contenido>
       </ng-container>
       <ng-container send>
-        <app-default-button [confs]="{color:'primary',titulo:'Enviar'}" [style]="'width: 100%;'">
+        <app-default-button [confs]="{color:'primary',titulo:'Enviar'}" [style]="'width: 100%;margin-bottom: -2px;'">
         </app-default-button>
       </ng-container>
     </app-formulario-azul>
@@ -176,11 +176,11 @@
                   <app-cargando *ngIf="statuscharge==true"></app-cargando>
                   <div class="cotentestructuraProgramForm">
                     <div class="question" style="justify-content: flex-start;align-items: center;">
-                      <img src="../../../assets/icons/signo-pregunta-abierto-naranja.svg" alt="">
+                      <img src="../../../assets/icons/signo-pregunta-abierto-03.svg" alt="">
                     </div>
                     <div>Tienes dudas sobre algún aspecto del programa</div>
                     <div class="question" style="justify-content: flex-end;align-items: center;">
-                      <img src="../../../assets/icons/signo-pregunta-cerrado-naranja.svg" alt="">
+                      <img src="../../../assets/icons/signo-pregunta-cerrado-04.svg" alt="">
                     </div>
                   </div>
                   <div class="subtitleEstruturaProgramFormAzul">
@@ -194,9 +194,9 @@
                     </ng-container>
                     <ng-container send>
                       <div style="text-align: center;" >
-                        <a style="color: white;font-size: 14px;cursor: pointer;" (click)="LimpiarCampos()">[No soy {{formularioContacto.Nombres}}]</a>
+                        <a style="color: #027CFF;font-size: 14px;cursor: pointer;" (click)="LimpiarCampos()">[No soy {{formularioContacto.Nombres}}]</a>
                       </div>
-                      <app-default-button [confs]="{color:'primary',titulo:'Enviar'}" [style]="'width: 100%;'">
+                      <app-default-button [confs]="{color:'primary',titulo:'Enviar'}" [style]="'width: 100%;margin-bottom: -2px;'">
                       </app-default-button>
                     </ng-container>
 
@@ -210,9 +210,9 @@
                     </ng-container>
                     <ng-container send>
                       <div style="text-align: center;" >
-                        <a style="color: white;font-size: 14px;cursor: pointer;" (click)="LimpiarCampos()">[No soy {{formularioContacto.Nombres}}]</a>
+                        <a style="color: #027CFF;font-size: 14px;cursor: pointer;" (click)="LimpiarCampos()">[No soy {{formularioContacto.Nombres}}]</a>
                       </div>
-                      <app-default-button [confs]="{color:'primary',titulo:'Enviar'}" [style]="'width: 100%;'">
+                      <app-default-button [confs]="{color:'primary',titulo:'Enviar'}" [style]="'width: 100%;margin-bottom: -2px;'">
                       </app-default-button>
                     </ng-container>
 
@@ -225,7 +225,7 @@
                     <ng-container contenido>
                     </ng-container>
                     <ng-container send>
-                      <app-default-button [confs]="{color:'primary',titulo:'Enviar'}" [style]="'width: 100%;'">
+                      <app-default-button [confs]="{color:'primary',titulo:'Enviar'}" [style]="'width: 100%;margin-bottom: -2px;'">
                       </app-default-button>
                     </ng-container>
                   </app-formulario-azul>
