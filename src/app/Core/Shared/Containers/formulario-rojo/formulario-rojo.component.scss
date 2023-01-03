@@ -1,0 +1,142 @@
+
+.fieldOldRojo .mat-form-field {
+  width: 100%;
+  //min-width: 300px;
+  margin-bottom:-2px;
+
+}
+
+.fieldOldRojo .mat-input-underline {
+  background-color: #FF0000;    /* replace this color with your accent color hex code */
+}
+:root {
+  --main-bg-color: white;
+}
+// .fieldOldRojo .mat-form-field.mat-form-field-appearance-outline  .mat-form-field-outline{
+//   top: 0.7rem;
+// }
+.fieldOldRojo .mat-form-field.mat-form-field-invalid .mat-form-field-label.mat-accent,
+.mat-form-field.mat-form-field-invalid .mat-form-field-label .mat-form-field-required-marker{
+  color: transparent !important;
+}
+.fieldOldRojo .mat-form-field.mat-form-field-appearance-outline.mat-form-field-can-float.mat-form-field-should-float .mat-form-field-label{
+  transform: translateY(-1.59375em) scale(0.75);
+}
+.fieldOldRojo .mat-form-field.mat-form-field-appearance-outline.mat-form-field-can-float.mat-form-field-should-float .mat-form-field-outline-gap{
+  border-top: solid 1px currentColor ;
+}
+.fieldOldRojo .mat-focused.mat-form-field-appearance-outline.mat-form-field-can-float.mat-form-field-should-float .mat-form-field-outline-gap{
+  border-top: solid 2px currentColor !important;
+}
+.fieldOldRojo .mat-form-field-flex:hover{
+  .mat-form-field-outline-gap{
+    border-top: solid 2px currentColor !important;
+  }
+}
+.fieldOldRojo .mat-form-field.mat-form-field-appearance-outline > div.mat-form-field-wrapper{
+  padding-bottom: 0.9rem;
+}
+.fieldOldRojo .mat-form-field.mat-form-field-appearance-outline > div.mat-form-field-wrapper >div.mat-form-field-subscript-wrapper{
+  font-size: 60% !important;
+  position: relative !important;
+}
+.fieldOldRojo .mat-form-field.mat-form-field-appearance-outline > div.mat-form-field-wrapper > div.mat-form-field-flex > div.mat-form-field-infix  {
+   padding: 0.4em 0px;
+   border-top: 0.65em solid transparent !important;
+  span{
+    .mat-form-field-label{
+      .mat-placeholder-required{
+        color: transparent !important;
+        display: none;
+      }
+    }
+  }
+}
+.fieldOldRojo .mat-form-field.mat-form-field-appearance-outline > div.mat-form-field-wrapper > div.mat-form-field-flex > div.mat-form-field-prefix { padding: 0.4em 0px;
+  top: 0px;
+  left: -10px;
+}
+
+.fieldOldRojo .mat-form-field.mat-form-field-appearance-outline > div.mat-form-field-wrapper > div.mat-form-field-flex > div.mat-form-field-infix > span.mat-form-field-label-wrapper { top: -1.5em; }
+
+.fieldOldRojo .mat-form-field-appearance-outline.mat-form-field-can-float.mat-form-field-should-float .mat-form-field-label {
+    transform: translateY(-1.1em) scale(.75);
+    width: 133.33333%;
+}
+.fieldOldRojo .mat-form-field.mat-form-field-appearance-outline > div.mat-form-field-wrapper > div.mat-form-field-flex > .mat-form-field-outline{
+
+  .mat-form-field-outline-start{
+    background-color: var(--main-bg-color);
+  }
+  .mat-form-field-outline-gap{
+    background-color: var(--main-bg-color);
+  }
+  .mat-form-field-outline-end {
+    background-color: var(--main-bg-color);
+  }
+}
+.fieldOldRojo .mat-form-field-appearance-outline .mat-form-field-outline {
+  color: #FF4E56;
+}
+.urlSelect{
+  width: 20px;
+  height: 20px;
+  border-radius: 50% !important;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 20px;
+}
+
+// .myPanelClass{
+//   // margin-top: 50px;
+//   //   margin-left: -40px;
+//   //   max-height: 500px !important;
+//   //transform-origin:50% 25.25px 0px !important;
+//   //top: 100px !important;
+// }
+.transForm {
+  height: 0px; width: 0px;
+  width: 0px !important;
+  height: 0px;
+}
+.transForm .mat-form-field-wrapper .mat-form-field-flex {
+  height: 0px !important;
+  padding: 0px !important;
+}
+.transForm .mat-select-trigger{
+  visibility: hidden;
+}
+// .transForm  .mat-select-arrow-wrapper{
+// }
+
+.transForm .mat-form-field-infix {
+  height: 0px;
+  padding: 0px;
+  border: 0px;
+}
+.fieldOldRojo .mat-error{
+  white-space: nowrap;
+  color: #FF0000;
+  margin-top: -2px;
+}
+.contSelectFormRojo{
+  display: flex;
+  cursor: pointer;
+  justify-content: center;
+  align-items: center;
+  background: #f8f8f8;
+  border: solid 1px #d5d5d5;
+  padding: 0px;
+  border-radius: 5px;
+  height: 35px;
+  margin: 5px 0px 0px 0px;
+  min-width: 50px
+}
+.mat-checkbox-label{
+  line-height: 14px !important;
+  white-space: normal !important;
+  word-break: normal;
+}
+.mat-checkbox-inner-container{
+  background: white;
+}

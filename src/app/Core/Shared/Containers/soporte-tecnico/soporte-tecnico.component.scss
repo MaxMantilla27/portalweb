@@ -1,11 +1,11 @@
 
 .sopoteTecnico {
   position: fixed;
-  bottom: 30px;
+  bottom: 25px;
   right: 30px;
   width: 90px;
   background: #ff4e56;
-  height: 90px;
+  height: 65px;
   color: white;
   display: flex;
   justify-content: center;
@@ -16,9 +16,6 @@
   line-height: 12px;
   z-index: 200;
   cursor: pointer;
-  img{
-    display: none;
-  }
 }
 .chatST{
   position: fixed;
@@ -53,6 +50,12 @@
 .cerrarChatMedia{
   display: none;
 }
+.puntoConectado{
+  display: flex;
+  margin-left: 5%;
+  margin-top: -10px;
+  margin-bottom: 5px;
+}
 @media (max-width: 690px) {
   .sopoteTecnico {
     border-radius: 0px !important;
@@ -62,9 +65,7 @@
     height: auto !important;
     padding: 10px;
     img{
-      display: block;
-      width: 20px;
-      margin-right: 20px;
+      display: none;
     }
   }
   .chatST{
@@ -87,7 +88,7 @@
     padding: 0px 10px;z-index: 1000000;
   }
   .triangulo-chat{
-    display: block;
+    display: none;
   }
 }
 

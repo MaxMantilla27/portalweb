@@ -10,7 +10,7 @@
       <div class="questionPopPup" style="justify-content: flex-start;align-items: center;">
         <img src="../../../../assets/icons/signo-pregunta-abierto-03.svg" alt="">
       </div>
-      <div style="display: flex;align-items: center;">Necesitas más información</div>
+      <div style="display: flex;align-items: center;">{{data.TextoFormulario}}</div>
       <div class="questionPopPup" style="justify-content: flex-end;align-items: center;">
         <img src="../../../../assets/icons/signo-pregunta-cerrado-04.svg" alt="">
       </div>
@@ -28,8 +28,8 @@
         <div style="text-align: center;margin-bottom: 15px;" >
           <a style="color: #027CFF;font-size: 14px;cursor: pointer;" (click)="LimpiarCampos()">[No soy {{formularioContacto.Nombres}}]</a>
         </div>
-        <app-default-button [confs]="{color:'primary',titulo:'Enviar'}" [style]="'width: 100%;'">
-        </app-default-button>
+        <app-default-button-flecha style="display: flex;justify-content: center;" [confs]="{color:'primary',titulo:'Enviar'}" [style]="'width: 85%;border-radius:20px'">
+        </app-default-button-flecha>
       </ng-container>
 
     </app-formulario-pop-up>
@@ -44,8 +44,8 @@
         <div style="text-align: center;margin-bottom: 15px;" >
           <a style="color: #027CFF;font-size: 14px;cursor: pointer;" (click)="LimpiarCampos()">[No soy {{formularioContacto.Nombres}}]</a>
         </div>
-        <app-default-button [confs]="{color:'primary',titulo:'Enviar'}" [style]="'width: 100%;'">
-        </app-default-button>
+        <app-default-button-flecha style="display: flex;justify-content: center;" [confs]="{color:'primary',titulo:'Enviar'}" [style]="'width: 85%;border-radius:20px'">
+        </app-default-button-flecha>
       </ng-container>
 
     </app-formulario-pop-up>
@@ -57,8 +57,8 @@
       <ng-container contenido>
       </ng-container>
       <ng-container send>
-        <app-default-button [confs]="{color:'primary',titulo:'Enviar'}" [style]="'width: 100%;'">
-        </app-default-button>
+        <app-default-button-flecha style="display: flex;justify-content: center;" [confs]="{color:'primary',titulo:'Enviar'}" [style]="'width: 85%;border-radius:20px'">
+        </app-default-button-flecha>
       </ng-container>
 
     </app-formulario-pop-up>

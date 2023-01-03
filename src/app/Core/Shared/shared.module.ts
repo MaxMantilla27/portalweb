@@ -123,6 +123,7 @@ import { DefaultButtonFlechaComponent } from './Containers/buttons/default-butto
 import { FormularioAzulComponent } from './Containers/formulario-azul/formulario-azul.component';
 import { FormularioPopUpComponent } from './Containers/formulario-pop-up/formulario-pop-up.component';
 import { ScrollTopComponent } from './Containers/scroll-top/scroll-top.component';
+import { FormularioRojoComponent } from './Containers/formulario-rojo/formulario-rojo.component';
 
 @NgModule({
   imports: [
@@ -213,6 +214,7 @@ import { ScrollTopComponent } from './Containers/scroll-top/scroll-top.component
     FormularioAzulComponent,
     FormularioPopUpComponent,
     ScrollTopComponent,
+    FormularioRojoComponent,
     //ChatZComponent,
   ],
   exports: [

@@ -81,6 +81,7 @@ export class MisCursosComponent implements OnInit,OnDestroy {
   ObtenerCursosPrueba(){
     this._CuentaService.ObtenerListaCursosPrueba().pipe(takeUntil(this.signal$)).subscribe({
       next: (x) => {
+        console.log(x)
         this.matriculasPrueba = x;
         if(this.matriculasPrueba!=null){
           this.matriculasPrueba.forEach(p=>{

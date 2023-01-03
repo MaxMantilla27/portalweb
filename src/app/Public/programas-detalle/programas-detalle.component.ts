@@ -246,6 +246,7 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
   public porcentajeDescuento='';
   public textoDescuento='';
   public certificadoVacio=false;
+  public TextoFormulario="Necesitas más información"
   ngOnInit(): void {
     this._HelperServiceP.recibirChangePais().pipe(takeUntil(this.signal$)).subscribe((x) => {
       if (this.isBrowser) {
@@ -308,11 +309,15 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
     });
 
   }
-  OpenModalFormulario(): void {
+  OpenModalFormulario(opcionTexto:number): void {
+    if(opcionTexto==2){
+      this.TextoFormulario="Consultar opción de pago personalizado"
+    }
     const dialogRef = this.dialog.open(ProgramaFormularioComponent, {
       width: '400px',height:'570px',
       data: { IdPespecificoPrograma:this.IdPespecificoPrograma,
-              IdBusqueda:this.idBusqueda },
+              IdBusqueda:this.idBusqueda,
+              TextoFormulario:this.TextoFormulario },
       panelClass: 'formulario-container',
     });
 
@@ -427,9 +432,12 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
 
             }
             this.cabecera = x.programaCabeceraDetalleDTO;
-            console.log(this.cabecera)
             if(this.cabecera.tituloHtml!=null){
+              this.cabecera.tituloHtml = "<h1>"+this.cabecera.tituloHtml+"</h1>";
+              this.cabecera.tituloHtml = this.cabecera.tituloHtml.replace("<h1><h1>","<h1>").replace("</h1></h1>","</h1>");
             }
+            console.log(this.cabecera)
+
             if(x.programaCabeceraDetalleDTO.listProgramaEspecificoInformacionDTO.length>0){
               this.IdPespecificoPrograma = x.programaCabeceraDetalleDTO.listProgramaEspecificoInformacionDTO[0].id
               this.cabecera.listProgramaEspecificoInformacionDTO.forEach(x=>{
@@ -451,6 +459,7 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
                 'https://img.bsginstitute.com/repositorioweb/img/partners/' +
                 x.programaCabeceraDetalleDTO.imgPrincipal;
             };
+            console.log(this.cabecera.imgPrincipal)
             this.ListSeccionPrograma();
             this.ListPrerrequisito();
             this.EstructuraProgramaPortal();

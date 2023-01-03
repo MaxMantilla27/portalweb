@@ -1,17 +1,19 @@
-<div class="card CabeceraContenido">
-  <div class="card-body" style="background: #F5F5F5; margin-top: auto;font-size: 13px;text-align: left;margin-top: -10px;width: 101%; margin-left: -1px; padding: 5px 15px 5px 15px;">
+<div class="card CabeceraContenido" style="border-radius: 5px 10px 10px 10px;border: 2px solid #FF4E56">
+  <div class="card-body" style="background: transparent; margin-top: 0px;font-size: 11px;text-align: left;margin-bottom: 5px;width: 101%; margin-left: 0px; padding: 5px 15px 5px 15px;text-align: center;">
     Solo tienes que ingresar tus datos para empezar a conversar ahora mismo
   </div>
-  <div class="card-footer" style="background: white;margin-bottom: 10px;padding-bottom: 0px;padding-top: 0px;">
-    <app-formulario [model]="formularioContactoChat" [InputsDisable]="statuscharge" (OnSubmit)="SetContacto($event)"
+  <div class="card-footer" style="background: white;margin-bottom: 10px;padding-bottom: 0px;padding-top: 0px;    border: 1px solid transparent;">
+    <app-formulario-rojo [model]="formularioContactoChat" [InputsDisable]="statuscharge" (OnSubmit)="SetContacto($event)"
       (OnValid)="formVal=$event" [fiels]="fileds" [ObtenerPrefijo]="true">
       <ng-container contenido>
       </ng-container>
-      <ng-container send>
-        <app-default-button style="background:#FF4E56;color:white;font-size: 15px;"
-          [confs]="{titulo:'Empezar a chatear ahora'}" [style]="'width: 100%;'">
-        </app-default-button>
+      <ng-container send >
+        <div style="margin-left: 2rem;">
+          <app-default-button-flecha style="background:#FF4E56;color:white;font-size: 15px;"
+          [confs]="{titulo:'Chatear ahora'}" [style]="'width: 90%;border-radius:20px;margin-bottom: 5px;'">
+        </app-default-button-flecha>
+        </div>
       </ng-container>
-    </app-formulario>
+    </app-formulario-rojo>
   </div>
 </div>
