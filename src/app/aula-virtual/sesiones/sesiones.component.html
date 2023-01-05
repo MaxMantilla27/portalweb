@@ -28,8 +28,7 @@
           </div>
         </div>
       </ng-container>
-      <mat-tab-group class="tabVerticalses" [(selectedIndex)]="tabIndex" (selectedTabChange)="tabChanged($event)"
-        [ngStyle]="{'min-height.px': minH}">
+      <mat-tab-group class="tabVerticalses" [(selectedIndex)]="tabIndex" (selectedTabChange)="tabChanged($event)">
         <ng-container *ngIf="estructuraCapitulo!=undefined && estructuraCapitulo!=null">
 
           <ng-container *ngFor="let item of estructuraCapitulo.registroEstructuraCursoCapitulo;let i=index">

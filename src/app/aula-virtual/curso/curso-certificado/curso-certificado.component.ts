@@ -6,6 +6,7 @@ import { DatoObservableDTO } from 'src/app/Core/Models/DatoObservableDTO';
 import { formulario } from 'src/app/Core/Models/Formulario';
 import { CertificadoService } from 'src/app/Core/Shared/Services/Certificado/certificado.service';
 import { CertificadoIntegraService } from 'src/app/Core/Shared/Services/CertificadoIntegra/certificado-integra.service';
+import { CertificadoIntegraPortalService } from 'src/app/Core/Shared/Services/CertificadoIntegraPortal/certificado-integra-portal.service';
 import { HelperService } from 'src/app/Core/Shared/Services/helper.service';
 import { SnackBarServiceService } from 'src/app/Core/Shared/Services/SnackBarService/snack-bar-service.service';
 
@@ -21,6 +22,7 @@ export class CursoCertificadoComponent implements OnInit,OnChanges,OnDestroy {
     private _HelperService:HelperService,
     private _SnackBarServiceService:SnackBarServiceService,
     private _CertificadoIntegraService:CertificadoIntegraService,
+    private _CertificadoIntegraPortalService:CertificadoIntegraPortalService
   ) { }
   ngOnDestroy(): void {
     this.signal$.next(true)
@@ -137,7 +139,7 @@ export class CursoCertificadoComponent implements OnInit,OnChanges,OnDestroy {
   GenerarCertificadoPorAlumnoPortalWebPorIdMatricula(){
     console.log(1)
     this.charge=true
-    this._CertificadoIntegraService.GenerarCertificadoPorAlumnoPortalWebPorIdMatricula(this.datosCertificado.idMatriculaCabecera)
+    this._CertificadoIntegraPortalService.GenerarCertificadoPorAlumnoPortalWebPorIdMatricula(this.datosCertificado.idMatriculaCabecera)
     .pipe(takeUntil(this.signal$))
     .subscribe({
       next:x=>{

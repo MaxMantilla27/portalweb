@@ -1067,7 +1067,7 @@ export class SesionesComponent implements OnInit,OnDestroy,AfterViewInit {
               x.registroEstructuraCursoEncuesta.forEach((enc: any) => {
                 enc.charge = false;
                 if (enc.idEncuesta == this.idSesion) {
-                    this.tabIndex += 1;
+                    //this.tabIndex += 1;
                     enc.charge = true;
                     this.migaPan.push({
                       titulo: enc.nombreEncuesta,
@@ -1264,6 +1264,7 @@ export class SesionesComponent implements OnInit,OnDestroy,AfterViewInit {
           }
         }
         c++;
+        console.log('---'+this.tabIndex)
       }
     );
     console.log(e)

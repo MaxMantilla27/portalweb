@@ -6,7 +6,7 @@ margin-bottom: 10px;">Estas son las actividades de aprendizaje que debes complet
 <div class="msjCom" style="border: solid 2px #fff7ee; padding: 10px;margin-bottom: 20px;">
   <img src="../../../../assets/icons/icon-hand.svg" alt="">
   <div>
-    <strong> Recuerda: </strong>Debes completar las encuestas y la primera sesión para poder acceder a las siguientes.
+    <strong> Recuerda: </strong>El avance es progresivo, debes de visualizar el video al 100% y/o completar la actividad previa para continuar con la siguiente
   </div>
 </div>
 <div *ngIf="estructuraCapitulo!=undefined">
@@ -58,7 +58,7 @@ margin-bottom: 10px;">Estas son las actividades de aprendizaje que debes complet
                 </div>
                 <div class="col-12 col-md-4 col-lg-3" style="display: flex;align-items: center;
                 font-weight: 300;
-                font-size: 14px;">
+                font-size: 14px;padding-left: 5px;">
                   <ng-container *ngIf="Encuesta.encuestaEnviada==true">
                     <i class="material-icons" style=" color: #05c254;font-size: 14px !important;
                     margin-right: 10px">check_circle</i>
@@ -75,29 +75,31 @@ margin-bottom: 10px;">Estas son las actividades de aprendizaje que debes complet
         <div class="contentCapituloSesion ">
           <ng-container *ngIf="estructuraCapitulo.contineSubSesion==true">
             <div class="capituloSesion row" *ngFor="let sesiones of item.registroEstructuraCursoSesion">
-              <div class="col-12 col-md-12 col-lg-12" style="margin: 15px 0px;font-weight: 600;">
+              <div class="col-12 col-md-12 col-lg-12" style="margin: 15px 0px;font-weight: 600;    padding-right: 46px;">
                 <div class="row">
                   <div class="col-12 col-md-8 col-lg-9">
                     Sesión {{sesiones.numeroSesion}}: {{sesiones.nombreSesion}}
                   </div>
                   <div class="col-12 col-md-4 col-lg-3">
-                    <div style="display: flex;font-weight: 100;">
-                      {{sesiones.subV}}/{{sesiones.registroEstructuraCursoSubSesion.length}}
-                      <div style="position: relative;width: 30px;">
+                    <div style="display: flex;font-weight: 100;align-items: center;">
 
-                        <mat-progress-spinner class="greay-spinner" [mode]="'determinate'" [diameter]="25"
+                      <div style="position: relative;width: 20px;margin-left: -5px;
+                      margin-right: 10px;    height: 20px;">
+
+                        <mat-progress-spinner class="greay-spinner" [mode]="'determinate'" [diameter]="20"
                           [strokeWidth]="4" [value]="100">
                         </mat-progress-spinner>
-                        <mat-progress-spinner class="progras-spinner" [mode]="'determinate'" [diameter]="25"
+                        <mat-progress-spinner class="progras-spinner" [mode]="'determinate'" [diameter]="20"
                           [strokeWidth]="4" [value]="sesiones.porcentajeVideoVisualizado">
                         </mat-progress-spinner>
                       </div>
+                      {{sesiones.subV}}/{{sesiones.registroEstructuraCursoSubSesion.length}}
                     </div>
                   </div>
                 </div>
               </div>
               <ng-container *ngFor="let subsesiones of sesiones.registroEstructuraCursoSubSesion">
-                <div class="col-12 row sesiones" style="padding: 5px 30px;">
+                <div class="col-12 row sesiones" style="padding: 5px 30px;" [id]="item.numeroCapitulo+'-'+sesiones.numeroSesion+'-'+subsesiones.numeroSubSesion">
                   <div class="capituloSesionesSubsesiones contentModuloSesiones col-12 col-md-8 col-lg-9">
                     <i class="material-icons playsesion">play_circle</i>
                     <div style="width: calc( 100% - 35px);">
@@ -132,7 +134,7 @@ margin-bottom: 10px;">Estas son las actividades de aprendizaje que debes complet
                   <div class="col-12 col-md-4 col-lg-3 calificacionpromedio">
                     <div class="VideoCalificacion"
                       [ngClass]="{'VideoFinalizadoCalificacion': subsesiones.porcentajeVideoVisualizado>=100}">
-                      <i class="material-icons">assignment</i>
+                      <i class="material-icons" style="font-size: 14px !important;">assignment</i>
                       <div>
                         <ng-container *ngIf="subsesiones.porcentajeVideoVisualizado>=100">
                           <ng-container *ngIf="subsesiones.promedioCalificacion!=0">
@@ -158,10 +160,10 @@ margin-bottom: 10px;">Estas son las actividades de aprendizaje que debes complet
           </ng-container>
 
           <ng-container *ngIf="estructuraCapitulo.contineSubSesion==false">
-            <div class="row " style="align-items: center;">
+            <div class="row " style="align-items: center;" >
               <ng-container *ngFor="let sesiones of item.registroEstructuraCursoSesion">
 
-                <div class="col-12 row sesiones" style="padding: 10px 20px;">
+                <div class="col-12 row sesiones" style="padding: 10px 20px;" [id]="item.numeroCapitulo+'-'+sesiones.numeroSesion">
                   <div class="col-12 col-md-8 col-lg-9 capituloJustSesion contentModuloSesiones">
                     <i class="material-icons playsesion">play_circle</i>
                     <div style="width: calc( 100% - 35px);">
@@ -196,7 +198,7 @@ margin-bottom: 10px;">Estas son las actividades de aprendizaje que debes complet
                   <div class="col-12 col-md-4 col-lg-3 calificacionpromedio">
                     <div class="VideoCalificacion"
                       [ngClass]="{'VideoFinalizadoCalificacion': sesiones.porcentajeVideoVisualizado>=100}">
-                      <i class="material-icons">assignment</i>
+                      <i class="material-icons" style="font-size: 14px !important;">assignment</i>
                       <div>
                         <ng-container *ngIf="sesiones.porcentajeVideoVisualizado>=100">
                           <ng-container *ngIf="sesiones.promedioCalificacion!=0">
@@ -259,7 +261,7 @@ margin-bottom: 10px;">Estas son las actividades de aprendizaje que debes complet
               </div>
               <div class="col-12 col-md-4 col-lg-3" style="display: flex;align-items: center;
               font-weight: 300;
-              font-size: 14px;">
+              font-size: 14px;padding-left: 5px;">
                 <ng-container *ngIf="Encuesta.encuestaEnviada==true">
 
                   <i class="material-icons" style=" color: #05c254;font-size: 14px !important;
@@ -284,7 +286,7 @@ margin-bottom: 10px;">Estas son las actividades de aprendizaje que debes complet
               </div>
               <div class="col-12 col-md-4 col-lg-3" style="display: flex;align-items: center;
               font-weight: 300;
-              font-size: 14px;">
+              font-size: 14px;padding-left: 5px;">
                 <ng-container *ngIf="Encuesta.encuestaEnviada==true">
 
                   <i class="material-icons" style=" color: #05c254;font-size: 14px !important;
