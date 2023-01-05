@@ -6,91 +6,158 @@
 <div *ngIf="estructuraCapitulo!=undefined">
 
 
-  <ng-container *ngFor="let item of estructuraCapitulo; let i=index">
-    <ng-container *ngIf="item.id==0 && i==0">
+  <ng-container *ngFor="let item of estructuraCapitulo.registroEstructuraCursoCapitulo; let i=index">
+    <ng-container *ngIf="idModalidad!=1">
 
-      <ng-container *ngIf="idModalidad!=1">
+      <div class="contentCapitulo">
 
-        <div class="contentCapitulo">
+        <div class="hederCapitulo row" style="margin-top: 20px;">
+          <div class="titleCapitulo col-12 col-md-12 col-lg-12">Capítulo {{item.numeroCapitulo}}:
+            {{item.nombreCapitulo}}</div>
+        </div>
+      </div>
+    </ng-container>
+    <ng-container *ngIf="idModalidad==1">
 
-          <div class="hederCapitulo row" style="margin-top: 20px;">
-            <div class="titleCapitulo col-12 col-md-12 col-lg-12">Capítulo {{item.ordenFila}}:
-              {{item.capitulo}}</div>
+      <div class="contentCapitulo">
+
+        <div class="hederCapitulo row">
+          <div class="titleCapitulo col-12 col-md-7 col-lg-9">Capítulo {{item.numeroCapitulo}}:
+            {{item.nombreCapitulo}}</div>
+          <div class="col-12 col-md-5 col-lg-3"
+            style="display: flex;justify-content: space-between;align-items: center;">
+            <div class="NSesionCapitulo">{{item.registroEstructuraCursoSesion.length}} Sesiones</div>
+
+
+            <i style=" color: #05c254;font-size: 16px !important;" class="material-icons" *ngIf="item.visualizadoCapitulo>=100">check_circle</i>
           </div>
         </div>
-      </ng-container>
-      <ng-container *ngIf="idModalidad==1">
-        <div class="contentCapitulo">
+        <div class="contentCapituloSesion ">
+          <ng-container *ngIf="estructuraCapitulo.contineSubSesion==true">
+            <div class="capituloSesion row" *ngFor="let sesiones of item.registroEstructuraCursoSesion">
+              <div class="col-12 col-md-12 col-lg-12" style="margin: 15px 0px;font-weight: 600;">
+                <div class="row">
+                  <div class="col-12 col-md-8 col-lg-8">
+                    Sesión {{sesiones.numeroSesion}}: {{sesiones.nombreSesion}}
+                  </div>
+                  <div class="col-12 col-md-4 col-lg-4">
+                    <div style="display: flex;font-weight: 100;">
+                      {{sesiones.subV}}/{{sesiones.registroEstructuraCursoSubSesion.length}}
+                      <div style="position: relative;width: 30px;">
 
-          <div class="hederCapitulo row">
-            <div class="titleCapitulo col-12 col-md-7 col-lg-9">Capítulo {{item.ordenFila}}:
-              {{item.capitulo}}</div>
-            <div class="col-12 col-md-5 col-lg-3" style="display: flex;justify-content: flex-end;align-items: center;">
-              <div class="NSesionCapitulo">{{item.ordenFila}} </div>
-            </div>
-          </div>
-          <div class="contentCapituloSesion ">
-            <ng-container *ngIf="item.listaSesiones!=null && item.listaSesiones.length>0 && item.listaSesiones[0].subSesion!=null && item.listaSesiones[0].subSesion!=''">
-              <div class="col-12 col-md-12 col-lg-12"
-              style="margin: 15px 0px;display: flex;justify-content: space-between;font-weight: 600;">
-              Sesión  {{item.listaSesiones[0].sesion}}</div>
-            </ng-container>
-            <div class="capituloSesion row" *ngFor="let sesiones of item.listaSesiones">
-
-              <ng-container *ngIf="sesiones.subSesion==null || sesiones.subSesion==''">
-                <div class="col-12 col-md-7 col-lg-9 capituloJustSesion contentModuloSesiones">
-                  <i class="material-icons playsesion">play_circle</i>
-                  <div style="width: calc( 100% - 35px);">
-                    <div class="tituloSesion" [routerLink]="'1/'+item.ordenFila+'/'+sesiones.ordenFila">
-                      {{sesiones.sesion}}</div>
-                    <mat-progress-bar mode="determinate"
-                      [value]="(sesiones.porcentajeVideoVisualizado!=undefined)?sesiones.porcentajeVideoVisualizado:0">
-                    </mat-progress-bar>
-                    <div
-                      style="justify-content: space-between; display: flex;font-size: 12px;color: #909090; font-weight: 600;width: 100%;">
-                      <div>0%</div>
-                      <div>{{(sesiones.porcentajeVideoVisualizado!=undefined)?(sesiones.porcentajeVideoVisualizado |
-                        number:'0.1-1'):0}}%
+                        <mat-progress-spinner class="progras-spinner" [mode]="'determinate'" [diameter]="25"
+                          [strokeWidth]="4" [value]="sesiones.porcentajeVideoVisualizado">
+                        </mat-progress-spinner>
                       </div>
                     </div>
-                    <div
-                      style="width: 100%;font-size: 10px;color: #cdcdcd;display: flex;    align-items: flex-end;margin-top: 5px;">
-                      <i class="material-icons" style="margin-right:5px ;">access_time</i>
-                      <div style="font-size: 12px;">({{sesiones.totalSegundos/60 | number:'0.0-0'}} minutos)</div>
+                  </div>
+                </div>
+              </div>
+              <ng-container *ngFor="let subsesiones of sesiones.registroEstructuraCursoSubSesion">
+                <div class="col-12 row sesiones" style="padding: 5px 30px;">
+                  <div class="capituloSesionesSubsesiones contentModuloSesiones col-12 col-md-12 col-lg-12">
+                    <i class="material-icons playsesion">play_circle</i>
+                    <div style="width: calc( 100% - 35px);">
+                      <div class="tituloSesion"
+                        (click)="EventoInteraccion(subsesiones.nombreSubSesion);IrVideo('1/'+item.numeroCapitulo+'/'+subsesiones.numeroSubSesion,subsesiones.habilitado,item.numeroCapitulo)">
+                        {{subsesiones.nombreSubSesion}}</div>
+
+                      <div class="row" style=" align-items: center;">
+                        <div class="col-12 col-md-4 col-lg-2"
+                          style="    margin: 10px 0px;font-size: 10px;color: #cdcdcd;display: flex;    align-items: flex-end;margin-top: 5px;;padding: 0px">
+                          <i class="material-icons" style="margin-right:5px ;">access_time</i>
+                          <div style="font-size: 12px;">({{subsesiones.tiempoVideo/60 | number:'0.0-0'}} min.)</div>
+                        </div>
+                        <div class="col-12 col-md-5 col-lg-8">
+                          <mat-progress-bar mode="determinate" style="    border-radius: 10px;"
+                            [value]="(subsesiones.porcentajeVideoVisualizado!=undefined)?subsesiones.porcentajeVideoVisualizado:0">
+                          </mat-progress-bar>
+                        </div>
+                        <div class="col-12 col-md-3 col-lg-2"
+                          style="justify-content: space-between; display: flex;font-size: 12px;color: #909090; font-weight: 600;    margin: 10px 0px;">
+                          <!-- <div>0%</div> -->
+                          <div>Avance
+                            {{(subsesiones.porcentajeVideoVisualizado!=undefined)?
+                            subsesiones.porcentajeVideoVisualizado>100?100:(subsesiones.porcentajeVideoVisualizado |
+                            number:'0.0-0'):0}}%
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                  </div>
+
+                </div>
+              </ng-container>
+            </div>
+          </ng-container>
+
+          <ng-container *ngIf="estructuraCapitulo.contineSubSesion==false">
+            <div class="row " style="align-items: center;">
+              <ng-container *ngFor="let sesiones of item.registroEstructuraCursoSesion">
+
+                <div class="col-12 row sesiones" style="padding: 10px 20px;">
+                  <div class="col-12 col-md-8 col-lg-9 capituloJustSesion contentModuloSesiones">
+                    <i class="material-icons playsesion">play_circle</i>
+                    <div style="width: calc( 100% - 35px);">
+                      <div class="tituloSesion"
+                        (click)="EventoInteraccion(sesiones.nombreSesion);IrVideo('1/'+item.numeroCapitulo+'/'+sesiones.numeroSesion,sesiones.habilitado,item.numeroCapitulo)">
+                        Sesión {{sesiones.numeroSesion}}: {{sesiones.nombreSesion}}</div>
+
+                      <div class="row" style=" align-items: center;">
+                        <div class="col-12 col-md-4 col-lg-2"
+                          style="    margin: 10px 0px;font-size: 10px;color: #cdcdcd;display: flex;    align-items: flex-end;margin-top: 5px;padding: 0px;">
+                          <i class="material-icons" style="margin-right:5px ;">access_time</i>
+                          <div style="font-size: 12px;">({{sesiones.tiempoVideo/60 | number:'0.0-0'}} min.)</div>
+                        </div>
+                        <div class="col-12 col-md-5 col-lg-8">
+                          <mat-progress-bar mode="determinate" style="    border-radius: 10px;"
+                            [value]="(sesiones.porcentajeVideoVisualizado!=undefined)?sesiones.porcentajeVideoVisualizado:0">
+                          </mat-progress-bar>
+                        </div>
+                        <div class="col-12 col-md-3 col-lg-2"
+                          style="justify-content: space-between; display: flex;font-size: 12px;color: #909090; font-weight: 600;    margin: 10px 0px;">
+                          <!-- <div>0%</div> -->
+                          <div>Avance
+                            {{(sesiones.porcentajeVideoVisualizado!=undefined)?
+                            sesiones.porcentajeVideoVisualizado>100?100:(sesiones.porcentajeVideoVisualizado |
+                            number:'0.0-0'):0}}%
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-12 col-md-4 col-lg-3 calificacionpromedio">
+                    <div class="VideoCalificacion"
+                      [ngClass]="{'VideoFinalizadoCalificacion': sesiones.porcentajeVideoVisualizado>=100}">
+                      <i class="material-icons">assignment</i>
+                      <div>
+                        <ng-container *ngIf="sesiones.porcentajeVideoVisualizado>=100">
+                          <ng-container *ngIf="sesiones.promedioCalificacion!=0">
+                            Calificación: <strong>{{sesiones.promedioCalificacion | number:'0.0-0'}}</strong>
+                          </ng-container>
+                          <ng-container *ngIf="sesiones.promedioCalificacion==0">
+                            Aprobado
+                          </ng-container>
+                        </ng-container>
+                        <ng-container *ngIf="sesiones.porcentajeVideoVisualizado<100">
+                          Pendiente
+                        </ng-container>
+                      </div>
                     </div>
                   </div>
                 </div>
               </ng-container>
-              <ng-container *ngIf="sesiones.subSesion!=null && sesiones.subSesion!=''">
-                <div class="col-12 col-md-12 col-lg-12" style="margin: 15px 0px;"></div>
-                <div class="capituloSesionesSubsesiones contentModuloSesiones col-12 col-md-7 col-lg-9">
-                  <i class="material-icons playsesion">play_circle</i>
-                  <div style="width: calc( 100% - 35px);">
-                    <div class="tituloSesion" [routerLink]="'1/'+item.ordenFila+'/'+sesiones.ordenFila">
-                      {{sesiones.subSesion}}</div>
-
-                    <mat-progress-bar mode="determinate"
-                      [value]="(sesiones.porcentajeVideoVisualizado!=undefined)?sesiones.porcentajeVideoVisualizado:0">
-                    </mat-progress-bar>
-                    <div
-                      style="justify-content: space-between; display: flex;font-size: 12px;color: #909090; font-weight: 600;width: 100%;">
-                      <div>0%</div>
-                      <div>{{(sesiones.porcentajeVideoVisualizado!=undefined)?(sesiones.porcentajeVideoVisualizado
-                        | number:'0.0-0'):0}}%
-                      </div>
-                    </div>
-                    <div
-                      style="width: 100%;font-size: 10px;color: #cdcdcd;display: flex;    align-items: flex-end;margin-top: 5px;">
-                      <i class="material-icons" style="margin-right:5px ;">access_time</i>
-                      <div style="font-size: 12px;">({{sesiones.totalSegundos/60 | number:'0.0-0'}} minutos)</div>
-                    </div>
-                  </div>
-                </div>
-              </ng-container>
             </div>
-          </div>
+
+          </ng-container>
         </div>
-      </ng-container>
+      </div>
     </ng-container>
   </ng-container>
+</div>
+
+<div *ngIf="estructuraCapitulo==undefined" style="position: relative;margin-top: 100px;">
+  <app-cargando></app-cargando>
 </div>

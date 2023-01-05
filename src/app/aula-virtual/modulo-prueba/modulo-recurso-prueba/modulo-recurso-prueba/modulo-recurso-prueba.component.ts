@@ -34,6 +34,8 @@ export class ModuloRecursoPruebaComponent implements OnInit,OnDestroy {
     this._HelperService.recibirCombosPerfil.pipe(takeUntil(this.signal$)).subscribe((x) => {
       this.miPerfil=x
     })
+    console.log(this.Estructura)
+
   }
   ngOnChanges(changes: SimpleChanges): void {
     if(this.tipo!=0){

@@ -32,6 +32,9 @@ export class CursoPruebaModulosComponent implements OnInit {
     programaGeneral: '',
   };
   @Input() idRegistroPrueba = 0;
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    console.log(this.programaEstructura)
+
+  }
 }
 

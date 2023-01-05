@@ -22,7 +22,7 @@
       </div>
     </div>
 
-    <app-default-button [confs]="{color:'primary',titulo:'Ingresar'}" [disabled]="item.params==undefined"
+    <app-default-button [confs]="{color:'primary',titulo:'Ingresar'}" [disabled]="item.params==undefined" [disabled]="item.visualizarVideos==false"
       [ruta]="'/AulaVirtual/MisCursosPrueba/'+idRegistroPrueba+'/'+item.idPEspecificoHijo" [style]="'padding:0px 20px'">
     </app-default-button>
   </div>

@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { MatTabChangeEvent } from '@angular/material/tabs';
 import { ActivatedRoute } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
-import { ParametrosEstructuraEspecificaDTO } from 'src/app/Core/Models/EstructuraEspecificaDTO';
+import { ParametrosEstructuraEspecificaAccesoPruebaDTO, ParametrosEstructuraEspecificaDTO } from 'src/app/Core/Models/EstructuraEspecificaDTO';
 import { CursoPadreDTO } from 'src/app/Core/Models/ListadoProgramaContenidoDTO';
 import { CursoPadrePruebaDTO } from 'src/app/Core/Models/ListadoProgramaContenidoPruebaDTO';
 import { CuentaService } from 'src/app/Core/Shared/Services/Cuenta/cuenta.service';
@@ -98,7 +98,7 @@ export class CursoPruebaComponent implements OnInit,OnDestroy {
   }
   ObtenerListadoProgramaContenidoPrueba() {
     this._ProgramaContenidoService
-      .ObtenerListadoProgramaContenidoPrueba(this.idRegistroPrueba)
+      .ObtenerListadoProgramaContenidoPrueba(this.idRegistroPrueba,0)
       .pipe(takeUntil(this.signal$))
       .subscribe({
         next: (x) => {
@@ -114,9 +114,9 @@ export class CursoPruebaComponent implements OnInit,OnDestroy {
             },)
 
           this.programaEstructura.listaCursoMatriculado.forEach((program) => {
-            var params: ParametrosEstructuraEspecificaDTO = {
+            var params: ParametrosEstructuraEspecificaAccesoPruebaDTO = {
               AccesoPrueba: false,
-              IdMatriculaCabecera: this.programaEstructura.idRegistroPrueba,
+              IdAccesoPrueba: this.programaEstructura.idRegistroPrueba,
               IdPEspecificoPadre: this.programaEstructura.idPEspecifico,
               IdPGeneralPadre: this.programaEstructura.idPGeneral,
               IdPEspecificoHijo: program.idPEspecificoHijo,

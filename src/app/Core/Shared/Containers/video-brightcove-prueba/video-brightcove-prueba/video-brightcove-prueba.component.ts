@@ -1,7 +1,7 @@
 import { Component, ElementRef, Input, OnDestroy, OnInit, SimpleChanges, ViewChild, ViewEncapsulation } from '@angular/core';
 import { CloudflareStreamComponent } from '@cloudflare/stream-angular';
 import { Subject, takeUntil } from 'rxjs';
-import { ParametrosEstructuraEspecificaDTO, RegistroVideoUltimaVisualizacionDTO } from 'src/app/Core/Models/EstructuraEspecificaDTO';
+import { ParametrosEstructuraEspecificaAccesoPruebaDTO, ParametrosEstructuraEspecificaDTO, RegistroVideoUltimaVisualizacionDTO } from 'src/app/Core/Models/EstructuraEspecificaDTO';
 import { HelperService } from '../../../Services/helper.service';
 import { VideoSesionService } from '../../../Services/VideoSesion/video-sesion.service';
 declare var $:any;
@@ -57,9 +57,9 @@ export class VideoBrightcovePruebaComponent implements OnInit,OnDestroy {
   };
   @Input() idSesion=0;
   @Input() idCapitulo=0;
-  @Input() json: ParametrosEstructuraEspecificaDTO = {
+  @Input() json: ParametrosEstructuraEspecificaAccesoPruebaDTO = {
     AccesoPrueba: true,
-    IdMatriculaCabecera: 0,
+    IdAccesoPrueba: 0,
     IdPEspecificoPadre: 0,
     IdPGeneralPadre: 0,
     IdPEspecificoHijo: 0,
@@ -348,7 +348,7 @@ export class VideoBrightcovePruebaComponent implements OnInit,OnDestroy {
     if(Math.floor(this.tiempoactualvideo)>this.tiempovideoinicioInicial && this.guardar==false){
       console.log(Math.floor(this.tiempoactualvideo)+'-'+this.tiempovideoinicioInicial)
       this.guardar=true
-      this.send.accesoPrueba=this.json.AccesoPrueba
+      this.send.accesoPrueba=true
       this.send.idPEspecificoHijo=this.json.IdPEspecificoHijo
       this.send.idCapitulo=this.idCapitulo
       this.send.idPEspecificoPadre=this.json.IdPEspecificoPadre
