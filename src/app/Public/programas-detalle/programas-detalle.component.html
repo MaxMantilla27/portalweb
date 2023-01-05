@@ -128,12 +128,12 @@
   <div class="row">
     <div class="col-12 col-md-12 col-lg-12">
       <div class="container">
-        <div class="row rowpadd">
+        <div class="row rowpadd" style="margin-bottom: 160px;">
           <div class="col-12 col-md-8 col-lg-8 row" style="align-items: flex-start;">
             <div *ngIf="cabecera.imgPrincipal!='https://img.bsginstitute.com/repositorioweb/img/partners/Sin Partner'" class="col-12 col-md-10 col-lg-10" style="position: relative;text-align: center;margin-bottom: 40px;">
               <img class="InfoProgramImg" [src]="cabecera.imgPrincipal" alt="">
             </div>
-            <div *ngIf="cabecera.imgPrincipal!='https://img.bsginstitute.com/repositorioweb/img/partners/Sin Partner'" class="col-12 col-md-6 col-lg-6 row" style="align-items: center;margin-bottom: 20px;">
+            <div *ngIf="cabecera.imgPrincipal!='https://img.bsginstitute.com/repositorioweb/img/partners/Sin Partner'" class="col-12 col-md-6 col-lg-6 row">
               <div class="col-12 " style="display: flex">
                 <img class="InfoProgramIcon" src="../../../assets//icons/reloj-04.svg" alt="">
                 <div class="InfoProgramTitle">Fechas de Inicio:</div>
@@ -152,7 +152,7 @@
                 </div>
               </div>
             </div>
-            <div *ngIf="cabecera.imgPrincipal=='https://img.bsginstitute.com/repositorioweb/img/partners/Sin Partner'" class="col-12 col-md-6 col-lg-6 row" style="align-items: center;margin-bottom: 160px;">
+            <div *ngIf="cabecera.imgPrincipal=='https://img.bsginstitute.com/repositorioweb/img/partners/Sin Partner'" class="col-12 col-md-6 col-lg-6 row" >
               <div class="col-12 " style="display: flex">
                 <img class="InfoProgramIcon" src="../../../assets//icons/reloj-04.svg" alt="">
                 <div class="InfoProgramTitle">Fechas de Inicio:</div>
@@ -176,7 +176,7 @@
                 <img class="InfoProgramIcon" src="../../../assets//icons/calendar-03.svg" alt="">
                 <div class="InfoProgramTitle">Duraci&oacute;n:</div>
               </div>
-              <div style="margin-top: 10px;width: 100%;">
+              <div style="margin-top: 10px;width: 100%; margin-bottom: 15px;">
                 <div class="infoProgramFechas">
                   <div class="infoProgramText">{{cabecera.duracion}}</div>
                 </div>
