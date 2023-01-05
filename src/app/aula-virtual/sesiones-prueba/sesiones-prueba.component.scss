@@ -62,7 +62,22 @@
     width: 248px;
     text-align: left;
   }
+  .iconMat {
+    background-repeat: no-repeat;
+    width: 30px;
+    height: 30px;
+    background-position: center;
+  }
+  .iconVideoFinal {
+    background-image: url("../../../assets/icons/positivo-hecho-20.svg");
+  }
+  .iconVideo {
+    background-image: url("../../../assets/icons/videos-29.svg");
+  }
 
+  .iconcapitulo {
+    background-image: url("../../../assets/icons/sesiones-gris-43.svg");
+  }
 }
 .tabVerticalSesiones
   .mat-tab-header
@@ -148,3 +163,4 @@
   margin-bottom: 10px;
   font-weight: 600;
 }
+

@@ -117,6 +117,9 @@ export class VideoBrightcovePruebaComponent implements OnInit,OnDestroy {
       }
       this.tiempovideoinicioInicial=Math.ceil(this.videoData.tiempoVisualizado)
       this.tiempovideo=this.videoData.tiempoTotalVideo
+      console.log(this.tiempovideoinicioInicial)
+      console.log(this.tiempovideo)
+      console.log(this.videoData)
       this.tiempoactualvideo=this.videoData.tiempoVisualizado
       console.log(this.video)
       this.diapositivas = this.videoData.objetoConfigurado.configuracion;

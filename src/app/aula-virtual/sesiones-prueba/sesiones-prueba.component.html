@@ -42,7 +42,7 @@
             <!--sin subsesion-->
             <ng-container *ngIf="estructuraCapitulo.contineSubSesion==false">
               <ng-container *ngFor="let sesion of item.registroEstructuraCursoSesion;let s=index">
-                <mat-tab [disabled]="!sesion.habilitado">
+                <mat-tab [disabled]="((!sesion.habilitado && item.numeroCapitulo!=1)||(sesion.habilitado && item.numeroCapitulo!=1))">
                   <ng-template mat-tab-label>
                     <div (click)="sesion.habilitado?changeTab(1,sesion.numeroSesion,i,s,-1):mensajeDisable(i+1)"
                       class="contentHeaderM estructuraSubCapitulos" [ngClass]="{'hidetab':item.opened==false}">
@@ -95,7 +95,7 @@
                   </ng-template>
                 </mat-tab>
                 <ng-container *ngFor="let subsesion of sesion.registroEstructuraCursoSubSesion;let ss=index">
-                  <mat-tab [disabled]="!subsesion.habilitado">
+                  <mat-tab [disabled]="((!sesion.habilitado && item.numeroCapitulo!=1)||(sesion.habilitado && item.numeroCapitulo!=1))">
                     <ng-template mat-tab-label>
                       <div (click)="subsesion.habilitado?changeTab(1,subsesion.numeroSubSesion,i,s,ss):mensajeDisable(i+1)"
                         class="contentHeaderM estructuraSubSesiones"

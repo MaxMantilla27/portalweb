@@ -58,7 +58,7 @@ export class SesionesVideoPruebaComponent implements OnInit,OnDestroy {
   ngOnChanges(changes: SimpleChanges): void {
     console.log(this.charge)
 
-    if(this.charge==true && this.habilitado==true){
+    if(this.charge==true ){
       this.parametros.IdSesion=this.idSesion;
       this.parametros.IdCapitulo=this.idCapitulo;
       this.parametros.AccesoPrueba=true;
