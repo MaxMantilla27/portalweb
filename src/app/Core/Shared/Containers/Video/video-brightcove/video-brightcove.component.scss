@@ -4,11 +4,12 @@
 }
 .video-js {
   width: 100% !important;
-  height: 400px !important;
+  height: 100% !important;
+  aspect-ratio: 16/9;
 }
 .containerVideoDiapositiva {
   width: 100%;
-  min-height: 500px;
+  //min-height: 500px;
   display: flex;
   padding: 10px 0px;
   .containerVideo {

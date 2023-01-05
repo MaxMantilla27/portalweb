@@ -111,7 +111,6 @@ export class CursoComponent implements OnInit,OnDestroy {
   public contenidotareapares=
   '<iframe src="https://player.vimeo.com/video/737722683?h=e768e2bbcc" width="100%"  height="564" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>'
   ngOnInit(): void {
-
     this._ActivatedRoute.params.pipe(
       takeUntil(this.signal$)
     ).subscribe({
@@ -345,10 +344,8 @@ export class CursoComponent implements OnInit,OnDestroy {
   }
   public dialogRef:any;
   RegistroProgramaMatriculadoPorIdMatricula(){
-    this.dialogRef =this.dialog.open(ChargeComponent,{
-      panelClass:'dialog-charge',
-      disableClose:true
-    });
+    //document.documentElement.scrollTop=0;
+
     this._DatosPerfilService.RegistroProgramaMatriculadoPorIdMatricula(this.idMatricula).pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
         console.log(x)
@@ -397,6 +394,10 @@ export class CursoComponent implements OnInit,OnDestroy {
     })
   }
   ObtenerListadoProgramaContenido() {
+     this.dialogRef =this.dialog.open(ChargeComponent,{
+      panelClass:'dialog-charge',
+      disableClose:true
+    });
     this._ProgramaContenidoService
       .ObtenerListadoProgramaContenido(this.idMatricula)
       .pipe(takeUntil(this.signal$))

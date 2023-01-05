@@ -22,6 +22,7 @@ import { DatosPortalService } from 'src/app/Core/Shared/Services/DatosPortal/dat
 import { HelperService } from 'src/app/Core/Shared/Services/helper.service';
 import { LandingPageService } from 'src/app/Core/Shared/Services/LandingPage/landing-page.service';
 import { RegionService } from 'src/app/Core/Shared/Services/Region/region.service';
+import { SessionStorageService } from 'src/app/Core/Shared/Services/session-storage.service';
 import { SnackBarServiceService } from 'src/app/Core/Shared/Services/SnackBarService/snack-bar-service.service';
 import { LandinPageV2Component } from '../landin-page-v2.component';
 declare const fbq: any;
@@ -43,7 +44,7 @@ export class LandingPageModalComponent implements OnInit, OnDestroy {
 
     private _DatosPortalService: DatosPortalService,
     private _RegionService: RegionService,
-
+    private _SessionStorageService:SessionStorageService,
     private _HelperService: HelperService,
     private _SnackBarServiceService: SnackBarServiceService,
     private _LandingPageService:LandingPageService,
@@ -67,27 +68,80 @@ export class LandingPageModalComponent implements OnInit, OnDestroy {
       obj[cc.identificadorApi]=''
     });
     this.obj=obj
-    this._HelperService.recibirCombosPerfil.pipe(takeUntil(this.signal$)).subscribe((x) => {
-      console.log(x.datosAlumno)
-      this.combosPrevios=x.datosAlumno;
+    this.obtenerFormularioCompletado();
+    // this._HelperService.recibirCombosPerfil.pipe(takeUntil(this.signal$)).subscribe((x) => {
+    //   console.log(x.datosAlumno)
+    //   this.combosPrevios=x.datosAlumno;
+    //   if(this.obj.Nombres!=undefined){
+    //     this.obj.Nombres=this.combosPrevios.nombres
+    //   }
+    //   if(this.obj.Apellidos!=undefined){
+    //     this.obj.Apellidos=this.combosPrevios.apellidos
+    //     console.log(obj.Apellidos)
+    //   }
+    //   if(this.obj.Email!=undefined){
+    //     this.obj.Email=this.combosPrevios.email
+    //   }
+    //   if(this.obj.IdPais!=undefined){
+    //     this.obj.IdPais=this.combosPrevios.idPais
+    //   }
+    //   if(this.obj.IdRegion!=undefined){
+    //     this.obj.IdRegion=this.combosPrevios.idDepartamento
+    //   }
+    //   if(this.obj.Movil!=undefined){
+    //     this.obj.Movil=this.combosPrevios.telefono
+    //   }
+    //   if(this.obj.IdCargo!=undefined){
+    //     this.obj.IdCargo=this.combosPrevios.idCargo
+    //   }
+    //   if(this.obj.IdAreaTrabajo!=undefined){
+    //     this.obj.IdAreaTrabajo=this.combosPrevios.idAreaTrabajo
+    //   }
+    //   if(this.obj.IdAreaFormacion!=undefined){
+    //     this.obj.IdAreaFormacion=this.combosPrevios.idAreaFormacion
+    //   }
+    //   if(this.obj.IdIndustria!=undefined){
+    //     this.obj.IdIndustria=this.combosPrevios.idIndustria
+    //   }
+    //   console.log(this.obj)
+    // })
+    console.log(this.obj)
+    this.AddFields();
+    this.ObtenerCombosPortal();
+    this.Secciones = JSON.parse(this.data.valorPrograma.estilosCongelados)
+    console.log(this.Secciones)
+    let i = 0;
+    this.Secciones.forEach((x:any) => {
+      this.cambios(i);
+      i++;
+    });
+  }
+
+  obtenerFormularioCompletado(){
+    var DatosFormulario = this._SessionStorageService.SessionGetValue('DatosFormulario');
+    console.log(DatosFormulario)
+    if(DatosFormulario!=''){
+      var datos = JSON.parse(DatosFormulario);
+      console.log(datos)
+      this.combosPrevios=datos;
       if(this.obj.Nombres!=undefined){
         this.obj.Nombres=this.combosPrevios.nombres
       }
       if(this.obj.Apellidos!=undefined){
         this.obj.Apellidos=this.combosPrevios.apellidos
-        console.log(obj.Apellidos)
       }
       if(this.obj.Email!=undefined){
         this.obj.Email=this.combosPrevios.email
       }
       if(this.obj.IdPais!=undefined){
         this.obj.IdPais=this.combosPrevios.idPais
+        this.GetRegionesPorPais(this.obj.IdPais);
       }
       if(this.obj.IdRegion!=undefined){
-        this.obj.IdRegion=this.combosPrevios.idDepartamento
+        this.obj.IdRegion=this.combosPrevios.idRegion
       }
       if(this.obj.Movil!=undefined){
-        this.obj.Movil=this.combosPrevios.telefono
+        this.obj.Movil=this.combosPrevios.movil
       }
       if(this.obj.IdCargo!=undefined){
         this.obj.IdCargo=this.combosPrevios.idCargo
@@ -101,20 +155,8 @@ export class LandingPageModalComponent implements OnInit, OnDestroy {
       if(this.obj.IdIndustria!=undefined){
         this.obj.IdIndustria=this.combosPrevios.idIndustria
       }
-      console.log(this.obj)
-    })
-    console.log(this.obj)
-    this.AddFields();
-    this.ObtenerCombosPortal();
-    this.Secciones = JSON.parse(this.data.valorPrograma.estilosCongelados)
-    console.log(this.Secciones)
-    let i = 0;
-    this.Secciones.forEach((x:any) => {
-      this.cambios(i);
-      i++;
-    });
+    }
   }
-
   public IdFormulario = 0;
   statuscharge = false;
   formVal: boolean = false;
@@ -256,6 +298,27 @@ export class LandingPageModalComponent implements OnInit, OnDestroy {
     console.log(this.Secciones);
   }
 
+  GetRegionesPorPais(idPais:number){
+    this._RegionService.ObtenerCiudadesPorPais(idPais).pipe(takeUntil(this.signal$)).subscribe({
+      next:x=>{
+        this.fileds.forEach(r=>{
+          if(r.nombre=='IdRegion'){
+            r.disable=false;
+            r.data=x.map((p:any)=>{
+              var ps:Basic={Nombre:p.nombreCiudad,value:p.idCiudad};
+              return ps;
+            })
+          }
+        })
+        this.form.enablefield('IdRegion');
+      }
+    })
+  }
+  SelectChage(e:any){
+    if(e.Nombre=="IdPais"){
+      this.GetRegionesPorPais(e.value)
+    }
+  }
   ObtenerCombosPortal(){
 
     this._DatosPortalService.ObtenerCombosPortal().pipe(takeUntil(this.signal$)).subscribe({

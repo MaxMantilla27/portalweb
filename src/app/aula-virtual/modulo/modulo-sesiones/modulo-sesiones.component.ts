@@ -26,6 +26,7 @@ export class ModuloSesionesComponent implements OnInit, OnChanges {
     private _AlumnosTest:AlumnosTest,
     private _HelperService:HelperService
   ) {}
+  public Actual='--'
   ngOnChanges(changes: SimpleChanges): void {
     console.log(this.estructuraCapitulo)
     if (this.estructuraCapitulo != undefined && this.estructuraCapitulo.registroEstructuraCursoCapitulo!=null) {
@@ -37,11 +38,14 @@ export class ModuloSesionesComponent implements OnInit, OnChanges {
           c.registroEstructuraCursoSesion.forEach((s: any) => {
             s.ses=ses
             if(this.estructuraCapitulo.contineSubSesion==true){
+
               s.subV = 0;
               s.registroEstructuraCursoSubSesion.forEach((ss: any) => {
                 ss.subs=subs
                 ss.habilitado=false;
-
+                if (Math.ceil(ss.porcentajeVideoVisualizado) >= 1) {
+                  this.Actual=c.numeroCapitulo+'-'+s.numeroSesion+'-'+ss.numeroSubSesion
+                }
                 if(this.estructuraCapitulo.convalidado==true || alumnoTest){
                   ss.habilitado=true;
                 }
@@ -140,6 +144,10 @@ export class ModuloSesionesComponent implements OnInit, OnChanges {
               });
               subs=0;
             }else{
+
+              if (Math.ceil(s.porcentajeVideoVisualizado) >= 1) {
+                this.Actual=c.numeroCapitulo+'-'+s.numeroSesion
+              }
               s.habilitado=false;
               if(this.estructuraCapitulo.convalidado==true || alumnoTest){
                 s.habilitado=true;
@@ -311,6 +319,14 @@ export class ModuloSesionesComponent implements OnInit, OnChanges {
         }
       );
       console.log(this.estructuraCapitulo);
+      console.log(this.Actual);
+      setTimeout(() => {
+        console.log(document.getElementById(this.Actual))
+        console.log(document.getElementById(this.Actual)?.offsetTop)
+        var ss=document.getElementById(this.Actual)
+        var n=ss!=undefined?ss.offsetTop:0
+        document.documentElement.scrollTop=n;
+      }, 100);
     }
   }
   @Input() Capitulo = '';

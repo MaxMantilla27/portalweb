@@ -1,5 +1,5 @@
 .TareaYEncuesta {
-  padding: 20px 0px;
+  padding: 20px 20px 20px 0px;
   font-weight: 600;
   display: flex;
   //margin-bottom: 20px;
@@ -72,6 +72,8 @@
 .VideoCalificacion{
   display: flex;
   color: #666666;
+  font-size: 14px;
+  align-items: center;
   i{
     margin-right: 10px;
   }
