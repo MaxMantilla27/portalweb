@@ -112,20 +112,8 @@
           </div>
         </div>
         <div class="iconoPagoTarjeta">
-          <div *ngIf="jsonSave.Comprobante==false">
-            <div class="imgPagoTarjetaVerde"></div>
-          </div>
-          <div *ngIf="jsonSave.Comprobante==true">
-            <div *ngIf="jsonSave.RazonSocial.length==0 ||
-                  jsonSave.CodigoTributario.length==0"
-              class="imgPagoTarjeta">
-            </div>
-            <div *ngIf="jsonSave.RazonSocial.length!=0 &&
-                  jsonSave.CodigoTributario.length!=0"
-              class="imgPagoTarjetaVerde">
-            </div>
-          </div>
-          <div class="textPagoTarjeta">
+          <div class="imgPagoTarjetaVerde"></div>
+          <div class="textPagoTarjeta"style="color:#02c158">
             <span>PAGO</span>
             <span>100%</span>
             <span>seguro</span>

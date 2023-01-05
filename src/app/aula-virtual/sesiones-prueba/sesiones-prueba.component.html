@@ -10,73 +10,125 @@
       <mat-tab-group class="tabVerticalSesiones" [(selectedIndex)]="tabIndex" (selectedTabChange)="tabChanged($event)">
         <ng-container *ngIf="estructuraCapitulo!=undefined && estructuraCapitulo!=null">
 
-          <ng-container *ngFor="let item of estructuraCapitulo;let i=index">
+          <ng-container *ngFor="let item of estructuraCapitulo.registroEstructuraCursoCapitulo;let i=index">
 
-            <ng-container *ngIf="(item.id==0 && i==0)" >
-              <mat-tab disabled>
-                <ng-template mat-tab-label>
-                  <div class="contentHeaderM" [ngClass]="{'ActiveChil':item.opened==true}" (click)="changeCapitulo(i)">
-                    <div class="titleMatr">{{item.capitulo}}</div>
-                    <i *ngIf="item.opened==true" class="material-icons">keyboard_arrow_up</i>
-                    <i *ngIf="item.opened==false" class="material-icons">keyboard_arrow_down</i>
-                  </div>
-                </ng-template>
-                <div style="padding: 10px 30px">
-                  <ng-template matTabContent>
-                  </ng-template>
+            <mat-tab disabled>
+              <ng-template mat-tab-label>
+                <div class="contentHeaderM" [ngClass]="{'ActiveChil':item.opened==true}" (click)="changeCapitulo(i)">
+                  <div class="iconMat" [matTooltip]="'Capitulo '+item.numeroCapitulo+': '+item.nombreCapitulo"
+                    matTooltipPosition="after"><i class="material-icons">collections_bookmark</i></div>
+                  <ng-container *ngIf="!hide">
+                    <div class="titleMatr" style="font-weight: bold;"><strong> Capítulo
+                        {{item.numeroCapitulo}}:</strong> <br>{{item.nombreCapitulo}}</div>
+                    <div style="min-height: 100%;;display: flex;align-items: center;">
+                      <i *ngIf="item.opened==true" class="material-icons"
+                        style="transform: rotate(90deg);font-size: 35px !important;">arrow_left</i>
+                      <i *ngIf="item.opened==false" class="material-icons"
+                        style="transform: rotate(-90deg);font-size: 35px !important;">arrow_left</i>
+                    </div>
+                  </ng-container>
+
                 </div>
-              </mat-tab>
+              </ng-template>
+              <div class="pad-resp">
+                <ng-template matTabContent>
+                </ng-template>
+              </div>
+            </mat-tab>
 
-              <ng-container *ngIf="tineSubsecion==true">
-                <mat-tab disabled>
+            <!-- sesiones y subsesiones -->
+
+
+            <!--sin subsesion-->
+            <ng-container *ngIf="estructuraCapitulo.contineSubSesion==false">
+              <ng-container *ngFor="let sesion of item.registroEstructuraCursoSesion;let s=index">
+                <mat-tab [disabled]="!sesion.habilitado">
                   <ng-template mat-tab-label>
-                    <div class="contentHeaderM estructuraSubCapitulos" [ngClass]="{'ActiveChil':item.openedSesion==true,'hidetab':item.opened==false}" (click)="Opensesion(i)">
-                      <div class="titleMatr">{{item.listaSesiones[0].sesion}}</div>
-                      <i *ngIf="item.openedSesion==true" class="material-icons">keyboard_arrow_up</i>
-                      <i *ngIf="item.openedSesion==false" class="material-icons">keyboard_arrow_down</i>
+                    <div (click)="sesion.habilitado?changeTab(1,sesion.numeroSesion,i,s,-1):mensajeDisable(i+1)"
+                      class="contentHeaderM estructuraSubCapitulos" [ngClass]="{'hidetab':item.opened==false}">
+                      <div *ngIf="sesion.VideoFinish==true" class="iconMat iconVideoFinal"
+                        [matTooltip]="sesion.nombreSesion" matTooltipPosition="after"></div>
+                      <div *ngIf="sesion.VideoFinish!=true" class="iconMat iconVideo" [matTooltip]="sesion.nombreSesion"
+                        matTooltipPosition="after"></div>
+                      <div *ngIf="!hide" class="titleMatr">{{sesion.nombreSesion}}</div>
+
+                      <div *ngIf="!hide"
+                        style="width: 100%;font-size: 10px;color: #cdcdcd;display: flex;    align-items: flex-end;margin-top: 5px;   padding-left: 15px;">
+                        <i class="material-icons" style="margin-right:5px ;">access_time</i>
+                        <div style="font-size: 12px;">({{sesion.tiempoVideo/60 | number:'0.0-0'}} minutos)</div>
+                      </div>
                     </div>
                   </ng-template>
-                  <div style="padding: 10px 30px">
-                    <ng-template matTabContent>
-                    </ng-template>
-                  </div>
+
+                  <ng-template matTabContent>
+                    <div class="pad-resp">
+                      <app-sesiones-video-prueba [OrdenSeccion]="sesion.ordenSeccion" [json]="json"
+                        [idCapitulo]="item.numeroCapitulo" [NombreCapitulo]="item.nombreCapitulo"
+                        [charge]="sesion.charge" [idSesion]="sesion.numeroSesion" [nombreSesion]="sesion.nombreSesion"
+                        [habilitado]="sesion.habilitado" [nextChapter]="sesion.nextChapter"
+                        (next)="siguiente(1,i,s,-1,false)" (onFinish)="siguiente(1,i,s,-1,true)"
+                        (prev)="anterior(1,i,s,-1)"></app-sesiones-video-prueba>
+                    </div>
+                  </ng-template>
                 </mat-tab>
               </ng-container>
-
-              <!-- sesiones y subsesiones -->
-              <ng-container *ngFor="let sesion of item.listaSesiones;let s=index">
-                <ng-container *ngIf="sesion.subSesion==null || sesion.subSesion==''">
-                  <mat-tab>
+            </ng-container>
+            <!--con subsesion-->
+            <ng-container *ngIf="estructuraCapitulo.contineSubSesion==true">
+              <ng-container *ngFor="let sesion of item.registroEstructuraCursoSesion;let s=index">
+                <mat-tab disabled>
+                  <ng-template mat-tab-label>
+                    <div class="contentHeaderM estructuraSubCapitulos" (click)="changeSesion(i,s)"
+                      [ngClass]="{'ActiveChil':sesion.opened==true,'hidetab':item.opened==false}">
+                      <div class="iconMat" [matTooltip]="'Sesión '+sesion.numeroSesion+': '+sesion.nombreSesion"
+                        matTooltipPosition="after"><i class="material-icons">filter_none</i></div>
+                      <ng-container *ngIf="!hide">
+                        <div class="titleMatr">Sesión {{sesion.numeroSesion}}: {{sesion.nombreSesion}}</div>
+                        <div style="min-height: 100%;display: flex;align-items: center;">
+                          <i *ngIf="sesion.opened==true" class="material-icons"
+                            style="transform: rotate(90deg);font-size: 35px !important;">arrow_left</i>
+                          <i *ngIf="sesion.opened==false" class="material-icons"
+                            style="transform: rotate(-90deg);font-size: 35px !important;">arrow_left</i>
+                        </div>
+                      </ng-container>
+                    </div>
+                  </ng-template>
+                </mat-tab>
+                <ng-container *ngFor="let subsesion of sesion.registroEstructuraCursoSubSesion;let ss=index">
+                  <mat-tab [disabled]="!subsesion.habilitado">
                     <ng-template mat-tab-label>
-                      <div (click)="changeTab(1,sesion.ordenFila,i,s,-1)" class="contentHeaderM estructuraSubCapitulos"
-                        [ngClass]="{'hidetab':item.opened==false}">
-                        <div class="titleMatr">{{sesion.sesion}}</div>
+                      <div (click)="subsesion.habilitado?changeTab(1,subsesion.numeroSubSesion,i,s,ss):mensajeDisable(i+1)"
+                        class="contentHeaderM estructuraSubSesiones"
+                        [ngClass]="{'hidetab':item.opened==false || sesion.opened==false}">
+                        <div *ngIf="subsesion.VideoFinish==true" class="iconMat iconVideoFinal"
+                          [matTooltip]="subsesion.nombreSubSesion" matTooltipPosition="after"></div>
+                        <div *ngIf="subsesion.VideoFinish!=true" class="iconMat iconVideo"
+                          [matTooltip]="subsesion.nombreSubSesion" matTooltipPosition="after"></div>
+                        <div *ngIf="!hide" class="titleMatr">{{subsesion.nombreSubSesion}}</div>
+
+                        <div *ngIf="!hide"
+                          style="width: 100%;font-size: 10px;color: #cdcdcd;display: flex;    align-items: flex-end;margin-top: 5px; padding-left: 20px;">
+                          <i class="material-icons" style="margin-right:5px ;">access_time</i>
+                          <div style="font-size: 12px;">({{subsesion.tiempoVideo/60 | number:'0.0-0'}} minutos)</div>
+                        </div>
                       </div>
                     </ng-template>
-                    <div style="padding: 10px 30px">
 
-                        <app-sesiones-video-prueba [OrdenSeccion]="sesion.ordenSeccion" [json]="json" [idCapitulo]="item.ordenFila" [NombreCapitulo]="item.capitulo" [charge]="sesion.charge"
-                          [idSesion]="sesion.ordenFila" [nombreSesion]="sesion.sesion"></app-sesiones-video-prueba>
-                    </div>
+                    <ng-template matTabContent>
+                      <div class="pad-resp">
+                        <app-sesiones-video-prueba [OrdenSeccion]="subsesion.ordenSeccion" [json]="json"
+                          [idCapitulo]="item.numeroCapitulo" [charge]="subsesion.charge"
+                          [idSesion]="subsesion.numeroSubSesion" [NombreCapitulo]="item.nombreCapitulo"
+                          [nombreSesion]="subsesion.nombreSubSesion" [habilitado]="subsesion.habilitado"
+                          [nextChapter]="subsesion.nextChapter" (next)="siguiente(1,i,s,ss,false)"
+                          (onFinish)="siguiente(1,i,s,ss,true)" (prev)="anterior(1,i,s,ss)"></app-sesiones-video-prueba>
+                      </div>
+                    </ng-template>
                   </mat-tab>
                 </ng-container>
-                <ng-container *ngIf="sesion.subSesion!=null && sesion.subSesion!=''">
-                  <mat-tab>
-                    <ng-template mat-tab-label>
-                      <div (click)="changeTab(1,sesion.ordenFila,i,s,-1)" class="contentHeaderM estructuraSubSesiones"
-                        [ngClass]="{'hidetab':item.openedSesion==false || item.opened==false}">
-                        <div class="titleMatr">{{sesion.subSesion}}</div>
-                      </div>
-                    </ng-template>
-                    <div style="padding: 10px 30px">
-
-                        <app-sesiones-video-prueba [OrdenSeccion]="sesion.ordenSeccion" [json]="json" [idCapitulo]="item.ordenFila" [NombreCapitulo]="item.capitulo" [charge]="sesion.charge"
-                          [idSesion]="sesion.ordenFila" [nombreSesion]="sesion.subSesion"></app-sesiones-video-prueba>
-                    </div>
-                  </mat-tab>>
-              </ng-container>
               </ng-container>
             </ng-container>
+
           </ng-container>
         </ng-container>
       </mat-tab-group>

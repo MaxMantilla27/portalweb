@@ -28,8 +28,8 @@
         <div style="text-align: center;margin-top: -10px;margin-bottom: 10px;" >
           <a style="color: #027CFF;font-size: 14px;cursor: pointer;" (click)="LimpiarCampos()">[No soy {{formularioContacto.Nombres}}]</a>
         </div>
-        <app-default-button [confs]="{color:'primary',titulo:'Enviar'}" [style]="'width: 100%;margin-bottom: -2px;'">
-        </app-default-button>
+        <app-default-button-flecha style="display: flex;justify-content: center;" [confs]="{color:'primary',titulo:'Enviar'}" [style]="'width: 85%;margin-bottom: -2px;border-radius:20px'">
+        </app-default-button-flecha>
       </ng-container>
 
     </app-formulario-azul>
@@ -44,8 +44,8 @@
         <div style="text-align: center;margin-top: -10px;margin-bottom: 10px;" >
           <a style="color: #027CFF;font-size: 14px;cursor: pointer;" (click)="LimpiarCampos()">[No soy {{formularioContacto.Nombres}}]</a>
         </div>
-        <app-default-button [confs]="{color:'primary',titulo:'Enviar'}" [style]="'width: 100%;margin-bottom: -2px;'">
-        </app-default-button>
+        <app-default-button-flecha style="display: flex;justify-content: center;" [confs]="{color:'primary',titulo:'Enviar'}" [style]="'width: 85%;margin-bottom: -2px;border-radius:20px'">
+        </app-default-button-flecha>
       </ng-container>
 
     </app-formulario-azul>
@@ -57,8 +57,8 @@
       <ng-container contenido>
       </ng-container>
       <ng-container send>
-        <app-default-button [confs]="{color:'primary',titulo:'Enviar'}" [style]="'width: 100%;margin-bottom: -2px;'">
-        </app-default-button>
+        <app-default-button-flecha style="display: flex;justify-content: center;" [confs]="{color:'primary',titulo:'Enviar'}" [style]="'width: 85%;margin-bottom: -2px;border-radius:20px'">
+        </app-default-button-flecha>
       </ng-container>
     </app-formulario-azul>
     </ng-container>
@@ -68,7 +68,7 @@
   <div class="row" style="padding: 0px;margin: 0px;">
 
     <div class="d-none col-md-1 d-md-block col-lg-1 d-lg-block" >
-      <div class="phoneCall " (click)="EventoInteraccionButton('Solicita una llamada');OpenModalFormulario()">
+      <div class="phoneCall " (click)="EventoInteraccionButton('Solicita una llamada');OpenModalFormulario(1)">
         <img src="../../../assets/icons/icono-llamada.svg" alt="">
         <div style="width: calc( 100% - 40px );"> Solicita una llamada</div>
         <div class="contentHover" >Consulta por nuestras facilidades de pago y descuentos</div>
@@ -78,7 +78,7 @@
 
       <div class="container">
         <div class="row rowpadd"  style="position: relative;padding-top: 0px;padding-bottom: 0px;">
-          <div class="phoneCall " (click)="EventoInteraccionButton('Solicita una llamada');OpenModalFormulario()" style="    top: 0;
+          <div class="phoneCall " (click)="EventoInteraccionButton('Solicita una llamada');OpenModalFormulario(1)" style="    top: 0;
           right: 0;
           width: 100%;
           justify-content: flex-start;
@@ -130,10 +130,29 @@
       <div class="container">
         <div class="row rowpadd">
           <div class="col-12 col-md-8 col-lg-8 row" style="align-items: flex-start;">
-            <div class="col-12 col-md-10 col-lg-10" style="position: relative;text-align: center;margin-bottom: 40px;">
+            <div *ngIf="cabecera.imgPrincipal!='https://img.bsginstitute.com/repositorioweb/img/partners/Sin Partner'" class="col-12 col-md-10 col-lg-10" style="position: relative;text-align: center;margin-bottom: 40px;">
               <img class="InfoProgramImg" [src]="cabecera.imgPrincipal" alt="">
             </div>
-            <div class="col-12 col-md-6 col-lg-6 row" style="align-items: center;margin-bottom: 20px;">
+            <div *ngIf="cabecera.imgPrincipal!='https://img.bsginstitute.com/repositorioweb/img/partners/Sin Partner'" class="col-12 col-md-6 col-lg-6 row" style="align-items: center;margin-bottom: 20px;">
+              <div class="col-12 " style="display: flex">
+                <img class="InfoProgramIcon" src="../../../assets//icons/reloj-04.svg" alt="">
+                <div class="InfoProgramTitle">Fechas de Inicio:</div>
+              </div>
+              <div class="col-12 " style="margin-top: 10px;">
+                <div *ngFor="let item of cabecera.listProgramaEspecificoInformacionDTO" class=" infoProgramFechas ">
+                  <div class="infoProgramTitle">
+                    <ng-container *ngIf="item.tipo.toLowerCase()=='online asincronica'">
+                      Online a tu ritmo :
+                    </ng-container>
+                    <ng-container *ngIf="item.tipo.toLowerCase()=='online sincronica'">
+                      Online en vivo :
+                    </ng-container>
+                  </div>
+                  <div class="infoProgramText">{{item.fechaInicioTexto}}</div>
+                </div>
+              </div>
+            </div>
+            <div *ngIf="cabecera.imgPrincipal=='https://img.bsginstitute.com/repositorioweb/img/partners/Sin Partner'" class="col-12 col-md-6 col-lg-6 row" style="align-items: center;margin-bottom: 120px;">
               <div class="col-12 " style="display: flex">
                 <img class="InfoProgramIcon" src="../../../assets//icons/reloj-04.svg" alt="">
                 <div class="InfoProgramTitle">Fechas de Inicio:</div>
@@ -196,8 +215,8 @@
                       <div style="text-align: center;margin-top: -10px;margin-bottom: 10px;" >
                         <a style="color: #027CFF;font-size: 14px;cursor: pointer;" (click)="LimpiarCampos()">[No soy {{formularioContacto.Nombres}}]</a>
                       </div>
-                      <app-default-button [confs]="{color:'primary',titulo:'Enviar'}" [style]="'width: 100%;margin-bottom: -2px;'">
-                      </app-default-button>
+                      <app-default-button-flecha style="display: flex;justify-content: center;" [confs]="{color:'primary',titulo:'Enviar'}" [style]="'width: 85%;margin-bottom: -2px;border-radius:20px'" >
+                      </app-default-button-flecha>
                     </ng-container>
 
                   </app-formulario-azul>
@@ -212,8 +231,8 @@
                       <div style="text-align: center;margin-top: -10px;margin-bottom: 10px;" >
                         <a style="color: #027CFF;font-size: 14px;cursor: pointer;" (click)="LimpiarCampos()">[No soy {{formularioContacto.Nombres}}]</a>
                       </div>
-                      <app-default-button [confs]="{color:'primary',titulo:'Enviar'}" [style]="'width: 100%;margin-bottom: -2px;'">
-                      </app-default-button>
+                      <app-default-button-flecha style="display: flex;justify-content: center;" [confs]="{color:'primary',titulo:'Enviar'}" [style]="'width: 85%;margin-bottom: -2px;border-radius:20px'">
+                      </app-default-button-flecha>
                     </ng-container>
 
                   </app-formulario-azul>
@@ -225,8 +244,8 @@
                     <ng-container contenido>
                     </ng-container>
                     <ng-container send>
-                      <app-default-button [confs]="{color:'primary',titulo:'Enviar'}" [style]="'width: 100%;margin-bottom: -2px;'">
-                      </app-default-button>
+                      <app-default-button-flecha style="display: flex;justify-content: center;" [confs]="{color:'primary',titulo:'Enviar'}" [style]="'width: 85%;margin-bottom: -2px;border-radius:20px'">
+                      </app-default-button-flecha>
                     </ng-container>
                   </app-formulario-azul>
                   </ng-container>
@@ -297,9 +316,9 @@
               <div style="display: flex;align-items: center;">
                 <div *ngIf="!item.opened" class="estructuraProgramicon">+</div>
                 <div *ngIf="item.opened" class="estructuraProgramicon">-</div>
-                <div style="color: black;"class="estructuraProgramTitle">{{item.titulo}} <br>
+                <div style="color: #8D8D8C;"class="estructuraProgramTitle">{{item.titulo}} <br>
                   <ng-container *ngIf="item.duracion>0">
-                    <div style="color:#a1a1a0;font-size: 12px;">
+                    <div style="color:#8D8D8C;font-size: 12px;">
                     ({{item.duracion}} horas cronol&oacute;gicas)
                     </div>
                   </ng-container>
@@ -317,8 +336,6 @@
     </div>
     <div style="display: flex;justify-content: center;"  class="col-12 col-md-12 col-lg-4 ContenidoVistaPrevia" *ngIf="ExisteVideo==true">
       <iframe #myIframe id="myIframe" id="cartoonVideo"[src]="VistaPreviaPortal | safe" class="embed-responsive-item" frameborder="5" allowfullscreen></iframe>
-
-
     </div>
   </div>
 </div>
@@ -397,7 +414,7 @@
       <div class="puntoAzulLista"  [innerHtml]="certificado.descripcionLeyenda | safeHtml" style="text-align: justify;"></div>
       <div style="display: flex;justify-content: center;margin-top: 20px;">
         <app-default-button-flecha [confs]="{color:'primary',titulo:'Solicita Información'}" [style]="'width:20rem;border-radius:20px'"
-        (ButtoclClick)="EventoInteraccionButton('Solicita Información') ;OpenModalFormulario()" ></app-default-button-flecha>
+        (ButtoclClick)="EventoInteraccionButton('Solicita Información') ;OpenModalFormulario(1)" ></app-default-button-flecha>
       </div>
     </div>
   </div>
@@ -536,7 +553,7 @@
           opciones de pago personalizadas y flexibles as&iacute; como las opciones de descuentos.</div>
           <div style="display:flex;justify-content:center;margin-top: 15px;">
             <app-default-button-flecha [confs]="{color:'primary',titulo:'Consutar Opción de Pago Personalizado'}" [style]="'border-radius:20px;'"
-          (ButtoclClick)="EventoInteraccionButton('Consutar Opción de Pago Personalizado');;OpenModalFormulario()"></app-default-button-flecha>
+          (ButtoclClick)="EventoInteraccionButton('Consutar Opción de Pago Personalizado');;OpenModalFormulario(2)"></app-default-button-flecha>
           </div>
 
       </div>

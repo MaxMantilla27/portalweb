@@ -30,36 +30,33 @@
           <ng-container *ngIf="Estructura!=undefined">
 
 
-            <div *ngFor="let est of Estructura">
-                <ng-container *ngIf="est.id==0">
-                  <div style="padding: 5px 0px;    text-decoration: underline;
-                font-weight: 600;">{{est.capitulo}}</div>
-                <div style="padding:5px 20px;">
+            <div *ngFor="let est of Estructura.registroEstructuraCursoCapitulo">
+              <div style="padding: 5px 0px;    text-decoration: underline;
+              font-weight: 600;">{{est.nombreCapitulo}}</div>
+              <div style="padding:5px 20px;">
 
-                 <!--  <ng-container *ngIf="Estructura.contineSubSesion==true">
+                <ng-container *ngIf="Estructura.contineSubSesion==true">
 
-                    <div *ngFor="let sesiones of est.registroEstructuraCursoSesion">
-                      {{sesiones.nombreSesion}}
-                      <ul>
-                        <ng-container *ngFor="let subsesiones of sesiones.registroEstructuraCursoSubSesion">
-                          <li >
-                            {{subsesiones.nombreSubSesion}}
-                          </li>
-                        </ng-container>
-                      </ul>
-                    </div>
-                  </ng-container> -->
-
-           <!--        <ng-container *ngIf="Estructura.contineSubSesion==false"> -->
-
+                  <div *ngFor="let sesiones of est.registroEstructuraCursoSesion">
+                    {{sesiones.nombreSesion}}
                     <ul>
-                      <li *ngFor="let sesiones of est.listaSesiones">{{sesiones.sesion}}</li>
+                      <ng-container *ngFor="let subsesiones of sesiones.registroEstructuraCursoSubSesion">
+                        <li >
+                          {{subsesiones.nombreSubSesion}}
+                        </li>
+                      </ng-container>
                     </ul>
-<!--                   </ng-container> -->
-                </div>
+                  </div>
                 </ng-container>
 
-            </div>
+                <ng-container *ngIf="Estructura.contineSubSesion==false">
+
+                  <ul>
+                    <li *ngFor="let sesiones of est.registroEstructuraCursoSesion">{{sesiones.nombreSesion}}</li>
+                  </ul>
+                </ng-container>
+              </div>
+          </div>
           </ng-container>
 
         </div>

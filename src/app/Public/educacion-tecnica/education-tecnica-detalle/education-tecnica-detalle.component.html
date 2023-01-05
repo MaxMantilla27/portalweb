@@ -90,7 +90,7 @@
           </div>
         </div>
       </div>
-      <div style="position: relative;">
+      <div style="position: relative;"#formularioPrograma>
 
         <!-- <div>
           <div style="position: absolute;width: 100%;">
@@ -241,7 +241,7 @@
                         <div *ngIf="item.opened===false">
                           <mat-icon>add</mat-icon>
                         </div>
-                        <span>{{item.titulo + ' (' + item.duracion + 'horas académicas)'}}</span>
+                        <span>{{item.titulo + ' (' + item.duracion + ' horas académicas)'}}</span>
                       </mat-panel-title>
                     </mat-expansion-panel-header>
                     <ul>
@@ -260,19 +260,23 @@
             <div class="container">
               <div class="rowpadd">
                 <div class="row">
-                  <div class="col-md-7 educacion-tecnica-container__content__fourthSection__information-container">
-                    <h1>Certificación</h1>
+                  <div class="col-12 col-md-5 col-lg-5">
+                    <div class="subtitulo">Certificación</div>
+                  </div>
+                  <div class="col-12 col-md-7 col-lg-7">
+                  </div>
+                  <div class="col-12 col-md-5 col-lg-5 educacion-tecnica-container__content__fourthSection__img-container" style="margin: 20px 0px;">
+                    <img src="../../../assets/imagenes/imagen-certificado-pagina-web.png" alt=""
+                      style="width: 100%;">
+                  </div>
+                  <div class="col-12 col-md-7 col-lg-7 educacion-tecnica-container__content__fourthSection__information-container"style="margin: 20px 0px;">
                     <div class="educacion-tecnica-container__content__fourthSection__information-container__detail"
                       [innerHTML]="certificaciones | safeHtml">
                     </div>
                     <div>
-                      <!-- <app-default-button [confs]="{color: 'primary', titulo: 'Solicita Información'}">
-                      </app-default-button> -->
+                      <app-default-button [confs]="{color: 'primary', titulo: 'Solicita Información'}" style="display: flex;justify-content: center;width:80%"(click)="ScrollTo(formularioPrograma)">
+                      </app-default-button>
                     </div>
-                  </div>
-
-                  <div class="col-md-7 educacion-tecnica-container__content__fourthSection__img-container">
-                    <img src="/assets/imagenes/imagen-certificado-pagina-web.png" alt="">
                   </div>
                 </div>
               </div>

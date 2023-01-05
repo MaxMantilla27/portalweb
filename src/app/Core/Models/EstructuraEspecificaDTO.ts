@@ -49,3 +49,14 @@ export interface RegistroVideoUltimaVisualizacionDTO
   tiempoVisualizacion:number,
   accesoPrueba:boolean,
 }
+export interface ParametrosEstructuraEspecificaAccesoPruebaDTO {
+  IdAccesoPrueba: number;
+  IdPEspecificoPadre: number;
+  IdPEspecificoHijo: number;
+  IdPGeneralPadre: number;
+  IdPGeneralHijo: number;
+  AccesoPrueba: boolean;
+  NombrePrograma: string;
+  NombreCapitulo: string;
+  idModalidad: number;
+}

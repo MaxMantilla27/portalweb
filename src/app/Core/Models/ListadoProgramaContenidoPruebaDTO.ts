@@ -16,7 +16,8 @@ export interface ListadoCursosHijosPruebaDTO {
   modalidadHijo: string;
   imgPortada: string;
   progreso:ProgresoAlumnoProgramaAulaVirtualPruebaDTO;
-  params:string
+  params:string;
+  visualizarVideos:boolean;
 }
 export interface ProgresoAlumnoProgramaAulaVirtualPruebaDTO {
   progresoVideo: Array<ProgresoAlumnoProgramaVideosAulaVirtualPruebaDTO>;

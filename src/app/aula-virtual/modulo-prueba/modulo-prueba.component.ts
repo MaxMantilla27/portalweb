@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { MatTabChangeEvent } from '@angular/material/tabs';
 import { ActivatedRoute } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
-import { ParametrosEstructuraEspecificaDTO } from 'src/app/Core/Models/EstructuraEspecificaDTO';
+import { ParametrosEstructuraEspecificaAccesoPruebaDTO, ParametrosEstructuraEspecificaDTO } from 'src/app/Core/Models/EstructuraEspecificaDTO';
 import { CursoPadrePruebaDTO } from 'src/app/Core/Models/ListadoProgramaContenidoPruebaDTO';
 import { ProgramaContenidoService } from 'src/app/Core/Shared/Services/ProgramaContenido/programa-contenido.service';
 import { SessionStorageService } from 'src/app/Core/Shared/Services/session-storage.service';
@@ -29,16 +29,16 @@ export class ModuloPruebaComponent implements OnInit,OnDestroy {
   public migaPan = [
     {
       titulo: 'Mis Cursos',
-      urlWeb: '/AulaVirtual/MisCursos',
+      urlWeb: '/AulaVirtual/MisCursosPrueba',
     },
   ];
   public tabIndex = 0;
   public idRegistroPrueba = 0;
   public idPEspecificoHijo=0;
-  public json:ParametrosEstructuraEspecificaDTO={
+  public json:ParametrosEstructuraEspecificaAccesoPruebaDTO={
 
     AccesoPrueba: false,
-    IdMatriculaCabecera: 0,
+    IdAccesoPrueba: 0,
     IdPEspecificoPadre: 0,
     IdPGeneralPadre: 0,
     IdPEspecificoHijo: 0,
@@ -69,19 +69,19 @@ export class ModuloPruebaComponent implements OnInit,OnDestroy {
     });
   }
   ObtenerEstructuraEspecificaCurso(){
-    this._ProgramaContenidoService.ConseguirEstructuraPorPrograma(this.programaEstructura.idPGeneral).pipe(takeUntil(this.signal$)).subscribe({
+    this._ProgramaContenidoService.ObtenerEstructuraEspecificaCursoAccesoPrueba(this.json).pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
+        console.log(x)
         this.estructuraCapitulo=x
         this._SessionStorageService.SetEstructura(this.estructuraCapitulo);
         console.log(this.estructuraCapitulo)
-
       }
     })
   }
   ObtenerListadoProgramaContenido() {
 
     this._ProgramaContenidoService
-      .ObtenerListadoProgramaContenidoPrueba(this.idRegistroPrueba).pipe(takeUntil(this.signal$))
+      .ObtenerListadoProgramaContenidoPrueba(this.idRegistroPrueba,this.idPEspecificoHijo).pipe(takeUntil(this.signal$))
       .subscribe({
         next: (x) => {
           console.log(x)
@@ -90,22 +90,22 @@ export class ModuloPruebaComponent implements OnInit,OnDestroy {
             if(this.idPEspecificoHijo==program.idPEspecificoHijo){
               this.json = {
                 AccesoPrueba: false,
-              IdMatriculaCabecera: this.programaEstructura.idRegistroPrueba,
-              IdPEspecificoPadre: this.programaEstructura.idPEspecifico,
-              IdPGeneralPadre: this.programaEstructura.idPGeneral,
-              IdPEspecificoHijo: program.idPEspecificoHijo,
-              IdPGeneralHijo: program.idPGeneralHijo,
-              NombreCapitulo:program.programaGeneralHijo,
-              NombrePrograma:this.programaEstructura.programaGeneral,
-              idModalidad:this.programaEstructura.idModalidad
+                IdAccesoPrueba: this.programaEstructura.idRegistroPrueba,
+                IdPEspecificoPadre: this.programaEstructura.idPEspecifico,
+                IdPGeneralPadre: this.programaEstructura.idPGeneral,
+                IdPEspecificoHijo: program.idPEspecificoHijo,
+                IdPGeneralHijo: program.idPGeneralHijo,
+                NombreCapitulo:program.programaGeneralHijo,
+                NombrePrograma:this.programaEstructura.programaGeneral,
+                idModalidad:this.programaEstructura.idModalidad
               };
               this.migaPan.push({
                 titulo:this.json.NombrePrograma,
-                urlWeb:'/AulaVirtual/MisCursos/'+this.json.IdMatriculaCabecera
+                urlWeb:'/AulaVirtual/MisCursosPrueba/'+this.json.IdAccesoPrueba
               },
               {
                 titulo:this.json.NombreCapitulo,
-                urlWeb:'/AulaVirtual/MisCursos/'+this.json.IdMatriculaCabecera+'/'+this.idPEspecificoHijo
+                urlWeb:'/AulaVirtual/MisCursosPrueba/'+this.json.IdAccesoPrueba+'/'+this.idPEspecificoHijo
               })
               this.ObtenerEstructuraEspecificaCurso();
             }

@@ -56,6 +56,7 @@
             <input style="display: flex;" type="text" placeholder="Nombre como aparece en la tarjeta" [ngModelOptions]="{standalone: true}"
             [(ngModel)]="jsonSave.TarjetaHabiente.Titular" matInput >
             <i *ngIf="jsonSave.TarjetaHabiente.Titular!=''" style="font-size: 15px !important;margin-left: 10px;color: #02c158;" class="material-icons" >check_circle</i>
+            <i *ngIf="jsonSave.TarjetaHabiente.Titular==''" style="font-size: 17px !important;margin-left: 10px;color:#FFC107;" class="material-icons" >emoji_objects</i>
           </mat-form-field>
 
           <ng-container *ngIf="resultCard.idPasarelaPago==1 && resultCard.idFormaPago==65">
@@ -89,6 +90,7 @@
             <input type="text" placeholder="N° de Documento" [ngModelOptions]="{standalone: true}"
             [(ngModel)]="jsonSave.TarjetaHabiente.NumeroDocumento" matInput >
             <i *ngIf="jsonSave.TarjetaHabiente.NumeroDocumento.length>=6" style="font-size: 15px !important;margin-left: 10px;color: #02c158;" class="material-icons" >check_circle</i>
+            <i *ngIf="jsonSave.TarjetaHabiente.NumeroDocumento.length<6" style="font-size: 17px !important;margin-left: 10px;color:#FFC107;" class="material-icons" >emoji_objects</i>
           </mat-form-field>
           <ng-container *ngIf="resultCard.idPasarelaPago!=1 || resultCard.idFormaPago!=65">
 
@@ -97,7 +99,9 @@
               <input type="text" placeholder="Número de tarjeta" [ngModelOptions]="{standalone: true}"
               [(ngModel)]="NumberT" matInput appInputCard>
               <i *ngIf="NumberT.split('-').join('').length>=14" style="font-size: 15px !important;margin-left: 10px;color: #02c158;" class="material-icons" >check_circle</i>
+              <i *ngIf="NumberT.split('-').join('').length<14" style="font-size: 17px !important;margin-left: 10px;color:#FFC107;" class="material-icons" >emoji_objects</i>
             </mat-form-field>
+
             <div class="col-6 col-md-6 col-lg-6">
 
               <mat-form-field  appearance="outline" [floatLabel]="'always'" style="width: 100%;">
@@ -105,6 +109,7 @@
                 <input type="text" placeholder="MM/AA" [ngModelOptions]="{standalone: true}"
                 [(ngModel)]="jsonSave.TarjetaHabiente.fecha" matInput appInputCardFecha>
                 <i *ngIf="jsonSave.TarjetaHabiente.fecha.length>=5" style="font-size: 15px !important;margin-left: 10px;color: #02c158;" class="material-icons" >check_circle</i>
+                <i *ngIf="jsonSave.TarjetaHabiente.fecha.length<5" style="font-size: 17px !important;margin-left: 10px;color:#FFC107;" class="material-icons" >emoji_objects</i>
               </mat-form-field>
             </div>
 
@@ -114,6 +119,7 @@
                 <input type="text" placeholder="CVV" [ngModelOptions]="{standalone: true}"
                 [(ngModel)]="jsonSave.TarjetaHabiente.CodigoVV" matInput [maxLength]="4">
                 <i *ngIf="jsonSave.TarjetaHabiente.CodigoVV.length>=3" style="font-size: 15px !important;margin-left: 10px;color: #02c158;" class="material-icons" >check_circle</i>
+                <i *ngIf="jsonSave.TarjetaHabiente.CodigoVV.length<3" style="font-size: 17px !important;margin-left: 10px;color:#FFC107;" class="material-icons" >emoji_objects</i>
               </mat-form-field>
             </div>
           </ng-container>
@@ -124,13 +130,15 @@
               <input type="text" [(ngModel)]="jsonSave.RazonSocial" placeholder="Razón Social" [ngModelOptions]="{standalone: true}"
                 matInput />
               <i *ngIf="jsonSave.RazonSocial.length!=0" style="font-size: 15px !important;margin-left: 10px;color: #02c158;" class="material-icons" >check_circle</i>
+              <i *ngIf="jsonSave.RazonSocial.length==0" style="font-size: 17px !important;margin-left: 10px;color:#FFC107;" class="material-icons" >emoji_objects</i>
+
             </mat-form-field>
             <mat-form-field appearance="outline" [floatLabel]="'always'" style="width: 100%;">
               <mat-label>Número Tributario</mat-label>
               <input type="text" [(ngModel)]="jsonSave.CodigoTributario" placeholder="Número Tributario" [ngModelOptions]="{standalone: true}"
                 matInput />
               <i *ngIf="jsonSave.CodigoTributario.length!=0" style="font-size: 15px !important;margin-left: 10px;color: #02c158;" class="material-icons" >check_circle</i>
-
+              <i *ngIf="jsonSave.CodigoTributario.length==0" style="font-size: 17px !important;margin-left: 10px;color:#FFC107;" class="material-icons" >emoji_objects</i>
             </mat-form-field>
           </ng-container>
 
@@ -181,44 +189,9 @@
           </div>
         </div>
         <div class="iconoPagoTarjeta">
-          <div *ngIf="jsonSave.Comprobante==false">
-            <div *ngIf="
-              jsonSave.TarjetaHabiente.Titular=='' ||
-              jsonSave.TarjetaHabiente.NumeroDocumento.length<=5 ||
-              NumberT.split('-').join('').length<=13 ||
-              jsonSave.TarjetaHabiente.fecha.length<=4 ||
-              jsonSave.TarjetaHabiente.CodigoVV.length<=2"
-              class="imgPagoTarjeta"></div>
-            <div *ngIf="
-              jsonSave.TarjetaHabiente.Titular!='' &&
-              jsonSave.TarjetaHabiente.NumeroDocumento.length>=6 &&
-              NumberT.split('-').join('').length>=14 &&
-              jsonSave.TarjetaHabiente.fecha.length>=5 &&
-              jsonSave.TarjetaHabiente.CodigoVV.length>=3"
-              class="imgPagoTarjetaVerde"></div>
-          </div>
-          <div *ngIf="jsonSave.Comprobante==true">
-            <div *ngIf="
-              jsonSave.TarjetaHabiente.Titular=='' ||
-              jsonSave.TarjetaHabiente.NumeroDocumento.length<=5 ||
-              NumberT.split('-').join('').length<=13 ||
-              jsonSave.TarjetaHabiente.fecha.length<=4 ||
-              jsonSave.TarjetaHabiente.CodigoVV.length<=2 ||
-              jsonSave.RazonSocial.length==0 ||
-              jsonSave.CodigoTributario.length==0"
-              class="imgPagoTarjeta"></div>
-            <div *ngIf="
-              jsonSave.TarjetaHabiente.Titular!='' &&
-              jsonSave.TarjetaHabiente.NumeroDocumento.length>=6 &&
-              NumberT.split('-').join('').length>=14 &&
-              jsonSave.TarjetaHabiente.fecha.length>=5 &&
-              jsonSave.TarjetaHabiente.CodigoVV.length>=3 &&
-              jsonSave.RazonSocial.length!=0 &&
-              jsonSave.CodigoTributario.length!=0"
-              class="imgPagoTarjetaVerde"></div>
-          </div>
+          <div class="imgPagoTarjetaVerde"></div>
 
-          <div class="textPagoTarjeta">
+          <div class="textPagoTarjeta" style="color:#02c158">
             <span>PAGO</span>
             <span>100%</span>
             <span>seguro</span>

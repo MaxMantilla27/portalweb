@@ -120,6 +120,7 @@ export class CarreraProfesionalDetalleComponent implements OnInit {
     idAreaTrabajo:undefined,
     idIndustria:undefined,
   }
+  public certificacionETDH=false;
   ngOnInit(): void {
     this.migaPan = [
       {
@@ -255,6 +256,7 @@ export class CarreraProfesionalDetalleComponent implements OnInit {
         let almCerticaciones: any = this.filtrarContenido(this.carrera.contenidoProgramaInformacionDTO, ['Certificaciones'])
         if(almCerticaciones.length==0){
           almCerticaciones = this.filtrarContenido(this.carrera.contenidoProgramaInformacionDTO, ['Certificación'])
+          this.certificacionETDH=true;
         }
         this.certificaciones = almCerticaciones.length>0?almCerticaciones[0].contenido:''
         //Certificaciones Adicionales

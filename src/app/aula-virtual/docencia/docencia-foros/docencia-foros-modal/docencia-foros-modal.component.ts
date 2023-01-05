@@ -40,15 +40,12 @@ export class DocenciaForosModalComponent implements OnInit,OnDestroy {
   ngOnInit(): void {
     this.jsonEnvio.idPGeneral=this.data.idPGeneral
     this.jsonEnvio.idForoCurso=this.data.idTemaForo
-    console.log(this.data)
     this.ContenidoPreguntaForoCurso()
     this.PartialRespuestaPregunta()
   }
   ContenidoPreguntaForoCurso(){
-    console.log(this.data.idTemaForo)
     this._ForoCursoService.ContenidoPreguntaForoCurso(this.data.idTemaForo).pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
-        console.log(x)
         this.pregunta=x
         this.ForoCerrado=x[0].foroCerrado;
         if(this.pregunta!=null && this.pregunta.length>0){
@@ -63,7 +60,6 @@ export class DocenciaForosModalComponent implements OnInit,OnDestroy {
   PartialRespuestaPregunta(){
     this._ForoCursoService.PartialRespuestaPregunta(this.data.idPGeneral,this.data.idTemaForo).pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
-        console.log(x)
         this.respuestas=x
       }
     })
@@ -72,8 +68,6 @@ export class DocenciaForosModalComponent implements OnInit,OnDestroy {
     this.jsonEnvio.estadoCerrado=1;
     this._ForoCursoService.EnviarRegistroRespuestaForo(this.jsonEnvio).pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
-        console.log(x)
-        this.CerrarModal()
       }
     })
   }

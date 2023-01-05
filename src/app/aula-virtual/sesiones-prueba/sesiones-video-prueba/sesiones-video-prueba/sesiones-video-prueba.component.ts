@@ -1,6 +1,6 @@
 import { Component, Input, OnDestroy, OnInit, SimpleChanges, ViewEncapsulation } from '@angular/core';
 import { Subject, takeUntil } from 'rxjs';
-import { ParametrosEstructuraEspecificaDTO, ParametrosVideoSesionDTO } from 'src/app/Core/Models/EstructuraEspecificaDTO';
+import { ParametrosEstructuraEspecificaAccesoPruebaDTO, ParametrosEstructuraEspecificaDTO, ParametrosVideoSesionDTO } from 'src/app/Core/Models/EstructuraEspecificaDTO';
 import { VideoSesionService } from 'src/app/Core/Shared/Services/VideoSesion/video-sesion.service';
 
 @Component({
@@ -20,9 +20,9 @@ export class SesionesVideoPruebaComponent implements OnInit,OnDestroy {
     this.signal$.complete()
   }
 
-  @Input() json: ParametrosEstructuraEspecificaDTO = {
-    AccesoPrueba: false,
-    IdMatriculaCabecera: 0,
+  @Input() json: ParametrosEstructuraEspecificaAccesoPruebaDTO = {
+    AccesoPrueba: true,
+    IdAccesoPrueba: 0,
     IdPEspecificoPadre: 0,
     IdPGeneralPadre: 0,
     IdPEspecificoHijo: 0,
@@ -35,14 +35,17 @@ export class SesionesVideoPruebaComponent implements OnInit,OnDestroy {
   @Input() idCapitulo=0;
   @Input() idSesion=0;
   @Input() OrdenSeccion=0;
+  @Input() habilitado=false
   @Input() charge:boolean|undefined=false;
   public videoData:any;
   @Input() crucigramaData:any;
   @Input() NombreCapitulo='';
+  @Input() nextChapter:any;
+
   public parametros:ParametrosVideoSesionDTO={
-    AccesoPrueba:this.json.AccesoPrueba,
+    AccesoPrueba:true,
     IdCapitulo:this.idCapitulo,
-    IdMatriculaCabecera:this.json.IdMatriculaCabecera,
+    IdMatriculaCabecera:this.json.IdAccesoPrueba,
     IdPGeneral:this.json.IdPGeneralHijo,
     IdSesion:this.idSesion,
     OrdenSeccion:this.OrdenSeccion,
@@ -55,11 +58,11 @@ export class SesionesVideoPruebaComponent implements OnInit,OnDestroy {
   ngOnChanges(changes: SimpleChanges): void {
     console.log(this.charge)
 
-    if(this.charge==true){
+    if(this.charge==true && this.habilitado==true){
       this.parametros.IdSesion=this.idSesion;
       this.parametros.IdCapitulo=this.idCapitulo;
-      this.parametros.AccesoPrueba=this.json.AccesoPrueba;
-      this.parametros.IdMatriculaCabecera=this.json.IdMatriculaCabecera;
+      this.parametros.AccesoPrueba=true;
+      this.parametros.IdMatriculaCabecera=this.json.IdAccesoPrueba;
       this.parametros.IdPGeneral=this.json.IdPGeneralHijo;
       this.parametros.OrdenSeccion=this.OrdenSeccion;
       this.ObtenerVideoProgramaCapacitacionSesion()

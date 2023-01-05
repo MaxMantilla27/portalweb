@@ -66,7 +66,7 @@
         </div>
       </div>
 
-      <div class="divicionAzul ">
+      <div class="divicionAzul "#formularioCarrera>
         <div class="container " style="padding-top: 20px;
         padding-bottom: 20px;">
           <div class="row">
@@ -120,7 +120,7 @@
                 </mat-tab-group>
               </div>
 
-              <div class="col-12 col-md-12 col-lg-6 educacion-tecnica-container__content__thirdSection__right" #formularioCarrera>
+              <div class="col-12 col-md-12 col-lg-6 educacion-tecnica-container__content__thirdSection__right" >
                 <div #divFixed id="divFixed"
                   class="educacion-tecnica-container__content__thirdSection__right__form-container" style="position: relative;">
                   <app-cargando *ngIf="statuscharge==true"></app-cargando>
@@ -204,13 +204,40 @@
           </div>
         </div>
       </div>
-      <div class="carrera-container__content__fourthSection">
+      <div *ngIf="certificacionETDH==false" class="carrera-container__content__fourthSection">
 
         <div class="container">
           <div class="rowpadd">
             <h1>Certificación</h1>
             <div class="carrera-container__content__fourthSection__information-detail"
               [innerHTML]="certificaciones  | safeHtml">
+            </div>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="certificacionETDH==true"  class="educacion-tecnica-container__content__fourthSection">
+
+        <div class="container">
+          <div class="rowpadd">
+            <div class="row">
+              <div class="col-12 col-md-5 col-lg-5">
+                <div class="subtitulo">Certificación</div>
+              </div>
+              <div class="col-12 col-md-7 col-lg-7">
+              </div>
+              <div class="col-12 col-md-5 col-lg-5 educacion-tecnica-container__content__fourthSection__img-container" style="margin: 20px 0px;">
+                <img src="../../../assets/imagenes/imagen-certificado-pagina-web.png" alt=""
+                  style="width: 100%;">
+              </div>
+              <div class="col-12 col-md-7 col-lg-7 educacion-tecnica-container__content__fourthSection__information-container"style="margin: 20px 0px;">
+                <div class="educacion-tecnica-container__content__fourthSection__information-container__detail"
+                  [innerHTML]="certificaciones | safeHtml">
+                </div>
+                <div>
+                  <app-default-button [confs]="{color: 'primary', titulo: 'Solicita Información'}" style="display: flex;justify-content: center;width:80%"(click)="ScrollTo(formularioCarrera)">
+                  </app-default-button>
+                </div>
+              </div>
             </div>
           </div>
         </div>

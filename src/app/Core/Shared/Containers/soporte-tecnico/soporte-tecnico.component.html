@@ -14,9 +14,8 @@
   <div style="display:flex"(click)="EventoInteraccionButton(texto);Open=true;IsOpen.emit(true)" *ngIf="!Open">
     <div class="sopoteTecnico" >
       <div>
-      <img src="../../../../../assets/icons/icono-chat-soporte.svg" alt="" style="height: 20px;display: block;margin-left: 35%;">
-        <br>
-        <div style="margin-top: -6px;">{{texto}}</div>
+        <img class="puntoConectado" src="../../../../../assets/icons/punto-verde.svg" alt="" >
+        <div>{{texto}}</div>
       </div>
     </div>
     <div class="triangulo-chat"></div>
