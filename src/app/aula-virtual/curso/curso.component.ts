@@ -438,11 +438,11 @@ export class CursoComponent implements OnInit,OnDestroy {
               IdMatriculaCabecera: x.idMatriculaCabecera,
               IdPEspecificoPadre: x.idPEspecifico,
               IdPGeneralPadre: x.idPGeneral,
-              IdPEspecificoHijo: this.programEstructura.listaCursoMatriculado[0].idPEspecificoHijo,
-              IdPGeneralHijo: this.programEstructura.listaCursoMatriculado[0].idPGeneralHijo,
-              NombreCapitulo:this.programEstructura.listaCursoMatriculado[0].programaGeneralHijo,
+              IdPEspecificoHijo: this.programEstructura.listaCursoMatriculado==null?0:this.programEstructura.listaCursoMatriculado[0].idPEspecificoHijo,
+              IdPGeneralHijo: this.programEstructura.listaCursoMatriculado==null?0:this.programEstructura.listaCursoMatriculado[0].idPGeneralHijo,
+              NombreCapitulo:this.programEstructura.listaCursoMatriculado==null?'':this.programEstructura.listaCursoMatriculado[0].programaGeneralHijo,
               NombrePrograma:x.programaGeneral,
-              idModalidad:this.programEstructura.listaCursoMatriculado[0].idModalidadHijo
+              idModalidad:this.programEstructura.listaCursoMatriculado==null?0:this.programEstructura.listaCursoMatriculado[0].idModalidadHijo
             };
             console.log(this.json)
             this.migaPan.push(
@@ -459,7 +459,7 @@ export class CursoComponent implements OnInit,OnDestroy {
               idprogramageneralalumno:x.idPGeneral,
               idcoordinadora:x.idAsesor,
               idcentrocosto:x.idCentroCosto,
-              idcursoprogramageneralalumno:this.programEstructura.listaCursoMatriculado[0].idPGeneralHijo
+              idcursoprogramageneralalumno:this.programEstructura.listaCursoMatriculado==null?0:this.programEstructura.listaCursoMatriculado[0].idPGeneralHijo
             });
             this.ObtenerEstructuraEspecificaCurso();
           }
