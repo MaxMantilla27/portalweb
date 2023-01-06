@@ -117,6 +117,7 @@ export class CursoComponent implements OnInit,OnDestroy {
       next: (x) => {
         this.idMatricula = parseInt(x['IdMatricula']);
         this.RegistroProgramaMatriculadoPorIdMatricula();
+        this.VerificarCursosCongelados();
         //this.ObtenerListadoProgramaContenido();
         this.ObtenerDatosCertificado();
         this.ObtenerDatosCertificadoIrcaEnvio();
@@ -486,5 +487,12 @@ export class CursoComponent implements OnInit,OnDestroy {
   }
   EventoInteraccionButton(nombre:string){
     this._HelperService.enviarMsjAcciones({Tag:"Button",Nombre:nombre,Seccion:'Indicaciones'})
+  }
+  VerificarCursosCongelados(){
+    this._ProgramaContenidoService.VerificarCursosCongelados(this.idMatricula).pipe(takeUntil(this.signal$)).subscribe({
+      next:x=>{
+        console.log('verificado')
+      }
+    })
   }
 }

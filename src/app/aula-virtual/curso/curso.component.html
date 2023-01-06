@@ -141,8 +141,15 @@
                 <div><strong>Recuerda: </strong>Debes completar el primer curso para poder acceder al siguiente</div>
               </div>
             </div>
-            <app-curso-modulos [idMatricula]="idMatricula" [programEstructura]="programEstructura">
-            </app-curso-modulos>
+            <div *ngIf="programEstructura.listaCursoMatriculado==null || this.programEstructura.listaCursoMatriculado.length==0">
+              <div>
+                Se están realizando validaciones, por favor vuelva a recargar en unos momentos
+              </div>
+            </div>
+            <div *ngIf="programEstructura.listaCursoMatriculado!=null && programEstructura.listaCursoMatriculado.length>1">
+              <app-curso-modulos [idMatricula]="idMatricula" [programEstructura]="programEstructura">
+              </app-curso-modulos>
+            </div>
           </div>
         </mat-tab>
         <mat-tab *ngIf="curso!=undefined && curso.proyectoAplicacion">

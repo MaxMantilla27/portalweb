@@ -105,4 +105,11 @@ export class ProgramaContenidoService {
       return EMPTY;
     }
   }
+  public VerificarCursosCongelados(IdMatriculaCabecera:number):Observable<any>{
+    if(this.isBrowser){
+      return this.http.get<any>(this.urlBase+'/VerificarCursosCongelados?IdMatriculaCabecera='+IdMatriculaCabecera);
+    }else{
+      return EMPTY;
+    }
+  }
 }
