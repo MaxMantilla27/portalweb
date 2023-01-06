@@ -1317,5 +1317,6 @@ export class SesionesPruebaComponent implements OnInit,OnDestroy {
       this._SnackBarServiceService.openSnackBar('No tienes acceso','x',10,'snackbarCrucigramaerror');
 
     }
+
   }
 }

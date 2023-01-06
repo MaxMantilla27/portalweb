@@ -53,13 +53,15 @@
           <ng-container *ngIf="jsonSave.Comprobante!=false">
             <mat-form-field appearance="outline" [floatLabel]="'always'" style="width: 100%;">
               <mat-label>Razón Social</mat-label>
-              <input type="text" [(ngModel)]="jsonSave.RazonSocial" placeholder="Razón Social" matInput />
+              <input type="text" [(ngModel)]="jsonSave.RazonSocial" placeholder="Razón Social" matInput  [maxLength]="11"/>
               <i *ngIf="jsonSave.RazonSocial.length!=0" style="font-size: 15px !important;margin-left: 10px;color: #02c158;" class="material-icons" >check_circle</i>
+              <i *ngIf="jsonSave.RazonSocial.length==0" style="font-size: 17px !important;margin-left: 10px;color:#FFC107;" class="material-icons" >emoji_objects</i>
             </mat-form-field>
             <mat-form-field appearance="outline" [floatLabel]="'always'" style="width: 100%;">
               <mat-label>Número Tributario</mat-label>
-              <input type="text" [(ngModel)]="jsonSave.CodigoTributario" placeholder="Número Tributario" matInput />
+              <input type="text" [(ngModel)]="jsonSave.CodigoTributario" placeholder="Número Tributario" matInput [maxLength]="11"/>
               <i *ngIf="jsonSave.CodigoTributario.length!=0" style="font-size: 15px !important;margin-left: 10px;color: #02c158;" class="material-icons" >check_circle</i>
+              <i *ngIf="jsonSave.CodigoTributario.length==0" style="font-size: 17px !important;margin-left: 10px;color:#FFC107;" class="material-icons" >emoji_objects</i>
             </mat-form-field>
           </ng-container>
 

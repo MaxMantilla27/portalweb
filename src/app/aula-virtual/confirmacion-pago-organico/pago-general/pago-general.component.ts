@@ -154,19 +154,19 @@ export class PagoGeneralComponent implements OnInit, OnDestroy {
     }
     var validate = true;
     if(this.resultCard.idPasarelaPago!=1 || this.resultCard.idFormaPago!=65){
-      if (this.jsonSave.TarjetaHabiente.fecha.length < 5) {
+      if (this.jsonSave.TarjetaHabiente.CodigoVV.length < 3) {
         validate = false;
         this._SnackBarServiceService.openSnackBar(
-          'Fecha de vencimiento incorrecta',
+          'Numero CVV Incorrecto',
           'x',
           5,
           'snackbarCrucigramaerror'
         );
       }
-      if (this.jsonSave.TarjetaHabiente.CodigoVV.length < 3) {
+      if (this.jsonSave.TarjetaHabiente.fecha.length < 5) {
         validate = false;
         this._SnackBarServiceService.openSnackBar(
-          'Numero CVV Incorrecto',
+          'Fecha de vencimiento incorrecta',
           'x',
           5,
           'snackbarCrucigramaerror'
