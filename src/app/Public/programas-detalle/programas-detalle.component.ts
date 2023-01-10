@@ -246,7 +246,8 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
   public porcentajeDescuento='';
   public textoDescuento='';
   public certificadoVacio=false;
-  public TextoFormulario="Necesitas más información"
+  public TextoFormulario="Necesitas más información";
+  public esPadre=false;
   ngOnInit(): void {
     this._HelperServiceP.recibirChangePais().pipe(takeUntil(this.signal$)).subscribe((x) => {
       if (this.isBrowser) {
@@ -526,14 +527,21 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
   EstructuraProgramaPortal() {
     this._ProgramaService.EstructuraProgramaPortal(this.idBusqueda).pipe(takeUntil(this.signal$)).subscribe({
       next: (x) => {
+        console.log(x)
         this.PrimerCurso=x.estructuraCurso[0].titulo
         this.estructuraPrograma = x.estructuraCurso;
         console.log(this.estructuraPrograma)
         this.estructuraPrograma.map((x) => {
+          if (x.titulo.includes('Curso')) {
+            this.esPadre = true;
+          }
+          console.log(this.esPadre)
+        });
+        this.estructuraPrograma.map((y) => {
           if (this.estructuraPrograma.length > 3) {
-            x.opened = false;
+            y.opened = false;
           } else {
-            x.opened = true;
+            y.opened = true;
           }
         });
         this.idPegeneral = x.idPGeneral;
@@ -1050,8 +1058,7 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
   }
   VistaPreviaProgramaPortal(){
     this.VistaPreviaPortal='https://players.brightcove.net/6267108632001/default_default/index.html?videoId=';
-    console.log(this.PrimerCurso)
-    if(this.PrimerCurso.includes('Curso')){
+    if(this.esPadre){
       this._ProgramaService.VistaPreviaProgramaPadrePortal(this.PrimerCurso).pipe(takeUntil(this.signal$)).subscribe({
         next:x=>{
           console.log(x)
