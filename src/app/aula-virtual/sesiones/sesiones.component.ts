@@ -1084,6 +1084,9 @@ export class SesionesComponent implements OnInit,OnDestroy,AfterViewInit {
                         this.idSesion,
                     });
                 }
+                if (enc.nombreEncuesta == 'Encuesta Inicial') {
+                  this.tabIndex++;
+                }
               });
             } else {
               x.registroEstructuraCursoEncuesta.forEach((enc: any) => {

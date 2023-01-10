@@ -49,8 +49,8 @@ margin-bottom: 10px;">Estas son las actividades de aprendizaje que debes complet
           *ngIf="item.registroEstructuraCursoEncuesta!=undefined && item.registroEstructuraCursoEncuesta!=null">
           <ng-container *ngFor="let Encuesta of item.registroEstructuraCursoEncuesta">
             <ng-container *ngIf="Encuesta.tipoExamen=='Encuesta' && Encuesta.nombreEncuesta=='Encuesta Inicial'">
-              <div (click)="EventoInteraccion(Encuesta.nombreEncuesta)"
-                [routerLink]="'3/'+Encuesta.numeroCapitulo+'/'+Encuesta.idEncuesta" class="TareaYEncuesta row">
+              <div (click)="EventoInteraccion(Encuesta.nombreEncuesta);IrVideo('3/'+Encuesta.numeroCapitulo+'/'+Encuesta.idEncuesta,true)"
+        class="TareaYEncuesta row">
                 <div class="col-12 col-md-8 col-lg-9 inhover" style="display: flex;    align-items: center;">
                   <img src="../../../../assets/icons/icon-like.svg" alt="">
                   <div>
