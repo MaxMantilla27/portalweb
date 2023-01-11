@@ -102,6 +102,32 @@ export class CompraExitosaOpenPayComponent implements OnInit {
             this._router.navigate([this.ruta])
           }else{
             this.resultVisa=x._Repuesta;
+            if(this.resultVisa.estadoOperacion=='Processed')
+            {
+              let comprobanteString = this._SessionStorageService.SessionGetValue('comprobante')
+              if(comprobanteString!='')
+              {
+                let objComprobante = JSON.parse(comprobanteString)
+                if(this.tipoRespuesta=="AF")
+                {
+                  var valor:any
+                  objComprobante.listaCuotas.forEach((l:any) => {
+                    if(valor==undefined){
+                      valor=l
+                    }else{
+                      if(valor.nroCuota<l.nroCuota){
+                        valor=l
+                      }
+                    }
+                  });
+                  objComprobante.listaCuotas = [valor]
+                }
+                this._FormaPagoService.actualizarComprobantePagoLista(objComprobante).pipe(takeUntil(this.signal$)).subscribe({
+                  next:x=>{
+                  }
+                })
+              }
+            }
             if(this.resultVisa.estadoOperacion.toLowerCase()=='pending'){
             }
           }

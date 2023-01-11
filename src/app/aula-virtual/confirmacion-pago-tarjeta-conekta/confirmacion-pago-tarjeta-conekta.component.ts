@@ -57,6 +57,15 @@ export class ConfirmacionPagoTarjetaConektaComponent implements OnInit,OnDestroy
       fecha:'',
     },
   }
+
+  public DataComprobante:any=
+  {
+    idComprobante:'',
+    nroDoc:'',
+    razonSocial:'',
+    listaCuotas:''
+  }
+
   ngOnInit(): void {
     this._ActivatedRoute.params.pipe(takeUntil(this.signal$)).subscribe({
       next: (x) => {
@@ -78,7 +87,7 @@ export class ConfirmacionPagoTarjetaConektaComponent implements OnInit,OnDestroy
       next:x=>{
         console.log(x)
         this.resultVisa=x._Repuesta;
-
+        this.DataComprobante.listaCuota = x._Repuesta.listaCuota
         if(this.resultVisa.estadoOperacion.toLowerCase()!='sent'){
           this._router.navigate(['/AulaVirtual/MisCursos/'+this.idMatricula])
         }else{
@@ -126,6 +135,10 @@ export class ConfirmacionPagoTarjetaConektaComponent implements OnInit,OnDestroy
     this._renderer2.appendChild(this._document.getElementById('conekta'), script);
   }
   pagar(){
+    this.DataComprobante.idComprobante=this.jsonSave.Comprobante==false?2:1
+    this.DataComprobante.nroDoc = this.jsonSave.Comprobante==false? this.resultVisa.registroAlumno.numeroDocumento :this.jsonSave.CodigoTributario
+    this.DataComprobante.razonSocial = this.jsonSave.RazonSocial
+    this._SessionStorageService.SessionSetValue('comprobante',JSON.stringify(this.DataComprobante));
     return this.urlBase+'/AulaVirtual/PagoExitoso/'+this.json.IdentificadorTransaccion
   }
 
