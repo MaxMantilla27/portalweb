@@ -21,7 +21,7 @@
           videoData.objetoConfigurado.idVideoBrightcove!=undefined">
           <video (play)="EventoInteraccion()" controls #video (timeupdate)="setCurrentTime($event)" (seeked)="changeTime($event)" height="auto"
             [currentTime]="tiempovideoinicio" [playbackRate]="1" id="bc-video" [attr.data-player]="playerData.playerId"
-            [attr.data-video-id]="playerData.videoId" [attr.data-account]="playerData.accountId" data-embed="default"
+            [attr.data-video-id]="playerData.videoId" (ended)="OnFinish()" [attr.data-account]="playerData.accountId" data-embed="default"
             data-application-id class="video-js" [ngClass]="{'medioVideo':tipo==3}">
           </video>
 
@@ -31,11 +31,39 @@
         videoData.objetoConfigurado.idVideoBrightcove==undefined">
           <cloudflare-stream (play)="EventoInteraccion()" *ngIf="tipo!=4" id="videoCloud" [autoplay]="autoplay" class="video-js" [controls]="true"
             [src]="videoData.idVideo" (timeupdate)="setCurrentTime($event)" #videoCloud style="height: auto !important;"
+            (ended)="OnFinish()"
             [currentTime]="tiempovideoinicio" (seeked)="changeTime($event)"></cloudflare-stream>
           <!-- <video style="width: 100%;" controls>
             <source [src]="'https://iframe.videodelivery.net/'+videoData.idVideo" type='video/mp4'>
           </video> -->
 
+        </ng-container>
+        <ng-container *ngIf="finish && nextChapter!=undefined && nextChapter.name!=null">
+          <div class="finishVideo">
+            <div  style="  display: flex;
+            justify-content: center;
+            align-items: center;height: 100%;">
+              <div class="pause" (mouseenter)="TimerPause()" (mouseleave)="TimerResume()"  style="margin-right: 20px;    display: flex;
+              flex-direction: column;
+              justify-content: center;
+              align-items: center;position:relative;">
+                <div class="imgOpcity" (click)="CambioTab()">
+                  <div class="OverimgOpcity"></div>
+                </div>
+                <img class="imgPlayButton" src="../../../assets/icons/videos-29.svg" alt="" style="width: 80px;">
+                <div class="buttonNextVideo vinculo"  (click)="CambioTab()">Ver ahora</div>
+              </div>
+              <div style="color: white">
+                <div style="color: #05a74c;
+                font-size: 14px;
+                font-weight: 600;    margin-bottom: 10px;">
+                A continuación, en {{valueCount/1000  | number:'0.0-0'}} </div>
+                <div style="    font-size: 22px;
+                font-weight: 600;">{{nextChapter.name}}</div>
+                <div *ngIf="nextChapter.time" style="font-size: 10px;">({{nextChapter.time | number:'0.0-0'}} minutos)</div>
+              </div>
+            </div>
+          </div>
         </ng-container>
       </div>
       <div class="iconResise" *ngIf="tipo==3" (mousedown)="down=true" (mouseup)="down=false" draggable="false">

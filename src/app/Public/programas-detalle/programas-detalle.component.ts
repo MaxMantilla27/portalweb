@@ -148,6 +148,7 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
     tituloHtml: '',
     idPartner:0
   };
+  public idBr=''
   public seccion: listaSeccionPrograma = {
     duracionHorario: '',
     metodologiaOnline: '',
@@ -249,6 +250,10 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
   public TextoFormulario="Necesitas más información";
   public esPadre=false;
   ngOnInit(): void {
+    setTimeout(() => {
+      this.OpenChat=true;
+    }, 30000);
+    // this.addPlayer()
     this._HelperServiceP.recibirChangePais().pipe(takeUntil(this.signal$)).subscribe((x) => {
       if (this.isBrowser) {
         location.reload();
@@ -1056,8 +1061,17 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
   EventoInteraccionLinck(nombre:string,tipo:string){
     this._HelperServiceP.enviarMsjAcciones({Tag:'Link',Tipo:tipo,Nombre:nombre,Programa:this.cabecera.tituloHtml})
   }
+
+  addPlayer() {
+    var s = document.createElement('script');
+    s.src =
+      'https://players.brightcove.net/' +
+      6267108632001 +
+      '/default_default/index.min.js';
+    document.body.appendChild(s);
+  }
   VistaPreviaProgramaPortal(){
-    this.VistaPreviaPortal='https://players.brightcove.net/6267108632001/default_default/index.html?videoId=';
+    this.VistaPreviaPortal='https://players.brightcove.net/6267108632001/rEr9tuuTvS_default/index.html?videoId=';
     if(this.esPadre){
       this._ProgramaService.VistaPreviaProgramaPadrePortal(this.PrimerCurso).pipe(takeUntil(this.signal$)).subscribe({
         next:x=>{
@@ -1069,6 +1083,7 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
             else{
               this.ExisteVideo=true;
               this.VistaPreviaPortal=this.VistaPreviaPortal+x.videoIdBrightcove
+              this.idBr=x.videoIdBrightcove
             }
           }
         },

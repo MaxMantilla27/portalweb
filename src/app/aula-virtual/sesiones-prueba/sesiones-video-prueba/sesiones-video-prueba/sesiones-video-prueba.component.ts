@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy, OnInit, SimpleChanges, ViewEncapsulation } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output, SimpleChanges, ViewEncapsulation } from '@angular/core';
 import { Subject, takeUntil } from 'rxjs';
 import { ParametrosEstructuraEspecificaAccesoPruebaDTO, ParametrosEstructuraEspecificaDTO, ParametrosVideoSesionDTO } from 'src/app/Core/Models/EstructuraEspecificaDTO';
 import { VideoSesionService } from 'src/app/Core/Shared/Services/VideoSesion/video-sesion.service';
@@ -41,6 +41,10 @@ export class SesionesVideoPruebaComponent implements OnInit,OnDestroy {
   @Input() crucigramaData:any;
   @Input() NombreCapitulo='';
   @Input() nextChapter:any;
+  public estadovideo=0;
+  @Output() onFinish: EventEmitter<void> = new EventEmitter<void>();
+  @Output() next: EventEmitter<void> = new EventEmitter<void>();
+  @Output() prev: EventEmitter<void> = new EventEmitter<void>();
 
   public parametros:ParametrosVideoSesionDTO={
     AccesoPrueba:true,
@@ -74,6 +78,10 @@ export class SesionesVideoPruebaComponent implements OnInit,OnDestroy {
       next:x=>{
         console.log(x)
         this.videoData=x;
+        if(this.videoData!=undefined){
+          var calc=Math.ceil(this.videoData.tiempoVisualizado*100/this.videoData.tiempoTotalVideo);
+          this.estadovideo=calc
+        }
       }
     })
   }
@@ -83,5 +91,24 @@ export class SesionesVideoPruebaComponent implements OnInit,OnDestroy {
       return '0'+r
     }
     return r
+  }
+  nextc(){
+    console.log(this.videoData)
+    if(this.videoData!=undefined){
+      var calc=Math.ceil(this.videoData.tiempoVisualizado*100/this.videoData.tiempoTotalVideo);
+      if(calc>=100){
+        this.next.emit();
+      }
+    }
+  }
+  onFinishVideo(){
+    console.log(this.videoData);
+    console.log(this.estadovideo);
+    this.onFinish.emit();
+    this.estadovideo=100;
+    this.videoData.tiempoVisualizado=this.videoData.tiempoTotalVideo
+  }
+  prevc(){
+    this.prev.emit();
   }
 }

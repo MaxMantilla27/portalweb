@@ -317,7 +317,7 @@
                 <div *ngIf="!item.opened" class="estructuraProgramicon">+</div>
                 <div *ngIf="item.opened" class="estructuraProgramicon">-</div>
                 <div style="color: #8D8D8C;"class="estructuraProgramTitle">{{item.titulo}} <br>
-                  <ng-container *ngIf="item.duracion>0">
+                  <ng-container  *ngIf="item.duracion>0">
                     <div style="color:#8D8D8C;font-size: 12px;">
                     ({{item.duracion}} horas cronol&oacute;gicas)
                     </div>
@@ -336,6 +336,7 @@
     </div>
     <div style="display: block;justify-content: center;"  class="col-12 col-md-12 col-lg-4 ContenidoVistaPrevia" *ngIf="ExisteVideo==true">
       <iframe #myIframe id="myIframe" id="cartoonVideoVistaPrevia"[src]="VistaPreviaPortal | safe" class="embed-responsive-item" frameborder="5" allowfullscreen></iframe>
+
     </div>
   </div>
 </div>

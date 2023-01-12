@@ -47,7 +47,7 @@ export class SesionesPruebaComponent implements OnInit,OnDestroy {
   public idRegistroPrueba = 0;
   public idPEspecificoHijo = 0;
   public json: ParametrosEstructuraEspecificaAccesoPruebaDTO = {
-    AccesoPrueba: false,
+    AccesoPrueba: true,
     IdAccesoPrueba: 0,
     IdPEspecificoPadre: 0,
     IdPGeneralPadre: 0,
@@ -95,109 +95,113 @@ export class SesionesPruebaComponent implements OnInit,OnDestroy {
     });
   }
   siguiente(tipo: number, indexc: number, index: number, indexss: number,solohabilitar:boolean) {
-    var indexI=this.tabIndex
-    var maxindexc =
-      this.estructuraCapitulo.registroEstructuraCursoCapitulo.length - 1;
-    if (tipo == 1) {
-      if (indexss == -1) {
-        if(this.estructuraCapitulo.registroEstructuraCursoCapitulo[indexc].registroEstructuraCursoSesion[index].VideoFinish!=false){
-          this.MigrarEstadoVideoEstructuraPorCurso();
+    if(indexc==0){
+      var indexI=this.tabIndex
+      var maxindexc =
+        this.estructuraCapitulo.registroEstructuraCursoCapitulo.length - 1;
+      var maxses =this.estructuraCapitulo.registroEstructuraCursoCapitulo[indexc].registroEstructuraCursoSesion.length - 1;
+      if(maxses == index){
+        if (tipo == 1) {
+          if (indexss == -1) {
+            if(this.estructuraCapitulo.registroEstructuraCursoCapitulo[indexc].registroEstructuraCursoSesion[index].VideoFinish!=false){
+              this.MigrarEstadoVideoEstructuraPorCurso();
+            }
+            this.estructuraCapitulo.registroEstructuraCursoCapitulo[indexc].registroEstructuraCursoSesion[index].VideoFinish=true
+            var encuestas = this.estructuraCapitulo.registroEstructuraCursoCapitulo[indexc].registroEstructuraCursoEncuesta.filter((x: any) => x.nombreEncuesta != 'Encuesta Inicial').length;
+            if (
+              maxses == index &&
+              this.estructuraCapitulo.registroEstructuraCursoCapitulo[indexc]
+                .registroCursoTareaCalificar.length == 0 &&
+              this.estructuraCapitulo.registroEstructuraCursoCapitulo[indexc]
+                .registroEstructuraCursoTarea.length == 0 &&
+              encuestas == 0
+            ) {
+              this.tabIndex++;
+            }
+          } else {
+            this.estructuraCapitulo.registroEstructuraCursoCapitulo[indexc].registroEstructuraCursoSesion[index].registroEstructuraCursoSubSesion[indexss].VideoFinish=true
+            var maxses =
+              this.estructuraCapitulo.registroEstructuraCursoCapitulo[indexc]
+                .registroEstructuraCursoSesion.length - 1;
+            var maxsubses =
+              this.estructuraCapitulo.registroEstructuraCursoCapitulo[indexc]
+                .registroEstructuraCursoSesion[index]
+                .registroEstructuraCursoSubSesion.length - 1;
+            if (maxsubses == indexss) {
+              this.tabIndex++;
+              var encuestas =
+                this.estructuraCapitulo.registroEstructuraCursoCapitulo[
+                  indexc
+                ].registroEstructuraCursoEncuesta.filter(
+                  (x: any) => x.nombreEncuesta != 'Encuesta Inicial'
+                ).length;
+              if (
+                maxses == index &&
+                this.estructuraCapitulo.registroEstructuraCursoCapitulo[indexc]
+                  .registroCursoTareaCalificar.length == 0 &&
+                this.estructuraCapitulo.registroEstructuraCursoCapitulo[indexc]
+                  .registroEstructuraCursoTarea.length == 0 &&
+                encuestas == 0
+              ) {
+                this.tabIndex++;
+              }
+            }
+          }
         }
-        this.estructuraCapitulo.registroEstructuraCursoCapitulo[indexc].registroEstructuraCursoSesion[index].VideoFinish=true
-        var maxses =this.estructuraCapitulo.registroEstructuraCursoCapitulo[indexc].registroEstructuraCursoSesion.length - 1;
-        var encuestas = this.estructuraCapitulo.registroEstructuraCursoCapitulo[indexc].registroEstructuraCursoEncuesta.filter((x: any) => x.nombreEncuesta != 'Encuesta Inicial').length;
-        if (
-          maxses == index &&
-          this.estructuraCapitulo.registroEstructuraCursoCapitulo[indexc]
-            .registroCursoTareaCalificar.length == 0 &&
-          this.estructuraCapitulo.registroEstructuraCursoCapitulo[indexc]
-            .registroEstructuraCursoTarea.length == 0 &&
-          encuestas == 0
-        ) {
-          this.tabIndex++;
-        }
-      } else {
-        this.estructuraCapitulo.registroEstructuraCursoCapitulo[indexc].registroEstructuraCursoSesion[index].registroEstructuraCursoSubSesion[indexss].VideoFinish=true
-        var maxses =
-          this.estructuraCapitulo.registroEstructuraCursoCapitulo[indexc]
-            .registroEstructuraCursoSesion.length - 1;
-        var maxsubses =
-          this.estructuraCapitulo.registroEstructuraCursoCapitulo[indexc]
-            .registroEstructuraCursoSesion[index]
-            .registroEstructuraCursoSubSesion.length - 1;
-        if (maxsubses == indexss) {
-          this.tabIndex++;
-          var encuestas =
-            this.estructuraCapitulo.registroEstructuraCursoCapitulo[
-              indexc
-            ].registroEstructuraCursoEncuesta.filter(
-              (x: any) => x.nombreEncuesta != 'Encuesta Inicial'
-            ).length;
+        if (tipo == 2) {
+          var maxtar =
+            this.estructuraCapitulo.registroEstructuraCursoCapitulo[indexc]
+              .registroEstructuraCursoTarea.length - 1;
+
           if (
-            maxses == index &&
             this.estructuraCapitulo.registroEstructuraCursoCapitulo[indexc]
               .registroCursoTareaCalificar.length == 0 &&
             this.estructuraCapitulo.registroEstructuraCursoCapitulo[indexc]
-              .registroEstructuraCursoTarea.length == 0 &&
-            encuestas == 0
+              .registroEstructuraCursoEncuesta.length == 0 &&
+            maxtar == index &&
+            maxindexc > indexc
           ) {
             this.tabIndex++;
+            if (this.estructuraCapitulo.contineSubSesion == true) {
+              this.tabIndex++;
+            }
           }
         }
-      }
-    }
-    if (tipo == 2) {
-      var maxtar =
-        this.estructuraCapitulo.registroEstructuraCursoCapitulo[indexc]
-          .registroEstructuraCursoTarea.length - 1;
-
-      if (
-        this.estructuraCapitulo.registroEstructuraCursoCapitulo[indexc]
-          .registroCursoTareaCalificar.length == 0 &&
-        this.estructuraCapitulo.registroEstructuraCursoCapitulo[indexc]
-          .registroEstructuraCursoEncuesta.length == 0 &&
-        maxtar == index &&
-        maxindexc > indexc
-      ) {
+        if (tipo == 3) {
+          var name =
+            this.estructuraCapitulo.registroEstructuraCursoCapitulo[indexc]
+              .registroEstructuraCursoEncuesta[index].nombreEncuesta;
+          var maxenc =
+            this.estructuraCapitulo.registroEstructuraCursoCapitulo[indexc]
+              .registroEstructuraCursoEncuesta.length - 1;
+          if (name == 'Encuesta Inicial') {
+            if (this.estructuraCapitulo.contineSubSesion == true) {
+              this.tabIndex++;
+            }
+          }
+        }
+        if (tipo == 4) {
+          var maxtarC =
+            this.estructuraCapitulo.registroEstructuraCursoCapitulo[indexc]
+              .registroCursoTareaCalificar.length - 1;
+          if (
+            this.estructuraCapitulo.registroEstructuraCursoCapitulo[indexc]
+              .registroEstructuraCursoEncuesta.length == 0 &&
+            maxtarC == index &&
+            maxindexc > indexc
+          ) {
+            this.tabIndex++;
+            if (this.estructuraCapitulo.contineSubSesion == true) {
+              this.tabIndex++;
+            }
+          }
+        }
         this.tabIndex++;
-        if (this.estructuraCapitulo.contineSubSesion == true) {
-          this.tabIndex++;
+        this.GetvalueByIndex();
+        if(solohabilitar==true){
+          this.tabIndex=indexI;
         }
       }
-    }
-    if (tipo == 3) {
-      var name =
-        this.estructuraCapitulo.registroEstructuraCursoCapitulo[indexc]
-          .registroEstructuraCursoEncuesta[index].nombreEncuesta;
-      var maxenc =
-        this.estructuraCapitulo.registroEstructuraCursoCapitulo[indexc]
-          .registroEstructuraCursoEncuesta.length - 1;
-      if (name == 'Encuesta Inicial') {
-        if (this.estructuraCapitulo.contineSubSesion == true) {
-          this.tabIndex++;
-        }
-      }
-    }
-    if (tipo == 4) {
-      var maxtarC =
-        this.estructuraCapitulo.registroEstructuraCursoCapitulo[indexc]
-          .registroCursoTareaCalificar.length - 1;
-      if (
-        this.estructuraCapitulo.registroEstructuraCursoCapitulo[indexc]
-          .registroEstructuraCursoEncuesta.length == 0 &&
-        maxtarC == index &&
-        maxindexc > indexc
-      ) {
-        this.tabIndex++;
-        if (this.estructuraCapitulo.contineSubSesion == true) {
-          this.tabIndex++;
-        }
-      }
-    }
-    this.tabIndex++;
-    this.GetvalueByIndex();
-    if(solohabilitar==true){
-      this.tabIndex=indexI;
     }
   }
   anterior(tipo: number, indexc: number, index: number, indexss: number) {
@@ -385,7 +389,7 @@ export class SesionesPruebaComponent implements OnInit,OnDestroy {
           this.programaEstructura.listaCursoMatriculado.forEach((program:any) => {
             if(this.idPEspecificoHijo==program.idPEspecificoHijo){
               this.json = {
-              AccesoPrueba: false,
+              AccesoPrueba: true,
               IdAccesoPrueba: this.programaEstructura.idRegistroPrueba,
               IdPEspecificoPadre: this.programaEstructura.idPEspecifico,
               IdPGeneralPadre: this.programaEstructura.idPGeneral,
@@ -1072,6 +1076,7 @@ export class SesionesPruebaComponent implements OnInit,OnDestroy {
           } else {
             s.habilitado = false;
             if(this.estructuraCapitulo.convalidado==true || alumnoTest){
+              console.log(alumnoTest)
               s.habilitado=true;
             }
             if (ses == 0) {
@@ -1156,11 +1161,14 @@ export class SesionesPruebaComponent implements OnInit,OnDestroy {
                 }
               }
             } else {
+              console.log(c)
+              console.log(ses)
+              console.log(c.registroEstructuraCursoSesion[ses - 1].porcentajeVideoVisualizado)
               if (
                 Math.ceil(
                   c.registroEstructuraCursoSesion[ses - 1]
                     .porcentajeVideoVisualizado
-                ) >= 100
+                ) >= 98
               ) {
                 s.habilitado = true;
               }
@@ -1298,6 +1306,7 @@ export class SesionesPruebaComponent implements OnInit,OnDestroy {
         cap++;
       }
     );
+    console.log(this.estructuraCapitulo.registroEstructuraCursoCapitulo)
   }
 
   MigrarEstadoVideoEstructuraPorCurso(){

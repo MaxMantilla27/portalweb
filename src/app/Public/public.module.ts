@@ -48,6 +48,7 @@ import { HomeCarrerasProfesionalesComponent } from './Home/home-carreras-profesi
 import { HomeEducacionTecnicaComponent } from './Home/home-educacion-tecnica/home-educacion-tecnica.component';
 import { HomeFormacionContinuaComponent } from './Home/home-formacion-continua/home-formacion-continua.component';
 import { ProgramaFormularioComponent } from './programas-detalle/programa-formulario/programa-formulario.component';
+import { SorteoComponent } from './sorteo/sorteo.component';
 
 
 @NgModule({
@@ -102,7 +103,8 @@ import { ProgramaFormularioComponent } from './programas-detalle/programa-formul
     HomeCarrerasProfesionalesComponent,
     HomeEducacionTecnicaComponent,
     HomeFormacionContinuaComponent,
-    ProgramaFormularioComponent
+    ProgramaFormularioComponent,
+    SorteoComponent
   ],
   exports: [],
   providers: [
