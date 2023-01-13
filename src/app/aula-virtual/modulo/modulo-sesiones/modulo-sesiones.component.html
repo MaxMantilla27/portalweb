@@ -133,10 +133,10 @@ margin-bottom: 10px;">Estas son las actividades de aprendizaje que debes complet
                   </div>
                   <div class="col-12 col-md-4 col-lg-3 calificacionpromedio">
                     <div class="VideoCalificacion"
-                      [ngClass]="{'VideoFinalizadoCalificacion': subsesiones.porcentajeVideoVisualizado>=100}">
+                      [ngClass]="{'VideoFinalizadoCalificacion': subsesiones.porcentajeVideoVisualizado>=97}">
                       <i class="material-icons" style="font-size: 14px !important;">assignment</i>
                       <div>
-                        <ng-container *ngIf="subsesiones.porcentajeVideoVisualizado>=100">
+                        <ng-container *ngIf="subsesiones.porcentajeVideoVisualizado>=97">
                           <ng-container *ngIf="subsesiones.promedioCalificacion!=0">
                             Calificación: <strong>{{subsesiones.promedioCalificacion | number:'0.0-0'}}</strong>
                           </ng-container>
@@ -144,7 +144,7 @@ margin-bottom: 10px;">Estas son las actividades de aprendizaje que debes complet
                             Aprobado
                           </ng-container>
                         </ng-container>
-                        <ng-container *ngIf="subsesiones.porcentajeVideoVisualizado<100">
+                        <ng-container *ngIf="subsesiones.porcentajeVideoVisualizado<97">
                           Pendiente
                         </ng-container>
                       </div>
@@ -197,10 +197,10 @@ margin-bottom: 10px;">Estas son las actividades de aprendizaje que debes complet
 
                   <div class="col-12 col-md-4 col-lg-3 calificacionpromedio">
                     <div class="VideoCalificacion"
-                      [ngClass]="{'VideoFinalizadoCalificacion': sesiones.porcentajeVideoVisualizado>=100}">
+                      [ngClass]="{'VideoFinalizadoCalificacion': sesiones.porcentajeVideoVisualizado>=98}">
                       <i class="material-icons" style="font-size: 14px !important;">assignment</i>
                       <div>
-                        <ng-container *ngIf="sesiones.porcentajeVideoVisualizado>=100">
+                        <ng-container *ngIf="sesiones.porcentajeVideoVisualizado>=98">
                           <ng-container *ngIf="sesiones.promedioCalificacion!=0">
                             Calificación: <strong>{{sesiones.promedioCalificacion | number:'0.0-0'}}</strong>
                           </ng-container>
@@ -208,7 +208,7 @@ margin-bottom: 10px;">Estas son las actividades de aprendizaje que debes complet
                             Aprobado
                           </ng-container>
                         </ng-container>
-                        <ng-container *ngIf="sesiones.porcentajeVideoVisualizado<100">
+                        <ng-container *ngIf="sesiones.porcentajeVideoVisualizado<98">
                           Pendiente
                         </ng-container>
                       </div>

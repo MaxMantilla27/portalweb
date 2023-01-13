@@ -754,7 +754,7 @@ export class SesionesComponent implements OnInit,OnDestroy,AfterViewInit {
                 Math.ceil(
                   c.registroEstructuraCursoSesion[ses - 1]
                     .porcentajeVideoVisualizado
-                ) >= 100
+                ) >= 98
               ) {
                 s.habilitado = true;
               }

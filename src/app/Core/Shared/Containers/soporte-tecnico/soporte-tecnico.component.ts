@@ -23,6 +23,7 @@ export class SoporteTecnicoComponent implements OnInit,OnChanges {
   @Output()
   IsOpen: EventEmitter<boolean> = new EventEmitter<boolean>();
   ngOnInit(): void {
+
   }
   EventoInteraccionButton(nombre:string){
     this._HelperService.enviarMsjAcciones({Tag:"Button",Nombre:nombre})

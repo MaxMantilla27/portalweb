@@ -30,7 +30,7 @@
     </div>
 
     <ng-container  *ngIf="chatInicial==true && chatOpen==true">
-      <div class="card CabeceraContenido"  style="position: relative;">
+      <div class="card CabeceraContenido"  style="position: relative;border-radius: 0px 0px 8px 8px;border: 1px solid #FF4E56">
         <app-cargando *ngIf="statuscharge==true"></app-cargando>
         <div class="card-header" (click)="chatOpen=!chatOpen" style="color: white;background: #FF8800;">
           <div style="display: flex;">

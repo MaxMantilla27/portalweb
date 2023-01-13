@@ -21,6 +21,27 @@
       <mat-tab-group class="tabVertical" [(selectedIndex)]="tabIndex" (selectedTabChange)="tabChanged($event)">
         <mat-tab>
           <ng-template mat-tab-label>
+            <div class="contentHeaderM">
+              <div class="iconMat iconModulos"></div>
+              <ng-container *ngIf="!hide">
+                <div class="titleMatr">Modulos</div>
+              </ng-container>
+            </div>
+          </ng-template>
+          <div class="pad-resp">
+
+            <div class="cursoTitle">{{programaEstructura.programaGeneral}}</div>
+            <div class="cursoTabDescripcion">¡Bienvenido! Debes completar los siguientes modulos de tu programa:</div>
+            <div class="cursoTabRemenber">
+              <img src="../../../assets/icons/horario-04.svg" alt="">
+              <div><strong>Recuerda: </strong>Debes completar el primer curso para poder acceder al siguiente</div>
+            </div>
+            <app-curso-prueba-modulos [idRegistroPrueba]="idRegistroPrueba" [programaEstructura]="programaEstructura">
+            </app-curso-prueba-modulos>
+          </div>
+        </mat-tab>
+        <mat-tab>
+          <ng-template mat-tab-label>
             <div class="contentHeaderM" [ngClass]="{'ActiveChil':IndicacionActive==true}">
               <div class="iconMat iconIndicaciones"></div>
               <ng-container *ngIf="!hide">
@@ -83,27 +104,6 @@
           </mat-tab>
         </ng-container>
 
-        <mat-tab>
-          <ng-template mat-tab-label>
-            <div class="contentHeaderM">
-              <div class="iconMat iconModulos"></div>
-              <ng-container *ngIf="!hide">
-                <div class="titleMatr">Modulos</div>
-              </ng-container>
-            </div>
-          </ng-template>
-          <div class="pad-resp">
-
-            <div class="cursoTitle">{{programaEstructura.programaGeneral}}</div>
-            <div class="cursoTabDescripcion">¡Bienvenido! Debes completar los siguientes modulos de tu programa:</div>
-            <div class="cursoTabRemenber">
-              <img src="../../../assets/icons/horario-04.svg" alt="">
-              <div><strong>Recuerda: </strong>Debes completar el primer curso para poder acceder al siguiente</div>
-            </div>
-            <app-curso-prueba-modulos [idRegistroPrueba]="idRegistroPrueba" [programaEstructura]="programaEstructura">
-            </app-curso-prueba-modulos>
-          </div>
-        </mat-tab>
       </mat-tab-group>
     </div>
   </div>

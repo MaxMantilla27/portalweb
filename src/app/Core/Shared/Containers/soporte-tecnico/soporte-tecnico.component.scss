@@ -3,9 +3,9 @@
   position: fixed;
   bottom: 25px;
   right: 30px;
-  width: 90px;
+  width: 112.5px;
   background: #ff4e56;
-  height: 65px;
+  height: 81.25px;
   color: white;
   display: flex;
   justify-content: center;
@@ -21,7 +21,7 @@
   position: fixed;
   bottom: 70px;
   right: 20px;
-  width: 300px;
+  width: 375px;
   background: white;
   //height: 400px;
   align-items: center;
@@ -33,7 +33,7 @@
 }
 .cerrarChat{
   position: fixed;
-  bottom: 20px;
+  bottom: 10px;
   right: 30px;
   color: white;
   font-size: 25px;
@@ -41,8 +41,8 @@
   z-index: 1000000;
   background: #ff4e55;
   border-radius: 50%;
-  width: 40px;
-  height: 40px;
+  width: 50px;
+  height: 50px;
   display: flex;
   justify-content: center;
   align-items: center;

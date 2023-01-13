@@ -1,4 +1,4 @@
-import { Component, ElementRef, Input, OnDestroy, OnInit, SimpleChanges, ViewChild, ViewEncapsulation } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, OnDestroy, OnInit, Output, SimpleChanges, ViewChild, ViewEncapsulation } from '@angular/core';
 import { CloudflareStreamComponent } from '@cloudflare/stream-angular';
 import { Subject, takeUntil } from 'rxjs';
 import { ParametrosEstructuraEspecificaAccesoPruebaDTO, ParametrosEstructuraEspecificaDTO, RegistroVideoUltimaVisualizacionDTO } from 'src/app/Core/Models/EstructuraEspecificaDTO';
@@ -24,6 +24,8 @@ export class VideoBrightcovePruebaComponent implements OnInit,OnDestroy {
     private _HelperService:HelperService
   ) {}
   ngOnDestroy(): void {
+    clearTimeout(this.timeo)
+    clearTimeout(this.timeo2)
     this.signal$.next(true)
     this.signal$.complete()
   }
@@ -49,6 +51,7 @@ export class VideoBrightcovePruebaComponent implements OnInit,OnDestroy {
   public guardar=false;
   public valorRespuesta=''
   public capituloEv=-1;
+  @Input() nextChapter:any;
   // +++ Set the data for the player +++
   playerData = {
     accountId: '6267108632001',
@@ -68,6 +71,8 @@ export class VideoBrightcovePruebaComponent implements OnInit,OnDestroy {
     NombrePrograma: '',
     idModalidad:1
   };
+  @Output() next: EventEmitter<void> = new EventEmitter<void>();
+  @Output() OnFin: EventEmitter<void> = new EventEmitter<void>();
   public send:RegistroVideoUltimaVisualizacionDTO={
     accesoPrueba:true,
     id:0,
@@ -79,6 +84,9 @@ export class VideoBrightcovePruebaComponent implements OnInit,OnDestroy {
     idSesion:0,
     tiempoVisualizacion:0,
   }
+
+  public GetTIme:any;
+  public finish=false
   public grupo=''
   public chargePreguntas=true;
   public preguntas:any;
@@ -89,6 +97,10 @@ export class VideoBrightcovePruebaComponent implements OnInit,OnDestroy {
   public finalizado=false;
   public videoFinal=''
   public videocontinuar=false
+  public TiempoRestante=3000;
+  public valueCount=3
+  public timeo2:any
+  public timeo:any
   ngOnInit(): void {
     this._HelperService.recibirCombosPerfil.pipe(takeUntil(this.signal$)).subscribe((x) => {
       this.miPerfil=x
@@ -377,5 +389,49 @@ export class VideoBrightcovePruebaComponent implements OnInit,OnDestroy {
   }
   EventoInteraccion(){
     this._HelperService.enviarMsjAcciones({Tag:'Video',Programa:this.json.NombrePrograma,Seccion:'Sesiones'})
+  }
+
+  OnFinish(){
+    this.RegistrarUltimaVisualizacionVideo()
+    this.finish=true;
+    this.tipo=2
+    console.log(this.nextChapter)
+    console.log('Finish-------------');
+    this.OnFin.emit()
+    this.GetTIme=new Date().getTime();
+    this.valueCount=3000
+    this.timeo2=setInterval(()=>{
+      this.valueCount-=100
+      console.log(this.valueCount)
+    },100)
+    this.timeo=setTimeout(() => {
+      this.CambioTab()
+    }, 3000);
+  }
+  CambioTab(){
+    this.tiempovideoinicio=0
+    this.finish=false;
+    this.TiempoRestante=3000
+    clearTimeout(this.timeo)
+    this.next.emit()
+  }
+  TimerPause(){
+    clearTimeout(this.timeo)
+    clearTimeout(this.timeo2)
+    var _now = new Date().getTime();
+    this.TiempoRestante-=(_now-this.GetTIme);
+    console.log(this.TiempoRestante)
+  }
+  TimerResume(){
+    if(this.TiempoRestante>0){
+      this.GetTIme=new Date();
+      this.timeo2=setInterval(()=>{
+        this.valueCount-=100
+        console.log(this.valueCount)
+      },100)
+      this.timeo=setTimeout(() => {
+        this.CambioTab()
+      }, this.TiempoRestante);
+    }
   }
 }

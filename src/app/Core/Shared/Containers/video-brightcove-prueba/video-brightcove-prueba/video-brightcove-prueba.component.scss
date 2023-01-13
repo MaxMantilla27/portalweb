@@ -4,11 +4,12 @@
 }
 .video-js{
   width: 100% !important;
-  height: 400px !important;
+  height: 100% !important;
+  aspect-ratio: 16/9;
 }
 .containerVideoDiapositiva{
   width: 100%;
-  height: 500px;
+  //height: 500px;
   display: flex;
   .containerVideo{
     width: 47%;
@@ -104,6 +105,14 @@
     background-color: var(--main-bg-color);
   }
 }
+.finishVideo {
+  width: 100%;
+  height: 100%;
+  background: #414141ab;
+  position: absolute;
+  padding: 20%;
+  align-items: flex;
+}
 .FeddbackCorrecto{
   font-size: 10px;
   padding: 10px;
@@ -112,4 +121,91 @@
   color: #155724;
   border-radius: 5px;
 
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  /* display: none; <- Crashes Chrome on hover */
+  -webkit-appearance: none;
+  margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
+}
+.imgPlayButton {
+  cursor: pointer;
+}
+@keyframes color-me-in {
+  /* You could think of as "step 1" */
+  0% {
+    left: 0px
+  }
+  // /* You could think of as "step 2" */
+  // 10% {
+  //   -webkit-mask-image: linear-gradient(to left, #ffffffd9 90%, #000000);
+  // }
+  // /* You could think of as "step 2" */
+  // 20% {
+  //   -webkit-mask-image: linear-gradient(to left, #ffffffd9 80%, #000000);
+  // }
+  // /* You could think of as "step 2" */
+  // 30% {
+  //   -webkit-mask-image: linear-gradient(to left, #ffffffd9 70%, #000000);
+  // }
+  // /* You could think of as "step 2" */
+  // 40% {
+  //   -webkit-mask-image: linear-gradient(to left, #ffffffd9 60%, #000000);
+  // }
+  // /* You could think of as "step 2" */
+  // 50% {
+  //   -webkit-mask-image: linear-gradient(to left, #ffffffd9 50%, #000000);
+  // }
+  // /* You could think of as "step 2" */
+  // 60% {
+  //   -webkit-mask-image: linear-gradient(to left, #ffffffd9 40%, #000000);
+  // }
+  // /* You could think of as "step 2" */
+  // 70% {
+  //   -webkit-mask-image: linear-gradient(to left, #ffffffd9 30%, #000000);
+  // }
+  // /* You could think of as "step 2" */
+  // 80% {
+  //   -webkit-mask-image: linear-gradient(to left, #ffffffd9 20%, #000000);
+  // }
+  // /* You could think of as "step 2" */
+  // 90% {
+  //   -webkit-mask-image: linear-gradient(to left, #ffffffd9 10%, #000000);
+  // }
+  /* You could think of as "step 2" */
+  100% {
+
+    left: 100%;
+  }
+}
+.OverimgOpcity{
+  height: 100%;
+  width: 100%;
+  background: transparent;
+  position: absolute;
+  background: #e7e7e770;
+  z-index: 2;
+  top: 0;
+  left: 100%;
+  animation: color-me-in 3s;
+  animation-play-state: running;
+}
+.pause:hover{
+  .OverimgOpcity{
+    animation-play-state: paused;
+  }
+}
+.imgOpcity {
+  width: 100%;
+  height: 80px;
+  position: absolute;
+  border-radius: 50%;
+  z-index: 1;
+  top: 0;
+  overflow: hidden;
+  cursor: pointer;
+}
+input[type="number"] {
+  -moz-appearance: textfield; /* Firefox */
 }

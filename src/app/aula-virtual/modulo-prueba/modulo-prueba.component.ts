@@ -29,7 +29,7 @@ export class ModuloPruebaComponent implements OnInit,OnDestroy {
   public migaPan = [
     {
       titulo: 'Mis Cursos',
-      urlWeb: '/AulaVirtual/MisCursosPrueba',
+      urlWeb: '/AulaVirtual/MisCursos',
     },
   ];
   public tabIndex = 0;
@@ -37,7 +37,7 @@ export class ModuloPruebaComponent implements OnInit,OnDestroy {
   public idPEspecificoHijo=0;
   public json:ParametrosEstructuraEspecificaAccesoPruebaDTO={
 
-    AccesoPrueba: false,
+    AccesoPrueba: true,
     IdAccesoPrueba: 0,
     IdPEspecificoPadre: 0,
     IdPGeneralPadre: 0,
@@ -89,7 +89,7 @@ export class ModuloPruebaComponent implements OnInit,OnDestroy {
           this.programaEstructura.listaCursoMatriculado.forEach((program:any) => {
             if(this.idPEspecificoHijo==program.idPEspecificoHijo){
               this.json = {
-                AccesoPrueba: false,
+                AccesoPrueba: true,
                 IdAccesoPrueba: this.programaEstructura.idRegistroPrueba,
                 IdPEspecificoPadre: this.programaEstructura.idPEspecifico,
                 IdPGeneralPadre: this.programaEstructura.idPGeneral,
