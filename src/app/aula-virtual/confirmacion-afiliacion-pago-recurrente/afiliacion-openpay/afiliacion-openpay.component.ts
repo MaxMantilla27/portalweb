@@ -80,6 +80,14 @@ export class AfiliacionOpenpayComponent implements OnInit,OnDestroy {
     usuarioModificacion: ''
   }
 
+  public DataComprobante:any=
+  {
+    idComprobante:'',
+    nroDoc:'',
+    razonSocial:'',
+    listaCuota:''
+  }
+
   ngOnInit(): void {
     this._HelperService.recibirCombosPerfil.pipe(takeUntil(this.signal$)).subscribe((x) => {
       this.jsonSave.TarjetaHabiente.Titular =x.datosAlumno.nombres+' '+x.datosAlumno.apellidos;
@@ -104,7 +112,7 @@ export class AfiliacionOpenpayComponent implements OnInit,OnDestroy {
       next:x=>{
         
         this.resultCard=x._Repuesta;
-
+        this.DataComprobante.listaCuota =x._Repuesta.listaCuota;
         if(this.resultCard.estadoOperacion.toLowerCase()!='sent'){
           this._router.navigate(['/AulaVirtual/MisCursos/'+this.idMatricula])
         }
@@ -239,6 +247,11 @@ export class AfiliacionOpenpayComponent implements OnInit,OnDestroy {
   }
 
   Afiliar(){
+    this.DataComprobante.idComprobante=this.jsonSave.Comprobante==false?2:1
+    this.DataComprobante.nroDoc = this.jsonSave.Comprobante==false?this.jsonSave.TarjetaHabiente.NumeroDocumento:this.jsonSave.CodigoTributario
+    this.DataComprobante.razonSocial = this.jsonSave.RazonSocial
+    this._SessionStorageService.SessionSetValue('comprobante',JSON.stringify(this.DataComprobante));
+
     this.oncharge=true
     this.jsonEnvio.identificadorTransaccion= this.jsonSave.IdentificadorTransaccion
     this.jsonEnvio.idPasarelaPago = this.jsonSave.IdPasarelaPago

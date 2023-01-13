@@ -62,7 +62,13 @@ export class AfiliacionVisaComponent implements OnInit,OnDestroy {
       fecha:'',
     },
   }
-
+  public DataComprobante:any=
+  {
+    idComprobante:'',
+    nroDoc:'',
+    razonSocial:'',
+    listaCuot:''
+  }
   ngOnInit(): void {
     this._ActivatedRoute.params.pipe(takeUntil(this.signal$)).subscribe({
       next: (x) => {
@@ -84,7 +90,7 @@ export class AfiliacionVisaComponent implements OnInit,OnDestroy {
       next:x=>{
         console.log("RESPUESTAVISA _:",x._Repuesta)
         this.resultVisa=x._Repuesta;
-
+        this.DataComprobante.listaCuota = x._Repuesta.listaCuota
         if(this.resultVisa.estadoOperacion.toLowerCase()!='sent'){
           this._router.navigate(['/AulaVirtual/MisCursos/'+this.idMatricula])
         }
@@ -111,6 +117,11 @@ export class AfiliacionVisaComponent implements OnInit,OnDestroy {
   }
 
   addVisa(){
+    this.DataComprobante.idComprobante=this.jsonSave.Comprobante==false?2:1
+    this.DataComprobante.nroDoc = this.jsonSave.Comprobante==false? this.resultVisa.registroAlumno.numeroDocumento :this.jsonSave.CodigoTributario
+    this.DataComprobante.razonSocial = this.jsonSave.RazonSocial
+    this._SessionStorageService.SessionSetValue('comprobante',JSON.stringify(this.DataComprobante));
+
     let action = 'https://proceso-pago.bsginstitute.com/ProcesoPagoVisa/Recurrente?IdTransaccion='+this.json.IdentificadorTransaccion
     let timeouturl = this.urlBase+'AulaVirtual/MisPagos/'+this.idMatricula
     let logo = 'https://img.bsginstitute.com/repositorioweb/img/logobsg-visa.svg'

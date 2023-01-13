@@ -103,6 +103,15 @@ export class FormaPagoService {
     
   }
 
+  public actualizarComprobantePagoLista(Json:any):Observable<any>{
+    if(this.isBrowser){
+      return this.http.post<any>(this.urlBase+'/actualizarComprobantePagoLista',Json)
+    }else{
+      return EMPTY;
+    }
+    
+  }
+
 
   public PreProcesoPagoOrganicoAlumno(Json:PagoOrganicoAlumnoDTO,dialogRef:any):void{
     console.log(Json)

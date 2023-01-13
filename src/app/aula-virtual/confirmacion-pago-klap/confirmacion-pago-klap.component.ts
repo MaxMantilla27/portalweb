@@ -131,6 +131,7 @@ export class ConfirmacionPagoKlapComponent implements OnInit {
           }
           else if (x._Repuesta.estado ==false)
           {
+            dialogRef.close()
             this._SnackBarServiceService.openSnackBar(
               'Ocurrio un problema al validar los datos, verifique que todo este correcto!',
               'x',
