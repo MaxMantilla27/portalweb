@@ -70,6 +70,7 @@ export class DocenciaForosModalComponent implements OnInit,OnDestroy {
       next:x=>{
       }
     })
+    this.CerrarModal();
   }
   CerrarModal(){
     this.dialogRef.close();
