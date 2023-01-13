@@ -68,9 +68,9 @@ export class DocenciaForosModalComponent implements OnInit,OnDestroy {
     this.jsonEnvio.estadoCerrado=1;
     this._ForoCursoService.EnviarRegistroRespuestaForo(this.jsonEnvio).pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
+        this.CerrarModal();
       }
     })
-    this.CerrarModal();
   }
   CerrarModal(){
     this.dialogRef.close();
