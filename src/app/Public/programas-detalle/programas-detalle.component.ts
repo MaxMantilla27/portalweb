@@ -250,9 +250,7 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
   public TextoFormulario="Necesitas más información";
   public esPadre=false;
   ngOnInit(): void {
-    setTimeout(() => {
-      this.OpenChat=true;
-    }, 30000);
+
     // this.addPlayer()
     this._HelperServiceP.recibirChangePais().pipe(takeUntil(this.signal$)).subscribe((x) => {
       if (this.isBrowser) {
@@ -260,6 +258,9 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
       }
     });
     if (this.isBrowser) {
+      setTimeout(() => {
+        this.OpenChat=true;
+      }, 30000);
       this.innerWidth = window.innerWidth;
       if (this.innerWidth < 992) this.seccionStep = 2;
       if (this.innerWidth < 768) this.seccionStep = 1;
@@ -275,6 +276,7 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
 
         this.idBusqueda = namePrograma[namePrograma.length - 1];
 
+
       },
       error: () => {
         this._router.navigate(['error404']);
@@ -287,10 +289,10 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
         this.Paises=x;
       }
     })
+    this.ObtenerCabeceraProgramaGeneral();
     this.obtenerFormularioCompletado();
     this.AddFields();
     this.ObtenerCombosPortal();
-    this.ObtenerCabeceraProgramaGeneral();
   }
 
   RegistrarProgramaPrueba(){
@@ -466,15 +468,18 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
                 x.programaCabeceraDetalleDTO.imgPrincipal;
             };
             console.log(this.cabecera.imgPrincipal)
-            this.ListSeccionPrograma();
-            this.ListPrerrequisito();
-            this.EstructuraProgramaPortal();
-            this.ListBeneficioPrograma();
-            this.ListCertificacion();
-            this.ListExpositor();
+
             this.ListMontoPago();
-            this.ListTagProgramaRelacionadoPorIdBusqueda();
-            this.obtenerErrorPagoModal();
+            this.ListSeccionPrograma();
+            if (this.isBrowser) {
+              this.ListPrerrequisito();
+              this.EstructuraProgramaPortal();
+              this.ListBeneficioPrograma();
+              this.ListCertificacion();
+              this.ListExpositor();
+              this.ListTagProgramaRelacionadoPorIdBusqueda();
+              this.obtenerErrorPagoModal();
+            }
           }
           else{
             this._router.navigate(['error404']);
@@ -916,6 +921,9 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
               });
               gtag('event', 'conversion', {
                   'send_to': 'AW-732083338/jQrVCKmUkqUBEIrpit0C',
+              });
+              gtag('event', 'conversion', {
+                'send_to': 'AW-11065656821/6CM8CNWQ2IcYEPWLwpwp',
               });
             }
             this._SnackBarServiceService.openSnackBar("¡Solicitud enviada!",'x',15,"snackbarCrucigramaSucces");

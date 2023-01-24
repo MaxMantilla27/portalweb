@@ -46,7 +46,21 @@ export class InterceptorService implements HttpInterceptor {
           this._HelperService.enviarDatoCuenta(this.DatoObservable);
           this.router.navigate(['/login']);
         }
+
         return throwError( err );
+      },
+      (error : HttpErrorResponse ) => {
+          if (error.status == 401) {
+            this._SessionStorageService.DeleteToken();
+            this._HelperService.enviarDatoCuenta(this.DatoObservable);
+            this.router.navigate(['/login']);
+            this._SnackBarServiceService.openSnackBar(
+              "Su sesión ha caducado",
+              'x',
+              5,
+              'snackbarCrucigramaerror'
+            );
+          }
       })
     );
   }

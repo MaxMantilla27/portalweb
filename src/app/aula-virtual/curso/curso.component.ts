@@ -198,14 +198,15 @@ export class CursoComponent implements OnInit,OnDestroy {
       }
     })
   }
-  // listaRegistroVideoSesionProgramaSincronico(){
-  //   this._ProgramaContenidoService.listaRegistroVideoSesionProgramaSincronico(this.curso.idPEspecifico).pipe(takeUntil(this.signal$)).subscribe({
-  //     next:x=>{
-  //       this.videosOnline=x
-  //       console.log(x)
-  //     }
-  //   })
-  // }
+  listaRegistroVideoSesionProgramaSincronico(){
+    this._ProgramaContenidoService.listaRegistroVideoSesionProgramaSincronico(this.curso.idPEspecifico).pipe(takeUntil(this.signal$)).subscribe({
+      next:x=>{
+        this.videosOnline=x
+        console.log(x)
+      }
+    })
+  }
+
   certificadoDigital(){
     console.log('-------')
     if(this.datosCertificado!=undefined){
@@ -360,7 +361,6 @@ export class CursoComponent implements OnInit,OnDestroy {
 
         this.ObtenerListadoProgramaContenido();
         // if(this.curso!=undefined ){
-        //   //this.listaRegistroVideoSesionProgramaSincronico()
         //   if(valorLoscalS>1){
         //     if(this.curso.proyectoAplicacion){
         //       this.tabIndex=valorLoscalS;
@@ -463,6 +463,7 @@ export class CursoComponent implements OnInit,OnDestroy {
               idcursoprogramageneralalumno:this.programEstructura.listaCursoMatriculado==null?0:this.programEstructura.listaCursoMatriculado[0].idPGeneralHijo
             });
             this.ObtenerEstructuraEspecificaCurso();
+            this.listaRegistroVideoSesionProgramaSincronico()
           }
           setTimeout(() => {
             this.Redirect();

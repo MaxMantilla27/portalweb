@@ -57,6 +57,7 @@ export class PagoVisaComponent implements OnInit,OnDestroy {
       fecha:'',
     },
   }
+  public intervcal:any
   ngOnInit(): void {
     this._ActivatedRoute.params.pipe(takeUntil(this.signal$)).subscribe({
       next: (x) => {
@@ -87,11 +88,19 @@ export class PagoVisaComponent implements OnInit,OnDestroy {
         // this.jsonSave.RazonSocial = this.resultVisa.identificadorTransaccion;
         //this._SessionStorageService.SessionSetValue('datos',JSON.stringify(this.jsonSave));
         this.addVisa()
+        this.intervcal=setTimeout(() => {
+          var buttons=this._document.getElementById('visa')?.getElementsByTagName('button')
+          console.log(buttons)
+          if(buttons !=undefined && buttons?.length>0){
+            clearTimeout(this.intervcal)
+          }else{
+            window.location.reload()
+          }
+        }, 500);
       }
     })
   }
   addVisa(){
-
     let script = this._renderer2.createElement('script');
     script.src='https://static-content.vnforapps.com/v2/js/checkout.js'
     script.setAttribute('data-sessiontoken',this.resultVisa.procesoPagoBotonVisa.sessionKey)
@@ -105,6 +114,7 @@ export class PagoVisaComponent implements OnInit,OnDestroy {
     script.setAttribute('data-amount',parseFloat(this.resultVisa.procesoPagoBotonVisa.amount+'.00'))
     script.setAttribute('data-expirationminutes','5')
     script.setAttribute('data-timeouturl',this.urlBase)
+    this._document.getElementById('visa')!.innerHTML = "";
 
     this._renderer2.appendChild(this._document.getElementById('visa'), script);
   }

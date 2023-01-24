@@ -220,6 +220,9 @@ export class LandingPageComponent implements OnInit,OnDestroy {
               gtag('event', 'conversion', {
                   'send_to': 'AW-732083338/jQrVCKmUkqUBEIrpit0C',
               });
+              gtag('event', 'conversion', {
+                'send_to': 'AW-11065656821/6CM8CNWQ2IcYEPWLwpwp',
+              });
             }catch(err){
             }
           }

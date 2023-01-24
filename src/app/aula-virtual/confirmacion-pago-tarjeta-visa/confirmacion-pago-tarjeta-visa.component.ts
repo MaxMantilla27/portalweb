@@ -68,6 +68,7 @@ export class ConfirmacionPagoTarjetaVisaComponent implements OnInit,OnDestroy {
     razonSocial:'',
     listaCuota:''
   }
+  public intervcal:any
 
   ngOnInit(): void {
     this._ActivatedRoute.params.pipe(takeUntil(this.signal$)).subscribe({
@@ -108,11 +109,20 @@ export class ConfirmacionPagoTarjetaVisaComponent implements OnInit,OnDestroy {
 
         //this._SessionStorageService.SessionSetValue('datos',JSON.stringify(this.jsonSave));
         this.addVisa()
+        this.intervcal=setTimeout(() => {
+          var buttons=this._document.getElementById('visa')?.getElementsByTagName('button')
+          console.log(buttons)
+          if(buttons !=undefined && buttons?.length>0){
+            clearTimeout(this.intervcal)
+          }else{
+            window.location.reload()
+          }
+        }, 500);
         //this.SetConfiguration()
       }
     })
   }
-  
+
   addVisa(){
 
     let script = this._renderer2.createElement('script');
@@ -226,6 +236,6 @@ export class ConfirmacionPagoTarjetaVisaComponent implements OnInit,OnDestroy {
     this._SessionStorageService.SessionSetValue('comprobante',JSON.stringify(this.DataComprobante));
 
   }
- 
-  
+
+
 }

@@ -302,6 +302,9 @@ export class BlogComponent implements OnInit {
             gtag('event', 'conversion', {
                 'send_to': 'AW-732083338/jQrVCKmUkqUBEIrpit0C',
             });
+            gtag('event', 'conversion', {
+              'send_to': 'AW-11065656821/6CM8CNWQ2IcYEPWLwpwp',
+            });
           }
           this._SnackBarServiceService.openSnackBar("¡Solicitud enviada!",'x',15,"snackbarCrucigramaSucces");
         },

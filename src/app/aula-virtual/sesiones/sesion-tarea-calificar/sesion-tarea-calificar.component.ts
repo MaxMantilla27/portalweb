@@ -91,7 +91,7 @@ export class SesionTareaCalificarComponent implements OnInit,OnChanges,OnDestroy
       var modifiedDate = event.target.files[i].lastModifiedDate;
       var extencion=name.split('.')[name.split('.').length-1]
       if( Math.round((size/1024)/1024)>150){
-        this.fileErrorMsg='El tamaño del archivo no debe superar los 150 MB'
+        this.fileErrorMsg='El tamaño del archivo no debe superar los 25 MB'
         this.filestatus=false
       }
       this.selectedFiles = event.target.files;

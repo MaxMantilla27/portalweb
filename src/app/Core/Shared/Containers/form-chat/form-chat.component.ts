@@ -146,6 +146,9 @@ export class FormChatComponent implements OnInit,OnChanges {
             gtag('event', 'conversion', {
                 'send_to': 'AW-732083338/jQrVCKmUkqUBEIrpit0C',
             });
+            gtag('event', 'conversion', {
+              'send_to': 'AW-11065656821/6CM8CNWQ2IcYEPWLwpwp',
+            });
           }
           this.validacionChat=x
           this.SaveForm.emit({id:x.respuesta.id,idAlumno:x.respuesta.idAlumno})
