@@ -112,4 +112,11 @@ export class ProgramaContenidoService {
       return EMPTY;
     }
   }
+  public ObtenerEstructuraEspecificaCursoSincronico(Json:ParametrosEstructuraEspecificaDTO):Observable<any>{
+    if(this.isBrowser){
+      return this.http.post<any>(this.urlBase+'/ObtenerEstructuraEspecificaCursoSincronico',Json);
+    }else{
+      return EMPTY;
+    }
+  }
 }

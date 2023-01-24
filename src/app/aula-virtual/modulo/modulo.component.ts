@@ -73,14 +73,26 @@ export class ModuloComponent implements OnInit,OnDestroy {
     })
   }
   ObtenerEstructuraEspecificaCurso(){
-    this._ProgramaContenidoService.ObtenerEstructuraEspecificaCurso(this.json).pipe(takeUntil(this.signal$)).subscribe({
-      next:x=>{
-        this.estructuraCapitulo=x
-        this._SessionStorageService.SetEstructura(this.estructuraCapitulo);
-        console.log(this.estructuraCapitulo)
+    if(this.json.idModalidad==1){
+      this._ProgramaContenidoService.ObtenerEstructuraEspecificaCurso(this.json).pipe(takeUntil(this.signal$)).subscribe({
+        next:x=>{
+          this.estructuraCapitulo=x
+          this._SessionStorageService.SetEstructura(this.estructuraCapitulo);
+          console.log(this.estructuraCapitulo)
 
-      }
-    })
+        }
+      })
+    }
+    else{
+      this._ProgramaContenidoService.ObtenerEstructuraEspecificaCursoSincronico(this.json).pipe(takeUntil(this.signal$)).subscribe({
+        next:x=>{
+          this.estructuraCapitulo=x
+          this._SessionStorageService.SetEstructura(this.estructuraCapitulo);
+          console.log(this.estructuraCapitulo)
+
+        }
+      })
+    }
   }
   ObtenerListadoProgramaContenido() {
 
