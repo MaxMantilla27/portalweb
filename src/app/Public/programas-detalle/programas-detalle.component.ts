@@ -66,6 +66,7 @@ declare const gtag:any;
   templateUrl: './programas-detalle.component.html',
   styleUrls: ['./programas-detalle.component.scss'],
   encapsulation: ViewEncapsulation.None,
+
 })
 export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
   private signal$ = new Subject();

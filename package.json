@@ -4,13 +4,15 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build",
+    "build": "npm run partytown && ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "dev:ssr": "ng run PortalWeb:serve-ssr",
     "serve:ssr": "node dist/PortalWeb/server/main.js",
-    "build:ssr": "ng build && ng run PortalWeb:server",
-    "prerender": "ng run PortalWeb:prerender"
+    "build:ssr": "npm run partytown && ng build && ng run PortalWeb:server && gzipper c ./dist --include js,css,html --output-file-format [filename].[ext] ./dist-compressed/ ",
+    "prerender": "ng run PortalWeb:prerender",
+    "partytown": "partytown copylib public/~partytown"
+
   },
   "private": true,
   "dependencies": {
@@ -26,6 +28,7 @@
     "@angular/platform-browser-dynamic": "~13.1.0",
     "@angular/platform-server": "~13.1.0",
     "@angular/router": "~13.1.0",
+    "@builder.io/partytown": "^0.7.5",
     "@ckeditor/ckeditor5-angular": "^4.0.0",
     "@cloudflare/stream-angular": "^1.0.1",
     "@microsoft/signalr": "^6.0.7",

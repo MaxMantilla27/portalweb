@@ -297,7 +297,7 @@ export class ModuloSesionesComponent implements OnInit, OnChanges {
               t.habilitado=true;
             }
             if(tarC>0){
-              if(Math.ceil(c.registroCursoTareaCalificar[tarC-1].porcentajeVideoVisualizado)>=98){
+              if(c.registroCursoTareaCalificar[tarC-1].calificado==true){
                 t.habilitado=true;
               }
             }else{

@@ -34,10 +34,16 @@
               "src/assets/favicon.ico",
               "src/assets",
               "src/robots.txt",
-              "src/sitemap.xml"
+              "src/sitemap.xml",
+              {
+                "glob": "**/*",
+                "input": "node_modules/@builder.io/partytown/lib",
+                "output": "/~partytown"
+              }
             ],
             "styles": [
               "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
+              "src/assets/styles/classic-reset.css",
               "src/styles.scss"
             ],
             "scripts": [
@@ -52,12 +58,12 @@
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "500kb",
-                  "maximumError": "2mb"
+                  "maximumWarning": "3mb",
+                  "maximumError": "3mb"
                 },
                 {
                   "type": "anyComponentStyle",
-                  "maximumWarning": "2kb",
+                  "maximumWarning": "15kb",
                   "maximumError": "15kb"
                 }
               ],
@@ -112,6 +118,7 @@
             ],
             "styles": [
               "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
+              "src/assets/styles/classic-reset.css",
               "src/styles.scss"
             ],
             "scripts": [
