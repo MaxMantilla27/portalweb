@@ -124,6 +124,8 @@ import { FormularioAzulComponent } from './Containers/formulario-azul/formulario
 import { FormularioPopUpComponent } from './Containers/formulario-pop-up/formulario-pop-up.component';
 import { ScrollTopComponent } from './Containers/scroll-top/scroll-top.component';
 import { FormularioRojoComponent } from './Containers/formulario-rojo/formulario-rojo.component';
+import { FacebookLoginComponent } from './Containers/facebook-login/facebook-login.component';
+import { SocialAuthService } from 'angularx-social-login';
 
 @NgModule({
   imports: [
@@ -215,6 +217,7 @@ import { FormularioRojoComponent } from './Containers/formulario-rojo/formulario
     FormularioPopUpComponent,
     ScrollTopComponent,
     FormularioRojoComponent,
+    FacebookLoginComponent,
     //ChatZComponent,
   ],
   exports: [
@@ -302,6 +305,7 @@ import { FormularioRojoComponent } from './Containers/formulario-rojo/formulario
     FormularioAzulComponent,
     FormularioPopUpComponent,
     ScrollTopComponent,
+    FacebookLoginComponent,
   ],
   providers: [
     SessionStorageService,
@@ -343,7 +347,8 @@ import { FormularioRojoComponent } from './Containers/formulario-rojo/formulario
     TrabajoDeParesIntegraService,
     IntegraEsquemaEvaluacionService,
     SeoService,
-    CertificadoIntegraPortalService
+    CertificadoIntegraPortalService,
+    SocialAuthService
   ],
 })
 export class SharedModule {
