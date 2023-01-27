@@ -39,7 +39,7 @@ registerLocaleData(localeEs, "es");
         providers: [
           {
             id: FacebookLoginProvider.PROVIDER_ID,
-            provider: new FacebookLoginProvider('3409015066000369'),
+            provider: new FacebookLoginProvider('8660666830674777'),
           },
         ],
       } as SocialAuthServiceConfig,
