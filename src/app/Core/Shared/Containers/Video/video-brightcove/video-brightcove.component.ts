@@ -75,6 +75,7 @@ export class VideoBrightcoveComponent implements OnInit, OnChanges,AfterViewInit
   public valorRespuesta=''
   public valorRespuestaNumero=0
   public capituloEv=-1;
+  public indiceDiapositiva=-1;
   public finish=false
   public animation=0
   public estadoFinalizarPreguntas=false
@@ -195,6 +196,7 @@ export class VideoBrightcoveComponent implements OnInit, OnChanges,AfterViewInit
       this.diapositivas = this.videoData.objetoConfigurado.configuracion;
       var tiempo=0
       var i=1
+      var j=0
       console.log(this.diapositivas)
       this.diapositivas.forEach((x) => {
 
@@ -204,6 +206,7 @@ export class VideoBrightcoveComponent implements OnInit, OnChanges,AfterViewInit
           }
           if(x.tiempo>=tiempo){
             tiempo=x.tiempo
+            this.indiceDiapositiva=j;
             this.urlDiapo = x.rutaDiapositiva;
             if(x.tipoVista==4){
               if(parseInt(x.estadoEval)!=1){
@@ -220,6 +223,7 @@ export class VideoBrightcoveComponent implements OnInit, OnChanges,AfterViewInit
           this.numeroDiapositivas++;
           i++;
         }
+        j++;
       });
       if(this.tipo==4){
         this.ListaRegistroPreguntaInteractivaPorGrupo();
@@ -241,19 +245,23 @@ export class VideoBrightcoveComponent implements OnInit, OnChanges,AfterViewInit
     this.finalizado=false
     this.valPregunta=false
     this.videocontinuar=false
+    var i=0;
     this.diapositivas.forEach(x=>{
-      if(x.nroDiapositiva==this.capituloEv && parseInt(x.tipoVista)==4){
+      if(x.nroDiapositiva==this.capituloEv && parseInt(x.tipoVista)==4 && this.indiceDiapositiva==i){
         x.estadoEval=1;
         time=x.tiempo;
 
         this.tiempovideoinicio=x.tiempo;
       }
+      i++;
     })
+    i=0;
     this.diapositivas.forEach(x=>{
 
       if (x.tiempo<=time) {
         if(x.tiempo>=tiempo){
           tiempo=x.tiempo
+          this.indiceDiapositiva=i;
           this.urlDiapo = x.rutaDiapositiva;
           if(x.tipoVista==4){
             if(parseInt(x.estadoEval)!=1){
@@ -266,6 +274,7 @@ export class VideoBrightcoveComponent implements OnInit, OnChanges,AfterViewInit
           this.grupo=x.urlEvaluacion
         }
       }
+      i++;
     })
     this.tipo
     this.playVideo()
@@ -466,6 +475,7 @@ export class VideoBrightcoveComponent implements OnInit, OnChanges,AfterViewInit
    // console.log(e)
     var tiempo=0
     var i=0
+    var j=0;
     this.diapositivaactual=0
     var entro4=false;
     this.diapositivas.forEach((x) => {
@@ -477,8 +487,8 @@ export class VideoBrightcoveComponent implements OnInit, OnChanges,AfterViewInit
         this.diapositivaactual=i
         if(x.tiempo>=tiempo){
           tiempo=x.tiempo
+          this.indiceDiapositiva=j;
           this.urlDiapo = x.rutaDiapositiva;
-
           if(x.tipoVista==4){
             if(parseInt(x.estadoEval)!=1){
               this.capituloEv=parseInt(x.nroDiapositiva)
@@ -496,6 +506,7 @@ export class VideoBrightcoveComponent implements OnInit, OnChanges,AfterViewInit
           }
         }
       }
+      j++;
     });
 
     //this.RegistrarUltimaVisualizacionVideo()
@@ -507,6 +518,7 @@ export class VideoBrightcoveComponent implements OnInit, OnChanges,AfterViewInit
     //   this.video.nativeElement.pause();
     // }
     var i=0;
+    var j=0
     this.diapositivas.forEach((x) => {
       if(x.tipoVista!=4){
         i++;
@@ -517,6 +529,7 @@ export class VideoBrightcoveComponent implements OnInit, OnChanges,AfterViewInit
       }
       if (parseInt(tiempo) == x.tiempo) {
         this.diapositivaactual=i
+        this.indiceDiapositiva=j;
         this.urlDiapo = x.rutaDiapositiva;
         if(x.tipoVista==4){
           if(parseInt(x.estadoEval)!=1){
@@ -533,6 +546,7 @@ export class VideoBrightcoveComponent implements OnInit, OnChanges,AfterViewInit
           this.ListaRegistroPreguntaInteractivaPorGrupo();
         }
       }
+      j++;
     });
   }
   minusDiapo(){
@@ -553,7 +567,8 @@ export class VideoBrightcoveComponent implements OnInit, OnChanges,AfterViewInit
     }
   }
   plusDiapo(){
-    var index=this.getNextIndexPordiapo()
+    // var index=this.getNextIndexPordiapo()
+    var index =this.indiceDiapositiva;
     console.log(this.diapositivas)
     console.log(index)
     console.log(this.diapositivaactual)
@@ -562,6 +577,7 @@ export class VideoBrightcoveComponent implements OnInit, OnChanges,AfterViewInit
       if(this.diapositivas[index].tipoVista==4 ){
         console.log(this.diapositivas[index].estadoEval)
         if(parseInt(this.diapositivas[index].estadoEval)!=1){
+          this.indiceDiapositiva=index
           this.capituloEv=parseInt(this.diapositivas[index].nroDiapositiva)
           console.log(this.diapositivas[index])
           this.tipo=this.diapositivas[index].tipoVista;
