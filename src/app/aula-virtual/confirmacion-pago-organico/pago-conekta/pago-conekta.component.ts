@@ -98,7 +98,7 @@ export class PagoConektaComponent implements OnInit,OnDestroy {
           window.ConektaCheckoutComponents.Integration({
             targetIFrame: "#conektaIframeContainer",
             checkoutRequestId: "`+this.resultVisa.tokenComercio+`",
-            publicKey: "key_NkUEio2hSx5H1zf7n5KueMw",
+            publicKey: "key_d5pmwruxvzxDYmHZiBbEbbA",
             options: {},
             styles: {},
             onCreateTokenSucceeded: function(token) {
