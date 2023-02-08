@@ -50,16 +50,16 @@ export class InterceptorService implements HttpInterceptor {
         return throwError( err );
       },
       (error : HttpErrorResponse ) => {
-          if (error.status == 401) {
+          if (error.status == 401 && this.router.url.split('/')[this.router.url.split('/').length-1].toString()!='LOGIN') {
             this._SessionStorageService.DeleteToken();
             this._HelperService.enviarDatoCuenta(this.DatoObservable);
-            this.router.navigate(['/login']);
             this._SnackBarServiceService.openSnackBar(
               "Su sesión ha caducado",
               'x',
               5,
               'snackbarCrucigramaerror'
             );
+            this.router.navigate(['/login']);
           }
       })
     );
