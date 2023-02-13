@@ -1,6 +1,11 @@
-<div class="TitleModal">
-  <img src="../../../../../assets/icons/foro-naranja.svg" alt="">
-  {{data.titulo}}
+<div class="row" style="display: flex;">
+  <div class="TitleModal col-11">
+    <img src="../../../../../assets/icons/foro-naranja.svg" alt="">
+    {{data.titulo}}
+  </div>
+  <div class="col-1" style="text-align: end;font-weight: bold;cursor: pointer;" (click)="dialogRef.close()">
+    X
+  </div>
 </div>
 <ng-container *ngIf="pregunta==undefined ;else existeForo">
   <div style="    display: flex;
@@ -28,7 +33,7 @@
 
         </div>
       </div>
-      <div class="Responder" >
+      <div *ngIf="ForoCerrado==false" class="Responder" >
 
         <mat-form-field appearance="outline" class="test">
           <mat-label>Responder</mat-label>
@@ -40,7 +45,8 @@
   </ng-template>
 
 </ng-template>
-<div class="FotterMdal">
+<div *ngIf="ForoCerrado==true" style="height: 1px;background-color: #F4F4F4;"></div>
+<div *ngIf="ForoCerrado==false" class="FotterMdal">
 
   <app-default-button [confs]="{color:'danger',titulo:'Cerrar'}"
   (ButtoclClick)="CerrarModal()"
