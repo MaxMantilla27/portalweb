@@ -567,17 +567,18 @@ export class VideoBrightcoveComponent implements OnInit, OnChanges,AfterViewInit
     }
   }
   plusDiapo(){
-    // var index=this.getNextIndexPordiapo()
-    var index =this.indiceDiapositiva;
+    var index=this.getNextIndexPordiapo()
+    //var index =this.indiceDiapositiva;
     console.log(this.diapositivas)
     console.log(index)
     console.log(this.diapositivaactual)
+    console.log(this.indiceDiapositiva)
     if(this.diapositivaactual<this.numeroDiapositivas){
       console.log(this.diapositivas[index].tipoVista)
       if(this.diapositivas[index].tipoVista==4 ){
-        console.log(this.diapositivas[index].estadoEval)
+        console.log(this.diapositivas[index])
         if(parseInt(this.diapositivas[index].estadoEval)!=1){
-          this.indiceDiapositiva=index
+         // this.indiceDiapositiva=index
           this.capituloEv=parseInt(this.diapositivas[index].nroDiapositiva)
           console.log(this.diapositivas[index])
           this.tipo=this.diapositivas[index].tipoVista;
@@ -606,12 +607,26 @@ export class VideoBrightcoveComponent implements OnInit, OnChanges,AfterViewInit
   }
   getNextIndexPordiapo():any{
     let i=0
+    let indiceactual=0
+    console.log(this.diapositivaactual)
     while(i<this.diapositivas.length){
       if(this.diapositivas[i].nroDiapositiva==this.diapositivaactual){
-        if(i<this.diapositivas.length){
-          return (i+1);
-        }else{
+        indiceactual=i;
+      }
+      i++
+    }
+    i=0
+    if(indiceactual==this.diapositivas.length){
+      return indiceactual;
+    }
+    while(i<this.diapositivas.length){
+      if(indiceactual<i){
+        if(this.diapositivas[i].tipoVista==4 && this.diapositivas[i].estadoEval.toString()=='0'){
           return i;
+        }else{
+          if(this.diapositivas[i].tipoVista!=4 ){
+            return i;
+          }
         }
       }
       i++
