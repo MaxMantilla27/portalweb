@@ -50,7 +50,8 @@ export class InterceptorService implements HttpInterceptor {
         return throwError( err );
       },
       (error : HttpErrorResponse ) => {
-          if (error.status == 401 && this.router.url.split('/')[this.router.url.split('/').length-1].toString()!='LOGIN') {
+          console.log(this.router.url)
+          if (error.status == 401 && this.router.url.split('/')[this.router.url.split('/').length-1].toUpperCase()!='LOGIN') {
             this._SessionStorageService.DeleteToken();
             this._HelperService.enviarDatoCuenta(this.DatoObservable);
             this._SnackBarServiceService.openSnackBar(

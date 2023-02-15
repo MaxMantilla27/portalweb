@@ -95,7 +95,7 @@ export class FormChatComponent implements OnInit,OnChanges {
     }
   }
   SetContacto(value: any) {
-    if (!this.formVal && this.statuscharge==true) {
+    if (!this.formVal || this.statuscharge==true) {
       // this._SnackBarServiceService.openSnackBar(
       //   'Debes completar todos los campos',
       //   'x',

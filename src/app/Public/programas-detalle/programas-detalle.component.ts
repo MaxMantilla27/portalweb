@@ -101,7 +101,6 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
     config.keyboard = true;
     config.pauseOnHover = true;
   }
-
   public charge=false
   public step=-1;
   public CodigoIso=''
