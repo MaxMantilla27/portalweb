@@ -42,7 +42,7 @@
   </ng-container>
 </div>
 
-<div class="RegistroComentario" style="width: 90%;  margin-top: 20px; margin-left: 10%;">
+<div *ngIf="ForoCerrado==false" class="RegistroComentario" style="width: 90%;  margin-top: 20px; margin-left: 10%;">
   <ng-container>
     <div class="foroTitleRespuesta" style="font-weight: bold;">Añade tu comentario: </div>
     <div class="col-12 col-md-12 col-lg-12">
@@ -68,5 +68,4 @@
       </form>
     </div>
   </ng-container>
-
 </div>
