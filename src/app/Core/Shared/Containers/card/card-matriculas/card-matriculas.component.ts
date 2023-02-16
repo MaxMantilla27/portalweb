@@ -13,7 +13,7 @@ export class CardMatriculasComponent implements OnInit {
   constructor(
     private _HelperService:HelperService
   ) { }
-
+  public IdPruebas=9818325
   @Input() cardContent:CardMatriculasDTO={Img:'',Title:'',ImgAlt:'',Tipo:1,Url:''};
   @Input() matricula:any
   ngOnInit(): void {
