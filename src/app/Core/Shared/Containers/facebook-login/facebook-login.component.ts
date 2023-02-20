@@ -63,19 +63,22 @@ export class FacebookLoginComponent implements OnInit ,OnDestroy {
       email: ['', Validators.required],
       password: ['', Validators.required],
     });
-    this.socialAuthService.authState.subscribe((user) => {
-      console.log(user)
-      this.socialUser = user;
-      this.loginSend.Email=this.socialUser.email
-      this.loginSend.IdFacebook=this.socialUser.id
-      this.loginSend.Token=this.socialUser.authToken
-      this.loginSend.DataFacebook=JSON.stringify(user)
-      if(this.EnLOgueo==true){
-        this.Login();
+    this.socialAuthService.authState.subscribe({
+      next:x=>{
+        console.log(x)
+        this.socialUser = x;
+        this.loginSend.Email=this.socialUser.email==undefined?'':this.socialUser.email
+        this.loginSend.IdFacebook=this.socialUser.id
+        this.loginSend.Token=this.socialUser.authToken
+        this.loginSend.DataFacebook=JSON.stringify(x)
+        if(this.EnLOgueo==true){
+          this.Login();
+        }
+        console.log(this.socialUser.email)
+        this.isLoggedin = x != null;
       }
-      console.log(this.socialUser.email)
-      this.isLoggedin = user != null;
     });
+    this.socialAuthService.initState
   }
 
   loginWithFacebook(): void {
