@@ -42,7 +42,7 @@ export class ResultadoPagoWebpayComponent implements OnInit {
           panelClass:'dialog-charge',
           disableClose:true
         });
-        if(this.json.TokenComercio==undefined || this.json.TokenComercio==null)
+        if(this.json.TokenComercio==undefined || this.json.TokenComercio==null || this.json.TokenComercio.length<=1)
           this.json.TokenComercio = this._SessionStorageService.SessionGetValue('token_ws')
         this.ObtenerResultadoProcesopagoWebpay()
       },
