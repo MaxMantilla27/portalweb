@@ -73,6 +73,7 @@ export class CompraExitosaOpenPayComponent implements OnInit {
       this._FormaPagoService.ProcesamientoAfiliacionOpenPay(this.id).pipe(takeUntil(this.signal$)).subscribe({
         next:x=>{
           console.log(x)
+          
           this.resultOpenPay = JSON.parse(x._Repuesta.pagoAfiliacion)
           console.log("ResultadoOpen", this.resultOpenPay)
           this.json.IdentificadorTransaccion=x._Repuesta.identificadorTransaccion
@@ -83,6 +84,7 @@ export class CompraExitosaOpenPayComponent implements OnInit {
     else{
       this._FormaPagoService.ProcesamientoPagoOpenPay(this.id).pipe(takeUntil(this.signal$)).subscribe({
         next:x=>{
+          
           this.json.IdentificadorTransaccion=x._Repuesta.identificadorTransaccion
           this.ObtenerPreProcesoPagoCuotaAlumno()
         }
@@ -94,7 +96,7 @@ export class CompraExitosaOpenPayComponent implements OnInit {
     this.ruta='/AulaVirtual/MisPagos'
     this._FormaPagoService.ObtenerPreProcesoPagoCuotaAlumno(this.json).pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
-        console.log(x)
+        this.dialogRef.close()
         if(x._Repuesta.registroAlumno==null){
           this.ObtenerPreProcesoPagoOrganicoAlumno()
         }else{
@@ -111,7 +113,7 @@ export class CompraExitosaOpenPayComponent implements OnInit {
                 if(this.tipoRespuesta=="AF")
                 {
                   var valor:any
-                  objComprobante.listaCuotas.forEach((l:any) => {
+                  objComprobante.listaCuota.forEach((l:any) => {
                     if(valor==undefined){
                       valor=l
                     }else{
@@ -120,7 +122,7 @@ export class CompraExitosaOpenPayComponent implements OnInit {
                       }
                     }
                   });
-                  objComprobante.listaCuotas = [valor]
+                  objComprobante.listaCuota = [valor]
                 }
                 this._FormaPagoService.actualizarComprobantePagoLista(objComprobante).pipe(takeUntil(this.signal$)).subscribe({
                   next:x=>{

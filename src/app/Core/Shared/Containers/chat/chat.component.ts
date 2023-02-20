@@ -69,6 +69,7 @@ export class ChatComponent implements OnInit,OnDestroy,OnChanges {
   public msjEnviado='';
   public configuration:any
   public lastMsj=''
+  public img='https://proceso-pago.bsginstitute.com/img-web/chatV2/'
   @Output()
   ChargeChat: EventEmitter<boolean> = new EventEmitter<boolean>();
   @Output()
@@ -330,6 +331,7 @@ export class ChatComponent implements OnInit,OnDestroy,OnChanges {
         var nombre1 = NombreAsesor.split(" ", 3);
         this.nombreasesorglobal = nombre1[0] + " " + nombre1[2];
         this.nombreAsesorSplit=this.nombreasesorglobal.split(' ',2)
+        this.img+=this.nombreAsesorSplit[0]+'-'+this.nombreAsesorSplit[1]+'.png'
         this._SessionStorageService.SessionSetValue("IdPGeneral",idPGeneral);
         this.ChargeChat.emit(true)
       }
@@ -492,5 +494,8 @@ export class ChatComponent implements OnInit,OnDestroy,OnChanges {
       obj={Tag:'Input',Accion:'keyup.enter',Tipo:'text',Nombre:'Chat',valor:this.chatBox,Seccion:'Chat'}
     }
     this._HelperService.enviarMsjAcciones(obj)
+  }
+  ErrorImgAsesor(){
+    this.img='../../../../../assets/imagenes/174188.png'
   }
 }

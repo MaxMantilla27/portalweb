@@ -4,9 +4,10 @@
   margin-left: 0px; padding: 5px 15px 5px 15px;text-align: center;margin-bottom: 15px;">
     Solo tienes que ingresar tus datos para empezar a conversar ahora mismo
   </div>
-  <div class="card-footer" style="background: white;margin-bottom: 10px;padding-bottom: 0px;padding-top: 0px;    border: 1px solid transparent;">
+  <div class="card-footer" style="background: white;margin-bottom: 10px;padding-bottom: 0px;padding-top: 0px;    border: 1px solid transparent;position: relative;">
+    <app-cargando *ngIf="statuscharge==true"></app-cargando>
     <app-formulario-rojo [model]="formularioContactoChat" [InputsDisable]="statuscharge" (OnSubmit)="SetContacto($event)"
-      (OnValid)="formVal=$event" [fiels]="fileds" [ObtenerPrefijo]="true">
+      (OnValid)="formVal=$event" [Interaccion]="'Chat-'+IdPGeneral" [fiels]="fileds" [ObtenerPrefijo]="true">
       <ng-container contenido>
       </ng-container>
       <ng-container send >

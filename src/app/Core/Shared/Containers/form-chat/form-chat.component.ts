@@ -95,7 +95,7 @@ export class FormChatComponent implements OnInit,OnChanges {
     }
   }
   SetContacto(value: any) {
-    if (!this.formVal) {
+    if (!this.formVal || this.statuscharge==true) {
       // this._SnackBarServiceService.openSnackBar(
       //   'Debes completar todos los campos',
       //   'x',
@@ -103,6 +103,7 @@ export class FormChatComponent implements OnInit,OnChanges {
       //   'snackbarCrucigramaerror'
       // );
     } else {
+      this.statuscharge=true;
       this.initValues = false;
       this.DatosEnvioFormulario.Nombres = value.Nombres;
       this.DatosEnvioFormulario.Apellidos = value.Apellidos;
@@ -122,6 +123,7 @@ export class FormChatComponent implements OnInit,OnChanges {
       this.DatosEnvioFormulario.IdCampania=parseInt(idcampania)
       this._ChatEnLinea.ValidarCrearOportunidadChat(this.DatosEnvioFormulario).pipe(takeUntil(this.signal$)).subscribe({
         next:(x)=>{
+          this.statuscharge=false;
           this.datos.nombres = this.DatosEnvioFormulario.Nombres;
             this.datos.apellidos = this.DatosEnvioFormulario.Apellidos;
             this.datos.email = this.DatosEnvioFormulario.Email;

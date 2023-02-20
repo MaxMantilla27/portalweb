@@ -65,6 +65,7 @@ export class ChatPortalComponent implements OnInit,OnDestroy,OnChanges {
   public msjEnviado='';
   public configuration:any
   public lastMsj=''
+  public img='https://proceso-pago.bsginstitute.com/img-web/chatV2/'
   @Output()
   ChargeChat: EventEmitter<boolean> = new EventEmitter<boolean>();
   @Output()
@@ -189,12 +190,15 @@ export class ChatPortalComponent implements OnInit,OnDestroy,OnChanges {
   }
   configuracion(){
     this.hubConnection.on("configuracion",(NombreAsesor:any, estado:any)=>{
+      console.log(NombreAsesor)
+      console.log(estado)
       if(estado==false){
         this.ChargeChat.emit(false)
       }else{
         var nombre1 = NombreAsesor.split(" ", 3);
         this.nombreasesorglobal = nombre1[0] + " " + nombre1[2];
         this.nombreAsesorSplit=this.nombreasesorglobal.split(' ',2)
+        this.img+=this.nombreAsesorSplit[0]+'-'+this.nombreAsesorSplit[1]+'.png'
         this.ChargeChat.emit(true)
       }
     })
@@ -355,5 +359,8 @@ export class ChatPortalComponent implements OnInit,OnDestroy,OnChanges {
     this.chatBox="";
   }
   ampliarImagen(url:string){
+  }
+  ErrorImgAsesor(){
+    this.img='../../../../../assets/imagenes/174188.png'
   }
 }

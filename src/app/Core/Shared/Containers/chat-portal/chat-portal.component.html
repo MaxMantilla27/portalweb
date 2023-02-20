@@ -1,7 +1,7 @@
 <div class="contentChat" >
   <div class="headerChatAula" *ngIf="nombreasesorglobal!=''">
     <div class="imgAsesor">
-      <img [src]="'https://proceso-pago.bsginstitute.com/img-web/chatV2/'+nombreAsesorSplit[0]+'-'+nombreAsesorSplit[1]+'.png'" alt="">
+      <img [src]="img" (error)="ErrorImgAsesor()" alt="">
       <div class="nombreAsesor">
         <ng-container *ngIf="estadoLogueo=='false'">
           Chatea en línea con {{nombreAsesorSplit[0]}} {{nombreAsesorSplit[1]}}

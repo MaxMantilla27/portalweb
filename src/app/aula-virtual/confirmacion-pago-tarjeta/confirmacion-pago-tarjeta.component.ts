@@ -122,8 +122,11 @@ export class ConfirmacionPagoTarjetaComponent implements OnInit,OnDestroy {
   }
   OpenPayInit() {
     console.log(OpenPay.deviceData);
-
+    //mlfmdoeugmuhd6epubse --prueba
+    //mxgmgffnaxu1mosrkhlo
     OpenPay.setId('mxgmgffnaxu1mosrkhlo');
+    //pk_81210f4cdefe4888bbe4ccfd8923655a --prueba
+    //pk_c9dfff7c5c9e4a68a7c6083d280ff4db
     OpenPay.setApiKey('pk_c9dfff7c5c9e4a68a7c6083d280ff4db');
     //OpenPay.setSandboxMode(false);
     OpenPay.setSandboxMode(false);

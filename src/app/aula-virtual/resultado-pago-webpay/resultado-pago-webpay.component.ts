@@ -4,6 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
 import { ChargeComponent } from 'src/app/Core/Shared/Containers/Dialog/charge/charge.component';
 import { FormaPagoService } from 'src/app/Core/Shared/Services/FormaPago/forma-pago.service';
+import { SessionStorageService } from 'src/app/Core/Shared/Services/session-storage.service';
 
 @Component({
   selector: 'app-resultado-pago-webpay',
@@ -16,7 +17,8 @@ export class ResultadoPagoWebpayComponent implements OnInit {
   constructor(
     private _FormaPagoService:FormaPagoService,
     private _ActivatedRoute:ActivatedRoute,
-    public dialog:MatDialog
+    public dialog:MatDialog,
+    private _SessionStorageService:SessionStorageService,
   ) { }
   public json={
     IdentificadorTransaccion:null,
@@ -31,12 +33,17 @@ export class ResultadoPagoWebpayComponent implements OnInit {
   ngOnInit(): void {
     this._ActivatedRoute.queryParams.pipe(takeUntil(this.signal$)).subscribe({
       next: (x) => {
+        console.log("ngOninni")
         this.json.TokenComercio = x['token_ws'];
+        if(this.json.TokenComercio==undefined || this.json.TokenComercio==null)
+          this.json.TokenComercio = x['TBK_TOKEN'];
         this.json.IdentificadorTransaccion = null;
         this.dialogRef =this.dialog.open(ChargeComponent,{
           panelClass:'dialog-charge',
           disableClose:true
         });
+        if(this.json.TokenComercio==undefined || this.json.TokenComercio==null || this.json.TokenComercio.length<=1)
+          this.json.TokenComercio = this._SessionStorageService.SessionGetValue('token_ws')
         this.ObtenerResultadoProcesopagoWebpay()
       },
     });
