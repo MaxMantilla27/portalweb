@@ -1,0 +1,5 @@
+<div class="alertLoginFacebook">{{data.msj}}</div>
+<mat-tab-group class="tabLoginFacebook">
+  <mat-tab label="Ingresar"> <app-login-facebook-ingresar (OnClose)="cerrar()" [data]="data"></app-login-facebook-ingresar></mat-tab>
+  <mat-tab label="Registrar"> <app-login-facebook-registrar (OnClose)="cerrar()" [data]="data"></app-login-facebook-registrar> </mat-tab>
+</mat-tab-group>

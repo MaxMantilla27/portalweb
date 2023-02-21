@@ -20,5 +20,9 @@ export class AspNetUserService {
     console.log(Json)
     return this.http.post<any>(this.urlBase+'/AuthenticateFacebook',Json);
   }
+  public GuardarLoginFacebook(Json:loginSendFacebookDTO):Observable<any>{
+    console.log(Json)
+    return this.http.post<any>(this.urlBase+'/GuardarLoginFacebook',Json);
+  }
 
 }

@@ -49,6 +49,9 @@ import { HomeEducacionTecnicaComponent } from './Home/home-educacion-tecnica/hom
 import { HomeFormacionContinuaComponent } from './Home/home-formacion-continua/home-formacion-continua.component';
 import { ProgramaFormularioComponent } from './programas-detalle/programa-formulario/programa-formulario.component';
 import { SorteoComponent } from './sorteo/sorteo.component';
+import { LoginFacebookComponent } from './login/login-facebook/login-facebook.component';
+import { LoginFacebookIngresarComponent } from './login/login-facebook/login-facebook-ingresar/login-facebook-ingresar.component';
+import { LoginFacebookRegistrarComponent } from './login/login-facebook/login-facebook-registrar/login-facebook-registrar.component';
 
 
 @NgModule({
@@ -104,7 +107,10 @@ import { SorteoComponent } from './sorteo/sorteo.component';
     HomeEducacionTecnicaComponent,
     HomeFormacionContinuaComponent,
     ProgramaFormularioComponent,
-    SorteoComponent
+    SorteoComponent,
+    LoginFacebookComponent,
+    LoginFacebookIngresarComponent,
+    LoginFacebookRegistrarComponent
   ],
   exports: [],
   providers: [

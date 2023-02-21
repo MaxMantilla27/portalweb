@@ -1,0 +1,16 @@
+// .login-facebook-dialog-container{
+
+// }
+.alertLoginFacebook{
+  color: #004085;
+  background-color: #cce5ff;
+  border-color: #b8daff;
+  position: relative;
+  padding: 0.75rem 1.25rem;
+  margin-bottom: 1rem;
+  border: 1px solid transparent;
+  border-radius: 0.25rem;
+}
+.tabLoginFacebook mat-tab-header .mat-tab-label-container .mat-tab-list .mat-tab-labels .mat-tab-label {
+  width: 50%;
+}

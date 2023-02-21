@@ -16,4 +16,5 @@ export interface loginSendFacebookDTO
   IdFacebook:string;
   Token:string;
   DataFacebook:string;
+  msj:string
 }

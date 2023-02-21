@@ -1,0 +1,25 @@
+<div class="row" style="margin: 0;
+margin-top: 20px;">
+  <div class="col-12 col-md-2 col-lg-2"></div>
+  <div class="col-12 col-md-8 col-lg-8" style="    background: #f4f4f4;
+  border: 1px solid #e1e1e1;
+  padding: 30px 40px;
+  border-radius: 10px;">
+
+    <app-formulario [model]="login" [InputsDisable]="statuscharge" (OnSubmit)="Login($event)" [Color]="'white'"
+      (OnValid)="formVal=$event" [Interaccion]="'Login'" [fiels]="fileds" [ChargeValuesInit]="initValues">
+
+      <ng-container contenido>
+        <div class="row" style="width: 100%;margin: 20px 0px;">
+
+          <div class="col-12 col-md-12 col-lg-12 buttonnsHelp vinculo" routerLink="/Account/ForgotPassword"> ¿Olvidaste tu contraseña?</div>
+          <div class="col-12 col-md-12 col-lg-12 buttonnsHelp vinculo" routerLink="/Registrarse"> ¿Aún no tienes una cuenta?</div>
+        </div>
+      </ng-container>
+      <ng-container send>
+        <app-default-button [confs]="{color:'primary',titulo:'Iniciar sesión'}" [style]="'width: 100%;'"  ></app-default-button>
+      </ng-container>
+
+    </app-formulario>
+  </div>
+</div>

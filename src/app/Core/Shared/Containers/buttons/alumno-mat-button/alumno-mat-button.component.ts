@@ -1,7 +1,7 @@
 import { Component, Input, OnChanges, OnInit, SimpleChanges, ViewEncapsulation } from '@angular/core';
 import { MAT_SELECT_CONFIG } from '@angular/material/select';
 import { Router } from '@angular/router';
-import { SocialAuthService } from 'angularx-social-login';
+import { FacebookLoginProvider, SocialAuthService } from 'angularx-social-login';
 import { BasicUrlIcon } from 'src/app/Core/Models/BasicDTO';
 import { DatoObservableDTO } from 'src/app/Core/Models/DatoObservableDTO';
 import { HelperService } from '../../../Services/helper.service';
@@ -119,6 +119,6 @@ export class AlumnoMatButtonComponent implements OnInit,OnChanges {
     this._HelperService.enviarDatoCuenta(this.DatoObservable);
     console.log(this.DatoObservable);
     this._router.navigate(['/login']);
-    this.socialAuthService.signOut();
+    this.socialAuthService.signOut().then().catch();
   }
 }

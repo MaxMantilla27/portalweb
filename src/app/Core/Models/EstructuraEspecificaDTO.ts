@@ -24,6 +24,12 @@ export interface  ParametrosCrucigramaVideoSesionDTO
     IdSesion:number,
     AccesoPrueba:boolean,
 }
+export interface  ResetearCrucigramasPreguntasPrueba
+{
+  IdPEspecificoPadre:number,
+  IdPrincipal:number,
+  EsCruCigrama:boolean,
+}
 export interface EvaluacionPromedioCrucigramaDTO{
   Id:number,
   IdCrucigrama:number,

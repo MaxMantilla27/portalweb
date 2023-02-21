@@ -41,7 +41,7 @@
         <ng-container send>
           <app-default-button [confs]="{color:'primary',titulo:'Iniciar sesión'}" [style]="'width: 100%;'"  ></app-default-button>
          <div style="text-align: center;">- ó -</div>
-          <app-facebook-login></app-facebook-login>
+          <app-facebook-login (OnError)="OpenModalLogin($event)"></app-facebook-login>
         </ng-container>
 
       </app-formulario>

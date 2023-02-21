@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { FacebookLoginProvider, SocialAuthService, SocialUser } from 'angularx-social-login';
@@ -36,7 +36,7 @@ export class FacebookLoginComponent implements OnInit ,OnDestroy {
     idAreaTrabajo:undefined,
     idIndustria:undefined,
   }
-  public loginSend:loginSendFacebookDTO={Email:'',IdFacebook:'',DataFacebook:'',Token:''}
+  public loginSend:loginSendFacebookDTO={Email:'',IdFacebook:'',DataFacebook:'',Token:'',msj:''}
   constructor(
     private formBuilder: FormBuilder,
     private socialAuthService: SocialAuthService,
@@ -54,6 +54,8 @@ export class FacebookLoginComponent implements OnInit ,OnDestroy {
     datoContenido: false,
   }
   public EnLOgueo=false
+
+  @Output() OnError = new EventEmitter<any>();
   ngOnDestroy(): void {
     this.signal$.next(true);
     this.signal$.complete();
@@ -162,13 +164,15 @@ export class FacebookLoginComponent implements OnInit ,OnDestroy {
       error:e=>{
         console.log(e)
 
-        this._SnackBarServiceService.openSnackBar(
-          e.error.excepcion.descripcionGeneral,
-          'x',
-          5,
-          'snackbarCrucigramaerror'
-        );
-        this.socialAuthService.signOut();
+        // this._SnackBarServiceService.openSnackBar(
+        //   e.error.excepcion.descripcionGeneral,
+        //   'x',
+        //   5,
+        //   'snackbarCrucigramaInfo'
+        // );
+        //this.socialAuthService.signOut();
+        this.loginSend.msj=e.error.excepcion.descripcionGeneral;
+        this.OnError.emit(this.loginSend)
       },
       complete:()=>{
         this.EnLOgueo=false

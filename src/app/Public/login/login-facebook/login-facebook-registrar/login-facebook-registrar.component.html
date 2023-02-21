@@ -1,0 +1,19 @@
+<app-cargando *ngIf="statuscharge==true"></app-cargando>
+<div class="row" style="    margin: 0;
+height: 500px;
+overflow-x: hidden;
+margin-top: 20px;">
+  <div class="col-12 col-md-2 col-lg-2"></div>
+  <div class="col-12 col-md-8 col-lg-8">
+    <app-formulario [Interaccion]="'Registrarce'" [model]="register" [InputsDisable]="statuscharge" [CleanOnSubmit]="cleanSub" (OnSubmit)="Register($event)" [Color]="'#f8f8f8'"
+      (OnValid)="formVal=$event" [fiels]="fileds" [Tipo]="1" (OnSelect)="SelectChage($event)" [ChargeValuesInit]="initValues">
+
+      <ng-container contenido>
+      </ng-container>
+      <ng-container send>
+        <app-default-button [confs]="{color:'primary',titulo:'Iniciar sesión'}" [style]="'width: 100%;'"  ></app-default-button>
+      </ng-container>
+
+    </app-formulario>
+  </div>
+</div>

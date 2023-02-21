@@ -2,7 +2,7 @@ import { isPlatformBrowser } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { EMPTY, Observable } from 'rxjs';
-import { EvaluacionPromedioCrucigramaDTO, ParametrosCrucigramaVideoSesionDTO } from 'src/app/Core/Models/EstructuraEspecificaDTO';
+import { EvaluacionPromedioCrucigramaDTO, ParametrosCrucigramaVideoSesionDTO, ResetearCrucigramasPreguntasPrueba } from 'src/app/Core/Models/EstructuraEspecificaDTO';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
