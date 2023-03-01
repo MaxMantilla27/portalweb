@@ -2,6 +2,7 @@ import { isPlatformBrowser } from '@angular/common';
 import { HttpClient, HttpRequest } from '@angular/common/http';
 import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { EMPTY, Observable } from 'rxjs';
+import { ParametroNotaRegistrarV3DTO } from 'src/app/Core/Models/ParticipacionExpositorFiltroDTO';
 import { ParametroObtenerEvaluacionTarea ,ModelTareaEvaluacionTareaDTO, ParametroEnvioTrabajoPares, ParametroEnvioCriterioReflexivo} from 'src/app/Core/Models/TareaEvaluacionDTO';
 import { environment } from 'src/environments/environment';
 
@@ -71,6 +72,25 @@ export class TareaEvaluacionService {
     formData.append('IdEsquemaEvaluacionPGeneralDetalle', Json.IdEsquemaEvaluacionPGeneralDetalle.toString());
     formData.append('Retroalimentacion', Json.Retroalimentacion.toString());
     const req= new HttpRequest('POST', `${this.urlBase}/EnviarCalificacionTrabajoPares`,formData, {
+      reportProgress: true,
+      responseType: 'json'
+    });
+    return this.http.request(req)
+  }
+  public EnviarCalificacionProyectoEvaluacion(Json:ParametroNotaRegistrarV3DTO):Observable<any>{
+    console.log(Json)
+    const formData: FormData = new FormData();
+    formData.append('file', Json.file!);
+    formData.append('PortalTareaEvaluacionTareaId', Json.PortalTareaEvaluacionTareaId!.toString());
+    formData.append('IdEscalaCalificacionDetalle', Json.IdEscalaCalificacionDetalle!.toString());
+    formData.append('IdParametroEvaluacion', Json.IdParametroEvaluacion.toString());
+    formData.append('IdPespecifico', Json.IdPespecifico.toString());
+    formData.append('IdMatriculaCabecera', Json.IdMatriculaCabecera.toString());
+    formData.append('Grupo', Json.Grupo.toString());
+    formData.append('NombreArchivoRetroalimentacion', Json.NombreArchivoRetroalimentacion.toString());
+    formData.append('UrlArchivoSubidoRetroalimentacionz', Json.UrlArchivoSubidoRetroalimentacion.toString());
+    formData.append('Retroalimentacion', Json.Retroalimentacion!.toString());
+    const req= new HttpRequest('POST', `${this.urlBase}/EnviarCalificacionProyectoEvaluacion`,formData, {
       reportProgress: true,
       responseType: 'json'
     });

@@ -198,6 +198,7 @@ export class ChatPortalComponent implements OnInit,OnDestroy,OnChanges {
         var nombre1 = NombreAsesor.split(" ", 3);
         this.nombreasesorglobal = nombre1[0] + " " + nombre1[2];
         this.nombreAsesorSplit=this.nombreasesorglobal.split(' ',2)
+        this.img='https://proceso-pago.bsginstitute.com/img-web/chatV2/'
         this.img+=this.nombreAsesorSplit[0]+'-'+this.nombreAsesorSplit[1]+'.png'
         this.ChargeChat.emit(true)
       }

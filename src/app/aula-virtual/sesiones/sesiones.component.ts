@@ -847,46 +847,29 @@ export class SesionesComponent implements OnInit,OnDestroy,AfterViewInit {
           tar++;
         });
         tar = 0;
-        c.registroCursoTareaCalificar.forEach((t: any) => {
-          t.habilitado = false;
+
+        c.registroCursoTareaCalificar.forEach((t:any) => {
+          t.habilitado=false;
           if(this.estructuraCapitulo.convalidado==true || alumnoTest){
             t.habilitado=true;
           }
-          if (tarC > 0) {
-            if (
-              Math.ceil(
-                c.registroCursoTareaCalificar[tarC - 1]
-                  .porcentajeVideoVisualizado
-              ) >= 98
-            ) {
-              t.habilitado = true;
+          if(tarC>0){
+            if(c.registroCursoTareaCalificar[tarC-1].calificado==true){
+              t.habilitado=true;
             }
-          } else {
-            if (this.estructuraCapitulo.contineSubSesion == true) {
-              var lastSubses =
-                c.registroEstructuraCursoSesion[lastses]
-                  .registroEstructuraCursoSubSesion.length - 1;
-              if (
-                Math.ceil(
-                  c.registroEstructuraCursoSesion[lastses]
-                    .registroEstructuraCursoSubSesion[lastSubses]
-                    .porcentajeVideoVisualizado
-                ) >= 98
-              ) {
-                t.habilitado = true;
+          }else{
+            if(this.estructuraCapitulo.contineSubSesion==true){
+              var lastSubses=c.registroEstructuraCursoSesion[lastses].registroEstructuraCursoSubSesion.length-1
+              if(Math.ceil(c.registroEstructuraCursoSesion[lastses].registroEstructuraCursoSubSesion[lastSubses].porcentajeVideoVisualizado)>=98){
+                t.habilitado=true;
               }
-            } else {
-              if (
-                Math.ceil(
-                  c.registroEstructuraCursoSesion[lastses]
-                    .porcentajeVideoVisualizado
-                ) >= 98
-              ) {
-                t.habilitado = true;
+            }else{
+              if(Math.ceil(c.registroEstructuraCursoSesion[lastses].porcentajeVideoVisualizado)>=98){
+                t.habilitado=true;
               }
             }
           }
-          tarC++;
+          tarC++
         });
         tarC = 0;
         cap++;

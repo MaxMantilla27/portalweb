@@ -22,9 +22,10 @@ export class ModuloVideosSincronicoComponent implements OnInit,OnChanges {
     if(this.videos.length>0){
       this.videos.forEach((v:any) => {
         v.open=false
-        v.idVideo='<iframe src="https://player.vimeo.com/video/'+v.idVideo+'" width="100%" height="564" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>'
+        v.idFrameVideo='<iframe src="https://player.vimeo.com/video/'+v.idVideo+'" width="100%" height="564" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>'
         //v.idVideo='https://player.vimeo.com/video/'+v.idVideo
       });
+      console.log(this.videos)
     }
   }
   Open(index:number){

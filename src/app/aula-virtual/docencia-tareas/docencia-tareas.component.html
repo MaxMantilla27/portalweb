@@ -226,7 +226,7 @@
 
                           <app-default-button [confs]="{color:'primary',titulo:'Calificar'}"
                             [style]="'padding:0px 30px;margin:0px '" [disabled]="cargaEnvio || calificacion==0 || retroalimentacion.trim().length==0"
-                            (ButtoclClick)="tareas.idTipoEvaluacionTrabajo==2?RegistrarV3(i):EnviarNota(item.id)"></app-default-button>
+                            (ButtoclClick)="tareas.idTipoEvaluacionTrabajo==2?EnviarCalificacionProyectoEvaluacion(i):EnviarNota(item.id)"></app-default-button>
                         </div>
                       </div>
                     </ng-container>

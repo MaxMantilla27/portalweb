@@ -40,4 +40,6 @@ export interface ParametroNotaRegistrarV3DTO {
   IdProyectoAplicacionEnvioAnterior?: number;
   NombreArchivoRetroalimentacion: string;
   UrlArchivoSubidoRetroalimentacion: string;
+  file?: File,
+  Retroalimentacion?: string;
 }

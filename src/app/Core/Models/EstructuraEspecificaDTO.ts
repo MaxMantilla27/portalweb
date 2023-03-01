@@ -15,39 +15,42 @@ export interface ParametrosVideoSesionDTO {
   IdCapitulo: number;
   IdSesion: number;
   AccesoPrueba: boolean;
-  OrdenSeccion:number
+  OrdenSeccion: number;
 }
-export interface  ParametrosCrucigramaVideoSesionDTO
-{
-    IdPGeneral:number,
-    IdCapitulo:number,
-    IdSesion:number,
-    AccesoPrueba:boolean,
+export interface ParametrosCrucigramaVideoSesionDTO {
+  IdPGeneral: number;
+  IdCapitulo: number;
+  IdSesion: number;
+  AccesoPrueba: boolean;
 }
-export interface EvaluacionPromedioCrucigramaDTO{
-  Id:number,
-  IdCrucigrama:number,
-  IdPrincipal:number,
-  IdPGeneral:number,
-  IdPEspecificoPadre:number,
-  IdPEspecifico:number,
-  OrdenFilaCapitulo:number,
-  OrdenFilaSesion:number,
-  CodigoCrucigrama:string,
-  Calificacion:number,
-  AccesoPrueba:boolean,
+export interface ResetearCrucigramasPreguntasPrueba {
+  IdPEspecificoPadre: number;
+  IdPrincipal: number;
+  EsCruCigrama: boolean;
 }
-export interface RegistroVideoUltimaVisualizacionDTO
-{
-  id:number,
-  idPrincipal:number,
-  idPGeneral:number,
-  idPEspecificoPadre:number,
-  idPEspecificoHijo:number,
-  idCapitulo:number,
-  idSesion:number,
-  tiempoVisualizacion:number,
-  accesoPrueba:boolean,
+export interface EvaluacionPromedioCrucigramaDTO {
+  Id: number;
+  IdCrucigrama: number;
+  IdPrincipal: number;
+  IdPGeneral: number;
+  IdPEspecificoPadre: number;
+  IdPEspecifico: number;
+  OrdenFilaCapitulo: number;
+  OrdenFilaSesion: number;
+  CodigoCrucigrama: string;
+  Calificacion: number;
+  AccesoPrueba: boolean;
+}
+export interface RegistroVideoUltimaVisualizacionDTO {
+  id: number;
+  idPrincipal: number;
+  idPGeneral: number;
+  idPEspecificoPadre: number;
+  idPEspecificoHijo: number;
+  idCapitulo: number;
+  idSesion: number;
+  tiempoVisualizacion: number;
+  accesoPrueba: boolean;
 }
 export interface ParametrosEstructuraEspecificaAccesoPruebaDTO {
   IdAccesoPrueba: number;
