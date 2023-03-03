@@ -31,7 +31,7 @@ export class CrucigramaService {
     if(this.isBrowser){
       console.log(Json)
       return this.http.post<any>(this.urlBase+'/EnviarFormularioCrucigramaAula',Json);
-      return this.http.post<any>(this.urlBase+'/EnviarFormularioCrucigrama',Json);
+      //return this.http.post<any>(this.urlBase+'/EnviarFormularioCrucigrama',Json);
     }else{
       return EMPTY;
     }
