@@ -33,12 +33,15 @@
 
         <ng-container contenido>
           <div class="row" style="width: 100%;margin: 20px 0px;">
+
             <div class="col-12 col-md-12 col-lg-12 buttonnsHelp vinculo" routerLink="/Account/ForgotPassword"> ¿Olvidaste tu contraseña?</div>
             <div class="col-12 col-md-12 col-lg-12 buttonnsHelp vinculo" routerLink="/Registrarse"> ¿Aún no tienes una cuenta?</div>
           </div>
         </ng-container>
         <ng-container send>
           <app-default-button [confs]="{color:'primary',titulo:'Iniciar sesión'}" [style]="'width: 100%;'"  ></app-default-button>
+         <div style="text-align: center;">- ó -</div>
+          <app-facebook-login (OnError)="OpenModalLogin($event)"></app-facebook-login>
         </ng-container>
 
       </app-formulario>

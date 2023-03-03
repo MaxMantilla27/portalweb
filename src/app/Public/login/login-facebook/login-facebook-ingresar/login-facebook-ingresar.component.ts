@@ -1,5 +1,4 @@
-import { style } from '@angular/animations';
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { Title, Meta } from '@angular/platform-browser';
@@ -8,21 +7,21 @@ import { Subject, takeUntil, timer } from 'rxjs';
 import { DatoObservableDTO } from 'src/app/Core/Models/DatoObservableDTO';
 import { DatosFormularioDTO } from 'src/app/Core/Models/DatosFormularioDTO';
 import { formulario } from 'src/app/Core/Models/Formulario';
-import { login, loginSendDTO, loginSendFacebookDTO } from 'src/app/Core/Models/login';
+import { loginSendDTO, login, loginSendFacebookDTO } from 'src/app/Core/Models/login';
 import { AccountService } from 'src/app/Core/Shared/Services/Account/account.service';
 import { AlumnoService } from 'src/app/Core/Shared/Services/Alumno/alumno.service';
 import { AspNetUserService } from 'src/app/Core/Shared/Services/AspNetUser/asp-net-user.service';
 import { FormaPagoService } from 'src/app/Core/Shared/Services/FormaPago/forma-pago.service';
 import { HelperService } from 'src/app/Core/Shared/Services/helper.service';
 import { SessionStorageService } from 'src/app/Core/Shared/Services/session-storage.service';
-import { LoginFacebookComponent } from './login-facebook/login-facebook.component';
+import { SnackBarServiceService } from 'src/app/Core/Shared/Services/SnackBarService/snack-bar-service.service';
 
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss']
+  selector: 'app-login-facebook-ingresar',
+  templateUrl: './login-facebook-ingresar.component.html',
+  styleUrls: ['./login-facebook-ingresar.component.scss']
 })
-export class LoginComponent implements OnInit,OnDestroy {
+export class LoginFacebookIngresarComponent implements OnInit ,OnDestroy {
   private signal$ = new Subject();
 
   constructor(
@@ -36,7 +35,7 @@ export class LoginComponent implements OnInit,OnDestroy {
     private meta:Meta,
     private _AccountService:AccountService,
     private _AlumnoService: AlumnoService,
-
+    private _SnackBarServiceService:SnackBarServiceService
     ) { }
   formVal:boolean=false;
   statuscharge=false;
@@ -45,14 +44,19 @@ export class LoginComponent implements OnInit,OnDestroy {
     datoAvatar: false,
     datoContenido: false,
   }
-
+  @Input() data:loginSendFacebookDTO={
+    Email:'',
+    IdFacebook:'',
+    Token:'',
+    DataFacebook:'',
+    msj:'',
+  };
   ngOnDestroy(): void {
     this.signal$.next(true);
     this.signal$.complete();
   }
   public migaPan: any = [];
   public loginSend:loginSendDTO={password:'',username:''}
-  public errorLogin=''
   login:login={
     Email:"",
     Password:"",
@@ -71,8 +75,8 @@ export class LoginComponent implements OnInit,OnDestroy {
     idAreaTrabajo:undefined,
     idIndustria:undefined,
   }
+  @Output() OnClose = new EventEmitter<any>();
   ngOnInit(): void {
-
     let t:string='Iniciar Sesión'
     this.title.setTitle(t);
     this.meta.addTag({name: 'author', content: 'BSG Institute'})
@@ -125,6 +129,12 @@ export class LoginComponent implements OnInit,OnDestroy {
           console.log(x)
           this.statuscharge=false
           this._SessionStorageService.SetToken(x.token)
+
+          this._AspNetUserService.GuardarLoginFacebook(this.data).subscribe({
+            next:x=>{
+              console.log(x);
+            }
+          })
           console.log('entra')
           this._AlumnoService.ObtenerCombosPerfil().subscribe({
             next: (x) => {
@@ -164,6 +174,7 @@ export class LoginComponent implements OnInit,OnDestroy {
           if(normal){
             var ap=this._SessionStorageService.SessionGetValueSesionStorage('accesoPrueba');
             if(ap==''){
+              this.OnClose.emit();
               if(x.idProveedor==0){
                 this.router.navigate(['/AulaVirtual/MisCursos']);
               }else{
@@ -186,19 +197,23 @@ export class LoginComponent implements OnInit,OnDestroy {
                       this.router.navigate(['/AulaVirtual/MisCursos']);
                     }
                   }
+                  this.OnClose.emit();
                 },
               })
             }
+          }else{
+            this.OnClose.emit();
           }
         },
         error:e=>{
           this.statuscharge=false
           console.log(e)
-          this.errorLogin=e.error.excepcion.descripcionGeneral;
-
-          timer(20000).pipe(takeUntil(this.signal$)).subscribe(_=>{
-            this.errorLogin='';
-          })
+          this._SnackBarServiceService.openSnackBar(
+            e.error.excepcion.descripcionGeneral,
+            'x',
+            5,
+            'snackbarCrucigramaerror'
+          );
         },
         complete:()=>{
           this.statuscharge=false
@@ -208,21 +223,5 @@ export class LoginComponent implements OnInit,OnDestroy {
 
     }
 
-  }
-  eventoclickout(olo:string){
-    console.log(olo)
-  }
-  OpenModalLogin(data:loginSendFacebookDTO){
-    const dialogRef = this.dialog.open(LoginFacebookComponent, {
-      width: '900px',
-      data: data,
-      panelClass: 'login-facebook-dialog-container',
-      disableClose:true
-    });
-    dialogRef.afterClosed().pipe(takeUntil(this.signal$)).subscribe((result) => {
-      if(result!=undefined){
-
-      }
-    });
   }
 }

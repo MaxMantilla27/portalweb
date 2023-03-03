@@ -13,6 +13,7 @@ import { HelperService } from './Core/Shared/Services/helper.service';
 import localeEs from "@angular/common/locales/es";
 import { registerLocaleData } from "@angular/common";
 import { GlobalErrorHandler } from './global-error.service';
+import { FacebookLoginProvider, SocialAuthServiceConfig } from 'angularx-social-login';
 registerLocaleData(localeEs, "es");
 
 @NgModule({
@@ -30,7 +31,21 @@ registerLocaleData(localeEs, "es");
     { provide: HTTP_INTERCEPTORS, useClass: InterceptorService, multi: true },
     { provide: LOCALE_ID, useValue: "es" },
     {provide: ErrorHandler, useClass: GlobalErrorHandler},
-    HelperService
+    HelperService,
+    {
+      provide: 'SocialAuthServiceConfig',
+      useValue: {
+        autoLogin: false,
+        providers: [
+          {
+            id: FacebookLoginProvider.PROVIDER_ID,
+            provider: new FacebookLoginProvider('1372181556519960'),
+            //provider: new FacebookLoginProvider('8660666830674777'),
+            //3409015066000369
+          },
+        ],
+      } as SocialAuthServiceConfig,
+    },
   ],
   bootstrap: [AppComponent]
 })
