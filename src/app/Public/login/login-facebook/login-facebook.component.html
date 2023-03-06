@@ -1,3 +1,4 @@
+<div style="position: absolute;top: 0;right: 10px;cursor: pointer;font-weight: bold;" (click)="cerrar()">x</div>
 <div class="alertLoginFacebook">{{data.msj}}</div>
 <mat-tab-group class="tabLoginFacebook">
   <mat-tab label="Ingresar"> <app-login-facebook-ingresar (OnClose)="cerrar()" [data]="data"></app-login-facebook-ingresar></mat-tab>

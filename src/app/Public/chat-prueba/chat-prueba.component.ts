@@ -39,6 +39,6 @@ export class ChatPruebaComponent implements OnInit {
   }
 
   AsesorConectado(){
-    this.hubConnection.invoke("AsesorConectado",this.usuarioNombre,492)
+    this.hubConnection.invoke("AsesorConectado",this.usuarioNombre,123321)
   }
 }

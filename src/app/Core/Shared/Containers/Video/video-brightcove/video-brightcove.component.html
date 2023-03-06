@@ -23,7 +23,7 @@
           (seeked)="changeTime($event)" height="auto" (ended)="OnFinish()" (error)="OnError($event)" (load)="OnError($event)"
             [currentTime]="tiempovideoinicio" (loadeddata)="tiempovideoinicio"  [playbackRate]="1" id="bc-video" [attr.data-player]="playerData.playerId"
             [attr.data-video-id]="playerData.videoId" [attr.data-account]="playerData.accountId" data-embed="default"
-            data-application-id class="video-js" [ngClass]="{'medioVideo':tipo==3}" data-setup="{}" playsInline autoplay loop muted preload="auto" >
+            data-application-id class="video-js" [ngClass]="{'medioVideo':tipo==3}" data-setup="{}">
           </video>
 
         </ng-container>
