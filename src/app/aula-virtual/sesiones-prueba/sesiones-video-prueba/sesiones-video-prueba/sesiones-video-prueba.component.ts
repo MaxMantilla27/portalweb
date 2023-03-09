@@ -96,6 +96,7 @@ export class SesionesVideoPruebaComponent implements OnInit,OnDestroy {
     console.log(this.videoData)
     if(this.videoData!=undefined){
       var calc=Math.ceil(this.videoData.tiempoVisualizado*100/this.videoData.tiempoTotalVideo);
+      console.log(calc)
       if(calc>=100){
         this.next.emit();
       }

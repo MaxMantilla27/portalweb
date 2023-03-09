@@ -249,6 +249,7 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
   public certificadoVacio=false;
   public TextoFormulario="Necesitas más información";
   public esPadre=false;
+  public namePrograma:any
   ngOnInit(): void {
 
     // this.addPlayer()
@@ -272,9 +273,9 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
         this.area = x['AreaCapacitacion'].split('-').join(' ');
         this.AraCompleta = x['AreaCapacitacion'];
         this.nombreProgramCompeto = x['ProgramaNombre'];
-        var namePrograma = x['ProgramaNombre'].split('-');
-
-        this.idBusqueda = namePrograma[namePrograma.length - 1];
+        this.namePrograma = x['ProgramaNombre'].split('-');
+        console.log(this.namePrograma)
+        this.idBusqueda = parseInt(this.namePrograma[this.namePrograma.length - 1]);
 
 
       },
@@ -407,8 +408,11 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
       .ObtenerCabeceraProgramaGeneral(this.idBusqueda).pipe(takeUntil(this.signal$))
       .subscribe({
         next: (x) => {
+          console.log(x.programaCabeceraDetalleDTO.direccion==this.namePrograma.join('-'))
           if(x.programaCabeceraDetalleDTO!=undefined
-            && this.removeAccents(this.area.toLowerCase())==this.removeAccents(x.programaCabeceraDetalleDTO.areaCapacitacion.toLowerCase()))
+            && this.removeAccents(this.area.toLowerCase())==this.removeAccents(x.programaCabeceraDetalleDTO.areaCapacitacion.toLowerCase())
+            && x.programaCabeceraDetalleDTO.direccion==this.namePrograma.join('-')
+            )
           {
 
             var metas=x.programaCabeceraDetalleDTO.parametroSeoProgramaDTO;

@@ -95,12 +95,13 @@ export class SesionesPruebaComponent implements OnInit,OnDestroy {
     });
   }
   siguiente(tipo: number, indexc: number, index: number, indexss: number,solohabilitar:boolean) {
+    console.log(tipo,indexc,index,indexss,solohabilitar)
+    console.log(this.tabIndex)
     if(indexc==0){
       var indexI=this.tabIndex
       var maxindexc =
         this.estructuraCapitulo.registroEstructuraCursoCapitulo.length - 1;
       var maxses =this.estructuraCapitulo.registroEstructuraCursoCapitulo[indexc].registroEstructuraCursoSesion.length - 1;
-      if(maxses == index){
         if (tipo == 1) {
           if (indexss == -1) {
             if(this.estructuraCapitulo.registroEstructuraCursoCapitulo[indexc].registroEstructuraCursoSesion[index].VideoFinish!=false){
@@ -129,20 +130,7 @@ export class SesionesPruebaComponent implements OnInit,OnDestroy {
                 .registroEstructuraCursoSubSesion.length - 1;
             if (maxsubses == indexss) {
               this.tabIndex++;
-              var encuestas =
-                this.estructuraCapitulo.registroEstructuraCursoCapitulo[
-                  indexc
-                ].registroEstructuraCursoEncuesta.filter(
-                  (x: any) => x.nombreEncuesta != 'Encuesta Inicial'
-                ).length;
-              if (
-                maxses == index &&
-                this.estructuraCapitulo.registroEstructuraCursoCapitulo[indexc]
-                  .registroCursoTareaCalificar.length == 0 &&
-                this.estructuraCapitulo.registroEstructuraCursoCapitulo[indexc]
-                  .registroEstructuraCursoTarea.length == 0 &&
-                encuestas == 0
-              ) {
+              if (maxses == index) {
                 this.tabIndex++;
               }
             }
@@ -196,12 +184,12 @@ export class SesionesPruebaComponent implements OnInit,OnDestroy {
             }
           }
         }
-        this.tabIndex++;
-        this.GetvalueByIndex();
-        if(solohabilitar==true){
-          this.tabIndex=indexI;
-        }
+      this.tabIndex++;
+      this.GetvalueByIndex();
+      if(solohabilitar==true){
+        this.tabIndex=indexI;
       }
+      console.log(this.tabIndex)
     }
   }
   anterior(tipo: number, indexc: number, index: number, indexss: number) {
@@ -244,7 +232,6 @@ export class SesionesPruebaComponent implements OnInit,OnDestroy {
   GetvalueByIndex() {
     var ndx = 0;
     console.log(this.tabIndex)
-    console.log(this.estructuraCapitulo.registroEstructuraCursoCapitulo)
     this.estructuraCapitulo.registroEstructuraCursoCapitulo.forEach(
       (c: any) => {
         c.opened = false;
@@ -315,6 +302,7 @@ export class SesionesPruebaComponent implements OnInit,OnDestroy {
         console.log(ndx)
       }
     );
+    console.log(this.estructuraCapitulo.registroEstructuraCursoCapitulo)
   }
   migapanbase() {
     this.migaPan = [

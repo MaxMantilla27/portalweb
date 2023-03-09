@@ -786,6 +786,7 @@ export class VideoBrightcoveComponent implements OnInit, OnChanges,AfterViewInit
     this.finish=false;
     this.TiempoRestante=3000
     clearTimeout(this.timeo)
+    clearTimeout(this.timeo2)
     this.next.emit()
   }
 }
