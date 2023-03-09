@@ -3,6 +3,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { Title } from '@angular/platform-browser';
 import {  Router } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
+import { ResetearCrucigramasPreguntasPrueba } from 'src/app/Core/Models/EstructuraEspecificaDTO';
+import { CrucigramaService } from 'src/app/Core/Shared/Services/Crucigrama/crucigrama.service';
 import { CuentaService } from 'src/app/Core/Shared/Services/Cuenta/cuenta.service';
 import { DatosPerfilService } from 'src/app/Core/Shared/Services/DatosPerfil/datos-perfil.service';
 import { HelperService } from 'src/app/Core/Shared/Services/helper.service';

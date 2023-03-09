@@ -162,8 +162,8 @@ export class SesionTareaComponent implements OnInit,OnChanges,OnDestroy {
   }
   EnviarFile(){
     if(this.filestatus){
-      if(this.tarea.registroEvaluacionArchivo!=null && this.tarea.registroEvaluacionArchivo.length>=3 ){
-        this._SnackBarServiceService.openSnackBar("Solo tiene 3 intentos para subir su tarea.",'x',15,"snackbarCrucigramaerror");
+      if(this.tarea.registroEvaluacionArchivo!=null && this.tarea.registroEvaluacionArchivo.length>=2 ){
+        this._SnackBarServiceService.openSnackBar("Solo tiene 2 intentos para subir su tarea.",'x',15,"snackbarCrucigramaerror");
       }else{
         this.setData()
         console.log(this.sendFile)

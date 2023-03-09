@@ -24,7 +24,6 @@ export class PublicGuard implements CanActivate {
   {
     if(this.isBrowser){
       if (this._SessionStorageService.validateTokken()) {
-
         this.DatoObservable.datoAvatar=true
         this.DatoObservable.datoContenido=true
         this._HelperService.enviarDatoCuenta(this.DatoObservable)

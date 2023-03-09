@@ -175,6 +175,14 @@ export class VideoBrightcoveComponent implements OnInit, OnChanges,AfterViewInit
       this.videoData.objetoConfigurado.idVideoBrightcove!=undefined){
         console.log(this.videoData.objetoConfigurado.idVideoBrightcove)
         this.addPlayer();
+        setInterval(() => {
+          console.log(this.video.nativeElement.currentTime)
+          if(this.video!=undefined){
+
+            // this.video.nativeElement.play()
+            // this.video.nativeElement.pause()
+          }
+        }, 1000);
       }else{
         this.videoData.url='https://iframe.videodelivery.net/'+this.videoData.idVideo
       }

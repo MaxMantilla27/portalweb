@@ -2,7 +2,7 @@ import { isPlatformBrowser } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { EMPTY, Observable } from 'rxjs';
-import { EvaluacionPromedioCrucigramaDTO, ParametrosCrucigramaVideoSesionDTO } from 'src/app/Core/Models/EstructuraEspecificaDTO';
+import { EvaluacionPromedioCrucigramaDTO, ParametrosCrucigramaVideoSesionDTO, ResetearCrucigramasPreguntasPrueba } from 'src/app/Core/Models/EstructuraEspecificaDTO';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -31,7 +31,23 @@ export class CrucigramaService {
     if(this.isBrowser){
       console.log(Json)
       return this.http.post<any>(this.urlBase+'/EnviarFormularioCrucigramaAula',Json);
-      return this.http.post<any>(this.urlBase+'/EnviarFormularioCrucigrama',Json);
+      //return this.http.post<any>(this.urlBase+'/EnviarFormularioCrucigrama',Json);
+    }else{
+      return EMPTY;
+    }
+  }
+
+  public ResetearCrucigramasPreguntasUsuarioPrueba(Json:ResetearCrucigramasPreguntasPrueba):Observable<any>{
+    if(this.isBrowser){
+      console.log(Json)
+      return this.http.post<any>(this.urlBase+'/ResetearCrucigramasPreguntasUsuarioPrueba',Json);
+    }else{
+      return EMPTY;
+    }
+  }
+  public ResetearEstructuraEspecificaPorMatricula(IdMatriculaCabecera:number):Observable<any>{
+    if(this.isBrowser){
+      return this.http.get<any>(this.urlBase+'/ResetearEstructuraEspecificaPorMatricula?IdMatriculaCabecera='+IdMatriculaCabecera);
     }else{
       return EMPTY;
     }

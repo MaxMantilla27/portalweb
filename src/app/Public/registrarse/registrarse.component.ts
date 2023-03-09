@@ -16,6 +16,7 @@ import { RegionService } from 'src/app/Core/Shared/Services/Region/region.servic
 import { SessionStorageService } from 'src/app/Core/Shared/Services/session-storage.service';
 import {timer} from 'rxjs'
 import { SnackBarServiceService } from 'src/app/Core/Shared/Services/SnackBarService/snack-bar-service.service';
+import { FormaPagoService } from 'src/app/Core/Shared/Services/FormaPago/forma-pago.service';
 declare const fbq:any;
 declare const gtag:any;
 @Component({
@@ -39,6 +40,7 @@ export class RegistrarseComponent implements OnInit,OnDestroy {
     private meta:Meta,
     @Inject(PLATFORM_ID) platformId: Object,
     private _SnackBarServiceService: SnackBarServiceService,
+    private _FormaPagoService:FormaPagoService,
   ) {
     this.isBrowser = isPlatformBrowser(platformId); {}
   }
@@ -170,17 +172,32 @@ export class RegistrarseComponent implements OnInit,OnDestroy {
             this._HelperService.enviarDatoCuenta(this.DatoObservable)
 
             var ap=this._SessionStorageService.SessionGetValueSesionStorage('accesoPrueba');
-
-            if(ap==''){
-              this.router.navigate(['/AulaVirtual/MisCursos']);
-            }else{
-              this._AccountService.RegistroCursoAulaVirtualNueva(parseInt(ap)).pipe(takeUntil(this.signal$)).subscribe({
-                next:x=>{
-                  this._SessionStorageService.SessionDeleteValueSesionStorage('accesoPrueba')
-                  this.router.navigate(['/AulaVirtual/MisCursos']);
-                },
-              })
+            var redirect=this._SessionStorageService.SessionGetValue('redirect');
+            var normal=true;
+            if(redirect!=''){
+              if(redirect=='pago'){
+                var jsonEnvioPago=this._SessionStorageService.SessionGetValue('datosTarjeta');
+                if(jsonEnvioPago!=''){
+                  normal=false;
+                  this._FormaPagoService.PreProcesoPagoOrganicoAlumno(JSON.parse(jsonEnvioPago),null);
+                }
+              }
+              this._SessionStorageService.SessionDeleteValue('redirect');
             }
+            if(normal){
+              if(ap==''){
+                this.router.navigate(['/AulaVirtual/MisCursos']);
+              }else{
+                this._AccountService.RegistroCursoAulaVirtualNueva(parseInt(ap)).pipe(takeUntil(this.signal$)).subscribe({
+                  next:x=>{
+                    this._SessionStorageService.SessionDeleteValueSesionStorage('accesoPrueba')
+                    this.router.navigate(['/AulaVirtual/MisCursos']);
+                  },
+                })
+              }
+
+            }
+
           }
         },
         error: (e) => {
