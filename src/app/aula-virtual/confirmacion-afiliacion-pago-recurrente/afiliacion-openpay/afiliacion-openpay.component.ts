@@ -138,12 +138,12 @@ export class AfiliacionOpenpayComponent implements OnInit,OnDestroy {
   }
 
   OpenPayInit() {
-    // OpenPay.setId('mlfmdoeugmuhd6epubse');
-    // OpenPay.setApiKey('pk_81210f4cdefe4888bbe4ccfd8923655a');
-    OpenPay.setId('mxgmgffnaxu1mosrkhlo');
-    OpenPay.setApiKey('pk_c9dfff7c5c9e4a68a7c6083d280ff4db');
-    OpenPay.setSandboxMode(false);
-    //OpenPay.setSandboxMode(true);
+     OpenPay.setId('mlfmdoeugmuhd6epubse');
+     OpenPay.setApiKey('pk_81210f4cdefe4888bbe4ccfd8923655a');
+    //OpenPay.setId('mxgmgffnaxu1mosrkhlo');
+    //OpenPay.setApiKey('pk_c9dfff7c5c9e4a68a7c6083d280ff4db');
+    //OpenPay.setSandboxMode(false);
+    OpenPay.setSandboxMode(true);
     //Se genera el id de dispositivo
     var deviceSessionId = OpenPay.deviceData.setup('fomrOpenPAy');
     console.log(OpenPay.getSandboxMode());
@@ -223,7 +223,6 @@ export class AfiliacionOpenpayComponent implements OnInit,OnDestroy {
         'snackbarCrucigramaerror'
       );
     }
-    console.log(validate);
     if (validate) {
       this.dialogRef =this.dialog.open(ChargeTextComponent,{
         panelClass:'dialog-charge-text',
@@ -265,17 +264,7 @@ export class AfiliacionOpenpayComponent implements OnInit,OnDestroy {
       next:x=>{
         this.oncharge=false
         this.dialogRef.close()
-        console.log("REspuestaOpenpay:",x._Repuesta)
-        if(x._Repuesta.montoPago != 0)
-          window.location.href =x._Repuesta.urlRedireccionar;
-        else{
-          this._SnackBarServiceService.openSnackBar(
-            'Ocurrio un error al intentar validar la cuenta, verifique el estado de la cuenta que desea afiliar.',
-            'x',
-            5,
-            'snackbarCrucigramaerror'
-          );
-        }
+        window.location.href =x._Repuesta.urlRedireccionar;
       },
       error:e=>{
         this.oncharge=false

@@ -230,4 +230,20 @@ export class FormaPagoService {
     }
   }
 
+  public EliminarSuscripcion(idMat:number,idPasarela:number):Observable<any>{
+    if(this.isBrowser){
+      return this.http.get<any>(this.urlBase+'/EliminarAfiliacionAlumno?IdMatriculaCabecera='+idMat+'&idPasarela='+idPasarela);
+    }else{
+      return EMPTY;
+    }
+  }
+
+  public ValidacionSuscripcion(idMat:number,idPasarela:number):Observable<any>{
+    if(this.isBrowser){
+      return this.http.get<any>(this.urlBase+'/VerificarAfiliacionAlumno?IdMatriculaCabecera='+idMat+'&IdPasarela='+idPasarela);
+    }else{
+      return EMPTY;
+    }
+  }
+
 }

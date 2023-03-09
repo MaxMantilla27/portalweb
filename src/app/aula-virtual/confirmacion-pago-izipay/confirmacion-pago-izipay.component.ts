@@ -31,6 +31,7 @@ export class ConfirmacionPagoIzipayComponent
     private _router: Router
   ) {}
   ngAfterViewInit(): void {
+    
     this._ActivatedRoute.params.pipe(takeUntil(this.signal$)).subscribe({
       next: (x) => {
         this.idMatricula = parseInt(x['IdMatricula']);
@@ -45,6 +46,8 @@ export class ConfirmacionPagoIzipayComponent
       },
     });
   }
+  hidenBotom=true
+  public intervcal:any
   public dialogRef: any;
   public idMatricula = 0;
   public json: RegistroRespuestaPreProcesoPagoDTO = {
@@ -52,7 +55,24 @@ export class ConfirmacionPagoIzipayComponent
     RequiereDatosTarjeta: false,
   };
   public resultPreValidacion: any;
-
+  customForm(){
+    var boton=document.getElementsByClassName('kr-popin-button');
+   boton[0].setAttribute("style",
+   "background-color: #F8893F;color: white;padding: 0 6px 0 6px;margin: 6px 8px 6px 8px;min-width: 88px;border-radius: 3px;font-size: 14px;"+
+   "text-align: center;text-transform: uppercase;text-decoration:none;border: none;outline: none;box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);&:hover {background-color: #b26a3b}"
+   )
+   var botonPago =document.getElementsByClassName('kr-payment-button');
+   botonPago[0].setAttribute("style",
+   "background-color: #F8893F;padding: 0 6px 0 6px;margin: 6px 8px 6px 8px;min-width: 88px;border-radius: 3px;font-size: 14px;"+
+   "text-align: center;text-transform: uppercase;text-decoration:none;border: none;outline: none;box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);&:hover {background-color: #b26a3b}"
+   )
+    var logo=document.getElementsByClassName('kr-header-logo');
+    logo[1].setAttribute("src",
+    "../../../assets/imagenes/logo-bsg.png")
+    var footer = document.getElementsByClassName('kr-logo-mcw');
+    footer[0].setAttribute("src","")
+    this.hidenBotom=false
+  }
   ngOnDestroy(): void {
     this.signal$.next(true);
     this.signal$.complete();
@@ -60,6 +80,7 @@ export class ConfirmacionPagoIzipayComponent
   ngOnInit(): void {
   }
   ObtenerPreProcesoPagoCuotaAlumno() {
+    
     this._FormaPagoService
       .ObtenerPreProcesoPagoCuotaAlumno(this.json)
       .pipe(takeUntil(this.signal$))
@@ -67,7 +88,7 @@ export class ConfirmacionPagoIzipayComponent
         next: (x) => {
           this.resultPreValidacion = x._Repuesta;
           this.iniciarScripsIzipay();
-          // KR.setFormConfig(config);
+          
         },
       });
   }
@@ -89,7 +110,6 @@ export class ConfirmacionPagoIzipayComponent
       script1
     );
     
-
     let script2 = this._renderer2.createElement('script');
     script2.src =
       'https://static.micuentaweb.pe/static/js/krypton-client/V4.0/ext/classic.js';
@@ -104,18 +124,16 @@ export class ConfirmacionPagoIzipayComponent
       'kr-form-token',
       this.resultPreValidacion.procesoPagoBotonIziPay.formToken
     );
+    this.intervcal=setInterval(() => {
+      var data=document.getElementsByClassName('kr-popin-button');
+      if(data !=undefined && data?.length>0){
+        this.customForm()
+        clearInterval(this.intervcal)
+      }else{
+        window.location.reload()
+      }
+    }, 500);
   }
 
-  config={
-    "merchant": {
-      "header": {
-        "image": {
-          "type": "logo",
-          "visibility": true,
-          "src": "https://www.logomoose.com/wp-content/uploads/2018/02/logomoosedogandowl-011.jpg"
-        }
-      }
-    }
-  }
 
 }
