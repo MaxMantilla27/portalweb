@@ -63,7 +63,8 @@ export class SesionEncuestaComponent implements OnInit,OnChanges,OnDestroy {
     if(this.idEncuesta>0 && this.charge==true && this.habilitado==true){
       this.params.IdEvaluacion=this.idEncuesta;
       this.params.IdPGeneral=this.json.IdPGeneralHijo;
-      this.ObtenerEncuestaEvaluacion();
+      //this.ObtenerEncuestaEvaluacion();
+      this.ObtenerNuevaEncuestaEvaluacion();
     }
   }
   ObtenerEncuestaEvaluacion(){
@@ -83,8 +84,8 @@ export class SesionEncuestaComponent implements OnInit,OnChanges,OnDestroy {
   }
   changeRespuesta(index:number,index2:number){
     console.log(this.encuesta.contenidoEncuesta[index])
-    var tipoP=parseInt(this.encuesta.contenidoEncuesta[index].tipoPregunta);
-    if(tipoP==4){
+    var tipoP=parseInt(this.encuesta.contenidoEncuesta[index].idTipoPregunta);
+    if(tipoP==3){
       var val=this.encuesta.contenidoEncuesta[index].listaRespuestas[index2].value==true?true:false;
       this.encuesta.contenidoEncuesta[index].listaRespuestas[index2].value=!val
     }else{
@@ -104,6 +105,7 @@ export class SesionEncuestaComponent implements OnInit,OnChanges,OnDestroy {
     this.preguntaError=0;
     this.encuesta.contenidoEncuesta.forEach((e:any) => {
       var cant=0
+      console.log(e.listaRespuestas)
       e.listaRespuestas.forEach((r:any) => {
         if(r.value!='' && r.value!=false){
           cant++;
@@ -111,9 +113,9 @@ export class SesionEncuestaComponent implements OnInit,OnChanges,OnDestroy {
             Id:0,
             IdExamenAsignado:this.encuesta.datosEncuesta.id,
             IdPregunta:e.idPregunta,
-            IdRespuesta:r.idRepuesta,
+            IdRespuesta:r.idRespuesta,
 
-            TextoRespuesta:(e.tipoPregunta!=5 && e.tipoPregunta!=4 && e.tipoPregunta!=3)?r.value:''
+            TextoRespuesta:(e.idTipoPregunta!=1 && e.idTipoPregunta!=3)?r.value:''
           })
         }
       });
@@ -121,10 +123,10 @@ export class SesionEncuestaComponent implements OnInit,OnChanges,OnDestroy {
       console.log(cant)
       if(cant==0){
         if(value==true){
-          if(e.tipoPregunta==4){
+          if(e.idTipoPregunta==3){
             this.mensajeError='Debe seleccionar al menos una alternativa en la pregunta '+this.preguntaError
           }else{
-            if(e.tipoPregunta==5 || e.tipoPregunta==3){
+            if(e.idTipoPregunta==1){
               this.mensajeError='Seleccione una opcion en la pregunta '+this.preguntaError
             }else{
               this.mensajeError='Debe rellenar al menos una casilla en la pregunta '+this.preguntaError
@@ -138,6 +140,7 @@ export class SesionEncuestaComponent implements OnInit,OnChanges,OnDestroy {
   }
   enviarEncuesta(){
     this.jsonEnvio.Respuestas=[];
+    console.log(this.jsonEnvio)
     var estado=this.getEnvio()
     console.log(estado)
     if(estado==false){
@@ -164,5 +167,20 @@ export class SesionEncuestaComponent implements OnInit,OnChanges,OnDestroy {
     if(this.encuesta.datosEncuesta.titulo!='Encuesta Inicial'){
       this.prev.emit();
     }
+  }
+  ObtenerNuevaEncuestaEvaluacion(){
+    this._EncuestaService.ObtenerNuevaEncuestaEvaluacion(this.params).pipe(takeUntil(this.signal$)).subscribe({
+      next:x=>{
+        console.log(x);
+        this.encuesta=x
+        if(this.encuesta.contenidoEncuesta!=null){
+          this.encuesta.contenidoEncuesta.forEach((e:any) => {
+            e.listaRespuestas.forEach((r:any) => {
+              r.value='';
+            });
+          });
+        }
+      }
+    })
   }
 }

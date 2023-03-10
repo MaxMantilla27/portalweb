@@ -34,4 +34,12 @@ export class EncuestaService {
       return EMPTY;
     }
   }
+  public ObtenerNuevaEncuestaEvaluacion(Json:ParametrosEncuestaDTO):Observable<any>{
+    if(this.isBrowser){
+      console.log(Json)
+      return this.http.post<any>(this.urlBase+'/ObtenerNuevaEncuestaEvaluacion',Json);
+    }else{
+      return EMPTY;
+    }
+  }
 }

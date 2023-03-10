@@ -45,43 +45,34 @@
       <div class="indexEncuesta">{{i+1}}</div>
       <div class="Encuesta">
         <div class="EncuestaPregunta" [innerHtml]="enc.enunciadoPregunta | safeHtml"></div>
-        <div class="EncuestaRespuestas" [ngClass]="{'radio':(enc.tipoPregunta==5 || enc.tipoPregunta==3)}">
+        <div class="EncuestaRespuestas" [ngClass]="{'radio':(enc.idTipoPregunta==1)}">
           <ng-container *ngFor="let res of enc.listaRespuestas;let r=index">
-            <ng-container *ngIf="enc.tipoPregunta==4;else radio">
-              <div class="optionsEncuesta" (click)="changeRespuesta(i,r)">
-                <i class="material-icons" *ngIf="res.value!=true">check_box_outline_blank</i>
-                <i class="material-icons"  *ngIf="res.value==true">check_box</i>
-                <div>{{res.enunciadoRespuesta}}</div>
-              </div>
-            </ng-container>
-            <ng-template #radio>
-              <ng-container *ngIf="(enc.tipoPregunta==5 || enc.tipoPregunta==3);else number">
-                <div class="optionsEncuesta esRadio" (click)="changeRespuesta(i,r)"
-                 [ngStyle]="{'width':(enc.listaRespuestas.length>2)?100/enc.listaRespuestas.length+'%':'10%'}">
-                  <i class="material-icons" *ngIf="res.value==true">radio_button_on</i>
-                  <i class="material-icons" *ngIf="res.value!=true">radio_button_off</i>
+            <!-- <div *ngIf="r<res.nroCasillas"> -->
+              <ng-container *ngIf="enc.idTipoPregunta==3;else radio">
+                <div class="optionsEncuesta" (click)="changeRespuesta(i,r)">
+                  <i class="material-icons" *ngIf="res.value!=true">check_box_outline_blank</i>
+                  <i class="material-icons"  *ngIf="res.value==true">check_box</i>
                   <div>{{res.enunciadoRespuesta}}</div>
                 </div>
               </ng-container>
-            </ng-template>
-            <ng-template #number>
-              <ng-container *ngIf="(enc.tipoPregunta==7);else text">
-
+              <ng-template #radio>
+                <ng-container *ngIf="(enc.idTipoPregunta==1);else texto">
+                  <div class="optionsEncuesta esRadio" (click)="changeRespuesta(i,r)"
+                   [ngStyle]="{'width':(enc.listaRespuestas.length>2)?100/enc.listaRespuestas.length+'%':'10%'}">
+                    <i class="material-icons" *ngIf="res.value==true">radio_button_on</i>
+                    <i class="material-icons" *ngIf="res.value!=true">radio_button_off</i>
+                    <div>{{res.enunciadoRespuesta}}</div>
+                  </div>
+                </ng-container>
+              </ng-template>
+              <ng-template #texto>
                 <mat-form-field appearance="outline" >
-                  <mat-label>{{res.enunciadoRespuesta}}</mat-label>
-                  <input type="number"  autocomplete="off" [(ngModel)]="res.value" matInput />
-                </mat-form-field>
+                    <mat-label>{{res.enunciadoRespuesta}}</mat-label>
+                    <input type="text" [(ngModel)]="res.value" matInput [maxLength]="enc.nroCaracteres"/>
+                  </mat-form-field>
+              </ng-template>
 
-              </ng-container>
-            </ng-template>
-            <ng-template #text>
-
-                <mat-form-field appearance="outline" >
-                  <mat-label>{{res.enunciadoRespuesta}}</mat-label>
-                  <input type="text"  autocomplete="off" [(ngModel)]="res.value" matInput />
-                </mat-form-field>
-
-            </ng-template>
+            <!-- </div> -->
           </ng-container>
         </div>
       </div>
