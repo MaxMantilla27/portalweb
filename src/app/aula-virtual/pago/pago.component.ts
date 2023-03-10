@@ -91,7 +91,7 @@ export class PagoComponent implements OnInit,OnDestroy {
       data: { text: 'Procesando Desafiliación' },
       disableClose:true
     });
-    this._CronogramaPagoService.EliminarSuscripcion(this.idMatricula).pipe(takeUntil(this.signal$)).subscribe({
+    this._FormaPagoService.EliminarSuscripcion(this.idMatricula,this.idPasarela).pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
         console.log("RespuestaEliminacion :",x)
         console.log(x._Repuesta.estadoOperacion)
@@ -112,7 +112,7 @@ export class PagoComponent implements OnInit,OnDestroy {
       let idPais = x.datosAlumno.idPais
       if(idPais==51 || idPais==52)
       {
-        this._CronogramaPagoService.ValidacionSuscripcion(this.idMatricula).pipe(takeUntil(this.signal$)).subscribe({
+        this._FormaPagoService.ValidacionSuscripcion(this.idMatricula,this.idPasarela).pipe(takeUntil(this.signal$)).subscribe({
           next:x=>{
             if(x._Repuesta!="ERROR")
             {
@@ -194,6 +194,10 @@ export class PagoComponent implements OnInit,OnDestroy {
       next:x=>{
         console.log("tarjeta",x)
         this.idPasarela=x[0].idPasarelaPago?x[0].idPasarelaPago:0
+      },
+      error:e=>{
+        console.log(e)
+        this.idPasarela=0
       }
     })
   }
@@ -220,21 +224,42 @@ export class PagoComponent implements OnInit,OnDestroy {
     var fechaVencimiento = new Date(this.CronogramaPago.fechaVencimiento)
     if(fechaActual<fechaVencimiento)
     {
-      const dialogRef = this.dialog.open(PagoTarjetaComponent, {
+      let cuotaBase = this.CronogramaPago.registroCuota[0].cuota+this.CronogramaPago.registroCuota[0].moraCalculada
+      let validador=true
 
-        width: '600px',
-        data: { idMatricula: this.idMatricula,tituloBotonModal:'Ir a afiliarse',tipo:"AF"},
-        panelClass: 'dialog-Tarjeta',
-       // disableClose:true
-      });
+      if(this.idPasarela==5){ //OpenPay
+        this.CronogramaPago.registroCuota.forEach((e:any) => {
+          let cuotaTotal =e.cuota+e.moraCalculada
+          if(cuotaBase!==cuotaTotal)validador=false
+        });
+      }
 
-      dialogRef.afterClosed().pipe(takeUntil(this.signal$)).subscribe((result) => {
-        console.log("Suscripcion",result);
-        if(result!=undefined){
-          this.jsonSend.ListaCuota=[]
-          this.PreProcesoAfiliacionPagoRecurrente(result);
-        }
-      });
+      if(validador!==true) 
+      {
+        this._SnackBarServiceService.openSnackBar(
+          "Lo sentimos, no puedes afiliarte al pago Recurrente, no todas las cuotas tiene el mismo monto",
+          'x',
+          10,
+          "snackbarCrucigramaerror");
+      }
+      if(validador==true)
+      {
+        const dialogRef = this.dialog.open(PagoTarjetaComponent, {
+
+          width: '600px',
+          data: { idMatricula: this.idMatricula,tituloBotonModal:'Ir a afiliarse',tipo:"AF"},
+          panelClass: 'dialog-Tarjeta',
+         // disableClose:true
+        });
+  
+        dialogRef.afterClosed().pipe(takeUntil(this.signal$)).subscribe((result) => {
+          console.log("Suscripcion",result);
+          if(result!=undefined){
+            this.jsonSend.ListaCuota=[]
+            this.PreProcesoAfiliacionPagoRecurrente(result);
+          }
+        });
+      }
     }
     else{
       this._SnackBarServiceService.openSnackBar("Lo sentimos, para afiliarte al pago recurrente es obligatorio estar al dia con los pagos cronograma.",'x',10,"snackbarCrucigramaerror");
@@ -260,10 +285,6 @@ export class PagoComponent implements OnInit,OnDestroy {
 
 
   PreProcesoAfiliacionPagoRecurrente(tarjeta:any){
-    const dialogRef =this.dialog.open(ChargeComponent,{
-      panelClass:'dialog-charge',
-      disableClose:true
-    });
     this.CronogramaPago.registroCuota.forEach((r:any) => {
       if(r.cancelado==false){
         var fecha=new Date(r.fechaVencimiento);
@@ -284,28 +305,41 @@ export class PagoComponent implements OnInit,OnDestroy {
     this.jsonSend.IdPasarelaPago=tarjeta.idPasarelaPago
     this.jsonSend.MedioCodigo=tarjeta.medioCodigo
     this.jsonSend.MedioPago=tarjeta.medioPago
-    this._FormaPagoService.PreProcesoAfiliacionAlumno(this.jsonSend).pipe(takeUntil(this.signal$)).subscribe({
-      next:x=>{
-        console.log(x)
-        dialogRef.close();
-        var sesion=x._Repuesta.identificadorTransaccion;
-        this._SessionStorageService.SessionSetValue(sesion,x._Repuesta.requiereDatosTarjeta);
-        console.log(parseInt(tarjeta.idPasarelaPago))
-
-        if(tarjeta.idPasarelaPago==5){ //OpenPay
-          this._router.navigate(['/AulaVirtual/MisPagos/Afiliacion/'+this.idMatricula+'/openpay/'+sesion]);
-        }
-        else if(tarjeta.idPasarelaPago==7){ //visa
-          if(tarjeta.idFormaPago==52){
-            this._router.navigate(['/AulaVirtual/MisPagos/Afiliacion/'+this.idMatricula+'/visa/'+sesion]);
+      const dialogRef =this.dialog.open(ChargeComponent,{
+        panelClass:'dialog-charge',
+        disableClose:true
+      });
+      this._FormaPagoService.PreProcesoAfiliacionAlumno(this.jsonSend).pipe(takeUntil(this.signal$)).subscribe({
+        next:x=>{
+          console.log(x)
+          dialogRef.close();
+          var sesion=x._Repuesta.identificadorTransaccion;
+          this._SessionStorageService.SessionSetValue(sesion,x._Repuesta.requiereDatosTarjeta);
+          console.log(parseInt(tarjeta.idPasarelaPago))
+  
+          if(tarjeta.idPasarelaPago==5){ //OpenPay
+            this._router.navigate(['/AulaVirtual/MisPagos/Afiliacion/'+this.idMatricula+'/openpay/'+sesion]);
           }
+          else if(tarjeta.idPasarelaPago==7){ //visa
+            if(tarjeta.idFormaPago==52){
+              this._router.navigate(['/AulaVirtual/MisPagos/Afiliacion/'+this.idMatricula+'/visa/'+sesion]);
+            }
+          }
+          else if(tarjeta.idPasarelaPago==13){ //IziPay
+              this._router.navigate(['/AulaVirtual/MisPagos/Afiliacion/'+this.idMatricula+'/izipay/'+sesion]);
+          }
+        },
+        complete:()=>{
+          dialogRef.close();
+        },
+        error:e=>{
+          console.log(e)
+          dialogRef.close();
         }
-        else if(tarjeta.idPasarelaPago==13){ //IziPay
-            this._router.navigate(['/AulaVirtual/MisPagos/Afiliacion/'+this.idMatricula+'/izipay/'+sesion]);
-        }
-      }
-    })
+      })
+    
   }
+
 
   PreProcesoPagoCuotaAlumno(tarjeta:any){
     const dialogRef =this.dialog.open(ChargeComponent,{

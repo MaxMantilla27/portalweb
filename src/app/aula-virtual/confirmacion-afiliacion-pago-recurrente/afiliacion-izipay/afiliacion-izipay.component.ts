@@ -37,6 +37,8 @@ export class AfiliacionIzipayComponent implements OnInit, OnDestroy, AfterViewIn
       },
     });
   }
+  hidenBotom=true
+  intervcal:any
   public dialogRef: any;
   public idMatricula = 0;
   public json: RegistroRespuestaPreProcesoPagoDTO = {
@@ -66,6 +68,26 @@ export class AfiliacionIzipayComponent implements OnInit, OnDestroy, AfterViewIn
           // KR.setFormConfig(config);
         },
       });
+  }
+
+  customForm(){
+    var boton=document.getElementsByClassName('kr-popin-button');
+   boton[0].setAttribute("style",
+   "background-color: #F8893F;color: white;padding: 0 6px 0 6px;margin: 6px 8px 6px 8px;min-width: 88px;border-radius: 3px;font-size: 14px;"+
+   "text-align: center;text-transform: uppercase;text-decoration:none;border: none;outline: none;box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);&:hover {background-color: #fb9754;div{text-decoration: underline;}}"
+   )
+   var botonPago =document.getElementsByClassName('kr-payment-button');
+   botonPago[0].setAttribute("style",
+   "background-color: #F8893F;padding: 0 6px 0 6px;margin: 6px 8px 6px 8px;min-width: 88px;border-radius: 3px;font-size: 14px;"+
+   "text-align: center;text-transform: uppercase;text-decoration:none;border: none;outline: none;box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);&:hover {background-color: #fb9754;div{text-decoration: underline;}}"
+   )
+    var logo=document.getElementsByClassName('kr-header-logo');
+    logo[1].setAttribute("src",
+    "../../../assets/imagenes/logo-bsg.png")
+    var footer = document.getElementsByClassName('kr-logo-mcw');
+    footer[0].setAttribute("src","")
+
+    this.hidenBotom=false
   }
 
   iniciarScripsIzipay() {
@@ -100,5 +122,15 @@ export class AfiliacionIzipayComponent implements OnInit, OnDestroy, AfterViewIn
       'kr-form-token',
       this.resultPreValidacion.procesoPagoBotonIziPay.formToken
     );
+    this.intervcal=setInterval(() => {
+      var data=document.getElementsByClassName('kr-popin-button');
+      if(data !=undefined && data?.length>0){
+        this.customForm()
+        clearInterval(this.intervcal)
+      }else{
+        window.location.reload()
+      }
+    }, 500);
   }
+
 }
