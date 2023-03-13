@@ -229,7 +229,7 @@ export class LandingPageComponent implements OnInit,OnDestroy {
           this.dialogRef.close()
         },
         complete: () => {
-          this.statuscharge = false;
+          //this.statuscharge = false;
           this.obtenerFormularioCompletado();
         },
       });

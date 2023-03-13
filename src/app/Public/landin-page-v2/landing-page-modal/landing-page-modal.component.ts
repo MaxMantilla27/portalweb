@@ -249,7 +249,7 @@ export class LandingPageModalComponent implements OnInit, OnDestroy {
           this.dialogRef.close()
         },
         complete: () => {
-          this.statuscharge = false;
+          //this.statuscharge = false;
         },
       });
     }else{

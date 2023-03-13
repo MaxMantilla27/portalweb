@@ -486,7 +486,9 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
             }
           }
           else{
-            this._router.navigate(['error404']);
+            console.log('/'+this.removeAccents(x.programaCabeceraDetalleDTO.areaDescripcion)+'/'+x.programaCabeceraDetalleDTO.direccion)
+            window.location.replace('/'+this.removeAccents(x.programaCabeceraDetalleDTO.areaDescripcion)+'/'+x.programaCabeceraDetalleDTO.direccion);
+           // this._router.navigate(['/'+this.removeAccents(x.programaCabeceraDetalleDTO.areaCapacitacion)+'/'+x.programaCabeceraDetalleDTO.direccion]);
           }
         },
         error: (e) => {
