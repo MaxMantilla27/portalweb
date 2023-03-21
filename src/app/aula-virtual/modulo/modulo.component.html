@@ -101,7 +101,8 @@
             </div>
           </ng-template>
           <div class="pad-resp">
-            <app-modulo-calificaciones [Capitulo]="json.NombreCapitulo" [IdMatriculaCabecera]="json.IdMatriculaCabecera" [IdPEspecifico]="json.IdPEspecificoHijo"></app-modulo-calificaciones>
+            <app-modulo-calificaciones [Capitulo]="json.NombreCapitulo" [IdMatriculaCabecera]="json.IdMatriculaCabecera"
+             [IdPGeneralHijo]="json.IdPGeneralHijo" [IdPEspecifico]="json.IdPEspecificoHijo"></app-modulo-calificaciones>
           </div>
         </mat-tab>
         <mat-tab *ngIf="videosOnline!=undefined && videosOnline.length>0">

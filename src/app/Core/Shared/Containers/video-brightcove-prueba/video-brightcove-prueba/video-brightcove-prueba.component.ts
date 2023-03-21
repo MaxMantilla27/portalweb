@@ -103,6 +103,7 @@ export class VideoBrightcovePruebaComponent implements OnInit,OnDestroy {
     IdPregunta:0,
     IdRespuesta:[],
     Texto:null,
+    AccesoPrueba:true
   }
   public finalizarPerguntas:RegistroPreguntaDTO={
     IdAccesoPrueba:false,

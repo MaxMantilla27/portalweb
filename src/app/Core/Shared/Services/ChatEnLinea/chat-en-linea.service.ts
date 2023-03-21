@@ -40,4 +40,12 @@ export class ChatEnLineaService {
       return EMPTY;
     }
   }
+  public ProcesarAsignacionAutomaticaNuevoPortal(Id:string):Observable<any>{
+    if(this.isBrowser){
+      console.log(Id)
+      return this.http.get<any>(this.urlBase+'/ProcesarAsignacionAutomaticaNuevoPortal?Id='+Id);
+    }else{
+      return EMPTY;
+    }
+  }
 }

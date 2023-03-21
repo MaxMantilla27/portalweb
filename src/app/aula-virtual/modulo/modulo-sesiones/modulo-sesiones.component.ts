@@ -2,14 +2,17 @@ import {
   Component,
   Input,
   OnChanges,
+  OnDestroy,
   OnInit,
   SimpleChanges,
   ViewEncapsulation,
 } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Subject, takeUntil } from 'rxjs';
 import { ParametrosEstructuraEspecificaDTO } from 'src/app/Core/Models/EstructuraEspecificaDTO';
 import { AlumnosTest } from 'src/app/Core/Shared/AlumnosTest';
 import { HelperService } from 'src/app/Core/Shared/Services/helper.service';
+import { ProgramaContenidoService } from 'src/app/Core/Shared/Services/ProgramaContenido/programa-contenido.service';
 import { SnackBarServiceService } from 'src/app/Core/Shared/Services/SnackBarService/snack-bar-service.service';
 
 @Component({
@@ -18,7 +21,8 @@ import { SnackBarServiceService } from 'src/app/Core/Shared/Services/SnackBarSer
   styleUrls: ['./modulo-sesiones.component.scss'],
   encapsulation: ViewEncapsulation.None,
 })
-export class ModuloSesionesComponent implements OnInit, OnChanges {
+export class ModuloSesionesComponent implements OnInit, OnChanges,OnDestroy {
+  private signal$ = new Subject();
   constructor(
     private _Router:Router,
     private _SnackBarServiceService:SnackBarServiceService,
@@ -334,6 +338,11 @@ export class ModuloSesionesComponent implements OnInit, OnChanges {
   @Input() idModalidad: number = 2;
   @Input() IdMatriculaCabecera=0;
   ngOnInit(): void {
+  }
+
+  ngOnDestroy(): void {
+    this.signal$.next(true)
+    this.signal$.complete()
   }
   IrVideo(url:string,habilitado:boolean){
     console.log(url)

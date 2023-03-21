@@ -21,6 +21,7 @@ import { Subject, takeUntil } from 'rxjs';
 import { SessionStorageService } from 'src/app/Core/Shared/Services/session-storage.service';
 import { isPlatformBrowser } from '@angular/common';
 import { DatosFormularioDTO } from 'src/app/Core/Models/DatosFormularioDTO';
+import { ChatEnLineaService } from 'src/app/Core/Shared/Services/ChatEnLinea/chat-en-linea.service';
 
 declare const fbq:any;
 declare const gtag:any;
@@ -69,7 +70,7 @@ export class EducationTecnicaDetalleComponent implements OnInit,OnDestroy {
     private title:Title,
     @Inject(PLATFORM_ID) platformId: Object,
     private _SessionStorageService:SessionStorageService,
-
+    private _ChatEnLineaService:ChatEnLineaService
   ) {
     this.isBrowser = isPlatformBrowser(platformId);
   }
@@ -298,6 +299,7 @@ export class EducationTecnicaDetalleComponent implements OnInit,OnDestroy {
       };
       this._HelperService.EnviarFormulario(this.DatosEnvioFormulario).pipe(takeUntil(this.signal$)).subscribe({
         next: (x) => {
+          this.ProcesarAsignacionAutomaticaNuevoPortal(x.id)
           this.cleanSub=false;
           this.datos.nombres = this.DatosEnvioFormulario.Nombres;
             this.datos.apellidos = this.DatosEnvioFormulario.Apellidos;
@@ -335,6 +337,12 @@ export class EducationTecnicaDetalleComponent implements OnInit,OnDestroy {
         },
       });
     }
+  }
+  ProcesarAsignacionAutomaticaNuevoPortal(id:any){
+    this._ChatEnLineaService.ProcesarAsignacionAutomaticaNuevoPortal(id).pipe(takeUntil(this.signal$)).subscribe({
+      next:(x)=>{
+      }
+    })
   }
   ObtenerCombosPortal(){
     this._DatosPortalService.ObtenerCombosPortal().pipe(takeUntil(this.signal$)).subscribe({

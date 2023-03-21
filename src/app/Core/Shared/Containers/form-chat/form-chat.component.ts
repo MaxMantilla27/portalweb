@@ -123,23 +123,26 @@ export class FormChatComponent implements OnInit,OnChanges {
       this.DatosEnvioFormulario.IdCampania=parseInt(idcampania)
       this._ChatEnLinea.ValidarCrearOportunidadChat(this.DatosEnvioFormulario).pipe(takeUntil(this.signal$)).subscribe({
         next:(x)=>{
-          this.statuscharge=false;
+          this.ProcesarAsignacionAutomaticaNuevoPortal(x);
+          this.statuscharge = false;
+          this.validacionChat=x
+          this.SaveForm.emit({id:x.respuesta.id,idAlumno:x.respuesta.idAlumno})
           this.datos.nombres = this.DatosEnvioFormulario.Nombres;
-            this.datos.apellidos = this.DatosEnvioFormulario.Apellidos;
-            this.datos.email = this.DatosEnvioFormulario.Email;
-            this.datos.movil = this.DatosEnvioFormulario.Movil;
-            var DatosFormulario = this._SessionStorageService.SessionGetValue('DatosFormulario');
-            if(DatosFormulario!=''){
-              var datosPrevios = JSON.parse(DatosFormulario);
-              this.datos.idCargo=datosPrevios.idCargo;
-              this.datos.idPais=datosPrevios.idPais;
-              this.datos.idRegion=datosPrevios.idRegion;
-              this.datos.idAreaFormacion=datosPrevios.idAreaFormacion;
-              this.datos.idAreaTrabajo=datosPrevios.idAreaTrabajo;
-              this.datos.idIndustria=datosPrevios.idIndustria;
-            }
-            this._SessionStorageService.SessionSetValue('DatosFormulario',JSON.stringify(this.datos));
-            this.CompleteLocalStorage=true;
+          this.datos.apellidos = this.DatosEnvioFormulario.Apellidos;
+          this.datos.email = this.DatosEnvioFormulario.Email;
+          this.datos.movil = this.DatosEnvioFormulario.Movil;
+          var DatosFormulario = this._SessionStorageService.SessionGetValue('DatosFormulario');
+          if(DatosFormulario!=''){
+            var datosPrevios = JSON.parse(DatosFormulario);
+            this.datos.idCargo=datosPrevios.idCargo;
+            this.datos.idPais=datosPrevios.idPais;
+            this.datos.idRegion=datosPrevios.idRegion;
+            this.datos.idAreaFormacion=datosPrevios.idAreaFormacion;
+            this.datos.idAreaTrabajo=datosPrevios.idAreaTrabajo;
+            this.datos.idIndustria=datosPrevios.idIndustria;
+          }
+          this._SessionStorageService.SessionSetValue('DatosFormulario',JSON.stringify(this.datos));
+          this.CompleteLocalStorage=true;
           if(this.isBrowser){
             fbq('track', 'CompleteRegistration');
             gtag('event', 'conversion', {
@@ -152,17 +155,23 @@ export class FormChatComponent implements OnInit,OnChanges {
               'send_to': 'AW-11065656821/6CM8CNWQ2IcYEPWLwpwp',
             });
           }
-          this.validacionChat=x
-          this.SaveForm.emit({id:x.respuesta.id,idAlumno:x.respuesta.idAlumno})
         },
         complete: () => {
-          this.statuscharge = false;
           this.obtenerFormularioCompletado();
         },
       })
     }
   }
 
+  ProcesarAsignacionAutomaticaNuevoPortal(data:any){
+    this._ChatEnLinea.ProcesarAsignacionAutomaticaNuevoPortal(data.respuesta.id).subscribe({
+      next:(x)=>{
+      },
+      complete: () => {
+        //this.statuscharge=false;
+      }
+    })
+  }
   AddFields() {
     this.fileds.push({
       nombre: 'Email',

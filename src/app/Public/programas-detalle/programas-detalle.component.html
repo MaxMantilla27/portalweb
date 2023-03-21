@@ -205,7 +205,7 @@
             </div>
 
             <div class="col-12" style=" color: red;display: flex;"
-              *ngIf="MontoPago.length>0 && MontoPago[0].porcentajeDescuento!=null && MontoPago[0].porcentajeDescuento!=0">
+              *ngIf="MontoPago!=undefined && MontoPago!=null && MontoPago.length>0 && MontoPago[0].porcentajeDescuento!=null && MontoPago[0].porcentajeDescuento!=0">
               <p style="font-weight: bold;font-size: 17px;">{{porcentajeDescuento}}%&nbsp;</p>
               <p style="font-size: 14px;margin-top: auto;">
                 {{textoDescuento}}

@@ -18,6 +18,7 @@ import { ContactenosDTO } from 'src/app/Core/Models/ContactenosDTO';
 import { formulario } from 'src/app/Core/Models/Formulario';
 import { FormularioLandingPageDTO } from 'src/app/Core/Models/FormularioDTO';
 import { FormularioComponent } from 'src/app/Core/Shared/Containers/formulario/formulario.component';
+import { ChatEnLineaService } from 'src/app/Core/Shared/Services/ChatEnLinea/chat-en-linea.service';
 import { DatosPortalService } from 'src/app/Core/Shared/Services/DatosPortal/datos-portal.service';
 import { HelperService } from 'src/app/Core/Shared/Services/helper.service';
 import { LandingPageService } from 'src/app/Core/Shared/Services/LandingPage/landing-page.service';
@@ -48,6 +49,7 @@ export class LandingPageModalComponent implements OnInit, OnDestroy {
     private _HelperService: HelperService,
     private _SnackBarServiceService: SnackBarServiceService,
     private _LandingPageService:LandingPageService,
+    private _ChatEnLineaService:ChatEnLineaService,
 
 
     public dialogRef: MatDialogRef<LandinPageV2Component>,
@@ -230,6 +232,10 @@ export class LandingPageModalComponent implements OnInit, OnDestroy {
       this.DatosLandingPageEnvio.IdIndustria=value.IdIndustria;
       this._LandingPageService.EnviarFormularioLandingPage(this.DatosLandingPageEnvio).pipe(takeUntil(this.signal$)).subscribe({
         next: (x) => {
+          this.ProcesarAsignacionAutomaticaNuevoPortal(x.id);
+          if(x.body.oportuniodd==true){
+
+          }
           if(this.isBrowser){
 
             fbq('track', 'CompleteRegistration');
@@ -246,8 +252,8 @@ export class LandingPageModalComponent implements OnInit, OnDestroy {
             }catch(err){
             }
           }
-          this.dialogRef.close()
         },
+
         complete: () => {
           //this.statuscharge = false;
         },
@@ -255,6 +261,14 @@ export class LandingPageModalComponent implements OnInit, OnDestroy {
     }else{
       this._SnackBarServiceService.openSnackBar("Debes completar todos los campos",'x',15,"snackbarCrucigramaerror");
     }
+  }
+  ProcesarAsignacionAutomaticaNuevoPortal(id:string){
+    this._ChatEnLineaService.ProcesarAsignacionAutomaticaNuevoPortal(id).pipe(takeUntil(this.signal$)).subscribe({
+      next:(x)=>{
+        console.log(x)
+        this.dialogRef.close()
+      }
+    })
   }
   submit(e:any){
     console.log(e)
