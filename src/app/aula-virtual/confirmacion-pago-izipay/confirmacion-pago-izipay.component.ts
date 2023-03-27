@@ -54,7 +54,9 @@ export class ConfirmacionPagoIzipayComponent
     IdentificadorTransaccion: '',
     RequiereDatosTarjeta: false,
   };
+  
   public resultPreValidacion: any;
+
   customForm(){
     var boton=document.getElementsByClassName('kr-popin-button');
    boton[0].setAttribute("style",
@@ -69,8 +71,15 @@ export class ConfirmacionPagoIzipayComponent
     var logo=document.getElementsByClassName('kr-header-logo');
     logo[1].setAttribute("src",
     "../../../assets/imagenes/logo-bsg.png")
-    var footer = document.getElementsByClassName('kr-logo-mcw');
-    footer[0].setAttribute("src","")
+
+    var spanNombre= document.getElementsByClassName('kr-popin-shop-name');
+    spanNombre[0].className="";
+
+    var modalHeader = document.getElementsByClassName('kr-popin-modal-header');
+    modalHeader[0].setAttribute("style",
+    " margin-bottom: 0px;height: 70px;")
+    console.log("modalHeader",modalHeader)
+    
     this.hidenBotom=false
   }
   ngOnDestroy(): void {
