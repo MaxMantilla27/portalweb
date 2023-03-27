@@ -91,7 +91,6 @@ export class AfiliacionIzipayComponent implements OnInit, OnDestroy, AfterViewIn
     var modalHeader = document.getElementsByClassName('kr-popin-modal-header');
     modalHeader[0].setAttribute("style",
     " margin-bottom: 0px;height: 70px;")
-    console.log("modalHeader",modalHeader)
     
     this.hidenBotom=false
   }
