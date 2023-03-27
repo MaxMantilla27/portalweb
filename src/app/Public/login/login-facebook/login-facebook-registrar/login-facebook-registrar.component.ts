@@ -12,6 +12,7 @@ import { loginSendFacebookDTO } from 'src/app/Core/Models/login';
 import { FormularioComponent } from 'src/app/Core/Shared/Containers/formulario/formulario.component';
 import { AccountService } from 'src/app/Core/Shared/Services/Account/account.service';
 import { AspNetUserService } from 'src/app/Core/Shared/Services/AspNetUser/asp-net-user.service';
+import { ChatEnLineaService } from 'src/app/Core/Shared/Services/ChatEnLinea/chat-en-linea.service';
 import { DatosPortalService } from 'src/app/Core/Shared/Services/DatosPortal/datos-portal.service';
 import { HelperService } from 'src/app/Core/Shared/Services/helper.service';
 import { RegionService } from 'src/app/Core/Shared/Services/Region/region.service';
@@ -42,6 +43,7 @@ export class LoginFacebookRegistrarComponent implements OnInit ,OnDestroy {
     @Inject(PLATFORM_ID) platformId: Object,
     private _SnackBarServiceService: SnackBarServiceService,
     private _AspNetUserService:AspNetUserService,
+    private _ChatEnLineaService:ChatEnLineaService
   ) {
     this.isBrowser = isPlatformBrowser(platformId); {}
   }

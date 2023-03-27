@@ -124,8 +124,8 @@ export class DocenciaTareasComponent implements OnInit,OnDestroy {
           this.datosTarea=x;
           this.params.id=this.IdTarea
           this.params.idEvaluacion=x.idEvaluacion
-          this.params.idPEspecifico=x.idPEspecificoHijo
-          this.params.idPEspecificoPadre=x.idPEspecificoPadre
+          this.params.idPEspecifico=x.idPEspecificoPadre
+          this.params.idPEspecificoPadre=x.idPEspecificoHijo
           this.params.idPGeneral=x.idPGeneralHijo
           this.params.idPrincipal=x.idPGeneralPadre
           this.ObtenerEvaluacionTarea();

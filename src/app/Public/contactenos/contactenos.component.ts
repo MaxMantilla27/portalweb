@@ -16,6 +16,7 @@ import { isPlatformBrowser } from '@angular/common';
 import { SnackBarServiceService } from 'src/app/Core/Shared/Services/SnackBarService/snack-bar-service.service';
 import { SessionStorageService } from 'src/app/Core/Shared/Services/session-storage.service';
 import { DatosFormularioDTO } from 'src/app/Core/Models/DatosFormularioDTO';
+import { ChatEnLineaService } from 'src/app/Core/Shared/Services/ChatEnLinea/chat-en-linea.service';
 declare const fbq:any;
 
 declare const gtag:any;
@@ -39,7 +40,8 @@ export class ContactenosComponent implements OnInit,OnDestroy {
     @Inject(PLATFORM_ID) platformId: Object,
     private _SessionStorageService:SessionStorageService,
     private _SnackBarServiceService:SnackBarServiceService,
-    private title:Title
+    private title:Title,
+    private _ChatEnLineaService:ChatEnLineaService
 
     ) {
       this.isBrowser = isPlatformBrowser(platformId);
@@ -192,6 +194,7 @@ export class ContactenosComponent implements OnInit,OnDestroy {
       console.log(this.DatosContactenosEnvio)
       this._ContactenosService.EnviarFormulario(this.DatosContactenosEnvio).subscribe({
         next:x => {
+          this.ProcesarAsignacionAutomaticaNuevoPortal(x.id)
           this.cleanSub=false;
           this.datos.nombres = this.DatosContactenosEnvio.Nombres;
           this.datos.apellidos = this.DatosContactenosEnvio.Apellidos;
@@ -231,6 +234,13 @@ export class ContactenosComponent implements OnInit,OnDestroy {
         },
       });
     }
+  }
+
+  ProcesarAsignacionAutomaticaNuevoPortal(id:any){
+    this._ChatEnLineaService.ProcesarAsignacionAutomaticaNuevoPortal(id).pipe(takeUntil(this.signal$)).subscribe({
+      next:(x)=>{
+      }
+    })
   }
   ObtenerCombosPortal(){
     this._DatosPortalService.ObtenerCombosPortal().pipe(takeUntil(this.signal$)).subscribe({

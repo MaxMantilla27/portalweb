@@ -104,9 +104,16 @@ export class ChatEnLineaComponent implements OnInit,OnDestroy {
       this._ChatEnLinea.ValidarCrearOportunidadChat(this.DatosEnvioFormulario).pipe(takeUntil(this.signal$)).subscribe({
         next:(x)=>{
           this.validacionChat=x
+          this.ProcesarAsignacionAutomaticaNuevoPortal(x);
         }
       })
     }
+  }
+  ProcesarAsignacionAutomaticaNuevoPortal(data:any){
+    this._ChatEnLinea.ProcesarAsignacionAutomaticaNuevoPortal(data.respuesta.id).pipe(takeUntil(this.signal$)).subscribe({
+      next:(x)=>{
+      }
+    })
   }
   AddFields() {
     this.fileds.push({

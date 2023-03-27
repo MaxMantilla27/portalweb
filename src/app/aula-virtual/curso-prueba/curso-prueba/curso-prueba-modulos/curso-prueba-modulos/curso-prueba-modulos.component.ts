@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, SimpleChanges, ViewEncapsulation } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, SimpleChanges, ViewEncapsulation } from '@angular/core';
 import { CursoPadrePruebaDTO, ProgresoAlumnoProgramaAulaVirtualPruebaDTO } from 'src/app/Core/Models/ListadoProgramaContenidoPruebaDTO';
 import { CuentaService } from 'src/app/Core/Shared/Services/Cuenta/cuenta.service';
 import { ProgramaContenidoService } from 'src/app/Core/Shared/Services/ProgramaContenido/programa-contenido.service';
@@ -10,7 +10,7 @@ import { SessionStorageService } from 'src/app/Core/Shared/Services/session-stor
   styleUrls: ['./curso-prueba-modulos.component.scss'],
   encapsulation: ViewEncapsulation.None,
 })
-export class CursoPruebaModulosComponent implements OnInit {
+export class CursoPruebaModulosComponent implements OnInit,OnChanges {
 
   constructor(
     private _ProgramaContenidoService: ProgramaContenidoService,
@@ -34,6 +34,10 @@ export class CursoPruebaModulosComponent implements OnInit {
   @Input() idRegistroPrueba = 0;
   ngOnInit(): void {
     console.log(this.programaEstructura)
+
+  }
+  ngOnChanges(changes: SimpleChanges): void {
+    console.log(this.programaEstructura.listaCursoMatriculado)
 
   }
 }

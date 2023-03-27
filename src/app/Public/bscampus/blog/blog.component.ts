@@ -23,6 +23,7 @@ import { Router } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
 import { isPlatformBrowser } from '@angular/common';
 import { DatosFormularioDTO } from 'src/app/Core/Models/DatosFormularioDTO';
+import { ChatEnLineaService } from 'src/app/Core/Shared/Services/ChatEnLinea/chat-en-linea.service';
 declare const fbq:any;
 declare const gtag:any;
 
@@ -51,7 +52,8 @@ export class BlogComponent implements OnInit {
     private _SeoService:SeoService,
     private title:Title,
     @Inject(PLATFORM_ID) platformId: Object,
-    private router:Router
+    private router:Router,
+    private _ChatEnLineaService:ChatEnLineaService
   ) {
     this.isBrowser = isPlatformBrowser(platformId);
   }
@@ -277,6 +279,7 @@ export class BlogComponent implements OnInit {
       this.DatosEnvioFormulario.IdIndustria=value.IdIndustria;
       this._HelperService.EnviarFormulario(this.DatosEnvioFormulario).pipe(takeUntil(this.signal$)).subscribe({
         next: (x) => {
+          this.ProcesarAsignacionAutomaticaNuevoPortal(x.id);
           this.cleanSub=false;
           this.datos.nombres = this.DatosEnvioFormulario.Nombres;
             this.datos.apellidos = this.DatosEnvioFormulario.Apellidos;
@@ -315,6 +318,13 @@ export class BlogComponent implements OnInit {
         },
       });
     }
+  }
+
+  ProcesarAsignacionAutomaticaNuevoPortal(id:any){
+    this._ChatEnLineaService.ProcesarAsignacionAutomaticaNuevoPortal(id).pipe(takeUntil(this.signal$)).subscribe({
+      next:(x)=>{
+      }
+    })
   }
   ObtenerCombosPortal(){
     this._DatosPortalService.ObtenerCombosPortal().pipe(takeUntil(this.signal$)).subscribe({

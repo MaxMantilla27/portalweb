@@ -11,6 +11,7 @@ export interface  ValidaRespuestaPreguntaDTO
     IdPregunta:number,
     IdRespuesta:Array<number>,
     Texto:string|null,
+    AccesoPrueba:boolean,
 }
 
 export interface  RegistroPreguntaDTO

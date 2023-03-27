@@ -20,7 +20,7 @@ export class ChatPruebaComponent implements OnInit {
   concted(){
     this.hubConnection = new signalR.HubConnectionBuilder()
       .withAutomaticReconnect()
-      .withUrl(this.urlSignal+"hubIntegraHub?idUsuario="+this.idUsuario+"&&usuarioNombre="+this.usuarioNombre+"&&rooms="+this.rooms+"").build();
+      .withUrl(this.urlSignal+"hubChatWhatsapp_Peru?idUsuario="+this.idUsuario+"&&usuarioNombre="+this.usuarioNombre+"&&rooms="+this.rooms+"").build();
 
     console.log(this.hubConnection)
 
@@ -39,6 +39,21 @@ export class ChatPruebaComponent implements OnInit {
   }
 
   AsesorConectado(){
-    this.hubConnection.invoke("AsesorConectado",this.usuarioNombre,123321)
+    var obj = {
+        Id: 0,
+        WaTo: 'Prueba',
+        WaType: "text",
+        WaTypeMensaje: 1,
+        WaRecipientType: "individual",
+        WaBody: 'prueba-ignorar',
+        IdPais: 51,
+        IdPersonal: 0,
+        IdAlumno: 0,
+        EsMigracion: true,
+        IdMigracion: 0,
+        usuario: 'asd'
+    };
+    console.log(obj)
+    this.hubConnection.invoke("OpSend",obj)
   }
 }
