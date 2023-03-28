@@ -2,6 +2,7 @@ import { isPlatformBrowser } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { EMPTY, Observable } from 'rxjs';
+import { NotaRegistrarDTO } from 'src/app/Core/Models/ParticipacionExpositorFiltroDTO';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -28,6 +29,13 @@ export class NotaService {
   public ListadoNotaProcesar(idPEspecifico:number,grupo:number):Observable<any>{
     if(this.isBrowser){
       return this.http.get<any>(this.urlBase+'/ListadoNotaProcesar?idPespecifico='+idPEspecifico+ "&grupo=" +grupo);
+    }else{
+      return EMPTY;
+    }
+  }
+  public Registrar(json:Array<NotaRegistrarDTO>):Observable<any>{
+    if(this.isBrowser){
+      return this.http.post<any>(this.urlBase+'/Registrar',json);
     }else{
       return EMPTY;
     }
