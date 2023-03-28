@@ -308,6 +308,9 @@ export class ChatComponent implements OnInit,OnDestroy,OnChanges {
   }
   configuracionSoporte(){
     this.hubConnection.on("configuracionSoporte",(NombreAsesor:any, estado:any, idPGeneral:any)=>{
+      console.log(NombreAsesor)
+      console.log(this.idProgramageneral)
+      console.log(idPGeneral)
       if(estado==false){
         if(this.contadoraulavirtual<4){
           if (this.idProgramageneral == 9990) {
@@ -331,7 +334,7 @@ export class ChatComponent implements OnInit,OnDestroy,OnChanges {
         var nombre1 = NombreAsesor.split(" ", 3);
         this.nombreasesorglobal = nombre1[0] + " " + nombre1[2];
         this.nombreAsesorSplit=this.nombreasesorglobal.split(' ',2)
-        this.img+=this.nombreAsesorSplit[0]+'-'+this.nombreAsesorSplit[1]+'.png'
+        this.img='https://proceso-pago.bsginstitute.com/img-web/chatV2/'+this.nombreAsesorSplit[0]+'-'+this.nombreAsesorSplit[1]+'.png'
         this._SessionStorageService.SessionSetValue("IdPGeneral",idPGeneral);
         this.ChargeChat.emit(true)
       }
