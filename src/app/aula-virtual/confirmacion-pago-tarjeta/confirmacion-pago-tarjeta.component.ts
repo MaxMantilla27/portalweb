@@ -292,10 +292,18 @@ export class ConfirmacionPagoTarjetaComponent implements OnInit,OnDestroy {
           if(this.resultCard.idPasarelaPago!=5){
             this._router.navigate(['/AulaVirtual/PagoExitoso/'+this.jsonSave.IdentificadorTransaccion])
           }else{
-            location.href=x._Repuesta.urlRedireccionar;
+            if(x._Repuesta.urlRedireccionar=='' || x._Repuesta.urlRedireccionar==null){
+              this._router.navigate(['/AulaVirtual/PagoExitoso/'+this.jsonSave.IdentificadorTransaccion])
+            }else{
+              location.href=x._Repuesta.urlRedireccionar;
+            }
           }
         }else{
-          location.href=x._Repuesta.urlRedireccionar;
+          if(x._Repuesta.urlRedireccionar=='' || x._Repuesta.urlRedireccionar==null){
+            this._router.navigate(['/AulaVirtual/PagoExitoso/'+this.jsonSave.IdentificadorTransaccion])
+          }else{
+            location.href=x._Repuesta.urlRedireccionar;
+          }
         }
       },
       error:e=>{
