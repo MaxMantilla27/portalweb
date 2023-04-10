@@ -14,6 +14,9 @@ import { MedioPagoActivoPasarelaService } from 'src/app/Core/Shared/Services/Med
 import { SessionStorageService } from 'src/app/Core/Shared/Services/session-storage.service';
 import { SnackBarServiceService } from 'src/app/Core/Shared/Services/SnackBarService/snack-bar-service.service';
 import { PagoTarjetaComponent } from './pago-tarjeta/pago-tarjeta.component';
+import { DatePipe } from '@angular/common';
+
+const pipe = new DatePipe('en-US')
 
 @Component({
   selector: 'app-pago',
@@ -220,29 +223,51 @@ export class PagoComponent implements OnInit,OnDestroy {
 
 
   OpenModalMetodoPagoSucripcion(): void {
-    var fechaActual = new Date()
-    var fechaVencimiento = new Date(this.CronogramaPago.fechaVencimiento)
-    if(fechaActual<fechaVencimiento)
+    var fechaActual = new Date();
+    var fechaVencimiento = new Date();
+    var stringActual= pipe.transform(new Date(), 'yyyy-MM-ddT00:00:00.000') 
+    var stringVencimiento= pipe.transform(new Date(this.CronogramaPago.fechaVencimiento), 'yyyy-MM-ddT00:00:00.000') 
+    if(stringActual)fechaActual=new Date(stringActual)
+    if(stringVencimiento)fechaVencimiento=new Date(stringVencimiento)
+    if(fechaActual <= fechaVencimiento)
     {
-      let cuotaBase = this.CronogramaPago.registroCuota[0].cuota+this.CronogramaPago.registroCuota[0].moraCalculada
-      let validador=true
-
+      let validador=0
       if(this.idPasarela==5){ //OpenPay
+        let count=0
+        let cuotaBase=0
+        let fechaBase = new Date();
         this.CronogramaPago.registroCuota.forEach((e:any) => {
-          let cuotaTotal =e.cuota+e.moraCalculada
-          if(cuotaBase!==cuotaTotal)validador=false
+          if(e.cancelado==false){
+            if(count==0){
+              cuotaBase = e.cuota+e.moraCalculada
+              fechaBase = new Date(e.fechaVencimiento)
+            }
+            let cuotaTotal:number =e.cuota+e.moraCalculada
+            if(cuotaBase!==cuotaTotal)validador=1
+            if(new Date(e.fechaVencimiento).getDate()!=fechaBase.getDate())validador=2
+            count++
+          }
+
         });
       }
 
-      if(validador!==true) 
+      if(validador==2) 
       {
         this._SnackBarServiceService.openSnackBar(
-          "Lo sentimos, no puedes afiliarte al pago Recurrente, no todas las cuotas tiene el mismo monto",
+          "Lo sentimos, no puedes afiliarte al pago Recurrente, no todas las cuotas pendientes se pagan el mismo día de afiliación",
           'x',
           10,
           "snackbarCrucigramaerror");
       }
-      if(validador==true)
+      else if(validador==1) 
+      {
+        this._SnackBarServiceService.openSnackBar(
+          "Lo sentimos, no puedes afiliarte al pago Recurrente, no todas las cuotas pendientes tiene el mismo monto",
+          'x',
+          10,
+          "snackbarCrucigramaerror");
+      }
+      else if(validador==0)
       {
         const dialogRef = this.dialog.open(PagoTarjetaComponent, {
 
