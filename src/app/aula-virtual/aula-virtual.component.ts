@@ -43,7 +43,7 @@ export class AulaVirtualComponent implements OnInit ,OnDestroy{
   ngOnDestroy(): void {
     this.ActualizarInteraccionPortal()
     this.signal$.next(true);
-    this.signal$.complete();
+    //this.signal$.complete();
     clearInterval(this.interval);
     clearInterval(this.intervalInicio);
   }
