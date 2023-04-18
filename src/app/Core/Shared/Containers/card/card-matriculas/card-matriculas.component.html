@@ -35,12 +35,15 @@
   <mat-card-footer>
     <div class="invercion">
       <div *ngIf="matricula.tipoModalidad==1" class="progressMat" style="margin-bottom: 15px;">
+        <div class="nrito">
+          Avance
+          <div >
+            {{matricula.Procent | number:'1.0-0'}}%
+          </div>
+        </div>
         <mat-progress-bar mode="determinate" class="progrees-modulo" style="    border-radius: 10px;height: 8px;"
           [value]="(matricula.Procent!=undefined)?matricula.Procent:0">
         </mat-progress-bar>
-        <div class="nrito">
-          {{matricula.Procent | number:'1.0-0'}} %
-        </div>
       </div>
       <ng-content select="[linkIcons]">
 

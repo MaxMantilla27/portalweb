@@ -93,6 +93,7 @@ export class CursoComponent implements OnInit,OnDestroy {
     NombrePrograma:'',
     idModalidad:1
   }
+  TitleMenu="menu"
   public estructuraCapitulo:any;
   public curso:any
   public EsCurso:any
