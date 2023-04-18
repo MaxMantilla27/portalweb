@@ -128,6 +128,7 @@ export class ChatComponent implements OnInit,OnDestroy,OnChanges {
 
         this.hubConnection = new signalR.HubConnectionBuilder()
         .withAutomaticReconnect()
+        .configureLogging(signalR.LogLevel.Information)
         .withUrl(this.urlSignal+"hubIntegraHub?idUsuario=11&&usuarioNombre=Anonimo&&rooms=633").build();
 
 
