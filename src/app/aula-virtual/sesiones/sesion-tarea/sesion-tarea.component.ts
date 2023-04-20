@@ -67,7 +67,8 @@ export class SesionTareaComponent implements OnInit,OnChanges,OnDestroy {
     idPGeneral:0,
     idPrincipal:0,
     idTipoEvaluacionTrabajo:0,
-    file:new File([],'')
+    file:new File([],''),
+    idMatriculaCabecera:0
   }
   public progress=0
   public selectedFiles?: FileList;
@@ -153,6 +154,7 @@ export class SesionTareaComponent implements OnInit,OnChanges,OnDestroy {
     this.sendFile.idPGeneral=this.json.IdPGeneralHijo
     this.sendFile.idPrincipal=this.json.IdPGeneralPadre
     this.sendFile.idTipoEvaluacionTrabajo=1
+    this.sendFile.idMatriculaCabecera=this.json.IdMatriculaCabecera
     if(this.selectedFiles){
       const file: File | null = this.selectedFiles.item(0);
       if (file) {

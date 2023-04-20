@@ -16,6 +16,7 @@ export interface ModelTareaEvaluacionTareaDTO {
   idTipoEvaluacionTrabajo: number;
   idEsquemaEvaluacionPGeneralDetalle: number;
   idEsquemaEvaluacionPGeneralDetalle_Anterior: number;
+  idMatriculaCabecera:number
 }
 export interface ParametroEnvioTrabajoPares{
 
