@@ -30,6 +30,7 @@ export class CursoProyectoComponent implements OnInit,OnChanges,OnDestroy {
   @Input() idPGeneral=0;;
   @Input() idPEspecifico=0;
   @Input() curso:any;
+  @Input() idMatricula:any;
   public proyecto:any
   public params: ParametroObtenerEvaluacionTarea = {
     id:0,
@@ -57,7 +58,8 @@ export class CursoProyectoComponent implements OnInit,OnChanges,OnDestroy {
     idPGeneral:0,
     idPrincipal:0,
     idTipoEvaluacionTrabajo:0,
-    file:new File([],'')
+    file:new File([],''),
+    idMatriculaCabecera:0
   }
   ngOnInit(): void {
     this._HelperService.recibirCombosPerfil.pipe(takeUntil(this.signal$)).subscribe((x) => {
@@ -139,6 +141,7 @@ export class CursoProyectoComponent implements OnInit,OnChanges,OnDestroy {
     this.sendFile.idPGeneral=this.idPGeneral
     this.sendFile.idPrincipal=this.idPGeneral
     this.sendFile.idTipoEvaluacionTrabajo=2
+    this.sendFile.idMatriculaCabecera=this.idMatricula
     if(this.selectedFiles){
       const file: File | null = this.selectedFiles.item(0);
       if (file) {

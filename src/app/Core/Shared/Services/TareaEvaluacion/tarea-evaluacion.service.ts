@@ -56,6 +56,7 @@ export class TareaEvaluacionService {
     formData.append('IdTipoEvaluacionTrabajo', Json.idTipoEvaluacionTrabajo.toString());
     formData.append('IdEsquemaEvaluacionPGeneralDetalle', Json.idEsquemaEvaluacionPGeneralDetalle.toString());
     formData.append('IdEsquemaEvaluacionPGeneralDetalle_Anterior', Json.idEsquemaEvaluacionPGeneralDetalle_Anterior.toString());
+    formData.append('IdMatriculaCabecera', Json.idMatriculaCabecera.toString());
     const req= new HttpRequest('POST', `${this.urlBase}/EnviarEvaluacionTarea`,formData, {
       reportProgress: true,
       responseType: 'json'
