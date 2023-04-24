@@ -44,6 +44,7 @@ import { DesafiliacionOpenpayComponent } from './confirmacion-desafiliacion-pago
 import { AfiliacionVisaComponent } from './confirmacion-afiliacion-pago-recurrente/afiliacion-visa/afiliacion-visa.component';
 import { ResultadoPagoIzipayComponent } from './resultado-pago-izipay/resultado-pago-izipay.component';
 import { AfiliacionIzipayComponent } from './confirmacion-afiliacion-pago-recurrente/afiliacion-izipay/afiliacion-izipay.component';
+import { DocenciaV2Component } from './docencia-v2/docencia-v2.component';
 
 
 const routes: Routes = [
@@ -56,6 +57,7 @@ const routes: Routes = [
         { path: 'MisCursos', component: MisCursosComponent,canActivate:[AlumnoGuard]},
         { path: 'Avatar', component: AvatarComponent,canActivate:[AlumnoGuard]},
         { path: 'Docencia', component: DocenciaComponent,canActivate:[ProveedorGuard]},
+        { path: 'DocenciaV2', component: DocenciaV2Component,canActivate:[ProveedorGuard]},
         { path: 'MisPagos', component: MisPagosComponent,canActivate:[AlumnoGuard]},
         { path: 'Categoria', component: CategoriaComponent,canActivate:[AlumnoGuard]},
 

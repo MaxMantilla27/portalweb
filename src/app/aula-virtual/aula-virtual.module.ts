@@ -102,6 +102,7 @@ import { DesafiliacionOpenpayComponent } from './confirmacion-desafiliacion-pago
 import { AfiliacionVisaComponent } from './confirmacion-afiliacion-pago-recurrente/afiliacion-visa/afiliacion-visa.component';
 import { ResultadoPagoIzipayComponent } from './resultado-pago-izipay/resultado-pago-izipay.component';
 import { AfiliacionIzipayComponent } from './confirmacion-afiliacion-pago-recurrente/afiliacion-izipay/afiliacion-izipay.component';
+import { DocenciaV2Component } from './docencia-v2/docencia-v2.component';
 
 
 
@@ -203,6 +204,7 @@ import { AfiliacionIzipayComponent } from './confirmacion-afiliacion-pago-recurr
     AfiliacionVisaComponent,
     ResultadoPagoIzipayComponent,
     AfiliacionIzipayComponent,
+    DocenciaV2Component,
 
   ],
   imports: [
