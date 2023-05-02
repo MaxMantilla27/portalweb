@@ -7,24 +7,41 @@
 <div class="container">
   <div class="row rowpaddAv">
     <div class="col-12 col-md-12 col-lg-12" style="position: relative;padding: 0px;">
-      <div style="width: 100%;display: flex;justify-content: flex-end;padding-right: 30px;">
+      <div style="width: 100%;display: flex;justify-content: flex-start;padding-right: 30px;    margin-bottom: 12px;">
         <div class="buttonBack no-select" [routerLink]="'/AulaVirtual/MisCursos'">
           <i class="material-icons">arrow_back_ios</i>
           Volver a mis cursos
         </div>
       </div>
       <div style="    display: flex;
-      justify-content: space-between;position: absolute;width: 100%;z-index: 10;">
+      justify-content: space-between;position: absolute;width: 300px;z-index: 10;">
         <div class="openClose" [ngClass]="{'reverse':!hide}" (click)="hide=!hide">
-          <div *ngIf="!hide">{{TitleMenu  | uppercase }}</div>
-            <div class="contentIconMenu">
-              <i class="material-icons" *ngIf="!hide">arrow_back</i>
-              <i class="material-icons" *ngIf="hide">arrow_forward</i>
-            </div>
+          <div class="contentIconMenu">
+            <i class="material-icons">menu</i>
+            <!-- <i class="material-icons" *ngIf="!hide">arrow_back</i>
+            <i class="material-icons" *ngIf="hide">arrow_forward</i> -->
+          </div>
+          <div *ngIf="!hide" style="    margin-left: 5px;">{{TitleMenu  | uppercase }}</div>
         </div>
       </div>
 
       <mat-tab-group class="tabVertical" [(selectedIndex)]="tabIndex" (selectedTabChange)="tabChanged($event)">
+
+        <mat-tab *ngIf="curso!=undefined && curso.claseWebexActivo==true && EsCurso!=undefined">
+          <ng-template mat-tab-label>
+            <div #Online class="contentHeaderM" (click)="InterraccionTab('Clases Online')"
+            [matTooltip]="'Clases Online'"
+            matTooltipPosition="after">
+
+              <div class="iconMat"><i class="material-icons">play_lesson</i></div>
+              <div class="titleMatr" *ngIf="!hide">Clases Online</div>
+            </div>
+          </ng-template>
+          <div class="pad-resp">
+            <app-curso-clase-online [escurso]="EsCurso" [IdMatricula]="idMatricula" [Capitulo]="programEstructura.programaGeneral">
+            </app-curso-clase-online>
+          </div>
+        </mat-tab>
         <ng-container *ngIf="EsCurso==true">
           <mat-tab>
             <ng-template mat-tab-label>
@@ -292,21 +309,6 @@
           <div class="pad-resp">
             <app-beneficios [IdMatricula]="idMatricula" [Capitulo]="programEstructura.programaGeneral">
             </app-beneficios>
-          </div>
-        </mat-tab>
-        <mat-tab *ngIf="curso!=undefined && curso.claseWebexActivo==true">
-          <ng-template mat-tab-label>
-            <div class="contentHeaderM" (click)="InterraccionTab('Clases Online')"
-            [matTooltip]="'Clases Online'"
-            matTooltipPosition="after">
-
-              <div class="iconMat"><i class="material-icons">play_lesson</i></div>
-              <div class="titleMatr" *ngIf="!hide">Clases Online</div>
-            </div>
-          </ng-template>
-          <div class="pad-resp">
-            <app-curso-clase-online [IdMatricula]="idMatricula" [Capitulo]="programEstructura.programaGeneral">
-            </app-curso-clase-online>
           </div>
         </mat-tab>
         <mat-tab *ngIf="curso!=undefined && curso.simuladorAsignado==true">

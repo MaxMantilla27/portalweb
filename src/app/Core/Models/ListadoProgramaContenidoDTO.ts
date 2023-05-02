@@ -19,7 +19,9 @@ export interface ListadoCursosHijosDTO {
   params:string,
   convalidado:boolean,
   habilitado?:Boolean,
-  porcentaje:number
+  porcentaje:number,
+  fechasOnline?:any,
+  fechasOnlineActive?:boolean
 }
 export interface ProgresoAlumnoProgramaAulaVirtualDTO {
   progresoVideo: Array<ProgresoAlumnoProgramaVideosAulaVirtualDTO>;

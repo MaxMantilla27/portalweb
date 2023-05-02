@@ -93,7 +93,7 @@
   .mat-tab-labels
   .mat-tab-label-active {
   background: #f4f4f4;
-  box-shadow: inset 8px 0px 0 #3390ff;
+  box-shadow: inset 4px 0px 0 #3390ff;
 }
 .pad-resp {
   padding: 5px 10px 0px 10px;
@@ -305,10 +305,10 @@
     height: 30px;
     width: 30px;
     border-radius: 50%;
-    background: white;
+    //background: white;
     .material-icons{
-      font-size: 20px !important;
-      color: #0684f2;
+      font-size: 30px !important;
+      //color: #0684f2;
     }
   }
 }
@@ -342,6 +342,7 @@
 }
 .reverse {
   width: 292px !important;
+  justify-content: start;
 }
 
 .reverse2 {

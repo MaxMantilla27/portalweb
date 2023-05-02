@@ -27,6 +27,7 @@ export class CursoComponent implements OnInit,OnDestroy {
   @ViewChild('indicaciones') indicaciones!: ElementRef;
   @ViewChild('sesiones') sesiones!: ElementRef;
   @ViewChild('modulos') modulos!: ElementRef;
+  @ViewChild('Online') Online!: ElementRef;
   @ViewChild('proyectos') proyectos!: ElementRef;
   @ViewChild('certificados') certificados!: ElementRef;
   @ViewChild('tramites') tramites!: ElementRef;
@@ -152,10 +153,14 @@ export class CursoComponent implements OnInit,OnDestroy {
     console.log(valorLoscalS);
     console.log(this.modulos);
     if(valorLoscalS<2){
-      if(this.EsCurso==true){
-        this.sesiones.nativeElement.click()
+      if(this.curso.claseWebexActivo==true){
+        this.Online.nativeElement.click()
       }else{
-        this.modulos.nativeElement.click()
+        if(this.EsCurso==true){
+          this.sesiones.nativeElement.click()
+        }else{
+          this.modulos.nativeElement.click()
+        }
       }
     }else{
       if(valorLoscalS==2){
@@ -409,6 +414,7 @@ export class CursoComponent implements OnInit,OnDestroy {
           console.log(this.programEstructura)
           if(this.programEstructura.listaCursoMatriculado!=null && this.programEstructura.listaCursoMatriculado.length>1){
             this.EsCurso=false
+            this.TitleMenu="MENU DEL CURSO"
             this.programEstructura.listaCursoMatriculado.sort(function (a:any, b:any) {
               return a.orden - b.orden;
             })

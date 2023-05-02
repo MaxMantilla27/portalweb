@@ -64,6 +64,8 @@ export class CursoModulosComponent implements OnInit, OnChanges,OnDestroy {
     if (this.idMatricula > 0) {
      // this.ObtenerProgresoAulaVirtual();
       this.ProgresoProgramaCursosAulaVirtualAonlinePorEstadoVideo();
+      console.log(this.programEstructura)
+      this.validarFechasOnline()
     }
   }
   ngOnChanges(changes: SimpleChanges): void {}
@@ -82,6 +84,21 @@ export class CursoModulosComponent implements OnInit, OnChanges,OnDestroy {
           this.cargaProgrso=true
         }
       });
+  }
+  validarFechasOnline(){
+    this.programEstructura.listaCursoMatriculado.forEach(c => {
+      c.fechasOnlineActive=false
+      if(c.idModalidadHijo!=1){
+
+        let fi=new Date((new Date(c.fechasOnline.fechaInicio)).getFullYear(),(new Date(c.fechasOnline.fechaInicio)).getMonth(),(new Date(c.fechasOnline.fechaInicio)).getDate());
+        let fa=new Date((new Date()).getFullYear(),(new Date()).getMonth(),(new Date()).getDate());
+        let ff=new Date((new Date(c.fechasOnline.fechaFin)).getFullYear(),(new Date(c.fechasOnline.fechaFin)).getMonth(),(new Date(c.fechasOnline.fechaFin)).getDate());
+        console.log(fi,fa,ff);
+        if(fa>=fi && fa<=ff){
+          c.fechasOnlineActive=true
+        }
+      }
+    });
   }
   ProgresoProgramaCursosAulaVirtualAonlinePorEstadoVideo() {
     this.cargaProgrso=false
