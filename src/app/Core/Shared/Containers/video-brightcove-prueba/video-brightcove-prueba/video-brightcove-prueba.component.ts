@@ -78,7 +78,9 @@ export class VideoBrightcovePruebaComponent implements OnInit,OnDestroy {
     IdPGeneralHijo: 0,
     NombreCapitulo: '',
     NombrePrograma: '',
-    idModalidad:1
+    idModalidad:1,
+    visualizarVideos:false,
+    accesoCompleto:false,
   };
   public estadoFinalizarPreguntas=false
   public send:RegistroVideoUltimaVisualizacionDTO={

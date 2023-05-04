@@ -125,9 +125,11 @@ export class CursoPruebaComponent implements OnInit,OnDestroy {
               IdPGeneralHijo: program.idPGeneralHijo,
               NombreCapitulo:program.programaGeneralHijo,
               NombrePrograma:this.programaEstructura.programaGeneral,
-              idModalidad:this.programaEstructura.idModalidad
+              idModalidad:this.programaEstructura.idModalidad,
+              visualizarVideos:program.visualizarVideos,
+              accesoCompleto:program.accesoCompleto,
             };
-            program.params = btoa(JSON.stringify(params));
+            //program.params = btoa(JSON.stringify(params));
           });
         },
       });

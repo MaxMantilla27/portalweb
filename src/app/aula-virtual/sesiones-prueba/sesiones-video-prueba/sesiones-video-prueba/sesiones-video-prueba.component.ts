@@ -29,7 +29,9 @@ export class SesionesVideoPruebaComponent implements OnInit,OnDestroy {
     IdPGeneralHijo: 0,
     NombreCapitulo: '',
     NombrePrograma: '',
-    idModalidad:1
+    idModalidad:1,
+    visualizarVideos:false,
+    accesoCompleto:false,
   };
   @Input() nombreSesion=''
   @Input() idCapitulo=0;
