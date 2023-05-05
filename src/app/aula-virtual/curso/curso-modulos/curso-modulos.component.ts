@@ -94,6 +94,7 @@ export class CursoModulosComponent implements OnInit, OnChanges,OnDestroy {
           console.log(x)
           this.progressProgram=x
           this.AddProgresToProgramV2();
+
         },
         complete:()=>{
           this.cargaProgrso=true
