@@ -137,13 +137,15 @@
         </div>
         <div class="contentBotton">
           <div style="background: transparent;position: relative;padding: 10px 0px;">
-            <div class="row"  style="align-items: flex-start;">
+            <div class="row" style="align-items: flex-start;">
               <div *ngIf="cabecera.imgPrincipal!='https://img.bsginstitute.com/repositorioweb/img/partners/Sin Partner'"
-                class="col-12 col-md-10 col-lg-10" style="position: relative;margin-top: 10px;text-align: left;margin-bottom: 40px;">
+                class="col-12 col-md-10 col-lg-10"
+                style="position: relative;margin-top: 10px;text-align: left;margin-bottom: 40px;">
                 <img class="InfoProgramImg" [src]="cabecera.imgPrincipal" alt="">
               </div>
               <ng-container *ngIf="idBusqueda!=7569">
-                <div *ngIf="cabecera.imgPrincipal!='https://img.bsginstitute.com/repositorioweb/img/partners/Sin Partner'"
+                <div
+                  *ngIf="cabecera.imgPrincipal!='https://img.bsginstitute.com/repositorioweb/img/partners/Sin Partner'"
                   class="col-12 col-md-6 col-lg-6 row">
 
                   <div class="col-12 " style="display: flex">
@@ -168,7 +170,8 @@
                   </div>
 
                 </div>
-                <div *ngIf="cabecera.imgPrincipal=='https://img.bsginstitute.com/repositorioweb/img/partners/Sin Partner'"
+                <div
+                  *ngIf="cabecera.imgPrincipal=='https://img.bsginstitute.com/repositorioweb/img/partners/Sin Partner'"
                   class="col-12 col-md-6 col-lg-6 row">
 
                   <div class="col-12 " style="display: flex">
@@ -548,18 +551,21 @@
           <mat-tab label="Duración y Horarios">
             <ng-container *ngIf="cabecera!=null && cabecera.listProgramaEspecificoInformacionDTO!=null">
               <ng-container *ngFor="let item of cabecera.listProgramaEspecificoInformacionDTO">
-                <div *ngIf="item.sesiones!=null && item.sesiones.length>0" style="margin-top: 20px;" >
-                  <strong >
+                <div *ngIf="item.sesiones!=null && item.sesiones.length>0" style="margin-top: 20px;">
+                  <strong>
                     En la modalidad
-                    <ng-container *ngIf="item.tipo.toLowerCase()=='online sincronica'">Online Sincrónica (Clases en vivo):</ng-container>
-                    <ng-container *ngIf="item.tipo.toLowerCase()!='online sincronica'">Presencial (Clases presenciales):</ng-container>
+                    <ng-container *ngIf="item.tipo.toLowerCase()=='online sincronica'">Online Sincrónica (Clases en
+                      vivo):</ng-container>
+                    <ng-container *ngIf="item.tipo.toLowerCase()!='online sincronica'">Presencial (Clases
+                      presenciales):</ng-container>
                   </strong>
                   <br>
                   Las clases se desarrollarán de forma {{item.tipo.toLowerCase()=='online sincronica'?'virtual':'presencial'}}, con una frecuencia semanal en el siguiente horario (*):
                   <ul style="margin: 1rem;">
                     <li *ngFor="let sesi of item.sesiones">
-                      <strong >
-                        {{sesi.dia}}: {{sesi.horaInicio.split(':')[0]+':'+sesi.horaInicio.split(':')[1] }} a {{sesi.horaFin.split(':')[0]+':'+sesi.horaFin.split(':')[1] }} horas.
+                      <strong>
+                        {{sesi.dia}}: {{sesi.horaInicio.split(':')[0]+':'+sesi.horaInicio.split(':')[1] }} a
+                        {{sesi.horaFin.split(':')[0]+':'+sesi.horaFin.split(':')[1] }} horas.
                       </strong>
                     </li>
                   </ul>
@@ -857,21 +863,24 @@
     <div class="col-12 col-md-12 col-lg-12 tabprogram">
       <div class="subtitulo" style="font-size: 2rem;
       font-weight: 600;">Modalidades de pago</div>
-      <div style="display: flex;
-      align-items: center;
-      color: #4a4a49; font-weight: bold;"><i class="material-icons"
-          style="color: #34c939;margin-right: 10px;">play_arrow</i>Dep&oacute;sito o pago en una cuenta del BCP:
-      </div>
-      <div class="row cardFormasPago" style="margin-bottom: 40px;">
-        <div class="col-12 col-md-9 col-lg-9 divpagobcp">
-          Puedes solicitar tu c&oacute;digo de pago, o la información de la cuenta a nuestros asesores para hacer un
-          dep&oacute;sito o transferencia
+      <ng-container *ngIf="codigoIso=='PE'">
+        <div style="display: flex;
+        align-items: center;
+        color: #4a4a49; font-weight: bold;"><i class="material-icons"
+            style="color: #34c939;margin-right: 10px;">play_arrow</i>Dep&oacute;sito o pago en una cuenta del BCP:
         </div>
-        <div class="col-12 col-md-3 col-lg-3"
-          style="padding: 0px; margin: 10px 0px;display:flex;justify-content: flex-start;">
-          <img class="imgCardFormasPago" src="../../../assets//icons/bcp-06.svg" alt="">
+        <div class="row cardFormasPago" style="margin-bottom: 40px;">
+          <div class="col-12 col-md-9 col-lg-9 divpagobcp">
+            Puedes solicitar tu c&oacute;digo de pago, o la información de la cuenta a nuestros asesores para hacer un
+            dep&oacute;sito o transferencia
+          </div>
+          <div class="col-12 col-md-3 col-lg-3"
+            style="padding: 0px; margin: 10px 0px;display:flex;justify-content: flex-start;">
+            <img class="imgCardFormasPago" src="../../../assets//icons/bcp-06.svg" alt="">
+          </div>
         </div>
-      </div>
+      </ng-container>
+
     </div>
     <div class="col-12 col-md-12 col-lg-12" style="    margin-bottom: 10px;">
 
