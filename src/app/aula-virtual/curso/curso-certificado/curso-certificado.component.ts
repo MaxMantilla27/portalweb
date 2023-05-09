@@ -40,7 +40,6 @@ export class CursoCertificadoComponent implements OnInit,OnChanges,OnDestroy {
     Nombres:'',
     Apellidos:''
   }
-
   public errorRegister = '';
   statuscharge = false;
   initValues=false;

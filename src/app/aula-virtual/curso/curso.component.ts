@@ -216,7 +216,9 @@ export class CursoComponent implements OnInit,OnDestroy {
   certificadoDigital(){
     console.log('-------')
     if(this.datosCertificado!=undefined){
-      if((this.datosCertificado.idEstado_matricula!=5 && this.datosCertificado.idEstado_matricula!=12) || this.datosCertificado.nombreArchivo==null){
+      if(!(this.datosCertificado.nombreArchivo!=null &&(
+        this.datosCertificado.idEstado_matricula==5 ||
+        this.datosCertificado.idEstado_matricula==12))){
         this.alertaDigital=true
       }
     }
