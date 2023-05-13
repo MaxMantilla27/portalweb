@@ -120,7 +120,7 @@
             </app-modulo-videos-sincronico>
           </div>
         </mat-tab>
-        <mat-tab>
+        <!-- <mat-tab>
           <ng-template mat-tab-label>
             <div class="contentHeaderM" (click)="InterraccionTab('Ayuda')" [ngClass]="{'ActiveChil':AyudaActive==true}">
               <div class="iconMat iconAyuda"
@@ -134,20 +134,17 @@
             [IdPGeneral]="json.IdPGeneralHijo" [IdPrincipal]="json.IdPGeneralPadre"
              [IdPEspecifico]="json.IdPEspecificoHijo" (OnChange)="cambio($event)"></app-modulo-ayuda>
           </div>
-        </mat-tab>
-
-
-        <ng-container *ngIf="AyudaActive==true">
+        </mat-tab> -->
 
           <mat-tab>
-            <ng-template mat-tab-label class="tabSubcontent">
-              <div  class="contentHeaderM subContent"
+            <ng-template mat-tab-label>
+              <div  class="contentHeaderM"
                (click)="InterraccionTab('Preguntas frecuentes')"
-               style="cursor: pointer;padding: 20px 10px !important;" (click)="alertaPreguntasFrecuentes=!alertaPreguntasFrecuentes">
+                (click)="alertaPreguntasFrecuentes=!alertaPreguntasFrecuentes">
 
-                <div class="iconMat"
+                <div class="iconMat iconAyuda"
                 matTooltip="Preguntas frecuentes"
-                matTooltipPosition="after"><i class="material-icons">question_answer</i></div>
+                matTooltipPosition="after"></div>
                 <div *ngIf="!hide" class="titleMatr">Preguntas frecuentes</div>
               </div>
             </ng-template>
@@ -160,12 +157,12 @@
           </mat-tab>
           <mat-tab >
             <ng-template mat-tab-label>
-              <div class="contentHeaderM subContent" (click)="InterraccionTab('Quejas y sugerencias')"
-              style="cursor: pointer;padding: 20px 10px !important;" (click)="alertaQuejasSugerencias=!alertaQuejasSugerencias">
+              <div class="contentHeaderM" (click)="InterraccionTab('Quejas y sugerencias')"
+              (click)="alertaQuejasSugerencias=!alertaQuejasSugerencias">
 
                 <div class="iconMat"
                 matTooltip="Quejas y sugerencias"
-                matTooltipPosition="after"><i class="material-icons">fmd_bad</i></div>
+                matTooltipPosition="after"><i class="material-icons">info</i></div>
                 <div *ngIf="!hide" class="titleMatr">Quejas y sugerencias</div>
               </div>
             </ng-template>
@@ -176,7 +173,7 @@
               </app-modulo-ayuda-quejas-sugerencias>
             </div>
           </mat-tab>
-        </ng-container>
+  
 
       </mat-tab-group>
     </div>
