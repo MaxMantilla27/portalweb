@@ -2,26 +2,47 @@
   display: flex;
   justify-content: flex-start;
   background: #f2f6ff;
-    padding: 5px 10px;
+    padding-top: 20px;
     margin-bottom: 20px;
 }
 .tipoIndicacionTitle img{
-  width: 15px;
+  width: 50px;
+  // padding-top: 15px;
   margin-right: 10px;
 }
 .tipoIndicacionTitle div{
+  width: auto;
   font-size: 18px;
     font-weight: 600;
     color: #505050;
+    
+    // padding-top: 15px ;
 }
+
+.tipoIndicacionTitle app-default-button{
+  margin-right: 10px;
+  font-size: 18px;
+  width:75%;
+  // background-color: #F8893F;
+  text-decoration-color: #f0f0f0;
+    // padding-top: 15px ;
+}
+
 .containerform{
-  margin-top: 40px;
+  margin-top: 25px;
+  padding-top: 0%;
+  border: 1px solid #505050;
+  border-radius: 15px; 
 }
+
 .headerFormSolicitu{
+  
   display: flex;
   justify-content: flex-start;
   align-items: flex-start;
+  padding: 10px;
   margin: 30px 0px;
+
   .index{
     font-weight: 600;
     width: 30px;
@@ -40,16 +61,57 @@
     }
   }
 }
+
+.headerFormSolicitudheader {
+  padding-top: 20px;
+  padding-bottom: 20px;
+  padding-left: 20px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  background-color: #ebebeb;
+  border-radius:15px;
+
+  .index{
+    font-weight: 600;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #f4f4f4;
+    border-radius: 50%;
+    margin-right: 20px;
+  }
+  div{
+    font-weight: 600;
+    .material-icons{
+      cursor: pointer;
+    }
+  }
+} 
+
+.ImgIndicacionesContent{
+  height: 30px !important;
+  margin-bottom: 20px !important;
+  margin-right: 10px;
+}
+
 .contentform{
   margin-left: 50px;
   margin-top: 30px;
+  // padding-left: 30px;
+  padding-right: 30px;
 }
 .contentform .mat-form-field.mat-form-field-appearance-outline > div.mat-form-field-wrapper > div.mat-form-field-flex > div.mat-form-field-infix  { padding: 0.4em 0px }
-.contentform .mat-form-field.mat-form-field-appearance-outline > div.mat-form-field-wrapper > div.mat-form-field-flex > div.mat-form-field-infix > span.mat-form-field-label-wrapper { top: -1.5em; }
+.contentform .mat-form-field.mat-form-field-appearance-outline > div.mat-form-field-wrapper > div.mat-form-field-flex > div.mat-form-field-infix > span.mat-form-field-label-wrapper { top: - 2.5em; }
 
 .contentform .mat-form-field-appearance-outline.mat-form-field-can-float.mat-form-field-should-float .mat-form-field-label {
     transform: translateY(-1.1em) scale(.75);
     width: 133.33333%;
+}
+mat-label{
+  font-size: 20px;
 }
 .contentform .mat-form-field.mat-form-field-appearance-outline > div.mat-form-field-wrapper > div.mat-form-field-flex > .mat-form-field-outline{
 
@@ -77,11 +139,7 @@
   }
 }
 
-.rowFormCertFisico{
-  label{
-    padding-bottom: 1.34375em;
-  }
-}
+
 
 .btn-habilitar{
   width: auto;
@@ -142,4 +200,26 @@
 .activeCard{
   background: #0668bf;
   color: white;
+}
+
+.left {
+ 
+  padding-top: 10px;
+  
+  float: left;
+  // position: relative;
+  // height: auto;
+}
+
+.right {
+  padding-top: 10px;
+  
+  // margin-left: 10px;
+  // position: relative;
+  float: right;
+  // height: auto;
+}
+.contentElements{
+  display: inline-block;
+    width: auto;
 }
