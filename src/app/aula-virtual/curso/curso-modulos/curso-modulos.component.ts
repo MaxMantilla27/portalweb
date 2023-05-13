@@ -86,16 +86,19 @@ export class CursoModulosComponent implements OnInit, OnChanges,OnDestroy {
       });
   }
   validarFechasOnline(){
+    console.log(this.programEstructura.listaCursoMatriculado)
     this.programEstructura.listaCursoMatriculado.forEach(c => {
       c.fechasOnlineActive=false
-      if(c.idModalidadHijo!=1){
+      if(c.fechasOnline!=undefined  && c.fechasOnline!=null ){
+        if(c.idModalidadHijo!=1){
 
-        let fi=new Date((new Date(c.fechasOnline.fechaInicio)).getFullYear(),(new Date(c.fechasOnline.fechaInicio)).getMonth(),(new Date(c.fechasOnline.fechaInicio)).getDate());
-        let fa=new Date((new Date()).getFullYear(),(new Date()).getMonth(),(new Date()).getDate());
-        let ff=new Date((new Date(c.fechasOnline.fechaFin)).getFullYear(),(new Date(c.fechasOnline.fechaFin)).getMonth(),(new Date(c.fechasOnline.fechaFin)).getDate());
-        console.log(fi,fa,ff);
-        if(fa>=fi && fa<=ff){
-          c.fechasOnlineActive=true
+          let fi=new Date((new Date(c.fechasOnline.fechaInicio)).getFullYear(),(new Date(c.fechasOnline.fechaInicio)).getMonth(),(new Date(c.fechasOnline.fechaInicio)).getDate());
+          let fa=new Date((new Date()).getFullYear(),(new Date()).getMonth(),(new Date()).getDate());
+          let ff=new Date((new Date(c.fechasOnline.fechaFin)).getFullYear(),(new Date(c.fechasOnline.fechaFin)).getMonth(),(new Date(c.fechasOnline.fechaFin)).getDate());
+          console.log(fi,fa,ff);
+          if(fa>=fi && fa<=ff){
+            c.fechasOnlineActive=true
+          }
         }
       }
     });

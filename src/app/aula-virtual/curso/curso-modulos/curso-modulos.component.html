@@ -13,7 +13,7 @@
           </div>
           <div class="FechasOnlineAula">
             <div class="imgActive" [ngClass]="{'inActiveOnline': item.fechasOnlineActive!=true}"></div>
-            <div class="fechasTextoOnlineAula">{{item.fechasOnline.fechaInicio | date:'dd/MM/yyyy'}} al {{item.fechasOnline.fechaFin | date:'dd/MM/yyyy'}}</div>
+            <div class="fechasTextoOnlineAula" *ngIf="item.fechasOnline!=undefined && item.fechasOnline!=null">{{item.fechasOnline.fechaInicio | date:'dd/MM/yyyy'}} al {{item.fechasOnline.fechaFin | date:'dd/MM/yyyy'}}</div>
           </div>
         </div>
       </ng-container>
