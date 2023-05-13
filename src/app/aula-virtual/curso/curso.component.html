@@ -460,9 +460,9 @@
           </mat-tab>
         </ng-container>
 
-        <ng-container *ngIf="EsCurso==true">
+        <!-- <ng-container *ngIf="EsCurso==true"> -->
 
-          <mat-tab >
+          <!-- <mat-tab >
             <ng-template mat-tab-label>
               <div class="contentHeaderM" (click)="InterraccionTab('Ayuda');changeIndexAyuda()" [ngClass]="{'ActiveChil':AyudaActive==true}">
                 <div class="iconMat iconAyuda"
@@ -476,19 +476,19 @@
               [IdPGeneral]="json.IdPGeneralHijo" [IdPrincipal]="json.IdPGeneralPadre"
                [IdPEspecifico]="json.IdPEspecificoHijo" (OnChange)="cambio($event)"></app-modulo-ayuda>
             </div>
-          </mat-tab>
+          </mat-tab> -->
 
 
-          <ng-container *ngIf="AyudaActive==true">
+          <!-- <ng-container > -->
 
-            <mat-tab >
-              <ng-template mat-tab-label class="tabSubcontent">
-                <div  class="contentHeaderM subContent" (click)="InterraccionTab('Preguntas frecuentes')"
-                 style="cursor: pointer; padding: 20px 10px !important;" (click)="alertaPreguntasFrecuentes=!alertaPreguntasFrecuentes">
+            <mat-tab *ngIf="EsCurso==true">
+              <ng-template mat-tab-label>
+                <div  class="contentHeaderM" (click)="InterraccionTab('Preguntas frecuentes')"
+                  (click)="alertaPreguntasFrecuentes=!alertaPreguntasFrecuentes">
 
-                  <div class="iconMat"
+                  <div class="iconMat iconAyuda"
                   matTooltip="Preguntas frecuentes"
-                  matTooltipPosition="after"><i class="material-icons">question_answer</i></div>
+                  matTooltipPosition="after"></div>
                   <div *ngIf="!hide" class="titleMatr">Preguntas frecuentes</div>
                 </div>
               </ng-template>
@@ -499,26 +499,26 @@
                 </app-modulo-ayuda-preguntas-frecuentes>
               </div>
             </mat-tab>
+            
             <mat-tab >
               <ng-template mat-tab-label>
-                <div class="contentHeaderM subContent" (click)="InterraccionTab('Quejas y sugerencias')"
-                 style="cursor: pointer;padding: 20px 10px !important;" (click)="alertaQuejasSugerencias=!alertaQuejasSugerencias">
-
+                <div class="contentHeaderM" (click)="InterraccionTab('Quejas y sugerencias')"
+                  (click)="alertaQuejasSugerencias=!alertaQuejasSugerencias">
+                <!-- <div class="iconMat">  <i class="material-icons">info</i></div> -->
                   <div class="iconMat"
                   matTooltip="Quejas y sugerencias"
-                  matTooltipPosition="after"><i class="material-icons">fmd_bad</i></div>
+                  matTooltipPosition="after"><i class="material-icons">info</i></div>
                   <div *ngIf="!hide" class="titleMatr">Quejas y sugerencias</div>
                 </div>
               </ng-template>
               <div class="pad-resp">
                 <app-modulo-ayuda-quejas-sugerencias [IdPGeneral]="json.IdPGeneralHijo" [IdPEspecifico]="json.IdPEspecificoHijo" [Capitulo]="json.NombreCapitulo"
                 (Onchange)="cambio($event)">
-
                 </app-modulo-ayuda-quejas-sugerencias>
               </div>
             </mat-tab>
-          </ng-container>
-        </ng-container>
+          <!-- </ng-container> -->
+        <!-- </ng-container> -->
       </mat-tab-group>
     </div>
   </div>
