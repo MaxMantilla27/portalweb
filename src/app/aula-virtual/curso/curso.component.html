@@ -34,7 +34,7 @@
             matTooltipPosition="after">
 
               <div class="iconMat"><i class="material-icons">play_lesson</i></div>
-              <div class="titleMatr" *ngIf="!hide">Clases Online</div>
+              <div class="titleMatr" *ngIf="!hide">Acceso a clases</div>
             </div>
           </ng-template>
           <div class="pad-resp">
@@ -499,8 +499,8 @@
                 </app-modulo-ayuda-preguntas-frecuentes>
               </div>
             </mat-tab>
-            
-            <mat-tab >
+
+            <mat-tab *ngIf="EsCurso==true">
               <ng-template mat-tab-label>
                 <div class="contentHeaderM" (click)="InterraccionTab('Quejas y sugerencias')"
                   (click)="alertaQuejasSugerencias=!alertaQuejasSugerencias">

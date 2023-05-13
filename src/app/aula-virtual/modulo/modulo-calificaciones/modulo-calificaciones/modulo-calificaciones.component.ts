@@ -34,10 +34,8 @@ export class ModuloCalificacionesComponent implements OnInit,OnDestroy {
   }
   ngOnChanges(changes: SimpleChanges): void {
     if(this.IdMatriculaCabecera!=0){
-
       this.ValidarCalificacionesMatriculaPorPgeneral();
     }
-
   }
   ValidarCalificacionesMatriculaPorPgeneral(){
     this._ProgramaContenidoService.ValidarCalificacionesMatriculaPorPgeneral(this.IdMatriculaCabecera,this.IdPGeneralHijo).pipe(takeUntil(this.signal$)).subscribe({
