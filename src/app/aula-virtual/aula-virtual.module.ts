@@ -103,7 +103,7 @@ import { AfiliacionVisaComponent } from './confirmacion-afiliacion-pago-recurren
 import { ResultadoPagoIzipayComponent } from './resultado-pago-izipay/resultado-pago-izipay.component';
 import { AfiliacionIzipayComponent } from './confirmacion-afiliacion-pago-recurrente/afiliacion-izipay/afiliacion-izipay.component';
 import { DocenciaV2Component } from './docencia-v2/docencia-v2.component';
-
+import { AsistenciaAlumnoComponent } from './curso/asistencia-alumno/asistencia-alumno.component';
 
 
 @NgModule({
@@ -205,6 +205,8 @@ import { DocenciaV2Component } from './docencia-v2/docencia-v2.component';
     ResultadoPagoIzipayComponent,
     AfiliacionIzipayComponent,
     DocenciaV2Component,
+    AsistenciaAlumnoComponent,
+  
 
   ],
   imports: [

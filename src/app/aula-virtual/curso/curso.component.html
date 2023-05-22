@@ -83,6 +83,26 @@
                 [Estructura]="estructuraCapitulo"></app-modulo-silabo>
             </div>
           </mat-tab>
+
+          <ng-template [ngIf]="json.idModalidad===2">
+          <mat-tab>
+            <ng-template mat-tab-label>
+              <div class="contentHeaderM" (click)="InterraccionTab('Asistencias')"
+              (click)="alertaPreguntasFrecuentes=!alertaPreguntasFrecuentes">
+              <div class="iconMat"
+              matTooltip="Preguntas frecuentes"
+              matTooltipPosition="after"><mat-icon>check_box</mat-icon></div>
+                <div class="titleMatr" *ngIf="!hide">Asistencias</div>
+              </div>
+            </ng-template>
+            <div class="pad-resp">
+              <app-asistencia-alumno [IdMatriculaCabecera]="json.IdMatriculaCabecera" [IdPEspecifico]="json.IdPEspecificoHijo">
+
+              </app-asistencia-alumno>
+            </div>
+          </mat-tab>
+        </ng-template>
+
           <mat-tab>
             <ng-template mat-tab-label>
               <div  class="contentHeaderM" (click)="InterraccionTab('Recursos')">
