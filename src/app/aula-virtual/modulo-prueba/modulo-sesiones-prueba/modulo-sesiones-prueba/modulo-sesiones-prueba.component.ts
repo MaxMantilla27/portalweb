@@ -313,11 +313,12 @@ export class ModuloSesionesPruebaComponent implements OnInit ,OnChanges{
   @Input() estructuraCapitulo:any;
   @Input() idModalidad:number=2
   @Input() IdAccesoPrueba=0;
+  @Input() accesoCompleto=false;
   ngOnInit(): void {
   }
   IrVideo(url:string,habilitado:boolean,capitulo:number){
     console.log(url)
-    if(capitulo==1){
+    if(capitulo==1 || this.accesoCompleto==true){
       if(habilitado){
         this._Router.navigate(['AulaVirtual/MisCursosPrueba/'+this.IdAccesoPrueba+'/'+this.estructuraCapitulo.idPEspecificoHijo+'/'+url])
         //this._Router.navigate([url], {relativeTo: this.r})

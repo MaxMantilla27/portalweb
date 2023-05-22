@@ -94,6 +94,7 @@ export class CursoModulosComponent implements OnInit, OnChanges,OnDestroy {
           console.log(x)
           this.progressProgram=x
           this.AddProgresToProgramV2();
+
         },
         complete:()=>{
           this.cargaProgrso=true
@@ -111,19 +112,19 @@ export class CursoModulosComponent implements OnInit, OnChanges,OnDestroy {
       cantidadRealizada=0
       program.habilitado=true;
       this.progressProgram.progresoEncuesta.forEach((encuesta:any) => {
-        if (program.idPGeneralHijo == encuesta.idPGeneralHijo) {
+        if (program.idPEspecificoHijo == encuesta.idPEspecificoHijo) {
           cantidad+=encuesta.examenProgramados
           cantidadRealizada+=encuesta.examenRealizado
         }
       });
       this.progressProgram.progresoTarea.forEach((tarea:any) => {
-        if (program.idPGeneralHijo == tarea.idPGeneralHijo) {
+        if (program.idPEspecificoHijo == tarea.idPEspecificoHijo) {
           cantidad+=tarea.tareasProgramadas
           cantidadRealizada+=tarea.tareasRealizadas
         }
       });
       this.progressProgram.progresoVideo.forEach((video:any) => {
-        if (program.idPGeneralHijo == video.idPGeneralHijo) {
+        if (program.idPEspecificoHijo == video.idPEspecificoHijo) {
           cantidad+=video.videosTotal
           cantidadRealizada+=video.videosTerminados
         }

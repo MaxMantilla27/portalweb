@@ -253,7 +253,11 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
   public esPadre=false;
   public namePrograma:any
   ngOnInit(): void {
-
+    this.codigoIso =
+    this._SessionStorageService.SessionGetValue('ISO_PAIS') != ''
+      ? this._SessionStorageService.SessionGetValue('ISO_PAIS')
+      : 'INTC';
+      console.log('*********************',this.codigoIso)
     // this.addPlayer()
     this._HelperServiceP.recibirChangePais().pipe(takeUntil(this.signal$)).subscribe((x) => {
       if (this.isBrowser) {

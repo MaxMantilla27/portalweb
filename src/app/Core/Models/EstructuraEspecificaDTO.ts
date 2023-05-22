@@ -76,4 +76,6 @@ export interface ParametrosEstructuraEspecificaAccesoPruebaDTO {
   NombrePrograma: string;
   NombreCapitulo: string;
   idModalidad: number;
+  visualizarVideos: boolean;
+  accesoCompleto: boolean;
 }

@@ -85,7 +85,7 @@ export class HomeProgramasComponent implements OnInit,OnChanges,OnDestroy {
             var ps:CardProgramasDTO={
                 Content:c.descripcion,
                 Inversion:content,
-                Url:'/'+urlArea+'/'+urlSubArea+'-'+c.idBusqueda,
+                Url:c.direccion,
                 Img:'https://img.bsginstitute.com/repositorioweb/img/programas/'+c.imagen,
                 ImgAlt:c.imagenAlt,
                 Title:c.nombre};

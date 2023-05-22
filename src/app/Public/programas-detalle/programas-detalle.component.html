@@ -3,7 +3,7 @@
     <app-miga-pan [items]="migaPan"></app-miga-pan>
   </div>
 </div>
-<div id="FormularioProgramas">
+<!-- <div id="FormularioProgramas">
   <div class="estructuraProgramForm" style="position: absolute;">
     <app-cargando *ngIf="statuscharge==true"></app-cargando>
     <div class="cotentestructuraProgramForm">
@@ -71,8 +71,234 @@
       </app-formulario-azul>
     </ng-container>
   </div>
+</div> -->
+<div class="ContentInicio">
+  <div class="contentAbsolute">
+    <div class="FondoGris"></div>
+    <div class="FondoBlanco"></div>
+  </div>
+
+  <div class="row" style="padding: 0px;margin: 0px;    width: 100%;">
+
+    <div class="d-none col-md-1 d-md-block col-lg-1 d-lg-block">
+      <div class="phoneCall " (click)="EventoInteraccionButton('Solicita una llamada');OpenModalFormulario(1)">
+        <img src="../../../assets/icons/icono-llamada.svg" alt="">
+        <div style="width: calc( 100% - 40px );"> Solicita una llamada</div>
+        <div class="contentHover">Consulta por nuestras facilidades de pago y descuentos</div>
+      </div>
+    </div>
+    <div class="col-12 d-md-none d-lg-none">
+
+      <div class="container">
+        <div class="row rowpadd" style="position: relative;padding-top: 0px;padding-bottom: 0px;">
+          <div class="phoneCall " (click)="EventoInteraccionButton('Solicita una llamada');OpenModalFormulario(1)"
+            style="    top: 0;
+          right: 0;
+          width: 100%;
+          justify-content: flex-start;
+          flex-wrap: nowrap;
+          position: relative;">
+            <img src="../../../assets/icons/icono-llamada.svg" alt="">
+            <div>
+              <div style="width: calc( 100% - 40px );"> Solicita una llamada</div>
+              <div style="font-weight: 100;">Consulta por nuestras facilidades de pago y descuentos</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="container">
+    <div class="row rowpadd">
+      <div class="contentLeft col-12 col-md-7 col-lg-7">
+        <div class="contentTop">
+          <div style="background: transparent;position: relative;padding: 10px 0px;">
+            <div [innerHtml]="cabecera.tituloHtml | safeHtml" class="titlePrograma"></div><br>
+            <div style="    margin: 10px 0px;
+            font-size: 15px;font-weight: 700;">Área: <a
+                (click)="EventoInteraccionLinck(cabecera.areaCapacitacion,'Área')" style="font-weight: 100;"
+                routerLink="/Area/{{cabecera.areaDescripcion}}">{{cabecera.areaCapacitacion}}</a> | Sub
+              Área: <a (click)="EventoInteraccionLinck(cabecera.nombreSubArea,'Sub Área')" style="font-weight: 100;"
+                routerLink="/SubArea/{{cabecera.subAreaDescripcion}}">{{cabecera.nombreSubArea}}</a> </div><br>
+            <div class="row" style="margin-top: 20px;">
+              <div class="col-12 col-md-12 col-lg-6">
+                <app-default-button-flecha [confs]="{color:'primary',titulo:'Matricularme Ahora'}"
+                  [style]="'width: 100%;border-radius:20px'"
+                  (ButtoclClick)="EventoInteraccionButton('Matricularme Ahora');OpenModalPago()"
+                  [disabled]="cabecera.listProgramaEspecificoInformacionDTO.length==0"></app-default-button-flecha>
+              </div>
+              <div class="col-12 col-md-12 col-lg-6 " *ngIf="esAonline==true">
+                <app-default-button-flecha [confs]="{color:'verde',titulo:'Acceso de prueba gratis'}"
+                  [style]="'width: 100%;border-radius:20px'"
+                  (ButtoclClick)="EventoInteraccionButton('Acceso de prueba gratis');RegistrarProgramaPrueba()"></app-default-button-flecha>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="contentBotton">
+          <div style="background: transparent;position: relative;padding: 10px 0px;">
+            <div class="row" style="align-items: flex-start;">
+              <div *ngIf="cabecera.imgPrincipal!='https://img.bsginstitute.com/repositorioweb/img/partners/Sin Partner'"
+                class="col-12 col-md-10 col-lg-10"
+                style="position: relative;margin-top: 10px;text-align: left;margin-bottom: 40px;">
+                <img class="InfoProgramImg" [src]="cabecera.imgPrincipal" alt="">
+              </div>
+              <ng-container *ngIf="idBusqueda!=7569">
+                <div
+                  *ngIf="cabecera.imgPrincipal!='https://img.bsginstitute.com/repositorioweb/img/partners/Sin Partner'"
+                  class="col-12 col-md-6 col-lg-6 row">
+
+                  <div class="col-12 " style="display: flex">
+                    <img class="InfoProgramIcon" src="../../../assets//icons/reloj-04.svg" alt="">
+                    <div class="InfoProgramTitle">Fechas de Inicio:</div>
+                  </div>
+                  <div class="col-12 " style="margin-top: 10px;">
+                    <div *ngFor="let item of cabecera.listProgramaEspecificoInformacionDTO" class=" infoProgramFechas ">
+                      <div class="infoProgramTitle">
+                        <ng-container *ngIf="item.tipo.toLowerCase()=='online asincronica'">
+                          Online a tu ritmo :
+                        </ng-container>
+                        <ng-container *ngIf="item.tipo.toLowerCase()=='online sincronica'">
+                          Online en vivo :
+                        </ng-container>
+                        <ng-container *ngIf="item.tipo.toLowerCase()=='presencial'">
+                          Presencial {{item.ciudad[0].toUpperCase() + item.ciudad.substr(1).toLowerCase() }}:
+                        </ng-container>
+                      </div>
+                      <div class="infoProgramText">{{item.fechaInicioTexto}}</div>
+                    </div>
+                  </div>
+
+                </div>
+                <div
+                  *ngIf="cabecera.imgPrincipal=='https://img.bsginstitute.com/repositorioweb/img/partners/Sin Partner'"
+                  class="col-12 col-md-6 col-lg-6 row">
+
+                  <div class="col-12 " style="display: flex">
+                    <img class="InfoProgramIcon" src="../../../assets//icons/reloj-04.svg" alt="">
+                    <div class="InfoProgramTitle">Fechas de Inicio:</div>
+                  </div>
+                  <div class="col-12 " style="margin-top: 10px;">
+                    <div *ngFor="let item of cabecera.listProgramaEspecificoInformacionDTO" class=" infoProgramFechas ">
+                      <div class="infoProgramTitle">
+                        <ng-container *ngIf="item.tipo.toLowerCase()=='online asincronica'">
+                          Online a tu ritmo :
+                        </ng-container>
+                        <ng-container *ngIf="item.tipo.toLowerCase()=='online sincronica'">
+                          Online en vivo :
+                        </ng-container>
+                      </div>
+                      <div class="infoProgramText">{{item.fechaInicioTexto}}</div>
+                    </div>
+                  </div>
+                </div>
+              </ng-container>
+              <div class="col-12 col-md-6 col-lg-6 row">
+                <div class="col-12 " style="display: flex">
+                  <img class="InfoProgramIcon" src="../../../assets//icons/calendar-03.svg" alt="">
+                  <div class="InfoProgramTitle">Duraci&oacute;n:</div>
+                </div>
+                <div style="margin-top: 10px;width: 100%; margin-bottom: 15px;">
+                  <div class="infoProgramFechas">
+                    <div class="infoProgramText">{{cabecera.duracion}}</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-12" style=" color: red;display: flex;"
+                *ngIf="MontoPago!=undefined && MontoPago!=null && MontoPago.length>0 && MontoPago[0].porcentajeDescuento!=null && MontoPago[0].porcentajeDescuento!=0">
+                <p style="font-weight: bold;font-size: 17px;">{{porcentajeDescuento}}%&nbsp;</p>
+                <p style="font-size: 14px;margin-top: auto;">
+                  {{textoDescuento}}
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="contentRigth col-12 col-md-5 col-lg-5">
+
+        <div class="col-12" style="display:flex;justify-content: center;">
+          <div id="FormularioProgramasInsert">
+            <div class="estructuraProgramForm" style="position: relative;">
+              <app-cargando *ngIf="statuscharge==true"></app-cargando>
+              <div class="cotentestructuraProgramForm">
+                <div class="question" style="justify-content: flex-start;align-items: center;">
+                  <img src="../../../assets/icons/signo-pregunta-abierto-03.svg" alt="">
+                </div>
+                <div>Tienes dudas sobre algún aspecto del programa</div>
+                <div class="question" style="justify-content: flex-end;align-items: center;">
+                  <img src="../../../assets/icons/signo-pregunta-cerrado-04.svg" alt="">
+                </div>
+              </div>
+              <div class="subtitleEstruturaProgramFormAzul">
+                Registra tus datos para que un asesor especializado pueda ayudarte en todo lo que requieras
+              </div>
+              <ng-container *ngIf="combosPrevios!=undefined">
+                <app-formulario-azul style="background-color: blue;" [Interaccion]="'Programas-'+idBusqueda"
+                  [model]="formularioContacto" [InputsDisable]="statuscharge" [CleanOnSubmit]="cleanSub"
+                  (OnSubmit)="SetContacto($event)" (OnValid)="formVal=$event" [fiels]="fileds"
+                  (OnSelect)="SelectChage($event)">
+
+                  <ng-container contenido>
+                  </ng-container>
+                  <ng-container send>
+                    <div style="text-align: center;margin-top: -10px;margin-bottom: 10px;">
+                      <a style="color: #027CFF;font-size: 14px;cursor: pointer;" (click)="LimpiarCampos()">[No soy
+                        {{formularioContacto.Nombres}}]</a>
+                    </div>
+                    <app-default-button-flecha style="display: flex;justify-content: center;"
+                      [confs]="{color:'primary',titulo:'Enviar'}"
+                      [style]="'width: 85%;margin-bottom: -2px;border-radius:20px'">
+                    </app-default-button-flecha>
+                  </ng-container>
+
+                </app-formulario-azul>
+              </ng-container>
+              <ng-container *ngIf="combosPrevios==undefined && CompleteLocalStorage==true">
+                <app-formulario-azul [Interaccion]="'Programas-'+idBusqueda" [model]="formularioContacto"
+                  [InputsDisable]="statuscharge" [CleanOnSubmit]="cleanSub" (OnSubmit)="SetContacto($event)"
+                  (OnValid)="formVal=$event" [fiels]="fileds" (OnSelect)="SelectChage($event)">
+
+                  <ng-container contenido>
+                  </ng-container>
+                  <ng-container send>
+                    <div style="text-align: center;margin-top: -10px;margin-bottom: 10px;">
+                      <a style="color: #027CFF;font-size: 14px;cursor: pointer;" (click)="LimpiarCampos()">[No soy
+                        {{formularioContacto.Nombres}}]</a>
+                    </div>
+                    <app-default-button-flecha style="display: flex;justify-content: center;"
+                      [confs]="{color:'primary',titulo:'Enviar'}"
+                      [style]="'width: 85%;margin-bottom: -2px;border-radius:20px'">
+                    </app-default-button-flecha>
+                  </ng-container>
+
+                </app-formulario-azul>
+              </ng-container>
+              <ng-container *ngIf="combosPrevios==undefined && CompleteLocalStorage==false">
+                <app-formulario-azul [Interaccion]="'Programas-'+idBusqueda" [model]="formularioContacto"
+                  [InputsDisable]="statuscharge" [CleanOnSubmit]="cleanSub" (OnSubmit)="SetContacto($event)"
+                  (OnValid)="formVal=$event" [fiels]="fileds" (OnSelect)="SelectChage($event)">
+
+                  <ng-container contenido>
+                  </ng-container>
+                  <ng-container send>
+                    <app-default-button-flecha style="display: flex;justify-content: center;"
+                      [confs]="{color:'primary',titulo:'Enviar'}"
+                      [style]="'width: 85%;margin-bottom: -2px;border-radius:20px'">
+                    </app-default-button-flecha>
+                  </ng-container>
+                </app-formulario-azul>
+              </ng-container>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
 </div>
-<div style="background: #f4f4f4;position: relative;padding: 10px 0px;">
+<!-- <div style="background: #f4f4f4;position: relative;padding: 10px 0px;">
   <div class="row" style="padding: 0px;margin: 0px;">
 
     <div class="d-none col-md-1 d-md-block col-lg-1 d-lg-block">
@@ -129,9 +355,9 @@
               </div>
             </div>
           </div>
-          <!-- <div class="col-12 col-md-6 col-lg-6 diviframe" style="position: relative;"
+          <div class="col-12 col-md-6 col-lg-6 diviframe" style="position: relative;"
             [innerHtml]="contenidoCabecera | safeHtml">
-          </div> -->
+          </div>
         </div>
       </div>
     </div>
@@ -291,7 +517,7 @@
       </div>
     </div>
   </div>
-</div>
+</div> -->
 
 
 
@@ -323,6 +549,34 @@
             </div>
           </mat-tab>
           <mat-tab label="Duración y Horarios">
+            <ng-container *ngIf="cabecera!=null && cabecera.listProgramaEspecificoInformacionDTO!=null">
+              <ng-container *ngFor="let item of cabecera.listProgramaEspecificoInformacionDTO">
+                <div *ngIf="item.sesiones!=null && item.sesiones.length>0" style="margin-top: 20px;">
+                  <strong>
+                    En la modalidad
+                    <ng-container *ngIf="item.tipo.toLowerCase()=='online sincronica'">Online Sincrónica (Clases en
+                      vivo):</ng-container>
+                    <ng-container *ngIf="item.tipo.toLowerCase()!='online sincronica'">Presencial (Clases
+                      presenciales):</ng-container>
+                  </strong>
+                  <br>
+                  Las clases se desarrollarán de forma {{item.tipo.toLowerCase()=='online sincronica'?'virtual':'presencial'}}, con una frecuencia semanal en el siguiente horario (*):
+                  <ul style="margin: 1rem;">
+                    <li *ngFor="let sesi of item.sesiones">
+                      <strong>
+                        {{sesi.dia}}: {{sesi.horaInicio.split(':')[0]+':'+sesi.horaInicio.split(':')[1] }} a
+                        {{sesi.horaFin.split(':')[0]+':'+sesi.horaFin.split(':')[1] }} horas.
+                      </strong>
+                    </li>
+                  </ul>
+                  (*) Para más detalles sobre fechas y horarios solicita el cronograma de clases.
+
+                </div>
+
+              </ng-container>
+
+            </ng-container>
+
             <div class="puntoAzulLista" [innerHtml]="seccion.duracionHorario | safeHtml" style="text-align: left;
             padding: 20px 0px;">
 
@@ -609,21 +863,24 @@
     <div class="col-12 col-md-12 col-lg-12 tabprogram">
       <div class="subtitulo" style="font-size: 2rem;
       font-weight: 600;">Modalidades de pago</div>
-      <div style="display: flex;
-      align-items: center;
-      color: #4a4a49; font-weight: bold;"><i class="material-icons"
-          style="color: #34c939;margin-right: 10px;">play_arrow</i>Dep&oacute;sito o pago en una cuenta del BCP:
-      </div>
-      <div class="row cardFormasPago" style="margin-bottom: 40px;">
-        <div class="col-12 col-md-9 col-lg-9 divpagobcp">
-          Puedes solicitar tu c&oacute;digo de pago, o la información de la cuenta a nuestros asesores para hacer un
-          dep&oacute;sito o transferencia
+      <ng-container *ngIf="codigoIso=='PE'">
+        <div style="display: flex;
+        align-items: center;
+        color: #4a4a49; font-weight: bold;"><i class="material-icons"
+            style="color: #34c939;margin-right: 10px;">play_arrow</i>Dep&oacute;sito o pago en una cuenta del BCP:
         </div>
-        <div class="col-12 col-md-3 col-lg-3"
-          style="padding: 0px; margin: 10px 0px;display:flex;justify-content: flex-start;">
-          <img class="imgCardFormasPago" src="../../../assets//icons/bcp-06.svg" alt="">
+        <div class="row cardFormasPago" style="margin-bottom: 40px;">
+          <div class="col-12 col-md-9 col-lg-9 divpagobcp">
+            Puedes solicitar tu c&oacute;digo de pago, o la información de la cuenta a nuestros asesores para hacer un
+            dep&oacute;sito o transferencia
+          </div>
+          <div class="col-12 col-md-3 col-lg-3"
+            style="padding: 0px; margin: 10px 0px;display:flex;justify-content: flex-start;">
+            <img class="imgCardFormasPago" src="../../../assets//icons/bcp-06.svg" alt="">
+          </div>
         </div>
-      </div>
+      </ng-container>
+
     </div>
     <div class="col-12 col-md-12 col-lg-12" style="    margin-bottom: 10px;">
 
