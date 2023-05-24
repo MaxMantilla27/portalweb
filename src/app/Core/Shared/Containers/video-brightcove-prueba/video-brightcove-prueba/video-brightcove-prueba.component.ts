@@ -4,6 +4,10 @@ import { Subject, takeUntil } from 'rxjs';
 import { ParametrosEstructuraEspecificaAccesoPruebaDTO, ParametrosEstructuraEspecificaDTO, RegistroVideoUltimaVisualizacionDTO } from 'src/app/Core/Models/EstructuraEspecificaDTO';
 import { HelperService } from '../../../Services/helper.service';
 import { VideoSesionService } from '../../../Services/VideoSesion/video-sesion.service';
+import { GrupoPreguntaFiltroDTO, RegistroPreguntaDTO, ValidaRespuestaPreguntaDTO } from 'src/app/Core/Models/PreguntaInteractivaDTO';
+import { PreguntaInteractivaService } from '../../../Services/PreguntaInteractiva/pregunta-interactiva.service';
+import { SnackBarServiceService } from '../../../Services/SnackBarService/snack-bar-service.service';
+
 declare var $:any;
 @Component({
   selector: 'app-video-brightcove-prueba',
@@ -21,6 +25,8 @@ export class VideoBrightcovePruebaComponent implements OnInit,OnDestroy {
 
   constructor(
     public _VideoSesionService:VideoSesionService,
+    public _PreguntaInteractivaService:PreguntaInteractivaService,
+    private _SnackBarServiceService:SnackBarServiceService,
     private _HelperService:HelperService
   ) {}
   ngOnDestroy(): void {
@@ -34,6 +40,9 @@ export class VideoBrightcovePruebaComponent implements OnInit,OnDestroy {
 
   @Input()
   public videoData: any;
+  @Input() nextChapter:any;
+  @Output() next: EventEmitter<void> = new EventEmitter<void>();
+  @Output() OnFin: EventEmitter<void> = new EventEmitter<void>();
   public tipo = 2;
   public urlDiapo = '';
   public diapositivas: Array<any> = [];
@@ -51,7 +60,7 @@ export class VideoBrightcovePruebaComponent implements OnInit,OnDestroy {
   public guardar=false;
   public valorRespuesta=''
   public capituloEv=-1;
-  @Input() nextChapter:any;
+  public cargaFinalizado=false;
   // +++ Set the data for the player +++
   playerData = {
     accountId: '6267108632001',
@@ -69,10 +78,11 @@ export class VideoBrightcovePruebaComponent implements OnInit,OnDestroy {
     IdPGeneralHijo: 0,
     NombreCapitulo: '',
     NombrePrograma: '',
-    idModalidad:1
+    idModalidad:1,
+    visualizarVideos:false,
+    accesoCompleto:false,
   };
-  @Output() next: EventEmitter<void> = new EventEmitter<void>();
-  @Output() OnFin: EventEmitter<void> = new EventEmitter<void>();
+  public estadoFinalizarPreguntas=false
   public send:RegistroVideoUltimaVisualizacionDTO={
     accesoPrueba:true,
     id:0,
@@ -84,7 +94,31 @@ export class VideoBrightcovePruebaComponent implements OnInit,OnDestroy {
     idSesion:0,
     tiempoVisualizacion:0,
   }
+  public paramsPreguntas:GrupoPreguntaFiltroDTO={
+    GrupoPregunta:'',
+    IdPgeneral:0,
+    IdPEspecifico:0
+  }
+  public validatePregunta:ValidaRespuestaPreguntaDTO={
+    IdPEspecifico:0,
+    IdPGeneral:0,
+    IdPregunta:0,
+    IdRespuesta:[],
+    Texto:null,
+    AccesoPrueba:true
+  }
+  public finalizarPerguntas:RegistroPreguntaDTO={
+    IdAccesoPrueba:false,
+    IdPEspecifico:0,
+    IdPEspecificoPadre:0,
+    IdPGeneral:0,
+    IdPregunta:'',
+    IdPrincipal:0,
+    IdRespuesta:'',
+    IdSexo:0,
+    Texto:'',
 
+  }
   public GetTIme:any;
   public finish=false
   public grupo=''
@@ -100,6 +134,7 @@ export class VideoBrightcovePruebaComponent implements OnInit,OnDestroy {
   public TiempoRestante=3000;
   public valueCount=3
   public timeo2:any
+  public indiceDiapositiva=-1;
   public timeo:any
   ngOnInit(): void {
     this._HelperService.recibirCombosPerfil.pipe(takeUntil(this.signal$)).subscribe((x) => {
@@ -138,6 +173,7 @@ export class VideoBrightcovePruebaComponent implements OnInit,OnDestroy {
       console.log(this.diapositivas)
       var tiempo=0
       var i=1
+      var j=0
       this.diapositivas.forEach((x) => {
 
         if (x.tiempo<=this.tiempovideoinicio) {
@@ -146,11 +182,12 @@ export class VideoBrightcovePruebaComponent implements OnInit,OnDestroy {
           }
           if(x.tiempo>=tiempo){
             tiempo=x.tiempo
+            this.indiceDiapositiva=j;
             this.urlDiapo = x.rutaDiapositiva;
             if(x.tipoVista==4){
               if(parseInt(x.estadoEval)!=1){
                 this.capituloEv=parseInt(x.nroDiapositiva)
-                this.tipo = 2
+                this.tipo = x.tipoVista
               }
             }else{
               this.tipo = x.tipoVista
@@ -162,29 +199,42 @@ export class VideoBrightcovePruebaComponent implements OnInit,OnDestroy {
           this.numeroDiapositivas++;
           i++;
         }
+        j++;
       });
-      console.log(this.tipo)
+      if(this.tipo==4){
+        this.ListaRegistroPreguntaInteractivaPorGrupo();
+      }
     }
   }
   continuarVideo(){
     var time=0
     var tiempo=0
+    console.log(this.capituloEv)
+    this.finalizado=false
+    this.valPregunta=false
+    this.videocontinuar=false
+    var i=0;
     this.diapositivas.forEach(x=>{
-      if(x.nroDiapositiva==this.capituloEv && parseInt(x.tipoVista)==4){
+      if(x.nroDiapositiva==this.capituloEv && parseInt(x.tipoVista)==4 && this.indiceDiapositiva==i){
         x.estadoEval=1;
         time=x.tiempo;
+
+        this.tiempovideoinicio=x.tiempo;
       }
+      i++;
     })
+    i=0;
     this.diapositivas.forEach(x=>{
 
       if (x.tiempo<=time) {
         if(x.tiempo>=tiempo){
           tiempo=x.tiempo
+          this.indiceDiapositiva=i;
           this.urlDiapo = x.rutaDiapositiva;
           if(x.tipoVista==4){
             if(parseInt(x.estadoEval)!=1){
               this.capituloEv=parseInt(x.nroDiapositiva)
-              this.tipo = 2
+              this.tipo = x.tipoVista
             }
           }else{
             this.tipo = x.tipoVista
@@ -192,11 +242,197 @@ export class VideoBrightcovePruebaComponent implements OnInit,OnDestroy {
           this.grupo=x.urlEvaluacion
         }
       }
+      i++;
     })
     this.tipo
     this.playVideo()
+    console.log(this.diapositivas)
   }
+  chageRespuesta(index:number,tipo:number){
+    if(!this.valPregunta){
+      this.validatePregunta.IdPregunta=this.preguntas[this.preguntaActual].idPregunta
+      this.validatePregunta.IdPGeneral=this.json.IdPGeneralHijo;
+      this.validatePregunta.IdPEspecifico=this.json.IdPEspecificoHijo;
+      this.validatePregunta.IdRespuesta=[];
+      var value=this.preguntas[this.preguntaActual].respuestaGrupoPreguntaInteractivaPrograma[index].check;
+      if(tipo!=4){
+        this.preguntas[this.preguntaActual].respuestaGrupoPreguntaInteractivaPrograma.forEach((res:any) => {
+          res.check=false;
+        });
+        this.preguntas[this.preguntaActual].respuestaGrupoPreguntaInteractivaPrograma[index].check=true
+      }else{
+        this.preguntas[this.preguntaActual].respuestaGrupoPreguntaInteractivaPrograma[index].check=!value;
+      }
 
+      let i=0
+      this.preguntas[this.preguntaActual].respuestaGrupoPreguntaInteractivaPrograma.forEach((res:any) => {
+        console.log(res.check);
+        if(res.check==true){
+          this.validatePregunta.IdRespuesta.push(res.idRespuesta)
+          i++;
+        }
+      });
+      console.log(i)
+      console.log(this.preguntas)
+      console.log(this.preguntas[this.preguntaActual].numeroRespuestas)
+      if(i==this.preguntas[this.preguntaActual].numeroRespuestas){
+        this.ValidarPreguntaInteractiva();
+      }
+    }
+  }
+  public esnumero=false
+  ValidarNumero(){
+    console.log(parseInt(this.valorRespuesta))
+    console.log(isNaN(parseInt(this.valorRespuesta)))
+    this.esnumero=!isNaN(parseInt(this.valorRespuesta))
+  }
+  ResponderTexto(){
+    console.log(this.valPregunta)
+    if(!this.valPregunta){
+      this.validatePregunta.IdPregunta=this.preguntas[this.preguntaActual].idPregunta
+      this.validatePregunta.IdPGeneral=this.json.IdPGeneralHijo;
+      this.validatePregunta.IdPEspecifico=this.json.IdPEspecificoHijo;
+      this.validatePregunta.Texto=this.valorRespuesta.toString();
+      console.log(this.validatePregunta)
+      this.ValidarPreguntaInteractiva();
+    }
+  }
+  finalizarPreguntas(){
+    this.feedCorrecto=''
+    this.cargaFinalizado=true
+    this.estadoFinalizarPreguntas=true
+    this.finalizarPerguntas.IdAccesoPrueba=this.json.AccesoPrueba;
+    this.finalizarPerguntas.IdPEspecifico=this.json.IdPEspecificoHijo;
+    this.finalizarPerguntas.IdPEspecificoPadre=this.json.IdPEspecificoPadre;
+    this.finalizarPerguntas.IdPGeneral=this.json.IdPGeneralHijo;
+    this.finalizarPerguntas.IdPrincipal=this.json.IdPGeneralPadre
+    this.finalizarPerguntas.IdSexo=this.miPerfil.datosAlumno.idGenero
+    this.finalizarPerguntas.Texto='';
+    var pregun=this.preguntas.map((p:any)=>p.idPregunta).join(',');
+    console.log(pregun)
+    var res="'"+this.preguntas.map((p:any)=>p.idRespuesta).join("','")+"'";
+    console.log(res)
+    this.finalizarPerguntas.IdPregunta=pregun
+    this.finalizarPerguntas.IdRespuesta=res
+    this._PreguntaInteractivaService.RegistrarPreguntaInteractiva(this.finalizarPerguntas).pipe(takeUntil(this.signal$)).subscribe({
+      next:x=>{
+        this.cargaFinalizado=false
+        console.log(x)
+        this.finalizado=true
+        this.videoFinal='https://repositorioweb.blob.core.windows.net/repositorioweb/aulavirtual/feedback/'+x.urlVideo
+        this.estadoFinalizarPreguntas=false
+      },
+      error:c=>{
+
+        this.cargaFinalizado=false
+      }
+    })
+  }
+  siguientePregunta(){
+    this.preguntaActual++ ;
+    this.feedCorrecto=''
+    this.valPregunta=false;
+  }
+  ValidarPreguntaInteractiva(){
+    this.valPregunta=true;
+    this._PreguntaInteractivaService.ValidarPreguntaInteractiva(this.validatePregunta).pipe(takeUntil(this.signal$)).subscribe({
+      next:x=>{
+        console.log(x)
+        this.preguntas[this.preguntaActual].idRespuesta=x.idRespuesta
+        if(x.respuestaCorrecta){
+          this._SnackBarServiceService.openSnackBar(x.feedbackPositivo,'x',15,"snackbarCrucigramaSucces");
+          this.preguntas[this.preguntaActual].valid=true
+        }else{
+          this.preguntas[this.preguntaActual].respuestaGrupoPreguntaInteractivaPrograma.forEach((res:any) => {
+            res.check=false;
+          });
+          this._SnackBarServiceService.openSnackBar(x.feedbackNegativo,'x',15,"snackbarCrucigramaerror");
+          if(x.numeroIntento>=x.numeroMaximoIntento){
+            this.feedCorrecto=x.feedbackPositivo;
+            this.preguntas[this.preguntaActual].valid=true
+          }else{
+            this.valPregunta=false;
+          }
+        }
+        console.log(this.preguntas)
+
+      },
+      error:e=>{
+        this.valPregunta=false;
+        console.log(e)
+      },
+      complete:()=>{
+        this.valorRespuesta=''
+      }
+    })
+  }
+  ListaRegistroPreguntaInteractivaPorGrupo(){
+    if(this.chargePreguntas){
+      this.chargePreguntas=false
+      this.paramsPreguntas.IdPgeneral=this.json.IdPGeneralHijo;
+      this.paramsPreguntas.IdPEspecifico=this.json.IdPEspecificoHijo;
+      this.paramsPreguntas.GrupoPregunta=this.grupo
+      this._PreguntaInteractivaService.ListaRegistroPreguntaInteractivaPorGrupo(this.paramsPreguntas).pipe(takeUntil(this.signal$)).subscribe({
+        next:x=>{
+          console.log(x)
+          if(x.length>0){
+            console.log(this.valPregunta)
+            this.preguntaActual=0;
+            this.chargePreguntas=true
+            this.preguntas=x;
+            let i=1;
+            this.preguntas.forEach((element:any) => {
+              element.valid=false
+              element.respuestaGrupoPreguntaInteractivaPrograma.forEach((res:any) => {
+                res.check=false;
+              });
+            });
+
+            console.log(this.preguntas.length)
+            var brk=false;
+            this.preguntas.forEach((element:any) => {
+              if(!brk){
+                if(this.preguntas.length!=(i)){
+                  console.log(this.preguntaActual)
+                  if(element.numeroMaximoIntento<=element.intento || element.correcto){
+                    this.preguntaActual++;
+                  }else{
+                    this.valPregunta=false;
+                    brk=true
+                  }
+                }else{
+                  console.log('-'+this.preguntaActual)
+                  if(element.numeroMaximoIntento<=element.intento || element.correcto){
+                    var respuestas=this.preguntas[this.preguntas.length-1].idRespuesta.split(',')
+                    this.preguntas[this.preguntas.length-1].respuestaGrupoPreguntaInteractivaPrograma.forEach((r:any) => {
+                      respuestas.forEach((res:any) => {
+                        if(parseInt(res)==r.idRespuesta){
+                          r.check=true
+                        }
+                      });
+                    });
+                    this.preguntas[this.preguntas.length-1].valid=true;
+                    this.valPregunta=true;
+                  }else{
+                    this.valPregunta=false;
+                  }
+                }
+              }
+
+              i++
+            });
+            console.log(this.preguntaActual)
+            console.log(this.valPregunta)
+            console.log(x)
+          }else{
+            this.continuarVideo()
+          }
+
+        }
+      })
+    }
+
+  }
   // +++ Build the player and place in HTML DOM +++
   changeBarra(e:any){
     this.tiempovideoinicio=e;
@@ -207,6 +443,7 @@ export class VideoBrightcovePruebaComponent implements OnInit,OnDestroy {
    // console.log(e)
     var tiempo=0
     var i=0
+    var j=0;
     this.diapositivaactual=0
     var entro4=false;
     this.diapositivas.forEach((x) => {
@@ -218,22 +455,30 @@ export class VideoBrightcovePruebaComponent implements OnInit,OnDestroy {
         this.diapositivaactual=i
         if(x.tiempo>=tiempo){
           tiempo=x.tiempo
+          this.indiceDiapositiva=j;
           this.urlDiapo = x.rutaDiapositiva;
 
           if(x.tipoVista==4){
             if(parseInt(x.estadoEval)!=1){
               this.capituloEv=parseInt(x.nroDiapositiva)
-              this.tipo =2
+              this.tipo =x.tipoVista
             }
           }else{
             this.tipo = x.tipoVista
           }
           this.grupo=x.urlEvaluacion
+          if(this.tipo==4){
+            this.tiempovideoinicio=x.tiempo;
+            this.tiempoactualvideo=x.tiempo;
+            this.pauseVideo();
+            this.ListaRegistroPreguntaInteractivaPorGrupo();
+          }
         }
       }
+      j++;
     });
 
-    this.RegistrarUltimaVisualizacionVideo()
+    //this.RegistrarUltimaVisualizacionVideo()
   }
   setCurrentTime(data: any) {
     var tiempo= data.target.currentTime;
@@ -242,6 +487,7 @@ export class VideoBrightcovePruebaComponent implements OnInit,OnDestroy {
     //   this.video.nativeElement.pause();
     // }
     var i=0;
+    var j=0
     this.diapositivas.forEach((x) => {
       if(x.tipoVista!=4){
         i++;
@@ -252,18 +498,24 @@ export class VideoBrightcovePruebaComponent implements OnInit,OnDestroy {
       }
       if (parseInt(tiempo) == x.tiempo) {
         this.diapositivaactual=i
+        this.indiceDiapositiva=j;
         this.urlDiapo = x.rutaDiapositiva;
         if(x.tipoVista==4){
           if(parseInt(x.estadoEval)!=1){
             this.capituloEv=parseInt(x.nroDiapositiva)
-            this.tipo = 2
+            this.tipo = x.tipoVista
           }
         }else{
           this.tipo = x.tipoVista
         }
         this.grupo=x.urlEvaluacion
         this.RegistrarUltimaVisualizacionVideo()
+        if(this.tipo==4){
+          this.pauseVideo();
+          this.ListaRegistroPreguntaInteractivaPorGrupo();
+        }
       }
+      j++;
     });
   }
   minusDiapo(){
@@ -284,25 +536,71 @@ export class VideoBrightcovePruebaComponent implements OnInit,OnDestroy {
     }
   }
   plusDiapo(){
-    var index=this.diapositivaactual
+    var index=this.getNextIndexPordiapo()
+    //var index =this.indiceDiapositiva;
     console.log(this.diapositivas)
-    if(this.diapositivaactual<=this.numeroDiapositivas){
+    console.log(index)
+    console.log(this.diapositivaactual)
+    console.log(this.indiceDiapositiva)
+    if(this.diapositivaactual<this.numeroDiapositivas){
+      console.log(this.diapositivas[index].tipoVista)
       if(this.diapositivas[index].tipoVista==4 ){
-        console.log(parseInt(this.diapositivas[index].estadoEval))
+        console.log(this.diapositivas[index])
         if(parseInt(this.diapositivas[index].estadoEval)!=1){
+         // this.indiceDiapositiva=index
           this.capituloEv=parseInt(this.diapositivas[index].nroDiapositiva)
           console.log(this.diapositivas[index])
           this.tipo=this.diapositivas[index].tipoVista;
+          this.grupo=this.diapositivas[index].urlEvaluacion
+          this.tiempovideoinicio=this.diapositivas[index].tiempo;
           this.pauseVideo()
+          this.ListaRegistroPreguntaInteractivaPorGrupo();
+        }else{
+          index++
+          this.autoplay=true
+          this.diapositivaactual++
+          this.tiempovideoinicio=this.diapositivas[index].tiempo;
+          this.urlDiapo=this.diapositivas[index].rutaDiapositiva;
+          this.tipo=this.diapositivas[index].tipoVista;
         }
       }else{
         this.autoplay=true
         this.diapositivaactual++
+        console.log(this.tiempovideoinicio)
         this.tiempovideoinicio=this.diapositivas[index].tiempo;
+        console.log(this.tiempovideoinicio)
         this.urlDiapo=this.diapositivas[index].rutaDiapositiva;
         this.tipo=this.diapositivas[index].tipoVista;
       }
     }
+  }
+  getNextIndexPordiapo():any{
+    let i=0
+    let indiceactual=0
+    console.log(this.diapositivaactual)
+    while(i<this.diapositivas.length){
+      if(this.diapositivas[i].nroDiapositiva==this.diapositivaactual){
+        indiceactual=i;
+      }
+      i++
+    }
+    i=0
+    if(indiceactual==this.diapositivas.length){
+      return indiceactual;
+    }
+    while(i<this.diapositivas.length){
+      if(indiceactual<i){
+        if(this.diapositivas[i].tipoVista==4 && this.diapositivas[i].estadoEval.toString()=='0'){
+          return i;
+        }else{
+          if(this.diapositivas[i].tipoVista!=4 ){
+            return i;
+          }
+        }
+      }
+      i++
+    }
+    return i;
   }
   pauseVideo(){
     if(this.videoData.objetoConfigurado.idVideoBrightcove!='0' &&
@@ -387,9 +685,6 @@ export class VideoBrightcovePruebaComponent implements OnInit,OnDestroy {
     }
 
   }
-  EventoInteraccion(){
-    this._HelperService.enviarMsjAcciones({Tag:'Video',Programa:this.json.NombrePrograma,Seccion:'Sesiones'})
-  }
 
   OnFinish(){
     this.RegistrarUltimaVisualizacionVideo()
@@ -403,17 +698,23 @@ export class VideoBrightcovePruebaComponent implements OnInit,OnDestroy {
     this.timeo2=setInterval(()=>{
       this.valueCount-=100
       console.log(this.valueCount)
+      if(this.valueCount<-200){
+        clearTimeout(this.timeo2)
+      }
     },100)
     this.timeo=setTimeout(() => {
       this.CambioTab()
     }, 3000);
   }
-  CambioTab(){
-    this.tiempovideoinicio=0
-    this.finish=false;
-    this.TiempoRestante=3000
-    clearTimeout(this.timeo)
-    this.next.emit()
+  EventoInteraccion(){
+    this._HelperService.enviarMsjAcciones({Tag:'Video',Programa:this.json.NombrePrograma,Seccion:'Sesiones'})
+  }
+  EventoInteraccionVolumen(){
+    console.log(event)
+    this._HelperService.enviarMsjAcciones({Tag:'Video(volumen)',Programa:this.json.NombrePrograma,Seccion:'Sesiones'})
+  }
+  EventoInteraccionDrag(){
+    this._HelperService.enviarMsjAcciones({Tag:'Drag',Programa:this.json.NombrePrograma,Seccion:'Sesiones'})
   }
   TimerPause(){
     clearTimeout(this.timeo)
@@ -428,10 +729,21 @@ export class VideoBrightcovePruebaComponent implements OnInit,OnDestroy {
       this.timeo2=setInterval(()=>{
         this.valueCount-=100
         console.log(this.valueCount)
+        if(this.valueCount<-200){
+          clearTimeout(this.timeo2)
+        }
       },100)
       this.timeo=setTimeout(() => {
         this.CambioTab()
       }, this.TiempoRestante);
     }
+  }
+  CambioTab(){
+    this.tiempovideoinicio=0
+    this.finish=false;
+    this.TiempoRestante=3000
+    clearTimeout(this.timeo)
+    clearTimeout(this.timeo2)
+    this.next.emit()
   }
 }

@@ -122,7 +122,7 @@ export class CursoCertificadoComponent implements OnInit,OnChanges,OnDestroy {
   GenerarCertificadoPorAlumnoIdMatriculaCabecera(){
     console.log(1)
     this.charge=true
-    this._CertificadoIntegraService.GenerarCertificadoPorAlumnoIdMatriculaCabecera(this.datosCertificado.idMatriculaCabecera)
+    this._CertificadoIntegraPortalService.GenerarCertificadoPorAlumnoPortalWebPorIdMatricula(this.datosCertificado.idMatriculaCabecera)
     .pipe(takeUntil(this.signal$))
     .subscribe({
       next:x=>{

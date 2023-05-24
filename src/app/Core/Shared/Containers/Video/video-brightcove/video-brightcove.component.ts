@@ -121,6 +121,7 @@ export class VideoBrightcoveComponent implements OnInit, OnChanges,AfterViewInit
     IdPregunta:0,
     IdRespuesta:[],
     Texto:null,
+    AccesoPrueba:false
   }
   public finalizarPerguntas:RegistroPreguntaDTO={
     IdAccesoPrueba:false,
@@ -778,6 +779,7 @@ export class VideoBrightcoveComponent implements OnInit, OnChanges,AfterViewInit
     this.finish=false;
     this.TiempoRestante=3000
     clearTimeout(this.timeo)
+    clearTimeout(this.timeo2)
     this.next.emit()
   }
 }

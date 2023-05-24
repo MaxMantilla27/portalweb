@@ -70,14 +70,15 @@ export class CompraExitosaOpenPayComponent implements OnInit {
   ProcesamientoPagoOpenPay(){
     if(this.tipoRespuesta=="AF")
     {
+      this.json.IdentificadorTransaccion=this.id
+      this.ObtenerPreProcesoPagoCuotaAlumno()
       this._FormaPagoService.ProcesamientoAfiliacionOpenPay(this.id).pipe(takeUntil(this.signal$)).subscribe({
         next:x=>{
           console.log(x)
           
           this.resultOpenPay = JSON.parse(x._Repuesta.pagoAfiliacion)
           console.log("ResultadoOpen", this.resultOpenPay)
-          this.json.IdentificadorTransaccion=x._Repuesta.identificadorTransaccion
-          this.ObtenerPreProcesoPagoCuotaAlumno()
+          
         }
       })
     }
@@ -93,6 +94,7 @@ export class CompraExitosaOpenPayComponent implements OnInit {
   }
 
   ObtenerPreProcesoPagoCuotaAlumno(){
+    console.log("PRUEBA")
     this.ruta='/AulaVirtual/MisPagos'
     this._FormaPagoService.ObtenerPreProcesoPagoCuotaAlumno(this.json).pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
@@ -117,7 +119,7 @@ export class CompraExitosaOpenPayComponent implements OnInit {
                     if(valor==undefined){
                       valor=l
                     }else{
-                      if(valor.nroCuota<l.nroCuota){
+                      if(valor.nroCuota>l.nroCuota){
                         valor=l
                       }
                     }

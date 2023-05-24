@@ -18,6 +18,7 @@ import { DatosPortalService } from 'src/app/Core/Shared/Services/DatosPortal/dat
 import { Validators } from '@angular/forms';
 import { FormularioAzulComponent } from 'src/app/Core/Shared/Containers/formulario-azul/formulario-azul.component';
 import { FormularioPopUpComponent } from 'src/app/Core/Shared/Containers/formulario-pop-up/formulario-pop-up.component';
+import { ChatEnLineaService } from 'src/app/Core/Shared/Services/ChatEnLinea/chat-en-linea.service';
 
 declare const fbq:any;
 declare const gtag:any;
@@ -46,7 +47,7 @@ export class ProgramaFormularioComponent implements OnInit, OnDestroy {
     private _HelperServiceP:Help,
     private _RegionService: RegionService,
     private _DatosPortalService: DatosPortalService,
-
+    private _ChatEnLineaService:ChatEnLineaService
 
 
   ) {
@@ -145,10 +146,11 @@ export class ProgramaFormularioComponent implements OnInit, OnDestroy {
         this.DatosEnvioFormulario.IdPespecifico=parseInt(IdPEspecifico)
       };
       this.DatosEnvioFormulario.IdCampania = parseInt(idcampania);
-      this._HelperService
-        .EnviarFormulario(this.DatosEnvioFormulario).pipe(takeUntil(this.signal$))
+      this._HelperService.EnviarFormulario(
+        this.DatosEnvioFormulario).pipe(takeUntil(this.signal$))
         .subscribe({
           next: (x) => {
+            this.ProcesarAsignacionAutomaticaNuevoPortal(x.id)
             this.cleanSub=false;
             this.datos.nombres = this.DatosEnvioFormulario.Nombres;
             this.datos.apellidos = this.DatosEnvioFormulario.Apellidos;
@@ -187,6 +189,12 @@ export class ProgramaFormularioComponent implements OnInit, OnDestroy {
           },
         });
     }
+  }
+  ProcesarAsignacionAutomaticaNuevoPortal(id:any){
+    this._ChatEnLineaService.ProcesarAsignacionAutomaticaNuevoPortal(id).pipe(takeUntil(this.signal$)).subscribe({
+      next:(x)=>{
+      }
+    })
   }
   obtenerFormularioCompletado(){
     var DatosFormulario = this._SessionStorageService.SessionGetValue('DatosFormulario');

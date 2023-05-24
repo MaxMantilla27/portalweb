@@ -31,6 +31,7 @@ export interface listProgramaEspecificoInformacionDTO{
   nombre:string,
   tipo:string,
   fechaInicioTexto:string,
+  sesiones:Array<any>
 }
 export interface listaPrerrequisitoDTO{
   cabecera:string;

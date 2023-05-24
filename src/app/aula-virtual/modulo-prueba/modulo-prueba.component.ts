@@ -45,7 +45,9 @@ export class ModuloPruebaComponent implements OnInit,OnDestroy {
     IdPGeneralHijo: 0,
     NombreCapitulo:'',
     NombrePrograma:'',
-    idModalidad:1
+    idModalidad:1,
+    visualizarVideos:false,
+    accesoCompleto:false,
   }
   public programaEstructura: CursoPadrePruebaDTO = {
     idAlumno: 0,
@@ -97,7 +99,9 @@ export class ModuloPruebaComponent implements OnInit,OnDestroy {
                 IdPGeneralHijo: program.idPGeneralHijo,
                 NombreCapitulo:program.programaGeneralHijo,
                 NombrePrograma:this.programaEstructura.programaGeneral,
-                idModalidad:this.programaEstructura.idModalidad
+                idModalidad:this.programaEstructura.idModalidad,
+                visualizarVideos:program.visualizarVideos,
+                accesoCompleto:program.accesoCompleto,
               };
               this.migaPan.push({
                 titulo:this.json.NombrePrograma,

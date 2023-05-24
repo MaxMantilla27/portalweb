@@ -119,4 +119,12 @@ export class ProgramaContenidoService {
       return EMPTY;
     }
   }
+
+  public ValidarCalificacionesMatriculaPorPgeneral(IdMatriculaCabecera:number,IdPgeneral:number):Observable<any>{
+    if(this.isBrowser){
+      return this.http.get<any>(this.urlBase+'/ValidarCalificacionesMatriculaPorPgeneral?IdMatriculaCabecera='+IdMatriculaCabecera+'&IdPgeneral='+IdPgeneral);
+    }else{
+      return EMPTY;
+    }
+  }
 }

@@ -43,6 +43,7 @@ export class CursoPruebaComponent implements OnInit,OnDestroy {
   public idMatricula = 0;
   public idRegistroPrueba = 0;
   public datos: any;
+  public cargo=false
   public programaEstructura: CursoPadrePruebaDTO = {
     idAlumno: 0,
     idRegistroPrueba: 0,
@@ -104,6 +105,7 @@ export class CursoPruebaComponent implements OnInit,OnDestroy {
         next: (x) => {
           console.log(x)
           this.programaEstructura = x;
+          this.cargo=true
           this.programaEstructura.listaCursoMatriculado.sort(function (a:any, b:any) {
             return a.orden - b.orden;
           })
@@ -123,9 +125,11 @@ export class CursoPruebaComponent implements OnInit,OnDestroy {
               IdPGeneralHijo: program.idPGeneralHijo,
               NombreCapitulo:program.programaGeneralHijo,
               NombrePrograma:this.programaEstructura.programaGeneral,
-              idModalidad:this.programaEstructura.idModalidad
+              idModalidad:this.programaEstructura.idModalidad,
+              visualizarVideos:program.visualizarVideos,
+              accesoCompleto:program.accesoCompleto,
             };
-            program.params = btoa(JSON.stringify(params));
+            //program.params = btoa(JSON.stringify(params));
           });
         },
       });

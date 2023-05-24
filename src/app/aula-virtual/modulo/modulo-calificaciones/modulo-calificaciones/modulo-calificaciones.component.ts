@@ -1,6 +1,7 @@
 import { Component, Input, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
 import { Subject, takeUntil } from 'rxjs';
 import { NotaService } from 'src/app/Core/Shared/Services/Nota/nota.service';
+import { ProgramaContenidoService } from 'src/app/Core/Shared/Services/ProgramaContenido/programa-contenido.service';
 
 @Component({
   selector: 'app-modulo-calificaciones',
@@ -10,7 +11,8 @@ import { NotaService } from 'src/app/Core/Shared/Services/Nota/nota.service';
 export class ModuloCalificacionesComponent implements OnInit,OnDestroy {
   private signal$ = new Subject();
   constructor(
-    private _NotaService:NotaService
+    private _NotaService:NotaService,
+    private _ProgramaContenidoService:ProgramaContenidoService
   ) { }
   ngOnDestroy(): void {
     this.signal$.next(true)
@@ -20,6 +22,7 @@ export class ModuloCalificacionesComponent implements OnInit,OnDestroy {
   @Input() IdMatriculaCabecera=0
   @Input() IdPEspecifico=0
   @Input() Capitulo=''
+  @Input() IdPGeneralHijo=0
   public criterioPendiente=false;
   public calificacionesCurso:Array<any>=[];
   public calificacionesCursoDetalle:Array<any>=[];
@@ -31,9 +34,21 @@ export class ModuloCalificacionesComponent implements OnInit,OnDestroy {
   }
   ngOnChanges(changes: SimpleChanges): void {
     if(this.IdMatriculaCabecera!=0){
-      this.ObtenerCriteriosEvaluacionCurso()
+
+      this.ValidarCalificacionesMatriculaPorPgeneral();
     }
 
+  }
+  ValidarCalificacionesMatriculaPorPgeneral(){
+    this._ProgramaContenidoService.ValidarCalificacionesMatriculaPorPgeneral(this.IdMatriculaCabecera,this.IdPGeneralHijo).pipe(takeUntil(this.signal$)).subscribe({
+      next:x=>{
+        console.log(x)
+      },
+      complete:()=>{
+
+          this.ObtenerCriteriosEvaluacionCurso()
+      }
+    })
   }
   ObtenerCriteriosEvaluacionCurso(){
     this._NotaService.ListadoCriteriosEvaluacionPorCurso(this.IdMatriculaCabecera,this.IdPEspecifico,1).pipe(takeUntil(this.signal$)).subscribe({

@@ -14,7 +14,7 @@
     <div class="containerVideoDiapositiva" (mouseleave)="down=false" (mouseup)="down=false"
       (mousemove)="resise($event)">
       <div style="display: flex;
-      align-items: center;" [ngClass]="{'containerVideo': tipo == 3}"
+      align-items: center;position: relative;" [ngClass]="{'containerVideo': tipo == 3}"
         [ngStyle]="{'width':(tipo==3)?whidth>0?'calc(45% - '+whidth+'px)':'calc(45% + '+whidth*-1+'px)':tipo==2?'100%':'0px'}">
         <ng-container *ngIf="videoData.objetoConfigurado.idVideoBrightcove!='0' &&
           videoData.objetoConfigurado.idVideoBrightcove!=null &&
@@ -74,6 +74,109 @@
         [ngStyle]="{'width':whidth<=0?'calc(45% - '+whidth*-1+'px)':'calc(45% + '+whidth+'px)'}">
 
         <img *ngIf="urlDiapo!=null" [src]="urlDiapo" alt="" style="width: 100%;height: auto;">
+      </div>
+      <div class="row" style="width: 100%;height: 100%; display: flex; align-items: center;justify-content: center" *ngIf="tipo==4 && preguntas!=undefined && preguntas.length>0">
+        <ng-container *ngIf="cargaFinalizado">
+          <mat-spinner></mat-spinner>
+        </ng-container>
+        <ng-container *ngIf="!cargaFinalizado">
+          <div *ngIf="finalizado">
+            <video [src]="videoFinal" autoplay style="    height: auto;
+            width: 100%;" (ended)="videocontinuar=true"></video>
+            <app-default-button *ngIf="videocontinuar" (ButtoclClick)="continuarVideo()" [confs]="{color:'danger',titulo:'Continuar con la sesión'}" [icon]="''"
+            [style]="'padding: 0px 20px;width:100%;margin-top: -8px;border-radius: 0px;'"></app-default-button>
+          </div>
+          <div class="col-10 col-md-10 col-lg-10 preguntaInteractiva" *ngIf="!finalizado">
+            <div class="headerPregunta">Evaluación</div>
+            <div class="contentPregunta">
+              <div class="pregunta" [innerHtml]="preguntas[preguntaActual].enunciadoPregunta | safeHtml"></div>
+              <div class="tipo_pregunta">
+                <ng-container *ngIf="preguntas[preguntaActual].tipoRespuesta==7;else texto">
+                  Responde esta pregunta ingresando un número
+                </ng-container>
+                <ng-template #texto>
+                  <ng-container *ngIf="preguntas[preguntaActual].tipoRespuesta==6 || preguntas[preguntaActual].tipoRespuesta==8;else select">
+                    Responde esta pregunta ingresando una palabra
+                  </ng-container>
+                  <ng-template #select>
+                    <ng-container *ngIf="preguntas[this.preguntaActual].numeroRespuestas==1;else select2">
+                      Responde esta pregunta escogiendo solo una alternativa
+                    </ng-container>
+                    <ng-template #select2>
+                      Responde esta pregunta marcando más de una alternativa
+                    </ng-template>
+
+                  </ng-template>
+                </ng-template>
+
+              </div>
+              <div class="respuestaLista">
+                <ng-container *ngIf="preguntas[preguntaActual].tipoRespuesta==4">
+                  <div class="respuesta" *ngFor="let respuesta of preguntas[preguntaActual].respuestaGrupoPreguntaInteractivaPrograma;let i=index"
+                  (click)="chageRespuesta(i,preguntas[preguntaActual].tipoRespuesta)">
+                    <i class="material-icons" *ngIf="respuesta.check!=true">check_box_outline_blank</i>
+                    <i class="material-icons" *ngIf="respuesta.check==true">check_box</i>
+                    <div [innerHtml]="respuesta.enunciadoRespuesta | safeHtml"></div>
+                  </div>
+                </ng-container>
+                <ng-container *ngIf="preguntas[preguntaActual].tipoRespuesta==5 || preguntas[preguntaActual].tipoRespuesta==3">
+                  <div class="respuesta" *ngFor="let respuesta of preguntas[preguntaActual].respuestaGrupoPreguntaInteractivaPrograma;let i=index"
+                  (click)="chageRespuesta(i,preguntas[preguntaActual].tipoRespuesta)">
+                    <i class="material-icons" *ngIf="respuesta.check!=true">radio_button_unchecked</i>
+                    <i class="material-icons" *ngIf="respuesta.check==true">radio_button_checked</i>
+                    <div [innerHtml]="respuesta.enunciadoRespuesta | safeHtml"></div>
+                  </div>
+                </ng-container>
+                <ng-container *ngIf="preguntas[preguntaActual].tipoRespuesta==6 || preguntas[preguntaActual].tipoRespuesta==8">
+                  <div class="respuesta fieldPreguntasI row" style="width: 100%;
+                  justify-content: space-between;
+                  align-items: center;" *ngFor="let respuesta of preguntas[preguntaActual].respuestaGrupoPreguntaInteractivaPrograma;let i=index">
+                    <mat-form-field  *ngIf="!valPregunta" appearance="outline" class="col-12 col-md-6 col-lg-6" >
+                      <mat-label>respuesta</mat-label>
+                      <input type="text" autocomplete="off" [(ngModel)]="valorRespuesta" matInput />
+                    </mat-form-field>
+                    <div class="col-12 col-md-6 col-lg-6">
+                      <app-default-button *ngIf="!valPregunta"
+                      (ButtoclClick)="ResponderTexto()" [disabled]="valorRespuesta==''"
+                      [confs]="{color:'primary',titulo:'responder'}" [icon]="''"
+                      [style]="'padding: 0px 20px;margin:0px;margin-bottom: 1.34375em;'"></app-default-button>
+                    </div>
+                  </div>
+                </ng-container>
+                <ng-container *ngIf="preguntas[preguntaActual].tipoRespuesta==7">
+                  <div class="respuesta fieldPreguntasI row" style="width: 100%;
+                  justify-content: space-between;
+                  align-items: center;"
+                   *ngFor="let respuesta of preguntas[preguntaActual].respuestaGrupoPreguntaInteractivaPrograma;let i=index">
+                    <mat-form-field  *ngIf="!valPregunta" appearance="outline" class="col-12 col-md-6 col-lg-6" >
+                      <mat-label>respuesta</mat-label>
+                      <input type="number"  [(ngModel)]="valorRespuesta" (input)="ValidarNumero()" matInput  />
+                    </mat-form-field>
+                    <div class="col-12 col-md-6 col-lg-6">
+                      <app-default-button *ngIf="!valPregunta"
+                      (ButtoclClick)="ResponderTexto()" [disabled]="!esnumero"
+                      [confs]="{color:'primary',titulo:'responder'}" [icon]="''"
+                      [style]="'padding: 0px 20px;margin:0px;margin-bottom: 1.34375em;'"></app-default-button>
+                    </div>
+                  </div>
+                </ng-container>
+
+                <div class="FeddbackCorrecto" *ngIf="feedCorrecto!=''">{{feedCorrecto}}</div>
+              </div>
+            </div>
+            <div class="footerPregunta">
+
+              <app-default-button *ngIf="preguntaActual<(preguntas.length-1)" (ButtoclClick)="siguientePregunta()" [disabled]="!preguntas[preguntaActual].valid"
+                [confs]="{color:'primary',titulo:'Siguiente'}" [icon]="''"
+                [style]="'padding: 0px 20px;margin:0px'"></app-default-button>
+              <app-default-button *ngIf="preguntaActual==(preguntas.length-1)" (ButtoclClick)="finalizarPreguntas()" [disabled]="!preguntas[preguntaActual].valid"
+                [confs]="{color:'primary',titulo:'Finalizar'}" [icon]="''"
+                [style]="'padding: 0px 20px;margin:0px'"></app-default-button>
+            </div>
+          </div>
+
+        </ng-container>
+
       </div>
     </div>
   </div>

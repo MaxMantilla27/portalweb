@@ -106,7 +106,7 @@ export class ConfirmacionPagoKlapComponent implements OnInit {
     if(this.rut==null || this.rut.length<=7 || this.rut==undefined){
       validate = false;
       this._SnackBarServiceService.openSnackBar(
-        'Ingrese RUT valido y completo del titular',
+        'Ingrese RUT valido, sin caracteres especiales (*.,-)! ',
         'x',
         5,
         'snackbarCrucigramaerror'
@@ -133,7 +133,7 @@ export class ConfirmacionPagoKlapComponent implements OnInit {
           {
             dialogRef.close()
             this._SnackBarServiceService.openSnackBar(
-              'Ocurrio un problema al validar los datos, verifique que todo este correcto!',
+              'Ocurrio un problema al validar los datos, Ingrese RUT valido, sin caracteres especiales (*.,-)!',
               'x',
               5,
               'snackbarCrucigramaerror'

@@ -37,7 +37,8 @@
 
 
       </div>
-      <ng-container *ngIf="idPasarela==13">
+      <!-- *ngIf="(idPasarela==13 || idPasarela==5) && idAlumno=9818325"> -->
+      <ng-container *ngIf=" idAlumno==9818325">
         <ng-container style="justify-content: flex-end;" *ngIf="EstadoAfiliado!=undefined && CronogramaPago!=undefined">
           <ng-container *ngIf="CronogramaPago.cuotasPendientes>0 || EstadoAfiliado==true">
             <div class="col-12 col-md-2 col-lg-2 itemsMisPagos" style="padding: 0%;">

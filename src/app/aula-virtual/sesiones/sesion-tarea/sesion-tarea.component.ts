@@ -67,7 +67,8 @@ export class SesionTareaComponent implements OnInit,OnChanges,OnDestroy {
     idPGeneral:0,
     idPrincipal:0,
     idTipoEvaluacionTrabajo:0,
-    file:new File([],'')
+    file:new File([],''),
+    idMatriculaCabecera:0
   }
   public progress=0
   public selectedFiles?: FileList;
@@ -153,6 +154,7 @@ export class SesionTareaComponent implements OnInit,OnChanges,OnDestroy {
     this.sendFile.idPGeneral=this.json.IdPGeneralHijo
     this.sendFile.idPrincipal=this.json.IdPGeneralPadre
     this.sendFile.idTipoEvaluacionTrabajo=1
+    this.sendFile.idMatriculaCabecera=this.json.IdMatriculaCabecera
     if(this.selectedFiles){
       const file: File | null = this.selectedFiles.item(0);
       if (file) {
@@ -162,8 +164,8 @@ export class SesionTareaComponent implements OnInit,OnChanges,OnDestroy {
   }
   EnviarFile(){
     if(this.filestatus){
-      if(this.tarea.registroEvaluacionArchivo!=null && this.tarea.registroEvaluacionArchivo.length>=3 ){
-        this._SnackBarServiceService.openSnackBar("Solo tiene 3 intentos para subir su tarea.",'x',15,"snackbarCrucigramaerror");
+      if(this.tarea.registroEvaluacionArchivo!=null && this.tarea.registroEvaluacionArchivo.length>=2 ){
+        this._SnackBarServiceService.openSnackBar("Solo tiene 2 intentos para subir su tarea.",'x',15,"snackbarCrucigramaerror");
       }else{
         this.setData()
         console.log(this.sendFile)

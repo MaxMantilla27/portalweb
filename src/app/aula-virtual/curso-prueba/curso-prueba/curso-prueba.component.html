@@ -36,7 +36,7 @@
               <img src="../../../assets/icons/horario-04.svg" alt="">
               <div><strong>Recuerda: </strong>Debes completar el primer curso para poder acceder al siguiente</div>
             </div>
-            <app-curso-prueba-modulos [idRegistroPrueba]="idRegistroPrueba" [programaEstructura]="programaEstructura">
+            <app-curso-prueba-modulos *ngIf="cargo==true" [idRegistroPrueba]="idRegistroPrueba" [programaEstructura]="programaEstructura">
             </app-curso-prueba-modulos>
           </div>
         </mat-tab>

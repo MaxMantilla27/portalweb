@@ -1,19 +1,21 @@
 import { style } from '@angular/animations';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Validators } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
 import { Title, Meta } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { Subject, takeUntil, timer } from 'rxjs';
 import { DatoObservableDTO } from 'src/app/Core/Models/DatoObservableDTO';
 import { DatosFormularioDTO } from 'src/app/Core/Models/DatosFormularioDTO';
 import { formulario } from 'src/app/Core/Models/Formulario';
-import { login, loginSendDTO } from 'src/app/Core/Models/login';
+import { login, loginSendDTO, loginSendFacebookDTO } from 'src/app/Core/Models/login';
 import { AccountService } from 'src/app/Core/Shared/Services/Account/account.service';
 import { AlumnoService } from 'src/app/Core/Shared/Services/Alumno/alumno.service';
 import { AspNetUserService } from 'src/app/Core/Shared/Services/AspNetUser/asp-net-user.service';
 import { FormaPagoService } from 'src/app/Core/Shared/Services/FormaPago/forma-pago.service';
 import { HelperService } from 'src/app/Core/Shared/Services/helper.service';
 import { SessionStorageService } from 'src/app/Core/Shared/Services/session-storage.service';
+import { LoginFacebookComponent } from './login-facebook/login-facebook.component';
 
 @Component({
   selector: 'app-login',
@@ -29,6 +31,7 @@ export class LoginComponent implements OnInit,OnDestroy {
     private _SessionStorageService:SessionStorageService,
     private _HelperService: HelperService,
     private _FormaPagoService:FormaPagoService,
+    public dialog: MatDialog,
     private title:Title,
     private meta:Meta,
     private _AccountService:AccountService,
@@ -69,7 +72,6 @@ export class LoginComponent implements OnInit,OnDestroy {
     idIndustria:undefined,
   }
   ngOnInit(): void {
-
 
     let t:string='Iniciar Sesión'
     this.title.setTitle(t);
@@ -210,5 +212,17 @@ export class LoginComponent implements OnInit,OnDestroy {
   eventoclickout(olo:string){
     console.log(olo)
   }
+  OpenModalLogin(data:loginSendFacebookDTO){
+    const dialogRef = this.dialog.open(LoginFacebookComponent, {
+      width: '900px',
+      data: data,
+      panelClass: 'login-facebook-dialog-container',
+      disableClose:true
+    });
+    dialogRef.afterClosed().pipe(takeUntil(this.signal$)).subscribe((result) => {
+      if(result!=undefined){
 
+      }
+    });
+  }
 }

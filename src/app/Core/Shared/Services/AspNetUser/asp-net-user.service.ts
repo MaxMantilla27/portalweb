@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { FiltroProgramasEnvioDTO } from 'src/app/Core/Models/FiltrosProgramasDTO';
-import { loginSendDTO } from 'src/app/Core/Models/login';
+import { loginSendDTO, loginSendFacebookDTO } from 'src/app/Core/Models/login';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -15,6 +15,14 @@ export class AspNetUserService {
   public Authenticate(Json:loginSendDTO):Observable<any>{
     console.log(Json)
     return this.http.post<any>(this.urlBase+'/Authenticate',Json);
+  }
+  public AuthenticateFacebook(Json:loginSendFacebookDTO):Observable<any>{
+    console.log(Json)
+    return this.http.post<any>(this.urlBase+'/AuthenticateFacebook',Json);
+  }
+  public GuardarLoginFacebook(Json:loginSendFacebookDTO):Observable<any>{
+    console.log(Json)
+    return this.http.post<any>(this.urlBase+'/GuardarLoginFacebook',Json);
   }
 
 }

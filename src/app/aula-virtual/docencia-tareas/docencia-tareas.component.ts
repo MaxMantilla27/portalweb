@@ -124,8 +124,8 @@ export class DocenciaTareasComponent implements OnInit,OnDestroy {
           this.datosTarea=x;
           this.params.id=this.IdTarea
           this.params.idEvaluacion=x.idEvaluacion
-          this.params.idPEspecifico=x.idPEspecificoHijo
-          this.params.idPEspecificoPadre=x.idPEspecificoPadre
+          this.params.idPEspecifico=x.idPEspecificoPadre
+          this.params.idPEspecificoPadre=x.idPEspecificoHijo
           this.params.idPGeneral=x.idPGeneralHijo
           this.params.idPrincipal=x.idPGeneralPadre
           this.ObtenerEvaluacionTarea();
@@ -215,6 +215,7 @@ export class DocenciaTareasComponent implements OnInit,OnDestroy {
     }
   }
   RegistrarV3(index:number){
+    this.cargaEnvio=true
     var tareasDetalle=this.tareaAc[index];
     console.log(tareasDetalle)
     var n:ParametroNotaRegistrarV3DTO={
@@ -242,9 +243,53 @@ export class DocenciaTareasComponent implements OnInit,OnDestroy {
     this._OperacionesNotaService.RegistrarV3(this.nota,this.tareas.criteriosEvaluacion.idPEspecifico,this.usuario,this.retroalimentacion,this.retroalimentacionFile,this.IdTarea).pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
         console.log(x)
+        this.cargaEnvio=false
         this.ObtenerEvaluacionTarea()
       },
       error:x=>{
+        this.cargaEnvio=false
+        console.log(x)
+      }
+    })
+  }
+  EnviarCalificacionProyectoEvaluacion(index:number){
+    this.cargaEnvio=true
+    var tareasDetalle=this.tareaAc[index];
+    console.log(tareasDetalle)
+    var n:ParametroNotaRegistrarV3DTO={
+        Id:0,
+        IdPespecifico:this.tareas.criteriosEvaluacion.idPEspecifico,
+        Grupo:this.Grupo,
+        IdMatriculaCabecera:this.IdMatriculaCabecera,
+        IdEsquemaEvaluacionPGeneralDetalle:this.tareas.criteriosEvaluacion.idEsquemaEvaluacionPGeneralDetalle_Anterior,
+        IdParametroEvaluacion:this.tareas.criteriosEvaluacion.idParametroEvaluacion,
+        IdEscalaCalificacionDetalle:this.calificacion,
+        PortalTareaEvaluacionTareaId:tareasDetalle.id,
+        EsProyectoAnterior:this.EsProyectoAnterior,
+        IdProyectoAplicacionEnvioAnterior:this.IdProyectoAplicacionEnvioAnterior==null?0:this.IdProyectoAplicacionEnvioAnterior,
+        NombreArchivoRetroalimentacion:'',
+        UrlArchivoSubidoRetroalimentacion:'',
+        Retroalimentacion:this.retroalimentacion
+
+      }
+
+    if(this.selectedFiles){
+      const file: File | null = this.selectedFiles.item(0);
+      if (file) {
+        this.retroalimentacionFile = file;
+      }
+    }
+    n.file=this.retroalimentacionFile
+    this.nota.push(n)
+    this._TareaEvaluacionService.EnviarCalificacionProyectoEvaluacion(n).pipe(takeUntil(this.signal$)).subscribe({
+      next:x=>{
+        console.log(x)
+        this.cargaEnvio=false
+        this.ObtenerEvaluacionTarea()
+      },
+      error:x=>{
+        this.cargaEnvio=false
+        this._SnackBarServiceService.openSnackBar("Ocurrio un error, por favor vuelva a recargar en unos momentos",'x',15,"snackbarCrucigramaerror");
         console.log(x)
       }
     })

@@ -29,7 +29,9 @@ export class SesionesVideoPruebaComponent implements OnInit,OnDestroy {
     IdPGeneralHijo: 0,
     NombreCapitulo: '',
     NombrePrograma: '',
-    idModalidad:1
+    idModalidad:1,
+    visualizarVideos:false,
+    accesoCompleto:false,
   };
   @Input() nombreSesion=''
   @Input() idCapitulo=0;
@@ -96,6 +98,7 @@ export class SesionesVideoPruebaComponent implements OnInit,OnDestroy {
     console.log(this.videoData)
     if(this.videoData!=undefined){
       var calc=Math.ceil(this.videoData.tiempoVisualizado*100/this.videoData.tiempoTotalVideo);
+      console.log(calc)
       if(calc>=100){
         this.next.emit();
       }

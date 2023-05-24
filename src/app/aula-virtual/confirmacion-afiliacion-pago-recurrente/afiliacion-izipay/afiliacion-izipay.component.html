@@ -1,5 +1,5 @@
 <!-- resultPreValidacion!=undefined -->
-<div class="container" >
+<div class="container" [hidden]="hidenBotom" >
     <div class="row rowpaddAv">
       <div class="col-12 row">
         <div class="col-12 col-md-12 col-lg-12 titlePagoTarjeta">Confirma tu afiliación</div>
@@ -54,8 +54,8 @@
           </ng-container>
 
           <div id="header"> </div>
-          <div style="text-align: center">
-            <div id="FormBody" class="kr-embedded"  kr-popin >
+          <div style="text-align: center" >
+            <div id="FormBody" class="kr-embedded"  kr-popin  style="display: flex;padding-top: 100px;">
               <!-- payment form fields -->
               <div class="kr-pan"></div>
               <div class="kr-expiry"></div>

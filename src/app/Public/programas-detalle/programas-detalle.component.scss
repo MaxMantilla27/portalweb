@@ -11,7 +11,7 @@
   cursor: pointer;
   position: absolute;
   right: 20px;
-  top: 5px;
+  top: 35px;
   background: #30cc44;
   color: white;
   padding: 5px;
@@ -63,8 +63,9 @@
   margin-right: 10px;
 }
 .InfoProgramImg {
-  width: 150px;
-  height: auto;
+  max-width: 100%;
+  width: auto;
+  height: 130px;
 }
 .InfoProgramTitle {
   font-weight: bold;
@@ -113,6 +114,16 @@
   width: 100% !important;
   padding: 20px;
 
+}
+.tabprogram
+  mat-tab-group
+  mat-tab-header
+  .mat-tab-label-container
+  .mat-tab-list
+  .mat-tab-labels
+  .mat-tab-label
+  .mat-ripple-element{
+    background: transparent !important;
 }
 .tabprogram
   mat-tab-group
@@ -233,7 +244,7 @@
   width: 100%;
   height: auto;
   border-radius: 20px;
-  padding: 20px 20px;
+  padding: 30px;
 }
 .estructuraProgramForm .cotentestructuraProgramForm {
   display: flex;
@@ -398,6 +409,40 @@
   width: 22rem;
   height: 13rem;
 }
+.ContentInicio{
+  width: 100vw;
+  display: flex;
+  flex-wrap: wrap;
+  position: relative;
+  padding: 10px 0px;
+  .contentAbsolute{
+    position: absolute;
+    top:0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    display: flex;
+    flex-wrap: wrap;
+    .FondoGris{
+      background: #f4f4f4;
+      max-height: 50%;
+      width: 100%;
+    }
+    .FondoBlanco{
+      background: white;
+      max-height: 50%;
+      width: 100%;
+    }
+  }
+}
+.contentLeft{
+  .contentTop{
+    height: 50%;
+  }
+  .contentBotton{
+    height: 50%;
+  }
+}
 @media (min-width: 768px) and ( max-width: 992px){
   #cartoonVideoVistaPrevia{
     width: 100%;
@@ -432,10 +477,10 @@
   z-index: 1;
 }
 #FormularioProgramasInsert{
-  display: none;
-  width: 320px;
+  width: 100%;
   top: 4rem;
   z-index: 1;
+  margin-left: 60px;
 }
 @media (max-width: 768px){
   #FormularioProgramas{
@@ -443,8 +488,20 @@
   }
   #FormularioProgramasInsert{
     display: block;
-    width: 90%;
-    margin-left: 2rem;
+    width: 100%;
+    margin-top: 100px;
+    //display: none;
+    margin-left: 0px;
+  }
+  .contentTop{
+    height: 50%;
+  }
+  .contentBotton{
+    height: auto;
+  }
+
+  .InfoProgramImg {
+    height: 80px;
   }
 }
 @media (max-width: 992px){
@@ -452,7 +509,7 @@
     right: 8%;
   }
   .estructuraProgramForm{
-    width: 80%;
+    width: 100%;
   }
 }
 

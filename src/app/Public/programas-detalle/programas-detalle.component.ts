@@ -59,6 +59,7 @@ import { MatTabChangeEvent } from '@angular/material/tabs';
 import { DatosFormularioDTO } from 'src/app/Core/Models/DatosFormularioDTO';
 import { ProgramaFormularioComponent } from './programa-formulario/programa-formulario.component';
 import { FormularioAzulComponent } from 'src/app/Core/Shared/Containers/formulario-azul/formulario-azul.component';
+import { ChatEnLineaService } from 'src/app/Core/Shared/Services/ChatEnLinea/chat-en-linea.service';
 declare const fbq:any;
 declare const gtag:any;
 @Component({
@@ -94,7 +95,8 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
     private _SessionStorageService:SessionStorageService,
     private _FormaPagoService:FormaPagoService,
     private _SeoService:SeoService,
-    private title:Title
+    private title:Title,
+    private _ChatEnLineaService:ChatEnLineaService
   ) {
     this.isBrowser = isPlatformBrowser(platformId);
     config.interval = 20000;
@@ -249,8 +251,13 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
   public certificadoVacio=false;
   public TextoFormulario="Necesitas más información";
   public esPadre=false;
+  public namePrograma:any
   ngOnInit(): void {
-
+    this.codigoIso =
+    this._SessionStorageService.SessionGetValue('ISO_PAIS') != ''
+      ? this._SessionStorageService.SessionGetValue('ISO_PAIS')
+      : 'INTC';
+      console.log('*********************',this.codigoIso)
     // this.addPlayer()
     this._HelperServiceP.recibirChangePais().pipe(takeUntil(this.signal$)).subscribe((x) => {
       if (this.isBrowser) {
@@ -272,9 +279,9 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
         this.area = x['AreaCapacitacion'].split('-').join(' ');
         this.AraCompleta = x['AreaCapacitacion'];
         this.nombreProgramCompeto = x['ProgramaNombre'];
-        var namePrograma = x['ProgramaNombre'].split('-');
-
-        this.idBusqueda = namePrograma[namePrograma.length - 1];
+        this.namePrograma = x['ProgramaNombre'].split('-');
+        console.log(this.namePrograma)
+        this.idBusqueda = parseInt(this.namePrograma[this.namePrograma.length - 1]);
 
 
       },
@@ -407,8 +414,11 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
       .ObtenerCabeceraProgramaGeneral(this.idBusqueda).pipe(takeUntil(this.signal$))
       .subscribe({
         next: (x) => {
+          console.log(x.programaCabeceraDetalleDTO.direccion==this.namePrograma.join('-'))
           if(x.programaCabeceraDetalleDTO!=undefined
-            && this.removeAccents(this.area.toLowerCase())==this.removeAccents(x.programaCabeceraDetalleDTO.areaCapacitacion.toLowerCase()))
+            && this.removeAccents(this.area.toLowerCase())==this.removeAccents(x.programaCabeceraDetalleDTO.areaCapacitacion.toLowerCase())
+            && x.programaCabeceraDetalleDTO.direccion==this.namePrograma.join('-')
+            )
           {
 
             var metas=x.programaCabeceraDetalleDTO.parametroSeoProgramaDTO;
@@ -482,7 +492,9 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
             }
           }
           else{
-            this._router.navigate(['error404']);
+            console.log('/'+this.removeAccents(x.programaCabeceraDetalleDTO.areaDescripcion)+'/'+x.programaCabeceraDetalleDTO.direccion)
+            window.location.replace('/'+this.removeAccents(x.programaCabeceraDetalleDTO.areaDescripcion)+'/'+x.programaCabeceraDetalleDTO.direccion);
+           // this._router.navigate(['/'+this.removeAccents(x.programaCabeceraDetalleDTO.areaCapacitacion)+'/'+x.programaCabeceraDetalleDTO.direccion]);
           }
         },
         error: (e) => {
@@ -893,10 +905,11 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
         this.DatosEnvioFormulario.IdPespecifico=parseInt(IdPEspecifico)
       };
       this.DatosEnvioFormulario.IdCampania = parseInt(idcampania);
-      this._HelperService
-        .EnviarFormulario(this.DatosEnvioFormulario).pipe(takeUntil(this.signal$))
+      this._HelperService.EnviarFormulario(
+        this.DatosEnvioFormulario).pipe(takeUntil(this.signal$))
         .subscribe({
           next: (x) => {
+            this.ProcesarAsignacionAutomaticaNuevoPortal(x.id)
             this.cleanSub=false;
             this.datos.nombres = this.DatosEnvioFormulario.Nombres;
             this.datos.apellidos = this.DatosEnvioFormulario.Apellidos;
@@ -935,6 +948,12 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
           },
         });
     }
+  }
+  ProcesarAsignacionAutomaticaNuevoPortal(id:any){
+    this._ChatEnLineaService.ProcesarAsignacionAutomaticaNuevoPortal(id).pipe(takeUntil(this.signal$)).subscribe({
+      next:(x)=>{
+      }
+    })
   }
   ObtenerCombosPortal(){
     this._DatosPortalService.ObtenerCombosPortal().pipe(takeUntil(this.signal$)).subscribe({

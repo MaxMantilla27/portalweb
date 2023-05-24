@@ -3,9 +3,18 @@
     <img mat-card-image [src]="cardContent.Img" (click)="EventoInteraccion()" [routerLink]="cardContent.Url"
       [alt]="cardContent.ImgAlt" (error)="updateUrl()">
     <div class="buttons-reset" *ngIf="IdPruebas==matricula.idAlumno">
-      <i class="material-icons" #tooltip="matTooltip" matTooltip="Resetear Preguntas(calificaciones">autorenew</i>
-      <i class="material-icons" #tooltip="matTooltip" matTooltip="Resetear Estructura">restore</i>
-      <i class="material-icons" #tooltip="matTooltip" matTooltip="Resetear Preguntas(calificaciones)">reset_tv</i>
+      <i class="material-icons" #tooltip="matTooltip" matTooltip="Resetear Preguntas(calificaciones"
+        (click)="ResetearCrucigramasPreguntasUsuarioPrueba(
+          { IdPEspecificoPadre:matricula.idPEspecifico,
+            IdPrincipal: matricula.idPGeneral,
+            EsCruCigrama: false})">autorenew</i>
+      <i class="material-icons" #tooltip="matTooltip" matTooltip="Resetear Estructura"
+       (click)="ResetearEstructuraEspecificaPorMatricula(matricula.idMatriculaCabecera)">restore</i>
+      <i class="material-icons" #tooltip="matTooltip" matTooltip="Resetear Crucigramas(calificaciones)"
+        (click)="ResetearCrucigramasPreguntasUsuarioPrueba(
+          { IdPEspecificoPadre:matricula.idPEspecifico,
+            IdPrincipal: matricula.idPGeneral,
+            EsCruCigrama: true})">reset_tv</i>
       <!-- <div class="link">Resetear Crucigramas(calificaciones)</div>
       <div class="link">Resetear Preguntas(calificaciones)</div>
       <div class="link">Resetear Estructura</div> -->
