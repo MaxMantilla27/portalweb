@@ -138,12 +138,12 @@ export class AfiliacionOpenpayComponent implements OnInit,OnDestroy {
   }
 
   OpenPayInit() {
-     OpenPay.setId('mlfmdoeugmuhd6epubse');
-     OpenPay.setApiKey('pk_81210f4cdefe4888bbe4ccfd8923655a');
-    //OpenPay.setId('mxgmgffnaxu1mosrkhlo');
-    //OpenPay.setApiKey('pk_c9dfff7c5c9e4a68a7c6083d280ff4db');
-    //OpenPay.setSandboxMode(false);
-    OpenPay.setSandboxMode(true);
+    //  OpenPay.setId('mlfmdoeugmuhd6epubse');
+    //  OpenPay.setApiKey('pk_81210f4cdefe4888bbe4ccfd8923655a');
+    OpenPay.setId('mxgmgffnaxu1mosrkhlo');
+    OpenPay.setApiKey('pk_c9dfff7c5c9e4a68a7c6083d280ff4db');
+    OpenPay.setSandboxMode(false);
+    //OpenPay.setSandboxMode(true);
     //Se genera el id de dispositivo
     var deviceSessionId = OpenPay.deviceData.setup('fomrOpenPAy');
     console.log(OpenPay.getSandboxMode());

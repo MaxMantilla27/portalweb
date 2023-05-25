@@ -232,24 +232,24 @@ export class PagoComponent implements OnInit,OnDestroy {
     if(fechaActual <= fechaVencimiento)
     {
       let validador=0
-      if(this.idPasarela==5){ //OpenPay
-        let count=0
-        let cuotaBase=0
-        let fechaBase = new Date();
-        this.CronogramaPago.registroCuota.forEach((e:any) => {
-          if(e.cancelado==false){
-            if(count==0){
-              cuotaBase = e.cuota+e.moraCalculada
-              fechaBase = new Date(e.fechaVencimiento)
-            }
-            let cuotaTotal:number =e.cuota+e.moraCalculada
-            if(cuotaBase!==cuotaTotal)validador=1
-            if(new Date(e.fechaVencimiento).getDate()!=fechaBase.getDate())validador=2
-            count++
-          }
+      // if(this.idPasarela==5){ //OpenPay
+      //   let count=0
+      //   let cuotaBase=0
+      //   let fechaBase = new Date();
+      //   this.CronogramaPago.registroCuota.forEach((e:any) => {
+      //     if(e.cancelado==false){
+      //       if(count==0){
+      //         cuotaBase = e.cuota+e.moraCalculada
+      //         fechaBase = new Date(e.fechaVencimiento)
+      //       }
+      //       let cuotaTotal:number =e.cuota+e.moraCalculada
+      //       if(cuotaBase!==cuotaTotal)validador=1
+      //       if(new Date(e.fechaVencimiento).getDate()!=fechaBase.getDate())validador=2
+      //       count++
+      //     }
 
-        });
-      }
+      //   });
+      // }
 
       if(validador==2) 
       {
