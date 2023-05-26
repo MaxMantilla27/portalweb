@@ -24,6 +24,18 @@
         }
     }
 }
+.secondary{
+  background-color: white;
+  color: #F8893F;
+  border-radius:2em;
+  // border: solid 1px #F8893F !important ;
+  
+  &:hover {
+      div{
+        text-decoration: underline;
+      }
+  }
+}
 .danger {
     background-color: red;
     color: white;

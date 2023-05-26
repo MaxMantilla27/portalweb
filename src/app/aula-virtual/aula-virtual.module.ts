@@ -104,6 +104,7 @@ import { ResultadoPagoIzipayComponent } from './resultado-pago-izipay/resultado-
 import { AfiliacionIzipayComponent } from './confirmacion-afiliacion-pago-recurrente/afiliacion-izipay/afiliacion-izipay.component';
 import { DocenciaV2Component } from './docencia-v2/docencia-v2.component';
 import { AsistenciaAlumnoComponent } from './curso/asistencia-alumno/asistencia-alumno.component';
+import { ConfirmCertFisicoComponent } from './curso/curso-certificado-fisico/confirm-cert-fisico/confirm-cert-fisico.component';
 
 
 @NgModule({
@@ -206,6 +207,7 @@ import { AsistenciaAlumnoComponent } from './curso/asistencia-alumno/asistencia-
     AfiliacionIzipayComponent,
     DocenciaV2Component,
     AsistenciaAlumnoComponent,
+    ConfirmCertFisicoComponent,
   
 
   ],
