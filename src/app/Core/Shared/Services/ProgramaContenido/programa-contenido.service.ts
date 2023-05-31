@@ -127,4 +127,11 @@ export class ProgramaContenidoService {
       return EMPTY;
     }
   }
+  public ActualizarTareaParametroEvaluacionProyectosNota(IdMatriculaCabecera:number):Observable<any>{
+    if(this.isBrowser){
+      return this.http.get<any>(this.urlBase+'/ActualizarTareaParametroEvaluacionProyectosNota?IdMatriculaCabecera='+IdMatriculaCabecera);
+    }else{
+      return EMPTY;
+    }
+  }
 }

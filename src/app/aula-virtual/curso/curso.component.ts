@@ -118,6 +118,7 @@ export class CursoComponent implements OnInit,OnDestroy {
     ).subscribe({
       next: (x) => {
         this.idMatricula = parseInt(x['IdMatricula']);
+        this.ActualizarTareaParametroEvaluacionProyectosNota()
         this.RegistroProgramaMatriculadoPorIdMatricula();
         this.VerificarCursosCongelados();
         //this.ObtenerListadoProgramaContenido();
@@ -502,6 +503,12 @@ export class CursoComponent implements OnInit,OnDestroy {
         }
       })
     }
+  }
+  ActualizarTareaParametroEvaluacionProyectosNota(){
+    this._ProgramaContenidoService.ActualizarTareaParametroEvaluacionProyectosNota(this.idMatricula).pipe(takeUntil(this.signal$)).subscribe({
+      next:x=>{
+      }
+    })
   }
   cambio(mas:number){
     console.log(mas)
