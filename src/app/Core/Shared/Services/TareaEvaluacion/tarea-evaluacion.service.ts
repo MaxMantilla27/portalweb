@@ -45,6 +45,13 @@ export class TareaEvaluacionService {
       return EMPTY;
     }
   }
+  public ListaPgeneralProyectoAplicacionAnexo(IdPgeneral:number):Observable<any>{
+    if(this.isBrowser){
+      return this.http.get<any>(this.urlBase+'/ListaPgeneralProyectoAplicacionAnexo?IdPgeneral='+IdPgeneral);
+    }else{
+      return EMPTY;
+    }
+  }
   public EnviarEvaluacionTarea(Json:ModelTareaEvaluacionTareaDTO):Observable<any>{
     const formData: FormData = new FormData();
     formData.append('file', Json.file);

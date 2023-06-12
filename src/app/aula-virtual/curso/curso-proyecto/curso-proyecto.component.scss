@@ -88,3 +88,21 @@
 .buttonTrash:hover{
   border:solid 1px #dc3545 !important;;
 }
+.anexosContent{
+  display: flex;
+    /* justify-content: center; */
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+}
+.VerAnexo{
+  color: #fff;
+    background-color: #218838;
+    border-color: #1e7e34;
+}
+.OcultarAnexo{
+  margin-left: 10px;
+  color: #fff;
+    background-color: #dc3545;
+    border-color: #dc3545;
+}

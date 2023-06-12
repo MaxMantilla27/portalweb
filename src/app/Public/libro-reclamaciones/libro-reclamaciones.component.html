@@ -84,7 +84,8 @@
         <mat-form-field appearance="outline" style="width: 100%;">
           <mat-label>Correo electr&oacute;nico</mat-label>
           <input id="email" name="email" #email="ngModel" type="text" [(ngModel)]="reclamo.CorreoElectronico" matInput
-            required="" />
+            required=""
+            pattern="[a-zA-Z0-9!#$%&'*_+-]([\.]?[a-zA-Z0-9!#$%&'*_+-])+@[a-zA-Z0-9]([^@&%$\/()=?¿!.,:;]|\d)+[a-zA-Z0-9][\.][a-zA-Z]{2,4}([\.][a-zA-Z]{2})?"/>
           <mat-error *ngIf="!email.valid">Ingrese su correo</mat-error>
         </mat-form-field>
       </div>
