@@ -82,7 +82,7 @@
 
     <div class="d-none col-md-1 d-md-block col-lg-1 d-lg-block">
       <div class="phoneCall " (click)="EventoInteraccionButton('Solicita una llamada');OpenModalFormulario(1)">
-        <img src="../../../assets/icons/icono-llamada.svg" alt="">
+        <img src="../../../assets/icons/icono-llamada.svg" alt="Llamada">
         <div style="width: calc( 100% - 40px );"> Solicita una llamada</div>
         <div class="contentHover">Consulta por nuestras facilidades de pago y descuentos</div>
       </div>
@@ -98,7 +98,7 @@
           justify-content: flex-start;
           flex-wrap: nowrap;
           position: relative;">
-            <img src="../../../assets/icons/icono-llamada.svg" alt="">
+            <img src="../../../assets/icons/icono-llamada.svg" alt="Llamada">
             <div>
               <div style="width: calc( 100% - 40px );"> Solicita una llamada</div>
               <div style="font-weight: 100;">Consulta por nuestras facilidades de pago y descuentos</div>
@@ -113,12 +113,12 @@
       <div class="contentLeft col-12 col-md-7 col-lg-7">
         <div class="contentTop">
           <div style="background: transparent;position: relative;padding: 10px 0px;">
-            <div [innerHtml]="cabecera.tituloHtml | safeHtml" class="titlePrograma"></div><br>
+            <h1 style="line-height: 120%;" [innerHtml]="cabecera.tituloHtml | safeHtml" class="titlePrograma"></h1><br>
             <div style="    margin: 10px 0px;
-            font-size: 15px;font-weight: 700;">Área: <a
+            font-size: 15px;font-weight: 700;">Área: <a title=" Vínculo a {{cabecera.areaCapacitacion}}"
                 (click)="EventoInteraccionLinck(cabecera.areaCapacitacion,'Área')" style="font-weight: 100;"
                 routerLink="/Area/{{cabecera.areaDescripcion}}">{{cabecera.areaCapacitacion}}</a> | Sub
-              Área: <a (click)="EventoInteraccionLinck(cabecera.nombreSubArea,'Sub Área')" style="font-weight: 100;"
+              Área: <a title="Vínculo a {{cabecera.nombreSubArea}}" (click)="EventoInteraccionLinck(cabecera.nombreSubArea,'Sub Área')" style="font-weight: 100;"
                 routerLink="/SubArea/{{cabecera.subAreaDescripcion}}">{{cabecera.nombreSubArea}}</a> </div><br>
             <div class="row" style="margin-top: 20px;">
               <div class="col-12 col-md-12 col-lg-6">
@@ -141,7 +141,7 @@
               <div *ngIf="cabecera.imgPrincipal!='https://img.bsginstitute.com/repositorioweb/img/partners/Sin Partner'"
                 class="col-12 col-md-10 col-lg-10"
                 style="position: relative;margin-top: 10px;text-align: left;margin-bottom: 40px;">
-                <img class="InfoProgramImg" [src]="cabecera.imgPrincipal" alt="">
+                <img class="InfoProgramImg" [src]="cabecera.imgPrincipal" alt="Logo">
               </div>
               <ng-container *ngIf="idBusqueda!=7569">
                 <div
@@ -149,7 +149,7 @@
                   class="col-12 col-md-6 col-lg-6 row">
 
                   <div class="col-12 " style="display: flex">
-                    <img class="InfoProgramIcon" src="../../../assets//icons/reloj-04.svg" alt="">
+                    <img class="InfoProgramIcon" src="../../../assets//icons/reloj-04.svg" alt="Reloj">
                     <div class="InfoProgramTitle">Fechas de Inicio:</div>
                   </div>
                   <div class="col-12 " style="margin-top: 10px;">
@@ -175,7 +175,7 @@
                   class="col-12 col-md-6 col-lg-6 row">
 
                   <div class="col-12 " style="display: flex">
-                    <img class="InfoProgramIcon" src="../../../assets//icons/reloj-04.svg" alt="">
+                    <img class="InfoProgramIcon" src="../../../assets//icons/reloj-04.svg" alt="Reloj">
                     <div class="InfoProgramTitle">Fechas de Inicio:</div>
                   </div>
                   <div class="col-12 " style="margin-top: 10px;">
@@ -195,7 +195,7 @@
               </ng-container>
               <div class="col-12 col-md-6 col-lg-6 row">
                 <div class="col-12 " style="display: flex">
-                  <img class="InfoProgramIcon" src="../../../assets//icons/calendar-03.svg" alt="">
+                  <img class="InfoProgramIcon" src="../../../assets//icons/calendar-03.svg" alt="Calendario">
                   <div class="InfoProgramTitle">Duraci&oacute;n:</div>
                 </div>
                 <div style="margin-top: 10px;width: 100%; margin-bottom: 15px;">
@@ -224,11 +224,11 @@
               <app-cargando *ngIf="statuscharge==true"></app-cargando>
               <div class="cotentestructuraProgramForm">
                 <div class="question" style="justify-content: flex-start;align-items: center;">
-                  <img src="../../../assets/icons/signo-pregunta-abierto-03.svg" alt="">
+                  <img src="../../../assets/icons/signo-pregunta-abierto-03.svg" alt="Signo de interrogación abierto">
                 </div>
                 <div>Tienes dudas sobre algún aspecto del programa</div>
                 <div class="question" style="justify-content: flex-end;align-items: center;">
-                  <img src="../../../assets/icons/signo-pregunta-cerrado-04.svg" alt="">
+                  <img src="../../../assets/icons/signo-pregunta-cerrado-04.svg" alt="Signo de interrogación cerrado">
                 </div>
               </div>
               <div class="subtitleEstruturaProgramFormAzul">
@@ -244,7 +244,7 @@
                   </ng-container>
                   <ng-container send>
                     <div style="text-align: center;margin-top: -10px;margin-bottom: 10px;">
-                      <a style="color: #027CFF;font-size: 14px;cursor: pointer;" (click)="LimpiarCampos()">[No soy
+                      <a title="Limpiar Campos" style="color: #027CFF;font-size: 14px;cursor: pointer;" (click)="LimpiarCampos()">[No soy
                         {{formularioContacto.Nombres}}]</a>
                     </div>
                     <app-default-button-flecha style="display: flex;justify-content: center;"
@@ -264,7 +264,7 @@
                   </ng-container>
                   <ng-container send>
                     <div style="text-align: center;margin-top: -10px;margin-bottom: 10px;">
-                      <a style="color: #027CFF;font-size: 14px;cursor: pointer;" (click)="LimpiarCampos()">[No soy
+                      <a title="Limpiar Campos" style="color: #027CFF;font-size: 14px;cursor: pointer;" (click)="LimpiarCampos()">[No soy
                         {{formularioContacto.Nombres}}]</a>
                     </div>
                     <app-default-button-flecha style="display: flex;justify-content: center;"
@@ -592,7 +592,7 @@
   <div class="row rowpadd">
     <div class="row"
       style="display: flex;justify-content: space-between;align-items: center;flex-wrap: wrap; margin-bottom: 20px;">
-      <div class="col-12 col-md-12 col-lg-12 subtitulo">Estructura Curricular</div>
+      <h2 style="font-weight: bold;line-height: 150%;" class="col-12 col-md-12 col-lg-12 subtitulo">Estructura Curricular</h2>
     </div>
     <div class="col-12 col-md-12 col-lg-8">
       <mat-accordion class="acordionPrograma" multi>
@@ -637,7 +637,7 @@
   <div class="container">
     <div class="row rowpadd">
       <div class="col-12 col-md-12 col-lg-12 tabprogram">
-        <div class="subtitulo">Beneficios</div>
+        <h2 style="font-weight: bold;line-height: 150%;" class="subtitulo">Beneficios</h2>
         <p>El programa incluye los siguientes beneficios:</p>
         <div class="row">
           <ng-container *ngFor="let item of beneficios">
@@ -668,12 +668,12 @@
 <div class="container">
   <div *ngIf="certificadoVacio==false" class="row rowpadd">
     <div class="col-12 col-md-5 col-lg-5">
-      <div class="subtitulo">Certificación</div>
+      <h2 style="font-weight: bold;line-height: 150%;" class="subtitulo">Certificación</h2>
     </div>
     <div class="col-12 col-md-7 col-lg-7">
     </div>
     <div class="col-12 col-md-5 col-lg-5" style="margin: 20px 0px;">
-      <img src="../../../assets/imagenes/imagen-certificado-pagina-web.png" alt="" style="width: 100%;">
+      <img src="../../../assets/imagenes/imagen-certificado-pagina-web.png" alt="Certificación" style="width: 100%;">
     </div>
     <div class="col-12 col-md-7 col-lg-7" style="margin: 20px 0px;">
       <div>
@@ -721,7 +721,7 @@
   <div class="container">
     <div class="row rowpadd">
       <div class="col-12 col-md-12 col-lg-12 tabprogram">
-        <div class="subtitulo">Expositores</div>
+        <h2 style="font-weight: bold;line-height: 150%;"  class="subtitulo">Expositores</h2>
 
         <div class="carousel-expositores">
           <ngb-carousel style="width: 99%" (slide)="EventoInteraccionCarrousel($event,'Expositores')">
@@ -805,7 +805,7 @@
   <div class="container">
     <div class="row rowpadd">
       <div class="col-12 col-md-12 col-lg-12 tabprogram">
-        <div class="subtitulo">Inversión</div>
+        <h2 style="font-weight: bold;line-height: 150%;"  class="subtitulo">Inversión</h2>
         <h4 style="color: #616161;" *ngIf="MontoPago!=null && MontoPago.length>0">
           <ng-container *ngIf="MontoPago[0].paquete==1">
             Versi&oacute;n B&aacute;sica
@@ -861,8 +861,8 @@
 <div class="container">
   <div class="row rowpadd">
     <div class="col-12 col-md-12 col-lg-12 tabprogram">
-      <div class="subtitulo" style="font-size: 2rem;
-      font-weight: 600;">Modalidades de pago</div>
+      <h2  class="subtitulo" style="font-size: 2rem;
+      font-weight: bold;line-height: 150%;">Modalidades de pago</h2>
       <ng-container *ngIf="codigoIso=='PE'">
         <div style="display: flex;
         align-items: center;
@@ -876,7 +876,7 @@
           </div>
           <div class="col-12 col-md-3 col-lg-3"
             style="padding: 0px; margin: 10px 0px;display:flex;justify-content: flex-start;">
-            <img class="imgCardFormasPago" src="../../../assets//icons/bcp-06.svg" alt="">
+            <img class="imgCardFormasPago" src="../../../assets//icons/bcp-06.svg" alt="BCP">
           </div>
         </div>
       </ng-container>
@@ -895,10 +895,10 @@
         <div class="contentCardFormasPago">
           <div>Tarjetas de d&eacute;bito o cr&eacute;dito:</div>
           <div class="contentimgtarjetas">
-            <img src="../../../assets//icons/visa-07.svg" alt="">
-            <img src="../../../assets//icons/mastercard-08.svg" alt="">
-            <img src="../../../assets//icons/american-09.svg" alt="">
-            <img src="../../../assets//icons/dinners-10.svg" alt="">
+            <img src="../../../assets//icons/visa-07.svg" alt="Visa">
+            <img src="../../../assets//icons/mastercard-08.svg" alt="MasterCard">
+            <img src="../../../assets//icons/american-09.svg" alt="American Express">
+            <img src="../../../assets//icons/dinners-10.svg" alt="Dinners">
           </div>
         </div>
       </div>

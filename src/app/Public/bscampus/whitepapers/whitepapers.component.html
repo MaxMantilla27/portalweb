@@ -7,9 +7,9 @@
   <div class="container">
     <div class="row rowpadd">
       <div class="col-12 col-md-9 col-lg-9">
-        <div class="titulop">
+        <h1 style="line-height: 150%;" class="titulop">
           {{Title}}
-        </div>
+        </h1>
       </div>
     </div>
   </div>
@@ -38,7 +38,7 @@
         <app-cargando *ngIf="cargando==true"></app-cargando>
         <div style="display: flex;justify-content: center;    padding: 0px 70px;align-items: center;">
           <div style="color: #118bf1;font-weight: 900;font-size: 20px;text-align: center;">Descargar White Paper</div>
-          <img style="width: 70px;height: auto;margin: 5px;" src="../../../../assets/icons/descarga.svg" alt="">
+          <img style="width: 70px;height: auto;margin: 5px;" src="../../../../assets/icons/descarga.svg" alt="Descargar White Paper">
         </div>
         <ng-container *ngIf="combosPrevios!=undefined">
           <app-formulario [Interaccion]="'blog-'+idWeb" [model]="formularioContacto" [CleanOnSubmit]="cleanSub" [InputsDisable]="statuscharge" (OnSubmit)="SetContacto($event)"
@@ -48,7 +48,7 @@
           </ng-container>
           <ng-container send>
             <div style="text-align: center;margin-bottom: 15px;">
-              <a style="color: #027CFF;font-size: 14px;cursor: pointer;" (click)="LimpiarCampos()">[No soy {{formularioContacto.Nombres}}]</a>
+              <a title="Limpiar Campos" style="color: #027CFF;font-size: 14px;cursor: pointer;" (click)="LimpiarCampos()">[No soy {{formularioContacto.Nombres}}]</a>
             </div>
             <app-default-button [confs]="{color:'primary',titulo:'Descargar ahora'}" [style]="'width: 100%;'">
             </app-default-button>
@@ -64,7 +64,7 @@
           </ng-container>
           <ng-container send>
             <div style="text-align: center;margin-bottom: 15px;">
-              <a style="color: #027CFF;font-size: 14px;cursor: pointer;" (click)="LimpiarCampos()">[No soy {{formularioContacto.Nombres}}]</a>
+              <a title="Limpiar Campos" style="color: #027CFF;font-size: 14px;cursor: pointer;" (click)="LimpiarCampos()">[No soy {{formularioContacto.Nombres}}]</a>
             </div>
             <app-default-button [confs]="{color:'primary',titulo:'Descargar ahora'}" [style]="'width: 100%;'">
             </app-default-button>

@@ -7,9 +7,9 @@
   <div class="container">
     <div class="row rowpadd">
       <div class="col-12 col-md-9 col-lg-9">
-        <div class="titulop">
+        <h1 style="line-height: 120%;" class="titulop">
           {{Title}}
-        </div>
+        </h1>
       </div>
     </div>
   </div>
@@ -26,11 +26,11 @@
         <app-cargando *ngIf="cargando==true"></app-cargando>
         <div class="cotentestructurablogForm">
           <div class="question" style="justify-content: flex-start;align-items: center;">
-            <img src="../../../assets/icons/signo-pregunta-abierto-03.svg" alt="">
+            <img src="../../../assets/icons/signo-pregunta-abierto-03.svg" alt="Signo de interrogación abieto">
           </div>
-          <div>Deseas conocer m&aacute;s sobre nuestra oferta de cursos y programas del área de {{area}}</div>
+          <div>Deseas conocer más sobre nuestra oferta de cursos y programas del área de {{area}}</div>
           <div class="question" style="justify-content: flex-end;align-items: center;">
-            <img src="../../../assets/icons/signo-pregunta-cerrado-04.svg" alt="">
+            <img src="../../../assets/icons/signo-pregunta-cerrado-04.svg" alt="Signo de interrogración cerrado">
           </div>
         </div>
 
@@ -45,7 +45,7 @@
           </ng-container>
           <ng-container send>
             <div style="text-align: center;margin-bottom: 15px;">
-              <a style="color: #027CFF;font-size: 14px;cursor: pointer;" (click)="LimpiarCampos()">[No soy {{formularioContacto.Nombres}}]</a>
+              <a title="Limpiar Campos" style="color: #027CFF;font-size: 14px;cursor: pointer;" (click)="LimpiarCampos()">[No soy {{formularioContacto.Nombres}}]</a>
             </div>
             <app-default-button [confs]="{color:'primary',titulo:'Solicitar Información'}" [style]="'width: 100%;'">
             </app-default-button>
@@ -61,7 +61,7 @@
           </ng-container>
           <ng-container send>
             <div style="text-align: center;margin-bottom: 15px;">
-              <a style="color: #027CFF;font-size: 14px;cursor:pointer" (click)="LimpiarCampos()">[No soy {{formularioContacto.Nombres}}]</a>
+              <a title="Limpiar Campos" style="color: #027CFF;font-size: 14px;cursor:pointer" (click)="LimpiarCampos()">[No soy {{formularioContacto.Nombres}}]</a>
             </div>
             <app-default-button [confs]="{color:'primary',titulo:'Solicitar Información'}" [style]="'width: 100%;'">
             </app-default-button>

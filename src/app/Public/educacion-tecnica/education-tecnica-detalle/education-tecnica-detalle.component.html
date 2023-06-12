@@ -13,9 +13,9 @@
         <div class="rowpadd">
           <div class="row">
             <div class="col-md-6 educacion-tecnica-container__header__information">
-              <div class="educacion-tecnica-container__header__information__title"
+              <h1 style="line-height: 120%;" class="educacion-tecnica-container__header__information__title"
                 [innerHTML]="carrera.programaGeneralInformacionVistaDTO?.tituloHtml">
-              </div>
+              </h1>
             </div>
             <!-- <div class="col-md-4 educacion-tecnica-container__header__img">
               <img [src]="rutaImagen+carrera.programaGeneralInformacionVistaDTO?.imagenPrograma" alt="">
@@ -52,7 +52,7 @@
               subtitulo: fechaInicio}"></app-icon-information-card>
             </div> -->
           </div>
-          <img class="nombrealumnoHeader" [src]="'../../../../assets/imagenes/'+(idBusqueda==7757?'arquetipo-promotor-ventas-contenido.png':'arquetipo-atencion-al-cliente.png')" alt="" style="    position: absolute;
+          <img class="nombrealumnoHeader" [src]="'../../../../assets/imagenes/'+(idBusqueda==7757?'arquetipo-promotor-ventas-contenido.png':'arquetipo-atencion-al-cliente.png')" alt="Profesional Promotor de Ventas" style="    position: absolute;
           right: 10%;
           bottom: 0;
           width: 35%;">
@@ -63,14 +63,14 @@
         padding-bottom: 20px;">
           <div class="row">
             <div class="col-12 col-md-4 col-lg-4 contentdiv">
-              <img src="../../../../assets/icons/icono-reloj-duracion-blanco.svg" alt="">
+              <img src="../../../../assets/icons/icono-reloj-duracion-blanco.svg" alt="Reloj">
               <div>
                 <div class="titleDiv">Duración</div>
                 <div class="subTitleDiv">{{carrera.programaGeneralInformacionVistaDTO?.duracion}}</div>
               </div>
             </div>
             <div class="col-12 col-md-4 col-lg-4 contentdiv">
-              <img src="../../../../assets/icons/icono-moneda-pension-blanco.svg" alt="">
+              <img src="../../../../assets/icons/icono-moneda-pension-blanco.svg" alt="Moneda">
               <div>
                 <div class="titleDiv">Pensión por ciclo</div>
                 <div class="subTitleDiv">{{'1 matrícula de '+
@@ -81,7 +81,7 @@
               </div>
             </div>
             <div class="col-12 col-md-4 col-lg-4 contentdiv">
-              <img src="../../../../assets/icons/icono-calendario-admision-blanco.svg" alt="">
+              <img src="../../../../assets/icons/icono-calendario-admision-blanco.svg" alt="Calendario">
               <div>
                 <div class="titleDiv">Admisi&oacute;n</div>
                 <div class="subTitleDiv">{{fechaInicio}}</div>
@@ -179,7 +179,7 @@
                       </ng-container>
                       <ng-container send>
                         <div style="text-align: center;margin-bottom: 15px;">
-                          <a style="color: #027CFF;font-size: 14px;cursor: pointer;" (click)="LimpiarCampos()">[No soy {{formularioContacto.Nombres}}]</a>
+                          <a title="Limpiar Campos" style="color: #027CFF;font-size: 14px;cursor: pointer;" (click)="LimpiarCampos()">[No soy {{formularioContacto.Nombres}}]</a>
                         </div>
                         <app-default-button [confs]="{color:'primary',titulo:'Enviar'}" [style]="'width: 100%;'">
                         </app-default-button>
@@ -195,7 +195,7 @@
                       </ng-container>
                       <ng-container send>
                         <div style="text-align: center;margin-bottom: 15px;">
-                          <a style="color: #027CFF;font-size: 14px;cursor: pointer;" (click)="LimpiarCampos()">[No soy {{formularioContacto.Nombres}}]</a>
+                          <a title="Limpiar Campos" style="color: #027CFF;font-size: 14px;cursor: pointer;" (click)="LimpiarCampos()">[No soy {{formularioContacto.Nombres}}]</a>
                         </div>
                         <app-default-button [confs]="{color:'primary',titulo:'Enviar'}" [style]="'width: 100%;'">
                         </app-default-button>
@@ -229,7 +229,7 @@
             <div class="rowpadd">
               <div class="row">
                 <div class="col-md-7 educacion-tecnica-container__content__thirdSection__left">
-                  <h1 style="padding-bottom: 2rem">Estructura Curricular</h1>
+                  <h2 style="padding-bottom: 2rem; font-weight: bold;line-height: 150%;">Estructura Curricular</h2>
                   <mat-expansion-panel class="panel-tecnica" hideToggle
                     *ngFor="let item of estructuraCurricular;let i =index" (opened)="item.opened=true"
                     (closed)="item.opened=false">
@@ -261,12 +261,12 @@
               <div class="rowpadd">
                 <div class="row">
                   <div class="col-12 col-md-5 col-lg-5">
-                    <div class="subtitulo">Certificación</div>
+                    <h2 style="line-height: 150%;" class="subtitulo">Certificación</h2>
                   </div>
                   <div class="col-12 col-md-7 col-lg-7">
                   </div>
                   <div class="col-12 col-md-5 col-lg-5 educacion-tecnica-container__content__fourthSection__img-container" style="margin: 20px 0px;">
-                    <img src="../../../assets/imagenes/imagen-certificado-pagina-web.png" alt=""
+                    <img src="../../../assets/imagenes/imagen-certificado-pagina-web.png" alt="Certificación"
                       style="width: 100%;">
                   </div>
                   <div class="col-12 col-md-7 col-lg-7 educacion-tecnica-container__content__fourthSection__information-container"style="margin: 20px 0px;">

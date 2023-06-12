@@ -7,7 +7,7 @@
             Tarifario de Tasas Académicas y Administrativas
         </h2>
         <div class="table-responsive">
-        <table class="table table-bordered" style="min-width: 900px;border: 1px solid #dee2e6; color: #212529; font-size:14px; font-weight: lighter; width:100%">
+        <table class="table table-bordered" style="min-width: 890px;border: 1px solid #dee2e6; color: #212529; font-size:14px; font-weight: lighter; width:100%">
           <thead class="text-center" style="background: #ffd800">
             <tr>
               <th>Nº</th>
@@ -20,11 +20,11 @@
             <ng-container *ngFor="let item of tarifas; let i = index">
               <tr>
                 <td>{{ i + 1 }}</td>
-        
+
                 <td>{{ item.concepto }}</td>
-        
+
                 <td>{{ item.descripcion }}</td>
-        
+
                 <td class="text-center">
                   <b> {{ item.monto }}</b>
                 </td>
