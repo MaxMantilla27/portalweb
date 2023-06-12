@@ -2,10 +2,10 @@
 <mat-toolbar color="primary" *ngIf="!responsive">
 
   <div class="div-icon">
-    <img src="../../../../../assets/icons/icono-menu-responsive.svg" width="20" height="20" alt="" loading="eager" (click)="OnClick.emit()">
+    <img src="../../../../../assets/icons/icono-menu-responsive.svg" width="20" height="20" alt="Menú" loading="eager" (click)="OnClick.emit()">
     <!-- <mat-icon (click)="OnClick.emit()">menu</mat-icon> -->
   </div>
-  <img class="logoHeader" src="https://img.bsginstitute.com/repositorioweb/img/logobsg.svg"  (click)="EventoInteraccionEducacion('Imagen')"
+  <img class="logoHeader" src="https://img.bsginstitute.com/repositorioweb/img/logobsg.svg" alt="BSG Institute" (click)="EventoInteraccionEducacion('Imagen')"
   width="160" loading="eager" [routerLink]="'/'">
 
   <div class="botones_login hideItemHeader">
@@ -56,7 +56,7 @@
           style="    flex-direction: column; display: flex;justify-content: flex-end;align-items: flex-end;">
           <app-alumno-mat-button [nombres]="Alumno.nombres+' '+Alumno.apellidos" [user]="Alumno.email" [val]="value">
             <ng-container contenidodata>
-              <img [src]="urlAvatar" style="width: auto;height: 30px; margin-top: -5px;" alt="">
+              <img [src]="urlAvatar" style="width: auto;height: 30px; margin-top: -5px;" alt="Usuario Avatar">
               <div class="nombrealumnoHeader">{{Alumno.nombres}}</div>
             </ng-container>
           </app-alumno-mat-button>
@@ -116,10 +116,10 @@
     </ng-container>
   </app-button>
   <div class="itemsFooter">
-    <a routerLink="/AcercaBsGrupo" (click)="EventoInteraccionEducacion('Acerca de BSG Institute')"  target="_blank">Acerca de BSG Institute</a>
-    <a routerLink="/contactenos" (click)="EventoInteraccionEducacion('Contáctenos')"  target="_blank">Contáctenos</a>
-    <a routerLink="/termino-uso-web" (click)="EventoInteraccionEducacion('Términos de uso')"  target="_blank">Términos de uso</a>
-    <a routerLink="/politica-privacidad" (click)="EventoInteraccionEducacion('Política de privacidad')"  target="_blank">Política de privacidad</a>
+    <a title="Vínculo a Acerca de BSG Institute" routerLink="/AcercaBsGrupo" (click)="EventoInteraccionEducacion('Acerca de BSG Institute')"  target="_blank">Acerca de BSG Institute</a>
+    <a title="Vínculo a Contáctenos" routerLink="/contactenos" (click)="EventoInteraccionEducacion('Contáctenos')"  target="_blank">Contáctenos</a>
+    <a title="Vínculo a Términos de Uso" routerLink="/termino-uso-web" (click)="EventoInteraccionEducacion('Términos de uso')"  target="_blank">Términos de uso</a>
+    <a title="Vínculo a Políticas de Privacidad" routerLink="/politica-privacidad" (click)="EventoInteraccionEducacion('Política de privacidad')"  target="_blank">Política de privacidad</a>
   </div>
 </div>
 
