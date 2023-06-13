@@ -68,7 +68,7 @@
               <div class="col-sm-12 item-footer">
                 <div class="redes-container">
                   <div class="redes-item" *ngFor="let item of redesSociales">
-                    <a [href]="item.route" target="_blank" (click)="EventoInteraccion(item.name)" target="_blank"><img
+                    <a title=" Vínculo a {{item.name}}" [href]="item.route" target="_blank" (click)="EventoInteraccion(item.name)" target="_blank"><img
                         [src]="item.icono" alt="{{item.name}}"></a>
                   </div>
                 </div>

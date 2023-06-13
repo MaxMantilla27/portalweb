@@ -1,15 +1,15 @@
-<a *ngIf="tipo==1" [routerLink]="Url"  (click)="OnClick.emit()" routerLinkActive="active" class="a_normal">
+<a title="Vínculo a {{Url}}" *ngIf="tipo==1" [routerLink]="Url"  (click)="OnClick.emit()" routerLinkActive="active" class="a_normal">
   <ng-content select="[contenido]">
   </ng-content>
 </a>
-<a [routerLink]="Url" *ngIf="tipo==2"  [ngClass]="{'bootoncolor':hover==true}" [ngStyle]="{'color':color,'font-weight':weigth}"
+<a title="Vínculo a {{Url}}" [routerLink]="Url" *ngIf="tipo==2"  [ngClass]="{'bootoncolor':hover==true}" [ngStyle]="{'color':color,'font-weight':weigth}"
   (mouseenter)="hover=true" (mouseleave)="hover=false" routerLinkActive="active" class="buttonHeader">
   <ng-content select="[contenidoTag]">
   </ng-content>
 </a>
 
 <ng-container *ngIf="tipo==3">
-  <a mat-button [ngClass]="{'bootoncolor':hover==true}" [matMenuTriggerFor]="menu"
+  <a title="Menú" mat-button [ngClass]="{'bootoncolor':hover==true}" [matMenuTriggerFor]="menu"
   (mouseenter)="hover=true" (mouseleave)="hover=false"
     #menuTrigger="matMenuTrigger" style="
     margin-right: 10px;">
@@ -31,6 +31,6 @@
     <ng-content select="[contenidoButton]">
     </ng-content>
   </button>
-  <img class="imgbutton" [src]="'../../.././../../assets/icons/'+img" width="20" width="20" alt="" loading="eager" *ngIf="img!=''" [routerLink]="Url" >
+  <img class="imgbutton" [src]="'../../.././../../assets/icons/'+img" width="20" width="20" alt="Botón" loading="eager" *ngIf="img!=''" [routerLink]="Url" >
 </ng-container>
 
