@@ -37,61 +37,71 @@ export class FooterComponent implements OnInit {
       // },
       {
         title: 'Transparencia',
-        route: '/Transparencia'
+        route: '/Transparencia',
       }
     ]
     this.centralTelefonica = [
       {
         icono: '../../../../../assets/icons/peru-icon.svg',
         pais: 'Perú',
-        telefono: '+51(1) 207-2770'
+        telefono: '+51(1) 207-2770',
+        alt: 'Bandera de Perú'
       },
       {
         icono: '../../../../../assets/icons/colombia-icon.svg',
         pais: 'Colombia',
-        telefono: '+57(601)381-9462'
+        telefono: '+57(601)381-9462',
+        alt: 'Bandera de Colombia'
       },
       {
         icono: '../../../../../assets/icons/bolivia-icon.svg',
         pais: 'Bolivia',
-        telefono: '+59(1) 7733-8111'
+        telefono: '+59(1) 7733-8111',
+        alt: 'Bandera de Bolivia'
       },
       {
         icono: '../../../../../assets/icons/mexico-icon.svg',
         pais: 'México',
-        telefono: '+52(55) 4000-3255'
+        telefono: '+52(55) 4000-3255',
+        alt: 'Bandera de México'
       },
       {
         icono: '../../../../../assets/icons/chile-icon.svg',
         pais: 'Chile',
-        telefono: '+56 (2) 2760 9120'
+        telefono: '+56 (2) 2760 9120',
+        alt: 'Bandera de Chile'
       }
     ]
     this.redesSociales = [
       {
         icono: '../../../../../assets/icons/facebook-icon.svg',
         route: 'https://www.facebook.com/BSGInstituteOficial/',
-        name: 'Facebook'
+        name: 'Facebook',
+        alt: 'Vínculo a Facebook'
       },
       {
         icono: '../../../../../assets/icons/instagram-icon.svg',
         route: 'https://www.instagram.com/bsg_institute/',
-        name: 'Instragram'
+        name: 'Instragram',
+        alt: 'Vínculo a Instragram'
       },
       {
         icono: '../../../../../assets/icons/youtube-icon.svg',
         route: 'https://www.youtube.com/user/BSGRUPOsac',
-        name: 'Youtube'
+        name: 'Youtube',
+        alt: 'Vínculo a Youtube'
       },
       {
         icono: '../../../../../assets/icons/twitter-icon.svg',
         route: 'https://twitter.com/BSG_Institute',
-        name: 'Twitter'
+        name: 'Twitter',
+        alt: 'Vínculo a Twitter'
       },
       {
         icono: '../../../../../assets/icons/linkedin-icon.svg',
         route: 'https://pe.linkedin.com/school/bsg-institute/',
-        name: 'LinkedIn'
+        name: 'LinkedIn',
+        alt: 'Vínculo a LinkedIn'
       },
 
     ]

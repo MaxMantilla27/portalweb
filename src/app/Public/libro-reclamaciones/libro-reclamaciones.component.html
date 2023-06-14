@@ -7,9 +7,9 @@
   <div class="container">
     <div class="row rowpadd">
       <div class="col-12 col-md-12 col-lg-12">
-        <div class="subtitulo" style="font-weight: bold;color: #4a4a49;">
+        <h2 class="subtitulo" style="font-weight: bold;color: #4a4a49;line-height: 150%;">
           Libro de Reclamaciones Virtual
-        </div>
+        </h2>
       </div>
     </div>
   </div>
@@ -31,14 +31,14 @@
     <div class="row rowpadd" style="padding-top: 35px;padding-bottom: 35px;">
 
       <div class="col-12 col-md-12 col-lg-12">
-        <div class="titleFormLibro">1. Identificaci&oacute;n del Consumidor Reclamante</div>
+        <div class="titleFormLibro">1. Identificación del Consumidor Reclamante</div>
       </div>
       <div class="col-12 col-md-6 col-lg-6 newInpiut">
         <mat-form-field appearance="outline" style="width: 100%;">
           <mat-label>Nombres</mat-label>
           <input id="nombres" name="nombres" #nombres="ngModel" type="text" [(ngModel)]="reclamo.Nombre" matInput
             required="" />
-          <mat-error *ngIf="!nombres.valid">Ingrese sus nombres completo</mat-error>
+          <mat-error *ngIf="!nombres.valid">Ingrese sus nombres completos</mat-error>
         </mat-form-field>
       </div>
       <div class="col-12 col-md-6 col-lg-6 newInpiut">
@@ -46,7 +46,7 @@
           <mat-label>Apellidos</mat-label>
           <input id="apellido" name="apellido" #apellido="ngModel" type="text" [(ngModel)]="reclamo.Apellido" matInput
             required="" />
-          <mat-error *ngIf="!apellido.valid">Ingrese sus apellidos completo</mat-error>
+          <mat-error *ngIf="!apellido.valid">Ingrese sus apellidos completos</mat-error>
         </mat-form-field>
       </div>
       <div class="col-12 col-md-6 col-lg-6 newInpiut">
@@ -90,18 +90,18 @@
         </mat-form-field>
       </div>
       <div class="col-12 col-md-3 col-lg-3 " style="display: flex;flex-direction: column;">
-        <div class="labelFormLibro">Padre madre o apoderado</div>
-        <div style="font-size: 10px;">(en caso de ser menor de edad)</div>
+        <div class="labelFormLibro">Padre, madre o apoderado</div>
+        <div style="font-size: 10px;">(En caso de ser menor de edad)</div>
       </div>
       <div class="col-12 col-md-9 col-lg-9 newInpiut">
         <mat-form-field appearance="outline" style="width: 100%;">
-          <mat-label>Padre madre o apoderado</mat-label>
+          <mat-label>Padre, madre o apoderado</mat-label>
           <input id="apoderado" name="apoderado" #apoderado="ngModel" type="text" [(ngModel)]="reclamo.Referente"
             matInput />
         </mat-form-field>
       </div>
       <div class="col-12 col-md-12 col-lg-12">
-        <div class="titleFormLibro">2. Identificaci&oacute;n del Bien/Servicio Contratado</div>
+        <div class="titleFormLibro">2. Identificación del Bien/Servicio Contratado</div>
       </div>
       <div class="col-6 col-md-3 col-lg-3">
         <div class="labelFormLibro">Tipo del Bien/Servicio</div>
@@ -137,7 +137,7 @@
       </div>
       <div class="col-6 col-md-4 col-lg-4 newInpiut">
         <mat-form-field appearance="outline" style="width: 100%;">
-          <mat-label>Escribir aqu&iacute;</mat-label>
+          <mat-label>Escribir aquí</mat-label>
           <input id="servicio" name="servicio" #servicio="ngModel" type="text" [(ngModel)]="reclamo.OtroDetalleServicio" matInput/>
         </mat-form-field>
       </div>
@@ -165,8 +165,8 @@
             <ng-container *ngIf="reclamo.IdTipoReclamo==2">check_box</ng-container>
             <ng-container *ngIf="reclamo.IdTipoReclamo!=2">check_box_outline_blank</ng-container>
           </i>
-          QUEJA (Disconformidad no relacionada a los productos o servicios; o , malestar o descontento respecto a la
-          atenci&oacute;n al p&uacute;blico)
+          QUEJA (Disconformidad no relacionada a los productos o servicios, malestar o descontento respecto a la
+          atención al público)
         </div>
       </div>
     </div>
@@ -195,8 +195,10 @@
       </div>
       <div class="col-12 col-md-6 col-lg-6" style="padding-top: 15px;padding-bottom: 15px;background: #e6eefa;">
 
-        <div><img src="../../../assets/icons/calendar-quejas.svg" style="width: 20px;
-          margin-right: 20px;" alt="">{{fecha | date: 'dd/MM/yyyy - HH:mm:ss' }}</div>
+        <div>
+            <img src="../../../assets/icons/calendar-quejas.svg" style="width: 20px; margin-right: 20px;" alt="Calendario">
+            {{fecha | date: 'dd/MM/yyyy - HH:mm:ss' }}
+          </div>
       </div>
       <div class="col-12 col-md-6 col-lg-6">
         <div class="buttonsFormLibro">

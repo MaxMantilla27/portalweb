@@ -2,8 +2,8 @@
     <div class="container">
       <div class="row rowpadd">
         <div class="col-12 col-sm-12" style="margin-bottom: 30px;">
-          <div class="subtitulo" style="text-align: center;    margin: 0px;">{{TituloEducacion}}</div>
-          <div class="parafoS" style="font-size: 22px;">Desarrolla habilidades altamente demandadas en el mercado laboral </div>
+          <h1 class="subtitulo" style="text-align: center; margin: 0px;line-height: 150%;">{{TituloEducacion}}</h1>
+          <h2 class="parafoS" style="font-size: 22px;line-height: 150%;">Desarrolla habilidades altamente demandadas en el mercado laboral </h2>
 
         </div>
         <div class="col-12 row" style="justify-content: space-between;    padding: 0px;
@@ -11,12 +11,12 @@
           <div class="col-12 col-sm-12 col-md-6" *ngFor="let item of Educacion;let i=index">
             <div style="display: flex;justify-content: center;flex-wrap: wrap;    padding: 20px 0px;">
               <img *ngIf="i%2==0" style="width: auto; height: 230px;"
-                src="../../../assets/imagenes/arquetipo-promotor-ventas-contenido.png" alt="">
+                src="../../../assets/imagenes/arquetipo-promotor-ventas-contenido.png" alt="Profesional en {{item.Nombre}}">
               <img *ngIf="i%2!=0" style="width: auto; height: 230px;"
-                src="../../../assets/imagenes/arquetipo-atencion-al-cliente.png" alt="">
+                src="../../../assets/imagenes/arquetipo-atencion-al-cliente.png" alt="Profesional en {{item.Nombre}}">
 
               <div class="cardCarrerasV2">
-                <div class="titleV2">{{item.Nombre}}</div>
+                <h2 class="titleV2" style="font-size: 1rem;line-height: 150%;">{{item.Nombre}}</h2>
                 <div class="underl"></div>
                 <div style="color: #f11f53;font-size: 14px;text-align: center;width: 100%;margin-top: 30px;">50% de descuento en la primera pensión</div>
                 <div class="subtitleCarreras orange " (click)="EventoInteraccionEducacion(item.Nombre)" [routerLink]="item.Url" style="margin-top: 0px;">

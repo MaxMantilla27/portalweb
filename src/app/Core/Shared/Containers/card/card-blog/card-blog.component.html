@@ -2,8 +2,8 @@
   <img mat-card-image [src]="'https://img.bsginstitute.com/repositorioweb/img/'+cardContent.imgPortada"
     [alt]="cardContent.imgPortadaAlt">
   <mat-card-content>
-    <div class="title" (click)="EventoInteraccion(cardContent.nombre)" [routerLink]="'/bs-campus/blog/'+cardContent.urlWeb+'-'+cardContent.idWeb">{{cardContent.nombre}}
-    </div>
+    <h2 style="line-height: 150%;font-size: 14px;" class="title" (click)="EventoInteraccion(cardContent.nombre)" [routerLink]="'/bs-campus/blog/'+cardContent.urlWeb+'-'+cardContent.idWeb">{{cardContent.nombre}}
+    </h2>
 
     <p [innerHTML]="cardContent.descripcion | safeHtml">
     </p>
@@ -26,8 +26,8 @@
     [src]="'https://repositorioweb.blob.core.windows.net/paper-bs/Paper/imagen/'+cardContent.imgPortada"
     [alt]="cardContent.imgPortadaAlt">
   <mat-card-content>
-    <div class="title" (click)="EventoInteraccion(cardContent.nombre)" [routerLink]="'/bs-campus/white-paper/'+cardContent.urlWeb+'-'+cardContent.idWeb">
-      {{cardContent.nombre}}</div>
+    <h2 style="line-height: 150%; font-size: 14px;" class="title" (click)="EventoInteraccion(cardContent.nombre)" [routerLink]="'/bs-campus/white-paper/'+cardContent.urlWeb+'-'+cardContent.idWeb">
+      {{cardContent.nombre}}</h2>
 
     <p [innerHTML]="cardContent.descripcion | safeHtml">
     </p>
