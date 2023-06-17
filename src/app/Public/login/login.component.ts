@@ -149,6 +149,7 @@ export class LoginComponent implements OnInit,OnDestroy {
           console.log(this.DatoObservable);
           this._SessionStorageService.SessionSetValue('IdProveedor',x.idProveedor);
           this._SessionStorageService.SessionSetValue('Cursos',x.cursos);
+          this._SessionStorageService.SessionSetValue('TipoCarrera',x.tipoCarrera);
           var redirect=this._SessionStorageService.SessionGetValue('redirect');
           var normal=true;
           if(redirect!=''){

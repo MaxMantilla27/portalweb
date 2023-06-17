@@ -44,6 +44,8 @@ import { DesafiliacionOpenpayComponent } from './confirmacion-desafiliacion-pago
 import { AfiliacionVisaComponent } from './confirmacion-afiliacion-pago-recurrente/afiliacion-visa/afiliacion-visa.component';
 import { ResultadoPagoIzipayComponent } from './resultado-pago-izipay/resultado-pago-izipay.component';
 import { AfiliacionIzipayComponent } from './confirmacion-afiliacion-pago-recurrente/afiliacion-izipay/afiliacion-izipay.component';
+import { BolsaTrabajoGuard } from './Guard/bolsa-trabajo.guard';
+import { BolsaTrabajoComponent } from './bolsa-trabajo/bolsa-trabajo.component';
 
 
 const routes: Routes = [
@@ -58,6 +60,7 @@ const routes: Routes = [
         { path: 'Docencia', component: DocenciaComponent,canActivate:[ProveedorGuard]},
         { path: 'MisPagos', component: MisPagosComponent,canActivate:[AlumnoGuard]},
         { path: 'Categoria', component: CategoriaComponent,canActivate:[AlumnoGuard]},
+        { path: 'BolsaTrabajo', component: BolsaTrabajoComponent,canActivate:[BolsaTrabajoGuard]},
 
         { path: 'MisPagos/tarjeta/:Identificador', component: PagoGeneralComponent,canActivate:[AlumnoGuard]},
         { path: 'MisPagos/visa/:Identificador', component: PagoVisaComponent,canActivate:[AlumnoGuard]},
