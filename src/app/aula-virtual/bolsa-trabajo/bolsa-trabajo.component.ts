@@ -27,6 +27,10 @@ export class BolsaTrabajoComponent implements OnInit {
           e.isSelect=false
         })
         this.listaConvocatorias=x
+        if(this.listaConvocatorias.length>0){
+          this.listaConvocatorias[0].isSelect=true
+          this.mostrarConvocatoria(this.listaConvocatorias[0])
+        }
       }
     })
   }

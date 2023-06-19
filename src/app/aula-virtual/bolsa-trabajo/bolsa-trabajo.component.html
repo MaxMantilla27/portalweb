@@ -13,7 +13,7 @@
         <div class="col-md-6">
             <div class="borde">
                 <div class="row" style=" padding-left: 10px; padding-right: 11px;">
-                    <div class="col-md-12 borde-recto-buttom" style="border-bottom: 1px solid #b5b5b5;background: #e7e7e7">
+                    <div class="col-md-12 borde-recto-buttom" style="border-bottom: 1px solid #b5b5b5;background: #033dab;color:whitesmoke">
                         <p style="margin: 10px;"><strong>{{listaConvocatorias.length}}</strong> Ofertas laborales</p>
                     </div>
                 </div>
@@ -30,11 +30,11 @@
                                 <div class="row">
                                     <div class="col-md-6" style="justify-content: left;display: flex;justify-content: flex-start;">
                                         <ng-container *ngIf="item.modalidadTrabajo!=null">
-                                         <p class="borde-p"><strong style="padding:8px">{{item.modalidadTrabajo}}</strong></p>
+                                         <p class="borde-p"><strong style="padding:8px 5px">{{item.modalidadTrabajo}}</strong></p>
                                         </ng-container>
                                     </div>
                                     <div class="col-md-6" style="justify-content: right;display: flex;justify-content: flex-end;">
-                                        <p><strong style="padding:8px">Fecha Fin :</strong>{{item.fechaFin|date: 'dd/MM/yy'}}</p>
+                                        <p><strong style="padding:8px 5px">Fecha Fin :</strong>{{item.fechaFin|date: 'dd/MM/yy'}}</p>
                                     </div>
                                 </div>
                             </div>

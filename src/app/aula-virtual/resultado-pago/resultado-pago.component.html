@@ -33,12 +33,13 @@
           <ng-container *ngIf="resultVisa.estadoOperacion=='Declinado'">
             <ng-container *ngIf="tipoRespuesta!='AF'">
               No hemos podido procesar su pago, debido a un error en nuestra plataforma de pagos.
+              <br>
+              Escríbenos a nuestro chat de soporte técnico para poder ayudarlo.
             </ng-container>
             <ng-container *ngIf="tipoRespuesta=='AF'">
-              No hemos podido procesar su afiliación, debido a un error en nuestra plataforma de pagos.
+              No hemos podido procesar su afiliación, debido a un error con su entidad bancaria,  comuniquese con
+              su Banco para solucionar el error en el pago; o intente con otro medio de pago.
             </ng-container>
-            <br>
-            Escribanos a nuestro chat de soporte técnico para poder ayudarlo.
           </ng-container>
           <ng-container *ngIf="resultVisa.estadoOperacion =='Processed-'">
             No hemos podido procesar su pago, debido a un error con su entidad bancaria,  comuniquese con
