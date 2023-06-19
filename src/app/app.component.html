@@ -6,13 +6,6 @@
 
   <mat-sidenav #sidenav mode="over" position='start' style="max-width: 70%;background: white !important;    position: fixed;margin-top: 60px;"
   [ngStyle]="{'height':step==-1?'fit-content':'auto'}">
-    <!-- <div style="display: flex;
-    align-items: center;
-    justify-content: space-between;">
-      <img src="https://img.bsginstitute.com/repositorioweb/img/logobsg.svg" alt="" width="75%">
-      <i class="material-icons" style="color: white;" (click)="sidenav.toggle()">close</i>
-    </div>
-    <hr /> -->
     <nav style="margin:0px">
 
       <app-header (OnClick)="sidenav.toggle()" (OpenStep)="step=$event" [usuarioWeb]="usuarioWeb"  [responsive]="true" [carga]="charge"

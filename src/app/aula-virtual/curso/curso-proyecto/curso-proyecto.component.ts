@@ -48,6 +48,7 @@ export class CursoProyectoComponent implements OnInit,OnChanges,OnDestroy {
   public fileErrorMsg=''
   public instruccionesAcerca=false;
   public instruccionesSubir=false
+  public instruccionesAnexos=false
   public nombrefile='Ningún archivo seleccionado'
   public sendFile:ModelTareaEvaluacionTareaDTO={
     idEsquemaEvaluacionPGeneralDetalle:0,
@@ -61,6 +62,7 @@ export class CursoProyectoComponent implements OnInit,OnChanges,OnDestroy {
     file:new File([],''),
     idMatriculaCabecera:0
   }
+  public anexos:Array<any>=[]
   ngOnInit(): void {
     this._HelperService.recibirCombosPerfil.pipe(takeUntil(this.signal$)).subscribe((x) => {
       this.miPerfil=x
@@ -74,6 +76,7 @@ export class CursoProyectoComponent implements OnInit,OnChanges,OnDestroy {
       this.params.idPGeneral=this.idPGeneral
       this.params.idPrincipal=this.idPGeneral
       this.ObtenerEvaluacionProyectoAplicacion();
+      this.ListaPgeneralProyectoAplicacionAnexo();
     }
   }
 
@@ -106,6 +109,19 @@ export class CursoProyectoComponent implements OnInit,OnChanges,OnDestroy {
               }
             }
           }
+        }
+      }
+    })
+  }
+  ListaPgeneralProyectoAplicacionAnexo(){
+    this._TareaEvaluacionService.ListaPgeneralProyectoAplicacionAnexo(this.params.idPGeneral).pipe(takeUntil(this.signal$)).subscribe({
+      next:x=>{
+        console.log(x)
+        if(x!=null){
+          this.anexos=x
+          this.anexos.forEach((a:any) => {
+            a.ver=false
+          });
         }
       }
     })

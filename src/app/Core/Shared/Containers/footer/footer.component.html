@@ -25,12 +25,12 @@
       </div> -->
       <div class="col-lg-4 col-sm-6 col-xs-12">
         <div class="item-container">
-          <h4 class="titulo-footer">Servicios</h4>
+          <h2 class="titulo-footer">Servicios</h2>
           <div class="row">
             <div class="col-sm-12 item-footer" *ngFor="let item of servicios">
               <div class="subitem-container">
                 <a routerLink="{{item.route}}" (click)="EventoInteraccion(item.title)"
-                  target="_blank">{{item.title}}</a>
+                  target="_blank" title="Vínculo a {{item.title}}">{{item.title}}</a>
               </div>
             </div>
           </div>
@@ -38,11 +38,11 @@
       </div>
       <div class="col-lg-4 col-sm-6 col-xs-12">
         <div class="item-container">
-          <h4 class="titulo-footer">Central Telefónica</h4>
+          <h2 class="titulo-footer">Central Telefónica</h2>
           <div class="row">
             <div class="subitem-container">
               <div class="col-sm-12 item-footer" *ngFor="let item of centralTelefonica">
-                <img alt="" [src]="item.icono" width="20rem" />
+                <img alt="Bandera de {{item.pais}}" [src]="item.icono" width="20rem" />
                 <span>{{item.pais}} {{item.telefono}}</span>
               </div>
             </div>
@@ -51,24 +51,24 @@
       </div>
       <div class="col-lg-4 col-sm-6 col-xs-12">
         <div class="item-container">
-          <h4 class="titulo-footer">Más Información</h4>
+          <h2 class="titulo-footer">Más Información</h2>
           <div class="row">
 
             <div class="col-sm-12 item-footer">
               <div class="subitem-container">
-                <a routerLink="/AcercaBsGrupo" (click)="EventoInteraccion('cerca de BSG Institute')"
+                <a title="Vínculo a Acerca de BSG Institute" routerLink="/AcercaBsGrupo" (click)="EventoInteraccion('cerca de BSG Institute')"
                   target="_blank">Acerca de BSG Institute</a>
               </div>
             </div>
             <div class="subitem-container">
               <div class="col-sm-12 item-footer">
-                <a routerLink="/contactenos" (click)="EventoInteraccion('Contáctenos')" target="_blank">Contáctenos</a>
+                <a title="Vínculo a Contáctenos" routerLink="/contactenos" (click)="EventoInteraccion('Contáctenos')" target="_blank">Contáctenos</a>
               </div>
               <div class="col-sm-12 item-footer">S&iacute;guenos en: </div>
               <div class="col-sm-12 item-footer">
                 <div class="redes-container">
                   <div class="redes-item" *ngFor="let item of redesSociales">
-                    <a [href]="item.route" target="_blank" (click)="EventoInteraccion(item.name)" target="_blank"><img
+                    <a title=" Vínculo a {{item.name}}" [href]="item.route" target="_blank" (click)="EventoInteraccion(item.name)" target="_blank"><img
                         [src]="item.icono" alt="{{item.name}}"></a>
                   </div>
                 </div>
@@ -86,9 +86,9 @@
       <div class="col-md-8">
         <span class="copyrigth">
           © 2020 BSG Institute, todos los derechos reservados • <a (click)="EventoInteraccion('Términos de uso')"
-            routerLink="/termino-uso-web" target="_blank">Términos de uso</a> • <a
+            routerLink="/termino-uso-web" target="_blank" title="Vínculo a Términos de Uso Web">Términos de uso</a> • <a
             (click)="EventoInteraccion('Política de privacidad')" routerLink="/politica-privacidad"
-            target="_blank">Política de privacidad</a><br>
+            target="_blank" title="Vínculo a Políticas de Privacidad">Política de privacidad</a><br>
           PMI, PMP, PMI-RMP, PMI-SP, CAPM, PMBOK, PMI Agile Certified Practitioner (PMI-ACP), Project Management
           Professional
           y el logotipo PMI Registered Education Provider son marcas registradas del Project Management Institute, Inc.
@@ -97,7 +97,7 @@
         </span>
       </div>
       <div class="col-md-4 reclamaciones-container">
-        <img src="../../../../../assets/icons/libro-reclamaciones-icon.svg" alt="">
+        <img src="../../../../../assets/icons/libro-reclamaciones-icon.svg" alt="Libro de Reclamaciones">
         <span class="reclamaciones" (click)="EventoInteraccion('Libro de Reclamaciones')" routerLink="/LibroReclamacion">
           Libro de Reclamaciones
         </span>
