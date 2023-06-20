@@ -105,7 +105,8 @@ export class LandingPageInterceptorComponent implements OnInit,OnDestroy {
               IdCategoriaOrigen:this.valorPrograma.idCategoriaOrigen,
               IdConjuntoAnuncio:this.valorPrograma.idConjuntoAnuncio,
               IdFormulario:this.valorPrograma.idFormulario,
-              IdCentroCosto:this.valorPrograma.idCentroCosto
+              IdCentroCosto:this.valorPrograma.idCentroCosto,
+              CampoContacto: this.valorPrograma.campoContacto
             },
       panelClass: 'dialog-landing-page',
     });
