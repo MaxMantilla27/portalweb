@@ -58,14 +58,14 @@
                       padding: 10px;
                       background: #fff8f0;
                       border: 1px solid #fff1e0;">
-                  <img src="../../../../assets/icons/calendario-24.svg" alt="" style="width: 20px;
+                  <img src="../../../../assets/icons/calendario-24.svg" alt="Calendario" style="width: 20px;
                       margin-right: 20px;">
                   <strong>Fecha limite de calificacion: </strong> &nbsp;{{item.fechaCalificacionLimite | date:"dd/MM/yyyy"}}
 
                 </div>
                 <div class="col-12 col-md-12 col-lg-12" style="display: flex;justify-content: center;margin-top: 20px;"
                   *ngIf="item!=undefined">
-                  <img src="../../../../assets/icons/descarga-36.svg" alt="" style="width: 20px;
+                  <img src="../../../../assets/icons/descarga-36.svg" alt="Descargar" style="width: 20px;
                       margin-right: 20px;">
                   <a class="vinculo" [href]="item.direccionUrl" target="_blank">{{item.nombreArchivo}}</a>
                 </div>
@@ -110,7 +110,7 @@
                       Nombre del archivo
                     </div>
                     <div class="col-12 col-md-6 col-lg-6" *ngIf="item!=undefined">
-                      <img src="../../../../assets/icons/descarga-36.svg" alt="" style="width: 20px;
+                      <img src="../../../../assets/icons/descarga-36.svg" alt="Descargar" style="width: 20px;
                           margin-right: 20px;">
                       <a class="vinculo" [href]="item.direccionUrl" target="_blank">{{item.nombreArchivo}}</a>
                     </div>
@@ -253,7 +253,7 @@
             <div class="tareaParesContent row" *ngIf="item.open==true">
               <div class="col-4" style="margin-bottom: 15px;">Archivo : </div>
               <div class="col-8" style="display: flex">
-                <img src="../../../../assets/icons/descarga-36.svg" alt="" style="width: 20px;
+                <img src="../../../../assets/icons/descarga-36.svg" alt="Descargar" style="width: 20px;
                 margin-right: 20px;">
                   <a class="vinculo" [href]="item.direccionUrl" target="_blank">{{item.nombreArchivo}}</a>
               </div>
@@ -274,7 +274,7 @@
                 <div class="col-8">{{item.retroalimentacion}}</div>
                 <div class="col-4" style="margin-bottom: 15px;">Archivo de Retroalimentación : </div>
                 <div class="col-8"style="display: flex">
-                  <img src="../../../../assets/icons/descarga-36.svg" alt="" style="width: 20px;
+                  <img src="../../../../assets/icons/descarga-36.svg" alt="Descargar" style="width: 20px;
                   margin-right: 20px;">
                     <a class="vinculo" [href]="item.urlArchivoSubidoRetroalimentacion" target="_blank">{{item.nombreArchivoRetroalimentacion}}</a>
                   </div>

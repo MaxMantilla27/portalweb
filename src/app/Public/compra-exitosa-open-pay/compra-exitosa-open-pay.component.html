@@ -4,7 +4,7 @@
     <div class="col-12 col-md-10 col-lg-8" *ngIf="resultVisa.estadoOperacion!='Processed'">
       <ng-container *ngIf="resultVisa.estadoOperacion=='Pending'">
         <div>
-          <img [src]="'../../../assets/icons/iconcharge/'+imgAc" alt="" *ngIf="imgAc!=''">
+          <img [src]="'../../../assets/icons/iconcharge/'+imgAc" alt="Procesando" *ngIf="imgAc!=''">
         </div>
         <div class="titleResultPago">
           <div>Procesando pago</div>
@@ -19,7 +19,7 @@
         <div class="titleResultPago">
           <div *ngIf="tipoRespuesta!='AF'">No se realizó el pago</div>
           <div *ngIf="tipoRespuesta=='AF'">No se realizó la afiliación</div>
-          <img src="../../../assets/icons/denegado-error-21.svg" alt="">
+          <img src="../../../assets/icons/denegado-error-21.svg" alt="Operación denegada">
         </div>
         <div class="textResultPago">
           <ng-container *ngIf="resultVisa.estadoOperacion =='No Process' && tipoRespuesta!='AF'">
@@ -52,7 +52,7 @@
     <div class="col-12 col-md-10 col-lg-8" *ngIf="resultVisa.estadoOperacion=='Processed'">
       <div class="titleResultPago">
         <div>¡Pago exitoso!</div>
-        <img src="../../../assets/icons/positivo-hecho-20.svg" alt="">
+        <img src="../../../assets/icons/positivo-hecho-20.svg" alt="Operación realizada">
       </div>
       <div style="margin-top: 5px;
       font-size: 14px;"  *ngIf="tipoRespuesta!='AF'">
@@ -101,8 +101,8 @@
               <div class="col-12 col-md-5 col-lg-4"><b>Pago recurrente:</b></div>
               <div class="col-12 col-md-7 col-lg-8 itemValueCardPago">Activado</div>
             </ng-container>
-            
-            
+
+
           </div>
         </div>
         <app-default-button [confs]="{color:'primary',titulo:'Volver'}" [style]="'margin-top:40px;padding: 0px 40px;'"

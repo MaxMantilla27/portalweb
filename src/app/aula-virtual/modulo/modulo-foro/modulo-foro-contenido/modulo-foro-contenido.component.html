@@ -2,7 +2,7 @@
   <div class="foroTitle">Tema: {{item.titulo}}</div>
   <div class="foroContenido">{{item.contenido}}</div>
   <div style="display: flex;align-items: center;justify-content: flex-start;margin-top: 20px;">
-    <img [src]="item.urlAvatar" alt="" style="width: 60px; height: 60px;margin-right: 10px;">
+    <img [src]="item.urlAvatar" alt="{{item.urlAvatar}}" style="width: 60px; height: 60px;margin-right: 10px;">
     <div>
       <div class="AutorFecha">Por: {{item.usuario}}</div>
       <div class="AutorFecha">Fecha: {{item.fecha| date: 'dd/MM/yyyy' }}</div>
@@ -14,7 +14,7 @@
       <div style="font-weight: bold;">Comentarios:</div>
     </div>
     <div class="col-12 col-md-6 col-lg-4" style="display: flex;justify-content: right;">
-      <img src="../../../../assets/icons/respuestas-foro-28.svg" alt=""
+      <img src="../../../../assets/icons/respuestas-foro-28.svg" alt="Respuesta Foro"
         style="width: 20px; height: 20px;  margin-right: 10px;">
       <div class="NRespuestas">{{item.respuestas}} Comentarios</div>
     </div>
@@ -30,7 +30,7 @@
         <div class="RespuestasForo">
           <div class="foroContenido" style="text-align: left;font-size: 17px;">{{itemRespuesta.contenido}}</div>
           <div style="display: flex;align-items: center;justify-content: flex-start;margin-top: 20px;">
-            <img [src]="itemRespuesta.urlAvatarRespuesta" alt="" style="width: 60px; height: 60px; margin-right: 10px;">
+            <img [src]="itemRespuesta.urlAvatarRespuesta" alt="{{itemRespuesta.urlAvatarRespuesta}}" style="width: 60px; height: 60px; margin-right: 10px;">
             <div class="AutorFecha">
               <div class="AutorFecha">Por: {{itemRespuesta.nombres}}</div>
               <div class="AutorFecha">Fecha: {{itemRespuesta.fechaCreacion| date: 'dd/MM/yyyy' }}</div>

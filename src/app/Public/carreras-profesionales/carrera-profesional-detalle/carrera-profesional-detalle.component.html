@@ -204,8 +204,32 @@
           </div>
         </div>
       </div>
-      <div *ngIf="certificacionETDH==false" class="carrera-container__content__fourthSection">
+      <div *ngIf="certificacionETDH==false" style="background: white;">
+        <div class="container">
+          <div class="row rowpadd">
+            <div class="col-12 col-md-12 col-lg-12 tabprogram">
+              <h2 style="font-weight: bold;line-height: 150%;"  class="subtitulo">Plana Docente</h2>
 
+              <div class="carousel-expositores">
+                <ngb-carousel style="width: 99%" (slide)="EventoInteraccionCarrousel($event,'Expositores')">
+                  <ng-template ngbSlide *ngFor="let ste of stepExpositors">
+                    <div class="wrapper" style="display: flex;justify-content: center;">
+                      <div class="row" style="align-items: center;width: 95%;justify-content: center;    padding: 30px 0px;">
+                        <div class="col-12 col-xs-6 col-md-6 col-lg-6" *ngFor="let item of ste" style="height: 100%;">
+                          <app-card-expositores [expositor]="item"></app-card-expositores>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="carousel-caption">
+                    </div>
+                  </ng-template>
+                </ngb-carousel>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="certificacionETDH==false" class="carrera-container__content__fourthSection">
         <div class="container">
           <div class="rowpadd">
             <h2 style="line-height: 150%;font-weight: bold">Certificación</h2>
@@ -216,7 +240,6 @@
         </div>
       </div>
       <div *ngIf="certificacionETDH==true"  class="educacion-tecnica-container__content__fourthSection">
-
         <div class="container">
           <div class="rowpadd">
             <div class="row">

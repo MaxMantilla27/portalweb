@@ -133,7 +133,7 @@
   <div class="subtitleTramites" style="margin-top: 40px;">II. Trámites solicitados</div>
   <div class="contenTramistes" *ngIf="tramitesSolicitado!=undefined">
     <div *ngFor="let item of tramitesSolicitado" class="itmTRamite">
-      <img src="../../../../../assets/icons/pdf-31.svg" alt="">
+      <img src="../../../../../assets/icons/pdf-31.svg" alt="Icono PDF">
       <a [href]="item.ruta+item.nombreArchivo" target="_blank">{{item.descripcion}} {{item.fechaCreacion |
         date:'dd/MM/yyyy'}}</a>
     </div>
