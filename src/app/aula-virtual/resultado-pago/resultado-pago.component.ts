@@ -87,77 +87,115 @@ export class ResultadoPagoComponent implements OnInit,OnDestroy{
   }
   ObtenerPreProcesoPagoCuotaAlumno(){
     this.ruta='/AulaVirtual/MisPagos'
-    this._FormaPagoService.ObtenerPreProcesoPagoCuotaAlumno(this.json).pipe(takeUntil(this.signal$)).subscribe({
-      next:x=>{
-        // console.log("REPUESTA-PREPROCESO",x._Repuesta.listaCuota)
-        // var menor = x._Repuesta.listaCuota[0].nombre
-        // console.log("REPUESTA-PREPROCESO",menor)
-        if(x._Repuesta.registroAlumno==null){
-          this.ObtenerPreProcesoPagoOrganicoAlumno()
-        }else{
-          if(x._Repuesta.estadoOperacion==null){
-            this._router.navigate([this.ruta])
-          }else{
-            this.resultVisa=x._Repuesta;
-            console.log(this.resultVisa)
-            if(this.resultVisa.estadoOperacion=='Processed'){
-              let comprobanteString = this._SessionStorageService.SessionGetValue('comprobante')
-              if(comprobanteString!='')
-              {
-                let objComprobante = JSON.parse(comprobanteString)
-                if(this.tipoRespuesta=="AF")
-                {
-                  var valor:any
-                  objComprobante.listaCuota.forEach((l:any) => {
-                    if(valor==undefined){
-                      valor=l
-                    }else{
-                      if(valor.nroCuota<l.nroCuota){
-                        valor=l
-                      }
-                    }
-                  });
-                  objComprobante.listaCuota = [valor]
-                }
-                this._FormaPagoService.actualizarComprobantePagoLista(objComprobante).pipe(takeUntil(this.signal$)).subscribe({
-                  next:x=>{
-                  }
-                })
-              }
-            }
+    let comprobanteString = this._SessionStorageService.SessionGetValue('comprobante')
 
-            if(this.resultVisa.estadoOperacion.toLowerCase()=='pending'){
-              if(this.resultVisa.idPasarelaPago==6){
-                this.verificarEstado(1)
+    if(this.tipoRespuesta=="AF"){
+      let data = {
+        identificadorTransaccion: this.json.IdentificadorTransaccion
+      }
+      this._FormaPagoService.ObtenerPreProcesoPagoCuotaAlumno(this.json).pipe(takeUntil(this.signal$)).subscribe({
+        next:x=>{
+          this.resultVisa=x._Repuesta
+          if(this.resultVisa.estadoOperacion.toLowerCase()=='pending'){
+            this._FormaPagoService.ObtenerRespuestaComercioByIdTransaccion(data).pipe(takeUntil(this.signal$)).subscribe({
+              next:x=>{
+                let respuesta:string = x.respuesta
+                if(respuesta.toLowerCase().includes("procesopago")){
+                  let JsonRespuesta = JSON.parse(respuesta)
+                  JsonRespuesta.identificadorTransaccion =this.json.IdentificadorTransaccion
+                  this._FormaPagoService.ServicioCobroVisaRecurrente(JsonRespuesta).pipe(takeUntil(this.signal$)).subscribe({
+                    next:x=>{
+                      this._FormaPagoService.ObtenerPreProcesoPagoCuotaAlumno(this.json).pipe(takeUntil(this.signal$)).subscribe({
+                        next:x=>{
+                          this.resultVisa=x._Repuesta
+                          if(this.resultVisa.estadoOperacion=='Processed'){
+                            var valor:any
+                            let objComprobante = JSON.parse(comprobanteString)
+                    
+                            objComprobante.listaCuota.forEach((l:any) => {
+                              if(valor==undefined){
+                                valor=l
+                              }else{
+                                if(valor.nroCuota<l.nroCuota){
+                                  valor=l
+                                }
+                              }
+                            });
+                            objComprobante.listaCuota = [valor]
+                            this._FormaPagoService.actualizarComprobantePagoLista(objComprobante).pipe(takeUntil(this.signal$)).subscribe({
+                              next:x=>{
+                              }
+                            })
+                          }
+                        }
+                      })
+                    }
+                  })
+                }
               }
-            }
-            if(this.resultVisa.estadoOperacion.toLowerCase()=='sent' ){
-              if(this.resultVisa.idPasarelaPago==2 && this.intentos<3)
-              {
-                var json=JSON.parse(this._SessionStorageService.SessionGetValue('datosWompi'));
-                console.log(this._router.url.split('id=')[1].split('&')[0]);
-                json.TransactionToken=this._router.url.split('id=')[1].split('&')[0]
-                this.ProcesarPagoCuotaAlumno(json)
-              }else{
+            })
+          }
+        }
+      })
+    }
+    else{
+      this._FormaPagoService.ObtenerPreProcesoPagoCuotaAlumno(this.json).pipe(takeUntil(this.signal$)).subscribe({
+        next:x=>{
+          // console.log("REPUESTA-PREPROCESO",x._Repuesta.listaCuota)
+          // var menor = x._Repuesta.listaCuota[0].nombre
+          // console.log("REPUESTA-PREPROCESO",menor)
+          if(x._Repuesta.registroAlumno==null){
+            this.ObtenerPreProcesoPagoOrganicoAlumno()
+          }else{
+            if(x._Repuesta.estadoOperacion==null){
+              this._router.navigate([this.ruta])
+            }else{
+              this.resultVisa=x._Repuesta;
+              console.log(this.resultVisa)
+              if(this.resultVisa.estadoOperacion=='Processed'){
+                if(comprobanteString!='')
+                {
+                  let objComprobante = JSON.parse(comprobanteString)
+                  this._FormaPagoService.actualizarComprobantePagoLista(objComprobante).pipe(takeUntil(this.signal$)).subscribe({
+                    next:x=>{
+                    }
+                  })
+                }
+              }
+  
+              if(this.resultVisa.estadoOperacion.toLowerCase()=='pending'){
                 if(this.resultVisa.idPasarelaPago==6){
-                  var js={
-                    IdentificadorTransaccion:this.json.IdentificadorTransaccion,
-                    RequiereDatosTarjeta:this.json.RequiereDatosTarjeta,
-                    tipo:1
-                  }
-                  this.ChangeToPending(js);
+                  this.verificarEstado(1)
+                }
+              }
+              if(this.resultVisa.estadoOperacion.toLowerCase()=='sent' ){
+                if(this.resultVisa.idPasarelaPago==2 && this.intentos<3)
+                {
+                  var json=JSON.parse(this._SessionStorageService.SessionGetValue('datosWompi'));
+                  console.log(this._router.url.split('id=')[1].split('&')[0]);
+                  json.TransactionToken=this._router.url.split('id=')[1].split('&')[0]
+                  this.ProcesarPagoCuotaAlumno(json)
                 }else{
-                  //this._router.navigate([this.ruta])
+                  if(this.resultVisa.idPasarelaPago==6){
+                    var js={
+                      IdentificadorTransaccion:this.json.IdentificadorTransaccion,
+                      RequiereDatosTarjeta:this.json.RequiereDatosTarjeta,
+                      tipo:1
+                    }
+                    this.ChangeToPending(js);
+                  }else{
+                    //this._router.navigate([this.ruta])
+                  }
                 }
               }
             }
           }
+        },
+        error:e=>{
+          //this._router.navigate([this.ruta])
         }
-      },
-      error:e=>{
-        //this._router.navigate([this.ruta])
-      }
-    })
+      })
+    }
   }
   ChangeToPending(js:any){
     this._FormaPagoService.ChangeToPending(js).pipe(takeUntil(this.signal$)).subscribe({
