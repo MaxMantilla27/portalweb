@@ -50,15 +50,6 @@ export class FormaPagoService {
     }
   }
 
-  public ObtenerRespuestaComercioByIdTransaccion(Json:any):Observable<any>{
-    if(this.isBrowser){
-      console.log(Json)
-      return this.http.post<any>(this.urlBase+'/ObtenerRespuestaComercioByIdTransaccion',Json);
-    }else{
-      return EMPTY;
-    }
-  }
-
   public ObtenerPreProcesoPagoOrganicoAlumno(Json:RegistroRespuestaPreProcesoPagoDTO):Observable<any>{
     if(this.isBrowser){
       console.log(Json)
@@ -122,9 +113,9 @@ export class FormaPagoService {
     
   }
 
-  public ServicioCobroVisaRecurrente(Json:any):Observable<any>{
+  public RegistroPagoCuotaAlumnoVisaProcesarRecurrente(Json:any):Observable<any>{
     if(this.isBrowser){
-      return this.http.post<any>(this.urlBase+'/ServicioCobroVisaRecurrente',Json)
+      return this.http.post<any>(this.urlBase+'/RegistroPagoCuotaAlumnoVisaProcesarRecurrente',Json)
     }else{
       return EMPTY;
     }

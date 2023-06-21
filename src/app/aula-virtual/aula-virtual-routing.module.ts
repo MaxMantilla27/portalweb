@@ -46,6 +46,7 @@ import { ResultadoPagoIzipayComponent } from './resultado-pago-izipay/resultado-
 import { AfiliacionIzipayComponent } from './confirmacion-afiliacion-pago-recurrente/afiliacion-izipay/afiliacion-izipay.component';
 import { BolsaTrabajoGuard } from './Guard/bolsa-trabajo.guard';
 import { BolsaTrabajoComponent } from './bolsa-trabajo/bolsa-trabajo.component';
+import { VisaRecurrenteComponent } from './resultado-pago-recurrente/visa-recurrente/visa-recurrente.component';
 
 
 const routes: Routes = [
@@ -79,6 +80,8 @@ const routes: Routes = [
         { path: 'PagoExitosoKlap/:Identificador', component: ResultadoPagoKlapComponent,canActivate:[AlumnoGuard]},
         { path: 'PagoExitosoIziPay/:Identificador', component: ResultadoPagoIzipayComponent,canActivate:[AlumnoGuard]},
 
+        // RespuestaPago Recurrente : 
+        { path: 'AfilicacionPagoRecurrente/:Identificador', component: VisaRecurrenteComponent,canActivate:[AlumnoGuard]},
 
         { path: 'MisCursosPrueba/:IdRegistroPrueba', component: CursoPruebaComponent,canActivate:[AlumnoGuard]},
 
