@@ -320,6 +320,19 @@ export class CursoComponent implements OnInit,OnDestroy {
     //   }
     // }
   }
+
+  ProgresoProgramaCursosAulaVirtualAonlinePorEstadoVideo() {
+    this._ProgramaContenidoService
+      .ProgresoProgramaCursosAulaVirtualAonlinePorEstadoVideo(this.idMatricula)
+      .pipe(takeUntil(this.signal$))
+      .subscribe({
+        next: (x) => {
+          console.log(x)
+        },
+        complete:()=>{
+        }
+      });
+  }
   InterraccionTab(nombre:string){
 
     this._HelperService.enviarMsjAcciones({Tag:'Tab',Nombre:nombre})
@@ -434,6 +447,7 @@ export class CursoComponent implements OnInit,OnDestroy {
               program.params = btoa(encodeURIComponent(JSON.stringify(params)));
             });
           }else{
+            this.ProgresoProgramaCursosAulaVirtualAonlinePorEstadoVideo()
             this.EsCurso=true
             this.json = {
               AccesoPrueba: false,
