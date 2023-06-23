@@ -1,4 +1,20 @@
 <br>
+<div class="container" *ngIf="resultVisa==undefined">
+    <div class="row rowpaddAv" style="justify-content: center;">
+        <div class="col-12 col-md-10 col-lg-8" >
+            <div>
+                <img [src]="'../../../assets/icons/iconcharge/'+imgAc" alt="" *ngIf="imgAc!=''">
+              </div>
+              <div class="titleResultPago">
+                <div>Procesando pago</div>
+              </div>
+              <div style="margin-top: 15px;
+              font-size: 15px;">
+                Te agradecemos por tu paciencia, en este momento estamos procesando tu pago
+            </div>
+        </div>
+    </div>
+</div>
 <div class="container" *ngIf="resultVisa!=undefined">
   <div class="row rowpaddAv" style="justify-content: center;">
     <div class="col-12 col-md-10 col-lg-8" *ngIf="resultVisa.estadoOperacion!='Processed'">
@@ -26,17 +42,11 @@
             su Banco para solucionar el error en el pago; o intente con otro medio de pago.
           </ng-container>
           <ng-container *ngIf="resultVisa.estadoOperacion=='Declinado'">
-            <ng-container >
-              No hemos podido procesar su pago, debido a un error en nuestra plataforma de pagos.
-              <br>
-              Escríbenos a nuestro chat de soporte técnico para poder ayudarlo.
+            <ng-container>
+              No hemos podido procesar su afiliación, debido a un error con su entidad bancaria,  comuniquese con
+              su Banco para solucionar el error en el pago; o intente con otro medio de pago.
             </ng-container>
           </ng-container>
-          <ng-container *ngIf="resultVisa.estadoOperacion =='Processed-'">
-            No hemos podido procesar su pago, debido a un error con su entidad bancaria,  comuniquese con
-            su Banco para solucionar el error en el pago; o intente con otro medio de pago.
-          </ng-container>
-
           <div class="textC">Si tiene alguna consulta adicional, escriba un correo a: <a
               href="mailto:matriculas@bsginstitute.com">matriculas@bsginstitute.com</a></div>
         </div>
@@ -60,7 +70,7 @@
       </div>
       <div style="margin-top: 5px;
       font-size: 14px;">
-        {{resultVisa.registroAlumno.nombre}}, tu compra ha sido realizada con exito.
+        {{resultVisa.registroAlumno.nombre}}, tu afiliación y primer pago recurrente ha sido realizada con exito.
       </div>
       <div class="contentCardPago">
         <div style="margin: 20px 0px;
@@ -82,9 +92,11 @@
             </ng-container>
             <ng-container *ngIf="resultVisa.listaCuota!=null && resultVisa.listaCuota.length>0">
               <div class="col-12 col-md-5 col-lg-4"><b>Razon:</b></div>
-              <div class="col-12 col-md-7 col-lg-8 itemValueCardPago" >
-                <div *ngFor="let item of resultVisa.listaCuota">
-                  {{item.nombre}}
+              <div class="col-12 col-md-7 col-lg-8 itemValueCardPago">
+                <div *ngFor="let item of resultVisa.listaCuota ; index as i" >
+                  <ng-container *ngIf="i==0">
+                    {{item.nombre}}
+                  </ng-container>
                 </div>
               </div>
             </ng-container>
@@ -93,6 +105,10 @@
             </div>
             <div class="col-12 col-md-5 col-lg-4"><b>Hora de transacción:</b></div>
             <div class="col-12 col-md-7 col-lg-8 itemValueCardPago">{{resultVisa.fechaTransaccion | date:'hh:mm'}}</div>
+            <ng-container>
+              <div class="col-12 col-md-5 col-lg-4"><b>Pago recurrente:</b></div>
+              <div class="col-12 col-md-7 col-lg-8 itemValueCardPago">Activado</div>
+            </ng-container>
 
           </div>
         </div>
@@ -102,3 +118,4 @@
     </div>
   </div>
 </div>
+
