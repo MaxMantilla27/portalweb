@@ -1,43 +1,198 @@
-.linea{
-    margin-top: 25px;
-    background-color: black !important;
-    
+
+.tabVertical
+.mat-tab-header
+.mat-tab-label-container
+.mat-tab-list
+.mat-tab-labels {
+  max-width: 290px;
 }
 
-.Select {
-    background: #d9e2f9;
+.msjCom {
+  display: flex;
+  background: #fff8f0;
+  padding: 10px 40px;
+  border-radius: 5px;
+  color: #72706d;
+  img {
+    width: 20px;
+    margin-right: 20px;
+  }
+}
+.tabVertical
+  .mat-tab-header
+  .mat-tab-label-container
+  .mat-tab-list
+  .mat-tab-labels
+  .mat-tab-label
+  .mat-tab-label-content
+  .contentHeaderM {
+  opacity: 1;
+  display: flex;
+  justify-content: flex-start;
+  align-items: stretch;
+  width: 100%;
+  padding: 20px !important;
+  flex-wrap: nowrap !important;
+  .titleMatr {
+    word-break: break-word;
+    white-space: normal;
+    /* display: block; */
+    width: 248px !important;
+    text-align: left;
+    margin-left: 10px;
+  }
+  .iconMat {
+    background-repeat: no-repeat;
+    width: 20px;
+    height: 20px;
+    background-position: center;
+    .material-icons{
+      //color: #4a4a49;
+      font-size: 20px !important;
+    }
+  }
+  
+  .iconRecursos {
+    background-image: url("../../../assets/icons/recursos-06.svg");
+  }
+  .iconCalificaciones {
+    background-image: url("../../../assets/icons/calificaciones-08.svg");
+  }
+}
+.tabVertical
+  mat-tab-header
+  .mat-tab-label-container
+  .mat-tab-list
+  .mat-tab-labels
+  .mat-tab-label-active
+  .mat-tab-label-content
+  .contentHeaderM {
+  color: #0684f3 !important;
+  font-weight: 600;
+  text-decoration: auto;
+
+  .iconMat {
+    .material-icons{
+      color: #41a6ff !important;
+    }
+  }
+  .titleMatr {
+    text-decoration: underline;
+  }
+  .iconRecursos {
+    background-image: url("../../../assets/icons/recursos-azul-05.svg") !important;
+  }
+  .iconCalificaciones {
+    background-image: url("../../../assets/icons/calificaciones-azul-07.svg") !important;
   }
 
-.borde{
-    border-color: #b5b5b5;
-    border-radius: 5px;
-    border-width:1px;
-    border-style: solid;  
 }
-.borde-recto-buttom{
-    border-color: #b5b5b5;
-    border-radius: 5px 5px 0px 0px;
-    border-width:1px;
-    border-style: solid;  
-    
+.ActiveChil {
+  color: #0684f3 !important;
+  font-weight: 600;
+
+  .titleMatr {
+    color: #0684f3 !important;
+    text-decoration: underline;
+  }
+  
+  .iconRecursos {
+    background-image: url("../../../assets/icons/recursos-azul-05.svg") !important;
+  }
+
+  .iconCalificaciones {
+    background-image: url("../../../assets/icons/calificaciones-azul-07.svg") !important;
+  }
+}
+.subContent {
+  margin-left: 20px;
+}
+.hederCapitulo {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: solid 1px gray;
+  padding-bottom: 10px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.cursoTitle {
+  font-size: 20px;
+  margin-bottom: 10px;
+  font-weight: 600;
+}
+.cursoTabDescripcion {
+  font-size: 18px;
+  color: #929292;
+  margin-bottom: 20px;
 }
 
-.borde-p{
-    border-color: black;
-    border-radius: 10px ;
-    border-width:1px;
-    border-style: none;  
-    width: auto;
-    background-color: #afca0a;
-    color: whitesmoke;
-    box-shadow: 0 3px 1px -2px #0003, 0 2px 2px #00000024, 0 1px 5px #0000001f;
-    padding: 5px 3px;
+.cursoTabRemenber {
+  display: flex;
+  justify-content: flex-start;
+  background: #fff8f0;
+  padding: 5px 10px;
+  margin-bottom: 20px;
+  border: solid 1px #fff4e8;
+}
+.cursoTabRemenber img {
+  width: 15px;
+  margin-right: 10px;
+}
+.cursoTabRemenber div {
+  //font-size: 13px;
+  color: #505050;
 }
 
-.borde-recto-buttom-top{
-    border-top: 1px solid #b5b5b5 ; 
-    border-bottom: 1px solid  #b5b5b5; 
+.NSesionCapitulo {
+  color: #878778;
+  font-size: 12px;
 }
-.contenedorTra{
-    overflow-y: scroll;
+.promedioCapitulo {
+  font-size: 12px;
+  background: #0684f2;
+  padding: 5px 20px;
+  border-radius: 10px;
+  color: white;
+}
+.titleCapitulo {
+  color: #545454;
+  font-size: 18px;
+  font-weight: 600;
+}
+.playsesion {
+  color: #ff7012;
+  margin-right: 5px;
+}
+.contentCapituloSesion {
+  padding: 0px 0px 30px 20px;
+}
+.capituloSesion {
+  align-items: center;
+  justify-content: space-between;
+}
+
+.tituloSesion {
+  color: #898989;
+  font-size: 16px;
+  cursor: pointer;
+  margin-bottom: 5px;
+}
+.tituloSesion:hover {
+  color: #0668bf;
+  font-weight: 600;
+  text-decoration: underline;
+}
+.contentModuloSesiones {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 15px 0px;
+}
+.contentModuloSesiones mat-progress-bar .mat-progress-bar-buffer {
+  background: #e7e7e8 !important;
+}
+.contentModuloSesiones mat-progress-bar {
+  height: 5px !important;
+}
+.contentModuloSesiones mat-progress-bar .mat-progress-bar-fill::after {
+  background-color: #00c356;
 }

@@ -73,12 +73,12 @@ export class AlumnoMatButtonComponent implements OnInit,OnChanges {
           Icon: 'badge',
           value: '../../../../../../assets/icons/categorias.svg',
         });
-        // this.buttons.push({
-        //     Nombre: 'Bolsa de Trabajo',
-        //     Url: '/AulaVirtual/BolsaTrabajo',
-        //     Icon: 'wallet_travel',
-        //     value: '',
-        // });
+        this.buttons.push({
+            Nombre: 'Bolsa de Trabajo',
+            Url: '/AulaVirtual/BolsaTrabajo',
+            Icon: 'wallet_travel',
+            value: '',
+        });
         // if(isCarrera==true){
         //   this.buttons.push({
         //     Nombre: 'Bolsa de Trabajo',

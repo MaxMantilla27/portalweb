@@ -21,9 +21,31 @@ export class OfertaLaboralService {
     this.isBrowser = isPlatformBrowser(platformId);
   }
 
-  public ObtenerCombocatoriasVigentes():Observable<any>{
+  public ObtenerConvocatoriasVigentes():Observable<any>{
     if(this.isBrowser){
-      return this.http.get<any>(this.urlBase+'/ObtenerCombocatoriasVigentes');
+      return this.http.get<any>(this.urlBase+'/ObtenerConvocatoriasVigentes');
+    }else{
+      return EMPTY;
+    }
+  }
+  public ObtenerPostulacionesAlumno():Observable<any>{
+    if(this.isBrowser){
+      return this.http.get<any>(this.urlBase+'/ObtenerPostulacionesAlumno');
+    }else{
+      return EMPTY;
+    }
+  }
+
+  public RegistrarPostulacionAlumno(idConvocatoria:number):Observable<any>{
+    if(this.isBrowser){
+      return this.http.get<any>(this.urlBase+'/RegistrarPostulacionAlumno/'+idConvocatoria);
+    }else{
+      return EMPTY;
+    }
+  }
+  public ValidarPostulacion(idConvocatoria:number):Observable<any>{
+    if(this.isBrowser){
+      return this.http.get<any>(this.urlBase+'/ValidarPostulacion/'+idConvocatoria);
     }else{
       return EMPTY;
     }
