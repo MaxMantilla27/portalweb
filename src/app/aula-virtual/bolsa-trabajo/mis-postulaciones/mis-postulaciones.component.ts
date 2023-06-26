@@ -30,9 +30,6 @@ export class MisPostulacionesComponent implements OnInit {
   }
 
   public listaConvocatorias:any[]=[]
-
-
-
   public isSelect:boolean=false
 
   ngOnInit(): void {
@@ -72,8 +69,6 @@ export class MisPostulacionesComponent implements OnInit {
   
   BuscarDataSeleccionada(idConvotaria:number){
     this.ObtenerPostulacionesAlumno(true,idConvotaria)
-   
-    
   }
 
 }
