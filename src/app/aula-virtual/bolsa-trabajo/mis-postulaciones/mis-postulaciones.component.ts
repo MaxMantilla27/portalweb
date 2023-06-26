@@ -36,7 +36,6 @@ export class MisPostulacionesComponent implements OnInit {
   public isSelect:boolean=false
 
   ngOnInit(): void {
-    console.log("mis postulacions")
     this.ObtenerPostulacionesAlumno()
   }
 
@@ -48,7 +47,7 @@ export class MisPostulacionesComponent implements OnInit {
     })
   }
 
-  ObtenerPostulacionesAlumno(){
+  ObtenerPostulacionesAlumno(isBoton?:boolean,idConvotaria?:number){
     this._OfertaLaboralService.ObtenerPostulacionesAlumno().pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
         x.forEach((e:any)=>{
@@ -57,22 +56,23 @@ export class MisPostulacionesComponent implements OnInit {
           e.isSelect=false
         })
         this.listaConvocatorias=x
+        if(isBoton==true){
+          if(idConvotaria!=0){
+            let data = this.listaConvocatorias.find((e:any)=>e.id==idConvotaria)
+            if(data!=null){
+              this.listaConvocatorias = this.listaConvocatorias.filter((e:any)=>e.id!=idConvotaria)
+              this.listaConvocatorias.unshift(data)
+              this.selectPanel(data)
+            }
+          }
+        }
       }
     })
   }
   
   BuscarDataSeleccionada(idConvotaria:number){
-    this.listaConvocatorias.forEach(e=>{
-      e.isSelect=false
-    })
-    if(idConvotaria!=0){
-      let data = this.listaConvocatorias.find((e:any)=>e.id==idConvotaria)
-      if(data!=null){
-        this.listaConvocatorias = this.listaConvocatorias.filter((e:any)=>e.id!=idConvotaria)
-        this.listaConvocatorias.unshift(data)
-        this.selectPanel(data)
-      }
-    }
+    this.ObtenerPostulacionesAlumno(true,idConvotaria)
+   
     
   }
 
