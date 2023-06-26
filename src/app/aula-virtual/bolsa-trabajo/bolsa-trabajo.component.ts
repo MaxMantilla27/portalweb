@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { MatTabChangeEvent } from '@angular/material/tabs';
 import { Router } from '@angular/router';
 import {  Subject, takeUntil } from 'rxjs';
@@ -14,7 +14,6 @@ import { MisPostulacionesComponent } from './mis-postulaciones/mis-postulaciones
   encapsulation: ViewEncapsulation.None,
 })
 export class BolsaTrabajoComponent implements OnInit {
-  private signal$ = new Subject();
   constructor(
     private _OfertaLaboralService:OfertaLaboralService,
     private _HelperService:HelperService,
@@ -33,6 +32,7 @@ export class BolsaTrabajoComponent implements OnInit {
 
   public hide=true
   public tabIndex = 0;
+
 
   ngOnInit(): void {
   }

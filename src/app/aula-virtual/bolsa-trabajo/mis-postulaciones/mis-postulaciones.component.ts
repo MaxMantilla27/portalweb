@@ -1,5 +1,5 @@
 import { isPlatformBrowser } from '@angular/common';
-import { Component, Inject, Input, OnInit, PLATFORM_ID, ViewChild } from '@angular/core';
+import { Component, Inject, Input, OnDestroy, OnInit, PLATFORM_ID, ViewChild } from '@angular/core';
 import { MatAccordion } from '@angular/material/expansion';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
@@ -12,7 +12,7 @@ import { SessionStorageService } from 'src/app/Core/Shared/Services/session-stor
   templateUrl: './mis-postulaciones.component.html',
   styleUrls: ['./mis-postulaciones.component.scss']
 })
-export class MisPostulacionesComponent implements OnInit {
+export class MisPostulacionesComponent implements OnInit,OnDestroy {
 
   private signal$ = new Subject();
   isBrowser: boolean;
@@ -27,6 +27,11 @@ export class MisPostulacionesComponent implements OnInit {
   ) {
     this.isBrowser = isPlatformBrowser(platformId); {}
     
+  }
+
+  ngOnDestroy(): void {
+    this.signal$.next(true);
+    this.signal$.complete();
   }
 
   public listaConvocatorias:any[]=[]
