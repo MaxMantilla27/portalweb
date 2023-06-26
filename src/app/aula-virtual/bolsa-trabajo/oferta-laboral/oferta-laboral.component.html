@@ -19,7 +19,7 @@
                 <div class="contenedorTra" style="max-height: 600px !important;">
                     <ng-container *ngFor="let item of listaConvocatorias">
                         <div class="borde-recto-buttom-top" (click)="mostrarConvocatoria(item)" 
-                        [ngClass]="{'Select':item.isSelect==true}" style="cursor: pointer;" style="background-color: whitesmoke;">
+                        [ngClass]="{'Select':item.isSelect==true}" style="background-color: whitesmoke;cursor: pointer;">
                             <div style="padding: 20px;">
                                 <p><strong>{{item.nombre}}</strong></p>
                                 <ng-container *ngIf="item.informacionAdicional">
