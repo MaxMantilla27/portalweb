@@ -1,5 +1,5 @@
 import { isPlatformBrowser } from '@angular/common';
-import { Component, Inject, Input, OnInit, PLATFORM_ID, ViewChild } from '@angular/core';
+import { Component, Inject, Input, OnDestroy, OnInit, PLATFORM_ID, ViewChild } from '@angular/core';
 import { MatAccordion } from '@angular/material/expansion';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
@@ -12,7 +12,7 @@ import { SessionStorageService } from 'src/app/Core/Shared/Services/session-stor
   templateUrl: './mis-postulaciones.component.html',
   styleUrls: ['./mis-postulaciones.component.scss']
 })
-export class MisPostulacionesComponent implements OnInit {
+export class MisPostulacionesComponent implements OnInit,OnDestroy {
 
   private signal$ = new Subject();
   isBrowser: boolean;
@@ -29,14 +29,15 @@ export class MisPostulacionesComponent implements OnInit {
     
   }
 
+  ngOnDestroy(): void {
+    this.signal$.next(true);
+    this.signal$.complete();
+  }
+
   public listaConvocatorias:any[]=[]
-
-
-
   public isSelect:boolean=false
 
   ngOnInit(): void {
-    console.log("mis postulacions")
     this.ObtenerPostulacionesAlumno()
   }
 
@@ -48,7 +49,7 @@ export class MisPostulacionesComponent implements OnInit {
     })
   }
 
-  ObtenerPostulacionesAlumno(){
+  ObtenerPostulacionesAlumno(isBoton?:boolean,idConvotaria?:number){
     this._OfertaLaboralService.ObtenerPostulacionesAlumno().pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
         x.forEach((e:any)=>{
@@ -57,23 +58,22 @@ export class MisPostulacionesComponent implements OnInit {
           e.isSelect=false
         })
         this.listaConvocatorias=x
+        if(isBoton==true){
+          if(idConvotaria!=0){
+            let data = this.listaConvocatorias.find((e:any)=>e.id==idConvotaria)
+            if(data!=null){
+              this.listaConvocatorias = this.listaConvocatorias.filter((e:any)=>e.id!=idConvotaria)
+              this.listaConvocatorias.unshift(data)
+              this.selectPanel(data)
+            }
+          }
+        }
       }
     })
   }
   
   BuscarDataSeleccionada(idConvotaria:number){
-    this.listaConvocatorias.forEach(e=>{
-      e.isSelect=false
-    })
-    if(idConvotaria!=0){
-      let data = this.listaConvocatorias.find((e:any)=>e.id==idConvotaria)
-      if(data!=null){
-        this.listaConvocatorias = this.listaConvocatorias.filter((e:any)=>e.id!=idConvotaria)
-        this.listaConvocatorias.unshift(data)
-        this.selectPanel(data)
-      }
-    }
-    
+    this.ObtenerPostulacionesAlumno(true,idConvotaria)
   }
 
 }

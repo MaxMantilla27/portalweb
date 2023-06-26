@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, OnChanges, OnDestroy, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import {  Subject, takeUntil } from 'rxjs';
 import { OfertaLaboralService } from 'src/app/Core/Shared/Services/OfertaLaboral/oferta-laboral.service';
@@ -11,7 +11,7 @@ import { HelperService } from 'src/app/Core/Shared/Services/helper.service';
   templateUrl: './oferta-laboral.component.html',
   styleUrls: ['./oferta-laboral.component.scss']
 })
-export class OfertaLaboralComponent implements OnInit {
+export class OfertaLaboralComponent implements OnInit,OnDestroy {
   private signal$ = new Subject();
   constructor(
     private _OfertaLaboralService:OfertaLaboralService,
@@ -26,7 +26,10 @@ export class OfertaLaboralComponent implements OnInit {
   @Output()
   MisPostulaciones = new EventEmitter<number>();
 
-
+  ngOnDestroy(): void {
+    this.signal$.next(true);
+    this.signal$.complete();
+  }
 
   ngOnInit(): void {
     this.ObtenerConvocatoriasVigentes()
