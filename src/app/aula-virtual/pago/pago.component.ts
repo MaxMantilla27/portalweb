@@ -76,20 +76,17 @@ export class PagoComponent implements OnInit,OnDestroy {
       this.textoBienvenido = x.datosAlumno.nombres+
       ', aquí podrás realizar los pagos de tus cronogramas de cuotas';
       this.email =x.datosAlumno.email
+      this._ActivatedRoute.params.pipe(takeUntil(this.signal$)).subscribe({
+        next: (param) => {
+          this.idMatricula = parseInt(param['IdMatricula']);
+          this.idPais = x.datosAlumno.idPais
+          this.VerificarEstadoAfiliacion()
+          this.ObtenerPasarela()
+          this.ObtenerCronogramaPagoMatricula()
+        },
+      });
     })
-    this._HelperService.recibirCombosPerfil.pipe(takeUntil(this.signal$)).subscribe((x) => {
-      console.log("REPUESTA ",x)
-       this.idPais = x.datosAlumno.idPais
-       this.VerificarEstadoAfiliacion()
-    })
-
-    this._ActivatedRoute.params.pipe(takeUntil(this.signal$)).subscribe({
-      next: (x) => {
-        this.idMatricula = parseInt(x['IdMatricula']);
-        this.ObtenerPasarela()
-        this.ObtenerCronogramaPagoMatricula()
-      },
-    });
+   
   }
 
   EliminarAfiliacion(){

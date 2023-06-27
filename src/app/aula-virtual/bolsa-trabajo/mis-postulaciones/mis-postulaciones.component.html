@@ -1,10 +1,10 @@
 
 <div >
     <div class="row">
-        <div class="col-md-4">
+        <div class="col-md-5">
             <h1>Mis Postulaciones</h1>
         </div>
-        <div class="col-md-8">
+        <div class="col-md-7">
             <hr size="6px" color="black" class="linea"> 
         </div>
     </div>
@@ -13,7 +13,7 @@
         <ng-container *ngFor="let data of listaConvocatorias">
             <div class="panel" >
                 <div class="panel-header" (click)="selectPanel(data)" [ngClass]="{'Select':data.isSelect==true}">
-                  <div class="row" style="padding-left: 10px;">
+                  <div class="row" style="padding-left: 10px;text-align: justify;">
                     <div class="col-md-8" style="padding-top: 10px;">
                         <div class="row">
                             <p><strong>{{data.nombre}}</strong></p>
@@ -47,7 +47,7 @@
                   </div>
                 </div>
                 <div class="panel-content" [ngClass]="data.isSelect==true?'abrir':'cerrar'">
-                    <div class="row" style="padding-left: 10px;padding-top:20px;">
+                    <div class="row" style="padding-left: 10px;padding-top:20px;text-align: justify;">
                         <div class="row" style="padding-bottom:20px;">
                             <p ><strong>{{data.nombre}}</strong></p>
                         </div>

@@ -6,6 +6,8 @@ import { OfertaLaboralService } from 'src/app/Core/Shared/Services/OfertaLaboral
 import { SnackBarServiceService } from 'src/app/Core/Shared/Services/SnackBarService/snack-bar-service.service';
 import { HelperService } from 'src/app/Core/Shared/Services/helper.service';
 import { MisPostulacionesComponent } from './mis-postulaciones/mis-postulaciones.component';
+import { distinctUntilChanged } from 'rxjs/operators';
+import { SessionStorageService } from 'src/app/Core/Shared/Services/session-storage.service';
 
 @Component({
   selector: 'app-bolsa-trabajo',
@@ -19,6 +21,7 @@ export class BolsaTrabajoComponent implements OnInit {
     private _HelperService:HelperService,
     private _SnackBarServiceService:SnackBarServiceService,
     private _router:Router,
+    private _SessionStorageService:SessionStorageService
   ) { }
 
   @ViewChild(MisPostulacionesComponent) MisPostulaciones!: MisPostulacionesComponent;
@@ -35,10 +38,15 @@ export class BolsaTrabajoComponent implements OnInit {
 
 
   ngOnInit(): void {
+    console.log('TipoCarrera',this._SessionStorageService.SessionGetValue('TipoCarrera'))
+  }
+  
+  cambioIsButom(event:any){
+    this.MisPostulaciones.BuscarDataSeleccionada(event)
+    this.tabIndex=1
   }
 
-  irAmisPostulaciones(IdConvocatoria:number){
-    this.MisPostulaciones.BuscarDataSeleccionada(IdConvocatoria)
-    this.tabIndex=1
+  ActualizarMisPostulaciones(){
+    this.MisPostulaciones.BuscarDataSeleccionada(0) 
   }
 }

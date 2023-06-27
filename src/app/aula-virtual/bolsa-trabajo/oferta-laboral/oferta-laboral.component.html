@@ -23,7 +23,7 @@
                             <div style="padding: 20px;">
                                 <p><strong>{{item.nombre}}</strong></p>
                                 <ng-container *ngIf="item.informacionAdicional">
-                                    <div [innerHtml]="item.informacionAdicional"></div>
+                                    <div [innerHtml]="item.informacionAdicional" style="text-align: justify;"></div>
                                 </ng-container>
                                 <br>
                                 <div class="row">
@@ -62,7 +62,7 @@
                             <p style="padding-top:5px"><strong >Cierre de Oferta: </strong>{{dataTemp.fechaFin|date: 'dd/MM/yy'}}</p>
                         </div>
                     </div>
-                    <div style="word-wrap: break-word;">
+                    <div style="word-wrap: break-word;text-align: justify;">
                         <div [innerHtml]="dataTemp.cuerpoConvocatoria"></div>
                     </div>
                     

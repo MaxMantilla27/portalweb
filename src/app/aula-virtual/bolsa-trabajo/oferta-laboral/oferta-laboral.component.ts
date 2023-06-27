@@ -1,9 +1,10 @@
-import { Component, EventEmitter, OnChanges, OnDestroy, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, OnChanges, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import {  Subject, takeUntil } from 'rxjs';
 import { OfertaLaboralService } from 'src/app/Core/Shared/Services/OfertaLaboral/oferta-laboral.service';
 import { SnackBarServiceService } from 'src/app/Core/Shared/Services/SnackBarService/snack-bar-service.service';
 import { HelperService } from 'src/app/Core/Shared/Services/helper.service';
+import { MisPostulacionesComponent } from '../mis-postulaciones/mis-postulaciones.component';
 
 
 @Component({
@@ -25,6 +26,9 @@ export class OfertaLaboralComponent implements OnInit,OnDestroy {
 
   @Output()
   MisPostulaciones = new EventEmitter<number>();
+  @Output()
+  Actualizar = new EventEmitter<void>();
+
 
   ngOnDestroy(): void {
     this.signal$.next(true);
@@ -79,6 +83,7 @@ export class OfertaLaboralComponent implements OnInit,OnDestroy {
                   'x',
                   10,
                   "snackbarCrucigramaSucces");
+                  this.Actualizar.emit()
                   this.dataTemp.isPostulado=true;
               }else
               {
