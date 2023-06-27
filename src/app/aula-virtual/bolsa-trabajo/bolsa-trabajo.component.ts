@@ -38,9 +38,8 @@ export class BolsaTrabajoComponent implements OnInit {
 
 
   ngOnInit(): void {
-    console.log('TipoCarrera',this._SessionStorageService.SessionGetValue('TipoCarrera'))
   }
-  
+
   cambioIsButom(event:any){
     this.MisPostulaciones.BuscarDataSeleccionada(event)
     this.tabIndex=1
