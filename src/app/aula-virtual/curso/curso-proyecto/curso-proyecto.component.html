@@ -68,7 +68,7 @@
               <th>Versión</th>
               <th>Calificación</th>
               <th>Estado</th>
-              <th style="min-width: 100px;">Acción</th>
+              <th *ngIf="proy.estadoDevuelto!=true" style="min-width: 100px;">Acción</th>
             </tr>
             <ng-container *ngIf="proyecto.registroEvaluacionArchivo!=null && proyecto.registroEvaluacionArchivo.length>0">
               <tr>
@@ -79,25 +79,48 @@
                 <td>{{(proy.notaProyecto==null || proy.notaProyecto.valorEscala==null )
                   ?'-':proy.notaProyecto.valorEscala}}</td>
                 <td>
-                  <ng-container *ngIf="proy.calificado">
-                    <div style="display: flex;align-items:center;justify-content: space-evenly;">
+                  <ng-container *ngIf="proy.estadoDevuelto==true">
+                    Devuelto
+                  </ng-container>
 
-                      Calificado <i class="material-icons" style="color: #00c355;">check_circle</i>
+                  <ng-container *ngIf="proy.estadoDevuelto!=true">
+                    <ng-container *ngIf="proy.calificado">
+                      <div style="display: flex;align-items:center;justify-content: space-evenly;">
+
+                        Calificado <i class="material-icons" style="color: #00c355;">check_circle</i>
+                      </div>
+                    </ng-container>
+
+                    <ng-container *ngIf="!proy.calificado">
+                      Sin calificar
+                    </ng-container>
+                  </ng-container>
+
+                </td>
+                <td *ngIf="proy.estadoDevuelto!=true">
+                  <ng-container >
+                    <div class="buttonTrash" (click)="OpenModalDelete(proy)">
+                      <i class="material-icons" [ngStyle]="{'color': proy.estadoEliminar==true?'white':'#dadada'}">delete</i>
                     </div>
                   </ng-container>
 
-                  <ng-container *ngIf="!proy.calificado">
-                    Sin calificar
-                  </ng-container>
-                </td>
-                <td>
-                  <div class="buttonTrash" (click)="OpenModalDelete(proy)">
-                    <i class="material-icons" [ngStyle]="{'color': proy.estadoEliminar==true?'white':'#dadada'}">delete</i>
-                  </div>
                 </td>
               </tr>
             </ng-container>
           </table>
+          <ng-container *ngIf="proy.estadoDevuelto==true">
+            <table class="tablaProyecto" style="    margin-top: 20px">
+              <tr>
+                <th style="text-align: left">Motivo</th>
+              </tr>
+              <ng-container *ngIf="proyecto.registroEvaluacionArchivo!=null && proyecto.registroEvaluacionArchivo.length>0">
+                <tr>
+                  <td style="text-align: left">{{(proy.retroalimentacion==null)
+                    ?'-':proy.retroalimentacion}}</td>
+                </tr>
+              </ng-container>
+            </table>
+          </ng-container>
           <ng-container *ngIf="proy.notaProyecto.id>0 && proy.notaProyecto!=null">
             <table class="tablaProyecto" style="    margin-top: 20px">
               <tr>

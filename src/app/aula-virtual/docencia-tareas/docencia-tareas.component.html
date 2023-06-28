@@ -23,7 +23,13 @@
             <div class="contentTareaParesDocente NoCalificada" (click)="item.open=item.open!=true?true:false">
               <div class="tituloTareaPares">Version {{item.version}} : {{tareas.datosTrabajoPares.nombre}} </div>
               <div style="font-weight: 600;">
-                Por calificar
+                <ng-container *ngIf="item.estadoDevuelto==true">
+                  Devuelto
+                </ng-container>
+                <ng-container *ngIf="item.estadoDevuelto!=true">
+                  Por calificar
+                </ng-container>
+
               </div>
               <ng-container *ngIf="item.open!=true">
                 <i class="material-icons">keyboard_arrow_down</i>
@@ -104,6 +110,13 @@
                 </div>
               </ng-container>
               <ng-container *ngIf="tareas.idTipoEvaluacionTrabajo==2">
+                <div *ngIf="item.estadoDevuelto!=true" class="col-12 col-md-12 col-lg-12"
+                style="display: flex;
+                justify-content: flex-end;
+                margin-bottom: 30px;" >
+                  <app-default-button [confs]="{color:'danger',titulo:'Devolver'}" [icon]="''"
+                  [style]="'padding:0px 30px;margin:0px '" (ButtoclClick)="DevolverTarea(item)"></app-default-button>
+                </div>
                 <div class="col-12 col-md-12 col-lg-12" *ngIf="item!=undefined" style="padding-left: 50px;margin-top: 10px;">
                   <div class="row" style="width:100%;justify-content: space-between;">
                     <div class="col-12 col-md-6 col-lg-6" >
@@ -186,7 +199,7 @@
 
                           <mat-form-field appearance="outline" style="width: 100%;font-size: 13px;">
                             <mat-label>Calificar</mat-label>
-                            <mat-select [(ngModel)]="calificacion" [disabled]="cargaEnvio">
+                            <mat-select [(ngModel)]="calificacion" [disabled]="cargaEnvio || item.estadoDevuelto==true">
                               <mat-option *ngFor="let item of tareas.criteriosEvaluacion.listaParametroEscalaEvaluacion"
                                 [value]="item.id">{{item.valor}} - {{item.nombre}}</mat-option>
                             </mat-select>
@@ -197,13 +210,13 @@
                         <div class="col-12 col-md-6 col-lg-6">
                           <mat-form-field appearance="outline" style="width: 100%;font-size: 13px;">
                             <mat-label>Retroalimentación</mat-label>
-                            <textarea matInput name="Retroalimentación" id="" style="width: 100%;" [(ngModel)]="retroalimentacion" ></textarea>
+                            <textarea matInput [disabled]="item.estadoDevuelto==true" name="Retroalimentación" id="" style="width: 100%;" [(ngModel)]="retroalimentacion" ></textarea>
                           </mat-form-field>
 
                         </div>
                         <div class="col-12 col-md-6 col-lg-6">Archivo de Retroalimentación</div>
                         <div class="col-12 col-md-6 col-lg-6">
-                          <div (click)="fileInput.click()" style="height: 38px;width: 100%;border:solid 1px #c2c2c2;border-radius: 5px;display: flex; align-items: center;
+                          <div (click)="item.estadoDevuelto==true?'':fileInput.click()" style="height: 38px;width: 100%;border:solid 1px #c2c2c2;border-radius: 5px;display: flex; align-items: center;
                           padding: 0px 5px;cursor: pointer;">
                             <button style="border: solid 1px #767676;
                             margin-right: 5px;    white-space: nowrap;">Seleccionar archivo</button>

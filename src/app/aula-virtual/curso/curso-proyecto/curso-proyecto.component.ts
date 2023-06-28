@@ -97,15 +97,17 @@ export class CursoProyectoComponent implements OnInit,OnChanges,OnDestroy {
         this.proyecto=x
         this.proyecto.habilitado=true
         if(this.proyecto.registroEvaluacionArchivo.length>0){
-          if(this.proyecto.registroEvaluacionArchivo[this.proyecto.registroEvaluacionArchivo.length-1].calificado==false){
-            this.proyecto.habilitado=false
-          }else{
-            var nota=this.proyecto.registroEvaluacionArchivo[this.proyecto.registroEvaluacionArchivo.length-1].notaProyecto.valorEscala;
-            if(nota==null){
+          if(this.proyecto.registroEvaluacionArchivo[this.proyecto.registroEvaluacionArchivo.length-1].estadoDevuelto!=true){
+            if(this.proyecto.registroEvaluacionArchivo[this.proyecto.registroEvaluacionArchivo.length-1].calificado==false){
               this.proyecto.habilitado=false
             }else{
-              if(nota>60){
+              var nota=this.proyecto.registroEvaluacionArchivo[this.proyecto.registroEvaluacionArchivo.length-1].notaProyecto.valorEscala;
+              if(nota==null){
                 this.proyecto.habilitado=false
+              }else{
+                if(nota>60){
+                  this.proyecto.habilitado=false
+                }
               }
             }
           }
@@ -167,7 +169,13 @@ export class CursoProyectoComponent implements OnInit,OnChanges,OnDestroy {
   }
   EnviarFile(){
     if(this.filestatus){
-      if(this.proyecto.registroEvaluacionArchivo.length>=2){
+      var cantidad=0
+      this.proyecto.registroEvaluacionArchivo.forEach((e:any) => {
+        if(e.estadoDevuelto!=true){
+          cantidad++
+        }
+      });
+      if(cantidad>=2){
         this._SnackBarServiceService.openSnackBar("Solo tiene 2 intentos para subir su proyecto.",'x',15,"snackbarCrucigramaerror");
       }else{
         this.setData()

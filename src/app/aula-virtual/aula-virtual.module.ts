@@ -104,6 +104,7 @@ import { ResultadoPagoIzipayComponent } from './resultado-pago-izipay/resultado-
 import { AfiliacionIzipayComponent } from './confirmacion-afiliacion-pago-recurrente/afiliacion-izipay/afiliacion-izipay.component';
 import { BolsaTrabajoComponent } from './bolsa-trabajo/bolsa-trabajo.component';
 import { VisaRecurrenteComponent } from './resultado-pago-recurrente/visa-recurrente/visa-recurrente.component';
+import { DevolverProyectoComponent } from './docencia-tareas/devolver-proyecto/devolver-proyecto.component';
 
 
 
@@ -207,6 +208,7 @@ import { VisaRecurrenteComponent } from './resultado-pago-recurrente/visa-recurr
     AfiliacionIzipayComponent,
     BolsaTrabajoComponent,
     VisaRecurrenteComponent,
+    DevolverProyectoComponent,
 
   ],
   imports: [
