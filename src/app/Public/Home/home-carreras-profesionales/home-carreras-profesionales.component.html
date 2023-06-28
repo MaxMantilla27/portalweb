@@ -2,12 +2,12 @@
   <div class="container">
     <div class="row rowpadd">
       <div class="col-12 col-sm-12" style="margin-bottom: 30px">
-        <div class="subtitulo" style="text-align: center; margin: 0px">
+        <h2 class="subtitulo" style="text-align: center; margin: 0px;line-height: 150%;">
           {{ TituloCarreras }}
-        </div>
-        <div class="parafoS" style="font-size: 22px">
+        </h2>
+        <h2 class="parafoS" style="font-size: 22px;line-height: 150%">
           Formamos Profesionales Competitivos
-        </div>
+        </h2>
       </div>
       <div
         class="col-12 row"
@@ -15,8 +15,7 @@
       >
         <div
           class="col-12 col-sm-12 col-md-6"
-          *ngFor="let item of Carreras; let i = index"
-        >
+          *ngFor="let item of Carreras; let i = index">
           <div
             style="
               display: flex;
@@ -29,25 +28,24 @@
               *ngIf="i % 2 == 0"
               style="width: auto; height: 230px"
               src="../../../assets/imagenes/arquetipo-administracion-hombre-index.png"
-              alt=""
+              alt="Profesional en {{item.Nombre}}"
             />
             <img
               *ngIf="i % 2 != 0"
               style="width: auto; height: 230px"
               src="../../../assets/imagenes/arquetipo-mujer-home.png"
-              alt=""
+              alt="Profesional en {{item.Nombre}}"
             />
 
             <div class="cardCarrerasV2">
-              <div class="titleV2">{{ item.Nombre }}</div>
+              <h2 class="titleV2" style="font-size: 1rem;line-height: 150%;">{{ item.Nombre }}</h2>
               <div class="underl"></div>
 
               <div
                 class="subtitleCarreras orange"
                 (click)="EventoInteraccionCarreras(item.Nombre)"
-                [routerLink]="item.Url"
-              >
-                <div class="vinculo">M&aacute;s Informaci&oacute;n</div>
+                [routerLink]="item.Url">
+                <div class="vinculo">Más Información</div>
                 <i class="material-icons">keyboard_arrow_right</i>
               </div>
             </div>

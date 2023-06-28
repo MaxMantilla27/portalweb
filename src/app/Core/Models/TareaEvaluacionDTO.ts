@@ -44,3 +44,9 @@ export interface ListaRespuestaReflexivosDTO
   IdEsquemaEvaluacionPGeneralDetalle:number ,
   IdEsquemaEvaluacionPGeneralDetalleCongelado:number ,
 }
+
+export interface DevolverProyectoDTO
+{
+  Id:number ,
+  Motivo:string
+}

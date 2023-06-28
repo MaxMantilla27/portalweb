@@ -2,12 +2,12 @@
   <div class="container">
     <div class="row rowpadd" style="align-items: center">
       <div class="col-12 col-sm-12" style="margin-bottom: 30px">
-        <div class="subtitulo" style="text-align: center; margin: 0px">
+        <h2 class="subtitulo" style="text-align: center; margin: 0px;line-height: 150%;">
           Casos de éxito
-        </div>
-        <div class="parafoS" style="text-align: center">
+        </h2>
+        <h2 class="parafoS" style="text-align: center;line-height: 150%;">
           Más de 25 mil profesionales capacitados por BSG Institute
-        </div>
+        </h2>
       </div>
       <div class="col-12 col-sm-12 carrouselCasos" style="margin-bottom: 30px">
         <ngb-carousel (slide)="EventoInteraccionCarrousel($event, 'Casos Exito')">
@@ -28,7 +28,8 @@
                     <img
                       class="imgalumno"
                       [src]="'../../../assets/imagenes/' + item.img"
-                      alt=""
+                      alt="{{item.Nombre}}"
+                      title="{{item.Nombre}}"
                     />
                   </div>
                 </div>

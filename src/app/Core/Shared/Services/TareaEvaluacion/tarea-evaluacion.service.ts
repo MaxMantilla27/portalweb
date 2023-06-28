@@ -3,7 +3,7 @@ import { HttpClient, HttpRequest } from '@angular/common/http';
 import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { EMPTY, Observable } from 'rxjs';
 import { ParametroNotaRegistrarV3DTO } from 'src/app/Core/Models/ParticipacionExpositorFiltroDTO';
-import { ParametroObtenerEvaluacionTarea ,ModelTareaEvaluacionTareaDTO, ParametroEnvioTrabajoPares, ParametroEnvioCriterioReflexivo} from 'src/app/Core/Models/TareaEvaluacionDTO';
+import { ParametroObtenerEvaluacionTarea ,ModelTareaEvaluacionTareaDTO, ParametroEnvioTrabajoPares, ParametroEnvioCriterioReflexivo, DevolverProyectoDTO} from 'src/app/Core/Models/TareaEvaluacionDTO';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -27,6 +27,14 @@ export class TareaEvaluacionService {
       return EMPTY;
     }
   }
+  public DevolverProyecto(Json:DevolverProyectoDTO):Observable<any>{
+    if(this.isBrowser){
+      console.log(Json)
+      return this.http.post<any>(this.urlBase+'/DevolverProyecto',Json);
+    }else{
+      return EMPTY;
+    }
+  }
 
   public ObtenerEvaluacionProyectoAplicacion(Json:ParametroObtenerEvaluacionTarea):Observable<any>{
     if(this.isBrowser){
@@ -41,6 +49,13 @@ export class TareaEvaluacionService {
     if(this.isBrowser){
       console.log(Json)
       return this.http.post<any>(this.urlBase+'/ObtenerEvaluacionTrabajoPares',Json);
+    }else{
+      return EMPTY;
+    }
+  }
+  public ListaPgeneralProyectoAplicacionAnexo(IdPgeneral:number):Observable<any>{
+    if(this.isBrowser){
+      return this.http.get<any>(this.urlBase+'/ListaPgeneralProyectoAplicacionAnexo?IdPgeneral='+IdPgeneral);
     }else{
       return EMPTY;
     }

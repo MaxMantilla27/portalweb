@@ -52,7 +52,7 @@
                 <div class="imgOpcity" (click)="CambioTab()">
                   <div class="OverimgOpcity"></div>
                 </div>
-                <img class="imgPlayButton" src="../../../assets/icons/videos-29.svg" alt="" style="width: 80px;">
+                <img class="imgPlayButton" src="../../../assets/icons/videos-29.svg" alt="Video" style="width: 80px;">
                 <div class="buttonNextVideo vinculo"  (click)="CambioTab()">Ver ahora</div>
               </div>
               <div style="color: white">
@@ -71,12 +71,12 @@
       </div>
       <div (click)="EventoInteraccionDrag()" class="iconResise" *ngIf="tipo==3" (mousedown)="down=true" (mouseup)="down=false" draggable="false">
         <img (mousedown)="down=true" (mouseup)="down=false" draggable="false"
-          src="../../../../../../assets/icons/icono-delizar.png" alt="">
+          src="../../../../../../assets/icons/icono-delizar.png" alt="Icono Deslizar">
       </div>
       <div class="containerDiapitiva" *ngIf="tipo==3 || tipo==1"
         [ngStyle]="{'width':whidth<=0?'calc(45% - '+whidth*-1+'px)':'calc(45% + '+whidth+'px)'}">
 
-        <img *ngIf="tipo==3 && urlDiapo!=''" [src]="urlDiapo" alt="" style="width: 100%;height: auto;">
+        <img *ngIf="tipo==3 && urlDiapo!=''" [src]="urlDiapo" alt="{{urlDiapo}}" style="width: 100%;height: auto;">
       </div>
       <div class="row" style="width: 100%;height: 100%; display: flex; align-items: center;justify-content: center" *ngIf="tipo==4 && preguntas!=undefined && preguntas.length>0">
         <ng-container *ngIf="cargaFinalizado">

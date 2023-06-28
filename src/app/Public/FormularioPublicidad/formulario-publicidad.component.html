@@ -2,23 +2,23 @@
   <app-cargando *ngIf="statuscharge==true"></app-cargando>
   <div class="col-12 col-md-8" style="background: white;padding: 0px;width: 475px;">
     <div style="background-color: #094D82;height: 45px;">
-      <div class="Encabezado-FormularioPublicidad">
+      <h1 style="line-height: 120%;" class="Encabezado-FormularioPublicidad">
         BSG Institute
-      </div>
+      </h1>
     </div>
 
     <div >
-      <div class="NombreProgramaFP">
+      <h2 style="font-weight: bold;line-height: 150%;" class="NombreProgramaFP">
         {{data.NombrePrograma}}
-      </div>
+      </h2>
       <ng-container *ngIf="combosPrevios!=undefined">
         <div class="OpcionFP">
-          <a style="color: #033DAB;cursor:pointer" (click)="LimpiarCampos()">[No soy {{FormularioPublicidad.Nombres}}]</a>
+          <a title="Limpiar Campos" style="color: #033DAB;cursor:pointer" (click)="LimpiarCampos()">[No soy {{FormularioPublicidad.Nombres}}]</a>
         </div>
       </ng-container>
       <ng-container *ngIf="combosPrevios==undefined && CompleteLocalStorage==true">
         <div class="OpcionFP">
-          <a style="color: #033DAB;cursor:pointer" (click)="LimpiarCampos()">[No soy {{FormularioPublicidad.Nombres}}]</a>
+          <a title="Limpiar Campos" style="color: #033DAB;cursor:pointer" (click)="LimpiarCampos()">[No soy {{FormularioPublicidad.Nombres}}]</a>
         </div>
       </ng-container>
     </div>
@@ -33,7 +33,7 @@
 
           <ng-container send>
             <div class="TerminosFP">
-              Al hacer clic en "Enviar", Ud. acepta enviar su información a BSG Institute, que se compromete a usarla en conformidad a su Política de Privacidad y su Política de Datos. <a routerLink="/politica-privacidad" target="_blank">Consulte la política de privacidad de BSG Institute...</a>
+              Al hacer clic en "Enviar", Ud. acepta enviar su información a BSG Institute, que se compromete a usarla en conformidad a su Política de Privacidad y su Política de Datos. <a title="Vínculo a Políticas de Privacidad" routerLink="/politica-privacidad" target="_blank">Consulte la política de privacidad de BSG Institute...</a>
             </div>
             <div class="col-12 col-md-12 col-lg-12" style="display: flex;margin-top:10px">
               <div class="col-9 col-md-9 col-lg-9">

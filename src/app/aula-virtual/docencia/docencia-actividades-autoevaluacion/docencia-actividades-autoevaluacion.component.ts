@@ -80,6 +80,9 @@ export class DocenciaActividadesAutoevaluacionComponent implements OnInit,OnChan
           if(a.calificado==true){
             a.calificadoEstado='Calificado'
           }
+          if(a.estadoDevuelto==true){
+            a.calificadoEstado='Devuelto'
+          }
           if(a.idTarea==0 || a.idTarea==null){
             this.proyectos[index].alumnosAntiguos.push(a)
           }else{

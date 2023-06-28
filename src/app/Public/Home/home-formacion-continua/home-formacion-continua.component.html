@@ -1,12 +1,12 @@
 <div class="container">
   <div class="row rowpadd" style="align-items: center">
     <div class="col-12 col-sm-12">
-      <div class="subtitulo" style="text-align: center; margin: 0px">
+      <h2 style="line-height: 150%;" class="subtitulo" style="text-align: center; margin: 0px">
         Formación continua
-      </div>
-      <div class="parafoS" style="font-size: 22px">
+      </h2>
+      <h2 class="parafoS" style="font-size: 22px">
         Brindamos capacitación especializada en diversas áreas
-      </div>
+      </h2>
     </div>
   </div>
 </div>
@@ -18,20 +18,19 @@
 >
   <ng-container *ngFor="let item of Formacion; let i = index">
     <mat-tab label="{{ item.Nombre }}">
-      <div
-        class="parafoS"
+      <div class="parafoS"
         style="
           margin-top: 30px;
           display: flex;
           align-items: center;
           justify-content: center;
           color: #ff8610;
-        "
-      >
+        ">
         <a
           class="vinculo"
           [routerLink]="'/programas-certificaciones-cursos/' + item.value"
           target="_blank"
+          title=" Vínculo a cursos relacionados al área seleccionada"
           >Mostrar todos los cursos de esta área
         </a>
         <i class="material-icons">keyboard_arrow_right</i>

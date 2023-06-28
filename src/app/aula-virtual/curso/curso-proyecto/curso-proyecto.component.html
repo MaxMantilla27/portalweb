@@ -68,7 +68,7 @@
               <th>Versión</th>
               <th>Calificación</th>
               <th>Estado</th>
-              <th style="min-width: 100px;">Acción</th>
+              <th *ngIf="proy.estadoDevuelto!=true" style="min-width: 100px;">Acción</th>
             </tr>
             <ng-container *ngIf="proyecto.registroEvaluacionArchivo!=null && proyecto.registroEvaluacionArchivo.length>0">
               <tr>
@@ -79,25 +79,48 @@
                 <td>{{(proy.notaProyecto==null || proy.notaProyecto.valorEscala==null )
                   ?'-':proy.notaProyecto.valorEscala}}</td>
                 <td>
-                  <ng-container *ngIf="proy.calificado">
-                    <div style="display: flex;align-items:center;justify-content: space-evenly;">
+                  <ng-container *ngIf="proy.estadoDevuelto==true">
+                    Devuelto
+                  </ng-container>
 
-                      Calificado <i class="material-icons" style="color: #00c355;">check_circle</i>
+                  <ng-container *ngIf="proy.estadoDevuelto!=true">
+                    <ng-container *ngIf="proy.calificado">
+                      <div style="display: flex;align-items:center;justify-content: space-evenly;">
+
+                        Calificado <i class="material-icons" style="color: #00c355;">check_circle</i>
+                      </div>
+                    </ng-container>
+
+                    <ng-container *ngIf="!proy.calificado">
+                      Sin calificar
+                    </ng-container>
+                  </ng-container>
+
+                </td>
+                <td *ngIf="proy.estadoDevuelto!=true">
+                  <ng-container >
+                    <div class="buttonTrash" (click)="OpenModalDelete(proy)">
+                      <i class="material-icons" [ngStyle]="{'color': proy.estadoEliminar==true?'white':'#dadada'}">delete</i>
                     </div>
                   </ng-container>
 
-                  <ng-container *ngIf="!proy.calificado">
-                    Sin calificar
-                  </ng-container>
-                </td>
-                <td>
-                  <div class="buttonTrash" (click)="OpenModalDelete(proy)">
-                    <i class="material-icons" [ngStyle]="{'color': proy.estadoEliminar==true?'white':'#dadada'}">delete</i>
-                  </div>
                 </td>
               </tr>
             </ng-container>
           </table>
+          <ng-container *ngIf="proy.estadoDevuelto==true">
+            <table class="tablaProyecto" style="    margin-top: 20px">
+              <tr>
+                <th style="text-align: left">Motivo</th>
+              </tr>
+              <ng-container *ngIf="proyecto.registroEvaluacionArchivo!=null && proyecto.registroEvaluacionArchivo.length>0">
+                <tr>
+                  <td style="text-align: left">{{(proy.retroalimentacion==null)
+                    ?'-':proy.retroalimentacion}}</td>
+                </tr>
+              </ng-container>
+            </table>
+          </ng-container>
           <ng-container *ngIf="proy.notaProyecto.id>0 && proy.notaProyecto!=null">
             <table class="tablaProyecto" style="    margin-top: 20px">
               <tr>
@@ -121,7 +144,7 @@
               text-decoration: auto;
               align-items: center;" [href]="proy.notaProyecto.urlArchivoSubidoRetroalimentacion"
               target="_blank">
-                <img style="width: 10px;height: auto;margin-right: 5px;" src="../../../../assets/icons/pdf-31.svg" alt="">
+                <img style="width: 10px;height: auto;margin-right: 5px;" src="../../../../assets/icons/pdf-31.svg" alt="Icono PDF">
                 <div>{{proy.notaProyecto.nombreArchivoRetroalimentacion}}</div>
               </a>
             </div>
@@ -242,6 +265,45 @@
           <li>{{proyecto.datosEvaluacionTrabajo.archivoCarpeta}}</li>
           <li>El plazo máximo en el que se cálificara tu proyecto sera de 15 días</li>
         </ul>
+      </div>
+    </div>
+    <div class="col-12 col-md-12 col-lg-12" style="margin: 10px 0px ;" *ngIf="anexos!=null && anexos.length>0">
+      <div class="cabeceraExpandProyecto" [ngClass]="{'cabeceraExpandProyectoOpen':instruccionesAnexos}"
+      (click)="instruccionesAnexos=!instruccionesAnexos;EventoInteraccionAccordionCertificado('Anexos del proyecto de Aplicacion',instruccionesAnexos==true?'Abierto':'Cerrado')">
+        <div>Anexos del proyecto de Aplicacion</div>
+        <div>
+          <i class="material-icons no-seleccionable " *ngIf="!instruccionesAnexos">keyboard_arrow_down</i>
+          <i class="material-icons no-seleccionable " *ngIf="instruccionesAnexos">keyboard_arrow_up</i>
+        </div>
+      </div>
+      <div class="contentCabeceraProyecto" *ngIf="instruccionesAnexos">
+        <div *ngFor="let item of anexos" class="anexosContent">
+          <ng-container *ngIf="item.esEnlace">
+            <ng-container *ngIf="item.soloLectura!=true">
+              <a class="nameAnexo" [href]="item.rutaArchivo">{{item.nombreArchivo}}</a>
+            </ng-container>
+            <ng-container *ngIf="item.soloLectura==true">
+              <div class="nameAnexo">{{item.nombreArchivo}}</div>
+              <div class="buttonAnexo">
+
+                <button mat-button class="VerAnexo" (click)="item.ver=true">Ver</button>
+                <button mat-button class="OcultarAnexo" (click)="item.ver=false">Ocultar</button>
+              </div>
+              <div [hidden]="item.ver!=true" style="width: 100%;margin-top: 15pxng serve;">
+                <embed [src]="item.rutaArchivo+'#toolbar=0' | safe" width="100%" height="500" style="width: 100%;">
+              </div>
+            </ng-container>
+          </ng-container>
+          <ng-container *ngIf="!item.esEnlace">
+            <ng-container *ngIf="item.soloLectura!=true">
+              <a class="nameAnexo" [download]="item.rutaArchivo"><i class="material-icons">download_for_offline</i> Descargar</a>
+            </ng-container>
+            <ng-container *ngIf="item.soloLectura==true">
+              <a class="nameAnexo" [href]="item.rutaArchivo"><i class="material-icons">link</i> Ver Documento</a>
+            </ng-container>
+          </ng-container>
+
+        </div>
       </div>
     </div>
   </div>

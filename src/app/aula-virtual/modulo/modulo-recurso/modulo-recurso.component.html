@@ -43,7 +43,7 @@
                   <ng-container *ngFor="let subsesiones of sesiones.registroEstructuraCursoSubSesion">
                     <a class="itemMaterial" target="_blank" (click)="EventoInteraccion(subsesiones.archivo.split('/')[subsesiones.archivo.split('/').length-1])"
                     [href]="'https://repositorioweb.blob.core.windows.net/repositorioweb/aulavirtual/documento-cursos/AulaVirtual/'+subsesiones.archivo">
-                    <img style="width: 15px;height: auto;margin-right: 15px;" src="../../../../assets/icons/pdf-31.svg" alt="">
+                    <img style="width: 15px;height: auto;margin-right: 15px;" src="../../../../assets/icons/pdf-31.svg" alt="Icono PDF">
                       {{subsesiones.archivo.split('/')[subsesiones.archivo.split('/').length-1]}}
                     </a>
                   </ng-container>
@@ -56,7 +56,7 @@
               <a *ngFor="let sesiones of est.registroEstructuraCursoSesion" class="itemMaterial"
               target="_blank" (click)="EventoInteraccion(sesiones.archivo.split('/')[sesiones.archivo.split('/').length-1])"
               [href]="'https://repositorioweb.blob.core.windows.net/repositorioweb/aulavirtual/documento-cursos/AulaVirtual/'+sesiones.archivo">
-              <img style="width: 15px;height: auto;margin-right: 15px;" src="../../../../assets/icons/pdf-31.svg" alt="">
+              <img style="width: 15px;height: auto;margin-right: 15px;" src="../../../../assets/icons/pdf-31.svg" alt="Icono PDF">
               {{sesiones.archivo.split('/')[sesiones.archivo.split('/').length-1]}}</a>
             </div>
           </div>
@@ -70,30 +70,58 @@
         <ng-container *ngFor="let item of material">
           <div style="margin-bottom: 30px;">
 
-            <a  class="itemMaterial"
+            <div *ngIf="item.soloLectura==true">
+              <a  class="itemMaterial"
             target="_blank"  (click)="EventoInteraccion(item.nombreArchivo)"
-            [href]="item.enlaceArchivo.includes('https')?item.enlaceArchivo:'https://repositorioweb.blob.core.windows.net/repositorioweb/aulavirtual/material-adiconal/'+item.enlaceArchivo">
+            [href]="item.enlaceArchivo.includes('https')?item.enlaceArchivo+'#toolbar=0':'https://repositorioweb.blob.core.windows.net/repositorioweb/aulavirtual/material-adiconal/'+item.enlaceArchivo+'#toolbar=0'">
             <ng-container *ngIf="item.enlaceArchivo.split('.')[item.enlaceArchivo.split('.').length-1]=='pdf';else doc">
-              <img style="width: 15px;height: auto;margin-right: 15px;" src="../../../../assets/icons/pdf-31.svg" alt="">
+              <img style="width: 15px;height: auto;margin-right: 15px;" src="../../../../assets/icons/pdf-31.svg" alt="Icono PDF">
             </ng-container>
             <ng-template #doc>
               <ng-container *ngIf="item.enlaceArchivo.split('.')[item.enlaceArchivo.split('.').length-1]=='doc';else zip">
-                <img style="width: 15px;height: auto;margin-right: 15px;" src="../../../../assets/icons/doc-naranja-49.svg" alt="">
+                <img style="width: 15px;height: auto;margin-right: 15px;" src="../../../../assets/icons/doc-naranja-49.svg" alt="Icono DOC">
               </ng-container>
             </ng-template>
 
             <ng-template #zip>
               <ng-container *ngIf="item.enlaceArchivo.split('.')[item.enlaceArchivo.split('.').length-1]=='sip' ||
               item.enlaceArchivo.split('.')[item.enlaceArchivo.split('.').length-1]=='rar';else excel">
-                <img style="width: 15px;height: auto;margin-right: 15px;" src="../../../../assets/icons/zip-32.svg" alt="">
+                <img style="width: 15px;height: auto;margin-right: 15px;" src="../../../../assets/icons/zip-32.svg" alt="Icono ZIP">
               </ng-container>
             </ng-template>
 
             <ng-template #excel>
-                <img style="width: 15px;height: auto;margin-right: 15px;" src="../../../../assets/icons/EXEL-naranja-48.svg" alt="">
+                <img style="width: 15px;height: auto;margin-right: 15px;" src="../../../../assets/icons/EXEL-naranja-48.svg" alt="Icono EXCEL">
             </ng-template>
 
               {{item.nombreArchivo}}</a>
+            </div>
+            <div *ngIf="item.soloLectura==false">
+              <a  class="itemMaterial"
+            target="_blank"  (click)="EventoInteraccion(item.nombreArchivo)"
+            [href]="item.enlaceArchivo.includes('https')?item.enlaceArchivo:'https://repositorioweb.blob.core.windows.net/repositorioweb/aulavirtual/material-adiconal/'+item.enlaceArchivo">
+            <ng-container *ngIf="item.enlaceArchivo.split('.')[item.enlaceArchivo.split('.').length-1]=='pdf';else doc">
+              <img style="width: 15px;height: auto;margin-right: 15px;" src="../../../../assets/icons/pdf-31.svg" alt="Icono PDF">
+            </ng-container>
+            <ng-template #doc>
+              <ng-container *ngIf="item.enlaceArchivo.split('.')[item.enlaceArchivo.split('.').length-1]=='doc';else zip">
+                <img style="width: 15px;height: auto;margin-right: 15px;" src="../../../../assets/icons/doc-naranja-49.svg" alt="Icono DOC">
+              </ng-container>
+            </ng-template>
+
+            <ng-template #zip>
+              <ng-container *ngIf="item.enlaceArchivo.split('.')[item.enlaceArchivo.split('.').length-1]=='sip' ||
+              item.enlaceArchivo.split('.')[item.enlaceArchivo.split('.').length-1]=='rar';else excel">
+                <img style="width: 15px;height: auto;margin-right: 15px;" src="../../../../assets/icons/zip-32.svg" alt="Icono ZIP">
+              </ng-container>
+            </ng-template>
+
+            <ng-template #excel>
+                <img style="width: 15px;height: auto;margin-right: 15px;" src="../../../../assets/icons/EXEL-naranja-48.svg" alt="Icono EXCEL">
+            </ng-template>
+
+              {{item.nombreArchivo}}</a>
+            </div>
           </div>
         </ng-container>
       </div>

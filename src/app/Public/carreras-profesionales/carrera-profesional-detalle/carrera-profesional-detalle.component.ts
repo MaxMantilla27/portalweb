@@ -20,6 +20,8 @@ import { SessionStorageService } from 'src/app/Core/Shared/Services/session-stor
 import { isPlatformBrowser } from '@angular/common';
 import { DatosFormularioDTO } from 'src/app/Core/Models/DatosFormularioDTO';
 import { ChatEnLineaService } from 'src/app/Core/Shared/Services/ChatEnLinea/chat-en-linea.service';
+import { ExpositorService } from 'src/app/Core/Shared/Services/Expositor/expositor.service';
+import { listaExpositorDTO } from 'src/app/Core/Models/listaExpositorDTO';
 
 declare const fbq:any;
 declare const gtag:any;
@@ -70,7 +72,8 @@ export class CarreraProfesionalDetalleComponent implements OnInit {
     private title:Title,
     @Inject(PLATFORM_ID) platformId: Object,
     private _SessionStorageService:SessionStorageService,
-    private _ChatEnLineaService:ChatEnLineaService
+    private _ChatEnLineaService:ChatEnLineaService,
+    private _ExpositorService: ExpositorService,
 
   ) {
     this.isBrowser = isPlatformBrowser(platformId);
@@ -122,6 +125,10 @@ export class CarreraProfesionalDetalleComponent implements OnInit {
     idIndustria:undefined,
   }
   public certificacionETDH=false;
+  public stepExpositors: Array<Array<listaExpositorDTO>> = [];
+  public expositor: Array<listaExpositorDTO> = [];
+  public seccionStep = 2;
+
   ngOnInit(): void {
     this.migaPan = [
       {
@@ -146,7 +153,8 @@ export class CarreraProfesionalDetalleComponent implements OnInit {
         titulo: nombre,
         urlWeb: params["urlWeb"]
       })
-      this.getCarreraDetalle(idBusqueda, nombre)
+      this.getCarreraDetalle(idBusqueda, nombre);
+      this.ListExpositor(idBusqueda)
     })
     this.obtenerFormularioCompletado();
     // this._HelperServiceP.recibirCombosPerfil.pipe(takeUntil(this.signal$)).subscribe((x) => {
@@ -173,10 +181,8 @@ export class CarreraProfesionalDetalleComponent implements OnInit {
   getCarreraDetalle(idBusqueda:number, nombre:string){
     this._CarreraProfesionalService.GetCarrerasDetalle(idBusqueda, nombre).pipe(takeUntil(this.signal$)).subscribe({
       next:(x)=>{
-        console.log(x);
         if(x.programaInformacionDTO.programaEspecificoInformacionDTO.length!=0){
           this.IdPespecificoPrograma = x.programaInformacionDTO.programaEspecificoInformacionDTO[0].id
-        console.log(this.IdPespecificoPrograma)
         }
         if(x.programaInformacionDTO!=undefined && x.programaInformacionDTO.parametroSeoProgramaDTO!=undefined){
           var metas=x.programaInformacionDTO.parametroSeoProgramaDTO;
@@ -190,7 +196,6 @@ export class CarreraProfesionalDetalleComponent implements OnInit {
                       metas.find((par:any)=>par.nombre=='description').descripcion:undefined
             let k=metas.find((par:any)=>par.nombre=='keywords')!=undefined?
                       metas.find((par:any)=>par.nombre=='keywords').descripcion:undefined
-            console.log(mt)
             this.title.setTitle(mt);
 
             this._SeoService.generateTags({
@@ -227,17 +232,13 @@ export class CarreraProfesionalDetalleComponent implements OnInit {
         let almPlanEstudios: any = this.filtrarContenido(this.carrera.contenidoProgramaInformacionDTO, ['Plan de Estudios'])
         if(almPlanEstudios.length==0){
           almPlanEstudios = this.filtrarContenido(this.carrera.contenidoProgramaInformacionDTO, ['Estructura Curricular'])
-          console.log(almPlanEstudios)
           this.planEstudios =
           almPlanEstudios.length>0?
             "<div class='real-contenedor'>"+
             almPlanEstudios[0].contenido.replaceAll("</strong><strong>","").replaceAll("</strong> <strong>"," ").replaceAll("<p><strong>","<div class='container-card'><p><strong>").
             replaceAll("</ul>","</ul></div>")+"</div></div>"
           :""
-          console.log(this.planEstudios)
         this.planEstudios = this.planEstudios.replaceAll("</strong></p>","</strong></p><div class='line'></div>")
-        console.log(this.planEstudios)
-
         }
         else if(almPlanEstudios!=0){
         this.planEstudios =
@@ -246,10 +247,8 @@ export class CarreraProfesionalDetalleComponent implements OnInit {
             almPlanEstudios[0].contenido.replaceAll("<p><strong>","<div class='container-card'><p><strong>").
             replaceAll("</ul><div class='container-card'>","</ul></div><div class='container-card'>")+"</div></div>"
           :""
-          console.log(this.planEstudios)
 
         this.planEstudios = this.planEstudios.replaceAll("</strong></p>","</strong></p><div class='line'></div>")
-        console.log(this.planEstudios)
 
         }
 
@@ -274,7 +273,6 @@ export class CarreraProfesionalDetalleComponent implements OnInit {
           this.contenidoCertificacionAdicional = almCertificacionesAdicionales[0].contenido.split("<strong>NOTA</strong>")[0].replaceAll("<div class=\"row\"><div class=\"col-sm-8\"><p><br /></p></div></div>","").replaceAll("<hr />","")
 
           let contenidoCertificacionSplit = almCertificacionesAdicionales[0].contenido.split("<p>&nbsp;</p>")
-          console.log(contenidoCertificacionSplit)
           if(contenidoCertificacionSplit.length<=2){
             contenidoCertificacionSplit = almCertificacionesAdicionales[0].contenido.split("<p><strong>&nbsp;</strong></p>")
           }
@@ -309,10 +307,8 @@ export class CarreraProfesionalDetalleComponent implements OnInit {
   }
   obtenerFormularioCompletado(){
     var DatosFormulario = this._SessionStorageService.SessionGetValue('DatosFormulario');
-    console.log(DatosFormulario)
     if(DatosFormulario!=''){
       var datos = JSON.parse(DatosFormulario);
-      console.log(datos)
       this.formularioContacto.Nombres=datos.nombres;
       this.formularioContacto.Apellidos=datos.apellidos;
       this.formularioContacto.Email=datos.email;
@@ -503,5 +499,34 @@ export class CarreraProfesionalDetalleComponent implements OnInit {
     this.formularioContacto.IdRegion=undefined,
     this.formularioContacto.Movil= '',
     this.GetRegionesPorPais(-1);
+  }
+  ListExpositor(idBusqueda:number) {
+    this.expositor=[];
+    this.stepExpositors=[]
+    this._ExpositorService.ListExpositor(idBusqueda).pipe(takeUntil(this.signal$)).subscribe({
+      next: (x) => {
+        console.log(x)
+        this.expositor = x.listaExpositorDTO;
+        var ind = 1;
+        var step: Array<any> = [];
+        this.expositor.forEach((p) => {
+          step.push(p);
+          if (ind == this.seccionStep) {
+            this.stepExpositors.push(step);
+            step = [];
+            ind = 0;
+          }
+          ind++;
+        });
+        if (step.length > 0) {
+          this.stepExpositors.push(step);
+        }
+      },
+    });
+  }
+  EventoInteraccionCarrousel(event:any,nombre:string){
+    if(event.source!='timer'){
+      this._HelperServiceP.enviarMsjAcciones({Tag:'Carousel',Nombre:nombre,Accion:event.source})
+    }
   }
 }

@@ -77,12 +77,16 @@ export class PagoComponent implements OnInit,OnDestroy {
       ', aquí podrás realizar los pagos de tus cronogramas de cuotas';
       this.email =x.datosAlumno.email
     })
+    this._HelperService.recibirCombosPerfil.pipe(takeUntil(this.signal$)).subscribe((x) => {
+      console.log("REPUESTA ",x)
+       this.idPais = x.datosAlumno.idPais
+       this.VerificarEstadoAfiliacion()
+    })
 
     this._ActivatedRoute.params.pipe(takeUntil(this.signal$)).subscribe({
       next: (x) => {
         this.idMatricula = parseInt(x['IdMatricula']);
         this.ObtenerPasarela()
-        this.VerificarEstadoAfiliacion()
         this.ObtenerCronogramaPagoMatricula()
       },
     });
@@ -111,9 +115,7 @@ export class PagoComponent implements OnInit,OnDestroy {
   }
 
   VerificarEstadoAfiliacion(){
-    this._HelperService.recibirCombosPerfil.pipe(takeUntil(this.signal$)).subscribe((x) => {
-      let idPais = x.datosAlumno.idPais
-      if(idPais==51 || idPais==52)
+    if(this.idPais==51 || this.idPais==52)
       {
         this._FormaPagoService.ValidacionSuscripcion(this.idMatricula,this.idPasarela).pipe(takeUntil(this.signal$)).subscribe({
           next:x=>{
@@ -129,7 +131,6 @@ export class PagoComponent implements OnInit,OnDestroy {
           }
         })
       }
-    })
   }
   ObtenerCronogramaPagoMatricula(){
     this._CronogramaPagoService.ObtenerCronogramaPagoMatricula(this.idMatricula).pipe(takeUntil(this.signal$)).subscribe({

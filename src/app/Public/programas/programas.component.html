@@ -7,7 +7,7 @@
   <div class="container">
     <div class="row rowpadd" style="padding-top: 20px;
     padding-bottom: 20px;">
-      <div class="titulop">{{Title}}</div>
+      <h1 class="titulop">{{Title}}</h1>
       <!-- <mat-form-field appearance="outline" style="width: 300px;font-size: 13px;">
         <mat-label>Más áreas de capacitación</mat-label>
         <mat-select (selectionChange)="AreasCapasitacion($event.value)" [(ngModel)]="IdArea" [disabled]="charge">
@@ -165,7 +165,7 @@
 
   <!-- <div class="foltroEncontrados">{{textoResult}}</div> -->
   <div style="display: flex;justify-content: flex-start;align-items: center;">
-    <img src="../../../assets/icons/filtro.svg" alt="">
+    <img src="../../../assets/icons/filtro.svg" alt="Icono de filtro de programas">
     <div>FILTROS</div>
   </div>
 </div>
@@ -216,7 +216,7 @@
         </div> -->
         <div class="filtroElemento">
           <div class="ElementoTitle" (click)="openExpand(0,'Áreas de capacitación')">
-            &Aacute;reas de capacitaci&oacute;n
+            Áreas de capacitación
             <i *ngIf="!expancions[0]" class="material-icons">keyboard_arrow_down</i>
             <i *ngIf="expancions[0]" class="material-icons">keyboard_arrow_up</i>
           </div>
@@ -232,7 +232,7 @@
         </div>
         <div class="filtroElemento">
           <div class="ElementoTitle" (click)="openExpand(1,'Subáreas de capacitación')">
-            Sub&aacute;rea de capacitaci&oacute;n
+            Subárea de capacitación
             <i *ngIf="!expancions[1]" class="material-icons">keyboard_arrow_down</i>
             <i *ngIf="expancions[1]" class="material-icons">keyboard_arrow_up</i>
           </div>
@@ -253,7 +253,7 @@
         </div>
         <div class="filtroElemento">
           <div class="ElementoTitle" (click)="openExpand(2,'Tipo de Programa')">
-            Tipo de Programa
+            Tipo de programa
             <i *ngIf="!expancions[2]" class="material-icons">keyboard_arrow_down</i>
             <i *ngIf="expancions[2]" class="material-icons">keyboard_arrow_up</i>
           </div>
@@ -288,8 +288,8 @@
 
     <div class="col-12 col-md-8 col-lg-9">
       <div class="row">
-        <div style="text-align: center;" *ngIf="charge==false && (programas.length==0 || cantidadProgramas==0)">No
-          existen programas con los filtros seleccionados</div>
+        <div style="text-align: center;" *ngIf="charge==false && (programas.length==0 || cantidadProgramas==0)">
+          No existen programas con los filtros seleccionados</div>
         <div *ngIf="charge==true" style="width: 100%;display: flex;justify-content: center;">
           <mat-spinner></mat-spinner>
         </div>

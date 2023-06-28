@@ -49,6 +49,7 @@ export class FormaPagoService {
       return EMPTY;
     }
   }
+
   public ObtenerPreProcesoPagoOrganicoAlumno(Json:RegistroRespuestaPreProcesoPagoDTO):Observable<any>{
     if(this.isBrowser){
       console.log(Json)
@@ -106,6 +107,15 @@ export class FormaPagoService {
   public actualizarComprobantePagoLista(Json:any):Observable<any>{
     if(this.isBrowser){
       return this.http.post<any>(this.urlBase+'/actualizarComprobantePagoLista',Json)
+    }else{
+      return EMPTY;
+    }
+    
+  }
+
+  public RegistroPagoCuotaAlumnoVisaProcesarRecurrente(Json:any):Observable<any>{
+    if(this.isBrowser){
+      return this.http.post<any>(this.urlBase+'/RegistroPagoCuotaAlumnoVisaProcesarRecurrente',Json)
     }else{
       return EMPTY;
     }

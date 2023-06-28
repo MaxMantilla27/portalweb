@@ -78,7 +78,7 @@
                             (selectionChange)="validatePais(i,field.nombre)">
 
                               <mat-option *ngFor="let item of paise" [value]="item.idPais">
-                                <img [src]="item.flag" alt="" style="    width: 20px;height: 20px;">
+                                <img [src]="item.flag" alt="{{item.pais}}" style="    width: 20px;height: 20px;">
                                 {{item.pais}}
                               </mat-option>
                             </mat-select>
@@ -137,8 +137,8 @@
             </ng-container>
             <ng-container *ngIf="field.tipo=='terminos'" >
               <mat-checkbox color="primary" formControlName="{{field.nombre}}" [style]="field.style">
-                He leído y acepto los <a routerLink="/termino-uso-web" target="_blank"> Términos de uso del sitio web</a>
-                y la <a routerLink="/politica-privacidad" target="_blank">Política de privacidad</a>
+                He leído y acepto los <a title="Vínculo a Términos de uso web" routerLink="/termino-uso-web" target="_blank"> Términos de uso del sitio web</a>
+                y la <a  title="Vínculo a Políticas de Privacidad" routerLink="/politica-privacidad" target="_blank">Política de privacidad</a>
               </mat-checkbox>
             </ng-container>
           </div>

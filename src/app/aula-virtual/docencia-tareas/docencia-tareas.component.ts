@@ -8,6 +8,8 @@ import { OperacionesNotaService } from 'src/app/Core/Shared/Services/Operaciones
 import { SnackBarServiceService } from 'src/app/Core/Shared/Services/SnackBarService/snack-bar-service.service';
 import { TareaEvaluacionService } from 'src/app/Core/Shared/Services/TareaEvaluacion/tarea-evaluacion.service';
 import { TrabajoDeParesIntegraService } from 'src/app/Core/Shared/Services/TrabajoDeParesIntegra/trabajo-de-pares-integra.service';
+import { DevolverProyectoComponent } from './devolver-proyecto/devolver-proyecto.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-docencia-tareas',
@@ -23,6 +25,7 @@ export class DocenciaTareasComponent implements OnInit,OnDestroy {
     private _ActivatedRoute:ActivatedRoute,
     private _OperacionesNotaService:OperacionesNotaService,
     private _HelperService: HelperService,
+    public dialog: MatDialog,
   ) { }
 
   ngOnDestroy(): void {
@@ -97,29 +100,10 @@ export class DocenciaTareasComponent implements OnInit,OnDestroy {
     });
   }
 
-  ObtenerEvaluacionTarea(){
-    this._TareaEvaluacionService.ObtenerEvaluacionTrabajoPares(this.params).pipe(takeUntil(this.signal$)).subscribe({
-      next:x=>{
-        console.log(x)
-        this.tareas=x
-        console.log(this.tareas)
-        if( this.tareas.registroTareaEvaluacionArchivo!=null){
-          this.tareaAc=this.tareas.registroTareaEvaluacionArchivo
-        }
-        console.log(this.tareaAc)
-        this.migaPan.push(
-          {
-            titulo: x.datosTrabajoPares.nombre,
-            urlWeb: '/AulaVirtual/Docencia',
-          },
-        )
-      }
-    })
-  }
   ObtenerTrabajoParesPorId(){
     this._TrabajoDeParesIntegraService.ObtenerTrabajoParesPorId(this.IdTarea).pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
-        console.log(x)
+        console.log(x.id)
         if(x.id>0){
           this.datosTarea=x;
           this.params.id=this.IdTarea
@@ -135,6 +119,7 @@ export class DocenciaTareasComponent implements OnInit,OnDestroy {
       }
     })
   }
+
   ListadoActividadesCalificablesDocentePorCurso(){
     this._TrabajoDeParesIntegraService.ListadoActividadesCalificablesDocentePorCurso(this.IdTarea).pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
@@ -155,6 +140,39 @@ export class DocenciaTareasComponent implements OnInit,OnDestroy {
         this.ObtenerEvaluacionTarea();
       }
     })
+  }
+  ObtenerEvaluacionTarea(){
+    this._TareaEvaluacionService.ObtenerEvaluacionTrabajoPares(this.params).pipe(takeUntil(this.signal$)).subscribe({
+      next:x=>{
+        console.log(x)
+        this.tareas=x
+        console.log(this.tareas)
+        if( this.tareas.registroTareaEvaluacionArchivo!=null){
+          this.tareaAc=this.tareas.registroTareaEvaluacionArchivo
+        }
+        console.log(this.tareaAc)
+        this.migaPan.push(
+          {
+            titulo: x.datosTrabajoPares.nombre,
+            urlWeb: '/AulaVirtual/Docencia',
+          },
+        )
+      }
+    })
+  }
+  DevolverTarea(item:any){
+    const dialogRef = this.dialog.open(DevolverProyectoComponent, {
+      width: '600px',
+      data: item,
+      panelClass: 'dialog-devolucion-proyecto',
+    });
+
+    dialogRef.afterClosed().pipe(takeUntil(this.signal$)).subscribe((result) => {
+      console.log(result)
+      if(result!=undefined){
+        this.ListadoActividadesCalificablesDocentePorCurso()
+      }
+    });
   }
 
   EnviarNota(id:number){

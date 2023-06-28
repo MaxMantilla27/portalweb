@@ -35,7 +35,6 @@ export class ResultadoPagoComponent implements OnInit,OnDestroy{
     RequiereDatosTarjeta:true
   }
 
-  public tipoRespuesta = null
   public resultVisa:any
   public ruta=''
   public rutaMisCursos='/AulaVirtual/MisCursos'
@@ -51,15 +50,7 @@ export class ResultadoPagoComponent implements OnInit,OnDestroy{
         next: (x) => {
           console.log("Identificador",x)
           this.json.IdentificadorTransaccion = x['Identificador'];
-          this._ActivatedRoute.queryParams.pipe(takeUntil(this.signal$)).subscribe({
-            next: (x) => {
-
-              console.log("tipo",this.tipoRespuesta )
-              this.tipoRespuesta = x['tipo']
-            this.ObtenerPreProcesoPagoCuotaAlumno()
-            },
-          });
-
+          this.ObtenerPreProcesoPagoCuotaAlumno()
         },
       });
 
@@ -87,6 +78,8 @@ export class ResultadoPagoComponent implements OnInit,OnDestroy{
   }
   ObtenerPreProcesoPagoCuotaAlumno(){
     this.ruta='/AulaVirtual/MisPagos'
+    let comprobanteString = this._SessionStorageService.SessionGetValue('comprobante')
+
     this._FormaPagoService.ObtenerPreProcesoPagoCuotaAlumno(this.json).pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
         // console.log("REPUESTA-PREPROCESO",x._Repuesta.listaCuota)
@@ -101,24 +94,9 @@ export class ResultadoPagoComponent implements OnInit,OnDestroy{
             this.resultVisa=x._Repuesta;
             console.log(this.resultVisa)
             if(this.resultVisa.estadoOperacion=='Processed'){
-              let comprobanteString = this._SessionStorageService.SessionGetValue('comprobante')
               if(comprobanteString!='')
               {
                 let objComprobante = JSON.parse(comprobanteString)
-                if(this.tipoRespuesta=="AF")
-                {
-                  var valor:any
-                  objComprobante.listaCuota.forEach((l:any) => {
-                    if(valor==undefined){
-                      valor=l
-                    }else{
-                      if(valor.nroCuota<l.nroCuota){
-                        valor=l
-                      }
-                    }
-                  });
-                  objComprobante.listaCuota = [valor]
-                }
                 this._FormaPagoService.actualizarComprobantePagoLista(objComprobante).pipe(takeUntil(this.signal$)).subscribe({
                   next:x=>{
                   }

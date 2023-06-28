@@ -13,9 +13,9 @@
         <div class="rowpadd">
           <div class="row">
             <div class="col-md-6 carrera-container__header__information">
-              <div class="carrera-container__header__information__title"
+              <h1 style="line-height: 120%;" class="carrera-container__header__information__title"
                 [innerHTML]="carrera.programaGeneralInformacionVistaDTO?.tituloHtml | safeHtml">
-              </div>
+            </h1>
               <!-- <div class="carrera-container__header__information__button">
                 <app-default-button [confs]="{color: 'primary', titulo: 'Inscribirme Ahora'}"></app-default-button>
               </div> -->
@@ -59,7 +59,7 @@
             </div> -->
           </div>
 
-          <img class="nombrealumnoHeader" [src]="'../../../../assets/imagenes/'+(idbusqueda==7429?'arquetipo-sistemas-mujer-contenido.png':'arquetipo-administracion-hombre-contenido.png')" alt="" style="    position: absolute;
+          <img class="nombrealumnoHeader" [src]="'../../../../assets/imagenes/'+(idbusqueda==7429?'arquetipo-sistemas-mujer-contenido.png':'arquetipo-administracion-hombre-contenido.png')" alt="Profesional" style="    position: absolute;
           right: 10%;
           bottom: 0;
           width: 35%;">
@@ -71,7 +71,7 @@
         padding-bottom: 20px;">
           <div class="row">
             <div class="col-12 col-md-4 col-lg-4 contentdiv">
-              <img src="../../../../assets/icons/icono-reloj-duracion-blanco.svg" alt="">
+              <img src="../../../../assets/icons/icono-reloj-duracion-blanco.svg" alt="Reloj">
               <div>
                 <div class="titleDiv">Duración</div>
                 <div class="subTitleDiv">{{carrera.programaGeneralInformacionVistaDTO?.duracion+','
@@ -79,7 +79,7 @@
               </div>
             </div>
             <div class="col-12 col-md-4 col-lg-4 contentdiv">
-              <img src="../../../../assets/icons/icono-moneda-pension-blanco.svg" alt="">
+              <img src="../../../../assets/icons/icono-moneda-pension-blanco.svg" alt="Moneda">
               <div>
                 <div class="titleDiv">Pensión por ciclo</div>
                 <div class="subTitleDiv">{{'1 matrícula de '
@@ -90,7 +90,7 @@
               </div>
             </div>
             <div class="col-12 col-md-4 col-lg-4 contentdiv">
-              <img src="../../../../assets/icons/icono-calendario-admision-blanco.svg" alt="">
+              <img src="../../../../assets/icons/icono-calendario-admision-blanco.svg" alt="Calendario">
               <div>
                 <div class="titleDiv">Admisión</div>
                 <div class="subTitleDiv">{{'Admisión '+fecha.getFullYear()}}</div>
@@ -197,18 +197,42 @@
       <div class="carrera-container__content__thirdSection">
         <div class="container">
           <div class="rowpadd">
-            <h1>Plan de Estudios</h1>
+            <h2 style="line-height: 150%;font-weight: bold">Plan de Estudios</h2>
             <div class="carrera-container__content__thirdSection__information-detail"
               [innerHTML]="planEstudios  | safeHtml">
             </div>
           </div>
         </div>
       </div>
-      <div *ngIf="certificacionETDH==false" class="carrera-container__content__fourthSection">
+      <div *ngIf="certificacionETDH==false" style="background: white;">
+        <div class="container">
+          <div class="row rowpadd">
+            <div class="col-12 col-md-12 col-lg-12 tabprogram">
+              <h2 style="font-weight: bold;line-height: 150%;"  class="subtitulo">Plana Docente</h2>
 
+              <div class="carousel-expositores">
+                <ngb-carousel style="width: 99%" (slide)="EventoInteraccionCarrousel($event,'Expositores')">
+                  <ng-template ngbSlide *ngFor="let ste of stepExpositors">
+                    <div class="wrapper" style="display: flex;justify-content: center;">
+                      <div class="row" style="align-items: center;width: 95%;justify-content: center;    padding: 30px 0px;">
+                        <div class="col-12 col-xs-6 col-md-6 col-lg-6" *ngFor="let item of ste" style="height: 100%;">
+                          <app-card-expositores [expositor]="item"></app-card-expositores>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="carousel-caption">
+                    </div>
+                  </ng-template>
+                </ngb-carousel>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="certificacionETDH==false" class="carrera-container__content__fourthSection">
         <div class="container">
           <div class="rowpadd">
-            <h1>Certificación</h1>
+            <h2 style="line-height: 150%;font-weight: bold">Certificación</h2>
             <div class="carrera-container__content__fourthSection__information-detail"
               [innerHTML]="certificaciones  | safeHtml">
             </div>
@@ -216,17 +240,16 @@
         </div>
       </div>
       <div *ngIf="certificacionETDH==true"  class="educacion-tecnica-container__content__fourthSection">
-
         <div class="container">
           <div class="rowpadd">
             <div class="row">
               <div class="col-12 col-md-5 col-lg-5">
-                <div class="subtitulo">Certificación</div>
+                <h2 style="line-height: 150%;font-weight: bold" class="subtitulo">Certificación</h2>
               </div>
               <div class="col-12 col-md-7 col-lg-7">
               </div>
               <div class="col-12 col-md-5 col-lg-5 educacion-tecnica-container__content__fourthSection__img-container" style="margin: 20px 0px;">
-                <img src="../../../assets/imagenes/imagen-certificado-pagina-web.png" alt=""
+                <img src="../../../assets/imagenes/imagen-certificado-pagina-web.png" alt="Certificación"
                   style="width: 100%;">
               </div>
               <div class="col-12 col-md-7 col-lg-7 educacion-tecnica-container__content__fourthSection__information-container"style="margin: 20px 0px;">
@@ -245,7 +268,7 @@
       <div *ngIf="contenidoCertificacionAdicional.length>0"  class="carrera-container__content__fiveSection">
         <div class="container">
           <div class="rowpadd">
-            <h1>Certificaciones Adicionales</h1>
+            <h2 style="line-height: 150%;font-weight: bold;">Certificaciones Adicionales</h2>
             <div class="carrera-container__content__fiveSection__information-detail"
               [innerHTML]="contenidoCertificacionAdicional  | safeHtml">
             </div>
