@@ -127,6 +127,7 @@ import { FormularioRojoComponent } from './Containers/formulario-rojo/formulario
 import { FacebookLoginComponent } from './Containers/facebook-login/facebook-login.component';
 import { SocialAuthService } from 'angularx-social-login';
 import { TableV2Component } from './Containers/table-v2/table-v2.component';
+import { TablePortalComponent } from './Containers/table-portal/table-portal.component';
 
 @NgModule({
   imports: [
@@ -220,6 +221,7 @@ import { TableV2Component } from './Containers/table-v2/table-v2.component';
     FormularioRojoComponent,
     FacebookLoginComponent,
     TableV2Component,
+    TablePortalComponent,
     //ChatZComponent,
   ],
   exports: [
@@ -245,6 +247,7 @@ import { TableV2Component } from './Containers/table-v2/table-v2.component';
     CrucigramaComponent,
     TableComponent,
     TableV2Component,
+    TablePortalComponent,
     MatmenuComponent,
     ChargeComponent,
     VideoBrightcovePruebaComponent,
