@@ -13,10 +13,10 @@ import { ExcelService } from 'src/app/Core/Shared/Services/Excel/excel.service';
 })
 export class PerfilAlumnosComponent implements OnInit, OnChanges,OnDestroy {
   private signal$ = new Subject();
-   
-  
+
+
   columnHeader = {
-    'index'  : 'N°',
+    'numero'  : 'N°',
     'codigoMatricula': 'Código',
     'nombreAlumno': 'Nombre y Apellidos',
     'pais': 'País',
@@ -42,7 +42,7 @@ export class PerfilAlumnosComponent implements OnInit, OnChanges,OnDestroy {
     private excelService: ExcelService,
   ) { }
 
-  
+
 
   ngOnDestroy(): void {
     this.signal$.next(true)
@@ -52,8 +52,8 @@ export class PerfilAlumnosComponent implements OnInit, OnChanges,OnDestroy {
   @Output() OnRecharge = new EventEmitter<void>();
 
 
-  
-  
+
+
   public PerfilAlumnos:any;
 
   ngOnInit(): void {
@@ -70,9 +70,16 @@ export class PerfilAlumnosComponent implements OnInit, OnChanges,OnDestroy {
     this._PerfilAlumnosService.ObtenerPerfilAlumnos(18675).pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
         this.PerfilAlumnos=x;
+        let i=1
+        this.PerfilAlumnos.forEach((e:any)=> {
+          e.index=i
+          i++
+        });
         this.tableInfo=x;
-        this.tableInfo.forEach((e:any) => {
-          e.Acciones=e.UrlWebex==null?'Próximamente':'Unirse'
+        i=1
+        this.tableInfo.forEach((e:any)=> {
+          e.numero=i
+          i++
         });
         // console.log(this.PerfilAlumnos);
         console.log("Hola");
@@ -82,8 +89,8 @@ export class PerfilAlumnosComponent implements OnInit, OnChanges,OnDestroy {
 
 
 
-  DownloadExcel(): void { 
-    const fileToExport = this.PerfilAlumnos.map((items:any) => { 
+  DownloadExcel(): void {
+    const fileToExport = this.PerfilAlumnos.map((items:any) => {
       return {
        "N°": items?.index,
        "Código": items?.codigoMatricula,
@@ -93,12 +100,12 @@ export class PerfilAlumnosComponent implements OnInit, OnChanges,OnDestroy {
        "Area Formación": items?.aFormacion,
        "Area Trabajo": items?.aTrabajo,
        "Industria": items?.industria,
-     } 
+     }
     });
-  
+
     this.excelService.exportToExcel(
      fileToExport,
-     'PerfilAlumnos-' + new Date().getTime() 
+     'PerfilAlumnos-' + new Date().getTime()
    );
   }
 

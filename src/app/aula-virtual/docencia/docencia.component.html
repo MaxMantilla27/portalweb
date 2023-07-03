@@ -28,7 +28,7 @@
             <app-docencia-sesiones-webinar [IdProveedor]="DataProveedor.id"></app-docencia-sesiones-webinar>
           </div>
         </mat-tab>
-        
+
         <mat-tab *ngIf="DataProveedor.aplicaSesionOnlineWebinar">
           <ng-template mat-tab-label>
             <div class="contentHeaderM">
@@ -168,6 +168,7 @@
             </div>
           </ng-template>
           <div class="pad-resp">
+            <app-perfil-alumnos [IdPEspecifico]="2"></app-perfil-alumnos>
           </div>
         </mat-tab>
       </mat-tab-group>
