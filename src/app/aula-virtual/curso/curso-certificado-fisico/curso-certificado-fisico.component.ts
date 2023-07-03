@@ -1,11 +1,14 @@
 import { Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges, ViewEncapsulation } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { MatButtonModule } from '@angular/material/button';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { Subject, takeUntil } from 'rxjs';
 import { combosPerfilDTO } from 'src/app/Core/Models/AlumnoDTO';
 import { InsertarRegistroEnvioFisicoDTO } from 'src/app/Core/Models/CertificadoDTO';
 import { CertificadoService } from 'src/app/Core/Shared/Services/Certificado/certificado.service';
 import { HelperService } from 'src/app/Core/Shared/Services/helper.service';
 import { SnackBarServiceService } from 'src/app/Core/Shared/Services/SnackBarService/snack-bar-service.service';
+import { ConfirmCertFisicoComponent } from './confirm-cert-fisico/confirm-cert-fisico.component';
 
 @Component({
   selector: 'app-curso-certificado-fisico',
@@ -19,13 +22,15 @@ export class CursoCertificadoFisicoComponent implements OnInit,OnDestroy ,OnChan
   constructor(
     private _HelperService: HelperService,
     private _CertificadoService:CertificadoService,
-    private _SnackBarServiceService:SnackBarServiceService
+    private _SnackBarServiceService:SnackBarServiceService,
+    public dialog: MatDialog,
+
+
   ) { }
   ngOnDestroy(): void {
     this.signal$.next(true)
     this.signal$.complete()
   }
-
 
   @Input() datosCertificado:any;
   @Input() curso:any;
@@ -37,6 +42,8 @@ export class CursoCertificadoFisicoComponent implements OnInit,OnDestroy ,OnChan
   @Output() OnGenerate = new EventEmitter<void>();
   public close=false
   public expacion=[true,false,false]
+  formEnvio = false;
+  buttonEnviar= true;
   public combosPerfil: combosPerfilDTO = {
     listaAreaFormacion:[],
     listaAreaTrabajo:[],
@@ -139,6 +146,15 @@ export class CursoCertificadoFisicoComponent implements OnInit,OnDestroy ,OnChan
       }
     }
   }
+
+  showData() {
+    return (this.formEnvio = true, this.buttonEnviar = false);
+  }
+
+  openDialog() {
+    this.dialog.open(ConfirmCertFisicoComponent);
+  }
+
   GenerarSolicitudCertificadoFisico(){
     this.jsonEnvio.Apellido=this.userForm.get('Apellido')?.value;
     this.jsonEnvio.Nombre=this.userForm.get('Nombres')?.value;
@@ -199,3 +215,6 @@ export class CursoCertificadoFisicoComponent implements OnInit,OnDestroy ,OnChan
     this.userForm.get('Region')?.disable();
   }
 }
+
+
+

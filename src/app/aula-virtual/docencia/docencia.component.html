@@ -28,6 +28,19 @@
             <app-docencia-sesiones-webinar [IdProveedor]="DataProveedor.id"></app-docencia-sesiones-webinar>
           </div>
         </mat-tab>
+
+        <mat-tab *ngIf="DataProveedor.aplicaSesionOnlineWebinar">
+          <ng-template mat-tab-label>
+            <div class="contentHeaderM">
+              <i class="material-icons">web</i>
+              <div class="titleMatr" *ngIf="!hide">Sesiones Online/Webinar</div>
+            </div>
+          </ng-template>
+          <div class="pad-resp">
+            <app-docencia-acceso-clases></app-docencia-acceso-clases>
+          </div>
+        </mat-tab>
+
         <mat-tab>
           <ng-template mat-tab-label>
             <div class="contentHeaderM">
@@ -51,6 +64,32 @@
             <app-docencia-gestion-asistencias [IdProveedor]="DataProveedor.id" [Correo]="DataProveedor.email" ></app-docencia-gestion-asistencias>
           </div>
         </mat-tab>
+
+        <mat-tab>
+          <ng-template mat-tab-label>
+            <div class="contentHeaderM">
+              <i class="material-icons">assistant</i>
+              <div class="titleMatr" *ngIf="!hide">Gestión de Asistencias</div>
+            </div>
+          </ng-template>
+          <div class="pad-resp">
+            <app-docencia-gestion-asistencia></app-docencia-gestion-asistencia>
+          </div>
+        </mat-tab>
+
+        <mat-tab>
+          <ng-template mat-tab-label>
+            <div class="contentHeaderM">
+              <i class="material-icons">assistant</i>
+              <div class="titleMatr" *ngIf="!hide">Registro de Asistencias</div>
+            </div>
+          </ng-template>
+          <div class="pad-resp">
+            <app-registro-asistencia></app-registro-asistencia>
+          </div>
+        </mat-tab>
+
+
         <mat-tab>
           <ng-template mat-tab-label>
             <div class="contentHeaderM">
@@ -73,6 +112,20 @@
             <app-docencia-trabajo-pares [IdProveedor]="DataProveedor.id" [Correo]="DataProveedor.email"></app-docencia-trabajo-pares>
           </div>
         </mat-tab>
+
+        <mat-tab>
+          <ng-template mat-tab-label>
+            <div class="contentHeaderM">
+              <i class="material-icons">work</i>
+              <div class="titleMatr" *ngIf="!hide">Perfil de Alumnos</div>
+            </div>
+          </ng-template>
+          <div class="pad-resp">
+            <app-perfil-alumnos
+            ></app-perfil-alumnos>
+          </div>
+        </mat-tab>
+
         <mat-tab>
           <ng-template mat-tab-label>
             <div class="contentHeaderM">
@@ -115,6 +168,7 @@
             </div>
           </ng-template>
           <div class="pad-resp">
+            <app-perfil-alumnos [IdPEspecifico]="2"></app-perfil-alumnos>
           </div>
         </mat-tab>
       </mat-tab-group>

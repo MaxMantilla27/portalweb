@@ -107,6 +107,12 @@ import { BolsaTrabajoComponent } from './bolsa-trabajo/bolsa-trabajo.component';
 import { VisaRecurrenteComponent } from './resultado-pago-recurrente/visa-recurrente/visa-recurrente.component';
 import { DevolverProyectoComponent } from './docencia-tareas/devolver-proyecto/devolver-proyecto.component';
 
+import { AsistenciaAlumnoComponent } from './curso/asistencia-alumno/asistencia-alumno.component';
+import { ConfirmCertFisicoComponent } from './curso/curso-certificado-fisico/confirm-cert-fisico/confirm-cert-fisico.component';
+import { PerfilAlumnosComponent } from './docencia/perfil-alumnos/perfil-alumnos.component';
+import { DocenciaGestionAsistenciaComponent } from './docencia/docencia-gestion-asistencia/docencia-gestion-asistencia.component';
+import { RegistroAsistenciaComponent } from './docencia/registro-asistencia/registro-asistencia.component';
+import { DocenciaAccesoClasesComponent } from './docencia/docencia-acceso-clases/docencia-acceso-clases.component';
 
 
 @NgModule({
@@ -211,6 +217,13 @@ import { DevolverProyectoComponent } from './docencia-tareas/devolver-proyecto/d
     BolsaTrabajoComponent,
     VisaRecurrenteComponent,
     DevolverProyectoComponent,
+    AsistenciaAlumnoComponent,
+    ConfirmCertFisicoComponent,
+    PerfilAlumnosComponent,
+    DocenciaGestionAsistenciaComponent,
+    RegistroAsistenciaComponent,
+    DocenciaAccesoClasesComponent,
+
 
   ],
   imports: [
