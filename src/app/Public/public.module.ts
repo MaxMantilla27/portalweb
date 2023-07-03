@@ -52,6 +52,7 @@ import { SorteoComponent } from './sorteo/sorteo.component';
 import { LoginFacebookComponent } from './login/login-facebook/login-facebook.component';
 import { LoginFacebookIngresarComponent } from './login/login-facebook/login-facebook-ingresar/login-facebook-ingresar.component';
 import { LoginFacebookRegistrarComponent } from './login/login-facebook/login-facebook-registrar/login-facebook-registrar.component';
+import { NotificacionBoliviaComponent } from './Home/notificacion-bolivia/notificacion-bolivia.component';
 
 
 @NgModule({
@@ -110,7 +111,8 @@ import { LoginFacebookRegistrarComponent } from './login/login-facebook/login-fa
     SorteoComponent,
     LoginFacebookComponent,
     LoginFacebookIngresarComponent,
-    LoginFacebookRegistrarComponent
+    LoginFacebookRegistrarComponent,
+    NotificacionBoliviaComponent
   ],
   exports: [],
   providers: [
