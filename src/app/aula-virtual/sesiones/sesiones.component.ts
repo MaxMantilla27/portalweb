@@ -559,17 +559,33 @@ export class SesionesComponent implements OnInit,OnDestroy,AfterViewInit {
               if (subs == 0) {
                 if (ses == 0) {
                   if (cap == 0) {
-                    c.registroEstructuraCursoEncuesta.forEach((e: any) => {
-                      if (e.nombreEncuesta == 'Encuesta Inicial') {
-                        if (e.encuestaEnviada == true) {
-                          ss.habilitado = true;
+                    if(c.registroEstructuraCursoEncuesta.length==0){
+                      ss.habilitado=true;
+                    }else{
+                      var encuentaINi=false
+                      c.registroEstructuraCursoEncuesta.forEach((e:any) => {
+                        if(e.nombreEncuesta=='Encuesta Inicial'){
+                          encuentaINi=true
+                          if(e.encuestaEnviada==true){
+                            ss.habilitado=true;
+                          }
                         }
+                      });
+                      if(encuentaINi==false){
+                        ss.habilitado=true;
                       }
-                    });
-
-                    if (c.registroEstructuraCursoEncuesta.length == 0) {
-                      ss.habilitado = true;
                     }
+                    // c.registroEstructuraCursoEncuesta.forEach((e: any) => {
+                    //   if (e.nombreEncuesta == 'Encuesta Inicial') {
+                    //     if (e.encuestaEnviada == true) {
+                    //       ss.habilitado = true;
+                    //     }
+                    //   }
+                    // });
+
+                    // if (c.registroEstructuraCursoEncuesta.length == 0) {
+                    //   ss.habilitado = true;
+                    // }
                   } else {
                     var lastses =
                       this.estructuraCapitulo.registroEstructuraCursoCapitulo[
@@ -670,16 +686,22 @@ export class SesionesComponent implements OnInit,OnDestroy,AfterViewInit {
             }
             if (ses == 0) {
               if (cap == 0) {
-                c.registroEstructuraCursoEncuesta.forEach((e: any) => {
-                  if (e.nombreEncuesta == 'Encuesta Inicial') {
-                    if (e.encuestaEnviada == true) {
-                      s.habilitado = true;
-                    }
-                  }
-                });
 
-                if (c.registroEstructuraCursoEncuesta.length == 0) {
-                  s.habilitado = true;
+                if(c.registroEstructuraCursoEncuesta.length==0){
+                  s.habilitado=true;
+                }else{
+                  var encuentaINi=false
+                  c.registroEstructuraCursoEncuesta.forEach((e:any) => {
+                    if(e.nombreEncuesta=='Encuesta Inicial'){
+                      encuentaINi=true
+                      if(e.encuestaEnviada==true){
+                        s.habilitado=true;
+                      }
+                    }
+                  });
+                  if(encuentaINi==false){
+                    s.habilitado=true;
+                  }
                 }
               } else {
                 var latcap =
