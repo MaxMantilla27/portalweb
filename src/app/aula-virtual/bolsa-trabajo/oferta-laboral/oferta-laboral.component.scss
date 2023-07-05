@@ -43,3 +43,81 @@
     overflow-y: scroll;
     overflow-x: hidden;
 }
+
+
+.loading-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  .loading {
+    width: 50px;
+    height: 50px;
+    border: 5px solid #f3f3f3;
+    border-top: 5px solid #3498db;
+    border-radius: 50%;
+    animation: spin 2s linear infinite;
+  }
+  
+  @keyframes spin {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+
+/* Estilos para el contenedor de los chips */
+.mat-chip-listbox {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  
+  /* Estilos para cada opción de chip */
+  .mat-chip-option {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 32px;
+    padding: 0 12px;
+    font-size: 14px;
+    font-weight: 500;
+    border-radius: 16px;
+    cursor: pointer;
+    background-color: #e0e0e0;
+    color: rgba(0, 0, 0, 0.87);
+  }
+  
+  /* Estilos para la opción de chip seleccionada */
+  .mat-chip-option.mat-chip-selected {
+    background-color: #3f51b5;
+    color: #fff;
+  }
+  
+  /* Estilos para la opción de chip con color "accent" */
+  .mat-chip-option[color="accent"] {
+    background-color: #fbc02d;
+    color: rgba(0, 0, 0, 0.87);
+  }
+  
+  /* Estilos para la opción de chip con color "warn" */
+  .mat-chip-option[color="warn"] {
+    background-color: #f44336;
+    color: #fff;
+  }
+  
+  /* Estilos para la opción de chip deshabilitada */
+  .mat-chip-option[disabled] {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  .mat-form-field-infix{
+    padding-top: 5px !important;
+    padding-bottom: 8px !important;
+
+  }

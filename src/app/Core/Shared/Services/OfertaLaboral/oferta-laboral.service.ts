@@ -1,5 +1,5 @@
 import { isPlatformBrowser } from '@angular/common';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpRequest } from '@angular/common/http';
 import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { Route, Router } from '@angular/router';
 import { EMPTY, Observable, Subject, takeUntil } from 'rxjs';
@@ -43,6 +43,15 @@ export class OfertaLaboralService {
       return EMPTY;
     }
   }
+
+  public ObtenerDetalleConvocatorias(idConvocatoria:number):Observable<any>{
+    if(this.isBrowser){
+      return this.http.get<any>(this.urlBase+'/ObtenerDetalleConvocatorias/'+idConvocatoria);
+    }else{
+      return EMPTY;
+    }
+  }
+  
   public ValidarPostulacion(idConvocatoria:number):Observable<any>{
     if(this.isBrowser){
       return this.http.get<any>(this.urlBase+'/ValidarPostulacion/'+idConvocatoria);
@@ -50,4 +59,26 @@ export class OfertaLaboralService {
       return EMPTY;
     }
   }
+
+  public ObtenerCVAlumno():Observable<any>{
+    if(this.isBrowser){
+      return this.http.get<any>(this.urlBase+'/ObtenerCVAlumno');
+    }else{
+      return EMPTY;
+    }
+  }
+
+  public ActualizarCVAlumno(file:any):Observable<any>{
+    const formData: FormData = new FormData();
+    formData.append('fileCV', file);
+  
+    const req= new HttpRequest('POST', `${this.urlBase}/ActualizarCVAlumno`,formData, {
+      reportProgress: true,
+      responseType: 'json'
+    });
+    return this.http.request(req)
+  }
+
+  
+
 }

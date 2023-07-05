@@ -1,13 +1,20 @@
-
 <div class="container">
-    <div class="rowpaddAv breadcrumb" style="padding-top: 0px !important;padding-bottom: 0px !important;padding-left: 1px !important;">
-      <app-miga-pan [items]="migaPan"></app-miga-pan>
-    </div>
+  <div
+    class="rowpaddAv breadcrumb"
+    style="
+      padding-top: 0px !important;
+      padding-bottom: 0px !important;
+      padding-left: 1px !important;
+    "
+  >
+    <app-miga-pan [items]="migaPan"></app-miga-pan>
+  </div>
 </div>
 <div class="container">
-  <div class="row rowpaddAv" style="
-  padding-right: 0px !important;padding-top: 20px !important;
-">
+  <div
+    class="row rowpaddAv"
+    style="padding-right: 0px !important; padding-top: 20px !important"
+  >
     <div
       class="col-12 col-md-12 col-lg-12"
       style="position: relative; padding: 0px"
@@ -37,7 +44,7 @@
       <mat-tab-group class="tabVertical" [(selectedIndex)]="tabIndex">
         <mat-tab>
           <ng-template mat-tab-label>
-            <div  class="contentHeaderM">
+            <div class="contentHeaderM">
               <div
                 class="iconMat iconRecursos"
                 matTooltip="Ofertas laborales"
@@ -47,12 +54,15 @@
             </div>
           </ng-template>
           <div class="pad-resp">
-            <oferta-laboral (MisPostulaciones)="cambioIsButom($event)" (Actualizar)="ActualizarMisPostulaciones()"></oferta-laboral>
+            <oferta-laboral
+              (MisPostulaciones)="cambioIsButom($event)"
+              (Actualizar)="ActualizarMisPostulaciones()"
+            ></oferta-laboral>
           </div>
         </mat-tab>
         <mat-tab>
           <ng-template mat-tab-label>
-            <div  class="contentHeaderM">
+            <div class="contentHeaderM">
               <div
                 class="iconMat iconCalificaciones"
                 matTooltip="Mis Postulaciones"
@@ -65,9 +75,121 @@
             <mis-postulaciones></mis-postulaciones>
           </div>
         </mat-tab>
+        <mat-tab>
+          <div class="CPC-k-loading-panel" *ngIf="loaderGeneral">
+            <div class="CPC-k-loading-panel-mask"></div>
+            <div class="CPC-k-loading-panel-wrapper">
+              <mat-spinner></mat-spinner>
+            </div>
+          </div>
+          <ng-template mat-tab-label>
+            <div class="contentHeaderM">
+              <div
+                class="iconMat iconTramites"
+                matTooltip="Mi hoja de vida"
+                matTooltipPosition="after"
+              ></div>
+              <div *ngIf="!hide" class="titleMatr">Mi hoja de vida</div>
+            </div>
+          </ng-template>
+          <div class="pad-resp">
+            <div class="row">
+              <div class="col-md-5">
+                <h1>Mi Hoja de Vida</h1>
+              </div>
+              <div class="col-md-7">
+                <hr size="6px" color="black" class="linea" />
+              </div>
+            </div>
+            <br>
+            <div class="row">
+              <div style="font-size: 14px; font-weight: 600;padding-bottom: 2%;">
+                Elige el archivo a subir:
+              </div>
+              <br>
+              <ng-container>
+                <div class="col-12 col-md-8 col-lg-9 fieldProyecto">
+                  <div
+                    (click)="fileInput.click()"
+                    style="
+                      height: 38px;
+                      width: 100%;
+                      border: solid 1px #c2c2c2;
+                      border-radius: 5px;
+                      display: flex;
+                      align-items: center;
+                      padding: 0px 5px;
+                      cursor: pointer;
+                    "
+                  >
+                    <button
+                      style="
+                        border: solid 1px #767676;
+                        margin-right: 5px;
+                        white-space: nowrap;
+                      "
+                    >
+                      Seleccionar archivo
+                    </button>
+                    <div
+                      style="
+                        white-space: nowrap;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                        display: -webkit-box;
+                        -webkit-line-clamp: 3;
+                        -webkit-box-orient: vertical;
+                      "
+                    >
+                      {{ nombrefile }}
+                    </div>
+                  </div>
+                  <input
+                    #fileInput
+                    type="file"
+                    id="file"
+                    (change)="getFileDetails($event)"
+                    accept="application/pdf"
+                    style="
+                      width: 100%;
+                      border: solid 1px #c2c2c2;
+                      padding: 7px;
+                      border-radius: 5px;
+                      display: none;
+                    "
+                  />
+                  <div *ngIf="!filestatus && fileErrorMsg != ''" style="color: rgb(180, 68, 68);">
+                    {{ fileErrorMsg }}
+                  </div>
+                </div>
+                <div
+                  class="col-12 col-md-4 col-lg-3"
+                  style="
+                    display: flex;
+                    justify-content: flex-stard;
+                  "
+                >
+                  <app-default-button
+                    [confs]="{ color: 'primary', titulo: 'Enviar' }"
+                    [style]="'padding:0px 30px;margin:0px '"
+                    (ButtoclClick)=" EnviarFile()
+                    "
+                  ></app-default-button>
+                  <ng-container *ngIf="JsonCV.urlArchivo!=null && JsonCV.urlArchivo!=''">
+                    <div style=" padding-left: 15px;padding-top: 4px;">
+                      <a  class="itemMaterial"
+                      target="_blank" 
+                      [href]="JsonCV.urlArchivo">
+                      <img style="width: 15px;height: auto;margin-right: 15px;" src="../../../../assets/icons/pdf-31.svg" alt=""> Ver mi CV</a>
+                    </div>
+                  </ng-container>
+                 
+                </div>
+              </ng-container>
+            </div>
+          </div>
+        </mat-tab>
       </mat-tab-group>
     </div>
   </div>
 </div>
-
-

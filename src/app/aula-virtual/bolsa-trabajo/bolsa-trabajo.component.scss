@@ -58,6 +58,9 @@
   .iconCalificaciones {
     background-image: url("../../../assets/icons/calificaciones-08.svg");
   }
+  .iconTramites {
+    background-image: url("../../../assets/icons/tramites-14.svg");
+  }
 }
 .tabVertical
   mat-tab-header
@@ -85,7 +88,9 @@
   .iconCalificaciones {
     background-image: url("../../../assets/icons/calificaciones-azul-07.svg") !important;
   }
-
+  .iconTramites {
+    background-image: url("../../../assets/icons/tramites-14.svg");
+  }
 }
 .ActiveChil {
   color: #0684f3 !important;
@@ -102,6 +107,9 @@
 
   .iconCalificaciones {
     background-image: url("../../../assets/icons/calificaciones-azul-07.svg") !important;
+  }
+  .iconTramites {
+    background-image: url("../../../assets/icons/tramites-14.svg");
   }
 }
 .subContent {
@@ -195,4 +203,41 @@
 }
 .contentModuloSesiones mat-progress-bar .mat-progress-bar-fill::after {
   background-color: #00c356;
+}
+
+/* Loader Panel Styles */
+.CPC-k-loading-panel {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 100;
+}
+.CPC-k-loading-panel-mask {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: rgba(255,255,255, 0.4);
+  opacity: 0.8;
+}
+.CPC-k-loading-panel-wrapper {
+  position: relative;
+  z-index: 2;
+}
+
+.CPC-k-loading-panel-text {
+  margin-top: 20px;
+  text-align: center;
+  color: #000000;
+}
+
+.itemMaterial:hover{
+  color: #0d6efd;
+  text-decoration: underline;
 }

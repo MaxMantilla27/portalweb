@@ -29,11 +29,12 @@ export class MisPostulacionesComponent implements OnInit,OnDestroy {
     
   }
 
+
   ngOnDestroy(): void {
     this.signal$.next(true);
     this.signal$.complete();
   }
-
+  buscando=false
   public listaConvocatorias:any[]=[]
   public isSelect:boolean=false
 
@@ -42,8 +43,21 @@ export class MisPostulacionesComponent implements OnInit,OnDestroy {
   }
 
   selectPanel(data:any) {
+    this.buscando=true
     if(data.isSelect==true)data.isSelect=false
-    else data.isSelect=true
+    else {
+      data.isSelect=true
+      this._OfertaLaboralService.ObtenerDetalleConvocatorias(data.id).pipe(takeUntil(this.signal$)).subscribe({
+        next:x=>{
+          data.stringIdiomas =x.idiomas.length>0? x.idiomas.map((e:any) => e.nombre).join(", "):""
+          data.stringNivelEstudio =x.nivelEstudio.length>0? x.nivelEstudio.map((e:any) => e.nombre).join(", "):""
+          data.stringExperiencia =x.experiencia.length>0? x.experiencia.map((e:any) => e.nombre).join(", "):""
+          
+          this.buscando=false
+        }
+      })
+      
+    }
     this.listaConvocatorias.forEach((e:any)=>{
       if(e.id!=data.id) e.isSelect=false
     })
@@ -63,8 +77,8 @@ export class MisPostulacionesComponent implements OnInit,OnDestroy {
             let data = this.listaConvocatorias.find((e:any)=>e.id==idConvotaria)
             if(data!=null){
               this.listaConvocatorias = this.listaConvocatorias.filter((e:any)=>e.id!=idConvotaria)
-              this.listaConvocatorias.unshift(data)
-              this.selectPanel(data)
+              this.ObtenerDetalleConvocatorias(data)
+             
             }
           }
         }
@@ -76,4 +90,15 @@ export class MisPostulacionesComponent implements OnInit,OnDestroy {
     this.ObtenerPostulacionesAlumno(true,idConvotaria)
   }
 
+  ObtenerDetalleConvocatorias(data:any){
+    this._OfertaLaboralService.ObtenerDetalleConvocatorias(data.id).pipe(takeUntil(this.signal$)).subscribe({
+      next:x=>{
+        data.stringIdiomas =x.idiomas.length>0? x.idiomas.map((e:any) => e.nombre).join(", "):""
+        data.stringNivelEstudio =x.nivelEstudio.length>0? x.nivelEstudio.map((e:any) => e.nombre).join(", "):""
+        data.stringExperiencia =x.experiencia.length>0? x.experiencia.map((e:any) => e.nombre).join(", "):""
+        this.listaConvocatorias.unshift(data)
+        this.selectPanel(data)
+      }
+    })
+  }
 }

@@ -47,29 +47,60 @@
                   </div>
                 </div>
                 <div class="panel-content" [ngClass]="data.isSelect==true?'abrir':'cerrar'">
-                    <div class="row" style="padding-left: 10px;padding-top:20px;text-align: justify;">
-                        <div class="row" style="padding-bottom:20px;">
-                            <p ><strong>{{data.nombre}}</strong></p>
+                    <ng-container *ngIf="buscando; else content">
+                        <div style="height: 70px">
+                            <div class="loading-container">
+                                <div class="spinner"></div>
+                              </div>
                         </div>
-                        <div class="row">
-                            <div class="col-md-12" style="justify-content: space-between;display: flex;">
-                                <div style="padding-left: 5%;">
-                                    <ng-container *ngIf="data.tipoJornada">
-                                        <p class="borde-p"><strong style="padding:8px">Tiempo {{data.tipoJornada}}</strong></p>
-                                    </ng-container>
-                                </div>
-                                <ng-container *ngIf="data.montoRemBruta!=null && data.visualizarRem!=null && data.visualizarRem==true " >
-                                    <p class="borde-p"><strong style="padding:8px">{{data.simboloRemMoneda}} {{data.montoRemBruta |number : '1.0-2' }}</strong></p>
-                                </ng-container>
-                                <p style="padding-top:5px"><strong >Fecha fin: </strong>{{data.fechaFin|date: 'dd/MM/yy'}}</p>
-                                
-                                <p style="padding-top:5px;padding-right: 5%;"><strong >Etapa de tu postulación: </strong> {{data.estadoPostulacion}}</p>
+                    </ng-container>
+                    <ng-template #content>
+                        <div class="row" style="padding-left: 10px;padding-top:20px;text-align: justify;">
+                            <div class="row" style="padding-bottom:20px;">
+                                <p ><strong>{{data.nombre}}</strong></p>
                             </div>
+                            <div class="row">
+                                <div class="col-md-12" style="justify-content: space-between;display: flex;">
+                                    <div style="padding-left: 5%;">
+                                        <ng-container *ngIf="data.tipoJornada">
+                                            <p class="borde-p"><strong style="padding:8px">Tiempo {{data.tipoJornada}}</strong></p>
+                                        </ng-container>
+                                    </div>
+                                    <ng-container *ngIf="data.montoRemBruta!=null && data.visualizarRem!=null && data.visualizarRem==true " >
+                                        <p class="borde-p"><strong style="padding:8px">{{data.simboloRemMoneda}} {{data.montoRemBruta |number : '1.0-2' }}</strong></p>
+                                    </ng-container>
+                                    <p style="padding-top:5px"><strong >Fecha fin: </strong>{{data.fechaFin|date: 'dd/MM/yy'}}</p>
+                                    
+                                    <p style="padding-top:5px;padding-right: 5%;"><strong >Etapa de tu postulación: </strong> {{data.estadoPostulacion}}</p>
+                                </div>
+                            </div>
+                            <div class="row" style="padding-bottom: 30px;">
+                                <div [innerHtml]="data.cuerpoConvocatoria"></div>
+                            </div>
+                            <ng-container *ngIf="data.stringIdiomas!='' || data.stringNivelEstudio!='' || data.stringExperiencia!=''">
+                                <div style="word-wrap: break-word;text-align: justify;">
+                                    <p><strong>Requerimientos:</strong></p>
+                                    <p>
+                                        <ng-container *ngIf="data.stringIdiomas!=''">Idioma: {{data.stringIdiomas}} <br> </ng-container>
+                                        <ng-container *ngIf="data.stringNivelEstudio!=''">Nivel de Estudio: {{data.stringNivelEstudio}} <br></ng-container>
+                                        <ng-container *ngIf="data.stringExperiencia!=''">Experiencia: {{data.stringExperiencia}} </ng-container>
+                                    </p>
+        
+                                </div>
+                            </ng-container>
+                            <ng-container *ngIf="data.aplicaBono==true || data.aplicaComision==true ">
+                                <div style="word-wrap: break-word;text-align: justify;">
+                                    <p><strong>Bonos y Comisiones:</strong></p>
+                                    <p>
+                                        <ng-container *ngIf="data.aplicaBono==true">Bonos: {{data.montoDesdeBono}} - {{data.montoHastaBono}} {{data.bonoMoneda}}<br> </ng-container>
+                                        <ng-container *ngIf="data.aplicaComision==true">Comsiones: {{data.montoDesdeComision}} - {{data.montoHastaComision}} {{data.comisionMoneda}}</ng-container>
+                                    </p>
+                                </div>
+                            </ng-container>
                         </div>
-                        <div class="row" style="padding-bottom: 30px;">
-                            <div [innerHtml]="data.cuerpoConvocatoria"></div>
-                        </div>
-                    </div>
+                    </ng-template>
+                    
+                    
                 </div>
             </div>
         </ng-container>
