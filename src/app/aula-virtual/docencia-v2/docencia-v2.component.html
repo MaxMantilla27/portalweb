@@ -4,7 +4,7 @@
   </div>
 </div>
 <div style="border-top:solid 3px #f4f4f4 ;"></div>
-<div class="container">
+<div class="container" *ngIf="DataProveedor!=undefined">
   <div class="row rowpaddAv">
     <div class="col-12 col-md-12 col-lg-12" style="position: relative;padding: 0px;">
       <div style="width: 100%;display: flex;justify-content: flex-end;padding-right: 30px;">
@@ -26,17 +26,20 @@
       </div>
 
       <mat-tab-group class="tabVertical" [(selectedIndex)]="tabIndex" (selectedTabChange)="tabChanged($event)">
-        <mat-tab>
+        <mat-tab *ngIf="DataProveedor.aplicaSesionOnlineWebinar">
           <ng-template mat-tab-label>
             <div #sesiones class="contentHeaderM" >
-              <div class="iconMat iconSesiones" matTooltip="Sesiones" matTooltipPosition="after"></div>
-              <div *ngIf="!hide" class="titleMatr">Acceso a clases</div>
+              <!-- <div class="iconMat iconSesiones" matTooltip="Sesiones" matTooltipPosition="after"></div> -->
+              <i class="material-icons">web</i>
+              <div class="titleMatr" *ngIf="!hide">Sesiones Online/Webinar</div>
             </div>
           </ng-template>
           <div class="pad-resp">
-            1
+            <app-docencia-acceso-clases></app-docencia-acceso-clases>
           </div>
         </mat-tab>
+
+
         <mat-tab>
           <ng-template mat-tab-label>
             <div #sesiones class="contentHeaderM" >

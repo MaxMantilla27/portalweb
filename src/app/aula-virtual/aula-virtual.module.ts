@@ -112,7 +112,7 @@ import { ConfirmCertFisicoComponent } from './curso/curso-certificado-fisico/con
 import { PerfilAlumnosComponent } from './docencia/perfil-alumnos/perfil-alumnos.component';
 import { DocenciaGestionAsistenciaComponent } from './docencia/docencia-gestion-asistencia/docencia-gestion-asistencia.component';
 import { RegistroAsistenciaComponent } from './docencia/registro-asistencia/registro-asistencia.component';
-import { DocenciaAccesoClasesComponent } from './docencia/docencia-acceso-clases/docencia-acceso-clases.component';
+import { DocenciaAccesoClasesComponent } from './docencia-v2/docencia-acceso-clases/docencia-acceso-clases.component';
 
 
 @NgModule({
