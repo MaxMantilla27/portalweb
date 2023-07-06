@@ -15,11 +15,22 @@ export class BolsaTrabajoGuard implements CanActivate {
 
   }
   canActivate( route: ActivatedRouteSnapshot,state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    // let isCarrera =JSON.parse(this._SessionStorageService.SessionGetValue('TipoCarrera')) 
-    // if(typeof isCarrera != "boolean" || isCarrera==false ){
-    //   this.router.navigate(['/AulaVirtual/Docencia']);
-    //   return false;
-    // }
-    return true;
+    let isCarrera = this._SessionStorageService.SessionGetValue('TipoCarrera');
+
+    if (isCarrera && isCarrera.length > 1) {
+      let carrera = JSON.parse(isCarrera);
+      if (typeof carrera === "boolean") {
+        if (carrera) {
+          return true;
+        } else {
+          this.router.navigate(['/AulaVirtual/Docencia']);
+          return false;
+        }
+      } else {
+        return false;
+      }
+    }
+    
+    return false;
   }
 }
