@@ -82,5 +82,12 @@ export class DatosPerfilService {
       return EMPTY;
     }
   }
+  public ObtenerSesionesOnlineWebinarDocente():Observable<any>{
+    if(this.isBrowser){
+      return this.http.get<any>(this.urlBase+'/ObtenerSesionesOnlineWebinarDocente');
+    }else{
+      return EMPTY;
+    }
+  }
 
 }

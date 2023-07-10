@@ -1,27 +1,73 @@
-<mat-card>
-    <mat-card-header>
-      <mat-card-title>Enfoque Ágil en Dirección de Proyectos</mat-card-title>
-      <mat-card-subtitle>
-        <p style="background-color: forestgreen; color:white">Hoy</p>
-        7:00 pm a 8:00 pm</mat-card-subtitle>
-    </mat-card-header>
-    <mat-card-actions>
-      <button mat-button>Asistencia ></button>
-      <button mat-button>Agregar actividades ></button>
-      <button mat-button>notas ></button>
-    </mat-card-actions>
-</mat-card>
+<ng-container *ngIf="Actual!=undefined">
+  <ng-container *ngFor="let item of Actual">
+    <div class="CardOnlines row">
+      <div class="col-12 col-md-8 col-lg-9">
+        <div class="tipoPrograma">
+          <ng-container *ngIf="item.tipo=='Webinar'">
+            Webinar >
+          </ng-container>
+          <ng-container *ngIf="item.tipo!='Webinar'">
+            Curso >
+          </ng-container>
+        </div>
+        <div class="programaOnlines">{{item.cursoNombre}}</div>
+        <div class="dataOnlineFechas">
+          <div class="tagFechaOnlines">Hoy</div>
+          <div class="sesionesOnline">Sesión {{item.orden+' de '+ item.maximo}}</div>
+          <div class="fechasOnline">{{item.fechaHoraInicio | date:'hh:mm a'}} a {{item.fechaHoraFinal | date:'hh:mm a'}}
+          </div>
+        </div>
+        <div class="alertaProgramas">*Podrá ingresar 15 minutos antes del inicio de clases</div>
+      </div>
+      <div class="col-12 col-md-4 col-lg-3" style="text-align: -webkit-right;">
+        <ng-container *ngIf="item.IsValid!=true">
+          <app-default-button [disabled]="true" [confs]="{color:'verde',titulo:'Ingresar a Webex'}" [icon]="''"
+            [style]="'margin: 0px;    border-radius: 5px;color: white;    background: #9d9d9c;width: 100%; '"></app-default-button>
+        </ng-container>
+        <ng-container *ngIf="item.IsValid==true">
+          <a [href]="item.urlWebex" style="color: transparent;text-decoration: none" target="_blank">
+            <app-default-button [confs]="{color:'verde',titulo:'Ingresar a Webex'}" [icon]="''"
+              [style]="'margin: 0px;    border-radius: 5px;color: white;background: #70ad47;width: 100%; '"></app-default-button>
+          </a>
+        </ng-container>
+        <ng-container *ngIf="item.tipo!='Webinar'">
+          <app-default-button [confs]="{color:'primary',titulo:'Administrar Sesión'}" [icon]="''"
+            [style]="'margin: 0px;    border-radius: 5px;color: white;background:rgb(237 125 49);width: 100%; margin-top: 14px;'"></app-default-button>
+        </ng-container>
 
-<mat-card>
-    <mat-card-header>
-      <mat-card-title>Webinar: Enfoque Ágil en Dirección de Proyectos</mat-card-title>
-      <mat-card-subtitle>
-        <p style="background-color: forestgreen; color:white">Hoy</p>
-        7:00 pm a 8:00 pm</mat-card-subtitle>
-    </mat-card-header>
-    <mat-card-actions>
-      <button mat-button>Asistencia ></button>
-      <button mat-button>Agregar actividades ></button>
-      <button mat-button>notas ></button>
-    </mat-card-actions>
-</mat-card>
+      </div>
+    </div>
+  </ng-container>
+</ng-container>
+<!-- <ng-container *ngIf="proximo!=undefined">
+  <div class="CardOnlines row">
+    <div class="col-12 col-md-8 col-lg-9">
+      <div class="programaOnlines" *ngIf="escurso==false">{{proximo.nombrePrograma}}</div>
+      <div class="dataOnlineFechas">
+        <div class="tagFechaOnlines">Próxima sesión</div>
+        <div class="fechasOnline">{{proximo.fechaHoraInicio | date:'dd/MM/yyyy'}} de {{proximo.fechaHoraInicio | date:'hh:mm a'}} a {{proximo.fechaHoraFinal | date:'hh:mm a'}}
+        </div>
+      </div>
+    </div>
+    <div class="col-12 col-md-4 col-lg-3" style="text-align: -webkit-right;">
+      <app-default-button [disabled]="true" [confs]="{color:'primary',titulo:'Ingresar >'}" [icon]="''"
+        [style]="'margin: 0px;    border-radius: 18px;color: white;    background: #9d9d9c;'"></app-default-button>
+    </div>
+  </div>
+</ng-container> -->
+
+
+<ng-container *ngIf="tableData!=undefined && tableData.length>0">
+  <div class="proximasSesionesOnline" (click)="OpenProx=!OpenProx">
+    <div class="textoProximas">Próximas sesiones</div>
+    <div class="iconProximas">
+      <ng-container *ngIf="OpenProx==false"><i class="material-icons">keyboard_arrow_down</i></ng-container>
+      <ng-container *ngIf="OpenProx==true"><i class="material-icons">keyboard_arrow_up</i></ng-container>
+    </div>
+  </div>
+  <ng-container *ngIf="OpenProx==true">
+
+    <app-table-v2 *ngIf="tableData!=undefined" [tableData]="tableData" [columnHeader]="columnHeader"
+      [tipoContenido]="TipoContenido" [StyleContent]="'    font-size: 12px;padding: 10px;'"></app-table-v2>
+  </ng-container>
+</ng-container>
