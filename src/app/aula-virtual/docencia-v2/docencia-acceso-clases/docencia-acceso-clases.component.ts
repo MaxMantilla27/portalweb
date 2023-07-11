@@ -46,10 +46,10 @@ export class DocenciaAccesoClasesComponent implements OnInit,OnChanges,OnDestroy
   ngOnChanges(changes: SimpleChanges): void {
     console.log(this.IdProveedor)
     if(this.IdProveedor>0){
-      this.ObtenerSesionesOnlineWebinarPorProveedor()
+      this.ObtenerSesionesOnlineWebinarDocente()
     }
   }
-  ObtenerSesionesOnlineWebinarPorProveedor(){
+  ObtenerSesionesOnlineWebinarDocente(){
     this._DatosPerfilService.ObtenerSesionesOnlineWebinarDocente().pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
         console.log(x)
