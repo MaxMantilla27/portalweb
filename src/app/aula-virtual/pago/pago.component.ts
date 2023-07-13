@@ -72,17 +72,21 @@ export class PagoComponent implements OnInit,OnDestroy {
   public idAlumno:any=0
 
   ngOnInit(): void {
+    let i=0
     this._HelperService.recibirCombosPerfil.pipe(takeUntil(this.signal$)).subscribe((x) => {
       this.textoBienvenido = x.datosAlumno.nombres+
       ', aquí podrás realizar los pagos de tus cronogramas de cuotas';
       this.email =x.datosAlumno.email
       this._ActivatedRoute.params.pipe(takeUntil(this.signal$)).subscribe({
         next: (param) => {
-          this.idMatricula = parseInt(param['IdMatricula']);
-          this.idPais = x.datosAlumno.idPais
-          this.VerificarEstadoAfiliacion()
-          this.ObtenerPasarela()
-          this.ObtenerCronogramaPagoMatricula()
+          if(i==0){
+            this.idMatricula = parseInt(param['IdMatricula']);
+            this.idPais = x.datosAlumno.idPais
+            this.VerificarEstadoAfiliacion()
+            this.ObtenerPasarela()
+            this.ObtenerCronogramaPagoMatricula()
+            i++
+          }
         },
       });
     })
