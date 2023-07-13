@@ -40,7 +40,7 @@ export class AlumnoMatButtonComponent implements OnInit,OnChanges {
   }
   ngOnChanges(changes: SimpleChanges): void {
     this.buttons=[];
-    let isCarrera =JSON.parse(this._SessionStorageService.SessionGetValue('TipoCarrera')?this._SessionStorageService.SessionGetValue('TipoCarrera'):"false") 
+    let isCarrera =this._SessionStorageService.SessionGetValue('TipoCarrera')
     console.log(isCarrera)
     if(this.val!=undefined){
       if(this.val.IdProveedor==0){
@@ -74,7 +74,7 @@ export class AlumnoMatButtonComponent implements OnInit,OnChanges {
           Icon: 'badge',
           value: '../../../../../../assets/icons/categorias.svg',
         });
-        if(isCarrera==true){
+        if(isCarrera=="true"){
           this.buttons.push({
             Nombre: 'Bolsa de Trabajo',
             Url: '/AulaVirtual/BolsaTrabajo',
@@ -115,7 +115,7 @@ export class AlumnoMatButtonComponent implements OnInit,OnChanges {
             Icon: 'badge',
             value: '../../../../../../assets/icons/categorias.svg',
           });
-          if(isCarrera==true){
+          if(isCarrera=="true"){
             this.buttons.push({
               Nombre: 'Bolsa de Trabajo',
               Url: '/AulaVirtual/BolsaTrabajo',
