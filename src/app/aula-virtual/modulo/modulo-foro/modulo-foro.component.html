@@ -44,14 +44,14 @@
       <div class="foro" *ngIf="(pagina-1)*4<=i && (pagina)*4>i">
 
         <div style="display: flex;align-items: center;justify-content: flex-start;">
-          <img [src]="item.urlAvatar" alt="" style="width: 40px; height: 40px;    margin-right: 10px;">
+          <img [src]="item.urlAvatar" alt="{{item.urlAvatar}}" style="width: 40px; height: 40px;    margin-right: 10px;">
           <div>
             <div class="titleForo" (click)="ContenidoForo=!ContenidoForo && IdForo=item.id" >{{item.titulo}}></div>
             <div class="subTitleForo">{{item.nombres}}</div>
           </div>
         </div>
         <div style="display: flex;justify-content: end;align-items: center;    min-width: 40px;">
-          <img src="../../../../assets/icons/respuestas-foro-28.svg" alt="" style="width: 20px; height: 20px;    margin-right: 10px;">
+          <img src="../../../../assets/icons/respuestas-foro-28.svg" alt="Respuesta Foro" style="width: 20px; height: 20px;    margin-right: 10px;">
           <div class="NRespuestas">{{item.respuestas}}</div>
         </div>
       </div>

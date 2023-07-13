@@ -1,6 +1,6 @@
 <div class="row" style="display: flex;">
   <div class="TitleModal col-11">
-    <img src="../../../../../assets/icons/foro-naranja.svg" alt="">
+    <img src="../../../../../assets/icons/foro-naranja.svg" alt="Foro Naranja">
     {{data.titulo}}
   </div>
   <div class="col-1" style="text-align: end;font-weight: bold;cursor: pointer;" (click)="dialogRef.close()">
@@ -20,7 +20,7 @@
   </ng-container>
   <ng-template #existe>
     <div class="ContentForoModal row" >
-      <img  class="col-12 col-md-6 col-lg-3" *ngIf="imgForo!=undefined" [src]="imgForo" alt="">
+      <img  class="col-12 col-md-6 col-lg-3" *ngIf="imgForo!=undefined" [src]="imgForo" alt="Foro">
       <div class="col-12 col-md-6 col-lg-9 contenidoInto">
         <div class="row" style="font-size: 12px;">
           <div class="col-12 col-md-4 col-lg-4"><strong style="    margin-right: 10px;">Fecha:</strong>{{pregunta[0].fecha | date:'yyyy-MM-dd'}}</div>
@@ -63,7 +63,7 @@
   <div *ngFor="let item of respuestas" style="display: flex;
   justify-content: flex-start;
   align-items: center;margin-top: 20px;">
-    <img [src]="_AvatarService.GetUrlImagenAvatar(item.avatar)" alt="" style="    width: 50px;
+    <img [src]="_AvatarService.GetUrlImagenAvatar(item.avatar)" alt="{{item.avatar}}" style="    width: 50px;
     margin-right: 20px;">
     <div style="width: 100%;">
       <div style="    color: #f8893f;

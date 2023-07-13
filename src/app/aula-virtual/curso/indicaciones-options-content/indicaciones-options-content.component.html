@@ -2,7 +2,7 @@
 <div style="    margin: 10px 0px;font-size: 19px;">Indicaciones</div>
 <div class="tipoIndicacionTitle">
 
-  <img class="ImgIndicacionesContent" [src]="'../../../../assets/icons/'+imgUrl" alt="" *ngIf="imgUrl!=''">
+  <img class="ImgIndicacionesContent" [src]="'../../../../assets/icons/'+imgUrl" alt="{{imgUrl}}" *ngIf="imgUrl!=''">
   <div>{{title}}</div>
 </div>
 <div *ngIf="videoUrl!=''">

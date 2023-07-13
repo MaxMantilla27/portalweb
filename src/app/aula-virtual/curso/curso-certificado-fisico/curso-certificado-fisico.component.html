@@ -197,12 +197,12 @@
               <div style="display: flex">
                 <div class="cardEstadoEnvioCertFisico" [ngClass]="{'activeCard':datosCertificado.datosCourierEnvio.estadoCourierInt==1}">
                   <div>En ruta</div>
-                  <img *ngIf="datosCertificado.datosCourierEnvio.estadoCourierInt==1" src="../../../../assets/icons/en-ruta-42.svg" alt="">
-                  <img *ngIf="datosCertificado.datosCourierEnvio.estadoCourierInt!=1" src="../../../../assets/icons/camion-gris-42.svg" alt="">
+                  <img *ngIf="datosCertificado.datosCourierEnvio.estadoCourierInt==1" src="../../../../assets/icons/en-ruta-42.svg" alt="En Ruta">
+                  <img *ngIf="datosCertificado.datosCourierEnvio.estadoCourierInt!=1" src="../../../../assets/icons/camion-gris-42.svg" alt="Camión Gris">
                 </div>
                 <div class="cardEstadoEnvioCertFisico" [ngClass]="{'activeCard':datosCertificado.datosCourierEnvio.estadoCourierInt==2}">
                   <div>Entregado</div>
-                  <img *ngIf="datosCertificado.datosCourierEnvio.estadoCourierInt==2" src="../../../../assets/icons/positivo-hecho-20.svg" alt="">
+                  <img *ngIf="datosCertificado.datosCourierEnvio.estadoCourierInt==2" src="../../../../assets/icons/positivo-hecho-20.svg" alt="Realizado">
                 </div>
               </div>
             </div>

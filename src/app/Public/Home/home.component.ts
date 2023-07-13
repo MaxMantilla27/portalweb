@@ -9,6 +9,8 @@ import { Router } from '@angular/router';
 import { SeoService } from 'src/app/Core/Shared/Services/seo.service';
 import {Title} from '@angular/platform-browser';
 import { Subject, takeUntil } from 'rxjs';
+import { MatDialog } from '@angular/material/dialog';
+import { NotificacionBoliviaComponent } from './notificacion-bolivia/notificacion-bolivia.component';
 declare const fbq:any;
 
 @Component({
@@ -32,7 +34,8 @@ export class HomeComponent implements OnInit,OnDestroy {
     private _SessionStorageService:SessionStorageService,
      @Inject(PLATFORM_ID) platformId: Object,
      private _SeoService:SeoService,
-    private title:Title
+    private title:Title,
+    public dialog: MatDialog,
   ) {
 
     this.isBrowser = isPlatformBrowser(platformId);
@@ -43,7 +46,12 @@ export class HomeComponent implements OnInit,OnDestroy {
   }
   public innerWidth: any;
   public seccionStep=4;
+  public IsoPais=''
   ngOnInit(): void {
+    this.IsoPais = this._SessionStorageService.SessionGetValue('ISO_PAIS');
+    if(this.IsoPais=='BO'){
+      this.OpenNotificacionBolivia()
+    }
     this._SessionStorageService.SessionSetValueCokies('prueba','123',1)
     let t:string='BSG Institute'
     this.title.setTitle(t);
@@ -56,6 +64,17 @@ export class HomeComponent implements OnInit,OnDestroy {
       if(this.innerWidth<992)this.seccionStep=2;
       if(this.innerWidth<768)this.seccionStep=1;
     }
+    this._HelperService.recibirChangePais().pipe(takeUntil(this.signal$)).subscribe({
+      next:x=>{
+        console.log(x);
+        if(this.IsoPais.toUpperCase()!='BO'){
+          if(x=='BO'){
+            this.OpenNotificacionBolivia()
+          }
+        }
+        this.IsoPais=x
+      }
+    })
   }
   BuscarProgramas(esButton:boolean){
     var obj:any
@@ -72,6 +91,11 @@ export class HomeComponent implements OnInit,OnDestroy {
   EventoInteraccion(){
     this._HelperService.enviarMsjAcciones({Tag:'Input',Accion:'click',Tipo:'text',Nombre:'¿Qué te gustaría aprender?',valor:this.busqueda})
   }
-
+  OpenNotificacionBolivia(){
+    const dialogRef = this.dialog.open(NotificacionBoliviaComponent, {
+      width: '1000px',
+      panelClass: 'custom-class-notificacion-Bolivia',
+    });
+  }
 }
 

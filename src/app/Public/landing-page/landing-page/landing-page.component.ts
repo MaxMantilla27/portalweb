@@ -26,6 +26,7 @@ import { RegionService } from 'src/app/Core/Shared/Services/Region/region.servic
 import { SessionStorageService } from 'src/app/Core/Shared/Services/session-storage.service';
 import { SnackBarServiceService } from 'src/app/Core/Shared/Services/SnackBarService/snack-bar-service.service';
 import { LandingPageInterceptorComponent } from './landing-page-interceptor/landing-page-interceptor/landing-page-interceptor.component';
+import { ChatEnLineaService } from 'src/app/Core/Shared/Services/ChatEnLinea/chat-en-linea.service';
 declare const fbq: any;
 declare const gtag: any;
 @Component({
@@ -48,6 +49,7 @@ export class LandingPageComponent implements OnInit, OnDestroy {
     private _HelperService: HelperService,
     private _SnackBarServiceService: SnackBarServiceService,
     private _SessionStorageService: SessionStorageService,
+    private _ChatEnLineaService:ChatEnLineaService,
 
     public dialogRef: MatDialogRef<LandingPageInterceptorComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -257,6 +259,7 @@ export class LandingPageComponent implements OnInit, OnDestroy {
         .pipe(takeUntil(this.signal$))
         .subscribe({
           next: (x) => {
+            this.ProcesarAsignacionAutomaticaNuevoPortal(x);
             this.datos.nombres = this.DatosLandingPageEnvio.Nombres;
             this.datos.apellidos = this.DatosLandingPageEnvio.Apellidos;
             this.datos.email = this.DatosLandingPageEnvio.Correo1;
@@ -374,6 +377,15 @@ export class LandingPageComponent implements OnInit, OnDestroy {
           this.form.enablefield('IdRegion');
         },
       });
+  }
+  ProcesarAsignacionAutomaticaNuevoPortal(data:any){
+    this._ChatEnLineaService.ProcesarAsignacionAutomaticaNuevoPortal(data.id).subscribe({
+      next:(x)=>{
+      },
+      complete: () => {
+        //this.statuscharge=false;
+      }
+    })
   }
   SelectChage(e: any) {
     if (e.Nombre == 'IdPais') {
