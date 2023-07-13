@@ -126,6 +126,7 @@ import { ScrollTopComponent } from './Containers/scroll-top/scroll-top.component
 import { FormularioRojoComponent } from './Containers/formulario-rojo/formulario-rojo.component';
 import { FacebookLoginComponent } from './Containers/facebook-login/facebook-login.component';
 import { SocialAuthService } from 'angularx-social-login';
+import { MatChipsModule } from '@angular/material/chips';
 
 @NgModule({
   imports: [
@@ -160,7 +161,8 @@ import { SocialAuthService } from 'angularx-social-login';
     MatDialogModule,
     MatBottomSheetModule,
     CKEditorModule,
-    TextFieldModule
+    TextFieldModule,
+    MatChipsModule
   ],
   declarations: [
     HeaderComponent,
@@ -306,6 +308,7 @@ import { SocialAuthService } from 'angularx-social-login';
     FormularioPopUpComponent,
     ScrollTopComponent,
     FacebookLoginComponent,
+    MatChipsModule,
   ],
   providers: [
     SessionStorageService,

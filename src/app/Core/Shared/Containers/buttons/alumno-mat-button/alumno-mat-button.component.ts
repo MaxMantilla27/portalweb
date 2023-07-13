@@ -40,7 +40,8 @@ export class AlumnoMatButtonComponent implements OnInit,OnChanges {
   }
   ngOnChanges(changes: SimpleChanges): void {
     this.buttons=[];
-    // let isCarrera =JSON.parse(this._SessionStorageService.SessionGetValue('TipoCarrera')) 
+    let isCarrera =this._SessionStorageService.SessionGetValue('TipoCarrera')
+    console.log(isCarrera)
     if(this.val!=undefined){
       if(this.val.IdProveedor==0){
         this.buttons.push({
@@ -73,20 +74,14 @@ export class AlumnoMatButtonComponent implements OnInit,OnChanges {
           Icon: 'badge',
           value: '../../../../../../assets/icons/categorias.svg',
         });
-        // this.buttons.push({
-        //     Nombre: 'Bolsa de Trabajo',
-        //     Url: '/AulaVirtual/BolsaTrabajo',
-        //     Icon: 'wallet_travel',
-        //     value: '',
-        // });
-        // if(isCarrera==true){
-        //   this.buttons.push({
-        //     Nombre: 'Bolsa de Trabajo',
-        //     Url: '/AulaVirtual/BolsaTrabajo',
-        //     Icon: 'wallet_travel',
-        //     value: '',
-        //   });
-        // }
+        if(isCarrera=="true"){
+          this.buttons.push({
+            Nombre: 'Bolsa de Trabajo',
+            Url: '/AulaVirtual/BolsaTrabajo',
+            Icon: 'wallet_travel',
+            value: '',
+          });
+        }
        
       }else{
         if(this.val.cursos>0){
@@ -120,14 +115,14 @@ export class AlumnoMatButtonComponent implements OnInit,OnChanges {
             Icon: 'badge',
             value: '../../../../../../assets/icons/categorias.svg',
           });
-          // if(isCarrera){
-          //   this.buttons.push({
-          //     Nombre: 'Bolsa de Trabajo',
-          //     Url: '/AulaVirtual/BolsaTrabajo',
-          //     Icon: 'wallet_travel',
-          //     value: '',
-          //   });
-          // }
+          if(isCarrera=="true"){
+            this.buttons.push({
+              Nombre: 'Bolsa de Trabajo',
+              Url: '/AulaVirtual/BolsaTrabajo',
+              Icon: 'wallet_travel',
+              value: '',
+            });
+          }
         }
         this.buttons.push({
           Nombre: 'Docencia',

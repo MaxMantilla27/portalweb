@@ -1,0 +1,173 @@
+<div  >
+    <div class="row">
+        <div class="col-md-5">
+            <h1>Ofertas Laborales</h1>
+        </div>
+        <div class="col-md-7">
+            <hr size="6px" color="black" class="linea"> 
+        </div>
+    </div>
+    <br>
+    <div class="row">
+        <mat-chip-list >
+            <mat-chip *ngIf="!selected[1]" (click)="selected[1] = true;cambioChipFiltro(1,true)">
+              Presencial
+            </mat-chip>
+            <mat-chip *ngIf="selected[1]" selected (click)="selected[1] = false;cambioChipFiltro(1,false)">
+                Presencial
+            </mat-chip>
+            <mat-chip *ngIf="!selected[2]" (click)="selected[2] = true;cambioChipFiltro(2,true)">
+                Remoto
+            </mat-chip>
+            <mat-chip *ngIf="selected[2]" selected (click)="selected[2] = false;cambioChipFiltro(2,false)">
+                Remoto
+            </mat-chip>
+            
+            <mat-chip *ngIf="!selected[3]" (click)="selected[3] = true;cambioChipFiltro(3,true)">
+                Presencial y Remoto
+            </mat-chip>
+            <mat-chip *ngIf="selected[3]" selected (click)="selected[3] = false;cambioChipFiltro(3,false)">
+                Presencial y Remoto
+            </mat-chip>
+            <mat-chip *ngIf="!selected[4]" (click)="selected[4] = true;cambioChipFiltro(4,true)">
+              Por horas
+            </mat-chip>
+            <mat-chip *ngIf="selected[4]" selected (click)="selected[4] = false;cambioChipFiltro(4,false)">
+                Por horas
+            </mat-chip>
+            <mat-chip *ngIf="!selected[5]" (click)="selected[5] = true;cambioChipFiltro(5,true)">
+                Parcial
+              </mat-chip>
+              <mat-chip *ngIf="selected[5]" selected (click)="selected[5] = false;cambioChipFiltro(5,false)">
+                Parcial
+            </mat-chip>
+            <mat-chip *ngIf="!selected[6]" (click)="selected[6] = true;cambioChipFiltro(6,true)">
+              Completo
+            </mat-chip>
+            <mat-chip *ngIf="selected[6]" selected (click)="selected[6] = false;cambioChipFiltro(6,false)">
+                Completo
+            </mat-chip>
+            <mat-chip *ngIf="!selected[7]" (click)="selected[7] = true;cambioChipFiltro(7,true)">
+                Bono
+              </mat-chip>
+              <mat-chip *ngIf="selected[7]" selected (click)="selected[7] = false;cambioChipFiltro(7,false)">
+                Bono
+            </mat-chip>
+            <mat-chip *ngIf="!selected[8]" (click)="selected[8] = true;cambioChipFiltro(8,true)">
+              Comisión
+            </mat-chip>
+            <mat-chip *ngIf="selected[8]" selected (click)="selected[8] = false;cambioChipFiltro(8,false)">
+                Comisión
+            </mat-chip>
+          </mat-chip-list>
+    </div>
+    <br>
+    <div class="row">
+        <mat-form-field appearance="outline" [floatLabel]="'always'" style="width: 75%;color:black !important">
+            <mat-label>Buscar por nombre de oferta laboral</mat-label>
+            <input type="text" [(ngModel)]="inputNombre" (input)="filtrarPorNombre()"  matInput />
+        </mat-form-field>
+    </div>
+    <div class="row" *ngIf="listaConvocatorias.length>0">
+        <div class="col-md-6">
+            <div class="borde">
+                <div class="row" style=" padding-left: 10px; padding-right: 11px;">
+                    <div class="col-md-12 borde-recto-buttom" style="border-bottom: 1px solid #b5b5b5;background: #033dab;color:whitesmoke">
+                        <p style="margin: 10px;"><strong>{{listaConvocatorias.length}}</strong> Ofertas laborales</p>
+                    </div>
+                </div>
+                <div class="contenedorTra" style="max-height: 600px !important;">
+                    <ng-container *ngFor="let item of listaConvocatorias">
+                        <div class="borde-recto-buttom-top" (click)="mostrarConvocatoria(item)" 
+                        [ngClass]="{'Select':item.isSelect==true}" style="background-color: whitesmoke;cursor: pointer;">
+                            <div style="padding: 20px;">
+                                <p><strong>{{item.nombre}}</strong></p>
+                                <ng-container *ngIf="item.informacionAdicional">
+                                    <div [innerHtml]="item.informacionAdicional" style="text-align: justify;"></div>
+                                </ng-container>
+                                <br>
+                                <div class="row">
+                                    <div class="col-md-6" style="justify-content: left;display: flex;justify-content: flex-start;">
+                                        <ng-container *ngIf="item.modalidadTrabajo!=null">
+                                         <p class="borde-p"><strong style="padding:8px 5px">{{item.modalidadTrabajo}}</strong></p>
+                                        </ng-container>
+                                    </div>
+                                    <div class="col-md-6" style="justify-content: right;display: flex;justify-content: flex-end;">
+                                        <p style="padding-top:5px"><strong >Fecha Fin: </strong>{{item.fechaFin|date: 'dd/MM/yy'}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </ng-container>
+                </div>
+            </div>
+            
+        </div>
+        <br>
+        <div class="col-md-6 borde" style="padding-right: 0px;padding-left: 0px;" >
+            <div style="height: 600px !important;max-height: 600px !important;" class="contenedorTra">
+                <div style="padding: 20px;position: relative;" *ngIf="dataTemp!=null">
+                    <ng-container *ngIf="buscando; else content">
+                        <div style="height: 500px">
+                            <div class="loading-container">
+                                <div class="loading"></div>
+                              </div>
+                        </div>
+                    </ng-container>
+                    <ng-template #content>
+                        <p><strong>{{dataTemp.nombre}}</strong></p>
+                        <div class="row">
+                            <div class="col-md-6" style="justify-content: left;display: flex;justify-content: flex-start;min-width: 267px;">
+                                <ng-container *ngIf="dataTemp.tipoJornada!=null">
+                                 <p class="borde-p"style="min-width: 167px !important;"><strong style="padding:8px">Tiempo {{dataTemp.tipoJornada}}</strong></p>
+                                </ng-container>
+                                <ng-container *ngIf="dataTemp.montoRemBruta!=null && dataTemp.visualizarRem!=null && dataTemp.visualizarRem==true " >
+                                    <div style="padding-left: 10px;">
+                                        <p class="borde-p" style="min-width: 100px !important;"><strong style="padding:8px">{{dataTemp.simboloRemMoneda}} {{dataTemp.montoRemBruta |number : '1.0-2' }}</strong></p>
+                                    </div>
+                                </ng-container>
+                            </div>
+                            <div class="col-md-6" style="justify-content: right;display: flex;justify-content: flex-end;">
+                                <p style="padding-top:5px"><strong >Cierre de Oferta: </strong>{{dataTemp.fechaFin|date: 'dd/MM/yy'}}</p>
+                            </div>
+                        </div>
+                        <div style="word-wrap: break-word;text-align: justify;">
+                            <div [innerHtml]="dataTemp.cuerpoConvocatoria"></div>
+                        </div>
+                        <ng-container *ngIf="dataTemp.stringIdiomas!='' || dataTemp.stringNivelEstudio!='' || dataTemp.stringExperiencia!=''">
+                            <div style="word-wrap: break-word;text-align: justify;">
+                                <p><strong>Requerimientos:</strong></p>
+                                <p>
+                                    <ng-container *ngIf="dataTemp.stringIdiomas!=''">Idioma: {{dataTemp.stringIdiomas}} <br> </ng-container>
+                                    <ng-container *ngIf="dataTemp.stringNivelEstudio!=''">Nivel de Estudio: {{dataTemp.stringNivelEstudio}} <br></ng-container>
+                                    <ng-container *ngIf="dataTemp.stringExperiencia!=''">Experiencia: {{dataTemp.stringExperiencia}} </ng-container>
+                                </p>
+    
+                            </div>
+                        </ng-container>
+                        <ng-container *ngIf="dataTemp.aplicaBono==true || dataTemp.aplicaComision==true ">
+                            <div style="word-wrap: break-word;text-align: justify;">
+                                <p><strong>Bonos y Comisiones:</strong></p>
+                                <p>
+                                    <ng-container *ngIf="dataTemp.aplicaBono==true">Bonos: {{dataTemp.montoDesdeBono}} - {{dataTemp.montoHastaBono}} {{dataTemp.bonoMoneda}}<br> </ng-container>
+                                    <ng-container *ngIf="dataTemp.aplicaComision==true">Comsiones: {{dataTemp.montoDesdeComision}} - {{dataTemp.montoHastaComision}} {{dataTemp.comisionMoneda}}</ng-container>
+                                </p>
+                            </div>
+                        </ng-container>
+                       
+                        <br>
+                        
+                        <div style="justify-content: center;display: flex;" *ngIf="dataTemp.isPostulado==false">
+                            <button mat-raised-button style="background-color: #fb9754;color:whitesmoke" (click)="postular()"><strong>Postularme</strong></button>
+                        </div>
+                        <div style="justify-content: center;display: flex;" *ngIf="dataTemp.isPostulado==true">
+                            <button mat-raised-button style="background-color: #fb9754;color:whitesmoke" (click)="redireccionarAMisPostulaciones()"><strong>Ver mis Postulaciones</strong></button>
+                        </div>
+                    </ng-template>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+    <br>
+</div>

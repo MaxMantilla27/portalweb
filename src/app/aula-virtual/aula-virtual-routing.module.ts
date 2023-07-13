@@ -48,7 +48,6 @@ import { BolsaTrabajoGuard } from './Guard/bolsa-trabajo.guard';
 import { BolsaTrabajoComponent } from './bolsa-trabajo/bolsa-trabajo.component';
 import { VisaRecurrenteComponent } from './resultado-pago-recurrente/visa-recurrente/visa-recurrente.component';
 
-
 const routes: Routes = [
   {
     path: '', component: AulaVirtualComponent ,canActivateChild: [AulaVirtualGuard] , children:
