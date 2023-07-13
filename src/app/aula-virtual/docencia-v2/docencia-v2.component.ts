@@ -28,7 +28,7 @@ export class DocenciaV2Component implements OnInit ,OnDestroy {
     }
   ];
   public hide=false
-  public tabIndex = 0;
+  public tabIndex = 1;
   public DataProveedor:any
 
   public json: ParticipacionExpositorFiltroDTO = {
