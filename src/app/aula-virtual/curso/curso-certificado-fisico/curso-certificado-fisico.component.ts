@@ -93,6 +93,7 @@ export class CursoCertificadoFisicoComponent implements OnInit,OnDestroy ,OnChan
     Codigo: new FormControl('',Validators.required),
     Referencia: new FormControl('',Validators.required),
     Region: new FormControl('',Validators.required),
+    RecepcionPersonal: new FormControl(true),
     Terminos: new FormControl(false,Validators.requiredTrue),
 
   })
@@ -119,34 +120,95 @@ export class CursoCertificadoFisicoComponent implements OnInit,OnDestroy ,OnChan
     IdCertificadoGeneradoAutomatico:0,
     IdSolicitudCertificadoFisico:0
   }
+  public IdEstadoCertificadoFisico=0;
   ngOnInit(): void {
-    this._HelperService.recibirCombosPerfil.pipe(takeUntil(this.signal$)).subscribe((x) => {
-      console.log(x);
-      this.combosPerfil = x;
-      this.userForm.patchValue({
-        Nombres: this.combosPerfil.datosAlumno.nombres,
-        Apellido: this.combosPerfil.datosAlumno.apellidos,
-        TipoDocumento: this.combosPerfil.datosAlumno.idTipoDocumento,
-        Documento: this.combosPerfil.datosAlumno.dni,
-        Movil: this.combosPerfil.datosAlumno.telefono,
-        Pais: this.combosPerfil.datosAlumno.idPais,
-        Ciudad: this.combosPerfil.datosAlumno.ciudad,
-        Direccion: this.combosPerfil.datosAlumno.direccion,
-
-        Terminos: false,
-      });
-    });
-  }
-  ngOnChanges(changes: SimpleChanges): void {
+    console.log(this.datosCertificado)
+    if(this.datosCertificado.idSolicitudCertificadoFisico!=null){
+      this.IdEstadoCertificadoFisico=this.datosCertificado.datosCourierEnvio.idEstadoCertificadoFisico
+    }
     if(this.datosCertificado!=undefined){
       this.userForm.get('Pais')?.disable();
-      if(this.datosCertificado.idSolicitudCertificadoFisico!=null && this.datosCertificado.idSolicitudCertificadoFisico>0){
+      console.log(this.datosCertificado.idSolicitudCertificadoFisico)
+      console.log(this.IdEstadoCertificadoFisico)
+      if(this.IdEstadoCertificadoFisico!=0 &&
+         this.IdEstadoCertificadoFisico!=5 &&
+         this.IdEstadoCertificadoFisico!=9){
         this.expacion=[false,false,true]
         this.bloquearTodosInputs();
       }
     }
+    this.CompletarDatosAlumno();
+    // if(this.IdEstadoCertificadoFisico!=0){
+    //   this.userForm.patchValue({
+    //     Distrito:this.datosCertificado.solicitudCertificadoEnvioDatos.distrito,
+    //     CodigoPostal:this.datosCertificado.solicitudCertificadoEnvioDatos.codigoPostal,
+    //     Referencia:this.datosCertificado.solicitudCertificadoEnvioDatos.referencia,
+    //     Region:this.datosCertificado.solicitudCertificadoEnvioDatos.region,
+    // });
+    // }
   }
+  ngOnChanges(changes: SimpleChanges): void {
+    console.log(this.datosCertificado)
 
+    if(this.datosCertificado!=undefined){
+      this.userForm.get('Pais')?.disable();
+      console.log(this.datosCertificado.idSolicitudCertificadoFisico)
+      console.log(this.IdEstadoCertificadoFisico)
+      if(this.IdEstadoCertificadoFisico!=0 &&
+         this.IdEstadoCertificadoFisico!=5 &&
+         this.IdEstadoCertificadoFisico!=9){
+        this.expacion=[false,false,true]
+        this.bloquearTodosInputs();
+      }
+      // if(this.IdEstadoCertificadoFisico!=0){
+      //   this.userForm.patchValue({
+      //     Distrito:this.datosCertificado.solicitudCertificadoEnvioDatos!.distrito,
+      //     CodigoPostal:this.datosCertificado.solicitudCertificadoEnvioDatos!.codigoPostal,
+      //     Referencia:this.datosCertificado.solicitudCertificadoEnvioDatos!.referencia,
+      //     Region:this.datosCertificado.solicitudCertificadoEnvioDatos!.region,
+      // });
+      // }
+    }
+  }
+  CompletarDatosAlumno(){
+    this._HelperService.recibirCombosPerfil.pipe(takeUntil(this.signal$)).subscribe((x) => {
+      console.log(x);
+      console.log(this.datosCertificado.solicitudCertificadoEnvioDatos)
+      console.log(this.IdEstadoCertificadoFisico)
+      this.combosPerfil = x;
+      if(this.IdEstadoCertificadoFisico!=0){
+        this.userForm.patchValue({
+          Nombres: this.combosPerfil.datosAlumno.nombres,
+          Apellido: this.combosPerfil.datosAlumno.apellidos,
+          TipoDocumento: this.combosPerfil.datosAlumno.idTipoDocumento,
+          Documento: this.combosPerfil.datosAlumno.dni,
+          Movil: this.combosPerfil.datosAlumno.telefono,
+          Pais: this.combosPerfil.datosAlumno.idPais,
+          Ciudad: this.combosPerfil.datosAlumno.ciudad,
+          Direccion: this.combosPerfil.datosAlumno.direccion,
+          Terminos: false,
+          Distrito: this.datosCertificado.solicitudCertificadoEnviadoDatos.distrito,
+          Codigo: this.datosCertificado.solicitudCertificadoEnviadoDatos.codigoPostal,
+          Referencia: this.datosCertificado.solicitudCertificadoEnviadoDatos.referencia,
+          Region: this.datosCertificado.solicitudCertificadoEnviadoDatos.region,
+        });
+      }
+      else{
+        this.userForm.patchValue({
+          Nombres: this.combosPerfil.datosAlumno.nombres,
+          Apellido: this.combosPerfil.datosAlumno.apellidos,
+          TipoDocumento: this.combosPerfil.datosAlumno.idTipoDocumento,
+          Documento: this.combosPerfil.datosAlumno.dni,
+          Movil: this.combosPerfil.datosAlumno.telefono,
+          Pais: this.combosPerfil.datosAlumno.idPais,
+          Ciudad: this.combosPerfil.datosAlumno.ciudad,
+          Direccion: this.combosPerfil.datosAlumno.direccion,
+          Terminos: false
+        });
+      }
+
+    });
+  }
   showData() {
     return (this.formEnvio = true, this.buttonEnviar = false);
   }
@@ -170,12 +232,16 @@ export class CursoCertificadoFisicoComponent implements OnInit,OnDestroy ,OnChan
     this.jsonEnvio.IdPGeneral=this.idPGeneral;
     this.jsonEnvio.IdMatriculaCabecera=this.idMatricula;
     this.jsonEnvio.CodigoMatricula=this.CodigoMatricula
+    console.log(this.jsonEnvio)
     this._CertificadoService.RegistrarSolicitudCertificadoFisico(this.jsonEnvio).pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
         console.log(x)
         if(x.mensaje==''){
-          this._SnackBarServiceService.openSnackBar("Se generó la solicitud de su certificado satisfactoriamente",'x',15,"snackbarCrucigramaSucces");
-          this.OnGenerate.emit();
+          this.openDialog();
+          this.CerrarDesplegable();
+          this.bloquearTodosInputs();
+          // this._SnackBarServiceService.openSnackBar("Se generó la solicitud de su certificado satisfactoriamente",'x',15,"snackbarCrucigramaSucces");
+          // this.OnGenerate.emit();
         }else{
           this._SnackBarServiceService.openSnackBar(x.mensaje,'x',15,"snackbarCrucigramaerror");
         }
@@ -213,6 +279,24 @@ export class CursoCertificadoFisicoComponent implements OnInit,OnDestroy ,OnChan
     this.userForm.get('Codigo')?.disable();
     this.userForm.get('Referencia')?.disable();
     this.userForm.get('Region')?.disable();
+    this.userForm.get('RecepcionPersonal')?.disable();
+
+  }
+  CerrarDesplegable(){
+    this.buttonEnviar=true;
+    this.formEnvio=false;
+    this.expacion[0]=false;
+    this.expacion[1]=false;
+    this.expacion[2]=false;
+    this.userForm.reset();
+    this.CompletarDatosAlumno()
+    this.disableDatos=true;
+    this.userForm.patchValue({RecepcionPersonal:true});
+    this.userForm.get('Nombres')?.disable();
+    this.userForm.get('Apellido')?.disable();
+    this.userForm.get('TipoDocumento')?.disable();
+    this.userForm.get('Documento')?.disable();
+    this.userForm.get('Movil')?.disable();
   }
 }
 

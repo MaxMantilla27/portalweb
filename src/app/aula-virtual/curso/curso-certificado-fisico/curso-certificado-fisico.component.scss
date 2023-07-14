@@ -174,6 +174,7 @@ mat-label{
     background: #fff8f0;
     color: #ff8b9b;
     border: 1px solid #ffe9d0;
+    border-radius: 10px;
     i{
       border-radius: 50%;
       color: white;
@@ -321,11 +322,10 @@ mat-label{
   color: #ffffff;
   font-size: 16px;
   position: center;
-  margin-left: 47%;
+  // margin-left: 47%;
   display: inline-block;
   border-radius: 2em;
-  margin-right: 10px;
-
+  // margin-right: 10px;
 }
 
 

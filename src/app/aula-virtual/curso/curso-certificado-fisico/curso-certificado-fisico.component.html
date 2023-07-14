@@ -5,9 +5,9 @@
   <!--  Element Card title -->
 
 
-  <button (click)="openDialog()">
+  <!-- <button (click)="openDialog()">
       Hola
-  </button>
+  </button> -->
 
 
   <div class="col-12">
@@ -25,12 +25,16 @@
   </mat-card-title-group>
 
   <mat-card-title-group>
-    <div class="cardTitle">
-      <img class="ImgIndicacionesContent" src="../../../../assets/icons/certificado-fisico-26.svg">
-      <div class="title">Certificado fisico</div>
-      <button *ngIf="buttonEnviar == true" (click)="showData()" id="buttonEnviar" class="butonSol" mat-button>
-        Solicitar >
-      </button>
+    <div class="cardTitle row" style="display: flex;width: 100%;">
+      <div class="col-12 col-lg-9">
+        <img class="ImgIndicacionesContent" src="../../../../assets/icons/certificado-fisico-26.svg">
+        <div class="title">Certificado fisico</div>
+      </div>
+      <div class="col-12 col-lg-3" style="justify-content: right;display: flex;">
+        <button *ngIf="buttonEnviar == true " (click)="showData()" id="buttonEnviar" class="butonSol" mat-button>
+          Solicitar >
+        </button>
+      </div>
     </div>
   </mat-card-title-group>
   </div>
@@ -40,10 +44,20 @@
       <form class ="form" (submit)="GenerarSolicitudCertificadoFisico()" [formGroup]="userForm">
         <div class="containerform">
           <div class="headerFormSolicitudheader">
-            <div style="display: flex;
-            width: calc( 100% - 20px);
-            justify-content: space-between;">
-              <div>Datos de Envío</div>
+            <div style="display: flex; width: calc( 100% - 20px); justify-content: space-between;">
+              <div class="row" style="width: 100%;">
+                <div class="col-12 col-lg-8">
+                  Datos de Envío
+                </div>
+                <div *ngIf="IdEstadoCertificadoFisico==9" class="col-12 col-lg-4" style="display: flex;">
+                  <div style="color: red; font-weight: bold;margin-right: 5px;">
+                    Observado
+                  </div>
+                  <div>
+                    <i class="material-icons" style="color: red;">error</i>
+                  </div>
+                </div>
+              </div>
             <div [ngStyle]="{'color':expacion[0]==true?'#106fc1':''}">
               <i *ngIf="!expacion[0]" (click)="expacion[0]=true" class="material-icons" style="font-size: 26px!important;">keyboard_arrow_down</i>
               <i *ngIf="expacion[0]" (click)="expacion[0]=false" class="material-icons" style="font-size: 26px!important;">keyboard_arrow_up</i>
@@ -148,8 +162,14 @@ incorrecta o este incompleta.
 
           <div class="contentform" *ngIf="expacion[2]">
             <div class="row rowFormCertFisico" style="align-items: center;">
-              <mat-checkbox color="primary">Yo recibiré el certificado, utilizar mis datos personales para el destinatario</mat-checkbox>
-
+              <div *ngIf="IdEstadoCertificadoFisico==0 ||IdEstadoCertificadoFisico==5 ||IdEstadoCertificadoFisico==9">
+                <mat-checkbox color="primary" formControlName="RecepcionPersonal" class="terminos" (click)="HabilitarInputs()">
+                  Yo recibiré el certificado, utilizar mis datos personales para el destinatario</mat-checkbox>
+              </div>
+              <div *ngIf="IdEstadoCertificadoFisico!=0 && IdEstadoCertificadoFisico!=5 && IdEstadoCertificadoFisico!=9">
+                <mat-checkbox color="primary" formControlName="RecepcionPersonal" class="terminos">
+                  Yo recibiré el certificado, utilizar mis datos personales para el destinatario</mat-checkbox>
+              </div>
               <div class="prueba">
                 <div class="left">
                   <mat-form-field appearance="outline" [floatLabel]="'always'">
@@ -198,23 +218,26 @@ incorrecta o este incompleta.
             </mat-checkbox>
 
           </div>
-          <div style="width: 100%;display:flex;justify-content: right;">
+          <div style="width: 100%;display:flex;justify-content: right;flex-wrap: wrap;">
 
-            <app-default-button (click)="openDialog()" [confs]="{color:'secondary',titulo:'Cancelar Solicitud'}"
-            [disabled]="!userForm.valid || (datosCertificado.idSolicitudCertificadoFisico!=null && datosCertificado.idSolicitudCertificadoFisico>0)"
-            [style]="'margin-top: 40px; margin-right:15px; border: none;'"
-            >
-          </app-default-button>
+            <app-default-button *ngIf="IdEstadoCertificadoFisico!=0  && IdEstadoCertificadoFisico!=5 && IdEstadoCertificadoFisico!=9" [confs]="{color:'secondary',titulo:'Cancelar Solicitud'}"
+              [style]="' margin-right:15px; border: none;'"
+              [disabled]="IdEstadoCertificadoFisico!=0  && IdEstadoCertificadoFisico!=5 && IdEstadoCertificadoFisico!=9">
+            </app-default-button>
+            <app-default-button *ngIf="IdEstadoCertificadoFisico==0  || IdEstadoCertificadoFisico==5 || IdEstadoCertificadoFisico==9" (click)="CerrarDesplegable()" [confs]="{color:'secondary',titulo:'Cancelar Solicitud'}"
+              [style]="' margin-right:15px; border: none;'">
+            </app-default-button>
             <app-default-button [confs]="{color:'primary',titulo:'Solicitar envio'}"
-            [disabled]="!userForm.valid || (datosCertificado.idSolicitudCertificadoFisico!=null && datosCertificado.idSolicitudCertificadoFisico>0)"
-            [style]="'margin-top: 40px; border-radius:2em;'" ></app-default-button>
+              [disabled]="!userForm.valid || (IdEstadoCertificadoFisico!=0  && IdEstadoCertificadoFisico!=5 && IdEstadoCertificadoFisico!=9)"
+              [style]="'margin-right:15px;border-radius:2em;'" >
+            </app-default-button>
           </div>
           </div>
         </div>
       </form>
       </div>
 
-      <div class="containerform">
+      <div class="containerform" *ngIf="IdEstadoCertificadoFisico!=0">
         <div class="headerFormSolicitudheader">
           <div style="display: flex;
           width: calc( 100% - 20px);
@@ -241,18 +264,18 @@ incorrecta o este incompleta.
             justify-content: center;align-items: center; padding-bottom: 35px;">
               <div style="display: flex;" >
 
-                <div class="CardEstadoEnvioCertFisico" [ngClass]="{'ActiveCard':datosCertificado.datosCourierEnvio.estadoCourierInt==1}">
+                <div class="CardEstadoEnvioCertFisico" [ngClass]="{'ActiveCard':datosCertificado.datosCourierEnvio.idEstadoCertificadoFisico==3}">
                   <div>En ruta</div>
-                  <img *ngIf="datosCertificado.datosCourierEnvio.estadoCourierInt==1" src="../../../../assets/icons/icono-courier-verde.svg" alt="26px">
-                  <img *ngIf="datosCertificado.datosCourierEnvio.estadoCourierInt!=1" src="../../../../assets/icons/icono-courier-gris.svg" alt="26px">
-                  <img *ngIf="datosCertificado.datosCourierEnvio.estadoCourierInt==1" class="botondiv" src="../../../../assets/icons/punto-verde.svg" alt="">
+                  <img *ngIf="datosCertificado.datosCourierEnvio.idEstadoCertificadoFisico==3" src="../../../../assets/icons/icono-courier-verde.svg" alt="26px">
+                  <img *ngIf="datosCertificado.datosCourierEnvio.idEstadoCertificadoFisico!=3" src="../../../../assets/icons/icono-courier-gris.svg" alt="26px">
+                  <img *ngIf="datosCertificado.datosCourierEnvio.idEstadoCertificadoFisico==3" class="botondiv" src="../../../../assets/icons/punto-verde.svg" alt="">
                 </div>
 
-                <div class="CardEstadoEnvioCertFisico" [ngClass]="{'ActiveCard':datosCertificado.datosCourierEnvio.estadoCourierInt==2}">
+                <div class="CardEstadoEnvioCertFisico" [ngClass]="{'ActiveCard':datosCertificado.datosCourierEnvio.idEstadoCertificadoFisico==4}">
                   <div>Entregado</div>
-                  <img *ngIf="datosCertificado.datosCourierEnvio.estadoCourierInt!=2" src="../../../../assets/icons/icono-entrega-lugar-gris.svg" alt="">
-                  <img *ngIf="datosCertificado.datosCourierEnvio.estadoCourierInt==2" src="../../../../assets/icons/icono-entrega-lugar-verde.svg" alt="">
-                  <img class="botondiv" *ngIf="datosCertificado.datosCourierEnvio.estadoCourierInt==2" src="../../../../assets/icons/punto-verde.svg" alt="">
+                  <img *ngIf="datosCertificado.datosCourierEnvio.idEstadoCertificadoFisico!=4" src="../../../../assets/icons/icono-entrega-lugar-gris.svg" alt="">
+                  <img *ngIf="datosCertificado.datosCourierEnvio.idEstadoCertificadoFisico==4" src="../../../../assets/icons/icono-entrega-lugar-verde.svg" alt="">
+                  <img class="botondiv" *ngIf="datosCertificado.datosCourierEnvio.idEstadoCertificadoFisico==4" src="../../../../assets/icons/punto-verde.svg" alt="">
                 </div>
               </div>
             </div>
@@ -269,28 +292,28 @@ incorrecta o este incompleta.
                   </div>
 
                  <div class="prueba">
-                  <label for="" class="autoleft">País Remitente:</label>
+                  <label for="" class="autoleft">País Remitente: </label>
                   <!-- <mat-form-field appearance="outline" [floatLabel]="'always'"> -->
                       <input class="autoright" type="text" [value]="datosCertificado.datosCourierEnvio.pais" matInput disabled />
                   <!-- </mat-form-field> -->
                  </div>
 
                   <div class="prueba">
-                    <label class="autoleft" for="">Ciudad Remitente:</label>
+                    <label class="autoleft" for="">Ciudad Remitente: </label>
                     <!-- <mat-form-field appearance="outline" [floatLabel]="'always'"> -->
                       <input class="autoright" type="text" [value]="datosCertificado.datosCourierEnvio.ciudad" matInput disabled />
                     <!-- </mat-form-field> -->
                   </div>
 
                   <div class="prueba">
-                    <label class="autoleft" for="">Telefono:</label>
+                    <label class="autoleft" for="">Teléfono: </label>
                     <!-- <mat-form-field appearance="outline" [floatLabel]="'always'"> -->
                       <input class="autoright" type="text" [value]="datosCertificado.datosCourierEnvio.telefono" matInput disabled />
                     <!-- </mat-form-field> -->
                   </div>
 
                   <div class="prueba">
-                    <label for="" class="autoleft">Direccion:</label>
+                    <label for="" class="autoleft">Dirección: </label>
                     <!-- <mat-form-field appearance="outline" [floatLabel]="'always'"> -->
                       <input type="text" class="autoright" [value]="datosCertificado.datosCourierEnvio.direccion" matInput disabled />
                     <!-- </mat-form-field> -->
@@ -301,7 +324,7 @@ incorrecta o este incompleta.
                <div class="right">
                   <!-- <div class="contentEnvio"> -->
                     <div class="prueba">
-                      <label for="" class="autoleft">Nro. guía/tracking:</label>
+                      <label for="" class="autoleft">Nro. guía / tracking: </label>
                       <!-- <mat-form-field appearance="outline" [floatLabel]="'always'"> -->
                         <input type="text" class="autoright" [value]="datosCertificado.datosCourierEnvio.codigoSeguimiento" matInput disabled />
                       <!-- </mat-form-field> -->
@@ -309,29 +332,36 @@ incorrecta o este incompleta.
                   <!-- </div> -->
 
                   <div class="prueba">
-                  <label for="" class="autoleft">Página web:</label>
+                  <label for="" class="autoleft">Página web: </label>
                     <!-- <mat-form-field appearance="outline" [floatLabel]="'always'"> -->
                       <input type="text" class="autoright" [value]="datosCertificado.datosCourierEnvio.url" matInput disabled />
                     <!-- </mat-form-field> -->
                   </div>
 
                   <div class="prueba">
-                    <label for="" class="autoleft">Fecha de entrega al courier:</label>
+                    <label for="" class="autoleft">Fecha de entrega al courier: </label>
                     <!-- <mat-form-field appearance="outline" [floatLabel]="'always'"> -->
                       <input type="text" class="autoright" [value]="datosCertificado.datosCourierEnvio.fechaEntregaCourierString" matInput disabled />
                     <!-- </mat-form-field> -->
                   </div>
 
                   <div class="prueba">
-                    <label for="" class="autoleft">Fecha de entrega estimada:</label>
+                    <label for="" class="autoleft">Fecha de entrega estimada: </label>
                     <!-- <mat-form-field appearance="outline" [floatLabel]="'always'"> -->
                       <input type="text" class="autoright" [value]="datosCertificado.datosCourierEnvio.fechaEntregaEstimadaString" matInput disabled />
+                    <!-- </mat-form-field> -->
+                  </div>
+
+                  <div class="prueba">
+                    <label for="" class="autoleft">Fecha de entrega: </label>
+                    <!-- <mat-form-field appearance="outline" [floatLabel]="'always'"> -->
+                      <input type="text" class="autoright" [value]="datosCertificado.datosCourierEnvio.fechaEntregaRealString" matInput disabled />
                     <!-- </mat-form-field> -->
                   </div>
                 </div>
               </div>
 
-              <div class="col-8 col-md-9 col-lg-9">
+              <!-- <div class="col-8 col-md-9 col-lg-9">
                 <mat-form-field appearance="outline" [floatLabel]="'always'">
                   <input type="text" [value]="datosCertificado.datosCourierEnvio.fechaEntregaEstimadaString" matInput disabled />
                 </mat-form-field>
@@ -339,13 +369,17 @@ incorrecta o este incompleta.
             </div>
           </ng-template>
 
-          <mat-card-title-group>
-            <div class="cardTitleDevuelto">
-              <div class="title"> Devuelto </div>
-              <img class="Img" src="../../../../assets/icons/icono-devuelto-rojo.svg">
-              <div>Tu certificado ha sido devuelto, comunícate con tu asesor cadémico.</div>
-            </div>
-          </mat-card-title-group>
+          <ng-container *ngIf="IdEstadoCertificadoFisico==5">
+            <mat-card-title-group>
+              <div class="cardTitleDevuelto">
+                <div class="title"> Devuelto </div>
+                <img class="Img" src="../../../../assets/icons/icono-devuelto-rojo.svg">
+                <div>Tu certificado ha sido devuelto, comunícate con tu asesor cadémico.</div>
+              </div>
+            </mat-card-title-group>
+          </ng-container>
+
+
 
         </div>
       </div>
