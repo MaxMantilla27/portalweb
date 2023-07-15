@@ -40,4 +40,12 @@ export class NotaService {
       return EMPTY;
     }
   }
+  public ObtenerCursosProgramaPorIdMatricula(IdMatriculaCabecera:number):Observable<any>{
+    console.log(IdMatriculaCabecera)
+    if(this.isBrowser){
+      return this.http.get<any>(this.urlBase+'/ObtenerCursosProgramaPorIdMatricula?IdMatriculaCabecera='+IdMatriculaCabecera);
+    }else{
+      return EMPTY;
+    }
+  }
 }
