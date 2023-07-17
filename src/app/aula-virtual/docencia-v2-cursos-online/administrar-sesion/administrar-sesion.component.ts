@@ -1,7 +1,9 @@
 import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
 import { DatosPerfilService } from 'src/app/Core/Shared/Services/DatosPerfil/datos-perfil.service';
+import { RegistrarAsistenciaOnlineComponent } from './registrar-asistencia-online/registrar-asistencia-online.component';
 
 @Component({
   selector: 'app-administrar-sesion',
@@ -18,7 +20,8 @@ export class AdministrarSesionComponent implements OnInit, OnDestroy {
   }
   constructor(
     private _DatosPerfilService: DatosPerfilService,
-    private _ActivatedRoute: ActivatedRoute
+    private _ActivatedRoute: ActivatedRoute,
+    public dialog: MatDialog,
   ) {}
   public IdPespecifico = 0;
   public sesiones: any;
@@ -60,5 +63,19 @@ export class AdministrarSesionComponent implements OnInit, OnDestroy {
   }
   ObtnerDataSesion(){
 
+  }
+  OpenAsistencias(){
+    const dialogRef = this.dialog.open(RegistrarAsistenciaOnlineComponent, {
+      width: '1000px',
+      data: { IdPespecifico: this.IdPespecifico,IdSesion:this.IdSesion },
+      panelClass: 'dialog-Tarjeta',
+     // disableClose:true
+    });
+
+    dialogRef.afterClosed().pipe(takeUntil(this.signal$)).subscribe((result) => {
+      if(result!=undefined){
+
+      }
+    });
   }
 }

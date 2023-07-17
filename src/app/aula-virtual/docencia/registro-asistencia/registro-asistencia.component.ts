@@ -12,7 +12,7 @@ import { AsistenciaRegistrarDTO } from 'src/app/Core/Models/ParticipacionExposit
   templateUrl: './registro-asistencia.component.html',
   styleUrls: ['./registro-asistencia.component.scss']
 })
-export class RegistroAsistenciaComponent implements OnInit, OnChanges,OnDestroy{
+export class RegistroAsistenciaComponent implements OnInit,OnDestroy{
   private signal$ = new Subject();
 
   columnHeader = {
@@ -20,7 +20,7 @@ export class RegistroAsistenciaComponent implements OnInit, OnChanges,OnDestroy{
     'codigoMatricula': 'Código',
     'alumno': 'Nombres y Apellidos',
     'asistio': 'Asistencia',
-    
+
   };
 
 
@@ -29,7 +29,7 @@ export class RegistroAsistenciaComponent implements OnInit, OnChanges,OnDestroy{
   }
   tableInfo:any;
 
-  constructor(    
+  constructor(
     private _Router:Router,
     private _OperacionesNotaService:OperacionesNotaService,
     public _OperacionesAsistenciaService:OperacionesAsistenciaService,
@@ -57,9 +57,9 @@ export class RegistroAsistenciaComponent implements OnInit, OnChanges,OnDestroy{
   ngOnChanges(changes: SimpleChanges): void {
     this.ObtenerAsistenciaSesion()
   }
-  
+
   ObtenerAsistenciaSesion(){
-    this._OperacionesNotaService.ListadoAsistenciaSesion(15647, 26978).pipe(takeUntil(this.signal$)).subscribe({
+    this._OperacionesNotaService.ObtenerAsistenciaAlumnoSesion(15647, 26978).pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
         this.Asistencias=x;
         // this.tableInfo=x;
@@ -92,13 +92,13 @@ export class RegistroAsistenciaComponent implements OnInit, OnChanges,OnDestroy{
           console.log(this.asistencias)
           this.charge=false
           this._SnackBarServiceService.openSnackBar("Se guardo correctamente",'x',5,"snackbarCrucigramaSucces");
-          
+
         },
         error:e=>{
           console.log(e)
           this._SnackBarServiceService.openSnackBar("Ocurrio un error , intentelo nuevamente mas tarde",'x', 10,'snackbarCrucigramaerror' );
           this.charge=false
-          
+
         }
       })
     }

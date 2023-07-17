@@ -1,0 +1,92 @@
+<p style="text-align: center;">Registro de Asistencia - Sesión </p>
+
+<!--<div class="">
+    <app-table-portal *ngIf="tableInfo!=undefined" [tableInfo]="tableInfo" [columnHeader]="columnHeader"
+    [tipoContenido]="TipoContenido"
+    [StyleContent]="'font-size: 12px; color: #4A4A49; font-weight:500; padding: 15px;'"
+    [StyleCabecera]="'font-size: 14px;color: #4A4A49; font-weight:bold; padding: 15px'"></app-table-portal>
+</div> -->
+
+<ng-container *ngIf="Asistencias!=undefined">
+  <div>
+    <ng-container *ngIf="charge==true">
+      <div style="width: 100%;z-index: 10;height: 100%;position: absolute;display: flex;justify-content: center;padding: 20px;align-items: center;
+      background: rgb(0 0 0 / 12%);border: 1px solid #C00;">
+        <mat-spinner></mat-spinner>
+      </div>
+    </ng-container>
+    <div class="tableresposive">
+
+      <table style="width: 100%; border-top: none !important; " class="table">
+        <thead style="position: sticky !important;
+        padding-bottom: 10px; top: -20px !important;">
+          <tr style="background: #e6eefa;">
+            <th  style="width: 10px;" rowspan="2"><b>N°</b></th>
+            <th  style="width: 70px;" rowspan="2"><b>Código</b></th>
+            <th  style="width: 100px;" rowspan="2"><b>Nombres y Apellidos</b></th>
+            <th  style="width: 100px; text-align: center;" rowspan="2"><b>Asistencia</b></th>
+          </tr>
+        </thead>
+
+        <ng-container>
+          <tbody>
+            <ng-container *ngFor="let mat of Asistencias ; let i=index">
+              <tr>
+                <td>
+                  {{i + 1}}
+                </td>
+                <td>
+                  {{mat.codigoMatricula}}
+                </td>
+                <td>
+                  {{mat.alumno | uppercase}}
+                </td>
+
+                <td style="width:max-content; text-align: center;">
+                  <!-- <ng-container *ngIf="matn.Asistio!=true">
+                      <i class="material-icons" style="cursor: pointer ;" (click)="matn.Asistio=!matn.Asistio"></i>
+                    </ng-container>
+                    <mat-option >gvkhv kh</mat-option> -->
+                    <!-- <ng-container *ngIf="matn.Asistio==true">
+                      <i class="material-icons" (click)="matn.Asistio=!matn.Asistio" style="color:#0075ff ;cursor: pointer">check_box</i>
+                    </ng-container> -->
+
+
+                  <mat-form-field appearance="outline" [floatLabel]="'never'">
+                    <mat-label>Seleccione</mat-label>
+                    <mat-select [(ngModel)]="mat.asistio" placeholder="Tipo de documento">
+
+                      <mat-option [value]="false">
+                        Falto</mat-option>
+
+                      <mat-option [value]="true">
+                        Asistió</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </td>
+
+              </tr>
+            </ng-container>
+          </tbody>
+        </ng-container>
+      </table>
+    </div>
+  </div>
+
+
+
+  <mat-dialog-actions align="end">
+    <div class="buttonsRegistroNota">
+      <div style="margin: 0px 5px;">
+        <app-default-button [confs]="{color:'primary',titulo:'Guardar'}"
+        [style]="'width: 100%;background: #0069d9;border-color: #0062cc;'"
+        (ButtoclClick)="RegistrarAsistenciaDetalleDocente()"
+        [icon]="'check'"></app-default-button>
+      </div>
+     </div>
+  </mat-dialog-actions>
+</ng-container>
+<!-- <ng-container *ngIf="listadoAsistencias==undefined">
+  <div style="width: 100%;display: flex;justify-content: center;padding: 20px"><mat-spinner></mat-spinner> </div>
+</ng-container> -->
+

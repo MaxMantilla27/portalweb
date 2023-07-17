@@ -116,6 +116,7 @@ import { DocenciaAccesoClasesComponent } from './docencia-v2/docencia-acceso-cla
 import { DocenciaCursosOnlineComponent } from './docencia-v2/docencia-cursos-online/docencia-cursos-online.component';
 import { DocenciaV2CursosOnlineComponent } from './docencia-v2-cursos-online/docencia-v2-cursos-online.component';
 import { AdministrarSesionComponent } from './docencia-v2-cursos-online/administrar-sesion/administrar-sesion.component';
+import { RegistrarAsistenciaOnlineComponent } from './docencia-v2-cursos-online/administrar-sesion/registrar-asistencia-online/registrar-asistencia-online.component';
 
 
 @NgModule({
@@ -229,6 +230,7 @@ import { AdministrarSesionComponent } from './docencia-v2-cursos-online/administ
     DocenciaCursosOnlineComponent,
     DocenciaV2CursosOnlineComponent,
     AdministrarSesionComponent,
+    RegistrarAsistenciaOnlineComponent,
   ],
   imports: [
     CommonModule,

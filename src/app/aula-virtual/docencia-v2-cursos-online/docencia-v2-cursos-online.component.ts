@@ -25,7 +25,7 @@ export class DocenciaV2CursosOnlineComponent implements OnInit,OnDestroy {
   public migaPan = [
     {
       titulo: 'DocenciaV2',
-      urlWeb: '/AulaVirtual/Docencia',
+      urlWeb: '/AulaVirtual/DocenciaV2',
     }
   ];
   public hide=false

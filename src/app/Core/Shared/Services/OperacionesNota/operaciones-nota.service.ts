@@ -102,7 +102,7 @@ export class OperacionesNotaService {
     }
   }
 
-  public ListadoAsistenciaSesion(IdPEspecifico:number,IdPEspecificoSesion:number):Observable<any>{
+  public ObtenerAsistenciaAlumnoSesion(IdPEspecifico:number,IdPEspecificoSesion:number):Observable<any>{
     if(this.isBrowser){
       return this.http.get<any>(this.urlBase2+'/ObtenerAsistenciaAlumnoSesion?IdPEspecifico='+IdPEspecifico+'&IdPEspecificoSesion='+IdPEspecificoSesion);
     }else{

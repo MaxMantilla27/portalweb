@@ -104,7 +104,7 @@ export class ChatComponent implements OnInit,OnDestroy,OnChanges {
         if(x.idsesion!=undefined){
           this.idsesion=x.idsesion
         }
-        if(this.hubConnection.state=='Connected'){
+        if(this.hubConnection.connection._connectionState=='Connected'){
           this.GenerarLogVisitanteAulaVirtual()
         }
 
@@ -228,9 +228,10 @@ export class ChatComponent implements OnInit,OnDestroy,OnChanges {
     })
   }
   ConectarSocket(IdFaseOportunidadPortal?:string){
+
     this.hubConnection.start()
       .then((x:any) =>{
-        if(this.hubConnection.state=='Connected'){
+        if(this.hubConnection.connection._connectionState=='Connected'){
           this.GenerarLogVisitanteAulaVirtual()
         }
 
@@ -242,7 +243,6 @@ export class ChatComponent implements OnInit,OnDestroy,OnChanges {
   }
 
   GenerarLogVisitanteAulaVirtual(){
-
     var idProgramaGenetalEstatico =
       this._SessionStorageService.SessionGetValue("IdPGeneral")==''
       ?0
