@@ -309,9 +309,7 @@ export class ChatComponent implements OnInit,OnDestroy,OnChanges {
   }
   configuracionSoporte(){
     this.hubConnection.on("configuracionSoporte",(NombreAsesor:any, estado:any, idPGeneral:any)=>{
-      console.log(NombreAsesor)
-      console.log(this.idProgramageneral)
-      console.log(idPGeneral)
+
       if(estado==false){
         if(this.contadoraulavirtual<4){
           if (this.idProgramageneral == 9990) {

@@ -45,11 +45,22 @@
     background-repeat: no-repeat;
     width: 20px;
     height: 20px;
-    background-position: center;
+    background-position: center;Z
     .material-icons{
       //color: #4a4a49;
       font-size: 20px !important;
     }
+  }
+
+
+  .iconSesiones {
+    background-image: url("../../../assets/icons/icono-play-gris.svg");
+  }
+  .iconCursosOnline {
+    background-image: url("../../../assets/icons/icono-gestion-cursos-online-gris.svg");
+  }
+  .iconCursosAOnline {
+    background-image: url("../../../assets/icons/icono-gestion-cursos-asincronicos-gris.svg");
   }
 }
 .tabVertical
@@ -69,6 +80,15 @@
       color: #41a6ff !important;
     }
   }
+  .iconSesiones {
+    background-image: url("../../../assets/icons/icono-play-azul.svg") !important;
+  }
+  .iconCursosOnline {
+    background-image: url("../../../assets/icons/icono-gestion-cursos-online-azul.svg") !important;
+  }
+  .iconCursosAOnline {
+    background-image: url("../../../assets/icons/icono-gestion-cursos-asincronicos-azul.svg") !important;
+  }
   .titleMatr {
     text-decoration: underline;
   }
@@ -80,6 +100,16 @@
   .titleMatr {
     color: #0684f3 !important;
     text-decoration: underline;
+  }
+
+  .iconSesiones {
+    background-image: url("../../../assets/icons/icono-play-azul.svg") !important;
+  }
+  .iconCursosOnline {
+    background-image: url("../../../assets/icons/icono-gestion-cursos-online-azul.svg") !important;
+  }
+  .iconCursosAOnline {
+    background-image: url("../../../assets/icons/icono-gestion-cursos-asincronicos-azul.svg") !important;
   }
 }
 

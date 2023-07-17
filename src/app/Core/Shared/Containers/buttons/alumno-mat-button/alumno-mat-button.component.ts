@@ -40,7 +40,7 @@ export class AlumnoMatButtonComponent implements OnInit,OnChanges {
   }
   ngOnChanges(changes: SimpleChanges): void {
     this.buttons=[];
-    // let isCarrera =JSON.parse(this._SessionStorageService.SessionGetValue('TipoCarrera')) 
+    // let isCarrera =JSON.parse(this._SessionStorageService.SessionGetValue('TipoCarrera'))
     if(this.val!=undefined){
       if(this.val.IdProveedor==0){
         this.buttons.push({
@@ -87,7 +87,7 @@ export class AlumnoMatButtonComponent implements OnInit,OnChanges {
         //     value: '',
         //   });
         // }
-       
+
       }else{
         if(this.val.cursos>0){
           this.buttons.push({
@@ -131,11 +131,11 @@ export class AlumnoMatButtonComponent implements OnInit,OnChanges {
         }
         this.buttons.push({
           Nombre: 'Docencia',
-          Url: '/AulaVirtual/Docencia',
+          Url: '/AulaVirtual/DocenciaV2',
           Icon: 'account_box',
           value: '',
         });
-        
+
       }
     }
   }

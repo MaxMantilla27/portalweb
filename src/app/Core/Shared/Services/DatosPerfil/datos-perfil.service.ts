@@ -90,9 +90,23 @@ export class DatosPerfilService {
     }
   }
 
+  public ObtenerSesionesOnlineWebinarDocentePorIdPespecifico(IdPespecifico:number):Observable<any>{
+    if(this.isBrowser){
+      return this.http.get<any>(this.urlBase+'/ObtenerSesionesOnlineWebinarDocentePorIdPespecifico?IdPespecifico='+IdPespecifico);
+    }else{
+      return EMPTY;
+    }
+  }
   public ObtenerCursosOnlineWebinarDocentePortalWeb():Observable<any>{
     if(this.isBrowser){
       return this.http.get<any>(this.urlBase+'/ObtenerCursosOnlineWebinarDocentePortalWeb');
+    }else{
+      return EMPTY;
+    }
+  }
+  public ObtenerCursoOnlineWebinarDocentePortalWeb(IdPespecifico:number):Observable<any>{
+    if(this.isBrowser){
+      return this.http.get<any>(this.urlBase+'/ObtenerCursoOnlineWebinarDocentePortalWeb?IdPespecifico='+IdPespecifico);
     }else{
       return EMPTY;
     }

@@ -1,0 +1,17 @@
+<div *ngIf="IdSesion>0" class="row">
+  <div class="col-12 col-md-9 col-lg-9 InputsDocencia">
+
+    <mat-form-field appearance="outline">
+      <mat-label>Filtrar por Estado</mat-label>
+      <mat-select #myselsetc [(ngModel)]="IdSesion" #select  (selectionChange)="ObtnerDataSesion()">
+        <mat-option *ngFor="let item of sesiones" [value]="item.idSesion" style="font-size: 16px;">
+          Sesión {{item.orden}}/{{item.maximo}} {{item.fechaHoraInicio | date:'dd-MM-yyyy'}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+  <div class="col-12 col-md-3 col-lg-3">
+    <app-default-button  [confs]="{color:'primary',titulo:'Registrar Asistencia'}" [icon]="''"
+      [style]="'margin: 0px;border-radius: 5px;width: 100%;margin-top:5px'"></app-default-button>
+  </div>
+</div>

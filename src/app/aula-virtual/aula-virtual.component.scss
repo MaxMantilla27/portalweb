@@ -24,6 +24,27 @@
     font-size: 14px !important;
   }
 }
+
+.greay-spinner {
+  position: absolute !important;
+  top: 0;
+  right: 0;
+}
+.progras-spinner {
+  position: absolute !important;
+  top: 0;
+  right: 0;
+}
+
+.greay-spinner circle,
+.greay-spinner circle {
+  stroke: #dadada !important;
+}
+
+.progras-spinner circle,
+.progras-spinner circle {
+  stroke: #00c356 !important;
+}
 .buttonBack:hover{
   border-bottom: solid 1px #ff7012;
 }

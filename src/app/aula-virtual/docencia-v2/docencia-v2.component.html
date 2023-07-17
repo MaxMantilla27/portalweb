@@ -7,12 +7,6 @@
 <div class="container" *ngIf="DataProveedor!=undefined">
   <div class="row rowpaddAv">
     <div class="col-12 col-md-12 col-lg-12" style="position: relative;padding: 0px;">
-      <div style="width: 100%;display: flex;justify-content: flex-end;padding-right: 30px;">
-        <div class="buttonBack no-select" [routerLink]="'/AulaVirtual/MisCursos'">
-          <i class="material-icons">arrow_back_ios</i>
-          Volver a mis cursos
-        </div>
-      </div>
       <div style="    display: flex;
       justify-content: space-between;position: absolute;width: auto;z-index: 10;">
         <div class="openClose" [ngClass]="{'reverse':!hide}" (click)="hide=!hide"
@@ -29,8 +23,8 @@
         <mat-tab *ngIf="DataProveedor.aplicaSesionOnlineWebinar">
           <ng-template mat-tab-label>
             <div #sesiones class="contentHeaderM" >
-              <!-- <div class="iconMat iconSesiones" matTooltip="Sesiones" matTooltipPosition="after"></div> -->
-              <i class="material-icons">web</i>
+              <div class="iconMat iconSesiones" matTooltip="Sesiones" matTooltipPosition="after"></div>
+              <!-- <i class="material-icons">web</i> -->
               <div class="titleMatr" *ngIf="!hide">Sesiones Online/Webinar</div>
             </div>
           </ng-template>
@@ -43,18 +37,18 @@
         <mat-tab>
           <ng-template mat-tab-label>
             <div #sesiones class="contentHeaderM" >
-              <div class="iconMat iconSesiones" matTooltip="Sesiones" matTooltipPosition="after"></div>
+              <div class="iconMat iconCursosOnline" matTooltip="Sesiones" matTooltipPosition="after"></div>
               <div *ngIf="!hide" class="titleMatr">Cursos online en vivo</div>
             </div>
           </ng-template>
           <div class="pad-resp">
-            2
+            <app-docencia-cursos-online ></app-docencia-cursos-online>
           </div>
         </mat-tab>
         <mat-tab>
           <ng-template mat-tab-label>
             <div #sesiones class="contentHeaderM" >
-              <div class="iconMat iconSesiones" matTooltip="Sesiones" matTooltipPosition="after"></div>
+              <div class="iconMat iconCursosAOnline" matTooltip="Sesiones" matTooltipPosition="after"></div>
               <div *ngIf="!hide" class="titleMatr">Cursos asincrónicos</div>
             </div>
           </ng-template>

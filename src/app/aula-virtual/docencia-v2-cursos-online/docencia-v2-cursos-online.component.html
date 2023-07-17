@@ -1,0 +1,124 @@
+<div class="container">
+  <div class="rowpaddAv breadcrumb" style="padding-top: 0px !important; padding-bottom: 0px !important;">
+    <app-miga-pan [items]="migaPan"></app-miga-pan>
+  </div>
+</div>
+<div style="border-top:solid 3px #f4f4f4 ;"></div>
+<div class="container">
+  <div class="row rowpaddAv">
+    <div class="col-12 col-md-12 col-lg-12" style="position: relative;padding: 0px;">
+      <div style="    display: flex;
+      justify-content: space-between;position: absolute;width: auto;z-index: 10;">
+        <div class="openClose" [ngClass]="{'reverse':!hide}" (click)="hide=!hide"
+        [ngStyle]="{'justify-content': !hide?'':' space-around !important;'}">
+          <div class="contentIconMenu">
+            <i class="material-icons" *ngIf="!hide">menu</i>
+            <i class="material-icons" *ngIf="hide" >menu</i>
+          </div>
+          <div *ngIf="!hide" style="margin-left: 10px;">MENU</div>
+        </div>
+      </div>
+
+      <mat-tab-group class="tabVertical" [(selectedIndex)]="tabIndex" (selectedTabChange)="tabChanged($event)">
+        <mat-tab >
+          <ng-template mat-tab-label>
+            <div  class="contentHeaderM" >
+              <div class="iconMat iconAdministrarSesion" matTooltip="Administrar Sesión" matTooltipPosition="after"></div>
+              <!-- <i class="material-icons">web</i> -->
+              <div class="titleMatr" *ngIf="!hide">Administrar Sesión</div>
+            </div>
+          </ng-template>
+          <div class="pad-resp">
+            <app-administrar-sesion *ngIf="IdPespecifico>0"></app-administrar-sesion>
+          </div>
+        </mat-tab>
+
+
+        <mat-tab>
+          <ng-template mat-tab-label>
+            <div  class="contentHeaderM" >
+              <div class="iconMat iconCalificarActividades" matTooltip="Calificar actividades" matTooltipPosition="after"></div>
+              <div *ngIf="!hide" class="titleMatr">Calificar actividades</div>
+            </div>
+          </ng-template>
+          <div class="pad-resp">
+
+          </div>
+        </mat-tab>
+        <mat-tab>
+          <ng-template mat-tab-label>
+            <div  class="contentHeaderM" >
+              <div class="iconMat iconMaterialEstudio" matTooltip="Material de estudio" matTooltipPosition="after"></div>
+              <div *ngIf="!hide" class="titleMatr">Material de estudio</div>
+            </div>
+          </ng-template>
+          <div class="pad-resp">
+          </div>
+        </mat-tab>
+        <mat-tab>
+          <ng-template mat-tab-label>
+            <div   class="contentHeaderM" >
+              <div class="iconMat iconControlAsistencia" matTooltip="Control de Asistencia" matTooltipPosition="after"></div>
+              <div *ngIf="!hide" class="titleMatr">Control de Asistencia</div>
+            </div>
+          </ng-template>
+          <div class="pad-resp">
+          </div>
+        </mat-tab>
+        <mat-tab>
+          <ng-template mat-tab-label>
+            <div   class="contentHeaderM" >
+              <div class="iconMat iconNotas" matTooltip="Notas" matTooltipPosition="after"></div>
+              <div *ngIf="!hide" class="titleMatr">Notas</div>
+            </div>
+          </ng-template>
+          <div class="pad-resp">
+          </div>
+        </mat-tab>
+        <mat-tab>
+          <ng-template mat-tab-label>
+            <div   class="contentHeaderM" >
+              <div class="iconMat iconSilabo" matTooltip="Silabo" matTooltipPosition="after"></div>
+              <div *ngIf="!hide" class="titleMatr">Silabo</div>
+            </div>
+          </ng-template>
+          <div class="pad-resp">
+
+          </div>
+        </mat-tab>
+        <mat-tab>
+          <ng-template mat-tab-label>
+            <div   class="contentHeaderM" >
+              <div class="iconMat iconCriterioEvaluacion" matTooltip="Criterios de Evaluación" matTooltipPosition="after"></div>
+              <div *ngIf="!hide" class="titleMatr">Criterios de Evaluación</div>
+            </div>
+          </ng-template>
+          <div class="pad-resp">
+          </div>
+        </mat-tab>
+        <mat-tab>
+          <ng-template mat-tab-label>
+            <div   class="contentHeaderM" >
+              <div class="iconMat iconPerfilAlumno" matTooltip="Perfil de Alumnos" matTooltipPosition="after"></div>
+              <div *ngIf="!hide" class="titleMatr">Perfil de Alumnos</div>
+            </div>
+          </ng-template>
+          <div class="pad-resp">
+            3
+          </div>
+        </mat-tab>
+        <mat-tab>
+          <ng-template mat-tab-label>
+            <div   class="contentHeaderM" >
+              <div class="iconMat iconCronogramaClases" matTooltip="Cronograma de clases" matTooltipPosition="after"></div>
+              <div *ngIf="!hide" class="titleMatr">Cronograma de clases</div>
+            </div>
+          </ng-template>
+          <div class="pad-resp">
+            3
+          </div>
+        </mat-tab>
+      </mat-tab-group>
+    </div>
+  </div>
+</div>
