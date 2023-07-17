@@ -48,6 +48,7 @@ import { DocenciaV2Component } from './docencia-v2/docencia-v2.component';
 import { BolsaTrabajoGuard } from './Guard/bolsa-trabajo.guard';
 import { BolsaTrabajoComponent } from './bolsa-trabajo/bolsa-trabajo.component';
 import { VisaRecurrenteComponent } from './resultado-pago-recurrente/visa-recurrente/visa-recurrente.component';
+import { DocenciaV2CursosOnlineComponent } from './docencia-v2-cursos-online/docencia-v2-cursos-online.component';
 
 
 const routes: Routes = [
@@ -73,6 +74,7 @@ const routes: Routes = [
         { path: 'MisPagos/webpay/:Identificador', component: PagoWebpayComponent,canActivate:[AlumnoGuard]},
         { path: 'MisPagos/webpayResultado', component: ResultadoPagoWebpayComponent},
 
+        { path: 'DocenciaV2/:IdPespecifico', component: DocenciaV2CursosOnlineComponent,canActivate:[ProveedorGuard]},
         { path: 'MisCursos/:IdMatricula', component: CursoComponent,canActivate:[AlumnoGuard]},
         { path: 'MisPagos/:IdMatricula', component: PagoComponent,canActivate:[AlumnoGuard]},
         { path: 'Docencia/:IdTarea', component: DocenciaTareasComponent,canActivate:[ProveedorGuard]},

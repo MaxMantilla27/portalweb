@@ -35,12 +35,12 @@
   top: -1.5em;
 }
 
-.mat-form-field-appearance-outline.mat-form-field-can-float.mat-form-field-should-float
+.InputsDocencia.mat-form-field-appearance-outline.mat-form-field-can-float.mat-form-field-should-float
   .mat-form-field-label {
   transform: translateY(-1.1em) scale(0.75);
   width: 133.33333%;
 }
-.mat-input-underline {
+.InputsDocencia.mat-input-underline {
   background-color: #ff0000; /* replace this color with your accent color hex code */
 }
 :root {
@@ -76,7 +76,7 @@
   .imgAlertaActividadesPendientes{
     width: 15px;
     height: 15px;
-    background: url('../../../../assets/icons/sesiones-azul-43.svg');
+    background: url('../../../../assets/icons/icono-notificacion-rojo.svg');
     background-size: cover;
     background-position: center;
     margin-right: 10px;
@@ -84,7 +84,7 @@
   .imgAlertaActividadesEchas{
     width: 15px;
     height: 15px;
-    background: url('../../../../assets/icons/sesiones-azul-43.svg');
+    background: url('../../../../assets/icons/icono-check-circulo-verde.svg');
     background-size: cover;
     background-position: center;
     margin-right: 10px;

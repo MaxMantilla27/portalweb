@@ -44,11 +44,11 @@ export class ModuloCalificacionesComponent implements OnInit,OnDestroy {
       },
       complete:()=>{
 
-          this.ObtenerCriteriosEvaluacionCurso()
+          this.ListadoCriteriosEvaluacionPorCurso()
       }
     })
   }
-  ObtenerCriteriosEvaluacionCurso(){
+  ListadoCriteriosEvaluacionPorCurso(){
     this._NotaService.ListadoCriteriosEvaluacionPorCurso(this.IdMatriculaCabecera,this.IdPEspecifico,1).pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
         this.calificacionesCurso=x;
