@@ -206,6 +206,20 @@
             </app-curso-proyecto>
           </div>
         </mat-tab>
+        <mat-tab *ngIf="curso!=undefined && curso.proyectoAplicacion">
+          <ng-template mat-tab-label>
+            <div  #notas class="contentHeaderM" (click)="InterraccionTab('Notas')"
+            matTooltip="Notas"
+            matTooltipPosition="after">
+              <div class="iconMat iconNotas"></div>
+              <div class="titleMatr" *ngIf="!hide">Notas</div>
+            </div>
+          </ng-template>
+          <div class="pad-resp">
+            <app-curso-notas [IdMatricula]="idMatricula">
+            </app-curso-notas>
+          </div>
+        </mat-tab>
         <mat-tab>
           <ng-template mat-tab-label>
             <div #certificados class="contentHeaderM" (click)="InterraccionTab('Certificados');changeIndexCertificado()"
@@ -241,7 +255,7 @@
                 matTooltip="Certificado Digital"
                 matTooltipPosition="after">
 
-                <!-- <div class="iconMat"><i class="material-icons">file_download</i></div> -->
+                <div class="iconMat"><i class="material-icons">file_download</i></div>
                 <div class="titleMatr" *ngIf="!hide">Certificado Digital</div>
               </div>
             </ng-template>
@@ -257,7 +271,7 @@
                 (click)="InterraccionTab('Certificado Fisico');certificadoFisico()"
                 matTooltip="Certificado Fisico"
                 matTooltipPosition="after">
-                <!-- <div class="iconMat"><i class="material-icons">contact_mail</i></div> -->
+                <div class="iconMat"><i class="material-icons">contact_mail</i></div>
                 <div class="titleMatr" *ngIf="!hide">Certificado Fisico</div>
               </div>
             </ng-template>
