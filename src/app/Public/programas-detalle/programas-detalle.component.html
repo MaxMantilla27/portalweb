@@ -110,10 +110,10 @@
   </div>
   <div class="container">
     <div class="row rowpadd">
-      <div class="contentLeft col-12 col-md-7 col-lg-7">
+      <div  #contentLeft  class="contentLeft col-12 col-md-7 col-lg-7">
         <div class="contentTop">
-          <div style="background: transparent;position: relative;padding: 10px 0px;">
-            <h1 style="line-height: 120%;" [innerHtml]="cabecera.tituloHtml | safeHtml" class="titlePrograma"></h1><br>
+          <div #contenidoTOp style="background: transparent;position: relative;padding: 10px 0px;">
+            <div style="line-height: 120%;" [innerHtml]="cabecera.tituloHtml | safeHtml" class="titlePrograma"></div><br>
             <div style="    margin: 10px 0px;
             font-size: 15px;font-weight: 700;">Área: <a title=" Vínculo a {{cabecera.areaCapacitacion}}"
                 (click)="EventoInteraccionLinck(cabecera.areaCapacitacion,'Área')" style="font-weight: 100;"

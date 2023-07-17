@@ -128,6 +128,7 @@ import { FacebookLoginComponent } from './Containers/facebook-login/facebook-log
 import { SocialAuthService } from 'angularx-social-login';
 import { TableV2Component } from './Containers/table-v2/table-v2.component';
 import { TablePortalComponent } from './Containers/table-portal/table-portal.component';
+import { MatChipsModule } from '@angular/material/chips';
 
 @NgModule({
   imports: [
@@ -162,7 +163,8 @@ import { TablePortalComponent } from './Containers/table-portal/table-portal.com
     MatDialogModule,
     MatBottomSheetModule,
     CKEditorModule,
-    TextFieldModule
+    TextFieldModule,
+    MatChipsModule
   ],
   declarations: [
     HeaderComponent,
@@ -312,6 +314,7 @@ import { TablePortalComponent } from './Containers/table-portal/table-portal.com
     FormularioPopUpComponent,
     ScrollTopComponent,
     FacebookLoginComponent,
+    MatChipsModule,
   ],
   providers: [
     SessionStorageService,

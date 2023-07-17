@@ -1,0 +1,74 @@
+.custom-class-notificacion-Bolivia{
+  mat-dialog-container{
+    padding: 24px 0px 100px 0px!important;
+    border: 1px solid #b1cb21!important;
+    max-height: 90vh;
+    overflow: auto;
+    position: relative;
+  }
+}
+.contentNotificacion{
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+
+  .material-icons{
+    font-weight: 600 !important;
+    color: #fe9848 !important;
+  }
+}
+.imgBSG{
+  background-image: url(../../../../assets/imagenes/LogoPrincipal.png);
+  height: 80px;
+  width: 320px;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+.titleNotificacionBolivia{
+  font-size: 25px;
+  text-decoration-line: underline;
+  color: #324893;
+  font-weight: 600;
+  text-align: center;
+}
+.SubTitleNotificacionBolivia{
+  width: 100%;
+  margin-top: 20px;
+  margin-bottom: 10px;
+  font-size: 15px;
+}
+.contentOptionsNotificacionBolivia{
+  width: 100%;
+  padding: 0px 10px;
+  margin-bottom: 10px;
+}
+.optionsNotificacionBolivia{
+  display: flex;
+}
+.textOptionsNotificacionBolivia{
+  font-size: 14px;
+  font-weight: 700;
+  margin-left: 10px;
+}
+.textoNotificacion{
+  width: 100%;
+  font-size: 14px;
+  margin-bottom: 10px;
+}
+.textoInferiorNotificacion{
+  width: 100%;
+  margin-top: 20px;
+  text-align: right;
+}
+.contentPersonasNotificacion{
+  font-size: 14px;
+  font-weight: 600;
+  align-items: center;
+  margin-bottom: 20px;
+  .iconPersonas{
+    display: flex;
+    justify-content: center;
+  }
+}

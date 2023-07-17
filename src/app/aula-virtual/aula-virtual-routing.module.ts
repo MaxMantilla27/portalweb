@@ -50,7 +50,6 @@ import { BolsaTrabajoComponent } from './bolsa-trabajo/bolsa-trabajo.component';
 import { VisaRecurrenteComponent } from './resultado-pago-recurrente/visa-recurrente/visa-recurrente.component';
 import { DocenciaV2CursosOnlineComponent } from './docencia-v2-cursos-online/docencia-v2-cursos-online.component';
 
-
 const routes: Routes = [
   {
     path: '', component: AulaVirtualComponent ,canActivateChild: [AulaVirtualGuard] , children:
