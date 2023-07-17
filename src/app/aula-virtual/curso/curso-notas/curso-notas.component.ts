@@ -42,7 +42,7 @@ export class CursoNotasComponent implements OnInit,OnDestroy {
           this.PromedioFinal=this.PromedioFinal+x.notaCurso;
           cont++
         });
-        this.PromedioFinal=this.PromedioFinal/cont
+        this.PromedioFinal=Math.floor(this.PromedioFinal/cont)
       }
     })
   }
