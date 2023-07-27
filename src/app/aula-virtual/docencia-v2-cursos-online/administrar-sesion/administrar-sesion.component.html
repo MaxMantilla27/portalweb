@@ -1,3 +1,4 @@
+
 <div *ngIf="IdSesion>0" class="row">
   <div class="col-12 col-md-9 col-lg-9 InputsDocencia">
 
@@ -14,5 +15,15 @@
     <app-default-button  [confs]="{color:'primary',titulo:'Registrar Asistencia'}" [icon]="''"
       (ButtoclClick)="OpenAsistencias()"
       [style]="'margin: 0px;border-radius: 5px;width: 100%;margin-top:5px'"></app-default-button>
+  </div>
+  <div class="col-12" style="position: relative;">
+
+    <app-pespecifico-sesion-tema [IdSesion]="IdSesion"></app-pespecifico-sesion-tema>
+  </div>
+  <div class="col-12" style="position: relative;">
+    <app-pespecifico-sesion-recurso-conectividad [IdSesion]="IdSesion"></app-pespecifico-sesion-recurso-conectividad>
+  </div>
+  <div class="col-12" style="position: relative;">
+    <app-pespecifico-sesion-esquema [IdSesion]="IdSesion" [IdPespecifico]="IdPespecifico" [sesion]="sesion"></app-pespecifico-sesion-esquema>
   </div>
 </div>

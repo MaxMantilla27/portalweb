@@ -1,0 +1,104 @@
+<ng-container *ngIf="charge==true">
+  <div style="width: 100%;z-index: 10;height: 100%;position: absolute;display: flex;justify-content: center;padding: 20px;align-items: center;
+  background: rgb(0 0 0 / 12%)">
+    <mat-spinner></mat-spinner>
+  </div>
+</ng-container>
+<div class="SubtitleRecursoConect">Informe de Interactividad </div>
+<div class="row" style="align-items: center;margin: 0px;">
+  <div class="col-6 col-md-5 col-lg-5 titleItemRecursos">
+    Examen / Test
+  </div>
+  <div class="col-6 col-md-5 col-lg-5 InputsDocencia">
+
+    <mat-form-field appearance="outline">
+      <mat-label>Examen / Test</mat-label>
+      <mat-select #myselsetc [(ngModel)]="json.IdPwTipoExamen" #select (selectionChange)="GuardarRecurso()">
+        <ng-container *ngIf="tipoExamen!=undefined && tipoExamen!=null">
+
+          <mat-option *ngFor="let item of tipoExamen" [value]="item.id" style="font-size: 16px;">
+            {{item.valor}}
+          </mat-option>
+        </ng-container>
+      </mat-select>
+    </mat-form-field>
+  </div>
+  <div class="col-6 col-md-5 col-lg-5 titleItemRecursos">
+    Trabajo Grupal
+  </div>
+  <div class="col-6 col-md-5 col-lg-5 InputsDocencia">
+
+    <mat-form-field appearance="outline">
+      <mat-label>Trabajo Grupal</mat-label>
+      <mat-select #myselsetc [(ngModel)]="json.TrabajoGrupal" #select (selectionChange)="GuardarRecurso()">
+          <mat-option [value]="1">SI</mat-option>
+          <mat-option [value]="2">NO</mat-option>
+          <mat-option [value]="0">No aplica (PMP, IRCA, Microsoft)</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+  <div class="col-6 col-md-5 col-lg-5 titleItemRecursos">
+    Exposición de Alumnos
+  </div>
+  <div class="col-6 col-md-5 col-lg-5 InputsDocencia">
+
+    <mat-form-field appearance="outline">
+      <mat-label>Exposición de Alumnos</mat-label>
+      <mat-select #myselsetc [(ngModel)]="json.ExposicionAlumnos" #select (selectionChange)="GuardarRecurso()">
+          <mat-option [value]="1">SI</mat-option>
+          <mat-option [value]="2">NO</mat-option>
+          <mat-option [value]="0">No aplica (PMP, IRCA, Microsoft)</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+</div>
+<div class="SubtitleRecursoConect">Informe de Interactividad </div>
+<div class="row" style="align-items: center;margin: 0px;">
+  <div class="col-6 col-md-5 col-lg-5 titleItemRecursos">
+    Uso de Camara
+  </div>
+  <div class="col-6 col-md-5 col-lg-5 InputsDocencia">
+
+    <mat-form-field appearance="outline">
+      <mat-label>Uso de Camara</mat-label>
+      <mat-select #myselsetc [(ngModel)]="json.UsoCamara" #select (selectionChange)="GuardarRecurso()">
+          <mat-option [value]="true">SI</mat-option>
+          <mat-option [value]="false">NO</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+  <div class="col-6 col-md-5 col-lg-5 titleItemRecursos">
+    Dispositivo de Conexión
+  </div>
+  <div class="col-6 col-md-5 col-lg-5 InputsDocencia">
+
+    <mat-form-field appearance="outline">
+      <mat-label>Dispositivo de Conexión</mat-label>
+      <mat-select #myselsetc [(ngModel)]="json.IdPwTipoDispositivo" #select (selectionChange)="GuardarRecurso()">
+        <ng-container *ngIf="tipoDispositivo!=undefined && tipoDispositivo!=null">
+
+          <mat-option *ngFor="let item of tipoDispositivo" [value]="item.id" style="font-size: 16px;">
+            {{item.valor}}
+          </mat-option>
+        </ng-container>
+      </mat-select>
+    </mat-form-field>
+  </div>
+  <div class="col-6 col-md-5 col-lg-5 titleItemRecursos">
+    Ambiente desarrollo de clases
+  </div>
+  <div class="col-6 col-md-5 col-lg-5 InputsDocencia">
+
+    <mat-form-field appearance="outline">
+      <mat-label>Ambiente desarrollo de clases</mat-label>
+      <mat-select #myselsetc [(ngModel)]="json.IdPwTipoAmbienteClase" #select (selectionChange)="GuardarRecurso()">
+        <ng-container *ngIf="tipoAmbienteClase!=undefined && tipoAmbienteClase!=null">
+
+          <mat-option *ngFor="let item of tipoAmbienteClase" [value]="item.id" style="font-size: 16px;">
+            {{item.valor}}
+          </mat-option>
+        </ng-container>
+      </mat-select>
+    </mat-form-field>
+  </div>
+</div>

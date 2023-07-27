@@ -1,4 +1,5 @@
-<p style="text-align: center;">Registro de Asistencia - Sesión </p>
+
+<p style="text-align: center;">Registro de Asistencia - Sesión {{data.Sesion.orden}}/{{data.Sesion.maximo}} - {{data.Sesion.fechaHoraInicio | date:'dd-MM-yyyy'}} </p>
 
 <!--<div class="">
     <app-table-portal *ngIf="tableInfo!=undefined" [tableInfo]="tableInfo" [columnHeader]="columnHeader"
@@ -8,7 +9,7 @@
 </div> -->
 
 <ng-container *ngIf="Asistencias!=undefined">
-  <div>
+  <div style="position: relative;margin-bottom: 20px;">
     <ng-container *ngIf="charge==true">
       <div style="width: 100%;z-index: 10;height: 100%;position: absolute;display: flex;justify-content: center;padding: 20px;align-items: center;
       background: rgb(0 0 0 / 12%);border: 1px solid #C00;">
@@ -19,11 +20,11 @@
 
       <table style="width: 100%; border-top: none !important; " class="table">
         <thead style="position: sticky !important;
-        padding-bottom: 10px; top: -20px !important;">
+        padding-bottom: 10px; top: -20px !important;z-index: 10;">
           <tr style="background: #e6eefa;">
             <th  style="width: 10px;" rowspan="2"><b>N°</b></th>
             <th  style="width: 70px;" rowspan="2"><b>Código</b></th>
-            <th  style="width: 100px;" rowspan="2"><b>Nombres y Apellidos</b></th>
+            <th  style="width: 250px;" rowspan="2"><b>Nombres y Apellidos</b></th>
             <th  style="width: 100px; text-align: center;" rowspan="2"><b>Asistencia</b></th>
           </tr>
         </thead>
@@ -42,7 +43,7 @@
                   {{mat.alumno | uppercase}}
                 </td>
 
-                <td style="width:max-content; text-align: center;">
+                <td style="text-align: center;" class="InputsDocencia">
                   <!-- <ng-container *ngIf="matn.Asistio!=true">
                       <i class="material-icons" style="cursor: pointer ;" (click)="matn.Asistio=!matn.Asistio"></i>
                     </ng-container>
@@ -52,7 +53,7 @@
                     </ng-container> -->
 
 
-                  <mat-form-field appearance="outline" [floatLabel]="'never'">
+                  <mat-form-field appearance="outline" [floatLabel]="'never'" style="width: 100%;">
                     <mat-label>Seleccione</mat-label>
                     <mat-select [(ngModel)]="mat.asistio" placeholder="Tipo de documento">
 
@@ -71,20 +72,25 @@
         </ng-container>
       </table>
     </div>
-  </div>
 
-
-
-  <mat-dialog-actions align="end">
-    <div class="buttonsRegistroNota">
+  <mat-dialog-actions align="center" style="margin-top: 20px;">
+      <div style="margin: 0px 5px;">
+        <app-default-button [confs]="{color:'danger',titulo:'Cerrar'}"
+        [style]="'width: 100%'"
+        mat-dialog-close
+        [icon]="'close'"></app-default-button>
+      </div>
       <div style="margin: 0px 5px;">
         <app-default-button [confs]="{color:'primary',titulo:'Guardar'}"
         [style]="'width: 100%;background: #0069d9;border-color: #0062cc;'"
         (ButtoclClick)="RegistrarAsistenciaDetalleDocente()"
         [icon]="'check'"></app-default-button>
       </div>
-     </div>
   </mat-dialog-actions>
+  </div>
+
+
+
 </ng-container>
 <!-- <ng-container *ngIf="listadoAsistencias==undefined">
   <div style="width: 100%;display: flex;justify-content: center;padding: 20px"><mat-spinner></mat-spinner> </div>

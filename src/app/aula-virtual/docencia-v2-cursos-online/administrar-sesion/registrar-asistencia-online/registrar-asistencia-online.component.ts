@@ -4,6 +4,7 @@ import {
   OnDestroy,
   OnInit,
   SimpleChanges,
+  ViewEncapsulation,
 } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
@@ -18,6 +19,7 @@ import { SnackBarServiceService } from 'src/app/Core/Shared/Services/SnackBarSer
   selector: 'app-registrar-asistencia-online',
   templateUrl: './registrar-asistencia-online.component.html',
   styleUrls: ['./registrar-asistencia-online.component.scss'],
+  encapsulation: ViewEncapsulation.None,
 })
 export class RegistrarAsistenciaOnlineComponent implements OnInit, OnDestroy {
   private signal$ = new Subject();
@@ -94,7 +96,7 @@ export class RegistrarAsistenciaOnlineComponent implements OnInit, OnDestroy {
         });
       });
       this._OperacionesAsistenciaService
-        .Registrar(this.asistencias, this.data.IdPEspecifico, this.data.correo)
+        .Registrar(this.asistencias, this.data.IdPespecifico, this.data.correo)
         .pipe(takeUntil(this.signal$))
         .subscribe({
           next: (x) => {
@@ -107,6 +109,7 @@ export class RegistrarAsistenciaOnlineComponent implements OnInit, OnDestroy {
               5,
               'snackbarCrucigramaSucces'
             );
+            this.dialogRef.close();
           },
           error: (e) => {
             console.log(e);

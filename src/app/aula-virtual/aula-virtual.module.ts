@@ -120,6 +120,12 @@ import { DocenciaV2CursosOnlineComponent } from './docencia-v2-cursos-online/doc
 import { AdministrarSesionComponent } from './docencia-v2-cursos-online/administrar-sesion/administrar-sesion.component';
 import { RegistrarAsistenciaOnlineComponent } from './docencia-v2-cursos-online/administrar-sesion/registrar-asistencia-online/registrar-asistencia-online.component';
 import { CursoNotasComponent } from './curso/curso-notas/curso-notas.component';
+import { PespecificoSesionTemaComponent } from './docencia-v2-cursos-online/administrar-sesion/pespecifico-sesion-tema/pespecifico-sesion-tema.component';
+import { PespecificoSesionRecursoConectividadComponent } from './docencia-v2-cursos-online/administrar-sesion/pespecifico-sesion-recurso-conectividad/pespecifico-sesion-recurso-conectividad.component';
+import { PespecificoSesionEsquemaComponent } from './docencia-v2-cursos-online/administrar-sesion/pespecifico-sesion-esquema/pespecifico-sesion-esquema.component';
+import { AgregarTareaComponent } from './docencia-v2-cursos-online/administrar-sesion/pespecifico-sesion-esquema/agregar-tarea/agregar-tarea.component';
+import { AgregarCuestionarioComponent } from './docencia-v2-cursos-online/administrar-sesion/pespecifico-sesion-esquema/agregar-cuestionario/agregar-cuestionario.component';
+import { AgregarPreguntasComponent } from './docencia-v2-cursos-online/administrar-sesion/pespecifico-sesion-esquema/agregar-cuestionario/agregar-preguntas/agregar-preguntas.component';
 
 
 @NgModule({
@@ -237,6 +243,12 @@ import { CursoNotasComponent } from './curso/curso-notas/curso-notas.component';
     AdministrarSesionComponent,
     RegistrarAsistenciaOnlineComponent,
     CursoNotasComponent,
+    PespecificoSesionTemaComponent,
+    PespecificoSesionRecursoConectividadComponent,
+    PespecificoSesionEsquemaComponent,
+    AgregarTareaComponent,
+    AgregarCuestionarioComponent,
+    AgregarPreguntasComponent,
   ],
   imports: [
     CommonModule,

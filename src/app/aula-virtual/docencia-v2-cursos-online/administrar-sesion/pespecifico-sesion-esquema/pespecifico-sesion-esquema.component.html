@@ -1,0 +1,70 @@
+<ng-container *ngIf="charge==true">
+  <div style="width: 100%;z-index: 10;height: 100%;position: absolute;display: flex;justify-content: center;padding: 20px;align-items: center;
+  background: rgb(0 0 0 / 12%)">
+    <mat-spinner></mat-spinner>
+  </div>
+</ng-container>
+<div class="TitleRecursos">Actividades y Recursos de la Sesión </div>
+
+<div class="table-resposive">
+  <table style="width: 100%;">
+    <tr>
+      <th style="width: 180px;">Actividad / Recurso</th>
+      <th style="min-width: 200px;">Título</th>
+      <th style="width:150px;text-align: center;">Acciones</th>
+      <!-- <th style="min-width: 180px;">Metas pronosticadas 2021</th> -->
+    </tr>
+    <tr class="example-box" *ngFor="let item of criterios;let i=index">
+      <td>{{item.tipo}}</td>
+      <td>{{item.titulo}}</td>
+      <td>
+        <div class="accionesRecursos">
+          <div class="edidtarNaranja" (click)="OpenEditar(i)"></div>
+          <div class="eliminarNaranja" (click)="Eliminar(i)"></div>
+        </div>
+      </td>
+    </tr>
+  </table>
+</div>
+<div class="row AgregarRecursos">
+  <div class="col-12 col-md-9 col-lg-10 InputsDocencia" *ngIf="IdEditar==null">
+    <mat-form-field appearance="outline">
+      <mat-label>Selecione Actividad o Recurso</mat-label>
+      <mat-select #myselsetc [(ngModel)]="ActividadSelect" #select>
+        <mat-option [value]="0">Material Adicional</mat-option>
+        <ng-container *ngFor="let item of esquemas">
+          <mat-option *ngIf="item.visible==true" [value]="item.id">
+            {{item.nombre}}
+          </mat-option>
+        </ng-container>
+      </mat-select>
+    </mat-form-field>
+  </div>
+  <div class="col-12 col-md-3 col-lg-2" *ngIf="IdEditar==null">
+    <app-default-button [confs]="{color:'primary',titulo:'Agregar'}" [icon]="''"
+      [style]="'margin: 0px;border-radius: 5px;width: 100%;margin-top:5px'" [disabled]="ActividadSelect==-1"
+      (ButtoclClick)="ActividadSelect==0?fileInput.click():Agregar()"></app-default-button>
+  </div>
+  <ng-container *ngIf="nombrefile!='' || IdEditar!=null">
+    <div class="ContentMaterialAdicionarl col-12">
+      <div>
+        <div class="errorMaterialAdicional" *ngIf="!filestatus && fileErrorMsg!=''">{{fileErrorMsg}}</div>
+        <div class="MaterialAdicional" (click)="fileInput.click()">{{nombrefile}}</div>
+      </div>
+      <div style="display: flex;">
+        <app-default-button [confs]="{color:'primary',titulo:IdEditar==null?'Guardar':'Actualizar'}" [icon]="'upload'"
+          [style]="'margin: 0px;border-radius: 5px;margin-top:5px'" [disabled]="!filestatus"
+          (ButtoclClick)="AgregarPEspecificoSesionMaterialAdicional()"></app-default-button>
+
+        <app-default-button *ngIf="IdEditar!=null" [confs]="{color:'danger',titulo:'Cancelar'}" [icon]="'close'"
+          [style]="'margin: 0px;border-radius: 5px;margin-left:10px'"
+          (ButtoclClick)="IdEditar=null;nombrefile=''"></app-default-button>
+      </div>
+    </div>
+  </ng-container>
+
+  <input #fileInput type="file" id="file" (change)="getFileDetails($event)" style="    width: 100%;
+    border: solid 1px #c2c2c2;
+    padding: 7px;
+    border-radius: 5px;display: none;">
+</div>

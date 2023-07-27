@@ -109,6 +109,7 @@ export class DocenciaAccesoClasesComponent implements OnInit,OnChanges,OnDestroy
             c.Acciones=c.urlWebex==null?'Próximamente':'Ir  a clase'
           });
         }
+        console.log(this.tableData)
       }
     })
   }

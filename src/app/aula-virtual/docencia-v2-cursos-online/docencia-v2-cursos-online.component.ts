@@ -3,6 +3,7 @@ import { MatTabChangeEvent } from '@angular/material/tabs';
 import { ActivatedRoute } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
 import { DatosPerfilService } from 'src/app/Core/Shared/Services/DatosPerfil/datos-perfil.service';
+import { ProveedorService } from 'src/app/Core/Shared/Services/Proveedor/proveedor.service';
 
 @Component({
   selector: 'app-docencia-v2-cursos-online',
@@ -20,6 +21,7 @@ export class DocenciaV2CursosOnlineComponent implements OnInit,OnDestroy {
   constructor(
     private _DatosPerfilService:DatosPerfilService,
     private _ActivatedRoute: ActivatedRoute,
+    private _ProveedorService:ProveedorService,
   ) { }
 
   public migaPan = [
@@ -32,7 +34,10 @@ export class DocenciaV2CursosOnlineComponent implements OnInit,OnDestroy {
   public tabIndex = 0;
   public IdPespecifico=0;
   public curso:any
+
+  public DataProveedor:any
   ngOnInit(): void {
+    this.ObtenerInformacionProveedor();
     this._ActivatedRoute.params.pipe(takeUntil(this.signal$)).subscribe({
       next: (x) => {
         this.IdPespecifico = parseInt(x['IdPespecifico']);
@@ -51,6 +56,16 @@ export class DocenciaV2CursosOnlineComponent implements OnInit,OnDestroy {
             titulo: this.curso.cursoNombre,
             urlWeb: '/AulaVirtual/DocenciaV2/'+this.IdPespecifico,
           },)
+      }
+    })
+  }
+
+  ObtenerInformacionProveedor(){
+    this._ProveedorService.ObtenerInformacionProveedor().pipe(takeUntil(this.signal$)).subscribe({
+      next:x=>{
+        console.log(x)
+        this.DataProveedor=x
+        // this.GenerarReporteFiltradoPortal()
       }
     })
   }

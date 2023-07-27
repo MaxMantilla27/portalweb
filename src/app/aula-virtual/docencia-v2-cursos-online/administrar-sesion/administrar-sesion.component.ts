@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
@@ -22,10 +22,13 @@ export class AdministrarSesionComponent implements OnInit, OnDestroy {
     private _DatosPerfilService: DatosPerfilService,
     private _ActivatedRoute: ActivatedRoute,
     public dialog: MatDialog,
+
   ) {}
   public IdPespecifico = 0;
   public sesiones: any;
   public IdSesion = 0;
+  @Input() DataProveedor:any
+  public sesion:any
   ngOnInit(): void {
     this._ActivatedRoute.params.pipe(takeUntil(this.signal$)).subscribe({
       next: (x) => {
@@ -51,23 +54,35 @@ export class AdministrarSesionComponent implements OnInit, OnDestroy {
               if (this.IdSesion == 0) {
                 if (s.esVisible == true) {
                   this.IdSesion = s.idSesion;
+                  this.sesion=s
                 }
               }
             });
             if (this.IdSesion == 0) {
               this.IdSesion = this.sesiones[this.sesiones.length - 1].idSesion;
+              this.sesion=this.sesiones[this.sesiones.length - 1]
             }
           }
         },
       });
   }
   ObtnerDataSesion(){
-
+    this.sesiones.forEach((s:any) => {
+      if(s.idSesion==this.IdSesion){
+        this.sesion=s
+      }
+    });
   }
+
   OpenAsistencias(){
+    this.sesiones.forEach((s:any) => {
+      if(s.idSesion==this.IdSesion){
+        this.sesion=s
+      }
+    });
     const dialogRef = this.dialog.open(RegistrarAsistenciaOnlineComponent, {
       width: '1000px',
-      data: { IdPespecifico: this.IdPespecifico,IdSesion:this.IdSesion },
+      data: { IdPespecifico: this.IdPespecifico,IdSesion:this.IdSesion,Sesion:this.sesion,correo:this.DataProveedor.email },
       panelClass: 'dialog-Tarjeta',
      // disableClose:true
     });

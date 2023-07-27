@@ -4,7 +4,7 @@
   </div>
 </div>
 <div style="border-top:solid 3px #f4f4f4 ;"></div>
-<div class="container">
+<div class="container" *ngIf="DataProveedor!=undefined">
   <div class="row rowpaddAv">
     <div class="col-12 col-md-12 col-lg-12" style="position: relative;padding: 0px;">
       <div style="    display: flex;
@@ -29,7 +29,7 @@
             </div>
           </ng-template>
           <div class="pad-resp">
-            <app-administrar-sesion *ngIf="IdPespecifico>0"></app-administrar-sesion>
+            <app-administrar-sesion *ngIf="IdPespecifico>0" [DataProveedor]="DataProveedor"></app-administrar-sesion>
           </div>
         </mat-tab>
 
