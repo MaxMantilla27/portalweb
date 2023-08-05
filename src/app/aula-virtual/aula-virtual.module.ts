@@ -132,6 +132,10 @@ import { CriterioEvaluacionDocenteComponent } from './docencia-v2-cursos-online/
 import { PerfilAlumnoDocenteComponent } from './docencia-v2-cursos-online/perfil-alumno-docente/perfil-alumno-docente.component';
 import { CronogramaClasesDocenteComponent } from './docencia-v2-cursos-online/cronograma-clases-docente/cronograma-clases-docente.component';
 import { NotaDocenteComponent } from './docencia-v2-cursos-online/nota-docente/nota-docente.component';
+import { RegistrarForoVideoComponent } from './sesiones/sesion-video/registrar-foro-video/registrar-foro-video.component';
+import { RegistrarForoTareaComponent } from './sesiones/sesion-tarea/registrar-foro-tarea/registrar-foro-tarea.component';
+import { CursoForoProyectoContenidoComponent } from './curso/curso-proyecto/curso-foro-proyecto-contenido/curso-foro-proyecto-contenido.component';
+import { CursoForoProyectoInsertComponent } from './curso/curso-proyecto/curso-foro-proyecto-insert/curso-foro-proyecto-insert.component';
 
 
 @NgModule({
@@ -261,6 +265,12 @@ import { NotaDocenteComponent } from './docencia-v2-cursos-online/nota-docente/n
     PerfilAlumnoDocenteComponent,
     CronogramaClasesDocenteComponent,
     NotaDocenteComponent,
+    RegistrarForoVideoComponent,
+    RegistrarForoTareaComponent,
+    CursoForoProyectoContenidoComponent,
+    CursoForoProyectoInsertComponent,
+
+
   ],
   imports: [
     CommonModule,

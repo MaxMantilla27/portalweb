@@ -1,0 +1,71 @@
+<ng-container *ngFor="let item of foroContenido;let i=index">
+  <div class="foroTitle">Tema: {{item.titulo}}</div>
+  <div class="foroContenido">{{item.contenido}}</div>
+  <div style="display: flex;align-items: center;justify-content: flex-start;margin-top: 20px;">
+    <img [src]="item.urlAvatar" alt="{{item.urlAvatar}}" style="width: 60px; height: 60px;margin-right: 10px;">
+    <div>
+      <div class="AutorFecha">Por: {{item.usuario}}</div>
+      <div class="AutorFecha">Fecha: {{item.fecha| date: 'dd/MM/yyyy' }}</div>
+    </div>
+  </div>
+
+  <div class="foroTitleComentario row" style="align-items: center;width: 90%; margin-left: 10%">
+    <div class="col-12 col-md-6 col-lg-8">
+      <div style="font-weight: bold;">Comentarios:</div>
+    </div>
+    <div class="col-12 col-md-6 col-lg-4" style="display: flex;justify-content: right;">
+      <img src="../../../../assets/icons/respuestas-foro-28.svg" alt="Respuesta Foro"
+        style="width: 20px; height: 20px;  margin-right: 10px;">
+      <div class="NRespuestas">{{item.respuestas}} Comentarios</div>
+    </div>
+  </div>
+</ng-container>
+<div class="Comentarios" style="width: 100%; margin-left: 2%;">
+  <ng-container *ngFor="let itemRespuesta of foroRespuesta;let i=index">
+    <div class="row" style="display: flex;">
+      <div style="width: 10%;">
+        <div class="triangulo-redondeado"></div>
+      </div>
+      <div style="width: 90%;">
+        <div class="RespuestasForo">
+          <div class="foroContenido" style="text-align: left;font-size: 17px;">{{itemRespuesta.contenido}}</div>
+          <div style="display: flex;align-items: center;justify-content: flex-start;margin-top: 20px;">
+            <img [src]="itemRespuesta.urlAvatarRespuesta" alt="{{itemRespuesta.urlAvatarRespuesta}}" style="width: 60px; height: 60px; margin-right: 10px;">
+            <div class="AutorFecha">
+              <div class="AutorFecha">Por: {{itemRespuesta.nombres}}</div>
+              <div class="AutorFecha">Fecha: {{itemRespuesta.fechaCreacion| date: 'dd/MM/yyyy' }}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+</div>
+
+<div *ngIf="ForoCerrado==false" class="RegistroComentario" style="width: 90%;  margin-top: 20px; margin-left: 10%;">
+  <ng-container>
+    <div class="foroTitleRespuesta" style="font-weight: bold;">Añade tu comentario: </div>
+    <div class="col-12 col-md-12 col-lg-12">
+      <form [formGroup]="userForm">
+        <div class="container">
+          <div class="col-12 col-md-12 col-lg-12">
+            <div class="row">
+              <textarea class="ContenidoRespuestaForo" formControlName="RespuestaForo" rows="4"></textarea>
+            </div>
+            <div class="row" style="margin-top: 20px;justify-content: flex-end;">
+              <div style="width: auto;">
+                <app-default-button (click)="VolverAtras()" [confs]="{color:'primary',titulo:'Cerrar'}"
+                  [style]="'margin-top: 10px;'"></app-default-button>
+              </div>
+              <div style="width: auto;">
+                <app-default-button [confs]="{color:'primary',titulo:'Publicar Comentario'}"
+                  [disabled]="!userForm.valid" [style]="'margin-top: 10px;'" (ButtoclClick)="EnviarRespuestaForo()">
+                </app-default-button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </ng-container>
+</div>

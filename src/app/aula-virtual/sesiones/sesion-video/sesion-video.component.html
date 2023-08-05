@@ -1,3 +1,4 @@
+hola
 <ng-container *ngIf="AbrirModal==false">
   <!-- <div class="cursoTitle">{{json.NombreCapitulo}}</div>
   <div>Capítulo {{idCapitulo}}:{{NombreCapitulo}} </div> -->
@@ -42,6 +43,14 @@
               <img class="IconoErrorVideoPlayer" src="../../../../assets/icons/videos-29.svg">
               <div (click)="Interaccion('Reportar error en video');OpenModal()" style="color: #FF7012;margin-left: 10px;margin-top: 8px;">
                 Reportar error en video
+              </div>
+            </div>
+          </div>
+          <div class="col-12 row" style="display: flex;justify-content: flex-end;margin-top: 10px;">
+            <div class="ErrorVideoPlayer" style="width:auto;display: flex;">
+              <i style="margin-top: 5px;;color:#FF7012;font-size: 32px !important;" class="material-icons" >help</i>
+              <div (click)="Interaccion('Consulta a docente');OpenModalForo()" style="color: #FF7012;margin-left: 10px;margin-top: 8px;">
+                Consulta a docente
               </div>
             </div>
           </div>

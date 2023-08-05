@@ -60,4 +60,11 @@ export class ForoCursoService {
     }
   }
 
+  public ObtenerForoCursoProyecto(IdPGeneral:number):Observable<any>{
+    if(this.isBrowser){
+      return this.http.get<any>(this.urlBase+'/ObtenerForoCursoProyecto?IdPGeneral='+IdPGeneral);
+    }else{
+      return EMPTY;
+    }
+  }
 }

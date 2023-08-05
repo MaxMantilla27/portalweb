@@ -36,6 +36,7 @@ export class ModuloForoComponent implements OnInit, OnChanges,OnDestroy {
   public ContenidoForo=false;
   public IdForo=0;
   public foro: Array<any> = [];
+  public foroFiltrado: Array<any> = [];
   public paginacion = [1];
   public pagina = 1;
   public paginaCeil = Math.ceil(this.pagina / 5);

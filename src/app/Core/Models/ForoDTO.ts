@@ -17,3 +17,17 @@ export interface ForoRespuestaDTO{
     esDocente: boolean,
     estadoAtendido:number,
 }
+export interface ForoDTOCompleto{
+  idPrincipal:number,
+  idCurso: number,
+  idPEspecificoPadre: number,
+  idPEspecificoHijo: number,
+  titulo: string,
+  contenido: string,
+  idOrigenForo: number,
+  idCapitulo: number,
+  idSesion: number,
+  idSubSesion: number,
+  idVideo: string,
+  urlArchivo: string,
+}
