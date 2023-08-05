@@ -117,6 +117,10 @@ import { DocenciaCursosOnlineComponent } from './docencia-v2/docencia-cursos-onl
 import { DocenciaV2CursosOnlineComponent } from './docencia-v2-cursos-online/docencia-v2-cursos-online.component';
 import { AdministrarSesionComponent } from './docencia-v2-cursos-online/administrar-sesion/administrar-sesion.component';
 import { CursoNotasComponent } from './curso/curso-notas/curso-notas.component';
+import { RegistrarForoVideoComponent } from './sesiones/sesion-video/registrar-foro-video/registrar-foro-video.component';
+import { RegistrarForoTareaComponent } from './sesiones/sesion-tarea/registrar-foro-tarea/registrar-foro-tarea.component';
+import { CursoForoProyectoContenidoComponent } from './curso/curso-proyecto/curso-foro-proyecto-contenido/curso-foro-proyecto-contenido.component';
+import { CursoForoProyectoInsertComponent } from './curso/curso-proyecto/curso-foro-proyecto-insert/curso-foro-proyecto-insert.component';
 
 
 @NgModule({
@@ -231,6 +235,10 @@ import { CursoNotasComponent } from './curso/curso-notas/curso-notas.component';
     DocenciaV2CursosOnlineComponent,
     AdministrarSesionComponent,
     CursoNotasComponent,
+    RegistrarForoVideoComponent,
+    RegistrarForoTareaComponent,
+    CursoForoProyectoContenidoComponent,
+    CursoForoProyectoInsertComponent,
 
 
   ],

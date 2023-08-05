@@ -6,6 +6,7 @@ import { CrucigramaService } from 'src/app/Core/Shared/Services/Crucigrama/cruci
 import { HelperService } from 'src/app/Core/Shared/Services/helper.service';
 import { VideoSesionService } from 'src/app/Core/Shared/Services/VideoSesion/video-sesion.service';
 import { RegistrarErrorComponent } from './registrar-error/registrar-error/registrar-error.component';
+import { RegistrarForoVideoComponent } from './registrar-foro-video/registrar-foro-video.component';
 
 
 @Component({
@@ -62,7 +63,12 @@ export class SesionVideoComponent implements OnInit,OnChanges,OnDestroy {
     IdPGeneral:this.json.IdPGeneralHijo,
     IdSesion:this.idSesion,
     OrdenSeccion:this.OrdenSeccion
-  }
+  };
+  public NombreSesion=''
+  public NombreSubSesion=''
+  public NumeroCapitulo=0;
+  public NumeroSesion=0;
+  public NumeroSubSesion=0;
   ngOnDestroy(): void {
     this.signal$.next(true)
     this.signal$.complete()
@@ -97,7 +103,17 @@ export class SesionVideoComponent implements OnInit,OnChanges,OnDestroy {
         this.videoData=x;
         if(this.videoData!=undefined){
           var calc=Math.ceil(this.videoData.tiempoVisualizado*100/this.videoData.tiempoTotalVideo);
-          this.estadovideo=calc
+          this.estadovideo=calc;
+          this.videoData.objetoConfigurado.configuracion.forEach(
+            (x: any) => {
+              if(x.tipoVista=='2'||x.tipoVista=='3'){
+                this.NumeroCapitulo=x.capitulo
+                this.NumeroSesion=x.numeroSesion
+                this.NombreSesion=x.nombreSesion
+                this.NumeroSubSesion=x.numeroSubSesion
+                this.NombreSubSesion=x.nombreSubSesion
+              }
+            })
         }
         if(this.videoData.tiempoTotalVideo>=3600){
           this.videoData.h=this.redondearAbajo(this.videoData.tiempoTotalVideo,3600)
@@ -158,4 +174,29 @@ export class SesionVideoComponent implements OnInit,OnChanges,OnDestroy {
   Interaccion(nombre:string){
     this._HelperService.enviarMsjAcciones({Tag:"Button",Nombre:nombre})
   }
+  OpenModalForo(): void {
+    const dialogRef = this.dialog.open(RegistrarForoVideoComponent, {
+      width: '500px',
+      data: {
+        IdPrincipal:this.json.IdPGeneralPadre,
+        IdCurso:this.json.IdPGeneralHijo,
+        IdPEspecificoPadre:this.json.IdPEspecificoPadre,
+        IdPEspecificoHijo:this.json.IdPEspecificoHijo,
+        NombreCapitulo:this.NombreCapitulo,
+        NombreSesion:this.NombreSesion,
+        NombreSubSesion:this.NombreSubSesion,
+        IdVideo:this.videoData.objetoConfigurado.idVideoBrightcove,
+        NumeroCapitulo:this.NumeroCapitulo,
+        NumeroSesion:this.NumeroSesion,
+        NumeroSubSesion:this.NumeroSubSesion,
+        VideoData:this.videoData
+        },
+      panelClass: 'custom-dialog-container',
+    });
+
+    dialogRef.afterClosed().pipe(takeUntil(this.signal$)).subscribe((result) => {
+      console.log('The dialog was closed');
+    });
+  }
+
 }
