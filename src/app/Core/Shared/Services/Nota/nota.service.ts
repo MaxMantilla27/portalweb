@@ -48,4 +48,12 @@ export class NotaService {
       return EMPTY;
     }
   }
+  public ListadoAsistenciaProcesar(idPEspecifico:number,grupo:number):Observable<any>{
+    if(this.isBrowser){
+      return this.http.get<any>(this.urlBase+'/ListadoAsistenciaProcesar?idPespecifico='+idPEspecifico+ "&grupo=" +grupo);
+    }else{
+      return EMPTY;
+    }
+  }
+
 }

@@ -34,7 +34,7 @@ export class ModuloRecursoComponent implements OnInit,OnChanges,OnDestroy {
   }
   ngOnChanges(changes: SimpleChanges): void {
     if(this.tipo!=0){
-      console.log(this.Estructura)
+      console.log(this.tipo)
       if(this.tipo==1){
         this.MaterialAdicionalAonline()
       }

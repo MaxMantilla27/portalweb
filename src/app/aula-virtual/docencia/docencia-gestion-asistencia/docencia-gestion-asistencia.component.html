@@ -1,5 +1,5 @@
 <ng-container *ngIf="listadoAsistencias!=undefined">
-  <div>
+  <!-- <div>
     <ng-container *ngIf="charge==true">
       <div style="width: 100%;z-index: 10;height: 100%;position: absolute;display: flex;justify-content: center;padding: 20px;align-items: center;
        background: rgb(0 0 0 / 12%);border: 1px solid #C00;">
@@ -10,59 +10,52 @@
 
       <table style="width: 100%; border-top: none !important; " class="table">
         <thead style="position: sticky !important;
-        padding-bottom: 10px; top: -20px !important;">
+        padding-bottom: 10px; top: -20px !important;z-index: 4;">
           <tr style="background: #e6eefa;">
-            <th style="width: 50px;" rowspan="2"><b>N°</b></th>
-            <th style="width: 100px;" rowspan="2"><b>Código</b></th>
-            <th style="width: 100px !important;" rowspan="2"><b>Nombres y Apellidos</b></th>  
+            <th class="sticky" rowspan="2"><b>N°</b></th>
+            <th rowspan="2"><b>Código</b></th>
+            <th  rowspan="2"><b>Nombres y Apellidos</b></th>
           </tr>
-          <ng-container *ngIf="listadoAsistencias.ListadoSesiones.length>0">
+          <ng-container *ngIf="listadoAsistencias.listadoSesiones.length>0">
             <tr >
-              <th style="width: 5px;min-width: 55px;text-align: center;" *ngFor="let item of listadoAsistencias.ListadoSesiones ; let i=index">
+              <th style="width: 5px;min-width: 55px;text-align: center;" *ngFor="let item of listadoAsistencias.listadoSesiones ; let i=index">
                 <ng-container >
                   <button mat-icon-button matTooltip="Basic" aria-label="Example icon-button with a heart icon">
                     <mat-icon>edit</mat-icon>
                   </button>
-                  <br>Sesión {{i + 1}} <br> {{item.FechaHoraInicio | date:'dd/MM/yyyy' }}
+                  <br>Sesión {{i + 1}} <br> {{item.fechaHoraInicio | date:'dd/MM/yyyy' }}
                 </ng-container>
 
               </th>
             </tr>
-        
+
           </ng-container>
-          
+
         </thead>
-        <ng-container *ngIf="listadoAsistencias.ListadoMatriculas!=null && listadoAsistencias.ListadoMatriculas.length>0">
+        <ng-container *ngIf="listadoAsistencias.listadoMatriculas!=null && listadoAsistencias.listadoMatriculas.length>0">
           <tbody>
-            <ng-container *ngFor="let mat of listadoAsistencias.ListadoMatriculas ; let i=index">
+            <ng-container *ngFor="let mat of listadoAsistencias.listadoMatriculas ; let i=index">
               <tr>
                 <td>
                   {{i + 1}}
                 </td>
                 <td>
-                  {{mat.CodigoMatricula}}
+                  {{mat.codigoMatricula}}
                 </td>
                 <td>
-                  {{mat.Alumno | uppercase}}
+                  {{mat.alumno | uppercase}}
                 </td>
-                
+
                 <ng-container *ngFor="let matn of mat.asistenciaAlumno">
                   <td style="width:max-content; text-align: center;">
-                  <!-- <ng-container *ngIf="matn.Asistio!=true">
-                      <i class="material-icons" style="cursor: pointer ;" (click)="matn.Asistio=!matn.Asistio"></i>
-                    </ng-container>
-                    <mat-option >gvkhv kh</mat-option> -->
-                    <!-- <ng-container *ngIf="matn.Asistio==true">
-                      <i class="material-icons" (click)="matn.Asistio=!matn.Asistio" style="color:#0075ff ;cursor: pointer">check_box</i>
-                    </ng-container> -->
-                        
+
                     <select (change)="matn.Asistio=!matn.Asistio" id="select-menu" style="width:max-content; border-radius: 0.4em;" >
                       <ng-container *ngIf="matn.Asistio!=true">
                          <option  default>Falta</option>
                          <option  > Asistio</option>
                       </ng-container>
-                      
-                      <ng-container *ngIf="matn.Asistio==true">                    
+
+                      <ng-container *ngIf="matn.Asistio==true">
 		                    <option  default>Asistio</option>
                         <option (click)="matn.Asistio=!matn.Asistio">Falta</option>
                       </ng-container>
@@ -75,27 +68,34 @@
         </ng-container>
       </table>
     </div>
-  </div>
+  </div> -->
+  <div>
+    <div class="tableGestionNotas">
 
-  <mat-dialog-actions align="end">
-    <div class="buttonsRegistroNota">
-      <div style="margin: 0px 5px;">
-        <app-default-button [confs]="{color:'primary',titulo:'Guardar'}"
+      <app-table-v2 *ngIf="infoAsistencias!=undefined && infoAsistencias.length>0" [tableData]="infoAsistencias"
+        [columnHeader]="columnHeader" [tipoContenido]="TipoContenido" [tipoContenidoHeader]="TipoContenidoHeader"
+        [StyleContent]="'    font-size: 12px;padding: 10px;'" [dataSelect]="dataSeldt" [DisableSort]="DisableSort"
+        [DisableCell]="DisableCell" [buttonheader]="buttonheader" [sticky]="sticky"
+        (ButtonHeaderClick)="HeaderChange($event)" (SelectChange)="SelectChange($event)"></app-table-v2>
+    </div>
+
+  </div>
+  <div class="buttonsRegistroNota">
+    <div style="margin: 0px 5px;">
+      <app-default-button [confs]="{color:'primary',titulo:'Guardar'}"
         [style]="'width: 100%;background: #0069d9;border-color: #0062cc;'"
-        (ButtoclClick)="RegistrarAsistenciaDetalleDocente()"
-        [icon]="'check'"></app-default-button>
-      </div>
-      <div style="margin: 0px 5px;">
-        <app-default-button [confs]="{color:'primary',titulo:'Finalizar Registro'}"
+        (ButtoclClick)="RegistrarAsistenciaDetalleDocente()" [icon]="'check'"></app-default-button>
+    </div>
+    <div style="margin: 0px 5px;">
+      <app-default-button [confs]="{color:'primary',titulo:'Finalizar Registro'}"
         (ButtoclClick)="ConfirmacionAprobarNotaDetalleDocente()"
         [style]="'width: 100%;background: #0069d9;border-color: #0062cc;'" [icon]="'check'"></app-default-button>
-      </div>
-      <!-- <div style="margin: 0px 5px;">
+    </div>
+    <!-- <div style="margin: 0px 5px;">
         <app-default-button [confs]="{color:'danger',titulo:'cancelar'}"
         [style]="'width: 100%;'" [icon]="'close'" (ButtoclClick)="charge==false?dialogRef.close():charge=true"></app-default-button>
       </div> -->
-    </div>
-  </mat-dialog-actions>
+  </div>
 </ng-container>
 <ng-container *ngIf="listadoAsistencias==undefined">
   <div style="width: 100%;display: flex;justify-content: center;padding: 20px"><mat-spinner></mat-spinner> </div>

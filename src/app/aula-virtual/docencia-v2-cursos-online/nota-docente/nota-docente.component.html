@@ -1,0 +1,9 @@
+
+<app-table-v2 *ngIf="infoNotas!=undefined && infoNotas.length>0" [tableData]="infoNotas"
+  [columnHeader]="columnHeader"  [tipoContenido]="TipoContenido"
+  [StyleContent]="'    font-size: 12px;padding: 10px;'" [sticky]="sticky"></app-table-v2>
+
+  <div  style="display: flex;
+  justify-content: center;" *ngIf="infoNotas!=undefined && infoNotas.length>0 "  >
+    <button type="action" (click)="DownloadExcel()"><img src="../../../../assets/icons/descarga-36.svg" alt="x" />Descargar en Excel</button>
+  </div>

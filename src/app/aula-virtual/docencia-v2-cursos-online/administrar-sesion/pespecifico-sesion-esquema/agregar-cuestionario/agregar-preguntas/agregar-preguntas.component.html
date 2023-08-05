@@ -42,7 +42,7 @@
           text-overflow: ellipsis;
           display: -webkit-box;
           -webkit-line-clamp: 3;
-          -webkit-box-orient: vertical;">{{nombrefile}}</div>
+          -webkit-box-orient: vertical;">{{pregunta.NombreArchivo}}</div>
       </div>
       <input #fileInput type="file" id="file" (change)="getFileDetails($event)" style="    width: 100%;
         border: solid 1px #c2c2c2;
@@ -61,36 +61,44 @@
       <table style="width: 100%;">
         <tr style="border-bottom: solid 1px black;">
           <th style="min-width: 280px;">Alternativas</th>
-          <th style="width: 200px;">Alternativa Correcta</th>
+          <th style="width: 100px;">Alternativa Correcta</th>
           <th style="width:110px;text-align: center;">Puntaje</th>
+          <th style="width:40px;text-align: center;"></th>
           <!-- <th style="min-width: 180px;">Metas pronosticadas 2021</th> -->
         </tr>
-        <tr  *ngFor="let item of pregunta.Alternativas;let i=index" >
-          <td class="box-label">
-            <mat-form-field appearance="fill" style="width: 100%;height: 100%;"  floatLabel="never">
-              <mat-label>Descripción Alternativa</mat-label>
-              <input type="text" placeholder="Descripción Alternativa" [(ngModel)]="item.Alternativa" matInput>
-            </mat-form-field>
+        <tr  *ngFor="let item of pregunta.Alternativas;let i=index"  style="height: 40px;background: #f1f1f1;">
+          <td class="box-label" style="position: relative;">
+            <input type="text" placeholder="Descripción Alternativa" [(ngModel)]="item.Alternativa" class="inputTextoDocente">
+
           </td>
-          <td style="cursor: pointer;" (click)="item.EsCorrecta==true?item.Puntaje=0:'';item.EsCorrecta=!item.EsCorrecta">
+          <td style="cursor: pointer;    text-align: center;" (click)="item.EsCorrecta==true?item.Puntaje=0:'';item.EsCorrecta=!item.EsCorrecta">
             <i class="material-icons" *ngIf="item.EsCorrecta==true" style="color: #5e9b00  !important;">radio_button_on</i>
             <i class="material-icons" *ngIf="item.EsCorrecta==false" >radio_button_off</i>
           </td>
-          <td class="fieldTable">
+          <td  style="position: relative" >
             <ng-container *ngIf="item.EsCorrecta==true">
-              <mat-form-field appearance="outline" >
+              <select [(ngModel)]="item.Puntaje" class="selectTextoDocente">
+
+                <option *ngFor="let item of Calificaciones" [value]="item">
+                  {{item}}
+                </option>
+              </select>
+              <!-- <mat-form-field appearance="outline" >
                 <mat-label>Puntaje</mat-label>
                 <mat-select #myselsetc [(ngModel)]="item.Puntaje" >
                     <mat-option *ngFor="let item of Calificaciones" [value]="item">
                       {{item}}
                     </mat-option>
                 </mat-select>
-              </mat-form-field>
+              </mat-form-field> -->
             </ng-container>
-            <ng-container *ngIf="item.EsCorrecta==false">
+            <div *ngIf="item.EsCorrecta==false" style="text-align: center;">
               {{item.Puntaje}}
-            </ng-container>
+            </div>
 
+          </td>
+          <td style="cursor: pointer;    text-align: center;" (click)="EliminarAlternatica(i)">
+            <i class="material-icons" style="color: red  !important;">close</i>
           </td>
         </tr>
       </table>
@@ -119,7 +127,7 @@
           text-overflow: ellipsis;
           display: -webkit-box;
           -webkit-line-clamp: 3;
-          -webkit-box-orient: vertical;">{{nombrefile2}}</div>
+          -webkit-box-orient: vertical;">{{pregunta.NombreArchivoRetroalimentacion}}</div>
       </div>
       <input #fileInput2 type="file" id="file" (change)="getFileDetails2($event)" style="    width: 100%;
         border: solid 1px #c2c2c2;

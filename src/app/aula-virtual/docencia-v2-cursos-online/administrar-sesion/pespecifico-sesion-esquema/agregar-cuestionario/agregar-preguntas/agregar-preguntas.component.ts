@@ -30,22 +30,20 @@ export class AgregarPreguntasComponent implements OnInit ,OnDestroy {
     Enunciado:'' ,
     Descripcion:'' ,
     Puntaje:0 ,
-    NombreArchivo:null  ,
+    NombreArchivo:'Seleccione Archivo'  ,
     UrlArchivoSubido:null ,
     Retroalimentacion:null ,
-    NombreArchivoRetroalimentacion:null ,
+    NombreArchivoRetroalimentacion:'Seleccione Archivo' ,
     UrlArchivoSubidoRetroalimentacion:null ,
     file: new File([], ''),
     fileRetroalimentacion: new File([], ''),
     Alternativas :[]
   }
 
-  public nombrefile = 'Seleccione Archivo';
   public filestatus = false;
   public fileErrorMsg = '';
   public selectedFiles?: FileList;
   public Calificaciones: Array<any> = [];
-  public nombrefile2 = 'Seleccione Archivo';
   public filestatus2 = false;
   public fileErrorMsg2 = '';
   public selectedFiles2?: FileList;
@@ -84,7 +82,9 @@ export class AgregarPreguntasComponent implements OnInit ,OnDestroy {
     });
   }
 
-
+  EliminarAlternatica(index:number){
+    this.pregunta.Alternativas.splice(index,1)
+  }
   AddAlternativa(){
     this.pregunta.Alternativas.push({
       Id:0,
@@ -97,7 +97,7 @@ export class AgregarPreguntasComponent implements OnInit ,OnDestroy {
     for (var i = 0; i < event.target.files.length; i++) {
       this.filestatus2 = true;
       var name = event.target.files[i].name;
-      this.nombrefile2 = name;
+      this.pregunta.NombreArchivoRetroalimentacion = name;
       var size = event.target.files[i].size;
       if (Math.round(size / 1024 / 1024) > 15) {
         this.fileErrorMsg2 = 'El tamaño del archivo no debe superar los 15 MB';
@@ -114,7 +114,7 @@ export class AgregarPreguntasComponent implements OnInit ,OnDestroy {
     for (var i = 0; i < event.target.files.length; i++) {
       this.filestatus = true;
       var name = event.target.files[i].name;
-      this.nombrefile = name;
+      this.pregunta.NombreArchivo = name;
       var size = event.target.files[i].size;
       if (Math.round(size / 1024 / 1024) > 15) {
         this.fileErrorMsg = 'El tamaño del archivo no debe superar los 15 MB';
@@ -141,6 +141,9 @@ export class AgregarPreguntasComponent implements OnInit ,OnDestroy {
       if (file) {
         this.pregunta.file = file;
       }
+    }else{
+      this.pregunta.NombreArchivo=null
+      this.pregunta.UrlArchivoSubido=null
     }
 
     if (this.selectedFiles2) {
@@ -148,6 +151,9 @@ export class AgregarPreguntasComponent implements OnInit ,OnDestroy {
       if (file) {
         this.pregunta.fileRetroalimentacion = file;
       }
+    }else{
+      this.pregunta.NombreArchivoRetroalimentacion=null
+      this.pregunta.UrlArchivoSubidoRetroalimentacion=null
     }
     this.dialogRef.close(this.pregunta)
   }

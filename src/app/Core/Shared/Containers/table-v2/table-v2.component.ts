@@ -2,6 +2,7 @@ import { AfterViewInit, ChangeDetectorRef, Component, EventEmitter, Input, OnCha
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { Basic } from 'src/app/Core/Models/BasicDTO';
 @Component({
   selector: 'app-table-v2',
   templateUrl: './table-v2.component.html',
@@ -20,14 +21,21 @@ export class TableV2Component implements OnInit {
   @Input() StyleCabecera=''
   @Input() StyleContent=''
   @Input() tipoContenido:any;
+  @Input() sticky:any={};
+  @Input() buttonheader:any={};
+  @Input() DisableSort:any;
+  @Input() DisableCell:any={};
+  @Input() tipoContenidoHeader:any;
   @Output() ButtonClick= new EventEmitter<number>();
   @Output() ButtonArrayClick= new EventEmitter<{indexButton:number,index:number}>();
+  @Output() ButtonHeaderClick= new EventEmitter<any>();
+  @Output() SelectChange= new EventEmitter<{index:number,value:any,column:string}>();
   dataSource :any;
   objectKeys = Object.keys;
   public select=-1
   public lengthInicial=0
+  @Input() dataSelect:Array<Basic>=[]
   ngOnInit(): void {
-    console.log(this.tableData);
     var i=0
     this.tableData.forEach((t:any) => {
       t.index=i;
@@ -35,11 +43,16 @@ export class TableV2Component implements OnInit {
     });
     this.lengthInicial=this.tableData.length;
     this.dataSource = new MatTableDataSource(this.tableData);
-
     //this.dataSource.sort = this.sort;
   }
   ngAfterViewInit (){
     this.dataSource.sort = this.sort;
+    this.dataSource.sortingDataAccessor = (data:any, col:any) => {
+      if (this.DisableSort!=undefined && this.DisableSort[col]!=undefined) {
+        return false;
+      }
+      return data[col];
+    };
     this.paginator._intl.itemsPerPageLabel = 'Items por pagina';
     this.paginator._intl.getRangeLabel = (page: number, pageSize: number, length: number) => {
       const start = page * pageSize + 1;
@@ -51,7 +64,6 @@ export class TableV2Component implements OnInit {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    console.log(this.tableData.length)
     if(this.tableData.length!=this.lengthInicial){
       var i=0
       this.tableData.forEach((t:any) => {
@@ -60,9 +72,20 @@ export class TableV2Component implements OnInit {
       });
       this.dataSource = new MatTableDataSource(this.tableData);
       this.changeDetectorRefs.detectChanges();
+
+      this.dataSource.sort = this.sort;
+      this.dataSource.sortingDataAccessor = (data:any, col:any) => {
+        if (this.DisableSort!=undefined && this.DisableSort[col]!=undefined) {
+          return false;
+        }
+        return data[col];
+      };
     }
   }
   IsArray(Element:any){
     return Array.isArray(Element);
+  }
+  isSticky(colum:string){
+    return this.sticky[colum]!=undefined
   }
 }

@@ -21,7 +21,7 @@ export class PerfilalumnosService {
 
   public ObtenerPerfilAlumnos(IdPEspecifico:number):Observable<any>{
     if(this.isBrowser){
-      return this.http.get<any>(this.urlBase+'/ObtenerPerfilAlumnos?IdPEspecifico='+IdPEspecifico);    
+      return this.http.get<any>(this.urlBase+'/ObtenerPerfilAlumnos?IdPEspecifico='+IdPEspecifico);
     } else {
       return EMPTY;
     }

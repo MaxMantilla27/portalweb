@@ -126,6 +126,12 @@ import { PespecificoSesionEsquemaComponent } from './docencia-v2-cursos-online/a
 import { AgregarTareaComponent } from './docencia-v2-cursos-online/administrar-sesion/pespecifico-sesion-esquema/agregar-tarea/agregar-tarea.component';
 import { AgregarCuestionarioComponent } from './docencia-v2-cursos-online/administrar-sesion/pespecifico-sesion-esquema/agregar-cuestionario/agregar-cuestionario.component';
 import { AgregarPreguntasComponent } from './docencia-v2-cursos-online/administrar-sesion/pespecifico-sesion-esquema/agregar-cuestionario/agregar-preguntas/agregar-preguntas.component';
+import { MaterialEstudioDocenteComponent } from './docencia-v2-cursos-online/material-estudio-docente/material-estudio-docente.component';
+import { SilaboDocenteComponent } from './docencia-v2-cursos-online/silabo-docente/silabo-docente.component';
+import { CriterioEvaluacionDocenteComponent } from './docencia-v2-cursos-online/criterio-evaluacion-docente/criterio-evaluacion-docente.component';
+import { PerfilAlumnoDocenteComponent } from './docencia-v2-cursos-online/perfil-alumno-docente/perfil-alumno-docente.component';
+import { CronogramaClasesDocenteComponent } from './docencia-v2-cursos-online/cronograma-clases-docente/cronograma-clases-docente.component';
+import { NotaDocenteComponent } from './docencia-v2-cursos-online/nota-docente/nota-docente.component';
 
 
 @NgModule({
@@ -249,6 +255,12 @@ import { AgregarPreguntasComponent } from './docencia-v2-cursos-online/administr
     AgregarTareaComponent,
     AgregarCuestionarioComponent,
     AgregarPreguntasComponent,
+    MaterialEstudioDocenteComponent,
+    SilaboDocenteComponent,
+    CriterioEvaluacionDocenteComponent,
+    PerfilAlumnoDocenteComponent,
+    CronogramaClasesDocenteComponent,
+    NotaDocenteComponent,
   ],
   imports: [
     CommonModule,

@@ -1,0 +1,26 @@
+
+<mat-accordion class="acordionSilaboModuloCursosDocente" multi>
+  <ng-container *ngFor="let item of listaSeccionesContenidosDocumento">
+    <ng-container *ngIf="item.order>0 && item.estado==true">
+      <mat-expansion-panel hideToggle (opened)="item.opened=true"
+      (closed)="item.opened=false" [expanded]="true">
+        <mat-expansion-panel-header class="headerPanelExpacionDocente">
+          <mat-panel-title>
+            <div style="display: flex;align-items: center;">
+              <div *ngIf="item.opened" class="estructuraProgramicon iconActive">-</div>
+              <div *ngIf="!item.opened" class="estructuraProgramicon ">+</div>
+              <div class="estructuraProgramTitle" [ngClass]="{'expandActive':item.opened}">{{item.titulo}}</div>
+            </div>
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <div *ngIf="item.titulo!='Beneficios' && item.titulo!='Certificacion' && item.titulo!='Estructura Curricular'"
+          [innerHtml]="item.contenido | safeHtml" style="padding: 0px 60px 20px;"></div>
+        <div *ngIf="item.titulo=='Beneficios' || item.titulo=='Certificacion'" style="padding: 0px 60px 20px;">
+          <ul>
+            <li *ngFor="let content of item.ArrayContent">{{content}}</li>
+          </ul>
+        </div>
+      </mat-expansion-panel>
+    </ng-container>
+  </ng-container>
+</mat-accordion>

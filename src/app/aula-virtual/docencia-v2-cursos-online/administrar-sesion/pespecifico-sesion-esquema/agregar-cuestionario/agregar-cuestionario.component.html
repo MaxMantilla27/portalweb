@@ -101,8 +101,13 @@
     </div>
     <div class="col-2">
       <app-default-button [confs]="{color:'primary',titulo:'Agregar'}" [disabled]="tipoagregra==-1"
-        [style]="'width: 100%;margin:0px'" (ButtoclClick)="tipoagregra==1?'':OpenCrearPregunta()"
+        [style]="'width: 100%;margin:0px'" (ButtoclClick)="tipoagregra==1?fileInput.click():OpenCrearPregunta()"
         [icon]="''"></app-default-button>
+
+      <input #fileInput type="file" id="file" (change)="getFileDetails($event)" style="    width: 100%;
+      border: solid 1px #c2c2c2;
+      padding: 7px;
+      border-radius: 5px;display: none;">
     </div>
     <div class="col-12">
       <div class="table-resposive">

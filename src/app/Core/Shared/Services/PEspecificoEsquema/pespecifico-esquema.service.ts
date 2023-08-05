@@ -1,16 +1,20 @@
-import { isPlatformBrowser } from '@angular/common';
-import { HttpClient, HttpRequest } from '@angular/common/http';
-import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
-import { Observable, EMPTY } from 'rxjs';
-import { PEspecificoSesionCuestionarioSaveDTO, PEspecificoSesionTareaSaveDTO, PEspecificoSesionMaterialAdicionalSaveDTO } from 'src/app/Core/Models/PEspecificoEsquema';
-import { environment } from 'src/environments/environment';
+import { isPlatformBrowser } from "@angular/common";
+import { HttpClient, HttpRequest } from "@angular/common/http";
+import { Inject, Injectable, PLATFORM_ID } from "@angular/core";
+import { Observable, EMPTY } from "rxjs";
+import {
+  PEspecificoSesionCuestionarioSaveDTO,
+  PEspecificoSesionTareaSaveDTO,
+  PEspecificoSesionMaterialAdicionalSaveDTO,
+} from "src/app/Core/Models/PEspecificoEsquema";
+import { environment } from "src/environments/environment";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root",
 })
 export class PEspecificoEsquemaService {
   isBrowser: boolean;
-  public urlBase=environment.url_api+'PEspecificoEsquema';
+  public urlBase = environment.url_api + "PEspecificoEsquema";
   constructor(
     private http: HttpClient,
     @Inject(PLATFORM_ID) platformId: Object
@@ -18,183 +22,372 @@ export class PEspecificoEsquemaService {
     this.isBrowser = isPlatformBrowser(platformId);
   }
 
-  public ObtenerpreguntasSesion(IdPwPEspecificoSesionCuestionario:number):Observable<any>{
-    if(this.isBrowser){
-      return this.http.get<any>(this.urlBase+'/ObtenerpreguntasSesion?IdPwPEspecificoSesionCuestionario='+IdPwPEspecificoSesionCuestionario);
+  public ObtenerpreguntasSesion(
+    IdPwPEspecificoSesionCuestionario: number
+  ): Observable<any> {
+    if (this.isBrowser) {
+      return this.http.get<any>(
+        this.urlBase +
+          "/ObtenerpreguntasSesion?IdPwPEspecificoSesionCuestionario=" +
+          IdPwPEspecificoSesionCuestionario
+      );
     } else {
       return EMPTY;
     }
   }
-  public ObtenerpreguntasSesionV2(IdPwPEspecificoSesionCuestionario:number):Observable<any>{
-    if(this.isBrowser){
-      return this.http.get<any>(this.urlBase+'/ObtenerpreguntasSesionV2?IdPwPEspecificoSesionCuestionario='+IdPwPEspecificoSesionCuestionario);
+  public ObtenerpreguntasSesionV2(
+    IdPwPEspecificoSesionCuestionario: number
+  ): Observable<any> {
+    if (this.isBrowser) {
+      return this.http.get<any>(
+        this.urlBase +
+          "/ObtenerpreguntasSesionV2?IdPwPEspecificoSesionCuestionario=" +
+          IdPwPEspecificoSesionCuestionario
+      );
     } else {
       return EMPTY;
     }
   }
-  public ObtenerActividadesRecursoSesionDocente(IdPEspecificoSesion:number):Observable<any>{
-    if(this.isBrowser){
-      return this.http.get<any>(this.urlBase+'/ObtenerActividadesRecursoSesionDocente?IdPEspecificoSesion='+IdPEspecificoSesion);
+  public ObtenerActividadesRecursoSesionDocente(
+    IdPEspecificoSesion: number
+  ): Observable<any> {
+    if (this.isBrowser) {
+      return this.http.get<any>(
+        this.urlBase +
+          "/ObtenerActividadesRecursoSesionDocente?IdPEspecificoSesion=" +
+          IdPEspecificoSesion
+      );
     } else {
       return EMPTY;
     }
   }
-  public ObtenerCriteriosPorProgramaEspecifico(IdPEspecifico:number):Observable<any>{
-    if(this.isBrowser){
-      return this.http.get<any>(this.urlBase+'/ObtenerCriteriosPorProgramaEspecifico?IdPEspecifico='+IdPEspecifico);
+  public ObtenerMaterialAdicionalDocentePespecifico(
+    IdPEspecifico: number
+  ): Observable<any> {
+    if (this.isBrowser) {
+      return this.http.get<any>(
+        this.urlBase +
+          "/ObtenerMaterialAdicionalDocentePespecifico?IdPEspecifico=" +
+          IdPEspecifico
+      );
     } else {
       return EMPTY;
     }
   }
-  public ObtenerPEspecificoSesionTareaPorId(Id:number):Observable<any>{
-    if(this.isBrowser){
-      return this.http.get<any>(this.urlBase+'/ObtenerPEspecificoSesionTareaPorId?Id='+Id);
+  public ObtenerCriteriosPorProgramaEspecifico(
+    IdPEspecifico: number
+  ): Observable<any> {
+    if (this.isBrowser) {
+      return this.http.get<any>(
+        this.urlBase +
+          "/ObtenerCriteriosPorProgramaEspecifico?IdPEspecifico=" +
+          IdPEspecifico
+      );
     } else {
       return EMPTY;
     }
   }
-  public ObtenerPEspecificoSesionMaterialAdicionalPorId(Id:number):Observable<any>{
-    if(this.isBrowser){
-      return this.http.get<any>(this.urlBase+'/ObtenerPEspecificoSesionMaterialAdicionalPorId?Id='+Id);
+  public ObtenerPEspecificoSesionTareaPorId(Id: number): Observable<any> {
+    if (this.isBrowser) {
+      return this.http.get<any>(
+        this.urlBase + "/ObtenerPEspecificoSesionTareaPorId?Id=" + Id
+      );
     } else {
       return EMPTY;
     }
   }
-  public ObtenerPEspecificoSesionCuestionarioPorId(Id:number):Observable<any>{
-    if(this.isBrowser){
-      return this.http.get<any>(this.urlBase+'/ObtenerPEspecificoSesionCuestionarioPorId?Id='+Id);
+  public ObtenerPEspecificoSesionMaterialAdicionalPorId(
+    Id: number
+  ): Observable<any> {
+    if (this.isBrowser) {
+      return this.http.get<any>(
+        this.urlBase +
+          "/ObtenerPEspecificoSesionMaterialAdicionalPorId?Id=" +
+          Id
+      );
     } else {
       return EMPTY;
     }
   }
-  public ObtenerPEspecificoSesionCuestionarioPreguntaAlternativaPorIdPregunta(Id:number):Observable<any>{
-    if(this.isBrowser){
-      return this.http.get<any>(this.urlBase+'/ObtenerPEspecificoSesionCuestionarioPreguntaAlternativaPorIdPregunta?Id='+Id);
+  public ObtenerPEspecificoSesionCuestionarioPorId(
+    Id: number
+  ): Observable<any> {
+    if (this.isBrowser) {
+      return this.http.get<any>(
+        this.urlBase + "/ObtenerPEspecificoSesionCuestionarioPorId?Id=" + Id
+      );
     } else {
       return EMPTY;
     }
   }
-  public ObtenerPreguntaTipo():Observable<any>{
-    if(this.isBrowser){
-      return this.http.get<any>(this.urlBase+'/ObtenerPreguntaTipo');
+  public ObtenerPEspecificoSesionCuestionarioPreguntaAlternativaPorIdPregunta(
+    Id: number
+  ): Observable<any> {
+    if (this.isBrowser) {
+      return this.http.get<any>(
+        this.urlBase +
+          "/ObtenerPEspecificoSesionCuestionarioPreguntaAlternativaPorIdPregunta?Id=" +
+          Id
+      );
     } else {
       return EMPTY;
     }
   }
-  public AgregarPEspecificoCuestionario(Json:PEspecificoSesionCuestionarioSaveDTO):Observable<any>{
-    if(this.isBrowser){
-      console.log(Json)
+  public ObtenerPreguntaTipo(): Observable<any> {
+    if (this.isBrowser) {
+      return this.http.get<any>(this.urlBase + "/ObtenerPreguntaTipo");
+    } else {
+      return EMPTY;
+    }
+  }
+  public AgregarPEspecificoCuestionario(
+    Json: PEspecificoSesionCuestionarioSaveDTO
+  ): Observable<any> {
+    if (this.isBrowser) {
+      console.log(Json);
       const formData: FormData = new FormData();
-      var Id=Json.Id==null?'':Json.Id?.toString()
-      var Descripcion=Json.Descripcion==null?'':Json.Descripcion?.toString()
-      var IdPEspecificoSesion=Json.IdPEspecificoSesion==null?'':Json.IdPEspecificoSesion?.toString()
-      formData.append('Id', Id);
-      formData.append('IdPEspecificoSesion', IdPEspecificoSesion);
-      formData.append('Titulo', Json.Titulo);
-      formData.append('Descripcion', Descripcion);
-      formData.append('FechaEntrega', Json.FechaEntrega.toString());
-      formData.append('IdCriterioEvaluacion', Json.IdCriterioEvaluacion.toString());
-      formData.append('CalificacionMaxima', Json.CalificacionMaxima.toString());
-      formData.append('TiempoLimite', Json.TiempoLimite.toString());
-      formData.append('Usuario', 'docente');
-      if(Json.Preguntas.length==0){
-        formData.append('Preguntas', '[]');
+      var Id = Json.Id == null ? "" : Json.Id?.toString();
+      var Descripcion =
+        Json.Descripcion == null ? "" : Json.Descripcion?.toString();
+      var IdPEspecificoSesion =
+        Json.IdPEspecificoSesion == null
+          ? ""
+          : Json.IdPEspecificoSesion?.toString();
+      formData.append("Id", Id);
+      formData.append("IdPEspecificoSesion", IdPEspecificoSesion);
+      formData.append("Titulo", Json.Titulo);
+      formData.append("Descripcion", Descripcion);
+      formData.append("FechaEntrega", Json.FechaEntrega.toString());
+      formData.append(
+        "IdCriterioEvaluacion",
+        Json.IdCriterioEvaluacion.toString()
+      );
+      formData.append("CalificacionMaxima", Json.CalificacionMaxima.toString());
+      formData.append("TiempoLimite", Json.TiempoLimite.toString());
+      formData.append("Usuario", "docente");
+      if (Json.Preguntas.length == 0) {
+        formData.append("Preguntas", "[]");
       }
-      let  indexf=0
+      let indexf = 0;
       for (let i = 0; i < Json.Preguntas.length; i++) {
         //formData.append("Preguntas[' + i + ']", JSON.stringify(Json.Preguntas[i]));
-        var IdPreguntaTipo=(Json.Preguntas[i].IdPreguntaTipo==undefined || Json.Preguntas[i].IdPreguntaTipo==null)?'':Json.Preguntas[i].IdPreguntaTipo!.toString();
-        var NombreArchivo=(Json.Preguntas[i].NombreArchivo==undefined || Json.Preguntas[i].NombreArchivo==null)?'':Json.Preguntas[i].NombreArchivo!.toString();
-        var UrlArchivoSubido=(Json.Preguntas[i].UrlArchivoSubido==undefined || Json.Preguntas[i].UrlArchivoSubido==null)?'':Json.Preguntas[i].UrlArchivoSubido!.toString();
-        var Retroalimentacion=(Json.Preguntas[i].Retroalimentacion==undefined || Json.Preguntas[i].Retroalimentacion==null)?'':Json.Preguntas[i].Retroalimentacion!.toString();
-        var NombreArchivoRetroalimentacion=(Json.Preguntas[i].NombreArchivoRetroalimentacion==undefined || Json.Preguntas[i].NombreArchivoRetroalimentacion==null)?'':Json.Preguntas[i].NombreArchivoRetroalimentacion!.toString();
-        var UrlArchivoSubidoRetroalimentacion=(Json.Preguntas[i].UrlArchivoSubidoRetroalimentacion==undefined || Json.Preguntas[i].UrlArchivoSubidoRetroalimentacion==null)?'':Json.Preguntas[i].UrlArchivoSubidoRetroalimentacion!.toString();
-        formData.append('Preguntas[' + i + '][idPreguntaTipo]', IdPreguntaTipo);
-        formData.append('Preguntas[' + i + '][enunciado]', Json.Preguntas[i].Enunciado.toString());
-        formData.append('Preguntas[' + i + '][descripcion]', Json.Preguntas[i].Descripcion.toString());
-        formData.append('Preguntas[' + i + '][puntaje]', Json.Preguntas[i].Puntaje.toString());
-        formData.append('Preguntas[' + i + '][file]', Json.Preguntas[i].file);
+        var IdPreguntaTipo =
+          Json.Preguntas[i].IdPreguntaTipo == undefined ||
+          Json.Preguntas[i].IdPreguntaTipo == null
+            ? ""
+            : Json.Preguntas[i].IdPreguntaTipo!.toString();
+        var NombreArchivo =
+          Json.Preguntas[i].NombreArchivo == undefined ||
+          Json.Preguntas[i].NombreArchivo == null
+            ? ""
+            : Json.Preguntas[i].NombreArchivo!.toString();
+        var UrlArchivoSubido =
+          Json.Preguntas[i].UrlArchivoSubido == undefined ||
+          Json.Preguntas[i].UrlArchivoSubido == null
+            ? ""
+            : Json.Preguntas[i].UrlArchivoSubido!.toString();
+        var Retroalimentacion =
+          Json.Preguntas[i].Retroalimentacion == undefined ||
+          Json.Preguntas[i].Retroalimentacion == null
+            ? ""
+            : Json.Preguntas[i].Retroalimentacion!.toString();
+        var NombreArchivoRetroalimentacion =
+          Json.Preguntas[i].NombreArchivoRetroalimentacion == undefined ||
+          Json.Preguntas[i].NombreArchivoRetroalimentacion == null
+            ? ""
+            : Json.Preguntas[i].NombreArchivoRetroalimentacion!.toString();
+        var UrlArchivoSubidoRetroalimentacion =
+          Json.Preguntas[i].UrlArchivoSubidoRetroalimentacion == undefined ||
+          Json.Preguntas[i].UrlArchivoSubidoRetroalimentacion == null
+            ? ""
+            : Json.Preguntas[i].UrlArchivoSubidoRetroalimentacion!.toString();
+        formData.append("Preguntas[" + i + "][idPreguntaTipo]", IdPreguntaTipo);
+        formData.append(
+          "Preguntas[" + i + "][enunciado]",
+          Json.Preguntas[i].Enunciado.toString()
+        );
+        formData.append(
+          "Preguntas[" + i + "][descripcion]",
+          Json.Preguntas[i].Descripcion.toString()
+        );
+        formData.append(
+          "Preguntas[" + i + "][puntaje]",
+          Json.Preguntas[i].Puntaje.toString()
+        );
+        formData.append("Preguntas[" + i + "][file]", Json.Preguntas[i].file);
 
-        formData.append('Preguntas[' + i + '][fileRetroalimentacion]', Json.Preguntas[i].fileRetroalimentacion);
-        formData.append('Preguntas[' + i + '][nombreArchivo]', NombreArchivo);
-        formData.append('Preguntas[' + i + '][urlArchivoSubido]', UrlArchivoSubido);
-        formData.append('Preguntas[' + i + '][retroalimentacion]', Retroalimentacion);
-        formData.append('Preguntas[' + i + '][nombreArchivoRetroalimentacion]', NombreArchivoRetroalimentacion);
-        formData.append('Preguntas[' + i + '][urlArchivoSubidoRetroalimentacion]', UrlArchivoSubidoRetroalimentacion);
-        formData.append('Preguntas[' + i + '][id]', Json.Preguntas[i].Id.toString());
+        formData.append(
+          "Preguntas[" + i + "][fileRetroalimentacion]",
+          Json.Preguntas[i].fileRetroalimentacion
+        );
+        formData.append("Preguntas[" + i + "][nombreArchivo]", NombreArchivo);
+        formData.append(
+          "Preguntas[" + i + "][urlArchivoSubido]",
+          UrlArchivoSubido
+        );
+        formData.append(
+          "Preguntas[" + i + "][retroalimentacion]",
+          Retroalimentacion
+        );
+        formData.append(
+          "Preguntas[" + i + "][nombreArchivoRetroalimentacion]",
+          NombreArchivoRetroalimentacion
+        );
+        formData.append(
+          "Preguntas[" + i + "][urlArchivoSubidoRetroalimentacion]",
+          UrlArchivoSubidoRetroalimentacion
+        );
+        formData.append(
+          "Preguntas[" + i + "][id]",
+          Json.Preguntas[i].Id.toString()
+        );
 
-        if( Json.Preguntas[i].file.size>0){
-          var end=Json.Preguntas[i].file.name.split('.')[1]
-          formData.append('files', Json.Preguntas[i].file, 'f-'+i+'.'+end);
-          indexf++
+        if (Json.Preguntas[i].file.size > 0) {
+          var end = Json.Preguntas[i].file.name.split(".")[1];
+          formData.append(
+            "files",
+            Json.Preguntas[i].file,
+            "f-" + i + "." + end
+          );
+          indexf++;
         }
-        if( Json.Preguntas[i].fileRetroalimentacion.size>0){
-          var end=Json.Preguntas[i].fileRetroalimentacion.name.split('.')[1]
-          formData.append('files', Json.Preguntas[i].fileRetroalimentacion,'r-'+i+'.'+end);
-          indexf++
+        if (Json.Preguntas[i].fileRetroalimentacion.size > 0) {
+          var end = Json.Preguntas[i].fileRetroalimentacion.name.split(".")[1];
+          formData.append(
+            "files",
+            Json.Preguntas[i].fileRetroalimentacion,
+            "r-" + i + "." + end
+          );
+          indexf++;
         }
-        if(Json.Preguntas[i].Alternativas.length==0){
-          formData.append('Preguntas[' + i + '][alternativas]', '[]');
+        if (Json.Preguntas[i].Alternativas.length == 0) {
+          formData.append("Preguntas[" + i + "][alternativas]", "[]");
         }
 
         for (let j = 0; j < Json.Preguntas[i].Alternativas.length; j++) {
-          var IdAlt=(Json.Preguntas[i].Alternativas[j].Id==undefined || Json.Preguntas[i].Alternativas[j].Id==null)?'':Json.Preguntas[i].Alternativas[j].Id!.toString();
-          formData.append('Preguntas[' + i + '][Alternativas][' + j + '][Id]', IdAlt.toString());
-          formData.append('Preguntas[' + i + '][Alternativas][' + j + '][Alternativa]', Json.Preguntas[i].Alternativas[j].Alternativa.toString());
-          formData.append('Preguntas[' + i + '][Alternativas][' + j + '][EsCorrecta]', Json.Preguntas[i].Alternativas[j].EsCorrecta.toString());
-          formData.append('Preguntas[' + i + '][Alternativas][' + j + '][Puntaje]', Json.Preguntas[i].Alternativas[j].Puntaje.toString());
+          var IdAlt =
+            Json.Preguntas[i].Alternativas[j].Id == undefined ||
+            Json.Preguntas[i].Alternativas[j].Id == null
+              ? ""
+              : Json.Preguntas[i].Alternativas[j].Id!.toString();
+          formData.append(
+            "Preguntas[" + i + "][Alternativas][" + j + "][Id]",
+            IdAlt.toString()
+          );
+          formData.append(
+            "Preguntas[" + i + "][Alternativas][" + j + "][Alternativa]",
+            Json.Preguntas[i].Alternativas[j].Alternativa.toString()
+          );
+          formData.append(
+            "Preguntas[" + i + "][Alternativas][" + j + "][EsCorrecta]",
+            Json.Preguntas[i].Alternativas[j].EsCorrecta.toString()
+          );
+          formData.append(
+            "Preguntas[" + i + "][Alternativas][" + j + "][Puntaje]",
+            Json.Preguntas[i].Alternativas[j].Puntaje.toString()
+          );
         }
       }
-      const req= new HttpRequest('POST', `${this.urlBase}/AgregarPEspecificoCuestionario`,formData, {
-        reportProgress: true,
-        responseType: 'json'
-      });
-      return this.http.request(req)
-    }else{
+      const req = new HttpRequest(
+        "POST",
+        `${this.urlBase}/AgregarPEspecificoCuestionario`,
+        formData,
+        {
+          reportProgress: true,
+          responseType: "json",
+        }
+      );
+      return this.http.request(req);
+    } else {
       return EMPTY;
     }
   }
-  public AgregarPEspecificoSesionTarea(Json:PEspecificoSesionTareaSaveDTO):Observable<any>{
-    if(this.isBrowser){
+  public AgregarPEspecificoSesionTarea(
+    Json: PEspecificoSesionTareaSaveDTO
+  ): Observable<any> {
+    if (this.isBrowser) {
       const formData: FormData = new FormData();
-      var Id=Json.Id==null?'':Json.Id?.toString()
-      var Descripcion=Json.Descripcion==null?'':Json.Descripcion?.toString()
-      var IdPEspecificoSesion=Json.IdPEspecificoSesion==null?'':Json.IdPEspecificoSesion?.toString()
-      formData.append('file', Json.file);
-      formData.append('Id', Id);
-      formData.append('IdPEspecificoSesion', IdPEspecificoSesion);
-      formData.append('Titulo', Json.Titulo);
-      formData.append('Descripcion', Descripcion);
-      formData.append('FechaEntrega', Json.FechaEntrega.toString());
-      formData.append('IdCriterioEvaluacion', Json.IdCriterioEvaluacion.toString());
-      formData.append('CalificacionMaxima', Json.CalificacionMaxima.toString());
-      formData.append('TieneArchivo', Json.TieneArchivo.toString());
-      formData.append('Usuario', 'docente');
-      const req= new HttpRequest('POST', `${this.urlBase}/AgregarPEspecificoSesionTarea`,formData, {
-        reportProgress: true,
-        responseType: 'json'
-      });
-      return this.http.request(req)
-    }else{
+      var Id = Json.Id == null ? "" : Json.Id?.toString();
+      var Descripcion =
+        Json.Descripcion == null ? "" : Json.Descripcion?.toString();
+      var IdPEspecificoSesion =
+        Json.IdPEspecificoSesion == null
+          ? ""
+          : Json.IdPEspecificoSesion?.toString();
+      formData.append("file", Json.file);
+      formData.append("Id", Id);
+      formData.append("IdPEspecificoSesion", IdPEspecificoSesion);
+      formData.append("Titulo", Json.Titulo);
+      formData.append("Descripcion", Descripcion);
+      formData.append("FechaEntrega", Json.FechaEntrega.toString());
+      formData.append(
+        "IdCriterioEvaluacion",
+        Json.IdCriterioEvaluacion.toString()
+      );
+      formData.append("CalificacionMaxima", Json.CalificacionMaxima.toString());
+      formData.append("TieneArchivo", Json.TieneArchivo.toString());
+      formData.append("Usuario", "docente");
+      const req = new HttpRequest(
+        "POST",
+        `${this.urlBase}/AgregarPEspecificoSesionTarea`,
+        formData,
+        {
+          reportProgress: true,
+          responseType: "json",
+        }
+      );
+      return this.http.request(req);
+    } else {
       return EMPTY;
     }
   }
-  public AgregarPEspecificoSesionMaterialAdicional(Json:PEspecificoSesionMaterialAdicionalSaveDTO):Observable<any>{
-    if(this.isBrowser){
+  public AgregarPEspecificoSesionMaterialAdicional(
+    Json: PEspecificoSesionMaterialAdicionalSaveDTO
+  ): Observable<any> {
+    if (this.isBrowser) {
       const formData: FormData = new FormData();
-      var Id=Json.Id==null?'':Json.Id?.toString()
-      var IdPEspecificoSesion=Json.IdPEspecificoSesion==null?'':Json.IdPEspecificoSesion?.toString()
-      formData.append('file', Json.file);
-      formData.append('Id', Id);
-      formData.append('IdPEspecificoSesion', IdPEspecificoSesion);
-      formData.append('Usuario', 'docente');
-      const req= new HttpRequest('POST', `${this.urlBase}/AgregarPEspecificoSesionMaterialAdicional`,formData, {
-        reportProgress: true,
-        responseType: 'json'
-      });
-      return this.http.request(req)
-    }else{
+      var Id = Json.Id == null ? "" : Json.Id?.toString();
+      var IdPEspecificoSesion =
+        Json.IdPEspecificoSesion == null
+          ? ""
+          : Json.IdPEspecificoSesion?.toString();
+      formData.append("file", Json.file);
+      formData.append("Id", Id);
+      formData.append("IdPEspecificoSesion", IdPEspecificoSesion);
+      formData.append("Usuario", "docente");
+      const req = new HttpRequest(
+        "POST",
+        `${this.urlBase}/AgregarPEspecificoSesionMaterialAdicional`,
+        formData,
+        {
+          reportProgress: true,
+          responseType: "json",
+        }
+      );
+      return this.http.request(req);
+    } else {
       return EMPTY;
     }
+  }
+  public ImportarExel(file: File): Observable<any> {
+    if (this.isBrowser) {
+      const formData: FormData = new FormData();
+      formData.append("file", file);
+      const req = new HttpRequest(
+        "POST",
+        `${this.urlBase}/ImportarExel`,
+        formData,
+        {
+          reportProgress: true,
+          responseType: "json",
+        }
+      );
+      return this.http.request(req);
+    } else {
+      return EMPTY;
+    }
+  }
+  public dowloadFile(url: string):any {
+    return  this.http.get(url, { responseType: "blob" });
   }
 }

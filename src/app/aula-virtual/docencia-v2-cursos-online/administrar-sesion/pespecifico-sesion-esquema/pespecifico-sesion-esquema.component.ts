@@ -69,6 +69,7 @@ export class PespecificoSesionEsquemaComponent implements OnInit ,OnChanges, OnD
   ngOnInit(): void {
   }
   ObtenerActividadesRecursoSesionDocente(){
+    this.criterios=[]
     this.ActividadSelect=-1
     this._PEspecificoEsquemaService.ObtenerActividadesRecursoSesionDocente(this.IdSesion).pipe(takeUntil(this.signal$))
     .subscribe({

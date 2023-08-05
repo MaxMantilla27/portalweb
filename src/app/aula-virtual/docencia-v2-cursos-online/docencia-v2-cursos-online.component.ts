@@ -31,7 +31,7 @@ export class DocenciaV2CursosOnlineComponent implements OnInit,OnDestroy {
     }
   ];
   public hide=false
-  public tabIndex = 0;
+  public tabIndex = 4;
   public IdPespecifico=0;
   public curso:any
 

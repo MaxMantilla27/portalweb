@@ -20,7 +20,7 @@ export class DocenciaAccesoClasesComponent implements OnInit,OnChanges,OnDestroy
     'ses': 'Sesión'};
 
   TipoContenido:any={
-    'fechaHoraInicio': ['date'],
+    fechaHoraInicio: ['date'],
     'HoraInicio': ['hora'],
     'HoraFinal': ['hora'],
     //'Acciones': ['buttons'],

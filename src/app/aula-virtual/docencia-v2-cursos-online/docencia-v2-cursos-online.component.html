@@ -29,7 +29,8 @@
             </div>
           </ng-template>
           <div class="pad-resp">
-            <app-administrar-sesion *ngIf="IdPespecifico>0" [DataProveedor]="DataProveedor"></app-administrar-sesion>
+
+            <app-administrar-sesion  [DataProveedor]="DataProveedor"></app-administrar-sesion>
           </div>
         </mat-tab>
 
@@ -53,6 +54,9 @@
             </div>
           </ng-template>
           <div class="pad-resp">
+            <ng-container *ngIf="IdPespecifico>0 && curso!=undefined">
+              <app-material-estudio-docente [IdPespecifico]="IdPespecifico" [idPGeneral]="curso.idPGeneral"></app-material-estudio-docente>
+            </ng-container>
           </div>
         </mat-tab>
         <mat-tab>
@@ -63,6 +67,7 @@
             </div>
           </ng-template>
           <div class="pad-resp">
+            <app-docencia-gestion-asistencia *ngIf="IdPespecifico>0" [idPEspecifico]="IdPespecifico"></app-docencia-gestion-asistencia>
           </div>
         </mat-tab>
         <mat-tab>
@@ -73,6 +78,7 @@
             </div>
           </ng-template>
           <div class="pad-resp">
+            <app-nota-docente *ngIf="IdPespecifico>0" [IdPespecifico]="IdPespecifico"></app-nota-docente>
           </div>
         </mat-tab>
         <mat-tab>
@@ -83,7 +89,7 @@
             </div>
           </ng-template>
           <div class="pad-resp">
-
+            <app-silabo-docente *ngIf="curso!=undefined" [IdPgeneral]="curso.idPGeneral"></app-silabo-docente>
           </div>
         </mat-tab>
         <mat-tab>
@@ -94,6 +100,7 @@
             </div>
           </ng-template>
           <div class="pad-resp">
+            <app-criterio-evaluacion-docente *ngIf="IdPespecifico>0" [IdPespecifico]="IdPespecifico"></app-criterio-evaluacion-docente>
           </div>
         </mat-tab>
         <mat-tab>
@@ -104,7 +111,7 @@
             </div>
           </ng-template>
           <div class="pad-resp">
-            3
+            <app-perfil-alumno-docente *ngIf="IdPespecifico>0" [IdPespecifico]="IdPespecifico"></app-perfil-alumno-docente>
           </div>
         </mat-tab>
         <mat-tab>
@@ -115,7 +122,7 @@
             </div>
           </ng-template>
           <div class="pad-resp">
-            3
+            <app-cronograma-clases-docente  *ngIf="IdPespecifico>0" [IdPespecifico]="IdPespecifico"></app-cronograma-clases-docente>
           </div>
         </mat-tab>
       </mat-tab-group>
