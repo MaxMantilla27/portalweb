@@ -359,6 +359,7 @@ export class ModuloSesionesComponent implements OnInit, OnChanges,OnDestroy {
   @Input() estructuraCapitulo: any;
   @Input() idModalidad: number = 2;
   @Input() IdMatriculaCabecera=0;
+  @Input() IdPespecifico=0;
   ngOnInit(): void {
   }
 

@@ -136,6 +136,7 @@ import { RegistrarForoVideoComponent } from './sesiones/sesion-video/registrar-f
 import { RegistrarForoTareaComponent } from './sesiones/sesion-tarea/registrar-foro-tarea/registrar-foro-tarea.component';
 import { CursoForoProyectoContenidoComponent } from './curso/curso-proyecto/curso-foro-proyecto-contenido/curso-foro-proyecto-contenido.component';
 import { CursoForoProyectoInsertComponent } from './curso/curso-proyecto/curso-foro-proyecto-insert/curso-foro-proyecto-insert.component';
+import { ModuloSesionesOnlineComponent } from './modulo/modulo-sesiones-online/modulo-sesiones-online.component';
 
 
 @NgModule({
@@ -269,6 +270,7 @@ import { CursoForoProyectoInsertComponent } from './curso/curso-proyecto/curso-f
     RegistrarForoTareaComponent,
     CursoForoProyectoContenidoComponent,
     CursoForoProyectoInsertComponent,
+    ModuloSesionesOnlineComponent,
 
 
   ],

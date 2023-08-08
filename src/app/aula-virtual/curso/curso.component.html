@@ -46,14 +46,15 @@
           <mat-tab>
             <ng-template mat-tab-label>
               <div  #sesiones class="contentHeaderM" (click)="InterraccionTab('Sesiones')">
-                <div class="iconMat iconSesiones"
+                <div class="iconMat " [ngClass]="{'iconSesiones': json.idModalidad===1,'iconSessionesOnline': json.idModalidad!=1}"
                 matTooltip="Sesiones"
                 matTooltipPosition="after"></div>
-                <div *ngIf="!hide" class="titleMatr">Sesiones</div>
+                <div *ngIf="!hide" class="titleMatr">{{json.idModalidad==2?'Recursos por sesión':'Sesiones'}}</div>
               </div>
             </ng-template>
             <div class="pad-resp">
-              <app-modulo-sesiones [Capitulo]="json.NombreCapitulo"  [IdMatriculaCabecera]="idMatricula" [idModalidad]="json.idModalidad" [estructuraCapitulo]="estructuraCapitulo">
+              <app-modulo-sesiones [Capitulo]="json.NombreCapitulo"
+              [IdPespecifico]="json.IdPEspecificoHijo" [IdMatriculaCabecera]="idMatricula" [idModalidad]="json.idModalidad" [estructuraCapitulo]="estructuraCapitulo">
               </app-modulo-sesiones>
             </div>
           </mat-tab>
