@@ -107,6 +107,7 @@ import { VisaRecurrenteComponent } from './resultado-pago-recurrente/visa-recurr
 import { OfertaLaboralComponent } from './bolsa-trabajo/oferta-laboral/oferta-laboral.component';
 import { MisPostulacionesComponent } from './bolsa-trabajo/mis-postulaciones/mis-postulaciones.component';
 import { DevolverProyectoComponent } from './docencia-tareas/devolver-proyecto/devolver-proyecto.component';
+import { ConfirmacionPagoOpenpayColombiaComponent } from './confirmacion-pago-openpay-colombia/confirmacion-pago-openpay-colombia.component';
 
 
 
@@ -213,6 +214,7 @@ import { DevolverProyectoComponent } from './docencia-tareas/devolver-proyecto/d
     OfertaLaboralComponent,
     MisPostulacionesComponent,
     DevolverProyectoComponent,
+    ConfirmacionPagoOpenpayColombiaComponent
 
   ],
   imports: [

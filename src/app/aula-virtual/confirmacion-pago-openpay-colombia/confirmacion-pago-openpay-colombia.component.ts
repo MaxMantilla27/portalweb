@@ -1,21 +1,22 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
-import {  Subject, takeUntil } from 'rxjs';
-import { RegistroProcesoPagoAlumnoDTO, RegistroRespuestaPreProcesoPagoDTO } from 'src/app/Core/Models/ProcesoPagoDTO';
+import { Subject, takeUntil } from 'rxjs';
+import { RegistroProcesoPagoAlumnoDTO, RegistroProcesoPagoPseDTO, RegistroRespuestaPreProcesoPagoDTO } from 'src/app/Core/Models/ProcesoPagoDTO';
 import { ChargeTextComponent } from 'src/app/Core/Shared/Containers/Dialog/charge-text/charge-text.component';
 import { FormaPagoService } from 'src/app/Core/Shared/Services/FormaPago/forma-pago.service';
+import { SnackBarServiceService } from 'src/app/Core/Shared/Services/SnackBarService/snack-bar-service.service';
 import { HelperService } from 'src/app/Core/Shared/Services/helper.service';
 import { SessionStorageService } from 'src/app/Core/Shared/Services/session-storage.service';
-import { SnackBarServiceService } from 'src/app/Core/Shared/Services/SnackBarService/snack-bar-service.service';
 declare var OpenPayColombia: any;
-declare var OpenPay: any;
+
 @Component({
-  selector: 'app-afiliacion-openpay',
-  templateUrl: './afiliacion-openpay.component.html',
-  styleUrls: ['./afiliacion-openpay.component.scss']
+  selector: 'app-confirmacion-pago-openpay-colombia',
+  templateUrl: './confirmacion-pago-openpay-colombia.component.html',
+  styleUrls: ['./confirmacion-pago-openpay-colombia.component.scss'],
+  encapsulation: ViewEncapsulation.None,
 })
-export class AfiliacionOpenpayComponent implements OnInit,OnDestroy {
+export class ConfirmacionPagoOpenpayColombiaComponent implements OnInit,OnDestroy {
 
   private signal$ = new Subject();
   constructor(
@@ -26,16 +27,11 @@ export class AfiliacionOpenpayComponent implements OnInit,OnDestroy {
     private _SnackBarServiceService:SnackBarServiceService,
     private _router:Router,
     public dialog: MatDialog,
-    
   ) { }
- 
-  NumberT:any
-
   ngOnDestroy(): void {
     this.signal$.next(true);
     this.signal$.complete();
   }
-
   public idMatricula=0
   public json:RegistroRespuestaPreProcesoPagoDTO={
     IdentificadorTransaccion:'',
@@ -43,8 +39,6 @@ export class AfiliacionOpenpayComponent implements OnInit,OnDestroy {
   }
   public resultCard:any
   public oncharge=false
-  public dialogRef:any
-
   public jsonSave:RegistroProcesoPagoAlumnoDTO={
     IdentificadorTransaccion:'',
     MedioCodigo:'',
@@ -58,7 +52,6 @@ export class AfiliacionOpenpayComponent implements OnInit,OnDestroy {
     IdPasarelaPago:0,
     IdentificadorUsuario:'',
     PagoPSE:false,
-    FechaFinalAfiliacion:'',
     TarjetaHabiente:{
       Aniho:'',
       CodigoVV:'',
@@ -69,25 +62,16 @@ export class AfiliacionOpenpayComponent implements OnInit,OnDestroy {
       fecha:'',
     },
   }
+  public NumberT=''
 
-  public jsonEnvio:any={
-    identificadorTransaccion: '',
-    idPasarelaPago: 0,
-    deviceSessionId: '',
-    tokenId: '',
-    idAlumno: 0,
-    idUsuario: '',
-    usuarioModificacion: ''
+  public registroPse:RegistroProcesoPagoPseDTO={
+    BancoPSE:'',
+    NombreTitularPSE:'',
+    NumeroDocumentoPSE:'',
+    TelefonoTitularPSE:'',
+    TipoClientePSE:'',
+    TipoDocumentoPSE:'',
   }
-
-  public DataComprobante:any=
-  {
-    idComprobante:'',
-    nroDoc:'',
-    razonSocial:'',
-    listaCuota:''
-  }
-
   ngOnInit(): void {
     this._HelperService.recibirCombosPerfil.pipe(takeUntil(this.signal$)).subscribe((x) => {
       this.jsonSave.TarjetaHabiente.Titular =x.datosAlumno.nombres+' '+x.datosAlumno.apellidos;
@@ -110,9 +94,9 @@ export class AfiliacionOpenpayComponent implements OnInit,OnDestroy {
   ObtenerPreProcesoPagoCuotaAlumno(){
     this._FormaPagoService.ObtenerPreProcesoPagoCuotaAlumno(this.json).pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
-        
+        console.log(x)
         this.resultCard=x._Repuesta;
-        this.DataComprobante.listaCuota =x._Repuesta.listaCuota;
+
         if(this.resultCard.estadoOperacion.toLowerCase()!='sent'){
           this._router.navigate(['/AulaVirtual/MisCursos/'+this.idMatricula])
         }
@@ -134,33 +118,24 @@ export class AfiliacionOpenpayComponent implements OnInit,OnDestroy {
       }
     })
   }
-
   OpenPayInit() {
-    var deviceSessionId =""
-    if(this.jsonSave.IdPasarelaPago==16){
-      OpenPayColombia.setId('m6g2okzx58x70r2yfjul');
-      OpenPayColombia.setApiKey('pk_d2a653a7e31e4a7fade3ef2c742d0c95');
-      OpenPayColombia.setSandboxMode(true);
-      deviceSessionId = OpenPayColombia.deviceData.setup('fomrOpenPAy');
-    }
-    else{
-      OpenPay.setId('mxgmgffnaxu1mosrkhlo');
-      OpenPay.setApiKey('pk_c9dfff7c5c9e4a68a7c6083d280ff4db');
-      OpenPay.setSandboxMode(false);
-      deviceSessionId = OpenPay.deviceData.setup('fomrOpenPAy');
-    }
+    OpenPayColombia.setId('m6g2okzx58x70r2yfjul');
+    OpenPayColombia.setApiKey('pk_d2a653a7e31e4a7fade3ef2c742d0c95');
+    OpenPayColombia.setSandboxMode(true);
+    var deviceSessionId = OpenPayColombia.deviceData.setup('fomrOpenPAy');
+    console.log(OpenPayColombia.getSandboxMode());
     this.jsonSave.DeviceSessionId = deviceSessionId;
   }
-
   ValidateSave(){
     var succes=(res:any) =>{
       console.log(res)
       this.jsonSave.TokenId=res.data.id
-      this.Afiliar();
+      this.Pagar();
 
     }
     var error=(err:any) =>{
-      this.dialogRef.close()
+      console.log(err);
+
       this._SnackBarServiceService.openSnackBar(
         'Los datos de tarjeta ingresados son incorrectos',
         'x',
@@ -170,6 +145,7 @@ export class AfiliacionOpenpayComponent implements OnInit,OnDestroy {
 
     }
     var validate=true
+    if(this.resultCard.idPasarelaPago!=1 || this.resultCard.idFormaPago!=65){
       if (this.jsonSave.TarjetaHabiente.fecha.length < 5) {
         validate = false;
         this._SnackBarServiceService.openSnackBar(
@@ -206,6 +182,44 @@ export class AfiliacionOpenpayComponent implements OnInit,OnDestroy {
           'snackbarCrucigramaerror'
         );
       }
+    }else{
+      if(this.registroPse.TipoDocumentoPSE==''){
+        validate = false;
+        this._SnackBarServiceService.openSnackBar(
+          'Ingrese su tipo de documento',
+          'x',
+          5,
+          'snackbarCrucigramaerror'
+        );
+      }
+      if(this.registroPse.TipoClientePSE==''){
+        validate = false;
+        this._SnackBarServiceService.openSnackBar(
+          'Ingrese el tipo de cliente',
+          'x',
+          5,
+          'snackbarCrucigramaerror'
+        );
+      }
+      if(this.registroPse.TelefonoTitularPSE==''){
+        validate = false;
+        this._SnackBarServiceService.openSnackBar(
+          'Ingrese su numero celular',
+          'x',
+          5,
+          'snackbarCrucigramaerror'
+        );
+      }
+      if(this.registroPse.BancoPSE==''){
+        validate = false;
+        this._SnackBarServiceService.openSnackBar(
+          'Seleccione su banco',
+          'x',
+          5,
+          'snackbarCrucigramaerror'
+        );
+      }
+    }
     if(this.jsonSave.TarjetaHabiente.Titular==''){
       validate = false;
       this._SnackBarServiceService.openSnackBar(
@@ -225,75 +239,54 @@ export class AfiliacionOpenpayComponent implements OnInit,OnDestroy {
         'snackbarCrucigramaerror'
       );
     }
+    console.log(validate);
     if (validate) {
-      this.dialogRef =this.dialog.open(ChargeTextComponent,{
-        panelClass:'dialog-charge-text',
-        data: { text: 'Procesando Afiliación' },
-        disableClose:true
-      });
+
       this.jsonSave.TarjetaHabiente.NumeroTarjeta =this.NumberT.split('-').join('');
       this.jsonSave.TarjetaHabiente.Aniho =this.jsonSave.TarjetaHabiente.fecha.split('/')[1];
       this.jsonSave.TarjetaHabiente.Mes =this.jsonSave.TarjetaHabiente.fecha.split('/')[0];
-
-      if(this.jsonSave.IdPasarelaPago==16){
-        OpenPayColombia.token.create(
-          {
-            card_number: this.jsonSave.TarjetaHabiente.NumeroTarjeta,
-            holder_name: this.jsonSave.TarjetaHabiente.Titular,
-            expiration_year: this.jsonSave.TarjetaHabiente.Aniho,
-            expiration_month: this.jsonSave.TarjetaHabiente.Mes,
-            cvv2: this.jsonSave.TarjetaHabiente.CodigoVV,
-          },
-          succes,
-          error
-        )
-      }
-      else{
-        OpenPay.token.create(
-          {
-            card_number: this.jsonSave.TarjetaHabiente.NumeroTarjeta,
-            holder_name: this.jsonSave.TarjetaHabiente.Titular,
-            expiration_year: this.jsonSave.TarjetaHabiente.Aniho,
-            expiration_month: this.jsonSave.TarjetaHabiente.Mes,
-            cvv2: this.jsonSave.TarjetaHabiente.CodigoVV,
-          },
-          succes,
-          error
-        )
-      }
-     
-
+      OpenPayColombia.token.create(
+        {
+          card_number: this.jsonSave.TarjetaHabiente.NumeroTarjeta,
+          holder_name: this.jsonSave.TarjetaHabiente.Titular,
+          expiration_year: this.jsonSave.TarjetaHabiente.Aniho,
+          expiration_month: this.jsonSave.TarjetaHabiente.Mes,
+          cvv2: this.jsonSave.TarjetaHabiente.CodigoVV,
+        },
+        succes,
+        error
+      );
     }
   }
-
-  Afiliar(){
-    this.DataComprobante.idComprobante=this.jsonSave.Comprobante==false?2:1
-    this.DataComprobante.nroDoc = this.jsonSave.Comprobante==false?this.jsonSave.TarjetaHabiente.NumeroDocumento:this.jsonSave.CodigoTributario
-    this.DataComprobante.razonSocial = this.jsonSave.RazonSocial
-    this._SessionStorageService.SessionSetValue('comprobante',JSON.stringify(this.DataComprobante));
-
+  Pagar(){
     this.oncharge=true
-    this.jsonEnvio.identificadorTransaccion= this.jsonSave.IdentificadorTransaccion
-    this.jsonEnvio.idPasarelaPago = this.jsonSave.IdPasarelaPago
-    this.jsonEnvio.tokenId = this.jsonSave.TokenId
-    this.jsonEnvio.deviceSessionId = this.jsonSave.DeviceSessionId
-
-    console.log(this.jsonEnvio)
-    this._FormaPagoService.ProcesarAfiliacionPagoRecurrenteAlumno(this.jsonSave).pipe(takeUntil(this.signal$)).subscribe({
+    const dialogRef =this.dialog.open(ChargeTextComponent,{
+      panelClass:'dialog-charge-text',
+      data: { text: 'Procesando pago' },
+      disableClose:true
+    });
+    this.registroPse.NombreTitularPSE=this.jsonSave.TarjetaHabiente.Titular;
+    this.registroPse.NumeroDocumentoPSE=this.jsonSave.TarjetaHabiente.NumeroDocumento;
+    this.jsonSave.RegistroProcesoPagoPse=this.registroPse;
+    this._FormaPagoService.ProcesarPagoCuotaAlumno(this.jsonSave).pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
         this.oncharge=false
-        this.dialogRef.close()
-        window.location.href =x._Repuesta.urlRedireccionar;
+        dialogRef.close()
+        if(x._Repuesta.urlRedireccionar=='' || x._Repuesta.urlRedireccionar==null){
+          this._router.navigate(['/AulaVirtual/PagoExitoso/'+this.jsonSave.IdentificadorTransaccion])
+        }else{
+          location.href=x._Repuesta.urlRedireccionar;
+        }
+        
       },
       error:e=>{
         this.oncharge=false
-        this.dialogRef.close()
+        dialogRef.close()
       },
       complete:()=>{
         this.oncharge=false
-        this.dialogRef.close()
+        dialogRef.close()
       }
     })
   }
-
 }
