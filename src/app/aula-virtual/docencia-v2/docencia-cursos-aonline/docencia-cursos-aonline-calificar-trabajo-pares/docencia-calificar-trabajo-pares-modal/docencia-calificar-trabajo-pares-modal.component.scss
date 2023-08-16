@@ -1,0 +1,142 @@
+.custom-dialog-docente-trabajo-pares-modal{
+  mat-dialog-container{
+    overflow: auto !important;
+    width: 76rem;
+    height: 31rem;
+    max-width: 100% !important;
+    padding-bottom: 0px !important;
+  }
+}
+
+.vinculo {
+  color: #505050;
+  text-decoration: none;
+}
+
+.vinculo:hover {
+  text-decoration: underline !important;
+}
+
+.tablaTarea {
+  width: calc(100% - 10px);
+  margin-top: 40px;
+}
+.tablaTarea tr th {
+  border: solid 1px #b2b2b2;
+  background: #e7e7e7;
+  text-align: center;
+  padding: 10px;
+}
+
+.tablaTarea tr td {
+  border: solid 1px #b2b2b2;
+  text-align: left;
+  padding: 10px;
+  word-break: break-all;
+  font-size: 12px;
+}
+
+.tipoIndicacionTitle {
+  display: flex;
+  justify-content: flex-start;
+  background: #f2f6ff;
+  padding: 5px 10px;
+}
+.tipoIndicacionTitle img {
+  width: 20px;
+  margin-right: 20px;
+}
+.tipoIndicacionTitle div {
+  font-size: 18px;
+  color: #505050;
+}
+.contentTareaParesDocente {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  padding: 16px 30px;
+  align-items: center;
+  cursor: pointer;
+  font-weight: bold;
+
+  margin: 15px 0px;
+}
+.Calificada {
+  border-color: #c3e6cb;
+  background: #d4edda;
+  color: #3d4245;
+}
+.NoCalificada {
+  color: #721c24;
+  background-color: #f8d7da;
+  border-color: #f5c6cb;
+}
+.tareaParesContent{
+  align-items: flex-start;
+  margin: 0px;
+  margin-top: -15px;
+  padding: 20px;
+  border: solid 1px rgba(0,0,0,.125);
+  position: relative;
+}
+.mat-form-field.fill-container,
+.mat-form-field.fill-container .mat-form-field-infix,
+.mat-form-field.fill-container .mat-form-field-flex,
+.mat-form-field.fill-container .mat-form-field-wrapper,
+.mat-form-field textarea {
+  height: 100%;
+  width: 100%;
+}
+
+.mat-form-field textarea {
+  height: calc(100% - 25px);
+}
+.tablaTarea tr td{
+  border: solid 1px #b2b2b2;
+  text-align: center;
+  padding: 10px;
+  word-break: break-all;
+  font-size: 12px;
+}
+.cabeceraExpandTarea{
+  display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: 700;
+
+    padding-bottom: 6px;
+    border-bottom: solid 1px #b2b2b2;
+
+}
+.contentCabeceraTarea{
+  color: #989898;
+}
+.cabeceraExpandTarea div .material-icons{
+  cursor: pointer;
+  font-size: 30px !important;
+}
+.cabeceraExpandTareaOpen{
+  color: #0d6dc2 !important;
+  border-bottom: solid 0px transparent !important;
+}
+.titleCriterio{
+  font-weight: 500;
+  font-size: 24px;
+  color: #2362AD;
+}
+.contentCriterio{
+  p{
+    margin-bottom: 0px;
+  }
+  ul{
+    margin-bottom: 0px;
+  }
+}
+.custom-dialog-container {
+  overflow: auto !important;
+}
+.Actualizar {
+  color: #3d4245;
+  background-color: #c0dd5a;
+  border-color: #c0dd5a;
+}
