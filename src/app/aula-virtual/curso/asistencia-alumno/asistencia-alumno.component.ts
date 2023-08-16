@@ -11,13 +11,13 @@ import { SnackBarServiceService } from 'src/app/Core/Shared/Services/SnackBarSer
 })
 export class AsistenciaAlumnoComponent implements OnInit, OnDestroy {
   private signal$ = new Subject();
-  
+
   constructor(
     private _Router:Router,
     private r:ActivatedRoute,
     private _SnackBarServiceService:SnackBarServiceService,
-    private _AsistenciaService:AsistenciaService) 
-  { 
+    private _AsistenciaService:AsistenciaService)
+  {
   }
 
   ngOnDestroy(): void {
@@ -34,7 +34,7 @@ export class AsistenciaAlumnoComponent implements OnInit, OnDestroy {
     this.ObtenerAsistenciaAlumno();
   }
   ObtenerAsistenciaAlumno(){
-    this._AsistenciaService.ObtenerAsistenciaAlumno(this.IdMatriculaCabecera,this.IdPEspecifico).pipe(takeUntil(this.signal$)).subscribe({
+    this._AsistenciaService.ObtenerAsistencia(this.IdMatriculaCabecera,this.IdPEspecifico).pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
         this.asistenciaAlumno=x
       }

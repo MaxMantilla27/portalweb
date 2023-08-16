@@ -21,7 +21,7 @@
             <!-- <i class="material-icons" *ngIf="!hide">arrow_back</i>
             <i class="material-icons" *ngIf="hide">arrow_forward</i> -->
           </div>
-          <div *ngIf="!hide" style="    margin-left: 5px;">{{TitleMenu  | uppercase }}</div>
+          <div *ngIf="!hide" style="    margin-left: 5px;">{{TitleMenu | uppercase }}</div>
         </div>
       </div>
 
@@ -30,31 +30,32 @@
         <mat-tab *ngIf="curso!=undefined && curso.claseWebexActivo==true && EsCurso!=undefined">
           <ng-template mat-tab-label>
             <div #Online class="contentHeaderM" (click)="InterraccionTab('Clases Online')"
-            [matTooltip]="'Clases Online'"
-            matTooltipPosition="after">
+              [matTooltip]="'Clases Online'" matTooltipPosition="after">
 
               <div class="iconMat"><i class="material-icons">play_lesson</i></div>
               <div class="titleMatr" *ngIf="!hide">Acceso a clases</div>
             </div>
           </ng-template>
           <div class="pad-resp">
-            <app-curso-clase-online [escurso]="EsCurso" [IdMatricula]="idMatricula" [Capitulo]="programEstructura.programaGeneral">
+            <app-curso-clase-online [escurso]="EsCurso" [IdMatricula]="idMatricula"
+              [Capitulo]="programEstructura.programaGeneral">
             </app-curso-clase-online>
           </div>
         </mat-tab>
         <ng-container *ngIf="EsCurso==true">
           <mat-tab>
             <ng-template mat-tab-label>
-              <div  #sesiones class="contentHeaderM" (click)="InterraccionTab('Sesiones')">
-                <div class="iconMat " [ngClass]="{'iconSesiones': json.idModalidad===1,'iconSessionesOnline': json.idModalidad!=1}"
-                matTooltip="Sesiones"
-                matTooltipPosition="after"></div>
+              <div #sesiones class="contentHeaderM" (click)="InterraccionTab('Sesiones')">
+                <div class="iconMat "
+                  [ngClass]="{'iconSesiones': json.idModalidad===1,'iconSessionesOnline': json.idModalidad!=1}"
+                  matTooltip="Sesiones" matTooltipPosition="after"></div>
                 <div *ngIf="!hide" class="titleMatr">{{json.idModalidad==2?'Recursos por sesión':'Sesiones'}}</div>
               </div>
             </ng-template>
             <div class="pad-resp">
-              <app-modulo-sesiones [Capitulo]="json.NombreCapitulo"
-              [IdPespecifico]="json.IdPEspecificoHijo" [IdMatriculaCabecera]="idMatricula" [idModalidad]="json.idModalidad" [estructuraCapitulo]="estructuraCapitulo">
+              <app-modulo-sesiones [Capitulo]="json.NombreCapitulo" [IdPespecifico]="json.IdPEspecificoHijo"
+                [IdMatriculaCabecera]="idMatricula" [idModalidad]="json.idModalidad"
+                [estructuraCapitulo]="estructuraCapitulo">
               </app-modulo-sesiones>
             </div>
           </mat-tab>
@@ -72,78 +73,72 @@
           </mat-tab> -->
           <mat-tab>
             <ng-template mat-tab-label>
-              <div  class="contentHeaderM" (click)="InterraccionTab('Sílabo')">
-                <div class="iconMat iconSilabo"
-                matTooltip="Sílabo"
-                matTooltipPosition="after"></div>
+              <div class="contentHeaderM" (click)="InterraccionTab('Sílabo')">
+                <div class="iconMat iconSilabo" matTooltip="Sílabo" matTooltipPosition="after"></div>
                 <div *ngIf="!hide" class="titleMatr">Sílabo</div>
               </div>
             </ng-template>
             <div class="pad-resp">
               <app-modulo-silabo [Capitulo]="json.NombreCapitulo" [IdPgeneral]="json.IdPGeneralHijo"
-                [Estructura]="estructuraCapitulo"></app-modulo-silabo>
+                [Estructura]="estructuraCapitulo" [idModalidad]="json.idModalidad"></app-modulo-silabo>
             </div>
           </mat-tab>
 
-          <ng-template [ngIf]="json.idModalidad===2">
-          <mat-tab>
+          <mat-tab *ngIf="json.idModalidad!=1">
             <ng-template mat-tab-label>
-              <div class="contentHeaderM" (click)="InterraccionTab('Asistencias')"
-              (click)="alertaPreguntasFrecuentes=!alertaPreguntasFrecuentes">
-              <div class="iconMat"
-              matTooltip="Preguntas frecuentes"
-              matTooltipPosition="after"><mat-icon>check_box</mat-icon></div>
-                <div class="titleMatr" *ngIf="!hide">Asistencias</div>
+              <div class="contentHeaderM" (click)="InterraccionTab('Foro')">
+                <div class="iconMat iconAsistencia"
+                matTooltip="Foro"
+                matTooltipPosition="after"></div>
+                <div *ngIf="!hide" class="titleMatr">Asistencia</div>
               </div>
             </ng-template>
             <div class="pad-resp">
-              <app-asistencia-alumno [IdMatriculaCabecera]="json.IdMatriculaCabecera" [IdPEspecifico]="json.IdPEspecificoHijo">
+              <ng-container >
+                <app-asistencias-online [IdMatriculaCabecera]="json.IdMatriculaCabecera" [IdPEspecifico]="json.IdPEspecificoHijo"></app-asistencias-online>
+              </ng-container>
 
-              </app-asistencia-alumno>
             </div>
           </mat-tab>
-        </ng-template>
 
           <mat-tab>
             <ng-template mat-tab-label>
-              <div  class="contentHeaderM" (click)="InterraccionTab('Recursos')">
-                <div class="iconMat iconRecursos"
-                matTooltip="Recursos"
-                matTooltipPosition="after"></div>
-                <div *ngIf="!hide" class="titleMatr">Recursos</div>
+              <div class="contentHeaderM" (click)="InterraccionTab('Recursos')">
+                <div class="iconMat iconRecursos" matTooltip="Recursos" matTooltipPosition="after"></div>
+                <div *ngIf="!hide" class="titleMatr">Material de estudio</div>
               </div>
             </ng-template>
             <div class="pad-resp"><app-modulo-recurso [Capitulo]="json.NombreCapitulo" [Estructura]="estructuraCapitulo"
-              [idPEspecifico]="json.IdPEspecificoHijo" [tipo]="json.idModalidad" [idPGeneral]="json.IdPGeneralHijo"></app-modulo-recurso></div>
+                [idPEspecifico]="json.IdPEspecificoHijo" [tipo]="json.idModalidad"
+                [idPGeneral]="json.IdPGeneralHijo"></app-modulo-recurso></div>
           </mat-tab>
           <mat-tab *ngIf="json.idModalidad==1">
             <ng-template mat-tab-label>
               <div class="contentHeaderM" (click)="InterraccionTab('Foro')">
-                <div class="iconMat iconForo"
-                matTooltip="Foro"
-                matTooltipPosition="after"></div>
+                <div class="iconMat iconForo" matTooltip="Foro" matTooltipPosition="after"></div>
                 <div *ngIf="!hide" class="titleMatr">Foro</div>
               </div>
             </ng-template>
             <div class="pad-resp">
-              <app-modulo-foro [Capitulo]="json.NombreCapitulo" [IdPgeneral]="json.IdPGeneralHijo" [IdPprincipal]="json.IdPGeneralPadre" [IdPEspecificoPadre]="json.IdPEspecificoPadre" [IdPEspecificoHijo]="json.IdPEspecificoHijo"></app-modulo-foro>
+              <app-modulo-foro [Capitulo]="json.NombreCapitulo" [IdPgeneral]="json.IdPGeneralHijo"
+                [IdPprincipal]="json.IdPGeneralPadre" [IdPEspecificoPadre]="json.IdPEspecificoPadre"
+                [IdPEspecificoHijo]="json.IdPEspecificoHijo"></app-modulo-foro>
             </div>
           </mat-tab>
           <mat-tab *ngIf="json.idModalidad==1">
             <ng-template mat-tab-label>
               <div class="contentHeaderM" (click)="InterraccionTab('Calificaciones')">
-                <div class="iconMat iconCalificaciones"
-                matTooltip="Calificaciones"
-                matTooltipPosition="after"></div>
+                <div class="iconMat iconCalificaciones" matTooltip="Calificaciones" matTooltipPosition="after"></div>
                 <div *ngIf="!hide" class="titleMatr">Calificaciones</div>
               </div>
             </ng-template>
             <div class="pad-resp">
-              <app-modulo-calificaciones [Capitulo]="json.NombreCapitulo" [IdMatriculaCabecera]="json.IdMatriculaCabecera"
-              [IdPGeneralHijo]="json.IdPGeneralHijo" [IdPEspecifico]="json.IdPEspecificoHijo"></app-modulo-calificaciones>
+              <app-modulo-calificaciones [Capitulo]="json.NombreCapitulo"
+                [IdMatriculaCabecera]="json.IdMatriculaCabecera" [IdPGeneralHijo]="json.IdPGeneralHijo"
+                [IdPEspecifico]="json.IdPEspecificoHijo"></app-modulo-calificaciones>
             </div>
           </mat-tab>
-          <mat-tab *ngIf="videosOnline!=undefined && videosOnline.length>0">
+          <!-- <mat-tab *ngIf="videosOnline!=undefined && videosOnline.length>0">
             <ng-template mat-tab-label>
               <div class="contentHeaderM" (click)="InterraccionTab('Clases Grabadas')"
               [matTooltip]="'Clases Grabadas'"
@@ -157,17 +152,16 @@
               <app-modulo-videos-sincronico [videos]="videosOnline" [Capitulo]="json.NombreCapitulo">
               </app-modulo-videos-sincronico>
             </div>
-          </mat-tab>
+          </mat-tab> -->
         </ng-container>
 
 
         <mat-tab *ngIf="EsCurso==false">
           <ng-template mat-tab-label>
-            <div #modulos class="contentHeaderM" (click)="InterraccionTab('Módulos')"
-            matTooltip="Módulos"
-            matTooltipPosition="after">
+            <div #modulos class="contentHeaderM" (click)="InterraccionTab('Módulos')" matTooltip="Módulos"
+              matTooltipPosition="after">
               <div class="iconMat iconModulos"></div>
-              <div class="titleMatr" *ngIf="!hide">Módulos</div>
+              <div class="titleMatr" *ngIf="!hide">Cursos</div>
             </div>
           </ng-template>
           <div class="pad-resp">
@@ -180,22 +174,37 @@
                 <div><strong>Recuerda: </strong>Debes completar el primer curso para poder acceder al siguiente</div>
               </div>
             </div>
-            <div *ngIf="programEstructura.listaCursoMatriculado==null || this.programEstructura.listaCursoMatriculado.length==0">
+            <div
+              *ngIf="programEstructura.listaCursoMatriculado==null || this.programEstructura.listaCursoMatriculado.length==0">
               <div>
                 Se están realizando validaciones, por favor vuelva a recargar en unos momentos
               </div>
             </div>
-            <div *ngIf="programEstructura.listaCursoMatriculado!=null && programEstructura.listaCursoMatriculado.length>1">
+            <div
+              *ngIf="programEstructura.listaCursoMatriculado!=null && programEstructura.listaCursoMatriculado.length>1">
               <app-curso-modulos [idMatricula]="idMatricula" [programEstructura]="programEstructura">
               </app-curso-modulos>
             </div>
           </div>
         </mat-tab>
+        <mat-tab *ngIf="EsCurso==false && asistencias!=undefined && asistencias!=null ">
+          <ng-template mat-tab-label>
+            <div #modulos class="contentHeaderM" (click)="InterraccionTab('Módulos')" matTooltip="Módulos"
+              matTooltipPosition="after">
+              <div class="iconMat iconAsistencia"></div>
+              <div class="titleMatr" *ngIf="!hide">Asistencia</div>
+            </div>
+          </ng-template>
+          <div class="pad-resp" >
+            <app-gestion-asistencia-programa  [IdMatriculaCabecera]="curso.idMatriculaCabecera"
+             [Cursos]="programEstructura.listaCursoMatriculado" [Asistencias]="asistencias"></app-gestion-asistencia-programa>
+          </div>
+        </mat-tab>
+
         <mat-tab *ngIf="curso!=undefined && curso.proyectoAplicacion">
           <ng-template mat-tab-label>
-            <div  #proyectos class="contentHeaderM" (click)="InterraccionTab('Proyecto de Aplicación')"
-            matTooltip="Proyecto de Aplicación"
-            matTooltipPosition="after">
+            <div #proyectos class="contentHeaderM" (click)="InterraccionTab('Proyecto de Aplicación')"
+              matTooltip="Proyecto de Aplicación" matTooltipPosition="after">
               <div class="iconMat iconProyectos"></div>
               <div class="titleMatr" *ngIf="!hide">Proyecto de Aplicación</div>
             </div>
@@ -209,9 +218,8 @@
         </mat-tab>
         <mat-tab *ngIf="curso!=undefined && curso.proyectoAplicacion">
           <ng-template mat-tab-label>
-            <div  #notas class="contentHeaderM" (click)="InterraccionTab('Notas')"
-            matTooltip="Notas"
-            matTooltipPosition="after">
+            <div #notas class="contentHeaderM" (click)="InterraccionTab('Notas')" matTooltip="Notas"
+              matTooltipPosition="after">
               <div class="iconMat iconNotas"></div>
               <div class="titleMatr" *ngIf="!hide">Notas</div>
             </div>
@@ -224,8 +232,7 @@
         <mat-tab>
           <ng-template mat-tab-label>
             <div #certificados class="contentHeaderM" (click)="InterraccionTab('Certificados');changeIndexCertificado()"
-            matTooltip="Certificados"
-            matTooltipPosition="after" [ngClass]="{'ActiveChil':CertificadoActive==true}">
+              matTooltip="Certificados" matTooltipPosition="after" [ngClass]="{'ActiveChil':CertificadoActive==true}">
               <div class="iconMat iconCertificados"></div>
               <div class="titleMatr" *ngIf="!hide">Certificados</div>
             </div>
@@ -236,7 +243,8 @@
                 [alertaFisico]="alertaFisico" [datosCertificado]="datosCertificado" [curso]="curso"
                 [idProyecto]="curso.idProyecto" [idPGeneral]="curso.idPGeneral" [idPEspecifico]="curso.idPEspecifico"
                 [changeOnGenerate]="generateCertificado" (OnGenerate)="ObtenerDatosCertificado()"
-                (OnValidation)="ObtenerDatosCertificado()" (OnCloseAlertaDigital)="alertaDigital=false" (OnCloseAlertaFisico)="alertaFisico=false">
+                (OnValidation)="ObtenerDatosCertificado()" (OnCloseAlertaDigital)="alertaDigital=false"
+                (OnCloseAlertaFisico)="alertaFisico=false">
 
               </app-curso-certificado>
             </div>
@@ -252,8 +260,7 @@
                           datosCertificado.idEstado_matricula==12))">
             <ng-template mat-tab-label class="tabSubcontent">
               <div class="contentHeaderM subContent" style="cursor: pointer;padding: 20px 10px !important;"
-                (click)="InterraccionTab('Certificado Digital');certificadoDigital()"
-                matTooltip="Certificado Digital"
+                (click)="InterraccionTab('Certificado Digital');certificadoDigital()" matTooltip="Certificado Digital"
                 matTooltipPosition="after">
 
                 <div class="iconMat"><i class="material-icons">file_download</i></div>
@@ -268,9 +275,8 @@
           </mat-tab>
           <mat-tab [disabled]="datosCertificado==undefined ||  datosCertificado.nombreArchivo==null">
             <ng-template mat-tab-label>
-              <div class="contentHeaderM subContent"  style="cursor: pointer;padding: 20px 10px !important;"
-                (click)="InterraccionTab('Certificado Fisico');certificadoFisico()"
-                matTooltip="Certificado Fisico"
+              <div class="contentHeaderM subContent" style="cursor: pointer;padding: 20px 10px !important;"
+                (click)="InterraccionTab('Certificado Fisico');certificadoFisico()" matTooltip="Certificado Fisico"
                 matTooltipPosition="after">
                 <div class="iconMat"><i class="material-icons">contact_mail</i></div>
                 <div class="titleMatr" *ngIf="!hide">Certificado Fisico</div>
@@ -288,15 +294,16 @@
           <ng-container *ngIf="ircas!=undefined && ircas.length>0">
             <mat-tab>
               <ng-template mat-tab-label>
-                <div class="contentHeaderM subContent" (click)="InterraccionTab('Certificados Irca')" style="cursor: pointer;padding: 20px 10px !important;"
-                matTooltip="Certificados Irca"
-                matTooltipPosition="after">
+                <div class="contentHeaderM subContent" (click)="InterraccionTab('Certificados Irca')"
+                  style="cursor: pointer;padding: 20px 10px !important;" matTooltip="Certificados Irca"
+                  matTooltipPosition="after">
                   <!-- <div class="iconMat"><i class="material-icons">microwave</i></div> -->
                   <div class="titleMatr" *ngIf="!hide">Certificados Irca</div>
                 </div>
               </ng-template>
               <div class="pad-resp">
-                <app-curso-certificado-irca [Ircas]="ircas" [Capitulo]="programEstructura.programaGeneral" ></app-curso-certificado-irca>
+                <app-curso-certificado-irca [Ircas]="ircas"
+                  [Capitulo]="programEstructura.programaGeneral"></app-curso-certificado-irca>
               </div>
             </mat-tab>
 
@@ -305,24 +312,23 @@
 
         <mat-tab>
           <ng-template mat-tab-label>
-            <div #tramites class="contentHeaderM" (click)="InterraccionTab('Trámites')"
-            matTooltip="Trámites"
-            matTooltipPosition="after">
+            <div #tramites class="contentHeaderM" (click)="InterraccionTab('Trámites')" matTooltip="Trámites"
+              matTooltipPosition="after">
               <div class="iconMat iconTramites"></div>
               <div class="titleMatr" *ngIf="!hide">Trámites</div>
             </div>
           </ng-template>
           <div class="pad-resp">
-            <app-curso-tramites [IdMatricula]="idMatricula" [Capitulo]="programEstructura.programaGeneral" [idPGeneral]="programEstructura.idPGeneral">
+            <app-curso-tramites [IdMatricula]="idMatricula" [Capitulo]="programEstructura.programaGeneral"
+              [idPGeneral]="programEstructura.idPGeneral">
             </app-curso-tramites>
           </div>
         </mat-tab>
 
         <mat-tab *ngIf="curso!=undefined && curso.webibarActivo">
           <ng-template mat-tab-label>
-            <div #webinars class="contentHeaderM" (click)="InterraccionTab('Webinars')"
-            matTooltip="Webinars"
-            matTooltipPosition="after">
+            <div #webinars class="contentHeaderM" (click)="InterraccionTab('Webinars')" matTooltip="Webinars"
+              matTooltipPosition="after">
               <div class="iconMat iconWebinars"></div>
               <div class="titleMatr" *ngIf="!hide">Webinars</div>
             </div>
@@ -335,8 +341,7 @@
         <mat-tab *ngIf="curso!=undefined && curso.benficioSolicitado">
           <ng-template mat-tab-label>
             <div #beneficios class="contentHeaderM" (click)="InterraccionTab('Mis Beneficios')"
-            matTooltip="Mis Beneficios"
-            matTooltipPosition="after">
+              matTooltip="Mis Beneficios" matTooltipPosition="after">
               <div class="iconMat iconBeneficios"></div>
               <div class="titleMatr" *ngIf="!hide">Mis Beneficios</div>
             </div>
@@ -348,9 +353,8 @@
         </mat-tab>
         <mat-tab *ngIf="curso!=undefined && curso.simuladorAsignado==true">
           <ng-template mat-tab-label>
-            <div class="contentHeaderM" (click)="InterraccionTab('Simuladores')"
-            [matTooltip]="'Simuladores'"
-            matTooltipPosition="after">
+            <div class="contentHeaderM" (click)="InterraccionTab('Simuladores')" [matTooltip]="'Simuladores'"
+              matTooltipPosition="after">
 
               <div class="iconMat"><i class="material-icons">group_work</i></div>
               <div class="titleMatr" *ngIf="!hide">Simuladores</div>
@@ -376,11 +380,10 @@
             </app-curso-videos-sincronico>
           </div>
         </mat-tab> -->
-        <mat-tab *ngIf="programEstructura.idModalidad!=2" >
+        <mat-tab *ngIf="programEstructura.idModalidad!=2">
           <ng-template mat-tab-label>
             <div #indicaciones class="contentHeaderM" (click)="InterraccionTab('Indicaciones')"
-            matTooltip="Indicaciones"
-            matTooltipPosition="after" [ngClass]="{'ActiveChil':IndicacionActive==true}">
+              matTooltip="Indicaciones" matTooltipPosition="after" [ngClass]="{'ActiveChil':IndicacionActive==true}">
               <div class="iconMat iconIndicaciones"></div>
               <ng-container *ngIf="!hide">
                 <div class="titleMatr">Indicaciones</div>
@@ -393,7 +396,8 @@
             <app-video-ayuda [sise]="3"></app-video-ayuda>
             <div class="cursoTitle">{{programEstructura.programaGeneral}}</div>
             <div class="cursoTabDescripcion">
-              ¡Hola! A continuación te explicamos cómo realizar las evaluaciones que se presentarán de acuerdo a tu avance del curso. Te deseamos éxitos.
+              ¡Hola! A continuación te explicamos cómo realizar las evaluaciones que se presentarán de acuerdo a tu
+              avance del curso. Te deseamos éxitos.
               <br>
             </div>
             <div class="row">
@@ -430,8 +434,7 @@
           <mat-tab>
             <ng-template mat-tab-label class="tabSubcontent">
               <div class="contentHeaderM subContent" (click)="InterraccionTab('Preguntas interactivas')"
-              matTooltip="Preguntas interactivas" style="padding: 20px 10px !important;"
-              matTooltipPosition="after">
+                matTooltip="Preguntas interactivas" style="padding: 20px 10px !important;" matTooltipPosition="after">
                 <div class="iconMat"><i class="material-icons">quiz</i></div>
                 <div class="titleMatr" *ngIf="!hide">Preguntas interactivas</div>
               </div>
@@ -445,9 +448,8 @@
           </mat-tab>
           <mat-tab>
             <ng-template mat-tab-label>
-              <div class="contentHeaderM subContent" (click)="InterraccionTab('Crucigramas')"
-              matTooltip="Crucigramas" style="padding: 20px 10px !important;"
-              matTooltipPosition="after">
+              <div class="contentHeaderM subContent" (click)="InterraccionTab('Crucigramas')" matTooltip="Crucigramas"
+                style="padding: 20px 10px !important;" matTooltipPosition="after">
                 <div class="iconMat"><i class="material-icons">games</i></div>
                 <div class="titleMatr" *ngIf="!hide">Crucigramas</div>
               </div>
@@ -461,9 +463,8 @@
           </mat-tab>
           <mat-tab>
             <ng-template mat-tab-label>
-              <div class="contentHeaderM subContent" (click)="InterraccionTab('Tareas')"
-              matTooltip="Tareas" style="padding: 20px 10px !important;"
-              matTooltipPosition="after">
+              <div class="contentHeaderM subContent" (click)="InterraccionTab('Tareas')" matTooltip="Tareas"
+                style="padding: 20px 10px !important;" matTooltipPosition="after">
                 <div class="iconMat"><i class="material-icons">edit_note</i></div>
                 <div class="titleMatr" *ngIf="!hide">Tareas</div>
               </div>
@@ -479,8 +480,7 @@
           <mat-tab>
             <ng-template mat-tab-label>
               <div class="contentHeaderM subContent" (click)="InterraccionTab('Calificar tarea de pares')"
-              matTooltip="Calificar tarea de pares" style="padding: 20px 10px !important;"
-              matTooltipPosition="after">
+                matTooltip="Calificar tarea de pares" style="padding: 20px 10px !important;" matTooltipPosition="after">
                 <div class="iconMat"><i class="material-icons">fact_check</i></div>
                 <div class="titleMatr" *ngIf="!hide">Calificar tarea de pares</div>
               </div>
@@ -497,7 +497,7 @@
 
         <!-- <ng-container *ngIf="EsCurso==true"> -->
 
-          <!-- <mat-tab >
+        <!-- <mat-tab >
             <ng-template mat-tab-label>
               <div class="contentHeaderM" (click)="InterraccionTab('Ayuda');changeIndexAyuda()" [ngClass]="{'ActiveChil':AyudaActive==true}">
                 <div class="iconMat iconAyuda"
@@ -514,45 +514,42 @@
           </mat-tab> -->
 
 
-          <!-- <ng-container > -->
+        <!-- <ng-container > -->
 
-            <mat-tab *ngIf="EsCurso==true">
-              <ng-template mat-tab-label>
-                <div  class="contentHeaderM" (click)="InterraccionTab('Preguntas frecuentes')"
-                  (click)="alertaPreguntasFrecuentes=!alertaPreguntasFrecuentes">
+        <mat-tab *ngIf="EsCurso==true">
+          <ng-template mat-tab-label>
+            <div class="contentHeaderM" (click)="InterraccionTab('Preguntas frecuentes')"
+              (click)="alertaPreguntasFrecuentes=!alertaPreguntasFrecuentes">
 
-                  <div class="iconMat iconAyuda"
-                  matTooltip="Preguntas frecuentes"
-                  matTooltipPosition="after"></div>
-                  <div *ngIf="!hide" class="titleMatr">Preguntas frecuentes</div>
-                </div>
-              </ng-template>
-              <div class="pad-resp">
-                <app-modulo-ayuda-preguntas-frecuentes [IdPrincipal]="json.IdPGeneralPadre" [IdPGeneral]="json.IdPGeneralHijo" [Capitulo]="json.NombreCapitulo"
-                (Onchange)="cambio($event)">
+              <div class="iconMat iconAyuda" matTooltip="Preguntas frecuentes" matTooltipPosition="after"></div>
+              <div *ngIf="!hide" class="titleMatr">Preguntas frecuentes</div>
+            </div>
+          </ng-template>
+          <div class="pad-resp">
+            <app-modulo-ayuda-preguntas-frecuentes [IdPrincipal]="json.IdPGeneralPadre"
+              [IdPGeneral]="json.IdPGeneralHijo" [Capitulo]="json.NombreCapitulo" (Onchange)="cambio($event)">
 
-                </app-modulo-ayuda-preguntas-frecuentes>
-              </div>
-            </mat-tab>
+            </app-modulo-ayuda-preguntas-frecuentes>
+          </div>
+        </mat-tab>
 
-            <mat-tab *ngIf="EsCurso==true">
-              <ng-template mat-tab-label>
-                <div class="contentHeaderM" (click)="InterraccionTab('Quejas y sugerencias')"
-                  (click)="alertaQuejasSugerencias=!alertaQuejasSugerencias">
-                <!-- <div class="iconMat">  <i class="material-icons">info</i></div> -->
-                  <div class="iconMat"
-                  matTooltip="Quejas y sugerencias"
-                  matTooltipPosition="after"><i class="material-icons">info</i></div>
-                  <div *ngIf="!hide" class="titleMatr">Quejas y sugerencias</div>
-                </div>
-              </ng-template>
-              <div class="pad-resp">
-                <app-modulo-ayuda-quejas-sugerencias [IdPGeneral]="json.IdPGeneralHijo" [IdPEspecifico]="json.IdPEspecificoHijo" [Capitulo]="json.NombreCapitulo"
-                (Onchange)="cambio($event)">
-                </app-modulo-ayuda-quejas-sugerencias>
-              </div>
-            </mat-tab>
-          <!-- </ng-container> -->
+        <mat-tab *ngIf="EsCurso==true">
+          <ng-template mat-tab-label>
+            <div class="contentHeaderM" (click)="InterraccionTab('Quejas y sugerencias')"
+              (click)="alertaQuejasSugerencias=!alertaQuejasSugerencias">
+              <!-- <div class="iconMat">  <i class="material-icons">info</i></div> -->
+              <div class="iconMat" matTooltip="Quejas y sugerencias" matTooltipPosition="after"><i
+                  class="material-icons">info</i></div>
+              <div *ngIf="!hide" class="titleMatr">Quejas y sugerencias</div>
+            </div>
+          </ng-template>
+          <div class="pad-resp">
+            <app-modulo-ayuda-quejas-sugerencias [IdPGeneral]="json.IdPGeneralHijo"
+              [IdPEspecifico]="json.IdPEspecificoHijo" [Capitulo]="json.NombreCapitulo" (Onchange)="cambio($event)">
+            </app-modulo-ayuda-quejas-sugerencias>
+          </div>
+        </mat-tab>
+        <!-- </ng-container> -->
         <!-- </ng-container> -->
       </mat-tab-group>
     </div>

@@ -1,1 +1,206 @@
-<p>modulo-sesiones-online works!</p>
+<ng-container *ngIf="sesiones!=null">
+  <ng-container *ngFor="let item of sesiones;let i = index">
+    <div class="SesionOnlineCard row" style="align-items: center;">
+      <div class="col-12 col-md-6 col-lg-6 LeftSesionOnline">
+        <div class="NombreSesionOnline">Sesión {{item.orden}}:</div>
+        <div class="FechaSesionOnline">
+          <div class="iconFecha"></div>
+          <div>{{item.fechaHoraInicio | date:'hh:mm a'}} a {{item.fechaHoraFinal | date:'hh:mm a'}} del
+            {{item.fechaHoraInicio | date :'dd/MM/yyyy'}}</div>
+        </div>
+      </div>
+      <div class="col-12 col-md-6 col-lg-6 RigthSesionOnline">
+        <ng-container *ngIf="item.tareas-item.tareasEnviadas>0">
+          <div class="ItemPendientes">
+            <div class="cantidadPendientes">{{item.tareas-item.tareasEnviadas}}</div>
+            <div>Tareas</div>
+          </div>
+        </ng-container>
+        <ng-container *ngIf="item.cuestionarios-item.cuestionariosEnviados>0">
+
+          <div class="ItemPendientes">
+            <div class="cantidadPendientes">{{item.cuestionarios-item.cuestionariosEnviados}}</div>
+            <div>Cuestionarios</div>
+          </div>
+        </ng-container>
+        <div class="OpenCloseSesionOnline" (click)="OpenSesion(i);">
+          <i class="material-icons" *ngIf="item.Open==false">keyboard_arrow_down</i>
+          <i class="material-icons" *ngIf="item.Open!=false">keyboard_arrow_up</i>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="item.Open==true">
+      <ng-container *ngIf="item.temas!=undefined && item.temas!=null && item.temas.length>0">
+        <div class="CardSesionOnlineGris">
+          <div class="cabeceraCardSesionOnline" [ngStyle]="{'border-radius':item.OpenTema==false?'10px':''}"
+            (click)="item.OpenTema=!item.OpenTema">
+            <i class="material-icons" *ngIf="item.OpenTema==false">add</i>
+            <i class="material-icons" *ngIf="item.OpenTema!=false">remove</i>
+            Agenda de sesión
+          </div>
+          <div class="contentCardSesionOnline" *ngIf="item.OpenTema==true">
+            <div class="titleTemaSesion">Temas desarrollados en esta sesión:</div>
+            <ng-container *ngFor="let tema of item.temas">
+              <div class="temaSesion">{{tema.tema}}</div>
+            </ng-container>
+
+          </div>
+        </div>
+      </ng-container>
+      <ng-container *ngIf="item.tarea!=undefined && item.tarea!=null && item.tarea.length>0">
+        <div class="cardSesionOnlineTareasCuestionario" *ngFor="let tars of item.tarea;let t=index">
+          <div class="flagActividad">
+            <div class="textoFlag">Tarea: {{t>9?(t+1):'0'+(t+1)}}</div>
+            <!-- <div class="trianglearrow"></div> -->
+            <div id="player">
+              <div id="outer">
+                <div id="inner"></div>
+              </div>
+            </div>
+          </div>
+          <div class="TitleActividad">{{tars.titulo}}</div>
+          <div class="DescripcionActividad" *ngIf="tars.descripcion!=null && tars.descripcion.length>0">
+            {{tars.descripcion}}</div>
+          <div class="lineaMedioActividad"></div>
+          <div class="AbajoActividad">
+            <div >
+              <div class="FechaEntregaActividad">
+                <div class="iconFecha"></div>
+                <div> <strong> Fecha de entrega:</strong> {{tars.fechaEntrega | date:'hh:mm a'}} del
+                  {{tars.fechaEntrega | date :'dd/MM/yyyy'}}</div>
+              </div>
+              <ng-container *ngIf="tars.tareas!=null && tars.tareas.length>0">
+                <div  class="FechaEntregaActividad" style="margin-top: 15px;">
+
+                  <div class="iconFechaEntrega"></div>
+                  <div> <strong> Enviado: </strong> {{tars.tareas[tars.tareas.length-1].fechaCreacion | date:'hh:mm a'}}
+                    del {{tars.tareas[tars.tareas.length-1].fechaCreacion | date :'dd/MM/yyyy'}}</div>
+                </div>
+                <ng-container *ngIf="tars.tareas[tars.tareas.length-1].nota!=null">
+                  <div  class="FechaEntregaActividad" style="margin-top: 15px;">
+
+                    <div class="iconCalificacion"></div>
+                    <div style="display: flex;align-items: center;"> <strong> Calificación: </strong> <div style="color: #3c71db;font-weight: 600;">{{tars.tareas[tars.tareas.length-1].nota}}</div> </div>
+                  </div>
+                </ng-container>
+
+              </ng-container>
+
+            </div>
+
+            <ng-container *ngIf="tars.tareas==null || tars.tareas==0">
+              <app-default-button [confs]="{color:'primary',titulo:'Enviar >'}" [icon]="''"
+                [style]="'border-radius: 20px;margin: 5px 0px 0px;width: 100%;padding: 0px 40px;'"
+                [disabled]="tars.disabled" (ButtoclClick)="EnviarTarea(i,t)"></app-default-button>
+            </ng-container>
+            <ng-container *ngIf="tars.tareas!=null && tars.tareas.length>0">
+              <app-default-button [confs]="{color:'primary',titulo:'Ver detalle >'}" [icon]="''"
+                [style]="'border-radius: 20px;margin: 5px 0px 0px;width: 100%;padding: 0px 40px;background:#00c356'"
+                [disabled]="tars.disabled" (ButtoclClick)="EnviarTarea(i,t)"></app-default-button>
+            </ng-container>
+          </div>
+        </div>
+      </ng-container>
+      <ng-container *ngIf="item.cuestionario!=undefined && item.cuestionario!=null && item.cuestionario.length>0">
+        <div class="cardSesionOnlineTareasCuestionario" *ngFor="let cuest of item.cuestionario;let t=index">
+          <div class="flagActividad">
+            <div class="textoFlag">Cuestionario:: {{t>9?(t+1):'0'+(t+1)}}</div>
+            <!-- <div class="trianglearrow"></div> -->
+            <div id="player">
+              <div id="outer">
+                <div id="inner"></div>
+              </div>
+            </div>
+          </div>
+          <div class="TitleActividad">{{cuest.titulo}}</div>
+          <div class="DescripcionActividad" *ngIf="cuest.descripcion!=null && cuest.descripcion.length>0">
+            {{cuest.descripcion}}</div>
+          <div class="lineaMedioActividad"></div>
+          <div class="AbajoActividad">
+            <div >
+              <div class="FechaEntregaActividad">
+                <div class="iconFecha"></div>
+                <div> <strong> Fecha de entrega:</strong> {{cuest.fechaEntrega | date:'hh:mm a'}} del
+                  {{cuest.fechaEntrega | date :'dd/MM/yyyy'}}</div>
+              </div>
+
+              <ng-container *ngIf="cuest.respuestaCuestionario==null || cuest.respuestaCuestionario.length==0">
+                <div  class="FechaEntregaActividad" style="margin-top: 15px;">
+
+                  <div class="iconTime"></div>
+                  <div> <strong> Tiempo para enviar el cuestionario: </strong> {{cuest.tiempoLimite}} minutos</div>
+                </div>
+              </ng-container>
+              <ng-container *ngIf="cuest.respuestaCuestionario!=null && cuest.respuestaCuestionario.length>0">
+                <div  class="FechaEntregaActividad" style="margin-top: 15px;">
+
+                  <div class="iconFechaEntrega"></div>
+                  <div> <strong> Enviado: </strong> {{cuest.respuestaCuestionario[cuest.respuestaCuestionario.length-1].fechaEntrega | date:'hh:mm a'}}
+                    del {{cuest.respuestaCuestionario[cuest.respuestaCuestionario.length-1].fechaEntrega | date :'dd/MM/yyyy'}}</div>
+                </div>
+                <ng-container *ngIf="cuest.respuestaCuestionario[cuest.respuestaCuestionario.length-1].fechaCalificacion!=null">
+                  <div  class="FechaEntregaActividad" style="margin-top: 15px;">
+
+                    <div class="iconCalificacion"></div>
+                    <div style="display: flex;align-items: center;"> <strong> Calificación: </strong>
+                       <div style="color: #3c71db;font-weight: 600;margin-left: 6px;">{{cuest.respuestaCuestionario[cuest.respuestaCuestionario.length-1].nota}}</div> </div>
+                  </div>
+                </ng-container>
+
+              </ng-container>
+            </div>
+
+            <ng-container *ngIf="cuest.respuestaCuestionario==null || cuest.respuestaCuestionario==0">
+              <app-default-button [confs]="{color:'primary',titulo:'Enviar >'}" [icon]="''"
+                [style]="'border-radius: 20px;margin: 5px 0px 0px;width: 100%;padding: 0px 40px;'"
+                [disabled]="cuest.disabled" (ButtoclClick)="EnviarCuestionario(i,t)"></app-default-button>
+            </ng-container>
+            <ng-container *ngIf="cuest.respuestaCuestionario!=null && cuest.respuestaCuestionario.length>0">
+              <app-default-button [confs]="{color:'primary',titulo:'Ver detalle >'}" [icon]="''"
+                [style]="'border-radius: 20px;margin: 5px 0px 0px;width: 100%;padding: 0px 40px;background:#00c356'"
+                [disabled]="cuest.disabled" (ButtoclClick)="EnviarCuestionario(i,t)"></app-default-button>
+            </ng-container>
+          </div>
+        </div>
+      </ng-container>
+
+      <ng-container *ngIf="item.material!=undefined && item.material!=null && item.material.length>0">
+        <div class="CardSesionOnlineGris">
+          <div class="cabeceraCardSesionOnline" [ngStyle]="{'border-radius':item.OpenMaterial==false?'10px':''}"
+            (click)="item.OpenMaterial=!item.OpenMaterial">
+            <i class="material-icons" *ngIf="item.OpenMaterial==false">add</i>
+            <i class="material-icons" *ngIf="item.OpenMaterial!=false">remove</i>
+            Material adicional
+          </div>
+          <div class="contentCardSesionOnline" *ngIf="item.OpenMaterial==true">
+            <ng-container *ngFor="let mat of item.material">
+              <div class="MaterialSesionesOnline">
+                <div class="pdfSesionOnline"></div>
+                <div>
+                  <a [href]="mat.urlArchivoSubido">{{mat.titulo}}</a>
+                </div>
+              </div>
+            </ng-container>
+
+          </div>
+        </div>
+      </ng-container>
+      <ng-container *ngIf="item.grabaciones!=undefined && item.grabaciones!=null">
+        <div class="CardSesionOnlineGris" *ngFor="let videos of item.grabaciones">
+          <div class="cabeceraCardSesionOnline" [ngStyle]="{'border-radius':videos.Open==false?'10px':''}"
+            (click)="videos.Open=!videos.Open">
+            <i class="material-icons" *ngIf="videos.Open==false">add</i>
+            <i class="material-icons" *ngIf="videos.Open!=false">remove</i>
+            Grabación de la sesión
+          </div>
+          <div class="contentCardSesionOnline" *ngIf="videos.Open==true">
+            <div [id]="'video-'+videos.idPEspecificoSesion" class="vimeoVideo"
+              [innerHtml]="videos.idFrameVideo | safeHtml" (click)="Onplay(this)"></div>
+          </div>
+        </div>
+      </ng-container>
+
+    </div>
+  </ng-container>
+
+</ng-container>

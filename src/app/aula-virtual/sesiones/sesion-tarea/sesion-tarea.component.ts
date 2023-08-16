@@ -59,7 +59,6 @@ export class SesionTareaComponent implements OnInit,OnChanges,OnDestroy {
   public tarea:any
   public instruccionesAcerca=false;
   public instruccionesSubir=false
-  public nombrefile='Ningún archivo seleccionado'
   public sendFile:ModelTareaEvaluacionTareaDTO={
     idEsquemaEvaluacionPGeneralDetalle:0,
     idEsquemaEvaluacionPGeneralDetalle_Anterior:0,
@@ -74,6 +73,7 @@ export class SesionTareaComponent implements OnInit,OnChanges,OnDestroy {
   }
   public progress=0
   public selectedFiles?: FileList;
+  public nombrefile='Ningún archivo seleccionado'
   public subir=false;
   public UrlArchivo=''
 

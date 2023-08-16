@@ -1,0 +1,25 @@
+<div class="container" [ngStyle]="{'border': border==false?'none':'1px solid #adadad;'}">
+  <table>
+    <tr>
+      <th>Sesion</th>
+      <th>Fecha</th>
+      <th>Asistencia</th>
+    </tr>
+
+    <ng-container *ngFor="let item of asistenciaAlumno">
+     <tr class="datos">
+      <ng-template [ngIf]="item.grupoSesion < 10" [ngIfElse]="major">
+         <th>{{"0" + item.grupoSesion}}</th>
+      </ng-template>
+      <ng-template #major>
+        <th>{{item.grupoSesion}}</th>
+       </ng-template>
+       <th>{{item.fechaHoraInicio | date:"dd/MM/yyyy"}}</th>
+       <ng-template [ngIf]="item.asistio=== 1"><th>Asistió</th></ng-template>
+       <ng-template [ngIf]="item.asistio=== 0"><th>Faltó</th></ng-template>
+       <ng-template [ngIf]="item.asistio=== null"><th></th></ng-template>
+      </tr>
+     </ng-container>
+  </table>
+  </div>
+

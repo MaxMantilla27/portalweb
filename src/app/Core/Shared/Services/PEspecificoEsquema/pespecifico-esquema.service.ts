@@ -6,6 +6,9 @@ import {
   PEspecificoSesionCuestionarioSaveDTO,
   PEspecificoSesionTareaSaveDTO,
   PEspecificoSesionMaterialAdicionalSaveDTO,
+  PEspecificoSesionTareaAlumnoSaveParamsDTO,
+  AgregarPEspecificoSesionCuestionarioAlumnoDTO,
+  AgregarCalificacionCuestionarioAlumnoDocenteDTO,
 } from "src/app/Core/Models/PEspecificoEsquema";
 import { environment } from "src/environments/environment";
 
@@ -61,6 +64,20 @@ export class PEspecificoEsquemaService {
       return EMPTY;
     }
   }
+  public ObtenerActividadesRecursoSesionAlumno(
+    IdPEspecificoSesion: number,
+    IdMatriculaCabecera:number
+  ): Observable<any> {
+    if (this.isBrowser) {
+      return this.http.get<any>(
+        this.urlBase +
+          "/ObtenerActividadesRecursoSesionAlumno?IdPEspecificoSesion=" +
+          IdPEspecificoSesion+'&IdMatriculaCabecera='+IdMatriculaCabecera
+      );
+    } else {
+      return EMPTY;
+    }
+  }
   public ObtenerMaterialAdicionalDocentePespecifico(
     IdPEspecifico: number
   ): Observable<any> {
@@ -105,6 +122,20 @@ export class PEspecificoEsquemaService {
           "/ObtenerPEspecificoSesionMaterialAdicionalPorId?Id=" +
           Id
       );
+    } else {
+      return EMPTY;
+    }
+  }
+  public AgregarPEspecificoSesionCuestionarioAlumno(json: AgregarPEspecificoSesionCuestionarioAlumnoDTO): Observable<any> {
+    if (this.isBrowser) {
+      return this.http.post<any>( this.urlBase +"/AgregarPEspecificoSesionCuestionarioAlumno" ,json);
+    } else {
+      return EMPTY;
+    }
+  }
+  public AgregarCalificacionCuestionarioAlumnoDocente(json: AgregarCalificacionCuestionarioAlumnoDocenteDTO): Observable<any> {
+    if (this.isBrowser) {
+      return this.http.post<any>( this.urlBase +"/AgregarCalificacionCuestionarioAlumnoDocente" ,json);
     } else {
       return EMPTY;
     }
@@ -201,14 +232,18 @@ export class PEspecificoEsquemaService {
           Json.Preguntas[i].UrlArchivoSubidoRetroalimentacion == null
             ? ""
             : Json.Preguntas[i].UrlArchivoSubidoRetroalimentacion!.toString();
+        var Descriocion2 =
+          Json.Preguntas[i].Descripcion == undefined ||
+          Json.Preguntas[i].Descripcion == null
+            ? ""
+            : Json.Preguntas[i].Descripcion!.toString();
         formData.append("Preguntas[" + i + "][idPreguntaTipo]", IdPreguntaTipo);
         formData.append(
           "Preguntas[" + i + "][enunciado]",
           Json.Preguntas[i].Enunciado.toString()
         );
         formData.append(
-          "Preguntas[" + i + "][descripcion]",
-          Json.Preguntas[i].Descripcion.toString()
+          "Preguntas[" + i + "][descripcion]",Descriocion2
         );
         formData.append(
           "Preguntas[" + i + "][puntaje]",
@@ -341,6 +376,31 @@ export class PEspecificoEsquemaService {
       return EMPTY;
     }
   }
+
+  public AgregarPEspecificoSesionTareaAlumno(
+    Json: PEspecificoSesionTareaAlumnoSaveParamsDTO
+  ): Observable<any> {
+    if (this.isBrowser) {
+      const formData: FormData = new FormData();
+      formData.append("file", Json.file);
+      formData.append("IdPEspecificoSesion", Json.IdPEspecificoSesion.toString());
+      formData.append("IdPwPEspecificoSesionTarea", Json.IdPwPEspecificoSesionTarea.toString());
+      formData.append("IdMatriculaCabecera", Json.IdMatriculaCabecera.toString());
+      formData.append("Usuario", "docente");
+      const req = new HttpRequest(
+        "POST",
+        `${this.urlBase}/AgregarPEspecificoSesionTareaAlumno`,
+        formData,
+        {
+          reportProgress: true,
+          responseType: "json",
+        }
+      );
+      return this.http.request(req);
+    } else {
+      return EMPTY;
+    }
+  }
   public AgregarPEspecificoSesionMaterialAdicional(
     Json: PEspecificoSesionMaterialAdicionalSaveDTO
   ): Observable<any> {
@@ -389,5 +449,19 @@ export class PEspecificoEsquemaService {
   }
   public dowloadFile(url: string):any {
     return  this.http.get(url, { responseType: "blob" });
+  }
+
+  public ObtenerTareaAulumnoPorIdPEspecificoSesionTarea(
+    IdPwPEspecificoSesionTarea: number
+  ): Observable<any> {
+    if (this.isBrowser) {
+      return this.http.get<any>(
+        this.urlBase +
+          "/ObtenerTareaAulumnoPorIdPEspecificoSesionTarea?IdPwPEspecificoSesionTarea=" +
+          IdPwPEspecificoSesionTarea
+      );
+    } else {
+      return EMPTY;
+    }
   }
 }

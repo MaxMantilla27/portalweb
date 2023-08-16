@@ -137,6 +137,10 @@ import { RegistrarForoTareaComponent } from './sesiones/sesion-tarea/registrar-f
 import { CursoForoProyectoContenidoComponent } from './curso/curso-proyecto/curso-foro-proyecto-contenido/curso-foro-proyecto-contenido.component';
 import { CursoForoProyectoInsertComponent } from './curso/curso-proyecto/curso-foro-proyecto-insert/curso-foro-proyecto-insert.component';
 import { ModuloSesionesOnlineComponent } from './modulo/modulo-sesiones-online/modulo-sesiones-online.component';
+import { EnvioTareaComponent } from './modulo/modulo-sesiones-online/envio-tarea/envio-tarea.component';
+import { EnvioCuestionarioComponent } from './modulo/modulo-sesiones-online/envio-cuestionario/envio-cuestionario.component';
+import { AsistenciasOnlineComponent } from './modulo/asistencias-online/asistencias-online.component';
+import { GestionAsistenciaProgramaComponent } from './curso/gestion-asistencia-programa/gestion-asistencia-programa.component';
 
 
 @NgModule({
@@ -271,6 +275,10 @@ import { ModuloSesionesOnlineComponent } from './modulo/modulo-sesiones-online/m
     CursoForoProyectoContenidoComponent,
     CursoForoProyectoInsertComponent,
     ModuloSesionesOnlineComponent,
+    EnvioTareaComponent,
+    EnvioCuestionarioComponent,
+    AsistenciasOnlineComponent,
+    GestionAsistenciaProgramaComponent,
 
 
   ],

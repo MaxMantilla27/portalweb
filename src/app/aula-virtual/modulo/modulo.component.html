@@ -36,7 +36,7 @@
             </div>
           </ng-template>
           <div class="pad-resp">
-            <app-modulo-sesiones [Capitulo]="json.NombreCapitulo"  [IdMatriculaCabecera]="idMatricula"
+            <app-modulo-sesiones [Capitulo]="json.NombreCapitulo" [videos]="videosOnline"  [IdMatriculaCabecera]="idMatricula"
              [idModalidad]="json.idModalidad" [IdPespecifico]="json.IdPEspecificoHijo" [estructuraCapitulo]="estructuraCapitulo">
             </app-modulo-sesiones>
           </div>
@@ -64,7 +64,7 @@
           </ng-template>
           <div class="pad-resp">
             <app-modulo-silabo [Capitulo]="json.NombreCapitulo" [IdPgeneral]="json.IdPGeneralHijo"
-              [Estructura]="estructuraCapitulo"></app-modulo-silabo>
+              [Estructura]="estructuraCapitulo" [idModalidad]="json.idModalidad"></app-modulo-silabo>
           </div>
         </mat-tab>
         <mat-tab>
@@ -73,7 +73,7 @@
               <div class="iconMat iconRecursos"
               matTooltip="Recursos"
               matTooltipPosition="after"></div>
-              <div *ngIf="!hide" class="titleMatr">Recursos</div>
+              <div *ngIf="!hide" class="titleMatr">Material de estudio</div>
             </div>
           </ng-template>
           <div class="pad-resp"><app-modulo-recurso [Capitulo]="json.NombreCapitulo" [Estructura]="estructuraCapitulo"
@@ -92,6 +92,22 @@
             <app-modulo-foro [Capitulo]="json.NombreCapitulo" [IdPgeneral]="json.IdPGeneralHijo" [IdPprincipal]="json.IdPGeneralPadre" [IdPEspecificoPadre]="json.IdPEspecificoPadre" [IdPEspecificoHijo]="json.IdPEspecificoHijo"></app-modulo-foro>
           </div>
         </mat-tab>
+        <mat-tab *ngIf="json.idModalidad!=1">
+          <ng-template mat-tab-label>
+            <div class="contentHeaderM" (click)="InterraccionTab('Foro')">
+              <div class="iconMat iconAsistencia"
+              matTooltip="Foro"
+              matTooltipPosition="after"></div>
+              <div *ngIf="!hide" class="titleMatr">Asistencia</div>
+            </div>
+          </ng-template>
+          <div class="pad-resp">
+            <ng-container >
+              <app-asistencias-online [IdMatriculaCabecera]="json.IdMatriculaCabecera" [IdPEspecifico]="json.IdPEspecificoHijo"></app-asistencias-online>
+            </ng-container>
+
+          </div>
+        </mat-tab>
         <mat-tab *ngIf="json.idModalidad==1">
           <ng-template mat-tab-label>
             <div class="contentHeaderM" (click)="InterraccionTab('Calificaciones')">
@@ -106,7 +122,7 @@
              [IdPGeneralHijo]="json.IdPGeneralHijo" [IdPEspecifico]="json.IdPEspecificoHijo"></app-modulo-calificaciones>
           </div>
         </mat-tab>
-        <mat-tab *ngIf="videosOnline!=undefined && videosOnline.length>0">
+        <!-- <mat-tab *ngIf="videosOnline!=undefined && videosOnline.length>0">
           <ng-template mat-tab-label>
             <div class="contentHeaderM" (click)="InterraccionTab('Clases Grabadas')"
             [matTooltip]="'Clases Grabadas'"
@@ -120,7 +136,7 @@
             <app-modulo-videos-sincronico [videos]="videosOnline" [Capitulo]="json.NombreCapitulo">
             </app-modulo-videos-sincronico>
           </div>
-        </mat-tab>
+        </mat-tab> -->
         <!-- <mat-tab>
           <ng-template mat-tab-label>
             <div class="contentHeaderM" (click)="InterraccionTab('Ayuda')" [ngClass]="{'ActiveChil':AyudaActive==true}">

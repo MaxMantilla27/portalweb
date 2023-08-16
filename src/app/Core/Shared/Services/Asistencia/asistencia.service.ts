@@ -18,13 +18,20 @@ export class AsistenciaService {
     this.isBrowser = isPlatformBrowser(platformId);
   }
 
-  public ObtenerAsistenciaAlumno(IdMatriculaCabecera:number,IdPEspecifico:number):Observable<any>{
+  public ObtenerAsistencia(IdMatriculaCabecera:number,IdPEspecifico:number):Observable<any>{
     if(this.isBrowser){
-      return this.http.get<any>(this.urlBase+'/ObtenerAsistencia?IdMatriculaCabecera='+IdMatriculaCabecera+'&IdPEspecifico='+IdPEspecifico);    
+      return this.http.get<any>(this.urlBase+'/ObtenerAsistencia?IdMatriculaCabecera='+IdMatriculaCabecera+'&IdPEspecifico='+IdPEspecifico);
     } else {
       return EMPTY;
     }
   }
 
+  public ObtenerAsistenciasAlumnoOnline(IdMatriculaCabecera:number,IdPEspecifico:number):Observable<any>{
+    if(this.isBrowser){
+      return this.http.get<any>(this.urlBase+'/ObtenerAsistenciasAlumnoOnline?IdMatriculaCabecera='+IdMatriculaCabecera+'&IdPEspecifico='+IdPEspecifico);
+    } else {
+      return EMPTY;
+    }
+  }
 }
 

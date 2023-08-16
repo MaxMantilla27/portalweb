@@ -9,6 +9,7 @@ import {
   ProgresoAlumnoProgramaAulaVirtualDTO,
 } from 'src/app/Core/Models/ListadoProgramaContenidoDTO';
 import { ChargeComponent } from 'src/app/Core/Shared/Containers/Dialog/charge/charge.component';
+import { AsistenciaService } from 'src/app/Core/Shared/Services/Asistencia/asistencia.service';
 import { CertificadoService } from 'src/app/Core/Shared/Services/Certificado/certificado.service';
 import { DatosPerfilService } from 'src/app/Core/Shared/Services/DatosPerfil/datos-perfil.service';
 import { HelperService } from 'src/app/Core/Shared/Services/helper.service';
@@ -42,6 +43,7 @@ export class CursoComponent implements OnInit,OnDestroy {
     private _SessionStorageService:SessionStorageService,
     private _CertificadoService:CertificadoService,
     public dialog: MatDialog,
+    private _AsistenciaService: AsistenciaService,
   ) {}
   ngOnDestroy(): void {
     this.signal$.next(true);
@@ -108,6 +110,7 @@ export class CursoComponent implements OnInit,OnDestroy {
   public generateCertificado=true
   public ircas:any
   public videosOnline:Array<any>=[]
+  public asistencias:any
   public contenidotarea=
   '<iframe src="https://player.vimeo.com/video/737713694?h=ce19c25ba1" width="100%" height="564" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>'
   public contenidotareapares=
@@ -139,6 +142,15 @@ export class CursoComponent implements OnInit,OnDestroy {
       },
     });
 
+  }
+
+  ObtenerAsistenciasAlumnoOnline(){
+    this._AsistenciaService.ObtenerAsistenciasAlumnoOnline(this.idMatricula, this.programEstructura.idPEspecifico).pipe(takeUntil(this.signal$)).subscribe({
+      next:x=>{
+        console.log(x)
+        this.asistencias=x
+      }
+    })
   }
   ObtenerDatosCertificadoIrcaEnvio(){
     this._CertificadoService.ObtenerDatosCertificadoIrcaEnvio(this.idMatricula).pipe(takeUntil(this.signal$)).subscribe({
@@ -455,6 +467,7 @@ export class CursoComponent implements OnInit,OnDestroy {
               console.log(params)
               program.params = btoa(encodeURIComponent(JSON.stringify(params)));
             });
+            this.ObtenerAsistenciasAlumnoOnline();
           }else{
             this.ProgresoProgramaCursosAulaVirtualAonlinePorEstadoVideo()
             this.EsCurso=true

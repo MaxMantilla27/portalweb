@@ -112,4 +112,12 @@ export class DatosPerfilService {
     }
   }
 
+  public ObtenerSesionesOnlineWebinarPorIdPespecifico(IdPespecifico:number):Observable<any>{
+    if(this.isBrowser){
+      return this.http.get<any>(this.urlBase+'/ObtenerSesionesOnlineWebinarPorIdPespecifico?IdPespecifico='+IdPespecifico);
+    }else{
+      return EMPTY;
+    }
+  }
+
 }

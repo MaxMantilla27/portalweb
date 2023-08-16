@@ -133,7 +133,7 @@ export class AgregarPreguntasComponent implements OnInit ,OnDestroy {
     this.pregunta.Descripcion=this.formularioTarea.get('Descripcion')?.value
     this.pregunta.Puntaje=0
     this.pregunta.Alternativas.forEach((a:any) => {
-      this.pregunta.Puntaje+=a.Puntaje
+      this.pregunta.Puntaje+=a.Puntaje*1
     });
 
     if (this.selectedFiles) {
