@@ -51,6 +51,7 @@ export class ModuloCalificacionesComponent implements OnInit,OnDestroy {
   ListadoCriteriosEvaluacionPorCurso(){
     this._NotaService.ListadoCriteriosEvaluacionPorCurso(this.IdMatriculaCabecera,this.IdPEspecifico,1).pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
+        console.log(x)
         this.calificacionesCurso=x;
         this.error=x.excepcion.excepcionGenerada;
         this.mensajeError=x.excepcion.descripcionGeneral;

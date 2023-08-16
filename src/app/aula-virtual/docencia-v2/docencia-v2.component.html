@@ -45,7 +45,7 @@
             <app-docencia-cursos-online ></app-docencia-cursos-online>
           </div>
         </mat-tab>
-        <mat-tab>
+        <!-- <mat-tab>
           <ng-template mat-tab-label>
             <div #sesiones class="contentHeaderM" >
               <div class="iconMat iconCursosAOnline" matTooltip="Sesiones" matTooltipPosition="after"></div>
@@ -53,9 +53,72 @@
             </div>
           </ng-template>
           <div class="pad-resp">
-            3
+            <app-docencia-cursos-aonline ></app-docencia-cursos-aonline>
           </div>
+        </mat-tab> -->
+        <mat-tab>
+          <ng-template mat-tab-label>
+            <div #sesiones class="contentHeaderM" (click)="InterraccionTab('Cursos asincrónicos');changeIndexAsincronico()"
+            matTooltip="Cursos asincrónicos"
+            matTooltipPosition="after" [ngClass]="{'ActiveChil':AsincronicoActive==true}">
+              <div class="iconMat iconCursosAOnline" matTooltip="Sesiones" matTooltipPosition="after"></div>
+              <div *ngIf="!hide" class="titleMatr">Cursos asincrónicos</div>
+            </div>
+          </ng-template>
+          <ng-template matTabContent>
+            <div class="pad-resp">
+              <app-docencia-cursos-aonline-responder-foro ></app-docencia-cursos-aonline-responder-foro>
+            </div>
+          </ng-template>
         </mat-tab>
+        <ng-container *ngIf="AsincronicoActive==true">
+
+          <mat-tab>
+            <ng-template mat-tab-label class="tabSubcontent">
+              <div class="contentHeaderM subContent" style="cursor: pointer;padding: 20px 10px !important;"
+                (click)="InterraccionTab('Responder Foros')"
+                matTooltip="Responder Foros"
+                matTooltipPosition="after">
+
+                <div class="iconMat"><i class="material-icons">comment</i></div>
+                <div class="titleMatr" *ngIf="!hide">Responder Foros</div>
+              </div>
+            </ng-template>
+            <div class="pad-resp">
+              <app-docencia-cursos-aonline-responder-foro ></app-docencia-cursos-aonline-responder-foro>
+            </div>
+          </mat-tab>
+          <mat-tab>
+            <ng-template mat-tab-label>
+              <div class="contentHeaderM subContent"  style="cursor: pointer;padding: 20px 10px !important;"
+                (click)="InterraccionTab('Calificar Proyecto de Aplicación');"
+                matTooltip="Calificar Proyecto de Aplicación"
+                matTooltipPosition="after">
+                <div class="iconMat"><i class="material-icons">folder_supervised</i></div>
+                <div class="titleMatr" *ngIf="!hide">Calificar Proyecto de Aplicación</div>
+              </div>
+            </ng-template>
+            <div class="pad-resp">
+              <app-docencia-cursos-aonline-calificar-proyecto-aplicacion></app-docencia-cursos-aonline-calificar-proyecto-aplicacion>
+            </div>
+          </mat-tab>
+          <mat-tab>
+            <ng-template mat-tab-label>
+              <div class="contentHeaderM subContent"  style="cursor: pointer;padding: 20px 10px !important;"
+                (click)="InterraccionTab('Calificar Trabajo de Pares');"
+                matTooltip="Calificar Trabajo de Pares"
+                matTooltipPosition="after">
+                <div class="iconMat"><i class="material-icons">groups_2</i></div>
+                <div class="titleMatr" *ngIf="!hide">Calificar Trabajo de Pares</div>
+              </div>
+            </ng-template>
+            <div class="pad-resp">
+              <app-docencia-cursos-aonline-calificar-trabajo-pares ></app-docencia-cursos-aonline-calificar-trabajo-pares>
+            </div>
+          </mat-tab>
+
+
+        </ng-container>
       </mat-tab-group>
     </div>
   </div>

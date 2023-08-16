@@ -1,0 +1,74 @@
+<div *ngIf="ContenidoProyectoAplicacion==false" class="contentCursosOnline">
+  <div class="row ">
+    <div class="col-12 col-md-12 col-lg-12 InputsDocencia">
+      <div class="row">
+        <div class="col-10 col-md-9 col-lg-9">
+          <mat-form-field appearance="outline"  style="width: 100%;">
+            <mat-label>Buscar por nombre de programa</mat-label>
+            <input type="text" placeholder="Buscar por nombre de programa" [(ngModel)]="filterProyectoAplicacion" matInput>
+          </mat-form-field>
+        </div>
+        <div class="col-2 col-md-3 col-lg-3">
+            <app-default-button [confs]="{color:'primary',titulo:'Buscar'}" [icon]="''"
+              [style]="'margin: 0px;border-radius: 5px;width: 100%;margin-top:5px'"
+              (ButtoclClick)="FiltrarProyectos()"
+              ></app-default-button>
+        </div>
+      </div>
+    </div>
+    <!-- <div class="col-6 col-md-3 col-lg-3 InputsDocencia" >
+
+      <mat-form-field appearance="outline">
+        <mat-label>Filtrar por Estado</mat-label>
+        <mat-select #myselsetc [(ngModel)]="EstadoPendiente" #select  (selectionChange)="FiltrarProyectos()">
+          <mat-option  [value]="-1" style="font-size: 16px;">
+            Todos
+          </mat-option>
+          <mat-option *ngFor="let item of Estados" [value]="item.id" style="font-size: 16px;">
+            {{item.Nombre}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div> -->
+    <ng-container *ngIf="ProyectoAplicacion==undefined">
+      <div style="    display: flex;
+        justify-content: center;">
+        <mat-spinner></mat-spinner>
+      </div>
+    </ng-container>
+    <ng-container *ngIf="ProyectoAplicacion!=undefined">
+      <div class="col-12" style="margin-top: 50px;">
+        <ng-container *ngFor="let item of ProyectoAplicacion;let i=index">
+          <div class="contentCursoOnline" *ngIf="item.Visible==true">
+            <div class="row" style="margin: 0px;align-items: center;">
+              <div class="col-12 col-md-8 col-lg-10">
+                <div class="col-12">
+                  <div class="TitleCursoOnline">Programa: {{item.pGeneral}}</div>
+                </div>
+              </div>
+              <div class="col-12 col-md-4 col-lg-2" style="    display: flex;
+              justify-content: baseline;
+              padding: 0px;">
+                <app-default-button (click)="IngresarProyectos(item.idPGeneralPadre,item.idPEspecifico,true)" [confs]="{color:'primary',titulo:'Calificar'}" [icon]="''"
+                  [style]="'border-radius: 5px; margin: 0px; padding: 0px 30px;'"></app-default-button>
+                <!-- <app-default-button *ngIf="item.estadoAtendido==1" (click)="IngresarProyectos(item.idPGeneralPadre,item.idPEspecifico,true)" [confs]="{color:'primary',titulo:'Ver Calificados'}" [icon]="''"
+                  [style]="'border-radius: 5px; margin: 0px; padding: 0px 30px;'"></app-default-button> -->
+              </div>
+              <div class="col-12 col-md-12 col-lg-12">
+                <div class="col-12">
+                  <div>Curso: {{item.pEspecifico}}</div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </ng-container>
+
+      </div>
+    </ng-container>
+
+  </div>
+</div>
+<div *ngIf="ContenidoProyectoAplicacion==true">
+  <app-docencia-calificar-proyecto-aplicacion [IdPEspecifico]="IdPEspecificoProyectoAplicacion"></app-docencia-calificar-proyecto-aplicacion>
+</div>
