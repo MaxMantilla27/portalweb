@@ -82,7 +82,6 @@ export class PagoComponent implements OnInit,OnDestroy {
           if(i==0){
             this.idMatricula = parseInt(param['IdMatricula']);
             this.idPais = x.datosAlumno.idPais
-            this.VerificarEstadoAfiliacion()
             this.ObtenerPasarela()
             this.ObtenerCronogramaPagoMatricula()
             i++
@@ -199,6 +198,9 @@ export class PagoComponent implements OnInit,OnDestroy {
       next:x=>{
         console.log("tarjeta",x)
         this.idPasarela=x[0].idPasarelaPago?x[0].idPasarelaPago:0
+
+        this.VerificarEstadoAfiliacion()
+
       },
       error:e=>{
         console.log(e)
