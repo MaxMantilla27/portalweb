@@ -141,6 +141,17 @@ import { EnvioTareaComponent } from './modulo/modulo-sesiones-online/envio-tarea
 import { EnvioCuestionarioComponent } from './modulo/modulo-sesiones-online/envio-cuestionario/envio-cuestionario.component';
 import { AsistenciasOnlineComponent } from './modulo/asistencias-online/asistencias-online.component';
 import { GestionAsistenciaProgramaComponent } from './curso/gestion-asistencia-programa/gestion-asistencia-programa.component';
+import { DocenciaCursosAonlineComponent } from './docencia-v2/docencia-cursos-aonline/docencia-cursos-aonline.component';
+import { DocenciaCursosAonlineResponderForoComponent } from './docencia-v2/docencia-cursos-aonline/docencia-cursos-aonline-responder-foro/docencia-cursos-aonline-responder-foro.component';
+import { DocenciaCursosAonlineCalificarProyectoAplicacionComponent } from './docencia-v2/docencia-cursos-aonline/docencia-cursos-aonline-calificar-proyecto-aplicacion/docencia-cursos-aonline-calificar-proyecto-aplicacion.component';
+import { DocenciaCursosAonlineCalificarTrabajoParesComponent } from './docencia-v2/docencia-cursos-aonline/docencia-cursos-aonline-calificar-trabajo-pares/docencia-cursos-aonline-calificar-trabajo-pares.component';
+import { DocenciaResponerForoCursoComponent } from './docencia-v2/docencia-cursos-aonline/docencia-cursos-aonline-responder-foro/docencia-responder-foro-curso/docencia-responer-foro-curso.component';
+import { DocenciaResponderForoCursoModalComponent } from './docencia-v2/docencia-cursos-aonline/docencia-cursos-aonline-responder-foro/docencia-responder-foro-curso-modal/docencia-responder-foro-curso-modal.component';
+import { DocenciaCalificarTrabajoParesComponent } from './docencia-v2/docencia-cursos-aonline/docencia-cursos-aonline-calificar-trabajo-pares/docencia-calificar-trabajo-pares/docencia-calificar-trabajo-pares.component';
+import { DocenciaCalificarTrabajoParesModalComponent } from './docencia-v2/docencia-cursos-aonline/docencia-cursos-aonline-calificar-trabajo-pares/docencia-calificar-trabajo-pares-modal/docencia-calificar-trabajo-pares-modal.component';
+import { DocenciaCalificarProyectoAplicacionComponent } from './docencia-v2/docencia-cursos-aonline/docencia-cursos-aonline-calificar-proyecto-aplicacion/docencia-calificar-proyecto-aplicacion/docencia-calificar-proyecto-aplicacion.component';
+import { DocenciaCalificarProyectoAplicacionModalComponent } from './docencia-v2/docencia-cursos-aonline/docencia-cursos-aonline-calificar-proyecto-aplicacion/docencia-calificar-proyecto-aplicacion-modal/docencia-calificar-proyecto-aplicacion-modal.component';
+import { ModuloCalificacionesOnlineComponent } from './modulo/modulo-calificaciones/modulo-calificaciones-online/modulo-calificaciones-online.component';
 
 
 @NgModule({
@@ -279,6 +290,17 @@ import { GestionAsistenciaProgramaComponent } from './curso/gestion-asistencia-p
     EnvioCuestionarioComponent,
     AsistenciasOnlineComponent,
     GestionAsistenciaProgramaComponent,
+    DocenciaCursosAonlineComponent,
+    DocenciaCursosAonlineResponderForoComponent,
+    DocenciaCursosAonlineCalificarProyectoAplicacionComponent,
+    DocenciaCursosAonlineCalificarTrabajoParesComponent,
+    DocenciaResponerForoCursoComponent,
+    DocenciaResponderForoCursoModalComponent,
+    DocenciaCalificarTrabajoParesComponent,
+    DocenciaCalificarTrabajoParesModalComponent,
+    DocenciaCalificarProyectoAplicacionComponent,
+    DocenciaCalificarProyectoAplicacionModalComponent,
+    ModuloCalificacionesOnlineComponent,
 
 
   ],

@@ -139,6 +139,21 @@
             </div>
           </mat-tab>
           <!-- <mat-tab *ngIf="videosOnline!=undefined && videosOnline.length>0">
+          <mat-tab *ngIf="json.idModalidad==2">
+            <ng-template mat-tab-label>
+              <div class="contentHeaderM" (click)="InterraccionTab('Calificaciones')">
+                <div class="iconMat iconCalificaciones"
+                matTooltip="Calificaciones"
+                matTooltipPosition="after"></div>
+                <div *ngIf="!hide" class="titleMatr">Calificaciones</div>
+              </div>
+            </ng-template>
+            <div class="pad-resp">
+              <app-modulo-calificaciones-online [Capitulo]="json.NombreCapitulo" [IdMatriculaCabecera]="json.IdMatriculaCabecera"
+              [IdPGeneralHijo]="json.IdPGeneralHijo" [IdPEspecifico]="json.IdPEspecificoHijo"></app-modulo-calificaciones-online>
+            </div>
+          </mat-tab>
+          <mat-tab *ngIf="videosOnline!=undefined && videosOnline.length>0">
             <ng-template mat-tab-label>
               <div class="contentHeaderM" (click)="InterraccionTab('Clases Grabadas')"
               [matTooltip]="'Clases Grabadas'"
@@ -216,7 +231,7 @@
             </app-curso-proyecto>
           </div>
         </mat-tab>
-        <mat-tab *ngIf="curso!=undefined && curso.proyectoAplicacion">
+        <mat-tab *ngIf="EsCurso==false">
           <ng-template mat-tab-label>
             <div #notas class="contentHeaderM" (click)="InterraccionTab('Notas')" matTooltip="Notas"
               matTooltipPosition="after">

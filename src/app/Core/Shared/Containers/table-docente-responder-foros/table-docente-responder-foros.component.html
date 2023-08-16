@@ -1,0 +1,122 @@
+<mat-card style="background-color: #ebebec;font-size: 13px;">
+  <div class="row">
+    <div class="col-12 col-md-6">
+      <div  class="col-12 col-md-6" style="margin-bottom: 10px;margin-left: 20px;">
+        <mat-form-field style="width: 120% !important;">
+          <mat-label>Código de matrícula</mat-label>
+          <input matInput (keyup)="FilterCodigoMatricula($event)" placeholder="Ingresar el código"/>
+        </mat-form-field>
+      </div>
+      <div  class="col-12 col-md-6"style="margin-bottom: 10px;margin-left: 20px;">
+        <mat-form-field style="width: 120% !important;">
+          <mat-label>Nombre alumno</mat-label>
+          <input matInput (keyup)="FilterAlumno($event)" placeholder="Ingresar nombres"/>
+        </mat-form-field>
+      </div>
+    </div>
+    <div  class="col-12 col-md-6">
+      <div  class="col-12 col-md-6"style="margin-bottom: 10px;margin-left: 20px;">
+        <mat-form-field style="width: 120% !important;">
+          <mat-label>Tema foro</mat-label>
+        <input matInput (keyup)="FilterTemaForo($event)" placeholder="Ingresar tema"/>
+        </mat-form-field>
+      </div>
+    </div>
+  </div>
+</mat-card>
+
+<div style="max-height: 500px;
+overflow: auto;">
+  <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8 tablev2-material" style="width: 100%;">
+
+    <ng-container [matColumnDef]="tableData" *ngFor="let tableData of objectKeys(columnHeader)"
+    [sticky]="isSticky(tableData)">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header [style]="StyleCabecera" style="text-align: center;">
+        <div style="display: flex;flex-direction: column;align-items: center;justify-content: center;">
+          <div *ngIf="buttonheader[tableData]" (click)="ButtonHeaderClick.emit(tableData)"><i class="material-icons">{{buttonheader[tableData][0]}}</i></div>
+          <div [innerHTML]="columnHeader[tableData]"></div>
+        </div>
+      </th>
+      <td mat-cell *matCellDef="let element;let i=index" [style]="StyleContent" >
+        <ng-container *ngIf="tipoContenido[tableData]; else normal">
+
+
+          <ng-container *ngIf="(tipoContenido[tableData][0] | lowercase )=='select'">
+            <div style="width: 100%;text-align: left;">
+              <select [disabled]="DisableCell[tableData][0]==true"
+              (change)="SelectChange.emit({index:element.index,value:element[tableData],column:tableData})"  [(ngModel)]="element[tableData]" style="width:max-content; border-radius: 0.4em;" >
+                   <option *ngFor="let item of dataSelect" [value]="item.value">{{item.Nombre}}</option>
+              </select>
+            </div>
+          </ng-container>
+          <ng-container  *ngIf="(tipoContenido[tableData][0] | lowercase )=='date';else hora">
+            <div style="width: 100%;text-align: left;">
+              {{element[tableData] | date: 'yyyy/MM/dd' }}
+            </div>
+          </ng-container>
+          <ng-template #hora>
+            <ng-container *ngIf="(tipoContenido[tableData][0] | lowercase )=='hora';else fechahora">
+              <div style="width: 100%;text-align: left;">
+                {{element[tableData] | date: 'hh:ss a' }}
+              </div>
+            </ng-container>
+
+            <ng-template #fechahora>
+              <ng-container *ngIf="(tipoContenido[tableData][0] | lowercase )=='fechahora';else url">
+                <div style="width: 100%;text-align: left;">
+                  {{element[tableData] | date: 'yyyy/MM/dd:hh:ss' }}
+                </div>
+              </ng-container>
+              <ng-template #url>
+                <ng-container *ngIf="(tipoContenido[tableData][0] | lowercase )=='url';else buttons">
+                  <ng-container *ngIf="
+                      (tipoContenido[tableData].length<2) || (!element[tipoContenido[tableData][1]]) ||
+                      (element[tipoContenido[tableData][1]]==null);
+                      else enabled">
+                    <app-default-button [confs]="{color:'primary',titulo:element[tableData]}" [icon]="''"
+                      [style]="'margin: 0px;'" [disabled]="true"></app-default-button>
+                  </ng-container>
+                  <ng-template #enabled>
+                    <a [href]="element[tipoContenido[tableData][1]]" style="    color: transparent;
+                    text-decoration: none;" target="_blank">
+                      <app-default-button [confs]="{color:'primary',titulo:element[tableData]}" [icon]="''"
+                        [style]="'margin: 0px;'"></app-default-button>
+                    </a>
+                  </ng-template>
+
+                </ng-container>
+                <ng-template #buttons>
+                  <ng-container *ngIf="(tipoContenido[tableData][0] | lowercase )=='buttons';">
+                    <ng-container *ngIf="!IsArray(tipoContenido[tableData][1])">
+                      <app-default-button [confs]="{color:'primary',titulo:element[tableData]}" [icon]="''"
+                        [style]="'margin: 0px;'" (ButtoclClick)="ButtonClick.emit(element.index)"></app-default-button>
+                    </ng-container>
+                    <ng-container *ngIf="IsArray(tipoContenido[tableData][1])">
+                      <div style="display: flex;flex-wrap: wrap;justify-content: space-evenly;align-items: center;">
+                        <app-default-button *ngFor="let item of tipoContenido[tableData][1],let indexb=index"
+                          [confs]="{color:'primary',titulo:item}" [icon]="''" [style]="'margin: 0px;'"
+                          (ButtoclClick)="ButtonArrayClick.emit({indexButton:indexb,index:element.index})"></app-default-button>
+                      </div>
+                    </ng-container>
+
+                  </ng-container>
+                </ng-template>
+
+              </ng-template>
+            </ng-template>
+          </ng-template>
+        </ng-container>
+        <ng-template #normal>
+          {{element[tableData] }}
+        </ng-template>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="objectKeys(columnHeader); sticky: true"></tr>
+    <tr mat-row *matRowDef="let row; columns: objectKeys(columnHeader);let i=index" (click)="select=i" class="rowSelect"
+      [ngClass]="{'select':select==i}"></tr>
+  </table>
+</div>
+
+<mat-paginator [pageSizeOptions]="[10, 20]" showFirstLastButtons aria-label="Selecciona">
+</mat-paginator>

@@ -3,6 +3,7 @@ import { MatTabChangeEvent } from '@angular/material/tabs';
 import { Subject, takeUntil } from 'rxjs';
 import { ParticipacionExpositorFiltroDTO } from 'src/app/Core/Models/ParticipacionExpositorFiltroDTO';
 import { ProveedorService } from 'src/app/Core/Shared/Services/Proveedor/proveedor.service';
+import { HelperService } from 'src/app/Core/Shared/Services/helper.service';
 
 @Component({
   selector: 'app-docencia-v2',
@@ -19,6 +20,7 @@ export class DocenciaV2Component implements OnInit ,OnDestroy {
   }
   constructor(
     private _ProveedorService:ProveedorService,
+    private _HelperService: HelperService,
     ) { }
 
   public migaPan = [
@@ -45,6 +47,8 @@ export class DocenciaV2Component implements OnInit ,OnDestroy {
     SinNotaAprobada: true,
     SinAsistenciaAprobada:null
   };
+  public AsincronicoActive = false;
+  public indexMenuAsincronico=0
   ngOnInit(): void {
     this.ObtenerInformacionProveedor();
   }
@@ -61,6 +65,30 @@ export class DocenciaV2Component implements OnInit ,OnDestroy {
     })
   }
   tabChanged(tabChangeEvent: MatTabChangeEvent): void {
+    if(this.AsincronicoActive==true){
+      console.log(this.indexMenuAsincronico)
+      if(this.indexMenuAsincronico==0){
+        this.indexMenuAsincronico=this.tabIndex
+        console.log(this.tabIndex)
+      }
+      console.log(this.indexMenuAsincronico )
+      console.log(tabChangeEvent.index )
+      console.log(this.tabIndex )
+      console.log(this.indexMenuAsincronico )
+      if (this.indexMenuAsincronico>0 && tabChangeEvent.index < this.indexMenuAsincronico)
+      {
+        this.AsincronicoActive = false;
+        this.indexMenuAsincronico=0
+        console.log(this.tabIndex)
+      }
+    }
+  }
+  InterraccionTab(nombre:string){
 
+    this._HelperService.enviarMsjAcciones({Tag:'Tab',Nombre:nombre})
+  }
+  changeIndexAsincronico() {
+    this.AsincronicoActive = true;
+    console.log(this.indexMenuAsincronico)
   }
 }

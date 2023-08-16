@@ -23,7 +23,13 @@
                   <div class="col-1 NumeroCurso" style="padding-left: 15px;" >
                     {{i+1}}
                   </div>
-                  <div class="col-9" style="font-size: 16px;" [innerHtml]="Cursos.nombrePEspecifico | safeHtml">
+                  <div class="col-9" >
+                    <div style="font-size: 16px;" [innerHtml]="Cursos.nombrePEspecifico | safeHtml">
+
+                    </div>
+                    <div style="font-size: 13px;color: #0684F3;" [innerHtml]="Cursos.nombreModalidad | safeHtml">
+
+                    </div>
 
                   </div>
                   <div class="col-2"  style="font-size: 16px;text-align: center;color: #0684F3;" >
@@ -91,8 +97,8 @@
       <strong>Promedio Final</strong>
     </div>
     <div  class="col-2" style="text-align: center;color: #0684F3;">
-      <strong>{{PromedioFinal}}</strong>
+      <strong *ngIf="PromedioFinal!=0">{{PromedioFinal}}</strong>
+      <strong *ngIf="PromedioFinal==0">0</strong>
     </div>
   </div>
 </div>
-

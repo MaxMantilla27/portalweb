@@ -136,6 +136,8 @@ import {DragDropModule} from '@angular/cdk/drag-drop';
 import { ChangeWordComponent } from './Containers/Dialog/change-word/change-word.component';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
+import { TableCalificarEvaluacionesComponent } from './Containers/table-calificar-evaluaciones/table-calificar-evaluaciones.component';
+import { TableDocenteResponderForosComponent } from './Containers/table-docente-responder-foros/table-docente-responder-foros.component';
 @NgModule({
   imports: [
     HttpClientModule,
@@ -234,6 +236,8 @@ import { MatNativeDateModule } from '@angular/material/core';
     TableV2Component,
     TablePortalComponent,
     ChangeWordComponent,
+    TableCalificarEvaluacionesComponent,
+    TableDocenteResponderForosComponent,
     //ChatZComponent,
   ],
   exports: [
@@ -329,6 +333,8 @@ import { MatNativeDateModule } from '@angular/material/core';
     DragDropModule,
     MatDatepickerModule,
     MatNativeDateModule,
+    TableCalificarEvaluacionesComponent,
+    TableDocenteResponderForosComponent,
   ],
   providers: [
     SessionStorageService,
