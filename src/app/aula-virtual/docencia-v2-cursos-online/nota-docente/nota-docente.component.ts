@@ -36,14 +36,14 @@ export class NotaDocenteComponent implements OnInit ,OnChanges, OnDestroy{
   }
   ngOnChanges(changes: SimpleChanges): void {
     if (this.IdPespecifico != 0) {
-      this.ListadoNotaProcesar();
+      this.ListadoNotaProcesarOnline();
     }
   }
 
   public infoNotas:Array<any>=[];
   public listadoNotas:any
-  ListadoNotaProcesar(){
-    this._NotaService.ListadoNotaProcesar(this.IdPespecifico,1).pipe(takeUntil(this.signal$)).subscribe({
+  ListadoNotaProcesarOnline(){
+    this._NotaService.ListadoNotaProcesarOnline(this.IdPespecifico,1).pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
         console.log(x)
         this.listadoNotas=x;

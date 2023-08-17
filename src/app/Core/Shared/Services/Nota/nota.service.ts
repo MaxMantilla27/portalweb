@@ -33,6 +33,13 @@ export class NotaService {
       return EMPTY;
     }
   }
+  public ListadoNotaProcesarOnline(idPEspecifico:number,grupo:number):Observable<any>{
+    if(this.isBrowser){
+      return this.http.get<any>(this.urlBase+'/ListadoNotaProcesarOnline?idPespecifico='+idPEspecifico+ "&grupo=" +grupo);
+    }else{
+      return EMPTY;
+    }
+  }
   public Registrar(json:Array<NotaRegistrarDTO>):Observable<any>{
     if(this.isBrowser){
       return this.http.post<any>(this.urlBase+'/Registrar',json);
