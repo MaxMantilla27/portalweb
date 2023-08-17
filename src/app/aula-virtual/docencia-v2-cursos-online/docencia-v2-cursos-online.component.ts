@@ -63,7 +63,6 @@ export class DocenciaV2CursosOnlineComponent implements OnInit,OnDestroy {
   ObtenerInformacionProveedor(){
     this._ProveedorService.ObtenerInformacionProveedor().pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
-        console.log(x)
         this.DataProveedor=x
         // this.GenerarReporteFiltradoPortal()
       }

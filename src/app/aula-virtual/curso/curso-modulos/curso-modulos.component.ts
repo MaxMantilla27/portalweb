@@ -149,8 +149,6 @@ export class CursoModulosComponent implements OnInit, OnChanges,OnDestroy {
           cantidadRealizada+=video.videosTerminados
         }
       });
-      console.log(cantidadRealizada)
-      console.log(cantidad)
       program.porcentaje = cantidadRealizada*100/cantidad;
 
       if(program.convalidado==false && program.idModalidadHijo==1 && !alumnoTest){

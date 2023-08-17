@@ -84,7 +84,6 @@ export class DocenciaCalificarTrabajoParesModalComponent implements OnInit,OnDes
   public TerminaCarga=false
   ngOnInit(): void {
     this.TerminaCarga=false;
-    console.log(this.data)
     this.IdTarea = this.data.idTarea
     this.ObtenerTrabajoParesPorId()
   }
@@ -92,8 +91,6 @@ export class DocenciaCalificarTrabajoParesModalComponent implements OnInit,OnDes
   ObtenerTrabajoParesPorId(){
     this._TrabajoDeParesIntegraService.ObtenerTrabajoParesPorId(this.IdTarea).pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
-        console.log(x)
-        console.log(x.id)
         if(x.id>0){
           this.datosTarea=x;
           this.params.id=this.IdTarea
@@ -113,7 +110,6 @@ export class DocenciaCalificarTrabajoParesModalComponent implements OnInit,OnDes
   ListadoActividadesCalificablesDocentePorCurso(){
     this._TrabajoDeParesIntegraService.ListadoActividadesCalificablesDocentePorCurso(this.IdTarea).pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
-        console.log(x)
         this.datosTarea=x;
         this.params.id=this.IdTarea
         this.params.idEvaluacion=x.idEvaluacion
@@ -135,13 +131,10 @@ export class DocenciaCalificarTrabajoParesModalComponent implements OnInit,OnDes
     this._TareaEvaluacionService.ObtenerEvaluacionTrabajoPares(this.params).pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
         this.TerminaCarga=true;
-        console.log(x)
         this.tareas=x
-        console.log(this.tareas)
         if( this.tareas.registroTareaEvaluacionArchivo!=null){
           this.tareaAc=this.tareas.registroTareaEvaluacionArchivo
         }
-        console.log(this.tareaAc)
         this.migaPan.push(
           {
             titulo: x.datosTrabajoPares.nombre,
@@ -159,7 +152,6 @@ export class DocenciaCalificarTrabajoParesModalComponent implements OnInit,OnDes
     });
 
     dialogRef.afterClosed().pipe(takeUntil(this.signal$)).subscribe((result) => {
-      console.log(result)
       if(result!=undefined){
         this.ListadoActividadesCalificablesDocentePorCurso()
       }
@@ -169,7 +161,6 @@ export class DocenciaCalificarTrabajoParesModalComponent implements OnInit,OnDes
   EnviarNota(id:number){
     this.cargaEnvio=true
     var cal=0;
-    console.log(this.calificacion)
     this.tareas.criteriosEvaluacion.listaParametroEscalaEvaluacion.forEach((p:any) => {
       if(p.id==this.calificacion){
         cal=p.valor
@@ -180,7 +171,6 @@ export class DocenciaCalificarTrabajoParesModalComponent implements OnInit,OnDes
     this.enviarJson.ValorCalificado=cal
     this.enviarJson.IdParametroEvaluacion=this.tareas.criteriosEvaluacion.idParametroEvaluacion
     this.enviarJson.IdEsquemaEvaluacionPGeneralDetalle=this.tareas.criteriosEvaluacion.idEsquemaEvaluacionPGeneralDetalle
-    console.log(this.enviarJson);
 
     this.enviarJson.Retroalimentacion=this.retroalimentacion
     if(this.selectedFiles){
@@ -189,15 +179,12 @@ export class DocenciaCalificarTrabajoParesModalComponent implements OnInit,OnDes
         this.enviarJson.file = file;
       }
     }
-    console.log(this.enviarJson);
     this._TareaEvaluacionService.EnviarCalificacionTrabajoPares(this.enviarJson).pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
-        console.log(x)
         this.ObtenerEvaluacionTarea()
         this.cargaEnvio=false
       },
       error:x=>{
-        console.log(x)
         this.cargaEnvio=false
       },
       complete:()=>{
@@ -220,10 +207,6 @@ export class DocenciaCalificarTrabajoParesModalComponent implements OnInit,OnDes
         this.filestatus=false
       }
       this.selectedFiles = event.target.files;
-      // console.log ('Name: ' + name + "\n" +
-      //   'Type: ' + extencion + "\n" +
-      //   'Last-Modified-Date: ' + modifiedDate + "\n" +
-      //   'Size: ' + Math.round((size/1024)/1024) + " MB");
     }
   }
 

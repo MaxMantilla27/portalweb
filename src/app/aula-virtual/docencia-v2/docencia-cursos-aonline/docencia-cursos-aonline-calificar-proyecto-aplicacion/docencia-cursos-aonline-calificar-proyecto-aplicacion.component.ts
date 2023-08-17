@@ -54,17 +54,23 @@ export class DocenciaCursosAonlineCalificarProyectoAplicacionComponent implement
     Acciones: ['buttons', 'Calificar']
     //'Acciones': ['buttons'],
   };
+  public TerminaCarga=false;
   ngOnInit(): void {
+    this.TerminaCarga=false;
     this.ListadoProgramasDocenteFiltrado();
   }
   ListadoProgramasDocenteFiltrado(){
     this._TrabajoDeParesIntegraService.ListadoProgramasDocenteFiltrado().pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
-        console.log(x)
+        this.TerminaCarga=true;
         this.ProyectoAplicacion=x;
-        this.ProyectoAplicacion.forEach((c:any) => {
-          c.Visible=true
-        });
+        if(this.ProyectoAplicacion!=null){
+          if(this.ProyectoAplicacion.length!=0){
+            this.ProyectoAplicacion.forEach((c:any) => {
+            c.Visible=true
+          });
+          }
+        }
       }
     })
   }
@@ -75,50 +81,16 @@ export class DocenciaCursosAonlineCalificarProyectoAplicacionComponent implement
     const Url =this._router.serializeUrl(urlTree);
     window.open(Url+'/'+this.ProyectoAplicacion[index].alumnos[indexAlumno].idTarea, '_blank');
   }
-  // openTab(item:any,index:number){
-  //   console.log(item)
-  //   this._TrabajoDeParesIntegraService.ListadoAlumnosCalificarPorPespecificoCongelado(item.idPEspecifico).pipe(takeUntil(this.signal$)).subscribe({
-  //     next:x=>{
-  //       console.log(x)
-  //       this.ProyectoAplicacion[index].alumnos=[]
-  //       this.ProyectoAplicacion[index].alumnosAntiguos=[]
-  //       x.forEach((a:any) => {
-  //         a.calificadoEstado='No Calificado'
-  //         if(a.calificado==true){
-  //           a.calificadoEstado='Calificado'
-  //         }
-  //         if(a.estadoDevuelto==true){
-  //           a.calificadoEstado='Devuelto'
-  //         }
-  //         if(a.idTarea==0 || a.idTarea==null){
-  //           this.ProyectoAplicacion[index].alumnosAntiguos.push(a)
-  //         }else{
-  //           this.ProyectoAplicacion[index].alumnos.push(a)
-  //         }
-  //       });
-  //       console.log(this.ProyectoAplicacion[index])
-  //     }
-  //   })
-  // }
+
   FiltrarProyectos(){
-    console.log(this.EstadoPendiente)
     this.ProyectoAplicacion.forEach((e:any) => {
       e.Visible=true
-      console.log(this.filterProyectoAplicacion)
       if(this.filterProyectoAplicacion.length>0){
         var name=e.pGeneral.toUpperCase();
-        console.log(name)
         if(!name.includes(this.filterProyectoAplicacion.toUpperCase())){
-          console.log(e)
           e.Visible=false
         }
       }
-      console.log(e)
-      // if(this.EstadoPendiente==0 || this.EstadoPendiente==1){
-      //   if(this.EstadoPendiente!=e.estadoAtendido){
-      //     e.Visible=false
-      //   }
-      // }
     });
   }
   IngresarProyectos(IdPGeneral:number,IdPEspecificoPadre:number,ContenidoProyectoAplicacion:boolean ){

@@ -84,7 +84,6 @@ export class DocenciaCalificarProyectoAplicacionModalComponent implements OnInit
   public TerminaCarga=false
   ngOnInit(): void {
     this.TerminaCarga=false;
-    console.log(this.data)
     this.IdTarea = this.data.idTarea
     this.ObtenerProyectoAplicacionPorId()
   }
@@ -92,8 +91,6 @@ export class DocenciaCalificarProyectoAplicacionModalComponent implements OnInit
   ObtenerProyectoAplicacionPorId(){
     this._TrabajoDeParesIntegraService.ObtenerTrabajoParesPorId(this.IdTarea).pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
-        console.log(x)
-        console.log(x.id)
         if(x.id>0){
           this.datosTarea=x;
           this.params.id=this.IdTarea
@@ -113,7 +110,6 @@ export class DocenciaCalificarProyectoAplicacionModalComponent implements OnInit
   ListadoActividadesCalificablesDocentePorCurso(){
     this._TrabajoDeParesIntegraService.ListadoActividadesCalificablesDocentePorCurso(this.IdTarea).pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
-        console.log(x)
         this.datosTarea=x;
         this.params.id=this.IdTarea
         this.params.idEvaluacion=x.idEvaluacion
@@ -135,13 +131,10 @@ export class DocenciaCalificarProyectoAplicacionModalComponent implements OnInit
     this._TareaEvaluacionService.ObtenerEvaluacionTrabajoPares(this.params).pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
         this.TerminaCarga=true;
-        console.log(x)
         this.tareas=x
-        console.log(this.tareas)
         if( this.tareas.registroTareaEvaluacionArchivo!=null){
           this.tareaAc=this.tareas.registroTareaEvaluacionArchivo
         }
-        console.log(this.tareaAc)
         this.migaPan.push(
           {
             titulo: x.datosTrabajoPares.nombre,
@@ -159,7 +152,6 @@ export class DocenciaCalificarProyectoAplicacionModalComponent implements OnInit
     });
 
     dialogRef.afterClosed().pipe(takeUntil(this.signal$)).subscribe((result) => {
-      console.log(result)
       if(result!=undefined){
         this.ListadoActividadesCalificablesDocentePorCurso()
       }
@@ -186,7 +178,6 @@ export class DocenciaCalificarProyectoAplicacionModalComponent implements OnInit
   EnviarCalificacionProyectoEvaluacion(index:number){
     this.cargaEnvio=true
     var tareasDetalle=this.tareaAc[index];
-    console.log(tareasDetalle)
     var n:ParametroNotaRegistrarV3DTO={
         Id:0,
         IdPespecifico:this.tareas.criteriosEvaluacion.idPEspecifico,
@@ -214,14 +205,12 @@ export class DocenciaCalificarProyectoAplicacionModalComponent implements OnInit
     this.nota.push(n)
     this._TareaEvaluacionService.EnviarCalificacionProyectoEvaluacion(n).pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
-        console.log(x)
         this.cargaEnvio=false
         this.ObtenerEvaluacionTarea()
       },
       error:x=>{
         this.cargaEnvio=false
         this._SnackBarServiceService.openSnackBar("Ocurrio un error, por favor vuelva a recargar en unos momentos",'x',15,"snackbarCrucigramaerror");
-        console.log(x)
       },
       complete:()=>{
         this.CerrarModal();
@@ -232,7 +221,6 @@ export class DocenciaCalificarProyectoAplicacionModalComponent implements OnInit
   ActualizarCalificacionProyectoEvaluacion(index:number){
     this.cargaEnvio=true
     var tareasDetalle=this.tareaAc[index];
-    console.log(tareasDetalle)
     var n:ParametroNotaRegistrarV3DTO={
         Id:0,
         IdPespecifico:this.tareas.criteriosEvaluacion.idPEspecifico,
@@ -260,14 +248,12 @@ export class DocenciaCalificarProyectoAplicacionModalComponent implements OnInit
     this.nota.push(n)
     this._TareaEvaluacionService.ActualizarCalificacionProyectoEvaluacion(n).pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
-        console.log(x)
         this.cargaEnvio=false
         this.ObtenerEvaluacionTarea()
       },
       error:x=>{
         this.cargaEnvio=false
         this._SnackBarServiceService.openSnackBar("Ocurrio un error, por favor vuelva a recargar en unos momentos",'x',15,"snackbarCrucigramaerror");
-        console.log(x)
       },
       complete:()=>{
         this.CerrarModal();
