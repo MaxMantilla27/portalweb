@@ -113,7 +113,7 @@ export class ModuloCalificacionesOnlineComponent implements OnInit,OnDestroy {
                 data.detalleCalificacion.push({
                   criterioEvaluacion:escala.nombre,
                   ponderacion:escala.porcentaje,
-                  valor:nota
+                  valor:Math.round(nota)
                 })
               });
               data.detalleCalificacion.push({
