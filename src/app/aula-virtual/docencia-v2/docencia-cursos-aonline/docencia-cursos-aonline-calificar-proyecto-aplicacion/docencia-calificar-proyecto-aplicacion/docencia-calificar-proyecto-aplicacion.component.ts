@@ -62,7 +62,6 @@ export class DocenciaCalificarProyectoAplicacionComponent implements OnInit , On
       .pipe(takeUntil(this.signal$))
       .subscribe({
       next:x=>{
-        console.log(x)
         this.proyectoAplicacionCurso=x
         if(this.proyectoAplicacionCurso!=null || this.proyectoAplicacionCurso!=undefined){
           this.NombreCurso=this.proyectoAplicacionCurso[0].pEspecifico
@@ -75,7 +74,6 @@ export class DocenciaCalificarProyectoAplicacionComponent implements OnInit , On
     });
   }
   AbrirProyectoAplicacion(index:number){
-    console.log(index)
     const dialogRef = this.dialog.open(DocenciaCalificarProyectoAplicacionModalComponent, {
       data: {
         idTarea:this.proyectoAplicacionCurso[index].idTarea,

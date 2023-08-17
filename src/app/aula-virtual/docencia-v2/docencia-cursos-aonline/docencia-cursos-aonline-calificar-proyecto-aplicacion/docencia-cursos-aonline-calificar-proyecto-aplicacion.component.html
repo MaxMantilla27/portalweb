@@ -30,13 +30,22 @@
         </mat-select>
       </mat-form-field>
     </div> -->
-    <ng-container *ngIf="ProyectoAplicacion==undefined">
-      <div style="    display: flex;
-        justify-content: center;">
-        <mat-spinner></mat-spinner>
+    <ng-container *ngIf="(ProyectoAplicacion==undefined || ProyectoAplicacion.length==0) && TerminaCarga==false">
+      <div class="row" style="display: flex; justify-content: center;align-items: center;text-align: center; height: 15rem;">
+        <div class="col-12" style="display: flex;justify-content: center;">
+          <mat-spinner></mat-spinner>
+        </div>
+        <div class="col-12">
+          Los registros se estan cargando ...
+        </div>
       </div>
     </ng-container>
-    <ng-container *ngIf="ProyectoAplicacion!=undefined">
+    <ng-container *ngIf="(ProyectoAplicacion==undefined || ProyectoAplicacion.length==0) && TerminaCarga==true">
+      <div style="display: flex;justify-content: center;align-items: center; height: 15rem;">
+        No se encontraron registros.
+      </div>
+    </ng-container>
+    <ng-container *ngIf="ProyectoAplicacion!=undefined && ProyectoAplicacion.length!=0">
       <div class="col-12" style="margin-top: 50px;">
         <ng-container *ngFor="let item of ProyectoAplicacion;let i=index">
           <div class="contentCursoOnline" *ngIf="item.Visible==true">

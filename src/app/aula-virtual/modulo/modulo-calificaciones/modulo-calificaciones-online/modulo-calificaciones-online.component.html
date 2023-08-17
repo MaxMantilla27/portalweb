@@ -15,7 +15,7 @@
         <td style="width: 250px;text-align: center;border-radius: 2px;font-weight: bold;min-width: 180px;"><strong>Calificación</strong></td>
       </tr>
     </thead>
-    <tbody class="TablaTramitesContenido">
+    <tbody class="TablaTramitesContenido" *ngIf="CursosCriterios.detalleCalificacion!=undefined">
       <ng-container *ngFor="let criterioCalificacion of CursosCriterios.detalleCalificacion">
         <tr *ngIf="criterioCalificacion.criterioEvaluacion!='Promedio'">
           <td class="criterio" style="width: 40%;padding-top: 10px;padding-bottom: 10px;padding-left: 10px;">

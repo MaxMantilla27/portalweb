@@ -56,7 +56,6 @@ export class DocenciaV2Component implements OnInit ,OnDestroy {
   ObtenerInformacionProveedor(){
     this._ProveedorService.ObtenerInformacionProveedor().pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
-        console.log(x)
         this.DataProveedor=x
 
         this.json.IdProveedorOperaciones = this.DataProveedor.id.toString();
@@ -66,20 +65,13 @@ export class DocenciaV2Component implements OnInit ,OnDestroy {
   }
   tabChanged(tabChangeEvent: MatTabChangeEvent): void {
     if(this.AsincronicoActive==true){
-      console.log(this.indexMenuAsincronico)
       if(this.indexMenuAsincronico==0){
         this.indexMenuAsincronico=this.tabIndex
-        console.log(this.tabIndex)
       }
-      console.log(this.indexMenuAsincronico )
-      console.log(tabChangeEvent.index )
-      console.log(this.tabIndex )
-      console.log(this.indexMenuAsincronico )
       if (this.indexMenuAsincronico>0 && tabChangeEvent.index < this.indexMenuAsincronico)
       {
         this.AsincronicoActive = false;
         this.indexMenuAsincronico=0
-        console.log(this.tabIndex)
       }
     }
   }
@@ -89,6 +81,5 @@ export class DocenciaV2Component implements OnInit ,OnDestroy {
   }
   changeIndexAsincronico() {
     this.AsincronicoActive = true;
-    console.log(this.indexMenuAsincronico)
   }
 }

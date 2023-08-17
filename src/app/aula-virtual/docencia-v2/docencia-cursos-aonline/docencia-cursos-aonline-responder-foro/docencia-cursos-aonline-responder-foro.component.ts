@@ -26,7 +26,9 @@ export class DocenciaCursosAonlineResponderForoComponent implements OnInit,OnDes
   EstadoPendiente=-1;
   public ContenidoCurso=false;
   public IdPGeneralForo=0;
+  public TerminaCarga=false;
   ngOnInit(): void {
+    this.TerminaCarga=false;
     this.IdPGeneralForo=0;
     this.ContenidoCurso=false;
     this.ObtenerCursosForoDocentePortalWeb()
@@ -34,10 +36,15 @@ export class DocenciaCursosAonlineResponderForoComponent implements OnInit,OnDes
   ObtenerCursosForoDocentePortalWeb(){
     this._ForoCursoService.ObtenerCursosForoDocentePortalWeb().pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
+        this.TerminaCarga=true;
         this.Foros=x
-        this.Foros.forEach((c:any) => {
-          c.Visible=true
-        });
+        if(this.Foros!=null){
+          if(this.Foros.length!=0){
+            this.Foros.forEach((c:any) => {
+              c.Visible=true
+            });
+          }
+        }
       }
     })
   }

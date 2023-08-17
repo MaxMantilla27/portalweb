@@ -27,40 +27,40 @@ export class DocenciaCursosAonlineCalificarTrabajoParesComponent implements OnIn
   public ContenidoTrabajoPares=false;
   public IdPGeneralTrabajoPares=0;
   public IdPEspecificoTrabajoPares=0;
+  public TerminaCarga=false;
   ngOnInit(): void {
+    this.TerminaCarga=false;
     this.ObtenerProgramaGeneralCentroCostoDocente()
   }
   ObtenerProgramaGeneralCentroCostoDocente(){
     this._TrabajoDeParesIntegraService.ObtenerProgramaGeneralCentroCostoDocenteV2().pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
-        console.log(x)
+        this.TerminaCarga=true;
         this.TrabajoPares=x
-        this.TrabajoPares.forEach((t:any) => {
-          t.Visible=true;
-          if(t.tareasPendientes==0){
-            t.estadoAtendido=1
-          }
-          else{
-            t.estadoAtendido=0
-          }
+        if(this.TrabajoPares!=null){
+          if(this.TrabajoPares.length!=0)
+          this.TrabajoPares.forEach((t:any) => {
+            t.Visible=true;
+            if(t.tareasPendientes==0){
+              t.estadoAtendido=1
+            }
+            else{
+              t.estadoAtendido=0
+            }
         });
+        }
       }
     })
   }
   FiltrarTrabajoPares(){
-    console.log(this.EstadoPendiente)
     this.TrabajoPares.forEach((e:any) => {
       e.Visible=true
-      console.log(this.filterTrabajoPares)
       if(this.filterTrabajoPares.length>0){
         var name=e.programaGeneral.toUpperCase();
-        console.log(name)
         if(!name.includes(this.filterTrabajoPares.toUpperCase())){
-          console.log(e)
           e.Visible=false
         }
       }
-      console.log(e)
       if(this.EstadoPendiente==0 || this.EstadoPendiente==1){
         if(this.EstadoPendiente!=e.estadoAtendido){
           e.Visible=false

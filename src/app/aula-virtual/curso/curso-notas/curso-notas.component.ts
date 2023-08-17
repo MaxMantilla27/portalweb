@@ -21,12 +21,10 @@ export class CursoNotasComponent implements OnInit,OnDestroy {
   @Input() IdMatricula=0;
   public charge=false;
   public CursosCriterios:any;
+  public CursosCriteriosPrevio:any;
   public CursoAbierto=-1;
   public PromedioFinal=0;
-  public PromedioFinalMatricula=0;
   public PromedioFinalOnlineCurso=0;
-  public PromedioFinalOnlineCursoFinal=0;
-  public PromedioFinalOnlineCursoFinal2=0;
   public infoNotas:Array<any>=[];
   public listadoNotas:any
   columnHeader:any = {
@@ -37,9 +35,6 @@ export class CursoNotasComponent implements OnInit,OnDestroy {
   public CursosCriteriosOnline:any;
   public CursosCriteriosOnlineNotas:any;
   public NombreCursoOnline=''
-  public PromediosOnline=false;
-  public PromediosAonline=false;
-  public PromediosAonlineCurso=false;
   ngOnInit(): void {
     this.CursosCriteriosOnlineNotas=[];
     this.PromedioFinal=0;
@@ -47,6 +42,8 @@ export class CursoNotasComponent implements OnInit,OnDestroy {
   ngOnChanges(changes: SimpleChanges): void {
     this.PromedioFinal=0;
     if(this.IdMatricula!=0){
+      this.CursosCriterios=[]
+      this.CursosCriteriosPrevio=[]
       this.ObtenerCursosProgramaPorIdMatriculaOnline(this.IdMatricula);
       this.ObtenerCursosProgramaPorIdMatricula(this.IdMatricula);
 
@@ -55,15 +52,15 @@ export class CursoNotasComponent implements OnInit,OnDestroy {
   }
 
   ObtenerCursosProgramaPorIdMatricula(idMatricula:number){
-    this.PromediosOnline=false;
     this.PromedioFinal=0;
     this._NotaService.ObtenerCursosProgramaPorIdMatricula(idMatricula).pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
-        this.CursosCriterios=x;
+        this.CursosCriteriosPrevio=x;
         let cont=0;
-        if(this.CursosCriterios!=undefined){
-          this.CursosCriterios.forEach((x:any) => {
+        if(this.CursosCriteriosPrevio!=undefined){
+          this.CursosCriteriosPrevio.forEach((x:any) => {
             x.nombreModalidad='Online Asincrónico';
+            this.CursosCriterios.push(x)
             this.PromedioFinal=this.PromedioFinal+x.notaCurso;
             cont++
           });
@@ -73,22 +70,19 @@ export class CursoNotasComponent implements OnInit,OnDestroy {
         }
       },
       complete:()=> {
+        console.log(this.CursosCriterios)
       },
     })
   }
   ObtenerCursosProgramaPorIdMatriculaOnline(idMatricula:number){
-    this.PromediosAonline=false;
     this._NotaService.ObtenerCursosProgramaPorIdMatriculaOnline(idMatricula).pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
-        console.log(x)
         this.CursosCriteriosOnline=x;
-        console.log(this.CursosCriteriosOnline)
         this.CursosCriteriosOnline.forEach((y:any) => {
           this._NotaService.ListadoNotaProcesarV2(y.idPEspecifico,1,this.IdMatricula).pipe(takeUntil(this.signal$)).subscribe({
             next:x=>{
               this.PromedioFinalOnlineCurso=0;
               this.NombreCursoOnline=y.nombrePEspecifico;
-              console.log(x)
               this.listadoNotas=x;
               if(this.listadoNotas.listadoEvaluaciones==null)this.listadoNotas.listadoEvaluaciones=[];
               if(this.listadoNotas.listadoNotas==null)this.listadoNotas.listadoNotas=[];
@@ -132,9 +126,7 @@ export class CursoNotasComponent implements OnInit,OnDestroy {
                   }
                 });
               });
-              console.log(this.listadoNotas)
               if(this.listadoNotas.listadoMatriculas!=null){
-                this.PromediosAonlineCurso=false
                 let i=1
                 this.listadoNotas.listadoMatriculas.forEach((m:any) => {
                 this.infoNotas=[]
@@ -166,15 +158,12 @@ export class CursoNotasComponent implements OnInit,OnDestroy {
                   this.infoNotas.push(data);
                   i++
                 });
-                console.log(x)
                 x=this.infoNotas[0];
                 x.notaCurso=Math.round(this.PromedioFinalOnlineCurso);
                 x.nombrePEspecifico=this.NombreCursoOnline
                 x.nombreModalidad='Online Sincrónico';
                 this.CursosCriterios.push(x)
-                this.PromediosAonlineCurso=true
                 let cont=0;
-                console.log(this.CursosCriterios)
                 this.PromedioFinal=0
                 if(this.CursosCriterios!=undefined){
                   this.CursosCriterios.forEach((x:any) => {
@@ -185,15 +174,12 @@ export class CursoNotasComponent implements OnInit,OnDestroy {
                 if(cont!=0){
                   this.PromedioFinal=Math.round(this.PromedioFinal/cont)
                 }
-                console.log(this.PromedioFinal)
               }
             }
           })
         })
       },
       complete:()=> {
-        this.PromediosAonline=true;
-
       },
     })
 

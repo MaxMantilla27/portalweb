@@ -62,7 +62,6 @@ export class DocenciaCalificarTrabajoParesComponent implements OnInit , OnChange
       .pipe(takeUntil(this.signal$))
       .subscribe({
       next:x=>{
-        console.log(x)
         this.trabajoParesCurso=x
         if(this.trabajoParesCurso!=null || this.trabajoParesCurso!=undefined){
           this.NombreCurso=this.trabajoParesCurso[0].programaGeneral
@@ -75,7 +74,6 @@ export class DocenciaCalificarTrabajoParesComponent implements OnInit , OnChange
     });
   }
   AbrirTrabajoPares(index:number){
-    console.log(index)
     const dialogRef = this.dialog.open(DocenciaCalificarTrabajoParesModalComponent, {
       data: {
         idTarea:this.trabajoParesCurso[index].id,

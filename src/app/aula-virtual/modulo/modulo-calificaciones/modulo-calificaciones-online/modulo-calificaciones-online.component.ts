@@ -40,6 +40,7 @@ export class ModuloCalificacionesOnlineComponent implements OnInit,OnDestroy {
   ngOnChanges(changes: SimpleChanges): void {
     this.promedio=0;
     if(this.IdMatriculaCabecera!=0){
+      this.CursosCriterios=[]
       this.ObtenerCursosProgramaPorIdMatriculaOnline(this.IdMatriculaCabecera);
 
     }

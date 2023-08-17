@@ -45,7 +45,6 @@ export class NotaDocenteComponent implements OnInit ,OnChanges, OnDestroy{
   ListadoNotaProcesar(){
     this._NotaService.ListadoNotaProcesar(this.IdPespecifico,1).pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
-        console.log(x)
         this.listadoNotas=x;
         if(this.listadoNotas.listadoEvaluaciones==null)this.listadoNotas.listadoEvaluaciones=[];
         if(this.listadoNotas.listadoNotas==null)this.listadoNotas.listadoNotas=[];
@@ -89,7 +88,6 @@ export class NotaDocenteComponent implements OnInit ,OnChanges, OnDestroy{
             }
           });
         });
-        console.log(this.listadoNotas)
         this.OrdenarNotas();
       }
     })
@@ -104,7 +102,6 @@ export class NotaDocenteComponent implements OnInit ,OnChanges, OnDestroy{
       }
 
     }
-    console.log(this.columnHeader)
     if(this.listadoNotas.listadoMatriculas!=null){
       let i=1
       this.listadoNotas.listadoMatriculas.forEach((m:any) => {
@@ -137,7 +134,6 @@ export class NotaDocenteComponent implements OnInit ,OnChanges, OnDestroy{
 
         i++
       });
-      console.log(this.infoNotas)
     }
   }
 
