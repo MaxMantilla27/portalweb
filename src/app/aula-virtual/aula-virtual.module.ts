@@ -152,6 +152,7 @@ import { DocenciaCalificarTrabajoParesModalComponent } from './docencia-v2/docen
 import { DocenciaCalificarProyectoAplicacionComponent } from './docencia-v2/docencia-cursos-aonline/docencia-cursos-aonline-calificar-proyecto-aplicacion/docencia-calificar-proyecto-aplicacion/docencia-calificar-proyecto-aplicacion.component';
 import { DocenciaCalificarProyectoAplicacionModalComponent } from './docencia-v2/docencia-cursos-aonline/docencia-cursos-aonline-calificar-proyecto-aplicacion/docencia-calificar-proyecto-aplicacion-modal/docencia-calificar-proyecto-aplicacion-modal.component';
 import { ModuloCalificacionesOnlineComponent } from './modulo/modulo-calificaciones/modulo-calificaciones-online/modulo-calificaciones-online.component';
+import { CalificarActividadesDocenteComponent } from './docencia-v2-cursos-online/calificar-actividades-docente/calificar-actividades-docente.component';
 
 
 @NgModule({
@@ -301,6 +302,7 @@ import { ModuloCalificacionesOnlineComponent } from './modulo/modulo-calificacio
     DocenciaCalificarProyectoAplicacionComponent,
     DocenciaCalificarProyectoAplicacionModalComponent,
     ModuloCalificacionesOnlineComponent,
+    CalificarActividadesDocenteComponent,
 
 
   ],

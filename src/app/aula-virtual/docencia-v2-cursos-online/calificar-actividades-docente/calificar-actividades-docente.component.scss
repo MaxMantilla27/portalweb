@@ -1,0 +1,116 @@
+.contentCursosOnline{
+  padding: 10px 0px;
+}
+.InputsDocencia {
+  display: flex;
+  flex-direction: column;
+
+}
+.InputsDocencia
+  .mat-form-field.mat-form-field-appearance-outline
+  > div.mat-form-field-wrapper
+  > div.mat-form-field-flex
+  > div.mat-form-field-infix {
+  padding: 0.4em 0px;
+}
+.InputsDocencia .titlePerfil{
+  border-bottom: 1px solid #cacaca;
+  font-size: 25px;
+  margin: 40px 0px;
+}
+.InputsDocencia
+  .mat-form-field.mat-form-field-appearance-outline
+  > div.mat-form-field-wrapper
+  > div.mat-form-field-flex
+  > div.mat-form-field-infix
+  input {
+  height: 20px;
+}
+.InputsDocencia
+  .mat-form-field.mat-form-field-appearance-outline
+  > div.mat-form-field-wrapper
+  > div.mat-form-field-flex
+  > div.mat-form-field-infix
+  > span.mat-form-field-label-wrapper {
+  top: -1.5em;
+}
+
+.InputsDocencia.mat-form-field-appearance-outline.mat-form-field-can-float.mat-form-field-should-float
+  .mat-form-field-label {
+  transform: translateY(-1.1em) scale(0.75);
+  width: 133.33333%;
+}
+.InputsDocencia.mat-input-underline {
+  background-color: #ff0000; /* replace this color with your accent color hex code */
+}
+:root {
+  --main-bg-color: white;
+}
+.InputsDocencia
+  .mat-form-field.mat-form-field-appearance-outline
+  > div.mat-form-field-wrapper
+  > div.mat-form-field-flex
+  > .mat-form-field-outline {
+  .mat-form-field-outline-start {
+    background-color: var(--main-bg-color);
+  }
+  .mat-form-field-outline-gap {
+    background-color: var(--main-bg-color);
+  }
+  .mat-form-field-outline-end {
+    background-color: var(--main-bg-color);
+  }
+}
+.contentCursoOnline{
+  background: #f4f4f4;
+  border-radius: 5px;
+  width: 100%;
+  padding: 20px;
+  /* display: flex; */
+  margin-bottom: 30px;
+  background: #f4f4f4;
+  .EstadoCurso{
+    font-size: 12px;
+    font-weight: 600;
+  }
+  .imgAlertaActividadesPendientes{
+    width: 15px;
+    height: 15px;
+    background: url('../../../../assets/icons/icono-notificacion-rojo.svg');
+    background-size: cover;
+    background-position: center;
+    margin-right: 10px;
+  }
+  .imgAlertaActividadesEchas{
+    width: 15px;
+    height: 15px;
+    background: url('../../../../assets/icons/icono-check-circulo-verde.svg');
+    background-size: cover;
+    background-position: center;
+    margin-right: 10px;
+  }
+  .textActividades{
+    font-size: 12px;
+  }
+  .TitleCursoOnline{
+    font-size: 18px;
+    font-weight: 600;
+    margin: none;
+  }
+  .fechasOnline{
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    margin: 3px 0px;
+    div{
+      margin-right: 20px;
+    }
+  }
+  .EstadoSesionOnline{
+    display: flex;
+    font-size: 14px;
+  }
+}
+.contentCursoOnline:hover{
+  background: #f2f6ff;
+}

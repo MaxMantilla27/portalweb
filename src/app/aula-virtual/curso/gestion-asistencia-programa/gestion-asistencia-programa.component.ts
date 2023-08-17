@@ -18,11 +18,13 @@ export class GestionAsistenciaProgramaComponent implements OnInit {
     console.log(this.Asistencias)
     this.Asistencias.forEach((a:any) => {
       a.open=false
+      let i=1
       this.Cursos.forEach((c:any) => {
         if(a.idPEspecificoHijo==c.idPEspecificoHijo){
           a.Nombre=c.programaGeneralHijo,
-          a.orden=c.orden
+          a.orden=i
         }
+        i++
       });
     });
 

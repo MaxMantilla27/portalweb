@@ -464,4 +464,11 @@ export class PEspecificoEsquemaService {
       return EMPTY;
     }
   }
+  public ObtenerCriteriosEvaluacionPespecifico(IdPEspecificoSesion:number): Observable<any> {
+    if (this.isBrowser) {
+      return this.http.get<any>(this.urlBase + "/ObtenerCriteriosEvaluacionPespecifico?IdPEspecificoSesion=" +IdPEspecificoSesion);
+    } else {
+      return EMPTY;
+    }
+  }
 }
