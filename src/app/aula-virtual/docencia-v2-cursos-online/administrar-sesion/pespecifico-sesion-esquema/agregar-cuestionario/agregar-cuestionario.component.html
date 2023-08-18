@@ -1,6 +1,14 @@
-<div class="TitleCardAgregarTarea">{{Title}}</div>
+<div class="TitleCardAgregarTarea"  style="display: flex;">
+  <div class="col-11">
+    {{Title}}
+  </div>
+  <div class="col-1" style="text-align: end;font-weight: bold;cursor: pointer;" (click)="dialogRef.close()">
+    X
+  </div>
+</div>
 <div class="TitleAgregarTarea">{{(data.id==0?'Agregar ':'Editar')+' Cuestionario'}} - Sesión {{data.sesion.orden}} de
-  {{data.sesion.maximo}} - Fecha : {{data.sesion.fechaHoraInicio | date:'dd-MM-yyyy'}} </div>
+  {{data.sesion.maximo}} - Fecha : {{data.sesion.fechaHoraInicio | date:'dd-MM-yyyy'}}
+</div>
 <form [formGroup]="formularioTarea">
   <div class="row">
     <div class="col-6 col-md-3 col-lg-3 labelTarea">Título</div>
@@ -76,7 +84,7 @@
     <div class="col-4 col-md-2 col-lg-2 InputsDocencia">
       <mat-form-field appearance="outline" style="width: 100%;">
         <mat-label>Tiempo Límite</mat-label>
-        <input type="text" placeholder="Tiempo Límite" formControlName="TiempoLimite" matInput>
+        <input type="number" placeholder="Tiempo Límite" formControlName="TiempoLimite" matInput>
         <mat-error *ngIf="!formularioTarea.get('TiempoLimite')?.valid">Ingrese el tiempo limite</mat-error>
       </mat-form-field>
     </div>

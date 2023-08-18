@@ -220,7 +220,8 @@ export class AgregarCuestionarioComponent implements OnInit, OnDestroy {
     fecha.setMinutes(this.formularioTarea.get('MinutoEntrega')?.value);
     fecha.setSeconds(0);
     if (fecha != null) {
-      var s = datePipe.transform(fecha, 'dd/MM/yyyy HH:mm:ss');
+      var s = datePipe.transform(fecha, 'yyyy-MM-ddTHH:mm:ss.SSS');
+      console.log(s)
       this.save.FechaEntrega = s != null ? s : '';
     }
     console.log(this.save);

@@ -1,4 +1,19 @@
-<ng-container *ngIf="Actual!=undefined">
+<ng-container *ngIf="(Actual==undefined || Actual.length==0) && TerminaCarga==false">
+  <div class="row" style="display: flex; justify-content: center;align-items: center;text-align: center; height: 15rem;">
+    <div class="col-12" style="display: flex;justify-content: center;">
+      <mat-spinner></mat-spinner>
+    </div>
+    <div class="col-12">
+      Los registros se estan cargando ...
+    </div>
+  </div>
+</ng-container>
+<ng-container *ngIf="(Actual==undefined || Actual.length==0) && TerminaCarga==true">
+  <div style="display: flex;justify-content: center;align-items: center; height: 15rem;">
+    No se encontraron registros.
+  </div>
+</ng-container>
+<ng-container *ngIf="Actual!=undefined && Actual.length!=0">
   <ng-container *ngFor="let item of Actual">
     <div class="CardOnlines row">
       <div class="col-12 col-md-8 col-lg-9">

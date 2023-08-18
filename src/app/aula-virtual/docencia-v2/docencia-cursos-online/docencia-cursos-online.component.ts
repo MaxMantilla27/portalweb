@@ -24,17 +24,22 @@ export class DocenciaCursosOnlineComponent implements OnInit,OnDestroy {
     {id:2,Nombre:'En Ejecución'}
   ]
   EstadoPespecifico=0
+  public TerminaCarga=false;
   ngOnInit(): void {
     this.ObtenerCursosOnlineWebinarDocentePortalWeb()
   }
   ObtenerCursosOnlineWebinarDocentePortalWeb(){
     this._DatosPerfilService.ObtenerCursosOnlineWebinarDocentePortalWeb().pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
-        console.log(x)
+        this.TerminaCarga=true;
         this.Cursos=x
-        this.Cursos.forEach((c:any) => {
-          c.Visible=true
-        });
+        if(this.Cursos!=null){
+          if(this.Cursos.length!=0){
+            this.Cursos.forEach((c:any) => {
+              c.Visible=true
+            });
+          }
+        }
       }
     })
   }

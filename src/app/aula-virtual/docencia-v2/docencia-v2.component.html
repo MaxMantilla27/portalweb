@@ -4,6 +4,16 @@
   </div>
 </div>
 <div style="border-top:solid 3px #f4f4f4 ;"></div>
+<ng-container *ngIf="DataProveedor==undefined">
+  <div class="row" style="display: flex; justify-content: center;align-items: center;text-align: center; height: 15rem;">
+    <div class="col-12" style="display: flex;justify-content: center;">
+      <mat-spinner></mat-spinner>
+    </div>
+    <div class="col-12">
+      Cargando información ...
+    </div>
+  </div>
+</ng-container>
 <div class="container" *ngIf="DataProveedor!=undefined">
   <div class="row rowpaddAv">
     <div class="col-12 col-md-12 col-lg-12" style="position: relative;padding: 0px;">

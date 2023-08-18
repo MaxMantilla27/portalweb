@@ -1,4 +1,4 @@
-import { Component, Inject, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, Inject, OnChanges, OnDestroy, OnInit, SimpleChanges, ViewEncapsulation } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Subject, takeUntil } from 'rxjs';
@@ -11,7 +11,7 @@ import { PEspecificoEsquemaService } from 'src/app/Core/Shared/Services/PEspecif
   styleUrls: ['./agregar-preguntas.component.scss'],
   encapsulation: ViewEncapsulation.None,
 })
-export class AgregarPreguntasComponent implements OnInit ,OnDestroy {
+export class AgregarPreguntasComponent implements OnInit ,OnChanges,OnDestroy {
   private signal$ = new Subject();
   ngOnDestroy(): void {
     this.signal$.next(true);
@@ -54,6 +54,7 @@ export class AgregarPreguntasComponent implements OnInit ,OnDestroy {
     IdPreguntaTipo: new FormControl(null, [Validators.required])
   });
   public tipoPregunta:Array<any>=[]
+  public disabledAddPregunta=true;
   ngOnInit(): void {
 
     for (let index = 1; index < 11; index++) {
@@ -71,6 +72,15 @@ export class AgregarPreguntasComponent implements OnInit ,OnDestroy {
         this.ObtenerPEspecificoSesionCuestionarioPreguntaAlternativaPorIdPregunta()
       }
     }
+  }
+  ngOnChanges(changes: SimpleChanges): void {
+    console.log(this.formularioTarea.get('IdPreguntaTipo')?.value)
+    if(this.formularioTarea.get('IdPreguntaTipo')?.value!=0)
+    {
+    console.log('XXXXXXXXXXXXXXXXXXX')
+
+    }
+    console.log('==================')
   }
   ObtenerPEspecificoSesionCuestionarioPreguntaAlternativaPorIdPregunta(){
     this._PEspecificoEsquemaService.ObtenerPEspecificoSesionCuestionarioPreguntaAlternativaPorIdPregunta(this.pregunta.Id).pipe(takeUntil(this.signal$))
@@ -156,5 +166,34 @@ export class AgregarPreguntasComponent implements OnInit ,OnDestroy {
       this.pregunta.UrlArchivoSubidoRetroalimentacion=null
     }
     this.dialogRef.close(this.pregunta)
+  }
+  ChangeTipoPregunta(IdTipoPregunta:number){
+    console.log(IdTipoPregunta)
+    this.disabledAddPregunta=false;
+    this.pregunta.Alternativas=[]
+    if(IdTipoPregunta==3){
+      this.pregunta.Alternativas.push({
+        Id:0,
+        Alternativa:'',
+        EsCorrecta:true,
+        Puntaje:0
+      })
+      this.pregunta.Alternativas.push({
+        Id:0,
+        Alternativa:'',
+        EsCorrecta:false,
+        Puntaje:0
+      })
+      this.disabledAddPregunta=true;
+    }
+    if(IdTipoPregunta==6){
+      this.pregunta.Alternativas.push({
+        Id:0,
+        Alternativa:'',
+        EsCorrecta:true,
+        Puntaje:0
+      })
+      this.disabledAddPregunta=true;
+    }
   }
 }
