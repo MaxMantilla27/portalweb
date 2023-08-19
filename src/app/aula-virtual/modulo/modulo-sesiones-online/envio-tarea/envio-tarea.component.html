@@ -39,7 +39,8 @@
         margin-top: 20px;"></div>
       </div>
     </ng-container>
-    <ng-container *ngIf="data.tarea.tareas!=null && data.tarea.tareas.length<3 && data.tarea.tareas.length==0 && data.tarea.tareas[data.tarea.tareas.length-1].fechaCalificacion!=null">
+    <ng-container *ngIf="(data.tarea.tareas==null || data.tarea.tareas.length==0) ||
+    (data.tarea.tareas!=null && data.tarea.tareas.length>0 && data.tarea.tareas.length<3 && data.tarea.tareas.length==0 && data.tarea.tareas[data.tarea.tareas.length-1].fechaCalificacion!=null) ">
       <div style="padding: 0px 40px;
       font-size: 16px;
       font-weight: 600;

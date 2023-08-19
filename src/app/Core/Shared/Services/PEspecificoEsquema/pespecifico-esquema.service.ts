@@ -9,6 +9,7 @@ import {
   PEspecificoSesionTareaAlumnoSaveParamsDTO,
   AgregarPEspecificoSesionCuestionarioAlumnoDTO,
   AgregarCalificacionCuestionarioAlumnoDocenteDTO,
+  CalificarTareaAlumnoOnlineDTO,
 } from "src/app/Core/Models/PEspecificoEsquema";
 import { environment } from "src/environments/environment";
 
@@ -129,13 +130,6 @@ export class PEspecificoEsquemaService {
   public AgregarPEspecificoSesionCuestionarioAlumno(json: AgregarPEspecificoSesionCuestionarioAlumnoDTO): Observable<any> {
     if (this.isBrowser) {
       return this.http.post<any>( this.urlBase +"/AgregarPEspecificoSesionCuestionarioAlumno" ,json);
-    } else {
-      return EMPTY;
-    }
-  }
-  public AgregarCalificacionCuestionarioAlumnoDocente(json: AgregarCalificacionCuestionarioAlumnoDocenteDTO): Observable<any> {
-    if (this.isBrowser) {
-      return this.http.post<any>( this.urlBase +"/AgregarCalificacionCuestionarioAlumnoDocente" ,json);
     } else {
       return EMPTY;
     }
@@ -467,6 +461,55 @@ export class PEspecificoEsquemaService {
   public ObtenerCriteriosEvaluacionPespecifico(IdPEspecificoSesion:number): Observable<any> {
     if (this.isBrowser) {
       return this.http.get<any>(this.urlBase + "/ObtenerCriteriosEvaluacionPespecifico?IdPEspecificoSesion=" +IdPEspecificoSesion);
+    } else {
+      return EMPTY;
+    }
+  }
+  public ObtenerListaCuestionarioAlumnoOnline(IdPwPEspecificoSesionCuestionario:number): Observable<any> {
+    if (this.isBrowser) {
+      return this.http.get<any>(this.urlBase + "/ObtenerListaCuestionarioAlumnoOnline?IdPwPEspecificoSesionCuestionario=" +IdPwPEspecificoSesionCuestionario);
+    } else {
+      return EMPTY;
+    }
+  }
+  public ObtenerListaTareaAlumnoOnline(IdPwPEspecificoSesionTarea:number): Observable<any> {
+    if (this.isBrowser) {
+      return this.http.get<any>(this.urlBase + "/ObtenerListaTareaAlumnoOnline?IdPwPEspecificoSesionTarea=" +IdPwPEspecificoSesionTarea);
+    } else {
+      return EMPTY;
+    }
+  }
+
+  public CalificarTareaAlumnoOnline(json: Array<CalificarTareaAlumnoOnlineDTO>): Observable<any> {
+    if (this.isBrowser) {
+
+      const formData: FormData = new FormData();
+      console.log(json)
+      formData.append("Usuario", 'Docencia');
+      for (let i = 0; i < json.length; i++) {
+        var Retroalimentacion =json[i].Retroalimentacion == undefined ||json[i].Retroalimentacion == null? "": json[i].Retroalimentacion!.toString();
+        formData.append("data[" + i + "].id", json[i].Id.toString());
+        formData.append("data[" + i + "].nota", json[i].Nota.toString());
+        formData.append("data[" + i + "].retroalimentacion", Retroalimentacion);
+        if (json[i].file.size > 0) {
+          var end = json[i].file.name.split(".")[1];
+          formData.append(
+            "files",
+            json[i].file,
+            i + "." + end
+          );
+        }
+      }
+      const req = new HttpRequest("POST",`${this.urlBase}/CalificarTareaAlumnoOnline`, formData,{reportProgress: true,responseType: "json", });
+      return this.http.request(req);
+    } else {
+      return EMPTY;
+    }
+  }
+
+  public AgregarCalificacionCuestionarioAlumnoDocente(json: AgregarCalificacionCuestionarioAlumnoDocenteDTO): Observable<any> {
+    if (this.isBrowser) {
+      return this.http.post<any>( this.urlBase +"/AgregarCalificacionCuestionarioAlumnoDocente" ,json);
     } else {
       return EMPTY;
     }

@@ -1,20 +1,20 @@
 export interface PEspecificoSesionCuestionarioSaveDTO {
   Id?: number;
   IdPEspecificoSesion: number;
-  Titulo: string;
-  Descripcion: string;
-  FechaEntrega: string;
+  Titulo: string,
+  Descripcion: string,
+  FechaEntrega: string,
   IdCriterioEvaluacion: number;
   CalificacionMaxima: number;
   TiempoLimite: number;
   Preguntas: Array<PEspecificoSesionCuestionarioPreguntaFileDTO>;
-  Usuario: string;
+  Usuario: string,
 }
 export interface PEspecificoSesionCuestionarioPreguntaFileDTO {
   Id: number;
   IdPreguntaTipo: number | null;
-  Enunciado: string;
-  Descripcion: string;
+  Enunciado: string,
+  Descripcion: string,
   Puntaje: number;
   NombreArchivo: string | null;
   UrlArchivoSubido: string | null;
@@ -27,21 +27,21 @@ export interface PEspecificoSesionCuestionarioPreguntaFileDTO {
 }
 export interface PEspecificoSesionCuestionarioPreguntaAlternativaDTO {
   Id: number | null;
-  Alternativa: string;
+  Alternativa: string,
   EsCorrecta: boolean;
   Puntaje: number;
 }
 export interface PEspecificoSesionTareaSaveDTO {
   Id?: number;
   IdPEspecificoSesion: number;
-  Titulo: string;
+  Titulo: string,
   Descripcion: string | null;
   file: File;
-  FechaEntrega: string;
+  FechaEntrega: string,
   IdCriterioEvaluacion: number;
   CalificacionMaxima: number;
   TieneArchivo: boolean;
-  Usuario: string;
+  Usuario: string,
 }
 
 export interface PEspecificoSesionTareaAlumnoSaveParamsDTO {
@@ -49,13 +49,13 @@ export interface PEspecificoSesionTareaAlumnoSaveParamsDTO {
   IdPwPEspecificoSesionTarea: number;
   IdMatriculaCabecera: number;
   file: File;
-  Usuario: string;
+  Usuario: string,
 }
 export interface PEspecificoSesionMaterialAdicionalSaveDTO {
   Id: number | null;
   IdPEspecificoSesion: number;
   file: File;
-  Usuario: string;
+  Usuario: string,
 }
 
 export interface AgregarPEspecificoSesionCuestionarioAlumnoDTO {
@@ -63,22 +63,29 @@ export interface AgregarPEspecificoSesionCuestionarioAlumnoDTO {
   IdPwPEspecificoSesionCuestionario: number;
   IdMatriculaCabecera: number;
   Preguntas: Array<RespuestasPreguntasDTO>;
-  Usuario: string;
+  Usuario: string,
 }
 export interface RespuestasPreguntasDTO {
   IdPwPEspecificoSesionCuestionarioPregunta: number;
   Respuestas: Array<RespuestasCuestionarioDTO>;
 }
 export interface RespuestasCuestionarioDTO {
-  valor: string;
+  valor: string,
 }
 
 export interface AgregarCalificacionCuestionarioAlumnoDocenteDTO {
   IdPwPEspecificoSesionCuestionarioAlumno: number;
   Respuestas: Array<RespuestasPreguntasDocenteDTO>;
-  Usuario: string;
+  Usuario: string,
 }
 export interface RespuestasPreguntasDocenteDTO {
   Id: number;
   Correcto: boolean;
+}
+
+export interface CalificarTareaAlumnoOnlineDTO {
+  Id: number,
+  Nota: number,
+  Retroalimentacion: string|null,
+  file: File;
 }

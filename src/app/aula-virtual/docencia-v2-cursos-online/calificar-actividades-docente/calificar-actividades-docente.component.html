@@ -1,74 +1,89 @@
 <div class="contentCursosOnline">
-  <div class="row ">
-    <div class="col-12 col-md-9 col-lg-9 InputsDocencia">
-      <div class="row">
-        <div class="col-10 col-md-9 col-lg-9">
-          <mat-form-field appearance="outline" style="width: 100%;">
-            <mat-label>Buscar por nombre de actividad</mat-label>
-            <input type="text" placeholder="Buscar por nombre de actividad" [(ngModel)]="filterCurso" matInput>
-          </mat-form-field>
-        </div>
-        <div class="col-2 col-md-3 col-lg-3">
-          <app-default-button [confs]="{color:'primary',titulo:'Buscar'}" [icon]="''"
-            [style]="'margin: 0px;border-radius: 5px;width: 100%;margin-top:5px'"
-            (ButtoclClick)="FilterCursos()"></app-default-button>
-        </div>
-      </div>
-    </div>
-    <div class="col-6 col-md-3 col-lg-3 InputsDocencia">
+  <ng-container *ngIf="IrCurso==-1">
 
-      <mat-form-field appearance="outline">
-        <mat-label>Filtrar por Estado</mat-label>
-        <mat-select #myselsetc [(ngModel)]="EstadoPespecifico" #select (selectionChange)="FilterCursos()">
-          <mat-option [value]="0" style="font-size: 16px;">
-            Todos
-          </mat-option>
-          <mat-option *ngFor="let item of Estados" [value]="item.id" style="font-size: 16px;">
-            {{item.Nombre}}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
-    </div>
-    <div class="col-12" style="margin-top: 50px;">
-      <ng-container *ngFor="let item of criterios;let i=index">
-        <div class="contentCursoOnline" *ngIf="item.Visible==true">
-          <div class="row" style="margin: 0px;align-items: center;">
-
-            <div class="col-6 col-md-3 col-lg-3">
-              <div class="EstadoCurso">Sesión: {{item.orden>9?item.orden:'0'+item.orden}}</div>
-            </div>
-            <div class="col-6 col-md-9 col-lg-9" style="    display: flex;">
-              <div class="TitleCursoOnline">{{item.nombre}}
-                {{item.ordenActividad>9?item.ordenActividad:'0'+item.ordenActividad}} - {{item.titulo}}</div>
-            </div>
-            <br>
-            <div class="col-12" style="margin-top: 10px;">
-            </div>
-            <div class="col-6 col-md-5 col-lg-5 fechasOnline">
-              <div>Fecha Entrega {{item.fechaEntrega | date:'dd-MM-yyyy'}}</div>
-            </div>
-
-            <div class="col-6 col-md-5 col-lg-5" style="    display: flex;">
-              <ng-container *ngIf="(item.cantidadEnviados - item.cantidadCalificados)<=0">
-                <div class="imgAlertaActividadesPendientes"></div>
-                <div class="textActividades">Sin pendientes</div>
-              </ng-container>
-              <ng-container *ngIf="(item.cantidadEnviados - item.cantidadCalificados)>0">
-                <div class="imgAlertaActividadesEchas"></div>
-                <div class="textActividades">Actividades por calificar ({{item.cantidadEnviados -
-                  item.cantidadCalificados}})</div>
-              </ng-container>
-
-            </div>
-
-            <div class="col-12 col-md-2 col-lg-2" style="    display: flex;justify-content: flex-end;padding: 0px;">
-              <app-default-button (ButtoclClick)="IrCurso=item.id" [confs]="{color:'primary',titulo:'Calificar'}"
-                [icon]="''" [style]="'border-radius: 5px; margin: 0px; padding: 0px 30px;'"></app-default-button>
-            </div>
+    <div class="row ">
+      <div class="col-12 col-md-9 col-lg-9 InputsDocencia">
+        <div class="row">
+          <div class="col-10 col-md-9 col-lg-9">
+            <mat-form-field appearance="outline" style="width: 100%;">
+              <mat-label>Buscar por nombre de actividad</mat-label>
+              <input type="text" placeholder="Buscar por nombre de actividad" [(ngModel)]="filterCurso" matInput>
+            </mat-form-field>
+          </div>
+          <div class="col-2 col-md-3 col-lg-3">
+            <app-default-button [confs]="{color:'primary',titulo:'Buscar'}" [icon]="''"
+              [style]="'margin: 0px;border-radius: 5px;width: 100%;margin-top:5px'"
+              (ButtoclClick)="FilterCursos()"></app-default-button>
           </div>
         </div>
-      </ng-container>
+      </div>
+      <div class="col-6 col-md-3 col-lg-3 InputsDocencia">
 
+        <mat-form-field appearance="outline">
+          <mat-label>Filtrar por Estado</mat-label>
+          <mat-select #myselsetc [(ngModel)]="EstadoPespecifico" #select (selectionChange)="FilterCursos()">
+            <mat-option [value]="0" style="font-size: 16px;">
+              Todos
+            </mat-option>
+            <mat-option *ngFor="let item of Estados" [value]="item.id" style="font-size: 16px;">
+              {{item.Nombre}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="col-12" style="margin-top: 50px;">
+        <ng-container *ngFor="let item of criterios;let i=index">
+          <div class="contentCursoOnline" *ngIf="item.Visible==true">
+            <div class="row" style="margin: 0px;align-items: center;">
+
+              <div class="col-6 col-md-3 col-lg-3">
+                <div class="EstadoCurso">Sesión: {{item.orden>9?item.orden:'0'+item.orden}}</div>
+              </div>
+              <div class="col-6 col-md-9 col-lg-9" style="    display: flex;">
+                <div class="TitleCursoOnline">{{item.nombre}}
+                  {{item.ordenActividad>9?item.ordenActividad:'0'+item.ordenActividad}} - {{item.titulo}}</div>
+              </div>
+              <br>
+              <div class="col-12" style="margin-top: 10px;">
+              </div>
+              <div class="col-6 col-md-5 col-lg-5 fechasOnline">
+                <div>Fecha Entrega {{item.fechaEntrega | date:'dd-MM-yyyy'}}</div>
+              </div>
+
+              <div class="col-6 col-md-5 col-lg-5" style="    display: flex;">
+                <ng-container *ngIf="(item.cantidadEnviados - item.cantidadCalificados)<=0">
+                  <div class="imgAlertaActividadesPendientes"></div>
+                  <div class="textActividades">Sin pendientes</div>
+                </ng-container>
+                <ng-container *ngIf="(item.cantidadEnviados - item.cantidadCalificados)>0">
+                  <div class="imgAlertaActividadesEchas"></div>
+                  <div class="textActividades">Actividades por calificar ({{item.cantidadEnviados -
+                    item.cantidadCalificados}})</div>
+                </ng-container>
+
+              </div>
+
+              <div class="col-12 col-md-2 col-lg-2" style="    display: flex;justify-content: flex-end;padding: 0px;">
+                <app-default-button (ButtoclClick)="IrACalificar(item)"
+                [confs]="{color:'primary',titulo:(item.cantidadEnviados - item.cantidadCalificados)<=0?'Ver Calificadas':'Calificar'}"
+                  [icon]="''" [style]="'border-radius: 5px; margin: 0px; padding: 0px 30px;'"></app-default-button>
+              </div>
+            </div>
+          </div>
+        </ng-container>
+
+      </div>
     </div>
-  </div>
+  </ng-container>
+  <ng-container *ngIf="IrCurso>1">
+    <div class="row" style="position: relative;">
+      <!-- <div class="col-12" style="display: flex;justify-content: flex-end;margin-bottom: 20px;">
+          <div class="Volver" (click)="IrCurso=-1">Volver</div>
+      </div> -->
+      <div class="col-12">
+        <app-calificar-cuestionario-docente *ngIf="Estarea==false" [Id]="IrCurso" [data]="itemSelect" (Volver)="IrCurso=-1"></app-calificar-cuestionario-docente>
+        <app-calificar-tarea-docente *ngIf="Estarea==true" [Id]="IrCurso" [data]="itemSelect" (Volver)="IrCurso=-1"></app-calificar-tarea-docente>
+      </div>
+    </div>
+  </ng-container>
 </div>

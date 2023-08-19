@@ -95,7 +95,7 @@ export class AsistenciasOnlineComponent
 
   ObtenerSesionesOnlineWebinarPorIdPespecifico() {
     this._DatosPerfilService
-      .ObtenerSesionesOnlineWebinarPorIdPespecifico(this.IdPEspecifico)
+      .ObtenerSesionesOnlineWebinarPorIdPespecifico(this.IdPEspecifico,this.IdMatriculaCabecera)
       .pipe(takeUntil(this.signal$))
       .subscribe({
         next: (x) => {
