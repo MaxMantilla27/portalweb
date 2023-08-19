@@ -30,19 +30,20 @@ export class MaterialEstudioDocenteComponent implements OnInit, OnDestroy {
   public material: Array<any> = [];
   @Input() idPGeneral: any;
   public sesiones:any;
+  public TerminaCarga1=false
+  public TerminaCarga2=false
   ngOnInit(): void {
-    console.log(this.IdPespecifico);
+    this.TerminaCarga1=false
+    this.TerminaCarga2=false
     this.MaterialAdicionalOnline();
     this.ObtenerSesionesOnlineWebinarDocentePorIdPespecifico();
   }
   ObtenerMaterialAdicionalDocentePespecifico() {
-    console.log(this.IdPespecifico)
     this._PEspecificoEsquemaService
       .ObtenerMaterialAdicionalDocentePespecifico(this.IdPespecifico)
       .pipe(takeUntil(this.signal$))
       .subscribe({
         next: (x) => {
-          console.log(x);
           this.material = x;
           if(this.material!=null){
             this.material.forEach((m:any) => {
@@ -53,12 +54,14 @@ export class MaterialEstudioDocenteComponent implements OnInit, OnDestroy {
                     number='0'
                   }
                   number+=''+s.orden.toString()
-                  console.log(number)
                   m.nombreArchivo="Sesión "+number+" - "+m.nombreArchivo
                 }
               });
             });
           }
+        },
+        complete:()=> {
+          this.TerminaCarga1=true;
         },
       });
   }
@@ -73,7 +76,6 @@ export class MaterialEstudioDocenteComponent implements OnInit, OnDestroy {
           if(this.sesiones!=undefined && this.sesiones!=null &&this.sesiones.length>0){
             this.ObtenerMaterialAdicionalDocentePespecifico();
           }
-          console.log(this.sesiones);
         },
       });
   }
@@ -83,8 +85,11 @@ export class MaterialEstudioDocenteComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.signal$))
       .subscribe({
         next: (x) => {
-          console.log(x);
           this.presentaciones = x;
+        },
+        complete:()=> {
+          this.TerminaCarga2=true;
+
         },
       });
   }

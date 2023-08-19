@@ -55,6 +55,7 @@ export class RegistrarAsistenciaOnlineComponent implements OnInit, OnDestroy {
   public listadoAsistencias: any;
 
   public charge = false;
+  public activarGuardado = false;
 
   ngOnInit(): void {
     console.log(this.data)
@@ -76,52 +77,68 @@ export class RegistrarAsistenciaOnlineComponent implements OnInit, OnDestroy {
           //   e.Acciones=e.UrlWebex==null?'Próximamente':'Unirse'
           // });
           console.log(this.Asistencias);
-          console.log('Hola');
         },
       });
   }
 
   RegistrarAsistenciaDetalleDocente() {
-    if (this.charge == false) {
-      this.charge = true;
-      this.asistencias = [];
-      this.Asistencias.forEach((mat: any) => {
-        console.log(mat.asistenciaAlumno);
-        this.asistencias.push({
-          Id: mat.id,
-          IdPEspecificoSesion: mat.idPEspecificoSesion,
-          IdMatriculaCabecera: mat.idMatriculaCabecera,
-          Asistio: mat.asistio,
-          Justifico: mat.justifico,
+    this.activarGuardado=true
+    console.log(this.Asistencias);
+    this.Asistencias.forEach((x: any) => {
+      if(x.asistio==null){
+        this.activarGuardado=false
+      }
+    });
+    if(this.activarGuardado==true){
+      if (this.charge == false) {
+        this.charge = true;
+        this.asistencias = [];
+        this.Asistencias.forEach((mat: any) => {
+          console.log(mat.asistenciaAlumno);
+          this.asistencias.push({
+            Id: mat.id,
+            IdPEspecificoSesion: this.data.IdSesion,
+            IdMatriculaCabecera: mat.idMatriculaCabecera,
+            Asistio: mat.asistio,
+            Justifico: mat.justifico,
+          });
         });
-      });
-      this._OperacionesAsistenciaService
-        .Registrar(this.asistencias, this.data.IdPespecifico, this.data.correo)
-        .pipe(takeUntil(this.signal$))
-        .subscribe({
-          next: (x) => {
-            console.log(x);
-            console.log(this.asistencias);
-            this.charge = false;
-            this._SnackBarServiceService.openSnackBar(
-              'Se guardo correctamente',
-              'x',
-              5,
-              'snackbarCrucigramaSucces'
-            );
-            this.dialogRef.close();
-          },
-          error: (e) => {
-            console.log(e);
-            this._SnackBarServiceService.openSnackBar(
-              'Ocurrio un error , intentelo nuevamente mas tarde',
-              'x',
-              10,
-              'snackbarCrucigramaerror'
-            );
-            this.charge = false;
-          },
-        });
+        this._OperacionesAsistenciaService
+          .Registrar(this.asistencias, this.data.IdPespecifico, this.data.correo)
+          .pipe(takeUntil(this.signal$))
+          .subscribe({
+            next: (x) => {
+              console.log(x);
+              console.log(this.asistencias);
+              this.charge = false;
+              this._SnackBarServiceService.openSnackBar(
+                'Se guardo correctamente',
+                'x',
+                5,
+                'snackbarCrucigramaSucces'
+              );
+              this.dialogRef.close();
+            },
+            error: (e) => {
+              console.log(e);
+              this._SnackBarServiceService.openSnackBar(
+                'Ocurrio un error , intentelo nuevamente mas tarde',
+                'x',
+                10,
+                'snackbarCrucigramaerror'
+              );
+              this.charge = false;
+            },
+          });
+      }
+    }
+    else{
+      this._SnackBarServiceService.openSnackBar(
+        'Debe completar el registro de todos los alumnos',
+        'x',
+        10,
+        'snackbarCrucigramaerror'
+      );
     }
   }
 }

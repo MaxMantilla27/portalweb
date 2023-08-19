@@ -30,62 +30,80 @@
         </mat-select>
       </mat-form-field>
     </div>
-    <div class="col-12" style="margin-top: 50px;">
-      <ng-container *ngFor="let item of Cursos;let i=index">
-        <div class="contentCursoOnline" *ngIf="item.Visible==true">
-          <div class="row" style="margin: 0px;">
-            <div class="col-12 col-md-8 col-lg-10">
-              <div class="row">
-                <div class="col-6 col-md-4 col-lg-4">
-                  <div class="EstadoCurso">Estado: {{item.idEstadoPEspecifico==2?'Ejecución':'Finalizado'}}</div>
-                </div>
-                <div class="col-6 col-md-8 col-lg-8" style="    display: flex;">
-                  <ng-container *ngIf="i%2==0">
-                    <div class="imgAlertaActividadesPendientes"></div>
-                    <div class="textActividades">Sin pendientes</div>
-                  </ng-container>
-                  <ng-container *ngIf="i%2!=0">
-                    <div class="imgAlertaActividadesEchas"></div>
-                    <div class="textActividades">Actividades por calificar (3)</div>
-                  </ng-container>
-
-                </div>
-                <br>
-                <div class="col-12">
-                  <div class="TitleCursoOnline">{{item.cursoNombre}}</div>
-                </div>
-                <div class="col-12 fechasOnline">
-                  <div>Fecha Inicio: {{item.fechaInicio | date:'dd-MM-yyyy'}}</div>
-                  <div>Fecha Fin: {{item.fechaFinal | date:'dd-MM-yyyy'}}</div>
-                </div>
-                <div class="EstadoSesionOnline">
-
-                  <div style="position: relative;width: 20px;
-                  margin-right: 10px;    height: 20px;">
-
-                    <mat-progress-spinner class="greay-spinner" [mode]="'determinate'" [diameter]="20"
-                      [strokeWidth]="4" [value]="100">
-                    </mat-progress-spinner>
-                    <mat-progress-spinner class="progras-spinner" [mode]="'determinate'" [diameter]="20"
-                      [strokeWidth]="4" [value]="(item.sesiones-item.sesionesFaltantes)*100/item.sesiones">
-                    </mat-progress-spinner>
+    <ng-container *ngIf="(Cursos==undefined || Cursos.length==0) && TerminaCarga==false">
+      <div class="row" style="display: flex; justify-content: center;align-items: center;text-align: center; height: 15rem;">
+        <div class="col-12" style="display: flex;justify-content: center;">
+          <mat-spinner></mat-spinner>
+        </div>
+        <div class="col-12">
+          Los registros se estan cargando ...
+        </div>
+      </div>
+    </ng-container>
+    <ng-container *ngIf="(Cursos==undefined || Cursos.length==0) && TerminaCarga==true">
+      <div style="display: flex;justify-content: center;align-items: center; height: 15rem;">
+        No se encontraron registros.
+      </div>
+    </ng-container>
+    <ng-container *ngIf="Cursos!=undefined && Cursos.length!=0">
+      <div class="col-12" style="margin-top: 50px;">
+        <ng-container *ngFor="let item of Cursos;let i=index">
+          <div class="contentCursoOnline" *ngIf="item.Visible==true">
+            <div class="row" style="margin: 0px;">
+              <div class="col-12 col-md-8 col-lg-10">
+                <div class="row">
+                  <div class="col-6 col-md-4 col-lg-4">
+                    <div class="EstadoCurso">Estado: {{item.idEstadoPEspecifico==2?'Ejecución':'Finalizado'}}</div>
                   </div>
-                  <div>
-                    Sesión {{item.sesiones-item.sesionesFaltantes}}/{{item.sesiones}}
+                  <div class="col-6 col-md-8 col-lg-8" style="    display: flex;">
+                    <ng-container *ngIf="i%2==0">
+                      <div class="imgAlertaActividadesPendientes"></div>
+                      <div class="textActividades">Sin pendientes</div>
+                    </ng-container>
+                    <ng-container *ngIf="i%2!=0">
+                      <div class="imgAlertaActividadesEchas"></div>
+                      <div class="textActividades">Actividades por calificar (3)</div>
+                    </ng-container>
+
+                  </div>
+                  <br>
+                  <div class="col-12">
+                    <div class="TitleCursoOnline">{{item.cursoNombre}}</div>
+                  </div>
+                  <div class="col-12 fechasOnline">
+                    <div>Fecha Inicio: {{item.fechaInicio | date:'dd-MM-yyyy'}}</div>
+                    <div>Fecha Fin: {{item.fechaFinal | date:'dd-MM-yyyy'}}</div>
+                  </div>
+                  <div class="EstadoSesionOnline">
+
+                    <div style="position: relative;width: 20px;
+                    margin-right: 10px;    height: 20px;">
+
+                      <mat-progress-spinner class="greay-spinner" [mode]="'determinate'" [diameter]="20"
+                        [strokeWidth]="4" [value]="100">
+                      </mat-progress-spinner>
+                      <mat-progress-spinner class="progras-spinner" [mode]="'determinate'" [diameter]="20"
+                        [strokeWidth]="4" [value]="(item.sesiones-item.sesionesFaltantes)*100/item.sesiones">
+                      </mat-progress-spinner>
+                    </div>
+                    <div>
+                      Sesión {{item.sesiones-item.sesionesFaltantes}}/{{item.sesiones}}
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-            <div class="col-12 col-md-4 col-lg-2" style="    display: flex;
-            justify-content: flex-end;
-            padding: 0px;">
-              <app-default-button [ruta]="item.idPEspecificoHijo" [confs]="{color:'primary',titulo:'Ingresar'}" [icon]="''"
-                [style]="'border-radius: 5px; margin: 0px; padding: 0px 30px;'"></app-default-button>
+              <div class="col-12 col-md-4 col-lg-2" style="    display: flex;
+              justify-content: flex-end;
+              padding: 0px;">
+                <app-default-button [ruta]="item.idPEspecificoHijo" [confs]="{color:'primary',titulo:'Ingresar'}" [icon]="''"
+                  [style]="'border-radius: 5px; margin: 0px; padding: 0px 30px;'"></app-default-button>
+              </div>
             </div>
           </div>
-        </div>
-      </ng-container>
+        </ng-container>
 
-    </div>
+      </div>
+    </ng-container>
+
   </div>
 </div>

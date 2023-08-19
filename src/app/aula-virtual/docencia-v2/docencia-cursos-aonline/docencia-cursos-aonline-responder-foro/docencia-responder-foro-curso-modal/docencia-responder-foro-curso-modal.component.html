@@ -37,16 +37,15 @@
         <div style="font-size: 12px;margin-bottom: 10px">
           <strong style=" margin-right: 10px;">Fecha Publicación:</strong>{{pregunta.fecha | date:'dd/MM/yyyy hh:mm a.'}}
         </div>
+        <div *ngIf="(pregunta.idOrigenForo==3 || pregunta.idOrigenForo==4) && pregunta.urlArchivo!=''" style="font-size: 13px;margin-bottom: 10px">
+          <div style="margin-right: 10px;margin-bottom: 10px;">
+            <strong>Archivo:</strong>
+          </div>
+          <a [href]="pregunta.urlArchivo">Descargar</a>
+        </div>
 
       </div>
-      <div *ngIf="(pregunta.idOrigenForo==3 || pregunta.idOrigenForo==4) && pregunta.urlArchivo!=''" style="font-size: 13px;margin-bottom: 10px">
-        <div style="margin-right: 10px;margin-bottom: 10px;">
-          <strong>Url Archivo:</strong>
-        </div>
-        <div style="word-wrap: break-word;">
-          {{pregunta.urlArchivo}}
-        </div>
-      </div>
+
       <div *ngIf="pregunta.idOrigenForo==2" style="font-size: 13px;margin-bottom: 10px">
         <strong style=" margin-right: 10px;display: flex;justify-content: center">Video de la consulta:</strong>
         <div style="display: flex;justify-content: center;" class="col-12 col-md-12 col-lg-12 ContenidoVistaPrevia">

@@ -4,6 +4,16 @@
   </div>
 </div>
 <div style="border-top:solid 3px #f4f4f4 ;"></div>
+<ng-container *ngIf="DataProveedor==undefined">
+  <div class="row" style="display: flex; justify-content: center;align-items: center;text-align: center; height: 15rem;">
+    <div class="col-12" style="display: flex;justify-content: center;">
+      <mat-spinner></mat-spinner>
+    </div>
+    <div class="col-12">
+      Cargando información ...
+    </div>
+  </div>
+</ng-container>
 <div class="container" *ngIf="DataProveedor!=undefined">
   <div class="row rowpaddAv">
     <div class="col-12 col-md-12 col-lg-12" style="position: relative;padding: 0px;">
@@ -45,17 +55,6 @@
             <app-docencia-cursos-online ></app-docencia-cursos-online>
           </div>
         </mat-tab>
-        <!-- <mat-tab>
-          <ng-template mat-tab-label>
-            <div #sesiones class="contentHeaderM" >
-              <div class="iconMat iconCursosAOnline" matTooltip="Sesiones" matTooltipPosition="after"></div>
-              <div *ngIf="!hide" class="titleMatr">Cursos asincrónicos</div>
-            </div>
-          </ng-template>
-          <div class="pad-resp">
-            <app-docencia-cursos-aonline ></app-docencia-cursos-aonline>
-          </div>
-        </mat-tab> -->
         <mat-tab>
           <ng-template mat-tab-label>
             <div #sesiones class="contentHeaderM" (click)="InterraccionTab('Cursos asincrónicos');changeIndexAsincronico()"
@@ -63,11 +62,6 @@
             matTooltipPosition="after" [ngClass]="{'ActiveChil':AsincronicoActive==true}">
               <div class="iconMat iconCursosAOnline" matTooltip="Sesiones" matTooltipPosition="after"></div>
               <div *ngIf="!hide" class="titleMatr">Cursos asincrónicos</div>
-            </div>
-          </ng-template>
-          <ng-template matTabContent>
-            <div class="pad-resp">
-              <app-docencia-cursos-aonline-responder-foro ></app-docencia-cursos-aonline-responder-foro>
             </div>
           </ng-template>
         </mat-tab>

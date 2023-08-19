@@ -66,13 +66,20 @@ export class DocenciaV2Component implements OnInit ,OnDestroy {
   tabChanged(tabChangeEvent: MatTabChangeEvent): void {
     if(this.AsincronicoActive==true){
       if(this.indexMenuAsincronico==0){
+        this.tabIndex=this.tabIndex+1
         this.indexMenuAsincronico=this.tabIndex
       }
-      if (this.indexMenuAsincronico>0 && tabChangeEvent.index < this.indexMenuAsincronico)
+      if (this.indexMenuAsincronico>0 && tabChangeEvent.index+1 < this.indexMenuAsincronico)
       {
         this.AsincronicoActive = false;
         this.indexMenuAsincronico=0
       }
+    }
+    if(this.AsincronicoActive==false){
+      if(this.indexMenuAsincronico!=0){
+        this.tabIndex=this.tabIndex-1
+      }
+      this.indexMenuAsincronico=0
     }
   }
   InterraccionTab(nombre:string){
@@ -80,6 +87,6 @@ export class DocenciaV2Component implements OnInit ,OnDestroy {
     this._HelperService.enviarMsjAcciones({Tag:'Tab',Nombre:nombre})
   }
   changeIndexAsincronico() {
-    this.AsincronicoActive = true;
+    this.AsincronicoActive = !this.AsincronicoActive;
   }
 }

@@ -39,13 +39,15 @@ export class DocenciaAccesoClasesComponent implements OnInit,OnChanges,OnDestroy
     private _DatosPerfilService:DatosPerfilService
   ) { }
   @Input() IdProveedor=0;
-
+    public TerminaCarga=false
   ngOnInit(): void {
+    this.TerminaCarga=false
   }
 
   ngOnChanges(changes: SimpleChanges): void {
     console.log(this.IdProveedor)
     if(this.IdProveedor>0){
+      this.TerminaCarga=false;
       this.ObtenerSesionesOnlineWebinarDocente()
     }
   }
@@ -110,6 +112,9 @@ export class DocenciaAccesoClasesComponent implements OnInit,OnChanges,OnDestroy
           });
         }
         console.log(this.tableData)
+      },
+      complete:()=>{
+        this.TerminaCarga=true
       }
     })
   }

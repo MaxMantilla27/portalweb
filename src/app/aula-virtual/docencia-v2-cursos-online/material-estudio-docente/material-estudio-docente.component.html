@@ -1,4 +1,20 @@
 <div class="line_up"></div>
+<ng-container *ngIf="presentaciones.length==0 && TerminaCarga2==false">
+  <div class="row" style="display: flex; justify-content: center;align-items: center;text-align: center; height: 15rem;">
+    <div class="col-12" style="display: flex;justify-content: center;">
+      <mat-spinner></mat-spinner>
+    </div>
+    <div class="col-12">
+      Cargando información ...
+    </div>
+  </div>
+</ng-container>
+<ng-container *ngIf="TerminaCarga1==true && material.length==0 &&
+                TerminaCarga2==true && presentaciones.length==0">
+  <div style="display: flex;justify-content: center;align-items: center; height: 15rem;">
+    No hay registros de material de estudio.
+  </div>
+</ng-container>
 <div class="contetDownloads" *ngIf="presentaciones!=undefined && presentaciones.length>0">
   <div class="titleContentDownloads">Descargar Presentaciones</div>
 
@@ -68,6 +84,21 @@
     </div>
   </ng-container>
 </div>
+<ng-container *ngIf="material.length==0 && TerminaCarga1==false">
+  <div class="row" style="display: flex; justify-content: center;align-items: center;text-align: center; height: 15rem;">
+    <div class="col-12" style="display: flex;justify-content: center;">
+      <mat-spinner></mat-spinner>
+    </div>
+    <div class="col-12">
+      Cargando información ...
+    </div>
+  </div>
+</ng-container>
+<!-- <ng-container *ngIf="TerminaCarga1==true && material.length==0">
+  <div style="display: flex;justify-content: center;align-items: center; height: 15rem;">
+    No hay registros de material de estudio.
+  </div>
+</ng-container> -->
 <div class="contetDownloads" *ngIf="material!=undefined && material.length>0">
   <div class="titleContentDownloads">Descargar Material Adicional</div>
 

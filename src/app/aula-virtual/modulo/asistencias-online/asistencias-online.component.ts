@@ -35,12 +35,14 @@ export class AsistenciasOnlineComponent
   @Input() border=true
   @Input() IdMatriculaCabecera = 0;
   @Input() IdPEspecifico = 0;
-  public asistenciaAlumno: any;
+  public asistenciaAlumno: Array<any>=[];
   public sesion = 0;
   public sesionesAll: any;
+  public TerminaCarga=false;
   ngOnInit(): void {}
   ngOnChanges(changes: SimpleChanges): void {
     if (this.IdMatriculaCabecera != 0) {
+      this.TerminaCarga=false;
       this.ObtenerSesionesOnlineWebinarPorIdPespecifico();
     }
   }
@@ -50,6 +52,8 @@ export class AsistenciasOnlineComponent
       .pipe(takeUntil(this.signal$))
       .subscribe({
         next: (x) => {
+          console.log(x)
+          this.asistenciaAlumno = [];
           this.asistenciaAlumno = x;
           if (
             this.sesionesAll != null &&
@@ -68,21 +72,24 @@ export class AsistenciasOnlineComponent
                   }
                 });
               });
-              this.sesionesAll.forEach((s: any) => {
-                if (s.existe != true) {
-                  this.asistenciaAlumno.push({
-                    asistio: null,
-                    fechaHoraInicio: s.fechaHoraInicio,
-                    grupoSesion: s.orden,
-                    idMatriculaCabecera: 63526,
-                    idPEspecifico: 20753,
-                    idPEspecificoSesion: 39223,
-                  });
-                }
-              });
+              // this.sesionesAll.forEach((s: any) => {
+              //   if (s.existe != true) {
+              //     this.asistenciaAlumno.push({
+              //       asistio: null,
+              //       fechaHoraInicio: s.fechaHoraInicio,
+              //       grupoSesion: s.orden,
+              //       idMatriculaCabecera: 63526,
+              //       idPEspecifico: 20753,
+              //       idPEspecificoSesion: 39223,
+              //     });
+              //   }
+              // });
             }
           }
         },
+        complete:()=>{
+          this.TerminaCarga=true
+        }
       });
   }
 

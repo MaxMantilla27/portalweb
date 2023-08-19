@@ -60,6 +60,7 @@ export class CursoNotasComponent implements OnInit,OnDestroy {
         if(this.CursosCriteriosPrevio!=undefined){
           this.CursosCriteriosPrevio.forEach((x:any) => {
             x.nombreModalidad='Online Asincrónico';
+            x.notaCurso=Math.round(x.notaCurso)
             this.CursosCriterios.push(x)
             this.PromedioFinal=this.PromedioFinal+x.notaCurso;
             cont++
@@ -145,13 +146,13 @@ export class CursoNotasComponent implements OnInit,OnDestroy {
                       data.detalleCalificacion.push({
                         criterioEvaluacion:escala.nombre,
                         ponderacion:escala.porcentaje,
-                        valor:nota
+                        valor:Math.round(nota)
                       })
                     });
                     data.detalleCalificacion.push({
                       criterioEvaluacion:'Promedio',
                       ponderacion:100,
-                      valor:notaFinal
+                      valor:Math.round(notaFinal)
                     })
                     this.PromedioFinalOnlineCurso=notaFinal;
                   }

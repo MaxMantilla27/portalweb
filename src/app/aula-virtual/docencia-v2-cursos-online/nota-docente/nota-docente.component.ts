@@ -31,6 +31,7 @@ export class NotaDocenteComponent implements OnInit ,OnChanges, OnDestroy{
     private _NotaService:NotaService,
     private excelService: ExcelService,
   ) { }
+  public TerminaCarga=false;
 
   ngOnInit(): void {
   }
@@ -45,6 +46,7 @@ export class NotaDocenteComponent implements OnInit ,OnChanges, OnDestroy{
   ListadoNotaProcesarOnline(){
     this._NotaService.ListadoNotaProcesarOnline(this.IdPespecifico,1).pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
+        this.TerminaCarga=false
         this.listadoNotas=x;
         if(this.listadoNotas.listadoEvaluaciones==null)this.listadoNotas.listadoEvaluaciones=[];
         if(this.listadoNotas.listadoNotas==null)this.listadoNotas.listadoNotas=[];
@@ -89,6 +91,9 @@ export class NotaDocenteComponent implements OnInit ,OnChanges, OnDestroy{
           });
         });
         this.OrdenarNotas();
+      },
+      complete:()=>{
+        this.TerminaCarga=true;
       }
     })
   }

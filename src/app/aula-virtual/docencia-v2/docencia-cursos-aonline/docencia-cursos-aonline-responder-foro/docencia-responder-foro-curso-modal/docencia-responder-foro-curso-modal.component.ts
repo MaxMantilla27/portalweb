@@ -50,6 +50,7 @@ export class DocenciaResponderForoCursoModalComponent implements OnInit,OnDestro
     this._ForoCursoService.ObtenerContenidoForosCurso(this.data.idTemaForo).pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
         this.pregunta=x
+        console.log(this.pregunta)
         this.ForoCerrado=x.estadoCerrado;
         if(x.idVideo!=''){
           this.ReproductorVideo=this.ReproductorVideo+x.idVideo
