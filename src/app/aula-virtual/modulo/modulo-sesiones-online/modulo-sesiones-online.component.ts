@@ -113,7 +113,7 @@ export class ModuloSesionesOnlineComponent implements OnInit , OnChanges,OnDestr
     })
   }
   ObtenerSesionesOnlineWebinarPorIdPespecifico(){
-    this._DatosPerfilService.ObtenerSesionesOnlineWebinarPorIdPespecifico(this.IdPespecifico).pipe(takeUntil(this.signal$)).subscribe({
+    this._DatosPerfilService.ObtenerSesionesOnlineWebinarPorIdPespecifico(this.IdPespecifico,this.IdMatriculaCabecera).pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
         console.log(x)
         this.sesiones=x

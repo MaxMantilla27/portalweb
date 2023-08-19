@@ -112,9 +112,9 @@ export class DatosPerfilService {
     }
   }
 
-  public ObtenerSesionesOnlineWebinarPorIdPespecifico(IdPespecifico:number):Observable<any>{
+  public ObtenerSesionesOnlineWebinarPorIdPespecifico(IdPespecifico:number,IdMatriculaCabcera:number):Observable<any>{
     if(this.isBrowser){
-      return this.http.get<any>(this.urlBase+'/ObtenerSesionesOnlineWebinarPorIdPespecifico?IdPespecifico='+IdPespecifico);
+      return this.http.get<any>(this.urlBase+'/ObtenerSesionesOnlineWebinarPorIdPespecifico?IdPespecifico='+IdPespecifico+'&IdMatriculaCabcera='+IdMatriculaCabcera);
     }else{
       return EMPTY;
     }

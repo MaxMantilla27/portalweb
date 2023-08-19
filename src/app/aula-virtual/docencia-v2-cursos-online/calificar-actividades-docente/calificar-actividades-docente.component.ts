@@ -37,6 +37,8 @@ export class CalificarActividadesDocenteComponent implements OnInit ,OnChanges, 
   EstadoPespecifico=0
   public criterios:Array<any>=[]
   public IrCurso=-1
+  public Estarea=false
+  public itemSelect:any
   ObtenerCriteriosEvaluacionPespecifico(){
     this._PEspecificoEsquemaService.ObtenerCriteriosEvaluacionPespecifico(this.IdPespecifico).pipe(takeUntil(this.signal$))
     .subscribe({
@@ -49,6 +51,7 @@ export class CalificarActividadesDocenteComponent implements OnInit ,OnChanges, 
             c.Visible=true
             c.Porcalificar=c.cantidadEnviados - c.cantidadCalificados
             c.nombre=c.nombre.split('Tareas').join('Tarea')
+            c.nombre=c.nombre.split('Cuestionarios').join('Cuestionario')
           });
         }
       },
@@ -77,5 +80,15 @@ export class CalificarActividadesDocenteComponent implements OnInit ,OnChanges, 
         }
       }
     });
+  }
+  IrACalificar(item:any){
+    console.log(item)
+    this.IrCurso=item.id
+    this.itemSelect=item
+    if(item.nombre.toLowerCase()=="tarea"){
+      this.Estarea=true
+    }else{
+      this.Estarea=false
+    }
   }
 }

@@ -56,6 +56,10 @@ export class SesionTareaComponent implements OnInit,OnChanges,OnDestroy {
   public file:any;
   public filestatus=false
   public fileErrorMsg=''
+  public selectedFiles?: FileList;
+  public nombrefile='Ningún archivo seleccionado'
+  public subir=false;
+  public UrlArchivo=''
   public tarea:any
   public instruccionesAcerca=false;
   public instruccionesSubir=false
@@ -72,10 +76,6 @@ export class SesionTareaComponent implements OnInit,OnChanges,OnDestroy {
     idMatriculaCabecera:0
   }
   public progress=0
-  public selectedFiles?: FileList;
-  public nombrefile='Ningún archivo seleccionado'
-  public subir=false;
-  public UrlArchivo=''
 
   ngOnDestroy(): void {
     this.signal$.next(true)

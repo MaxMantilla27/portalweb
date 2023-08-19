@@ -1,0 +1,26 @@
+
+<app-cargando *ngIf="cargando==true"></app-cargando>
+<div class="row" style="    margin-bottom: 20px;
+font-weight: 600;">
+  <div class="col-6 col-md-4 col-lg-4">Sesión: {{data.orden>9?data.orden:'0'+data.orden}}</div>
+  <div class="col-6 col-md-4 col-lg-4">{{data.nombre}}
+    {{data.ordenActividad>9?data.ordenActividad:'0'+data.ordenActividad}} - {{data.titulo}}</div>
+</div>
+
+<app-table-v2 *ngIf="cuestionario!=undefined && cuestionario.length>0" [tableData]="cuestionario"
+  [columnHeader]="columnHeader"  [tipoContenido]="TipoContenido"
+  [StyleContent]="'    font-size: 12px;padding: 10px;'" (ButtonClick)="Open($event)"></app-table-v2>
+
+
+<div class="buttonsRegistroNota">
+  <div style="margin: 0px 5px;">
+    <app-default-button [confs]="{color:'primary',titulo:'Volver'}"
+      [style]="'width: 100%;'"
+      (ButtoclClick)="Volver.emit()" [icon]="''"></app-default-button>
+  </div>
+  <!-- <div style="margin: 0px 5px;">
+      <app-default-button [confs]="{color:'danger',titulo:'cancelar'}"
+      [style]="'width: 100%;'" [icon]="'close'" (ButtoclClick)="charge==false?dialogRef.close():charge=true"></app-default-button>
+    </div> -->
+</div>
+

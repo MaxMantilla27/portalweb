@@ -95,7 +95,7 @@
   .TitleCursoOnline{
     font-size: 18px;
     font-weight: 600;
-    margin: none;
+    margin: none !important;
   }
   .fechasOnline{
     font-size: 14px;
@@ -113,4 +113,10 @@
 }
 .contentCursoOnline:hover{
   background: #f2f6ff;
+}
+.Volver{
+  cursor: pointer;
+}
+.Volver:hover{
+  text-decoration: underline;
 }

@@ -18,9 +18,12 @@ export class GestionAsistenciaProgramaComponent implements OnInit {
     console.log(this.Asistencias)
     this.Asistencias.forEach((a:any) => {
       a.open=false
+      a.orden=2000
+      a.ver=false
       let i=1
       this.Cursos.forEach((c:any) => {
         if(a.idPEspecificoHijo==c.idPEspecificoHijo){
+          a.ver=true
           a.Nombre=c.programaGeneralHijo,
           a.orden=i
         }

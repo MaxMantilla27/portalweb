@@ -7,19 +7,24 @@
 
 
   </div>
-  <div *ngFor="let item of Asistencias" [ngClass]="{'OpenAsistencias': item.open}" style="margin-bottom: 20px;">
-    <div class="row CursosOnline" >
-      <div class="col-2 col-md-1 col-lg-1 ">{{item.orden>9?item.orden:'0'+item.orden.toString()}}</div>
-      <div class="col-6 col-md-8 col-lg-8 ">{{item.Nombre}}</div>
-      <div class="col-3 col-md-2 col-lg-2 procentage">{{item.promedio}}%</div>
-      <div class="col-1" >
-        <i class="material-icons" *ngIf="item.open==false" (click)="item.open=!item.open">keyboard_arrow_down</i>
-        <i class="material-icons openEx" *ngIf="item.open==true" (click)="item.open=!item.open">keyboard_arrow_up</i>
+  <ng-container *ngFor="let item of Asistencias">
+    <ng-container *ngIf="item.ver==true">
+      <div [ngClass]="{'OpenAsistencias': item.open}" style="margin-bottom: 20px;">
+        <div class="row CursosOnline">
+          <div class="col-2 col-md-1 col-lg-1 ">{{item.orden>9?item.orden:'0'+item.orden.toString()}}</div>
+          <div class="col-6 col-md-8 col-lg-8 ">{{item.Nombre}}</div>
+          <div class="col-3 col-md-2 col-lg-2 procentage">{{item.promedio}}%</div>
+          <div class="col-1">
+            <i class="material-icons" *ngIf="item.open==false" (click)="item.open=!item.open">keyboard_arrow_down</i>
+            <i class="material-icons openEx" *ngIf="item.open==true"
+              (click)="item.open=!item.open">keyboard_arrow_up</i>
+          </div>
+        </div>
+        <div class="expandAsistencias" *ngIf="item.open==true">
+          <app-asistencias-online [IdMatriculaCabecera]="IdMatriculaCabecera" [border]="false"
+            [IdPEspecifico]="item.idPEspecificoHijo"></app-asistencias-online>
+        </div>
       </div>
-    </div>
-
-    <div class="expandAsistencias" *ngIf="item.open==true">
-      <app-asistencias-online [IdMatriculaCabecera]="IdMatriculaCabecera" [border]="false" [IdPEspecifico]="item.idPEspecificoHijo"></app-asistencias-online>
-    </div>
-  </div>
+    </ng-container>
+  </ng-container>
 </ng-container>
