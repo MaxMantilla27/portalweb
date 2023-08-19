@@ -33,13 +33,14 @@ export class MaterialEstudioDocenteComponent implements OnInit, OnDestroy {
   public TerminaCarga1=false
   public TerminaCarga2=false
   ngOnInit(): void {
+    this.TerminaCarga1=false
+    this.TerminaCarga2=false
     this.MaterialAdicionalOnline();
     this.ObtenerSesionesOnlineWebinarDocentePorIdPespecifico();
   }
   ObtenerMaterialAdicionalDocentePespecifico() {
     this._PEspecificoEsquemaService
-      .ObtenerMaterialAdicionalDocentePespecifico(this.IdPespecifico)
-      .pipe(takeUntil(this.signal$))
+      .ObtenerMaterialAdicionalDocentePespecifico(this.IdPespecifico).pipe(takeUntil(this.signal$))
       .subscribe({
         next: (x) => {
           this.material=[]
@@ -60,38 +61,9 @@ export class MaterialEstudioDocenteComponent implements OnInit, OnDestroy {
           }
         },
         complete:()=> {
-          this.TerminaCarga1=true;
         },
-      });
+    });
   }
-  // ObtenerMaterialAdicionalDocentePespecifico() {
-  //   this._PEspecificoEsquemaService
-  //     .ObtenerMaterialAdicionalDocentePespecifico(this.IdPespecifico).pipe(takeUntil(this.signal$))
-  //     .subscribe({
-  //       next: (x) => {
-  //         this.TerminaCarga1=true;
-  //         console.log(this.TerminaCarga1)
-  //         this.material=[]
-  //         this.material = x;
-  //         if(this.material!=null){
-  //           this.material.forEach((m:any) => {
-  //             this.sesiones.forEach((s:any) => {
-  //               if(m.idPEspecificoSesion==s.idSesion){
-  //                 var number=''
-  //                 if(s.orden>9){
-  //                   number='0'
-  //                 }
-  //                 number+=''+s.orden.toString()
-  //                 m.nombreArchivo="Sesión "+number+" - "+m.nombreArchivo
-  //               }
-  //             });
-  //           });
-  //         }
-  //       },
-  //       complete:()=> {
-  //       },
-  //     });
-  // }
 
   ObtenerSesionesOnlineWebinarDocentePorIdPespecifico() {
     this._DatosPerfilService
@@ -104,6 +76,9 @@ export class MaterialEstudioDocenteComponent implements OnInit, OnDestroy {
             this.ObtenerMaterialAdicionalDocentePespecifico();
           }
         },
+        complete:()=>{
+          this.TerminaCarga1=true;
+        }
       });
   }
   MaterialAdicionalOnline() {
