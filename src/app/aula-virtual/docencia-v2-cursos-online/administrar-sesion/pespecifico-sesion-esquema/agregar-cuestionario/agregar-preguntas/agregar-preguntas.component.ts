@@ -174,13 +174,13 @@ export class AgregarPreguntasComponent implements OnInit ,OnChanges,OnDestroy {
     if(IdTipoPregunta==3){
       this.pregunta.Alternativas.push({
         Id:0,
-        Alternativa:'',
-        EsCorrecta:true,
+        Alternativa:'Verdadero',
+        EsCorrecta:false,
         Puntaje:0
       })
       this.pregunta.Alternativas.push({
         Id:0,
-        Alternativa:'',
+        Alternativa:'Falso',
         EsCorrecta:false,
         Puntaje:0
       })

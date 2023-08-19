@@ -188,7 +188,7 @@ export class PEspecificoEsquemaService {
       formData.append("IdPEspecificoSesion", IdPEspecificoSesion);
       formData.append("Titulo", Json.Titulo);
       formData.append("Descripcion", Descripcion);
-      formData.append("FechaEntrega", Json.FechaEntrega.toString());
+      formData.append("FechaEntrega", Json.FechaEntrega);
       formData.append(
         "IdCriterioEvaluacion",
         Json.IdCriterioEvaluacion.toString()

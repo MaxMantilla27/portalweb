@@ -1,6 +1,12 @@
 
-<p style="text-align: center;">Registro de Asistencia - Sesión {{data.Sesion.orden}}/{{data.Sesion.maximo}} - {{data.Sesion.fechaHoraInicio | date:'dd-MM-yyyy'}} </p>
-
+<div class="TitleCardAgregarTarea"  style="display: flex;">
+  <div class="col-11">
+    <p style="text-align: center;">Registro de Asistencia - Sesión {{data.Sesion.orden}}/{{data.Sesion.maximo}} - {{data.Sesion.fechaHoraInicio | date:'dd-MM-yyyy'}} </p>
+  </div>
+  <div class="col-1" style="text-align: end;font-weight: bold;cursor: pointer;" (click)="dialogRef.close()">
+    X
+  </div>
+</div>
 <!--<div class="">
     <app-table-portal *ngIf="tableInfo!=undefined" [tableInfo]="tableInfo" [columnHeader]="columnHeader"
     [tipoContenido]="TipoContenido"

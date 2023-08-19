@@ -44,7 +44,6 @@ export class MaterialEstudioDocenteComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.signal$))
       .subscribe({
         next: (x) => {
-          this.TerminaCarga1=true;
           this.material = x;
           if(this.material!=null){
             this.material.forEach((m:any) => {
@@ -60,6 +59,9 @@ export class MaterialEstudioDocenteComponent implements OnInit, OnDestroy {
               });
             });
           }
+        },
+        complete:()=> {
+          this.TerminaCarga1=true;
         },
       });
   }
@@ -83,8 +85,11 @@ export class MaterialEstudioDocenteComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.signal$))
       .subscribe({
         next: (x) => {
-          this.TerminaCarga2=true;
           this.presentaciones = x;
+        },
+        complete:()=> {
+          this.TerminaCarga2=true;
+
         },
       });
   }

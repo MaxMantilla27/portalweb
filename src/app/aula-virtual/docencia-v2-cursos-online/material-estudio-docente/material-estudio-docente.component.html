@@ -1,5 +1,5 @@
 <div class="line_up"></div>
-<ng-container *ngIf="presentaciones==undefined && TerminaCarga2==false">
+<ng-container *ngIf="presentaciones.length==0 && TerminaCarga2==false">
   <div class="row" style="display: flex; justify-content: center;align-items: center;text-align: center; height: 15rem;">
     <div class="col-12" style="display: flex;justify-content: center;">
       <mat-spinner></mat-spinner>
@@ -84,7 +84,7 @@
     </div>
   </ng-container>
 </div>
-<ng-container *ngIf="material==undefined && TerminaCarga1==false">
+<ng-container *ngIf="material.length==0 && TerminaCarga1==false">
   <div class="row" style="display: flex; justify-content: center;align-items: center;text-align: center; height: 15rem;">
     <div class="col-12" style="display: flex;justify-content: center;">
       <mat-spinner></mat-spinner>

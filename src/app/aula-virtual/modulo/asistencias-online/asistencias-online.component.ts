@@ -35,12 +35,14 @@ export class AsistenciasOnlineComponent
   @Input() border=true
   @Input() IdMatriculaCabecera = 0;
   @Input() IdPEspecifico = 0;
-  public asistenciaAlumno: any;
+  public asistenciaAlumno: Array<any>=[];
   public sesion = 0;
   public sesionesAll: any;
+  public TerminaCarga=false;
   ngOnInit(): void {}
   ngOnChanges(changes: SimpleChanges): void {
     if (this.IdMatriculaCabecera != 0) {
+      this.TerminaCarga=false;
       this.ObtenerSesionesOnlineWebinarPorIdPespecifico();
     }
   }
@@ -50,6 +52,7 @@ export class AsistenciasOnlineComponent
       .pipe(takeUntil(this.signal$))
       .subscribe({
         next: (x) => {
+          this.asistenciaAlumno = [];
           this.asistenciaAlumno = x;
           if (
             this.sesionesAll != null &&
@@ -83,6 +86,9 @@ export class AsistenciasOnlineComponent
             }
           }
         },
+        complete:()=>{
+          this.TerminaCarga=true
+        }
       });
   }
 
