@@ -93,7 +93,7 @@ export class DocenciaGestionAsistenciaComponent implements OnInit,OnChanges,OnDe
                   IdPEspecificoSesion:ses.id,
                   IdMatriculaCabecera:mat.idMatriculaCabecera,
                   Justifico:false,
-                  Asistio:false
+                  Asistio:null
                 })
               }
             }

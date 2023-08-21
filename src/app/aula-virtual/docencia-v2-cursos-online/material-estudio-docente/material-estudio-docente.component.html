@@ -9,7 +9,7 @@
     </div>
   </div>
 </ng-container>
-<ng-container *ngIf="TerminaCarga1==true && material.length==0 &&
+<ng-container *ngIf="material!=undefined && material!=null && TerminaCarga1==true && material.length==0 &&
                 TerminaCarga2==true && presentaciones.length==0">
   <div style="display: flex;justify-content: center;align-items: center; height: 15rem;">
     No hay registros de material de estudio.
@@ -84,7 +84,7 @@
     </div>
   </ng-container>
 </div>
-<ng-container *ngIf="material.length==0 && TerminaCarga1==false">
+<ng-container *ngIf="material!=undefined && material!=null && material.length==0 && TerminaCarga1==false">
   <div class="row" style="display: flex; justify-content: center;align-items: center;text-align: center; height: 15rem;">
     <div class="col-12" style="display: flex;justify-content: center;">
       <mat-spinner></mat-spinner>

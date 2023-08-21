@@ -44,7 +44,9 @@ export class MaterialEstudioDocenteComponent implements OnInit, OnDestroy {
       .subscribe({
         next: (x) => {
           this.material=[]
-          this.material = x;
+          if(x!=null && x!=undefined){
+            this.material = x;
+          }
           if(this.material!=null){
             this.material.forEach((m:any) => {
               this.sesiones.forEach((s:any) => {

@@ -53,11 +53,14 @@
               <div *ngIf="!hide" class="titleMatr">Material de estudio</div>
             </div>
           </ng-template>
-          <div class="pad-resp">
-            <ng-container *ngIf="IdPespecifico>0 && curso!=undefined">
-              <app-material-estudio-docente [IdPespecifico]="IdPespecifico" [idPGeneral]="curso.idPGeneral"></app-material-estudio-docente>
-            </ng-container>
-          </div>
+
+          <ng-template matTabContent>
+            <div class="pad-resp">
+              <ng-container *ngIf="IdPespecifico>0 && curso!=undefined">
+                <app-material-estudio-docente [IdPespecifico]="IdPespecifico" [idPGeneral]="curso.idPGeneral"></app-material-estudio-docente>
+              </ng-container>
+            </div>
+          </ng-template>
         </mat-tab>
         <mat-tab>
           <ng-template mat-tab-label>
@@ -66,9 +69,12 @@
               <div *ngIf="!hide" class="titleMatr">Control de Asistencia</div>
             </div>
           </ng-template>
-          <div class="pad-resp">
-            <app-docencia-gestion-asistencia *ngIf="IdPespecifico>0" [idPEspecifico]="IdPespecifico"></app-docencia-gestion-asistencia>
-          </div>
+
+          <ng-template matTabContent>
+            <div class="pad-resp">
+              <app-docencia-gestion-asistencia *ngIf="IdPespecifico>0" [idPEspecifico]="IdPespecifico"></app-docencia-gestion-asistencia>
+            </div>
+          </ng-template>
         </mat-tab>
         <mat-tab>
           <ng-template mat-tab-label>
@@ -77,9 +83,12 @@
               <div *ngIf="!hide" class="titleMatr">Notas</div>
             </div>
           </ng-template>
-          <div class="pad-resp">
-            <app-nota-docente *ngIf="IdPespecifico>0" [IdPespecifico]="IdPespecifico"></app-nota-docente>
-          </div>
+
+          <ng-template matTabContent>
+            <div class="pad-resp">
+              <app-nota-docente *ngIf="IdPespecifico>0" [IdPespecifico]="IdPespecifico"></app-nota-docente>
+            </div>
+          </ng-template>
         </mat-tab>
         <mat-tab>
           <ng-template mat-tab-label>
