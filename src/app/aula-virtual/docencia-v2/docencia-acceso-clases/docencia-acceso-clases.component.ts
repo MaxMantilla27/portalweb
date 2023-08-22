@@ -14,7 +14,7 @@ export class DocenciaAccesoClasesComponent implements OnInit,OnChanges,OnDestroy
   columnHeader:any =  {
     'fechaHoraInicio': 'Fecha',
     'tipo':'Tipo',
-    'cursoNombre': 'Nombre Curso Especifico' ,
+    'cursoNombre': 'Nombre Curso Específico' ,
     'HoraInicio': 'Hora Inicio',
     'HoraFinal': 'Hora Fin',
     'ses': 'Sesión'};

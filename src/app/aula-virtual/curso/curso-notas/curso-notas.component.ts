@@ -60,6 +60,7 @@ export class CursoNotasComponent implements OnInit,OnDestroy {
         if(this.CursosCriteriosPrevio!=undefined){
           this.CursosCriteriosPrevio.forEach((x:any) => {
             x.nombreModalidad='Online Asincrónico';
+            x.idPEspecifico=x.idPEspecificoHijo
             x.notaCurso=Math.round(x.notaCurso)
             this.CursosCriterios.push(x)
             this.PromedioFinal=this.PromedioFinal+x.notaCurso;
@@ -79,6 +80,7 @@ export class CursoNotasComponent implements OnInit,OnDestroy {
     this._NotaService.ObtenerCursosProgramaPorIdMatriculaOnline(idMatricula).pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
         this.CursosCriteriosOnline=x;
+        console.log(this.CursosCriteriosOnline)
         this.CursosCriteriosOnline.forEach((y:any) => {
           this._NotaService.ListadoNotaProcesarV2(y.idPEspecifico,1,this.IdMatricula).pipe(takeUntil(this.signal$)).subscribe({
             next:x=>{
@@ -161,6 +163,7 @@ export class CursoNotasComponent implements OnInit,OnDestroy {
                 });
                 x=this.infoNotas[0];
                 x.notaCurso=Math.round(this.PromedioFinalOnlineCurso);
+                x.idPEspecifico=y.idPEspecifico
                 x.nombrePEspecifico=this.NombreCursoOnline
                 x.nombreModalidad='Online Sincrónico';
                 this.CursosCriterios.push(x)
@@ -175,6 +178,9 @@ export class CursoNotasComponent implements OnInit,OnDestroy {
                 if(cont!=0){
                   this.PromedioFinal=Math.round(this.PromedioFinal/cont)
                 }
+                this.CursosCriterios.sort(function (a:any, b:any) {
+                  return a.idPEspecifico - b.idPEspecifico;
+                })
               }
             }
           })

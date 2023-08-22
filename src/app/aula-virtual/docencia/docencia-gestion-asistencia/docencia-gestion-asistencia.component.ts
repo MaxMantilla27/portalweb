@@ -49,8 +49,8 @@ export class DocenciaGestionAsistenciaComponent implements OnInit,OnChanges,OnDe
     //'Acciones': ['buttons'],
   };
   public dataSeldt:Array<Basic>=[
-    {Nombre:'Falto',value:false},
-    {Nombre:'Asistio',value:true}
+    {Nombre:'Faltó',value:false},
+    {Nombre:'Asistió',value:true}
   ]
   public sticky:any={
     alumno: true};

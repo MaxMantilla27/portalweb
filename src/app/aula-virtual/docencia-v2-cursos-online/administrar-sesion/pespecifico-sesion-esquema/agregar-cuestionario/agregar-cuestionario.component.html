@@ -84,7 +84,7 @@
     <div class="col-4 col-md-2 col-lg-2 InputsDocencia">
       <mat-form-field appearance="outline" style="width: 100%;">
         <mat-label>Tiempo Límite</mat-label>
-        <input type="number" placeholder="Tiempo Límite" formControlName="TiempoLimite" matInput>
+        <input type="number" placeholder="Tiempo Límite" formControlName="TiempoLimite" matInput min="0">
         <mat-error *ngIf="!formularioTarea.get('TiempoLimite')?.valid">Ingrese el tiempo limite</mat-error>
       </mat-form-field>
     </div>

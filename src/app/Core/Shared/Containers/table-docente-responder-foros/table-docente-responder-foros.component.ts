@@ -53,11 +53,11 @@ export class TableDocenteResponderForosComponent implements OnInit {
       }
       return data[col];
     };
-    this.paginator._intl.itemsPerPageLabel = 'Items por pagina';
+    this.paginator._intl.itemsPerPageLabel = 'Ítems por página';
     this.paginator._intl.getRangeLabel = (page: number, pageSize: number, length: number) => {
       const start = page * pageSize + 1;
       const end = (length<(page + 1) * pageSize)?length:(page + 1) * pageSize;
-      return `Pagina ${page+1} de ${Math.ceil(length/pageSize)}`;
+      return `Página ${page+1} de ${Math.ceil(length/pageSize)}`;
       // return `pag${start} - ${end} de ${length}`;
     };
     this.dataSource.paginator = this.paginator;
