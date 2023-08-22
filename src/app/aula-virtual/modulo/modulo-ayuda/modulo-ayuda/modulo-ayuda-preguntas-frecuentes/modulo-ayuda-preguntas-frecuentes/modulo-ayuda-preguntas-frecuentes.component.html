@@ -11,12 +11,12 @@
     </app-default-button>
   </div>
 </div> -->
-<ng-container *ngIf="PreguntasFrecuentes==null">
+<ng-container *ngIf="PreguntasFrecuentes.length==0">
   <div style="text-align: left; margin-bottom: 20px;">
     Por el momento el curso no cuenta con preguntas frecuentes.
   </div>
 </ng-container>
-<ng-container *ngIf="PreguntasFrecuentes!=null">
+<ng-container *ngIf="PreguntasFrecuentes.length!=0">
   <div style="text-align: left; margin-bottom: 20px;">
     A continuación se muestran las preguntas frecuentes correspondientes al curso.
   </div>
@@ -37,7 +37,7 @@
               </div>
             </div>
             <div class="ContenidoRespuestaPregunta" *ngIf="PreguntaExpand==i" [innerHtml]="item.respuesta | safeHtml">
-              
+
             </div>
           </div>
         </div>
