@@ -65,15 +65,17 @@ export class PEspecificoEsquemaService {
       return EMPTY;
     }
   }
-  public ObtenerActividadesRecursoSesionAlumno(
-    IdPEspecificoSesion: number,
-    IdMatriculaCabecera:number
-  ): Observable<any> {
+  public ObtenerActividadesRecursoSesionAlumno(IdPEspecificoSesion: number,IdMatriculaCabecera:number): Observable<any> {
     if (this.isBrowser) {
-      return this.http.get<any>(
-        this.urlBase +
-          "/ObtenerActividadesRecursoSesionAlumno?IdPEspecificoSesion=" +
-          IdPEspecificoSesion+'&IdMatriculaCabecera='+IdMatriculaCabecera
+      return this.http.get<any>(this.urlBase +"/ObtenerActividadesRecursoSesionAlumno?IdPEspecificoSesion=" +IdPEspecificoSesion+'&IdMatriculaCabecera='+IdMatriculaCabecera
+      );
+    } else {
+      return EMPTY;
+    }
+  }
+  public ObtenerActividadesRecursoSesionAlumnoPorIds(IdPEspecificoSesionCuestionario: number,IdMatriculaCabecera:number): Observable<any> {
+    if (this.isBrowser) {
+      return this.http.get<any>(this.urlBase +"/ObtenerActividadesRecursoSesionAlumnoPorIds?IdPEspecificoSesionCuestionario=" +IdPEspecificoSesionCuestionario+'&IdMatriculaCabecera='+IdMatriculaCabecera
       );
     } else {
       return EMPTY;

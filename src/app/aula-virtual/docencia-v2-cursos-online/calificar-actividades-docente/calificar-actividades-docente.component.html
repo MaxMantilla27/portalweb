@@ -75,7 +75,7 @@
       </div>
     </div>
   </ng-container>
-  <ng-container *ngIf="IrCurso>1">
+  <ng-container *ngIf="IrCurso>0">
     <div class="row" style="position: relative;">
       <!-- <div class="col-12" style="display: flex;justify-content: flex-end;margin-bottom: 20px;">
           <div class="Volver" (click)="IrCurso=-1">Volver</div>
@@ -83,6 +83,7 @@
       <div class="col-12">
         <app-calificar-cuestionario-docente *ngIf="Estarea==false" [Id]="IrCurso" [data]="itemSelect" (Volver)="IrCurso=-1"></app-calificar-cuestionario-docente>
         <app-calificar-tarea-docente *ngIf="Estarea==true" [Id]="IrCurso" [data]="itemSelect" (Volver)="IrCurso=-1"></app-calificar-tarea-docente>
+
       </div>
     </div>
   </ng-container>

@@ -52,6 +52,7 @@ export class CalificarCuestionarioDocenteComponent implements OnInit ,OnChanges 
     }
   }
   ObtenerListaCuestionarioAlumnoOnline(){
+    this.cuestionario=[]
     this._PEspecificoEsquemaService.ObtenerListaCuestionarioAlumnoOnline(this.Id).pipe(takeUntil(this.signal$))
     .subscribe({
       next: (x) => {
@@ -68,7 +69,7 @@ export class CalificarCuestionarioDocenteComponent implements OnInit ,OnChanges 
     console.log(e)
     console.log(this.cuestionario[e])
     const dialogRef = this.dialog.open(DetallesCuestionarioComponent, {
-      width: '1000px',
+      width: '1200px',
       data:this.cuestionario[e],
       panelClass: 'dialog-detalle-cuestionario',
      // disableClose:true

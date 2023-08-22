@@ -1,1 +1,119 @@
-<p>detalles-cuestionario works!</p>
+<app-cargando *ngIf="cargando==true"></app-cargando>
+<div class="HeaderCuestionario">
+  INTERFAZ VER CUESTIONARIO - POPUP
+</div>
+<div class="contentCuestionario">
+  <div class="nombreAlumnoContetCuestionario">{{data.nombreAlumno}}</div>
+  <div class="FechaContetCuestionario" *ngIf="fechacalificacion!=null && fechacalificacion!=undefined">{{fechacalificacion}}</div>
+  <ng-container *ngIf="preguntas!=null && preguntas!=undefined && respuestas!=null && respuestas!=undefined">
+    <div class="row">
+      <ng-container *ngFor="let item of preguntas;let i=index">
+        <div class="col-4 col-md-2 col-lg-2">Tipo Calificación :</div>
+        <div class="col-8 col-md-10 col-lg-10">{{item.idPreguntaTipo==6?'Manual':'Automatica'}}</div>
+        <div class="col-4 col-md-2 col-lg-2">
+          <div class="contentLeftPreguntas">
+            <div>Pregunta {{(i+1)>9?i+1:'0'+(i+1).toString()}}</div>
+            <ng-container *ngIf="item.idPreguntaTipo==6">
+              <ng-container *ngIf="fechacalificacion!=undefined && fechacalificacion!=null">
+                <div class="resultado" [ngClass]="{'esResultadoCorrecto': item.FinalCorecto==true}">{{item.FinalCorecto==true?'Correcta':'Incorrecta'}}</div>
+              </ng-container>
+            </ng-container>
+            <ng-container *ngIf="item.idPreguntaTipo!=6">
+              <div class="resultado" [ngClass]="{'esResultadoCorrecto': item.FinalCorecto==true}">{{item.FinalCorecto==true?'Correcta':'Incorrecta'}}</div>
+            </ng-container>
+            <ng-container *ngIf="item.idPreguntaTipo==6">
+              <ng-container *ngIf="fechacalificacion==undefined || fechacalificacion==null">
+                <div style="display: flex;justify-content:space-between;">
+                  Puntaje :
+                  <select (change)="SetNota(item)"
+                  [(ngModel)]="item.valueSelec" style="width:70px; border-radius: 0.4em;" >
+                      <option *ngFor="let d of item.data" [value]="d">{{d}}</option>
+                  </select>
+                </div>
+              </ng-container>
+              <ng-container *ngIf="fechacalificacion!=undefined && fechacalificacion!=null">
+                <div class="puntaje">Puntaje: {{item.puntos}}</div>
+              </ng-container>
+            </ng-container>
+            <ng-container *ngIf="item.idPreguntaTipo!=6">
+              <div class="puntaje">Puntaje: {{item.puntos}}</div>
+            </ng-container>
+
+          </div>
+        </div>
+        <div class="col-8 col-md-10 col-lg-10">
+          <div class="contetPreguntasCuestionario">
+            <div class="descPregunta row">
+              <div class="col-12 col-md-9 col-lg-9">
+                <div class="titlePregunta">{{item.enunciado}}</div>
+                <div class="DescripcionPregunta" *ngIf="item.descripcion!=null && item.descripcion.length>0">
+                  {{item.descripcion}}</div>
+                <div class="DescripcionPregunta" *ngIf="item.idPreguntaTipo==3">Responde verdadero (V) O falso (F) según
+                  corresponda</div>
+                <div class="DescripcionPregunta" *ngIf="item.idPreguntaTipo==4">Elija las alternativas correctas</div>
+                <div class="DescripcionPregunta" *ngIf="item.idPreguntaTipo==5">Elige la alternativa correcta</div>
+              </div>
+              <div class="col-12 col-md-3 col-lg-3" style=" display: flex;
+              flex-direction: column;
+              align-items: flex-end;">
+                <div class="PuntoPregunta"><strong>{{item.puntaje}}</strong> Puntos</div>
+                <div class="IntenTareasEnviadas" *ngIf="item.urlArchivoSubido!=null && item.urlArchivoSubido!=undefined">
+                  <div class="pdfSesionOnline"></div>
+                  <div>
+                    <a target="_blank" [href]="item.urlArchivoSubido">{{item.nombreArchivo}}</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div *ngIf="item.alternativas!= null && item.alternativas!= undefined">
+              <ng-container *ngIf="item.idPreguntaTipo==3 || item.idPreguntaTipo==5">
+                <div class="radiosOptions" *ngFor="let altern of item.alternativas;let a=index"
+                [ngClass]="{'Correctos':altern.Correcto==true,'InCorrectos':altern.Correcto==false}">
+                  <i class="material-icons" *ngIf="altern.select!=true">radio_button_off</i>
+                  <i class="material-icons activeSelect" *ngIf="altern.select==true">radio_button_checked</i>
+                  {{altern.alternativa}}
+                </div>
+              </ng-container>
+              <ng-container *ngIf="item.idPreguntaTipo==4">
+                <div class="checkOptions" *ngFor="let altern of item.alternativas;let a=index"
+                [ngClass]="{'Correctos':altern.Correcto==true,'InCorrectos':altern.Correcto==false}">
+                  <i class="material-icons" *ngIf="altern.select!=true" >check_box_outline_blank</i>
+                  <i class="material-icons activeSelect" *ngIf="altern.select==true">check_box</i>
+                  {{altern.alternativa}}
+                </div>
+              </ng-container>
+              <ng-container *ngIf="item.idPreguntaTipo==6">
+
+                <div class="InputsOnlineCuestionario">
+                  <mat-form-field appearance="outline" style="width: 100%;">
+                    <mat-label>Ingresa tu respuesta</mat-label>
+                    <input type="text" [disabled]="true" placeholder="Ingresa tu respuesta"  [(ngModel)]="item.respuesta[0]" matInput>
+                  </mat-form-field>
+                </div>
+              </ng-container>
+            </div>
+          </div>
+        </div>
+        <div class="col-12" style="    border-bottom: solid 2px #d3d3d3;
+        margin: 20px 0;
+        padding-bottom: 25px;"></div>
+      </ng-container>
+    </div>
+    <div class="nota">
+      Calificación Total: {{nota}}
+    </div>
+    <ng-container >
+      <div  style="display: flex;align-items: center;justify-content: center;">
+        <app-default-button [confs]="{color:'primary',titulo:'Cancelar'}"
+          [style]="'margin: 0px; padding: 0px 40px; border-radius: 40px;    margin-right: 30px;'"
+          mat-dialog-close></app-default-button>
+        <app-default-button [confs]="{color:'primary',titulo:'Guardar'}"
+          [style]="'margin: 0px; padding: 0px 40px; border-radius: 40px;'"
+          [disabled]="fechacalificacion!=undefined && fechacalificacion!=null"
+          (ButtoclClick)="AgregarCalificacionCuestionarioAlumnoDocente()"
+          ></app-default-button>
+      </div>
+    </ng-container>
+
+  </ng-container>
+</div>

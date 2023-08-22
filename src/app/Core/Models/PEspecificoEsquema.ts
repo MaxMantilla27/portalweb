@@ -80,6 +80,7 @@ export interface AgregarCalificacionCuestionarioAlumnoDocenteDTO {
 }
 export interface RespuestasPreguntasDocenteDTO {
   Id: number;
+  Puntos:number;
   Correcto: boolean;
 }
 

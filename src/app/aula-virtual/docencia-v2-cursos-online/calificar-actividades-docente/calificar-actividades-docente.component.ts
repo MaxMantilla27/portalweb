@@ -90,5 +90,6 @@ export class CalificarActividadesDocenteComponent implements OnInit ,OnChanges, 
     }else{
       this.Estarea=false
     }
+    console.log(this.IrCurso,this.Estarea)
   }
 }

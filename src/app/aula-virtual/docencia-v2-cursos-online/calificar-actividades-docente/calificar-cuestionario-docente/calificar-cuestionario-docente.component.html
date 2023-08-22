@@ -6,7 +6,6 @@ font-weight: 600;">
   <div class="col-6 col-md-4 col-lg-4">{{data.nombre}}
     {{data.ordenActividad>9?data.ordenActividad:'0'+data.ordenActividad}} - {{data.titulo}}</div>
 </div>
-
 <app-table-v2 *ngIf="cuestionario!=undefined && cuestionario.length>0" [tableData]="cuestionario"
   [columnHeader]="columnHeader"  [tipoContenido]="TipoContenido"
   [StyleContent]="'    font-size: 12px;padding: 10px;'" (ButtonClick)="Open($event)"></app-table-v2>
