@@ -54,7 +54,7 @@ const routes:Routes=[
             {path:'politica-privacidad', component:PoliticaPrivacidadComponent},
             {path:'AcercaBsGrupo', component:AcercaDeComponent},
             {path:'contactenos', component:ContactenosComponent},
-            {path:'Account/ForgotPassword', component:ForgotPasswordComponent},
+            {path:'Account/ForgotPassword', component:ForgotPasswordComponent,canActivate:[PublicGuard]},
             {path:'Avatar', component: AvatarComponent},
             {path:'ChatEnlinea', component: ChatPruebaComponent},
             {path:'sorteo', component: SorteoComponent},
