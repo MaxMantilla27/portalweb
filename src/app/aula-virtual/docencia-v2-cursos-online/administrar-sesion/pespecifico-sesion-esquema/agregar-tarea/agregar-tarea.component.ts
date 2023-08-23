@@ -18,6 +18,7 @@ import { PEspecificoEsquemaService } from 'src/app/Core/Shared/Services/PEspecif
 import { HttpEventType, HttpResponse } from '@angular/common/http';
 import { Subject, takeUntil } from 'rxjs';
 import { DatePipe } from '@angular/common';
+import { SnackBarServiceService } from 'src/app/Core/Shared/Services/SnackBarService/snack-bar-service.service';
 
 @Component({
   selector: 'app-agregar-tarea',
@@ -35,7 +36,8 @@ export class AgregarTareaComponent implements OnInit, OnDestroy {
   constructor(
     public dialogRef: MatDialogRef<AgregarTareaComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
-    private _PEspecificoEsquemaService: PEspecificoEsquemaService
+    private _PEspecificoEsquemaService: PEspecificoEsquemaService,
+    public _SnackBarServiceService: SnackBarServiceService
   ) {}
   public saveTarea: PEspecificoSesionTareaSaveDTO = {
     file: new File([], ''),
@@ -67,6 +69,7 @@ export class AgregarTareaComponent implements OnInit, OnDestroy {
   public Horas: Array<any> = [];
   public Minutos: Array<any> = [];
   public Calificaciones: Array<any> = [];
+  cargando=false
   ngOnInit(): void {
     for (let index = 0; index < 24; index++) {
       var hora = '' + index;
@@ -170,6 +173,11 @@ export class AgregarTareaComponent implements OnInit, OnDestroy {
           if (x.type === HttpEventType.UploadProgress) {
             console.log(Math.round((100 * x.loaded) / x.total));
           } else if (x instanceof HttpResponse) {
+            this._SnackBarServiceService.openSnackBar("El cuestionario se ha subido correctamente.!",
+            'x',
+            10,
+            "snackbarCrucigramaSucces")
+            this.cargando=false
             this.dialogRef.close('guardado');
           }
         },

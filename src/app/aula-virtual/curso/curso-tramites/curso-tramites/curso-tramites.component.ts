@@ -152,7 +152,7 @@ export class CursoTramitesComponent implements OnInit,OnDestroy {
         var sesion=x._Repuesta.identificadorTransaccion;
         this._SessionStorageService.SessionSetValue(sesion,x._Repuesta.requiereDatosTarjeta);
         console.log(tarjeta.idFormaPago)
-        if(tarjeta.idPasarelaPago==7){
+        if(tarjeta.idPasarelaPago==7 || tarjeta.idPasarelaPago==10){
           if(tarjeta.idFormaPago==52){
             this._router.navigate(['/AulaVirtual/MisPagos/'+this.IdMatricula+'/visa/'+sesion]);
           }

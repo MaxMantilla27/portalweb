@@ -73,7 +73,7 @@ export class AgregarCuestionarioComponent implements OnInit, OnDestroy {
   public Calificaciones: Array<any> = [];
   public tipoagregra = -1;
   public tipoPregunta: Array<any> = [];
-
+  cargando=false
   public selectedFiles?: FileList;
   ngOnInit(): void {
     for (let index = 0; index < 24; index++) {
@@ -209,6 +209,7 @@ export class AgregarCuestionarioComponent implements OnInit, OnDestroy {
       });
   }
   AgregarPEspecificoCuestionario() {
+    this.cargando=true
     var datePipe = new DatePipe('en-US');
     this.save.Titulo = this.formularioTarea.get('Titulo')?.value;
     this.save.Descripcion = this.formularioTarea.get('Descripcion')?.value;
@@ -234,6 +235,11 @@ export class AgregarCuestionarioComponent implements OnInit, OnDestroy {
           if (x.type === HttpEventType.UploadProgress) {
             console.log(Math.round((100 * x.loaded) / x.total));
           } else if (x instanceof HttpResponse) {
+            this._SnackBarServiceService.openSnackBar("El cuestionario se ha subido correctamente.!",
+            'x',
+            10,
+            "snackbarCrucigramaSucces")
+            this.cargando=false
             this.dialogRef.close('guardado');
           }
         },
