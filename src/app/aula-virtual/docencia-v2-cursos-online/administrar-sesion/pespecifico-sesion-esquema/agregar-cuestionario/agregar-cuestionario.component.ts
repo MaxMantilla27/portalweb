@@ -60,7 +60,7 @@ export class AgregarCuestionarioComponent implements OnInit, OnDestroy {
   formularioTarea = new FormGroup({
     Titulo: new FormControl('', [Validators.required]),
     Descripcion: new FormControl(),
-    CalificacionMaxima: new FormControl(0, [Validators.required]),
+    CalificacionMaxima: new FormControl(100, [Validators.required]),
     FechaEntrega: new FormControl(null, [Validators.required]),
     HoraEntrega: new FormControl(null, [Validators.required]),
     MinutoEntrega: new FormControl(null, [Validators.required]),
@@ -69,7 +69,7 @@ export class AgregarCuestionarioComponent implements OnInit, OnDestroy {
   public fecha = new Date();
   public filestatus = false;
   public Horas: Array<any> = [];
-  public Minutos: Array<any> = [];
+  public Minutos: Array<any> = [0,30,59];
   public Calificaciones: Array<any> = [];
   public tipoagregra = -1;
   public tipoPregunta: Array<any> = [];
@@ -83,13 +83,13 @@ export class AgregarCuestionarioComponent implements OnInit, OnDestroy {
       }
       this.Horas.push(hora.toString());
     }
-    for (let index = 1; index < 60; index++) {
-      var Minutos = '' + index;
-      if (index < 10) {
-        Minutos = '0' + index;
-      }
-      this.Minutos.push(Minutos.toString());
-    }
+    // for (let index = 1; index < 60; index++) {
+    //   var Minutos = '' + index;
+    //   if (index < 10) {
+    //     Minutos = '0' + index;
+    //   }
+    //   this.Minutos.push(Minutos.toString());
+    // }
     for (let index = 0; index < 11; index++) {
       this.Calificaciones.push(index * 10);
     }
@@ -226,6 +226,38 @@ export class AgregarCuestionarioComponent implements OnInit, OnDestroy {
       this.save.FechaEntrega = s != null ? s : '';
     }
     console.log(this.save);
+    if(this.save.Preguntas.length==0){
+      this._SnackBarServiceService.openSnackBar(
+        'El cuestionario no tiene preguntas creadas',
+        'x',
+        15,
+        'snackbarCrucigramaerror'
+      );
+      this.cargando=false
+      return ;
+    }else{
+      var sum=0
+      this.save.Preguntas.forEach(p=> {
+        sum+=p.Puntaje!=null?p.Puntaje:0
+      });
+      var msj=''
+      if(sum>100){
+        msj='La suma del puntaje de las preguntas suman más de 100'
+      }
+      if(sum<100){
+        msj='La suma del puntaje de las preguntas suman menos de 100'
+      }
+      if(msj.length>0){
+        this._SnackBarServiceService.openSnackBar(
+          msj,
+          'x',
+          15,
+          'snackbarCrucigramaerror'
+        );
+        this.cargando=false
+        return ;
+      }
+    }
     this._PEspecificoEsquemaService
       .AgregarPEspecificoCuestionario(this.save)
       .pipe(takeUntil(this.signal$))

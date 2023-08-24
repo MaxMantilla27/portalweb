@@ -55,7 +55,7 @@ export class AgregarTareaComponent implements OnInit, OnDestroy {
   formularioTarea = new FormGroup({
     Titulo: new FormControl('', [Validators.required]),
     Descripcion: new FormControl(),
-    CalificacionMaxima: new FormControl(0, [Validators.required]),
+    CalificacionMaxima: new FormControl(100, [Validators.required]),
     FechaEntrega: new FormControl(null, [Validators.required]),
     HoraEntrega: new FormControl(null, [Validators.required]),
     MinutoEntrega: new FormControl(null, [Validators.required]),
@@ -67,7 +67,7 @@ export class AgregarTareaComponent implements OnInit, OnDestroy {
   public fileErrorMsg = '';
   public selectedFiles?: FileList;
   public Horas: Array<any> = [];
-  public Minutos: Array<any> = [];
+  public Minutos: Array<any> = [0,30,59];
   public Calificaciones: Array<any> = [];
   cargando=false
   ngOnInit(): void {
@@ -78,13 +78,13 @@ export class AgregarTareaComponent implements OnInit, OnDestroy {
       }
       this.Horas.push(hora.toString());
     }
-    for (let index = 1; index < 60; index++) {
-      var Minutos = '' + index;
-      if (index < 10) {
-        Minutos = '0' + index;
-      }
-      this.Minutos.push(Minutos.toString());
-    }
+    // for (let index = 1; index < 60; index++) {
+    //   var Minutos = '' + index;
+    //   if (index < 10) {
+    //     Minutos = '0' + index;
+    //   }
+    //   this.Minutos.push(Minutos.toString());
+    // }
     for (let index = 0; index < 11; index++) {
       this.Calificaciones.push(index * 10);
     }
