@@ -1,15 +1,20 @@
 <app-cargando *ngIf="cargando==true"></app-cargando>
-<div class="HeaderCuestionario">
-  INTERFAZ VER CUESTIONARIO - POPUP
+<div class="HeaderCuestionario"  style="display: flex;">
+  <div class="col-11">
+    INTERFAZ VER CUESTIONARIO - POPUP
+  </div>
+  <div class="col-1" style="text-align: end;font-weight: bold;cursor: pointer;" (click)="dialogRef.close()">
+    X
+  </div>
 </div>
 <div class="contentCuestionario">
   <div class="nombreAlumnoContetCuestionario">{{data.nombreAlumno}}</div>
-  <div class="FechaContetCuestionario" *ngIf="fechacalificacion!=null && fechacalificacion!=undefined">{{fechacalificacion}}</div>
+  <div class="FechaContetCuestionario" *ngIf="fechacalificacion!=null && fechacalificacion!=undefined">Fecha de Calificación: {{fechacalificacion  | date:'dd-MM-yyyy'}}</div>
   <ng-container *ngIf="preguntas!=null && preguntas!=undefined && respuestas!=null && respuestas!=undefined">
     <div class="row">
       <ng-container *ngFor="let item of preguntas;let i=index">
         <div class="col-4 col-md-2 col-lg-2">Tipo Calificación :</div>
-        <div class="col-8 col-md-10 col-lg-10">{{item.idPreguntaTipo==6?'Manual':'Automatica'}}</div>
+        <div class="col-8 col-md-10 col-lg-10">{{item.idPreguntaTipo==6?'Manual':'Automática'}}</div>
         <div class="col-4 col-md-2 col-lg-2">
           <div class="contentLeftPreguntas">
             <div>Pregunta {{(i+1)>9?i+1:'0'+(i+1).toString()}}</div>

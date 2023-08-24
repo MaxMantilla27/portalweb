@@ -7,8 +7,8 @@
   </div>
 </div>
 <div class="TitleAgregarTarea">
-  {{(data.id==0?'Agregar ':'Editar')+' Cuestionario'}} - Sesión {{data.sesion.orden}} de
-  {{data.sesion.maximo}} - Fecha : {{data.sesion.fechaHoraInicio | date:'dd-MM-yyyy'}}
+  <strong>Sesión</strong> {{data.sesion.orden}} de
+  {{data.sesion.maximo}} - <strong>Fecha:</strong> {{data.sesion.fechaHoraInicio | date:'dd-MM-yyyy'}}
 </div>
 <form [formGroup]="formularioTarea">
   <div class="row">

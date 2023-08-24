@@ -6,6 +6,7 @@ import { PEspecificoSesionCuestionarioSaveDTO, PEspecificoSesionTareaSaveDTO, PE
 import { HttpEventType, HttpResponse } from '@angular/common/http';
 import { AgregarTareaComponent } from './agregar-tarea/agregar-tarea.component';
 import { AgregarCuestionarioComponent } from './agregar-cuestionario/agregar-cuestionario.component';
+import { SnackBarServiceService } from 'src/app/Core/Shared/Services/SnackBarService/snack-bar-service.service';
 
 @Component({
   selector: 'app-pespecifico-sesion-esquema',
@@ -22,6 +23,7 @@ export class PespecificoSesionEsquemaComponent implements OnInit ,OnChanges, OnD
   constructor(
     private _PEspecificoEsquemaService: PEspecificoEsquemaService,
     public dialog: MatDialog,
+    public _SnackBarServiceService: SnackBarServiceService,
   ) {}
   public ActividadSelect=-1
   public charge = false;
@@ -52,7 +54,8 @@ export class PespecificoSesionEsquemaComponent implements OnInit ,OnChanges, OnD
   public filestatus=false
   public IdEditar:any=null
   public fileErrorMsg=''
-  public nombrefile=''
+  public materialAdicional=false
+  public nombrefile = 'Seleccione Archivo';
   ngOnChanges(changes: SimpleChanges): void {
     if (this.IdPespecifico != 0) {
       this.ObtenerCriteriosPorProgramaEspecifico();
@@ -105,11 +108,12 @@ export class PespecificoSesionEsquemaComponent implements OnInit ,OnChanges, OnD
     var data=this.criterios[i]
     console.log(data)
     if(data.tipo=='Tarea'){
+      this.materialAdicional=false
       const dialogRef = this.dialog.open(AgregarTareaComponent, {
         width: '1000px',
         data: {id:data.id ,idCriterio:data.idCriterio,sesion:this.sesion},
         panelClass: 'dialog-Agregar-Tarea',
-       // disableClose:true
+       disableClose:true
       });
 
       dialogRef.afterClosed().pipe(takeUntil(this.signal$)).subscribe((result) => {
@@ -120,12 +124,13 @@ export class PespecificoSesionEsquemaComponent implements OnInit ,OnChanges, OnD
         }
       });
     }else{
+      this.materialAdicional=false
       if(data.tipo=='Cuestionario'){
         const dialogRef = this.dialog.open(AgregarCuestionarioComponent, {
           width: '1000px',
           data: {id:data.id ,idCriterio:data.idCriterio,sesion:this.sesion},
           panelClass: 'dialog-Agregar-Tarea',
-         // disableClose:true
+          disableClose:true
         });
 
         dialogRef.afterClosed().pipe(takeUntil(this.signal$)).subscribe((result) => {
@@ -141,7 +146,53 @@ export class PespecificoSesionEsquemaComponent implements OnInit ,OnChanges, OnD
       }
     }
   }
-  Eliminar(i:number){
+  Eliminar(i:number,item:any){
+    console.log(i)
+    console.log(item)
+    if(item.tipo=='Cuestionario'){
+      this._PEspecificoEsquemaService.EliminarPEspecificoSesionCuestionario(item.id).pipe(takeUntil(this.signal$)).subscribe({
+      next: (x:any) => {
+      },
+      complete:()=>{
+        this._SnackBarServiceService.openSnackBar("El cuestionario se ha eliminado correctamente!",
+        'x',
+        10,
+        "snackbarCrucigramaSucces")
+        this.ObtenerActividadesRecursoSesionDocente();
+
+      }
+      });
+    }
+    if(item.tipo=='Material Adicional'){
+      this._PEspecificoEsquemaService.EliminarPEspecificoSesionMaterialAdicional(item.id).pipe(takeUntil(this.signal$)).subscribe({
+        next: (x:any) => {
+        },
+        complete:()=>{
+          this._SnackBarServiceService.openSnackBar("El matrial adicional se ha eliminado correctamente!",
+          'x',
+          10,
+          "snackbarCrucigramaSucces")
+          this.ObtenerActividadesRecursoSesionDocente();
+
+        }
+      });
+    }
+    console.log(item.tipo)
+    if(item.tipo=='Tarea'){
+      console.log('INGRESO')
+      this._PEspecificoEsquemaService.EliminarPEspecificoSesionTarea(item.id).pipe(takeUntil(this.signal$)).subscribe({
+        next: (x:any) => {
+        },
+        complete:()=>{
+          this._SnackBarServiceService.openSnackBar("La Tarea se ha eliminado correctamente!",
+          'x',
+          10,
+          "snackbarCrucigramaSucces")
+          this.ObtenerActividadesRecursoSesionDocente();
+        }
+      });
+    }
+
 
   }
   Agregar(){
@@ -157,7 +208,7 @@ export class PespecificoSesionEsquemaComponent implements OnInit ,OnChanges, OnD
         width: '1000px',
         data: {id:0 ,idCriterio:data.idCriterio,sesion:this.sesion},
         panelClass: 'dialog-Agregar-Tarea',
-       // disableClose:true
+       disableClose:true
       });
 
       dialogRef.afterClosed().pipe(takeUntil(this.signal$)).subscribe((result) => {
@@ -172,7 +223,7 @@ export class PespecificoSesionEsquemaComponent implements OnInit ,OnChanges, OnD
         width: '1000px',
         data: {id:0 ,idCriterio:data.idCriterio,sesion:this.sesion},
         panelClass: 'dialog-Agregar-Tarea',
-       // disableClose:true
+        disableClose:true
       });
 
       dialogRef.afterClosed().pipe(takeUntil(this.signal$)).subscribe((result) => {
@@ -225,12 +276,17 @@ export class PespecificoSesionEsquemaComponent implements OnInit ,OnChanges, OnD
           this.fileErrorMsg='';
           this.nombrefile=''
           this.ObtenerActividadesRecursoSesionDocente();
+          this.materialAdicional=false;
+          this.ActividadSelect=-1;
+          this.IdEditar=null;
         }
+
       },
       error:x=>{
         this.progress=0;
 
       }
     });
+
   }
 }

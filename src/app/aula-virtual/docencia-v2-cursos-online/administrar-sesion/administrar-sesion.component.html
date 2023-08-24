@@ -6,7 +6,7 @@
       <mat-label>Sesiones</mat-label>
       <mat-select #myselsetc [(ngModel)]="IdSesion" #select  (selectionChange)="ObtnerDataSesion()">
         <mat-option *ngFor="let item of sesiones" [value]="item.idSesion" style="font-size: 16px;">
-          Sesión {{item.orden}}/{{item.maximo}} {{item.fechaHoraInicio | date:'dd-MM-yyyy'}}
+         <strong> Sesión</strong> {{item.orden}} de {{item.maximo}} - <strong>Fecha:</strong> {{item.fechaHoraInicio | date:'dd-MM-yyyy'}}
         </mat-option>
       </mat-select>
     </mat-form-field>
@@ -17,13 +17,45 @@
       [style]="'margin: 0px;border-radius: 5px;width: 100%;margin-top:5px'"></app-default-button>
   </div>
   <div class="col-12" style="position: relative;">
-
-    <app-pespecifico-sesion-tema [IdSesion]="IdSesion"></app-pespecifico-sesion-tema>
+    <div class="opcionDesplegable" style="display:flex" (click)="OpenAgendaSesion=!OpenAgendaSesion">
+      <div class="textoDesplegable">Agenda de Sesión</div>
+      <div class="iconDesplegable">
+        <ng-container *ngIf="OpenAgendaSesion==false"><i class="material-icons">keyboard_arrow_down</i></ng-container>
+        <ng-container *ngIf="OpenAgendaSesion==true"><i class="material-icons">keyboard_arrow_up</i></ng-container>
+      </div>
+    </div>
+    <ng-container *ngIf="OpenAgendaSesion==true">
+      <div style="padding: 15px;">
+        <app-pespecifico-sesion-tema [IdSesion]="IdSesion"></app-pespecifico-sesion-tema>
+      </div>
+    </ng-container>
   </div>
   <div class="col-12" style="position: relative;">
-    <app-pespecifico-sesion-recurso-conectividad [IdSesion]="IdSesion"></app-pespecifico-sesion-recurso-conectividad>
+    <div class="opcionDesplegable" style="display:flex" (click)="OpenActividadesSesion=!OpenActividadesSesion">
+      <div class="textoDesplegable">Actividades y recursos de la sesión</div>
+      <div class="iconDesplegable">
+        <ng-container *ngIf="OpenActividadesSesion==false"><i class="material-icons">keyboard_arrow_down</i></ng-container>
+        <ng-container *ngIf="OpenActividadesSesion==true"><i class="material-icons">keyboard_arrow_up</i></ng-container>
+      </div>
+    </div>
+    <ng-container *ngIf="OpenActividadesSesion==true">
+      <div style="padding: 15px;">
+        <app-pespecifico-sesion-esquema [IdSesion]="IdSesion" [IdPespecifico]="IdPespecifico" [sesion]="sesion"></app-pespecifico-sesion-esquema>
+      </div>
+    </ng-container>
   </div>
   <div class="col-12" style="position: relative;">
-    <app-pespecifico-sesion-esquema [IdSesion]="IdSesion" [IdPespecifico]="IdPespecifico" [sesion]="sesion"></app-pespecifico-sesion-esquema>
+    <div class="opcionDesplegable" style="display:flex" (click)="OpenInteractividadSesion=!OpenInteractividadSesion">
+      <div class="textoDesplegable">Informe de interactividad y conexión</div>
+      <div class="iconDesplegable">
+        <ng-container *ngIf="OpenInteractividadSesion==false"><i class="material-icons">keyboard_arrow_down</i></ng-container>
+        <ng-container *ngIf="OpenInteractividadSesion==true"><i class="material-icons">keyboard_arrow_up</i></ng-container>
+      </div>
+    </div>
+    <ng-container *ngIf="OpenInteractividadSesion==true" >
+      <div style="padding: 15px;">
+        <app-pespecifico-sesion-recurso-conectividad [IdSesion]="IdSesion"></app-pespecifico-sesion-recurso-conectividad>
+      </div>
+    </ng-container>
   </div>
 </div>

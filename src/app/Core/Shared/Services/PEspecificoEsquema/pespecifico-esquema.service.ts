@@ -350,7 +350,7 @@ export class PEspecificoEsquemaService {
       formData.append("IdPEspecificoSesion", IdPEspecificoSesion);
       formData.append("Titulo", Json.Titulo);
       formData.append("Descripcion", Descripcion);
-      formData.append("FechaEntrega", Json.FechaEntrega.toString());
+      formData.append("FechaEntrega", Json.FechaEntrega);
       formData.append(
         "IdCriterioEvaluacion",
         Json.IdCriterioEvaluacion.toString()
@@ -512,6 +512,27 @@ export class PEspecificoEsquemaService {
   public AgregarCalificacionCuestionarioAlumnoDocente(json: AgregarCalificacionCuestionarioAlumnoDocenteDTO): Observable<any> {
     if (this.isBrowser) {
       return this.http.post<any>( this.urlBase +"/AgregarCalificacionCuestionarioAlumnoDocente" ,json);
+    } else {
+      return EMPTY;
+    }
+  }
+  public EliminarPEspecificoSesionCuestionario(IdCuestionario:number): Observable<any> {
+    if (this.isBrowser) {
+      return this.http.post<any>( this.urlBase +"/EliminarPEspecificoSesionCuestionario?IdCuestionario="+IdCuestionario,{});
+    } else {
+      return EMPTY;
+    }
+  }
+  public EliminarPEspecificoSesionMaterialAdicional(IdMaterialAdicional:number): Observable<any> {
+    if (this.isBrowser) {
+      return this.http.post<any>( this.urlBase +'/EliminarPEspecificoSesionMaterialAdicional?IdMaterialAdicional='+IdMaterialAdicional,{});
+    } else {
+      return EMPTY;
+    }
+  }
+  public EliminarPEspecificoSesionTarea(IdTarea:number): Observable<any> {
+    if (this.isBrowser) {
+      return this.http.post<any>( this.urlBase +"/EliminarPEspecificoSesionTarea?IdTarea="+IdTarea,{});
     } else {
       return EMPTY;
     }

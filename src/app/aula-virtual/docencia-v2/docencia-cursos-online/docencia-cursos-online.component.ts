@@ -20,7 +20,7 @@ export class DocenciaCursosOnlineComponent implements OnInit,OnDestroy {
   Cursos:any
   filterCurso=''
   Estados:Array<any>=[
-    {id:1,Nombre:'Finazalizado'},
+    {id:1,Nombre:'Finalizado'},
     {id:2,Nombre:'En Ejecución'}
   ]
   EstadoPespecifico=0

@@ -72,7 +72,7 @@ export class CalificarCuestionarioDocenteComponent implements OnInit ,OnChanges 
       width: '1200px',
       data:this.cuestionario[e],
       panelClass: 'dialog-detalle-cuestionario',
-     // disableClose:true
+     disableClose:true
     });
 
     dialogRef.afterClosed().pipe(takeUntil(this.signal$)).subscribe((result) => {

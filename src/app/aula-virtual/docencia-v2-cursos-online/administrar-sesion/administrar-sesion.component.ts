@@ -29,6 +29,9 @@ export class AdministrarSesionComponent implements OnInit, OnDestroy {
   public IdSesion = 0;
   @Input() DataProveedor:any
   public sesion:any
+  public OpenAgendaSesion=false
+  public OpenActividadesSesion=false
+  public OpenInteractividadSesion=false
   ngOnInit(): void {
     this._ActivatedRoute.params.pipe(takeUntil(this.signal$)).subscribe({
       next: (x) => {
@@ -69,6 +72,7 @@ export class AdministrarSesionComponent implements OnInit, OnDestroy {
   ObtnerDataSesion(){
     this.sesiones.forEach((s:any) => {
       if(s.idSesion==this.IdSesion){
+        console.log(s)
         this.sesion=s
       }
     });

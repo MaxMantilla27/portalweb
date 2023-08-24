@@ -153,7 +153,7 @@ export class AgregarTareaComponent implements OnInit, OnDestroy {
     fecha.setMinutes(this.formularioTarea.get('MinutoEntrega')?.value);
     fecha.setSeconds(0);
     if (fecha != null) {
-      var s = datePipe.transform(fecha, 'dd/MM/yyyy HH:mm:ss');
+      var s = datePipe.transform(fecha, 'yyyy-MM-ddTHH:mm:ss.SSS');
       this.saveTarea.FechaEntrega = s != null ? s : '';
     }
     console.log(this.saveTarea);
