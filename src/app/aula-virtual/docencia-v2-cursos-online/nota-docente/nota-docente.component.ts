@@ -131,7 +131,7 @@ export class NotaDocenteComponent implements OnInit ,OnChanges, OnDestroy{
               value:nota
             })
           });
-          data['zzFinal']= notaFinal;
+          data['zzFinal']='<strong>'+notaFinal+'</strong>' ;
 
         }
 

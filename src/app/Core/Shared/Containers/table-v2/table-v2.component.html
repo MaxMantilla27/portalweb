@@ -80,7 +80,7 @@ overflow: auto;">
           </ng-template>
         </ng-container>
         <ng-template #normal>
-          {{element[tableData] }}
+          <div [innerHTML]="element[tableData] | safeHtml"></div>
         </ng-template>
       </td>
     </ng-container>
