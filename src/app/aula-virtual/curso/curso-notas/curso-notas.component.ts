@@ -30,7 +30,7 @@ export class CursoNotasComponent implements OnInit,OnDestroy {
   columnHeader:any = {
     indice: 'N°',
     codigoMatricula: 'Código',
-    alumno: 'Nombres Y Apellidos'
+    alumno: 'Apellidos y Nombres'
   };
   public CursosCriteriosOnline:any;
   public CursosCriteriosOnlineNotas:any;

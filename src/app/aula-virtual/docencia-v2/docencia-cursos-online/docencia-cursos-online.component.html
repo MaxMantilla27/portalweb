@@ -53,17 +53,21 @@
               <div class="col-12 col-md-8 col-lg-10">
                 <div class="row">
                   <div class="col-6 col-md-4 col-lg-4">
-                    <div class="EstadoCurso">Estado: {{item.idEstadoPEspecifico==2?'Ejecución':'Finalizado'}}</div>
+                    <div *ngIf="item.idEstadoPEspecifico==1" class="EstadoCurso" style="display: flex;">Estado: <div style="color: #00C356;margin-left: 10px;"> Finalizado</div></div>
+                    <div *ngIf="item.idEstadoPEspecifico==2" class="EstadoCurso" style="display: flex;">Estado: <div style="color: #366BD9;margin-left: 10px;"> Ejecución</div></div>
+                    <div *ngIf="item.idEstadoPEspecifico==3" class="EstadoCurso">Estado: Por Ejecutar</div>
                   </div>
                   <div class="col-6 col-md-8 col-lg-8" style="    display: flex;">
-                    <ng-container >
+                    <ng-container *ngIf="item.calificacionesPendientes==0" >
                       <div class="imgAlertaActividadesEchas"></div>
                       <div class="textActividades">Sin pendientes</div>
                     </ng-container>
-                    <!-- <ng-container *ngIf="i%2!=0">
-                      <div class="imgAlertaActividadesPendientes"></div>
-                      <div class="textActividades">Actividades por calificar (3)</div>
-                    </ng-container> -->
+                    <ng-container *ngIf="item.calificacionesPendientes!=0">
+                      <div class="buttonCalificarActividades no-select" [routerLink]="'/AulaVirtual/DocenciaV2/' + item.idPEspecificoHijo" (click)="saveIndex(1)">
+                        <div class="imgAlertaActividadesPendientes"></div>
+                        <div class="textActividades">Actividades por calificar ({{item.calificacionesPendientes}})</div>
+                      </div>
+                    </ng-container>
 
                   </div>
                   <br>
@@ -87,7 +91,7 @@
                       </mat-progress-spinner>
                     </div>
                     <div>
-                      Sesión {{item.sesiones-item.sesionesFaltantes}}/{{item.sesiones}}
+                      Sesines ejecutadas {{item.sesiones-item.sesionesFaltantes}} de {{item.sesiones}}
                     </div>
                   </div>
                 </div>

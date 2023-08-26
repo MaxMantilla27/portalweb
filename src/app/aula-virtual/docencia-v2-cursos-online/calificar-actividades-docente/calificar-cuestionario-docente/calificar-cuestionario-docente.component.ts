@@ -24,7 +24,7 @@ export class CalificarCuestionarioDocenteComponent implements OnInit ,OnChanges 
 
   columnHeader:any = {
     codigoMatricula: 'Código',
-    nombreAlumno: 'Nombres Y Apellidos',
+    nombreAlumno: 'Apellidos y Nombres',
     fechaEntrega: 'Fecha Entrega',
     fechaCalificacion: 'Fecha Revisión',
     nota: 'Nota',

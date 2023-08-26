@@ -35,7 +35,7 @@
         <div style="font-size: 14px;margin-bottom: 10px" [innerHtml]="pregunta.contenido | safeHtml">
         </div>
         <div style="font-size: 12px;margin-bottom: 10px">
-          <strong style=" margin-right: 10px;">Fecha Publicación:</strong>{{pregunta.fecha | date:'dd/MM/yyyy hh:mm a.'}}
+          <strong style=" margin-right: 10px;">Fecha Publicación:</strong>{{pregunta.fecha | date:'dd-MM-yyyy hh:mm a.'}}
         </div>
         <div *ngIf="(pregunta.idOrigenForo==3 || pregunta.idOrigenForo==4) && pregunta.urlArchivo!=''" style="font-size: 13px;margin-bottom: 10px">
           <div style="margin-right: 10px;margin-bottom: 10px;">

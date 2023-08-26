@@ -73,8 +73,8 @@ export class DocenciaResponerForoCursoComponent implements OnInit, OnChanges , O
             else{
               e.estadoForo='Resuelto'
             }
-            e.fechaPublicacion=datePipe.transform(e.fechaPublicacion, 'dd/MM/yyyy hh:mm a.');
-            e.fechaRespuesta=datePipe.transform(e.fechaRespuesta, 'dd/MM/yyyy hh:mm a.');
+            e.fechaPublicacion=datePipe.transform(e.fechaPublicacion, 'dd-MM-yyyy hh:mm a.');
+            e.fechaRespuesta=datePipe.transform(e.fechaRespuesta, 'dd-MM-yyyy hh:mm a.');
             e.Acciones=e.estadoAtendido==1?'Ver':'Responder'
           });
           }

@@ -16,7 +16,7 @@ export class CronogramaClasesDocenteComponent implements OnInit ,OnChanges , OnD
   }
   columnHeader = {
     'orden'  : 'Sesión',
-    'fechaSesion': 'Fecha',
+    'fechaHoraInicio': 'Fecha',
     'HoraInicio': 'Hora Inicio',
     'HoraFinal': 'Hora Final',
     'nombrePais': 'País',

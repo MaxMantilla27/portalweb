@@ -165,11 +165,11 @@
                 </div>
                 <ng-container *ngIf="item.fechaCalificacionLimite!=null">
                   <div class="col-4" style="margin-bottom: 15px;">Fecha límite de calificación : </div>
-                  <div class="col-8">{{item.fechaCalificacionLimite | date:"dd/MM/yyyy"}}</div>
+                  <div class="col-8">{{item.fechaCalificacionLimite | date:"dd-MM-yyyy"}}</div>
                 </ng-container>
 
                 <div class="col-4" style="margin-bottom: 15px;">Fecha de calificación : </div>
-                <div class="col-8">{{item.fechaCalificacion | date:"dd/MM/yyyy"}}</div>
+                <div class="col-8">{{item.fechaCalificacion | date:"dd-MM-yyyy"}}</div>
 
                 <ng-container *ngIf="tareas.idTipoEvaluacionTrabajo==2">
                   <div class="col-4" style="margin-bottom: 15px;">Comentario de Retroalimentación: </div>

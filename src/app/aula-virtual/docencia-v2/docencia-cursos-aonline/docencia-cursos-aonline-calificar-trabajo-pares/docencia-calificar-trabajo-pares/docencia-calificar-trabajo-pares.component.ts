@@ -66,9 +66,11 @@ export class DocenciaCalificarTrabajoParesComponent implements OnInit , OnChange
         if(this.trabajoParesCurso!=null || this.trabajoParesCurso!=undefined){
           this.NombreCurso=this.trabajoParesCurso[0].programaGeneral
           this.trabajoParesCurso.forEach((e:any) => {
+            console.log(e)
           e.archivo=e.urlArchivo==null?'Sin Archivo':'Descargar'
           e.Acciones=e.calificado==0?'Calificar':'Mostrar'
         });
+        console.log(this.trabajoParesCurso)
         }
       }
     });

@@ -38,7 +38,7 @@ export class DocenciaGestionAsistenciaComponent implements OnInit,OnChanges,OnDe
   columnHeader:any = {
     indice: 'N°',
     codigoMatricula: 'Código',
-    alumno: 'Nombres Y Apellidos'
+    alumno: 'Apellidos y Nombres'
   };
   DisableSort:any={}
   DisableCell:any={}
