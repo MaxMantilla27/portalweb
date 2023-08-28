@@ -49,7 +49,7 @@ export class DetallesCuestionarioComponent implements OnInit, OnDestroy {
     this.cargando=true
     this._PEspecificoEsquemaService
       .ObtenerActividadesRecursoSesionAlumnoPorIds(
-        this.data.id,
+        this.data.idCuestionario,
         this.data.idMatriculaCabecera
       )
       .pipe(takeUntil(this.signal$))

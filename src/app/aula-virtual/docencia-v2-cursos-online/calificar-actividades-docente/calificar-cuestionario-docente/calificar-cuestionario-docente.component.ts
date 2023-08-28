@@ -61,6 +61,11 @@ export class CalificarCuestionarioDocenteComponent implements OnInit ,OnChanges 
           this.cuestionario=[]
         }
         this.cuestionario=x
+        this.cuestionario.forEach(
+          (x: any) => {
+            x.idCuestionario=this.Id
+          })
+        console.log(this.cuestionario)
         this.cargando=false
       },
     });
