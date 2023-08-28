@@ -1,4 +1,6 @@
-
+<div *ngIf="criterios==undefined || criterios==null" style="font-weight: bold;">
+  * No hay criterios de evaluación configurados.
+</div>
 <app-table-v2 *ngIf="criterios!=undefined " [tableData]="criterios"
   [columnHeader]="columnHeader" [tipoContenido]="TipoContenido"
   [StyleContent]="'    font-size: 12px;padding: 10px;'" [Paginador]="false"

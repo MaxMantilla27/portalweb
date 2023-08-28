@@ -1,6 +1,7 @@
 import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { Subject, takeUntil } from 'rxjs';
 import { DatosPerfilService } from 'src/app/Core/Shared/Services/DatosPerfil/datos-perfil.service';
+import { SessionStorageService } from 'src/app/Core/Shared/Services/session-storage.service';
 
 @Component({
   selector: 'app-docencia-cursos-online',
@@ -15,13 +16,15 @@ export class DocenciaCursosOnlineComponent implements OnInit,OnDestroy {
     this.signal$.complete()
   }
   constructor(
-    private _DatosPerfilService:DatosPerfilService
+    private _DatosPerfilService:DatosPerfilService,
+    private _SessionStorageService:SessionStorageService,
     ) { }
   Cursos:any
   filterCurso=''
   Estados:Array<any>=[
-    {id:1,Nombre:'Finazalizado'},
-    {id:2,Nombre:'En Ejecución'}
+    {id:1,Nombre:'Finalizado'},
+    {id:2,Nombre:'Ejecución'},
+    {id:3,Nombre:'Por Ejecutar'}
   ]
   EstadoPespecifico=0
   public TerminaCarga=false;
@@ -36,6 +39,9 @@ export class DocenciaCursosOnlineComponent implements OnInit,OnDestroy {
         if(this.Cursos!=null){
           if(this.Cursos.length!=0){
             this.Cursos.forEach((c:any) => {
+              if(c.idEstadoPEspecifico==5){
+                c.idEstadoPEspecifico=3
+              }
               c.Visible=true
             });
           }
@@ -58,5 +64,8 @@ export class DocenciaCursosOnlineComponent implements OnInit,OnDestroy {
         }
       }
     });
+  }
+  saveIndex(index:number){
+    this._SessionStorageService.SessionSetValue('cursoOnlineCursoIndex',index.toString());
   }
 }

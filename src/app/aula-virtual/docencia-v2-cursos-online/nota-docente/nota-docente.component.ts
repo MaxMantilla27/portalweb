@@ -17,7 +17,7 @@ export class NotaDocenteComponent implements OnInit ,OnChanges, OnDestroy{
   columnHeader:any = {
     indice: 'N°',
     codigoMatricula: 'Código',
-    alumno: 'Nombres Y Apellidos'
+    alumno: 'Apellidos y Nombres'
   };
   TipoContenido: any = {
     //'Acciones': ['buttons'],

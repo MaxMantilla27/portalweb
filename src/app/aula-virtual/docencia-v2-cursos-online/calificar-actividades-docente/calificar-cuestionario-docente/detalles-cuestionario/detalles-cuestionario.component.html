@@ -1,17 +1,22 @@
 <app-cargando *ngIf="cargando==true"></app-cargando>
-<div class="HeaderCuestionario">
-  INTERFAZ VER CUESTIONARIO - POPUP
+<div class="HeaderCuestionario"  style="display: flex;">
+  <div class="col-11">
+    INTERFAZ VER CUESTIONARIO - POPUP
+  </div>
+  <div class="col-1" style="text-align: end;font-weight: bold;cursor: pointer;" (click)="dialogRef.close()">
+    X
+  </div>
 </div>
 <div class="contentCuestionario">
   <div class="nombreAlumnoContetCuestionario">{{data.nombreAlumno}}</div>
-  <div class="FechaContetCuestionario" *ngIf="fechacalificacion!=null && fechacalificacion!=undefined">{{fechacalificacion}}</div>
+  <div class="FechaContetCuestionario" *ngIf="fechacalificacion!=null && fechacalificacion!=undefined">Fecha de Calificación: {{fechacalificacion  | date:'dd-MM-yyyy'}}</div>
   <ng-container *ngIf="preguntas!=null && preguntas!=undefined && respuestas!=null && respuestas!=undefined">
     <div class="row">
       <ng-container *ngFor="let item of preguntas;let i=index">
-        <div class="col-4 col-md-2 col-lg-2">Tipo Calificación :</div>
-        <div class="col-8 col-md-10 col-lg-10">{{item.idPreguntaTipo==6?'Manual':'Automatica'}}</div>
+        <div class="col-4 col-md-2 col-lg-2" style="font-size: 15px;">Tipo Calificación :</div>
+        <div class="col-8 col-md-10 col-lg-10" style="font-size: 15px; padding-left: 30px;">{{item.idPreguntaTipo==6?'Manual':'Automática'}}</div>
         <div class="col-4 col-md-2 col-lg-2">
-          <div class="contentLeftPreguntas">
+          <div class="contentLeftPreguntas" style="font-size: 15px;">
             <div>Pregunta {{(i+1)>9?i+1:'0'+(i+1).toString()}}</div>
             <ng-container *ngIf="item.idPreguntaTipo==6">
               <ng-container *ngIf="fechacalificacion!=undefined && fechacalificacion!=null">
@@ -41,9 +46,9 @@
 
           </div>
         </div>
-        <div class="col-8 col-md-10 col-lg-10">
+        <div class="col-8 col-md-10 col-lg-10" >
           <div class="contetPreguntasCuestionario">
-            <div class="descPregunta row">
+            <div class="descPregunta row" style="font-size: 15px; padding-left: 20px;">
               <div class="col-12 col-md-9 col-lg-9">
                 <div class="titlePregunta">{{item.enunciado}}</div>
                 <div class="DescripcionPregunta" *ngIf="item.descripcion!=null && item.descripcion.length>0">

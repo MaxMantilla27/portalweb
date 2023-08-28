@@ -24,7 +24,7 @@ export class CalificarCuestionarioDocenteComponent implements OnInit ,OnChanges 
 
   columnHeader:any = {
     codigoMatricula: 'Código',
-    nombreAlumno: 'Nombres Y Apellidos',
+    nombreAlumno: 'Apellidos y Nombres',
     fechaEntrega: 'Fecha Entrega',
     fechaCalificacion: 'Fecha Revisión',
     nota: 'Nota',
@@ -61,6 +61,11 @@ export class CalificarCuestionarioDocenteComponent implements OnInit ,OnChanges 
           this.cuestionario=[]
         }
         this.cuestionario=x
+        this.cuestionario.forEach(
+          (x: any) => {
+            x.idCuestionario=this.Id
+          })
+        console.log(this.cuestionario)
         this.cargando=false
       },
     });
@@ -72,7 +77,7 @@ export class CalificarCuestionarioDocenteComponent implements OnInit ,OnChanges 
       width: '1200px',
       data:this.cuestionario[e],
       panelClass: 'dialog-detalle-cuestionario',
-     // disableClose:true
+     disableClose:true
     });
 
     dialogRef.afterClosed().pipe(takeUntil(this.signal$)).subscribe((result) => {

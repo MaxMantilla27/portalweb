@@ -114,3 +114,18 @@
 .contentCursoOnline:hover{
   background: #f2f6ff;
 }
+.buttonCalificarActividades{
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  border-bottom: solid 1px transparent;
+  .material-icons{
+    font-weight: 600;
+    font-size: 14px !important;
+  }
+}
+.buttonCalificarActividades:hover{
+  border-bottom: solid 1px #FF0303;
+}

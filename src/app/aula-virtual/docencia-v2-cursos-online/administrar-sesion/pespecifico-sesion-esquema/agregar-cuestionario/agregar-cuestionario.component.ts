@@ -287,7 +287,7 @@ export class AgregarCuestionarioComponent implements OnInit, OnDestroy {
         tipoPregunta: this.tipoPregunta,
       },
       panelClass: 'dialog-Agregar-Tarea',
-      // disableClose:true
+      disableClose:true
     });
 
     dialogRef
@@ -412,7 +412,7 @@ export class AgregarCuestionarioComponent implements OnInit, OnDestroy {
         tipoPregunta: this.tipoPregunta,
       },
       panelClass: 'dialog-Agregar-Tarea',
-      // disableClose:true
+      disableClose:true
     });
 
     dialogRef

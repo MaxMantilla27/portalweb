@@ -31,7 +31,10 @@
           </mat-select>
         </mat-form-field>
       </div>
-      <div class="col-12" style="margin-top: 50px;">
+      <div class="col-12" style="margin-top: 50px; font-weight: bold;" *ngIf="criterios==null" >
+        * Sin actividades para calificar.
+      </div>
+      <div class="col-12" style="margin-top: 50px;" *ngIf="criterios!=null">
         <ng-container *ngFor="let item of criterios;let i=index">
           <div class="contentCursoOnline" *ngIf="item.Visible==true">
             <div class="row" style="margin: 0px;align-items: center;">
@@ -52,11 +55,11 @@
 
               <div class="col-6 col-md-5 col-lg-5" style="    display: flex;">
                 <ng-container *ngIf="(item.cantidadEnviados - item.cantidadCalificados)<=0">
-                  <div class="imgAlertaActividadesPendientes"></div>
+                  <div class="imgAlertaActividadesEchas "></div>
                   <div class="textActividades">Sin pendientes</div>
                 </ng-container>
                 <ng-container *ngIf="(item.cantidadEnviados - item.cantidadCalificados)>0">
-                  <div class="imgAlertaActividadesEchas"></div>
+                  <div class="imgAlertaActividadesPendientes"></div>
                   <div class="textActividades">Actividades por calificar ({{item.cantidadEnviados -
                     item.cantidadCalificados}})</div>
                 </ng-container>

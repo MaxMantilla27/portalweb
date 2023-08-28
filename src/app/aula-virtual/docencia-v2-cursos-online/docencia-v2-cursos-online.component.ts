@@ -4,6 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
 import { DatosPerfilService } from 'src/app/Core/Shared/Services/DatosPerfil/datos-perfil.service';
 import { ProveedorService } from 'src/app/Core/Shared/Services/Proveedor/proveedor.service';
+import { SessionStorageService } from 'src/app/Core/Shared/Services/session-storage.service';
 
 @Component({
   selector: 'app-docencia-v2-cursos-online',
@@ -22,6 +23,7 @@ export class DocenciaV2CursosOnlineComponent implements OnInit,OnDestroy {
     private _DatosPerfilService:DatosPerfilService,
     private _ActivatedRoute: ActivatedRoute,
     private _ProveedorService:ProveedorService,
+    private _SessionStorageService:SessionStorageService,
   ) { }
 
   public migaPan = [
@@ -37,6 +39,9 @@ export class DocenciaV2CursosOnlineComponent implements OnInit,OnDestroy {
 
   public DataProveedor:any
   ngOnInit(): void {
+    setTimeout(() => {
+      this.Redirect();
+    }, 1000);
     this.ObtenerInformacionProveedor();
     this._ActivatedRoute.params.pipe(takeUntil(this.signal$)).subscribe({
       next: (x) => {
@@ -70,5 +75,12 @@ export class DocenciaV2CursosOnlineComponent implements OnInit,OnDestroy {
   }
   tabChanged(tabChangeEvent: MatTabChangeEvent): void {
 
+  }
+  Redirect(){
+
+    var valorLoscalS=this._SessionStorageService.SessionGetValue('cursoOnlineCursoIndex')==''?0:parseInt(this._SessionStorageService.SessionGetValue('cursoOnlineCursoIndex'))
+    console.log(valorLoscalS)
+    this.tabIndex=valorLoscalS
+    this._SessionStorageService.SessionDeleteValue('cursoOnlineCursoIndex');
   }
 }

@@ -66,6 +66,7 @@ export class DocenciaCalificarProyectoAplicacionComponent implements OnInit , On
         if(this.proyectoAplicacionCurso!=null || this.proyectoAplicacionCurso!=undefined){
           this.NombreCurso=this.proyectoAplicacionCurso[0].pEspecifico
           this.proyectoAplicacionCurso.forEach((e:any) => {
+            console.log(e)
           e.archivo=e.urlArchivoSubido==null?'Sin Archivo':'Descargar'
           e.Acciones=e.calificado==0?'Calificar':'Mostrar'
         });
