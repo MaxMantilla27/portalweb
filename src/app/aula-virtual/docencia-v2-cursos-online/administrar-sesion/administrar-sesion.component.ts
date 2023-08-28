@@ -32,20 +32,24 @@ export class AdministrarSesionComponent implements OnInit, OnDestroy {
   public OpenAgendaSesion=false
   public OpenActividadesSesion=false
   public OpenInteractividadSesion=false
+  public loadingSesiones=false
   ngOnInit(): void {
     this._ActivatedRoute.params.pipe(takeUntil(this.signal$)).subscribe({
       next: (x) => {
+        this.loadingSesiones=false
         this.IdPespecifico = parseInt(x['IdPespecifico']);
-        this.ObtenerSesionesOnlineWebinarDocentePorIdPespecifico();
+        console.log(this.IdPespecifico)
+        this.ObtenerSesionesOnlineWebinarDocentePorIdPespecifico(this.IdPespecifico);
       },
     });
   }
-  ObtenerSesionesOnlineWebinarDocentePorIdPespecifico() {
+  ObtenerSesionesOnlineWebinarDocentePorIdPespecifico(IdPespecifico:number) {
     this._DatosPerfilService
-      .ObtenerSesionesOnlineWebinarDocentePorIdPespecifico(this.IdPespecifico)
+      .ObtenerSesionesOnlineWebinarDocentePorIdPespecifico(IdPespecifico)
       .pipe(takeUntil(this.signal$))
       .subscribe({
         next: (x) => {
+          this.loadingSesiones=true;
           this.sesiones = x;
           console.log(this.sesiones);
           if (
