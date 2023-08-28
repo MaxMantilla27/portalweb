@@ -30,11 +30,18 @@ export class TableV2Component implements OnInit {
   @Output() ButtonArrayClick= new EventEmitter<{indexButton:number,index:number}>();
   @Output() ButtonHeaderClick= new EventEmitter<any>();
   @Output() SelectChange= new EventEmitter<{index:number,value:any,column:string}>();
+  @Input() Paginador=true;
+  @Input() ColSpan:Array<any>=
+  [];
+  @Input() ColorHeader=false;
   dataSource :any;
   objectKeys = Object.keys;
   public select=-1
   public lengthInicial=0
   @Input() dataSelect:Array<Basic>=[]
+  public datacolspa:Array<string>=[]
+  public columnas:Array<any>=[]
+  public hide:any={}
   ngOnInit(): void {
     var i=0
     this.tableData.forEach((t:any) => {
@@ -43,6 +50,36 @@ export class TableV2Component implements OnInit {
     });
     this.lengthInicial=this.tableData.length;
     this.dataSource = new MatTableDataSource(this.tableData);
+
+
+    if(this.ColSpan.length>0){
+      for (let index = 0; index < this.objectKeys(this.columnHeader).length; index++) {
+        var existe=false;
+        this.ColSpan.forEach((c:any) => {
+          if(index+1>=c.inicio && index+1<=(c.inicio+c.colspam)){
+            existe=true
+          }
+        });
+        if(existe==false){
+          this.hide[this.objectKeys(this.columnHeader)[index]]=true
+          this.columnas.push({id:0,inicio: index,nombre: this.columnHeader[this.objectKeys(this.columnHeader)[index]],colspam: 1})
+        }
+      }
+      this.ColSpan.forEach((c:any) => {
+        this.columnas.push(c)
+      });
+      let j=0
+      this.columnas.sort(function (a, b) {
+        return a.inicio - b.inicio;
+      });
+      this.columnas.forEach((c:any) => {
+        this.datacolspa.push('c'+j)
+        j++
+      });
+      console.log(this.columnas)
+      console.log(this.hide)
+      console.log(this.datacolspa)
+    }
     //this.dataSource.sort = this.sort;
   }
   ngAfterViewInit (){
@@ -53,14 +90,16 @@ export class TableV2Component implements OnInit {
       }
       return data[col];
     };
-    this.paginator._intl.itemsPerPageLabel = 'Ítems por página';
-    this.paginator._intl.getRangeLabel = (page: number, pageSize: number, length: number) => {
-      const start = page * pageSize + 1;
-      const end = (length<(page + 1) * pageSize)?length:(page + 1) * pageSize;
-      return `Página ${page+1} de ${Math.ceil(length/pageSize)}`;
-      // return `pag${start} - ${end} de ${length}`;
-    };
-    this.dataSource.paginator = this.paginator;
+    if(this.Paginador==true){
+      this.paginator._intl.itemsPerPageLabel = 'Ítems por página';
+      this.paginator._intl.getRangeLabel = (page: number, pageSize: number, length: number) => {
+        const start = page * pageSize + 1;
+        const end = (length<(page + 1) * pageSize)?length:(page + 1) * pageSize;
+        return `Página ${page+1} de ${Math.ceil(length/pageSize)}`;
+        // return `pag${start} - ${end} de ${length}`;
+      };
+      this.dataSource.paginator = this.paginator;
+    }
   }
 
   ngOnChanges(changes: SimpleChanges): void {
