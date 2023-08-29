@@ -31,8 +31,7 @@ export class TableV2Component implements OnInit {
   @Output() ButtonHeaderClick= new EventEmitter<any>();
   @Output() SelectChange= new EventEmitter<{index:number,value:any,column:string}>();
   @Input() Paginador=true;
-  @Input() ColSpan:Array<any>=
-  [];
+  @Input() ColSpan:Array<any>=[];
   @Input() ColorHeader=false;
   dataSource :any;
   objectKeys = Object.keys;

@@ -1,7 +1,5 @@
-
 <div style="position: relative;">
-  <app-cargando *ngIf="cargando==true"></app-cargando>
-  <div class="TitleCardAgregarTarea"  style="display: flex;">
+  <div class="TitleCardAgregarTarea" style="display: flex;">
     <div class="col-11">
       {{Title}}
     </div>
@@ -9,154 +7,162 @@
       X
     </div>
   </div>
-  <div class="TitleAgregarTarea"><strong>Sesión</strong> {{data.sesion.orden}} de
-    {{data.sesion.maximo}} - <strong>Fecha:</strong> {{data.sesion.fechaHoraInicio | date:'dd-MM-yyyy'}}
-  </div>
-  <form [formGroup]="formularioTarea">
-    <div class="row">
-      <div class="col-6 col-md-3 col-lg-3 labelTarea">Título</div>
-      <div class="col-6 col-md-9 col-lg-9 InputsDocencia">
-        <mat-form-field appearance="outline" style="width: 100%;">
-          <mat-label>Ingresar Título de la Tarea</mat-label>
-          <input type="text" placeholder="Ingresar Título del cuestionario" formControlName="Titulo" matInput>
+  <div style="position: relative;">
 
-          <mat-error *ngIf="!formularioTarea.get('Titulo')?.valid">Ingrese el titulo</mat-error>
-        </mat-form-field>
+    <app-cargando *ngIf="cargando==true"></app-cargando>
 
-      </div>
-      <div class="col-6 col-md-3 col-lg-3 labelTarea">Descripción</div>
-      <div class="col-6 col-md-9 col-lg-9 InputsDocencia">
-        <mat-form-field appearance="outline" style="width: 100%;">
-          <mat-label>Ingresar Descripción de la Tarea</mat-label>
-          <input type="text" placeholder="Ingresar Descripción del cuestionario" formControlName="Descripcion" matInput>
-        </mat-form-field>
-      </div>
-      <div class="col-6 col-md-3 col-lg-3 labelTarea">Fecha de Entrega</div>
-      <div class="col-6 col-md-3 col-lg-3 InputsDocencia">
-        <mat-form-field appearance="outline">
-          <mat-label>Fecha de Entrega</mat-label>
-          <input matInput [min]="fecha" [matDatepicker]="picker" placeholder="Fecha de Entrega"
-            formControlName="FechaEntrega">
-          <mat-datepicker-toggle matSuffix [for]="picker" placeholder="Fecha de Entrega"></mat-datepicker-toggle>
-          <mat-datepicker #picker></mat-datepicker>
-          <mat-error *ngIf="!formularioTarea.get('FechaEntrega')?.valid">Ingrese la fecha de entrega</mat-error>
-        </mat-form-field>
 
-      </div>
-      <div class="col-6 col-md-2 col-lg-2 labelTarea">Hora de Entrega</div>
-      <div class="col-3 col-md-2 col-lg-2 InputsDocencia">
-
-        <mat-form-field appearance="outline">
-          <mat-label>Horas</mat-label>
-          <mat-select #myselsetc formControlName="HoraEntrega">
-            <mat-option *ngFor="let item of Horas" [value]="item">
-              {{item}}
-            </mat-option>
-          </mat-select>
-          <mat-error *ngIf="!formularioTarea.get('HoraEntrega')?.valid">Ingrese la hora</mat-error>
-        </mat-form-field>
-
-      </div>
-      <div class="col-3 col-md-2 col-lg-2 InputsDocencia">
-
-        <mat-form-field appearance="outline">
-          <mat-label>Minutos</mat-label>
-          <mat-select #myselsetc formControlName="MinutoEntrega">
-            <mat-option *ngFor="let item of Minutos" [value]="item">
-              {{item}}
-            </mat-option>
-          </mat-select>
-          <mat-error *ngIf="!formularioTarea.get('MinutoEntrega')?.valid">Ingrese los minutos</mat-error>
-        </mat-form-field>
-
-      </div>
-
-      <div class="col-6 col-md-3 col-lg-3 labelTarea">Calificación Maxima</div>
-      <div class="col-6 col-md-3 col-lg-3 InputsDocencia">
-        <mat-form-field appearance="outline">
-          <mat-label>Calificación Maxima</mat-label>
-          <mat-select #myselsetc formControlName="CalificacionMaxima" [disabled]="true">
-            <mat-option *ngFor="let item of Calificaciones" [value]="item">
-              {{item}}
-            </mat-option>
-          </mat-select>
-          <mat-error *ngIf="!formularioTarea.get('CalificacionMaxima')?.valid">Ingrese la calificacion maxima</mat-error>
-        </mat-form-field>
-      </div>
-      <div class="col-6 col-md-2 col-lg-2 labelTarea">Tiempo Límite</div>
-      <div class="col-4 col-md-2 col-lg-2 InputsDocencia">
-        <mat-form-field appearance="outline" style="width: 100%;">
-          <mat-label>Tiempo Límite</mat-label>
-          <input type="number" placeholder="Tiempo Límite" formControlName="TiempoLimite" matInput min="0">
-          <mat-error *ngIf="!formularioTarea.get('TiempoLimite')?.valid">Ingrese el tiempo limite</mat-error>
-        </mat-form-field>
-      </div>
-      <div class="col-2 col-md-2 col-lg-2">
-        minutos
-      </div>
+    <div class="TitleAgregarTarea"><strong>Sesión</strong> {{data.sesion.orden}} de
+      {{data.sesion.maximo}} - <strong>Fecha:</strong> {{data.sesion.fechaHoraInicio | date:'dd-MM-yyyy'}}
     </div>
-  </form>
-  <div class="noform">
-    <div class="row">
-      <div class="col-5 col-md-3 col-lg-3 labelTarea">Agregar preguntas</div>
-      <div class="col-5 col-md-7 col-lg-7 InputsDocencia">
+    <form [formGroup]="formularioTarea">
+      <div class="row">
+        <div class="col-6 col-md-3 col-lg-3 labelTarea">Título</div>
+        <div class="col-6 col-md-9 col-lg-9 InputsDocencia">
+          <mat-form-field appearance="outline" style="width: 100%;">
+            <mat-label>Ingresar Título de la Tarea</mat-label>
+            <input type="text" placeholder="Ingresar Título del cuestionario" formControlName="Titulo" matInput>
 
-        <mat-form-field appearance="outline">
-          <mat-label>Seleccione</mat-label>
-          <mat-select #myselsetc [(ngModel)]="tipoagregra">
-            <mat-option [value]="1">Importar Bloque de Preguntas</mat-option>
-            <mat-option [value]="2">Agregar Preguntas Manualmente</mat-option>
-          </mat-select>
-        </mat-form-field>
+            <mat-error *ngIf="!formularioTarea.get('Titulo')?.valid">Ingrese el titulo</mat-error>
+          </mat-form-field>
 
+        </div>
+        <div class="col-6 col-md-3 col-lg-3 labelTarea">Descripción</div>
+        <div class="col-6 col-md-9 col-lg-9 InputsDocencia">
+          <mat-form-field appearance="outline" style="width: 100%;">
+            <mat-label>Ingresar Descripción de la Tarea</mat-label>
+            <input type="text" placeholder="Ingresar Descripción del cuestionario" formControlName="Descripcion"
+              matInput>
+          </mat-form-field>
+        </div>
+        <div class="col-6 col-md-3 col-lg-3 labelTarea">Fecha de Entrega</div>
+        <div class="col-6 col-md-3 col-lg-3 InputsDocencia">
+          <mat-form-field appearance="outline">
+            <mat-label>Fecha de Entrega</mat-label>
+            <input matInput [min]="fecha" [matDatepicker]="picker" placeholder="Fecha de Entrega"
+              formControlName="FechaEntrega">
+            <mat-datepicker-toggle matSuffix [for]="picker" placeholder="Fecha de Entrega"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+            <mat-error *ngIf="!formularioTarea.get('FechaEntrega')?.valid">Ingrese la fecha de entrega</mat-error>
+          </mat-form-field>
+
+        </div>
+        <div class="col-6 col-md-2 col-lg-2 labelTarea">Hora de Entrega</div>
+        <div class="col-3 col-md-2 col-lg-2 InputsDocencia">
+
+          <mat-form-field appearance="outline">
+            <mat-label>Horas</mat-label>
+            <mat-select #myselsetc formControlName="HoraEntrega">
+              <mat-option *ngFor="let item of Horas" [value]="item">
+                {{item}}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="!formularioTarea.get('HoraEntrega')?.valid">Ingrese la hora</mat-error>
+          </mat-form-field>
+
+        </div>
+        <div class="col-3 col-md-2 col-lg-2 InputsDocencia">
+
+          <mat-form-field appearance="outline">
+            <mat-label>Minutos</mat-label>
+            <mat-select #myselsetc formControlName="MinutoEntrega">
+              <mat-option *ngFor="let item of Minutos" [value]="item">
+                {{item}}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="!formularioTarea.get('MinutoEntrega')?.valid">Ingrese los minutos</mat-error>
+          </mat-form-field>
+
+        </div>
+
+        <div class="col-6 col-md-3 col-lg-3 labelTarea">Calificación Maxima</div>
+        <div class="col-6 col-md-3 col-lg-3 InputsDocencia">
+          <mat-form-field appearance="outline">
+            <mat-label>Calificación Maxima</mat-label>
+            <mat-select #myselsetc formControlName="CalificacionMaxima" [disabled]="true">
+              <mat-option *ngFor="let item of Calificaciones" [value]="item">
+                {{item}}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="!formularioTarea.get('CalificacionMaxima')?.valid">Ingrese la calificacion
+              maxima</mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col-6 col-md-2 col-lg-2 labelTarea">Tiempo Límite</div>
+        <div class="col-4 col-md-2 col-lg-2 InputsDocencia">
+          <mat-form-field appearance="outline" style="width: 100%;">
+            <mat-label>Tiempo Límite</mat-label>
+            <input type="number" placeholder="Tiempo Límite" formControlName="TiempoLimite" matInput min="0">
+            <mat-error *ngIf="!formularioTarea.get('TiempoLimite')?.valid">Ingrese el tiempo limite</mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col-2 col-md-2 col-lg-2">
+          minutos
+        </div>
       </div>
-      <div class="col-2">
-        <app-default-button [confs]="{color:'primary',titulo:'Agregar'}" [disabled]="tipoagregra==-1"
-          [style]="'width: 100%;margin:0px'" (ButtoclClick)="tipoagregra==1?fileInput.click():OpenCrearPregunta()"
-          [icon]="''"></app-default-button>
+    </form>
+    <div class="noform">
+      <div class="row">
+        <div class="col-5 col-md-3 col-lg-3 labelTarea">Agregar preguntas</div>
+        <div class="col-5 col-md-7 col-lg-7 InputsDocencia">
 
-        <input #fileInput type="file" id="file" (change)="getFileDetails($event)" style="    width: 100%;
+          <mat-form-field appearance="outline">
+            <mat-label>Seleccione</mat-label>
+            <mat-select #myselsetc [(ngModel)]="tipoagregra">
+              <mat-option [value]="1">Importar Bloque de Preguntas</mat-option>
+              <mat-option [value]="2">Agregar Preguntas Manualmente</mat-option>
+            </mat-select>
+          </mat-form-field>
+
+        </div>
+        <div class="col-2">
+          <app-default-button [confs]="{color:'primary',titulo:'Agregar'}" [disabled]="tipoagregra==-1"
+            [style]="'width: 100%;margin:0px'" (ButtoclClick)="tipoagregra==1?fileInput.click():OpenCrearPregunta()"
+            [icon]="''"></app-default-button>
+
+          <input #fileInput type="file" id="file" (change)="getFileDetails($event)" style="    width: 100%;
         border: solid 1px #c2c2c2;
         padding: 7px;
         border-radius: 5px;display: none;">
-      </div>
-      <div class="col-12">
-        <div class="table-resposive">
-          <table style="width: 100%;">
-            <tr style="border-bottom: solid 1px black;">
-              <th style="width: 180px;">Tipo de Pregunta</th>
-              <th style="min-width: 200px;">Enunciado</th>
-              <th style="width:150px">Puntaje</th>
-              <th style="width:150px;text-align: center">Acciones</th>
-              <!-- <th style="min-width: 180px;">Metas pronosticadas 2021</th> -->
-            </tr>
-            <tr class="example-box" *ngFor="let item of  save.Preguntas;let i=index">
-              <td>{{GettipoPregunta(item.IdPreguntaTipo)}}</td>
-              <td>{{item.Enunciado}}</td>
-              <td>{{item.Puntaje}}</td>
-              <td>
-                <div class="accionesRecursos">
-                  <div class="edidtarNaranja" (click)="OpenEditar(i)"></div>
-                  <div class="eliminarNaranja" (click)="Eliminar(i)"></div>
-                </div>
-              </td>
-            </tr>
-          </table>
         </div>
-      </div>
+        <div class="col-12">
+          <div class="table-resposive">
+            <table style="width: 100%;">
+              <tr style="border-bottom: solid 1px black;">
+                <th style="width: 180px;">Tipo de Pregunta</th>
+                <th style="min-width: 200px;">Enunciado</th>
+                <th style="width:150px">Puntaje</th>
+                <th style="width:150px;text-align: center">Acciones</th>
+                <!-- <th style="min-width: 180px;">Metas pronosticadas 2021</th> -->
+              </tr>
+              <tr class="example-box" *ngFor="let item of  save.Preguntas;let i=index">
+                <td>{{GettipoPregunta(item.IdPreguntaTipo)}}</td>
+                <td>{{item.Enunciado}}</td>
+                <td>{{item.Puntaje}}</td>
+                <td>
+                  <div class="accionesRecursos">
+                    <div class="edidtarNaranja" (click)="OpenEditar(i)"></div>
+                    <div class="eliminarNaranja" (click)="Eliminar(i)"></div>
+                  </div>
+                </td>
+              </tr>
+            </table>
+          </div>
+        </div>
 
+      </div>
     </div>
+    <mat-dialog-actions align="center" style="margin-top: 20px;    margin-bottom: 20px;">
+      <div style="margin: 0px 5px;">
+        <app-default-button [confs]="{color:'danger',titulo:'Cerrar'}" [style]="'width: 100%'" mat-dialog-close
+          [icon]="'close'"></app-default-button>
+      </div>
+      <div style="margin: 0px 5px;">
+        <app-default-button [confs]="{color:'primary',titulo:'Guardar'}" [disabled]="!formularioTarea.valid"
+          [style]="'width: 100%;background: #0069d9;border-color: #0062cc;'"
+          (ButtoclClick)="AgregarPEspecificoCuestionario()" [icon]="'check'"></app-default-button>
+      </div>
+    </mat-dialog-actions>
   </div>
-  <mat-dialog-actions align="center" style="margin-top: 20px;    margin-bottom: 20px;">
-    <div style="margin: 0px 5px;">
-      <app-default-button [confs]="{color:'danger',titulo:'Cerrar'}" [style]="'width: 100%'" mat-dialog-close
-        [icon]="'close'"></app-default-button>
-    </div>
-    <div style="margin: 0px 5px;">
-      <app-default-button [confs]="{color:'primary',titulo:'Guardar'}" [disabled]="!formularioTarea.valid"
-        [style]="'width: 100%;background: #0069d9;border-color: #0062cc;'"
-        (ButtoclClick)="AgregarPEspecificoCuestionario()" [icon]="'check'"></app-default-button>
-    </div>
-  </mat-dialog-actions>
 
 </div>

@@ -4,6 +4,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Subject, takeUntil } from 'rxjs';
 import { PEspecificoSesionCuestionarioPreguntaFileDTO } from 'src/app/Core/Models/PEspecificoEsquema';
 import { PEspecificoEsquemaService } from 'src/app/Core/Shared/Services/PEspecificoEsquema/pespecifico-esquema.service';
+import { SnackBarServiceService } from 'src/app/Core/Shared/Services/SnackBarService/snack-bar-service.service';
 
 @Component({
   selector: 'app-agregar-preguntas',
@@ -23,6 +24,7 @@ export class AgregarPreguntasComponent implements OnInit ,OnChanges,OnDestroy {
     public dialogRef: MatDialogRef<AgregarPreguntasComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private _PEspecificoEsquemaService: PEspecificoEsquemaService,
+    private _SnackBarServiceService:SnackBarServiceService
     ) { }
   public pregunta:PEspecificoSesionCuestionarioPreguntaFileDTO={
     Id:0,
@@ -142,10 +144,21 @@ export class AgregarPreguntasComponent implements OnInit ,OnChanges,OnDestroy {
     this.pregunta.Enunciado=this.formularioTarea.get('Enunciado')?.value
     this.pregunta.Descripcion=this.formularioTarea.get('Descripcion')?.value
     this.pregunta.Puntaje=0
+    var vacias=0
     this.pregunta.Alternativas.forEach((a:any) => {
       this.pregunta.Puntaje+=a.Puntaje*1
+      if(a.Alternativa.length==0){
+        vacias++
+      }
     });
-
+    if(vacias>0){
+      this._SnackBarServiceService.openSnackBar(
+        "Debe ingresar el texto en todas las alternativas",
+        'x',
+        10,
+        "snackbarCrucigramaerror");
+      return false;
+    }
     if (this.selectedFiles) {
       const file: File | null = this.selectedFiles.item(0);
       if (file) {
@@ -166,6 +179,7 @@ export class AgregarPreguntasComponent implements OnInit ,OnChanges,OnDestroy {
       this.pregunta.UrlArchivoSubidoRetroalimentacion=null
     }
     this.dialogRef.close(this.pregunta)
+    return true;
   }
   ChangeTipoPregunta(IdTipoPregunta:number){
     console.log(IdTipoPregunta)
