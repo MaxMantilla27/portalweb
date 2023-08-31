@@ -139,7 +139,7 @@ export class ModuloSesionesOnlineComponent implements OnInit , OnChanges,OnDestr
       width: '1000px',
       data: {tarea:this.sesiones[indexSesion].tarea[index],index:index,IdMatriculaCabecera:this.IdMatriculaCabecera},
       panelClass: 'dialog-envio-tarea-alumno',
-     // disableClose:true
+     disableClose:true
     });
 
     dialogRef.afterClosed().pipe(takeUntil(this.signal$)).subscribe((result) => {
@@ -156,7 +156,7 @@ export class ModuloSesionesOnlineComponent implements OnInit , OnChanges,OnDestr
       width: '1000px',
       data: {cuestionario:this.sesiones[indexSesion].cuestionario[index],index:index,IdMatriculaCabecera:this.IdMatriculaCabecera},
       panelClass: 'dialog-envio-cuestionario-alumno',
-     // disableClose:true
+     disableClose:true
     });
 
     dialogRef.afterClosed().pipe(takeUntil(this.signal$)).subscribe((result) => {

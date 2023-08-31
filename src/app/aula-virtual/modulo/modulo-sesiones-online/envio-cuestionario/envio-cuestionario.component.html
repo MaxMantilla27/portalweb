@@ -1,3 +1,5 @@
+
+
 <ng-container *ngIf="data.cuestionario!=undefined">
   <div class="cardSesionOnlineTareasCuestionario">
     <ng-container *ngIf="vertiempo==true">
@@ -11,14 +13,19 @@
       </div>
     </ng-container>
 
-    <div class="flagActividad">
-      <div class="textoFlag">Cuestionario: {{data.index>9?(data.index+1):'0'+(data.index+1)}}</div>
-      <!-- <div class="trianglearrow"></div> -->
-      <div id="player">
-        <div id="outer">
-          <div id="inner"></div>
+    <div class="flagActividad" style="display: flex;">
+      <div class="col-11" style="display: flex;">
+        <div class="textoFlag">Cuestionario: {{data.index>9?(data.index+1):'0'+(data.index+1)}}</div>
+        <div id="player">
+          <div id="outer">
+            <div id="inner"></div>
+          </div>
         </div>
       </div>
+      <div class="col-1" style="text-align: end;font-weight: bold;cursor: pointer;" (click)="dialogRef.close()">
+        X
+      </div>
+      <!-- <div class="trianglearrow"></div> -->
     </div>
     <div class="TitleActividad">{{data.cuestionario.titulo}}</div>
     <div class="DescripcionActividad"

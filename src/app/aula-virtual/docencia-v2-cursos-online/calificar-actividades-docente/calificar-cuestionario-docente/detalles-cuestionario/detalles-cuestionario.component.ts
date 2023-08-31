@@ -66,7 +66,7 @@ export class DetallesCuestionarioComponent implements OnInit, OnDestroy {
               this.respuestas[0].respuestas.forEach((r: any) => {
                 if (r.idPwPEspecificoSesionCuestionarioPregunta == p.id) {
                   if (p.idPreguntaTipo == 6) {
-                    p.respuesta = [r.valor];
+                    p.respuesta = [r.id,r.valor];
                     var maxPuntos = 0;
                     p.alternativas.forEach((a: any) => {
                       maxPuntos = a.puntaje;
@@ -142,7 +142,7 @@ export class DetallesCuestionarioComponent implements OnInit, OnDestroy {
       if (p.idPreguntaTipo == 6) {
         if (p.valueSelec != null) {
           this.json.Respuestas.push({
-            Id: p.id,
+            Id: p.respuesta[0],
             Puntos: p.valueSelec,
             Correcto:
               p.data[p.data.length - 1].toString() == p.valueSelec.toString()
