@@ -564,6 +564,17 @@
             </app-modulo-ayuda-quejas-sugerencias>
           </div>
         </mat-tab>
+        <mat-tab *ngIf="IdModalidadPrincipal!=1" [disabled]="true">
+          <ng-template mat-tab-label  >
+            <div #biblioteca class="contentHeaderM" (click)="InterraccionTab('Biblioteca Virtual')" matTooltip="BibliotecaVirtual"
+              matTooltipPosition="after"(click)="redireccionarBiblioteca()" style="cursor: pointer;color:#524f4f !important">
+              <i class="material-icons">menu_book</i>
+              <div class="titleMatr">Biblioteca Virtual</div>
+            </div>
+          </ng-template>
+          <div class="pad-resp">
+          </div>
+        </mat-tab>
         <!-- </ng-container> -->
         <!-- </ng-container> -->
       </mat-tab-group>

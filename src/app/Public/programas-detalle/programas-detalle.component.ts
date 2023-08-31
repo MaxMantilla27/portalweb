@@ -1161,7 +1161,6 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
       var abrirModalReintento = JSON.parse(ModalReintento);
       console.log(abrirModalReintento)
       if(abrirModalReintento==true){
-        console.log('hola')
         this.OpenModalPago();
       }
       this._SessionStorageService.SessionDeleteValue('urlRedireccionErrorPagoModal')

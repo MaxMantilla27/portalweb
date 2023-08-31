@@ -111,6 +111,7 @@ export class CursoComponent implements OnInit,OnDestroy {
   public ircas:any
   public videosOnline:Array<any>=[]
   public asistencias:any
+  public IdModalidadPrincipal=0
   public contenidotarea=
   '<iframe src="https://player.vimeo.com/video/737713694?h=ce19c25ba1" width="100%" height="564" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>'
   public contenidotareapares=
@@ -439,6 +440,7 @@ export class CursoComponent implements OnInit,OnDestroy {
       .subscribe({
         next: (x) => {
           this.programEstructura = x;
+          this.IdModalidadPrincipal=x.idModalidad
           console.log(this.programEstructura)
           if(this.programEstructura.listaCursoMatriculado!=null && this.programEstructura.listaCursoMatriculado.length>1){
             this.EsCurso=false
@@ -550,5 +552,9 @@ export class CursoComponent implements OnInit,OnDestroy {
         console.log('verificado')
       }
     })
+  }
+  redireccionarBiblioteca(){
+    window.open("https://www.oreilly.com/member/login/",'_blank');
+
   }
 }
