@@ -39,11 +39,15 @@ export class CalificarActividadesDocenteComponent implements OnInit ,OnChanges, 
   public IrCurso=-1
   public Estarea=false
   public itemSelect:any
+  public TerminaCarga=false;
   ObtenerCriteriosEvaluacionPespecifico(){
+    this.TerminaCarga=false;
     this._PEspecificoEsquemaService.ObtenerCriteriosEvaluacionPespecifico(this.IdPespecifico).pipe(takeUntil(this.signal$))
     .subscribe({
       next: (x) => {
+
         console.log(x);
+        this.criterios=[];
 
         this.criterios=x
         if(this.criterios!=null && this.criterios!=undefined && this.criterios.length>0){
@@ -54,6 +58,8 @@ export class CalificarActividadesDocenteComponent implements OnInit ,OnChanges, 
             c.nombre=c.nombre.split('Cuestionarios').join('Cuestionario')
           });
         }
+        this.TerminaCarga=true;
+
       },
     });
   }

@@ -47,26 +47,26 @@ export class CalificarCuestionarioDocenteComponent implements OnInit ,OnChanges 
   ngOnChanges(changes: SimpleChanges): void {
     console.log(this.Id)
     if (this.Id != 0) {
-      this.cargando=true
       this.ObtenerListaCuestionarioAlumnoOnline();
     }
   }
   ObtenerListaCuestionarioAlumnoOnline(){
+    this.cargando=false
     this.cuestionario=[]
     this._PEspecificoEsquemaService.ObtenerListaCuestionarioAlumnoOnline(this.Id).pipe(takeUntil(this.signal$))
     .subscribe({
       next: (x) => {
         console.log(x);
-        if(x==null){
-          this.cuestionario=[]
-        }
+        this.cuestionario=[]
         this.cuestionario=x
-        this.cuestionario.forEach(
-          (x: any) => {
-            x.idCuestionario=this.Id
-          })
+        if(this.cuestionario.length>0){
+          this.cuestionario.forEach(
+            (x: any) => {
+              x.idCuestionario=this.Id
+            })
+        }
         console.log(this.cuestionario)
-        this.cargando=false
+        this.cargando=true
       },
     });
   }
@@ -83,7 +83,6 @@ export class CalificarCuestionarioDocenteComponent implements OnInit ,OnChanges 
     dialogRef.afterClosed().pipe(takeUntil(this.signal$)).subscribe((result) => {
       console.log(result)
       if(result!=undefined && result.length>0){
-        this.cargando = true;
         this.ObtenerListaCuestionarioAlumnoOnline()
       }
     });
