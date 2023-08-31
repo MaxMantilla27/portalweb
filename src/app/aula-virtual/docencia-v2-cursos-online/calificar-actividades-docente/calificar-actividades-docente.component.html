@@ -31,10 +31,24 @@
           </mat-select>
         </mat-form-field>
       </div>
-      <div class="col-12" style="margin-top: 50px; font-weight: bold;" *ngIf="criterios==null" >
-        * Sin actividades para calificar.
-      </div>
-      <div class="col-12" style="margin-top: 50px;" *ngIf="criterios!=null">
+
+      <ng-container *ngIf="criterios.length==0 && TerminaCarga==false">
+        <div class="row"
+          style="display: flex; justify-content: center;align-items: center;text-align: center; height: 15rem;">
+          <div class="col-12" style="display: flex;justify-content: center;">
+            <mat-spinner></mat-spinner>
+          </div>
+          <div class="col-12">
+            Cargando información ...
+          </div>
+        </div>
+      </ng-container>
+      <ng-container *ngIf="criterios.length==0 && TerminaCarga==true ">
+        <div class="col-12" style="margin-top: 50px; font-weight: bold;">
+          * Sin actividades para calificar.
+        </div>
+      </ng-container>
+      <div class="col-12" style="margin-top: 50px;" *ngIf="criterios!=null && criterios.length>0">
         <ng-container *ngFor="let item of criterios;let i=index">
           <div class="contentCursoOnline" *ngIf="item.Visible==true">
             <div class="row" style="margin: 0px;align-items: center;">
