@@ -1,12 +1,17 @@
 <ng-container *ngIf="data.tarea!=undefined">
   <div class="cardSesionOnlineTareasCuestionario">
-    <div class="flagActividad">
-      <div class="textoFlag">Tarea: {{data.index>9?(+1):'0'+(data.index+1)}}</div>
-      <!-- <div class="trianglearrow"></div> -->
-      <div id="player">
-        <div id="outer">
-          <div id="inner"></div>
+    <div class="flagActividad"  style="display: flex;">
+      <div class="col-11" style="display: flex;">
+        <div class="textoFlag">Tarea: {{data.index>9?(+1):'0'+(data.index+1)}}</div>
+        <!-- <div class="trianglearrow"></div> -->
+        <div id="player">
+          <div id="outer">
+            <div id="inner"></div>
+          </div>
         </div>
+      </div>
+      <div class="col-1" style="text-align: end;font-weight: bold;cursor: pointer;" (click)="dialogRef.close()">
+        X
       </div>
     </div>
     <div class="TitleActividad">{{data.tarea.titulo}}</div>
