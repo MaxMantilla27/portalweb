@@ -22,6 +22,12 @@ export class NotaDocenteComponent implements OnInit ,OnChanges, OnDestroy{
   TipoContenido: any = {
     //'Acciones': ['buttons'],
   };
+
+  columnHeaderDetalle:any = {
+    indice: 'N°',
+    codigoMatricula: 'Código',
+    alumno: 'Nombres Y Apellidos'
+  };
   public sticky:any={
     indice: true,
     codigoMatricula: true,
@@ -40,12 +46,16 @@ export class NotaDocenteComponent implements OnInit ,OnChanges, OnDestroy{
       this.ListadoNotaProcesarOnline();
     }
   }
-
+  public detalle=false
+  public verDetalle=false
   public infoNotas:Array<any>=[];
+  public infoNotasDetalle:Array<any>=[];
   public listadoNotas:any
+  public Colspam:Array<any>=[]
   ListadoNotaProcesarOnline(){
     this._NotaService.ListadoNotaProcesarOnline(this.IdPespecifico,1).pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
+        console.log(x)
         this.TerminaCarga=false
         this.listadoNotas=x;
         if(this.listadoNotas.listadoEvaluaciones==null)this.listadoNotas.listadoEvaluaciones=[];
@@ -53,6 +63,18 @@ export class NotaDocenteComponent implements OnInit ,OnChanges, OnDestroy{
         if(this.listadoNotas.listadoMatriculas==null)this.listadoNotas.listadoMatriculas=[];
         if(this.listadoNotas.listadoSesiones==null)this.listadoNotas.listadoSesiones=[];
         if(this.listadoNotas.listadoAsistencias==null)this.listadoNotas.listadoAsistencias=[];
+        var detalles:Array<any>=[]
+        if(this.listadoNotas.listadoNotas.length>0){
+          var dte=this.listadoNotas.listadoNotas[0].detalle
+          if(dte!=undefined && dte!=null && dte.length>0){
+            this.detalle=true
+            dte.forEach((y:any) => {
+              y.nota=0
+              detalles.push(y)
+            });
+          }
+        }
+        console.log(detalles)
         this.listadoNotas.listadoMatriculas.forEach((mat:any) => {
           mat.notaActual=[];
           this.listadoNotas.listadoEvaluaciones.forEach((evl:any) => {
@@ -89,6 +111,20 @@ export class NotaDocenteComponent implements OnInit ,OnChanges, OnDestroy{
               }
             }
           });
+          var d:Array<any>=[]
+          this.listadoNotas.listadoNotas.forEach((n:any) => {
+            if(mat.idMatriculaCabecera==n.idMatriculaCabecera){
+              d=n.detalle
+            }
+          });
+          if(d.length==0){
+            detalles.forEach((d:any )=> {
+              d.idMatriculaCabecera=mat.idMatriculaCabecera
+            });
+            mat.detalles=detalles
+          }else{
+            mat.detalles=d
+          }
         });
         this.OrdenarNotas();
       },
@@ -116,6 +152,7 @@ export class NotaDocenteComponent implements OnInit ,OnChanges, OnDestroy{
         data.codigoMatricula=m.codigoMatricula,
         data.alumno=m.alumno
         data.Ponderaciones=[]
+        data.detalle=m.detalles;
         if(m.notaActual!=null && m.notaActual!=undefined){
           var notaFinal=0
           m.notaActual.forEach((na:any) => {
@@ -127,21 +164,104 @@ export class NotaDocenteComponent implements OnInit ,OnChanges, OnDestroy{
             notaFinal+=nota*(escala.porcentaje/100)
             data['z'+na.IdEvaluacion]= nota;
             data.Ponderaciones.push({
-              nombre:escala.nombre+' ('+escala.porcentaje+'%)',
+              nombre:escala.nombre+' \n ('+escala.porcentaje+'%)',
               value:nota
             })
           });
           data['zzFinal']='<strong>'+notaFinal+'</strong>' ;
 
         }
-
         this.infoNotas.push(data);
 
         i++
       });
     }
+    console.log(this.columnHeader)
+    console.log(this.infoNotas)
+    if(this.detalle==true){
+      this.OrdenarDetalle()
+    }
   }
+  OrdenarDetalle(){
+    this.listadoNotas.listadoEvaluaciones.forEach((e:any) => {
+      if(e.nombre.toUpperCase().includes('ASISTENCIA')){
+        this.columnHeaderDetalle['z'+e.id]='Asistencia <br> '+e.porcentaje+'%'
+      }else{
+        this.Colspam.push({
+          id:e.id,
+          nombre:e.nombre,
+          colspam:0,
+          inicio:0
+        })
+      }
+    })
+    if(this.listadoNotas.listadoNotas!=null){
 
+      var detalles=this.listadoNotas.listadoNotas[0].detalle
+
+      let claves = Object.keys(this.columnHeaderDetalle);
+      var inicio=claves.length
+      this.Colspam.forEach((c:any) => {
+        c.inicio=inicio+1;
+
+        detalles.forEach((d:any) => {
+          if(d.idCriterioEvaluacion==c.id){
+            this.columnHeaderDetalle['z'+c.id+'-'+d.id]=d.nombre
+            inicio++
+            c.colspam++
+          }
+        });
+        this.columnHeaderDetalle['z'+c.id]='Promedio'
+        c.colspam++
+      });
+    }
+    this.columnHeaderDetalle['zzFinal']='Promedio <br> Final';
+    if(this.infoNotas!=null){
+      let i=1
+      this.infoNotas.forEach((m:any) => {
+        var data:any={}
+        data.indice= m.indice,
+        data.codigoMatricula=m.codigoMatricula,
+        data.alumno=m.alumno
+        data.zzFinal=m.zzFinal
+        data.Ponderaciones=[]
+        this.listadoNotas.listadoEvaluaciones.forEach((e:any) => {
+          if(e.nombre.toUpperCase().includes('ASISTENCIA')){
+
+            data.Ponderaciones.push({
+              nombre:e.nombre+' \n ('+e.porcentaje+'%)',
+              value:m['z'+e.id],
+              inx:'z'+e.id
+            })
+          }else{
+            data.Ponderaciones.push({
+              nombre:e.nombre+' \n Promedio',
+              value:m['z'+e.id],
+              inx:'z'+e.id
+            })
+          }
+          data['z'+e.id]=m['z'+e.id];
+        })
+        m.detalle.forEach((det:any) => {
+          data.Ponderaciones.push({
+            nombre:det.criterio+' \n '+det.nombre,
+            value:det.nota==null?0:det.nota,
+            inx:'z'+det.idCriterioEvaluacion+'-'+det.id
+          })
+          data['z'+det.idCriterioEvaluacion+'-'+det.id]=det.nota==null?0:det.nota
+        });
+
+        data.Ponderaciones.sort(function (a:any, b:any) {
+          return a.inx - b.inx;
+        });
+        this.infoNotasDetalle.push(data);
+        i++
+      });
+    }
+    console.log(this.infoNotasDetalle)
+    console.log(this.columnHeaderDetalle)
+    console.log(this.Colspam)
+  }
   DownloadExcel(): void {
     const fileToExport = this.infoNotas.map((items:any) => {
       var data:any={}
@@ -151,7 +271,25 @@ export class NotaDocenteComponent implements OnInit ,OnChanges, OnDestroy{
       items.Ponderaciones.forEach((p:any) => {
         data[p.nombre]=p.value
       });
-      data["Promedio Final"]= items?.zzFinal
+      data["Promedio Final"]= items?.zzFinal.split('<strong>').join('').split('</strong>').join('')
+      return data
+    });
+
+    this.excelService.exportToExcel(
+     fileToExport,
+     'PerfilAlumnos-' + new Date().getTime()
+   );
+  }
+  DownloadExcelDetalle(): void {
+    const fileToExport = this.infoNotasDetalle.map((items:any) => {
+      var data:any={}
+      data["N°"]= items?.indice
+      data["Código"]= items?.codigoMatricula
+      data["Nombre y Apellidos"]= items?.alumno
+      items.Ponderaciones.forEach((p:any) => {
+        data[p.nombre]=p.value
+      });
+      data["Promedio Final"]= items?.zzFinal.split('<strong>').join('').split('</strong>').join('')
       return data
     });
 

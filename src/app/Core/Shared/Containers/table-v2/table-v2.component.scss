@@ -2,10 +2,10 @@
   cursor: pointer;
 }
 .rowSelect:hover{
-  background: #ededed;
+  background: #f2f6ff;
 }
 .select{
-  background: #ededed;
+  background: #f2f6ff;
 }
 .tablev2-material{
   thead{
@@ -39,3 +39,6 @@
   }
 }
 
+.bordercolor{
+  border: solid 1px gray !important;
+}

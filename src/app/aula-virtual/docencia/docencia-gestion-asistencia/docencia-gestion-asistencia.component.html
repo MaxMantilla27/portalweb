@@ -74,6 +74,7 @@
 
       <app-table-v2 *ngIf="infoAsistencias!=undefined && infoAsistencias.length>0" [tableData]="infoAsistencias"
         [columnHeader]="columnHeader" [tipoContenido]="TipoContenido" [tipoContenidoHeader]="TipoContenidoHeader"
+        [Paginador]="false"
         [StyleContent]="'    font-size: 12px;padding: 10px;'" [dataSelect]="dataSeldt" [DisableSort]="DisableSort"
         [DisableCell]="DisableCell" [buttonheader]="buttonheader" [sticky]="sticky"
         (ButtonHeaderClick)="HeaderChange($event)" (SelectChange)="SelectChange($event)"></app-table-v2>
