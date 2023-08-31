@@ -239,6 +239,7 @@ export class LandingPageModalComponent implements OnInit, OnDestroy {
           if(this.isBrowser){
 
             fbq('track', 'CompleteRegistration');
+            fbq('track', 'Lead');
             try{
               gtag('event', 'conversion', {
                 'send_to': 'AW-991002043/tnStCPDl6HUQu_vF2AM',

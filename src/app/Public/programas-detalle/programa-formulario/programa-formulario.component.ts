@@ -170,6 +170,7 @@ export class ProgramaFormularioComponent implements OnInit, OnDestroy {
             this.CompleteLocalStorage=true;
             if(this.isBrowser){
               fbq('track', 'CompleteRegistration');
+              fbq('track', 'Lead');
               gtag('event', 'conversion', {
                 'send_to': 'AW-991002043/tnStCPDl6HUQu_vF2AM',
               });
