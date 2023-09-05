@@ -36,7 +36,6 @@ export class AdministrarSesionComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this._ActivatedRoute.params.pipe(takeUntil(this.signal$)).subscribe({
       next: (x) => {
-        this.loadingSesiones=false
         this.IdPespecifico = parseInt(x['IdPespecifico']);
         console.log(this.IdPespecifico)
         this.ObtenerSesionesOnlineWebinarDocentePorIdPespecifico(this.IdPespecifico);
@@ -44,6 +43,7 @@ export class AdministrarSesionComponent implements OnInit, OnDestroy {
     });
   }
   ObtenerSesionesOnlineWebinarDocentePorIdPespecifico(IdPespecifico:number) {
+    this.loadingSesiones=false
     this._DatosPerfilService
       .ObtenerSesionesOnlineWebinarDocentePorIdPespecifico(IdPespecifico)
       .pipe(takeUntil(this.signal$))
@@ -92,7 +92,7 @@ export class AdministrarSesionComponent implements OnInit, OnDestroy {
       width: '1000px',
       data: { IdPespecifico: this.IdPespecifico,IdSesion:this.IdSesion,Sesion:this.sesion,correo:this.DataProveedor.email },
       panelClass: 'dialog-Tarjeta',
-     // disableClose:true
+     disableClose:true
     });
 
     dialogRef.afterClosed().pipe(takeUntil(this.signal$)).subscribe((result) => {
