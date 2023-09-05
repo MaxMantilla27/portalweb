@@ -49,7 +49,9 @@ export class CalificarActividadesDocenteComponent implements OnInit ,OnChanges, 
         console.log(x);
         this.criterios=[];
 
-        this.criterios=x
+        if(x!=null){
+          this.criterios=x
+        }
         if(this.criterios!=null && this.criterios!=undefined && this.criterios.length>0){
           this.criterios.forEach((c:any) => {
             c.Visible=true
