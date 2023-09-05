@@ -165,7 +165,7 @@ export class LoginFacebookRegistrarComponent implements OnInit ,OnDestroy {
 
             this.cleanSub=true
             if(this.isBrowser){
-              fbq('track', 'CompleteRegistration');
+              //fbq('track', 'CompleteRegistration');
               fbq('track', 'Lead');
               gtag('event', 'conversion', {
                 'send_to': 'AW-991002043/tnStCPDl6HUQu_vF2AM',
