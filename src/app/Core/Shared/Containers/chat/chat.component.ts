@@ -243,6 +243,7 @@ export class ChatComponent implements OnInit,OnDestroy,OnChanges {
   }
 
   GenerarLogVisitanteAulaVirtual(){
+    console.log(this.idprogramageneralalumno)
     var idProgramaGenetalEstatico =
       this._SessionStorageService.SessionGetValue("IdPGeneral")==''
       ?0

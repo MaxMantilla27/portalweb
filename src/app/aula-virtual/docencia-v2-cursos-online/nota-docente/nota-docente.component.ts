@@ -117,7 +117,7 @@ export class NotaDocenteComponent implements OnInit ,OnChanges, OnDestroy{
               d=n.detalle
             }
           });
-          if(d.length==0){
+          if(d!=null && d.length==0){
             detalles.forEach((d:any )=> {
               d.idMatriculaCabecera=mat.idMatriculaCabecera
             });
