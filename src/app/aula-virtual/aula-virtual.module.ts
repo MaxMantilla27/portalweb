@@ -108,6 +108,8 @@ import { OfertaLaboralComponent } from './bolsa-trabajo/oferta-laboral/oferta-la
 import { MisPostulacionesComponent } from './bolsa-trabajo/mis-postulaciones/mis-postulaciones.component';
 import { DevolverProyectoComponent } from './docencia-tareas/devolver-proyecto/devolver-proyecto.component';
 import { ConfirmacionPagoOpenpayColombiaComponent } from './confirmacion-pago-openpay-colombia/confirmacion-pago-openpay-colombia.component';
+import { ConfirmacionPagoMercadoPagoChileComponent } from './confirmacion-pago-mercado-pago-chile/confirmacion-pago-mercado-pago-chile.component';
+import { ResultadoPagoMercadopagoComponent } from './resultado-pago-mercadopago/resultado-pago-mercadopago.component';
 
 
 
@@ -214,7 +216,9 @@ import { ConfirmacionPagoOpenpayColombiaComponent } from './confirmacion-pago-op
     OfertaLaboralComponent,
     MisPostulacionesComponent,
     DevolverProyectoComponent,
-    ConfirmacionPagoOpenpayColombiaComponent
+    ConfirmacionPagoOpenpayColombiaComponent,
+    ConfirmacionPagoMercadoPagoChileComponent,
+    ResultadoPagoMercadopagoComponent
 
   ],
   imports: [
