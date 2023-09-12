@@ -32,7 +32,7 @@
               <div class="iconMat" [ngClass]="{'iconSesiones': json.idModalidad===1,'iconSessionesOnline': json.idModalidad!=1}"
               matTooltip="Sesiones"
               matTooltipPosition="after"></div>
-              <div *ngIf="!hide" class="titleMatr">{{json.idModalidad==2?'Recursos por sesión':'Sesiones'}}</div>
+              <div *ngIf="!hide" class="titleMatr">{{json.idModalidad==1?'Sesiones':'Recursos por sesión'}}</div>
             </div>
           </ng-template>
           <div class="pad-resp">

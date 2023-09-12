@@ -12,6 +12,7 @@ import { Subject, takeUntil } from 'rxjs';
 import { AsistenciaService } from 'src/app/Core/Shared/Services/Asistencia/asistencia.service';
 import { DatosPerfilService } from 'src/app/Core/Shared/Services/DatosPerfil/datos-perfil.service';
 import { SnackBarServiceService } from 'src/app/Core/Shared/Services/SnackBarService/snack-bar-service.service';
+import { SessionStorageService } from 'src/app/Core/Shared/Services/session-storage.service';
 
 @Component({
   selector: 'app-asistencias-online',
@@ -25,7 +26,9 @@ export class AsistenciasOnlineComponent
 
   constructor(
     private _AsistenciaService: AsistenciaService,
-    private _DatosPerfilService: DatosPerfilService
+    private _DatosPerfilService: DatosPerfilService,
+    private _SessionStorageService:SessionStorageService,
+
   ) {}
 
   ngOnDestroy(): void {
@@ -35,6 +38,7 @@ export class AsistenciasOnlineComponent
   @Input() border=true
   @Input() IdMatriculaCabecera = 0;
   @Input() IdPEspecifico = 0;
+  @Input() IdTipoProgramaCarrera=0;
   public asistenciaAlumno: Array<any>=[];
   public sesion = 0;
   public sesionesAll: any;
@@ -47,7 +51,54 @@ export class AsistenciasOnlineComponent
     }
   }
   ObtenerAsistencia() {
-    this._AsistenciaService
+    if(this.IdTipoProgramaCarrera==2){
+      this._AsistenciaService
+      .ObtenerAsistenciaCarrerasProfesionales(this.IdMatriculaCabecera, this.IdPEspecifico)
+      .pipe(takeUntil(this.signal$))
+      .subscribe({
+        next: (x) => {
+          console.log(x)
+          this.asistenciaAlumno = [];
+          this.asistenciaAlumno = x;
+          if (
+            this.sesionesAll != null &&
+            this.sesionesAll != undefined &&
+            this.sesionesAll.length > 0
+          ) {
+            if (
+              this.asistenciaAlumno != null &&
+              this.asistenciaAlumno != undefined &&
+              this.asistenciaAlumno.length > 0
+            ) {
+              this.sesionesAll.forEach((s: any) => {
+                this.asistenciaAlumno.forEach((a: any) => {
+                  if (s.idSesion == a.idPEspecificoSesion) {
+                    s.existe = true;
+                  }
+                });
+              });
+              // this.sesionesAll.forEach((s: any) => {
+              //   if (s.existe != true) {
+              //     this.asistenciaAlumno.push({
+              //       asistio: null,
+              //       fechaHoraInicio: s.fechaHoraInicio,
+              //       grupoSesion: s.orden,
+              //       idMatriculaCabecera: 63526,
+              //       idPEspecifico: 20753,
+              //       idPEspecificoSesion: 39223,
+              //     });
+              //   }
+              // });
+            }
+          }
+        },
+        complete:()=>{
+          this.TerminaCarga=true
+        }
+      });
+    }
+    else{
+      this._AsistenciaService
       .ObtenerAsistencia(this.IdMatriculaCabecera, this.IdPEspecifico)
       .pipe(takeUntil(this.signal$))
       .subscribe({
@@ -91,6 +142,7 @@ export class AsistenciasOnlineComponent
           this.TerminaCarga=true
         }
       });
+    }
   }
 
   ObtenerSesionesOnlineWebinarPorIdPespecifico() {

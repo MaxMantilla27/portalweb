@@ -33,5 +33,19 @@ export class AsistenciaService {
       return EMPTY;
     }
   }
+  public ObtenerAsistenciasAlumnoOnlineCarrerasProfesionales(IdMatriculaCabecera:number,IdPEspecifico:number):Observable<any>{
+    if(this.isBrowser){
+      return this.http.get<any>(this.urlBase+'/ObtenerAsistenciasAlumnoOnlineCarrerasProfesionales?IdMatriculaCabecera='+IdMatriculaCabecera+'&IdPEspecifico='+IdPEspecifico);
+    } else {
+      return EMPTY;
+    }
+  }
+  public ObtenerAsistenciaCarrerasProfesionales(IdMatriculaCabecera:number,IdPEspecifico:number):Observable<any>{
+    if(this.isBrowser){
+      return this.http.get<any>(this.urlBase+'/ObtenerAsistenciaCarrerasProfesionales?IdMatriculaCabecera='+IdMatriculaCabecera+'&IdPEspecifico='+IdPEspecifico);
+    } else {
+      return EMPTY;
+    }
+  }
 }
 

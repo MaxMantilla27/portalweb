@@ -38,7 +38,7 @@
           </ng-template>
           <div class="pad-resp">
             <app-curso-clase-online [escurso]="EsCurso" [IdMatricula]="idMatricula"
-              [Capitulo]="programEstructura.programaGeneral">
+              [Capitulo]="programEstructura.programaGeneral" [IdTipoProgramaCarrera]="IdTipoProgramaCarrera">
             </app-curso-clase-online>
           </div>
         </mat-tab>
@@ -49,7 +49,7 @@
                 <div class="iconMat "
                   [ngClass]="{'iconSesiones': json.idModalidad===1,'iconSessionesOnline': json.idModalidad!=1}"
                   matTooltip="Sesiones" matTooltipPosition="after"></div>
-                <div *ngIf="!hide" class="titleMatr">{{json.idModalidad==2?'Recursos por sesión':'Sesiones'}}</div>
+                <div *ngIf="!hide" class="titleMatr">{{json.idModalidad==1?'Sesiones':'Recursos por sesión'}}</div>
               </div>
             </ng-template>
             <div class="pad-resp">
@@ -95,7 +95,7 @@
             </ng-template>
             <div class="pad-resp">
               <ng-container >
-                <app-asistencias-online [IdMatriculaCabecera]="json.IdMatriculaCabecera" [IdPEspecifico]="json.IdPEspecificoHijo"></app-asistencias-online>
+                <app-asistencias-online [IdMatriculaCabecera]="json.IdMatriculaCabecera" [IdPEspecifico]="json.IdPEspecificoHijo" [IdTipoProgramaCarrera]="IdTipoProgramaCarrera"></app-asistencias-online>
               </ng-container>
 
             </div>
@@ -240,7 +240,7 @@
             </div>
           </ng-template>
           <div class="pad-resp">
-            <app-curso-notas [IdMatricula]="idMatricula">
+            <app-curso-notas [IdMatricula]="idMatricula" [IdTipoProgramaCarrera]="IdTipoProgramaCarrera">
             </app-curso-notas>
           </div>
         </mat-tab>

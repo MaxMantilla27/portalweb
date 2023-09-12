@@ -2,7 +2,7 @@ import { isPlatformBrowser } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { EMPTY, Observable } from 'rxjs';
-import { ParametrosEstructuraEspecificaAccesoPruebaDTO, ParametrosEstructuraEspecificaDTO } from 'src/app/Core/Models/EstructuraEspecificaDTO';
+import { ParametrosEstructuraEspecificaAccesoPruebaDTO, ParametrosEstructuraEspecificaDTO,ParametrosEstructuraEspecificaV2DTO } from 'src/app/Core/Models/EstructuraEspecificaDTO';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -130,6 +130,34 @@ export class ProgramaContenidoService {
   public ActualizarTareaParametroEvaluacionProyectosNota(IdMatriculaCabecera:number):Observable<any>{
     if(this.isBrowser){
       return this.http.get<any>(this.urlBase+'/ActualizarTareaParametroEvaluacionProyectosNota?IdMatriculaCabecera='+IdMatriculaCabecera);
+    }else{
+      return EMPTY;
+    }
+  }
+  public ObtenerEstructuraEspecificaCarrerasProfesionales(Json:ParametrosEstructuraEspecificaV2DTO):Observable<any>{
+    if(this.isBrowser){
+      return this.http.post<any>(this.urlBase+'/ObtenerEstructuraEspecificaCarrerasProfesionales',Json);
+    }else{
+      return EMPTY;
+    }
+  }
+  public ObtenerListadoProgramaContenidoCarrerasProfesionales(IdMatriculaCabecera:number):Observable<any>{
+    if(this.isBrowser){
+      return this.http.get<any>(this.urlBase+'/ObtenerListadoProgramaContenidoCarrerasProfesionales?IdMatriculaCabecera='+IdMatriculaCabecera);
+    }else{
+      return EMPTY;
+    }
+  }
+  public CongelarCursoCarrerasProfesionales(IdMatriculaCabecera:number):Observable<any>{
+    if(this.isBrowser){
+      return this.http.get<any>(this.urlBase+'/CongelarCursoCarrerasProfesionales?IdMatriculaCabecera='+IdMatriculaCabecera);
+    }else{
+      return EMPTY;
+    }
+  }
+  public ObtenerIdTipoProgramaCarreraIdPEspecifico(IdPEspecifico:number):Observable<any>{
+    if(this.isBrowser){
+      return this.http.post<any>(this.urlBase+'/ObtenerIdTipoProgramaCarreraIdPEspecifico?IdPEspecifico='+IdPEspecifico,{});
     }else{
       return EMPTY;
     }

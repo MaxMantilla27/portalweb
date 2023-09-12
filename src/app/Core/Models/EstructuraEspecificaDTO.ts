@@ -79,3 +79,23 @@ export interface ParametrosEstructuraEspecificaAccesoPruebaDTO {
   visualizarVideos: boolean;
   accesoCompleto: boolean;
 }
+export interface ParametrosEstructuraEspecificaV2DTO {
+  IdMatriculaCabecera: number;
+  IdPEspecificoPadre: number;
+  IdPEspecificoHijo: number;
+  IdPGeneralPadre: number;
+  IdPGeneralHijo: number;
+  AccesoPrueba: boolean;
+  NombrePrograma: string;
+  NombreCapitulo: string;
+  idModalidad: number;
+  creditosTeoricos: number;
+  creditosPracticos: number;
+  creditosTotales: number;
+  horasTeoricas: number;
+  horasPracticas: number;
+  horasTotales: number;
+  idPeriodoLectivo: number;
+  idTipoProgramaCarrera: number;
+}
+

@@ -77,5 +77,20 @@ export class NotaService {
       return EMPTY;
     }
   }
+  public ObtenerCursosProgramaPorIdMatriculaOnlineCarrerasProfesionales(IdMatriculaCabecera:number):Observable<any>{
+    console.log(IdMatriculaCabecera)
+    if(this.isBrowser){
+      return this.http.get<any>(this.urlBase+'/ObtenerCursosProgramaPorIdMatriculaOnlineCarrerasProfesionales?IdMatriculaCabecera='+IdMatriculaCabecera);
+    }else{
+      return EMPTY;
+    }
+  }
+  public ListadoNotaProcesarCarreras(idPEspecifico:number,grupo:number,idMatriculaCabecera:number):Observable<any>{
+    if(this.isBrowser){
+      return this.http.get<any>(this.urlBase+'/ListadoNotaProcesarCarreras?idPespecifico='+idPEspecifico+ "&grupo=" +grupo+ "&idMatriculaCabecera=" +idMatriculaCabecera);
+    }else{
+      return EMPTY;
+    }
+  }
 
 }
