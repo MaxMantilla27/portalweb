@@ -147,7 +147,7 @@ export class CursoComponent implements OnInit,OnDestroy {
   }
 
   ObtenerAsistenciasAlumnoOnline(){
-    console.log(this.programEstructura)
+    console.log(this.programEstructura.listaCursoMatriculado)
     if(this.IdTipoProgramaCarrera==2){
       this._AsistenciaService.ObtenerAsistenciasAlumnoOnlineCarrerasProfesionales(this.idMatricula, this.programEstructura.idPEspecifico).pipe(takeUntil(this.signal$)).subscribe({
         next:x=>{
