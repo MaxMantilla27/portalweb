@@ -155,9 +155,9 @@ export class AgregarCuestionarioComponent implements OnInit, OnDestroy {
           this.formularioTarea
             .get('MinutoEntrega')
             ?.setValue(
-              date.getMinutes().toString().length > 1
-                ? date.getMinutes().toString()
-                : '0' + date.getMinutes().toString()
+              date.getMinutes()
+                ? date.getMinutes()
+                : '0' + date.getMinutes()
             );
           this.formularioTarea.get('TiempoLimite')?.setValue(x.tiempoLimite);
         },
@@ -427,5 +427,7 @@ export class AgregarCuestionarioComponent implements OnInit, OnDestroy {
         }
       });
   }
-  Eliminar(i: number) {}
+  Eliminar(index: number) {
+    this.save.Preguntas.splice(index,1)
+  }
 }

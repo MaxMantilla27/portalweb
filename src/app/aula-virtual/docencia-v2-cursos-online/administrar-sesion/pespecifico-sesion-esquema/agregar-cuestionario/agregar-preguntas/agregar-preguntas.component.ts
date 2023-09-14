@@ -70,6 +70,10 @@ export class AgregarPreguntasComponent implements OnInit ,OnChanges,OnDestroy {
       this.formularioTarea.get('IdPreguntaTipo')?.setValue(this.pregunta.IdPreguntaTipo)
       this.formularioTarea.get('Enunciado')?.setValue(this.pregunta.Enunciado)
       this.formularioTarea.get('Descripcion')?.setValue(this.pregunta.Descripcion)
+      this.formularioTarea.get('NombreArchivo')?.setValue(this.pregunta.NombreArchivo)
+      this.formularioTarea.get('UrlArchivoSubido')?.setValue(this.pregunta.UrlArchivoSubido)
+      this.formularioTarea.get('NombreArchivoRetroalimentacion')?.setValue(this.pregunta.NombreArchivoRetroalimentacion)
+      this.formularioTarea.get('UrlArchivoSubidoRetroalimentacion')?.setValue(this.pregunta.UrlArchivoSubidoRetroalimentacion)
       if(this.pregunta!=null && this.pregunta.Id!=0){
         this.ObtenerPEspecificoSesionCuestionarioPreguntaAlternativaPorIdPregunta()
       }
@@ -164,9 +168,6 @@ export class AgregarPreguntasComponent implements OnInit ,OnChanges,OnDestroy {
       if (file) {
         this.pregunta.file = file;
       }
-    }else{
-      this.pregunta.NombreArchivo=null
-      this.pregunta.UrlArchivoSubido=null
     }
 
     if (this.selectedFiles2) {
@@ -174,9 +175,6 @@ export class AgregarPreguntasComponent implements OnInit ,OnChanges,OnDestroy {
       if (file) {
         this.pregunta.fileRetroalimentacion = file;
       }
-    }else{
-      this.pregunta.NombreArchivoRetroalimentacion=null
-      this.pregunta.UrlArchivoSubidoRetroalimentacion=null
     }
     this.dialogRef.close(this.pregunta)
     return true;
