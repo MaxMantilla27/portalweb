@@ -17,6 +17,7 @@ import { SnackBarServiceService } from 'src/app/Core/Shared/Services/SnackBarSer
 import { SessionStorageService } from 'src/app/Core/Shared/Services/session-storage.service';
 import { DatosFormularioDTO } from 'src/app/Core/Models/DatosFormularioDTO';
 import { ChatEnLineaService } from 'src/app/Core/Shared/Services/ChatEnLinea/chat-en-linea.service';
+import { FacebookPixelService } from 'src/app/Core/Shared/Services/FacebookPixel/facebook-pixel.service';
 declare const fbq:any;
 
 declare const gtag:any;
@@ -41,6 +42,7 @@ export class ContactenosComponent implements OnInit,OnDestroy {
     private _SessionStorageService:SessionStorageService,
     private _SnackBarServiceService:SnackBarServiceService,
     private title:Title,
+    private _FacebookPixelService:FacebookPixelService,
     private _ChatEnLineaService:ChatEnLineaService
 
     ) {
@@ -183,14 +185,15 @@ export class ContactenosComponent implements OnInit,OnDestroy {
       this.DatosContactenosEnvio.IdAreaTrabajo=value.IdAreaTrabajo;
       this.DatosContactenosEnvio.IdIndustria=value.IdIndustria;
       this.DatosContactenosEnvio.Comentario=value.Comentario;
-      var IdPespecifico=this._SessionStorageService.SessionGetValueCokies("IdPEspecificoPublicidad");
+
+      var IdPEspecifico=this._SessionStorageService.SessionGetValueCokies("IdPEspecificoPublicidad");
       var IdCategoriaDato=this._SessionStorageService.SessionGetValueCokies("idCategoria");
+      var idcampania=this._SessionStorageService.SessionGetValueCokies("idCampania");
+
+      this.DatosContactenosEnvio.IdPespecifico=IdPEspecifico==''?0:parseInt(IdPEspecifico);
       this.DatosContactenosEnvio.IdCategoriaDato=IdCategoriaDato==''?0:parseInt(IdCategoriaDato);
-      if(IdPespecifico==''){
-        this.DatosContactenosEnvio.IdPespecifico=0
-      }else{
-        this.DatosContactenosEnvio.IdPespecifico=parseInt(IdPespecifico)
-      };
+      this.DatosContactenosEnvio.IdCampania=idcampania==''?0:parseInt(idcampania);
+
       console.log(this.DatosContactenosEnvio)
       this._ContactenosService.EnviarFormulario(this.DatosContactenosEnvio).subscribe({
         next:x => {
@@ -210,7 +213,15 @@ export class ContactenosComponent implements OnInit,OnDestroy {
           this.CompleteLocalStorage=true;
           this.formularioContacto.Comentario= '';
           if(this.isBrowser){
-            fbq('track', 'CompleteRegistration');
+            fbq('trackSingle','269257245868695', 'Lead', {}, {eventID:x.id});
+            this._FacebookPixelService.SendLoad(x.id,x.correoEnc,x.telEnc,x.userAgent,x.userIp).subscribe({
+              next:(x)=>{
+                console.log(x)
+              },
+              error:(e)=>{
+                console.log(e)
+              }
+            });
             gtag('event', 'conversion', {
               'send_to': 'AW-991002043/tnStCPDl6HUQu_vF2AM',
             });
@@ -223,9 +234,6 @@ export class ContactenosComponent implements OnInit,OnDestroy {
           }
           this._SnackBarServiceService.openSnackBar("¡Solicitud enviada!",'x',15,"snackbarCrucigramaSucces");
         },
-        // error:(e)=>{
-        //   fbq('track', 'CompleteRegistration');
-        // },
         complete: () => {
           console.log('------------------facebook(complete)---------------------------');
           this.statuscharge = false;

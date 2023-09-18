@@ -26,6 +26,7 @@ import { RegionService } from 'src/app/Core/Shared/Services/Region/region.servic
 import { SessionStorageService } from 'src/app/Core/Shared/Services/session-storage.service';
 import { SnackBarServiceService } from 'src/app/Core/Shared/Services/SnackBarService/snack-bar-service.service';
 import { LandinPageV2Component } from '../landin-page-v2.component';
+import { FacebookPixelService } from 'src/app/Core/Shared/Services/FacebookPixel/facebook-pixel.service';
 declare const fbq: any;
 declare const gtag: any;
 
@@ -51,6 +52,7 @@ export class LandingPageModalComponent implements OnInit, OnDestroy {
     private _LandingPageService:LandingPageService,
     private _ChatEnLineaService:ChatEnLineaService,
 
+    private _FacebookPixelService:FacebookPixelService,
 
     public dialogRef: MatDialogRef<LandinPageV2Component>,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -238,7 +240,15 @@ export class LandingPageModalComponent implements OnInit, OnDestroy {
           }
           if(this.isBrowser){
 
-            fbq('track', 'CompleteRegistration');
+            fbq('trackSingle','269257245868695', 'Lead', {}, {eventID:x.id});
+            this._FacebookPixelService.SendLoad(x.id,x.correoEnc,x.telEnc,x.userAgent,x.userIp).subscribe({
+              next:(x)=>{
+                console.log(x)
+              },
+              error:(e)=>{
+                console.log(e)
+              }
+            });
             try{
               gtag('event', 'conversion', {
                 'send_to': 'AW-991002043/tnStCPDl6HUQu_vF2AM',

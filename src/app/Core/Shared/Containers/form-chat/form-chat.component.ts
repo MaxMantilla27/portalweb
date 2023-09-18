@@ -8,6 +8,7 @@ import { formulario } from 'src/app/Core/Models/Formulario';
 import { ChatEnLineaService } from '../../Services/ChatEnLinea/chat-en-linea.service';
 import { SessionStorageService } from '../../Services/session-storage.service';
 import { SnackBarServiceService } from '../../Services/SnackBarService/snack-bar-service.service';
+import { FacebookPixelService } from '../../Services/FacebookPixel/facebook-pixel.service';
 declare const fbq:any;
 declare const gtag:any;
 @Component({
@@ -24,6 +25,7 @@ export class FormChatComponent implements OnInit,OnChanges {
     private _SnackBarServiceService: SnackBarServiceService,
     private _SessionStorageService:SessionStorageService,
     @Inject(PLATFORM_ID) platformId: Object,
+    private _FacebookPixelService:FacebookPixelService
   ) {
     this.isBrowser = isPlatformBrowser(platformId);
   }
@@ -144,7 +146,15 @@ export class FormChatComponent implements OnInit,OnChanges {
           this._SessionStorageService.SessionSetValue('DatosFormulario',JSON.stringify(this.datos));
           this.CompleteLocalStorage=true;
           if(this.isBrowser){
-            fbq('track', 'CompleteRegistration');
+            fbq('trackSingle','269257245868695', 'Lead', {}, {eventID:x.respuesta.id});
+            this._FacebookPixelService.SendLoad(x.respuesta.id,x.respuesta.correoEnc,x.respuesta.telEnc,x.respuesta.userAgent,x.respuesta.userIp).subscribe({
+              next:(x)=>{
+                console.log(x)
+              },
+              error:(e)=>{
+                console.log(e)
+              }
+            });
             gtag('event', 'conversion', {
               'send_to': 'AW-991002043/tnStCPDl6HUQu_vF2AM',
             });

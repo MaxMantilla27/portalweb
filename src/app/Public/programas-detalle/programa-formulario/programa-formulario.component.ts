@@ -19,6 +19,7 @@ import { Validators } from '@angular/forms';
 import { FormularioAzulComponent } from 'src/app/Core/Shared/Containers/formulario-azul/formulario-azul.component';
 import { FormularioPopUpComponent } from 'src/app/Core/Shared/Containers/formulario-pop-up/formulario-pop-up.component';
 import { ChatEnLineaService } from 'src/app/Core/Shared/Services/ChatEnLinea/chat-en-linea.service';
+import { FacebookPixelService } from 'src/app/Core/Shared/Services/FacebookPixel/facebook-pixel.service';
 
 declare const fbq:any;
 declare const gtag:any;
@@ -47,6 +48,8 @@ export class ProgramaFormularioComponent implements OnInit, OnDestroy {
     private _HelperServiceP:Help,
     private _RegionService: RegionService,
     private _DatosPortalService: DatosPortalService,
+
+    private _FacebookPixelService:FacebookPixelService,
     private _ChatEnLineaService:ChatEnLineaService
 
 
@@ -169,7 +172,15 @@ export class ProgramaFormularioComponent implements OnInit, OnDestroy {
             this._SessionStorageService.SessionSetValue('DatosFormulario',JSON.stringify(this.datos));
             this.CompleteLocalStorage=true;
             if(this.isBrowser){
-              fbq('track', 'CompleteRegistration');
+              fbq('trackSingle','269257245868695', 'Lead', {}, {eventID:x.id});
+              this._FacebookPixelService.SendLoad(x.id,x.correoEnc,x.telEnc,x.userAgent,x.userIp).subscribe({
+                next:(x)=>{
+                  console.log(x)
+                },
+                error:(e)=>{
+                  console.log(e)
+                }
+              });
               gtag('event', 'conversion', {
                 'send_to': 'AW-991002043/tnStCPDl6HUQu_vF2AM',
               });

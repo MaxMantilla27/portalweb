@@ -127,6 +127,7 @@ import { FormularioRojoComponent } from './Containers/formulario-rojo/formulario
 import { FacebookLoginComponent } from './Containers/facebook-login/facebook-login.component';
 import { SocialAuthService } from 'angularx-social-login';
 import { MatChipsModule } from '@angular/material/chips';
+import { FacebookPixelService } from './Services/FacebookPixel/facebook-pixel.service';
 
 @NgModule({
   imports: [
@@ -220,6 +221,7 @@ import { MatChipsModule } from '@angular/material/chips';
     ScrollTopComponent,
     FormularioRojoComponent,
     FacebookLoginComponent,
+
     //ChatZComponent,
   ],
   exports: [
@@ -351,7 +353,8 @@ import { MatChipsModule } from '@angular/material/chips';
     IntegraEsquemaEvaluacionService,
     SeoService,
     CertificadoIntegraPortalService,
-    SocialAuthService
+    SocialAuthService,
+    FacebookPixelService
   ],
 })
 export class SharedModule {
