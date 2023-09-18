@@ -17,6 +17,7 @@ import { SessionStorageService } from 'src/app/Core/Shared/Services/session-stor
 import {timer} from 'rxjs'
 import { SnackBarServiceService } from 'src/app/Core/Shared/Services/SnackBarService/snack-bar-service.service';
 import { FormaPagoService } from 'src/app/Core/Shared/Services/FormaPago/forma-pago.service';
+import { FacebookPixelService } from 'src/app/Core/Shared/Services/FacebookPixel/facebook-pixel.service';
 declare const fbq:any;
 declare const gtag:any;
 @Component({
@@ -41,6 +42,7 @@ export class RegistrarseComponent implements OnInit,OnDestroy {
     @Inject(PLATFORM_ID) platformId: Object,
     private _SnackBarServiceService: SnackBarServiceService,
     private _FormaPagoService:FormaPagoService,
+    private _FacebookPixelService:FacebookPixelService
   ) {
     this.isBrowser = isPlatformBrowser(platformId); {}
   }
@@ -155,7 +157,15 @@ export class RegistrarseComponent implements OnInit,OnDestroy {
             this.cleanSub=true
             if(this.isBrowser){
               //fbq('track', 'CompleteRegistration');
-              fbq('track', 'Lead');
+              fbq('trackSingle','269257245868695', 'Lead', {}, {eventID:x.id});
+              this._FacebookPixelService.SendLoad(x.id,x.correoEnc,x.telEnc,x.userAgent,x.userIp).subscribe({
+                next:(x)=>{
+                  console.log(x)
+                },
+                error:(e)=>{
+                  console.log(e)
+                }
+              });
               gtag('event', 'conversion', {
                 'send_to': 'AW-991002043/tnStCPDl6HUQu_vF2AM',
               });

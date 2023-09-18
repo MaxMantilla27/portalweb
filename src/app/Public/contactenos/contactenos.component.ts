@@ -17,6 +17,7 @@ import { SnackBarServiceService } from 'src/app/Core/Shared/Services/SnackBarSer
 import { SessionStorageService } from 'src/app/Core/Shared/Services/session-storage.service';
 import { DatosFormularioDTO } from 'src/app/Core/Models/DatosFormularioDTO';
 import { ChatEnLineaService } from 'src/app/Core/Shared/Services/ChatEnLinea/chat-en-linea.service';
+import { FacebookPixelService } from 'src/app/Core/Shared/Services/FacebookPixel/facebook-pixel.service';
 declare const fbq:any;
 
 declare const gtag:any;
@@ -41,8 +42,8 @@ export class ContactenosComponent implements OnInit,OnDestroy {
     private _SessionStorageService:SessionStorageService,
     private _SnackBarServiceService:SnackBarServiceService,
     private title:Title,
-    private _ChatEnLineaService:ChatEnLineaService
-
+    private _ChatEnLineaService:ChatEnLineaService,
+    private _FacebookPixelService:FacebookPixelService
     ) {
       this.isBrowser = isPlatformBrowser(platformId);
     }
@@ -211,7 +212,15 @@ export class ContactenosComponent implements OnInit,OnDestroy {
           this.formularioContacto.Comentario= '';
           if(this.isBrowser){
             //fbq('track', 'CompleteRegistration');
-            fbq('track', 'Lead');
+            fbq('trackSingle','269257245868695', 'Lead', {}, {eventID:x.id});
+            this._FacebookPixelService.SendLoad(x.id,x.correoEnc,x.telEnc,x.userAgent,x.userIp).subscribe({
+              next:(x)=>{
+                console.log(x)
+              },
+              error:(e)=>{
+                console.log(e)
+              }
+            });
             gtag('event', 'conversion', {
               'send_to': 'AW-991002043/tnStCPDl6HUQu_vF2AM',
             });

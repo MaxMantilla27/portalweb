@@ -302,7 +302,7 @@ export class BlogComponent implements OnInit {
           if(this.isBrowser){
             //fbq('track', 'CompleteRegistration');
             fbq('trackSingle','269257245868695', 'Lead', {}, {eventID:x.id});
-            this._FacebookPixelService.SendLoad(x.id,x.correoEnc).subscribe({
+            this._FacebookPixelService.SendLoad(x.id,x.correoEnc,x.telEnc,x.userAgent,x.userIp).subscribe({
               next:(x)=>{
                 console.log(x)
               },

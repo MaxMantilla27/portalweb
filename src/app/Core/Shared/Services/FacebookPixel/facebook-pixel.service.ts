@@ -19,8 +19,8 @@ export class FacebookPixelService {
     this.isBrowser = isPlatformBrowser(platformId);
   }
 
-  public SendLoad(id:string,correo:string): Observable<any> {
-    console.log(this.router)
+  public SendLoad(id: string, correo: string,telefono:string,nav:string,ip:string): Observable<any> {
+    console.log(this.router);
     if (this.isBrowser) {
       var dateTime = new Date().getTime();
       var timestamp = Math.floor(dateTime / 1000);
@@ -31,9 +31,12 @@ export class FacebookPixelService {
           event_time: timestamp,
           action_source: "website",
           event_id: id,
-          event_source_url:this.router['location']._platformLocation.location.href,
+          event_source_url:this.router["location"]._platformLocation.location.href,
           user_data: {
-            em: [correo]
+            em: [correo],
+            ph: [telefono],
+            client_ip_address: ip,
+            client_user_agent: nav,
           },
         },
       ];
