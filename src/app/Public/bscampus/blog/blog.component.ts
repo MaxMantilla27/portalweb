@@ -298,7 +298,8 @@ export class BlogComponent implements OnInit {
             this._SessionStorageService.SessionSetValue('DatosFormulario',JSON.stringify(this.datos));
             this.CompleteLocalStorage=true;
           if(this.isBrowser){
-            fbq('track', 'CompleteRegistration');
+            //fbq('track', 'CompleteRegistration');
+            fbq('track', 'Lead');
             gtag('event', 'conversion', {
               'send_to': 'AW-991002043/tnStCPDl6HUQu_vF2AM',
             });

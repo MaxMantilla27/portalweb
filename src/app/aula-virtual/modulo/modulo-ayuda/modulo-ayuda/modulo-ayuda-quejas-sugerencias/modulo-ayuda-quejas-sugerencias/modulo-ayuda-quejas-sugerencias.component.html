@@ -1,6 +1,6 @@
-<div class="cursoTitle">{{Capitulo}}</div>
+<!-- <div class="cursoTitle">{{Capitulo}}</div> -->
 
-<div class="col-12 col-md-12 col-lg-12 row">
+<!-- <div class="col-12 col-md-12 col-lg-12 row">
   <div class="tipoIndicacionTitle col-12 col-md-9 col-lg-10">
     <img class="ImgIndicacionesContent" src="../../../../assets/icons/ayuda-naranja.svg">
     <div>Quejas y sugerencias</div>
@@ -10,13 +10,12 @@
       [style]="'margin-bottom: 0px !important;padding:0px 20px'" [icon]="''">
     </app-default-button>
   </div>
-</div>
+</div> -->
 <div class="col-12 col-md-12 col-lg-12">
   <form [formGroup]="userForm">
-    <div class="col-12 col-md-12 col-lg-12 newInpiut" style="display: flex;margin-bottom: 20px;">
-
+    <div class="col-6 col-md-6 col-lg-6 newInpiut" style="display: flex;margin-bottom: 20px;">
       <mat-form-field appearance="outline" [floatLabel]="'always'">
-        <mat-label>Tipo de solicitud</mat-label>
+        <mat-label>Seleccione una opción</mat-label>
         <mat-select formControlName="IdTipoQuejaSugerencia" placeholder="Tipo de solicitud">
           <mat-option *ngFor="let option of Tipo" [value]="option.id">
             {{option.nombre}}</mat-option>
@@ -24,18 +23,18 @@
         <mat-error *ngIf="userForm.invalid">Seleccione una opción</mat-error>
       </mat-form-field>
     </div>
-    <div class="titleForo" style="font-weight: bold;">Descripción de la Queja/Sugerencia: </div>
-    <div class="row" style="    width: 100%;">
-      <textarea class="ContenidoQuejaSugerencia" formControlName="Descripcion" rows="4" ></textarea>
+    <div class="titleForo" style="font-weight: normal;">Descripción de la Queja/Sugerencia: </div>
+    <div class="row" style="width: 100%; ">
+      <textarea class="ContenidoQuejaSugerencia" style="width: 100%; " formControlName="Descripcion" rows="4" ></textarea>
     </div>
     <div class="row" style="margin-top: 20px;">
-      <div style="width: 100%;"></div>
-      <div style="width: 100%;display:flex">
+      <div style="width: 50%; float: right!important;"></div>
+      <div style="width: 50%; display:flex">
         <div class="col-8 col-md-8 col-lg-8">
         </div>
-        <div class="col-4 col-md-4 col-lg-4">
+        <div class="col-4 col-md-4 col-lg-4" >
           <app-default-button [confs]="{color:'primary',titulo:'Enviar'}" [disabled]="!userForm.valid"
-          [style]="'width: 95%;margin-top: 20px;'"(ButtoclClick)="RegistrarQuejaSugerencia()"></app-default-button>
+          [style]="'width:100px;margin-top: 20px; border-radius: 18px;'"(ButtoclClick)="RegistrarQuejaSugerencia()"></app-default-button>
         </div>
       </div>
     </div>

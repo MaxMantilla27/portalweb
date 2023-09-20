@@ -4,7 +4,7 @@ import { Subject, takeUntil } from 'rxjs';
 import { ParticipacionExpositorFiltroDTO } from 'src/app/Core/Models/ParticipacionExpositorFiltroDTO';
 import { ProveedorService } from 'src/app/Core/Shared/Services/Proveedor/proveedor.service';
 import { ReporteParticipacionExpositorService } from 'src/app/Core/Shared/Services/ReporteParticipacionExpositor/reporte-participacion-expositor.service';
-
+import { PerfilalumnosService } from 'src/app/Core/Shared/Services/PerfilAlumnos/perfilalumnos.service';
 @Component({
   selector: 'app-docencia',
   templateUrl: './docencia.component.html',
@@ -21,6 +21,7 @@ export class DocenciaComponent implements OnInit,OnDestroy {
   constructor(
     private _ProveedorService:ProveedorService,
     public _ReporteParticipacionExpositorService: ReporteParticipacionExpositorService,
+    public _PerfilAlumnosService: PerfilalumnosService,
   ) { }
 
   public migaPan = [
@@ -48,9 +49,11 @@ export class DocenciaComponent implements OnInit,OnDestroy {
   public DataProveedor:any
   public dataForo:any
   public notas:any
+  public PerfilAlumnos:any
   ngOnInit(): void {
     this.ObtenerInformacionProveedor();
     this.ObtenerForoProveedor();
+    // this.ObtenerPerfilAlumnos();
   }
   ObtenerInformacionProveedor(){
     this._ProveedorService.ObtenerInformacionProveedor().pipe(takeUntil(this.signal$)).subscribe({
@@ -86,4 +89,14 @@ export class DocenciaComponent implements OnInit,OnDestroy {
         },
       });
   }
+
+  // ObtenerPerfilAlumnos(){
+  //   this._PerfilAlumnosService.ObtenerPerfilAlumnos(18675).pipe(takeUntil(this.signal$)).subscribe({
+  //     next:x=>{
+  //       this.PerfilAlumnos=x;
+  //       console.log(this.PerfilAlumnos);
+  //       console.log("Hola");
+  //     }
+  //   })
+  // }
 }

@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Subject, takeUntil } from 'rxjs';
-import { ForoDTO } from 'src/app/Core/Models/ForoDTO';
+import { ForoDTO, ForoDTOCompleto } from 'src/app/Core/Models/ForoDTO';
 import { ForoCursoService } from 'src/app/Core/Shared/Services/ForoCurso/foro-curso.service';
 import { HelperService } from 'src/app/Core/Shared/Services/helper.service';
 
@@ -21,6 +21,7 @@ export class ModuloForoInsertComponent implements OnInit,OnDestroy {
   ) { this.userForm =fb.group({
     Titulo: ['', [Validators.required]],
     Contenido: ['', [Validators.required]],
+    Archivo: ['', [Validators.required]],
   });
   }
   ngOnDestroy(): void {
@@ -35,14 +36,25 @@ export class ModuloForoInsertComponent implements OnInit,OnDestroy {
   @Output() volver:EventEmitter<void>=new EventEmitter<void>();
   public NuevoForo =false;
   public AnadirForo =false;
-  public ForoCurso: ForoDTO ={
+  public ForoCurso: ForoDTOCompleto ={
     idPrincipal:0,
     idCurso: 0,
     idPEspecificoPadre: 0,
     idPEspecificoHijo: 0,
     titulo: '',
-    contenido: ''
+    contenido: '',
+    idOrigenForo: 0,
+    idCapitulo: 0,
+    idSesion: 0,
+    idSubSesion: 0,
+    idVideo: '',
+    urlArchivo:'',
   }
+  public progress=0
+  public selectedFiles?: FileList;
+  public file:any;
+  public filestatus=false
+  public fileErrorMsg=''
   ngOnInit(): void {
 
   }
@@ -53,6 +65,12 @@ export class ModuloForoInsertComponent implements OnInit,OnDestroy {
     this.ForoCurso.idPEspecificoHijo = this.IdPEspecificoHijo;
     this.ForoCurso.titulo =this.userForm.get('Titulo')?.value;
     this.ForoCurso.contenido = this.userForm.get('Contenido')?.value;
+    this.ForoCurso.idOrigenForo=1
+    this.ForoCurso.idCapitulo=0
+    this.ForoCurso.idSesion=0
+    this.ForoCurso.idSubSesion=0
+    this.ForoCurso.idVideo=''
+    this.ForoCurso.urlArchivo=''
     this._HelperService.enviarMsjAcciones({Tag:"Button",Nombre:'Publica Tema',Seccion:'Foro',valorTitulo:this.ForoCurso.titulo,valorContenido:this.ForoCurso.contenido})
     this._ForoCursoService.InsertarForoCursoPorUsuario(this.ForoCurso).pipe(takeUntil(this.signal$)).subscribe({
       next: (x) => {

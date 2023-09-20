@@ -8,7 +8,8 @@ import { EliminarComponent } from 'src/app/Core/Shared/Containers/Dialog/elimina
 import { SnackBarServiceService } from 'src/app/Core/Shared/Services/SnackBarService/snack-bar-service.service';
 import { TareaEvaluacionService } from 'src/app/Core/Shared/Services/TareaEvaluacion/tarea-evaluacion.service';
 import { RetroalimentacionTareaComponent } from './retroalimentacion-tarea/retroalimentacion-tarea.component';
-
+import { HelperService } from 'src/app/Core/Shared/Services/helper.service';
+import { RegistrarForoTareaComponent } from './registrar-foro-tarea/registrar-foro-tarea.component';
 @Component({
   selector: 'app-sesion-tarea',
   templateUrl: './sesion-tarea.component.html',
@@ -22,6 +23,7 @@ export class SesionTareaComponent implements OnInit,OnChanges,OnDestroy {
     private _TareaEvaluacionService:TareaEvaluacionService,
     private _SnackBarServiceService:SnackBarServiceService,
     public dialog: MatDialog,
+    private _HelperService:HelperService,
   ) { }
   @Input() json: ParametrosEstructuraEspecificaDTO = {
     AccesoPrueba: false,
@@ -54,10 +56,13 @@ export class SesionTareaComponent implements OnInit,OnChanges,OnDestroy {
   public file:any;
   public filestatus=false
   public fileErrorMsg=''
+  public selectedFiles?: FileList;
+  public nombrefile='Ningún archivo seleccionado'
+  public subir=false;
+  public UrlArchivo=''
   public tarea:any
   public instruccionesAcerca=false;
   public instruccionesSubir=false
-  public nombrefile='Ningún archivo seleccionado'
   public sendFile:ModelTareaEvaluacionTareaDTO={
     idEsquemaEvaluacionPGeneralDetalle:0,
     idEsquemaEvaluacionPGeneralDetalle_Anterior:0,
@@ -71,8 +76,7 @@ export class SesionTareaComponent implements OnInit,OnChanges,OnDestroy {
     idMatriculaCabecera:0
   }
   public progress=0
-  public selectedFiles?: FileList;
-  public subir=false;
+
   ngOnDestroy(): void {
     this.signal$.next(true)
     this.signal$.complete()
@@ -104,6 +108,7 @@ export class SesionTareaComponent implements OnInit,OnChanges,OnDestroy {
           this.subir=true
         }else{
           this.tarea.registroEvaluacionArchivo.forEach((r:any) => {
+            this.UrlArchivo=r.direccionUrl;
             if(r.calificado==true){
               if(r.nota>6){
                 this.subir=false
@@ -256,6 +261,31 @@ export class SesionTareaComponent implements OnInit,OnChanges,OnDestroy {
     const dialogRef =this.dialog.open(RetroalimentacionTareaComponent,{
       panelClass:'dialog-retro-tarea',
       data: this.tarea.registroEvaluacionArchivo[index],
+    });
+  }
+  Interaccion(nombre:string){
+    this._HelperService.enviarMsjAcciones({Tag:"Button",Nombre:nombre})
+  }
+  OpenModalForo(): void {
+    const dialogRef = this.dialog.open(RegistrarForoTareaComponent, {
+      width: '500px',
+      data: {
+        IdPrincipal:this.json.IdPGeneralPadre,
+        IdCurso:this.json.IdPGeneralHijo,
+        IdPEspecificoPadre:this.json.IdPEspecificoPadre,
+        IdPEspecificoHijo:this.json.IdPEspecificoHijo,
+        NombreCapitulo:this.NombreCapitulo,
+        NumeroCapitulo:this.tarea.datosEvaluacionTrabajo.ordenCapitulo,
+        NombreTarea:this.tarea.datosEvaluacionTrabajo.nombre,
+        UrlArchivo:this.UrlArchivo,
+        Json:this.json,
+        Tarea: this.tarea
+        },
+      panelClass: 'custom-dialog-container',
+    });
+
+    dialogRef.afterClosed().pipe(takeUntil(this.signal$)).subscribe((result) => {
+      console.log('The dialog was closed');
     });
   }
 }

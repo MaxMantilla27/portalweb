@@ -1,10 +1,10 @@
-<div class="cursoTitle">{{Capitulo}}</div>
+<!-- <div class="cursoTitle">{{Capitulo}}</div>
 <div class="row" style="align-items: center;">
   <div class="tipoIndicacionTitle col-12 col-md-12 col-lg-12">
     <i class="material-icons">microwave</i>
     <div style="font-weight: bold;">Certificados Irca</div>
   </div>
-</div>
+</div> -->
 <ng-container *ngIf="Ircas!=undefined && Ircas.length>0">
 
   <ng-container *ngFor="let item of Ircas">
@@ -28,6 +28,10 @@
           target="_blank">
           {{item.nombre}}</a>
       </div>
+
+    </div>
+    <div class="IframeCertificado">
+      <iframe [src]="'https://repositorioweb.blob.core.windows.net/operaciones/comprobantes/'+item.nombreArchivo  | safe" frameborder="0"></iframe>
     </div>
   </ng-container>
 </ng-container>

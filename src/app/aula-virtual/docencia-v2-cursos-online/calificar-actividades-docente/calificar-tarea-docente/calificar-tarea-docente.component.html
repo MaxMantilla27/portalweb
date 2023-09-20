@@ -1,0 +1,148 @@
+
+
+  <app-cargando *ngIf="cargando==true"></app-cargando>
+<div class="row" style="    margin-bottom: 20px;
+font-weight: 600;">
+  <div class="col-6 col-md-3 col-lg-3">Sesión: {{data.orden>9?data.orden:'0'+data.orden}}</div>
+  <div class="col-6 col-md-9 col-lg-9">{{data.nombre}}
+    {{data.ordenActividad>9?data.ordenActividad:'0'+data.ordenActividad}} - {{data.titulo}}</div>
+</div>
+
+  <div style="max-height: 500px;
+  overflow: auto;" >
+    <table mat-table [dataSource]="dataSource"  multiTemplateDataRows class="mat-elevation-z8 tablev2-material" style="width: 100%;" matSort>
+
+      <ng-container matColumnDef="codigo">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header style="text-align: center;">
+          <div style="display: flex;flex-direction: column;align-items: center;justify-content: center;">
+            Código
+          </div>  </th>
+        <td mat-cell *matCellDef="let element"> {{element.codigoMatricula}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="nombre">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header style="text-align: center;">
+          <div style="display: flex;flex-direction: column;align-items: center;justify-content: center;">
+            Nombre Alumno
+          </div> </th>
+        <td mat-cell *matCellDef="let element"> {{element.nombreAlumno}} </td>
+      </ng-container>
+      <ng-container matColumnDef="entrega">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header style="text-align: center;">
+          <div style="display: flex;flex-direction: column;align-items: center;justify-content: center;">
+            Fecha Entrega
+          </div> </th>
+        <td mat-cell *matCellDef="let element"> {{element.fechaEntrega | date:'dd/MM/yyyy'}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="version">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header style="text-align: center;">
+          <div style="display: flex;flex-direction: column;align-items: center;justify-content: center;">
+            version
+          </div>  </th>
+        <td mat-cell *matCellDef="let element">{{element.version}}
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="archivo">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header style="text-align: center;">
+          <div style="display: flex;flex-direction: column;align-items: center;justify-content: center;">
+            Archivo
+          </div>  </th>
+        <td mat-cell *matCellDef="let element">
+          <a class="Archivo" [href]="element.urlArchivoSubido" target="_blank">Descargar</a>
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="calificacion">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header style="text-align: center;">
+          <div style="display: flex;flex-direction: column;align-items: center;justify-content: center;">
+            Fecha Calificación
+          </div>  </th>
+        <td mat-cell *matCellDef="let element"> {{element.fechaCalificacion==null?'':element.fechaCalificacion |
+          date:'dd/MM/yyyy'}} </td>
+      </ng-container>
+      <ng-container matColumnDef="nota">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header style="text-align: center;">
+          <div style="display: flex;flex-direction: column;align-items: center;justify-content: center;">
+            Nota
+          </div> </th>
+        <td mat-cell *matCellDef="let element">
+          <select (change)="SetNota(element)"
+          [(ngModel)]="element.nota" style="width:max-content; border-radius: 0.4em;" >
+               <option *ngFor="let item of Notas" [value]="item">{{item}}</option>
+          </select>
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="retro">
+        <th mat-header-cell *matHeaderCellDef style="text-align: center;">
+          <div style="display: flex;flex-direction: column;align-items: center;justify-content: center;">
+            Retroalimentación
+          </div>  </th>
+        <td mat-cell *matCellDef="let element;let indice=index">
+          <div class="Archivo" (click)="Expand(element.index,indice)"> {{(element.retroalimentacion==null &&
+            element.urlArchivoSubidoRetroalimentacion==null)?'Agregar':'Mostrar' }}</div>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="expandedDetail">
+        <td mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplay.length">
+          <div class="example-element-detail" [ngClass]="{'archivosadjuto': element.ArchivoAdjunto==true}" [@detailExpand]="expandedElement == element.index ? 'expanded' : 'collapsed'">
+            <div class="TextRetro">
+              <textarea placeholder="Ingrese el texto de la retroalimentacion" [(ngModel)]="element.retroalimentacion"
+              (input)="SetRetro(element)"></textarea>
+            </div>
+            <div class=" row ArchivoRetro">
+              <div class="col-6 col-md-8 col-lg-9 fieldTarea">
+                <div (click)="fileInput.click()" style="height: 38px;width: 100%;border:solid 1px #c2c2c2;border-radius: 5px;display: flex; align-items: center;
+                padding: 0px 5px;cursor: pointer;">
+                  <button style="border: solid 1px #767676;
+                  margin-right: 5px;    white-space: nowrap;">Seleccionar archivo</button>
+                  <div style="    white-space: nowrap;
+                  overflow: hidden;
+                  text-overflow: ellipsis;
+                  display: -webkit-box;
+                  -webkit-line-clamp: 3;
+                  -webkit-box-orient: vertical;">{{element.nombreArchivoRetroalimentacion}}</div>
+                </div>
+                <input #fileInput type="file" id="file" (change)="getFileDetails($event,element)" style="    width: 100%;
+                border: solid 1px #c2c2c2;
+                padding: 7px;
+                border-radius: 5px;display: none;">
+                <div *ngIf="!element.filestatus && element.fileErrorMsg!=''">{{element.fileErrorMsg}}</div>
+              </div>
+              <div class="col-6 col-md-4 col-lg-3" style="display: flex;align-items: center;justify-content: flex-end;">
+                <app-default-button [confs]="{color:'primary',titulo:'Adjuntar'}" [style]="'padding:0px 30px;margin:0px '"
+                [icon]="''"
+                  [disabled]="!element.filestatus" (ButtoclClick)="SetFile(element)"></app-default-button>
+              </div>
+            </div>
+          </div>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+      <tr id="{{element.index}}" mat-row *matRowDef="let element; columns: columnsToDisplay;" class="example-element-row"
+        [class.example-expanded-row]="expandedElement == element.index">
+      </tr>
+      <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
+    </table>
+  </div>
+<mat-paginator [pageSizeOptions]="[10, 20]" showFirstLastButtons aria-label="Selecciona">
+</mat-paginator>
+
+<div class="buttonsRegistroNota">
+  <div style="margin: 0px 5px;">
+    <app-default-button [confs]="{color:'primary',titulo:'Volver'}"
+      [style]="'width: 100%;'"
+      (ButtoclClick)="Volver.emit()" [icon]="''"></app-default-button>
+  </div>
+  <div style="margin: 0px 5px;">
+    <app-default-button [confs]="{color:'primary',titulo:'Guardar'}"
+      (ButtoclClick)="CalificarTareaAlumnoOnline()"
+      [style]="'width: 100%'" [icon]="''"></app-default-button>
+  </div>
+  <!-- <div style="margin: 0px 5px;">
+      <app-default-button [confs]="{color:'danger',titulo:'cancelar'}"
+      [style]="'width: 100%;'" [icon]="'close'" (ButtoclClick)="charge==false?dialogRef.close():charge=true"></app-default-button>
+    </div> -->
+</div>
+

@@ -47,8 +47,8 @@
     height: 20px;
     background-position: center;
     .material-icons{
-      //color: #4a4a49;
-      font-size: 20px !important;
+      color: #4a4a49;
+      font-size: 25px !important;
     }
   }
   .iconIndicaciones {
@@ -59,6 +59,9 @@
   }
   .iconProyectos {
     background-image: url("../../../assets/icons/proyecto-aplicacion-12.svg");
+  }
+  .iconNotas {
+    background-image: url("../../../assets/icons/icono-notas-estrella-gris.svg");
   }
   .iconCertificados {
     background-image: url("../../../assets/icons/certificados-gris-51.svg");
@@ -75,17 +78,23 @@
   .iconSesiones {
     background-image: url("../../../assets/icons/sesiones-gris-43.svg");
   }
+  .iconSessionesOnline {
+    background-image: url("../../../assets/icons/icono-recursos-por-sesion-gris.svg");
+  }
   .iconWebinars {
     background-image: url("../../../assets/icons/webinar-04.svg");
   }
   .iconSilabo {
-    background-image: url("../../../assets/icons/silabo-05.svg");
+    background-image: url("../../../assets/icons/icono-silabo-gris.svg");
   }
   .iconRecursos {
-    background-image: url("../../../assets/icons/recursos-06.svg");
+    background-image: url("../../../assets/icons/icono-material-de-estudio-gris.svg");
   }
   .iconForo {
     background-image: url("../../../assets/icons/foro-07.svg");
+  }
+  .iconAsistencia{
+    background-image: url("../../../assets/icons/icono-asistencia-gris.svg");
   }
   .iconCalificaciones {
     background-image: url("../../../assets/icons/calificaciones-08.svg");
@@ -123,6 +132,9 @@
   .iconProyectos {
     background-image: url("../../../assets/icons/proyecto-aplicacion-azul-11.svg") !important;
   }
+  .iconNotas {
+    background-image: url("../../../assets/icons/icono-notas-estrella-azul.svg") !important;
+  }
   .iconCertificados {
     background-image: url("../../../assets/icons/certificados-azul-52.svg") !important;
   }
@@ -138,17 +150,23 @@
   .iconSesiones {
     background-image: url("../../../assets/icons/sesiones-azul-43.svg") !important;
   }
+  .iconSessionesOnline {
+    background-image: url("../../../assets/icons/icono-recursos-por-sesion-azul.svg")!important;
+  }
   .iconWebinars {
     background-image: url("../../../assets/icons/webinar-azul-03.svg") !important;
   }
   .iconSilabo {
-    background-image: url("../../../assets/icons/silabo-azul-04.svg") !important;
+    background-image: url("../../../assets/icons/icono-silabo-azul.svg") !important;
   }
   .iconRecursos {
-    background-image: url("../../../assets/icons/recursos-azul-05.svg") !important;
+    background-image: url("../../../assets/icons/icono-material-de-estudio-azul.svg") !important;
   }
   .iconForo {
     background-image: url("../../../assets/icons/foro-azul-06.svg") !important;
+  }
+  .iconAsistencia{
+    background-image: url("../../../assets/icons/icono-asistencia-azul.svg") !important;
   }
   .iconCalificaciones {
     background-image: url("../../../assets/icons/calificaciones-azul-07.svg") !important;
@@ -174,6 +192,9 @@
   .iconProyectos {
     background-image: url("../../../assets/icons/proyecto-aplicacion-azul-11.svg") !important;
   }
+  .iconNotas {
+    background-image: url("../../../assets/icons/icono-notas-estrella-azul.svg") !important;
+  }
   .iconCertificados {
     background-image: url("../../../assets/icons/certificados-azul-52.svg") !important;
   }
@@ -189,17 +210,23 @@
   .iconSesiones {
     background-image: url("../../../assets/icons/sesiones-azul-43.svg") !important;
   }
+  .iconSessionesOnline {
+    background-image: url("../../../assets/icons/icono-recursos-por-sesion-azul.svg") !important;
+  }
   .iconWebinars {
     background-image: url("../../../assets/icons/webinar-azul-03.svg") !important;
   }
   .iconSilabo {
-    background-image: url("../../../assets/icons/silabo-azul-04.svg") !important;
+    background-image: url("../../../assets/icons/icono-silabo-azul.svg") !important;
   }
   .iconRecursos {
-    background-image: url("../../../assets/icons/recursos-azul-05.svg") !important;
+    background-image: url("../../../assets/icons/icono-material-de-estudio-azul.svg") !important;
   }
   .iconForo {
     background-image: url("../../../assets/icons/foro-azul-06.svg") !important;
+  }
+  .iconAsistencia{
+    background-image: url("../../../assets/icons/icono-asistencia-azul.svg") !important;
   }
   .iconCalificaciones {
     background-image: url("../../../assets/icons/calificaciones-azul-07.svg") !important;
@@ -289,7 +316,7 @@
 .contentModuloSesiones {
   display: flex;
   flex-wrap: wrap;
-  padding: 15px 0px;
+  padding: 5px 0px;
 }
 .contentModuloSesiones mat-progress-bar .mat-progress-bar-buffer {
   background: #e7e7e8 !important;

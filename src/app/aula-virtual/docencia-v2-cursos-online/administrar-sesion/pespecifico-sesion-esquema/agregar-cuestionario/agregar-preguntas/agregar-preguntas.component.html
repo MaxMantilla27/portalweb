@@ -1,0 +1,165 @@
+<div class="TitleCardAgregarTarea" style="display: flex;">
+  <div class="col-11">
+    {{Title}}
+  </div>
+  <div class="col-1" style="text-align: end;font-weight: bold;cursor: pointer;" (click)="dialogRef.close()">
+    X
+  </div>
+</div>
+<div class="TitleAgregarTarea">
+  <strong>Sesión</strong> {{data.sesion.orden}} de
+  {{data.sesion.maximo}} - <strong>Fecha:</strong> {{data.sesion.fechaHoraInicio | date:'dd-MM-yyyy'}}
+</div>
+<form [formGroup]="formularioTarea">
+  <div class="row">
+    <div class="col-6 col-md-3 col-lg-3 labelTarea">Tipo de Pregunta</div>
+    <div class="col-6 col-md-9 col-lg-9 InputsDocencia">
+
+      <mat-form-field appearance="outline">
+        <mat-label>Seleccione el Tipo de Pregunta</mat-label>
+        <mat-select #myselsetc formControlName="IdPreguntaTipo" >
+            <mat-option *ngFor="let item of tipoPregunta" [value]="item.id" (click)="ChangeTipoPregunta(item.id)">{{item.valor}}</mat-option>
+        </mat-select>
+        <mat-error *ngIf="!formularioTarea.get('HoraEntrega')?.valid">Seleccione el tipo de pregunta</mat-error>
+      </mat-form-field>
+
+    </div>
+    <div class="col-6 col-md-3 col-lg-3 labelTarea">Enunciado</div>
+    <div class="col-6 col-md-9 col-lg-9 InputsDocencia">
+      <mat-form-field appearance="outline" style="width: 100%;">
+        <mat-label>Ingresar Enunciado de la Pregunta</mat-label>
+        <input type="text" placeholder="Ingresar Enunciado de la Pregunta" formControlName="Enunciado" matInput>
+        <mat-error *ngIf="!formularioTarea.get('HoraEntrega')?.valid">Ingrese el enunciado</mat-error>
+      </mat-form-field>
+    </div>
+    <div class="col-6 col-md-3 col-lg-3 labelTarea">Descripción</div>
+    <div class="col-6 col-md-9 col-lg-9 InputsDocencia">
+      <mat-form-field appearance="outline" style="width: 100%;">
+        <mat-label>Ingresar Descripción de la Tarea</mat-label>
+        <input type="text" placeholder="Ingresar Descripción de la Tarea" formControlName="Descripcion" matInput>
+      </mat-form-field>
+    </div>
+
+    <div class="col-6 col-md-3 col-lg-3 labelTarea">Adjuntar Archivo</div>
+    <div class="col-6 col-md-9 col-lg-9 row" style="margin:0px">
+      <div (click)="fileInput.click()" style="height: 38px;width: 100%;border:solid 1px #c2c2c2;border-radius: 5px;display: flex; align-items: center;
+        padding: 0px 5px;cursor: pointer;">
+        <button style="border: solid 1px #767676;
+          margin-right: 5px;    white-space: nowrap;">Seleccionar archivo</button>
+        <div style="    white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          display: -webkit-box;
+          -webkit-line-clamp: 3;
+          -webkit-box-orient: vertical;">{{pregunta.NombreArchivo}}</div>
+      </div>
+      <input #fileInput type="file" id="file" (change)="getFileDetails($event)" style="    width: 100%;
+        border: solid 1px #c2c2c2;
+        padding: 7px;
+        border-radius: 5px;display: none;">
+      <div *ngIf="!filestatus && fileErrorMsg!=''">{{fileErrorMsg}}</div>
+    </div>
+
+  </div>
+</form>
+<div class="noform2" style="padding-top: 0px!important;">
+  <div class="col-12" style="justify-content: end; display: flex;">
+    <app-default-button [confs]="{color:'primary',titulo:'Agregar Alternativa'}"
+        [disabled]="disabledAddPregunta"
+        [style]="'width: 100%;background: #5e9b00;border-color: #5e9b00;color:white;cursor:pointer;;margin:0px'"
+        (ButtoclClick)="AddAlternativa()"
+        [icon]="'add'"></app-default-button>
+  </div>
+  <div class="row">
+
+    <div class="col-12 table-resposive">
+
+      <table style="width: 100%;">
+        <tr style="border-bottom: solid 1px #a7a3a3;">
+          <th style="min-width: 280px;text-align: center;border: #a7a3a3 2px solid;">Alternativas</th>
+          <th style="width: 100px;text-align: center;border: #a7a3a3 2px solid;">Alternativa Correcta</th>
+          <th style="width:110px;text-align: center;border: #a7a3a3 2px solid;">Puntaje</th>
+          <th style="width:40px;text-align: center;border: #a7a3a3 2px solid;"></th>
+          <!-- <th style="min-width: 180px;">Metas pronosticadas 2021</th> -->
+        </tr>
+        <tr  *ngFor="let item of pregunta.Alternativas;let i=index"  style="height: 40px;background: #f1f1f1;">
+          <td class="box-label" style="position: relative;border: #a7a3a3 2px solid;">
+            <input style="border-bottom: transparent solid 1px!important;" type="text" placeholder="Descripción Alternativa" [(ngModel)]="item.Alternativa" class="inputTextoDocente">
+
+          </td>
+          <td style="cursor: pointer;    text-align: center;border: #a7a3a3 2px solid;" (click)="item.EsCorrecta==true?item.Puntaje=0:'';item.EsCorrecta=!item.EsCorrecta">
+            <i class="material-icons" *ngIf="item.EsCorrecta==true" style="color: #5e9b00  !important;">radio_button_on</i>
+            <i class="material-icons" *ngIf="item.EsCorrecta==false" >radio_button_off</i>
+          </td>
+          <td  style="position: relative;border: #a7a3a3 2px solid;" >
+            <ng-container *ngIf="item.EsCorrecta==true">
+              <select [(ngModel)]="item.Puntaje" class="selectTextoDocente">
+
+                <option *ngFor="let item of Calificaciones" [value]="item">
+                  {{item}}
+                </option>
+              </select>
+              <!-- <mat-form-field appearance="outline" >
+                <mat-label>Puntaje</mat-label>
+                <mat-select #myselsetc [(ngModel)]="item.Puntaje" >
+                    <mat-option *ngFor="let item of Calificaciones" [value]="item">
+                      {{item}}
+                    </mat-option>
+                </mat-select>
+              </mat-form-field> -->
+            </ng-container>
+            <div *ngIf="item.EsCorrecta==false" style="text-align: center;">
+              {{item.Puntaje}}
+            </div>
+
+          </td>
+          <td style="cursor: pointer;    text-align: center;border: #a7a3a3 2px solid;" (click)="EliminarAlternatica(i)">
+            <i class="material-icons" style="color: red  !important;">close</i>
+          </td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="col-6 col-md-3 col-lg-3 labelTarea">Retroalimentación</div>
+    <div class="col-6 col-md-9 col-lg-9 InputsDocencia">
+      <mat-form-field appearance="outline" >
+        <mat-label>Ingresar Retroalimentación</mat-label>
+        <input type="text" placeholder="Ingresar Descripción de la Tarea" [(ngModel)]="pregunta.Retroalimentacion" matInput>
+      </mat-form-field>
+    </div>
+    <div class="col-6 col-md-3 col-lg-3 labelTarea">Adjuntar Imagen/Archivo</div>
+    <div class="col-6 col-md-9 col-lg-9 row" style="margin:0px">
+      <div (click)="fileInput2.click()" style="height: 38px;width: 100%;border:solid 1px #c2c2c2;border-radius: 5px;display: flex; align-items: center;
+        padding: 0px 5px;cursor: pointer;">
+        <button style="border: solid 1px #767676;
+          margin-right: 5px;    white-space: nowrap;">Seleccionar archivo</button>
+        <div style="    white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          display: -webkit-box;
+          -webkit-line-clamp: 3;
+          -webkit-box-orient: vertical;">{{pregunta.NombreArchivoRetroalimentacion}}</div>
+      </div>
+      <input #fileInput2 type="file" id="file" (change)="getFileDetails2($event)" style="    width: 100%;
+        border: solid 1px #c2c2c2;
+        padding: 7px;
+        border-radius: 5px;display: none;">
+      <div *ngIf="!filestatus2 && fileErrorMsg2!=''">{{fileErrorMsg2}}</div>
+    </div>
+  </div>
+</div>
+<mat-dialog-actions align="center" style="margin-top: 20px;    margin-bottom: 20px;">
+    <div style="margin: 0px 5px;">
+      <app-default-button [confs]="{color:'danger',titulo:'Cerrar'}"
+      [style]="'width: 100%'"
+      mat-dialog-close
+      [icon]="'close'"></app-default-button>
+    </div>
+    <div style="margin: 0px 5px;">
+      <app-default-button [confs]="{color:'primary',titulo:'Guardar'}"
+      [disabled]="!formularioTarea.valid"
+      [style]="'width: 100%;background: #0069d9;border-color: #0062cc;'"
+      (ButtoclClick)="AgregarPregunta()"
+      [icon]="'check'"></app-default-button>
+    </div>
+</mat-dialog-actions>

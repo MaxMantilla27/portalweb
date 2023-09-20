@@ -1,0 +1,123 @@
+
+.InputsChangeWord {
+  display: flex;
+  flex-direction: column;
+}
+.InputsChangeWord
+  .mat-form-field.mat-form-field-appearance-outline
+  > div.mat-form-field-wrapper
+  > div.mat-form-field-flex
+  > div.mat-form-field-infix {
+  padding: 0.4em 0px;
+}
+.InputsChangeWord .titlePerfil {
+  border-bottom: 1px solid #cacaca;
+  font-size: 25px;
+  margin: 40px 0px;
+}
+.InputsChangeWord
+  .mat-form-field.mat-form-field-appearance-outline
+  > div.mat-form-field-wrapper
+  > div.mat-form-field-flex
+  > div.mat-form-field-infix
+  input {
+  height: 20px;
+}
+.InputsChangeWord
+  .mat-form-field.mat-form-field-appearance-outline
+  > div.mat-form-field-wrapper
+  > div.mat-form-field-flex
+  > div.mat-form-field-infix
+  > span.mat-form-field-label-wrapper {
+  top: -1.5em;
+}
+.InputsChangeWord
+  .mat-form-field.mat-form-field-appearance-outline
+  > div.mat-form-field-wrapper{
+    padding: 0px;
+}
+.InputsChangeWord
+  > .mat-focused
+  > div.mat-form-field-wrapper
+  > div.mat-form-field-flex
+  > div.mat-form-field-infix
+  > span.mat-form-field-label-wrapper
+  .mat-form-field-label {
+    transform: translateY(-1.1em) scale(0.75);
+    width: 133.33333%;
+}
+.InputsChangeWord
+  > .mat-form-field-should-float
+  > div.mat-form-field-wrapper
+  > div.mat-form-field-flex
+  > div.mat-form-field-infix
+  > span.mat-form-field-label-wrapper
+  .mat-form-field-label {
+    transform: translateY(-1.1em) scale(0.75);
+    width: 133.33333%;
+}
+.InputsChangeWord.mat-form-field-appearance-outline.mat-form-field-can-float.mat-form-field-should-float
+  .mat-form-field-label {
+  transform: translateY(-1.1em) scale(0.75);
+  width: 133.33333%;
+}
+.InputsChangeWord.mat-input-underline {
+  background-color: #ff0000; /* replace this color with your accent color hex code */
+}
+:root {
+  --main-bg-color: white;
+}
+.InputsChangeWord
+  .mat-form-field.mat-form-field-appearance-outline
+  > div.mat-form-field-wrapper
+  > div.mat-form-field-flex
+  > .mat-form-field-outline {
+  .mat-form-field-outline-start {
+    background-color: var(--main-bg-color);
+  }
+  .mat-form-field-outline-gap {
+    background-color: var(--main-bg-color);
+  }
+  .mat-form-field-outline-end {
+    background-color: var(--main-bg-color);
+  }
+}
+.custom-dialog-aprovacion{
+  mat-dialog-container{
+    padding: 0px !important;
+    height: auto;
+  }
+}
+.buttonsDialogAprovacion{
+  display: flex;
+  justify-content: center;
+  padding: 10px;
+  border-top: solid 1px #dee2e6;
+}
+
+.titleDialogAprovacion{
+  padding: 10px 20px;
+  border-bottom: solid 1px #dee2e6;
+  width: 100%;
+  position: relative;
+}
+.contentDialogAprovacion{
+
+  padding: 10px 20px;
+}
+.cerrarDialogAprovacion{
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  padding: 5px;
+  cursor: pointer;
+  font-size: 12px !important;
+  color: black;
+}
+.titleChangeWord{
+  text-align: center;
+
+  margin-bottom: 30px;
+  font-size: 16px;
+  font-weight: 600;
+}

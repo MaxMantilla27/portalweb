@@ -1,0 +1,204 @@
+.SesionOnlineCard {
+  padding: 20px 10px;
+  background: #e3f7ec;
+  border-radius: 3px;
+  margin: 10px 0px;
+  .LeftSesionOnline {
+    .NombreSesionOnline {
+      font-size: 17px;
+      font-weight: 600;
+      margin-bottom: 5px;
+    }
+    .FechaSesionOnline {
+      font-size: 12px;
+      display: flex;
+      align-items: center;
+    }
+  }
+  .RigthSesionOnline {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    .ItemPendientes {
+      display: flex;
+      align-items: center;
+      margin-right: 10px;
+      font-weight: 600;
+      .cantidadPendientes {
+        background: rgb(224 111 35);
+        border-radius: 50%;
+        width: 25px;
+        height: 25px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        margin-right: 5px;
+        font-size: 12px;
+      }
+    }
+    .OpenCloseSesionOnline {
+      cursor: pointer;
+    }
+  }
+}
+.SesionOnlineCard:hover {
+  background: rgb(242, 246, 255);
+}
+.cardSesionOnlineTareasCuestionario {
+  background: #bef4ff;
+  border: solid 1px #a5eaf8;
+  padding: 15px 20px;
+  margin: 10px 0;
+  border-radius: 5px;
+  margin-left: 20px;
+  .flagActividad {
+    display: flex;
+    align-items: center;
+    .textoFlag {
+      width: fit-content;
+      background: rgb(255, 207, 0);
+      padding: 2px 10px;
+      font-size: 12px;
+      font-weight: 600;
+    }
+    #player {
+      position: relative;
+      width: 22px;
+      height: 22px;
+    }
+
+    #inner {
+      transform: rotate(45deg);
+      background-color: #ffcf00;
+      width: 22px;
+      height: 22px;
+      left: -7px;
+      position: relative;
+      border-radius: 2px;
+    }
+
+    #outer {
+      position: absolute;
+      width: 22px;
+      height: 22px;
+      overflow: hidden;
+    }
+    .trianglearrow {
+      width: 0;
+      height: 0;
+      border-top: 11px solid transparent;
+      border-bottom: 11px solid transparent;
+      border-left: 11px solid #ffcf00;
+    }
+  }
+  .TitleActividad {
+    font-size: 18px;
+    font-weight: 600;
+    margin: 10px 0px;
+  }
+  .DescripcionActividad {
+    font-size: 14px;
+  }
+  .lineaMedioActividad {
+    height: 1px;
+    background: rgb(179 182 182);
+    margin: 10px 0px;
+  }
+  .AbajoActividad {
+    display: flex;
+    justify-content: space-between;
+    .FechaEntregaActividad {
+      display: flex;
+      align-items: center;
+      font-size: 14px;
+    }
+  }
+}
+.CardSesionOnlineGris {
+  margin-left: 20px;
+  margin-top: 20px;
+  border: solid 2px #dbdbdb;
+  border-radius: 10px;
+  .cabeceraCardSesionOnline {
+    border-radius: 10px 10px 0px 0px;
+    background: rgb(244 244 244);
+    padding: 10px 20px;
+    display: flex;
+    align-items: center;
+    font-weight: 600;
+    cursor: pointer;
+    .material-icons {
+      color: rgb(139 179 252);
+      margin-right: 10px;
+    }
+  }
+  .contentCardSesionOnline {
+    padding: 20px;
+    .vimeoVideo {
+      iframe {
+        height: auto;
+      }
+    }
+    .titleTemaSesion {
+      font-size: 16px;
+      font-weight: 600;
+      margin: 10px;
+    }
+    .temaSesion {
+      margin: 5px 15px;
+      font-size: 14px;
+    }
+    .MaterialSesionesOnline {
+      display: flex;
+      align-items: center;
+      .pdfSesionOnline {
+        background-image: url(../../../../assets/icons/pdf-31.svg);
+        background-repeat: no-repeat;
+        width: 15px;
+        height: 15px;
+        background-position: center;
+        margin-right: 15px;
+      }
+      a {
+        color: black !important;
+        text-decoration: none !important;
+      }
+    }
+  }
+}
+
+.iconFecha {
+  background-image: url(../../../../assets/icons/icono-calendario-naranja.svg);
+  background-repeat: no-repeat;
+  width: 12px;
+  height: 12px;
+  background-position: center;
+  margin-right: 5px;
+}
+.iconFechaEntrega{
+  background-image: url(../../../../assets/icons/icono-check-circulo-verde.svg);
+  background-repeat: no-repeat;
+  width: 12px;
+  height: 12px;
+  background-position: center;
+  margin-right: 5px;
+}
+
+.iconCalificacion{
+  background-image: url(../../../../assets/icons/icono-estrella-amarillo.svg);
+  background-repeat: no-repeat;
+  width: 12px;
+  height: 12px;
+  background-position: center;
+  margin-right: 5px;
+}
+
+.iconTime{
+  background-image: url(../../../../assets/icons/icono-cronometro-naranja.svg);
+  background-repeat: no-repeat;
+  width: 12px;
+  height: 12px;
+  background-position: center;
+  margin-right: 5px;
+}

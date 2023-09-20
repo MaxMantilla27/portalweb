@@ -126,7 +126,19 @@ import { ScrollTopComponent } from './Containers/scroll-top/scroll-top.component
 import { FormularioRojoComponent } from './Containers/formulario-rojo/formulario-rojo.component';
 import { FacebookLoginComponent } from './Containers/facebook-login/facebook-login.component';
 import { SocialAuthService } from 'angularx-social-login';
+import { TableV2Component } from './Containers/table-v2/table-v2.component';
+import { TablePortalComponent } from './Containers/table-portal/table-portal.component';
 import { MatChipsModule } from '@angular/material/chips';
+import { PespecificoSesionTemaService } from './Services/PespecificoSesionTema/pespecifico-sesion-tema.service';
+import { PEspecificoEsquemaService } from './Services/PEspecificoEsquema/pespecifico-esquema.service';
+import { PEspecificoSesionRecursoConectividadService } from './Services/PEspecificoSesionRecursoConectividad/pespecifico-sesion-recurso-conectividad.service';
+import {DragDropModule} from '@angular/cdk/drag-drop';
+import { ChangeWordComponent } from './Containers/Dialog/change-word/change-word.component';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
+import { TableCalificarEvaluacionesComponent } from './Containers/table-calificar-evaluaciones/table-calificar-evaluaciones.component';
+import { TableDocenteResponderForosComponent } from './Containers/table-docente-responder-foros/table-docente-responder-foros.component';
+import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 
 @NgModule({
   imports: [
@@ -162,7 +174,11 @@ import { MatChipsModule } from '@angular/material/chips';
     MatBottomSheetModule,
     CKEditorModule,
     TextFieldModule,
-    MatChipsModule
+    MatChipsModule,
+    DragDropModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatSlideToggleModule,
   ],
   declarations: [
     HeaderComponent,
@@ -220,6 +236,11 @@ import { MatChipsModule } from '@angular/material/chips';
     ScrollTopComponent,
     FormularioRojoComponent,
     FacebookLoginComponent,
+    TableV2Component,
+    TablePortalComponent,
+    ChangeWordComponent,
+    TableCalificarEvaluacionesComponent,
+    TableDocenteResponderForosComponent,
     //ChatZComponent,
   ],
   exports: [
@@ -244,6 +265,8 @@ import { MatChipsModule } from '@angular/material/chips';
     VideoBrightcoveComponent,
     CrucigramaComponent,
     TableComponent,
+    TableV2Component,
+    TablePortalComponent,
     MatmenuComponent,
     ChargeComponent,
     VideoBrightcovePruebaComponent,
@@ -255,6 +278,7 @@ import { MatChipsModule } from '@angular/material/chips';
     TextHtmlEditorComponent,
     CargandoComponent,
     ChargeTextComponent,
+    ChangeWordComponent,
     //ChatZComponent,
 
     InputCardDirective,
@@ -309,6 +333,12 @@ import { MatChipsModule } from '@angular/material/chips';
     ScrollTopComponent,
     FacebookLoginComponent,
     MatChipsModule,
+    DragDropModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    TableCalificarEvaluacionesComponent,
+    TableDocenteResponderForosComponent,
+    MatSlideToggleModule,
   ],
   providers: [
     SessionStorageService,
@@ -351,7 +381,10 @@ import { MatChipsModule } from '@angular/material/chips';
     IntegraEsquemaEvaluacionService,
     SeoService,
     CertificadoIntegraPortalService,
-    SocialAuthService
+    SocialAuthService,
+    PespecificoSesionTemaService,
+    PEspecificoEsquemaService,
+    PEspecificoSesionRecursoConectividadService
   ],
 })
 export class SharedModule {

@@ -1,0 +1,42 @@
+<ng-container *ngIf="infoNotas.length==0 && TerminaCarga==false">
+  <div class="row"
+    style="display: flex; justify-content: center;align-items: center;text-align: center; height: 15rem;">
+    <div class="col-12" style="display: flex;justify-content: center;">
+      <mat-spinner></mat-spinner>
+    </div>
+    <div class="col-12">
+      Cargando información ...
+    </div>
+  </div>
+</ng-container>
+<ng-container *ngIf="infoNotas.length==0 && TerminaCarga==true ">
+  <div style="display: flex;justify-content: center;align-items: center; height: 15rem;">
+    No hay registros.
+  </div>
+</ng-container>
+<ng-container *ngIf="detalle==true">
+  <mat-slide-toggle [(ngModel)]="verDetalle" color="primary">Ver detalles</mat-slide-toggle>
+</ng-container>
+<ng-container *ngIf="verDetalle==false">
+  <app-table-v2 *ngIf="infoNotas!=undefined && infoNotas.length>0" [tableData]="infoNotas" [columnHeader]="columnHeader"
+    [tipoContenido]="TipoContenido" [Paginador]="false" [StyleContent]="'    font-size: 12px;padding: 10px;'"
+    [sticky]="sticky"></app-table-v2>
+
+  <div style="display: flex;
+    justify-content: center;" *ngIf="infoNotas!=undefined && infoNotas.length>0 ">
+    <button type="action" (click)="DownloadExcel()"><img src="../../../../assets/icons/descarga-36.svg"
+        alt="x" />Descargar en Excel</button>
+  </div>
+</ng-container>
+
+<ng-container *ngIf="verDetalle==true">
+  <app-table-v2 *ngIf="infoNotasDetalle!=undefined && infoNotasDetalle.length>0" [tableData]="infoNotasDetalle" [columnHeader]="columnHeaderDetalle"
+    [tipoContenido]="TipoContenido" [Paginador]="false" [StyleContent]="'    font-size: 12px;padding: 10px;'"
+     [ColSpan]="Colspam" [ColorHeader]="true"></app-table-v2>
+
+  <div style="display: flex;
+    justify-content: center;" *ngIf="infoNotasDetalle!=undefined && infoNotasDetalle.length>0 ">
+    <button type="action" (click)="DownloadExcelDetalle()"><img src="../../../../assets/icons/descarga-36.svg"
+        alt="x" />Descargar en Excel</button>
+  </div>
+</ng-container>

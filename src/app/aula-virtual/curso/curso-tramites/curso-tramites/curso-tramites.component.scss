@@ -11,11 +11,11 @@
   margin-right: 20px;
 }
 .criterio{
-  border-bottom: 1px solid #cacaca;
+  //border-bottom: 1px solid #cacaca;
   height: 50px;
 }
 .TablaTramitesEncabezado{
-  background-color: #F4F4F4;
+  //background-color: #F4F4F4;
   height: 60px;
 }
 .TablaTramitesContenido{
@@ -23,17 +23,49 @@
     cursor: pointer;
   }
 }
+.buttonDescargarTramite{
+  background: #f8893f;
+  border: none;
+  color: white;
+  padding: 5px 15px;
+  margin: 5px 0px;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0px 0px 6px 0px #929292;
+  .iconobuttonTramite{
+    height: 17px;
+    margin-right: 5px;
+    width: 17px;
+    display: flex;
+    justify-content: space-between;
+    position: relative;
+    div{
+      width: 7px;
+      border-bottom: solid;
+    }
+    i{
+      position: absolute;
+      font-size: 15px!important;
+      left: 1px;
+      top: 0px;
+    }
+  }
+}
 .ResumenPago{
   display: flex;
   background-color: #F4F4F4;
   height: 60px;
   align-items: center;
-
   border-radius: 10px 10px 0px 0px;
+  position: absolute;
+    left: 0;
+    right: 0;
 }
 .MontoTramite{
   display: flex;
-  justify-content: center;
+  //justify-content: center;
 }
 .cursoTitle {
   font-size: 20px;
@@ -45,14 +77,16 @@
 }
 
 .subtitleTramites{
-  font-size: 16px;
-  font-weight: 600;
-  margin: 10px 0px 30px;
-  border-bottom: solid 2px #f0f0f0;
+  font-size: 20px;
+  font-weight: bold;
+  padding: 10px 0 20px;
+  border-top: solid 2px #d8d8d8;
 }
 .contenTramistes{
 
   .itmTRamite{
+    font-size: 14px;
+    margin: 5px 0px;
     display: flex;
     align-items: center;
     a{
@@ -68,8 +102,11 @@
 }
 .itmTRamite:hover{
   a{
-    color: #0d6efd !important;
-    text-decoration: underline !important;
+    .buttonDescargarTramite{
+      box-shadow: 0px 0px 1px 0px #929292;
+    }
+    //color: #0d6efd !important;
+    //text-decoration: underline !important;
   }
 }
 .ListaTramites{

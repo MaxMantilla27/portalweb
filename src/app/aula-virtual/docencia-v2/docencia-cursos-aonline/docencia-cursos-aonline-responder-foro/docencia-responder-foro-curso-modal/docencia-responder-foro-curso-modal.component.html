@@ -1,0 +1,97 @@
+<div class="row" style="display: flex;">
+  <div class="TitleModal col-11">
+    <img src="../../../../../assets/icons/foro-naranja.svg" alt="Foro Naranja">
+    Responder Foro
+  </div>
+  <div class="col-1" style="text-align: end;font-weight: bold;cursor: pointer;" (click)="dialogRef.close()">
+    X
+  </div>
+</div>
+<ng-container *ngIf="pregunta==undefined ;else existeForo">
+  <div style="    display: flex;
+    justify-content: center;">
+    <mat-spinner></mat-spinner>
+  </div>
+</ng-container>
+<ng-template #existeForo>
+  <ng-container *ngIf="pregunta==null;else existe">
+    <div style="font-size: 20px;font-weight: 600;"> Ocurrió un error</div>
+    <div>inténtenlo de nuevo más tarde</div>
+  </ng-container>
+  <ng-template #existe>
+    <div class="ContentForoModal row" >
+      <img  class="col-12 col-md-6 col-lg-3" *ngIf="imgForo!=undefined" [src]="imgForo" alt="Foro">
+      <div class="col-12 col-md-6 col-lg-9 contenidoInto">
+        <div style="font-size: 13px;margin-bottom: 10px;">
+          <strong style=" margin-right: 10px;">Origen:</strong>{{pregunta.origenForo}}
+        </div>
+        <div style="font-size: 13px;margin-bottom: 10px">
+          <strong style=" margin-right: 10px;">Tema Foro:</strong>{{pregunta.titulo}}
+        </div>
+        <div style="font-size: 13px;margin-bottom: 10px">
+          <strong style=" margin-right: 10px;">Consulta:</strong>
+        </div>
+
+        <div style="font-size: 14px;margin-bottom: 10px" [innerHtml]="pregunta.contenido | safeHtml">
+        </div>
+        <div style="font-size: 12px;margin-bottom: 10px">
+          <strong style=" margin-right: 10px;">Fecha Publicación:</strong>{{pregunta.fecha | date:'dd-MM-yyyy hh:mm a.'}}
+        </div>
+        <div *ngIf="(pregunta.idOrigenForo==3 || pregunta.idOrigenForo==4) && pregunta.urlArchivo!=''" style="font-size: 13px;margin-bottom: 10px">
+          <div style="margin-right: 10px;margin-bottom: 10px;">
+            <strong>Archivo:</strong>
+          </div>
+          <a [href]="pregunta.urlArchivo">Descargar</a>
+        </div>
+
+      </div>
+
+      <div *ngIf="pregunta.idOrigenForo==2" style="font-size: 13px;margin-bottom: 10px">
+        <strong style=" margin-right: 10px;display: flex;justify-content: center">Video de la consulta:</strong>
+        <div style="display: flex;justify-content: center;" class="col-12 col-md-12 col-lg-12 ContenidoVistaPrevia">
+        <iframe #myIframe id="myIframe" id="cartoonVideoVistaPrevia" [src]="ReproductorVideo | safe"
+        class="embed-responsive-item" frameborder="5" allowfullscreen></iframe>
+        </div>
+      </div>
+      <div *ngIf="ForoCerrado==false" class="Responder" >
+
+        <mat-form-field appearance="outline" class="test">
+          <mat-label>Responder</mat-label>
+          <textarea matInput matTextareaAutosize [(ngModel)]="jsonEnvio.contenido"></textarea>
+        </mat-form-field>
+
+      </div>
+    </div>
+  </ng-template>
+
+</ng-template>
+<div *ngIf="ForoCerrado==true" style="height: 1px;background-color: #F4F4F4;"></div>
+<div *ngIf="ForoCerrado==false" class="FotterMdal">
+
+  <app-default-button [confs]="{color:'danger',titulo:'Cerrar'}"
+  (ButtoclClick)="CerrarModal()"
+  [icon]="''" [style]="'margin-right: 10px'">
+  </app-default-button>
+
+  <app-default-button [confs]="{color:'primary',titulo:'Responder'}"
+  (ButtoclClick)="EnviarRegistroRespuestaForo()"
+  [icon]="''" [style]="'padding: 0px 20px'">
+  </app-default-button>
+</div>
+
+<div class="respuestas" style="padding: 20px;">
+  <div *ngFor="let item of respuestas" style="display: flex;
+  justify-content: flex-start;
+  align-items: center;margin-top: 20px;">
+    <img [src]="_AvatarService.GetUrlImagenAvatar(item.avatar)" alt="{{item.avatar}}" style="    width: 50px;
+    margin-right: 20px;">
+    <div style="width: 100%;">
+      <div style="    color: #f8893f;
+      font-weight: 600;">{{item.nombres}}</div>
+      <div style="
+      font-size: 15px;
+      font-style: italic;">{{item.contenido}}</div>
+      <div style="font-size: 12px;text-align: right;"><strong>Fecha:</strong> {{item.fechaCreacion | date:'yyyy-MM-dd'}}</div>
+    </div>
+  </div>
+</div>

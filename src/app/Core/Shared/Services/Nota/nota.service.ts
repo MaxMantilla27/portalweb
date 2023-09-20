@@ -33,6 +33,13 @@ export class NotaService {
       return EMPTY;
     }
   }
+  public ListadoNotaProcesarOnline(idPEspecifico:number,grupo:number):Observable<any>{
+    if(this.isBrowser){
+      return this.http.get<any>(this.urlBase+'/ListadoNotaProcesarOnline?idPespecifico='+idPEspecifico+ "&grupo=" +grupo);
+    }else{
+      return EMPTY;
+    }
+  }
   public Registrar(json:Array<NotaRegistrarDTO>):Observable<any>{
     if(this.isBrowser){
       return this.http.post<any>(this.urlBase+'/Registrar',json);
@@ -40,4 +47,35 @@ export class NotaService {
       return EMPTY;
     }
   }
+  public ObtenerCursosProgramaPorIdMatricula(IdMatriculaCabecera:number):Observable<any>{
+    console.log(IdMatriculaCabecera)
+    if(this.isBrowser){
+      return this.http.get<any>(this.urlBase+'/ObtenerCursosProgramaPorIdMatricula?IdMatriculaCabecera='+IdMatriculaCabecera);
+    }else{
+      return EMPTY;
+    }
+  }
+  public ListadoAsistenciaProcesar(idPEspecifico:number,grupo:number):Observable<any>{
+    if(this.isBrowser){
+      return this.http.get<any>(this.urlBase+'/ListadoAsistenciaProcesar?idPespecifico='+idPEspecifico+ "&grupo=" +grupo);
+    }else{
+      return EMPTY;
+    }
+  }
+  public ObtenerCursosProgramaPorIdMatriculaOnline(IdMatriculaCabecera:number):Observable<any>{
+    console.log(IdMatriculaCabecera)
+    if(this.isBrowser){
+      return this.http.get<any>(this.urlBase+'/ObtenerCursosProgramaPorIdMatriculaOnline?IdMatriculaCabecera='+IdMatriculaCabecera);
+    }else{
+      return EMPTY;
+    }
+  }
+  public ListadoNotaProcesarV2(idPEspecifico:number,grupo:number,idMatriculaCabecera:number):Observable<any>{
+    if(this.isBrowser){
+      return this.http.get<any>(this.urlBase+'/ListadoNotaProcesarV2?idPespecifico='+idPEspecifico+ "&grupo=" +grupo+ "&idMatriculaCabecera=" +idMatriculaCabecera);
+    }else{
+      return EMPTY;
+    }
+  }
+
 }

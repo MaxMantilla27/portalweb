@@ -1,0 +1,40 @@
+.rowSelect{
+    cursor: pointer;
+  }
+  .rowSelect:hover{
+    background: #dce5fa;
+  }
+  .select{
+    background: #ededed;
+  }
+  .mat-sort-header-container{
+    justify-content: center !important;
+  }
+  
+.contenedor{
+    border-bottom: 2px solid #838383;
+    border-top: 2px solid #838383;
+
+
+    thead{
+      tr{
+        th{
+           box-shadow: none !important;
+        }
+      }
+    }
+    tbody{
+      tr{
+        td{
+          box-shadow: none !important;
+          
+        }
+      }
+    }
+  }
+  
+  td.mat-cell, td.mat-footer-cell {
+    padding: 0;
+    border-bottom-width: none !important;
+    border-bottom-style: none !important;
+}

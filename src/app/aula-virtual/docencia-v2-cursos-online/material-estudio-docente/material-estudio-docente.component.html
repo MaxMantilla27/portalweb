@@ -1,0 +1,142 @@
+<div class="line_up"></div>
+<ng-container *ngIf="presentaciones.length==0 && TerminaCarga2==false">
+  <div class="row" style="display: flex; justify-content: center;align-items: center;text-align: center; height: 15rem;">
+    <div class="col-12" style="display: flex;justify-content: center;">
+      <mat-spinner></mat-spinner>
+    </div>
+    <div class="col-12">
+      Cargando información ...
+    </div>
+  </div>
+</ng-container>
+<ng-container *ngIf="material!=undefined && material!=null && TerminaCarga1==true && material.length==0 &&
+                TerminaCarga2==true && presentaciones.length==0">
+  <div style="display: flex;justify-content: center;align-items: center; height: 15rem;">
+    No hay registros de material de estudio.
+  </div>
+</ng-container>
+<div class="contetDownloads" *ngIf="presentaciones!=undefined && presentaciones.length>0">
+  <div class="titleContentDownloads">Descargar Presentaciones</div>
+
+  <ng-container *ngFor="let item of presentaciones;let i=index">
+    <div  class="itemDowload">
+
+      <ng-container *ngIf="item.soloLectura==true">
+        <a [id]="'present-'+i" class="itemMaterial"
+          [href]="item.enlaceArchivo.includes('https')?item.enlaceArchivo+'#toolbar=0':'https://repositorioweb.blob.core.windows.net/repositorioweb/aulavirtual/material-adiconal/'+item.enlaceArchivo+'#toolbar=0'"
+          download="file.txt">
+          <ng-container *ngIf="item.enlaceArchivo.split('.')[item.enlaceArchivo.split('.').length-1]=='pdf';else doc">
+            <img style="width: 15px;height: auto;margin-right: 15px;" src="../../../../assets/icons/pdf-31.svg"
+              alt="Icono PDF">
+          </ng-container>
+          <ng-template #doc>
+            <ng-container *ngIf="item.enlaceArchivo.split('.')[item.enlaceArchivo.split('.').length-1]=='doc';else zip">
+              <img style="width: 15px;height: auto;margin-right: 15px;"
+                src="../../../../assets/icons/doc-naranja-49.svg" alt="Icono DOC">
+            </ng-container>
+          </ng-template>
+
+          <ng-template #zip>
+            <ng-container *ngIf="item.enlaceArchivo.split('.')[item.enlaceArchivo.split('.').length-1]=='sip' ||
+        item.enlaceArchivo.split('.')[item.enlaceArchivo.split('.').length-1]=='rar';else excel">
+              <img style="width: 15px;height: auto;margin-right: 15px;" src="../../../../assets/icons/zip-32.svg"
+                alt="Icono ZIP">
+            </ng-container>
+          </ng-template>
+
+          <ng-template #excel>
+            <img style="width: 15px;height: auto;margin-right: 15px;" src="../../../../assets/icons/EXEL-naranja-48.svg"
+              alt="Icono EXCEL">
+          </ng-template>
+
+          {{item.nombreArchivo}}</a>
+      </ng-container>
+      <ng-container *ngIf="item.soloLectura==false" >
+        <a [id]="'present-'+i" class="itemMaterial" target="_blank"
+          [href]="item.enlaceArchivo.includes('https')?item.enlaceArchivo:'https://repositorioweb.blob.core.windows.net/repositorioweb/aulavirtual/material-adiconal/'+item.enlaceArchivo"
+          download="file.txt">
+          <ng-container *ngIf="item.enlaceArchivo.split('.')[item.enlaceArchivo.split('.').length-1]=='pdf';else doc">
+            <img style="width: 15px;height: auto;margin-right: 15px;" src="../../../../assets/icons/pdf-31.svg"
+              alt="Icono PDF">
+          </ng-container>
+          <ng-template #doc>
+            <ng-container *ngIf="item.enlaceArchivo.split('.')[item.enlaceArchivo.split('.').length-1]=='doc';else zip">
+              <img style="width: 15px;height: auto;margin-right: 15px;"
+                src="../../../../assets/icons/doc-naranja-49.svg" alt="Icono DOC">
+            </ng-container>
+          </ng-template>
+
+          <ng-template #zip>
+            <ng-container *ngIf="item.enlaceArchivo.split('.')[item.enlaceArchivo.split('.').length-1]=='zip' ||
+        item.enlaceArchivo.split('.')[item.enlaceArchivo.split('.').length-1]=='rar';else excel">
+              <img style="width: 15px;height: auto;margin-right: 15px;" src="../../../../assets/icons/zip-32.svg"
+                alt="Icono ZIP">
+            </ng-container>
+          </ng-template>
+
+          <ng-template #excel>
+            <img style="width: 15px;height: auto;margin-right: 15px;" src="../../../../assets/icons/EXEL-naranja-48.svg"
+              alt="Icono EXCEL">
+          </ng-template>
+
+          {{item.nombreArchivo}}</a>
+      </ng-container>
+    </div>
+  </ng-container>
+</div>
+<ng-container *ngIf="material!=undefined && material!=null && material.length==0 && TerminaCarga1==false">
+  <div class="row" style="display: flex; justify-content: center;align-items: center;text-align: center; height: 15rem;">
+    <div class="col-12" style="display: flex;justify-content: center;">
+      <mat-spinner></mat-spinner>
+    </div>
+    <div class="col-12">
+      Cargando información ...
+    </div>
+  </div>
+</ng-container>
+<!-- <ng-container *ngIf="TerminaCarga1==true && material.length==0">
+  <div style="display: flex;justify-content: center;align-items: center; height: 15rem;">
+    No hay registros de material de estudio.
+  </div>
+</ng-container> -->
+<div class="contetDownloads" *ngIf="material!=undefined && material.length>0">
+  <div class="titleContentDownloads">Descargar Material Adicional</div>
+
+  <ng-container *ngFor="let item of material;let i=index">
+    <div class="itemDowload">
+
+        <a [id]="'mater-'+i" class="itemMaterial" target="_blank"
+          [href]="item.urlArchivoSubido.includes('https')?item.urlArchivoSubido:item.urlArchivoSubido" download="file.txt">
+          <ng-container *ngIf="item.urlArchivoSubido.split('.')[item.urlArchivoSubido.split('.').length-1]=='pdf';else doc">
+            <img style="width: 15px;height: auto;margin-right: 15px;" src="../../../../assets/icons/pdf-31.svg"
+              alt="Icono PDF">
+          </ng-container>
+          <ng-template #doc>
+            <ng-container *ngIf="item.urlArchivoSubido.split('.')[item.urlArchivoSubido.split('.').length-1]=='doc';else zip">
+              <img style="width: 15px;height: auto;margin-right: 15px;"
+                src="../../../../assets/icons/doc-naranja-49.svg" alt="Icono DOC">
+            </ng-container>
+          </ng-template>
+
+          <ng-template #zip>
+            <ng-container *ngIf="item.urlArchivoSubido.split('.')[item.urlArchivoSubido.split('.').length-1]=='sip' ||
+        item.urlArchivoSubido.split('.')[item.urlArchivoSubido.split('.').length-1]=='rar';else excel">
+              <img style="width: 15px;height: auto;margin-right: 15px;" src="../../../../assets/icons/zip-32.svg"
+                alt="Icono ZIP">
+            </ng-container>
+          </ng-template>
+
+          <ng-template #excel>
+            <img style="width: 15px;height: auto;margin-right: 15px;" src="../../../../assets/icons/EXEL-naranja-48.svg"
+              alt="Icono EXCEL">
+          </ng-template>
+
+          {{item.nombreArchivo}}</a>
+    </div>
+  </ng-container>
+</div>
+<div class="buttonMateriales" *ngIf="(material!=null && material.length>0 )|| (presentaciones!=null && presentaciones.length>0)">
+  <app-default-button [confs]="{color:'primary',titulo:'Descargar todo'}" [icon]="''"
+    [style]="'margin: 0px;border-radius: 5px;margin-top:5px'"
+    (ButtoclClick)="DescargarTodo()"></app-default-button>
+</div>

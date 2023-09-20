@@ -1,0 +1,31 @@
+.dialog-Agregar-Tarea{
+  mat-dialog-container {
+    padding: 0px !important;
+    border-radius: 4px;
+    max-height: 90vh;
+  }
+}
+.TitleCardAgregarTarea{
+  padding: 5px 10px;
+  background: #cfcfcf;
+  font-weight: 600;
+  text-align: center;
+  font-size: 20px;
+}
+.TitleAgregarTarea{
+  margin-top: 30px;
+  text-align: center;
+  font-size: 18px;
+  // font-weight: 600;
+}
+form{
+  max-width: 100%;
+  padding: 30px;
+  .row{
+    align-items: center;
+  }
+  .labelTarea{
+    font-weight:600;
+    margin: 20px 0px;
+  }
+}

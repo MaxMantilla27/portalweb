@@ -32,6 +32,7 @@ export class ModuloComponent implements OnInit,OnDestroy {
       urlWeb: '/AulaVirtual/MisCursos',
     },
   ];
+  public TitleMenu="MENU DEL CURSO"
   public hide=false
   public tabIndex = 0;
   public idMatricula=0;

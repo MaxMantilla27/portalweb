@@ -1,6 +1,7 @@
 import { isPlatformBrowser } from '@angular/common';
 import {
   Component,
+  ElementRef,
   Inject,
   OnDestroy,
   OnInit,
@@ -74,6 +75,12 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
   isBrowser: boolean;
   @ViewChild(FormularioAzulComponent)
   form!: FormularioAzulComponent;
+
+  @ViewChild('contenidoTOp')
+  contenidoTOp!: ElementRef;
+  @ViewChild('contentLeft')
+  contentLeft!: ElementRef;
+
   constructor(
     private activatedRoute: ActivatedRoute,
     private _SeccionProgramaService: SeccionProgramaService,
@@ -478,6 +485,20 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
                 x.programaCabeceraDetalleDTO.imgPrincipal;
             };
             console.log(this.cabecera.imgPrincipal)
+            console.log(this.contentLeft.nativeElement.offsetHeight)
+            console.log(this.contenidoTOp.nativeElement.offsetHeight)
+            setTimeout(() => {
+
+              console.log("--------------")
+              console.log(this.contentLeft.nativeElement.offsetHeight)
+              console.log(this.contenidoTOp.nativeElement.offsetHeight)
+              if(this.contenidoTOp.nativeElement.offsetHeight>360){
+                var min=this.contentLeft.nativeElement.offsetHeight*1+((this.contenidoTOp.nativeElement.offsetHeight-360)*2)
+                console.log(min)
+                this.contentLeft.nativeElement.setAttribute('style', 'min-height:'+min+'px')
+              }
+              console.log("--------------")
+            }, 500);
 
             this.ListMontoPago();
             this.ListSeccionPrograma();
@@ -928,7 +949,8 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
             this._SessionStorageService.SessionSetValue('DatosFormulario',JSON.stringify(this.datos));
             this.CompleteLocalStorage=true;
             if(this.isBrowser){
-              fbq('track', 'CompleteRegistration');
+              //fbq('track', 'CompleteRegistration');
+              fbq('track', 'Lead');
               gtag('event', 'conversion', {
                 'send_to': 'AW-991002043/tnStCPDl6HUQu_vF2AM',
               });
@@ -1140,7 +1162,6 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
       var abrirModalReintento = JSON.parse(ModalReintento);
       console.log(abrirModalReintento)
       if(abrirModalReintento==true){
-        console.log('hola')
         this.OpenModalPago();
       }
       this._SessionStorageService.SessionDeleteValue('urlRedireccionErrorPagoModal')

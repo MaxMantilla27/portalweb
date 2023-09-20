@@ -1,0 +1,34 @@
+<div style="width: 100% ; text-align: right;    padding: 5px;
+height: 30px;
+margin: 0px;"><i class="material-icons" style="cursor: pointer;" (click)="dialogRef.close()">close</i></div>
+<ng-container *ngIf="data!=undefined">
+  <div class="TituloErrorVideo" style="text-align: center;font-weight: bold;font-size: 30px;margin-bottom: 20px;">
+    Consulta a docente
+  </div>
+  <div class="col-12 col-md-12 col-lg-12">
+    <form [formGroup]="userForm">
+        <div class="container">
+            <div class="col-12 col-md-12 col-lg-12">
+              <div class="titleForo" style="margin-left: -10px;margin-bottom: 10px;">Ingresa tu consulta sobre la tarea: </div>
+              <div class="row">
+                <textarea class="ContenidoPreguntaForo" formControlName="Contenido" rows="6" ></textarea>
+              </div>
+                <div class="row" style="margin-top: 20px;">
+                  <div style="width: 100%;display:flex">
+                    <div class="col-3 col-md-3 col-lg-3"></div>
+                    <div class="col-3 col-md-3 col-lg-3">
+                      <app-default-button  (click)="dialogRef.close()" [confs]="{color:'primary',titulo:'Cancelar'}"
+                      [style]="'width: 95%;margin-top: 20px;'"></app-default-button>
+                    </div>
+                    <div class="col-3 col-md-3 col-lg-3">
+                      <app-default-button [confs]="{color:'primary',titulo:'Enviar'}" [disabled]="!userForm.valid"
+                      [style]="'width: 95%;margin-top: 20px;'"(ButtoclClick)="InsertarForo()"></app-default-button>
+                    </div>
+                    <div class="col-3 col-md-3 col-lg-3"></div>
+                  </div>
+                </div>
+          </div>
+          </div>
+    </form>
+  </div>
+</ng-container>

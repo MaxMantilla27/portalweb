@@ -24,6 +24,27 @@
     font-size: 14px !important;
   }
 }
+
+.greay-spinner {
+  position: absolute !important;
+  top: 0;
+  right: 0;
+}
+.progras-spinner {
+  position: absolute !important;
+  top: 0;
+  right: 0;
+}
+
+.greay-spinner circle,
+.greay-spinner circle {
+  stroke: #dadada !important;
+}
+
+.progras-spinner circle,
+.progras-spinner circle {
+  stroke: #00c356 !important;
+}
 .buttonBack:hover{
   border-bottom: solid 1px #ff7012;
 }
@@ -93,7 +114,7 @@
   .mat-tab-labels
   .mat-tab-label-active {
   background: #f4f4f4;
-  box-shadow: inset 8px 0px 0 #3390ff;
+  box-shadow: inset 4px 0px 0 #3390ff;
 }
 .pad-resp {
   padding: 5px 10px 0px 10px;
@@ -305,10 +326,10 @@
     height: 30px;
     width: 30px;
     border-radius: 50%;
-    background: white;
+    //background: white;
     .material-icons{
-      font-size: 20px !important;
-      color: #0684f2;
+      font-size: 30px !important;
+      //color: #0684f2;
     }
   }
 }
@@ -342,6 +363,7 @@
 }
 .reverse {
   width: 292px !important;
+  justify-content: start;
 }
 
 .reverse2 {

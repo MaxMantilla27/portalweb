@@ -1,0 +1,60 @@
+<div class="col-12 col-md-12 col-lg-12" style="margin-top: 15px;">
+  <form [formGroup]="userForm">
+      <div class="container">
+          <div class="col-12 col-md-12 col-lg-12">
+              <div class="titleForo" style="font-weight: bold;">Mensaje: </div>
+              <div class="row">
+                <textarea class="ContenidoPreguntaForo" formControlName="Contenido" rows="4" ></textarea>
+              </div>
+              <!-- <div class="titleForo" style="font-weight: bold;margin-top: 15px;">Elige el archivo a subir (Opcional): </div>
+              <ng-container *ngIf="progress==0;else cargando" >
+                <div class="col-12 col-md-12 col-lg-12 fieldProyecto" >
+                  <div (click)="fileInput.click()" style="height: 38px;width: 100%;border:solid 1px #c2c2c2;border-radius: 5px;display: flex; align-items: center;
+                  padding: 0px 5px;cursor: pointer;">
+                    <button style="border: solid 1px #767676;
+                    margin-right: 5px;    white-space: nowrap;">Seleccionar archivo</button>
+                    <div style="    white-space: nowrap;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    display: -webkit-box;
+                    -webkit-line-clamp: 3;
+                    -webkit-box-orient: vertical;">{{nombrefile}}</div>
+                  </div>
+                  <input #fileInput type="file" id="file"
+                  (change)="getFileDetails($event)"
+                  style="    width: 100%;
+                  border: solid 1px #c2c2c2;
+                  padding: 7px;
+                  border-radius: 5px;display: none;">
+                    <div *ngIf="!filestatus && fileErrorMsg!=''">{{fileErrorMsg}}</div>
+                </div>
+              </ng-container>
+              <ng-template #cargando>
+                <div class="col-12 col-md-12 col-lg-12 cargaProyecto">
+                  <ng-container *ngIf="progress>=100">
+                    <div style="    text-align: center;margin-bottom: 10px;">Cargando</div>
+                    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+                  </ng-container>
+                  <ng-container *ngIf="progress<100">
+                    <div style="    text-align: center;margin-bottom: 10px;">subiendo {{progress}}%</div>
+                    <mat-progress-bar mode="determinate" [value]="progress"> </mat-progress-bar>
+                  </ng-container>
+
+                </div>
+              </ng-template> -->
+              <div class="row" style="margin-top: 20px; justify-content: flex-end;">
+                  <div style="width: auto;">
+                    <app-default-button  (click)="EventoInteraccionButton('Volver');VolverAtras()" [confs]="{color:'primary',titulo:'Cerrar'}"
+                    [style]="'margin-top: 10px;'"></app-default-button>
+                  </div>
+                  <div style="width: auto;">
+                    <app-default-button [confs]="{color:'primary',titulo:'Enviar consulta'}" [disabled]="!userForm.valid"
+                    [style]="'margin-top: 10px;'"(ButtoclClick)="InsertarForo()"></app-default-button>
+                  </div>
+              </div>
+        </div>
+        </div>
+  </form>
+</div>
+
+

@@ -1,0 +1,55 @@
+<div class="cursoTitle">{{Capitulo}}</div>
+<div class="tipoIndicacionTitle col-12 col-md-12 col-lg-12">
+  <img class="ImgIndicacionesContent" src="../../../../assets/icons/star-47.svg">
+  <div>Calificaciones</div>
+</div>
+<div class="CalificacionesEncabezado">
+  Este es el promedio de las calificaciones que has obtenido hasta ahora en el desarrollo del curso.
+</div>
+<div *ngIf="CursosCriterios.detalleCalificacion!=undefined">
+  <div *ngIf="CursosCriterios.detalleCalificacion.length<=1" style="margin-top: 15px;font-style: italic;font-weight: bold;">
+    * Este curso no tiene criterios de evaluación configurados.
+  </div>
+  <div *ngIf="CursosCriterios.detalleCalificacion.length>=2" class="table-resposive" style="margin-top: 20px;">
+    <table class="table" style="width: 100%">
+      <thead class="TablaCalificacionEncabezado">
+        <tr>
+          <td style="width: 500px;text-align: left;border-radius: 2px;font-weight: bold;min-width: 200px;"><strong>Criterio de evaluación</strong></td>
+          <td style="width: 250px;text-align: center;border-radius: 2px;font-weight: bold;min-width: 180px;"><strong>Ponderación</strong></td>
+          <td style="width: 250px;text-align: center;border-radius: 2px;font-weight: bold;min-width: 180px;"><strong>Calificación</strong></td>
+        </tr>
+      </thead>
+      <tbody class="TablaTramitesContenido">
+        <ng-container *ngFor="let criterioCalificacion of CursosCriterios.detalleCalificacion">
+          <tr *ngIf="criterioCalificacion.criterioEvaluacion!='Promedio'">
+            <td class="criterio" style="width: 40%;padding-top: 10px;padding-bottom: 10px;padding-left: 10px;">
+              {{criterioCalificacion.criterioEvaluacion}}
+            </td>
+            <td class="criterio" style="width: 30%;text-align: center;padding-top: 10px;padding-bottom: 10px;">
+              {{criterioCalificacion.ponderacion}} %
+            </td>
+            <td class="criterio" style="width: 30%;text-align: center;padding-top: 10px;padding-bottom: 10px;">
+              <div *ngIf="criterioCalificacion.valor==0">Pendiente</div>
+              <div *ngIf="criterioCalificacion.valor!=0">{{criterioCalificacion.valor}}</div>
+            </td>
+          </tr>
+          <tr *ngIf="criterioCalificacion.criterioEvaluacion=='Promedio'">
+            <td class="criterio" style="width: 40%;padding-top: 10px;padding-bottom: 10px;border-radius: 10px 0px 0px 10px;padding-left: 10px;">
+              <strong>{{criterioCalificacion.criterioEvaluacion}}</strong>
+            </td>
+            <td class="criterio" style="width: 30%;text-align: center;padding-top: 10px;padding-bottom: 10px;">
+              {{criterioCalificacion.ponderacion}} %
+            </td>
+            <td class="criterio" style="width: 30%;text-align: center;padding-top: 10px;padding-bottom: 10px;border-radius: 0px 10px 10px 0px">
+              {{criterioCalificacion.valor}}
+            </td>
+          </tr>
+        </ng-container>
+      </tbody>
+    </table>
+    <div *ngIf="error==true">
+      {{mensajeError}}
+    </div>
+  </div>
+</div>
+

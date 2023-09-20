@@ -43,6 +43,7 @@ export class DocenciaSesionesWebinarComponent implements OnInit ,OnChanges,OnDes
     this._ProgramaEspecificoIntegraService.ObtenerSesionesOnlineWebinarPorProveedor(this.IdProveedor).pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
         this.tableData=x
+        console.log(x)
         this.tableData.forEach((e:any) => {
           e.Acciones=e.UrlWebex==null?'Próximamente':'Unirse'
         });

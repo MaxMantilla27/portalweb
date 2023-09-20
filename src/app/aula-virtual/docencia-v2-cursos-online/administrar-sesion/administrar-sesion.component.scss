@@ -1,0 +1,21 @@
+.opcionDesplegable{
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  padding-bottom: 10px;
+  padding-top: 10px;
+  border-bottom: solid 2px #d1d1d1;
+  .textoDesplegable{
+    font-size: 17px;
+    font-weight: 600;
+    margin-left: 10px
+  }
+  .iconDesplegable{
+    height: 20px;
+    cursor: pointer;
+    .material-icons{
+      font-size: 30px !important;
+      color: black;
+    }
+  }
+}

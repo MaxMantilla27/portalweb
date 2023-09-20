@@ -1,0 +1,282 @@
+.openClose {
+  .contentIconMenu {
+    background: #0684f2;
+    .material-icons {
+      color: white;
+      font-size: 30px !important;
+    }
+  }
+}
+.reverse {
+  justify-content: flex-start !important;
+}
+.tabVertical
+  .mat-tab-header
+  .mat-tab-label-container
+  .mat-tab-list
+  .mat-tab-labels {
+  max-width: 290px;
+}
+.tabVertical
+  .mat-tab-header
+  .mat-tab-label-container
+  .mat-tab-list
+  .mat-tab-labels
+  .mat-tab-label
+  .mat-tab-label-content
+  .contentHeaderM {
+  opacity: 1;
+  display: flex;
+  justify-content: flex-start;
+  align-items: stretch;
+  width: 100%;
+  padding: 20px !important;
+  flex-wrap: nowrap !important;
+  .titleMatr {
+    word-break: break-word;
+    white-space: normal;
+    /* display: block; */
+    width: 248px !important;
+    text-align: left;
+    margin-left: 10px;
+  }
+  .iconMat {
+    background-repeat: no-repeat;
+    width: 20px;
+    height: 20px;
+    background-position: center;
+    Z .material-icons {
+      //color: #4a4a49;
+      font-size: 20px !important;
+    }
+  }
+
+  .iconAdministrarSesion {
+    background-image: url("../../../assets/icons/icono-recursos-por-sesion-gris.svg");
+  }
+  .iconCalificarActividades {
+    background-image: url("../../../assets/icons/icono-calificar-actividades-gris.svg");
+  }
+  .iconMaterialEstudio {
+    background-image: url("../../../assets/icons/icono-material-estudio-gris.svg");
+  }
+  .iconControlAsistencia {
+    background-image: url("../../../assets/icons/icono-control-de-asistencia-gris.svg");
+  }
+  .iconNotas {
+    background-image: url("../../../assets/icons/icono-notas-gris.svg");
+  }
+  .iconCronogramaClases {
+    background-image: url("../../../assets/icons/icono-cronograma-de-clases-gris.svg");
+  }
+  .iconPerfilAlumno {
+    background-image: url("../../../assets/icons/icono-perfil-de-alumnos-gris.svg");
+  }
+  .iconSilabo {
+    background-image: url("../../../assets/icons/icono-silabo-gris.svg");
+  }
+  .iconCriterioEvaluacion {
+    background-image: url("../../../assets/icons/icono-criterios-de-evaluacion-gris.svg");
+  }
+}
+.tabVertical
+  mat-tab-header
+  .mat-tab-label-container
+  .mat-tab-list
+  .mat-tab-labels
+  .mat-tab-label-active
+  .mat-tab-label-content
+  .contentHeaderM {
+  color: #0684f3 !important;
+  font-weight: 600;
+  text-decoration: auto;
+
+  .iconMat {
+    .material-icons {
+      color: #41a6ff !important;
+    }
+  }
+  .iconAdministrarSesion {
+    background-image: url("../../../assets/icons/icono-recursos-por-sesion-azul.svg") !important;
+  }
+  .iconCalificarActividades {
+    background-image: url("../../../assets/icons/icono-calificar\ actividades-azul.svg") !important;
+  }
+  .iconMaterialEstudio {
+    background-image: url("../../../assets/icons/icono-material-estudio-azul.svg") !important;
+  }
+  .iconControlAsistencia {
+    background-image: url("../../../assets/icons/icono-control-de-asistencia-azul.svg") !important;
+  }
+  .iconNotas {
+    background-image: url("../../../assets/icons/icono-notas-azul.svg") !important;
+  }
+  .iconCronogramaClases {
+    background-image: url("../../../assets/icons/icono-cronograma-de-clases-azul.svg") !important;
+  }
+  .iconPerfilAlumno {
+    background-image: url("../../../assets/icons/icono-perfil-de-alumnos-azul.svg") !important;
+  }
+  .iconSilabo {
+    background-image: url("../../../assets/icons/icono-silabo-azul.svg") !important;
+  }
+  .iconCriterioEvaluacion {
+    background-image: url("../../../assets/icons/icono-criterios-de-evaluacion-azul.svg") !important;
+  }
+  .titleMatr {
+    text-decoration: underline;
+  }
+}
+.ActiveChil {
+  color: #0684f3 !important;
+  font-weight: 600;
+
+  .titleMatr {
+    color: #0684f3 !important;
+    text-decoration: underline;
+  }
+
+  .iconAdministrarSesion {
+    background-image: url("../../../assets/icons/icono-recursos-por-sesion-azul.svg") !important;
+  }
+  .iconCalificarActividades {
+    background-image: url("../../../assets/icons/icono-calificar\ actividades-azul.svg") !important;
+  }
+  .iconMaterialEstudio {
+    background-image: url("../../../assets/icons/icono-material-estudio-azul.svg") !important;
+  }
+  .iconControlAsistencia {
+    background-image: url("../../../assets/icons/icono-control-de-asistencia-azul.svg") !important;
+  }
+  .iconNotas {
+    background-image: url("../../../assets/icons/icono-notas-azul.svg") !important;
+  }
+  .iconCronogramaClases {
+    background-image: url("../../../assets/icons/icono-cronograma-de-clases-azul.svg") !important;
+  }
+  .iconPerfilAlumno {
+    background-image: url("../../../assets/icons/icono-perfil-de-alumnos-azul.svg") !important;
+  }
+  .iconSilabo {
+    background-image: url("../../../assets/icons/icono-silabo-azul.svg") !important;
+  }
+  .iconCriterioEvaluacion {
+    background-image: url("../../../assets/icons/icono-criterios-de-evaluacion-azul.svg") !important;
+  }
+}
+
+.subContent {
+  margin-left: 20px;
+}
+
+.InputsDocencia {
+  display: flex;
+  flex-direction: column;
+}
+.InputsDocencia
+  .mat-form-field.mat-form-field-appearance-outline
+  > div.mat-form-field-wrapper
+  > div.mat-form-field-flex
+  > div.mat-form-field-infix {
+  padding: 0.4em 0px;
+}
+.InputsDocencia .titlePerfil {
+  border-bottom: 1px solid #cacaca;
+  font-size: 25px;
+  margin: 40px 0px;
+}
+.InputsDocencia
+  .mat-form-field.mat-form-field-appearance-outline
+  > div.mat-form-field-wrapper
+  > div.mat-form-field-flex
+  > div.mat-form-field-infix
+  input {
+  height: 20px;
+}
+.InputsDocencia
+  .mat-form-field.mat-form-field-appearance-outline
+  > div.mat-form-field-wrapper
+  > div.mat-form-field-flex
+  > div.mat-form-field-infix
+  > span.mat-form-field-label-wrapper {
+  top: -1.5em;
+}
+.InputsDocencia
+  .mat-form-field.mat-form-field-appearance-outline
+  > div.mat-form-field-wrapper{
+    padding: 0px;
+}
+.InputsDocencia
+  > .mat-focused
+  > div.mat-form-field-wrapper
+  > div.mat-form-field-flex
+  > div.mat-form-field-infix
+  > span.mat-form-field-label-wrapper
+  .mat-form-field-label {
+    transform: translateY(-1.1em) scale(0.75);
+    width: 133.33333%;
+}
+.InputsDocencia
+  > .mat-form-field-should-float
+  > div.mat-form-field-wrapper
+  > div.mat-form-field-flex
+  > div.mat-form-field-infix
+  > span.mat-form-field-label-wrapper
+  .mat-form-field-label {
+    transform: translateY(-1.1em) scale(0.75);
+    width: 133.33333%;
+}
+.InputsDocencia.mat-form-field-appearance-outline.mat-form-field-can-float.mat-form-field-should-float
+  .mat-form-field-label {
+  transform: translateY(-1.1em) scale(0.75);
+  width: 133.33333%;
+}
+.InputsDocencia.mat-input-underline {
+  background-color: #ff0000; /* replace this color with your accent color hex code */
+}
+:root {
+  --main-bg-color: white;
+}
+.InputsDocencia
+  .mat-form-field.mat-form-field-appearance-outline
+  > div.mat-form-field-wrapper
+  > div.mat-form-field-flex
+  > .mat-form-field-outline {
+  .mat-form-field-outline-start {
+    background-color: var(--main-bg-color);
+  }
+  .mat-form-field-outline-gap {
+    background-color: var(--main-bg-color);
+  }
+  .mat-form-field-outline-end {
+    background-color: var(--main-bg-color);
+  }
+}
+.InputsDocencia
+.mat-form-field.mat-form-field-appearance-outline
+> div.mat-form-field-wrapper
+> div.mat-form-field-subscript-wrapper{
+  height: auto;
+      position: relative;
+      margin: 0px;
+      font-size: 10px;
+      margin-top: 2px;
+      padding-bottom: 1px;
+}
+.inputTextoDocente{
+  width: 100%;
+    position: absolute;
+    top: 0px;
+    height: 100%;
+    border: none;
+    border-bottom: solid 1px;
+}
+.selectTextoDocente{
+  width: 100%;
+    position: absolute;
+    top: 0px;
+    height: 100%;
+    border: none;
+    border-bottom: solid 1px;
+    text-align: center;
+}

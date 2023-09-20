@@ -5,6 +5,8 @@ import { Subject, takeUntil } from 'rxjs';
 import { ParametrosEstructuraEspecificaDTO } from 'src/app/Core/Models/EstructuraEspecificaDTO';
 import { ModelTareaEvaluacionTareaDTO, ParametroObtenerEvaluacionTarea } from 'src/app/Core/Models/TareaEvaluacionDTO';
 import { EliminarComponent } from 'src/app/Core/Shared/Containers/Dialog/eliminar/eliminar.component';
+import { AvatarService } from 'src/app/Core/Shared/Services/Avatar/avatar.service';
+import { ForoCursoService } from 'src/app/Core/Shared/Services/ForoCurso/foro-curso.service';
 import { HelperService } from 'src/app/Core/Shared/Services/helper.service';
 import { SnackBarServiceService } from 'src/app/Core/Shared/Services/SnackBarService/snack-bar-service.service';
 import { TareaEvaluacionService } from 'src/app/Core/Shared/Services/TareaEvaluacion/tarea-evaluacion.service';
@@ -20,7 +22,9 @@ export class CursoProyectoComponent implements OnInit,OnChanges,OnDestroy {
     private _TareaEvaluacionService: TareaEvaluacionService,
     private _SnackBarServiceService: SnackBarServiceService,
     public dialog: MatDialog,
-    private _HelperService:HelperService
+    private _HelperService:HelperService,
+    private _ForoCursoService: ForoCursoService,
+    private _AvatarService: AvatarService
   ) {}
   ngOnDestroy(): void {
     this.signal$.next(true)
@@ -49,6 +53,7 @@ export class CursoProyectoComponent implements OnInit,OnChanges,OnDestroy {
   public instruccionesAcerca=false;
   public instruccionesSubir=false
   public instruccionesAnexos=false
+  public foroAbrir=false
   public nombrefile='Ningún archivo seleccionado'
   public sendFile:ModelTareaEvaluacionTareaDTO={
     idEsquemaEvaluacionPGeneralDetalle:0,
@@ -63,6 +68,20 @@ export class CursoProyectoComponent implements OnInit,OnChanges,OnDestroy {
     idMatriculaCabecera:0
   }
   public anexos:Array<any>=[]
+  public valorNavegarForoPrincipal=0;
+  public NuevoForo=false;
+  public ContenidoForo=false;
+  public IdForo=0;
+  public foro: Array<any> = [];
+  public foroFiltrado: Array<any> = [];
+  public paginacion = [1];
+  public pagina = 1;
+  public paginaCeil = Math.ceil(this.pagina / 5);
+  public IdPprincipal = 0;
+  public IdPEspecificoPadre = 0;
+  public IdPEspecificoHijo = 0;
+  public Capitulo = '';
+  public UrlArchivo ='';
   ngOnInit(): void {
     this._HelperService.recibirCombosPerfil.pipe(takeUntil(this.signal$)).subscribe((x) => {
       this.miPerfil=x
@@ -77,6 +96,9 @@ export class CursoProyectoComponent implements OnInit,OnChanges,OnDestroy {
       this.params.idPrincipal=this.idPGeneral
       this.ObtenerEvaluacionProyectoAplicacion();
       this.ListaPgeneralProyectoAplicacionAnexo();
+    }
+    if (this.idPGeneral != 0 && this.valorNavegarForoPrincipal==0) {
+      this.ObtenerForoCursoProyecto();
     }
   }
 
@@ -97,6 +119,9 @@ export class CursoProyectoComponent implements OnInit,OnChanges,OnDestroy {
         this.proyecto=x
         this.proyecto.habilitado=true
         if(this.proyecto.registroEvaluacionArchivo.length>0){
+          this.proyecto.registroEvaluacionArchivo.forEach((r:any) => {
+            this.UrlArchivo=r.direccionUrl;
+          })
           if(this.proyecto.registroEvaluacionArchivo[this.proyecto.registroEvaluacionArchivo.length-1].estadoDevuelto!=true){
             if(this.proyecto.registroEvaluacionArchivo[this.proyecto.registroEvaluacionArchivo.length-1].calificado==false){
               this.proyecto.habilitado=false
@@ -250,5 +275,47 @@ export class CursoProyectoComponent implements OnInit,OnChanges,OnDestroy {
         }
       }
     })
+  }
+  ObtenerForoCursoProyecto() {
+    this._ForoCursoService.ObtenerForoCursoProyecto(this.idPGeneral).pipe(takeUntil(this.signal$)).subscribe({
+      next: (x) => {
+
+        console.log(x);
+        this.foro = x;
+        if (this.foro != null && this.foro != undefined) {
+          this.foro.forEach((x) => {
+            x.urlAvatar = this._AvatarService.GetUrlImagenAvatar(x.avatar);
+          });
+          var pag = Math.ceil(this.foro.length / 4);
+          this.paginacion = [];
+          for (let index = 0; index < pag; index++) {
+            this.paginacion.push(index + 1);
+          }
+        }
+      },
+    });
+  }
+  minusPage() {
+    if (this.pagina > 1) {
+      this.pagina--;
+      this.paginaCeil = Math.ceil(this.pagina / 5);
+    }
+  }
+  plusPage() {
+    if(this.foro!=null){
+      if (this.pagina < Math.ceil(this.foro.length / 4)) {
+        this.pagina++;
+        this.paginaCeil = Math.ceil(this.pagina / 5);
+      }
+    }
+  }
+  page(p: number) {
+    this.pagina = p;
+    this.paginaCeil = Math.ceil(this.pagina / 5);
+  }
+  RefrescarForo(){
+    this.NuevoForo=false;
+    this.ContenidoForo=false;
+    this.ObtenerForoCursoProyecto() ;
   }
 }

@@ -1,0 +1,119 @@
+
+
+<ng-container *ngIf="data.cuestionario!=undefined">
+  <div class="cardSesionOnlineTareasCuestionario">
+    <ng-container *ngIf="vertiempo==true">
+      <div class="TimeCronometer">
+        <div class="TimePrevCuestionario">
+          <div class="imgTimePrev"></div>
+          <div class="MinutosTiempo">{{minutos}}</div>
+          <div class="">:</div>
+          <div class="MinutosTiempo">{{segundos>9?(segundos):'0'+(segundos)}}</div>
+        </div>
+      </div>
+    </ng-container>
+
+    <div class="flagActividad" style="display: flex;">
+      <div class="col-11" style="display: flex;">
+        <div class="textoFlag">Cuestionario: {{data.index>9?(data.index+1):'0'+(data.index+1)}}</div>
+        <div id="player">
+          <div id="outer">
+            <div id="inner"></div>
+          </div>
+        </div>
+      </div>
+      <div class="col-1" style="text-align: end;font-weight: bold;cursor: pointer;" (click)="dialogRef.close()">
+        X
+      </div>
+      <!-- <div class="trianglearrow"></div> -->
+    </div>
+    <div class="TitleActividad">{{data.cuestionario.titulo}}</div>
+    <div class="DescripcionActividad"
+      *ngIf="data.cuestionario.descripcion!=null && data.cuestionario.descripcion.length>0">
+      {{data.cuestionario.descripcion}}</div>
+  </div>
+  <div class="AlertPrevContent" *ngIf="CuestionarioAvance.Inicio==false">
+    <div class="alertPrev">Una vez que inicies el cuestionario empezará a correr el tiempo programado.</div>
+    <div class="IntentoAlert">Número de intentos: 01</div>
+
+    <app-default-button [confs]="{color:'primary',titulo:'Iniciar Cuestionario >'}"
+      [style]="'    margin: 0px; padding: 0px 40px; border-radius: 40px;'"
+      (ButtoclClick)="IniciarCuestionario()"></app-default-button>
+    <div class="TimePrevCuestionario" style="margin-top: 15px;">
+      <div class="imgTimePrev"></div>
+      <div class="MinutosTiempo">
+        {{data.cuestionario.tiempoLimite>9?data.cuestionario.tiempoLimite:'0'+data.cuestionario.tiempoLimite.toString()
+        }}</div>
+      <div class="">:</div>
+      <div class="MinutosTiempo">00</div>
+    </div>
+  </div>
+  <div class="content" *ngIf="CuestionarioAvance.Inicio==true">
+    <ng-container
+      *ngIf="data.cuestionario.preguntasCuestionario!=null && data.cuestionario.preguntasCuestionario!=undefined">
+      <ng-container *ngFor="let item of data.cuestionario.preguntasCuestionario;let i=index">
+        <div class="contetPreguntasCuestionario">
+          <div class="descPregunta row">
+            <div class="col-12 col-md-9 col-lg-9">
+              <div class="titlePregunta">{{i+1}}. {{item.enunciado}}</div>
+              <div class="DescripcionPregunta" *ngIf="item.descripcion!=null && item.descripcion.length>0">
+                {{item.descripcion}}</div>
+              <div class="DescripcionPregunta" *ngIf="item.idPreguntaTipo==3">Responde verdadero (V) O falso (F) según
+                corresponda</div>
+              <div class="DescripcionPregunta" *ngIf="item.idPreguntaTipo==4">Elija las alternativas correctas</div>
+              <div class="DescripcionPregunta" *ngIf="item.idPreguntaTipo==5">Elige la alternativa correcta</div>
+            </div>
+            <div class="col-12 col-md-3 col-lg-3" style=" display: flex;
+            flex-direction: column;
+            align-items: flex-end;">
+              <div class="PuntoPregunta"><strong>{{item.puntaje}}</strong> Puntos</div>
+              <div class="IntenTareasEnviadas" *ngIf="item.urlArchivoSubido!=null && item.urlArchivoSubido!=undefined">
+                <div class="pdfSesionOnline"></div>
+                <div>
+                  <a target="_blank" [href]="item.urlArchivoSubido">{{item.nombreArchivo}}</a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div *ngIf="item.alternativas!= null && item.alternativas!= undefined">
+            <ng-container *ngIf="item.idPreguntaTipo==3 || item.idPreguntaTipo==5">
+              <div class="radiosOptions" *ngFor="let altern of item.alternativas;let a=index" (click)="changeRadio(i,a)"
+              [ngClass]="{'Correctos':altern.Correcto==true,'InCorrectos':altern.Correcto==false}">
+                <i class="material-icons" *ngIf="altern.select!=true">radio_button_off</i>
+                <i class="material-icons activeSelect" *ngIf="altern.select==true">radio_button_checked</i>
+                {{altern.alternativa}}
+              </div>
+            </ng-container>
+            <ng-container *ngIf="item.idPreguntaTipo==4">
+              <div class="checkOptions" *ngFor="let altern of item.alternativas;let a=index" (click)="changeCheck(i,a)"
+              [ngClass]="{'Correctos':altern.Correcto==true,'InCorrectos':altern.Correcto==false}">
+                <i class="material-icons" *ngIf="altern.select!=true" >check_box_outline_blank</i>
+                <i class="material-icons activeSelect" *ngIf="altern.select==true">check_box</i>
+                {{altern.alternativa}}
+              </div>
+            </ng-container>
+            <ng-container *ngIf="item.idPreguntaTipo==6">
+
+              <div class="InputsOnlineCuestionario">
+                <mat-form-field appearance="outline" style="width: 100%;">
+                  <mat-label>Ingresa tu respuesta</mat-label>
+                  <input type="text" [disabled]="disableAll" placeholder="Ingresa tu respuesta" (input)="AddToAvance()" [(ngModel)]="item.respuesta[0]" matInput>
+                </mat-form-field>
+              </div>
+            </ng-container>
+          </div>
+        </div>
+
+      </ng-container>
+      <ng-container *ngIf="disableAll!=true">
+        <div  style="display: flex;align-items: center;justify-content: flex-end;">
+          <app-default-button [confs]="{color:'primary',titulo:'Enviar Cuestionario >'}"
+            [style]="'margin: 0px; padding: 0px 40px; border-radius: 40px;'"
+           (ButtoclClick)="AgregarPEspecificoSesionCuestionarioAlumno()"></app-default-button>
+        </div>
+      </ng-container>
+
+    </ng-container>
+
+  </div>
+</ng-container>

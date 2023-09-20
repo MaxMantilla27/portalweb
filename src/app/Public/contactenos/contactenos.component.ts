@@ -210,7 +210,8 @@ export class ContactenosComponent implements OnInit,OnDestroy {
           this.CompleteLocalStorage=true;
           this.formularioContacto.Comentario= '';
           if(this.isBrowser){
-            fbq('track', 'CompleteRegistration');
+            //fbq('track', 'CompleteRegistration');
+            fbq('track', 'Lead');
             gtag('event', 'conversion', {
               'send_to': 'AW-991002043/tnStCPDl6HUQu_vF2AM',
             });
@@ -224,7 +225,7 @@ export class ContactenosComponent implements OnInit,OnDestroy {
           this._SnackBarServiceService.openSnackBar("¡Solicitud enviada!",'x',15,"snackbarCrucigramaSucces");
         },
         // error:(e)=>{
-        //   fbq('track', 'CompleteRegistration');
+        //   //fbq('track', 'CompleteRegistration');
         // },
         complete: () => {
           console.log('------------------facebook(complete)---------------------------');

@@ -40,6 +40,7 @@ export class AlumnoMatButtonComponent implements OnInit,OnChanges {
   }
   ngOnChanges(changes: SimpleChanges): void {
     this.buttons=[];
+    // let isCarrera =JSON.parse(this._SessionStorageService.SessionGetValue('TipoCarrera'))
     let isCarrera =this._SessionStorageService.SessionGetValue('TipoCarrera')
     console.log(isCarrera)
     if(this.val!=undefined){
@@ -74,6 +75,21 @@ export class AlumnoMatButtonComponent implements OnInit,OnChanges {
           Icon: 'badge',
           value: '../../../../../../assets/icons/categorias.svg',
         });
+        // this.buttons.push({
+        //     Nombre: 'Bolsa de Trabajo',
+        //     Url: '/AulaVirtual/BolsaTrabajo',
+        //     Icon: 'wallet_travel',
+        //     value: '',
+        // });
+        // if(isCarrera==true){
+        //   this.buttons.push({
+        //     Nombre: 'Bolsa de Trabajo',
+        //     Url: '/AulaVirtual/BolsaTrabajo',
+        //     Icon: 'wallet_travel',
+        //     value: '',
+        //   });
+        // }
+
         if(isCarrera=="true"){
           this.buttons.push({
             Nombre: 'Bolsa de Trabajo',
@@ -82,7 +98,7 @@ export class AlumnoMatButtonComponent implements OnInit,OnChanges {
             value: '',
           });
         }
-       
+
       }else{
         if(this.val.cursos>0){
           this.buttons.push({
@@ -126,11 +142,11 @@ export class AlumnoMatButtonComponent implements OnInit,OnChanges {
         }
         this.buttons.push({
           Nombre: 'Docencia',
-          Url: '/AulaVirtual/Docencia',
+          Url: '/AulaVirtual/DocenciaV2',
           Icon: 'account_box',
           value: '',
         });
-        
+
       }
     }
   }

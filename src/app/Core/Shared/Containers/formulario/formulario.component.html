@@ -11,14 +11,14 @@
                 <ng-container
                   *ngIf="field.tipo=='' || field.tipo=='text' || field.tipo=='number' || field.tipo=='password'">
                   <mat-form-field appearance="outline" *ngIf="!FormOld">
-                    <mat-label>{{field.label}}</mat-label>
+                    <mat-label *ngIf="labels==true">{{field.label}}</mat-label>
                     <input type="{{field.tipo}}" [autofocus]="field.focus" [style]="field.style" formControlName="{{field.nombre}}" matInput />
                     <mat-error *ngIf="userForm.invalid">{{obtenerErrorCampoNombre(i,field.nombre)}}</mat-error>
                   </mat-form-field>
                 </ng-container>
                 <ng-container *ngIf="field.tipo=='select'">
                   <mat-form-field appearance="outline">
-                    <mat-label>{{field.label}}</mat-label>
+                    <mat-label *ngIf="labels==true">{{field.label}}</mat-label>
                     <mat-select [style]="field.style" formControlName="{{field.nombre}}"
                       (selectionChange)="OnSelect.emit({Nombre:field.nombre,value:$event.value})">
                       <mat-option *ngFor="let option of field.data" [value]="option.value">{{option.Nombre}}
@@ -52,14 +52,14 @@
                   <ng-container
                     *ngIf="field.tipo=='' || field.tipo=='text' || field.tipo=='number' || field.tipo=='password'">
                     <mat-form-field appearance="outline">
-                      <mat-label>{{field.label}}</mat-label>
+                      <mat-label *ngIf="labels==true">{{field.label}}</mat-label>
                       <input type="{{field.tipo}}" [autofocus]="field.focus" [style]="field.style" formControlName="{{field.nombre}}" matInput />
                       <mat-error *ngIf="userForm.invalid">{{obtenerErrorCampoNombre(i,field.nombre)}}</mat-error>
                     </mat-form-field>
                   </ng-container>
                   <ng-container *ngIf="field.tipo=='select'">
                     <mat-form-field appearance="outline">
-                      <mat-label>{{field.label}}</mat-label>
+                      <mat-label *ngIf="labels==true">{{field.label}}</mat-label>
                       <mat-select [style]="field.style" formControlName="{{field.nombre}}"
                         (selectionChange)="OnSelect.emit({Nombre:field.nombre,value:$event.value})">
                         <mat-option *ngFor="let option of field.data" [value]="option.value">{{option.Nombre}}
@@ -89,7 +89,7 @@
                       </div>
                       <div class="col-10 col-md-10 col-lg-10 fieldOld">
                         <mat-form-field appearance="outline">
-                          <mat-label>{{field.label}}</mat-label>
+                          <mat-label *ngIf="labels==true">{{field.label}}</mat-label>
                           <!-- <span matPrefix>{{PrefPaises()}}</span> -->
                           <input type="text" [autofocus]="field.focus" (keyup)="ChangeInpiut(i,field.nombre)" (keydown)="ChangeInpiut(i,field.nombre)" [style]="field.style" formControlName="{{field.nombre}}" matInput />
                           <mat-error *ngIf="userForm.invalid">{{obtenerErrorCampoNombre(i,field.nombre)}}</mat-error>
@@ -108,14 +108,14 @@
                   <ng-container
                     *ngIf="field.tipo=='' || field.tipo=='text' || field.tipo=='number' || field.tipo=='password'">
                     <mat-form-field appearance="outline">
-                      <mat-label>{{field.label}}</mat-label>
+                      <mat-label *ngIf="labels==true">{{field.label}}</mat-label>
                       <input type="{{field.tipo}}" [autofocus]="field.focus" [style]="field.style" formControlName="{{field.nombre}}" matInput />
                       <mat-error *ngIf="userForm.invalid">{{obtenerErrorCampoNombre(i,field.nombre)}}</mat-error>
                     </mat-form-field>
                   </ng-container>
                   <ng-container *ngIf="field.tipo=='select'">
                     <mat-form-field appearance="outline">
-                      <mat-label>{{field.label}}</mat-label>
+                      <mat-label *ngIf="labels==true">{{field.label}}</mat-label>
                       <mat-select [style]="field.style" formControlName="{{field.nombre}}"
                         (selectionChange)="OnSelect.emit({Nombre:field.nombre,value:$event.value})">
                         <mat-option *ngFor="let option of field.data" [value]="option.value">{{option.Nombre}}

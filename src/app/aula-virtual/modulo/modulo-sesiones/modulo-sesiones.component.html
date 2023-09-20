@@ -1,65 +1,295 @@
-<div class="cursoTitle">{{Capitulo}}</div>
-<div class="cursoTabDescripcion" style="
-margin-bottom: 10px;">Estas son las actividades de aprendizaje que debes completar.
-  <br>
-</div>
-<div class="msjCom" style="border: solid 2px #fff7ee; padding: 10px;margin-bottom: 20px;">
-  <img src="../../../../assets/icons/icon-hand.svg" alt="">
-  <div>
-    <strong> Recuerda: </strong>El avance es progresivo, debes de visualizar el video al 100% y/o completar la actividad previa para continuar con la siguiente
+<ng-container *ngIf="idModalidad==1">
+  <div class="cursoTitle">{{Capitulo}}</div>
+  <div class="cursoTabDescripcion" style="
+  margin-bottom: 10px;">Estas son las actividades de aprendizaje que debes completar.
+    <br>
   </div>
-</div>
-<div *ngIf="estructuraCapitulo!=undefined">
+  <div class="msjCom" style="border: solid 2px #fff7ee; padding: 10px;margin-bottom: 20px;">
+    <img src="../../../../assets/icons/icon-hand.svg" alt="">
+    <div>
+      <strong> Recuerda: </strong>El avance es progresivo, debes de visualizar el video al 100% y/o completar la actividad previa para continuar con la siguiente
+    </div>
+  </div>
+  <div *ngIf="estructuraCapitulo!=undefined">
 
 
-  <ng-container *ngFor="let item of estructuraCapitulo.registroEstructuraCursoCapitulo; let i=index">
+    <ng-container *ngFor="let item of estructuraCapitulo.registroEstructuraCursoCapitulo; let i=index">
 
 
-    <ng-container *ngIf="idModalidad!=1">
+      <ng-container *ngIf="idModalidad!=1">
 
-      <div class="contentCapitulo">
+        <div class="contentCapitulo">
 
-        <div class="hederCapitulo row" style="margin-top: 20px;">
-          <div class="titleCapitulo col-12 col-md-12 col-lg-12">Capítulo {{item.numeroCapitulo}}:
-            {{item.nombreCapitulo}}</div>
-        </div>
-      </div>
-    </ng-container>
-    <ng-container *ngIf="idModalidad==1">
-
-      <div class="contentCapitulo">
-
-        <div class="hederCapitulo row">
-          <div class="titleCapitulo col-12 col-md-7 col-lg-9">Capítulo {{item.numeroCapitulo}}:
-            {{item.nombreCapitulo}}</div>
-          <div class="col-12 col-md-5 col-lg-3"
-            style="display: flex;justify-content: space-between;align-items: center;">
-            <div class="NSesionCapitulo">{{item.registroEstructuraCursoSesion.length}} Sesiones</div>
-
-
-            <i style=" color: #05c254;
-        font-size: 16px !important;" class="material-icons" *ngIf="item.visualizadoCapitulo>=100">check_circle</i>
-            <div class="promedioCapitulo">
-              Promedio: <strong>{{item.promedioCalificacion | number:'1.0-0'}}</strong>
-            </div>
+          <div class="hederCapitulo row" style="margin-top: 20px;">
+            <div class="titleCapitulo col-12 col-md-12 col-lg-12">Capítulo {{item.numeroCapitulo}}:
+              {{item.nombreCapitulo}}</div>
           </div>
         </div>
+      </ng-container>
+      <ng-container *ngIf="idModalidad==1">
+
+        <div class="contentCapitulo">
+
+          <div class="hederCapitulo row">
+            <div class="titleCapitulo col-12 col-md-7 col-lg-9">Capítulo {{item.numeroCapitulo}}:
+              {{item.nombreCapitulo}}</div>
+            <div class="col-12 col-md-5 col-lg-3"
+              style="display: flex;justify-content: space-between;align-items: center;">
+              <div class="NSesionCapitulo">{{item.registroEstructuraCursoSesion.length}} Sesiones</div>
+
+
+              <i style=" color: #05c254;
+          font-size: 16px !important;" class="material-icons" *ngIf="item.visualizadoCapitulo>=100">check_circle</i>
+              <div class="promedioCapitulo">
+                Promedio: <strong>{{item.promedioCalificacion | number:'1.0-0'}}</strong>
+              </div>
+            </div>
+          </div>
+
+          <ng-container
+            *ngIf="item.registroEstructuraCursoEncuesta!=undefined && item.registroEstructuraCursoEncuesta!=null">
+            <ng-container *ngFor="let Encuesta of item.registroEstructuraCursoEncuesta">
+              <ng-container *ngIf="Encuesta.tipoExamen=='Encuesta' && Encuesta.nombreEncuesta=='Encuesta Inicial'">
+                <div (click)="EventoInteraccion(Encuesta.nombreEncuesta);IrVideo('3/'+Encuesta.numeroCapitulo+'/'+Encuesta.idEncuesta,true)"
+          class="TareaYEncuesta row">
+                  <div class="col-12 col-md-8 col-lg-9 inhover" style="display: flex;    align-items: center;">
+                    <img src="../../../../assets/icons/icon-like.svg" alt="">
+                    <div>
+                      {{Encuesta.nombreEncuesta}}</div>
+                  </div>
+                  <div class="col-12 col-md-4 col-lg-3" style="display: flex;align-items: center;
+                  font-weight: 300;
+                  font-size: 14px;padding-left: 5px;">
+                    <ng-container *ngIf="Encuesta.encuestaEnviada==true">
+                      <i class="material-icons" style=" color: #05c254;font-size: 14px !important;
+                      margin-right: 10px">check_circle</i>
+                      Completado
+                    </ng-container>
+                    <ng-container *ngIf="Encuesta.encuestaEnviada==false">
+                      Pendiente
+                    </ng-container>
+                  </div>
+                </div>
+              </ng-container>
+            </ng-container>
+          </ng-container>
+          <div class="contentCapituloSesion ">
+            <ng-container *ngIf="estructuraCapitulo.contineSubSesion==true">
+              <div class="capituloSesion row" *ngFor="let sesiones of item.registroEstructuraCursoSesion">
+                <div class="col-12 col-md-12 col-lg-12" style="margin: 15px 0px;font-weight: 600;    padding-right: 46px;">
+                  <div class="row">
+                    <div class="col-12 col-md-8 col-lg-9">
+                      Sesión {{sesiones.numeroSesion}}: {{sesiones.nombreSesion}}
+                    </div>
+                    <div class="col-12 col-md-4 col-lg-3">
+                      <div style="display: flex;font-weight: 100;align-items: center;">
+
+                        <div style="position: relative;width: 20px;margin-left: -5px;
+                        margin-right: 10px;    height: 20px;">
+
+                          <mat-progress-spinner class="greay-spinner" [mode]="'determinate'" [diameter]="20"
+                            [strokeWidth]="4" [value]="100">
+                          </mat-progress-spinner>
+                          <mat-progress-spinner class="progras-spinner" [mode]="'determinate'" [diameter]="20"
+                            [strokeWidth]="4" [value]="sesiones.porcentajeVideoVisualizado">
+                          </mat-progress-spinner>
+                        </div>
+                        {{sesiones.subV}}/{{sesiones.registroEstructuraCursoSubSesion.length}}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <ng-container *ngFor="let subsesiones of sesiones.registroEstructuraCursoSubSesion">
+                  <div class="col-12 row sesiones" style="padding: 5px 30px;" [id]="item.numeroCapitulo+'-'+sesiones.numeroSesion+'-'+subsesiones.numeroSubSesion">
+                    <div class="capituloSesionesSubsesiones contentModuloSesiones col-12 col-md-8 col-lg-9">
+                      <i class="material-icons playsesion">play_circle</i>
+                      <div style="width: calc( 100% - 35px);">
+                        <div class="tituloSesion"
+                          (click)="EventoInteraccion(subsesiones.nombreSubSesion);IrVideo('1/'+item.numeroCapitulo+'/'+subsesiones.numeroSubSesion,subsesiones.habilitado)">
+                          {{subsesiones.nombreSubSesion}}</div>
+
+                        <div class="row" style=" align-items: center;">
+                          <div class="col-12 col-md-4 col-lg-2"
+                            style="    margin: 10px 0px;font-size: 10px;color: #cdcdcd;display: flex;    align-items: flex-end;margin-top: 5px;;padding: 0px">
+                            <i class="material-icons" style="margin-right:5px ;">access_time</i>
+                            <div style="font-size: 12px;">({{subsesiones.tiempoVideo/60 | number:'0.0-0'}} min.)</div>
+                          </div>
+                          <div class="col-12 col-md-5 col-lg-8">
+                            <mat-progress-bar mode="determinate" style="    border-radius: 10px;"
+                              [value]="(subsesiones.porcentajeVideoVisualizado!=undefined)?subsesiones.porcentajeVideoVisualizado:0">
+                            </mat-progress-bar>
+                          </div>
+                          <div class="col-12 col-md-3 col-lg-2"
+                            style="justify-content: space-between; display: flex;font-size: 12px;color: #909090; font-weight: 600;    margin: 10px 0px;">
+                            <!-- <div>0%</div> -->
+                            <div>Avance
+                              {{(subsesiones.porcentajeVideoVisualizado!=undefined)?
+                              subsesiones.porcentajeVideoVisualizado>100?100:(subsesiones.porcentajeVideoVisualizado |
+                              number:'0.0-0'):0}}%
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                    </div>
+                    <div class="col-12 col-md-4 col-lg-3 calificacionpromedio">
+                      <div class="VideoCalificacion"
+                        [ngClass]="{'VideoFinalizadoCalificacion': subsesiones.porcentajeVideoVisualizado>=97}">
+                        <i class="material-icons" style="font-size: 14px !important;">assignment</i>
+                        <div>
+                          <ng-container *ngIf="subsesiones.porcentajeVideoVisualizado>=97">
+                            <ng-container *ngIf="subsesiones.promedioCalificacion!=0">
+                              Calificación: <strong>{{subsesiones.promedioCalificacion | number:'0.0-0'}}</strong>
+                            </ng-container>
+                            <ng-container *ngIf="subsesiones.promedioCalificacion==0">
+                              Aprobado
+                            </ng-container>
+                          </ng-container>
+                          <ng-container *ngIf="subsesiones.porcentajeVideoVisualizado<97">
+                            Pendiente
+                          </ng-container>
+                        </div>
+                      </div>
+                      <!-- <div *ngIf="subsesiones.promedioCalificacion!=0" class="calificado">Calificación:
+                        <strong>{{subsesiones.promedioCalificacion | number:'0.0-0'}}</strong>
+                      </div>
+                      <div *ngIf="subsesiones.promedioCalificacion==0">Sin Calificación</div> -->
+                    </div>
+                  </div>
+                </ng-container>
+              </div>
+            </ng-container>
+
+            <ng-container *ngIf="estructuraCapitulo.contineSubSesion==false">
+              <div class="row " style="align-items: center;" >
+                <ng-container *ngFor="let sesiones of item.registroEstructuraCursoSesion">
+
+                  <div class="col-12 row sesiones" style="padding: 10px 20px;" [id]="item.numeroCapitulo+'-'+sesiones.numeroSesion">
+                    <div class="col-12 col-md-8 col-lg-9 capituloJustSesion contentModuloSesiones">
+                      <i class="material-icons playsesion">play_circle</i>
+                      <div style="width: calc( 100% - 35px);">
+                        <div class="tituloSesion"
+                          (click)="EventoInteraccion(sesiones.nombreSesion);IrVideo('1/'+item.numeroCapitulo+'/'+sesiones.numeroSesion,sesiones.habilitado)">
+                          Sesión {{sesiones.numeroSesion}}: {{sesiones.nombreSesion}}</div>
+
+                        <div class="row" style=" align-items: center;">
+                          <div class="col-12 col-md-4 col-lg-2"
+                            style="    margin: 10px 0px;font-size: 10px;color: #cdcdcd;display: flex;    align-items: flex-end;margin-top: 5px;padding: 0px;">
+                            <i class="material-icons" style="margin-right:5px ;">access_time</i>
+                            <div style="font-size: 12px;">({{sesiones.tiempoVideo/60 | number:'0.0-0'}} min.)</div>
+                          </div>
+                          <div class="col-12 col-md-5 col-lg-8">
+                            <mat-progress-bar mode="determinate" style="    border-radius: 10px;"
+                              [value]="(sesiones.porcentajeVideoVisualizado!=undefined)?sesiones.porcentajeVideoVisualizado:0">
+                            </mat-progress-bar>
+                          </div>
+                          <div class="col-12 col-md-3 col-lg-2"
+                            style="justify-content: space-between; display: flex;font-size: 12px;color: #909090; font-weight: 600;    margin: 10px 0px;">
+                            <!-- <div>0%</div> -->
+                            <div>Avance
+                              {{(sesiones.porcentajeVideoVisualizado!=undefined)?
+                              sesiones.porcentajeVideoVisualizado>100?100:(sesiones.porcentajeVideoVisualizado |
+                              number:'0.0-0'):0}}%
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="col-12 col-md-4 col-lg-3 calificacionpromedio">
+                      <div class="VideoCalificacion"
+                        [ngClass]="{'VideoFinalizadoCalificacion': sesiones.porcentajeVideoVisualizado>=98}">
+                        <i class="material-icons" style="font-size: 14px !important;">assignment</i>
+                        <div>
+                          <ng-container *ngIf="sesiones.porcentajeVideoVisualizado>=98">
+                            <ng-container *ngIf="sesiones.promedioCalificacion!=0">
+                              Calificación: <strong>{{sesiones.promedioCalificacion | number:'0.0-0'}}</strong>
+                            </ng-container>
+                            <ng-container *ngIf="sesiones.promedioCalificacion==0">
+                              Aprobado
+                            </ng-container>
+                          </ng-container>
+                          <ng-container *ngIf="sesiones.porcentajeVideoVisualizado<98">
+                            Pendiente
+                          </ng-container>
+                        </div>
+                      </div>
+                      <!-- <div *ngIf="sesiones.promedioCalificacion!=0" class="calificado">Calificación:
+                        <strong>{{sesiones.promedioCalificacion | number:'0.0-0'}}</strong>
+                      </div>
+                      <div *ngIf="sesiones.promedioCalificacion==0">Sin Calificación</div> -->
+                    </div>
+                  </div>
+                </ng-container>
+              </div>
+
+            </ng-container>
+          </div>
+        </div>
+        <ng-container *ngIf="item.registroEstructuraCursoTarea!=undefined && item.registroEstructuraCursoTarea!=null">
+          <ng-container *ngFor="let Tarea of item.registroEstructuraCursoTarea">
+            <div class="TareaYEncuesta"
+              (click)="EventoInteraccion(Tarea.tarea);IrVideo('2/'+Tarea.numeroCapitulo+'/'+Tarea.idTarea,Tarea.habilitado)">
+              <div><i class="material-icons" style="color:#fe7112 ;margin-right: 20px;">check_circle</i>{{Tarea.tarea}}
+                <div style="color:#00c356" *ngIf="Tarea.tareasEnviadas>0">Enviado</div>
+              </div>
+            </div>
+          </ng-container>
+        </ng-container>
+
+        <ng-container *ngIf="item.registroCursoTareaCalificar!=undefined && item.registroCursoTareaCalificar!=null">
+          <ng-container *ngFor="let TareaC of item.registroCursoTareaCalificar">
+            <div class="TareaYEncuesta"
+              (click)="EventoInteraccion(TareaC.tarea);IrVideo('4/'+TareaC.numeroCapitulo+'/'+TareaC.id,TareaC.habilitado)">
+              <div class="inhover">
+                <img src="../../../../assets/icons/tareas-23.svg" alt=""> Revisión de: {{TareaC.tarea}} <br>
+                <div style="color:#00c356" *ngIf="TareaC.calificado">Calificado</div>
+                <div style="color: #da121a;" *ngIf="!TareaC.calificado">Por calificar</div>
+              </div>
+            </div>
+          </ng-container>
+        </ng-container>
 
         <ng-container
           *ngIf="item.registroEstructuraCursoEncuesta!=undefined && item.registroEstructuraCursoEncuesta!=null">
           <ng-container *ngFor="let Encuesta of item.registroEstructuraCursoEncuesta">
-            <ng-container *ngIf="Encuesta.tipoExamen=='Encuesta' && Encuesta.nombreEncuesta=='Encuesta Inicial'">
-              <div (click)="EventoInteraccion(Encuesta.nombreEncuesta);IrVideo('3/'+Encuesta.numeroCapitulo+'/'+Encuesta.idEncuesta,true)"
-        class="TareaYEncuesta row">
+            <ng-container *ngIf="Encuesta.tipoExamen=='Encuesta' && Encuesta.nombreEncuesta=='Encuesta Intermedia'">
+              <div class="TareaYEncuesta row"
+                (click)="EventoInteraccion(Encuesta.nombreEncuesta);IrVideo('3/'+Encuesta.numeroCapitulo+'/'+Encuesta.idEncuesta,Encuesta.habilitado)">
                 <div class="col-12 col-md-8 col-lg-9 inhover" style="display: flex;    align-items: center;">
                   <img src="../../../../assets/icons/icon-like.svg" alt="">
-                  <div>
-                    {{Encuesta.nombreEncuesta}}</div>
+                  <div>{{Encuesta.nombreEncuesta}}</div>
                 </div>
                 <div class="col-12 col-md-4 col-lg-3" style="display: flex;align-items: center;
                 font-weight: 300;
                 font-size: 14px;padding-left: 5px;">
                   <ng-container *ngIf="Encuesta.encuestaEnviada==true">
+
+                    <i class="material-icons" style=" color: #05c254;font-size: 14px !important;
+                    margin-right: 10px">check_circle</i>
+                    Completado
+                  </ng-container>
+                  <ng-container *ngIf="Encuesta.encuestaEnviada==false">
+                    Pendiente
+                  </ng-container>
+                </div>
+              </div>
+            </ng-container>
+          </ng-container>
+          <ng-container *ngFor="let Encuesta of item.registroEstructuraCursoEncuesta">
+            <ng-container *ngIf="Encuesta.tipoExamen=='Encuesta' && Encuesta.nombreEncuesta=='Encuesta Final'">
+              <div class="TareaYEncuesta row"
+                (click)="EventoInteraccion(Encuesta.nombreEncuesta);IrVideo('3/'+Encuesta.numeroCapitulo+'/'+Encuesta.idEncuesta,Encuesta.habilitado)">
+
+                <div class="col-12 col-md-8 col-lg-9 inhover" style="display: flex;    align-items: center;">
+                  <img src="../../../../assets/icons/icon-like.svg" alt="">
+                  <div>{{Encuesta.nombreEncuesta}}</div>
+                </div>
+                <div class="col-12 col-md-4 col-lg-3" style="display: flex;align-items: center;
+                font-weight: 300;
+                font-size: 14px;padding-left: 5px;">
+                  <ng-container *ngIf="Encuesta.encuestaEnviada==true">
+
                     <i class="material-icons" style=" color: #05c254;font-size: 14px !important;
                     margin-right: 10px">check_circle</i>
                     Completado
@@ -72,239 +302,13 @@ margin-bottom: 10px;">Estas son las actividades de aprendizaje que debes complet
             </ng-container>
           </ng-container>
         </ng-container>
-        <div class="contentCapituloSesion ">
-          <ng-container *ngIf="estructuraCapitulo.contineSubSesion==true">
-            <div class="capituloSesion row" *ngFor="let sesiones of item.registroEstructuraCursoSesion">
-              <div class="col-12 col-md-12 col-lg-12" style="margin: 15px 0px;font-weight: 600;    padding-right: 46px;">
-                <div class="row">
-                  <div class="col-12 col-md-8 col-lg-9">
-                    Sesión {{sesiones.numeroSesion}}: {{sesiones.nombreSesion}}
-                  </div>
-                  <div class="col-12 col-md-4 col-lg-3">
-                    <div style="display: flex;font-weight: 100;align-items: center;">
-
-                      <div style="position: relative;width: 20px;margin-left: -5px;
-                      margin-right: 10px;    height: 20px;">
-
-                        <mat-progress-spinner class="greay-spinner" [mode]="'determinate'" [diameter]="20"
-                          [strokeWidth]="4" [value]="100">
-                        </mat-progress-spinner>
-                        <mat-progress-spinner class="progras-spinner" [mode]="'determinate'" [diameter]="20"
-                          [strokeWidth]="4" [value]="sesiones.porcentajeVideoVisualizado">
-                        </mat-progress-spinner>
-                      </div>
-                      {{sesiones.subV}}/{{sesiones.registroEstructuraCursoSubSesion.length}}
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <ng-container *ngFor="let subsesiones of sesiones.registroEstructuraCursoSubSesion">
-                <div class="col-12 row sesiones" style="padding: 5px 30px;" [id]="item.numeroCapitulo+'-'+sesiones.numeroSesion+'-'+subsesiones.numeroSubSesion">
-                  <div class="capituloSesionesSubsesiones contentModuloSesiones col-12 col-md-8 col-lg-9">
-                    <i class="material-icons playsesion">play_circle</i>
-                    <div style="width: calc( 100% - 35px);">
-                      <div class="tituloSesion"
-                        (click)="EventoInteraccion(subsesiones.nombreSubSesion);IrVideo('1/'+item.numeroCapitulo+'/'+subsesiones.numeroSubSesion,subsesiones.habilitado)">
-                        {{subsesiones.nombreSubSesion}}</div>
-
-                      <div class="row" style=" align-items: center;">
-                        <div class="col-12 col-md-4 col-lg-2"
-                          style="    margin: 10px 0px;font-size: 10px;color: #cdcdcd;display: flex;    align-items: flex-end;margin-top: 5px;;padding: 0px">
-                          <i class="material-icons" style="margin-right:5px ;">access_time</i>
-                          <div style="font-size: 12px;">({{subsesiones.tiempoVideo/60 | number:'0.0-0'}} min.)</div>
-                        </div>
-                        <div class="col-12 col-md-5 col-lg-8">
-                          <mat-progress-bar mode="determinate" style="    border-radius: 10px;"
-                            [value]="(subsesiones.porcentajeVideoVisualizado!=undefined)?subsesiones.porcentajeVideoVisualizado:0">
-                          </mat-progress-bar>
-                        </div>
-                        <div class="col-12 col-md-3 col-lg-2"
-                          style="justify-content: space-between; display: flex;font-size: 12px;color: #909090; font-weight: 600;    margin: 10px 0px;">
-                          <!-- <div>0%</div> -->
-                          <div>Avance
-                            {{(subsesiones.porcentajeVideoVisualizado!=undefined)?
-                            subsesiones.porcentajeVideoVisualizado>100?100:(subsesiones.porcentajeVideoVisualizado |
-                            number:'0.0-0'):0}}%
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-
-                  </div>
-                  <div class="col-12 col-md-4 col-lg-3 calificacionpromedio">
-                    <div class="VideoCalificacion"
-                      [ngClass]="{'VideoFinalizadoCalificacion': subsesiones.porcentajeVideoVisualizado>=97}">
-                      <i class="material-icons" style="font-size: 14px !important;">assignment</i>
-                      <div>
-                        <ng-container *ngIf="subsesiones.porcentajeVideoVisualizado>=97">
-                          <ng-container *ngIf="subsesiones.promedioCalificacion!=0">
-                            Calificación: <strong>{{subsesiones.promedioCalificacion | number:'0.0-0'}}</strong>
-                          </ng-container>
-                          <ng-container *ngIf="subsesiones.promedioCalificacion==0">
-                            Aprobado
-                          </ng-container>
-                        </ng-container>
-                        <ng-container *ngIf="subsesiones.porcentajeVideoVisualizado<97">
-                          Pendiente
-                        </ng-container>
-                      </div>
-                    </div>
-                    <!-- <div *ngIf="subsesiones.promedioCalificacion!=0" class="calificado">Calificación:
-                      <strong>{{subsesiones.promedioCalificacion | number:'0.0-0'}}</strong>
-                    </div>
-                    <div *ngIf="subsesiones.promedioCalificacion==0">Sin Calificación</div> -->
-                  </div>
-                </div>
-              </ng-container>
-            </div>
-          </ng-container>
-
-          <ng-container *ngIf="estructuraCapitulo.contineSubSesion==false">
-            <div class="row " style="align-items: center;" >
-              <ng-container *ngFor="let sesiones of item.registroEstructuraCursoSesion">
-
-                <div class="col-12 row sesiones" style="padding: 10px 20px;" [id]="item.numeroCapitulo+'-'+sesiones.numeroSesion">
-                  <div class="col-12 col-md-8 col-lg-9 capituloJustSesion contentModuloSesiones">
-                    <i class="material-icons playsesion">play_circle</i>
-                    <div style="width: calc( 100% - 35px);">
-                      <div class="tituloSesion"
-                        (click)="EventoInteraccion(sesiones.nombreSesion);IrVideo('1/'+item.numeroCapitulo+'/'+sesiones.numeroSesion,sesiones.habilitado)">
-                        Sesión {{sesiones.numeroSesion}}: {{sesiones.nombreSesion}}</div>
-
-                      <div class="row" style=" align-items: center;">
-                        <div class="col-12 col-md-4 col-lg-2"
-                          style="    margin: 10px 0px;font-size: 10px;color: #cdcdcd;display: flex;    align-items: flex-end;margin-top: 5px;padding: 0px;">
-                          <i class="material-icons" style="margin-right:5px ;">access_time</i>
-                          <div style="font-size: 12px;">({{sesiones.tiempoVideo/60 | number:'0.0-0'}} min.)</div>
-                        </div>
-                        <div class="col-12 col-md-5 col-lg-8">
-                          <mat-progress-bar mode="determinate" style="    border-radius: 10px;"
-                            [value]="(sesiones.porcentajeVideoVisualizado!=undefined)?sesiones.porcentajeVideoVisualizado:0">
-                          </mat-progress-bar>
-                        </div>
-                        <div class="col-12 col-md-3 col-lg-2"
-                          style="justify-content: space-between; display: flex;font-size: 12px;color: #909090; font-weight: 600;    margin: 10px 0px;">
-                          <!-- <div>0%</div> -->
-                          <div>Avance
-                            {{(sesiones.porcentajeVideoVisualizado!=undefined)?
-                            sesiones.porcentajeVideoVisualizado>100?100:(sesiones.porcentajeVideoVisualizado |
-                            number:'0.0-0'):0}}%
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="col-12 col-md-4 col-lg-3 calificacionpromedio">
-                    <div class="VideoCalificacion"
-                      [ngClass]="{'VideoFinalizadoCalificacion': sesiones.porcentajeVideoVisualizado>=98}">
-                      <i class="material-icons" style="font-size: 14px !important;">assignment</i>
-                      <div>
-                        <ng-container *ngIf="sesiones.porcentajeVideoVisualizado>=98">
-                          <ng-container *ngIf="sesiones.promedioCalificacion!=0">
-                            Calificación: <strong>{{sesiones.promedioCalificacion | number:'0.0-0'}}</strong>
-                          </ng-container>
-                          <ng-container *ngIf="sesiones.promedioCalificacion==0">
-                            Aprobado
-                          </ng-container>
-                        </ng-container>
-                        <ng-container *ngIf="sesiones.porcentajeVideoVisualizado<98">
-                          Pendiente
-                        </ng-container>
-                      </div>
-                    </div>
-                    <!-- <div *ngIf="sesiones.promedioCalificacion!=0" class="calificado">Calificación:
-                      <strong>{{sesiones.promedioCalificacion | number:'0.0-0'}}</strong>
-                    </div>
-                    <div *ngIf="sesiones.promedioCalificacion==0">Sin Calificación</div> -->
-                  </div>
-                </div>
-              </ng-container>
-            </div>
-
-          </ng-container>
-        </div>
-      </div>
-      <ng-container *ngIf="item.registroEstructuraCursoTarea!=undefined && item.registroEstructuraCursoTarea!=null">
-        <ng-container *ngFor="let Tarea of item.registroEstructuraCursoTarea">
-          <div class="TareaYEncuesta"
-            (click)="EventoInteraccion(Tarea.tarea);IrVideo('2/'+Tarea.numeroCapitulo+'/'+Tarea.idTarea,Tarea.habilitado)">
-            <div><i class="material-icons" style="color:#fe7112 ;margin-right: 20px;">check_circle</i>{{Tarea.tarea}}
-              <div style="color:#00c356" *ngIf="Tarea.tareasEnviadas>0">Enviado</div>
-            </div>
-          </div>
-        </ng-container>
-      </ng-container>
-
-      <ng-container *ngIf="item.registroCursoTareaCalificar!=undefined && item.registroCursoTareaCalificar!=null">
-        <ng-container *ngFor="let TareaC of item.registroCursoTareaCalificar">
-          <div class="TareaYEncuesta"
-            (click)="EventoInteraccion(TareaC.tarea);IrVideo('4/'+TareaC.numeroCapitulo+'/'+TareaC.id,TareaC.habilitado)">
-            <div class="inhover">
-              <img src="../../../../assets/icons/tareas-23.svg" alt=""> Revisión de: {{TareaC.tarea}} <br>
-              <div style="color:#00c356" *ngIf="TareaC.calificado">Calificado</div>
-              <div style="color: #da121a;" *ngIf="!TareaC.calificado">Por calificar</div>
-            </div>
-          </div>
-        </ng-container>
-      </ng-container>
-
-      <ng-container
-        *ngIf="item.registroEstructuraCursoEncuesta!=undefined && item.registroEstructuraCursoEncuesta!=null">
-        <ng-container *ngFor="let Encuesta of item.registroEstructuraCursoEncuesta">
-          <ng-container *ngIf="Encuesta.tipoExamen=='Encuesta' && Encuesta.nombreEncuesta=='Encuesta Intermedia'">
-            <div class="TareaYEncuesta row"
-              (click)="EventoInteraccion(Encuesta.nombreEncuesta);IrVideo('3/'+Encuesta.numeroCapitulo+'/'+Encuesta.idEncuesta,Encuesta.habilitado)">
-              <div class="col-12 col-md-8 col-lg-9 inhover" style="display: flex;    align-items: center;">
-                <img src="../../../../assets/icons/icon-like.svg" alt="">
-                <div>{{Encuesta.nombreEncuesta}}</div>
-              </div>
-              <div class="col-12 col-md-4 col-lg-3" style="display: flex;align-items: center;
-              font-weight: 300;
-              font-size: 14px;padding-left: 5px;">
-                <ng-container *ngIf="Encuesta.encuestaEnviada==true">
-
-                  <i class="material-icons" style=" color: #05c254;font-size: 14px !important;
-                  margin-right: 10px">check_circle</i>
-                  Completado
-                </ng-container>
-                <ng-container *ngIf="Encuesta.encuestaEnviada==false">
-                  Pendiente
-                </ng-container>
-              </div>
-            </div>
-          </ng-container>
-        </ng-container>
-        <ng-container *ngFor="let Encuesta of item.registroEstructuraCursoEncuesta">
-          <ng-container *ngIf="Encuesta.tipoExamen=='Encuesta' && Encuesta.nombreEncuesta=='Encuesta Final'">
-            <div class="TareaYEncuesta row"
-              (click)="EventoInteraccion(Encuesta.nombreEncuesta);IrVideo('3/'+Encuesta.numeroCapitulo+'/'+Encuesta.idEncuesta,Encuesta.habilitado)">
-
-              <div class="col-12 col-md-8 col-lg-9 inhover" style="display: flex;    align-items: center;">
-                <img src="../../../../assets/icons/icon-like.svg" alt="">
-                <div>{{Encuesta.nombreEncuesta}}</div>
-              </div>
-              <div class="col-12 col-md-4 col-lg-3" style="display: flex;align-items: center;
-              font-weight: 300;
-              font-size: 14px;padding-left: 5px;">
-                <ng-container *ngIf="Encuesta.encuestaEnviada==true">
-
-                  <i class="material-icons" style=" color: #05c254;font-size: 14px !important;
-                  margin-right: 10px">check_circle</i>
-                  Completado
-                </ng-container>
-                <ng-container *ngIf="Encuesta.encuestaEnviada==false">
-                  Pendiente
-                </ng-container>
-              </div>
-            </div>
-          </ng-container>
-        </ng-container>
       </ng-container>
     </ng-container>
-  </ng-container>
-</div>
-
-<div *ngIf="estructuraCapitulo==undefined" style="position: relative;margin-top: 100px;">
-  <app-cargando></app-cargando>
-</div>
+  </div>
+  <div *ngIf="estructuraCapitulo==undefined" style="position: relative;margin-top: 100px;">
+    <app-cargando></app-cargando>
+  </div>
+</ng-container>
+<ng-container *ngIf="idModalidad!=1">
+  <app-modulo-sesiones-online  [IdPespecifico]="IdPespecifico"  [videos]="videos" [IdMatriculaCabecera]="IdMatriculaCabecera"></app-modulo-sesiones-online>
+</ng-container>

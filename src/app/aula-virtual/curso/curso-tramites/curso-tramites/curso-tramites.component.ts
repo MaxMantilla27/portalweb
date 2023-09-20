@@ -9,6 +9,8 @@ import { DatosPerfilService } from 'src/app/Core/Shared/Services/DatosPerfil/dat
 import { FormaPagoService } from 'src/app/Core/Shared/Services/FormaPago/forma-pago.service';
 import { HelperService } from 'src/app/Core/Shared/Services/helper.service';
 import { SessionStorageService } from 'src/app/Core/Shared/Services/session-storage.service';
+import { registerLocaleData } from '@angular/common';
+import en from '@angular/common/locales/es';
 
 @Component({
   selector: 'app-curso-tramites',
@@ -52,6 +54,7 @@ export class CursoTramitesComponent implements OnInit,OnDestroy {
     WebMoneda:'',
   }
   ngOnInit(): void {
+    registerLocaleData( en );
   }
   ngOnChanges(changes: SimpleChanges): void {
     if(this.IdMatricula!=0 && !this.charge){
@@ -93,7 +96,7 @@ export class CursoTramitesComponent implements OnInit,OnDestroy {
     this.TramitesCurso.forEach((y:any)=>{
       if(y.pagar==true){
         this.PagoTotalTramite=this.PagoTotalTramite+y.tarifario;
-        this.SimboloMoneda=y.simboloMoneda
+        this.SimboloMoneda=y.codigo
       }
     })
   }
@@ -103,8 +106,8 @@ export class CursoTramitesComponent implements OnInit,OnDestroy {
   }
   Pagar(){
     const dialogRef = this.dialog.open(PagoTarjetaComponent, {
-      width: '600px',
-      data: { idMatricula: this.IdMatricula },
+      width: '500px',
+      data: { idMatricula: this.IdMatricula,tituloBotonModal:'Continuar' },
       panelClass: 'dialog-Tarjeta',
      // disableClose:true
     });
@@ -149,7 +152,7 @@ export class CursoTramitesComponent implements OnInit,OnDestroy {
         var sesion=x._Repuesta.identificadorTransaccion;
         this._SessionStorageService.SessionSetValue(sesion,x._Repuesta.requiereDatosTarjeta);
         console.log(tarjeta.idFormaPago)
-        if(tarjeta.idPasarelaPago==7){
+        if(tarjeta.idPasarelaPago==7 || tarjeta.idPasarelaPago==10){
           if(tarjeta.idFormaPago==52){
             this._router.navigate(['/AulaVirtual/MisPagos/'+this.IdMatricula+'/visa/'+sesion]);
           }

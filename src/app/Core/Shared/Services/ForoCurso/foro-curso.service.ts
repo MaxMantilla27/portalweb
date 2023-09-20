@@ -60,4 +60,32 @@ export class ForoCursoService {
     }
   }
 
+  public ObtenerForoCursoProyecto(IdPGeneral:number):Observable<any>{
+    if(this.isBrowser){
+      return this.http.get<any>(this.urlBase+'/ObtenerForoCursoProyecto?IdPGeneral='+IdPGeneral);
+    }else{
+      return EMPTY;
+    }
+  }
+  public ObtenerCursosForoDocentePortalWeb():Observable<any>{
+    if(this.isBrowser){
+      return this.http.get<any>(this.urlBase+'/ObtenerCursosForoDocentePortalWeb');
+    }else{
+      return EMPTY;
+    }
+  }
+  public ObtenerForosPorCursoDocente(IdPGeneral:number):Observable<any>{
+    if(this.isBrowser){
+      return this.http.get<any>(this.urlBase+'/ObtenerForosPorCursoDocente?IdPGeneral='+IdPGeneral);
+    }else{
+      return EMPTY;
+    }
+  }
+  public ObtenerContenidoForosCurso(IdPregunta:number):Observable<any>{
+    if(this.isBrowser){
+      return this.http.get<any>(this.urlBase+'/ObtenerContenidoForosCurso?IdPregunta='+IdPregunta);
+    }else{
+      return EMPTY;
+    }
+  }
 }

@@ -1,19 +1,70 @@
-<div class="cursoTitle">{{Capitulo}}</div>
+<!-- <div class="cursoTitle">{{Capitulo}}</div>
 <div class="row" style="align-items: center;">
   <div class="tipoIndicacionTitle col-12 col-md-12 col-lg-12">
     <i class="material-icons">play_lesson</i>
     <div style="font-weight: bold;">Clases Online</div>
   </div>
-</div>
+</div> -->
+
 <ng-container *ngIf="clases==undefined || clases.length==0">
   <div style="text-align: left; margin-bottom: 20px;">
     Por el momento no cuenta con clases online
   </div>
 </ng-container>
-<ng-container *ngIf="clases!=undefined && clases.length>0">
-
-  <app-table  [tableData]="clases" [columnHeader]="columnHeader"
-  [tipoContenido]="TipoContenido"
-  [StyleContent]="'    font-size: 12px;padding: 10px;'"
-  [StyleCabecera]="'color: white;background: rgb(3 61 171)'"></app-table>
+<ng-container *ngIf="actual!=undefined">
+  <ng-container *ngFor="let item of actual">
+    <div class="CardOnlines row">
+      <div class="col-12 col-md-8 col-lg-9">
+        <div class="programaOnlines" *ngIf="escurso==false">{{item.nombrePrograma}}</div>
+        <div class="dataOnlineFechas">
+          <div class="tagFechaOnlines">Hoy</div>
+          <div class="fechasOnline">{{item.fechaHoraInicio | date:'hh:mm a'}} a {{item.fechaHoraFinal | date:'hh:mm a'}}
+          </div>
+        </div>
+      </div>
+      <div class="col-12 col-md-4 col-lg-3" style="text-align: -webkit-right;">
+        <ng-container *ngIf="item.IsValid!=true">
+          <app-default-button [disabled]="true" [confs]="{color:'primary',titulo:'Ingresar >'}"
+            [icon]="''" [style]="'margin: 0px;    border-radius: 18px;color: white;    background: #9d9d9c;'"></app-default-button>
+        </ng-container>
+        <ng-container *ngIf="item.IsValid==true">
+          <a [href]="item.urlWebex" style="color: transparent;text-decoration: none" target="_blank">
+            <app-default-button [confs]="{color:'primary',titulo:'Ingresar >'}"
+              [icon]="''" [style]="'margin: 0px;    border-radius: 18px;color: white;'"></app-default-button>
+          </a>
+        </ng-container>
+      </div>
+    </div>
+  </ng-container>
 </ng-container>
+<ng-container *ngIf="proximo!=undefined">
+  <div class="CardOnlines row">
+    <div class="col-12 col-md-8 col-lg-9">
+      <div class="programaOnlines" *ngIf="escurso==false">{{proximo.nombrePrograma}}</div>
+      <div class="dataOnlineFechas">
+        <div class="tagFechaOnlines">Próxima sesión</div>
+        <div class="fechasOnline">{{proximo.fechaHoraInicio | date:'dd/MM/yyyy'}} de {{proximo.fechaHoraInicio | date:'hh:mm a'}} a {{proximo.fechaHoraFinal | date:'hh:mm a'}}
+        </div>
+      </div>
+    </div>
+    <div class="col-12 col-md-4 col-lg-3" style="text-align: -webkit-right;">
+      <app-default-button [disabled]="true" [confs]="{color:'primary',titulo:'Ingresar >'}" [icon]="''"
+        [style]="'margin: 0px;    border-radius: 18px;color: white;    background: #9d9d9c;'"></app-default-button>
+    </div>
+  </div>
+</ng-container>
+<ng-container *ngIf="clases!=undefined && clases.length>0">
+  <div class="proximasSesionesOnline" (click)="OpenProx=!OpenProx">
+    <div class="textoProximas">Próximas sesiones</div>
+    <div class="iconProximas">
+      <ng-container *ngIf="OpenProx==false"><i class="material-icons">keyboard_arrow_down</i></ng-container>
+      <ng-container *ngIf="OpenProx==true"><i class="material-icons">keyboard_arrow_up</i></ng-container>
+    </div>
+  </div>
+  <ng-container *ngIf="OpenProx==true">
+
+    <app-table-v2 [tableData]="clases" [columnHeader]="columnHeader" [tipoContenido]="TipoContenido"
+      [StyleContent]="'    font-size: 12px;padding: 10px;'"></app-table-v2>
+  </ng-container>
+</ng-container>
+

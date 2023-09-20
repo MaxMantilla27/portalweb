@@ -21,7 +21,7 @@ export class ModuloAyudaPreguntasFrecuentesComponent implements OnInit,OnDestroy
  @Input() Capitulo=''
  @Output() Onchange=new EventEmitter<number>();
  public PreguntaExpand=-1;
- public PreguntasFrecuentes:any
+ public PreguntasFrecuentes: Array<any>=[];
   ngOnInit(): void {
   this.ObtenerPreguntasFrecuentes();
   }
@@ -29,6 +29,7 @@ export class ModuloAyudaPreguntasFrecuentesComponent implements OnInit,OnDestroy
   ObtenerPreguntasFrecuentes(){
     this._PreguntasFrecuentesCursoService.ObtenerPreguntaFrecuentePorPrograma(this.IdPrincipal,this.IdPGeneral).pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
+        this.PreguntasFrecuentes=[]
         console.log(x)
         this.PreguntasFrecuentes=x
       }

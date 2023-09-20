@@ -1,25 +1,36 @@
 <ng-container *ngIf="datosCertificado!=undefined">
-
-  <div class="cursoTitle">{{curso.programaGeneral}}</div>
-  <div class="row" style="align-items: center;" style="margin: 30px 0px 0px;">
-    <div class="tipoIndicacionTitle col-12 col-md-12 col-lg-12" style="margin:0px;">
+  <!--
+  <div class="cursoTitle">{{curso.programaGeneral}}</div> -->
+  <div class="row" style="align-items: center;">
+    <!-- <div class="tipoIndicacionTitle col-12 col-md-12 col-lg-12" style="margin:0px;">
       <img class="ImgIndicacionesContent" src="../../../../assets/icons/certificados-25.svg">
       <div><strong> Certificados</strong></div>
-    </div>
-    <div *ngIf="curso.programaGeneral.toLowerCase().includes('irca')" class="alartasCertificados col-12 col-md-12 col-lg-12" style="margin-top:10px;" >
+    </div> -->
+    <div *ngIf="curso.programaGeneral.toLowerCase().includes('irca')"
+      class="alartasCertificados col-12 col-md-12 col-lg-12" style="margin-top:10px;">
       <div>
         El certificado no está disponible para los cursos IRCA. Consulta con tu coordinadora de atención al cliente
       </div>
     </div>
     <ng-container *ngIf="!curso.programaGeneral.toLowerCase().includes('irca')">
-      <div *ngIf="alertaDigital==true || alertaFisico==true" class="alartasCertificados col-12 col-md-12 col-lg-12" style="margin-top:10px;" >
-        <div *ngIf="alertaDigital">
+      <div *ngIf="alertaDigital==true || alertaFisico==true" class="alartasCertificados col-12 col-md-12 col-lg-12">
+        <div *ngIf="alertaDigital" class="contentAlertas">
           Aún no puedes descargar tu certificado digital
           <i class="material-icons" (click)="alertaDigital=false;OnCloseAlertaDigital.emit()">close</i>
+
+          <div class="contentAlertaCertificado">
+            Si tienes alguna duda adicional sobre la obtención de tu certificado,
+            estamos para ayudarte. Comunícate con tu asistente de atención al cliente.
+          </div>
         </div>
-        <div *ngIf="alertaFisico">
+        <div *ngIf="alertaFisico" class="contentAlertas">
           Aún no puedes solicitar tu certificado físico
           <i class="material-icons" (click)="alertaFisico=false;OnCloseAlertaFisico.emit()">close</i>
+
+          <div class="contentAlertaCertificado">
+            Si tienes alguna duda adicional sobre la obtención de tu certificado,
+            estamos para ayudarte. Comunícate con tu asistente de atención al cliente.
+          </div>
         </div>
       </div>
     </ng-container>
@@ -46,7 +57,8 @@
           width: 30px;
           height: 30px;
           margin-right: 20px;">1</div>
-          <div style="width: calc( 100% - 50px );">Debes haber completado todas las sesiones, evaluaciones, encuestas y tener tu proyecto de aplicación calificado.</div>
+          <div style="width: calc( 100% - 50px );">Debes haber completado todas las sesiones, evaluaciones, encuestas y
+            tener tu proyecto de aplicación calificado.</div>
 
         </div>
         <div style="    display: flex;
@@ -70,37 +82,54 @@
     <ng-container *ngIf="datosCertificado.idEstado_matricula==5 || datosCertificado.idEstado_matricula==12">
       <div class="col-12 col-md-12 col-lg-12">
 
-        <div style="color: #4a4a4a;
+        <div style="    color: #4a4a4a;
         font-size: 20px;
         font-weight: 600;
+        padding: 20px 0px;
         padding-bottom: 5px;
-        border-bottom: solid 1px #ececec;
-        margin: 20px 0px;">Recuerda validar tus datos de identificación como nombres y apellidos con los cuales se emitira tu certificado:</div>
+        border-top: solid 1px #b0b0b0;
+        margin-bottom: 20px;">
+          <ng-container
+            *ngIf="(datosCertificado.idConfirmarDatoAlumnoLog==null || datosCertificado.idConfirmarDatoAlumnoLog==0)">
+            Valida tus nombres y apellidos, recuerda que se mostraran en tu
+            certificado.
+          </ng-container>
+          <ng-container
+            *ngIf="(datosCertificado.idConfirmarDatoAlumnoLog!=null && datosCertificado.idConfirmarDatoAlumnoLog!=0)">
+            Recuerda validar tus datos de identificación como nombres y apellidos con los cuales se
+            emitira tu certificado:
+          </ng-container>
+        </div>
+        <div style="margin-bottom: 20px;" *ngIf="(datosCertificado.idConfirmarDatoAlumnoLog==null || datosCertificado.idConfirmarDatoAlumnoLog==0)">
+          Una vez que valides tus datos se generará tu certificado
+        </div>
 
       </div>
       <div class="col-12 col-md-12 col-lg-12">
 
-        <app-formulario *ngIf="miPerfil!=undefined" [model]="json" [InputsDisable]="statuscharge" (OnSubmit)="InsertarValidacionDatosAlumno($event)" [Color]="'#f8f8f8'"
-          (OnValid)="formVal=$event" [fiels]="fileds" [Tipo]="2"  [ChargeValuesInit]="initValues">
+        <app-formulario  *ngIf="miPerfil!=undefined" [model]="json" [InputsDisable]="statuscharge"
+          (OnSubmit)="InsertarValidacionDatosAlumno($event)" [Color]="'#f8f8f8'" (OnValid)="formVal=$event"
+          [fiels]="fileds" [Tipo]="2" [ChargeValuesInit]="initValues" [labels]="false">
 
           <ng-container contenido>
           </ng-container>
           <ng-container send>
-            <div style="display: flex;justify-content: flex-end;" *ngIf="!curso.programaGeneral.toLowerCase().includes('irca')">
+            <div style="display: flex;justify-content: flex-end;"
+              *ngIf="!curso.programaGeneral.toLowerCase().includes('irca')">
 
 
-              <button mat-raised-button *ngIf="(datosCertificado.idConfirmarDatoAlumnoLog!=null && datosCertificado.idConfirmarDatoAlumnoLog!=0)"
-              (click)="!charge?datosCertificado.nuevaAula==true?GenerarCertificadoPorAlumnoPortalWebPorIdMatricula():GenerarCertificadoPorAlumnoIdMatriculaCabecera():''"
-              class="btn-generar"
-              type="button" [disabled]="charge || datosCertificado.nombreArchivo!=null"
-              style="margin-right: 20px;"
-              >Generar certificado
+              <button mat-raised-button
+                *ngIf="(datosCertificado.idConfirmarDatoAlumnoLog!=null && datosCertificado.idConfirmarDatoAlumnoLog!=0)"
+                (click)="!charge?datosCertificado.nuevaAula==true?GenerarCertificadoPorAlumnoPortalWebPorIdMatricula():GenerarCertificadoPorAlumnoIdMatriculaCabecera():''"
+                class="btn-generar" type="button" [disabled]="charge || datosCertificado.nombreArchivo!=null"
+                style="margin-right: 20px;    border-radius: 20px;">Generar certificado
               </button>
               <mat-spinner [diameter]="20" *ngIf="charge"></mat-spinner>
 
-              <app-default-button [confs]="{color:'primary',titulo:'Validar'}" [style]="'padding:0px 20px;'"
-              *ngIf="(datosCertificado.idConfirmarDatoAlumnoLog==null || datosCertificado.idConfirmarDatoAlumnoLog==0)"
-              [disabled]="(datosCertificado.idConfirmarDatoAlumnoLog!=null && datosCertificado.idConfirmarDatoAlumnoLog!=0) || !formVal" ></app-default-button>
+              <app-default-button [confs]="{color:'primary',titulo:'Validar'}"
+                [style]="'padding:0px 20px;    border-radius: 20px;'"
+                *ngIf="(datosCertificado.idConfirmarDatoAlumnoLog==null || datosCertificado.idConfirmarDatoAlumnoLog==0)"
+                [disabled]="(datosCertificado.idConfirmarDatoAlumnoLog!=null && datosCertificado.idConfirmarDatoAlumnoLog!=0) || !formVal"></app-default-button>
             </div>
           </ng-container>
 

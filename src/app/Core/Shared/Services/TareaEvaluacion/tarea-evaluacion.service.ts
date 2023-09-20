@@ -129,4 +129,24 @@ export class TareaEvaluacionService {
     }
   }
 
+  public ActualizarCalificacionProyectoEvaluacion(Json:ParametroNotaRegistrarV3DTO):Observable<any>{
+    console.log(Json)
+    const formData: FormData = new FormData();
+    formData.append('file', Json.file!);
+    formData.append('PortalTareaEvaluacionTareaId', Json.PortalTareaEvaluacionTareaId!.toString());
+    formData.append('IdEscalaCalificacionDetalle', Json.IdEscalaCalificacionDetalle!.toString());
+    formData.append('IdParametroEvaluacion', Json.IdParametroEvaluacion.toString());
+    formData.append('IdPespecifico', Json.IdPespecifico.toString());
+    formData.append('IdMatriculaCabecera', Json.IdMatriculaCabecera.toString());
+    formData.append('Grupo', Json.Grupo.toString());
+    formData.append('NombreArchivoRetroalimentacion', Json.NombreArchivoRetroalimentacion.toString());
+    formData.append('UrlArchivoSubidoRetroalimentacionz', Json.UrlArchivoSubidoRetroalimentacion.toString());
+    formData.append('Retroalimentacion', Json.Retroalimentacion!.toString());
+    const req= new HttpRequest('POST', `${this.urlBase}/ActualizarCalificacionProyectoEvaluacion`,formData, {
+      reportProgress: true,
+      responseType: 'json'
+    });
+    return this.http.request(req)
+  }
+
 }
