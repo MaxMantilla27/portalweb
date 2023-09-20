@@ -10,6 +10,8 @@ import { FormaPagoService } from 'src/app/Core/Shared/Services/FormaPago/forma-p
 import { SnackBarServiceService } from 'src/app/Core/Shared/Services/SnackBarService/snack-bar-service.service';
 import { SessionStorageService } from 'src/app/Core/Shared/Services/session-storage.service';
 
+const PK_Produccion ="APP_USR-655cbc43-a08f-482f-a7bc-df64d486c667";
+const PK_Prueba ="TEST-4afbabcc-eedf-4dfb-b8ce-9703a5b7f973";
 @Component({
   selector: 'app-confirmacion-pago-mercado-pago-chile',
   templateUrl: './confirmacion-pago-mercado-pago-chile.component.html',
@@ -71,7 +73,6 @@ export class ConfirmacionPagoMercadoPagoChileComponent implements OnInit {
         setTimeout(()=>{
           this.renderCardPaymentBrick(window)
         },500)
-        console.log("Mercado Pago",this.resultPreProcesoMP)
 
       }
     })
@@ -82,7 +83,7 @@ export class ConfirmacionPagoMercadoPagoChileComponent implements OnInit {
   }
   
   async renderCardPaymentBrick(window:any): Promise<void> {
-    const mp = new window.MercadoPago("TEST-4afbabcc-eedf-4dfb-b8ce-9703a5b7f973", {
+    const mp = new window.MercadoPago(PK_Produccion, {
       locale: "es-PE",
     });
     const bricksBuilder = mp.bricks();
@@ -112,7 +113,6 @@ export class ConfirmacionPagoMercadoPagoChileComponent implements OnInit {
       },
       callbacks: {
         onReady: () => {
-          console.log("BRICK TERMINO")
           setTimeout(() => {
             const elementosConAlt = document.querySelectorAll('[alt="Tarjeta ingresada diners"]');
             if (elementosConAlt.length > 0) {
@@ -146,7 +146,7 @@ export class ConfirmacionPagoMercadoPagoChileComponent implements OnInit {
           cardFormData.identificadorTransaccion = this.json.IdentificadorTransaccion
           cardFormData.description = this.resultPreProcesoMP.nombrePrograma
           return new Promise<void>((resolve, reject) => {
-            fetch('https://localhost:7177/api/FormaPago/ProcesarPagoCuotaAlumnoConfirmarMercadoPago', {
+            fetch('https://api-portalweb-prototipo.bsginstitute.com/api/FormaPago/ProcesarPagoCuotaAlumnoConfirmarMercadoPago', {
               method: 'POST',
               headers: {
                 'Content-Type': 'application/json',
@@ -155,13 +155,13 @@ export class ConfirmacionPagoMercadoPagoChileComponent implements OnInit {
             })
               .then(() => {
                 this.dialogRefLoader.close()
-                window.location.href = 'http://localhost:4200/AulaVirtual/PagoExitosoMercadoPago/'+this.json.IdentificadorTransaccion
+                window.location.href = 'https://prototipo.bsginstitute.com/AulaVirtual/PagoExitosoMercadoPago/'+this.json.IdentificadorTransaccion
                 // Recibir el resultado del pago
                 resolve();
               })
               .catch(() => {
                 this.dialogRefLoader.close()
-                window.location.href = 'http://localhost:4200/AulaVirtual/PagoExitosoMercadoPago/'+this.json.IdentificadorTransaccion
+                window.location.href = 'https://prototipo.bsginstitute.com/AulaVirtual/PagoExitosoMercadoPago/'+this.json.IdentificadorTransaccion
 
                 // Tratar respuesta de error al intentar crear el pago
                 reject();
