@@ -115,19 +115,26 @@
               </div>
               <div class="respuestaLista">
                 <ng-container *ngIf="preguntas[preguntaActual].tipoRespuesta==4">
-                  <div class="respuesta" *ngFor="let respuesta of preguntas[preguntaActual].respuestaGrupoPreguntaInteractivaPrograma;let i=index"
+                  <div class="respuesta"
+                   [ngClass]="{'selectIncorrecto': respuesta.checkAnteriorError==true,'selectCorrecto':respuesta.checkAnteriorCorrecto==true}"
+                  *ngFor="let respuesta of preguntas[preguntaActual].respuestaGrupoPreguntaInteractivaPrograma;let i=index"
                   (click)="chageRespuesta(i,preguntas[preguntaActual].tipoRespuesta)">
                     <i class="material-icons" *ngIf="respuesta.check!=true">check_box_outline_blank</i>
                     <i class="material-icons" *ngIf="respuesta.check==true">check_box</i>
                     <div [innerHtml]="respuesta.enunciadoRespuesta | safeHtml"></div>
+
+
                   </div>
                 </ng-container>
                 <ng-container *ngIf="preguntas[preguntaActual].tipoRespuesta==5 || preguntas[preguntaActual].tipoRespuesta==3">
-                  <div class="respuesta" *ngFor="let respuesta of preguntas[preguntaActual].respuestaGrupoPreguntaInteractivaPrograma;let i=index"
+                  <div class="respuesta"
+                  [ngClass]="{'selectIncorrecto': respuesta.checkAnteriorError==true,'selectCorrecto':respuesta.checkAnteriorCorrecto==true}"
+                  *ngFor="let respuesta of preguntas[preguntaActual].respuestaGrupoPreguntaInteractivaPrograma;let i=index"
                   (click)="chageRespuesta(i,preguntas[preguntaActual].tipoRespuesta)">
                     <i class="material-icons" *ngIf="respuesta.check!=true">radio_button_unchecked</i>
                     <i class="material-icons" *ngIf="respuesta.check==true">radio_button_checked</i>
                     <div [innerHtml]="respuesta.enunciadoRespuesta | safeHtml"></div>
+
                   </div>
                 </ng-container>
                 <ng-container *ngIf="preguntas[preguntaActual].tipoRespuesta==6 || preguntas[preguntaActual].tipoRespuesta==8">
@@ -163,7 +170,10 @@
                     </div>
                   </div>
                 </ng-container>
-
+                <div *ngIf="ValidandoPreguntas==true" style="    display: flex;
+                align-items: center;
+                font-size: 12px;    margin-top: 10px;
+    justify-content: center;">Validando <app-load-vertical style="margin-left: 10px;" ></app-load-vertical></div>
                 <div class="FeddbackCorrecto" *ngIf="feedCorrecto!=''">{{feedCorrecto}}</div>
               </div>
             </div>

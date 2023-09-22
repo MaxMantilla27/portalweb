@@ -150,6 +150,7 @@ export class VideoBrightcoveComponent implements OnInit, OnChanges,AfterViewInit
   public timeo2:any
   public GetTIme:any;
   public TiempoRestante=3000;
+  public ValidandoPreguntas=false
   player!: videojs.Player;
   options:{
     fluid: boolean,
@@ -300,6 +301,8 @@ export class VideoBrightcoveComponent implements OnInit, OnChanges,AfterViewInit
       let i=0
       this.preguntas[this.preguntaActual].respuestaGrupoPreguntaInteractivaPrograma.forEach((res:any) => {
         console.log(res.check);
+        res.checkAnteriorError=false
+        res.checkAnteriorCorrecto=false
         if(res.check==true){
           this.validatePregunta.IdRespuesta.push(res.idRespuesta)
           i++;
@@ -368,34 +371,55 @@ export class VideoBrightcoveComponent implements OnInit, OnChanges,AfterViewInit
   }
   ValidarPreguntaInteractiva(){
     this.valPregunta=true;
+    this.ValidandoPreguntas=true
     this._PreguntaInteractivaService.ValidarPreguntaInteractiva(this.validatePregunta).pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
         console.log(x)
+        console.log(this.preguntas[this.preguntaActual])
         this.preguntas[this.preguntaActual].idRespuesta=x.idRespuesta
         if(x.respuestaCorrecta){
           this._SnackBarServiceService.openSnackBar(x.feedbackPositivo,'x',15,"snackbarCrucigramaSucces");
           this.preguntas[this.preguntaActual].valid=true
+
+          this.preguntas[this.preguntaActual].respuestaGrupoPreguntaInteractivaPrograma.forEach((res:any) => {
+            res.checkAnteriorCorrecto=false
+            if(res.check==true){
+              res.checkAnteriorCorrecto=true
+            }
+          });
         }else{
           this.preguntas[this.preguntaActual].respuestaGrupoPreguntaInteractivaPrograma.forEach((res:any) => {
-            res.check=false;
+            res.checkAnteriorError=false
+            if(res.check==true){
+              res.checkAnteriorError=true
+            }
           });
           this._SnackBarServiceService.openSnackBar(x.feedbackNegativo,'x',15,"snackbarCrucigramaerror");
+          if(this.preguntas[this.preguntaActual].numeroRespuestas>1){
+            this._SnackBarServiceService.openSnackBar('Seleccione todas las respuestas correctas','x',15,"snackbarCrucigramaerror");
+          }
           if(x.numeroIntento>=x.numeroMaximoIntento){
             this.feedCorrecto=x.feedbackPositivo;
             this.preguntas[this.preguntaActual].valid=true
           }else{
+            this.preguntas[this.preguntaActual].respuestaGrupoPreguntaInteractivaPrograma.forEach((res:any) => {
+              res.check=false;
+            });
             this.valPregunta=false;
           }
         }
         console.log(this.preguntas)
+        this.ValidandoPreguntas=false
 
       },
       error:e=>{
         this.valPregunta=false;
+        this.ValidandoPreguntas=false
         console.log(e)
       },
       complete:()=>{
         this.valorRespuesta=''
+        this.ValidandoPreguntas=false
       }
     })
   }
