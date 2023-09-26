@@ -8,6 +8,8 @@ import { Subject, takeUntil } from 'rxjs';
 import { CalificarTareaAlumnoOnlineDTO } from 'src/app/Core/Models/PEspecificoEsquema';
 import { PEspecificoEsquemaService } from 'src/app/Core/Shared/Services/PEspecificoEsquema/pespecifico-esquema.service';
 import { SnackBarServiceService } from 'src/app/Core/Shared/Services/SnackBarService/snack-bar-service.service';
+import { LineamientosTareaOnlineComponent } from './lineamientos-tarea-online/lineamientos-tarea-online.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-calificar-tarea-docente',
@@ -48,7 +50,8 @@ export class CalificarTareaDocenteComponent implements OnInit,OnChanges , OnDest
   public json:Array<CalificarTareaAlumnoOnlineDTO>=[]
   constructor(
     private _PEspecificoEsquemaService: PEspecificoEsquemaService,
-    private _SnackBarServiceService:SnackBarServiceService
+    private _SnackBarServiceService:SnackBarServiceService,
+    public dialog: MatDialog,
     ) { }
 
     columnsToDisplay = ['codigo', 'nombre', 'entrega', 'archivo', 'version', 'calificacion', 'nota','retro'];
@@ -209,5 +212,14 @@ export class CalificarTareaDocenteComponent implements OnInit,OnChanges , OnDest
       this.cargando=false
       this._SnackBarServiceService.openSnackBar("No existe ninguna tarea modificada",'x',15,"snackbarCrucigramaerror");
     }
+  }
+
+  Open(){
+    this.dialog.open(LineamientosTareaOnlineComponent, {
+      width: '1200px',
+      panelClass: 'dialog-lineamisnto-tarea',
+     disableClose:true
+    });
+
   }
 }
