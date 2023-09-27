@@ -5,3 +5,36 @@
     max-height: 90vh;
   }
 }
+
+.HeaderLanzamiento{
+  background: #dedede;
+    text-align: center;
+    padding: 10px;
+    font-size: 18px;
+    font-weight: 600;
+}
+.ContentLanzamiento{
+  padding: 20px 40px;
+  .TitleLanzamiento{
+    font-size: 18px;
+    font-weight: 600;
+    padding: 20px 0px;
+  }
+  .subTitleLanzamiento{
+    font-size: 16px;
+    font-weight: 600;
+  }
+  .textLanzamiento{
+    font-size: 14px;
+  }
+  .buttonLanzamiento{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 20px;
+  }
+  .SpaceLanzamiento{
+    width: 100%;
+    height: 10px;
+  }
+}

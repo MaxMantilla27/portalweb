@@ -1,4 +1,5 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, Inject, OnInit, ViewEncapsulation } from '@angular/core';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-lineamientos-tarea-online',
@@ -8,7 +9,10 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 })
 export class LineamientosTareaOnlineComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    public dialogRef: MatDialogRef<LineamientosTareaOnlineComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: any,
+    ) { }
 
   ngOnInit(): void {
   }

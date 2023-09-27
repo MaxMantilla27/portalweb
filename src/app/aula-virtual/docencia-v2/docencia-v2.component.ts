@@ -4,6 +4,7 @@ import { Subject, takeUntil } from 'rxjs';
 import { ParticipacionExpositorFiltroDTO } from 'src/app/Core/Models/ParticipacionExpositorFiltroDTO';
 import { ProveedorService } from 'src/app/Core/Shared/Services/Proveedor/proveedor.service';
 import { HelperService } from 'src/app/Core/Shared/Services/helper.service';
+import { SessionStorageService } from 'src/app/Core/Shared/Services/session-storage.service';
 
 @Component({
   selector: 'app-docencia-v2',
@@ -21,6 +22,7 @@ export class DocenciaV2Component implements OnInit ,OnDestroy {
   constructor(
     private _ProveedorService:ProveedorService,
     private _HelperService: HelperService,
+    private _SessionStorageService:SessionStorageService
     ) { }
 
   public migaPan = [
@@ -51,6 +53,10 @@ export class DocenciaV2Component implements OnInit ,OnDestroy {
   public indexMenuAsincronico=0
   ngOnInit(): void {
     this.ObtenerInformacionProveedor();
+    var indice=this._SessionStorageService.SessionGetValue('docencia');
+    if(indice!=''){
+      this.tabIndex=parseInt(indice);
+    }
   }
 
   ObtenerInformacionProveedor(){
@@ -64,6 +70,7 @@ export class DocenciaV2Component implements OnInit ,OnDestroy {
     })
   }
   tabChanged(tabChangeEvent: MatTabChangeEvent): void {
+    this._SessionStorageService.SessionSetValue('docencia',this.tabIndex>2?'2':this.tabIndex.toString());
     if(this.AsincronicoActive==true){
       if(this.indexMenuAsincronico==0){
         this.tabIndex=this.tabIndex+1

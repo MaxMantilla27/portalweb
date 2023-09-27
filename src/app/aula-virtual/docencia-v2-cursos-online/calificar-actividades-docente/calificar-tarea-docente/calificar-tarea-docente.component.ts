@@ -214,10 +214,11 @@ export class CalificarTareaDocenteComponent implements OnInit,OnChanges , OnDest
     }
   }
 
-  Open(){
+  Open(name:string){
     this.dialog.open(LineamientosTareaOnlineComponent, {
       width: '1200px',
       panelClass: 'dialog-lineamisnto-tarea',
+      data:{title:name},
      disableClose:true
     });
 
