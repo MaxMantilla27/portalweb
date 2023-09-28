@@ -57,6 +57,7 @@ export class ModuloSesionesOnlineComponent implements OnInit , OnChanges,OnDestr
   @Input() IdMatriculaCabecera=0;
   public sesiones:Array<any>=[]
   @Input() videos: Array<any>=[];
+  @Input() Capitulo='';
   ngOnInit(): void {
   }
   OpenSesion(index:number){

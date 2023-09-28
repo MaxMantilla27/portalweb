@@ -18,18 +18,19 @@
         <div class="programaOnlines" *ngIf="escurso==false">{{item.nombrePrograma}}</div>
         <div class="dataOnlineFechas">
           <div class="tagFechaOnlines">Hoy</div>
-          <div class="fechasOnline">{{item.fechaHoraInicio | date:'hh:mm a'}} a {{item.fechaHoraFinal | date:'hh:mm a'}}
+          <div class="fechasOnline">{{item.fechaHoraInicio | date:'hh:mm a'}} a {{item.fechaHoraFinal | date:'hh:mm a'}} - (Hora {{item.nombrePais}})
           </div>
         </div>
+        <div class="alertaProgramas">*Podrá ingresar 15 minutos antes del inicio de clases</div>
       </div>
       <div class="col-12 col-md-4 col-lg-3" style="text-align: -webkit-right;">
         <ng-container *ngIf="item.IsValid!=true">
-          <app-default-button [disabled]="true" [confs]="{color:'primary',titulo:'Ingresar >'}"
+          <app-default-button [disabled]="true" [confs]="{color:'primary',titulo:'Ingresar a Webex'}"
             [icon]="''" [style]="'margin: 0px;    border-radius: 18px;color: white;    background: #9d9d9c;'"></app-default-button>
         </ng-container>
         <ng-container *ngIf="item.IsValid==true">
           <a [href]="item.urlWebex" style="color: transparent;text-decoration: none" target="_blank">
-            <app-default-button [confs]="{color:'primary',titulo:'Ingresar >'}"
+            <app-default-button [confs]="{color:'primary',titulo:'Ingresar a Webex'}"
               [icon]="''" [style]="'margin: 0px;    border-radius: 18px;color: white;'"></app-default-button>
           </a>
         </ng-container>
@@ -43,12 +44,12 @@
       <div class="programaOnlines" *ngIf="escurso==false">{{proximo.nombrePrograma}}</div>
       <div class="dataOnlineFechas">
         <div class="tagFechaOnlines">Próxima sesión</div>
-        <div class="fechasOnline">{{proximo.fechaHoraInicio | date:'dd/MM/yyyy'}} de {{proximo.fechaHoraInicio | date:'hh:mm a'}} a {{proximo.fechaHoraFinal | date:'hh:mm a'}}
+        <div class="fechasOnline">{{proximo.fechaHoraInicio | date:'dd-MM-yyyy'}} de {{proximo.fechaHoraInicio | date:'hh:mm a'}} a {{proximo.fechaHoraFinal | date:'hh:mm a'}}  - (Hora {{proximo.nombrePais}})
         </div>
       </div>
     </div>
     <div class="col-12 col-md-4 col-lg-3" style="text-align: -webkit-right;">
-      <app-default-button [disabled]="true" [confs]="{color:'primary',titulo:'Ingresar >'}" [icon]="''"
+      <app-default-button [disabled]="true" [confs]="{color:'primary',titulo:'Ingresar a Webex'}" [icon]="''"
         [style]="'margin: 0px;    border-radius: 18px;color: white;    background: #9d9d9c;'"></app-default-button>
     </div>
   </div>
@@ -63,7 +64,7 @@
   </div>
   <ng-container *ngIf="OpenProx==true">
 
-    <app-table-v2 [tableData]="clases" [columnHeader]="columnHeader" [tipoContenido]="TipoContenido"
+    <app-table-v2 [tableData]="clases" [columnHeader]="columnHeader" [tipoContenido]="TipoContenido" [Paginador]="false"
       [StyleContent]="'    font-size: 12px;padding: 10px;'"></app-table-v2>
   </ng-container>
 </ng-container>

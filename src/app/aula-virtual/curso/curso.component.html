@@ -33,7 +33,7 @@
               [matTooltip]="'Clases Online'" matTooltipPosition="after">
 
               <div class="iconMat"><i class="material-icons">play_lesson</i></div>
-              <div class="titleMatr" *ngIf="!hide">Acceso a clases</div>
+              <div class="titleMatr" *ngIf="!hide">Acceso a clases en vivo</div>
             </div>
           </ng-template>
           <div class="pad-resp">
@@ -183,10 +183,10 @@
 
             <div class="cursoTitle">{{programEstructura.programaGeneral}}</div>
             <div class="cursoTabDescripcion">¡Bienvenido! Debes completar los siguientes módulos de tu programa:</div>
-            <div class="msjCom" style="border: solid 2px #fff7ee; padding: 10px;margin-bottom: 20px;">
+            <div *ngIf="MostrarMensajeRecuerda==true" class="msjCom" style="border: solid 2px #fff7ee; padding: 10px;margin-bottom: 20px;">
               <img src="../../../../assets/icons/icon-hand.svg" alt="Icono Mano">
               <div>
-                <div><strong>Recuerda: </strong>Debes completar el primer curso para poder acceder al siguiente</div>
+                <div ><strong>Recuerda: </strong>Debes completar el primer curso para poder acceder al siguiente</div>
               </div>
             </div>
             <div
@@ -236,7 +236,7 @@
             <div #notas class="contentHeaderM" (click)="InterraccionTab('Notas')" matTooltip="Notas"
               matTooltipPosition="after">
               <div class="iconMat iconNotas"></div>
-              <div class="titleMatr" *ngIf="!hide">Notas</div>
+              <div class="titleMatr" *ngIf="!hide">Calificaciones</div>
             </div>
           </ng-template>
           <div class="pad-resp">
@@ -564,7 +564,8 @@
             </app-modulo-ayuda-quejas-sugerencias>
           </div>
         </mat-tab>
-        <mat-tab *ngIf="IdModalidadPrincipal!=1" [disabled]="true">
+        <!-- Pendiente para Carreras Profesionales -->
+        <!-- <mat-tab *ngIf="IdModalidadPrincipal!=1" [disabled]="true">
           <ng-template mat-tab-label  >
             <div #biblioteca class="contentHeaderM" (click)="InterraccionTab('Biblioteca Virtual')" matTooltip="BibliotecaVirtual"
               matTooltipPosition="after"(click)="redireccionarBiblioteca()" style="cursor: pointer;color:#524f4f !important">
@@ -574,7 +575,7 @@
           </ng-template>
           <div class="pad-resp">
           </div>
-        </mat-tab>
+        </mat-tab> -->
         <!-- </ng-container> -->
         <!-- </ng-container> -->
       </mat-tab-group>

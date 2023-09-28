@@ -22,8 +22,8 @@ font-weight: 600;">
   </div>
 </ng-container>
 <app-table-v2 *ngIf="cuestionario!=undefined && cuestionario.length>0" [tableData]="cuestionario"
-  [columnHeader]="columnHeader"  [tipoContenido]="TipoContenido"
-  [StyleContent]="'    font-size: 12px;padding: 10px;'" (ButtonClick)="Open($event)"></app-table-v2>
+  [columnHeader]="columnHeader"  [tipoContenido]="TipoContenido" [Paginador]="false"
+  [StyleContent]="'     font-size: 12px;padding: 10px;'" (ButtonClick)="Open($event)"></app-table-v2>
 
 
 <div class="buttonsRegistroNota">

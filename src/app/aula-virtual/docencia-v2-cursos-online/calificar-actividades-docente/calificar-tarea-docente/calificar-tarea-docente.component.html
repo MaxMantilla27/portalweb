@@ -10,7 +10,7 @@ font-weight: 600;">
 
   <div style="max-height: 500px;
   overflow: auto;" >
-    <table mat-table [dataSource]="dataSource"  multiTemplateDataRows class="mat-elevation-z8 tablev2-material" style="width: 100%;" matSort>
+    <table  mat-table [dataSource]="dataSource"  multiTemplateDataRows class="mat-elevation-z8 tablev2-material" style="width: 100%;" matSort>
 
       <ng-container matColumnDef="codigo">
         <th mat-header-cell *matHeaderCellDef mat-sort-header style="text-align: center;">
@@ -126,14 +126,14 @@ font-weight: 600;">
       <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
     </table>
   </div>
-<mat-paginator [pageSizeOptions]="[10, 20]" showFirstLastButtons aria-label="Selecciona">
-</mat-paginator>
+<!-- <mat-paginator [pageSizeOptions]="[10, 20]" showFirstLastButtons aria-label="Selecciona">
+</mat-paginator> -->
 
 <div class="buttonsRegistroNota">
   <div style="margin: 0px 5px;">
     <app-default-button [confs]="{color:'primary',titulo:'Volver'}"
       [style]="'width: 100%;'"
-      (ButtoclClick)="Volver.emit()" [icon]="''"></app-default-button>
+      (ButtoclClick)="VolverAtras()" [icon]="''"></app-default-button>
   </div>
   <div style="margin: 0px 5px;">
     <app-default-button [confs]="{color:'primary',titulo:'Guardar'}"

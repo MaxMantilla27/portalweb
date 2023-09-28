@@ -75,9 +75,15 @@ export class DetallesCuestionarioComponent implements OnInit, OnDestroy {
                       }
                     });
                     p.data = [];
-                    for (let index = 0; index < maxPuntos; index++) {
-                      p.data.push(index + 1);
+                    for (let index = 0; index <= maxPuntos; index=index+5) {
+                      p.data.push(index);
                     }
+                    if (maxPuntos%5!=0){
+                      p.data.push(maxPuntos)
+                    }
+                    // for (let index = 0; index < maxPuntos; index++) {
+                    //   p.data.push(index + 1 );
+                    // }
                     p.valueSelec = null;
                   } else {
                     p.alternativas.forEach((a: any) => {

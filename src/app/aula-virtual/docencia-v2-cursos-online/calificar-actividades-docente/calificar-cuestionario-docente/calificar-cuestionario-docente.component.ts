@@ -19,22 +19,22 @@ export class CalificarCuestionarioDocenteComponent implements OnInit ,OnChanges 
   @Input() Id = 0;
   @Input() data:any;
   cargando=false
-  @Output()
-  Volver = new EventEmitter<void>();
+  // @Output() Volver = new EventEmitter<void>();
+  @Output() Volver:EventEmitter<void>=new EventEmitter<void>();
 
   columnHeader:any = {
-    codigoMatricula: 'Código',
-    nombreAlumno: 'Apellidos y Nombres',
-    fechaEntrega: 'Fecha Entrega',
-    fechaCalificacion: 'Fecha Revisión',
-    nota: 'Nota',
-    Acciones: 'Acciones',
+    'codigoMatricula': 'Código',
+    'nombreAlumno': 'Apellidos y Nombres',
+    'fechaEntrega': 'Fecha Entrega',
+    'fechaCalificacion': 'Fecha Revisión',
+    'nota': 'Nota',
+    'Acciones': 'Acciones',
   };
 
   TipoContenido: any = {
     fechaEntrega: ['date'],
     fechaCalificacion: ['date'],
-    Acciones: ['buttons', 'Ver Cuestionario'],
+    'Acciones': ['buttons', 'fechaCalificacion'],
     //'Acciones': ['buttons'],
   };
   public cuestionario: any;
@@ -63,6 +63,7 @@ export class CalificarCuestionarioDocenteComponent implements OnInit ,OnChanges 
           this.cuestionario.forEach(
             (x: any) => {
               x.idCuestionario=this.Id
+              x.Acciones=x.fechaCalificacion==null?'Calificar':'Ver Cuestionario'
             })
         }
         console.log(this.cuestionario)

@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewEncapsulation,Output, EventEmitter } from '@angular/core';
 import { MatTabChangeEvent } from '@angular/material/tabs';
 import { ActivatedRoute } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
@@ -83,4 +83,5 @@ export class DocenciaV2CursosOnlineComponent implements OnInit,OnDestroy {
     this.tabIndex=valorLoscalS
     this._SessionStorageService.SessionDeleteValue('cursoOnlineCursoIndex');
   }
+
 }

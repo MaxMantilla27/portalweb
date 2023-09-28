@@ -182,6 +182,7 @@ export class AgregarCuestionarioComponent implements OnInit, OnDestroy {
                     Alternativa: al.alternativa,
                     EsCorrecta: al.esCorrecta,
                     Puntaje: al.puntaje,
+                    Disabled:false,
                   });
                 });
               }
@@ -267,7 +268,7 @@ export class AgregarCuestionarioComponent implements OnInit, OnDestroy {
           if (x.type === HttpEventType.UploadProgress) {
             console.log(Math.round((100 * x.loaded) / x.total));
           } else if (x instanceof HttpResponse) {
-            this._SnackBarServiceService.openSnackBar("El cuestionario se ha subido correctamente.!",
+            this._SnackBarServiceService.openSnackBar("El cuestionario se ha guardado correctamente.",
             'x',
             10,
             "snackbarCrucigramaSucces")
@@ -361,6 +362,7 @@ export class AgregarCuestionarioComponent implements OnInit, OnDestroy {
                       Alternativa: al.alternativa,
                       EsCorrecta: al.esCorrecta,
                       Puntaje: al.puntaje,
+                      Disabled:false,
                     });
                   });
                 }

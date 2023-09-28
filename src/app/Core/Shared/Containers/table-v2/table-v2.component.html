@@ -64,14 +64,16 @@ overflow: auto;">
                   </ng-container>
                   <ng-template #buttons>
                     <ng-container *ngIf="(tipoContenido[tableData][0] | lowercase )=='buttons';">
-                      <ng-container *ngIf="!IsArray(tipoContenido[tableData][1])">
-                        <app-default-button [confs]="{color:'primary',titulo:tipoContenido[tableData][1]}" [icon]="''"
-                          [style]="'margin: 0px;'" (ButtoclClick)="ButtonClick.emit(element.index)"></app-default-button>
+                      <ng-container  *ngIf="!IsArray(tipoContenido[tableData][1])" >
+                       <div style="display: flex;justify-content: center">
+                        <app-default-button [confs]="{color:'primary',titulo:element[tableData]}" [icon]="''"
+                        [style]="'margin: 0px;'" (ButtoclClick)="ButtonClick.emit(element.index)"></app-default-button>
+                       </div>
                       </ng-container>
                       <ng-container *ngIf="IsArray(tipoContenido[tableData][1])">
                         <div style="display: flex;flex-wrap: wrap;justify-content: space-evenly;align-items: center;">
                           <app-default-button *ngFor="let item of tipoContenido[tableData][1],let indexb=index"
-                            [confs]="{color:'primary',titulo:item}" [icon]="''" [style]="'margin: 0px;'"
+                            [confs]="{color:'primary',titulo:item}" [icon]="''" [style]="'margin: 0px;back'"
                             (ButtoclClick)="ButtonArrayClick.emit({indexButton:indexb,index:element.index})"></app-default-button>
                         </div>
                       </ng-container>

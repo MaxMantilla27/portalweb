@@ -57,6 +57,7 @@ export class AgregarPreguntasComponent implements OnInit ,OnChanges,OnDestroy {
   });
   public tipoPregunta:Array<any>=[]
   public disabledAddPregunta=true;
+  public IdTipoPreguntaAlternativa=0;
   ngOnInit(): void {
 
     for (let index = 1; index < 11; index++) {
@@ -64,6 +65,11 @@ export class AgregarPreguntasComponent implements OnInit ,OnChanges,OnDestroy {
     }
     console.log(this.data)
     this.tipoPregunta=this.data.tipoPregunta
+    this.tipoPregunta.forEach((x:any) => {
+      if(x.valor=='Ingresar palabra'){
+        x.valor='Pregunta Abierta'
+      }
+    });
     if (this.data.pregunta != null) {
       this.Title = 'EDITAR PREGUNTA';
       this.pregunta = this.data.pregunta;
@@ -106,7 +112,8 @@ export class AgregarPreguntasComponent implements OnInit ,OnChanges,OnDestroy {
       Id:0,
       Alternativa:'',
       EsCorrecta:false,
-      Puntaje:0
+      Puntaje:0,
+      Disabled:false,
     })
   }
   getFileDetails2(event: any) {
@@ -181,6 +188,7 @@ export class AgregarPreguntasComponent implements OnInit ,OnChanges,OnDestroy {
   }
   ChangeTipoPregunta(IdTipoPregunta:number){
     console.log(IdTipoPregunta)
+    this.IdTipoPreguntaAlternativa=IdTipoPregunta,
     this.disabledAddPregunta=false;
     this.pregunta.Alternativas=[]
     if(IdTipoPregunta==3){
@@ -188,24 +196,72 @@ export class AgregarPreguntasComponent implements OnInit ,OnChanges,OnDestroy {
         Id:0,
         Alternativa:'Verdadero',
         EsCorrecta:false,
-        Puntaje:0
+        Puntaje:0,
+        Disabled:true,
       })
       this.pregunta.Alternativas.push({
         Id:0,
         Alternativa:'Falso',
         EsCorrecta:false,
-        Puntaje:0
+        Puntaje:0,
+        Disabled:true,
       })
       this.disabledAddPregunta=true;
     }
     if(IdTipoPregunta==6){
       this.pregunta.Alternativas.push({
         Id:0,
-        Alternativa:'',
+        Alternativa:' ',
         EsCorrecta:true,
-        Puntaje:0
+        Puntaje:0,
+        Disabled:true,
       })
       this.disabledAddPregunta=true;
     }
+  }
+  ValidarLimiteSeleccionado(Correcto:any,Valor:any){
+    console.log(Correcto)
+    console.log(this.IdTipoPreguntaAlternativa)
+    if(this.IdTipoPreguntaAlternativa==3 || this.IdTipoPreguntaAlternativa==5){
+      let count=0
+      this.pregunta.Alternativas.forEach((x:any) => {
+        if(Correcto==true){
+          if(count==Valor){
+            x.EsCorrecta=true
+          }
+          else{
+            x.EsCorrecta=false
+          }
+          x.Puntaje=0
+        }
+        else{
+          x.EsCorrecta=false
+        }
+        count++
+      });
+    }
+    // if(this.IdTipoPreguntaAlternativa==5){
+    //   let count=0
+    //   this.pregunta.Alternativas.forEach((x:any) => {
+    //     if(count!=Valor){
+    //       x.EsCorrecta=false
+    //     }
+    //     else{
+    //       x.EsCorrecta=true
+    //     }
+    //     x.Puntaje=0
+    //     count++
+    //   });
+    // }
+    console.log(this.pregunta.Alternativas)
+    // if(this.IdTipoPreguntaAlternativa==3){
+    //   var count=0
+    //   this.pregunta.Alternativas.forEach((x:any) => {
+    //     if(count!=Valor){
+    //       x.Correcto=false
+    //     }
+    //   });
+    // }
+
   }
 }

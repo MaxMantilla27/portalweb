@@ -18,7 +18,7 @@ export class PerfilAlumnoDocenteComponent implements OnInit ,OnChanges,OnDestroy
     'nombreAlumno': 'Nombre y Apellidos',
     'pais': 'País',
     'cargo': 'Cargo',
-    'aFormacion': 'Area Formacion',
+    'aFormacion': 'Area Formación',
     'aTrabajo': 'Area Trabajo',
     'industria':'Industria',
   };
@@ -59,7 +59,10 @@ export class PerfilAlumnoDocenteComponent implements OnInit ,OnChanges,OnDestroy
     this._PerfilAlumnosService.ObtenerPerfilAlumnos(this.IdPespecifico).pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
         this.PerfilAlumnos=x;
-        let i=1
+        console.log(this.PerfilAlumnos)
+        if(this.PerfilAlumnos!=null)
+        {
+          let i=1
         this.PerfilAlumnos.forEach((e:any)=> {
           e.index=i
           i++
@@ -70,6 +73,7 @@ export class PerfilAlumnoDocenteComponent implements OnInit ,OnChanges,OnDestroy
           e.numero=i
           i++
         });
+        }
         // console.log(this.PerfilAlumnos);
         console.log("Hola");
       }
@@ -81,7 +85,7 @@ export class PerfilAlumnoDocenteComponent implements OnInit ,OnChanges,OnDestroy
   DownloadExcel(): void {
     const fileToExport = this.PerfilAlumnos.map((items:any) => {
       return {
-       "N°": items?.index,
+       "N°": items?.numero,
        "Código": items?.codigoMatricula,
        "Nombre y Apellidos": items?.nombreAlumno,
        "País": items?.pais,

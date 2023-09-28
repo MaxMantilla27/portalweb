@@ -21,7 +21,7 @@ export class PerfilAlumnosComponent implements OnInit, OnChanges,OnDestroy {
     'nombreAlumno': 'Nombre y Apellidos',
     'pais': 'País',
     'cargo': 'Cargo',
-    'aFormacion': 'Area Formacion',
+    'aFormacion': 'Area Formación',
     'aTrabajo': 'Area Trabajo',
     'industria':'Industria',
   };

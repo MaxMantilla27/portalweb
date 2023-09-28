@@ -2,6 +2,9 @@ import { Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@
 import { Subject, takeUntil } from 'rxjs';
 import { DatosPerfilService } from 'src/app/Core/Shared/Services/DatosPerfil/datos-perfil.service';
 import { ProgramaEspecificoIntegraService } from 'src/app/Core/Shared/Services/ProgramaEspecificoIntegra/programa-especifico-integra.service';
+import { RegistrarAsistenciaOnlineComponent } from '../../docencia-v2-cursos-online/administrar-sesion/registrar-asistencia-online/registrar-asistencia-online.component';
+import { MatDialog } from '@angular/material/dialog';
+import { ProveedorService } from 'src/app/Core/Shared/Services/Proveedor/proveedor.service';
 
 @Component({
   selector: 'app-docencia-acceso-clases',
@@ -36,10 +39,13 @@ export class DocenciaAccesoClasesComponent implements OnInit,OnChanges,OnDestroy
   }
   constructor(
     private _ProgramaEspecificoIntegraService:ProgramaEspecificoIntegraService,
-    private _DatosPerfilService:DatosPerfilService
+    private _DatosPerfilService:DatosPerfilService,
+    public dialog: MatDialog,
+    private _ProveedorService:ProveedorService,
   ) { }
   @Input() IdProveedor=0;
-    public TerminaCarga=false
+  public TerminaCarga=false
+  public DataProveedor:any
   ngOnInit(): void {
     this.TerminaCarga=false
   }
@@ -49,6 +55,7 @@ export class DocenciaAccesoClasesComponent implements OnInit,OnChanges,OnDestroy
     if(this.IdProveedor>0){
       this.TerminaCarga=false;
       this.ObtenerSesionesOnlineWebinarDocente()
+      this.ObtenerInformacionProveedor();
     }
   }
   ObtenerSesionesOnlineWebinarDocente(){
@@ -139,5 +146,26 @@ export class DocenciaAccesoClasesComponent implements OnInit,OnChanges,OnDestroy
         }
       });
     }, 5000);
+  }
+  ObtenerInformacionProveedor(){
+    this._ProveedorService.ObtenerInformacionProveedor().pipe(takeUntil(this.signal$)).subscribe({
+      next:x=>{
+        this.DataProveedor=x
+      }
+    })
+  }
+  OpenAsistencias(item:any){
+    const dialogRef = this.dialog.open(RegistrarAsistenciaOnlineComponent, {
+      width: '1000px',
+      data: { IdPespecifico: item.idPEspecificoHijo,IdSesion:item.idSesion,Sesion:item,correo:this.DataProveedor.email },
+      panelClass: 'dialog-Tarjeta',
+     disableClose:true
+    });
+
+    dialogRef.afterClosed().pipe(takeUntil(this.signal$)).subscribe((result) => {
+      if(result!=undefined){
+
+      }
+    });
   }
 }

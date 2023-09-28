@@ -19,6 +19,7 @@ import {
 } from '@angular/cdk/drag-drop';
 import { MatDialog } from '@angular/material/dialog';
 import { ChangeWordComponent } from 'src/app/Core/Shared/Containers/Dialog/change-word/change-word.component';
+import { AlertaService } from 'src/app/shared/services/alerta.service';
 
 @Component({
   selector: 'app-pespecifico-sesion-tema',
@@ -37,6 +38,8 @@ export class PespecificoSesionTemaComponent
   constructor(
     private _PespecificoSesionTemaService: PespecificoSesionTemaService,
     public dialog: MatDialog,
+    private alertaService: AlertaService,
+
   ) {}
 
   public update:PespecificoSesionTemaUpdateDTO={
@@ -110,14 +113,19 @@ export class PespecificoSesionTemaComponent
     });
   }
   EliminarTemaSesion(index:number) {
-    this.charge = true;
-    this.delete.Id=this.temas[index].id;
-    this._PespecificoSesionTemaService.EliminarTemaSesion(this.delete).pipe(takeUntil(this.signal$))
-    .subscribe({
-      next: (x) => {
-        console.log(x);
-        this.ObtenerPespecificoSesionTemaPorSesion();
-      },
+    this.alertaService.mensajeEliminar().then((result) => {
+      if (result.isConfirmed) {
+        this.OrdenarTemaSesion(this.temas[index].id,0)
+        this.charge = true;
+        this.delete.Id=this.temas[index].id;
+        this._PespecificoSesionTemaService.EliminarTemaSesion(this.delete).pipe(takeUntil(this.signal$))
+        .subscribe({
+          next: (x) => {
+            console.log(x);
+            this.ObtenerPespecificoSesionTemaPorSesion();
+          },
+        });
+      }
     });
   }
   InsertarTemaSesion() {
@@ -134,6 +142,7 @@ export class PespecificoSesionTemaComponent
     });
   }
   drop(event: CdkDragDrop<string[]>) {
+    console.log(event)
     moveItemInArray(this.temas, event.previousIndex, event.currentIndex);
     this.OrdenarTemaSesion(this.temas[event.currentIndex].id,event.currentIndex+1)
   }

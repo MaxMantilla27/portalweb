@@ -18,11 +18,11 @@
         <div class="col-4 col-md-2 col-lg-2">
           <div class="contentLeftPreguntas" style="font-size: 15px;">
             <div>Pregunta {{(i+1)>9?i+1:'0'+(i+1).toString()}}</div>
-            <ng-container *ngIf="item.idPreguntaTipo==6">
+            <!-- <ng-container *ngIf="item.idPreguntaTipo==6">
               <ng-container *ngIf="fechacalificacion!=undefined && fechacalificacion!=null">
                 <div class="resultado" [ngClass]="{'esResultadoCorrecto': item.FinalCorecto==true}">{{item.FinalCorecto==true?'Correcta':'Incorrecta'}}</div>
               </ng-container>
-            </ng-container>
+            </ng-container> -->
             <ng-container *ngIf="item.idPreguntaTipo!=6">
               <div class="resultado" [ngClass]="{'esResultadoCorrecto': item.FinalCorecto==true}">{{item.FinalCorecto==true?'Correcta':'Incorrecta'}}</div>
             </ng-container>

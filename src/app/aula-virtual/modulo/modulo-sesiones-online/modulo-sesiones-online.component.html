@@ -1,4 +1,5 @@
 <ng-container *ngIf="sesiones!=null">
+  <div class="cursoTitle">{{Capitulo}}</div>
   <ng-container *ngFor="let item of sesiones;let i = index">
     <div class="SesionOnlineCard row" style="align-items: center;">
       <div class="col-12 col-md-6 col-lg-6 LeftSesionOnline">
@@ -6,7 +7,7 @@
         <div class="FechaSesionOnline">
           <div class="iconFecha"></div>
           <div>{{item.fechaHoraInicio | date:'hh:mm a'}} a {{item.fechaHoraFinal | date:'hh:mm a'}} del
-            {{item.fechaHoraInicio | date :'dd/MM/yyyy'}}</div>
+            {{item.fechaHoraInicio | date :'dd-MM-yyyy'}}</div>
         </div>
       </div>
       <div class="col-12 col-md-6 col-lg-6 RigthSesionOnline">
@@ -40,8 +41,8 @@
           </div>
           <div class="contentCardSesionOnline" *ngIf="item.OpenTema==true">
             <div class="titleTemaSesion">Temas desarrollados en esta sesión:</div>
-            <ng-container *ngFor="let tema of item.temas">
-              <div class="temaSesion">{{tema.tema}}</div>
+            <ng-container *ngFor="let tema of item.temas;let i=index">
+              <div class="temaSesion">Tema {{i+1}}: {{tema.tema}}</div>
             </ng-container>
 
           </div>
@@ -67,14 +68,14 @@
               <div class="FechaEntregaActividad">
                 <div class="iconFecha"></div>
                 <div> <strong> Fecha de entrega:</strong> {{tars.fechaEntrega | date:'hh:mm a'}} del
-                  {{tars.fechaEntrega | date :'dd/MM/yyyy'}}</div>
+                  {{tars.fechaEntrega | date :'dd-MM-yyyy'}}</div>
               </div>
               <ng-container *ngIf="tars.tareas!=null && tars.tareas.length>0">
                 <div  class="FechaEntregaActividad" style="margin-top: 15px;">
 
                   <div class="iconFechaEntrega"></div>
                   <div> <strong> Enviado: </strong> {{tars.tareas[tars.tareas.length-1].fechaCreacion | date:'hh:mm a'}}
-                    del {{tars.tareas[tars.tareas.length-1].fechaCreacion | date :'dd/MM/yyyy'}}</div>
+                    del {{tars.tareas[tars.tareas.length-1].fechaCreacion | date :'dd-MM-yyyy'}}</div>
                 </div>
                 <ng-container *ngIf="tars.tareas[tars.tareas.length-1].nota!=null">
                   <div  class="FechaEntregaActividad" style="margin-top: 15px;">
@@ -121,7 +122,7 @@
               <div class="FechaEntregaActividad">
                 <div class="iconFecha"></div>
                 <div> <strong> Fecha de entrega:</strong> {{cuest.fechaEntrega | date:'hh:mm a'}} del
-                  {{cuest.fechaEntrega | date :'dd/MM/yyyy'}}</div>
+                  {{cuest.fechaEntrega | date :'dd-MM-yyyy'}}</div>
               </div>
 
               <ng-container *ngIf="cuest.respuestaCuestionario==null || cuest.respuestaCuestionario.length==0">
@@ -136,7 +137,7 @@
 
                   <div class="iconFechaEntrega"></div>
                   <div> <strong> Enviado: </strong> {{cuest.respuestaCuestionario[cuest.respuestaCuestionario.length-1].fechaEntrega | date:'hh:mm a'}}
-                    del {{cuest.respuestaCuestionario[cuest.respuestaCuestionario.length-1].fechaEntrega | date :'dd/MM/yyyy'}}</div>
+                    del {{cuest.respuestaCuestionario[cuest.respuestaCuestionario.length-1].fechaEntrega | date :'dd-MM-yyyy'}}</div>
                 </div>
                 <ng-container *ngIf="cuest.respuestaCuestionario[cuest.respuestaCuestionario.length-1].fechaCalificacion!=null">
                   <div  class="FechaEntregaActividad" style="margin-top: 15px;">
@@ -151,7 +152,7 @@
             </div>
 
             <ng-container *ngIf="cuest.respuestaCuestionario==null || cuest.respuestaCuestionario==0">
-              <app-default-button [confs]="{color:'primary',titulo:'Enviar >'}" [icon]="''"
+              <app-default-button [confs]="{color:'primary',titulo:'Ingresar >'}" [icon]="''"
                 [style]="'border-radius: 20px;margin: 5px 0px 0px;width: 100%;padding: 0px 40px;'"
                 [disabled]="cuest.disabled" (ButtoclClick)="EnviarCuestionario(i,t)"></app-default-button>
             </ng-container>

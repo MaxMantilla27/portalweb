@@ -82,7 +82,7 @@
 
               <div class="col-12 col-md-2 col-lg-2" style="    display: flex;justify-content: flex-end;padding: 0px;">
                 <app-default-button (ButtoclClick)="IrACalificar(item)"
-                [confs]="{color:'primary',titulo:(item.cantidadEnviados - item.cantidadCalificados)<=0?'Ver Calificadas':'Calificar'}"
+                [confs]="{color:'primary',titulo:(item.cantidadEnviados - item.cantidadCalificados)<=0?'Ver Calificados':'Calificar'}"
                   [icon]="''" [style]="'border-radius: 5px; margin: 0px; padding: 0px 30px;'"></app-default-button>
               </div>
             </div>
@@ -98,9 +98,8 @@
           <div class="Volver" (click)="IrCurso=-1">Volver</div>
       </div> -->
       <div class="col-12">
-        <app-calificar-cuestionario-docente *ngIf="Estarea==false" [Id]="IrCurso" [data]="itemSelect" (Volver)="IrCurso=-1"></app-calificar-cuestionario-docente>
-        <app-calificar-tarea-docente *ngIf="Estarea==true" [Id]="IrCurso" [data]="itemSelect" (Volver)="IrCurso=-1"></app-calificar-tarea-docente>
-
+        <app-calificar-cuestionario-docente  (Volver)="RefrescarListaCalificar()" *ngIf="Estarea==false" [Id]="IrCurso" [data]="itemSelect" (Volver)="IrCurso=-1"></app-calificar-cuestionario-docente>
+        <app-calificar-tarea-docente (Volver)="RefrescarListaCalificar()"  *ngIf="Estarea==true" [Id]="IrCurso" [data]="itemSelect" (Volver)="IrCurso=-1"></app-calificar-tarea-docente>
       </div>
     </div>
   </ng-container>

@@ -35,8 +35,8 @@
     <div class="col-6 col-md-3 col-lg-3 labelTarea">Descripción</div>
     <div class="col-6 col-md-9 col-lg-9 InputsDocencia">
       <mat-form-field appearance="outline" style="width: 100%;">
-        <mat-label>Ingresar Descripción de la Tarea</mat-label>
-        <input type="text" placeholder="Ingresar Descripción de la Tarea" formControlName="Descripcion" matInput>
+        <mat-label>Ingresar Descripción de la Pregunta (Opcional)</mat-label>
+        <input type="text" placeholder="Ingresar Descripción de la Pregunta (Opcional)" formControlName="Descripcion" matInput>
       </mat-form-field>
     </div>
 
@@ -84,11 +84,13 @@
         </tr>
         <tr  *ngFor="let item of pregunta.Alternativas;let i=index"  style="height: 40px;background: #f1f1f1;">
           <td class="box-label" style="position: relative;border: #a7a3a3 2px solid;">
-            <input style="border-bottom: transparent solid 1px!important;" type="text" placeholder="Descripción Alternativa" [(ngModel)]="item.Alternativa" class="inputTextoDocente">
+            <input style="border-bottom: transparent solid 1px!important;" type="text" placeholder="Descripción Alternativa" [(ngModel)]="item.Alternativa" [disabled]="item.Disabled" class="inputTextoDocente">
 
           </td>
-          <td style="cursor: pointer;    text-align: center;border: #a7a3a3 2px solid;" (click)="item.EsCorrecta==true?item.Puntaje=0:'';item.EsCorrecta=!item.EsCorrecta">
+          <td style="cursor: pointer;    text-align: center;border: #a7a3a3 2px solid;" (click)="item.EsCorrecta==true?item.Puntaje=0:'';item.EsCorrecta=!item.EsCorrecta;ValidarLimiteSeleccionado(item.EsCorrecta,i)" >
             <i class="material-icons" *ngIf="item.EsCorrecta==true" style="color: #5e9b00  !important;">radio_button_on</i>
+            <!-- <i class="material-icons" *ngIf="item.EsCorrecta==true" style="color: #5e9b00  !important;"(click)="ValidarLimiteSeleccionado(item,i)">radio_button_on</i>
+            <i class="material-icons" *ngIf="item.EsCorrecta==true" style="color: #5e9b00  !important;"(click)="ValidarLimiteSeleccionado(item,i)">radio_button_on</i> -->
             <i class="material-icons" *ngIf="item.EsCorrecta==false" >radio_button_off</i>
           </td>
           <td  style="position: relative;border: #a7a3a3 2px solid;" >
@@ -113,8 +115,10 @@
             </div>
 
           </td>
-          <td style="cursor: pointer;    text-align: center;border: #a7a3a3 2px solid;" (click)="EliminarAlternatica(i)">
+          <td *ngIf="item.Disabled==false" style="cursor: pointer;    text-align: center;border: #a7a3a3 2px solid;" (click)="EliminarAlternatica(i)">
             <i class="material-icons" style="color: red  !important;">close</i>
+          </td>
+          <td *ngIf="item.Disabled==true" style="cursor: pointer;    text-align: center;border: #a7a3a3 2px solid;">
           </td>
         </tr>
       </table>
@@ -123,8 +127,8 @@
     <div class="col-6 col-md-3 col-lg-3 labelTarea">Retroalimentación</div>
     <div class="col-6 col-md-9 col-lg-9 InputsDocencia">
       <mat-form-field appearance="outline" >
-        <mat-label>Ingresar Retroalimentación</mat-label>
-        <input type="text" placeholder="Ingresar Descripción de la Tarea" [(ngModel)]="pregunta.Retroalimentacion" matInput>
+        <mat-label>Ingresar Retroalimentación de la Pregunta (Opcional)</mat-label>
+        <input type="text" placeholder="Ingresar Retroalimentación de la Pregunta (Opcional)" [(ngModel)]="pregunta.Retroalimentacion" matInput>
       </mat-form-field>
     </div>
     <div class="col-6 col-md-3 col-lg-3 labelTarea">Adjuntar Imagen/Archivo</div>
