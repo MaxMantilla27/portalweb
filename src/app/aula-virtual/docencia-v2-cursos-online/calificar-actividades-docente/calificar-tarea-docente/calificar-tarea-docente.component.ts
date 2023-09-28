@@ -230,7 +230,7 @@ export class CalificarTareaDocenteComponent implements OnInit,OnChanges , OnDest
       data:{title:name},
      disableClose:true
     });
-
+  }
   VolverAtras(){
     this.Volver.emit()
   }
