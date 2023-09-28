@@ -82,7 +82,6 @@ export class PagoComponent implements OnInit,OnDestroy {
           if(i==0){
             this.idMatricula = parseInt(param['IdMatricula']);
             this.idPais = x.datosAlumno.idPais
-            this.VerificarEstadoAfiliacion()
             this.ObtenerPasarela()
             this.ObtenerCronogramaPagoMatricula()
             i++
@@ -116,7 +115,7 @@ export class PagoComponent implements OnInit,OnDestroy {
   }
 
   VerificarEstadoAfiliacion(){
-    if(this.idPais==51 || this.idPais==52)
+    if(this.idPais==51 || this.idPais==52 || this.idPais==57)
       {
         this._FormaPagoService.ValidacionSuscripcion(this.idMatricula,this.idPasarela).pipe(takeUntil(this.signal$)).subscribe({
           next:x=>{
@@ -199,6 +198,9 @@ export class PagoComponent implements OnInit,OnDestroy {
       next:x=>{
         console.log("tarjeta",x)
         this.idPasarela=x[0].idPasarelaPago?x[0].idPasarelaPago:0
+
+        this.VerificarEstadoAfiliacion()
+
       },
       error:e=>{
         console.log(e)
@@ -344,7 +346,7 @@ export class PagoComponent implements OnInit,OnDestroy {
           this._SessionStorageService.SessionSetValue(sesion,x._Repuesta.requiereDatosTarjeta);
           console.log(parseInt(tarjeta.idPasarelaPago))
   
-          if(tarjeta.idPasarelaPago==5){ //OpenPay
+          if(tarjeta.idPasarelaPago==5 || tarjeta.idPasarelaPago==16){ //OpenPay
             this._router.navigate(['/AulaVirtual/MisPagos/Afiliacion/'+this.idMatricula+'/openpay/'+sesion]);
           }
           else if(tarjeta.idPasarelaPago==7){ //visa
@@ -436,6 +438,12 @@ export class PagoComponent implements OnInit,OnDestroy {
           }
           if(parseInt(tarjeta.idPasarelaPago)==13){
             this._router.navigate(['/AulaVirtual/MisPagos/'+this.idMatricula+'/izipay/'+sesion]);
+          }
+          if(parseInt(tarjeta.idPasarelaPago)==16){
+            this._router.navigate(['/AulaVirtual/MisPagos/'+this.idMatricula+'/openpayCOP/'+sesion]);
+          }
+          if(parseInt(tarjeta.idPasarelaPago)==17){//Mercado Pago
+            this._router.navigate(['/AulaVirtual/MisPagos/'+this.idMatricula+'/mercadoPago/'+sesion]);
           }
         }
       },

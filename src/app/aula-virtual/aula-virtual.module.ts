@@ -108,6 +108,9 @@ import { VisaRecurrenteComponent } from './resultado-pago-recurrente/visa-recurr
 import { OfertaLaboralComponent } from './bolsa-trabajo/oferta-laboral/oferta-laboral.component';
 import { MisPostulacionesComponent } from './bolsa-trabajo/mis-postulaciones/mis-postulaciones.component';
 import { DevolverProyectoComponent } from './docencia-tareas/devolver-proyecto/devolver-proyecto.component';
+import { ConfirmacionPagoOpenpayColombiaComponent } from './confirmacion-pago-openpay-colombia/confirmacion-pago-openpay-colombia.component';
+import { ConfirmacionPagoMercadoPagoChileComponent } from './confirmacion-pago-mercado-pago-chile/confirmacion-pago-mercado-pago-chile.component';
+import { ResultadoPagoMercadopagoComponent } from './resultado-pago-mercadopago/resultado-pago-mercadopago.component';
 
 import { AsistenciaAlumnoComponent } from './curso/asistencia-alumno/asistencia-alumno.component';
 import { ConfirmCertFisicoComponent } from './curso/curso-certificado-fisico/confirm-cert-fisico/confirm-cert-fisico.component';
@@ -262,6 +265,9 @@ import { DetallesCuestionarioComponent } from './docencia-v2-cursos-online/calif
     OfertaLaboralComponent,
     MisPostulacionesComponent,
     DevolverProyectoComponent,
+    ConfirmacionPagoOpenpayColombiaComponent,
+    ConfirmacionPagoMercadoPagoChileComponent,
+    ResultadoPagoMercadopagoComponent,
     AsistenciaAlumnoComponent,
     ConfirmCertFisicoComponent,
     PerfilAlumnosComponent,
@@ -309,7 +315,6 @@ import { DetallesCuestionarioComponent } from './docencia-v2-cursos-online/calif
     CalificarCuestionarioDocenteComponent,
     CalificarTareaDocenteComponent,
     DetallesCuestionarioComponent,
-
 
   ],
   imports: [
