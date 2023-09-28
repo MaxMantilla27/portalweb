@@ -190,7 +190,7 @@ export class PagoComponent implements OnInit,OnDestroy {
     this.total=0
     this.CronogramaPago.registroCuota.forEach((r:any) => {
       if(r.estado==true){
-        this.total+=r.cuota
+        this.total+=r.cuota+r.moraCalculada
       }
     });
   }
