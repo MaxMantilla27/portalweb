@@ -8,8 +8,12 @@ import { Subject, takeUntil } from 'rxjs';
 import { CalificarTareaAlumnoOnlineDTO } from 'src/app/Core/Models/PEspecificoEsquema';
 import { PEspecificoEsquemaService } from 'src/app/Core/Shared/Services/PEspecificoEsquema/pespecifico-esquema.service';
 import { SnackBarServiceService } from 'src/app/Core/Shared/Services/SnackBarService/snack-bar-service.service';
+<<<<<<< HEAD
 import { LineamientosTareaOnlineComponent } from './lineamientos-tarea-online/lineamientos-tarea-online.component';
 import { MatDialog } from '@angular/material/dialog';
+=======
+import { HelperService } from 'src/app/Core/Shared/Services/helper.service';
+>>>>>>> 3ea246b17849540c66206b1adc0ea62d255e3b79
 
 @Component({
   selector: 'app-calificar-tarea-docente',
@@ -38,8 +42,9 @@ export class CalificarTareaDocenteComponent implements OnInit,OnChanges , OnDest
   @Input() Id = 0;
   @Input() data:any;
 
-  @Output()
-  Volver = new EventEmitter<void>();
+  // @Output()
+  // Volver = new EventEmitter<void>();
+  @Output() Volver:EventEmitter<void>=new EventEmitter<void>();
   dataSource :any;
   public file:any;
 
@@ -51,7 +56,11 @@ export class CalificarTareaDocenteComponent implements OnInit,OnChanges , OnDest
   constructor(
     private _PEspecificoEsquemaService: PEspecificoEsquemaService,
     private _SnackBarServiceService:SnackBarServiceService,
+<<<<<<< HEAD
     public dialog: MatDialog,
+=======
+    private _HelperService:HelperService
+>>>>>>> 3ea246b17849540c66206b1adc0ea62d255e3b79
     ) { }
 
     columnsToDisplay = ['codigo', 'nombre', 'entrega', 'archivo', 'version', 'calificacion', 'nota','retro'];
@@ -65,13 +74,13 @@ export class CalificarTareaDocenteComponent implements OnInit,OnChanges , OnDest
   cargando=false
   ngAfterViewInit (){
 
-    this.paginator._intl.itemsPerPageLabel = 'Ítems por página';
-    this.paginator._intl.getRangeLabel = (page: number, pageSize: number, length: number) => {
-      const start = page * pageSize + 1;
-      const end = (length<(page + 1) * pageSize)?length:(page + 1) * pageSize;
-      return `Página ${page+1} de ${Math.ceil(length/pageSize)}`;
-      // return `pag${start} - ${end} de ${length}`;
-    };
+    // this.paginator._intl.itemsPerPageLabel = 'Ítems por página';
+    // this.paginator._intl.getRangeLabel = (page: number, pageSize: number, length: number) => {
+    //   const start = page * pageSize + 1;
+    //   const end = (length<(page + 1) * pageSize)?length:(page + 1) * pageSize;
+    //   return `Página ${page+1} de ${Math.ceil(length/pageSize)}`;
+    //   // return `pag${start} - ${end} de ${length}`;
+    // };
   }
   ngOnChanges(changes: SimpleChanges): void {
     console.log(this.data)
@@ -175,7 +184,7 @@ export class CalificarTareaDocenteComponent implements OnInit,OnChanges , OnDest
       }
     });
     console.log(this.tableData)
-    this._SnackBarServiceService.openSnackBar("Se adjunto el archivo",'x',15,"snackbarCrucigramaSucces");
+    this._SnackBarServiceService.openSnackBar("Se adjuntó el archivo",'x',15,"snackbarCrucigramaSucces");
   }
   CalificarTareaAlumnoOnline(){
     this.cargando=true
@@ -201,7 +210,7 @@ export class CalificarTareaDocenteComponent implements OnInit,OnChanges , OnDest
           if (x.type === HttpEventType.UploadProgress) {
             console.log(Math.round((100 * x.loaded) / x.total));
           } else if (x instanceof HttpResponse) {
-            this._SnackBarServiceService.openSnackBar("Se calificaron las notas",'x',15,"snackbarCrucigramaSucces");
+            this._SnackBarServiceService.openSnackBar("Se calificó la tarea",'x',15,"snackbarCrucigramaSucces");
             this.ObtenerListaTareaAlumnoOnline()
           }
         },
@@ -222,5 +231,7 @@ export class CalificarTareaDocenteComponent implements OnInit,OnChanges , OnDest
      disableClose:true
     });
 
+  VolverAtras(){
+    this.Volver.emit()
   }
 }

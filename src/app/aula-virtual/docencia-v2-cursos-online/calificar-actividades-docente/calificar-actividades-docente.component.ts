@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges, ViewEncapsulation } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges, ViewEncapsulation } from '@angular/core';
 import { Subject, takeUntil } from 'rxjs';
 import { PEspecificoEsquemaService } from 'src/app/Core/Shared/Services/PEspecificoEsquema/pespecifico-esquema.service';
 
@@ -25,6 +25,7 @@ export class CalificarActividadesDocenteComponent implements OnInit ,OnChanges, 
       this.ObtenerCriteriosEvaluacionPespecifico();
     }
   }
+
   ngOnInit(): void {
   }
 
@@ -45,7 +46,6 @@ export class CalificarActividadesDocenteComponent implements OnInit ,OnChanges, 
     this._PEspecificoEsquemaService.ObtenerCriteriosEvaluacionPespecifico(this.IdPespecifico).pipe(takeUntil(this.signal$))
     .subscribe({
       next: (x) => {
-
         console.log(x);
         this.criterios=[];
 
@@ -99,5 +99,8 @@ export class CalificarActividadesDocenteComponent implements OnInit ,OnChanges, 
       this.Estarea=false
     }
     console.log(this.IrCurso,this.Estarea)
+  }
+  RefrescarListaCalificar(){
+    this.ObtenerCriteriosEvaluacionPespecifico();
   }
 }

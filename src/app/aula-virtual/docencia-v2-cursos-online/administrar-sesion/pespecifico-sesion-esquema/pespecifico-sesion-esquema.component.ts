@@ -7,6 +7,7 @@ import { HttpEventType, HttpResponse } from '@angular/common/http';
 import { AgregarTareaComponent } from './agregar-tarea/agregar-tarea.component';
 import { AgregarCuestionarioComponent } from './agregar-cuestionario/agregar-cuestionario.component';
 import { SnackBarServiceService } from 'src/app/Core/Shared/Services/SnackBarService/snack-bar-service.service';
+import { AlertaService } from 'src/app/shared/services/alerta.service';
 
 @Component({
   selector: 'app-pespecifico-sesion-esquema',
@@ -24,6 +25,8 @@ export class PespecificoSesionEsquemaComponent implements OnInit ,OnChanges, OnD
     private _PEspecificoEsquemaService: PEspecificoEsquemaService,
     public dialog: MatDialog,
     public _SnackBarServiceService: SnackBarServiceService,
+    private alertaService: AlertaService,
+
   ) {}
   public ActividadSelect=-1
   public charge = false;
@@ -149,51 +152,53 @@ export class PespecificoSesionEsquemaComponent implements OnInit ,OnChanges, OnD
   Eliminar(i:number,item:any){
     console.log(i)
     console.log(item)
-    if(item.tipo=='Cuestionario'){
-      this._PEspecificoEsquemaService.EliminarPEspecificoSesionCuestionario(item.id).pipe(takeUntil(this.signal$)).subscribe({
-      next: (x:any) => {
-      },
-      complete:()=>{
-        this._SnackBarServiceService.openSnackBar("El cuestionario se ha eliminado correctamente!",
-        'x',
-        10,
-        "snackbarCrucigramaSucces")
-        this.ObtenerActividadesRecursoSesionDocente();
+    this.alertaService.mensajeEliminar().then((result) => {
+      if (result.isConfirmed) {
+        if(item.tipo=='Cuestionario'){
+          this._PEspecificoEsquemaService.EliminarPEspecificoSesionCuestionario(item.id).pipe(takeUntil(this.signal$)).subscribe({
+          next: (x:any) => {
+          },
+          complete:()=>{
+            this._SnackBarServiceService.openSnackBar("El cuestionario se ha eliminado correctamente.",
+            'x',
+            10,
+            "snackbarCrucigramaSucces")
+            this.ObtenerActividadesRecursoSesionDocente();
 
+          }
+          });
+        }
+        if(item.tipo=='Material Adicional'){
+          this._PEspecificoEsquemaService.EliminarPEspecificoSesionMaterialAdicional(item.id).pipe(takeUntil(this.signal$)).subscribe({
+            next: (x:any) => {
+            },
+            complete:()=>{
+              this._SnackBarServiceService.openSnackBar("El material adicional se ha eliminado correctamente.",
+              'x',
+              10,
+              "snackbarCrucigramaSucces")
+              this.ObtenerActividadesRecursoSesionDocente();
+
+            }
+          });
+        }
+        console.log(item.tipo)
+        if(item.tipo=='Tarea'){
+          console.log('INGRESO')
+          this._PEspecificoEsquemaService.EliminarPEspecificoSesionTarea(item.id).pipe(takeUntil(this.signal$)).subscribe({
+            next: (x:any) => {
+            },
+            complete:()=>{
+              this._SnackBarServiceService.openSnackBar("La tarea se ha eliminado correctamente.",
+              'x',
+              10,
+              "snackbarCrucigramaSucces")
+              this.ObtenerActividadesRecursoSesionDocente();
+            }
+          });
+        }
       }
-      });
-    }
-    if(item.tipo=='Material Adicional'){
-      this._PEspecificoEsquemaService.EliminarPEspecificoSesionMaterialAdicional(item.id).pipe(takeUntil(this.signal$)).subscribe({
-        next: (x:any) => {
-        },
-        complete:()=>{
-          this._SnackBarServiceService.openSnackBar("El matrial adicional se ha eliminado correctamente!",
-          'x',
-          10,
-          "snackbarCrucigramaSucces")
-          this.ObtenerActividadesRecursoSesionDocente();
-
-        }
-      });
-    }
-    console.log(item.tipo)
-    if(item.tipo=='Tarea'){
-      console.log('INGRESO')
-      this._PEspecificoEsquemaService.EliminarPEspecificoSesionTarea(item.id).pipe(takeUntil(this.signal$)).subscribe({
-        next: (x:any) => {
-        },
-        complete:()=>{
-          this._SnackBarServiceService.openSnackBar("La Tarea se ha eliminado correctamente!",
-          'x',
-          10,
-          "snackbarCrucigramaSucces")
-          this.ObtenerActividadesRecursoSesionDocente();
-        }
-      });
-    }
-
-
+    });
   }
   Agregar(){
     console.log(this.ActividadSelect)

@@ -104,7 +104,7 @@ export class MaterialEstudioDocenteComponent implements OnInit, OnDestroy {
     //   a.click()
     // }
     var i=0
-    if(this.presentaciones!=null){
+    if(this.presentaciones!=null && this.presentaciones.length>0){
       this.presentaciones.forEach(item => {
         if(item.enlaceArchivo.split('.')[item.enlaceArchivo.split('.').length-1]=='pdf'){
           var blob = new Blob([item.enlaceArchivo.includes('https')?item.enlaceArchivo:'https://repositorioweb.blob.core.windows.net/repositorioweb/aulavirtual/material-adiconal/'+item.enlaceArchivo], { type: 'application/pdf' });
@@ -120,7 +120,7 @@ export class MaterialEstudioDocenteComponent implements OnInit, OnDestroy {
         i++
       });
     }
-    if(this.material!=null){
+    if(this.material!=null && this.material.length>0){
       this.material.forEach(item => {
         if(item.urlArchivoSubido.split('.')[item.urlArchivoSubido.split('.').length-1]=='pdf'){
           var blob = new Blob([item.urlArchivoSubido], { type: 'application/pdf' });
@@ -133,6 +133,7 @@ export class MaterialEstudioDocenteComponent implements OnInit, OnDestroy {
           var file =  new File([blob], item.nombreArchivo+'.'+item.urlArchivoSubido.split('.')[item.urlArchivoSubido.split('.').length-1], { type: 'application/'+item.urlArchivoSubido.split('.')[item.urlArchivoSubido.split('.').length-1] });
           saveAs(file)
         }
+        i++
       });
     }
   }

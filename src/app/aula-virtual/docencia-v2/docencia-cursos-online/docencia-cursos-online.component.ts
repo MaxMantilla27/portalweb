@@ -36,6 +36,7 @@ export class DocenciaCursosOnlineComponent implements OnInit,OnDestroy {
       next:x=>{
         this.TerminaCarga=true;
         this.Cursos=x
+        console.log(this.Cursos)
         if(this.Cursos!=null){
           if(this.Cursos.length!=0){
             this.Cursos.forEach((c:any) => {

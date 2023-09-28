@@ -13,7 +13,7 @@
         <div class="programaOnlines">{{item.cursoNombre}}</div>
         <div class="dataOnlineFechas">
           <div class="tagFechaOnlines">Hoy</div>
-          <div class="sesionesOnline">Sesión {{item.orden+' de '+ item.maximo}}</div>
+          <!-- <div class="sesionesOnline">Sesión {{item.orden+' de '+ item.maximo}}</div> -->
           <div class="fechasOnline">{{item.fechaHoraInicio | date:'hh:mm a'}} a {{item.fechaHoraFinal | date:'hh:mm a'}} - (Hora {{item.nombrePais}})
           </div>
         </div>
@@ -30,8 +30,13 @@
               [style]="'margin: 0px;    border-radius: 5px;color: white;background: #70ad47;width: 100%; '"></app-default-button>
           </a>
         </ng-container>
-        <ng-container *ngIf="item.tipo!='Webinar'">
+        <!-- <ng-container *ngIf="item.tipo!='Webinar'">
           <app-default-button [ruta]="item.idPEspecificoHijo" [confs]="{color:'primary',titulo:'Administrar Sesión'}" [icon]="''"
+            [style]="'margin: 0px;    border-radius: 5px;color: white;background:rgb(237 125 49);width: 100%; margin-top: 14px;'"></app-default-button>
+        </ng-container> -->
+        <ng-container *ngIf="item.tipo!='Webinar'">
+          <app-default-button [confs]="{color:'primary',titulo:'Registrar Asistencia'}" [icon]="''"
+            (ButtoclClick)="OpenAsistencias(item)"
             [style]="'margin: 0px;    border-radius: 5px;color: white;background:rgb(237 125 49);width: 100%; margin-top: 14px;'"></app-default-button>
         </ng-container>
 
@@ -82,6 +87,6 @@
   <ng-container *ngIf="OpenProx==true">
 
     <app-table-v2 *ngIf="tableData!=undefined" [tableData]="tableData" [columnHeader]="columnHeader"
-      [tipoContenido]="TipoContenido" [StyleContent]="'    font-size: 12px;padding: 10px;'"></app-table-v2>
+      [tipoContenido]="TipoContenido"  [Paginador]="false"  [StyleContent]="'  font-size: 12px;padding: 10px;'"></app-table-v2>
   </ng-container>
 </ng-container>

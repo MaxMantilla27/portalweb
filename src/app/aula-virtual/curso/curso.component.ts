@@ -112,6 +112,7 @@ export class CursoComponent implements OnInit,OnDestroy {
   public videosOnline:Array<any>=[]
   public asistencias:any
   public IdModalidadPrincipal=0
+  public MostrarMensajeRecuerda=false;
   public contenidotarea=
   '<iframe src="https://player.vimeo.com/video/737713694?h=ce19c25ba1" width="100%" height="564" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>'
   public contenidotareapares=
@@ -455,6 +456,9 @@ export class CursoComponent implements OnInit,OnDestroy {
               },)
 
             this.programEstructura.listaCursoMatriculado.forEach((program) => {
+              if(program.idModalidadHijo==1){
+                this.MostrarMensajeRecuerda=true;
+              }
               var params: ParametrosEstructuraEspecificaDTO = {
                 AccesoPrueba: false,
                 IdMatriculaCabecera: this.programEstructura.idMatriculaCabecera,

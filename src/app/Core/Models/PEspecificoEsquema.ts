@@ -30,6 +30,8 @@ export interface PEspecificoSesionCuestionarioPreguntaAlternativaDTO {
   Alternativa: string,
   EsCorrecta: boolean;
   Puntaje: number;
+  Disabled: boolean;
+
 }
 export interface PEspecificoSesionTareaSaveDTO {
   Id?: number;

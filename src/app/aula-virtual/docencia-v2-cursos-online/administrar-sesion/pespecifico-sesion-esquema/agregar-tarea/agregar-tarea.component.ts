@@ -174,7 +174,7 @@ export class AgregarTareaComponent implements OnInit, OnDestroy {
           if (x.type === HttpEventType.UploadProgress) {
             console.log(Math.round((100 * x.loaded) / x.total));
           } else if (x instanceof HttpResponse) {
-            this._SnackBarServiceService.openSnackBar("La tarea se ha subido correctamente",
+            this._SnackBarServiceService.openSnackBar("La tarea se ha guardado correctamente.",
             'x',
             10,
             "snackbarCrucigramaSucces")
