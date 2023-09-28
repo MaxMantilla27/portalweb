@@ -8,12 +8,9 @@ import { Subject, takeUntil } from 'rxjs';
 import { CalificarTareaAlumnoOnlineDTO } from 'src/app/Core/Models/PEspecificoEsquema';
 import { PEspecificoEsquemaService } from 'src/app/Core/Shared/Services/PEspecificoEsquema/pespecifico-esquema.service';
 import { SnackBarServiceService } from 'src/app/Core/Shared/Services/SnackBarService/snack-bar-service.service';
-<<<<<<< HEAD
 import { LineamientosTareaOnlineComponent } from './lineamientos-tarea-online/lineamientos-tarea-online.component';
 import { MatDialog } from '@angular/material/dialog';
-=======
 import { HelperService } from 'src/app/Core/Shared/Services/helper.service';
->>>>>>> 3ea246b17849540c66206b1adc0ea62d255e3b79
 
 @Component({
   selector: 'app-calificar-tarea-docente',
@@ -56,11 +53,8 @@ export class CalificarTareaDocenteComponent implements OnInit,OnChanges , OnDest
   constructor(
     private _PEspecificoEsquemaService: PEspecificoEsquemaService,
     private _SnackBarServiceService:SnackBarServiceService,
-<<<<<<< HEAD
     public dialog: MatDialog,
-=======
     private _HelperService:HelperService
->>>>>>> 3ea246b17849540c66206b1adc0ea62d255e3b79
     ) { }
 
     columnsToDisplay = ['codigo', 'nombre', 'entrega', 'archivo', 'version', 'calificacion', 'nota','retro'];
