@@ -8,6 +8,8 @@ import { Subject, takeUntil } from 'rxjs';
 import { CalificarTareaAlumnoOnlineDTO } from 'src/app/Core/Models/PEspecificoEsquema';
 import { PEspecificoEsquemaService } from 'src/app/Core/Shared/Services/PEspecificoEsquema/pespecifico-esquema.service';
 import { SnackBarServiceService } from 'src/app/Core/Shared/Services/SnackBarService/snack-bar-service.service';
+import { LineamientosTareaOnlineComponent } from './lineamientos-tarea-online/lineamientos-tarea-online.component';
+import { MatDialog } from '@angular/material/dialog';
 import { HelperService } from 'src/app/Core/Shared/Services/helper.service';
 
 @Component({
@@ -51,6 +53,7 @@ export class CalificarTareaDocenteComponent implements OnInit,OnChanges , OnDest
   constructor(
     private _PEspecificoEsquemaService: PEspecificoEsquemaService,
     private _SnackBarServiceService:SnackBarServiceService,
+    public dialog: MatDialog,
     private _HelperService:HelperService
     ) { }
 
@@ -212,6 +215,15 @@ export class CalificarTareaDocenteComponent implements OnInit,OnChanges , OnDest
       this.cargando=false
       this._SnackBarServiceService.openSnackBar("No existe ninguna tarea modificada",'x',15,"snackbarCrucigramaerror");
     }
+  }
+
+  Open(name:string){
+    this.dialog.open(LineamientosTareaOnlineComponent, {
+      width: '1200px',
+      panelClass: 'dialog-lineamisnto-tarea',
+      data:{title:name},
+     disableClose:true
+    });
   }
   VolverAtras(){
     this.Volver.emit()
