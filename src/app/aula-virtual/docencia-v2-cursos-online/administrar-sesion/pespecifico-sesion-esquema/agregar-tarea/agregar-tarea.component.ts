@@ -49,7 +49,9 @@ export class AgregarTareaComponent implements OnInit, OnDestroy {
     CalificacionMaxima: 10,
     FechaEntrega: '',
     IdCriterioEvaluacion: 0,
-    TieneArchivo:false
+    TieneArchivo:false,
+    CalificacionMaximaSecundaria:0,
+    FechaEntregaSecundaria:''
   };
 
   formularioTarea = new FormGroup({
@@ -59,6 +61,8 @@ export class AgregarTareaComponent implements OnInit, OnDestroy {
     FechaEntrega: new FormControl(null, [Validators.required]),
     HoraEntrega: new FormControl(null, [Validators.required]),
     MinutoEntrega: new FormControl(null, [Validators.required]),
+    CalificacionMaximaSecundaria: new FormControl(0, [Validators.required]),
+    FechaEntregaSecundaria: new FormControl(null, [Validators.required]),
   });
   public Title = 'AGREGAR TAREA';
   public fecha = new Date();

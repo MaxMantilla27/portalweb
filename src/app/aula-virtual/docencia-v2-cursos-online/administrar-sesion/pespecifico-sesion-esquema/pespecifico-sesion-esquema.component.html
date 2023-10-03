@@ -6,26 +6,46 @@
 </ng-container>
 <!-- <div class="TitleRecursos">Actividades y Recursos de la Sesión </div> -->
 
-<div class="table-resposive">
-  <table style="width: 100%;">
-    <tr>
-      <th style="width: 180px;">Actividad / Recurso</th>
-      <th style="min-width: 200px;">Título</th>
-      <th style="width:150px;text-align: center;">Acciones</th>
-      <!-- <th style="min-width: 180px;">Metas pronosticadas 2021</th> -->
-    </tr>
-    <tr class="example-box" *ngFor="let item of criterios;let i=index">
-      <td>{{item.tipo}}</td>
-      <td>{{item.titulo}}</td>
-      <td>
-        <div class="accionesRecursos">
-          <div *ngIf="item.tipo!='Material Adicional'" class="edidtarNaranja" (click)="OpenEditar(i)"></div>
-          <div *ngIf="item.tipo=='Material Adicional'" class="edidtarNaranja" (click)="materialAdicional=true;nombrefile=item.titulo;IdEditar=item.id"></div>
-          <div class="eliminarNaranja" (click)="Eliminar(i,item)"></div>
-        </div>
-      </td>
-    </tr>
-  </table>
+<div class="table-resposive" *ngIf="criterios!=null">
+  <ng-container *ngIf="criterios.cuestionarios!=null && criterios.cuestionarios.length>0">
+    <div class="TitleRecurso">Cuestionarios</div>
+    <app-recursos-cuestionario [cuestionarios]="criterios.cuestionarios" (OnReload)="ObtenerActividadesRecursoSesionDocente()"
+    (Oncharge)="charge=true" (OnDelete)="EliminarCuestionario($event)" (OnEdit)="OpenEditarCuestionario($event)"
+    ></app-recursos-cuestionario>
+    <br>
+  </ng-container>
+  <ng-container *ngIf="criterios.tareas!=null && criterios.tareas.length>0">
+    <div class="TitleRecurso">Tareas</div>
+    <app-recursos-tarea [cuestionarios]="criterios.tareas" (OnReload)="ObtenerActividadesRecursoSesionDocente()"
+    (Oncharge)="charge=true" (OnDelete)="EliminarTarea($event)" (OnEdit)="OpenEditarTarea($event)"></app-recursos-tarea>
+    <br>
+  </ng-container>
+
+  <ng-container *ngIf="criterios.material!=null && criterios.material.length>0">
+    <div class="TitleRecurso">Material Adicional</div>
+    <table style="width: 100%;">
+      <tr>
+        <!-- <th style="width: 180px;">Actividad / Recurso</th> -->
+        <th style="min-width: 200px;">Título</th>
+        <th style="width:150px;text-align: center;">Acciones</th>
+        <!-- <th style="min-width: 180px;">Metas pronosticadas 2021</th> -->
+      </tr>
+
+      <tr class="example-box"  *ngFor="let item of criterios.material;let i=index">
+        <!-- <td>{{item.tipo}}</td> -->
+        <td><a [href]="item.urlArchivoSubido" target="_blank" rel="noopener noreferrer" class="vinculo">{{item.titulo}}</a> </td>
+        <td>
+          <div class="accionesRecursos">
+            <!-- <div *ngIf="item.tipo!='Material Adicional'" class="edidtarNaranja" (click)="OpenEditar(i)"></div> -->
+            <div class="edidtarNaranja" (click)="materialAdicional=true;nombrefile=item.titulo;IdEditar=item.id"></div>
+            <div class="eliminarNaranja" (click)="Eliminar(item)"></div>
+          </div>
+        </td>
+      </tr>
+    </table>
+  </ng-container>
+
+
 </div>
 <div class="row AgregarRecursos">
   <div class="col-12 col-md-9 col-lg-10 InputsDocencia"  *ngIf="IdEditar==null && materialAdicional==false">
