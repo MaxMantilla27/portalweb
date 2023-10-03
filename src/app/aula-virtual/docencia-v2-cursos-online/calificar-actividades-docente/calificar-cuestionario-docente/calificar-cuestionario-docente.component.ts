@@ -34,7 +34,7 @@ export class CalificarCuestionarioDocenteComponent implements OnInit ,OnChanges 
   TipoContenido: any = {
     fechaEntrega: ['date',],
     fechaCalificacion: ['date'],
-    'Acciones': ['buttons2', 'fechaCalificacion','id'],
+    'Acciones': ['buttons2', 'fechaCalificacion', ['Disabled','ValorBoton']],
     // 'Nota': ['buttons', 'fechaCalificacion'],
     //'Acciones': ['buttons'],
   };
@@ -61,14 +61,14 @@ export class CalificarCuestionarioDocenteComponent implements OnInit ,OnChanges 
         this.cuestionario=[]
         this.cuestionario=x
         if(this.cuestionario.length>0){
+          let aux=50
           this.cuestionario.forEach(
             (x: any) => {
-              x.idCuestionario=this.Id
-              x.Acciones=x.fechaCalificacion==null?'Calificar':'Ver Cuestionario'
-              x.Acciones=x.id==null?'true':'false'
-
-              // x.nota=x.nota==null? 'Pendiente' :x.nota.tostring()
-              console.log(x)
+              x.idCuestionario=this.Id,
+              x.Acciones=x.fechaCalificacion==null?'Calificar':'Ver Cuestionario',
+              x.Disabled=x.id==null?'true':'false',
+              x.ValorBoton=x.fechaCalificacion==null?'Calificar':'Ver Cuestionario',
+              x.nota=x.nota==null?'Pendiente': x.nota.toString()
 
             })
         }

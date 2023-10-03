@@ -8,6 +8,7 @@ import { AgregarTareaComponent } from './agregar-tarea/agregar-tarea.component';
 import { AgregarCuestionarioComponent } from './agregar-cuestionario/agregar-cuestionario.component';
 import { SnackBarServiceService } from 'src/app/Core/Shared/Services/SnackBarService/snack-bar-service.service';
 import { AlertaService } from 'src/app/shared/services/alerta.service';
+import { VistaPreviaCuestionarioComponent } from './vista-previa-cuestionario/vista-previa-cuestionario.component';
 
 @Component({
   selector: 'app-pespecifico-sesion-esquema',
@@ -133,6 +134,48 @@ export class PespecificoSesionEsquemaComponent implements OnInit ,OnChanges, OnD
           width: '1000px',
           data: {id:data.id ,idCriterio:data.idCriterio,sesion:this.sesion},
           panelClass: 'dialog-Agregar-Tarea',
+          disableClose:true
+        });
+
+        dialogRef.afterClosed().pipe(takeUntil(this.signal$)).subscribe((result) => {
+          console.log(result)
+          if(result!=undefined && result.length>0){
+            this.charge = true;
+            this.ObtenerActividadesRecursoSesionDocente()
+          }
+        });
+      }else{
+        this.IdEditar=data.id
+        this.nombrefile=data.titulo
+      }
+    }
+  }
+  OpenVistaPrevia(i:number){
+    var data=this.criterios[i]
+    console.log(data)
+    if(data.tipo=='Tarea'){
+      this.materialAdicional=false
+      const dialogRef = this.dialog.open(AgregarCuestionarioComponent, {
+        width: '1000px',
+        data: {id:data.id ,idCriterio:data.idCriterio,sesion:this.sesion},
+        panelClass: 'dialog-Vista-Previa-Tarea',
+       disableClose:true
+      });
+
+      dialogRef.afterClosed().pipe(takeUntil(this.signal$)).subscribe((result) => {
+        console.log(result)
+        if(result!=undefined && result.length>0){
+          this.charge = true;
+          this.ObtenerActividadesRecursoSesionDocente()
+        }
+      });
+    }else{
+      this.materialAdicional=false
+      if(data.tipo=='Cuestionario'){
+        const dialogRef = this.dialog.open(VistaPreviaCuestionarioComponent, {
+          width: '1000px',
+          data: {id:data.id ,idCriterio:data.idCriterio,sesion:this.sesion},
+          panelClass: 'dialog-Vista-Previa-Tarea',
           disableClose:true
         });
 

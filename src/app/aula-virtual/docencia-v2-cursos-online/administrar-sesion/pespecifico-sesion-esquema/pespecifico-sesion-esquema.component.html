@@ -21,6 +21,7 @@
         <div class="accionesRecursos">
           <div *ngIf="item.tipo!='Material Adicional'" class="edidtarNaranja" (click)="OpenEditar(i)"></div>
           <div *ngIf="item.tipo=='Material Adicional'" class="edidtarNaranja" (click)="materialAdicional=true;nombrefile=item.titulo;IdEditar=item.id"></div>
+          <div *ngIf="item.tipo!='Material Adicional'" class="verNaranja" (click)="OpenVistaPrevia(i)"></div>
           <div class="eliminarNaranja" (click)="Eliminar(i,item)"></div>
         </div>
       </td>

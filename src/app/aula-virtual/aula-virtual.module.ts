@@ -160,6 +160,7 @@ import { CalificarCuestionarioDocenteComponent } from './docencia-v2-cursos-onli
 import { CalificarTareaDocenteComponent } from './docencia-v2-cursos-online/calificar-actividades-docente/calificar-tarea-docente/calificar-tarea-docente.component';
 import { DetallesCuestionarioComponent } from './docencia-v2-cursos-online/calificar-actividades-docente/calificar-cuestionario-docente/detalles-cuestionario/detalles-cuestionario.component';
 import { LineamientosTareaOnlineComponent } from './docencia-v2-cursos-online/calificar-actividades-docente/calificar-tarea-docente/lineamientos-tarea-online/lineamientos-tarea-online.component';
+import { VistaPreviaCuestionarioComponent } from './docencia-v2-cursos-online/administrar-sesion/pespecifico-sesion-esquema/vista-previa-cuestionario/vista-previa-cuestionario.component';
 
 
 @NgModule({
@@ -317,6 +318,7 @@ import { LineamientosTareaOnlineComponent } from './docencia-v2-cursos-online/ca
     CalificarTareaDocenteComponent,
     DetallesCuestionarioComponent,
     LineamientosTareaOnlineComponent,
+    VistaPreviaCuestionarioComponent,
 
   ],
   imports: [

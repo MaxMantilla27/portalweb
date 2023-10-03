@@ -1,5 +1,4 @@
 
-
   <app-cargando *ngIf="cargando==true"></app-cargando>
 <div class="row" style="    margin-bottom: 20px;
 font-weight: 600;">
@@ -50,7 +49,8 @@ font-weight: 600;">
             Archivo
           </div>  </th>
         <td mat-cell *matCellDef="let element">
-          <a class="Archivo" [href]="element.urlArchivoSubido" target="_blank">Descargar</a>
+          <!-- <a *ngIf="element.urlArchivoSubido==null" class="Archivo"></a> -->
+          <a *ngIf="element.urlArchivoSubido!=null" class="Archivo" [href]="element.urlArchivoSubido" target="_blank">Descargar</a>
         </td>
       </ng-container>
       <ng-container matColumnDef="calificacion">
@@ -67,10 +67,13 @@ font-weight: 600;">
             Nota
           </div> </th>
         <td mat-cell *matCellDef="let element">
-          <select (change)="SetNota(element)"
+          <div *ngIf="element.id!=null">
+            <select (change)="SetNota(element)"
           [(ngModel)]="element.nota" style="width:max-content; border-radius: 0.4em;" >
                <option *ngFor="let item of Notas" [value]="item">{{item}}</option>
           </select>
+          </div>
+
         </td>
       </ng-container>
       <ng-container matColumnDef="retro">
@@ -79,8 +82,9 @@ font-weight: 600;">
             Retroalimentación
           </div>  </th>
         <td mat-cell *matCellDef="let element;let indice=index">
-          <div class="Archivo" (click)="Expand(element.index,indice)"> {{(element.retroalimentacion==null &&
-            element.urlArchivoSubidoRetroalimentacion==null)?'Agregar':'Mostrar' }}</div>
+          <div *ngIf="element.id==null" class="Archivo">No Enviado </div>
+          <div *ngIf="element.id!=null" class="Archivo" (click)="Expand(element.index,indice)"> {{(element.retroalimentacion==null &&
+              element.urlArchivoSubidoRetroalimentacion==null)?'Agregar':'Mostrar' }}</div>
         </td>
       </ng-container>
 

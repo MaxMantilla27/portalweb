@@ -1,7 +1,7 @@
 
 <ng-container *ngIf="data.cuestionario!=undefined">
   <div class="cardSesionOnlineTareasCuestionario">
-    <ng-container *ngIf="vertiempo==true">
+    <!-- <ng-container *ngIf="vertiempo==true">
       <div class="TimeCronometer">
         <div class="TimePrevCuestionario">
           <div class="imgTimePrev"></div>
@@ -10,7 +10,7 @@
           <div class="MinutosTiempo">{{segundos>9?(segundos):'0'+(segundos)}}</div>
         </div>
       </div>
-    </ng-container>
+    </ng-container> -->
 
     <div class="flagActividad" style="display: flex;">
       <div class="col-11" style="display: flex;">
@@ -31,13 +31,12 @@
       *ngIf="data.cuestionario.descripcion!=null && data.cuestionario.descripcion.length>0">
       {{data.cuestionario.descripcion}}</div>
   </div>
-  <div class="AlertPrevContent" *ngIf="CuestionarioAvance.Inicio==false">
+  <div class="AlertPrevContent">
     <div class="alertPrev">Una vez que inicies el cuestionario empezará a correr el tiempo programado.</div>
     <!-- <div class="IntentoAlert">Número de intentos: 01</div> -->
 
     <app-default-button [confs]="{color:'primary',titulo:'Iniciar Cuestionario >'}"
-      [style]="'    margin: 0px; padding: 0px 40px; border-radius: 40px;'"
-      (ButtoclClick)="IniciarCuestionario()"></app-default-button>
+      [style]="'    margin: 0px; padding: 0px 40px; border-radius: 40px;'"></app-default-button>
     <div class="TimePrevCuestionario" style="margin-top: 15px;">
       <div class="imgTimePrev"></div>
       <div class="MinutosTiempo">
@@ -47,7 +46,7 @@
       <div class="MinutosTiempo">00</div>
     </div>
   </div>
-  <div class="content" *ngIf="CuestionarioAvance.Inicio==true">
+  <div class="content">
     <ng-container
       *ngIf="data.cuestionario.preguntasCuestionario!=null && data.cuestionario.preguntasCuestionario!=undefined">
       <ng-container *ngFor="let item of data.cuestionario.preguntasCuestionario;let i=index">
@@ -76,7 +75,7 @@
           </div>
           <div *ngIf="item.alternativas!= null && item.alternativas!= undefined">
             <ng-container *ngIf="item.idPreguntaTipo==3 || item.idPreguntaTipo==5">
-              <div class="radiosOptions" *ngFor="let altern of item.alternativas;let a=index" (click)="changeRadio(i,a)"
+              <div class="radiosOptions" *ngFor="let altern of item.alternativas;let a=index"
               [ngClass]="{'Correctos':altern.Correcto==true,'InCorrectos':altern.Correcto==false}">
                 <i class="material-icons" *ngIf="altern.select!=true">radio_button_off</i>
                 <i class="material-icons activeSelect" *ngIf="altern.select==true">radio_button_checked</i>
@@ -84,7 +83,7 @@
               </div>
             </ng-container>
             <ng-container *ngIf="item.idPreguntaTipo==4">
-              <div class="checkOptions" *ngFor="let altern of item.alternativas;let a=index" (click)="changeCheck(i,a)"
+              <div class="checkOptions" *ngFor="let altern of item.alternativas;let a=index"
               [ngClass]="{'Correctos':altern.Correcto==true,'InCorrectos':altern.Correcto==false}">
                 <i class="material-icons" *ngIf="altern.select!=true" >check_box_outline_blank</i>
                 <i class="material-icons activeSelect" *ngIf="altern.select==true">check_box</i>
@@ -96,7 +95,7 @@
               <div class="InputsOnlineCuestionario">
                 <mat-form-field appearance="outline" style="width: 100%;">
                   <mat-label>Ingresa tu respuesta</mat-label>
-                  <input type="text" [disabled]="disableAll" placeholder="Ingresa tu respuesta" (input)="AddToAvance()" [(ngModel)]="item.respuesta[0]" matInput>
+                  <input type="text"  placeholder="Ingresa tu respuesta" [(ngModel)]="item.respuesta[0]" matInput>
                 </mat-form-field>
               </div>
             </ng-container>
@@ -104,11 +103,11 @@
         </div>
 
       </ng-container>
-      <ng-container *ngIf="disableAll!=true">
+      <ng-container>
         <div  style="display: flex;align-items: center;justify-content: flex-end;">
           <app-default-button [confs]="{color:'primary',titulo:'Enviar Cuestionario >'}"
             [style]="'margin: 0px; padding: 0px 40px; border-radius: 40px;'"
-           (ButtoclClick)="AgregarPEspecificoSesionCuestionarioAlumno()"></app-default-button>
+           (ButtoclClick)="dialogRef.close()"></app-default-button>
         </div>
       </ng-container>
 

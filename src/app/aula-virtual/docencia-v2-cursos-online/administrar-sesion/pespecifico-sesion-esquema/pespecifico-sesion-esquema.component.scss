@@ -20,6 +20,14 @@
   display: flex;
   align-items: center;
   justify-content: space-evenly;
+  .verNaranja {
+    width: 15px;
+    height: 15px;
+    background: url("../../../../../assets/icons/icono-mostrar-naranja.svg");
+    background-size: cover;
+    background-position: center;
+    cursor: pointer !important;
+  }
   .edidtarNaranja {
     width: 15px;
     height: 15px;
