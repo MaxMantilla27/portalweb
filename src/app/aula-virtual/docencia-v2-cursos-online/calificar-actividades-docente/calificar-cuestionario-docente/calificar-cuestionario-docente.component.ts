@@ -32,9 +32,10 @@ export class CalificarCuestionarioDocenteComponent implements OnInit ,OnChanges 
   };
 
   TipoContenido: any = {
-    fechaEntrega: ['date'],
+    fechaEntrega: ['date',],
     fechaCalificacion: ['date'],
-    'Acciones': ['buttons', 'fechaCalificacion'],
+    'Acciones': ['buttons2', 'fechaCalificacion','id'],
+    // 'Nota': ['buttons', 'fechaCalificacion'],
     //'Acciones': ['buttons'],
   };
   public cuestionario: any;
@@ -64,6 +65,11 @@ export class CalificarCuestionarioDocenteComponent implements OnInit ,OnChanges 
             (x: any) => {
               x.idCuestionario=this.Id
               x.Acciones=x.fechaCalificacion==null?'Calificar':'Ver Cuestionario'
+              x.Acciones=x.id==null?'true':'false'
+
+              // x.nota=x.nota==null? 'Pendiente' :x.nota.tostring()
+              console.log(x)
+
             })
         }
         console.log(this.cuestionario)
