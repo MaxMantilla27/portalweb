@@ -1,0 +1,26 @@
+
+<div class="table-resposive">
+  <table style="width: 100%;">
+    <tr>
+      <th style="width: 30px;">N°</th>
+      <th style="min-width: 200px;">Titulo</th>
+      <th style="min-width: 200px;">Fecha Entrega</th>
+      <th style="width:150px;text-align: center;">Acciones</th>
+      <!-- <th style="min-width: 180px;">Metas pronosticadas 2021</th> -->
+    </tr>
+    <tbody cdkDropList class="example-list" (cdkDropListDropped)="drop($event)">
+      <tr class="example-custom-placeholder" *cdkDragPlaceholder></tr>
+      <tr class="example-box" *ngFor="let item of cuestionarios;let i=index" cdkDrag>
+        <td>{{item.orden}}</td>
+        <td>{{item.titulo}}</td>
+        <td>{{item.fechaEntrega | date:'dd-MM-yyyy hh:mm a'}}</td>
+        <td>
+          <div class="accionesTema">
+            <div class="edidtarNaranja" (click)="OnEdit.emit(i)"></div>
+            <div class="eliminarNaranja" (click)="OnDelete.emit(i)"></div>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

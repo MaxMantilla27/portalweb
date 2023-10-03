@@ -25,11 +25,13 @@ export class TableV2Component implements OnInit {
   @Input() buttonheader:any={};
   @Input() DisableSort:any;
   @Input() DisableCell:any={};
+  @Input() EsButton:any={};
   @Input() tipoContenidoHeader:any;
   @Output() ButtonClick= new EventEmitter<number>();
   @Output() ButtonArrayClick= new EventEmitter<{indexButton:number,index:number}>();
   @Output() ButtonHeaderClick= new EventEmitter<any>();
   @Output() SelectChange= new EventEmitter<{index:number,value:any,column:string}>();
+  @Output() EsButtonNormal= new EventEmitter<number>();
   @Input() Paginador=true;
   @Input() ColSpan:Array<any>=[];
   @Input() ColorHeader=false;

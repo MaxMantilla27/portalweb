@@ -161,6 +161,8 @@ import { CalificarTareaDocenteComponent } from './docencia-v2-cursos-online/cali
 import { DetallesCuestionarioComponent } from './docencia-v2-cursos-online/calificar-actividades-docente/calificar-cuestionario-docente/detalles-cuestionario/detalles-cuestionario.component';
 import { LineamientosTareaOnlineComponent } from './docencia-v2-cursos-online/calificar-actividades-docente/calificar-tarea-docente/lineamientos-tarea-online/lineamientos-tarea-online.component';
 import { VistaPreviaCuestionarioComponent } from './docencia-v2-cursos-online/administrar-sesion/pespecifico-sesion-esquema/vista-previa-cuestionario/vista-previa-cuestionario.component';
+import { RecursosTareaComponent } from './docencia-v2-cursos-online/administrar-sesion/pespecifico-sesion-esquema/recursos-tarea/recursos-tarea.component';
+import { RecursosCuestionarioComponent } from './docencia-v2-cursos-online/administrar-sesion/pespecifico-sesion-esquema/recursos-cuestionario/recursos-cuestionario.component';
 
 
 @NgModule({
@@ -319,6 +321,8 @@ import { VistaPreviaCuestionarioComponent } from './docencia-v2-cursos-online/ad
     DetallesCuestionarioComponent,
     LineamientosTareaOnlineComponent,
     VistaPreviaCuestionarioComponent,
+    RecursosTareaComponent,
+    RecursosCuestionarioComponent,
 
   ],
   imports: [

@@ -5,6 +5,8 @@ import { ProgramaEspecificoIntegraService } from 'src/app/Core/Shared/Services/P
 import { RegistrarAsistenciaOnlineComponent } from '../../docencia-v2-cursos-online/administrar-sesion/registrar-asistencia-online/registrar-asistencia-online.component';
 import { MatDialog } from '@angular/material/dialog';
 import { ProveedorService } from 'src/app/Core/Shared/Services/Proveedor/proveedor.service';
+import { SessionStorageService } from 'src/app/Core/Shared/Services/session-storage.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-docencia-acceso-clases',
@@ -28,6 +30,9 @@ export class DocenciaAccesoClasesComponent implements OnInit,OnChanges,OnDestroy
     'HoraFinal': ['hora'],
     //'Acciones': ['buttons'],
   }
+  EsButton:any={
+    'cursoNombre': true
+  }
   tableData: any;
   public Actual:any
   public interval:any
@@ -42,6 +47,8 @@ export class DocenciaAccesoClasesComponent implements OnInit,OnChanges,OnDestroy
     private _DatosPerfilService:DatosPerfilService,
     public dialog: MatDialog,
     private _ProveedorService:ProveedorService,
+    private router:Router,
+    private _SessionStorageService:SessionStorageService
   ) { }
   @Input() IdProveedor=0;
   public TerminaCarga=false
@@ -57,6 +64,12 @@ export class DocenciaAccesoClasesComponent implements OnInit,OnChanges,OnDestroy
       this.ObtenerSesionesOnlineWebinarDocente()
       this.ObtenerInformacionProveedor();
     }
+  }
+  IrAcurso(e:any){
+    console.log(e)
+    console.log(this.tableData[e])
+    this._SessionStorageService.SessionSetValue("SesionSelect",this.tableData[e].orden)
+    this.router.navigate(['/AulaVirtual/DocenciaV2/'+this.tableData[e].idPEspecificoHijo]);
   }
   ObtenerSesionesOnlineWebinarDocente(){
     this._DatosPerfilService.ObtenerSesionesOnlineWebinarDocente().pipe(takeUntil(this.signal$)).subscribe({

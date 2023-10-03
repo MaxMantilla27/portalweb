@@ -14,6 +14,9 @@
     <mat-form-field appearance="outline">
       <mat-label>Sesiones</mat-label>
       <mat-select #myselsetc [(ngModel)]="IdSesion" #select  (selectionChange)="ObtnerDataSesion()">
+        <mat-select-trigger *ngIf="sesion!=undefined">
+          <strong> Sesión</strong> {{sesion.orden}} de {{sesion.maximo}} - <strong>Fecha:</strong> {{sesion.fechaHoraInicio | date:'dd-MM-yyyy'}}
+        </mat-select-trigger>
         <mat-option *ngFor="let item of sesiones" [value]="item.idSesion" style="font-size: 16px;">
          <strong> Sesión</strong> {{item.orden}} de {{item.maximo}} - <strong>Fecha:</strong> {{item.fechaHoraInicio | date:'dd-MM-yyyy'}}
         </mat-option>

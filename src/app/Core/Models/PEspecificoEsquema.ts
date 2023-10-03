@@ -44,6 +44,8 @@ export interface PEspecificoSesionTareaSaveDTO {
   CalificacionMaxima: number;
   TieneArchivo: boolean;
   Usuario: string,
+  FechaEntregaSecundaria: string,
+  CalificacionMaximaSecundaria: number;
 }
 
 export interface PEspecificoSesionTareaAlumnoSaveParamsDTO {

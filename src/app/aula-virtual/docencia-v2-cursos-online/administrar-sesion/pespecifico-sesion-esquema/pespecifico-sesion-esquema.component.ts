@@ -45,7 +45,7 @@ export class PespecificoSesionEsquemaComponent implements OnInit ,OnChanges, OnD
       idCriterio:0
     }
   ]
-  public criterios:Array<any>=[]
+  public criterios:any=[]
   public saveMaterial:PEspecificoSesionMaterialAdicionalSaveDTO={
     file:new File([],''),
     IdPEspecificoSesion:0,
@@ -76,7 +76,7 @@ export class PespecificoSesionEsquemaComponent implements OnInit ,OnChanges, OnD
   ngOnInit(): void {
   }
   ObtenerActividadesRecursoSesionDocente(){
-    this.criterios=[]
+    this.criterios=null
     this.ActividadSelect=-1
     this._PEspecificoEsquemaService.ObtenerActividadesRecursoSesionDocente(this.IdSesion).pipe(takeUntil(this.signal$))
     .subscribe({
@@ -108,97 +108,64 @@ export class PespecificoSesionEsquemaComponent implements OnInit ,OnChanges, OnD
       },
     });
   }
+  OpenEditarCuestionario(i:number){
+    var data=this.criterios.cuestionarios[i]
+    const dialogRef = this.dialog.open(AgregarCuestionarioComponent, {
+      width: '1000px',
+      data: {id:data.id ,idCriterio:data.idCriterio,sesion:this.sesion},
+      panelClass: 'dialog-Agregar-Tarea',
+      disableClose:true
+    });
+
+    dialogRef.afterClosed().pipe(takeUntil(this.signal$)).subscribe((result) => {
+      console.log(result)
+      if(result!=undefined && result.length>0){
+        this.charge = true;
+        this.ObtenerActividadesRecursoSesionDocente()
+      }
+    });
+  }
+  OpenEditarTarea(i:number){
+    var data=this.criterios.tareas[i]
+    this.materialAdicional=false
+    const dialogRef = this.dialog.open(AgregarTareaComponent, {
+      width: '1000px',
+      data: {id:data.id ,idCriterio:data.idCriterio,sesion:this.sesion},
+      panelClass: 'dialog-Agregar-Tarea',
+      disableClose:true
+    });
+
+    dialogRef.afterClosed().pipe(takeUntil(this.signal$)).subscribe((result) => {
+      console.log(result)
+      if(result!=undefined && result.length>0){
+        this.charge = true;
+        this.ObtenerActividadesRecursoSesionDocente()
+      }
+    });
+  }
   OpenEditar(i:number){
     var data=this.criterios[i]
     console.log(data)
     if(data.tipo=='Tarea'){
-      this.materialAdicional=false
-      const dialogRef = this.dialog.open(AgregarTareaComponent, {
-        width: '1000px',
-        data: {id:data.id ,idCriterio:data.idCriterio,sesion:this.sesion},
-        panelClass: 'dialog-Agregar-Tarea',
-       disableClose:true
-      });
 
-      dialogRef.afterClosed().pipe(takeUntil(this.signal$)).subscribe((result) => {
-        console.log(result)
-        if(result!=undefined && result.length>0){
-          this.charge = true;
-          this.ObtenerActividadesRecursoSesionDocente()
-        }
-      });
     }else{
       this.materialAdicional=false
       if(data.tipo=='Cuestionario'){
-        const dialogRef = this.dialog.open(AgregarCuestionarioComponent, {
-          width: '1000px',
-          data: {id:data.id ,idCriterio:data.idCriterio,sesion:this.sesion},
-          panelClass: 'dialog-Agregar-Tarea',
-          disableClose:true
-        });
 
-        dialogRef.afterClosed().pipe(takeUntil(this.signal$)).subscribe((result) => {
-          console.log(result)
-          if(result!=undefined && result.length>0){
-            this.charge = true;
-            this.ObtenerActividadesRecursoSesionDocente()
-          }
-        });
       }else{
         this.IdEditar=data.id
         this.nombrefile=data.titulo
       }
     }
   }
-  OpenVistaPrevia(i:number){
-    var data=this.criterios[i]
-    console.log(data)
-    if(data.tipo=='Tarea'){
-      this.materialAdicional=false
-      const dialogRef = this.dialog.open(AgregarCuestionarioComponent, {
-        width: '1000px',
-        data: {id:data.id ,idCriterio:data.idCriterio,sesion:this.sesion},
-        panelClass: 'dialog-Vista-Previa-Tarea',
-       disableClose:true
-      });
-
-      dialogRef.afterClosed().pipe(takeUntil(this.signal$)).subscribe((result) => {
-        console.log(result)
-        if(result!=undefined && result.length>0){
-          this.charge = true;
-          this.ObtenerActividadesRecursoSesionDocente()
-        }
-      });
-    }else{
-      this.materialAdicional=false
-      if(data.tipo=='Cuestionario'){
-        const dialogRef = this.dialog.open(VistaPreviaCuestionarioComponent, {
-          width: '1000px',
-          data: {id:data.id ,idCriterio:data.idCriterio,sesion:this.sesion},
-          panelClass: 'dialog-Vista-Previa-Tarea',
-          disableClose:true
-        });
-
-        dialogRef.afterClosed().pipe(takeUntil(this.signal$)).subscribe((result) => {
-          console.log(result)
-          if(result!=undefined && result.length>0){
-            this.charge = true;
-            this.ObtenerActividadesRecursoSesionDocente()
-          }
-        });
-      }else{
-        this.IdEditar=data.id
-        this.nombrefile=data.titulo
-      }
-    }
-  }
-  Eliminar(i:number,item:any){
+  EliminarCuestionario(i:number){
+    var item=this.criterios.cuestionarios[i]
     console.log(i)
     console.log(item)
+
     this.alertaService.mensajeEliminar().then((result) => {
       if (result.isConfirmed) {
-        if(item.tipo=='Cuestionario'){
-          this._PEspecificoEsquemaService.EliminarPEspecificoSesionCuestionario(item.id).pipe(takeUntil(this.signal$)).subscribe({
+        this._PEspecificoEsquemaService.EliminarPEspecificoSesionCuestionario(item.id).pipe(takeUntil(this.signal$)).subscribe({
           next: (x:any) => {
           },
           complete:()=>{
@@ -207,27 +174,18 @@ export class PespecificoSesionEsquemaComponent implements OnInit ,OnChanges, OnD
             10,
             "snackbarCrucigramaSucces")
             this.ObtenerActividadesRecursoSesionDocente();
-
           }
-          });
-        }
-        if(item.tipo=='Material Adicional'){
-          this._PEspecificoEsquemaService.EliminarPEspecificoSesionMaterialAdicional(item.id).pipe(takeUntil(this.signal$)).subscribe({
-            next: (x:any) => {
-            },
-            complete:()=>{
-              this._SnackBarServiceService.openSnackBar("El material adicional se ha eliminado correctamente.",
-              'x',
-              10,
-              "snackbarCrucigramaSucces")
-              this.ObtenerActividadesRecursoSesionDocente();
+        });
+      }
+    });
+  }
+  EliminarTarea(i:number){
+    var item=this.criterios.tareas[i]
+    console.log(i)
+    console.log(item)
 
-            }
-          });
-        }
-        console.log(item.tipo)
-        if(item.tipo=='Tarea'){
-          console.log('INGRESO')
+    this.alertaService.mensajeEliminar().then((result) => {
+      if (result.isConfirmed) {
           this._PEspecificoEsquemaService.EliminarPEspecificoSesionTarea(item.id).pipe(takeUntil(this.signal$)).subscribe({
             next: (x:any) => {
             },
@@ -239,7 +197,26 @@ export class PespecificoSesionEsquemaComponent implements OnInit ,OnChanges, OnD
               this.ObtenerActividadesRecursoSesionDocente();
             }
           });
-        }
+      }
+    });
+  }
+  Eliminar(item:any){
+    console.log(item)
+    this.alertaService.mensajeEliminar().then((result) => {
+      if (result.isConfirmed) {
+        this._PEspecificoEsquemaService.EliminarPEspecificoSesionMaterialAdicional(item.id).pipe(takeUntil(this.signal$)).subscribe({
+          next: (x:any) => {
+          },
+          complete:()=>{
+            this._SnackBarServiceService.openSnackBar("El material adicional se ha eliminado correctamente.",
+            'x',
+            10,
+            "snackbarCrucigramaSucces")
+            this.ObtenerActividadesRecursoSesionDocente();
+
+          }
+        });
+        console.log(item.tipo)
       }
     });
   }
@@ -323,6 +300,11 @@ export class PespecificoSesionEsquemaComponent implements OnInit ,OnChanges, OnD
           this.filestatus=false;
           this.fileErrorMsg='';
           this.nombrefile=''
+
+          this._SnackBarServiceService.openSnackBar("El material adicional se ha publicado correctamente.",
+          'x',
+          10,
+          "snackbarCrucigramaSucces")
           this.ObtenerActividadesRecursoSesionDocente();
           this.materialAdicional=false;
           this.ActividadSelect=-1;

@@ -11,6 +11,7 @@ import {
   AgregarCalificacionCuestionarioAlumnoDocenteDTO,
   CalificarTareaAlumnoOnlineDTO,
 } from "src/app/Core/Models/PEspecificoEsquema";
+import { PespecificoSesionTemaUpdateOrdenDTO } from "src/app/Core/Models/PespecificoSesionTemaDTO";
 import { environment } from "src/environments/environment";
 
 @Injectable({
@@ -537,10 +538,20 @@ export class PEspecificoEsquemaService {
       return EMPTY;
     }
   }
-  public ObtenerDetalleCuestionarioVistaPrevia(IdPEspecificoSesionCuestionario: number): Observable<any> {
-    if (this.isBrowser) {
-      return this.http.get<any>(this.urlBase +"/ObtenerDetalleCuestionarioVistaPrevia?IdPEspecificoSesionCuestionario=" +IdPEspecificoSesionCuestionario);
-    } else {
+
+  public OrdenarCuestionario(Json:PespecificoSesionTemaUpdateOrdenDTO):Observable<any>{
+    if(this.isBrowser){
+      console.log(Json)
+      return this.http.post<any>(this.urlBase+'/OrdenarCuestionario',Json);
+    }else{
+      return EMPTY;
+    }
+  }
+  public OrdenarTarea(Json:PespecificoSesionTemaUpdateOrdenDTO):Observable<any>{
+    if(this.isBrowser){
+      console.log(Json)
+      return this.http.post<any>(this.urlBase+'/OrdenarTarea',Json);
+    }else{
       return EMPTY;
     }
   }
