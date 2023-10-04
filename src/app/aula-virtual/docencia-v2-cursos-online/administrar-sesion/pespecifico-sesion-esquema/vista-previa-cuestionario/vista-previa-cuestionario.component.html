@@ -1,20 +1,11 @@
 
-<ng-container *ngIf="data.cuestionario!=undefined">
+<ng-container *ngIf="preguntas!=undefined">
   <div class="cardSesionOnlineTareasCuestionario">
-    <!-- <ng-container *ngIf="vertiempo==true">
-      <div class="TimeCronometer">
-        <div class="TimePrevCuestionario">
-          <div class="imgTimePrev"></div>
-          <div class="MinutosTiempo">{{minutos}}</div>
-          <div class="">:</div>
-          <div class="MinutosTiempo">{{segundos>9?(segundos):'0'+(segundos)}}</div>
-        </div>
-      </div>
-    </ng-container> -->
+
 
     <div class="flagActividad" style="display: flex;">
       <div class="col-11" style="display: flex;">
-        <div class="textoFlag">Cuestionario: {{data.index>9?(data.index+1):'0'+(data.index+1)}}</div>
+        <div class="textoFlag">Cuestionario: {{detalleCuestionario.orden>9?(detalleCuestionario.orden+1):'0'+(detalleCuestionario.orden+1)}}</div>
         <div id="player">
           <div id="outer">
             <div id="inner"></div>
@@ -26,30 +17,16 @@
       </div>
       <!-- <div class="trianglearrow"></div> -->
     </div>
-    <div class="TitleActividad">{{data.cuestionario.titulo}}</div>
+    <div class="TitleActividad">{{detalleCuestionario.titulo}}</div>
     <div class="DescripcionActividad"
-      *ngIf="data.cuestionario.descripcion!=null && data.cuestionario.descripcion.length>0">
-      {{data.cuestionario.descripcion}}</div>
+      *ngIf="detalleCuestionario.descripcion!=null && detalleCuestionario.descripcion.length>0">
+      {{detalleCuestionario.descripcion}}</div>
   </div>
-  <div class="AlertPrevContent">
-    <div class="alertPrev">Una vez que inicies el cuestionario empezará a correr el tiempo programado.</div>
-    <!-- <div class="IntentoAlert">Número de intentos: 01</div> -->
 
-    <app-default-button [confs]="{color:'primary',titulo:'Iniciar Cuestionario >'}"
-      [style]="'    margin: 0px; padding: 0px 40px; border-radius: 40px;'"></app-default-button>
-    <div class="TimePrevCuestionario" style="margin-top: 15px;">
-      <div class="imgTimePrev"></div>
-      <div class="MinutosTiempo">
-        {{data.cuestionario.tiempoLimite>9?data.cuestionario.tiempoLimite:'0'+data.cuestionario.tiempoLimite.toString()
-        }}</div>
-      <div class="">:</div>
-      <div class="MinutosTiempo">00</div>
-    </div>
-  </div>
-  <div class="content">
+  <div class="content" >
     <ng-container
-      *ngIf="data.cuestionario.preguntasCuestionario!=null && data.cuestionario.preguntasCuestionario!=undefined">
-      <ng-container *ngFor="let item of data.cuestionario.preguntasCuestionario;let i=index">
+      *ngIf="preguntas!=null && preguntas!=undefined">
+      <ng-container *ngFor="let item of preguntas;let i=index">
         <div class="contetPreguntasCuestionario">
           <div class="descPregunta row">
             <div class="col-12 col-md-9 col-lg-9">
@@ -77,8 +54,8 @@
             <ng-container *ngIf="item.idPreguntaTipo==3 || item.idPreguntaTipo==5">
               <div class="radiosOptions" *ngFor="let altern of item.alternativas;let a=index"
               [ngClass]="{'Correctos':altern.Correcto==true,'InCorrectos':altern.Correcto==false}">
-                <i class="material-icons" *ngIf="altern.select!=true">radio_button_off</i>
-                <i class="material-icons activeSelect" *ngIf="altern.select==true">radio_button_checked</i>
+                <i class="material-icons" *ngIf="altern.select!=true" (click)="altern.select==true">radio_button_off</i>
+                <i class="material-icons activeSelect" *ngIf="altern.select==true" (click)="altern.select==true">radio_button_checked</i>
                 {{altern.alternativa}}
               </div>
             </ng-container>
@@ -95,7 +72,7 @@
               <div class="InputsOnlineCuestionario">
                 <mat-form-field appearance="outline" style="width: 100%;">
                   <mat-label>Ingresa tu respuesta</mat-label>
-                  <input type="text"  placeholder="Ingresa tu respuesta" [(ngModel)]="item.respuesta[0]" matInput>
+                  <input type="text" [disabled]="true" placeholder="Ingresa tu respuesta"  [(ngModel)]="item.respuesta[0]" matInput>
                 </mat-form-field>
               </div>
             </ng-container>
@@ -107,7 +84,12 @@
         <div  style="display: flex;align-items: center;justify-content: flex-end;">
           <app-default-button [confs]="{color:'primary',titulo:'Enviar Cuestionario >'}"
             [style]="'margin: 0px; padding: 0px 40px; border-radius: 40px;'"
-           (ButtoclClick)="dialogRef.close()"></app-default-button>
+           [disabled]="true"></app-default-button>
+        </div>
+        <div  style="display: flex;align-items: center;justify-content: flex-end;margin-top: 10px;">
+          <app-default-button [confs]="{color:'primary',titulo:'Cerrar >'}"
+            [style]="'margin: 0px; padding: 0px 40px; border-radius: 40px;'"
+            (click)="dialogRef.close()"></app-default-button>
         </div>
       </ng-container>
 
