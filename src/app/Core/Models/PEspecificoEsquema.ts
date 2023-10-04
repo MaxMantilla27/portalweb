@@ -9,6 +9,8 @@ export interface PEspecificoSesionCuestionarioSaveDTO {
   TiempoLimite: number;
   Preguntas: Array<PEspecificoSesionCuestionarioPreguntaFileDTO>;
   Usuario: string,
+  FechaEntregaSecundaria: string,
+  CalificacionMaximaSecundaria: number
 }
 export interface PEspecificoSesionCuestionarioPreguntaFileDTO {
   Id: number;

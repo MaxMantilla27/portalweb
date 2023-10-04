@@ -110,7 +110,7 @@ export class PespecificoSesionEsquemaComponent implements OnInit ,OnChanges, OnD
   OpenEditarCuestionario(i:number){
     var data=this.criterios.cuestionarios[i]
     const dialogRef = this.dialog.open(AgregarCuestionarioComponent, {
-      width: '1000px',
+      width: '1200px',
       data: {id:data.id ,idCriterio:data.idCriterio,sesion:this.sesion},
       panelClass: 'dialog-Agregar-Tarea',
       disableClose:true
@@ -128,7 +128,7 @@ export class PespecificoSesionEsquemaComponent implements OnInit ,OnChanges, OnD
     var data=this.criterios.tareas[i]
     this.materialAdicional=false
     const dialogRef = this.dialog.open(AgregarTareaComponent, {
-      width: '1000px',
+      width: '1200px',
       data: {id:data.id ,idCriterio:data.idCriterio,sesion:this.sesion},
       panelClass: 'dialog-Agregar-Tarea',
       disableClose:true
@@ -229,7 +229,7 @@ export class PespecificoSesionEsquemaComponent implements OnInit ,OnChanges, OnD
     });
     if(data.id==1){
       const dialogRef = this.dialog.open(AgregarTareaComponent, {
-        width: '1000px',
+        width: '1200px',
         data: {id:0 ,idCriterio:data.idCriterio,sesion:this.sesion},
         panelClass: 'dialog-Agregar-Tarea',
        disableClose:true
@@ -244,7 +244,7 @@ export class PespecificoSesionEsquemaComponent implements OnInit ,OnChanges, OnD
       });
     }else{
       const dialogRef = this.dialog.open(AgregarCuestionarioComponent, {
-        width: '1000px',
+        width: '1200px',
         data: {id:0 ,idCriterio:data.idCriterio,sesion:this.sesion},
         panelClass: 'dialog-Agregar-Tarea',
         disableClose:true
