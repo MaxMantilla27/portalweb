@@ -555,4 +555,13 @@ export class PEspecificoEsquemaService {
       return EMPTY;
     }
   }
+  public ObtenerDetalleCuestionarioVistaPrevia(IdPEspecificoSesionCuestionario: number): Observable<any> {
+    if (this.isBrowser) {
+      return this.http.get<any>(this.urlBase +"/ObtenerDetalleCuestionarioVistaPrevia?IdPEspecificoSesionCuestionario=" +IdPEspecificoSesionCuestionario);
+    } else {
+      {
+        return EMPTY;
+      }
+    }
+  }
 }

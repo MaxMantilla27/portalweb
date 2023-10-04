@@ -211,7 +211,7 @@ export class AgregarPreguntasComponent implements OnInit ,OnChanges,OnDestroy {
     if(IdTipoPregunta==6){
       this.pregunta.Alternativas.push({
         Id:0,
-        Alternativa:' ',
+        Alternativa:'Pregunta Abierta',
         EsCorrecta:true,
         Puntaje:0,
         Disabled:true,

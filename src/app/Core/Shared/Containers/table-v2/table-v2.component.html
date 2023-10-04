@@ -81,37 +81,37 @@ overflow: auto;">
                     </ng-container>
                   </ng-template>
                   <ng-template #buttons2>
+                    <!-- A
+                    {{tipoContenido[tableData]}}
+                    B
+                    {{tipoContenido[tableData][0]}}
+                    C
+                    {{tipoContenido[tableData][1]}}
+                    D
+                    {{tipoContenido[tableData][2]}}
+                    E
+                    {{tipoContenido[tableData][3]}}
+                    F -->
                     <ng-container *ngIf="(tipoContenido[tableData][0] | lowercase )=='buttons2';">
                       <ng-container  *ngIf="!IsArray(tipoContenido[tableData][1])&&tipoContenido[tableData].length==2" >
-                       <div style="display: flex;justify-content: center">
-                        <app-default-button [confs]="{color:'primary',titulo:element[tableData]}" [icon]="''"
-                        [style]="'margin: 0px;'" (ButtoclClick)="ButtonClick.emit(element.index)"></app-default-button>
-                       </div>
-                      </ng-container>
-                      <ng-container  *ngIf="!IsArray(tipoContenido[tableData][1]) && tipoContenido[tableData].length==3" >
-                        {{tipoContenido[tableData]}}
-                        {{element[tableData][2]}}
-                        <div *ngIf="tipoContenido[tableData][2]=='true'" style="display: flex;justify-content: center">
-                          falso
-                         <app-default-button [confs]="{color:'primary',titulo:element[tableData][1]}" [icon]="''"
-                         [style]="'margin: 0px;'" [disabled]="true"></app-default-button>
-                        </div>
-                        <div *ngIf="tipoContenido[tableData][2]=='false'" style="display: flex;justify-content: center">
-                          verdadero
-                          <app-default-button [confs]="{color:'primary',titulo:element[tableData][1]}" [icon]="''"
-                          [style]="'margin: 0px;'" [disabled]="false" (ButtoclClick)="ButtonClick.emit(element.index)"></app-default-button>
-                         </div>
-                         <div style="display: flex;justify-content: center">
-                          neutro
+                        <div style="display: flex;justify-content: center">
                           <app-default-button [confs]="{color:'primary',titulo:element[tableData]}" [icon]="''"
-                          [style]="'margin: 0px;'" [disabled]="tipoContenido[tableData][2]" (ButtoclClick)="ButtonClick.emit(element.index)"></app-default-button>
+                          [style]="'margin: 0px;'" (ButtoclClick)="ButtonClick.emit(element.index)"></app-default-button>
                          </div>
                        </ng-container>
                       <ng-container *ngIf="IsArray(tipoContenido[tableData][1])">
                         <div style="display: flex;flex-wrap: wrap;justify-content: space-evenly;align-items: center;">
                           <app-default-button *ngFor="let item of tipoContenido[tableData][1],let indexb=index"
-                            [confs]="{color:'primary',titulo:item}" [icon]="''" [style]="'margin: 0px;back'"
+                            [confs]="{color:'primary',titulo:element[item]}" [icon]="''" [style]="'margin: 0px;back'"
                             (ButtoclClick)="ButtonArrayClick.emit({indexButton:indexb,index:element.index})"></app-default-button>
+                        </div>
+                      </ng-container>
+                      <ng-container *ngIf="IsArray(tipoContenido[tableData][2])">
+                        <div style="display: flex;flex-wrap: wrap;justify-content: space-evenly;align-items: center;">
+                          <app-default-button
+                            [confs]="{color:'primary',titulo:element[tipoContenido[tableData][2][1]]}" [icon]="''" [style]="'margin: 0px;back'"
+                            [disabled]="element[tipoContenido[tableData][2][0]]"
+                            (ButtoclClick)="ButtonClick.emit(element.index)"></app-default-button>
                         </div>
                       </ng-container>
                     </ng-container>

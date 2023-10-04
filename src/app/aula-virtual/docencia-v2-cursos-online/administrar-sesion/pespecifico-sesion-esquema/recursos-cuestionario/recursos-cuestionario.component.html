@@ -1,4 +1,4 @@
-
+holaxx
 <div class="table-resposive">
   <table style="width: 100%;">
     <tr>
@@ -18,6 +18,8 @@
           <div class="accionesTema">
             <div class="edidtarNaranja" (click)="OnEdit.emit(i)"></div>
             <div class="eliminarNaranja" (click)="OnDelete.emit(i)"></div>
+            <div class="verNaranja" (click)="OpenVistaPrevia(item)"></div>
+            <div class="publicarNaranja" (click)="PublicarCuestionario(item)"></div>
           </div>
         </td>
       </tr>

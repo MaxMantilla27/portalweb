@@ -115,7 +115,7 @@ export class PespecificoSesionTemaComponent
   EliminarTemaSesion(index:number) {
     this.alertaService.mensajeEliminar().then((result) => {
       if (result.isConfirmed) {
-        this.OrdenarTemaSesion(this.temas[index].id,0)
+        // this.OrdenarTemaSesion(this.temas[index].id,-1)
         this.charge = true;
         this.delete.Id=this.temas[index].id;
         this._PespecificoSesionTemaService.EliminarTemaSesion(this.delete).pipe(takeUntil(this.signal$))

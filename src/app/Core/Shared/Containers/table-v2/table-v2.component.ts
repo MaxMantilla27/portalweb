@@ -44,8 +44,7 @@ export class TableV2Component implements OnInit {
   public columnas:Array<any>=[]
   public hide:any={}
   ngOnInit(): void {
-    console.log(this.tipoContenido)
-    console.log(this.tableData)
+    console.log(this.tipoContenido[this.tableData])
 
     var i=0
     this.tableData.forEach((t:any) => {
@@ -87,8 +86,6 @@ export class TableV2Component implements OnInit {
     //this.dataSource.sort = this.sort;
   }
   ngAfterViewInit (){
-    console.log(this.tipoContenido)
-    console.log(this.tableData)
 
     this.dataSource.sort = this.sort;
     this.dataSource.sortingDataAccessor = (data:any, col:any) => {
@@ -110,8 +107,6 @@ export class TableV2Component implements OnInit {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    console.log(this.tipoContenido)
-    console.log(this.tableData)
 
 
     if(this.tableData.length!=this.lengthInicial){

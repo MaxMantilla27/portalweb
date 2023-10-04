@@ -8,6 +8,7 @@ import { AgregarTareaComponent } from './agregar-tarea/agregar-tarea.component';
 import { AgregarCuestionarioComponent } from './agregar-cuestionario/agregar-cuestionario.component';
 import { SnackBarServiceService } from 'src/app/Core/Shared/Services/SnackBarService/snack-bar-service.service';
 import { AlertaService } from 'src/app/shared/services/alerta.service';
+import { VistaPreviaCuestionarioComponent } from './vista-previa-cuestionario/vista-previa-cuestionario.component';
 
 @Component({
   selector: 'app-pespecifico-sesion-esquema',

@@ -3,6 +3,8 @@ import { Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output } 
 import { Subject, takeUntil } from 'rxjs';
 import { PespecificoSesionTemaUpdateOrdenDTO } from 'src/app/Core/Models/PespecificoSesionTemaDTO';
 import { PEspecificoEsquemaService } from 'src/app/Core/Shared/Services/PEspecificoEsquema/pespecifico-esquema.service';
+import { VistaPreviaCuestionarioComponent } from '../vista-previa-cuestionario/vista-previa-cuestionario.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-recursos-cuestionario',
@@ -17,7 +19,8 @@ export class RecursosCuestionarioComponent implements OnInit, OnDestroy {
     this.signal$.complete();
   }
   constructor(
-    private _PEspecificoEsquemaService:PEspecificoEsquemaService
+    private _PEspecificoEsquemaService:PEspecificoEsquemaService,
+    public dialog: MatDialog,
   ) { }
 
   @Input() cuestionarios:Array<any> = [];
@@ -30,6 +33,9 @@ export class RecursosCuestionarioComponent implements OnInit, OnDestroy {
     Id:0,
     Orden:0,
   }
+  public data:any;
+  public sesion:any;
+
   ngOnInit(): void {
   }
 
@@ -50,5 +56,25 @@ export class RecursosCuestionarioComponent implements OnInit, OnDestroy {
         this.OnReload.emit();
       },
     });
+  }
+  OpenVistaPrevia(detalle:any){
+    console.log(detalle)
+    const dialogRef = this.dialog.open(VistaPreviaCuestionarioComponent, {
+      width: '1000px',
+      data: {data:detalle},
+      panelClass: 'dialog-Vista-Previa-Cuestionario',
+      disableClose:true
+    });
+
+    dialogRef.afterClosed().pipe(takeUntil(this.signal$)).subscribe((result) => {
+      console.log(result)
+      if(result!=undefined && result.length>0){
+        // this.charge = true;
+        // this.ObtenerActividadesRecursoSesionDocente()
+      }
+    });
+  }
+  PublicarCuestionario(detalle:any){
+    console.log(detalle)
   }
 }
