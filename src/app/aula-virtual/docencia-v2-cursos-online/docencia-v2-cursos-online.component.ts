@@ -43,6 +43,10 @@ export class DocenciaV2CursosOnlineComponent implements OnInit,OnDestroy {
       this.Redirect();
     }, 1000);
     this.ObtenerInformacionProveedor();
+    var indice=this._SessionStorageService.SessionGetValue('docenciaCursos');
+    if(indice!=''){
+      this.tabIndex=parseInt(indice);
+    }
     this._ActivatedRoute.params.pipe(takeUntil(this.signal$)).subscribe({
       next: (x) => {
         this.IdPespecifico = parseInt(x['IdPespecifico']);
@@ -74,7 +78,7 @@ export class DocenciaV2CursosOnlineComponent implements OnInit,OnDestroy {
     })
   }
   tabChanged(tabChangeEvent: MatTabChangeEvent): void {
-
+    this._SessionStorageService.SessionSetValue('docenciaCursos',this.tabIndex.toString());
   }
   Redirect(){
 

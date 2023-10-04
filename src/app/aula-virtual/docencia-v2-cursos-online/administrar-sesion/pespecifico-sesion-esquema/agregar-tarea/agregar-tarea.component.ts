@@ -112,7 +112,7 @@ export class AgregarTareaComponent implements OnInit, OnDestroy {
           console.log(x)
           var date=new Date(x.fechaEntrega)
           var date2=new Date(x.fechaEntregaSecundaria)
-          console.log(date)
+          console.log(date2.getMinutes().toString())
           this.saveTarea.IdCriterioEvaluacion = x.idCriterioEvaluacion;
 
 
@@ -124,7 +124,7 @@ export class AgregarTareaComponent implements OnInit, OnDestroy {
           this.formularioTarea.get('MinutoEntrega')?.setValue(date.getMinutes().toString().length>1?date.getMinutes().toString():'0'+date.getMinutes().toString())
           this.formularioTarea.get('FechaEntregaSecundaria')?.setValue(date2)
           this.formularioTarea.get('HoraEntregaSecundaria')?.setValue(date2.getHours().toString().length>1?date2.getHours().toString():'0'+date2.getHours().toString())
-          this.formularioTarea.get('MinutoEntregaSecundaria')?.setValue(date2.getMinutes().toString().length>1?date2.getMinutes().toString():'0'+date2.getMinutes().toString())
+          this.formularioTarea.get('MinutoEntregaSecundaria')?.setValue(date2.getMinutes())
           this.formularioTarea.get('CalificacionMaximaSecundaria')?.setValue(x.calificacionMaximaSecundaria)
           if(x.nombreArchivo!=null){
             this.nombrefile=x.nombreArchivo

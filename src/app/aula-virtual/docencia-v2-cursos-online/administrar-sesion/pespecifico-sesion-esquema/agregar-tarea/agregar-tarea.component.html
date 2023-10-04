@@ -108,7 +108,7 @@
         <input matInput [min]="!formularioTarea.get('FechaEntrega')?.valid?fecha:formularioTarea.get('FechaEntrega')?.value"
         [matDatepicker]="picker2" placeholder="Fecha de Entrega maxima" formControlName="FechaEntregaSecundaria" >
 
-        <mat-datepicker-toggle matSuffix [for]="picker" placeholder="Fecha de Entrega maxima" ></mat-datepicker-toggle>
+        <mat-datepicker-toggle matSuffix [for]="picker2" placeholder="Fecha de Entrega maxima" ></mat-datepicker-toggle>
         <mat-datepicker #picker2></mat-datepicker>
         <mat-error *ngIf="!formularioTarea.get('FechaEntregaSecundaria')?.valid">Ingrese la fecha de entrega maxima</mat-error>
       </mat-form-field>
@@ -149,7 +149,7 @@
     <div class="col-8 col-md-2 col-lg-2 InputsDocencia">
       <mat-form-field appearance="outline">
         <mat-label>Calificación Minima</mat-label>
-        <mat-select #myselsetc formControlName="CalificacionMaximaSecundaria" [disabled]="true" >
+        <mat-select #myselsetc formControlName="CalificacionMaximaSecundaria"  >
             <mat-option *ngFor="let item of Calificaciones" [value]="item">
               {{item}}
             </mat-option>

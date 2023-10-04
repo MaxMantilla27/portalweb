@@ -76,6 +76,8 @@ export class SessionStorageService {
   DeleteToken():void{
     if(this.isBrowser){
       localStorage.removeItem('Token');
+      localStorage.removeItem('docencia');
+      localStorage.removeItem('docenciaCursos');
     }
   }
 

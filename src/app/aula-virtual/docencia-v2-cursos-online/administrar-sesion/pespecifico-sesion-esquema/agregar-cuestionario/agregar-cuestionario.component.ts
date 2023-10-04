@@ -81,6 +81,7 @@ export class AgregarCuestionarioComponent implements OnInit, OnDestroy {
   public tipoPregunta: Array<any> = [];
   cargando=false
   public selectedFiles?: FileList;
+  public fechamaxima=new Date();
   ngOnInit(): void {
     for (let index = 0; index < 24; index++) {
       var hora = '' + index;
@@ -124,6 +125,9 @@ export class AgregarCuestionarioComponent implements OnInit, OnDestroy {
         error: (x) => {},
       });
   }
+  setFechaMaxima(){
+    this.fechamaxima=this.formularioTarea.get('FechaEntrega')?.value
+  }
   GettipoPregunta(id: number | null): string {
     var text = '';
     for (let index = 0; index < this.tipoPregunta.length; index++) {
@@ -143,7 +147,7 @@ export class AgregarCuestionarioComponent implements OnInit, OnDestroy {
           console.log(x);
           var date = new Date(x.fechaEntrega);
           var date2=new Date(x.fechaEntregaSecundaria)
-          console.log(date);
+          console.log(date2);
           this.save.IdCriterioEvaluacion = x.idCriterioEvaluacion;
 
           this.formularioTarea.get('Titulo')?.setValue(x.titulo);
@@ -155,7 +159,7 @@ export class AgregarCuestionarioComponent implements OnInit, OnDestroy {
           this.formularioTarea.get('TiempoLimite')?.setValue(x.tiempoLimite);
           this.formularioTarea.get('FechaEntregaSecundaria')?.setValue(date2)
           this.formularioTarea.get('HoraEntregaSecundaria')?.setValue(date2.getHours().toString().length>1?date2.getHours().toString():'0'+date2.getHours().toString())
-          this.formularioTarea.get('MinutoEntregaSecundaria')?.setValue(date2.getMinutes().toString().length>1?date2.getMinutes().toString():'0'+date2.getMinutes().toString())
+          this.formularioTarea.get('MinutoEntregaSecundaria')?.setValue(date2.getMinutes())
           this.formularioTarea.get('CalificacionMaximaSecundaria')?.setValue(x.calificacionMaximaSecundaria)
         },
         error: (x) => {},

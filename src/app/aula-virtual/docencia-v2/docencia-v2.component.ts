@@ -56,6 +56,12 @@ export class DocenciaV2Component implements OnInit ,OnDestroy {
     var indice=this._SessionStorageService.SessionGetValue('docencia');
     if(indice!=''){
       this.tabIndex=parseInt(indice);
+      if(this.tabIndex>1){
+
+        this.changeIndexAsincronico()
+        this.tabIndex++
+        this.indexMenuAsincronico=this.tabIndex
+      }
     }
   }
 

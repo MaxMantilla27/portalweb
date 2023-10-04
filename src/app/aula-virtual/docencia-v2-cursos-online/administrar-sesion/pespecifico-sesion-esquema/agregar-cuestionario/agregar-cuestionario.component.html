@@ -17,66 +17,69 @@
     </div>
     <form [formGroup]="formularioTarea">
       <div class="row">
-        <div class="col-6 col-md-3 col-lg-3 labelTarea">Título</div>
-        <div class="col-6 col-md-9 col-lg-9 InputsDocencia">
+        <div class="col-4 col-md-2 col-lg-2 labelTarea">Título</div>
+        <div class="col-8 col-md-10 col-lg-10 InputsDocencia">
           <mat-form-field appearance="outline" style="width: 100%;">
-            <mat-label>Ingresar Título de la Tarea</mat-label>
+            <mat-label>Ingresar Título del cuestionario </mat-label>
             <input type="text" placeholder="Ingresar Título del cuestionario" formControlName="Titulo" matInput>
 
             <mat-error *ngIf="!formularioTarea.get('Titulo')?.valid">Ingrese el titulo</mat-error>
           </mat-form-field>
 
         </div>
-        <div class="col-6 col-md-3 col-lg-3 labelTarea">Descripción</div>
-        <div class="col-6 col-md-9 col-lg-9 InputsDocencia">
+        <div class="col-4 col-md-2 col-lg-2 labelTarea">Descripción</div>
+        <div class="col-8 col-md-10 col-lg-10 InputsDocencia">
           <mat-form-field appearance="outline" style="width: 100%;">
             <mat-label>Ingresar Descripción del Cuestionario (Opcional)</mat-label>
             <input type="text" placeholder="Ingresar Descripción del Cuestionario (Opcional)" formControlName="Descripcion"
               matInput>
           </mat-form-field>
         </div>
-        <div class="col-6 col-md-3 col-lg-3 labelTarea">Fecha de Entrega</div>
-        <div class="col-6 col-md-3 col-lg-3 InputsDocencia">
+        <div class="col-4 col-md-2 col-lg-2 labelTarea">Fecha de Entrega</div>
+        <div class="col-8 col-md-2 col-lg-2 InputsDocencia">
           <mat-form-field appearance="outline">
             <mat-label>Fecha de Entrega</mat-label>
             <input matInput [min]="fecha" [matDatepicker]="picker" placeholder="Fecha de Entrega"
-              formControlName="FechaEntrega">
+              formControlName="FechaEntrega" (input)="setFechaMaxima()">
             <mat-datepicker-toggle matSuffix [for]="picker" placeholder="Fecha de Entrega"></mat-datepicker-toggle>
             <mat-datepicker #picker></mat-datepicker>
             <mat-error *ngIf="!formularioTarea.get('FechaEntrega')?.valid">Ingrese la fecha de entrega</mat-error>
           </mat-form-field>
 
         </div>
-        <div class="col-6 col-md-2 col-lg-2 labelTarea">Hora de Entrega</div>
-        <div class="col-3 col-md-2 col-lg-2 InputsDocencia">
 
-          <mat-form-field appearance="outline">
-            <mat-label>Horas</mat-label>
-            <mat-select #myselsetc formControlName="HoraEntrega">
-              <mat-option *ngFor="let item of Horas" [value]="item">
-                {{item}}
-              </mat-option>
-            </mat-select>
-            <mat-error *ngIf="!formularioTarea.get('HoraEntrega')?.valid">Ingrese la hora</mat-error>
-          </mat-form-field>
+        <div class="col-12 col-md-4 col-lg-4 row" style="margin: 0px;">
+          <div class="col-4 labelTarea">Hora de Entrega</div>
+          <div class="col-4 InputsDocencia">
 
+            <mat-form-field appearance="outline">
+              <mat-label>Horas</mat-label>
+              <mat-select #myselsetc formControlName="HoraEntrega">
+                <mat-option *ngFor="let item of Horas" [value]="item">
+                  {{item}}
+                </mat-option>
+              </mat-select>
+              <mat-error *ngIf="!formularioTarea.get('HoraEntrega')?.valid">Ingrese la hora</mat-error>
+            </mat-form-field>
+
+          </div>
+          <div class="col-4 InputsDocencia">
+
+            <mat-form-field appearance="outline">
+              <mat-label>Minutos</mat-label>
+              <mat-select #myselsetc formControlName="MinutoEntrega">
+                <mat-option *ngFor="let item of Minutos" [value]="item">
+                  {{item}}
+                </mat-option>
+              </mat-select>
+              <mat-error *ngIf="!formularioTarea.get('MinutoEntrega')?.valid">Ingrese los minutos</mat-error>
+            </mat-form-field>
+
+          </div>
         </div>
-        <div class="col-3 col-md-2 col-lg-2 InputsDocencia">
 
-          <mat-form-field appearance="outline">
-            <mat-label>Minutos</mat-label>
-            <mat-select #myselsetc formControlName="MinutoEntrega">
-              <mat-option *ngFor="let item of Minutos" [value]="item">
-                {{item}}
-              </mat-option>
-            </mat-select>
-            <mat-error *ngIf="!formularioTarea.get('MinutoEntrega')?.valid">Ingrese los minutos</mat-error>
-          </mat-form-field>
-
-        </div>
-
-        <div class="col-6 col-md-3 col-lg-3 labelTarea">Calificación Maxima</div>
-        <div class="col-6 col-md-3 col-lg-3 InputsDocencia">
+        <div class="col-4 col-md-2 col-lg-2 labelTarea">Calificación Maxima</div>
+        <div class="col-8 col-md-2 col-lg-2 InputsDocencia">
           <mat-form-field appearance="outline">
             <mat-label>Calificación Maxima</mat-label>
             <mat-select #myselsetc formControlName="CalificacionMaxima" [disabled]="true">
@@ -86,6 +89,63 @@
             </mat-select>
             <mat-error *ngIf="!formularioTarea.get('CalificacionMaxima')?.valid">Ingrese la calificacion
               maxima</mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col-4 col-md-2 col-lg-2 labelTarea">Fecha de Entrega Maxima</div>
+        <div class="col-8 col-md-2 col-lg-2 InputsDocencia">
+          <mat-form-field appearance="outline">
+            <mat-label>Fecha de Entrega Maxima</mat-label>
+            <input matInput [min]="!formularioTarea.get('FechaEntrega')?.valid?fecha:formularioTarea.get('FechaEntrega')?.value"
+            [matDatepicker]="picker2" placeholder="Fecha de Entrega maxima" formControlName="FechaEntregaSecundaria"
+            [disabled]="!formularioTarea.get('FechaEntrega')?.valid">
+
+            <mat-datepicker-toggle matSuffix [for]="picker2" placeholder="Fecha de Entrega maxima" ></mat-datepicker-toggle>
+            <mat-datepicker #picker2></mat-datepicker>
+            <mat-error *ngIf="!formularioTarea.get('FechaEntregaSecundaria')?.valid">Ingrese la fecha de entrega maxima</mat-error>
+          </mat-form-field>
+
+        </div>
+
+        <div class="col-12 col-md-4 col-lg-4 row" style="margin: 0px;">
+          <div class="col-4 labelTarea">Hora de Entrega</div>
+          <div class="col-4 InputsDocencia">
+
+            <mat-form-field appearance="outline">
+              <mat-label>Horas</mat-label>
+              <mat-select #myselsetc formControlName="HoraEntregaSecundaria" >
+                  <mat-option *ngFor="let item of Horas" [value]="item">
+                    {{item}}
+                  </mat-option>
+              </mat-select>
+              <mat-error *ngIf="!formularioTarea.get('HoraEntregaSecundaria')?.valid">Ingrese la hora</mat-error>
+            </mat-form-field>
+
+          </div>
+          <div class="col-4 InputsDocencia">
+
+            <mat-form-field appearance="outline">
+              <mat-label>Minutos</mat-label>
+              <mat-select #myselsetc formControlName="MinutoEntregaSecundaria" >
+                  <mat-option *ngFor="let item of Minutos" [value]="item">
+                    {{item}}
+                  </mat-option>
+              </mat-select>
+              <mat-error *ngIf="!formularioTarea.get('MinutoEntregaSecundaria')?.valid">Ingrese los minutos</mat-error>
+            </mat-form-field>
+
+          </div>
+        </div>
+
+        <div class="col-4 col-md-2 col-lg-2 labelTarea">Calificación Minima</div>
+        <div class="col-8 col-md-2 col-lg-2 InputsDocencia">
+          <mat-form-field appearance="outline">
+            <mat-label>Calificación Minima</mat-label>
+            <mat-select #myselsetc formControlName="CalificacionMaximaSecundaria"  >
+                <mat-option *ngFor="let item of Calificaciones" [value]="item">
+                  {{item}}
+                </mat-option>
+            </mat-select>
+            <mat-error *ngIf="!formularioTarea.get('CalificacionMaximaSecundaria')?.valid">Ingrese la calificacion minima</mat-error>
           </mat-form-field>
         </div>
         <div class="col-6 col-md-2 col-lg-2 labelTarea">Tiempo Límite</div>

@@ -186,11 +186,10 @@ export class PEspecificoEsquemaService {
       formData.append("Titulo", Json.Titulo);
       formData.append("Descripcion", Descripcion);
       formData.append("FechaEntrega", Json.FechaEntrega);
-      formData.append(
-        "IdCriterioEvaluacion",
-        Json.IdCriterioEvaluacion.toString()
-      );
+      formData.append("FechaEntregaSecundaria", Json.FechaEntregaSecundaria);
+      formData.append("IdCriterioEvaluacion",Json.IdCriterioEvaluacion.toString());
       formData.append("CalificacionMaxima", Json.CalificacionMaxima.toString());
+      formData.append("CalificacionMaximaSecundaria", Json.CalificacionMaximaSecundaria.toString());
       formData.append("TiempoLimite", Json.TiempoLimite.toString());
       formData.append("Usuario", "docente");
       if (Json.Preguntas.length == 0) {
@@ -352,11 +351,10 @@ export class PEspecificoEsquemaService {
       formData.append("Titulo", Json.Titulo);
       formData.append("Descripcion", Descripcion);
       formData.append("FechaEntrega", Json.FechaEntrega);
-      formData.append(
-        "IdCriterioEvaluacion",
-        Json.IdCriterioEvaluacion.toString()
-      );
+      formData.append("FechaEntregaSecundaria", Json.FechaEntregaSecundaria);
+      formData.append("IdCriterioEvaluacion",Json.IdCriterioEvaluacion.toString());
       formData.append("CalificacionMaxima", Json.CalificacionMaxima.toString());
+      formData.append("CalificacionMaximaSecundaria", Json.CalificacionMaximaSecundaria.toString());
       formData.append("TieneArchivo", Json.TieneArchivo.toString());
       formData.append("Usuario", "docente");
       const req = new HttpRequest(
