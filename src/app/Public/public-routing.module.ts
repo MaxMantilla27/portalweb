@@ -27,7 +27,6 @@ import { ForgotPasswordComponent } from './forgot-password/forgot-password.compo
 import { AvatarComponent } from '../aula-virtual/avatar/avatar.component';
 import { LandingPageInterceptorComponent } from './landing-page/landing-page/landing-page-interceptor/landing-page-interceptor/landing-page-interceptor.component';
 import { PageErrorComponent } from './page-error/page-error/page-error.component';
-import { ChatPruebaComponent } from './chat-prueba/chat-prueba.component';
 import { FormularioPublicidadInterceptorComponent } from './FormularioPublicidad/FormularioPublicidadInterceptor/formulario-publicidad-interceptor.component';
 import { NotificacionWebinarComponent } from './notificacion-webinar/notificacion-webinar.component';
 import { InformacionCertificadoComponent } from './informacion-certificado/informacion-certificado.component';
@@ -56,7 +55,6 @@ const routes:Routes=[
             {path:'contactenos', component:ContactenosComponent},
             {path:'Account/ForgotPassword', component:ForgotPasswordComponent,canActivate:[PublicGuard]},
             {path:'Avatar', component: AvatarComponent},
-            {path:'ChatEnlinea', component: ChatPruebaComponent},
             {path:'sorteo', component: SorteoComponent},
             {path:'LandingPage/:IdFormulario', component: LandinPageV2Component},
 

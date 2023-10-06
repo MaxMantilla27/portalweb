@@ -923,10 +923,12 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
       var IdCategoriaDato=this._SessionStorageService.SessionGetValueCokies("idCategoria");
       var idcampania=this._SessionStorageService.SessionGetValueCokies("idCampania");
       this.DatosEnvioFormulario.IdCategoriaDato=IdCategoriaDato==''?0:parseInt(IdCategoriaDato);
-      if(IdPEspecifico==''){
-        this.DatosEnvioFormulario.IdPespecifico=this.IdPespecificoPrograma;
-      }else{
+
+
+      if(this.IdPespecificoPrograma==0 || this.IdPespecificoPrograma==null || this.IdPespecificoPrograma==undefined){
         this.DatosEnvioFormulario.IdPespecifico=parseInt(IdPEspecifico)
+      }else{
+        this.DatosEnvioFormulario.IdPespecifico=this.IdPespecificoPrograma
       };
       this.DatosEnvioFormulario.IdCampania = parseInt(idcampania);
       this._HelperService.EnviarFormulario(

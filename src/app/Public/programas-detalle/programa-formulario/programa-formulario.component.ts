@@ -143,10 +143,11 @@ export class ProgramaFormularioComponent implements OnInit, OnDestroy {
       var IdCategoriaDato=this._SessionStorageService.SessionGetValueCokies("idCategoria");
       var idcampania=this._SessionStorageService.SessionGetValueCokies("idCampania");
       this.DatosEnvioFormulario.IdCategoriaDato=IdCategoriaDato==''?0:parseInt(IdCategoriaDato);
-      if(IdPEspecifico==''){
-        this.DatosEnvioFormulario.IdPespecifico=this.data.IdPespecificoPrograma;
-      }else{
+
+      if(this.data.IdPespecificoPrograma==0 || this.data.IdPespecificoPrograma==null || this.data.IdPespecificoPrograma==undefined){
         this.DatosEnvioFormulario.IdPespecifico=parseInt(IdPEspecifico)
+      }else{
+        this.DatosEnvioFormulario.IdPespecifico=this.data.IdPespecificoPrograma
       };
       this.DatosEnvioFormulario.IdCampania = parseInt(idcampania);
       this._HelperService.EnviarFormulario(

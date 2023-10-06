@@ -212,13 +212,16 @@ export class CrucigramaComponent implements OnInit,OnChanges ,OnDestroy{
     console.log(this.matris)
   }
   SendValor(){
-    if(this.valorActual.toLowerCase()!=this.valorIngresado.toLowerCase()){
+    if(this.removeAccents(this.valorActual.toLowerCase())!=this.removeAccents(this.valorIngresado.toLowerCase())){
       this._SnackBarServiceService.openSnackBar("Oh no! No es la palabra correcta.",'x',5,"snackbarCrucigramaerror");
     }else{
       this._SnackBarServiceService.openSnackBar("Correcto!!!",'x',5,"snackbarCrucigramaSucces");
       this.setFinalizado(this.PreguntaActual-1,this.valorIngresado)
       this.PreguntaActual=-1;
     }
+  }
+  removeAccents(strng:string){
+    return strng.normalize("NFD").replace(/[\u0300-\u036f]/g, "")
   }
   setFinalizado(index:number,varlori:string){
     var palabraL=varlori.length
