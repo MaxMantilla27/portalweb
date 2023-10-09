@@ -56,8 +56,12 @@ export class CalificarActividadesDocenteComponent implements OnInit ,OnChanges, 
           this.criterios.forEach((c:any) => {
             c.Visible=true
             c.Porcalificar=c.cantidadEnviados - c.cantidadCalificados
-            c.nombre=c.nombre.split('Tareas').join('Tarea')
-            c.nombre=c.nombre.split('Cuestionarios').join('Cuestionario')
+            c.criterios.forEach((cc:any) => {
+              cc.Visible=true
+              cc.Porcalificar=cc.cantidadEnviados - cc.cantidadCalificados
+              cc.nombre=cc.nombre.split('Tareas').join('Tarea')
+              cc.nombre=cc.nombre.split('Cuestionarios').join('Cuestionario')
+            });
           });
         }
         this.TerminaCarga=true;
@@ -69,9 +73,20 @@ export class CalificarActividadesDocenteComponent implements OnInit ,OnChanges, 
   FilterCursos(){
     this.criterios.forEach((e:any) => {
       e.Visible=true
+      e.criterios.forEach((c:any) => {
+        c.Visible=true
+      });
       if(this.filterCurso.length>0){
-        var name=e.titulo.toUpperCase();
-        if(!name.includes(this.filterCurso.toUpperCase())){
+        var Alguno=0
+        e.criterios.forEach((c:any) => {
+          var name=c.titulo.toUpperCase();
+          if(!name.includes(this.filterCurso.toUpperCase())){
+            c.Visible=false
+          }else{
+            Alguno++
+          }
+        });
+        if(Alguno==0){
           e.Visible=false
         }
       }
@@ -86,6 +101,21 @@ export class CalificarActividadesDocenteComponent implements OnInit ,OnChanges, 
             e.Visible=false
           }
         }
+        if(e.Visible==true){
+          e.criterios.forEach((c:any) => {
+            if(this.EstadoPespecifico==1){
+              if(c.Porcalificar<=0){
+                c.Visible=false
+              }
+            }
+            if(this.EstadoPespecifico==2){
+              if(c.Porcalificar>0){
+                c.Visible=false
+              }
+            }
+          });
+        }
+
       }
     });
   }

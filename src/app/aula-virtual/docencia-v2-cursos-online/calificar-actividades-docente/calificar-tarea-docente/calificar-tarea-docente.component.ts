@@ -102,6 +102,17 @@ export class CalificarTareaDocenteComponent implements OnInit,OnChanges , OnDest
           if(t.nombreArchivoRetroalimentacion==null){
             t.nombreArchivoRetroalimentacion='Ningún archivo seleccionado'
           }
+          t.notas=[]
+          if(t.calificacionMaxima>0){
+            for (let index = 0; index <= (t.calificacionMaxima/10); index++) {
+              t.notas.push(index*10)
+            }
+            var f=t.notas.find((element:any) => element == t.calificacionMaxima)
+            console.log(f)
+            if(f==null){
+              t.notas.push(t.calificacionMaxima)
+            }
+          }
           i++
         });
         console.log(this.tableData)

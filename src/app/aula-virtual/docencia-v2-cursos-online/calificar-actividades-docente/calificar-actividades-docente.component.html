@@ -49,44 +49,64 @@
         </div>
       </ng-container>
       <div class="col-12" style="margin-top: 50px;" *ngIf="criterios!=null && criterios.length>0">
-        <ng-container *ngFor="let item of criterios;let i=index">
-          <div class="contentCursoOnline" *ngIf="item.Visible==true">
-            <div class="row" style="margin: 0px;align-items: center;">
-
-              <div class="col-6 col-md-3 col-lg-3">
-                <div class="EstadoCurso">Sesión: {{item.orden>9?item.orden:'0'+item.orden}}</div>
-              </div>
-              <div class="col-6 col-md-9 col-lg-9" style="    display: flex;">
-                <div class="TitleCursoOnline">{{item.nombre}}
-                  {{item.ordenActividad>9?item.ordenActividad:'0'+item.ordenActividad}} - {{item.titulo}}</div>
-              </div>
-              <br>
-              <div class="col-12" style="margin-top: 10px;">
-              </div>
-              <div class="col-6 col-md-5 col-lg-5 fechasOnline">
-                <div>Fecha Entrega {{item.fechaEntrega | date:'dd-MM-yyyy'}}</div>
-              </div>
-
-              <div class="col-6 col-md-5 col-lg-5" style="    display: flex;">
-                <ng-container *ngIf="(item.cantidadEnviados - item.cantidadCalificados)<=0">
+        <ng-container *ngFor="let items of criterios;let i=index">
+          <ng-container *ngIf="items.Visible==true">
+            <div class="SubTitleSesionesCurso">
+              <div class="titleSubTitleSesionesCurso">Sesión: {{items.sesion>9?items.sesion:'0'+items.sesion}}</div>
+              <div style="display: flex;align-items: center;">
+                <ng-container *ngIf="(items.cantidadEnviados - items.cantidadCalificados)<=0">
                   <div class="imgAlertaActividadesEchas "></div>
                   <div class="textActividades">Sin pendientes</div>
                 </ng-container>
-                <ng-container *ngIf="(item.cantidadEnviados - item.cantidadCalificados)>0">
+                <ng-container *ngIf="(items.cantidadEnviados - items.cantidadCalificados)>0">
                   <div class="imgAlertaActividadesPendientes"></div>
-                  <div class="textActividades">Actividades por calificar ({{item.cantidadEnviados -
-                    item.cantidadCalificados}})</div>
+                  <div class="textActividades">Actividades por calificar ({{items.cantidadEnviados -
+                    items.cantidadCalificados}})</div>
                 </ng-container>
 
               </div>
-
-              <div class="col-12 col-md-2 col-lg-2" style="    display: flex;justify-content: flex-end;padding: 0px;">
-                <app-default-button (ButtoclClick)="IrACalificar(item)"
-                [confs]="{color:'primary',titulo:(item.cantidadEnviados - item.cantidadCalificados)<=0?'Ver Calificados':'Calificar'}"
-                  [icon]="''" [style]="'border-radius: 5px; margin: 0px; padding: 0px 30px;'"></app-default-button>
-              </div>
             </div>
-          </div>
+                <ng-container *ngFor="let item of items.criterios">
+
+                  <div class="contentCursoOnline" *ngIf="item.Visible==true">
+                    <div class="row" style="margin: 0px;align-items: center;">
+
+                      <div class="col-6 col-md-3 col-lg-3">
+                        <div class="EstadoCurso">Sesión: {{item.sesion>9?item.sesion:'0'+item.sesion}}</div>
+                      </div>
+                      <div class="col-6 col-md-9 col-lg-9" style="    display: flex;">
+                        <div class="TitleCursoOnline">{{item.nombre}}
+                          {{item.orden>9?item.orden:'0'+item.orden}} - {{item.titulo}}</div>
+                      </div>
+                      <br>
+                      <div class="col-12" style="margin-top: 10px;">
+                      </div>
+                      <div class="col-6 col-md-5 col-lg-5 fechasOnline">
+                        <div>Fecha Entrega {{item.fechaEntrega | date:'dd-MM-yyyy'}}</div>
+                      </div>
+
+                      <div class="col-6 col-md-5 col-lg-5" style="    display: flex;">
+                        <ng-container *ngIf="(item.cantidadEnviados - item.cantidadCalificados)<=0">
+                          <div class="imgAlertaActividadesEchas "></div>
+                          <div class="textActividades">Sin pendientes</div>
+                        </ng-container>
+                        <ng-container *ngIf="(item.cantidadEnviados - item.cantidadCalificados)>0">
+                          <div class="imgAlertaActividadesPendientes"></div>
+                          <div class="textActividades">Actividades por calificar ({{item.cantidadEnviados -
+                            item.cantidadCalificados}})</div>
+                        </ng-container>
+
+                      </div>
+
+                      <div class="col-12 col-md-2 col-lg-2" style="    display: flex;justify-content: flex-end;padding: 0px;">
+                        <app-default-button (ButtoclClick)="IrACalificar(item)"
+                        [confs]="{color:'primary',titulo:(item.cantidadEnviados - item.cantidadCalificados)<=0?'Ver Calificados':'Calificar'}"
+                          [icon]="''" [style]="'border-radius: 5px; margin: 0px; padding: 0px 30px;'"></app-default-button>
+                      </div>
+                    </div>
+                  </div>
+                </ng-container>
+          </ng-container>
         </ng-container>
 
       </div>

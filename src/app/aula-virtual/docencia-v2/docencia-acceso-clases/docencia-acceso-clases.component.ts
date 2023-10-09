@@ -71,7 +71,7 @@ export class DocenciaAccesoClasesComponent implements OnInit,OnChanges,OnDestroy
     console.log(e)
     console.log(this.tableData[e])
     if(this.tableData[e].tipo=='Webinar'){
-      this._SnackBarServiceService.openSnackBar("Las sesiones de tipo webinar no se configuran",'x',15,"snackbarCrucigramaerror");
+      this._SnackBarServiceService.openSnackBar("Las sesiones de tipo webinar no se configuran ",'x',15,"snackbarCrucigramaerror");
     }else{
       this._SessionStorageService.SessionSetValue("SesionSelect",this.tableData[e].orden)
       this.router.navigate(['/AulaVirtual/DocenciaV2/'+this.tableData[e].idPEspecificoHijo]);
