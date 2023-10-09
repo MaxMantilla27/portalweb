@@ -39,11 +39,12 @@ export class DocenciaV2CursosOnlineComponent implements OnInit,OnDestroy {
 
   public DataProveedor:any
   ngOnInit(): void {
-    setTimeout(() => {
-      this.Redirect();
-    }, 1000);
+    // setTimeout(() => {
+    //   this.Redirect();
+    // }, 1000);
     this.ObtenerInformacionProveedor();
     var indice=this._SessionStorageService.SessionGetValue('docenciaCursos');
+    console.log('indice', indice)
     if(indice!=''){
       this.tabIndex=parseInt(indice);
     }

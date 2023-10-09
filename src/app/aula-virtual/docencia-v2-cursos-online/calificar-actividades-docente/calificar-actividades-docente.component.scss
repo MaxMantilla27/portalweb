@@ -73,22 +73,6 @@
     font-size: 12px;
     font-weight: 600;
   }
-  .imgAlertaActividadesPendientes{
-    width: 15px;
-    height: 15px;
-    background: url('../../../../assets/icons/icono-notificacion-rojo.svg');
-    background-size: cover;
-    background-position: center;
-    margin-right: 10px;
-  }
-  .imgAlertaActividadesEchas{
-    width: 15px;
-    height: 15px;
-    background: url('../../../../assets/icons/icono-check-circulo-verde.svg');
-    background-size: cover;
-    background-position: center;
-    margin-right: 10px;
-  }
   .textActividades{
     font-size: 12px;
   }
@@ -111,6 +95,23 @@
     font-size: 14px;
   }
 }
+
+.imgAlertaActividadesPendientes{
+  width: 15px;
+  height: 15px;
+  background: url('../../../../assets/icons/icono-notificacion-rojo.svg');
+  background-size: cover;
+  background-position: center;
+  margin-right: 10px;
+}
+.imgAlertaActividadesEchas{
+  width: 15px;
+  height: 15px;
+  background: url('../../../../assets/icons/icono-check-circulo-verde.svg');
+  background-size: cover;
+  background-position: center;
+  margin-right: 10px;
+}
 .contentCursoOnline:hover{
   background: #f2f6ff;
 }
@@ -119,4 +120,16 @@
 }
 .Volver:hover{
   text-decoration: underline;
+}
+.SubTitleSesionesCurso{
+  padding: 5px;
+  border-bottom: solid 2px #d4d4d4;
+  margin: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  .titleSubTitleSesionesCurso{
+    font-size: 17px;
+    font-weight: 600;
+  }
 }

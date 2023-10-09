@@ -7,6 +7,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ProveedorService } from 'src/app/Core/Shared/Services/Proveedor/proveedor.service';
 import { SessionStorageService } from 'src/app/Core/Shared/Services/session-storage.service';
 import { Router } from '@angular/router';
+import { SnackBarServiceService } from 'src/app/Core/Shared/Services/SnackBarService/snack-bar-service.service';
 
 @Component({
   selector: 'app-docencia-acceso-clases',
@@ -48,7 +49,8 @@ export class DocenciaAccesoClasesComponent implements OnInit,OnChanges,OnDestroy
     public dialog: MatDialog,
     private _ProveedorService:ProveedorService,
     private router:Router,
-    private _SessionStorageService:SessionStorageService
+    private _SessionStorageService:SessionStorageService,
+    private _SnackBarServiceService: SnackBarServiceService,
   ) { }
   @Input() IdProveedor=0;
   public TerminaCarga=false
@@ -68,8 +70,12 @@ export class DocenciaAccesoClasesComponent implements OnInit,OnChanges,OnDestroy
   IrAcurso(e:any){
     console.log(e)
     console.log(this.tableData[e])
-    this._SessionStorageService.SessionSetValue("SesionSelect",this.tableData[e].orden)
-    this.router.navigate(['/AulaVirtual/DocenciaV2/'+this.tableData[e].idPEspecificoHijo]);
+    if(this.tableData[e].tipo=='Webinar'){
+      this._SnackBarServiceService.openSnackBar("Las sesiones de tipo webinar no se configuran ",'x',15,"snackbarCrucigramaerror");
+    }else{
+      this._SessionStorageService.SessionSetValue("SesionSelect",this.tableData[e].orden)
+      this.router.navigate(['/AulaVirtual/DocenciaV2/'+this.tableData[e].idPEspecificoHijo]);
+    }
   }
   ObtenerSesionesOnlineWebinarDocente(){
     this._DatosPerfilService.ObtenerSesionesOnlineWebinarDocente().pipe(takeUntil(this.signal$)).subscribe({
