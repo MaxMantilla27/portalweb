@@ -22,4 +22,28 @@ export class AlertaService {
       allowOutsideClick: false,
     });
   }
+  mensajeConfirmacionCuestionario() {
+    return Swal.fire({
+      title: 'Se restaurarán los cuestionarios de todos los alumnos. ¿Desea continuar?',
+      text: '¡No podrás revertir esto!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#4C5FC0',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Aceptar',
+      allowOutsideClick: false,
+    });
+  }
+  mensajeConfirmacionTarea() {
+    return Swal.fire({
+      title: 'Se restaurarán las tareas de todos los alumnos. ¿Desea continuar?',
+      text: '¡No podrás revertir esto!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#4C5FC0',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Aceptar',
+      allowOutsideClick: false,
+    });
+  }
 }

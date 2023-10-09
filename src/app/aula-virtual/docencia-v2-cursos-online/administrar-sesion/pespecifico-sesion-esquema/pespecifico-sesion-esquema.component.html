@@ -50,12 +50,12 @@
 <div class="row AgregarRecursos">
   <div class="col-12 col-md-9 col-lg-10 InputsDocencia"  *ngIf="IdEditar==null && materialAdicional==false">
     <mat-form-field appearance="outline">
-      <mat-label>Selecione Actividad o Recurso</mat-label>
+      <mat-label>Seleccione Actividad o Recurso</mat-label>
       <mat-select #myselsetc [(ngModel)]="ActividadSelect" #select>
         <mat-option [value]="0">Material Adicional</mat-option>
         <ng-container *ngFor="let item of esquemas">
-          <mat-option *ngIf="item.visible==true" [value]="item.id">
-            {{item.nombre}}
+          <mat-option *ngIf="item.visible==true" [value]="item.idTipoCriterioEvaluacion">
+            {{item.tipoCriterioEvaluacion}}
           </mat-option>
         </ng-container>
       </mat-select>

@@ -57,7 +57,8 @@ export class AgregarCuestionarioComponent implements OnInit, OnDestroy {
     TiempoLimite: 0,
     Preguntas: [],
     CalificacionMaximaSecundaria:0,
-    FechaEntregaSecundaria:''
+    FechaEntregaSecundaria:'',
+
   };
   formularioTarea = new FormGroup({
     Titulo: new FormControl('', [Validators.required]),
@@ -71,6 +72,8 @@ export class AgregarCuestionarioComponent implements OnInit, OnDestroy {
     FechaEntregaSecundaria: new FormControl(null, [Validators.required]),
     HoraEntregaSecundaria: new FormControl(null, [Validators.required]),
     MinutoEntregaSecundaria: new FormControl(null, [Validators.required]),
+    IdCriterioEvaluacion: new FormControl(0, [Validators.required]),
+
   });
   public fecha = new Date();
   public filestatus = false;
@@ -82,6 +85,33 @@ export class AgregarCuestionarioComponent implements OnInit, OnDestroy {
   cargando=false
   public selectedFiles?: FileList;
   public fechamaxima=new Date();
+  // public esquemas:Array<any>=[
+  //   {
+  //     id:1,
+  //     nombre:'Cuestionario',
+  //     visible:false,
+  //     idCriterio:0,
+  //     idTipoCriterioEvaluacion:0,
+  //     tipoCriterioEvaluacion:'Cuestionario'
+  //   },
+  //   {
+  //     id:2,
+  //     nombre:'Tarea',
+  //     visible:false,
+  //     idCriterio:0,
+  //     idTipoCriterioEvaluacion:0,
+  //     tipoCriterioEvaluacion:'Tarea'
+  //   },
+  //   {
+  //     id:3,
+  //     nombre:'Cuestionario',
+  //     visible:false,
+  //     idCriterio:0,
+  //     idTipoCriterioEvaluacion:0,
+  //     tipoCriterioEvaluacion:'Otros'
+  //   }
+  // ]
+  public esquemas : any;
   ngOnInit(): void {
     for (let index = 0; index < 24; index++) {
       var hora = '' + index;
@@ -101,7 +131,7 @@ export class AgregarCuestionarioComponent implements OnInit, OnDestroy {
       this.Calificaciones.push(index * 10);
     }
     console.log(this.data);
-    this.save.IdCriterioEvaluacion = this.data.idCriterio;
+    // this.save.IdCriterioEvaluacion = this.data.idCriterio;
     this.save.IdPEspecificoSesion = this.data.sesion.idSesion;
     if (this.data.id != 0) {
       this.Title = 'EDITAR CUESTIONARIO';
@@ -109,8 +139,12 @@ export class AgregarCuestionarioComponent implements OnInit, OnDestroy {
       this.ObtenerPEspecificoSesionCuestionarioPorId();
       this.ObtenerpreguntasSesionV2();
     }
+    else{
+      this.ObtenerTipoCriteriosPorProgramaEspecifico(this.data.idTipoCriterioEvaluacion)
+    }
 
     this.ObtenerPreguntaTipo();
+
   }
 
   ObtenerPreguntaTipo() {
@@ -145,10 +179,12 @@ export class AgregarCuestionarioComponent implements OnInit, OnDestroy {
       .subscribe({
         next: (x) => {
           console.log(x);
+          this.ObtenerTipoCriteriosPorProgramaEspecifico(x.idTipoCriterioEvaluacion)
+
           var date = new Date(x.fechaEntrega);
           var date2=new Date(x.fechaEntregaSecundaria)
           console.log(date2);
-          this.save.IdCriterioEvaluacion = x.idCriterioEvaluacion;
+          // this.save.IdCriterioEvaluacion = x.idCriterioEvaluacion;
 
           this.formularioTarea.get('Titulo')?.setValue(x.titulo);
           this.formularioTarea.get('Descripcion')?.setValue(x.descripcion);
@@ -161,6 +197,7 @@ export class AgregarCuestionarioComponent implements OnInit, OnDestroy {
           this.formularioTarea.get('HoraEntregaSecundaria')?.setValue(date2.getHours().toString().length>1?date2.getHours().toString():'0'+date2.getHours().toString())
           this.formularioTarea.get('MinutoEntregaSecundaria')?.setValue(date2.getMinutes())
           this.formularioTarea.get('CalificacionMaximaSecundaria')?.setValue(x.calificacionMaximaSecundaria)
+          this.formularioTarea.get('IdCriterioEvaluacion')?.setValue(x.idCriterioEvaluacion)
         },
         error: (x) => {},
       });
@@ -218,6 +255,7 @@ export class AgregarCuestionarioComponent implements OnInit, OnDestroy {
     this.save.TiempoLimite = this.formularioTarea.get('TiempoLimite')?.value;
     this.save.CalificacionMaxima =this.formularioTarea.get('CalificacionMaxima')?.value;
     this.save.CalificacionMaximaSecundaria = this.formularioTarea.get('CalificacionMaximaSecundaria')?.value;
+    this.save.IdCriterioEvaluacion = this.formularioTarea.get('IdCriterioEvaluacion')?.value;
     var fecha: Date = this.formularioTarea.get('FechaEntrega')?.value;
     fecha.setHours(this.formularioTarea.get('HoraEntrega')?.value);
     fecha.setMinutes(this.formularioTarea.get('MinutoEntrega')?.value);
@@ -439,5 +477,17 @@ export class AgregarCuestionarioComponent implements OnInit, OnDestroy {
   }
   Eliminar(index: number) {
     this.save.Preguntas.splice(index,1)
+  }
+  ObtenerTipoCriteriosPorProgramaEspecifico(idTipoCriterioEvaluacion:number){
+    this._PEspecificoEsquemaService.ObtenerTipoCriteriosPorProgramaEspecifico(this.data.idPEspecifico,idTipoCriterioEvaluacion).pipe(takeUntil(this.signal$))
+    .subscribe({
+      next: (x) => {
+        console.log(x);
+        if(x!=null){
+          this.esquemas=x;
+
+        }
+      },
+    });
   }
 }

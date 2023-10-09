@@ -1,10 +1,10 @@
-holaxx
 <div class="table-resposive">
   <table style="width: 100%;">
     <tr>
       <th style="width: 30px;">N°</th>
       <th style="min-width: 200px;">Titulo</th>
       <th style="min-width: 200px;">Fecha Entrega</th>
+      <th style="min-width: 200px;">Fecha Publicación</th>
       <th style="width:150px;text-align: center;">Acciones</th>
       <!-- <th style="min-width: 180px;">Metas pronosticadas 2021</th> -->
     </tr>
@@ -15,11 +15,19 @@ holaxx
         <td>{{item.titulo}}</td>
         <td>{{item.fechaEntrega | date:'dd-MM-yyyy hh:mm a'}}</td>
         <td>
+          <div *ngIf="item.fechaPublicacion!=null">
+            {{item.fechaPublicacion | date:'dd-MM-yyyy hh:mm a'}}
+          </div>
+          <div *ngIf="item.fechaPublicacion==null">
+            Sin Publicar
+          </div>
+        </td>
+        <td>
           <div class="accionesTema">
             <div class="edidtarNaranja" (click)="OnEdit.emit(i)"></div>
             <div class="eliminarNaranja" (click)="OnDelete.emit(i)"></div>
             <div class="verNaranja" (click)="OpenVistaPrevia(item)"></div>
-            <div class="publicarNaranja" (click)="PublicarCuestionario(item)"></div>
+            <!-- <div class="publicarNaranja" (click)="PublicarCuestionario(item)"></div> -->
           </div>
         </td>
       </tr>

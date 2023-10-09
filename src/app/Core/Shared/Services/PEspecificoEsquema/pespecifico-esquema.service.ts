@@ -562,4 +562,29 @@ export class PEspecificoEsquemaService {
       }
     }
   }
+  public ObtenerTipoCriteriosPorProgramaEspecifico(
+    IdPEspecifico: number,IdTipoCriterioEvaluacion:number
+  ): Observable<any> {
+    console.log(IdPEspecifico)
+    console.log(IdTipoCriterioEvaluacion)
+    if (this.isBrowser) {
+      return this.http.get<any>(
+        this.urlBase +
+          "/ObtenerTipoCriteriosPorProgramaEspecifico?IdPEspecifico=" +
+          IdPEspecifico + '&IdTipoCriterioEvaluacion='+IdTipoCriterioEvaluacion
+      );
+    } else {
+      return EMPTY;
+    }
+  }
+  public ResetearCuestionarioAlumno(IdPEspecificoSesionCuestionario: number): Observable<any> {
+    console.log(IdPEspecificoSesionCuestionario)
+    if (this.isBrowser) {
+      return this.http.post<any>(this.urlBase +"/ResetearCuestionarioAlumno?IdPEspecificoSesionCuestionario=" +IdPEspecificoSesionCuestionario,{});
+    } else {
+      {
+        return EMPTY;
+      }
+    }
+  }
 }

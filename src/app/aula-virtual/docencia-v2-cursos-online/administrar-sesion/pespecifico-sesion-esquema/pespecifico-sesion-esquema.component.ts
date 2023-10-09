@@ -34,15 +34,27 @@ export class PespecificoSesionEsquemaComponent implements OnInit ,OnChanges, OnD
   public esquemas:Array<any>=[
     {
       id:1,
-      nombre:'Tarea',
+      nombre:'Cuestionario',
       visible:false,
-      idCriterio:0
+      idCriterio:0,
+      idTipoCriterioEvaluacion:0,
+      tipoCriterioEvaluacion:'Cuestionario'
     },
     {
       id:2,
+      nombre:'Tarea',
+      visible:false,
+      idCriterio:0,
+      idTipoCriterioEvaluacion:0,
+      tipoCriterioEvaluacion:'Tarea'
+    },
+    {
+      id:3,
       nombre:'Cuestionario',
       visible:false,
-      idCriterio:0
+      idCriterio:0,
+      idTipoCriterioEvaluacion:0,
+      tipoCriterioEvaluacion:'Otros'
     }
   ]
   public criterios:any=[]
@@ -62,7 +74,7 @@ export class PespecificoSesionEsquemaComponent implements OnInit ,OnChanges, OnD
   public nombrefile = 'Seleccione Archivo';
   ngOnChanges(changes: SimpleChanges): void {
     if (this.IdPespecifico != 0) {
-      this.ObtenerCriteriosPorProgramaEspecifico();
+      this.ObtenerTipoCriteriosPorProgramaEspecifico();
     }
     if (this.IdSesion != 0) {
       console.log('carga criterios....', this.IdSesion);
@@ -89,17 +101,17 @@ export class PespecificoSesionEsquemaComponent implements OnInit ,OnChanges, OnD
       },
     });
   }
-  ObtenerCriteriosPorProgramaEspecifico(){
-    this._PEspecificoEsquemaService.ObtenerCriteriosPorProgramaEspecifico(this.IdPespecifico).pipe(takeUntil(this.signal$))
+  ObtenerTipoCriteriosPorProgramaEspecifico(){
+    this._PEspecificoEsquemaService.ObtenerTipoCriteriosPorProgramaEspecifico(this.IdPespecifico,0).pipe(takeUntil(this.signal$))
     .subscribe({
       next: (x) => {
         console.log(x);
         if(x!=null){
           this.esquemas.forEach((ea:any) => {
             x.forEach((e:any) => {
-              if(e.nombre.toLowerCase().includes(ea.nombre.toLowerCase())){
+              if(e.tipoCriterioEvaluacion.toLowerCase().includes(ea.tipoCriterioEvaluacion.toLowerCase())){
                 ea.visible=true
-                ea.idCriterio=e.idCriterioEvaluacion
+                ea.idTipoCriterioEvaluacion=e.idTipoCriterioEvaluacion
               }
             });
           });
@@ -112,7 +124,7 @@ export class PespecificoSesionEsquemaComponent implements OnInit ,OnChanges, OnD
     var data=this.criterios.cuestionarios[i]
     const dialogRef = this.dialog.open(AgregarCuestionarioComponent, {
       width: '1200px',
-      data: {id:data.id ,idCriterio:data.idCriterio,sesion:this.sesion},
+      data: {id:data.id ,idCriterio:data.idCriterio,sesion:this.sesion,idTipoCriterioEvaluacion:data.idTipoCriterioEvaluacion,idPEspecifico:this.IdPespecifico},
       panelClass: 'dialog-Agregar-Tarea',
       disableClose:true
     });
@@ -228,12 +240,13 @@ export class PespecificoSesionEsquemaComponent implements OnInit ,OnChanges, OnD
         data=element;
       }
     });
-    if(data.id==1){
-      const dialogRef = this.dialog.open(AgregarTareaComponent, {
+    if(data.id==1)
+    {
+      const dialogRef = this.dialog.open(AgregarCuestionarioComponent, {
         width: '1200px',
-        data: {id:0 ,idCriterio:data.idCriterio,sesion:this.sesion},
+        data: {id:0 ,idCriterio:data.idCriterio,sesion:this.sesion,idTipoCriterioEvaluacion:data.idTipoCriterioEvaluacion,idPEspecifico:this.IdPespecifico},
         panelClass: 'dialog-Agregar-Tarea',
-       disableClose:true
+        disableClose:true
       });
 
       dialogRef.afterClosed().pipe(takeUntil(this.signal$)).subscribe((result) => {
@@ -243,12 +256,13 @@ export class PespecificoSesionEsquemaComponent implements OnInit ,OnChanges, OnD
           this.ObtenerActividadesRecursoSesionDocente()
         }
       });
-    }else{
-      const dialogRef = this.dialog.open(AgregarCuestionarioComponent, {
+    }
+    if(data.id==2){
+      const dialogRef = this.dialog.open(AgregarTareaComponent, {
         width: '1200px',
         data: {id:0 ,idCriterio:data.idCriterio,sesion:this.sesion},
         panelClass: 'dialog-Agregar-Tarea',
-        disableClose:true
+       disableClose:true
       });
 
       dialogRef.afterClosed().pipe(takeUntil(this.signal$)).subscribe((result) => {
