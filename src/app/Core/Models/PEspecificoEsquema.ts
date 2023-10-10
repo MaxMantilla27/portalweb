@@ -88,6 +88,8 @@ export interface RespuestasPreguntasDocenteDTO {
   Id: number;
   Puntos:number;
   Correcto: boolean;
+  Retroalimentacion: string|null,
+  file: File;
 }
 
 export interface CalificarTareaAlumnoOnlineDTO {

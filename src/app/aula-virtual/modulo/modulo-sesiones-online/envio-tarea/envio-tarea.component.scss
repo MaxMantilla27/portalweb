@@ -116,3 +116,14 @@
   background-position: center;
   margin-right: 15px;
 }
+.VinculoActividad{
+  font-size: 12px;
+  a{
+    color: #505050  !important;
+    text-decoration: none;
+  }
+}
+.VinculoActividad:hover{
+  text-decoration: underline;
+  text-decoration-color: #505050 ;
+}

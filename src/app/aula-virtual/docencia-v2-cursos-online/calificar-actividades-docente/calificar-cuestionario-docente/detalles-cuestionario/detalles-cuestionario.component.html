@@ -27,18 +27,18 @@
               <div class="resultado" [ngClass]="{'esResultadoCorrecto': item.FinalCorecto==true}">{{item.FinalCorecto==true?'Correcta':'Incorrecta'}}</div>
             </ng-container>
             <ng-container *ngIf="item.idPreguntaTipo==6">
-              <ng-container *ngIf="fechacalificacion==undefined || fechacalificacion==null">
+              <!-- <ng-container *ngIf="fechacalificacion==undefined || fechacalificacion==null"> -->
                 <div style="display: flex;justify-content:space-between;">
                   Puntaje :
                   <select (change)="SetNota(item)"
-                  [(ngModel)]="item.valueSelec" style="width:70px; border-radius: 0.4em;" >
+                  [(ngModel)]="item.puntos" style="width:70px; border-radius: 0.4em;" >
                       <option *ngFor="let d of item.data" [value]="d">{{d}}</option>
                   </select>
                 </div>
-              </ng-container>
-              <ng-container *ngIf="fechacalificacion!=undefined && fechacalificacion!=null">
+              <!-- </ng-container> -->
+              <!-- <ng-container *ngIf="fechacalificacion!=undefined && fechacalificacion!=null">
                 <div class="puntaje">Puntaje: {{item.puntos}}</div>
-              </ng-container>
+              </ng-container> -->
             </ng-container>
             <ng-container *ngIf="item.idPreguntaTipo!=6">
               <div class="puntaje">Puntaje: {{item.puntos}}</div>
@@ -95,6 +95,38 @@
                     <input type="text" [disabled]="true" placeholder="Ingresa tu respuesta"  [(ngModel)]="item.respuesta[1]" matInput>
                   </mat-form-field>
                 </div>
+                <div style="font-size: 14px;font-weight: 600;margin-bottom: 10px;">Retroalimentación:</div>
+                <div class="TextRetro">
+                  <textarea placeholder="Ingrese el texto de la retroalimentacion" [(ngModel)]="item.retroalimentacion"
+                  (input)="SetRetro(item)"></textarea>
+                </div>
+                <div style="width: 100%;padding: 0px 20px 0px 20px;">
+                  <div class=" row ArchivoRetro">
+                    <div class="col-6 col-md-8 col-lg-9 fieldTarea">
+                      <div (click)="fileInput.click()" style="height: 38px;width: 100%;border:solid 1px #c2c2c2;border-radius: 5px;display: flex; align-items: center;
+                      padding: 0px 5px;cursor: pointer;">
+                        <button style="border: solid 1px #767676;
+                        margin-right: 5px;    white-space: nowrap;">Seleccionar archivo</button>
+                        <div style="    white-space: nowrap;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                        display: -webkit-box;
+                        -webkit-line-clamp: 3;
+                        -webkit-box-orient: vertical;">{{item.nombreArchivo}}</div>
+                      </div>
+                      <input #fileInput type="file" id="file" (change)="getFileDetails($event,item)" style="    width: 100%;
+                      border: solid 1px #c2c2c2;
+                      padding: 7px;
+                      border-radius: 5px;display: none;">
+                      <div *ngIf="!item.filestatus && item.fileErrorMsg!=''">{{item.fileErrorMsg}}</div>
+                    </div>
+                    <div class="col-6 col-md-4 col-lg-3" style="display: flex;align-items: center;justify-content: flex-end;">
+                      <app-default-button [confs]="{color:'primary',titulo:'Adjuntar'}" [style]="'padding:0px 30px;margin:0px '"
+                      [icon]="''"
+                        [disabled]="!item.filestatus" (ButtoclClick)="SetFile(item)"></app-default-button>
+                    </div>
+                  </div>
+                </div>
               </ng-container>
             </div>
           </div>
@@ -114,7 +146,7 @@
           mat-dialog-close></app-default-button>
         <app-default-button [confs]="{color:'primary',titulo:'Guardar'}"
           [style]="'margin: 0px; padding: 0px 40px; border-radius: 40px;'"
-          [disabled]="fechacalificacion!=undefined && fechacalificacion!=null"
+
           (ButtoclClick)="AgregarCalificacionCuestionarioAlumnoDocente()"
           ></app-default-button>
       </div>

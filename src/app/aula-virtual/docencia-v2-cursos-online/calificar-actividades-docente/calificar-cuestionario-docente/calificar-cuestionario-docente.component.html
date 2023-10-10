@@ -1,8 +1,8 @@
 <div class="row" style="    margin-bottom: 20px;
 font-weight: 600;">
-  <div class="col-6 col-md-3 col-lg-3">Sesión: {{data.orden>9?data.orden:'0'+data.orden}}</div>
+  <div class="col-6 col-md-3 col-lg-3">Sesión: {{data.sesion>9?data.sesion:'0'+data.sesion}}</div>
   <div class="col-6 col-md-9 col-lg-9">{{data.nombre}}
-    {{data.ordenActividad>9?data.ordenActividad:'0'+data.ordenActividad}} - {{data.titulo}}</div>
+    {{data.orden>9?data.orden:'0'+data.orden}} - {{data.titulo}}</div>
 </div>
 <ng-container *ngIf="cuestionario.length==0 && cargando==true">
   <div class="row"
