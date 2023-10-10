@@ -138,7 +138,10 @@ export class DetallesCuestionarioComponent implements OnInit, OnDestroy {
             });
           }
           this.preguntas.forEach((p:any) => {
-           // p.puntos=p.puntos*this.respuestas[0].calificacionMaxima/100
+
+            if (p.idPreguntaTipo != 6) {
+              p.puntos=p.puntos*this.respuestas[0].calificacionMaxima/100
+            }
             p.puntaje=p.puntaje*this.respuestas[0].calificacionMaxima/100
           });
           this.cargando=false
