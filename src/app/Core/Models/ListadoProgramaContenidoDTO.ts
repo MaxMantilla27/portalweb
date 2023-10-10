@@ -21,7 +21,14 @@ export interface ListadoCursosHijosDTO {
   habilitado?:Boolean,
   porcentaje:number,
   fechasOnline?:any,
-  fechasOnlineActive?:boolean
+  fechasOnlineActive?:boolean,
+  tareas: number;
+  tareasEnviadas:number;
+  cuestionarios:number;
+  cuestionariosEnviados:number;
+  pendientes:number;
+  sesiones:number;
+  sesionesFaltantes:number;
 }
 export interface ProgresoAlumnoProgramaAulaVirtualDTO {
   progresoVideo: Array<ProgresoAlumnoProgramaVideosAulaVirtualDTO>;

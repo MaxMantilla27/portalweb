@@ -11,8 +11,8 @@ import { Router } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
 import { ParametrosEstructuraEspecificaDTO } from 'src/app/Core/Models/EstructuraEspecificaDTO';
 import {
-  ProgresoAlumnoProgramaAulaVirtualDTO,
   CursoPadreDTO,
+  ProgresoAlumnoProgramaAulaVirtualDTO,
   ProgresoAlumnoProgramaVideosAulaVirtualDTO,
 } from 'src/app/Core/Models/ListadoProgramaContenidoDTO';
 import { AlumnosTest } from 'src/app/Core/Shared/AlumnosTest';
@@ -55,7 +55,7 @@ export class CursoModulosComponent implements OnInit, OnChanges,OnDestroy {
     idPGeneral: 0,
     listaCursoMatriculado: [],
     modalidad: '',
-    programaGeneral: '',
+    programaGeneral: ''
   };
   public cargaProgrso=false
   public progressProgram:any
@@ -65,6 +65,7 @@ export class CursoModulosComponent implements OnInit, OnChanges,OnDestroy {
      // this.ObtenerProgresoAulaVirtual();
       this.ProgresoProgramaCursosAulaVirtualAonlinePorEstadoVideo();
       console.log(this.programEstructura)
+      console.log(this.programEstructura.listaCursoMatriculado)
       this.validarFechasOnline()
     }
   }
