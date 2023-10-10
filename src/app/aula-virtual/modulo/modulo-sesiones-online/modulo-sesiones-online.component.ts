@@ -94,7 +94,6 @@ export class ModuloSesionesOnlineComponent implements OnInit , OnChanges,OnDestr
         if(x!=null){
           x.forEach((d:any) => {
             d.disabled=false;
-            console.log(d)
             let f1=new Date(d.fechaEntregaSecundaria);
             let f2=new Date();
 
@@ -117,6 +116,7 @@ export class ModuloSesionesOnlineComponent implements OnInit , OnChanges,OnDestr
             }
           });
         }
+        console.log(this.sesiones)
       }
     })
   }

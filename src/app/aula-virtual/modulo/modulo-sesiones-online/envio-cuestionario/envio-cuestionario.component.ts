@@ -1,10 +1,11 @@
 import { Component, Inject, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
 import { Subject, takeUntil } from 'rxjs';
 import { PEspecificoEsquemaService } from 'src/app/Core/Shared/Services/PEspecificoEsquema/pespecifico-esquema.service';
 import * as moment  from 'moment';
 import { SessionStorageService } from 'src/app/Core/Shared/Services/session-storage.service';
 import { AgregarPEspecificoSesionCuestionarioAlumnoDTO, RespuestasCuestionarioDTO } from 'src/app/Core/Models/PEspecificoEsquema';
+import { ImagenModalComponent } from 'src/app/Core/Shared/Containers/Dialog/imagen-modal/imagen-modal.component';
 
 @Component({
   selector: 'app-envio-cuestionario',
@@ -19,7 +20,8 @@ export class EnvioCuestionarioComponent implements OnInit ,OnDestroy {
     public dialogRef: MatDialogRef<EnvioCuestionarioComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private _SessionStorageService:SessionStorageService,
-    private _PEspecificoEsquemaService: PEspecificoEsquemaService
+    private _PEspecificoEsquemaService: PEspecificoEsquemaService,
+    public dialog: MatDialog,
   ) { }
 
   public CuestionarioAvance:
@@ -63,6 +65,9 @@ export class EnvioCuestionarioComponent implements OnInit ,OnDestroy {
           var vaRes:Array<any>=[]
           var vaCorr:Array<any>=[]
           var vaInCorr:Array<any>=[]
+          var retroalimentacion=null
+          var nombreArchivoRetroalimentacion=null
+          var urlArchivoSubidoRetroalimentacion=null
           dataguardada.respuestas.forEach((r:any) => {
             if(p.id==r.idPwPEspecificoSesionCuestionarioPregunta){
               vaRes.push(r.valor)
@@ -72,10 +77,18 @@ export class EnvioCuestionarioComponent implements OnInit ,OnDestroy {
               if(r.correcto==false){
                 vaInCorr.push(r.valor)
               }
+              if(p.idPreguntaTipo==6){
+                retroalimentacion=r.retroalimentacion
+                nombreArchivoRetroalimentacion=r.nombreArchivo
+                urlArchivoSubidoRetroalimentacion=r.urlArchivoSubido
+              }
             }
           });
           if(p.idPreguntaTipo==6){
             p.respuesta=vaRes
+            p.retroalimentacion=retroalimentacion
+            p.nombreArchivoRetroalimentacion=nombreArchivoRetroalimentacion
+            p.urlArchivoSubidoRetroalimentacion=urlArchivoSubidoRetroalimentacion
           }else{
             p.alternativas.forEach((a:any) => {
               vaRes.forEach((vr:any) => {
@@ -123,6 +136,19 @@ export class EnvioCuestionarioComponent implements OnInit ,OnDestroy {
       }
     }
   }
+  getUrl(url:string)
+  {
+    return "url('"+url+"')";
+  }
+  OpenImage(url:string)
+  {
+    this.dialog.open(ImagenModalComponent, {
+      width: '1000px',
+      data: url,
+      panelClass: 'dialog-Imagen-Modal'
+    });
+  }
+
   IniciarCuestionario(){
     this.CuestionarioAvance.Inicio=true
     this.CuestionarioAvance.fechaInicio=new Date();
