@@ -104,3 +104,28 @@
 .contentModuloSesiones mat-progress-bar .mat-progress-bar-fill::after {
   background-color: #00c356;
 }
+.fechasOnline{
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  margin: 3px 0px;
+  div{
+    margin-right: 20px;
+  }
+}
+.imgAlertaActividadesPendientes{
+  width: 15px;
+  height: 15px;
+  background: url('../../../../assets/icons/icono-notificacion-rojo.svg');
+  background-size: cover;
+  background-position: center;
+  margin-right: 10px;
+}
+.imgAlertaActividadesEchas{
+  width: 15px;
+  height: 15px;
+  background: url('../../../../assets/icons/icono-check-circulo-verde.svg');
+  background-size: cover;
+  background-position: center;
+  margin-right: 10px;
+}

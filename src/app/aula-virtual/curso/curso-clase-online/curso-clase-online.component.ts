@@ -29,6 +29,7 @@ export class CursoClaseOnlineComponent implements OnInit,OnDestroy,OnChanges {
   public proximo:any
   columnHeader:any = {
     'fechaHoraInicio': 'Fecha',
+    'cursoNombre': 'Nombre Curso Específico' ,
     'HoraInicio': 'Hora Inicio',
     'HoraFinal': 'Hora Fin',
     'ses': 'Sesión' };
@@ -57,10 +58,10 @@ export class CursoClaseOnlineComponent implements OnInit,OnDestroy,OnChanges {
       if(this.escurso==false){
         this.columnHeader = {
           'fechaHoraInicio': 'Fecha',
+          'cursoNombre': 'Nombre Curso Específico' ,
           'HoraInicio': 'Hora Inicio',
           'HoraFinal': 'Hora Fin',
-          'ses': 'Sesión',
-          'nombrePrograma': 'Curso' };
+          'ses': 'Sesión',};
       }
     }
   }
@@ -126,7 +127,7 @@ export class CursoClaseOnlineComponent implements OnInit,OnDestroy,OnChanges {
           this.clases.forEach((c:any) => {
             c.HoraInicio=c.fechaHoraInicio;
             c.HoraFinal=c.fechaHoraFinal;
-            c.ses=c.Sesion+' de '+ this.total
+            c.ses=c.orden+' de '+ c.maximo
             c.Acciones=c.urlWebex==null?'Próximamente':'Ir  a clase'
           });
         }
@@ -177,9 +178,6 @@ export class CursoClaseOnlineComponent implements OnInit,OnDestroy,OnChanges {
     })
   }
   IrAcurso(e:any){
-    console.log(e)
-    console.log(this.clases)
-    console.log(this.clases[e])
-    // this.router.navigate(['/MisCursos/'+this.IdMatricula+'/'+this.clases[e].idPEspecificoHijo]);
+    this.router.navigate(['/MisCursos/'+this.IdMatricula+'/'+this.clases[e].idPespecifico]);
   }
 }

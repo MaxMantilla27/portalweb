@@ -82,7 +82,7 @@ export class CursoComponent implements OnInit,OnDestroy {
     idPGeneral: 0,
     listaCursoMatriculado: [],
     modalidad: '',
-    programaGeneral: '',
+    programaGeneral: ''
   };
   public json:ParametrosEstructuraEspecificaDTO={
 

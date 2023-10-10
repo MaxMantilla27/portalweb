@@ -7,14 +7,47 @@
       <ng-container *ngIf="item.idModalidadHijo!=1">
         <div class="titleCursoModulo col-10 col-md-11 col-lg-11">
           {{item.programaGeneralHijo}}
-          <div class="cursoMatriculaicon" >
-            <i class="material-icons" [ngClass]="{'inActiveOnline': item.fechasOnlineActive!=true}">play_circle_fill</i>
-            <div>Online Sincrónico</div>
+          <div class="row" >
+            <div class="cursoMatriculaicon col-6 col-md-6 col-lg-6" style="    display: flex;">
+              <i class="material-icons" [ngClass]="{'inActiveOnline': item.fechasOnlineActive!=true}">play_circle_fill</i>
+              <div>Online Sincrónico</div>
+            </div>
+            <div class="col-6 col-md-6 col-lg-6" style="display: flex;align-items: center;">
+              <ng-container *ngIf="item.pendientes!=0">
+                <div class="imgAlertaActividadesPendientes"></div>
+                <div style="font-size: 12px">Actividades Pendientes ({{item.pendientes}}) </div>
+              </ng-container>
+              <ng-container *ngIf="item.pendientes==0">
+                <div class="imgAlertaActividadesEchas"></div>
+                <div style="font-size: 12px;">Sin Pendientes</div>
+              </ng-container>
+
+            </div>
           </div>
           <div class="FechasOnlineAula">
-            <div class="imgActive" [ngClass]="{'inActiveOnline': item.fechasOnlineActive!=true}"></div>
-            <div class="fechasTextoOnlineAula" *ngIf="item.fechasOnline!=undefined && item.fechasOnline!=null">{{item.fechasOnline.fechaInicio | date:'dd/MM/yyyy'}} al {{item.fechasOnline.fechaFin | date:'dd/MM/yyyy'}}</div>
+            <div class="col-12 fechasOnline"  *ngIf="item.fechasOnline!=undefined && item.fechasOnline!=null">
+              <div class="imgActive" [ngClass]="{'inActiveOnline': item.fechasOnlineActive!=true}"></div>
+              <div style="font-weight: normal !important;">Fecha Inicio: {{item.fechasOnline.fechaInicio | date:'dd-MM-yyyy'}}</div>
+              <div style="font-weight: normal !important;">Fecha Fin: {{item.fechasOnline.fechaFin | date:'dd-MM-yyyy'}}</div>
+            </div>
           </div>
+          <div style="display: flex; font-size: 14px;font-weight: normal !important;">
+
+            <div style="position: relative;width: 20px;
+            margin-right: 10px;    height: 20px;">
+
+              <mat-progress-spinner class="greay-spinner" [mode]="'determinate'" [diameter]="20"
+                [strokeWidth]="4" [value]="100">
+              </mat-progress-spinner>
+              <mat-progress-spinner class="progras-spinner" [mode]="'determinate'" [diameter]="20"
+                [strokeWidth]="4" [value]="(item.sesionesFaltantes)*100/item.sesiones">
+              </mat-progress-spinner>
+            </div>
+            <div>
+              Sesiones ejecutadas {{item.sesionesFaltantes}} de {{item.sesiones}}
+            </div>
+          </div>
+
         </div>
       </ng-container>
       <ng-container *ngIf="item.idModalidadHijo==1">
