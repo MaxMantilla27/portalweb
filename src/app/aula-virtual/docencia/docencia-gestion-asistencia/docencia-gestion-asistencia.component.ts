@@ -1,6 +1,7 @@
 import { DatePipe } from '@angular/common';
 import { Component, Inject, Input, OnChanges, OnDestroy, OnInit, SimpleChanges, ViewEncapsulation } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
+import * as moment from 'moment';
 import { Subject, takeUntil } from 'rxjs';
 import { Basic } from 'src/app/Core/Models/BasicDTO';
 import { AsistenciaRegistrarDTO } from 'src/app/Core/Models/ParticipacionExpositorFiltroDTO';
@@ -56,9 +57,15 @@ export class DocenciaGestionAsistenciaComponent implements OnInit,OnChanges,OnDe
     alumno: true};
   public buttonheader:any={};
   public infoAsistencias:Array<any>=[];
+  public fechaUltimaSesion:any
+  public fechaActual:any
+  public today:any;
+  public DisabledFinalizarRegistro=true;
   @Input() idPEspecifico=0
   ngOnInit(): void {
     console.log(this.data)
+    this.today= new Date();
+    this.fechaActual= new DatePipe('es-Pe').transform(this.today, 'yyyy-MM-ddTHH:mm:ss.SSS');
 
   }
   ngOnChanges(changes: SimpleChanges): void {
@@ -97,12 +104,33 @@ export class DocenciaGestionAsistenciaComponent implements OnInit,OnChanges,OnDe
                 })
               }
             }
-          }
-
-          );
+            else{
+              mat.asistenciaAlumno.push({
+                Id:0,
+                IdPEspecificoSesion:ses.id,
+                IdMatriculaCabecera:mat.idMatriculaCabecera,
+                Justifico:false,
+                Asistio:null
+              })
+            }
+          },);
         });
         this.ArmarTablaMaterial();
-        console.log(this.listadoAsistencias)
+        // this.listadoAsistencias.listadoSesiones.sort((a:any, b:any) => a.fechaHoraInicio > b.fechaHoraInicio)
+        if(this.listadoAsistencias.listadoSesiones>=2){
+        this.listadoAsistencias.listadoSesiones.sort((a:any, b:any) => new Date(a.fechaHoraInicio).getTime() > new Date(b.fechaHoraInicio).getTime());
+        }
+        console.log(this.fechaActual)
+        console.log(this.listadoAsistencias.listadoSesiones[0].fechaHoraInicio)
+        console.log(Math.round(moment.duration(moment(this.fechaActual).diff(moment(this.listadoAsistencias.listadoSesiones[0].fechaHoraInicio))).as('day')))
+        if(Math.round(moment.duration(moment(this.fechaActual).diff(moment(this.listadoAsistencias.listadoSesiones[0].fechaHoraInicio))).as('day'))<=7){
+          this.DisabledFinalizarRegistro=true
+          console.log('Finalizar Registro se habilitará 1 semana después de la última sesión')
+        }
+        else{
+          this.DisabledFinalizarRegistro=false
+          console.log('Finalizar Registro Habilitado')
+        }
       }
     })
   }
@@ -146,6 +174,7 @@ export class DocenciaGestionAsistenciaComponent implements OnInit,OnChanges,OnDe
     console.log(codigo,valor,id)
     this.listadoAsistencias.listadoMatriculas.forEach((l:any) => {
       if(l.codigoMatricula==codigo){
+        console.log(l.asistenciaAlumno)
         l.asistenciaAlumno.forEach((la:any) => {
           console.log(la)
           if(la.IdPEspecificoSesion==id){
@@ -175,13 +204,14 @@ export class DocenciaGestionAsistenciaComponent implements OnInit,OnChanges,OnDe
     if(this.charge==false){
       this.charge=true;
       this.asistencias=[];
+      console.log(this.listadoAsistencias.listadoMatriculas)
       this.listadoAsistencias.listadoMatriculas.forEach((mat:any) => {
         mat.asistenciaAlumno.forEach((asis:any) => {
           this.asistencias.push({
             Id:asis.Id,
             IdPEspecificoSesion:asis.IdPEspecificoSesion,
             IdMatriculaCabecera:asis.IdMatriculaCabecera,
-            Asistio:asis.Asistio,
+            Asistio:asis.Asistio==null?false:asis.Asistio,
             Justifico:asis.Justifico
           })
         });
@@ -201,6 +231,9 @@ export class DocenciaGestionAsistenciaComponent implements OnInit,OnChanges,OnDe
 
         }
       })
+    }
+    else{
+      this._SnackBarServiceService.openSnackBar("Debe terminar de editar para guardar los registros",'x', 10,'snackbarCrucigramaerror' );
     }
   }
 
@@ -236,7 +269,7 @@ export class DocenciaGestionAsistenciaComponent implements OnInit,OnChanges,OnDe
           Id:asis.Id,
           IdPEspecificoSesion:asis.IdPEspecificoSesion,
           IdMatriculaCabecera:asis.IdMatriculaCabecera,
-          Asistio:asis.Asistio,
+          Asistio:asis.Asistio==null?false:true,
           Justifico:asis.Justifico
         })
       });

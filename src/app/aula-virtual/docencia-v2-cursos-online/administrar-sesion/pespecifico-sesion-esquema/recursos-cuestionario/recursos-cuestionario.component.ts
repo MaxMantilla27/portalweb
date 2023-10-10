@@ -74,7 +74,7 @@ export class RecursosCuestionarioComponent implements OnInit, OnDestroy {
       }
     });
   }
-  PublicarCuestionario(detalle:any){
-    console.log(detalle)
-  }
+  // PublicarCuestionario(detalle:any){
+  //   console.log(detalle)
+  // }
 }

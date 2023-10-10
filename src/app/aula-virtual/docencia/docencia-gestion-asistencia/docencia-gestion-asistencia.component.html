@@ -1,3 +1,4 @@
+holax
 <ng-container *ngIf="listadoAsistencias!=undefined">
   <!-- <div>
     <ng-container *ngIf="charge==true">
@@ -87,15 +88,14 @@
         [style]="'width: 100%;background: #0069d9;border-color: #0062cc;'"
         (ButtoclClick)="RegistrarAsistenciaDetalleDocente()" [icon]="'check'"></app-default-button>
     </div>
-    <div style="margin: 0px 5px;">
+    <div *ngIf="DisabledFinalizarRegistro==true" style="margin: 0px 5px;">
       <app-default-button [confs]="{color:'primary',titulo:'Finalizar Registro'}"
-        (ButtoclClick)="ConfirmacionAprobarNotaDetalleDocente()"
-        [style]="'width: 100%;background: #0069d9;border-color: #0062cc;'" [icon]="'check'"></app-default-button>
+        [disabled]="true" [style]="'color:white; width: 100%;background: #888888;border-color: #888888;'" [icon]="'check'"></app-default-button>
     </div>
-    <!-- <div style="margin: 0px 5px;">
-        <app-default-button [confs]="{color:'danger',titulo:'cancelar'}"
-        [style]="'width: 100%;'" [icon]="'close'" (ButtoclClick)="charge==false?dialogRef.close():charge=true"></app-default-button>
-      </div> -->
+    <div *ngIf="DisabledFinalizarRegistro==false" style="margin: 0px 5px;">
+      <app-default-button [confs]="{color:'primary',titulo:'Finalizar Registro'}"
+        (ButtoclClick)="ConfirmacionAprobarNotaDetalleDocente()" [style]="'width: 100%;background: #0069d9;border-color: #0062cc;'" [icon]="'check'"></app-default-button>
+    </div>
   </div>
 </ng-container>
 <ng-container *ngIf="listadoAsistencias==undefined">

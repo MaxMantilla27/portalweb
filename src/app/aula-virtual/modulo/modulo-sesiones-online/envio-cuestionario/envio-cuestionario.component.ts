@@ -211,6 +211,7 @@ export class EnvioCuestionarioComponent implements OnInit ,OnDestroy {
         this.dialogRef.close('guardado');
       },
     });
+    this._SessionStorageService.SessionDeleteValue('cuest-'+this.CuestionarioAvance.id.toString())
   }
   changeRadio(indexPregunta:number,index:number){
     if(this.disableAll!=true){
