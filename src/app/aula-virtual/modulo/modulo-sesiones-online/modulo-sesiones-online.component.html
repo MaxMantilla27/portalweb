@@ -1,3 +1,4 @@
+
 <ng-container *ngIf="sesiones!=null">
   <div class="cursoTitle">{{Capitulo}}</div>
   <ng-container *ngFor="let item of sesiones;let i = index">
@@ -105,7 +106,7 @@
       <ng-container *ngIf="item.cuestionario!=undefined && item.cuestionario!=null && item.cuestionario.length>0">
         <div class="cardSesionOnlineTareasCuestionario" *ngFor="let cuest of item.cuestionario;let t=index">
           <div class="flagActividad">
-            <div class="textoFlag">Cuestionario:: {{t>9?(t+1):'0'+(t+1)}}</div>
+            <div class="textoFlag">Cuestionario: {{t>9?(t+1):'0'+(t+1)}}</div>
             <!-- <div class="trianglearrow"></div> -->
             <div id="player">
               <div id="outer">

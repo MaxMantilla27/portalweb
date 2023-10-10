@@ -508,9 +508,42 @@ export class PEspecificoEsquemaService {
     }
   }
 
-  public AgregarCalificacionCuestionarioAlumnoDocente(json: AgregarCalificacionCuestionarioAlumnoDocenteDTO): Observable<any> {
+  public AgregarCalificacionCuestionarioAlumnoDocente(Json: AgregarCalificacionCuestionarioAlumnoDocenteDTO): Observable<any> {
     if (this.isBrowser) {
-      return this.http.post<any>( this.urlBase +"/AgregarCalificacionCuestionarioAlumnoDocente" ,json);
+
+      const formData: FormData = new FormData();
+      formData.append("IdPwPEspecificoSesionCuestionarioAlumno", Json.IdPwPEspecificoSesionCuestionarioAlumno.toString());
+      formData.append("Usuario", "docente");
+
+      for (let i = 0; i < Json.Respuestas.length; i++) {
+        var Retroalimentacion =Json.Respuestas[i].Retroalimentacion == undefined ||Json.Respuestas[i].Retroalimentacion == null ? "": Json.Respuestas[i].Retroalimentacion!.toString();
+
+        formData.append("Respuestas[" + i + "][retroalimentacion]", Retroalimentacion);
+        formData.append("Respuestas[" + i + "][Id]", Json.Respuestas[i].Id.toString());
+        formData.append("Respuestas[" + i + "][Puntos]",  Json.Respuestas[i].Puntos.toString());
+        formData.append("Respuestas[" + i + "][Correcto]",  Json.Respuestas[i].Correcto.toString());
+        if (Json.Respuestas[i].file!=null && Json.Respuestas[i].file.size > 0) {
+          var end = Json.Respuestas[i].file.name.split(".")[1];
+          formData.append(
+            "files",
+            Json.Respuestas[i].file,
+            i + "." + end
+          );
+        }
+      }
+
+      console.log(formData)
+      const req = new HttpRequest(
+        "POST",
+        `${this.urlBase}/AgregarCalificacionCuestionarioAlumnoDocente`,
+        formData,
+        {
+          reportProgress: true,
+          responseType: "json",
+        }
+      );
+      return this.http.request(req);
+      //return this.http.post<any>( this.urlBase +"/AgregarCalificacionCuestionarioAlumnoDocente" ,Json);
     } else {
       return EMPTY;
     }

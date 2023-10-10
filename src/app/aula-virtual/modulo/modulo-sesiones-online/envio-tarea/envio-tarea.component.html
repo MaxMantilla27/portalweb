@@ -15,8 +15,9 @@
       </div>
     </div>
     <div class="TitleActividad">{{data.tarea.titulo}}</div>
-    <div class="DescripcionActividad" *ngIf="data.tarea.descripcion!=null && data.tarea.descripcion.length>0">
-      {{data.tarea.descripcion}}</div>
+    <div class="DescripcionActividad" *ngIf="data.tarea.descripcion!=null && data.tarea.descripcion.length>0">{{data.tarea.descripcion}}</div>
+    <div class="VinculoActividad" *ngIf="data.tarea.nombreArchivo!=null && data.tarea.nombreArchivo.length>0">
+      <a [href]="data.tarea.urlArchivoSubido" target="_blank" >{{data.tarea.nombreArchivo}}</a></div>
   </div>
   <div class="content">
     <ng-container *ngIf="data.tarea.tareas!=null && data.tarea.tareas.length>0">
@@ -28,14 +29,15 @@
             <a target="_blank" [href]="item.urlArchivoSubido">{{item.nombreArchivo}}</a>
           </div>
         </div>
+        <div class="IntenTareasEnviadas"><strong>Fecha de Envio:</strong>  {{item.fechaCreacion | date :'dd/MM/yyyy'}}</div>
         <div class="IntenTareasEnviadas"><strong>Calificación:</strong>  {{item.nota}}</div>
-        <div class="IntenTareasEnviadas"><strong>Fecha de Calificación:</strong>  {{item.fechaCreacion | date :'dd/MM/yyyy'}}</div>
+        <div class="IntenTareasEnviadas"><strong>Fecha de Calificación:</strong>  {{item.fechaCalificacion | date :'dd/MM/yyyy'}}</div>
         <div class="IntenTareasEnviadas"><strong>Retroalimentación:</strong>  {{item.retroalimentacion}}</div>
         <div class="IntenTareasEnviadas"><strong>Archivo de Retroalimentación:</strong>
           <ng-container *ngIf="item.urlArchivoSubidoRetroalimentacion!=null">
             <div class="pdfSesionOnline"></div>
             <div >
-              <a [href]="item.urlArchivoSubidoRetroalimentacion">{{item.nombreArchivoRetroalimentacion}}</a>
+              <a [href]="item.urlArchivoSubidoRetroalimentacion" target="_blank">{{item.nombreArchivoRetroalimentacion}}</a>
             </div>
           </ng-container>
 
@@ -45,7 +47,7 @@
       </div>
     </ng-container>
     <ng-container *ngIf="(data.tarea.tareas==null || data.tarea.tareas.length==0) ||
-    (data.tarea.tareas!=null && data.tarea.tareas.length>0 && data.tarea.tareas.length<3 && data.tarea.tareas.length==0 && data.tarea.tareas[data.tarea.tareas.length-1].fechaCalificacion!=null) ">
+    (data.tarea.tareas!=null && data.tarea.tareas.length>0 && data.tarea.tareas.length<3  && data.tarea.tareas[data.tarea.tareas.length-1].fechaCalificacion!=null) ">
       <div style="padding: 0px 40px;
       font-size: 16px;
       font-weight: 600;

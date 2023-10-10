@@ -46,7 +46,7 @@ export class CalificarCuestionarioDocenteComponent implements OnInit ,OnChanges 
   ngOnInit(): void {
   }
   ngOnChanges(changes: SimpleChanges): void {
-    console.log(this.Id)
+    console.log(this.data)
     if (this.Id != 0) {
       this.ObtenerListaCuestionarioAlumnoOnline();
     }

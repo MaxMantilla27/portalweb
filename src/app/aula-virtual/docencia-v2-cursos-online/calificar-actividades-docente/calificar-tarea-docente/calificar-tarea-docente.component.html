@@ -2,9 +2,9 @@
   <app-cargando *ngIf="cargando==true"></app-cargando>
 <div class="row" style="    margin-bottom: 20px;
 font-weight: 600;">
-  <div class="col-6 col-md-4 col-lg-4">Sesión: {{data.orden>9?data.orden:'0'+data.orden}}</div>
+  <div class="col-6 col-md-4 col-lg-4">Sesión: {{data.sesion>9?data.sesion:'0'+data.sesion}}</div>
   <div class="col-6 col-md-4 col-lg-4">{{data.nombre}}
-    {{data.ordenActividad>9?data.ordenActividad:'0'+data.ordenActividad}} - {{data.titulo}}</div>
+    {{data.orden>9?data.orden:'0'+data.orden}} - {{data.titulo}}</div>
   <div class="col-12 col-md-4 col-lg-4 VerLineamientos" (click)="Open(data.nombre)">Ver Lineamientos de Calificación</div>
 </div>
 

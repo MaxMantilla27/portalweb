@@ -43,11 +43,11 @@ export class CalificarActividadesDocenteComponent implements OnInit ,OnChanges, 
   public TerminaCarga=false;
   ObtenerCriteriosEvaluacionPespecifico(){
     this.TerminaCarga=false;
+    this.criterios=[];
     this._PEspecificoEsquemaService.ObtenerCriteriosEvaluacionPespecifico(this.IdPespecifico).pipe(takeUntil(this.signal$))
     .subscribe({
       next: (x) => {
         console.log(x);
-        this.criterios=[];
 
         if(x!=null){
           this.criterios=x
@@ -131,6 +131,7 @@ export class CalificarActividadesDocenteComponent implements OnInit ,OnChanges, 
     console.log(this.IrCurso,this.Estarea)
   }
   RefrescarListaCalificar(){
+    this.EstadoPespecifico=0
     this.ObtenerCriteriosEvaluacionPespecifico();
   }
 }

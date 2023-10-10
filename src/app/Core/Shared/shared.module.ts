@@ -139,6 +139,7 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { TableCalificarEvaluacionesComponent } from './Containers/table-calificar-evaluaciones/table-calificar-evaluaciones.component';
 import { TableDocenteResponderForosComponent } from './Containers/table-docente-responder-foros/table-docente-responder-foros.component';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
+import { ImagenModalComponent } from './Containers/Dialog/imagen-modal/imagen-modal.component';
 
 @NgModule({
   imports: [
@@ -241,6 +242,7 @@ import {MatSlideToggleModule} from '@angular/material/slide-toggle';
     ChangeWordComponent,
     TableCalificarEvaluacionesComponent,
     TableDocenteResponderForosComponent,
+    ImagenModalComponent,
     //ChatZComponent,
   ],
   exports: [
