@@ -94,19 +94,26 @@ export class ModuloSesionesOnlineComponent implements OnInit , OnChanges,OnDestr
         if(x!=null){
           x.forEach((d:any) => {
             d.disabled=false;
-            let f1=new Date((new Date(d.fechaEntrega)).getFullYear(),(new Date(d.fechaEntrega)).getMonth(),(new Date(d.fechaEntrega)).getDate());
-            let f2=new Date((new Date()).getFullYear(),(new Date()).getMonth(),(new Date()).getDate());
-            if(f2>f1){
-              d.disabled=true
-            }
+            console.log(d)
+            let f1=new Date(d.fechaEntregaSecundaria);
+            let f2=new Date();
+
+
             if(d.tipo.toLowerCase()=='material adicional'){
               this.sesiones[index].material.push(d)
             }
             if(d.tipo.toLowerCase()=='tarea'){
+              if(f2>f1 && d.tareas.length!=0){
+                d.disabled=true
+              }
               this.sesiones[index].tarea.push(d)
             }
             if(d.tipo.toLowerCase()=='cuestionario'){
+              if(f2>f1 && d.respuestaCuestionario.length!=0){
+                d.disabled=true
+              }
               this.sesiones[index].cuestionario.push(d)
+
             }
           });
         }

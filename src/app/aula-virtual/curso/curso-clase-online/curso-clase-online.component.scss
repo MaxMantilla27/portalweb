@@ -32,11 +32,22 @@
       font-size: 12px;
       margin-left: 6px;
     }
+    .sesionesOnline{
+      font-size: 12px;
+      margin-left: 6px;
+      margin-right: 6px;
+    }
   }
   .programaOnlines{
     font-weight: 800;
     font-size: 14px;
+    margin-bottom: 5px;
+  }
+  .tipoPrograma{
+    font-size: 10px;
     margin-bottom: 10px;
+    margin-bottom: 10px;
+    font-weight: 600;
   }
   .alertaProgramas{
     font-size: 10px;
@@ -60,7 +71,7 @@
     cursor: pointer;
     .material-icons{
       font-size: 30px !important;
-      color: #72a3ff;
+      // color: #72a3ff;
     }
   }
 }

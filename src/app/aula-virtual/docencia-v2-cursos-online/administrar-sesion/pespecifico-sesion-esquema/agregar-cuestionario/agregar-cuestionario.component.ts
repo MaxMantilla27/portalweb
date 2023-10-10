@@ -21,6 +21,7 @@ import { HttpEventType, HttpResponse } from '@angular/common/http';
 import { DatePipe } from '@angular/common';
 import { AgregarPreguntasComponent } from './agregar-preguntas/agregar-preguntas.component';
 import { SnackBarServiceService } from 'src/app/Core/Shared/Services/SnackBarService/snack-bar-service.service';
+import { AlertaService } from 'src/app/shared/services/alerta.service';
 
 @Component({
   selector: 'app-agregar-cuestionario',
@@ -40,7 +41,8 @@ export class AgregarCuestionarioComponent implements OnInit, OnDestroy {
     @Inject(MAT_DIALOG_DATA) public data: any,
     private _PEspecificoEsquemaService: PEspecificoEsquemaService,
     public dialog: MatDialog,
-    public _SnackBarServiceService: SnackBarServiceService
+    public _SnackBarServiceService: SnackBarServiceService,
+    private alertaService: AlertaService,
   ) {}
 
   public file=new File([], '')
@@ -305,7 +307,9 @@ export class AgregarCuestionarioComponent implements OnInit, OnDestroy {
         return ;
       }
     }
-    this._PEspecificoEsquemaService
+    this.alertaService.mensajeConfirmacionEdicionCuestionario().then((result) => {
+      if (result.isConfirmed) {
+        this._PEspecificoEsquemaService
       .AgregarPEspecificoCuestionario(this.save)
       .pipe(takeUntil(this.signal$))
       .subscribe({
@@ -324,6 +328,12 @@ export class AgregarCuestionarioComponent implements OnInit, OnDestroy {
         },
         error: (x) => {},
       });
+      }
+      else{
+        this.dialogRef.close();
+      }
+    });
+
   }
   OpenCrearPregunta() {
     const dialogRef = this.dialog.open(AgregarPreguntasComponent, {

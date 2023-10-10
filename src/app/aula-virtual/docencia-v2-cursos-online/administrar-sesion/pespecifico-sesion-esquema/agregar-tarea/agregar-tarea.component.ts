@@ -19,6 +19,7 @@ import { HttpEventType, HttpResponse } from '@angular/common/http';
 import { Subject, takeUntil } from 'rxjs';
 import { DatePipe } from '@angular/common';
 import { SnackBarServiceService } from 'src/app/Core/Shared/Services/SnackBarService/snack-bar-service.service';
+import { AlertaService } from 'src/app/shared/services/alerta.service';
 
 @Component({
   selector: 'app-agregar-tarea',
@@ -37,7 +38,9 @@ export class AgregarTareaComponent implements OnInit, OnDestroy {
     public dialogRef: MatDialogRef<AgregarTareaComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private _PEspecificoEsquemaService: PEspecificoEsquemaService,
-    public _SnackBarServiceService: SnackBarServiceService
+    public _SnackBarServiceService: SnackBarServiceService,
+    private alertaService: AlertaService,
+
   ) {}
   public saveTarea: PEspecificoSesionTareaSaveDTO = {
     file: new File([], ''),
@@ -185,7 +188,9 @@ export class AgregarTareaComponent implements OnInit, OnDestroy {
         this.saveTarea.TieneArchivo=true
       }
     }
-    this._PEspecificoEsquemaService
+    this.alertaService.mensajeConfirmacionEdicionTarea().then((result) => {
+      if (result.isConfirmed) {
+        this._PEspecificoEsquemaService
       .AgregarPEspecificoSesionTarea(this.saveTarea)
       .pipe(takeUntil(this.signal$))
       .subscribe({
@@ -204,5 +209,11 @@ export class AgregarTareaComponent implements OnInit, OnDestroy {
         },
         error: (x) => {},
       });
+      }
+      else{
+        this.dialogRef.close();
+      }
+    });
+
   }
 }

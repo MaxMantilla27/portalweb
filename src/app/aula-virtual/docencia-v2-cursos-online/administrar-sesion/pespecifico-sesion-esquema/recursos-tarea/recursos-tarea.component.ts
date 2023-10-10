@@ -3,6 +3,8 @@ import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angu
 import { Subject, takeUntil } from 'rxjs';
 import { PespecificoSesionTemaUpdateOrdenDTO } from 'src/app/Core/Models/PespecificoSesionTemaDTO';
 import { PEspecificoEsquemaService } from 'src/app/Core/Shared/Services/PEspecificoEsquema/pespecifico-esquema.service';
+import { SnackBarServiceService } from 'src/app/Core/Shared/Services/SnackBarService/snack-bar-service.service';
+import { AlertaService } from 'src/app/shared/services/alerta.service';
 
 @Component({
   selector: 'app-recursos-tarea',
@@ -17,7 +19,9 @@ export class RecursosTareaComponent implements OnInit, OnDestroy {
     this.signal$.complete();
   }
   constructor(
-    private _PEspecificoEsquemaService:PEspecificoEsquemaService
+    private _PEspecificoEsquemaService:PEspecificoEsquemaService,
+    public _SnackBarServiceService: SnackBarServiceService,
+    private alertaService: AlertaService,
   ) { }
 
   @Input() cuestionarios:Array<any> = [];
@@ -49,6 +53,24 @@ export class RecursosTareaComponent implements OnInit, OnDestroy {
         console.log(x);
         this.OnReload.emit();
       },
+    });
+  }
+  PublicarTarea(IdTarea:number){
+    console.log(IdTarea)
+    this.alertaService.mensajeConfirmacionTarea().then((result) => {
+      if (result.isConfirmed) {
+        this._PEspecificoEsquemaService.ResetearTareaAlumno(IdTarea).pipe(takeUntil(this.signal$)).subscribe({
+          next: (x:any) => {
+          },
+          complete:()=>{
+            this.OnReload.emit();
+            this._SnackBarServiceService.openSnackBar("La tarea se ha publicado correctamente.",
+            'x',
+            10,
+            "snackbarCrucigramaSucces")
+          }
+        });
+      }
     });
   }
 

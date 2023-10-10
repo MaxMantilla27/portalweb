@@ -64,8 +64,9 @@
   </div>
   <ng-container *ngIf="OpenProx==true">
 
-    <app-table-v2 [tableData]="clases" [columnHeader]="columnHeader" [tipoContenido]="TipoContenido" [Paginador]="false"
-      [StyleContent]="'    font-size: 12px;padding: 10px;'"></app-table-v2>
+    <app-table-v2  *ngIf="clases!=undefined" [tableData]="clases" [columnHeader]="columnHeader" [tipoContenido]="TipoContenido" [Paginador]="false"
+      [StyleContent]="'    font-size: 12px;padding: 10px;'"
+      (EsButtonNormal)="IrAcurso($event)" [EsButton]="EsButton"></app-table-v2>
   </ng-container>
 </ng-container>
 

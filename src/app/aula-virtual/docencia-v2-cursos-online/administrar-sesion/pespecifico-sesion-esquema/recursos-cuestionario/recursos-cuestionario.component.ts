@@ -67,11 +67,8 @@ export class RecursosCuestionarioComponent implements OnInit, OnDestroy {
     });
 
     dialogRef.afterClosed().pipe(takeUntil(this.signal$)).subscribe((result) => {
+      this.OnReload.emit();
       console.log(result)
-      if(result!=undefined && result.length>0){
-        // this.charge = true;
-        // this.ObtenerActividadesRecursoSesionDocente()
-      }
     });
   }
   // PublicarCuestionario(detalle:any){

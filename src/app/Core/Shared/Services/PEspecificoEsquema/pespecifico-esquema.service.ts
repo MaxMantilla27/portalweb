@@ -587,4 +587,13 @@ export class PEspecificoEsquemaService {
       }
     }
   }
+  public ResetearTareaAlumno(IdPEspecificoSesionTarea: number): Observable<any> {
+    if (this.isBrowser) {
+      return this.http.post<any>(this.urlBase +"/ResetearTareaAlumno?IdPEspecificoSesionTarea=" +IdPEspecificoSesionTarea,{});
+    } else {
+      {
+        return EMPTY;
+      }
+    }
+  }
 }

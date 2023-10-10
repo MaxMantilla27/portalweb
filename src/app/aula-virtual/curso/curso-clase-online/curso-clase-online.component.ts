@@ -1,7 +1,7 @@
 import { Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
 import { Subject, takeUntil } from 'rxjs';
 import { DatosPerfilService } from 'src/app/Core/Shared/Services/DatosPerfil/datos-perfil.service';
-
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-curso-clase-online',
   templateUrl: './curso-clase-online.component.html',
@@ -11,7 +11,8 @@ export class CursoClaseOnlineComponent implements OnInit,OnDestroy,OnChanges {
 
   private signal$ = new Subject();
   constructor(
-    private _DatosPerfilService:DatosPerfilService
+    private _DatosPerfilService:DatosPerfilService,
+    private router:Router,
   ) { }
 
   ngOnDestroy(): void {
@@ -37,6 +38,9 @@ export class CursoClaseOnlineComponent implements OnInit,OnDestroy,OnChanges {
     'HoraInicio': ['hora'],
     'HoraFinal': ['hora'],
     //'Acciones': ['buttons'],
+  }
+  EsButton:any={
+    'cursoNombre': true
   }
   OpenProx=true
   public interval:any
@@ -171,5 +175,11 @@ export class CursoClaseOnlineComponent implements OnInit,OnDestroy,OnChanges {
         console.log(e)
       }
     })
+  }
+  IrAcurso(e:any){
+    console.log(e)
+    console.log(this.clases)
+    console.log(this.clases[e])
+    // this.router.navigate(['/MisCursos/'+this.IdMatricula+'/'+this.clases[e].idPEspecificoHijo]);
   }
 }
