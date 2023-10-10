@@ -52,7 +52,7 @@
       <ng-container *ngIf="item.tarea!=undefined && item.tarea!=null && item.tarea.length>0">
         <div class="cardSesionOnlineTareasCuestionario" *ngFor="let tars of item.tarea;let t=index">
           <div class="flagActividad">
-            <div class="textoFlag">Tarea: {{t>9?(t+1):'0'+(t+1)}}</div>
+            <div class="textoFlag">Tarea: {{tars.orden>9?(tars.orden):'0'+(tars.orden)}}</div>
             <!-- <div class="trianglearrow"></div> -->
             <div id="player">
               <div id="outer">
@@ -106,7 +106,7 @@
       <ng-container *ngIf="item.cuestionario!=undefined && item.cuestionario!=null && item.cuestionario.length>0">
         <div class="cardSesionOnlineTareasCuestionario" *ngFor="let cuest of item.cuestionario;let t=index">
           <div class="flagActividad">
-            <div class="textoFlag">Cuestionario: {{t>9?(t+1):'0'+(t+1)}}</div>
+            <div class="textoFlag">Cuestionario: {{cuest.orden>9?cuest.orden:'0'+cuest.orden}}</div>
             <!-- <div class="trianglearrow"></div> -->
             <div id="player">
               <div id="outer">

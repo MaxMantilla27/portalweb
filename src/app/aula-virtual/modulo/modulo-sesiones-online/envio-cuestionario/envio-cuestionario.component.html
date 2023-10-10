@@ -62,17 +62,28 @@
               <div class="DescripcionPregunta" *ngIf="item.idPreguntaTipo==4">Elija las alternativas correctas</div>
               <div class="DescripcionPregunta" *ngIf="item.idPreguntaTipo==5">Elige la alternativa correcta</div>
             </div>
-            <div class="col-12 col-md-3 col-lg-3" style=" display: flex;
-            flex-direction: column;
-            align-items: flex-end;">
-              <div class="PuntoPregunta"><strong>{{item.puntaje}}</strong> Puntos</div>
-              <div class="IntenTareasEnviadas" *ngIf="item.urlArchivoSubido!=null && item.urlArchivoSubido!=undefined">
-                <div class="pdfSesionOnline"></div>
-                <div>
-                  <a target="_blank" [href]="item.urlArchivoSubido">{{item.nombreArchivo}}</a>
+            <ng-container *ngIf="item.nombreArchivo!=null">
+              <div class="col-12 col-md-3 col-lg-3" style=" display: flex;
+              flex-direction: column;
+              align-items: flex-end;"
+                *ngIf="item.nombreArchivo.split('.')[item.nombreArchivo.split('.').length-1].toUpperCase()!='PNG' &&
+                item.nombreArchivo.split('.')[item.nombreArchivo.split('.').length-1].toUpperCase()!='JPG';else img">
+                <div class="PuntoPregunta"><strong>{{item.puntaje}}</strong> Puntos</div>
+                <div class="IntenTareasEnviadas" *ngIf="item.urlArchivoSubido!=null && item.urlArchivoSubido!=undefined">
+                  <div class="pdfSesionOnline"></div>
+                  <div>
+                    <a target="_blank" [href]="item.urlArchivoSubido">{{item.nombreArchivo}}</a>
+                  </div>
                 </div>
               </div>
-            </div>
+              <ng-template #img>
+                <div class="ImagenAdjunta" (click)="OpenImage(item.urlArchivoSubido)"
+                [ngStyle]="{'background-image': getUrl(item.urlArchivoSubido)}">
+
+                </div>
+              </ng-template>
+            </ng-container>
+
           </div>
           <div *ngIf="item.alternativas!= null && item.alternativas!= undefined">
             <ng-container *ngIf="item.idPreguntaTipo==3 || item.idPreguntaTipo==5">
@@ -101,6 +112,12 @@
               </div>
             </ng-container>
           </div>
+          <div class="contentRetroalimentacion" *ngIf="disableAll==true">
+              <div class="preguntaRetro" *ngIf="item.retroalimentacion!=null">{{item.retroalimentacion}}</div>
+              <div class="preguntaVinculo" *ngIf="item.nombreArchivoRetroalimentacion!=null && item.nombreArchivoRetroalimentacion.length>0">
+                <a [href]="item.urlArchivoSubidoRetroalimentacion" target="_blank" >{{item.nombreArchivoRetroalimentacion}}</a></div>
+          </div>
+
         </div>
 
       </ng-container>

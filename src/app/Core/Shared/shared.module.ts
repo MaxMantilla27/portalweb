@@ -341,6 +341,7 @@ import { ImagenModalComponent } from './Containers/Dialog/imagen-modal/imagen-mo
     TableCalificarEvaluacionesComponent,
     TableDocenteResponderForosComponent,
     MatSlideToggleModule,
+    ImagenModalComponent
   ],
   providers: [
     SessionStorageService,
