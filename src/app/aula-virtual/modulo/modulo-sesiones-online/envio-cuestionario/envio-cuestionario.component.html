@@ -114,8 +114,12 @@
           </div>
           <div class="contentRetroalimentacion" *ngIf="disableAll==true">
               <div class="preguntaRetro" *ngIf="item.retroalimentacion!=null">{{item.retroalimentacion}}</div>
-              <div class="preguntaVinculo" *ngIf="item.nombreArchivoRetroalimentacion!=null && item.nombreArchivoRetroalimentacion.length>0">
-                <a [href]="item.urlArchivoSubidoRetroalimentacion" target="_blank" >{{item.nombreArchivoRetroalimentacion}}</a></div>
+              <div class="IntenTareasEnviadas" *ngIf="item.urlArchivoSubidoRetroalimentacion!=null && item.urlArchivoSubidoRetroalimentacion!=undefined && item.urlArchivoSubidoRetroalimentacion.length>0">
+                <div class="pdfSesionOnline"></div>
+                <div>
+                  <a target="_blank" [href]="item.urlArchivoSubidoRetroalimentacion">{{item.nombreArchivoRetroalimentacion}}</a>
+                </div>
+              </div>
           </div>
 
         </div>
