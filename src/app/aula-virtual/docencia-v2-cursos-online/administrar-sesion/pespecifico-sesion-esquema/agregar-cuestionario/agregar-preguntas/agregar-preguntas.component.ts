@@ -73,6 +73,13 @@ export class AgregarPreguntasComponent implements OnInit ,OnChanges,OnDestroy {
     if (this.data.pregunta != null) {
       this.Title = 'EDITAR PREGUNTA';
       this.pregunta = this.data.pregunta;
+      this.IdTipoPreguntaAlternativa=this.pregunta.IdPreguntaTipo==null?0:this.pregunta.IdPreguntaTipo;
+      this.pregunta.Alternativas.forEach((x:any) => {
+        x.Disabled=false;
+        if(this.pregunta.IdPreguntaTipo==3 || this.pregunta.IdPreguntaTipo==6){
+          x.Disabled=true;
+        }
+      });
       this.formularioTarea.get('IdPreguntaTipo')?.setValue(this.pregunta.IdPreguntaTipo)
       this.formularioTarea.get('Enunciado')?.setValue(this.pregunta.Enunciado)
       this.formularioTarea.get('Descripcion')?.setValue(this.pregunta.Descripcion)
