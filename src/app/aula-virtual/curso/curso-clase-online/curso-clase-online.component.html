@@ -29,7 +29,7 @@
            [icon]="''" [style]="'margin: 0px;    border-radius: 18px;color: white;    background: #9d9d9c;' "></app-default-button>
         </ng-container>
         <ng-container *ngIf="item.IsValid==true">
-          <a [href]="item.urlWebex" style="color: transparent;text-decoration: none" target="_blank" (click)="RegistrarAsistenciaAlumno()">
+          <a [href]="item.urlWebex" style="color: transparent;text-decoration: none" target="_blank" (click)="RegistrarAsistenciaAlumno(item.idSesion)">
             <app-default-button [confs]="{color:'primary',titulo:'Ingresar a Webex'}"
               [icon]="''" [style]="'margin: 0px;    border-radius: 18px;color: white;'"></app-default-button>
           </a>

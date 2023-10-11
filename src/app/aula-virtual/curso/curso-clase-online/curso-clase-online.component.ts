@@ -2,6 +2,7 @@ import { Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@
 import { Subject, takeUntil } from 'rxjs';
 import { DatosPerfilService } from 'src/app/Core/Shared/Services/DatosPerfil/datos-perfil.service';
 import { Router } from '@angular/router';
+import { AsistenciaService } from 'src/app/Core/Shared/Services/Asistencia/asistencia.service';
 @Component({
   selector: 'app-curso-clase-online',
   templateUrl: './curso-clase-online.component.html',
@@ -13,6 +14,7 @@ export class CursoClaseOnlineComponent implements OnInit,OnDestroy,OnChanges {
   constructor(
     private _DatosPerfilService:DatosPerfilService,
     private router:Router,
+    private _AsistenciaService: AsistenciaService,
   ) { }
 
   ngOnDestroy(): void {
@@ -180,7 +182,14 @@ export class CursoClaseOnlineComponent implements OnInit,OnDestroy,OnChanges {
   IrAcurso(e:any){
     this.router.navigate(['/AulaVirtual/MisCursos/'+this.IdMatricula+'/'+this.clases[e].idPespecifico]);
   }
-  RegistrarAsistenciaAlumno(){
-    
+  RegistrarAsistenciaAlumno(IdSesion:number){
+    console.log(IdSesion)
+    this._AsistenciaService.RegistrarAsistenciaMatricula(this.IdMatricula, IdSesion ).pipe(takeUntil(this.signal$)).subscribe({
+      next:x=>{
+      },
+      error:e=>{
+        console.log(e)
+      }
+    })
   }
 }
