@@ -33,5 +33,12 @@ export class AsistenciaService {
       return EMPTY;
     }
   }
+  public RegistrarAsistenciaMatricula(IdMatriculaCabecera:number,IdPEspecificoSesion:number):Observable<any>{
+    if(this.isBrowser){
+      return this.http.get<any>(this.urlBase+'/RegistrarAsistenciaMatricula?IdMatriculaCabecera='+IdMatriculaCabecera+'&IdPEspecificoSesion='+IdPEspecificoSesion);
+    } else {
+      return EMPTY;
+    }
+  }
 }
 
