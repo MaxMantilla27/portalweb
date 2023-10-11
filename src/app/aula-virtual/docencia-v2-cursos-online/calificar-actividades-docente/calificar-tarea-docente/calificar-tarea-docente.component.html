@@ -84,7 +84,7 @@ font-weight: 600;">
         <td mat-cell *matCellDef="let element;let indice=index">
           <div *ngIf="element.id==null" class="Archivo">No Enviado </div>
           <div *ngIf="element.id!=null" class="Archivo" (click)="Expand(element.index,indice)">
-            {{expandedElement==-1?((element.retroalimentacion==null && element.urlArchivoSubidoRetroalimentacion==null)?'Agregar':'Mostrar'):'Ocultar' }}</div>
+            {{expandedElement!=element.index?((element.retroalimentacion==null && element.urlArchivoSubidoRetroalimentacion==null)?'Agregar':'Mostrar'):'Ocultar' }}</div>
         </td>
       </ng-container>
 
