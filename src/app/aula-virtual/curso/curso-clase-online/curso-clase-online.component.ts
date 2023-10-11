@@ -180,4 +180,7 @@ export class CursoClaseOnlineComponent implements OnInit,OnDestroy,OnChanges {
   IrAcurso(e:any){
     this.router.navigate(['/AulaVirtual/MisCursos/'+this.IdMatricula+'/'+this.clases[e].idPespecifico]);
   }
+  RegistrarAsistenciaAlumno(){
+    
+  }
 }
