@@ -145,7 +145,7 @@
       </div>
     </div>
 
-    <div class="col-4 col-md-2 col-lg-2 labelTarea">Calificación Minima</div>
+    <div class="col-4 col-md-2 col-lg-2 labelTarea">Calificación Máxima</div>
     <div class="col-8 col-md-2 col-lg-2 InputsDocencia">
       <mat-form-field appearance="outline">
         <mat-label>Calificación Minima</mat-label>
@@ -157,6 +157,19 @@
         <mat-error *ngIf="!formularioTarea.get('CalificacionMaximaSecundaria')?.valid">Ingrese la calificacion minima</mat-error>
       </mat-form-field>
     </div>
+
+    <div class="col-6 col-md-3 col-lg-3 labelTarea">Criterio de Evaluación</div>
+        <div class="col-6 col-md-3 col-lg-3 InputsDocencia">
+          <mat-form-field appearance="outline">
+            <mat-label>Criterio de Evaluación</mat-label>
+            <mat-select #myselsetc formControlName="IdCriterioEvaluacion"  >
+                <mat-option *ngFor="let item of esquemas" [value]="item.idCriterioEvaluacion">
+                  {{item.nombre}}
+                </mat-option>
+            </mat-select>
+            <mat-error *ngIf="!formularioTarea.get('IdCriterioEvaluacion')?.valid">Seleccione un criterio de evaluación</mat-error>
+          </mat-form-field>
+        </div>
   </div>
 </form>
 <mat-dialog-actions align="center" style="margin-top: 20px;    margin-bottom: 20px;">
