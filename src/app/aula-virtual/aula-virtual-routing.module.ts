@@ -48,6 +48,7 @@ import { BolsaTrabajoGuard } from './Guard/bolsa-trabajo.guard';
 import { BolsaTrabajoComponent } from './bolsa-trabajo/bolsa-trabajo.component';
 import { VisaRecurrenteComponent } from './resultado-pago-recurrente/visa-recurrente/visa-recurrente.component';
 import { EvalComponent } from './eval/eval.component';
+import { ConfirmacionPagoMercadoPagoChileComponent } from './confirmacion-pago-mercado-pago-chile/confirmacion-pago-mercado-pago-chile.component';
 
 const routes: Routes = [
   {
@@ -94,6 +95,7 @@ const routes: Routes = [
         { path: 'MisPagos/:IdMatricula/webpay/:Identificador', component: ConfirmacionPagoWebpayComponent,canActivate:[AlumnoGuard]},
         { path: 'MisPagos/:IdMatricula/izipay/:Identificador', component: ConfirmacionPagoIzipayComponent,canActivate:[AlumnoGuard]},
         { path: 'MisPagos/:IdMatricula/klap/:Identificador', component: ConfirmacionPagoKlapComponent,canActivate:[AlumnoGuard]},
+        { path: 'MisPagos/:IdMatricula/mercadoPago/:Identificador', component: ConfirmacionPagoMercadoPagoChileComponent,canActivate:[AlumnoGuard]},
 
         // Afiliaciones a Pagos Recurrentes
         { path: 'MisPagos/Afiliacion/:IdMatricula/openpay/:Identificador', component: AfiliacionOpenpayComponent,canActivate:[AlumnoGuard]},

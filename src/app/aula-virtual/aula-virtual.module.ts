@@ -108,6 +108,8 @@ import { OfertaLaboralComponent } from './bolsa-trabajo/oferta-laboral/oferta-la
 import { MisPostulacionesComponent } from './bolsa-trabajo/mis-postulaciones/mis-postulaciones.component';
 import { DevolverProyectoComponent } from './docencia-tareas/devolver-proyecto/devolver-proyecto.component';
 import { EvalComponent } from './eval/eval.component';
+import { ConfirmacionPagoMercadoPagoChileComponent } from './confirmacion-pago-mercado-pago-chile/confirmacion-pago-mercado-pago-chile.component';
+import { ResultadoPagoMercadopagoComponent } from './resultado-pago-mercadopago/resultado-pago-mercadopago.component';
 
 
 
@@ -215,7 +217,8 @@ import { EvalComponent } from './eval/eval.component';
     MisPostulacionesComponent,
     DevolverProyectoComponent,
     EvalComponent,
-
+    ResultadoPagoMercadopagoComponent,
+    ConfirmacionPagoMercadoPagoChileComponent
   ],
   imports: [
     CommonModule,
