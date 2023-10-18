@@ -9,7 +9,7 @@ export interface PEspecificoSesionCuestionarioSaveDTO {
   TiempoLimite: number;
   Preguntas: Array<PEspecificoSesionCuestionarioPreguntaFileDTO>;
   Usuario: string,
-  FechaEntregaSecundaria: string,
+  FechaEntregaSecundaria: string | null,
   CalificacionMaximaSecundaria: number
 }
 export interface PEspecificoSesionCuestionarioPreguntaFileDTO {
@@ -46,7 +46,7 @@ export interface PEspecificoSesionTareaSaveDTO {
   CalificacionMaxima: number;
   TieneArchivo: boolean;
   Usuario: string,
-  FechaEntregaSecundaria: string,
+  FechaEntregaSecundaria: string | null,
   CalificacionMaximaSecundaria: number;
 }
 

@@ -46,7 +46,24 @@ export class VistaPreviaCuestionarioComponent implements OnInit {
       this.disabledPublicar=true;
     }
     this.ObtenerDetalleCuestionarioVistaPrevia(this.detalleCuestionario.id)
+    //this.ObtenerPuntajePreguntasPorCuestionario();
 
+  }
+  ObtenerPuntajePreguntasPorCuestionario(id:number){
+    this._PEspecificoEsquemaService.ObtenerPuntajePreguntasPorCuestionario(id).pipe(takeUntil(this.signal$))
+    .subscribe({
+      next: (x) => {
+        console.log(x);
+        if(x==100){
+          this.PublicarCuestionario(id)
+        }else{
+          this._SnackBarServiceService.openSnackBar("El puntaje de las preguntas del cuestionario deben sumar 100.",
+          'x',
+          10,
+          "snackbarCrucigramaerror")
+        }
+      },
+    });
   }
   ObtenerDetalleCuestionarioVistaPrevia(IdCuestionario:number) {
     this.cargando=true
