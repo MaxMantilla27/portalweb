@@ -48,14 +48,14 @@ export class PespecificoSesionEsquemaComponent implements OnInit ,OnChanges, OnD
       idTipoCriterioEvaluacion:0,
       tipoCriterioEvaluacion:'Tarea'
     },
-    {
-      id:3,
-      nombre:'Cuestionario',
-      visible:false,
-      idCriterio:0,
-      idTipoCriterioEvaluacion:0,
-      tipoCriterioEvaluacion:'Otros'
-    }
+    // {
+    //   id:3,
+    //   nombre:'Cuestionario',
+    //   visible:false,
+    //   idCriterio:0,
+    //   idTipoCriterioEvaluacion:0,
+    //   tipoCriterioEvaluacion:'Otros'
+    // }
   ]
   public criterios:any=[]
   public saveMaterial:PEspecificoSesionMaterialAdicionalSaveDTO={
@@ -142,7 +142,7 @@ export class PespecificoSesionEsquemaComponent implements OnInit ,OnChanges, OnD
     this.materialAdicional=false
     const dialogRef = this.dialog.open(AgregarTareaComponent, {
       width: '1200px',
-      data: {id:data.id ,idCriterio:data.idCriterio,sesion:this.sesion},
+      data: {id:data.id ,idCriterio:data.idCriterio,sesion:this.sesion,idTipoCriterioEvaluacion:data.idTipoCriterioEvaluacion,idPEspecifico:this.IdPespecifico},
       panelClass: 'dialog-Agregar-Tarea',
       disableClose:true
     });
@@ -260,7 +260,7 @@ export class PespecificoSesionEsquemaComponent implements OnInit ,OnChanges, OnD
     if(data.id==2){
       const dialogRef = this.dialog.open(AgregarTareaComponent, {
         width: '1200px',
-        data: {id:0 ,idCriterio:data.idCriterio,sesion:this.sesion},
+        data: {id:0 ,idCriterio:data.idCriterio,sesion:this.sesion,idTipoCriterioEvaluacion:data.idTipoCriterioEvaluacion,idPEspecifico:this.IdPespecifico},
         panelClass: 'dialog-Agregar-Tarea',
        disableClose:true
       });

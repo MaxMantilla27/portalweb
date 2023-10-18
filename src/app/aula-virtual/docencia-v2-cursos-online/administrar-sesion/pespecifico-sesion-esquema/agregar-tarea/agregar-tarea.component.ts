@@ -65,9 +65,17 @@ export class AgregarTareaComponent implements OnInit, OnDestroy {
     HoraEntrega: new FormControl(null, [Validators.required]),
     MinutoEntrega: new FormControl(null, [Validators.required]),
     CalificacionMaximaSecundaria: new FormControl(0, [Validators.required]),
+<<<<<<< HEAD
     FechaEntregaSecundaria: new FormControl(),
     HoraEntregaSecundaria: new FormControl(),
     MinutoEntregaSecundaria: new FormControl(),
+=======
+    FechaEntregaSecundaria: new FormControl(null, [Validators.required]),
+    HoraEntregaSecundaria: new FormControl(null, [Validators.required]),
+    MinutoEntregaSecundaria: new FormControl(null, [Validators.required]),
+    IdCriterioEvaluacion: new FormControl(0, [Validators.required]),
+
+>>>>>>> 43088f2f0c4256ad1b05cbbe62f95d23f98fde74
   });
   public Title = 'AGREGAR TAREA';
   public fecha = new Date();
@@ -78,7 +86,9 @@ export class AgregarTareaComponent implements OnInit, OnDestroy {
   public Horas: Array<any> = [];
   public Minutos: Array<any> = [0,30,59];
   public Calificaciones: Array<any> = [];
-  cargando=false
+  public cargando=false
+  public esquemas : any;
+
   ngOnInit(): void {
     for (let index = 0; index < 24; index++) {
       var hora = '' + index;
@@ -98,12 +108,15 @@ export class AgregarTareaComponent implements OnInit, OnDestroy {
       this.Calificaciones.push(index * 10);
     }
     console.log(this.data);
-    this.saveTarea.IdCriterioEvaluacion = this.data.idCriterio;
+    // this.saveTarea.IdCriterioEvaluacion = this.data.idCriterio;
     this.saveTarea.IdPEspecificoSesion = this.data.sesion.idSesion;
     if (this.data.id != 0) {
       this.Title = 'EDITAR TAREA';
       this.saveTarea.Id = this.data.id;
       this.ObtenerPEspecificoSesionTareaPorId()
+    }
+    else{
+      this.ObtenerTipoCriteriosPorProgramaEspecifico(this.data.idTipoCriterioEvaluacion)
     }
   }
   ObtenerPEspecificoSesionTareaPorId() {
@@ -113,8 +126,12 @@ export class AgregarTareaComponent implements OnInit, OnDestroy {
       .subscribe({
         next: (x) => {
           console.log(x)
+          this.ObtenerTipoCriteriosPorProgramaEspecifico(x.idTipoCriterioEvaluacion)
           var date=new Date(x.fechaEntrega)
           this.saveTarea.IdCriterioEvaluacion = x.idCriterioEvaluacion;
+          var date2=new Date(x.fechaEntregaSecundaria)
+          console.log(date2.getMinutes().toString())
+          // this.saveTarea.IdCriterioEvaluacion = x.idCriterioEvaluacion;
 
 
           this.formularioTarea.get('Titulo')?.setValue(x.titulo)
@@ -122,7 +139,7 @@ export class AgregarTareaComponent implements OnInit, OnDestroy {
           this.formularioTarea.get('CalificacionMaxima')?.setValue(x.calificacionMaxima)
           this.formularioTarea.get('FechaEntrega')?.setValue(date)
           this.formularioTarea.get('HoraEntrega')?.setValue(date.getHours().toString().length>1?date.getHours().toString():'0'+date.getHours().toString())
-          this.formularioTarea.get('MinutoEntrega')?.setValue(date.getMinutes().toString().length>1?date.getMinutes().toString():'0'+date.getMinutes().toString())
+          this.formularioTarea.get('MinutoEntrega')?.setValue(date.getMinutes())
           if(x.fechaEntregaSecundaria!=null){
             var date2=new Date(x.fechaEntregaSecundaria)
             console.log(date2.getMinutes().toString())
@@ -131,6 +148,8 @@ export class AgregarTareaComponent implements OnInit, OnDestroy {
             this.formularioTarea.get('MinutoEntregaSecundaria')?.setValue(date2.getMinutes())
           }
           this.formularioTarea.get('CalificacionMaximaSecundaria')?.setValue(x.calificacionMaximaSecundaria)
+          this.formularioTarea.get('IdCriterioEvaluacion')?.setValue(x.idCriterioEvaluacion)
+
           if(x.nombreArchivo!=null){
             this.nombrefile=x.nombreArchivo
             this.saveTarea.TieneArchivo=true
@@ -167,6 +186,8 @@ export class AgregarTareaComponent implements OnInit, OnDestroy {
     this.saveTarea.CalificacionMaxima = this.formularioTarea.get('CalificacionMaxima')?.value;
     this.saveTarea.CalificacionMaximaSecundaria = this.formularioTarea.get('CalificacionMaximaSecundaria')?.value;
     var fecha: Date = this.formularioTarea.get('FechaEntrega')?.value;
+    this.saveTarea.IdCriterioEvaluacion = this.formularioTarea.get('IdCriterioEvaluacion')?.value;
+
     fecha.setHours(this.formularioTarea.get('HoraEntrega')?.value);
     fecha.setMinutes(this.formularioTarea.get('MinutoEntrega')?.value);
     fecha.setSeconds(0);
@@ -217,5 +238,17 @@ export class AgregarTareaComponent implements OnInit, OnDestroy {
       }
     });
 
+  }
+  ObtenerTipoCriteriosPorProgramaEspecifico(idTipoCriterioEvaluacion:number){
+    this._PEspecificoEsquemaService.ObtenerTipoCriteriosPorProgramaEspecifico(this.data.idPEspecifico,idTipoCriterioEvaluacion).pipe(takeUntil(this.signal$))
+    .subscribe({
+      next: (x) => {
+        console.log(x);
+        if(x!=null){
+          this.esquemas=x;
+
+        }
+      },
+    });
   }
 }

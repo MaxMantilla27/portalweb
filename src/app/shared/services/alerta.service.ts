@@ -25,7 +25,7 @@ export class AlertaService {
   mensajeConfirmacionCuestionario() {
     return Swal.fire({
       title: 'Se restaurarán los cuestionarios de todos los alumnos. ¿Desea continuar?',
-      text: '¡No podrás revertir esto!',
+      text: '¡Se borrarán todos los intentos realizados!',
       icon: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#4C5FC0',
@@ -37,7 +37,7 @@ export class AlertaService {
   mensajeConfirmacionTarea() {
     return Swal.fire({
       title: 'Se restaurarán las tareas de todos los alumnos. ¿Desea continuar?',
-      text: '¡No podrás revertir esto!',
+      text: '¡Se borrarán todas las tareas realizadas!',
       icon: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#4C5FC0',
@@ -49,7 +49,7 @@ export class AlertaService {
   mensajeConfirmacionEdicionCuestionario() {
     return Swal.fire({
       title: 'El cuestionario no será visible hasta su publicación. ¿Desea continuar?',
-      text: '¡No podrás revertir esto!',
+      text: '¡Se borrarán todos los intentos realizados!',
       icon: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#4C5FC0',
@@ -61,7 +61,7 @@ export class AlertaService {
   mensajeConfirmacionEdicionTarea() {
     return Swal.fire({
       title: 'La tarea no será visible hasta su publicación. ¿Desea continuar?',
-      text: '¡No podrás revertir esto!',
+      text: '¡Se borrarán todas las tareas realizadas!',
       icon: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#4C5FC0',

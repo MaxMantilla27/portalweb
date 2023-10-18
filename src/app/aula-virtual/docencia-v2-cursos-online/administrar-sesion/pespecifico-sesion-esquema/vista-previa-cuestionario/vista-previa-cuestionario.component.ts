@@ -1,10 +1,12 @@
 import { Component, Inject, OnInit, ViewEncapsulation } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
 import { Subject, takeUntil } from 'rxjs';
 import { AgregarCalificacionCuestionarioAlumnoDocenteDTO } from 'src/app/Core/Models/PEspecificoEsquema';
 import { PEspecificoEsquemaService } from 'src/app/Core/Shared/Services/PEspecificoEsquema/pespecifico-esquema.service';
 import { SnackBarServiceService } from 'src/app/Core/Shared/Services/SnackBarService/snack-bar-service.service';
 import { AlertaService } from 'src/app/shared/services/alerta.service';
+import { ImagenModalComponent } from 'src/app/Core/Shared/Containers/Dialog/imagen-modal/imagen-modal.component';
+
 
 @Component({
   selector: 'app-vista-previa-cuestionario',
@@ -25,6 +27,7 @@ export class VistaPreviaCuestionarioComponent implements OnInit {
     private _PEspecificoEsquemaService: PEspecificoEsquemaService,
     public _SnackBarServiceService: SnackBarServiceService,
     private alertaService: AlertaService,
+    public dialog: MatDialog,
 
   ) { }
   public cargando=false;
@@ -99,7 +102,18 @@ export class VistaPreviaCuestionarioComponent implements OnInit {
       }
     });
   }
-
+  getUrl(url:string)
+  {
+    return "url('"+url+"')";
+  }
+  OpenImage(url:string)
+  {
+    this.dialog.open(ImagenModalComponent, {
+      width: '1000px',
+      data: url,
+      panelClass: 'dialog-Imagen-Modal'
+    });
+  }
   // changeRadio(indexPregunta:number,index:number){
   //   this.preguntas.alternativas.forEach((a:any) => {
   //     a.select=false
