@@ -82,7 +82,6 @@ export class PagoComponent implements OnInit,OnDestroy {
           if(i==0){
             this.idMatricula = parseInt(param['IdMatricula']);
             this.idPais = x.datosAlumno.idPais
-            this.VerificarEstadoAfiliacion()
             this.ObtenerPasarela()
             this.ObtenerCronogramaPagoMatricula()
             i++
@@ -90,7 +89,7 @@ export class PagoComponent implements OnInit,OnDestroy {
         },
       });
     })
-
+   
   }
 
   EliminarAfiliacion(){
@@ -116,7 +115,7 @@ export class PagoComponent implements OnInit,OnDestroy {
   }
 
   VerificarEstadoAfiliacion(){
-    if(this.idPais==51 || this.idPais==52)
+    if(this.idPais==51 || this.idPais==52 || this.idPais==57)
       {
         this._FormaPagoService.ValidacionSuscripcion(this.idMatricula,this.idPasarela).pipe(takeUntil(this.signal$)).subscribe({
           next:x=>{
@@ -199,6 +198,9 @@ export class PagoComponent implements OnInit,OnDestroy {
       next:x=>{
         console.log("tarjeta",x)
         this.idPasarela=x[0].idPasarelaPago?x[0].idPasarelaPago:0
+
+        this.VerificarEstadoAfiliacion()
+
       },
       error:e=>{
         console.log(e)
@@ -227,8 +229,8 @@ export class PagoComponent implements OnInit,OnDestroy {
   OpenModalMetodoPagoSucripcion(): void {
     var fechaActual = new Date();
     var fechaVencimiento = new Date();
-    var stringActual= pipe.transform(new Date(), 'yyyy-MM-ddT00:00:00.000')
-    var stringVencimiento= pipe.transform(new Date(this.CronogramaPago.fechaVencimiento), 'yyyy-MM-ddT00:00:00.000')
+    var stringActual= pipe.transform(new Date(), 'yyyy-MM-ddT00:00:00.000') 
+    var stringVencimiento= pipe.transform(new Date(this.CronogramaPago.fechaVencimiento), 'yyyy-MM-ddT00:00:00.000') 
     if(stringActual)fechaActual=new Date(stringActual)
     if(stringVencimiento)fechaVencimiento=new Date(stringVencimiento)
     if(fechaActual <= fechaVencimiento)
@@ -253,7 +255,7 @@ export class PagoComponent implements OnInit,OnDestroy {
       //   });
       // }
 
-      if(validador==2)
+      if(validador==2) 
       {
         this._SnackBarServiceService.openSnackBar(
           "Lo sentimos, no puedes afiliarte al pago Recurrente, no todas las cuotas pendientes se pagan el mismo día de afiliación",
@@ -261,7 +263,7 @@ export class PagoComponent implements OnInit,OnDestroy {
           10,
           "snackbarCrucigramaerror");
       }
-      else if(validador==1)
+      else if(validador==1) 
       {
         this._SnackBarServiceService.openSnackBar(
           "Lo sentimos, no puedes afiliarte al pago Recurrente, no todas las cuotas pendientes tiene el mismo monto",
@@ -278,7 +280,7 @@ export class PagoComponent implements OnInit,OnDestroy {
           panelClass: 'dialog-Tarjeta',
          // disableClose:true
         });
-
+  
         dialogRef.afterClosed().pipe(takeUntil(this.signal$)).subscribe((result) => {
           console.log("Suscripcion",result);
           if(result!=undefined){
@@ -343,7 +345,7 @@ export class PagoComponent implements OnInit,OnDestroy {
           var sesion=x._Repuesta.identificadorTransaccion;
           this._SessionStorageService.SessionSetValue(sesion,x._Repuesta.requiereDatosTarjeta);
           console.log(parseInt(tarjeta.idPasarelaPago))
-
+  
           if(tarjeta.idPasarelaPago==5){ //OpenPay
             this._router.navigate(['/AulaVirtual/MisPagos/Afiliacion/'+this.idMatricula+'/openpay/'+sesion]);
           }
@@ -364,7 +366,7 @@ export class PagoComponent implements OnInit,OnDestroy {
           dialogRef.close();
         }
       })
-
+    
   }
 
 
@@ -436,6 +438,12 @@ export class PagoComponent implements OnInit,OnDestroy {
           }
           if(parseInt(tarjeta.idPasarelaPago)==13){
             this._router.navigate(['/AulaVirtual/MisPagos/'+this.idMatricula+'/izipay/'+sesion]);
+          }
+          if(parseInt(tarjeta.idPasarelaPago)==16){
+            this._router.navigate(['/AulaVirtual/MisPagos/'+this.idMatricula+'/openpayCOP/'+sesion]);
+          }
+          if(parseInt(tarjeta.idPasarelaPago)==17){//Mercado Pago
+            this._router.navigate(['/AulaVirtual/MisPagos/'+this.idMatricula+'/mercadoPago/'+sesion]);
           }
         }
       },
