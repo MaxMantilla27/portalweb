@@ -65,17 +65,10 @@ export class AgregarTareaComponent implements OnInit, OnDestroy {
     HoraEntrega: new FormControl(null, [Validators.required]),
     MinutoEntrega: new FormControl(null, [Validators.required]),
     CalificacionMaximaSecundaria: new FormControl(0, [Validators.required]),
-<<<<<<< HEAD
     FechaEntregaSecundaria: new FormControl(),
     HoraEntregaSecundaria: new FormControl(),
     MinutoEntregaSecundaria: new FormControl(),
-=======
-    FechaEntregaSecundaria: new FormControl(null, [Validators.required]),
-    HoraEntregaSecundaria: new FormControl(null, [Validators.required]),
-    MinutoEntregaSecundaria: new FormControl(null, [Validators.required]),
     IdCriterioEvaluacion: new FormControl(0, [Validators.required]),
-
->>>>>>> 43088f2f0c4256ad1b05cbbe62f95d23f98fde74
   });
   public Title = 'AGREGAR TAREA';
   public fecha = new Date();
