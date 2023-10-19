@@ -132,6 +132,7 @@ export class DocenciaCalificarTrabajoParesModalComponent implements OnInit,OnDes
       next:x=>{
         this.TerminaCarga=true;
         this.tareas=x
+        console.log(x)
         if( this.tareas.registroTareaEvaluacionArchivo!=null){
           this.tareaAc=this.tareas.registroTareaEvaluacionArchivo
         }
@@ -188,7 +189,7 @@ export class DocenciaCalificarTrabajoParesModalComponent implements OnInit,OnDes
         this.cargaEnvio=false
       },
       complete:()=>{
-        this.CerrarModal();
+        this.dialogRef.close(true);
       }
     })
   }

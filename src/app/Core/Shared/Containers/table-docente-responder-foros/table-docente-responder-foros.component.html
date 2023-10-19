@@ -39,8 +39,6 @@ overflow: auto;">
       </th>
       <td mat-cell *matCellDef="let element;let i=index" [style]="StyleContent" >
         <ng-container *ngIf="tipoContenido[tableData]; else normal">
-
-
           <ng-container *ngIf="(tipoContenido[tableData][0] | lowercase )=='select'">
             <div style="width: 100%;text-align: left;">
               <select [disabled]="DisableCell[tableData][0]==true"
@@ -60,7 +58,6 @@ overflow: auto;">
                 {{element[tableData] | date: 'hh:ss a' }}
               </div>
             </ng-container>
-
             <ng-template #fechahora>
               <ng-container *ngIf="(tipoContenido[tableData][0] | lowercase )=='fechahora';else url">
                 <div style="width: 100%;text-align: left;">
@@ -83,10 +80,9 @@ overflow: auto;">
                         [style]="'margin: 0px;'"></app-default-button>
                     </a>
                   </ng-template>
-
                 </ng-container>
                 <ng-template #buttons>
-                  <ng-container *ngIf="(tipoContenido[tableData][0] | lowercase )=='buttons';">
+                  <ng-container *ngIf="(tipoContenido[tableData][0] | lowercase )=='buttons';else temaForo">
                     <ng-container *ngIf="!IsArray(tipoContenido[tableData][1])">
                       <app-default-button [confs]="{color:'primary',titulo:element[tableData]}" [icon]="''"
                         [style]="'margin: 0px;'" (ButtoclClick)="ButtonClick.emit(element.index)"></app-default-button>
@@ -98,16 +94,23 @@ overflow: auto;">
                           (ButtoclClick)="ButtonArrayClick.emit({indexButton:indexb,index:element.index})"></app-default-button>
                       </div>
                     </ng-container>
-
                   </ng-container>
+                  <ng-template #temaForo>
+                    <ng-container *ngIf="(tipoContenido[tableData][0] | lowercase )=='temaforo';">
+                      <div  class="elipsisForo">
+                      {{element[tableData] }}
+                      </div>
+                    </ng-container>
+                  </ng-template>
                 </ng-template>
-
               </ng-template>
             </ng-template>
           </ng-template>
         </ng-container>
         <ng-template #normal>
-          {{element[tableData] }}
+          <div>
+            {{element[tableData] }}
+          </div>
         </ng-template>
       </td>
     </ng-container>

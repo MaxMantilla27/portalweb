@@ -1,7 +1,7 @@
 <div class="row" style="display: flex;">
   <div class="TitleModal col-11">
     <img src="../../../../../assets/icons/foro-naranja.svg" alt="Foro Naranja">
-    Responder Foro
+    Responder Consultas
   </div>
   <div class="col-1" style="text-align: end;font-weight: bold;cursor: pointer;" (click)="dialogRef.close()">
     X
@@ -25,8 +25,17 @@
         <div style="font-size: 13px;margin-bottom: 10px;">
           <strong style=" margin-right: 10px;">Origen:</strong>{{pregunta.origenForo}}
         </div>
-        <div style="font-size: 13px;margin-bottom: 10px">
-          <strong style=" margin-right: 10px;">Tema Foro:</strong>{{pregunta.titulo}}
+        <div style="font-size: 13px;margin-bottom: 10px" *ngIf="pregunta.idOrigenForo==1">
+          <strong  style=" margin-right: 10px;">Tema Foro:</strong>{{pregunta.titulo}}
+        </div>
+        <div style="font-size: 13px;margin-bottom: 10px" *ngIf="pregunta.idOrigenForo==2">
+          <strong  style=" margin-right: 10px;">Foro Video:</strong>{{pregunta.titulo}}
+        </div>
+        <div style="font-size: 13px;margin-bottom: 10px" *ngIf="pregunta.idOrigenForo==3">
+          <strong  style=" margin-right: 10px;">Foro Tarea:</strong>{{pregunta.titulo}}
+        </div>
+        <div style="font-size: 13px;margin-bottom: 10px" *ngIf="pregunta.idOrigenForo==4" >
+          <strong style=" margin-right: 10px;">Foro Proyecto:</strong>{{pregunta.titulo}}
         </div>
         <div style="font-size: 13px;margin-bottom: 10px">
           <strong style=" margin-right: 10px;">Consulta:</strong>

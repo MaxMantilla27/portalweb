@@ -64,9 +64,11 @@ export class ModuloForoContenidoComponent implements OnInit,OnDestroy {
     this._ForoCursoService.PartialRespuestaPregunta(this.IdPgeneral,this.IdPregunta).pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
         this.foroRespuesta=x;
-        this.foroRespuesta.forEach(x=>{
-          x.urlAvatarRespuesta=this._AvatarService.GetUrlImagenAvatar(x.avatar)
-        })
+        if(x!=null){
+          this.foroRespuesta.forEach(x=>{
+            x.urlAvatarRespuesta=this._AvatarService.GetUrlImagenAvatar(x.avatar)
+          })
+        }
       }
     })
   }
@@ -84,6 +86,7 @@ export class ModuloForoContenidoComponent implements OnInit,OnDestroy {
     this._ForoCursoService.EnviarRegistroRespuestaForo(this.ForoRespuestaEnvio).pipe(takeUntil(this.signal$)).subscribe({
       next: (x) => {
         this.ObtenerRespuestaForo()
+        this.userForm.get('RespuestaForo')?.setValue('')
       },
     });
   }

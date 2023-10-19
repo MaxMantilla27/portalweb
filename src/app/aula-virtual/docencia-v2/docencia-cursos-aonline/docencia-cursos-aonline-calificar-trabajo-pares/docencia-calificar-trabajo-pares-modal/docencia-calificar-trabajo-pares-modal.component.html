@@ -220,11 +220,19 @@
 
                 <div class="col-4" style="margin-bottom: 15px;">Fecha de calificación : </div>
                 <div class="col-8">{{item.fechaCalificacion | date:"dd-MM-yyyy"}}</div>
+                <div class="col-4" style="margin-bottom: 15px;">Comentario de Retroalimentación: </div>
+                <div class="col-8" *ngIf="item.retroalimentacion==null">No tiene retroalimentación.</div>
+                <div class="col-8" *ngIf="item.retroalimentacion!=null">{{item.retroalimentacion}}</div>
+                <div class="col-4" style="margin-bottom: 15px;">Archivo de Retroalimentación : </div>
+                <div class="col-8" *ngIf="item.nombreArchivoRetroalimentacion!=null" style="display: flex">
+                  <img src="../../../../assets/icons/descarga-36.svg" alt="Descargar" style="width: 20px;
+                    margin-right: 20px;">
+                    <a class="vinculo" [href]="item.urlArchivoSubidoRetroalimentacion" target="_blank">{{item.nombreArchivoRetroalimentacion}}</a>
+                </div>
+                <div class="col-8" *ngIf="item.nombreArchivoRetroalimentacion==null">No tiene archivo</div>
 
-                <ng-container *ngIf="tareas.idTipoEvaluacionTrabajo==1">
-                  <div class="col-4" style="margin-bottom: 15px;">Nota : </div>
-                  <div class="col-8">{{item.nota}}</div>
-                </ng-container>
+                <div class="col-4" style="margin-bottom: 15px;">Nota : </div>
+                <div class="col-8">{{item.nota}}</div>
 
               </div>
             </ng-container>

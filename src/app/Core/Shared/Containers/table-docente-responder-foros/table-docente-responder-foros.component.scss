@@ -38,4 +38,10 @@
     }
   }
 }
+.elipsisForo{
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 12.5rem;
+}
 

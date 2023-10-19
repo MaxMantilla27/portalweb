@@ -93,7 +93,8 @@ export class DocenciaCursosAonlineCalificarProyectoAplicacionComponent implement
       }
     });
   }
-  IngresarProyectos(IdPGeneral:number,IdPEspecificoPadre:number,ContenidoProyectoAplicacion:boolean ){
+  IngresarProyectos(IdPGeneral:number,IdPEspecificoPadre:number,ContenidoProyectoAplicacion:boolean ,item:any){
+    console.log(item)
     this.IdPGeneralProyectoAplicacion=IdPGeneral;
     this.IdPEspecificoProyectoAplicacion=IdPEspecificoPadre;
     this.ContenidoProyectoAplicacion=ContenidoProyectoAplicacion;

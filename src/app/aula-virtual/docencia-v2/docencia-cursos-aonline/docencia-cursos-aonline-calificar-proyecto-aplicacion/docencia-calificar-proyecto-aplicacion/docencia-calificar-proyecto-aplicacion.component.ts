@@ -36,7 +36,7 @@ export class DocenciaCalificarProyectoAplicacionComponent implements OnInit , On
     public dialog: MatDialog,
   ) { }
 
-  @Input() IdPEspecifico = 0;
+  @Input() IdPGeneral = 0;
   @Output() OnRecharge = new EventEmitter<void>();
   public proyectoAplicacionCurso: any;
   public NombreCurso=''
@@ -51,26 +51,34 @@ export class DocenciaCalificarProyectoAplicacionComponent implements OnInit , On
   ngOnChanges(changes: SimpleChanges): void {
     this.RegresarAhora=false
     this.TerminaCarga=false;
-    if(this.IdPEspecifico>0){
+    if(this.IdPGeneral>0){
       this.ObtenerProyectoAplicacionPorCursoDocente()
     }
   }
   ObtenerProyectoAplicacionPorCursoDocente(){
     var datePipe = new DatePipe('en-US');
+    this.proyectoAplicacionCurso=undefined
     this._TrabajoDeParesIntegraService
-      .ListadoAlumnosCalificarPorPespecificoCongeladoV2(this.IdPEspecifico)
+      .ListadoAlumnosCalificarPorPespecificoCongeladoV2(this.IdPGeneral)
       .pipe(takeUntil(this.signal$))
       .subscribe({
       next:x=>{
+        console.log(x)
         this.proyectoAplicacionCurso=x
         if(this.proyectoAplicacionCurso!=null || this.proyectoAplicacionCurso!=undefined){
-          this.NombreCurso=this.proyectoAplicacionCurso[0].pEspecifico
+          this.NombreCurso=this.proyectoAplicacionCurso[0].pGeneral
           this.proyectoAplicacionCurso.forEach((e:any) => {
             console.log(e)
+            if(e.fechaCalificacion=="Pendiente"){
+              e.nota='Pendiente'
+            }
           e.archivo=e.urlArchivoSubido==null?'Sin Archivo':'Descargar'
           e.Acciones=e.calificado==0?'Calificar':'Mostrar'
         });
         }
+      },
+      complete:()=>{
+        this.TerminaCarga=true
       }
     });
   }
@@ -84,7 +92,10 @@ export class DocenciaCalificarProyectoAplicacionComponent implements OnInit , On
     });
 
     dialogRef.afterClosed().pipe(takeUntil(this.signal$)).subscribe(result => {
-      this.ObtenerProyectoAplicacionPorCursoDocente()
+      if(result==true){
+        this.TerminaCarga=false
+        this.ObtenerProyectoAplicacionPorCursoDocente()
+      }
     });
   }
   Regresar(){

@@ -46,7 +46,7 @@
       </div>
     </ng-container>
     <ng-container *ngIf="TrabajoPares!=undefined && TrabajoPares.length!=0">
-      <div class="col-12" style="margin-top: 50px;">
+      <div class="col-12" >
         <ng-container *ngFor="let item of TrabajoPares;let i=index">
           <div class="contentCursoOnline" *ngIf="item.Visible==true">
             <div class="row" style="margin: 0px;align-items: center;">
@@ -73,18 +73,18 @@
               <div class="col-12 col-md-4 col-lg-2" style="    display: flex;
               justify-content: flex-end;
               padding: 0px;">
-                <app-default-button *ngIf="item.estadoAtendido==0" (click)="IngresarTrabajoPares(item.idPGeneralPadre,item.idPEspecificoPadre,true)" [confs]="{color:'primary',titulo:'Calificar'}" [icon]="''"
+                <app-default-button *ngIf="item.estadoAtendido==0" (click)="IngresarTrabajoPares(item.idPGeneralPadre,0,true)" [confs]="{color:'primary',titulo:'Calificar'}" [icon]="''"
                   [style]="'border-radius: 5px; margin: 0px; padding: 0px 30px;'"></app-default-button>
-                <app-default-button *ngIf="item.estadoAtendido==1" (click)="IngresarTrabajoPares(item.idPGeneralPadre,item.idPEspecificoPadre,true)" [confs]="{color:'primary',titulo:'Ver Calificados'}" [icon]="''"
+                <app-default-button *ngIf="item.estadoAtendido==1" (click)="IngresarTrabajoPares(item.idPGeneralPadre,0,true)" [confs]="{color:'primary',titulo:'Ver Calificados'}" [icon]="''"
                   [style]="'border-radius: 5px; margin: 0px; padding: 0px 30px;'"></app-default-button>
               </div>
             </div>
             <div class="col-12">
-              <div class="TitleCursoOnline">Programa: {{item.programaGeneral}}</div>
+              <div class="TitleCursoOnline" style="margin-top: 10px;">{{item.programaGeneral}}</div>
             </div>
-            <div class="col-12">
+            <!-- <div class="col-12">
               <div>Curso: {{item.programaEspecifico}}</div>
-            </div>
+            </div> -->
           </div>
         </ng-container>
 

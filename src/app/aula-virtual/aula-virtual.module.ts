@@ -163,6 +163,7 @@ import { LineamientosTareaOnlineComponent } from './docencia-v2-cursos-online/ca
 import { VistaPreviaCuestionarioComponent } from './docencia-v2-cursos-online/administrar-sesion/pespecifico-sesion-esquema/vista-previa-cuestionario/vista-previa-cuestionario.component';
 import { RecursosTareaComponent } from './docencia-v2-cursos-online/administrar-sesion/pespecifico-sesion-esquema/recursos-tarea/recursos-tarea.component';
 import { RecursosCuestionarioComponent } from './docencia-v2-cursos-online/administrar-sesion/pespecifico-sesion-esquema/recursos-cuestionario/recursos-cuestionario.component';
+import { RegistrarForoProyectoComponent } from './curso/curso-proyecto/registrar-foro-proyecto/registrar-foro-proyecto.component';
 
 
 @NgModule({
@@ -323,6 +324,7 @@ import { RecursosCuestionarioComponent } from './docencia-v2-cursos-online/admin
     VistaPreviaCuestionarioComponent,
     RecursosTareaComponent,
     RecursosCuestionarioComponent,
+    RegistrarForoProyectoComponent,
 
   ],
   imports: [

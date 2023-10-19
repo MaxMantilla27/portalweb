@@ -48,6 +48,8 @@ export class DocenciaCursosAonlineCalificarTrabajoParesComponent implements OnIn
               t.estadoAtendido=0
             }
         });
+        console.log(this.TrabajoPares)
+
         }
       }
     })

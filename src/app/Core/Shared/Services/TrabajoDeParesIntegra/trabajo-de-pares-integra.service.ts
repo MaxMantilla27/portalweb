@@ -81,9 +81,9 @@ export class TrabajoDeParesIntegraService {
       return EMPTY;
     }
   }
-  public ListadoAlumnosCalificarPorPespecificoCongeladoV2(IdPEspecifico:number):Observable<any>{
+  public ListadoAlumnosCalificarPorPespecificoCongeladoV2(IdPGeneral:number):Observable<any>{
     if(this.isBrowser){
-      return this.http.get<any>(this.urlBase+'/ListadoAlumnosCalificarPorPespecificoCongeladoV2?IdPEspecifico='+IdPEspecifico);
+      return this.http.get<any>(this.urlBase+'/ListadoAlumnosCalificarPorPespecificoCongeladoV2?IdPGeneral='+IdPGeneral);
     }else{
       return EMPTY;
     }

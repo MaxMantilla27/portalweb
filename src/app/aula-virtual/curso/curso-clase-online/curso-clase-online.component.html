@@ -18,6 +18,7 @@
         <div class="programaOnlines" *ngIf="escurso==false">{{item.nombrePrograma}}</div>
         <div class="dataOnlineFechas">
           <div class="tagFechaOnlines">Hoy</div>
+          <div *ngIf="item.tipo!='Webinar'" class="sesionesOnline">Sesión {{item.orden+' de '+ item.maximo}}</div>
           <div class="fechasOnline">{{item.fechaHoraInicio | date:'hh:mm a'}} a {{item.fechaHoraFinal | date:'hh:mm a'}} - (Hora {{item.nombrePais}})
           </div>
         </div>
