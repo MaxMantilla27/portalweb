@@ -71,9 +71,9 @@ export class AgregarCuestionarioComponent implements OnInit, OnDestroy {
     MinutoEntrega: new FormControl(null, [Validators.required]),
     TiempoLimite: new FormControl(null, [Validators.required]),
     CalificacionMaximaSecundaria: new FormControl(0, [Validators.required]),
-    FechaEntregaSecundaria: new FormControl(null, [Validators.required]),
-    HoraEntregaSecundaria: new FormControl(null, [Validators.required]),
-    MinutoEntregaSecundaria: new FormControl(null, [Validators.required]),
+    FechaEntregaSecundaria: new FormControl(),
+    HoraEntregaSecundaria: new FormControl(),
+    MinutoEntregaSecundaria: new FormControl(),
     IdCriterioEvaluacion: new FormControl(0, [Validators.required]),
 
   });
@@ -195,9 +195,13 @@ export class AgregarCuestionarioComponent implements OnInit, OnDestroy {
           this.formularioTarea.get('HoraEntrega')?.setValue(date.getHours().toString().length > 1 ? date.getHours().toString(): '0' + date.getHours().toString());
           this.formularioTarea.get('MinutoEntrega')?.setValue(date.getMinutes()? date.getMinutes(): '0' + date.getMinutes());
           this.formularioTarea.get('TiempoLimite')?.setValue(x.tiempoLimite);
-          this.formularioTarea.get('FechaEntregaSecundaria')?.setValue(date2)
-          this.formularioTarea.get('HoraEntregaSecundaria')?.setValue(date2.getHours().toString().length>1?date2.getHours().toString():'0'+date2.getHours().toString())
-          this.formularioTarea.get('MinutoEntregaSecundaria')?.setValue(date2.getMinutes())
+          if(x.fechaEntregaSecundaria!=null){
+            var date2=new Date(x.fechaEntregaSecundaria)
+            console.log(date2.getMinutes().toString())
+            this.formularioTarea.get('FechaEntregaSecundaria')?.setValue(date2)
+            this.formularioTarea.get('HoraEntregaSecundaria')?.setValue(date2.getHours().toString().length>1?date2.getHours().toString():'0'+date2.getHours().toString())
+            this.formularioTarea.get('MinutoEntregaSecundaria')?.setValue(date2.getMinutes())
+          }
           this.formularioTarea.get('CalificacionMaximaSecundaria')?.setValue(x.calificacionMaximaSecundaria)
           this.formularioTarea.get('IdCriterioEvaluacion')?.setValue(x.idCriterioEvaluacion)
         },
@@ -268,45 +272,45 @@ export class AgregarCuestionarioComponent implements OnInit, OnDestroy {
       this.save.FechaEntrega = s != null ? s : '';
     }
     fecha = this.formularioTarea.get('FechaEntregaSecundaria')?.value;
-    fecha.setHours(this.formularioTarea.get('HoraEntregaSecundaria')?.value);
-    fecha.setMinutes(this.formularioTarea.get('MinutoEntregaSecundaria')?.value);
     if (fecha != null) {
+      fecha.setHours(this.formularioTarea.get('HoraEntregaSecundaria')?.value);
+      fecha.setMinutes(this.formularioTarea.get('MinutoEntregaSecundaria')?.value);
       var s = datePipe.transform(fecha, 'yyyy-MM-ddTHH:mm:ss.SSS');
       this.save.FechaEntregaSecundaria = s != null ? s : '';
     }
     console.log(this.save);
-    if(this.save.Preguntas.length==0){
-      this._SnackBarServiceService.openSnackBar(
-        'El cuestionario no tiene preguntas creadas',
-        'x',
-        15,
-        'snackbarCrucigramaerror'
-      );
-      this.cargando=false
-      return ;
-    }else{
-      var sum=0
-      this.save.Preguntas.forEach(p=> {
-        sum+=p.Puntaje!=null?p.Puntaje:0
-      });
-      var msj=''
-      if(sum>100){
-        msj='La suma del puntaje de las preguntas suman más de 100'
-      }
-      if(sum<100){
-        msj='La suma del puntaje de las preguntas suman menos de 100'
-      }
-      if(msj.length>0){
-        this._SnackBarServiceService.openSnackBar(
-          msj,
-          'x',
-          15,
-          'snackbarCrucigramaerror'
-        );
-        this.cargando=false
-        return ;
-      }
-    }
+    // if(this.save.Preguntas.length==0){
+    //   this._SnackBarServiceService.openSnackBar(
+    //     'El cuestionario no tiene preguntas creadas',
+    //     'x',
+    //     15,
+    //     'snackbarCrucigramaerror'
+    //   );
+    //   this.cargando=false
+    //   return ;
+    // }else{
+    //   var sum=0
+    //   this.save.Preguntas.forEach(p=> {
+    //     sum+=p.Puntaje!=null?p.Puntaje:0
+    //   });
+    //   var msj=''
+    //   if(sum>100){
+    //     msj='La suma del puntaje de las preguntas suman más de 100'
+    //   }
+    //   if(sum<100){
+    //     msj='La suma del puntaje de las preguntas suman menos de 100'
+    //   }
+    //   if(msj.length>0){
+    //     this._SnackBarServiceService.openSnackBar(
+    //       msj,
+    //       'x',
+    //       15,
+    //       'snackbarCrucigramaerror'
+    //     );
+    //     this.cargando=false
+    //     return ;
+    //   }
+    // }
     this.alertaService.mensajeConfirmacionEdicionCuestionario().then((result) => {
       if (result.isConfirmed) {
         this._PEspecificoEsquemaService

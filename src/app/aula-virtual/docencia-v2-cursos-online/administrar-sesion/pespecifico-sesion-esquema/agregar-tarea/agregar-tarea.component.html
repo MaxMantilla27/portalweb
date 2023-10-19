@@ -101,16 +101,16 @@
         <mat-error *ngIf="!formularioTarea.get('CalificacionMaxima')?.valid">Ingrese la calificacion maxima</mat-error>
       </mat-form-field>
     </div>
-    <div class="col-4 col-md-2 col-lg-2 labelTarea">Fecha de Entrega Maxima</div>
+    <div class="col-4 col-md-2 col-lg-2 labelTarea">Fecha de Entrega Ampliada</div>
     <div class="col-8 col-md-2 col-lg-2 InputsDocencia">
       <mat-form-field appearance="outline">
-        <mat-label>Fecha de Entrega Maxima</mat-label>
+        <mat-label>Fecha de Entrega Ampliada</mat-label>
         <input matInput [min]="!formularioTarea.get('FechaEntrega')?.valid?fecha:formularioTarea.get('FechaEntrega')?.value"
-        [matDatepicker]="picker2" placeholder="Fecha de Entrega maxima" formControlName="FechaEntregaSecundaria" >
+        [matDatepicker]="picker2" placeholder="Fecha de Entrega ampliada" formControlName="FechaEntregaSecundaria" >
 
-        <mat-datepicker-toggle matSuffix [for]="picker2" placeholder="Fecha de Entrega maxima" ></mat-datepicker-toggle>
+        <mat-datepicker-toggle matSuffix [for]="picker2" placeholder="Fecha de Entrega Ampliada" ></mat-datepicker-toggle>
         <mat-datepicker #picker2></mat-datepicker>
-        <mat-error *ngIf="!formularioTarea.get('FechaEntregaSecundaria')?.valid">Ingrese la fecha de entrega maxima</mat-error>
+        <mat-error *ngIf="!formularioTarea.get('FechaEntregaSecundaria')?.valid">Ingrese la fecha de entrega ampliada</mat-error>
       </mat-form-field>
 
     </div>
@@ -148,13 +148,13 @@
     <div class="col-4 col-md-2 col-lg-2 labelTarea">Calificación Máxima</div>
     <div class="col-8 col-md-2 col-lg-2 InputsDocencia">
       <mat-form-field appearance="outline">
-        <mat-label>Calificación Minima</mat-label>
+        <mat-label>Calificación Máxima</mat-label>
         <mat-select #myselsetc formControlName="CalificacionMaximaSecundaria"  >
             <mat-option *ngFor="let item of Calificaciones" [value]="item">
               {{item}}
             </mat-option>
         </mat-select>
-        <mat-error *ngIf="!formularioTarea.get('CalificacionMaximaSecundaria')?.valid">Ingrese la calificacion minima</mat-error>
+        <mat-error *ngIf="!formularioTarea.get('CalificacionMaximaSecundaria')?.valid">Ingrese la calificacion maxima</mat-error>
       </mat-form-field>
     </div>
 

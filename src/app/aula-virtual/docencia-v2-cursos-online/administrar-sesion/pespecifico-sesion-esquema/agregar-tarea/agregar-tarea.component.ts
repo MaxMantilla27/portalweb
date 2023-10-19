@@ -65,11 +65,10 @@ export class AgregarTareaComponent implements OnInit, OnDestroy {
     HoraEntrega: new FormControl(null, [Validators.required]),
     MinutoEntrega: new FormControl(null, [Validators.required]),
     CalificacionMaximaSecundaria: new FormControl(0, [Validators.required]),
-    FechaEntregaSecundaria: new FormControl(null, [Validators.required]),
-    HoraEntregaSecundaria: new FormControl(null, [Validators.required]),
-    MinutoEntregaSecundaria: new FormControl(null, [Validators.required]),
+    FechaEntregaSecundaria: new FormControl(),
+    HoraEntregaSecundaria: new FormControl(),
+    MinutoEntregaSecundaria: new FormControl(),
     IdCriterioEvaluacion: new FormControl(0, [Validators.required]),
-
   });
   public Title = 'AGREGAR TAREA';
   public fecha = new Date();
@@ -122,6 +121,7 @@ export class AgregarTareaComponent implements OnInit, OnDestroy {
           console.log(x)
           this.ObtenerTipoCriteriosPorProgramaEspecifico(x.idTipoCriterioEvaluacion)
           var date=new Date(x.fechaEntrega)
+          this.saveTarea.IdCriterioEvaluacion = x.idCriterioEvaluacion;
           var date2=new Date(x.fechaEntregaSecundaria)
           console.log(date2.getMinutes().toString())
           // this.saveTarea.IdCriterioEvaluacion = x.idCriterioEvaluacion;
@@ -133,9 +133,13 @@ export class AgregarTareaComponent implements OnInit, OnDestroy {
           this.formularioTarea.get('FechaEntrega')?.setValue(date)
           this.formularioTarea.get('HoraEntrega')?.setValue(date.getHours().toString().length>1?date.getHours().toString():'0'+date.getHours().toString())
           this.formularioTarea.get('MinutoEntrega')?.setValue(date.getMinutes())
-          this.formularioTarea.get('FechaEntregaSecundaria')?.setValue(date2)
-          this.formularioTarea.get('HoraEntregaSecundaria')?.setValue(date2.getHours().toString().length>1?date2.getHours().toString():'0'+date2.getHours().toString())
-          this.formularioTarea.get('MinutoEntregaSecundaria')?.setValue(date2.getMinutes())
+          if(x.fechaEntregaSecundaria!=null){
+            var date2=new Date(x.fechaEntregaSecundaria)
+            console.log(date2.getMinutes().toString())
+            this.formularioTarea.get('FechaEntregaSecundaria')?.setValue(date2)
+            this.formularioTarea.get('HoraEntregaSecundaria')?.setValue(date2.getHours().toString().length>1?date2.getHours().toString():'0'+date2.getHours().toString())
+            this.formularioTarea.get('MinutoEntregaSecundaria')?.setValue(date2.getMinutes())
+          }
           this.formularioTarea.get('CalificacionMaximaSecundaria')?.setValue(x.calificacionMaximaSecundaria)
           this.formularioTarea.get('IdCriterioEvaluacion')?.setValue(x.idCriterioEvaluacion)
 
@@ -186,9 +190,9 @@ export class AgregarTareaComponent implements OnInit, OnDestroy {
     }
 
     fecha = this.formularioTarea.get('FechaEntregaSecundaria')?.value;
-    fecha.setHours(this.formularioTarea.get('HoraEntregaSecundaria')?.value);
-    fecha.setMinutes(this.formularioTarea.get('MinutoEntregaSecundaria')?.value);
     if (fecha != null) {
+      fecha.setHours(this.formularioTarea.get('HoraEntregaSecundaria')?.value);
+      fecha.setMinutes(this.formularioTarea.get('MinutoEntregaSecundaria')?.value);
       var s = datePipe.transform(fecha, 'yyyy-MM-ddTHH:mm:ss.SSS');
       this.saveTarea.FechaEntregaSecundaria = s != null ? s : '';
     }

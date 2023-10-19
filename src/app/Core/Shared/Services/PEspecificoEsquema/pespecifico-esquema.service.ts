@@ -177,16 +177,14 @@ export class PEspecificoEsquemaService {
       var Id = Json.Id == null ? "" : Json.Id?.toString();
       var Descripcion =
         Json.Descripcion == null ? "" : Json.Descripcion?.toString();
-      var IdPEspecificoSesion =
-        Json.IdPEspecificoSesion == null
-          ? ""
-          : Json.IdPEspecificoSesion?.toString();
+      var IdPEspecificoSesion =Json.IdPEspecificoSesion == null ? "": Json.IdPEspecificoSesion?.toString();
+      var FechaEntregaSecundaria =Json.FechaEntregaSecundaria == null ? "": Json.FechaEntregaSecundaria?.toString();
       formData.append("Id", Id);
       formData.append("IdPEspecificoSesion", IdPEspecificoSesion);
       formData.append("Titulo", Json.Titulo);
       formData.append("Descripcion", Descripcion);
       formData.append("FechaEntrega", Json.FechaEntrega);
-      formData.append("FechaEntregaSecundaria", Json.FechaEntregaSecundaria);
+      formData.append("FechaEntregaSecundaria", FechaEntregaSecundaria);
       formData.append("IdCriterioEvaluacion",Json.IdCriterioEvaluacion.toString());
       formData.append("CalificacionMaxima", Json.CalificacionMaxima.toString());
       formData.append("CalificacionMaximaSecundaria", Json.CalificacionMaximaSecundaria.toString());
@@ -341,17 +339,15 @@ export class PEspecificoEsquemaService {
       var Id = Json.Id == null ? "" : Json.Id?.toString();
       var Descripcion =
         Json.Descripcion == null ? "" : Json.Descripcion?.toString();
-      var IdPEspecificoSesion =
-        Json.IdPEspecificoSesion == null
-          ? ""
-          : Json.IdPEspecificoSesion?.toString();
+      var IdPEspecificoSesion =Json.IdPEspecificoSesion == null? "": Json.IdPEspecificoSesion?.toString();
+      var FechaEntregaSecundaria =Json.FechaEntregaSecundaria == null ? "": Json.FechaEntregaSecundaria?.toString();
       formData.append("file", Json.file);
       formData.append("Id", Id);
       formData.append("IdPEspecificoSesion", IdPEspecificoSesion);
       formData.append("Titulo", Json.Titulo);
       formData.append("Descripcion", Descripcion);
       formData.append("FechaEntrega", Json.FechaEntrega);
-      formData.append("FechaEntregaSecundaria", Json.FechaEntregaSecundaria);
+      formData.append("FechaEntregaSecundaria", FechaEntregaSecundaria);
       formData.append("IdCriterioEvaluacion",Json.IdCriterioEvaluacion.toString());
       formData.append("CalificacionMaxima", Json.CalificacionMaxima.toString());
       formData.append("CalificacionMaximaSecundaria", Json.CalificacionMaximaSecundaria.toString());
@@ -629,4 +625,15 @@ export class PEspecificoEsquemaService {
       }
     }
   }
+
+  public ObtenerPuntajePreguntasPorCuestionario(IdPEspecificoSesionCuestionario: number): Observable<any> {
+    if (this.isBrowser) {
+      return this.http.get<any>(this.urlBase +"/ObtenerPuntajePreguntasPorCuestionario?IdPEspecificoSesionCuestionario=" +IdPEspecificoSesionCuestionario);
+    } else {
+      {
+        return EMPTY;
+      }
+    }
+  }
+
 }

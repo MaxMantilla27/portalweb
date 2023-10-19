@@ -1,5 +1,5 @@
 
-<ng-container *ngIf="preguntas!=undefined">
+<ng-container >
   <div class="cardSesionOnlineTareasCuestionario">
 
 
@@ -23,7 +23,7 @@
       {{detalleCuestionario.descripcion}}</div>
   </div>
 
-  <div class="content" >
+  <div class="content"  >
     <ng-container
       *ngIf="preguntas!=null && preguntas!=undefined">
       <ng-container *ngFor="let item of preguntas;let i=index">
@@ -136,7 +136,7 @@
           <div  style="display: flex;align-items: center;justify-content: flex-end;margin-top: 10px;margin-right:10px;">
             <app-default-button [confs]="{color:'primary',titulo:'Publicar'}"
               [style]="'margin: 0px; padding: 0px 40px; border-radius: 40px;'"
-              (click)="PublicarCuestionario(detalleCuestionario.id)"
+              (click)="ObtenerPuntajePreguntasPorCuestionario(detalleCuestionario.id)"
               [disabled]="disabledPublicar"></app-default-button>
           </div>
           <div  style="display: flex;align-items: center;justify-content: flex-end;margin-top: 10px;">

@@ -69,7 +69,6 @@ export class NotaDocenteComponent implements OnInit ,OnChanges, OnDestroy{
           if(dte!=undefined && dte!=null && dte.length>0){
             this.detalle=true
             dte.forEach((y:any) => {
-              y.nota=0
               detalles.push(y)
             });
           }
@@ -114,18 +113,30 @@ export class NotaDocenteComponent implements OnInit ,OnChanges, OnDestroy{
           var d:Array<any>=[]
           this.listadoNotas.listadoNotas.forEach((n:any) => {
             if(mat.idMatriculaCabecera==n.idMatriculaCabecera){
-              d=n.detalle
+              n.detalle.forEach((a:any )=> {
+                d.push(a)
+              });
             }
           });
           if(d!=null && d.length==0){
-            detalles.forEach((d:any )=> {
-              d.idMatriculaCabecera=mat.idMatriculaCabecera
+            d=[]
+            var dj=JSON.stringify(detalles);
+            d=JSON.parse(dj)
+
+            mat.detalles=[]
+            d.forEach((a:any) => {
+              a.nota=0
+              a.idMatriculaCabecera=mat.idMatriculaCabecera
+              mat.detalles.push(a)
             });
-            mat.detalles=detalles
           }else{
-            mat.detalles=d
+            mat.detalles=[]
+            d.forEach((a:any) => {
+              mat.detalles.push(a)
+            });
           }
         });
+        console.log(this.listadoNotas.listadoNotas)
         this.OrdenarNotas();
       },
       complete:()=>{
@@ -187,12 +198,14 @@ export class NotaDocenteComponent implements OnInit ,OnChanges, OnDestroy{
       if(e.nombre.toUpperCase().includes('ASISTENCIA')){
         this.columnHeaderDetalle['z'+e.id]='Asistencia <br> '+e.porcentaje+'%'
       }else{
-        this.Colspam.push({
-          id:e.id,
-          nombre:e.nombre,
-          colspam:0,
-          inicio:0
-        })
+        if(e.evaluaciones>0){
+          this.Colspam.push({
+            id:e.id,
+            nombre:e.nombre + '<br> '+e.porcentaje+'%',
+            colspam:0,
+            inicio:0
+          })
+        }
       }
     })
     if(this.listadoNotas.listadoNotas!=null){

@@ -147,7 +147,9 @@ overflow: auto;">
         <ng-container *ngIf="item.id>0">
           <th mat-header-cell *matHeaderCellDef [attr.colspan]="item.colspam" style="font-weight: 800;
           color: #4e4e4e;
-          text-align: center;" [ngClass]="{'bordercolor': ColorHeader==true}">{{item.nombre}}</th>
+          text-align: center;" [ngClass]="{'bordercolor': ColorHeader==true}">
+            <div  [innerHTML]="item.nombre"></div>
+          </th>
         </ng-container>
       </ng-container>
     </ng-container>

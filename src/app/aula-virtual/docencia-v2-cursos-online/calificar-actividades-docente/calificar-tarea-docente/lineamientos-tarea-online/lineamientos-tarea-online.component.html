@@ -34,55 +34,35 @@
     <div class="col-8 col-md-9 col-lg-9 textLanzamiento">Proyecto copiado (plagio). </div>
   </div>
   <div class="TitleLanzamiento">Instrucciones acerca del proyecto</div>
-  <div class="subTitleLanzamiento">{{data.title}}</div>
+  <div class="subTitleLanzamiento">{{data.titulo}}</div>
 
   <div class="SpaceLanzamiento"></div>
-  <div class="subTitleLanzamiento">Descripción de la tarea</div>
+  <ng-container *ngIf="data.descripcion!=null">
 
-  <div class="SpaceLanzamiento"></div>
-  <div class="textLanzamiento">
-    El estudiante deberá desarrollar un proyecto aplicado a la organización a la cual pertenece o a alguna organización
-    donde desee aplicarlo. Para el proyecto, el alumno podrá optar por cualquiera de los siguientes casos típicos:
-    <div class="SpaceLanzamiento"></div>
-    1. Caso de propuesta de implementación de un SIG en una organización que no tiene implementado ningún sistema de
-    gestión. En una organización que no tiene implementado ningún sistema de gestión, donde se cumplen total o
-    parcialmente las Buenas Prácticas de Manufactura – BPM.
-    <div class="SpaceLanzamiento"></div>
-    2. Caso de propuesta de implementación de un SIG mejorando de lo que actualmente tiene implementado la organización.
-    En una organización que tiene implementado algún sistema de gestión inocuidad alimentario como HACCP, ISO 22000,
-    FSSC 22000, BRC, IFS, SQF, Global G.A.P. o similar, analiza el nivel de cumplimiento de los requisitos de dichas
-    normas y la aplicación adecuada del sistema Análisis de Peligros Y Puntos Críticos de Control - HACCP como soporte
-    del SGIA.
-  </div>
+    <div class="subTitleLanzamiento">Descripción de la tarea</div>
 
-  <div class="SpaceLanzamiento"></div>
-  <div class="subTitleLanzamiento">Metodología</div>
+    <div class="SpaceLanzamiento"></div>
+    <div class="textLanzamiento">
+      {{data.descripcion}}
+    </div>
+  </ng-container>
 
-  <div class="SpaceLanzamiento"></div>
-  <div class="textLanzamiento">
-    Se aplicarán las siguientes metodologías, alineadas a lo estudiado en el programa:
-    <div class="SpaceLanzamiento"></div>
-    a. Identificar el cumplimiento de los requisitos que hacen parte de las Buenas Prácticas de Manufactura – BPM bajos
-    los lineamientos generales de las normas de la Comisión del Codex Alimentarius.
-    <div class="SpaceLanzamiento"></div>
-    b. Establecer las similitudes y diferencias entre los requisitos establecidos en las Buenas Prácticas de Manufactura
-    - BPM, la Ley de Modernización de la Inocuidad Alimentaria – FSMA, y las normas de inocuidad alimentaria ISO 22000,
-    FSSC 22000, BRC, IFS, SQF y Global G.A.P
-  </div>
-
-  <div class="SpaceLanzamiento"></div>
-  <div class="subTitleLanzamiento">Entregables</div>
-
-  <div class="SpaceLanzamiento"></div>
-  <div class="textLanzamiento">
-    Para el desarrollo de este documento, el estudiante deberá considerar los siguientes entregables:
-    Caratula con identificación del tema y del alumno.
-    Índice del contenido.
-    Desarrollo del proyecto
-    <div class="SpaceLanzamiento"></div>
-    1. Obtener las ultimas versiones vigentes de las normas
-    <div class="SpaceLanzamiento"></div>
-    2. Seleccionar y caracterizar la organización y proceso sobre la cual se va a desarrollar el proyecto.
+  <div class="subTitleLanzamiento">Fechas</div>
+  <div class="row">
+    <div class="col-6 col-md-6 col-lg-6 subTitleLanzamiento">Fecha de Entrega</div>
+    <div class="col-6 col-md-6 col-lg-6 subTitleLanzamiento">Calificación Maxima </div>
+    <div class="col-12" style="height: 10px;"></div>
+    <div class="col-6 col-md-6 col-lg-6 subTitleLanzamiento">{{data.fechaEntrega | date:'dd-MM-yyyy hh:mm'}}</div>
+    <div class="col-6 col-md-6 col-lg-6 subTitleLanzamiento">{{data.calificacionMaxima}}</div>
+    <div class="col-6 col-md-6 col-lg-6 subTitleLanzamiento">Fecha de Entrega Ampliada</div>
+    <div class="col-6 col-md-6 col-lg-6 subTitleLanzamiento">Calificación Maxima </div>
+    <div class="col-12" style="height: 10px;"></div>
+    <div class="col-6 col-md-6 col-lg-6 subTitleLanzamiento">
+      <ng-container *ngIf="data.fechaEntregaSecundaria!=null">
+        {{data.fechaEntregaSecundaria | date:'dd-MM-yyyy hh:mm'}}
+      </ng-container>
+    </div>
+    <div class="col-6 col-md-6 col-lg-6 subTitleLanzamiento">{{data.calificacionMaximaSecundaria}}</div>
   </div>
   <div class="buttonLanzamiento">
     <app-default-button [confs]="{color:'primary',titulo:'Cerrar'}"

@@ -185,7 +185,7 @@
             <div class="cursoTabDescripcion">¡Bienvenido! Debes completar los siguientes módulos de tu programa:</div>
             <div *ngIf="MostrarMensajeRecuerda==true" class="msjCom" style="border: solid 2px #fff7ee; padding: 10px;margin-bottom: 20px;">
               <img src="../../../../assets/icons/icon-hand.svg" alt="Icono Mano">
-              <div>
+              <div *ngIf="json.idModalidad===1">
                 <div ><strong>Recuerda: </strong>Debes completar el primer curso para poder acceder al siguiente</div>
               </div>
             </div>
