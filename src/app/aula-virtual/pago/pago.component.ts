@@ -197,7 +197,7 @@ export class PagoComponent implements OnInit,OnDestroy {
     this._MedioPagoActivoPasarelaService.MedioPagoPasarelaPortalRecurrente(this.idMatricula).pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
         console.log("tarjeta",x)
-        this.idPasarela=x[0].idPasarelaPago?x[0].idPasarelaPago:0
+        if(x!=undefined && x!=null && x.length>0 )this.idPasarela=x[0].idPasarelaPago?x[0].idPasarelaPago:0
 
         this.VerificarEstadoAfiliacion()
 
