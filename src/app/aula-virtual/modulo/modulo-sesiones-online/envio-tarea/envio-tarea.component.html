@@ -29,9 +29,9 @@
             <a target="_blank" [href]="item.urlArchivoSubido">{{item.nombreArchivo}}</a>
           </div>
         </div>
-        <div class="IntenTareasEnviadas"><strong>Fecha de Envio:</strong>  {{item.fechaCreacion | date :'dd/MM/yyyy'}}</div>
+        <div class="IntenTareasEnviadas"><strong>Fecha de Envio:</strong>  {{item.fechaCreacion | date :'dd/MM/yyyy hh:mm:ss'}}</div>
         <div class="IntenTareasEnviadas"><strong>Calificación:</strong>  {{item.nota}}</div>
-        <div class="IntenTareasEnviadas"><strong>Fecha de Calificación:</strong>  {{item.fechaCalificacion | date :'dd/MM/yyyy'}}</div>
+        <div class="IntenTareasEnviadas"><strong>Fecha de Calificación:</strong>  {{item.fechaCalificacion | date :'dd/MM/yyyy hh:mm:ss'}}</div>
         <div class="IntenTareasEnviadas"><strong>Retroalimentación:</strong>  {{item.retroalimentacion}}</div>
         <div class="IntenTareasEnviadas"><strong>Archivo de Retroalimentación:</strong>
           <ng-container *ngIf="item.urlArchivoSubidoRetroalimentacion!=null">

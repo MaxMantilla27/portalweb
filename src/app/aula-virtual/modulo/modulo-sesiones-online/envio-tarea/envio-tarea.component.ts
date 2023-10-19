@@ -4,6 +4,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Subject, takeUntil } from 'rxjs';
 import { PEspecificoSesionTareaAlumnoSaveParamsDTO } from 'src/app/Core/Models/PEspecificoEsquema';
 import { PEspecificoEsquemaService } from 'src/app/Core/Shared/Services/PEspecificoEsquema/pespecifico-esquema.service';
+import { SnackBarServiceService } from 'src/app/Core/Shared/Services/SnackBarService/snack-bar-service.service';
 
 @Component({
   selector: 'app-envio-tarea',
@@ -17,7 +18,8 @@ export class EnvioTareaComponent implements OnInit ,OnDestroy {
   constructor(
     public dialogRef: MatDialogRef<EnvioTareaComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
-    private _PEspecificoEsquemaService: PEspecificoEsquemaService
+    private _PEspecificoEsquemaService: PEspecificoEsquemaService,
+    private _SnackBarServiceService:SnackBarServiceService
   ) { }
     public json:PEspecificoSesionTareaAlumnoSaveParamsDTO={
       file: new File([], ''),
@@ -79,6 +81,18 @@ export class EnvioTareaComponent implements OnInit ,OnDestroy {
         if (x.type === HttpEventType.UploadProgress) {
           console.log(Math.round((100 * x.loaded) / x.total));
         } else if (x instanceof HttpResponse) {
+
+          if(x.body!=1){
+            if(x.body==0){
+              this._SnackBarServiceService.openSnackBar("Ya paso la fecha de entrega de la tarea",'x',5,"snackbarCrucigramaerror");
+            }else{
+              if(x.body==3){
+                this._SnackBarServiceService.openSnackBar("Ya supero el numero maximo de intentos",'x',15,"snackbarCrucigramaerror");
+              }else{
+                this._SnackBarServiceService.openSnackBar("Ocurrio un error al subir el Archivo.",'x',15,"snackbarCrucigramaerror");
+              }
+            }
+          }
           this.dialogRef.close('guardado');
         }
       },
