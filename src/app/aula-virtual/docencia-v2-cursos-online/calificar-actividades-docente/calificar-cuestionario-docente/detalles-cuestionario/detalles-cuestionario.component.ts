@@ -151,13 +151,11 @@ export class DetallesCuestionarioComponent implements OnInit, OnDestroy {
   }
   SetNota(item: any) {
     console.log(item);
-    this.nota = this.data.nota*1;
+    this.nota = 0;
 
     this.preguntas.forEach((p: any) => {
-      if (p.idPreguntaTipo == 6) {
-        if (p.puntos != null) {
-          this.nota+=p.puntos*1
-        }
+      if (p.puntos != null) {
+        this.nota+=p.puntos*1
       }
     })
   }
