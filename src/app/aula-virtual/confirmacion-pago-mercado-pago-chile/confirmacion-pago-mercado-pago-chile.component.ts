@@ -146,7 +146,7 @@ export class ConfirmacionPagoMercadoPagoChileComponent implements OnInit {
           cardFormData.identificadorTransaccion = this.json.IdentificadorTransaccion
           cardFormData.description = this.resultPreProcesoMP.nombrePrograma
           return new Promise<void>((resolve, reject) => {
-            fetch('https://api-portalweb-carrera.bsginstitute.com/api/FormaPago/ProcesarPagoCuotaAlumnoConfirmarMercadoPago', {
+            fetch('https://api-portalweb.bsginstitute.com/api/FormaPago/ProcesarPagoCuotaAlumnoConfirmarMercadoPago', {
               method: 'POST',
               headers: {
                 'Content-Type': 'application/json',
@@ -155,13 +155,13 @@ export class ConfirmacionPagoMercadoPagoChileComponent implements OnInit {
             })
               .then(() => {
                 this.dialogRefLoader.close()
-                window.location.href = 'https://img.bsgrupo.com/AulaVirtual/PagoExitosoMercadoPago/'+this.json.IdentificadorTransaccion
+                window.location.href = 'https://bsginstitute.com/AulaVirtual/PagoExitosoMercadoPago/'+this.json.IdentificadorTransaccion
                 // Recibir el resultado del pago
                 resolve();
               })
               .catch(() => {
                 this.dialogRefLoader.close()
-                window.location.href = 'https://img.bsgrupo.com/AulaVirtual/PagoExitosoMercadoPago/'+this.json.IdentificadorTransaccion
+                window.location.href = 'https://bsginstitute.com/AulaVirtual/PagoExitosoMercadoPago/'+this.json.IdentificadorTransaccion
 
                 // Tratar respuesta de error al intentar crear el pago
                 reject();
