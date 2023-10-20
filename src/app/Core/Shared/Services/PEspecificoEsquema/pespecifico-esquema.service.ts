@@ -636,4 +636,23 @@ export class PEspecificoEsquemaService {
     }
   }
 
+  public ObtenerEstadoDeFechasPorTarea(Id: number): Observable<any> {
+    if (this.isBrowser) {
+      return this.http.get<any>(this.urlBase +"/ObtenerEstadoDeFechasPorTarea?Id=" +Id);
+    } else {
+      {
+        return EMPTY;
+      }
+    }
+  }
+  public ObtenerEstadoDeFechasPorCuestionario(Id: number): Observable<any> {
+    if (this.isBrowser) {
+      return this.http.get<any>(this.urlBase +"/ObtenerEstadoDeFechasPorCuestionario?Id=" +Id);
+    } else {
+      {
+        return EMPTY;
+      }
+    }
+  }
+
 }

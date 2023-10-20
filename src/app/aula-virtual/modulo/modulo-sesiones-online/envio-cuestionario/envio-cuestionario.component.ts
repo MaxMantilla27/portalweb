@@ -6,6 +6,7 @@ import * as moment  from 'moment';
 import { SessionStorageService } from 'src/app/Core/Shared/Services/session-storage.service';
 import { AgregarPEspecificoSesionCuestionarioAlumnoDTO, RespuestasCuestionarioDTO } from 'src/app/Core/Models/PEspecificoEsquema';
 import { ImagenModalComponent } from 'src/app/Core/Shared/Containers/Dialog/imagen-modal/imagen-modal.component';
+import { SnackBarServiceService } from 'src/app/Core/Shared/Services/SnackBarService/snack-bar-service.service';
 
 @Component({
   selector: 'app-envio-cuestionario',
@@ -22,6 +23,7 @@ export class EnvioCuestionarioComponent implements OnInit ,OnDestroy {
     private _SessionStorageService:SessionStorageService,
     private _PEspecificoEsquemaService: PEspecificoEsquemaService,
     public dialog: MatDialog,
+    public _SnackBarServiceService:SnackBarServiceService
   ) { }
 
   public CuestionarioAvance:
@@ -150,12 +152,24 @@ export class EnvioCuestionarioComponent implements OnInit ,OnDestroy {
   }
 
   IniciarCuestionario(){
-    this.CuestionarioAvance.Inicio=true
-    this.CuestionarioAvance.fechaInicio=new Date();
-    this.vertiempo=true
+    this._PEspecificoEsquemaService.ObtenerEstadoDeFechasPorCuestionario(this.data.cuestionario.id).pipe(takeUntil(this.signal$)).subscribe({
+      next:x=>{
+        console.log(x)
+        if(x==true){
+          this.CuestionarioAvance.Inicio=true
+          this.CuestionarioAvance.fechaInicio=new Date();
+          this.vertiempo=true
 
-    this._SessionStorageService.SessionSetValue('cuest-'+this.CuestionarioAvance.id.toString(),btoa(JSON.stringify(this.CuestionarioAvance)))
-    this.cronometro();
+          this._SessionStorageService.SessionSetValue('cuest-'+this.CuestionarioAvance.id.toString(),btoa(JSON.stringify(this.CuestionarioAvance)))
+          this.cronometro();
+        }else{
+          this._SnackBarServiceService.openSnackBar("Ya culmino el plazo para presentar este cuestionario.",'x',15,"snackbarCrucigramaerror");
+        }
+      },
+      error:e=>{
+        this._SnackBarServiceService.openSnackBar("Ocurrio un error",'x',15,"snackbarCrucigramaerror");
+      }
+    })
   }
   AddValoresActuales(cuest:any){
     this.CuestionarioAvance.fechaInicio=cuest.fechaInicio

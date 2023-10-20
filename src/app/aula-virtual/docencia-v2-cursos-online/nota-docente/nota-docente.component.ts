@@ -110,30 +110,32 @@ export class NotaDocenteComponent implements OnInit ,OnChanges, OnDestroy{
               }
             }
           });
-          var d:Array<any>=[]
-          this.listadoNotas.listadoNotas.forEach((n:any) => {
-            if(mat.idMatriculaCabecera==n.idMatriculaCabecera){
-              n.detalle.forEach((a:any )=> {
-                d.push(a)
+          if(detalles.length>0){
+            var d:Array<any>=[]
+            this.listadoNotas.listadoNotas.forEach((n:any) => {
+              if(mat.idMatriculaCabecera==n.idMatriculaCabecera){
+                n.detalle.forEach((a:any )=> {
+                  d.push(a)
+                });
+              }
+            });
+            if(d!=null && d.length==0){
+              d=[]
+              var dj=JSON.stringify(detalles);
+              d=JSON.parse(dj)
+
+              mat.detalles=[]
+              d.forEach((a:any) => {
+                a.nota=0
+                a.idMatriculaCabecera=mat.idMatriculaCabecera
+                mat.detalles.push(a)
+              });
+            }else{
+              mat.detalles=[]
+              d.forEach((a:any) => {
+                mat.detalles.push(a)
               });
             }
-          });
-          if(d!=null && d.length==0){
-            d=[]
-            var dj=JSON.stringify(detalles);
-            d=JSON.parse(dj)
-
-            mat.detalles=[]
-            d.forEach((a:any) => {
-              a.nota=0
-              a.idMatriculaCabecera=mat.idMatriculaCabecera
-              mat.detalles.push(a)
-            });
-          }else{
-            mat.detalles=[]
-            d.forEach((a:any) => {
-              mat.detalles.push(a)
-            });
           }
         });
         console.log(this.listadoNotas.listadoNotas)
