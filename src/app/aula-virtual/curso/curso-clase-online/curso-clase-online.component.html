@@ -41,11 +41,12 @@
 </ng-container>
 <ng-container *ngIf="proximo!=undefined">
   <div class="CardOnlines row">
-    <div class="col-12 col-md-8 col-lg-9">
+    <div class="col-12 col-md-8 col-lg-9" style="padding:0px">
       <div class="programaOnlines" *ngIf="escurso==false">{{proximo.nombrePrograma}}</div>
       <div class="dataOnlineFechas">
         <div class="tagFechaOnlines">Próxima sesión</div>
-        <div class="fechasOnline">{{proximo.fechaHoraInicio | date:'dd-MM-yyyy'}} de {{proximo.fechaHoraInicio | date:'hh:mm a'}} a {{proximo.fechaHoraFinal | date:'hh:mm a'}}  - (Hora {{proximo.nombrePais}})
+        <div *ngIf="proximo.tipo!='Webinar'" class="sesionesOnline" style="font-size: 11.5px;">Sesión {{proximo.orden+' de '+ proximo.maximo}}</div>
+        <div class="fechasOnline" style="font-size: 11.5px;">{{proximo.fechaHoraInicio | date:'dd-MM-yyyy'}} de {{proximo.fechaHoraInicio | date:'hh:mm a'}} a {{proximo.fechaHoraFinal | date:'hh:mm a'}}  - (Hora {{proximo.nombrePais}})
         </div>
       </div>
     </div>

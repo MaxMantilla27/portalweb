@@ -57,7 +57,8 @@ export class RegistrarForoTareaComponent implements OnInit {
     this.ForoCurso.idCurso=this.data.IdCurso
     this.ForoCurso.idPEspecificoPadre=this.data.IdPEspecificoPadre
     this.ForoCurso.idPEspecificoHijo=this.data.IdPEspecificoHijo
-    this.ForoCurso.titulo=this.data.NombreCapitulo + ' - ' + this.data.NombreTarea
+    // this.ForoCurso.titulo=this.data.NombreCapitulo + ' - ' + this.data.NombreTarea
+    this.ForoCurso.titulo=this.data.NombreTarea
     this.ForoCurso.contenido=this.userForm.get('Contenido')?.value
     this.ForoCurso.idOrigenForo=3
     this.ForoCurso.idCapitulo=this.data.NumeroCapitulo
