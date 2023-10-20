@@ -38,6 +38,9 @@
               <div class="DescripcionPregunta" *ngIf="item.idPreguntaTipo==4">Elija las alternativas correctas</div>
               <div class="DescripcionPregunta" *ngIf="item.idPreguntaTipo==5">Elige la alternativa correcta</div>
             </div>
+            <div *ngIf="item.nombreArchivo==null" class="col-12 col-md-3 col-lg-3"  style=" display: flex;flex-direction: column;align-items: flex-end;">
+              <div class="PuntoPregunta"><strong>{{item.puntaje}}</strong> Puntos</div>
+            </div>
             <ng-container *ngIf="item.nombreArchivo!=null">
               <div class="col-12 col-md-3 col-lg-3" style=" display: flex;
               flex-direction: column;
@@ -45,6 +48,7 @@
                 *ngIf="item.nombreArchivo.split('.')[item.nombreArchivo.split('.').length-1].toUpperCase()!='PNG' &&
                 item.nombreArchivo.split('.')[item.nombreArchivo.split('.').length-1].toUpperCase()!='JPG';else img">
                 <div class="PuntoPregunta"><strong>{{item.puntaje}}</strong> Puntos</div>
+
                 <div class="IntenTareasEnviadas" *ngIf="item.urlArchivoSubido!=null && item.urlArchivoSubido!=undefined">
                   <div class="pdfSesionOnline"></div>
                   <div>
@@ -53,9 +57,13 @@
                 </div>
               </div>
               <ng-template #img>
+                <div style="justify-content: end;display: flex;margin-bottom: 5px;">
+                  <div class="PuntoPregunta">
+                    <strong>{{item.puntaje}}</strong> Puntos
+                  </div>
+                </div>
                 <div class="ImagenAdjunta" (click)="OpenImage(item.urlArchivoSubido)"
                 [ngStyle]="{'background-image': getUrl(item.urlArchivoSubido)}">
-
                 </div>
               </ng-template>
             </ng-container>
@@ -102,7 +110,11 @@
                   <div class="col-12 col-md-3 TitleActividad">
                     Archivo:
                   </div>
-                  <div class="col-12 col-md-9 DescripcionActividad">
+                  <!-- <div class="col-12 col-md-9 DescripcionActividad">
+                    <a [href]="item.urlArchivoSubidoRetroalimentacion">{{item.nombreArchivoRetroalimentacion}}</a>
+                  </div> -->
+                  <div class="pdfSesionOnline"></div>
+                  <div>
                     <a [href]="item.urlArchivoSubidoRetroalimentacion">{{item.nombreArchivoRetroalimentacion}}</a>
                   </div>
                 </div>

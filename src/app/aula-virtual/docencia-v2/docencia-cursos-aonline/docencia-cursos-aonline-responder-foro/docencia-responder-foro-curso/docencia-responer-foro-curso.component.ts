@@ -30,6 +30,7 @@ export class DocenciaResponerForoCursoComponent implements OnInit, OnChanges , O
   TipoContenido:any={
     FechaPublicacion: ['date'],
     FechaRespuesta: ['date'],
+    titulo:['temaForo','titulo'],
     'Acciones': ['buttons','Responder']
   }
   constructor(
@@ -77,6 +78,7 @@ export class DocenciaResponerForoCursoComponent implements OnInit, OnChanges , O
             e.fechaRespuesta=datePipe.transform(e.fechaRespuesta, 'dd-MM-yyyy hh:mm a.');
             e.Acciones=e.estadoAtendido==1?'Ver':'Responder'
           });
+          console.log(this.foroCurso)
           }
         },
       });

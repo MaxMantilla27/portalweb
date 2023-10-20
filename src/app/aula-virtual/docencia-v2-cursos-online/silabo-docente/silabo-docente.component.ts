@@ -63,17 +63,17 @@ export class SilaboDocenteComponent implements OnInit ,OnChanges,OnDestroy {
               x.estado=false
             }
           }
-          if(x.titulo=="Certificacion"){
-            x.titulo="Certificación"
-            if(indexC==-1){
-              indexC=i
-              x.order=5;
-              this.listaSeccionesContenidosDocumento[indexC].ArrayContent.push(x.contenido)
-            }else{
-              this.listaSeccionesContenidosDocumento[indexC].ArrayContent.push(x.contenido)
-              x.estado=false
-            }
-          }
+          // if(x.titulo=="Certificacion"){
+          //   x.titulo="Certificación"
+          //   if(indexC==-1){
+          //     indexC=i
+          //     x.order=5;
+          //     this.listaSeccionesContenidosDocumento[indexC].ArrayContent.push(x.contenido)
+          //   }else{
+          //     this.listaSeccionesContenidosDocumento[indexC].ArrayContent.push(x.contenido)
+          //     x.estado=false
+          //   }
+          // }
           if(x.titulo=="Bibliografia"){
             x.titulo="Bibliografía"
             x.order=6;

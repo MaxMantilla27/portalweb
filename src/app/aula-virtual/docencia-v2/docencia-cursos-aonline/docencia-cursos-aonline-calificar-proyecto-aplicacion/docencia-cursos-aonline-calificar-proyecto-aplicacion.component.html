@@ -46,28 +46,28 @@
       </div>
     </ng-container>
     <ng-container *ngIf="ProyectoAplicacion!=undefined && ProyectoAplicacion.length!=0">
-      <div class="col-12" style="margin-top: 50px;">
+      <div class="col-12">
         <ng-container *ngFor="let item of ProyectoAplicacion;let i=index">
           <div class="contentCursoOnline" *ngIf="item.Visible==true">
             <div class="row" style="margin: 0px;align-items: center;">
               <div class="col-12 col-md-8 col-lg-10">
                 <div class="col-12">
-                  <div class="TitleCursoOnline">Programa: {{item.pGeneral}}</div>
+                  <div class="TitleCursoOnline" style="margin-top: 10px;">{{item.pGeneral}}</div>
                 </div>
               </div>
               <div class="col-12 col-md-4 col-lg-2" style="    display: flex;
               justify-content: baseline;
               padding: 0px;">
-                <app-default-button (click)="IngresarProyectos(item.idPGeneralPadre,item.idPEspecifico,true)" [confs]="{color:'primary',titulo:'Calificar'}" [icon]="''"
+                <app-default-button (click)="IngresarProyectos(item.idPGeneral,0,true,item)" [confs]="{color:'primary',titulo:'Calificar'}" [icon]="''"
                   [style]="'border-radius: 5px; margin: 0px; padding: 0px 30px;'"></app-default-button>
                 <!-- <app-default-button *ngIf="item.estadoAtendido==1" (click)="IngresarProyectos(item.idPGeneralPadre,item.idPEspecifico,true)" [confs]="{color:'primary',titulo:'Ver Calificados'}" [icon]="''"
                   [style]="'border-radius: 5px; margin: 0px; padding: 0px 30px;'"></app-default-button> -->
               </div>
-              <div class="col-12 col-md-12 col-lg-12">
+              <!-- <div class="col-12 col-md-12 col-lg-12">
                 <div class="col-12">
                   <div>Curso: {{item.pEspecifico}}</div>
                 </div>
-              </div>
+              </div> -->
             </div>
 
           </div>
@@ -79,5 +79,5 @@
   </div>
 </div>
 <div *ngIf="ContenidoProyectoAplicacion==true">
-  <app-docencia-calificar-proyecto-aplicacion [IdPEspecifico]="IdPEspecificoProyectoAplicacion"></app-docencia-calificar-proyecto-aplicacion>
+  <app-docencia-calificar-proyecto-aplicacion [IdPGeneral]="IdPGeneralProyectoAplicacion"></app-docencia-calificar-proyecto-aplicacion>
 </div>

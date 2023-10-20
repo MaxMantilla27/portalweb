@@ -86,7 +86,7 @@
                       </div>
 
                       <div class="col-6 col-md-5 col-lg-5" style="    display: flex;">
-                        <ng-container *ngIf="(item.cantidadEnviados - item.cantidadCalificados)<=0">
+                        <ng-container *ngIf="item.cantidadEnviados<=0">
                           <div class="imgAlertaActividadesEchas "></div>
                           <div class="textActividades">Sin pendientes</div>
                         </ng-container>
@@ -94,6 +94,10 @@
                           <div class="imgAlertaActividadesPendientes"></div>
                           <div class="textActividades">Actividades por calificar ({{item.cantidadEnviados -
                             item.cantidadCalificados}})</div>
+                        </ng-container>
+                        <ng-container *ngIf="item.cantidadEnviados>0 && item.cantidadEnviados==item.cantidadCalificados">
+                          <div class="imgAlertaActividadesEchas "></div>
+                          <div class="textActividades">Calificadas {{item.cantidadEnviados}} / {{item.cantidadCalificados}}</div>
                         </ng-container>
 
                       </div>

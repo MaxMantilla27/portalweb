@@ -57,6 +57,7 @@ export class DocenciaCalificarTrabajoParesComponent implements OnInit , OnChange
   }
   ObtenerTrabajoParesPorCursoDocente(){
     var datePipe = new DatePipe('en-US');
+    this.trabajoParesCurso=undefined
     this._TrabajoDeParesIntegraService
       .ObtenerAlumnoTrabajoParesV2(this.IdPEspecifico,this.IdPGeneral)
       .pipe(takeUntil(this.signal$))
@@ -72,8 +73,12 @@ export class DocenciaCalificarTrabajoParesComponent implements OnInit , OnChange
         });
         console.log(this.trabajoParesCurso)
         }
+      },
+      complete:()=>{
+        this.TerminaCarga=true
       }
     });
+
   }
   AbrirTrabajoPares(index:number){
     const dialogRef = this.dialog.open(DocenciaCalificarTrabajoParesModalComponent, {
@@ -85,7 +90,10 @@ export class DocenciaCalificarTrabajoParesComponent implements OnInit , OnChange
     });
 
     dialogRef.afterClosed().pipe(takeUntil(this.signal$)).subscribe(result => {
-      this.ObtenerTrabajoParesPorCursoDocente()
+      if(result==true){
+        this.TerminaCarga=false;
+        this.ObtenerTrabajoParesPorCursoDocente()
+      }
     });
   }
   Regresar(){

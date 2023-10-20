@@ -26,7 +26,8 @@
           <div class="accionesTema">
             <div class="edidtarNaranja" (click)="OnEdit.emit(i)"></div>
             <div class="eliminarNaranja" (click)="OnDelete.emit(i)"></div>
-            <div class="verNaranja" (click)="OpenVistaPrevia(item)"></div>
+            <div *ngIf="item.fechaPublicacion==null" class="verSinPublicar" (click)="OpenVistaPrevia(item)"></div>
+            <div *ngIf="item.fechaPublicacion!=null" class="verPublicado" (click)="OpenVistaPrevia(item)"></div>
             <!-- <div class="publicarNaranja" (click)="PublicarCuestionario(item)"></div> -->
           </div>
         </td>

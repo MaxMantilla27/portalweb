@@ -64,6 +64,9 @@ export class TableDocenteResponderForosComponent implements OnInit {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
+    console.log(this.tipoContenido[this.tableData])
+    console.log(this.tableData)
+    console.log(this.tipoContenido)
     if(this.tableData.length!=this.lengthInicial){
       var i=0
       this.tableData.forEach((t:any) => {
@@ -81,6 +84,8 @@ export class TableDocenteResponderForosComponent implements OnInit {
         return data[col];
       };
     }
+    console.log(this.tipoContenido)
+
   }
   IsArray(Element:any){
     return Array.isArray(Element);

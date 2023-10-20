@@ -51,12 +51,14 @@ export class DocenciaResponderForoCursoModalComponent implements OnInit,OnDestro
       next:x=>{
         this.pregunta=x
         console.log(this.pregunta)
-        this.ForoCerrado=x.estadoCerrado;
+        if(x!=null){
+          this.ForoCerrado=x.estadoCerrado;
         if(x.idVideo!=''){
           this.ReproductorVideo=this.ReproductorVideo+x.idVideo
         }
         if(this.pregunta!=null){
           this.imgForo=this._AvatarService.GetUrlImagenAvatar(this.pregunta.avatar)
+        }
         }
       },
       error:e=>{

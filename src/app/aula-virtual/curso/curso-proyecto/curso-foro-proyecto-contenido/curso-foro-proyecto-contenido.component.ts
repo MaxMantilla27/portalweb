@@ -30,7 +30,7 @@ export class CursoForoProyectoContenidoComponent implements OnInit,OnDestroy {
   @Input() IdPEspecificoPadre=0;
   @Input() IdPEspecificoHijo=0;
   @Input() IdPregunta=0;
-  @Output() volver: EventEmitter<void> = new EventEmitter<void>();
+  @Output() volverProyecto = new EventEmitter<void>();
   public esDocente=false;
   public foroContenido:Array<any>=[];
   public foroRespuesta:Array<any>=[];
@@ -64,9 +64,11 @@ export class CursoForoProyectoContenidoComponent implements OnInit,OnDestroy {
     this._ForoCursoService.PartialRespuestaPregunta(this.IdPgeneral,this.IdPregunta).pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
         this.foroRespuesta=x;
-        this.foroRespuesta.forEach(x=>{
-          x.urlAvatarRespuesta=this._AvatarService.GetUrlImagenAvatar(x.avatar)
-        })
+        if(x!=null){
+          this.foroRespuesta.forEach(x=>{
+            x.urlAvatarRespuesta=this._AvatarService.GetUrlImagenAvatar(x.avatar)
+          })
+        }
       }
     })
   }
@@ -84,10 +86,11 @@ export class CursoForoProyectoContenidoComponent implements OnInit,OnDestroy {
     this._ForoCursoService.EnviarRegistroRespuestaForo(this.ForoRespuestaEnvio).pipe(takeUntil(this.signal$)).subscribe({
       next: (x) => {
         this.ObtenerRespuestaForo()
+        this.userForm.get('RespuestaForo')?.setValue('')
       },
     });
   }
   VolverAtras(){
-    this.volver.emit()
+    this.volverProyecto.emit()
   }
 }

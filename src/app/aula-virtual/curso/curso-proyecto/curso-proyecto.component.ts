@@ -10,6 +10,7 @@ import { ForoCursoService } from 'src/app/Core/Shared/Services/ForoCurso/foro-cu
 import { HelperService } from 'src/app/Core/Shared/Services/helper.service';
 import { SnackBarServiceService } from 'src/app/Core/Shared/Services/SnackBarService/snack-bar-service.service';
 import { TareaEvaluacionService } from 'src/app/Core/Shared/Services/TareaEvaluacion/tarea-evaluacion.service';
+import { RegistrarForoProyectoComponent } from './registrar-foro-proyecto/registrar-foro-proyecto.component';
 
 @Component({
   selector: 'app-curso-proyecto',
@@ -82,6 +83,17 @@ export class CursoProyectoComponent implements OnInit,OnChanges,OnDestroy {
   public IdPEspecificoHijo = 0;
   public Capitulo = '';
   public UrlArchivo ='';
+  @Input() json: ParametrosEstructuraEspecificaDTO = {
+    AccesoPrueba: false,
+    IdMatriculaCabecera: 0,
+    IdPEspecificoPadre: 0,
+    IdPGeneralPadre: 0,
+    IdPEspecificoHijo: 0,
+    IdPGeneralHijo: 0,
+    NombreCapitulo: '',
+    NombrePrograma: '',
+    idModalidad:1
+  };
   ngOnInit(): void {
     this._HelperService.recibirCombosPerfil.pipe(takeUntil(this.signal$)).subscribe((x) => {
       this.miPerfil=x
@@ -279,7 +291,7 @@ export class CursoProyectoComponent implements OnInit,OnChanges,OnDestroy {
   ObtenerForoCursoProyecto() {
     this._ForoCursoService.ObtenerForoCursoProyecto(this.idPGeneral).pipe(takeUntil(this.signal$)).subscribe({
       next: (x) => {
-
+        this.foro=[];
         console.log(x);
         this.foro = x;
         if (this.foro != null && this.foro != undefined) {
@@ -316,6 +328,30 @@ export class CursoProyectoComponent implements OnInit,OnChanges,OnDestroy {
   RefrescarForo(){
     this.NuevoForo=false;
     this.ContenidoForo=false;
+    console.log('REFRESCANDO==================')
     this.ObtenerForoCursoProyecto() ;
+  }
+  Interaccion(nombre:string){
+    this._HelperService.enviarMsjAcciones({Tag:"Button",Nombre:nombre})
+  }
+  OpenModalForo(): void {
+    const dialogRef = this.dialog.open(RegistrarForoProyectoComponent, {
+      width: '500px',
+      data: {
+        IdPGeneral:this.idPGeneral,
+        IdPrincipal:this.idPGeneral,
+        IdPEspecificoPadre:this.idPEspecifico,
+        IdPEspecificoHijo:this.idPEspecifico,
+        Curso:this.curso,
+        UrlArchivo:this.UrlArchivo
+        },
+      panelClass: 'custom-dialog-container',
+    });
+
+    dialogRef.afterClosed().pipe(takeUntil(this.signal$)).subscribe((result) => {
+      if(result==true){
+        this.ObtenerForoCursoProyecto();
+      }
+    });
   }
 }

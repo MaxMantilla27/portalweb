@@ -213,7 +213,7 @@ export class DocenciaCalificarProyectoAplicacionModalComponent implements OnInit
         this._SnackBarServiceService.openSnackBar("Ocurrio un error, por favor vuelva a recargar en unos momentos",'x',15,"snackbarCrucigramaerror");
       },
       complete:()=>{
-        this.CerrarModal();
+        this.dialogRef.close(true);
       }
     })
   }

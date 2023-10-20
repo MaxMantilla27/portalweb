@@ -73,8 +73,8 @@
     background-position: center;
     cursor:pointer  !important;
   }
-  .verNaranja {
-    width: 20px;
+  .verSinPublicar {
+    width: 21px;
     height: 13px;
     background: url("../../../../../../assets/icons/icono-mostrar-naranja.svg");
     background-size: cover;
@@ -93,6 +93,14 @@
     width: 20px;
     height: 13px;
     background: url("../../../../../../assets/icons/icono-check-circulo-verde.svg");
+    background-size: cover;
+    background-position: center;
+    cursor: pointer !important;
+  }
+  .verPublicado {
+    width:22px;
+    height: 13px;
+    background: url("../../../../../../assets/icons/icono-mostrar-verde.svg");
     background-size: cover;
     background-position: center;
     cursor: pointer !important;

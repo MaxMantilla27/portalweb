@@ -20,10 +20,10 @@
   </ng-container>
   <ng-container *ngIf="trabajoParesCurso==undefined && TerminaCarga==true">
     <div style="display: flex;justify-content: center;align-items: center; height: 15rem;">
-      No se encontraron registros de foros.
+      No se encontraron registros de trabajo de pares.
     </div>
   </ng-container>
-  <app-table-calificar-evaluaciones *ngIf="trabajoParesCurso!=undefined "
+  <app-table-calificar-evaluaciones *ngIf="trabajoParesCurso!=undefined && TerminaCarga==true"
     [tableData]="trabajoParesCurso"
     [columnHeader]="columnHeader"
     [tipoContenido]="TipoContenido"

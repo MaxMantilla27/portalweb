@@ -23,7 +23,7 @@
       No se encontraron registros de foros.
     </div>
   </ng-container>
-  <app-table-calificar-evaluaciones *ngIf="proyectoAplicacionCurso!=undefined "
+  <app-table-calificar-evaluaciones *ngIf="proyectoAplicacionCurso!=undefined  && TerminaCarga==true"
     [tableData]="proyectoAplicacionCurso"
     [columnHeader]="columnHeader"
     [tipoContenido]="TipoContenido"
