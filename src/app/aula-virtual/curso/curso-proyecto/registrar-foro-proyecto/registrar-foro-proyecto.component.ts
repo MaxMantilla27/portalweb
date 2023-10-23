@@ -58,7 +58,8 @@ export class RegistrarForoProyectoComponent implements OnInit {
     this.ForoCurso.idCurso = this.data.IdPGeneral;
     this.ForoCurso.idPEspecificoPadre = this.data.IdPEspecificoPadre;
     this.ForoCurso.idPEspecificoHijo = this.data.IdPEspecificoHijo;
-    this.ForoCurso.titulo = this.data.Curso.programaEspecifico + '- Proyecto de aplicación';
+    // this.ForoCurso.titulo = this.data.Curso.programaEspecifico + '- Proyecto de aplicación';
+    this.ForoCurso.titulo = 'Proyecto de aplicación';
     this.ForoCurso.contenido = this.userForm.get('Contenido')?.value;
     this.ForoCurso.idOrigenForo=4
     this.ForoCurso.idCapitulo=0

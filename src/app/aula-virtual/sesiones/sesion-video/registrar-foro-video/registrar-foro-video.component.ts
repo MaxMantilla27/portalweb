@@ -59,11 +59,17 @@ export class RegistrarForoVideoComponent implements OnInit {
     this.ForoCurso.idCurso=this.data.IdCurso
     this.ForoCurso.idPEspecificoPadre=this.data.IdPEspecificoPadre
     this.ForoCurso.idPEspecificoHijo=this.data.IdPEspecificoHijo
+    // if(this.data.NombreSubSesion!=''){
+    // this.ForoCurso.titulo=this.data.NombreCapitulo + ' - ' + this.data.NombreSesion+' - '+this.data.NombreSubSesion
+    // }
+    // else{
+    //   this.ForoCurso.titulo=this.data.NombreCapitulo + ' - ' + this.data.NombreSesion
+    // }
     if(this.data.NombreSubSesion!=''){
-    this.ForoCurso.titulo=this.data.NombreCapitulo + ' - ' + this.data.NombreSesion+' - '+this.data.NombreSubSesion
+    this.ForoCurso.titulo=this.data.NombreSubSesion
     }
     else{
-      this.ForoCurso.titulo=this.data.NombreCapitulo + ' - ' + this.data.NombreSesion
+      this.ForoCurso.titulo=this.data.NombreSesion
     }
     this.ForoCurso.contenido=this.userForm.get('Contenido')?.value
     this.ForoCurso.idOrigenForo=2
