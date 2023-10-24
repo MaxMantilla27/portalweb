@@ -24,6 +24,7 @@ export class ForoCursoService {
       return EMPTY;
     }
   }
+
   public InsertarForoCursoPorUsuario(Json:ForoDTO):Observable<any>{
     if(this.isBrowser){
       return this.http.post<any>(this.urlBase+'/InsertarForoCursoPorUsuario',Json);
