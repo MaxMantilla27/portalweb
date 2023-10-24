@@ -534,7 +534,7 @@ export class VideoBrightcoveComponent implements OnInit, OnChanges,AfterViewInit
       j++;
     });
 
-    //this.RegistrarUltimaVisualizacionVideo()
+    //this.RegistrarUltimaVisualizacionVideoWebApi()
   }
   setCurrentTime(data: any) {
     var tiempo= data.target.currentTime;
@@ -550,7 +550,7 @@ export class VideoBrightcoveComponent implements OnInit, OnChanges,AfterViewInit
       }
       if(parseInt(tiempo)%10==0){
         //console.log(parseInt(tiempo))
-        this.RegistrarUltimaVisualizacionVideo()
+        this.RegistrarUltimaVisualizacionVideoWebApi()
       }
       if (parseInt(tiempo) == x.tiempo) {
         this.diapositivaactual=i
@@ -565,7 +565,7 @@ export class VideoBrightcoveComponent implements OnInit, OnChanges,AfterViewInit
           this.tipo = x.tipoVista
         }
         this.grupo=x.urlEvaluacion
-        this.RegistrarUltimaVisualizacionVideo()
+        this.RegistrarUltimaVisualizacionVideoWebApi()
         if(this.tipo==4){
           this.pauseVideo();
           this.ListaRegistroPreguntaInteractivaPorGrupo();
@@ -723,7 +723,7 @@ export class VideoBrightcoveComponent implements OnInit, OnChanges,AfterViewInit
       }
     }
   }
-  RegistrarUltimaVisualizacionVideo(){
+  RegistrarUltimaVisualizacionVideoWebApi(){
 
     if(Math.floor(this.tiempoactualvideo)>this.tiempovideoinicioInicial && this.guardar==false){
       console.log(Math.floor(this.tiempoactualvideo)+'-'+this.tiempovideoinicioInicial)
@@ -738,7 +738,7 @@ export class VideoBrightcoveComponent implements OnInit, OnChanges,AfterViewInit
       this.send.id=this.videoData.id==null?0:this.videoData.id
       this.send.tiempoVisualizacion=Math.floor(this.tiempoactualvideo)
       console.log(this.send)
-      this._VideoSesionService.RegistrarUltimaVisualizacionVideo(this.send).pipe(takeUntil(this.signal$)).subscribe({
+      this._VideoSesionService.RegistrarUltimaVisualizacionVideoWebApi(this.send).pipe(takeUntil(this.signal$)).subscribe({
         next:x=>{
           this.tiempovideoinicioInicial=this.send.tiempoVisualizacion
           this.guardar=false
@@ -753,7 +753,7 @@ export class VideoBrightcoveComponent implements OnInit, OnChanges,AfterViewInit
 
   }
   OnFinish(){
-    this.RegistrarUltimaVisualizacionVideo()
+    this.RegistrarUltimaVisualizacionVideoWebApi()
     this.finish=true;
     this.tipo=2
     console.log(this.nextChapter)
