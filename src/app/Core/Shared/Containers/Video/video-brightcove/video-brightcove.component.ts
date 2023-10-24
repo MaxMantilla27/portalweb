@@ -533,7 +533,6 @@ export class VideoBrightcoveComponent implements OnInit, OnChanges,AfterViewInit
       }
       j++;
     });
-
     //this.RegistrarUltimaVisualizacionVideoWebApi()
   }
   setCurrentTime(data: any) {
