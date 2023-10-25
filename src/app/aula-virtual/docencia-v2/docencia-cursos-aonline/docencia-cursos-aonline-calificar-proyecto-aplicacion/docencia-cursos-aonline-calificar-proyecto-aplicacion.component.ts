@@ -64,10 +64,17 @@ export class DocenciaCursosAonlineCalificarProyectoAplicacionComponent implement
       next:x=>{
         this.TerminaCarga=true;
         this.ProyectoAplicacion=x;
+        console.log(this.ProyectoAplicacion)
         if(this.ProyectoAplicacion!=null){
           if(this.ProyectoAplicacion.length!=0){
             this.ProyectoAplicacion.forEach((c:any) => {
             c.Visible=true
+            if(c.pendientes==0){
+              c.estadoAtendido=1
+            }
+            else{
+              c.estadoAtendido=0
+            }
           });
           }
         }
@@ -82,12 +89,28 @@ export class DocenciaCursosAonlineCalificarProyectoAplicacionComponent implement
     window.open(Url+'/'+this.ProyectoAplicacion[index].alumnos[indexAlumno].idTarea, '_blank');
   }
 
+  // FiltrarProyectos(){
+  //   this.ProyectoAplicacion.forEach((e:any) => {
+  //     e.Visible=true
+  //     if(this.filterProyectoAplicacion.length>0){
+  //       var name=e.pGeneral.toUpperCase();
+  //       if(!name.includes(this.filterProyectoAplicacion.toUpperCase())){
+  //         e.Visible=false
+  //       }
+  //     }
+  //   });
+  // }
   FiltrarProyectos(){
     this.ProyectoAplicacion.forEach((e:any) => {
       e.Visible=true
       if(this.filterProyectoAplicacion.length>0){
         var name=e.pGeneral.toUpperCase();
         if(!name.includes(this.filterProyectoAplicacion.toUpperCase())){
+          e.Visible=false
+        }
+      }
+      if(this.EstadoPendiente==0 || this.EstadoPendiente==1){
+        if(this.EstadoPendiente!=e.estadoAtendido){
           e.Visible=false
         }
       }
