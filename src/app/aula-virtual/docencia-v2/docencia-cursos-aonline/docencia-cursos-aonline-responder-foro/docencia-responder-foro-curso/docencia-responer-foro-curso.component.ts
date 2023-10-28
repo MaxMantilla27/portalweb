@@ -95,7 +95,12 @@ export class DocenciaResponerForoCursoComponent implements OnInit, OnChanges , O
     });
 
     dialogRef.afterClosed().pipe(takeUntil(this.signal$)).subscribe(result => {
-      this.ObtenerForosPorCursoDocente()
+      if(result==true){
+        this.foroCurso=undefined;
+        this.TerminaCarga=false;
+        this.ObtenerForosPorCursoDocente()
+
+      }
     });
   }
   Regresar(){

@@ -204,32 +204,62 @@ export class AgregarTareaComponent implements OnInit, OnDestroy {
         this.saveTarea.TieneArchivo=true
       }
     }
-    this.alertaService.mensajeConfirmacionEdicionTarea().then((result) => {
-      if (result.isConfirmed) {
-        this._PEspecificoEsquemaService
-      .AgregarPEspecificoSesionTarea(this.saveTarea)
-      .pipe(takeUntil(this.signal$))
-      .subscribe({
-        next: (x) => {
-          console.log(x);
-          if (x.type === HttpEventType.UploadProgress) {
-            console.log(Math.round((100 * x.loaded) / x.total));
-          } else if (x instanceof HttpResponse) {
-            this._SnackBarServiceService.openSnackBar("La tarea se ha guardado correctamente.",
-            'x',
-            10,
-            "snackbarCrucigramaSucces")
-            this.cargando=false
-            this.dialogRef.close('guardado');
-          }
-        },
-        error: (x) => {},
+    if(this.saveTarea.Id==0){
+      this.alertaService.mensajeConfirmacionRegistroTarea().then((result) => {
+        if (result.isConfirmed) {
+          this._PEspecificoEsquemaService
+        .AgregarPEspecificoSesionTarea(this.saveTarea)
+        .pipe(takeUntil(this.signal$))
+        .subscribe({
+          next: (x) => {
+            console.log(x);
+            if (x.type === HttpEventType.UploadProgress) {
+              console.log(Math.round((100 * x.loaded) / x.total));
+            } else if (x instanceof HttpResponse) {
+              this._SnackBarServiceService.openSnackBar("La tarea se ha guardado correctamente.",
+              'x',
+              10,
+              "snackbarCrucigramaSucces")
+              this.cargando=false
+              this.dialogRef.close('guardado');
+            }
+          },
+          error: (x) => {},
+        });
+        }
+        else{
+          this.dialogRef.close();
+        }
       });
-      }
-      else{
-        this.dialogRef.close();
-      }
-    });
+    }
+    else{
+      this.alertaService.mensajeConfirmacionEdicionTarea().then((result) => {
+        if (result.isConfirmed) {
+          this._PEspecificoEsquemaService
+        .AgregarPEspecificoSesionTarea(this.saveTarea)
+        .pipe(takeUntil(this.signal$))
+        .subscribe({
+          next: (x) => {
+            console.log(x);
+            if (x.type === HttpEventType.UploadProgress) {
+              console.log(Math.round((100 * x.loaded) / x.total));
+            } else if (x instanceof HttpResponse) {
+              this._SnackBarServiceService.openSnackBar("La tarea se ha guardado correctamente.",
+              'x',
+              10,
+              "snackbarCrucigramaSucces")
+              this.cargando=false
+              this.dialogRef.close('guardado');
+            }
+          },
+          error: (x) => {},
+        });
+        }
+        else{
+          this.dialogRef.close();
+        }
+      });
+    }
 
   }
   ObtenerTipoCriteriosPorProgramaEspecifico(idTipoCriterioEvaluacion:number){

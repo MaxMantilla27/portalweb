@@ -23,7 +23,7 @@
       No se encontraron registros de foros.
     </div>
   </ng-container>
-  <app-table-docente-responder-foros *ngIf="foroCurso!=undefined "
+  <app-table-docente-responder-foros *ngIf="foroCurso!=undefined && TerminaCarga==true "
     [tableData]="foroCurso"
     [columnHeader]="columnHeader"
     [tipoContenido]="TipoContenido"

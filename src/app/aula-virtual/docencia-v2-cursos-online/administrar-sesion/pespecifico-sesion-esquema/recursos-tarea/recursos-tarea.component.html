@@ -28,7 +28,7 @@
             <div class="edidtarNaranja" (click)="OnEdit.emit(i)"></div>
             <div class="eliminarNaranja" (click)="OnDelete.emit(i)"></div>
             <div *ngIf="item.fechaPublicacion==null" class="verSinPublicar" (click)="PublicarTarea(item.id)"></div>
-            <div *ngIf="item.fechaPublicacion!=null" class="verPublicado" (click)="PublicarTarea(item.id)"></div>
+            <div *ngIf="item.fechaPublicacion!=null" class="verPublicado"></div>
           </div>
         </td>
       </tr>
