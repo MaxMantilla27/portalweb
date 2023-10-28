@@ -147,6 +147,7 @@ export class AgregarTareaComponent implements OnInit, OnDestroy {
             this.nombrefile=x.nombreArchivo
             this.saveTarea.TieneArchivo=true
           }
+          this.fecha=date
         },
         error: (x) => {},
       });

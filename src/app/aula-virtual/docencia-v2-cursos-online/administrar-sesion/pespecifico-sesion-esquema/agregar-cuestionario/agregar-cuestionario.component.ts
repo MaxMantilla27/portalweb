@@ -204,6 +204,7 @@ export class AgregarCuestionarioComponent implements OnInit, OnDestroy {
           }
           this.formularioTarea.get('CalificacionMaximaSecundaria')?.setValue(x.calificacionMaximaSecundaria)
           this.formularioTarea.get('IdCriterioEvaluacion')?.setValue(x.idCriterioEvaluacion)
+          this.fecha=date
         },
         error: (x) => {},
       });

@@ -229,7 +229,7 @@ export class CursoProyectoComponent implements OnInit,OnChanges,OnDestroy {
                 //this._SnackBarServiceService.openSnackBar(x.body.mensaje,'x',20,"snackbarCrucigramaSucces");
               }else{
                 if(x.body==false){
-                  this._SnackBarServiceService.openSnackBar("Solo tiene 3 intentos para subir su tarea.",'x',15,"snackbarCrucigramaerror");
+                  this._SnackBarServiceService.openSnackBar("Solo tiene 2 intentos para subir su proyecto.",'x',15,"snackbarCrucigramaerror");
                 }else{
                   if(x.body.estado==true){
                     this.ObtenerEvaluacionProyectoAplicacion()
@@ -261,7 +261,7 @@ export class CursoProyectoComponent implements OnInit,OnChanges,OnDestroy {
     const dialogRef = this.dialog.open(EliminarComponent, {
       width: '550px',
       data: {
-        titulo:'¿Está seguro de eliminar la tarea registrada?',
+        titulo:'¿Está seguro de eliminar el proyecto registrada?',
         sub:'¡No podrás revertir esta acción!'},
       panelClass: 'custom-dialog-eliminar',
     });
