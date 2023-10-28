@@ -58,6 +58,28 @@ export class AlertaService {
       allowOutsideClick: false,
     });
   }
+  mensajeConfirmacionRegistroCuestionario() {
+    return Swal.fire({
+      title: 'El cuestionario no será visible hasta su publicación. ¿Desea continuar?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#4C5FC0',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Aceptar',
+      allowOutsideClick: false,
+    });
+  }
+  mensajeConfirmacionRegistroTarea() {
+    return Swal.fire({
+      title: 'La tarea no será visible hasta su publicación. ¿Desea continuar?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#4C5FC0',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Aceptar',
+      allowOutsideClick: false,
+    });
+  }
   mensajeConfirmacionEdicionTarea() {
     return Swal.fire({
       title: 'La tarea no será visible hasta su publicación. ¿Desea continuar?',

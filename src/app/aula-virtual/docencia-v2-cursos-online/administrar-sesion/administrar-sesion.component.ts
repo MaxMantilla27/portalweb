@@ -70,7 +70,7 @@ export class AdministrarSesionComponent implements OnInit, OnDestroy {
               this._SessionStorageService.SessionGetValue('SesionSelect');
             if (idses != '') {
               this.sesiones.forEach((s: any) => {
-                if (s.idSesion == parseInt(idses)) {
+                if (s.orden == parseInt(idses)) {
                   this.IdSesion = s.idSesion;
                   this.sesion = s;
                 }

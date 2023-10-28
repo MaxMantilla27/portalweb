@@ -86,19 +86,15 @@ export class VistaPreviaCuestionarioComponent implements OnInit {
   }
   PublicarCuestionario(IdCuestionario:number){
     this.cargando=true
-    this.alertaService.mensajeConfirmacionCuestionario().then((result) => {
-      if (result.isConfirmed) {
-        this._PEspecificoEsquemaService.ResetearCuestionarioAlumno(IdCuestionario).pipe(takeUntil(this.signal$)).subscribe({
-          next: (x:any) => {
-          },
-          complete:()=>{
-            this.dialogRef.close();
-            this._SnackBarServiceService.openSnackBar("El cuestionario se ha publicado correctamente.",
-            'x',
-            10,
-            "snackbarCrucigramaSucces")
-          }
-        });
+    this._PEspecificoEsquemaService.ResetearCuestionarioAlumno(IdCuestionario).pipe(takeUntil(this.signal$)).subscribe({
+      next: (x:any) => {
+      },
+      complete:()=>{
+        this.dialogRef.close();
+        this._SnackBarServiceService.openSnackBar("El cuestionario se ha publicado correctamente.",
+        'x',
+        10,
+        "snackbarCrucigramaSucces")
       }
     });
   }

@@ -312,32 +312,62 @@ export class AgregarCuestionarioComponent implements OnInit, OnDestroy {
     //     return ;
     //   }
     // }
-    this.alertaService.mensajeConfirmacionEdicionCuestionario().then((result) => {
-      if (result.isConfirmed) {
-        this._PEspecificoEsquemaService
-      .AgregarPEspecificoCuestionario(this.save)
-      .pipe(takeUntil(this.signal$))
-      .subscribe({
-        next: (x) => {
-          console.log(x);
-          if (x.type === HttpEventType.UploadProgress) {
-            console.log(Math.round((100 * x.loaded) / x.total));
-          } else if (x instanceof HttpResponse) {
-            this._SnackBarServiceService.openSnackBar("El cuestionario se ha guardado correctamente.",
-            'x',
-            10,
-            "snackbarCrucigramaSucces")
-            this.cargando=false
-            this.dialogRef.close('guardado');
-          }
-        },
-        error: (x) => {},
+    if(this.save.Id==0){
+      this.alertaService.mensajeConfirmacionRegistroCuestionario().then((result) => {
+        if (result.isConfirmed) {
+          this._PEspecificoEsquemaService
+        .AgregarPEspecificoCuestionario(this.save)
+        .pipe(takeUntil(this.signal$))
+        .subscribe({
+          next: (x) => {
+            console.log(x);
+            if (x.type === HttpEventType.UploadProgress) {
+              console.log(Math.round((100 * x.loaded) / x.total));
+            } else if (x instanceof HttpResponse) {
+              this._SnackBarServiceService.openSnackBar("El cuestionario se ha guardado correctamente.",
+              'x',
+              10,
+              "snackbarCrucigramaSucces")
+              this.cargando=false
+              this.dialogRef.close('guardado');
+            }
+          },
+          error: (x) => {},
+        });
+        }
+        else{
+          this.dialogRef.close();
+        }
       });
-      }
-      else{
-        this.dialogRef.close();
-      }
-    });
+    }
+    else{
+      this.alertaService.mensajeConfirmacionEdicionCuestionario().then((result) => {
+        if (result.isConfirmed) {
+          this._PEspecificoEsquemaService
+        .AgregarPEspecificoCuestionario(this.save)
+        .pipe(takeUntil(this.signal$))
+        .subscribe({
+          next: (x) => {
+            console.log(x);
+            if (x.type === HttpEventType.UploadProgress) {
+              console.log(Math.round((100 * x.loaded) / x.total));
+            } else if (x instanceof HttpResponse) {
+              this._SnackBarServiceService.openSnackBar("El cuestionario se ha guardado correctamente.",
+              'x',
+              10,
+              "snackbarCrucigramaSucces")
+              this.cargando=false
+              this.dialogRef.close('guardado');
+            }
+          },
+          error: (x) => {},
+        });
+        }
+        else{
+          this.dialogRef.close();
+        }
+      });
+    }
 
   }
   OpenCrearPregunta() {
