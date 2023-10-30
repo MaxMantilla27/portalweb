@@ -32,7 +32,7 @@
               <div class="iconMat" [ngClass]="{'iconSesiones': json.idModalidad===1,'iconSessionesOnline': json.idModalidad!=1}"
               matTooltip="Sesiones"
               matTooltipPosition="after"></div>
-              <div *ngIf="!hide" class="titleMatr">{{json.idModalidad==2?'Recursos por sesión':'Sesiones'}}</div>
+              <div *ngIf="!hide" class="titleMatr">{{json.idModalidad==1?'Sesiones':'Recursos por sesión'}}</div>
             </div>
           </ng-template>
           <div class="pad-resp">
@@ -133,7 +133,7 @@
           </ng-template>
           <div class="pad-resp">
             <app-modulo-calificaciones-online [Capitulo]="json.NombreCapitulo" [IdMatriculaCabecera]="json.IdMatriculaCabecera"
-             [IdPGeneralHijo]="json.IdPGeneralHijo" [IdPEspecifico]="json.IdPEspecificoHijo"></app-modulo-calificaciones-online>
+             [IdPGeneralHijo]="json.IdPGeneralHijo" [IdPEspecifico]="json.IdPEspecificoHijo" [IdTipoProgramaCarrera]="IdTipoProgramaCarrera"></app-modulo-calificaciones-online>
           </div>
         </mat-tab>
         <!-- <mat-tab *ngIf="videosOnline!=undefined && videosOnline.length>0">

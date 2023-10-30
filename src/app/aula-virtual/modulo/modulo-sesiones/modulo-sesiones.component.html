@@ -21,7 +21,7 @@
         <div class="contentCapitulo">
 
           <div class="hederCapitulo row" style="margin-top: 20px;">
-            <div class="titleCapitulo col-12 col-md-12 col-lg-12">Cap铆tulo {{item.numeroCapitulo}}:
+            <div class="titleCapitulo col-12 col-md-12 col-lg-12">Cap韙ulo {{item.numeroCapitulo}}:
               {{item.nombreCapitulo}}</div>
           </div>
         </div>
@@ -31,7 +31,7 @@
         <div class="contentCapitulo">
 
           <div class="hederCapitulo row">
-            <div class="titleCapitulo col-12 col-md-7 col-lg-9">Cap铆tulo {{item.numeroCapitulo}}:
+            <div class="titleCapitulo col-12 col-md-7 col-lg-9">Cap韙ulo {{item.numeroCapitulo}}:
               {{item.nombreCapitulo}}</div>
             <div class="col-12 col-md-5 col-lg-3"
               style="display: flex;justify-content: space-between;align-items: center;">
@@ -79,7 +79,7 @@
                 <div class="col-12 col-md-12 col-lg-12" style="margin: 15px 0px;font-weight: 600;    padding-right: 46px;">
                   <div class="row">
                     <div class="col-12 col-md-8 col-lg-9">
-                      Sesi贸n {{sesiones.numeroSesion}}: {{sesiones.nombreSesion}}
+                      Sesi髇 {{sesiones.numeroSesion}}: {{sesiones.nombreSesion}}
                     </div>
                     <div class="col-12 col-md-4 col-lg-3">
                       <div style="display: flex;font-weight: 100;align-items: center;">
@@ -139,7 +139,7 @@
                         <div>
                           <ng-container *ngIf="subsesiones.porcentajeVideoVisualizado>=97">
                             <ng-container *ngIf="subsesiones.promedioCalificacion!=0">
-                              Calificaci贸n: <strong>{{subsesiones.promedioCalificacion | number:'0.0-0'}}</strong>
+                              Calificaci髇: <strong>{{subsesiones.promedioCalificacion | number:'0.0-0'}}</strong>
                             </ng-container>
                             <ng-container *ngIf="subsesiones.promedioCalificacion==0">
                               Aprobado
@@ -150,10 +150,10 @@
                           </ng-container>
                         </div>
                       </div>
-                      <!-- <div *ngIf="subsesiones.promedioCalificacion!=0" class="calificado">Calificaci贸n:
+                      <!-- <div *ngIf="subsesiones.promedioCalificacion!=0" class="calificado">Calificaci髇:
                         <strong>{{subsesiones.promedioCalificacion | number:'0.0-0'}}</strong>
                       </div>
-                      <div *ngIf="subsesiones.promedioCalificacion==0">Sin Calificaci贸n</div> -->
+                      <div *ngIf="subsesiones.promedioCalificacion==0">Sin Calificaci髇</div> -->
                     </div>
                   </div>
                 </ng-container>
@@ -170,7 +170,7 @@
                       <div style="width: calc( 100% - 35px);">
                         <div class="tituloSesion"
                           (click)="EventoInteraccion(sesiones.nombreSesion);IrVideo('1/'+item.numeroCapitulo+'/'+sesiones.numeroSesion,sesiones.habilitado)">
-                          Sesi贸n {{sesiones.numeroSesion}}: {{sesiones.nombreSesion}}</div>
+                          Sesi髇 {{sesiones.numeroSesion}}: {{sesiones.nombreSesion}}</div>
 
                         <div class="row" style=" align-items: center;">
                           <div class="col-12 col-md-4 col-lg-2"
@@ -203,7 +203,7 @@
                         <div>
                           <ng-container *ngIf="sesiones.porcentajeVideoVisualizado>=98">
                             <ng-container *ngIf="sesiones.promedioCalificacion!=0">
-                              Calificaci贸n: <strong>{{sesiones.promedioCalificacion | number:'0.0-0'}}</strong>
+                              Calificaci髇: <strong>{{sesiones.promedioCalificacion | number:'0.0-0'}}</strong>
                             </ng-container>
                             <ng-container *ngIf="sesiones.promedioCalificacion==0">
                               Aprobado
@@ -214,10 +214,10 @@
                           </ng-container>
                         </div>
                       </div>
-                      <!-- <div *ngIf="sesiones.promedioCalificacion!=0" class="calificado">Calificaci贸n:
+                      <!-- <div *ngIf="sesiones.promedioCalificacion!=0" class="calificado">Calificaci髇:
                         <strong>{{sesiones.promedioCalificacion | number:'0.0-0'}}</strong>
                       </div>
-                      <div *ngIf="sesiones.promedioCalificacion==0">Sin Calificaci贸n</div> -->
+                      <div *ngIf="sesiones.promedioCalificacion==0">Sin Calificaci髇</div> -->
                     </div>
                   </div>
                 </ng-container>
@@ -242,7 +242,7 @@
             <div class="TareaYEncuesta"
               (click)="EventoInteraccion(TareaC.tarea);IrVideo('4/'+TareaC.numeroCapitulo+'/'+TareaC.id,TareaC.habilitado)">
               <div class="inhover">
-                <img src="../../../../assets/icons/tareas-23.svg" alt=""> Revisi贸n de: {{TareaC.tarea}} <br>
+                <img src="../../../../assets/icons/tareas-23.svg" alt=""> Revisi髇 de: {{TareaC.tarea}} <br>
                 <div style="color:#00c356" *ngIf="TareaC.calificado">Calificado</div>
                 <div style="color: #da121a;" *ngIf="!TareaC.calificado">Por calificar</div>
               </div>
@@ -312,3 +312,4 @@
 <ng-container *ngIf="idModalidad!=1">
   <app-modulo-sesiones-online  [IdPespecifico]="IdPespecifico"  [videos]="videos" [IdMatriculaCabecera]="IdMatriculaCabecera" [Capitulo]="Capitulo"></app-modulo-sesiones-online>
 </ng-container>
+  <app-modulo-sesiones-online  [IdPespecifico]="IdPespecifico"  [videos]="videos" [IdMatriculaCabecera]="IdMatriculaCabecera"></app-modulo-sesiones-online>

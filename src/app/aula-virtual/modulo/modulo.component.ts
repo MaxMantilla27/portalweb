@@ -54,16 +54,27 @@ export class ModuloComponent implements OnInit,OnDestroy {
     idModalidad:1
   }
   public estructuraCapitulo:any;
+  public IdTipoProgramaCarrera=0;
   ngOnInit(): void {
 
     this._ActivatedRoute.params.pipe(takeUntil(this.signal$)).subscribe({
       next: (x) => {
         this.idMatricula = parseInt(x['IdMatricula']);
         this.idPEspecificoHijo=x['idPEspecificoHijo'];
-        this.ObtenerListadoProgramaContenido();
-        this.listaRegistroVideoSesionProgramaSincronico();
+        this.ObtenerIdTipoProgramaCarrera();
       },
     });
+  }
+  ObtenerIdTipoProgramaCarrera(){
+    this._ProgramaContenidoService.ObtenerIdTipoProgramaCarreraIdPEspecifico(this.idPEspecificoHijo).pipe(takeUntil(this.signal$)).subscribe({
+      next:x=>{
+        this.IdTipoProgramaCarrera=x
+      },
+      complete:()=>{
+        this.ObtenerListadoProgramaContenido();
+        this.listaRegistroVideoSesionProgramaSincronico();
+      }
+    })
   }
   listaRegistroVideoSesionProgramaSincronico(){
     this._ProgramaContenidoService.listaRegistroVideoSesionProgramaSincronico(this.idPEspecificoHijo).pipe(takeUntil(this.signal$)).subscribe({
@@ -96,14 +107,17 @@ export class ModuloComponent implements OnInit,OnDestroy {
     }
   }
   ObtenerListadoProgramaContenido() {
-
-    this._ProgramaContenidoService
-      .ObtenerListadoProgramaContenido(this.idMatricula)
+    console.log(this.IdTipoProgramaCarrera)
+    if(this.IdTipoProgramaCarrera==2){
+      this._ProgramaContenidoService
+      .ObtenerListadoProgramaContenidoCarrerasProfesionales(this.idMatricula)
       .pipe(takeUntil(this.signal$))
       .subscribe({
         next: (x) => {
           console.log(x)
           x.listaCursoMatriculado.forEach((program:any) => {
+            console.log(program)
+            console.log(this.idPEspecificoHijo)
             if(this.idPEspecificoHijo==program.idPEspecificoHijo){
               this.json = {
                 AccesoPrueba: false,
@@ -137,6 +151,51 @@ export class ModuloComponent implements OnInit,OnDestroy {
           });
         },
       });
+    }
+    else{
+      this._ProgramaContenidoService
+      .ObtenerListadoProgramaContenido(this.idMatricula)
+      .pipe(takeUntil(this.signal$))
+      .subscribe({
+        next: (x) => {
+          console.log(x)
+          x.listaCursoMatriculado.forEach((program:any) => {
+            console.log(this.idPEspecificoHijo)
+            if(this.idPEspecificoHijo==program.idPEspecificoHijo){
+              this.json = {
+                AccesoPrueba: false,
+                IdMatriculaCabecera: x.idMatriculaCabecera,
+                IdPEspecificoPadre: x.idPEspecifico,
+                IdPGeneralPadre: x.idPGeneral,
+                IdPEspecificoHijo: program.idPEspecificoHijo,
+                IdPGeneralHijo: program.idPGeneralHijo,
+                NombreCapitulo:program.programaGeneralHijo,
+                NombrePrograma:x.programaGeneral,
+                idModalidad:program.idModalidadHijo
+              };
+              console.log(this.json)
+              this.migaPan.push({
+                titulo:this.json.NombrePrograma,
+                urlWeb:'/AulaVirtual/MisCursos/'+this.json.IdMatriculaCabecera
+              },
+              {
+                titulo:this.json.NombreCapitulo,
+                urlWeb:'/AulaVirtual/MisCursos/'+this.json.IdMatriculaCabecera+'/'+this.idPEspecificoHijo
+              })
+              this._HelperService.enviarMsjChat({
+                idMatriculaCabecera:x.idMatriculaCabecera,
+                idprogramageneralalumno:x.idPGeneral,
+                idcoordinadora:x.idAsesor,
+                idcentrocosto:x.idCentroCosto,
+                idcursoprogramageneralalumno:program.idPGeneralHijo
+              });
+              this.ObtenerEstructuraEspecificaCurso();
+            }
+          });
+        },
+      });
+    }
+
   }
   tabChanged(tabChangeEvent: MatTabChangeEvent): void {
     console.log('tabChangeEvent => ', tabChangeEvent);

@@ -27,7 +27,7 @@ export class DatosPerfilService {
   }
   public RegistroProgramaMatriculado():Observable<any>{
     if(this.isBrowser){
-      return this.http.get<any>(this.urlBase+'/RegistroProgramaMatriculado');
+      return this.http.get<any>(this.urlBase+'/RegistroProgramaMatriculadoPorAlumno');
     }else{
       return EMPTY;
     }
@@ -115,6 +115,13 @@ export class DatosPerfilService {
   public ObtenerSesionesOnlineWebinarPorIdPespecifico(IdPespecifico:number,IdMatriculaCabcera:number):Observable<any>{
     if(this.isBrowser){
       return this.http.get<any>(this.urlBase+'/ObtenerSesionesOnlineWebinarPorIdPespecifico?IdPespecifico='+IdPespecifico+'&IdMatriculaCabcera='+IdMatriculaCabcera);
+    }else{
+      return EMPTY;
+    }
+  }
+  public ListaCursoWebexMatriculadoCarrerasProfesionales(IdMatriculaCabecera:number):Observable<any>{
+    if(this.isBrowser){
+      return this.http.get<any>(this.urlBase+'/ListaCursoWebexMatriculadoCarrerasProfesionales?IdMatriculaCabecera='+IdMatriculaCabecera);
     }else{
       return EMPTY;
     }

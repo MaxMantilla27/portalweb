@@ -82,7 +82,7 @@ export class CursoComponent implements OnInit,OnDestroy {
     idPGeneral: 0,
     listaCursoMatriculado: [],
     modalidad: '',
-    programaGeneral: ''
+    programaGeneral: '',
   };
   public json:ParametrosEstructuraEspecificaDTO={
 
@@ -112,6 +112,7 @@ export class CursoComponent implements OnInit,OnDestroy {
   public videosOnline:Array<any>=[]
   public asistencias:any
   public IdModalidadPrincipal=0
+  public IdTipoProgramaCarrera=0
   public MostrarMensajeRecuerda=false;
   public contenidotarea=
   '<iframe src="https://player.vimeo.com/video/737713694?h=ce19c25ba1" width="100%" height="564" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>'
@@ -147,12 +148,23 @@ export class CursoComponent implements OnInit,OnDestroy {
   }
 
   ObtenerAsistenciasAlumnoOnline(){
-    this._AsistenciaService.ObtenerAsistenciasAlumnoOnline(this.idMatricula, this.programEstructura.idPEspecifico).pipe(takeUntil(this.signal$)).subscribe({
-      next:x=>{
-        console.log(x)
-        this.asistencias=x
-      }
-    })
+    console.log(this.programEstructura.listaCursoMatriculado)
+    if(this.IdTipoProgramaCarrera==2){
+      this._AsistenciaService.ObtenerAsistenciasAlumnoOnlineCarrerasProfesionales(this.idMatricula, this.programEstructura.idPEspecifico).pipe(takeUntil(this.signal$)).subscribe({
+        next:x=>{
+          console.log(x)
+          this.asistencias=x
+        }
+      })
+    }
+    else{
+      this._AsistenciaService.ObtenerAsistenciasAlumnoOnline(this.idMatricula, this.programEstructura.idPEspecifico).pipe(takeUntil(this.signal$)).subscribe({
+        next:x=>{
+          console.log(x)
+          this.asistencias=x
+        }
+      })
+    }
   }
   ObtenerDatosCertificadoIrcaEnvio(){
     this._CertificadoService.ObtenerDatosCertificadoIrcaEnvio(this.idMatricula).pipe(takeUntil(this.signal$)).subscribe({
@@ -393,9 +405,12 @@ export class CursoComponent implements OnInit,OnDestroy {
           idcoordinadora:x.idAsesor,
           idcentrocosto:x.idCentroCosto
         });
+        x.claseWebexActivo=true;
         this.curso=x
+        this.IdTipoProgramaCarrera=x.idTipoProgramaCarrera
 
         this.ObtenerListadoProgramaContenido();
+        this.CongelarCursoMatriculaCarrera()
         // if(this.curso!=undefined ){
         //   if(valorLoscalS>1){
         //     if(this.curso.proyectoAplicacion){
@@ -435,7 +450,86 @@ export class CursoComponent implements OnInit,OnDestroy {
       panelClass:'dialog-charge',
       disableClose:true
     });
-    this._ProgramaContenidoService
+    if(this.IdTipoProgramaCarrera==2){
+      this._ProgramaContenidoService
+      .ObtenerListadoProgramaContenidoCarrerasProfesionales(this.idMatricula)
+      .pipe(takeUntil(this.signal$))
+      .subscribe({
+        next: (x) => {
+          this.programEstructura = x;
+          this.IdModalidadPrincipal=x.idModalidad
+          console.log(this.programEstructura)
+          if(this.programEstructura.listaCursoMatriculado!=null && this.programEstructura.listaCursoMatriculado.length>1){
+            this.EsCurso=false
+            this.TitleMenu="MENU DEL CURSO"
+            this.programEstructura.listaCursoMatriculado.sort(function (a:any, b:any) {
+              return a.orden - b.orden;
+            })
+            this.migaPan.push(
+              {
+                titulo: this.programEstructura.programaGeneral,
+                urlWeb: '/AulaVirtual/MisCursos/'+this.idMatricula,
+              },)
+
+            this.programEstructura.listaCursoMatriculado.forEach((program) => {
+              var params: ParametrosEstructuraEspecificaDTO = {
+                AccesoPrueba: false,
+                IdMatriculaCabecera: this.programEstructura.idMatriculaCabecera,
+                IdPEspecificoPadre: this.programEstructura.idPEspecifico,
+                IdPGeneralPadre: this.programEstructura.idPGeneral,
+                IdPEspecificoHijo: program.idPEspecificoHijo,
+                IdPGeneralHijo: program.idPGeneralHijo,
+                NombreCapitulo:program.programaGeneralHijo,
+                NombrePrograma:this.programEstructura.programaGeneral,
+                idModalidad:this.programEstructura.idModalidad
+              };
+              console.log(params)
+              program.params = btoa(encodeURIComponent(JSON.stringify(params)));
+            });
+            this.ObtenerAsistenciasAlumnoOnline();
+          }else{
+            this.ProgresoProgramaCursosAulaVirtualAonlinePorEstadoVideo()
+            this.EsCurso=true
+            this.json = {
+              AccesoPrueba: false,
+              IdMatriculaCabecera: x.idMatriculaCabecera,
+              IdPEspecificoPadre: x.idPEspecifico,
+              IdPGeneralPadre: x.idPGeneral,
+              IdPEspecificoHijo: this.programEstructura.listaCursoMatriculado==null?0:this.programEstructura.listaCursoMatriculado[0].idPEspecificoHijo,
+              IdPGeneralHijo: this.programEstructura.listaCursoMatriculado==null?0:this.programEstructura.listaCursoMatriculado[0].idPGeneralHijo,
+              NombreCapitulo:this.programEstructura.listaCursoMatriculado==null?'':this.programEstructura.listaCursoMatriculado[0].programaGeneralHijo,
+              NombrePrograma:x.programaGeneral,
+              idModalidad:this.programEstructura.listaCursoMatriculado==null?0:this.programEstructura.listaCursoMatriculado[0].idModalidadHijo
+            };
+            console.log(this.json)
+            this.migaPan.push(
+            // {
+            //   titulo:this.json.NombrePrograma,
+            //   urlWeb:'/AulaVirtual/MisCursos/'+this.json.IdMatriculaCabecera
+            // },
+            {
+              titulo:this.json.NombreCapitulo,
+              urlWeb:'/AulaVirtual/MisCursos/'+this.json.IdMatriculaCabecera
+            })
+            this._HelperService.enviarMsjChat({
+              idMatriculaCabecera:x.idMatriculaCabecera,
+              idprogramageneralalumno:x.idPGeneral,
+              idcoordinadora:x.idAsesor,
+              idcentrocosto:x.idCentroCosto,
+              idcursoprogramageneralalumno:this.programEstructura.listaCursoMatriculado==null?0:this.programEstructura.listaCursoMatriculado[0].idPGeneralHijo
+            });
+            this.ObtenerEstructuraEspecificaCurso();
+            this.listaRegistroVideoSesionProgramaSincronico()
+          }
+          setTimeout(() => {
+            this.Redirect();
+          }, 1000);
+
+        },
+      });
+    }
+    else{
+      this._ProgramaContenidoService
       .ObtenerListadoProgramaContenido(this.idMatricula)
       .pipe(takeUntil(this.signal$))
       .subscribe({
@@ -514,6 +608,7 @@ export class CursoComponent implements OnInit,OnDestroy {
 
         },
       });
+    }
   }
   ObtenerEstructuraEspecificaCurso(){
     if(this.json.idModalidad==1){
@@ -560,5 +655,12 @@ export class CursoComponent implements OnInit,OnDestroy {
   redireccionarBiblioteca(){
     window.open("https://www.oreilly.com/member/login/",'_blank');
 
+  }
+  CongelarCursoMatriculaCarrera(){
+    this._ProgramaContenidoService.CongelarCursoCarrerasProfesionales(this.idMatricula).pipe(takeUntil(this.signal$)).subscribe({
+      next:x=>{
+        console.log('verificado')
+      }
+    })
   }
 }

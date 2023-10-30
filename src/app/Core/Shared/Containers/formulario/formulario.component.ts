@@ -466,7 +466,6 @@ export class FormularioComponent implements OnChanges, OnInit,OnDestroy {
   ChangeInpiut(i: number, val: string){
     var campo = (<FormArray>this.userForm.get('Fields')).controls[i].get(val)?.value.toString();
     var s =campo.split(' ')
-    console.log(s)
     if(this.PrefPaises()!=null){
       if(s[0]!=this.PrefPaises()){
         if(s[0].length>this.PrefPaises().length){

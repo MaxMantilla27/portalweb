@@ -23,8 +23,9 @@
       <!-- <app-video-ayuda></app-video-ayuda> -->
     </div>
     <div class="col-12 col-md-4 col-lg-4" *ngFor="let item of matriculas" style="margin-bottom: 20px;">
+      <!-- (click)="guardarTipoProgramaCarrera(item.idTipoProgramaCarreraPEspecifico)" -->
       <app-card-matriculas [matricula]="item" [cardContent]="{ Img: 'https://img.bsginstitute.com/repositorioweb/img/programas/'+item.pw_ImgPortada,
-      Title: item.programaGeneral,ImgAlt: '',Tipo:item.tipoModalidad,Url: '/AulaVirtual/MisCursos/'+item.idMatriculaCabecera}">
+      Title: item.programaGeneral,ImgAlt: '',Tipo:item.tipoModalidad,Url: '/AulaVirtual/MisCursos/'+item.idMatriculaCabecera}" >
 
         <ng-container linkIcons>
           <button class="buttonIconCurso" (click)="EventoInteraccion('Indicaciones',item.programaGeneral);saveIndex(0)" [routerLink]="'/AulaVirtual/MisCursos/'+item.idMatriculaCabecera"
