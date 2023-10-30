@@ -16,14 +16,14 @@ overflow: auto;">
           <ng-template #hora>
             <ng-container  *ngIf="(tipoContenido[tableData][0] | lowercase )=='hora';else fechahora">
               <div style="width: 100%;text-align: center;">
-                {{element[tableData] | date: 'hh:ss' }}
+                {{element[tableData] | date: 'hh:mm' }}
               </div>
             </ng-container>
 
             <ng-template #fechahora>
               <ng-container  *ngIf="(tipoContenido[tableData][0] | lowercase )=='fechahora';else url">
                 <div style="width: 100%;text-align: center;">
-                  {{element[tableData] | date: 'yyyy/MM/dd:hh:ss' }}
+                  {{element[tableData] | date: 'yyyy/MM/dd:hh:mm' }}
                 </div>
               </ng-container>
               <ng-template #url>

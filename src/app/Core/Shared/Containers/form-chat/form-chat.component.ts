@@ -117,10 +117,11 @@ export class FormChatComponent implements OnInit,OnChanges {
       var IdCategoriaDato=this._SessionStorageService.SessionGetValueCokies("idCategoria");
       var idcampania=this._SessionStorageService.SessionGetValueCokies("idCampania");
       this.DatosEnvioFormulario.IdCategoriaDato=IdCategoriaDato==''?0:parseInt(IdCategoriaDato);
-      if(IdPespecifico==''){
-        this.DatosEnvioFormulario.IdPespecifico=this.IdPespecificoPrograma
-      }else{
+
+      if(this.IdPespecificoPrograma==0 || this.IdPespecificoPrograma==null || this.IdPespecificoPrograma==undefined){
         this.DatosEnvioFormulario.IdPespecifico=parseInt(IdPespecifico)
+      }else{
+        this.DatosEnvioFormulario.IdPespecifico=this.IdPespecificoPrograma
       };
       this.DatosEnvioFormulario.IdCampania=parseInt(idcampania)
       this._ChatEnLinea.ValidarCrearOportunidadChat(this.DatosEnvioFormulario).pipe(takeUntil(this.signal$)).subscribe({
@@ -146,7 +147,6 @@ export class FormChatComponent implements OnInit,OnChanges {
           this._SessionStorageService.SessionSetValue('DatosFormulario',JSON.stringify(this.datos));
           this.CompleteLocalStorage=true;
           if(this.isBrowser){
-            //fbq('track', 'CompleteRegistration');
             fbq('trackSingle','269257245868695', 'Lead', {}, {eventID:x.respuesta.id});
             this._FacebookPixelService.SendLoad(x.respuesta.id,x.respuesta.correoEnc,x.respuesta.telEnc,x.respuesta.userAgent,x.respuesta.userIp).subscribe({
               next:(x)=>{

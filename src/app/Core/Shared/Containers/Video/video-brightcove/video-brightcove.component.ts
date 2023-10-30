@@ -150,6 +150,7 @@ export class VideoBrightcoveComponent implements OnInit, OnChanges,AfterViewInit
   public timeo2:any
   public GetTIme:any;
   public TiempoRestante=3000;
+  public ValidandoPreguntas=false
   player!: videojs.Player;
   options:{
     fluid: boolean,
@@ -300,6 +301,8 @@ export class VideoBrightcoveComponent implements OnInit, OnChanges,AfterViewInit
       let i=0
       this.preguntas[this.preguntaActual].respuestaGrupoPreguntaInteractivaPrograma.forEach((res:any) => {
         console.log(res.check);
+        res.checkAnteriorError=false
+        res.checkAnteriorCorrecto=false
         if(res.check==true){
           this.validatePregunta.IdRespuesta.push(res.idRespuesta)
           i++;
@@ -368,34 +371,55 @@ export class VideoBrightcoveComponent implements OnInit, OnChanges,AfterViewInit
   }
   ValidarPreguntaInteractiva(){
     this.valPregunta=true;
+    this.ValidandoPreguntas=true
     this._PreguntaInteractivaService.ValidarPreguntaInteractiva(this.validatePregunta).pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
         console.log(x)
+        console.log(this.preguntas[this.preguntaActual])
         this.preguntas[this.preguntaActual].idRespuesta=x.idRespuesta
         if(x.respuestaCorrecta){
           this._SnackBarServiceService.openSnackBar(x.feedbackPositivo,'x',15,"snackbarCrucigramaSucces");
           this.preguntas[this.preguntaActual].valid=true
+
+          this.preguntas[this.preguntaActual].respuestaGrupoPreguntaInteractivaPrograma.forEach((res:any) => {
+            res.checkAnteriorCorrecto=false
+            if(res.check==true){
+              res.checkAnteriorCorrecto=true
+            }
+          });
         }else{
           this.preguntas[this.preguntaActual].respuestaGrupoPreguntaInteractivaPrograma.forEach((res:any) => {
-            res.check=false;
+            res.checkAnteriorError=false
+            if(res.check==true){
+              res.checkAnteriorError=true
+            }
           });
           this._SnackBarServiceService.openSnackBar(x.feedbackNegativo,'x',15,"snackbarCrucigramaerror");
+          if(this.preguntas[this.preguntaActual].numeroRespuestas>1){
+            this._SnackBarServiceService.openSnackBar('Seleccione todas las respuestas correctas','x',15,"snackbarCrucigramaerror");
+          }
           if(x.numeroIntento>=x.numeroMaximoIntento){
             this.feedCorrecto=x.feedbackPositivo;
             this.preguntas[this.preguntaActual].valid=true
           }else{
+            this.preguntas[this.preguntaActual].respuestaGrupoPreguntaInteractivaPrograma.forEach((res:any) => {
+              res.check=false;
+            });
             this.valPregunta=false;
           }
         }
         console.log(this.preguntas)
+        this.ValidandoPreguntas=false
 
       },
       error:e=>{
         this.valPregunta=false;
+        this.ValidandoPreguntas=false
         console.log(e)
       },
       complete:()=>{
         this.valorRespuesta=''
+        this.ValidandoPreguntas=false
       }
     })
   }
@@ -509,8 +533,7 @@ export class VideoBrightcoveComponent implements OnInit, OnChanges,AfterViewInit
       }
       j++;
     });
-
-    //this.RegistrarUltimaVisualizacionVideo()
+    //this.RegistrarUltimaVisualizacionVideoWebApi()
   }
   setCurrentTime(data: any) {
     var tiempo= data.target.currentTime;
@@ -526,7 +549,7 @@ export class VideoBrightcoveComponent implements OnInit, OnChanges,AfterViewInit
       }
       if(parseInt(tiempo)%10==0){
         //console.log(parseInt(tiempo))
-        this.RegistrarUltimaVisualizacionVideo()
+        this.RegistrarUltimaVisualizacionVideoWebApi()
       }
       if (parseInt(tiempo) == x.tiempo) {
         this.diapositivaactual=i
@@ -541,7 +564,7 @@ export class VideoBrightcoveComponent implements OnInit, OnChanges,AfterViewInit
           this.tipo = x.tipoVista
         }
         this.grupo=x.urlEvaluacion
-        this.RegistrarUltimaVisualizacionVideo()
+        this.RegistrarUltimaVisualizacionVideoWebApi()
         if(this.tipo==4){
           this.pauseVideo();
           this.ListaRegistroPreguntaInteractivaPorGrupo();
@@ -699,7 +722,7 @@ export class VideoBrightcoveComponent implements OnInit, OnChanges,AfterViewInit
       }
     }
   }
-  RegistrarUltimaVisualizacionVideo(){
+  RegistrarUltimaVisualizacionVideoWebApi(){
 
     if(Math.floor(this.tiempoactualvideo)>this.tiempovideoinicioInicial && this.guardar==false){
       console.log(Math.floor(this.tiempoactualvideo)+'-'+this.tiempovideoinicioInicial)
@@ -714,7 +737,7 @@ export class VideoBrightcoveComponent implements OnInit, OnChanges,AfterViewInit
       this.send.id=this.videoData.id==null?0:this.videoData.id
       this.send.tiempoVisualizacion=Math.floor(this.tiempoactualvideo)
       console.log(this.send)
-      this._VideoSesionService.RegistrarUltimaVisualizacionVideo(this.send).pipe(takeUntil(this.signal$)).subscribe({
+      this._VideoSesionService.RegistrarUltimaVisualizacionVideoWebApi(this.send).pipe(takeUntil(this.signal$)).subscribe({
         next:x=>{
           this.tiempovideoinicioInicial=this.send.tiempoVisualizacion
           this.guardar=false
@@ -729,7 +752,7 @@ export class VideoBrightcoveComponent implements OnInit, OnChanges,AfterViewInit
 
   }
   OnFinish(){
-    this.RegistrarUltimaVisualizacionVideo()
+    this.RegistrarUltimaVisualizacionVideoWebApi()
     this.finish=true;
     this.tipo=2
     console.log(this.nextChapter)

@@ -53,6 +53,7 @@ export class ConfirmacionPagoMercadoPagoChileComponent implements OnInit {
           this.json.RequiereDatosTarjeta=r=='false'?false:true;
           //this._SessionStorageService.SessionDeleteValue(this.json.IdentificadorTransaccion);
           this.ObtenerPreProcesoPagoCuotaAlumno()
+          this.iniciarJSMercadoPago()
         }
       },
     });
@@ -69,7 +70,6 @@ export class ConfirmacionPagoMercadoPagoChileComponent implements OnInit {
         this.resultPreProcesoMP.listaCuota.forEach((l:any) => {
           this.resultPreProcesoMP.total+=l.cuotaTotal
         });
-        this.iniciarJSMercadoPago()
         setTimeout(()=>{
           this.renderCardPaymentBrick(window)
         },500)
@@ -146,7 +146,7 @@ export class ConfirmacionPagoMercadoPagoChileComponent implements OnInit {
           cardFormData.identificadorTransaccion = this.json.IdentificadorTransaccion
           cardFormData.description = this.resultPreProcesoMP.nombrePrograma
           return new Promise<void>((resolve, reject) => {
-            fetch('https://api-portalweb-prototipo.bsginstitute.com/api/FormaPago/ProcesarPagoCuotaAlumnoConfirmarMercadoPago', {
+            fetch('https://api-portalweb.bsginstitute.com/api/FormaPago/ProcesarPagoCuotaAlumnoConfirmarMercadoPago', {
               method: 'POST',
               headers: {
                 'Content-Type': 'application/json',
@@ -155,13 +155,13 @@ export class ConfirmacionPagoMercadoPagoChileComponent implements OnInit {
             })
               .then(() => {
                 this.dialogRefLoader.close()
-                window.location.href = 'https://prototipo.bsginstitute.com/AulaVirtual/PagoExitosoMercadoPago/'+this.json.IdentificadorTransaccion
+                window.location.href = 'https://bsginstitute.com/AulaVirtual/PagoExitosoMercadoPago/'+this.json.IdentificadorTransaccion
                 // Recibir el resultado del pago
                 resolve();
               })
               .catch(() => {
                 this.dialogRefLoader.close()
-                window.location.href = 'https://prototipo.bsginstitute.com/AulaVirtual/PagoExitosoMercadoPago/'+this.json.IdentificadorTransaccion
+                window.location.href = 'https://bsginstitute.com/AulaVirtual/PagoExitosoMercadoPago/'+this.json.IdentificadorTransaccion
 
                 // Tratar respuesta de error al intentar crear el pago
                 reject();
@@ -170,12 +170,7 @@ export class ConfirmacionPagoMercadoPagoChileComponent implements OnInit {
         },
         onError: (error: any) => {
           // Callback llamado para todos los casos de error de Brick
-          this._SnackBarServiceService.openSnackBar(
-            'Ocurrio un error al cargar MercadoPago, refresque la pagina.',
-            'x',
-            5,
-            'snackbarCrucigramaerror'
-          );
+          
           this.dialogRefLoader.close()
         },
       },

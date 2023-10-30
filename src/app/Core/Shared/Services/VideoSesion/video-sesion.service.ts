@@ -33,6 +33,13 @@ export class VideoSesionService {
       return EMPTY;
     }
   }
+  public RegistrarUltimaVisualizacionVideoWebApi(Json:RegistroVideoUltimaVisualizacionDTO):Observable<any>{
+    if(this.isBrowser){
+      return this.http.post<any>(this.urlBase+'/RegistrarUltimaVisualizacionVideoWebApi',Json);
+    }else{
+      return EMPTY;
+    }
+  }
   public ObtenerVideoProgramaCapacitacionSesionPrueba(Json:ParametrosVideoSesionDTO):Observable<any>{
     if(this.isBrowser){
       return this.http.post<any>(this.urlBase+'/ObtenerVideoProgramaCapacitacionSesionPrueba',Json);

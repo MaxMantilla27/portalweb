@@ -32,7 +32,6 @@ import { LandingPageComponent } from './landing-page/landing-page/landing-page.c
 import { LandingPageInterceptorComponent } from './landing-page/landing-page/landing-page-interceptor/landing-page-interceptor/landing-page-interceptor.component';
 import { PageErrorComponent } from './page-error/page-error/page-error.component';
 import { ChatEnLineaComponent } from './chat-en-linea/chat-en-linea.component';
-import { ChatPruebaComponent } from './chat-prueba/chat-prueba.component';
 import { FormularioPublicidadComponent } from './FormularioPublicidad/formulario-publicidad.component';
 import { FormularioPublicidadInterceptorComponent } from './FormularioPublicidad/FormularioPublicidadInterceptor/formulario-publicidad-interceptor.component';
 import { NotificacionWebinarComponent } from './notificacion-webinar/notificacion-webinar.component';
@@ -93,7 +92,6 @@ import { CompraExitosaOpenPayColombiaComponent } from './compra-exitosa-open-pay
     LandingPageInterceptorComponent,
     PageErrorComponent,
     ChatEnLineaComponent,
-    ChatPruebaComponent,
     FormularioPublicidadComponent,
     FormularioPublicidadInterceptorComponent,
     NotificacionWebinarComponent,

@@ -48,6 +48,56 @@
                     Escríbenos a nuestro chat de soporte técnico para poder ayudarlo.
 
                   </ng-container>
+                  <ng-container *ngIf="reultadoPago.status  =='rejected' && reultadoPago.statusDetail=='cc_rejected_bad_filled_card_number'">
+                    No hemos podido procesar su pago, debido a un error con el número de tarjeta.
+                    <br>
+                    Escríbenos a nuestro chat de soporte técnico para poder ayudarlo.
+
+                  </ng-container>
+                  <ng-container *ngIf="reultadoPago.status  =='rejected' && reultadoPago.statusDetail=='cc_rejected_blacklist'">
+                    No hemos podido procesar su pago, debido a un error con la tarjeta ingrasada, consultar con su banco el motivo del rechazo.
+                    <br>
+                    Escríbenos a nuestro chat de soporte técnico para poder ayudarlo.
+
+                  </ng-container>
+                  <ng-container *ngIf="reultadoPago.status  =='rejected' && reultadoPago.statusDetail=='cc_rejected_call_for_authorize'">
+                    No hemos podido procesar su pago, debido a que la transaccion no ha sido autorizada, consultar con su banco el motivo del rechazo.
+                    <br>
+                    Escríbenos a nuestro chat de soporte técnico para poder ayudarlo.
+
+                  </ng-container>
+                  <ng-container *ngIf="reultadoPago.status  =='rejected' && reultadoPago.statusDetail=='cc_rejected_card_disabled'">
+                    No hemos podido procesar su pago, debido a que la tarjeta no esta activa, consultar con su banco el motivo del rechazo.
+                    <br>
+                    Escríbenos a nuestro chat de soporte técnico para poder ayudarlo.
+
+                  </ng-container>
+                  <ng-container *ngIf="reultadoPago.status  =='rejected' && reultadoPago.statusDetail=='cc_rejected_card_error'">
+                    No hemos podido procesar su pago, consultar con su banco el motivo del rechazo.
+                    <br>
+                    Escríbenos a nuestro chat de soporte técnico para poder ayudarlo.
+
+                  </ng-container>
+                  <ng-container *ngIf="reultadoPago.status  =='rejected' && reultadoPago.statusDetail=='cc_rejected_duplicated_payment'">
+                    No hemos podido procesar su pago, debido a que ya hiciste un pago por ese valor. Si necesitas volver a pagar usa otra tarjeta u otro medio de pago.
+                    <br>
+                    Escríbenos a nuestro chat de soporte técnico para poder ayudarlo.
+                  </ng-container>
+                  <ng-container *ngIf="reultadoPago.status  =='rejected' && reultadoPago.statusDetail=='cc_rejected_high_risk'">
+                    No hemos podido procesar su pago, debido a que la tarjeta ha sido rechazada, consultar con su banco el motivo del rechazo.
+                    <br>
+                    Escríbenos a nuestro chat de soporte técnico para poder ayudarlo.
+                  </ng-container>
+                  <ng-container *ngIf="reultadoPago.status  =='rejected' && reultadoPago.statusDetail=='cc_rejected_invalid_installments'">
+                    No hemos podido procesar su pago, debido a que la tarjeta ha sido rechazada, consultar con su banco el motivo del rechazo.
+                    <br>
+                    Escríbenos a nuestro chat de soporte técnico para poder ayudarlo.
+                  </ng-container>
+                  <ng-container *ngIf="reultadoPago.status  =='rejected' && reultadoPago.statusDetail=='cc_rejected_max_attempts'">
+                    No hemos podido procesar su pago, debido a que llegaste al límite de intentos permitidos. Elige otra tarjeta.
+                    <br>
+                    Escríbenos a nuestro chat de soporte técnico para poder ayudarlo.
+                  </ng-container>
                 <div class="textC">Si tiene alguna consulta adicional, escriba un correo a: <a
                     href="mailto:matriculas@bsginstitute.com">matriculas@bsginstitute.com</a></div>
             </div>

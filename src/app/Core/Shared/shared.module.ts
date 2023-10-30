@@ -129,6 +129,7 @@ import { SocialAuthService } from 'angularx-social-login';
 import { TableV2Component } from './Containers/table-v2/table-v2.component';
 import { TablePortalComponent } from './Containers/table-portal/table-portal.component';
 import { MatChipsModule } from '@angular/material/chips';
+import { FacebookPixelService } from './Services/FacebookPixel/facebook-pixel.service';
 import { PespecificoSesionTemaService } from './Services/PespecificoSesionTema/pespecifico-sesion-tema.service';
 import { PEspecificoEsquemaService } from './Services/PEspecificoEsquema/pespecifico-esquema.service';
 import { PEspecificoSesionRecursoConectividadService } from './Services/PEspecificoSesionRecursoConectividad/pespecifico-sesion-recurso-conectividad.service';
@@ -237,6 +238,7 @@ import { ImagenModalComponent } from './Containers/Dialog/imagen-modal/imagen-mo
     ScrollTopComponent,
     FormularioRojoComponent,
     FacebookLoginComponent,
+
     TableV2Component,
     TablePortalComponent,
     ChangeWordComponent,
@@ -384,6 +386,8 @@ import { ImagenModalComponent } from './Containers/Dialog/imagen-modal/imagen-mo
     IntegraEsquemaEvaluacionService,
     SeoService,
     CertificadoIntegraPortalService,
+    SocialAuthService,
+    FacebookPixelService
     SocialAuthService,
     PespecificoSesionTemaService,
     PEspecificoEsquemaService,

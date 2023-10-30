@@ -44,8 +44,9 @@ export class LoginFacebookRegistrarComponent implements OnInit ,OnDestroy {
     @Inject(PLATFORM_ID) platformId: Object,
     private _SnackBarServiceService: SnackBarServiceService,
     private _AspNetUserService:AspNetUserService,
-    private _ChatEnLineaService:ChatEnLineaService,
-    private _FacebookPixelService:FacebookPixelService
+
+    private _FacebookPixelService:FacebookPixelService,
+    private _ChatEnLineaService:ChatEnLineaService
   ) {
     this.isBrowser = isPlatformBrowser(platformId); {}
   }
@@ -167,7 +168,6 @@ export class LoginFacebookRegistrarComponent implements OnInit ,OnDestroy {
 
             this.cleanSub=true
             if(this.isBrowser){
-              //fbq('track', 'CompleteRegistration');
               fbq('trackSingle','269257245868695', 'Lead', {}, {eventID:x.id});
               this._FacebookPixelService.SendLoad(x.id,x.correoEnc,x.telEnc,x.userAgent,x.userIp).subscribe({
                 next:(x)=>{

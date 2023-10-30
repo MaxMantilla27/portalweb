@@ -51,7 +51,9 @@ export class LandingPageModalComponent implements OnInit, OnDestroy {
     private _SnackBarServiceService: SnackBarServiceService,
     private _LandingPageService:LandingPageService,
     private _ChatEnLineaService:ChatEnLineaService,
+
     private _FacebookPixelService:FacebookPixelService,
+
     public dialogRef: MatDialogRef<LandinPageV2Component>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     @Inject(PLATFORM_ID) platformId: Object
@@ -238,7 +240,6 @@ export class LandingPageModalComponent implements OnInit, OnDestroy {
           }
           if(this.isBrowser){
 
-            //fbq('track', 'CompleteRegistration');
             fbq('trackSingle','269257245868695', 'Lead', {}, {eventID:x.id});
             this._FacebookPixelService.SendLoad(x.id,x.correoEnc,x.telEnc,x.userAgent,x.userIp).subscribe({
               next:(x)=>{

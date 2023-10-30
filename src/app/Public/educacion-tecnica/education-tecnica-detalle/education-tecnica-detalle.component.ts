@@ -71,8 +71,8 @@ export class EducationTecnicaDetalleComponent implements OnInit,OnDestroy {
     private title:Title,
     @Inject(PLATFORM_ID) platformId: Object,
     private _SessionStorageService:SessionStorageService,
-    private _ChatEnLineaService:ChatEnLineaService,
-    private _FacebookPixelService:FacebookPixelService
+    private _FacebookPixelService:FacebookPixelService,
+    private _ChatEnLineaService:ChatEnLineaService
   ) {
     this.isBrowser = isPlatformBrowser(platformId);
   }
@@ -320,7 +320,6 @@ export class EducationTecnicaDetalleComponent implements OnInit,OnDestroy {
             this._SessionStorageService.SessionSetValue('DatosFormulario',JSON.stringify(this.datos));
             this.CompleteLocalStorage=true;
           if(this.isBrowser){
-            //fbq('track', 'CompleteRegistration');
             fbq('trackSingle','269257245868695', 'Lead', {}, {eventID:x.id});
             this._FacebookPixelService.SendLoad(x.id,x.correoEnc,x.telEnc,x.userAgent,x.userIp).subscribe({
               next:(x)=>{

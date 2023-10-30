@@ -279,6 +279,14 @@ export class BlogComponent implements OnInit {
       this.DatosEnvioFormulario.IdAreaFormacion=value.IdAreaFormacion;
       this.DatosEnvioFormulario.IdAreaTrabajo=value.IdAreaTrabajo;
       this.DatosEnvioFormulario.IdIndustria=value.IdIndustria;
+
+      var IdPEspecifico=this._SessionStorageService.SessionGetValueCokies("IdPEspecificoPublicidad");
+      var IdCategoriaDato=this._SessionStorageService.SessionGetValueCokies("idCategoria");
+      var idcampania=this._SessionStorageService.SessionGetValueCokies("idCampania");
+
+      this.DatosEnvioFormulario.IdPespecifico=IdPEspecifico==''?undefined:parseInt(IdPEspecifico);
+      this.DatosEnvioFormulario.IdCategoriaDato=IdCategoriaDato==''?undefined:parseInt(IdCategoriaDato);
+      this.DatosEnvioFormulario.IdCampania=idcampania==''?undefined:parseInt(idcampania);
       this._HelperService.EnviarFormulario(this.DatosEnvioFormulario).pipe(takeUntil(this.signal$)).subscribe({
         next: (x) => {
           this.ProcesarAsignacionAutomaticaNuevoPortal(x.id);
@@ -300,7 +308,6 @@ export class BlogComponent implements OnInit {
             this._SessionStorageService.SessionSetValue('DatosFormulario',JSON.stringify(this.datos));
             this.CompleteLocalStorage=true;
           if(this.isBrowser){
-            //fbq('track', 'CompleteRegistration');
             fbq('trackSingle','269257245868695', 'Lead', {}, {eventID:x.id});
             this._FacebookPixelService.SendLoad(x.id,x.correoEnc,x.telEnc,x.userAgent,x.userIp).subscribe({
               next:(x)=>{

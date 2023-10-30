@@ -189,7 +189,7 @@ export class PagoComponent implements OnInit,OnDestroy {
     this.total=0
     this.CronogramaPago.registroCuota.forEach((r:any) => {
       if(r.estado==true){
-        this.total+=r.cuota
+        this.total+=r.cuota+r.moraCalculada
       }
     });
   }
@@ -197,7 +197,7 @@ export class PagoComponent implements OnInit,OnDestroy {
     this._MedioPagoActivoPasarelaService.MedioPagoPasarelaPortalRecurrente(this.idMatricula).pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
         console.log("tarjeta",x)
-        this.idPasarela=x[0].idPasarelaPago?x[0].idPasarelaPago:0
+        if(x!=undefined && x!=null && x.length>0 )this.idPasarela=x[0].idPasarelaPago?x[0].idPasarelaPago:0
 
         this.VerificarEstadoAfiliacion()
 
@@ -346,7 +346,7 @@ export class PagoComponent implements OnInit,OnDestroy {
           this._SessionStorageService.SessionSetValue(sesion,x._Repuesta.requiereDatosTarjeta);
           console.log(parseInt(tarjeta.idPasarelaPago))
   
-          if(tarjeta.idPasarelaPago==5 || tarjeta.idPasarelaPago==16){ //OpenPay
+          if(tarjeta.idPasarelaPago==5){ //OpenPay
             this._router.navigate(['/AulaVirtual/MisPagos/Afiliacion/'+this.idMatricula+'/openpay/'+sesion]);
           }
           else if(tarjeta.idPasarelaPago==7){ //visa

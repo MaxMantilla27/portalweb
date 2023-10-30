@@ -56,6 +56,8 @@ export class AppComponent implements OnInit,AfterViewInit ,OnDestroy {
   public IdPGeneral=0;
   public stateToekn=false
   ngOnInit() {
+    console.log(window.frames.location)
+
     this.router.events.pipe(takeUntil(this.signal$)).subscribe((val) => {
       this.IdPGeneral=0;
       this.stateToekn=this._SessionStorageService.validateTokken();

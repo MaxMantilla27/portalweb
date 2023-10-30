@@ -48,6 +48,9 @@ import { DocenciaV2Component } from './docencia-v2/docencia-v2.component';
 import { BolsaTrabajoGuard } from './Guard/bolsa-trabajo.guard';
 import { BolsaTrabajoComponent } from './bolsa-trabajo/bolsa-trabajo.component';
 import { VisaRecurrenteComponent } from './resultado-pago-recurrente/visa-recurrente/visa-recurrente.component';
+import { EvalComponent } from './eval/eval.component';
+import { ConfirmacionPagoMercadoPagoChileComponent } from './confirmacion-pago-mercado-pago-chile/confirmacion-pago-mercado-pago-chile.component';
+import { ResultadoPagoMercadopagoComponent } from './resultado-pago-mercadopago/resultado-pago-mercadopago.component';
 import { ConfirmacionPagoOpenpayColombiaComponent } from './confirmacion-pago-openpay-colombia/confirmacion-pago-openpay-colombia.component';
 import { ConfirmacionPagoMercadoPagoChileComponent } from './confirmacion-pago-mercado-pago-chile/confirmacion-pago-mercado-pago-chile.component';
 import { ResultadoPagoMercadopagoComponent } from './resultado-pago-mercadopago/resultado-pago-mercadopago.component';
@@ -58,6 +61,7 @@ const routes: Routes = [
     path: '', component: AulaVirtualComponent ,canActivateChild: [AulaVirtualGuard] , children:
       [
         { path: 'Cuenta', component: CuentaComponent},
+        { path: 'eval', component: EvalComponent},
         { path: 'MiPerfil', component: MiPerfilComponent,canActivate:[AlumnoGuard]},
         { path: 'ChangePassword', component: CambiarContraComponent,canActivate:[AlumnoGuard]},
         { path: 'MisCursos', component: MisCursosComponent,canActivate:[AlumnoGuard]},
@@ -100,6 +104,7 @@ const routes: Routes = [
         { path: 'MisPagos/:IdMatricula/webpay/:Identificador', component: ConfirmacionPagoWebpayComponent,canActivate:[AlumnoGuard]},
         { path: 'MisPagos/:IdMatricula/izipay/:Identificador', component: ConfirmacionPagoIzipayComponent,canActivate:[AlumnoGuard]},
         { path: 'MisPagos/:IdMatricula/klap/:Identificador', component: ConfirmacionPagoKlapComponent,canActivate:[AlumnoGuard]},
+        { path: 'MisPagos/:IdMatricula/mercadoPago/:Identificador', component: ConfirmacionPagoMercadoPagoChileComponent,canActivate:[AlumnoGuard]},
         { path: 'MisPagos/:IdMatricula/openpayCOP/:Identificador', component: ConfirmacionPagoOpenpayColombiaComponent,canActivate:[AlumnoGuard]},
         { path: 'MisPagos/:IdMatricula/mercadoPago/:Identificador', component: ConfirmacionPagoMercadoPagoChileComponent,canActivate:[AlumnoGuard]},
 

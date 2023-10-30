@@ -48,8 +48,11 @@ export class ProgramaFormularioComponent implements OnInit, OnDestroy {
     private _HelperServiceP:Help,
     private _RegionService: RegionService,
     private _DatosPortalService: DatosPortalService,
-    private _ChatEnLineaService:ChatEnLineaService,
-    private _FacebookPixelService:FacebookPixelService
+
+    private _FacebookPixelService:FacebookPixelService,
+    private _ChatEnLineaService:ChatEnLineaService
+
+
   ) {
     this.isBrowser = isPlatformBrowser(platformId);
    }
@@ -140,10 +143,11 @@ export class ProgramaFormularioComponent implements OnInit, OnDestroy {
       var IdCategoriaDato=this._SessionStorageService.SessionGetValueCokies("idCategoria");
       var idcampania=this._SessionStorageService.SessionGetValueCokies("idCampania");
       this.DatosEnvioFormulario.IdCategoriaDato=IdCategoriaDato==''?0:parseInt(IdCategoriaDato);
-      if(IdPEspecifico==''){
-        this.DatosEnvioFormulario.IdPespecifico=this.data.IdPespecificoPrograma;
-      }else{
+
+      if(this.data.IdPespecificoPrograma==0 || this.data.IdPespecificoPrograma==null || this.data.IdPespecificoPrograma==undefined){
         this.DatosEnvioFormulario.IdPespecifico=parseInt(IdPEspecifico)
+      }else{
+        this.DatosEnvioFormulario.IdPespecifico=this.data.IdPespecificoPrograma
       };
       this.DatosEnvioFormulario.IdCampania = parseInt(idcampania);
       this._HelperService.EnviarFormulario(
@@ -169,7 +173,6 @@ export class ProgramaFormularioComponent implements OnInit, OnDestroy {
             this._SessionStorageService.SessionSetValue('DatosFormulario',JSON.stringify(this.datos));
             this.CompleteLocalStorage=true;
             if(this.isBrowser){
-              //fbq('track', 'CompleteRegistration');
               fbq('trackSingle','269257245868695', 'Lead', {}, {eventID:x.id});
               this._FacebookPixelService.SendLoad(x.id,x.correoEnc,x.telEnc,x.userAgent,x.userIp).subscribe({
                 next:(x)=>{

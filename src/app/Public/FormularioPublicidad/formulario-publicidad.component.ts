@@ -41,6 +41,7 @@ export class FormularioPublicidadComponent implements OnInit {
     private _HelperService: HelperService,
     private _SessionStorageService:SessionStorageService,
     private _ChatEnLineaService:ChatEnLineaService,
+
     private _FacebookPixelService:FacebookPixelService,
     public dialogRef: MatDialogRef<FormularioPublicidadInterceptorComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -188,7 +189,6 @@ export class FormularioPublicidadComponent implements OnInit {
         this._SessionStorageService.SessionSetValue('DatosFormulario',JSON.stringify(this.datos));
         this.CompleteLocalStorage=true;
         if(this.isBrowser){
-          //fbq('track', 'CompleteRegistration');
           fbq('trackSingle','269257245868695', 'Lead', {}, {eventID:x.id});
           this._FacebookPixelService.SendLoad(x.id,x.correoEnc,x.telEnc,x.userAgent,x.userIp).subscribe({
             next:(x)=>{
@@ -198,6 +198,7 @@ export class FormularioPublicidadComponent implements OnInit {
               console.log(e)
             }
           });
+
           try{
             gtag('event', 'conversion', {
               'send_to': 'AW-991002043/tnStCPDl6HUQu_vF2AM',

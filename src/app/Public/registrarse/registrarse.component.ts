@@ -41,8 +41,9 @@ export class RegistrarseComponent implements OnInit,OnDestroy {
     private meta:Meta,
     @Inject(PLATFORM_ID) platformId: Object,
     private _SnackBarServiceService: SnackBarServiceService,
+
+    private _FacebookPixelService:FacebookPixelService,
     private _FormaPagoService:FormaPagoService,
-    private _FacebookPixelService:FacebookPixelService
   ) {
     this.isBrowser = isPlatformBrowser(platformId); {}
   }
@@ -156,7 +157,6 @@ export class RegistrarseComponent implements OnInit,OnDestroy {
 
             this.cleanSub=true
             if(this.isBrowser){
-              //fbq('track', 'CompleteRegistration');
               fbq('trackSingle','269257245868695', 'Lead', {}, {eventID:x.id});
               this._FacebookPixelService.SendLoad(x.id,x.correoEnc,x.telEnc,x.userAgent,x.userIp).subscribe({
                 next:(x)=>{
