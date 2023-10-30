@@ -41,6 +41,7 @@ export class DetallesCuestionarioComponent implements OnInit, OnDestroy {
     Usuario: 'docente',
   };
   cargando=false
+  Calificable=false
 
   public nombrefile='Ningún archivo seleccionado'
   public selectedFiles?: FileList;
@@ -141,11 +142,14 @@ export class DetallesCuestionarioComponent implements OnInit, OnDestroy {
 
             if (p.idPreguntaTipo != 6) {
               p.puntos=p.puntos*this.respuestas[0].calificacionMaxima/100
+            }else{
+              this.Calificable=true
             }
             p.puntaje=p.puntaje*this.respuestas[0].calificacionMaxima/100
           });
           this.cargando=false
           console.log(this.preguntas);
+          console.log(this.Calificable);
         },
       });
   }
