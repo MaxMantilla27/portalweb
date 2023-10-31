@@ -6,6 +6,10 @@
 <div style="border-top:solid 3px #f4f4f4 ;"></div>
 <div class="container">
   <div class="row rowpaddAv">
+    <div class="col-12">
+      <div class="cursoTitle">{{programEstructura.programaGeneral}}</div>
+      <!-- <div class="cursoTabDescripcion">¡Bienvenido! Debes completar los siguientes módulos de tu programa:</div> -->
+    </div>
     <div class="col-12 col-md-12 col-lg-12" style="position: relative;padding: 0px;">
       <div style="width: 100%;display: flex;justify-content: flex-start;padding-right: 30px;    margin-bottom: 12px;">
         <div class="buttonBack no-select" [routerLink]="'/AulaVirtual/MisCursos'">
@@ -181,8 +185,6 @@
           </ng-template>
           <div class="pad-resp">
 
-            <div class="cursoTitle">{{programEstructura.programaGeneral}}</div>
-            <div class="cursoTabDescripcion">¡Bienvenido! Debes completar los siguientes módulos de tu programa:</div>
             <div *ngIf="IdModalidadPrincipal==1" class="msjCom" style="border: solid 2px #fff7ee; padding: 10px;margin-bottom: 20px;">
               <img src="../../../../assets/icons/icon-hand.svg" alt="Icono Mano">
               <div >
