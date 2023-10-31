@@ -386,8 +386,7 @@ import { ImagenModalComponent } from './Containers/Dialog/imagen-modal/imagen-mo
     IntegraEsquemaEvaluacionService,
     SeoService,
     CertificadoIntegraPortalService,
-    SocialAuthService,
-    FacebookPixelService
+    FacebookPixelService,
     SocialAuthService,
     PespecificoSesionTemaService,
     PEspecificoEsquemaService,

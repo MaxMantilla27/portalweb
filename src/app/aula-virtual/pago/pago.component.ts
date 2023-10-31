@@ -197,10 +197,7 @@ export class PagoComponent implements OnInit,OnDestroy {
     this._MedioPagoActivoPasarelaService.MedioPagoPasarelaPortalRecurrente(this.idMatricula).pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
         console.log("tarjeta",x)
-        if(x!=undefined && x!=null && x.length>0 )this.idPasarela=x[0].idPasarelaPago?x[0].idPasarelaPago:0
-
-        this.VerificarEstadoAfiliacion()
-
+        this.idPasarela=x[0].idPasarelaPago?x[0].idPasarelaPago:0
       },
       error:e=>{
         console.log(e)
@@ -346,7 +343,7 @@ export class PagoComponent implements OnInit,OnDestroy {
           this._SessionStorageService.SessionSetValue(sesion,x._Repuesta.requiereDatosTarjeta);
           console.log(parseInt(tarjeta.idPasarelaPago))
   
-          if(tarjeta.idPasarelaPago==5){ //OpenPay
+          if(tarjeta.idPasarelaPago==5 || tarjeta.idPasarelaPago==16){ //OpenPay
             this._router.navigate(['/AulaVirtual/MisPagos/Afiliacion/'+this.idMatricula+'/openpay/'+sesion]);
           }
           else if(tarjeta.idPasarelaPago==7){ //visa

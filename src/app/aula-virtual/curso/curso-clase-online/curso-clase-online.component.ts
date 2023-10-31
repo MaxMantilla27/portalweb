@@ -217,6 +217,7 @@ export class CursoClaseOnlineComponent implements OnInit,OnDestroy,OnChanges {
       }
     })
   }
+  }
   SetIntervalo(){
     this.interval=setInterval(() => {
       var pending=0
