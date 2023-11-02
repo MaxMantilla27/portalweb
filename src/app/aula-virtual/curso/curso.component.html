@@ -198,9 +198,14 @@
               </div>
             </div>
             <div
-              *ngIf="programEstructura.listaCursoMatriculado!=null && programEstructura.listaCursoMatriculado.length>1">
+              *ngIf="programEstructura.listaCursoMatriculado!=null && programEstructura.listaCursoMatriculado.length>1 && IdTipoProgramaCarrera!=2">
               <app-curso-modulos [idMatricula]="idMatricula" [programEstructura]="programEstructura">
               </app-curso-modulos>
+            </div>
+            <div
+              *ngIf="programEstructura.listaCursoMatriculado!=null && programEstructura.listaCursoMatriculado.length>1 && IdTipoProgramaCarrera==2">
+              <app-curso-modulos-carreras-profesionales [idMatricula]="idMatricula" [programEstructura]="programEstructura">
+              </app-curso-modulos-carreras-profesionales>
             </div>
           </div>
         </mat-tab>
