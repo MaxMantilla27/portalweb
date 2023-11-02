@@ -1,8 +1,8 @@
 import { isPlatformBrowser } from '@angular/common';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpRequest } from '@angular/common/http';
 import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { EMPTY, Observable } from 'rxjs';
-import { DatosAlumnoValidacionDTO, InsertarRegistroEnvioFisicoDTO } from 'src/app/Core/Models/CertificadoDTO';
+import { DatosAlumnoValidacionCarreraDTO, DatosAlumnoValidacionDTO, InsertarRegistroEnvioFisicoDTO } from 'src/app/Core/Models/CertificadoDTO';
 import { environment } from 'src/environments/environment';
 import { SessionStorageService } from '../session-storage.service';
 
@@ -31,6 +31,30 @@ export class CertificadoService {
       console.log(Json)
       return this.http.post<any>(this.urlBase+'/InsertarValidacionDatosAlumno',Json);
     }else{
+      return EMPTY;
+    }
+  }
+
+
+
+  public InsertarValidacionDatosAlumnoCarrera(Json: DatosAlumnoValidacionCarreraDTO): Observable<any> {
+    if (this.isBrowser) {
+      const formData: FormData = new FormData();
+      formData.append("Nombres", Json.Nombres);
+      formData.append("Apellidos", Json.Apellidos);
+      formData.append("Usuario", "--");
+      formData.append("file", Json.file);
+      const req = new HttpRequest(
+        "POST",
+        `${this.urlBase}/InsertarValidacionDatosAlumnoCarrera`,
+        formData,
+        {
+          reportProgress: true,
+          responseType: "json",
+        }
+      );
+      return this.http.request(req);
+    } else {
       return EMPTY;
     }
   }

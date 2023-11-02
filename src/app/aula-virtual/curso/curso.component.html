@@ -341,9 +341,11 @@
             </div>
           </ng-template>
           <div class="pad-resp">
-            <app-curso-tramites [IdMatricula]="idMatricula" [Capitulo]="programEstructura.programaGeneral"
+
+            <app-curso-tramites *ngIf="EsCarrera!=true" [IdMatricula]="idMatricula" [Capitulo]="programEstructura.programaGeneral"
               [idPGeneral]="programEstructura.idPGeneral">
             </app-curso-tramites>
+            <app-curso-tramites-carrera *ngIf="EsCarrera==true"></app-curso-tramites-carrera>
           </div>
         </mat-tab>
 

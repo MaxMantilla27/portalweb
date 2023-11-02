@@ -8,6 +8,7 @@ import {
   CursoPadreDTO,
   ProgresoAlumnoProgramaAulaVirtualDTO,
 } from 'src/app/Core/Models/ListadoProgramaContenidoDTO';
+import { AlumnosTest } from 'src/app/Core/Shared/AlumnosTest';
 import { ChargeComponent } from 'src/app/Core/Shared/Containers/Dialog/charge/charge.component';
 import { AsistenciaService } from 'src/app/Core/Shared/Services/Asistencia/asistencia.service';
 import { CertificadoService } from 'src/app/Core/Shared/Services/Certificado/certificado.service';
@@ -44,6 +45,7 @@ export class CursoComponent implements OnInit,OnDestroy {
     private _CertificadoService:CertificadoService,
     public dialog: MatDialog,
     private _AsistenciaService: AsistenciaService,
+    private _AlumnosTest:AlumnosTest,
   ) {}
   ngOnDestroy(): void {
     this.signal$.next(true);
@@ -113,6 +115,7 @@ export class CursoComponent implements OnInit,OnDestroy {
   public asistencias:any
   public IdModalidadPrincipal=0
   public IdTipoProgramaCarrera=0
+  public EsCarrera=false
   public MostrarMensajeRecuerda=false;
   public contenidotarea=
   '<iframe src="https://player.vimeo.com/video/737713694?h=ce19c25ba1" width="100%" height="564" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>'
@@ -408,7 +411,8 @@ export class CursoComponent implements OnInit,OnDestroy {
         x.claseWebexActivo=true;
         this.curso=x
         this.IdTipoProgramaCarrera=x.idTipoProgramaCarrera
-
+        this.EsCarrera=this._AlumnosTest.PermisosCarrea(this.curso.idAlumno);
+        console.log('EsCarrera', this.EsCarrera)
         this.ObtenerListadoProgramaContenido();
         this.CongelarCursoMatriculaCarrera()
         // if(this.curso!=undefined ){

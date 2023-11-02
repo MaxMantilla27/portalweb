@@ -147,7 +147,7 @@
     </div>
 </ng-container>
 
-<ng-container>
+<ng-container *ngIf="tramitesSolicitado!=null && tramitesSolicitado.length>0">
   <div class="subtitleTramites" style="margin-top: 40px;">Trámites solicitados</div>
   <div class="contenTramistes row" *ngIf="tramitesSolicitado!=undefined">
     <div class="col-6 col-md-3 col-lg-3 ">

@@ -1,0 +1,84 @@
+
+<ng-container *ngIf="charge==false">
+
+  <div class="row">
+    <div class="col-6 col-md-4 col-lg-4">
+      <app-card-tramites-carrera [Titulo]="'Solicitar Certificado de estudios'" [img]="'user-solido.svg'"
+      (click)="Changes(1)"></app-card-tramites-carrera>
+    </div>
+    <div class="col-6 col-md-4 col-lg-4">
+      <app-card-tramites-carrera [Titulo]="'Solicitar Diploma de Grado de Bachiller'" [img]="'user-solido.svg'"
+      (click)="Changes(2)"></app-card-tramites-carrera>
+    </div>
+    <div class="col-6 col-md-4 col-lg-4">
+      <app-card-tramites-carrera [Titulo]="'Solicitar Diploma de Título profesional técnico'" [img]="'user-solido.svg'"
+      (click)="Changes(3)"></app-card-tramites-carrera>
+    </div>
+    <div class="col-6 col-md-4 col-lg-4">
+      <app-card-tramites-carrera [Titulo]="'Actualizar información personal'" [img]="'user-solido.svg'"
+      (click)="Changes(4)"></app-card-tramites-carrera>
+    </div>
+    <div class="col-6 col-md-4 col-lg-4">
+      <app-card-tramites-carrera [Titulo]="'Presentar Certificado de Idioma Extranjero'" [img]="'user-solido.svg'"
+      (click)="Changes(5)"></app-card-tramites-carrera>
+    </div>
+    <div class="col-6 col-md-4 col-lg-4">
+      <app-card-tramites-carrera [Titulo]="'Solicitar Constancia de matrícula'" [img]="'user-solido.svg'"
+      (click)="Changes(6)"></app-card-tramites-carrera>
+    </div>
+  </div>
+
+  <ng-container *ngIf="tramitesSolicitado!=null && tramitesSolicitado.length>0 && tramitesSolicitado!=undefined">
+    <div class="subtitleTramites" style="margin-top: 40px;">Seguimiento de solicitudes</div>
+    <div class="contenTramistes row" >
+      <div class="col-6 col-md-3 col-lg-3 ">
+        <div style="font-size: 16px;
+        font-weight: 600;
+        margin: 10px 0px;">Fecha de inicio</div>
+      </div>
+      <div class="col-6 col-md-5 col-lg-5 ">
+        <div style="font-size: 16px;
+        font-weight: 600;
+        margin: 10px 0px;">Trámite</div>
+      </div>
+      <div class="col-6 col-md-2 col-lg-2 ">
+        <div style="font-size: 16px;
+        font-weight: 600;
+        margin: 10px 0px;">Estado</div>
+      </div>
+      <div class="col-12 col-md-2 col-lg-2 ">
+        <div style="font-size: 16px;
+        font-weight: 600;
+        margin: 10px 0px;">Acciones</div>
+      </div>
+      <ng-container *ngFor="let item of tramitesSolicitado">
+        <div class="col-6 col-md-3 col-lg-3 itmTRamite">
+          {{item.fechaCreacion | date:'dd/MM/yyyy'}}
+        </div>
+        <div class="col-6 col-md-6 col-lg-6 itmTRamite">
+          {{item.descripcion}}
+        </div>
+        <div class="col-12 col-md-3 col-lg-3 itmTRamite" style=" display: flex;
+        justify-content: end;">
+          <a [href]="item.ruta+item.nombreArchivo" target="_blank">
+            <button class="buttonDescargarTramite">
+              <div class="iconobuttonTramite">
+                <div style="border-left: solid;
+                border-top: solid;"></div>
+                <div></div>
+                <div style="border-right: solid;
+                border-top: solid;"></div>
+                <i class="material-icons">arrow_downward</i>
+              </div>
+              Descargar
+            </button>
+          </a>
+        </div>
+      </ng-container>
+    </div>
+  </ng-container>
+
+</ng-container>
+<ng-container *ngIf="charge==true">
+  <app-tramites-informacion-personal *ngIf="InformacionPersonal==true"></app-tramites-informacion-personal>
+</ng-container>
