@@ -368,9 +368,7 @@ export class PEspecificoEsquemaService {
     }
   }
 
-  public AgregarPEspecificoSesionTareaAlumno(
-    Json: PEspecificoSesionTareaAlumnoSaveParamsDTO
-  ): Observable<any> {
+  public AgregarPEspecificoSesionTareaAlumno(Json: PEspecificoSesionTareaAlumnoSaveParamsDTO): Observable<any> {
     if (this.isBrowser) {
       const formData: FormData = new FormData();
       formData.append("file", Json.file);

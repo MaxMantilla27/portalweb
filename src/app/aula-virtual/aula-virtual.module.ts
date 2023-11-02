@@ -165,6 +165,9 @@ import { VistaPreviaCuestionarioComponent } from './docencia-v2-cursos-online/ad
 import { RecursosTareaComponent } from './docencia-v2-cursos-online/administrar-sesion/pespecifico-sesion-esquema/recursos-tarea/recursos-tarea.component';
 import { RecursosCuestionarioComponent } from './docencia-v2-cursos-online/administrar-sesion/pespecifico-sesion-esquema/recursos-cuestionario/recursos-cuestionario.component';
 import { RegistrarForoProyectoComponent } from './curso/curso-proyecto/registrar-foro-proyecto/registrar-foro-proyecto.component';
+import { CursoTramitesCarreraComponent } from './curso/curso-tramites-carrera/curso-tramites-carrera.component';
+import { CardTramitesCarreraComponent } from './curso/curso-tramites-carrera/card-tramites-carrera/card-tramites-carrera.component';
+import { TramitesInformacionPersonalComponent } from './curso/curso-tramites-carrera/tramites-informacion-personal/tramites-informacion-personal.component';
 
 
 @NgModule({
@@ -327,6 +330,9 @@ import { RegistrarForoProyectoComponent } from './curso/curso-proyecto/registrar
     RecursosTareaComponent,
     RecursosCuestionarioComponent,
     RegistrarForoProyectoComponent,
+    CursoTramitesCarreraComponent,
+    CardTramitesCarreraComponent,
+    TramitesInformacionPersonalComponent,
 
   ],
   imports: [

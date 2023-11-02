@@ -25,3 +25,8 @@ export interface InsertarRegistroEnvioFisicoDTO {
   Direccion: string;
   IdCertificadoGeneradoAutomatico?:number;
 }
+export interface DatosAlumnoValidacionCarreraDTO {
+  Nombres: string;
+  Apellidos: string;
+  file: File;
+}
