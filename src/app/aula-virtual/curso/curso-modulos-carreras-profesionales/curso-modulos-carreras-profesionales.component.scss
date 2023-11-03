@@ -129,3 +129,23 @@
   background-position: center;
   margin-right: 10px;
 }
+.proximasSesionesOnline{
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin: 10px 10px;
+  padding-bottom: 10px;
+  border-bottom: solid 2px #d1d1d1;
+  .textoProximas{
+    font-size: 17px;
+    font-weight: 600;
+  }
+  .iconProximas{
+    height: 20px;
+    cursor: pointer;
+    .material-icons{
+      font-size: 30px !important;
+      // color: #72a3ff;
+    }
+  }
+}

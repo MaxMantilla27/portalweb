@@ -1,20 +1,19 @@
 <ng-container *ngIf="Semestres!=null && Semestres!=undefined && Semestres.length!=0">
-  <div *ngFor="let mod of Semestres">
-    <div style="padding: 5px 0px;font-weight: 600;display: flex;justify-content: space-between;align-items: center;width: 100%;cursor: pointer;"
-      (click)="mod.open=(mod.open==undefined || mod.open==false)?true:false">
-        <div>Semestre {{mod.nombreCiclo}}</div>
-
-        <div>
-          <i class="material-icons no-seleccionable " *ngIf="!mod.open">keyboard_arrow_down</i>
-          <i class="material-icons no-seleccionable " *ngIf="mod.open">keyboard_arrow_up</i>
-        </div>
+  <div *ngFor="let mod of Semestres;let i=index">
+    <div class="proximasSesionesOnline" (click)="OpenSemestre(i)">
+      <div class="textoProximas">Semestre {{mod.nombreCiclo}}</div>
+      <div class="iconProximas">
+        <ng-container *ngIf="mod.open==false" ><i class="material-icons">keyboard_arrow_down</i></ng-container>
+        <ng-container *ngIf="mod.open==true "><i class="material-icons">keyboard_arrow_up</i></ng-container>
       </div>
-      <div style="padding:5px 20px;" *ngIf="mod.open==true">
-        <div class="contentCursoModulo" *ngFor="let item of programEstructura.listaCursoMatriculado; let i=index">
-          <div class="headerCursoModulo row" *ngIf="item.nombreCiclo==mod.nombreCiclo">
+    </div>
+    <div *ngIf="mod.open==true">
+      <ng-container *ngFor="let item of programEstructura.listaCursoMatriculado; let i2=index">
+        <div class="contentCursoModulo" *ngIf="item.nombreCiclo==mod.nombreCiclo">
+          <div class="headerCursoModulo row">
             <div class="col-12 col-md-8 col-lg-10 row" style="align-items: flex-start;">
               <div class="NumberCursoModulo col-2 col-md-1 col-lg-1">
-                {{i+1}}
+                {{i2+1}}
               </div>
               <ng-container *ngIf="item.idModalidadHijo!=1">
                 <div class="titleCursoModulo col-10 col-md-11 col-lg-11">
@@ -107,8 +106,22 @@
             </div>
           </div>
         </div>
+      </ng-container>
 
+    </div>
+    <!-- <div style="padding: 5px 0px;font-weight: 600;display: flex;justify-content: space-between;align-items: center;width: 100%;cursor: pointer;"
+      (click)="mod.open=(mod.open==undefined || mod.open==false)?true:false">
+        <div>Semestre {{mod.nombreCiclo}}</div>
+
+        <div>
+          <i class="material-icons no-seleccionable " *ngIf="!mod.open">keyboard_arrow_down</i>
+          <i class="material-icons no-seleccionable " *ngIf="mod.open">keyboard_arrow_up</i>
+        </div>
       </div>
+      <div style="padding:5px 20px;" *ngIf="mod.open==true">
+
+
+      </div> -->
   </div>
 </ng-container>
 

@@ -1,0 +1,14 @@
+<div class="card-certificado-carrera">
+  <div>
+    <div class="img-certificado-carrera"
+    [ngStyle]="{'background-image': getUrl()}">
+    </div>
+    <div class="title-certificado-carrera">
+      {{Titulo}}
+    </div>
+  </div>
+  <div>
+    <app-default-button [confs]="{color:'primary',titulo:'Ingresar'}"[style]="'width: 100%;margin-top: 20px;'" >
+    </app-default-button>
+  </div>
+</div>

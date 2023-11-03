@@ -73,13 +73,12 @@ export class CursoClaseOnlineComponent implements OnInit,OnDestroy,OnChanges {
     }
   }
   ListaCursoWebexMatriculadoV2(){
+    this.clases=[]
+    this.actual=[]
     if(this.IdTipoProgramaCarrera==2){
       this._DatosPerfilService.ListaCursoWebexMatriculadoCarrerasProfesionales(this.IdMatricula).pipe(takeUntil(this.signal$)).subscribe({
         next:x=>{
           console.log(x)
-
-          this.clases=[]
-          this.actual=[]
           var i=0
           var primero=true
           x.forEach((s:any) => {
@@ -135,23 +134,24 @@ export class CursoClaseOnlineComponent implements OnInit,OnDestroy,OnChanges {
             this.clases.forEach((c:any) => {
               c.HoraInicio=c.fechaHoraInicio;
               c.HoraFinal=c.fechaHoraFinal;
-              c.ses=c.Sesion+' de '+ this.total
+              c.ses=c.orden+' de '+ c.maximo
               c.Acciones=c.urlWebex==null?'Próximamente':'Ir  a clase'
             });
           }
         },
+        complete:()=> {
+        },
         error:e=>{
           console.log(e)
         }
+
       })
+
     }
     else{
       this._DatosPerfilService.ListaCursoWebexMatriculadoV2(this.IdMatricula).pipe(takeUntil(this.signal$)).subscribe({
         next:x=>{
           console.log(x)
-
-          this.clases=[]
-          this.actual=[]
           var i=0
           var primero=true
           x.forEach((s:any) => {
@@ -204,6 +204,7 @@ export class CursoClaseOnlineComponent implements OnInit,OnDestroy,OnChanges {
           this.SetIntervalo();
         }
         if(this.clases!=undefined && this.clases!=null && this.clases.length){
+        console.log(this.clases)
           this.clases.forEach((c:any) => {
             c.HoraInicio=c.fechaHoraInicio;
             c.HoraFinal=c.fechaHoraFinal;

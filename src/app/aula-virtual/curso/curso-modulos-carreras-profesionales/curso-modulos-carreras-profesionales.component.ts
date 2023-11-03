@@ -53,6 +53,8 @@ export class CursoModulosCarrerasProfesionalesComponent implements OnInit, OnCha
   public progressProgram:any
   @Input() idMatricula = 0;
   public Semestres:any;
+  public OpenProx=false;
+  public SemestreSelect=0;
   ngOnInit(): void {
     if (this.idMatricula > 0) {
      // this.ObtenerProgresoAulaVirtual();
@@ -82,9 +84,16 @@ export class CursoModulosCarrerasProfesionalesComponent implements OnInit, OnCha
   validarFechasOnline(){
     console.log(this.programEstructura.listaCursoMatriculado)
     this.Semestres=[];
+    let count=0;
     this.programEstructura.listaCursoMatriculado.forEach((c:any) => {
+      c.pendientes=0;
       if( this.Semestres.filter((w:any) => w.nombreCiclo == c.nombreCiclo).length>0==false){
-        this.Semestres.push({nombreCiclo:c.nombreCiclo})
+        this.Semestres.push({
+          valor:count,
+          nombreCiclo:c.nombreCiclo,
+          open:false
+        })
+        count++
       }
       c.fechasOnlineActive=false
       if(c.fechasOnline!=undefined  && c.fechasOnline!=null ){
@@ -231,5 +240,11 @@ export class CursoModulosCarrerasProfesionalesComponent implements OnInit, OnCha
   }
   EventoInteraccionButton(nombre:string){
     this._HelperService.enviarMsjAcciones({Tag:"Button",Nombre:nombre,Seccion:'Modulos'})
+  }
+  OpenSemestre(SemestreSeleccionado:number){
+    this.Semestres.forEach((e:any) => {
+      if(e.valor==SemestreSeleccionado)
+      e.open=!e.open
+    })
   }
 }
