@@ -1,0 +1,151 @@
+.contentCursoModulo {
+  width: 100%;
+  padding: 20px;
+  display: flex;
+  margin-bottom: 30px;
+  background: #f4f4f4;
+  flex-direction: column;
+}
+
+.headerCursoModulo {
+  margin: 0px;
+  padding: 0px;
+  justify-content: space-between;
+  // border-bottom: solid 1px #dcdcdc;
+  align-items: flex-start;
+}
+.titleCursoModulo {
+  font-size: 17px;
+  font-weight: bold;
+}
+.estadoCursoModulo {
+  font-size: 14px;
+  //margin-left: 30px;
+  margin: 10px 0px;
+  font-weight: 600;
+  color: #8d8789;
+  display: flex;
+  i {
+    color: #05c254;
+    margin-right: 5px;
+  }
+}
+.contenidoCursoModulo {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 20px 0px 0px 0px;
+}
+.contentModulo {
+  margin-bottom: 20px;
+}
+.contentModulo mat-progress-bar .mat-progress-bar-buffer {
+  background: #e7e7e8 !important;
+}
+.contentModulo mat-progress-bar {
+  height: 5px !important;
+}
+.contentModulo mat-progress-bar .mat-progress-bar-fill::after {
+  background-color: #00c356;
+}
+.contentCursoModulo:hover {
+  background: #f2f6ff;
+  box-shadow: 0px 0px 3px #626261;
+}
+
+.cursoMatriculaicon {
+  display: flex;
+  align-items: center;
+  margin: 20px -2px;
+}
+.cursoMatriculaicon i {
+  margin-right: 4px;
+  color: #ff7012;
+  font-size: 14px;
+}
+.cursoMatriculaicon .inActiveOnline {
+  color: #878787 !important;
+}
+.cursoMatriculaicon > div {
+  font-size: 12px;
+  color: #ababab;
+}
+.NumberCursoModulo {
+  width: 27px;
+  height: 27px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: 900;
+  background: #80c4ff;
+  border-radius: 50%;
+}
+.FechasOnlineAula {
+  display: flex;
+  align-items: center;
+  .imgActive {
+    background-image: url(../../../../assets/icons/icono-calendario-naranja.svg);
+    background-repeat: no-repeat;
+    width: 15px;
+    height: 15px;
+    background-position: center;
+  }
+  .inActiveOnline {
+    background-image: url(../../../../assets/icons/icono-calendario-gris.svg);
+  }
+  .fechasTextoOnlineAula {
+    margin-left: 10px;
+    font-size: 12px;
+    color: #ababab;
+    margin-top: 4px;
+  }
+}
+.contentModuloSesiones mat-progress-bar .mat-progress-bar-fill::after {
+  background-color: #00c356;
+}
+.fechasOnline{
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  margin: 3px 0px;
+  div{
+    margin-right: 20px;
+  }
+}
+.imgAlertaActividadesPendientes{
+  width: 15px;
+  height: 15px;
+  background: url('../../../../assets/icons/icono-notificacion-rojo.svg');
+  background-size: cover;
+  background-position: center;
+  margin-right: 10px;
+}
+.imgAlertaActividadesEchas{
+  width: 15px;
+  height: 15px;
+  background: url('../../../../assets/icons/icono-check-circulo-verde.svg');
+  background-size: cover;
+  background-position: center;
+  margin-right: 10px;
+}
+.proximasSesionesOnline{
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin: 10px 10px;
+  padding-bottom: 10px;
+  border-bottom: solid 2px #d1d1d1;
+  .textoProximas{
+    font-size: 17px;
+    font-weight: 600;
+  }
+  .iconProximas{
+    height: 20px;
+    cursor: pointer;
+    .material-icons{
+      font-size: 30px !important;
+      // color: #72a3ff;
+    }
+  }
+}

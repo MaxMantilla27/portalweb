@@ -1,0 +1,128 @@
+<ng-container *ngIf="Semestres!=null && Semestres!=undefined && Semestres.length!=0">
+  <div *ngFor="let mod of Semestres;let i=index">
+    <div class="proximasSesionesOnline" (click)="OpenSemestre(i)">
+      <div class="textoProximas">Semestre {{mod.nombreCiclo}}</div>
+      <div class="iconProximas">
+        <ng-container *ngIf="mod.open==false" ><i class="material-icons">keyboard_arrow_down</i></ng-container>
+        <ng-container *ngIf="mod.open==true "><i class="material-icons">keyboard_arrow_up</i></ng-container>
+      </div>
+    </div>
+    <div *ngIf="mod.open==true">
+      <ng-container *ngFor="let item of programEstructura.listaCursoMatriculado; let i2=index">
+        <div class="contentCursoModulo" *ngIf="item.nombreCiclo==mod.nombreCiclo">
+          <div class="headerCursoModulo row">
+            <div class="col-12 col-md-8 col-lg-10 row" style="align-items: flex-start;">
+              <div class="NumberCursoModulo col-2 col-md-1 col-lg-1">
+                {{i2+1}}
+              </div>
+              <ng-container *ngIf="item.idModalidadHijo!=1">
+                <div class="titleCursoModulo col-10 col-md-11 col-lg-11">
+                  {{item.programaGeneralHijo}}
+                  <div class="row" >
+                    <div class="cursoMatriculaicon col-6 col-md-6 col-lg-6" style="    display: flex;">
+                      <i class="material-icons" [ngClass]="{'inActiveOnline': item.fechasOnlineActive!=true}">play_circle_fill</i>
+                      <div>Online Sincrónico</div>
+                    </div>
+                    <div class="col-6 col-md-6 col-lg-6" style="display: flex;align-items: center;">
+                      <ng-container *ngIf="item.pendientes!=0">
+                        <div class="imgAlertaActividadesPendientes"></div>
+                        <div style="font-size: 12px">Actividades Pendientes ({{item.pendientes}}) </div>
+                      </ng-container>
+                      <ng-container *ngIf="item.pendientes==0">
+                        <div class="imgAlertaActividadesEchas"></div>
+                        <div style="font-size: 12px;">Sin Pendientes</div>
+                      </ng-container>
+
+                    </div>
+                  </div>
+                  <div class="FechasOnlineAula">
+                    <div class="col-12 fechasOnline"  *ngIf="item.fechasOnline!=undefined && item.fechasOnline!=null">
+                      <div class="imgActive" [ngClass]="{'inActiveOnline': item.fechasOnlineActive!=true}"></div>
+                      <div style="font-weight: normal !important;">Fecha Inicio: {{item.fechasOnline.fechaInicio | date:'dd-MM-yyyy'}}</div>
+                      <div style="font-weight: normal !important;">Fecha Fin: {{item.fechasOnline.fechaFin | date:'dd-MM-yyyy'}}</div>
+                    </div>
+                  </div>
+                  <div style="display: flex; font-size: 14px;font-weight: normal !important;">
+
+                    <div style="position: relative;width: 20px;
+                    margin-right: 10px;    height: 20px;">
+
+                      <mat-progress-spinner class="greay-spinner" [mode]="'determinate'" [diameter]="20"
+                        [strokeWidth]="4" [value]="100">
+                      </mat-progress-spinner>
+                      <mat-progress-spinner class="progras-spinner" [mode]="'determinate'" [diameter]="20"
+                        [strokeWidth]="4" [value]="(item.sesionesFaltantes)*100/item.sesiones">
+                      </mat-progress-spinner>
+                    </div>
+                    <div>
+                      Sesiones ejecutadas {{item.sesionesFaltantes}} de {{item.sesiones}}
+                    </div>
+                  </div>
+
+                </div>
+              </ng-container>
+              <ng-container *ngIf="item.idModalidadHijo==1">
+                <div class="titleCursoModulo col-10 col-md-11 col-lg-11">{{item.programaGeneralHijo}}
+                  <div class="cursoMatriculaicon">
+                    <i class="material-icons">play_circle_fill</i>
+                    <div>Online Asincrónico</div>
+                  </div>
+                  <ng-container *ngIf="item.convalidado!=true">
+                    <div
+                      style="font-size: 10px;font-weight: 600;color: #8d8789;display: flex;    align-items: flex-end;margin-top: 5px;">
+                      <div style="font-size: 12px;">Avance {{item.porcentaje | number:'1.0-0'}}%</div>
+                    </div>
+                    <div class="contentModuloSesiones">
+                      <mat-progress-bar mode="determinate" class="progrees-modulo" style="    border-radius: 10px;"
+                        [value]="(item.porcentaje!=undefined)?item.porcentaje:0">
+                      </mat-progress-bar>
+                    </div>
+                  </ng-container>
+
+                  <ng-container *ngIf="item.convalidado==true">
+                    <div
+                      style="font-size: 10px;font-weight: 600;color: #8d8789;display: flex;    align-items: flex-end;margin-top: 5px;">
+                      <div style="font-size: 12px;">Avance 100%</div>
+                    </div>
+                    <div class="col-12 contentModuloSesiones">
+                      <mat-progress-bar mode="determinate" class="progrees-modulo" style="    border-radius: 10px;"
+                        [value]="100">
+                      </mat-progress-bar>
+                    </div>
+
+                    <div style="    font-size: 11px;font-weight: bold;color: #909090;margin-top: 10px;">
+                      Convalidado
+                    </div>
+                  </ng-container>
+                </div>
+              </ng-container>
+            </div>
+            <div class="col-12 col-md-4 col-lg-2" style="display: flex;justify-content: flex-end;padding: 0px;">
+              <app-default-button (ButtoclClick)="EventoInteraccionButton('Ingresar')" [disabled]="item.params==undefined"
+                (click)="IrCurso(idMatricula,item.idPEspecificoHijo,item.habilitado==true?true:false)"
+                [confs]="{color:'primary',titulo:'Ingresar'}" [disabled]="item.params==undefined"
+                [style]="'padding: 0px 30px;border-radius: 20px;margin:0px'">
+              </app-default-button>
+            </div>
+          </div>
+        </div>
+      </ng-container>
+
+    </div>
+    <!-- <div style="padding: 5px 0px;font-weight: 600;display: flex;justify-content: space-between;align-items: center;width: 100%;cursor: pointer;"
+      (click)="mod.open=(mod.open==undefined || mod.open==false)?true:false">
+        <div>Semestre {{mod.nombreCiclo}}</div>
+
+        <div>
+          <i class="material-icons no-seleccionable " *ngIf="!mod.open">keyboard_arrow_down</i>
+          <i class="material-icons no-seleccionable " *ngIf="mod.open">keyboard_arrow_up</i>
+        </div>
+      </div>
+      <div style="padding:5px 20px;" *ngIf="mod.open==true">
+
+
+      </div> -->
+  </div>
+</ng-container>
+
+

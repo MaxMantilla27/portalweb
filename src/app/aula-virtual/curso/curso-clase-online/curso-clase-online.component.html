@@ -5,8 +5,12 @@
     <div style="font-weight: bold;">Clases Online</div>
   </div>
 </div> -->
-
-<ng-container *ngIf="(clases==undefined || clases.length==0) ||  (actual==undefined || actual.length==0)  || (proximo==undefined || proximo.length==0) ">
+<!-- <ng-container *ngIf="(clases==undefined || clases.length==0) ||  (actual==undefined || actual.length==0)  || (proximo==undefined || proximo.length==0) ">
+  <div style="text-align: left; margin-bottom: 20px;">
+    Por el momento no cuenta con clases online
+  </div>
+</ng-container> -->
+<ng-container *ngIf="clases.length==0 ">
   <div style="text-align: left; margin-bottom: 20px;">
     Por el momento no cuenta con clases online
   </div>

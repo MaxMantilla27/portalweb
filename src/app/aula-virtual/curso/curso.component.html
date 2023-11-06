@@ -198,9 +198,14 @@
               </div>
             </div>
             <div
-              *ngIf="programEstructura.listaCursoMatriculado!=null && programEstructura.listaCursoMatriculado.length>1">
+              *ngIf="programEstructura.listaCursoMatriculado!=null && programEstructura.listaCursoMatriculado.length>1 && IdTipoProgramaCarrera!=2">
               <app-curso-modulos [idMatricula]="idMatricula" [programEstructura]="programEstructura">
               </app-curso-modulos>
+            </div>
+            <div
+              *ngIf="programEstructura.listaCursoMatriculado!=null && programEstructura.listaCursoMatriculado.length>1 && IdTipoProgramaCarrera==2">
+              <app-curso-modulos-carreras-profesionales [idMatricula]="idMatricula" [programEstructura]="programEstructura">
+              </app-curso-modulos-carreras-profesionales>
             </div>
           </div>
         </mat-tab>
@@ -241,9 +246,13 @@
               <div class="titleMatr" *ngIf="!hide">Calificaciones</div>
             </div>
           </ng-template>
-          <div class="pad-resp">
+          <div *ngIf="IdTipoProgramaCarrera!=2" class="pad-resp">
             <app-curso-notas [IdMatricula]="idMatricula" [IdTipoProgramaCarrera]="IdTipoProgramaCarrera">
             </app-curso-notas>
+          </div>
+          <div  *ngIf="IdTipoProgramaCarrera==2" class="pad-resp">
+            <app-curso-notas-carreras-profesionales [IdMatricula]="idMatricula" [IdTipoProgramaCarrera]="IdTipoProgramaCarrera">
+            </app-curso-notas-carreras-profesionales>
           </div>
         </mat-tab>
         <mat-tab>
@@ -255,7 +264,7 @@
             </div>
           </ng-template>
           <ng-template matTabContent>
-            <div class="pad-resp">
+            <div *ngIf="IdTipoProgramaCarrera!=2" class="pad-resp">
               <app-curso-certificado *ngIf="curso!=undefined" [alertaDigital]="alertaDigital"
                 [alertaFisico]="alertaFisico" [datosCertificado]="datosCertificado" [curso]="curso"
                 [idProyecto]="curso.idProyecto" [idPGeneral]="curso.idPGeneral" [idPEspecifico]="curso.idPEspecifico"
@@ -264,6 +273,11 @@
                 (OnCloseAlertaFisico)="alertaFisico=false">
 
               </app-curso-certificado>
+            </div>
+            <div *ngIf="IdTipoProgramaCarrera==2" class="pad-resp">
+              <app-curso-certificado-carreras-profesionales [IdMatricula]="curso.idMatriculaCabecera" >
+
+              </app-curso-certificado-carreras-profesionales>
             </div>
           </ng-template>
 

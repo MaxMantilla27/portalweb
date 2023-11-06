@@ -1,0 +1,24 @@
+
+<ng-container *ngIf="charge==false">
+
+  <div class="row">
+    <div class="col-6 col-md-4 col-lg-4">
+      <app-card-certificado-carreras [Titulo]="'Certificado de Estudios'" [img]="'certificado-estudios.svg'"
+      (click)="Changes(1)"></app-card-certificado-carreras>
+    </div>
+    <div class="col-6 col-md-4 col-lg-4">
+      <app-card-certificado-carreras [Titulo]="'Grado de Bachiller'" [img]="'diploma-grado-bachiller.svg'"
+      (click)="Changes(2)"></app-card-certificado-carreras>
+    </div>
+    <div class="col-6 col-md-4 col-lg-4">
+      <app-card-certificado-carreras [Titulo]="'Título Profesional Técnico'" [img]="'diploma-titulo-profesional-tecnico.svg'"
+      (click)="Changes(3)"></app-card-certificado-carreras>
+    </div>
+  </div>
+
+
+
+</ng-container>
+<ng-container *ngIf="charge==true">
+  Valores
+</ng-container>

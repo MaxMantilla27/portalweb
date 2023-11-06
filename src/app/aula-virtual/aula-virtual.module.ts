@@ -165,6 +165,7 @@ import { VistaPreviaCuestionarioComponent } from './docencia-v2-cursos-online/ad
 import { RecursosTareaComponent } from './docencia-v2-cursos-online/administrar-sesion/pespecifico-sesion-esquema/recursos-tarea/recursos-tarea.component';
 import { RecursosCuestionarioComponent } from './docencia-v2-cursos-online/administrar-sesion/pespecifico-sesion-esquema/recursos-cuestionario/recursos-cuestionario.component';
 import { RegistrarForoProyectoComponent } from './curso/curso-proyecto/registrar-foro-proyecto/registrar-foro-proyecto.component';
+import { CursoModulosCarrerasProfesionalesComponent } from './curso/curso-modulos-carreras-profesionales/curso-modulos-carreras-profesionales.component';
 import { CursoTramitesCarreraComponent } from './curso/curso-tramites-carrera/curso-tramites-carrera.component';
 import { CardTramitesCarreraComponent } from './curso/curso-tramites-carrera/card-tramites-carrera/card-tramites-carrera.component';
 import { TramitesInformacionPersonalComponent } from './curso/curso-tramites-carrera/tramites-informacion-personal/tramites-informacion-personal.component';
@@ -173,6 +174,9 @@ import { TramitesCertificadoEstudiosComponent } from './curso/curso-tramites-car
 import { TramitesGradoBachillerComponent } from './curso/curso-tramites-carrera/tramites-grado-bachiller/tramites-grado-bachiller.component';
 import { TramitesConstanciaMatriculaComponent } from './curso/curso-tramites-carrera/tramites-constancia-matricula/tramites-constancia-matricula.component';
 import { TramitesDiplomaTituloComponent } from './curso/curso-tramites-carrera/tramites-diploma-titulo/tramites-diploma-titulo.component';
+import { CursoNotasCarrerasProfesionalesComponent } from './curso/curso-notas-carreras-profesionales/curso-notas-carreras-profesionales.component';
+import { CursoCertificadoCarrerasProfesionalesComponent } from './curso/curso-certificado-carreras-profesionales/curso-certificado-carreras-profesionales.component';
+import { CardCertificadoCarrerasComponent } from './curso/curso-certificado-carreras-profesionales/card-certificado-carreras/card-certificado-carreras.component';
 
 
 @NgModule({
@@ -335,6 +339,7 @@ import { TramitesDiplomaTituloComponent } from './curso/curso-tramites-carrera/t
     RecursosTareaComponent,
     RecursosCuestionarioComponent,
     RegistrarForoProyectoComponent,
+    CursoModulosCarrerasProfesionalesComponent,
     CursoTramitesCarreraComponent,
     CardTramitesCarreraComponent,
     TramitesInformacionPersonalComponent,
@@ -343,6 +348,9 @@ import { TramitesDiplomaTituloComponent } from './curso/curso-tramites-carrera/t
     TramitesGradoBachillerComponent,
     TramitesConstanciaMatriculaComponent,
     TramitesDiplomaTituloComponent,
+    CursoNotasCarrerasProfesionalesComponent,
+    CursoCertificadoCarrerasProfesionalesComponent,
+    CardCertificadoCarrerasComponent,
 
   ],
   imports: [
