@@ -54,6 +54,7 @@ export class CursoComponent implements OnInit,OnDestroy {
   public tabIndex = 0;
   public IndicacionActive = false;
   public CertificadoActive = false;
+  public CertificadoActiveCarreras = false;
   public hide=false
 
   public indexIndicacions=0
@@ -327,35 +328,6 @@ export class CursoComponent implements OnInit,OnDestroy {
         console.log(this.tabIndex)
       }
     }
-    // if((tabChangeEvent.index >= (4+TProyecto+noesAonline+esirca) || tabChangeEvent.index < (1+TProyecto+noesAonline))   && this.CertificadoActive){
-    //   this.CertificadoActive=false
-    //   if(tabChangeEvent.index >= (4+TProyecto+noesAonline+esirca)){
-    //   }
-    // }
-    // if(tabChangeEvent.index == (1+TProyecto+noesAonline) && !this.CertificadoActive){
-    //   this.CertificadoActive=true
-    // }
-    // if(this.curso!=undefined && this.curso.proyectoAplicacion){
-    //   if((tabChangeEvent.index >= (6+noesAonline+esirca) || tabChangeEvent.index < (3+noesAonline))  && this.CertificadoActive){
-    //     this.CertificadoActive=false
-    //     if(tabChangeEvent.index >= (6+noesAonline+esirca)){
-    //       this.tabIndex-=(2+esirca)
-    //     }
-    //   }
-    //   if(tabChangeEvent.index == (2+noesAonline) && !this.CertificadoActive){
-    //     this.CertificadoActive=true
-    //   }
-    // }else{
-    //   if((tabChangeEvent.index >= (5+noesAonline+esirca) || tabChangeEvent.index < (2+noesAonline))   && this.CertificadoActive){
-    //     this.CertificadoActive=false
-    //     if(tabChangeEvent.index >= (5+noesAonline+esirca)){
-    //       this.tabIndex-=(2+esirca)
-    //     }
-    //   }
-    //   if(tabChangeEvent.index == (1+noesAonline) && !this.CertificadoActive){
-    //     this.CertificadoActive=true
-    //   }
-    // }
   }
 
   ProgresoProgramaCursosAulaVirtualAonlinePorEstadoVideo() {

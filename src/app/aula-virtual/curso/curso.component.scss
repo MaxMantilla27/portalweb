@@ -102,6 +102,18 @@
   .iconAyuda {
     background-image: url("../../../assets/icons/ayuda-09.svg");
   }
+  .iconCertificadoEstudio{
+    width: 30px !important;
+    background-image: url("../../../assets/icons/certificado-estudios-gris.svg");
+  }
+  .iconGradoBachiller{
+    width: 30px !important;
+    background-image: url("../../../assets/icons/diploma-grado-bachiller-gris.svg");
+  }
+  .iconTituloProfesional{
+    width: 30px !important;
+    background-image: url("../../../assets/icons/diploma-titulo-profesional-tecnico-gris.svg");
+  }
 }
 .tabVertical
   mat-tab-header
@@ -174,6 +186,18 @@
   .iconAyuda {
     background-image: url("../../../assets/icons/ayuda-azul-09.svg") !important;
   }
+  .iconCertificadoEstudio{
+    width: 30px !important;
+    background-image: url("../../../assets/icons/certificado-estudios-azul.svg") !important;
+  }
+  .iconGradoBachiller{
+    width: 30px !important;
+    background-image: url("../../../assets/icons/diploma-grado-bachiller-azul.svg") !important;
+  }
+  .iconTituloProfesional{
+    width: 30px !important;
+    background-image: url("../../../assets/icons/diploma-titulo-profesional-tecnico-azul.svg") !important;
+  }
 }
 .ActiveChil {
   color: #0684f3 !important;
@@ -233,6 +257,18 @@
   }
   .iconAyuda {
     background-image: url("../../../assets/icons/ayuda-azul-09.svg") !important;
+  }
+  .iconCertificadoEstudio{
+    width: 30px !important;
+    background-image: url("../../../assets/icons/certificado-estudios.svg") !important;
+  }
+  .iconGradoBachiller{
+    width: 30px !important;
+    background-image: url("../../../assets/icons/diploma-grado-bachiller.svg") !important;
+  }
+  .iconTituloProfesional{
+    width: 30px !important;
+    background-image: url("../../../assets/icons/diploma-titulo-profesional-tecnico.svg") !important;
   }
 }
 .subContent {

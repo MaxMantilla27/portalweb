@@ -108,7 +108,8 @@
           </ng-template>
           <div class="pad-resp">
             <ng-container >
-              <app-asistencias-online [IdMatriculaCabecera]="json.IdMatriculaCabecera" [IdPEspecifico]="json.IdPEspecificoHijo"></app-asistencias-online>
+              <app-asistencias-online *ngIf="IdTipoProgramaCarrera!=2" [IdMatriculaCabecera]="json.IdMatriculaCabecera" [IdPEspecifico]="json.IdPEspecificoHijo"></app-asistencias-online>
+              <app-asistencias-carreras-profesionales *ngIf="IdTipoProgramaCarrera==2" [IdMatriculaCabecera]="json.IdMatriculaCabecera" [IdPEspecifico]="json.IdPEspecificoHijo" [IdTipoProgramaCarrera]="IdTipoProgramaCarrera"></app-asistencias-carreras-profesionales>
             </ng-container>
 
           </div>
