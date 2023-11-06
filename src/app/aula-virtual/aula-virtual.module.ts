@@ -169,6 +169,11 @@ import { CursoModulosCarrerasProfesionalesComponent } from './curso/curso-modulo
 import { CursoTramitesCarreraComponent } from './curso/curso-tramites-carrera/curso-tramites-carrera.component';
 import { CardTramitesCarreraComponent } from './curso/curso-tramites-carrera/card-tramites-carrera/card-tramites-carrera.component';
 import { TramitesInformacionPersonalComponent } from './curso/curso-tramites-carrera/tramites-informacion-personal/tramites-informacion-personal.component';
+import { TramitesCertificadoIdiomaComponent } from './curso/curso-tramites-carrera/tramites-certificado-idioma/tramites-certificado-idioma.component';
+import { TramitesCertificadoEstudiosComponent } from './curso/curso-tramites-carrera/tramites-certificado-estudios/tramites-certificado-estudios.component';
+import { TramitesGradoBachillerComponent } from './curso/curso-tramites-carrera/tramites-grado-bachiller/tramites-grado-bachiller.component';
+import { TramitesConstanciaMatriculaComponent } from './curso/curso-tramites-carrera/tramites-constancia-matricula/tramites-constancia-matricula.component';
+import { TramitesDiplomaTituloComponent } from './curso/curso-tramites-carrera/tramites-diploma-titulo/tramites-diploma-titulo.component';
 import { CursoNotasCarrerasProfesionalesComponent } from './curso/curso-notas-carreras-profesionales/curso-notas-carreras-profesionales.component';
 import { CursoCertificadoCarrerasProfesionalesComponent } from './curso/curso-certificado-carreras-profesionales/curso-certificado-carreras-profesionales.component';
 import { AsistenciasCarrerasProfesionalesComponent } from './modulo/asistencias-carreras-profesionales/asistencias-carreras-profesionales.component';
@@ -345,6 +350,11 @@ import { ModalCertificadoTituloCarrerasProfesionalesComponent } from './curso/cu
     CursoTramitesCarreraComponent,
     CardTramitesCarreraComponent,
     TramitesInformacionPersonalComponent,
+    TramitesCertificadoIdiomaComponent,
+    TramitesCertificadoEstudiosComponent,
+    TramitesGradoBachillerComponent,
+    TramitesConstanciaMatriculaComponent,
+    TramitesDiplomaTituloComponent,
     CursoNotasCarrerasProfesionalesComponent,
     CursoCertificadoCarrerasProfesionalesComponent,
     AsistenciasCarrerasProfesionalesComponent,

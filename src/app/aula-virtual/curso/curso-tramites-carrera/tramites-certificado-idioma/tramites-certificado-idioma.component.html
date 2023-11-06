@@ -1,0 +1,61 @@
+<div style="    font-size: 12px;font-weight: 600;margin: 10px 0px;">Presentar Certificado de Idioma Extranjero</div>
+<div style="font-size: 14px;margin: 10px 0px;margin: 10px 0px;">Como parte de los requisitos para obtener el Grado de
+  Bachiller debes
+  presentar tu certificado que acredite un idioma extranjero o lengua originaria.</div>
+
+<div style="    font-size: 12px;font-weight: 600;margin: 10px 0px;">Selecciona el archivo:</div>
+<div class="row">
+  <div class="col-8 col-md-10 col-lg-10">
+    <div style="height: 38px;width: 100%;border:solid 1px #c2c2c2;border-radius: 5px;display: flex; align-items: center;
+      padding: 0px 5px;">
+      <button style="    border: solid 1px #767676;
+        margin-right: 5px;
+        white-space: nowrap;
+        font-size: 12px;
+        padding: 2px 20px;
+        border-radius: 5px;" (click)="fileInput.click()">Examinar</button>
+      <a [href]="url" class="vinculo" style="
+        color: black !important;
+        text-decoration: none ;
+        background: #fff7ea;
+        font-size: 12px;
+        padding: 4px 10px;
+        border-radius: 5px;" target="_blank"> {{nombre}}</a>
+    </div>
+    <input #fileInput type="file" id="file" (change)="getFileDetails($event)" style="    width: 100%;
+      border: solid 1px #c2c2c2;
+      padding: 7px;
+      border-radius: 5px;display: none;">
+    <div *ngIf="!filestatus && fileErrorMsg!=''">{{fileErrorMsg}}</div>
+  </div>
+  <div class="col-4 col-md-2 col-lg-2">
+
+    <app-default-button [confs]="{color:'primary',titulo:'Enviar'}" [style]="'width: 100%;'" [icon]="''"
+      [style]="'     width:100%;border-radius: 25px;border: solid 1px #f8893f;'"
+      [disabled]="nombrefile==''"
+      (click)="InsertarCertificadoIdiomaExtranjero()"></app-default-button>
+  </div>
+</div>
+<div class="HeaderCarreraDatosPersonales">
+  <div>Instrucciones para subir tu certificado</div>
+  <div class="IconCarreraDatosPersonales">
+    <i class="material-icons" *ngIf="OpenInstrucciones==true"
+      (click)="OpenInstrucciones=!OpenInstrucciones">keyboard_arrow_up</i>
+    <i class="material-icons" *ngIf="OpenInstrucciones==false"
+      (click)="OpenInstrucciones=!OpenInstrucciones">keyboard_arrow_down</i>
+  </div>
+</div>
+<ng-container *ngIf="OpenInstrucciones==true">
+  <div class="contentCarreraDatosPersonales">
+    <div style="font-size: 13px;margin-bottom: 4px;">- No nombrar tu archivo con caracteres especiales</div>
+    <div style="font-size: 13px;margin-bottom: 4px;">- El peso máximo del archivo debe ser 25 MB</div>
+    <div style="font-size: 13px;margin-bottom: 4px;">- Subir el archivo en formato .pdf</div>
+  </div>
+</ng-container>
+
+<div class="buttonsEnvioCarreraDatos">
+
+  <app-default-button [confs]="{color:'primary',titulo:'Volver'}" [style]="'width: 100%;'" [icon]="''"
+    [style]="'     padding: 0px 60px; border-radius: 25px;border: solid 1px #f8893f;'"
+    (click)="Volver.emit(0)"></app-default-button>
+</div>

@@ -1,0 +1,28 @@
+.dialog-modal-carrera{
+  mat-dialog-container {
+    border-radius: 24px;
+  }
+}
+.contenidoCarreraModal{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+.imgCarreraModal{
+  width: 40px;
+    height: 40px;
+    background-image: url(../../../../../../assets/icons/icono-check-circulo-verde.svg);
+    margin-bottom: 20px;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+.titleCarreraModal{
+  font-size: 16px;
+  font-weight: 600;
+}
+.textoCarreraModal{
+  font-size: 14px;
+  margin-bottom: 20px;
+}

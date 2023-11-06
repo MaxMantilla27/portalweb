@@ -39,8 +39,8 @@ export class AgregarCuestionarioComponent implements OnInit, OnDestroy {
   constructor(
     public dialogRef: MatDialogRef<AgregarCuestionarioComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
-    private _PEspecificoEsquemaService: PEspecificoEsquemaService,
     public dialog: MatDialog,
+    private _PEspecificoEsquemaService: PEspecificoEsquemaService,
     public _SnackBarServiceService: SnackBarServiceService,
     private alertaService: AlertaService,
   ) {}

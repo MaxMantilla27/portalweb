@@ -1,0 +1,8 @@
+<div class="contenidoCarreraModal">
+  <div class="imgCarreraModal"></div>
+  <div class="titleCarreraModal" [innerHTML]="data.titulo  | safeHtml"></div>
+  <div class="textoCarreraModal" [innerHTML]="data.texto  | safeHtml"></div>
+  <app-default-button [confs]="{color:'primary',titulo:'Aceptar'}" [style]="'width: 100%;'"
+  [icon]="''" [style]="'     padding: 0px 60px; border-radius: 25px;border: solid 1px #f8893f;'"
+  (click)="dialogRef.close()"></app-default-button>
+</div>

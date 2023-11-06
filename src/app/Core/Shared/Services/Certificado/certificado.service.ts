@@ -37,6 +37,24 @@ export class CertificadoService {
 
 
 
+  public InsertarCertificadoIdiomaExtranjero(file: File): Observable<any> {
+    if (this.isBrowser) {
+      const formData: FormData = new FormData();
+      formData.append("file", file);
+      const req = new HttpRequest(
+        "POST",
+        `${this.urlBase}/InsertarCertificadoIdiomaExtranjero`,
+        formData,
+        {
+          reportProgress: true,
+          responseType: "json",
+        }
+      );
+      return this.http.request(req);
+    } else {
+      return EMPTY;
+    }
+  }
   public InsertarValidacionDatosAlumnoCarrera(Json: DatosAlumnoValidacionCarreraDTO): Observable<any> {
     if (this.isBrowser) {
       const formData: FormData = new FormData();
@@ -44,6 +62,7 @@ export class CertificadoService {
       formData.append("Apellidos", Json.Apellidos);
       formData.append("Usuario", "--");
       formData.append("file", Json.file);
+      formData.append("IdMatriculaCabecera", Json.IdMatriculaCabecera.toString());
       const req = new HttpRequest(
         "POST",
         `${this.urlBase}/InsertarValidacionDatosAlumnoCarrera`,
@@ -65,6 +84,14 @@ export class CertificadoService {
       return EMPTY;
     }
   }
+  public ObtenerImagenAlumno(IdMatriculaCabecera:number):Observable<any>{
+    if(this.isBrowser){
+      return this.http.get<any>(this.urlBase+'/ObtenerImagenAlumno?IdMatriculaCabecera='+IdMatriculaCabecera);
+    }else{
+      return EMPTY;
+    }
+  }
+
   public ObtenerDatosCertificadoIrcaEnvio(IdMatriculaCabecera:number):Observable<any>{
     if(this.isBrowser){
       return this.http.get<any>(this.urlBase+'/ObtenerDatosCertificadoIrcaEnvio?IdMatriculaCabecera='+IdMatriculaCabecera);

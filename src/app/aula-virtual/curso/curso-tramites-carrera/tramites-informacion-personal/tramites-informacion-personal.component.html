@@ -1,1 +1,97 @@
-<div class=""></div>
+<div class="HeaderCarreraDatosPersonales">
+  <div>Validar nombres y apellidos</div>
+  <div class="IconCarreraDatosPersonales">
+    <i class="material-icons" *ngIf="OpenNombres==true" (click)="OpenNombres=!OpenNombres">keyboard_arrow_up</i>
+    <i class="material-icons" *ngIf="OpenNombres==false" (click)="OpenNombres=!OpenNombres">keyboard_arrow_down</i>
+  </div>
+</div>
+<ng-container *ngIf="OpenNombres==true">
+  <div class="contentCarreraDatosPersonales row">
+    <div style="    font-size: 14px;margin: 10px 0px;">Verifica que tus nombres y apellidos sean correctos, ya que estos se mostrarán en tu certificado</div>
+    <div class="row" style="align-items: center;padding: 20px;">
+      <div class="col-4 col-md-3 col-lg-3" style="margin-bottom: 20px;">Nombres:</div>
+      <div class="col-8 col-md-9 col-lg-9 InputsTramiteCarrera">
+
+        <mat-form-field appearance="outline"  style="width: 100%;">
+          <mat-label>Nombres</mat-label>
+          <input type="text" placeholder="Nombres" [(ngModel)]="json.Nombres" matInput>
+        </mat-form-field>
+      </div>
+      <div class="col-12" style="margin-bottom: 10px;"></div>
+      <div class="col-4 col-md-3 col-lg-3" >Apellidos:</div>
+      <div class="col-8 col-md-9 col-lg-9 InputsTramiteCarrera">
+        <mat-form-field appearance="outline"  style="width: 100%;">
+          <mat-label>Apellidos</mat-label>
+          <input type="text" placeholder="Apellidos" [(ngModel)]="json.Apellidos" matInput>
+        </mat-form-field>
+      </div>
+    </div>
+  </div>
+</ng-container>
+
+<div class="HeaderCarreraDatosPersonales">
+  <div>Actualizar Fotografía</div>
+  <div class="IconCarreraDatosPersonales">
+    <i class="material-icons" *ngIf="OpenFoto==true" (click)="OpenFoto=!OpenFoto">keyboard_arrow_up</i>
+    <i class="material-icons" *ngIf="OpenFoto==false" (click)="OpenFoto=!OpenFoto">keyboard_arrow_down</i>
+  </div>
+</div>
+<ng-container *ngIf="OpenFoto==true">
+  <div class="contentCarreraDatosPersonales row">
+    <div style="    font-size: 14px;margin: 10px 0px;margin: 10px 0px;">Como parte de los requisitos para obtener tus certificados y titulo profesional técnico, debes actualizar tu fotografía</div>
+    <div  style="    font-size: 12px;font-weight: 600;margin: 10px 0px;">Consideraciones</div>
+    <div style="font-size: 13px;margin-bottom: 4px;">- El estudiante debe estar de manera frontal a la cámara, con una expresión natural</div>
+    <div style="font-size: 13px;margin-bottom: 4px;">- No debe tener accesorios, a menos que se sustente con un certificado medico</div>
+    <div style="font-size: 13px;margin-bottom: 4px;">- Fotografía en alta resolución y en fondo Blanco</div>
+    <div style="font-size: 13px;margin-bottom: 4px;">- Tamaño pasaporte: (Ancho: 35 mm y Alto 45 mm)</div>
+    <div style="font-size: 13px;margin-bottom: 4px;">- Antigüedad menor a 30 días a la fecha de captura</div>
+    <div style="font-size: 13px;margin-bottom: 4px;">- No se aceptan fotografías escaneadas ni retocadas</div>
+    <div  style="    font-size: 12px;font-weight: 600;margin: 10px 0px;">Selecciona el archivo:</div>
+    <div class="ArchivoCarreraDatosPersonales" >
+      <div  style="height: 38px;width: 100%;border:solid 1px #c2c2c2;border-radius: 5px;display: flex; align-items: center;
+      padding: 0px 5px;">
+        <button style="    border: solid 1px #767676;
+        margin-right: 5px;
+        white-space: nowrap;
+        font-size: 12px;
+        padding: 2px 20px;
+        border-radius: 5px;" (click)="fileInput.click()">Examinar</button>
+        <div style="    white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;" *ngIf="ImgCarrera==undefined || ImgCarrera==null || ImgCarrera.nombreArchivo==null || nombrefile!=''">{{nombrefile==''?'Ningún archivo seleccionado':nombrefile}}</div>
+        <a *ngIf="ImgCarrera!=undefined && ImgCarrera!=null && ImgCarrera.nombreArchivo!=null && nombrefile==''" [href]="ImgCarrera.urlArchivoSubido" class="vinculo" style="
+        color: black !important;
+        text-decoration: none ;
+        background: #fff7ea;
+        font-size: 12px;
+        padding: 4px 10px;
+        border-radius: 5px;" target="_blank"> {{ImgCarrera.nombreArchivo}}</a>
+      </div>
+      <input #fileInput type="file" id="file"
+      (change)="getFileDetails($event)"
+      style="    width: 100%;
+      border: solid 1px #c2c2c2;
+      padding: 7px;
+      border-radius: 5px;display: none;">
+        <div *ngIf="!filestatus && fileErrorMsg!=''">{{fileErrorMsg}}</div>
+    </div>
+    <div  style="    font-size: 12px;font-weight: 600;margin: 10px 0px;">Consideraciones</div>
+    <div style="font-size: 13px;margin-bottom: 4px;">- No nombrar tu archivo con caracteres especiales</div>
+    <div style="font-size: 13px;margin-bottom: 4px;">- El peso máximo del archivo debe ser 25 MB</div>
+    <div style="font-size: 13px;margin-bottom: 4px;">- Subir el archivo en formato .jpg o .png</div>
+  </div>
+</ng-container>
+
+<div class="buttonsEnvioCarreraDatos">
+
+  <app-default-button [confs]="{color:'primary',titulo:'Volver'}" [style]="'width: 100%;'"
+  [icon]="''" [style]="'padding: 0px 40px; border-radius: 25px; background: white;border: solid 1px #f8893f;color: #f8893f;'" (click)="Volver.emit(0)"></app-default-button>
+
+  <app-default-button [confs]="{color:'primary',titulo:'Guardar'}" [style]="'width: 100%;'"
+  [icon]="''" [style]="'     padding: 0px 40px; border-radius: 25px;border: solid 1px #f8893f;'"
+  [disabled]="json.Nombres.length==0 || json.Apellidos.length==0"
+  (click)="InsertarValidacionDatosAlumnoCarrera()"></app-default-button>
+</div>
