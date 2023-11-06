@@ -1,0 +1,75 @@
+<div style="font-size: 16px;font-weight: 600;margin: 10px 0px;">Certificado de estudios</div>
+<div style="    font-size: 14px;margin: 10px 0px;margin: 10px 0px;">Recuerda que para obtener el certificado de estudios debes cumplir con lo siguiente:</div>
+
+<div class="row">
+  <div class="col-7 col-md-"></div>
+
+</div>
+<div class="ListaTramites" style="margin-top: 40px;border: 2px solid #cacaca;border-radius: 10px;    position: relative;">
+
+  <div class="ResumenPago">
+    <div style=" margin-left: 20px;display:flex;align-items: center;"> Resumen de Pago</div>
+  </div>
+  <div class="contentTablaPagos">
+    <table class="TablaPagos" style="margin-top:75px">
+      <thead class="TablaPagosEncabezado" style="border-bottom: 1px solid #cacaca;">
+        <tr>
+          <td style="width: 500px;text-align: left;border-radius: 2px;font-weight: bold;    min-width: 200px;"><strong
+              style=" margin-left: 20px">Concepto</strong></td>
+          <td style="width: 200px;border-radius: 2px;font-weight: bold;    min-width: 120px;    padding-bottom: 10px;"><strong>Moneda</strong></td>
+          <td style="width: 200px;border-radius: 2px;font-weight: bold;    min-width: 120px;    padding-bottom: 10px;"><strong>Monto</strong></td>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="criterio" style="width: 600px;text-align: left;">
+            <div style=" margin-left: 20px;margin-top: 20px;margin-bottom: 20px;text-align:left">
+              <div>
+                Constancia de matrícula
+              </div>
+            </div>
+          </td>
+          <td class="criterio" style="width: 200px;">
+            <div class="MontoTramite">
+              PEN
+            </div>
+          </td>
+          <td class="criterio" style="width: 200px;">
+            <div class="MontoTramite">
+              <div>
+                30.00
+              </div>
+            </div>
+          </td>
+        </tr>
+        <tr class="TotalPagar">
+          <td class="criterio" style="font-weight: bold;width: 500px;text-align: left">
+            <div style="margin-left: 20px">
+              Total a pagar
+            </div>
+          </td>
+          <td class="criterio" style="width: 200px;">
+            <div class="MontoTramite">
+              PEN
+            </div>
+          </td>
+          <td class="criterio" style="width: 200px">
+            <div class="MontoTramite">
+              30.00
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="buttonsEnvioCarreraDatos">
+
+  <app-default-button [confs]="{color:'primary',titulo:'Volver'}" [style]="'width: 100%;'"
+  [icon]="''" [style]="'padding: 0px 40px; border-radius: 25px; background: white;border: solid 1px #f8893f;color: #f8893f;'" (click)="Volver.emit(0)"></app-default-button>
+
+  <app-default-button [confs]="{color:'primary',titulo:'Pagar >'}" [style]="'width: 100%;'"
+  [icon]="''" [style]="'     padding: 0px 40px; border-radius: 25px;border: solid 1px #f8893f;'"
+  (click)="Pagar()"></app-default-button>
+</div>

@@ -141,6 +141,7 @@ import { TableCalificarEvaluacionesComponent } from './Containers/table-califica
 import { TableDocenteResponderForosComponent } from './Containers/table-docente-responder-foros/table-docente-responder-foros.component';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import { ImagenModalComponent } from './Containers/Dialog/imagen-modal/imagen-modal.component';
+import { ModalCarrerasComponent } from './Containers/Dialog/modal-carreras/modal-carreras.component';
 
 @NgModule({
   imports: [
@@ -245,6 +246,7 @@ import { ImagenModalComponent } from './Containers/Dialog/imagen-modal/imagen-mo
     TableCalificarEvaluacionesComponent,
     TableDocenteResponderForosComponent,
     ImagenModalComponent,
+    ModalCarrerasComponent,
     //ChatZComponent,
   ],
   exports: [

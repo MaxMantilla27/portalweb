@@ -1,29 +1,29 @@
 
-<ng-container *ngIf="charge==false">
+<ng-container *ngIf="change==false">
 
   <div class="row">
     <div class="col-6 col-md-4 col-lg-4">
-      <app-card-tramites-carrera [Titulo]="'Solicitar Certificado de estudios'" [img]="'user-solido.svg'"
+      <app-card-tramites-carrera [Titulo]="'Solicitar Certificado de estudios'" [img]="'Solicitar Certificado de estudios.svg'"
       (click)="Changes(1)"></app-card-tramites-carrera>
     </div>
     <div class="col-6 col-md-4 col-lg-4">
-      <app-card-tramites-carrera [Titulo]="'Solicitar Diploma de Grado de Bachiller'" [img]="'user-solido.svg'"
+      <app-card-tramites-carrera [Titulo]="'Solicitar Diploma de Grado de Bachiller'" [img]="'Solicitar Diploma de Grado de Bachiller.svg'"
       (click)="Changes(2)"></app-card-tramites-carrera>
     </div>
     <div class="col-6 col-md-4 col-lg-4">
-      <app-card-tramites-carrera [Titulo]="'Solicitar Diploma de Título profesional técnico'" [img]="'user-solido.svg'"
+      <app-card-tramites-carrera [Titulo]="'Solicitar Diploma de Título profesional técnico'" [img]="'Solicitar Diploma de Título profesional técnico.svg'"
       (click)="Changes(3)"></app-card-tramites-carrera>
     </div>
     <div class="col-6 col-md-4 col-lg-4">
-      <app-card-tramites-carrera [Titulo]="'Actualizar información personal'" [img]="'user-solido.svg'"
-      (click)="Changes(4)"></app-card-tramites-carrera>
+      <app-card-tramites-carrera [Titulo]="'Actualizar información personal'" [img]="'Actualizar información personal.svg'"
+      (click)="Changes(4)" ></app-card-tramites-carrera>
     </div>
     <div class="col-6 col-md-4 col-lg-4">
-      <app-card-tramites-carrera [Titulo]="'Presentar Certificado de Idioma Extranjero'" [img]="'user-solido.svg'"
+      <app-card-tramites-carrera [Titulo]="'Presentar Certificado de Idioma Extranjero'" [img]="'Presentar Certificado de Idioma Extranjero.svg'"
       (click)="Changes(5)"></app-card-tramites-carrera>
     </div>
     <div class="col-6 col-md-4 col-lg-4">
-      <app-card-tramites-carrera [Titulo]="'Solicitar Constancia de matrícula'" [img]="'user-solido.svg'"
+      <app-card-tramites-carrera [Titulo]="'Solicitar Constancia de matrícula'" [img]="'Solicitar Constancia de matrícula.svg'"
       (click)="Changes(6)"></app-card-tramites-carrera>
     </div>
   </div>
@@ -79,6 +79,9 @@
   </ng-container>
 
 </ng-container>
-<ng-container *ngIf="charge==true">
-  <app-tramites-informacion-personal *ngIf="InformacionPersonal==true"></app-tramites-informacion-personal>
+<ng-container *ngIf="change==true">
+  <app-tramites-informacion-personal *ngIf="InformacionPersonal==true" [ImgCarrera]="ImgCarrera" (Volver)="ChangesVolver($event)" [IdMatriculaCabecera]="IdMatricula"></app-tramites-informacion-personal>
+  <app-tramites-certificado-idioma *ngIf="certificadoIdioma==true"  (Volver)="ChangesVolver($event)" ></app-tramites-certificado-idioma>
+  <app-tramites-constancia-matricula *ngIf="constanciaMatricula==true"  (Volver)="ChangesVolver(0)" [IdMatriculaCabecera]="IdMatricula"></app-tramites-constancia-matricula>
+  <app-tramites-certificado-estudios *ngIf="certificadoEstudios==true"  (Volver)="ChangesVolver(0)" [IdMatriculaCabecera]="IdMatricula"></app-tramites-certificado-estudios>
 </ng-container>

@@ -1,56 +1,39 @@
 import { HttpEventType, HttpResponse } from '@angular/common/http';
-import { Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, ViewEncapsulation } from '@angular/core';
+import { Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Subject, takeUntil } from 'rxjs';
-import { DatosAlumnoValidacionCarreraDTO } from 'src/app/Core/Models/CertificadoDTO';
 import { ModalCarrerasComponent } from 'src/app/Core/Shared/Containers/Dialog/modal-carreras/modal-carreras.component';
 import { CertificadoService } from 'src/app/Core/Shared/Services/Certificado/certificado.service';
 import { HelperService } from 'src/app/Core/Shared/Services/helper.service';
 
 @Component({
-  selector: 'app-tramites-informacion-personal',
-  templateUrl: './tramites-informacion-personal.component.html',
-  styleUrls: ['./tramites-informacion-personal.component.scss'],
-  encapsulation: ViewEncapsulation.None,
+  selector: 'app-tramites-certificado-idioma',
+  templateUrl: './tramites-certificado-idioma.component.html',
+  styleUrls: ['./tramites-certificado-idioma.component.scss']
 })
-export class TramitesInformacionPersonalComponent implements OnInit ,OnDestroy {
+export class TramitesCertificadoIdiomaComponent implements OnInit,OnDestroy {
   private signal$ = new Subject();
-
-  public nombrefile=''
-
-  public selectedFiles?: FileList;
-  public file:any;
-  public filestatus=false
-  public fileErrorMsg=''
-  constructor(
-    private _HelperService:HelperService,
-    private _CertificadoService:CertificadoService,
-    public dialog: MatDialog,
-  ) { }
-
-  @Input() ImgCarrera:any;
-  @Input() IdMatriculaCabecera=0;
-
-  @Output() Volver= new EventEmitter<number>();
-  public OpenNombres=true
-  public OpenFoto=false
   ngOnDestroy(): void {
     this.signal$.next(true)
     this.signal$.complete()
   }
 
-  public json:DatosAlumnoValidacionCarreraDTO={
-    Nombres:'',
-    Apellidos:'',
-    file:new File([],''),
-    IdMatriculaCabecera:0
-  }
+
+  public selectedFiles?: FileList;
+  public file:any;
+  public filestatus=false
+  public fileErrorMsg=''
+  public nombrefile=''
+  constructor(
+    private _HelperService:HelperService,
+    private _CertificadoService:CertificadoService,
+    public dialog: MatDialog,
+  ) { }
+  public url='https://repositorioweb.blob.core.windows.net/repositorioweb/aulavirtual/MatriculaAlumno/Idioma/Prueba.pdf';
+  public nombre='Certificado de Ingles.pdf'
+  OpenInstrucciones=true
+  @Output() Volver= new EventEmitter<number>();
   ngOnInit(): void {
-    this._HelperService.recibirCombosPerfil.pipe(takeUntil(this.signal$)).subscribe((x:any) => {
-      this.json.Nombres=x.datosAlumno.nombres
-      this.json.Apellidos=x.datosAlumno.apellidos
-      console.log(this.json)
-    })
   }
 
   getFileDetails(event:any) {
@@ -74,16 +57,17 @@ export class TramitesInformacionPersonalComponent implements OnInit ,OnDestroy {
     }
   }
 
-  InsertarValidacionDatosAlumnoCarrera(){
+  InsertarCertificadoIdiomaExtranjero(){
+    var f=new File([],'')
     if(this.selectedFiles){
       const file: File | null = this.selectedFiles.item(0);
       if (file) {
-        this.json.file = file;
+        f = file;
       }
     }
-    this.json.IdMatriculaCabecera=this.IdMatriculaCabecera
-    this._CertificadoService.InsertarValidacionDatosAlumnoCarrera(this.json).pipe(takeUntil(this.signal$)).subscribe({
+    this._CertificadoService.InsertarCertificadoIdiomaExtranjero(f).pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
+        console.log(x)
         if (x.type === HttpEventType.UploadProgress) {
           console.log(Math.round(100 * x.loaded / x.total))
         } else if (x instanceof HttpResponse) {
@@ -99,15 +83,16 @@ export class TramitesInformacionPersonalComponent implements OnInit ,OnDestroy {
     const dialogRef = this.dialog.open(ModalCarrerasComponent, {
       width: '800px',
       data: {
-        titulo:'¡Tu información personal ha sido actualizada con éxito!' ,
-        texto:'Validaremos tu fotografía y actualizaremos el estado de tu tramite en <br> un plazo de 7 días hábiles'},
+        titulo:'¡Tu certificado se ha subido con éxito!' ,
+        texto:'validaremos tu documentos y actualizaremos el estado de tu tramite en <br> un plazo de 7 días hábiles'},
       panelClass: 'dialog-modal-carrera',
       disableClose:true
     });
 
     dialogRef.afterClosed().pipe(takeUntil(this.signal$)).subscribe((result) => {
       console.log(result)
-      this.Volver.emit(4)
+      this.Volver.emit(0)
     });
   }
+
 }

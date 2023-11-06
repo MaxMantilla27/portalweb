@@ -29,4 +29,5 @@ export interface DatosAlumnoValidacionCarreraDTO {
   Nombres: string;
   Apellidos: string;
   file: File;
+  IdMatriculaCabecera:number
 }

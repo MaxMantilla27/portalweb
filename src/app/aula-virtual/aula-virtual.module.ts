@@ -168,6 +168,11 @@ import { RegistrarForoProyectoComponent } from './curso/curso-proyecto/registrar
 import { CursoTramitesCarreraComponent } from './curso/curso-tramites-carrera/curso-tramites-carrera.component';
 import { CardTramitesCarreraComponent } from './curso/curso-tramites-carrera/card-tramites-carrera/card-tramites-carrera.component';
 import { TramitesInformacionPersonalComponent } from './curso/curso-tramites-carrera/tramites-informacion-personal/tramites-informacion-personal.component';
+import { TramitesCertificadoIdiomaComponent } from './curso/curso-tramites-carrera/tramites-certificado-idioma/tramites-certificado-idioma.component';
+import { TramitesCertificadoEstudiosComponent } from './curso/curso-tramites-carrera/tramites-certificado-estudios/tramites-certificado-estudios.component';
+import { TramitesGradoBachillerComponent } from './curso/curso-tramites-carrera/tramites-grado-bachiller/tramites-grado-bachiller.component';
+import { TramitesConstanciaMatriculaComponent } from './curso/curso-tramites-carrera/tramites-constancia-matricula/tramites-constancia-matricula.component';
+import { TramitesDiplomaTituloComponent } from './curso/curso-tramites-carrera/tramites-diploma-titulo/tramites-diploma-titulo.component';
 
 
 @NgModule({
@@ -333,6 +338,11 @@ import { TramitesInformacionPersonalComponent } from './curso/curso-tramites-car
     CursoTramitesCarreraComponent,
     CardTramitesCarreraComponent,
     TramitesInformacionPersonalComponent,
+    TramitesCertificadoIdiomaComponent,
+    TramitesCertificadoEstudiosComponent,
+    TramitesGradoBachillerComponent,
+    TramitesConstanciaMatriculaComponent,
+    TramitesDiplomaTituloComponent,
 
   ],
   imports: [
