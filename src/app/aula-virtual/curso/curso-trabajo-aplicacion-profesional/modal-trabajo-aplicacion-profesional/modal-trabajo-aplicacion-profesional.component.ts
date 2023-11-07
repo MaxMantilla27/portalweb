@@ -1,6 +1,7 @@
 import { Component, OnInit,Inject, ViewEncapsulation } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { DialogModel } from 'src/app/Core/Models/Dialog';
+import { HelperService } from 'src/app/Core/Shared/Services/helper.service';
 
 @Component({
   selector: 'app-modal-trabajo-aplicacion-profesional',
@@ -12,7 +13,9 @@ export class ModalTrabajoAplicacionProfesionalComponent implements OnInit {
 
   constructor(
     public dialogRef: MatDialogRef<ModalTrabajoAplicacionProfesionalComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: DialogModel
+    @Inject(MAT_DIALOG_DATA) public data: DialogModel,
+    private _HelperService:HelperService,
+
   ) { }
   public instruccionesSubir=false
   public selectedFiles?: FileList;
@@ -20,12 +23,13 @@ export class ModalTrabajoAplicacionProfesionalComponent implements OnInit {
   public filestatus=false
   public fileErrorMsg=''
   public ProyectoEnviado=false;
+
   ngOnInit(): void {
     this.ProyectoEnviado=false
   }
   SubirTrabajoAplicacionProfesional(){
     this.ProyectoEnviado=true;
-
+    this._HelperService.enviarActivarTrabajoTipoExamenCarrera(2)
   }
   getFileDetails(event:any) {
     for (var i = 0; i < event.target.files.length; i++) {

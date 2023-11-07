@@ -115,7 +115,7 @@ export class AsistenciasCarrerasProfesionalesComponent implements OnInit, OnDest
 
   ObtenerSesionesOnlineWebinarPorIdPespecifico() {
     this._DatosPerfilService
-      .ObtenerSesionesOnlineWebinarPorIdPespecifico(this.IdPEspecifico,this.IdMatriculaCabecera)
+      .ObtenerSesionesOnlineWebinarPorIdPespecificoCarrerasProfesionales(this.IdPEspecifico,this.IdMatriculaCabecera)
       .pipe(takeUntil(this.signal$))
       .subscribe({
         next: (x) => {

@@ -1,6 +1,7 @@
 import { Component, Input, OnDestroy, OnInit, SimpleChanges, ViewEncapsulation } from '@angular/core';
 import { Subject, takeUntil } from 'rxjs';
 import { NotaService } from 'src/app/Core/Shared/Services/Nota/nota.service';
+import { HelperService } from 'src/app/Core/Shared/Services/helper.service';
 import { SessionStorageService } from 'src/app/Core/Shared/Services/session-storage.service';
 
 @Component({
@@ -14,6 +15,8 @@ export class CursoNotasCarrerasProfesionalesComponent implements OnInit,OnDestro
   constructor(
     private _NotaService:NotaService,
     private _SessionStorageService:SessionStorageService,
+    private _HelperService: HelperService,
+
 
   ) { }
   ngOnDestroy(): void {
@@ -42,9 +45,26 @@ export class CursoNotasCarrerasProfesionalesComponent implements OnInit,OnDestro
   public Semestres:any;
   public OpenProx=false;
   public SemestreSelect=0;
+  public NotaExamenSuficienciaProfesionalActivo=false
+  public NotaTrabajoProfesionalActivo=false
+  public NotaExamenSuficienciaProfesional=16
+  public NotaTrabajoProfesional=17.5
   ngOnInit(): void {
     this.CursosCriteriosOnlineNotas=[];
     this.PromedioFinal=0;
+    this._HelperService.recibirActivarTrabajoTipoExamenCarrera().pipe(takeUntil(this.signal$)).subscribe({
+      next: (x) => {
+        this.NotaExamenSuficienciaProfesionalActivo=false
+        this.NotaTrabajoProfesionalActivo=false
+        if(x==1){
+          this.NotaExamenSuficienciaProfesionalActivo=true
+        }
+        if(x==2){
+          this.NotaTrabajoProfesionalActivo=true
+        }
+        console.log(x)
+      },
+    });
   }
   ngOnChanges(changes: SimpleChanges): void {
     this.PromedioFinal=0;
