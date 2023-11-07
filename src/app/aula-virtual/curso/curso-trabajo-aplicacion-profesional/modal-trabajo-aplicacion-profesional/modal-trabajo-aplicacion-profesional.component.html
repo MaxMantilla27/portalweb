@@ -1,9 +1,8 @@
-
-<ng-container *ngIf="data.tarea!=undefined">
-  <div class="cardSesionOnlineTareasCuestionario">
+<ng-container >
+  <div class="cardSesionOnlineTrabajoProyecto">
     <div class="flagActividad"  style="display: flex;">
       <div class="col-11" style="display: flex;">
-        <div class="textoFlag">Tarea: {{data.index>9?(+1):'0'+(data.index+1)}}</div>
+        <div class="textoFlag">Trabajo de aplicación profesional</div>
         <!-- <div class="trianglearrow"></div> -->
         <div id="player">
           <div id="outer">
@@ -15,45 +14,19 @@
         X
       </div>
     </div>
-    <div class="TitleActividad">{{data.tarea.titulo}}</div>
-    <div class="DescripcionActividad" *ngIf="data.tarea.descripcion!=null && data.tarea.descripcion.length>0">{{data.tarea.descripcion}}</div>
-    <div class="VinculoActividad" *ngIf="data.tarea.nombreArchivo!=null && data.tarea.nombreArchivo.length>0">
-      <a [href]="data.tarea.urlArchivoSubido" target="_blank" >{{data.tarea.nombreArchivo}}</a></div>
+    <div class="TitleActividad">Trabajo de aplicación para obtención de título profesional técnico</div>
+    <div class="DescripcionActividad">
+      Te damos la bienvenida al trabajo de aplicación profesional que te permitirá obtener el título profesional técnico en Desarrollo de Sistemas de Información.
+    </div>
+
   </div>
   <div class="content">
-    <ng-container *ngIf="data.tarea.tareas!=null && data.tarea.tareas.length>0">
-      <div class="contentTareasEnviadas" *ngFor="let item of data.tarea.tareas">
-        <div class="IntenTareasEnviadas"><strong>Versión:</strong>  {{item.version}}</div>
-        <div class="IntenTareasEnviadas"><strong>Archivo enviado:</strong>
-          <div class="pdfSesionOnline"></div>
-          <div>
-            <a target="_blank" [href]="item.urlArchivoSubido">{{item.nombreArchivo}}</a>
-          </div>
-        </div>
-        <div class="IntenTareasEnviadas"><strong>Fecha de Envio:</strong>  {{item.fechaCreacion | date :'dd/MM/yyyy hh:mm:ss'}}</div>
-        <div class="IntenTareasEnviadas"><strong>Calificación:</strong>  {{item.nota}}</div>
-        <div class="IntenTareasEnviadas"><strong>Fecha de Calificación:</strong>  {{item.fechaCalificacion | date :'dd/MM/yyyy hh:mm:ss'}}</div>
-        <div class="IntenTareasEnviadas"><strong>Retroalimentación:</strong>  {{item.retroalimentacion}}</div>
-        <div class="IntenTareasEnviadas"><strong>Archivo de Retroalimentación:</strong>
-          <ng-container *ngIf="item.urlArchivoSubidoRetroalimentacion!=null">
-            <div class="pdfSesionOnline"></div>
-            <div >
-              <a [href]="item.urlArchivoSubidoRetroalimentacion" target="_blank">{{item.nombreArchivoRetroalimentacion}}</a>
-            </div>
-          </ng-container>
-
-        </div>
-        <div style="background: rgb(233 233 233);width: 100%;height: 2px;
-        margin-top: 20px;"></div>
-      </div>
-    </ng-container>
-    <ng-container *ngIf="(data.tarea.tareas==null || data.tarea.tareas.length==0) ||
-    (data.tarea.tareas!=null && data.tarea.tareas.length>0 && data.tarea.tareas.length<1  && data.tarea.tareas[data.tarea.tareas.length-1].fechaCalificacion!=null) ">
+    <ng-container *ngIf="ProyectoEnviado==false">
       <div style="padding: 0px 40px;
       font-size: 16px;
       font-weight: 600;
       margin-bottom: 10px;
-      margin-top: 20px;">Selecciona el archivo de tu tarea:</div>
+      margin-top: 20px;">Selecciona el archivo de tu trabajo:</div>
       <div  style="display: flex;
       padding: 0px 40px 30px;
       justify-content: space-between;">
@@ -77,7 +50,7 @@
         </div>
         <div class="col-6 col-md-4 col-lg-3" style="display: flex;align-items: center;justify-content: flex-end;    width: 180px;">
           <app-default-button [confs]="{color:'primary',titulo:'Enviar'}" [style]="'    margin: 0px; padding: 0px 40px; border-radius: 40px;'"
-            [disabled]="!filestatus" (ButtoclClick)="AgregarPEspecificoSesionTareaAlumno()"></app-default-button>
+            [disabled]="!filestatus" (ButtoclClick)="SubirTrabajoAplicacionProfesional()"></app-default-button>
         </div>
       </div>
       <div class="row" style="margin: 0px;">
@@ -102,6 +75,27 @@
         </div>
       </div>
     </ng-container>
+    <ng-container *ngIf="ProyectoEnviado">
+      <div class="contenidoProyectoCarreraModal">
+        <div class="imgProyectoCarreraModal"></div>
+        <div style="display: flex;">
+          <div class="titleProyectoCarreraModal">
+            ¡Excelente Trabajo!&nbsp;
+          </div>
+          <div style="font-size: 16px;">
+            Tu trabajo ha sido enviado correctamente.
+          </div>
+        </div>
+        <div class="textoProyectoCarreraModal">
+          Te comunicaremos la fecha de sustentación de tu trabajo de aplicación profesional.
+        </div>
+        <app-default-button [confs]="{color:'primary',titulo:'Aceptar'}" [style]="'width: 100%;'"
+        [icon]="''" [style]="'     padding: 0px 60px; border-radius: 25px;border: solid 1px #f8893f;'"
+        (click)="dialogRef.close()"></app-default-button>
+      </div>
+
+    </ng-container>
+
 
 
   </div>

@@ -184,6 +184,8 @@ import { CertificadoBachillerCarrerasProfesionalesComponent } from './curso/curs
 import { ModalCertificadoEstudiosCarrerasProfesionalesComponent } from './curso/curso-certificado-carreras-profesionales/certificado-estudios-carreras-profesionales/modal-certificado-estudios-carreras-profesionales/modal-certificado-estudios-carreras-profesionales.component';
 import { ModalCertificadoBachillerCarrerasProfesionalesComponent } from './curso/curso-certificado-carreras-profesionales/certificado-bachiller-carreras-profesionales/modal-certificado-bachiller-carreras-profesionales/modal-certificado-bachiller-carreras-profesionales.component';
 import { ModalCertificadoTituloCarrerasProfesionalesComponent } from './curso/curso-certificado-carreras-profesionales/certificado-titulo-carreras-profesionales/modal-certificado-certificado-titulo-carreras-profesionales/modal-certificado-titulo-carreras-profesionales.component';
+import { CursoTrabajoAplicacionProfesionalComponent } from './curso/curso-trabajo-aplicacion-profesional/curso-trabajo-aplicacion-profesional.component';
+import { ModalTrabajoAplicacionProfesionalComponent } from './curso/curso-trabajo-aplicacion-profesional/modal-trabajo-aplicacion-profesional/modal-trabajo-aplicacion-profesional.component';
 
 
 @NgModule({
@@ -364,7 +366,9 @@ import { ModalCertificadoTituloCarrerasProfesionalesComponent } from './curso/cu
     CertificadoBachillerCarrerasProfesionalesComponent,
     ModalCertificadoEstudiosCarrerasProfesionalesComponent,
     ModalCertificadoBachillerCarrerasProfesionalesComponent,
-    ModalCertificadoTituloCarrerasProfesionalesComponent
+    ModalCertificadoTituloCarrerasProfesionalesComponent,
+    CursoTrabajoAplicacionProfesionalComponent,
+    ModalTrabajoAplicacionProfesionalComponent
 
   ],
   imports: [

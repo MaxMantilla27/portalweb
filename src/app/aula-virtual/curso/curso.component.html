@@ -370,6 +370,20 @@
             <app-curso-tramites-carrera *ngIf="EsCarrera==true"  [IdMatricula]="idMatricula" ></app-curso-tramites-carrera>
           </div>
         </mat-tab>
+        <mat-tab>
+          <ng-template mat-tab-label>
+            <div #tramites class="contentHeaderM" matTooltip="TrabajoAplicacionProfesional"
+              matTooltipPosition="after">
+              <div class="iconMat iconTramites"></div>
+              <div class="titleMatr" *ngIf="!hide">Trabajo de aplicación Profesional</div>
+            </div>
+          </ng-template>
+          <div class="pad-resp">
+            <app-curso-trabajo-aplicacion-profesional *ngIf="EsCarrera==true" [IdMatricula]="idMatricula"
+              [idPGeneral]="programEstructura.idPGeneral">
+            </app-curso-trabajo-aplicacion-profesional>
+          </div>
+        </mat-tab>
 
         <mat-tab *ngIf="curso!=undefined && curso.webibarActivo">
           <ng-template mat-tab-label>
