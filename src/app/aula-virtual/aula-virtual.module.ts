@@ -176,8 +176,19 @@ import { TramitesConstanciaMatriculaComponent } from './curso/curso-tramites-car
 import { TramitesDiplomaTituloComponent } from './curso/curso-tramites-carrera/tramites-diploma-titulo/tramites-diploma-titulo.component';
 import { CursoNotasCarrerasProfesionalesComponent } from './curso/curso-notas-carreras-profesionales/curso-notas-carreras-profesionales.component';
 import { CursoCertificadoCarrerasProfesionalesComponent } from './curso/curso-certificado-carreras-profesionales/curso-certificado-carreras-profesionales.component';
+<<<<<<< HEAD
 import { CardCertificadoCarrerasComponent } from './curso/curso-certificado-carreras-profesionales/card-certificado-carreras/card-certificado-carreras.component';
 import { ExamenSuficienciaComponent } from './curso/examen-suficiencia/examen-suficiencia.component';
+=======
+import { AsistenciasCarrerasProfesionalesComponent } from './modulo/asistencias-carreras-profesionales/asistencias-carreras-profesionales.component';
+import { GestionAsistenciaProgramaCarreraProfesionalComponent } from './curso/gestion-asistencia-programa-carrera-profesional/gestion-asistencia-programa-carrera-profesional.component';
+import { CertificadoTituloCarrerasProfesionalesComponent } from './curso/curso-certificado-carreras-profesionales/certificado-titulo-carreras-profesionales/certificado-titulo-carreras-profesionales.component';
+import { CertificadoEstudiosCarrerasProfesionalesComponent } from './curso/curso-certificado-carreras-profesionales/certificado-estudios-carreras-profesionales/certificado-estudios-carreras-profesionales.component';
+import { CertificadoBachillerCarrerasProfesionalesComponent } from './curso/curso-certificado-carreras-profesionales/certificado-bachiller-carreras-profesionales/certificado-bachiller-carreras-profesionales.component';
+import { ModalCertificadoEstudiosCarrerasProfesionalesComponent } from './curso/curso-certificado-carreras-profesionales/certificado-estudios-carreras-profesionales/modal-certificado-estudios-carreras-profesionales/modal-certificado-estudios-carreras-profesionales.component';
+import { ModalCertificadoBachillerCarrerasProfesionalesComponent } from './curso/curso-certificado-carreras-profesionales/certificado-bachiller-carreras-profesionales/modal-certificado-bachiller-carreras-profesionales/modal-certificado-bachiller-carreras-profesionales.component';
+import { ModalCertificadoTituloCarrerasProfesionalesComponent } from './curso/curso-certificado-carreras-profesionales/certificado-titulo-carreras-profesionales/modal-certificado-certificado-titulo-carreras-profesionales/modal-certificado-titulo-carreras-profesionales.component';
+>>>>>>> cbd9b565735f3273e560cfe26bcf8e34097da7b7
 
 
 @NgModule({
@@ -351,8 +362,19 @@ import { ExamenSuficienciaComponent } from './curso/examen-suficiencia/examen-su
     TramitesDiplomaTituloComponent,
     CursoNotasCarrerasProfesionalesComponent,
     CursoCertificadoCarrerasProfesionalesComponent,
+<<<<<<< HEAD
     CardCertificadoCarrerasComponent,
     ExamenSuficienciaComponent,
+=======
+    AsistenciasCarrerasProfesionalesComponent,
+    GestionAsistenciaProgramaCarreraProfesionalComponent,
+    CertificadoTituloCarrerasProfesionalesComponent,
+    CertificadoEstudiosCarrerasProfesionalesComponent,
+    CertificadoBachillerCarrerasProfesionalesComponent,
+    ModalCertificadoEstudiosCarrerasProfesionalesComponent,
+    ModalCertificadoBachillerCarrerasProfesionalesComponent,
+    ModalCertificadoTituloCarrerasProfesionalesComponent
+>>>>>>> cbd9b565735f3273e560cfe26bcf8e34097da7b7
 
   ],
   imports: [

@@ -218,8 +218,10 @@
             </div>
           </ng-template>
           <div class="pad-resp" >
-            <app-gestion-asistencia-programa  [IdMatriculaCabecera]="curso.idMatriculaCabecera"
+            <app-gestion-asistencia-programa *ngIf="IdTipoProgramaCarrera!=2"  [IdMatriculaCabecera]="curso.idMatriculaCabecera"
              [Cursos]="programEstructura.listaCursoMatriculado" [Asistencias]="asistencias"></app-gestion-asistencia-programa>
+             <app-gestion-asistencia-programa-carrera-profesional *ngIf="IdTipoProgramaCarrera==2"  [IdMatriculaCabecera]="curso.idMatriculaCabecera"
+             [Cursos]="programEstructura.listaCursoMatriculado" [Asistencias]="asistencias"></app-gestion-asistencia-programa-carrera-profesional>
           </div>
         </mat-tab>
 
@@ -255,7 +257,7 @@
             </app-curso-notas-carreras-profesionales>
           </div>
         </mat-tab>
-        <mat-tab>
+        <mat-tab *ngIf="IdTipoProgramaCarrera!=2">
           <ng-template mat-tab-label>
             <div #certificados class="contentHeaderM" (click)="InterraccionTab('Certificados');changeIndexCertificado()"
               matTooltip="Certificados" matTooltipPosition="after" [ngClass]="{'ActiveChil':CertificadoActive==true}">
@@ -264,7 +266,7 @@
             </div>
           </ng-template>
           <ng-template matTabContent>
-            <div *ngIf="IdTipoProgramaCarrera!=2" class="pad-resp">
+            <div class="pad-resp">
               <app-curso-certificado *ngIf="curso!=undefined" [alertaDigital]="alertaDigital"
                 [alertaFisico]="alertaFisico" [datosCertificado]="datosCertificado" [curso]="curso"
                 [idProyecto]="curso.idProyecto" [idPGeneral]="curso.idPGeneral" [idPEspecifico]="curso.idPEspecifico"
@@ -274,16 +276,10 @@
 
               </app-curso-certificado>
             </div>
-            <div *ngIf="IdTipoProgramaCarrera==2" class="pad-resp">
-              <app-curso-certificado-carreras-profesionales [IdMatricula]="curso.idMatriculaCabecera" >
-
-              </app-curso-certificado-carreras-profesionales>
-            </div>
           </ng-template>
 
         </mat-tab>
-
-        <ng-container *ngIf="CertificadoActive==true">
+        <ng-container *ngIf="CertificadoActive==true && IdTipoProgramaCarrera!=2">
 
           <mat-tab [disabled]="!(datosCertificado!=undefined &&
                                 datosCertificado.nombreArchivo!=null &&
@@ -340,6 +336,23 @@
 
           </ng-container>
         </ng-container>
+        <mat-tab *ngIf="IdTipoProgramaCarrera==2">
+          <ng-template mat-tab-label>
+            <div #certificados class="contentHeaderM" (click)="changeIndexCertificado()"
+              matTooltip="Certificados" matTooltipPosition="after" [ngClass]="{'ActiveChil':CertificadoActive==true}">
+              <div class="iconMat iconCertificados"></div>
+              <div class="titleMatr" *ngIf="!hide">Certificados</div>
+            </div>
+          </ng-template>
+          <ng-template matTabContent>
+            <div class="pad-resp">
+              <app-curso-certificado-carreras-profesionales [IdMatricula]="curso.idMatriculaCabecera" >
+
+              </app-curso-certificado-carreras-profesionales>
+            </div>
+          </ng-template>
+
+        </mat-tab>
 
         <mat-tab>
           <ng-template mat-tab-label>

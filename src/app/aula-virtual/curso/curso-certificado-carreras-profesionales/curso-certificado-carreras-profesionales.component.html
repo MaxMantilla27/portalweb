@@ -1,24 +1,68 @@
-
-<ng-container *ngIf="charge==false">
-
-  <div class="row">
-    <div class="col-6 col-md-4 col-lg-4">
-      <app-card-certificado-carreras [Titulo]="'Certificado de Estudios'" [img]="'certificado-estudios.svg'"
-      (click)="Changes(1)"></app-card-certificado-carreras>
-    </div>
-    <div class="col-6 col-md-4 col-lg-4">
-      <app-card-certificado-carreras [Titulo]="'Grado de Bachiller'" [img]="'diploma-grado-bachiller.svg'"
-      (click)="Changes(2)"></app-card-certificado-carreras>
-    </div>
-    <div class="col-6 col-md-4 col-lg-4">
-      <app-card-certificado-carreras [Titulo]="'Título Profesional Técnico'" [img]="'diploma-titulo-profesional-tecnico.svg'"
-      (click)="Changes(3)"></app-card-certificado-carreras>
+<div class="row" *ngIf="CertificadoSeleccionado==false">
+  <div class="col-6 col-md-4 col-lg-4">
+    <div class="card-certificado-carrera row">
+      <div class="col-12" style="display:flex; justify-content:center">
+        <div class="img-certificado-carrera col-12 col-md-5 col-lg-5">
+        <img src="../../../../../assets/icons/certificado-estudios.svg" alt="CertificadoEstudios">
+        </div>
+        <div class="title-certificado-carrera col-12 col-md-7 col-lg-7">
+          Certificado de Estudios
+        </div>
+      </div>
+      <div class="col-12">
+        <div style="display: flex;justify-content: end;">
+          <app-default-button [confs]="{color:'primary',titulo:'Ingresar'}"[style]="'width: 90%;margin-top: 15px;margin-bottom:5px;font-size:13px'" (click)="Changes(1)">
+          </app-default-button>
+        </div>
+      </div>
     </div>
   </div>
-
-
-
-</ng-container>
-<ng-container *ngIf="charge==true">
-  Valores
-</ng-container>
+  <div class="col-6 col-md-4 col-lg-4">
+    <div class="card-certificado-carrera row">
+      <div class="col-12" style="display:flex; justify-content:center">
+        <div class="img-certificado-carrera col-12 col-md-5 col-lg-5">
+        <img src="../../../../../assets/icons/diploma-grado-bachiller.svg" alt="GradoBachiller">
+        </div>
+        <div class="title-certificado-carrera col-12 col-md-7 col-lg-7">
+          Grado de Bachiller
+        </div>
+      </div>
+      <div class="col-12">
+        <div style="display: flex;justify-content: end;">
+          <app-default-button [confs]="{color:'primary',titulo:'Ingresar'}"[style]="'width: 90%;margin-top: 15px;margin-bottom:5px;font-size:13px'" (click)="Changes(2)">
+          </app-default-button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-6 col-md-4 col-lg-4">
+    <div class="card-certificado-carrera row">
+      <div class="col-12" style="display:flex; justify-content:center">
+        <div class="img-certificado-carrera col-12 col-md-5 col-lg-5">
+        <img src="../../../../../assets/icons/diploma-titulo-profesional-tecnico.svg" alt="TítuloProfesional">
+        </div>
+        <div class="title-certificado-carrera col-12 col-md-7 col-lg-7">
+          Título Profesional Técnico
+        </div>
+      </div>
+      <div class="col-12">
+        <div style="display: flex;justify-content: end;">
+          <app-default-button [confs]="{color:'primary',titulo:'Ingresar'}"[style]="'width: 90%;margin-top: 15px;margin-bottom:5px;font-size:13px'" (click)="Changes(3)">
+          </app-default-button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div *ngIf="CertificadoEstudios==true && CertificadoSeleccionado==true">
+  <app-certificado-estudios-carreras-profesionales (VolverCertificadoCarreras)="RefrescarCertificados()">
+  </app-certificado-estudios-carreras-profesionales>
+</div>
+<div *ngIf="DiplomaBachiller==true && CertificadoSeleccionado==true">
+  <app-certificado-bachiller-carreras-profesionales (VolverCertificadoCarreras)="RefrescarCertificados()">
+  </app-certificado-bachiller-carreras-profesionales>
+</div>
+<div *ngIf="TituloProfesional==true && CertificadoSeleccionado==true">
+  <app-certificado-titulo-carreras-profesionales (VolverCertificadoCarreras)="RefrescarCertificados()">
+  </app-certificado-titulo-carreras-profesionales>
+</div>
