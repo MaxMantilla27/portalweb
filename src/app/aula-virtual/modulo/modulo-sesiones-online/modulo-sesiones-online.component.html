@@ -1,3 +1,4 @@
+
 <ng-container *ngIf="sesiones!=null">
   <!-- <div class="cursoTitle">{{Capitulo}}</div> -->
   <ng-container *ngFor="let item of sesiones;let i = index">
@@ -204,4 +205,7 @@
     </div>
   </ng-container>
 
+</ng-container>
+<ng-container *ngIf="sesiones==null">
+  Sin sesiones configuradas.
 </ng-container>

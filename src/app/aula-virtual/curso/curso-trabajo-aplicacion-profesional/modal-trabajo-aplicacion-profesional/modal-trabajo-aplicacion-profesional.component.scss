@@ -1,0 +1,152 @@
+.modal-trabajo-aplicacion-carreras-profesionales-container{
+  mat-dialog-container {
+    padding: 0px !important;
+    border-radius: 15px;
+    max-height: 90vh;
+  }
+}
+
+.cardSesionOnlineTrabajoProyecto {
+  background: #bef4ff;
+  border: solid 1px #a5eaf8;
+  padding: 15px 30px;
+  .flagActividad {
+    display: flex;
+    align-items: center;
+    .textoFlag {
+      width: fit-content;
+      background: rgb(255, 207, 0);
+      padding: 2px 10px;
+      font-size: 12px;
+      font-weight: 600;
+    }
+    #player {
+      position: relative;
+      width: 22px;
+      height: 22px;
+    }
+
+    #inner {
+      transform: rotate(45deg);
+      background-color: #ffcf00;
+      width: 22px;
+      height: 22px;
+      left: -7px;
+      position: relative;
+      border-radius: 2px;
+    }
+
+    #outer {
+      position: absolute;
+      width: 22px;
+      height: 22px;
+      overflow: hidden;
+    }
+    .trianglearrow {
+      width: 0;
+      height: 0;
+      border-top: 11px solid transparent;
+      border-bottom: 11px solid transparent;
+      border-left: 11px solid #ffcf00;
+    }
+  }
+  .TitleActividad {
+    font-size: 18px;
+    font-weight: 600;
+    margin: 10px 0px;
+  }
+  .DescripcionActividad {
+    font-size: 14px;
+  }
+  .lineaMedioActividad {
+    height: 1px;
+    background: rgb(179 182 182);
+    margin: 10px 0px;
+  }
+  .AbajoActividad {
+    display: flex;
+    justify-content: space-between;
+    .FechaEntregaActividad {
+      display: flex;
+      align-items: center;
+      font-size: 14px;
+    }
+  }
+}
+.cabeceraExpandTarea{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: 700;
+
+  padding-bottom: 6px;
+  border-bottom: solid 1px #b2b2b2;
+  margin-left: 40px;
+  margin-right: 40px;
+}
+.contentCabeceraTarea {
+  color: #989898;
+    margin-left: 40px;
+    margin-right: 40px;
+}
+.contentTareasEnviadas{
+  margin: 10px 40px;
+  margin-top: 20px;
+  padding-bottom: 20px;
+  .IntenTareasEnviadas{
+    margin: 5px 0px;
+    display: flex;
+    align-items: center;
+    a {
+      color: black !important;
+      text-decoration: none !important;
+    }
+    strong{
+      margin-right: 15px;
+    }
+  }
+}
+
+.pdfSesionOnline {
+  background-image: url(../../../../../assets/icons/pdf-31.svg);
+  background-repeat: no-repeat;
+  width: 15px;
+  height: 15px;
+  background-position: center;
+  margin-right: 15px;
+}
+.VinculoActividad{
+  font-size: 12px;
+  a{
+    color: #505050  !important;
+    text-decoration: none;
+  }
+}
+.VinculoActividad:hover{
+  text-decoration: underline;
+  text-decoration-color: #505050 ;
+}
+.contenidoProyectoCarreraModal{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 24px;
+}
+.imgProyectoCarreraModal{
+  width: 40px;
+    height: 40px;
+    background-image: url(../../../../../assets/icons/icono-check-circulo-verde.svg);
+    margin-bottom: 20px;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+.titleProyectoCarreraModal{
+  font-size: 16px;
+  font-weight: 600;
+}
+.textoProyectoCarreraModal{
+  font-size: 16px;
+  margin-bottom: 20px;
+}

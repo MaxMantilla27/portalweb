@@ -30,6 +30,7 @@ export class HelperService {
   private msjChat=new Subject<SetChat>();
   private ActivarTipoExamen=new Subject<number>();
   private OcultarTodo=new Subject<void>();
+  private ActivarTrabajoTipoExamenCarrera=new Subject<number>();
 
 
   enviarOcultar():void {
@@ -144,5 +145,10 @@ export class HelperService {
   public enviarDatoCuenta(datos: DatoObservableDTO): void {
     this.msjRecarga.next(datos);
   }
-
+  enviarActivarTrabajoTipoExamenCarrera(data:number):void {
+    this.ActivarTrabajoTipoExamenCarrera.next(data);
+  }
+  recibirActivarTrabajoTipoExamenCarrera(): Observable<any> {
+    return this.ActivarTrabajoTipoExamenCarrera.asObservable();
+  }
 }

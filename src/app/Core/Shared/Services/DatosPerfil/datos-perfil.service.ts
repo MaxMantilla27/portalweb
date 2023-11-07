@@ -126,5 +126,12 @@ export class DatosPerfilService {
       return EMPTY;
     }
   }
+  public ObtenerSesionesOnlineWebinarPorIdPespecificoCarrerasProfesionales(IdPespecifico:number,IdMatriculaCabcera:number):Observable<any>{
+    if(this.isBrowser){
+      return this.http.get<any>(this.urlBase+'/ObtenerSesionesOnlineWebinarPorIdPespecificoCarrerasProfesionales?IdPespecifico='+IdPespecifico+'&IdMatriculaCabcera='+IdMatriculaCabcera);
+    }else{
+      return EMPTY;
+    }
+  }
 
 }

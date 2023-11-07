@@ -118,7 +118,7 @@ export class CursoComponent implements OnInit,OnDestroy {
   public IdTipoProgramaCarrera=0
   public EsCarrera=false
   public ExamenActivo=false
-  public proyectoActivo=false
+  public ProyectoActivo=false
   public MostrarMensajeRecuerda=false;
   public ocultar=false
   public contenidotarea=
@@ -142,13 +142,13 @@ export class CursoComponent implements OnInit,OnDestroy {
     this._HelperService.recibirActivarTipoExamen().pipe(takeUntil(this.signal$)).subscribe({
       next: (x) => {
         this.ExamenActivo=false
-        this.proyectoActivo=false
+        this.ProyectoActivo=false
         this.tabIndex++
         if(x==1){
           this.ExamenActivo=true
         }
         if(x==2){
-          this.ExamenActivo=true
+          this.ProyectoActivo=true
         }
         console.log(x)
       },

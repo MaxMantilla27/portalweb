@@ -43,7 +43,12 @@ export class ModuloSesionesOnlineComponent implements OnInit , OnChanges,OnDestr
   }
   ngOnChanges(changes: SimpleChanges): void {
     if(this.IdPespecifico>0){
-      this.ObtenerSesionesOnlineWebinarPorIdPespecifico()
+      if(this.IdTipoProgramaCarrera==2){
+        this.ObtenerSesionesOnlineWebinarPorIdPespecificoCarrerasProfesionales()
+      }
+      else{
+        this.ObtenerSesionesOnlineWebinarPorIdPespecifico()
+      }
     }
     if(this.videos!=null && this.videos.length>0){
       this.videos.forEach((v:any) => {
@@ -61,7 +66,13 @@ export class ModuloSesionesOnlineComponent implements OnInit , OnChanges,OnDestr
   public sesiones:Array<any>=[]
   @Input() videos: Array<any>=[];
   @Input() Capitulo='';
+  @Input() IdTipoProgramaCarrera=0;
   ngOnInit(): void {
+    console.log(this.IdPespecifico)
+    console.log(this.IdMatriculaCabecera)
+    console.log(this.videos)
+    console.log(this.Capitulo)
+    console.log(this.IdTipoProgramaCarrera)
   }
   OpenSesion(index:number){
     this.sesiones[index].Open=!this.sesiones[index].Open
@@ -124,6 +135,27 @@ export class ModuloSesionesOnlineComponent implements OnInit , OnChanges,OnDestr
   }
   ObtenerSesionesOnlineWebinarPorIdPespecifico(){
     this._DatosPerfilService.ObtenerSesionesOnlineWebinarPorIdPespecifico(this.IdPespecifico,this.IdMatriculaCabecera).pipe(takeUntil(this.signal$)).subscribe({
+      next:x=>{
+        console.log(x)
+        this.sesiones=x
+        if(this.sesiones!=null){
+          this.sesiones.forEach((s:any) => {
+            s.Open=false;
+            s.OpenMaterial=false;
+            s.OpenTema=false;
+            var f=new Date(s.fechaHoraInicio);
+            f.setMinutes(f.getMinutes()+(s.duracion*60))
+            s.fechaHoraFinal=f
+          });
+        }
+        if(this.videos!=null && this.videos.length>0){
+          this.ArmarVdeosGrabado()
+        }
+      }
+    })
+  }
+  ObtenerSesionesOnlineWebinarPorIdPespecificoCarrerasProfesionales(){
+    this._DatosPerfilService.ObtenerSesionesOnlineWebinarPorIdPespecificoCarrerasProfesionales(this.IdPespecifico,this.IdMatriculaCabecera).pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
         console.log(x)
         this.sesiones=x
