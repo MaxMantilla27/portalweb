@@ -177,6 +177,7 @@ import { TramitesDiplomaTituloComponent } from './curso/curso-tramites-carrera/t
 import { CursoNotasCarrerasProfesionalesComponent } from './curso/curso-notas-carreras-profesionales/curso-notas-carreras-profesionales.component';
 import { CursoCertificadoCarrerasProfesionalesComponent } from './curso/curso-certificado-carreras-profesionales/curso-certificado-carreras-profesionales.component';
 import { CardCertificadoCarrerasComponent } from './curso/curso-certificado-carreras-profesionales/card-certificado-carreras/card-certificado-carreras.component';
+import { ExamenSuficienciaComponent } from './curso/examen-suficiencia/examen-suficiencia.component';
 
 
 @NgModule({
@@ -351,6 +352,7 @@ import { CardCertificadoCarrerasComponent } from './curso/curso-certificado-carr
     CursoNotasCarrerasProfesionalesComponent,
     CursoCertificadoCarrerasProfesionalesComponent,
     CardCertificadoCarrerasComponent,
+    ExamenSuficienciaComponent,
 
   ],
   imports: [

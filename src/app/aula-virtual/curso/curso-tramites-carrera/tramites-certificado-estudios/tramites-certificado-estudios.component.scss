@@ -41,3 +41,25 @@
     display: flex;
     justify-content: space-evenly;
 }
+.tablarequisitos{
+  padding: 30px 40px;
+  i{
+    color: #0684f2;
+  }
+}
+.subrallado{
+  height: 1px;
+  background: #d5d5d5;
+  margin: 14px 0px;
+}
+.titleTableReq{
+  font-size: 16px;
+  font-weight: 600;
+}
+.contentTableReq{
+  font-size: 14px;
+}
+.obsTableReq{
+  margin: 10px 0px;
+  font-size: 8px;
+}

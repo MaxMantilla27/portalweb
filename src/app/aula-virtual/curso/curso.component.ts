@@ -116,6 +116,8 @@ export class CursoComponent implements OnInit,OnDestroy {
   public IdModalidadPrincipal=0
   public IdTipoProgramaCarrera=0
   public EsCarrera=false
+  public ExamenActivo=false
+  public proyectoActivo=false
   public MostrarMensajeRecuerda=false;
   public contenidotarea=
   '<iframe src="https://player.vimeo.com/video/737713694?h=ce19c25ba1" width="100%" height="564" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>'
@@ -133,6 +135,20 @@ export class CursoComponent implements OnInit,OnDestroy {
         //this.ObtenerListadoProgramaContenido();
         this.ObtenerDatosCertificado();
         this.ObtenerDatosCertificadoIrcaEnvio();
+      },
+    });
+    this._HelperService.recibirActivarTipoExamen().pipe(takeUntil(this.signal$)).subscribe({
+      next: (x) => {
+        this.ExamenActivo=false
+        this.proyectoActivo=false
+        this.tabIndex++
+        if(x==1){
+          this.ExamenActivo=true
+        }
+        if(x==2){
+          this.ExamenActivo=true
+        }
+        console.log(x)
       },
     });
     this._HelperService.recibirCombosPerfil.pipe(takeUntil(this.signal$)).subscribe({

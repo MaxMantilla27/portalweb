@@ -582,6 +582,18 @@
             </app-modulo-ayuda-quejas-sugerencias>
           </div>
         </mat-tab>
+
+        <mat-tab *ngIf="EsCarrera==true && ExamenActivo==true">
+          <ng-template mat-tab-label>
+            <div class="contentHeaderM" (click)="InterraccionTab('Sílabo')">
+              <div class="iconMat iconSilabo" matTooltip="Sílabo" matTooltipPosition="after"></div>
+              <div *ngIf="!hide" class="titleMatr">Examen de suficiencia profesional</div>
+            </div>
+          </ng-template>
+          <div class="pad-resp">
+            <app-examen-suficiencia></app-examen-suficiencia>
+          </div>
+        </mat-tab>
         <!-- Pendiente para Carreras Profesionales -->
         <!-- <mat-tab *ngIf="IdModalidadPrincipal!=1" [disabled]="true">
           <ng-template mat-tab-label  >

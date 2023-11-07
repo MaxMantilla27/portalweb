@@ -84,4 +84,6 @@
   <app-tramites-certificado-idioma *ngIf="certificadoIdioma==true"  (Volver)="ChangesVolver($event)" ></app-tramites-certificado-idioma>
   <app-tramites-constancia-matricula *ngIf="constanciaMatricula==true"  (Volver)="ChangesVolver(0)" [IdMatriculaCabecera]="IdMatricula"></app-tramites-constancia-matricula>
   <app-tramites-certificado-estudios *ngIf="certificadoEstudios==true"  (Volver)="ChangesVolver(0)" [IdMatriculaCabecera]="IdMatricula"></app-tramites-certificado-estudios>
+  <app-tramites-grado-bachiller *ngIf="DiplomaBachiller==true"  (Volver)="ChangesVolver(0)" [IdMatriculaCabecera]="IdMatricula" ></app-tramites-grado-bachiller>
+  <app-tramites-diploma-titulo  *ngIf="tituloProfesional==true"  (Volver)="ChangesVolver(0)" [IdMatriculaCabecera]="IdMatricula"></app-tramites-diploma-titulo>
 </ng-container>
