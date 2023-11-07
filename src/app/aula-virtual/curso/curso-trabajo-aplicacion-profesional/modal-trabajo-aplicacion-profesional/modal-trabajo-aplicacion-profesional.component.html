@@ -56,7 +56,7 @@
       <div class="row" style="margin: 0px;">
         <div class="col-12 col-md-12 col-lg-12" style="margin: 10px 0px ;">
           <div class="cabeceraExpandTarea" [ngClass]="{'cabeceraExpandTareaOpen':instruccionesSubir}">
-            <div>Instrucciones para subir la tarea</div>
+            <div>Instrucciones para subir el trabajo</div>
             <div>
               <i class="material-icons no-seleccionable " *ngIf="!instruccionesSubir"
                 (click)="instruccionesSubir=true">keyboard_arrow_down</i>
@@ -68,8 +68,8 @@
             Estimado alumno toma lo siguiente en consideración antes de subir tu archivo
             <ul>
               <li>No nombrar tu archivo con caracteres especiales.</li>
-              <li>Que el archivo tenga una capacidad máxima de 15 MB</li>
-              <li>El plazo máximo en el que se cálificara tu tarea será de 1 semana después desde la fecha de entrega</li>
+              <li>Que el archivo tenga una capacidad máxima de 25 MB</li>
+              <li>Subir el archivo en formato .pdf</li>
             </ul>
           </div>
         </div>
@@ -91,7 +91,7 @@
         </div>
         <app-default-button [confs]="{color:'primary',titulo:'Aceptar'}" [style]="'width: 100%;'"
         [icon]="''" [style]="'     padding: 0px 60px; border-radius: 25px;border: solid 1px #f8893f;'"
-        (click)="dialogRef.close()"></app-default-button>
+        (click)="RedirigirCalificaciones()"></app-default-button>
       </div>
 
     </ng-container>

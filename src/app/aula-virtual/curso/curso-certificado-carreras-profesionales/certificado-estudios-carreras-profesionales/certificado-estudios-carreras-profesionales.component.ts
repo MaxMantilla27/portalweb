@@ -231,7 +231,7 @@ export class CertificadoEstudiosCarrerasProfesionalesComponent implements OnInit
   }
   RegistrarCertificadoFisico(data:any){
     const dialogRef = this.dialog.open(ModalCertificadoEstudiosCarrerasProfesionalesComponent, {
-      width: '500px',
+      width: '600px',
       data: data,
       panelClass: 'modal-certificado-estudios-carreras-profesionales-container',
       disableClose:true

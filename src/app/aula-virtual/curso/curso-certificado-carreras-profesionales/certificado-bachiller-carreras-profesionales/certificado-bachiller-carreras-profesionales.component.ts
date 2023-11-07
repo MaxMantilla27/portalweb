@@ -231,7 +231,7 @@ export class CertificadoBachillerCarrerasProfesionalesComponent implements OnIni
   }
   RegistrarCertificadoFisico(data:any){
     const dialogRef = this.dialog.open(ModalCertificadoBachillerCarrerasProfesionalesComponent, {
-      width: '500px',
+      width: '600px',
       data: data,
       panelClass: 'modal-certificado-estudios-carreras-profesionales-container',
       disableClose:true

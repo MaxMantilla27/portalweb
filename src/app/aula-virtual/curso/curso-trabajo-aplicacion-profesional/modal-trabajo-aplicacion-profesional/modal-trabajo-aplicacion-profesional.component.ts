@@ -29,7 +29,6 @@ export class ModalTrabajoAplicacionProfesionalComponent implements OnInit {
   }
   SubirTrabajoAplicacionProfesional(){
     this.ProyectoEnviado=true;
-    this._HelperService.enviarActivarTrabajoTipoExamenCarrera(2)
   }
   getFileDetails(event:any) {
     for (var i = 0; i < event.target.files.length; i++) {
@@ -50,6 +49,10 @@ export class ModalTrabajoAplicacionProfesionalComponent implements OnInit {
       //   'Last-Modified-Date: ' + modifiedDate + "\n" +
       //   'Size: ' + Math.round((size/1024)/1024) + " MB");
     }
+  }
+  RedirigirCalificaciones(){
+    this.dialogRef.close()
+    this._HelperService.enviarActivarTrabajoTipoExamenCarrera(2)
   }
 
 }

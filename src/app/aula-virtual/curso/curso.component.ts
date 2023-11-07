@@ -152,6 +152,13 @@ export class CursoComponent implements OnInit,OnDestroy {
         console.log(x)
       },
     });
+    this._HelperService.recibirActivarTrabajoTipoExamenCarrera().pipe(takeUntil(this.signal$)).subscribe({
+      next: (x) => {
+        console.log(x)
+        this.tabIndex=3
+        console.log(this.tabIndex)
+      },
+    });
     this._HelperService.recibirCombosPerfil.pipe(takeUntil(this.signal$)).subscribe({
       next: (x) => {
 
