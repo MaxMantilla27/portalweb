@@ -1,5 +1,6 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import * as moment  from 'moment';
+import { HelperService } from 'src/app/Core/Shared/Services/helper.service';
 
 @Component({
   selector: 'app-examen-carrera',
@@ -8,7 +9,9 @@ import * as moment  from 'moment';
 })
 export class ExamenCarreraComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    private _HelperService: HelperService,
+    ) { }
 
   public minutos=45
   public segundos=0

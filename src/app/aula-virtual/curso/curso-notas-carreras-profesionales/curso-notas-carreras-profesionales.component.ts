@@ -26,6 +26,8 @@ export class CursoNotasCarrerasProfesionalesComponent implements OnInit,OnDestro
 
   @Input() IdMatricula=0;
   @Input() IdTipoProgramaCarrera=0;
+  @Input() MostarNotaExamen=false;
+
   public charge=false;
   public CursosCriterios:any;
   public CursosCriteriosPrevio:any;
@@ -54,6 +56,7 @@ export class CursoNotasCarrerasProfesionalesComponent implements OnInit,OnDestro
     this.PromedioFinal=0;
     this._HelperService.recibirActivarTrabajoTipoExamenCarrera().pipe(takeUntil(this.signal$)).subscribe({
       next: (x) => {
+        console.log('notas',x)
         this.NotaExamenSuficienciaProfesionalActivo=false
         this.NotaTrabajoProfesionalActivo=false
         if(x==1){
@@ -68,6 +71,7 @@ export class CursoNotasCarrerasProfesionalesComponent implements OnInit,OnDestro
   }
   ngOnChanges(changes: SimpleChanges): void {
     this.PromedioFinal=0;
+    this.NotaExamenSuficienciaProfesionalActivo=this.MostarNotaExamen;
     if(this.IdMatricula!=0){
       this.CursosCriterios=[]
       this.CursosCriteriosPrevio=[]

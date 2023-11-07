@@ -120,6 +120,7 @@ export class CursoComponent implements OnInit,OnDestroy {
   public ExamenActivo=false
   public ProyectoActivo=false
   public MostrarMensajeRecuerda=false;
+  public MostarNotaExamen=false
   public ocultar=false
   public contenidotarea=
   '<iframe src="https://player.vimeo.com/video/737713694?h=ce19c25ba1" width="100%" height="564" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>'
@@ -179,7 +180,12 @@ export class CursoComponent implements OnInit,OnDestroy {
     });
 
   }
-
+  DesOcultar(){
+    this.ocultar=false
+    this.tabIndex=3
+    this.MostarNotaExamen=true
+    this._HelperService.enviarActivarTrabajoTipoExamenCarrera(1)
+  }
   ObtenerAsistenciasAlumnoOnline(){
     console.log(this.programEstructura.listaCursoMatriculado)
     if(this.IdTipoProgramaCarrera==2){

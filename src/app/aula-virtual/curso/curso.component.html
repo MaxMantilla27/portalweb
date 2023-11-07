@@ -253,7 +253,7 @@
             </app-curso-notas>
           </div>
           <div  *ngIf="IdTipoProgramaCarrera==2" class="pad-resp">
-            <app-curso-notas-carreras-profesionales [IdMatricula]="idMatricula" [IdTipoProgramaCarrera]="IdTipoProgramaCarrera">
+            <app-curso-notas-carreras-profesionales [IdMatricula]="idMatricula" [MostarNotaExamen]="MostarNotaExamen" [IdTipoProgramaCarrera]="IdTipoProgramaCarrera">
             </app-curso-notas-carreras-profesionales>
           </div>
         </mat-tab>
@@ -637,6 +637,6 @@
         <!-- </ng-container> -->
       </mat-tab-group>
     </div>
-    <app-examen-carrera *ngIf="ocultar==true" (Volver)="ocultar=false"></app-examen-carrera>
+    <app-examen-carrera *ngIf="ocultar==true" (Volver)="DesOcultar()"></app-examen-carrera>
   </div>
 </div>
