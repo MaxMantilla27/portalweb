@@ -120,6 +120,7 @@ export class CursoComponent implements OnInit,OnDestroy {
   public ExamenActivo=false
   public ProyectoActivo=false
   public MostrarMensajeRecuerda=false;
+  public ocultar=false
   public contenidotarea=
   '<iframe src="https://player.vimeo.com/video/737713694?h=ce19c25ba1" width="100%" height="564" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>'
   public contenidotareapares=
@@ -157,6 +158,11 @@ export class CursoComponent implements OnInit,OnDestroy {
         console.log(x)
         this.tabIndex=3
         console.log(this.tabIndex)
+      }
+    });
+    this._HelperService.recibirOcultar().pipe(takeUntil(this.signal$)).subscribe({
+      next: (x) => {
+        this.ocultar=true
       },
     });
     this._HelperService.recibirCombosPerfil.pipe(takeUntil(this.signal$)).subscribe({

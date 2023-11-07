@@ -1,16 +1,36 @@
-<div style="font-size: 16px;font-weight: 600;margin: 10px 0px;">Examen de suficiencia profesional</div>
-<div style="    font-size: 14px;margin: 10px 0px;margin: 10px 0px;">Te damos la bienvenida al examen de suficiencia
-  profesional que te permitirá obtener el título
-  profesional técnico en administración de empresas.</div>
-<div style="    font-size: 12px;font-weight: 600;margin: 10px 0px;">Indicaciones generales:</div>
-<div style="font-size: 13px;margin-bottom: 4px;">- Ubícate en un entorno tranquilo y sin distracciones para poder
-  realizar tu examen. Evita tener
-  materiales no permitidos a tu alcance.</div>
-<div style="font-size: 13px;margin-bottom: 4px;">- Se otorga un único intento permitido para completar el examen.</div>
-<div style="font-size: 13px;margin-bottom: 4px;">- La duración establecida será 45 minutos. Asegúrate de gestionar tu
-  tiempo para completar todas
-  las preguntas.</div>
-<div style="font-size: 13px;margin-bottom: 4px;">- La nota final se podrá revisar en la sección de calificaciones dentro
-  de las 48 horas posteriores a la
-  finalización del examen. Se establece como aprobatoria una puntuación mínima de 12 puntos.</div>
-<div style="    font-size: 12px;font-weight: 600;margin: 10px 0px;">Anexos:</div>
+
+<ng-container *ngIf="ComenzoExamen!=true">
+  <div style="font-size: 16px;font-weight: 600;margin: 10px 0px;">Examen de suficiencia profesional</div>
+  <div style="    font-size: 14px;margin: 10px 0px;margin: 10px 0px;">Te damos la bienvenida al examen de suficiencia
+    profesional que te permitirá obtener el título
+    profesional técnico en administración de empresas.</div>
+  <div style="    font-size: 12px;font-weight: 600;margin: 10px 0px;">Indicaciones generales:</div>
+  <div style="font-size: 13px;margin-bottom: 4px;">- Ubícate en un entorno tranquilo y sin distracciones para poder
+    realizar tu examen. Evita tener
+    materiales no permitidos a tu alcance.</div>
+  <div style="font-size: 13px;margin-bottom: 4px;">- Se otorga un único intento permitido para completar el examen.</div>
+  <div style="font-size: 13px;margin-bottom: 4px;">- La duración establecida será 45 minutos. Asegúrate de gestionar tu
+    tiempo para completar todas
+    las preguntas.</div>
+  <div style="font-size: 13px;margin-bottom: 4px;">- La nota final se podrá revisar en la sección de calificaciones dentro
+    de las 48 horas posteriores a la
+    finalización del examen. Se establece como aprobatoria una puntuación mínima de 12 puntos.</div>
+  <div style="    font-size: 12px;font-weight: 600;margin: 10px 0px;">Anexos:</div>
+  <div class="temario">
+    <div class="imgtemario"></div>
+    <div>Temario 1.pdf</div>
+  </div>
+
+  <div class="fechasExamen">
+    <div>Fecha de examen programada:</div>
+    <div class="imagenFechaSelect"  ></div>
+    <div class="fechaseslect">{{fechaSelec|date: 'dd/MM/yyyy'}}</div>
+  </div>
+
+  <div class="buttonsEnvioCarreraDatos">
+
+    <app-default-button [confs]="{color:'primary',titulo:'Iniciar'}" [style]="'width: 100%;'"
+    [icon]="''" [style]="'     padding: 0px 40px; border-radius: 25px;border: solid 1px #f8893f;'"
+    (click)="Ir()"></app-default-button>
+  </div>
+</ng-container>

@@ -25,3 +25,50 @@
     display: flex;
     justify-content: space-evenly;
 }
+.temario{
+  display: flex;
+  align-items: center;
+  padding: 3px 5px;
+  background: #f8f8f8;
+  width: max-content;
+  font-size: 10px;
+  font-weight: 600;
+  cursor: pointer;
+}
+.imgtemario{
+  background-image: url(../../../../assets/icons/pdf-31.svg);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  min-width: 12px;
+  height: 15px;
+  margin-right: 10px;
+}
+.fechasExamen{
+  display: flex;
+  align-items: center;
+  margin-top: 20px;
+  font-size: 12px;
+  justify-content: center;
+}
+
+.imagenFechaSelect{
+  background-image: url(../../../../assets/icons/icono-calendario-naranja.svg);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  min-width: 15px;
+  height: 15px;
+  margin-right: 10px;
+  margin: 0px 10px;
+  cursor: pointer;
+}
+.fechaseslect{
+  font-weight: 600;
+}
+
+.buttonsEnvioCarreraDatos{
+  margin: 50px;
+    display: flex;
+    justify-content: space-evenly;
+}
