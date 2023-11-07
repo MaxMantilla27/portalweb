@@ -187,6 +187,7 @@ import { CertificadoBachillerCarrerasProfesionalesComponent } from './curso/curs
 import { ModalCertificadoEstudiosCarrerasProfesionalesComponent } from './curso/curso-certificado-carreras-profesionales/certificado-estudios-carreras-profesionales/modal-certificado-estudios-carreras-profesionales/modal-certificado-estudios-carreras-profesionales.component';
 import { ModalCertificadoBachillerCarrerasProfesionalesComponent } from './curso/curso-certificado-carreras-profesionales/certificado-bachiller-carreras-profesionales/modal-certificado-bachiller-carreras-profesionales/modal-certificado-bachiller-carreras-profesionales.component';
 import { ModalCertificadoTituloCarrerasProfesionalesComponent } from './curso/curso-certificado-carreras-profesionales/certificado-titulo-carreras-profesionales/modal-certificado-certificado-titulo-carreras-profesionales/modal-certificado-titulo-carreras-profesionales.component';
+import { ExamenCarreraComponent } from './examen-carrera/examen-carrera.component';
 
 
 
@@ -369,7 +370,8 @@ import { ModalCertificadoTituloCarrerasProfesionalesComponent } from './curso/cu
     CertificadoBachillerCarrerasProfesionalesComponent,
     ModalCertificadoEstudiosCarrerasProfesionalesComponent,
     ModalCertificadoBachillerCarrerasProfesionalesComponent,
-    ModalCertificadoTituloCarrerasProfesionalesComponent
+    ModalCertificadoTituloCarrerasProfesionalesComponent,
+    ExamenCarreraComponent
 
   ],
   imports: [

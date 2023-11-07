@@ -10,7 +10,7 @@
       <div class="cursoTitle">{{programEstructura.programaGeneral}}</div>
       <!-- <div class="cursoTabDescripcion">¡Bienvenido! Debes completar los siguientes módulos de tu programa:</div> -->
     </div>
-    <div class="col-12 col-md-12 col-lg-12" style="position: relative;padding: 0px;">
+    <div class="col-12 col-md-12 col-lg-12" style="position: relative;padding: 0px;" *ngIf="ocultar==false">
       <div style="width: 100%;display: flex;justify-content: flex-start;padding-right: 30px;    margin-bottom: 12px;">
         <div class="buttonBack no-select" [routerLink]="'/AulaVirtual/MisCursos'">
           <i class="material-icons">arrow_back_ios</i>
@@ -623,5 +623,6 @@
         <!-- </ng-container> -->
       </mat-tab-group>
     </div>
+    <app-examen-carrera *ngIf="ocultar==true" (Volver)="ocultar=false"></app-examen-carrera>
   </div>
 </div>
