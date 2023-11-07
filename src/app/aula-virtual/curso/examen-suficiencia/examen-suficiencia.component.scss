@@ -1,0 +1,27 @@
+
+.HeaderCarreraDatosPersonales{
+  display: flex;
+  justify-content: space-between;
+  border-bottom: solid 2px #9a9a9a;
+  padding: 5px;
+  font-size: 16px;
+  font-weight: 600;
+  align-items: center;
+}
+.IconCarreraDatosPersonales{
+  i{
+    font-size: 25px !important;
+    cursor: pointer;
+  }
+}
+.contentCarreraDatosPersonales{
+  padding: 10px
+}
+.ArchivoCarreraDatosPersonales{
+  margin-bottom: 15px;
+}
+.buttonsEnvioCarreraDatos{
+  margin: 50px;
+    display: flex;
+    justify-content: space-evenly;
+}

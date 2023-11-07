@@ -28,8 +28,15 @@ export class HelperService {
   private msjAcciones=new Subject<any>();
   private msjAccionesForm=new Subject<any>();
   private msjChat=new Subject<SetChat>();
+  private ActivarTipoExamen=new Subject<number>();
 
 
+  enviarActivarTipoExamen(data:number):void {
+    this.ActivarTipoExamen.next(data);
+  }
+  recibirActivarTipoExamen(): Observable<any> {
+    return this.ActivarTipoExamen.asObservable();
+  }
 
   enviarMsjChat(data:SetChat):void {
     this.msjChat.next(data);

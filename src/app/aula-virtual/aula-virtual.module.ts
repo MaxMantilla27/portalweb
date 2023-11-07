@@ -176,6 +176,9 @@ import { TramitesConstanciaMatriculaComponent } from './curso/curso-tramites-car
 import { TramitesDiplomaTituloComponent } from './curso/curso-tramites-carrera/tramites-diploma-titulo/tramites-diploma-titulo.component';
 import { CursoNotasCarrerasProfesionalesComponent } from './curso/curso-notas-carreras-profesionales/curso-notas-carreras-profesionales.component';
 import { CursoCertificadoCarrerasProfesionalesComponent } from './curso/curso-certificado-carreras-profesionales/curso-certificado-carreras-profesionales.component';
+
+import { ExamenSuficienciaComponent } from './curso/examen-suficiencia/examen-suficiencia.component';
+
 import { AsistenciasCarrerasProfesionalesComponent } from './modulo/asistencias-carreras-profesionales/asistencias-carreras-profesionales.component';
 import { GestionAsistenciaProgramaCarreraProfesionalComponent } from './curso/gestion-asistencia-programa-carrera-profesional/gestion-asistencia-programa-carrera-profesional.component';
 import { CertificadoTituloCarrerasProfesionalesComponent } from './curso/curso-certificado-carreras-profesionales/certificado-titulo-carreras-profesionales/certificado-titulo-carreras-profesionales.component';
@@ -186,6 +189,7 @@ import { ModalCertificadoBachillerCarrerasProfesionalesComponent } from './curso
 import { ModalCertificadoTituloCarrerasProfesionalesComponent } from './curso/curso-certificado-carreras-profesionales/certificado-titulo-carreras-profesionales/modal-certificado-certificado-titulo-carreras-profesionales/modal-certificado-titulo-carreras-profesionales.component';
 import { CursoTrabajoAplicacionProfesionalComponent } from './curso/curso-trabajo-aplicacion-profesional/curso-trabajo-aplicacion-profesional.component';
 import { ModalTrabajoAplicacionProfesionalComponent } from './curso/curso-trabajo-aplicacion-profesional/modal-trabajo-aplicacion-profesional/modal-trabajo-aplicacion-profesional.component';
+
 
 
 @NgModule({
@@ -359,6 +363,7 @@ import { ModalTrabajoAplicacionProfesionalComponent } from './curso/curso-trabaj
     TramitesDiplomaTituloComponent,
     CursoNotasCarrerasProfesionalesComponent,
     CursoCertificadoCarrerasProfesionalesComponent,
+    ExamenSuficienciaComponent,
     AsistenciasCarrerasProfesionalesComponent,
     GestionAsistenciaProgramaCarreraProfesionalComponent,
     CertificadoTituloCarrerasProfesionalesComponent,
