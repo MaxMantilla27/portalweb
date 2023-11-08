@@ -113,6 +113,49 @@
 
 
         </ng-container>
+        <mat-tab>
+          <ng-template mat-tab-label>
+            <div #sesiones class="contentHeaderM" (click)="changeIndexCarrerasProfesionales()" >
+              <div class="iconMat iconCursosOnline" matTooltip="CarrerasProfesionales" matTooltipPosition="after"></div>
+              <div *ngIf="!hide" class="titleMatr">Carreras profesionales</div>
+            </div>
+          </ng-template>
+          <div class="pad-resp">
+            <app-docencia-carreras-profesionales ></app-docencia-carreras-profesionales>
+          </div>
+        </mat-tab>
+        <ng-container *ngIf="CarrerasProfesionalesActive">
+
+          <mat-tab>
+            <ng-template mat-tab-label class="tabSubcontent">
+              <div class="contentHeaderM subContent" style="cursor: pointer;padding: 20px 10px !important;"
+                matTooltip="Examen de suficiencia profesional"
+                matTooltipPosition="after">
+
+                <div class="iconMat"><i class="material-icons">comment</i></div>
+                <div class="titleMatr" *ngIf="!hide">Examen de suficiencia profesional</div>
+              </div>
+            </ng-template>
+            <div class="pad-resp">
+              <app-docencia-examen-suficiencia-profesional></app-docencia-examen-suficiencia-profesional>
+            </div>
+          </mat-tab>
+          <mat-tab>
+            <ng-template mat-tab-label>
+              <div class="contentHeaderM subContent"  style="cursor: pointer;padding: 20px 10px !important;"
+                matTooltip="Trabajo de aplicación profesional"
+                matTooltipPosition="after">
+                <div class="iconMat"><i class="material-icons">folder_supervised</i></div>
+                <div class="titleMatr" *ngIf="!hide">Trabajo de aplicación profesional</div>
+              </div>
+            </ng-template>
+            <div class="pad-resp">
+              <app-docencia-trabajo-aplicacion-profesional></app-docencia-trabajo-aplicacion-profesional>
+            </div>
+          </mat-tab>
+
+
+        </ng-container>
       </mat-tab-group>
     </div>
   </div>

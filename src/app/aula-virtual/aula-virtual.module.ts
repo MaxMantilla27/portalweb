@@ -190,6 +190,9 @@ import { ModalCertificadoTituloCarrerasProfesionalesComponent } from './curso/cu
 import { ExamenCarreraComponent } from './examen-carrera/examen-carrera.component';
 import { CursoTrabajoAplicacionProfesionalComponent } from './curso/curso-trabajo-aplicacion-profesional/curso-trabajo-aplicacion-profesional.component';
 import { ModalTrabajoAplicacionProfesionalComponent } from './curso/curso-trabajo-aplicacion-profesional/modal-trabajo-aplicacion-profesional/modal-trabajo-aplicacion-profesional.component';
+import { DocenciaCarrerasProfesionalesComponent } from './docencia-v2/docencia-carreras-profesionales/docencia-carreras-profesionales.component';
+import { DocenciaExamenSuficienciaProfesionalComponent } from './docencia-v2/docencia-carreras-profesionales/docencia-examen-suficiencia-profesional/docencia-examen-suficiencia-profesional.component';
+import { DocenciaTrabajoAplicacionProfesionalComponent } from './docencia-v2/docencia-carreras-profesionales/docencia-trabajo-aplicacion-profesional/docencia-trabajo-aplicacion-profesional.component';
 
 
 
@@ -375,7 +378,10 @@ import { ModalTrabajoAplicacionProfesionalComponent } from './curso/curso-trabaj
     ModalCertificadoTituloCarrerasProfesionalesComponent,
     ExamenCarreraComponent,
     CursoTrabajoAplicacionProfesionalComponent,
-    ModalTrabajoAplicacionProfesionalComponent
+    ModalTrabajoAplicacionProfesionalComponent,
+    DocenciaCarrerasProfesionalesComponent,
+    DocenciaExamenSuficienciaProfesionalComponent,
+    DocenciaTrabajoAplicacionProfesionalComponent
 
   ],
   imports: [

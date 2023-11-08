@@ -50,6 +50,7 @@ export class DocenciaV2Component implements OnInit ,OnDestroy {
     SinAsistenciaAprobada:null
   };
   public AsincronicoActive = false;
+  public CarrerasProfesionalesActive = false;
   public indexMenuAsincronico=0
   ngOnInit(): void {
     this.ObtenerInformacionProveedor();
@@ -101,5 +102,8 @@ export class DocenciaV2Component implements OnInit ,OnDestroy {
   }
   changeIndexAsincronico() {
     this.AsincronicoActive = !this.AsincronicoActive;
+  }
+  changeIndexCarrerasProfesionales() {
+    this.CarrerasProfesionalesActive = !this.CarrerasProfesionalesActive;
   }
 }
