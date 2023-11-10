@@ -21,7 +21,7 @@ export class ModuloForoInsertComponent implements OnInit,OnDestroy {
   ) { this.userForm =fb.group({
     Titulo: ['', [Validators.required]],
     Contenido: ['', [Validators.required]],
-    Archivo: ['', [Validators.required]],
+    // Archivo: ['', [Validators.required]],
   });
   }
   ngOnDestroy(): void {
