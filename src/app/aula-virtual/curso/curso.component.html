@@ -622,7 +622,7 @@
           </div>
         </mat-tab>
         <!-- Pendiente para Carreras Profesionales -->
-        <!-- <mat-tab *ngIf="IdModalidadPrincipal!=1" [disabled]="true">
+        <mat-tab *ngIf="EsCarrera==true" [disabled]="true">
           <ng-template mat-tab-label  >
             <div #biblioteca class="contentHeaderM" (click)="InterraccionTab('Biblioteca Virtual')" matTooltip="BibliotecaVirtual"
               matTooltipPosition="after"(click)="redireccionarBiblioteca()" style="cursor: pointer;color:#524f4f !important">
@@ -632,7 +632,7 @@
           </ng-template>
           <div class="pad-resp">
           </div>
-        </mat-tab> -->
+        </mat-tab>
         <!-- </ng-container> -->
         <!-- </ng-container> -->
       </mat-tab-group>
