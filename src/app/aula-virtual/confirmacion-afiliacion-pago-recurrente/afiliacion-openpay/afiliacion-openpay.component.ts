@@ -35,7 +35,7 @@ export class AfiliacionOpenpayComponent implements OnInit,OnDestroy {
     this.signal$.next(true);
     this.signal$.complete();
   }
-
+  public tipoTarjet=""
   public idMatricula=0
   public json:RegistroRespuestaPreProcesoPagoDTO={
     IdentificadorTransaccion:'',
@@ -138,8 +138,8 @@ export class AfiliacionOpenpayComponent implements OnInit,OnDestroy {
   OpenPayInit() {
     var deviceSessionId =""
     if(this.jsonSave.IdPasarelaPago==16){
-      OpenPayColombia.setId('m6g2okzx58x70r2yfjul');
-      OpenPayColombia.setApiKey('pk_d2a653a7e31e4a7fade3ef2c742d0c95');
+      OpenPayColombia.setId('mxqbvmmsltqluhbqauyo');
+      OpenPayColombia.setApiKey('pk_ba4c502aa2b848c2a6e67c3a36268542');
       OpenPayColombia.setSandboxMode(true);
       deviceSessionId = OpenPayColombia.deviceData.setup('fomrOpenPAy');
     }
@@ -294,6 +294,33 @@ export class AfiliacionOpenpayComponent implements OnInit,OnDestroy {
         this.dialogRef.close()
       }
     })
+  }
+
+  obtenerTipoTarjeta(){
+    var numeroTarjetaLimpio = this.NumberT.replace(/\s/g, '').replace(/[^0-9]/gi, '');
+
+    const patronesTarjetas: Record<string, RegExp> = {
+      visa: /^4/,
+      mastercard: /^5[1-5]/,
+      amex: /^3[47]/,
+      carnet :/^506[0-9]/
+    };
+    let tarjeta=""
+    for (const tipo in patronesTarjetas) {
+      if (patronesTarjetas[tipo].test(numeroTarjetaLimpio)) {
+        tarjeta = tipo;
+          break;
+      }
+      else tarjeta =""
+    }
+
+    switch(tarjeta){
+      case 'visa':this.tipoTarjet='visa-07.svg';break;
+      case 'mastercard':this.tipoTarjet='mastercard-08.svg';break;
+      case 'amex':this.tipoTarjet='american-09.svg';break;
+      case 'carnet':this.tipoTarjet='carnet-mexico.svg';break;
+      default :this.tipoTarjet=""
+    }
   }
 
 }

@@ -91,3 +91,22 @@
     border-bottom: solid 1px #e8e8e8;
   }
   
+
+  .logo-openpay {
+    // background-image: url(../assets/icons/flecha-derecha.svg);
+    background-image: url(../../../assets/icons/logo-openpay.png);
+    width: 100%;
+    background-size: contain;
+    height: 50px;
+    background-position: right;
+    background-repeat: no-repeat;
+
+  }
+
+  .imagenAlgo{
+    position: absolute;
+    width: 35px;
+    height: 25px;
+    top: calc( 50% - 17px );
+    right: 5px;
+  }

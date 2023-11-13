@@ -1,7 +1,13 @@
 <div class="container">
     <div class="row rowpaddAv">
       <div class="col-12 row" *ngIf="resultCard!=undefined">
-        <div class="col-12 col-md-12 col-lg-12 titlePagoTarjeta">Confirma tu afiliación</div>
+        <div class="col-12 col-md-12 col-lg-12 titlePagoTarjeta">
+          <div class="row" style="align-items: end;">
+            <div class="col-md-6" >Confirma tu afiliación</div>
+            <div class="col-md-6" style="padding-right: 60px;"> <div class="logo-openpay"></div></div>
+          </div>
+        </div>
+        
         <div class="col-12 d-md-none d-lg-none" >
           <div class="resumenPagoTarjeta" style="padding: 0px">
             <div class="titleResumenPago">Resumen de tu afiliación</div>
@@ -66,10 +72,12 @@
 
 
             <ng-container >
-              <mat-form-field class="col-12" appearance="outline" [floatLabel]="'always'" style="width: 100%;">
+              <mat-form-field class="col-12" appearance="outline" [floatLabel]="'always'" style="width: 100%;position: relative;">
+
                 <mat-label>Número de tarjeta</mat-label>
-                <input type="text" placeholder="Número de tarjeta" [ngModelOptions]="{standalone: true}"
+                <input type="text" placeholder="Número de tarjeta" [ngModelOptions]="{standalone: true}" (input)="obtenerTipoTarjeta()"
                 [(ngModel)]="NumberT" matInput appInputCard>
+                <img *ngIf="tipoTarjet!=''" [src]="'../../../../assets/icons/'+ tipoTarjet" class="imagenAlgo" />
               </mat-form-field>
               <div class="col-6 col-md-6 col-lg-6">
 
