@@ -45,7 +45,9 @@
               "src/assets/librerias/conekta-checkout.min.js",
               "src/assets/librerias/jquery-1.11.2.min.js",
               "src/assets/librerias/openpay.v1.min.js",
-              "src/assets/librerias/openpay-data.v1.min.js"
+              "src/assets/librerias/openpay-data.v1.min.js",
+              "src/assets/librerias/openpay-colombia.v1.min.js",
+              "src/assets/librerias/openpay-colombia-data.v1.min.js"
             ]
           },
           "configurations": {
@@ -130,7 +132,9 @@
               "src/assets/librerias/conekta-checkout.min.js",
               "src/assets/librerias/jquery-1.11.2.min.js",
               "src/assets/librerias/openpay.v1.min.js",
-              "src/assets/librerias/openpay-data.v1.min.js"
+              "src/assets/librerias/openpay-data.v1.min.js",
+              "src/assets/librerias/openpay-colombia.v1.min.js",
+              "src/assets/librerias/openpay-colombia-data.v1.min.js"
             ]
           }
         },
