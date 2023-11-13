@@ -64,7 +64,7 @@ const routes:Routes=[
             {path:'bs-campus/blog/:blog', component:BlogComponent},
 
             {path:'CompraExitosaOpenPay/:validate', component:CompraExitosaOpenPayComponent},
-            {path:'CompraExitosaOpenPay/:validate', component:CompraExitosaOpenPayColombiaComponent},
+            {path:'CompraExitosaOpenPayColombia/:validate', component:CompraExitosaOpenPayColombiaComponent},
             {path:'Certificado/:IdMatricula/:IdCertificado', component:InformacionCertificadoComponent},
             {path:'SubArea/:nombre', component:TagsComponent},
             {path:'Area/:nombre', component:TagsComponent},
