@@ -110,6 +110,7 @@ import { DevolverProyectoComponent } from './docencia-tareas/devolver-proyecto/d
 import { EvalComponent } from './eval/eval.component';
 import { ConfirmacionPagoMercadoPagoChileComponent } from './confirmacion-pago-mercado-pago-chile/confirmacion-pago-mercado-pago-chile.component';
 import { ResultadoPagoMercadopagoComponent } from './resultado-pago-mercadopago/resultado-pago-mercadopago.component';
+import { ConfirmacionPagoOpenpayColombiaComponent } from './confirmacion-pago-openpay-colombia/confirmacion-pago-openpay-colombia.component';
 
 
 
@@ -218,7 +219,8 @@ import { ResultadoPagoMercadopagoComponent } from './resultado-pago-mercadopago/
     DevolverProyectoComponent,
     EvalComponent,
     ResultadoPagoMercadopagoComponent,
-    ConfirmacionPagoMercadoPagoChileComponent
+    ConfirmacionPagoMercadoPagoChileComponent,
+    ConfirmacionPagoOpenpayColombiaComponent
   ],
   imports: [
     CommonModule,

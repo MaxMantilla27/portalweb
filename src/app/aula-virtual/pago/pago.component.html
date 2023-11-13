@@ -1,3 +1,4 @@
+
 <div class="container">
   <div class="rowpaddAv breadcrumb" style="padding-top: 0px !important; padding-bottom: 0px !important;">
     <app-miga-pan [items]="migaPan"></app-miga-pan>
@@ -96,7 +97,7 @@
               <td>{{item.nroCuota}}</td>
               <td>{{item.nombreMoneda}}</td>
               <td>{{item.cuota}}</td>
-              <td>{{item.moraCalculada | number : '1.2-2'}}</td>
+              <td>{{item.mora}}</td>
               <td>{{item.fechaVencimiento | date:'dd/MM/yyyy'}}</td>
               <td>
                 <ng-container *ngIf="item.fechaPago!=null">{{item.fechaPago | date:'dd/MM/yyyy'}}</ng-container>
@@ -130,12 +131,12 @@
               <ng-container *ngFor="let item of CronogramaPago.registroCuota;let i=index">
                 <div class="col-12 row cen" *ngIf="item.estado==true">
                   <div class="col-8">Cuota N°{{item.nroCuota}} - {{item.fechaVencimiento | date:'dd/MM/yyyy'}}</div>
-                  <div class="col-4">{{item.simbolo}} {{(item.cuota+item.moraCalculada) | number : '1.2-2'}}</div>
+                  <div class="col-4">{{item.simbolo}} {{item.cuota}}</div>
                 </div>
               </ng-container>
               <div class="col-12 row tot">
                 <div class="col-8">Total a pagar</div>
-                <div class="col-4">{{CronogramaPago.registroCuota[0].simbolo}} {{total | number : '1.2-2'}}</div>
+                <div class="col-4">{{CronogramaPago.registroCuota[0].simbolo}} {{total}}</div>
               </div>
               <div class="col-12 row bot">
                 <div>
