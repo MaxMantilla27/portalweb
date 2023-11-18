@@ -104,6 +104,23 @@ export class DatosPerfilService {
       return EMPTY;
     }
   }
+
+  public ObtenerCarreraProvedor():Observable<any>{
+    if(this.isBrowser){
+      return this.http.get<any>(this.urlBase+'/ObtenerCarreraProvedor');
+    }else{
+      return EMPTY;
+    }
+  }
+
+
+  public ObtenerCursoCarreraProvedor():Observable<any>{
+    if(this.isBrowser){
+      return this.http.get<any>(this.urlBase+'/ObtenerCursoCarreraProvedor');
+    }else{
+      return EMPTY;
+    }
+  }
   public ObtenerCursoOnlineWebinarDocentePortalWeb(IdPespecifico:number):Observable<any>{
     if(this.isBrowser){
       return this.http.get<any>(this.urlBase+'/ObtenerCursoOnlineWebinarDocentePortalWeb?IdPespecifico='+IdPespecifico);

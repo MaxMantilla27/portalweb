@@ -1,0 +1,89 @@
+.ButtonCursoCarrera{
+  display: flex;
+  justify-content: flex-end;
+  padding: 0px;
+}
+.greay-spinner {
+  position: absolute !important;
+  top: 0;
+  right: 0;
+}
+.progras-spinner {
+  position: absolute !important;
+  top: 0;
+  right: 0;
+}
+.greay-spinner circle,
+.greay-spinner circle {
+  stroke: #dadada !important;
+}
+
+.progras-spinner circle,
+.progras-spinner circle {
+  stroke: #f8893f !important;
+}
+.AcordeonCarreras{
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  padding-bottom: 5px;
+  border-bottom: solid 1px #767676;
+  margin-bottom: 30px;
+  font-size: 20px;
+  font-weight: 600;
+  cursor: pointer;
+}
+.ExpandCarrera{
+  i{
+    font-size: 26px !important;
+  }
+}
+.cardCursoCarrera{
+  padding: 20px;
+  background: #f4f4f4;
+  border-radius: 5px;
+  margin: 10px 0px 20px;
+  align-items: center;
+}
+.NombreCursoCarrera{
+  font-size: 18px;
+  font-weight: 600;
+}
+.FechaCursosCarrera{
+  display: flex;
+  font-size: 14px;
+  color: #949494;
+  width: fit-content;
+  margin: 10px;
+  strong{
+    margin-right: 5px;
+  }
+}
+.IconCursoCarrera{
+  background-image: url(../../../../assets/icons/Enejecucion.svg);
+  min-width: 20px;
+    height: 20px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    margin-right: 5px;
+}
+
+.IconCicloCarrera{
+  background-image: url(../../../../assets/icons/Semestrebarra.svg);
+  min-width: 15px;
+    height: 15px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    margin-right: 5px;
+}
+.IconFaltantesCarrera{
+  background-image: url(../../../../assets/icons/Campana.svg);
+  min-width: 15px;
+    height: 15px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    margin-right: 5px;
+}

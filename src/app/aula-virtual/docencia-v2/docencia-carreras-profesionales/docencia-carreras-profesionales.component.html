@@ -1,1 +1,107 @@
-Tab Carreras Profesionales
+<div class="contentCursosOnline">
+  <div class="row ">
+    <div class="col-12 InputsDocencia">
+      <div class="row">
+        <div class="col-12 ">
+          <mat-form-field appearance="outline" style="width: 100%;">
+            <mat-label>Ingresar el nombre del curso</mat-label>
+            <input type="text" placeholder="Ingresar el nombre del curso" (input)="FilterCursos()" [(ngModel)]="filterCurso" matInput>
+          </mat-form-field>
+        </div>
+      </div>
+    </div>
+    <ng-container *ngIf="(Cursos==undefined || Cursos.length==0) && TerminaCarga==false">
+      <div class="row"
+        style="display: flex; justify-content: center;align-items: center;text-align: center; height: 15rem;">
+        <div class="col-12" style="display: flex;justify-content: center;">
+          <mat-spinner></mat-spinner>
+        </div>
+        <div class="col-12">
+          Los registros se estan cargando ...
+        </div>
+      </div>
+    </ng-container>
+    <ng-container *ngIf="(Cursos==undefined || Cursos.length==0) && TerminaCarga==true">
+      <div style="display: flex;justify-content: center;align-items: center; height: 15rem;">
+        No se encontraron registros.
+      </div>
+    </ng-container>
+    <ng-container *ngIf="Cursos!=undefined && Cursos.length!=0">
+      <div class="col-12" style="margin-top: 50px;" >
+        <ng-container *ngFor="let item of Cursos;let i=index">
+          <ng-container *ngIf="item.Visible==true">
+            <div class="AcordeonCarreras" (click)="item.Open=!item.Open">
+              <div >{{item.nombre}}</div>
+              <div class="ExpandCarrera">
+                <i class="material-icons" *ngIf="item.Open!=true">keyboard_arrow_down</i>
+                <i class="material-icons" *ngIf="item.Open==true">keyboard_arrow_up</i>
+              </div>
+            </div>
+            <ng-container *ngIf="item.Open==true">
+              <ng-container *ngFor="let curso of item.cursos">
+
+                <div class="cardCursoCarrera row" *ngIf="curso.Visible==true">
+                  <ng-container *ngIf="curso.orden==0">
+                    <div class="col-12 col-md-8 col-lg-9 NombreCursoCarrera">{{curso.pGeneral}}</div>
+                    <div class="col-12 col-md-4 col-lg-3 ButtonCursoCarrera">
+                      <app-default-button [ruta]="curso.idPEspecificoHijo" [confs]="{color:'primary',titulo:'Ingresar >'}"
+                        [icon]="''" [style]="'border-radius: 30px; margin: 0px; padding: 0px 30px;'"></app-default-button>
+                    </div>
+                    <div class="col-12" style="height: 10px;"></div>
+                    <div class="FechaCursosCarrera">
+                      <div class="IconCursoCarrera"></div>
+                      <strong>{{curso.nombreEstado}}:</strong>
+                      <div>{{curso.fechaInicio | date:'dd-MM-yyyy'}} al {{curso.fechaFinal | date:'dd-MM-yyyy'}}</div>
+                    </div>
+                    <div class="FechaCursosCarrera" *ngIf="curso.descripcion!=null">
+                      <div class="IconCicloCarrera"></div>
+                      <strong>Semestre:</strong>
+                      <div>{{curso.descripcion}}</div>
+                    </div>
+                    <div class="FechaCursosCarrera">
+                      <div class="IconSesionesCarrera"></div>
+                      <div style="position: relative;width: 20px;margin-left: -5px;
+                        margin-right: 10px;    height: 20px;">
+
+                        <mat-progress-spinner class="greay-spinner" [mode]="'determinate'" [diameter]="20"
+                          [strokeWidth]="3" [value]="100">
+                        </mat-progress-spinner>
+                        <mat-progress-spinner class="progras-spinner" [mode]="'determinate'" [diameter]="20"
+                          [strokeWidth]="3" [value]="curso.porcentage">
+                        </mat-progress-spinner>
+                      </div>
+                      <div>Sesiones: {{curso.sesiones}}/{{curso.sesionesFaltantes}}</div>
+                    </div>
+                    <div class="FechaCursosCarrera"
+                      *ngIf="curso.calificacionesPendientes!=null && curso.calificacionesPendientes>0">
+                      <div class="IconFaltantesCarrera"></div>
+                      <div>Trabajos por calificar ({{curso.calificacionesPendientes}})</div>
+                    </div>
+                  </ng-container>
+                  <ng-container *ngIf="curso.orden!=0">
+                    <div class="col-12 col-md-8 col-lg-9 NombreCursoCarrera">{{curso.pGeneral}}</div>
+                    <div class="col-12 col-md-4 col-lg-3 ButtonCursoCarrera">
+                      <app-default-button [confs]="{color:'primary',titulo:'Ingresar >'}" [icon]="''"
+                        [style]="'border-radius: 30px; margin: 0px; padding: 0px 30px;'"
+                        (click)="IrTrabajo(curso,item.nombre)"></app-default-button>
+                    </div>
+                    <div class="col-12 FechaCursosCarrera">
+                      <div class="IconCursoCarrera"></div>
+                      <strong>{{curso.nombreEstado}}:</strong>
+                      <div>Asincrónico</div>
+                    </div>
+                  </ng-container>
+                </div>
+              </ng-container>
+
+            </ng-container>
+          </ng-container>
+
+
+        </ng-container>
+
+      </div>
+    </ng-container>
+
+  </div>
+</div>

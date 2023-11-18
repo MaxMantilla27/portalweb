@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, ElementRef, OnDestroy, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { MatTabChangeEvent } from '@angular/material/tabs';
 import { Subject, takeUntil } from 'rxjs';
 import { ParticipacionExpositorFiltroDTO } from 'src/app/Core/Models/ParticipacionExpositorFiltroDTO';
@@ -14,6 +14,8 @@ import { SessionStorageService } from 'src/app/Core/Shared/Services/session-stor
 })
 export class DocenciaV2Component implements OnInit ,OnDestroy {
   private signal$ = new Subject();
+
+  @ViewChild('carreras') carreras!: ElementRef;
 
   ngOnDestroy(): void {
     this.signal$.next(true);
@@ -34,7 +36,7 @@ export class DocenciaV2Component implements OnInit ,OnDestroy {
   public hide=false
   public tabIndex = 0;
   public DataProveedor:any
-
+  public NombreCurso=''
   public json: ParticipacionExpositorFiltroDTO = {
     IdArea: null,
     IdCentroCosto: null,
@@ -51,17 +53,14 @@ export class DocenciaV2Component implements OnInit ,OnDestroy {
   };
   public AsincronicoActive = false;
   public CarrerasProfesionalesActive = false;
-  public indexMenuAsincronico=0
   ngOnInit(): void {
     this.ObtenerInformacionProveedor();
     var indice=this._SessionStorageService.SessionGetValue('docencia');
     if(indice!=''){
       this.tabIndex=parseInt(indice);
-      if(this.tabIndex>1){
-
+      if(this.tabIndex==2){
         this.changeIndexAsincronico()
         this.tabIndex++
-        this.indexMenuAsincronico=this.tabIndex
       }
     }
   }
@@ -77,33 +76,38 @@ export class DocenciaV2Component implements OnInit ,OnDestroy {
     })
   }
   tabChanged(tabChangeEvent: MatTabChangeEvent): void {
-    this._SessionStorageService.SessionSetValue('docencia',this.tabIndex>2?'2':this.tabIndex.toString());
+    console.log(tabChangeEvent)
+    this._SessionStorageService.SessionSetValue('docencia',this.tabIndex.toString());
     if(this.AsincronicoActive==true){
-      if(this.indexMenuAsincronico==0){
-        this.tabIndex=this.tabIndex+1
-        this.indexMenuAsincronico=this.tabIndex
+      if(tabChangeEvent.index>5 || tabChangeEvent.index <2 ){
+        this.AsincronicoActive=false
+      }else{
+        this._SessionStorageService.SessionSetValue('docencia','2');
       }
-      if (this.indexMenuAsincronico>0 && tabChangeEvent.index+1 < this.indexMenuAsincronico)
-      {
-        this.AsincronicoActive = false;
-        this.indexMenuAsincronico=0
+      if(tabChangeEvent.index==2){
+        this.tabIndex=3
       }
     }
-    if(this.AsincronicoActive==false){
-      if(this.indexMenuAsincronico!=0){
-        this.tabIndex=this.tabIndex-1
+    if(this.CarrerasProfesionalesActive==true){
+      if(tabChangeEvent.index <4 ){
+        this.CarrerasProfesionalesActive=false
+      }else{
+        this._SessionStorageService.SessionSetValue('docencia','3');
       }
-      this.indexMenuAsincronico=0
     }
-  }
-  InterraccionTab(nombre:string){
 
-    this._HelperService.enviarMsjAcciones({Tag:'Tab',Nombre:nombre})
+
   }
   changeIndexAsincronico() {
-    this.AsincronicoActive = !this.AsincronicoActive;
+    this.AsincronicoActive=true
   }
   changeIndexCarrerasProfesionales() {
-    this.CarrerasProfesionalesActive = !this.CarrerasProfesionalesActive;
+    this.tabIndex=3
+  }
+  AddIndex(item:any){
+    console.log(item)
+    this.CarrerasProfesionalesActive=true
+    this.tabIndex+=item.orden
+    this.NombreCurso=item.NombrePadre
   }
 }

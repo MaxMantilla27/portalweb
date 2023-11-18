@@ -18,6 +18,17 @@
   font-size: 25px;
   margin: 40px 0px;
 }
+
+.InputsDocencia
+  .mat-focused
+  > div.mat-form-field-wrapper
+  > div.mat-form-field-flex
+  > div.mat-form-field-infix
+  > span.mat-form-field-label-wrapper
+  > .mat-form-field-label {
+    transform: translateY(-1em) scale(.75) !important;
+}
+
 .InputsDocencia
   .mat-form-field.mat-form-field-appearance-outline
   > div.mat-form-field-wrapper

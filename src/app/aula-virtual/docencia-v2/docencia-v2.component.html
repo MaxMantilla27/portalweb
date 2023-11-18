@@ -5,7 +5,8 @@
 </div>
 <div style="border-top:solid 3px #f4f4f4 ;"></div>
 <ng-container *ngIf="DataProveedor==undefined">
-  <div class="row" style="display: flex; justify-content: center;align-items: center;text-align: center; height: 15rem;">
+  <div class="row"
+    style="display: flex; justify-content: center;align-items: center;text-align: center; height: 15rem;">
     <div class="col-12" style="display: flex;justify-content: center;">
       <mat-spinner></mat-spinner>
     </div>
@@ -16,23 +17,31 @@
 </ng-container>
 <div class="container" *ngIf="DataProveedor!=undefined">
   <div class="row rowpaddAv">
+
+    <div class="col-12" *ngIf="CarrerasProfesionalesActive==true">
+      <div style="font-size: 20px;
+      margin-bottom: 30px;
+      margin-left: -10px;
+      font-weight: 600;">{{NombreCurso}}</div>
+      <!-- <div class="cursoTabDescripcion">¡Bienvenido! Debes completar los siguientes módulos de tu programa:</div> -->
+    </div>
     <div class="col-12 col-md-12 col-lg-12" style="position: relative;padding: 0px;">
       <div style="    display: flex;
       justify-content: space-between;position: absolute;width: auto;z-index: 10;">
         <div class="openClose" [ngClass]="{'reverse':!hide}" (click)="hide=!hide"
-        [ngStyle]="{'justify-content': !hide?'':' space-around !important;'}">
+          [ngStyle]="{'justify-content': !hide?'':' space-around !important;'}">
           <div class="contentIconMenu">
             <i class="material-icons" *ngIf="!hide">menu</i>
-            <i class="material-icons" *ngIf="hide" >menu</i>
+            <i class="material-icons" *ngIf="hide">menu</i>
           </div>
           <div *ngIf="!hide" style="margin-left: 10px;">MENU</div>
         </div>
       </div>
 
       <mat-tab-group class="tabVertical" [(selectedIndex)]="tabIndex" (selectedTabChange)="tabChanged($event)">
-        <mat-tab *ngIf="DataProveedor.aplicaSesionOnlineWebinar">
+        <mat-tab >
           <ng-template mat-tab-label>
-            <div #sesiones class="contentHeaderM" >
+            <div #sesiones class="contentHeaderM">
               <div class="iconMat iconSesiones" matTooltip="Sesiones" matTooltipPosition="after"></div>
               <!-- <i class="material-icons">web</i> -->
               <div class="titleMatr" *ngIf="!hide">Acceso a clases en vivo</div>
@@ -46,20 +55,20 @@
 
         <mat-tab>
           <ng-template mat-tab-label>
-            <div #sesiones class="contentHeaderM" >
+            <div #sesiones class="contentHeaderM">
               <div class="iconMat iconCursosOnline" matTooltip="Sesiones" matTooltipPosition="after"></div>
               <div *ngIf="!hide" class="titleMatr">Cursos online en vivo</div>
             </div>
           </ng-template>
           <div class="pad-resp">
-            <app-docencia-cursos-online ></app-docencia-cursos-online>
+            <app-docencia-cursos-online></app-docencia-cursos-online>
           </div>
         </mat-tab>
         <mat-tab>
           <ng-template mat-tab-label>
-            <div #sesiones class="contentHeaderM" (click)="InterraccionTab('Cursos asincrónicos');changeIndexAsincronico()"
-            matTooltip="Cursos asincrónicos"
-            matTooltipPosition="after" [ngClass]="{'ActiveChil':AsincronicoActive==true}">
+            <div #sesiones class="contentHeaderM"
+              (click)="changeIndexAsincronico()" matTooltip="Cursos asincrónicos"
+              matTooltipPosition="after" [ngClass]="{'ActiveChil':AsincronicoActive==true}">
               <div class="iconMat iconCursosAOnline" matTooltip="Sesiones" matTooltipPosition="after"></div>
               <div *ngIf="!hide" class="titleMatr">Cursos asincrónicos</div>
             </div>
@@ -70,8 +79,7 @@
           <mat-tab>
             <ng-template mat-tab-label class="tabSubcontent">
               <div class="contentHeaderM subContent" style="cursor: pointer;padding: 20px 10px !important;"
-                (click)="InterraccionTab('Responder Consultas')"
-                matTooltip="Responder Consultas"
+                 matTooltip="Responder Consultas"
                 matTooltipPosition="after">
 
                 <div class="iconMat"><i class="material-icons">comment</i></div>
@@ -79,15 +87,13 @@
               </div>
             </ng-template>
             <div class="pad-resp">
-              <app-docencia-cursos-aonline-responder-foro ></app-docencia-cursos-aonline-responder-foro>
+              <app-docencia-cursos-aonline-responder-foro></app-docencia-cursos-aonline-responder-foro>
             </div>
           </mat-tab>
           <mat-tab>
             <ng-template mat-tab-label>
-              <div class="contentHeaderM subContent"  style="cursor: pointer;padding: 20px 10px !important;"
-                (click)="InterraccionTab('Calificar Proyecto de Aplicación');"
-                matTooltip="Calificar Proyecto de Aplicación"
-                matTooltipPosition="after">
+              <div class="contentHeaderM subContent" style="cursor: pointer;padding: 20px 10px !important;"
+                matTooltip="Calificar Proyecto de Aplicación" matTooltipPosition="after">
                 <div class="iconMat"><i class="material-icons">folder_supervised</i></div>
                 <div class="titleMatr" *ngIf="!hide">Calificar Proyecto de Aplicación</div>
               </div>
@@ -98,16 +104,15 @@
           </mat-tab>
           <mat-tab>
             <ng-template mat-tab-label>
-              <div class="contentHeaderM subContent"  style="cursor: pointer;padding: 20px 10px !important;"
-                (click)="InterraccionTab('Calificar Trabajo de Pares');"
-                matTooltip="Calificar Trabajo de Pares"
+              <div class="contentHeaderM subContent" style="cursor: pointer;padding: 20px 10px !important;"
+               matTooltip="Calificar Trabajo de Pares"
                 matTooltipPosition="after">
                 <div class="iconMat"><i class="material-icons">groups_2</i></div>
                 <div class="titleMatr" *ngIf="!hide">Calificar Trabajo de Pares</div>
               </div>
             </ng-template>
             <div class="pad-resp">
-              <app-docencia-cursos-aonline-calificar-trabajo-pares ></app-docencia-cursos-aonline-calificar-trabajo-pares>
+              <app-docencia-cursos-aonline-calificar-trabajo-pares></app-docencia-cursos-aonline-calificar-trabajo-pares>
             </div>
           </mat-tab>
 
@@ -115,13 +120,13 @@
         </ng-container>
         <mat-tab>
           <ng-template mat-tab-label>
-            <div #sesiones class="contentHeaderM" (click)="changeIndexCarrerasProfesionales()" >
+            <div #carreras class="contentHeaderM" (click)="changeIndexCarrerasProfesionales()">
               <div class="iconMat iconCursosOnline" matTooltip="CarrerasProfesionales" matTooltipPosition="after"></div>
               <div *ngIf="!hide" class="titleMatr">Carreras profesionales</div>
             </div>
           </ng-template>
           <div class="pad-resp">
-            <app-docencia-carreras-profesionales ></app-docencia-carreras-profesionales>
+            <app-docencia-carreras-profesionales (AddIndex)="AddIndex($event)"></app-docencia-carreras-profesionales>
           </div>
         </mat-tab>
         <ng-container *ngIf="CarrerasProfesionalesActive">
@@ -129,29 +134,33 @@
           <mat-tab>
             <ng-template mat-tab-label class="tabSubcontent">
               <div class="contentHeaderM subContent" style="cursor: pointer;padding: 20px 10px !important;"
-                matTooltip="Examen de suficiencia profesional"
-                matTooltipPosition="after">
+                matTooltip="Examen de suficiencia profesional" matTooltipPosition="after">
 
                 <div class="iconMat"><i class="material-icons">comment</i></div>
                 <div class="titleMatr" *ngIf="!hide">Examen de suficiencia profesional</div>
               </div>
             </ng-template>
-            <div class="pad-resp">
-              <app-docencia-examen-suficiencia-profesional></app-docencia-examen-suficiencia-profesional>
-            </div>
+
+            <ng-template matTabContent>
+              <div class="pad-resp">
+                <app-docencia-examen-suficiencia-profesional></app-docencia-examen-suficiencia-profesional>
+              </div>
+            </ng-template>
           </mat-tab>
           <mat-tab>
             <ng-template mat-tab-label>
-              <div class="contentHeaderM subContent"  style="cursor: pointer;padding: 20px 10px !important;"
-                matTooltip="Trabajo de aplicación profesional"
-                matTooltipPosition="after">
+              <div class="contentHeaderM subContent" style="cursor: pointer;padding: 20px 10px !important;"
+                matTooltip="Trabajo de aplicación profesional" matTooltipPosition="after">
                 <div class="iconMat"><i class="material-icons">folder_supervised</i></div>
                 <div class="titleMatr" *ngIf="!hide">Trabajo de aplicación profesional</div>
               </div>
             </ng-template>
-            <div class="pad-resp">
-              <app-docencia-trabajo-aplicacion-profesional></app-docencia-trabajo-aplicacion-profesional>
-            </div>
+
+            <ng-template matTabContent>
+              <div class="pad-resp">
+                <app-docencia-trabajo-aplicacion-profesional></app-docencia-trabajo-aplicacion-profesional>
+              </div>
+            </ng-template>
           </mat-tab>
 
 
