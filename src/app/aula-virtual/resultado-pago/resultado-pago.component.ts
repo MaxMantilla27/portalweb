@@ -40,6 +40,9 @@ export class ResultadoPagoComponent implements OnInit,OnDestroy{
   public rutaMisCursos='/AulaVirtual/MisCursos'
   public AreaCapacitacion=''
   public ProgramaNombre=''
+  public PagoInstituto=true
+  public rutaInstituto='/AulaVirtual/MisCursos'
+
   intentos=0;
   img=1;
   imgAc=''
@@ -131,6 +134,11 @@ export class ResultadoPagoComponent implements OnInit,OnDestroy{
             }
           }
         }
+        console.log(this.resultVisa)
+        if(this.resultVisa.idMatriculaCabecera!=undefined){
+          this.rutaInstituto='/AulaVirtual/MisCursos/'+this.resultVisa.idMatriculaCabecera
+          console.log(this.rutaInstituto)
+        }
       },
       error:e=>{
         //this._router.navigate([this.ruta])
@@ -212,6 +220,11 @@ export class ResultadoPagoComponent implements OnInit,OnDestroy{
             }
           }
         }
+        if(this.resultVisa.idMatriculaCabecera!=undefined){
+          this.rutaInstituto='/AulaVirtual/MisCursos/'+this.resultVisa.idMatriculaCabecera
+          console.log(this.rutaInstituto)
+        }
+
       }
     })
   }

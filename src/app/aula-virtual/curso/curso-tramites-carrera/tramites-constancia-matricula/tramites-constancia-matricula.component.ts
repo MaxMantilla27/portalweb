@@ -33,6 +33,8 @@ export class TramitesConstanciaMatriculaComponent implements OnInit ,OnDestroy {
   ) { }
 
   @Input() IdMatriculaCabecera=0;
+  @Input() TramiteSeleccionado:any;
+  @Input() IdPGeneral=0;
   @Output() Volver= new EventEmitter<number>();
 
 
@@ -48,7 +50,12 @@ export class TramitesConstanciaMatriculaComponent implements OnInit ,OnDestroy {
     SimboloMoneda:'',
     WebMoneda:'',
   }
+  public PagoTotalTramite=0;
+  public SimboloMoneda='';
   ngOnInit(): void {
+    console.log(this.IdMatriculaCabecera)
+    console.log(this.TramiteSeleccionado)
+    this.CalcularMontoTotal()
   }
   Pagar(){
     const dialogRef = this.dialog.open(PagoTarjetaComponent, {
@@ -72,16 +79,28 @@ export class TramitesConstanciaMatriculaComponent implements OnInit ,OnDestroy {
       disableClose:true
     });
     this.jsonSend.ListaCuota=[];
-    this.jsonSend.ListaCuota.push({
-      IdCuota: 119,
-      NroCuota: 0,
-      TipoCuota:"1",
-      Cuota: 10,
-      Mora: 0,
-      MoraCalculada: 0,
-      CuotaTotal:10,
-      Nombre:"Constancia de Nota / Calificación"
-    })
+    if(this.TramiteSeleccionado.pagar==true){
+      this.jsonSend.ListaCuota.push({
+        IdCuota: this.TramiteSeleccionado.idTarifarioDetalle,
+        NroCuota: 0,
+        TipoCuota: this.TramiteSeleccionado.tipoCantidad,
+        Cuota: this.TramiteSeleccionado.tarifario,
+        Mora: 0,
+        MoraCalculada: 0,
+        CuotaTotal: this.TramiteSeleccionado.tarifario,
+        Nombre:this.TramiteSeleccionado.concepto
+      })
+    }
+    // this.jsonSend.ListaCuota.push({
+    //   IdCuota: 119,
+    //   NroCuota: 0,
+    //   TipoCuota:"1",
+    //   Cuota: 10,
+    //   Mora: 0,
+    //   MoraCalculada: 0,
+    //   CuotaTotal:10,
+    //   Nombre:"Constancia de Nota / Calificación"
+    // })
     this.jsonSend.IdFormaPago=tarjeta.idFormaPago
     this.jsonSend.IdPasarelaPago=tarjeta.idPasarelaPago
     this.jsonSend.MedioCodigo=tarjeta.medioCodigo
@@ -122,5 +141,18 @@ export class TramitesConstanciaMatriculaComponent implements OnInit ,OnDestroy {
         dialogRef.close();
       }
     })
+  }
+  CalcularMontoTotal(){
+    this.PagoTotalTramite=0;
+    this.SimboloMoneda=''
+    if(this.TramiteSeleccionado.pagar==true){
+      this.PagoTotalTramite=this.PagoTotalTramite+this.TramiteSeleccionado.tarifario;
+      this.SimboloMoneda=this.TramiteSeleccionado.codigo
+    }
+    this.jsonSend.IdPGeneral=this.IdPGeneral
+    this.jsonSend.IdMatriculaCabecera=this.IdMatriculaCabecera
+    this.jsonSend.Moneda=this.TramiteSeleccionado.moneda
+    this.jsonSend.SimboloMoneda=this.TramiteSeleccionado.simboloMoneda
+    this.jsonSend.WebMoneda=this.TramiteSeleccionado.webMoneda
   }
 }

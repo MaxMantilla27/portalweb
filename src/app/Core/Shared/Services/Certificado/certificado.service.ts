@@ -2,7 +2,7 @@ import { isPlatformBrowser } from '@angular/common';
 import { HttpClient, HttpRequest } from '@angular/common/http';
 import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { EMPTY, Observable } from 'rxjs';
-import { DatosAlumnoValidacionCarreraDTO, DatosAlumnoValidacionDTO, InsertarRegistroEnvioFisicoDTO } from 'src/app/Core/Models/CertificadoDTO';
+import { DatosAlumnoValidacionCarreraDTO, DatosAlumnoValidacionDTO, DatosCertificadoIdiomaAlumnoValidacionCarreraDTO, InsertarRegistroEnvioFisicoDTO } from 'src/app/Core/Models/CertificadoDTO';
 import { environment } from 'src/environments/environment';
 import { SessionStorageService } from '../session-storage.service';
 
@@ -37,13 +37,16 @@ export class CertificadoService {
 
 
 
-  public InsertarCertificadoIdiomaExtranjero(file: File): Observable<any> {
+  public InsertarCertificadoIdiomaAlumnoCarrera(Json: DatosCertificadoIdiomaAlumnoValidacionCarreraDTO): Observable<any> {
     if (this.isBrowser) {
       const formData: FormData = new FormData();
-      formData.append("file", file);
+      formData.append("Usuario", "--");
+      formData.append("IdALumno", "0");
+      formData.append("file", Json.file);
+      formData.append("IdMatriculaCabecera", Json.IdMatriculaCabecera.toString());
       const req = new HttpRequest(
         "POST",
-        `${this.urlBase}/InsertarCertificadoIdiomaExtranjero`,
+        `${this.urlBase}/InsertarCertificadoIdiomaAlumnoCarrera`,
         formData,
         {
           reportProgress: true,
@@ -115,5 +118,13 @@ export class CertificadoService {
       return EMPTY;
     }
   }
+  public ObtenerCertificadoIdiomaAlumno(IdMatriculaCabecera:number):Observable<any>{
+    if(this.isBrowser){
+      return this.http.get<any>(this.urlBase+'/ObtenerCertificadoIdiomaAlumno?IdMatriculaCabecera='+IdMatriculaCabecera);
+    }else{
+      return EMPTY;
+    }
+  }
+
 
 }

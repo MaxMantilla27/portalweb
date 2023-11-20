@@ -7,15 +7,21 @@
   <div class="col-6 col-md-8 col-lg-8 titleTableReq">Requisito</div>
   <div class="col-5 col-md-3 col-lg-3 titleTableReq" > Estado</div>
   <div class="col-12 subrallado"></div>
-  <div class="col-1"><i class="material-icons">check_box</i></div>
+  <div *ngIf="InformacionActualizada" class="col-1"><i class="material-icons">check_box</i></div>
+  <div *ngIf="InformacionActualizada==false"class="col-1"><i class="material-icons">check_box_outline_blank</i></div>
   <div class="col-6 col-md-8 col-lg-8 contentTableReq">Información personal actualizada</div>
-  <div class="col-5 col-md-3 col-lg-3 contentTableReq" >Aprobado</div>
-  <div class="col-1"><i class="material-icons">check_box</i></div>
+  <div *ngIf="InformacionActualizada" class="col-5 col-md-3 col-lg-3 contentTableReq" >Aprobado</div>
+  <div *ngIf="InformacionActualizada==false" class="col-5 col-md-3 col-lg-3 contentTableReq" >Pendiente</div>
+  <div *ngIf="MallaCurricularAprobada" class="col-1"><i class="material-icons">check_box</i></div>
+  <div *ngIf="MallaCurricularAprobada==false" class="col-1"><i class="material-icons">check_box_outline_blank</i></div>
   <div class="col-6 col-md-8 col-lg-8 contentTableReq">Aprobar todos los cursos de su malla curricular</div>
-  <div class="col-5 col-md-3 col-lg-3 contentTableReq" >Aprobado</div>
-  <div class="col-1"><i class="material-icons">check_box</i></div>
+  <div *ngIf="MallaCurricularAprobada" class="col-5 col-md-3 col-lg-3 contentTableReq" >Aprobado</div>
+  <div *ngIf="MallaCurricularAprobada==false" class="col-5 col-md-3 col-lg-3 contentTableReq" >Pendiente</div>
+  <div *ngIf="DeudasPendientes" class="col-1"><i class="material-icons">check_box</i></div>
+  <div *ngIf="DeudasPendientes==false"class="col-1"><i class="material-icons">check_box_outline_blank</i></div>
   <div class="col-6 col-md-8 col-lg-8 contentTableReq">No tener deudas pendientes.</div>
-  <div class="col-5 col-md-3 col-lg-3 contentTableReq" >Aprobado</div>
+  <div *ngIf="DeudasPendientes"class="col-5 col-md-3 col-lg-3 contentTableReq" >Aprobado</div>
+  <div *ngIf="DeudasPendientes==false"class="col-5 col-md-3 col-lg-3 contentTableReq" >Pendiente</div>
   <div class="col-1"><i class="material-icons">check_box</i></div>
   <div class="col-6 col-md-8 col-lg-8 contentTableReq">No tener pendientes entrega de documentación.</div>
   <div class="col-5 col-md-3 col-lg-3 contentTableReq" >Aprobado</div>
@@ -37,27 +43,30 @@
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <td class="criterio" style="width: 600px;text-align: left;">
-            <div style=" margin-left: 20px;margin-top: 20px;margin-bottom: 20px;text-align:left">
-              <div>
-                Emisión de Certificado de estudiante
+        <ng-container *ngIf="TramiteSeleccionado.pagar==true">
+          <tr>
+            <td class="criterio" style="width: 600px;text-align: left;">
+              <div style=" margin-left: 20px;margin-top: 20px;margin-bottom: 20px;text-align:left">
+                <div>
+                  {{TramiteSeleccionado.concepto}}
+                </div>
               </div>
-            </div>
-          </td>
-          <td class="criterio" style="width: 200px;">
-            <div class="MontoTramite">
-              PEN
-            </div>
-          </td>
-          <td class="criterio" style="width: 200px;">
-            <div class="MontoTramite">
-              <div>
-                30.00
+            </td>
+            <td class="criterio" style="width: 200px;">
+              <div class="MontoTramite">
+                {{TramiteSeleccionado.codigo | uppercase}}
               </div>
-            </div>
-          </td>
-        </tr>
+            </td>
+            <td class="criterio" style="width: 200px;">
+              <div class="MontoTramite">
+                <div>
+                  {{TramiteSeleccionado.tarifario | number:'1.2-2':'en-US'}}
+                </div>
+              </div>
+            </td>
+          </tr>
+        </ng-container>
+
         <tr class="TotalPagar">
           <td class="criterio" style="font-weight: bold;width: 500px;text-align: left">
             <div style="margin-left: 20px">
@@ -65,13 +74,13 @@
             </div>
           </td>
           <td class="criterio" style="width: 200px;">
-            <div class="MontoTramite">
-              PEN
+            <div class="MontoTramite" *ngIf="SimboloMoneda.length>0">
+              {{SimboloMoneda | uppercase}}
             </div>
           </td>
           <td class="criterio" style="width: 200px">
             <div class="MontoTramite">
-              30.00
+              {{PagoTotalTramite | number:'1.2-2':'en-US'}}
             </div>
           </td>
         </tr>
@@ -85,7 +94,9 @@
   <app-default-button [confs]="{color:'primary',titulo:'Volver'}" [style]="'width: 100%;'"
   [icon]="''" [style]="'padding: 0px 40px; border-radius: 25px; background: white;border: solid 1px #f8893f;color: #f8893f;'" (click)="Volver.emit(0)"></app-default-button>
 
-  <app-default-button [confs]="{color:'primary',titulo:'Pagar >'}" [style]="'width: 100%;'"
-  [icon]="''" [style]="'     padding: 0px 40px; border-radius: 25px;border: solid 1px #f8893f;'"
-  (click)="Pagar()"></app-default-button>
+  <app-default-button *ngIf="HabilitarPago==false" [confs]="{color:'primary',titulo:'Pagar >'}" [style]="'width: 100%;'"
+  [icon]="''"[disabled]="true" [style]="' padding: 0px 40px; border-radius: 25px;'"></app-default-button>
+  <app-default-button *ngIf="HabilitarPago==true" [confs]="{color:'primary',titulo:'Pagar >'}" [style]="'width: 100%;'"
+    [icon]="''" [style]="'     padding: 0px 40px; border-radius: 25px;border: solid 1px #f8893f;'"
+    (click)="Pagar()"></app-default-button>
 </div>

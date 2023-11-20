@@ -45,8 +45,15 @@ export class CronogramaPagoService {
       return EMPTY;
     }
   }
+  public ValidacionDeudasPendientesMatricula(IdMatriculaCabecera:number):Observable<any>{
+    if(this.isBrowser){
+      return this.http.get<any>(this.urlBase+'/ValidacionDeudasPendientesMatricula?IdMatriculaCabecera='+IdMatriculaCabecera);
+    }else{
+      return EMPTY;
+    }
+  }
 
-  
-  
+
+
 
 }

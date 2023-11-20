@@ -18,10 +18,13 @@ export class CursoTramitesCarreraComponent implements OnInit ,OnDestroy {
     private _DatosPerfilService: DatosPerfilService,
     private _CertificadoService:CertificadoService
   ) { }
-
+  ngOnDestroy(): void {
+    this.signal$.next(true);
+    this.signal$.complete();
+  }
   @Input() IdMatricula=0;
+  @Input() IdPGeneral=0;
   public tramitesSolicitado:any
-  public ImgCarrera:any
   public InformacionPersonal=false
   public certificadoEstudios=false
   public DiplomaBachiller=false
@@ -30,37 +33,85 @@ export class CursoTramitesCarreraComponent implements OnInit ,OnDestroy {
   public constanciaMatricula=false
 
   public cambio=false
+  public TramitesCurso:Array<any>=[];
+  public TramiteSeleccionado:any;
+
   ngOnInit(): void {
+  }
+  ngOnChanges(changes: SimpleChanges): void {
+    console.log(this.IdMatricula)
+    console.log(this.IdPGeneral)
+    if(this.IdMatricula!=0){
+      this.ObtenerTramitesSolicitadosPorMatricula();
+      this.ObtenerTramitesMatricula();
+    }
   }
   Changes(i:number){
     this.change=true
-
-    if(i==1)this.certificadoEstudios=true;
-    if(i==2)this.DiplomaBachiller=true;
-    if(i==3)this.tituloProfesional=true;
-    if(i==4)this.InformacionPersonal=true;
-    if(i==5)this.certificadoIdioma=true;
-    if(i==6)this.constanciaMatricula=true;
+    console.log(this.TramitesCurso)
+    if(i==1){
+      this.certificadoEstudios=true;
+      this.TramitesCurso.forEach((y:any)=>{
+        if(y.concepto.toUpperCase().includes('EMISIÓN DE CERTIFICADO DE EGRESADO'))
+        {
+          console.log(y)
+          y.pagar=true;
+          this.TramiteSeleccionado=y;
+        }
+      })
+      console.log(this.TramiteSeleccionado)
+    }
+    if(i==2){
+      this.DiplomaBachiller=true;
+      this.TramitesCurso.forEach((y:any)=>{
+        if(y.concepto.toUpperCase().includes('EMISIÓN DE DIPLOMA DE GRADO DE BACHILLER'))
+        {
+          y.pagar=true;
+          this.TramiteSeleccionado=y;
+        }
+      })
+    }
+    if(i==3){
+      this.tituloProfesional=true;
+      this.TramitesCurso.forEach((y:any)=>{
+        if(y.concepto.toUpperCase().includes('EMISIÓN DE TÍTULO PROFESIONAL TÉCNICO'))
+        {
+          y.pagar=true;
+          this.TramiteSeleccionado=y;
+        }
+      })
+    }
+    if(i==4){
+      this.InformacionPersonal=true;
+    }
+    if(i==5){
+      this.certificadoIdioma=true;
+    }
+    if(i==6){
+      this.constanciaMatricula=true;
+      this.TramitesCurso.forEach((y:any)=>{
+        if(y.concepto.toUpperCase().includes('EMISIÓN DE CONSTANCIA DE MATRÍCULA'))
+        {
+          y.pagar=true;
+          this.TramiteSeleccionado=y;
+        }
+      })
+    }
   }
   ChangesVolver(i:number){
     this.change=false
-
+    this.TramiteSeleccionado=undefined
     this.certificadoEstudios=false;
     this.DiplomaBachiller=false;
     this.tituloProfesional=false;
     this.InformacionPersonal=false;
     this.certificadoIdioma=false;
     this.constanciaMatricula=false;
-    if(i==4){
-      this.ObtenerImagenAlumno()
-    }
+    this.TramitesCurso.forEach((y:any)=>{
+      y.pagar=false;
+    })
   }
-  ngOnChanges(changes: SimpleChanges): void {
-    if(this.IdMatricula!=0){
-      this.ObtenerTramitesSolicitadosPorMatricula();
-      this.ObtenerImagenAlumno()
-    }
-  }
+
   ObtenerTramitesSolicitadosPorMatricula(){
     this._DatosPerfilService.ObtenerTramitesSolicitadosPorMatricula(this.IdMatricula).pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
@@ -69,16 +120,19 @@ export class CursoTramitesCarreraComponent implements OnInit ,OnDestroy {
       }
     })
   }
-  ngOnDestroy(): void {
-    this.signal$.next(true);
-    this.signal$.complete();
-  }
 
-  ObtenerImagenAlumno(){
-    this._CertificadoService.ObtenerImagenAlumno(this.IdMatricula).pipe(takeUntil(this.signal$)).subscribe({
+
+
+  ObtenerTramitesMatricula(){
+    this._DatosPerfilService.ListaTramiteAdministrativoProgramaMatriculadoRegistradoCarreras(this.IdMatricula).pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
-        console.log(x);
-        this.ImgCarrera=x;
+        if(x.length>0){
+          this.TramitesCurso=x;
+          this.TramitesCurso.forEach((y:any)=>{
+            y.pagar=false;
+          })
+          console.log(this.TramitesCurso)
+        }
       }
     })
   }

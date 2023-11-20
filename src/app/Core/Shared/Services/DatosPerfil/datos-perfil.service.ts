@@ -133,5 +133,47 @@ export class DatosPerfilService {
       return EMPTY;
     }
   }
+  public ListaTramiteAdministrativoProgramaMatriculadoRegistradoCarreras(IdMatriculaCabecera:number):Observable<any>{
+    if(this.isBrowser){
+      return this.http.get<any>(this.urlBase+'/ListaTramiteAdministrativoProgramaMatriculadoRegistradoCarreras?IdMatriculaCabecera='+IdMatriculaCabecera);
+    }else{
+      return EMPTY;
+    }
+  }
+  public ObtenerTramitesSolicitadosPorMatriculaCarreras(IdMatriculaCabecera:number):Observable<any>{
+    if(this.isBrowser){
+      return this.http.get<any>(this.urlBase+'/ObtenerTramitesSolicitadosPorMatriculaCarreras?IdMatriculaCabecera='+IdMatriculaCabecera);
+    }else{
+      return EMPTY;
+    }
+  }
+  public ValidarInformacionActualizada(IdMatriculaCabecera:number):Observable<any>{
+    if(this.isBrowser){
+      return this.http.get<any>(this.urlBase+'/ValidarInformacionActualizada?IdMatriculaCabecera='+IdMatriculaCabecera);
+    }else{
+      return EMPTY;
+    }
+  }
+  public ValidarCertificadoEstudiosCompletado(IdMatriculaCabecera:number):Observable<any>{
+    if(this.isBrowser){
+      return this.http.get<any>(this.urlBase+'/ValidarCertificadoEstudiosCompletado?IdMatriculaCabecera='+IdMatriculaCabecera);
+    }else{
+      return EMPTY;
+    }
+  }
+  public ValidarGradoBachillerCompletado(IdMatriculaCabecera:number):Observable<any>{
+    if(this.isBrowser){
+      return this.http.get<any>(this.urlBase+'/ValidarGradoBachillerCompletado?IdMatriculaCabecera='+IdMatriculaCabecera);
+    }else{
+      return EMPTY;
+    }
+  }
+  public ValidarCertificadoIdiomaAprobado(IdMatriculaCabecera:number):Observable<any>{
+    if(this.isBrowser){
+      return this.http.get<any>(this.urlBase+'/ValidarCertificadoIdiomaAprobado?IdMatriculaCabecera='+IdMatriculaCabecera);
+    }else{
+      return EMPTY;
+    }
+  }
 
 }
