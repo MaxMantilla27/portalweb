@@ -36,6 +36,7 @@ export class LandinPageV2Component implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    console.log('estoy en tu portal')
     this.activatedRoute.params.pipe(takeUntil(this.signal$)).subscribe({
       next: (x) => {
         console.log(x);

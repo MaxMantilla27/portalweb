@@ -66,6 +66,7 @@ export class LandingPageModalComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    console.log('teencontremorita')
     console.log(this.data)
     var obj: any = {};
     this.data.valorPrograma.campoContacto.forEach((cc:any) => {
@@ -341,9 +342,30 @@ export class LandingPageModalComponent implements OnInit, OnDestroy {
       }
     })
   }
+  GetLocalidadPorRegion(idRegion:number){
+    this._RegionService.ObtenerLocalidadPorRegion(idRegion).pipe(takeUntil(this.signal$)).subscribe({
+      next:x=>{
+        this.fileds.forEach(r=>{
+          if(r.nombre=='IdLocalidad'){
+            r.disable=false;
+            r.data=x.map((p:any)=>{
+              var ps:Basic={Nombre:p.nombreLocalidad,value:p.idLocalidad};
+              return ps;
+            })
+          }
+        })
+        this.form.enablefield('IdLocalidad');
+
+      }
+
+    })
+  }
   SelectChage(e:any){
     if(e.Nombre=="IdPais"){
       this.GetRegionesPorPais(e.value)
+    }
+    if(e.Nombre == "IdRegion"){
+      this.GetLocalidadPorRegion(e.value)
     }
   }
   ObtenerCombosPortal(){

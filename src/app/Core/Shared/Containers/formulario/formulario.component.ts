@@ -110,6 +110,7 @@ export class FormularioComponent implements OnChanges, OnInit,OnDestroy {
     Nombre:''
   }
   ngOnInit(): void {
+    console.log('aquillenaformulario')
     this._HelperService.recibirDataPais.pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
         console.log(x)
