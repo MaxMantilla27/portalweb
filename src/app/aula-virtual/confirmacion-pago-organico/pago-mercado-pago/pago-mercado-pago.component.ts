@@ -4,20 +4,20 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { loadMercadoPago } from "@mercadopago/sdk-js";
 import { Subject, takeUntil } from 'rxjs';
 import { RegistroRespuestaPreProcesoPagoDTO } from 'src/app/Core/Models/ProcesoPagoDTO';
-import { ChargeTextComponent } from 'src/app/Core/Shared/Containers/Dialog/charge-text/charge-text.component';
 import { ChargeComponent } from 'src/app/Core/Shared/Containers/Dialog/charge/charge.component';
 import { FormaPagoService } from 'src/app/Core/Shared/Services/FormaPago/forma-pago.service';
 import { SnackBarServiceService } from 'src/app/Core/Shared/Services/SnackBarService/snack-bar-service.service';
 import { SessionStorageService } from 'src/app/Core/Shared/Services/session-storage.service';
-
 const PK_Produccion ="APP_USR-655cbc43-a08f-482f-a7bc-df64d486c667";
 const PK_Prueba ="TEST-4afbabcc-eedf-4dfb-b8ce-9703a5b7f973";
+
 @Component({
-  selector: 'app-confirmacion-pago-mercado-pago-chile',
-  templateUrl: './confirmacion-pago-mercado-pago-chile.component.html',
-  styleUrls: ['./confirmacion-pago-mercado-pago-chile.component.scss']
+  selector: 'app-pago-mercado-pago',
+  templateUrl: './pago-mercado-pago.component.html',
+  styleUrls: ['./pago-mercado-pago.component.scss']
 })
-export class ConfirmacionPagoMercadoPagoChileComponent implements OnInit {
+export class PagoMercadoPagoComponent implements OnInit {
+
   private signal$ = new Subject()
 
   constructor(
@@ -52,7 +52,7 @@ export class ConfirmacionPagoMercadoPagoChileComponent implements OnInit {
         if(r!=''){
           this.json.RequiereDatosTarjeta=r=='false'?false:true;
           //this._SessionStorageService.SessionDeleteValue(this.json.IdentificadorTransaccion);
-          this.ObtenerPreProcesoPagoCuotaAlumno()
+          this.ObtenerPreProcesoPagoOrganicoAlumno()
           this.iniciarJSMercadoPago()
         }
       },
@@ -61,15 +61,12 @@ export class ConfirmacionPagoMercadoPagoChileComponent implements OnInit {
   }
 
 
-  ObtenerPreProcesoPagoCuotaAlumno(){
-    this._FormaPagoService.ObtenerPreProcesoPagoCuotaAlumno(this.json).pipe(takeUntil(this.signal$)).subscribe({
+  ObtenerPreProcesoPagoOrganicoAlumno(){
+    this._FormaPagoService.ObtenerPreProcesoPagoOrganicoAlumno(this.json).pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
         console.log(x)
         this.resultPreProcesoMP=x._Repuesta;
-        this.resultPreProcesoMP.total=0;
-        this.resultPreProcesoMP.listaCuota.forEach((l:any) => {
-          this.resultPreProcesoMP.total+=l.cuotaTotal
-        });
+       
         setTimeout(()=>{
           this.renderCardPaymentBrick(window)
         },500)
@@ -90,9 +87,9 @@ export class ConfirmacionPagoMercadoPagoChileComponent implements OnInit {
 
     const settings = {
       initialization: {
-        amount: this.resultPreProcesoMP.total, // Monto a ser pagado
+        amount: this.resultPreProcesoMP.montoTotal, // Monto a ser pagado
         payer: {
-          email: this.resultPreProcesoMP.registroAlumno.correo,
+          email: this.resultPreProcesoMP.datoAlumno.correo,
         },
       },
       customization: {

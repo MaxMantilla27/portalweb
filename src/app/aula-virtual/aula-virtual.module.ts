@@ -111,6 +111,7 @@ import { EvalComponent } from './eval/eval.component';
 import { ConfirmacionPagoMercadoPagoChileComponent } from './confirmacion-pago-mercado-pago-chile/confirmacion-pago-mercado-pago-chile.component';
 import { ResultadoPagoMercadopagoComponent } from './resultado-pago-mercadopago/resultado-pago-mercadopago.component';
 import { ConfirmacionPagoOpenpayColombiaComponent } from './confirmacion-pago-openpay-colombia/confirmacion-pago-openpay-colombia.component';
+import { PagoMercadoPagoComponent } from './confirmacion-pago-organico/pago-mercado-pago/pago-mercado-pago.component';
 
 
 
@@ -220,8 +221,9 @@ import { ConfirmacionPagoOpenpayColombiaComponent } from './confirmacion-pago-op
     EvalComponent,
     ResultadoPagoMercadopagoComponent,
     ConfirmacionPagoMercadoPagoChileComponent,
-    ConfirmacionPagoOpenpayColombiaComponent
-  ],
+    ConfirmacionPagoOpenpayColombiaComponent,
+    PagoMercadoPagoComponent
+    ],
   imports: [
     CommonModule,
     AulaVirtualRoutingModule,

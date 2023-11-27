@@ -51,6 +51,7 @@ import { EvalComponent } from './eval/eval.component';
 import { ConfirmacionPagoMercadoPagoChileComponent } from './confirmacion-pago-mercado-pago-chile/confirmacion-pago-mercado-pago-chile.component';
 import { ResultadoPagoMercadopagoComponent } from './resultado-pago-mercadopago/resultado-pago-mercadopago.component';
 import { ConfirmacionPagoOpenpayColombiaComponent } from './confirmacion-pago-openpay-colombia/confirmacion-pago-openpay-colombia.component';
+import { PagoMercadoPagoComponent } from './confirmacion-pago-organico/pago-mercado-pago/pago-mercado-pago.component';
 
 const routes: Routes = [
   {
@@ -73,7 +74,9 @@ const routes: Routes = [
         { path: 'MisPagos/conekta/:Identificador', component: PagoConektaComponent,canActivate:[AlumnoGuard]},
         { path: 'MisPagos/multipago/:Identificador', component: PagoMultipagoComponent,canActivate:[AlumnoGuard]},
         { path: 'MisPagos/webpay/:Identificador', component: PagoWebpayComponent,canActivate:[AlumnoGuard]},
+        { path: 'MisPagos/mercadopago/:Identificador', component: PagoMercadoPagoComponent,canActivate:[AlumnoGuard]},
         { path: 'MisPagos/webpayResultado', component: ResultadoPagoWebpayComponent},
+        
 
         { path: 'MisCursos/:IdMatricula', component: CursoComponent,canActivate:[AlumnoGuard]},
         { path: 'MisPagos/:IdMatricula', component: PagoComponent,canActivate:[AlumnoGuard]},

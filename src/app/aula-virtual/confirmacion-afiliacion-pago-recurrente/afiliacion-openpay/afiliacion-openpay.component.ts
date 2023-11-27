@@ -139,9 +139,11 @@ export class AfiliacionOpenpayComponent implements OnInit,OnDestroy {
   OpenPayInit() {
     var deviceSessionId =""
     if(this.jsonSave.IdPasarelaPago==16){
-      OpenPayColombia.setId('mxqbvmmsltqluhbqauyo');
-      OpenPayColombia.setApiKey('pk_ba4c502aa2b848c2a6e67c3a36268542');
-      OpenPayColombia.setSandboxMode(true);
+      // OpenPayColombia.setId('mxqbvmmsltqluhbqauyo'); //--PRUEBA
+      // OpenPayColombia.setApiKey('pk_ba4c502aa2b848c2a6e67c3a36268542'); //--PRUEBA
+      OpenPayColombia.setId('mplrg136vnwpb3badwpv');
+      OpenPayColombia.setApiKey('pk_a0440e88efb34c668644d2f52027b251');
+      OpenPayColombia.setSandboxMode(false);
       deviceSessionId = OpenPayColombia.deviceData.setup('fomrOpenPAy');
     }
     else{

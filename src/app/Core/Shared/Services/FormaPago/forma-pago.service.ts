@@ -159,6 +159,9 @@ export class FormaPagoService {
           if(parseInt(Json.IdPasarelaPago)==11){
             this._router.navigate(['/AulaVirtual/MisPagos/webpay/'+sesion]);
           }
+          if(parseInt(Json.IdPasarelaPago)==17){
+            this._router.navigate(['/AulaVirtual/MisPagos/mercadopago/'+sesion]);
+          }
         }
       }
     });
