@@ -46,13 +46,13 @@ export class LandingPageModalComponent implements OnInit, OnDestroy {
 
     private _DatosPortalService: DatosPortalService,
     private _RegionService: RegionService,
-    private _SessionStorageService:SessionStorageService,
+    private _SessionStorageService: SessionStorageService,
     private _HelperService: HelperService,
     private _SnackBarServiceService: SnackBarServiceService,
-    private _LandingPageService:LandingPageService,
-    private _ChatEnLineaService:ChatEnLineaService,
+    private _LandingPageService: LandingPageService,
+    private _ChatEnLineaService: ChatEnLineaService,
 
-    private _FacebookPixelService:FacebookPixelService,
+    private _FacebookPixelService: FacebookPixelService,
 
     public dialogRef: MatDialogRef<LandinPageV2Component>,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -66,12 +66,12 @@ export class LandingPageModalComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    console.log(this.data)
+    console.log(this.data);
     var obj: any = {};
-    this.data.valorPrograma.campoContacto.forEach((cc:any) => {
-      obj[cc.identificadorApi]=''
+    this.data.valorPrograma.campoContacto.forEach((cc: any) => {
+      obj[cc.identificadorApi] = '';
     });
-    this.obj=obj
+    this.obj = obj;
     this.obtenerFormularioCompletado();
     // this._HelperService.recibirCombosPerfil.pipe(takeUntil(this.signal$)).subscribe((x) => {
     //   console.log(x.datosAlumno)
@@ -109,55 +109,56 @@ export class LandingPageModalComponent implements OnInit, OnDestroy {
     //   }
     //   console.log(this.obj)
     // })
-    console.log(this.obj)
+    console.log(this.obj);
     this.AddFields();
     this.ObtenerCombosPortal();
-    this.Secciones = JSON.parse(this.data.valorPrograma.estilosCongelados)
-    console.log(this.Secciones)
+    this.Secciones = JSON.parse(this.data.valorPrograma.estilosCongelados);
+    console.log(this.Secciones);
     let i = 0;
-    this.Secciones.forEach((x:any) => {
+    this.Secciones.forEach((x: any) => {
       this.cambios(i);
       i++;
     });
   }
 
-  obtenerFormularioCompletado(){
-    var DatosFormulario = this._SessionStorageService.SessionGetValue('DatosFormulario');
-    console.log(DatosFormulario)
-    if(DatosFormulario!=''){
+  obtenerFormularioCompletado() {
+    var DatosFormulario =
+      this._SessionStorageService.SessionGetValue('DatosFormulario');
+    console.log(DatosFormulario);
+    if (DatosFormulario != '') {
       var datos = JSON.parse(DatosFormulario);
-      console.log(datos)
-      this.combosPrevios=datos;
-      if(this.obj.Nombres!=undefined){
-        this.obj.Nombres=this.combosPrevios.nombres
+      console.log(datos);
+      this.combosPrevios = datos;
+      if (this.obj.Nombres != undefined) {
+        this.obj.Nombres = this.combosPrevios.nombres;
       }
-      if(this.obj.Apellidos!=undefined){
-        this.obj.Apellidos=this.combosPrevios.apellidos
+      if (this.obj.Apellidos != undefined) {
+        this.obj.Apellidos = this.combosPrevios.apellidos;
       }
-      if(this.obj.Email!=undefined){
-        this.obj.Email=this.combosPrevios.email
+      if (this.obj.Email != undefined) {
+        this.obj.Email = this.combosPrevios.email;
       }
-      if(this.obj.IdPais!=undefined){
-        this.obj.IdPais=this.combosPrevios.idPais
+      if (this.obj.IdPais != undefined) {
+        this.obj.IdPais = this.combosPrevios.idPais;
         this.GetRegionesPorPais(this.obj.IdPais);
       }
-      if(this.obj.IdRegion!=undefined){
-        this.obj.IdRegion=this.combosPrevios.idRegion
+      if (this.obj.IdRegion != undefined) {
+        this.obj.IdRegion = this.combosPrevios.idRegion;
       }
-      if(this.obj.Movil!=undefined){
-        this.obj.Movil=this.combosPrevios.movil
+      if (this.obj.Movil != undefined) {
+        this.obj.Movil = this.combosPrevios.movil;
       }
-      if(this.obj.IdCargo!=undefined){
-        this.obj.IdCargo=this.combosPrevios.idCargo
+      if (this.obj.IdCargo != undefined) {
+        this.obj.IdCargo = this.combosPrevios.idCargo;
       }
-      if(this.obj.IdAreaTrabajo!=undefined){
-        this.obj.IdAreaTrabajo=this.combosPrevios.idAreaTrabajo
+      if (this.obj.IdAreaTrabajo != undefined) {
+        this.obj.IdAreaTrabajo = this.combosPrevios.idAreaTrabajo;
       }
-      if(this.obj.IdAreaFormacion!=undefined){
-        this.obj.IdAreaFormacion=this.combosPrevios.idAreaFormacion
+      if (this.obj.IdAreaFormacion != undefined) {
+        this.obj.IdAreaFormacion = this.combosPrevios.idAreaFormacion;
       }
-      if(this.obj.IdIndustria!=undefined){
-        this.obj.IdIndustria=this.combosPrevios.idIndustria
+      if (this.obj.IdIndustria != undefined) {
+        this.obj.IdIndustria = this.combosPrevios.idIndustria;
       }
     }
   }
@@ -167,121 +168,145 @@ export class LandingPageModalComponent implements OnInit, OnDestroy {
   public initValues = false;
   public fileds: Array<formulario> = [];
 
-  Cabecera : any;
+  Cabecera: any;
   Titulo: any;
   Subitutlo: any;
   Input: any;
   Boton: any;
-  Plantilla:any;
-  fondoColor:any;
+  Plantilla: any;
+  fondoColor: any;
 
-  Secciones = this.data.Secciones
-  public obj:any
+  Secciones = this.data.Secciones;
+  public obj: any;
 
+  public DatosLandingPageEnvio: ContactenosDTO = {
+    NombrePrograma: '',
+    IdFormularioPublicidad: 0,
+    IdCategoriaDato: 0,
+    IdCampania: 0,
+    IdTipoDato: 0,
+    IdFaseOportunidad: 0,
+    NombreFormulario: '',
+    NombreOrigen: '',
+    IdCentroCosto: 0,
+    Nombres: '',
+    Apellidos: '',
+    Correo1: '',
+    IdPais: undefined,
+    IdRegion: undefined,
+    Movil: '',
+    IdCargo: undefined,
+    IdAreaFormacion: undefined,
+    IdAreaTrabajo: undefined,
+    IdIndustria: undefined,
+  };
+  public combosPrevios: any;
 
-  public DatosLandingPageEnvio: ContactenosDTO={
-    NombrePrograma:'',
-    IdFormularioPublicidad:0,
-    IdCategoriaDato:0,
-    IdCampania:0,
-    IdTipoDato:0,
-    IdFaseOportunidad:0,
-    NombreFormulario:'',
-    NombreOrigen:'',
-    IdCentroCosto:0,
-    Nombres:'',
-    Apellidos:'',
-    Correo1:'',
-    IdPais:undefined,
-    IdRegion:undefined,
-    Movil:'',
-    IdCargo:undefined,
-    IdAreaFormacion:undefined,
-    IdAreaTrabajo:undefined,
-    IdIndustria:undefined,
-  }
-  public combosPrevios:any
-
-  EnviarFormulario(value:any){
-    console.log(value)
-    if(this.formVal){
+  EnviarFormulario(value: any) {
+    console.log(value);
+    if (this.formVal) {
       this.initValues = false;
 
-      this.statuscharge=true;
-      this.DatosLandingPageEnvio.NombrePrograma= this.data.valorPrograma.nombrePrograma;
-      this.DatosLandingPageEnvio.IdFormularioPublicidad= this.data.valorPrograma.idFormulario;
-      this.DatosLandingPageEnvio.IdCategoriaDato= this.data.valorPrograma.idCategoriaOrigen;
-      this.DatosLandingPageEnvio.IdCampania= this.data.valorPrograma.idConjuntoAnuncio;
-      this.DatosLandingPageEnvio.IdCentroCosto= this.data.valorPrograma.idCentroCosto;
-      this.DatosLandingPageEnvio.IdTipoDato= 8;
-      this.DatosLandingPageEnvio.IdFaseOportunidad=2;
-      this.DatosLandingPageEnvio.NombreFormulario='publicidad';
-      if(this.DatosLandingPageEnvio.IdCategoriaDato==104){
-        this.DatosLandingPageEnvio.NombreOrigen='Adwords Busqueda Formulario Propio';
+      this.statuscharge = true;
+      this.DatosLandingPageEnvio.NombrePrograma =
+        this.data.valorPrograma.nombrePrograma;
+      this.DatosLandingPageEnvio.IdFormularioPublicidad =
+        this.data.valorPrograma.idFormulario;
+      this.DatosLandingPageEnvio.IdCategoriaDato =
+        this.data.valorPrograma.idCategoriaOrigen;
+      this.DatosLandingPageEnvio.IdCampania =
+        this.data.valorPrograma.idConjuntoAnuncio;
+      this.DatosLandingPageEnvio.IdCentroCosto =
+        this.data.valorPrograma.idCentroCosto;
+      this.DatosLandingPageEnvio.IdTipoDato = 8;
+      this.DatosLandingPageEnvio.IdFaseOportunidad = 2;
+      this.DatosLandingPageEnvio.NombreFormulario = 'publicidad';
+      if (this.DatosLandingPageEnvio.IdCategoriaDato == 104) {
+        this.DatosLandingPageEnvio.NombreOrigen =
+          'Adwords Busqueda Formulario Propio';
+      } else if (this.DatosLandingPageEnvio.IdCategoriaDato == 632) {
+        this.DatosLandingPageEnvio.NombreOrigen =
+          'Masivos SMS Bases Propias Formulario Propio';
+      } else {
+        this.DatosLandingPageEnvio.NombreOrigen =
+          'Mailing Bases Propias Formulario Propio';
       }
-      else{
-        this.DatosLandingPageEnvio.NombreOrigen='Mailing Bases Propias Formulario Propio';
-      }
-      this.DatosLandingPageEnvio.Nombres=value.Nombres;
-      this.DatosLandingPageEnvio.Apellidos=value.Apellidos;
-      this.DatosLandingPageEnvio.Correo1=value.Email;
-      this.DatosLandingPageEnvio.IdPais=value.IdPais;
-      this.DatosLandingPageEnvio.IdRegion=value.IdRegion;
-      this.DatosLandingPageEnvio.Movil=value.Movil;
-      this.DatosLandingPageEnvio.IdCargo=value.IdCargo;
-      this.DatosLandingPageEnvio.IdAreaFormacion=value.IdAreaFormacion;
-      this.DatosLandingPageEnvio.IdAreaTrabajo=value.IdAreaTrabajo;
-      this.DatosLandingPageEnvio.IdIndustria=value.IdIndustria;
-      this._LandingPageService.EnviarFormularioLandingPage(this.DatosLandingPageEnvio).pipe(takeUntil(this.signal$)).subscribe({
-        next: (x) => {
-          this.ProcesarAsignacionAutomaticaNuevoPortal(x.id);
-          if(x.body.oportuniodd==true){
-
-          }
-          if(this.isBrowser){
-
-            fbq('trackSingle','269257245868695', 'Lead', {}, {eventID:x.id});
-            this._FacebookPixelService.SendLoad(x.id,x.correoEnc,x.telEnc,x.userAgent,x.userIp).subscribe({
-              next:(x)=>{
-                console.log(x)
-              },
-              error:(e)=>{
-                console.log(e)
-              }
-            });
-            try{
-              gtag('event', 'conversion', {
-                'send_to': 'AW-991002043/tnStCPDl6HUQu_vF2AM',
-              });
-              gtag('event', 'conversion', {
-                  'send_to': 'AW-732083338/jQrVCKmUkqUBEIrpit0C',
-              });
-              gtag('event', 'conversion', {
-                'send_to': 'AW-11065656821/6CM8CNWQ2IcYEPWLwpwp',
-              });
-            }catch(err){
+      this.DatosLandingPageEnvio.Nombres = value.Nombres;
+      this.DatosLandingPageEnvio.Apellidos = value.Apellidos;
+      this.DatosLandingPageEnvio.Correo1 = value.Email;
+      this.DatosLandingPageEnvio.IdPais = value.IdPais;
+      this.DatosLandingPageEnvio.IdRegion = value.IdRegion;
+      this.DatosLandingPageEnvio.Movil = value.Movil;
+      this.DatosLandingPageEnvio.IdCargo = value.IdCargo;
+      this.DatosLandingPageEnvio.IdAreaFormacion = value.IdAreaFormacion;
+      this.DatosLandingPageEnvio.IdAreaTrabajo = value.IdAreaTrabajo;
+      this.DatosLandingPageEnvio.IdIndustria = value.IdIndustria;
+      this._LandingPageService
+        .EnviarFormularioLandingPage(this.DatosLandingPageEnvio)
+        .pipe(takeUntil(this.signal$))
+        .subscribe({
+          next: (x) => {
+            this.ProcesarAsignacionAutomaticaNuevoPortal(x.id);
+            if (x.body.oportuniodd == true) {
             }
-          }
-        },
+            if (this.isBrowser) {
+              fbq(
+                'trackSingle',
+                '269257245868695',
+                'Lead',
+                {},
+                { eventID: x.id }
+              );
+              this._FacebookPixelService
+                .SendLoad(x.id, x.correoEnc, x.telEnc, x.userAgent, x.userIp)
+                .subscribe({
+                  next: (x) => {
+                    console.log(x);
+                  },
+                  error: (e) => {
+                    console.log(e);
+                  },
+                });
+              try {
+                gtag('event', 'conversion', {
+                  send_to: 'AW-991002043/tnStCPDl6HUQu_vF2AM',
+                });
+                gtag('event', 'conversion', {
+                  send_to: 'AW-732083338/jQrVCKmUkqUBEIrpit0C',
+                });
+                gtag('event', 'conversion', {
+                  send_to: 'AW-11065656821/6CM8CNWQ2IcYEPWLwpwp',
+                });
+              } catch (err) {}
+            }
+          },
 
-        complete: () => {
-          //this.statuscharge = false;
-        },
-      });
-    }else{
-      this._SnackBarServiceService.openSnackBar("Debes completar todos los campos",'x',15,"snackbarCrucigramaerror");
+          complete: () => {
+            //this.statuscharge = false;
+          },
+        });
+    } else {
+      this._SnackBarServiceService.openSnackBar(
+        'Debes completar todos los campos',
+        'x',
+        15,
+        'snackbarCrucigramaerror'
+      );
     }
   }
-  ProcesarAsignacionAutomaticaNuevoPortal(id:string){
-    this._ChatEnLineaService.ProcesarAsignacionAutomaticaNuevoPortal(id).pipe(takeUntil(this.signal$)).subscribe({
-      next:(x)=>{
-        console.log(x)
-        this.dialogRef.close()
-      }
-    })
+  ProcesarAsignacionAutomaticaNuevoPortal(id: string) {
+    this._ChatEnLineaService
+      .ProcesarAsignacionAutomaticaNuevoPortal(id)
+      .pipe(takeUntil(this.signal$))
+      .subscribe({
+        next: (x) => {
+          console.log(x);
+          this.dialogRef.close();
+        },
+      });
   }
-  submit(e:any){
-    console.log(e)
+  submit(e: any) {
+    console.log(e);
   }
 
   cambios(i: number) {
@@ -305,13 +330,17 @@ export class LandingPageModalComponent implements OnInit, OnDestroy {
       if (obj['background-fondo']) {
         console.log(obj);
         this.fondoColor = obj['background-fondo'];
-        if(this.fondoColor!=undefined && this.fondoColor!=null && this.fondoColor.length>0){
-          console.log(this.fondoColor)
-          this.fondoColor=this.fondoColor+'50'
+        if (
+          this.fondoColor != undefined &&
+          this.fondoColor != null &&
+          this.fondoColor.length > 0
+        ) {
+          console.log(this.fondoColor);
+          this.fondoColor = this.fondoColor + '50';
         }
       }
       this.Plantilla = obj;
-      console.log(this.fondoColor)
+      console.log(this.fondoColor);
     }
     if (this.Secciones[i].NombreSeccion.toLowerCase() == 'boton') {
       this.Boton = obj;
@@ -325,87 +354,98 @@ export class LandingPageModalComponent implements OnInit, OnDestroy {
     console.log(this.Secciones);
   }
 
-  GetRegionesPorPais(idPais:number){
-    this._RegionService.ObtenerCiudadesPorPais(idPais).pipe(takeUntil(this.signal$)).subscribe({
-      next:x=>{
-        this.fileds.forEach(r=>{
-          if(r.nombre=='IdRegion'){
-            r.disable=false;
-            r.data=x.map((p:any)=>{
-              var ps:Basic={Nombre:p.nombreCiudad,value:p.idCiudad};
-              return ps;
-            })
-          }
-        })
-        this.form.enablefield('IdRegion');
-      }
-    })
+  GetRegionesPorPais(idPais: number) {
+    this._RegionService
+      .ObtenerCiudadesPorPais(idPais)
+      .pipe(takeUntil(this.signal$))
+      .subscribe({
+        next: (x) => {
+          this.fileds.forEach((r) => {
+            if (r.nombre == 'IdRegion') {
+              r.disable = false;
+              r.data = x.map((p: any) => {
+                var ps: Basic = { Nombre: p.nombreCiudad, value: p.idCiudad };
+                return ps;
+              });
+            }
+          });
+          this.form.enablefield('IdRegion');
+        },
+      });
   }
-  SelectChage(e:any){
-    if(e.Nombre=="IdPais"){
-      this.GetRegionesPorPais(e.value)
+  SelectChage(e: any) {
+    if (e.Nombre == 'IdPais') {
+      this.GetRegionesPorPais(e.value);
     }
   }
-  ObtenerCombosPortal(){
-
-    this._DatosPortalService.ObtenerCombosPortal().pipe(takeUntil(this.signal$)).subscribe({
-      next:(x)=>{
-        this.fileds.forEach(r=>{
-          if(r.nombre=='IdPais'){
-            r.data=x.listaPais.map((p:any)=>{
-              var ps:Basic={Nombre:p.pais,value:p.idPais};
-              return ps;
-            })
-          }
-        })
-        this.fileds.forEach(r=>{
-          if(r.nombre=='IdCargo'){
-            r.data=x.listaCargo.map((p:any)=>{
-              var ps:Basic={Nombre:p.cargo,value:p.idCargo};
-              return ps;
-            })
-          }
-        })
-        this.fileds.forEach(r=>{
-          if(r.nombre=='IdAreaFormacion'){
-            r.data=x.listaAreaFormacion.map((p:any)=>{
-              var ps:Basic={Nombre:p.areaFormacion,value:p.idAreaFormacion};
-              return ps;
-            })
-          }
-        })
-        this.fileds.forEach(r=>{
-          if(r.nombre=='IdAreaTrabajo'){
-            r.data=x.listaAreaTrabajo.map((p:any)=>{
-              var ps:Basic={Nombre:p.areaTrabajo,value:p.idAreaTrabajo};
-              return ps;
-            })
-          }
-        })
-        this.fileds.forEach(r=>{
-          if(r.nombre=='IdIndustria'){
-            r.data=x.listaIndustria.map((p:any)=>{
-              var ps:Basic={Nombre:p.industria,value:p.idIndustria};
-              return ps;
-            })
-          }
-        })
-      }
-    })
+  ObtenerCombosPortal() {
+    this._DatosPortalService
+      .ObtenerCombosPortal()
+      .pipe(takeUntil(this.signal$))
+      .subscribe({
+        next: (x) => {
+          this.fileds.forEach((r) => {
+            if (r.nombre == 'IdPais') {
+              r.data = x.listaPais.map((p: any) => {
+                var ps: Basic = { Nombre: p.pais, value: p.idPais };
+                return ps;
+              });
+            }
+          });
+          this.fileds.forEach((r) => {
+            if (r.nombre == 'IdCargo') {
+              r.data = x.listaCargo.map((p: any) => {
+                var ps: Basic = { Nombre: p.cargo, value: p.idCargo };
+                return ps;
+              });
+            }
+          });
+          this.fileds.forEach((r) => {
+            if (r.nombre == 'IdAreaFormacion') {
+              r.data = x.listaAreaFormacion.map((p: any) => {
+                var ps: Basic = {
+                  Nombre: p.areaFormacion,
+                  value: p.idAreaFormacion,
+                };
+                return ps;
+              });
+            }
+          });
+          this.fileds.forEach((r) => {
+            if (r.nombre == 'IdAreaTrabajo') {
+              r.data = x.listaAreaTrabajo.map((p: any) => {
+                var ps: Basic = {
+                  Nombre: p.areaTrabajo,
+                  value: p.idAreaTrabajo,
+                };
+                return ps;
+              });
+            }
+          });
+          this.fileds.forEach((r) => {
+            if (r.nombre == 'IdIndustria') {
+              r.data = x.listaIndustria.map((p: any) => {
+                var ps: Basic = { Nombre: p.industria, value: p.idIndustria };
+                return ps;
+              });
+            }
+          });
+        },
+      });
     this.initValues = true;
   }
-  AddFields(){
-    this.data.valorPrograma.campoContacto.forEach((cc:any) => {
-      var val=[Validators.required]
-      if(cc.identificadorApi=="Email"){
-        val.push(Validators.email)
+  AddFields() {
+    this.data.valorPrograma.campoContacto.forEach((cc: any) => {
+      var val = [Validators.required];
+      if (cc.identificadorApi == 'Email') {
+        val.push(Validators.email);
       }
       this.fileds.push({
-        nombre:cc.identificadorApi,
-        tipo:cc.tipoControl,
-        valorInicial:"",
-        validate:val,
-        label:cc.nombreLabel,
+        nombre: cc.identificadorApi,
+        tipo: cc.tipoControl,
+        valorInicial: '',
+        validate: val,
+        label: cc.nombreLabel,
       });
     });
     // this.fileds.push({

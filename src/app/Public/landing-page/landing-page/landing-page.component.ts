@@ -50,9 +50,9 @@ export class LandingPageComponent implements OnInit, OnDestroy {
     private _HelperService: HelperService,
     private _SnackBarServiceService: SnackBarServiceService,
     private _SessionStorageService: SessionStorageService,
-    private _ChatEnLineaService:ChatEnLineaService,
+    private _ChatEnLineaService: ChatEnLineaService,
 
-    private _FacebookPixelService:FacebookPixelService,
+    private _FacebookPixelService: FacebookPixelService,
     public dialogRef: MatDialogRef<LandingPageInterceptorComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     @Inject(PLATFORM_ID) platformId: Object
@@ -242,6 +242,9 @@ export class LandingPageComponent implements OnInit, OnDestroy {
       if (this.DatosLandingPageEnvio.IdCategoriaDato == 104) {
         this.DatosLandingPageEnvio.NombreOrigen =
           'Adwords Busqueda Formulario Propio';
+      } else if (this.DatosLandingPageEnvio.IdCategoriaDato == 632) {
+        this.DatosLandingPageEnvio.NombreOrigen =
+          'Masivos SMS Bases Propias Formulario Propio';
       } else {
         this.DatosLandingPageEnvio.NombreOrigen =
           'Mailing Bases Propias Formulario Propio';
@@ -279,15 +282,23 @@ export class LandingPageComponent implements OnInit, OnDestroy {
             );
             this.CompleteLocalStorage = true;
             if (this.isBrowser) {
-              fbq('trackSingle','269257245868695', 'Lead', {}, {eventID:x.id});
-              this._FacebookPixelService.SendLoad(x.id,x.correoEnc,x.telEnc,x.userAgent,x.userIp).subscribe({
-                next:(x)=>{
-                  console.log(x)
-                },
-                error:(e)=>{
-                  console.log(e)
-                }
-              });
+              fbq(
+                'trackSingle',
+                '269257245868695',
+                'Lead',
+                {},
+                { eventID: x.id }
+              );
+              this._FacebookPixelService
+                .SendLoad(x.id, x.correoEnc, x.telEnc, x.userAgent, x.userIp)
+                .subscribe({
+                  next: (x) => {
+                    console.log(x);
+                  },
+                  error: (e) => {
+                    console.log(e);
+                  },
+                });
               try {
                 gtag('event', 'conversion', {
                   send_to: 'AW-991002043/tnStCPDl6HUQu_vF2AM',
@@ -388,14 +399,15 @@ export class LandingPageComponent implements OnInit, OnDestroy {
         },
       });
   }
-  ProcesarAsignacionAutomaticaNuevoPortal(data:any){
-    this._ChatEnLineaService.ProcesarAsignacionAutomaticaNuevoPortal(data.id).subscribe({
-      next:(x)=>{
-      },
-      complete: () => {
-        //this.statuscharge=false;
-      }
-    })
+  ProcesarAsignacionAutomaticaNuevoPortal(data: any) {
+    this._ChatEnLineaService
+      .ProcesarAsignacionAutomaticaNuevoPortal(data.id)
+      .subscribe({
+        next: (x) => {},
+        complete: () => {
+          //this.statuscharge=false;
+        },
+      });
   }
   SelectChage(e: any) {
     if (e.Nombre == 'IdPais') {
