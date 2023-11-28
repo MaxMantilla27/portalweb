@@ -1,6 +1,10 @@
 export interface Basic{
   Nombre:string,
-  value:any
+  value:any,
+  hiden?:any,
+  longitudCelular?:any,
+  codigo?: any
+
 }
 export interface BasicUrl{
   Nombre:string,

@@ -98,6 +98,7 @@ export class FormularioComponent implements OnChanges, OnInit,OnDestroy {
   @Input() cargando=false
   //later in the code
   fields: any = {};
+  activaraMexico:boolean = false
   public interval:any
   public jsonForm:InteraccionFormularioCampoDTO={
     Acciones:[],
@@ -118,6 +119,9 @@ export class FormularioComponent implements OnChanges, OnInit,OnDestroy {
           this.paise=x;
           var codigoISo=this._SessionStorageService.SessionGetValue('ISO_PAIS');
           this.paisSelect=this.paise.find(x=>x.codigoIso==codigoISo).idPais;
+          if(this.paisSelect==52){
+            this.activaraMexico= true
+          }
           var index=0
           this.fiels.forEach((f:any) =>{
             if(f.tipo=='phone' && this.userForm){
@@ -180,7 +184,6 @@ export class FormularioComponent implements OnChanges, OnInit,OnDestroy {
       }
     }
   }
-
   ngOnChanges(changes: SimpleChanges): void {
     this.changeForm();
     if (this.userForm != undefined) {
@@ -411,6 +414,36 @@ export class FormularioComponent implements OnChanges, OnInit,OnDestroy {
     }
     return '';
   }
+  //agregado no
+  filtroAutocomplete(data: formulario, value: any) {
+    console.log('Data de eventos ', value.target.value);
+    let info = value.target.value == null ? '' : value.target.value;
+    data.data?.forEach((element: any) => {
+      element.hiden = true;
+      if (
+        element.Nombre.toLowerCase().includes(info.toLowerCase()) ||
+        info.length == 0
+      ) {
+        element.hiden = false;
+      }
+    });
+  }
+
+  itemDisplayFn(item: any) {
+    console.log('ITEM ', item);
+    return item && item.Nombre ? item.Nombre : '';
+  }
+
+
+  changeFormsSelect(clave:any, valor:any){
+    if (clave == "IdLocalidad"){
+      //this.userForm.controls['Fields'].setValue({['phone']:valor.codigo})
+      (<FormArray>this.userForm.get('Fields')).controls[4].get("Movil")?.setValue(this.pref+valor.codigo);
+    }
+    this.OnSelect.emit({Nombre:clave,value:valor})
+  }
+  ///
+
   validatePais(i: number, val: string){
     var c=(<FormArray>this.userForm.get('Fields')).controls[i].get(val)?.value;
     var campo =c==null?'':c.toString();
@@ -458,6 +491,12 @@ export class FormularioComponent implements OnChanges, OnInit,OnDestroy {
     return 0;
   }
   PrefPaises():string{
+    if(this.paise.find(x=>x.idPais==this.paisSelect)!=undefined){
+      return this.paise.find(x=>x.idPais==this.paisSelect).prefijoTelefono
+    }
+    return '';
+  }
+  PrefLocalidad():string{
     if(this.paise.find(x=>x.idPais==this.paisSelect)!=undefined){
       return this.paise.find(x=>x.idPais==this.paisSelect).prefijoTelefono
     }

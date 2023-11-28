@@ -128,7 +128,7 @@ import { FacebookLoginComponent } from './Containers/facebook-login/facebook-log
 import { SocialAuthService } from 'angularx-social-login';
 import { MatChipsModule } from '@angular/material/chips';
 import { FacebookPixelService } from './Services/FacebookPixel/facebook-pixel.service';
-
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 @NgModule({
   imports: [
     HttpClientModule,
@@ -163,7 +163,8 @@ import { FacebookPixelService } from './Services/FacebookPixel/facebook-pixel.se
     MatBottomSheetModule,
     CKEditorModule,
     TextFieldModule,
-    MatChipsModule
+    MatChipsModule,
+    MatAutocompleteModule,
   ],
   declarations: [
     HeaderComponent,
@@ -225,6 +226,7 @@ import { FacebookPixelService } from './Services/FacebookPixel/facebook-pixel.se
     //ChatZComponent,
   ],
   exports: [
+    MatAutocompleteModule,
     HttpClientModule,
     RouterModule,
     CommonModule,

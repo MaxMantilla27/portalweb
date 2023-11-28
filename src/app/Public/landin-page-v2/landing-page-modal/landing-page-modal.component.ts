@@ -349,27 +349,32 @@ export class LandingPageModalComponent implements OnInit, OnDestroy {
           if(r.nombre=='IdLocalidad'){
             r.disable=false;
             r.data=x.map((p:any)=>{
-              var ps:Basic={Nombre:p.nombreLocalidad,value:p.idLocalidad};
+              var ps:Basic={Nombre:p.nombreLocalidad,value:p.idLocalidad,longitudCelular:p.longitudCelular,codigo:p.codigo};
               return ps;
             })
           }
         })
         this.form.enablefield('IdLocalidad');
-
       }
-
     })
+  }
+  GetLocalidadSeleccion(idLocalidad:number){
+
+    console.log('localidadPrueba',idLocalidad)
   }
   SelectChage(e:any){
     if(e.Nombre=="IdPais"){
-      this.GetRegionesPorPais(e.value)
+      this.GetRegionesPorPais(e.value.value)
     }
     if(e.Nombre == "IdRegion"){
-      this.GetLocalidadPorRegion(e.value)
+      this.GetLocalidadPorRegion(e.value.value)
     }
+    if(e.Nombre == "IdLocalidad"){
+      this.GetLocalidadSeleccion(e.value.value)
+    }
+
   }
   ObtenerCombosPortal(){
-
     this._DatosPortalService.ObtenerCombosPortal().pipe(takeUntil(this.signal$)).subscribe({
       next:(x)=>{
         this.fileds.forEach(r=>{
@@ -503,5 +508,9 @@ export class LandingPageModalComponent implements OnInit, OnDestroy {
     //   validate:[Validators.required],
     //   label:"Industria",
     // });
+  }
+  prueba(data:any,obj:any,statuscharge:any){
+    console.log('pruebamiguelyo',data,obj,statuscharge)
+
   }
 }
