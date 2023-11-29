@@ -92,4 +92,16 @@ export class AlertaService {
       allowOutsideClick: false,
     });
   }
+  mensajeConfirmacionRegistro(title:string,text:string,icon?:string){
+    return Swal.fire({
+      title: title,
+      text: text,
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#4C5FC0',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Aceptar',
+      allowOutsideClick: false,
+    });
+  }
 }

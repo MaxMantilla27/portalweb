@@ -1,0 +1,429 @@
+.dialog-detalle-examen{
+  mat-dialog-container {
+    padding: 0px !important;
+    border-radius: 4px;
+    max-height: 90vh;
+  }
+}
+
+.dialog-envio-cuestionario-alumno{
+  position: relative !important;
+  mat-dialog-container {
+    padding: 0px !important;
+    border-radius: 15px;
+    max-height: 90vh;
+  }
+}
+
+.cardSesionOnlineTareasCuestionario {
+  background: #bef4ff;
+  border: solid 1px #a5eaf8;
+  padding: 15px 20px;
+  .flagActividad {
+    display: flex;
+    align-items: center;
+    .textoFlag {
+      width: fit-content;
+      background: rgb(255, 207, 0);
+      padding: 2px 10px;
+      font-size: 12px;
+      font-weight: 600;
+    }
+    #player {
+      position: relative;
+      width: 22px;
+      height: 22px;
+    }
+
+    #inner {
+      transform: rotate(45deg);
+      background-color: #ffcf00;
+      width: 22px;
+      height: 22px;
+      left: -7px;
+      position: relative;
+      border-radius: 2px;
+    }
+
+    #outer {
+      position: absolute;
+      width: 22px;
+      height: 22px;
+      overflow: hidden;
+    }
+    .trianglearrow {
+      width: 0;
+      height: 0;
+      border-top: 11px solid transparent;
+      border-bottom: 11px solid transparent;
+      border-left: 11px solid #ffcf00;
+    }
+  }
+  .TitleActividad {
+    font-size: 18px;
+    font-weight: 600;
+    margin: 10px 0px;
+  }
+  .DescripcionActividad {
+    font-size: 14px;
+  }
+  .lineaMedioActividad {
+    height: 1px;
+    background: rgb(179 182 182);
+    margin: 10px 0px;
+  }
+  .AbajoActividad {
+    display: flex;
+    justify-content: space-between;
+    .FechaEntregaActividad {
+      display: flex;
+      align-items: center;
+      font-size: 14px;
+    }
+  }
+}
+.cabeceraExpandTarea{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: 700;
+
+  padding-bottom: 6px;
+  border-bottom: solid 1px #b2b2b2;
+  margin-left: 40px;
+  margin-right: 40px;
+}
+.contentCabeceraTarea {
+  color: #989898;
+    margin-left: 40px;
+    margin-right: 40px;
+}
+.contentTareasEnviadas{
+  margin: 10px 40px;
+  margin-top: 20px;
+  padding-bottom: 20px;
+}
+
+.IntenTareasEnviadas{
+  margin: 5px 0px;
+  display: flex;
+  align-items: center;
+  a {
+    color: black !important;
+    text-decoration: none !important;
+    font-size: 14px;
+  }
+  strong{
+    margin-right: 15px;
+  }
+}
+.pdfSesionOnline {
+  background-image: url(../../../../../../../assets/icons/pdf-31.svg);
+  background-repeat: no-repeat;
+  width: 12px;
+  height: 12px;
+  background-position: center;
+  margin-right: 10px;
+}
+.AlertPrevContent{
+  display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 30px 20px;
+  .alertPrev{
+    font-size: 14px;
+    margin-bottom: 15px;
+  }
+  .IntentoAlert{
+    font-size: 16px;
+    margin-bottom: 15px;
+    font-weight: 600;
+  }
+
+}
+
+.TimePrevCuestionario{
+  display: flex;
+  color: #f8893f;
+  font-size: 25px;
+  font-weight: 700;
+  align-items: center;
+  .imgTimePrev{
+    background-image: url(../../../../../../../assets/icons/icono-cronometro-naranja.svg);
+    background-repeat: no-repeat;
+    width: 20px;
+    height: 20px;
+    background-position: center;
+    margin-right: 10px;
+  }
+  .MinutosTiempo{
+    color: black;
+    margin: 0px 5px;
+  }
+}
+.TimeCronometer{
+  position: absolute;
+  padding: 0px 10px;
+  background: white;
+  border-radius: 7px;
+  top: 0px;
+  right: -130px;
+  z-index: 1000;
+  width: 125px;
+}
+
+.contetPreguntasCuestionario{
+
+  .titlePregunta{
+    font-size: 16px;
+  font-weight: 600;
+  }
+  .DescripcionPregunta{
+    margin: 0px;
+  font-size: 14px;
+  }
+  .radiosOptions{
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    margin: 10px 20px;
+    // width: -moz-fit-content;
+    // width: fit-content;
+    font-size: 14px;
+    i{
+      margin-right: 10px;
+    }
+  }
+  .checkOptions{
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    margin: 10px 20px;
+    // width: fit-content;
+    font-size: 14px;
+    i{
+      margin-right: 10px;
+    }
+  }
+}
+.activeSelect{
+  color: #0684f2 !important;
+}
+
+.InputsOnlineCuestionario {
+  display: flex;
+  flex-direction: column;
+  margin: 10px 20px;
+}
+.InputsOnlineCuestionario
+  .mat-form-field.mat-form-field-appearance-outline
+  > div.mat-form-field-wrapper
+  > div.mat-form-field-flex
+  > div.mat-form-field-infix {
+  padding: 0.4em 0px;
+}
+.InputsOnlineCuestionario .titlePerfil {
+  border-bottom: 1px solid #cacaca;
+  font-size: 25px;
+  margin: 40px 0px;
+}
+.InputsOnlineCuestionario
+  .mat-form-field.mat-form-field-appearance-outline
+  > div.mat-form-field-wrapper
+  > div.mat-form-field-flex
+  > div.mat-form-field-infix
+  input {
+  height: 20px;
+}
+.InputsOnlineCuestionario
+  .mat-form-field.mat-form-field-appearance-outline
+  > div.mat-form-field-wrapper
+  > div.mat-form-field-flex
+  > div.mat-form-field-infix
+  > span.mat-form-field-label-wrapper {
+  top: -1.5em;
+}
+.InputsOnlineCuestionario
+  .mat-form-field.mat-form-field-appearance-outline
+  > div.mat-form-field-wrapper{
+    padding: 0px;
+}
+.InputsOnlineCuestionario
+  > .mat-focused
+  > div.mat-form-field-wrapper
+  > div.mat-form-field-flex
+  > div.mat-form-field-infix
+  > span.mat-form-field-label-wrapper
+  .mat-form-field-label {
+    transform: translateY(-1.1em) scale(0.75);
+    width: 133.33333%;
+}
+.InputsOnlineCuestionario
+  > .mat-form-field-should-float
+  > div.mat-form-field-wrapper
+  > div.mat-form-field-flex
+  > div.mat-form-field-infix
+  > span.mat-form-field-label-wrapper
+  .mat-form-field-label {
+    transform: translateY(-1.1em) scale(0.75);
+    width: 133.33333%;
+}
+.InputsOnlineCuestionario.mat-form-field-appearance-outline.mat-form-field-can-float.mat-form-field-should-float
+  .mat-form-field-label {
+  transform: translateY(-1.1em) scale(0.75);
+  width: 133.33333%;
+}
+.InputsOnlineCuestionario.mat-input-underline {
+  background-color: #ff0000; /* replace this color with your accent color hex code */
+}
+:root {
+  --main-bg-color: white;
+}
+.InputsOnlineCuestionario
+  .mat-form-field.mat-form-field-appearance-outline
+  > div.mat-form-field-wrapper
+  > div.mat-form-field-flex
+  > .mat-form-field-outline {
+  .mat-form-field-outline-start {
+    background-color: var(--main-bg-color);
+  }
+  .mat-form-field-outline-gap {
+    background-color: var(--main-bg-color);
+  }
+  .mat-form-field-outline-end {
+    background-color: var(--main-bg-color);
+  }
+}
+.InputsOnlineCuestionario
+.mat-form-field.mat-form-field-appearance-outline
+> div.mat-form-field-wrapper
+> div.mat-form-field-subscript-wrapper{
+  height: auto;
+      position: relative;
+      margin: 0px;
+      font-size: 10px;
+      margin-top: 2px;
+      padding-bottom: 1px;
+}
+.PuntoPregunta{
+  width: fit-content;
+  padding: 5px 10px;
+  background: #f4f4f4;
+  border-radius: 5px;
+  font-size: 14px;
+}
+.Correctos{
+  color: #155724;
+    background-color: #d4edda;
+    border-color: #c3e6cb;
+    padding: 0.75rem 1.25rem;
+    border-radius: 0.25rem;
+}
+.InCorrectos{
+  color: #721c24;
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
+    padding: 0.75rem 1.25rem;
+    border-radius: 0.25rem;
+}
+.nota{
+  display: flex;
+  align-items: center;
+  width: 100%;
+  justify-content: center;
+  padding: 30px;
+  font-size: 20px;
+  font-weight: bold;
+}
+.HeaderCuestionario{
+  background: #dedede;
+    text-align: center;
+    padding: 10px;
+    font-size: 18px;
+    font-weight: 600;
+}
+.contentCuestionario{
+  padding: 20px 40px;
+  .nombreAlumnoContetCuestionario{
+    text-align: center;
+    padding: 10px;
+    font-size: 16px;
+    font-weight: 600;
+  }
+}
+.resultado{
+  font-size: 12px;
+    color: red;
+    font-weight: 600;
+}
+.esResultadoCorrecto{
+  color: #40b25a!important
+}
+.puntaje{
+  font-weight: 600;
+    font-size: 14px;
+}
+
+
+
+.TextRetro{
+  width: 100%;
+  height: 100px;
+  padding: 10px 20px 0px 20px;
+  textarea{
+    width: 100%;
+    height: 100%;
+    padding: 10px;
+  }
+}
+.ArchivoRetro{
+  width: 100%;
+    padding: 20px;
+    margin: 0px;
+    border: solid 1px;
+    margin-top: -2px;
+
+}
+.IndicePreguntas{
+  width: 100%;
+    border: solid 1px #c3c3c3;
+    border-radius: 10px;
+    margin: 20px 0px 40px;
+  .HeaderIndicePreguntas{
+    background: #f2f2f2;
+    padding: 10px;
+    font-weight: 600;
+    border-radius: 10px 10px 0px 0px;
+  }
+  .ContentIndicePreguntas{
+    padding: 10px;
+    display: flex;
+    align-items: center;
+  }
+  .PreguntasIndice{
+    font-size: 12px;
+    font-weight: 600;
+    border-radius: 5px;
+    min-width: 20px;
+    min-height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 8px;
+    cursor: pointer;
+    border: solid 1px #077aff;
+    box-shadow: 3px 3px 9px #afafaf;
+  }
+  .IndiceCalificado{
+    color: white;
+    background: #077aff;
+  }
+  .IndiceNoCalificado{
+    color: #077aff;
+    background:  white;
+  }
+  .IndiceSeleccionado{
+    box-shadow: none !important;
+  }
+}

@@ -1,1 +1,24 @@
-<p>docencia-trabajo-aplicacion-profesional works!</p>
+<div class="contentAplicacion">
+  <div class="headerAplicacion" (click)="OperCrear=!OperCrear">
+    <div>Crear trabajo de aplicación profesional</div>
+    <div class="ExpandAplicacion">
+      <i class="material-icons" *ngIf="OperCrear!=true">keyboard_arrow_down</i>
+      <i class="material-icons" *ngIf="OperCrear==true">keyboard_arrow_up</i>
+    </div>
+  </div>
+  <ng-container *ngIf="OperCrear==true">
+    <app-crear-trabajo-aplicacion [IdPespecifico]="IdPespecifico"></app-crear-trabajo-aplicacion>
+  </ng-container>
+  <div class="headerAplicacion" (click)="OperCalificar=!OperCalificar">
+    <div>Calificar trabajo de aplicación profesional</div>
+    <div class="ExpandAplicacion">
+      <i class="material-icons" *ngIf="OperCalificar!=true">keyboard_arrow_down</i>
+      <i class="material-icons" *ngIf="OperCalificar==true">keyboard_arrow_up</i>
+    </div>
+  </div>
+  <ng-container *ngIf="OperCalificar==true">
+    <app-calificar-trabajo-aplicacion [IdPespecifico]="IdPespecifico">
+
+    </app-calificar-trabajo-aplicacion>
+  </ng-container>
+</div>

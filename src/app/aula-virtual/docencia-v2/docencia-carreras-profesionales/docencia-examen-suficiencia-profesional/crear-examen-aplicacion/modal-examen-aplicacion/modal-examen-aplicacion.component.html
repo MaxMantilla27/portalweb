@@ -1,0 +1,135 @@
+<app-cargando *ngIf="cargando==true"></app-cargando>
+<div class="TitleCardAgregarCarreraExamen row" style="display: flex;">
+  <div class="col-12">
+    {{Title}}
+  </div>
+  <div style="    cursor: pointer;
+  position: absolute;
+  right: 15px;
+  font-size: 17px;
+  top: 15px;
+  width: fit-content;" (click)="dialogRef.close()">
+    X
+  </div>
+</div>
+<form [formGroup]="formularioCarreraExamen">
+  <div class="row" style="align-items: center;">
+    <div class="col-4 col-md-2 col-lg-2 ">Título</div>
+    <div class="col-8 col-md-10 col-lg-10 InputsDocencia">
+      <mat-form-field appearance="outline" style="width: 100%;">
+        <mat-label>Ingresar Título</mat-label>
+        <input type="text" placeholder="Ingresar Título" formControlName="Titulo" matInput>
+
+        <mat-error *ngIf="!formularioCarreraExamen.get('Titulo')?.valid">Ingrese el titulo</mat-error>
+      </mat-form-field>
+
+    </div>
+    <div class="col-4 col-md-2 col-lg-2 ">Descripción</div>
+    <div class="col-8 col-md-10 col-lg-10 InputsDocencia">
+      <mat-form-field appearance="outline" style="width: 100%;">
+        <mat-label>Ingresar Descripción (Opcional)</mat-label>
+        <textarea name="" id="" rows="2" placeholder="Ingresar Descripción (Opcional)" formControlName="Descripcion" matInput></textarea>
+      </mat-form-field>
+    </div>
+
+    <div class="col-4 col-md-2 col-lg-2 ">Plazo de entrega:</div>
+    <div class="col-4 col-md-4 col-lg-4 InputsDocencia">
+      <mat-form-field appearance="outline">
+        <mat-label>Plazo de entrega:</mat-label>
+        <mat-select #myselsetc formControlName="PlazoEntrega" [disabled]="true">
+          <mat-option *ngFor="let item of dias" [value]="item">
+            {{item}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div class="col-4 col-md-6 col-lg-6">dias</div>
+    <div class="col-4 col-md-2 col-lg-2 ">Calificación Maxima</div>
+    <div class="col-8 col-md-4 col-lg-4 InputsDocencia">
+      <mat-form-field appearance="outline">
+        <mat-label>Calificación Maxima</mat-label>
+        <mat-select #myselsetc formControlName="CalificacionMaxima" [disabled]="true">
+          <mat-option *ngFor="let item of Calificaciones" [value]="item">
+            {{item}}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="!formularioCarreraExamen.get('CalificacionMaxima')?.valid">Ingrese la calificacion maxima</mat-error>
+      </mat-form-field>
+    </div>
+    <div class="col-4 col-md-2 col-lg-2 ">Tiempo límite</div>
+    <div class="col-4 col-md-2 col-lg-2 InputsDocencia">
+      <mat-form-field appearance="outline" style="width: 100%;">
+        <mat-label>Ingrese el tiempo limite</mat-label>
+        <input type="number" placeholder="Ingrese el tiempo limite" formControlName="TiempoLimite" matInput>
+
+        <mat-error *ngIf="!formularioCarreraExamen.get('TiempoLimite')?.valid">Ingrese el tiempo limite</mat-error>
+      </mat-form-field>
+    </div>
+    <div class="col-4 col-md-2 col-lg-2 ">Minutos</div>
+
+  </div>
+</form>
+
+<div class="noform">
+  <div class="row">
+    <div class="col-5 col-md-3 col-lg-3 labelTarea">Agregar preguntas</div>
+    <div class="col-5 col-md-7 col-lg-7 InputsDocencia ImputSinMarginBottom">
+
+      <mat-form-field appearance="outline">
+        <mat-label>Seleccione</mat-label>
+        <mat-select #myselsetc [(ngModel)]="tipoagregra">
+          <mat-option [value]="1">Importar Bloque de Preguntas</mat-option>
+          <mat-option [value]="2">Agregar Preguntas Manualmente</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+    </div>
+    <div class="col-2">
+      <app-default-button [confs]="{color:'primary',titulo:'Agregar'}" [disabled]="tipoagregra==-1"
+        [style]="'width: 100%;margin:0px'" (ButtoclClick)="tipoagregra==1?fileInput.click():OpenCrearPregunta()"
+        [icon]="''"></app-default-button>
+
+      <input #fileInput type="file" id="file" (change)="getFileDetails($event)" style="    width: 100%;
+    border: solid 1px #c2c2c2;
+    padding: 7px;
+    border-radius: 5px;display: none;">
+    </div>
+    <div class="col-12">
+      <div class="table-resposive">
+        <table style="width: 100%;margin: 10px 0px 40px;">
+          <tr style="height: 40px;">
+            <th style="width: 180px;">Tipo de Pregunta</th>
+            <th style="min-width: 200px;">Enunciado</th>
+            <th style="width:150px">Puntaje</th>
+            <th style="width:150px;text-align: center">Acciones</th>
+            <!-- <th style="min-width: 180px;">Metas pronosticadas 2021</th> -->
+          </tr>
+          <tr class="example-box" *ngFor="let item of  saveCarreraExamen.Preguntas;let i=index">
+            <td>{{GettipoPregunta(item.IdPreguntaTipo)}}</td>
+            <td>{{item.Enunciado}}</td>
+            <td>{{item.Puntaje}}</td>
+            <td>
+              <div class="accionesRecursos">
+                <div class="edidtarNaranja" (click)="OpenEditar(i)"></div>
+                <div class="eliminarNaranja" (click)="Eliminar(i)"></div>
+              </div>
+            </td>
+          </tr>
+        </table>
+      </div>
+    </div>
+
+  </div>
+</div>
+<mat-dialog-actions align="center" style="margin-top: 20px;    margin-bottom: 20px;">
+  <div style="margin: 0px 5px;">
+    <app-default-button [confs]="{color:'danger',titulo:'Cerrar'}"
+    [style]="'width: 100%;background: white;border: solid 1px #f8893f; color: #f8893f;padding: 0px 50px;border-radius: 15px;'" mat-dialog-close
+      [icon]="''"></app-default-button>
+  </div>
+  <div style="margin: 0px 5px;">
+    <app-default-button [confs]="{color:'primary',titulo:'Guardar'}" [disabled]="!formularioCarreraExamen.valid"
+      [style]="'background: #f8893f;border: solid 1px #f8893f;color: white; padding: 0px 50px; border-radius: 15px;'"
+      (ButtoclClick)="AgregarPEspecificoExamen()" [icon]="''"></app-default-button>
+  </div>
+</mat-dialog-actions>

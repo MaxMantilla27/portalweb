@@ -74,7 +74,11 @@ export class DocenciaCarrerasProfesionalesComponent implements OnInit ,OnDestroy
   }
   IrTrabajo(item:any,nombre:any){
     console.log(item)
-    item.NombrePadre=nombre
+    if(item.orden==1){
+      item.NombrePadre="Trabajo de aplicación para la obtención de título profesional técnico"
+    }else{
+      item.NombrePadre="Examen de suficiencia para la obtención de título profesional técnico"
+    }
     this.AddIndex.emit(item)
   }
 }

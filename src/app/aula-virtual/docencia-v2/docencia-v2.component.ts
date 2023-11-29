@@ -37,6 +37,7 @@ export class DocenciaV2Component implements OnInit ,OnDestroy {
   public tabIndex = 0;
   public DataProveedor:any
   public NombreCurso=''
+  public IdPespecifico=0
   public json: ParticipacionExpositorFiltroDTO = {
     IdArea: null,
     IdCentroCosto: null,
@@ -109,5 +110,6 @@ export class DocenciaV2Component implements OnInit ,OnDestroy {
     this.CarrerasProfesionalesActive=true
     this.tabIndex+=item.orden
     this.NombreCurso=item.NombrePadre
+    this.IdPespecifico=item.idPEspecificoPadre
   }
 }

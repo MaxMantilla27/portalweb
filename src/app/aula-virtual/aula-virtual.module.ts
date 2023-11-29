@@ -193,6 +193,15 @@ import { ModalTrabajoAplicacionProfesionalComponent } from './curso/curso-trabaj
 import { DocenciaCarrerasProfesionalesComponent } from './docencia-v2/docencia-carreras-profesionales/docencia-carreras-profesionales.component';
 import { DocenciaExamenSuficienciaProfesionalComponent } from './docencia-v2/docencia-carreras-profesionales/docencia-examen-suficiencia-profesional/docencia-examen-suficiencia-profesional.component';
 import { DocenciaTrabajoAplicacionProfesionalComponent } from './docencia-v2/docencia-carreras-profesionales/docencia-trabajo-aplicacion-profesional/docencia-trabajo-aplicacion-profesional.component';
+import { CrearTrabajoAplicacionComponent } from './docencia-v2/docencia-carreras-profesionales/docencia-trabajo-aplicacion-profesional/crear-trabajo-aplicacion/crear-trabajo-aplicacion.component';
+import { CalificarTrabajoAplicacionComponent } from './docencia-v2/docencia-carreras-profesionales/docencia-trabajo-aplicacion-profesional/calificar-trabajo-aplicacion/calificar-trabajo-aplicacion.component';
+import { ModalTrabajoAplicacionComponent } from './docencia-v2/docencia-carreras-profesionales/docencia-trabajo-aplicacion-profesional/crear-trabajo-aplicacion/modal-trabajo-aplicacion/modal-trabajo-aplicacion.component';
+import { CrearExamenAplicacionComponent } from './docencia-v2/docencia-carreras-profesionales/docencia-examen-suficiencia-profesional/crear-examen-aplicacion/crear-examen-aplicacion.component';
+import { CalificarExamenAplicacionComponent } from './docencia-v2/docencia-carreras-profesionales/docencia-examen-suficiencia-profesional/calificar-examen-aplicacion/calificar-examen-aplicacion.component';
+import { ModalExamenAplicacionComponent } from './docencia-v2/docencia-carreras-profesionales/docencia-examen-suficiencia-profesional/crear-examen-aplicacion/modal-examen-aplicacion/modal-examen-aplicacion.component';
+import { ModalPrevisualizacionExamenAplicacionComponent } from './docencia-v2/docencia-carreras-profesionales/docencia-examen-suficiencia-profesional/crear-examen-aplicacion/modal-previsualizacion-examen-aplicacion/modal-previsualizacion-examen-aplicacion.component';
+import { ModalExamenAplicacionPreguntasComponent } from './docencia-v2/docencia-carreras-profesionales/docencia-examen-suficiencia-profesional/crear-examen-aplicacion/modal-examen-aplicacion/modal-examen-aplicacion-preguntas/modal-examen-aplicacion-preguntas.component';
+import { CalificarExamenAplicacionDetalleComponent } from './docencia-v2/docencia-carreras-profesionales/docencia-examen-suficiencia-profesional/calificar-examen-aplicacion/calificar-examen-aplicacion-detalle/calificar-examen-aplicacion-detalle.component';
 
 
 
@@ -381,7 +390,16 @@ import { DocenciaTrabajoAplicacionProfesionalComponent } from './docencia-v2/doc
     ModalTrabajoAplicacionProfesionalComponent,
     DocenciaCarrerasProfesionalesComponent,
     DocenciaExamenSuficienciaProfesionalComponent,
-    DocenciaTrabajoAplicacionProfesionalComponent
+    DocenciaTrabajoAplicacionProfesionalComponent,
+    CrearTrabajoAplicacionComponent,
+    CalificarTrabajoAplicacionComponent,
+    ModalTrabajoAplicacionComponent,
+    CrearExamenAplicacionComponent,
+    CalificarExamenAplicacionComponent,
+    ModalExamenAplicacionComponent,
+    ModalPrevisualizacionExamenAplicacionComponent,
+    ModalExamenAplicacionPreguntasComponent,
+    CalificarExamenAplicacionDetalleComponent
 
   ],
   imports: [

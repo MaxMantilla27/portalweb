@@ -1,0 +1,37 @@
+
+<div style="position: relative;">
+  <app-cargando *ngIf="cargando==true"></app-cargando>
+  <div>
+    <app-default-button [confs]="{color:'primary',titulo:'Agregar examen'}" [icon]="''"
+      [style]="'border-radius: 10px;margin: 0px;padding: 4px 30px;'"
+      (click)="OpenAgregar()"></app-default-button>
+  </div>
+  <div class="table-resposive" *ngIf="aplicacion!=undefined && aplicacion!=null">
+    <table style="width: 100%;    margin-top: 20px;margin-bottom: 20px;">
+      <tr>
+        <th style="width: 30px;padding-bottom: 20px;">N°</th>
+        <th style="min-width: 200px;padding-bottom: 20px;">Titulo</th>
+        <th style="min-width: 180px;padding-bottom: 20px;">Fecha de creación</th>
+        <th style="width:150px;text-align: center;padding-bottom: 20px;">Acciones</th>
+        <!-- <th style="min-width: 180px;">Metas pronosticadas 2021</th> -->
+      </tr>
+      <tbody class="example-list" >
+        <tr class="example-box" *ngFor="let item of aplicacion;let i=index"
+          [ngClass]="{'NoPublicado': item.publicado!=true}">
+          <td>{{item.orden}}</td>
+          <td>{{item.titulo}}</td>
+          <td>{{item.fechaCreacion | date:'dd-MM-yyyy hh:mm a'}}</td>
+          <td>
+            <div class="accionesTema">
+              <div  [ngClass]="{'edidtarNaranjaI': item.publicado!=true,'edidtarNaranja':item.publicado==true}" (click)="OpenEditar(item.id)"></div>
+              <div  [ngClass]="{'eliminarNaranjaI': item.publicado!=true,'eliminarNaranja':item.publicado==true}" (click)="EliminarPEspecificoCarreraExamen(item.id)"></div>
+              <div [ngClass]="{'verPublicarI': item.publicado!=true,'verPublicar':item.publicado==true}"
+              (click)="PublicarPEspecificoCarreraExamen(item)"></div>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+</div>

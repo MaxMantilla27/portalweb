@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, Inject, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
 import { Subject, takeUntil } from 'rxjs';
 import { AgregarCalificacionCuestionarioAlumnoDocenteDTO } from 'src/app/Core/Models/PEspecificoEsquema';
@@ -14,7 +14,7 @@ import { ImagenModalComponent } from 'src/app/Core/Shared/Containers/Dialog/imag
   styleUrls: ['./vista-previa-cuestionario.component.scss'],
   encapsulation: ViewEncapsulation.None,
 })
-export class VistaPreviaCuestionarioComponent implements OnInit {
+export class VistaPreviaCuestionarioComponent implements OnInit,OnDestroy {
   private signal$ = new Subject();
   ngOnDestroy(): void {
     this.signal$.next(true);

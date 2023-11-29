@@ -132,9 +132,24 @@
         <ng-container *ngIf="CarrerasProfesionalesActive">
 
           <mat-tab>
+            <ng-template mat-tab-label>
+              <div class="contentHeaderM subContent" style="cursor: pointer;padding: 20px 10px !important;"
+                matTooltip="Trabajo de aplicación profesional" matTooltipPosition="after" (click)="NombreCurso='Trabajo de aplicación para la obtención de título profesional técnico'">
+                <div class="iconMat"><i class="material-icons">folder_supervised</i></div>
+                <div class="titleMatr" *ngIf="!hide">Trabajo de aplicación profesional</div>
+              </div>
+            </ng-template>
+
+            <ng-template matTabContent>
+              <div class="pad-resp">
+                <app-docencia-trabajo-aplicacion-profesional [IdPespecifico]="IdPespecifico"></app-docencia-trabajo-aplicacion-profesional>
+              </div>
+            </ng-template>
+          </mat-tab>
+          <mat-tab>
             <ng-template mat-tab-label class="tabSubcontent">
               <div class="contentHeaderM subContent" style="cursor: pointer;padding: 20px 10px !important;"
-                matTooltip="Examen de suficiencia profesional" matTooltipPosition="after">
+                matTooltip="Examen de suficiencia profesional" matTooltipPosition="after" (click)="NombreCurso='Examen de suficiencia para la obtención de título profesional técnico'">
 
                 <div class="iconMat"><i class="material-icons">comment</i></div>
                 <div class="titleMatr" *ngIf="!hide">Examen de suficiencia profesional</div>
@@ -143,27 +158,10 @@
 
             <ng-template matTabContent>
               <div class="pad-resp">
-                <app-docencia-examen-suficiencia-profesional></app-docencia-examen-suficiencia-profesional>
+                <app-docencia-examen-suficiencia-profesional [IdPespecifico]="IdPespecifico"></app-docencia-examen-suficiencia-profesional>
               </div>
             </ng-template>
           </mat-tab>
-          <mat-tab>
-            <ng-template mat-tab-label>
-              <div class="contentHeaderM subContent" style="cursor: pointer;padding: 20px 10px !important;"
-                matTooltip="Trabajo de aplicación profesional" matTooltipPosition="after">
-                <div class="iconMat"><i class="material-icons">folder_supervised</i></div>
-                <div class="titleMatr" *ngIf="!hide">Trabajo de aplicación profesional</div>
-              </div>
-            </ng-template>
-
-            <ng-template matTabContent>
-              <div class="pad-resp">
-                <app-docencia-trabajo-aplicacion-profesional></app-docencia-trabajo-aplicacion-profesional>
-              </div>
-            </ng-template>
-          </mat-tab>
-
-
         </ng-container>
       </mat-tab-group>
     </div>
