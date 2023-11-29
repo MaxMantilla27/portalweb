@@ -88,6 +88,7 @@ export class ChatPortalComponent implements OnInit,OnDestroy,OnChanges {
     }
   }
   ngOnInit(): void {
+    console.log('llega2')
     this.ObtenerConfiguracionChat();
     this._HelperService.recibirDataPais.pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{

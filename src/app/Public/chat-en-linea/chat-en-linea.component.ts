@@ -62,6 +62,7 @@ export class ChatEnLineaComponent implements OnInit,OnDestroy {
   };
   public combosPrevios:any
   ngOnInit(): void {
+    console.log('llega3')
     /* this.ObtenerConfiguracionChat(); */
       this.AddFields();
       this._HelperService.recibirCombosPerfil.pipe(takeUntil(this.signal$)).subscribe((x) => {

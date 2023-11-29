@@ -9,6 +9,9 @@ import { ChatEnLineaService } from '../../Services/ChatEnLinea/chat-en-linea.ser
 import { SessionStorageService } from '../../Services/session-storage.service';
 import { SnackBarServiceService } from '../../Services/SnackBarService/snack-bar-service.service';
 import { FacebookPixelService } from '../../Services/FacebookPixel/facebook-pixel.service';
+import { RegionService } from '../../Services/Region/region.service';
+import { Basic } from 'src/app/Core/Models/BasicDTO';
+import { DatosPortalService } from '../../Services/DatosPortal/datos-portal.service';
 declare const fbq:any;
 declare const gtag:any;
 @Component({
@@ -22,9 +25,11 @@ export class FormChatComponent implements OnInit,OnChanges {
   isBrowser: boolean;
   constructor(
     private _ChatEnLinea: ChatEnLineaService,
+    private _RegionService: RegionService,
     private _SnackBarServiceService: SnackBarServiceService,
     private _SessionStorageService:SessionStorageService,
     @Inject(PLATFORM_ID) platformId: Object,
+    private _DatosPortalService: DatosPortalService,
     private _FacebookPixelService:FacebookPixelService
   ) {
     this.isBrowser = isPlatformBrowser(platformId);
@@ -77,6 +82,7 @@ export class FormChatComponent implements OnInit,OnChanges {
   ngOnInit(): void {
     this.AddFields();
     this.obtenerFormularioCompletado();
+    this.ObtenerCombosPortal();
   }
   ngOnChanges(changes: SimpleChanges): void {
   }
@@ -173,6 +179,71 @@ export class FormChatComponent implements OnInit,OnChanges {
       })
     }
   }
+  GetLocalidadPorRegion(idRegion:number){
+    this._RegionService.ObtenerLocalidadPorRegion(idRegion).pipe(takeUntil(this.signal$)).subscribe({
+      next:x=>{
+        this.fileds.forEach(r=>{
+          if(r.nombre=='IdLocalidad'){
+            r.disable=false;
+            r.data=x.map((p:any)=>{
+              var ps:Basic={Nombre:p.nombreLocalidad,value:p.idLocalidad,longitudCelular:p.longitudCelular,codigo:p.codigo};
+              return ps;
+            })
+          }
+        })
+        //this.form.enablefield('IdLocalidad');
+      }
+    })
+  }
+  GetLocalidadSeleccion(idLocalidad:number){
+
+    console.log('localidadPrueba',idLocalidad)
+  }
+  SelectChage(e:any){
+    console.log('form')
+    if(e.Nombre =="IdPais"){
+      this.GetRegionesPorPais(e.value)
+    }
+    if(e.Nombre == "IdRegion"){
+      this.GetLocalidadPorRegion(e.value)
+    }
+
+
+  }
+  GetRegionesPorPais(idPais:number){
+    this._RegionService.ObtenerCiudadesPorPais(idPais).pipe(takeUntil(this.signal$)).subscribe({
+      next:x=>{
+        console.log(x)
+        this.fileds.forEach(r=>{
+          if(r.nombre=='IdRegion'){
+            r.disable=false;
+            r.data=x.map((p:any)=>{
+              var ps:Basic={Nombre:p.nombreCiudad,value:p.idCiudad};
+              return ps;
+            })
+          }
+        })
+        //this.form.enablefield('IdRegion');
+      }
+    })
+  }
+
+  ObtenerCombosPortal(){
+    this._DatosPortalService.ObtenerCombosPortal().pipe(takeUntil(this.signal$)).subscribe({
+      next:(x)=>{
+        console.log(x);
+        this.fileds.forEach(r=>{
+          if(r.nombre=='IdPais'){
+            r.data=x.listaPais.map((p:any)=>{
+              var ps:Basic={Nombre:p.pais,value:p.idPais};
+              return ps;
+            })
+          }
+        })
+      }
+    })
+    this.initValues = true;
+  }
 
   ProcesarAsignacionAutomaticaNuevoPortal(data:any){
     this._ChatEnLinea.ProcesarAsignacionAutomaticaNuevoPortal(data.respuesta.id).subscribe({
@@ -205,12 +276,38 @@ export class FormChatComponent implements OnInit,OnChanges {
       validate: [Validators.required],
       label: 'Apellidos',
     });
+
     this.fileds.push({
       nombre: 'Movil',
       tipo: 'phone',
       valorInicial: '',
       validate: [Validators.required],
       label: 'Teléfono Móvil',
+    });
+    this.fileds.push({
+      nombre: 'IdPais',
+      tipo: 'select',
+      valorInicial: '',
+      validate: [Validators.required],
+      disable: false,
+      label: 'Pais',
+    });
+
+    this.fileds.push({
+      nombre: 'IdRegion',
+      tipo: 'select',
+      valorInicial: '',
+      validate: [Validators.required],
+      disable: false,
+      label: 'Región',
+    });
+    this.fileds.push({
+      nombre: 'IdLocalidad',
+      tipo: 'select',
+      valorInicial: '',
+      validate: [Validators.required],
+      disable: false,
+      label: 'Localidad',
     });
   }
   LimpiarCampos(){

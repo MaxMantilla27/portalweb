@@ -80,6 +80,7 @@ export class ChatComponent implements OnInit,OnDestroy,OnChanges {
     this.signal$.complete()
   }
   ngOnInit(): void {
+    console.log('llega1')
     this._HelperService.recibirMsjChat().pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
         console.log(x);
