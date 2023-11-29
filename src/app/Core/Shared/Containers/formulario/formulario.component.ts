@@ -99,6 +99,7 @@ export class FormularioComponent implements OnChanges, OnInit,OnDestroy {
   //later in the code
   fields: any = {};
   activaraMexico:boolean = false
+  PaisSelect2 :any
   public interval:any
   public jsonForm:InteraccionFormularioCampoDTO={
     Acciones:[],
@@ -119,9 +120,9 @@ export class FormularioComponent implements OnChanges, OnInit,OnDestroy {
           this.paise=x;
           var codigoISo=this._SessionStorageService.SessionGetValue('ISO_PAIS');
           this.paisSelect=this.paise.find(x=>x.codigoIso==codigoISo).idPais;
-          if(this.paisSelect==52){
-            this.activaraMexico= true
-          }
+          // if(this.paisSelect==52){
+          //   this.activaraMexico= true
+          // }
           var index=0
           this.fiels.forEach((f:any) =>{
             if(f.tipo=='phone' && this.userForm){
@@ -431,6 +432,12 @@ export class FormularioComponent implements OnChanges, OnInit,OnDestroy {
 
   itemDisplayFn(item: any) {
     console.log('ITEM ', item);
+    this.PaisSelect2 =item.value
+    // if(item.value ==52){
+    //   this.activaraMexico= true
+    // }else {
+    //   this.activaraMexico= false
+    // }
     return item && item.Nombre ? item.Nombre : '';
   }
 
