@@ -244,7 +244,8 @@ export class FormularioComponent implements OnChanges, OnInit,OnDestroy {
       Object.entries(this.model).forEach(([key, value]) => {
         if (key == clave[0]) {
           value = element.value[clave[0]];
-          obj[key] = value;
+          // obj[key] = value;
+          obj[key] = typeof value === 'object' ? value.value : value;
           if(this.ObtenerPrefijo==false){
             this.fiels.forEach((f:any) =>{
               if(f.tipo=='phone' && f.nombre.toLowerCase()==key.toLowerCase()){
@@ -432,7 +433,7 @@ export class FormularioComponent implements OnChanges, OnInit,OnDestroy {
 
   itemDisplayFn(item: any) {
     console.log('ITEM ', item);
-    this.PaisSelect2 =item.value
+    // this.PaisSelect2 =item.value
     // if(item.value ==52){
     //   this.activaraMexico= true
     // }else {
@@ -443,6 +444,9 @@ export class FormularioComponent implements OnChanges, OnInit,OnDestroy {
 
 
   changeFormsSelect(clave:any, valor:any){
+    if (clave == "IdPais"){
+      this.PaisSelect2 =valor.value
+    }
     if (clave == "IdLocalidad"){
       //this.userForm.controls['Fields'].setValue({['phone']:valor.codigo})
       (<FormArray>this.userForm.get('Fields')).controls[4].get("Movil")?.setValue(this.pref+valor.codigo);
