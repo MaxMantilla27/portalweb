@@ -27,10 +27,16 @@
     <div class="fechaseslect">{{fechaSelec|date: 'dd/MM/yyyy'}}</div>
   </div>
 
-  <div class="buttonsEnvioCarreraDatos">
+  <div *ngIf="BloquearExamen==false" class="buttonsEnvioCarreraDatos">
 
     <app-default-button [confs]="{color:'primary',titulo:'Iniciar'}" [style]="'width: 100%;'"
     [icon]="''" [style]="'     padding: 0px 40px; border-radius: 25px;border: solid 1px #f8893f;'"
-    (click)="Ir()"></app-default-button>
+    (click)="Ir()" [disabled]="BloquearExamen"></app-default-button>
+  </div>
+  <div *ngIf="BloquearExamen" class="buttonsEnvioCarreraDatos">
+
+    <app-default-button [confs]="{color:'primary',titulo:'Enviado'}" [style]="'width: 100%;'"
+    [icon]="''" [style]="'     padding: 0px 40px; border-radius: 25px;'"
+    [disabled]="BloquearExamen"></app-default-button>
   </div>
 </ng-container>

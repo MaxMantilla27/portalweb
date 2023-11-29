@@ -29,26 +29,49 @@
     <i class="material-icons" (click)="select=0 "  *ngIf="select==0">check_circle</i>
     <i class="material-icons" (click)="select=0 "  *ngIf="select!=0">radio_button_unchecked</i>
   </div>
-  <div class="col-10 contentTableReq">Trabajo de aplicación profesional</div>
+  <div class="col-10 contentTableReq">
+    <div>
+      Trabajo de aplicación profesional
+    </div>
+    <div *ngIf="select==0" class="col-10" style="margin-top: 10px;margin-bottom: 10px;" >
+      <div style="font-size: 12px!important;">
+        *Una vez que realices el pago, tu fecha límite de entrega será dentro de <strong>90 días en adelante:</strong>
+      </div>
+      <div>
+        <div class="contentTableReq Sleccionarfechas" style="justify-content: center;margin-top: 10px;">
+          <ng-container style="font-size: 12px!important;">Fecha límite de entrega:</ng-container>
+          <div class="imagenFechaSelectTrabajo"></div>
+          <div class="fechaseslect">{{fechaSelec|date: 'dd/MM/yyyy'}}</div>
+        </div>
+      </div>
+    </div>
+  </div>
   <div class="col-1"></div>
   <div class="col-1">
     <i class="material-icons" (click)="select=1 "  *ngIf="select==1">check_circle</i>
     <i class="material-icons" (click)="select=1 "  *ngIf="select!=1">radio_button_unchecked</i>
   </div>
-  <div class="col-10 contentTableReq">Examen de suficiencia profesional</div>
-
-  <div class="col-2"></div>
-  <div class="col-10">
-    <div class="contentTableReq Sleccionarfechas">
-      <ng-container *ngIf="select==1">Seleccionar fecha:</ng-container>
-      <ng-container *ngIf="select==0">Fecha límite de entrega:</ng-container>
-      <div class="imagenFechaSelect"  (click)="picker.open()" ></div>
-      <div class="fechaseslect">{{fechaSelec|date: 'dd/MM/yyyy'}}</div>
+  <div class="col-10 contentTableReq">
+    <div>
+      Examen de suficiencia profesional
     </div>
-    <input class="dp-input" [matDatepicker]="picker" [min]="fechaMin" [(ngModel)]="fechaSelec" style="visibility: hidden;">
-      <mat-datepicker #picker ></mat-datepicker>
+    <div *ngIf="select==1"class="col-10" style="margin-top: 10px;margin-bottom: 10px;" >
+      <div style="font-size: 12px!important;">
+        *Una vez que realices el pago, tendrás <strong> un plazo de 90 días</strong> para realizar tu sustentación, deberás elegir una fecha dentro de ese rango:
+      </div>
+      <div >
+        <div class="contentTableReq Sleccionarfechas"style="justify-content: center;margin-top: 10px;">
+          <ng-container style="font-size: 12px!important;">Seleccionar fecha:</ng-container>
+          <div class="imagenFechaSelect"  (click)="picker.open()" ></div>
+          <div class="fechaseslect">{{fechaSelec|date: 'dd/MM/yyyy'}}</div>
+        </div>
+        <input class="dp-input" [matDatepicker]="picker" [min]="fechaMin" [max]="fechaMax" [(ngModel)]="fechaSelec" style="visibility: hidden;">
+        <mat-datepicker #picker ></mat-datepicker>
+      </div>
+    </div>
   </div>
-  <div class="col-12 obsTableReq">Tu trámite se iniciará cuando realices el pago correspondiente.</div>
+
+  <!-- <div class="col-12 obsTableReq">Tu trámite se iniciará cuando realices el pago correspondiente.</div> -->
 </div>
 <div class="ListaTramites" style="margin-top: 40px;border: 2px solid #cacaca;border-radius: 10px;    position: relative;">
 

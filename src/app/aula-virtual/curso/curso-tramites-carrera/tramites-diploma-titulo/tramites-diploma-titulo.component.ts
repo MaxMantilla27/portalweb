@@ -13,6 +13,7 @@ import { PagoTarjetaComponent } from 'src/app/aula-virtual/pago/pago-tarjeta/pag
 import * as moment  from 'moment';
 import { DatosPerfilService } from 'src/app/Core/Shared/Services/DatosPerfil/datos-perfil.service';
 import { CronogramaPagoService } from 'src/app/Core/Shared/Services/CronogramaPago/cronograma-pago.service';
+import { ProgramaContenidoService } from 'src/app/Core/Shared/Services/ProgramaContenido/programa-contenido.service';
 @Component({
   selector: 'app-tramites-diploma-titulo',
   templateUrl: './tramites-diploma-titulo.component.html',
@@ -34,6 +35,8 @@ export class TramitesDiplomaTituloComponent implements OnInit ,OnDestroy {
     private _SessionStorageService:SessionStorageService,
     private _DatosPerfilService:DatosPerfilService,
     private _CronogramaPagoService:CronogramaPagoService,
+    private _ProgramaContenidoService: ProgramaContenidoService,
+
 
 
   ) { }
@@ -58,6 +61,7 @@ export class TramitesDiplomaTituloComponent implements OnInit ,OnDestroy {
   }
   public fechaSelec=new Date()
   public fechaMin=new Date()
+  public fechaMax=new Date()
   public PagoTotalTramite=0;
   public SimboloMoneda='';
   public InformacionActualizada=false;
@@ -67,9 +71,10 @@ export class TramitesDiplomaTituloComponent implements OnInit ,OnDestroy {
   public HabilitarPago=false
   ngOnInit(): void {
     const hoy = moment(new Date);
-    this.fechaSelec=new Date(hoy.add(3,'M').format('YYYY-MM-DD hh:mm:ss a'))
+    this.fechaSelec=new Date(hoy.add(90,'days').format('YYYY-MM-DD hh:mm:ss a'))
     console.log(this.fechaSelec)
-    this.fechaMin=new Date(moment(new Date).add(3,'M').format('YYYY-MM-DD hh:mm:ss a'))
+    this.fechaMin=new Date(moment(new Date).add(0,'days').format('YYYY-MM-DD hh:mm:ss a'))
+    this.fechaMax=new Date(moment(new Date).add(90,'days').format('YYYY-MM-DD hh:mm:ss a'))
     console.log(this.IdMatriculaCabecera)
     console.log(this.TramiteSeleccionado)
     this.ValidarInformacionActualizada()
@@ -86,6 +91,12 @@ export class TramitesDiplomaTituloComponent implements OnInit ,OnDestroy {
     dialogRef.afterClosed().pipe(takeUntil(this.signal$)).subscribe((result) => {
       console.log(result);
       if(result!=undefined){
+        if(this.select==1){
+          this.CongelarExamenSuficienciaCarrerasProfesionales();
+        }
+        else{
+          this.CongelarTrabajoAplicacionCarrerasProfesionales();
+        }
         this._HelperService.enviarActivarTipoExamen(this.select==0?2:1)
         //this.PreProcesoPagoTramiteAlumno(result);
       }
@@ -214,4 +225,19 @@ export class TramitesDiplomaTituloComponent implements OnInit ,OnDestroy {
     }
     console.log(this.HabilitarPago)
   }
+  CongelarTrabajoAplicacionCarrerasProfesionales(){
+    this._ProgramaContenidoService.CongelarTrabajoAplicacionCarrerasProfesionales(this.IdMatriculaCabecera,moment(new Date(this.fechaSelec!)).format('yyyy-MM-DDTHH:mm:ss')).pipe(takeUntil(this.signal$)).subscribe({
+      next:x=>{
+        console.log('Trabajo de aplicación profesional congelado')
+      }
+    })
+  }
+  CongelarExamenSuficienciaCarrerasProfesionales(){
+    this._ProgramaContenidoService.CongelarExamenSuficienciaCarrerasProfesionales(this.IdMatriculaCabecera,moment(new Date(this.fechaSelec!)).format('yyyy-MM-DDTHH:mm:ss')).pipe(takeUntil(this.signal$)).subscribe({
+      next:x=>{
+        console.log('Examen de suficiencia profesional congelado')
+      }
+    })
+  }
+
 }

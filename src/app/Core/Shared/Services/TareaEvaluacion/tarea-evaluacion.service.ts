@@ -2,6 +2,7 @@ import { isPlatformBrowser } from '@angular/common';
 import { HttpClient, HttpRequest } from '@angular/common/http';
 import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { EMPTY, Observable } from 'rxjs';
+import { DatosProyectoAplicacionProfesionalCarreraDTO } from 'src/app/Core/Models/CertificadoDTO';
 import { ParametroNotaRegistrarV3DTO } from 'src/app/Core/Models/ParticipacionExpositorFiltroDTO';
 import { ParametroObtenerEvaluacionTarea ,ModelTareaEvaluacionTareaDTO, ParametroEnvioTrabajoPares, ParametroEnvioCriterioReflexivo, DevolverProyectoDTO} from 'src/app/Core/Models/TareaEvaluacionDTO';
 import { environment } from 'src/environments/environment';
@@ -147,6 +148,26 @@ export class TareaEvaluacionService {
       responseType: 'json'
     });
     return this.http.request(req)
+  }
+  public InsertarProyectoAplicacionProfesionalCarrera(Json: DatosProyectoAplicacionProfesionalCarreraDTO): Observable<any> {
+    if (this.isBrowser) {
+      const formData: FormData = new FormData();
+      formData.append("Usuario", "--");
+      formData.append("file", Json.file);
+      formData.append("IdRegistro", Json.IdRegistro.toString());
+      const req = new HttpRequest(
+        "POST",
+        `${this.urlBase}/InsertarProyectoAplicacionProfesionalCarrera`,
+        formData,
+        {
+          reportProgress: true,
+          responseType: "json",
+        }
+      );
+      return this.http.request(req);
+    } else {
+      return EMPTY;
+    }
   }
 
 }

@@ -14,14 +14,44 @@
         X
       </div>
     </div>
-    <div class="TitleActividad">Trabajo de aplicación para obtención de título profesional técnico</div>
+    <!-- <div class="TitleActividad">Trabajo de aplicación para obtención de título profesional técnico</div>
     <div class="DescripcionActividad">
       Te damos la bienvenida al trabajo de aplicación profesional que te permitirá obtener el título profesional técnico en Desarrollo de Sistemas de Información.
+    </div> -->
+    <div class="TitleActividad">{{ProyectoAplicacionProfesional.titulo}}</div>
+    <div class="DescripcionActividad">
+      {{ProyectoAplicacionProfesional.descripcion}}
     </div>
+    <div class="VinculoActividad" *ngIf="ProyectoAplicacionProfesional.nombreArchivo!=null && ProyectoAplicacionProfesional.nombreArchivo.length>0">
+      <a [href]="ProyectoAplicacionProfesional.urlArchivoSubido" target="_blank" >{{ProyectoAplicacionProfesional.nombreArchivo}}</a></div>
 
   </div>
   <div class="content">
-    <ng-container *ngIf="ProyectoEnviado==false">
+    <ng-container *ngIf="ProyectoAplicacionProfesional.archivoEnviado!=null">
+      <!-- <div class="IntenTareasEnviadas"><strong>Versión:</strong>  {{ProyectoAplicacionProfesional.version}}</div> -->
+        <div class="IntenTareasEnviadas"><strong>Archivo enviado:</strong>
+          <div class="pdfSesionOnline"></div>
+          <div>
+            <a target="_blank" [href]="ProyectoAplicacionProfesional.urlArchivoEnviado">{{ProyectoAplicacionProfesional.archivoEnviado}}</a>
+          </div>
+        </div>
+        <div class="IntenTareasEnviadas"><strong>Fecha de Envio:</strong>  {{ProyectoAplicacionProfesional.fechaEnvio | date :'dd/MM/yyyy hh:mm:ss'}}</div>
+        <div class="IntenTareasEnviadas"><strong>Calificación:</strong>  {{ProyectoAplicacionProfesional.nota}}</div>
+        <div class="IntenTareasEnviadas"><strong>Fecha de Calificación:</strong>  {{ProyectoAplicacionProfesional.fechaCalificacion | date :'dd/MM/yyyy hh:mm:ss'}}</div>
+        <div class="IntenTareasEnviadas"><strong>Retroalimentación:</strong>  {{ProyectoAplicacionProfesional.retroalimentacion}}</div>
+        <div class="IntenTareasEnviadas"><strong>Archivo de Retroalimentación:</strong>
+          <ng-container *ngIf="ProyectoAplicacionProfesional.urlArchivoRetroalimentacion!=null">
+            <div class="pdfSesionOnline"></div>
+            <div >
+              <a [href]="ProyectoAplicacionProfesional.urlArchivoRetroalimentacion" target="_blank">{{ProyectoAplicacionProfesional.nombreArchivoRetroalimentacion}}</a>
+            </div>
+          </ng-container>
+
+        </div>
+        <div style="background: rgb(233 233 233);width: 100%;height: 2px;
+        margin-top: 20px;"></div>
+    </ng-container>
+    <ng-container *ngIf="ProyectoEnviado==false && ProyectoAplicacionProfesional.archivoEnviado==null">
       <div style="padding: 0px 40px;
       font-size: 16px;
       font-weight: 600;
@@ -35,12 +65,25 @@
           padding: 0px 5px;cursor: pointer;">
             <button style="border: solid 1px #767676;
             margin-right: 5px;    white-space: nowrap;">Seleccionar archivo</button>
+            <!-- <div style="    white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;">{{nombrefile}}</div> -->
             <div style="    white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
             display: -webkit-box;
             -webkit-line-clamp: 3;
-            -webkit-box-orient: vertical;">{{nombrefile}}</div>
+            -webkit-box-orient: vertical;" *ngIf="ProyectoAplicacionProfesional==undefined || ProyectoAplicacionProfesional==null || ProyectoAplicacionProfesional.archivoEnviado==null || nombrefile!=''">{{nombrefile==''?'Ningún archivo seleccionado':nombrefile}}</div>
+            <a *ngIf="ProyectoAplicacionProfesional!=undefined && ProyectoAplicacionProfesional!=null && ProyectoAplicacionProfesional.archivoEnviado!=null && nombrefile==''" [href]="ProyectoAplicacionProfesional.urlArchivoEnviado" class="vinculo" style="
+            color: black !important;
+            text-decoration: none ;
+            background: #fff7ea;
+            font-size: 12px;
+            padding: 4px 10px;
+            border-radius: 5px;" target="_blank"> {{ProyectoAplicacionProfesional.archivoEnviado}}</a>
           </div>
           <input #fileInput type="file" id="file" (change)="getFileDetails($event)" style="    width: 100%;
           border: solid 1px #c2c2c2;

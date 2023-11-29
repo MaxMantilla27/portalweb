@@ -1,94 +1,125 @@
-<div class="cardExamenCarrera row">
-  <div class="contentcardExamenCarrera col-12 col-md-8 col-lg-8">
-    <div class="flagcardExamenCarrera">
-      <div class="textoFlag">Examen de suficiencia profesional</div>
-      <!-- <div class="trianglearrow"></div> -->
-      <div id="player">
-        <div id="outer">
-          <div id="inner"></div>
+<div *ngIf="Examen!=undefined">
+  <div  class="cardExamenCarrera row">
+    <div class="contentcardExamenCarrera col-12 col-md-8 col-lg-8">
+      <div class="flagcardExamenCarrera">
+        <div class="textoFlag">Examen de suficiencia profesional</div>
+        <!-- <div class="trianglearrow"></div> -->
+        <div id="player">
+          <div id="outer">
+            <div id="inner"></div>
+          </div>
         </div>
       </div>
+      <div class="titlecardExamenCarrera">{{Examen.titulo}}</div>
+      <div class="textcardExamenCarrera">{{Examen.descripcion}}</div>
     </div>
-    <div class="titlecardExamenCarrera">Gestión de la diversidad cultural en entornos empresariales</div>
-    <div class="textcardExamenCarrera">Lee detenidamente cada enunciado y responde de manera precisa asegurándote de
-      proporcionar
-      la información que se solicita según corresponda:</div>
-  </div>
-  <div class="col-12 col-md-4 col-lg-4" style="justify-content: flex-end;
-  display: flex;">
-    <ng-container *ngIf="vertiempo==true">
-      <div class="TimeCronometer">
-        <div class="TimePrevCuestionario">
-          <div class="imgTimePrev"></div>
-          <div class="MinutosTiempo">{{minutos}}</div>
-          <div class="">:</div>
-          <div class="MinutosTiempo">{{segundos>9?(segundos):'0'+(segundos)}}</div>
-        </div>
-      </div>
-    </ng-container>
-  </div>
-</div>
-<div class="ExamenCarrera row">
-  <div class="PreguntasExamenCarrera col-12 col-md-8 col-lg-8">
-    <ng-container *ngFor="let item of Preguntas; let i=index">
-      <ng-container *ngIf="preguntaSeleccionada==i">
-        <div class="pregunta">
-          <div class="titulopregunta">
-
-            <div>{{ (i+1)}}. {{item.pregunta}}</div>
-            <div class="puintosPregunta"><strong style="    margin-right: 5px;">{{item.puntos}}</strong> Puntos</div>
+    <div class="col-12 col-md-4 col-lg-4" style="justify-content: flex-end;
+    display: flex;">
+      <ng-container *ngIf="vertiempo==true">
+        <div class="TimeCronometer">
+          <div class="TimePrevCuestionario">
+            <div class="imgTimePrev"></div>
+            <div class="MinutosTiempo">{{minutos}}</div>
+            <div class="">:</div>
+            <div class="MinutosTiempo">{{segundos>9?(segundos):'0'+(segundos)}}</div>
           </div>
-          <div class="subtitulopregunta">
-            <ng-container *ngIf="item.tipo==0">Responde verdadero (V) O falso (F) según corresponda</ng-container>
-            <ng-container *ngIf="item.tipo==1">Elige la alternativa correcta</ng-container>
-            <ng-container *ngIf="item.tipo==2">Elige la alternativas correctas</ng-container>
-
-          </div>
-          <div class="Alternativas" *ngFor="let alt of item.alternativas;let j=index">
-            <div class="icono" (click)="ChangeAlternat(i,j)">
-              <ng-container *ngIf="item.tipo==2">
-                <i class="material-icons" *ngIf="alt.select==true">check_box</i>
-                <i class="material-icons" *ngIf="alt.select!=true">check_box_outline_blank</i>
-              </ng-container>
-              <ng-container *ngIf="item.tipo!=2">
-                <i class="material-icons"  *ngIf="alt.select==true">radio_button_checked</i>
-                <i class="material-icons"  *ngIf="alt.select!=true">radio_button_unchecked</i>
-              </ng-container>
-            </div>
-            <div class="tetxoAlternativa">
-              {{alt.titulo}}
-            </div>
-          </div>
-
         </div>
       </ng-container>
-    </ng-container>
-
-  </div>
-  <div class="col-12 col-md-4 col-lg-4">
-    <div class="CardPreguntas">
-      <div class="headerCardPreguntas">Índice de preguntas</div>
-      <div class="contentCardPreguntas">
-        <ng-container *ngFor="let item of Preguntas; let i=index">
-          <div class="boxPregunta" [ngClass]="{'preguntaSeleccionada': preguntaSeleccionada==i,'preguntarespondida':item.Respondida==true}"
-          (click)="cambiarPregunta(i)">{{i+1}}</div>
-        </ng-container>
-      </div>
     </div>
   </div>
+  <ng-container *ngIf="ExamenEnviado==false">
+    <div class="ExamenCarrera row">
+      <div class="PreguntasExamenCarrera col-12 col-md-8 col-lg-8">
+        <ng-container *ngFor="let item of Examen.preguntas; let i=index">
+          <ng-container *ngIf="preguntaSeleccionada==i">
+            <div class="pregunta">
+              <div class="titulopregunta">
 
-  <div class="buttonsEnvioCarreraDatos">
+                <div>{{ (i+1)}}. {{item.enunciado}}</div>
+                <div class="puintosPregunta"><strong style="    margin-right: 5px;">{{item.puntaje}}</strong> Puntos</div>
+              </div>
+              <div class="subtitulopregunta">
+                <ng-container >{{item.descripcion}}</ng-container>
 
-    <app-default-button *ngIf="preguntaSeleccionada>0" [confs]="{color:'primary',titulo:'Anterior'}" [style]="'width: 100%;'"
-    [icon]="''" [style]="'padding: 0px 40px; border-radius: 25px; background: white;border: solid 1px #f8893f;color: #f8893f;'" (click)="Anterior()"></app-default-button>
+              </div>
+              <ng-container *ngIf="item.idPreguntaTipo!=6">
+                <div class="Alternativas" *ngFor="let Respuesta of item.respuestas;let j=index">
+                  <div style="display: flex;align-items: flex-start;font-size: 15px;color: black;margin-bottom: 10px;">
+                    <div (click)="Respuesta.respuestaSeleccionada=chageRadio(Respuesta.respuestaSeleccionada,i,j)" (click)="VerificarMarcado(i)">
+                    <i class="material-icons radioFormRpta" style="font-size: 22px;" [style]="{'color':Respuesta.respuestaSeleccionada==true?'green':'#ededed'}">
+                    <ng-container *ngIf="Respuesta.respuestaSeleccionada==true">radio_button_checked</ng-container>
+                    <ng-container *ngIf="Respuesta.respuestaSeleccionada!=true">radio_button_unchecked</ng-container>
+                    </i>
+                    </div>
+                    <div [innerHTML]="Respuesta.alternativa| safeHtml" >
+                    </div>
+                  </div>
+                </div>
+              </ng-container>
 
-    <app-default-button *ngIf="preguntaSeleccionada!=Preguntas.length-1" [confs]="{color:'primary',titulo:'Siguiente'}" [style]="'width: 100%;'"
-    [icon]="''" [style]="'     padding: 0px 40px; border-radius: 25px;border: solid 1px #f8893f;'"
-    (click)="Siguiente()"></app-default-button>
+              <ng-container *ngIf="item.idPreguntaTipo==6">
 
-    <app-default-button *ngIf="preguntaSeleccionada==Preguntas.length-1" [confs]="{color:'primary',titulo:'Finalizar'}" [style]="'width: 100%;'"
-    [icon]="''" [style]="'     padding: 0px 40px; border-radius: 25px;border: solid 1px #f8893f;'"
-    (click)="finalizar()"></app-default-button>
-  </div>
+                <div class="InputsExamenSuficiencia">
+                  <mat-form-field appearance="outline" style="width: 100%;">
+                    <mat-label>Ingresa tu respuesta</mat-label>
+                    <input type="text" [disabled]="disableAll" placeholder="Ingresa tu respuesta" [(ngModel)]="item.respuestas[0].respuestaTexto" matInput>
+                  </mat-form-field>
+                </div>
+              </ng-container>
+
+            </div>
+          </ng-container>
+        </ng-container>
+
+      </div>
+      <div class="col-12 col-md-4 col-lg-4">
+        <div class="CardPreguntas">
+          <div class="headerCardPreguntas">Índice de preguntas</div>
+          <div class="contentCardPreguntas">
+            <ng-container *ngFor="let item of Examen.preguntas; let i=index">
+              <div class="boxPregunta" [ngClass]="{'preguntaSeleccionada': preguntaSeleccionada==i,'preguntarespondida':item.respondida==true}"
+              (click)="cambiarPregunta(i)">{{i+1}}</div>
+            </ng-container>
+          </div>
+        </div>
+      </div>
+
+      <div class="buttonsEnvioCarreraDatos">
+
+        <app-default-button *ngIf="preguntaSeleccionada>0" [confs]="{color:'primary',titulo:'Anterior'}" [style]="'width: 100%;'"
+        [icon]="''" [style]="'padding: 0px 40px; border-radius: 25px; background: white;border: solid 1px #f8893f;color: #f8893f;'" (click)="Anterior()"></app-default-button>
+
+        <app-default-button *ngIf="preguntaSeleccionada!=Examen.preguntas.length-1" [confs]="{color:'primary',titulo:'Siguiente'}" [style]="'width: 100%;'"
+        [icon]="''" [style]="'     padding: 0px 40px; border-radius: 25px;border: solid 1px #f8893f;'"
+        (click)="Siguiente()"></app-default-button>
+
+        <app-default-button *ngIf="preguntaSeleccionada==Examen.preguntas.length-1" [confs]="{color:'primary',titulo:'Finalizar'}" [style]="'width: 100%;'"
+        [icon]="''" [style]="'     padding: 0px 40px; border-radius: 25px;border: solid 1px #f8893f;'"
+        (click)="AgregarExamenSuficienciaProfesionalCarrera()"></app-default-button>
+      </div>
+
+    </div>
+  </ng-container>
+
+  <ng-container *ngIf="ExamenEnviado">
+    <div class="contenidoExamenCarreraModal">
+      <div class="imgExamenCarreraModal"></div>
+      <div style="display: flex;">
+        <div class="titleExamenCarreraModal">
+          ¡Excelente Trabajo!&nbsp;
+        </div>
+        <div style="font-size: 16px;">
+          Tu examen ha sido enviado correctamente.
+        </div>
+      </div>
+      <div class="textoExamenCarreraModal">
+        Tus resultados serán publicados en tu libro de calificaciones en un plazo de 5 días hábiles.
+      </div>
+      <app-default-button [confs]="{color:'primary',titulo:'Aceptar'}" [style]="'width: 100%;'"
+      [icon]="''" [style]="'     padding: 0px 60px; border-radius: 25px;border: solid 1px #f8893f;'"
+      (click)="finalizar()"></app-default-button>
+    </div>
+
+  </ng-container>
 
 </div>

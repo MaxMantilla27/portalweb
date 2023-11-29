@@ -35,3 +35,7 @@ export interface DatosCertificadoIdiomaAlumnoValidacionCarreraDTO {
   file: File;
   IdMatriculaCabecera:number
 }
+export interface DatosProyectoAplicacionProfesionalCarreraDTO {
+  file: File;
+  IdRegistro:number
+}

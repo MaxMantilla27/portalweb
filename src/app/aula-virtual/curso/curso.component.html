@@ -604,7 +604,8 @@
             </div>
           </ng-template>
           <div class="pad-resp">
-            <app-examen-suficiencia></app-examen-suficiencia>
+            <app-examen-suficiencia *ngIf="EsCarrera==true" [IdMatricula]="idMatricula"
+            [idPGeneral]="programEstructura.idPGeneral" [TrabajoExamenSuficienciaProfesional]="TrabajoExamenSuficienciaProfesional"></app-examen-suficiencia>
           </div>
         </mat-tab>
         <mat-tab *ngIf="EsCarrera==true && ProyectoActivo==true">
@@ -617,7 +618,7 @@
           </ng-template>
           <div class="pad-resp">
             <app-curso-trabajo-aplicacion-profesional *ngIf="EsCarrera==true" [IdMatricula]="idMatricula"
-              [idPGeneral]="programEstructura.idPGeneral">
+              [idPGeneral]="programEstructura.idPGeneral" [TrabajoAplicacionProfesional]="TrabajoAplicacionProfesional">
             </app-curso-trabajo-aplicacion-profesional>
           </div>
         </mat-tab>
@@ -637,6 +638,6 @@
         <!-- </ng-container> -->
       </mat-tab-group>
     </div>
-    <app-examen-carrera *ngIf="ocultar==true" (Volver)="DesOcultar()"></app-examen-carrera>
+    <app-examen-carrera *ngIf="ocultar==true" (Volver)="DesOcultar()" [IdMatricula]="idMatricula"></app-examen-carrera>
   </div>
 </div>
