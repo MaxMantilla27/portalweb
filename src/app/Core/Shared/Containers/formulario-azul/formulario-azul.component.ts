@@ -239,7 +239,8 @@ export class FormularioAzulComponent implements OnChanges, OnInit,OnDestroy {
       Object.entries(this.model).forEach(([key, value]) => {
         if (key == clave[0]) {
           value = element.value[clave[0]];
-          obj[key] = value;
+          // obj[key] = value;
+          obj[key] = typeof value === 'object' ? value.value : value;
           if(this.ObtenerPrefijo==false){
             this.fiels.forEach((f:any) =>{
               if(f.tipo=='phone' && f.nombre.toLowerCase()==key.toLowerCase()){
@@ -361,6 +362,7 @@ export class FormularioAzulComponent implements OnChanges, OnInit,OnDestroy {
     }
   }
   obtenerErrorCampoNombre(i: number, val: string) {
+    console.log('obtenerErrorCampoNombre', i, val);
     var campo = (<FormArray>this.userForm.get('Fields')).controls[i].get(val);
     if (campo!.hasError('required')) {
       var fls=this.fiels.find(x=>x.nombre==val);
@@ -486,5 +488,27 @@ export class FormularioAzulComponent implements OnChanges, OnInit,OnDestroy {
         );
       }
     }
+  }
+  filtroAutocomplete(data: formulario, value: any) {
+    console.log('Data de eventos ', value.target.value);
+    let info = value.target.value == null ? '' : value.target.value;
+    data.data?.forEach((element: any) => {
+      element.hiden = true;
+      if (
+        element.Nombre.toLowerCase().includes(info.toLowerCase()) ||
+        info.length == 0
+      ) {
+        element.hiden = false;
+      }
+    });
+  }
+  itemDisplayFn(item: any) {
+    return item && item.Nombre ? item.Nombre : '';
+  }
+  changeFormsSelect(clave:any, valor:any, i:number){
+    if (clave == "IdLocalidad"){
+      (<FormArray>this.userForm.get('Fields')).controls[6].get("Movil")?.setValue(this.pref+valor.codigo);
+    }
+    this.OnSelect.emit({Nombre:clave,value:valor.value})
   }
 }

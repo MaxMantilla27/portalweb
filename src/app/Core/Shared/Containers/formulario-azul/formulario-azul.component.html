@@ -48,7 +48,7 @@
 
               </ng-container>
               <ng-container *ngIf="FormOld">
-                <div class="fieldOldAzul">
+                <div class="fieldOldAzul" *ngIf="field.hiden!=true">
                   <ng-container
                     *ngIf="field.tipo=='' || field.tipo=='text' || field.tipo=='number' || field.tipo=='password'">
                     <mat-form-field appearance="outline">
@@ -60,11 +60,36 @@
                   <ng-container *ngIf="field.tipo=='select'">
                     <mat-form-field appearance="outline">
                       <mat-label>{{field.label}}</mat-label>
-                      <mat-select [style]="field.style" formControlName="{{field.nombre}}"
+                      <!-- <mat-select [style]="field.style" formControlName="{{field.nombre}}"
                         (selectionChange)="OnSelect.emit({Nombre:field.nombre,value:$event.value})">
                         <mat-option *ngFor="let option of field.data" [value]="option.value">{{option.Nombre}}
                         </mat-option>
-                      </mat-select>
+                      </mat-select> -->
+                      <input
+                        type="text"
+                        placeholder="{{ field.label }}"
+                        matInput
+                        formControlName="{{ field.nombre }}"
+                        [style]="field.style"
+                        (input)="filtroAutocomplete(field, $event)"
+                        [matAutocomplete]="auto"
+                      />
+                      <mat-autocomplete
+                        [style]="field.style"
+                        [displayWith]="itemDisplayFn"
+                        autoActiveFirstOption
+                        #auto="matAutocomplete"
+                        (optionSelected)="changeFormsSelect(field.nombre, $event.option.value, i)"
+                      >
+                        <ng-container *ngFor="let option of field.data">
+                          <mat-option
+                            *ngIf="option.hiden != true"
+                            [value]="option"
+                          >
+                            {{ option.Nombre }}
+                          </mat-option>
+                        </ng-container>
+                      </mat-autocomplete>
                       <mat-error *ngIf="userForm.invalid">{{obtenerErrorCampoNombre(i,field.nombre)}}</mat-error>
                     </mat-form-field>
                   </ng-container>

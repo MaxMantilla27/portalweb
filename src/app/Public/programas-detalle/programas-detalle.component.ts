@@ -992,7 +992,7 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
   ObtenerCombosPortal(){
     this._DatosPortalService.ObtenerCombosPortal().pipe(takeUntil(this.signal$)).subscribe({
       next:(x)=>{
-        console.log(x);
+        console.log("Campos formulario portal",x);
         this.fileds.forEach(r=>{
           if(r.nombre=='IdPais'){
             r.data=x.listaPais.map((p:any)=>{
@@ -1000,6 +1000,13 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
               return ps;
             })
           }
+          // else if(r.nombre == 'IdLocalidad'){
+          //   r.data=x.listaLocalida.map((p:any)=>{
+          //     var ps:Basic={Nombre:p.nombreLocalidad,value:p.idLocalidad, codigo:p.codigo};
+          //     return ps;
+          //   })
+          // }
+
         })
       }
     })
@@ -1022,9 +1029,32 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
       }
     })
   }
+  GetLocalidadesPorRegion(idRegion:number){
+    this._RegionService.ObtenerLocalidadPorRegion(idRegion).pipe(takeUntil(this.signal$)).subscribe({
+      next:x=>{
+        if (x.length != 0 || x != undefined || x !=null ) {
+
+          this.fileds.forEach(r=>{
+            if(r.nombre=='IdLocalidad'){
+              r.disable=false;
+              r.hiden=false;
+              r.data=x.map((p:any)=>{
+                var ps:Basic={Nombre:p.nombreLocalidad,value:p.idLocalidad,longitudCelular:p.longitudCelular,codigo:p.codigo};
+                return ps;
+              })
+            }
+          })
+          this.form.enablefield('IdLocalidad');
+        }
+      }
+    })
+  }
   SelectChage(e:any){
     if(e.Nombre=="IdPais"){
       this.GetRegionesPorPais(e.value)
+    }
+    else if(e.Nombre=="IdRegion"){
+      this.GetLocalidadesPorRegion(e.value)
     }
   }
   AddFields() {
@@ -1065,6 +1095,15 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
       validate: [Validators.required],
       disable: true,
       label: 'Región',
+    });
+    this.fileds.push({
+      nombre:"IdLocalidad",
+      tipo:"select",
+      valorInicial:"",
+      disable:true,
+      validate:[Validators.required],
+      label:"Localidad",
+      hiden:true
     });
     this.fileds.push({
       nombre:"Movil",
