@@ -162,4 +162,39 @@ export class ProgramaContenidoService {
       return EMPTY;
     }
   }
+  public CongelarTrabajoAplicacionCarrerasProfesionales(IdMatriculaCabecera:number,FechaEntrega:string):Observable<any>{
+    if(this.isBrowser){
+      return this.http.get<any>(this.urlBase+'/CongelarTrabajoAplicacionCarrerasProfesionales?IdMatriculaCabecera='+IdMatriculaCabecera+'&FechaEntrega='+FechaEntrega);
+    }else{
+      return EMPTY;
+    }
+  }
+  public ObtenerTrabajoAplicacionProfesional(IdMatriculaCabecera:number):Observable<any>{
+    if(this.isBrowser){
+      return this.http.get<any>(this.urlBase+'/ObtenerTrabajoAplicacionProfesional?IdMatriculaCabecera='+IdMatriculaCabecera);
+    }else{
+      return EMPTY;
+    }
+  }
+  public CongelarExamenSuficienciaCarrerasProfesionales(IdMatriculaCabecera:number,FechaEntrega:string):Observable<any>{
+    if(this.isBrowser){
+      return this.http.get<any>(this.urlBase+'/CongelarExamenSuficienciaCarrerasProfesionales?IdMatriculaCabecera='+IdMatriculaCabecera+'&FechaEntrega='+FechaEntrega);
+    }else{
+      return EMPTY;
+    }
+  }
+  public ObtenerExamenSuficienciaProfesionalCarrera(IdMatriculaCabecera:number):Observable<any>{
+    if(this.isBrowser){
+      return this.http.get<any>(this.urlBase+'/ObtenerExamenSuficienciaProfesionalCarrera?IdMatriculaCabecera='+IdMatriculaCabecera);
+    }else{
+      return EMPTY;
+    }
+  }
+  public ObtenerContenidoExamenSuficienciaProfesionalCarrera(IdMatriculaCabecera:number):Observable<any>{
+    if(this.isBrowser){
+      return this.http.get<any>(this.urlBase+'/ObtenerContenidoExamenSuficienciaProfesionalCarrera?IdMatriculaCabecera='+IdMatriculaCabecera);
+    }else{
+      return EMPTY;
+    }
+  }
 }

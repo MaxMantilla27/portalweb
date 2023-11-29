@@ -6,15 +6,21 @@
   <div class="col-6 col-md-8 col-lg-8 titleTableReq">Requisito</div>
   <div class="col-5 col-md-3 col-lg-3 titleTableReq" > Estado</div>
   <div class="col-12 subrallado"></div>
-  <div class="col-1"><i class="material-icons">check_box</i></div>
+  <div *ngIf="InformacionActualizada" class="col-1"><i class="material-icons">check_box</i></div>
+  <div *ngIf="InformacionActualizada==false"class="col-1"><i class="material-icons">check_box_outline_blank</i></div>
   <div class="col-6 col-md-8 col-lg-8 contentTableReq">Información personal actualizada</div>
-  <div class="col-5 col-md-3 col-lg-3 contentTableReq" >Aprobado</div>
-  <div class="col-1"><i class="material-icons">check_box</i></div>
+  <div *ngIf="InformacionActualizada" class="col-5 col-md-3 col-lg-3 contentTableReq" >Aprobado</div>
+  <div *ngIf="InformacionActualizada==false" class="col-5 col-md-3 col-lg-3 contentTableReq" >Pendiente</div>
+  <div *ngIf="GradoBachillerCompletado" class="col-1"><i class="material-icons">check_box</i></div>
+  <div *ngIf="GradoBachillerCompletado==false" class="col-1"><i class="material-icons">check_box_outline_blank</i></div>
   <div class="col-6 col-md-8 col-lg-8 contentTableReq">Haber obtenido el grado de bachiller</div>
-  <div class="col-5 col-md-3 col-lg-3 contentTableReq" >Aprobado</div>
-  <div class="col-1"><i class="material-icons">check_box</i></div>
+  <div *ngIf="GradoBachillerCompletado" class="col-5 col-md-3 col-lg-3 contentTableReq" >Aprobado</div>
+  <div *ngIf="GradoBachillerCompletado==false" class="col-5 col-md-3 col-lg-3 contentTableReq" >Pendiente</div>
+  <div *ngIf="DeudasPendientes" class="col-1"><i class="material-icons">check_box</i></div>
+  <div *ngIf="DeudasPendientes==false"class="col-1"><i class="material-icons">check_box_outline_blank</i></div>
   <div class="col-6 col-md-8 col-lg-8 contentTableReq">No tener deudas pendientes.</div>
-  <div class="col-5 col-md-3 col-lg-3 contentTableReq" >Aprobado</div>
+  <div *ngIf="DeudasPendientes"class="col-5 col-md-3 col-lg-3 contentTableReq" >Aprobado</div>
+  <div *ngIf="DeudasPendientes==false"class="col-5 col-md-3 col-lg-3 contentTableReq" >Pendiente</div>
   <div class="col-1"><i class="material-icons">check_box_outline_blank</i></div>
   <div class="col-6 col-md-8 col-lg-8 contentTableReq">Aprobar el tipo de sustentación elegido:</div>
   <div class="col-5 col-md-3 col-lg-3 contentTableReq" >Pendiente</div>
@@ -23,26 +29,49 @@
     <i class="material-icons" (click)="select=0 "  *ngIf="select==0">check_circle</i>
     <i class="material-icons" (click)="select=0 "  *ngIf="select!=0">radio_button_unchecked</i>
   </div>
-  <div class="col-10 contentTableReq">Trabajo de aplicación profesional</div>
+  <div class="col-10 contentTableReq">
+    <div>
+      Trabajo de aplicación profesional
+    </div>
+    <div *ngIf="select==0" class="col-10" style="margin-top: 10px;margin-bottom: 10px;" >
+      <div style="font-size: 12px!important;">
+        *Una vez que realices el pago, tu fecha límite de entrega será dentro de <strong>90 días en adelante:</strong>
+      </div>
+      <div>
+        <div class="contentTableReq Sleccionarfechas" style="justify-content: center;margin-top: 10px;">
+          <ng-container style="font-size: 12px!important;">Fecha límite de entrega:</ng-container>
+          <div class="imagenFechaSelectTrabajo"></div>
+          <div class="fechaseslect">{{fechaSelec|date: 'dd/MM/yyyy'}}</div>
+        </div>
+      </div>
+    </div>
+  </div>
   <div class="col-1"></div>
   <div class="col-1">
     <i class="material-icons" (click)="select=1 "  *ngIf="select==1">check_circle</i>
     <i class="material-icons" (click)="select=1 "  *ngIf="select!=1">radio_button_unchecked</i>
   </div>
-  <div class="col-10 contentTableReq">Examen de suficiencia profesional</div>
-
-  <div class="col-2"></div>
-  <div class="col-10">
-    <div class="contentTableReq Sleccionarfechas">
-      <ng-container *ngIf="select==1">Seleccionar fecha:</ng-container>
-      <ng-container *ngIf="select==0">Fecha límite de entrega:</ng-container>
-      <div class="imagenFechaSelect"  (click)="picker.open()" ></div>
-      <div class="fechaseslect">{{fechaSelec|date: 'dd/MM/yyyy'}}</div>
+  <div class="col-10 contentTableReq">
+    <div>
+      Examen de suficiencia profesional
     </div>
-    <input class="dp-input" [matDatepicker]="picker" [min]="fechaMin" [(ngModel)]="fechaSelec" style="visibility: hidden;">
-      <mat-datepicker #picker ></mat-datepicker>
+    <div *ngIf="select==1"class="col-10" style="margin-top: 10px;margin-bottom: 10px;" >
+      <div style="font-size: 12px!important;">
+        *Una vez que realices el pago, tendrás <strong> un plazo de 90 días</strong> para realizar tu sustentación, deberás elegir una fecha dentro de ese rango:
+      </div>
+      <div >
+        <div class="contentTableReq Sleccionarfechas"style="justify-content: center;margin-top: 10px;">
+          <ng-container style="font-size: 12px!important;">Seleccionar fecha:</ng-container>
+          <div class="imagenFechaSelect"  (click)="picker.open()" ></div>
+          <div class="fechaseslect">{{fechaSelec|date: 'dd/MM/yyyy'}}</div>
+        </div>
+        <input class="dp-input" [matDatepicker]="picker" [min]="fechaMin" [max]="fechaMax" [(ngModel)]="fechaSelec" style="visibility: hidden;">
+        <mat-datepicker #picker ></mat-datepicker>
+      </div>
+    </div>
   </div>
-  <div class="col-12 obsTableReq">Tu trámite se iniciará cuando realices el pago correspondiente.</div>
+
+  <!-- <div class="col-12 obsTableReq">Tu trámite se iniciará cuando realices el pago correspondiente.</div> -->
 </div>
 <div class="ListaTramites" style="margin-top: 40px;border: 2px solid #cacaca;border-radius: 10px;    position: relative;">
 
@@ -60,27 +89,30 @@
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <td class="criterio" style="width: 600px;text-align: left;">
-            <div style=" margin-left: 20px;margin-top: 20px;margin-bottom: 20px;text-align:left">
-              <div>
-                Emisión de título profesional técnico
+        <ng-container *ngIf="TramiteSeleccionado.pagar==true">
+          <tr>
+            <td class="criterio" style="width: 600px;text-align: left;">
+              <div style=" margin-left: 20px;margin-top: 20px;margin-bottom: 20px;text-align:left">
+                <div>
+                  {{TramiteSeleccionado.concepto}}
+                </div>
               </div>
-            </div>
-          </td>
-          <td class="criterio" style="width: 200px;">
-            <div class="MontoTramite">
-              PEN
-            </div>
-          </td>
-          <td class="criterio" style="width: 200px;">
-            <div class="MontoTramite">
-              <div>
-                300.00
+            </td>
+            <td class="criterio" style="width: 200px;">
+              <div class="MontoTramite">
+                {{TramiteSeleccionado.codigo | uppercase}}
               </div>
-            </div>
-          </td>
-        </tr>
+            </td>
+            <td class="criterio" style="width: 200px;">
+              <div class="MontoTramite">
+                <div>
+                  {{TramiteSeleccionado.tarifario | number:'1.2-2':'en-US'}}
+                </div>
+              </div>
+            </td>
+          </tr>
+        </ng-container>
+
         <tr class="TotalPagar">
           <td class="criterio" style="font-weight: bold;width: 500px;text-align: left">
             <div style="margin-left: 20px">
@@ -88,13 +120,13 @@
             </div>
           </td>
           <td class="criterio" style="width: 200px;">
-            <div class="MontoTramite">
-              PEN
+            <div class="MontoTramite" *ngIf="SimboloMoneda.length>0">
+              {{SimboloMoneda | uppercase}}
             </div>
           </td>
           <td class="criterio" style="width: 200px">
             <div class="MontoTramite">
-              300.00
+              {{PagoTotalTramite | number:'1.2-2':'en-US'}}
             </div>
           </td>
         </tr>
@@ -108,7 +140,9 @@
   <app-default-button [confs]="{color:'primary',titulo:'Volver'}" [style]="'width: 100%;'"
   [icon]="''" [style]="'padding: 0px 40px; border-radius: 25px; background: white;border: solid 1px #f8893f;color: #f8893f;'" (click)="Volver.emit(0)"></app-default-button>
 
-  <app-default-button [confs]="{color:'primary',titulo:'Pagar >'}" [style]="'width: 100%;'"
-  [icon]="''" [style]="'     padding: 0px 40px; border-radius: 25px;border: solid 1px #f8893f;'"
-  (click)="Pagar()"></app-default-button>
+  <app-default-button *ngIf="HabilitarPago==false" [confs]="{color:'primary',titulo:'Pagar >'}" [style]="'width: 100%;'"
+    [icon]="''"[disabled]="true" [style]="' padding: 0px 40px; border-radius: 25px;'"></app-default-button>
+  <app-default-button *ngIf="HabilitarPago==true" [confs]="{color:'primary',titulo:'Pagar >'}" [style]="'width: 100%;'"
+    [icon]="''" [style]="'     padding: 0px 40px; border-radius: 25px;border: solid 1px #f8893f;'"
+    (click)="Pagar()"></app-default-button>
 </div>

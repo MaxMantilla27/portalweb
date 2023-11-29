@@ -19,27 +19,30 @@
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <td class="criterio" style="width: 600px;text-align: left;">
-            <div style=" margin-left: 20px;margin-top: 20px;margin-bottom: 20px;text-align:left">
-              <div>
-                Constancia de matrícula
+        <ng-container *ngIf="TramiteSeleccionado.pagar==true">
+          <tr>
+            <td class="criterio" style="width: 600px;text-align: left;">
+              <div style=" margin-left: 20px;margin-top: 20px;margin-bottom: 20px;text-align:left">
+                <div>
+                  {{TramiteSeleccionado.concepto}}
+                </div>
               </div>
-            </div>
-          </td>
-          <td class="criterio" style="width: 200px;">
-            <div class="MontoTramite">
-              PEN
-            </div>
-          </td>
-          <td class="criterio" style="width: 200px;">
-            <div class="MontoTramite">
-              <div>
-                30.00
+            </td>
+            <td class="criterio" style="width: 200px;">
+              <div class="MontoTramite">
+                {{TramiteSeleccionado.codigo | uppercase}}
               </div>
-            </div>
-          </td>
-        </tr>
+            </td>
+            <td class="criterio" style="width: 200px;">
+              <div class="MontoTramite">
+                <div>
+                  {{TramiteSeleccionado.tarifario | number:'1.2-2':'en-US'}}
+                </div>
+              </div>
+            </td>
+          </tr>
+        </ng-container>
+
         <tr class="TotalPagar">
           <td class="criterio" style="font-weight: bold;width: 500px;text-align: left">
             <div style="margin-left: 20px">
@@ -47,13 +50,13 @@
             </div>
           </td>
           <td class="criterio" style="width: 200px;">
-            <div class="MontoTramite">
-              PEN
+            <div class="MontoTramite" *ngIf="SimboloMoneda.length>0">
+              {{SimboloMoneda | uppercase}}
             </div>
           </td>
           <td class="criterio" style="width: 200px">
             <div class="MontoTramite">
-              30.00
+              {{PagoTotalTramite | number:'1.2-2':'en-US'}}
             </div>
           </td>
         </tr>

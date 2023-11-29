@@ -98,3 +98,24 @@ export interface CalificarTareaAlumnoOnlineDTO {
   Retroalimentacion: string|null,
   file: File;
 }
+
+export interface AgregarExamenSuficienciaAlumnoDTO {
+  id: number;
+  idMatriculaCabecera: number;
+  idPEspecifico: number;
+  preguntas: Array<ExamenSuficienciaRespuestasPreguntasDTO>;
+  usuario: string,
+  nota:number,
+}
+export interface ExamenSuficienciaRespuestasPreguntasDTO {
+  id: number;
+  respondida: boolean;
+  respuestas: Array<ExamenSuficienciaRespuestasDTO>;
+}
+export interface ExamenSuficienciaRespuestasDTO {
+  id:number;
+  correcto:boolean;
+  puntos?: number;
+  respuestaSeleccionada: boolean;
+  respuestaTexto: string,
+}

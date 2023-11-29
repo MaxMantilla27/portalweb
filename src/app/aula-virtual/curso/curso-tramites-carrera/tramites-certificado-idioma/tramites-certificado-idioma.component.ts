@@ -1,7 +1,8 @@
 import { HttpEventType, HttpResponse } from '@angular/common/http';
-import { Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Subject, takeUntil } from 'rxjs';
+import { DatosCertificadoIdiomaAlumnoValidacionCarreraDTO } from 'src/app/Core/Models/CertificadoDTO';
 import { ModalCarrerasComponent } from 'src/app/Core/Shared/Containers/Dialog/modal-carreras/modal-carreras.component';
 import { CertificadoService } from 'src/app/Core/Shared/Services/Certificado/certificado.service';
 import { HelperService } from 'src/app/Core/Shared/Services/helper.service';
@@ -29,11 +30,18 @@ export class TramitesCertificadoIdiomaComponent implements OnInit,OnDestroy {
     private _CertificadoService:CertificadoService,
     public dialog: MatDialog,
   ) { }
-  public url='https://repositorioweb.blob.core.windows.net/repositorioweb/aulavirtual/MatriculaAlumno/Idioma/Prueba.pdf';
-  public nombre='Certificado de Ingles.pdf'
+  public url='';
+  public nombre=''
   OpenInstrucciones=true
+  @Input() IdMatriculaCabecera=0;
   @Output() Volver= new EventEmitter<number>();
+  public CertificadoIdioma:any;
+  public json:DatosCertificadoIdiomaAlumnoValidacionCarreraDTO={
+    file:new File([],''),
+    IdMatriculaCabecera:0
+  }
   ngOnInit(): void {
+    this.ObtenerCertificadoIdiomaAlumno()
   }
 
   getFileDetails(event:any) {
@@ -58,14 +66,14 @@ export class TramitesCertificadoIdiomaComponent implements OnInit,OnDestroy {
   }
 
   InsertarCertificadoIdiomaExtranjero(){
-    var f=new File([],'')
     if(this.selectedFiles){
       const file: File | null = this.selectedFiles.item(0);
       if (file) {
-        f = file;
+        this.json.file = file;
       }
     }
-    this._CertificadoService.InsertarCertificadoIdiomaExtranjero(f).pipe(takeUntil(this.signal$)).subscribe({
+    this.json.IdMatriculaCabecera=this.IdMatriculaCabecera
+    this._CertificadoService.InsertarCertificadoIdiomaAlumnoCarrera(this.json).pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
         console.log(x)
         if (x.type === HttpEventType.UploadProgress) {
@@ -93,6 +101,14 @@ export class TramitesCertificadoIdiomaComponent implements OnInit,OnDestroy {
       console.log(result)
       this.Volver.emit(0)
     });
+  }
+  ObtenerCertificadoIdiomaAlumno(){
+    this._CertificadoService.ObtenerCertificadoIdiomaAlumno(this.IdMatriculaCabecera).pipe(takeUntil(this.signal$)).subscribe({
+      next:x=>{
+        console.log(x);
+        this.CertificadoIdioma=x;
+      }
+    })
   }
 
 }

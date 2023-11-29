@@ -122,6 +122,8 @@ export class CursoComponent implements OnInit,OnDestroy {
   public MostrarMensajeRecuerda=false;
   public MostarNotaExamen=false
   public ocultar=false
+  public TrabajoAplicacionProfesional:any
+  public TrabajoExamenSuficienciaProfesional:any
   public contenidotarea=
   '<iframe src="https://player.vimeo.com/video/737713694?h=ce19c25ba1" width="100%" height="564" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>'
   public contenidotareapares=
@@ -138,6 +140,8 @@ export class CursoComponent implements OnInit,OnDestroy {
         //this.ObtenerListadoProgramaContenido();
         this.ObtenerDatosCertificado();
         this.ObtenerDatosCertificadoIrcaEnvio();
+        this.VerificarTrabajoExamenTitulo();
+        this.VerificarExamenSuficienciaProfesionalCarrera();
       },
     });
     this._HelperService.recibirActivarTipoExamen().pipe(takeUntil(this.signal$)).subscribe({
@@ -671,6 +675,34 @@ export class CursoComponent implements OnInit,OnDestroy {
     this._ProgramaContenidoService.CongelarCursoCarrerasProfesionales(this.idMatricula).pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
         console.log('verificado')
+      }
+    })
+  }
+  VerificarTrabajoExamenTitulo(){
+    this.ProyectoActivo=false;
+    this._ProgramaContenidoService.ObtenerTrabajoAplicacionProfesional(this.idMatricula).pipe(takeUntil(this.signal$)).subscribe({
+      next:x=>{
+        this.TrabajoAplicacionProfesional=x
+        if(x.id!=0){
+          this.ProyectoActivo=true
+        }
+      },
+      complete:()=>{
+
+      }
+    })
+  }
+  VerificarExamenSuficienciaProfesionalCarrera(){
+    this.ExamenActivo=false;
+    this._ProgramaContenidoService.ObtenerExamenSuficienciaProfesionalCarrera(this.idMatricula).pipe(takeUntil(this.signal$)).subscribe({
+      next:x=>{
+        this.TrabajoExamenSuficienciaProfesional=x
+        if(x.id!=0){
+          this.ExamenActivo=true
+        }
+      },
+      complete:()=>{
+
       }
     })
   }

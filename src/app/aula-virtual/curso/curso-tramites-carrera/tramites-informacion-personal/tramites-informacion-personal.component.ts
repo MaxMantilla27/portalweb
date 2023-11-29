@@ -28,12 +28,13 @@ export class TramitesInformacionPersonalComponent implements OnInit ,OnDestroy {
     public dialog: MatDialog,
   ) { }
 
-  @Input() ImgCarrera:any;
   @Input() IdMatriculaCabecera=0;
 
   @Output() Volver= new EventEmitter<number>();
   public OpenNombres=true
   public OpenFoto=false
+  public ImgCarrera:any;
+
   ngOnDestroy(): void {
     this.signal$.next(true)
     this.signal$.complete()
@@ -49,7 +50,7 @@ export class TramitesInformacionPersonalComponent implements OnInit ,OnDestroy {
     this._HelperService.recibirCombosPerfil.pipe(takeUntil(this.signal$)).subscribe((x:any) => {
       this.json.Nombres=x.datosAlumno.nombres
       this.json.Apellidos=x.datosAlumno.apellidos
-      console.log(this.json)
+      this.ObtenerImagenAlumno();
     })
   }
 
@@ -109,5 +110,13 @@ export class TramitesInformacionPersonalComponent implements OnInit ,OnDestroy {
       console.log(result)
       this.Volver.emit(4)
     });
+  }
+  ObtenerImagenAlumno(){
+    this._CertificadoService.ObtenerImagenAlumno(this.IdMatriculaCabecera).pipe(takeUntil(this.signal$)).subscribe({
+      next:x=>{
+        console.log(x);
+        this.ImgCarrera=x;
+      }
+    })
   }
 }

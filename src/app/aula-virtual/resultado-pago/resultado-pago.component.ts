@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
 import { RegistroRespuestaPreProcesoPagoDTO } from 'src/app/Core/Models/ProcesoPagoDTO';
 import { FormaPagoService } from 'src/app/Core/Shared/Services/FormaPago/forma-pago.service';
+import { ProgramaContenidoService } from 'src/app/Core/Shared/Services/ProgramaContenido/programa-contenido.service';
 import { SessionStorageService } from 'src/app/Core/Shared/Services/session-storage.service';
 
 @Component({
@@ -21,6 +22,8 @@ export class ResultadoPagoComponent implements OnInit,OnDestroy{
     private _SessionStorageService:SessionStorageService,
     private _router:Router,
     @Inject(PLATFORM_ID) platformId: Object,
+    private _ProgramaContenidoService: ProgramaContenidoService,
+
   ) {
     this.isBrowser = isPlatformBrowser(platformId); {}
   }
@@ -40,6 +43,9 @@ export class ResultadoPagoComponent implements OnInit,OnDestroy{
   public rutaMisCursos='/AulaVirtual/MisCursos'
   public AreaCapacitacion=''
   public ProgramaNombre=''
+  public PagoInstituto=false
+  public rutaInstituto='/AulaVirtual/MisCursos'
+
   intentos=0;
   img=1;
   imgAc=''
@@ -131,6 +137,11 @@ export class ResultadoPagoComponent implements OnInit,OnDestroy{
             }
           }
         }
+        console.log(this.resultVisa)
+        if(this.resultVisa.idMatriculaCabecera!=undefined){
+          this.rutaInstituto='/AulaVirtual/MisCursos/'+this.resultVisa.idMatriculaCabecera
+          console.log(this.rutaInstituto)
+        }
       },
       error:e=>{
         //this._router.navigate([this.ruta])
@@ -212,6 +223,11 @@ export class ResultadoPagoComponent implements OnInit,OnDestroy{
             }
           }
         }
+        if(this.resultVisa.idMatriculaCabecera!=undefined){
+          this.rutaInstituto='/AulaVirtual/MisCursos/'+this.resultVisa.idMatriculaCabecera
+          console.log(this.rutaInstituto)
+        }
+
       }
     })
   }
@@ -248,5 +264,6 @@ export class ResultadoPagoComponent implements OnInit,OnDestroy{
     this._router.navigate(['/'+ this.AreaCapacitacion + '/' + this.ProgramaNombre])
 
   }
+
 
 }

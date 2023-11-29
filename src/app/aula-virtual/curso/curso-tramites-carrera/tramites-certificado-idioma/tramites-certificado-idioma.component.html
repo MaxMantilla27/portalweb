@@ -15,13 +15,26 @@
         font-size: 12px;
         padding: 2px 20px;
         border-radius: 5px;" (click)="fileInput.click()">Examinar</button>
-      <a [href]="url" class="vinculo" style="
+      <!-- <a [href]="url" class="vinculo" style="
         color: black !important;
         text-decoration: none ;
         background: #fff7ea;
         font-size: 12px;
         padding: 4px 10px;
-        border-radius: 5px;" target="_blank"> {{nombre}}</a>
+        border-radius: 5px;" target="_blank"> {{nombre}}</a> -->
+        <div style="    white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;" *ngIf="CertificadoIdioma==undefined || CertificadoIdioma==null || CertificadoIdioma.nombreArchivo==null || nombrefile!=''">{{nombrefile==''?'Ningún archivo seleccionado':nombrefile}}</div>
+        <a *ngIf="CertificadoIdioma!=undefined && CertificadoIdioma!=null && CertificadoIdioma.nombreArchivo!=null && nombrefile==''" [href]="CertificadoIdioma.urlArchivoSubido" class="vinculo" style="
+        color: black !important;
+        text-decoration: none ;
+        background: #fff7ea;
+        font-size: 12px;
+        padding: 4px 10px;
+        border-radius: 5px;" target="_blank"> {{CertificadoIdioma.nombreArchivo}}</a>
     </div>
     <input #fileInput type="file" id="file" (change)="getFileDetails($event)" style="    width: 100%;
       border: solid 1px #c2c2c2;
@@ -32,7 +45,7 @@
   <div class="col-4 col-md-2 col-lg-2">
 
     <app-default-button [confs]="{color:'primary',titulo:'Enviar'}" [style]="'width: 100%;'" [icon]="''"
-      [style]="'     width:100%;border-radius: 25px;border: solid 1px #f8893f;'"
+      [style]="'     width:100%;border-radius: 25px;'"
       [disabled]="nombrefile==''"
       (click)="InsertarCertificadoIdiomaExtranjero()"></app-default-button>
   </div>

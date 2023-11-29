@@ -10,6 +10,7 @@ import {
   AgregarPEspecificoSesionCuestionarioAlumnoDTO,
   AgregarCalificacionCuestionarioAlumnoDocenteDTO,
   CalificarTareaAlumnoOnlineDTO,
+  AgregarExamenSuficienciaAlumnoDTO,
 } from "src/app/Core/Models/PEspecificoEsquema";
 import { PespecificoSesionTemaUpdateOrdenDTO } from "src/app/Core/Models/PespecificoSesionTemaDTO";
 import { environment } from "src/environments/environment";
@@ -650,6 +651,14 @@ export class PEspecificoEsquemaService {
       {
         return EMPTY;
       }
+    }
+  }
+  public AgregarExamenSuficienciaProfesionalCarrera(json: AgregarExamenSuficienciaAlumnoDTO): Observable<any> {
+    console.log('==============enviando====================')
+    if (this.isBrowser) {
+      return this.http.post<any>( this.urlBase +"/AgregarExamenSuficienciaProfesionalCarrera" ,json);
+    } else {
+      return EMPTY;
     }
   }
 
