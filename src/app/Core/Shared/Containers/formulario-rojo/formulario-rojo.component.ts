@@ -110,6 +110,7 @@ export class FormularioRojoComponent implements OnChanges, OnInit,OnDestroy {
     Nombre:''
   }
   ngOnInit(): void {
+    console.log('formularioaqui')
     this._HelperService.recibirDataPais.pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
         console.log(x)
@@ -123,6 +124,20 @@ export class FormularioRojoComponent implements OnChanges, OnInit,OnDestroy {
               this.validatePais(index,f.nombre)
             }
             if(f.nombre.toLowerCase()=='idpais' && this.userForm){
+              let campo = (<FormArray>this.userForm.get('Fields')).controls[index].get(f.nombre);
+              if(campo?.value!=undefined){
+                campo?.setValue(this.paisSelect);
+                this.OnSelect.emit({Nombre:f.nombre,value:this.paisSelect})
+              }
+            }
+            if(f.nombre.toLowerCase()=='idregion' && this.userForm){
+              let campo = (<FormArray>this.userForm.get('Fields')).controls[index].get(f.nombre);
+              if(campo?.value!=undefined){
+                campo?.setValue(this.paisSelect);
+                this.OnSelect.emit({Nombre:f.nombre,value:this.paisSelect})
+              }
+            }
+            if(f.nombre.toLowerCase()=='idlocalidad' && this.userForm){
               let campo = (<FormArray>this.userForm.get('Fields')).controls[index].get(f.nombre);
               if(campo?.value!=undefined){
                 campo?.setValue(this.paisSelect);

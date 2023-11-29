@@ -7,7 +7,7 @@
   <div class="card-footer" style="background: white;margin-bottom: 10px;padding-bottom: 0px;padding-top: 0px;    border: 1px solid transparent;position: relative;">
     <app-cargando *ngIf="statuscharge==true"></app-cargando>
     <app-formulario-rojo [model]="formularioContactoChat" [InputsDisable]="statuscharge" (OnSubmit)="SetContacto($event)"
-      (OnValid)="formVal=$event" [Interaccion]="'Chat-'+IdPGeneral" [fiels]="fileds" [ObtenerPrefijo]="true">
+      (OnValid)="formVal=$event" [Interaccion]="'Chat-'+IdPGeneral" [fiels]="fileds" [ObtenerPrefijo]="true" (OnSelect)="SelectChage($event)">
       <ng-container contenido>
       </ng-container>
       <ng-container send >

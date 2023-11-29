@@ -110,7 +110,7 @@
                       }}</mat-error>
                     </mat-form-field>
                   </ng-container>
-                  <ng-container *ngIf="(field.tipo === 'select' && PaisSelect2 === 52 && (field.nombre === 'IdPais' || field.nombre === 'IdLocalidad' || field.nombre === 'IdRegion')) || (field.tipo === 'select' && (PaisSelect2 !== 52 && field.nombre === 'IdPais'))">
+                  <ng-container *ngIf="(field.tipo === 'select' && paisSelect === 52 && (field.nombre === 'IdPais' || field.nombre === 'IdLocalidad' || field.nombre === 'IdRegion')) || (field.tipo === 'select' && (paisSelect !== 52 && field.nombre === 'IdPais'))">
                     <mat-form-field appearance="outline">
                       <!-- <mat-label>{{field.label}}</mat-label>
                       <mat-select [style]="field.style" formControlName="{{field.nombre}}"
