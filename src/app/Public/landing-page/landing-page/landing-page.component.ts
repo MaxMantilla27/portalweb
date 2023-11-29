@@ -242,7 +242,7 @@ export class LandingPageComponent implements OnInit, OnDestroy {
       if (this.DatosLandingPageEnvio.IdCategoriaDato == 104) {
         this.DatosLandingPageEnvio.NombreOrigen =
           'Adwords Busqueda Formulario Propio';
-      } else if (this.DatosLandingPageEnvio.IdCategoriaDato == 632) {
+      } else if (this.DatosLandingPageEnvio.IdCategoriaDato == 624) {
         this.DatosLandingPageEnvio.NombreOrigen =
           'Masivos SMS Bases Propias Formulario Propio';
       } else {
