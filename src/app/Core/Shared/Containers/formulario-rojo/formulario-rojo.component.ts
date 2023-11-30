@@ -43,6 +43,9 @@ export class FormularioRojoComponent implements OnChanges, OnInit,OnDestroy {
   ) {
     this.isBrowser = isPlatformBrowser(platformId);
   }
+  ngOnChanges(changes: SimpleChanges): void {
+    throw new Error('Method not implemented.');
+  }
 
   ngOnDestroy(): void {
     clearInterval(this.interval);
@@ -194,8 +197,23 @@ export class FormularioRojoComponent implements OnChanges, OnInit,OnDestroy {
       }
     }
   }
-
-  ngOnChanges(changes: SimpleChanges): void {
+  filtroAutocomplete(data: formulario, value: any) {
+    console.log('Data de eventos ', value.target.value);
+    let info = value.target.value == null ? '' : value.target.value;
+    data.data?.forEach((element: any) => {
+      element.hiden = true;
+      if (
+        element.Nombre.toLowerCase().includes(info.toLowerCase()) ||
+        info.length == 0
+      ) {
+        element.hiden = false;
+      }
+    });
+  }
+  itemDisplayFn(item: any) {
+    return item && item.Nombre ? item.Nombre : '';
+  }
+Changes(changes: SimpleChanges): void {
     this.changeForm();
     if (this.userForm != undefined) {
       if (this.InputsDisable == true) {
@@ -246,6 +264,13 @@ export class FormularioRojoComponent implements OnChanges, OnInit,OnDestroy {
       });
     }
   }
+  changeFormsSelect(clave:any, valor:any, i:number){
+    if (clave == "IdLocalidad"){
+      (<FormArray>this.userForm.get('Fields')).controls[6].get("Movil")?.setValue(this.pref+valor.codigo);
+    }
+    this.OnSelect.emit({Nombre:clave,value:valor.value})
+  }
+
   EnviarCambios() {
     let obj: any = {};
     for (let i = 0; i < (<FormArray>this.userForm.get('Fields')).length; i++) {
