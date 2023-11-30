@@ -238,7 +238,7 @@
                 <app-formulario-azul style="background-color: blue;" [Interaccion]="'Programas-'+idBusqueda"
                   [model]="formularioContacto" [InputsDisable]="statuscharge" [CleanOnSubmit]="cleanSub"
                   (OnSubmit)="SetContacto($event)" (OnValid)="formVal=$event" [fiels]="fileds"
-                  (OnSelect)="SelectChage($event)">
+                  [ListaLocalidades]="listaValida" (OnSelect)="SelectChage($event)">
 
                   <ng-container contenido>
                   </ng-container>
@@ -258,6 +258,7 @@
               <ng-container *ngIf="combosPrevios==undefined && CompleteLocalStorage==true">
                 <app-formulario-azul [Interaccion]="'Programas-'+idBusqueda" [model]="formularioContacto"
                   [InputsDisable]="statuscharge" [CleanOnSubmit]="cleanSub" (OnSubmit)="SetContacto($event)"
+                  [ListaLocalidades]="listaValida"
                   (OnValid)="formVal=$event" [fiels]="fileds" (OnSelect)="SelectChage($event)">
 
                   <ng-container contenido>
@@ -278,6 +279,7 @@
               <ng-container *ngIf="combosPrevios==undefined && CompleteLocalStorage==false">
                 <app-formulario-azul [Interaccion]="'Programas-'+idBusqueda" [model]="formularioContacto"
                   [InputsDisable]="statuscharge" [CleanOnSubmit]="cleanSub" (OnSubmit)="SetContacto($event)"
+                  [ListaLocalidades]="listaValida"
                   (OnValid)="formVal=$event" [fiels]="fileds" (OnSelect)="SelectChage($event)">
 
                   <ng-container contenido>

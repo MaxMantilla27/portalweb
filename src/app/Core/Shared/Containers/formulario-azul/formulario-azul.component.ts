@@ -81,6 +81,9 @@ export class FormularioAzulComponent implements OnChanges, OnInit,OnDestroy {
   @Input()
   Interaccion: any;
 
+  @Input()
+  ListaLocalidades?: any;
+
   @Output()
   OnSubmit: EventEmitter<object> = new EventEmitter<object>();
 
@@ -362,7 +365,6 @@ export class FormularioAzulComponent implements OnChanges, OnInit,OnDestroy {
     }
   }
   obtenerErrorCampoNombre(i: number, val: string) {
-    console.log('obtenerErrorCampoNombre', i, val);
     var campo = (<FormArray>this.userForm.get('Fields')).controls[i].get(val);
     if (campo!.hasError('required')) {
       var fls=this.fiels.find(x=>x.nombre==val);
@@ -370,6 +372,10 @@ export class FormularioAzulComponent implements OnChanges, OnInit,OnDestroy {
         return fls?.error;
       }
       return 'El campo ' + this.fiels[i].label + ' es requerido';
+    }
+
+    if (campo!.hasError('digitosInvalidos')) {
+      return 'Los dos o tres primeros dígitos no son válidos';
     }
 
     if (campo!.hasError('minlength')) {
@@ -464,10 +470,27 @@ export class FormularioAzulComponent implements OnChanges, OnInit,OnDestroy {
     }
     return '';
   }
+  flagLocalidadError:boolean=false
+  validadorPrefijo(codigoPais:string, nrocelular:string ){
+    if(codigoPais == '+52' && nrocelular.length >= 2){
+      const primerosDosDigitos = nrocelular.substring(0, 2);
+      const primerosTresDigitos = nrocelular.substring(0, 3);
+      if (!this.ListaLocalidades?.includes(primerosDosDigitos) && !this.ListaLocalidades?.includes(primerosTresDigitos)) {
+        console.log("Error el prefijo no es valido");
+        this.flagLocalidadError = true;
+      }
+      else{
+        console.log("El prefijo es valido");
+        this.flagLocalidadError = false;
+      }
+    }
+  }
   ChangeInpiut(i: number, val: string){
     var campo = (<FormArray>this.userForm.get('Fields')).controls[i].get(val)?.value.toString();
     var s =campo.split(' ')
     console.log(s)
+    this.validadorPrefijo(s[0],s[1])
+
     if(this.PrefPaises()!=null){
       if(s[0]!=this.PrefPaises()){
         if(s[0].length>this.PrefPaises().length){
@@ -506,9 +529,20 @@ export class FormularioAzulComponent implements OnChanges, OnInit,OnDestroy {
     return item && item.Nombre ? item.Nombre : '';
   }
   changeFormsSelect(clave:any, valor:any, i:number){
-    if (clave == "IdLocalidad"){
+
+    console.log("Formulario declarado",this.userForm.get('Fields')?.value)
+
+    if (clave == "IdPais"){
+      (<FormArray>this.userForm.get('Fields')).controls[4].get("IdRegion")?.setValue(null);
+      (<FormArray>this.userForm.get('Fields')).controls[5].get("IdLocalidad")?.setValue(null);
+    }
+    else if (clave == "IdRegion"){
+      (<FormArray>this.userForm.get('Fields')).controls[5].get("IdLocalidad")?.setValue(null);
+    }
+    else if (clave == "IdLocalidad"){
       (<FormArray>this.userForm.get('Fields')).controls[6].get("Movil")?.setValue(this.pref+valor.codigo);
     }
+
     this.OnSelect.emit({Nombre:clave,value:valor.value})
   }
 }

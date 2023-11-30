@@ -117,7 +117,8 @@
                           <mat-label>{{field.label}}</mat-label>
                           <!-- <span matPrefix>{{PrefPaises()}}</span> -->
                           <input type="text" [autofocus]="field.focus" (keyup)="ChangeInpiut(i,field.nombre)" (keydown)="ChangeInpiut(i,field.nombre)" [style]="field.style" formControlName="{{field.nombre}}" matInput />
-                          <mat-error *ngIf="userForm.invalid">{{obtenerErrorCampoNombre(i,field.nombre)}}</mat-error>
+                          <mat-error *ngIf="!flagLocalidadError && userForm.invalid">{{obtenerErrorCampoNombre(i,field.nombre)}}</mat-error>
+                          <mat-error *ngIf="flagLocalidadError"> Clave LADA Incorrecto </mat-error>
                         </mat-form-field>
                       </div>
                     </div>

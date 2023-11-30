@@ -9,7 +9,7 @@ import {
   ViewChild,
   ViewEncapsulation,
 } from '@angular/core';
-import { Validators } from '@angular/forms';
+import { AbstractControl, FormControl, ValidatorFn, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { NgbCarouselConfig } from '@ng-bootstrap/ng-bootstrap';
@@ -989,10 +989,15 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
       }
     })
   }
+
+  listaValida:any;
+
   ObtenerCombosPortal(){
     this._DatosPortalService.ObtenerCombosPortal().pipe(takeUntil(this.signal$)).subscribe({
       next:(x)=>{
-        console.log("Campos formulario portal",x);
+        this.listaValida = x.listaLocalida.map((p:any)=>String(p.codigo));
+        console.log("Campos formulario portal localidad", this.listaValida);
+
         this.fileds.forEach(r=>{
           if(r.nombre=='IdPais'){
             r.data=x.listaPais.map((p:any)=>{
@@ -1032,7 +1037,7 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
   GetLocalidadesPorRegion(idRegion:number){
     this._RegionService.ObtenerLocalidadPorRegion(idRegion).pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
-        if (x.length != 0 || x != undefined || x !=null ) {
+        if (x.length != 0 && x != undefined && x !=null ) {
 
           this.fileds.forEach(r=>{
             if(r.nombre=='IdLocalidad'){
@@ -1042,9 +1047,20 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
                 var ps:Basic={Nombre:p.nombreLocalidad,value:p.idLocalidad,longitudCelular:p.longitudCelular,codigo:p.codigo};
                 return ps;
               })
+              r.validate=[Validators.required];
             }
           })
           this.form.enablefield('IdLocalidad');
+        }
+        else{
+          this.fileds.forEach(r=>{
+            if(r.nombre=='IdLocalidad'){
+              r.disable=true;
+              r.hiden=true;
+              r.validate=[];
+            }
+          })
+
         }
       }
     })
@@ -1071,7 +1087,6 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
       valorInicial:"",
       validate:[Validators.required],
       label:"Apellidos",
-
     });
     this.fileds.push({
       nombre:"Email",
@@ -1079,7 +1094,6 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
       valorInicial:"",
       validate:[Validators.required,Validators.email],
       label:"E-mail",
-
     });
     this.fileds.push({
       nombre:"IdPais",
@@ -1101,7 +1115,7 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
       tipo:"select",
       valorInicial:"",
       disable:true,
-      validate:[Validators.required],
+      validate:[],
       label:"Localidad",
       hiden:true
     });
@@ -1218,5 +1232,18 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
       }
       this._SessionStorageService.SessionDeleteValue('urlRedireccionErrorPagoModal')
     }
+  }
+  validarDigitos(lista: string[]): ValidatorFn {
+    return (control: AbstractControl): { [key: string]: any } | null => {
+      const valor = control.value;
+      if (valor && valor.length >= 2) {
+        const primerosDosDigitos = valor.substring(0, 2);
+        const primerosTresDigitos = valor.substring(0, 3);
+        if (!lista.includes(primerosDosDigitos) && !lista.includes(primerosTresDigitos)) {
+          return { digitosInvalidos: true };
+        }
+      }
+      return null;
+    };
   }
 }
