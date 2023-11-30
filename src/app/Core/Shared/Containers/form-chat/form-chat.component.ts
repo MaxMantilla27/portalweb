@@ -1,5 +1,5 @@
 import { isPlatformBrowser } from '@angular/common';
-import { Component, EventEmitter, Inject, Input, OnChanges, OnInit, Output, PLATFORM_ID, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Inject, Input, OnChanges, OnInit, Output, PLATFORM_ID, SimpleChanges, ViewChild } from '@angular/core';
 import { Validators } from '@angular/forms';
 import { Subject, takeUntil } from 'rxjs';
 import { ValidacionChatEnvioDTO, ValidacionChatFormularioDTO } from 'src/app/Core/Models/ChatEnLineaDTO';
@@ -12,6 +12,7 @@ import { FacebookPixelService } from '../../Services/FacebookPixel/facebook-pixe
 import { RegionService } from '../../Services/Region/region.service';
 import { Basic } from 'src/app/Core/Models/BasicDTO';
 import { DatosPortalService } from '../../Services/DatosPortal/datos-portal.service';
+import { FormularioAzulComponent } from '../formulario-azul/formulario-azul.component';
 declare const fbq:any;
 declare const gtag:any;
 @Component({
@@ -23,6 +24,8 @@ export class FormChatComponent implements OnInit,OnChanges {
   private signal$ = new Subject();
 
   isBrowser: boolean;
+  @ViewChild(FormularioAzulComponent)
+  form!: FormularioAzulComponent;
   constructor(
     private _ChatEnLinea: ChatEnLineaService,
     private _RegionService: RegionService,
@@ -191,7 +194,7 @@ export class FormChatComponent implements OnInit,OnChanges {
             })
           }
         })
-        //this.form.enablefield('IdLocalidad');
+        this.form.enablefield('IdLocalidad');
       }
     })
   }
@@ -223,7 +226,7 @@ export class FormChatComponent implements OnInit,OnChanges {
             })
           }
         })
-        //this.form.enablefield('IdRegion');
+        this.form.enablefield('IdRegion');
       }
     })
   }
@@ -297,7 +300,7 @@ export class FormChatComponent implements OnInit,OnChanges {
       nombre: 'IdRegion',
       tipo: 'select',
       valorInicial: '',
-      validate: [Validators.required],
+      validate: [],
       disable: false,
       label: 'Región',
     });
@@ -305,7 +308,7 @@ export class FormChatComponent implements OnInit,OnChanges {
       nombre: 'IdLocalidad',
       tipo: 'select',
       valorInicial: '',
-      validate: [Validators.required],
+      validate: [],
       disable: false,
       label: 'Localidad',
     });
