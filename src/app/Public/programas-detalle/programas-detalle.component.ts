@@ -1115,7 +1115,7 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
       tipo:"select",
       valorInicial:"0",
       disable:true,
-      validate:[Validators.required],
+      validate:[],
       label:"Localidad",
       hiden:true
     });
