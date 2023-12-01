@@ -206,10 +206,10 @@ export class FormChatComponent implements OnInit,OnChanges {
   SelectChage(e:any){
     console.log('form')
     if(e.Nombre =="IdPais"){
-      (<FormArray>this.userForm.get('Fields')).controls[3].get("IdPais")?.setValue(   {
-        "Nombre": "Mexico",
-        "value": 52
-    });
+    //   (<FormArray>this.userForm.get('Fields')).controls[3].get("IdPais")?.setValue(   {
+    //     "Nombre": "Mexico",
+    //     "value": 52
+    // });
       this.GetRegionesPorPais(e.value)
     }
     if(e.Nombre == "IdRegion"){
@@ -235,10 +235,11 @@ export class FormChatComponent implements OnInit,OnChanges {
       }
     })
   }
-
+  listaValida:any;
   ObtenerCombosPortal(){
     this._DatosPortalService.ObtenerCombosPortal().pipe(takeUntil(this.signal$)).subscribe({
       next:(x)=>{
+        this.listaValida = x.listaLocalida.map((p:any)=>String(p.codigo));
         console.log(x);
         this.fileds.forEach(r=>{
           if(r.nombre=='IdPais'){
