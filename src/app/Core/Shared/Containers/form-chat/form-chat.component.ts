@@ -1,6 +1,6 @@
 import { isPlatformBrowser } from '@angular/common';
 import { Component, EventEmitter, Inject, Input, OnChanges, OnInit, Output, PLATFORM_ID, SimpleChanges, ViewChild } from '@angular/core';
-import { Validators } from '@angular/forms';
+import { FormArray, FormGroup, Validators } from '@angular/forms';
 import { Subject, takeUntil } from 'rxjs';
 import { ValidacionChatEnvioDTO, ValidacionChatFormularioDTO } from 'src/app/Core/Models/ChatEnLineaDTO';
 import { DatosFormularioDTO } from 'src/app/Core/Models/DatosFormularioDTO';
@@ -89,6 +89,7 @@ export class FormChatComponent implements OnInit,OnChanges {
   }
   ngOnChanges(changes: SimpleChanges): void {
   }
+  userForm!: FormGroup;
   obtenerFormularioCompletado(){
     var DatosFormulario = this._SessionStorageService.SessionGetValue('DatosFormulario');
     console.log(DatosFormulario)
@@ -205,6 +206,10 @@ export class FormChatComponent implements OnInit,OnChanges {
   SelectChage(e:any){
     console.log('form')
     if(e.Nombre =="IdPais"){
+      (<FormArray>this.userForm.get('Fields')).controls[3].get("IdPais")?.setValue(   {
+        "Nombre": "Mexico",
+        "value": 52
+    });
       this.GetRegionesPorPais(e.value)
     }
     if(e.Nombre == "IdRegion"){

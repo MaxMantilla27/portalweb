@@ -84,6 +84,7 @@ export class FormularioRojoComponent implements OnChanges, OnInit,OnDestroy {
   @Input()
   Interaccion: any;
 
+  @Output() selecionPaisinicio = new EventEmitter<Basic>()
   @Output()
   OnSubmit: EventEmitter<object> = new EventEmitter<object>();
 
@@ -98,6 +99,7 @@ export class FormularioRojoComponent implements OnChanges, OnInit,OnDestroy {
   public pref=''
   public min=0
   public max=0
+  public pais:any
   @Input() cargando=false
   //later in the code
   fields: any = {};
@@ -149,6 +151,15 @@ export class FormularioRojoComponent implements OnChanges, OnInit,OnDestroy {
             }
             index++
           })
+          let data:any = this.paise.find(x=>x.idPais==this.paisSelect)
+          if (data != undefined){
+            (<FormArray>this.userForm.get('Fields')).controls[3].get("IdPais")?.setValue(
+              {
+                "Nombre": data.pais,
+                "value": data.idPais
+              }
+            )
+          }
         }
       }
     })
@@ -186,6 +197,17 @@ export class FormularioRojoComponent implements OnChanges, OnInit,OnDestroy {
       index++;
     });
     this.OnValid.emit(this.userForm.valid);
+    this.asociarPais()
+  }
+  public paisEnvio:any
+  asociarPais(){
+    console.log('miprimeroutpu')
+    this.pais = this.paise.find((x:any)=> x.idPais == this.paisSelect)
+    let paisData={
+      Nombre: 'IdPais',
+      value: this.pais.idPais
+    }
+    this.selecionPaisinicio.emit(paisData)
   }
   changeForm(){
     if(this.userForm!=undefined){
