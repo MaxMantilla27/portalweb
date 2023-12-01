@@ -451,7 +451,7 @@ export class FormularioComponent implements OnChanges, OnInit,OnDestroy {
       //this.userForm.controls['Fields'].setValue({['phone']:valor.codigo})
       (<FormArray>this.userForm.get('Fields')).controls[4].get("Movil")?.setValue(this.pref+valor.codigo);
     }
-    this.OnSelect.emit({Nombre:clave,value:valor})
+    this.OnSelect.emit({Nombre:clave,value:valor.value})
   }
   ///
 
