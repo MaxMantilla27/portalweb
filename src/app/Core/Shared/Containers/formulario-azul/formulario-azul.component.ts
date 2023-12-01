@@ -120,6 +120,7 @@ export class FormularioAzulComponent implements OnChanges, OnInit,OnDestroy {
           this.paise=x;
           var codigoISo=this._SessionStorageService.SessionGetValue('ISO_PAIS');
           this.paisSelect=this.paise.find(x=>x.codigoIso==codigoISo).idPais;
+
           var index=0
           this.fiels.forEach((f:any) =>{
             if(f.tipo=='phone' && this.userForm){
@@ -203,6 +204,10 @@ export class FormularioAzulComponent implements OnChanges, OnInit,OnDestroy {
       }
 
     }
+
+    this.changePaisForm();
+
+
   }
   AddItemsForm() {
     const control = <FormArray>this.userForm.get('Fields');
@@ -451,6 +456,22 @@ export class FormularioAzulComponent implements OnChanges, OnInit,OnDestroy {
       this.OnValid.emit(false);
     }
     (<FormArray>this.userForm.get('Fields')).controls[i].get(val)?.setValue(this.pref+(s.length>1?s[1]:''));
+    this.changePaisForm();
+
+  }
+  changePaisForm(){
+    let data:any = this.paise.find(x=>x.idPais==this.pref)
+    if (data != undefined){
+      (<FormArray>this.userForm.get('Fields')).controls[3].get("IdPais")?.setValue(
+        {
+          "Nombre": data.pais,
+          "value": data.idPais
+        }
+      );
+      (<FormArray>this.userForm.get('Fields')).controls[4].get("IdRegion")?.setValue(null);
+      (<FormArray>this.userForm.get('Fields')).controls[5].get("IdLocalidad")?.setValue(null);
+      this.OnSelect.emit({Nombre:'IdPais',value:data.idPais})
+    }
   }
   LongCelularPaises():number{
     if(this.paise.find(x=>x.idPais==this.paisSelect)!=undefined){
@@ -476,11 +497,9 @@ export class FormularioAzulComponent implements OnChanges, OnInit,OnDestroy {
       const primerosDosDigitos = nrocelular.substring(0, 2);
       const primerosTresDigitos = nrocelular.substring(0, 3);
       if (!this.ListaLocalidades?.includes(primerosDosDigitos) && !this.ListaLocalidades?.includes(primerosTresDigitos)) {
-        console.log("Error el prefijo no es valido");
         this.flagLocalidadError = true;
       }
       else{
-        console.log("El prefijo es valido");
         this.flagLocalidadError = false;
       }
     }
@@ -489,8 +508,6 @@ export class FormularioAzulComponent implements OnChanges, OnInit,OnDestroy {
     var campo = (<FormArray>this.userForm.get('Fields')).controls[i].get(val)?.value.toString();
     var s =campo.split(' ')
     console.log(s)
-    this.validadorPrefijo(s[0],s[1])
-
     if(this.PrefPaises()!=null){
       if(s[0]!=this.PrefPaises()){
         if(s[0].length>this.PrefPaises().length){
@@ -511,6 +528,7 @@ export class FormularioAzulComponent implements OnChanges, OnInit,OnDestroy {
         );
       }
     }
+    this.validadorPrefijo(s[0],s[1])
   }
   filtroAutocomplete(data: formulario, value: any) {
     console.log('Data de eventos ', value.target.value);
@@ -528,11 +546,14 @@ export class FormularioAzulComponent implements OnChanges, OnInit,OnDestroy {
   itemDisplayFn(item: any) {
     return item && item.Nombre ? item.Nombre : '';
   }
-  changeFormsSelect(clave:any, valor:any, i:number){
+  changeFormsSelect(clave:any, valor:any, i:number):void{
 
     console.log("Formulario declarado",this.userForm.get('Fields')?.value)
 
+
     if (clave == "IdPais"){
+      this.paisSelect = valor.value;
+      this.validatePais(6,'Movil');
       (<FormArray>this.userForm.get('Fields')).controls[4].get("IdRegion")?.setValue(null);
       (<FormArray>this.userForm.get('Fields')).controls[5].get("IdLocalidad")?.setValue(null);
     }

@@ -1113,9 +1113,9 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
     this.fileds.push({
       nombre:"IdLocalidad",
       tipo:"select",
-      valorInicial:"",
+      valorInicial:"0",
       disable:true,
-      validate:[],
+      validate:[Validators.required],
       label:"Localidad",
       hiden:true
     });
