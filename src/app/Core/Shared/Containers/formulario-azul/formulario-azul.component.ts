@@ -84,6 +84,9 @@ export class FormularioAzulComponent implements OnChanges, OnInit,OnDestroy {
   @Input()
   ListaLocalidades?: any;
 
+  @Input()
+  ListaRegiones?: any;
+
   @Output()
   OnSubmit: EventEmitter<object> = new EventEmitter<object>();
 
@@ -119,7 +122,7 @@ export class FormularioAzulComponent implements OnChanges, OnInit,OnDestroy {
         if(this.paise.length==0){
           this.paise=x;
           var codigoISo=this._SessionStorageService.SessionGetValue('ISO_PAIS');
-          this.paisSelect=this.paise.find(x=>x.codigoIso==codigoISo).idPais;
+          // this.paisSelect=this.paise.find(x=>x.codigoIso==codigoISo).idPais;
 
           var index=0
           this.fiels.forEach((f:any) =>{
@@ -129,8 +132,8 @@ export class FormularioAzulComponent implements OnChanges, OnInit,OnDestroy {
             if(f.nombre.toLowerCase()=='idpais' && this.userForm){
               let campo = (<FormArray>this.userForm.get('Fields')).controls[index].get(f.nombre);
               if(campo?.value!=undefined){
-                campo?.setValue(this.paisSelect);
-                this.OnSelect.emit({Nombre:f.nombre,value:this.paisSelect})
+                // campo?.setValue(this.paisSelect);
+                // this.OnSelect.emit({Nombre:f.nombre,value:this.paisSelect})
               }
             }
             index++
@@ -144,7 +147,9 @@ export class FormularioAzulComponent implements OnChanges, OnInit,OnDestroy {
       }
     }
     let i = 0;
+    console.log("Campos formulario");
     Object.entries(this.model).forEach(([key, value]) => {
+      console.log("Valores ",key, value, i);
       this.AddFields(key, value, i);
       i++;
     });
@@ -185,6 +190,7 @@ export class FormularioAzulComponent implements OnChanges, OnInit,OnDestroy {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
+    console.log("Cambios changes",changes)
     this.changeForm();
     if (this.userForm != undefined) {
       if (this.InputsDisable == true) {
@@ -204,10 +210,7 @@ export class FormularioAzulComponent implements OnChanges, OnInit,OnDestroy {
       }
 
     }
-
-    this.changePaisForm();
-
-
+    // this.changePaisForm();
   }
   AddItemsForm() {
     const control = <FormArray>this.userForm.get('Fields');
@@ -223,12 +226,22 @@ export class FormularioAzulComponent implements OnChanges, OnInit,OnDestroy {
   patchValues(obj: any) {
     return this.formBuilder.group(obj);
   }
-  AddFields(nombre: string, value: string, index: number) {
+  AddFields(nombre: string, value: any, index: number) {
     let fild = this.fiels.find((x) => x.nombre === nombre);
     if (fild != undefined) {
       let index = this.fiels.indexOf(fild);
-
-      this.fiels[index].valorInicial = value;
+      if(fild.tipo ==  'select'){
+        console.log("Datos especificos", {Nombre:value?.Nombre, value:value?.value})
+        this.fiels[index].valorInicial = {Nombre:value?.Nombre, value:value?.value};
+        if (nombre == "IdPais"){
+          this.paisSelect = value?.value;
+          this.IconPaises(value?.value)
+        }
+        this.OnSelect.emit({Nombre:nombre,value:value?.value})
+      }
+      else{
+        this.fiels[index].valorInicial = value;
+      }
     } else {
       this.fiels.splice(index, 0, {
         nombre: nombre,
@@ -247,8 +260,8 @@ export class FormularioAzulComponent implements OnChanges, OnInit,OnDestroy {
       Object.entries(this.model).forEach(([key, value]) => {
         if (key == clave[0]) {
           value = element.value[clave[0]];
-          // obj[key] = value;
-          obj[key] = typeof value === 'object' ? value.value : value;
+          obj[key] = value;
+          // obj[key] = typeof value === 'object' ? value.value : value;
           if(this.ObtenerPrefijo==false){
             this.fiels.forEach((f:any) =>{
               if(f.tipo=='phone' && f.nombre.toLowerCase()==key.toLowerCase()){
@@ -261,6 +274,7 @@ export class FormularioAzulComponent implements OnChanges, OnInit,OnDestroy {
       });
     }
     this.model = obj;
+    console.log("Modelo",this.model)
     this.OnSubmit.emit(this.model);
     if(this.CleanOnSubmit==true){
       //this.userForm.reset();
@@ -417,7 +431,10 @@ export class FormularioAzulComponent implements OnChanges, OnInit,OnDestroy {
   Fields(): FormArray {
     return this.userForm.get('Fields') as FormArray;
   }
-  IconPaises(){
+  IconPaises(idpaisStorage?:number){
+    if (idpaisStorage!=undefined){
+      this.paisSelect=idpaisStorage;
+    }
     if(this.paise.find(x=>x.idPais==this.paisSelect)!=undefined){
       return this.paise.find(x=>x.idPais==this.paisSelect).icono
     }
@@ -456,20 +473,19 @@ export class FormularioAzulComponent implements OnChanges, OnInit,OnDestroy {
       this.OnValid.emit(false);
     }
     (<FormArray>this.userForm.get('Fields')).controls[i].get(val)?.setValue(this.pref+(s.length>1?s[1]:''));
-    this.changePaisForm();
-
+    // this.changePaisForm();
   }
   changePaisForm(){
     let data:any = this.paise.find(x=>x.idPais==this.pref)
     if (data != undefined){
+      console.log("Data ",data.pais, data.idPais);
       (<FormArray>this.userForm.get('Fields')).controls[3].get("IdPais")?.setValue(
         {
           "Nombre": data.pais,
           "value": data.idPais
         }
       );
-      (<FormArray>this.userForm.get('Fields')).controls[4].get("IdRegion")?.setValue(null);
-      (<FormArray>this.userForm.get('Fields')).controls[5].get("IdLocalidad")?.setValue(null);
+
       this.OnSelect.emit({Nombre:'IdPais',value:data.idPais})
     }
   }
@@ -544,6 +560,7 @@ export class FormularioAzulComponent implements OnChanges, OnInit,OnDestroy {
     });
   }
   itemDisplayFn(item: any) {
+    console.log('Item de eventos ', item);
     return item && item.Nombre ? item.Nombre : '';
   }
   changeFormsSelect(clave:any, valor:any, i:number):void{
