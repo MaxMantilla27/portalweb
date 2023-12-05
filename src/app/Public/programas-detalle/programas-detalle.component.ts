@@ -217,6 +217,7 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
     Email: '',
     IdPais: undefined,
     IdRegion: undefined,
+    IdLocalidad: undefined,
     Movil: '',
   };
   public DatosEnvioFormulario: ContactenosDTO = {
@@ -892,6 +893,7 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
       // this.formularioContacto.IdPais=datos.idPais;
       this.formularioContacto.IdPais = datos.Pais;
       // this.formularioContacto.IdRegion=datos.idRegion;
+      this.formularioContacto.IdLocalidad = datos?.Localidad;
       this.formularioContacto.IdRegion = datos.Region
       this.formularioContacto.Movil=datos.movil;
       if(this.formularioContacto.IdPais!=undefined){
@@ -1155,6 +1157,7 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
     this.formularioContacto.Email= '',
     this.formularioContacto.IdPais=undefined,
     this.formularioContacto.IdRegion=undefined,
+    this.formularioContacto.IdLocalidad=undefined,
     this.formularioContacto.Movil= '',
     this.GetRegionesPorPais(-1);
   }

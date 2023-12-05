@@ -177,6 +177,10 @@ export class FormularioAzulComponent implements OnChanges, OnInit,OnDestroy {
       index++;
     });
     this.OnValid.emit(this.userForm.valid);
+    if (this.localidadAux != '' && this.localidadAux != undefined) {
+      (<FormArray>this.userForm.get('Fields')).controls[6].get("Movil")?.setValue(this.pref+this.localidadAux);
+    }
+
   }
   changeForm(){
     if(this.userForm!=undefined){
@@ -226,6 +230,7 @@ export class FormularioAzulComponent implements OnChanges, OnInit,OnDestroy {
   patchValues(obj: any) {
     return this.formBuilder.group(obj);
   }
+  localidadAux : any = '';
   AddFields(nombre: string, value: any, index: number) {
     let fild = this.fiels.find((x) => x.nombre === nombre);
     if (fild != undefined) {
@@ -236,6 +241,9 @@ export class FormularioAzulComponent implements OnChanges, OnInit,OnDestroy {
         if (nombre == "IdPais"){
           this.paisSelect = value?.value;
           this.IconPaises(value?.value)
+        }
+        else if (nombre == "IdLocalidad" && value?.codigo != undefined){
+          this.localidadAux = value?.codigo;
         }
         this.OnSelect.emit({Nombre:nombre,value:value?.value})
       }

@@ -433,23 +433,26 @@ export class FormularioComponent implements OnChanges, OnInit,OnDestroy {
 
   itemDisplayFn(item: any) {
     console.log('ITEM ', item);
-    // this.PaisSelect2 =item.value
-    // if(item.value ==52){
-    //   this.activaraMexico= true
-    // }else {
-    //   this.activaraMexico= false
-    // }
     return item && item.Nombre ? item.Nombre : '';
   }
 
 
   changeFormsSelect(clave:any, valor:any){
+    console.log("Formulario declarado loading page",this.userForm.get('Fields')?.value)
+
     if (clave == "IdPais"){
       this.PaisSelect2 =valor.value
+      this.validatePais(6,'Movil');
+      (<FormArray>this.userForm.get('Fields')).controls[4].get("IdRegion")?.setValue(null);
+      (<FormArray>this.userForm.get('Fields')).controls[5].get("IdLocalidad")?.setValue(null);
+
     }
-    if (clave == "IdLocalidad"){
+    else if (clave == "IdRegion"){
+      (<FormArray>this.userForm.get('Fields')).controls[5].get("IdLocalidad")?.setValue(null);
+    }
+    else if (clave == "IdLocalidad"){
       //this.userForm.controls['Fields'].setValue({['phone']:valor.codigo})
-      (<FormArray>this.userForm.get('Fields')).controls[4].get("Movil")?.setValue(this.pref+valor.codigo);
+      (<FormArray>this.userForm.get('Fields')).controls[6].get("Movil")?.setValue(this.pref+valor.codigo);
     }
     this.OnSelect.emit({Nombre:clave,value:valor.value})
   }

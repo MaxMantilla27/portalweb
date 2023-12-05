@@ -69,4 +69,5 @@ export interface ContactenosDTO{
   IdArticulo?:number,
   NombreWhitePaper?:string,
   urlWhitePaper?:string,
+  IdLocalidad?:number,
 }

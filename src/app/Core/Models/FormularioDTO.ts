@@ -20,6 +20,7 @@ export interface FormularioContactoShortDTO
   Email: string,
   IdPais?: number,
   IdRegion?: number,
+  IdLocalidad?: number,
   Movil: string,
 }
 
