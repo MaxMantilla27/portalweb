@@ -100,6 +100,7 @@ export class FormularioComponent implements OnChanges, OnInit,OnDestroy {
   fields: any = {};
   activaraMexico:boolean = false
   PaisSelect2 :any
+  mexicoSeleccion:boolean  =false
   public interval:any
   public jsonForm:InteraccionFormularioCampoDTO={
     Acciones:[],
@@ -464,6 +465,10 @@ export class FormularioComponent implements OnChanges, OnInit,OnDestroy {
     var s=campo.split(' ');
 
     this.pref=this.PrefPaises()==null?'':this.PrefPaises()+' ';
+    if(this.pref=='+52'){
+      this.mexicoSeleccion == true
+    }
+    else this.mexicoSeleccion == false
     this.min=this.LongCelularPaises()==null?0:this.LongCelularPaises();
     (<FormArray>this.userForm.get('Fields')).controls[i].get(val)?.setValue(this.pref+s.slice(1));
     (<FormArray>this.userForm.get('Fields')).controls[i].get(val)?.clearValidators();

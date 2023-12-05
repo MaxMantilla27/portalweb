@@ -41,6 +41,7 @@ export class LandingPageModalComponent implements OnInit, OnDestroy {
   @ViewChild(FormularioComponent)
   form!: FormularioComponent;
   isBrowser: boolean;
+
   constructor(
     private router: Router,
 
@@ -345,16 +346,32 @@ export class LandingPageModalComponent implements OnInit, OnDestroy {
   GetLocalidadPorRegion(idRegion:number){
     this._RegionService.ObtenerLocalidadPorRegion(idRegion).pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
-        this.fileds.forEach(r=>{
-          if(r.nombre=='IdLocalidad'){
-            r.disable=false;
-            r.data=x.map((p:any)=>{
-              var ps:Basic={Nombre:p.nombreLocalidad,value:p.idLocalidad,longitudCelular:p.longitudCelular,codigo:p.codigo};
-              return ps;
-            })
-          }
-        })
-        this.form.enablefield('IdLocalidad');
+
+        if (x.length != 0 && x != undefined && x !=null ) {
+
+          this.fileds.forEach(r=>{
+            if(r.nombre=='IdLocalidad'){
+              r.disable=false;
+              r.hiden=false;
+              r.data=x.map((p:any)=>{
+                var ps:Basic={Nombre:p.nombreLocalidad,value:p.idLocalidad,longitudCelular:p.longitudCelular,codigo:p.codigo};
+                return ps;
+              })
+              r.validate=[Validators.required];
+            }
+          })
+          this.form.enablefield('IdLocalidad');
+        }
+        else{
+          this.fileds.forEach(r=>{
+            if(r.nombre=='IdLocalidad'){
+              r.disable=true;
+              r.hiden=true;
+              r.validate=[];
+            }
+          })
+
+        }
       }
     })
   }
@@ -364,13 +381,13 @@ export class LandingPageModalComponent implements OnInit, OnDestroy {
   }
   SelectChage(e:any){
     if(e.Nombre=="IdPais"){
-      this.GetRegionesPorPais(e.value.value)
+      this.GetRegionesPorPais(e.value)
     }
     if(e.Nombre == "IdRegion"){
-      this.GetLocalidadPorRegion(e.value.value)
+      this.GetLocalidadPorRegion(e.value)
     }
     if(e.Nombre == "IdLocalidad"){
-      this.GetLocalidadSeleccion(e.value.value)
+      this.GetLocalidadSeleccion(e.value)
     }
 
   }

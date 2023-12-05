@@ -8,7 +8,7 @@
     <app-cargando *ngIf="statuscharge==true"></app-cargando>
 
     <app-formulario-rojo (selecionPaisinicio)="SelectChage($event)" [model]="formularioContactoChat" [InputsDisable]="statuscharge" (OnSubmit)="SetContacto($event)"
-      (OnValid)="formVal=$event" [Interaccion]="'Chat-'+IdPGeneral" [fiels]="fileds" [ObtenerPrefijo]="true" (OnSelect)="SelectChage($event)">
+      (OnValid)="formVal=$event" [Interaccion]="'Chat-'+IdPGeneral" [fiels]="fileds" [ObtenerPrefijo]="true" [ListaLocalidades]="listaValida" (OnSelect)="SelectChage($event)">
       <ng-container contenido>
       </ng-container>
       <ng-container send >
