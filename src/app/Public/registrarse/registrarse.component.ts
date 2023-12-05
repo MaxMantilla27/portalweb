@@ -103,6 +103,7 @@ export class RegistrarseComponent implements OnInit,OnDestroy {
     IdPEspecifico:0
   };
   ngOnInit(): void {
+    console.log('tiempo')
     let t:string='Registrarse'
     this.title.setTitle(t);
     this.meta.addTag({name: 'author', content: 'BSG Institute'})
@@ -286,6 +287,7 @@ export class RegistrarseComponent implements OnInit,OnDestroy {
         this.fileds.forEach((r) => {
           if (r.nombre == 'IdRegion') {
             r.disable = false;
+            r.hiden =false
             r.data = x.map((p: any) => {
               var ps: Basic = { Nombre: p.nombreCiudad, value: p.idCiudad };
               return ps;
@@ -300,6 +302,40 @@ export class RegistrarseComponent implements OnInit,OnDestroy {
     if (e.Nombre == 'IdPais') {
       this.GetRegionesPorPais(e.value);
     }
+    else if(e.Nombre=="IdRegion"){
+      this.GetLocalidadesPorRegion(e.value)
+    }
+  }
+  GetLocalidadesPorRegion(idRegion:number){
+    this._RegionService.ObtenerLocalidadPorRegion(idRegion).pipe(takeUntil(this.signal$)).subscribe({
+      next:x=>{
+        if (x.length != 0 && x != undefined && x !=null ) {
+
+          this.fileds.forEach(r=>{
+            if(r.nombre=='IdLocalidad'){
+              r.disable=false;
+              r.hiden=false;
+              r.data=x.map((p:any)=>{
+                var ps:Basic={Nombre:p.nombreLocalidad,value:p.idLocalidad,longitudCelular:p.longitudCelular,codigo:p.codigo};
+                return ps;
+              })
+              r.validate=[Validators.required];
+            }
+          })
+          this.form.enablefield('IdLocalidad');
+        }
+        else{
+          this.fileds.forEach(r=>{
+            if(r.nombre=='IdLocalidad'){
+              r.disable=true;
+              r.hiden=true;
+              r.validate=[];
+            }
+          })
+
+        }
+      }
+    })
   }
   AddField() {
     this.fileds.push({
@@ -337,7 +373,25 @@ export class RegistrarseComponent implements OnInit,OnDestroy {
       validate: [Validators.required],
       disable: true,
       label: 'Región',
+      hiden: true
     });
+    this.fileds.push({
+      nombre:"IdLocalidad",
+      tipo:"select",
+      valorInicial:"0",
+      disable:true,
+      validate:[],
+      label:"Localidad",
+      hiden:true
+    });
+    // this.fileds.push({
+    //   nombre: 'IdRegion',
+    //   tipo: 'select',
+    //   valorInicial: '',
+    //   validate: [Validators.required],
+    //   disable: true,
+    //   label: 'Región',
+    // });
     this.fileds.push({
       nombre: 'Movil',
       tipo: 'phone',
@@ -380,6 +434,23 @@ export class RegistrarseComponent implements OnInit,OnDestroy {
       validate: [Validators.required, Validators.minLength(6)],
       label: 'Password',
     });
+    // this.fileds.push({
+    //   nombre: 'IdRegion',
+    //   tipo: 'select',
+    //   valorInicial: '',
+    //   validate: [Validators.required],
+    //   disable: true,
+    //   label: 'Región',
+    // });
+    // this.fileds.push({
+    //   nombre:"IdLocalidad",
+    //   tipo:"select",
+    //   valorInicial:"0",
+    //   disable:true,
+    //   validate:[],
+    //   label:"Localidad",
+    //   hiden:true
+    // });
     this.fileds.push({
       nombre: 'terminos',
       tipo: 'terminos',
