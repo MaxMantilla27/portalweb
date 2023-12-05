@@ -112,6 +112,7 @@ export class ContactenosComponent implements OnInit,OnDestroy {
   }
   ngOnInit(): void {
 
+    console.log('contactenosaqui')
 
     let t:string='BSG Institute - Contáctenos'
     this.title.setTitle(t);
@@ -352,6 +353,21 @@ export class ContactenosComponent implements OnInit,OnDestroy {
       validate:[Validators.required],
       label:"País",
     });
+    // this.fileds.push({
+    //   nombre: 'IdRegion',
+    //   tipo: 'select',
+    //   valorInicial: '',
+    //   validate: [Validators.required],
+    //   disable: true,
+    //   label: 'Región',
+    // });
+    this.fileds.push({
+      nombre:"Movil",
+      tipo:"phone",
+      valorInicial:"",
+      validate:[Validators.required],
+      label:"Teléfono Móvil",
+    });
     this.fileds.push({
       nombre: 'IdRegion',
       tipo: 'select',
@@ -361,11 +377,13 @@ export class ContactenosComponent implements OnInit,OnDestroy {
       label: 'Región',
     });
     this.fileds.push({
-      nombre:"Movil",
-      tipo:"phone",
-      valorInicial:"",
+      nombre:"IdLocalidad",
+      tipo:"select",
+      valorInicial:"0",
+      disable:true,
       validate:[Validators.required],
-      label:"Teléfono Móvil",
+      label:"Localidad",
+      hiden:true
     });
     this.fileds.push({
       nombre:"IdCargo",

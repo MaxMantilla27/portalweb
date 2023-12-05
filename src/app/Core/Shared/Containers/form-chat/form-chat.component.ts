@@ -12,7 +12,7 @@ import { FacebookPixelService } from '../../Services/FacebookPixel/facebook-pixe
 import { RegionService } from '../../Services/Region/region.service';
 import { Basic } from 'src/app/Core/Models/BasicDTO';
 import { DatosPortalService } from '../../Services/DatosPortal/datos-portal.service';
-import { FormularioAzulComponent } from '../formulario-azul/formulario-azul.component';
+import { FormularioRojoComponent } from '../formulario-rojo/formulario-rojo.component';
 declare const fbq:any;
 declare const gtag:any;
 @Component({
@@ -24,8 +24,8 @@ export class FormChatComponent implements OnInit,OnChanges {
   private signal$ = new Subject();
 
   isBrowser: boolean;
-  @ViewChild(FormularioAzulComponent)
-  form!: FormularioAzulComponent;
+  @ViewChild(FormularioRojoComponent)
+  form!: FormularioRojoComponent;
   constructor(
     private _ChatEnLinea: ChatEnLineaService,
     private _RegionService: RegionService,
@@ -186,16 +186,31 @@ export class FormChatComponent implements OnInit,OnChanges {
   GetLocalidadPorRegion(idRegion:number){
     this._RegionService.ObtenerLocalidadPorRegion(idRegion).pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
-        this.fileds.forEach(r=>{
-          if(r.nombre=='IdLocalidad'){
-            r.disable=false;
-            r.data=x.map((p:any)=>{
-              var ps:Basic={Nombre:p.nombreLocalidad,value:p.idLocalidad,longitudCelular:p.longitudCelular,codigo:p.codigo};
-              return ps;
-            })
-          }
-        })
-        this.form.enablefield('IdLocalidad');
+        if (x.length != 0 && x != undefined && x !=null ) {
+
+          this.fileds.forEach(r=>{
+            if(r.nombre=='IdLocalidad'){
+              r.disable=false;
+              r.hiden=false;
+              r.data=x.map((p:any)=>{
+                var ps:Basic={Nombre:p.nombreLocalidad,value:p.idLocalidad,longitudCelular:p.longitudCelular,codigo:p.codigo};
+                return ps;
+              })
+              r.validate=[Validators.required];
+            }
+          })
+          this.form.enablefield('IdLocalidad');
+        }
+        else{
+          this.fileds.forEach(r=>{
+            if(r.nombre=='IdLocalidad'){
+              r.disable=true;
+              r.hiden=true;
+              r.validate=[];
+            }
+          })
+
+        }
       }
     })
   }
@@ -307,16 +322,18 @@ export class FormChatComponent implements OnInit,OnChanges {
       tipo: 'select',
       valorInicial: '',
       validate: [],
-      disable: false,
+      disable: true,
       label: 'Región',
+      hiden:true
     });
     this.fileds.push({
       nombre: 'IdLocalidad',
       tipo: 'select',
       valorInicial: '',
       validate: [],
-      disable: false,
+      disable: true,
       label: 'Localidad',
+      hiden:true
     });
   }
   LimpiarCampos(){

@@ -304,6 +304,12 @@ Changes(changes: SimpleChanges): void {
     else if (clave == "IdLocalidad"){
       (<FormArray>this.userForm.get('Fields')).controls[3].get("Movil")?.setValue(this.pref+valor.codigo);
     }
+    let paisData={
+      Nombre: clave,
+      value: valor.value
+    }
+
+    //this.selecionPaisinicio.emit(paisData)
 
     this.OnSelect.emit({Nombre:clave,value:valor.value})
     // if (clave == "IdLocalidad"){
@@ -529,14 +535,14 @@ Changes(changes: SimpleChanges): void {
   changePaisForm(){
     let data:any = this.paise.find(x=>x.idPais==this.pref)
     if (data != undefined){
-      (<FormArray>this.userForm.get('Fields')).controls[3].get("IdPais")?.setValue(
+      (<FormArray>this.userForm.get('Fields')).controls[4].get("IdPais")?.setValue(
         {
           "Nombre": data.pais,
           "value": data.idPais
         }
       );
-      (<FormArray>this.userForm.get('Fields')).controls[4].get("IdRegion")?.setValue(null);
-      (<FormArray>this.userForm.get('Fields')).controls[5].get("IdLocalidad")?.setValue(null);
+      (<FormArray>this.userForm.get('Fields')).controls[5].get("IdRegion")?.setValue(null);
+      (<FormArray>this.userForm.get('Fields')).controls[6].get("IdLocalidad")?.setValue(null);
       this.OnSelect.emit({Nombre:'IdPais',value:data.idPais})
     }
   }

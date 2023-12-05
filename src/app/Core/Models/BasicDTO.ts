@@ -5,6 +5,7 @@ export interface Basic{
   longitudCelular?:any,
   codigo?: any
 
+
 }
 export interface BasicUrl{
   Nombre:string,
