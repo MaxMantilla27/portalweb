@@ -238,7 +238,7 @@
                 <app-formulario-azul style="background-color: blue;" [Interaccion]="'Programas-'+idBusqueda"
                   [model]="formularioContacto" [InputsDisable]="statuscharge" [CleanOnSubmit]="cleanSub"
                   (OnSubmit)="SetContacto($event)" (OnValid)="formVal=$event" [fiels]="fileds"
-                  [ListaLocalidades]="listaValida" (OnSelect)="SelectChage($event)">
+                  [ListaLocalidades]="listaValida" [ListaRegiones]="listaRegiones" (OnSelect)="SelectChage($event)">
 
                   <ng-container contenido>
                   </ng-container>
@@ -258,7 +258,7 @@
               <ng-container *ngIf="combosPrevios==undefined && CompleteLocalStorage==true">
                 <app-formulario-azul [Interaccion]="'Programas-'+idBusqueda" [model]="formularioContacto"
                   [InputsDisable]="statuscharge" [CleanOnSubmit]="cleanSub" (OnSubmit)="SetContacto($event)"
-                  [ListaLocalidades]="listaValida"
+                  [ListaLocalidades]="listaValida" [ListaRegiones]="listaRegiones"
                   (OnValid)="formVal=$event" [fiels]="fileds" (OnSelect)="SelectChage($event)">
 
                   <ng-container contenido>
@@ -279,7 +279,7 @@
               <ng-container *ngIf="combosPrevios==undefined && CompleteLocalStorage==false">
                 <app-formulario-azul [Interaccion]="'Programas-'+idBusqueda" [model]="formularioContacto"
                   [InputsDisable]="statuscharge" [CleanOnSubmit]="cleanSub" (OnSubmit)="SetContacto($event)"
-                  [ListaLocalidades]="listaValida"
+                  [ListaLocalidades]="listaValida" [ListaRegiones]="listaRegiones"
                   (OnValid)="formVal=$event" [fiels]="fileds" (OnSelect)="SelectChage($event)">
 
                   <ng-container contenido>

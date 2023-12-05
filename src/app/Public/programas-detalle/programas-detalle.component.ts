@@ -255,6 +255,9 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
     idAreaFormacion:undefined,
     idAreaTrabajo:undefined,
     idIndustria:undefined,
+    Region:undefined,
+    Pais:undefined,
+    Localidad:undefined
   }
   public porcentajeDescuento='';
   public textoDescuento='';
@@ -886,8 +889,10 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
       this.formularioContacto.Nombres=datos.nombres;
       this.formularioContacto.Apellidos=datos.apellidos;
       this.formularioContacto.Email=datos.email;
-      this.formularioContacto.IdPais=datos.idPais;
-      this.formularioContacto.IdRegion=datos.idRegion;
+      // this.formularioContacto.IdPais=datos.idPais;
+      this.formularioContacto.IdPais = datos.Pais;
+      // this.formularioContacto.IdRegion=datos.idRegion;
+      this.formularioContacto.IdRegion = datos.Region
       this.formularioContacto.Movil=datos.movil;
       if(this.formularioContacto.IdPais!=undefined){
         this.GetRegionesPorPais(this.formularioContacto.IdPais);
@@ -912,13 +917,13 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
       this.DatosEnvioFormulario.Nombres = value.Nombres;
       this.DatosEnvioFormulario.Apellidos = value.Apellidos;
       this.DatosEnvioFormulario.Correo1 = value.Email;
-      this.DatosEnvioFormulario.IdPais = value.IdPais;
-      this.DatosEnvioFormulario.IdRegion = value.IdRegion;
+      this.DatosEnvioFormulario.IdPais =  typeof value.IdPais === 'object' ? value.IdPais.value : value.IdPais;
+      this.DatosEnvioFormulario.IdRegion = typeof value.IdRegion === 'object' ? value.IdRegion.value : value.IdRegion;
       this.DatosEnvioFormulario.Movil = value.Movil;
       this.DatosEnvioFormulario.IdCargo = value.IdCargo;
-      this.DatosEnvioFormulario.IdAreaFormacion = value.IdAreaFormacion;
-      this.DatosEnvioFormulario.IdAreaTrabajo = value.IdAreaTrabajo;
-      this.DatosEnvioFormulario.IdIndustria = value.IdIndustria;
+      this.DatosEnvioFormulario.IdAreaFormacion = typeof value.IdAreaFormacion === 'object' ? value.IdAreaFormacion.value : value.IdAreaFormacion;
+      this.DatosEnvioFormulario.IdAreaTrabajo = typeof value.IdAreaTrabajo === 'object' ? value.IdAreaTrabajo.value : value.IdAreaTrabajo;
+      this.DatosEnvioFormulario.IdIndustria = typeof value.IdIndustria === 'object' ? value.IdIndustria.value : value.IdIndustria;
       var IdPEspecifico=this._SessionStorageService.SessionGetValueCokies("IdPEspecificoPublicidad");
       var IdCategoriaDato=this._SessionStorageService.SessionGetValueCokies("idCategoria");
       var idcampania=this._SessionStorageService.SessionGetValueCokies("idCampania");
@@ -943,6 +948,9 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
             this.datos.idPais = this.DatosEnvioFormulario.IdPais;
             this.datos.idRegion = this.DatosEnvioFormulario.IdRegion;
             this.datos.movil = this.DatosEnvioFormulario.Movil;
+            this.datos.Pais = value.IdPais;
+            this.datos.Region = value.IdRegion;
+            this.datos.Localidad = value.IdLocalidad;
             var DatosFormulario = this._SessionStorageService.SessionGetValue('DatosFormulario');
             if(DatosFormulario!=''){
               var datosPrevios = JSON.parse(DatosFormulario);
@@ -991,11 +999,14 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
   }
 
   listaValida:any;
-
+  listaRegiones:any;
   ObtenerCombosPortal(){
     this._DatosPortalService.ObtenerCombosPortal().pipe(takeUntil(this.signal$)).subscribe({
       next:(x)=>{
         this.listaValida = x.listaLocalida.map((p:any)=>String(p.codigo));
+        this.listaRegiones = x.listaCiudad;
+        console.log("Campos formulario portal region", this.listaRegiones);
+
         console.log("Campos formulario portal localidad", this.listaValida);
 
         this.fileds.forEach(r=>{
@@ -1115,7 +1126,7 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
       tipo:"select",
       valorInicial:"0",
       disable:true,
-      validate:[Validators.required],
+      validate:[],
       label:"Localidad",
       hiden:true
     });
