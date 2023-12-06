@@ -67,19 +67,23 @@
                       </mat-select> -->
                       <input
                         type="text"
-                        placeholder="{{ field.label }}"
                         matInput
+                        placeholder="{{ field.label }}"
                         formControlName="{{ field.nombre }}"
                         [style]="field.style"
                         (input)="filtroAutocomplete(field, $event)"
                         [matAutocomplete]="auto"
                       />
+                      <mat-icon matSuffix *ngIf="!field.openIcon">expand_more</mat-icon>
+                      <mat-icon matSuffix *ngIf="field.openIcon">search</mat-icon>
                       <mat-autocomplete
                         [style]="field.style"
                         [displayWith]="itemDisplayFn"
                         autoActiveFirstOption
                         #auto="matAutocomplete"
                         (optionSelected)="changeFormsSelect(field.nombre, $event.option.value, i)"
+                        (opened)="toggleOptions(field, true)"
+                        (closed)="toggleOptions(field, false)"
                       >
                         <ng-container *ngFor="let option of field.data">
                           <mat-option
