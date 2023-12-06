@@ -112,6 +112,9 @@ export class ContactenosComponent implements OnInit,OnDestroy {
   }
   ngOnInit(): void {
 
+    console.log(this.formularioContacto)
+
+
     console.log('contactenosaqui')
 
     let t:string='BSG Institute - Contáctenos'

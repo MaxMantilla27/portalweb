@@ -29,25 +29,24 @@ import { SessionStorageService } from '../../Services/session-storage.service';
   styleUrls: ['./formulario.component.scss'],
   encapsulation: ViewEncapsulation.None,
 })
-export class FormularioComponent implements OnChanges, OnInit,OnDestroy {
+export class FormularioComponent implements OnChanges, OnInit, OnDestroy {
   private signal$ = new Subject();
   @ViewChild('f') myNgForm: any;
   isBrowser: boolean;
-  public changeValidation=false;
+  public changeValidation = false;
   constructor(
     private formBuilder: FormBuilder,
     @Inject(PLATFORM_ID) platformId: Object,
-    private _HelperService:HelperService,
-    private _SessionStorageService:SessionStorageService
-
+    private _HelperService: HelperService,
+    private _SessionStorageService: SessionStorageService
   ) {
     this.isBrowser = isPlatformBrowser(platformId);
   }
 
   ngOnDestroy(): void {
     clearInterval(this.interval);
-    this.signal$.next(true)
-    this.signal$.complete()
+    this.signal$.next(true);
+    this.signal$.complete();
   }
   userForm!: FormGroup;
 
@@ -70,19 +69,19 @@ export class FormularioComponent implements OnChanges, OnInit,OnDestroy {
   InputsDisable!: boolean;
 
   @Input()
-  ChargeValuesInit: boolean=false;
+  ChargeValuesInit: boolean = false;
 
   @Input()
-  ObtenerPrefijo: boolean=false;
+  ObtenerPrefijo: boolean = false;
 
   @Input()
-  CleanOnSubmit: boolean=false;
+  CleanOnSubmit: boolean = false;
 
   @Input()
   Interaccion: any;
 
   @Input()
-  ListaLocalidades?:any;
+  ListaLocalidades?: any;
 
   @Output()
   OnSubmit: EventEmitter<object> = new EventEmitter<object>();
@@ -93,61 +92,69 @@ export class FormularioComponent implements OnChanges, OnInit,OnDestroy {
   @Output()
   OnSelect: EventEmitter<Basic> = new EventEmitter<Basic>();
 
-  public paise:Array<any>=[]
-  public paisSelect=0;
-  public pref=''
-  public min=0
-  public max=0
+  public paise: Array<any> = [];
+  public paisSelect = 0;
+  public pref = '';
+  public min = 0;
+  public max = 0;
 
-  flagLocalidadError:boolean = false;
+  flagLocalidadError: boolean = false;
 
-  @Input() cargando=false
+  @Input() cargando = false;
   //later in the code
   fields: any = {};
-  activaraMexico:boolean = false
-  PaisSelect2 :any
-  mexicoSeleccion:boolean  =false
-  public interval:any
-  public jsonForm:InteraccionFormularioCampoDTO={
-    Acciones:[],
-    AccionesJson:{},
-    IdCategoriaOrigen:null,
-    IdConjuntoAnuncio:null,
-    IdInteraccionPortalPaginaV2:0,
-    IdTipoInteraccionPortalFormulario:0,
-    IdInteraccionPortalV2:0,
-    Nombre:''
-  }
+  activaraMexico: boolean = false;
+  PaisSelect2: any;
+  mexicoSeleccion: boolean = false;
+  public interval: any;
+  public jsonForm: InteraccionFormularioCampoDTO = {
+    Acciones: [],
+    AccionesJson: {},
+    IdCategoriaOrigen: null,
+    IdConjuntoAnuncio: null,
+    IdInteraccionPortalPaginaV2: 0,
+    IdTipoInteraccionPortalFormulario: 0,
+    IdInteraccionPortalV2: 0,
+    Nombre: '',
+  };
   ngOnInit(): void {
-    console.log('aquillenaformulario')
-    this._HelperService.recibirDataPais.pipe(takeUntil(this.signal$)).subscribe({
-      next:x=>{
-        console.log(x)
-        if(this.paise.length==0){
-          this.paise=x;
-          var codigoISo=this._SessionStorageService.SessionGetValue('ISO_PAIS');
-          // this.paisSelect=this.paise.find(x=>x.codigoIso==codigoISo).idPais;
+    console.log('aquillenaformulario');
+    this._HelperService.recibirDataPais
+      .pipe(takeUntil(this.signal$))
+      .subscribe({
+        next: (x) => {
+          console.log(x);
+          if (this.paise.length == 0) {
+            this.paise = x;
+            var codigoISo =
+              this._SessionStorageService.SessionGetValue('ISO_PAIS');
+            // this.paisSelect=this.paise.find(x=>x.codigoIso==codigoISo).idPais;
 
-          var index=0
-          this.fiels.forEach((f:any) =>{
-            if(f.tipo=='phone' && this.userForm){
-              this.validatePais(index,f.nombre)
-            }
-            if(f.nombre.toLowerCase()=='idpais' && this.userForm){
-              let campo = (<FormArray>this.userForm.get('Fields')).controls[index].get(f.nombre);
-              if(campo?.value!=undefined){
-                // campo?.setValue(this.paisSelect);
-                // this.OnSelect.emit({Nombre:f.nombre,value:this.paisSelect})
+            var index = 0;
+            this.fiels.forEach((f: any) => {
+              if (f.tipo == 'phone' && this.userForm) {
+                this.validatePais(index, f.nombre);
               }
-            }
-            index++
-          })
-        }
-      }
-    })
-    if(this.isBrowser){
-      if(this.Color!=''){
-        document.documentElement.style.setProperty('--main-bg-color',this.Color);
+              if (f.nombre.toLowerCase() == 'idpais' && this.userForm) {
+                let campo = (<FormArray>this.userForm.get('Fields')).controls[
+                  index
+                ].get(f.nombre);
+                if (campo?.value != undefined) {
+                  // campo?.setValue(this.paisSelect);
+                  // this.OnSelect.emit({Nombre:f.nombre,value:this.paisSelect})
+                }
+              }
+              index++;
+            });
+          }
+        },
+      });
+    if (this.isBrowser) {
+      if (this.Color != '') {
+        document.documentElement.style.setProperty(
+          '--main-bg-color',
+          this.Color
+        );
       }
     }
     let i = 0;
@@ -161,31 +168,32 @@ export class FormularioComponent implements OnChanges, OnInit,OnDestroy {
     this.AddItemsForm();
 
     this.userForm.valueChanges.pipe(takeUntil(this.signal$)).subscribe(() => {
-
-      if(this.changeValidation==false){
+      if (this.changeValidation == false) {
         this.OnValid.emit(this.userForm.valid);
       }
     });
-    this.fiels.forEach((x:any) =>{
-      if(x.disable!=undefined && x.disable==true){
-        this.disableFiled(x.nombre)
+    this.fiels.forEach((x: any) => {
+      if (x.disable != undefined && x.disable == true) {
+        this.disableFiled(x.nombre);
       }
-    })
-    var index=0;
-    this.fiels.forEach((f:any) =>{
-      if(f.tipo=='phone' && this.userForm){
-        this.validatePais(index,f.nombre)
+    });
+    var index = 0;
+    this.fiels.forEach((f: any) => {
+      if (f.tipo == 'phone' && this.userForm) {
+        this.validatePais(index, f.nombre);
       }
       index++;
     });
     this.OnValid.emit(this.userForm.valid);
     if (this.localidadAux != '' && this.localidadAux != undefined) {
       this.PaisSelect2 = this.paisSelect;
-      (<FormArray>this.userForm.get('Fields')).controls[6].get("Movil")?.setValue(this.pref+this.localidadAux);
+      (<FormArray>this.userForm.get('Fields')).controls[6]
+        .get('Movil')
+        ?.setValue(this.pref + this.localidadAux);
     }
   }
-  changeForm(){
-    if(this.userForm!=undefined){
+  changeForm() {
+    if (this.userForm != undefined) {
       for (let i = 0; i < this.fiels.length; i++) {
         let campo = (<FormArray>this.userForm.get('Fields')).controls[i].get(
           this.fiels[i].nombre
@@ -202,17 +210,16 @@ export class FormularioComponent implements OnChanges, OnInit,OnDestroy {
       } else {
         this.EnabledFields();
       }
-      if(this.CleanOnSubmit==true){
+      if (this.CleanOnSubmit == true) {
         this.myNgForm.resetForm();
-        var index=0
-        this.fiels.forEach((f:any) =>{
-          if(f.tipo=='phone' && this.userForm){
-            this.validatePais(index,f.nombre)
+        var index = 0;
+        this.fiels.forEach((f: any) => {
+          if (f.tipo == 'phone' && this.userForm) {
+            this.validatePais(index, f.nombre);
           }
-          index++
-        })
+          index++;
+        });
       }
-
     }
   }
   AddItemsForm() {
@@ -229,25 +236,29 @@ export class FormularioComponent implements OnChanges, OnInit,OnDestroy {
   patchValues(obj: any) {
     return this.formBuilder.group(obj);
   }
-  localidadAux : any = '';
+  localidadAux: any = '';
   AddFields(nombre: string, value: any, index: number) {
     let fild = this.fiels.find((x) => x.nombre === nombre);
     if (fild != undefined) {
       let index = this.fiels.indexOf(fild);
-      if(fild.tipo ==  'select'){
-        console.log("Datos especificos", {Nombre:value?.Nombre, value:value?.value})
-        this.fiels[index].valorInicial = {Nombre:value?.Nombre, value:value?.value};
-        if (nombre == "IdPais"){
+      if (fild.tipo == 'select') {
+        console.log('Datos especificos', {
+          Nombre: value?.Nombre,
+          value: value?.value,
+        });
+        this.fiels[index].valorInicial = {
+          Nombre: value?.Nombre,
+          value: value?.value,
+        };
+        if (nombre == 'IdPais') {
           this.paisSelect = value?.value;
-          this.IconPaises(value?.value)
-        }
-        else if (nombre == "IdLocalidad" && value?.codigo != undefined){
+          this.IconPaises(value?.value);
+        } else if (nombre == 'IdLocalidad' && value?.codigo != undefined) {
           this.localidadAux = value?.codigo;
         }
-        this.OnSelect.emit({Nombre:nombre,value:value?.value})
-      }
-      else{
-      this.fiels[index].valorInicial = value;
+        this.OnSelect.emit({ Nombre: nombre, value: value?.value });
+      } else {
+        this.fiels[index].valorInicial = value;
       }
     } else {
       this.fiels.splice(index, 0, {
@@ -269,107 +280,121 @@ export class FormularioComponent implements OnChanges, OnInit,OnDestroy {
           value = element.value[clave[0]];
           obj[key] = value;
           // obj[key] = typeof value === 'object' ? value.value : value;
-          if(this.ObtenerPrefijo==false){
-            this.fiels.forEach((f:any) =>{
-              if(f.tipo=='phone' && f.nombre.toLowerCase()==key.toLowerCase()){
-                value = element.value[clave[0]].split(this.pref)[element.value[clave[0]].split(this.pref).length-1];
+          if (this.ObtenerPrefijo == false) {
+            this.fiels.forEach((f: any) => {
+              if (
+                f.tipo == 'phone' &&
+                f.nombre.toLowerCase() == key.toLowerCase()
+              ) {
+                value = element.value[clave[0]].split(this.pref)[
+                  element.value[clave[0]].split(this.pref).length - 1
+                ];
                 obj[key] = value;
               }
-            })
+            });
           }
         }
       });
     }
     this.model = obj;
     this.OnSubmit.emit(this.model);
-    if(this.CleanOnSubmit==true){
+    if (this.CleanOnSubmit == true) {
       //this.userForm.reset();
     }
-    if(this.Interaccion!=undefined){
+    if (this.Interaccion != undefined) {
       this.EnvioInteraccion(true);
     }
   }
-  ClickIntoForm(){
-    if(this.interval==undefined){
+  ClickIntoForm() {
+    if (this.interval == undefined) {
       var i = 0;
-      this.interval=setInterval(()=>{
+      this.interval = setInterval(() => {
         i++;
-        if(i==60){
+        if (i == 60) {
           this.EnvioInteraccion(false);
         }
-      },1000);
+      }, 1000);
     }
   }
-  EnvioInteraccion(enviado:boolean){
-    let objInteraccion:Array<any>=[];
+  EnvioInteraccion(enviado: boolean) {
+    let objInteraccion: Array<any> = [];
     for (let i = 0; i < (<FormArray>this.userForm.get('Fields')).length; i++) {
       const element = (<FormArray>this.userForm.get('Fields')).at(i);
       let clave = Object.keys(element.value);
       var value = element.value[clave[0]];
-      if(this.ObtenerPrefijo==false){
-        this.fiels.forEach((f:any) =>{
-          if(f.tipo=='phone' && f.nombre.toLowerCase()==clave[0].toLowerCase()){
-            value = element.value[clave[0]].split(this.pref)[element.value[clave[0]].split(this.pref).length-1];
+      if (this.ObtenerPrefijo == false) {
+        this.fiels.forEach((f: any) => {
+          if (
+            f.tipo == 'phone' &&
+            f.nombre.toLowerCase() == clave[0].toLowerCase()
+          ) {
+            value = element.value[clave[0]].split(this.pref)[
+              element.value[clave[0]].split(this.pref).length - 1
+            ];
           }
-        })
+        });
       }
-      this.fiels.forEach((f:any) =>{
-        if(f.nombre.toLowerCase()==clave[0].toLowerCase()){
-
-          var tipo='Input'
-          if(f.tipo=='checkbox'){
-            tipo='checkbox'
+      this.fiels.forEach((f: any) => {
+        if (f.nombre.toLowerCase() == clave[0].toLowerCase()) {
+          var tipo = 'Input';
+          if (f.tipo == 'checkbox') {
+            tipo = 'checkbox';
           }
-          if(f.tipo.toLowerCase()=='password'){
-            let cantV=value.length
-            let v=''
-            for(let i=0; i<cantV;i++){
-              v+='*'
+          if (f.tipo.toLowerCase() == 'password') {
+            let cantV = value.length;
+            let v = '';
+            for (let i = 0; i < cantV; i++) {
+              v += '*';
             }
-            value=v;
+            value = v;
           }
           objInteraccion.push({
-            Tag:tipo,
-            Tipo:f.tipo,
-            Nombre:f.label,
-            valor:value
-          })
+            Tag: tipo,
+            Tipo: f.tipo,
+            Nombre: f.label,
+            valor: value,
+          });
         }
-      })
+      });
     }
-    var tipo=0;
-    if(enviado){
-      if(this.userForm.valid==true){
-        tipo=4
-      }else{
-        tipo=3
+    var tipo = 0;
+    if (enviado) {
+      if (this.userForm.valid == true) {
+        tipo = 4;
+      } else {
+        tipo = 3;
       }
-    }else{
-      if(this.userForm.valid==true){
-        tipo=2
-      }else{
-        tipo=1
+    } else {
+      if (this.userForm.valid == true) {
+        tipo = 2;
+      } else {
+        tipo = 1;
       }
     }
-    this.jsonForm.AccionesJson=objInteraccion;
-    this.jsonForm.IdCategoriaOrigen=this._SessionStorageService.SessionGetValueCokies("idCategoria");
-    this.jsonForm.IdConjuntoAnuncio=this._SessionStorageService.SessionGetValueCokies("idCampania")
-    this.jsonForm.IdTipoInteraccionPortalFormulario=tipo
-    this.jsonForm.Nombre=this.Interaccion
+    this.jsonForm.AccionesJson = objInteraccion;
+    this.jsonForm.IdCategoriaOrigen =
+      this._SessionStorageService.SessionGetValueCokies('idCategoria');
+    this.jsonForm.IdConjuntoAnuncio =
+      this._SessionStorageService.SessionGetValueCokies('idCampania');
+    this.jsonForm.IdTipoInteraccionPortalFormulario = tipo;
+    this.jsonForm.Nombre = this.Interaccion;
     this._HelperService.enviarMsjForm(this.jsonForm);
-    clearInterval(this.interval)
-    this.interval=undefined
+    clearInterval(this.interval);
+    this.interval = undefined;
   }
-  disableFiled(name:string){
-
+  disableFiled(name: string) {
     for (let i = 0; i < this.fiels.length; i++) {
-      let campo = (<FormArray>this.userForm.get('Fields')).controls[i].get(name);
+      let campo = (<FormArray>this.userForm.get('Fields')).controls[i].get(
+        name
+      );
       campo?.disable();
     }
   }
-  enablefield(name:string){
+  enablefield(name: string) {
     for (let i = 0; i < this.fiels.length; i++) {
-      let campo = (<FormArray>this.userForm.get('Fields')).controls[i].get(name);
+      let campo = (<FormArray>this.userForm.get('Fields')).controls[i].get(
+        name
+      );
       campo?.enable();
     }
   }
@@ -392,8 +417,8 @@ export class FormularioComponent implements OnChanges, OnInit,OnDestroy {
   obtenerErrorCampoNombre(i: number, val: string) {
     var campo = (<FormArray>this.userForm.get('Fields')).controls[i].get(val);
     if (campo!.hasError('required')) {
-      var fls=this.fiels.find(x=>x.nombre==val);
-      if(fls?.error!=undefined){
+      var fls = this.fiels.find((x) => x.nombre == val);
+      if (fls?.error != undefined) {
         return fls?.error;
       }
       return 'El campo ' + this.fiels[i].label + ' es requerido';
@@ -402,18 +427,18 @@ export class FormularioComponent implements OnChanges, OnInit,OnDestroy {
     if (campo!.hasError('minlength')) {
       let min = campo?.getError('minlength')!.requiredLength;
       //return 'La longitud mínima es de ' + min + ' caracteres';
-      var fls=this.fiels.find(x=>x.nombre==val);
-      if(fls?.tipo=='phone'){
-        return 'La longitud debe ser de '+(this.min) +' dígitos minimo'
+      var fls = this.fiels.find((x) => x.nombre == val);
+      if (fls?.tipo == 'phone') {
+        return 'La longitud debe ser de ' + this.min + ' dígitos minimo';
       }
       return 'La longitud es incorrecta';
     }
     if (campo!.hasError('maxlength')) {
       let max = campo?.getError('maxlength')!.requiredLength;
       //return 'La longitud maxima es de ' + max + ' caracteres';
-      var fls=this.fiels.find(x=>x.nombre==val);
-      if(fls?.tipo=='phone'){
-        return 'La longitud debe ser de '+(this.max) +' dígitos maximo'
+      var fls = this.fiels.find((x) => x.nombre == val);
+      if (fls?.tipo == 'phone') {
+        return 'La longitud debe ser de ' + this.max + ' dígitos maximo';
       }
       return 'La longitud es incorrecta';
     }
@@ -433,12 +458,12 @@ export class FormularioComponent implements OnChanges, OnInit,OnDestroy {
   Fields(): FormArray {
     return this.userForm.get('Fields') as FormArray;
   }
-  IconPaises(idpaisStorage?:number){
-    if (idpaisStorage!=undefined){
-      this.paisSelect=idpaisStorage;
+  IconPaises(idpaisStorage?: number) {
+    if (idpaisStorage != undefined) {
+      this.paisSelect = idpaisStorage;
     }
-    if(this.paise.find(x=>x.idPais==this.paisSelect)!=undefined){
-      return this.paise.find(x=>x.idPais==this.paisSelect).icono
+    if (this.paise.find((x) => x.idPais == this.paisSelect) != undefined) {
+      return this.paise.find((x) => x.idPais == this.paisSelect).icono;
     }
     return '';
   }
@@ -462,128 +487,196 @@ export class FormularioComponent implements OnChanges, OnInit,OnDestroy {
     return item && item.Nombre ? item.Nombre : '';
   }
 
+  changeFormsSelect(clave: any, valor: any) {
+    console.log(
+      'Formulario declarado loading page',
+      this.userForm.get('Fields')?.value
+    );
+    //if(this.userForm.get('Fields')?.value.[4] == 'movil')
+    const objeto = this.userForm.get('Fields')?.value[4];
 
-  changeFormsSelect(clave:any, valor:any){
-    console.log("Formulario declarado loading page",this.userForm.get('Fields')?.value)
+    if (objeto.hasOwnProperty('Movil')) {
+      console.log('formulario contactenos');
 
-    if (clave == "IdPais"){
-      this.paisSelect =valor.value
-      this.PaisSelect2 = valor.value
-      this.validatePais(6,'Movil');
-      (<FormArray>this.userForm.get('Fields')).controls[4].get("IdRegion")?.setValue(null);
-      (<FormArray>this.userForm.get('Fields')).controls[5].get("IdLocalidad")?.setValue(null);
-
+      if (clave == 'IdPais') {
+        this.paisSelect = valor.value;
+        this.PaisSelect2 = valor.value;
+        this.validatePais(4, 'Movil');
+        (<FormArray>this.userForm.get('Fields')).controls[5]
+          .get('IdRegion')
+          ?.setValue(null);
+        (<FormArray>this.userForm.get('Fields')).controls[5]
+          .get('IdLocalidad')
+          ?.setValue(null);
+      } else if (clave == 'IdRegion') {
+        (<FormArray>this.userForm.get('Fields')).controls[5]
+          .get('IdLocalidad')
+          ?.setValue(null);
+      } else if (clave == 'IdLocalidad') {
+        //this.userForm.controls['Fields'].setValue({['phone']:valor.codigo})
+        (<FormArray>this.userForm.get('Fields')).controls[4]
+          .get('Movil')
+          ?.setValue(this.pref + valor.codigo);
+      }
+      this.OnSelect.emit({ Nombre: clave, value: valor.value });
+    } else {
+      console.log('formulario programa');
+      if (clave == 'IdPais') {
+        this.paisSelect = valor.value;
+        this.PaisSelect2 = valor.value;
+        this.validatePais(6, 'Movil');
+        (<FormArray>this.userForm.get('Fields')).controls[4]
+          .get('IdRegion')
+          ?.setValue(null);
+        (<FormArray>this.userForm.get('Fields')).controls[5]
+          .get('IdLocalidad')
+          ?.setValue(null);
+      } else if (clave == 'IdRegion') {
+        (<FormArray>this.userForm.get('Fields')).controls[5]
+          .get('IdLocalidad')
+          ?.setValue(null);
+      } else if (clave == 'IdLocalidad') {
+        //this.userForm.controls['Fields'].setValue({['phone']:valor.codigo})
+        (<FormArray>this.userForm.get('Fields')).controls[6]
+          .get('Movil')
+          ?.setValue(this.pref + valor.codigo);
+      }
+      this.OnSelect.emit({ Nombre: clave, value: valor.value });
     }
-    else if (clave == "IdRegion"){
-      (<FormArray>this.userForm.get('Fields')).controls[5].get("IdLocalidad")?.setValue(null);
-    }
-    else if (clave == "IdLocalidad"){
-      //this.userForm.controls['Fields'].setValue({['phone']:valor.codigo})
-      (<FormArray>this.userForm.get('Fields')).controls[6].get("Movil")?.setValue(this.pref+valor.codigo);
-    }
-    this.OnSelect.emit({Nombre:clave,value:valor.value})
   }
   ///
 
-  validatePais(i: number, val: string){
-    var c=(<FormArray>this.userForm.get('Fields')).controls[i].get(val)?.value;
-    var campo =c==null?'':c.toString();
-    var s=campo.split(' ');
+  validatePais(i: number, val: string) {
+    var c = (<FormArray>this.userForm.get('Fields')).controls[i].get(
+      val
+    )?.value;
+    var campo = c == null ? '' : c.toString();
+    var s = campo.split(' ');
 
-    this.pref=this.PrefPaises()==null?'':this.PrefPaises()+' ';
-    if(this.pref=='+52'){
-      this.mexicoSeleccion == true
-    }
-    else this.mexicoSeleccion == false
-    this.min=this.LongCelularPaises()==null?0:this.LongCelularPaises();
-    (<FormArray>this.userForm.get('Fields')).controls[i].get(val)?.setValue(this.pref+s.slice(1));
-    (<FormArray>this.userForm.get('Fields')).controls[i].get(val)?.clearValidators();
-    if(this.min>0){
-      this.max=this.MaxLongCelularPaises()==null?0:this.MaxLongCelularPaises();
+    this.pref = this.PrefPaises() == null ? '' : this.PrefPaises() + ' ';
+    if (this.pref == '+52') {
+      this.mexicoSeleccion == true;
+    } else this.mexicoSeleccion == false;
+    this.min = this.LongCelularPaises() == null ? 0 : this.LongCelularPaises();
+    (<FormArray>this.userForm.get('Fields')).controls[i]
+      .get(val)
+      ?.setValue(this.pref + s.slice(1));
+    (<FormArray>this.userForm.get('Fields')).controls[i]
+      .get(val)
+      ?.clearValidators();
+    if (this.min > 0) {
+      this.max =
+        this.MaxLongCelularPaises() == null ? 0 : this.MaxLongCelularPaises();
 
-      if(this.min>0){
-        (<FormArray>this.userForm.get('Fields')).controls[i].get(val)?.addValidators([
-          Validators.required,
-          Validators.minLength(this.pref.length+this.min),
-          Validators.maxLength(this.pref.length+this.max)]);
-        this.ChangeInpiut(i,val);
+      if (this.min > 0) {
+        (<FormArray>this.userForm.get('Fields')).controls[i]
+          .get(val)
+          ?.addValidators([
+            Validators.required,
+            Validators.minLength(this.pref.length + this.min),
+            Validators.maxLength(this.pref.length + this.max),
+          ]);
+        this.ChangeInpiut(i, val);
         this.OnValid.emit(false);
-      }else{
-        (<FormArray>this.userForm.get('Fields')).controls[i].get(val)?.addValidators([
-          Validators.required,
-          Validators.minLength(this.pref.length+this.min),
-          Validators.maxLength(this.pref.length+this.min)]);
-        this.ChangeInpiut(i,val);
+      } else {
+        (<FormArray>this.userForm.get('Fields')).controls[i]
+          .get(val)
+          ?.addValidators([
+            Validators.required,
+            Validators.minLength(this.pref.length + this.min),
+            Validators.maxLength(this.pref.length + this.min),
+          ]);
+        this.ChangeInpiut(i, val);
         this.OnValid.emit(false);
       }
-    }else{
-      (<FormArray>this.userForm.get('Fields')).controls[i].get(val)?.addValidators([
-        Validators.required]);
+    } else {
+      (<FormArray>this.userForm.get('Fields')).controls[i]
+        .get(val)
+        ?.addValidators([Validators.required]);
       this.OnValid.emit(false);
     }
-    (<FormArray>this.userForm.get('Fields')).controls[i].get(val)?.setValue(this.pref+(s.length>1?s[1]:''));
+    (<FormArray>this.userForm.get('Fields')).controls[i]
+      .get(val)
+      ?.setValue(this.pref + (s.length > 1 ? s[1] : ''));
   }
-  LongCelularPaises():number{
-    if(this.paise.find(x=>x.idPais==this.paisSelect)!=undefined){
-      return this.paise.find(x=>x.idPais==this.paisSelect).longCelularAlterno
+  LongCelularPaises(): number {
+    if (this.paise.find((x) => x.idPais == this.paisSelect) != undefined) {
+      return this.paise.find((x) => x.idPais == this.paisSelect)
+        .longCelularAlterno;
     }
     return 0;
   }
-  MaxLongCelularPaises():number{
-    if(this.paise.find(x=>x.idPais==this.paisSelect)!=undefined){
-      return this.paise.find(x=>x.idPais==this.paisSelect).longCelular
+  MaxLongCelularPaises(): number {
+    if (this.paise.find((x) => x.idPais == this.paisSelect) != undefined) {
+      return this.paise.find((x) => x.idPais == this.paisSelect).longCelular;
     }
     return 0;
   }
-  PrefPaises():string{
-    if(this.paise.find(x=>x.idPais==this.paisSelect)!=undefined){
-      return this.paise.find(x=>x.idPais==this.paisSelect).prefijoTelefono
+  PrefPaises(): string {
+    if (this.paise.find((x) => x.idPais == this.paisSelect) != undefined) {
+      return this.paise.find((x) => x.idPais == this.paisSelect)
+        .prefijoTelefono;
     }
     return '';
   }
-  PrefLocalidad():string{
-    if(this.paise.find(x=>x.idPais==this.paisSelect)!=undefined){
-      return this.paise.find(x=>x.idPais==this.paisSelect).prefijoTelefono
+  PrefLocalidad(): string {
+    if (this.paise.find((x) => x.idPais == this.paisSelect) != undefined) {
+      return this.paise.find((x) => x.idPais == this.paisSelect)
+        .prefijoTelefono;
     }
     return '';
   }
-  validadorPrefijo(codigoPais:string, nrocelular:string ){
-    if(codigoPais == '+52' && nrocelular.length >= 2){
+  validadorPrefijo(codigoPais: string, nrocelular: string) {
+    if (codigoPais == '+52' && nrocelular.length >= 2) {
       const primerosDosDigitos = nrocelular.substring(0, 2);
       const primerosTresDigitos = nrocelular.substring(0, 3);
-      if (!this.ListaLocalidades?.includes(primerosDosDigitos) && !this.ListaLocalidades?.includes(primerosTresDigitos)) {
-        console.log("Error el prefijo no es valido");
+      if (
+        !this.ListaLocalidades?.includes(primerosDosDigitos) &&
+        !this.ListaLocalidades?.includes(primerosTresDigitos)
+      ) {
+        console.log('Error el prefijo no es valido');
         this.flagLocalidadError = true;
-      }
-      else{
-        console.log("El prefijo es valido");
+      } else {
+        console.log('El prefijo es valido');
         this.flagLocalidadError = false;
       }
     }
   }
-  ChangeInpiut(i: number, val: string){
-    var campo = (<FormArray>this.userForm.get('Fields')).controls[i].get(val)?.value.toString();
-    var s =campo.split(' ')
-    this.validadorPrefijo(s[0],s[1])
-    console.log(s)
-    if(this.PrefPaises()!=null){
-      if(s[0]!=this.PrefPaises()){
-        if(s[0].length>this.PrefPaises().length){
-          (<FormArray>this.userForm.get('Fields')).controls[i].get(val)?.setValue(
-              s[0].slice(0,this.PrefPaises().length)+' '+campo.slice(this.PrefPaises().length)
-          );
-          console.log(1)
-        }else{
-          (<FormArray>this.userForm.get('Fields')).controls[i].get(val)?.setValue(this.PrefPaises()+' ');
-          console.log(2)
+  ChangeInpiut(i: number, val: string) {
+    var campo = (<FormArray>this.userForm.get('Fields')).controls[i]
+      .get(val)
+      ?.value.toString();
+    var s = campo.split(' ');
+    this.validadorPrefijo(s[0], s[1]);
+    console.log(s);
+    if (this.PrefPaises() != null) {
+      if (s[0] != this.PrefPaises()) {
+        if (s[0].length > this.PrefPaises().length) {
+          (<FormArray>this.userForm.get('Fields')).controls[i]
+            .get(val)
+            ?.setValue(
+              s[0].slice(0, this.PrefPaises().length) +
+                ' ' +
+                campo.slice(this.PrefPaises().length)
+            );
+          console.log(1);
+        } else {
+          (<FormArray>this.userForm.get('Fields')).controls[i]
+            .get(val)
+            ?.setValue(this.PrefPaises() + ' ');
+          console.log(2);
         }
-      } else if(campo==this.PrefPaises()){
-        (<FormArray>this.userForm.get('Fields')).controls[i].get(val)?.setValue(this.PrefPaises()+' ');
-        console.log(3)
-      }else{
-        (<FormArray>this.userForm.get('Fields')).controls[i].get(val)?.setValue(
-            s[0].slice(0,this.PrefPaises().length)+' '+s[1].trim()
-        );
+      } else if (campo == this.PrefPaises()) {
+        (<FormArray>this.userForm.get('Fields')).controls[i]
+          .get(val)
+          ?.setValue(this.PrefPaises() + ' ');
+        console.log(3);
+      } else {
+        (<FormArray>this.userForm.get('Fields')).controls[i]
+          .get(val)
+          ?.setValue(
+            s[0].slice(0, this.PrefPaises().length) + ' ' + s[1].trim()
+          );
       }
     }
   }
