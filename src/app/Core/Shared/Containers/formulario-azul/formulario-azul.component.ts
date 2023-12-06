@@ -104,6 +104,7 @@ export class FormularioAzulComponent implements OnChanges, OnInit,OnDestroy {
   @Input() cargando=false
   //later in the code
   fields: any = {};
+  optionsOpen: boolean = false;
   public interval:any
   public jsonForm:InteraccionFormularioCampoDTO={
     Acciones:[],
@@ -122,18 +123,23 @@ export class FormularioAzulComponent implements OnChanges, OnInit,OnDestroy {
         if(this.paise.length==0){
           this.paise=x;
           var codigoISo=this._SessionStorageService.SessionGetValue('ISO_PAIS');
-          // this.paisSelect=this.paise.find(x=>x.codigoIso==codigoISo).idPais;
+          var storageAlumno = this._SessionStorageService.SessionGetValue('DatosFormulario');
+          if (storageAlumno == undefined || storageAlumno == null || storageAlumno == '') {
+            this.paisSelect=this.paise.find(x=>x.codigoIso==codigoISo).idPais;
+          }
 
           var index=0
           this.fiels.forEach((f:any) =>{
+            f.openIcon = false;
             if(f.tipo=='phone' && this.userForm){
               this.validatePais(index,f.nombre)
             }
             if(f.nombre.toLowerCase()=='idpais' && this.userForm){
               let campo = (<FormArray>this.userForm.get('Fields')).controls[index].get(f.nombre);
               if(campo?.value!=undefined){
-                // campo?.setValue(this.paisSelect);
-                // this.OnSelect.emit({Nombre:f.nombre,value:this.paisSelect})
+                console.log('Paises', this.paise)
+                campo?.setValue({Nombre:this.paise.find( x=> x.idPais == this.paisSelect).pais ,value:this.paisSelect});
+                this.OnSelect.emit({Nombre:f.nombre,value:this.paisSelect})
               }
             }
             index++
@@ -239,6 +245,7 @@ export class FormularioAzulComponent implements OnChanges, OnInit,OnDestroy {
         console.log("Datos especificos", {Nombre:value?.Nombre, value:value?.value})
         this.fiels[index].valorInicial = {Nombre:value?.Nombre, value:value?.value};
         if (nombre == "IdPais"){
+          var codigoISo=this._SessionStorageService.SessionGetValue('ISO_PAIS');
           this.paisSelect = value?.value;
           this.IconPaises(value?.value)
         }
@@ -592,5 +599,14 @@ export class FormularioAzulComponent implements OnChanges, OnInit,OnDestroy {
     }
 
     this.OnSelect.emit({Nombre:clave,value:valor.value})
+  }
+  toggleOptions(campo:any,opened: boolean) {
+    console.log(campo, "datos")
+    console.log(this.fiels, "datos")
+    this.fiels.forEach((f:any) =>{
+      if(f.nombre.toLowerCase()==campo.nombre.toLowerCase()){
+        f.openIcon = opened;
+      }
+    })
   }
 }

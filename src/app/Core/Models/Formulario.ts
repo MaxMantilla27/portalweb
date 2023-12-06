@@ -16,4 +16,5 @@ export interface formulario
   error?:string,
   hiden?:any,
   selectValue?:any,
+  openIcon?:boolean
 }
