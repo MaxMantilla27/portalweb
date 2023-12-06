@@ -195,7 +195,7 @@
                             alt=""
                             class="urlSelect"
                           ></div>
-                          <i class="material-icons">arrow_drop_down</i>
+                          <!-- <i class="material-icons">arrow_drop_down</i> -->
                         </div>
                       </div>
                       <div class="col-10 col-md-10 col-lg-10 fieldOld">
@@ -211,9 +211,11 @@
                             formControlName="{{ field.nombre }}"
                             matInput
                           />
-                          <mat-error *ngIf="userForm.invalid">{{
+                          <mat-error *ngIf="!flagLocalidadError && userForm.invalid">{{
                             obtenerErrorCampoNombre(i, field.nombre)
                           }}</mat-error>
+                          <mat-error *ngIf="flagLocalidadError"> Clave LADA Incorrecto </mat-error>
+
                         </mat-form-field>
                       </div>
                     </div>

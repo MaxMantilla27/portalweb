@@ -67,7 +67,6 @@ export class LandingPageModalComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    console.log('teencontremorita')
     console.log(this.data)
     var obj: any = {};
     this.data.valorPrograma.campoContacto.forEach((cc:any) => {
@@ -139,12 +138,17 @@ export class LandingPageModalComponent implements OnInit, OnDestroy {
       if(this.obj.Email!=undefined){
         this.obj.Email=this.combosPrevios.email
       }
+      if(this.obj.IdLocalidad!=undefined){
+        this.obj.IdLocalidad= datos?.Localidad
+      }
       if(this.obj.IdPais!=undefined){
-        this.obj.IdPais=this.combosPrevios.idPais
+        // this.obj.IdPais=this.combosPrevios.idPais
+        this.obj.IdPais = datos.Pais;
         this.GetRegionesPorPais(this.obj.IdPais);
       }
       if(this.obj.IdRegion!=undefined){
-        this.obj.IdRegion=this.combosPrevios.idRegion
+        // this.obj.IdRegion=this.combosPrevios.idRegion
+        this.obj.IdRegion = datos.Region
       }
       if(this.obj.Movil!=undefined){
         this.obj.Movil=this.combosPrevios.movil
@@ -227,8 +231,11 @@ export class LandingPageModalComponent implements OnInit, OnDestroy {
       this.DatosLandingPageEnvio.Nombres=value.Nombres;
       this.DatosLandingPageEnvio.Apellidos=value.Apellidos;
       this.DatosLandingPageEnvio.Correo1=value.Email;
-      this.DatosLandingPageEnvio.IdPais=value.IdPais;
-      this.DatosLandingPageEnvio.IdRegion=value.IdRegion;
+      // this.DatosLandingPageEnvio.IdPais=value.IdPais;
+      // this.DatosLandingPageEnvio.IdRegion=value.IdRegion;
+      this.DatosLandingPageEnvio.IdPais =  typeof value.IdPais === 'object' ? value.IdPais.value : value.IdPais;
+      this.DatosLandingPageEnvio.IdRegion = typeof value.IdRegion === 'object' ? value.IdRegion.value : value.IdRegion;
+
       this.DatosLandingPageEnvio.Movil=value.Movil;
       this.DatosLandingPageEnvio.IdCargo=value.IdCargo;
       this.DatosLandingPageEnvio.IdAreaFormacion=value.IdAreaFormacion;
@@ -391,9 +398,11 @@ export class LandingPageModalComponent implements OnInit, OnDestroy {
     }
 
   }
+  listaLocalidadesValidar:any;
   ObtenerCombosPortal(){
     this._DatosPortalService.ObtenerCombosPortal().pipe(takeUntil(this.signal$)).subscribe({
       next:(x)=>{
+        this.listaLocalidadesValidar = x.listaLocalida.map((p:any)=>String(p.codigo));
         this.fileds.forEach(r=>{
           if(r.nombre=='IdPais'){
             r.data=x.listaPais.map((p:any)=>{

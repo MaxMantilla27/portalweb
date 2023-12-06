@@ -21,9 +21,8 @@ align-items: center; " >
       </div>
 
       <div style="padding: 10px 25px;">
-
           <app-formulario *ngIf="obj!=undefined" [Interaccion]="'Publicidad-'+data.IdFormulario"  style="margin-top: 20px"
-          [model]="obj" [InputsDisable]="statuscharge"
+          [model]="obj" [InputsDisable]="statuscharge" [ListaLocalidades]="listaLocalidadesValidar"
             (OnValid)="formVal=$event" [fiels]="fileds" [Tipo]="1"  (OnSelect)="SelectChage($event)"  (OnSubmit)="EnviarFormulario($event)" >
 
             <ng-container contenido>

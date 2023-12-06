@@ -81,6 +81,9 @@ export class FormularioComponent implements OnChanges, OnInit,OnDestroy {
   @Input()
   Interaccion: any;
 
+  @Input()
+  ListaLocalidades?:any;
+
   @Output()
   OnSubmit: EventEmitter<object> = new EventEmitter<object>();
 
@@ -95,6 +98,9 @@ export class FormularioComponent implements OnChanges, OnInit,OnDestroy {
   public pref=''
   public min=0
   public max=0
+
+  flagLocalidadError:boolean = false;
+
   @Input() cargando=false
   //later in the code
   fields: any = {};
@@ -120,10 +126,8 @@ export class FormularioComponent implements OnChanges, OnInit,OnDestroy {
         if(this.paise.length==0){
           this.paise=x;
           var codigoISo=this._SessionStorageService.SessionGetValue('ISO_PAIS');
-          this.paisSelect=this.paise.find(x=>x.codigoIso==codigoISo).idPais;
-          // if(this.paisSelect==52){
-          //   this.activaraMexico= true
-          // }
+          // this.paisSelect=this.paise.find(x=>x.codigoIso==codigoISo).idPais;
+
           var index=0
           this.fiels.forEach((f:any) =>{
             if(f.tipo=='phone' && this.userForm){
@@ -132,8 +136,8 @@ export class FormularioComponent implements OnChanges, OnInit,OnDestroy {
             if(f.nombre.toLowerCase()=='idpais' && this.userForm){
               let campo = (<FormArray>this.userForm.get('Fields')).controls[index].get(f.nombre);
               if(campo?.value!=undefined){
-                campo?.setValue(this.paisSelect);
-                this.OnSelect.emit({Nombre:f.nombre,value:this.paisSelect})
+                // campo?.setValue(this.paisSelect);
+                // this.OnSelect.emit({Nombre:f.nombre,value:this.paisSelect})
               }
             }
             index++
@@ -175,6 +179,10 @@ export class FormularioComponent implements OnChanges, OnInit,OnDestroy {
       index++;
     });
     this.OnValid.emit(this.userForm.valid);
+    if (this.localidadAux != '' && this.localidadAux != undefined) {
+      this.PaisSelect2 = this.paisSelect;
+      (<FormArray>this.userForm.get('Fields')).controls[6].get("Movil")?.setValue(this.pref+this.localidadAux);
+    }
   }
   changeForm(){
     if(this.userForm!=undefined){
@@ -221,12 +229,26 @@ export class FormularioComponent implements OnChanges, OnInit,OnDestroy {
   patchValues(obj: any) {
     return this.formBuilder.group(obj);
   }
-  AddFields(nombre: string, value: string, index: number) {
+  localidadAux : any = '';
+  AddFields(nombre: string, value: any, index: number) {
     let fild = this.fiels.find((x) => x.nombre === nombre);
     if (fild != undefined) {
       let index = this.fiels.indexOf(fild);
-
+      if(fild.tipo ==  'select'){
+        console.log("Datos especificos", {Nombre:value?.Nombre, value:value?.value})
+        this.fiels[index].valorInicial = {Nombre:value?.Nombre, value:value?.value};
+        if (nombre == "IdPais"){
+          this.paisSelect = value?.value;
+          this.IconPaises(value?.value)
+        }
+        else if (nombre == "IdLocalidad" && value?.codigo != undefined){
+          this.localidadAux = value?.codigo;
+        }
+        this.OnSelect.emit({Nombre:nombre,value:value?.value})
+      }
+      else{
       this.fiels[index].valorInicial = value;
+      }
     } else {
       this.fiels.splice(index, 0, {
         nombre: nombre,
@@ -245,8 +267,8 @@ export class FormularioComponent implements OnChanges, OnInit,OnDestroy {
       Object.entries(this.model).forEach(([key, value]) => {
         if (key == clave[0]) {
           value = element.value[clave[0]];
-          // obj[key] = value;
-          obj[key] = typeof value === 'object' ? value.value : value;
+          obj[key] = value;
+          // obj[key] = typeof value === 'object' ? value.value : value;
           if(this.ObtenerPrefijo==false){
             this.fiels.forEach((f:any) =>{
               if(f.tipo=='phone' && f.nombre.toLowerCase()==key.toLowerCase()){
@@ -411,7 +433,10 @@ export class FormularioComponent implements OnChanges, OnInit,OnDestroy {
   Fields(): FormArray {
     return this.userForm.get('Fields') as FormArray;
   }
-  IconPaises(){
+  IconPaises(idpaisStorage?:number){
+    if (idpaisStorage!=undefined){
+      this.paisSelect=idpaisStorage;
+    }
     if(this.paise.find(x=>x.idPais==this.paisSelect)!=undefined){
       return this.paise.find(x=>x.idPais==this.paisSelect).icono
     }
@@ -442,7 +467,8 @@ export class FormularioComponent implements OnChanges, OnInit,OnDestroy {
     console.log("Formulario declarado loading page",this.userForm.get('Fields')?.value)
 
     if (clave == "IdPais"){
-      this.PaisSelect2 =valor.value
+      this.paisSelect =valor.value
+      this.PaisSelect2 = valor.value
       this.validatePais(6,'Movil');
       (<FormArray>this.userForm.get('Fields')).controls[4].get("IdRegion")?.setValue(null);
       (<FormArray>this.userForm.get('Fields')).controls[5].get("IdLocalidad")?.setValue(null);
@@ -521,9 +547,24 @@ export class FormularioComponent implements OnChanges, OnInit,OnDestroy {
     }
     return '';
   }
+  validadorPrefijo(codigoPais:string, nrocelular:string ){
+    if(codigoPais == '+52' && nrocelular.length >= 2){
+      const primerosDosDigitos = nrocelular.substring(0, 2);
+      const primerosTresDigitos = nrocelular.substring(0, 3);
+      if (!this.ListaLocalidades?.includes(primerosDosDigitos) && !this.ListaLocalidades?.includes(primerosTresDigitos)) {
+        console.log("Error el prefijo no es valido");
+        this.flagLocalidadError = true;
+      }
+      else{
+        console.log("El prefijo es valido");
+        this.flagLocalidadError = false;
+      }
+    }
+  }
   ChangeInpiut(i: number, val: string){
     var campo = (<FormArray>this.userForm.get('Fields')).controls[i].get(val)?.value.toString();
     var s =campo.split(' ')
+    this.validadorPrefijo(s[0],s[1])
     console.log(s)
     if(this.PrefPaises()!=null){
       if(s[0]!=this.PrefPaises()){

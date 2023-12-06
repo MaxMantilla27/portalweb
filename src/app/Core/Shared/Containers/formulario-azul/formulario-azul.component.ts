@@ -579,6 +579,8 @@ export class FormularioAzulComponent implements OnChanges, OnInit,OnDestroy {
     console.log("Formulario declarado",this.userForm.get('Fields')?.value)
 
     if (clave == "IdPais"){
+      this.paisSelect = valor.value;
+      this.validatePais(6,'Movil');
       (<FormArray>this.userForm.get('Fields')).controls[4].get("IdRegion")?.setValue(null);
       (<FormArray>this.userForm.get('Fields')).controls[5].get("IdLocalidad")?.setValue(null);
     }
