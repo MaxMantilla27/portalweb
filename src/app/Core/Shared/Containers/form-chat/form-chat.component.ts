@@ -221,10 +221,7 @@ export class FormChatComponent implements OnInit,OnChanges {
   SelectChage(e:any){
     console.log('form')
     if(e.Nombre =="IdPais"){
-    //   (<FormArray>this.userForm.get('Fields')).controls[3].get("IdPais")?.setValue(   {
-    //     "Nombre": "Mexico",
-    //     "value": 52
-    // });
+
       this.GetRegionesPorPais(e.value)
     }
     if(e.Nombre == "IdRegion"){

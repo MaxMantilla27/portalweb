@@ -457,7 +457,9 @@ export class FormularioAzulComponent implements OnChanges, OnInit,OnDestroy {
     var c=(<FormArray>this.userForm.get('Fields')).controls[i].get(val)?.value;
     var campo =c==null?'':c.toString();
     var s=campo.split(' ');
-
+    if(s.length ==1){
+      s.push(' ')
+    }
     this.pref=this.PrefPaises()==null?'':this.PrefPaises()+' ';
     this.min=this.LongCelularPaises()==null?0:this.LongCelularPaises();
     (<FormArray>this.userForm.get('Fields')).controls[i].get(val)?.setValue(this.pref+s.slice(1));
@@ -539,6 +541,9 @@ export class FormularioAzulComponent implements OnChanges, OnInit,OnDestroy {
     var campo = (<FormArray>this.userForm.get('Fields')).controls[i].get(val)?.value.toString();
     var s =campo.split(' ')
     console.log(s)
+    if(s.length ==1){
+      s.push(' ')
+    }
     this.validadorPrefijo(s[0],s[1])
 
     if(this.PrefPaises()!=null){

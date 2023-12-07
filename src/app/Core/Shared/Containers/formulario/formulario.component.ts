@@ -539,6 +539,7 @@ export class FormularioComponent implements OnChanges, OnInit, OnDestroy {
         (<FormArray>this.userForm.get('Fields')).controls[5]
           .get('IdLocalidad')
           ?.setValue(null);
+          (<FormArray>this.userForm.get('Fields')).controls[6].get("Movil")?.setValue(this.pref);
       } else if (clave == 'IdRegion') {
         (<FormArray>this.userForm.get('Fields')).controls[5]
           .get('IdLocalidad')
@@ -654,7 +655,11 @@ export class FormularioComponent implements OnChanges, OnInit, OnDestroy {
     var campo = (<FormArray>this.userForm.get('Fields')).controls[i]
       .get(val)
       ?.value.toString();
+
     var s = campo.split(' ');
+    if(s.length ==1){
+      s.push(' ')
+    }
     this.validadorPrefijo(s[0], s[1]);
     console.log(s);
     if (this.PrefPaises() != null) {

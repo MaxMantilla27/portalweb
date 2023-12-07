@@ -130,13 +130,13 @@ export class FormularioRojoComponent implements OnChanges, OnInit,OnDestroy {
             this.paisSelect=this.paise.find(x=>x.codigoIso==codigoISo).idPais;
           }
 
-          this.paisSelect=this.paise.find(x=>x.codigoIso==codigoISo).idPais;
+          //this.paisSelect=this.paise.find(x=>x.codigoIso==codigoISo).idPais;
           var index=0
           this.fiels.forEach((f:any) =>{
             if(f.tipo=='phone' && this.userForm){
               this.validatePais(index,f.nombre)
             }
-            if(f.nombre.toLowerCase()=='idpais' && this.userForm){
+            if(f.nombre=='IdPais' && this.userForm){
 
               let campo = (<FormArray>this.userForm.get('Fields')).controls[
                 index
@@ -311,16 +311,16 @@ Changes(changes: SimpleChanges): void {
 
     if (clave == "IdPais"){
       this.paisSelect = valor.value;
-      this.validatePais(3,'Movil');
-      (<FormArray>this.userForm.get('Fields')).controls[5].get("IdRegion")?.setValue(null);
-      (<FormArray>this.userForm.get('Fields')).controls[6].get("IdLocalidad")?.setValue(null);
-      (<FormArray>this.userForm.get('Fields')).controls[3].get("Movil")?.setValue(this.pref);
+      this.validatePais(6,'Movil');
+      (<FormArray>this.userForm.get('Fields')).controls[4].get("IdRegion")?.setValue(null);
+      (<FormArray>this.userForm.get('Fields')).controls[5].get("IdLocalidad")?.setValue(null);
+      (<FormArray>this.userForm.get('Fields')).controls[6].get("Movil")?.setValue(this.pref);
     }
     else if (clave == "IdRegion"){
       (<FormArray>this.userForm.get('Fields')).controls[6].get("IdLocalidad")?.setValue(null);
     }
     else if (clave == "IdLocalidad"){
-      (<FormArray>this.userForm.get('Fields')).controls[3].get("Movil")?.setValue(this.pref+valor.codigo);
+      (<FormArray>this.userForm.get('Fields')).controls[6].get("Movil")?.setValue(this.pref+valor.codigo);
     }
     let paisData={
       Nombre: clave,
@@ -519,7 +519,9 @@ Changes(changes: SimpleChanges): void {
     var c=(<FormArray>this.userForm.get('Fields')).controls[i].get(val)?.value;
     var campo =c==null?'':c.toString();
     var s=campo.split(' ');
-
+    if(s.length ==1){
+      s.push(' ')
+    }
     this.pref=this.PrefPaises()==null?'':this.PrefPaises()+' ';
     this.min=this.LongCelularPaises()==null?0:this.LongCelularPaises();
     (<FormArray>this.userForm.get('Fields')).controls[i].get(val)?.setValue(this.pref+s.slice(1));
