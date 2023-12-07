@@ -16,7 +16,7 @@ import {
   ViewEncapsulation,
 } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Subject, takeUntil } from 'rxjs';
+import { Subject, takeUntil, timer } from 'rxjs';
 import { Basic } from 'src/app/Core/Models/BasicDTO';
 import { formulario } from 'src/app/Core/Models/Formulario';
 import { InteraccionFormularioCampoDTO } from 'src/app/Core/Models/Interacciones';
@@ -118,6 +118,7 @@ export class FormularioComponent implements OnChanges, OnInit, OnDestroy {
     Nombre: '',
   };
   ngOnInit(): void {
+    console.log('aquillenaformulario');
     this._HelperService.recibirDataPais
       .pipe(takeUntil(this.signal$))
       .subscribe({
@@ -137,21 +138,56 @@ export class FormularioComponent implements OnChanges, OnInit, OnDestroy {
             var index = 0;
             this.fiels.forEach((f: any) => {
               f.openIcon = false;
-              if(f.tipo=='phone' && this.userForm){
-                this.validatePais(index,f.nombre)
+              if (f.tipo == 'phone' && this.userForm) {
+                this.validatePais(index, f.nombre);
               }
-              if(f.nombre.toLowerCase()=='idpais' && this.userForm){
-                let campo = (<FormArray>this.userForm.get('Fields')).controls[index].get(f.nombre);
-                if(campo?.value!=undefined){
+              if (f.nombre.toLowerCase() == 'idpais' && this.userForm) {
+                let campo = (<FormArray>this.userForm.get('Fields')).controls[
+                  index
+                ].get(f.nombre);
+                if (campo?.value != undefined) {
                   campo?.setValue({Nombre:this.paise.find( x=> x.idPais == this.paisSelect).pais ,value:this.paisSelect});
                   this.OnSelect.emit({Nombre:f.nombre,value:this.paisSelect})
+                  // campo?.setValue(this.paisSelect);
+                  // this.OnSelect.emit({Nombre:f.nombre,value:this.paisSelect})
                 }
               }
               index++;
             });
+            if (this.userForm == undefined){
+              if (this.isBrowser) {
+                let interval = setInterval(() => {
+                  if (this.userForm != undefined) {
+                    this.paise = x;
+                    var codigoISo = this._SessionStorageService.SessionGetValue('ISO_PAIS');
+                    var storageAlumno = this._SessionStorageService.SessionGetValue('DatosFormulario');
+                    if (storageAlumno == undefined || storageAlumno == null || storageAlumno == '') {
+                      this.paisSelect=this.paise.find(x=>x.codigoIso==codigoISo).idPais;
+                      this.PaisSelect2 = this.paisSelect;
+                    }
+                    var indexAlter = 0;
+                    this.fiels.forEach((f: any) => {
+                      f.openIcon = false;
+                      if (f.tipo == 'phone' && this.userForm) {
+                        this.validatePais(indexAlter, f.nombre);
+                      }
+                      if (f.nombre.toLowerCase() == 'idpais' && this.userForm) {
+                        let campo = (<FormArray>this.userForm.get('Fields')).controls[
+                          indexAlter
+                        ].get(f.nombre);
+                        if (campo?.value != undefined) {
+                          campo?.setValue({Nombre:this.paise.find( x=> x.idPais == this.paisSelect).pais ,value:this.paisSelect});
+                          this.OnSelect.emit({Nombre:f.nombre,value:this.paisSelect})
+                        }
+                      }
+                      indexAlter++;
+                    });
+                  }
+                  clearInterval(interval);
+                }, 1000);
 
-
-
+              }
+            }
           }
         },
       });
@@ -197,6 +233,15 @@ export class FormularioComponent implements OnChanges, OnInit, OnDestroy {
         .get('Movil')
         ?.setValue(this.pref + this.localidadAux);
     }
+  }
+  toggleOptions(campo:any,opened: boolean) {
+    console.log(campo, "datos")
+    console.log(this.fiels, "datos")
+    this.fiels.forEach((f:any) =>{
+      if(f.nombre.toLowerCase()==campo.nombre.toLowerCase()){
+        f.openIcon = opened;
+      }
+    })
   }
   changeForm() {
     if (this.userForm != undefined) {
@@ -515,7 +560,6 @@ export class FormularioComponent implements OnChanges, OnInit, OnDestroy {
         (<FormArray>this.userForm.get('Fields')).controls[5]
           .get('IdLocalidad')
           ?.setValue(null);
-          (<FormArray>this.userForm.get('Fields')).controls[6].get("Movil")?.setValue(this.pref);
       } else if (clave == 'IdRegion') {
         (<FormArray>this.userForm.get('Fields')).controls[5]
           .get('IdLocalidad')
@@ -563,7 +607,6 @@ export class FormularioComponent implements OnChanges, OnInit, OnDestroy {
     var s = campo.split(' ');
 
     this.pref = this.PrefPaises() == null ? '' : this.PrefPaises() + ' ';
-
     this.mexicoSeleccion = this.pref == '+52' ? true : false;
 
     this.min = this.LongCelularPaises() == null ? 0 : this.LongCelularPaises();
