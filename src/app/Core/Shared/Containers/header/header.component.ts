@@ -274,7 +274,7 @@ export class HeaderComponent implements OnInit,OnChanges,OnDestroy {
     this._CarreraProfesionalService.GetCarreras(11).pipe(takeUntil(this.signal$)).subscribe({
       next: (x) => {
         console.log(x)
-        this.carreras = x.listaProfesionCabeceraDTO.map((c: any) => {
+        this.carreras = x.listaProfesionCabeceraDTO?.map((c: any) => {
           var ps: BasicUrl = {
             Nombre: c.titulo,
             value: c.idBusqueda,
@@ -282,8 +282,8 @@ export class HeaderComponent implements OnInit,OnChanges,OnDestroy {
           };
           return ps;
         });
-        this._HelperService.enviarArrayCarrera(this.carreras.map((m:any)=>{return m}));
-        this.carreras.push({
+        this._HelperService.enviarArrayCarrera(this.carreras?.map((m:any)=>{return m}));
+        this.carreras?.push({
           Nombre: 'Ver Todo',
           value: 1,
           Url: '/carreras-profesionales',

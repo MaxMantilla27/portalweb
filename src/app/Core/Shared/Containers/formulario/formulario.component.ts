@@ -118,7 +118,6 @@ export class FormularioComponent implements OnChanges, OnInit, OnDestroy {
     Nombre: '',
   };
   ngOnInit(): void {
-    console.log('aquillenaformulario');
     this._HelperService.recibirDataPais
       .pipe(takeUntil(this.signal$))
       .subscribe({
@@ -128,20 +127,24 @@ export class FormularioComponent implements OnChanges, OnInit, OnDestroy {
             this.paise = x;
             var codigoISo =
               this._SessionStorageService.SessionGetValue('ISO_PAIS');
-            // this.paisSelect=this.paise.find(x=>x.codigoIso==codigoISo).idPais;
+            var storageAlumno = this._SessionStorageService.SessionGetValue('DatosFormulario');
+            if (storageAlumno == undefined || storageAlumno == null || storageAlumno == '') {
+              this.paisSelect=this.paise.find(x=>x.codigoIso==codigoISo).idPais;
+              this.PaisSelect2 = this.paisSelect;
+            }
+              // this.paisSelect=this.paise.find(x=>x.codigoIso==codigoISo).idPais;
 
             var index = 0;
             this.fiels.forEach((f: any) => {
-              if (f.tipo == 'phone' && this.userForm) {
-                this.validatePais(index, f.nombre);
+              f.openIcon = false;
+              if(f.tipo=='phone' && this.userForm){
+                this.validatePais(index,f.nombre)
               }
-              if (f.nombre.toLowerCase() == 'idpais' && this.userForm) {
-                let campo = (<FormArray>this.userForm.get('Fields')).controls[
-                  index
-                ].get(f.nombre);
-                if (campo?.value != undefined) {
-                  // campo?.setValue(this.paisSelect);
-                  // this.OnSelect.emit({Nombre:f.nombre,value:this.paisSelect})
+              if(f.nombre.toLowerCase()=='idpais' && this.userForm){
+                let campo = (<FormArray>this.userForm.get('Fields')).controls[index].get(f.nombre);
+                if(campo?.value!=undefined){
+                  campo?.setValue({Nombre:this.paise.find( x=> x.idPais == this.paisSelect).pais ,value:this.paisSelect});
+                  this.OnSelect.emit({Nombre:f.nombre,value:this.paisSelect})
                 }
               }
               index++;
@@ -252,6 +255,7 @@ export class FormularioComponent implements OnChanges, OnInit, OnDestroy {
         };
         if (nombre == 'IdPais') {
           this.paisSelect = value?.value;
+          this.PaisSelect2 = this.paisSelect;
           this.IconPaises(value?.value);
         } else if (nombre == 'IdLocalidad' && value?.codigo != undefined) {
           this.localidadAux = value?.codigo;
@@ -554,9 +558,9 @@ export class FormularioComponent implements OnChanges, OnInit, OnDestroy {
     var s = campo.split(' ');
 
     this.pref = this.PrefPaises() == null ? '' : this.PrefPaises() + ' ';
-    if (this.pref == '+52') {
-      this.mexicoSeleccion == true;
-    } else this.mexicoSeleccion == false;
+
+    this.mexicoSeleccion = this.pref == '+52' ? true : false;
+
     this.min = this.LongCelularPaises() == null ? 0 : this.LongCelularPaises();
     (<FormArray>this.userForm.get('Fields')).controls[i]
       .get(val)

@@ -137,7 +137,6 @@ export class FormularioAzulComponent implements OnChanges, OnInit,OnDestroy {
             if(f.nombre.toLowerCase()=='idpais' && this.userForm){
               let campo = (<FormArray>this.userForm.get('Fields')).controls[index].get(f.nombre);
               if(campo?.value!=undefined){
-                console.log('Paises', this.paise)
                 campo?.setValue({Nombre:this.paise.find( x=> x.idPais == this.paisSelect).pais ,value:this.paisSelect});
                 this.OnSelect.emit({Nombre:f.nombre,value:this.paisSelect})
               }
@@ -245,7 +244,6 @@ export class FormularioAzulComponent implements OnChanges, OnInit,OnDestroy {
         console.log("Datos especificos", {Nombre:value?.Nombre, value:value?.value})
         this.fiels[index].valorInicial = {Nombre:value?.Nombre, value:value?.value};
         if (nombre == "IdPais"){
-          var codigoISo=this._SessionStorageService.SessionGetValue('ISO_PAIS');
           this.paisSelect = value?.value;
           this.IconPaises(value?.value)
         }
@@ -590,6 +588,8 @@ export class FormularioAzulComponent implements OnChanges, OnInit,OnDestroy {
       this.validatePais(6,'Movil');
       (<FormArray>this.userForm.get('Fields')).controls[4].get("IdRegion")?.setValue(null);
       (<FormArray>this.userForm.get('Fields')).controls[5].get("IdLocalidad")?.setValue(null);
+      (<FormArray>this.userForm.get('Fields')).controls[6].get("Movil")?.setValue(this.pref);
+
     }
     else if (clave == "IdRegion"){
       (<FormArray>this.userForm.get('Fields')).controls[5].get("IdLocalidad")?.setValue(null);
