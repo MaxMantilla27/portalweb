@@ -44,7 +44,7 @@ export class FormularioRojoComponent implements OnChanges, OnInit,OnDestroy {
     this.isBrowser = isPlatformBrowser(platformId);
   }
   ngOnChanges(changes: SimpleChanges): void {
-    throw new Error('Method not implemented.');
+    // throw new Error('Method not implemented.');
   }
 
   ngOnDestroy(): void {
