@@ -126,10 +126,12 @@ export class FormularioComponent implements OnChanges, OnInit, OnDestroy {
           console.log(x);
           if (this.paise.length == 0) {
             this.paise = x;
-            var codigoISo =
-              this._SessionStorageService.SessionGetValue('ISO_PAIS');
+            var codigoISo =this._SessionStorageService.SessionGetValue('ISO_PAIS');
             // this.paisSelect=this.paise.find(x=>x.codigoIso==codigoISo).idPais;
-
+            var storageAlumno = this._SessionStorageService.SessionGetValue('DatosFormulario');
+            if (storageAlumno == undefined || storageAlumno == null || storageAlumno == '') {
+              this.paisSelect=this.paise.find(x=>x.codigoIso==codigoISo).idPais;
+            }
             var index = 0;
             this.fiels.forEach((f: any) => {
               if (f.tipo == 'phone' && this.userForm) {
@@ -140,12 +142,17 @@ export class FormularioComponent implements OnChanges, OnInit, OnDestroy {
                   index
                 ].get(f.nombre);
                 if (campo?.value != undefined) {
+                  campo?.setValue({Nombre:this.paise.find( x=> x.idPais == this.paisSelect).pais ,value:this.paisSelect});
+                  this.OnSelect.emit({Nombre:f.nombre,value:this.paisSelect})
                   // campo?.setValue(this.paisSelect);
                   // this.OnSelect.emit({Nombre:f.nombre,value:this.paisSelect})
                 }
               }
               index++;
             });
+
+
+
           }
         },
       });
@@ -508,6 +515,7 @@ export class FormularioComponent implements OnChanges, OnInit, OnDestroy {
         (<FormArray>this.userForm.get('Fields')).controls[5]
           .get('IdLocalidad')
           ?.setValue(null);
+          (<FormArray>this.userForm.get('Fields')).controls[6].get("Movil")?.setValue(this.pref);
       } else if (clave == 'IdRegion') {
         (<FormArray>this.userForm.get('Fields')).controls[5]
           .get('IdLocalidad')

@@ -302,13 +302,6 @@ export class FormChatComponent implements OnInit,OnChanges {
     });
 
     this.fileds.push({
-      nombre: 'Movil',
-      tipo: 'phone',
-      valorInicial: '',
-      validate: [Validators.required],
-      label: 'Teléfono Móvil',
-    });
-    this.fileds.push({
       nombre: 'IdPais',
       tipo: 'select',
       valorInicial: '',
@@ -335,6 +328,15 @@ export class FormChatComponent implements OnInit,OnChanges {
       label: 'Localidad',
       hiden:true
     });
+
+    this.fileds.push({
+      nombre: 'Movil',
+      tipo: 'phone',
+      valorInicial: '',
+      validate: [Validators.required],
+      label: 'Teléfono Móvil',
+    });
+
   }
   LimpiarCampos(){
     this.CompleteLocalStorage=false;

@@ -124,6 +124,12 @@ export class FormularioRojoComponent implements OnChanges, OnInit,OnDestroy {
         if(this.paise.length==0){
           this.paise=x;
           var codigoISo=this._SessionStorageService.SessionGetValue('ISO_PAIS');
+
+          var storageAlumno = this._SessionStorageService.SessionGetValue('DatosFormulario');
+          if (storageAlumno == undefined || storageAlumno == null || storageAlumno == '') {
+            this.paisSelect=this.paise.find(x=>x.codigoIso==codigoISo).idPais;
+          }
+
           this.paisSelect=this.paise.find(x=>x.codigoIso==codigoISo).idPais;
           var index=0
           this.fiels.forEach((f:any) =>{
@@ -131,11 +137,22 @@ export class FormularioRojoComponent implements OnChanges, OnInit,OnDestroy {
               this.validatePais(index,f.nombre)
             }
             if(f.nombre.toLowerCase()=='idpais' && this.userForm){
-              let campo = (<FormArray>this.userForm.get('Fields')).controls[index].get(f.nombre);
-              if(campo?.value!=undefined){
-                campo?.setValue(this.paisSelect);
+
+              let campo = (<FormArray>this.userForm.get('Fields')).controls[
+                index
+              ].get(f.nombre);
+              if (campo?.value != undefined) {
+                campo?.setValue({Nombre:this.paise.find( x=> x.idPais == this.paisSelect).pais ,value:this.paisSelect});
                 this.OnSelect.emit({Nombre:f.nombre,value:this.paisSelect})
+                // campo?.setValue(this.paisSelect);
+                // this.OnSelect.emit({Nombre:f.nombre,value:this.paisSelect})
               }
+              /////
+              // let campo = (<FormArray>this.userForm.get('Fields')).controls[index].get(f.nombre);
+              // if(campo?.value!=undefined){
+              //   campo?.setValue(this.paisSelect);
+              //   this.OnSelect.emit({Nombre:f.nombre,value:this.paisSelect})
+              // }
             }
             if(f.nombre.toLowerCase()=='idregion' && this.userForm){
               let campo = (<FormArray>this.userForm.get('Fields')).controls[index].get(f.nombre);
@@ -297,6 +314,7 @@ Changes(changes: SimpleChanges): void {
       this.validatePais(3,'Movil');
       (<FormArray>this.userForm.get('Fields')).controls[5].get("IdRegion")?.setValue(null);
       (<FormArray>this.userForm.get('Fields')).controls[6].get("IdLocalidad")?.setValue(null);
+      (<FormArray>this.userForm.get('Fields')).controls[3].get("Movil")?.setValue(this.pref);
     }
     else if (clave == "IdRegion"){
       (<FormArray>this.userForm.get('Fields')).controls[6].get("IdLocalidad")?.setValue(null);

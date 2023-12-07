@@ -309,6 +309,7 @@ export class ContactenosComponent implements OnInit,OnDestroy {
         this.fileds.forEach(r=>{
           if(r.nombre=='IdRegion'){
             r.disable=false;
+            r.hiden=false
             r.data=x.map((p:any)=>{
               var ps:Basic={Nombre:p.nombreCiudad,value:p.idCiudad};
               return ps;
@@ -400,29 +401,31 @@ export class ContactenosComponent implements OnInit,OnDestroy {
     //   label: 'Región',
     // });
     this.fileds.push({
-      nombre:"Movil",
-      tipo:"phone",
-      valorInicial:"",
-      validate:[Validators.required],
-      label:"Teléfono Móvil",
-    });
-    this.fileds.push({
       nombre: 'IdRegion',
       tipo: 'select',
       valorInicial: '',
       validate: [Validators.required],
       disable: true,
       label: 'Región',
-    });
-    this.fileds.push({
-      nombre:"IdLocalidad",
-      tipo:"select",
-      valorInicial:"0",
-      disable:true,
-      validate:[Validators.required],
-      label:"Localidad",
       hiden:true
     });
+    this.fileds.push({
+      nombre:'IdLocalidad',
+      tipo:'select',
+      valorInicial:'',
+      disable:true,
+      validate:[Validators.required],
+      label:'Localidad',
+      hiden:true
+    });
+    this.fileds.push({
+      nombre:"Movil",
+      tipo:"phone",
+      valorInicial:"",
+      validate:[Validators.required],
+      label:"Teléfono Móvil",
+    });
+
     this.fileds.push({
       nombre:"IdCargo",
       tipo:"select",

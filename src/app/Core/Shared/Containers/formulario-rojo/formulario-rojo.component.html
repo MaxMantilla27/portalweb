@@ -120,14 +120,15 @@
                             </mat-select>
                           </mat-form-field>
                           <div [style]="'background-image: url('+IconPaises()+')'" alt="" class="urlSelect"></div>
-                          <i class="material-icons">arrow_drop_down</i>
+                          <!-- <i class="material-icons">arrow_drop_down</i> -->
                         </div>
                       </div>
                       <div class="col-10 col-md-10 col-lg-10 fieldOldRojo">
                         <mat-form-field appearance="outline">
+
                           <mat-label>{{field.label}}</mat-label>
                           <!-- <span matPrefix>{{PrefPaises()}}</span> -->
-                          <input type="text" [autofocus]="field.focus" (keyup)="ChangeInpiut(i,field.nombre)" (keydown)="ChangeInpiut(i,field.nombre)" [style]="field.style" formControlName="{{field.nombre}}" matInput />
+                          <input type="text" [autofocus]="field.focus" (keyup)="ChangeInpiut(i,field.nombre)"  [style]="field.style" formControlName="{{field.nombre}}" matInput />
                           <mat-error *ngIf="userForm.invalid">{{obtenerErrorCampoNombre(i,field.nombre)}}</mat-error>
                         </mat-form-field>
                       </div>
