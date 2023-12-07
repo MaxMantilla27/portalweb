@@ -131,14 +131,16 @@
                         (input)="filtroAutocomplete(field, $event)"
                         [matAutocomplete]="auto"
                       />
-
+                      <mat-icon matSuffix *ngIf="!field.openIcon">expand_more</mat-icon>
+                      <mat-icon matSuffix *ngIf="field.openIcon">search</mat-icon>
                       <mat-autocomplete
                         [style]="field.style"
                         [displayWith]="itemDisplayFn"
                         autoActiveFirstOption
                         #auto="matAutocomplete"
                         (optionSelected)="changeFormsSelect(field.nombre, $event.option.value)"
-
+                        (opened)="toggleOptions(field, true)"
+                        (closed)="toggleOptions(field, false)"
                       >
                         <ng-container *ngFor="let option of field.data">
                           <mat-option
