@@ -57,7 +57,9 @@
                       <mat-error *ngIf="userForm.invalid">{{obtenerErrorCampoNombre(i,field.nombre)}}</mat-error>
                     </mat-form-field>
                   </ng-container>
-                  <ng-container *ngIf="field.tipo=='select'">
+                  <ng-container
+                  *ngIf="(field.tipo === 'select' && paisSelect === 52 && (field.nombre === 'IdPais' || field.nombre === 'IdLocalidad' || field.nombre === 'IdRegion' )) || (field.tipo === 'select' && (paisSelect !== 52 && field.nombre === 'IdPais' || field.nombre === 'IdCargo' || field.nombre === 'IdAreaFormacion' || field.nombre === 'IdAreaTrabajo' || field.nombre === 'IdIndustria'))"
+                  >
                     <mat-form-field appearance="outline">
                       <mat-label>{{field.label}}</mat-label>
                       <!-- <mat-select [style]="field.style" formControlName="{{field.nombre}}"

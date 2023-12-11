@@ -148,12 +148,21 @@ export class FormChatComponent implements OnInit,OnChanges {
           var DatosFormulario = this._SessionStorageService.SessionGetValue('DatosFormulario');
           if(DatosFormulario!=''){
             var datosPrevios = JSON.parse(DatosFormulario);
-            this.datos.idCargo=datosPrevios.idCargo;
-            this.datos.idPais=datosPrevios.idPais;
-            this.datos.idRegion=datosPrevios.idRegion;
-            this.datos.idAreaFormacion=datosPrevios.idAreaFormacion;
-            this.datos.idAreaTrabajo=datosPrevios.idAreaTrabajo;
-            this.datos.idIndustria=datosPrevios.idIndustria;
+            // this.datos.idCargo=datosPrevios.idCargo;
+            // this.datos.idPais=datosPrevios.idPais;
+            // this.datos.idRegion=datosPrevios.idRegion;
+            // this.datos.idAreaFormacion=datosPrevios.idAreaFormacion;
+            // this.datos.idAreaTrabajo=datosPrevios.idAreaTrabajo;
+            // this.datos.idIndustria=datosPrevios.idIndustria;
+            this.datos.idCargo= typeof datosPrevios.idCargo  === 'object' ? datosPrevios.idCargo.value : datosPrevios.idCargo;
+            this.datos.idPais= typeof datosPrevios.idPais  === 'object' ? datosPrevios.idPais.value : datosPrevios.idPais;
+            this.datos.idRegion=typeof datosPrevios.idRegion === 'object' ? datosPrevios.idRegion.value : datosPrevios.idRegion;
+            this.datos.idAreaFormacion= typeof datosPrevios.idAreaFormacion === 'object' ? datosPrevios.idAreaFormacion.value : datosPrevios.idAreaFormacion;
+            this.datos.idAreaTrabajo= typeof datosPrevios.idAreaTrabajo === 'object' ? datosPrevios.idAreaTrabajo.value : datosPrevios.idAreaTrabajo;
+            this.datos.idIndustria= typeof datosPrevios.idIndustria === 'object' ? datosPrevios.idIndustria.value : datosPrevios.idIndustria;
+            this.datos.Pais = datosPrevios.idPais;
+            this.datos.Region = datosPrevios.idRegion;
+            this.datos.Localidad = datosPrevios.idLocalidad;
           }
           this._SessionStorageService.SessionSetValue('DatosFormulario',JSON.stringify(this.datos));
           this.CompleteLocalStorage=true;
