@@ -76,11 +76,15 @@
                         (input)="filtroAutocomplete(field, $event)"
                         [matAutocomplete]="auto"
                       />
+                      <mat-icon matSuffix *ngIf="!field.openIcon">expand_more</mat-icon>
+                      <mat-icon matSuffix *ngIf="field.openIcon">search</mat-icon>
                       <mat-autocomplete
                         [style]="field.style"
                         [displayWith]="itemDisplayFn"
                         autoActiveFirstOption
                         #auto="matAutocomplete"
+                        (opened)="toggleOptions(field, true)"
+                        (closed)="toggleOptions(field, false)"
                         (optionSelected)="changeFormsSelect(field.nombre, $event.option.value, i)"
                       >
                         <ng-container *ngFor="let option of field.data">
@@ -112,7 +116,7 @@
                       <div class="col-2 col-md-2 col-lg-2 " (click)="select.open()" style="padding-right: 0px;">
                         <div class="fieldOldRojo contSelectFormRojo" >
                           <mat-form-field appearance="fill" style="height: 0px; width: 0px;" class="transForm">
-                            <mat-select #myselsetc [(value)]="paisSelect" #select panelClass="myPanelClass"
+                            <mat-select #myselsetc [disabled]="true" [(value)]="paisSelect" #select panelClass="myPanelClass"
                             (selectionChange)="validatePais(i,field.nombre)">
 
                               <mat-option *ngFor="let item of paise" [value]="item.idPais">
@@ -131,7 +135,8 @@
                           <mat-label>{{field.label}}</mat-label>
                           <!-- <span matPrefix>{{PrefPaises()}}</span> -->
                           <input type="text" [autofocus]="field.focus" (keyup)="ChangeInpiut(i,field.nombre)"  [style]="field.style" formControlName="{{field.nombre}}" matInput />
-                          <mat-error *ngIf="userForm.invalid">{{obtenerErrorCampoNombre(i,field.nombre)}}</mat-error>
+                          <mat-error *ngIf="!flagLocalidadError && userForm.invalid">{{obtenerErrorCampoNombre(i,field.nombre)}}</mat-error>
+                          <mat-error *ngIf="flagLocalidadError"> Clave LADA Incorrecto </mat-error>
                         </mat-form-field>
                       </div>
                     </div>

@@ -130,9 +130,9 @@ export class FormularioRojoComponent implements OnChanges, OnInit,OnDestroy {
             this.paisSelect=this.paise.find(x=>x.codigoIso==codigoISo).idPais;
           }
 
-          //this.paisSelect=this.paise.find(x=>x.codigoIso==codigoISo).idPais;
           var index=0
           this.fiels.forEach((f:any) =>{
+            f.openIcon = false;
             if(f.tipo=='phone' && this.userForm){
               this.validatePais(index,f.nombre)
             }
@@ -164,8 +164,6 @@ export class FormularioRojoComponent implements OnChanges, OnInit,OnDestroy {
                   if (storageAlumno == undefined || storageAlumno == null || storageAlumno == '') {
                     this.paisSelect=this.paise.find(x=>x.codigoIso==codigoISo).idPais;
                   }
-
-                  this.paisSelect=this.paise.find(x=>x.codigoIso==codigoISo).idPais;
                   var index=0
                   this.fiels.forEach((f:any) =>{
                     if(f.tipo=='phone' && this.userForm){
@@ -228,6 +226,11 @@ export class FormularioRojoComponent implements OnChanges, OnInit,OnDestroy {
       index++;
     });
     this.OnValid.emit(this.userForm.valid);
+    if (this.localidadAux != '' && this.localidadAux != undefined) {
+      (<FormArray>this.userForm.get('Fields')).controls[6]
+        .get('Movil')
+        ?.setValue(this.pref + this.localidadAux);
+    }
     this.asociarPais()
   }
   public paisEnvio:any
@@ -301,12 +304,28 @@ Changes(changes: SimpleChanges): void {
   patchValues(obj: any) {
     return this.formBuilder.group(obj);
   }
-  AddFields(nombre: string, value: string, index: number) {
+  localidadAux: any = '';
+  AddFields(nombre: string, value: any, index: number) {
     let fild = this.fiels.find((x) => x.nombre === nombre);
     if (fild != undefined) {
       let index = this.fiels.indexOf(fild);
+      if (fild.tipo == 'select') {
+        this.fiels[index].valorInicial = {
+          Nombre: value?.Nombre,
+          value: value?.value,
+        };
+        if (nombre == 'IdPais') {
+          this.paisSelect = value?.value;
+          this.IconPaises(value?.value);
+        } else if (nombre == 'IdLocalidad' && value?.codigo != undefined) {
+          this.localidadAux = value?.codigo;
+        }
+        this.OnSelect.emit({ Nombre: nombre, value: value?.value });
+      }
+      else{
+        this.fiels[index].valorInicial = value;
+      }
 
-      this.fiels[index].valorInicial = value;
     } else {
       this.fiels.splice(index, 0, {
         nombre: nombre,
@@ -521,7 +540,10 @@ Changes(changes: SimpleChanges): void {
   Fields(): FormArray {
     return this.userForm.get('Fields') as FormArray;
   }
-  IconPaises(){
+  IconPaises(idpaisStorage?: number){
+    if (idpaisStorage != undefined) {
+      this.paisSelect = idpaisStorage;
+    }
     if(this.paise.find(x=>x.idPais==this.paisSelect)!=undefined){
       return this.paise.find(x=>x.idPais==this.paisSelect).icono
     }
@@ -609,10 +631,20 @@ Changes(changes: SimpleChanges): void {
       }
     }
   }
+  toggleOptions(campo:any,opened: boolean) {
+    console.log(campo, "datos")
+    console.log(this.fiels, "datos")
+    this.fiels.forEach((f:any) =>{
+      if(f.nombre.toLowerCase()==campo.nombre.toLowerCase()){
+        f.openIcon = opened;
+      }
+    })
+  }
   ChangeInpiut(i: number, val: string){
     var campo = (<FormArray>this.userForm.get('Fields')).controls[i].get(val)?.value.toString();
     var s =campo.split(' ')
     console.log(s)
+    this.validadorPrefijo(s[0], s[1]);
     if(this.PrefPaises()!=null){
       if(s[0]!=this.PrefPaises()){
         if(s[0].length>this.PrefPaises().length){

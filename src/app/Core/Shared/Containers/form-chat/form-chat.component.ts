@@ -58,6 +58,9 @@ export class FormChatComponent implements OnInit,OnChanges {
     Email: '',
     Nombres: '',
     Apellidos: '',
+    IdPais: undefined,
+    IdRegion: undefined,
+    IdLocalidad: undefined,
     Movil: '',
   };
   public DatosEnvioFormulario: ValidacionChatEnvioDTO = {
@@ -101,6 +104,9 @@ export class FormChatComponent implements OnInit,OnChanges {
       this.formularioContactoChat.Apellidos=datos.apellidos;
       this.formularioContactoChat.Email=datos.email;
       this.formularioContactoChat.Movil=datos.movil;
+      this.formularioContactoChat.IdPais=datos.Pais;
+      this.formularioContactoChat.IdRegion=datos.Region;
+      this.formularioContactoChat.IdLocalidad = datos?.Localidad;
       this.CompleteLocalStorage=true;
     }
     else{
