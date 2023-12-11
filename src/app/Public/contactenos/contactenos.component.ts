@@ -79,6 +79,7 @@ export class ContactenosComponent implements OnInit,OnDestroy {
     IdAreaFormacion:undefined,
     IdAreaTrabajo:undefined,
     IdIndustria:undefined,
+    IdLocalidad: undefined,
     Comentario:''
   }
   public DatosContactenosEnvio: ContactenosDTO={
@@ -109,6 +110,13 @@ export class ContactenosComponent implements OnInit,OnDestroy {
     idAreaFormacion:undefined,
     idAreaTrabajo:undefined,
     idIndustria:undefined,
+    Region:undefined,
+    Pais:undefined,
+    Localidad:undefined,
+    Cargo: undefined,
+    AreaFormacion: undefined,
+    AreaTrabajo: undefined,
+    Industria: undefined
   }
   ngOnInit(): void {
 
@@ -158,13 +166,20 @@ export class ContactenosComponent implements OnInit,OnDestroy {
       this.formularioContacto.Nombres=datos.nombres;
       this.formularioContacto.Apellidos=datos.apellidos;
       this.formularioContacto.Email=datos.email;
-      this.formularioContacto.IdPais=datos.idPais;
-      this.formularioContacto.IdRegion=datos.idRegion;
       this.formularioContacto.Movil=datos.movil;
-      this.formularioContacto.IdCargo=datos.idCargo;
-      this.formularioContacto.IdAreaFormacion=datos.idAreaFormacion;
-      this.formularioContacto.IdAreaTrabajo=datos.idAreaTrabajo;
-      this.formularioContacto.IdIndustria=datos.idIndustria;
+      // this.formularioContacto.IdPais=datos.idPais;
+      // this.formularioContacto.IdRegion=datos.idRegion;
+      // this.formularioContacto.IdCargo=datos.idCargo;
+      // this.formularioContacto.IdAreaFormacion=datos.idAreaFormacion;
+      // this.formularioContacto.IdAreaTrabajo=datos.idAreaTrabajo;
+      // this.formularioContacto.IdIndustria=datos.idIndustria;
+      this.formularioContacto.IdPais=datos.Pais;
+      this.formularioContacto.IdLocalidad = datos?.Localidad;
+      this.formularioContacto.IdRegion=datos.Region;
+      this.formularioContacto.IdCargo=datos.Cargo;
+      this.formularioContacto.IdAreaFormacion=datos.AreaFormacion;
+      this.formularioContacto.IdAreaTrabajo=datos.AreaTrabajo;
+      this.formularioContacto.IdIndustria=datos.Industria;
       if(this.formularioContacto.IdPais!=undefined){
         this.GetRegionesPorPais(this.formularioContacto.IdPais);
       }
@@ -216,9 +231,15 @@ export class ContactenosComponent implements OnInit,OnDestroy {
           this.datos.idPais = this.DatosContactenosEnvio.IdPais;
           this.datos.idRegion = this.DatosContactenosEnvio.IdRegion;
           this.datos.movil = this.DatosContactenosEnvio.Movil;
+
           this.datos.Pais = value.IdPais;
           this.datos.Region = value.IdRegion;
           this.datos.Localidad = value.IdLocalidad;
+          this.datos.Cargo = value.IdCargo;
+          this.datos.AreaFormacion = value.IdAreaFormacion;
+          this.datos.AreaTrabajo = value.IdAreaTrabajo;
+          this.datos.Industria = value.IdIndustria;
+
           this.datos.idCargo = this.DatosContactenosEnvio.IdCargo;
           this.datos.idAreaFormacion = this.DatosContactenosEnvio.IdAreaFormacion;
           this.datos.idAreaTrabajo = this.DatosContactenosEnvio.IdAreaTrabajo;

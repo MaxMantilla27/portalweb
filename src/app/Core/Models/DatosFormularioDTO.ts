@@ -12,4 +12,8 @@ export interface DatosFormularioDTO{
   Region?: any,
   Pais?: any,
   Localidad?: any,
+  Cargo?: any,
+  AreaFormacion?: any,
+  AreaTrabajo?: any,
+  Industria?: any
 }

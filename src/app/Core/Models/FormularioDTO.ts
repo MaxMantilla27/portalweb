@@ -10,6 +10,7 @@ export interface FormularioContactoDTO
   IdAreaFormacion?: number,
   IdAreaTrabajo?: number,
   IdIndustria?: number,
+  IdLocalidad?: number,
   Comentario?: string,
 }
 export interface FormularioContactoShortDTO
