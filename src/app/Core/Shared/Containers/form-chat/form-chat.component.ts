@@ -68,6 +68,7 @@ export class FormChatComponent implements OnInit,OnChanges {
     IdPrograma:0,
     EstadoAsesor:'',
   };
+  userForm!: FormGroup;
   @Output() SaveForm:EventEmitter<{id:string,idAlumno:number}> = new EventEmitter<{id:string,idAlumno:number}>();
   public CompleteLocalStorage=false;
   public datos: DatosFormularioDTO ={
@@ -89,7 +90,7 @@ export class FormChatComponent implements OnInit,OnChanges {
   }
   ngOnChanges(changes: SimpleChanges): void {
   }
-  userForm!: FormGroup;
+
   obtenerFormularioCompletado(){
     var DatosFormulario = this._SessionStorageService.SessionGetValue('DatosFormulario');
     console.log(DatosFormulario)
