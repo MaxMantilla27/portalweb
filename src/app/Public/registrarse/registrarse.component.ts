@@ -126,13 +126,21 @@ export class RegistrarseComponent implements OnInit,OnDestroy {
       this.registerSend.Nombres=this.register.Nombres,
       this.registerSend.Apellidos=this.register.Apellidos,
       this.registerSend.Email=this.register.Email,
-      this.registerSend.IdPais=this.register.IdPais,
-      this.registerSend.IdRegion=this.register.IdRegion,
+      // this.registerSend.IdPais=this.register.IdPais,
+      // this.registerSend.IdRegion=this.register.IdRegion,
+      this.registerSend.IdPais =  typeof value.IdPais === 'object' ? value.IdPais.value : value.IdPais;
+      this.registerSend.IdRegion = typeof value.IdRegion === 'object' ? value.IdRegion.value : value.IdRegion;
       this.registerSend.Movil=this.register.Movil,
-      this.registerSend.IdCargo=this.register.IdCargo,
-      this.registerSend.IdAreaFormacion=this.register.IdAreaFormacion,
-      this.registerSend.IdAreaTrabajo=this.register.IdAreaTrabajo,
-      this.registerSend.IdIndustria=this.register.IdIndustria,
+      // this.registerSend.IdCargo=this.register.IdCargo,
+      // this.registerSend.IdAreaFormacion=this.register.IdAreaFormacion,
+      // this.registerSend.IdAreaTrabajo=this.register.IdAreaTrabajo,
+      // this.registerSend.IdIndustria=this.register.IdIndustria,
+
+      this.registerSend.IdCargo= typeof value.IdCargo === 'object' ? value.IdCargo.value : value.IdCargo;
+      this.registerSend.IdAreaFormacion= typeof value.IdAreaFormacion === 'object' ? value.IdAreaFormacion.value : value.IdAreaFormacion;
+      this.registerSend.IdAreaTrabajo= typeof value.IdAreaTrabajo === 'object' ? value.IdAreaTrabajo.value : value.IdAreaTrabajo;
+      this.registerSend.IdIndustria= typeof value.IdIndustria === 'object' ? value.IdIndustria.value : value.IdIndustria;
+
       this.registerSend.Password=this.register.Password
 
       var idPEspecifico=this._SessionStorageService.SessionGetValueCokies("IdPEspecificoPublicidad");
@@ -228,11 +236,12 @@ export class RegistrarseComponent implements OnInit,OnDestroy {
     }
 
   }
-
+  listaLocalidadesValidar:any;
   ObtenerCombosPortal() {
 
     this._DatosPortalService.ObtenerCombosPortal().pipe(takeUntil(this.signal$)).subscribe({
       next: (x) => {
+        this.listaLocalidadesValidar = x.listaLocalida.map((p:any)=>String(p.codigo));
         this.fileds.forEach((r) => {
           if (r.nombre == 'IdPais') {
             r.data = x.listaPais.map((p: any) => {

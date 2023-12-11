@@ -181,13 +181,20 @@ export class ContactenosComponent implements OnInit,OnDestroy {
       this.DatosContactenosEnvio.Nombres=value.Nombres;
       this.DatosContactenosEnvio.Apellidos=value.Apellidos;
       this.DatosContactenosEnvio.Correo1=value.Email;
-      this.DatosContactenosEnvio.IdPais=value.IdPais;
-      this.DatosContactenosEnvio.IdRegion=value.IdRegion;
+      // this.DatosContactenosEnvio.IdPais=value.IdPais;
+      // this.DatosContactenosEnvio.IdRegion=value.IdRegion;
+      this.DatosContactenosEnvio.IdPais =  typeof value.IdPais === 'object' ? value.IdPais.value : value.IdPais;
+      this.DatosContactenosEnvio.IdRegion = typeof value.IdRegion === 'object' ? value.IdRegion.value : value.IdRegion;
+
       this.DatosContactenosEnvio.Movil=value.Movil;
-      this.DatosContactenosEnvio.IdCargo=value.IdCargo;
-      this.DatosContactenosEnvio.IdAreaFormacion=value.IdAreaFormacion;
-      this.DatosContactenosEnvio.IdAreaTrabajo=value.IdAreaTrabajo;
-      this.DatosContactenosEnvio.IdIndustria=value.IdIndustria;
+      // this.DatosContactenosEnvio.IdCargo=value.IdCargo;
+      // this.DatosContactenosEnvio.IdAreaFormacion=value.IdAreaFormacion;
+      // this.DatosContactenosEnvio.IdAreaTrabajo=value.IdAreaTrabajo;
+      // this.DatosContactenosEnvio.IdIndustria=value.IdIndustria;
+      this.DatosContactenosEnvio.IdCargo = typeof value.IdCargo === 'object' ? value.IdCargo.value : value.IdCargo;
+      this.DatosContactenosEnvio.IdAreaFormacion = typeof value.IdAreaFormacion === 'object' ? value.IdAreaFormacion.value : value.IdAreaFormacion;
+      this.DatosContactenosEnvio.IdAreaTrabajo = typeof value.IdAreaTrabajo === 'object' ? value.IdAreaTrabajo.value : value.IdAreaTrabajo;
+      this.DatosContactenosEnvio.IdIndustria = typeof value.IdIndustria === 'object' ? value.IdIndustria.value : value.IdIndustria;
       this.DatosContactenosEnvio.Comentario=value.Comentario;
 
       var IdPEspecifico=this._SessionStorageService.SessionGetValueCokies("IdPEspecificoPublicidad");
@@ -209,6 +216,9 @@ export class ContactenosComponent implements OnInit,OnDestroy {
           this.datos.idPais = this.DatosContactenosEnvio.IdPais;
           this.datos.idRegion = this.DatosContactenosEnvio.IdRegion;
           this.datos.movil = this.DatosContactenosEnvio.Movil;
+          this.datos.Pais = value.IdPais;
+          this.datos.Region = value.IdRegion;
+          this.datos.Localidad = value.IdLocalidad;
           this.datos.idCargo = this.DatosContactenosEnvio.IdCargo;
           this.datos.idAreaFormacion = this.DatosContactenosEnvio.IdAreaFormacion;
           this.datos.idAreaTrabajo = this.DatosContactenosEnvio.IdAreaTrabajo;
@@ -254,10 +264,12 @@ export class ContactenosComponent implements OnInit,OnDestroy {
       }
     })
   }
+  listaLocalidadesValidar:any;
   ObtenerCombosPortal(){
     this._DatosPortalService.ObtenerCombosPortal().pipe(takeUntil(this.signal$)).subscribe({
       next:(x)=>{
         console.log(x);
+        this.listaLocalidadesValidar = x.listaLocalida.map((p:any)=>String(p.codigo));
         this.fileds.forEach(r=>{
           if(r.nombre=='IdPais'){
             r.data=x.listaPais.map((p:any)=>{
