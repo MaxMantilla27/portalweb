@@ -156,7 +156,7 @@ export class FormularioRojoComponent implements OnChanges, OnInit,OnDestroy {
             let interval = setInterval(() => {
               if (this.userForm != undefined) {
                 console.log(x)
-                if(this.paise.length==0){
+               // if(this.paise.length==0){
                   this.paise=x;
                   var codigoISo=this._SessionStorageService.SessionGetValue('ISO_PAIS');
 
@@ -183,7 +183,7 @@ export class FormularioRojoComponent implements OnChanges, OnInit,OnDestroy {
                     }
                     index++
                   })
-                }
+
                 console.log('usuario formulario carga aqui',this.userForm)
 
               }
