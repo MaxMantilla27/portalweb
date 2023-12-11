@@ -165,7 +165,7 @@ export class FormularioRojoComponent implements OnChanges, OnInit,OnDestroy {
                     this.paisSelect=this.paise.find(x=>x.codigoIso==codigoISo).idPais;
                   }
 
-                  //this.paisSelect=this.paise.find(x=>x.codigoIso==codigoISo).idPais;
+                  this.paisSelect=this.paise.find(x=>x.codigoIso==codigoISo).idPais;
                   var index=0
                   this.fiels.forEach((f:any) =>{
                     if(f.tipo=='phone' && this.userForm){
