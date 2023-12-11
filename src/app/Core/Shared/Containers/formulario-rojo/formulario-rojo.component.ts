@@ -144,40 +144,52 @@ export class FormularioRojoComponent implements OnChanges, OnInit,OnDestroy {
               if (campo?.value != undefined) {
                 campo?.setValue({Nombre:this.paise.find( x=> x.idPais == this.paisSelect).pais ,value:this.paisSelect});
                 this.OnSelect.emit({Nombre:f.nombre,value:this.paisSelect})
-                // campo?.setValue(this.paisSelect);
-                // this.OnSelect.emit({Nombre:f.nombre,value:this.paisSelect})
-              }
-              /////
-              // let campo = (<FormArray>this.userForm.get('Fields')).controls[index].get(f.nombre);
-              // if(campo?.value!=undefined){
-              //   campo?.setValue(this.paisSelect);
-              //   this.OnSelect.emit({Nombre:f.nombre,value:this.paisSelect})
-              // }
-            }
-            if(f.nombre.toLowerCase()=='idregion' && this.userForm){
-              let campo = (<FormArray>this.userForm.get('Fields')).controls[index].get(f.nombre);
-              if(campo?.value!=undefined){
-                campo?.setValue(this.paisSelect);
-                this.OnSelect.emit({Nombre:f.nombre,value:this.paisSelect})
-              }
-            }
-            if(f.nombre.toLowerCase()=='idlocalidad' && this.userForm){
-              let campo = (<FormArray>this.userForm.get('Fields')).controls[index].get(f.nombre);
-              if(campo?.value!=undefined){
-                campo?.setValue(this.paisSelect);
-                this.OnSelect.emit({Nombre:f.nombre,value:this.paisSelect})
               }
             }
             index++
           })
-          let data:any = this.paise.find(x=>x.idPais==this.paisSelect)
-          if (data != undefined){
-            (<FormArray>this.userForm.get('Fields')).controls[3].get("IdPais")?.setValue(
-              {
-                "Nombre": data.pais,
-                "value": data.idPais
+        }
+        console.log('usuario formulario carga aqui',this.userForm)
+
+        if (this.userForm == undefined){
+          if (this.isBrowser) {
+            let interval = setInterval(() => {
+              if (this.userForm != undefined) {
+                console.log(x)
+               // if(this.paise.length==0){
+                  this.paise=x;
+                  var codigoISo=this._SessionStorageService.SessionGetValue('ISO_PAIS');
+
+                  var storageAlumno = this._SessionStorageService.SessionGetValue('DatosFormulario');
+                  if (storageAlumno == undefined || storageAlumno == null || storageAlumno == '') {
+                    this.paisSelect=this.paise.find(x=>x.codigoIso==codigoISo).idPais;
+                  }
+
+                  //this.paisSelect=this.paise.find(x=>x.codigoIso==codigoISo).idPais;
+                  var index=0
+                  this.fiels.forEach((f:any) =>{
+                    if(f.tipo=='phone' && this.userForm){
+                      this.validatePais(index,f.nombre)
+                    }
+                    if(f.nombre=='IdPais' && this.userForm){
+
+                      let campo = (<FormArray>this.userForm.get('Fields')).controls[
+                        index
+                      ].get(f.nombre);
+                      if (campo?.value != undefined) {
+                        campo?.setValue({Nombre:this.paise.find( x=> x.idPais == this.paisSelect).pais ,value:this.paisSelect});
+                        this.OnSelect.emit({Nombre:f.nombre,value:this.paisSelect})
+                      }
+                    }
+                    index++
+                  })
+
+                console.log('usuario formulario carga aqui',this.userForm)
+
               }
-            )
+              clearInterval(interval);
+            }, 1000);
+
           }
         }
       }

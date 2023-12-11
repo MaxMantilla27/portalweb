@@ -184,7 +184,7 @@ export class FormularioComponent implements OnChanges, OnInit, OnDestroy {
                     });
                   }
                   clearInterval(interval);
-                }, 1000);
+                }, 800);
 
               }
             }
