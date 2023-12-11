@@ -111,7 +111,7 @@
                     </mat-form-field>
                   </ng-container>
                   <ng-container
-                  *ngIf="(field.tipo === 'select' && PaisSelect2 === 52 && (field.nombre === 'IdPais' || field.nombre === 'IdLocalidad' || field.nombre === 'IdRegion')) || (field.tipo === 'select' && (PaisSelect2 !== 52 && field.nombre === 'IdPais'))"
+                  *ngIf="(field.tipo === 'select' && PaisSelect2 === 52 && (field.nombre === 'IdPais' || field.nombre === 'IdLocalidad' || field.nombre === 'IdRegion' )) || (field.tipo === 'select' && (PaisSelect2 !== 52 && field.nombre === 'IdPais' || field.nombre === 'IdCargo' || field.nombre === 'IdAreaFormacion' || field.nombre === 'IdAreaTrabajo' || field.nombre === 'IdIndustria'))"
                   >
                     <mat-form-field appearance="outline">
                       <!-- <mat-label>{{field.label}}</mat-label>
