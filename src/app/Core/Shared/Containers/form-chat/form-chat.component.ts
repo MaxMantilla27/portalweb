@@ -9,6 +9,10 @@ import { ChatEnLineaService } from '../../Services/ChatEnLinea/chat-en-linea.ser
 import { SessionStorageService } from '../../Services/session-storage.service';
 import { SnackBarServiceService } from '../../Services/SnackBarService/snack-bar-service.service';
 import { FacebookPixelService } from '../../Services/FacebookPixel/facebook-pixel.service';
+import { Basic } from 'src/app/Core/Models/BasicDTO';
+import { FormularioRojoComponent } from '../formulario-rojo/formulario-rojo.component';
+import { RegionService } from '../../Services/Region/region.service';
+import { DatosPortalService } from '../../Services/DatosPortal/datos-portal.service';
 declare const fbq:any;
 declare const gtag:any;
 @Component({
@@ -18,13 +22,15 @@ declare const gtag:any;
 })
 export class FormChatComponent implements OnInit,OnChanges {
   private signal$ = new Subject();
-
+  form!: FormularioRojoComponent;
   isBrowser: boolean;
   constructor(
     private _ChatEnLinea: ChatEnLineaService,
     private _SnackBarServiceService: SnackBarServiceService,
     private _SessionStorageService:SessionStorageService,
     @Inject(PLATFORM_ID) platformId: Object,
+    private _RegionService: RegionService,
+    private _DatosPortalService: DatosPortalService,
     private _FacebookPixelService:FacebookPixelService
   ) {
     this.isBrowser = isPlatformBrowser(platformId);
@@ -60,6 +66,7 @@ export class FormChatComponent implements OnInit,OnChanges {
     IdPrograma:0,
     EstadoAsesor:'',
   };
+  public listaLocalidades?:any;
   @Output() SaveForm:EventEmitter<{id:string,idAlumno:number}> = new EventEmitter<{id:string,idAlumno:number}>();
   public CompleteLocalStorage=false;
   public datos: DatosFormularioDTO ={
@@ -75,8 +82,32 @@ export class FormChatComponent implements OnInit,OnChanges {
     idIndustria:undefined,
   }
   ngOnInit(): void {
+    console.log('form-chat')
     this.AddFields();
     this.obtenerFormularioCompletado();
+    this.ObtenerCombosPortal();
+  }
+  ObtenerCombosPortal(){
+    this._DatosPortalService.ObtenerCombosPortal().pipe(takeUntil(this.signal$)).subscribe({
+      next:(x)=>{
+        console.log(x);
+        this.listaLocalidades = x.listaLocalida.map((p:any)=>String(p.codigo));
+        this.fileds.forEach(r=>{
+          if(r.nombre=='IdPais'){
+            r.data,  r.filteredOptions =x.listaPais.map((p:any)=>{
+              var ps:Basic={Nombre:p.pais,value:p.idPais};
+              return ps;
+            })
+            r.filteredOptionsAux=x.listaPais.map((p:any)=>{
+              var ps:Basic={Nombre:p.pais,value:p.idPais};
+              return ps;
+            })
+
+          }
+        })
+      }
+    })
+    this.initValues = true;
   }
   ngOnChanges(changes: SimpleChanges): void {
   }
@@ -206,6 +237,30 @@ export class FormChatComponent implements OnInit,OnChanges {
       label: 'Apellidos',
     });
     this.fileds.push({
+      nombre:"IdPais",
+      tipo:"select",
+      valorInicial:"",
+      validate:[Validators.required],
+      label:"País",
+    });
+    this.fileds.push({
+      nombre: 'IdRegion',
+      tipo: 'select',
+      valorInicial: '',
+      validate: [Validators.required],
+      disable: true,
+      label: 'Región',
+    });
+    this.fileds.push({
+      nombre: 'IdLocalidad',
+      tipo: 'select',
+      valorInicial: '',
+      validate: [Validators.required],
+      disable: true,
+      hidden:true,
+      label: 'Localidad',
+    });
+    this.fileds.push({
       nombre: 'Movil',
       tipo: 'phone',
       valorInicial: '',
@@ -220,5 +275,77 @@ export class FormChatComponent implements OnInit,OnChanges {
     this.DatosEnvioFormulario.Apellidos= '';
     this.DatosEnvioFormulario.Email= '';
     this.DatosEnvioFormulario.Movil= '';
+  }
+  SelectChage(e:any){
+    if(e.Nombre=="IdPais"){
+      if(e.value!=52){
+        this.fileds.filter(x=>x.nombre=='IdLocalidad')[0].hidden=true;
+        this.fileds.filter(x=>x.nombre=='IdLocalidad')[0].valorInicial = '';
+      }
+      this.GetRegionesPorPais(e.value)
+    }
+    if(e.Nombre=='IdRegion'){
+      this.GetLocalidadesPorRegion(e.value)
+    }
+  }
+  GetRegionesPorPais(idPais:number){
+    this._RegionService.ObtenerCiudadesPorPais(idPais).pipe(takeUntil(this.signal$)).subscribe({
+      next:x=>{
+        console.log(x)
+        this.fileds.forEach(r=>{
+          if(r.nombre=='IdRegion'){
+            r.disable=false;
+            r.data, r.filteredOptions=x.map((p:any)=>{
+              var ps:Basic={Nombre:p.nombreCiudad,value:p.idCiudad};
+              return ps;
+            })
+            r.filteredOptionsAux=x.map((p:any)=>{
+              var ps:Basic={Nombre:p.nombreCiudad,value:p.idCiudad};
+              return ps;
+            })
+          }
+          // if(r.nombre=='IdLocalidad'){
+          //   r.disable=true;
+          //   r.hidden=true;
+          // }
+        })
+        this.form.enablefield('IdRegion');
+      }
+    })
+  }
+  GetLocalidadesPorRegion(idRegion:number){
+    this._RegionService.ObtenerLocalidadPorRegion(idRegion).pipe(takeUntil(this.signal$)).subscribe({
+      next:x=>{
+        if (x.length != 0 && x != undefined && x !=null ) {
+
+          this.fileds.forEach(r=>{
+            if(r.nombre=='IdLocalidad'){
+              r.disable=false;
+              r.hidden=false;
+              r.data, r.filteredOptions=x.map((p:any)=>{
+                var ps:Basic={Nombre:p.nombreLocalidad,value:p.codigo,longitudCelular:p.longitudCelular};
+                return ps;
+              })
+              r.filteredOptionsAux=x.map((p:any)=>{
+                var ps:Basic={Nombre:p.nombreLocalidad,value:p.codigo,longitudCelular:p.longitudCelular};
+                return ps;
+              })
+              r.validate=[Validators.required];
+            }
+          })
+          this.form.enablefield('IdLocalidad');
+        }
+        else{
+          this.fileds.forEach(r=>{
+            if(r.nombre=='IdLocalidad'){
+              r.disable=true;
+              r.hidden=true;
+              r.validate=[];
+            }
+          })
+
+        }
+      }
+    })
   }
 }
