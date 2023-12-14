@@ -21,6 +21,7 @@ export interface FormularioContactoShortDTO
   IdPais?: number,
   IdRegion?: number,
   Movil: string,
+  IdLocalidad?: any,
 }
 
 export interface FormularioLandingPageDTO
