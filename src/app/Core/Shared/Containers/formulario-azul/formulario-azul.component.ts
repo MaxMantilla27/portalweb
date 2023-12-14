@@ -11,9 +11,11 @@ import {
   OnInit,
   Output,
   PLATFORM_ID,
+  QueryList,
   Renderer2,
   SimpleChanges,
   ViewChild,
+  ViewChildren,
   ViewEncapsulation,
 } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -98,6 +100,9 @@ export class FormularioAzulComponent implements OnChanges, OnInit,OnDestroy {
   OnSelect: EventEmitter<Basic> = new EventEmitter<Basic>();
 
   @ViewChild('inputField') inputField!: ElementRef;
+  @ViewChild('inputFieldRegion') inputFieldRegion!: ElementRef;
+  @ViewChild('inputFieldLocalidad') inputFieldLocalidad!: ElementRef;
+  // @ViewChildren('inputField') inputFields!: QueryList<ElementRef>;
 
   public paise:Array<any>=[]
   public paisSelect=0;
@@ -270,15 +275,7 @@ export class FormularioAzulComponent implements OnChanges, OnInit,OnDestroy {
   }
   EnviarCambios() {
     let obj: any = {};
-    // if(this.flagLocalidadError){
-    //   this._SnackBarServiceService.openSnackBar(
-    //     'Ingrese una clave LADA valida',
-    //     'x',
-    //     10,
-    //     'snackbarCrucigramaerror'
-    //   );
-    //   return;
-    // }
+    let aux;
     for (let i = 0; i < (<FormArray>this.userForm.get('Fields')).length; i++) {
       const element = (<FormArray>this.userForm.get('Fields')).at(i);
       let clave = Object.keys(element.value);
@@ -291,7 +288,9 @@ export class FormularioAzulComponent implements OnChanges, OnInit,OnDestroy {
               if(f.tipo=='phone' && f.nombre.toLowerCase()==key.toLowerCase()){
                 value = element.value[clave[0]].split(this.pref)[element.value[clave[0]].split(this.pref).length-1];
                 obj[key] = value;
-                let aux= this.validadorPrefijo(this.pref, value);
+                console.log("Valor del telefono ",value);
+                aux= this.validadorPrefijo(this.pref, value);
+                console.log("Valor del aux ",aux);
                 if(aux!=''){
                   this._SnackBarServiceService.openSnackBar(
                     'Ingrese una clave LADA valida',
@@ -309,12 +308,14 @@ export class FormularioAzulComponent implements OnChanges, OnInit,OnDestroy {
     }
     this.model = obj;
     console.log("Modelo enviado",this.model);
-    this.OnSubmit.emit(this.model);
-    if(this.CleanOnSubmit==true){
-      //this.userForm.reset();
-    }
-    if(this.Interaccion!=undefined){
-      this.EnvioInteraccion(true);
+    if(aux==''){
+      this.OnSubmit.emit(this.model);
+      if(this.CleanOnSubmit==true){
+        //this.userForm.reset();
+      }
+      if(this.Interaccion!=undefined){
+        this.EnvioInteraccion(true);
+      }
     }
   }
   ClickIntoForm(){
@@ -419,14 +420,6 @@ export class FormularioAzulComponent implements OnChanges, OnInit,OnDestroy {
   }
   obtenerErrorCampoNombre(i: number, val: string) {
     var campo = (<FormArray>this.userForm.get('Fields')).controls[i].get(val);
-    if(val == 'Movil'){
-      var s =campo?.value.split(' ')
-      var data = this.validadorPrefijo(s[0], s[1]);
-      if (data != "") {
-        this.userForm.invalid
-        return data;
-      }
-    }
     if (campo!.hasError('required')) {
       var fls=this.fiels.find(x=>x.nombre==val);
       if(fls?.error!=undefined){
@@ -530,6 +523,7 @@ export class FormularioAzulComponent implements OnChanges, OnInit,OnDestroy {
   ChangeInpiut(i: number, val: string){
     var campo = (<FormArray>this.userForm.get('Fields')).controls[i].get(val)?.value.toString();
     var s =campo.split(' ')
+    this.validadorPrefijo(s[0],s[1]),
     console.log(s)
     if(this.PrefPaises()!=null){
       if(s[0]!=this.PrefPaises()){
@@ -567,12 +561,25 @@ export class FormularioAzulComponent implements OnChanges, OnInit,OnDestroy {
     // if (this.inputField && this.inputField.nativeElement) {
     //   this.renderer.selectRootElement(this.inputField.nativeElement).focus();
     // }
-    this.renderer.selectRootElement(this.inputField.nativeElement).focus();
+    // this.renderer.selectRootElement(this.inputField.nativeElement).focus();
 
   }
-  onOpenedChange(event:any, field:any) {
-    this.focusInput();
+  onSelectOpenedChange(field: any) {
+    if(field.nombre == 'IdPais'){
+      this.renderer.selectRootElement(this.inputField.nativeElement).focus();
+
+    }
+    if(field.nombre == 'IdRegion'){
+      this.renderer.selectRootElement(this.inputFieldRegion.nativeElement).focus();
+
+    }
+    if(field.nombre == 'IdLocalidad'){
+      this.renderer.selectRootElement(this.inputFieldLocalidad.nativeElement).focus();
+
+    }
+
   }
+
   changeselectForm(nombre:any, value:any){
     this.OnSelect.emit({Nombre:nombre,value:value});
     if (nombre == 'IdPais') {
@@ -595,6 +602,7 @@ export class FormularioAzulComponent implements OnChanges, OnInit,OnDestroy {
     });
   }
   validadorPrefijo(codigoPais:string, nrocelular:string ){
+    codigoPais = codigoPais.trim();
     if(codigoPais == '+52' && nrocelular.length >= 2){
       const primerosDosDigitos = nrocelular.substring(0, 2);
       const primerosTresDigitos = nrocelular.substring(0, 3);
