@@ -8,14 +8,15 @@ export interface ForoDTO{
 }
 
 export interface ForoRespuestaDTO{
-    idForoCurso:number,
-    idPrincipal:number,
-    idPGeneral: number,
-    idPEspecificoPadre: number,
-    idPEspecificoHijo: number,
-    contenido: string,
-    esDocente: boolean,
-    estadoAtendido:number,
+  idForoCurso:number,
+  idPrincipal:number,
+  idPGeneral: number,
+  idPEspecificoPadre: number,
+  idPEspecificoHijo: number,
+  contenido: string,
+  esDocente: boolean,
+  estadoAtendido:number,
+  file?: File;
 }
 export interface ForoDTOCompleto{
   idPrincipal:number,
@@ -29,5 +30,6 @@ export interface ForoDTOCompleto{
   idSesion: number,
   idSubSesion: number,
   idVideo: string,
-  urlArchivo: string,
+  file?: File;
+
 }

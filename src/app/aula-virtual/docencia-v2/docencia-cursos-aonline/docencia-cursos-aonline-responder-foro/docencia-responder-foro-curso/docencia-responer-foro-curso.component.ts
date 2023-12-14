@@ -63,7 +63,6 @@ export class DocenciaResponerForoCursoComponent implements OnInit, OnChanges , O
       .pipe(takeUntil(this.signal$))
       .subscribe({
         next: (x) => {
-          this.TerminaCarga=true;
           this.foroCurso = x;
           if(this.foroCurso!=null || this.foroCurso!=undefined){
             this.NombreCurso=this.foroCurso[0].pGeneral
@@ -81,6 +80,9 @@ export class DocenciaResponerForoCursoComponent implements OnInit, OnChanges , O
           console.log(this.foroCurso)
           }
         },
+        complete:()=>{
+          this.TerminaCarga=true;
+        }
       });
   }
   AbrirForo(index:number){

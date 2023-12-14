@@ -72,7 +72,7 @@
             </tr>
             <ng-container *ngIf="proyecto.registroEvaluacionArchivo!=null && proyecto.registroEvaluacionArchivo.length>0">
               <tr>
-                <td>{{proy.nombreArchivo}}</td>
+                <td><a [href]="proy.direccionUrl" target="_blank">{{proy.nombreArchivo}}</a> </td>
                 <td>{{proy.fechaCreacion | date:"dd/MM/yyyy"}}</td>
                 <td>{{proy.fechaCalificacion==null?'-':proy.fechaCalificacion | date:"dd/MM/yyyy"}}</td>
                 <td>{{proy.version}}</td>

@@ -19,6 +19,10 @@
     <div>inténtenlo de nuevo más tarde</div>
   </ng-container>
   <ng-template #existe>
+    <div style="display: flex;font-weight: bold;justify-content: center;margin: 10px;">
+      {{pregunta.codigoMatricula}} - {{pregunta.nombresCompletos}}
+
+    </div>
     <div class="ContentForoModal row" >
       <img  class="col-12 col-md-6 col-lg-3" *ngIf="imgForo!=undefined" [src]="imgForo" alt="Foro">
       <div class="col-12 col-md-6 col-lg-9 contenidoInto">
@@ -46,11 +50,11 @@
         <div style="font-size: 12px;margin-bottom: 10px">
           <strong style=" margin-right: 10px;">Fecha Publicación:</strong>{{pregunta.fecha | date:'dd-MM-yyyy hh:mm a.'}}
         </div>
-        <div *ngIf="(pregunta.idOrigenForo==3 || pregunta.idOrigenForo==4) && pregunta.urlArchivo!=''" style="font-size: 13px;margin-bottom: 10px">
+        <div *ngIf="pregunta.urlArchivo!='' && pregunta.urlArchivo!=null" style="font-size: 13px;margin-bottom: 10px">
           <div style="margin-right: 10px;margin-bottom: 10px;">
             <strong>Archivo:</strong>
           </div>
-          <a [href]="pregunta.urlArchivo">Descargar</a>
+          <a [href]="pregunta.urlArchivo">{{pregunta.nombreArchivo}}</a>
         </div>
 
       </div>
@@ -68,6 +72,24 @@
           <mat-label>Responder</mat-label>
           <textarea matInput matTextareaAutosize [(ngModel)]="jsonEnvio.contenido"></textarea>
         </mat-form-field>
+        <div class="col-12 col-md-12 col-lg-12">
+          <div (click)="fileInput.click()" style="height: 38px;width: 100%;border:solid 1px #e0d9d9;border-radius: 5px;display: flex; align-items: center;margin-bottom: 10px;
+          padding: 0px 5px;cursor: pointer;">
+            <button style="border: solid 1px #767676;
+            margin-right: 5px;    white-space: nowrap;">Seleccionar archivo</button>
+            <div style="    white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;">{{nombrefile}}</div>
+          </div>
+          <input #fileInput type="file" id="file" (change)="getFileDetails($event)" style="    width: 100%;
+          border: solid 1px #c2c2c2;
+          padding: 7px;
+          border-radius: 5px;display: none;">
+          <div *ngIf="!filestatus && fileErrorMsg!=''">{{fileErrorMsg}}</div>
+        </div>
 
       </div>
     </div>
@@ -84,7 +106,8 @@
 
   <app-default-button [confs]="{color:'primary',titulo:'Responder'}"
   (ButtoclClick)="EnviarRegistroRespuestaForo()"
-  [icon]="''" [style]="'padding: 0px 20px'">
+  [icon]="''" [style]="'padding: 0px 20px'"
+  [disabled]="jsonEnvio.contenido==''">
   </app-default-button>
 </div>
 
@@ -100,7 +123,13 @@
       <div style="
       font-size: 15px;
       font-style: italic;">{{item.contenido}}</div>
-      <div style="font-size: 12px;text-align: right;"><strong>Fecha:</strong> {{item.fechaCreacion | date:'yyyy-MM-dd'}}</div>
+      <div class="row" *ngIf="item.urlArchivo!=null">
+        <div  class="col-12 col-md-6 col-lg-6" style="display: flex;font-size: 12px;align-items: center;">
+          <a style="color: #7f7b7b;font-weight: bold;" class="vinculo" [href]="item.urlArchivo" target="_blank">Archivo Adjunto</a>
+        </div>
+        <div class="col-12 col-md-6 col-lg-6" style="font-size: 12px;text-align: right;"><strong>Fecha:</strong> {{item.fechaCreacion | date:'yyyy-MM-dd'}}</div>
+      </div>
+      <div *ngIf="item.urlArchivo==null" style="font-size: 12px;text-align: right;"><strong>Fecha:</strong> {{item.fechaCreacion | date:'yyyy-MM-dd'}}</div>
     </div>
   </div>
 </div>

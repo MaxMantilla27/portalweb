@@ -43,8 +43,15 @@ export class CursoForoProyectoContenidoComponent implements OnInit,OnDestroy {
     contenido: '',
     esDocente: false,
     estadoAtendido:0,
+    file: new File([], ''),
   }
   public ForoCerrado=false;
+  public file:any;
+  public filestatus=false
+  public fileErrorMsg=''
+  public selectedFiles?: FileList;
+  public nombrefile='Ningún archivo seleccionado'
+  public Recarga=false
   ngOnInit(): void {
     this.ObtenerContenidoForo();
     this.ObtenerRespuestaForo();
@@ -68,6 +75,7 @@ export class CursoForoProyectoContenidoComponent implements OnInit,OnDestroy {
           this.foroRespuesta.forEach(x=>{
             x.urlAvatarRespuesta=this._AvatarService.GetUrlImagenAvatar(x.avatar)
           })
+          this.Recarga=true;
         }
       }
     })
@@ -82,15 +90,53 @@ export class CursoForoProyectoContenidoComponent implements OnInit,OnDestroy {
     this.ForoRespuestaEnvio.contenido = this.userForm.get('RespuestaForo')?.value;;
     this.ForoRespuestaEnvio.esDocente = this.esDocente;
     this.ForoRespuestaEnvio.estadoAtendido = 0;
-
+    if(this.selectedFiles){
+      const file: File | null = this.selectedFiles.item(0);
+      if (file) {
+        this.ForoRespuestaEnvio.file = file;
+      }
+    }
     this._ForoCursoService.EnviarRegistroRespuestaForo(this.ForoRespuestaEnvio).pipe(takeUntil(this.signal$)).subscribe({
       next: (x) => {
-        this.ObtenerRespuestaForo()
-        this.userForm.get('RespuestaForo')?.setValue('')
+
       },
+      complete:()=>{
+        this.Recarga=false;
+        this.RestaurarValores()
+        this.ObtenerRespuestaForo()
+      }
     });
   }
   VolverAtras(){
     this.volverProyecto.emit()
   }
+  getFileDetails(event:any) {
+    if(event!=null){
+      for (var i = 0; i < event.target.files.length; i++) {
+        this.filestatus=true
+        var name = event.target.files[i].name;
+        this.nombrefile=name;
+        var type = event.target.files[i].type;
+        var size = event.target.files[i].size;
+        var modifiedDate = event.target.files[i].lastModifiedDate;
+        var extencion=name.split('.')[name.split('.').length-1]
+        if( Math.round((size/1024)/1024)>150){
+          this.fileErrorMsg='El tamaño del archivo no debe superar los 25 MB'
+          this.filestatus=false
+        }
+        this.selectedFiles = event.target.files;
+      }
+    }
+    else{
+      this.filestatus=false
+      this.nombrefile='Ningún archivo seleccionado'
+      this.selectedFiles=undefined;
+    }
+  }
+  RestaurarValores(){
+    this.userForm.get('RespuestaForo')?.setValue('')
+    this.ForoRespuestaEnvio.file = new File([], '')
+    this.getFileDetails(null)
+  }
+
 }

@@ -62,7 +62,8 @@ export class CursoForoProyectoInsertComponent implements OnInit,OnDestroy {
     idSesion: 0,
     idSubSesion: 0,
     idVideo: '',
-    urlArchivo:''
+    file: new File([], ''),
+
   }
   public progress=0
   public selectedFiles?: FileList;
@@ -84,8 +85,7 @@ export class CursoForoProyectoInsertComponent implements OnInit,OnDestroy {
     this.ForoCurso.idCapitulo=0
     this.ForoCurso.idSesion=0
     this.ForoCurso.idSubSesion=0
-    this.ForoCurso.idVideo=''
-    this.ForoCurso.urlArchivo=this.UrlArchivo
+    this.ForoCurso.idVideo="0"
     console.log(this.ForoCurso)
     this._HelperService.enviarMsjAcciones({Tag:"Button",Nombre:'Publica Tema',Seccion:'Foro',valorTitulo:this.ForoCurso.titulo,valorContenido:this.ForoCurso.contenido})
     this._ForoCursoService.InsertarForoCursoPorUsuario(this.ForoCurso).pipe(takeUntil(this.signal$)).subscribe({

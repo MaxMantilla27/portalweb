@@ -36,9 +36,16 @@ export class DocenciaResponderForoCursoModalComponent implements OnInit,OnDestro
     idPGeneral:0,
     idPrincipal:0,
     estadoAtendido:0,
+    file: new File([], ''),
   }
   public ForoCerrado=false
   public ReproductorVideo=''
+  public file:any;
+  public filestatus=false
+  public fileErrorMsg=''
+  public selectedFiles?: FileList;
+  public nombrefile='Ningún archivo seleccionado'
+  public Recarga=false
   ngOnInit(): void {
     this.jsonEnvio.idPGeneral=this.data.idPGeneral
     this.jsonEnvio.idForoCurso=this.data.idTemaForo
@@ -69,12 +76,19 @@ export class DocenciaResponderForoCursoModalComponent implements OnInit,OnDestro
   PartialRespuestaPregunta(){
     this._ForoCursoService.PartialRespuestaPregunta(this.data.idPGeneral,this.data.idTemaForo).pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
+        console.log(x)
         this.respuestas=x
       }
     })
   }
   EnviarRegistroRespuestaForo(){
     this.jsonEnvio.estadoAtendido=1;
+    if(this.selectedFiles){
+      const file: File | null = this.selectedFiles.item(0);
+      if (file) {
+        this.jsonEnvio.file = file;
+      }
+    }
     this._ForoCursoService.EnviarRegistroRespuestaForo(this.jsonEnvio).pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
         this.dialogRef.close(true);
@@ -83,5 +97,33 @@ export class DocenciaResponderForoCursoModalComponent implements OnInit,OnDestro
   }
   CerrarModal(){
     this.dialogRef.close();
+  }
+  RestaurarValores(){
+    this.jsonEnvio.contenido=''
+    this.jsonEnvio.file = new File([], '')
+    this.getFileDetails(null)
+  }
+  getFileDetails(event:any) {
+    if(event!=null){
+      for (var i = 0; i < event.target.files.length; i++) {
+        this.filestatus=true
+        var name = event.target.files[i].name;
+        this.nombrefile=name;
+        var type = event.target.files[i].type;
+        var size = event.target.files[i].size;
+        var modifiedDate = event.target.files[i].lastModifiedDate;
+        var extencion=name.split('.')[name.split('.').length-1]
+        if( Math.round((size/1024)/1024)>150){
+          this.fileErrorMsg='El tamaño del archivo no debe superar los 25 MB'
+          this.filestatus=false
+        }
+        this.selectedFiles = event.target.files;
+      }
+    }
+    else{
+      this.filestatus=false
+      this.nombrefile='Ningún archivo seleccionado'
+      this.selectedFiles=undefined;
+    }
   }
 }
