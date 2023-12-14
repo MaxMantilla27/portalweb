@@ -606,6 +606,11 @@ export class FormularioAzulComponent implements OnChanges, OnInit,OnDestroy {
     if(codigoPais == '+52' && nrocelular.length >= 2){
       const primerosDosDigitos = nrocelular.substring(0, 2);
       const primerosTresDigitos = nrocelular.substring(0, 3);
+      console.log(this.ListaLocalidades)
+      console.log(primerosDosDigitos)
+      console.log(primerosTresDigitos)
+      console.log(!this.ListaLocalidades?.includes(primerosDosDigitos))
+      console.log(!this.ListaLocalidades?.includes(primerosTresDigitos))
       if (
         !this.ListaLocalidades?.includes(primerosDosDigitos) &&
         !this.ListaLocalidades?.includes(primerosTresDigitos)
