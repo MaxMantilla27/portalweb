@@ -9,6 +9,7 @@ import {
   OnChanges,
   OnDestroy,
   OnInit,
+  Renderer2,
   Output,
   PLATFORM_ID,
   SimpleChanges,
@@ -33,12 +34,15 @@ export class FormularioComponent implements OnChanges, OnInit,OnDestroy {
   private signal$ = new Subject();
   @ViewChild('f') myNgForm: any;
   isBrowser: boolean;
+
+  @ViewChild('inputField') inputField!: ElementRef;
   public changeValidation=false;
   constructor(
     private formBuilder: FormBuilder,
     @Inject(PLATFORM_ID) platformId: Object,
     private _HelperService:HelperService,
-    private _SessionStorageService:SessionStorageService
+    private _SessionStorageService:SessionStorageService,
+    private renderer: Renderer2
 
   ) {
     this.isBrowser = isPlatformBrowser(platformId);
@@ -66,6 +70,8 @@ export class FormularioComponent implements OnChanges, OnInit,OnDestroy {
   @Input()
   model!: object;
 
+  @Input()
+  ListaLocalidades?: any;
   @Input()
   InputsDisable!: boolean;
 
@@ -109,6 +115,7 @@ export class FormularioComponent implements OnChanges, OnInit,OnDestroy {
     IdInteraccionPortalV2:0,
     Nombre:''
   }
+  public localidadAux:any = '';
   ngOnInit(): void {
     this._HelperService.recibirDataPais.pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
@@ -168,6 +175,16 @@ export class FormularioComponent implements OnChanges, OnInit,OnDestroy {
       index++;
     });
     this.OnValid.emit(this.userForm.valid);
+    if (this.localidadAux != '' && this.localidadAux != undefined) {
+      const fieldsArray = (this.userForm.get('Fields') as FormArray).controls;
+      const mobileIndex = fieldsArray.findIndex((element: any) => Object.keys(element?.value)[0] === 'Movil');
+      (<FormArray>this.userForm.get('Fields')).controls[mobileIndex].get("Movil")?.setValue(this.pref+this.localidadAux);
+
+
+    }
+    const fieldsArrayPais = (this.userForm.get('Fields') as FormArray).controls;
+    const mobileIndexPais = fieldsArrayPais.findIndex((element: any) => Object.keys(element?.value)[0] === 'IdPais');
+    (<FormArray>this.userForm.get('Fields')).controls[mobileIndexPais].get("IdPais")?.setValue(this.paisSelect);
   }
   changeForm(){
     if(this.userForm!=undefined){
@@ -219,8 +236,21 @@ export class FormularioComponent implements OnChanges, OnInit,OnDestroy {
     let fild = this.fiels.find((x) => x.nombre === nombre);
     if (fild != undefined) {
       let index = this.fiels.indexOf(fild);
-
-      this.fiels[index].valorInicial = value;
+      if(nombre == 'IdPais'){
+        this.paisSelect = Number(value) == undefined ? this.paisSelect : Number(value);
+        this.fiels[index].valorInicial = this.paisSelect;
+      }
+      else if (nombre == "IdLocalidad" && value != undefined){
+        this.localidadAux = value;
+      }
+        if(fild.tipo=='select'){
+        this.fiels[index].valorInicial = value;
+        this.OnSelect.emit({Nombre:nombre,value:value});
+      }
+      else{
+        this.fiels[index].valorInicial = value;
+      }
+      //this.fiels[index].valorInicial = value;
     } else {
       this.fiels.splice(index, 0, {
         nombre: nombre,
@@ -417,7 +447,8 @@ export class FormularioComponent implements OnChanges, OnInit,OnDestroy {
 
     this.pref=this.PrefPaises()==null?'':this.PrefPaises()+' ';
     this.min=this.LongCelularPaises()==null?0:this.LongCelularPaises();
-    (<FormArray>this.userForm.get('Fields')).controls[i].get(val)?.setValue(this.pref+s.slice(1));
+    (<FormArray>this.userForm.get('Fields')).controls[i].get(val)?.setValue(this.pref);
+    //(<FormArray>this.userForm.get('Fields')).controls[i].get(val)?.setValue(this.pref+s.slice(1));
     (<FormArray>this.userForm.get('Fields')).controls[i].get(val)?.clearValidators();
     if(this.min>0){
       this.max=this.MaxLongCelularPaises()==null?0:this.MaxLongCelularPaises();
@@ -442,7 +473,9 @@ export class FormularioComponent implements OnChanges, OnInit,OnDestroy {
         Validators.required]);
       this.OnValid.emit(false);
     }
-    (<FormArray>this.userForm.get('Fields')).controls[i].get(val)?.setValue(this.pref+(s.length>1?s[1]:''));
+    (<FormArray>this.userForm.get('Fields')).controls[i].get(val)?.setValue(this.pref);
+    //(<FormArray>this.userForm.get('Fields')).controls[i].get(val)?.setValue(this.pref+(s.length>1?s[1]:''));
+
   }
   LongCelularPaises():number{
     if(this.paise.find(x=>x.idPais==this.paisSelect)!=undefined){
@@ -486,5 +519,47 @@ export class FormularioComponent implements OnChanges, OnInit,OnDestroy {
         );
       }
     }
+  }
+  changeselectForm(nombre:any, value:any){
+    this.OnSelect.emit({Nombre:nombre,value:value});
+    if (nombre == 'IdPais') {
+      this.paisSelect = value;
+      /*Se encuentra el index del campo movil*/
+      const fieldsArray = (this.userForm.get('Fields') as FormArray).controls;
+      const mobileIndex = fieldsArray.findIndex((element: any) => Object.keys(element?.value)[0] === 'Movil');
+      this.validatePais(mobileIndex,'Movil');
+
+    }
+    if (nombre == 'IdLocalidad' && value != undefined) {
+      const fieldsArray = (this.userForm.get('Fields') as FormArray).controls;
+      const mobileIndex = fieldsArray.findIndex((element: any) => Object.keys(element?.value)[0] === 'Movil');
+      (<FormArray>this.userForm.get('Fields')).controls[mobileIndex].get("Movil")?.setValue(this.pref+value);
+      // console.log("Valor localidad ",value)
+    }
+    this.fiels.forEach((element: any) => {
+      if(element.nombre == nombre){
+        element.filteredOptions = element.filteredOptionsAux;
+      }
+    });
+  }
+  onOpenedChange(event:any, field:any) {
+    this.focusInput();
+  }
+  onKey(evetn:any, field:any) {
+    const searchText = evetn.target.value == null ? '' : evetn.target.value.toLowerCase();
+    this.fiels.forEach((element: any) => {
+      if(element.nombre == field.nombre){
+        element.filteredOptions = field.filteredOptionsAux.filter((option:any) =>
+          option.Nombre.toLowerCase().includes(searchText)
+        );
+      }
+    });
+  }
+  focusInput() {
+    // if (this.inputField && this.inputField.nativeElement) {
+    //   this.renderer.selectRootElement(this.inputField.nativeElement).focus();
+    // }
+    this.renderer.selectRootElement(this.inputField.nativeElement).focus();
+
   }
 }
