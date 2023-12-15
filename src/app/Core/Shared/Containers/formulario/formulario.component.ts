@@ -148,6 +148,46 @@ export class FormularioComponent implements OnChanges, OnInit,OnDestroy {
             index++
           })
         }
+        ////
+
+        if (this.userForm == undefined){
+          if (this.isBrowser) {
+            let interval = setInterval(() => {
+              if (this.userForm != undefined) {
+                console.log(x)
+               // if(this.paise.length==0){
+                this.paise=x;
+                var codigoISo=this._SessionStorageService.SessionGetValue('ISO_PAIS');
+                this.paisSelect=this.paise.find(x=>x.codigoIso==codigoISo).idPais;
+                var index=0
+                this.fiels.forEach((f:any) =>{
+                  if(f.tipo=='phone' && this.userForm){
+                    this.validatePais(index,f.nombre)
+                  }
+                  if(f.nombre.toLowerCase()=='idpais' && this.userForm){
+                    let campo = (<FormArray>this.userForm.get('Fields')).controls[index].get(f.nombre);
+                    if(campo?.value!=undefined){
+                      campo?.setValue(this.paisSelect);
+                      this.OnSelect.emit({Nombre:f.nombre,value:this.paisSelect})
+                    }
+                  }
+                  index++
+                })
+
+                console.log('usuario formulario carga aqui',this.userForm)
+
+              }
+              clearInterval(interval);
+            }, 1000);
+
+          }
+        }
+
+
+
+
+
+        ////////7
       }
     })
     if(this.isBrowser){
@@ -468,6 +508,9 @@ export class FormularioComponent implements OnChanges, OnInit,OnDestroy {
     var c=(<FormArray>this.userForm.get('Fields')).controls[i].get(val)?.value;
     var campo =c==null?'':c.toString();
     var s=campo.split(' ');
+    if(s.length ==1){
+      s.push(' ')
+    }
 
     this.pref=this.PrefPaises()==null?'':this.PrefPaises()+' ';
     this.min=this.LongCelularPaises()==null?0:this.LongCelularPaises();
@@ -522,6 +565,9 @@ export class FormularioComponent implements OnChanges, OnInit,OnDestroy {
   ChangeInpiut(i: number, val: string){
     var campo = (<FormArray>this.userForm.get('Fields')).controls[i].get(val)?.value.toString();
     var s =campo.split(' ')
+    if(s.length ==1){
+      s.push(' ')
+    }
     console.log(s)
     this.validadorPrefijo(s[0],s[1]);
     if(this.PrefPaises()!=null){
