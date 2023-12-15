@@ -79,7 +79,8 @@ export class ContactenosComponent implements OnInit,OnDestroy {
     IdAreaFormacion:undefined,
     IdAreaTrabajo:undefined,
     IdIndustria:undefined,
-    Comentario:''
+    Comentario:'',
+    idLocalidad: undefined,
   }
   public DatosContactenosEnvio: ContactenosDTO={
     Nombres:'',
@@ -93,6 +94,7 @@ export class ContactenosComponent implements OnInit,OnDestroy {
     IdAreaTrabajo:undefined,
     IdIndustria:undefined,
     Comentario:'',
+    idLocalidad: undefined,
   }
   public combosPrevios:any
   public cargando=false
@@ -151,6 +153,7 @@ export class ContactenosComponent implements OnInit,OnDestroy {
     console.log(DatosFormulario)
     if(DatosFormulario!=''){
       var datos = JSON.parse(DatosFormulario);
+
       console.log(datos)
       this.formularioContacto.Nombres=datos.nombres;
       this.formularioContacto.Apellidos=datos.apellidos;
@@ -162,6 +165,7 @@ export class ContactenosComponent implements OnInit,OnDestroy {
       this.formularioContacto.IdAreaFormacion=datos.idAreaFormacion;
       this.formularioContacto.IdAreaTrabajo=datos.idAreaTrabajo;
       this.formularioContacto.IdIndustria=datos.idIndustria;
+      this.formularioContacto.idLocalidad=datos.idLocalidad
       if(this.formularioContacto.IdPais!=undefined){
         this.GetRegionesPorPais(this.formularioContacto.IdPais);
       }
