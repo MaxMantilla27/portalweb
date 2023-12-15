@@ -109,7 +109,6 @@ export class FormularioComponent implements OnChanges, OnInit,OnDestroy {
   //later in the code
   fields: any = {};
   public interval:any
-  public flagLocalidadError = false;
   public jsonForm:InteraccionFormularioCampoDTO={
     Acciones:[],
     AccionesJson:{},
@@ -120,6 +119,7 @@ export class FormularioComponent implements OnChanges, OnInit,OnDestroy {
     IdInteraccionPortalV2:0,
     Nombre:''
   }
+  public flagLocalidadError = false;
   public localidadAux:any = '';
   ngOnInit(): void {
     this._HelperService.recibirDataPais.pipe(takeUntil(this.signal$)).subscribe({
@@ -653,11 +653,6 @@ export class FormularioComponent implements OnChanges, OnInit,OnDestroy {
     if(codigoPais == '+52' && nrocelular.length >= 2){
       const primerosDosDigitos = nrocelular.substring(0, 2);
       const primerosTresDigitos = nrocelular.substring(0, 3);
-      console.log(this.ListaLocalidades)
-      console.log(primerosDosDigitos)
-      console.log(primerosTresDigitos)
-      console.log(!this.ListaLocalidades?.includes(primerosDosDigitos))
-      console.log(!this.ListaLocalidades?.includes(primerosTresDigitos))
       if (
         !this.ListaLocalidades?.includes(primerosDosDigitos) &&
         !this.ListaLocalidades?.includes(primerosTresDigitos)
