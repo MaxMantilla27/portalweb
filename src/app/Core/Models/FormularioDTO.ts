@@ -11,6 +11,7 @@ export interface FormularioContactoDTO
   IdAreaTrabajo?: number,
   IdIndustria?: number,
   Comentario?: string,
+  idLocalidad?: string
 }
 export interface FormularioContactoShortDTO
 {
