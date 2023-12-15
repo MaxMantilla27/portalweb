@@ -172,6 +172,7 @@ export class LandingPageComponent implements OnInit, OnDestroy {
       }
       if (this.obj.IdRegion != undefined) {
         this.obj.IdRegion = this.combosPrevios.idRegion;
+        this.GetLocalidadesPorRegion(this.obj.idRegion)
       }
       if (this.obj.IdLocalidad != undefined) {
         this.obj.IdLocalidad = this.combosPrevios.idLocalidad;

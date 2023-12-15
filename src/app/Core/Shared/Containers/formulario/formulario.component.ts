@@ -128,7 +128,8 @@ export class FormularioComponent implements OnChanges, OnInit,OnDestroy {
         if(this.paise.length==0){
           this.paise=x;
           var codigoISo=this._SessionStorageService.SessionGetValue('ISO_PAIS');
-          this.paisSelect=this.paise.find(x=>x.codigoIso==codigoISo).idPais;
+
+          //this.paisSelect=this.paise.find(x=>x.codigoIso==codigoISo).idPais;
           var storageAlumno = this._SessionStorageService.SessionGetValue('DatosFormulario');
           if (storageAlumno == undefined || storageAlumno == null || storageAlumno == '') {
             this.paisSelect=this.paise.find(x=>x.codigoIso==codigoISo).idPais;
@@ -145,6 +146,7 @@ export class FormularioComponent implements OnChanges, OnInit,OnDestroy {
                 this.OnSelect.emit({Nombre:f.nombre,value:this.paisSelect})
               }
             }
+
             index++
           })
         }
@@ -158,7 +160,11 @@ export class FormularioComponent implements OnChanges, OnInit,OnDestroy {
                // if(this.paise.length==0){
                 this.paise=x;
                 var codigoISo=this._SessionStorageService.SessionGetValue('ISO_PAIS');
-                this.paisSelect=this.paise.find(x=>x.codigoIso==codigoISo).idPais;
+                //this.paisSelect=this.paise.find(x=>x.codigoIso==codigoISo).idPais;
+                var storageAlumno = this._SessionStorageService.SessionGetValue('DatosFormulario');
+                if (storageAlumno == undefined || storageAlumno == null || storageAlumno == '') {
+                  this.paisSelect=this.paise.find(x=>x.codigoIso==codigoISo).idPais;
+                }
                 var index=0
                 this.fiels.forEach((f:any) =>{
                   if(f.tipo=='phone' && this.userForm){
@@ -171,6 +177,17 @@ export class FormularioComponent implements OnChanges, OnInit,OnDestroy {
                       this.OnSelect.emit({Nombre:f.nombre,value:this.paisSelect})
                     }
                   }
+                  this.OnValid.emit(this.userForm.valid);
+                  if (this.localidadAux != '' && this.localidadAux != undefined) {
+                    const fieldsArray = (this.userForm.get('Fields') as FormArray).controls;
+                    const mobileIndex = fieldsArray.findIndex((element: any) => Object.keys(element?.value)[0] === 'Movil');
+                    (<FormArray>this.userForm.get('Fields')).controls[mobileIndex].get("Movil")?.setValue(this.pref+this.localidadAux);
+
+
+                  }
+                  const fieldsArrayPais = (this.userForm.get('Fields') as FormArray).controls;
+                  const mobileIndexPais = fieldsArrayPais.findIndex((element: any) => Object.keys(element?.value)[0] === 'IdPais');
+                  (<FormArray>this.userForm.get('Fields')).controls[mobileIndexPais].get("IdPais")?.setValue(this.paisSelect);
                   index++
                 })
 
