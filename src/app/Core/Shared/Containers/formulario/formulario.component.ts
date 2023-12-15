@@ -23,6 +23,7 @@ import { formulario } from 'src/app/Core/Models/Formulario';
 import { InteraccionFormularioCampoDTO } from 'src/app/Core/Models/Interacciones';
 import { HelperService } from '../../Services/helper.service';
 import { SessionStorageService } from '../../Services/session-storage.service';
+import { SnackBarServiceService } from '../../Services/SnackBarService/snack-bar-service.service';
 
 @Component({
   selector: 'app-formulario',
@@ -35,14 +36,15 @@ export class FormularioComponent implements OnChanges, OnInit,OnDestroy {
   @ViewChild('f') myNgForm: any;
   isBrowser: boolean;
 
-  @ViewChild('inputField') inputField!: ElementRef;
   public changeValidation=false;
   constructor(
     private formBuilder: FormBuilder,
     @Inject(PLATFORM_ID) platformId: Object,
     private _HelperService:HelperService,
     private _SessionStorageService:SessionStorageService,
-    private renderer: Renderer2
+    private renderer: Renderer2,
+    private _SnackBarServiceService: SnackBarServiceService,
+
 
   ) {
     this.isBrowser = isPlatformBrowser(platformId);
@@ -95,7 +97,9 @@ export class FormularioComponent implements OnChanges, OnInit,OnDestroy {
 
   @Output()
   OnSelect: EventEmitter<Basic> = new EventEmitter<Basic>();
-
+  @ViewChild('inputField') inputField!: ElementRef;
+  @ViewChild('inputFieldRegion') inputFieldRegion!: ElementRef;
+  @ViewChild('inputFieldLocalidad') inputFieldLocalidad!: ElementRef;
   public paise:Array<any>=[]
   public paisSelect=0;
   public pref=''
@@ -105,6 +109,7 @@ export class FormularioComponent implements OnChanges, OnInit,OnDestroy {
   //later in the code
   fields: any = {};
   public interval:any
+  public flagLocalidadError = false;
   public jsonForm:InteraccionFormularioCampoDTO={
     Acciones:[],
     AccionesJson:{},
@@ -263,6 +268,7 @@ export class FormularioComponent implements OnChanges, OnInit,OnDestroy {
   }
   EnviarCambios() {
     let obj: any = {};
+    let aux;
     for (let i = 0; i < (<FormArray>this.userForm.get('Fields')).length; i++) {
       const element = (<FormArray>this.userForm.get('Fields')).at(i);
       let clave = Object.keys(element.value);
@@ -275,6 +281,17 @@ export class FormularioComponent implements OnChanges, OnInit,OnDestroy {
               if(f.tipo=='phone' && f.nombre.toLowerCase()==key.toLowerCase()){
                 value = element.value[clave[0]].split(this.pref)[element.value[clave[0]].split(this.pref).length-1];
                 obj[key] = value;
+                aux= this.validadorPrefijo(this.pref, value);
+                console.log("Valor del aux ",aux);
+                if(aux!=''){
+                  this._SnackBarServiceService.openSnackBar(
+                    'Ingrese una clave LADA valida',
+                    'x',
+                    10,
+                    'snackbarCrucigramaerror'
+                  );
+                  return;
+                }
               }
             })
           }
@@ -282,13 +299,16 @@ export class FormularioComponent implements OnChanges, OnInit,OnDestroy {
       });
     }
     this.model = obj;
-    this.OnSubmit.emit(this.model);
-    if(this.CleanOnSubmit==true){
-      //this.userForm.reset();
+    if(aux==''){
+      this.OnSubmit.emit(this.model);
+      if(this.CleanOnSubmit==true){
+        //this.userForm.reset();
+      }
+      if(this.Interaccion!=undefined){
+        this.EnvioInteraccion(true);
+      }
     }
-    if(this.Interaccion!=undefined){
-      this.EnvioInteraccion(true);
-    }
+
   }
   ClickIntoForm(){
     if(this.interval==undefined){
@@ -499,6 +519,7 @@ export class FormularioComponent implements OnChanges, OnInit,OnDestroy {
     var campo = (<FormArray>this.userForm.get('Fields')).controls[i].get(val)?.value.toString();
     var s =campo.split(' ')
     console.log(s)
+    this.validadorPrefijo(s[0],s[1]);
     if(this.PrefPaises()!=null){
       if(s[0]!=this.PrefPaises()){
         if(s[0].length>this.PrefPaises().length){
@@ -545,6 +566,21 @@ export class FormularioComponent implements OnChanges, OnInit,OnDestroy {
   onOpenedChange(event:any, field:any) {
     this.focusInput();
   }
+  onSelectOpenedChange(field: any) {
+    if(field.nombre == 'IdPais'){
+      this.renderer.selectRootElement(this.inputField.nativeElement).focus();
+
+    }
+    if(field.nombre == 'IdRegion'){
+      this.renderer.selectRootElement(this.inputFieldRegion.nativeElement).focus();
+
+    }
+    if(field.nombre == 'IdLocalidad'){
+      this.renderer.selectRootElement(this.inputFieldLocalidad.nativeElement).focus();
+
+    }
+
+  }
   onKey(evetn:any, field:any) {
     const searchText = evetn.target.value == null ? '' : evetn.target.value.toLowerCase();
     this.fiels.forEach((element: any) => {
@@ -561,5 +597,32 @@ export class FormularioComponent implements OnChanges, OnInit,OnDestroy {
     // }
     this.renderer.selectRootElement(this.inputField.nativeElement).focus();
 
+  }
+  validadorPrefijo(codigoPais:string, nrocelular:string ){
+    codigoPais = codigoPais.trim();
+    if(codigoPais == '+52' && nrocelular.length >= 2){
+      const primerosDosDigitos = nrocelular.substring(0, 2);
+      const primerosTresDigitos = nrocelular.substring(0, 3);
+      console.log(this.ListaLocalidades)
+      console.log(primerosDosDigitos)
+      console.log(primerosTresDigitos)
+      console.log(!this.ListaLocalidades?.includes(primerosDosDigitos))
+      console.log(!this.ListaLocalidades?.includes(primerosTresDigitos))
+      if (
+        !this.ListaLocalidades?.includes(primerosDosDigitos) &&
+        !this.ListaLocalidades?.includes(primerosTresDigitos)
+      ) {
+        this.flagLocalidadError = true;
+        console.log("Error el prefijo no es valido");
+        return "Error la clave LADA no es valida"
+      }
+      else{
+        console.log("El prefijo es valido");
+        this.flagLocalidadError = false;
+        return ""
+      }
+
+    }
+    return ""
   }
 }

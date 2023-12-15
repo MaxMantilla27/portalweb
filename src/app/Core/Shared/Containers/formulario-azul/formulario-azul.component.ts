@@ -523,7 +523,7 @@ export class FormularioAzulComponent implements OnChanges, OnInit,OnDestroy {
   ChangeInpiut(i: number, val: string){
     var campo = (<FormArray>this.userForm.get('Fields')).controls[i].get(val)?.value.toString();
     var s =campo.split(' ')
-    this.validadorPrefijo(s[0],s[1]),
+    this.validadorPrefijo(s[0],s[1]);
     console.log(s)
     if(this.PrefPaises()!=null){
       if(s[0]!=this.PrefPaises()){

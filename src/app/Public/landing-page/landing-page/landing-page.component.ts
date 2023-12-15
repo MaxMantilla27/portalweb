@@ -116,6 +116,7 @@ export class LandingPageComponent implements OnInit, OnDestroy {
     idAreaFormacion: undefined,
     idAreaTrabajo: undefined,
     idIndustria: undefined,
+    idLocalidad: undefined,
   };
   ngOnInit(): void {
     console.log(this.data);
@@ -173,7 +174,7 @@ export class LandingPageComponent implements OnInit, OnDestroy {
         this.obj.IdRegion = this.combosPrevios.idRegion;
       }
       if (this.obj.IdLocalidad != undefined) {
-        this.obj.IdLocalidad = this.combosPrevios.IdLocalidad;
+        this.obj.IdLocalidad = this.combosPrevios.idLocalidad;
       }
       if (this.obj.Movil != undefined) {
         this.obj.Movil = this.combosPrevios.movil;
@@ -275,6 +276,7 @@ export class LandingPageComponent implements OnInit, OnDestroy {
             this.datos.idPais = this.DatosLandingPageEnvio.IdPais;
             this.datos.idRegion = this.DatosLandingPageEnvio.IdRegion;
             this.datos.movil = this.DatosLandingPageEnvio.Movil;
+            this.datos.idLocalidad = value.IdLocalidad;
             this.datos.idCargo = this.DatosLandingPageEnvio.IdCargo;
             this.datos.idAreaFormacion =
               this.DatosLandingPageEnvio.IdAreaFormacion;
@@ -349,7 +351,11 @@ export class LandingPageComponent implements OnInit, OnDestroy {
           });
           this.fileds.forEach((r) => {
             if (r.nombre == 'IdCargo') {
-              r.data = x.listaCargo.map((p: any) => {
+              r.data,  r.filteredOptions = x.listaCargo.map((p: any) => {
+                var ps: Basic = { Nombre: p.cargo, value: p.idCargo };
+                return ps;
+              });
+              r.filteredOptionsAux = x.listaCargo.map((p: any) => {
                 var ps: Basic = { Nombre: p.cargo, value: p.idCargo };
                 return ps;
               });
@@ -357,7 +363,14 @@ export class LandingPageComponent implements OnInit, OnDestroy {
           });
           this.fileds.forEach((r) => {
             if (r.nombre == 'IdAreaFormacion') {
-              r.data = x.listaAreaFormacion.map((p: any) => {
+              r.data, r.filteredOptions = x.listaAreaFormacion.map((p: any) => {
+                var ps: Basic = {
+                  Nombre: p.areaFormacion,
+                  value: p.idAreaFormacion,
+                };
+                return ps;
+              });
+              r.filteredOptionsAux = x.listaAreaFormacion.map((p: any) => {
                 var ps: Basic = {
                   Nombre: p.areaFormacion,
                   value: p.idAreaFormacion,
@@ -368,7 +381,14 @@ export class LandingPageComponent implements OnInit, OnDestroy {
           });
           this.fileds.forEach((r) => {
             if (r.nombre == 'IdAreaTrabajo') {
-              r.data = x.listaAreaTrabajo.map((p: any) => {
+              r.data, r.filteredOptions = x.listaAreaTrabajo.map((p: any) => {
+                var ps: Basic = {
+                  Nombre: p.areaTrabajo,
+                  value: p.idAreaTrabajo,
+                };
+                return ps;
+              });
+              r.filteredOptionsAux =  x.listaAreaTrabajo.map((p: any) => {
                 var ps: Basic = {
                   Nombre: p.areaTrabajo,
                   value: p.idAreaTrabajo,
@@ -379,7 +399,11 @@ export class LandingPageComponent implements OnInit, OnDestroy {
           });
           this.fileds.forEach((r) => {
             if (r.nombre == 'IdIndustria') {
-              r.data = x.listaIndustria.map((p: any) => {
+              r.data, r.filteredOptions = x.listaIndustria.map((p: any) => {
+                var ps: Basic = { Nombre: p.industria, value: p.idIndustria };
+                return ps;
+              });
+              r.filteredOptionsAux = x.listaIndustria.map((p: any) => {
                 var ps: Basic = { Nombre: p.industria, value: p.idIndustria };
                 return ps;
               });

@@ -84,11 +84,34 @@
                       <mat-select
                       [style]="field.style" formControlName="{{field.nombre}}"
                       (selectionChange)="changeselectForm(field.nombre,$event.value)"
-                      (openedChange)="onOpenedChange($event, field)"
-                        >
+                      (openedChange)="onSelectOpenedChange(field)"
+                      >
                         <div class="search-container">
                           <input
+                          *ngIf="field.nombre == 'IdPais'"
                           #inputField
+                          placeholder="Buscar"
+                          matInput
+                          type="text"
+                          (keyup)="onKey($event, field)"
+                          class="example-input"
+                          style="background-color: #cacaca;
+                          height: 35px;
+                          padding: 5px;">
+                          <input
+                          *ngIf="field.nombre == 'IdRegion'"
+                          #inputFieldRegion
+                          placeholder="Buscar"
+                          matInput
+                          type="text"
+                          (keyup)="onKey($event, field)"
+                          class="example-input"
+                          style="background-color: #cacaca;
+                          height: 35px;
+                          padding: 5px;">
+                          <input
+                          *ngIf="field.nombre == 'IdLocalidad'"
+                          #inputFieldLocalidad
                           placeholder="Buscar"
                           matInput
                           type="text"
@@ -136,7 +159,10 @@
                           <mat-label>{{field.label}}</mat-label>
                           <!-- <span matPrefix>{{PrefPaises()}}</span> -->
                           <input type="text" [autofocus]="field.focus" (keyup)="ChangeInpiut(i,field.nombre)" (keydown)="ChangeInpiut(i,field.nombre)" [style]="field.style" formControlName="{{field.nombre}}" matInput />
-                          <mat-error *ngIf="userForm.invalid">{{obtenerErrorCampoNombre(i,field.nombre)}}</mat-error>
+                          <mat-error *ngIf="userForm.invalid && flagLocalidadError!=true">{{obtenerErrorCampoNombre(i,field.nombre)}}</mat-error>
+                          <mat-error *ngif="flagLocalidadError==true">
+                            Error clave LADA Icorrecta
+                          </mat-error>
                         </mat-form-field>
                       </div>
                     </div>
