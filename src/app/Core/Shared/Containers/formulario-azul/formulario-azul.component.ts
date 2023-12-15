@@ -293,7 +293,7 @@ export class FormularioAzulComponent implements OnChanges, OnInit,OnDestroy {
                 console.log("Valor del aux ",aux);
                 if(aux!=''){
                   this._SnackBarServiceService.openSnackBar(
-                    'Ingrese una clave LADA valida',
+                    'El numero Ingresado no existe, Código LADA incorrecto.',
                     'x',
                     10,
                     'snackbarCrucigramaerror'
