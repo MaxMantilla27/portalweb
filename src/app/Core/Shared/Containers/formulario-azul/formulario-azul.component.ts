@@ -589,6 +589,9 @@ export class FormularioAzulComponent implements OnChanges, OnInit,OnDestroy {
     this.OnSelect.emit({Nombre:nombre,value:value});
     if (nombre == 'IdPais') {
       this.paisSelect = value;
+      if(this.paisSelect !=52){
+        this.flagLocalidadError= false;
+      }
       /*Se encuentra el index del campo movil*/
       const fieldsArray = (this.userForm.get('Fields') as FormArray).controls;
       const mobileIndex = fieldsArray.findIndex((element: any) => Object.keys(element?.value)[0] === 'Movil');

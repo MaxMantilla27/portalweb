@@ -100,6 +100,8 @@ export class FormularioRojoComponent implements OnChanges, OnInit,OnDestroy {
   public min=0
   public max=0
   @Input() cargando=false
+  public flagLocalidadError = false;
+
   //later in the code
   fields: any = {};
   public interval:any
@@ -595,6 +597,9 @@ export class FormularioRojoComponent implements OnChanges, OnInit,OnDestroy {
       this.OnSelect.emit({Nombre:nombre,value:value});
       if (nombre == 'IdPais') {
         this.paisSelect = value;
+        if(this.paisSelect !=52){
+          this.flagLocalidadError= false;
+        }
         /*Se encuentra el index del campo movil*/
         const fieldsArray = (this.userForm.get('Fields') as FormArray).controls;
         const mobileIndex = fieldsArray.findIndex((element: any) => Object.keys(element?.value)[0] === 'Movil');
