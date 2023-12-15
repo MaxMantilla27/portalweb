@@ -611,6 +611,9 @@ export class FormularioComponent implements OnChanges, OnInit,OnDestroy {
   changeselectForm(nombre:any, value:any){
     this.OnSelect.emit({Nombre:nombre,value:value});
     if (nombre == 'IdPais') {
+      if(this.paisSelect !=52){
+        this.flagLocalidadError= false;
+      }
       this.paisSelect = value;
       /*Se encuentra el index del campo movil*/
       const fieldsArray = (this.userForm.get('Fields') as FormArray).controls;

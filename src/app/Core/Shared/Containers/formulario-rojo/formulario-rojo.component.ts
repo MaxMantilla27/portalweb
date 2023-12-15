@@ -121,7 +121,10 @@ export class FormularioRojoComponent implements OnChanges, OnInit,OnDestroy {
         if(this.paise.length==0){
           this.paise=x;
           var codigoISo=this._SessionStorageService.SessionGetValue('ISO_PAIS');
-          this.paisSelect=this.paise.find(x=>x.codigoIso==codigoISo).idPais;
+          var storageAlumno = this._SessionStorageService.SessionGetValue('DatosFormulario');
+          if (storageAlumno == undefined || storageAlumno == null || storageAlumno == '') {
+            this.paisSelect=this.paise.find(x=>x.codigoIso==codigoISo).idPais;
+          }
           var index=0
           this.fiels.forEach((f:any) =>{
             if(f.tipo=='phone' && this.userForm){
@@ -136,6 +139,53 @@ export class FormularioRojoComponent implements OnChanges, OnInit,OnDestroy {
             }
             index++
           })
+        }
+        if (this.userForm == undefined){
+          if (this.isBrowser) {
+            let interval = setInterval(() => {
+              if (this.userForm != undefined) {
+                console.log(x)
+               // if(this.paise.length==0){
+                this.paise=x;
+                var codigoISo=this._SessionStorageService.SessionGetValue('ISO_PAIS');
+                //this.paisSelect=this.paise.find(x=>x.codigoIso==codigoISo).idPais;
+                var storageAlumno = this._SessionStorageService.SessionGetValue('DatosFormulario');
+                if (storageAlumno == undefined || storageAlumno == null || storageAlumno == '') {
+                  this.paisSelect=this.paise.find(x=>x.codigoIso==codigoISo).idPais;
+                }
+                var index=0
+                this.fiels.forEach((f:any) =>{
+                  if(f.tipo=='phone' && this.userForm){
+                    this.validatePais(index,f.nombre)
+                  }
+                  if(f.nombre.toLowerCase()=='idpais' && this.userForm){
+                    let campo = (<FormArray>this.userForm.get('Fields')).controls[index].get(f.nombre);
+                    if(campo?.value!=undefined){
+                      campo?.setValue(this.paisSelect);
+                      this.OnSelect.emit({Nombre:f.nombre,value:this.paisSelect})
+                    }
+                  }
+                  this.OnValid.emit(this.userForm.valid);
+                  if (this.localidadAux != '' && this.localidadAux != undefined) {
+                    const fieldsArray = (this.userForm.get('Fields') as FormArray).controls;
+                    const mobileIndex = fieldsArray.findIndex((element: any) => Object.keys(element?.value)[0] === 'Movil');
+                    (<FormArray>this.userForm.get('Fields')).controls[mobileIndex].get("Movil")?.setValue(this.pref+this.localidadAux);
+
+
+                  }
+                  const fieldsArrayPais = (this.userForm.get('Fields') as FormArray).controls;
+                  const mobileIndexPais = fieldsArrayPais.findIndex((element: any) => Object.keys(element?.value)[0] === 'IdPais');
+                  (<FormArray>this.userForm.get('Fields')).controls[mobileIndexPais].get("IdPais")?.setValue(this.paisSelect);
+                  index++
+                })
+
+                console.log('usuario formulario carga aqui',this.userForm)
+
+              }
+              clearInterval(interval);
+            }, 1000);
+
+          }
         }
       }
     })

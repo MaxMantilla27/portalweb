@@ -57,6 +57,9 @@ export class FormChatComponent implements OnInit,OnChanges {
     Nombres: '',
     Apellidos: '',
     Movil: '',
+    IdPais:0,
+    IdRegion:0,
+    IdLocalidad:0
   };
   public DatosEnvioFormulario: ValidacionChatEnvioDTO = {
     Email: '',
@@ -80,6 +83,7 @@ export class FormChatComponent implements OnInit,OnChanges {
     idAreaFormacion:undefined,
     idAreaTrabajo:undefined,
     idIndustria:undefined,
+    idLocalidad:undefined
   }
   ngOnInit(): void {
     console.log('form-chat')
@@ -121,6 +125,9 @@ export class FormChatComponent implements OnInit,OnChanges {
       this.formularioContactoChat.Apellidos=datos.apellidos;
       this.formularioContactoChat.Email=datos.email;
       this.formularioContactoChat.Movil=datos.movil;
+      this.formularioContactoChat.IdPais =datos.idPais;
+      this.formularioContactoChat.IdRegion =datos.idRegion;
+      this.formularioContactoChat.IdLocalidad = datos.idLocalidad
       this.CompleteLocalStorage=true;
     }
     else{
@@ -275,6 +282,7 @@ export class FormChatComponent implements OnInit,OnChanges {
     this.DatosEnvioFormulario.Apellidos= '';
     this.DatosEnvioFormulario.Email= '';
     this.DatosEnvioFormulario.Movil= '';
+
   }
   SelectChage(e:any){
     if(e.Nombre=="IdPais"){

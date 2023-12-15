@@ -3,6 +3,9 @@ export interface ValidacionChatFormularioDTO{
   Nombres:string,
   Apellidos:string,
   Movil:string,
+  IdPais?:number,
+  IdRegion?:number,
+  IdLocalidad?:number
 }
 export interface ValidacionChatEnvioDTO{
   Email:string,

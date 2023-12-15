@@ -430,7 +430,9 @@ export class LandingPageComponent implements OnInit, OnDestroy {
       if(e.value!=52){
         this.fileds.filter(x=>x.nombre=='IdLocalidad')[0].hidden=true;
         this.fileds.filter(x=>x.nombre=='IdLocalidad')[0].valorInicial = '';
+
       }
+
       this.GetRegionesPorPais(e.value)
     }
     if(e.Nombre=='IdRegion'){
