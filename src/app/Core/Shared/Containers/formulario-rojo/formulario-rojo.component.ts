@@ -23,6 +23,7 @@ import { formulario } from 'src/app/Core/Models/Formulario';
 import { InteraccionFormularioCampoDTO } from 'src/app/Core/Models/Interacciones';
 import { HelperService } from '../../Services/helper.service';
 import { SessionStorageService } from '../../Services/session-storage.service';
+import { SnackBarServiceService } from '../../Services/SnackBarService/snack-bar-service.service';
 
 @Component({
   selector: 'app-formulario-rojo',
@@ -41,6 +42,7 @@ export class FormularioRojoComponent implements OnChanges, OnInit,OnDestroy {
     @Inject(PLATFORM_ID) platformId: Object,
     private _HelperService:HelperService,
     private _SessionStorageService:SessionStorageService,
+    private _SnackBarServiceService: SnackBarServiceService,
     private renderer: Renderer2
 
   ) {
@@ -315,6 +317,7 @@ export class FormularioRojoComponent implements OnChanges, OnInit,OnDestroy {
   }
   EnviarCambios() {
     let obj: any = {};
+    let aux;
     for (let i = 0; i < (<FormArray>this.userForm.get('Fields')).length; i++) {
       const element = (<FormArray>this.userForm.get('Fields')).at(i);
       let clave = Object.keys(element.value);
@@ -330,17 +333,36 @@ export class FormularioRojoComponent implements OnChanges, OnInit,OnDestroy {
               }
             })
           }
+          aux= this.validadorPrefijo(this.pref, value);
+          if(aux!=''){
+            this._SnackBarServiceService.openSnackBar(
+              'El numero Ingresado no existe, Código LADA incorrecto.',
+              'x',
+              10,
+              'snackbarCrucigramaerror'
+            );
+            return;
+          }
         }
       });
     }
     this.model = obj;
-    this.OnSubmit.emit(this.model);
-    if(this.CleanOnSubmit==true){
-      //this.userForm.reset();
+    if(aux==''){
+      this.OnSubmit.emit(this.model);
+      if(this.CleanOnSubmit==true){
+        //this.userForm.reset();
+      }
+      if(this.Interaccion!=undefined){
+        this.EnvioInteraccion(true);
+      }
     }
-    if(this.Interaccion!=undefined){
-      this.EnvioInteraccion(true);
-    }
+    // this.OnSubmit.emit(this.model);
+    // if(this.CleanOnSubmit==true){
+    //   //this.userForm.reset();
+    // }
+    // if(this.Interaccion!=undefined){
+    //   this.EnvioInteraccion(true);
+    // }
   }
   ClickIntoForm(){
     if(this.interval==undefined){
@@ -355,6 +377,7 @@ export class FormularioRojoComponent implements OnChanges, OnInit,OnDestroy {
   }
   EnvioInteraccion(enviado:boolean){
     let objInteraccion:Array<any>=[];
+
     for (let i = 0; i < (<FormArray>this.userForm.get('Fields')).length; i++) {
       const element = (<FormArray>this.userForm.get('Fields')).at(i);
       let clave = Object.keys(element.value);
@@ -363,7 +386,9 @@ export class FormularioRojoComponent implements OnChanges, OnInit,OnDestroy {
         this.fiels.forEach((f:any) =>{
           if(f.tipo=='phone' && f.nombre.toLowerCase()==clave[0].toLowerCase()){
             value = element.value[clave[0]].split(this.pref)[element.value[clave[0]].split(this.pref).length-1];
+
           }
+
         })
       }
       this.fiels.forEach((f:any) =>{
@@ -550,6 +575,10 @@ export class FormularioRojoComponent implements OnChanges, OnInit,OnDestroy {
   ChangeInpiut(i: number, val: string){
     var campo = (<FormArray>this.userForm.get('Fields')).controls[i].get(val)?.value.toString();
     var s =campo.split(' ')
+    if(s.length ==1){
+      s.push(' ')
+    }
+    this.validadorPrefijo(s[0],s[1]);
     console.log(s)
     if(this.PrefPaises()!=null){
       if(s[0]!=this.PrefPaises()){
@@ -616,5 +645,33 @@ export class FormularioRojoComponent implements OnChanges, OnInit,OnDestroy {
           element.filteredOptions = element.filteredOptionsAux;
         }
       });
+    }
+
+    validadorPrefijo(codigoPais:string, nrocelular:string ){
+      codigoPais = codigoPais.trim();
+      if(codigoPais == '+52' && nrocelular.length >= 2){
+        const primerosDosDigitos = nrocelular.substring(0, 2);
+        const primerosTresDigitos = nrocelular.substring(0, 3);
+        console.log(this.ListaLocalidades)
+        console.log(primerosDosDigitos)
+        console.log(primerosTresDigitos)
+        console.log(!this.ListaLocalidades?.includes(primerosDosDigitos))
+        console.log(!this.ListaLocalidades?.includes(primerosTresDigitos))
+        if (
+          !this.ListaLocalidades?.includes(primerosDosDigitos) &&
+          !this.ListaLocalidades?.includes(primerosTresDigitos)
+        ) {
+          this.flagLocalidadError = true;
+          console.log("Error el prefijo no es valido");
+          return "Error la clave LADA no es valida"
+        }
+        else{
+          console.log("El prefijo es valido");
+          this.flagLocalidadError = false;
+          return ""
+        }
+
+      }
+      return ""
     }
 }
