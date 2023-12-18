@@ -65,6 +65,7 @@ export class ProgramaFormularioComponent implements OnInit, OnDestroy {
   public fileds: Array<formulario> = [];
   public combosPrevios:any;
   public Paises:any;
+  public listaLocalidades?:any;
 
   public formularioContacto: FormularioContactoShortDTO = {
     Nombres: '',
@@ -73,6 +74,7 @@ export class ProgramaFormularioComponent implements OnInit, OnDestroy {
     IdPais: undefined,
     IdRegion: undefined,
     Movil: '',
+    IdLocalidad: undefined
   };
   public DatosEnvioFormulario: ContactenosDTO = {
     Nombres: '',
@@ -97,6 +99,7 @@ export class ProgramaFormularioComponent implements OnInit, OnDestroy {
     idAreaFormacion:undefined,
     idAreaTrabajo:undefined,
     idIndustria:undefined,
+    idLocalidad:undefined,
   }
   ngOnDestroy(): void {
     this.signal$.next(true);
@@ -161,6 +164,7 @@ export class ProgramaFormularioComponent implements OnInit, OnDestroy {
             this.datos.email = this.DatosEnvioFormulario.Correo1;
             this.datos.idPais = this.DatosEnvioFormulario.IdPais;
             this.datos.idRegion = this.DatosEnvioFormulario.IdRegion;
+            this.datos.idLocalidad = value.IdLocalidad;
             this.datos.movil = this.DatosEnvioFormulario.Movil;
             var DatosFormulario = this._SessionStorageService.SessionGetValue('DatosFormulario');
             if(DatosFormulario!=''){
@@ -220,6 +224,7 @@ export class ProgramaFormularioComponent implements OnInit, OnDestroy {
       this.formularioContacto.IdPais=datos.idPais;
       this.formularioContacto.IdRegion=datos.idRegion;
       this.formularioContacto.Movil=datos.movil;
+      this.formularioContacto.IdLocalidad=datos.idLocalidad;
       if(this.formularioContacto.IdPais!=undefined){
         this.GetRegionesPorPais(this.formularioContacto.IdPais);
       }
@@ -232,12 +237,15 @@ export class ProgramaFormularioComponent implements OnInit, OnDestroy {
   ObtenerCombosPortal() {
     this._DatosPortalService.ObtenerCombosPortal().pipe(takeUntil(this.signal$)).subscribe({
       next: (x) => {
+        this.listaLocalidades = x.listaLocalida.map((p:any)=>String(p.codigo));
         this.fileds.forEach((r) => {
           if (r.nombre == 'IdPais') {
             r.data = x.listaPais.map((p: any) => {
               var ps: Basic = { Nombre: p.pais, value: p.idPais };
               return ps;
             });
+            r.filteredOptions = r.data;
+            r.filteredOptionsAux = r.data;
           }
         });
         this.fileds.forEach((r) => {
@@ -246,6 +254,8 @@ export class ProgramaFormularioComponent implements OnInit, OnDestroy {
               var ps: Basic = { Nombre: p.cargo, value: p.idCargo };
               return ps;
             });
+            r.filteredOptions = r.data;
+            r.filteredOptionsAux = r.data;
           }
         });
         this.fileds.forEach((r) => {
@@ -257,6 +267,8 @@ export class ProgramaFormularioComponent implements OnInit, OnDestroy {
               };
               return ps;
             });
+            r.filteredOptions = r.data;
+            r.filteredOptionsAux = r.data;
           }
         });
         this.fileds.forEach((r) => {
@@ -265,6 +277,8 @@ export class ProgramaFormularioComponent implements OnInit, OnDestroy {
               var ps: Basic = { Nombre: p.areaTrabajo, value: p.idAreaTrabajo };
               return ps;
             });
+            r.filteredOptions = r.data;
+            r.filteredOptionsAux = r.data;
           }
         });
         this.fileds.forEach((r) => {
@@ -273,6 +287,8 @@ export class ProgramaFormularioComponent implements OnInit, OnDestroy {
               var ps: Basic = { Nombre: p.industria, value: p.idIndustria };
               return ps;
             });
+            r.filteredOptions = r.data;
+            r.filteredOptionsAux = r.data;
           }
         });
       },
@@ -289,11 +305,44 @@ export class ProgramaFormularioComponent implements OnInit, OnDestroy {
               var ps: Basic = { Nombre: p.nombreCiudad, value: p.idCiudad };
               return ps;
             });
+            r.filteredOptions = r.data;
+            r.filteredOptionsAux = r.data;
           }
         });
         this.form.enablefield('IdRegion');
       },
     });
+  }
+  GetLocalidadesPorRegion(idRegion:number){
+    this._RegionService.ObtenerLocalidadPorRegion(idRegion).pipe(takeUntil(this.signal$)).subscribe({
+      next:x=>{
+        if (x.length != 0 && x != undefined && x !=null ) {
+          this.fileds.forEach(r=>{
+            if(r.nombre=='IdLocalidad'){
+              r.disable=false;
+              r.hidden=false;
+              r.data = x.map((p:any)=>{
+                var ps:Basic={Nombre:p.nombreLocalidad,value:p.codigo,longitudCelular:p.longitudCelular};
+                return ps;
+              })
+              r.filteredOptions = r.data;
+              r.filteredOptionsAux = r.data;
+            }
+          })
+          this.form.enablefield('IdLocalidad');
+        }
+        else{
+          this.fileds.forEach(r=>{
+            if(r.nombre=='IdLocalidad'){
+              r.disable=true;
+              r.hidden=true;
+              r.validate=[];
+            }
+          })
+
+        }
+      }
+    })
   }
   AddFields() {
     this.fileds.push({
@@ -333,6 +382,15 @@ export class ProgramaFormularioComponent implements OnInit, OnDestroy {
       label: 'Región',
     });
     this.fileds.push({
+      nombre: 'IdLocalidad',
+      tipo: 'select',
+      valorInicial: '',
+      validate: [Validators.required],
+      disable: true,
+      hidden:true,
+      label: 'Localidad',
+    });
+    this.fileds.push({
       nombre: 'Movil',
       tipo: 'phone',
       valorInicial: '',
@@ -363,7 +421,14 @@ export class ProgramaFormularioComponent implements OnInit, OnDestroy {
   }
   SelectChage(e: any) {
     if (e.Nombre == 'IdPais') {
+      if(e.value!=52){
+        this.fileds.filter(x=>x.nombre=='IdLocalidad')[0].hidden=true;
+        this.fileds.filter(x=>x.nombre=='IdLocalidad')[0].valorInicial = '';
+      }
       this.GetRegionesPorPais(e.value);
+    }
+    if (e.Nombre == 'IdRegion') {
+      this.GetLocalidadesPorRegion(e.value)
     }
   }
 }
