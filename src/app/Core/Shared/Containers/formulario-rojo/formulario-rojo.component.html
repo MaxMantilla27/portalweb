@@ -66,11 +66,34 @@
                       <mat-select
                       [style]="field.style" formControlName="{{field.nombre}}"
                       (selectionChange)="changeselectForm(field.nombre,$event.value)"
-                      (openedChange)="onOpenedChange($event, field)"
+                      (openedChange)="onSelectOpenedChange(field)"
                       >
                       <div class="search-container">
                         <input
+                        *ngIf="field.nombre == 'IdPais'"
                         #inputField
+                        placeholder="Buscar"
+                        matInput
+                        type="text"
+                        (keyup)="onKey($event, field)"
+                        class="example-input"
+                        style="background-color: #cacaca;
+                        height: 35px;
+                        padding: 5px;">
+                        <input
+                        *ngIf="field.nombre == 'IdRegion'"
+                        #inputFieldRegion
+                        placeholder="Buscar"
+                        matInput
+                        type="text"
+                        (keyup)="onKey($event, field)"
+                        class="example-input"
+                        style="background-color: #cacaca;
+                        height: 35px;
+                        padding: 5px;">
+                        <input
+                        *ngIf="field.nombre == 'IdLocalidad'"
+                        #inputFieldLocalidad
                         placeholder="Buscar"
                         matInput
                         type="text"

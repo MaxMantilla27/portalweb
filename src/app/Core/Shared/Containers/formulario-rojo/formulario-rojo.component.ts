@@ -35,6 +35,9 @@ export class FormularioRojoComponent implements OnChanges, OnInit,OnDestroy {
   private signal$ = new Subject();
   @ViewChild('f') myNgForm: any;
   @ViewChild('inputField') inputField!: ElementRef;
+  @ViewChild('inputFieldRegion') inputFieldRegion!: ElementRef;
+  @ViewChild('inputFieldLocalidad') inputFieldLocalidad!: ElementRef;
+
   isBrowser: boolean;
   public changeValidation=false;
   constructor(
@@ -619,8 +622,20 @@ export class FormularioRojoComponent implements OnChanges, OnInit,OnDestroy {
       this.renderer.selectRootElement(this.inputField.nativeElement).focus();
 
     }
-    onOpenedChange(event:any, field:any) {
-      this.focusInput();
+    onSelectOpenedChange(field: any) {
+      if(field.nombre == 'IdPais'){
+        this.renderer.selectRootElement(this.inputField.nativeElement).focus();
+
+      }
+      if(field.nombre == 'IdRegion'){
+        this.renderer.selectRootElement(this.inputFieldRegion.nativeElement).focus();
+
+      }
+      if(field.nombre == 'IdLocalidad'){
+        this.renderer.selectRootElement(this.inputFieldLocalidad.nativeElement).focus();
+
+      }
+
     }
     changeselectForm(nombre:any, value:any){
       this.OnSelect.emit({Nombre:nombre,value:value});

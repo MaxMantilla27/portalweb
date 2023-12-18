@@ -80,7 +80,7 @@ export class ContactenosComponent implements OnInit,OnDestroy {
     IdAreaTrabajo:undefined,
     IdIndustria:undefined,
     Comentario:'',
-    idLocalidad: undefined,
+    IdLocalidad: undefined,
   }
   public DatosContactenosEnvio: ContactenosDTO={
     Nombres:'',
@@ -165,7 +165,7 @@ export class ContactenosComponent implements OnInit,OnDestroy {
       this.formularioContacto.IdAreaFormacion=datos.idAreaFormacion;
       this.formularioContacto.IdAreaTrabajo=datos.idAreaTrabajo;
       this.formularioContacto.IdIndustria=datos.idIndustria;
-      this.formularioContacto.idLocalidad=datos.idLocalidad
+      this.formularioContacto.IdLocalidad=datos.idLocalidad
       if(this.formularioContacto.IdPais!=undefined){
         this.GetRegionesPorPais(this.formularioContacto.IdPais);
       }
@@ -262,14 +262,12 @@ export class ContactenosComponent implements OnInit,OnDestroy {
         this.listaLocalidades = x.listaLocalida.map((p:any)=>String(p.codigo));
         this.fileds.forEach(r=>{
           if(r.nombre=='IdPais'){
-            r.data,  r.filteredOptions =x.listaPais.map((p:any)=>{
+            r.data =x.listaPais.map((p:any)=>{
               var ps:Basic={Nombre:p.pais,value:p.idPais};
               return ps;
             })
-            r.filteredOptionsAux=x.listaPais.map((p:any)=>{
-              var ps:Basic={Nombre:p.pais,value:p.idPais};
-              return ps;
-            })
+            r.filteredOptionsAux = r.data;
+            r.filteredOptions = r.data;
           }
         })
         this.fileds.forEach(r=>{
@@ -278,6 +276,8 @@ export class ContactenosComponent implements OnInit,OnDestroy {
               var ps:Basic={Nombre:p.cargo,value:p.idCargo};
               return ps;
             })
+            r.filteredOptionsAux = r.data;
+            r.filteredOptions = r.data;
           }
         })
         this.fileds.forEach(r=>{
@@ -286,6 +286,8 @@ export class ContactenosComponent implements OnInit,OnDestroy {
               var ps:Basic={Nombre:p.areaFormacion,value:p.idAreaFormacion};
               return ps;
             })
+            r.filteredOptionsAux = r.data;
+            r.filteredOptions = r.data;
           }
         })
         this.fileds.forEach(r=>{
@@ -294,6 +296,8 @@ export class ContactenosComponent implements OnInit,OnDestroy {
               var ps:Basic={Nombre:p.areaTrabajo,value:p.idAreaTrabajo};
               return ps;
             })
+            r.filteredOptionsAux = r.data;
+            r.filteredOptions = r.data;
           }
         })
         this.fileds.forEach(r=>{
@@ -302,6 +306,8 @@ export class ContactenosComponent implements OnInit,OnDestroy {
               var ps:Basic={Nombre:p.industria,value:p.idIndustria};
               return ps;
             })
+            r.filteredOptionsAux = r.data;
+            r.filteredOptions = r.data;
           }
         })
       }

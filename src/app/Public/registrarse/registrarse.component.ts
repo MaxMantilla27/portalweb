@@ -236,14 +236,12 @@ export class RegistrarseComponent implements OnInit,OnDestroy {
         this.listaLocalidades = x.listaLocalida.map((p:any)=>String(p.codigo));
         this.fileds.forEach((r) => {
           if (r.nombre == 'IdPais') {
-            r.data,  r.filteredOptions =x.listaPais.map((p:any)=>{
+            r.data =x.listaPais.map((p:any)=>{
               var ps:Basic={Nombre:p.pais,value:p.idPais};
               return ps;
             })
-            r.filteredOptionsAux=x.listaPais.map((p:any)=>{
-              var ps:Basic={Nombre:p.pais,value:p.idPais};
-              return ps;
-            })
+            r.filteredOptions = r.data;
+            r.filteredOptionsAux = r.data;
           }
         });
         this.fileds.forEach((r) => {
@@ -252,6 +250,8 @@ export class RegistrarseComponent implements OnInit,OnDestroy {
               var ps: Basic = { Nombre: p.cargo, value: p.idCargo };
               return ps;
             });
+            r.filteredOptions = r.data;
+            r.filteredOptionsAux = r.data;
           }
         });
         this.fileds.forEach((r) => {
@@ -263,6 +263,8 @@ export class RegistrarseComponent implements OnInit,OnDestroy {
               };
               return ps;
             });
+            r.filteredOptions = r.data;
+            r.filteredOptionsAux = r.data;
           }
         });
         this.fileds.forEach((r) => {
@@ -271,6 +273,8 @@ export class RegistrarseComponent implements OnInit,OnDestroy {
               var ps: Basic = { Nombre: p.areaTrabajo, value: p.idAreaTrabajo };
               return ps;
             });
+            r.filteredOptions = r.data;
+            r.filteredOptionsAux = r.data;
           }
         });
         this.fileds.forEach((r) => {
@@ -279,6 +283,8 @@ export class RegistrarseComponent implements OnInit,OnDestroy {
               var ps: Basic = { Nombre: p.industria, value: p.idIndustria };
               return ps;
             });
+            r.filteredOptions = r.data;
+            r.filteredOptionsAux = r.data;
           }
         });
 
