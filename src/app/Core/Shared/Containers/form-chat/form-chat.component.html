@@ -4,7 +4,7 @@
   margin-left: 0px; padding: 5px 15px 5px 15px;text-align: center;margin-bottom: 15px;">
     Solo tienes que ingresar tus datos para empezar a conversar ahora mismo
   </div>
-  <div class="card-footer" style="background: white;margin-bottom: 10px;padding-bottom: 0px;padding-top: 0px;    border: 1px solid transparent;position: relative;">
+  <div class="card-footer" style="background: white;margin-bottom: 10px;padding-bottom: 0px;padding-top: 0px;    border: 1px solid transparent;position: relative; height: 420px;overflow: scroll;">
     <app-cargando *ngIf="statuscharge==true"></app-cargando>
     <app-formulario-rojo [ListaLocalidades]="listaLocalidades" [model]="formularioContactoChat" [InputsDisable]="statuscharge" (OnSubmit)="SetContacto($event)"
       (OnValid)="formVal=$event" [Interaccion]="'Chat-'+IdPGeneral" [fiels]="fileds" [ObtenerPrefijo]="true" (OnSelect)="SelectChage($event)">
