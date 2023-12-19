@@ -333,19 +333,20 @@ export class FormularioRojoComponent implements OnChanges, OnInit,OnDestroy {
               if(f.tipo=='phone' && f.nombre.toLowerCase()==key.toLowerCase()){
                 value = element.value[clave[0]].split(this.pref)[element.value[clave[0]].split(this.pref).length-1];
                 obj[key] = value;
+                aux= this.validadorPrefijo(this.pref, value);
+                if(aux!=''){
+                  this._SnackBarServiceService.openSnackBar(
+                    'El numero Ingresado no existe, Código LADA incorrecto.',
+                    'x',
+                    10,
+                    'snackbarCrucigramaerror'
+                  );
+                  return;
+                }
               }
             })
           }
-          aux= this.validadorPrefijo(this.pref, value);
-          if(aux!=''){
-            this._SnackBarServiceService.openSnackBar(
-              'El numero Ingresado no existe, Código LADA incorrecto.',
-              'x',
-              10,
-              'snackbarCrucigramaerror'
-            );
-            return;
-          }
+
         }
       });
     }
