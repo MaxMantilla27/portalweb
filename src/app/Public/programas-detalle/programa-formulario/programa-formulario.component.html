@@ -19,7 +19,7 @@
       Registra tus datos para que un asesor especializado pueda ayudarte en todo lo que requieras
     </div>
     <ng-container *ngIf="combosPrevios!=undefined">
-      <app-formulario-pop-up [Interaccion]="'Programas-'+data.IdBusqueda" [model]="formularioContacto" [InputsDisable]="statuscharge" [CleanOnSubmit]="cleanSub" (OnSubmit)="SetContacto($event)"
+      <app-formulario-pop-up [ListaLocalidades]="listaLocalidades" [Interaccion]="'Programas-'+data.IdBusqueda" [model]="formularioContacto" [InputsDisable]="statuscharge" [CleanOnSubmit]="cleanSub" (OnSubmit)="SetContacto($event)"
       (OnValid)="formVal=$event" [fiels]="fileds" (OnSelect)="SelectChage($event)">
 
       <ng-container contenido>
