@@ -531,8 +531,8 @@ export class FormularioComponent implements OnChanges, OnInit,OnDestroy {
 
     this.pref=this.PrefPaises()==null?'':this.PrefPaises()+' ';
     this.min=this.LongCelularPaises()==null?0:this.LongCelularPaises();
-    (<FormArray>this.userForm.get('Fields')).controls[i].get(val)?.setValue(this.pref);
-    //(<FormArray>this.userForm.get('Fields')).controls[i].get(val)?.setValue(this.pref+s.slice(1));
+    // (<FormArray>this.userForm.get('Fields')).controls[i].get(val)?.setValue(this.pref);
+    (<FormArray>this.userForm.get('Fields')).controls[i].get(val)?.setValue(this.pref+s.slice(1));
     (<FormArray>this.userForm.get('Fields')).controls[i].get(val)?.clearValidators();
     if(this.min>0){
       this.max=this.MaxLongCelularPaises()==null?0:this.MaxLongCelularPaises();
@@ -557,7 +557,8 @@ export class FormularioComponent implements OnChanges, OnInit,OnDestroy {
         Validators.required]);
       this.OnValid.emit(false);
     }
-    (<FormArray>this.userForm.get('Fields')).controls[i].get(val)?.setValue(this.pref);
+    (<FormArray>this.userForm.get('Fields')).controls[i].get(val)?.setValue(this.pref+(s.length>1?s[1]:''));
+    // (<FormArray>this.userForm.get('Fields')).controls[i].get(val)?.setValue(this.pref);
     //(<FormArray>this.userForm.get('Fields')).controls[i].get(val)?.setValue(this.pref+(s.length>1?s[1]:''));
 
   }
