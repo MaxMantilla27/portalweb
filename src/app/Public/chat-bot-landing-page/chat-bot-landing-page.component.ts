@@ -40,7 +40,8 @@ export class ChatBotLandingPageComponent implements OnInit,OnDestroy{
     IdPespecifico:0,
     IdPrograma:0,
     IdCampania:0,
-    IdUsuario:''
+    IdUsuario:'',
+    IdPais:0
   }
   public datosAlumno:ChatBotAlumnoDTO={
     Email:'',
@@ -242,6 +243,7 @@ export class ChatBotLandingPageComponent implements OnInit,OnDestroy{
       this.OportunidadDTO.NombresCompletos=this.datosAlumno.Nombres
       this.OportunidadDTO.Celular=this.datosAlumno.Movil
       this.OportunidadDTO.Correo=this.datosAlumno.Email
+      this.OportunidadDTO.IdPais=this.datosAlumno.IdPais
       this.ProcesarAsignacionAutomaticaChatbot();
     }else{
       if(this.pasoActual.nombreFuncion=='ActualizarAlumnoProbabilidad' && ValorDB!=null && ValorDB!=undefined && ValorDB!=0){

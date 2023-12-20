@@ -115,4 +115,5 @@ export interface ValidacionChatBotEnvioDTO {
   IdCategoriaDato: number;
   IdPespecifico: number;
   IdCampania?: number;
+  IdPais?:number;
 }
