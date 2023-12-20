@@ -128,6 +128,7 @@ import { FacebookLoginComponent } from './Containers/facebook-login/facebook-log
 import { SocialAuthService } from 'angularx-social-login';
 import { MatChipsModule } from '@angular/material/chips';
 import { FacebookPixelService } from './Services/FacebookPixel/facebook-pixel.service';
+import { ChatbotComponent } from './Containers/chatbot/chatbot.component';
 
 @NgModule({
   imports: [
@@ -221,6 +222,7 @@ import { FacebookPixelService } from './Services/FacebookPixel/facebook-pixel.se
     ScrollTopComponent,
     FormularioRojoComponent,
     FacebookLoginComponent,
+    ChatbotComponent,
 
     //ChatZComponent,
   ],
