@@ -511,6 +511,10 @@ export class FormularioPopUpComponent implements OnChanges, OnInit,OnDestroy {
     var c=(<FormArray>this.userForm.get('Fields')).controls[i].get(val)?.value;
     var campo =c==null?'':c.toString();
     var s=campo.split(' ');
+    var s=campo.split(' ');
+    if(s.length ==1){
+      s.push(' ')
+    }
 
     this.pref=this.PrefPaises()==null?'':this.PrefPaises()+' ';
     this.min=this.LongCelularPaises()==null?0:this.LongCelularPaises();
@@ -562,6 +566,10 @@ export class FormularioPopUpComponent implements OnChanges, OnInit,OnDestroy {
   ChangeInpiut(i: number, val: string){
     var campo = (<FormArray>this.userForm.get('Fields')).controls[i].get(val)?.value.toString();
     var s =campo.split(' ')
+    var s=campo.split(' ');
+    if(s.length ==1){
+      s.push(' ')
+    }
     console.log(s)
     this.validadorPrefijo(s[0],s[1]);
     if(this.PrefPaises()!=null){
