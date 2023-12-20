@@ -613,6 +613,7 @@ export class FormularioPopUpComponent implements OnChanges, OnInit,OnDestroy {
     if(codigoPais == '+52' && nrocelular.length >= 2){
       const primerosDosDigitos = nrocelular.substring(0, 2);
       const primerosTresDigitos = nrocelular.substring(0, 3);
+      console.log("Validando prefijo")
       console.log(this.ListaLocalidades)
       console.log(primerosDosDigitos)
       console.log(primerosTresDigitos)

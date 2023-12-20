@@ -35,7 +35,7 @@
     </app-formulario-pop-up>
     </ng-container>
     <ng-container *ngIf="combosPrevios==undefined && CompleteLocalStorage==true">
-      <app-formulario-pop-up [Interaccion]="'Programas-'+data.IdBusqueda" [model]="formularioContacto" [InputsDisable]="statuscharge" [CleanOnSubmit]="cleanSub" (OnSubmit)="SetContacto($event)"
+      <app-formulario-pop-up [ListaLocalidades]="listaLocalidades" [Interaccion]="'Programas-'+data.IdBusqueda" [model]="formularioContacto" [InputsDisable]="statuscharge" [CleanOnSubmit]="cleanSub" (OnSubmit)="SetContacto($event)"
       (OnValid)="formVal=$event" [fiels]="fileds" (OnSelect)="SelectChage($event)">
 
       <ng-container contenido>
