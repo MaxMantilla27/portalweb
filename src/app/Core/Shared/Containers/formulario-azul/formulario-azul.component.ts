@@ -598,6 +598,7 @@ export class FormularioAzulComponent implements OnChanges, OnInit,OnDestroy {
       this.validatePais(mobileIndex,'Movil');
     }
     if (nombre == 'IdLocalidad' && value != undefined) {
+      this.flagLocalidadError= false;
       const fieldsArray = (this.userForm.get('Fields') as FormArray).controls;
       const mobileIndex = fieldsArray.findIndex((element: any) => Object.keys(element?.value)[0] === 'Movil');
       (<FormArray>this.userForm.get('Fields')).controls[mobileIndex].get("Movil")?.setValue(this.pref+value);
