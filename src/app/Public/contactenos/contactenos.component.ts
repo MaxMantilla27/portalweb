@@ -111,6 +111,7 @@ export class ContactenosComponent implements OnInit,OnDestroy {
     idAreaFormacion:undefined,
     idAreaTrabajo:undefined,
     idIndustria:undefined,
+    idLocalidad: undefined
   }
   public listaLocalidades?:any;
   ngOnInit(): void {
@@ -212,6 +213,7 @@ export class ContactenosComponent implements OnInit,OnDestroy {
           this.datos.movil = this.DatosContactenosEnvio.Movil;
           this.datos.idCargo = this.DatosContactenosEnvio.IdCargo;
           this.datos.idAreaFormacion = this.DatosContactenosEnvio.IdAreaFormacion;
+          this.datos.idLocalidad = value.IdLocalidad;
           this.datos.idAreaTrabajo = this.DatosContactenosEnvio.IdAreaTrabajo;
           this.datos.idIndustria = this.DatosContactenosEnvio.IdIndustria
           this._SessionStorageService.SessionSetValue('DatosFormulario',JSON.stringify(this.datos));
