@@ -1,4 +1,5 @@
-import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
+import { Component, Inject, OnDestroy, OnInit, PLATFORM_ID, ViewEncapsulation } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { Subject, takeUntil } from 'rxjs';
 import { ChatBotAlumnoDTO } from 'src/app/Core/Models/AlumnoDTO';
@@ -18,15 +19,20 @@ export class ChatBotLandingPageComponent implements OnInit,OnDestroy{
 
   formControl = new FormControl('', [Validators.required]);
   private signal$ = new Subject();
+  isBrowser: boolean;
   ngOnDestroy(): void {
     this.signal$.next(true);
     this.signal$.complete();
+    clearInterval(this.intervalInicio);
   }
   constructor(
+    @Inject(PLATFORM_ID) platformId: Object,
     private _HelperService:HelperService,
     private _SessionStorageService:SessionStorageService,
     private _ChatBotService:ChatBotService
-  ) { }
+  ) {
+    this.isBrowser = isPlatformBrowser(platformId);
+  }
   chat=false
   CargandoChat=false
   public primerpaso :any
@@ -87,8 +93,20 @@ export class ChatBotLandingPageComponent implements OnInit,OnDestroy{
   public Paises:any;
   public min=0
   public max=1000
+  public intervalInicio:any
   public opcionesTruFalse:Array<any>=[]
   ngOnInit(): void {
+    if(this.isBrowser){
+      this.intervalInicio= setInterval(()=>{
+        var usuarioWeb=this._SessionStorageService.SessionGetValue('usuarioWeb');
+        console.log(usuarioWeb)
+        if(usuarioWeb!='' && usuarioWeb!=null && usuarioWeb.length>0){
+          this.dataInicial.IdContactoPortalSegmento=usuarioWeb
+          this.InicializarChatbot()
+          clearInterval(this.intervalInicio);
+        }
+      },100);
+    }
     this._HelperService.recibirDataPais.pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
         console.log(x)
@@ -107,7 +125,6 @@ export class ChatBotLandingPageComponent implements OnInit,OnDestroy{
         }
       }
     })
-    this.InicializarChatbot()
   }
   InicializarChatbot(){
     this.CargandoChat=true
