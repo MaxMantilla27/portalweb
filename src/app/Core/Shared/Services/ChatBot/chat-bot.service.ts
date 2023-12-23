@@ -2,7 +2,7 @@ import { isPlatformBrowser } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { EMPTY, Observable } from 'rxjs';
-import { ActualizarAlumnoChatBotDTO, FlujoChatEntradalDTO, InicioEntradaChatbotDTO, ValidacionChatBotEnvioDTO } from 'src/app/Core/Models/ChatBotDTO';
+import { ActualizarAlumnoChatBotDTO, FlujoChatEntradalDTO, InicioEntradaChatbotDTO, PerfilProfesionalDTO, ValidacionChatBotEnvioDTO } from 'src/app/Core/Models/ChatBotDTO';
 import { ValidacionChatEnvioDTO } from 'src/app/Core/Models/ChatEnLineaDTO';
 import { environment } from 'src/environments/environment';
 
@@ -86,6 +86,22 @@ export class ChatBotService {
     if(this.isBrowser){
       console.log(Json)
       return this.http.post<any>(this.urlBase+'/ProcesarAsignacionAutomaticaChatbot',Json);
+    }else{
+      return EMPTY;
+    }
+  }
+  public ActualizarIdOportunidadChatbotUsuarioContacto(IdChatbotUsuarioContacto:number,IdOportunidad:number,IdAlumno:number):Observable<any>{
+    if(this.isBrowser){
+      return this.http.get<any>(this.urlBase+'/ActualizarIdOportunidadChatbotUsuarioContacto?IdChatbotUsuarioContacto='+IdChatbotUsuarioContacto+'&IdOportunidad='+IdOportunidad+'&IdAlumno='+IdAlumno);
+    }else{
+      return EMPTY;
+    }
+  }
+
+  public ObtenerCincoOpcionesPerfilProfesionalChatbot(Json:PerfilProfesionalDTO):Observable<any>{
+    if(this.isBrowser){
+      console.log(Json)
+      return this.http.post<any>(this.urlBase+'/ObtenerCincoOpcionesPerfilProfesionalChatbot',Json);
     }else{
       return EMPTY;
     }

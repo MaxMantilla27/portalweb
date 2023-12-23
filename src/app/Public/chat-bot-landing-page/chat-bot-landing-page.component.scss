@@ -143,6 +143,29 @@
   cursor: pointer;
   color: white;
 }
+.OpcionesCheckGlobo{
+  width: fit-content;
+  padding: 5px 20px;
+  background: #fca534;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  cursor: pointer;
+  color: white;
+  display: flex;
+  align-items: center;
+}
+.TipoCheck{
+  width: 150px;
+  border-right: solid 1px white;
+  font-size: 14px;
+}
+.NombreCheck{
+  margin-left: 10px;
+  width: 350px;
+  border-right: solid 1px white;
+  margin-right: 10px;
+  font-size: 14px;
+}
 .RespuestaCheat{
   width: 100%;
   display: flex;

@@ -4,7 +4,7 @@ import { AbstractControl, ValidatorFn } from '@angular/forms';
 
 export function MovilValidator(IdPais: number): any{
   return (control: AbstractControl)=>{
-    const valor=<string>control.value;
+    const valor=<string>control.value+'';
     var Paises=[51,52,57,591,56]
     var error=false
     if(Paises.find(element => element ==IdPais)){
@@ -37,7 +37,6 @@ export function MovilValidator(IdPais: number): any{
           break;
         }
       }
-      console.log(IdPais)
       if(error==true){
         return{
           MovilValidator:{

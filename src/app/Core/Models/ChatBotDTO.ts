@@ -115,5 +115,12 @@ export interface ValidacionChatBotEnvioDTO {
   IdCategoriaDato: number;
   IdPespecifico: number;
   IdCampania?: number;
-  IdPais?:number;
+  IdPais?: number;
+}
+
+export interface PerfilProfesionalDTO {
+  CodigoPGeneral: string;
+  IdCampoContacto: number;
+  PrimerBloque: boolean;
+  IdCampo: number;
 }
