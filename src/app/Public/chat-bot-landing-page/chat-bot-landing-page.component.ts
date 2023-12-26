@@ -265,8 +265,8 @@ export class ChatBotLandingPageComponent implements OnInit,OnDestroy{
         this.flujoActual.IdAlumno=x.idAlumno
         this.flujoActual.IdOportunidad=x.idOportunidad
         this.ActualizarAlumnoDTO.IdAlumno=x.idAlumno
-        this.flujoActual.IdAlumno=10550890
-        this.flujoActual.IdOportunidad=2450547
+        //this.flujoActual.IdAlumno=10550890
+        //this.flujoActual.IdOportunidad=2450547
 
         this.ActualizarIdOportunidadChatbotUsuarioContacto();
         this.FlujoConversacionPrincipal()
