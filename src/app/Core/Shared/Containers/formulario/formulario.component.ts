@@ -181,13 +181,17 @@ export class FormularioComponent implements OnChanges, OnInit,OnDestroy {
                   if (this.localidadAux != '' && this.localidadAux != undefined) {
                     const fieldsArray = (this.userForm.get('Fields') as FormArray).controls;
                     const mobileIndex = fieldsArray.findIndex((element: any) => Object.keys(element?.value)[0] === 'Movil');
-                    (<FormArray>this.userForm.get('Fields')).controls[mobileIndex].get("Movil")?.setValue(this.pref+this.localidadAux);
+                    if (mobileIndex != -1){
+                      (<FormArray>this.userForm.get('Fields')).controls[mobileIndex].get("Movil")?.setValue(this.pref+this.localidadAux);
+                    }
 
 
                   }
                   const fieldsArrayPais = (this.userForm.get('Fields') as FormArray).controls;
                   const mobileIndexPais = fieldsArrayPais.findIndex((element: any) => Object.keys(element?.value)[0] === 'IdPais');
-                  (<FormArray>this.userForm.get('Fields')).controls[mobileIndexPais].get("IdPais")?.setValue(this.paisSelect);
+                  if (mobileIndexPais != -1){
+                    (<FormArray>this.userForm.get('Fields')).controls[mobileIndexPais].get("IdPais")?.setValue(this.paisSelect);
+                  }
                   index++
                 })
 
@@ -244,13 +248,17 @@ export class FormularioComponent implements OnChanges, OnInit,OnDestroy {
     if (this.localidadAux != '' && this.localidadAux != undefined) {
       const fieldsArray = (this.userForm.get('Fields') as FormArray).controls;
       const mobileIndex = fieldsArray.findIndex((element: any) => Object.keys(element?.value)[0] === 'Movil');
-      (<FormArray>this.userForm.get('Fields')).controls[mobileIndex].get("Movil")?.setValue(this.pref+this.localidadAux);
+      if (mobileIndex != -1){
+        (<FormArray>this.userForm.get('Fields')).controls[mobileIndex].get("Movil")?.setValue(this.pref+this.localidadAux);
+      }
 
 
     }
     const fieldsArrayPais = (this.userForm.get('Fields') as FormArray).controls;
     const mobileIndexPais = fieldsArrayPais.findIndex((element: any) => Object.keys(element?.value)[0] === 'IdPais');
-    (<FormArray>this.userForm.get('Fields')).controls[mobileIndexPais].get("IdPais")?.setValue(this.paisSelect);
+    if (mobileIndexPais != -1){
+      (<FormArray>this.userForm.get('Fields')).controls[mobileIndexPais].get("IdPais")?.setValue(this.paisSelect);
+    }
   }
   changeForm(){
     if(this.userForm!=undefined){
