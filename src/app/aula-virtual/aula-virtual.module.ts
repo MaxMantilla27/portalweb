@@ -159,6 +159,7 @@ import { CalificarActividadesDocenteComponent } from './docencia-v2-cursos-onlin
 import { CalificarCuestionarioDocenteComponent } from './docencia-v2-cursos-online/calificar-actividades-docente/calificar-cuestionario-docente/calificar-cuestionario-docente.component';
 import { CalificarTareaDocenteComponent } from './docencia-v2-cursos-online/calificar-actividades-docente/calificar-tarea-docente/calificar-tarea-docente.component';
 import { DetallesCuestionarioComponent } from './docencia-v2-cursos-online/calificar-actividades-docente/calificar-cuestionario-docente/detalles-cuestionario/detalles-cuestionario.component';
+import { ConfirmacionPagoOpenpayPeruComponent } from './confirmacion-pago-openpay-peru/confirmacion-pago-openpay-peru.component';
 
 
 @NgModule({
@@ -315,6 +316,7 @@ import { DetallesCuestionarioComponent } from './docencia-v2-cursos-online/calif
     CalificarCuestionarioDocenteComponent,
     CalificarTareaDocenteComponent,
     DetallesCuestionarioComponent,
+    ConfirmacionPagoOpenpayPeruComponent,
 
   ],
   imports: [

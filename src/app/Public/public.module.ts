@@ -54,6 +54,7 @@ import { LoginFacebookIngresarComponent } from './login/login-facebook/login-fac
 import { LoginFacebookRegistrarComponent } from './login/login-facebook/login-facebook-registrar/login-facebook-registrar.component';
 import { NotificacionBoliviaComponent } from './Home/notificacion-bolivia/notificacion-bolivia.component';
 import { CompraExitosaOpenPayColombiaComponent } from './compra-exitosa-open-pay-colombia/compra-exitosa-open-pay-colombia.component';
+import { CompraExitosaOpenpayPeruComponent } from './compra-exitosa-openpay-peru/compra-exitosa-openpay-peru.component';
 
 
 @NgModule({
@@ -114,7 +115,8 @@ import { CompraExitosaOpenPayColombiaComponent } from './compra-exitosa-open-pay
     LoginFacebookIngresarComponent,
     LoginFacebookRegistrarComponent,
     NotificacionBoliviaComponent,
-    CompraExitosaOpenPayColombiaComponent
+    CompraExitosaOpenPayColombiaComponent,
+    CompraExitosaOpenpayPeruComponent
   ],
   exports: [],
   providers: [
