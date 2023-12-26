@@ -368,7 +368,10 @@ export class FormularioComponent implements OnChanges, OnInit,OnDestroy {
       });
     }
     this.model = obj;
-    if(aux==''){
+
+    const fieldsArrayPais = (this.userForm.get('Fields') as FormArray).controls;
+    const mobileIndexLocalidad = fieldsArrayPais.findIndex((element: any) => Object.keys(element?.value)[0] === 'IdLocalidad');
+    if(aux=='' || aux==undefined){
       this.OnSubmit.emit(this.model);
       if(this.CleanOnSubmit==true){
         //this.userForm.reset();
