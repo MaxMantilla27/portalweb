@@ -70,6 +70,7 @@ export class PagoComponent implements OnInit,OnDestroy {
   public idPais=0
   public email=""
   public idAlumno:any=0
+  public tarjetas:any;
 
   ngOnInit(): void {
     let i=0
@@ -88,8 +89,9 @@ export class PagoComponent implements OnInit,OnDestroy {
           }
         },
       });
+      this.obtenerTarjetas();
     })
-   
+
   }
 
   EliminarAfiliacion(){
@@ -185,6 +187,7 @@ export class PagoComponent implements OnInit,OnDestroy {
     }
     this.sumarMotos()
   }
+
   sumarMotos(){
     this.total=0
     this.CronogramaPago.registroCuota.forEach((r:any) => {
@@ -224,13 +227,23 @@ export class PagoComponent implements OnInit,OnDestroy {
       }
     });
   }
-
+  obtenerTarjetas(){
+    this._MedioPagoActivoPasarelaService.MedioPagoPasarelaPortalCronograma(this.idMatricula).pipe(takeUntil(this.signal$)).subscribe({
+      next:x=>{
+        this.tarjetas=x
+        this.tarjetas.forEach((e:any) => {
+          e.img=this._t.GetTarjeta(e.medioCodigo)
+        });
+        console.log("Tarjetas por alumno",this.tarjetas)
+      }
+    })
+  }
 
   OpenModalMetodoPagoSucripcion(): void {
     var fechaActual = new Date();
     var fechaVencimiento = new Date();
-    var stringActual= pipe.transform(new Date(), 'yyyy-MM-ddT00:00:00.000') 
-    var stringVencimiento= pipe.transform(new Date(this.CronogramaPago.fechaVencimiento), 'yyyy-MM-ddT00:00:00.000') 
+    var stringActual= pipe.transform(new Date(), 'yyyy-MM-ddT00:00:00.000')
+    var stringVencimiento= pipe.transform(new Date(this.CronogramaPago.fechaVencimiento), 'yyyy-MM-ddT00:00:00.000')
     if(stringActual)fechaActual=new Date(stringActual)
     if(stringVencimiento)fechaVencimiento=new Date(stringVencimiento)
     if(fechaActual <= fechaVencimiento)
@@ -255,7 +268,7 @@ export class PagoComponent implements OnInit,OnDestroy {
       //   });
       // }
 
-      if(validador==2) 
+      if(validador==2)
       {
         this._SnackBarServiceService.openSnackBar(
           "Lo sentimos, no puedes afiliarte al pago Recurrente, no todas las cuotas pendientes se pagan el mismo día de afiliación",
@@ -263,7 +276,7 @@ export class PagoComponent implements OnInit,OnDestroy {
           10,
           "snackbarCrucigramaerror");
       }
-      else if(validador==1) 
+      else if(validador==1)
       {
         this._SnackBarServiceService.openSnackBar(
           "Lo sentimos, no puedes afiliarte al pago Recurrente, no todas las cuotas pendientes tiene el mismo monto",
@@ -280,7 +293,7 @@ export class PagoComponent implements OnInit,OnDestroy {
           panelClass: 'dialog-Tarjeta',
          // disableClose:true
         });
-  
+
         dialogRef.afterClosed().pipe(takeUntil(this.signal$)).subscribe((result) => {
           console.log("Suscripcion",result);
           if(result!=undefined){
@@ -345,7 +358,7 @@ export class PagoComponent implements OnInit,OnDestroy {
           var sesion=x._Repuesta.identificadorTransaccion;
           this._SessionStorageService.SessionSetValue(sesion,x._Repuesta.requiereDatosTarjeta);
           console.log(parseInt(tarjeta.idPasarelaPago))
-  
+
           if(tarjeta.idPasarelaPago==5 || tarjeta.idPasarelaPago==16){ //OpenPay
             this._router.navigate(['/AulaVirtual/MisPagos/Afiliacion/'+this.idMatricula+'/openpay/'+sesion]);
           }
@@ -366,7 +379,7 @@ export class PagoComponent implements OnInit,OnDestroy {
           dialogRef.close();
         }
       })
-    
+
   }
 
 

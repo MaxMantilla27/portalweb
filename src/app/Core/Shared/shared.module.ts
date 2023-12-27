@@ -128,6 +128,7 @@ import { FacebookLoginComponent } from './Containers/facebook-login/facebook-log
 import { SocialAuthService } from 'angularx-social-login';
 import { MatChipsModule } from '@angular/material/chips';
 import { FacebookPixelService } from './Services/FacebookPixel/facebook-pixel.service';
+import {MatRadioModule} from '@angular/material/radio';
 
 @NgModule({
   imports: [
@@ -163,7 +164,8 @@ import { FacebookPixelService } from './Services/FacebookPixel/facebook-pixel.se
     MatBottomSheetModule,
     CKEditorModule,
     TextFieldModule,
-    MatChipsModule
+    MatChipsModule,
+    MatRadioModule,
   ],
   declarations: [
     HeaderComponent,
@@ -311,6 +313,7 @@ import { FacebookPixelService } from './Services/FacebookPixel/facebook-pixel.se
     ScrollTopComponent,
     FacebookLoginComponent,
     MatChipsModule,
+    MatRadioModule,
   ],
   providers: [
     SessionStorageService,

@@ -66,11 +66,11 @@
           </ng-container>
         </ng-container>
       </ng-container>
-
-
-
-
-      <div class="col-12 ">
+    </div>
+    <div class="row">
+      <div
+      [ngClass]="{'col-12':total==0,'col-7':total>0}"
+      >
         <div class="table-resposive">
           <table style="width: 100%" class="table">
             <thead>
@@ -120,7 +120,9 @@
             </tr>
           </table>
         </div>
-        <div class="row" style="margin-top: 40px;justify-content: center;" *ngIf="total>0">
+      </div>
+      <div class="col-5" *ngIf="total>0">
+        <div class="row" style="margin-top: 40px;justify-content: center;">
           <div class="col-12 col-md-8 col-lg-6 CardPago">
             <div class="titleCardPago">Resumen de pago</div>
             <div class="contentCardPago row">
@@ -134,9 +136,34 @@
                   <div class="col-4">{{item.simbolo}} {{item.cuota}}</div>
                 </div>
               </ng-container>
-              <div class="col-12 row tot">
+              <div class="col-12 row tot sub">
                 <div class="col-8">Total a pagar</div>
                 <div class="col-4">{{CronogramaPago.registroCuota[0].simbolo}} {{total}}</div>
+              </div>
+              <div class="col-12 row">
+                <span class="tot mb-3">Método de pago aceptados:</span>
+                <div class="row mb-3">
+                  <span>
+                    Tarjeta de débito/crédito:
+                    <ng-container
+                    *ngFor="let imgMedioPago of tarjetas"
+                    >
+                      <!-- <span>{{imgMedioPago.medioPago}}</span> -->
+                      <img [src]="'../../../../assets/icons/'+imgMedioPago.img" alt="" style="width: 35px;">
+                    </ng-container>
+                  </span>
+                </div>
+                <span class="tot mb-3">
+                  Tipo de comprobante:
+                </span>
+                <div class="row mb-2">
+                  <mat-radio-group
+                  color="primary"
+                  aria-label="Select an option">
+                    <mat-radio-button value="1" class="m-2">Boleta</mat-radio-button>
+                    <mat-radio-button value="2" class="m-2">Factura</mat-radio-button>
+                  </mat-radio-group>
+                </div>
               </div>
               <div class="col-12 row bot">
                 <div>
