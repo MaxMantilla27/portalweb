@@ -68,6 +68,7 @@ export class FormChatComponent implements OnInit,OnChanges {
     Movil: '',
     IdPrograma:0,
     EstadoAsesor:'',
+
   };
   public listaLocalidades?:any;
   @Output() SaveForm:EventEmitter<{id:string,idAlumno:number}> = new EventEmitter<{id:string,idAlumno:number}>();
@@ -149,6 +150,8 @@ export class FormChatComponent implements OnInit,OnChanges {
       this.DatosEnvioFormulario.Apellidos = value.Apellidos;
       this.DatosEnvioFormulario.Email = value.Email;
       this.DatosEnvioFormulario.Movil = value.Movil;
+      this.DatosEnvioFormulario.IdPais = value.IdPais;
+      this.DatosEnvioFormulario.IdRegion = value.IdRegion;
       this.DatosEnvioFormulario.EstadoAsesor = '0';
       this.DatosEnvioFormulario.IdPrograma = this.IdPGeneral;
       var IdPespecifico=this._SessionStorageService.SessionGetValueCokies("IdPEspecificoPublicidad");
