@@ -216,10 +216,12 @@ export class ChatBotLandingPageComponent implements OnInit,OnDestroy{
       next:x=>{
         console.log(x);
 
-        if(x.itemFlujo.esMensajeFinal==true){
-          this.flujoActual.EsMensajeFinal=true
-          this.FlujoConversacionPrincipal();
-        }else{
+        //if(x.itemFlujo==null)
+          //{
+          //this.flujoActual.EsMensajeFinal=true
+          //this.FlujoConversacionPrincipal();
+          //}else
+        //{
           if(x.itemFlujo!=null){
             this.formControl.reset();
             this.pasoActual=x.itemFlujo
@@ -254,7 +256,7 @@ export class ChatBotLandingPageComponent implements OnInit,OnDestroy{
             this.CargandoChat=false
 
           }
-        }
+      // }
 
       }
     })
