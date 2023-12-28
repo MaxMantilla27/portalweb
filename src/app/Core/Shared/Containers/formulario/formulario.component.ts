@@ -615,7 +615,7 @@ export class FormularioComponent implements OnChanges, OnInit,OnDestroy {
         console.log(3)
       }else{
         (<FormArray>this.userForm.get('Fields')).controls[i].get(val)?.setValue(
-            s[0].slice(0,this.PrefPaises().length)+' '+s[1].trim()
+            s[0].slice(0,this.PrefPaises().length)+' '+s[1].replace(/\D/g, '').trim()
         );
       }
     }
