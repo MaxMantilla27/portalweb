@@ -425,6 +425,8 @@ export class ChatBotLandingPageComponent implements OnInit,OnDestroy{
           this.datosAlumno.Nombres=x.nombresCompletos
           this.ActualizarAlumnoDTO.IdAlumno=x.idAlumno
           this.flujoActual.UsuarioRegistrado=true
+          this.flujoActual.IdAlumno=x.idAlumno
+          this.ActualizarIdOportunidadChatbotUsuarioContacto()
         }
         this.FlujoConversacionPrincipal()
       }
