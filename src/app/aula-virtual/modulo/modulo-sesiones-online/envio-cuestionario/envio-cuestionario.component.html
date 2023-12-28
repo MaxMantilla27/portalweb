@@ -59,7 +59,7 @@
                 {{item.descripcion}}</div>
               <div class="DescripcionPregunta" *ngIf="item.idPreguntaTipo==3">Responde verdadero (V) O falso (F) según
                 corresponda</div>
-              <div class="DescripcionPregunta" *ngIf="item.idPreguntaTipo==4">Elija las alternativas correctas</div>
+              <div class="DescripcionPregunta" *ngIf="item.idPreguntaTipo==4">Elija {{item.respuestasMinimas}} alternativas correctas</div>
               <div class="DescripcionPregunta" *ngIf="item.idPreguntaTipo==5">Elige la alternativa correcta</div>
             </div>
             <div *ngIf="item.nombreArchivo==null" class="col-12 col-md-3 col-lg-3"  style=" display: flex;flex-direction: column;align-items: flex-end;">

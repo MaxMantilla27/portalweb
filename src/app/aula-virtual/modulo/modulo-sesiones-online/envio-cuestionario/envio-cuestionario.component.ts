@@ -92,7 +92,17 @@ export class EnvioCuestionarioComponent implements OnInit ,OnDestroy {
             p.nombreArchivoRetroalimentacion=nombreArchivoRetroalimentacion
             p.urlArchivoSubidoRetroalimentacion=urlArchivoSubidoRetroalimentacion
           }else{
+            let respuestasMinimas=0
             p.alternativas.forEach((a:any) => {
+              if(p.idPreguntaTipo==4){
+                if(a.puntaje!=0){
+                  respuestasMinimas=respuestasMinimas+1
+                }
+              }
+              else{
+                respuestasMinimas=1
+              }
+              p.respuestasMinimas=respuestasMinimas;
               vaRes.forEach((vr:any) => {
                 if(a.id==vr){
                   a.select=true
@@ -111,8 +121,22 @@ export class EnvioCuestionarioComponent implements OnInit ,OnDestroy {
             });
           }
         });
+        console.log(this.data.cuestionario.preguntasCuestionario)
+
       }else{
         this.data.cuestionario.preguntasCuestionario.forEach((p:any) => {
+          let respuestasMinimas=0
+          p.alternativas.forEach((a:any) => {
+            if(p.idPreguntaTipo==4){
+              if(a.puntaje!=0){
+                respuestasMinimas=respuestasMinimas+1
+              }
+            }
+            else{
+              respuestasMinimas=1
+            }
+            p.respuestasMinimas=respuestasMinimas;
+          });
           p.respuesta=[]
           if(p.idPreguntaTipo==6){
             p.respuesta.push('')
@@ -135,6 +159,8 @@ export class EnvioCuestionarioComponent implements OnInit ,OnDestroy {
             this.cronometro();
           }
         }
+        console.log(this.data.cuestionario.preguntasCuestionario)
+
       }
     }
   }
@@ -244,14 +270,21 @@ export class EnvioCuestionarioComponent implements OnInit ,OnDestroy {
       })
 
     });
-    this._PEspecificoEsquemaService.AgregarPEspecificoSesionCuestionarioAlumno(this.json).pipe(takeUntil(this.signal$))
-    .subscribe({
-      next: (x) => {
-        console.log(x)
-        this.dialogRef.close('guardado');
-      },
-    });
-    this._SessionStorageService.SessionDeleteValue('cuest-'+this.CuestionarioAvance.id.toString())
+    console.log(this.json)
+    // if(){
+    //   this._SnackBarServiceService.openSnackBar("Ya culmino el plazo para presentar este cuestionario.",'x',15,"snackbarCrucigramaerror");
+    // }
+    // else{
+    //   this._PEspecificoEsquemaService.AgregarPEspecificoSesionCuestionarioAlumno(this.json).pipe(takeUntil(this.signal$))
+    //   .subscribe({
+    //   next: (x) => {
+    //     console.log(x)
+    //     this.dialogRef.close('guardado');
+    //   },
+    // });
+    // this._SessionStorageService.SessionDeleteValue('cuest-'+this.CuestionarioAvance.id.toString())
+    // }
+
   }
   changeRadio(indexPregunta:number,index:number){
     if(this.disableAll!=true){
