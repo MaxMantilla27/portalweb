@@ -197,7 +197,7 @@ export class ChatBotLandingPageComponent implements OnInit,OnDestroy{
           if(this.datosAlumno.Nombres!=null){
             this.flujoActual.NombreUsuario=this.datosAlumno.Nombres
           }
-          this.flujoActual.Respuesta=pasoActualHistotial.respuesta
+          this.flujoActual.Respuesta=pasoActualHistotial.respuesta.toString()
           if(pasoActualHistotial.opcionEnviadoJson!=undefined && pasoActualHistotial.opcionEnviadoJson!=null){
             this.flujoActual.OpcionEnviadoJson=JSON.stringify(pasoActualHistotial.opcionEnviadoJson)
           }
@@ -254,7 +254,10 @@ export class ChatBotLandingPageComponent implements OnInit,OnDestroy{
             }
             console.log(this.SiguientesPasos)
             this.CargandoChat=false
-
+            if(this.pasoActual.esMensajeFinal==true){
+              this.flujoActual.EsMensajeFinal=true
+              this.FlujoConversacionPrincipal();
+            }
           }
       // }
 
