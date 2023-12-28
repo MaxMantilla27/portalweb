@@ -438,7 +438,7 @@ export class ChatBotLandingPageComponent implements OnInit,OnDestroy{
     this.flujoActual.MensajeEnviado=this.pasoActual.mensaje
     this.flujoActual.IdCampoContacto=this.pasoActual.idCampoContacto
     this.flujoActual.NombreUsuario=this.datosAlumno.Nombres
-    this.flujoActual.Respuesta=this.formControl.value
+    this.flujoActual.Respuesta=this.formControl.value.toString()
     if(this.pasoActual.opciones!=undefined && this.pasoActual.opciones!=null){
       this.flujoActual.OpcionEnviadoJson=JSON.stringify(this.pasoActual.opciones)
     }
