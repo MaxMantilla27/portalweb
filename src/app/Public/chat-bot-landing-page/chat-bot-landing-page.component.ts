@@ -540,43 +540,55 @@ export class ChatBotLandingPageComponent implements OnInit,OnDestroy{
   }
 
   ActualizarAlumnoChatBot2(valor:number){
-
     this.ActualizarAlumnoDTO.IdAlumno=this.datosAlumno.Id
     var indicemal=0
+    var msg=''
     for (let index = 0; index < this.opcionesTruFalse.length; index++) {
-      if(this.opcionesTruFalse[index].Check!=true || this.opcionesTruFalse[index].idCampo==0 || this.opcionesTruFalse[index].idCampo==null){
+      if(this.opcionesTruFalse[index].Check!=true){
+        msg='Muy Bien '+this.datosAlumno.Nombres+', vemos que cambiaste tu '+ this.opcionesTruFalse[index].nombre +' por favor actualizalo seleccionando una de las siguientes opciones:'
+        indicemal=index
+        break;
+      }
+      if(this.opcionesTruFalse[index].idCampo==0 || this.opcionesTruFalse[index].idCampo==null){
+        msg='Muy Bien '+this.datosAlumno.Nombres+', necesitamos conocer tu '+ this.opcionesTruFalse[index].nombre +' por favor selecciona una de las siguientes opciones:'
+
         indicemal=index
         break;
       }
     }
     console.log(this.opcionesTruFalse)
     console.log(indicemal)
-    switch (this.opcionesTruFalse[indicemal].id) {
-      case 7:
-        this.ActualizarAlumnoDTO.IdentificadorApi='IdCargo'
-        break;
-      case 8:
-        this.ActualizarAlumnoDTO.IdentificadorApi='IdAreaFormacion'
-        break;
-      case 9:
-        this.ActualizarAlumnoDTO.IdentificadorApi='IdAreaTrabajo'
-        break;
-      case 10:
-        this.ActualizarAlumnoDTO.IdentificadorApi='IdIndustria'
-        break;
-      default:
-        this.ActualizarAlumnoDTO.IdentificadorApi='IdCargo'
-        break;
-    }
-    this.ActualizarAlumnoDTO.Valor=valor.toString()
-    this._ChatBotService.ActualizarAlumnoChatBot(this.ActualizarAlumnoDTO).pipe(takeUntil(this.signal$)).subscribe({
-      next:x=>{
-        this.opcionesTruFalse[indicemal].idCampo=valor.toString()
-        this.opcionesTruFalse[indicemal].Check=true
-        this.opcionesTruFalse[indicemal].campo=x
-        this.ContinuarOpciones()
+    if(valor==0 || valor==null){
+      this.datos.PrimerBloque=false
+      this.ObtenerCincoOpcionesPerfilProfesionalChatbot(this.opcionesTruFalse[indicemal],msg)
+    }else{
+      switch (this.opcionesTruFalse[indicemal].id) {
+        case 7:
+          this.ActualizarAlumnoDTO.IdentificadorApi='IdCargo'
+          break;
+        case 8:
+          this.ActualizarAlumnoDTO.IdentificadorApi='IdAreaFormacion'
+          break;
+        case 9:
+          this.ActualizarAlumnoDTO.IdentificadorApi='IdAreaTrabajo'
+          break;
+        case 10:
+          this.ActualizarAlumnoDTO.IdentificadorApi='IdIndustria'
+          break;
+        default:
+          this.ActualizarAlumnoDTO.IdentificadorApi='IdCargo'
+          break;
       }
-    })
+      this.ActualizarAlumnoDTO.Valor=valor.toString()
+      this._ChatBotService.ActualizarAlumnoChatBot(this.ActualizarAlumnoDTO).pipe(takeUntil(this.signal$)).subscribe({
+        next:x=>{
+          this.opcionesTruFalse[indicemal].idCampo=valor.toString()
+          this.opcionesTruFalse[indicemal].Check=true
+          this.opcionesTruFalse[indicemal].campo=x.registro
+          this.ContinuarOpciones()
+        }
+      })
+    }
   }
 
 }

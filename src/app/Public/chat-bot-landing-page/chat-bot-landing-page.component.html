@@ -86,7 +86,7 @@
                 <div>
                   <input  class="inputData" [ngClass]="{'inputDataError': formControl.invalid}"
                   [formControl]="formControl" [type]="item.identificadorApi=='Movil'?'number':item.identificadorApi=='Email'?'email':'text'"
-                  matInput (keyup.enter)="SetDatAlumno()">
+                  matInput (keyup.enter)="SiguientePaso()">
                   <div class="InputError" *ngIf="formControl.invalid">{{obtenerErrorCampoNombre()}}</div>
                 </div>
 
