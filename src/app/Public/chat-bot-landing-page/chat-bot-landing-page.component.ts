@@ -363,7 +363,7 @@ export class ChatBotLandingPageComponent implements OnInit,OnDestroy{
   ContinuarFlujo(ValorDB:any){
     if(this.pasoActual.nombreFuncion=='CreacionAlumnoOportunidad'){
       this.OportunidadDTO.NombresCompletos=this.datosAlumno.Nombres
-      this.OportunidadDTO.Celular=this.datosAlumno.Movil
+      this.OportunidadDTO.Celular=this.datosAlumno.Movil.toString()
       this.OportunidadDTO.Correo=this.datosAlumno.Email
       this.OportunidadDTO.IdPais=this.datosAlumno.IdPais
       this.ProcesarAsignacionAutomaticaChatbot();
