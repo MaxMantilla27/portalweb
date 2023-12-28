@@ -33,12 +33,12 @@
 
       <ng-container *ngIf="chat==true">
         <div class="NombreCurso">{{flujoActual.NombrePGeneral}}</div>
-        <div class="textoChatbot">Registra tus datos para que un asesor especializado pueda ayudarte en todo lo que requieras</div>
+        <div class="textoChatbot"></div>
         <ng-container *ngFor="let item of SiguientesPasos; let i=index">
           <div class="PreguntaChat" *ngIf="i!=0">
             <div class="GloboPregunta">
               <div class="imgChatBot"></div>
-              <div class="PreguntaGlobo">{{item.mensaje}}</div>
+              <div class="PreguntaGlobo" [innerHtml]="item.mensaje | safeHtml"></div>
             </div>
             <div class="OpcionesPregunta" *ngIf="item.opciones2!=null && item.opciones2.length>0">
               <ng-container *ngFor="let itemo of item.opciones2">
@@ -79,7 +79,7 @@
           </div>
           <div class="RespuestaCheat" *ngIf="item.esMensajeFinal!=true && item.respuesta!=null">
             <ng-container *ngIf="item.respondido==true">
-              <div class="RespuestaGlobo">{{item.respuesta}}</div>
+              <div class="RespuestaGlobo" [innerHtml]="item.respuesta | safeHtml" ></div>
             </ng-container>
             <ng-container *ngIf="item.respondido!=true && (item.opciones==undefined || item.opciones==null || item.opciones.length==0)">
               <div class="InputResponder">
