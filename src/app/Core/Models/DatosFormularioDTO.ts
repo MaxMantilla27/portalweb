@@ -9,4 +9,5 @@ export interface DatosFormularioDTO{
   idAreaFormacion?:number,
   idAreaTrabajo?:number,
   idIndustria?:number,
+  idLocalidad?:any
 }

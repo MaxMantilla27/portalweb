@@ -1,3 +1,4 @@
+
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -8,8 +9,8 @@ import { FormaPagoService } from 'src/app/Core/Shared/Services/FormaPago/forma-p
 import { HelperService } from 'src/app/Core/Shared/Services/helper.service';
 import { SessionStorageService } from 'src/app/Core/Shared/Services/session-storage.service';
 import { SnackBarServiceService } from 'src/app/Core/Shared/Services/SnackBarService/snack-bar-service.service';
+declare var OpenPayColombia: any;
 declare var OpenPay: any;
-
 @Component({
   selector: 'app-afiliacion-openpay',
   templateUrl: './afiliacion-openpay.component.html',
@@ -35,7 +36,7 @@ export class AfiliacionOpenpayComponent implements OnInit,OnDestroy {
     this.signal$.next(true);
     this.signal$.complete();
   }
-
+  public tipoTarjet=""
   public idMatricula=0
   public json:RegistroRespuestaPreProcesoPagoDTO={
     IdentificadorTransaccion:'',
@@ -130,23 +131,27 @@ export class AfiliacionOpenpayComponent implements OnInit,OnDestroy {
         this.jsonSave.IdentificadorUsuario=this._SessionStorageService.SessionGetValue('usuarioWeb');
 
         this.jsonSave.PagoPSE=(this.resultCard.idPasarelaPago!=1 || this.resultCard.idFormaPago!=65)?false:true;
-        if (this.resultCard.idPasarelaPago == 5) {
-          this.OpenPayInit();
-        }
+        this.OpenPayInit();
       }
     })
   }
 
   OpenPayInit() {
-    //  OpenPay.setId('mlfmdoeugmuhd6epubse');
-    //  OpenPay.setApiKey('pk_81210f4cdefe4888bbe4ccfd8923655a');
-    OpenPay.setId('mxgmgffnaxu1mosrkhlo');
-    OpenPay.setApiKey('pk_c9dfff7c5c9e4a68a7c6083d280ff4db');
-    OpenPay.setSandboxMode(false);
-    //OpenPay.setSandboxMode(true);
-    //Se genera el id de dispositivo
-    var deviceSessionId = OpenPay.deviceData.setup('fomrOpenPAy');
-    console.log(OpenPay.getSandboxMode());
+    var deviceSessionId =""
+    if(this.jsonSave.IdPasarelaPago==16){
+      // OpenPayColombia.setId('mxqbvmmsltqluhbqauyo'); //--PRUEBA
+      // OpenPayColombia.setApiKey('pk_ba4c502aa2b848c2a6e67c3a36268542'); //--PRUEBA
+      OpenPayColombia.setId('mplrg136vnwpb3badwpv');
+      OpenPayColombia.setApiKey('pk_a0440e88efb34c668644d2f52027b251');
+      OpenPayColombia.setSandboxMode(false);
+      deviceSessionId = OpenPayColombia.deviceData.setup('fomrOpenPAy');
+    }
+    else{
+      OpenPay.setId('mxgmgffnaxu1mosrkhlo');
+      OpenPay.setApiKey('pk_c9dfff7c5c9e4a68a7c6083d280ff4db');
+      OpenPay.setSandboxMode(false);
+      deviceSessionId = OpenPay.deviceData.setup('fomrOpenPAy');
+    }
     this.jsonSave.DeviceSessionId = deviceSessionId;
   }
 
@@ -232,17 +237,34 @@ export class AfiliacionOpenpayComponent implements OnInit,OnDestroy {
       this.jsonSave.TarjetaHabiente.NumeroTarjeta =this.NumberT.split('-').join('');
       this.jsonSave.TarjetaHabiente.Aniho =this.jsonSave.TarjetaHabiente.fecha.split('/')[1];
       this.jsonSave.TarjetaHabiente.Mes =this.jsonSave.TarjetaHabiente.fecha.split('/')[0];
-      OpenPay.token.create(
-        {
-          card_number: this.jsonSave.TarjetaHabiente.NumeroTarjeta,
-          holder_name: this.jsonSave.TarjetaHabiente.Titular,
-          expiration_year: this.jsonSave.TarjetaHabiente.Aniho,
-          expiration_month: this.jsonSave.TarjetaHabiente.Mes,
-          cvv2: this.jsonSave.TarjetaHabiente.CodigoVV,
-        },
-        succes,
-        error
-      )
+
+      if(this.jsonSave.IdPasarelaPago==16){
+        OpenPayColombia.token.create(
+          {
+            card_number: this.jsonSave.TarjetaHabiente.NumeroTarjeta,
+            holder_name: this.jsonSave.TarjetaHabiente.Titular,
+            expiration_year: this.jsonSave.TarjetaHabiente.Aniho,
+            expiration_month: this.jsonSave.TarjetaHabiente.Mes,
+            cvv2: this.jsonSave.TarjetaHabiente.CodigoVV,
+          },
+          succes,
+          error
+        )
+      }
+      else{
+        OpenPay.token.create(
+          {
+            card_number: this.jsonSave.TarjetaHabiente.NumeroTarjeta,
+            holder_name: this.jsonSave.TarjetaHabiente.Titular,
+            expiration_year: this.jsonSave.TarjetaHabiente.Aniho,
+            expiration_month: this.jsonSave.TarjetaHabiente.Mes,
+            cvv2: this.jsonSave.TarjetaHabiente.CodigoVV,
+          },
+          succes,
+          error
+        )
+      }
+     
 
     }
   }
@@ -275,6 +297,33 @@ export class AfiliacionOpenpayComponent implements OnInit,OnDestroy {
         this.dialogRef.close()
       }
     })
+  }
+
+  obtenerTipoTarjeta(){
+    var numeroTarjetaLimpio = this.NumberT.replace(/\s/g, '').replace(/[^0-9]/gi, '');
+
+    const patronesTarjetas: Record<string, RegExp> = {
+      visa: /^4/,
+      mastercard: /^5[1-5]/,
+      amex: /^3[47]/,
+      carnet :/^506[0-9]/
+    };
+    let tarjeta=""
+    for (const tipo in patronesTarjetas) {
+      if (patronesTarjetas[tipo].test(numeroTarjetaLimpio)) {
+        tarjeta = tipo;
+          break;
+      }
+      else tarjeta =""
+    }
+
+    switch(tarjeta){
+      case 'visa':this.tipoTarjet='visa-07.svg';break;
+      case 'mastercard':this.tipoTarjet='mastercard-08.svg';break;
+      case 'amex':this.tipoTarjet='american-09.svg';break;
+      case 'carnet':this.tipoTarjet='carnet-mexico.svg';break;
+      default :this.tipoTarjet=""
+    }
   }
 
 }

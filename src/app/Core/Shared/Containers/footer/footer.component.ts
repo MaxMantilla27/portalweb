@@ -23,10 +23,7 @@ export class FooterComponent implements OnInit {
         title: 'Carreras Profesionales',
         route: '/carreras-profesionales'
       },
-      {
-        title: 'Formación Continua',
-        route: '/programas-certificaciones-cursos'
-      },
+
       // {
       //   title: 'Servicios Corporativos',
       //   route: '/'
@@ -38,6 +35,10 @@ export class FooterComponent implements OnInit {
       {
         title: 'Transparencia',
         route: '/Transparencia',
+      },
+      {
+        title: 'Formación Continua',
+        route: '/programas-certificaciones-cursos'
       }
     ]
     this.centralTelefonica = [

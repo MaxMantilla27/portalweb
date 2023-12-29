@@ -28,7 +28,7 @@
 
     <div style="padding: 10px 25px;">
       <ng-container *ngIf="combosPrevios!=undefined" style="margin-top: 10px;">
-        <app-formulario [Interaccion]="'Publicidad-'+data.IdFormulario" style="margin-top: 20px"
+        <app-formulario  [ListaLocalidades]="listaLocalidades" [Interaccion]="'Publicidad-'+data.IdFormulario" style="margin-top: 20px"
           [model]="obj" [InputsDisable]="statuscharge" (OnValid)="formVal=$event" [fiels]="fileds"
           [Tipo]="1" (OnSubmit)="EnviarFormulario($event)" (OnSelect)="SelectChage($event)">
 
@@ -51,7 +51,7 @@
         </app-formulario>
       </ng-container>
       <ng-container *ngIf="combosPrevios==undefined && CompleteLocalStorage==true" style="margin-top: 10px;">
-        <app-formulario [Interaccion]="'Publicidad-'+data.IdFormulario" style="margin-top: 20px"
+        <app-formulario  [ListaLocalidades]="listaLocalidades" [Interaccion]="'Publicidad-'+data.IdFormulario" style="margin-top: 20px"
           [model]="obj" [InputsDisable]="statuscharge" (OnValid)="formVal=$event" [fiels]="fileds"
           [Tipo]="1" (OnSubmit)="EnviarFormulario($event)" (OnSelect)="SelectChage($event)">
 
@@ -74,7 +74,7 @@
         </app-formulario>
       </ng-container>
       <ng-container *ngIf="combosPrevios==undefined && CompleteLocalStorage==false" style="margin-top: 10px;">
-        <app-formulario [Interaccion]="'Publicidad-'+data.IdFormulario" style="margin-top: 20px"
+        <app-formulario   [ListaLocalidades]="listaLocalidades"[Interaccion]="'Publicidad-'+data.IdFormulario" style="margin-top: 20px"
           [model]="obj" [InputsDisable]="statuscharge" (OnValid)="formVal=$event" [fiels]="fileds"
           [Tipo]="1" (OnSubmit)="EnviarFormulario($event)" (OnSelect)="SelectChage($event)">
 

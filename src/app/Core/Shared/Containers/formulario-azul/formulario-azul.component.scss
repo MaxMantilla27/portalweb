@@ -138,3 +138,14 @@
 .mat-checkbox-inner-container{
   background: white;
 }
+.search-container {
+  position: sticky;
+  top: 0;
+  background-color: #fff; /* Cambia este color según tu diseño */
+  z-index: 1; /* Asegura que esté por encima del contenido desplazable */
+}
+
+.options-container {
+  max-height: 200px; /* Ajusta la altura máxima según tus necesidades */
+  overflow-y: auto; /* Habilita el desplazamiento vertical */
+}

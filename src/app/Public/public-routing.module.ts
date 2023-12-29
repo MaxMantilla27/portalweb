@@ -34,6 +34,7 @@ import { CompraExitosaOpenPayComponent } from './compra-exitosa-open-pay/compra-
 import { LandinPageV2Component } from './landin-page-v2/landin-page-v2.component';
 import { TarifaGestionComponent } from './tarifa-gestion/tarifa-gestion.component';
 import { SorteoComponent } from './sorteo/sorteo.component';
+import { CompraExitosaOpenPayColombiaComponent } from './compra-exitosa-open-pay-colombia/compra-exitosa-open-pay-colombia.component';
 
 const routes:Routes=[
     {path:'',component:PublicComponent,children:
@@ -63,6 +64,7 @@ const routes:Routes=[
             {path:'bs-campus/blog/:blog', component:BlogComponent},
 
             {path:'CompraExitosaOpenPay/:validate', component:CompraExitosaOpenPayComponent},
+            {path:'CompraExitosaOpenPayColombia/:validate', component:CompraExitosaOpenPayColombiaComponent},
             {path:'Certificado/:IdMatricula/:IdCertificado', component:InformacionCertificadoComponent},
             {path:'SubArea/:nombre', component:TagsComponent},
             {path:'Area/:nombre', component:TagsComponent},

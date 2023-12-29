@@ -1,0 +1,85 @@
+<div class="container">
+    <div class="row rowpaddAv">
+      <div class="col-12 row" *ngIf="resultPreProcesoMP!=undefined">
+        <div class="col-12 col-md-12 col-lg-12 titlePagoTarjeta">Confirma tu compra</div>
+        <div class="col-12 d-md-none d-lg-none" >
+            <div class="resumenPagoTarjeta" style="padding: 0px">
+              <div class="titleResumenPago">Resumen de tu pago</div>
+              <div class="contentResumenPago">
+                <div class="subtitleResumenPago">{{resultPreProcesoMP.nombrePrograma}}</div>
+                <div class="ItemsResumenPago row">
+                    <div class="col-12 row itms" >
+                      <div class="verionPago" style="margin: 10px 0px;
+                      font-size: 14px;">{{resultPreProcesoMP.version}}</div>
+                      <div class="inicioPago">INICIO: {{resultPreProcesoMP.tipo}} - {{resultPreProcesoMP.inicio}}</div>
+                    </div>
+                    <div class="col-12 row tot">
+                      <div class="col-8">Total a pagar</div>
+                      <div class="col-4" style="text-align: right;">{{resultPreProcesoMP.moneda}} {{resultPreProcesoMP.montoTotal}}</div>
+                    </div>
+                  </div>
+              </div>
+            </div>
+    
+            <div class="iconoPagoTarjeta">
+              <div class="imgPagoTarjeta"></div>
+              <div class="textPagoTarjeta">
+                <span>PAGO</span>
+                <span>100%</span>
+                <span>seguro</span>
+              </div>
+              <div class="descPagoTarjeta">
+                <span>Este certificado garantiza la</span>
+                <span>seguridad de todas tus conexiones</span>
+                <span>mediante cifrado</span>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-md-6 col-lg-6 inputPagoVisa row">
+            <div [hidden]="hiden">
+                <div id="cardPaymentBrick_container"></div>
+            </div>
+            
+            <div style="    width: 100%;
+            font-size: 12px;
+            color: #b2b2b2;
+            padding: 20px;">
+              * El monto a cargar sera el cual se detalla arriba en la moneda del programa, el tipo de cambio dependerá del banco que usted utilice.
+            </div>
+    
+          </div>
+          <div class="d-none col-md-6 d-md-block col-lg-6 d-lg-block">
+            <div class="resumenPagoTarjeta">
+              <div class="titleResumenPago">Resumen de tu pago</div>
+              <div class="contentResumenPago">
+                <div class="subtitleResumenPago">{{resultPreProcesoMP.nombrePrograma}}</div>
+                <div class="ItemsResumenPago row">
+                    <div class="col-12 row itms" >
+                      <div class="verionPago" style="margin: 10px 0px;
+                      font-size: 14px;">{{resultPreProcesoMP.version}}</div>
+                      <div class="inicioPago">INICIO: {{resultPreProcesoMP.tipo}} - {{resultPreProcesoMP.inicio}}</div>
+                    </div>
+                    <div class="col-12 row tot">
+                      <div class="col-8">Total a pagar</div>
+                      <div class="col-4" style="text-align: right;">{{resultPreProcesoMP.moneda}} {{resultPreProcesoMP.montoTotal}}</div>
+                    </div>
+                  </div>
+              </div>
+            </div>
+            <div class="iconoPagoTarjeta">
+              <div class="imgPagoTarjeta"></div>
+              <div class="textPagoTarjeta">
+                <span>PAGO</span>
+                <span>100%</span>
+                <span>seguro</span>
+              </div>
+              <div class="descPagoTarjeta">
+                <span>Este certificado garantiza la</span>
+                <span>seguridad de todas tus conexiones</span>
+                <span>mediante cifrado</span>
+              </div>
+            </div>
+          </div>
+      </div>
+    </div>
+</div>

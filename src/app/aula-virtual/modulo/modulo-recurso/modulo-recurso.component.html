@@ -11,9 +11,9 @@
 
 <div class="row">
   <div class="col-12 col-md-12 col-lg-12">
-    <div class="titleMaterial">Diapositivas</div>
+    <div class="titleMaterial" *ngIf="tipo==1">Diapositivas</div>
     <div class="contentMaterial">
-      <ng-container *ngIf="Estructura!=undefined">
+      <ng-container *ngIf="Estructura!=undefined && tipo==1">
         <div *ngFor="let est of Estructura.registroEstructuraCursoCapitulo">
           <div style="padding: 5px 0px;font-weight: 600;display: flex;justify-content: space-between;align-items: center;width: 100%;cursor: pointer;"
           (click)="est.open=(est.open==undefined || est.open==false)?true:false">
