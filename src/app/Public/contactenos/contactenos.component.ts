@@ -319,6 +319,9 @@ export class ContactenosComponent implements OnInit,OnDestroy {
 
   SelectChage(e:any){
     if(e.Nombre=="IdPais"){
+      this.formularioContacto.IdRegion=undefined
+      this.formularioContacto.IdLocalidad=undefined
+      this.formularioContacto.Movil=''
       if(e.value!=52){
         this.fileds.filter(x=>x.nombre=='IdLocalidad')[0].hidden=true;
         this.fileds.filter(x=>x.nombre=='IdLocalidad')[0].valorInicial = '';
@@ -326,6 +329,7 @@ export class ContactenosComponent implements OnInit,OnDestroy {
       this.GetRegionesPorPais(e.value)
     }
     if(e.Nombre=='IdRegion'){
+      this.formularioContacto.IdLocalidad=undefined
       this.GetLocalidadesPorRegion(e.value)
     }
   }

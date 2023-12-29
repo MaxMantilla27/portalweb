@@ -525,6 +525,12 @@ export class FormularioRojoComponent implements OnChanges, OnInit,OnDestroy {
     var c=(<FormArray>this.userForm.get('Fields')).controls[i].get(val)?.value;
     var campo =c==null?'':c.toString();
     var s=campo.split(' ');
+    if(s.length ==1){
+      s.push(' ')
+    }else
+    {
+      s = s.slice(0, -1);
+    }
 
     this.pref=this.PrefPaises()==null?'':this.PrefPaises()+' ';
     this.min=this.LongCelularPaises()==null?0:this.LongCelularPaises();

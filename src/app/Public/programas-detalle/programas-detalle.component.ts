@@ -1018,6 +1018,7 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
     this.initValues = true;
   }
   GetRegionesPorPais(idPais:number){
+
     this._RegionService.ObtenerCiudadesPorPais(idPais).pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
         console.log(x)
@@ -1079,6 +1080,9 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
   }
   SelectChage(e:any){
     if(e.Nombre=="IdPais"){
+      this.formularioContacto.IdRegion=undefined
+      this.formularioContacto.IdLocalidad=undefined
+
       if(e.value!=52){
         this.fileds.filter(x=>x.nombre=='IdLocalidad')[0].hidden=true;
         this.fileds.filter(x=>x.nombre=='IdLocalidad')[0].valorInicial = '';
@@ -1086,6 +1090,7 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
       this.GetRegionesPorPais(e.value)
     }
     if(e.Nombre=='IdRegion'){
+      this.formularioContacto.IdLocalidad=undefined
       this.GetLocalidadesPorRegion(e.value)
     }
   }
