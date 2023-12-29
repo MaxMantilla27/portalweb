@@ -1079,12 +1079,10 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
     })
   }
   SelectChage(e:any){
-
-
     if(e.Nombre=="IdPais"){
       this.formularioContacto.IdRegion=undefined
       this.formularioContacto.IdLocalidad=undefined
-      this.formularioContacto.Movil=''
+
       if(e.value!=52){
         this.fileds.filter(x=>x.nombre=='IdLocalidad')[0].hidden=true;
         this.fileds.filter(x=>x.nombre=='IdLocalidad')[0].valorInicial = '';

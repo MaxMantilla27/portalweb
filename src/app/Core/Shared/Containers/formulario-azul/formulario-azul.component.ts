@@ -474,9 +474,6 @@ export class FormularioAzulComponent implements OnChanges, OnInit,OnDestroy {
     var s=campo.split(' ');
     if(s.length ==1){
       s.push(' ')
-    }else
-    {
-      s = s.slice(0, -1);
     }
     this.pref=this.PrefPaises()==null?'':this.PrefPaises()+' ';
     this.min=this.LongCelularPaises()==null?0:this.LongCelularPaises();
@@ -549,7 +546,7 @@ export class FormularioAzulComponent implements OnChanges, OnInit,OnDestroy {
         console.log(3)
       }else{
         (<FormArray>this.userForm.get('Fields')).controls[i].get(val)?.setValue(
-            s[0].slice(0,this.PrefPaises().length)+' '
+            s[0].slice(0,this.PrefPaises().length)+' '+s[1].trim()
         );
       }
     }
