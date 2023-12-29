@@ -472,6 +472,7 @@ export class FormularioAzulComponent implements OnChanges, OnInit,OnDestroy {
     var c=(<FormArray>this.userForm.get('Fields')).controls[i].get(val)?.value;
     var campo =c==null?'':c.toString();
     var s=campo.split(' ');
+
     if(s.length ==1){
       s.push(' ')
     }
@@ -586,8 +587,10 @@ export class FormularioAzulComponent implements OnChanges, OnInit,OnDestroy {
   }
 
   changeselectForm(nombre:any, value:any){
+
     this.OnSelect.emit({Nombre:nombre,value:value});
     if (nombre == 'IdPais') {
+
       this.paisSelect = value;
       if(this.paisSelect !=52){
         this.flagLocalidadError= false;
@@ -595,7 +598,13 @@ export class FormularioAzulComponent implements OnChanges, OnInit,OnDestroy {
       /*Se encuentra el index del campo movil*/
       const fieldsArray = (this.userForm.get('Fields') as FormArray).controls;
       const mobileIndex = fieldsArray.findIndex((element: any) => Object.keys(element?.value)[0] === 'Movil');
+      const RegionIndex = fieldsArray.findIndex((element: any) => Object.keys(element?.value)[0] === 'IdRegion');
+      const LocalidadIndex = fieldsArray.findIndex((element: any) => Object.keys(element?.value)[0] === 'IdLocalidad');
       this.validatePais(mobileIndex,'Movil');
+
+      (<FormArray>this.userForm.get('Fields')).controls[mobileIndex].get("Movil")?.setValue(this.pref);
+      (<FormArray>this.userForm.get('Fields')).controls[RegionIndex].get("IdRegion")?.setValue(undefined);
+      (<FormArray>this.userForm.get('Fields')).controls[LocalidadIndex].get("IdLocalidad")?.setValue(undefined);
     }
     if (nombre == 'IdLocalidad' && value != undefined) {
       this.flagLocalidadError= false;

@@ -649,6 +649,7 @@ export class FormularioRojoComponent implements OnChanges, OnInit,OnDestroy {
         const fieldsArray = (this.userForm.get('Fields') as FormArray).controls;
         const mobileIndex = fieldsArray.findIndex((element: any) => Object.keys(element?.value)[0] === 'Movil');
         this.validatePais(mobileIndex,'Movil');
+        (<FormArray>this.userForm.get('Fields')).controls[mobileIndex].get("Movil")?.setValue(this.pref);
       }
       if (nombre == 'IdLocalidad' && value != undefined) {
         this.flagLocalidadError= false;
