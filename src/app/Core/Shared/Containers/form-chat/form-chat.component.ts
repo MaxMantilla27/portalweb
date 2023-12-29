@@ -289,6 +289,9 @@ export class FormChatComponent implements OnInit,OnChanges {
   }
   SelectChage(e:any){
     if(e.Nombre=="IdPais"){
+      this.formularioContactoChat.IdRegion=undefined
+      this.formularioContactoChat.IdLocalidad=undefined
+      this.formularioContactoChat.Movil=''
       if(e.value!=52){
         this.fileds.filter(x=>x.nombre=='IdLocalidad')[0].hidden=true;
         this.fileds.filter(x=>x.nombre=='IdLocalidad')[0].valorInicial = '';
@@ -296,6 +299,7 @@ export class FormChatComponent implements OnInit,OnChanges {
       this.GetRegionesPorPais(e.value)
     }
     if(e.Nombre=='IdRegion'){
+      this.formularioContactoChat.IdLocalidad=undefined
       this.GetLocalidadesPorRegion(e.value)
     }
   }
