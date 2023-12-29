@@ -648,8 +648,12 @@ export class FormularioRojoComponent implements OnChanges, OnInit,OnDestroy {
         /*Se encuentra el index del campo movil*/
         const fieldsArray = (this.userForm.get('Fields') as FormArray).controls;
         const mobileIndex = fieldsArray.findIndex((element: any) => Object.keys(element?.value)[0] === 'Movil');
+        const RegionIndex = fieldsArray.findIndex((element: any) => Object.keys(element?.value)[0] === 'IdRegion');
+        const LocalidadIndex = fieldsArray.findIndex((element: any) => Object.keys(element?.value)[0] === 'IdLocalidad');
         this.validatePais(mobileIndex,'Movil');
         (<FormArray>this.userForm.get('Fields')).controls[mobileIndex].get("Movil")?.setValue(this.pref);
+        (<FormArray>this.userForm.get('Fields')).controls[RegionIndex].get("IdRegion")?.setValue(undefined);
+        (<FormArray>this.userForm.get('Fields')).controls[LocalidadIndex].get("IdLocalidad")?.setValue(undefined);
       }
       if (nombre == 'IdLocalidad' && value != undefined) {
         this.flagLocalidadError= false;
