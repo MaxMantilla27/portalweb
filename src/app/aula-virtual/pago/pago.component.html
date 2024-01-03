@@ -148,9 +148,23 @@
                     <ng-container
                     *ngFor="let imgMedioPago of tarjetas"
                     >
-                      <!-- <span>{{imgMedioPago.medioPago}}</span> -->
-                      <img [src]="'../../../../assets/icons/'+imgMedioPago.img" alt="" style="width: 35px;">
+                      <mat-radio-button
+                      [value]="imgMedioPago"
+                      (change)="onChangeRadioButton(imgMedioPago)"
+                      class="m-2"
+                      color="primary"
+
+                      >
+                        <img [src]="'../../../../assets/icons/'+imgMedioPago.img" alt=""  class="gray-border" style="width: 35px;">
+                      </mat-radio-button>
+
+
+                      <img [src]="'../../../../assets/icons/'+imgMedioPago.img" alt=""  class="m-2" style="width: 35px;" *ngIf="validadorPagosMultiples.length == 0">
+
                     </ng-container>
+                    <mat-error *ngIf="validadorPagosMultiples.length > 0 && medioPagoSeleccionado == undefined">
+                      Debe seleccionar un medio de pago
+                    </mat-error>
                   </span>
                 </div>
                 <span class="tot mb-3">
