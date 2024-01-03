@@ -58,6 +58,7 @@ export class AgregarPreguntasComponent implements OnInit ,OnChanges,OnDestroy {
   public tipoPregunta:Array<any>=[]
   public disabledAddPregunta=true;
   public IdTipoPreguntaAlternativa=0;
+  public Publicado=false;
   ngOnInit(): void {
 
     for (let index = 1; index < 11; index++) {
@@ -65,6 +66,8 @@ export class AgregarPreguntasComponent implements OnInit ,OnChanges,OnDestroy {
     }
     console.log(this.data)
     this.tipoPregunta=this.data.tipoPregunta
+    this.Publicado=this.data.publicado
+    console.log(this.Publicado)
     this.tipoPregunta.forEach((x:any) => {
       if(x.valor=='Ingresar palabra'){
         x.valor='Pregunta Abierta'

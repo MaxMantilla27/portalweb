@@ -72,11 +72,11 @@ export class TrabajoDeParesIntegraService {
       return EMPTY;
     }
   }
-  public ObtenerAlumnoTrabajoParesV2(IdPEspecifico:number,IdPGeneralPadre:number):Observable<any>{
+  public ObtenerAlumnoTrabajoParesV2(IdPEspecifico:number,IdPGeneralHijo:number):Observable<any>{
     if(this.isBrowser){
       return this.http
             .get<any>(
-              this.urlBase+'/ObtenerAlumnoTrabajoParesV2?IdPEspecifico='+IdPEspecifico+'&IdPGeneralPadre='+IdPGeneralPadre);
+              this.urlBase+'/ObtenerAlumnoTrabajoParesV2?IdPEspecifico='+IdPEspecifico+'&IdPGeneralHijo='+IdPGeneralHijo);
     }else{
       return EMPTY;
     }

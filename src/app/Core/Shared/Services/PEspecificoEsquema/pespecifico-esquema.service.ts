@@ -654,5 +654,14 @@ export class PEspecificoEsquemaService {
       }
     }
   }
+  public PublicarPEspecificoSesionTarea(IdPEspecificoSesionTarea: number): Observable<any> {
+    if (this.isBrowser) {
+      return this.http.post<any>(this.urlBase +"/PublicarPEspecificoSesionTarea?IdPEspecificoSesionTarea=" +IdPEspecificoSesionTarea,{});
+    } else {
+      {
+        return EMPTY;
+      }
+    }
+  }
 
 }

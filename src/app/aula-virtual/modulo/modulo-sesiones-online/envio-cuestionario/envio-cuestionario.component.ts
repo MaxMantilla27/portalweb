@@ -46,19 +46,26 @@ export class EnvioCuestionarioComponent implements OnInit ,OnDestroy {
     Preguntas:[],
     Usuario:'Alumno'
   }
-
+  public CuestionarioValido=false
+  public PuntuacionActual=0;
+  public PuntuacionActualEnviada=0;
+  public dataguardada:any
+  public CuestionarioEnviado=false
+  public PuntajeInicial=0
   ngOnInit(): void {
     var fecha1 = moment('2016-07-12');
     var fecha2 = moment('2016-08-01');
 
-    console.log(fecha2.diff(fecha1, 'seconds'), ' dias de diferencia');
     console.log(this.data)
+    this.PuntuacionActual=this.data.cuestionario.calificacionActual
     if(this.data.cuestionario!=undefined && this.data.cuestionario.preguntasCuestionario!=undefined && this.data.cuestionario.preguntasCuestionario!=null){
 
       this.minutos=this.data.cuestionario.tiempoLimite
       if(this.data.cuestionario.respuestaCuestionario!=null && this.data.cuestionario.respuestaCuestionario!=undefined && this.data.cuestionario.respuestaCuestionario.length>0){
-        var dataguardada=this.data.cuestionario.respuestaCuestionario[0]
-        console.log(dataguardada)
+        this.dataguardada=[]
+        this.dataguardada=this.data.cuestionario.respuestaCuestionario[0]
+        this.PuntuacionActualEnviada=this.data.cuestionario.respuestaCuestionario[0].calificacionMaxima
+        this.CuestionarioEnviado=true;
         this.disableAll=true
         this._SessionStorageService.SessionDeleteValue('cuest-'+this.CuestionarioAvance.id.toString())
         this.CuestionarioAvance.Inicio=true
@@ -70,7 +77,7 @@ export class EnvioCuestionarioComponent implements OnInit ,OnDestroy {
           var retroalimentacion=null
           var nombreArchivoRetroalimentacion=null
           var urlArchivoSubidoRetroalimentacion=null
-          dataguardada.respuestas.forEach((r:any) => {
+          this.dataguardada.respuestas.forEach((r:any) => {
             if(p.id==r.idPwPEspecificoSesionCuestionarioPregunta){
               vaRes.push(r.valor)
               if(r.correcto==true){
@@ -80,6 +87,9 @@ export class EnvioCuestionarioComponent implements OnInit ,OnDestroy {
                 vaInCorr.push(r.valor)
               }
               if(p.idPreguntaTipo==6){
+                this.PuntajeInicial=0
+                this.PuntajeInicial=r.puntos
+                p.puntajePregunta=this.PuntajeInicial
                 retroalimentacion=r.retroalimentacion
                 nombreArchivoRetroalimentacion=r.nombreArchivo
                 urlArchivoSubidoRetroalimentacion=r.urlArchivoSubido
@@ -93,6 +103,7 @@ export class EnvioCuestionarioComponent implements OnInit ,OnDestroy {
             p.urlArchivoSubidoRetroalimentacion=urlArchivoSubidoRetroalimentacion
           }else{
             let respuestasMinimas=0
+            this.PuntajeInicial=0
             p.alternativas.forEach((a:any) => {
               if(p.idPreguntaTipo==4){
                 if(a.puntaje!=0){
@@ -106,6 +117,8 @@ export class EnvioCuestionarioComponent implements OnInit ,OnDestroy {
               vaRes.forEach((vr:any) => {
                 if(a.id==vr){
                   a.select=true
+                  this.PuntajeInicial=this.PuntajeInicial+a.puntaje
+
                 }
               });
               vaCorr.forEach((vr:any) => {
@@ -120,8 +133,10 @@ export class EnvioCuestionarioComponent implements OnInit ,OnDestroy {
               });
             });
           }
+          if(p.idPreguntaTipo!=6){
+            p.puntajePregunta=this.PuntajeInicial
+          }
         });
-        console.log(this.data.cuestionario.preguntasCuestionario)
 
       }else{
         this.data.cuestionario.preguntasCuestionario.forEach((p:any) => {
@@ -152,14 +167,12 @@ export class EnvioCuestionarioComponent implements OnInit ,OnDestroy {
         this.CuestionarioAvance.id=this.data.cuestionario.id
         if(this._SessionStorageService.SessionGetValue('cuest-'+this.CuestionarioAvance.id.toString())!=''){
           var cuest=JSON.parse(atob(this._SessionStorageService.SessionGetValue('cuest-'+this.CuestionarioAvance.id.toString())));
-          console.log(cuest);
           this.AddValoresActuales(cuest)
           if(this.CuestionarioAvance.Inicio==true){
             this.vertiempo=true
             this.cronometro();
           }
         }
-        console.log(this.data.cuestionario.preguntasCuestionario)
 
       }
     }
@@ -180,7 +193,6 @@ export class EnvioCuestionarioComponent implements OnInit ,OnDestroy {
   IniciarCuestionario(){
     this._PEspecificoEsquemaService.ObtenerEstadoDeFechasPorCuestionario(this.data.cuestionario.id).pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
-        console.log(x)
         if(x==true){
           this.CuestionarioAvance.Inicio=true
           this.CuestionarioAvance.fechaInicio=new Date();
@@ -204,13 +216,11 @@ export class EnvioCuestionarioComponent implements OnInit ,OnDestroy {
       cuest.valores.forEach((av:any) => {
         if(av.IdPregunta==p.id){
           if(p.idPreguntaTipo==6){
-            console.log(p.respuesta,av.valorRespues)
             p.respuesta=av.valorRespues
           }else{
             p.alternativas.forEach((a:any) => {
 
               av.valorRespues.forEach((res:any) => {
-                console.log(res,a.id)
                 if(res==a.id){
                   a.select=true
                 }
@@ -220,7 +230,6 @@ export class EnvioCuestionarioComponent implements OnInit ,OnDestroy {
         }
       });
     });
-    console.log( this.data.cuestionario.preguntasCuestionario)
   }
   cronometro(){
     this.interval=setInterval(() => {
@@ -241,6 +250,7 @@ export class EnvioCuestionarioComponent implements OnInit ,OnDestroy {
   }
   AgregarPEspecificoSesionCuestionarioAlumno(){
     this.json.Preguntas=[]
+    let Orden=0
     this.data.cuestionario.preguntasCuestionario.forEach((p:any) => {
       var respues:Array<RespuestasCuestionarioDTO>=[]
       if(p.idPreguntaTipo==6){
@@ -264,26 +274,49 @@ export class EnvioCuestionarioComponent implements OnInit ,OnDestroy {
           valor:' '
         })
       }
+      let validado=false
+      if(p.idPreguntaTipo==4){
+        respues.forEach((a:any) => {
+          if(respues.length>=p.respuestasMinimas && a.valor!=' '){
+            validado=true;
+          }
+        });
+      }
+      else{
+        validado=true;
+      }
+      Orden=Orden+1
       this.json.Preguntas.push({
         IdPwPEspecificoSesionCuestionarioPregunta:p.id,
-        Respuestas:respues
+        Respuestas:respues,
+        Validado:validado,
+        Orden:Orden,
+        RespuestasMinimas:p.respuestasMinimas
       })
-
+      this.CuestionarioValido=true
+      this.json.Preguntas.forEach((pre:any) => {
+        if(pre.Validado==false){
+          this.CuestionarioValido=false
+        }
+      });
     });
-    console.log(this.json)
-    // if(){
-    //   this._SnackBarServiceService.openSnackBar("Ya culmino el plazo para presentar este cuestionario.",'x',15,"snackbarCrucigramaerror");
-    // }
-    // else{
-    //   this._PEspecificoEsquemaService.AgregarPEspecificoSesionCuestionarioAlumno(this.json).pipe(takeUntil(this.signal$))
-    //   .subscribe({
-    //   next: (x) => {
-    //     console.log(x)
-    //     this.dialogRef.close('guardado');
-    //   },
-    // });
-    // this._SessionStorageService.SessionDeleteValue('cuest-'+this.CuestionarioAvance.id.toString())
-    // }
+    if(this.CuestionarioValido==false){
+      this.json.Preguntas.reverse();
+      this.json.Preguntas.forEach((pre:any) => {
+        if(pre.Validado==false){
+          this._SnackBarServiceService.openSnackBar("Debe seleccionar "+pre.RespuestasMinimas+ " alternativas en la pregunta N° "+pre.Orden,'x',15,"snackbarCrucigramaerror");
+        }
+      });
+    }
+    else{
+      this._PEspecificoEsquemaService.AgregarPEspecificoSesionCuestionarioAlumno(this.json).pipe(takeUntil(this.signal$))
+      .subscribe({
+      next: (x) => {
+        this.dialogRef.close('guardado');
+      },
+    });
+    this._SessionStorageService.SessionDeleteValue('cuest-'+this.CuestionarioAvance.id.toString())
+    }
 
   }
   changeRadio(indexPregunta:number,index:number){
@@ -322,6 +355,5 @@ export class EnvioCuestionarioComponent implements OnInit ,OnDestroy {
       });
     });
     this._SessionStorageService.SessionSetValue('cuest-'+this.CuestionarioAvance.id.toString(),btoa(JSON.stringify(this.CuestionarioAvance)))
-    console.log(this.CuestionarioAvance);
   }
 }

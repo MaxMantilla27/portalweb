@@ -152,7 +152,7 @@
         <div class="col-6 col-md-3 col-lg-3 InputsDocencia">
           <mat-form-field appearance="outline">
             <mat-label>Criterio de Evaluación</mat-label>
-            <mat-select #myselsetc formControlName="IdCriterioEvaluacion"  >
+            <mat-select #myselsetc formControlName="IdCriterioEvaluacion" [disabled]="Publicado" >
                 <mat-option *ngFor="let item of esquemas" [value]="item.idCriterioEvaluacion">
                   {{item.nombre}}
                 </mat-option>
@@ -175,8 +175,8 @@
     </form>
     <div class="noform">
       <div class="row">
-        <div class="col-5 col-md-3 col-lg-3 labelTarea">Agregar preguntas</div>
-        <div class="col-5 col-md-7 col-lg-7 InputsDocencia">
+        <div  *ngIf="!Publicado" class="col-5 col-md-3 col-lg-3 labelTarea">Agregar preguntas</div>
+        <div  *ngIf="!Publicado" class="col-5 col-md-7 col-lg-7 InputsDocencia">
 
           <mat-form-field appearance="outline">
             <mat-label>Seleccione</mat-label>
@@ -187,7 +187,7 @@
           </mat-form-field>
 
         </div>
-        <div class="col-2">
+        <div  *ngIf="!Publicado" class="col-2">
           <app-default-button [confs]="{color:'primary',titulo:'Agregar'}" [disabled]="tipoagregra==-1"
             [style]="'width: 100%;margin:0px'" (ButtoclClick)="tipoagregra==1?fileInput.click():OpenCrearPregunta()"
             [icon]="''"></app-default-button>
@@ -197,7 +197,7 @@
         padding: 7px;
         border-radius: 5px;display: none;">
         </div>
-        <div class="col-12">
+        <div *ngIf="!Publicado" class="col-12">
           <div class="table-resposive">
             <table style="width: 100%;">
               <tr style="border-bottom: solid 1px black;">
@@ -221,10 +221,38 @@
             </table>
           </div>
         </div>
+        <div *ngIf="Publicado" class="col-12">
+          <div class="table-resposive">
+            <table style="width: 100%;">
+              <tr style="border-bottom: solid 1px black;">
+                <th style="width: 180px;">Tipo de Pregunta</th>
+                <th style="min-width: 200px;">Enunciado</th>
+                <th style="width:150px">Puntaje</th>
+                <th style="width:150px;text-align: center">Acciones</th>
+                <!-- <th style="min-width: 180px;">Metas pronosticadas 2021</th> -->
+              </tr>
+              <tr class="example-box" *ngFor="let item of  save.Preguntas;let i=index">
+                <td>{{GettipoPregunta(item.IdPreguntaTipo)}}</td>
+                <td>{{item.Enunciado}}</td>
+                <td>{{item.Puntaje}}</td>
+                <td>
+                  <div class="accionesRecursos">
+                    <div class="edidtarNaranja" (click)="OpenEditar(i)"></div>
+                    <!-- <div class="eliminarNaranja" (click)="Eliminar(i)"></div> -->
+                  </div>
+                </td>
+              </tr>
+            </table>
+          </div>
+        </div>
 
       </div>
     </div>
     <mat-dialog-actions align="center" style="margin-top: 20px;    margin-bottom: 20px;">
+      <div style="margin: 0px 5px;">
+        <app-default-button [confs]="{color:'verde',titulo:'Exportar Preguntas'}" [style]="'width: 100%'"
+          [icon]="'download'" (ButtoclClick)="DownloadPreguntasCuestionarioExcel()"></app-default-button>
+      </div>
       <div style="margin: 0px 5px;">
         <app-default-button [confs]="{color:'danger',titulo:'Cerrar'}" [style]="'width: 100%'" mat-dialog-close
           [icon]="'close'"></app-default-button>

@@ -59,7 +59,7 @@ export class RecursosTareaComponent implements OnInit, OnDestroy {
     console.log(IdTarea)
     this.alertaService.mensajeConfirmacionTarea().then((result) => {
       if (result.isConfirmed) {
-        this._PEspecificoEsquemaService.ResetearTareaAlumno(IdTarea).pipe(takeUntil(this.signal$)).subscribe({
+        this._PEspecificoEsquemaService.PublicarPEspecificoSesionTarea(IdTarea).pipe(takeUntil(this.signal$)).subscribe({
           next: (x:any) => {
           },
           complete:()=>{

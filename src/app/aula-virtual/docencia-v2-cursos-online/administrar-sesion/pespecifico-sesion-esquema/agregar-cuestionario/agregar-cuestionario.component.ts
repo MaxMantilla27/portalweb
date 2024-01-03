@@ -15,6 +15,7 @@ import { PEspecificoEsquemaService } from 'src/app/Core/Shared/Services/PEspecif
 import {
   PEspecificoSesionCuestionarioPreguntaAlternativaDTO,
   PEspecificoSesionCuestionarioSaveDTO,
+  registrosExcelDTO,
 } from 'src/app/Core/Models/PEspecificoEsquema';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { HttpEventType, HttpResponse } from '@angular/common/http';
@@ -22,6 +23,7 @@ import { DatePipe } from '@angular/common';
 import { AgregarPreguntasComponent } from './agregar-preguntas/agregar-preguntas.component';
 import { SnackBarServiceService } from 'src/app/Core/Shared/Services/SnackBarService/snack-bar-service.service';
 import { AlertaService } from 'src/app/shared/services/alerta.service';
+import { ExcelService } from 'src/app/Core/Shared/Services/Excel/excel.service';
 
 @Component({
   selector: 'app-agregar-cuestionario',
@@ -43,6 +45,7 @@ export class AgregarCuestionarioComponent implements OnInit, OnDestroy {
     public dialog: MatDialog,
     public _SnackBarServiceService: SnackBarServiceService,
     private alertaService: AlertaService,
+    private excelService: ExcelService,
   ) {}
 
   public file=new File([], '')
@@ -114,6 +117,9 @@ export class AgregarCuestionarioComponent implements OnInit, OnDestroy {
   //   }
   // ]
   public esquemas : any;
+  public Publicado=false;
+  public registrosExcel:any
+  public registrosExcelDescarga: Array<any> = [];
   ngOnInit(): void {
     for (let index = 0; index < 24; index++) {
       var hora = '' + index;
@@ -175,12 +181,16 @@ export class AgregarCuestionarioComponent implements OnInit, OnDestroy {
     return text;
   }
   ObtenerPEspecificoSesionCuestionarioPorId() {
+    this.Publicado=false
     this._PEspecificoEsquemaService
       .ObtenerPEspecificoSesionCuestionarioPorId(this.data.id)
       .pipe(takeUntil(this.signal$))
       .subscribe({
         next: (x) => {
           console.log(x);
+          if(x.publicado==true){
+            this.Publicado=true
+          }
           this.ObtenerTipoCriteriosPorProgramaEspecifico(x.idTipoCriterioEvaluacion)
 
           var date = new Date(x.fechaEntrega);
@@ -377,6 +387,7 @@ export class AgregarCuestionarioComponent implements OnInit, OnDestroy {
         pregunta: null,
         sesion: this.data.sesion,
         tipoPregunta: this.tipoPregunta,
+        publicado:this.Publicado
       },
       panelClass: 'dialog-Agregar-Tarea',
       disableClose:true
@@ -503,6 +514,7 @@ export class AgregarCuestionarioComponent implements OnInit, OnDestroy {
         pregunta: this.save.Preguntas[i],
         sesion: this.data.sesion,
         tipoPregunta: this.tipoPregunta,
+        publicado:this.Publicado
       },
       panelClass: 'dialog-Agregar-Tarea',
       disableClose:true
@@ -534,5 +546,74 @@ export class AgregarCuestionarioComponent implements OnInit, OnDestroy {
         }
       },
     });
+  }
+  DownloadPreguntasCuestionarioExcel(): void {
+    if(this.save.Preguntas.length!=0){
+      var TipoPreguntaExcel=''
+      var CountOrden=0
+      var Enunciado=''
+      var Retroalimentacion=''
+      var Descripcion=''
+      this.registrosExcelDescarga=[]
+      this.registrosExcel={}
+      this.save.Preguntas.forEach((items:any) => {
+        this.tipoPregunta.forEach((tp:any) => {
+          if(tp.id==items.IdPreguntaTipo){
+            TipoPreguntaExcel=''
+            TipoPreguntaExcel=this.removeAccents(tp.valor)
+            CountOrden=CountOrden+1
+          }
+        })
+        if(items.Enunciado!=null){
+          Enunciado=items.Enunciado
+        }
+        if(items.Retroalimentacion!=null){
+          Retroalimentacion=items.Retroalimentacion
+        }
+        if(items.Descripcion!=null){
+          Descripcion=items.Descripcion
+        }
+        items.Alternativas.forEach((ex:any) => {
+          this.registrosExcel={}
+          this.registrosExcel.Orden=CountOrden
+          this.registrosExcel.TipoPregunta=TipoPreguntaExcel
+          this.registrosExcel.Enunciado=Enunciado
+          this.registrosExcel.Retroalimentacion=Retroalimentacion
+          this.registrosExcel.Descripcion=Descripcion
+          this.registrosExcel.Alternativa=ex.Alternativa
+          this.registrosExcel.Correcta=ex.EsCorrecta==true?1:0
+          this.registrosExcel.Puntaje=ex.Puntaje
+          this.registrosExcelDescarga.push(this.registrosExcel)
+        });
+      });
+      const fileToExport = this.registrosExcelDescarga.map((itemsFinal:any) => {
+        var data:any={}
+        data["Orden"]= itemsFinal?.Orden
+        data["TipoPregunta"]= itemsFinal?.TipoPregunta
+        data["Enunciado"]= itemsFinal?.Enunciado
+        data["Retroalimentacion"]= itemsFinal?.Retroalimentacion
+        data["Descripcion"]= itemsFinal?.Descripcion
+        data["Alternativa"]= itemsFinal?.Alternativa
+        data["Correcta"]= itemsFinal?.Correcta
+        data["Puntaje"]= itemsFinal?.Puntaje
+        return data
+      })
+      this.excelService.exportToExcel(
+        fileToExport,
+        'CuestionarioPreguntas-' + new Date().getTime()
+      );
+    }
+    else{
+      this._SnackBarServiceService.openSnackBar(
+        'No hay preguntas registradas para descargar',
+        'x',
+        15,
+        'snackbarCrucigramaerror'
+      );
+    }
+
+  }
+  removeAccents(strng:string){
+    return strng.normalize("NFD").replace(/[\u0300-\u036f]/g, "")
   }
 }

@@ -36,8 +36,8 @@ export class AlertaService {
   }
   mensajeConfirmacionTarea() {
     return Swal.fire({
-      title: 'Se restaurarán las tareas de todos los alumnos. ¿Desea continuar?',
-      text: '¡Se borrarán todas las tareas realizadas!',
+      title: 'Se publicará la tarea para ser visible por los alumnos. ¿Desea continuar?',
+      // text: '¡Se borrarán todas las tareas realizadas!',
       icon: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#4C5FC0',
@@ -48,8 +48,8 @@ export class AlertaService {
   }
   mensajeConfirmacionEdicionCuestionario() {
     return Swal.fire({
-      title: 'El cuestionario no será visible hasta su publicación. ¿Desea continuar?',
-      text: '¡Se borrarán todos los intentos realizados!',
+      title: 'El cuestionario se actualizará manteniendo su estado de publicación. ¿Desea continuar?',
+      // text: '¡Se borrarán todos los intentos realizados!',
       icon: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#4C5FC0',
@@ -82,8 +82,8 @@ export class AlertaService {
   }
   mensajeConfirmacionEdicionTarea() {
     return Swal.fire({
-      title: 'La tarea no será visible hasta su publicación. ¿Desea continuar?',
-      text: '¡Se borrarán todas las tareas realizadas!',
+      title: 'Se guardarán todos los cambios. ¿Desea continuar?',
+      // text: '¡Se borrarán todas las tareas realizadas!',
       icon: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#4C5FC0',

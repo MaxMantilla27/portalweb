@@ -74,6 +74,9 @@ export interface AgregarPEspecificoSesionCuestionarioAlumnoDTO {
 export interface RespuestasPreguntasDTO {
   IdPwPEspecificoSesionCuestionarioPregunta: number;
   Respuestas: Array<RespuestasCuestionarioDTO>;
+  Validado:boolean;
+  Orden: number;
+  RespuestasMinimas: number
 }
 export interface RespuestasCuestionarioDTO {
   valor: string,
@@ -97,4 +100,14 @@ export interface CalificarTareaAlumnoOnlineDTO {
   Nota: number,
   Retroalimentacion: string|null,
   file: File;
+}
+export interface registrosExcelDTO{
+  Orden:number,
+  TipoPregunta:string,
+  Enunciado:string,
+  Retroalimentacion:string,
+  Descripcion:string,
+  Alternativa:string,
+  Correcta:number,
+  Puntaje:number
 }

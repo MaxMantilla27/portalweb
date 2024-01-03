@@ -77,6 +77,22 @@ export class VistaPreviaCuestionarioComponent implements OnInit {
         next: (x) => {
           console.log(x);
           this.preguntas = x;
+          if(x!=null && x!=undefined){
+            this.preguntas.forEach((p:any) =>{
+              let respuestasMinimas=0
+              p.alternativas.forEach((a:any) => {
+                if(p.idPreguntaTipo==4){
+                  if(a.puntaje!=0){
+                    respuestasMinimas=respuestasMinimas+1
+                  }
+                }
+                else{
+                  respuestasMinimas=1
+                }
+                p.respuestasMinimas=respuestasMinimas;
+              });
+            });
+          }
           // this.preguntas.alternativas.forEach((a:any) => {
           //   a.select=false
           // });

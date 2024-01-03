@@ -108,10 +108,11 @@
   .AbajoActividad {
     display: flex;
     justify-content: space-between;
+    align-items: center;
     .FechaEntregaActividad {
       display: flex;
       align-items: center;
-      font-size: 14px;
+      font-size: 11px;
     }
   }
 }

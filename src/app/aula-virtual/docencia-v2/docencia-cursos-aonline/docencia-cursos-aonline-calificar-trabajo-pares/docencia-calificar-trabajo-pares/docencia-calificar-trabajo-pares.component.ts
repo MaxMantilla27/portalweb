@@ -91,6 +91,7 @@ export class DocenciaCalificarTrabajoParesComponent implements OnInit , OnChange
 
     dialogRef.afterClosed().pipe(takeUntil(this.signal$)).subscribe(result => {
       if(result==true){
+        this.trabajoParesCurso=undefined
         this.TerminaCarga=false;
         this.ObtenerTrabajoParesPorCursoDocente()
       }

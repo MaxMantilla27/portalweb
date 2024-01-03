@@ -17,8 +17,8 @@
 
       <mat-form-field appearance="outline">
         <mat-label>Seleccione el Tipo de Pregunta</mat-label>
-        <mat-select #myselsetc formControlName="IdPreguntaTipo" >
-            <mat-option *ngFor="let item of tipoPregunta" [value]="item.id" (click)="ChangeTipoPregunta(item.id)">{{item.valor}}</mat-option>
+        <mat-select #myselsetc formControlName="IdPreguntaTipo" [disabled]="Publicado">
+            <mat-option *ngFor="let item of tipoPregunta" [value]="item.id"  (click)="ChangeTipoPregunta(item.id)">{{item.valor}}</mat-option>
         </mat-select>
         <mat-error *ngIf="!formularioTarea.get('HoraEntrega')?.valid">Seleccione el tipo de pregunta</mat-error>
       </mat-form-field>
@@ -28,7 +28,7 @@
     <div class="col-6 col-md-9 col-lg-9 InputsDocencia">
       <mat-form-field appearance="outline" style="width: 100%;">
         <mat-label>Ingresar Enunciado de la Pregunta</mat-label>
-        <input type="text" placeholder="Ingresar Enunciado de la Pregunta" formControlName="Enunciado" matInput>
+        <input  type="text"   placeholder="Ingresar Enunciado de la Pregunta" formControlName="Enunciado" matInput [disabled]="true">
         <mat-error *ngIf="!formularioTarea.get('HoraEntrega')?.valid">Ingrese el enunciado</mat-error>
       </mat-form-field>
     </div>
@@ -36,7 +36,7 @@
     <div class="col-6 col-md-9 col-lg-9 InputsDocencia">
       <mat-form-field appearance="outline" style="width: 100%;">
         <mat-label>Ingresar Descripción de la Pregunta (Opcional)</mat-label>
-        <input type="text" placeholder="Ingresar Descripción de la Pregunta (Opcional)" formControlName="Descripcion" matInput>
+        <input type="text" placeholder="Ingresar Descripción de la Pregunta (Opcional)" formControlName="Descripcion"matInput [disabled]="true">
       </mat-form-field>
     </div>
 
@@ -64,7 +64,7 @@
 </form>
 <div class="noform2" style="padding-top: 0px!important;">
   <div class="col-12" style="justify-content: end; display: flex;">
-    <app-default-button [confs]="{color:'primary',titulo:'Agregar Alternativa'}"
+    <app-default-button *ngIf="Publicado==false" [confs]="{color:'primary',titulo:'Agregar Alternativa'}"
         [disabled]="disabledAddPregunta"
         [style]="'width: 100%;background: #5e9b00;border-color: #5e9b00;color:white;cursor:pointer;;margin:0px'"
         (ButtoclClick)="AddAlternativa()"
@@ -159,7 +159,7 @@
       mat-dialog-close
       [icon]="'close'"></app-default-button>
     </div>
-    <div style="margin: 0px 5px;">
+    <div *ngIf="!Publicado" style="margin: 0px 5px;">
       <app-default-button [confs]="{color:'primary',titulo:'Guardar'}"
       [disabled]="!formularioTarea.valid"
       [style]="'width: 100%;background: #0069d9;border-color: #0062cc;'"

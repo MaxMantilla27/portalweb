@@ -58,7 +58,7 @@ export class DocenciaCursosAonlineCalificarTrabajoParesComponent implements OnIn
     this.TrabajoPares.forEach((e:any) => {
       e.Visible=true
       if(this.filterTrabajoPares.length>0){
-        var name=e.programaGeneral.toUpperCase();
+        var name=e.programaGeneralHijo.toUpperCase();
         if(!name.includes(this.filterTrabajoPares.toUpperCase())){
           e.Visible=false
         }

@@ -7,8 +7,7 @@
         <div class="NombreSesionOnline">Sesión {{item.orden}}:</div>
         <div class="FechaSesionOnline">
           <div class="iconFecha"></div>
-          <div>{{item.fechaHoraInicio | date:'hh:mm a'}} a {{item.fechaHoraFinal | date:'hh:mm a'}} del
-            {{item.fechaHoraInicio | date :'dd-MM-yyyy'}}</div>
+          <div>{{item.fechaHoraInicio | date :'dd-MM-yyyy'}} - {{item.fechaHoraInicio | date:'hh:mm a'}} a {{item.fechaHoraFinal | date:'hh:mm a'}}</div>
         </div>
       </div>
       <div class="col-12 col-md-6 col-lg-6 RigthSesionOnline">
@@ -52,7 +51,7 @@
       <ng-container *ngIf="item.tarea!=undefined && item.tarea!=null && item.tarea.length>0">
         <div class="cardSesionOnlineTareasCuestionario" *ngFor="let tars of item.tarea;let t=index">
           <div class="flagActividad">
-            <div class="textoFlag">Tarea</div>
+            <div class="textoFlag">Tarea: {{t>9?(t+1):'0'+(t+1)}}</div>
             <!-- <div class="trianglearrow"></div> -->
             <div id="player">
               <div id="outer">
@@ -64,22 +63,39 @@
           <div class="DescripcionActividad" *ngIf="tars.descripcion!=null && tars.descripcion.length>0">
             {{tars.descripcion}}</div>
           <div class="lineaMedioActividad"></div>
-          <div class="AbajoActividad">
-            <div >
-              <div class="FechaEntregaActividad">
-                <div class="iconFecha"></div>
-                <div> <strong> Fecha de entrega:</strong> {{tars.fechaEntrega | date:'hh:mm a'}} del
-                  {{tars.fechaEntrega | date :'dd-MM-yyyy'}}</div>
+          <div class="AbajoActividad row">
+            <div class="col-12 col-lg-9 col-md-9">
+              <div  class="FechaEntregaActividad row">
+                <div  class="col-12 col-lg-8 col-md-8" style="display: flex;font-size: 10.5px;">
+                  <div class="iconFecha"></div>
+                  <div>
+                    <strong> Fecha de entrega:</strong> {{tars.fechaEntrega | date :'dd-MM-yyyy'}} - {{tars.fechaEntrega | date:'hh:mm a'}}
+                  </div>
+                </div>
+                <div  class="col-12 col-lg-4 col-md-4"  style="font-size: 11px;">
+                  <strong> Calificación Máxima:</strong> {{tars.calificacionMaxima}}
+                </div>
+              </div>
+              <div *ngIf="tars.fechaEntregaSecundaria!=null"  class="FechaEntregaActividad row">
+                <div  class="col-12 col-lg-8 col-md-8" style="display: flex;font-size: 10.5px;">
+                  <div class="iconFecha"></div>
+                  <div>
+                    <strong> Fecha de entrega ampliada:</strong> {{tars.fechaEntregaSecundaria | date :'dd-MM-yyyy'}} -  {{tars.fechaEntregaSecundaria | date:'hh:mm a'}}
+                  </div>
+                </div>
+                <div  class="col-12 col-lg-4 col-md-4"  style="font-size: 11px;">
+                  <strong> Calificación Máxima:</strong> {{tars.calificacionMaximaSecundaria}}
+                </div>
               </div>
               <ng-container *ngIf="tars.tareas!=null && tars.tareas.length>0">
-                <div  class="FechaEntregaActividad" style="margin-top: 15px;">
+                <div  class="FechaEntregaActividad" style="margin-top: 10px;">
 
                   <div class="iconFechaEntrega"></div>
                   <div> <strong> Enviado: </strong> {{tars.tareas[tars.tareas.length-1].fechaCreacion | date:'hh:mm a'}}
                     del {{tars.tareas[tars.tareas.length-1].fechaCreacion | date :'dd-MM-yyyy'}}</div>
                 </div>
                 <ng-container *ngIf="tars.tareas[tars.tareas.length-1].nota!=null">
-                  <div  class="FechaEntregaActividad" style="margin-top: 15px;">
+                  <div  class="FechaEntregaActividad" style="margin-top: 10px;">
 
                     <div class="iconCalificacion"></div>
                     <div style="display: flex;align-items: center;"> <strong> Calificación: </strong> <div style="color: #3c71db;font-weight: 600;">{{tars.tareas[tars.tareas.length-1].nota}}</div> </div>
@@ -87,26 +103,27 @@
                 </ng-container>
 
               </ng-container>
-
             </div>
 
-            <ng-container *ngIf="tars.tareas==null || tars.tareas.length==0">
-              <app-default-button [confs]="{color:'primary',titulo:'Enviar >'}" [icon]="''"
-                [style]="'border-radius: 20px;margin: 5px 0px 0px;width: 100%;padding: 0px 40px;'"
-                [disabled]="tars.disabled" (ButtoclClick)="EnviarTarea(i,t)"></app-default-button>
-            </ng-container>
-            <ng-container *ngIf="tars.tareas!=null && tars.tareas.length>0">
-              <app-default-button [confs]="{color:'primary',titulo:'Ver detalle >'}" [icon]="''"
-                [style]="'border-radius: 20px;margin: 5px 0px 0px;width: 100%;padding: 0px 40px;background:#00c356'"
-                 (ButtoclClick)="EnviarTarea(i,t)"></app-default-button>
-            </ng-container>
+            <div class="col-12 col-lg-3 col-md-3">
+              <ng-container *ngIf="tars.tareas==null || tars.tareas.length==0">
+                <app-default-button [confs]="{color:'primary',titulo:'Enviar >'}" [icon]="''"
+                  [style]="'border-radius: 20px;margin: 5px 0px 0px;width: 100%;padding: 0px 40px;'"
+                  [disabled]="tars.disabled" (ButtoclClick)="EnviarTarea(i,t)"></app-default-button>
+              </ng-container>
+              <ng-container *ngIf="tars.tareas!=null && tars.tareas.length>0">
+                <app-default-button [confs]="{color:'primary',titulo:'Ver detalle >'}" [icon]="''"
+                  [style]="'border-radius: 20px;margin: 5px 0px 0px;width: 100%;padding: 0px 40px;background:#00c356'"
+                   (ButtoclClick)="EnviarTarea(i,t)"></app-default-button>
+              </ng-container>
+            </div>
           </div>
         </div>
       </ng-container>
       <ng-container *ngIf="item.cuestionario!=undefined && item.cuestionario!=null && item.cuestionario.length>0">
         <div class="cardSesionOnlineTareasCuestionario" *ngFor="let cuest of item.cuestionario;let t=index">
           <div class="flagActividad">
-            <div class="textoFlag">Cuestionario</div>
+            <div class="textoFlag">Cuestionario: {{t>9?(t+1):'0'+(t+1)}}</div>
             <!-- <div class="trianglearrow"></div> -->
             <div id="player">
               <div id="outer">
@@ -118,30 +135,47 @@
           <div class="DescripcionActividad" *ngIf="cuest.descripcion!=null && cuest.descripcion.length>0">
             {{cuest.descripcion}}</div>
           <div class="lineaMedioActividad"></div>
-          <div class="AbajoActividad">
-            <div >
-              <div class="FechaEntregaActividad">
-                <div class="iconFecha"></div>
-                <div> <strong> Fecha de entrega:</strong> {{cuest.fechaEntrega | date:'hh:mm a'}} del
-                  {{cuest.fechaEntrega | date :'dd-MM-yyyy'}}</div>
+          <div class="AbajoActividad row">
+            <div class="col-12 col-lg-9 col-md-9">
+              <div  class="FechaEntregaActividad row">
+                <div  class="col-12 col-lg-8 col-md-8" style="display: flex;font-size: 10.5px;">
+                  <div class="iconFecha"></div>
+                  <div>
+                    <strong> Fecha de entrega:</strong> {{cuest.fechaEntrega | date :'dd-MM-yyyy'}} - {{cuest.fechaEntrega | date:'hh:mm a'}}
+                  </div>
+                </div>
+                <div  class="col-12 col-lg-4 col-md-4"  style="font-size: 11px;">
+                  <strong> Calificación Máxima:</strong> {{cuest.calificacionMaxima}}
+                </div>
+              </div>
+              <div *ngIf="cuest.fechaEntregaSecundaria!=null"  class="FechaEntregaActividad row">
+                <div  class="col-12 col-lg-8 col-md-8" style="display: flex;font-size: 10.5px;">
+                  <div class="iconFecha"></div>
+                  <div>
+                    <strong> Fecha de entrega ampliada:</strong> {{cuest.fechaEntregaSecundaria | date :'dd-MM-yyyy'}} -  {{cuest.fechaEntregaSecundaria | date:'hh:mm a'}}
+                  </div>
+                </div>
+                <div  class="col-12 col-lg-4 col-md-4"  style="font-size: 11px;">
+                  <strong> Calificación Máxima:</strong> {{cuest.calificacionMaximaSecundaria}}
+                </div>
               </div>
 
               <ng-container *ngIf="cuest.respuestaCuestionario==null || cuest.respuestaCuestionario.length==0">
-                <div  class="FechaEntregaActividad" style="margin-top: 15px;">
+                <div  class="FechaEntregaActividad" style="margin-top: 10px;">
 
                   <div class="iconTime"></div>
                   <div> <strong> Tiempo para enviar el cuestionario: </strong> {{cuest.tiempoLimite}} minutos</div>
                 </div>
               </ng-container>
               <ng-container *ngIf="cuest.respuestaCuestionario!=null && cuest.respuestaCuestionario.length>0">
-                <div  class="FechaEntregaActividad" style="margin-top: 15px;">
+                <div  class="FechaEntregaActividad" style="margin-top: 10px;">
 
                   <div class="iconFechaEntrega"></div>
                   <div> <strong> Enviado: </strong> {{cuest.respuestaCuestionario[cuest.respuestaCuestionario.length-1].fechaEntrega | date:'hh:mm a'}}
                     del {{cuest.respuestaCuestionario[cuest.respuestaCuestionario.length-1].fechaEntrega | date :'dd-MM-yyyy'}}</div>
                 </div>
                 <ng-container *ngIf="cuest.respuestaCuestionario[cuest.respuestaCuestionario.length-1].fechaCalificacion!=null">
-                  <div  class="FechaEntregaActividad" style="margin-top: 15px;">
+                  <div  class="FechaEntregaActividad" style="margin-top: 10px;">
 
                     <div class="iconCalificacion"></div>
                     <div style="display: flex;align-items: center;"> <strong> Calificación: </strong>
@@ -151,17 +185,19 @@
 
               </ng-container>
             </div>
+            <div class="col-12 col-lg-3 col-md-3">
+              <ng-container *ngIf="cuest.respuestaCuestionario==null || cuest.respuestaCuestionario.length==0">
+                <app-default-button [confs]="{color:'primary',titulo:'Ingresar >'}" [icon]="''"
+                  [style]="'border-radius: 20px;margin: 5px 0px 0px;width: 100%;padding: 0px 40px;'"
+                  [disabled]="cuest.disabled" (ButtoclClick)="EnviarCuestionario(i,t)"></app-default-button>
+              </ng-container>
+              <ng-container *ngIf="cuest.respuestaCuestionario!=null && cuest.respuestaCuestionario.length>0">
+                <app-default-button [confs]="{color:'primary',titulo:'Ver detalle >'}" [icon]="''"
+                  [style]="'border-radius: 20px;margin: 5px 0px 0px;width: 100%;padding: 0px 40px;background:#00c356'"
+                  (ButtoclClick)="EnviarCuestionario(i,t)"></app-default-button>
+              </ng-container>
+            </div>
 
-            <ng-container *ngIf="cuest.respuestaCuestionario==null || cuest.respuestaCuestionario.length==0">
-              <app-default-button [confs]="{color:'primary',titulo:'Ingresar >'}" [icon]="''"
-                [style]="'border-radius: 20px;margin: 5px 0px 0px;width: 100%;padding: 0px 40px;'"
-                [disabled]="cuest.disabled" (ButtoclClick)="EnviarCuestionario(i,t)"></app-default-button>
-            </ng-container>
-            <ng-container *ngIf="cuest.respuestaCuestionario!=null && cuest.respuestaCuestionario.length>0">
-              <app-default-button [confs]="{color:'primary',titulo:'Ver detalle >'}" [icon]="''"
-                [style]="'border-radius: 20px;margin: 5px 0px 0px;width: 100%;padding: 0px 40px;background:#00c356'"
-                (ButtoclClick)="EnviarCuestionario(i,t)"></app-default-button>
-            </ng-container>
           </div>
         </div>
       </ng-container>

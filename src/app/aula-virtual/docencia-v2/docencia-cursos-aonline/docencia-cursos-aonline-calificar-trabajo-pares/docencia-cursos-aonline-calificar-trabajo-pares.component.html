@@ -73,14 +73,14 @@
               <div class="col-12 col-md-4 col-lg-2" style="    display: flex;
               justify-content: flex-end;
               padding: 0px;">
-                <app-default-button *ngIf="item.estadoAtendido==0" (click)="IngresarTrabajoPares(item.idPGeneralPadre,0,true)" [confs]="{color:'primary',titulo:'Calificar'}" [icon]="''"
+                <app-default-button *ngIf="item.estadoAtendido==0" (click)="IngresarTrabajoPares(item.idPGeneralHijo,0,true)" [confs]="{color:'primary',titulo:'Calificar'}" [icon]="''"
                   [style]="'border-radius: 5px; margin: 0px; padding: 0px 30px;'"></app-default-button>
-                <app-default-button *ngIf="item.estadoAtendido==1" (click)="IngresarTrabajoPares(item.idPGeneralPadre,0,true)" [confs]="{color:'primary',titulo:'Ver Calificados'}" [icon]="''"
+                <app-default-button *ngIf="item.estadoAtendido==1" (click)="IngresarTrabajoPares(item.idPGeneralHijo,0,true)" [confs]="{color:'primary',titulo:'Ver Calificados'}" [icon]="''"
                   [style]="'border-radius: 5px; margin: 0px; padding: 0px 30px;'"></app-default-button>
               </div>
             </div>
             <div class="col-12">
-              <div class="TitleCursoOnline" style="margin-top: 10px;">{{item.programaGeneral}}</div>
+              <div class="TitleCursoOnline" style="margin-top: 10px;">{{item.programaGeneralHijo}}</div>
             </div>
             <!-- <div class="col-12">
               <div>Curso: {{item.programaEspecifico}}</div>
