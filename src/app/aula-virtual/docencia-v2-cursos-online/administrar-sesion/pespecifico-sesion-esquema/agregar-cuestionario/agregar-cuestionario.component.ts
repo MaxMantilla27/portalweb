@@ -24,6 +24,7 @@ import { AgregarPreguntasComponent } from './agregar-preguntas/agregar-preguntas
 import { SnackBarServiceService } from 'src/app/Core/Shared/Services/SnackBarService/snack-bar-service.service';
 import { AlertaService } from 'src/app/shared/services/alerta.service';
 import { ExcelService } from 'src/app/Core/Shared/Services/Excel/excel.service';
+import { VerPreguntasCuestionarioComponent } from './ver-preguntas-cuestionario/ver-preguntas-cuestionario.component';
 
 @Component({
   selector: 'app-agregar-cuestionario',
@@ -77,7 +78,7 @@ export class AgregarCuestionarioComponent implements OnInit, OnDestroy {
     FechaEntregaSecundaria: new FormControl(),
     HoraEntregaSecundaria: new FormControl(),
     MinutoEntregaSecundaria: new FormControl(),
-    IdCriterioEvaluacion: new FormControl(0, [Validators.required]),
+    IdCriterioEvaluacion: new FormControl(null, [Validators.required]),
 
   });
   public fecha = new Date();
@@ -531,6 +532,32 @@ export class AgregarCuestionarioComponent implements OnInit, OnDestroy {
           this.save.Preguntas[i] = JSON.parse(json);
         }
       });
+  }
+  OpenVerPreguntas(i: number) {
+    var json = JSON.stringify(this.save.Preguntas[i]);
+    const dialogRef = this.dialog.open(VerPreguntasCuestionarioComponent, {
+      width: '1000px',
+      data: {
+        pregunta: this.save.Preguntas[i],
+        sesion: this.data.sesion,
+        tipoPregunta: this.tipoPregunta,
+        publicado:this.Publicado
+      },
+      panelClass: 'dialog-Agregar-Tarea',
+      disableClose:true
+    });
+
+    dialogRef
+      .afterClosed()
+      .pipe(takeUntil(this.signal$))
+      .subscribe((result) => {
+        console.log(result);
+        if (result != undefined && result != '') {
+          // this.save.Preguntas.push(result)
+        } else {
+          this.save.Preguntas[i] = JSON.parse(json);
+        }
+    });
   }
   Eliminar(index: number) {
     this.save.Preguntas.splice(index,1)

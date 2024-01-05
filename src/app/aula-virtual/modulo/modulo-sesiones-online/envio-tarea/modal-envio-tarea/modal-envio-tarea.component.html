@@ -1,0 +1,17 @@
+<div>
+  <div class="row" style="display: flex;">
+    <div class="TitleModal col-11">
+    </div>
+    <div class="col-1" style="text-align: end;font-weight: bold;cursor: pointer;" (click)="dialogRef.close()">
+      X
+    </div>
+  </div>
+  <div style="text-align: center;">
+    "Su tarea se esta entregando en fecha ampliada, será calificada en base a {{Puntos}} puntos"
+  </div>
+  <div style="display:flex;justify-content: center;margin-top: 15px;">
+    <app-default-button [confs]="{color:'primary',titulo:'Continuar'}"
+      [style]="'width: 100%;'" (click)="dialogRef.close(true)">
+    </app-default-button>
+  </div>
+</div>

@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit, SimpleChanges, ViewEncapsulation } from '@angular/core';
 import { Subject, takeUntil } from 'rxjs';
 import { NotaService } from 'src/app/Core/Shared/Services/Nota/nota.service';
 import { ProgramaContenidoService } from 'src/app/Core/Shared/Services/ProgramaContenido/programa-contenido.service';
@@ -6,7 +6,9 @@ import { ProgramaContenidoService } from 'src/app/Core/Shared/Services/ProgramaC
 @Component({
   selector: 'app-modulo-calificaciones-online',
   templateUrl: './modulo-calificaciones-online.component.html',
-  styleUrls: ['./modulo-calificaciones-online.component.scss']
+  styleUrls: ['./modulo-calificaciones-online.component.scss'],
+  // encapsulation: ViewEncapsulation.None,
+
 })
 export class ModuloCalificacionesOnlineComponent implements OnInit,OnDestroy {
   private signal$ = new Subject();
@@ -35,6 +37,11 @@ export class ModuloCalificacionesOnlineComponent implements OnInit,OnDestroy {
   public listadoNotas:any
   public PromedioFinal=0;
   public CursosCriteriosOnline:any
+  public detalle=false
+  public verDetalle=false
+  public CursoAbierto=-1;
+
+
   ngOnInit(): void {
   }
   ngOnChanges(changes: SimpleChanges): void {
@@ -56,6 +63,17 @@ export class ModuloCalificacionesOnlineComponent implements OnInit,OnDestroy {
         if(this.listadoNotas.listadoMatriculas==null)this.listadoNotas.listadoMatriculas=[];
         if(this.listadoNotas.listadoSesiones==null)this.listadoNotas.listadoSesiones=[];
         if(this.listadoNotas.listadoAsistencias==null)this.listadoNotas.listadoAsistencias=[];
+        var detalles:Array<any>=[]
+        if(this.listadoNotas.listadoNotas.length>0){
+          var dte=this.listadoNotas.listadoNotas[0].detalle
+          if(dte!=undefined && dte!=null && dte.length>0){
+            this.detalle=true
+            dte.forEach((y:any) => {
+              detalles.push(y)
+            });
+          }
+        }
+        console.log(detalles)
         this.listadoNotas.listadoMatriculas.forEach((mat:any) => {
           mat.notaActual=[];
           this.listadoNotas.listadoEvaluaciones.forEach((evl:any) => {
@@ -92,6 +110,33 @@ export class ModuloCalificacionesOnlineComponent implements OnInit,OnDestroy {
               }
             }
           });
+          if(detalles.length>0){
+            var d:Array<any>=[]
+            this.listadoNotas.listadoNotas.forEach((n:any) => {
+              if(mat.idMatriculaCabecera==n.idMatriculaCabecera){
+                n.detalle.forEach((a:any )=> {
+                  d.push(a)
+                });
+              }
+            });
+            if(d!=null && d.length==0){
+              d=[]
+              var dj=JSON.stringify(detalles);
+              d=JSON.parse(dj)
+
+              mat.detalles=[]
+              d.forEach((a:any) => {
+                a.nota=0
+                a.idMatriculaCabecera=mat.idMatriculaCabecera
+                mat.detalles.push(a)
+              });
+            }else{
+              mat.detalles=[]
+              d.forEach((a:any) => {
+                mat.detalles.push(a)
+              });
+            }
+          }
         });
         console.log(this.listadoNotas)
         if(this.listadoNotas.listadoMatriculas!=null){
@@ -121,6 +166,7 @@ export class ModuloCalificacionesOnlineComponent implements OnInit,OnDestroy {
                 ponderacion:100,
                 valor:Math.round(notaFinal)
               })
+              this.PromedioFinal=Math.round(notaFinal)
             }
             this.infoNotas.push(data);
             i++

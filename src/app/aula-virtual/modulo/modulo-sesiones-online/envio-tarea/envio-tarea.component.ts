@@ -1,10 +1,11 @@
 import { HttpEventType, HttpResponse } from '@angular/common/http';
 import { Component, Inject, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
 import { Subject, takeUntil } from 'rxjs';
 import { PEspecificoSesionTareaAlumnoSaveParamsDTO } from 'src/app/Core/Models/PEspecificoEsquema';
 import { PEspecificoEsquemaService } from 'src/app/Core/Shared/Services/PEspecificoEsquema/pespecifico-esquema.service';
 import { SnackBarServiceService } from 'src/app/Core/Shared/Services/SnackBarService/snack-bar-service.service';
+import { ModalEnvioTareaComponent } from './modal-envio-tarea/modal-envio-tarea.component';
 
 @Component({
   selector: 'app-envio-tarea',
@@ -19,7 +20,9 @@ export class EnvioTareaComponent implements OnInit ,OnDestroy {
     public dialogRef: MatDialogRef<EnvioTareaComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private _PEspecificoEsquemaService: PEspecificoEsquemaService,
-    private _SnackBarServiceService:SnackBarServiceService
+    private _SnackBarServiceService:SnackBarServiceService,
+    public dialog: MatDialog,
+
   ) { }
     public json:PEspecificoSesionTareaAlumnoSaveParamsDTO={
       file: new File([], ''),
@@ -34,15 +37,26 @@ export class EnvioTareaComponent implements OnInit ,OnDestroy {
     public fileErrorMsg=''
 
   public instruccionesSubir=false
+  public ActualizaTareaEnviada=true
+  public CalificacionActual=0
+  public EnvioFechaSecundaria=false
   ngOnDestroy(): void {
     this.signal$.next(true)
     this.signal$.complete()
   }
   ngOnInit(): void {
     console.log(this.data)
+    this.EnvioFechaSecundaria=false
+    this.CalificacionActual=this.data.tarea.calificacionActual
+    if(this.data.tarea.calificacionActual!=this.data.tarea.calificacionMaxima){
+      this.EnvioFechaSecundaria=true
+    }
     this.json.IdPwPEspecificoSesionTarea=this.data.tarea.id
     this.json.IdPEspecificoSesion=this.data.tarea.idPEspecificoSesion
     this.json.IdMatriculaCabecera=this.data.IdMatriculaCabecera
+    if(this.data.tarea.tareas!=null && this.data.tarea.tareas.length>0){
+      this.VerificarEnvioTarea()
+    }
 
   }
 
@@ -98,5 +112,42 @@ export class EnvioTareaComponent implements OnInit ,OnDestroy {
       },
       error: (x) => {},
     });
+  }
+  VerificarEnvioTarea(){
+    console.log(this.data.tarea)
+    this.data.tarea.tareas.forEach((x:any) => {
+      console.log(x)
+      this.ActualizaTareaEnviada=true
+      if(x.nota!=null)
+      {
+        this.ActualizaTareaEnviada=false
+      }
+      else{
+        this.nombrefile=x.nombreArchivo
+      }
+    });
+    console.log(this.ActualizaTareaEnviada)
+  }
+
+
+  AbrirConfirmacionActualizar(){
+    if(this.EnvioFechaSecundaria==false){
+      this.AgregarPEspecificoSesionTareaAlumno()
+    }
+    else{
+      const dialogRef = this.dialog.open(ModalEnvioTareaComponent, {
+        width: '450px',
+        data: {Puntos:this.CalificacionActual},
+        panelClass: 'dialog-envio-tarea-actualizar-alumno',
+       disableClose:true
+      });
+
+      dialogRef.afterClosed().pipe(takeUntil(this.signal$)).subscribe((result) => {
+        console.log(result)
+        if(result){
+          this.AgregarPEspecificoSesionTareaAlumno()
+        }
+      });
+    }
   }
 }
