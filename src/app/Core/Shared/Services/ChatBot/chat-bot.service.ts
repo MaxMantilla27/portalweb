@@ -106,4 +106,12 @@ export class ChatBotService {
       return EMPTY;
     }
   }
+
+  public ObtenerUrlPrograma(IdPGeneral:number):Observable<any>{
+    if(this.isBrowser){
+      return this.http.get<any>(this.urlBase+'/ObtenerUrlPrograma?IdPGeneral='+IdPGeneral);
+    }else{
+      return EMPTY;
+    }
+  }
 }

@@ -8,6 +8,7 @@ import { ChatBotService } from 'src/app/Core/Shared/Services/ChatBot/chat-bot.se
 import { HelperService } from 'src/app/Core/Shared/Services/helper.service';
 import { SessionStorageService } from 'src/app/Core/Shared/Services/session-storage.service';
 import { MovilValidator } from 'src/app/Core/Shared/Validators/MovilValidator';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-chat-bot-landing-page',
@@ -29,9 +30,11 @@ export class ChatBotLandingPageComponent implements OnInit,OnDestroy{
     @Inject(PLATFORM_ID) platformId: Object,
     private _HelperService:HelperService,
     private _SessionStorageService:SessionStorageService,
-    private _ChatBotService:ChatBotService
+    private _ChatBotService:ChatBotService,
+    private router: Router
   ) {
     this.isBrowser = isPlatformBrowser(platformId);
+    this.urlPrograma = "/programas-certificaciones-cursos";
   }
   chat=false
   CargandoChat=false
@@ -95,6 +98,8 @@ export class ChatBotLandingPageComponent implements OnInit,OnDestroy{
   public max=1000
   public intervalInicio:any
   public opcionesTruFalse:Array<any>=[]
+  public urlPrograma: string
+  public idBusqueda: any
   ngOnInit(): void {
     if(this.isBrowser){
       this.intervalInicio= setInterval(()=>{
@@ -136,6 +141,7 @@ export class ChatBotLandingPageComponent implements OnInit,OnDestroy{
           this.OportunidadDTO.IdPrograma=x.datosFormulario.idPGeneral
           this.OportunidadDTO.IdPespecifico=x.datosFormulario.idPEspecifico
           this.OportunidadDTO.IdCategoriaDato=x.datosFormulario.idCategoriaOrigen
+          this.idBusqueda=x.datosFormulario.idBusqueda
         }
         if(x.datosAlumno!=null){
           this.datosAlumno.Id=x.datosAlumno.idAlumno
@@ -589,6 +595,25 @@ export class ChatBotLandingPageComponent implements OnInit,OnDestroy{
         }
       })
     }
+  }
+  ObtenerUrlProgramaChatBot(){
+    this._ChatBotService.ObtenerUrlPrograma(this.idBusqueda).pipe(takeUntil(this.signal$)).subscribe({
+      next:x=>{
+        console.log("esta es la url ", x)
+        this.urlPrograma = x;
+    }})
+  }
+
+  redigirPaginaCurso(){
+
+    this._ChatBotService.ObtenerUrlPrograma(this.idBusqueda).pipe(takeUntil(this.signal$)).subscribe({
+      next:x=>{
+        console.log("esta es la url ", x.url)
+        if(x.url!= null && x.url!= "" && x.url!= undefined) {
+          this.urlPrograma = x.url;
+        }
+        this.router.navigate([this.urlPrograma]);
+    }})
   }
 
 }
