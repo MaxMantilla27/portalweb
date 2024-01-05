@@ -142,6 +142,7 @@ export class ModuloCalificacionesOnlineComponent implements OnInit,OnDestroy {
         if(this.listadoNotas.listadoMatriculas!=null){
           let i=1
           this.listadoNotas.listadoMatriculas.forEach((m:any) => {
+            console.log(m)
             this.infoNotas=[]
             var data:any={}
             m.indice=i
@@ -150,15 +151,26 @@ export class ModuloCalificacionesOnlineComponent implements OnInit,OnDestroy {
               var notaFinal=0
               m.notaActual.forEach((na:any) => {
                 var nota=na.nota
+                var calificacionDetallada:any=[]
                 if(this.listadoNotas.escalaCalificacion!=null && this.listadoNotas.escalaCalificacion>0){
                   nota=na.nota*(100/this.listadoNotas.escalaCalificacion)
                 }
                 var escala=this.listadoNotas.listadoEvaluaciones.filter((w:any) => w.id == na.IdEvaluacion)[0]
                 notaFinal+=nota*(escala.porcentaje/100)
+                console.log(na)
+                if(detalles.length>=1){
+                  detalles.forEach((detcali:any) => {
+                    console.log(detcali)
+                    if(na.IdEvaluacion==detcali.idCriterioEvaluacion){
+                      calificacionDetallada.push(detcali)
+                    }
+                  })
+                }
                 data.detalleCalificacion.push({
                   criterioEvaluacion:escala.nombre,
                   ponderacion:escala.porcentaje,
-                  valor:Math.round(nota)
+                  valor:Math.round(nota),
+                  detalleCalificacion:calificacionDetallada
                 })
               });
               data.detalleCalificacion.push({
