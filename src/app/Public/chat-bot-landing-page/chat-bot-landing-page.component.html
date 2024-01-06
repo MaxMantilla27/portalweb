@@ -1,5 +1,5 @@
 <div class="titulos">
-  <div class="titleCurso" class="NombreCurso">
+  <div class="titleCurso" >
     Capacitate en {{ flujoActual.NombrePGeneral }}
   </div>
 </div>
@@ -10,9 +10,8 @@
   SiguientesPasos != null &&
   SiguientesPasos.length > 0
   ">
-    <div class="titleCurso" class="NombreCurso">
       <div class="titlePrimerPaso">{{ primerpaso.mensaje }}</div>
-    </div>
+
 </ng-container>
 </div>
 
@@ -249,6 +248,19 @@
               </div>
             </ng-container>
           </div>
+
+          <div class="ButtonPrimerPaso"  *ngIf="item.esMensajeFinal == true">
+            <app-default-button
+              [confs]="{ color: '', titulo: 'Visitar Sitio Web' }"
+              [icon]="''"
+              [disabled]="formControl.invalid"
+              [style]="
+                'width: 100%;background: white;border: solid 1px #f8893f; color: #f8893f;padding: 0px 50px;border-radius: 15px;'
+              "
+              (click)="redigirPaginaCurso()"
+            ></app-default-button>
+        </div>
+
         </ng-container>
 
         <div class="PreguntaChat" *ngIf="CargandoChat == true">
@@ -260,17 +272,6 @@
           </div>
         </div>
 
-        <div class="ButtonPrimerPaso">
-            <app-default-button
-              [confs]="{ color: '', titulo: 'Visitar Sitio Web' }"
-              [icon]="''"
-              [disabled]="formControl.invalid"
-              [style]="
-                'width: 100%;background: white;border: solid 1px #f8893f; color: #f8893f;padding: 0px 50px;border-radius: 15px;'
-              "
-              (click)="redigirPaginaCurso()"
-            ></app-default-button>
-        </div>
       </ng-container>
     </div>
   </div>
