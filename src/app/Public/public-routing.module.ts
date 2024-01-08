@@ -35,6 +35,7 @@ import { LandinPageV2Component } from './landin-page-v2/landin-page-v2.component
 import { TarifaGestionComponent } from './tarifa-gestion/tarifa-gestion.component';
 import { SorteoComponent } from './sorteo/sorteo.component';
 import { CompraExitosaOpenPayColombiaComponent } from './compra-exitosa-open-pay-colombia/compra-exitosa-open-pay-colombia.component';
+import { ChatBotLandingPageComponent } from './chat-bot-landing-page/chat-bot-landing-page.component';
 
 const routes:Routes=[
     {path:'',component:PublicComponent,children:
@@ -58,6 +59,7 @@ const routes:Routes=[
             {path:'Avatar', component: AvatarComponent},
             {path:'sorteo', component: SorteoComponent},
             {path:'LandingPage/:IdFormulario', component: LandinPageV2Component},
+            {path:'Chat/:IdFormulario', component: ChatBotLandingPageComponent},
 
             {path:'NotificacionAlumno/Webinar/:datos', component:NotificacionWebinarComponent},
             {path:'bs-campus/white-paper/:whitepaper', component:WhitepapersComponent},

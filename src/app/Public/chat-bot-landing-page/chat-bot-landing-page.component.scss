@@ -1,0 +1,297 @@
+.TerminosLP {
+  font-size: 9px;
+  text-align: justify;
+  width: 400px;
+  max-width: 90%;
+}
+.textoChatbot{
+  width: 100%;
+  font-size: 12px;
+  margin-bottom: 30px;
+}
+.NombreCurso{
+  width: 100%;
+  font-weight: 600;
+  font-size: 20px;
+  margin: 10px 0px ;
+
+}
+.contentPrimerPaso {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: calc(100vh - 670px);
+  position: relative;
+}
+
+.titulos {
+  padding: 1%;
+  padding-left: 15%;
+  padding-right: 15%;
+  width: 100%;
+  background-color:rgb(244, 244,244);
+}
+.titleCurso {
+  text-align: center;
+  font-size: 25px;
+  margin: 10px 20px;
+  font-weight: 600;
+  text-align: justify;
+}
+.titlePrimerPaso {
+  text-align: center;
+  font-size: 18px;
+  margin: 10px 20px;
+  font-weight: 300;
+}
+
+.maindiv{
+  display:flex;
+  flex-direction:row;
+  align-items:center;
+  justify-content:center;
+}
+
+img {
+  max-width: 90%;
+  max-height:90%;
+}
+
+.subTitlePrimerPaso {
+  font-size: 16px;
+  margin: 20px;
+}
+.ButtonPrimerPaso {
+  margin-top: 40px;
+}
+
+.ContentInputChat .mat-form-field {
+  width: 400px;
+  max-width: 90%;
+  margin-bottom: 20px;
+}
+
+.InputFillWhioutColor
+  .mat-form-field.mat-form-field-appearance-fill
+  > div.mat-form-field-wrapper
+  > div.mat-form-field-flex
+  > div.mat-form-field-infix {
+  padding: 0.4em 0px;
+}
+
+.InputFillWhioutColor
+  .mat-form-field.mat-form-field-appearance-outline
+  > div.mat-form-field-wrapper
+  > div.mat-form-field-flex
+  > div.mat-form-field-infix
+  input {
+  height: 20px;
+}
+.InputFillWhioutColor
+  .mat-form-field.mat-form-field-appearance-fill
+  > div.mat-form-field-wrapper
+  > div.mat-form-field-flex
+  > div.mat-form-field-infix
+  > span.mat-form-field-label-wrapper {
+  top:  -0.5em;
+}
+
+// .ContentInputChat
+//   .mat-form-field.mat-form-field-appearance-fill.mat-form-field-can-float.mat-form-field-should-float
+//   .mat-form-field-label {
+//   transform: translateY(-1.1em) scale(0.75);
+//   width: 133.33333%;
+// }
+
+.InputFillWhioutColor
+  .mat-form-field-appearance-fill .mat-form-field-flex {
+
+  background-color: transparent ;
+}
+
+.InputFillWhioutColor
+  .mat-form-field.mat-form-field-appearance-fill
+  > div.mat-form-field-wrapper
+  > div.mat-form-field-subscript-wrapper
+  > div.ng-trigger-transitionMessages
+   mat-error {
+    font-size: 10px;
+    text-align: center;
+}
+.PreguntaChat{
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 20px;
+  justify-content: flex-start;
+  width: 100%;
+  flex-wrap: wrap;
+}
+.PreguntaGlobo{
+  width: 60%;
+  padding: 10px;
+  color: #7a7a87;
+  background: #f9f9f9;
+  border-radius: 0px 10px 10px 10px;
+}
+.PreguntaGloboChat{
+  width: 60px;
+  padding: 10px;
+  color: #7a7a87;
+  background: #f9f9f9;
+  border-radius: 0px 10px 10px 10px;
+  display: flex;
+  justify-content: center;
+}
+.OpcionesPregunta{
+  width: 100%;
+  margin: 20px;
+  margin-left: 50px;
+}
+.GloboPregunta{
+  display: flex;
+  align-items: flex-start;
+}
+.imgChatBot{
+  background-image: url(../../../assets/imagenes/174188.png);
+  width: 40px;
+  height: 40px;
+  background-position: center;
+  background-size: cover;
+  margin-right: 10px;
+  border-radius: 50%;
+  border: solid 1px black;
+}
+.OpcionesGlobo{
+  width: fit-content;
+  padding: 5px 40px;
+  background: #fca534;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  cursor: pointer;
+  color: white;
+}
+.OpcionesCheckGlobo{
+  width: fit-content;
+  padding: 5px 20px;
+  background: #fca534;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  cursor: pointer;
+  color: white;
+  display: flex;
+  align-items: center;
+}
+.TipoCheck{
+  width: 150px;
+  border-right: solid 1px white;
+  font-size: 14px;
+}
+.NombreCheck{
+  margin-left: 10px;
+  width: 350px;
+  border-right: solid 1px white;
+  margin-right: 10px;
+  font-size: 14px;
+}
+.RespuestaCheat{
+  width: 100%;
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
+  margin: 20px 0px;
+
+}
+.RespuestaGlobo{
+
+  width: fit-content;
+  padding: 10px;
+  background: #91b2ef;
+  border-radius: 10px 10px 0px 10px;
+}
+.inputData{
+  border-bottom: 1px solid #91b2ef;
+  width: 350px;
+}
+.inputDataError{
+  border-bottom: 1px solid #ff0000 !important;
+}
+.InputResponder{
+  display: flex;
+  align-items: flex-start;
+}
+.sendMensajeChat{
+  margin-left:10px ;
+  cursor: pointer;
+}
+.sendMensajeChatHabil:hover{
+  color: #91b2ef !important;
+}
+.sendMensajeChatInHabil{
+  color: gray;
+
+}
+.sendMensajeChatHabil{
+  color: black;
+
+}
+.InputError{
+  font-size: 11px;
+    text-align: center;
+    margin-top: 6px;
+    color: red;
+    max-width: 350px;
+}
+.inputData[type=number]::-webkit-inner-spin-button,
+.inputData[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.inputData[type=number] { -moz-appearance:textfield; }
+
+.dot-flashing {
+  position: relative;
+  width: 10px;
+  height: 10px;
+  border-radius: 5px;
+  background-color: #91b2ef;
+  color: #91b2ef;
+  animation: dot-flashing 1s infinite linear alternate;
+  animation-delay: 0.5s;
+}
+.dot-flashing::before, .dot-flashing::after {
+  content: "";
+  display: inline-block;
+  position: absolute;
+  top: 0;
+}
+.dot-flashing::before {
+  left: -15px;
+  width: 10px;
+  height: 10px;
+  border-radius: 5px;
+  background-color: #91b2ef;
+  color: #91b2ef;
+  animation: dot-flashing 1s infinite alternate;
+  animation-delay: 0s;
+}
+.dot-flashing::after {
+  left: 15px;
+  width: 10px;
+  height: 10px;
+  border-radius: 5px;
+  background-color: #91b2ef;
+  color: #91b2ef;
+  animation: dot-flashing 1s infinite alternate;
+  animation-delay: 1s;
+}
+
+@keyframes dot-flashing {
+  0% {
+    background-color: #91b2ef;
+  }
+  50%, 100% {
+    background-color: rgba(145, 178, 239, 0.2);
+  }
+}

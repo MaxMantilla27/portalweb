@@ -63,6 +63,7 @@ export class AppComponent implements OnInit,AfterViewInit ,OnDestroy {
       this.stateToekn=this._SessionStorageService.validateTokken();
     });
     this.usuarioWeb=this._SessionStorageService.SessionGetValue('usuarioWeb');
+    console.log(this.usuarioWeb)
     var codIso=this._SessionStorageService.SessionGetValue('ISO_PAIS');
     if(this.usuarioWeb=='' || codIso==''){
       if(codIso==''){
@@ -70,10 +71,13 @@ export class AppComponent implements OnInit,AfterViewInit ,OnDestroy {
       }
       if(this.usuarioWeb==''){
         this.RegistroInteraccionInicial();
+      }else{
+        this._HelperService.enviarmsjObtenerUsuario(this.usuarioWeb);
       }
     }else{
       this.CodigoIso=codIso;
       this.charge=true;
+      this._HelperService.enviarmsjObtenerUsuario(this.usuarioWeb);
     }
   }
   ObtenerCodigoIso(){
@@ -90,6 +94,7 @@ export class AppComponent implements OnInit,AfterViewInit ,OnDestroy {
       this._SessionStorageService.SessionSetValue('usuarioWeb',x.identificadorUsuario);
       this.usuarioWeb=x.identificadorUsuario
       this.charge=true;
+      this._HelperService.enviarmsjObtenerUsuario(x.identificadorUsuario);
       this.InsertarContactoPortal();
     }})
   }

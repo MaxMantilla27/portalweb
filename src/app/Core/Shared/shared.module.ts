@@ -128,6 +128,8 @@ import { FacebookLoginComponent } from './Containers/facebook-login/facebook-log
 import { SocialAuthService } from 'angularx-social-login';
 import { MatChipsModule } from '@angular/material/chips';
 import { FacebookPixelService } from './Services/FacebookPixel/facebook-pixel.service';
+import { ChatbotComponent } from './Containers/chatbot/chatbot.component';
+import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 
 @NgModule({
   imports: [
@@ -163,7 +165,8 @@ import { FacebookPixelService } from './Services/FacebookPixel/facebook-pixel.se
     MatBottomSheetModule,
     CKEditorModule,
     TextFieldModule,
-    MatChipsModule
+    MatChipsModule,
+    MatSlideToggleModule,
   ],
   declarations: [
     HeaderComponent,
@@ -221,6 +224,7 @@ import { FacebookPixelService } from './Services/FacebookPixel/facebook-pixel.se
     ScrollTopComponent,
     FormularioRojoComponent,
     FacebookLoginComponent,
+    ChatbotComponent,
 
     //ChatZComponent,
   ],
@@ -311,6 +315,7 @@ import { FacebookPixelService } from './Services/FacebookPixel/facebook-pixel.se
     ScrollTopComponent,
     FacebookLoginComponent,
     MatChipsModule,
+    MatSlideToggleModule,
   ],
   providers: [
     SessionStorageService,
