@@ -74,7 +74,9 @@ export class AdministrarSesionComponent implements OnInit, OnDestroy {
                   this.IdSesion = s.idSesion;
                   this.sesion = s;
                 }
-                this.fechaFinSesion=s.fechaSesion
+                this.fechaFinSesion=new Date(s.fechaSesion)
+                console.log(this.fechaFinSesion)
+
               });
             }
 
@@ -86,7 +88,9 @@ export class AdministrarSesionComponent implements OnInit, OnDestroy {
                     this.sesion = s;
                   }
                 }
-                this.fechaFinSesion=s.fechaSesion
+                this.fechaFinSesion=new Date(s.fechaSesion)
+                console.log(new Date(this.fechaFinSesion))
+
               });
               if (this.IdSesion == 0) {
                 this.IdSesion =
@@ -104,7 +108,9 @@ export class AdministrarSesionComponent implements OnInit, OnDestroy {
         console.log(s);
         this.sesion = s;
       }
-      this.fechaFinSesion=s.fechaSesion
+      this.fechaFinSesion=new Date(s.fechaSesion)
+      console.log(this.fechaFinSesion)
+
     });
   }
 

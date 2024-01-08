@@ -138,6 +138,14 @@ export class AgregarActividadAdicionalComponent implements OnInit, OnDestroy {
     var fecha: Date = this.formularioActividad.get('FechaEntrega')?.value;
     this.saveActividad.IdCriterioEvaluacion = this.formularioActividad.get('IdCriterioEvaluacion')?.value;
 
+
+    console.log(this.formularioActividad.get('FechaEntrega')?.value)
+    console.log(new Date(this.formularioActividad.get('FechaEntrega')?.value))
+    console.log(fecha)
+    console.log(this.formularioActividad.get('HoraEntrega')?.value)
+    console.log(this.formularioActividad.get('MinutoEntrega')?.value)
+
+
     fecha.setHours(this.formularioActividad.get('HoraEntrega')?.value);
     fecha.setMinutes(this.formularioActividad.get('MinutoEntrega')?.value);
     fecha.setSeconds(0);
