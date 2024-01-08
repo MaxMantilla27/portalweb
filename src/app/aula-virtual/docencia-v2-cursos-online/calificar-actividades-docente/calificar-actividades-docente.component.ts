@@ -1,7 +1,8 @@
+import { DatePipe } from '@angular/common';
 import { Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges, ViewEncapsulation } from '@angular/core';
 import { Subject, takeUntil } from 'rxjs';
 import { PEspecificoEsquemaService } from 'src/app/Core/Shared/Services/PEspecificoEsquema/pespecifico-esquema.service';
-
+const pipe = new DatePipe('en-US')
 @Component({
   selector: 'app-calificar-actividades-docente',
   templateUrl: './calificar-actividades-docente.component.html',
@@ -22,11 +23,13 @@ export class CalificarActividadesDocenteComponent implements OnInit ,OnChanges, 
   ngOnChanges(changes: SimpleChanges): void {
     console.log(this.IdPespecifico)
     if (this.IdPespecifico != 0) {
+      this.fechaActual= pipe.transform(new Date(), 'yyyy-MM-ddTHH:mm:ss.SSS')
       this.ObtenerCriteriosEvaluacionPespecifico();
     }
   }
 
   ngOnInit(): void {
+    this.fechaActual= pipe.transform(new Date(), 'yyyy-MM-ddTHH:mm:ss.SSS')
   }
 
   filterCurso=''
@@ -38,11 +41,16 @@ export class CalificarActividadesDocenteComponent implements OnInit ,OnChanges, 
   EstadoPespecifico=0
   public criterios:Array<any>=[]
   public IrCurso=-1
-  public Estarea=false
+  public Criterio=0
   public itemSelect:any
   public TerminaCarga=false;
+  public CantidadCalificadosActividad=0
+  public CantidadEnviadosActividad=0
+  public fechaActual: any
+
   ObtenerCriteriosEvaluacionPespecifico(){
     this.TerminaCarga=false;
+
     this.criterios=[];
     this._PEspecificoEsquemaService.ObtenerCriteriosEvaluacionPespecifico(this.IdPespecifico).pipe(takeUntil(this.signal$))
     .subscribe({
@@ -54,14 +62,23 @@ export class CalificarActividadesDocenteComponent implements OnInit ,OnChanges, 
         }
         if(this.criterios!=null && this.criterios!=undefined && this.criterios.length>0){
           this.criterios.forEach((c:any) => {
+            console.log(c)
+            console.log(c.fechaEntrega)
             c.Visible=true
-            c.Porcalificar=c.cantidadEnviados - c.cantidadCalificados
+            this.CantidadCalificadosActividad=0
+            this.CantidadEnviadosActividad=0
             c.criterios.forEach((cc:any) => {
+              var fechaEntrega= pipe.transform(new Date(cc.fechaEntrega), 'yyyy-MM-ddTHH:mm:ss.SSS')
+              if(cc.idCriterioEvaluacion==21 && fechaEntrega!>this.fechaActual){
+                this.CantidadEnviadosActividad=this.CantidadEnviadosActividad+cc.cantidadEnviados
+                this.CantidadCalificadosActividad=this.CantidadCalificadosActividad+cc.cantidadCalificados
+              }
               cc.Visible=true
               cc.Porcalificar=cc.cantidadEnviados - cc.cantidadCalificados
               cc.nombre=cc.nombre.split('Tareas').join('Tarea')
               cc.nombre=cc.nombre.split('Cuestionarios').join('Cuestionario')
             });
+            c.Porcalificar=(c.cantidadEnviados-this.CantidadEnviadosActividad) - (c.cantidadCalificados-this.CantidadCalificadosActividad)
           });
         }
         this.TerminaCarga=true;
@@ -121,14 +138,20 @@ export class CalificarActividadesDocenteComponent implements OnInit ,OnChanges, 
   }
   IrACalificar(item:any){
     console.log(item)
+    this.Criterio=0
     this.IrCurso=item.id
     this.itemSelect=item
     if(item.nombre.toLowerCase()=="tarea"){
-      this.Estarea=true
+      this.Criterio=1
     }else{
-      this.Estarea=false
+      if(item.nombre.toLowerCase()=="cuestionario"){
+        this.Criterio=2
+      }
+      else{
+        this.Criterio=3
+      }
     }
-    console.log(this.IrCurso,this.Estarea)
+    console.log(this.IrCurso,this.Criterio)
   }
   RefrescarListaCalificar(){
     this.EstadoPespecifico=0

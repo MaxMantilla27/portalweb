@@ -54,7 +54,8 @@
         <div class="contetPreguntasCuestionario">
           <div class="descPregunta row">
             <div class="col-12 col-md-9 col-lg-9">
-              <div class="titlePregunta">{{i+1}}. {{item.enunciado}}</div>
+              <div *ngIf="item.idPreguntaTipo==11" class="titlePregunta">{{item.enunciado}}</div>
+              <div *ngIf="item.idPreguntaTipo!=11" class="titlePregunta">{{i}}. {{item.enunciado}}</div>
               <div class="DescripcionPregunta" *ngIf="item.descripcion!=null && item.descripcion.length>0">
                 {{item.descripcion}}</div>
               <div class="DescripcionPregunta" *ngIf="item.idPreguntaTipo==3">Responde verdadero (V) O falso (F) según
@@ -63,14 +64,14 @@
               <div class="DescripcionPregunta" *ngIf="item.idPreguntaTipo==5">Elige la alternativa correcta</div>
             </div>
             <div *ngIf="item.nombreArchivo==null" class="col-12 col-md-3 col-lg-3"  style=" display: flex;flex-direction: column;align-items: flex-end;">
-              <div  *ngIf="CuestionarioEnviado==false" class="PuntoPregunta">
+              <div  *ngIf="CuestionarioEnviado==false && item.idPreguntaTipo!=11" class="PuntoPregunta">
                 <strong>{{item.puntaje*PuntuacionActual/100}}</strong> Puntos
               </div>
-              <div *ngIf="CuestionarioEnviado==true && item.idPreguntaTipo!=6" class="PuntoPregunta">
-                <strong>{{item.puntajePregunta*PuntuacionActualEnviada/100}} / {{item.puntaje*PuntuacionActualEnviada/100}}</strong>
+              <div *ngIf="CuestionarioEnviado==true && item.idPreguntaTipo!=6 && item.idPreguntaTipo!=11" class="PuntoPregunta">
+                <strong>{{item.puntajePregunta*PuntuacionActualEnviada/100}} / {{item.puntaje*PuntuacionActualEnviada/100}}</strong> Puntos
               </div>
               <div *ngIf="CuestionarioEnviado==true && item.idPreguntaTipo==6" class="PuntoPregunta">
-                <strong>{{item.puntajePregunta}} / {{item.puntaje*PuntuacionActualEnviada/100}}</strong>
+                <strong>{{item.puntajePregunta}} / {{item.puntaje*PuntuacionActualEnviada/100}}</strong> Puntos
               </div>
             </div>
             <ng-container *ngIf="item.nombreArchivo!=null">
@@ -79,10 +80,10 @@
               align-items: flex-end;"
                 *ngIf="item.nombreArchivo.split('.')[item.nombreArchivo.split('.').length-1].toUpperCase()!='PNG' &&
                 item.nombreArchivo.split('.')[item.nombreArchivo.split('.').length-1].toUpperCase()!='JPG';else img">
-                <div *ngIf="CuestionarioEnviado==false" class="PuntoPregunta">
+                <div *ngIf="CuestionarioEnviado==false && item.idPreguntaTipo!=11" class="PuntoPregunta">
                   <strong>{{item.puntaje*PuntuacionActual/100}}</strong> Puntos
                 </div>
-                <div *ngIf="CuestionarioEnviado==true && item.idPreguntaTipo!=6" class="PuntoPregunta">
+                <div *ngIf="CuestionarioEnviado==true && item.idPreguntaTipo!=6 && item.idPreguntaTipo!=11" class="PuntoPregunta">
                   <strong>{{item.puntajePregunta*PuntuacionActualEnviada/100}} / {{item.puntaje*PuntuacionActualEnviada/100}}</strong> Puntos
                 </div>
                 <div *ngIf="CuestionarioEnviado==true && item.idPreguntaTipo==6" class="PuntoPregunta">
@@ -97,14 +98,14 @@
               </div>
               <ng-template #img>
                 <div style="justify-content: end;display: flex;margin-bottom: 5px;">
-                  <div  *ngIf="CuestionarioEnviado==false" class="PuntoPregunta">
+                  <div  *ngIf="CuestionarioEnviado==false && item.idPreguntaTipo!=11" class="PuntoPregunta">
                     <strong>{{item.puntaje*PuntuacionActual/100}}</strong> Puntos
                   </div>
-                  <div  *ngIf="CuestionarioEnviado==true && item.idPreguntaTipo!=6" class="PuntoPregunta">
-                    <strong>{{item.puntajePregunta*PuntuacionActualEnviada/100}} / {{item.puntaje*PuntuacionActualEnviada/100}}</strong>
+                  <div  *ngIf="CuestionarioEnviado==true && item.idPreguntaTipo!=6 && item.idPreguntaTipo!=11" class="PuntoPregunta">
+                    <strong>{{item.puntajePregunta*PuntuacionActualEnviada/100}} / {{item.puntaje*PuntuacionActualEnviada/100}}</strong> Puntos
                   </div>
                   <div  *ngIf="CuestionarioEnviado==true && item.idPreguntaTipo==6" class="PuntoPregunta">
-                    <strong>{{item.puntajePregunta}} / {{item.puntaje*PuntuacionActualEnviada/100}}</strong>
+                    <strong>{{item.puntajePregunta}} / {{item.puntaje*PuntuacionActualEnviada/100}}</strong> Puntos
                   </div>
                 </div>
                 <div class="ImagenAdjunta" (click)="OpenImage(item.urlArchivoSubido)"

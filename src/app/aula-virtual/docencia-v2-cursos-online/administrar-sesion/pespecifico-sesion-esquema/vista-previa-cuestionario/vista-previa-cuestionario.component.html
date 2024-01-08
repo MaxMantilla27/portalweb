@@ -30,7 +30,8 @@
         <div class="contetPreguntasCuestionario">
           <div class="descPregunta row">
             <div class="col-12 col-md-9 col-lg-9">
-              <div class="titlePregunta">{{i+1}}. {{item.enunciado}}</div>
+              <div *ngIf="item.idPreguntaTipo==11" class="titlePregunta">{{item.enunciado}}</div>
+              <div *ngIf="item.idPreguntaTipo!=11" class="titlePregunta">{{i}}. {{item.enunciado}}</div>
               <div class="DescripcionPregunta" *ngIf="item.descripcion!=null && item.descripcion.length>0">
                 {{item.descripcion}}</div>
               <div class="DescripcionPregunta" *ngIf="item.idPreguntaTipo==3">Responde verdadero (V) O falso (F) según
@@ -39,7 +40,7 @@
               <div class="DescripcionPregunta" *ngIf="item.idPreguntaTipo==5">Elige la alternativa correcta</div>
             </div>
             <div *ngIf="item.nombreArchivo==null" class="col-12 col-md-3 col-lg-3"  style=" display: flex;flex-direction: column;align-items: flex-end;">
-              <div class="PuntoPregunta"><strong>{{item.puntaje}}</strong> Puntos</div>
+              <div  *ngIf="item.idPreguntaTipo!=11" class="PuntoPregunta"><strong>{{item.puntaje}}</strong> Puntos</div>
             </div>
             <ng-container *ngIf="item.nombreArchivo!=null">
               <div class="col-12 col-md-3 col-lg-3" style=" display: flex;
@@ -47,7 +48,7 @@
               align-items: flex-end;"
                 *ngIf="item.nombreArchivo.split('.')[item.nombreArchivo.split('.').length-1].toUpperCase()!='PNG' &&
                 item.nombreArchivo.split('.')[item.nombreArchivo.split('.').length-1].toUpperCase()!='JPG';else img">
-                <div class="PuntoPregunta"><strong>{{item.puntaje}}</strong> Puntos</div>
+                <div  *ngIf="item.idPreguntaTipo!=11" class="PuntoPregunta"><strong>{{item.puntaje}}</strong> Puntos</div>
 
                 <div class="IntenTareasEnviadas" *ngIf="item.urlArchivoSubido!=null && item.urlArchivoSubido!=undefined">
                   <div class="pdfSesionOnline"></div>
@@ -58,7 +59,7 @@
               </div>
               <ng-template #img>
                 <div style="justify-content: end;display: flex;margin-bottom: 5px;">
-                  <div class="PuntoPregunta">
+                  <div  *ngIf="item.idPreguntaTipo!=11" class="PuntoPregunta">
                     <strong>{{item.puntaje}}</strong> Puntos
                   </div>
                 </div>

@@ -92,4 +92,39 @@ export class AlertaService {
       allowOutsideClick: false,
     });
   }
+  mensajeConfirmacionActividad() {
+    return Swal.fire({
+      title: 'Se publicará la actividad para ser visible por los alumnos. ¿Desea continuar?',
+      // text: '¡Se borrarán todas las tareas realizadas!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#4C5FC0',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Aceptar',
+      allowOutsideClick: false,
+    });
+  }
+  mensajeConfirmacionRegistroActividad() {
+    return Swal.fire({
+      title: 'La actividad no será visible hasta su publicación. ¿Desea continuar?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#4C5FC0',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Aceptar',
+      allowOutsideClick: false,
+    });
+  }
+  mensajeConfirmacionEdicionActividad() {
+    return Swal.fire({
+      title: 'Se guardarán todos los cambios. ¿Desea continuar?',
+      // text: '¡Se borrarán todas las tareas realizadas!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#4C5FC0',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Aceptar',
+      allowOutsideClick: false,
+    });
+  }
 }

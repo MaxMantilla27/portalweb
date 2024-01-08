@@ -40,11 +40,11 @@ export class AdministrarSesionComponent implements OnInit, OnDestroy {
   public OpenActividadesSesion = false;
   public OpenInteractividadSesion = false;
   public loadingSesiones = false;
+  public fechaFinSesion:any
   ngOnInit(): void {
     this._ActivatedRoute.params.pipe(takeUntil(this.signal$)).subscribe({
       next: (x) => {
         this.IdPespecifico = parseInt(x['IdPespecifico']);
-        console.log(this.IdPespecifico);
         this.ObtenerSesionesOnlineWebinarDocentePorIdPespecifico(
           this.IdPespecifico
         );
@@ -74,6 +74,7 @@ export class AdministrarSesionComponent implements OnInit, OnDestroy {
                   this.IdSesion = s.idSesion;
                   this.sesion = s;
                 }
+                this.fechaFinSesion=s.fechaSesion
               });
             }
 
@@ -85,6 +86,7 @@ export class AdministrarSesionComponent implements OnInit, OnDestroy {
                     this.sesion = s;
                   }
                 }
+                this.fechaFinSesion=s.fechaSesion
               });
               if (this.IdSesion == 0) {
                 this.IdSesion =
@@ -102,6 +104,7 @@ export class AdministrarSesionComponent implements OnInit, OnDestroy {
         console.log(s);
         this.sesion = s;
       }
+      this.fechaFinSesion=s.fechaSesion
     });
   }
 

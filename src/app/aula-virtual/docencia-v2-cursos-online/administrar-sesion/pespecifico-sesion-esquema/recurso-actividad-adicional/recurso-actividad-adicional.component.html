@@ -6,7 +6,6 @@
       <th style="min-width: 180px;">Fecha Entrega</th>
       <th style="min-width: 180px;">Fecha Publicación</th>
       <th style="width:150px;text-align: center;">Acciones</th>
-      <!-- <th style="min-width: 180px;">Metas pronosticadas 2021</th> -->
     </tr>
     <tbody cdkDropList class="example-list" (cdkDropListDropped)="drop($event)">
       <tr class="example-custom-placeholder" *cdkDragPlaceholder></tr>
@@ -26,7 +25,7 @@
           <div class="accionesTema">
             <div class="edidtarNaranja" (click)="OnEdit.emit(i)"></div>
             <div class="eliminarNaranja" (click)="OnDelete.emit(i)"></div>
-            <div *ngIf="item.fechaPublicacion==null" class="verSinPublicar" (click)="PublicarTarea(item.id)"></div>
+            <div *ngIf="item.fechaPublicacion==null" class="verSinPublicar" (click)="PublicarActividad(item.id)"></div>
             <div *ngIf="item.fechaPublicacion!=null" class="verPublicado"></div>
           </div>
         </td>

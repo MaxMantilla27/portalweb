@@ -35,8 +35,8 @@
         <mat-error *ngIf="!formularioTarea.get('HoraEntrega')?.valid">Ingrese el enunciado</mat-error>
       </mat-form-field>
     </div>
-    <div class="col-6 col-md-3 col-lg-3 labelTarea">Descripción</div>
-    <div class="col-6 col-md-9 col-lg-9 InputsDocencia">
+    <div *ngIf="IdTipoPreguntaAlternativa!=11" class="col-6 col-md-3 col-lg-3 labelTarea">Descripción</div>
+    <div *ngIf="IdTipoPreguntaAlternativa!=11" class="col-6 col-md-9 col-lg-9 InputsDocencia">
       <mat-form-field appearance="outline" style="width: 100%;">
         <mat-label>Ingresar Descripción de la Pregunta (Opcional)</mat-label>
         <input type="text" placeholder="Ingresar Descripción de la Pregunta (Opcional)" formControlName="Descripcion"matInput >
@@ -45,7 +45,7 @@
 
     <div class="col-6 col-md-3 col-lg-3 labelTarea">Adjuntar Archivo</div>
     <div class="col-6 col-md-9 col-lg-9 row" style="margin:0px">
-      <div (click)="fileInput.click()" style="height: 38px;width: 100%;border:solid 1px #c2c2c2;border-radius: 5px;display: flex; align-items: center;
+      <div style="height: 38px;width: 100%;border:solid 1px #c2c2c2;border-radius: 5px;display: flex; align-items: center;
         padding: 0px 5px;cursor: pointer;">
         <button (click)="fileInput.click()" style="border: solid 1px #767676;
           margin-right: 5px;    white-space: nowrap;">Seleccionar archivo</button>
@@ -64,7 +64,7 @@
     </div>
   </div>
 </form>
-<div class="noform2" style="padding-top: 0px!important;">
+<div *ngIf="IdTipoPreguntaAlternativa!=11" class="noform2" style="padding-top: 0px!important;">
   <div class="col-12" style="justify-content: end; display: flex;">
     <app-default-button [confs]="{color:'primary',titulo:'Agregar Alternativa'}"
         [disabled]="disabledAddPregunta"

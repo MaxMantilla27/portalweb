@@ -10,6 +10,8 @@ import {
   AgregarPEspecificoSesionCuestionarioAlumnoDTO,
   AgregarCalificacionCuestionarioAlumnoDocenteDTO,
   CalificarTareaAlumnoOnlineDTO,
+  PEspecificoSesionActividadSaveDTO,
+  CalificarActividadAlumnoOnlineDTO,
 } from "src/app/Core/Models/PEspecificoEsquema";
 import { PespecificoSesionTemaUpdateOrdenDTO } from "src/app/Core/Models/PespecificoSesionTemaDTO";
 import { environment } from "src/environments/environment";
@@ -661,6 +663,105 @@ export class PEspecificoEsquemaService {
       {
         return EMPTY;
       }
+    }
+  }
+  public OrdenarActividad(Json:PespecificoSesionTemaUpdateOrdenDTO):Observable<any>{
+    if(this.isBrowser){
+      console.log(Json)
+      return this.http.post<any>(this.urlBase+'/OrdenarActividad',Json);
+    }else{
+      return EMPTY;
+    }
+  }
+  public PublicarPEspecificoSesionActividad(IdPEspecificoSesionActividad: number): Observable<any> {
+    if (this.isBrowser) {
+      return this.http.post<any>(this.urlBase +"/PublicarPEspecificoSesionActividad?IdPEspecificoSesionActividad=" +IdPEspecificoSesionActividad,{});
+    } else {
+      {
+        return EMPTY;
+      }
+    }
+  }
+  public ObtenerPEspecificoSesionActividadPorId(Id: number): Observable<any> {
+    if (this.isBrowser) {
+      return this.http.get<any>(
+        this.urlBase + "/ObtenerPEspecificoSesionActividadPorId?Id=" + Id
+      );
+    } else {
+      return EMPTY;
+    }
+  }
+  public AgregarPEspecificoSesionActividad(
+    Json: PEspecificoSesionActividadSaveDTO
+  ): Observable<any> {
+    if (this.isBrowser) {
+      const formData: FormData = new FormData();
+      var Id = Json.Id == null ? "" : Json.Id?.toString();
+      var Descripcion =
+        Json.Descripcion == null ? "" : Json.Descripcion?.toString();
+      var IdPEspecificoSesion =Json.IdPEspecificoSesion == null? "": Json.IdPEspecificoSesion?.toString();
+      formData.append("file", Json.file);
+      formData.append("Id", Id);
+      formData.append("IdPEspecificoSesion", IdPEspecificoSesion);
+      formData.append("Titulo", Json.Titulo);
+      formData.append("Descripcion", Descripcion);
+      formData.append("FechaEntrega", Json.FechaEntrega);
+      formData.append("IdCriterioEvaluacion",Json.IdCriterioEvaluacion.toString());
+      formData.append("CalificacionMaxima", Json.CalificacionMaxima.toString());
+      formData.append("TieneArchivo", Json.TieneArchivo.toString());
+      formData.append("Usuario", "docente");
+      const req = new HttpRequest(
+        "POST",
+        `${this.urlBase}/AgregarPEspecificoSesionActividad`,
+        formData,
+        {
+          reportProgress: true,
+          responseType: "json",
+        }
+      );
+      return this.http.request(req);
+    } else {
+      return EMPTY;
+    }
+  }
+  public EliminarPEspecificoSesionActividad(IdActividad:number): Observable<any> {
+    if (this.isBrowser) {
+      return this.http.post<any>( this.urlBase +"/EliminarPEspecificoSesionActividad?IdActividad="+IdActividad,{});
+    } else {
+      return EMPTY;
+    }
+  }
+  public ObtenerListaActividadAlumnoOnline(IdPwPEspecificoSesionActividad:number): Observable<any> {
+    if (this.isBrowser) {
+      return this.http.get<any>(this.urlBase + "/ObtenerListaActividadAlumnoOnline?IdPwPEspecificoSesionActividad=" +IdPwPEspecificoSesionActividad);
+    } else {
+      return EMPTY;
+    }
+  }
+  public CalificarActividadAlumnoOnline(json: Array<CalificarActividadAlumnoOnlineDTO>): Observable<any> {
+    if (this.isBrowser) {
+
+      const formData: FormData = new FormData();
+      console.log(json)
+      formData.append("Usuario", 'Docencia');
+      for (let i = 0; i < json.length; i++) {
+        var Retroalimentacion =json[i].Retroalimentacion == undefined ||json[i].Retroalimentacion == null? "": json[i].Retroalimentacion!.toString();
+        formData.append("data[" + i + "].id", json[i].Id.toString());
+        formData.append("data[" + i + "].nota", json[i].Nota.toString());
+        formData.append("data[" + i + "].retroalimentacion", Retroalimentacion);
+        if (json[i].file.size > 0) {
+          var end = json[i].file.name.split(".")[1];
+          formData.append(
+            "files",
+            json[i].file,
+            i + "." + end
+          );
+        }
+      }
+      const req = new HttpRequest("POST",`${this.urlBase}/CalificarActividadAlumnoOnline`, formData,{reportProgress: true,responseType: "json", });
+      return this.http.request(req);
+    } else {
+      return EMPTY;
     }
   }
 

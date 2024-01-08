@@ -54,14 +54,13 @@
             <div class="SubTitleSesionesCurso">
               <div class="titleSubTitleSesionesCurso">Sesión: {{items.sesion>9?items.sesion:'0'+items.sesion}}</div>
               <div style="display: flex;align-items: center;">
-                <ng-container *ngIf="(items.cantidadEnviados - items.cantidadCalificados)<=0">
+                <ng-container *ngIf="(items.Porcalificar)<=0">
                   <div class="imgAlertaActividadesEchas "></div>
                   <div class="textActividades">Sin pendientes</div>
                 </ng-container>
-                <ng-container *ngIf="(items.cantidadEnviados - items.cantidadCalificados)>0">
+                <ng-container *ngIf="(items.Porcalificar)>0">
                   <div class="imgAlertaActividadesPendientes"></div>
-                  <div class="textActividades">Actividades por calificar ({{items.cantidadEnviados -
-                    items.cantidadCalificados}})</div>
+                  <div class="textActividades">Actividades por calificar {{items.Porcalificar}}</div>
                 </ng-container>
 
               </div>
@@ -122,8 +121,10 @@
           <div class="Volver" (click)="IrCurso=-1">Volver</div>
       </div> -->
       <div class="col-12">
-        <app-calificar-cuestionario-docente  (Volver)="RefrescarListaCalificar()" *ngIf="Estarea==false" [Id]="IrCurso" [data]="itemSelect" (Volver)="IrCurso=-1"></app-calificar-cuestionario-docente>
-        <app-calificar-tarea-docente (Volver)="RefrescarListaCalificar()"  *ngIf="Estarea==true" [Id]="IrCurso" [data]="itemSelect" (Volver)="IrCurso=-1"></app-calificar-tarea-docente>
+        <app-calificar-tarea-docente (Volver)="RefrescarListaCalificar()"  *ngIf="Criterio==1" [Id]="IrCurso" [data]="itemSelect" (Volver)="IrCurso=-1"></app-calificar-tarea-docente>
+        <app-calificar-cuestionario-docente  (Volver)="RefrescarListaCalificar()" *ngIf="Criterio==2" [Id]="IrCurso" [data]="itemSelect" (Volver)="IrCurso=-1"></app-calificar-cuestionario-docente>
+        <app-calificar-actividad-adicional-docente (Volver)="RefrescarListaCalificar()"  *ngIf="Criterio==3" [Id]="IrCurso" [data]="itemSelect" (Volver)="IrCurso=-1"></app-calificar-actividad-adicional-docente>
+
       </div>
     </div>
   </ng-container>

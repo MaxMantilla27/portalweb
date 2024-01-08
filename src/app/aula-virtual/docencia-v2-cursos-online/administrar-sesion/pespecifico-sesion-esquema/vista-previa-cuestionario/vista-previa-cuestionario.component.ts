@@ -42,9 +42,7 @@ export class VistaPreviaCuestionarioComponent implements OnInit {
   };
   public disabledPublicar=false;
   ngOnInit(): void {
-    console.log(this.data);
     this.detalleCuestionario=this.data.data
-    console.log(this.detalleCuestionario)
     if(this.detalleCuestionario.publicado==1){
       this.disabledPublicar=true;
     }
@@ -56,7 +54,6 @@ export class VistaPreviaCuestionarioComponent implements OnInit {
     this._PEspecificoEsquemaService.ObtenerPuntajePreguntasPorCuestionario(id).pipe(takeUntil(this.signal$))
     .subscribe({
       next: (x) => {
-        console.log(x);
         if(x==100){
           this.PublicarCuestionario(id)
         }else{
@@ -75,7 +72,6 @@ export class VistaPreviaCuestionarioComponent implements OnInit {
       .pipe(takeUntil(this.signal$))
       .subscribe({
         next: (x) => {
-          console.log(x);
           this.preguntas = x;
           if(x!=null && x!=undefined){
             this.preguntas.forEach((p:any) =>{
@@ -93,9 +89,6 @@ export class VistaPreviaCuestionarioComponent implements OnInit {
               });
             });
           }
-          // this.preguntas.alternativas.forEach((a:any) => {
-          //   a.select=false
-          // });
 
         },
       });
@@ -126,15 +119,5 @@ export class VistaPreviaCuestionarioComponent implements OnInit {
       panelClass: 'dialog-Imagen-Modal'
     });
   }
-  // changeRadio(indexPregunta:number,index:number){
-  //   this.preguntas.alternativas.forEach((a:any) => {
-  //     a.select=false
-  //   });
-  //   this.preguntas[indexPregunta].alternativas[index].select=true
-  // }
-  // changeCheck(indexPregunta:number,index:number){
-  //   this.preguntas.alternativas[index].select=!this.preguntas[indexPregunta].alternativas[index].select
-
-  // }
 
 }

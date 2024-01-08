@@ -166,6 +166,10 @@ import { RecursosCuestionarioComponent } from './docencia-v2-cursos-online/admin
 import { RegistrarForoProyectoComponent } from './curso/curso-proyecto/registrar-foro-proyecto/registrar-foro-proyecto.component';
 import { VerPreguntasCuestionarioComponent } from './docencia-v2-cursos-online/administrar-sesion/pespecifico-sesion-esquema/agregar-cuestionario/ver-preguntas-cuestionario/ver-preguntas-cuestionario.component';
 import { ModalEnvioTareaComponent } from './modulo/modulo-sesiones-online/envio-tarea/modal-envio-tarea/modal-envio-tarea.component';
+import { RecursoActividadAdicionalComponent } from './docencia-v2-cursos-online/administrar-sesion/pespecifico-sesion-esquema/recurso-actividad-adicional/recurso-actividad-adicional.component';
+import { AgregarActividadAdicionalComponent } from './docencia-v2-cursos-online/administrar-sesion/pespecifico-sesion-esquema/agregar-actividad-adicional/agregar-actividad-adicional.component';
+import { CalificarActividadAdicionalDocenteComponent } from './docencia-v2-cursos-online/calificar-actividades-docente/calificar-actividad-adicional-docente/calificar-actividad-adicional-docente.component';
+import { EnvioActividadComponent } from './modulo/modulo-sesiones-online/envio-actividad/envio-actividad.component';
 
 
 @NgModule({
@@ -329,6 +333,10 @@ import { ModalEnvioTareaComponent } from './modulo/modulo-sesiones-online/envio-
     RegistrarForoProyectoComponent,
     VerPreguntasCuestionarioComponent,
     ModalEnvioTareaComponent,
+    RecursoActividadAdicionalComponent,
+    AgregarActividadAdicionalComponent,
+    CalificarActividadAdicionalDocenteComponent,
+    EnvioActividadComponent,
 
   ],
   imports: [

@@ -9,6 +9,7 @@ import { EnvioTareaComponent } from './envio-tarea/envio-tarea.component';
 import { EnvioCuestionarioComponent } from './envio-cuestionario/envio-cuestionario.component';
 import * as moment  from 'moment';
 import { SnackBarServiceService } from 'src/app/Core/Shared/Services/SnackBarService/snack-bar-service.service';
+import { EnvioActividadComponent } from './envio-actividad/envio-actividad.component';
 
 @Component({
   selector: 'app-modulo-sesiones-online',
@@ -93,6 +94,7 @@ export class ModuloSesionesOnlineComponent implements OnInit , OnChanges,OnDestr
         this.sesiones[index].material=[]
         this.sesiones[index].tarea=[]
         this.sesiones[index].cuestionario=[]
+        this.sesiones[index].actividades=[]
         console.log(x)
         if(x!=null){
           x.forEach((d:any) => {
@@ -115,6 +117,10 @@ export class ModuloSesionesOnlineComponent implements OnInit , OnChanges,OnDestr
               d.disabled=diference
               this.sesiones[index].cuestionario.push(d)
 
+            }
+            if(d.tipo.toLowerCase()=='actividad adicional'){
+              d.disabled=diference
+              this.sesiones[index].actividades.push(d)
             }
           });
         }
@@ -216,5 +222,20 @@ export class ModuloSesionesOnlineComponent implements OnInit , OnChanges,OnDestr
   }
   Onplay(e:any){
     console.log(e);
+  }
+  EnviarActividad(indexSesion:number, index:number){
+    const dialogRef = this.dialog.open(EnvioActividadComponent, {
+      width: '1000px',
+      data: {actividad:this.sesiones[indexSesion].actividades[index],index:index,IdMatriculaCabecera:this.IdMatriculaCabecera},
+      panelClass: 'dialog-envio-actividad-alumno',
+     disableClose:true
+    });
+
+    dialogRef.afterClosed().pipe(takeUntil(this.signal$)).subscribe((result) => {
+      console.log(result)
+      if(result!=undefined && result.length>0){
+        this.ObtenerActividadesRecursoSesionAlumno(this.sesiones[indexSesion].idSesion,indexSesion)
+      }
+    });
   }
 }

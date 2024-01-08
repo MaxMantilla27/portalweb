@@ -40,6 +40,7 @@ export class ModuloCalificacionesOnlineComponent implements OnInit,OnDestroy {
   public detalle=false
   public verDetalle=false
   public CursoAbierto=-1;
+  public recargarDetalle=false;
 
 
   ngOnInit(): void {
@@ -170,7 +171,8 @@ export class ModuloCalificacionesOnlineComponent implements OnInit,OnDestroy {
                   criterioEvaluacion:escala.nombre,
                   ponderacion:escala.porcentaje,
                   valor:Math.round(nota),
-                  detalleCalificacion:calificacionDetallada
+                  detalleCalificacion:calificacionDetallada,
+                  cursoAbierto:false
                 })
               });
               data.detalleCalificacion.push({
@@ -188,10 +190,24 @@ export class ModuloCalificacionesOnlineComponent implements OnInit,OnDestroy {
           x=this.infoNotas[0];
           this.CursosCriterios=x
           console.log(this.CursosCriterios)
+          this.recargarDetalle=true
         }
       }
     })
-
-
   }
+  actualizarDesplegable(i:number,valor:boolean){
+    console.log(i)
+    console.log(valor)
+    this.recargarDetalle=false
+    let count=0
+    this.CursosCriterios.detalleCalificacion.forEach((x:any) => {
+      if(count==i){
+        x.cursoAbierto=valor
+      }
+      count=count+1
+    })
+    console.log(this.CursosCriterios.detalleCalificacion)
+    this.recargarDetalle=true
+  }
+
 }

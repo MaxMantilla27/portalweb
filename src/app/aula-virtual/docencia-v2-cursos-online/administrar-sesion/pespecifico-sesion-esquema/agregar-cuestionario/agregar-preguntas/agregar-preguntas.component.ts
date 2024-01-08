@@ -2,7 +2,7 @@ import { Component, Inject, OnChanges, OnDestroy, OnInit, SimpleChanges, ViewEnc
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Subject, takeUntil } from 'rxjs';
-import { PEspecificoSesionCuestionarioPreguntaFileDTO } from 'src/app/Core/Models/PEspecificoEsquema';
+import { PEspecificoSesionCuestionarioPreguntaFileDTO, PEspecificoSesionPreguntaDescriptivaFileDTO } from 'src/app/Core/Models/PEspecificoEsquema';
 import { PEspecificoEsquemaService } from 'src/app/Core/Shared/Services/PEspecificoEsquema/pespecifico-esquema.service';
 import { SnackBarServiceService } from 'src/app/Core/Shared/Services/SnackBarService/snack-bar-service.service';
 
@@ -41,6 +41,15 @@ export class AgregarPreguntasComponent implements OnInit ,OnChanges,OnDestroy {
     fileRetroalimentacion: new File([], ''),
     Alternativas :[]
   }
+  public preguntaDescriptiva:PEspecificoSesionPreguntaDescriptivaFileDTO={
+    Id:0,
+    IdPreguntaTipo:0,
+    Enunciado:'' ,
+    Puntaje:0 ,
+    NombreArchivo:'Seleccione Archivo'  ,
+    UrlArchivoSubido:null ,
+    file: new File([], ''),
+  }
 
   public filestatus = false;
   public fileErrorMsg = '';
@@ -64,10 +73,8 @@ export class AgregarPreguntasComponent implements OnInit ,OnChanges,OnDestroy {
     for (let index = 1; index < 11; index++) {
       this.Calificaciones.push(index * 10);
     }
-    console.log(this.data)
     this.tipoPregunta=this.data.tipoPregunta
     this.Publicado=this.data.publicado
-    console.log(this.Publicado)
     this.tipoPregunta.forEach((x:any) => {
       if(x.valor=='Ingresar palabra'){
         x.valor='Pregunta Abierta'
@@ -96,19 +103,15 @@ export class AgregarPreguntasComponent implements OnInit ,OnChanges,OnDestroy {
     }
   }
   ngOnChanges(changes: SimpleChanges): void {
-    console.log(this.formularioTarea.get('IdPreguntaTipo')?.value)
     if(this.formularioTarea.get('IdPreguntaTipo')?.value!=0)
     {
-    console.log('XXXXXXXXXXXXXXXXXXX')
 
     }
-    console.log('==================')
   }
   ObtenerPEspecificoSesionCuestionarioPreguntaAlternativaPorIdPregunta(){
     this._PEspecificoEsquemaService.ObtenerPEspecificoSesionCuestionarioPreguntaAlternativaPorIdPregunta(this.pregunta.Id).pipe(takeUntil(this.signal$))
     .subscribe({
       next: (x) => {
-        console.log(x)
       },
       error: (x) => {},
     });
@@ -161,43 +164,57 @@ export class AgregarPreguntasComponent implements OnInit ,OnChanges,OnDestroy {
     }
   }
   AgregarPregunta(){
-    this.pregunta.IdPreguntaTipo=this.formularioTarea.get('IdPreguntaTipo')?.value
-    this.pregunta.Enunciado=this.formularioTarea.get('Enunciado')?.value
-    this.pregunta.Descripcion=this.formularioTarea.get('Descripcion')?.value
-    this.pregunta.Puntaje=0
-    var vacias=0
-    this.pregunta.Alternativas.forEach((a:any) => {
-      this.pregunta.Puntaje+=a.Puntaje*1
-      if(a.Alternativa.length==0){
-        vacias++
+    if(this.IdTipoPreguntaAlternativa==11){
+      this.pregunta.IdPreguntaTipo=this.formularioTarea.get('IdPreguntaTipo')?.value
+      this.pregunta.Enunciado=this.formularioTarea.get('Enunciado')?.value
+      this.pregunta.Puntaje=0
+      if (this.selectedFiles) {
+        const file: File | null = this.selectedFiles.item(0);
+        if (file) {
+          this.pregunta.file = file;
+        }
       }
-    });
-    if(vacias>0){
-      this._SnackBarServiceService.openSnackBar(
-        "Debe ingresar el texto en todas las alternativas",
-        'x',
-        10,
-        "snackbarCrucigramaerror");
-      return false;
+      this.dialogRef.close(this.pregunta)
+      return true;
     }
-    if (this.selectedFiles) {
-      const file: File | null = this.selectedFiles.item(0);
-      if (file) {
-        this.pregunta.file = file;
+    else{
+      this.pregunta.IdPreguntaTipo=this.formularioTarea.get('IdPreguntaTipo')?.value
+      this.pregunta.Enunciado=this.formularioTarea.get('Enunciado')?.value
+      this.pregunta.Descripcion=this.formularioTarea.get('Descripcion')?.value
+      this.pregunta.Puntaje=0
+      var vacias=0
+      this.pregunta.Alternativas.forEach((a:any) => {
+        this.pregunta.Puntaje+=a.Puntaje*1
+        if(a.Alternativa.length==0){
+          vacias++
+        }
+      });
+      if(vacias>0){
+        this._SnackBarServiceService.openSnackBar(
+          "Debe ingresar el texto en todas las alternativas",
+          'x',
+          10,
+          "snackbarCrucigramaerror");
+        return false;
       }
-    }
+      if (this.selectedFiles) {
+        const file: File | null = this.selectedFiles.item(0);
+        if (file) {
+          this.pregunta.file = file;
+        }
+      }
 
-    if (this.selectedFiles2) {
-      const file: File | null = this.selectedFiles2.item(0);
-      if (file) {
-        this.pregunta.fileRetroalimentacion = file;
+      if (this.selectedFiles2) {
+        const file: File | null = this.selectedFiles2.item(0);
+        if (file) {
+          this.pregunta.fileRetroalimentacion = file;
+        }
       }
+      this.dialogRef.close(this.pregunta)
+      return true;
     }
-    this.dialogRef.close(this.pregunta)
-    return true;
   }
   ChangeTipoPregunta(IdTipoPregunta:number){
-    console.log(IdTipoPregunta)
     this.IdTipoPreguntaAlternativa=IdTipoPregunta,
     this.disabledAddPregunta=false;
     this.pregunta.Alternativas=[]
@@ -230,8 +247,6 @@ export class AgregarPreguntasComponent implements OnInit ,OnChanges,OnDestroy {
     }
   }
   ValidarLimiteSeleccionado(Correcto:any,Valor:any){
-    console.log(Correcto)
-    console.log(this.IdTipoPreguntaAlternativa)
     if(this.IdTipoPreguntaAlternativa==3 || this.IdTipoPreguntaAlternativa==5){
       let count=0
       this.pregunta.Alternativas.forEach((x:any) => {
@@ -250,28 +265,6 @@ export class AgregarPreguntasComponent implements OnInit ,OnChanges,OnDestroy {
         count++
       });
     }
-    // if(this.IdTipoPreguntaAlternativa==5){
-    //   let count=0
-    //   this.pregunta.Alternativas.forEach((x:any) => {
-    //     if(count!=Valor){
-    //       x.EsCorrecta=false
-    //     }
-    //     else{
-    //       x.EsCorrecta=true
-    //     }
-    //     x.Puntaje=0
-    //     count++
-    //   });
-    // }
-    console.log(this.pregunta.Alternativas)
-    // if(this.IdTipoPreguntaAlternativa==3){
-    //   var count=0
-    //   this.pregunta.Alternativas.forEach((x:any) => {
-    //     if(count!=Valor){
-    //       x.Correcto=false
-    //     }
-    //   });
-    // }
 
   }
 }

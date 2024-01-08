@@ -20,7 +20,13 @@
     (Oncharge)="charge=true" (OnDelete)="EliminarTarea($event)" (OnEdit)="OpenEditarTarea($event)"></app-recursos-tarea>
     <br>
   </ng-container>
-
+  <ng-container *ngIf="criterios.actividades!=null && criterios.actividades.length>0">
+    <div class="TitleRecurso">Actividades Adicionales</div>
+    <app-recurso-actividad-adicional [cuestionarios]="criterios.actividades" (OnReload)="ObtenerActividadesRecursoSesionDocente()"
+    (Oncharge)="charge=true" (OnDelete)="EliminarActividad($event)" (OnEdit)="OpenEditarActividad($event)"
+    ></app-recurso-actividad-adicional>
+    <br>
+  </ng-container>
   <ng-container *ngIf="criterios.material!=null && criterios.material.length>0">
     <div class="TitleRecurso">Material Adicional</div>
     <table style="width: 100%;">

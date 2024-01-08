@@ -8,7 +8,7 @@ import { AgregarTareaComponent } from './agregar-tarea/agregar-tarea.component';
 import { AgregarCuestionarioComponent } from './agregar-cuestionario/agregar-cuestionario.component';
 import { SnackBarServiceService } from 'src/app/Core/Shared/Services/SnackBarService/snack-bar-service.service';
 import { AlertaService } from 'src/app/shared/services/alerta.service';
-import { VistaPreviaCuestionarioComponent } from './vista-previa-cuestionario/vista-previa-cuestionario.component';
+import { AgregarActividadAdicionalComponent } from './agregar-actividad-adicional/agregar-actividad-adicional.component';
 
 @Component({
   selector: 'app-pespecifico-sesion-esquema',
@@ -48,14 +48,14 @@ export class PespecificoSesionEsquemaComponent implements OnInit ,OnChanges, OnD
       idTipoCriterioEvaluacion:0,
       tipoCriterioEvaluacion:'Tarea'
     },
-    // {
-    //   id:3,
-    //   nombre:'Cuestionario',
-    //   visible:false,
-    //   idCriterio:0,
-    //   idTipoCriterioEvaluacion:0,
-    //   tipoCriterioEvaluacion:'Otros'
-    // }
+    {
+      id:3,
+      nombre:'Actividad Adicional',
+      visible:false,
+      idCriterio:0,
+      idTipoCriterioEvaluacion:0,
+      tipoCriterioEvaluacion:'Actividad Adicional'
+    }
   ]
   public criterios:any=[]
   public saveMaterial:PEspecificoSesionMaterialAdicionalSaveDTO={
@@ -77,7 +77,6 @@ export class PespecificoSesionEsquemaComponent implements OnInit ,OnChanges, OnD
       this.ObtenerTipoCriteriosPorProgramaEspecifico();
     }
     if (this.IdSesion != 0) {
-      console.log('carga criterios....', this.IdSesion);
       this.charge = true;
       this.ObtenerActividadesRecursoSesionDocente();
     }
@@ -85,6 +84,8 @@ export class PespecificoSesionEsquemaComponent implements OnInit ,OnChanges, OnD
   @Input() IdSesion = 0;
   @Input() sesion : any;
   @Input() IdPespecifico = 0;
+  @Input() fechaFinSesion: any;
+
   ngOnInit(): void {
   }
   ObtenerActividadesRecursoSesionDocente(){
@@ -105,7 +106,6 @@ export class PespecificoSesionEsquemaComponent implements OnInit ,OnChanges, OnD
     this._PEspecificoEsquemaService.ObtenerTipoCriteriosPorProgramaEspecifico(this.IdPespecifico,0).pipe(takeUntil(this.signal$))
     .subscribe({
       next: (x) => {
-        console.log(x);
         if(x!=null){
           this.esquemas.forEach((ea:any) => {
             x.forEach((e:any) => {
@@ -266,7 +266,21 @@ export class PespecificoSesionEsquemaComponent implements OnInit ,OnChanges, OnD
       });
 
       dialogRef.afterClosed().pipe(takeUntil(this.signal$)).subscribe((result) => {
-        console.log(result)
+        if(result!=undefined && result.length>0){
+          this.charge = true;
+          this.ObtenerActividadesRecursoSesionDocente()
+        }
+      });
+    }
+    if(data.id==3){
+      const dialogRef = this.dialog.open(AgregarActividadAdicionalComponent, {
+        width: '1200px',
+        data: {id:0 ,idCriterio:data.idCriterio,sesion:this.sesion,idTipoCriterioEvaluacion:data.idTipoCriterioEvaluacion,idPEspecifico:this.IdPespecifico,fechaFinSesion:this.fechaFinSesion},
+        panelClass: 'dialog-Agregar-Actividad',
+       disableClose:true
+      });
+
+      dialogRef.afterClosed().pipe(takeUntil(this.signal$)).subscribe((result) => {
         if(result!=undefined && result.length>0){
           this.charge = true;
           this.ObtenerActividadesRecursoSesionDocente()
@@ -288,9 +302,6 @@ export class PespecificoSesionEsquemaComponent implements OnInit ,OnChanges, OnD
         this.filestatus=false
       }
       this.selectedFiles = event.target.files;
-      console.log((size/1024)/1024)
-      console.log(this.fileErrorMsg)
-      console.log(this.filestatus)
     }
   }
   AgregarPEspecificoSesionMaterialAdicional(){
@@ -332,5 +343,48 @@ export class PespecificoSesionEsquemaComponent implements OnInit ,OnChanges, OnD
       }
     });
 
+  }
+
+  OpenEditarActividad(i:number){
+    var data=this.criterios.actividades[i]
+    this.materialAdicional=false
+    const dialogRef = this.dialog.open(AgregarActividadAdicionalComponent, {
+      width: '1200px',
+      data: {
+        id:data.id,
+        idCriterio:data.idCriterio,
+        sesion:this.sesion,
+        idTipoCriterioEvaluacion:data.idTipoCriterioEvaluacion,
+        idPEspecifico:this.IdPespecifico,
+        fechaFinSesion:this.fechaFinSesion},
+      panelClass: 'dialog-Agregar-Actividad',
+      disableClose:true
+    });
+
+    dialogRef.afterClosed().pipe(takeUntil(this.signal$)).subscribe((result) => {
+      if(result!=undefined && result.length>0){
+        this.charge = true;
+        this.ObtenerActividadesRecursoSesionDocente()
+      }
+    });
+  }
+
+  EliminarActividad(i:number){
+    var item=this.criterios.actividades[i]
+    this.alertaService.mensajeEliminar().then((result) => {
+      if (result.isConfirmed) {
+          this._PEspecificoEsquemaService.EliminarPEspecificoSesionActividad(item.id).pipe(takeUntil(this.signal$)).subscribe({
+            next: (x:any) => {
+            },
+            complete:()=>{
+              this._SnackBarServiceService.openSnackBar("La actividad se ha eliminado correctamente.",
+              'x',
+              10,
+              "snackbarCrucigramaSucces")
+              this.ObtenerActividadesRecursoSesionDocente();
+            }
+          });
+      }
+    });
   }
 }

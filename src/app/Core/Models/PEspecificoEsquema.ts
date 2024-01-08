@@ -111,3 +111,31 @@ export interface registrosExcelDTO{
   Correcta:number,
   Puntaje:number
 }
+export interface PEspecificoSesionActividadSaveDTO {
+  Id?: number;
+  IdPEspecificoSesion: number;
+  Titulo: string,
+  Descripcion: string | null;
+  file: File;
+  FechaEntrega: string,
+  IdCriterioEvaluacion: number;
+  CalificacionMaxima: number;
+  TieneArchivo: boolean;
+  Usuario: string,
+}
+export interface CalificarActividadAlumnoOnlineDTO {
+  Id: number,
+  Nota: number,
+  Retroalimentacion: string|null,
+  file: File;
+}
+export interface PEspecificoSesionPreguntaDescriptivaFileDTO {
+  Id: number;
+  IdPreguntaTipo: number | null;
+  Enunciado: string,
+  Puntaje: number;
+  NombreArchivo: string | null;
+  UrlArchivoSubido: string | null;
+  file: File;
+}
+
