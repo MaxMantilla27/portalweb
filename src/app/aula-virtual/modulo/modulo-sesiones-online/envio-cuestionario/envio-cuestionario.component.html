@@ -70,7 +70,10 @@
               <div *ngIf="CuestionarioEnviado==true && item.idPreguntaTipo!=6 && item.idPreguntaTipo!=11" class="PuntoPregunta">
                 <strong>{{item.puntajePregunta*PuntuacionActualEnviada/100}} / {{item.puntaje*PuntuacionActualEnviada/100}}</strong> Puntos
               </div>
-              <div *ngIf="CuestionarioEnviado==true && item.idPreguntaTipo==6" class="PuntoPregunta">
+              <div *ngIf="CuestionarioEnviado==true && item.idPreguntaTipo==6 && item.puntajePregunta==null" class="PuntoPregunta">
+                <strong> Pendiente / {{item.puntaje*PuntuacionActualEnviada/100}}</strong> Puntos
+              </div>
+              <div *ngIf="CuestionarioEnviado==true && item.idPreguntaTipo==6 && item.puntajePregunta!=null" class="PuntoPregunta">
                 <strong>{{item.puntajePregunta}} / {{item.puntaje*PuntuacionActualEnviada/100}}</strong> Puntos
               </div>
             </div>
@@ -86,7 +89,10 @@
                 <div *ngIf="CuestionarioEnviado==true && item.idPreguntaTipo!=6 && item.idPreguntaTipo!=11" class="PuntoPregunta">
                   <strong>{{item.puntajePregunta*PuntuacionActualEnviada/100}} / {{item.puntaje*PuntuacionActualEnviada/100}}</strong> Puntos
                 </div>
-                <div *ngIf="CuestionarioEnviado==true && item.idPreguntaTipo==6" class="PuntoPregunta">
+                <div *ngIf="CuestionarioEnviado==true && item.idPreguntaTipo==6  && item.puntajePregunta==null" class="PuntoPregunta">
+                  <strong> Pendiente / {{item.puntaje*PuntuacionActualEnviada/100}}</strong> Puntos
+                </div>
+                <div *ngIf="CuestionarioEnviado==true && item.idPreguntaTipo==6  && item.puntajePregunta!=null" class="PuntoPregunta">
                   <strong>{{item.puntajePregunta}} / {{item.puntaje*PuntuacionActualEnviada/100}}</strong> Puntos
                 </div>
                 <div class="IntenTareasEnviadas" *ngIf="item.urlArchivoSubido!=null && item.urlArchivoSubido!=undefined">
@@ -104,7 +110,10 @@
                   <div  *ngIf="CuestionarioEnviado==true && item.idPreguntaTipo!=6 && item.idPreguntaTipo!=11" class="PuntoPregunta">
                     <strong>{{item.puntajePregunta*PuntuacionActualEnviada/100}} / {{item.puntaje*PuntuacionActualEnviada/100}}</strong> Puntos
                   </div>
-                  <div  *ngIf="CuestionarioEnviado==true && item.idPreguntaTipo==6" class="PuntoPregunta">
+                  <div  *ngIf="CuestionarioEnviado==true && item.idPreguntaTipo==6 && item.puntajePregunta==null" class="PuntoPregunta">
+                    <strong> Pendiente / {{item.puntaje*PuntuacionActualEnviada/100}}</strong> Puntos
+                  </div>
+                  <div  *ngIf="CuestionarioEnviado==true && item.idPreguntaTipo==6 && item.puntajePregunta!=null" class="PuntoPregunta">
                     <strong>{{item.puntajePregunta}} / {{item.puntaje*PuntuacionActualEnviada/100}}</strong> Puntos
                   </div>
                 </div>

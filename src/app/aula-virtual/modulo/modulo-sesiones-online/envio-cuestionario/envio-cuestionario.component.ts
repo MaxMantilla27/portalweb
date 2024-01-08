@@ -304,7 +304,7 @@ export class EnvioCuestionarioComponent implements OnInit ,OnDestroy {
       this.json.Preguntas.reverse();
       this.json.Preguntas.forEach((pre:any) => {
         if(pre.Validado==false){
-          this._SnackBarServiceService.openSnackBar("Debe seleccionar "+pre.RespuestasMinimas+ " alternativas en la pregunta N° "+pre.Orden,'x',15,"snackbarCrucigramaerror");
+          this._SnackBarServiceService.openSnackBar("Selecciona "+pre.RespuestasMinimas+ " alternativas en la pregunta N° "+pre.Orden,'x',10,"snackbarCrucigramaerror");
         }
       });
     }
