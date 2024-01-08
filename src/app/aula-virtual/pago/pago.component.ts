@@ -15,6 +15,10 @@ import { SessionStorageService } from 'src/app/Core/Shared/Services/session-stor
 import { SnackBarServiceService } from 'src/app/Core/Shared/Services/SnackBarService/snack-bar-service.service';
 import { PagoTarjetaComponent } from './pago-tarjeta/pago-tarjeta.component';
 import { DatePipe } from '@angular/common';
+import { PagoVisaComponent } from '../confirmacion-pago-organico/pago-visa/pago-visa.component';
+import { ModalPagoVisaComponent } from '../modal-confirmacion-pago/modal-pago-visa/modal-pago-visa.component';
+import { ModalPagoTarjetaComponent } from '../modal-confirmacion-pago/modal-pago-tarjeta/modal-pago-tarjeta.component';
+import { ModalPagoIzipayComponent } from '../modal-confirmacion-pago/modal-pago-izipay/modal-pago-izipay.component';
 
 const pipe = new DatePipe('en-US')
 
@@ -73,7 +77,7 @@ export class PagoComponent implements OnInit,OnDestroy {
   public tarjetas:any;
   public validadorPagosMultiples:any;
   public medioPagoSeleccionado:any;
-
+  public eventosPagoSelccion:boolean = false;
   ngOnInit(): void {
     let i=0
     this._HelperService.recibirCombosPerfil.pipe(takeUntil(this.signal$)).subscribe((x) => {
@@ -216,26 +220,35 @@ export class PagoComponent implements OnInit,OnDestroy {
   onChangeRadioButton(event:any){
     this.medioPagoSeleccionado=event;
   }
-  OpenModal(): void {
+  EnviarSolicitudPago(): void{
+    this.medioPagoSeleccionado = this.validadorPagosMultiples == 0 ?
+      this.tarjetas[0]: this.medioPagoSeleccionado;
     console.log("Medio Pago",this.medioPagoSeleccionado)
     if(this.medioPagoSeleccionado!=undefined){
       this.jsonSend.ListaCuota=[]
       this.PreProcesoPagoCuotaAlumnoV2(this.medioPagoSeleccionado);
+      this.eventosPagoSelccion = false;
     }
-    //jaj const dialogRef = this.dialog.open(PagoTarjetaComponent, {
-    //   width: '600px',
-    //   data: { idMatricula: this.idMatricula },
-    //   panelClass: 'dialog-Tarjeta',
-    //  // disableClose:true
-    // });
+    else{
+      this.eventosPagoSelccion = true;
+    }
+  }
+  OpenModal(): void {
 
-    // dialogRef.afterClosed().pipe(takeUntil(this.signal$)).subscribe((result) => {
-    //   console.log("preprocesoPago",result);
-    //   if(result!=undefined){
-    //     this.jsonSend.ListaCuota=[]
-    //     this.PreProcesoPagoCuotaAlumno(result);
-    //   }
-    // });
+    const dialogRef = this.dialog.open(PagoTarjetaComponent, {
+      width: '600px',
+      data: { idMatricula: this.idMatricula },
+      panelClass: 'dialog-Tarjeta',
+     // disableClose:true
+    });
+
+    dialogRef.afterClosed().pipe(takeUntil(this.signal$)).subscribe((result) => {
+      console.log("preprocesoPago",result);
+      if(result!=undefined){
+        this.jsonSend.ListaCuota=[]
+        this.PreProcesoPagoCuotaAlumno(result);
+      }
+    });
   }
   obtenerTarjetas(){
     this._MedioPagoActivoPasarelaService.MedioPagoPasarelaPortalCronograma(this.idMatricula).pipe(takeUntil(this.signal$)).subscribe({
@@ -424,11 +437,26 @@ export class PagoComponent implements OnInit,OnDestroy {
         if(tarjeta.idPasarelaPago==7 || tarjeta.idPasarelaPago==10){
           if(tarjeta.idFormaPago==52){
             console.log('/AulaVirtual/MisPagos/'+this.idMatricula+'/visa/'+sesion)
+
+            /*Aperturamos el modal del pago*/
+            const dialogRef = this.dialog.open(ModalPagoVisaComponent, {
+              width: '600px',
+              data: { Identificador: sesion, IdMatricula: this.idMatricula },
+              panelClass: 'dialog-Tarjeta',
+              // disableClose:true
+            });
+
             // this._router.navigate(['/AulaVirtual/MisPagos/'+this.idMatricula+'/visa/'+sesion]);
           }
           if(tarjeta.idFormaPago==48){
             console.log('/AulaVirtual/MisPagos/'+this.idMatricula+'/tarjeta/'+sesion)
             // this._router.navigate(['/AulaVirtual/MisPagos/'+this.idMatricula+'/tarjeta/'+sesion]);
+            const dialogRef = this.dialog.open(ModalPagoTarjetaComponent, {
+              width: '600px',
+              data: { Identificador: sesion, IdMatricula: this.idMatricula },
+              panelClass: 'dialog-Tarjeta',
+              // disableClose:true
+            });
           }
         }
         if(tarjeta.idPasarelaPago==1 || tarjeta.idPasarelaPago==5){
@@ -463,6 +491,12 @@ export class PagoComponent implements OnInit,OnDestroy {
           }
           if(parseInt(tarjeta.idPasarelaPago)==13){
             console.log('/AulaVirtual/MisPagos/'+this.idMatricula+'/izipay/'+sesion)
+            const dialogRef = this.dialog.open(ModalPagoIzipayComponent, {
+              width: '600px',
+              data: { Identificador: sesion, IdMatricula: this.idMatricula },
+              panelClass: 'dialog-Tarjeta',
+              // disableClose:true
+            });
             // this._router.navigate(['/AulaVirtual/MisPagos/'+this.idMatricula+'/izipay/'+sesion]);
           }
           if(parseInt(tarjeta.idPasarelaPago)==16){

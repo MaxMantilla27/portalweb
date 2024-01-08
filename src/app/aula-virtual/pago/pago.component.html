@@ -141,7 +141,11 @@
                 <div class="col-4">{{CronogramaPago.registroCuota[0].simbolo}} {{total}}</div>
               </div>
               <div class="col-12 row">
-                <span class="tot mb-3">Método de pago aceptados:</span>
+                <div class="col-12 row sub mt-2">
+                  <span>
+                    Método de pago aceptados:
+                  </span>
+                </div>
                 <div class="row mb-3">
                   <span>
                     Tarjeta de débito/crédito:
@@ -153,7 +157,7 @@
                       (change)="onChangeRadioButton(imgMedioPago)"
                       class="m-2"
                       color="primary"
-
+                      *ngIf="validadorPagosMultiples.length != 0"
                       >
                         <img [src]="'../../../../assets/icons/'+imgMedioPago.img" alt=""  class="gray-border" style="width: 35px;">
                       </mat-radio-button>
@@ -162,7 +166,7 @@
                       <img [src]="'../../../../assets/icons/'+imgMedioPago.img" alt=""  class="m-2" style="width: 35px;" *ngIf="validadorPagosMultiples.length == 0">
 
                     </ng-container>
-                    <mat-error *ngIf="validadorPagosMultiples.length > 0 && medioPagoSeleccionado == undefined">
+                    <mat-error *ngIf="validadorPagosMultiples.length > 0 && medioPagoSeleccionado == undefined && eventosPagoSelccion == true">
                       Debe seleccionar un medio de pago
                     </mat-error>
                   </span>
@@ -181,8 +185,11 @@
               </div>
               <div class="col-12 row bot">
                 <div>
-                  <app-default-button [confs]="{color:'primary',titulo:'Pagar'}"
-                    [style]="'margin-top: 20px;padding: 0px 40px;'" (ButtoclClick)="OpenModal()"></app-default-button>
+                  <app-default-button
+                  [confs]="{color:'primary',titulo:'Pagar'}"
+                  [style]="'margin-top: 20px;padding: 0px 40px;'"
+                  (ButtoclClick)="EnviarSolicitudPago()">
+                  </app-default-button>
                 </div>
               </div>
             </div>
