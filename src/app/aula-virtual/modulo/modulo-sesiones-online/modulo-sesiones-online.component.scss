@@ -203,3 +203,12 @@
   background-position: center;
   margin-right: 5px;
 }
+.VinculoActividad{
+  font-size: 12px;
+  a{
+    text-decoration: none;
+  }
+}
+.VinculoActividad:hover{
+  text-decoration: underline;
+}
