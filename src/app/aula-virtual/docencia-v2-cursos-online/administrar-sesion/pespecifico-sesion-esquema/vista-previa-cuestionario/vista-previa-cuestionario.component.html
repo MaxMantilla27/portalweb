@@ -31,7 +31,7 @@
           <div class="descPregunta row">
             <div class="col-12 col-md-9 col-lg-9">
               <div *ngIf="item.idPreguntaTipo==11" class="titlePregunta">{{item.enunciado}}</div>
-              <div *ngIf="item.idPreguntaTipo!=11" class="titlePregunta">{{i}}. {{item.enunciado}}</div>
+              <div *ngIf="item.idPreguntaTipo!=11" class="titlePregunta">{{item.orden}}. {{item.enunciado}}</div>
               <div class="DescripcionPregunta" *ngIf="item.descripcion!=null && item.descripcion.length>0">
                 {{item.descripcion}}</div>
               <div class="DescripcionPregunta" *ngIf="item.idPreguntaTipo==3">Responde verdadero (V) O falso (F) según

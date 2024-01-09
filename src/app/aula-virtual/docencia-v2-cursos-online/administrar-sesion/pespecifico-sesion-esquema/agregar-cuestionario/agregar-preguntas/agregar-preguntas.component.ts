@@ -178,40 +178,98 @@ export class AgregarPreguntasComponent implements OnInit ,OnChanges,OnDestroy {
       return true;
     }
     else{
-      this.pregunta.IdPreguntaTipo=this.formularioTarea.get('IdPreguntaTipo')?.value
-      this.pregunta.Enunciado=this.formularioTarea.get('Enunciado')?.value
-      this.pregunta.Descripcion=this.formularioTarea.get('Descripcion')?.value
-      this.pregunta.Puntaje=0
-      var vacias=0
-      this.pregunta.Alternativas.forEach((a:any) => {
-        this.pregunta.Puntaje+=a.Puntaje*1
-        if(a.Alternativa.length==0){
-          vacias++
-        }
-      });
-      if(vacias>0){
-        this._SnackBarServiceService.openSnackBar(
-          "Debe ingresar el texto en todas las alternativas",
-          'x',
-          10,
-          "snackbarCrucigramaerror");
-        return false;
-      }
-      if (this.selectedFiles) {
-        const file: File | null = this.selectedFiles.item(0);
-        if (file) {
-          this.pregunta.file = file;
-        }
-      }
+      var enviarMultiple=true
+      console.log(this.IdTipoPreguntaAlternativa)
+      console.log(this.pregunta.Alternativas.length)
+      if(this.IdTipoPreguntaAlternativa==4){
+        var countCorrectasRequeridas=0
+        this.pregunta.Alternativas.forEach((x:any) => {
+          console.log(x)
+          if(x.EsCorrecta==true && x.Puntaje!=0){
+            countCorrectasRequeridas=countCorrectasRequeridas+1
+          }
+        })
+        if(countCorrectasRequeridas>=2){
+          this.pregunta.IdPreguntaTipo=this.formularioTarea.get('IdPreguntaTipo')?.value
+          this.pregunta.Enunciado=this.formularioTarea.get('Enunciado')?.value
+          this.pregunta.Descripcion=this.formularioTarea.get('Descripcion')?.value
+          this.pregunta.Puntaje=0
+          var vacias=0
+          this.pregunta.Alternativas.forEach((a:any) => {
+            this.pregunta.Puntaje+=a.Puntaje*1
+            if(a.Alternativa.length==0){
+              vacias++
+            }
+          });
+          if(vacias>0){
+            this._SnackBarServiceService.openSnackBar(
+              "Debe ingresar el texto en todas las alternativas",
+              'x',
+              10,
+              "snackbarCrucigramaerror");
+            return false;
+          }
+          if (this.selectedFiles) {
+            const file: File | null = this.selectedFiles.item(0);
+            if (file) {
+              this.pregunta.file = file;
+            }
+          }
 
-      if (this.selectedFiles2) {
-        const file: File | null = this.selectedFiles2.item(0);
-        if (file) {
-          this.pregunta.fileRetroalimentacion = file;
+          if (this.selectedFiles2) {
+            const file: File | null = this.selectedFiles2.item(0);
+            if (file) {
+              this.pregunta.fileRetroalimentacion = file;
+            }
+          }
+          this.dialogRef.close(this.pregunta)
+          return true
+        }
+        else{
+          this._SnackBarServiceService.openSnackBar(
+            "Debe ingresar como mínimo 2 alternativas correctas",
+            'x',
+            10,
+            "snackbarCrucigramaerror");
+          return false;
         }
       }
-      this.dialogRef.close(this.pregunta)
-      return true;
+      else{
+        this.pregunta.IdPreguntaTipo=this.formularioTarea.get('IdPreguntaTipo')?.value
+        this.pregunta.Enunciado=this.formularioTarea.get('Enunciado')?.value
+        this.pregunta.Descripcion=this.formularioTarea.get('Descripcion')?.value
+        this.pregunta.Puntaje=0
+        var vacias=0
+        this.pregunta.Alternativas.forEach((a:any) => {
+          this.pregunta.Puntaje+=a.Puntaje*1
+          if(a.Alternativa.length==0){
+            vacias++
+          }
+        });
+        if(vacias>0){
+          this._SnackBarServiceService.openSnackBar(
+            "Debe ingresar el texto en todas las alternativas",
+            'x',
+            10,
+            "snackbarCrucigramaerror");
+          return false;
+        }
+        if (this.selectedFiles) {
+          const file: File | null = this.selectedFiles.item(0);
+          if (file) {
+            this.pregunta.file = file;
+          }
+        }
+
+        if (this.selectedFiles2) {
+          const file: File | null = this.selectedFiles2.item(0);
+          if (file) {
+            this.pregunta.fileRetroalimentacion = file;
+          }
+        }
+        this.dialogRef.close(this.pregunta)
+        return true;
+      }
     }
   }
   ChangeTipoPregunta(IdTipoPregunta:number){

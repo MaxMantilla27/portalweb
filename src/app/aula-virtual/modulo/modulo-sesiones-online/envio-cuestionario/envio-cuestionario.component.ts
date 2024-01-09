@@ -69,7 +69,15 @@ export class EnvioCuestionarioComponent implements OnInit ,OnDestroy {
         this.disableAll=true
         this._SessionStorageService.SessionDeleteValue('cuest-'+this.CuestionarioAvance.id.toString())
         this.CuestionarioAvance.Inicio=true
+        var OrdenMostrar=0;
         this.data.cuestionario.preguntasCuestionario.forEach((p:any) => {
+          if(p.idPreguntaTipo==11){
+            p.ordenMostrar=0
+          }
+          else{
+            OrdenMostrar=OrdenMostrar+1
+            p.ordenMostrar=OrdenMostrar
+          }
           p.respuesta=[]
           var vaRes:Array<any>=[]
           var vaCorr:Array<any>=[]
@@ -139,7 +147,15 @@ export class EnvioCuestionarioComponent implements OnInit ,OnDestroy {
         });
 
       }else{
+        var OrdenMostrar=0;
         this.data.cuestionario.preguntasCuestionario.forEach((p:any) => {
+          if(p.idPreguntaTipo==11){
+            p.ordenMostrar=0
+          }
+          else{
+            OrdenMostrar=OrdenMostrar+1
+            p.ordenMostrar=OrdenMostrar
+          }
           let respuestasMinimas=0
           p.alternativas.forEach((a:any) => {
             if(p.idPreguntaTipo==4){
@@ -277,10 +293,11 @@ export class EnvioCuestionarioComponent implements OnInit ,OnDestroy {
       let validado=false
       if(p.idPreguntaTipo==4){
         respues.forEach((a:any) => {
-          if(respues.length>=p.respuestasMinimas && a.valor!=' '){
+          if(respues.length==p.respuestasMinimas && a.valor!=' '){
             validado=true;
           }
         });
+        console.log(respues)
       }
       else{
         validado=true;
@@ -302,6 +319,7 @@ export class EnvioCuestionarioComponent implements OnInit ,OnDestroy {
     });
     if(this.CuestionarioValido==false){
       this.json.Preguntas.reverse();
+      console.log(this.json.Preguntas)
       this.json.Preguntas.forEach((pre:any) => {
         if(pre.Validado==false){
           this._SnackBarServiceService.openSnackBar("Selecciona "+pre.RespuestasMinimas+ " alternativas en la pregunta N° "+pre.Orden,'x',10,"snackbarCrucigramaerror");
@@ -316,6 +334,7 @@ export class EnvioCuestionarioComponent implements OnInit ,OnDestroy {
       },
     });
     this._SessionStorageService.SessionDeleteValue('cuest-'+this.CuestionarioAvance.id.toString())
+    console.log("guardado")
     }
 
   }

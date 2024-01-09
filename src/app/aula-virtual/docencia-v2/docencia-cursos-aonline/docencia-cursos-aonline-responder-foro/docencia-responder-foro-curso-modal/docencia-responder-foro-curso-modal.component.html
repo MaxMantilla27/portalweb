@@ -68,29 +68,31 @@
       </div>
       <div *ngIf="ForoCerrado==false" class="Responder" >
 
-        <mat-form-field appearance="outline" class="test">
-          <mat-label>Responder</mat-label>
-          <textarea matInput matTextareaAutosize [(ngModel)]="jsonEnvio.contenido"></textarea>
-        </mat-form-field>
-        <div class="col-12 col-md-12 col-lg-12">
-          <div (click)="fileInput.click()" style="height: 38px;width: 100%;border:solid 1px #e0d9d9;border-radius: 5px;display: flex; align-items: center;margin-bottom: 10px;
-          padding: 0px 5px;cursor: pointer;">
-            <button style="border: solid 1px #767676;
-            margin-right: 5px;    white-space: nowrap;">Seleccionar archivo</button>
-            <div style="    white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            display: -webkit-box;
-            -webkit-line-clamp: 3;
-            -webkit-box-orient: vertical;">{{nombrefile}}</div>
+        <form [formGroup]="userForm">
+          <mat-form-field appearance="outline" class="test">
+            <mat-label>Responder</mat-label>
+            <textarea matInput matTextareaAutosize formControlName="RespuestaForo"></textarea>
+          </mat-form-field>
+          <div class="col-12 col-md-12 col-lg-12">
+            <div (click)="fileInput.click()" style="height: 38px;width: 100%;border:solid 1px #e0d9d9;border-radius: 5px;display: flex; align-items: center;margin-bottom: 10px;
+            padding: 0px 5px;cursor: pointer;">
+              <button style="border: solid 1px #767676;
+              margin-right: 5px;    white-space: nowrap;">Seleccionar archivo</button>
+              <div style="    white-space: nowrap;
+              overflow: hidden;
+              text-overflow: ellipsis;
+              display: -webkit-box;
+              -webkit-line-clamp: 3;
+              -webkit-box-orient: vertical;">{{nombrefile}}</div>
+            </div>
+            <input #fileInput type="file" id="file" (change)="getFileDetails($event)" style="    width: 100%;
+            border: solid 1px #c2c2c2;
+            padding: 7px;
+            border-radius: 5px;display: none;">
+            <div *ngIf="!filestatus && fileErrorMsg!=''">{{fileErrorMsg}}</div>
           </div>
-          <input #fileInput type="file" id="file" (change)="getFileDetails($event)" style="    width: 100%;
-          border: solid 1px #c2c2c2;
-          padding: 7px;
-          border-radius: 5px;display: none;">
-          <div *ngIf="!filestatus && fileErrorMsg!=''">{{fileErrorMsg}}</div>
-        </div>
 
+        </form>
       </div>
     </div>
   </ng-template>

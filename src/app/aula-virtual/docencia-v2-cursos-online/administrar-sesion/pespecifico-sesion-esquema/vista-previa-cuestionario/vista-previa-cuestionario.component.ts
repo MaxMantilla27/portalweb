@@ -43,6 +43,7 @@ export class VistaPreviaCuestionarioComponent implements OnInit {
   public disabledPublicar=false;
   ngOnInit(): void {
     this.detalleCuestionario=this.data.data
+    this.OrdenarCuestionario();
     if(this.detalleCuestionario.publicado==1){
       this.disabledPublicar=true;
     }
@@ -72,10 +73,19 @@ export class VistaPreviaCuestionarioComponent implements OnInit {
       .pipe(takeUntil(this.signal$))
       .subscribe({
         next: (x) => {
+          console.log(x)
           this.preguntas = x;
           if(x!=null && x!=undefined){
+            var Orden=0
             this.preguntas.forEach((p:any) =>{
               let respuestasMinimas=0
+              if(p.idPreguntaTipo==11){
+                p.orden=0
+              }
+              else{
+                Orden=Orden+1
+                p.orden=Orden
+              }
               p.alternativas.forEach((a:any) => {
                 if(p.idPreguntaTipo==4){
                   if(a.puntaje!=0){
@@ -119,5 +129,8 @@ export class VistaPreviaCuestionarioComponent implements OnInit {
       panelClass: 'dialog-Imagen-Modal'
     });
   }
+  OrdenarCuestionario(){
+console.log()
 
+  }
 }

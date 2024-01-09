@@ -5,6 +5,7 @@ import { ForoRespuestaDTO } from 'src/app/Core/Models/ForoDTO';
 import { AvatarService } from 'src/app/Core/Shared/Services/Avatar/avatar.service';
 import { ForoCursoService } from 'src/app/Core/Shared/Services/ForoCurso/foro-curso.service';
 import { DocenciaResponerForoCursoComponent } from '../docencia-responder-foro-curso/docencia-responer-foro-curso.component';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-docencia-responder-foro-curso-modal',
@@ -14,16 +15,22 @@ import { DocenciaResponerForoCursoComponent } from '../docencia-responder-foro-c
 })
 export class DocenciaResponderForoCursoModalComponent implements OnInit,OnDestroy {
   private signal$ = new Subject();
+  public userForm: FormGroup = new FormGroup({});
   constructor(
+    private fb: FormBuilder,
     public dialogRef: MatDialogRef<DocenciaResponerForoCursoComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private _ForoCursoService:ForoCursoService,
     public _AvatarService:AvatarService
-    ) { }
+    ) {this.userForm =fb.group({
+      RespuestaForo: ['', [Validators.required]]
+     });
+    }
   ngOnDestroy(): void {
     this.signal$.next(true)
     this.signal$.complete()
   }
+
   public pregunta:any
   public respuestas:any
   public imgForo:any
@@ -82,7 +89,17 @@ export class DocenciaResponderForoCursoModalComponent implements OnInit,OnDestro
     })
   }
   EnviarRegistroRespuestaForo(){
-    this.jsonEnvio.estadoAtendido=1;
+    this.jsonEnvio.contenido='';
+    this.jsonEnvio.idForoCurso = this.data.idTemaForo
+    this.jsonEnvio.idPrincipal = 0;
+    this.jsonEnvio.idPGeneral = this.data.idPGeneral
+    this.jsonEnvio.idPEspecificoPadre = 0;
+    this.jsonEnvio.idPEspecificoHijo = 0;
+    this.jsonEnvio.contenido = this.userForm.get('RespuestaForo')?.value;;
+    this.jsonEnvio.esDocente = true;
+    this.jsonEnvio.estadoAtendido = 1;
+    console.log('VA A REGITRAR')
+    console.log(this.jsonEnvio)
     if(this.selectedFiles){
       const file: File | null = this.selectedFiles.item(0);
       if (file) {
@@ -91,6 +108,8 @@ export class DocenciaResponderForoCursoModalComponent implements OnInit,OnDestro
     }
     this._ForoCursoService.EnviarRegistroRespuestaForo(this.jsonEnvio).pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
+        console.log(x)
+        console.log('REGISTRÓ')
         this.dialogRef.close(true);
       }
     })
@@ -99,7 +118,7 @@ export class DocenciaResponderForoCursoModalComponent implements OnInit,OnDestro
     this.dialogRef.close();
   }
   RestaurarValores(){
-    this.jsonEnvio.contenido=''
+    this.userForm.get('RespuestaForo')?.setValue('')
     this.jsonEnvio.file = new File([], '')
     this.getFileDetails(null)
   }
