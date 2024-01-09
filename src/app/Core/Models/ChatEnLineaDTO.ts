@@ -18,7 +18,8 @@ export interface ValidacionChatEnvioDTO{
   IdCategoriaDato?:number,
   IdCampania?:number,
   IdPespecifico?:number,
-
+  IdPais?:number,
+  IdRegion?:number,
 }
 export interface SetChat{
   idprogramageneralalumno?:number,
