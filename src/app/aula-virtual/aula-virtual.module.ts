@@ -112,6 +112,7 @@ import { ConfirmacionPagoMercadoPagoChileComponent } from './confirmacion-pago-m
 import { ResultadoPagoMercadopagoComponent } from './resultado-pago-mercadopago/resultado-pago-mercadopago.component';
 import { ConfirmacionPagoOpenpayColombiaComponent } from './confirmacion-pago-openpay-colombia/confirmacion-pago-openpay-colombia.component';
 import { PagoMercadoPagoComponent } from './confirmacion-pago-organico/pago-mercado-pago/pago-mercado-pago.component';
+import { ConfirmacionPagoOpenpayPeruComponent } from './confirmacion-pago-openpay-peru/confirmacion-pago-openpay-peru.component';
 
 
 
@@ -222,7 +223,8 @@ import { PagoMercadoPagoComponent } from './confirmacion-pago-organico/pago-merc
     ResultadoPagoMercadopagoComponent,
     ConfirmacionPagoMercadoPagoChileComponent,
     ConfirmacionPagoOpenpayColombiaComponent,
-    PagoMercadoPagoComponent
+    PagoMercadoPagoComponent,
+    ConfirmacionPagoOpenpayPeruComponent
     ],
   imports: [
     CommonModule,

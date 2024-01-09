@@ -445,6 +445,9 @@ export class PagoComponent implements OnInit,OnDestroy {
           if(parseInt(tarjeta.idPasarelaPago)==17){//Mercado Pago
             this._router.navigate(['/AulaVirtual/MisPagos/'+this.idMatricula+'/mercadoPago/'+sesion]);
           }
+          if(parseInt(tarjeta.idPasarelaPago)==18){
+            this._router.navigate(['/AulaVirtual/MisPagos/'+this.idMatricula+'/openpayPEN/'+sesion]);
+          }
         }
       },
       complete:()=>{
