@@ -1,11 +1,12 @@
 .TerminosLP {
+  margin: 2em;
   font-size: 9px;
   text-align: justify;
-  width: 400px;
-  max-width: 90%;
+  width: 40em;
+  max-width: 100%;
 }
 .textoChatbot{
-  width: 100%;
+  width: 90%;
   font-size: 12px;
   margin-bottom: 30px;
 }
@@ -23,7 +24,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  min-height: calc(70vh - 670px);
+  min-height: calc(70vh - 67em);
   position: relative;
   //overflow-y: scroll;
   //scroll-behavior: smooth;
@@ -32,23 +33,26 @@
 }
 
 .titulos {
-  padding-top: 1.5%;
   padding-left: 15%;
   padding-right: 15%;
   width: 100%;
   background-color:rgb(244, 244,244);
+  border-bottom: 1px solid #033DAB;
 }
 .titleCurso {
+  padding-top: 1.5%;
   text-align: center;
   font-size: 28px;
-  margin: 10px 20px 0px, 20px;
+  margin: 10px 20px 10px, 20px;
   font-weight: 600;
   text-align: justify;
+  padding-bottom: 1.5%;
 }
 .titlePrimerPaso {
+  padding-top: 1.5%;
   text-align: center;
   font-size: 18px;
-  margin: 0px 20px 10px 20px;
+  margin-bottom: 1.5%;
   font-weight: 300;
 }
 
@@ -57,47 +61,45 @@
   flex-direction:row;
   align-items:center;
   justify-content:center;
+  padding: 2%;
+  width: 90%;
 }
 
 img {
-  max-width: 90%;
-  max-height:90%;
+  max-width: 85%;
+  max-height:85%;
 }
 
 .subTitlePrimerPaso {
   font-size: 16px;
-  margin: 20px;
+  margin: 2.0em;
 }
 .ButtonPrimerPaso {
-  margin-top: 40px;
+  margin-top: 10px;
+  width: 100%;
 }
+
 
 .ButtonPrimerPaso:hover {
   border-radius: 15px;
   box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.3); /* Sombras al pasar el mouse */
   &:hover {
-    background-color: #fb9754;
     div{
       text-decoration: underline;
     }
-}
+  }
 
 }
-
-#miBoton:hover {
-  background-color: #3498db; /* Change to the desired hover background color */
-  color: #ffffff; /* Change to the desired hover text color */
-}
-
-app-default-button:hover {
-  background: #f8893f;
-  color: white;
+.bloqueIngreso{
+  padding: 1%;
+  width: 100%;
 }
 
 .ContentInputChat .mat-form-field {
-  width: 400px;
-  max-width: 90%;
-  margin-bottom: 20px;
+  width: 27.0em;
+  max-width: 100%;
+  margin-top: 2em;
+  margin-bottom: 2em;
 }
 
 .InputFillWhioutColor
@@ -114,7 +116,7 @@ app-default-button:hover {
   > div.mat-form-field-flex
   > div.mat-form-field-infix
   input {
-  height: 20px;
+  height: 2.0em;
 }
 .InputFillWhioutColor
   .mat-form-field.mat-form-field-appearance-fill
@@ -182,8 +184,8 @@ app-default-button:hover {
 }
 .imgChatBot{
   background-image: url(../../../assets/imagenes/174188.png);
-  width: 40px;
-  height: 40px;
+  width: 50px;
+  height: 50px;
   background-position: center;
   background-size: cover;
   margin-right: 10px;
@@ -200,17 +202,15 @@ app-default-button:hover {
   border-radius: 10px;
   margin-bottom: 10px;
   cursor: pointer;
-
  // background-color: #2E475D;
  // color: white;
-  &:hover {
-   //   background-color: #2E475D;
-      div{
-        text-decoration: underline;
-        border-radius: 15px;
-        box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.3); /* Sombras al pasar el mouse */
-      }
-  }
+
+}
+.OpcionesGlobo:hover {
+  transition: 0.7s;
+  text-decoration: underline;
+  border-radius: 15px;
+  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.3); /* Sombras al pasar el mouse */
 }
 .OpcionesCheckGlobo{
   width: fit-content;

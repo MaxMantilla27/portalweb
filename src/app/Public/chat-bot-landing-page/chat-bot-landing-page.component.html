@@ -35,7 +35,7 @@
                 alt="profile"
               />
             </div>
-            <div>
+            <div class = "bloqueIngreso">
               <div class="subTitlePrimerPaso">
                 Ahora por favor ingresa
                 {{
@@ -90,7 +90,6 @@
                   [style]="
                     'width: 100%;background: white;border: solid 1px #f8893f; color: #f8893f;padding: 0px 50px;border-radius: 15px;'"
                   (click)="IrChat()"
-                  id="miBoton"
                 ></app-default-button>
               </div>
             </div>
@@ -123,7 +122,7 @@
               *ngIf="item.opciones2 != null && item.opciones2.length > 0"
             >
               <ng-container *ngFor="let itemo of item.opciones2">
-                <button
+                <button type="button"
                   class="OpcionesGlobo"
                   (click)="
                     item.respondido == true
@@ -184,7 +183,7 @@
                 >
                 <div class="ButtonPrimerPaso">
                   <app-default-button
-                    [confs]="{ color: '', titulo: 'Continuar' }"
+                    [confs]="{ color: 'primary', titulo: 'Continuar' }"
                     [icon]="''"
                     [style]="
                       'width: 100%;background: white;border: solid 1px #f8893f; color: #f8893f;padding: 0px 50px;border-radius: 15px;'
@@ -257,7 +256,7 @@
               [icon]="''"
               [disabled]="formControl.invalid"
               [style]="
-                'width: 100%;background: white;border: solid 1px #f8893f; color: #f8893f;padding: 0px 50px;border-radius: 15px; transition: background 0.3s;'
+                'width: 100%;background: white;border: solid 1px #f8893f; color: #f8893f;padding: 0px 50px;border-radius: 15px;'
               "
               (click)="redigirPaginaCurso()"
             ></app-default-button>
