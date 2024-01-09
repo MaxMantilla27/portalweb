@@ -116,6 +116,13 @@ import { ConfirmacionPagoOpenpayPeruComponent } from './confirmacion-pago-openpa
 import { ModalPagoVisaComponent } from './modal-confirmacion-pago/modal-pago-visa/modal-pago-visa.component';
 import { ModalPagoTarjetaComponent } from './modal-confirmacion-pago/modal-pago-tarjeta/modal-pago-tarjeta.component';
 import { ModalPagoIzipayComponent } from './modal-confirmacion-pago/modal-pago-izipay/modal-pago-izipay.component';
+import { Visa2Component } from './modal-confirmacion-pago/pagos-organicos/visa2/visa2.component';
+import { Tarjeta2Component } from './modal-confirmacion-pago/pagos-organicos/tarjeta2/tarjeta2.component';
+import { Wompi2Component } from './modal-confirmacion-pago/pagos-organicos/wompi2/wompi2.component';
+import { Conekta2Component } from './modal-confirmacion-pago/pagos-organicos/conekta2/conekta2.component';
+import { Multipago2Component } from './modal-confirmacion-pago/pagos-organicos/multipago2/multipago2.component';
+import { Webpay2Component } from './modal-confirmacion-pago/pagos-organicos/webpay2/webpay2.component';
+import { Mercadopago2Component } from './modal-confirmacion-pago/pagos-organicos/mercadopago2/mercadopago2.component';
 
 
 
@@ -230,7 +237,14 @@ import { ModalPagoIzipayComponent } from './modal-confirmacion-pago/modal-pago-i
     ConfirmacionPagoOpenpayPeruComponent,
     ModalPagoVisaComponent,
     ModalPagoTarjetaComponent,
-    ModalPagoIzipayComponent
+    ModalPagoIzipayComponent,
+    Visa2Component,
+    Tarjeta2Component,
+    Wompi2Component,
+    Conekta2Component,
+    Multipago2Component,
+    Webpay2Component,
+    Mercadopago2Component
     ],
   imports: [
     CommonModule,
