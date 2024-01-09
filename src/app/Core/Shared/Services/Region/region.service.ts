@@ -24,4 +24,12 @@ export class RegionService {
       return EMPTY;
     }
   }
+  public ObtenerLocalidadPorRegion(IdRegion?:number):Observable<any>{
+    if(this.isBrowser){
+      return this.http.get<any>(this.urlBase+'/ObtenerLocalidadPorRegion?IdRegion='+IdRegion)
+    }
+    else{
+      return EMPTY;
+    }
+  }
 }

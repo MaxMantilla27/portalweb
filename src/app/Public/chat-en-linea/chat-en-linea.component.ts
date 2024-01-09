@@ -51,6 +51,9 @@ export class ChatEnLineaComponent implements OnInit,OnDestroy {
     Nombres: '',
     Apellidos: '',
     Movil: '',
+    IdPais:0,
+    IdRegion:0,
+    IdLocalidad:0
   };
   public DatosEnvioFormulario: ValidacionChatEnvioDTO = {
     Email: '',
