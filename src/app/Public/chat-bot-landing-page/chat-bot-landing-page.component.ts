@@ -546,6 +546,7 @@ export class ChatBotLandingPageComponent implements OnInit,OnDestroy{
   }
 
   ActualizarAlumnoChatBot2(valor:number){
+    this.datos.PrimerBloque=true
     this.ActualizarAlumnoDTO.IdAlumno=this.datosAlumno.Id
     var indicemal=0
     var msg=''
