@@ -112,6 +112,7 @@ import { ConfirmacionPagoMercadoPagoChileComponent } from './confirmacion-pago-m
 import { ResultadoPagoMercadopagoComponent } from './resultado-pago-mercadopago/resultado-pago-mercadopago.component';
 import { ConfirmacionPagoOpenpayColombiaComponent } from './confirmacion-pago-openpay-colombia/confirmacion-pago-openpay-colombia.component';
 import { PagoMercadoPagoComponent } from './confirmacion-pago-organico/pago-mercado-pago/pago-mercado-pago.component';
+import { ConfirmacionPagoOpenpayPeruComponent } from './confirmacion-pago-openpay-peru/confirmacion-pago-openpay-peru.component';
 import { ModalPagoVisaComponent } from './modal-confirmacion-pago/modal-pago-visa/modal-pago-visa.component';
 import { ModalPagoTarjetaComponent } from './modal-confirmacion-pago/modal-pago-tarjeta/modal-pago-tarjeta.component';
 import { ModalPagoIzipayComponent } from './modal-confirmacion-pago/modal-pago-izipay/modal-pago-izipay.component';
@@ -226,6 +227,7 @@ import { ModalPagoIzipayComponent } from './modal-confirmacion-pago/modal-pago-i
     ConfirmacionPagoMercadoPagoChileComponent,
     ConfirmacionPagoOpenpayColombiaComponent,
     PagoMercadoPagoComponent,
+    ConfirmacionPagoOpenpayPeruComponent,
     ModalPagoVisaComponent,
     ModalPagoTarjetaComponent,
     ModalPagoIzipayComponent
