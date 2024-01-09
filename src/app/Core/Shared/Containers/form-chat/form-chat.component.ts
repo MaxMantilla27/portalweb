@@ -68,6 +68,7 @@ export class FormChatComponent implements OnInit,OnChanges {
     Movil: '',
     IdPrograma:0,
     EstadoAsesor:'',
+
   };
   public listaLocalidades?:any;
   @Output() SaveForm:EventEmitter<{id:string,idAlumno:number}> = new EventEmitter<{id:string,idAlumno:number}>();
@@ -149,6 +150,8 @@ export class FormChatComponent implements OnInit,OnChanges {
       this.DatosEnvioFormulario.Apellidos = value.Apellidos;
       this.DatosEnvioFormulario.Email = value.Email;
       this.DatosEnvioFormulario.Movil = value.Movil;
+      this.DatosEnvioFormulario.IdPais = value.IdPais;
+      this.DatosEnvioFormulario.IdRegion = value.IdRegion;
       this.DatosEnvioFormulario.EstadoAsesor = '0';
       this.DatosEnvioFormulario.IdPrograma = this.IdPGeneral;
       var IdPespecifico=this._SessionStorageService.SessionGetValueCokies("IdPEspecificoPublicidad");
@@ -286,6 +289,9 @@ export class FormChatComponent implements OnInit,OnChanges {
   }
   SelectChage(e:any){
     if(e.Nombre=="IdPais"){
+      this.formularioContactoChat.IdRegion=undefined
+      this.formularioContactoChat.IdLocalidad=undefined
+      this.formularioContactoChat.Movil=''
       if(e.value!=52){
         this.fileds.filter(x=>x.nombre=='IdLocalidad')[0].hidden=true;
         this.fileds.filter(x=>x.nombre=='IdLocalidad')[0].valorInicial = '';
@@ -293,6 +299,7 @@ export class FormChatComponent implements OnInit,OnChanges {
       this.GetRegionesPorPais(e.value)
     }
     if(e.Nombre=='IdRegion'){
+      this.formularioContactoChat.IdLocalidad=undefined
       this.GetLocalidadesPorRegion(e.value)
     }
   }
