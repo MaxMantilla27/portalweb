@@ -1,14 +1,17 @@
 .TerminosLP {
+  margin: 2em;
   font-size: 9px;
   text-align: justify;
-  width: 400px;
-  max-width: 90%;
+  width: 40em;
+  max-width: 100%;
 }
 .textoChatbot{
-  width: 100%;
+  width: 90%;
   font-size: 12px;
   margin-bottom: 30px;
 }
+
+
 .NombreCurso{
   width: 100%;
   font-weight: 600;
@@ -21,8 +24,12 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  min-height: calc(100vh - 670px);
+  min-height: calc(70vh - 67em);
   position: relative;
+  //overflow-y: scroll;
+  //scroll-behavior: smooth;
+  //height: 200px;
+  padding: 2%;
 }
 
 .titulos {
@@ -31,18 +38,22 @@
   padding-right: 15%;
   width: 100%;
   background-color:rgb(244, 244,244);
+  border-bottom: 1px solid #033DAB;
 }
 .titleCurso {
+  padding-top: 1.5%;
   text-align: center;
-  font-size: 25px;
-  margin: 10px 20px;
+  font-size: 28px;
+  margin: 10px 20px 10px, 20px;
   font-weight: 600;
   text-align: justify;
+  padding-bottom: 1.5%;
 }
 .titlePrimerPaso {
+  padding-top: 1.5%;
   text-align: center;
   font-size: 18px;
-  margin: 10px 20px;
+  margin-bottom: 1.5%;
   font-weight: 300;
 }
 
@@ -51,25 +62,45 @@
   flex-direction:row;
   align-items:center;
   justify-content:center;
+  padding: 2%;
+  width: 90%;
 }
 
 img {
-  max-width: 90%;
-  max-height:90%;
+  max-width: 85%;
+  max-height:85%;
 }
 
 .subTitlePrimerPaso {
   font-size: 16px;
-  margin: 20px;
+  margin: 2.0em;
 }
 .ButtonPrimerPaso {
-  margin-top: 40px;
+  margin-top: 10px;
+  width: 100%;
+}
+
+
+.ButtonPrimerPaso:hover {
+  border-radius: 15px;
+  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.3); /* Sombras al pasar el mouse */
+  &:hover {
+    div{
+      text-decoration: underline;
+    }
+  }
+
+}
+.bloqueIngreso{
+  padding: 1%;
+  width: 100%;
 }
 
 .ContentInputChat .mat-form-field {
-  width: 400px;
-  max-width: 90%;
-  margin-bottom: 20px;
+  width: 27.0em;
+  max-width: 100%;
+  margin-top: 2em;
+  margin-bottom: 2em;
 }
 
 .InputFillWhioutColor
@@ -86,7 +117,7 @@ img {
   > div.mat-form-field-flex
   > div.mat-form-field-infix
   input {
-  height: 20px;
+  height: 2.0em;
 }
 .InputFillWhioutColor
   .mat-form-field.mat-form-field-appearance-fill
@@ -131,7 +162,7 @@ img {
   width: 60%;
   padding: 10px;
   color: #7a7a87;
-  background: #f9f9f9;
+  background: #EAF0F6;
   border-radius: 0px 10px 10px 10px;
 }
 .PreguntaGloboChat{
@@ -154,8 +185,8 @@ img {
 }
 .imgChatBot{
   background-image: url(../../../assets/imagenes/174188.png);
-  width: 40px;
-  height: 40px;
+  width: 50px;
+  height: 50px;
   background-position: center;
   background-size: cover;
   margin-right: 10px;
@@ -165,20 +196,33 @@ img {
 .OpcionesGlobo{
   width: fit-content;
   padding: 5px 40px;
-  background: #fca534;
+  border: 2px solid #2E475D;
+  color: #2E475D;
+  // color: white
+  //background: #fca534;
   border-radius: 10px;
   margin-bottom: 10px;
   cursor: pointer;
-  color: white;
+ // background-color: #2E475D;
+ // color: white;
+
+}
+.OpcionesGlobo:hover {
+  transition: 0.7s;
+  text-decoration: underline;
+  border-radius: 15px;
+  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.3); /* Sombras al pasar el mouse */
 }
 .OpcionesCheckGlobo{
   width: fit-content;
   padding: 5px 20px;
-  background: #fca534;
+  border: 2px solid #2E475D;
+//  background: #fca534;
   border-radius: 10px;
   margin-bottom: 10px;
   cursor: pointer;
-  color: white;
+  color: #2E475D;
+// color: white
   display: flex;
   align-items: center;
 }
@@ -206,15 +250,18 @@ img {
 
   width: fit-content;
   padding: 10px;
-  background: #91b2ef;
+  background: #2E475D;
+  color: white;
   border-radius: 10px 10px 0px 10px;
 }
 .inputData{
-  border-bottom: 1px solid #91b2ef;
+  border: 1px solid #91b2ef;
+  padding: 1%;
   width: 350px;
 }
 .inputDataError{
-  border-bottom: 1px solid #ff0000 !important;
+  border: 1px solid #ff0000 !important;
+  padding: 1%;
 }
 .InputResponder{
   display: flex;
@@ -225,7 +272,7 @@ img {
   cursor: pointer;
 }
 .sendMensajeChatHabil:hover{
-  color: #91b2ef !important;
+  color: white !important;
 }
 .sendMensajeChatInHabil{
   color: gray;

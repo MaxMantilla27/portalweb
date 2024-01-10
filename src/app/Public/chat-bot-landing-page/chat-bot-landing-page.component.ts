@@ -336,10 +336,10 @@ export class ChatBotLandingPageComponent implements OnInit,OnDestroy{
   obtenerErrorCampoNombre() {
     var campo = this.formControl;
     if (campo!.hasError('required')) {
-      if(this.pasoActual.identificadorApi=='Email') return 'El correo electronico es necesario';
-      if(this.pasoActual.identificadorApi=='Movil') return 'El numero telefonico es necesario';
+      if(this.pasoActual.identificadorApi=='Email') return 'El correo electrónico es necesario';
+      if(this.pasoActual.identificadorApi=='Movil') return 'El número telefónico es necesario';
       if(this.pasoActual.identificadorApi=='Nombres') return 'Ingresa tus nombres';
-
+      if(this.pasoActual.identificadorApi=='Dni') return 'Ingresa tu documento de identidad';
       return ''
     }
 
@@ -403,7 +403,7 @@ export class ChatBotLandingPageComponent implements OnInit,OnDestroy{
     this.flujoActual.Caso=this.pasoActual.caso
     this.flujoActual.MensajeEnviado=this.pasoActual.mensaje
     this.flujoActual.IdCampoContacto=this.pasoActual.idCampoContacto
-    this.flujoActual.NombreUsuario=this.datosAlumno.Nombres
+    this.flujoActual.NombreUsuario=this.datosAlumno.Nombres.split(' ')[0]
     this.flujoActual.Respuesta=this.formControl.value
     if(this.pasoActual.opciones!=undefined && this.pasoActual.opciones!=null){
       this.flujoActual.OpcionEnviadoJson=JSON.stringify(this.pasoActual.opciones)
@@ -445,7 +445,7 @@ export class ChatBotLandingPageComponent implements OnInit,OnDestroy{
     this.flujoActual.Caso=this.pasoActual.caso
     this.flujoActual.MensajeEnviado=this.pasoActual.mensaje
     this.flujoActual.IdCampoContacto=this.pasoActual.idCampoContacto
-    this.flujoActual.NombreUsuario=this.datosAlumno.Nombres
+    this.flujoActual.NombreUsuario=this.datosAlumno.Nombres.split(' ')[0]
     this.flujoActual.Respuesta=this.formControl.value.toString()
     if(this.pasoActual.opciones!=undefined && this.pasoActual.opciones!=null){
       this.flujoActual.OpcionEnviadoJson=JSON.stringify(this.pasoActual.opciones)
@@ -468,7 +468,7 @@ export class ChatBotLandingPageComponent implements OnInit,OnDestroy{
     this.flujoActual.Caso=this.pasoActual.caso
     this.flujoActual.MensajeEnviado=this.pasoActual.mensaje
     this.flujoActual.IdCampoContacto=this.pasoActual.idCampoContacto
-    this.flujoActual.NombreUsuario=this.datosAlumno.Nombres
+    this.flujoActual.NombreUsuario=this.datosAlumno.Nombres.split(' ')[0]
     this.flujoActual.Respuesta=item.nombre
     if(this.pasoActual.opciones!=undefined && this.pasoActual.opciones!=null){
       this.flujoActual.OpcionEnviadoJson=JSON.stringify(this.pasoActual.opciones)
@@ -507,7 +507,7 @@ export class ChatBotLandingPageComponent implements OnInit,OnDestroy{
       this.flujoActual.Caso=this.pasoActual.caso
       this.flujoActual.MensajeEnviado=this.pasoActual.mensaje
       this.flujoActual.IdCampoContacto=this.pasoActual.idCampoContacto
-      this.flujoActual.NombreUsuario=this.datosAlumno.Nombres
+      this.flujoActual.NombreUsuario=this.datosAlumno.Nombres.split(' ')[0]
       this.flujoActual.Respuesta=''
       if(this.pasoActual.opciones!=undefined && this.pasoActual.opciones!=null){
         this.flujoActual.OpcionEnviadoJson=JSON.stringify(this.pasoActual.opciones)
@@ -546,6 +546,7 @@ export class ChatBotLandingPageComponent implements OnInit,OnDestroy{
   }
 
   ActualizarAlumnoChatBot2(valor:number){
+    this.datos.PrimerBloque=true
     this.ActualizarAlumnoDTO.IdAlumno=this.datosAlumno.Id
     var indicemal=0
     var msg=''
