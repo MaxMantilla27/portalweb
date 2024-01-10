@@ -106,11 +106,9 @@ export class DocenciaResponderForoCursoModalComponent implements OnInit,OnDestro
       }
     }
     console.log(this.jsonEnvio)
-    console.log('VA A REGITRAR DOCENTE')
     this._ForoCursoService.EnviarRegistroRespuestaForo(this.jsonEnvio).pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
         console.log(x)
-        console.log('REGISTRÓ DOCENTE')
       },
       complete:()=>{
         this.dialogRef.close(true);

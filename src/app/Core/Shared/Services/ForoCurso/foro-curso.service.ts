@@ -74,7 +74,6 @@ export class ForoCursoService {
   //   }
   // }
   public EnviarRegistroRespuestaForo(Json:ForoRespuestaDTO):Observable<any>{
-    console.log('REGISTRANDO')
     console.log(Json)
     const formData: FormData = new FormData();
     formData.append('idForoCurso', Json.idForoCurso.toString());
