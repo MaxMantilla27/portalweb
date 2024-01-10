@@ -86,8 +86,25 @@ img {
       text-decoration: underline;
     }
   }
-
 }
+
+.ButtonIrPrograma {
+  width: 70%;
+  display: flex;
+  justify-content: center;
+}
+
+
+.ButtonIrPrograma:hover {
+  border-radius: 15px;
+  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.3); /* Sombras al pasar el mouse */
+  &:hover {
+    div{
+      text-decoration: underline;
+    }
+  }
+}
+
 .bloqueIngreso{
   padding: 1%;
   width: 100%;
@@ -172,7 +189,7 @@ img {
   justify-content: center;
 }
 .OpcionesPregunta{
-  width: 100%;
+  width: 61%;
   margin: 20px;
   margin-left: 50px;
 }
@@ -200,6 +217,7 @@ img {
   border-radius: 10px;
   margin-bottom: 10px;
   cursor: pointer;
+  background-color: white;
  // background-color: #2E475D;
  // color: white;
 
@@ -211,7 +229,7 @@ img {
   box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.3); /* Sombras al pasar el mouse */
 }
 .OpcionesCheckGlobo{
-  width: fit-content;
+//width: fit-content;
   padding: 5px 20px;
   border: 2px solid #2E475D;
 //  background: #fca534;

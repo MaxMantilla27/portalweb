@@ -1,6 +1,6 @@
 <div class="titulos">
-  <div class="titleCurso" >
-    Capacitate en {{ flujoActual.NombrePGeneral }}
+  <div class="titleCurso" *ngIf="flujoActual.NombrePGeneral">
+    Capacitate en {{flujoActual.NombrePGeneral}}
   </div>
 </div>
 
@@ -133,6 +133,7 @@
                 >
                   {{ itemo.nombre }}
                 </button>
+                <br>
               </ng-container>
             </div>
             <div
@@ -259,7 +260,7 @@
               [icon]="''"
               [disabled]="formControl.invalid"
               [style]="
-                'margin-top: 10%; width: 100%;background: white;border: solid 1px #f8893f; color: #f8893f;padding: 0px 50px;border-radius: 15px;'
+                'margin-top: 50px; width: 100%;background: white;border: solid 1px #f8893f; color: #f8893f;padding: 0px 50px;border-radius: 15px;'
               "
               (click)="redigirPaginaCurso()"
             ></app-default-button>
