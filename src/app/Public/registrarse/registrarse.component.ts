@@ -102,6 +102,7 @@ export class RegistrarseComponent implements OnInit,OnDestroy {
     Tipo:'accesopruebagratis',//pago
     IdPEspecifico:0
   };
+  public listaLocalidades?:any;
   ngOnInit(): void {
     let t:string='Registrarse'
     this.title.setTitle(t);
@@ -232,12 +233,15 @@ export class RegistrarseComponent implements OnInit,OnDestroy {
 
     this._DatosPortalService.ObtenerCombosPortal().pipe(takeUntil(this.signal$)).subscribe({
       next: (x) => {
+        this.listaLocalidades = x.listaLocalida.map((p:any)=>String(p.codigo));
         this.fileds.forEach((r) => {
           if (r.nombre == 'IdPais') {
-            r.data = x.listaPais.map((p: any) => {
-              var ps: Basic = { Nombre: p.pais, value: p.idPais };
+            r.data =x.listaPais.map((p:any)=>{
+              var ps:Basic={Nombre:p.pais,value:p.idPais};
               return ps;
-            });
+            })
+            r.filteredOptions = r.data;
+            r.filteredOptionsAux = r.data;
           }
         });
         this.fileds.forEach((r) => {
@@ -246,6 +250,8 @@ export class RegistrarseComponent implements OnInit,OnDestroy {
               var ps: Basic = { Nombre: p.cargo, value: p.idCargo };
               return ps;
             });
+            r.filteredOptions = r.data;
+            r.filteredOptionsAux = r.data;
           }
         });
         this.fileds.forEach((r) => {
@@ -257,6 +263,8 @@ export class RegistrarseComponent implements OnInit,OnDestroy {
               };
               return ps;
             });
+            r.filteredOptions = r.data;
+            r.filteredOptionsAux = r.data;
           }
         });
         this.fileds.forEach((r) => {
@@ -265,6 +273,8 @@ export class RegistrarseComponent implements OnInit,OnDestroy {
               var ps: Basic = { Nombre: p.areaTrabajo, value: p.idAreaTrabajo };
               return ps;
             });
+            r.filteredOptions = r.data;
+            r.filteredOptionsAux = r.data;
           }
         });
         this.fileds.forEach((r) => {
@@ -273,6 +283,8 @@ export class RegistrarseComponent implements OnInit,OnDestroy {
               var ps: Basic = { Nombre: p.industria, value: p.idIndustria };
               return ps;
             });
+            r.filteredOptions = r.data;
+            r.filteredOptionsAux = r.data;
           }
         });
 
@@ -280,26 +292,78 @@ export class RegistrarseComponent implements OnInit,OnDestroy {
       },
     });
   }
-  GetRegionesPorPais(idPais: number) {
-    this._RegionService.ObtenerCiudadesPorPais(idPais).pipe(takeUntil(this.signal$)).subscribe({
-      next: (x) => {
-        this.fileds.forEach((r) => {
-          if (r.nombre == 'IdRegion') {
-            r.disable = false;
-            r.data = x.map((p: any) => {
-              var ps: Basic = { Nombre: p.nombreCiudad, value: p.idCiudad };
-              return ps;
-            });
-          }
-        });
-        this.form.enablefield('IdRegion');
-      },
-    });
-  }
+
   SelectChage(e: any) {
-    if (e.Nombre == 'IdPais') {
-      this.GetRegionesPorPais(e.value);
+    if(e.Nombre=="IdPais"){
+      if(e.value!=52){
+        this.fileds.filter(x=>x.nombre=='IdLocalidad')[0].hidden=true;
+        this.fileds.filter(x=>x.nombre=='IdLocalidad')[0].valorInicial = '';
+      }
+      this.GetRegionesPorPais(e.value)
     }
+    if(e.Nombre=='IdRegion'){
+      this.GetLocalidadesPorRegion(e.value)
+    }
+  }
+  GetRegionesPorPais(idPais:number){
+    this._RegionService.ObtenerCiudadesPorPais(idPais).pipe(takeUntil(this.signal$)).subscribe({
+      next:x=>{
+        console.log(x)
+        this.fileds.forEach(r=>{
+          if(r.nombre=='IdRegion'){
+            r.disable=false;
+            r.data, r.filteredOptions=x.map((p:any)=>{
+              var ps:Basic={Nombre:p.nombreCiudad,value:p.idCiudad};
+              return ps;
+            })
+            r.filteredOptionsAux=x.map((p:any)=>{
+              var ps:Basic={Nombre:p.nombreCiudad,value:p.idCiudad};
+              return ps;
+            })
+          }
+          // if(r.nombre=='IdLocalidad'){
+          //   r.disable=true;
+          //   r.hidden=true;
+          // }
+        })
+        this.form.enablefield('IdRegion');
+      }
+    })
+  }
+  GetLocalidadesPorRegion(idRegion:number){
+    this._RegionService.ObtenerLocalidadPorRegion(idRegion).pipe(takeUntil(this.signal$)).subscribe({
+      next:x=>{
+        if (x.length != 0 && x != undefined && x !=null ) {
+
+          this.fileds.forEach(r=>{
+            if(r.nombre=='IdLocalidad'){
+              r.disable=false;
+              r.hidden=false;
+              r.data, r.filteredOptions=x.map((p:any)=>{
+                var ps:Basic={Nombre:p.nombreLocalidad,value:p.codigo,longitudCelular:p.longitudCelular};
+                return ps;
+              })
+              r.filteredOptionsAux=x.map((p:any)=>{
+                var ps:Basic={Nombre:p.nombreLocalidad,value:p.codigo,longitudCelular:p.longitudCelular};
+                return ps;
+              })
+              r.validate=[Validators.required];
+            }
+          })
+          this.form.enablefield('IdLocalidad');
+        }
+        else{
+          this.fileds.forEach(r=>{
+            if(r.nombre=='IdLocalidad'){
+              r.disable=true;
+              r.hidden=true;
+              r.validate=[];
+            }
+          })
+
+        }
+      }
+    })
   }
   AddField() {
     this.fileds.push({
@@ -337,6 +401,15 @@ export class RegistrarseComponent implements OnInit,OnDestroy {
       validate: [Validators.required],
       disable: true,
       label: 'Región',
+    });
+    this.fileds.push({
+      nombre: 'IdLocalidad',
+      tipo: 'select',
+      valorInicial: '',
+      validate: [],
+      disable: true,
+      hidden:true,
+      label: 'Localidad',
     });
     this.fileds.push({
       nombre: 'Movil',

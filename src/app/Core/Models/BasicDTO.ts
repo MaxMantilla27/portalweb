@@ -1,6 +1,8 @@
 export interface Basic{
   Nombre:string,
   value:any
+  longitudCelular?:any,
+  codigo?:any
 }
 export interface BasicUrl{
   Nombre:string,

@@ -41,6 +41,8 @@ export class LandingPageModalComponent implements OnInit, OnDestroy {
   @ViewChild(FormularioComponent)
   form!: FormularioComponent;
   isBrowser: boolean;
+  public listaLocalidades?:any;
+
   constructor(
     private router: Router,
 
@@ -145,6 +147,9 @@ export class LandingPageModalComponent implements OnInit, OnDestroy {
       if (this.obj.IdRegion != undefined) {
         this.obj.IdRegion = this.combosPrevios.idRegion;
       }
+      if (this.obj.IdLocalidad != undefined) {
+        this.obj.IdLocalidad = this.combosPrevios.idLocalidad;
+      }
       if (this.obj.Movil != undefined) {
         this.obj.Movil = this.combosPrevios.movil;
       }
@@ -247,8 +252,8 @@ export class LandingPageModalComponent implements OnInit, OnDestroy {
         .subscribe({
           next: (x) => {
             this.ProcesarAsignacionAutomaticaNuevoPortal(x.id);
-            if (x.body.oportuniodd == true) {
-            }
+            // if (x.body.oportuniodd == true) {
+            // }
             if (this.isBrowser) {
               fbq(
                 'trackSingle',
@@ -367,6 +372,8 @@ export class LandingPageModalComponent implements OnInit, OnDestroy {
                 var ps: Basic = { Nombre: p.nombreCiudad, value: p.idCiudad };
                 return ps;
               });
+              r.filteredOptions = r.data;
+              r.filteredOptionsAux =r.data;
             }
           });
           this.form.enablefield('IdRegion');
@@ -375,8 +382,50 @@ export class LandingPageModalComponent implements OnInit, OnDestroy {
   }
   SelectChage(e: any) {
     if (e.Nombre == 'IdPais') {
+      if(e.value!=52){
+        this.fileds.filter(x=>x.nombre=='IdLocalidad')[0].hidden=true;
+        this.fileds.filter(x=>x.nombre=='IdLocalidad')[0].valorInicial = '';
+      }
       this.GetRegionesPorPais(e.value);
     }
+    if(e.Nombre=='IdRegion'){
+      this.GetLocalidadesPorRegion(e.value)
+    }
+  }
+  GetLocalidadesPorRegion(idRegion:number){
+    this._RegionService.ObtenerLocalidadPorRegion(idRegion).pipe(takeUntil(this.signal$)).subscribe({
+      next:x=>{
+        if (x.length != 0 && x != undefined && x !=null ) {
+
+          this.fileds.forEach(r=>{
+            if(r.nombre=='IdLocalidad'){
+              r.disable=false;
+              r.hidden=false;
+              r.data, r.filteredOptions=x.map((p:any)=>{
+                var ps:Basic={Nombre:p.nombreLocalidad,value:p.codigo,longitudCelular:p.longitudCelular};
+                return ps;
+              })
+              r.filteredOptionsAux=x.map((p:any)=>{
+                var ps:Basic={Nombre:p.nombreLocalidad,value:p.codigo,longitudCelular:p.longitudCelular};
+                return ps;
+              })
+              r.validate=[Validators.required];
+            }
+          })
+          this.form.enablefield('IdLocalidad');
+        }
+        else{
+          this.fileds.forEach(r=>{
+            if(r.nombre=='IdLocalidad'){
+              r.disable=true;
+              r.hidden=true;
+              r.validate=[];
+            }
+          })
+
+        }
+      }
+    })
   }
   ObtenerCombosPortal() {
     this._DatosPortalService
@@ -384,12 +433,16 @@ export class LandingPageModalComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.signal$))
       .subscribe({
         next: (x) => {
+          this.listaLocalidades = x.listaLocalida.map((p:any)=>String(p.codigo));
           this.fileds.forEach((r) => {
             if (r.nombre == 'IdPais') {
               r.data = x.listaPais.map((p: any) => {
                 var ps: Basic = { Nombre: p.pais, value: p.idPais };
                 return ps;
               });
+              r.filteredOptions = r.data;
+              r.filteredOptionsAux =r.data;
+
             }
           });
           this.fileds.forEach((r) => {
@@ -398,6 +451,8 @@ export class LandingPageModalComponent implements OnInit, OnDestroy {
                 var ps: Basic = { Nombre: p.cargo, value: p.idCargo };
                 return ps;
               });
+              r.filteredOptions = r.data;
+              r.filteredOptionsAux =r.data;
             }
           });
           this.fileds.forEach((r) => {
@@ -409,6 +464,8 @@ export class LandingPageModalComponent implements OnInit, OnDestroy {
                 };
                 return ps;
               });
+              r.filteredOptions = r.data;
+              r.filteredOptionsAux =r.data;
             }
           });
           this.fileds.forEach((r) => {
@@ -420,6 +477,8 @@ export class LandingPageModalComponent implements OnInit, OnDestroy {
                 };
                 return ps;
               });
+              r.filteredOptions = r.data;
+              r.filteredOptionsAux =r.data;
             }
           });
           this.fileds.forEach((r) => {
@@ -428,6 +487,8 @@ export class LandingPageModalComponent implements OnInit, OnDestroy {
                 var ps: Basic = { Nombre: p.industria, value: p.idIndustria };
                 return ps;
               });
+              r.filteredOptions = r.data;
+              r.filteredOptionsAux =r.data;
             }
           });
         },
