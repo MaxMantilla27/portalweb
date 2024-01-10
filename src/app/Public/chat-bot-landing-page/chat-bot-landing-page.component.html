@@ -182,7 +182,8 @@
                   *ngIf="item.respondido != true"
                 >
                 <div class="ButtonPrimerPaso">
-                  <app-default-button
+                  <div>
+                    <app-default-button
                     [confs]="{ color: 'primary', titulo: 'Continuar' }"
                     [icon]="''"
                     [style]="
@@ -190,6 +191,7 @@
                     "
                     (click)="ContinuarOpciones()"
                   ></app-default-button>
+                  </div>
                 </div>
                 </div>
               </ng-container>
@@ -251,15 +253,18 @@
           </div>
 
           <div class="ButtonPrimerPaso"  *ngIf="item.esMensajeFinal == true">
-            <app-default-button
+            <div>
+              <app-default-button
               [confs]="{ color: 'primary', titulo: 'Visitar Sitio Web' }"
               [icon]="''"
               [disabled]="formControl.invalid"
               [style]="
-                'width: 100%;background: white;border: solid 1px #f8893f; color: #f8893f;padding: 0px 50px;border-radius: 15px;'
+                'margin-top: 10%; width: 100%;background: white;border: solid 1px #f8893f; color: #f8893f;padding: 0px 50px;border-radius: 15px;'
               "
               (click)="redigirPaginaCurso()"
             ></app-default-button>
+            </div>
+
         </div>
 
         </ng-container>
