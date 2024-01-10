@@ -111,6 +111,8 @@ export class DocenciaResponderForoCursoModalComponent implements OnInit,OnDestro
       next:x=>{
         console.log(x)
         console.log('REGISTRÓ DOCENTE')
+      },
+      complete:()=>{
         this.dialogRef.close(true);
       }
     })
