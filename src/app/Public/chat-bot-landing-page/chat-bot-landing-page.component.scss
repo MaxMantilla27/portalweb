@@ -258,14 +258,15 @@ img {
 }
 .inputDataError{
   border: 1px solid #ff0000 !important;
-  padding: 1%;
+  padding: 3%;
 }
 .InputResponder{
   display: flex;
   align-items: flex-start;
 }
 .sendMensajeChat{
-  margin-left:10px ;
+  margin-left: 8%;
+  margin-top: 3%;
   cursor: pointer;
 }
 .sendMensajeChatHabil:hover{
