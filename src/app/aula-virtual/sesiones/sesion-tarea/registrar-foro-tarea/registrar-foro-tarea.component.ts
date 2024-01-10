@@ -83,7 +83,7 @@ export class RegistrarForoTareaComponent implements OnInit {
 
         },
         complete:()=>{
-          this._SnackBarServiceService.openSnackBar("Se ha registrado con éxito su consulta. Se atenderá en un plazo máximo de 72 horas y visualizara su respuesta en el menú Foro",'x',10,"snackbarCrucigramaSucces");
+          this._SnackBarServiceService.openSnackBar("Se ha registrado con éxito su consulta. Se atenderá en un plazo máximo de 72 horas y visualizara su respuesta en el menú Consultas al Expositor",'x',10,"snackbarCrucigramaSucces");
           this.dialogRef.close();
         }
       });

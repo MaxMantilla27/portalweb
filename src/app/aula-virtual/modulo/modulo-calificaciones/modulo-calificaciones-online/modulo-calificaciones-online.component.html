@@ -8,11 +8,11 @@
     <img class="ImgIndicacionesContent" src="../../../../assets/icons/star-47.svg">
     <div>Calificaciones</div>
   </div>
-  <div class="col-12 col-md-3 col-lg-3">
+  <!-- <div class="col-12 col-md-3 col-lg-3">
     <ng-container *ngIf="detalle==true">
       <mat-slide-toggle [(ngModel)]="verDetalle" color="primary">Ver detalles</mat-slide-toggle>
     </ng-container>
-  </div>
+  </div> -->
 </div>
 <div class="CalificacionesEncabezado">
   Este es el promedio de las calificaciones que has obtenido hasta ahora en el desarrollo del curso.
@@ -21,7 +21,7 @@
   <div *ngIf="CursosCriterios.detalleCalificacion.length<=1" style="margin-top: 15px;font-style: italic;font-weight: bold;">
     * Este curso no tiene criterios de evaluación configurados.
   </div>
-  <div *ngIf="CursosCriterios.detalleCalificacion.length>=2 && verDetalle==false" class="table-resposive" style="margin-top: 20px;overflow-x: none !important;">
+  <!-- <div *ngIf="CursosCriterios.detalleCalificacion.length>=2 && verDetalle==false" class="table-resposive" style="margin-top: 20px;overflow-x: none !important;">
     <table class="table" style="width: 100%">
       <thead class="TablaCalificacionEncabezado">
         <tr>
@@ -63,8 +63,8 @@
     <div *ngIf="error==true">
       {{mensajeError}}
     </div>
-  </div>
-  <div *ngIf="CursosCriterios.detalleCalificacion.length>=2 && verDetalle==true" class="table-resposive" style="margin-top: 20px;overflow: hidden;">
+  </div> -->
+  <div *ngIf="CursosCriterios.detalleCalificacion.length>=2" class="table-resposive" style="margin-top: 20px;overflow: hidden;">
     <div class="ListaNotas">
       <div class="row" style="margin-top: 10px;margin-bottom: 10px;">
         <div class="col-6"style="border-radius: 2px;">
