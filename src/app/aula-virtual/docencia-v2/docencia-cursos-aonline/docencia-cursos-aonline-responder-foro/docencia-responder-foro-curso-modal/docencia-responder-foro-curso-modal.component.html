@@ -109,7 +109,7 @@
   <app-default-button [confs]="{color:'primary',titulo:'Responder'}"
   (ButtoclClick)="EnviarRegistroRespuestaForo()"
   [icon]="''" [style]="'padding: 0px 20px'"
-  [disabled]="jsonEnvio.contenido==''">
+  [disabled]="userForm.invalid">
   </app-default-button>
 </div>
 
