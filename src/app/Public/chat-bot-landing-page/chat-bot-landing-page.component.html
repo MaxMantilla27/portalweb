@@ -10,7 +10,8 @@
   SiguientesPasos != null &&
   SiguientesPasos.length > 0
   ">
-      <div class="titlePrimerPaso">{{ primerpaso.mensaje }}</div>
+      <div class="titlePrimerPaso">{{ primerpaso.mensaje }} </div>
+      <hr style="margin: 0px;">
 </ng-container>
 </div>
 
@@ -216,7 +217,7 @@
               <div class="InputResponder">
                 <div>
                   <input
-                    class="inputData"
+                    class="inputData" style="border-bottom: 1px solid; border-top: 0px; border-left: 0px; border-right: 0px;"
                     [ngClass]="{ inputDataError: formControl.invalid }"
                     [formControl]="formControl"
                     [type]="
