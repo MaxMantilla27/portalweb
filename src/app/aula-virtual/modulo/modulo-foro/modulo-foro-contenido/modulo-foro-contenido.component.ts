@@ -35,7 +35,7 @@ export class ModuloForoContenidoComponent implements OnInit,OnDestroy {
   public foroContenido:Array<any>=[];
   public foroRespuesta:Array<any>=[];
   public ForoRespuestaEnvio: ForoRespuestaDTO ={
-    idForoCurso:19,
+    idForoCurso:0,
     idPrincipal:0,
     idPGeneral: 0,
     idPEspecificoPadre: 0,
@@ -97,8 +97,11 @@ export class ModuloForoContenidoComponent implements OnInit,OnDestroy {
         this.ForoRespuestaEnvio.file = file;
       }
     }
+    console.log('VA A REGITRAR ALUMNO')
+    console.log(this.ForoRespuestaEnvio)
     this._ForoCursoService.EnviarRegistroRespuestaForo(this.ForoRespuestaEnvio).pipe(takeUntil(this.signal$)).subscribe({
       next: (x) => {
+        console.log('REGISTRÓ ALUMNO')
 
       },
       complete:()=>{

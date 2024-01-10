@@ -35,13 +35,13 @@ export class DocenciaResponderForoCursoModalComponent implements OnInit,OnDestro
   public respuestas:any
   public imgForo:any
   public jsonEnvio:ForoRespuestaDTO={
-    contenido:'',
-    esDocente:true,
     idForoCurso:0,
-    idPEspecificoHijo:0,
-    idPEspecificoPadre:0,
-    idPGeneral:0,
     idPrincipal:0,
+    idPGeneral: 0,
+    idPEspecificoPadre: 0,
+    idPEspecificoHijo: 0,
+    contenido: '',
+    esDocente: false,
     estadoAtendido:0,
     file: new File([], ''),
   }
@@ -54,6 +54,7 @@ export class DocenciaResponderForoCursoModalComponent implements OnInit,OnDestro
   public nombrefile='Ningún archivo seleccionado'
   public Recarga=false
   ngOnInit(): void {
+    console.log(this.data)
     this.jsonEnvio.idPGeneral=this.data.idPGeneral
     this.jsonEnvio.idForoCurso=this.data.idTemaForo
     this.ContenidoPreguntaForoCurso()
@@ -98,18 +99,18 @@ export class DocenciaResponderForoCursoModalComponent implements OnInit,OnDestro
     this.jsonEnvio.contenido = this.userForm.get('RespuestaForo')?.value;;
     this.jsonEnvio.esDocente = true;
     this.jsonEnvio.estadoAtendido = 1;
-    console.log('VA A REGITRAR')
-    console.log(this.jsonEnvio)
     if(this.selectedFiles){
       const file: File | null = this.selectedFiles.item(0);
       if (file) {
         this.jsonEnvio.file = file;
       }
     }
+    console.log(this.jsonEnvio)
+    console.log('VA A REGITRAR DOCENTE')
     this._ForoCursoService.EnviarRegistroRespuestaForo(this.jsonEnvio).pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
         console.log(x)
-        console.log('REGISTRÓ')
+        console.log('REGISTRÓ DOCENTE')
         this.dialogRef.close(true);
       }
     })
