@@ -41,6 +41,7 @@ export class ModuloCalificacionesOnlineComponent implements OnInit,OnDestroy {
   public verDetalle=false
   public CursoAbierto=-1;
   public recargarDetalle=false;
+  public TerminaCarga=false
 
 
   ngOnInit(): void {
@@ -192,7 +193,10 @@ export class ModuloCalificacionesOnlineComponent implements OnInit,OnDestroy {
           console.log(this.CursosCriterios)
           this.recargarDetalle=true
         }
-      }
+      },
+      complete:()=> {
+        this.TerminaCarga=true
+      },
     })
   }
   actualizarDesplegable(i:number,valor:boolean){

@@ -17,7 +17,19 @@
 <div class="CalificacionesEncabezado">
   Este es el promedio de las calificaciones que has obtenido hasta ahora en el desarrollo del curso.
 </div>
-<div *ngIf="CursosCriterios.detalleCalificacion!=undefined">
+<div>
+  <ng-container *ngIf="CursosCriterios.detalleCalificacion==undefined && TerminaCarga==false">
+    <div class="row" style="display: flex; justify-content: center;align-items: center;text-align: center; height: 15rem;">
+      <div class="col-12" style="display: flex;justify-content: center;">
+        <mat-spinner></mat-spinner>
+      </div>
+      <div class="col-12">
+        Cargando calificaciones ...
+      </div>
+    </div>
+  </ng-container>
+</div>
+<div *ngIf="CursosCriterios.detalleCalificacion!=undefined && TerminaCarga==true">
   <div *ngIf="CursosCriterios.detalleCalificacion.length<=1" style="margin-top: 15px;font-style: italic;font-weight: bold;">
     * Este curso no tiene criterios de evaluación configurados.
   </div>

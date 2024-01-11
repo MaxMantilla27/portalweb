@@ -51,7 +51,7 @@ export class ModuloForoComponent implements OnInit, OnChanges,OnDestroy {
   ObtenerForoCurso() {
     this._ForoCursoService.ObtenerForoCurso(this.IdPgeneral).pipe(takeUntil(this.signal$)).subscribe({
       next: (x) => {
-
+        this.foro=[]
         console.log(x);
         this.foro = x;
         if (this.foro != null && this.foro != undefined) {

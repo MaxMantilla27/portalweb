@@ -328,7 +328,6 @@ export class CursoProyectoComponent implements OnInit,OnChanges,OnDestroy {
   RefrescarForo(){
     this.NuevoForo=false;
     this.ContenidoForo=false;
-    console.log('REFRESCANDO==================')
     this.ObtenerForoCursoProyecto() ;
   }
   Interaccion(nombre:string){

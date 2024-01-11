@@ -104,6 +104,7 @@ export class CursoForoProyectoContenidoComponent implements OnInit,OnDestroy {
         this.Recarga=false;
         this.RestaurarValores()
         this.ObtenerRespuestaForo()
+        this.ObtenerContenidoForo();
       }
     });
   }

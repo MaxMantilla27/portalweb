@@ -8,14 +8,14 @@
       <div>Foro</div>
     </div>
     <div class="col-12 col-md-3 col-lg-2">
-      <app-default-button  (ButtoclClick)="NuevoForo=!NuevoForo" [confs]="{color:'primary',titulo:'Volver'}"  [style]="'width: 100%;'"
+      <app-default-button  (ButtoclClick)="RefrescarForo()" [confs]="{color:'primary',titulo:'Volver'}"  [style]="'width: 100%;'"
         [style]="'margin-bottom: 0px !important;padding:0px 20px'" [icon]="''">
       </app-default-button>
     </div>
   </div>
   <app-modulo-foro-insert (volver)="RefrescarForo()"
   [IdPgeneral]="IdPgeneral" [IdPprincipal]="IdPprincipal" [IdPEspecificoPadre]="IdPEspecificoPadre" [IdPEspecificoHijo]="IdPEspecificoHijo">
-</app-modulo-foro-insert>
+  </app-modulo-foro-insert>
 </ng-container>
 <ng-container *ngIf="!NuevoForo">
   <ng-container *ngIf="!ContenidoForo">
@@ -41,12 +41,12 @@
 
       <ng-container  *ngFor="let item of foro;let i=index">
 
-      <div class="foro" *ngIf="(pagina-1)*4<=i && (pagina)*4>i">
+      <div class="foro" *ngIf="(pagina-1)*4<=i && (pagina)*4>i"  (click)="ContenidoForo=!ContenidoForo && IdForo=item.id" >
 
         <div style="display: flex;align-items: center;justify-content: flex-start;">
           <img [src]="item.urlAvatar" alt="{{item.urlAvatar}}" style="width: 40px; height: 40px;    margin-right: 10px;">
           <div>
-            <div class="titleForo" (click)="ContenidoForo=!ContenidoForo && IdForo=item.id" >{{item.titulo}}></div>
+            <div class="titleForo">{{item.titulo}}></div>
             <div class="subTitleForo">{{item.nombres}}</div>
           </div>
         </div>
@@ -76,7 +76,7 @@
         <div>Foro</div>
       </div>
       <div class="col-6 col-md-3 col-lg-2">
-        <app-default-button  (ButtoclClick)="NuevoForo=!NuevoForo && ContenidoForo=!ContenidoForo" [confs]="{color:'primary',titulo:'Volver'}"  [style]="'width: 100%;'"
+        <app-default-button  (ButtoclClick)="RefrescarForo()" [confs]="{color:'primary',titulo:'Volver'}"  [style]="'width: 100%;'"
         [style]="'margin-bottom: 0px !important;padding:0px 20px'" [icon]="''">
       </app-default-button>
       </div>
