@@ -123,6 +123,14 @@ import { Conekta2Component } from './modal-confirmacion-pago/pagos-organicos/con
 import { Multipago2Component } from './modal-confirmacion-pago/pagos-organicos/multipago2/multipago2.component';
 import { Webpay2Component } from './modal-confirmacion-pago/pagos-organicos/webpay2/webpay2.component';
 import { Mercadopago2Component } from './modal-confirmacion-pago/pagos-organicos/mercadopago2/mercadopago2.component';
+import { ModalPagoOpenpayPeruComponent } from './modal-confirmacion-pago/modal-pago-openpay-peru/modal-pago-openpay-peru.component';
+import { ModalPagoTarjetaMexicoComponent } from './modal-confirmacion-pago/modal-pago-tarjeta-mexico/modal-pago-tarjeta-mexico.component';
+import { ModalPagoConektaComponent } from './modal-confirmacion-pago/modal-pago-conekta/modal-pago-conekta.component';
+import { ModalPagoWebpayComponent } from './modal-confirmacion-pago/modal-pago-webpay/modal-pago-webpay.component';
+import { ModalPagoMercadoPagoChileComponent } from './modal-confirmacion-pago/modal-pago-mercado-pago-chile/modal-pago-mercado-pago-chile.component';
+import { ModalPagoWompiComponent } from './modal-confirmacion-pago/modal-pago-wompi/modal-pago-wompi.component';
+import { ModalPagoOpenpayColombiaComponent } from './modal-confirmacion-pago/modal-pago-openpay-colombia/modal-pago-openpay-colombia.component';
+import { ModalPagoMultipagoComponent } from './modal-confirmacion-pago/modal-pago-multipago/modal-pago-multipago.component';
 
 
 
@@ -244,7 +252,15 @@ import { Mercadopago2Component } from './modal-confirmacion-pago/pagos-organicos
     Conekta2Component,
     Multipago2Component,
     Webpay2Component,
-    Mercadopago2Component
+    Mercadopago2Component,
+    ModalPagoOpenpayPeruComponent,
+    ModalPagoTarjetaMexicoComponent,
+    ModalPagoConektaComponent,
+    ModalPagoWebpayComponent,
+    ModalPagoMercadoPagoChileComponent,
+    ModalPagoWompiComponent,
+    ModalPagoOpenpayColombiaComponent,
+    ModalPagoMultipagoComponent
     ],
   imports: [
     CommonModule,
