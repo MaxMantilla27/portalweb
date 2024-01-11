@@ -1,5 +1,5 @@
 import { isPlatformBrowser } from '@angular/common';
-import { Component, Inject, OnDestroy, OnInit, PLATFORM_ID, ViewEncapsulation } from '@angular/core';
+import { Component, Inject, OnChanges, OnDestroy, OnInit, PLATFORM_ID, SimpleChanges, ViewEncapsulation } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { Subject, takeUntil } from 'rxjs';
 import { ChatBotAlumnoDTO } from 'src/app/Core/Models/AlumnoDTO';
@@ -16,7 +16,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./chat-bot-landing-page.component.scss'],
   encapsulation: ViewEncapsulation.None,
 })
-export class ChatBotLandingPageComponent implements OnInit,OnDestroy{
+export class ChatBotLandingPageComponent implements OnInit,OnDestroy,OnChanges{
 
   formControl = new FormControl('', [Validators.required]);
   private signal$ = new Subject();
@@ -100,7 +100,12 @@ export class ChatBotLandingPageComponent implements OnInit,OnDestroy{
   public opcionesTruFalse:Array<any>=[]
   public urlPrograma: string
   public idBusqueda: any
+
+  ngOnChanges(changes: SimpleChanges): void {
+    this.SetPaisCodigo()
+  }
   ngOnInit(): void {
+
     if(this.isBrowser){
       this.intervalInicio= setInterval(()=>{
         var usuarioWeb=this._SessionStorageService.SessionGetValue('usuarioWeb');
