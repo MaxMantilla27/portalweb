@@ -270,12 +270,13 @@ img {
   border-radius: 10px 10px 0px 10px;
 }
 .inputData{
-  border: 1px solid #91b2ef;
+  //border-bottom: 1px solid #91b2ef;
+  border-bottom: 1px solid !important;
   width: 100%;
 }
 .inputDataError{
   border: 1px solid #ff0000 !important;
-  padding: 3%;
+  padding: 3% !important;
 }
 .InputResponder{
   display: flex;
