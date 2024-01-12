@@ -272,7 +272,8 @@ img {
 .inputData{
   //border-bottom: 1px solid #91b2ef;
   border-bottom: 1px solid !important;
-  width: 100%;
+  max-width: 100%;
+  width: 345px !important;
 }
 .inputDataError{
   border: 1px solid #ff0000 !important;
@@ -283,7 +284,6 @@ img {
   align-items: flex-start;
 }
 .sendMensajeChat{
-  margin-left: 8%;
   margin-top: 3%;
   cursor: pointer;
 }
