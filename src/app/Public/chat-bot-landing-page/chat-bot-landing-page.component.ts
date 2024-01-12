@@ -249,7 +249,7 @@ export class ChatBotLandingPageComponent implements OnInit,OnDestroy,OnChanges{
                 });
                 this.opcionesTruFalse=this.pasoActual.opciones
                 if(existen==this.pasoActual.opciones.length){
-                  this.ContinuarOpciones()
+                  this.ContinuarOpciones(1)
                 }
               }
               this.SiguientesPasos.push(this.pasoActual)
@@ -436,9 +436,12 @@ export class ChatBotLandingPageComponent implements OnInit,OnDestroy,OnChanges{
           this.datosAlumno.Nombres=x.nombresCompletos
           this.ActualizarAlumnoDTO.IdAlumno=x.idAlumno
           this.flujoActual.UsuarioRegistrado=true
+          this.flujoActual.NombreUsuario=x.nombresCompletos.split(' ')[0]
           this.flujoActual.IdAlumno=x.idAlumno
           this.ActualizarIdOportunidadChatbotUsuarioContacto()
         }
+      },
+      complete:()=>{
         this.FlujoConversacionPrincipal()
       }
     })
@@ -485,13 +488,16 @@ export class ChatBotLandingPageComponent implements OnInit,OnDestroy,OnChanges{
     this.ContinuarFlujo(item.id)
     console.log(this.datosAlumno)
   }
-  ContinuarOpciones(){
+  ContinuarOpciones(valor:number){
+    console.log(valor)
     this.CargandoChat=true
     console.log(this.opcionesTruFalse)
     this.SiguientesPasos.forEach((p) => {
       p.respondido=true
     });
-    this.SiguientesPasos[this.SiguientesPasos.length-1].respuesta=null
+    if(valor!=1 && valor!=2){
+      this.SiguientesPasos[this.SiguientesPasos.length-1].respuesta=null
+    }
     var hayerrore=false
     for (let index = 0; index < this.opcionesTruFalse.length; index++) {
       if(this.opcionesTruFalse[index].Check!=true){
@@ -550,7 +556,13 @@ export class ChatBotLandingPageComponent implements OnInit,OnDestroy,OnChanges{
     })
   }
 
-  ActualizarAlumnoChatBot2(valor:number){
+  ActualizarAlumnoChatBot2(valor:number,valorNombre:any){
+    console.log(this.SiguientesPasos)
+    this.SiguientesPasos.forEach((p) => {
+      p.respondido=true
+    });
+    this.SiguientesPasos[this.SiguientesPasos.length-1].respuesta=valorNombre
+    console.log(valorNombre)
     this.datos.PrimerBloque=true
     this.ActualizarAlumnoDTO.IdAlumno=this.datosAlumno.Id
     var indicemal=0
@@ -592,12 +604,13 @@ export class ChatBotLandingPageComponent implements OnInit,OnDestroy,OnChanges{
           break;
       }
       this.ActualizarAlumnoDTO.Valor=valor.toString()
+      console.log(valor.toString())
       this._ChatBotService.ActualizarAlumnoChatBot(this.ActualizarAlumnoDTO).pipe(takeUntil(this.signal$)).subscribe({
         next:x=>{
           this.opcionesTruFalse[indicemal].idCampo=valor.toString()
           this.opcionesTruFalse[indicemal].Check=true
           this.opcionesTruFalse[indicemal].campo=x.registro
-          this.ContinuarOpciones()
+          this.ContinuarOpciones(2)
         }
       })
     }

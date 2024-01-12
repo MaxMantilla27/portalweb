@@ -128,7 +128,7 @@
                   (click)="
                     item.respondido == true
                       ? ''
-                      : ActualizarAlumnoChatBot2(itemo.id)
+                      : ActualizarAlumnoChatBot2(itemo.id,itemo.nombre)
                   "
                 >
                   {{ itemo.nombre }}
@@ -190,7 +190,7 @@
                     [style]="
                       'width: 100%;background: white;border: solid 1px #f8893f; color: #f8893f;padding: 0px 50px;border-radius: 15px;'
                     "
-                    (click)="ContinuarOpciones()"
+                    (click)="ContinuarOpciones(3)"
                   ></app-default-button>
                   </div>
                 </div>
