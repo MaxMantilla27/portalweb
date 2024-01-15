@@ -416,6 +416,10 @@ export class PagoComponent implements OnInit,OnDestroy {
   }
 
   PreProcesoPagoCuotaAlumnoV2(tarjeta:any){
+    const dialogRefLoader =this.dialog.open(ChargeComponent,{
+      panelClass:'dialog-charge',
+      disableClose:true
+    });
     this.CronogramaPago.registroCuota.forEach((r:any) => {
       if(r.estado==true){
         var fecha=new Date(r.fechaVencimiento);
@@ -439,6 +443,7 @@ export class PagoComponent implements OnInit,OnDestroy {
     this._FormaPagoService.PreProcesoPagoCuotaAlumno(this.jsonSend).pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
         console.log(x)
+        dialogRefLoader.close()
         var sesion=x._Repuesta.identificadorTransaccion;
         this._SessionStorageService.SessionSetValue(sesion,x._Repuesta.requiereDatosTarjeta);
         console.log(parseInt(tarjeta.idPasarelaPago))
