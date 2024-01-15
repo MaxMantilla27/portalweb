@@ -1,5 +1,5 @@
 import { Component, ElementRef, Inject, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { loadMercadoPago } from "@mercadopago/sdk-js";
 import { Subject, takeUntil } from 'rxjs';
@@ -30,6 +30,8 @@ export class ModalPagoMercadoPagoChileComponent implements OnInit {
     private _router:Router,
     public dialog: MatDialog,
     @Inject(MAT_DIALOG_DATA) public data: any,
+    private dialogRefModal: MatDialogRef<any>
+
   ) { }
 
   idMatricula:any
@@ -145,12 +147,14 @@ export class ModalPagoMercadoPagoChileComponent implements OnInit {
                 window.location.href = 'https://bsginstitute.com/AulaVirtual/PagoExitosoMercadoPago/'+this.json.IdentificadorTransaccion
                 // Recibir el resultado del pago
                 resolve();
+                this.dialogRefModal.close();
               })
               .catch(() => {
                 this.dialogRefLoader.close()
                 window.location.href = 'https://bsginstitute.com/AulaVirtual/PagoExitosoMercadoPago/'+this.json.IdentificadorTransaccion
                 // Tratar respuesta de error al intentar crear el pago
                 reject();
+                this.dialogRefModal.close();
               });
           });
         },

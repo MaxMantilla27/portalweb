@@ -1,5 +1,5 @@
 import { Component, Inject, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
 import { RegistroProcesoPagoAlumnoDTO, RegistroProcesoPagoPseDTO, RegistroRespuestaPreProcesoPagoDTO } from 'src/app/Core/Models/ProcesoPagoDTO';
@@ -27,7 +27,7 @@ export class ModalPagoOpenpayPeruComponent implements OnInit {
     private _router:Router,
     public dialog: MatDialog,
     @Inject(MAT_DIALOG_DATA) public data: any,
-
+    private dialogRefModal: MatDialogRef<any>
   ) { }
   public idMatricula=0
   public json:RegistroRespuestaPreProcesoPagoDTO={
@@ -138,10 +138,12 @@ export class ModalPagoOpenpayPeruComponent implements OnInit {
       error:e=>{
         this.oncharge=false
         dialogRef.close()
+        this.dialogRefModal.close();
       },
       complete:()=>{
         this.oncharge=false
         dialogRef.close()
+        this.dialogRefModal.close();
       }
     })
   }
@@ -190,10 +192,12 @@ export class ModalPagoOpenpayPeruComponent implements OnInit {
       error:e=>{
         this.oncharge=false
         dialogRef.close()
+        this.dialogRefModal.close();
       },
       complete:()=>{
         this.oncharge=false
         dialogRef.close()
+        this.dialogRefModal.close();
       }
     })
   }

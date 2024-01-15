@@ -1,5 +1,5 @@
 import { Component, Inject, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
 import { RegistroProcesoPagoAlumnoDTO, RegistroProcesoPagoPseDTO, RegistroRespuestaPreProcesoPagoDTO } from 'src/app/Core/Models/ProcesoPagoDTO';
@@ -25,6 +25,7 @@ export class ModalPagoOpenpayColombiaComponent implements OnInit, OnDestroy {
     private _SnackBarServiceService:SnackBarServiceService,
     private _router:Router,
     public dialog: MatDialog,
+    private dialogRefModal: MatDialogRef<any>,
     @Inject(MAT_DIALOG_DATA) public data: any,
   ) { }
   public idMatricula=0
@@ -189,10 +190,12 @@ export class ModalPagoOpenpayColombiaComponent implements OnInit, OnDestroy {
       error:e=>{
         this.oncharge=false
         dialogRef.close()
+        this.dialogRefModal.close();
       },
       complete:()=>{
         this.oncharge=false
         dialogRef.close()
+        this.dialogRefModal.close();
       }
     })
   }
