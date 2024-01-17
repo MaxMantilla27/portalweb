@@ -52,6 +52,7 @@ import { ConfirmacionPagoMercadoPagoChileComponent } from './confirmacion-pago-m
 import { ResultadoPagoMercadopagoComponent } from './resultado-pago-mercadopago/resultado-pago-mercadopago.component';
 import { ConfirmacionPagoOpenpayColombiaComponent } from './confirmacion-pago-openpay-colombia/confirmacion-pago-openpay-colombia.component';
 import { PagoMercadoPagoComponent } from './confirmacion-pago-organico/pago-mercado-pago/pago-mercado-pago.component';
+import { ConfirmacionPagoOpenpayPeruComponent } from './confirmacion-pago-openpay-peru/confirmacion-pago-openpay-peru.component';
 
 const routes: Routes = [
   {
@@ -103,6 +104,8 @@ const routes: Routes = [
         { path: 'MisPagos/:IdMatricula/klap/:Identificador', component: ConfirmacionPagoKlapComponent,canActivate:[AlumnoGuard]},
         { path: 'MisPagos/:IdMatricula/openpayCOP/:Identificador', component: ConfirmacionPagoOpenpayColombiaComponent,canActivate:[AlumnoGuard]},
         { path: 'MisPagos/:IdMatricula/mercadoPago/:Identificador', component: ConfirmacionPagoMercadoPagoChileComponent,canActivate:[AlumnoGuard]},
+        { path: 'MisPagos/:IdMatricula/openpayPEN/:Identificador', component: ConfirmacionPagoOpenpayPeruComponent,canActivate:[AlumnoGuard]},
+
 
         // Afiliaciones a Pagos Recurrentes
         { path: 'MisPagos/Afiliacion/:IdMatricula/openpay/:Identificador', component: AfiliacionOpenpayComponent,canActivate:[AlumnoGuard]},

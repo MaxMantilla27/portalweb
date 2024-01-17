@@ -216,6 +216,13 @@ export class FormaPagoService {
       return EMPTY;
     }
   }
+  public ProcesamientoPagoPeruOpenPay(ident:string):Observable<any>{
+    if(this.isBrowser){
+      return this.http.get<any>(this.urlBase+'/ProcesamientoPagoPeruOpenPay?Id='+ident);
+    }else{
+      return EMPTY;
+    }
+  }
 
   public ProcesamientoAfiliacionOpenPay(ident:string):Observable<any>{
     if(this.isBrowser){
@@ -231,7 +238,13 @@ export class FormaPagoService {
       return EMPTY;
     }
   }
-
+  public ProcesamientoAfiliacionPeruOpenPay(ident:string):Observable<any>{
+    if(this.isBrowser){
+      return this.http.get<any>(this.urlBase+'/ValidarProcesoAfiliacionPeruOpenPay?Id='+ident);
+    }else{
+      return EMPTY;
+    }
+  }
 
   public ObtenerConfirmacionWebPay(token_ws:string):Observable<any>{
     if(this.isBrowser){
