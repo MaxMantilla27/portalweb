@@ -150,3 +150,32 @@ table tr:last-child td {
   border-color: darkgrey; /* Cambio de color al hacer hover */
   transform: scale(1.08); /* Aumenta el tamaño al hacer hover */
 }
+.comprobatePagoTarjeta {
+  display: flex;
+  align-items: center;
+  .titleComprobantePagoTarjeta {
+    color: #878787;
+    width: 160px;
+  }
+  .items {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+    .itm {
+      padding: 10px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+      background: #f4f4f4;
+      border-radius: 20px;
+      cursor: pointer;
+      margin: 10px 0px;
+      .material-icons {
+        font-size: 15px !important;
+        margin-left: 10px;
+        color: #02c158;
+      }
+    }
+  }
+}

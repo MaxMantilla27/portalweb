@@ -324,7 +324,7 @@ export class FormChatComponent implements OnInit,OnChanges {
           //   r.hidden=true;
           // }
         })
-        this.form.enablefield('IdRegion');
+        this.form?.enablefield('IdRegion');
       }
     })
   }
@@ -348,7 +348,7 @@ export class FormChatComponent implements OnInit,OnChanges {
               r.validate=[Validators.required];
             }
           })
-          this.form.enablefield('IdLocalidad');
+          this.form?.enablefield('IdLocalidad');
         }
         else{
           this.fileds.forEach(r=>{

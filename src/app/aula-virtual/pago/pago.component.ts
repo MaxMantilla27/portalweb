@@ -54,6 +54,11 @@ export class PagoComponent implements OnInit,OnDestroy {
     this.signal$.next(true);
     this.signal$.complete();
   }
+  public DatosFacturacion:any = {
+    Comprobante:false,
+    RazonSocial: "",
+    CodigoTributario: "",
+  }
   public migaPan = [
     {
       titulo: 'Mis pagos',
@@ -436,6 +441,7 @@ export class PagoComponent implements OnInit,OnDestroy {
         })
       }
     });
+
     this.jsonSend.IdFormaPago=tarjeta.idFormaPago
     this.jsonSend.IdPasarelaPago=tarjeta.idPasarelaPago
     this.jsonSend.MedioCodigo=tarjeta.medioCodigo
@@ -454,7 +460,7 @@ export class PagoComponent implements OnInit,OnDestroy {
             /*Aperturamos el modal del pago*/
             const dialogRef = this.dialog.open(ModalPagoVisaComponent, {
               width: '600px',
-              data: { Identificador: sesion, IdMatricula: this.idMatricula },
+              data: { Identificador: sesion, IdMatricula: this.idMatricula, DatosFacturacion:this.DatosFacturacion },
               panelClass: 'dialog-Tarjeta',
               // disableClose:true
             });
@@ -466,7 +472,7 @@ export class PagoComponent implements OnInit,OnDestroy {
             // this._router.navigate(['/AulaVirtual/MisPagos/'+this.idMatricula+'/tarjeta/'+sesion]);
             const dialogRef = this.dialog.open(ModalPagoTarjetaComponent, {
               width: '600px',
-              data: { Identificador: sesion, IdMatricula: this.idMatricula },
+              data: { Identificador: sesion, IdMatricula: this.idMatricula, DatosFacturacion:this.DatosFacturacion },
               panelClass: 'dialog-Tarjeta',
               // disableClose:true
             });
@@ -476,7 +482,7 @@ export class PagoComponent implements OnInit,OnDestroy {
           console.log('/AulaVirtual/MisPagos/'+this.idMatricula+'/tarjeta/'+sesion)
           const dialogRef = this.dialog.open(ModalPagoTarjetaMexicoComponent, {
             width: '600px',
-            data: { Identificador: sesion, IdMatricula: this.idMatricula },
+            data: { Identificador: sesion, IdMatricula: this.idMatricula, DatosFacturacion:this.DatosFacturacion },
             panelClass: 'dialog-Tarjeta',
             // disableClose:true
           });
@@ -487,7 +493,7 @@ export class PagoComponent implements OnInit,OnDestroy {
             console.log('/AulaVirtual/MisPagos/'+this.idMatricula+'/wompi/'+sesion)
             const dialogRef = this.dialog.open(ModalPagoWompiComponent, {
               width: '600px',
-              data: { Identificador: sesion, IdMatricula: this.idMatricula },
+              data: { Identificador: sesion, IdMatricula: this.idMatricula, DatosFacturacion:this.DatosFacturacion },
               panelClass: 'dialog-Tarjeta',
               // disableClose:true
             });
@@ -500,7 +506,7 @@ export class PagoComponent implements OnInit,OnDestroy {
             console.log('/AulaVirtual/MisPagos/'+this.idMatricula+'/conekta/'+sesion)
             const dialogRef = this.dialog.open(ModalPagoConektaComponent, {
               width: '600px',
-              data: { Identificador: sesion, IdMatricula: this.idMatricula },
+              data: { Identificador: sesion, IdMatricula: this.idMatricula, DatosFacturacion:this.DatosFacturacion },
               panelClass: 'dialog-Tarjeta',
               maxHeight: '90vh' //you can adjust the value as per your view
               // disableClose:true
@@ -516,7 +522,7 @@ export class PagoComponent implements OnInit,OnDestroy {
             console.log('/AulaVirtual/MisPagos/'+this.idMatricula+'/webpay/'+sesion)
             const dialogRef = this.dialog.open(ModalPagoWebpayComponent, {
               width: '600px',
-              data: { Identificador: sesion, IdMatricula: this.idMatricula },
+              data: { Identificador: sesion, IdMatricula: this.idMatricula, DatosFacturacion:this.DatosFacturacion },
               panelClass: 'dialog-Tarjeta',
             });
             // this._router.navigate(['/AulaVirtual/MisPagos/'+this.idMatricula+'/webpay/'+sesion]);
@@ -533,7 +539,7 @@ export class PagoComponent implements OnInit,OnDestroy {
             console.log('/AulaVirtual/MisPagos/'+this.idMatricula+'/izipay/'+sesion)
             const dialogRef = this.dialog.open(ModalPagoIzipayComponent, {
               width: '600px',
-              data: { Identificador: sesion, IdMatricula: this.idMatricula },
+              data: { Identificador: sesion, IdMatricula: this.idMatricula, DatosFacturacion:this.DatosFacturacion },
               panelClass: 'dialog-Tarjeta',
               // disableClose:true
             });
@@ -543,7 +549,7 @@ export class PagoComponent implements OnInit,OnDestroy {
             console.log('/AulaVirtual/MisPagos/'+this.idMatricula+'/openpayCOP/'+sesion)
             const dialogRef = this.dialog.open(ModalPagoOpenpayColombiaComponent, {
               width: '600px',
-              data: { Identificador: sesion, IdMatricula: this.idMatricula },
+              data: { Identificador: sesion, IdMatricula: this.idMatricula, DatosFacturacion:this.DatosFacturacion },
               panelClass: 'dialog-Tarjeta',
               // disableClose:true
             });
@@ -552,7 +558,7 @@ export class PagoComponent implements OnInit,OnDestroy {
             console.log('/AulaVirtual/MisPagos/'+this.idMatricula+'/mercadoPago/'+sesion)
             const dialogRef = this.dialog.open(ModalPagoMercadoPagoChileComponent, {
               width: '600px',
-              data: { Identificador: sesion, IdMatricula: this.idMatricula },
+              data: { Identificador: sesion, IdMatricula: this.idMatricula, DatosFacturacion:this.DatosFacturacion },
               panelClass: 'dialog-Tarjeta',
               maxHeight: '90vh' //you can adjust the value as per your view
               // disableClose:true
@@ -563,7 +569,7 @@ export class PagoComponent implements OnInit,OnDestroy {
             console.log('/AulaVirtual/MisPagos/'+this.idMatricula+'/openpayPEN/'+sesion)
             const dialogRef = this.dialog.open(ModalPagoOpenpayPeruComponent, {
               width: '600px',
-              data: { Identificador: sesion, IdMatricula: this.idMatricula },
+              data: { Identificador: sesion, IdMatricula: this.idMatricula, DatosFacturacion:this.DatosFacturacion },
               panelClass: 'dialog-Tarjeta',
               // disableClose:true
             });

@@ -81,6 +81,9 @@ export class ModalPagoOpenpayColombiaComponent implements OnInit, OnDestroy {
     if (this.data.Identificador){
       this.idMatricula =this.data.IdMatricula;
       this.json.IdentificadorTransaccion = this.data.Identificador;
+      this.jsonSave.Comprobante = this.data.DatosFacturacion.Comprobante;
+      this.jsonSave.CodigoTributario = this.data.DatosFacturacion.CodigoTributario;
+      this.jsonSave.RazonSocial = this.data.DatosFacturacion.RazonSocial;
       var r= this._SessionStorageService.SessionGetValue(this.json.IdentificadorTransaccion);
       if(r!=''){
         this.json.RequiereDatosTarjeta=r=='false'?false:true;

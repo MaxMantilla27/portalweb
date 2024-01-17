@@ -64,6 +64,9 @@ export class ModalPagoWompiComponent implements OnInit,OnDestroy {
   ngOnInit(): void {
     if (this.data.Identificador){
       this.json.IdentificadorTransaccion = this.data.Identificador;
+      this.jsonSave.Comprobante = this.data.DatosFacturacion.Comprobante;
+      this.jsonSave.CodigoTributario = this.data.DatosFacturacion.CodigoTributario;
+      this.jsonSave.RazonSocial = this.data.DatosFacturacion.RazonSocial;
       this.IdMatriculaCabecera = this.data.IdMatricula;
       var r= this._SessionStorageService.SessionGetValue(this.json.IdentificadorTransaccion);
       if(r!=''){

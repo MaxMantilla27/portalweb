@@ -70,7 +70,7 @@ export class ModalPagoTarjetaComponent implements OnInit {
     TipoClientePSE:'',
     TipoDocumentoPSE:'',
   }
-
+  public emailAlumno : string = "";
   ngOnDestroy(): void {
     this.signal$.next(true);
     this.signal$.complete();
@@ -79,10 +79,16 @@ export class ModalPagoTarjetaComponent implements OnInit {
     this._HelperService.recibirCombosPerfil.pipe(takeUntil(this.signal$)).subscribe((x) => {
       this.jsonSave.TarjetaHabiente.Titular =x.datosAlumno.nombres+' '+x.datosAlumno.apellidos;
       this.jsonSave.TarjetaHabiente.NumeroDocumento =x.datosAlumno.dni;
+      this.emailAlumno = x.datosAlumno.email;
     })
     if(this.data!=null){
       this.idMatricula = this.data.IdMatricula;
       this.json.IdentificadorTransaccion = this.data.Identificador;
+
+      this.jsonSave.Comprobante = this.data.DatosFacturacion.Comprobante;
+      this.jsonSave.CodigoTributario = this.data.DatosFacturacion.CodigoTributario;
+      this.jsonSave.RazonSocial = this.data.DatosFacturacion.RazonSocial;
+
       var r= this._SessionStorageService.SessionGetValue(this.json.IdentificadorTransaccion);
       if(r!=''){
         this.json.RequiereDatosTarjeta=r=='false'?false:true;
