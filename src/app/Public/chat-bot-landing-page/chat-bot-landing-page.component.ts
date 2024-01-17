@@ -91,7 +91,7 @@ export class ChatBotLandingPageComponent implements OnInit,OnDestroy,OnChanges{
   }
   public dataInicial:InicioEntradaChatbotDTO={
     IdContactoPortalSegmento:this._SessionStorageService.SessionGetValue('usuarioWeb'),
-    IdFormulario:567
+    IdFormulario: 550//567
   }
   public Paises:any;
   public min=0
@@ -480,6 +480,11 @@ export class ChatBotLandingPageComponent implements OnInit,OnDestroy,OnChanges{
     this.flujoActual.Respuesta=item.nombre
     if(this.pasoActual.opciones!=undefined && this.pasoActual.opciones!=null){
       this.flujoActual.OpcionEnviadoJson=JSON.stringify(this.pasoActual.opciones)
+    }
+    if(this.pasoActual.FuncionObtenerOpcion = 'pw.SP_PW_ChatbotPGeneralMayorProbabilidadTop5_PorAlumno')
+    {
+      this.OportunidadDTO.IdPrograma = item.id;
+      console.log("id nuevo programa seleccionado: ", item.id);
     }
     this.SiguientesPasos.forEach((p) => {
       p.respondido=true
