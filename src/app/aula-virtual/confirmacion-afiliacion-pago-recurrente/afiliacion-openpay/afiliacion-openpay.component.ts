@@ -9,6 +9,7 @@ import { FormaPagoService } from 'src/app/Core/Shared/Services/FormaPago/forma-p
 import { HelperService } from 'src/app/Core/Shared/Services/helper.service';
 import { SessionStorageService } from 'src/app/Core/Shared/Services/session-storage.service';
 import { SnackBarServiceService } from 'src/app/Core/Shared/Services/SnackBarService/snack-bar-service.service';
+declare var OpenPayPeru: any;
 declare var OpenPayColombia: any;
 declare var OpenPay: any;
 @Component({
@@ -146,6 +147,15 @@ export class AfiliacionOpenpayComponent implements OnInit,OnDestroy {
       OpenPayColombia.setSandboxMode(false);
       deviceSessionId = OpenPayColombia.deviceData.setup('fomrOpenPAy');
     }
+    else if(this.jsonSave.IdPasarelaPago==18){
+      // OpenPayPeru.setId('momoj94bmepe1pmubupx'); //--PRUEBA
+      // OpenPayPeru.setApiKey('pk_adaaac28202241d6a979341a0d463809'); //--PRUEBA
+      //OpenPayPeru.setSandboxMode(false);
+      OpenPayPeru.setId('mtdw8qhfdylsh4rotsoh');
+      OpenPayPeru.setApiKey('pk_110ab96b532e4cd298a86652327ba258');
+      OpenPayPeru.setSandboxMode(false);
+      deviceSessionId = OpenPayPeru.deviceData.setup('fomrOpenPAy');
+    }
     else{
       OpenPay.setId('mxgmgffnaxu1mosrkhlo');
       OpenPay.setApiKey('pk_c9dfff7c5c9e4a68a7c6083d280ff4db');
@@ -240,6 +250,19 @@ export class AfiliacionOpenpayComponent implements OnInit,OnDestroy {
 
       if(this.jsonSave.IdPasarelaPago==16){
         OpenPayColombia.token.create(
+          {
+            card_number: this.jsonSave.TarjetaHabiente.NumeroTarjeta,
+            holder_name: this.jsonSave.TarjetaHabiente.Titular,
+            expiration_year: this.jsonSave.TarjetaHabiente.Aniho,
+            expiration_month: this.jsonSave.TarjetaHabiente.Mes,
+            cvv2: this.jsonSave.TarjetaHabiente.CodigoVV,
+          },
+          succes,
+          error
+        )
+      }
+      else if(this.jsonSave.IdPasarelaPago==18){
+        OpenPayPeru.token.create(
           {
             card_number: this.jsonSave.TarjetaHabiente.NumeroTarjeta,
             holder_name: this.jsonSave.TarjetaHabiente.Titular,

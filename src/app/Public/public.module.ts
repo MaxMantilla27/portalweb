@@ -53,6 +53,7 @@ import { LoginFacebookIngresarComponent } from './login/login-facebook/login-fac
 import { LoginFacebookRegistrarComponent } from './login/login-facebook/login-facebook-registrar/login-facebook-registrar.component';
 import { NotificacionBoliviaComponent } from './Home/notificacion-bolivia/notificacion-bolivia.component';
 import { CompraExitosaOpenPayColombiaComponent } from './compra-exitosa-open-pay-colombia/compra-exitosa-open-pay-colombia.component';
+import { CompraExistosaOpenPayPeruComponent } from './compra-existosa-open-pay-peru/compra-existosa-open-pay-peru.component';
 import { ChatBotLandingPageComponent } from './chat-bot-landing-page/chat-bot-landing-page.component';
 
 
@@ -113,6 +114,7 @@ import { ChatBotLandingPageComponent } from './chat-bot-landing-page/chat-bot-la
     LoginFacebookIngresarComponent,
     LoginFacebookRegistrarComponent,
     NotificacionBoliviaComponent,
+    CompraExistosaOpenPayPeruComponent
     CompraExitosaOpenPayColombiaComponent,
     ChatBotLandingPageComponent
   ],
