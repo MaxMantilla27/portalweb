@@ -114,7 +114,7 @@ import { ChatBotLandingPageComponent } from './chat-bot-landing-page/chat-bot-la
     LoginFacebookIngresarComponent,
     LoginFacebookRegistrarComponent,
     NotificacionBoliviaComponent,
-    CompraExistosaOpenPayPeruComponent
+    CompraExistosaOpenPayPeruComponent,
     CompraExitosaOpenPayColombiaComponent,
     ChatBotLandingPageComponent
   ],
