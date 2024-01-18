@@ -372,7 +372,7 @@ export class ChatBotLandingPageComponent implements OnInit,OnDestroy,OnChanges{
     return this.pasoActual.mensajeErrorValidacion;
   }
   ContinuarFlujo(ValorDB:any){
-    if(this.pasoActual.nombreFuncion=='CreacionAlumnoOportunidad'){
+    if(this.pasoActual.nombreFuncion=='CreacionAlumnoOportunidad' || this.pasoActual.FuncionObtenerOpcion == 'pw.SP_PW_ChatbotPGeneralMayorProbabilidadTop5_PorAlumno'){
       this.OportunidadDTO.NombresCompletos=this.datosAlumno.Nombres
       this.OportunidadDTO.Celular=this.datosAlumno.Movil.toString()
       this.OportunidadDTO.Correo=this.datosAlumno.Email
