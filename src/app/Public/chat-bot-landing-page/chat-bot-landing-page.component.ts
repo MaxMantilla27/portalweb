@@ -484,7 +484,11 @@ export class ChatBotLandingPageComponent implements OnInit,OnDestroy,OnChanges{
     if(this.pasoActual.FuncionObtenerOpcion = 'pw.SP_PW_ChatbotPGeneralMayorProbabilidadTop5_PorAlumno')
     {
       this.OportunidadDTO.IdPrograma = item.id;
+
+      this.OportunidadDTO.IdPespecifico
+      this.ObtenerIdPEspecifico(item.id , this.datosAlumno.IdPais);
       console.log("id nuevo programa seleccionado: ", item.id);
+      console.log("idpespecifico nuevo programa",this.OportunidadDTO.IdPespecifico);
     }
     this.SiguientesPasos.forEach((p) => {
       p.respondido=true
@@ -638,6 +642,14 @@ export class ChatBotLandingPageComponent implements OnInit,OnDestroy,OnChanges{
         }
         this.router.navigate([this.urlPrograma]);
     }})
+  }
+
+  ObtenerIdPEspecifico(IdPGeneral: any , IdPaisAlumno: any){
+    this._ChatBotService.ObtenerIdPEspecifico(IdPGeneral, IdPaisAlumno).pipe(takeUntil(this.signal$)).subscribe({
+      next:x=>{
+        this.OportunidadDTO.IdPespecifico = x;
+      }
+    })
   }
 
 }
