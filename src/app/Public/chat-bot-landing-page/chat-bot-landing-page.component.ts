@@ -489,6 +489,7 @@ export class ChatBotLandingPageComponent implements OnInit,OnDestroy,OnChanges{
       this.ObtenerIdPEspecifico(item.id , this.datosAlumno.IdPais);
       console.log("id nuevo programa seleccionado: ", item.id);
       console.log("idpespecifico nuevo programa",this.OportunidadDTO.IdPespecifico);
+
     }
     this.SiguientesPasos.forEach((p) => {
       p.respondido=true
