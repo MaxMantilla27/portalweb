@@ -1,8 +1,16 @@
-<div>
-  <app-cargando *ngIf="cargando==false" ></app-cargando>
-</div>
+<ng-container *ngIf="cargando==false">
+  <div class="row"
+    style="display: flex; justify-content: center;align-items: center;text-align: center; height: 15rem;">
+    <div class="col-12" style="display: flex;justify-content: center;">
+      <mat-spinner></mat-spinner>
+    </div>
+    <div class="col-12">
+      Cargando información ...
+    </div>
+  </div>
+</ng-container>
 
-<div *ngIf="cargando">
+<ng-container *ngIf="cargando">
   <div class="titulos">
     <div class="titleCurso" *ngIf="flujoActual.NombrePGeneral">
       {{flujoActual.NombrePGeneral}}
@@ -198,4 +206,4 @@
     </div>
   </div>
 
-</div>
+</ng-container>

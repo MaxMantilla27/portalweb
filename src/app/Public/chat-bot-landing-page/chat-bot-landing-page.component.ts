@@ -1,5 +1,5 @@
-import { isPlatformBrowser } from '@angular/common';
-import { Component, Inject, OnChanges, OnDestroy, OnInit, PLATFORM_ID, SimpleChanges, ViewEncapsulation } from '@angular/core';
+import { DOCUMENT, isPlatformBrowser } from '@angular/common';
+import { Component, Inject, OnChanges, OnDestroy, OnInit, PLATFORM_ID, Renderer2, SimpleChanges, ViewEncapsulation } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { Subject, takeUntil } from 'rxjs';
 import { ChatBotAlumnoDTO } from 'src/app/Core/Models/AlumnoDTO';
@@ -31,7 +31,9 @@ export class ChatBotLandingPageComponent implements OnInit,OnDestroy,OnChanges{
     private _HelperService:HelperService,
     private _SessionStorageService:SessionStorageService,
     private _ChatBotService:ChatBotService,
-    private router: Router
+    private router: Router,
+    private renderer: Renderer2,
+    @Inject(DOCUMENT) private _document: Document,
   ) {
     this.isBrowser = isPlatformBrowser(platformId);
     this.urlPrograma = "/programas-certificaciones-cursos";
@@ -106,7 +108,6 @@ export class ChatBotLandingPageComponent implements OnInit,OnDestroy,OnChanges{
     this.SetPaisCodigo()
   }
   ngOnInit(): void {
-
     if(this.isBrowser){
       this.intervalInicio= setInterval(()=>{
         var usuarioWeb=this._SessionStorageService.SessionGetValue('usuarioWeb');
@@ -222,7 +223,9 @@ export class ChatBotLandingPageComponent implements OnInit,OnDestroy,OnChanges{
         this.FlujoConversacionPrincipal()
       },
       complete:()=>{
-          this.cargando=true
+          this.cargando=true,
+          this.FocusInput()
+
       }
     })
   }
@@ -655,6 +658,9 @@ export class ChatBotLandingPageComponent implements OnInit,OnDestroy,OnChanges{
         this.OportunidadDTO.IdPespecifico = x;
       }
     })
+  }
+  FocusInput(){
+    // this._document.getElementById('InputFocus')?.focus();
   }
 
 }
