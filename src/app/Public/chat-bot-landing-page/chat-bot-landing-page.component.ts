@@ -387,7 +387,11 @@ export class ChatBotLandingPageComponent implements OnInit,OnDestroy,OnChanges{
       this.OportunidadDTO.Correo=this.datosAlumno.Email
       this.OportunidadDTO.IdPais=this.datosAlumno.IdPais
       this.ProcesarAsignacionAutomaticaChatbot();
-    }else{
+    }if(this.pasoActual.idCampoContacto == 3){
+      console.log('entro a la validacion de correo');
+      this.ValidacionAlumnoCorreoChatBot();
+    }
+    else{
       if((this.pasoActual.nombreFuncion=='ActualizarAlumnoProbabilidad' || this.pasoActual.nombreFuncion=='ActualizarAlumno') && ValorDB!=null && ValorDB!=undefined && ValorDB!=0){
         this.ActualizarAlumnoDTO.IdentificadorApi=this.pasoActual.identificadorApi
         this.ActualizarAlumnoDTO.Valor=ValorDB.toString()
@@ -447,6 +451,7 @@ export class ChatBotLandingPageComponent implements OnInit,OnDestroy,OnChanges{
           this.flujoActual.UsuarioRegistrado=true
           this.flujoActual.NombreUsuario=x.nombresCompletos.split(' ')[0]
           this.flujoActual.IdAlumno=x.idAlumno
+          console.log( 'usuario registrado: ', this.flujoActual.UsuarioRegistrado);
           this.ActualizarIdOportunidadChatbotUsuarioContacto()
         }
       },
