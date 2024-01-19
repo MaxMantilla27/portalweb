@@ -100,6 +100,7 @@ export class ChatBotLandingPageComponent implements OnInit,OnDestroy,OnChanges{
   public opcionesTruFalse:Array<any>=[]
   public urlPrograma: string
   public idBusqueda: any
+  public cargando=false
 
   ngOnChanges(changes: SimpleChanges): void {
     this.SetPaisCodigo()
@@ -219,6 +220,9 @@ export class ChatBotLandingPageComponent implements OnInit,OnDestroy,OnChanges{
           this.pasoActual=this.SiguientesPasos[this.SiguientesPasos.length-1]
         }
         this.FlujoConversacionPrincipal()
+      },
+      complete:()=>{
+          this.cargando=true
       }
     })
   }

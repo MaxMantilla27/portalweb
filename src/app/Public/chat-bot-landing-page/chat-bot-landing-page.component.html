@@ -1,194 +1,201 @@
-<div class="titulos">
-  <div class="titleCurso" *ngIf="flujoActual.NombrePGeneral">
-    {{flujoActual.NombrePGeneral}}
-  </div>
+<div>
+  <app-cargando *ngIf="cargando==false" ></app-cargando>
 </div>
 
-<div class="container" style="padding: 0% 10%">
-  <div class="rowRowpadd">
-    <div class="contentPrimerPaso">
+<div *ngIf="cargando">
+  <div class="titulos">
+    <div class="titleCurso" *ngIf="flujoActual.NombrePGeneral">
+      {{flujoActual.NombrePGeneral}}
+    </div>
+  </div>
 
-      <ng-container  *ngIf="
-      SiguientesPasos != undefined &&
-      SiguientesPasos != null &&
-      SiguientesPasos.length > 0
-      ">   <!--*ngIf="chat == true"> -->
+  <div class="container" style="padding: 0% 10%">
+    <div class="rowRowpadd">
+      <div class="contentPrimerPaso">
+
+        <ng-container  *ngIf="
+        SiguientesPasos != undefined &&
+        SiguientesPasos != null &&
+        SiguientesPasos.length > 0
+        ">   <!--*ngIf="chat == true"> -->
 
 
-        <div class="textoChatbot"></div>
+          <div class="textoChatbot"></div>
 
 
-        <ng-container *ngFor="let item of SiguientesPasos; let i = index">
-          <div class="PreguntaChat" *ngIf="i >= 0">
-            <div class="GloboPregunta">
-              <div class="imgChatBot"></div>
+          <ng-container *ngFor="let item of SiguientesPasos; let i = index">
+            <div class="PreguntaChat" *ngIf="i >= 0">
+              <div class="GloboPregunta">
+                <div class="imgChatBot"></div>
+                <div
+                  class="PreguntaGlobo"
+                  [innerHtml]="item.mensaje | safeHtml"
+                ></div>
+              </div>
               <div
-                class="PreguntaGlobo"
-                [innerHtml]="item.mensaje | safeHtml"
-              ></div>
-            </div>
-            <div
-              class="OpcionesPregunta"
-              *ngIf="item.opciones2 != null && item.opciones2.length > 0"
-            >
-              <ng-container *ngFor="let itemo of item.opciones2">
-                <button type="button"
-                  class="OpcionesGlobo"
-                  (click)="
-                    item.respondido == true
-                      ? ''
-                      : ActualizarAlumnoChatBot2(itemo.id,itemo.nombre)
-                  "
-                >
-                  {{ itemo.nombre }}
-                </button>
-                <br>
-              </ng-container>
-            </div>
-            <div
-              class="OpcionesPregunta"
-              *ngIf="item.opciones != null && item.opciones.length > 0"
-            >
-              <ng-container *ngIf="item.tipoOpcion != 'TrueFalse'">
-                <ng-container *ngFor="let itemo of item.opciones">
-                  <div
+                class="OpcionesPregunta"
+                *ngIf="item.opciones2 != null && item.opciones2.length > 0"
+              >
+                <ng-container *ngFor="let itemo of item.opciones2">
+                  <button type="button"
                     class="OpcionesGlobo"
                     (click)="
-                      item.respondido == true ? '' : SelectOpciones(itemo)
+                      item.respondido == true
+                        ? ''
+                        : ActualizarAlumnoChatBot2(itemo.id,itemo.nombre)
                     "
                   >
                     {{ itemo.nombre }}
-                  </div>
+                  </button>
+                  <br>
                 </ng-container>
-              </ng-container>
-              <ng-container *ngIf="item.tipoOpcion == 'TrueFalse'">
-                <ng-container *ngFor="let itemo of item.opciones">
-                  <ng-container
-                    *ngIf="
-                      itemo.idCampo != undefined &&
-                      itemo.idCampo != null &&
-                      itemo.idCampo != 0
-                    "
-                  >
-                    <div class="OpcionesCheckGlobo">
-                      <div class="TipoCheck">{{ itemo.nombre }}</div>
-                      <div class="NombreCheck">{{ itemo.campo }}</div>
-                      <mat-slide-toggle
-                        class="example-margin"
-                        color="primary"
-                        [(ngModel)]="itemo.Check"
-                        [disabled]="item.respondido == true"
-                      >
-                      </mat-slide-toggle>
+              </div>
+              <div
+                class="OpcionesPregunta"
+                *ngIf="item.opciones != null && item.opciones.length > 0"
+              >
+                <ng-container *ngIf="item.tipoOpcion != 'TrueFalse'">
+                  <ng-container *ngFor="let itemo of item.opciones">
+                    <div
+                      class="OpcionesGlobo"
+                      (click)="
+                        item.respondido == true ? '' : SelectOpciones(itemo)
+                      "
+                    >
+                      {{ itemo.nombre }}
                     </div>
                   </ng-container>
                 </ng-container>
-                <div
-                  style="
-                    width: 100%;
-                    justify-content: center;
-                    margin-top: 30px;
-                  "
-                  *ngIf="item.respondido != true"
-                >
-                <div class="ButtonPrimerPaso">
-                  <div>
-                    <app-default-button
-                    [confs]="{ color: 'primary', titulo: 'Continuar' }"
-                    [icon]="''"
-                    [style]="
-                      'width: 100%;background: white;border: solid 1px #f8893f; color: #f8893f;padding: 0px 50px;border-radius: 15px;'
+                <ng-container *ngIf="item.tipoOpcion == 'TrueFalse'">
+                  <ng-container *ngFor="let itemo of item.opciones">
+                    <ng-container
+                      *ngIf="
+                        itemo.idCampo != undefined &&
+                        itemo.idCampo != null &&
+                        itemo.idCampo != 0
+                      "
+                    >
+                      <div class="OpcionesCheckGlobo">
+                        <div class="TipoCheck">{{ itemo.nombre }}</div>
+                        <div class="NombreCheck">{{ itemo.campo }}</div>
+                        <mat-slide-toggle
+                          class="example-margin"
+                          color="primary"
+                          [(ngModel)]="itemo.Check"
+                          [disabled]="item.respondido == true"
+                        >
+                        </mat-slide-toggle>
+                      </div>
+                    </ng-container>
+                  </ng-container>
+                  <div
+                    style="
+                      width: 100%;
+                      justify-content: center;
+                      margin-top: 30px;
                     "
-                    (click)="ContinuarOpciones(3)"
-                  ></app-default-button>
+                    *ngIf="item.respondido != true"
+                  >
+                  <div class="ButtonPrimerPaso">
+                    <div>
+                      <app-default-button
+                      [confs]="{ color: 'primary', titulo: 'Continuar' }"
+                      [icon]="''"
+                      [style]="
+                        'width: 100%;background: white;border: solid 1px #f8893f; color: #f8893f;padding: 0px 50px;border-radius: 15px;'
+                      "
+                      (click)="ContinuarOpciones(3)"
+                    ></app-default-button>
+                    </div>
                   </div>
-                </div>
+                  </div>
+                </ng-container>
+              </div>
+            </div>
+            <div
+              class="RespuestaCheat"
+              *ngIf="item.esMensajeFinal != true && item.respuesta != null"
+            >
+              <ng-container *ngIf="item.respondido == true">
+                <div
+                  class="RespuestaGlobo"
+                  [innerHtml]="item.respuesta | safeHtml"
+                ></div>
+              </ng-container>
+              <ng-container
+                *ngIf="
+                  item.respondido != true &&
+                  (item.opciones == undefined ||
+                    item.opciones == null ||
+                    item.opciones.length == 0)
+                "
+              >
+                <div class="InputResponder">
+                  <div>
+                    <input
+                      class="inputData"
+                      [ngClass]="{ inputDataError: formControl.invalid }"
+                      [formControl]="formControl"
+                      [type]="
+                        item.identificadorApi == 'Movil'
+                          ? 'number'
+                          : item.identificadorApi == 'Email'
+                          ? 'email'
+                          : 'text'
+                      "
+                      matInput
+                      (keyup.enter)="SiguientePaso()"
+                      placeholder="{{ obtenerErrorCampoNombre() }}"
+                    />
+                    <div class="InputError" *ngIf="formControl.invalid">
+                      {{ obtenerErrorCampoNombre() }}
+                    </div>
+                  </div>
+
+                  <i
+                    class="material-icons sendMensajeChat sendMensajeChatInHabil"
+                    *ngIf="formControl.invalid"
+                    >send</i
+                  >
+                  <i
+                    class="material-icons sendMensajeChat sendMensajeChatHabil"
+                    *ngIf="!formControl.invalid"
+                    (click)="SiguientePaso()"
+                    >send</i
+                  >
                 </div>
               </ng-container>
             </div>
-          </div>
-          <div
-            class="RespuestaCheat"
-            *ngIf="item.esMensajeFinal != true && item.respuesta != null"
-          >
-            <ng-container *ngIf="item.respondido == true">
-              <div
-                class="RespuestaGlobo"
-                [innerHtml]="item.respuesta | safeHtml"
-              ></div>
-            </ng-container>
-            <ng-container
-              *ngIf="
-                item.respondido != true &&
-                (item.opciones == undefined ||
-                  item.opciones == null ||
-                  item.opciones.length == 0)
-              "
-            >
-              <div class="InputResponder">
-                <div>
-                  <input
-                    class="inputData"
-                    [ngClass]="{ inputDataError: formControl.invalid }"
-                    [formControl]="formControl"
-                    [type]="
-                      item.identificadorApi == 'Movil'
-                        ? 'number'
-                        : item.identificadorApi == 'Email'
-                        ? 'email'
-                        : 'text'
-                    "
-                    matInput
-                    (keyup.enter)="SiguientePaso()"
-                    placeholder="{{ obtenerErrorCampoNombre() }}"
-                  />
-                  <div class="InputError" *ngIf="formControl.invalid">
-                    {{ obtenerErrorCampoNombre() }}
-                  </div>
-                </div>
 
-                <i
-                  class="material-icons sendMensajeChat sendMensajeChatInHabil"
-                  *ngIf="formControl.invalid"
-                  >send</i
-                >
-                <i
-                  class="material-icons sendMensajeChat sendMensajeChatHabil"
-                  *ngIf="!formControl.invalid"
-                  (click)="SiguientePaso()"
-                  >send</i
-                >
+            <div class="ButtonPrimerPaso"  *ngIf="item.esMensajeFinal == true">
+              <div>
+                <app-default-button
+                [confs]="{ color: 'primary', titulo: 'Visitar Sitio Web' }"
+                [icon]="''"
+                [disabled]="formControl.invalid"
+                [style]="
+                  'margin-top: 50px; width: 100%;background: white;border: solid 1px #f8893f; color: #f8893f;padding: 0px 50px;border-radius: 15px;'
+                "
+                (click)="redigirPaginaCurso()"
+              ></app-default-button>
               </div>
-            </ng-container>
+
           </div>
 
-          <div class="ButtonPrimerPaso"  *ngIf="item.esMensajeFinal == true">
-            <div>
-              <app-default-button
-              [confs]="{ color: 'primary', titulo: 'Visitar Sitio Web' }"
-              [icon]="''"
-              [disabled]="formControl.invalid"
-              [style]="
-                'margin-top: 50px; width: 100%;background: white;border: solid 1px #f8893f; color: #f8893f;padding: 0px 50px;border-radius: 15px;'
-              "
-              (click)="redigirPaginaCurso()"
-            ></app-default-button>
-            </div>
+          </ng-container>
 
-        </div>
+          <div class="PreguntaChat" *ngIf="CargandoChat == true">
+            <div class="GloboPregunta">
+              <div class="imgChatBot"></div>
+              <div class="PreguntaGloboChat">
+                <div class="dot-flashing"></div>
+              </div>
+            </div>
+          </div>
 
         </ng-container>
-
-        <div class="PreguntaChat" *ngIf="CargandoChat == true">
-          <div class="GloboPregunta">
-            <div class="imgChatBot"></div>
-            <div class="PreguntaGloboChat">
-              <div class="dot-flashing"></div>
-            </div>
-          </div>
-        </div>
-
-      </ng-container>
+      </div>
     </div>
   </div>
+
 </div>
