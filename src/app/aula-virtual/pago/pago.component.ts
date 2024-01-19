@@ -89,6 +89,7 @@ export class PagoComponent implements OnInit,OnDestroy {
   public idAlumno:any=0
   public tarjetas:any;
   public validadorPagosMultiples:any;
+  public validadorPagosChile: boolean = false;
   public medioPagoSeleccionado:any;
   public eventosPagoSelccion:boolean = false;
   ngOnInit(): void {
@@ -267,7 +268,7 @@ export class PagoComponent implements OnInit,OnDestroy {
     this._MedioPagoActivoPasarelaService.MedioPagoPasarelaPortalCronograma(this.idMatricula).pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
         this.validadorPagosMultiples = x.filter((item:any) => item.idPasarelaPago === 7 || item.idPasarelaPago === 18 || item.idPasarelaPago === 10);
-
+        this.validadorPagosChile = x.filter((item:any) => item.idPasarelaPago === 11 || item.idPasarelaPago === 17).length > 0 ? true : false;
         this.tarjetas=x
         this.tarjetas.forEach((e:any) => {
           e.img=this._t.GetTarjeta(e.medioCodigo)
