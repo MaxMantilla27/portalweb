@@ -1,4 +1,4 @@
-import { DOCUMENT, isPlatformBrowser } from '@angular/common';
+import { DOCUMENT, isPlatformBrowser,DatePipe } from '@angular/common';
 import { Component, Inject, OnChanges, OnDestroy, OnInit, PLATFORM_ID, Renderer2, SimpleChanges, ViewEncapsulation } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { Subject, takeUntil } from 'rxjs';
@@ -103,7 +103,7 @@ export class ChatBotLandingPageComponent implements OnInit,OnDestroy,OnChanges{
   public urlPrograma: string
   public idBusqueda: any
   public cargando=false
-
+  public datePipe = new DatePipe('en-US');
   ngOnChanges(changes: SimpleChanges): void {
     this.SetPaisCodigo()
   }
@@ -196,7 +196,8 @@ export class ChatBotLandingPageComponent implements OnInit,OnDestroy,OnChanges{
                 identificadorApi: h.identificadorApi,
                 opciones: opcionesdesc,
                 respuesta:h.tipoOpcion=='TrueFalse'?null:h.respuesta,
-                tipoOpcion:h.tipoOpcion
+                tipoOpcion:h.tipoOpcion,
+                fechaRegistrada:this.datePipe.transform(h.fechaCreacion, 'hh:mm a'),
             }
             )
           });
@@ -223,9 +224,7 @@ export class ChatBotLandingPageComponent implements OnInit,OnDestroy,OnChanges{
         this.FlujoConversacionPrincipal()
       },
       complete:()=>{
-          this.cargando=true,
-          this.FocusInput()
-
+          this.cargando=true
       }
     })
   }
@@ -270,6 +269,9 @@ export class ChatBotLandingPageComponent implements OnInit,OnDestroy,OnChanges{
                 this.SetDataForm()
               }
             }
+            console.log(this.SiguientesPasos)
+            // this.SiguientesPasos[0].fechaRegistrada= this.datePipe.transform(new Date(), 'dd-MM-yyyy hh:mm a'),
+            this.SiguientesPasos[this.SiguientesPasos.length-1].fechaRegistrada= this.datePipe.transform(new Date(), 'hh:mm a'),
             console.log(this.SiguientesPasos)
             this.CargandoChat=false
             if(this.pasoActual.esMensajeFinal==true){
@@ -469,6 +471,7 @@ export class ChatBotLandingPageComponent implements OnInit,OnDestroy,OnChanges{
       p.respondido=true
     });
     this.SiguientesPasos[this.SiguientesPasos.length-1].respuesta=this.formControl.value
+    this.SiguientesPasos[this.SiguientesPasos.length-1].fechaRegistrada= this.datePipe.transform(new Date(), 'hh:mm a'),
     this.ContinuarFlujo(this.formControl.value)
     console.log(this.datosAlumno)
   }
@@ -659,8 +662,8 @@ export class ChatBotLandingPageComponent implements OnInit,OnDestroy,OnChanges{
       }
     })
   }
-  FocusInput(){
-    // this._document.getElementById('InputFocus')?.focus();
+  ScrollTo(el: HTMLElement) {
+    el.scrollIntoView();
   }
 
 }

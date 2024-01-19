@@ -4,13 +4,13 @@
     <div class="col-12" style="display: flex;justify-content: center;">
       <mat-spinner></mat-spinner>
     </div>
-    <div class="col-12">
+    <!-- <div class="col-12">
       Cargando información ...
-    </div>
+    </div> -->
   </div>
 </ng-container>
 
-<ng-container *ngIf="cargando">
+<ng-container  *ngIf="cargando">
   <div class="titulos">
     <div class="titleCurso" *ngIf="flujoActual.NombrePGeneral">
       {{flujoActual.NombrePGeneral}}
@@ -35,10 +35,11 @@
             <div class="PreguntaChat" *ngIf="i >= 0">
               <div class="GloboPregunta">
                 <div class="imgChatBot"></div>
-                <div
-                  class="PreguntaGlobo"
-                  [innerHtml]="item.mensaje | safeHtml"
+                <div class="PreguntaGlobo">
+                  <div [innerHtml]="item.mensaje | safeHtml"
                 ></div>
+                <div style="text-align: end;font-size: 15px;">{{item.fechaRegistrada}}</div>
+                </div>
               </div>
               <div
                 class="OpcionesPregunta"
@@ -122,13 +123,23 @@
             </div>
             <div
               class="RespuestaCheat"
-              *ngIf="item.esMensajeFinal != true && item.respuesta != null"
+              *ngIf="item.esMensajeFinal != true && item.respuesta != null" #ChatUbicacion
             >
               <ng-container *ngIf="item.respondido == true">
-                <div
+                <div class="RespuestaGlobo">
+                  <div>
+                    <div [innerHtml]="item.respuesta | safeHtml"
+                  ></div>
+                  <div style="text-align: end;font-size: 15px;">{{item.fechaRegistrada}}</div>
+                  </div>
+                </div>
+                <!-- <div
                   class="RespuestaGlobo"
                   [innerHtml]="item.respuesta | safeHtml"
                 ></div>
+                <div class="RespuestaGlobo">
+
+                </div> -->
               </ng-container>
               <ng-container
                 *ngIf="
@@ -138,9 +149,12 @@
                     item.opciones.length == 0)
                 "
               >
-                <div class="InputResponder">
+                <div ChatUbicacion class="InputResponder">
                   <div>
-                    <input
+                    <input autofocus
+                      (focus)="true"
+                      [autofocus]="true"
+                      focus
                       class="inputData"
                       [ngClass]="{ inputDataError: formControl.invalid }"
                       [formControl]="formControl"
@@ -154,6 +168,7 @@
                       matInput
                       (keyup.enter)="SiguientePaso()"
                       placeholder="{{ obtenerErrorCampoNombre() }}"
+                      autofocus
                     />
                     <div class="InputError" *ngIf="formControl.invalid">
                       {{ obtenerErrorCampoNombre() }}
@@ -169,6 +184,7 @@
                     class="material-icons sendMensajeChat sendMensajeChatHabil"
                     *ngIf="!formControl.invalid"
                     (click)="SiguientePaso()"
+                    (click)="ScrollTo(ChatUbicacion)"
                     >send</i
                   >
                 </div>
@@ -200,10 +216,16 @@
               </div>
             </div>
           </div>
+          <!-- <ng-container  #ChatUbicacion>
+
+          </ng-container> -->
+
 
         </ng-container>
       </div>
     </div>
+
   </div>
+
 
 </ng-container>
