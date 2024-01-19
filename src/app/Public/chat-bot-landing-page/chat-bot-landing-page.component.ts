@@ -387,19 +387,20 @@ export class ChatBotLandingPageComponent implements OnInit,OnDestroy,OnChanges{
       this.OportunidadDTO.Correo=this.datosAlumno.Email
       this.OportunidadDTO.IdPais=this.datosAlumno.IdPais
       this.ProcesarAsignacionAutomaticaChatbot();
-    }if(this.pasoActual.idCampoContacto == 3){
+    }
+    else if(this.pasoActual.idCampoContacto == 3){
       console.log('entro a la validacion de correo');
       this.ValidacionAlumnoCorreoChatBot();
     }
-    else{
-      if((this.pasoActual.nombreFuncion=='ActualizarAlumnoProbabilidad' || this.pasoActual.nombreFuncion=='ActualizarAlumno') && ValorDB!=null && ValorDB!=undefined && ValorDB!=0){
+    else if((this.pasoActual.nombreFuncion=='ActualizarAlumnoProbabilidad' || this.pasoActual.nombreFuncion=='ActualizarAlumno') && ValorDB!=null && ValorDB!=undefined && ValorDB!=0){
         this.ActualizarAlumnoDTO.IdentificadorApi=this.pasoActual.identificadorApi
         this.ActualizarAlumnoDTO.Valor=ValorDB.toString()
         this.ActualizarAlumnoChatBot()
-      }else{
-        this.FlujoConversacionPrincipal()
       }
+    else{
+        this.FlujoConversacionPrincipal()
     }
+
   }
   ActualizarIdOportunidadChatbotUsuarioContacto(){
     this._ChatBotService.ActualizarIdOportunidadChatbotUsuarioContacto(this.flujoActual.IdChatbotUsuarioContacto,this.flujoActual.IdOportunidad,this.flujoActual.IdAlumno).pipe(takeUntil(this.signal$)).subscribe({
@@ -499,8 +500,6 @@ export class ChatBotLandingPageComponent implements OnInit,OnDestroy,OnChanges{
     if(this.pasoActual.FuncionObtenerOpcion = 'pw.SP_PW_ChatbotPGeneralMayorProbabilidadTop5_PorAlumno')
     {
       this.OportunidadDTO.IdPrograma = item.id;
-
-      this.OportunidadDTO.IdPespecifico
       this.ObtenerIdPEspecifico(item.id , this.datosAlumno.IdPais);
       console.log("id nuevo programa seleccionado: ", item.id);
       console.log("idpespecifico nuevo programa",this.OportunidadDTO.IdPespecifico);
@@ -663,6 +662,7 @@ export class ChatBotLandingPageComponent implements OnInit,OnDestroy,OnChanges{
   ObtenerIdPEspecifico(IdPGeneral: any , IdPaisAlumno: any){
     this._ChatBotService.ObtenerIdPEspecifico(IdPGeneral, IdPaisAlumno).pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
+        console.log('retorno pespecifico x: ', x);
         this.OportunidadDTO.IdPespecifico = x;
       }
     })
