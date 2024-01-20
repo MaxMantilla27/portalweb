@@ -5,7 +5,7 @@
 export const environment = {
   production: false,
   url_api:'https://api-portalweb-carrera.bsginstitute.com/api/',
-  //url_api:'http://localhost:7177/api/',
+  //url_api:'https://localhost:7177/api/',
   //url_api_integra:'https://localhost:5001/api/',
   url_api_integra:'https://integrav4-servicios.bsginstitute.com/api/',
   //url_portal:'https://angular-portal.bsginstitute.com/',
