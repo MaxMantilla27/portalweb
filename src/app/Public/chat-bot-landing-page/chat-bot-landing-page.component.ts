@@ -381,7 +381,8 @@ export class ChatBotLandingPageComponent implements OnInit,OnDestroy,OnChanges{
     return this.pasoActual.mensajeErrorValidacion;
   }
   ContinuarFlujo(ValorDB:any){
-    if(this.pasoActual.nombreFuncion=='CreacionAlumnoOportunidad' || this.pasoActual.FuncionObtenerOpcion == 'pw.SP_PW_ChatbotPGeneralMayorProbabilidadTop5_PorAlumno'){
+    console.log( 'Paso Actual', this.pasoActual)
+    if(this.pasoActual.nombreFuncion==='CreacionAlumnoOportunidad' || this.pasoActual.FuncionObtenerOpcion === 'pw.SP_PW_ChatbotPGeneralMayorProbabilidadTop5_PorAlumno'){
       this.OportunidadDTO.NombresCompletos=this.datosAlumno.Nombres
       this.OportunidadDTO.Celular=this.datosAlumno.Movil.toString()
       this.OportunidadDTO.Correo=this.datosAlumno.Email
@@ -396,7 +397,7 @@ export class ChatBotLandingPageComponent implements OnInit,OnDestroy,OnChanges{
         this.ActualizarAlumnoDTO.IdentificadorApi=this.pasoActual.identificadorApi
         this.ActualizarAlumnoDTO.Valor=ValorDB.toString()
         this.ActualizarAlumnoChatBot()
-      }
+    }
     else{
         this.FlujoConversacionPrincipal()
     }
@@ -497,7 +498,7 @@ export class ChatBotLandingPageComponent implements OnInit,OnDestroy,OnChanges{
     if(this.pasoActual.opciones!=undefined && this.pasoActual.opciones!=null){
       this.flujoActual.OpcionEnviadoJson=JSON.stringify(this.pasoActual.opciones)
     }
-    if(this.pasoActual.FuncionObtenerOpcion = 'pw.SP_PW_ChatbotPGeneralMayorProbabilidadTop5_PorAlumno')
+    if(this.pasoActual.FuncionObtenerOpcion === 'pw.SP_PW_ChatbotPGeneralMayorProbabilidadTop5_PorAlumno')
     {
       this.OportunidadDTO.IdPrograma = item.id;
       this.ObtenerIdPEspecifico(item.id , this.datosAlumno.IdPais);
