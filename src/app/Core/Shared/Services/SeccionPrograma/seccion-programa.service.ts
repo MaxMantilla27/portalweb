@@ -22,6 +22,12 @@ export class SeccionProgramaService {
     //este es meta
     return this.http.get<any>(this.urlBase+'/ObtenerCabeceraProgramaGeneral?IdBusqueda='+IdBusqueda);
   }
+
+  public ObtenerCabeceraProgramaGeneral2(IdBusqueda:number):Observable<any>{
+    //este es meta
+    return this.http.get<any>(this.urlBase+'/ObtenerCabeceraProgramaGeneral?IdBusqueda='+IdBusqueda);
+  }
+
   public ListSeccionPrograma(IdBusqueda:number):Observable<any>{
     if(this.isBrowser){
       return this.http.get<any>(this.urlBase+'/ListSeccionPrograma?IdBusqueda='+IdBusqueda);

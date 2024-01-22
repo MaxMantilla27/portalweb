@@ -28,6 +28,7 @@ export interface PagoOrganicoAlumnoDTO {
   Version: string;
   Tipo: string;
   Inicio: string;
+  IdBusqueda: number
 }
 export interface RegistroPreProcesoPagoCuotaDTO {
   IdCuota: number;

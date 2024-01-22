@@ -141,6 +141,7 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
     Inicio:'',
     Tipo:'',
     Version:'',
+    IdBusqueda:0
   }
   public area = '';
   public idBusqueda = 0;
@@ -296,7 +297,15 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
         this.namePrograma = x['ProgramaNombre'].split('-');
         console.log(this.namePrograma)
         this.idBusqueda = parseInt(this.namePrograma[this.namePrograma.length - 1]);
-
+        let DataRuta={
+          rutaProgramaDetalle:this.rutaProgramaDetalle,
+          area:this.area,
+          AraCompleta:this.AraCompleta,
+          nombreProgramCompeto:this.nombreProgramCompeto,
+          namePrograma:this.namePrograma,
+          idBusqueda:this.idBusqueda
+        }
+        this._SessionStorageService.SessionSetValue('dataRuta',JSON.stringify(DataRuta));
 
       },
       error: () => {
@@ -357,6 +366,15 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
         ? this._SessionStorageService.SessionGetValue('ISO_PAIS')
         : 'INTC';
     this.IdPais=this.GetIdPaisProCodigo();
+    let dataEnvioPago = {
+      idPais: this.IdPais ,
+        idBusqueda:this.idBusqueda,
+        alumno:this.alumno,
+        nombre:this.cabecera.nombre,
+        modalidad:this.cabecera.listProgramaEspecificoInformacionDTO,
+        rutaProgramaDetalle:this.rutaProgramaDetalle
+    }
+    this._SessionStorageService.SessionSetValue('datEnvioPago',JSON.stringify(dataEnvioPago));
     const dialogRef = this.dialog.open(ProgramaPagoComponent, {
       width: '900px',
       data: {
@@ -395,11 +413,14 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
     this.jsonEnvioPago.Inicio=tarjeta.inicio;
     this.jsonEnvioPago.Version=tarjeta.version;
     this.jsonEnvioPago.Tipo=tarjeta.tipo;
+    this.jsonEnvioPago.IdBusqueda=this.idBusqueda
     //this.jsonEnvioPago.TipoProveedor=;
     this.jsonEnvioPago.WebMoneda=tarjeta.webMoneda;
     var token=this._SessionStorageService.validateTokken();
     if(token){
-      this._FormaPagoService.PreProcesoPagoOrganicoAlumno(this.jsonEnvioPago,dialogRef);
+      //this._FormaPagoService.PreProcesoPagoOrganicoAlumno(this.jsonEnvioPago,dialogRef);
+//miguel pagos
+      this._FormaPagoService.PreProcesoPagoOrganicoAlumno2(this.jsonEnvioPago,dialogRef);
       this._SessionStorageService.SessionSetValue('urlRedireccionErrorPago',JSON.stringify(this.rutaProgramaDetalle));
 
     }else{

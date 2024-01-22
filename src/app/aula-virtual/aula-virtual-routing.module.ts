@@ -53,6 +53,7 @@ import { ResultadoPagoMercadopagoComponent } from './resultado-pago-mercadopago/
 import { ConfirmacionPagoOpenpayColombiaComponent } from './confirmacion-pago-openpay-colombia/confirmacion-pago-openpay-colombia.component';
 import { PagoMercadoPagoComponent } from './confirmacion-pago-organico/pago-mercado-pago/pago-mercado-pago.component';
 import { ConfirmacionPagoOpenpayPeruComponent } from './confirmacion-pago-openpay-peru/confirmacion-pago-openpay-peru.component';
+import { Tarjeta2Component } from './modal-confirmacion-pago/pagos-organicos/tarjeta2/tarjeta2.component';
 
 const routes: Routes = [
   {
@@ -70,6 +71,10 @@ const routes: Routes = [
         { path: 'BolsaTrabajo', component: BolsaTrabajoComponent,canActivate:[BolsaTrabajoGuard]},
 
         { path: 'MisPagos/tarjeta/:Identificador', component: PagoGeneralComponent,canActivate:[AlumnoGuard]},
+        //Miguel pago peru
+        { path: 'MisPagos/tarjeta2/:Identificador', component: Tarjeta2Component,canActivate:[AlumnoGuard]},
+
+
         { path: 'MisPagos/visa/:Identificador', component: PagoVisaComponent,canActivate:[AlumnoGuard]},
         { path: 'MisPagos/wompi/:Identificador', component: PagoWompiComponent,canActivate:[AlumnoGuard]},
         { path: 'MisPagos/conekta/:Identificador', component: PagoConektaComponent,canActivate:[AlumnoGuard]},
@@ -77,7 +82,7 @@ const routes: Routes = [
         { path: 'MisPagos/webpay/:Identificador', component: PagoWebpayComponent,canActivate:[AlumnoGuard]},
         { path: 'MisPagos/mercadopago/:Identificador', component: PagoMercadoPagoComponent,canActivate:[AlumnoGuard]},
         { path: 'MisPagos/webpayResultado', component: ResultadoPagoWebpayComponent},
-        
+
 
         { path: 'MisCursos/:IdMatricula', component: CursoComponent,canActivate:[AlumnoGuard]},
         { path: 'MisPagos/:IdMatricula', component: PagoComponent,canActivate:[AlumnoGuard]},
