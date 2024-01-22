@@ -35,10 +35,14 @@
             <div class="PreguntaChat" *ngIf="i >= 0">
               <div class="GloboPregunta">
                 <div class="imgChatBot"></div>
-                <div class="PreguntaGlobo">
-                  <div [innerHtml]="item.mensaje | safeHtml"
-                ></div>
-                <div style="text-align: end;font-size: 15px;">{{item.fechaRegistrada}}</div>
+                <div class="PreguntaGloboPrevio">
+                  <div class="PreguntaGlobo">
+                    <div [innerHtml]="item.mensaje | safeHtml">
+                    </div>
+                  </div>
+                  <div style="text-align: end;font-size: 15px;">
+                    {{item.fechaRegistrada}}
+                  </div>
                 </div>
               </div>
               <div
@@ -59,13 +63,13 @@
                   <br>
                 </ng-container>
               </div>
-              <div
+              <div #ChatUbicacion1
                 class="OpcionesPregunta"
                 *ngIf="item.opciones != null && item.opciones.length > 0"
               >
                 <ng-container *ngIf="item.tipoOpcion != 'TrueFalse'">
                   <ng-container *ngFor="let itemo of item.opciones">
-                    <div
+                    <div (click)="ScrollTo(ChatUbicacion1)"
                       class="OpcionesGlobo"
                       (click)="
                         item.respondido == true ? '' : SelectOpciones(itemo)
@@ -126,12 +130,14 @@
               *ngIf="item.esMensajeFinal != true && item.respuesta != null" #ChatUbicacion
             >
               <ng-container *ngIf="item.respondido == true">
-                <div class="RespuestaGlobo">
-                  <div>
-                    <div [innerHtml]="item.respuesta | safeHtml"
-                  ></div>
-                  <div style="text-align: end;font-size: 15px;">{{item.fechaRegistrada}}</div>
+                <div class="RespuestaGloboPrevio">
+                  <div class="RespuestaGlobo">
+                    <div>
+                      <div [innerHtml]="item.respuesta | safeHtml"
+                    ></div>
+                    </div>
                   </div>
+                  <div style="text-align: end;font-size: 15px;">{{item.fechaRegistrada}}</div>
                 </div>
                 <!-- <div
                   class="RespuestaGlobo"
@@ -152,9 +158,6 @@
                 <div ChatUbicacion class="InputResponder">
                   <div>
                     <input autofocus
-                      (focus)="true"
-                      [autofocus]="true"
-                      focus
                       class="inputData"
                       [ngClass]="{ inputDataError: formControl.invalid }"
                       [formControl]="formControl"
@@ -168,7 +171,6 @@
                       matInput
                       (keyup.enter)="SiguientePaso()"
                       placeholder="{{ obtenerErrorCampoNombre() }}"
-                      autofocus
                     />
                     <div class="InputError" *ngIf="formControl.invalid">
                       {{ obtenerErrorCampoNombre() }}
@@ -186,6 +188,14 @@
                     (click)="SiguientePaso();ScrollTo(ChatUbicacion)"
                     >send</i
                   >
+                  <!-- <app-default-button
+                  [confs]="{ color: 'primary', titulo: 'AVANZANDO' }"
+                  [icon]="''"
+                  [style]="
+                    'width: 100%;background: white;border: solid 1px #f8893f; color: #f8893f;padding: 0px 50px;border-radius: 15px;'
+                  "
+                  (click)="ScrollTo(ChatUbicacion)"
+                ></app-default-button> -->
                 </div>
               </ng-container>
             </div>

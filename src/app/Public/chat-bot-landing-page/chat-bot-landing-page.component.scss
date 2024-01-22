@@ -172,8 +172,10 @@ img {
   width: 100%;
   flex-wrap: wrap;
 }
-.PreguntaGlobo{
+.PreguntaGloboPrevio{
   width: 60%;
+}
+.PreguntaGlobo{
   padding: 10px;
   color: #7a7a87;
   background: #EAF0F6;
@@ -260,6 +262,9 @@ img {
   justify-content: flex-end;
   margin: 20px 0px;
 
+}
+.RespuestaGloboPrevio{
+  width: fit-content;
 }
 .RespuestaGlobo{
 
