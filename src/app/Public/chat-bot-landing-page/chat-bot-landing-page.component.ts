@@ -93,7 +93,7 @@ export class ChatBotLandingPageComponent implements OnInit,OnDestroy,OnChanges{
   }
   public dataInicial:InicioEntradaChatbotDTO={
     IdContactoPortalSegmento:this._SessionStorageService.SessionGetValue('usuarioWeb'),
-    IdFormulario: 550//567
+    IdFormulario: 556 //550//567
   }
   public Paises:any;
   public min=0
