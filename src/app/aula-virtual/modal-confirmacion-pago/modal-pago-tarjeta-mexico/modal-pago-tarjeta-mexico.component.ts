@@ -10,14 +10,12 @@ import { HelperService } from 'src/app/Core/Shared/Services/helper.service';
 import { SessionStorageService } from 'src/app/Core/Shared/Services/session-storage.service';
 import { environment } from 'src/environments/environment';
 declare var OpenPay: any;
-
 @Component({
-  selector: 'app-modal-pago-tarjeta',
-  templateUrl: './modal-pago-tarjeta.component.html',
-  styleUrls: ['./modal-pago-tarjeta.component.scss'],
-  encapsulation: ViewEncapsulation.None,
+  selector: 'app-modal-pago-tarjeta-mexico',
+  templateUrl: './modal-pago-tarjeta-mexico.component.html',
+  styleUrls: ['./modal-pago-tarjeta-mexico.component.scss']
 })
-export class ModalPagoTarjetaComponent implements OnInit {
+export class ModalPagoTarjetaMexicoComponent implements OnInit {
   private signal$ = new Subject();
   constructor(
     private _renderer2: Renderer2,
@@ -70,7 +68,7 @@ export class ModalPagoTarjetaComponent implements OnInit {
     TipoClientePSE:'',
     TipoDocumentoPSE:'',
   }
-  public emailAlumno : string = "";
+
   ngOnDestroy(): void {
     this.signal$.next(true);
     this.signal$.complete();
@@ -79,16 +77,13 @@ export class ModalPagoTarjetaComponent implements OnInit {
     this._HelperService.recibirCombosPerfil.pipe(takeUntil(this.signal$)).subscribe((x) => {
       this.jsonSave.TarjetaHabiente.Titular =x.datosAlumno.nombres+' '+x.datosAlumno.apellidos;
       this.jsonSave.TarjetaHabiente.NumeroDocumento =x.datosAlumno.dni;
-      this.emailAlumno = x.datosAlumno.email;
     })
     if(this.data!=null){
       this.idMatricula = this.data.IdMatricula;
       this.json.IdentificadorTransaccion = this.data.Identificador;
-
       this.jsonSave.Comprobante = this.data.DatosFacturacion.Comprobante;
       this.jsonSave.CodigoTributario = this.data.DatosFacturacion.CodigoTributario;
       this.jsonSave.RazonSocial = this.data.DatosFacturacion.RazonSocial;
-
       var r= this._SessionStorageService.SessionGetValue(this.json.IdentificadorTransaccion);
       if(r!=''){
         this.json.RequiereDatosTarjeta=r=='false'?false:true;
@@ -319,7 +314,7 @@ export class ModalPagoTarjetaComponent implements OnInit {
       },
       complete:()=>{
         this.oncharge=false
-        dialogRef.close();
+        dialogRef.close()
         this.dialogRefModal.close();
       }
     })

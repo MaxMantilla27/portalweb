@@ -171,17 +171,33 @@
                     </mat-error>
                   </span>
                 </div>
-                <span class="tot mb-3">
-                  Tipo de comprobante:
-                </span>
-                <div class="row mb-2">
-                  <mat-radio-group
-                  color="primary"
-                  aria-label="Select an option">
-                    <mat-radio-button value="1" class="m-2">Boleta</mat-radio-button>
-                    <mat-radio-button value="2" class="m-2">Factura</mat-radio-button>
-                  </mat-radio-group>
-                </div>
+                <ng-container *ngIf="validadorPagosChile!=true">
+                  <span class="tot mb-3">
+                    Tipo de comprobante:
+                  </span>
+                  <div class="row comprobatePagoTarjeta">
+                    <div class="col-12 col-md-12 col-lg-12 items">
+                      <div class="itm no-select" [ngClass]="{'SelectCom':DatosFacturacion.Comprobante==false}"
+                        (click)="DatosFacturacion.Comprobante=false">
+                        Boleta <i class="material-icons" *ngIf="DatosFacturacion.Comprobante==false">check_circle</i>
+                      </div>
+                      <div class="itm no-select" [ngClass]="{'SelectCom':DatosFacturacion.Comprobante!=false}"
+                        (click)="DatosFacturacion.Comprobante=true">Factura <i class="material-icons"
+                          *ngIf="DatosFacturacion.Comprobante!=false">check_circle</i>
+                      </div>
+                    </div>
+                  </div>
+                  <ng-container *ngIf="DatosFacturacion.Comprobante!=false">
+                    <mat-form-field appearance="outline" [floatLabel]="'always'" style="width: 100%;">
+                      <mat-label>Razón Social</mat-label>
+                      <input type="text" [(ngModel)]="DatosFacturacion.RazonSocial" placeholder="Razón Social" matInput />
+                    </mat-form-field>
+                    <mat-form-field appearance="outline" [floatLabel]="'always'" style="width: 100%;">
+                      <mat-label>Número Tributario</mat-label>
+                      <input type="text" [(ngModel)]="DatosFacturacion.CodigoTributario" placeholder="Número Tributario" matInput />
+                    </mat-form-field>
+                  </ng-container>
+                </ng-container>
               </div>
               <div class="col-12 row bot">
                 <div>

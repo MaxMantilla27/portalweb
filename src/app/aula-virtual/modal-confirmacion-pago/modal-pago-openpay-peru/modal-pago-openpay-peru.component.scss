@@ -1,0 +1,113 @@
+.titlePagoTarjeta {
+  font-size: 20px;
+  font-weight: 600;
+  margin: 30px 0px;
+  border-bottom: solid 1px #e8e8e8;
+}
+.inputPagoVisa
+  .mat-form-field.mat-form-field-appearance-outline
+  > div.mat-form-field-wrapper
+  > div.mat-form-field-flex
+  > div.mat-form-field-infix {
+  padding: 0.4em 0px;
+}
+.inputPagoVisa
+  .mat-form-field.mat-form-field-appearance-outline
+  > div.mat-form-field-wrapper
+  > div.mat-form-field-flex
+  > div.mat-form-field-prefix {
+  padding: 0.4em 0px;
+  top: 0px;
+  left: -10px;
+}
+
+.inputPagoVisa
+  .mat-form-field.mat-form-field-appearance-outline
+  > div.mat-form-field-wrapper
+  > div.mat-form-field-flex
+  > div.mat-form-field-infix
+  > span.mat-form-field-label-wrapper {
+  top: -1.5em;
+}
+
+.inputPagoVisa
+  .mat-form-field-appearance-outline.mat-form-field-can-float.mat-form-field-should-float
+  .mat-form-field-label {
+  transform: translateY(-1.1em) scale(0.75);
+  width: 133.33333%;
+}
+.inputPagoVisa
+  .disabledInput
+  > div.mat-form-field-wrapper
+  > div.mat-form-field-flex
+  > .mat-form-field-outline {
+  .mat-form-field-outline-start {
+    background-color: #f4f4f4;
+  }
+  .mat-form-field-outline-gap {
+    background-color: #f4f4f4;
+  }
+  .mat-form-field-outline-end {
+    background-color: #f4f4f4;
+  }
+}
+.comprobatePagoTarjeta {
+  display: flex;
+  align-items: center;
+  .titleComprobantePagoTarjeta {
+    color: #878787;
+    width: 160px;
+  }
+  .items {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+    .itm {
+      padding: 10px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+      background: #f4f4f4;
+      border-radius: 20px;
+      cursor: pointer;
+      margin: 10px 0px;
+      .material-icons {
+        font-size: 15px !important;
+        margin-left: 10px;
+        color: #02c158;
+      }
+    }
+  }
+}
+.SelectCom {
+  background: white !important;
+  border: solid 1px #02c158;
+  color: #02c158;
+}
+.subtitlePagoVisa{
+  font-weight: 600;
+  margin-bottom: 20px;
+  border-bottom: solid 1px #e8e8e8;
+}
+
+
+.logo-openpay {
+  // background-image: url(../assets/icons/flecha-derecha.svg);
+  // background-image: url(../../../assets/icons/logo-openpay.png);
+  // background-image: url(.../.../.../.../assets/icons/logo-openpay.png);
+  width: 100%;
+  background-size: contain;
+  height: 50px;
+  background-position: right;
+  background-repeat: no-repeat;
+
+}
+
+.imagenAlgo{
+  position: absolute;
+  width: 35px;
+  height: 25px;
+  top: calc( 50% - 17px );
+  right: 5px;
+}
