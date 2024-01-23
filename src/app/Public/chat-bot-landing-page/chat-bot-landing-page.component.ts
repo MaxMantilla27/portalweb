@@ -285,6 +285,7 @@ export class ChatBotLandingPageComponent implements OnInit,OnDestroy,OnChanges{
     })
   }
   ProcesarAsignacionAutomaticaChatbot(){
+
     this._ChatBotService.ProcesarAsignacionAutomaticaChatbot(this.OportunidadDTO).pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
         this.flujoActual.IdAlumno=x.idAlumno
@@ -382,7 +383,7 @@ export class ChatBotLandingPageComponent implements OnInit,OnDestroy,OnChanges{
   }
   ContinuarFlujo(ValorDB:any){
     console.log( 'Paso Actual', this.pasoActual)
-    if(this.pasoActual.nombreFuncion==='CreacionAlumnoOportunidad' || this.pasoActual.FuncionObtenerOpcion === 'pw.SP_PW_ChatbotPGeneralMayorProbabilidadTop5_PorAlumno'){
+    if(this.pasoActual.nombreFuncion==='CreacionAlumnoOportunidad' || this.pasoActual.funcionObtenerOpcion === 'pw.SP_PW_ChatbotPGeneralMayorProbabilidadTop5_PorAlumno'){
       this.OportunidadDTO.NombresCompletos=this.datosAlumno.Nombres
       this.OportunidadDTO.Celular=this.datosAlumno.Movil.toString()
       this.OportunidadDTO.Correo=this.datosAlumno.Email
@@ -498,13 +499,13 @@ export class ChatBotLandingPageComponent implements OnInit,OnDestroy,OnChanges{
     if(this.pasoActual.opciones!=undefined && this.pasoActual.opciones!=null){
       this.flujoActual.OpcionEnviadoJson=JSON.stringify(this.pasoActual.opciones)
     }
-    if(this.pasoActual.FuncionObtenerOpcion === 'pw.SP_PW_ChatbotPGeneralMayorProbabilidadTop5_PorAlumno')
+    if(this.pasoActual.funcionObtenerOpcion === "pw.SP_PW_ChatbotPGeneralMayorProbabilidadTop5_PorAlumno")
     {
       this.OportunidadDTO.IdPrograma = item.id;
       this.ObtenerIdPEspecifico(item.id , this.datosAlumno.IdPais);
+      this.flujoActual.NombrePGeneral=item.nombre;
       console.log("id nuevo programa seleccionado: ", item.id);
       console.log("idpespecifico nuevo programa",this.OportunidadDTO.IdPespecifico);
-
     }
     this.SiguientesPasos.forEach((p) => {
       p.respondido=true
@@ -649,7 +650,6 @@ export class ChatBotLandingPageComponent implements OnInit,OnDestroy,OnChanges{
   }
 
   redigirPaginaCurso(){
-
     this._ChatBotService.ObtenerUrlPrograma(this.idBusqueda).pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
         console.log("esta es la url ", x.url)
@@ -663,8 +663,10 @@ export class ChatBotLandingPageComponent implements OnInit,OnDestroy,OnChanges{
   ObtenerIdPEspecifico(IdPGeneral: any , IdPaisAlumno: any){
     this._ChatBotService.ObtenerIdPEspecifico(IdPGeneral, IdPaisAlumno).pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
-        console.log('retorno pespecifico x: ', x);
-        this.OportunidadDTO.IdPespecifico = x;
+        console.log("retorno pespecifico x: ", x.pespecifico);
+        if(x.pespecifico!= null && x.pespecifico!= "" && x.pespecifico!= undefined) {
+          this.OportunidadDTO.IdPespecifico = x.pespecifico;
+        }
       }
     })
   }

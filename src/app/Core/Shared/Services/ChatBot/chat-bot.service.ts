@@ -117,7 +117,7 @@ export class ChatBotService {
 
   public ObtenerIdPEspecifico(IdPGeneral:number, IdPaisAlumno: number):Observable<any>{
     if(this.isBrowser){
-      return this.http.get<any>(this.urlBase+'/ObtenerUrlPrograma?IdPGeneral='+IdPGeneral+'&IdPaisAlumno='+IdPaisAlumno);
+      return this.http.get<any>(this.urlBase+'/ObtenerIdPEspecifico?IdPGeneral='+IdPGeneral+'&IdPaisAlumno='+IdPaisAlumno);
     }else{
       return EMPTY;
     }
