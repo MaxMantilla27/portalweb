@@ -32,12 +32,12 @@
 
 
           <ng-container *ngFor="let item of SiguientesPasos; let i = index">
-            <div class="PreguntaChat" *ngIf="i >= 0">
+            <div class="PreguntaChat" *ngIf="i >= 0" #ChatUbicacion2>
               <div class="GloboPregunta">
                 <div class="imgChatBot"></div>
                 <div class="PreguntaGloboPrevio">
                   <div class="PreguntaGlobo">
-                    <div [innerHtml]="item.mensaje | safeHtml">
+                    <div [innerHtml]="item.mensaje | safeHtml" (click)="ChatUbicacion2">
                     </div>
                   </div>
                   <div style="text-align: end;font-size: 15px;">
@@ -46,6 +46,7 @@
                 </div>
               </div>
               <div
+                #ChatUbicacion2
                 class="OpcionesPregunta"
                 *ngIf="item.opciones2 != null && item.opciones2.length > 0"
               >
@@ -55,7 +56,8 @@
                     (click)="
                       item.respondido == true
                         ? ''
-                        : ActualizarAlumnoChatBot2(itemo.id,itemo.nombre)
+                        : ActualizarAlumnoChatBot2(itemo.id,itemo.nombre);
+                        ScrollTo(ChatUbicacion2);
                     "
                   >
                     {{ itemo.nombre }}
@@ -69,11 +71,11 @@
               >
                 <ng-container *ngIf="item.tipoOpcion != 'TrueFalse'">
                   <ng-container *ngFor="let itemo of item.opciones">
-                    <div (click)="ScrollTo(ChatUbicacion1)"
+                    <div
                       class="OpcionesGlobo"
                       (click)="
-                        item.respondido == true ? '' : SelectOpciones(itemo)
-                      "
+                        item.respondido == true ? '' : SelectOpciones(itemo);
+                        ScrollTo(ChatUbicacion1)"
                     >
                       {{ itemo.nombre }}
                     </div>
@@ -109,7 +111,7 @@
                     "
                     *ngIf="item.respondido != true"
                   >
-                  <div class="ButtonPrimerPaso">
+                  <div class="ButtonPrimerPaso" #ChatUbicacionCheck>
                     <div>
                       <app-default-button
                       [confs]="{ color: 'primary', titulo: 'Continuar' }"
@@ -117,7 +119,7 @@
                       [style]="
                         'width: 100%;background: white;border: solid 1px #f8893f; color: #f8893f;padding: 0px 50px;border-radius: 15px;'
                       "
-                      (click)="ContinuarOpciones(3)"
+                      (click)="ContinuarOpciones(3);ScrollTo(ChatUbicacionCheck)"
                     ></app-default-button>
                     </div>
                   </div>
@@ -147,7 +149,7 @@
 
                 </div> -->
               </ng-container>
-              <ng-container
+              <ng-container ChatUbicacion
                 *ngIf="
                   item.respondido != true &&
                   (item.opciones == undefined ||
@@ -155,12 +157,14 @@
                     item.opciones.length == 0)
                 "
               >
-                <div ChatUbicacion class="InputResponder">
-                  <div>
-                    <input autofocus
+                <div  class="InputResponder">
+                  <div *ngIf="formControl!= null">
+                    <input  #inputElement autofocus
                       class="inputData"
                       [ngClass]="{ inputDataError: formControl.invalid }"
                       [formControl]="formControl"
+                      [autofocus]="true"
+                      id="inputData"
                       [type]="
                         item.identificadorApi == 'Movil'
                           ? 'number'
@@ -185,7 +189,7 @@
                   <i
                     class="material-icons sendMensajeChat sendMensajeChatHabil"
                     *ngIf="!formControl.invalid"
-                    (click)="SiguientePaso();ScrollTo(ChatUbicacion)"
+                    (click)="SiguientePaso(); ScrollTo(ChatUbicacion)"
                     >send</i
                   >
                   <!-- <app-default-button

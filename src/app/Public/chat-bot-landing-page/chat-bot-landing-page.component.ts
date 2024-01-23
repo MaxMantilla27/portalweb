@@ -107,6 +107,10 @@ export class ChatBotLandingPageComponent implements OnInit,OnDestroy,OnChanges{
   ngOnChanges(changes: SimpleChanges): void {
     this.SetPaisCodigo()
   }
+/*   ngAfterViewInit() {
+    this.elementRef.nativeElement.querySelector('.inputData').focus();
+  } */
+
   ngOnInit(): void {
     if(this.isBrowser){
       this.intervalInicio= setInterval(()=>{
@@ -123,7 +127,8 @@ export class ChatBotLandingPageComponent implements OnInit,OnDestroy,OnChanges{
       next:x=>{
         console.log(x)
         this.Paises=x;
-        if(this.datosAlumno.Id==0 && this.Paises!=null && this.Paises!=undefined){
+        if( this.Paises!=null && this.Paises!=undefined) //this.datosAlumno.Id==0
+        {
          this.SetPaisCodigo()
         }
       }
@@ -132,7 +137,8 @@ export class ChatBotLandingPageComponent implements OnInit,OnDestroy,OnChanges{
     this._HelperService.recibirChangePais().pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
         console.log(x);
-        if(this.datosAlumno.Id==0 && this.Paises!=null && this.Paises!=undefined){
+        if( this.Paises!=null && this.Paises!=undefined) //this.datosAlumno.Id==0
+        {
          this.SetPaisCodigo()
         }
       }
@@ -331,6 +337,9 @@ export class ChatBotLandingPageComponent implements OnInit,OnDestroy,OnChanges{
     if(this.pasoActual.identificadorApi=='Nombres'){
       this.formControl.setValidators([Validators.required])
     };
+    // if(this.pasoActual.identificadorApi=='Dni'){
+    //   this.formControl.setValidators([Validators.required])
+    // };
     console.log(this.formControl)
   }
   SetDatAlumno(){
@@ -670,8 +679,16 @@ export class ChatBotLandingPageComponent implements OnInit,OnDestroy,OnChanges{
       }
     })
   }
+
   ScrollTo(el: HTMLElement) {
     el.scrollIntoView();
   }
+
+ scrollToFooter() {
+  const footer = document.getElementById('footer'); // replace 'footer' with the actual id of your footer element
+  if (footer) {
+    footer.scrollIntoView({ behavior: 'smooth', block: 'end' });
+  }
+}
 
 }
