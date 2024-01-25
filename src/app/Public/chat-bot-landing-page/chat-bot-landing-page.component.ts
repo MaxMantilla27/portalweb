@@ -10,6 +10,14 @@ import { SessionStorageService } from 'src/app/Core/Shared/Services/session-stor
 import { MovilValidator } from 'src/app/Core/Shared/Validators/MovilValidator';
 import { Router } from '@angular/router';
 
+interface ITrueFalse {
+  id: number;
+  nombre: string;
+  idCampo: number;
+  campo: string;
+  Check: boolean;
+  validacion:  boolean
+}
 @Component({
   selector: 'app-chat-bot-landing-page',
   templateUrl: './chat-bot-landing-page.component.html',
@@ -91,6 +99,7 @@ export class ChatBotLandingPageComponent implements OnInit,OnDestroy,OnChanges{
     IdCampoContacto:0,
     PrimerBloque:true
   }
+
   public dataInicial:InicioEntradaChatbotDTO={
     IdContactoPortalSegmento:this._SessionStorageService.SessionGetValue('usuarioWeb'),
     IdFormulario: 556 //550//567
@@ -99,15 +108,17 @@ export class ChatBotLandingPageComponent implements OnInit,OnDestroy,OnChanges{
   public min=0
   public max=1000
   public intervalInicio:any
-  public opcionesTruFalse:Array<any>=[]
+  public opcionesTruFalse: Array<ITrueFalse> = [];
   public urlPrograma: string
   public idBusqueda: any
   public cargando=false
   public datePipe = new DatePipe('en-US');
+  public validacionCambio:boolean = false;
+
   ngOnChanges(changes: SimpleChanges): void {
     this.SetPaisCodigo()
   }
-/*   ngAfterViewInit() {
+  /*ngAfterViewInit() {
     this.elementRef.nativeElement.querySelector('.inputData').focus();
   } */
 
@@ -257,9 +268,12 @@ export class ChatBotLandingPageComponent implements OnInit,OnDestroy,OnChanges{
                   if(o.idCampo==null || o.idCampo==0){
                     existen++
                   }
-                  o.Check=true
+                  o.Check=false;
+                 // o.validacion=false;
                 });
-                this.opcionesTruFalse=this.pasoActual.opciones
+                this.opcionesTruFalse=this.pasoActual.opciones;
+                this.opcionesTruFalse = this.opcionesTruFalse.map(item => ({ ...item, validacion: false }));
+
                 if(existen==this.pasoActual.opciones.length){
                   this.ContinuarOpciones(1)
                 }
@@ -524,9 +538,9 @@ export class ChatBotLandingPageComponent implements OnInit,OnDestroy,OnChanges{
     console.log(this.datosAlumno)
   }
   ContinuarOpciones(valor:number){
-    console.log(valor)
+    console.log("ContinuarOpciones valor", valor)
     this.CargandoChat=true
-    console.log(this.opcionesTruFalse)
+    console.log("opcionesTrueFalse: ", this.opcionesTruFalse)
     this.SiguientesPasos.forEach((p) => {
       p.respondido=true
     });
@@ -642,14 +656,43 @@ export class ChatBotLandingPageComponent implements OnInit,OnDestroy,OnChanges{
       console.log(valor.toString())
       this._ChatBotService.ActualizarAlumnoChatBot(this.ActualizarAlumnoDTO).pipe(takeUntil(this.signal$)).subscribe({
         next:x=>{
-          this.opcionesTruFalse[indicemal].idCampo=valor.toString()
-          this.opcionesTruFalse[indicemal].Check=true
           this.opcionesTruFalse[indicemal].campo=x.registro
+          this.opcionesTruFalse[indicemal].idCampo=valor
+          this.opcionesTruFalse[indicemal].Check=true
+          this.opcionesTruFalse[indicemal].validacion=true
           this.ContinuarOpciones(2)
         }
       })
     }
   }
+
+  ValidacionDenegadaContinuar( ){
+    console.log(this.SiguientesPasos)
+    this.SiguientesPasos.forEach((p) => {
+      p.respondido=true
+    });
+    var indicemal=0
+    var msg=''
+    for (let index = 0; index < this.opcionesTruFalse.length; index++) {
+      if(this.opcionesTruFalse[index].Check!=true){
+        msg='Muy Bien '+this.datosAlumno.Nombres.split(' ')[0]+', vemos que cambiaste tu <strong>'+ this.opcionesTruFalse[index].nombre +'</strong> por favor actualizalo seleccionando una de las siguientes opciones:'
+        indicemal=index
+        break;
+      }
+      if(this.opcionesTruFalse[index].idCampo==0 || this.opcionesTruFalse[index].idCampo==null){
+        msg='Muy Bien '+this.datosAlumno.Nombres+', necesitamos conocer tu '+ this.opcionesTruFalse[index].nombre +' por favor selecciona una de las siguientes opciones:'
+
+        indicemal=index
+        break;
+      }
+    }
+    this.opcionesTruFalse[indicemal].validacion=false
+    this.opcionesTruFalse[indicemal].Check=true
+    this.opcionesTruFalse[indicemal].validacion=false
+    this.ContinuarOpciones(2)
+  }
+
+
   ObtenerUrlProgramaChatBot(){
     this._ChatBotService.ObtenerUrlPrograma(this.idBusqueda).pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
@@ -688,7 +731,10 @@ export class ChatBotLandingPageComponent implements OnInit,OnDestroy,OnChanges{
   const footer = document.getElementById('footer'); // replace 'footer' with the actual id of your footer element
   if (footer) {
     footer.scrollIntoView({ behavior: 'smooth', block: 'end' });
+    }
   }
-}
+  nuevaFun(i: any){
+    console.log("i: ", i);
+  }
 
 }

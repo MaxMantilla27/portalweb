@@ -10,14 +10,11 @@
   font-size: 12px;
   margin-bottom: 30px;
 }
-
-
 .NombreCurso{
   width: 100%;
   font-weight: 600;
   font-size: 20px;
   margin: 10px 0px ;
-
 }
 .contentPrimerPaso {
 //  display: flex;
@@ -224,7 +221,29 @@ img {
  // color: white;
 
 }
+
+.OpcionesGloboValidacion{
+  width: 48%;
+  margin: 1%;
+  padding: 5px 40px;
+  border: 2px solid #2E475D;
+  color: #2E475D;
+  // color: white
+  //background: #fca534;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  cursor: pointer;
+  background-color: white;
+ // background-color: #2E475D;
+ // color: white;
+}
 .OpcionesGlobo:hover {
+  transition: 0.7s;
+  text-decoration: underline;
+  border-radius: 15px;
+  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.3); /* Sombras al pasar el mouse */
+}
+.OpcionesGloboValidacion:hover {
   transition: 0.7s;
   text-decoration: underline;
   border-radius: 15px;
