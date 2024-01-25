@@ -27,7 +27,7 @@ interface ITrueFalse {
 })
 export class ChatBotLandingPageComponent implements OnInit,OnDestroy,OnChanges,AfterViewInit {
   @ViewChildren('inputElementRef') inputElements: any;
-
+  @ViewChildren('inputElements') inputChat: any;
   ngAfterViewInit() {
   //  console.log ( "input elements",this.inputElements )
 
@@ -323,7 +323,7 @@ export class ChatBotLandingPageComponent implements OnInit,OnDestroy,OnChanges,A
             }
           }
       // }
-
+        this.inputChat.nativeElement.focus()
       }
     })
   }
