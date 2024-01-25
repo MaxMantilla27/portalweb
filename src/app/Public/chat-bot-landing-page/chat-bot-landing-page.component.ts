@@ -487,6 +487,7 @@ export class ChatBotLandingPageComponent implements OnInit,OnDestroy,OnChanges{
     })
   }
   SiguientePaso(){
+    if(this.formControl.valid) {
     this.CargandoChat=true
     this.SetDatAlumno();
     this.flujoActual.Paso=this.pasoActual.paso
@@ -505,6 +506,7 @@ export class ChatBotLandingPageComponent implements OnInit,OnDestroy,OnChanges{
     this.SiguientesPasos[this.SiguientesPasos.length-1].fechaRegistrada= this.datePipe.transform(new Date(), 'hh:mm a'),
     this.ContinuarFlujo(this.formControl.value)
     console.log(this.datosAlumno)
+    }
   }
   SelectOpciones(item:any){
     this.CargandoChat=true
@@ -550,7 +552,7 @@ export class ChatBotLandingPageComponent implements OnInit,OnDestroy,OnChanges{
     var hayerrore=false
     for (let index = 0; index < this.opcionesTruFalse.length; index++) {
       if(this.opcionesTruFalse[index].Check!=true){
-        var msg='Muy Bien '+this.datosAlumno.Nombres.split(' ')[0]+', vemos que cambiaste tu <strong>'+ this.opcionesTruFalse[index].nombre +'</strong> por favor actualizalo seleccionando una de las siguientes opciones:'
+        var msg='Muy Bien '+this.datosAlumno.Nombres.split(' ')[0]+', Tu <strong>'+ this.opcionesTruFalse[index].nombre +'</strong> sigue siendo <strong>' + this.opcionesTruFalse[index].campo + '</strong>?'
         this.ObtenerCincoOpcionesPerfilProfesionalChatbot(this.opcionesTruFalse[index],msg)
         hayerrore=true
         break;
@@ -582,6 +584,7 @@ export class ChatBotLandingPageComponent implements OnInit,OnDestroy,OnChanges{
 
     this._ChatBotService.ObtenerCincoOpcionesPerfilProfesionalChatbot(this.datos).pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
+
         this.SiguientesPasos.push(
           {
             idChatbotConfiguracionFlujo: 1,
@@ -598,6 +601,7 @@ export class ChatBotLandingPageComponent implements OnInit,OnDestroy,OnChanges{
             respuesta:null,
             tipoOpcion:'TrueFalse',
             opciones2: x,
+            validacionCambio: false
         })
         this.CargandoChat=false
         console.log(this.SiguientesPasos)
@@ -668,6 +672,7 @@ export class ChatBotLandingPageComponent implements OnInit,OnDestroy,OnChanges{
 
   ValidacionDenegadaContinuar( ){
     console.log(this.SiguientesPasos)
+    this.SiguientesPasos[this.SiguientesPasos.length-1].respuesta="Si";
     this.SiguientesPasos.forEach((p) => {
       p.respondido=true
     });

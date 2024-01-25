@@ -60,34 +60,34 @@
                 class="OpcionesPregunta"
                 *ngIf="item.opciones2 != null && item.opciones2.length > 0"
               >
-                <div *ngIf="validacionCambio== false"  style=" margin-bottom: 10%">
+                <div *ngIf="item.validacionCambio== false"  style=" margin-bottom: 10%">
                   <button
                     type="button"
                     class="OpcionesGloboValidacion"
-                    (click)="validacionCambio = true; nuevaFun(i)"
+                    (click)="item.validacionCambio = true;"
                   >
                     Si
                   </button>
                   <button
                     type="button"
                     class="OpcionesGloboValidacion"
-                    (click)="validacionCambio = false; ValidacionDenegadaContinuar(); "
+                    (click)="item.validacionCambio = false; ValidacionDenegadaContinuar(); "
                   >
                     No
                   </button>
                 </div>
 
-                <ng-container *ngIf="validacionCambio == true">
+                <ng-container *ngIf="item.validacionCambio == true">
                   <div *ngFor="let itemo of item.opciones2">
                     <button
                       type="button"
                       class="OpcionesGlobo"
                       (click)="
-                        item.respondido == true && validacionCambio == true
+                        item.respondido == true && item.validacionCambio == true
                           ? ''
                           : ActualizarAlumnoChatBot2(itemo.id, itemo.nombre);
                         ScrollTo(ChatUbicacion2);
-                        validacionCambio = false;
+
                       "
                     >
                       {{ itemo.nombre }}
