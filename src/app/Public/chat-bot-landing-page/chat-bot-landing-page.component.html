@@ -60,18 +60,24 @@
                 class="OpcionesPregunta"
                 *ngIf="item.opciones2 != null && item.opciones2.length > 0"
               >
-                <div *ngIf="item.validacionCambio== false"  style=" margin-bottom: 10%">
+                <div
+                  *ngIf="item.validacionCambio == false"
+                  style="margin-bottom: 10%"
+                >
                   <button
                     type="button"
                     class="OpcionesGloboValidacion"
-                    (click)="item.validacionCambio = true;"
+                    (click)="item.validacionCambio = true"
                   >
                     Si
                   </button>
                   <button
                     type="button"
                     class="OpcionesGloboValidacion"
-                    (click)="item.validacionCambio = false; ValidacionDenegadaContinuar(); "
+                    (click)="
+                      item.validacionCambio = false;
+                      ValidacionDenegadaContinuar()
+                    "
                   >
                     No
                   </button>
@@ -86,8 +92,7 @@
                         item.respondido == true && item.validacionCambio == true
                           ? ''
                           : ActualizarAlumnoChatBot2(itemo.id, itemo.nombre);
-                        ScrollTo(ChatUbicacion2);
-
+                        ScrollTo(ChatUbicacion2)
                       "
                     >
                       {{ itemo.nombre }}
@@ -117,7 +122,7 @@
                     </div>
                   </ng-container>
                 </ng-container>
-                 <ng-container *ngIf="item.tipoOpcion == 'TrueFalse'">
+                <ng-container *ngIf="item.tipoOpcion == 'TrueFalse'">
                   <!-- <ng-container *ngFor="let itemo of item.opciones">
                     <ng-container
                       //*ngIf="
@@ -201,13 +206,12 @@
                 <div class="InputResponder">
                   <div *ngIf="formControl != null">
                     <input
-                      #inputElement
-                      autofocus
+                      #inputElements
                       class="inputData"
                       [ngClass]="{ inputDataError: formControl.invalid }"
                       [formControl]="formControl"
-                      [autofocus]="true"
-                      id="inputData"
+                      autofocus
+                      id="inputDataUsuario"
                       [type]="
                         item.identificadorApi == 'Movil'
                           ? 'number'
@@ -216,7 +220,7 @@
                           : 'text'
                       "
                       matInput
-                      (keyup.enter)="SiguientePaso()"
+                      (keyup.enter)="SiguientePaso(); "
                       placeholder="{{ obtenerErrorCampoNombre() }}"
                     />
                     <div class="InputError" *ngIf="formControl.invalid">
