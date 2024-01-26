@@ -76,7 +76,11 @@ export class ChatBotLandingPageComponent implements OnInit,OnDestroy,OnChanges,A
     IdPrograma:0,
     IdCampania:0,
     IdUsuario:'',
-    IdPais:0
+    IdPais:0,
+    IdAreaFormacion:0,
+    IdCargo:0,
+    IdAreaTrabajo:0,
+    IdIndustria:0
   }
   public datosAlumno:ChatBotAlumnoDTO={
     Email:'',
@@ -203,7 +207,7 @@ export class ChatBotLandingPageComponent implements OnInit,OnDestroy,OnChanges,A
             this.datosAlumno=JSON.parse(dataAlumnoLocal)
           }
         }
-        console.log(this.datosAlumno)
+        console.log("datos alumno", this.datosAlumno)
         this.flujoActual.IdChatbotUsuarioContacto=x.idChatbotUsuarioContacto
         this.flujoActual.NombreUsuario=x.nombreUsuarioRegistrado
         this.flujoActual.UsuarioRegistrado=x.registrado
@@ -323,7 +327,7 @@ export class ChatBotLandingPageComponent implements OnInit,OnDestroy,OnChanges,A
             }
           }
       // }
-        this.inputChat.nativeElement.focus()
+       // this.inputChat.nativeElement.focus()
       }
     })
   }
@@ -434,6 +438,11 @@ export class ChatBotLandingPageComponent implements OnInit,OnDestroy,OnChanges,A
       this.OportunidadDTO.Celular=this.datosAlumno.Movil.toString()
       this.OportunidadDTO.Correo=this.datosAlumno.Email
       this.OportunidadDTO.IdPais=this.datosAlumno.IdPais
+      this.OportunidadDTO.IdAreaFormacion =this.datosAlumno.IdAreaFormacion
+      this.OportunidadDTO.IdCargo =this.datosAlumno.IdCargo
+      this.OportunidadDTO.IdAreaTrabajo =this.datosAlumno.IdAreaTrabajo
+      this.OportunidadDTO.IdIndustria =this.datosAlumno.IdIndustria
+
       this.ProcesarAsignacionAutomaticaChatbot();
     }
     else if(this.pasoActual.idCampoContacto == 3){
