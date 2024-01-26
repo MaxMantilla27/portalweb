@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, HostListener } from '@angular/core';
 import { HelperService } from '../../Services/helper.service';
 
 @Component({
@@ -13,13 +13,39 @@ export class HeaderChatbotComponent implements OnInit {
 
   @Input() nombre = '';
 
-  ngOnInit(): void {}
+  pantalla = false
 
-  EventoInteraccionEducacion(nombre: string) {
-    this._HelperService.enviarMsjAcciones({
-      Tag: 'Link',
-      Nombre: nombre,
-      Seccion: 'Menu cabecera',
-    });
+
+  ngOnInit(): void {
+    this.validarTamañoVentana();
   }
+
+  // EventoInteraccionEducacion(nombre: string) {
+  //   this._HelperService.enviarMsjAcciones({
+  //     Tag: 'Link',
+  //     Nombre: nombre,
+  //     Seccion: 'Menu cabecera',
+  //   });
+  // }
+
+  @HostListener('window:resize', ['$event'])
+  onResize(event: any) {
+    this.validarTamañoVentana();
+  }
+  
+
+  private validarTamañoVentana() {
+    const width = window.innerWidth;
+
+    if (width < 600) {
+      console.log('Ventana pequeña');
+      this.pantalla = true;
+    } else {
+      console.log('Ventana grande');
+      this.pantalla = false;
+
+    }
+  }
+
+
 }

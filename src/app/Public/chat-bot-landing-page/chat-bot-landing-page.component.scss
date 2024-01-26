@@ -27,13 +27,14 @@
   //scroll-behavior: smooth;
   //height: 200px;
   padding: 2%;
+  padding-top: 0px;
 }
 
 .titulos {
   padding-left: 15%;
   padding-right: 15%;
   width: 100%;
-  background-color:rgb(244, 244,244);
+  background-color: rgb(244, 244, 244);
 }
 .titleCurso {
   padding-top: 3%;
@@ -269,7 +270,6 @@ img {
 .RespuestaCheat {
   width: 100%;
   display: flex;
-  align-items: flex-end;
   justify-content: flex-end;
   margin: 20px 0px;
 }
@@ -283,19 +283,35 @@ img {
   color: white;
   border-radius: 10px 10px 0px 10px;
 }
+// .inputData {
+//   //border-bottom: 1px solid #91b2ef;
+//   padding: 5px;
+//   border-color: #ceced0 !important;
+//   width: 100% !important;
+//   border-radius: 10px;
+//   margin-right: 8px !important;
+// }
+
 .inputData {
   //border-bottom: 1px solid #91b2ef;
   border-bottom: 1px solid !important;
   max-width: 100%;
   width: 345px !important;
+  border-radius: 10px;
+  margin-right: 8px !important;
+  border-radius: 10px;
+  padding: 5px;
+  border-color: #ceced0 !important;
 }
+
 .inputDataError {
   border: 1px solid #ff0000 !important;
   padding: 3% !important;
 }
 .InputResponder {
-  display: flex;
   align-items: flex-start;
+  width: 100%;
+  display: contents;
 }
 .sendMensajeChat {
   margin-top: 3%;
@@ -381,22 +397,49 @@ img {
   padding: 0% 10%;
 }
 
-.fechaR{
+.fechaR {
   text-align: end;
   font-size: 15px;
+}
+
+.iconoEnvio {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 30px;
+  height: 30px;
+  background-color: #00bcd4;
+  border-radius: 50%;
+  margin-top: 2px;
+}
+
+.material-icons {
+  color: white; /* Color del icono, puedes cambiarlo según tu preferencia */
+  font-size: 24px; /* Tamaño del icono, puedes ajustarlo según tus necesidades */
+  margin-left: 4px;
 }
 
 @media screen and (max-width: 600px) {
   body {
     font-size: 15px;
-    color:#3e617f;
+    color: #3e617f;
+  }
+
+  .iconoEnvio {
+    width: 34px;
+    height: 30px;
+  }
+
+  .inputData {
+    width: 340px !important;
+    margin-right: 5px !important;
   }
 
   .container {
     padding: 0% 0% !important;
   }
 
-  .fechaR{
+  .fechaR {
     text-align: end;
     font-size: 13px;
   }
@@ -411,6 +454,6 @@ img {
     cursor: pointer;
     background-color: #fff;
     text-align: center;
+    margin-left: 5px;
   }
-  
 }

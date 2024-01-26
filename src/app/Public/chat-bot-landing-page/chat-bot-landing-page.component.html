@@ -1,5 +1,6 @@
 <app-header-chatbot [nombre]="flujoActual.NombrePGeneral"></app-header-chatbot>
-<div style="height: 80px"></div>
+<div *ngIf="pantalla == false" style="height: 80px"></div>
+
 <ng-container *ngIf="cargando == false">
   <div
     class="row"
@@ -69,8 +70,9 @@
                   <button
                     type="button"
                     class="OpcionesGloboValidacion"
-                    (click)="item.validacionCambio = false;
-                    ValidacionDenegadaContinuar()
+                    (click)="
+                      item.validacionCambio = false;
+                      ValidacionDenegadaContinuar()
                     "
                   >
                     Si
@@ -78,9 +80,7 @@
                   <button
                     type="button"
                     class="OpcionesGloboValidacion"
-                    (click)="
-                      item.validacionCambio = true;
-                    "
+                    (click)="item.validacionCambio = true"
                   >
                     No
                   </button>
@@ -91,6 +91,13 @@
                     <button
                       type="button"
                       class="OpcionesGlobo"
+                      style="
+                        overflow: hidden;
+                        white-space: nowrap;
+                        text-overflow: ellipsis;
+                        display: inline-block;
+                        max-width: 100%;
+                      "
                       (click)="
                         item.respondido == true && item.validacionCambio == true
                           ? ''
@@ -207,7 +214,7 @@
                 "
               >
                 <div class="InputResponder">
-                  <div *ngIf="formControl != null">
+                  <div *ngIf="formControl != null" class="inp">
                     <input
                       #inputElements
                       class="inputData"
@@ -223,7 +230,7 @@
                           : 'text'
                       "
                       matInput
-                      (keyup.enter)="SiguientePaso(); "
+                      (keyup.enter)="SiguientePaso()"
                       placeholder="{{ obtenerErrorCampoNombre() }}"
                     />
                     <div class="InputError" *ngIf="formControl.invalid">
@@ -231,17 +238,20 @@
                     </div>
                   </div>
 
-                  <i
-                    class="material-icons sendMensajeChat sendMensajeChatInHabil"
-                    *ngIf="formControl.invalid"
-                    >send</i
-                  >
-                  <i
-                    class="material-icons sendMensajeChat sendMensajeChatHabil"
-                    *ngIf="!formControl.invalid"
-                    (click)="SiguientePaso(); ScrollTo(ChatUbicacion)"
-                    >send</i
-                  >
+                  <div class="iconoEnvio" *ngIf="formControl.invalid">
+                    <i
+                      class="material-icons sendMensajeChat sendMensajeChatInHabil"
+                      >send</i
+                    >
+                  </div>
+                  <div class="iconoEnvio" *ngIf="!formControl.invalid">
+                    <i
+                      class="material-icons sendMensajeChat sendMensajeChatHabil"
+                      (click)="SiguientePaso(); ScrollTo(ChatUbicacion)"
+                      >send</i
+                    >
+                  </div>
+
                   <!-- <app-default-button
                   [confs]="{ color: 'primary', titulo: 'AVANZANDO' }"
                   [icon]="''"
@@ -285,3 +295,4 @@
     </div>
   </div>
 </ng-container>
+<div id="footer"></div>
