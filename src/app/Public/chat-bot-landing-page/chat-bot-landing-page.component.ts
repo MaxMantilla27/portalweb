@@ -80,7 +80,21 @@ export class ChatBotLandingPageComponent
     this.isBrowser = isPlatformBrowser(platformId);
     this.urlPrograma = '/programas-certificaciones-cursos';
   }
-  chat=false
+
+  private validarTamanioVentana() {
+    const width = window.innerWidth;
+
+    if (width < 600) {
+      console.log('Ventana pequeña');
+      this.pantalla = true;
+    } else {
+      console.log('Ventana grande');
+      this.pantalla = false;
+    }
+  }
+
+  chat = false;
+  pantalla = false;
   CargandoChat=false
   public primerpaso :any
   public SiguientesPasos :Array<any>=[]
@@ -164,7 +178,7 @@ export class ChatBotLandingPageComponent
   }
 
   ngOnInit(): void {
-    this.validarTamañoVentana();
+    this.validarTamanioVentana();
 
     if (this.isBrowser) {
       this.intervalInicio = setInterval(() => {
