@@ -587,14 +587,13 @@ export class ChatBotLandingPageComponent implements OnInit,OnDestroy,OnChanges,A
     }
     var hayerrore=false
     for (let index = 0; index < this.opcionesTruFalse.length; index++) {
+      var msg = "";
       if(this.opcionesTruFalse[index].Check!=true){
-        var msg='Muy Bien '+this.datosAlumno.Nombres.split(' ')[0]+', Tu <strong>'+ this.opcionesTruFalse[index].nombre +'</strong> sigue siendo <strong>' + this.opcionesTruFalse[index].campo + '</strong>?'
-        this.ObtenerCincoOpcionesPerfilProfesionalChatbot(this.opcionesTruFalse[index],msg)
-        hayerrore=true
-        break;
-      }
-      if(this.opcionesTruFalse[index].idCampo==0 || this.opcionesTruFalse[index].idCampo==null){
-        var msg='Muy Bien '+this.datosAlumno.Nombres.split(' ')[0]+', necesitamos conocer tu <strong>'+ this.opcionesTruFalse[index].nombre +'</strong> por favor selecciona una de las siguientes opciones:'
+        if( this.opcionesTruFalse[index].idCampo==0 || this.opcionesTruFalse[index].idCampo==null )
+          msg='Muy Bien '+this.datosAlumno.Nombres.split(' ')[0]+', necesitamos conocer tu <strong>'+ this.opcionesTruFalse[index].nombre +'</strong> por favor selecciona una de las siguientes opciones:'
+        else{
+          msg='Muy Bien '+this.datosAlumno.Nombres.split(' ')[0]+', Tu <strong>'+ this.opcionesTruFalse[index].nombre +'</strong> sigue siendo <strong>' + this.opcionesTruFalse[index].campo + '</strong>?'
+        }
         this.ObtenerCincoOpcionesPerfilProfesionalChatbot(this.opcionesTruFalse[index],msg)
         hayerrore=true
         break;
