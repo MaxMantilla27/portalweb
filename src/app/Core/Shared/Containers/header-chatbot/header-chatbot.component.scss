@@ -1,0 +1,12 @@
+@media screen and (max-width: 600px) {
+    #nombreContainer {
+      display: block; /* Cambia a bloque en lugar de flex */
+      text-align: center; /* Centra el texto */
+      margin-top: 20px; /* Ajusta el margen según sea necesario */
+    }
+  
+    .logoHeader {
+      margin: 0 auto; /* Centra la imagen */
+    }
+  }
+  

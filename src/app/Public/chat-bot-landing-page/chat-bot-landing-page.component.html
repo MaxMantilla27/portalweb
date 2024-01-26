@@ -1,3 +1,5 @@
+<app-header-chatbot [nombre]="flujoActual.NombrePGeneral"></app-header-chatbot>
+<div style="height: 80px"></div>
 <ng-container *ngIf="cargando == false">
   <div
     class="row"
@@ -19,13 +21,13 @@
 </ng-container>
 
 <ng-container *ngIf="cargando">
-  <div class="titulos">
+  <!-- <div class="titulos">
     <div class="titleCurso" *ngIf="flujoActual.NombrePGeneral">
       {{ flujoActual.NombrePGeneral }}
     </div>
-  </div>
+  </div> -->
 
-  <div class="container" style="padding: 0% 10%">
+  <div class="container conten">
     <div class="rowRowpadd">
       <div class="contentPrimerPaso">
         <ng-container
@@ -50,7 +52,7 @@
                       (click)="(ChatUbicacion2)"
                     ></div>
                   </div>
-                  <div style="text-align: end; font-size: 15px">
+                  <div class="fechaR">
                     {{ item.fechaRegistrada }}
                   </div>
                 </div>
@@ -60,18 +62,24 @@
                 class="OpcionesPregunta"
                 *ngIf="item.opciones2 != null && item.opciones2.length > 0"
               >
-                <div *ngIf="item.validacionCambio== false"  style=" margin-bottom: 10%">
+                <div
+                  *ngIf="item.validacionCambio == false"
+                  style="margin-bottom: 10%"
+                >
                   <button
                     type="button"
                     class="OpcionesGloboValidacion"
-                    (click)="item.validacionCambio = true;"
+                    (click)="item.validacionCambio = true"
                   >
                     Si
                   </button>
                   <button
                     type="button"
                     class="OpcionesGloboValidacion"
-                    (click)="item.validacionCambio = false; ValidacionDenegadaContinuar(); "
+                    (click)="
+                      item.validacionCambio = false;
+                      ValidacionDenegadaContinuar()
+                    "
                   >
                     No
                   </button>
@@ -86,8 +94,7 @@
                         item.respondido == true && item.validacionCambio == true
                           ? ''
                           : ActualizarAlumnoChatBot2(itemo.id, itemo.nombre);
-                        ScrollTo(ChatUbicacion2);
-
+                        ScrollTo(ChatUbicacion2)
                       "
                     >
                       {{ itemo.nombre }}
@@ -117,7 +124,7 @@
                     </div>
                   </ng-container>
                 </ng-container>
-                 <ng-container *ngIf="item.tipoOpcion == 'TrueFalse'">
+                <ng-container *ngIf="item.tipoOpcion == 'TrueFalse'">
                   <!-- <ng-container *ngFor="let itemo of item.opciones">
                     <ng-container
                       //*ngIf="
@@ -177,7 +184,7 @@
                       <div [innerHtml]="item.respuesta | safeHtml"></div>
                     </div>
                   </div>
-                  <div style="text-align: end; font-size: 15px">
+                  <div class="fechaR">
                     {{ item.fechaRegistrada }}
                   </div>
                 </div>

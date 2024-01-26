@@ -1,26 +1,55 @@
+<ng-container *ngIf="esChatbot == false">
+  <app-header
+    (OnClick)="sidenav.toggle()"
+    (ChangeExpand)="changeExpandibles($event)"
+    [usuarioWeb]="usuarioWeb"
+    [carga]="charge"
+    [CodigoIso]="CodigoIso"
+  >
+  </app-header>
+</ng-container>
 
-<app-header (OnClick)="sidenav.toggle()" (ChangeExpand)="changeExpandibles($event)" [usuarioWeb]="usuarioWeb"
-[carga]="charge" [CodigoIso]="CodigoIso">
-</app-header>
-<mat-sidenav-container style="height:100%">
 
-  <mat-sidenav #sidenav mode="over" position='start' style="max-width: 70%;background: white !important;    position: fixed;margin-top: 60px;"
-  [ngStyle]="{'height':step==-1?'fit-content':'auto'}">
-    <nav style="margin:0px">
-
-      <app-header (OnClick)="sidenav.toggle()" (OpenStep)="step=$event" [usuarioWeb]="usuarioWeb"  [responsive]="true" [carga]="charge"
-      [expandibles]="Expandibles" (ChangeExpand)="changeExpandibles($event)" [CodigoIso]="CodigoIso">
+<mat-sidenav-container style="height: 100%">
+  <mat-sidenav
+    #sidenav
+    mode="over"
+    position="start"
+    style="
+      max-width: 70%;
+      background: white !important;
+      position: fixed;
+      margin-top: 60px;
+    "
+    [ngStyle]="{ height: step == -1 ? 'fit-content' : 'auto' }"
+  >
+    <nav style="margin: 0px">
+      <app-header
+        (OnClick)="sidenav.toggle()"
+        (OpenStep)="step = $event"
+        [usuarioWeb]="usuarioWeb"
+        [responsive]="true"
+        [carga]="charge"
+        [expandibles]="Expandibles"
+        (ChangeExpand)="changeExpandibles($event)"
+        [CodigoIso]="CodigoIso"
+      >
       </app-header>
     </nav>
   </mat-sidenav>
 
-  <mat-sidenav-content (scroll)="onSideNavScroll($event)" [scrollTop]="0" style="overflow: hidden;" >
+  <mat-sidenav-content
+    (scroll)="onSideNavScroll($event)"
+    [scrollTop]="0"
+    style="overflow: hidden"
+  >
     <section>
-
       <router-outlet></router-outlet>
     </section>
 
-    <app-footer></app-footer>
+    <ng-container *ngIf="esChatbot == false">
+      <app-footer></app-footer>
+    </ng-container>
   </mat-sidenav-content>
 </mat-sidenav-container>
 <!-- <app-soporte-tecnico [cargaChat]="cargaChat"  (IsOpen)="OpenChat=$event" [Open]="OpenChat" [token]="stateToekn" [IdPGeneral]="IdPGeneral">

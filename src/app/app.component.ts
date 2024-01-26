@@ -23,6 +23,8 @@ export class AppComponent implements OnInit,AfterViewInit ,OnDestroy {
   public OpenChat=false;
   public cargaChat=false;
   public usuarioWeb=''
+  public esChatbot = false;
+
   constructor(
     private _HelperService: HelperService,
     private router: Router,
@@ -57,6 +59,8 @@ export class AppComponent implements OnInit,AfterViewInit ,OnDestroy {
   public stateToekn=false
   ngOnInit() {
     console.log(window.frames.location)
+
+    this.esChatbot = window.frames.location.href == 'http://localhost:4200/Chat/1'? true: false;
 
     this.router.events.pipe(takeUntil(this.signal$)).subscribe((val) => {
       this.IdPGeneral=0;

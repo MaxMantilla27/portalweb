@@ -5,19 +5,19 @@
   width: 40em;
   max-width: 100%;
 }
-.textoChatbot{
+.textoChatbot {
   width: 90%;
   font-size: 12px;
   margin-bottom: 30px;
 }
-.NombreCurso{
+.NombreCurso {
   width: 100%;
   font-weight: 600;
   font-size: 20px;
-  margin: 10px 0px ;
+  margin: 10px 0px;
 }
 .contentPrimerPaso {
-//  display: flex;
+  //  display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
@@ -33,7 +33,7 @@
   padding-left: 15%;
   padding-right: 15%;
   width: 100%;
-  background-color:rgb(244, 244,244);
+  background-color: rgb(244, 244, 244);
 }
 .titleCurso {
   padding-top: 3%;
@@ -51,35 +51,34 @@
   font-weight: 300;
 }
 
-.maindiv{
-  display:flex;
-  flex-direction:row;
-  align-items:center;
-  justify-content:center;
+.maindiv {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
   padding: 2%;
   width: 90%;
 }
 
 img {
   max-width: 85%;
-  max-height:85%;
+  max-height: 85%;
 }
 
 .subTitlePrimerPaso {
   font-size: 16px;
-  margin: 2.0em;
+  margin: 2em;
 }
 .ButtonPrimerPaso {
   margin-top: 10px;
   width: 100%;
 }
 
-
 .ButtonPrimerPaso:hover {
   border-radius: 15px;
   box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.3); /* Sombras al pasar el mouse */
   &:hover {
-    div{
+    div {
       text-decoration: underline;
     }
   }
@@ -91,24 +90,23 @@ img {
   justify-content: center;
 }
 
-
 .ButtonIrPrograma:hover {
   border-radius: 15px;
   box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.3); /* Sombras al pasar el mouse */
   &:hover {
-    div{
+    div {
       text-decoration: underline;
     }
   }
 }
 
-.bloqueIngreso{
+.bloqueIngreso {
   padding: 1%;
   width: 100%;
 }
 
 .ContentInputChat .mat-form-field {
-  width: 27.0em;
+  width: 27em;
   max-width: 100%;
   margin-top: 2em;
   margin-bottom: 2em;
@@ -128,7 +126,7 @@ img {
   > div.mat-form-field-flex
   > div.mat-form-field-infix
   input {
-  height: 2.0em;
+  height: 2em;
 }
 .InputFillWhioutColor
   .mat-form-field.mat-form-field-appearance-fill
@@ -136,7 +134,7 @@ img {
   > div.mat-form-field-flex
   > div.mat-form-field-infix
   > span.mat-form-field-label-wrapper {
-  top:  -0.5em;
+  top: -0.5em;
 }
 
 // .ContentInputChat
@@ -146,10 +144,8 @@ img {
 //   width: 133.33333%;
 // }
 
-.InputFillWhioutColor
-  .mat-form-field-appearance-fill .mat-form-field-flex {
-
-  background-color: transparent ;
+.InputFillWhioutColor .mat-form-field-appearance-fill .mat-form-field-flex {
+  background-color: transparent;
 }
 
 .InputFillWhioutColor
@@ -157,11 +153,11 @@ img {
   > div.mat-form-field-wrapper
   > div.mat-form-field-subscript-wrapper
   > div.ng-trigger-transitionMessages
-   mat-error {
-    font-size: 10px;
-    text-align: center;
+  mat-error {
+  font-size: 10px;
+  text-align: center;
 }
-.PreguntaChat{
+.PreguntaChat {
   display: flex;
   align-items: flex-start;
   margin-bottom: 20px;
@@ -169,16 +165,16 @@ img {
   width: 100%;
   flex-wrap: wrap;
 }
-.PreguntaGloboPrevio{
+.PreguntaGloboPrevio {
   width: 60%;
 }
-.PreguntaGlobo{
+.PreguntaGlobo {
   padding: 10px;
   color: #7a7a87;
-  background: #EAF0F6;
+  background: #e5eaef;
   border-radius: 0px 10px 10px 10px;
 }
-.PreguntaGloboChat{
+.PreguntaGloboChat {
   width: 60px;
   padding: 10px;
   color: #7a7a87;
@@ -187,16 +183,16 @@ img {
   display: flex;
   justify-content: center;
 }
-.OpcionesPregunta{
+.OpcionesPregunta {
   width: 61%;
   margin: 20px;
   margin-left: 50px;
 }
-.GloboPregunta{
+.GloboPregunta {
   display: flex;
   align-items: flex-start;
 }
-.imgChatBot{
+.imgChatBot {
   background-image: url(../../../assets/imagenes/asesorprueba.png);
   width: 50px;
   height: 50px;
@@ -206,36 +202,32 @@ img {
   border-radius: 50%;
   border: solid 1px black;
 }
-.OpcionesGlobo{
-  width: 90%;
+.OpcionesGlobo {
+  width: 60%;
   padding: 5px 40px;
-  border: 2px solid #2E475D;
-  color: #2E475D;
-  // color: white
-  //background: #fca534;
+  border: 2px solid #6b9ac3;
+  color: #2e475d;
   border-radius: 10px;
   margin-bottom: 10px;
   cursor: pointer;
-  background-color: white;
- // background-color: #2E475D;
- // color: white;
-
+  background-color: #fff;
+  text-align: center;
 }
 
-.OpcionesGloboValidacion{
+.OpcionesGloboValidacion {
   width: 48%;
   margin: 1%;
   padding: 5px 40px;
-  border: 2px solid #2E475D;
-  color: #2E475D;
+  border: 2px solid #2e475d;
+  color: #2e475d;
   // color: white
   //background: #fca534;
   border-radius: 10px;
   margin-bottom: 10px;
   cursor: pointer;
   background-color: white;
- // background-color: #2E475D;
- // color: white;
+  // background-color: #2E475D;
+  // color: white;
 }
 .OpcionesGlobo:hover {
   transition: 0.7s;
@@ -249,93 +241,91 @@ img {
   border-radius: 15px;
   box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.3); /* Sombras al pasar el mouse */
 }
-.OpcionesCheckGlobo{
-//width: fit-content;
+.OpcionesCheckGlobo {
+  //width: fit-content;
   padding: 5px 20px;
-  border: 2px solid #2E475D;
-//  background: #fca534;
+  border: 2px solid #2e475d;
+  //  background: #fca534;
   border-radius: 10px;
   margin-bottom: 10px;
   cursor: pointer;
-  color: #2E475D;
-// color: white
+  color: #2e475d;
+  // color: white
   display: flex;
   align-items: center;
 }
-.TipoCheck{
+.TipoCheck {
   width: 150px;
   border-right: solid 1px white;
   font-size: 14px;
 }
-.NombreCheck{
+.NombreCheck {
   margin-left: 10px;
   width: 350px;
   border-right: solid 1px white;
   margin-right: 10px;
   font-size: 14px;
 }
-.RespuestaCheat{
+.RespuestaCheat {
   width: 100%;
   display: flex;
   align-items: flex-end;
   justify-content: flex-end;
   margin: 20px 0px;
-
 }
-.RespuestaGloboPrevio{
+.RespuestaGloboPrevio {
   width: fit-content;
 }
-.RespuestaGlobo{
-
+.RespuestaGlobo {
   width: fit-content;
   padding: 10px;
-  background: #2E475D;
+  background: #42729d;
   color: white;
   border-radius: 10px 10px 0px 10px;
 }
-.inputData{
+.inputData {
   //border-bottom: 1px solid #91b2ef;
   border-bottom: 1px solid !important;
   max-width: 100%;
   width: 345px !important;
 }
-.inputDataError{
+.inputDataError {
   border: 1px solid #ff0000 !important;
   padding: 3% !important;
 }
-.InputResponder{
+.InputResponder {
   display: flex;
   align-items: flex-start;
 }
-.sendMensajeChat{
+.sendMensajeChat {
   margin-top: 3%;
   cursor: pointer;
 }
-.sendMensajeChatHabil:hover{
-  color:  gray!important;
+.sendMensajeChatHabil:hover {
+  color: gray !important;
 }
-.sendMensajeChatInHabil{
+.sendMensajeChatInHabil {
   color: gray;
-
 }
-.sendMensajeChatHabil{
+.sendMensajeChatHabil {
   color: black;
-
 }
-.InputError{
+.InputError {
   font-size: 11px;
-    text-align: center;
-    margin-top: 6px;
-    color: red;
-    max-width: 350px;
+  text-align: center;
+  margin-top: 6px;
+  color: red;
+  max-width: 350px;
 }
-.inputData[type=number]::-webkit-inner-spin-button,
-.inputData[type=number]::-webkit-outer-spin-button {
+.inputData[type="number"]::-webkit-inner-spin-button,
+.inputData[type="number"]::-webkit-outer-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
 
-.inputData[type=number] { -moz-appearance:textfield; }
+.inputData[type="number"] {
+  -moz-appearance: textfield;
+}
 
 .dot-flashing {
   position: relative;
@@ -347,7 +337,8 @@ img {
   animation: dot-flashing 1s infinite linear alternate;
   animation-delay: 0.5s;
 }
-.dot-flashing::before, .dot-flashing::after {
+.dot-flashing::before,
+.dot-flashing::after {
   content: "";
   display: inline-block;
   position: absolute;
@@ -378,7 +369,48 @@ img {
   0% {
     background-color: #91b2ef;
   }
-  50%, 100% {
+  50%,
+  100% {
     background-color: rgba(145, 178, 239, 0.2);
   }
+}
+
+//------- Cambios Bryan --------//
+
+.conten {
+  padding: 0% 10%;
+}
+
+.fechaR{
+  text-align: end;
+  font-size: 15px;
+}
+
+@media screen and (max-width: 600px) {
+  body {
+    font-size: 15px;
+    color:#3e617f;
+  }
+
+  .container {
+    padding: 0% 0% !important;
+  }
+
+  .fechaR{
+    text-align: end;
+    font-size: 13px;
+  }
+
+  .OpcionesGlobo {
+    width: 100%;
+    padding: 5px 40px;
+    border: 2px solid #6b9ac3;
+    color: #2e475d;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    cursor: pointer;
+    background-color: #fff;
+    text-align: center;
+  }
+  
 }
