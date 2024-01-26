@@ -208,13 +208,12 @@
                 <div class="InputResponder">
                   <div *ngIf="formControl != null">
                     <input
-                      #inputElement
-                      autofocus
+                      #inputElements
                       class="inputData"
                       [ngClass]="{ inputDataError: formControl.invalid }"
                       [formControl]="formControl"
-                      [autofocus]="true"
-                      id="inputData"
+                      autofocus
+                      id="inputDataUsuario"
                       [type]="
                         item.identificadorApi == 'Movil'
                           ? 'number'
@@ -223,7 +222,7 @@
                           : 'text'
                       "
                       matInput
-                      (keyup.enter)="SiguientePaso()"
+                      (keyup.enter)="SiguientePaso(); "
                       placeholder="{{ obtenerErrorCampoNombre() }}"
                     />
                     <div class="InputError" *ngIf="formControl.invalid">

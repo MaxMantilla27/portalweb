@@ -1,5 +1,5 @@
 import { DOCUMENT, isPlatformBrowser,DatePipe } from '@angular/common';
-import { Component, Inject, OnChanges, OnDestroy, OnInit, PLATFORM_ID, Renderer2, SimpleChanges, ViewEncapsulation } from '@angular/core';
+import { Component, Inject, OnChanges, OnDestroy, OnInit, PLATFORM_ID, Renderer2, SimpleChanges, ViewEncapsulation, ElementRef } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { Subject, takeUntil } from 'rxjs';
 import { ChatBotAlumnoDTO } from 'src/app/Core/Models/AlumnoDTO';
@@ -9,6 +9,7 @@ import { HelperService } from 'src/app/Core/Shared/Services/helper.service';
 import { SessionStorageService } from 'src/app/Core/Shared/Services/session-storage.service';
 import { MovilValidator } from 'src/app/Core/Shared/Validators/MovilValidator';
 import { Router } from '@angular/router';
+import { ViewChildren, QueryList, AfterViewInit } from '@angular/core';
 
 interface ITrueFalse {
   id: number;
@@ -24,8 +25,23 @@ interface ITrueFalse {
   styleUrls: ['./chat-bot-landing-page.component.scss'],
   encapsulation: ViewEncapsulation.None,
 })
-export class ChatBotLandingPageComponent implements OnInit,OnDestroy,OnChanges{
+export class ChatBotLandingPageComponent implements OnInit,OnDestroy,OnChanges,AfterViewInit {
+  @ViewChildren('inputElementRef') inputElements: any;
+  @ViewChildren('inputElements') inputChat: any;
+  ngAfterViewInit() {
+  //  console.log ( "input elements",this.inputElements )
 
+
+  //  this.inputElements.nativeElement.querySelector('.inputElements').focus();
+  }
+  focusOnLastInput() {
+    const lastInputElement = this.inputElements.last;
+
+    if (lastInputElement) {
+      // Focus on the last input element
+      lastInputElement.nativeElement.focus();
+    }
+  }
   formControl = new FormControl('', [Validators.required]);
   private signal$ = new Subject();
   isBrowser: boolean;
@@ -117,10 +133,13 @@ export class ChatBotLandingPageComponent implements OnInit,OnDestroy,OnChanges{
 
   ngOnChanges(changes: SimpleChanges): void {
     this.SetPaisCodigo()
+    // this.inputElements.nativeElement.querySelector('.inputDataUsuario').focus();
   }
-  /*ngAfterViewInit() {
-    this.elementRef.nativeElement.querySelector('.inputData').focus();
-  } */
+  ngDoCheck(): void {
+    //Called every time that the input properties of a component or a directive are checked. Use it to extend change detection by performing a custom check.
+    //Add 'implements DoCheck' to the class.
+
+  }
 
   ngOnInit(): void {
     if(this.isBrowser){
@@ -217,6 +236,8 @@ export class ChatBotLandingPageComponent implements OnInit,OnDestroy,OnChanges{
                 fechaRegistrada:this.datePipe.transform(h.fechaCreacion, 'hh:mm a'),
             }
             )
+            console.log("documents.get", this.ElementRefTemp)
+
           });
           console.log("siguientespasos",this.SiguientesPasos)
           var pasoActualHistotial=x.historial[x.historial.length-1]
@@ -279,6 +300,8 @@ export class ChatBotLandingPageComponent implements OnInit,OnDestroy,OnChanges{
                 }
               }
               this.SiguientesPasos.push(this.pasoActual)
+              console.log("documents.get", this.ElementRefTemp)
+
               if(this.pasoActual.paso==1){
                 this.primerpaso=this.pasoActual
               }else{
@@ -300,7 +323,7 @@ export class ChatBotLandingPageComponent implements OnInit,OnDestroy,OnChanges{
             }
           }
       // }
-
+        this.inputChat.nativeElement.focus()
       }
     })
   }
@@ -486,7 +509,11 @@ export class ChatBotLandingPageComponent implements OnInit,OnDestroy,OnChanges{
       }
     })
   }
-  SiguientePaso(){
+  ElementRefTemp: any
+  SiguientePaso(ElementRef?: any){
+    if(ElementRef != null){
+      this.ElementRefTemp = ElementRef
+    }
     if(this.formControl.valid) {
     this.CargandoChat=true
     this.SetDatAlumno();
@@ -603,6 +630,7 @@ export class ChatBotLandingPageComponent implements OnInit,OnDestroy,OnChanges{
             opciones2: x,
             validacionCambio: false
         })
+
         this.CargandoChat=false
         console.log(this.SiguientesPasos)
       }

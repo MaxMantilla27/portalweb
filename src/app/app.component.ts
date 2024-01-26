@@ -56,9 +56,12 @@ export class AppComponent implements OnInit,AfterViewInit ,OnDestroy {
     },
   ];
   public IdPGeneral=0;
-  public stateToekn=false
+  public stateToekn=false;
+  public esChatbot = false;
   ngOnInit() {
-    console.log(window.frames.location)
+    console.log("Inicio Ruta ",window.frames.location);
+
+    this.esChatbot = window.frames.location.href == 'http://localhost:4200/Chat/1'? true: false;
 
     this.esChatbot = window.frames.location.href == 'http://localhost:4200/Chat/1'? true: false;
 
