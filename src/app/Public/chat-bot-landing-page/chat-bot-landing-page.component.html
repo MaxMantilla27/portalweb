@@ -69,7 +69,9 @@
                   <button
                     type="button"
                     class="OpcionesGloboValidacion"
-                    (click)="item.validacionCambio = true"
+                    (click)="item.validacionCambio = false;
+                    ValidacionDenegadaContinuar()
+                    "
                   >
                     Si
                   </button>
@@ -77,8 +79,7 @@
                     type="button"
                     class="OpcionesGloboValidacion"
                     (click)="
-                      item.validacionCambio = false;
-                      ValidacionDenegadaContinuar()
+                      item.validacionCambio = true;
                     "
                   >
                     No
