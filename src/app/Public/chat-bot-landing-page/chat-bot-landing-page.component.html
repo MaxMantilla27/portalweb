@@ -43,7 +43,7 @@
           <div class="textoChatbot"></div>
 
           <ng-container *ngFor="let item of SiguientesPasos; let i = index">
-            <div class="PreguntaChat" *ngIf="i >= 0 && i!=2" #ChatUbicacion2>
+            <div class="PreguntaChat" *ngIf="i >= 0 && item.mensaje!='¡A continuación necesitamos que confirmes información sobre tu perfil profesional!'" #ChatUbicacion2>
               <div class="GloboPregunta" *ngIf="item.mensaje != null">
                 <div class="imgChatBot"></div>
                 <div class="PreguntaGloboPrevio">
@@ -272,7 +272,7 @@
                   [icon]="''"
                   [disabled]="formControl.invalid"
                   [style]="
-                    'margin-top: 50px; width: 100%;background: white;border: solid 1px #f8893f; color: #f8893f;padding: 0px 50px;border-radius: 15px;'
+                    'margin-top: 0px; width: 100%;background: white;border: solid 1px #f8893f; color: #f8893f;padding: 0px 37%;border-radius: 15px;'
                   "
                   (click)="redigirPaginaCurso()"
                 ></app-default-button>
@@ -296,6 +296,5 @@
     </div>
   </div>
 </ng-container>
-<div #scrollContainer> FINNNN
-</div>
+<div #ScrollContainer> _</div>
 <div id="footer"></div>

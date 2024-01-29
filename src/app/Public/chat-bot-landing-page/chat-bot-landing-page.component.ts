@@ -97,62 +97,62 @@ export class ChatBotLandingPageComponent
 
   chat = false;
   pantalla = false;
-  CargandoChat=false
-  public primerpaso :any
-  public SiguientesPasos :Array<any>=[]
-  public pasoActual :any
-  public OportunidadDTO:ValidacionChatBotEnvioDTO={
-    NombresCompletos:'',
-    Celular:'',
-    Correo:'',
-    IdCategoriaDato:0,
-    IdPespecifico:0,
-    IdPrograma:0,
-    IdCampania:0,
-    IdUsuario:'',
-    IdPais:0,
-    IdAreaFormacion:0,
-    IdCargo:0,
-    IdAreaTrabajo:0,
-    IdIndustria:0
-  }
-  public datosAlumno:ChatBotAlumnoDTO={
-    Email:'',
-    Movil:'',
-    Nombres:'',
-    IdAreaFormacion:0,
-    IdAreaTrabajo:0,
-    IdCargo:0,
-    IdIndustria:0,
-    IdPais:0,
-    IdRegion:0,
-    Id:0
-  }
-  public flujoActual:FlujoChatEntradalDTO={
-    CodigoPGeneral:'',
-    IdCampoContacto:0,
-    IdChatbotUsuarioContacto:0,
-    IdConfiguracionFlujoChatbot:1,
-    NombrePGeneral:'',
-    NombreUsuario:'',
-    Paso:0,
-    UsuarioRegistrado:false,
-    Caso:'a',
-    EsMensajeFinal:false,
-    IdOportunidad:0,
-    IdAlumno:0
-  }
-  public ActualizarAlumnoDTO:ActualizarAlumnoChatBotDTO={
-    IdAlumno:0,
-    IdentificadorApi:'',
-    Valor:''
-  }
-  public datos:PerfilProfesionalDTO={
-    CodigoPGeneral:'',
-    IdCampo:0,
-    IdCampoContacto:0,
-    PrimerBloque:true
-  }
+  CargandoChat = false;
+  public primerpaso: any;
+  public SiguientesPasos: Array<any> = [];
+  public pasoActual: any;
+  public OportunidadDTO: ValidacionChatBotEnvioDTO = {
+    NombresCompletos: '',
+    Celular: '',
+    Correo: '',
+    IdCategoriaDato: 0,
+    IdPespecifico: 0,
+    IdPrograma: 0,
+    IdCampania: 0,
+    IdUsuario: '',
+    IdPais: 51,
+    IdAreaFormacion: 0,
+    IdCargo: 0,
+    IdAreaTrabajo: 0,
+    IdIndustria: 0,
+  };
+  public datosAlumno: ChatBotAlumnoDTO = {
+    Email: '',
+    Movil: '',
+    Nombres: '',
+    IdAreaFormacion: 0,
+    IdAreaTrabajo: 0,
+    IdCargo: 0,
+    IdIndustria: 0,
+    IdPais: 51,
+    IdRegion: 0,
+    Id: 0,
+  };
+  public flujoActual: FlujoChatEntradalDTO = {
+    CodigoPGeneral: '',
+    IdCampoContacto: 0,
+    IdChatbotUsuarioContacto: 0,
+    IdConfiguracionFlujoChatbot: 1,
+    NombrePGeneral: '',
+    NombreUsuario: '',
+    Paso: 0,
+    UsuarioRegistrado: false,
+    Caso: 'a',
+    EsMensajeFinal: false,
+    IdOportunidad: 0,
+    IdAlumno: 0,
+  };
+  public ActualizarAlumnoDTO: ActualizarAlumnoChatBotDTO = {
+    IdAlumno: 0,
+    IdentificadorApi: '',
+    Valor: '',
+  };
+  public datos: PerfilProfesionalDTO = {
+    CodigoPGeneral: '',
+    IdCampo: 0,
+    IdCampoContacto: 0,
+    PrimerBloque: true,
+  };
 
   public dataInicial: InicioEntradaChatbotDTO = {
     IdContactoPortalSegmento:
@@ -186,7 +186,7 @@ export class ChatBotLandingPageComponent
       this.intervalInicio = setInterval(() => {
         var usuarioWeb =
           this._SessionStorageService.SessionGetValue('usuarioWeb');
-        console.log("usuario web", usuarioWeb);
+        console.log('usuario web', usuarioWeb);
         if (usuarioWeb != '' && usuarioWeb != null && usuarioWeb.length > 0) {
           this.dataInicial.IdContactoPortalSegmento = usuarioWeb;
           this.InicializarChatbot();
@@ -198,7 +198,7 @@ export class ChatBotLandingPageComponent
       .pipe(takeUntil(this.signal$))
       .subscribe({
         next: (x) => {
-          console.log("recibir pais", x);
+          console.log('recibir pais', x);
           this.Paises = x;
           if (this.Paises != null && this.Paises != undefined) {
             //this.datosAlumno.Id==0
@@ -212,7 +212,7 @@ export class ChatBotLandingPageComponent
       .pipe(takeUntil(this.signal$))
       .subscribe({
         next: (x) => {
-          console.log("recibir cambio de pais", x);
+          console.log('recibir cambio de pais', x);
           if (this.Paises != null && this.Paises != undefined) {
             //this.datosAlumno.Id==0
             this.SetPaisCodigo();
@@ -220,52 +220,64 @@ export class ChatBotLandingPageComponent
         },
       });
   }
-  InicializarChatbot(){
-    this.CargandoChat=true
-    this._ChatBotService.InicializarChatbot(this.dataInicial).pipe(takeUntil(this.signal$)).subscribe({
-      next:x=>{
-        console.log("iniciar chatbot", x);
-        if(x.datosFormulario!=undefined && x.datosFormulario!=null){
-          this.OportunidadDTO.IdCampania=x.datosFormulario.idConjuntoAnuncio
-          this.OportunidadDTO.IdPrograma=x.datosFormulario.idPGeneral
-          this.OportunidadDTO.IdPespecifico=x.datosFormulario.idPEspecifico
-          this.OportunidadDTO.IdCategoriaDato=x.datosFormulario.idCategoriaOrigen
-          this.idBusqueda=x.datosFormulario.idBusqueda
-        }
-        if(x.datosAlumno!=null){
-          this.datosAlumno.Id=x.datosAlumno.idAlumno
-          this.datosAlumno.Movil=x.datosAlumno.celular
-          this.datosAlumno.Email=x.datosAlumno.correo
-          this.datosAlumno.IdAreaFormacion=x.datosAlumno.idAreaFormacion
-          this.datosAlumno.IdAreaTrabajo=x.datosAlumno.idAreaTrabajo
-          this.datosAlumno.IdCargo=x.datosAlumno.idCargo
-          this.datosAlumno.IdIndustria=x.datosAlumno.idIndustria
-          this.datosAlumno.IdPais=x.datosAlumno.idPais
-          this.datosAlumno.Nombres=x.datosAlumno.nombresCompletos
-          this.ActualizarAlumnoDTO.IdAlumno=x.datosAlumno.idAlumno
-        }else{
-          var dataAlumnoLocal=this._SessionStorageService.SessionGetValue('dataAlumnoChatBot'+this.OportunidadDTO.IdPrograma);
-          if(dataAlumnoLocal!='' && dataAlumnoLocal!=null){
-            this.datosAlumno=JSON.parse(dataAlumnoLocal)
+  InicializarChatbot() {
+    this.CargandoChat = true;
+    this._ChatBotService
+      .InicializarChatbot(this.dataInicial)
+      .pipe(takeUntil(this.signal$))
+      .subscribe({
+        next: (x) => {
+          console.log('iniciar chatbot', x);
+          if (x.datosFormulario != undefined && x.datosFormulario != null) {
+            this.OportunidadDTO.IdCampania =
+              x.datosFormulario.idConjuntoAnuncio;
+            this.OportunidadDTO.IdPrograma = x.datosFormulario.idPGeneral;
+            this.OportunidadDTO.IdPespecifico = x.datosFormulario.idPEspecifico;
+            this.OportunidadDTO.IdCategoriaDato =
+              x.datosFormulario.idCategoriaOrigen;
+            this.idBusqueda = x.datosFormulario.idBusqueda;
           }
-        }
-        console.log("datos alumno", this.datosAlumno)
-        this.flujoActual.IdChatbotUsuarioContacto=x.idChatbotUsuarioContacto
-        this.flujoActual.NombreUsuario=x.nombreUsuarioRegistrado
-        this.flujoActual.UsuarioRegistrado=x.registrado
-        this.flujoActual.CodigoPGeneral=x.datosFormulario.codigoPGeneral
-        this.flujoActual.NombrePGeneral=x.datosFormulario.nombrePGeneral
-        this.flujoActual.IdAlumno=x.idAlumno
-        this.flujoActual.IdOportunidad=x.idOportunidad
-        if(x.historial!=null && x.historial.length>0){
-          x.historial.forEach((h:any) => {
-            var opcionesdesc=null;
-            if(h.opcionEnviadoJson!=undefined && h.opcionEnviadoJson!=null){
-              opcionesdesc=JSON.parse(h.opcionEnviadoJson)
+          if (x.datosAlumno != null) {
+            this.datosAlumno.Id = x.datosAlumno.idAlumno;
+            this.datosAlumno.Movil = x.datosAlumno.celular;
+            this.datosAlumno.Email = x.datosAlumno.correo;
+            this.datosAlumno.IdAreaFormacion = x.datosAlumno.idAreaFormacion;
+            this.datosAlumno.IdAreaTrabajo = x.datosAlumno.idAreaTrabajo;
+            this.datosAlumno.IdCargo = x.datosAlumno.idCargo;
+            this.datosAlumno.IdIndustria = x.datosAlumno.idIndustria;
+            this.datosAlumno.IdPais = x.datosAlumno.idPais;
+            console.log('hay datosAlumno', this.datosAlumno.IdPais);
+            this.datosAlumno.Nombres = x.datosAlumno.nombresCompletos;
+            this.ActualizarAlumnoDTO.IdAlumno = x.datosAlumno.idAlumno;
+          } else {
+            var dataAlumnoLocal = this._SessionStorageService.SessionGetValue(
+              'dataAlumnoChatBot' + this.OportunidadDTO.IdPrograma
+            );
+            if (dataAlumnoLocal != '' && dataAlumnoLocal != null) {
+              this.datosAlumno = JSON.parse(dataAlumnoLocal);
             }
-            console.log("opciones",opcionesdesc)
-            this.SiguientesPasos.push(
-              {
+          }
+          this.datosAlumno.IdPais == 0 ? (this.datosAlumno.IdPais = 51) : ''; // por defecto Pais Peru
+          console.log('datos alumno inicializar', this.datosAlumno);
+          this.flujoActual.IdChatbotUsuarioContacto =
+            x.idChatbotUsuarioContacto;
+          this.flujoActual.NombreUsuario = x.nombreUsuarioRegistrado;
+          this.flujoActual.UsuarioRegistrado = x.registrado;
+          this.flujoActual.CodigoPGeneral = x.datosFormulario.codigoPGeneral;
+          this.flujoActual.NombrePGeneral = x.datosFormulario.nombrePGeneral;
+          this.flujoActual.IdAlumno = x.idAlumno;
+          this.flujoActual.IdOportunidad = x.idOportunidad;
+          if (x.historial != null && x.historial.length > 0) {
+            x.historial.forEach((h: any) => {
+              var opcionesdesc = null;
+              if (
+                h.opcionEnviadoJson != undefined &&
+                h.opcionEnviadoJson != null
+              ) {
+                opcionesdesc = JSON.parse(h.opcionEnviadoJson);
+              }
+              console.log('opciones', opcionesdesc);
+              this.SiguientesPasos.push({
                 idChatbotConfiguracionFlujo: 1,
                 usuarioRegistrado: h.usuarioRegistrado,
                 paso: h.paso,
@@ -329,7 +341,7 @@ export class ChatBotLandingPageComponent
       .pipe(takeUntil(this.signal$))
       .subscribe({
         next: (x) => {
-          console.log("Respuesta FlujoConversacionPrincipal", x);
+          console.log('Respuesta FlujoConversacionPrincipal', x);
 
           //if(x.itemFlujo==null)
           //{
@@ -362,7 +374,7 @@ export class ChatBotLandingPageComponent
             (this.SiguientesPasos[
               this.SiguientesPasos.length - 1
             ].fechaRegistrada = this.datePipe.transform(new Date(), 'hh:mm a')),
-              console.log("siguientes pasos Flujo", this.SiguientesPasos);
+              console.log('siguientes pasos Flujo', this.SiguientesPasos);
             this.CargandoChat = false;
             if (this.pasoActual.esMensajeFinal == true) {
               this.flujoActual.EsMensajeFinal = true;
@@ -374,14 +386,13 @@ export class ChatBotLandingPageComponent
               this.pasoActual.opciones != null &&
               this.pasoActual.opciones != undefined &&
               this.pasoActual.opciones.length > 0
-            )
-            {
+            ) {
               var existenNULL = 0;
               this.pasoActual.opciones.forEach((o: any) => {
-                if (o == null || o.idCampo == null || o.idCampo == 0 ) {
+                if (o == null || o.idCampo == null || o.idCampo == 0) {
                   existenNULL++;
                 }
-                o!=null ? o.Check = false: "";
+                o != null ? (o.Check = false) : '';
                 // o.validacion=false;
               });
               this.opcionesTruFalse = this.pasoActual.opciones;
@@ -390,19 +401,18 @@ export class ChatBotLandingPageComponent
               //   validacion: false,
               // }));
 
-              console.log("Existe null opcines cantidad", existenNULL);
+              console.log('Existe null opcines cantidad', existenNULL);
               if (existenNULL == this.pasoActual.opciones.length) {
                 this.ContinuarOpciones(1);
-              }
-              else{
+              } else {
                 this.ContinuarOpciones(3);
               }
             }
           }
-      // }
-       // this.inputChat.nativeElement.focus()
-      }
-    })
+          // }
+          // this.inputChat.nativeElement.focus()
+        },
+      });
   }
   ProcesarAsignacionAutomaticaChatbot() {
     this._ChatBotService
@@ -427,6 +437,8 @@ export class ChatBotLandingPageComponent
     this.Paises.forEach((p: any) => {
       if (p.codigoIso == codigoISo) {
         this.datosAlumno.IdPais = p.idPais;
+        console.log('Set pais Codigo', this.datosAlumno.IdPais);
+
         this.min = p.longCelularAlterno;
         this.max = p.longCelular;
       }
@@ -441,37 +453,35 @@ export class ChatBotLandingPageComponent
     });
   }
   SetValidator() {
-    console.log("paso actual", this.pasoActual);
+    console.log('paso actual', this.pasoActual);
     this.formControl.clearValidators();
     if (this.pasoActual.identificadorApi == 'Email') {
       this.formControl.setValidators([Validators.required, Validators.email]);
-    }
-    else if (this.pasoActual.identificadorApi == 'Movil') {
+    } else if (this.pasoActual.identificadorApi == 'Movil') {
       var idPais =
         this.datosAlumno.IdPais == undefined ? 0 : this.datosAlumno.IdPais;
+      console.log('idPais SetValidator', idPais);
+
       this.formControl.setValidators([
         Validators.required,
         Validators.minLength(this.min),
         Validators.maxLength(this.max),
         MovilValidator(idPais),
       ]);
-    }
-    else if (this.pasoActual.identificadorApi == 'Nombres') {
+    } else if (this.pasoActual.identificadorApi == 'Nombres') {
       this.formControl.setValidators([Validators.required]);
     }
     // if(this.pasoActual.identificadorApi=='Dni'){
     //   this.formControl.setValidators([Validators.required])
     // };
-    console.log("FormControl ",this.formControl);
+    console.log('FormControl ', this.formControl);
   }
   SetDatAlumno() {
-    if (this.pasoActual.identificadorApi == 'Email'){
+    if (this.pasoActual.identificadorApi == 'Email') {
       this.datosAlumno.Email = this.formControl.value;
-    }
-    else if (this.pasoActual.identificadorApi == 'Movil'){
+    } else if (this.pasoActual.identificadorApi == 'Movil') {
       this.datosAlumno.Movil = this.formControl.value;
-    }
-    else if (this.pasoActual.identificadorApi == 'Nombres'){
+    } else if (this.pasoActual.identificadorApi == 'Nombres') {
       this.datosAlumno.Nombres = this.formControl.value;
     }
     var dataAlumno = JSON.stringify(this.datosAlumno);
@@ -526,17 +536,21 @@ export class ChatBotLandingPageComponent
     }
     return this.pasoActual.mensajeErrorValidacion;
   }
-  ContinuarFlujo(ValorDB:any){
-    console.log( 'Paso Actual Continuar Flujo', this.pasoActual)
-    if(this.pasoActual.nombreFuncion==='CreacionAlumnoOportunidad' || this.pasoActual.funcionObtenerOpcion === 'pw.SP_PW_ChatbotPGeneralMayorProbabilidadTop5_PorAlumno'){
-      this.OportunidadDTO.NombresCompletos=this.datosAlumno.Nombres
-      this.OportunidadDTO.Celular=this.datosAlumno.Movil.toString()
-      this.OportunidadDTO.Correo=this.datosAlumno.Email
-      this.OportunidadDTO.IdPais=this.datosAlumno.IdPais
-      this.OportunidadDTO.IdAreaFormacion =this.datosAlumno.IdAreaFormacion
-      this.OportunidadDTO.IdCargo =this.datosAlumno.IdCargo
-      this.OportunidadDTO.IdAreaTrabajo =this.datosAlumno.IdAreaTrabajo
-      this.OportunidadDTO.IdIndustria =this.datosAlumno.IdIndustria
+  ContinuarFlujo(ValorDB: any) {
+    console.log('Paso Actual Continuar Flujo', this.pasoActual);
+    if (
+      this.pasoActual.nombreFuncion === 'CreacionAlumnoOportunidad' ||
+      this.pasoActual.funcionObtenerOpcion ===
+        'pw.SP_PW_ChatbotPGeneralMayorProbabilidadTop5_PorAlumno'
+    ) {
+      this.OportunidadDTO.NombresCompletos = this.datosAlumno.Nombres;
+      this.OportunidadDTO.Celular = this.datosAlumno.Movil.toString();
+      this.OportunidadDTO.Correo = this.datosAlumno.Email;
+      this.OportunidadDTO.IdPais = this.datosAlumno.IdPais;
+      this.OportunidadDTO.IdAreaFormacion = this.datosAlumno.IdAreaFormacion;
+      this.OportunidadDTO.IdCargo = this.datosAlumno.IdCargo;
+      this.OportunidadDTO.IdAreaTrabajo = this.datosAlumno.IdAreaTrabajo;
+      this.OportunidadDTO.IdIndustria = this.datosAlumno.IdIndustria;
 
       this.ProcesarAsignacionAutomaticaChatbot();
     } else if (this.pasoActual.idCampoContacto == 3) {
@@ -602,7 +616,7 @@ export class ChatBotLandingPageComponent
     this.SiguientesPasos[this.SiguientesPasos.length - 1].respuesta =
       this.formControl.value;
     this.ValidacionAlumnoCorreoChatBot();
-    console.log("ir chat datos alumno", this.datosAlumno);
+    console.log('ir chat datos alumno', this.datosAlumno);
   }
   ValidacionAlumnoCorreoChatBot() {
     this._ChatBotService
@@ -610,7 +624,7 @@ export class ChatBotLandingPageComponent
       .pipe(takeUntil(this.signal$))
       .subscribe({
         next: (x) => {
-          console.log("validar correo alumno", x);
+          console.log('validar correo alumno', x);
           if (x != null && x != undefined) {
             this.datosAlumno.Id = x.idAlumno;
             this.datosAlumno.Movil = x.celular;
@@ -643,7 +657,7 @@ export class ChatBotLandingPageComponent
       this.ElementRefTemp = ElementRef;
     }
     if (this.formControl.valid) {
-      console.log("entro al siguiente paso")
+      console.log('entro al siguiente paso');
       this.CargandoChat = true;
       this.SetDatAlumno();
       this.flujoActual.Paso = this.pasoActual.paso;
@@ -668,7 +682,7 @@ export class ChatBotLandingPageComponent
       (this.SiguientesPasos[this.SiguientesPasos.length - 1].fechaRegistrada =
         this.datePipe.transform(new Date(), 'hh:mm a')),
         this.ContinuarFlujo(this.formControl.value);
-      console.log("datos alumno", this.datosAlumno);
+      console.log('datos alumno sigue paso', this.datosAlumno);
     }
   }
   SelectOpciones(item: any) {
@@ -715,7 +729,7 @@ export class ChatBotLandingPageComponent
     this.SiguientesPasos[this.SiguientesPasos.length - 1].respuesta =
       item.nombre;
     this.ContinuarFlujo(item.id);
-    console.log("select opciones datos alumno", this.datosAlumno);
+    console.log('select opciones datos alumno', this.datosAlumno);
   }
   ContinuarOpciones(valor: number) {
     console.log('ContinuarOpciones valor', valor);
@@ -729,15 +743,36 @@ export class ChatBotLandingPageComponent
     }
     var hayerrore = false;
     for (let index = 0; index < this.opcionesTruFalse.length; index++) {
-      var msg = "";
-      if(this.opcionesTruFalse[index].Check!=true){
-        if( this.opcionesTruFalse[index].idCampo==0 || this.opcionesTruFalse[index].idCampo==null )
-          msg='Muy Bien '+this.datosAlumno.Nombres.split(' ')[0]+', necesitamos conocer tu <strong>'+ this.opcionesTruFalse[index].nombre +'</strong> por favor selecciona una de las siguientes opciones:'
-        else{
-          msg='Muy Bien '+this.datosAlumno.Nombres.split(' ')[0]+', Tu <strong>'+ this.opcionesTruFalse[index].nombre +'</strong> sigue siendo <strong>' + this.opcionesTruFalse[index].campo + '</strong>?'
+      var msg = '';
+      if (this.opcionesTruFalse[index].Check != true) {
+        if (
+          this.opcionesTruFalse[index].idCampo == 0 ||
+          this.opcionesTruFalse[index].idCampo == null
+        ) {
+          msg =
+            'Muy Bien ' +
+            this.datosAlumno.Nombres.split(' ')[0] +
+            ', necesitamos conocer tu <strong>' +
+            this.opcionesTruFalse[index].nombre +
+            '</strong> por favor selecciona una de las siguientes opciones:';
+          this.SiguientesPasos[
+            this.SiguientesPasos.length - 1
+          ].validacionCambio = true;
+        } else {
+          msg =
+            'Muy Bien ' +
+            this.datosAlumno.Nombres.split(' ')[0] +
+            ', Tu <strong>' +
+            this.opcionesTruFalse[index].nombre +
+            '</strong> sigue siendo <strong>' +
+            this.opcionesTruFalse[index].campo +
+            '</strong>?';
         }
-        this.ObtenerCincoOpcionesPerfilProfesionalChatbot(this.opcionesTruFalse[index],msg)
-        hayerrore=true
+        this.ObtenerCincoOpcionesPerfilProfesionalChatbot(
+          this.opcionesTruFalse[index],
+          msg
+        );
+        hayerrore = true;
         break;
       }
     }
@@ -760,6 +795,7 @@ export class ChatBotLandingPageComponent
     }
   }
   ObtenerCincoOpcionesPerfilProfesionalChatbot(data: any, mensaje: string) {
+    console.log("obtener 5 opcioones perfil DATOS", this.datos );
     this.datos.CodigoPGeneral = this.flujoActual.CodigoPGeneral;
     this.datos.IdCampo = data.idCampo;
     this.datos.IdCampoContacto = data.id;
@@ -784,57 +820,64 @@ export class ChatBotLandingPageComponent
             respuesta: null,
             tipoOpcion: 'TrueFalse',
             opciones2: x,
-            validacionCambio: false,
+            validacionCambio: this.datos.IdCampo == 0 ? true:false,
           });
 
           this.CargandoChat = false;
-          console.log("obtenercincoopcionesperfilprofesional SIGUIENTES PASOS", this.SiguientesPasos);
+          console.log(
+            'obtenercincoopcionesperfilprofesional SIGUIENTES PASOS',
+            this.SiguientesPasos
+          );
           this.ScrollTo();
         },
       });
-
   }
 
   ActualizarAlumnoChatBot2(valor: number, valorNombre: any) {
-    console.log("ACTUAKIZAR ALUMNOS 2 sht pasos", this.SiguientesPasos);
+    console.log('ACTUAKIZAR ALUMNOS 2 sht pasos', this.SiguientesPasos);
     this.SiguientesPasos.forEach((p) => {
       p.respondido = true;
     });
     this.SiguientesPasos[this.SiguientesPasos.length - 1].respuesta =
       valorNombre;
-    console.log("valor nombre", valorNombre);
+    console.log('valor nombre', valorNombre);
     this.datos.PrimerBloque = true;
     this.ActualizarAlumnoDTO.IdAlumno = this.datosAlumno.Id;
     var indicemal = 0;
     var msg = '';
     for (let index = 0; index < this.opcionesTruFalse.length; index++) {
       if (this.opcionesTruFalse[index].Check != true) {
-        msg =
-          'Muy Bien ' +
-          this.datosAlumno.Nombres.split(' ')[0] +
-          ', vemos que cambiaste tu <strong>' +
-          this.opcionesTruFalse[index].nombre +
-          '</strong> por favor actualizalo seleccionando una de las siguientes opciones:';
-        indicemal = index;
-        break;
-      }
-      if (
-        this.opcionesTruFalse[index].idCampo == 0 ||
-        this.opcionesTruFalse[index].idCampo == null
-      ) {
-        msg =
-          'Muy Bien ' +
-          this.datosAlumno.Nombres +
-          ', necesitamos conocer tu ' +
-          this.opcionesTruFalse[index].nombre +
-          ' por favor selecciona una de las siguientes opciones:';
+        if (
+          this.opcionesTruFalse[index].idCampo == 0 ||
+          this.opcionesTruFalse[index].idCampo == null
+        ) {
+          msg =
+            'Muy Bien ' +
+            this.datosAlumno.Nombres.split(' ')[0] +
+            ', necesitamos conocer tu ' +
+            this.opcionesTruFalse[index].nombre +
+            ' por favor selecciona una de las siguientes opciones:';
+
+          this.SiguientesPasos[this.SiguientesPasos.length-1].validacionCambio =
+            true;
+        } else {
+          msg =
+            'Muy Bien ' +
+            this.datosAlumno.Nombres.split(' ')[0] +
+            ', vemos que cambiaste tu <strong>' +
+            this.opcionesTruFalse[index].nombre +
+            '</strong> por favor actualizalo seleccionando una de las siguientes opciones:';
+        }
 
         indicemal = index;
         break;
       }
     }
-    console.log("ActualizarAlumnoChatBot2 opciesTRUEFALSE", this.opcionesTruFalse);
-    console.log("inidcemal", indicemal);
+    console.log(
+      'ActualizarAlumnoChatBot2 opciesTRUEFALSE',
+      this.opcionesTruFalse
+    );
+    console.log('inidcemal', indicemal);
     if (valor == 0 || valor == null) {
       this.datos.PrimerBloque = false;
       this.ObtenerCincoOpcionesPerfilProfesionalChatbot(
@@ -860,7 +903,7 @@ export class ChatBotLandingPageComponent
           break;
       }
       this.ActualizarAlumnoDTO.Valor = valor.toString();
-      console.log("valor", valor.toString());
+      console.log('valor', valor.toString());
       this._ChatBotService
         .ActualizarAlumnoChatBot(this.ActualizarAlumnoDTO)
         .pipe(takeUntil(this.signal$))
@@ -877,7 +920,7 @@ export class ChatBotLandingPageComponent
   }
 
   ValidacionDenegadaContinuar() {
-    console.log("validacion denegada siguet pasos" , this.SiguientesPasos);
+    console.log('validacion denegada siguet pasos', this.SiguientesPasos);
     this.SiguientesPasos[this.SiguientesPasos.length - 1].respuesta = 'Si';
     this.SiguientesPasos.forEach((p) => {
       p.respondido = true;
@@ -886,25 +929,27 @@ export class ChatBotLandingPageComponent
     var msg = '';
     for (let index = 0; index < this.opcionesTruFalse.length; index++) {
       if (this.opcionesTruFalse[index].Check != true) {
-        msg =
-          'Muy Bien ' +
-          this.datosAlumno.Nombres.split(' ')[0] +
-          ', vemos que cambiaste tu <strong>' +
-          this.opcionesTruFalse[index].nombre +
-          '</strong> por favor actualizalo seleccionando una de las siguientes opciones:';
-        indicemal = index;
-        break;
-      }
-      if (
-        this.opcionesTruFalse[index].idCampo == 0 ||
-        this.opcionesTruFalse[index].idCampo == null
-      ) {
-        msg =
-          'Muy Bien ' +
-          this.datosAlumno.Nombres +
-          ', necesitamos conocer tu ' +
-          this.opcionesTruFalse[index].nombre +
-          ' por favor selecciona una de las siguientes opciones:';
+        if (
+          this.opcionesTruFalse[index].idCampo == 0 ||
+          this.opcionesTruFalse[index].idCampo == null
+        ) {
+          msg =
+            'Muy Bien ' +
+            this.datosAlumno.Nombres.split(' ')[0] +
+            ', necesitamos conocer tu ' +
+            this.opcionesTruFalse[index].nombre +
+            ' por favor selecciona una de las siguientes opciones:';
+
+          this.SiguientesPasos[this.SiguientesPasos.length-1].validacionCambio =
+            true;
+        } else {
+          msg =
+            'Muy Bien ' +
+            this.datosAlumno.Nombres.split(' ')[0] +
+            ', vemos que cambiaste tu <strong>' +
+            this.opcionesTruFalse[index].nombre +
+            '</strong> por favor actualizalo seleccionando una de las siguientes opciones:';
+        }
 
         indicemal = index;
         break;
