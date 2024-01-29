@@ -43,14 +43,14 @@
           <div class="textoChatbot"></div>
 
           <ng-container *ngFor="let item of SiguientesPasos; let i = index">
-            <div class="PreguntaChat" *ngIf="i >= 0" #ChatUbicacion2>
-              <div class="GloboPregunta">
+            <div class="PreguntaChat" *ngIf="i >= 0 && i!=2" #ChatUbicacion2>
+              <div class="GloboPregunta" *ngIf="item.mensaje != null">
                 <div class="imgChatBot"></div>
                 <div class="PreguntaGloboPrevio">
-                  <div class="PreguntaGlobo">
+                  <div class="PreguntaGlobo" *ngIf="1">
                     <div
                       [innerHtml]="item.mensaje | safeHtml"
-                      (click)="(ChatUbicacion2)"
+                      (click)="ScrollTo();(ChatUbicacion2); ScrollTo()"
                     ></div>
                   </div>
                   <div class="fechaR">
@@ -72,7 +72,8 @@
                     class="OpcionesGloboValidacion"
                     (click)="
                       item.validacionCambio = false;
-                      ValidacionDenegadaContinuar()
+                      ValidacionDenegadaContinuar();
+                      ScrollTo()
                     "
                   >
                     Si
@@ -80,7 +81,7 @@
                   <button
                     type="button"
                     class="OpcionesGloboValidacion"
-                    (click)="item.validacionCambio = true"
+                    (click)="item.validacionCambio = true; ScrollTo()"
                   >
                     No
                   </button>
@@ -102,10 +103,11 @@
                         item.respondido == true && item.validacionCambio == true
                           ? ''
                           : ActualizarAlumnoChatBot2(itemo.id, itemo.nombre);
-                        ScrollTo(ChatUbicacion2)
+                        ScrollTo()
                       "
                     >
-                      {{ itemo.nombre }}
+                      {{ itemo.nombre}}
+                      {{ this.ScrollTo() }}
                     </button>
                   </div>
                   <div style="text-align: end; font-size: 15px">
@@ -125,10 +127,10 @@
                       class="OpcionesGlobo"
                       (click)="
                         item.respondido == true ? '' : SelectOpciones(itemo);
-                        ScrollTo(ChatUbicacion1)
+                        ScrollTo()
                       "
                     >
-                      {{ itemo.nombre }}
+                      {{ itemo.nombre}}
                     </div>
                   </ng-container>
                 </ng-container>
@@ -154,7 +156,7 @@
                       </div>
                     </ng-container>
                   </ng-container> -->
-                  <div
+                  <!-- <div
                     style="
                       width: 100%;
                       justify-content: center;
@@ -175,7 +177,7 @@
                         ></app-default-button>
                       </div>
                     </div>
-                  </div>
+                  </div> -->
                 </ng-container>
               </div>
             </div>
@@ -229,7 +231,7 @@
                           : 'text'
                       "
                       matInput
-                      (keyup.enter)="SiguientePaso()"
+                      (keyup.enter)="SiguientePaso(); ScrollTo()"
                       placeholder="{{ obtenerErrorCampoNombre() }}"
                     />
                     <div class="InputError" *ngIf="formControl.invalid">
@@ -246,7 +248,7 @@
                   <div class="iconoEnvio" *ngIf="!formControl.invalid">
                     <i
                       class="material-icons sendMensajeChat sendMensajeChatHabil"
-                      (click)="SiguientePaso(); ScrollTo(ChatUbicacion)"
+                      (click)="SiguientePaso(); ScrollTo()"
                       >send</i
                     >
                   </div>
@@ -294,4 +296,6 @@
     </div>
   </div>
 </ng-container>
+<div #scrollContainer> FINNNN
+</div>
 <div id="footer"></div>
