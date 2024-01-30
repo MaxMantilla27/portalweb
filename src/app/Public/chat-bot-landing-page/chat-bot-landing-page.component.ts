@@ -169,7 +169,7 @@ export class ChatBotLandingPageComponent
   public cargando = false;
   public datePipe = new DatePipe('en-US');
   public validacionCambio: boolean = false;
-
+  public validacionCambioMovil: boolean = false;
   ngOnChanges(changes: SimpleChanges): void {
     this.SetPaisCodigo();
     // this.inputElements.nativeElement.querySelector('.inputDataUsuario').focus();
@@ -181,7 +181,7 @@ export class ChatBotLandingPageComponent
 
   ngOnInit(): void {
     this.validarTamanioVentana();
-
+    this.validacionCambioMovil = false;
     if (this.isBrowser) {
       this.intervalInicio = setInterval(() => {
         var usuarioWeb =
@@ -295,6 +295,7 @@ export class ChatBotLandingPageComponent
                   h.fechaCreacion,
                   'hh:mm a'
                 ),
+                validacionCambioMovil: false
               });
               console.log('documents.get', this.ElementRefTemp);
             });
@@ -356,7 +357,12 @@ export class ChatBotLandingPageComponent
             if (this.pasoActual != null && this.pasoActual != undefined) {
               this.pasoActual.opciones = x.opciones;
 
+              this.pasoActual.idCampoContacto == 5?
+              this.pasoActual.mensaje += ". ¿Sigue siendo tu número "+
+              this.datosAlumno.Movil+ " ?":"";
+              this.pasoActual.validacionCambioMovil = false;
               this.SiguientesPasos.push(this.pasoActual);
+
               //console.log('documents.get', this.ElementRefTemp);
 
               if (this.pasoActual.paso == 1) {
@@ -683,6 +689,8 @@ export class ChatBotLandingPageComponent
         this.datePipe.transform(new Date(), 'hh:mm a')),
         this.ContinuarFlujo(this.formControl.value);
       console.log('datos alumno sigue paso', this.datosAlumno);
+      this.validacionCambioMovil = true;
+
     }
   }
   SelectOpciones(item: any) {
@@ -755,9 +763,9 @@ export class ChatBotLandingPageComponent
             ', necesitamos conocer tu <strong>' +
             this.opcionesTruFalse[index].nombre +
             '</strong> por favor selecciona una de las siguientes opciones:';
-          this.SiguientesPasos[
-            this.SiguientesPasos.length - 1
-          ].validacionCambio = true;
+          // this.SiguientesPasos[
+          //   this.SiguientesPasos.length - 1
+          // ].validacionCambio = true;
         } else {
           msg =
             'Muy Bien ' +
@@ -805,6 +813,8 @@ export class ChatBotLandingPageComponent
       .pipe(takeUntil(this.signal$))
       .subscribe({
         next: (x) => {
+          console.log( "datosIDCAMPO", this.datos.IdCampo);
+          console.log("ult respuesta sgutes pasos", this.SiguientesPasos[this.SiguientesPasos.length -1].respuesta )
           this.SiguientesPasos.push({
             idChatbotConfiguracionFlujo: 1,
             usuarioRegistrado: this.pasoActual.usuarioRegistrado,
@@ -820,7 +830,8 @@ export class ChatBotLandingPageComponent
             respuesta: null,
             tipoOpcion: 'TrueFalse',
             opciones2: x,
-            validacionCambio: this.datos.IdCampo == 0 ? true:false,
+            validacionCambioMovil: false,
+            validacionCambio: this.SiguientesPasos[this.SiguientesPasos.length -1].respuesta == "Otras Opciones"? true:false
           });
 
           this.CargandoChat = false;
@@ -835,6 +846,7 @@ export class ChatBotLandingPageComponent
 
   ActualizarAlumnoChatBot2(valor: number, valorNombre: any) {
     console.log('ACTUAKIZAR ALUMNOS 2 sht pasos', this.SiguientesPasos);
+    console.log( "valor de entrada ",valor)
     this.SiguientesPasos.forEach((p) => {
       p.respondido = true;
     });
@@ -940,8 +952,8 @@ export class ChatBotLandingPageComponent
             this.opcionesTruFalse[index].nombre +
             ' por favor selecciona una de las siguientes opciones:';
 
-          this.SiguientesPasos[this.SiguientesPasos.length-1].validacionCambio =
-            true;
+          // this.SiguientesPasos[this.SiguientesPasos.length-1].validacionCambio =
+          //   true;
         } else {
           msg =
             'Muy Bien ' +
