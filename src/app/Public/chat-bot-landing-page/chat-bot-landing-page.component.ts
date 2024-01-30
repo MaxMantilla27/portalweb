@@ -1021,6 +1021,8 @@ export class ChatBotLandingPageComponent
       .pipe(takeUntil(this.signal$))
       .subscribe({
         next: (x) => {
+          console.log('x: ', x);
+
           console.log('retorno pespecifico x: ', x.pespecifico);
           if (
             x.pespecifico != null &&
