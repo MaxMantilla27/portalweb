@@ -357,7 +357,7 @@ export class ChatBotLandingPageComponent
             if (this.pasoActual != null && this.pasoActual != undefined) {
               this.pasoActual.opciones = x.opciones;
 
-              this.pasoActual.idCampoContacto == 5?
+              this.pasoActual.idCampoContacto == 5 && this.pasoActual.usuarioRegistrado              ?
               this.pasoActual.mensaje += ". ¿Sigue siendo tu número "+
               this.datosAlumno.Movil+ " ?":"";
               this.pasoActual.validacionCambioMovil = false;

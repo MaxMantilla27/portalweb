@@ -90,7 +90,6 @@
                       (click)="
                         item.respondido = false;
                         item.validacionCambioMovil = true;
-                        item.idCampoContacto = 4;
                         ScrollTo()
                       "
                     >
@@ -172,6 +171,7 @@
                       "
                     >
                       {{ itemo.nombre }}
+                      {{ this.ScrollTo() }}
                     </div>
                   </ng-container>
                 </ng-container>
@@ -236,6 +236,8 @@
                   </div>
                   <div class="fechaR">
                     {{ item.fechaRegistrada }}
+                    {{ this.ScrollTo() }}
+
                   </div>
                 </div>
                 <!-- <div
@@ -253,7 +255,8 @@
                     (item.respondido != true || item.respuesta == '') &&
                     (item.opciones == undefined ||
                       item.opciones == null ||
-                      item.opciones.length == 0))
+                      item.opciones.length == 0)) || (item.idCampoContacto == 5 && !item.usuarioRegistrado &&
+                      !item.respondido)
                 "
               >
                 <div class="InputResponder">
