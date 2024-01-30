@@ -104,7 +104,7 @@
                 *ngIf="item.opciones2 != null && item.opciones2.length > 0 "
               >
                 <div
-                  *ngIf="item.validacionCambio == false && this.opcionesTruFalse[item.paso-2].idCampo != 0"
+                  *ngIf="item.validacionCambio == false"
 
                   style="margin-bottom: 10%"
                 >
@@ -129,7 +129,7 @@
                   </button>
                 </div>
 
-                <ng-container *ngIf="item.validacionCambio == true || this.opcionesTruFalse[item.paso-2].idCampo == 0">
+                <ng-container *ngIf="item.validacionCambio == true">
                   <div *ngFor="let itemo of item.opciones2">
                     <button
                       type="button"

@@ -764,7 +764,7 @@ export class ChatBotLandingPageComponent
             ', necesitamos conocer tu <strong>' +
             this.opcionesTruFalse[index].nombre +
             '</strong> por favor selecciona una de las siguientes opciones:';
-            this.SiguientesPasos[this.SiguientesPasos.length - 1].validacionCambio = true;
+            //this.SiguientesPasos[this.SiguientesPasos.length - 1].validacionCambio = true;
 
         } else {
           msg =
@@ -835,7 +835,7 @@ export class ChatBotLandingPageComponent
             tipoOpcion: 'TrueFalse',
             opciones2: x,
             validacionCambioMovil: false,
-            validacionCambio: this.SiguientesPasos[this.SiguientesPasos.length -1].respuesta == "Otras Opciones"? true:false
+            validacionCambio: this.SiguientesPasos[this.SiguientesPasos.length -1].respuesta == "Otras Opciones" || data.idCampo <= 0? true:false
           });
 
           this.CargandoChat = false;
@@ -870,12 +870,12 @@ export class ChatBotLandingPageComponent
           msg =
             'Muy Bien ' +
             this.datosAlumno.Nombres.split(' ')[0] +
-            ', necesitamos conocer tu ' +
+            ', necesitamos conocer tu <strong>' +
             this.opcionesTruFalse[index].nombre +
-            ' por favor selecciona una de las siguientes opciones:';
+            '</strong> por favor selecciona una de las siguientes opciones:';
 
-          this.SiguientesPasos[this.SiguientesPasos.length-1].validacionCambio =
-            true;
+          //this.SiguientesPasos[this.SiguientesPasos.length-1].validacionCambio =
+          //  true;
         } else {
           msg =
             'Muy Bien ' +
@@ -960,7 +960,7 @@ export class ChatBotLandingPageComponent
             ', necesitamos conocer tu <strong>' +
             this.opcionesTruFalse[index].nombre +
             ' /strong> por favor selecciona una de las siguientes opciones:';
-            this.SiguientesPasos[this.SiguientesPasos.length - 1].validacionCambio = true;
+           // this.SiguientesPasos[this.SiguientesPasos.length - 1].validacionCambio = true;
 
           // this.SiguientesPasos[this.SiguientesPasos.length-1].validacionCambio =
           //   true;
