@@ -723,8 +723,9 @@ export class ChatBotLandingPageComponent
       'pw.SP_PW_ChatbotPGeneralMayorProbabilidadTop5_PorAlumno'
     ) {
       this.OportunidadDTO.IdPrograma = item.id;
-      this.ObtenerIdPEspecifico(item.id, this.datosAlumno.IdPais);
+      this.OportunidadDTO.IdPespecifico = this.ObtenerIdPEspecifico(item.id, this.datosAlumno.IdPais);
       this.flujoActual.NombrePGeneral = item.nombre;
+
       console.log('id nuevo programa seleccionado: ', item.id);
       console.log(
         'idpespecifico nuevo programa',
@@ -763,9 +764,8 @@ export class ChatBotLandingPageComponent
             ', necesitamos conocer tu <strong>' +
             this.opcionesTruFalse[index].nombre +
             '</strong> por favor selecciona una de las siguientes opciones:';
-          // this.SiguientesPasos[
-          //   this.SiguientesPasos.length - 1
-          // ].validacionCambio = true;
+            this.SiguientesPasos[this.SiguientesPasos.length - 1].validacionCambio = true;
+
         } else {
           msg =
             'Muy Bien ' +
@@ -775,6 +775,10 @@ export class ChatBotLandingPageComponent
             '</strong> sigue siendo <strong>' +
             this.opcionesTruFalse[index].campo +
             '</strong>?';
+
+            // this.SiguientesPasos[
+            //   this.SiguientesPasos.length - 1
+            //  ].idCampoContacto = 1;
         }
         this.ObtenerCincoOpcionesPerfilProfesionalChatbot(
           this.opcionesTruFalse[index],
@@ -879,7 +883,12 @@ export class ChatBotLandingPageComponent
             ', vemos que cambiaste tu <strong>' +
             this.opcionesTruFalse[index].nombre +
             '</strong> por favor actualizalo seleccionando una de las siguientes opciones:';
-        }
+
+            // this.SiguientesPasos[
+            //   this.SiguientesPasos.length - 1
+            //  ].idCampoContacto = 1;
+
+          }
 
         indicemal = index;
         break;
@@ -948,9 +957,10 @@ export class ChatBotLandingPageComponent
           msg =
             'Muy Bien ' +
             this.datosAlumno.Nombres.split(' ')[0] +
-            ', necesitamos conocer tu ' +
+            ', necesitamos conocer tu <strong>' +
             this.opcionesTruFalse[index].nombre +
-            ' por favor selecciona una de las siguientes opciones:';
+            ' /strong> por favor selecciona una de las siguientes opciones:';
+            this.SiguientesPasos[this.SiguientesPasos.length - 1].validacionCambio = true;
 
           // this.SiguientesPasos[this.SiguientesPasos.length-1].validacionCambio =
           //   true;
@@ -961,7 +971,12 @@ export class ChatBotLandingPageComponent
             ', vemos que cambiaste tu <strong>' +
             this.opcionesTruFalse[index].nombre +
             '</strong> por favor actualizalo seleccionando una de las siguientes opciones:';
-        }
+
+            // this.SiguientesPasos[
+            //   this.SiguientesPasos.length - 1
+            //  ].idCampoContacto= 1;
+
+          }
 
         indicemal = index;
         break;
@@ -1000,7 +1015,7 @@ export class ChatBotLandingPageComponent
       });
   }
 
-  ObtenerIdPEspecifico(IdPGeneral: any, IdPaisAlumno: any) {
+  ObtenerIdPEspecifico(IdPGeneral: any, IdPaisAlumno: any): any {
     this._ChatBotService
       .ObtenerIdPEspecifico(IdPGeneral, IdPaisAlumno)
       .pipe(takeUntil(this.signal$))
@@ -1012,7 +1027,9 @@ export class ChatBotLandingPageComponent
             x.pespecifico != '' &&
             x.pespecifico != undefined
           ) {
+
             this.OportunidadDTO.IdPespecifico = x.pespecifico;
+            return x.pespecifico;
           }
         },
       });
