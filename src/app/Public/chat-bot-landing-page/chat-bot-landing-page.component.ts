@@ -298,7 +298,7 @@ export class ChatBotLandingPageComponent
                   h.fechaCreacion,
                   'hh:mm a'
                 ),
-                validacionCambioMovil: false
+                validacionCambioMovil: false,
               });
               console.log('documents.get', this.ElementRefTemp);
             });
@@ -360,9 +360,13 @@ export class ChatBotLandingPageComponent
             if (this.pasoActual != null && this.pasoActual != undefined) {
               this.pasoActual.opciones = x.opciones;
 
-              this.pasoActual.idCampoContacto == 5 && this.pasoActual.usuarioRegistrado              ?
-              this.pasoActual.mensaje += ". ¿Sigue siendo tu número "+
-              this.datosAlumno.Movil+ " ?":"";
+              this.pasoActual.idCampoContacto == 5 &&
+              this.pasoActual.usuarioRegistrado
+                ? (this.pasoActual.mensaje +=
+                    '. ¿Sigue siendo tu número ' +
+                    this.datosAlumno.Movil +
+                    ' ?')
+                : '';
               this.pasoActual.validacionCambioMovil = false;
               this.SiguientesPasos.push(this.pasoActual);
 
@@ -693,7 +697,6 @@ export class ChatBotLandingPageComponent
         this.ContinuarFlujo(this.formControl.value);
       console.log('datos alumno sigue paso', this.datosAlumno);
       this.validacionCambioMovil = true;
-
     }
   }
   SelectOpciones(item: any) {
@@ -726,7 +729,10 @@ export class ChatBotLandingPageComponent
       'pw.SP_PW_ChatbotPGeneralMayorProbabilidadTop5_PorAlumno'
     ) {
       this.OportunidadDTO.IdPrograma = item.id;
-      this.OportunidadDTO.IdPespecifico = this.ObtenerIdPEspecifico(item.id, this.datosAlumno.IdPais);
+      this.OportunidadDTO.IdPespecifico = this.ObtenerIdPEspecifico(
+        item.id,
+        this.datosAlumno.IdPais
+      );
       this.flujoActual.NombrePGeneral = item.nombre;
 
       console.log('id nuevo programa seleccionado: ', item.id);
@@ -767,8 +773,7 @@ export class ChatBotLandingPageComponent
             ', necesitamos conocer tu <strong>' +
             this.opcionesTruFalse[index].nombre +
             '</strong> por favor selecciona una de las siguientes opciones:';
-            //this.SiguientesPasos[this.SiguientesPasos.length - 1].validacionCambio = true;
-
+          //this.SiguientesPasos[this.SiguientesPasos.length - 1].validacionCambio = true;
         } else {
           msg =
             'Muy Bien ' +
@@ -779,9 +784,9 @@ export class ChatBotLandingPageComponent
             this.opcionesTruFalse[index].campo +
             '</strong>?';
 
-            // this.SiguientesPasos[
-            //   this.SiguientesPasos.length - 1
-            //  ].idCampoContacto = 1;
+          // this.SiguientesPasos[
+          //   this.SiguientesPasos.length - 1
+          //  ].idCampoContacto = 1;
         }
         this.ObtenerCincoOpcionesPerfilProfesionalChatbot(
           this.opcionesTruFalse[index],
@@ -810,7 +815,7 @@ export class ChatBotLandingPageComponent
     }
   }
   ObtenerCincoOpcionesPerfilProfesionalChatbot(data: any, mensaje: string) {
-    console.log("obtener 5 opcioones perfil DATOS", this.datos );
+    console.log('obtener 5 opcioones perfil DATOS', this.datos);
     this.datos.CodigoPGeneral = this.flujoActual.CodigoPGeneral;
     this.datos.IdCampo = data.idCampo;
     this.datos.IdCampoContacto = data.id;
@@ -820,8 +825,11 @@ export class ChatBotLandingPageComponent
       .pipe(takeUntil(this.signal$))
       .subscribe({
         next: (x) => {
-          console.log( "datosIDCAMPO", this.datos.IdCampo);
-          console.log("ult respuesta sgutes pasos", this.SiguientesPasos[this.SiguientesPasos.length -1].respuesta )
+          console.log('datosIDCAMPO', this.datos.IdCampo);
+          console.log(
+            'ult respuesta sgutes pasos',
+            this.SiguientesPasos[this.SiguientesPasos.length - 1].respuesta
+          );
           this.SiguientesPasos.push({
             idChatbotConfiguracionFlujo: 1,
             usuarioRegistrado: this.pasoActual.usuarioRegistrado,
@@ -838,7 +846,11 @@ export class ChatBotLandingPageComponent
             tipoOpcion: 'TrueFalse',
             opciones2: x,
             validacionCambioMovil: false,
-            validacionCambio: this.SiguientesPasos[this.SiguientesPasos.length -1].respuesta == "Otras Opciones" || data.idCampo <= 0? true:false
+            validacionCambio:
+              this.SiguientesPasos[this.SiguientesPasos.length - 1].respuesta ==
+                'Otras Opciones' || data.idCampo <= 0
+                ? true
+                : false,
           });
 
           this.CargandoChat = false;
@@ -853,7 +865,9 @@ export class ChatBotLandingPageComponent
 
   ActualizarAlumnoChatBot2(valor: number, valorNombre: any) {
     console.log('ACTUAKIZAR ALUMNOS 2 sht pasos', this.SiguientesPasos);
-    console.log( "valor de entrada ",valor)
+    console.log('valor de entrada ', valor);
+    let tamanio = this.SiguientesPasos.length;
+    console.log('ultimo sgt paso', this.SiguientesPasos[tamanio - 1]);
     this.SiguientesPasos.forEach((p) => {
       p.respondido = true;
     });
@@ -876,22 +890,28 @@ export class ChatBotLandingPageComponent
             ', necesitamos conocer tu <strong>' +
             this.opcionesTruFalse[index].nombre +
             '</strong> por favor selecciona una de las siguientes opciones:';
-
+          if (valorNombre ==  "Otras Opciones") {
+            msg =
+              'A continuación ' +
+              this.datosAlumno.Nombres.split(' ')[0] +
+              ', necesitamos conocer tu <strong>' +
+              this.opcionesTruFalse[index].nombre +
+              '</strong> por favor selecciona una de las siguientes opciones:';
+          }
           //this.SiguientesPasos[this.SiguientesPasos.length-1].validacionCambio =
           //  true;
         } else {
           msg =
-            'Muy Bien ' +
+            'Disculpa ' +
             this.datosAlumno.Nombres.split(' ')[0] +
-            ', vemos que cambiaste tu <strong>' +
+            ', que insistamos en esta información, pero es importante conocer tu <strong>' +
             this.opcionesTruFalse[index].nombre +
-            '</strong> por favor actualizalo seleccionando una de las siguientes opciones:';
+            '</strong> para poder darte información personalizada sobre nuestros programas, Selecciona nuevamente entre las siguientes opciones';
 
-            // this.SiguientesPasos[
-            //   this.SiguientesPasos.length - 1
-            //  ].idCampoContacto = 1;
-
-          }
+          // this.SiguientesPasos[
+          //   this.SiguientesPasos.length - 1
+          //  ].idCampoContacto = 1;
+        }
 
         indicemal = index;
         break;
@@ -963,7 +983,7 @@ export class ChatBotLandingPageComponent
             ', necesitamos conocer tu <strong>' +
             this.opcionesTruFalse[index].nombre +
             ' /strong> por favor selecciona una de las siguientes opciones:';
-           // this.SiguientesPasos[this.SiguientesPasos.length - 1].validacionCambio = true;
+          // this.SiguientesPasos[this.SiguientesPasos.length - 1].validacionCambio = true;
 
           // this.SiguientesPasos[this.SiguientesPasos.length-1].validacionCambio =
           //   true;
@@ -975,11 +995,10 @@ export class ChatBotLandingPageComponent
             this.opcionesTruFalse[index].nombre +
             '</strong> por favor actualizalo seleccionando una de las siguientes opciones:';
 
-            // this.SiguientesPasos[
-            //   this.SiguientesPasos.length - 1
-            //  ].idCampoContacto= 1;
-
-          }
+          // this.SiguientesPasos[
+          //   this.SiguientesPasos.length - 1
+          //  ].idCampoContacto= 1;
+        }
 
         indicemal = index;
         break;
@@ -1032,7 +1051,6 @@ export class ChatBotLandingPageComponent
             x.pespecifico != '' &&
             x.pespecifico != undefined
           ) {
-
             this.OportunidadDTO.IdPespecifico = x.pespecifico;
             return x.pespecifico;
           }
@@ -1041,7 +1059,7 @@ export class ChatBotLandingPageComponent
   }
   gethora() {
     //this.horaMinuto = new Date();
-    this.horaMinuto = this.datePipe.transform(new Date(), 'hh:mm a')
+    this.horaMinuto = this.datePipe.transform(new Date(), 'hh:mm a');
   }
   ScrollTo() {
     //el.scrollIntoView();

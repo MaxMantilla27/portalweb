@@ -40,7 +40,7 @@
         >
           <!--*ngIf="chat == true"> -->
 
-          <div class="textoChatbot"></div>
+          <!-- <div class="textoChatbot"></div> -->
 
           <ng-container *ngFor="let item of SiguientesPasos; let i = index">
             <div
@@ -62,9 +62,12 @@
                     ></div>
                   </div>
                   <div class="fechaR">
-
                     {{ gethora() }}
-                    {{ item.fechaRegistrada? item.fechaRegistrada : this.horaMinuto }}
+                    {{
+                      item.fechaRegistrada
+                        ? item.fechaRegistrada
+                        : this.horaMinuto
+                    }}
                   </div>
 
                   <div
@@ -103,11 +106,10 @@
               <div
                 #ChatUbicacion2
                 class="OpcionesPregunta"
-                *ngIf="item.opciones2 != null && item.opciones2.length > 0 "
+                *ngIf="item.opciones2 != null && item.opciones2.length > 0"
               >
                 <div
                   *ngIf="item.validacionCambio == false"
-
                   style="margin-bottom: 10%"
                 >
                   <button
@@ -120,7 +122,6 @@
                     "
                   >
                     Si
-
                   </button>
                   <button
                     type="button"
@@ -226,6 +227,46 @@
                 </ng-container>
               </div>
             </div>
+
+            <ng-container
+              *ngIf="
+                (item.idCampoContacto == 5 && item.validacionCambioMovil) ||
+                (item.idCampoContacto != 5 &&
+                  (item.respondido != true || item.respuesta == '') &&
+                  (item.opciones == undefined ||
+                    item.opciones == null ||
+                    item.opciones.length == 0)) ||
+                (item.idCampoContacto == 5 &&
+                  !item.usuarioRegistrado &&
+                  !item.respondido)
+              "
+            >
+              <div
+                class="PreguntaChat"
+                *ngIf="item.idCampoContacto == 5 && item.validacionCambioMovil"
+              >
+                <div class="GloboPregunta">
+                  <div class="imgChatBot"></div>
+                  <div class="PreguntaGloboPrevio">
+                    <div class="PreguntaGlobo">
+                      <div
+                        [innerHtml]="'Por favor digite nuevamente su nuevo número de celular' | safeHtml"
+                        (click)="ScrollTo()"
+                      ></div>
+                    </div>
+                    <div class="fechaR">
+                      {{ gethora() }}
+                      {{
+                        item.fechaRegistrada
+                          ? item.fechaRegistrada
+                          : this.horaMinuto
+                      }}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </ng-container>
+
             <div
               class="RespuestaCheat"
               *ngIf="item.esMensajeFinal != true && item.respuesta != null"
@@ -240,9 +281,12 @@
                   </div>
                   <div class="fechaR">
                     {{ gethora() }}
-                    {{ item.fechaRegistrada? item.fechaRegistrada : this.horaMinuto }}
+                    {{
+                      item.fechaRegistrada
+                        ? item.fechaRegistrada
+                        : this.horaMinuto
+                    }}
                     {{ this.ScrollTo() }}
-
                   </div>
                 </div>
                 <!-- <div
@@ -255,13 +299,16 @@
               </ng-container>
               <ng-container
                 #ChatUbicacionInput
-                *ngIf="(item.idCampoContacto == 5 && item.validacionCambioMovil) ||
+                *ngIf="
+                  (item.idCampoContacto == 5 && item.validacionCambioMovil) ||
                   (item.idCampoContacto != 5 &&
                     (item.respondido != true || item.respuesta == '') &&
                     (item.opciones == undefined ||
                       item.opciones == null ||
-                      item.opciones.length == 0)) || (item.idCampoContacto == 5 && !item.usuarioRegistrado &&
-                      !item.respondido)
+                      item.opciones.length == 0)) ||
+                  (item.idCampoContacto == 5 &&
+                    !item.usuarioRegistrado &&
+                    !item.respondido)
                 "
               >
                 <div class="InputResponder">
