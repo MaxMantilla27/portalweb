@@ -361,6 +361,9 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
 
   }
   OpenModalPago(){
+
+
+
     this.codigoIso =
       this._SessionStorageService.SessionGetValue('ISO_PAIS') != ''
         ? this._SessionStorageService.SessionGetValue('ISO_PAIS')
@@ -372,27 +375,36 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
         alumno:this.alumno,
         nombre:this.cabecera.nombre,
         modalidad:this.cabecera.listProgramaEspecificoInformacionDTO,
-        rutaProgramaDetalle:this.rutaProgramaDetalle
+        rutaProgramaDetalle:this.rutaProgramaDetalle,
+
+    }
+    let datosPrograma={
+      nombrePrograma:this.cabecera.tituloHtml
     }
     this._SessionStorageService.SessionSetValue('datEnvioPago',JSON.stringify(dataEnvioPago));
-    const dialogRef = this.dialog.open(ProgramaPagoComponent, {
-      width: '900px',
-      data: {
-        idPais: this.IdPais ,
-        idBusqueda:this.idBusqueda,
-        alumno:this.alumno,
-        nombre:this.cabecera.nombre,
-        modalidad:this.cabecera.listProgramaEspecificoInformacionDTO,
-        rutaProgramaDetalle:this.rutaProgramaDetalle},
-      panelClass: 'programa-pago-dialog-container',
-    });
-    dialogRef.afterClosed().pipe(takeUntil(this.signal$)).subscribe((result) => {
-      if(result!=undefined){
+    this._SessionStorageService.SessionSetValue('datosProgramaPago',JSON.stringify(datosPrograma))
 
-        this.PreProcesoPagoOrganicoAlumno(result);
-      }
-    });
+
+    this._router.navigate(['/AulaVirtual/MisPagos/PagoOrganicoTodos']);
+    // const dialogRef = this.dialog.open(ProgramaPagoComponent, {
+    //   width: '900px',
+    //   data: {
+    //     idPais: this.IdPais ,
+    //     idBusqueda:this.idBusqueda,
+    //     alumno:this.alumno,
+    //     nombre:this.cabecera.nombre,
+    //     modalidad:this.cabecera.listProgramaEspecificoInformacionDTO,
+    //     rutaProgramaDetalle:this.rutaProgramaDetalle},
+    //   panelClass: 'programa-pago-dialog-container',
+    // });
+    // dialogRef.afterClosed().pipe(takeUntil(this.signal$)).subscribe((result) => {
+    //   if(result!=undefined){
+
+    //     this.PreProcesoPagoOrganicoAlumno(result);
+    //   }
+    // });
   }
+
   PreProcesoPagoOrganicoAlumno(tarjeta:any){
 
     const dialogRef =this.dialog.open(ChargeComponent,{
