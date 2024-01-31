@@ -101,6 +101,8 @@ export class ChatBotLandingPageComponent
   public primerpaso: any;
   public SiguientesPasos: Array<any> = [];
   public pasoActual: any;
+  public horaMinuto: any;
+
   public OportunidadDTO: ValidacionChatBotEnvioDTO = {
     NombresCompletos: '',
     Celular: '',
@@ -182,6 +184,7 @@ export class ChatBotLandingPageComponent
   ngOnInit(): void {
     this.validarTamanioVentana();
     this.validacionCambioMovil = false;
+    this.horaMinuto = new Date();
     if (this.isBrowser) {
       this.intervalInicio = setInterval(() => {
         var usuarioWeb =
@@ -1036,7 +1039,10 @@ export class ChatBotLandingPageComponent
         },
       });
   }
-
+  gethora() {
+    //this.horaMinuto = new Date();
+    this.horaMinuto = this.datePipe.transform(new Date(), 'hh:mm a')
+  }
   ScrollTo() {
     //el.scrollIntoView();
     const footer = document.getElementById('footer'); // replace 'footer' with the actual id of your footer element

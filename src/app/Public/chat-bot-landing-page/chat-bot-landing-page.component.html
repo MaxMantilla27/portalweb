@@ -62,7 +62,9 @@
                     ></div>
                   </div>
                   <div class="fechaR">
-                    {{ item.fechaRegistrada }}
+
+                    {{ gethora() }}
+                    {{ item.fechaRegistrada? item.fechaRegistrada : this.horaMinuto }}
                   </div>
 
                   <div
@@ -237,7 +239,8 @@
                     </div>
                   </div>
                   <div class="fechaR">
-                    {{ item.fechaRegistrada }}
+                    {{ gethora() }}
+                    {{ item.fechaRegistrada? item.fechaRegistrada : this.horaMinuto }}
                     {{ this.ScrollTo() }}
 
                   </div>
