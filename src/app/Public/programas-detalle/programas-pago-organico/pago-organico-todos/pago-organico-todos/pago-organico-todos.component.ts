@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit, PLATFORM_ID, } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
@@ -25,8 +25,8 @@ import { ModalPagoTarjetaOrganicoComponent } from 'src/app/aula-virtual/modal-co
 import { ModalPagoVisaOrganicoComponent } from 'src/app/aula-virtual/modal-confirmacion-pago-organico/modal-pago-visa-organico/modal-pago-visa-organico/modal-pago-visa-organico.component';
 import { ModalPagoWebpayOrganicoComponent } from 'src/app/aula-virtual/modal-confirmacion-pago-organico/modal-pago-webpay-organico/modal-pago-webpay-organico/modal-pago-webpay-organico.component';
 import { ModalPagoWompiOrganicoComponent } from 'src/app/aula-virtual/modal-confirmacion-pago-organico/modal-pago-wompi-organico/modal-pago-wompi-organico/modal-pago-wompi-organico.component';
-
-
+import { isPlatformBrowser } from '@angular/common';
+import { HelperService as Help} from 'src/app/Core/Shared/Services/helper.service';
 
 @Component({
   selector: 'app-pago-organico-todos',
@@ -35,8 +35,9 @@ import { ModalPagoWompiOrganicoComponent } from 'src/app/aula-virtual/modal-conf
 })
 export class PagoOrganicoTodosComponent implements OnInit {
   private signal$ = new Subject();
-
+  isBrowser: boolean;
   constructor(
+    @Inject(PLATFORM_ID) platformId: Object,
     private _router: Router,
     private _HelperService: HelperService,
     private _SeccionProgramaService: SeccionProgramaService,
@@ -45,8 +46,11 @@ export class PagoOrganicoTodosComponent implements OnInit {
     private _t: ImagenTarjetas,
     public _FormaPagoService: FormaPagoService,
     private _SessionStorageService: SessionStorageService,
-    public dialog: MatDialog
-  ) {}
+    public dialog: MatDialog,
+    private _HelperServiceP:Help,
+  ) {
+    this.isBrowser = isPlatformBrowser(platformId);
+  }
 
   public resultCard: any = {
     nombrePrograma: '',
@@ -126,15 +130,67 @@ export class PagoOrganicoTodosComponent implements OnInit {
     },
   };
   public medioCodigo = 0;
+  public contCambioPais =0
+  public codigoIso:string = 'INTC';
+  public IdPais=-1;
+  public Paises:any;
 
   ngOnInit(): void {
+    this._HelperServiceP.recibirDataPais.pipe(takeUntil(this.signal$)).subscribe({
+      next:x=>{
+        this.Paises=x;
+        this.codigoIso =
+        this._SessionStorageService.SessionGetValue('ISO_PAIS') != ''
+          ? this._SessionStorageService.SessionGetValue('ISO_PAIS')
+          : 'INTC';
+          console.log('*********************',this.codigoIso)
+          this.IdPais=this.GetIdPaisProCodigo();
+
+    this.ListMontoPagoCompleto();
+    this.MedioPagoActivoPasarelaPortal();
+      }
+    })
+
+
+    this._HelperService.recibirChangePais().pipe(takeUntil(this.signal$)).subscribe(x=>{
+      console.log('cambio de pais')
+      //this._router.navigate(['/AulaVirtual/MisCursos']);
+
+      if(this.isBrowser){
+
+
+          this.ObtenerCabeceraProgramaGeneral()
+          location.reload();
+
+
+      }
+
+      // if(this.change==true){
+      //   this.GetProgramasHome()
+      // }
+    })
+
+
+
+
     this.datospago = localStorage.getItem('datEnvioPago');
     this.datospago = atob(this.datospago);
     this.datospago = JSON.parse(this.datospago);
     this.modalidad = this.datospago.modalidad;
 
-    this.ListMontoPagoCompleto();
-    this.MedioPagoActivoPasarelaPortal();
+
+  }
+  GetIdPaisProCodigo():number{
+    var idp=0
+    this.Paises.forEach((p:any)=>{
+      if(p.codigoIso.toLowerCase()==this.codigoIso.toLowerCase()){
+        idp=parseInt(p.idPais);
+      }
+    })
+    return idp;
+  }
+  removeAccents(strng:string){
+    return strng.normalize("NFD").replace(/[\u0300-\u036f]/g, "")
   }
   ListMontoPagoCompleto() {
     this._SeccionProgramaService
@@ -147,9 +203,24 @@ export class PagoOrganicoTodosComponent implements OnInit {
         },
       });
   }
+  ObtenerCabeceraProgramaGeneral() {
+    this._SeccionProgramaService
+      .ObtenerCabeceraProgramaGeneral(this.datospago.idBusqueda).pipe(takeUntil(this.signal$))
+      .subscribe({
+        next: (x) => {
+          //console.log(x.programaCabeceraDetalleDTO.direccion==this.namePrograma.join('-'))
+          window.location.replace('/'+this.removeAccents(x.programaCabeceraDetalleDTO.areaDescripcion)+'/'+x.programaCabeceraDetalleDTO.direccion);
+        },
+        error: (e) => {
+          this._router.navigate(['error404']);
+        },
+      }
+      )}
+
+
   MedioPagoActivoPasarelaPortal() {
     this._MedioPagoActivoPasarelaService
-      .MedioPagoActivoPasarelaPortal(this.datospago.idPais)
+      .MedioPagoActivoPasarelaPortal(this.IdPais)
       .pipe(takeUntil(this.signal$))
       .subscribe({
         next: (x) => {
@@ -288,6 +359,10 @@ export class PagoOrganicoTodosComponent implements OnInit {
   dataPreprocesamiento: any;
   jsonPreproceaminetoData: any;
   continuarPago() {
+
+    if(this.medioPagoSeleccionado == undefined){
+      this.medioPagoSeleccionado = this.tarjetas[0]
+    }
     //var find=this.tarjetas.find((x:any)=>x.medioCodigo==this.medioCodigo)
     const dialogRefLoader = this.dialog.open(ChargeComponent, {
       panelClass: 'dialog-charge',
@@ -298,7 +373,7 @@ export class PagoOrganicoTodosComponent implements OnInit {
     //this.jsonEnvioPago.IdMontoPago=;
     this.jsonEnvioPago.IdPEspecifico = this.modalidadSeleccionada.id;
     this.jsonEnvioPago.IdPGeneral = this.idPegeneral;
-    this.jsonEnvioPago.IdPais = this.datospago.idPais;
+    this.jsonEnvioPago.IdPais = this.IdPais;
     this.jsonEnvioPago.IdPasarelaPago =
       this.medioPagoSeleccionado.idPasarelaPago.toString();
     this.jsonEnvioPago.MedioCodigo = this.medioPagoSeleccionado.medioCodigo;
