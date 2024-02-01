@@ -558,9 +558,7 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
            // this._router.navigate(['/'+this.removeAccents(x.programaCabeceraDetalleDTO.areaCapacitacion)+'/'+x.programaCabeceraDetalleDTO.direccion]);
           }
         },
-        error: (e) => {
-          this._router.navigate(['error404']);
-        },
+
       });
 
   }

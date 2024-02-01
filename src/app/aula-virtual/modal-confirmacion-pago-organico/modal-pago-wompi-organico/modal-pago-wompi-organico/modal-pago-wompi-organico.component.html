@@ -7,15 +7,15 @@
         <ng-container *ngIf="resultVisa!=undefined">
           <mat-form-field appearance="outline" class="disabledInput" [floatLabel]="'always'" style="width: 100%;">
             <mat-label>Nombres</mat-label>
-            <input type="text" style="color: #878787;" [value]="resultVisa.registroAlumno.nombre" disabled matInput />
+            <input type="text" style="color: #878787;" [value]="resultVisa.datoAlumno.nombre" disabled matInput />
           </mat-form-field>
           <mat-form-field appearance="outline" class="disabledInput" [floatLabel]="'always'" style="width: 100%;">
             <mat-label>Apellidos</mat-label>
-            <input type="text" style="color: #878787;" [value]="resultVisa.registroAlumno.apellido" disabled matInput />
+            <input type="text" style="color: #878787;" [value]="resultVisa.datoAlumno.apellido" disabled matInput />
           </mat-form-field>
           <mat-form-field appearance="outline" class="disabledInput" [floatLabel]="'always'" style="width: 100%;">
             <mat-label>E-mail</mat-label>
-            <input type="text" style="color: #878787;" [value]="resultVisa.registroAlumno.correo" disabled matInput />
+            <input type="text" style="color: #878787;" [value]="resultVisa.datoAlumno.correo" disabled matInput />
           </mat-form-field>
           <ng-container *ngIf="jsonSave.Comprobante!=false">
             <mat-form-field appearance="outline" [floatLabel]="'always'" style="width: 100%;">

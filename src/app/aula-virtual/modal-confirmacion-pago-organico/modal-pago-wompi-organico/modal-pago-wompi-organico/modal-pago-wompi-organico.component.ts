@@ -68,7 +68,7 @@ export class ModalPagoWompiOrganicoComponent implements OnInit {
       this.jsonSave.Comprobante = this.data.DatosFacturacion.Comprobante;
       this.jsonSave.CodigoTributario = this.data.DatosFacturacion.CodigoTributario;
       this.jsonSave.RazonSocial = this.data.DatosFacturacion.RazonSocial;
-      this.IdMatriculaCabecera = this.data.IdMatricula;
+      //this.IdMatriculaCabecera = this.data.IdMatricula;
       var r= this._SessionStorageService.SessionGetValue(this.json.IdentificadorTransaccion);
       if(r!=''){
         this.json.RequiereDatosTarjeta=r=='false'?false:true;
