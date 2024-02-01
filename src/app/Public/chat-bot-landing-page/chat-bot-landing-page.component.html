@@ -58,7 +58,7 @@
                   <div class="PreguntaGlobo" *ngIf="1">
                     <div
                       [innerHtml]="item.mensaje | safeHtml"
-                      (click)="ScrollTo(); (ChatUbicacion2); ScrollTo()"
+                      (click)="(ChatUbicacion2); "
                     ></div>
                   </div>
                   <div class="fechaR">
@@ -68,6 +68,7 @@
                         ? item.fechaRegistrada
                         : this.horaMinuto
                     }}
+                    {{ this.ScrollTo() }}
                   </div>
 
                   <div
@@ -128,9 +129,13 @@
                   <button
                     type="button"
                     class="OpcionesGloboValidacion"
-                    (click)="item.validacionCambio = true; ScrollTo()"
+                    (click)="item.validacionCambio = true;
+                    AgregarSiguientePasoRespuestaNoPerfilProfesional();
+                    ScrollTo()"
                   >
                     No
+                   {{ this.ScrollTo() }}
+
                   </button>
                 </div>
 
@@ -297,10 +302,12 @@
                         ScrollTo()
                       "
                       placeholder="{{ obtenerErrorCampoNombre() }}"
+
                     />
                     <div class="InputError" *ngIf="formControl.invalid">
                       {{ obtenerErrorCampoNombre() }}
                     </div>
+                    {{ this.ScrollTo() }}
                   </div>
 
                   <div class="iconoEnvio" *ngIf="formControl.invalid">

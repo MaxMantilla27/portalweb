@@ -1061,14 +1061,6 @@ export class ChatBotLandingPageComponent
     //this.horaMinuto = new Date();
     this.horaMinuto = this.datePipe.transform(new Date(), 'hh:mm a');
   }
-  ScrollTo() {
-    //el.scrollIntoView();
-    const footer = document.getElementById('footer'); // replace 'footer' with the actual id of your footer element
-    if (footer) {
-      footer.scrollIntoView();
-    }
-    //console.log("stroll el ", footer);
-  }
   AgregarSiguientePasoRespuestaNoMovil(){
 
     let temporal = Object.assign({}, this.pasoActual);
@@ -1088,17 +1080,37 @@ export class ChatBotLandingPageComponent
     this.SiguientesPasos.push(temporal);
 
     console.log("siguientes pasos NO MOVIl", this.SiguientesPasos)
+    this.ScrollTo();
+  }
+  AgregarSiguientePasoRespuestaNoPerfilProfesional(){
+
+    let temporal = Object.assign({}, this.SiguientesPasos[this.SiguientesPasos.length - 1]);
+
+    this.SiguientesPasos[this.SiguientesPasos.length - 1].respuesta = "No";
+    this.SiguientesPasos[this.SiguientesPasos.length - 1].validacionCambio = false;
+    this.SiguientesPasos[this.SiguientesPasos.length - 1].fechaRegistrada =
+    this.datePipe.transform(new Date(), 'hh:mm a');
 
 
-    // console.log('validacion denegada siguet pasos', this.SiguientesPasos);
-    // this.SiguientesPasos[this.SiguientesPasos.length - 1].respuesta = 'Si';
+    this.SiguientesPasos.forEach((p) => {
+        p.respondido = true;
+      });
 
-    // console.log("Resouesta No PasoActual", this.pasoActual)
-    //  let temporal = Object.assign({}, this.pasoActual);
-    // temporal.respuesta = "No";
-    // temporal.respondido = true;
-    // temporal.validacionCambioMovil = false;
-    // console.log(temporal);
-    //  this.SiguientesPasos.push(temporal);
+    temporal.mensaje = "Por favor actualizalo seleccionando una de las siguientes opciones:";
+    temporal.validacionCambio = true;
+    temporal.respondido = false;
+
+    this.SiguientesPasos.push(temporal);
+
+    console.log("siguientes pasos NO PERFIL PROFESIONAL ", this.SiguientesPasos)
+    this.ScrollTo();
+  }
+  ScrollTo() {
+    //el.scrollIntoView();
+    const footer = document.getElementById('footer'); // replace 'footer' with the actual id of your footer element
+    if (footer) {
+      footer.scrollIntoView();
+    }
+    //console.log("stroll el ", footer);
   }
 }
