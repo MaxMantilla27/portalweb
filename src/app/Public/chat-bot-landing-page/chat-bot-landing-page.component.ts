@@ -1069,4 +1069,36 @@ export class ChatBotLandingPageComponent
     }
     //console.log("stroll el ", footer);
   }
+  AgregarSiguientePasoRespuestaNoMovil(){
+
+    let temporal = Object.assign({}, this.pasoActual);
+
+    this.SiguientesPasos[this.SiguientesPasos.length - 1].respuesta = "No";
+    this.SiguientesPasos[this.SiguientesPasos.length - 1].validacionCambioMovil = false;
+    this.SiguientesPasos[this.SiguientesPasos.length - 1].fechaRegistrada = this.datePipe.transform(new Date(), 'hh:mm a');
+    this.SiguientesPasos.forEach((p) => {
+        p.respondido = true;
+      });
+
+    temporal.mensaje = "Por favor digite nuevamente su nuevo número de celular";
+    temporal.editarMovil = true;
+    temporal.validacionCambioMovil = true;
+    temporal.respondido = false;
+
+    this.SiguientesPasos.push(temporal);
+
+    console.log("siguientes pasos NO MOVIl", this.SiguientesPasos)
+
+
+    // console.log('validacion denegada siguet pasos', this.SiguientesPasos);
+    // this.SiguientesPasos[this.SiguientesPasos.length - 1].respuesta = 'Si';
+
+    // console.log("Resouesta No PasoActual", this.pasoActual)
+    //  let temporal = Object.assign({}, this.pasoActual);
+    // temporal.respuesta = "No";
+    // temporal.respondido = true;
+    // temporal.validacionCambioMovil = false;
+    // console.log(temporal);
+    //  this.SiguientesPasos.push(temporal);
+  }
 }

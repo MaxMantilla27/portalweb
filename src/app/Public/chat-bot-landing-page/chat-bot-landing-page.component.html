@@ -73,7 +73,8 @@
                   <div
                     *ngIf="
                       item.idCampoContacto == 5 &&
-                      item.usuarioRegistrado == true
+                      item.usuarioRegistrado == true &&
+                      item.editarMovil != true
                     "
                     style="margin-bottom: 10%"
                   >
@@ -82,8 +83,8 @@
                       class="OpcionesGloboValidacion"
                       (click)="
                         item.validacionCambioMovil = false;
-                        SiguientePaso();
                         item.respondido = true;
+                        SiguientePaso();
                         ScrollTo()
                       "
                     >
@@ -95,6 +96,7 @@
                       (click)="
                         item.respondido = false;
                         item.validacionCambioMovil = true;
+                        AgregarSiguientePasoRespuestaNoMovil();
                         ScrollTo()
                       "
                     >
@@ -228,45 +230,6 @@
               </div>
             </div>
 
-            <ng-container
-              *ngIf="
-                (item.idCampoContacto == 5 && item.validacionCambioMovil) ||
-                (item.idCampoContacto != 5 &&
-                  (item.respondido != true || item.respuesta == '') &&
-                  (item.opciones == undefined ||
-                    item.opciones == null ||
-                    item.opciones.length == 0)) ||
-                (item.idCampoContacto == 5 &&
-                  !item.usuarioRegistrado &&
-                  !item.respondido)
-              "
-            >
-              <div
-                class="PreguntaChat"
-                *ngIf="item.idCampoContacto == 5 && item.validacionCambioMovil"
-              >
-                <div class="GloboPregunta">
-                  <div class="imgChatBot"></div>
-                  <div class="PreguntaGloboPrevio">
-                    <div class="PreguntaGlobo">
-                      <div
-                        [innerHtml]="'Por favor digite nuevamente su nuevo número de celular' | safeHtml"
-                        (click)="ScrollTo()"
-                      ></div>
-                    </div>
-                    <div class="fechaR">
-                      {{ gethora() }}
-                      {{
-                        item.fechaRegistrada
-                          ? item.fechaRegistrada
-                          : this.horaMinuto
-                      }}
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </ng-container>
-
             <div
               class="RespuestaCheat"
               *ngIf="item.esMensajeFinal != true && item.respuesta != null"
@@ -300,7 +263,7 @@
               <ng-container
                 #ChatUbicacionInput
                 *ngIf="
-                  (item.idCampoContacto == 5 && item.validacionCambioMovil) ||
+                  (item.idCampoContacto == 5 && item.validacionCambioMovil && !item.respondido) ||
                   (item.idCampoContacto != 5 &&
                     (item.respondido != true || item.respuesta == '') &&
                     (item.opciones == undefined ||
