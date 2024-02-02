@@ -286,7 +286,7 @@ export class ModalPagoTarjetaOrganicoComponent implements OnInit {
     this.registroPse.NombreTitularPSE=this.jsonSave.TarjetaHabiente.Titular;
     this.registroPse.NumeroDocumentoPSE=this.jsonSave.TarjetaHabiente.NumeroDocumento;
     this.jsonSave.RegistroProcesoPagoPse=this.registroPse;
-    this._FormaPagoService.ProcesarPagoCuotaAlumno(this.jsonSave).pipe(takeUntil(this.signal$)).subscribe({
+    this._FormaPagoService.ProcesarPagoAlumnoOrganico(this.jsonSave).pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
         this.oncharge=false
         dialogRef.close()

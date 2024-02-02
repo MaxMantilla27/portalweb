@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit, PLATFORM_ID, } from '@angular/core';
+import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
@@ -26,12 +26,12 @@ import { ModalPagoVisaOrganicoComponent } from 'src/app/aula-virtual/modal-confi
 import { ModalPagoWebpayOrganicoComponent } from 'src/app/aula-virtual/modal-confirmacion-pago-organico/modal-pago-webpay-organico/modal-pago-webpay-organico/modal-pago-webpay-organico.component';
 import { ModalPagoWompiOrganicoComponent } from 'src/app/aula-virtual/modal-confirmacion-pago-organico/modal-pago-wompi-organico/modal-pago-wompi-organico/modal-pago-wompi-organico.component';
 import { isPlatformBrowser } from '@angular/common';
-import { HelperService as Help} from 'src/app/Core/Shared/Services/helper.service';
+import { HelperService as Help } from 'src/app/Core/Shared/Services/helper.service';
 
 @Component({
   selector: 'app-pago-organico-todos',
   templateUrl: './pago-organico-todos.component.html',
-  styleUrls: ['./pago-organico-todos.component.scss']
+  styleUrls: ['./pago-organico-todos.component.scss'],
 })
 export class PagoOrganicoTodosComponent implements OnInit {
   private signal$ = new Subject();
@@ -47,7 +47,7 @@ export class PagoOrganicoTodosComponent implements OnInit {
     public _FormaPagoService: FormaPagoService,
     private _SessionStorageService: SessionStorageService,
     public dialog: MatDialog,
-    private _HelperServiceP:Help,
+    private _HelperServiceP: Help
   ) {
     this.isBrowser = isPlatformBrowser(platformId);
   }
@@ -130,67 +130,62 @@ export class PagoOrganicoTodosComponent implements OnInit {
     },
   };
   public medioCodigo = 0;
-  public contCambioPais =0
-  public codigoIso:string = 'INTC';
-  public IdPais=-1;
-  public Paises:any;
+  public contCambioPais = 0;
+  public codigoIso: string = 'INTC';
+  public IdPais = -1;
+  public Paises: any;
 
   ngOnInit(): void {
-    this._HelperServiceP.recibirDataPais.pipe(takeUntil(this.signal$)).subscribe({
-      next:x=>{
-        this.Paises=x;
-        this.codigoIso =
-        this._SessionStorageService.SessionGetValue('ISO_PAIS') != ''
-          ? this._SessionStorageService.SessionGetValue('ISO_PAIS')
-          : 'INTC';
-          console.log('*********************',this.codigoIso)
-          this.IdPais=this.GetIdPaisProCodigo();
+    this._HelperServiceP.recibirDataPais
+      .pipe(takeUntil(this.signal$))
+      .subscribe({
+        next: (x) => {
+          this.Paises = x;
+          this.codigoIso =
+            this._SessionStorageService.SessionGetValue('ISO_PAIS') != ''
+              ? this._SessionStorageService.SessionGetValue('ISO_PAIS')
+              : 'INTC';
+          console.log('*********************', this.codigoIso);
+          this.IdPais = this.GetIdPaisProCodigo();
 
-    this.ListMontoPagoCompleto();
-    this.MedioPagoActivoPasarelaPortal();
-      }
-    })
+          this.ListMontoPagoCompleto();
+          this.MedioPagoActivoPasarelaPortal();
+        },
+      });
 
+    this._HelperService
+      .recibirChangePais()
+      .pipe(takeUntil(this.signal$))
+      .subscribe((x) => {
+        console.log('cambio de pais');
+        //this._router.navigate(['/AulaVirtual/MisCursos']);
 
-    this._HelperService.recibirChangePais().pipe(takeUntil(this.signal$)).subscribe(x=>{
-      console.log('cambio de pais')
-      //this._router.navigate(['/AulaVirtual/MisCursos']);
-
-      if(this.isBrowser){
-
-
-          this.ObtenerCabeceraProgramaGeneral()
+        if (this.isBrowser) {
+          this.ObtenerCabeceraProgramaGeneral();
           location.reload();
+        }
 
-
-      }
-
-      // if(this.change==true){
-      //   this.GetProgramasHome()
-      // }
-    })
-
-
-
+        // if(this.change==true){
+        //   this.GetProgramasHome()
+        // }
+      });
 
     this.datospago = localStorage.getItem('datEnvioPago');
     this.datospago = atob(this.datospago);
     this.datospago = JSON.parse(this.datospago);
     this.modalidad = this.datospago.modalidad;
-
-
   }
-  GetIdPaisProCodigo():number{
-    var idp=0
-    this.Paises.forEach((p:any)=>{
-      if(p.codigoIso.toLowerCase()==this.codigoIso.toLowerCase()){
-        idp=parseInt(p.idPais);
+  GetIdPaisProCodigo(): number {
+    var idp = 0;
+    this.Paises.forEach((p: any) => {
+      if (p.codigoIso.toLowerCase() == this.codigoIso.toLowerCase()) {
+        idp = parseInt(p.idPais);
       }
-    })
+    });
     return idp;
   }
-  removeAccents(strng:string){
-    return strng.normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+  removeAccents(strng: string) {
+    return strng.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
   }
   ListMontoPagoCompleto() {
     this._SeccionProgramaService
@@ -205,18 +200,23 @@ export class PagoOrganicoTodosComponent implements OnInit {
   }
   ObtenerCabeceraProgramaGeneral() {
     this._SeccionProgramaService
-      .ObtenerCabeceraProgramaGeneral(this.datospago.idBusqueda).pipe(takeUntil(this.signal$))
+      .ObtenerCabeceraProgramaGeneral(this.datospago.idBusqueda)
+      .pipe(takeUntil(this.signal$))
       .subscribe({
         next: (x) => {
           //console.log(x.programaCabeceraDetalleDTO.direccion==this.namePrograma.join('-'))
-          window.location.replace('/'+this.removeAccents(x.programaCabeceraDetalleDTO.areaDescripcion)+'/'+x.programaCabeceraDetalleDTO.direccion);
+          window.location.replace(
+            '/' +
+              this.removeAccents(x.programaCabeceraDetalleDTO.areaDescripcion) +
+              '/' +
+              x.programaCabeceraDetalleDTO.direccion
+          );
         },
         error: (e) => {
           this._router.navigate(['error404']);
         },
-      }
-      )}
-
+      });
+  }
 
   MedioPagoActivoPasarelaPortal() {
     this._MedioPagoActivoPasarelaService
@@ -260,8 +260,19 @@ export class PagoOrganicoTodosComponent implements OnInit {
       Valor: valor,
     });
   }
-
+  seleccionModalidad: boolean = false;
   changeModalidad() {
+    this.seleccionModalidad = true;
+    if (this.validadorPagosMultiples.length != 0) {
+      if (
+        this.seleccionFormaPago == true &&
+        this.seleccionModalidad == true &&
+        this.seleccionMetodoPago == true
+      ) {
+        this.botonContinuar = false;
+      }
+    }
+
     this.modalidadSeleccionada = this.modalidad.find(
       (e: any) => e.id == this.idPEspecifico
     );
@@ -273,8 +284,27 @@ export class PagoOrganicoTodosComponent implements OnInit {
     ) {
       //this.ObtenerPreProcesoPagoOrganicoAlumno();
     }
+    if (this.validadorPagosMultiples.length === 0) {
+      if (this.seleccionFormaPago == true && this.seleccionModalidad == true) {
+        this.botonContinuar = false;
+      }
+    }
+
   }
+  seleccionMetodoPago: boolean = false;
   onChangeRadioButton(event: any) {
+    this.seleccionMetodoPago = true;
+    if (this.validadorPagosMultiples.length != 0) {
+      if (
+        this.seleccionFormaPago == true &&
+        this.seleccionModalidad == true &&
+        this.seleccionMetodoPago == true
+      ) {
+        this.botonContinuar = false;
+      }
+    }
+
+
     this.medioPagoSeleccionado = event;
     this.medioCodigo = this.medioPagoSeleccionado.idFormaPago;
     //
@@ -285,6 +315,12 @@ export class PagoOrganicoTodosComponent implements OnInit {
     ) {
       //this.ObtenerPreProcesoPagoOrganicoAlumno();
     }
+
+    if (this.validadorPagosMultiples.length === 0) {
+      if (this.seleccionFormaPago == true && this.seleccionModalidad == true) {
+        this.botonContinuar = false;
+      }
+    }
   }
   public infoPago: any = {
     precio: '',
@@ -292,7 +328,22 @@ export class PagoOrganicoTodosComponent implements OnInit {
     version: '',
   };
   public pEspecifico: any;
+
+  seleccionFormaPago: boolean = false;
+  botonContinuar: boolean = true;
   changeForma() {
+    this.seleccionFormaPago = true;
+    if (this.validadorPagosMultiples.length != 0) {
+      if (
+        this.seleccionFormaPago == true &&
+        this.seleccionModalidad == true &&
+        this.seleccionMetodoPago == true
+      ) {
+        this.botonContinuar = false;
+      }
+    }
+
+
     var fp = this.formapago[this.idFormaPago];
     this.formaPagoSeleccion = this.formapago[this.idFormaPago];
 
@@ -355,13 +406,17 @@ export class PagoOrganicoTodosComponent implements OnInit {
     // if( this.medioPagoSeleccionado != undefined && this.idFormaPago != -1 && this.idPEspecifico != 0 ){
     //  // this.ObtenerPreProcesoPagoOrganicoAlumno();
     // }
+    if (this.validadorPagosMultiples.length === 0) {
+      if (this.seleccionFormaPago == true && this.seleccionModalidad == true) {
+        this.botonContinuar = false;
+      }
+    }
   }
   dataPreprocesamiento: any;
   jsonPreproceaminetoData: any;
   continuarPago() {
-
-    if(this.medioPagoSeleccionado == undefined){
-      this.medioPagoSeleccionado = this.tarjetas[0]
+    if (this.medioPagoSeleccionado == undefined) {
+      this.medioPagoSeleccionado = this.tarjetas[0];
     }
     //var find=this.tarjetas.find((x:any)=>x.medioCodigo==this.medioCodigo)
     const dialogRefLoader = this.dialog.open(ChargeComponent, {
@@ -464,7 +519,6 @@ export class PagoOrganicoTodosComponent implements OnInit {
               const dialogRef = this.dialog.open(
                 ModalPagoTarjetaMexicoOraganicoComponent,
                 {
-
                   width: '600px',
                   data: {
                     Identificador: sesion,
@@ -542,7 +596,6 @@ export class PagoOrganicoTodosComponent implements OnInit {
                 // this._router.navigate(['/AulaVirtual/MisPagos/'+this.idMatricula+'/webpay/'+sesion]);
               }
 
-
               if (parseInt(this.medioPagoSeleccionado.idPasarelaPago) == 12) {
                 // console.log(this.total);
                 // if (this.total >= 50)
@@ -578,7 +631,6 @@ export class PagoOrganicoTodosComponent implements OnInit {
                 );
                 // this._router.navigate(['/AulaVirtual/MisPagos/'+this.idMatricula+'/izipay/'+sesion]);
               }
-
 
               if (parseInt(this.medioPagoSeleccionado.idPasarelaPago) == 16) {
                 console.log('ModalPagoOpenpayColombiaOrganicoComponent');
@@ -641,16 +693,13 @@ export class PagoOrganicoTodosComponent implements OnInit {
               .pipe(takeUntil(this.signal$))
               .subscribe({
                 next: (x) => {
-                  dialogRefLoader.close()
+                  dialogRefLoader.close();
                   console.log('aquise hizo el proecesamiento', x);
                   this.resultCard = x._Repuesta;
-
                 },
               });
           },
         });
-
-
     } else {
       this._SessionStorageService.SessionSetValue('redirect', 'pago');
       this._SessionStorageService.SessionSetValue(

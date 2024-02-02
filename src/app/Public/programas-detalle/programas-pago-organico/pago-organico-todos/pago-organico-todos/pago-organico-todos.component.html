@@ -104,7 +104,7 @@
             Tipo de comprobante:
           </span>
           <div class="row comprobatePagoTarjeta">
-            <div class="col-12 col-md-12 col-lg-12 items">
+            <div class=" items">
               <div class="itm no-select" [ngClass]="{'SelectCom':DatosFacturacion.Comprobante==false}"
                 (click)="DatosFacturacion.Comprobante=false">
                 Boleta <i class="material-icons" *ngIf="DatosFacturacion.Comprobante==false">check_circle</i>
@@ -166,14 +166,17 @@
         </div>
       </div>
       <ng-container>
-        <div class="row justify-content-center" >
+        <div style="display: flex; justify-content:center;">
           <app-default-button
-            [confs]="{ color: 'primary', titulo: 'Continuar' }"
-            [style]="'padding: 0px 40px;'"
-            (ButtoclClick)="continuarPago()"
+                [confs]="{ color: 'primary', titulo: 'Continuar' }"
+                [style]="'padding: 0px 40px;'"
+                [disabled]="botonContinuar"
+                (ButtoclClick)="continuarPago()"
           ></app-default-button>
         </div>
+
       </ng-container>
+
     </div>
   </div>
 </div>
