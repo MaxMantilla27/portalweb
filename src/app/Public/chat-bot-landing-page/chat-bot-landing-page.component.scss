@@ -421,18 +421,25 @@ img {
 }
 
 @media screen and (max-width: 600px) {
+
   body {
     font-size: 15px;
     color: #3e617f;
+    touch-action: manipulation;
   }
 
   .iconoEnvio {
     width: 34px;
     height: 30px;
+    margin-left: 5px;
+  }
+
+  .inp {
+    width: 100%;
   }
 
   .inputData {
-    width: 340px !important;
+    width: 100% !important;
     margin-right: 5px !important;
   }
 
@@ -456,5 +463,16 @@ img {
     background-color: #fff;
     text-align: center;
     margin-left: 5px;
+  }
+
+  .contentPrimerPaso {
+    margin-top: 120px;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  .inputData {
+    width: 100% !important;
+    margin-right: 5px !important;
   }
 }

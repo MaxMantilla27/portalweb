@@ -1,35 +1,39 @@
-<mat-toolbar
-  color="primary"
-  style="position: fixed; top: 0; height: 50px !important; width: 100%"
->
-  <div
-    style="
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      width: 100%;
-    "
+<div style="position: relative;">
+  <mat-toolbar
+    color="primary"
+    style="position: fixed; top: 0; height: 50px !important; width: 100%"
   >
-    <div>
-      <img
-        class="logoHeader"
-        src="https://img.bsginstitute.com/repositorioweb/img/logobsg.svg"
-        alt="BSG Institute"
-        width="160"
-        loading="eager"
-      />
-    </div>
-
-    <ng-container *ngIf="pantalla == false">
-      <div id="nombreContainer">
-        <h1>{{ nombre }}</h1>
+    <div
+      style="
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: 100%;
+      "
+    >
+      <div>
+        <img
+          class="logoHeader"
+          src="https://img.bsginstitute.com/repositorioweb/img/logobsg.svg"
+          alt="BSG Institute"
+          width="160"
+          loading="eager"
+        />
       </div>
-    </ng-container>
-  </div>
-</mat-toolbar>
 
-<ng-container *ngIf="pantalla == true">
-  <div class="titulo">
-    <h1>{{ nombre }}</h1>
-  </div>
-</ng-container>
+      <ng-container *ngIf="pantalla == false">
+        <div id="nombreContainer">
+          <h1>{{ nombre }}</h1>
+        </div>
+      </ng-container>
+    </div>
+  </mat-toolbar>
+
+  <ng-container *ngIf="pantalla == true">
+    <div class="titulo" style="position: fixed; top: 50px; width: 100%;">
+      <h1>{{ nombre }}</h1>
+    </div>
+  </ng-container>
+
+  <!-- Rest of your content -->
+</div>
