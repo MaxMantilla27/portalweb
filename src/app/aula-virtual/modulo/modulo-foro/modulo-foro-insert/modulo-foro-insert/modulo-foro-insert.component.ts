@@ -41,7 +41,13 @@ export class ModuloForoInsertComponent implements OnInit,OnDestroy {
     idPEspecificoPadre: 0,
     idPEspecificoHijo: 0,
     titulo: '',
-    contenido: ''
+    contenido: '',
+    idOrigenForo: 1,
+    idCapitulo: 0,
+    idSesion: 0,
+    idSubSesion: 0,
+    idVideo: '',
+    urlArchivo:'',
   }
   ngOnInit(): void {
 
