@@ -564,7 +564,6 @@ export class ChatBotLandingPageComponent
       this.OportunidadDTO.IdCargo = this.datosAlumno.IdCargo;
       this.OportunidadDTO.IdAreaTrabajo = this.datosAlumno.IdAreaTrabajo;
       this.OportunidadDTO.IdIndustria = this.datosAlumno.IdIndustria;
-
       this.ProcesarAsignacionAutomaticaChatbot();
     } else if (this.pasoActual.idCampoContacto == 3) {
       console.log('entro a la validacion de correo');
@@ -716,6 +715,13 @@ export class ChatBotLandingPageComponent
     this.flujoActual.IdCampoContacto = this.pasoActual.idCampoContacto;
     this.flujoActual.NombreUsuario = this.datosAlumno.Nombres.split(' ')[0];
     this.flujoActual.Respuesta = item.nombre;
+
+    this.SiguientesPasos.forEach((p) => {
+      p.respondido = true;
+    });
+    this.SiguientesPasos[this.SiguientesPasos.length - 1].respuesta =
+      item.nombre;
+
     if (
       this.pasoActual.opciones != undefined &&
       this.pasoActual.opciones != null
@@ -729,25 +735,19 @@ export class ChatBotLandingPageComponent
       'pw.SP_PW_ChatbotPGeneralMayorProbabilidadTop5_PorAlumno'
     ) {
       this.OportunidadDTO.IdPrograma = item.id;
-      this.OportunidadDTO.IdPespecifico = this.ObtenerIdPEspecifico(
-        item.id,
+      this.flujoActual.NombrePGeneral = item.nombre;
+      console.log('select opciones datos alumno PRO MEDIA', this.datosAlumno);
+      this.ObtenerIdPEspecifico(
+        this.OportunidadDTO.IdPrograma,
         this.datosAlumno.IdPais
       );
-      this.flujoActual.NombrePGeneral = item.nombre;
-
-      console.log('id nuevo programa seleccionado: ', item.id);
-      console.log(
-        'idpespecifico nuevo programa',
-        this.OportunidadDTO.IdPespecifico
-      );
     }
-    this.SiguientesPasos.forEach((p) => {
-      p.respondido = true;
-    });
-    this.SiguientesPasos[this.SiguientesPasos.length - 1].respuesta =
-      item.nombre;
-    this.ContinuarFlujo(item.id);
-    console.log('select opciones datos alumno', this.datosAlumno);
+    if (
+      this.pasoActual.funcionObtenerOpcion !=
+      'pw.SP_PW_ChatbotPGeneralMayorProbabilidadTop5_PorAlumno'
+    ){
+      this.ContinuarFlujo(item.id);
+    }
   }
   ContinuarOpciones(valor: number) {
     console.log('ContinuarOpciones valor', valor);
@@ -1037,14 +1037,13 @@ export class ChatBotLandingPageComponent
       });
   }
 
-  ObtenerIdPEspecifico(IdPGeneral: any, IdPaisAlumno: any): any {
+  ObtenerIdPEspecifico(IdPGeneral: any, IdPaisAlumno: any) {
     this._ChatBotService
-      .ObtenerIdPEspecifico(IdPGeneral, IdPaisAlumno)
+      .ObtenerIdPEspecificoService(IdPGeneral, IdPaisAlumno)
       .pipe(takeUntil(this.signal$))
       .subscribe({
         next: (x) => {
           console.log('x: ', x);
-
           console.log('retorno pespecifico x: ', x.pespecifico);
           if (
             x.pespecifico != null &&
@@ -1052,8 +1051,8 @@ export class ChatBotLandingPageComponent
             x.pespecifico != undefined
           ) {
             this.OportunidadDTO.IdPespecifico = x.pespecifico;
-            return x.pespecifico;
           }
+          this.ContinuarFlujo(IdPGeneral);
         },
       });
   }
@@ -1076,10 +1075,12 @@ export class ChatBotLandingPageComponent
     temporal.editarMovil = true;
     temporal.validacionCambioMovil = true;
     temporal.respondido = false;
+    //this.cargandoUltimo();
 
     this.SiguientesPasos.push(temporal);
 
     console.log("siguientes pasos NO MOVIl", this.SiguientesPasos)
+
     this.ScrollTo();
   }
   AgregarSiguientePasoRespuestaNoPerfilProfesional(){
@@ -1112,5 +1113,15 @@ export class ChatBotLandingPageComponent
       footer.scrollIntoView();
     }
     //console.log("stroll el ", footer);
+  }
+
+  cargandoUltimo(){
+    //if(item == this.SiguientesPasos[this.SiguientesPasos.length-2])
+    {
+      setTimeout(()=>{                           // <<<---using ()=> syntax
+        this.CargandoChat = true;
+      }, 1000);
+      this.CargandoChat = false;
+    }
   }
 }
