@@ -31,11 +31,13 @@ export class SessionStorageService {
     }
   }
 
+
   SessionSetValue(name:string, token: string):void{
     if(this.isBrowser){
       localStorage.setItem(name,btoa(token));
     }
   }
+
   SessionGetValue(name:string):string{
     if(this.isBrowser){
 

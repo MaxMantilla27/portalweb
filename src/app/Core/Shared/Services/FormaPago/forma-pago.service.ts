@@ -61,6 +61,8 @@ export class FormaPagoService {
 
 
 
+
+
   public ObtenerPreProcesoPagoAlumnoWebPay(Json:any):Observable<any>{
     if(this.isBrowser){
       console.log(Json)
@@ -101,7 +103,7 @@ export class FormaPagoService {
     }else{
       return EMPTY;
     }
-    
+
   }
 
   public actualizarComprobantePagoLista(Json:any):Observable<any>{
@@ -110,7 +112,7 @@ export class FormaPagoService {
     }else{
       return EMPTY;
     }
-    
+
   }
 
   public RegistroPagoCuotaAlumnoVisaProcesarRecurrente(Json:any):Observable<any>{
@@ -119,9 +121,72 @@ export class FormaPagoService {
     }else{
       return EMPTY;
     }
-    
+
   }
 
+  public PagoOrganicoDatosServicio(Json:any):Observable<any>{
+    if(this.isBrowser){
+      return this.http.post<any>(this.urlBase+'/PreProcesoPagoOrganicoAlumno',Json)
+    }else{
+      return EMPTY;
+    }
+  }
+
+  public ObtenerPreProcesoPagoOrganicoAlumno2(Json:PagoOrganicoAlumnoDTO):Observable<any>{
+    if(this.isBrowser){
+      console.log(Json)
+      return this.http.post<any>(this.urlBase+'/PreProcesoPagoOrganicoAlumno',Json);
+    }else{
+      return EMPTY;
+    }
+  }
+
+  public PreProcesoPagoOrganicoAlumno2(Json:PagoOrganicoAlumnoDTO,dialogRef:any):void{
+    console.log(Json)
+    //this.http.post<any>(this.urlBase+'/PreProcesoPagoOrganicoAlumno',Json).pipe(takeUntil(this.signal$)).subscribe({
+      this.http.post<any>(this.urlBase+'/PreProcesoPagoOrganicoAlumno2',Json).pipe(takeUntil(this.signal$)).subscribe({
+      next:x=>{
+        console.log(x)
+        if(dialogRef!=null){
+          dialogRef.close();
+        }
+        var sesion=x._Repuesta.identificadorTransaccion;
+        this._SessionStorageService.SessionSetValue(sesion,x._Repuesta.requiereDatosTarjeta);
+        this._SessionStorageService.SessionSetValue('Busqueda',JSON.stringify(Json));
+
+        console.log(Json.IdFormaPago)
+        this._SessionStorageService.SessionDeleteValue('redirect');
+        if(parseInt(Json.IdPasarelaPago)==7 || parseInt(Json.IdPasarelaPago)==10){
+         // if(Json.IdFormaPago==52){
+            //this._router.navigate(['/AulaVirtual/MisPagos/visa2/'+sesion]);
+         // }
+          // if(Json.IdFormaPago==48){
+            this._router.navigate(['/AulaVirtual/MisPagos/tarjeta2/'+sesion]);
+          // }
+        }
+        if(parseInt(Json.IdPasarelaPago)==1 || parseInt(Json.IdPasarelaPago)==5){
+          this._router.navigate(['/AulaVirtual/MisPagos/tarjeta2/'+sesion]);
+        }else{
+          if(parseInt(Json.IdPasarelaPago)==2){
+            this._router.navigate(['/AulaVirtual/MisPagos/wompi2/'+sesion]);
+          }
+          if(parseInt(Json.IdPasarelaPago)==6){
+            this._router.navigate(['/AulaVirtual/MisPagos/conekta2/'+sesion]);
+          }
+          if(parseInt(Json.IdPasarelaPago)==3){}
+          if(parseInt(Json.IdPasarelaPago)==4){
+            this._router.navigate(['/AulaVirtual/MisPagos/multipago2/'+sesion]);
+          }
+          if(parseInt(Json.IdPasarelaPago)==11){
+            this._router.navigate(['/AulaVirtual/MisPagos/webpay2/'+sesion]);
+          }
+          if(parseInt(Json.IdPasarelaPago)==17){
+            this._router.navigate(['/AulaVirtual/MisPagos/mercadopago2/'+sesion]);
+          }
+        }
+      }
+    });
+  }
 
   public PreProcesoPagoOrganicoAlumno(Json:PagoOrganicoAlumnoDTO,dialogRef:any):void{
     console.log(Json)

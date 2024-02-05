@@ -1,0 +1,50 @@
+<div class="container" [hidden]="hidenBotom">
+  <div class="row">
+    <div class="col-12 row">
+      <div class="col-12 col-md-12 col-lg-12 titlePagoTarjeta">Confirma tu compra</div>
+      <div class="col-12 col-md-12 col-lg-12 inputPagoVisa">
+        <div class="subtitlePagoVisa">Pago realizado por</div>
+        <ng-container *ngIf="resultPreValidacion!=undefined">
+          <mat-form-field appearance="outline" class="disabledInput" [floatLabel]="'always'" style="width: 100%;">
+            <mat-label>Nombres</mat-label>
+            <input type="text" style="color: #878787;" [value]="resultPreValidacion.datoAlumno.nombre" disabled matInput />
+          </mat-form-field>
+          <mat-form-field appearance="outline" class="disabledInput" [floatLabel]="'always'" style="width: 100%;">
+            <mat-label>Apellidos</mat-label>
+            <input type="text" style="color: #878787;" [value]="resultPreValidacion.datoAlumno.apellido" disabled matInput />
+          </mat-form-field>
+          <mat-form-field appearance="outline" class="disabledInput" [floatLabel]="'always'" style="width: 100%;">
+            <mat-label>E-mail</mat-label>
+            <input type="text" style="color: #878787;" [value]="resultPreValidacion.datoAlumno.correo" disabled matInput />
+          </mat-form-field>
+        </ng-container>
+
+        <div id="header"> </div>
+        <div style="text-align: center">
+          <div id="FormBody" class="kr-embedded"  kr-popin  style="display: flex;padding-top: 100px;">
+            <!-- payment form fields -->
+            <div class="kr-pan"></div>
+            <div class="kr-expiry"></div>
+            <div class="kr-security-code"></div>
+
+            <!-- payment form submit button -->
+            <button class="kr-payment-button"></button>
+
+            <!-- error zone -->
+            <div class="kr-form-error"></div>
+
+          </div>
+        </div>
+
+
+
+        <div style="    width: 100%;
+        font-size: 12px;
+        color: #b2b2b2;
+        padding: 20px;">
+          * El monto a cargar sera el cual se detalla arriba en la moneda del programa, el tipo de cambio dependerá del banco que usted utilice.
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

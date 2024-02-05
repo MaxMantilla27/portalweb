@@ -40,12 +40,14 @@ export class ProgramaPagoComponent implements OnInit ,OnDestroy{
   ngOnInit(): void {
     this.data.alumno=this.data.alumno.length>0?this.data.alumno+',':''
     this.MedioPagoActivoPasarelaPortal();
-    this.ListMontoPagoCompleto();
+
+
   }
   MedioPagoActivoPasarelaPortal(){
     this._MedioPagoActivoPasarelaService.MedioPagoActivoPasarelaPortal(this.data.idPais).pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
         this.tarjetas=x
+        this.ListMontoPagoCompleto();
       }
     })
   }
@@ -53,6 +55,7 @@ export class ProgramaPagoComponent implements OnInit ,OnDestroy{
     this._SeccionProgramaService.ListMontoPagoCompleto(this.data.idBusqueda).pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
         this.formapago=x.listaMontoPagoProgramaInformacionDTO
+        this. Pagar()
       }
     })
   }
@@ -62,7 +65,7 @@ export class ProgramaPagoComponent implements OnInit ,OnDestroy{
     this.medioPago=this.tarjetas.find((x:any)=>x.medioCodigo==this.medioCodigo).medioPago
   }
   changeForma(){
-    var fp=this.formapago[this.idFormaPago]
+    var fp=this.formapago[0]
 
     var value=''
     if(fp.paquete==1){
@@ -85,8 +88,8 @@ export class ProgramaPagoComponent implements OnInit ,OnDestroy{
     this.EventoInteraccionSelect('Selecciona tu forma de pago',value)
   }
   Pagar(){
-    if(this.medioCodigo.length>0){
-      var formaPago=this.formapago[this.idFormaPago];
+    // if(this.medioCodigo.length>0){
+      var formaPago=this.formapago[0];
 
       var pEspecifico:any;
       this.data.modalidad.forEach((e:any) => {
@@ -94,7 +97,7 @@ export class ProgramaPagoComponent implements OnInit ,OnDestroy{
           pEspecifico=e;
         }
       });
-      var find=this.tarjetas.find((x:any)=>x.medioCodigo==this.medioCodigo)
+      var find=this.tarjetas.find((x:any)=>x.medioCodigo=='VS')
       find.idPEspecifico=this.idPEspecifico;
       find.moneda=formaPago.simbolo
       find.webMoneda=formaPago.webMoneda
@@ -113,12 +116,12 @@ export class ProgramaPagoComponent implements OnInit ,OnDestroy{
       if(formaPago.paquete==3){
         find.version='Versión gerencial'
       }
-      find.tipo=pEspecifico.tipo
-      find.inicio=pEspecifico.fechaInicioTexto
+      find.tipo='0',
+      find.inicio='0'
       this.dialogRef.close(find)
-    }else{
-      this._SnackBarServiceService.openSnackBar("Seleccione su medio de pago",'x',10,"snackbarCrucigramaerror");
-    }
+    // }else{
+    //   this._SnackBarServiceService.openSnackBar("Seleccione su medio de pago",'x',10,"snackbarCrucigramaerror");
+    // }
   }
 
   EventoInteraccion(){
