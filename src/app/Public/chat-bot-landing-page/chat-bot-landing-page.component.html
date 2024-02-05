@@ -85,6 +85,8 @@
                       (click)="
                         item.validacionCambioMovil = false;
                         item.respondido = true;
+                        item.identificadorApi = 'movilSinValidacion';
+                        FormControlValid();
                         SiguientePaso();
                         ScrollTo()
                       "
