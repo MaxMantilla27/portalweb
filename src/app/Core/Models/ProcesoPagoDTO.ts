@@ -28,7 +28,9 @@ export interface PagoOrganicoAlumnoDTO {
   Version: string;
   Tipo: string;
   Inicio: string;
-  IdBusqueda: number
+  IdBusqueda: number,
+  TipoComprobante?: boolean;
+  CodigoTributario?: string;
 }
 export interface RegistroPreProcesoPagoCuotaDTO {
   IdCuota: number;

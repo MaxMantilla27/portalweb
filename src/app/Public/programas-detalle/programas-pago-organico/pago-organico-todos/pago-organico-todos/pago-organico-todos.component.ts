@@ -100,6 +100,9 @@ export class PagoOrganicoTodosComponent implements OnInit {
     Tipo: '',
     Version: '',
     IdBusqueda: 0,
+    TipoComprobante: false,
+    CodigoTributario:''
+
   };
   public DatosFacturacion: any = {
     Comprobante: false,
@@ -438,7 +441,9 @@ export class PagoOrganicoTodosComponent implements OnInit {
     this.jsonEnvioPago.Inicio = this.pEspecifico.fechaInicioTexto;
     this.jsonEnvioPago.Version = this.infoPago.version;
     this.jsonEnvioPago.Tipo = this.pEspecifico.tipo;
-    //this.jsonEnvioPago.TipoProveedor=;
+    this.jsonEnvioPago.TipoComprobante =this.DatosFacturacion.Comprobante;
+    this.jsonEnvioPago.CodigoTributario = this.DatosFacturacion.RazonSocial ;
+        //this.jsonEnvioPago.TipoProveedor=;
     this.jsonEnvioPago.WebMoneda = this.formaPagoSeleccion.webMoneda;
     var token = this._SessionStorageService.validateTokken();
     if (token) {
@@ -688,16 +693,16 @@ export class PagoOrganicoTodosComponent implements OnInit {
 
             //////
 
-            this._FormaPagoService
-              .ObtenerPreProcesoPagoOrganicoAlumno(this.jsonPreproceaminetoData)
-              .pipe(takeUntil(this.signal$))
-              .subscribe({
-                next: (x) => {
-                  dialogRefLoader.close();
-                  console.log('aquise hizo el proecesamiento', x);
-                  this.resultCard = x._Repuesta;
-                },
-              });
+            // this._FormaPagoService
+            //   .ObtenerPreProcesoPagoOrganicoAlumno(this.jsonPreproceaminetoData)
+            //   .pipe(takeUntil(this.signal$))
+            //   .subscribe({
+            //     next: (x) => {
+            //       dialogRefLoader.close();
+            //       console.log('aquise hizo el proecesamiento', x);
+            //       this.resultCard = x._Repuesta;
+            //     },
+            //   });
           },
         });
     } else {
