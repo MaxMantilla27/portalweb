@@ -447,6 +447,8 @@ export class PagoComponent implements OnInit,OnDestroy {
     this.jsonSend.IdPasarelaPago=tarjeta.idPasarelaPago
     this.jsonSend.MedioCodigo=tarjeta.medioCodigo
     this.jsonSend.MedioPago=tarjeta.medioPago
+    this.jsonSend.TipoComprobante = this.DatosFacturacion.Comprobante;
+    this.jsonSend.CodigoTributario = this.DatosFacturacion.CodigoTributario;
     this._FormaPagoService.PreProcesoPagoCuotaAlumno(this.jsonSend).pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
         console.log(x)
