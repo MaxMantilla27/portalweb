@@ -130,6 +130,7 @@ import { MatChipsModule } from '@angular/material/chips';
 import { FacebookPixelService } from './Services/FacebookPixel/facebook-pixel.service';
 import { ChatbotComponent } from './Containers/chatbot/chatbot.component';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
+import { HeaderChatbotComponent } from './Containers/header-chatbot/header-chatbot.component';
 
 @NgModule({
   imports: [
@@ -225,6 +226,7 @@ import {MatSlideToggleModule} from '@angular/material/slide-toggle';
     FormularioRojoComponent,
     FacebookLoginComponent,
     ChatbotComponent,
+    HeaderChatbotComponent,
 
     //ChatZComponent,
   ],
@@ -316,6 +318,7 @@ import {MatSlideToggleModule} from '@angular/material/slide-toggle';
     FacebookLoginComponent,
     MatChipsModule,
     MatSlideToggleModule,
+    HeaderChatbotComponent
   ],
   providers: [
     SessionStorageService,
