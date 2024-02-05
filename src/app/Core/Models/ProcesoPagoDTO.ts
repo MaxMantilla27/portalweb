@@ -9,6 +9,8 @@ export interface RegistroPreProcesoPagoDTO {
   Moneda: string;
   SimboloMoneda: string;
   ListaCuota: Array<RegistroPreProcesoPagoCuotaDTO>;
+  TipoComprobante?: boolean;
+  CodigoTributario?: string;
 }
 export interface PagoOrganicoAlumnoDTO {
   IdPGeneral: number;
