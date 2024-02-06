@@ -114,4 +114,12 @@ export class ChatBotService {
       return EMPTY;
     }
   }
+
+  public ObtenerIdPEspecificoService(IdPGeneral:number, IdPaisAlumno: number):Observable<any>{
+    if(this.isBrowser){
+      return this.http.get<any>(this.urlBase+'/ObtenerIdPEspecifico?IdPGeneral='+IdPGeneral+'&IdPaisAlumno='+IdPaisAlumno);
+    }else{
+      return EMPTY;
+    }
+  }
 }
