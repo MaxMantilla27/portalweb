@@ -85,6 +85,8 @@
                       (click)="
                         item.validacionCambioMovil = false;
                         item.respondido = true;
+                        item.identificadorApi = 'movilSinValidacion';
+                        FormControlValid();
                         SiguientePaso();
                         ScrollTo()
                       "
@@ -144,13 +146,6 @@
                     <button
                       type="button"
                       class="OpcionesGlobo"
-                      style="
-                        overflow: hidden;
-                        white-space: nowrap;
-                        text-overflow: ellipsis;
-                        display: inline-block;
-                        max-width: 100%;
-                      "
                       (click)="
                         item.respondido == true && item.validacionCambio == true
                           ? ''

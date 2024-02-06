@@ -466,7 +466,8 @@ export class ChatBotLandingPageComponent
     });
   }
   SetValidator() {
-    console.log('paso actual', this.pasoActual);
+    console.log('paso actual Set VALIDATORS', this.pasoActual);
+    //this.formControl.reset();
     this.formControl.clearValidators();
     if (this.pasoActual.identificadorApi == 'Email') {
       this.formControl.setValidators([Validators.required, Validators.email]);
@@ -487,7 +488,11 @@ export class ChatBotLandingPageComponent
     // if(this.pasoActual.identificadorApi=='Dni'){
     //   this.formControl.setValidators([Validators.required])
     // };
-    console.log('FormControl ', this.formControl);
+    console.log('FormControl  SET VALIDATOR ', this.formControl);
+  }
+  FormControlValid(){
+    //this.formControl.clearValidators();
+    this.formControl.setErrors(null);
   }
   SetDatAlumno() {
     if (this.pasoActual.identificadorApi == 'Email') {

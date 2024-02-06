@@ -60,7 +60,7 @@ export class AppComponent implements OnInit,AfterViewInit ,OnDestroy {
   ngOnInit() {
     console.log("Inicio Ruta ",window.frames.location);
 
-    this.esChatbot = window.frames.location.href == 'http://localhost:4200/Chat/1' || window.frames.location.href == 'https://img.bsgrupo.com/Chat/1'? true: false;
+    this.esChatbot = window.frames.location.href == 'http://localhost:4200/Chat/1' || window.frames.location.href == 'https://img.bsgrupo.com/Chat/1' || window.frames.location.href == 'https://bsginstitute.com/Chat/1'? true: false;
 
     this.router.events.pipe(takeUntil(this.signal$)).subscribe((val) => {
       this.IdPGeneral=0;
