@@ -30,7 +30,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 })
 export class ChatComponent implements OnInit, OnDestroy, OnChanges {
   private signal$ = new Subject();
- 
+
   @ViewChild('contenidoMsj') contenidoMsj!: ElementRef;
   public hubConnection: any;
   private storageEventListener: (event: StorageEvent) => void;
@@ -106,7 +106,7 @@ export class ChatComponent implements OnInit, OnDestroy, OnChanges {
     window.removeEventListener('storage', this.storageEventListener);
   }
   ngOnInit(): void {
-   
+
     this._HelperService
       .recibirMsjChat()
       .pipe(takeUntil(this.signal$))
@@ -135,12 +135,12 @@ export class ChatComponent implements OnInit, OnDestroy, OnChanges {
             this.idsesion = x.idsesion;
           }
           if (this.hubConnection.state == 'Connected') {
-            /* this.GenerarLogVisitanteAulaVirtual() */
-            if (this.git == '') {
-              this.hubConnection.invoke('getGuid');
-            } else {
-              this.GenerarLogVisitanteAulaVirtual();
-            }
+            this.GenerarLogVisitanteAulaVirtual()
+            // if (this.git == '') {
+            //   this.hubConnection.invoke('getGuid');
+            // } else {
+            //   this.GenerarLogVisitanteAulaVirtual();
+            // }
           }
         },
       });
@@ -212,7 +212,7 @@ export class ChatComponent implements OnInit, OnDestroy, OnChanges {
     }
     if (this.idProgramageneral > 0 && this.estadoLogueo == 'false') {
       this.ObtenerAsesorChat();
-      
+
     }
   }
 
@@ -304,11 +304,12 @@ doSomethingOnNewTab() {
       .start()
       .then((x: any) => {
         if (this.hubConnection.state == 'Connected') {
-          if (this.git == '') {
-            this.hubConnection.invoke('getGuid');
-          } else {
-            this.GenerarLogVisitanteAulaVirtual();
-          }
+          this.GenerarLogVisitanteAulaVirtual();
+          // if (this.git == '') {
+          //   this.hubConnection.invoke('getGuid');
+          // } else {
+          //   this.GenerarLogVisitanteAulaVirtual();
+          // }
         }
 
         if (IdFaseOportunidadPortal != undefined) {
@@ -322,13 +323,13 @@ doSomethingOnNewTab() {
     this.hubConnection.on('setGuid', (Guid: any) => {
       console.log('Entro al setGuid', Guid);
       this.git = Guid;
-      
+
       this.GenerarLogVisitanteAulaVirtual();
     });
   }
 
   GenerarLogVisitanteAulaVirtual() {
-    
+
     var idProgramaGenetalEstatico =
       this._SessionStorageService.SessionGetValue('IdPGeneral') == ''
         ? 0
@@ -370,16 +371,16 @@ doSomethingOnNewTab() {
       this.idcentrocosto,
       this.idcoordinadora,
       this.codigomatricula,
-      this.git
+      // this.git
     );
     /*  if(this.IdAlumno==null)
     {console.log("Recargo Funcion GenerarLogVisitanteAulaVirtual");
-    
+
       this.GenerarLogVisitanteAulaVirtual();
-      
+
     } */
   }
-  
+
   mensajeChat() {
     if (this.clics === 0) {
       this.GenerarLogVisitanteAulaVirtual();
@@ -393,7 +394,7 @@ doSomethingOnNewTab() {
     console.log('---------------------------------');
   }
   enviarMensajeVisitanteSoporte() {
-    
+
     if (this.clics === 0) {
       this.GenerarLogVisitanteAulaVirtual();
       console.log("Entro en clck para recarga ");
@@ -415,11 +416,11 @@ doSomethingOnNewTab() {
     }
   }
   marcarChatAgentecomoleido() {
-    
+
     this.hubConnection.invoke('marcarChatAgentecomoleido', this.idInteraccion);
   }
   actualizarDatosAlumno(IdFaseOportunidadPortal: any) {
-    
+
     this.hubConnection.invoke(
       'actualizarDatosAlumno',
       this.IdAlumno,
@@ -427,7 +428,7 @@ doSomethingOnNewTab() {
     );
   }
   crearChatOfflineSoporte() {
-    
+
     var idProgramaGenetalEstatico = parseInt(
       this._SessionStorageService.SessionGetValue('IdPGeneral')
     );
@@ -440,7 +441,7 @@ doSomethingOnNewTab() {
     );
   }
   crearChatOffline() {
-    
+
     var idProgramaGenetalEstatico = parseInt(
       this._SessionStorageService.SessionGetValue('IdPGeneral')
     );
@@ -452,12 +453,12 @@ doSomethingOnNewTab() {
     );
   }
   enviarMensajeVisitanteSoporteArchivo(
-    
+
     url: string,
     idarchivo: number | null,
     tipo: string
   ) {
-    
+
     this.hubConnection.invoke(
       'EnviarMensajeVisitanteSoporteArchivoV2',
       url,
@@ -470,9 +471,9 @@ doSomethingOnNewTab() {
     url: string,
     idarchivo: number | null,
     tipo: string
-    
+
   ) {
-    
+
     this.hubConnection.invoke(
       'mensajeChatArchivoAdjunto',
       url,
@@ -481,7 +482,7 @@ doSomethingOnNewTab() {
     );
   }
   ObtenerDetalleChatPorIdInteraccionControlMensajeSoporte(idAlumno: number) {
-    
+
     this.charge = true;
     this._ChatDetalleIntegraService
       .ObtenerDetalleChatPorIdInteraccionControlMensajeSoporte(idAlumno)
@@ -507,7 +508,7 @@ doSomethingOnNewTab() {
       });
   }
   configuracionSoporte() {
-    
+
     this.hubConnection.on(
       'configuracionSoporte',
       (NombreAsesor: any, estado: any, idPGeneral: any) => {
@@ -547,7 +548,7 @@ doSomethingOnNewTab() {
     );
   }
   setChat() {
-    
+
     this.hubConnection.on(
       'setChat',
       (id: any, agentName: any, existing: any) => {
@@ -579,7 +580,7 @@ doSomethingOnNewTab() {
     );
   }
   onlineStatus() {
-    
+
     this.hubConnection.on('onlineStatus', (data: any) => {
       if (data.status == true) {
         if (data.nombreasesor === undefined) {
@@ -807,7 +808,7 @@ doSomethingOnNewTab() {
         //     // this._SnackBarServiceService.openSnackBar("Solo tiene 2 intentos para subir su proyecto.",'x',15,"snackbarCrucigramaerror");
         //   }
         // }
-      } 
+      }
     })*/
   }
   GetsesionIdInteraccion() {
