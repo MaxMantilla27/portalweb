@@ -97,7 +97,7 @@
               <td>{{item.nroCuota}}</td>
               <td>{{item.nombreMoneda}}</td>
               <td>{{item.cuota}}</td>
-              <td>{{item.mora}}</td>
+              <td>{{item.moraCalculada | number:'1.2-2'}}</td>
               <td>{{item.fechaVencimiento | date:'dd/MM/yyyy'}}</td>
               <td>
                 <ng-container *ngIf="item.fechaPago!=null">{{item.fechaPago | date:'dd/MM/yyyy'}}</ng-container>
@@ -133,12 +133,12 @@
               <ng-container *ngFor="let item of CronogramaPago.registroCuota;let i=index">
                 <div class="col-12 row cen" *ngIf="item.estado==true">
                   <div class="col-8">Cuota N°{{item.nroCuota}} - {{item.fechaVencimiento | date:'dd/MM/yyyy'}}</div>
-                  <div class="col-4">{{item.simbolo}} {{item.cuota}}</div>
+                  <div class="col-4">{{item.simbolo}} {{item.cuota + item.moraCalculada | number:'1.2-2'}}</div>
                 </div>
               </ng-container>
               <div class="col-12 row tot sub">
                 <div class="col-8">Total a pagar</div>
-                <div class="col-4">{{CronogramaPago.registroCuota[0].simbolo}} {{total}}</div>
+                <div class="col-4">{{CronogramaPago.registroCuota[0].simbolo}} {{total | number:'1.2-2'}}</div>
               </div>
               <div class="col-12 row">
                 <div class="col-12 row sub mt-2">

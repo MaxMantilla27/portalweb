@@ -81,3 +81,16 @@ export interface datosAlumnoEnvioDTO {
   idAreaFormacion: number,
   idIndustria: number,
 }
+
+export interface ChatBotAlumnoDTO {
+  Id:0,
+  Nombres: string,
+  Email: string,
+  Movil: string,
+  IdPais?: number,
+  IdRegion?: number,
+  IdCargo?: number,
+  IdAreaFormacion?: number,
+  IdAreaTrabajo?: number,
+  IdIndustria?: number,
+}

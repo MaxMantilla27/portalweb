@@ -4,8 +4,8 @@
 
 export const environment = {
   production: false,
-  url_api:'https://localhost:7177/api/',
-  //url_api:'http://localhost:7177/api/',
+  url_api:'https://api-portalweb-carrera.bsginstitute.com/api/',
+  //url_api:'https://localhost:7177/api/',
   //url_api_integra:'https://localhost:5001/api/',
   url_api_integra:'https://integrav4-servicios.bsginstitute.com/api/',
   //url_portal:'https://angular-portal.bsginstitute.com/',
@@ -14,8 +14,9 @@ export const environment = {
   //url_portal:'http://localhost:4200/',
   // url_signal:'https://integrav4-signalrcore.bsginstitute.com/'
   //url_signal:'http://bsgvalidaciones.endevslab.com/'
-  //url_signal:'https://integrav4-signalrcore.bsginstitute.com/'
-  url_signal:'https://localhost:7120/'
+  url_signal:'https://integrav4-signalrcore.bsginstitute.com/',
+  url_api_integra_v5:'https://localhost:7288/api'
+  //url_signal:'https://localhost:7120/'
 };
 
 /*

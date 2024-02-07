@@ -212,7 +212,7 @@ export class PagoComponent implements OnInit,OnDestroy {
     this.total=0
     this.CronogramaPago.registroCuota.forEach((r:any) => {
       if(r.estado==true){
-        this.total+=r.cuota
+        this.total+=r.cuota + r.moraCalculada
       }
     });
   }
@@ -285,8 +285,8 @@ export class PagoComponent implements OnInit,OnDestroy {
     var stringVencimiento= pipe.transform(new Date(this.CronogramaPago.fechaVencimiento), 'yyyy-MM-ddT00:00:00.000')
     if(stringActual)fechaActual=new Date(stringActual)
     if(stringVencimiento)fechaVencimiento=new Date(stringVencimiento)
-    if(fechaActual <= fechaVencimiento)
-    {
+    // if(fechaActual <= fechaVencimiento)
+    // {
       let validador=0
       // if(this.idPasarela==5){ //OpenPay
       //   let count=0
@@ -341,10 +341,10 @@ export class PagoComponent implements OnInit,OnDestroy {
           }
         });
       }
-    }
-    else{
-      this._SnackBarServiceService.openSnackBar("Lo sentimos, para afiliarte al pago recurrente es obligatorio estar al dia con los pagos cronograma.",'x',10,"snackbarCrucigramaerror");
-    }
+    // }
+    // else{
+    //   this._SnackBarServiceService.openSnackBar("Lo sentimos, para afiliarte al pago recurrente es obligatorio estar al dia con los pagos cronograma.",'x',10,"snackbarCrucigramaerror");
+    // }
 
   }
 
@@ -398,7 +398,7 @@ export class PagoComponent implements OnInit,OnDestroy {
           this._SessionStorageService.SessionSetValue(sesion,x._Repuesta.requiereDatosTarjeta);
           console.log(parseInt(tarjeta.idPasarelaPago))
 
-          if(tarjeta.idPasarelaPago==5 || tarjeta.idPasarelaPago==16){ //OpenPay
+          if(tarjeta.idPasarelaPago==5 || tarjeta.idPasarelaPago==16 || tarjeta.idPasarelaPago==18){ //OpenPay
             this._router.navigate(['/AulaVirtual/MisPagos/Afiliacion/'+this.idMatricula+'/openpay/'+sesion]);
           }
           else if(tarjeta.idPasarelaPago==7){ //visa
@@ -657,6 +657,9 @@ export class PagoComponent implements OnInit,OnDestroy {
           }
           if(parseInt(tarjeta.idPasarelaPago)==17){//Mercado Pago
             this._router.navigate(['/AulaVirtual/MisPagos/'+this.idMatricula+'/mercadoPago/'+sesion]);
+          }
+          if(parseInt(tarjeta.idPasarelaPago)==18){
+            this._router.navigate(['/AulaVirtual/MisPagos/'+this.idMatricula+'/openpayPEN/'+sesion]);
           }
           if(parseInt(tarjeta.idPasarelaPago)==18){
             this._router.navigate(['/AulaVirtual/MisPagos/'+this.idMatricula+'/openpayPEN/'+sesion]);

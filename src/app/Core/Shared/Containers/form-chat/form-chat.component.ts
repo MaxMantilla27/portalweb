@@ -167,7 +167,7 @@ export class FormChatComponent implements OnInit,OnChanges {
       this.DatosEnvioFormulario.IdCampania=parseInt(idcampania)
       this._ChatEnLinea.ValidarCrearOportunidadChat(this.DatosEnvioFormulario).pipe(takeUntil(this.signal$)).subscribe({
         next:(x)=>{
-          this.ProcesarAsignacionAutomaticaNuevoPortal(x);
+          //this.ProcesarAsignacionAutomaticaNuevoPortal(x);
           this.statuscharge = false;
           this.validacionChat=x
           this.SaveForm.emit({id:x.respuesta.id,idAlumno:x.respuesta.idAlumno})

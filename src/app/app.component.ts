@@ -23,6 +23,8 @@ export class AppComponent implements OnInit,AfterViewInit ,OnDestroy {
   public OpenChat=false;
   public cargaChat=false;
   public usuarioWeb=''
+  public esChatbot = false;
+
   constructor(
     private _HelperService: HelperService,
     private router: Router,
@@ -54,15 +56,18 @@ export class AppComponent implements OnInit,AfterViewInit ,OnDestroy {
     },
   ];
   public IdPGeneral=0;
-  public stateToekn=false
+  public stateToekn=false;
   ngOnInit() {
-    console.log(window.frames.location)
+    console.log("Inicio Ruta ",window.frames.location);
+
+    this.esChatbot = window.frames.location.href == 'http://localhost:4200/Chat/1' || window.frames.location.href == 'https://img.bsgrupo.com/Chat/1' || window.frames.location.href == 'https://bsginstitute.com/Chat/1'? true: false;
 
     this.router.events.pipe(takeUntil(this.signal$)).subscribe((val) => {
       this.IdPGeneral=0;
       this.stateToekn=this._SessionStorageService.validateTokken();
     });
     this.usuarioWeb=this._SessionStorageService.SessionGetValue('usuarioWeb');
+    console.log(this.usuarioWeb)
     var codIso=this._SessionStorageService.SessionGetValue('ISO_PAIS');
     if(this.usuarioWeb=='' || codIso==''){
       if(codIso==''){
@@ -70,10 +75,13 @@ export class AppComponent implements OnInit,AfterViewInit ,OnDestroy {
       }
       if(this.usuarioWeb==''){
         this.RegistroInteraccionInicial();
+      }else{
+        this._HelperService.enviarmsjObtenerUsuario(this.usuarioWeb);
       }
     }else{
       this.CodigoIso=codIso;
       this.charge=true;
+      this._HelperService.enviarmsjObtenerUsuario(this.usuarioWeb);
     }
   }
   ObtenerCodigoIso(){
@@ -90,6 +98,7 @@ export class AppComponent implements OnInit,AfterViewInit ,OnDestroy {
       this._SessionStorageService.SessionSetValue('usuarioWeb',x.identificadorUsuario);
       this.usuarioWeb=x.identificadorUsuario
       this.charge=true;
+      this._HelperService.enviarmsjObtenerUsuario(x.identificadorUsuario);
       this.InsertarContactoPortal();
     }})
   }

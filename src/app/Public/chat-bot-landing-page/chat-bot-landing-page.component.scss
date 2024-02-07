@@ -1,0 +1,478 @@
+.TerminosLP {
+  margin: 2em;
+  font-size: 9px;
+  text-align: justify;
+  width: 40em;
+  max-width: 100%;
+}
+.textoChatbot {
+  width: 90%;
+  font-size: 12px;
+  margin-bottom: 30px;
+}
+.NombreCurso {
+  width: 100%;
+  font-weight: 600;
+  font-size: 20px;
+  margin: 10px 0px;
+}
+.contentPrimerPaso {
+  //  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: calc(70vh - 67em);
+  position: relative;
+  //overflow-y: scroll;
+  //scroll-behavior: smooth;
+  //height: 200px;
+  padding: 2%;
+  padding-top: 0px;
+}
+
+.titulos {
+  padding-left: 15%;
+  padding-right: 15%;
+  width: 100%;
+  background-color: rgb(244, 244, 244);
+}
+.titleCurso {
+  padding-top: 3%;
+  text-align: center;
+  font-size: 34px;
+  font-weight: 600;
+  text-align: justify;
+  padding-bottom: 2.5%;
+}
+.titlePrimerPaso {
+  padding-top: 1.5%;
+  text-align: center;
+  font-size: 18px;
+  padding-bottom: 1.5%;
+  font-weight: 300;
+}
+
+.maindiv {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  padding: 2%;
+  width: 90%;
+}
+
+img {
+  max-width: 85%;
+  max-height: 85%;
+}
+
+.subTitlePrimerPaso {
+  font-size: 16px;
+  margin: 2em;
+}
+.ButtonPrimerPaso {
+  margin-top: 10px;
+  width: 100%;
+}
+
+.ButtonPrimerPaso:hover {
+  border-radius: 15px;
+  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.3); /* Sombras al pasar el mouse */
+  &:hover {
+    div {
+      text-decoration: underline;
+    }
+  }
+}
+
+.ButtonIrPrograma {
+  width: 70%;
+  display: flex;
+  justify-content: center;
+}
+
+.ButtonIrPrograma:hover {
+  border-radius: 15px;
+  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.3); /* Sombras al pasar el mouse */
+  &:hover {
+    div {
+      text-decoration: underline;
+    }
+  }
+}
+
+.bloqueIngreso {
+  padding: 1%;
+  width: 100%;
+}
+
+.ContentInputChat .mat-form-field {
+  width: 27em;
+  max-width: 100%;
+  margin-top: 2em;
+  margin-bottom: 2em;
+}
+
+.InputFillWhioutColor
+  .mat-form-field.mat-form-field-appearance-fill
+  > div.mat-form-field-wrapper
+  > div.mat-form-field-flex
+  > div.mat-form-field-infix {
+  padding: 0.4em 0px;
+}
+
+.InputFillWhioutColor
+  .mat-form-field.mat-form-field-appearance-outline
+  > div.mat-form-field-wrapper
+  > div.mat-form-field-flex
+  > div.mat-form-field-infix
+  input {
+  height: 2em;
+}
+.InputFillWhioutColor
+  .mat-form-field.mat-form-field-appearance-fill
+  > div.mat-form-field-wrapper
+  > div.mat-form-field-flex
+  > div.mat-form-field-infix
+  > span.mat-form-field-label-wrapper {
+  top: -0.5em;
+}
+
+// .ContentInputChat
+//   .mat-form-field.mat-form-field-appearance-fill.mat-form-field-can-float.mat-form-field-should-float
+//   .mat-form-field-label {
+//   transform: translateY(-1.1em) scale(0.75);
+//   width: 133.33333%;
+// }
+
+.InputFillWhioutColor .mat-form-field-appearance-fill .mat-form-field-flex {
+  background-color: transparent;
+}
+
+.InputFillWhioutColor
+  .mat-form-field.mat-form-field-appearance-fill
+  > div.mat-form-field-wrapper
+  > div.mat-form-field-subscript-wrapper
+  > div.ng-trigger-transitionMessages
+  mat-error {
+  font-size: 10px;
+  text-align: center;
+}
+.PreguntaChat {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 20px;
+  justify-content: flex-start;
+  width: 100%;
+  flex-wrap: wrap;
+}
+.PreguntaGloboPrevio {
+  width: 60%;
+}
+.PreguntaGlobo {
+  padding: 10px;
+  color: #7a7a87;
+  background: #e5eaef;
+  border-radius: 0px 10px 10px 10px;
+}
+.PreguntaGloboChat {
+  width: 60px;
+  padding: 10px;
+  color: #7a7a87;
+  background: #f9f9f9;
+  border-radius: 0px 10px 10px 10px;
+  display: flex;
+  justify-content: center;
+}
+.OpcionesPregunta {
+  width: 61%;
+  margin: 20px;
+  margin-left: 50px;
+}
+.GloboPregunta {
+  display: flex;
+  align-items: flex-start;
+}
+.imgChatBot {
+  background-image: url(../../../assets/imagenes/asesorprueba.png);
+  width: 50px;
+  height: 50px;
+  background-position: center;
+  background-size: cover;
+  margin-right: 10px;
+  border-radius: 50%;
+  border: solid 1px black;
+}
+.OpcionesGlobo {
+  width: 60%;
+  padding: 5px 40px;
+  border: 2px solid #6b9ac3;
+  color: #2e475d;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  cursor: pointer;
+  background-color: #fff;
+  text-align: center;
+}
+
+.OpcionesGloboValidacion {
+  width: 48%;
+  margin: 1%;
+  padding: 5px 40px;
+  border: 2px solid #2e475d;
+  color: #2e475d;
+  // color: white
+  //background: #fca534;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  cursor: pointer;
+  background-color: white;
+  // background-color: #2E475D;
+  // color: white;
+}
+.OpcionesGlobo:hover {
+  transition: 0.7s;
+  text-decoration: underline;
+  border-radius: 15px;
+  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.3); /* Sombras al pasar el mouse */
+}
+.OpcionesGloboValidacion:hover {
+  transition: 0.7s;
+  text-decoration: underline;
+  border-radius: 15px;
+  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.3); /* Sombras al pasar el mouse */
+}
+.OpcionesCheckGlobo {
+  //width: fit-content;
+  padding: 5px 20px;
+  border: 2px solid #2e475d;
+  //  background: #fca534;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  cursor: pointer;
+  color: #2e475d;
+  // color: white
+  display: flex;
+  align-items: center;
+}
+.TipoCheck {
+  width: 150px;
+  border-right: solid 1px white;
+  font-size: 14px;
+}
+.NombreCheck {
+  margin-left: 10px;
+  width: 350px;
+  border-right: solid 1px white;
+  margin-right: 10px;
+  font-size: 14px;
+}
+.RespuestaCheat {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  margin: 20px 0px;
+}
+.RespuestaGloboPrevio {
+  width: fit-content;
+}
+.RespuestaGlobo {
+  width: fit-content;
+  padding: 10px;
+  background: #42729d;
+  color: white;
+  border-radius: 10px 10px 0px 10px;
+}
+// .inputData {
+//   //border-bottom: 1px solid #91b2ef;
+//   padding: 5px;
+//   border-color: #ceced0 !important;
+//   width: 100% !important;
+//   border-radius: 10px;
+//   margin-right: 8px !important;
+// }
+
+.inputData {
+  //border-bottom: 1px solid #91b2ef;
+  border-bottom: 1px solid !important;
+  max-width: 100%;
+  width: 345px !important;
+  border-radius: 10px;
+  margin-right: 8px !important;
+  border-radius: 10px;
+  padding: 5px;
+  border-color: #ceced0 !important;
+}
+
+.inputDataError {
+  border: 1px solid #ff0000 !important;
+  padding: 3% !important;
+}
+.InputResponder {
+  align-items: flex-start;
+  width: 100%;
+  display: contents;
+}
+.sendMensajeChat {
+  margin-top: 3%;
+  cursor: pointer;
+}
+.sendMensajeChatHabil:hover {
+  color: gray !important;
+}
+.sendMensajeChatInHabil {
+  color: gray;
+}
+.sendMensajeChatHabil {
+  color: black;
+}
+.InputError {
+  font-size: 11px;
+  text-align: center;
+  margin-top: 6px;
+  color: red;
+  max-width: 350px;
+}
+.inputData[type="number"]::-webkit-inner-spin-button,
+.inputData[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.inputData[type="number"] {
+  -moz-appearance: textfield;
+}
+
+.dot-flashing {
+  position: relative;
+  width: 10px;
+  height: 10px;
+  border-radius: 5px;
+  background-color: #91b2ef;
+  color: #91b2ef;
+  animation: dot-flashing 1s infinite linear alternate;
+  animation-delay: 0.5s;
+}
+.dot-flashing::before,
+.dot-flashing::after {
+  content: "";
+  display: inline-block;
+  position: absolute;
+  top: 0;
+}
+.dot-flashing::before {
+  left: -15px;
+  width: 10px;
+  height: 10px;
+  border-radius: 5px;
+  background-color: #91b2ef;
+  color: #91b2ef;
+  animation: dot-flashing 1s infinite alternate;
+  animation-delay: 0s;
+}
+.dot-flashing::after {
+  left: 15px;
+  width: 10px;
+  height: 10px;
+  border-radius: 5px;
+  background-color: #91b2ef;
+  color: #91b2ef;
+  animation: dot-flashing 1s infinite alternate;
+  animation-delay: 1s;
+}
+
+@keyframes dot-flashing {
+  0% {
+    background-color: #91b2ef;
+  }
+  50%,
+  100% {
+    background-color: rgba(145, 178, 239, 0.2);
+  }
+}
+
+//------- Cambios Bryan --------//
+
+.conten {
+  padding: 0% 10%;
+}
+
+.fechaR {
+  text-align: end;
+  font-size: 11px;
+  color: #635e5e;
+}
+
+.iconoEnvio {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 30px;
+  height: 30px;
+  background-color: #00bcd4;
+  border-radius: 50%;
+  margin-top: 2px;
+}
+
+.material-icons {
+  color: white; /* Color del icono, puedes cambiarlo según tu preferencia */
+  font-size: 24px; /* Tamaño del icono, puedes ajustarlo según tus necesidades */
+  margin-left: 4px;
+}
+
+@media screen and (max-width: 600px) {
+
+  body {
+    font-size: 15px;
+    color: #3e617f;
+    touch-action: manipulation;
+  }
+
+  .iconoEnvio {
+    width: 34px;
+    height: 30px;
+    margin-left: 5px;
+  }
+
+  .inp {
+    width: 100%;
+  }
+
+  .inputData {
+    width: 100% !important;
+    margin-right: 5px !important;
+  }
+
+  .container {
+    padding: 0% 0% !important;
+  }
+
+  .fechaR {
+    text-align: end;
+    font-size: 13px;
+  }
+
+  .OpcionesGlobo {
+    width: 100%;
+    padding: 5px 40px;
+    border: 2px solid #6b9ac3;
+    color: #2e475d;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    cursor: pointer;
+    background-color: #fff;
+    text-align: center;
+    margin-left: 5px;
+  }
+
+  .contentPrimerPaso {
+    margin-top: 120px;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  .inputData {
+    width: 100% !important;
+    margin-right: 5px !important;
+  }
+}
