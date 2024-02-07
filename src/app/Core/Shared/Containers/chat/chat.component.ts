@@ -135,7 +135,6 @@ export class ChatComponent implements OnInit, OnDestroy, OnChanges {
             this.idsesion = x.idsesion;
           }
           if (this.hubConnection.state == 'Connected') {
-            this.GenerarLogVisitanteAulaVirtual()
             // if (this.git == '') {
             //   this.hubConnection.invoke('getGuid');
             // } else {
@@ -304,7 +303,6 @@ doSomethingOnNewTab() {
       .start()
       .then((x: any) => {
         if (this.hubConnection.state == 'Connected') {
-          this.GenerarLogVisitanteAulaVirtual();
           // if (this.git == '') {
           //   this.hubConnection.invoke('getGuid');
           // } else {
