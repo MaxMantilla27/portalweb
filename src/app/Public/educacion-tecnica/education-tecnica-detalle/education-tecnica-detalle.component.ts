@@ -22,6 +22,7 @@ import { SessionStorageService } from 'src/app/Core/Shared/Services/session-stor
 import { isPlatformBrowser } from '@angular/common';
 import { DatosFormularioDTO } from 'src/app/Core/Models/DatosFormularioDTO';
 import { ChatEnLineaService } from 'src/app/Core/Shared/Services/ChatEnLinea/chat-en-linea.service';
+import { FacebookPixelService } from 'src/app/Core/Shared/Services/FacebookPixel/facebook-pixel.service';
 
 declare const fbq:any;
 declare const gtag:any;
@@ -70,6 +71,7 @@ export class EducationTecnicaDetalleComponent implements OnInit,OnDestroy {
     private title:Title,
     @Inject(PLATFORM_ID) platformId: Object,
     private _SessionStorageService:SessionStorageService,
+    private _FacebookPixelService:FacebookPixelService,
     private _ChatEnLineaService:ChatEnLineaService
   ) {
     this.isBrowser = isPlatformBrowser(platformId);
@@ -318,8 +320,15 @@ export class EducationTecnicaDetalleComponent implements OnInit,OnDestroy {
             this._SessionStorageService.SessionSetValue('DatosFormulario',JSON.stringify(this.datos));
             this.CompleteLocalStorage=true;
           if(this.isBrowser){
-            //fbq('track', 'CompleteRegistration');
-            fbq('track', 'Lead');
+            fbq('trackSingle','269257245868695', 'Lead', {}, {eventID:x.id});
+            this._FacebookPixelService.SendLoad(x.id,x.correoEnc,x.telEnc,x.userAgent,x.userIp).subscribe({
+              next:(x)=>{
+                console.log(x)
+              },
+              error:(e)=>{
+                console.log(e)
+              }
+            });
             gtag('event', 'conversion', {
               'send_to': 'AW-991002043/tnStCPDl6HUQu_vF2AM',
             });

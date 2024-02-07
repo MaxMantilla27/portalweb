@@ -23,6 +23,7 @@ export class ModuloSilaboComponent implements OnInit,OnChanges,OnDestroy {
   @Input() IdPgeneral=0
   @Input() Estructura:any=[]
   @Input() Capitulo='';
+  @Input() IdModalidad=0;
   public listaSeccionesContenidosDocumento:Array<any>=[];
   public prese=''
   public presentacionC=''
@@ -31,6 +32,7 @@ export class ModuloSilaboComponent implements OnInit,OnChanges,OnDestroy {
   }
   ngOnChanges(changes: SimpleChanges): void {
     if(this.IdPgeneral!=0){
+      console.log(this.IdModalidad)
       this.ObtenerSilaboCurso()
     }
     console.log(this.Estructura)
@@ -87,13 +89,15 @@ export class ModuloSilaboComponent implements OnInit,OnChanges,OnDestroy {
           }
           i++
         })
-        this.listaSeccionesContenidosDocumento.push({
-          titulo:'Estructura Curricular',
-          Contenido:'',
-          order:7,
-          ArrayContent:[],
-          estado:true
-        })
+        if(this.IdModalidad==1){
+          this.listaSeccionesContenidosDocumento.push({
+            titulo:'Estructura Curricular',
+            Contenido:'',
+            order:7,
+            ArrayContent:[],
+            estado:true
+          })
+        }
         this.listaSeccionesContenidosDocumento.sort(function (a, b) {
           return a.order - b.order;
         });

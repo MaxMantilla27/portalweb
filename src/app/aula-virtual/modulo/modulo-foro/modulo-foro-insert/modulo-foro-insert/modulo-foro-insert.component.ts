@@ -55,7 +55,7 @@ export class ModuloForoInsertComponent implements OnInit,OnDestroy {
   public filestatus=false
   public fileErrorMsg=''
   public selectedFiles?: FileList;
-  public nombrefile='Ningún archivo seleccionado'
+  public nombrefile='Ning�n archivo seleccionado'
   public progress=0
   ngOnInit(): void {
 
@@ -116,7 +116,7 @@ export class ModuloForoInsertComponent implements OnInit,OnDestroy {
       var modifiedDate = event.target.files[i].lastModifiedDate;
       var extencion=name.split('.')[name.split('.').length-1]
       if( Math.round((size/1024)/1024)>150){
-        this.fileErrorMsg='El tamaño del archivo no debe superar los 25 MB'
+        this.fileErrorMsg='El tama�o del archivo no debe superar los 25 MB'
         this.filestatus=false
       }
       this.selectedFiles = event.target.files;

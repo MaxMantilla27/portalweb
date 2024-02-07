@@ -14,6 +14,7 @@ import { AccountService } from 'src/app/Core/Shared/Services/Account/account.ser
 import { AspNetUserService } from 'src/app/Core/Shared/Services/AspNetUser/asp-net-user.service';
 import { ChatEnLineaService } from 'src/app/Core/Shared/Services/ChatEnLinea/chat-en-linea.service';
 import { DatosPortalService } from 'src/app/Core/Shared/Services/DatosPortal/datos-portal.service';
+import { FacebookPixelService } from 'src/app/Core/Shared/Services/FacebookPixel/facebook-pixel.service';
 import { HelperService } from 'src/app/Core/Shared/Services/helper.service';
 import { RegionService } from 'src/app/Core/Shared/Services/Region/region.service';
 import { SessionStorageService } from 'src/app/Core/Shared/Services/session-storage.service';
@@ -43,6 +44,8 @@ export class LoginFacebookRegistrarComponent implements OnInit ,OnDestroy {
     @Inject(PLATFORM_ID) platformId: Object,
     private _SnackBarServiceService: SnackBarServiceService,
     private _AspNetUserService:AspNetUserService,
+
+    private _FacebookPixelService:FacebookPixelService,
     private _ChatEnLineaService:ChatEnLineaService
   ) {
     this.isBrowser = isPlatformBrowser(platformId); {}
@@ -165,8 +168,15 @@ export class LoginFacebookRegistrarComponent implements OnInit ,OnDestroy {
 
             this.cleanSub=true
             if(this.isBrowser){
-              //fbq('track', 'CompleteRegistration');
-              fbq('track', 'Lead');
+              fbq('trackSingle','269257245868695', 'Lead', {}, {eventID:x.id});
+              this._FacebookPixelService.SendLoad(x.id,x.correoEnc,x.telEnc,x.userAgent,x.userIp).subscribe({
+                next:(x)=>{
+                  console.log(x)
+                },
+                error:(e)=>{
+                  console.log(e)
+                }
+              });
               gtag('event', 'conversion', {
                 'send_to': 'AW-991002043/tnStCPDl6HUQu_vF2AM',
               });

@@ -27,7 +27,6 @@ import { ForgotPasswordComponent } from './forgot-password/forgot-password.compo
 import { AvatarComponent } from '../aula-virtual/avatar/avatar.component';
 import { LandingPageInterceptorComponent } from './landing-page/landing-page/landing-page-interceptor/landing-page-interceptor/landing-page-interceptor.component';
 import { PageErrorComponent } from './page-error/page-error/page-error.component';
-import { ChatPruebaComponent } from './chat-prueba/chat-prueba.component';
 import { FormularioPublicidadInterceptorComponent } from './FormularioPublicidad/FormularioPublicidadInterceptor/formulario-publicidad-interceptor.component';
 import { NotificacionWebinarComponent } from './notificacion-webinar/notificacion-webinar.component';
 import { InformacionCertificadoComponent } from './informacion-certificado/informacion-certificado.component';
@@ -36,6 +35,8 @@ import { LandinPageV2Component } from './landin-page-v2/landin-page-v2.component
 import { TarifaGestionComponent } from './tarifa-gestion/tarifa-gestion.component';
 import { SorteoComponent } from './sorteo/sorteo.component';
 import { CompraExitosaOpenPayColombiaComponent } from './compra-exitosa-open-pay-colombia/compra-exitosa-open-pay-colombia.component';
+import { CompraExistosaOpenPayPeruComponent } from './compra-existosa-open-pay-peru/compra-existosa-open-pay-peru.component';
+import { ChatBotLandingPageComponent } from './chat-bot-landing-page/chat-bot-landing-page.component';
 
 const routes:Routes=[
     {path:'',component:PublicComponent,children:
@@ -55,11 +56,11 @@ const routes:Routes=[
             {path:'politica-privacidad', component:PoliticaPrivacidadComponent},
             {path:'AcercaBsGrupo', component:AcercaDeComponent},
             {path:'contactenos', component:ContactenosComponent},
-            {path:'Account/ForgotPassword', component:ForgotPasswordComponent},
+            {path:'Account/ForgotPassword', component:ForgotPasswordComponent,canActivate:[PublicGuard]},
             {path:'Avatar', component: AvatarComponent},
-            {path:'ChatEnlinea', component: ChatPruebaComponent},
             {path:'sorteo', component: SorteoComponent},
             {path:'LandingPage/:IdFormulario', component: LandinPageV2Component},
+            {path:'Chat/:IdFormulario', component: ChatBotLandingPageComponent},
 
             {path:'NotificacionAlumno/Webinar/:datos', component:NotificacionWebinarComponent},
             {path:'bs-campus/white-paper/:whitepaper', component:WhitepapersComponent},
@@ -67,6 +68,7 @@ const routes:Routes=[
 
             {path:'CompraExitosaOpenPay/:validate', component:CompraExitosaOpenPayComponent},
             {path:'CompraExitosaOpenPayColombia/:validate', component:CompraExitosaOpenPayColombiaComponent},
+            {path:'CompraExitosaOpenPayPeru/:validate', component:CompraExistosaOpenPayPeruComponent},
 
             {path:'Certificado/:IdMatricula/:IdCertificado', component:InformacionCertificadoComponent},
             {path:'SubArea/:nombre', component:TagsComponent},

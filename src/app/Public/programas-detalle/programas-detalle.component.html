@@ -235,7 +235,7 @@
                 Registra tus datos para que un asesor especializado pueda ayudarte en todo lo que requieras
               </div>
               <ng-container *ngIf="combosPrevios!=undefined">
-                <app-formulario-azul style="background-color: blue;" [Interaccion]="'Programas-'+idBusqueda"
+                <app-formulario-azul style="background-color: blue;" [ListaLocalidades]="listaLocalidades" [Interaccion]="'Programas-'+idBusqueda"
                   [model]="formularioContacto" [InputsDisable]="statuscharge" [CleanOnSubmit]="cleanSub"
                   (OnSubmit)="SetContacto($event)" (OnValid)="formVal=$event" [fiels]="fileds"
                   (OnSelect)="SelectChage($event)">
@@ -256,7 +256,7 @@
                 </app-formulario-azul>
               </ng-container>
               <ng-container *ngIf="combosPrevios==undefined && CompleteLocalStorage==true">
-                <app-formulario-azul [Interaccion]="'Programas-'+idBusqueda" [model]="formularioContacto"
+                <app-formulario-azul [ListaLocalidades]="listaLocalidades" [Interaccion]="'Programas-'+idBusqueda" [model]="formularioContacto"
                   [InputsDisable]="statuscharge" [CleanOnSubmit]="cleanSub" (OnSubmit)="SetContacto($event)"
                   (OnValid)="formVal=$event" [fiels]="fileds" (OnSelect)="SelectChage($event)">
 
@@ -276,7 +276,7 @@
                 </app-formulario-azul>
               </ng-container>
               <ng-container *ngIf="combosPrevios==undefined && CompleteLocalStorage==false">
-                <app-formulario-azul [Interaccion]="'Programas-'+idBusqueda" [model]="formularioContacto"
+                <app-formulario-azul [ListaLocalidades]="listaLocalidades" [Interaccion]="'Programas-'+idBusqueda" [model]="formularioContacto"
                   [InputsDisable]="statuscharge" [CleanOnSubmit]="cleanSub" (OnSubmit)="SetContacto($event)"
                   (OnValid)="formVal=$event" [fiels]="fileds" (OnSelect)="SelectChage($event)">
 
@@ -797,9 +797,9 @@
         <div style="color: #616161;font-size: 14px; margin-top: 40px;margin-bottom: 10px;">Consulte por nuestras
           opciones de pago personalizadas y flexibles as&iacute; como las opciones de descuentos.</div>
         <div style="display:flex;justify-content:center;margin-top: 15px;">
-          <app-default-button-flecha [confs]="{color:'primary',titulo:'Consutar Opción de Pago Personalizado'}"
+          <app-default-button-flecha [confs]="{color:'primary',titulo:'Consultar Opción de Pago Personalizado'}"
             [style]="'border-radius:20px;'"
-            (ButtoclClick)="EventoInteraccionButton('Consutar Opción de Pago Personalizado');;OpenModalFormulario(2)"></app-default-button-flecha>
+            (ButtoclClick)="EventoInteraccionButton('Consultar Opción de Pago Personalizado');;OpenModalFormulario(2)"></app-default-button-flecha>
         </div>
 
       </div>

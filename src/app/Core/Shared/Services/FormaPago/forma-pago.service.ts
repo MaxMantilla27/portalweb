@@ -159,6 +159,9 @@ export class FormaPagoService {
           if(parseInt(Json.IdPasarelaPago)==11){
             this._router.navigate(['/AulaVirtual/MisPagos/webpay/'+sesion]);
           }
+          if(parseInt(Json.IdPasarelaPago)==17){
+            this._router.navigate(['/AulaVirtual/MisPagos/mercadopago/'+sesion]);
+          }
         }
       }
     });
@@ -206,10 +209,16 @@ export class FormaPagoService {
       return EMPTY;
     }
   }
-  
   public ProcesamientoPagoColombiaOpenPay(ident:string):Observable<any>{
     if(this.isBrowser){
       return this.http.get<any>(this.urlBase+'/ProcesamientoPagoColombiaOpenPay?Id='+ident);
+    }else{
+      return EMPTY;
+    }
+  }
+  public ProcesamientoPagoPeruOpenPay(ident:string):Observable<any>{
+    if(this.isBrowser){
+      return this.http.get<any>(this.urlBase+'/ProcesamientoPagoPeruOpenPay?Id='+ident);
     }else{
       return EMPTY;
     }
@@ -225,6 +234,13 @@ export class FormaPagoService {
   public ProcesamientoAfiliacionColombiaOpenPay(ident:string):Observable<any>{
     if(this.isBrowser){
       return this.http.get<any>(this.urlBase+'/ValidarProcesoAfiliacionColombiaOpenPay?Id='+ident);
+    }else{
+      return EMPTY;
+    }
+  }
+  public ProcesamientoAfiliacionPeruOpenPay(ident:string):Observable<any>{
+    if(this.isBrowser){
+      return this.http.get<any>(this.urlBase+'/ValidarProcesoAfiliacionPeruOpenPay?Id='+ident);
     }else{
       return EMPTY;
     }

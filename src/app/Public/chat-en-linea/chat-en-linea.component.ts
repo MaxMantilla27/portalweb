@@ -51,6 +51,9 @@ export class ChatEnLineaComponent implements OnInit,OnDestroy {
     Nombres: '',
     Apellidos: '',
     Movil: '',
+    IdPais:0,
+    IdRegion:0,
+    IdLocalidad:0
   };
   public DatosEnvioFormulario: ValidacionChatEnvioDTO = {
     Email: '',
@@ -104,7 +107,7 @@ export class ChatEnLineaComponent implements OnInit,OnDestroy {
       this._ChatEnLinea.ValidarCrearOportunidadChat(this.DatosEnvioFormulario).pipe(takeUntil(this.signal$)).subscribe({
         next:(x)=>{
           this.validacionChat=x
-          this.ProcesarAsignacionAutomaticaNuevoPortal(x);
+        //  this.ProcesarAsignacionAutomaticaNuevoPortal(x);
         }
       })
     }

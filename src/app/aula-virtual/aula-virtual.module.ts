@@ -108,6 +108,12 @@ import { VisaRecurrenteComponent } from './resultado-pago-recurrente/visa-recurr
 import { OfertaLaboralComponent } from './bolsa-trabajo/oferta-laboral/oferta-laboral.component';
 import { MisPostulacionesComponent } from './bolsa-trabajo/mis-postulaciones/mis-postulaciones.component';
 import { DevolverProyectoComponent } from './docencia-tareas/devolver-proyecto/devolver-proyecto.component';
+import { EvalComponent } from './eval/eval.component';
+import { ConfirmacionPagoMercadoPagoChileComponent } from './confirmacion-pago-mercado-pago-chile/confirmacion-pago-mercado-pago-chile.component';
+import { ResultadoPagoMercadopagoComponent } from './resultado-pago-mercadopago/resultado-pago-mercadopago.component';
+import { ConfirmacionPagoOpenpayColombiaComponent } from './confirmacion-pago-openpay-colombia/confirmacion-pago-openpay-colombia.component';
+import { PagoMercadoPagoComponent } from './confirmacion-pago-organico/pago-mercado-pago/pago-mercado-pago.component';
+import { ConfirmacionPagoOpenpayPeruComponent } from './confirmacion-pago-openpay-peru/confirmacion-pago-openpay-peru.component';
 import { ConfirmacionPagoOpenpayColombiaComponent } from './confirmacion-pago-openpay-colombia/confirmacion-pago-openpay-colombia.component';
 import { ConfirmacionPagoMercadoPagoChileComponent } from './confirmacion-pago-mercado-pago-chile/confirmacion-pago-mercado-pago-chile.component';
 import { ResultadoPagoMercadopagoComponent } from './resultado-pago-mercadopago/resultado-pago-mercadopago.component';
@@ -276,6 +282,13 @@ import { EnvioActividadComponent } from './modulo/modulo-sesiones-online/envio-a
     OfertaLaboralComponent,
     MisPostulacionesComponent,
     DevolverProyectoComponent,
+    EvalComponent,
+    ResultadoPagoMercadopagoComponent,
+    ConfirmacionPagoMercadoPagoChileComponent,
+    ConfirmacionPagoOpenpayColombiaComponent,
+    PagoMercadoPagoComponent,
+    ConfirmacionPagoOpenpayPeruComponent
+    ],
     ConfirmacionPagoOpenpayColombiaComponent,
     ConfirmacionPagoMercadoPagoChileComponent,
     ResultadoPagoMercadopagoComponent,

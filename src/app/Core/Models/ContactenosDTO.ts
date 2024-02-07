@@ -28,6 +28,7 @@ export interface ContactenosDTO{
   IdAlumno?:number,
   NumeroDocumento?:string,
   Comentario?:string,
+  idLocalidad?:string,
 
   IdTipoDocumentoPersonal?:number,
   IdTipoDocumento?:any,

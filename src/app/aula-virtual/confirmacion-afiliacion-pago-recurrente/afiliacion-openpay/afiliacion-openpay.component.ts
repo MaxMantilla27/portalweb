@@ -1,3 +1,4 @@
+
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -8,6 +9,7 @@ import { FormaPagoService } from 'src/app/Core/Shared/Services/FormaPago/forma-p
 import { HelperService } from 'src/app/Core/Shared/Services/helper.service';
 import { SessionStorageService } from 'src/app/Core/Shared/Services/session-storage.service';
 import { SnackBarServiceService } from 'src/app/Core/Shared/Services/SnackBarService/snack-bar-service.service';
+declare var OpenPayPeru: any;
 declare var OpenPayColombia: any;
 declare var OpenPay: any;
 @Component({
@@ -35,7 +37,7 @@ export class AfiliacionOpenpayComponent implements OnInit,OnDestroy {
     this.signal$.next(true);
     this.signal$.complete();
   }
-
+  public tipoTarjet=""
   public idMatricula=0
   public json:RegistroRespuestaPreProcesoPagoDTO={
     IdentificadorTransaccion:'',
@@ -138,10 +140,21 @@ export class AfiliacionOpenpayComponent implements OnInit,OnDestroy {
   OpenPayInit() {
     var deviceSessionId =""
     if(this.jsonSave.IdPasarelaPago==16){
-      OpenPayColombia.setId('m6g2okzx58x70r2yfjul');
-      OpenPayColombia.setApiKey('pk_d2a653a7e31e4a7fade3ef2c742d0c95');
-      OpenPayColombia.setSandboxMode(true);
+      // OpenPayColombia.setId('mxqbvmmsltqluhbqauyo'); //--PRUEBA
+      // OpenPayColombia.setApiKey('pk_ba4c502aa2b848c2a6e67c3a36268542'); //--PRUEBA
+      OpenPayColombia.setId('mplrg136vnwpb3badwpv');
+      OpenPayColombia.setApiKey('pk_a0440e88efb34c668644d2f52027b251');
+      OpenPayColombia.setSandboxMode(false);
       deviceSessionId = OpenPayColombia.deviceData.setup('fomrOpenPAy');
+    }
+    else if(this.jsonSave.IdPasarelaPago==18){
+      // OpenPayPeru.setId('momoj94bmepe1pmubupx'); //--PRUEBA
+      // OpenPayPeru.setApiKey('pk_adaaac28202241d6a979341a0d463809'); //--PRUEBA
+      //OpenPayPeru.setSandboxMode(false);
+      OpenPayPeru.setId('mtdw8qhfdylsh4rotsoh');
+      OpenPayPeru.setApiKey('pk_110ab96b532e4cd298a86652327ba258');
+      OpenPayPeru.setSandboxMode(false);
+      deviceSessionId = OpenPayPeru.deviceData.setup('fomrOpenPAy');
     }
     else{
       OpenPay.setId('mxgmgffnaxu1mosrkhlo');
@@ -248,6 +261,19 @@ export class AfiliacionOpenpayComponent implements OnInit,OnDestroy {
           error
         )
       }
+      else if(this.jsonSave.IdPasarelaPago==18){
+        OpenPayPeru.token.create(
+          {
+            card_number: this.jsonSave.TarjetaHabiente.NumeroTarjeta,
+            holder_name: this.jsonSave.TarjetaHabiente.Titular,
+            expiration_year: this.jsonSave.TarjetaHabiente.Aniho,
+            expiration_month: this.jsonSave.TarjetaHabiente.Mes,
+            cvv2: this.jsonSave.TarjetaHabiente.CodigoVV,
+          },
+          succes,
+          error
+        )
+      }
       else{
         OpenPay.token.create(
           {
@@ -294,6 +320,33 @@ export class AfiliacionOpenpayComponent implements OnInit,OnDestroy {
         this.dialogRef.close()
       }
     })
+  }
+
+  obtenerTipoTarjeta(){
+    var numeroTarjetaLimpio = this.NumberT.replace(/\s/g, '').replace(/[^0-9]/gi, '');
+
+    const patronesTarjetas: Record<string, RegExp> = {
+      visa: /^4/,
+      mastercard: /^5[1-5]/,
+      amex: /^3[47]/,
+      carnet :/^506[0-9]/
+    };
+    let tarjeta=""
+    for (const tipo in patronesTarjetas) {
+      if (patronesTarjetas[tipo].test(numeroTarjetaLimpio)) {
+        tarjeta = tipo;
+          break;
+      }
+      else tarjeta =""
+    }
+
+    switch(tarjeta){
+      case 'visa':this.tipoTarjet='visa-07.svg';break;
+      case 'mastercard':this.tipoTarjet='mastercard-08.svg';break;
+      case 'amex':this.tipoTarjet='american-09.svg';break;
+      case 'carnet':this.tipoTarjet='carnet-mexico.svg';break;
+      default :this.tipoTarjet=""
+    }
   }
 
 }

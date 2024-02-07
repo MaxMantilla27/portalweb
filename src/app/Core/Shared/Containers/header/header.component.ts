@@ -304,28 +304,33 @@ export class HeaderComponent implements OnInit,OnChanges,OnDestroy {
   GetEducacionTecnica() {
     this._CarreraProfesionalService.GetCarreras(16).pipe(takeUntil(this.signal$)).subscribe({
       next: (x) => {
-        this.tecnica = x.listaProfesionCabeceraDTO.map((c: any) => {
-          var ps: BasicUrl = {
-            Nombre: c.titulo,
-            value: c.idBusqueda,
-            Url:
-              '/tecnico-productivo/' +
-              c.titulo.replace(/ /g, '-') +
-              '-' +
-              c.idBusqueda,
-          };
-          return ps;
-        });
-        this._HelperService.enviarArrayEducacion(this.tecnica.map((m:any)=>{return m}));
-        this.tecnica.push({
-          Nombre: 'Ver Todo',
-          value: 1,
-          Url: '/tecnicos-productivos',
-          style: { 'font-weight': 'bold' },
-        });
-        this.expandibles[2].estatus = true;
-        this.expandibles[2].data = this.tecnica;
-        this._HelperService.enviarStringEducacion(this.expandibles[2].Nombre);
+        if(x.listaProfesionCabeceraDTO!=null){
+          this.tecnica = x.listaProfesionCabeceraDTO.map((c: any) => {
+            var ps: BasicUrl = {
+              Nombre: c.titulo,
+              value: c.idBusqueda,
+              Url:
+                '/tecnico-productivo/' +
+                c.titulo.replace(/ /g, '-') +
+                '-' +
+                c.idBusqueda,
+            };
+            return ps;
+          });
+
+          this._HelperService.enviarArrayEducacion(this.tecnica.map((m:any)=>{return m}));
+          this.tecnica.push({
+            Nombre: 'Ver Todo',
+            value: 1,
+            Url: '/tecnicos-productivos',
+            style: { 'font-weight': 'bold' },
+          });
+          this.expandibles[2].estatus = true;
+          this.expandibles[2].data = this.tecnica;
+          this._HelperService.enviarStringEducacion(this.expandibles[2].Nombre);
+        }else{
+          this.tecnica=[]
+        }
       },
       error: (x) => {
       },

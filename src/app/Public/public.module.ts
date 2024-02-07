@@ -32,7 +32,6 @@ import { LandingPageComponent } from './landing-page/landing-page/landing-page.c
 import { LandingPageInterceptorComponent } from './landing-page/landing-page/landing-page-interceptor/landing-page-interceptor/landing-page-interceptor.component';
 import { PageErrorComponent } from './page-error/page-error/page-error.component';
 import { ChatEnLineaComponent } from './chat-en-linea/chat-en-linea.component';
-import { ChatPruebaComponent } from './chat-prueba/chat-prueba.component';
 import { FormularioPublicidadComponent } from './FormularioPublicidad/formulario-publicidad.component';
 import { FormularioPublicidadInterceptorComponent } from './FormularioPublicidad/FormularioPublicidadInterceptor/formulario-publicidad-interceptor.component';
 import { NotificacionWebinarComponent } from './notificacion-webinar/notificacion-webinar.component';
@@ -54,6 +53,8 @@ import { LoginFacebookIngresarComponent } from './login/login-facebook/login-fac
 import { LoginFacebookRegistrarComponent } from './login/login-facebook/login-facebook-registrar/login-facebook-registrar.component';
 import { NotificacionBoliviaComponent } from './Home/notificacion-bolivia/notificacion-bolivia.component';
 import { CompraExitosaOpenPayColombiaComponent } from './compra-exitosa-open-pay-colombia/compra-exitosa-open-pay-colombia.component';
+import { CompraExistosaOpenPayPeruComponent } from './compra-existosa-open-pay-peru/compra-existosa-open-pay-peru.component';
+import { ChatBotLandingPageComponent } from './chat-bot-landing-page/chat-bot-landing-page.component';
 
 
 @NgModule({
@@ -93,7 +94,6 @@ import { CompraExitosaOpenPayColombiaComponent } from './compra-exitosa-open-pay
     LandingPageInterceptorComponent,
     PageErrorComponent,
     ChatEnLineaComponent,
-    ChatPruebaComponent,
     FormularioPublicidadComponent,
     FormularioPublicidadInterceptorComponent,
     NotificacionWebinarComponent,
@@ -114,7 +114,9 @@ import { CompraExitosaOpenPayColombiaComponent } from './compra-exitosa-open-pay
     LoginFacebookIngresarComponent,
     LoginFacebookRegistrarComponent,
     NotificacionBoliviaComponent,
-    CompraExitosaOpenPayColombiaComponent
+    CompraExistosaOpenPayPeruComponent,
+    CompraExitosaOpenPayColombiaComponent,
+    ChatBotLandingPageComponent
   ],
   exports: [],
   providers: [

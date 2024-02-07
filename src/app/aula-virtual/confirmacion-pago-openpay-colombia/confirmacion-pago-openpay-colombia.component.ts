@@ -63,7 +63,7 @@ export class ConfirmacionPagoOpenpayColombiaComponent implements OnInit,OnDestro
     },
   }
   public NumberT=''
-
+  public tipoTarjet=""
   public registroPse:RegistroProcesoPagoPseDTO={
     BancoPSE:'',
     NombreTitularPSE:'',
@@ -278,6 +278,60 @@ export class ConfirmacionPagoOpenpayColombiaComponent implements OnInit,OnDestro
           location.href=x._Repuesta.urlRedireccionar;
         }
         
+      },
+      error:e=>{
+        this.oncharge=false
+        dialogRef.close()
+      },
+      complete:()=>{
+        this.oncharge=false
+        dialogRef.close()
+      }
+    })
+  }
+
+  obtenerTipoTarjeta(){
+    var numeroTarjetaLimpio = this.NumberT.replace(/\s/g, '').replace(/[^0-9]/gi, '');
+
+    const patronesTarjetas: Record<string, RegExp> = {
+      visa: /^4/,
+      mastercard: /^5[1-5]/,
+      amex: /^3[47]/,
+      carnet :/^506[0-9]/
+    };
+    let tarjeta=""
+    for (const tipo in patronesTarjetas) {
+      if (patronesTarjetas[tipo].test(numeroTarjetaLimpio)) {
+        tarjeta = tipo;
+          break;
+      }
+      else tarjeta =""
+    }
+
+    switch(tarjeta){
+      case 'visa':this.tipoTarjet='visa-07.svg';break;
+      case 'mastercard':this.tipoTarjet='mastercard-08.svg';break;
+      case 'amex':this.tipoTarjet='american-09.svg';break;
+      case 'carnet':this.tipoTarjet='carnet-mexico.svg';break;
+      default :this.tipoTarjet=""
+    }
+  }
+
+  redireccionarPSE(){
+    this.oncharge=true
+    const dialogRef =this.dialog.open(ChargeTextComponent,{
+      panelClass:'dialog-charge-text',
+      data: { text: 'Procesando' },
+      disableClose:true
+    });
+    this.registroPse.NombreTitularPSE=this.jsonSave.TarjetaHabiente.Titular;
+    this.registroPse.NumeroDocumentoPSE=this.jsonSave.TarjetaHabiente.NumeroDocumento;
+    this.jsonSave.RegistroProcesoPagoPse=this.registroPse;
+    this.jsonSave.PagoPSE = true;
+    this._FormaPagoService.ProcesarPagoCuotaAlumno(this.jsonSave).pipe(takeUntil(this.signal$)).subscribe({
+      next:x=>{
+        console.log("Respuesta OpenPay",x)
+        location.href=x._Repuesta.urlRedireccionar;
       },
       error:e=>{
         this.oncharge=false

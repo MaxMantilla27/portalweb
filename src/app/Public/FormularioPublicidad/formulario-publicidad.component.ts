@@ -17,6 +17,7 @@ import { LandingPageService } from 'src/app/Core/Shared/Services/LandingPage/lan
 import { RegionService } from 'src/app/Core/Shared/Services/Region/region.service';
 import { SessionStorageService } from 'src/app/Core/Shared/Services/session-storage.service';
 import { FormularioPublicidadInterceptorComponent } from './FormularioPublicidadInterceptor/formulario-publicidad-interceptor.component';
+import { FacebookPixelService } from 'src/app/Core/Shared/Services/FacebookPixel/facebook-pixel.service';
 declare const fbq:any;
 declare const gtag:any;
 @Component({
@@ -41,6 +42,7 @@ export class FormularioPublicidadComponent implements OnInit {
     private _SessionStorageService:SessionStorageService,
     private _ChatEnLineaService:ChatEnLineaService,
 
+    private _FacebookPixelService:FacebookPixelService,
     public dialogRef: MatDialogRef<FormularioPublicidadInterceptorComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     @Inject(PLATFORM_ID) platformId: Object,
@@ -187,8 +189,16 @@ export class FormularioPublicidadComponent implements OnInit {
         this._SessionStorageService.SessionSetValue('DatosFormulario',JSON.stringify(this.datos));
         this.CompleteLocalStorage=true;
         if(this.isBrowser){
-          //fbq('track', 'CompleteRegistration');
-          fbq('track', 'Lead');
+          fbq('trackSingle','269257245868695', 'Lead', {}, {eventID:x.id});
+          this._FacebookPixelService.SendLoad(x.id,x.correoEnc,x.telEnc,x.userAgent,x.userIp).subscribe({
+            next:(x)=>{
+              console.log(x)
+            },
+            error:(e)=>{
+              console.log(e)
+            }
+          });
+
           try{
             gtag('event', 'conversion', {
               'send_to': 'AW-991002043/tnStCPDl6HUQu_vF2AM',

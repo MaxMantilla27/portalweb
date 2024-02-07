@@ -47,7 +47,7 @@
         <div class="col-10 col-md-11 col-lg-11">
           <div class="mapaSede">
             <h2 class="nameSede" [ngClass]="{'openIframe':expancion[1]}">Lima - Perú</h2>
-            <p class="direccionSede">Av. Pardo 650 Miraflores Lima, Perú <br> <b>Teléfono: +51(1) 207-2770</b></p>
+            <p class="direccionSede">Av. Alfredo Benavides 768 - Oficina 401 Miraflores, Centro Empresarial Reducto Lima, Perú<br> <b>Teléfono: +51(1) 207-2770</b></p>
             <iframe [ngStyle]="{'display':expancion[1]?'block':'none'}"
               src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3900.9052759614697!2d-77.03688568020594!3d-12.11863336322078!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9105c86a591e03af%3A0x44216f10931e46b7!2sBSG%20Institute!5e0!3m2!1sen!2sus!4v1652105967236!5m2!1sen!2sus"
               width="100%" height="200" style="border:0;" allowfullscreen="" loading="lazy"
@@ -154,7 +154,7 @@
           Registra tus datos y nos pondremos en contacto contigo para ayudarte en todo lo que requieras
         </div>
         <ng-container *ngIf="combosPrevios!=undefined">
-          <app-formulario [Interaccion]="'Contactenos'" [model]="formularioContacto" [CleanOnSubmit]="cleanSub" [InputsDisable]="statuscharge" (OnSubmit)="SetContacto($event)"
+          <app-formulario   [ListaLocalidades]="listaLocalidades" [Interaccion]="'Contactenos'" [model]="formularioContacto" [CleanOnSubmit]="cleanSub" [InputsDisable]="statuscharge" (OnSubmit)="SetContacto($event)"
             (OnValid)="formVal=$event" [fiels]="fileds" (OnSelect)="SelectChage($event)">
 
             <ng-container contenido>
@@ -170,7 +170,7 @@
           </app-formulario>
         </ng-container>
         <ng-container *ngIf="combosPrevios==undefined && CompleteLocalStorage==true">
-          <app-formulario [Interaccion]="'Contactenos'" [model]="formularioContacto" [CleanOnSubmit]="cleanSub" [InputsDisable]="statuscharge" (OnSubmit)="SetContacto($event)"
+          <app-formulario  [ListaLocalidades]="listaLocalidades" [Interaccion]="'Contactenos'" [model]="formularioContacto" [CleanOnSubmit]="cleanSub" [InputsDisable]="statuscharge" (OnSubmit)="SetContacto($event)"
             (OnValid)="formVal=$event" [fiels]="fileds" (OnSelect)="SelectChage($event)">
 
             <ng-container contenido>
@@ -186,7 +186,7 @@
           </app-formulario>
         </ng-container>
         <ng-container *ngIf="combosPrevios==undefined && CompleteLocalStorage==false">
-          <app-formulario [Interaccion]="'Contactenos'" [model]="formularioContacto" [CleanOnSubmit]="cleanSub" [InputsDisable]="statuscharge" (OnSubmit)="SetContacto($event)"
+          <app-formulario  [ListaLocalidades]="listaLocalidades" [Interaccion]="'Contactenos'" [model]="formularioContacto" [CleanOnSubmit]="cleanSub" [InputsDisable]="statuscharge" (OnSubmit)="SetContacto($event)"
             (OnValid)="formVal=$event" [fiels]="fileds" (OnSelect)="SelectChage($event)">
 
             <ng-container contenido>
