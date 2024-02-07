@@ -213,6 +213,7 @@ export class PagoComponent implements OnInit,OnDestroy {
     this.CronogramaPago.registroCuota.forEach((r:any) => {
       if(r.estado==true){
         this.total+=r.cuota + r.moraCalculada
+        this.total+=r.cuota + r.moraCalculada
       }
     });
   }
@@ -287,6 +288,8 @@ export class PagoComponent implements OnInit,OnDestroy {
     if(stringVencimiento)fechaVencimiento=new Date(stringVencimiento)
     // if(fechaActual <= fechaVencimiento)
     // {
+    // if(fechaActual <= fechaVencimiento)
+    // {
       let validador=0
       // if(this.idPasarela==5){ //OpenPay
       //   let count=0
@@ -341,6 +344,10 @@ export class PagoComponent implements OnInit,OnDestroy {
           }
         });
       }
+    // }
+    // else{
+    //   this._SnackBarServiceService.openSnackBar("Lo sentimos, para afiliarte al pago recurrente es obligatorio estar al dia con los pagos cronograma.",'x',10,"snackbarCrucigramaerror");
+    // }
     // }
     // else{
     //   this._SnackBarServiceService.openSnackBar("Lo sentimos, para afiliarte al pago recurrente es obligatorio estar al dia con los pagos cronograma.",'x',10,"snackbarCrucigramaerror");
