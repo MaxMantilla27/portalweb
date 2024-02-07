@@ -114,9 +114,6 @@ import { ResultadoPagoMercadopagoComponent } from './resultado-pago-mercadopago/
 import { ConfirmacionPagoOpenpayColombiaComponent } from './confirmacion-pago-openpay-colombia/confirmacion-pago-openpay-colombia.component';
 import { PagoMercadoPagoComponent } from './confirmacion-pago-organico/pago-mercado-pago/pago-mercado-pago.component';
 import { ConfirmacionPagoOpenpayPeruComponent } from './confirmacion-pago-openpay-peru/confirmacion-pago-openpay-peru.component';
-import { ConfirmacionPagoOpenpayColombiaComponent } from './confirmacion-pago-openpay-colombia/confirmacion-pago-openpay-colombia.component';
-import { ConfirmacionPagoMercadoPagoChileComponent } from './confirmacion-pago-mercado-pago-chile/confirmacion-pago-mercado-pago-chile.component';
-import { ResultadoPagoMercadopagoComponent } from './resultado-pago-mercadopago/resultado-pago-mercadopago.component';
 
 import { AsistenciaAlumnoComponent } from './curso/asistencia-alumno/asistencia-alumno.component';
 import { ConfirmCertFisicoComponent } from './curso/curso-certificado-fisico/confirm-cert-fisico/confirm-cert-fisico.component';
@@ -287,8 +284,7 @@ import { EnvioActividadComponent } from './modulo/modulo-sesiones-online/envio-a
     ConfirmacionPagoMercadoPagoChileComponent,
     ConfirmacionPagoOpenpayColombiaComponent,
     PagoMercadoPagoComponent,
-    ConfirmacionPagoOpenpayPeruComponent
-    ],
+    ConfirmacionPagoOpenpayPeruComponent,
     ConfirmacionPagoOpenpayColombiaComponent,
     ConfirmacionPagoMercadoPagoChileComponent,
     ResultadoPagoMercadopagoComponent,

@@ -131,18 +131,17 @@ import { TablePortalComponent } from './Containers/table-portal/table-portal.com
 import { MatChipsModule } from '@angular/material/chips';
 import { FacebookPixelService } from './Services/FacebookPixel/facebook-pixel.service';
 import { ChatbotComponent } from './Containers/chatbot/chatbot.component';
-import {MatSlideToggleModule} from '@angular/material/slide-toggle';
+import { MatSlideToggleModule} from '@angular/material/slide-toggle';
 import { HeaderChatbotComponent } from './Containers/header-chatbot/header-chatbot.component';
 import { PespecificoSesionTemaService } from './Services/PespecificoSesionTema/pespecifico-sesion-tema.service';
 import { PEspecificoEsquemaService } from './Services/PEspecificoEsquema/pespecifico-esquema.service';
 import { PEspecificoSesionRecursoConectividadService } from './Services/PEspecificoSesionRecursoConectividad/pespecifico-sesion-recurso-conectividad.service';
-import {DragDropModule} from '@angular/cdk/drag-drop';
+import { DragDropModule} from '@angular/cdk/drag-drop';
 import { ChangeWordComponent } from './Containers/Dialog/change-word/change-word.component';
-import {MatDatepickerModule} from '@angular/material/datepicker';
+import { MatDatepickerModule} from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { TableCalificarEvaluacionesComponent } from './Containers/table-calificar-evaluaciones/table-calificar-evaluaciones.component';
 import { TableDocenteResponderForosComponent } from './Containers/table-docente-responder-foros/table-docente-responder-foros.component';
-import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import { ImagenModalComponent } from './Containers/Dialog/imagen-modal/imagen-modal.component';
 
 @NgModule({
@@ -343,7 +342,7 @@ import { ImagenModalComponent } from './Containers/Dialog/imagen-modal/imagen-mo
     FacebookLoginComponent,
     MatChipsModule,
     MatSlideToggleModule,
-    HeaderChatbotComponent
+    HeaderChatbotComponent,
     DragDropModule,
     MatDatepickerModule,
     MatNativeDateModule,
@@ -394,7 +393,7 @@ import { ImagenModalComponent } from './Containers/Dialog/imagen-modal/imagen-mo
     SeoService,
     CertificadoIntegraPortalService,
     SocialAuthService,
-    FacebookPixelService
+    FacebookPixelService,
     SocialAuthService,
     PespecificoSesionTemaService,
     PEspecificoEsquemaService,

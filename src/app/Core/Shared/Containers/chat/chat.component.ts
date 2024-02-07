@@ -106,36 +106,43 @@ export class ChatComponent implements OnInit, OnDestroy, OnChanges {
     window.removeEventListener('storage', this.storageEventListener);
   }
   ngOnInit(): void {
-    this._HelperService.recibirMsjChat().pipe(takeUntil(this.signal$)).subscribe({
-      next:x=>{
-        console.log(x);
-        if(x.idMatriculaCabecera!=undefined){
-          this.idMatriculaCabecera=x.idMatriculaCabecera
-        }
-        if(x.idcentrocosto!=undefined){
-          this.idcentrocosto=x.idcentrocosto
-        }
-        if(x.idcoordinadora!=undefined){
-          this.idcoordinadora=x.idcoordinadora
-        }
-        if(x.idcursoprogramageneralalumno!=undefined){
-          this.idcursoprogramageneralalumno=x.idcursoprogramageneralalumno
-        }
-        if(x.idprogramageneralalumno!=undefined){
-          this.idprogramageneralalumno=x.idprogramageneralalumno
-        }
-        if(x.idcapitulo!=undefined){
-          this.idcapitulo=x.idcapitulo
-        }
-        if(x.idsesion!=undefined){
-          this.idsesion=x.idsesion
-        }
-        if(this.hubConnection.connection._connectionState=='Connected'){
-          this.GenerarLogVisitanteAulaVirtual()
-        }
 
-      }
-    })
+    this._HelperService
+      .recibirMsjChat()
+      .pipe(takeUntil(this.signal$))
+      .subscribe({
+        next: (x) => {
+          console.log(x);
+          if (x.idMatriculaCabecera != undefined) {
+            this.idMatriculaCabecera = x.idMatriculaCabecera;
+          }
+          if (x.idcentrocosto != undefined) {
+            this.idcentrocosto = x.idcentrocosto;
+          }
+          if (x.idcoordinadora != undefined) {
+            this.idcoordinadora = x.idcoordinadora;
+          }
+          if (x.idcursoprogramageneralalumno != undefined) {
+            this.idcursoprogramageneralalumno = x.idcursoprogramageneralalumno;
+          }
+          if (x.idprogramageneralalumno != undefined) {
+            this.idprogramageneralalumno = x.idprogramageneralalumno;
+          }
+          if (x.idcapitulo != undefined) {
+            this.idcapitulo = x.idcapitulo;
+          }
+          if (x.idsesion != undefined) {
+            this.idsesion = x.idsesion;
+          }
+          if (this.hubConnection.state == 'Connected') {
+            // if (this.git == '') {
+            //   this.hubConnection.invoke('getGuid');
+            // } else {
+            //   this.GenerarLogVisitanteAulaVirtual();
+            // }
+          }
+        },
+      });
     console.log(this._Router.url.split('/'));
     this.ObtenerConfiguracionChat();
     //this.ObtenerIdAlumnoPorUsuario(undefined)
@@ -267,34 +274,40 @@ doSomethingOnNewTab() {
     }
     this.chatBox = '';
   }
-  ObtenerConfiguracionChat(){
-    this._ChatEnLinea.ObtenerConfiguracionChat().pipe(takeUntil(this.signal$)).subscribe({
-      next:x=>{
-        this.configuration=x
-      }
-    })
+  ObtenerConfiguracionChat() {
+    this.clics=0;
+    this._ChatEnLinea
+      .ObtenerConfiguracionChat()
+      .pipe(takeUntil(this.signal$))
+      .subscribe({
+        next: (x) => {
+          this.configuration = x;
+        },
+      });
   }
-  ObtenerIdAlumnoPorUsuario(IdFaseOportunidadPortal?:any){
-    this._GlobalService.ObtenerIdAlumnoPorUsuario().pipe(takeUntil(this.signal$)).subscribe({
-      next:x=>{
-
-        if(x!=null && x.idAlumno!=null && x.idAlumno>0){
-
-
-
-        }else{
-          this.estadoLogueo="false"
-        }
-
-      }
-    })
+  ObtenerIdAlumnoPorUsuario(IdFaseOportunidadPortal?: any) {
+    this._GlobalService
+      .ObtenerIdAlumnoPorUsuario()
+      .pipe(takeUntil(this.signal$))
+      .subscribe({
+        next: (x) => {
+          if (x != null && x.idAlumno != null && x.idAlumno > 0) {
+          } else {
+            this.estadoLogueo = 'false';
+          }
+        },
+      });
   }
-  ConectarSocket(IdFaseOportunidadPortal?:string){
-
-    this.hubConnection.start()
-      .then((x:any) =>{
-        if(this.hubConnection.connection._connectionState=='Connected'){
-          this.GenerarLogVisitanteAulaVirtual()
+  ConectarSocket(IdFaseOportunidadPortal?: string) {
+    this.hubConnection
+      .start()
+      .then((x: any) => {
+        if (this.hubConnection.state == 'Connected') {
+          // if (this.git == '') {
+          //   this.hubConnection.invoke('getGuid');
+          // } else {
+          //   this.GenerarLogVisitanteAulaVirtual();
+          // }
         }
 
         if (IdFaseOportunidadPortal != undefined) {
@@ -304,8 +317,17 @@ doSomethingOnNewTab() {
       .catch((err: any) => {});
   }
 
-  GenerarLogVisitanteAulaVirtual(){
-    console.log(this.idprogramageneralalumno)
+  setGuid() {
+    this.hubConnection.on('setGuid', (Guid: any) => {
+      console.log('Entro al setGuid', Guid);
+      this.git = Guid;
+
+      this.GenerarLogVisitanteAulaVirtual();
+    });
+  }
+
+  GenerarLogVisitanteAulaVirtual() {
+
     var idProgramaGenetalEstatico =
       this._SessionStorageService.SessionGetValue('IdPGeneral') == ''
         ? 0
@@ -483,27 +505,42 @@ doSomethingOnNewTab() {
         },
       });
   }
-  configuracionSoporte(){
-    this.hubConnection.on("configuracionSoporte",(NombreAsesor:any, estado:any, idPGeneral:any)=>{
+  configuracionSoporte() {
 
-      if(estado==false){
-        if(this.contadoraulavirtual<4){
-          if (this.idProgramageneral == 9990) {
-            this.idProgramageneral = 9991;
+    this.hubConnection.on(
+      'configuracionSoporte',
+      (NombreAsesor: any, estado: any, idPGeneral: any) => {
+        /*  console.log(NombreAsesor)
+      console.log(this.idProgramageneral)
+      console.log(idPGeneral) */
+        if (estado == false) {
+          if (this.contadoraulavirtual < 4) {
+            if (this.idProgramageneral == 9990) {
+              this.idProgramageneral = 9991;
+            } else if (this.idProgramageneral == 9991) {
+              this.idProgramageneral = 9992;
+            } else if (this.idProgramageneral == 9992) {
+              this.idProgramageneral = 9993;
+            } else if (this.idProgramageneral == 9993) {
+              this.idProgramageneral = 9990;
+            }
+            this.contadoraulavirtual++;
+            this.GenerarLogVisitanteAulaVirtual();
+          } else {
+            this.ChargeChat.emit(false);
           }
-          else if (this.idProgramageneral == 9991) {
-            this.idProgramageneral = 9992;
-          }
-          else if (this.idProgramageneral == 9992) {
-            this.idProgramageneral = 9993;
-          }
-          else if (this.idProgramageneral == 9993) {
-            this.idProgramageneral = 9990;
-          }
-          this.contadoraulavirtual++
-          this.GenerarLogVisitanteAulaVirtual();
-        }else{
-          this.ChargeChat.emit(false)
+        } else {
+          var nombre1 = NombreAsesor.split(' ', 3);
+          this.nombreasesorglobal = nombre1[0] + ' ' + nombre1[2];
+          this.nombreAsesorSplit = this.nombreasesorglobal.split(' ', 2);
+          this.img =
+            'https://proceso-pago.bsginstitute.com/img-web/chatV2/' +
+            this.nombreAsesorSplit[0] +
+            '-' +
+            this.nombreAsesorSplit[1] +
+            '.png';
+          this._SessionStorageService.SessionSetValue('IdPGeneral', idPGeneral);
+          this.ChargeChat.emit(true);
         }
       }
     );

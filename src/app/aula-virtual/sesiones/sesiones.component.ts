@@ -903,6 +903,7 @@ export class SesionesComponent implements OnInit,OnDestroy,AfterViewInit {
       .ObtenerListadoProgramaContenido(this.idMatricula).pipe(takeUntil(this.signal$))
       .subscribe({
         next: (x) => {
+          console.log(x)
           if(x.listaCursoMatriculado.length>1){
             this.escurso=false
           }else{

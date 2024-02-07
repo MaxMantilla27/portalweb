@@ -440,6 +440,7 @@ export class CursoComponent implements OnInit,OnDestroy {
       .pipe(takeUntil(this.signal$))
       .subscribe({
         next: (x) => {
+          console.log(x)
           this.programEstructura = x;
           this.IdModalidadPrincipal=x.idModalidad
           console.log(this.programEstructura)
