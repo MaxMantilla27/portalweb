@@ -137,8 +137,19 @@ export class PagoOrganicoTodosComponent implements OnInit {
   public codigoIso: string = 'INTC';
   public IdPais = -1;
   public Paises: any;
+  dialogRef:any
 
   ngOnInit(): void {
+     this.dialogRef =this.dialog.open(ChargeComponent,{
+      panelClass:'dialog-charge',
+      disableClose:true
+    });
+        this.datospago = localStorage.getItem('datEnvioPago');
+    this.datospago = atob(this.datospago);
+    this.datospago = JSON.parse(this.datospago);
+    this.modalidad = this.datospago.modalidad;
+
+
     this._HelperServiceP.recibirDataPais
       .pipe(takeUntil(this.signal$))
       .subscribe({
@@ -173,10 +184,7 @@ export class PagoOrganicoTodosComponent implements OnInit {
         // }
       });
 
-    this.datospago = localStorage.getItem('datEnvioPago');
-    this.datospago = atob(this.datospago);
-    this.datospago = JSON.parse(this.datospago);
-    this.modalidad = this.datospago.modalidad;
+
   }
   GetIdPaisProCodigo(): number {
     var idp = 0;
@@ -247,6 +255,7 @@ export class PagoOrganicoTodosComponent implements OnInit {
           //this.ListMontoPagoCompleto();
         },
       });
+      this.dialogRef.close()
   }
   EventoInteraccionSelectClick(nombre: string) {
     this._HelperService.enviarMsjAcciones({
