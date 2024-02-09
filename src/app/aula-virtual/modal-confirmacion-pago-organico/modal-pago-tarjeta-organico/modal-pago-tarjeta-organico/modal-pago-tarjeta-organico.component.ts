@@ -72,6 +72,8 @@ export class ModalPagoTarjetaOrganicoComponent implements OnInit {
     this.signal$.next(true);
     this.signal$.complete();
   }
+
+  dialogRef:any
   ngOnInit(): void {
     this._HelperService.recibirCombosPerfil.pipe(takeUntil(this.signal$)).subscribe((x) => {
       this.jsonSave.TarjetaHabiente.Titular =x.datosAlumno.nombres+' '+x.datosAlumno.apellidos;
@@ -278,7 +280,7 @@ export class ModalPagoTarjetaOrganicoComponent implements OnInit {
   }
   Pagar(){
     this.oncharge=true
-    const dialogRef =this.dialog.open(ChargeTextComponent,{
+    this.dialogRef =this.dialog.open(ChargeTextComponent,{
       panelClass:'dialog-charge-text',
       data: { text: 'Procesando pago' },
       disableClose:true
@@ -289,7 +291,7 @@ export class ModalPagoTarjetaOrganicoComponent implements OnInit {
     this._FormaPagoService.ProcesarPagoAlumnoOrganico(this.jsonSave).pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
         this.oncharge=false
-        dialogRef.close()
+        this.dialogRef.close()
         console.log(x);
         if(this.resultCard.idPasarelaPago!=1 || this.resultCard.idFormaPago!=65){
           if(this.resultCard.idPasarelaPago!=5){
@@ -311,12 +313,12 @@ export class ModalPagoTarjetaOrganicoComponent implements OnInit {
       },
       error:e=>{
         this.oncharge=false
-        dialogRef.close()
+        this.dialogRef.close()
         this.dialogRefModal.close();
       },
       complete:()=>{
         this.oncharge=false
-        dialogRef.close();
+        this.dialogRef.close();
         this.dialogRefModal.close();
       }
     })
