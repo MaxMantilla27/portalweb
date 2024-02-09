@@ -113,6 +113,8 @@ const routes: Routes = [
         { path: 'MisPagos/:IdMatricula/mercadoPago/:Identificador', component: ConfirmacionPagoMercadoPagoChileComponent,canActivate:[AlumnoGuard]},
         { path: 'MisPagos/:IdMatricula/openpayPEN/:Identificador', component: ConfirmacionPagoOpenpayPeruComponent,canActivate:[AlumnoGuard]},
 
+        { path: 'MisPagos/:IdMatricula/openpayPEN/:Identificador', component: ConfirmacionPagoOpenpayPeruComponent,canActivate:[AlumnoGuard]},
+
 
         // Afiliaciones a Pagos Recurrentes
         { path: 'MisPagos/Afiliacion/:IdMatricula/openpay/:Identificador', component: AfiliacionOpenpayComponent,canActivate:[AlumnoGuard]},

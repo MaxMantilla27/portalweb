@@ -4,7 +4,13 @@ export interface ForoDTO{
     idPEspecificoPadre: number,
     idPEspecificoHijo: number,
     titulo: string,
-    contenido: string
+    contenido: string,
+    idOrigenForo: number,
+    idCapitulo: number,
+    idSesion: number,
+    idSubSesion: number,
+    idVideo: string,
+    urlArchivo: string
 }
 
 export interface ForoRespuestaDTO{

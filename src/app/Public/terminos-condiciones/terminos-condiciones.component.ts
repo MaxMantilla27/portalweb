@@ -1,7 +1,8 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges, ViewEncapsulation } from '@angular/core';
 import { Meta, Title } from '@angular/platform-browser';
 import { Subject, takeUntil } from 'rxjs';
 import { TerminosCondicionesService } from 'src/app/Core/Shared/Services/TerminosCondiciones/terminos-condiciones.service';
+import { HelperService } from 'src/app/Core/Shared/Services/helper.service';
 
 @Component({
   selector: 'app-terminos-condiciones',
@@ -9,10 +10,11 @@ import { TerminosCondicionesService } from 'src/app/Core/Shared/Services/Termino
   styleUrls: ['./terminos-condiciones.component.scss'],
   encapsulation: ViewEncapsulation.None,
 })
-export class TerminosCondicionesComponent implements OnInit {
+export class TerminosCondicionesComponent implements OnInit,OnChanges,OnDestroy {
   private signal$ = new Subject();
   constructor(
     private _TerminosCondicionesService: TerminosCondicionesService,
+    private _HelperService:HelperService,
     private title:Title,
     private meta:Meta
   ) {}
@@ -33,11 +35,18 @@ export class TerminosCondicionesComponent implements OnInit {
       urlWeb: '/termino-uso-web'
     }
   ]
+  @Input() change:boolean|undefined=false;
   ngOnInit(): void {
+    this._HelperService.recibirChangePais().pipe(takeUntil(this.signal$)).subscribe(x=>{
+      this.ObtenerTerminosCondiciones()
+    })
     let t:string='Términos de Uso Web'
     this.title.setTitle(t);
     this.meta.addTag({name: 'author', content: 'BSG Institute'})
     this.ObtenerTerminosCondiciones();
+  }
+  ngOnChanges(changes: SimpleChanges): void {
+    this.ObtenerTerminosCondiciones()
   }
   ObtenerTerminosCondiciones() {
     this._TerminosCondicionesService.ObtenerTerminosCondiciones().pipe(takeUntil(this.signal$)).subscribe({

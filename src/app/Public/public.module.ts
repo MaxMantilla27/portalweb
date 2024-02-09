@@ -53,6 +53,7 @@ import { LoginFacebookIngresarComponent } from './login/login-facebook/login-fac
 import { LoginFacebookRegistrarComponent } from './login/login-facebook/login-facebook-registrar/login-facebook-registrar.component';
 import { NotificacionBoliviaComponent } from './Home/notificacion-bolivia/notificacion-bolivia.component';
 import { CompraExitosaOpenPayColombiaComponent } from './compra-exitosa-open-pay-colombia/compra-exitosa-open-pay-colombia.component';
+import { ChatBotLandingPageComponent } from './chat-bot-landing-page/chat-bot-landing-page.component';
 import { CompraExistosaOpenPayPeruComponent } from './compra-existosa-open-pay-peru/compra-existosa-open-pay-peru.component';
 import { PagoOrganicoTodosComponent } from './programas-detalle/programas-pago-organico/pago-organico-todos/pago-organico-todos/pago-organico-todos.component';
 import { ModalPagoVisaOrganicoComponent } from '../aula-virtual/modal-confirmacion-pago-organico/modal-pago-visa-organico/modal-pago-visa-organico/modal-pago-visa-organico.component';
@@ -124,7 +125,9 @@ import { ModalPagoOpenpayPeruOrganicoComponent } from '../aula-virtual/modal-con
     LoginFacebookIngresarComponent,
     LoginFacebookRegistrarComponent,
     NotificacionBoliviaComponent,
+    CompraExistosaOpenPayPeruComponent,
     CompraExitosaOpenPayColombiaComponent,
+    ChatBotLandingPageComponent,
     CompraExistosaOpenPayPeruComponent,
     PagoOrganicoTodosComponent,
     ModalPagoVisaOrganicoComponent,

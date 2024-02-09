@@ -129,6 +129,9 @@ import { SocialAuthService } from 'angularx-social-login';
 import { MatChipsModule } from '@angular/material/chips';
 import { FacebookPixelService } from './Services/FacebookPixel/facebook-pixel.service';
 import {MatRadioModule} from '@angular/material/radio';
+import { ChatbotComponent } from './Containers/chatbot/chatbot.component';
+import {MatSlideToggleModule} from '@angular/material/slide-toggle';
+import { HeaderChatbotComponent } from './Containers/header-chatbot/header-chatbot.component';
 
 @NgModule({
   imports: [
@@ -137,7 +140,6 @@ import {MatRadioModule} from '@angular/material/radio';
     CommonModule,
     ReactiveFormsModule,
     FormsModule,
-
     MatTabsModule,
     MatTableModule,
     MatProgressSpinnerModule,
@@ -165,6 +167,7 @@ import {MatRadioModule} from '@angular/material/radio';
     CKEditorModule,
     TextFieldModule,
     MatChipsModule,
+    MatSlideToggleModule,
     MatRadioModule,
   ],
   declarations: [
@@ -223,6 +226,8 @@ import {MatRadioModule} from '@angular/material/radio';
     ScrollTopComponent,
     FormularioRojoComponent,
     FacebookLoginComponent,
+    ChatbotComponent,
+    HeaderChatbotComponent,
 
     //ChatZComponent,
   ],
@@ -313,6 +318,8 @@ import {MatRadioModule} from '@angular/material/radio';
     ScrollTopComponent,
     FacebookLoginComponent,
     MatChipsModule,
+    MatSlideToggleModule,
+    HeaderChatbotComponent,
     MatRadioModule,
   ],
   providers: [
