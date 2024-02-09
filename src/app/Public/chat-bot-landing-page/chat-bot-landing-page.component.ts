@@ -435,7 +435,12 @@ export class ChatBotLandingPageComponent
       });
   }
   ProcesarAsignacionAutomaticaChatbot() {
-    console.log(this.OportunidadDTO);
+    console.log("oportunidadDTO",this.OportunidadDTO);
+    this.OportunidadDTO.IdAreaFormacion = 0;
+    this.OportunidadDTO.IdAreaTrabajo = 0;
+    this.OportunidadDTO.IdCargo = 0;
+    this.OportunidadDTO.IdIndustria = 0;
+    console.log("Se borro perfil",this.OportunidadDTO);
     this._ChatBotService
       .ProcesarAsignacionAutomaticaChatbot(this.OportunidadDTO)
       .pipe(takeUntil(this.signal$))
