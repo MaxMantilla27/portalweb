@@ -52,7 +52,106 @@
               "
               #ChatUbicacion2
             >
-              <div class="GloboPregunta" *ngIf="item.mensaje != null">
+              <div *ngIf="PasoRecargado==item.paso && PasoRecargado !=1">
+                <div class="col-12" style="display: flex;margin-bottom: 10px;">
+                  <div class="imgChatBot"></div>
+                  <div class="PreguntaGloboPrevio">
+                    <div class="PreguntaGlobo">
+                      <div>¡Hola {{NombreUsuario}}, nos alegra de tenerte de vuelta!</div>
+                    </div>
+                    <div class="fechaR">
+                      {{ gethora() }}
+                      {{horaMinuto}}
+                      {{ this.ScrollTo() }}
+                    </div>
+                  </div>
+                </div>
+                <div class="col-12" style="display: flex;margin-bottom: 10px;">
+                  <div class="imgChatBot"></div>
+                  <div class="PreguntaGloboPrevio">
+                    <div class="PreguntaGlobo">
+                      <div>Completa la siguiente información para proceder con tu solicitud.</div>
+                    </div>
+                    <div class="fechaR">
+                      {{ gethora() }}
+                      {{horaMinuto}}
+                      {{ this.ScrollTo() }}
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div *ngIf="ProgramasCargados==false && item.paso==8 && item.opciones.length==0">
+                <div class="col-12" style="display: flex;margin-bottom: 10px;">
+                  <div class="imgChatBot"></div>
+                  <div class="PreguntaGloboPrevio">
+                    <div class="PreguntaGlobo">
+                      <div>{{mensajeEspera}}</div>
+                    </div>
+                    <div class="fechaR">
+                      {{ gethora() }}
+                      {{horaMinuto}}
+                      {{ this.ScrollTo() }}
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="GloboPregunta" *ngIf="item.mensaje != null && item.paso!=8">
+                <div class="imgChatBot"></div>
+                <div class="PreguntaGloboPrevio">
+                  <div class="PreguntaGlobo" *ngIf="1">
+                    <div
+                      [innerHtml]="item.mensaje | safeHtml"
+                      (click)="(ChatUbicacion2); "
+                    ></div>
+                  </div>
+                  <div class="fechaR">
+                    {{ gethora() }}
+                    {{
+                      item.fechaRegistrada
+                        ? item.fechaRegistrada
+                        : this.horaMinuto
+                    }}
+                    {{ this.ScrollTo() }}
+                  </div>
+
+                  <div
+                    *ngIf="
+                      item.idCampoContacto == 5 &&
+                      item.usuarioRegistrado == true &&
+                      item.editarMovil != true
+                    "
+                    style="margin-bottom: 10%"
+                  >
+                    <button
+                      type="button"
+                      class="OpcionesGloboValidacion"
+                      (click)="
+                        item.validacionCambioMovil = false;
+                        item.respondido = true;
+                        item.identificadorApi = 'movilSinValidacion';
+                        FormControlValid();
+                        SiguientePaso();
+                        ScrollTo()
+                      "
+                    >
+                      Si
+                    </button>
+                    <button
+                      type="button"
+                      class="OpcionesGloboValidacion"
+                      (click)="
+                        item.respondido = false;
+                        item.validacionCambioMovil = true;
+                        AgregarSiguientePasoRespuestaNoMovil();
+                        ScrollTo()
+                      "
+                    >
+                      No
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <div class="GloboPregunta" *ngIf="ProgramasCargados==true ||(item.paso==8 && item.opciones.length!=0)">
                 <div class="imgChatBot"></div>
                 <div class="PreguntaGloboPrevio">
                   <div class="PreguntaGlobo" *ngIf="1">
@@ -268,7 +367,7 @@
                     (item.respondido != true || item.respuesta == '') &&
                     (item.opciones == undefined ||
                       item.opciones == null ||
-                      item.opciones.length == 0)) ||
+                      item.opciones.length == 0) && item.paso!=8) ||
                   (item.idCampoContacto == 5 &&
                     !item.usuarioRegistrado &&
                     !item.respondido)
@@ -350,7 +449,7 @@
             </div>
           </ng-container>
 
-          <div class="PreguntaChat" *ngIf="CargandoChat == true">
+          <div class="PreguntaChat" *ngIf="CargandoChat == true && ProgramasCargados==false">
             <div class="GloboPregunta">
               <div class="imgChatBot"></div>
               <div class="PreguntaGloboChat">

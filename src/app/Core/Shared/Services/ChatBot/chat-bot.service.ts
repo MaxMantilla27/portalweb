@@ -122,4 +122,11 @@ export class ChatBotService {
       return EMPTY;
     }
   }
+  public ObtenerProbabilidadProgramaAlumno(IdAlumno:number):Observable<any>{
+    if(this.isBrowser){
+      return this.http.get<any>(this.urlBase+'/ObtenerProbabilidadProgramaAlumno?IdAlumno='+IdAlumno);
+    }else{
+      return EMPTY;
+    }
+  }
 }

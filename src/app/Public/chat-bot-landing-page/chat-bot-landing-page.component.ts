@@ -104,6 +104,8 @@ export class ChatBotLandingPageComponent
   public SiguientesPasos: Array<any> = [];
   public pasoActual: any;
   public horaMinuto: any;
+  public CargarMensajeEspera=false;
+  public CalculandoRespuesta=false
 
   public OportunidadDTO: ValidacionChatBotEnvioDTO = {
     NombresCompletos: '',
@@ -175,6 +177,11 @@ export class ChatBotLandingPageComponent
   public validacionCambio: boolean = false;
   public validacionCambioMovil: boolean = false;
   public LimpiarChat = false;
+  public NombreUsuario = 'Usuario'
+  public PasoRecargado=0;
+  public ProgramasCargados=false;
+  public controlIntervalo:any
+  public mensajeEspera='';
   ngOnChanges(changes: SimpleChanges): void {
     this.SetPaisCodigo();
     // this.inputElements.nativeElement.querySelector('.inputDataUsuario').focus();
@@ -274,6 +281,7 @@ export class ChatBotLandingPageComponent
           this.flujoActual.IdChatbotUsuarioContacto =
             x.idChatbotUsuarioContacto;
           this.flujoActual.NombreUsuario = x.nombreUsuarioRegistrado;
+          this.NombreUsuario=this.datosAlumno.Nombres.split(' ')[0];
           this.flujoActual.UsuarioRegistrado = x.registrado;
           this.flujoActual.CodigoPGeneral = x.datosFormulario.codigoPGeneral;
           this.flujoActual.NombrePGeneral = x.datosFormulario.nombrePGeneral;
@@ -350,6 +358,10 @@ export class ChatBotLandingPageComponent
         },
         complete: () => {
           this.cargando = true;
+          if(this.SiguientesPasos.length>1){
+            this.PasoRecargado= this.SiguientesPasos[this.SiguientesPasos.length - 1].paso+1;
+            console.log(this.PasoRecargado)
+          }
         },
       });
   }
@@ -367,7 +379,20 @@ export class ChatBotLandingPageComponent
           //this.FlujoConversacionPrincipal();
           //}else
           //{
+            // console.log(x.itemFlujo.opciones.length)
+          // if(x.itemFlujo.paso==8){
+          //   if(x.opciones.length==0){
+          //     this.mensajeEspera=x.itemFlujo.mensaje.split('información. ')[0]+'información. ';
+          //     console.log(this.mensajeEspera)
+          //     // x.itemFlujo=null;
+          //     // console.log('Lo hizo null');
+          //     // this.CargarMensajeEspera=true
+          //   }
+          // }
           if (x.itemFlujo != null) {
+
+            this.mensajeEspera=x.itemFlujo.mensaje.split('información. ')[0]+'información. ';
+            console.log('CARGA DATA!=======================', x);
             this.formControl.reset();
             this.pasoActual = x.itemFlujo;
             this.pasoActual.respuesta = '';
@@ -421,7 +446,6 @@ export class ChatBotLandingPageComponent
               });
               this.opcionesTruFalse = this.pasoActual.opciones;
 
-              console.log('Existe null opcines cantidad', existenNULL);
               if (existenNULL == this.pasoActual.opciones.length) {
                 this.ContinuarOpciones(1);
               } else {
@@ -432,10 +456,22 @@ export class ChatBotLandingPageComponent
           // }
           // this.inputChat.nativeElement.focus()
         },
+        complete:()=>{
+          console.log(this.SiguientesPasos)
+          if(this.SiguientesPasos.length!=0){
+            if(this.SiguientesPasos[this.SiguientesPasos.length-1].paso==8){
+              this.ObtenerProbabilidadProgramaAlumno()
+            }
+          }
+        }
       });
   }
   ProcesarAsignacionAutomaticaChatbot() {
-    console.log(this.OportunidadDTO);
+    // this.OportunidadDTO.IdAreaFormacion = 0;
+    // this.OportunidadDTO.IdAreaTrabajo = 0;
+    // this.OportunidadDTO.IdCargo = 0;
+    // this.OportunidadDTO.IdIndustria = 0;
+    console.log("oportunidadDTO",this.OportunidadDTO);
     this._ChatBotService
       .ProcesarAsignacionAutomaticaChatbot(this.OportunidadDTO)
       .pipe(takeUntil(this.signal$))
@@ -446,10 +482,30 @@ export class ChatBotLandingPageComponent
           this.ActualizarAlumnoDTO.IdAlumno = x.idAlumno;
           //this.flujoActual.IdAlumno=10550890
           //this.flujoActual.IdOportunidad=2450547
+        },
+        complete:()=>{
+          this.CargandoChat=true
 
           this.ActualizarIdOportunidadChatbotUsuarioContacto();
-          this.FlujoConversacionPrincipal();
-        },
+          this.CalculandoRespuesta=true;
+          if(this.SiguientesPasos[this.SiguientesPasos.length-1].paso==8){
+            this.CargandoChat=true
+            setTimeout(()=>{
+              console.log('===========================CONSULTARA EL FLUJO=========')
+              this.FlujoConversacionPrincipal();
+              this.CargandoChat=true
+              this.controlIntervalo=setInterval(()=>{
+                this.CargandoChat=true
+                console.log('===========================CONSULTA NUEVAMENTE=========')
+                this.FlujoConversacionPrincipal();
+                this.CargandoChat=true
+              },60000)
+            },30000)
+          }
+          else{
+            this.FlujoConversacionPrincipal();
+          }
+        }
       });
   }
 
@@ -604,7 +660,11 @@ export class ChatBotLandingPageComponent
       )
       .pipe(takeUntil(this.signal$))
       .subscribe({
-        next: (x) => {},
+        next: (x) => {
+          console.log(x)
+        },
+        complete:()=>{
+        }
       });
   }
   ActualizarAlumnoChatBot() {
@@ -613,8 +673,11 @@ export class ChatBotLandingPageComponent
       .pipe(takeUntil(this.signal$))
       .subscribe({
         next: (x) => {
-          this.FlujoConversacionPrincipal();
         },
+        complete:()=>{
+          this.FlujoConversacionPrincipal();
+
+        }
       });
   }
   IrChat() {
@@ -667,10 +730,10 @@ export class ChatBotLandingPageComponent
               'usuario registrado: ',
               this.flujoActual.UsuarioRegistrado
             );
-            this.ActualizarIdOportunidadChatbotUsuarioContacto();
           }
         },
         complete: () => {
+          this.ActualizarIdOportunidadChatbotUsuarioContacto();
           this.FlujoConversacionPrincipal();
         },
       });
@@ -1135,7 +1198,7 @@ export class ChatBotLandingPageComponent
 
   CalcularDiasPasados(){
     var fechaActual = new Date();
-    var fechaUltimoMensaje = this.SiguientesPasos[this.SiguientesPasos.length - 2].fechaRegistradaCompleta;//new Date();
+    var fechaUltimoMensaje = this.SiguientesPasos[this.SiguientesPasos.length - 1].fechaRegistradaCompleta;//new Date();
     let  diasTrancurridos = moment.duration(moment(fechaActual).diff(moment(fechaUltimoMensaje))).abs().as('d');
     console.log("Resta", diasTrancurridos  );
 
@@ -1163,6 +1226,24 @@ export class ChatBotLandingPageComponent
       IdOportunidad: 0,
       IdAlumno: 0,
     };
+  }
+  ObtenerProbabilidadProgramaAlumno() {
+    this.CargandoChat=true
+    this._ChatBotService
+      .ObtenerProbabilidadProgramaAlumno(this.flujoActual.IdAlumno)
+      .pipe(takeUntil(this.signal$))
+      .subscribe({
+        next: (x) => {
+          console.log(x)
+          this.ProgramasCargados=x
+        },
+        complete:()=>{
+          if(this.ProgramasCargados==true){
+            clearInterval(this.controlIntervalo);
+            this.CalculandoRespuesta=false
+          }
+        }
+      });
   }
 
 }
