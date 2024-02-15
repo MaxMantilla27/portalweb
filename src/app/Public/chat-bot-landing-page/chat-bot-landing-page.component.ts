@@ -99,13 +99,14 @@ export class ChatBotLandingPageComponent
 
   chat = false;
   pantalla = false;
-  CargandoChat = false;
+  CargandoChat = true;
   public primerpaso: any;
   public SiguientesPasos: Array<any> = [];
   public pasoActual: any;
   public horaMinuto: any;
   public CargarMensajeEspera=false;
   public CalculandoRespuesta=false
+  public IniciaCarga=0
 
   public OportunidadDTO: ValidacionChatBotEnvioDTO = {
     NombresCompletos: '',
@@ -183,6 +184,7 @@ export class ChatBotLandingPageComponent
   public controlIntervalo:any
   public mensajeEspera='';
   ngOnChanges(changes: SimpleChanges): void {
+    this.IniciaCarga=0;
     this.SetPaisCodigo();
     // this.inputElements.nativeElement.querySelector('.inputDataUsuario').focus();
   }
@@ -192,6 +194,7 @@ export class ChatBotLandingPageComponent
   }
 
   ngOnInit(): void {
+    this.IniciaCarga=0;
     this.validarTamanioVentana();
     this.validacionCambioMovil = false;
     this.horaMinuto = new Date();
@@ -366,7 +369,8 @@ export class ChatBotLandingPageComponent
       });
   }
   FlujoConversacionPrincipal() {
-    this._ChatBotService
+    setTimeout(()=>{
+      this._ChatBotService
       .FlujoConversacionPrincipal(this.flujoActual)
       .pipe(takeUntil(this.signal$))
       .subscribe({
@@ -391,8 +395,8 @@ export class ChatBotLandingPageComponent
           // }
           if (x.itemFlujo != null) {
 
-            this.mensajeEspera=x.itemFlujo.mensaje.split('información. ')[0]+'información. ';
-            console.log('CARGA DATA!=======================', x);
+            // this.mensajeEspera=x.itemFlujo.mensaje.split('información. ')[0]+'información. ';
+            // console.log('CARGA DATA!=======================', x);
             this.formControl.reset();
             this.pasoActual = x.itemFlujo;
             this.pasoActual.respuesta = '';
@@ -457,54 +461,60 @@ export class ChatBotLandingPageComponent
           // this.inputChat.nativeElement.focus()
         },
         complete:()=>{
-          console.log(this.SiguientesPasos)
-          if(this.SiguientesPasos.length!=0){
-            if(this.SiguientesPasos[this.SiguientesPasos.length-1].paso==8){
-              this.ObtenerProbabilidadProgramaAlumno()
-            }
-          }
+          this.IniciaCarga=1;
+
         }
       });
+    },1500)
   }
   ProcesarAsignacionAutomaticaChatbot() {
     // this.OportunidadDTO.IdAreaFormacion = 0;
     // this.OportunidadDTO.IdAreaTrabajo = 0;
     // this.OportunidadDTO.IdCargo = 0;
     // this.OportunidadDTO.IdIndustria = 0;
+    console.log(this.OportunidadDTO.IdPais)
+    if(this.OportunidadDTO.IdPais==null || this.OportunidadDTO.IdPais==0){
+      this.OportunidadDTO.IdPais=51
+    }
     console.log("oportunidadDTO",this.OportunidadDTO);
     this._ChatBotService
       .ProcesarAsignacionAutomaticaChatbot(this.OportunidadDTO)
       .pipe(takeUntil(this.signal$))
       .subscribe({
         next: (x) => {
+          console.log(x)
           this.flujoActual.IdAlumno = x.idAlumno;
           this.flujoActual.IdOportunidad = x.idOportunidad;
           this.ActualizarAlumnoDTO.IdAlumno = x.idAlumno;
           //this.flujoActual.IdAlumno=10550890
           //this.flujoActual.IdOportunidad=2450547
+          console.log('OPORTUNIDAD CREADAAAAAAAAAAAAAAAAAAAA',x)
         },
         complete:()=>{
           this.CargandoChat=true
 
           this.ActualizarIdOportunidadChatbotUsuarioContacto();
+
           this.CalculandoRespuesta=true;
-          if(this.SiguientesPasos[this.SiguientesPasos.length-1].paso==8){
-            this.CargandoChat=true
-            setTimeout(()=>{
-              console.log('===========================CONSULTARA EL FLUJO=========')
-              this.FlujoConversacionPrincipal();
-              this.CargandoChat=true
-              this.controlIntervalo=setInterval(()=>{
-                this.CargandoChat=true
-                console.log('===========================CONSULTA NUEVAMENTE=========')
-                this.FlujoConversacionPrincipal();
-                this.CargandoChat=true
-              },60000)
-            },30000)
-          }
-          else{
-            this.FlujoConversacionPrincipal();
-          }
+          this.FlujoConversacionPrincipal();
+
+          // if(this.SiguientesPasos[this.SiguientesPasos.length-1].paso==8){
+          //   this.CargandoChat=true
+          //   setTimeout(()=>{
+          //     console.log('===========================CONSULTARA EL FLUJO=========')
+          //     // this.FlujoConversacionPrincipal();
+          //     // this.CargandoChat=true
+          //     // this.controlIntervalo=setInterval(()=>{
+          //     //   this.CargandoChat=true
+          //     //   console.log('===========================CONSULTA NUEVAMENTE=========')
+          //     //   this.FlujoConversacionPrincipal();
+          //     //   this.CargandoChat=true
+          //     // },60000)
+          //   },10000)
+          // }
+          // else{
+          //   this.FlujoConversacionPrincipal();
+          // }
         }
       });
   }
@@ -548,9 +558,9 @@ export class ChatBotLandingPageComponent
     } else if (this.pasoActual.identificadorApi == 'Nombres') {
       this.formControl.setValidators([Validators.required]);
     }
-    // if(this.pasoActual.identificadorApi=='Dni'){
-    //   this.formControl.setValidators([Validators.required])
-    // };
+    if(this.pasoActual.identificadorApi=='Dni'){
+      this.formControl.setValidators([Validators.required])
+    };
     console.log('FormControl  SET VALIDATOR ', this.formControl);
   }
   FormControlValid(){
@@ -581,6 +591,7 @@ export class ChatBotLandingPageComponent
   }
   CleanDataAlumno() {}
   obtenerErrorCampoNombre() {
+    // console.log(this.pasoActual)
     var campo = this.formControl;
     if (campo!.hasError('required')) {
       if (this.pasoActual.identificadorApi == 'Email')
@@ -664,6 +675,7 @@ export class ChatBotLandingPageComponent
           console.log(x)
         },
         complete:()=>{
+
         }
       });
   }
@@ -1094,11 +1106,13 @@ export class ChatBotLandingPageComponent
   }
 
   redigirPaginaCurso() {
+    console.log(this.idBusqueda)
     this._ChatBotService
       .ObtenerUrlPrograma(this.idBusqueda)
       .pipe(takeUntil(this.signal$))
       .subscribe({
         next: (x) => {
+          console.log(x)
           console.log('esta es la url ', x.url);
           if (x.url != null && x.url != '' && x.url != undefined) {
             this.urlPrograma = x.url;

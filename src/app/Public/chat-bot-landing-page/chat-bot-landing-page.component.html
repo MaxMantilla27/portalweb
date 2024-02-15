@@ -21,6 +21,7 @@
   </div>
 </ng-container>
 
+
 <ng-container *ngIf="cargando">
   <!-- <div class="titulos">
     <div class="titleCurso" *ngIf="flujoActual.NombrePGeneral">
@@ -31,6 +32,14 @@
   <div class="container conten">
     <div class="rowRowpadd">
       <div class="contentPrimerPaso">
+        <div class="PreguntaChat" *ngIf="IniciaCarga == 0 && SiguientesPasos.length==0">
+          <div class="GloboPregunta">
+            <div class="imgChatBot"></div>
+            <div class="PreguntaGloboChat">
+              <div class="dot-flashing"></div>
+            </div>
+          </div>
+        </div>
         <ng-container
           *ngIf="
             SiguientesPasos != undefined &&
@@ -80,22 +89,8 @@
                   </div>
                 </div>
               </div>
-              <div *ngIf="ProgramasCargados==false && item.paso==8 && item.opciones.length==0">
-                <div class="col-12" style="display: flex;margin-bottom: 10px;">
-                  <div class="imgChatBot"></div>
-                  <div class="PreguntaGloboPrevio">
-                    <div class="PreguntaGlobo">
-                      <div>{{mensajeEspera}}</div>
-                    </div>
-                    <div class="fechaR">
-                      {{ gethora() }}
-                      {{horaMinuto}}
-                      {{ this.ScrollTo() }}
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="GloboPregunta" *ngIf="item.mensaje != null && item.paso!=8">
+
+              <div class="GloboPregunta" *ngIf="item.mensaje != null">
                 <div class="imgChatBot"></div>
                 <div class="PreguntaGloboPrevio">
                   <div class="PreguntaGlobo" *ngIf="1">
@@ -151,62 +146,7 @@
                   </div>
                 </div>
               </div>
-              <div class="GloboPregunta" *ngIf="ProgramasCargados==true ||(item.paso==8 && item.opciones.length!=0)">
-                <div class="imgChatBot"></div>
-                <div class="PreguntaGloboPrevio">
-                  <div class="PreguntaGlobo" *ngIf="1">
-                    <div
-                      [innerHtml]="item.mensaje | safeHtml"
-                      (click)="(ChatUbicacion2); "
-                    ></div>
-                  </div>
-                  <div class="fechaR">
-                    {{ gethora() }}
-                    {{
-                      item.fechaRegistrada
-                        ? item.fechaRegistrada
-                        : this.horaMinuto
-                    }}
-                    {{ this.ScrollTo() }}
-                  </div>
 
-                  <div
-                    *ngIf="
-                      item.idCampoContacto == 5 &&
-                      item.usuarioRegistrado == true &&
-                      item.editarMovil != true
-                    "
-                    style="margin-bottom: 10%"
-                  >
-                    <button
-                      type="button"
-                      class="OpcionesGloboValidacion"
-                      (click)="
-                        item.validacionCambioMovil = false;
-                        item.respondido = true;
-                        item.identificadorApi = 'movilSinValidacion';
-                        FormControlValid();
-                        SiguientePaso();
-                        ScrollTo()
-                      "
-                    >
-                      Si
-                    </button>
-                    <button
-                      type="button"
-                      class="OpcionesGloboValidacion"
-                      (click)="
-                        item.respondido = false;
-                        item.validacionCambioMovil = true;
-                        AgregarSiguientePasoRespuestaNoMovil();
-                        ScrollTo()
-                      "
-                    >
-                      No
-                    </button>
-                  </div>
-                </div>
-              </div>
               <div
                 #ChatUbicacion2
                 class="OpcionesPregunta"
@@ -367,7 +307,7 @@
                     (item.respondido != true || item.respuesta == '') &&
                     (item.opciones == undefined ||
                       item.opciones == null ||
-                      item.opciones.length == 0) && item.paso!=8) ||
+                      item.opciones.length == 0)) ||
                   (item.idCampoContacto == 5 &&
                     !item.usuarioRegistrado &&
                     !item.respondido)
@@ -376,6 +316,7 @@
                 <div class="InputResponder">
                   <div *ngIf="formControl != null" class="inp">
                     <input
+                      style="font-size:15px !important"
                       #inputElements
                       class="inputData"
                       [ngClass]="{ inputDataError: formControl.invalid }"
@@ -384,10 +325,10 @@
                       id="inputDataUsuario"
                       [type]="
                         item.identificadorApi == 'Movil'
-                          ? 'number'
-                          : item.identificadorApi == 'Email'
-                          ? 'email'
-                          : 'text'
+                        ? 'number'
+                        : item.identificadorApi == 'Email'
+                        ? 'email'
+                        : 'text'
                       "
                       matInput
                       (keyup.enter)="
@@ -439,9 +380,8 @@
                 <app-default-button
                   [confs]="{ color: 'primary', titulo: 'Visitar Sitio Web' }"
                   [icon]="''"
-                  [disabled]="formControl.invalid"
                   [style]="
-                    'margin-top: 0px; width: 100%;background: white;border: solid 1px #f8893f; color: #f8893f;border-radius: 15px; display:flex; flex-wrap: nowrap'
+                    'margin-top: 0px; width: 100%;background: white;border: solid 1px #f8893f; color: #f8893f;border-radius: 15px; display:flex; flex-wrap: nowrap;cursor:pointer'
                   "
                   (click)="redigirPaginaCurso()"
                 ></app-default-button>
@@ -449,7 +389,7 @@
             </div>
           </ng-container>
 
-          <div class="PreguntaChat" *ngIf="CargandoChat == true && ProgramasCargados==false">
+          <div class="PreguntaChat" *ngIf="CargandoChat == true">
             <div class="GloboPregunta">
               <div class="imgChatBot"></div>
               <div class="PreguntaGloboChat">
@@ -457,6 +397,7 @@
               </div>
             </div>
           </div>
+
           <!-- <ng-container  #ChatUbicacion>
 
           </ng-container> -->
