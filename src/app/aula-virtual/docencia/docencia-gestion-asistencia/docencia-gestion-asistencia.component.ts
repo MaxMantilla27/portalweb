@@ -62,6 +62,7 @@ export class DocenciaGestionAsistenciaComponent implements OnInit,OnChanges,OnDe
   public today:any;
   public DisabledFinalizarRegistro=true;
   @Input() idPEspecifico=0
+  @Input() IdEstadoPEspecifico=0
   ngOnInit(): void {
     console.log(this.data)
     this.today= new Date();

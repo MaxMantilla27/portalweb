@@ -4,4 +4,11 @@
 <app-table-v2 *ngIf="criterios!=undefined " [tableData]="criterios"
   [columnHeader]="columnHeader" [tipoContenido]="TipoContenido"
   [StyleContent]="'    font-size: 12px;padding: 10px;'" [Paginador]="false"
-  [StyleCabecera]="'border-bottom: solid 1px;'"></app-table-v2>
+  [StyleCabecera]="'border-bottom: solid 1px;'">
+</app-table-v2>
+<div style="display: flex;justify-content: center;">
+  <app-default-button [confs]="{color:'primary',titulo:'Registrar Criterios'}"
+    [style]="'width: 100%;background: #0069d9;border-color: #0062cc;'"
+    (ButtoclClick)="RegistrarCriteriosAntiguos()"
+    [icon]="'check'"></app-default-button>
+</div>

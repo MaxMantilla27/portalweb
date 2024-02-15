@@ -1,0 +1,99 @@
+<div class="container" style="display: flex;">
+  <div class="TitleModal col-11" >
+    <div class="cursoTitle" style="font-weight: bold;padding-left: 25px; font-size: 20px;text-align: center;
+    margin-top: 15px;">Registro de Notas</div>
+  </div>
+  <div class="col-1" style="text-align: end;font-weight: bold;cursor: pointer;" (click)="dialogRef.close()">
+    X
+  </div>
+</div>
+<!-- <div class="headerRegistroNota">Registro de Notas</div> -->
+<ng-container *ngIf="contenido!=undefined">
+  <div class="contentRegistroNota">
+    <ng-container *ngIf="charge==true">
+      <div style="width: 100%;z-index: 10;height: 100%;position: absolute;display: flex;justify-content: center;padding: 20px;align-items: center;
+       background: rgb(0 0 0 / 12%);">
+        <mat-spinner></mat-spinner>
+      </div>
+    </ng-container>
+    <div class="contentTextEditor">
+      <div class="titleTextEdir">Público Objetivo</div>
+      <app-text-html-editor [(htmlContent)]="contenido.PublicoObjetivo"></app-text-html-editor>
+    </div>
+    <div class="contentTextEditor">
+      <div class="titleTextEdir">Bibliografía</div>
+      <app-text-html-editor [(htmlContent)]="contenido.Bibliografia"></app-text-html-editor>
+    </div>
+    <div class="contentTextEditor">
+      <div class="titleTextEdir">Objetivos de Aprendizaje</div>
+      <app-text-html-editor [(htmlContent)]="contenido.ObjetivoAprendizaje"></app-text-html-editor>
+    </div>
+    <div class="contentTextEditor">
+      <div class="titleTextEdir">Material del Curso</div>
+      <app-text-html-editor [(htmlContent)]="contenido.Material"></app-text-html-editor>
+    </div>
+    <div class="contentTextEditor">
+      <div class="titleTextEdir">Pautas Complementarias</div>
+      <app-text-html-editor [(htmlContent)]="contenido.PautaComplementaria"></app-text-html-editor>
+    </div>
+    <div class="contentTextEditor" >
+      <div class="titleTextEdir">Criterios de Evaluación</div>
+      <div class="buttonAddSilabo" (click)="AgregarEvaluacion(null)">
+        <i class="material-icons">add</i>
+      </div>
+      <div class="table-resposive" *ngIf="evaluacion!=null && evaluacion.length>0">
+        <table style="width: 100%" class="table">
+          <thead>
+            <tr style="background: #e6eefa;">
+              <th class="text-center" style="min-width: 200px;" rowspan="2"><b>Nombre</b></th>
+              <th class="text-center" style="min-width: 200px;" rowspan="2"><b>Porcentaje</b></th>
+              <th class="text-center" style="min-width: 200px;" rowspan="2"><b>Acciones</b></th>
+            </tr>
+          </thead>
+            <tbody>
+              <ng-container *ngFor="let ev of evaluacion;let i=index">
+                <tr>
+                  <td>
+                    {{ev.Nombre}}
+                  </td>
+                  <td>
+                    {{ev.Porcentaje}}
+                  </td>
+                  <td>
+                    <div style="display: flex;
+                    justify-content: space-evenly;">
+                      <app-default-button [confs]="{color:'primary',titulo:'Editar'}"
+                      [style]="'background: white;color:#333;border:1px solid #ccc;'"
+                      (ButtoclClick)="AgregarEvaluacion(i)"
+                      [icon]="''"></app-default-button>
+                      <app-default-button [confs]="{color:'primary',titulo:'Eliminar'}"
+                      [style]="'background: white;color:#333;border:1px solid #ccc;'"
+                      (ButtoclClick)="EliminarEvaluacion(i)"
+                      [icon]="''"></app-default-button>
+                    </div>
+                  </td>
+                </tr>
+              </ng-container>
+            </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div class="buttonsRegistroNota" style="display: flex;justify-content: center;">
+    <div style="margin: 0px 5px;">
+      <app-default-button [confs]="{color:'danger',titulo:'Cancelar'}"
+      [style]="'width: 100%;'" [icon]="'close'" (ButtoclClick)="charge==false?dialogRef.close():charge=true"></app-default-button>
+    </div>
+    <div style="margin: 0px 5px;">
+      <app-default-button [confs]="{color:'primary',titulo:'Confirmar'}"
+      [style]="'width: 100%;background: #0069d9;border-color: #0062cc;'"
+      (ButtoclClick)="AprobarSilaboDetalleDocente()"
+      [icon]="'check'"></app-default-button>
+    </div>
+  </div>
+</ng-container>
+<ng-container *ngIf="contenido==undefined">
+  <div style="width: 100%;display: flex;justify-content: center;padding: 20px"><mat-spinner></mat-spinner> </div>
+</ng-container>
+
+

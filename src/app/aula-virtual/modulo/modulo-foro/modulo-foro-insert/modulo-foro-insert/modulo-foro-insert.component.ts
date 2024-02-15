@@ -55,7 +55,7 @@ export class ModuloForoInsertComponent implements OnInit,OnDestroy {
   public filestatus=false
   public fileErrorMsg=''
   public selectedFiles?: FileList;
-  public nombrefile='Ning�n archivo seleccionado'
+  public nombrefile='Ningún archivo seleccionado'
   public progress=0
   ngOnInit(): void {
 

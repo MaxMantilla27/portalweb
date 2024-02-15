@@ -59,6 +59,7 @@ export class DocenciaV2CursosOnlineComponent implements OnInit,OnDestroy {
   ObtenerCursoOnlineWebinarDocentePortalWeb(){
     this._DatosPerfilService.ObtenerCursoOnlineWebinarDocentePortalWeb(this.IdPespecifico).pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
+        console.log(x)
         this.curso=x
 
         this.migaPan.push(

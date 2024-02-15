@@ -764,5 +764,17 @@ export class PEspecificoEsquemaService {
       return EMPTY;
     }
   }
-
+  public ObtenerCriteriosPorProgramaEspecificoAntiguos(
+    IdPEspecifico: number
+  ): Observable<any> {
+    if (this.isBrowser) {
+      return this.http.get<any>(
+        this.urlBase +
+          "/ObtenerCriteriosPorProgramaEspecificoAntiguos?IdPEspecifico=" +
+          IdPEspecifico
+      );
+    } else {
+      return EMPTY;
+    }
+  }
 }
