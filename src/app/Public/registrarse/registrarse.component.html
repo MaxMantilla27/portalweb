@@ -32,7 +32,7 @@
       <div class="alert alert-danger" role="alert" *ngIf="errorRegister!=''" style="display: flex;align-items:center;justify-content:space-between;font-size: 14px;">
         {{errorRegister}} <i class="material-icons" style="margin-left: 20px;cursor: pointer;" (click)="errorRegister=''">close</i>
       </div>
-      <app-formulario [Interaccion]="'Registrarce'" [model]="register" [InputsDisable]="statuscharge" [CleanOnSubmit]="cleanSub" (OnSubmit)="Register($event)" [Color]="'#f8f8f8'"
+      <app-formulario [ListaLocalidades]="listaLocalidades" [Interaccion]="'Registrarce'" [model]="register" [InputsDisable]="statuscharge" [CleanOnSubmit]="cleanSub" (OnSubmit)="Register($event)" [Color]="'#f8f8f8'"
         (OnValid)="formVal=$event" [fiels]="fileds" [Tipo]="1" (OnSelect)="SelectChage($event)" [ChargeValuesInit]="initValues">
 
         <ng-container contenido>

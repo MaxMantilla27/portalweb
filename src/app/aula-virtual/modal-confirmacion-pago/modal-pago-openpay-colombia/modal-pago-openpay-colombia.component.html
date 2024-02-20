@@ -1,0 +1,82 @@
+<div class="container">
+  <div class="row">
+    <div class="col-12 row" *ngIf="resultCard!=undefined">
+      <div class="col-12 col-md-12 col-lg-12 titlePagoTarjeta">
+        <div class="row" style="align-items: end;">
+          <div class="col-md-6" >Confirma tu compra</div>
+          <div class="col-md-6" style="padding-right: 60px;"> <div class="logo-openpay"></div></div>
+        </div>
+      </div>
+      <div class="col-12 col-md-12 col-lg-12 inputPagoVisa row">
+        <div class="subtitlePagoVisa">Ingresa los datos de tu tarjeta de crédito o débito {{resultCard.medioPago | capitalice}}</div>
+        <form id="fomrOpenPAy" class="row">
+          <mat-form-field class="col-12" appearance="outline" [floatLabel]="'always'" style="width: 100%;">
+            <mat-label>Nombres :</mat-label>
+            <input type="text" placeholder="Número de tarjeta" [ngModelOptions]="{standalone: true}"
+            [(ngModel)]="resultCard.registroAlumno.nombre" matInput [readonly]="true">
+          </mat-form-field>
+          <mat-form-field  appearance="outline" [floatLabel]="'always'" style="width: 100%;">
+              <mat-label>Apellidos :</mat-label>
+              <input type="text" [ngModelOptions]="{standalone: true}"
+              [(ngModel)]="resultCard.registroAlumno.apellido" matInput [readonly]="true">
+          </mat-form-field>
+          <mat-form-field  appearance="outline" [floatLabel]="'always'" style="width: 100%;">
+              <mat-label>Correo :</mat-label>
+              <input type="text" [ngModelOptions]="{standalone: true}"
+              [(ngModel)]="resultCard.registroAlumno.correo" matInput [readonly]="true">
+          </mat-form-field>
+          <mat-form-field  appearance="outline" [floatLabel]="'always'" style="width: 100%;">
+              <mat-label>Nro. Documento :</mat-label>
+              <input type="text" [ngModelOptions]="{standalone: true}"
+              [(ngModel)]="resultCard.registroAlumno.numeroDocumento" matInput [readonly]="true">
+          </mat-form-field>
+          <ng-container *ngIf="jsonSave.Comprobante!=false">
+            <mat-form-field appearance="outline" [floatLabel]="'always'" style="width: 100%;">
+              <mat-label>Razón Social</mat-label>
+              <input type="text" [(ngModel)]="jsonSave.RazonSocial" placeholder="Razón Social" matInput
+              [ngModelOptions]="{standalone: true}" />
+            </mat-form-field>
+            <mat-form-field appearance="outline" [floatLabel]="'always'" style="width: 100%;">
+              <mat-label>Número Tributario</mat-label>
+              <input type="text" [(ngModel)]="jsonSave.CodigoTributario" [ngModelOptions]="{standalone: true}"
+              placeholder="Número Tributario" matInput />
+            </mat-form-field>
+          </ng-container>
+          <div class="row comprobatePagoTarjeta">
+            <div class="col-12 col-md-6 col-lg-4">Emitir comprobante</div>
+            <div class="col-12 col-md-6 col-lg-8 items">
+              <div class="itm no-select" [ngClass]="{'SelectCom':jsonSave.Comprobante==false}"
+                (click)="jsonSave.Comprobante=false">
+                Boleta <i class="material-icons" *ngIf="jsonSave.Comprobante==false">check_circle</i>
+              </div>
+              <div class="itm no-select" [ngClass]="{'SelectCom':jsonSave.Comprobante!=false}"
+                (click)="jsonSave.Comprobante=true">Factura <i class="material-icons"
+                  *ngIf="jsonSave.Comprobante!=false">check_circle</i>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 row" style="justify-content: center;">
+            <div class="col-12 col-md-10 col-lg-10">
+              <ng-container *ngIf="resultCard.medioPago!='Pse' else pseBTN">
+                <app-default-button [confs]="{color:'primary',titulo:'Pagar ahora'}"
+                [style]="'margin-top: 20px;margin-bottom: 0px;width:100%'" (ButtoclClick)="Pagar()"></app-default-button>
+              </ng-container >
+                <ng-template #pseBTN>
+                  <app-default-button [confs]="{color:'primary',titulo:'Ir a pagar con PSE'}"
+                  [style]="'margin-top: 20px;margin-bottom: 0px;width:100%'" (ButtoclClick)="redireccionarPSE()"></app-default-button>
+                </ng-template>
+
+            </div>
+          </div>
+        </form>
+        <div style="    width: 100%;
+        font-size: 12px;
+        color: #b2b2b2;
+        padding: 20px;">
+          * El monto a cargar sera el cual se detalla arriba en la moneda del programa, el tipo de cambio dependerá del banco que usted utilice.
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>

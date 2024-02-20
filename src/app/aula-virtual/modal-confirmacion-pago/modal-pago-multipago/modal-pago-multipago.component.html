@@ -1,0 +1,22 @@
+<div class="container">
+  <div class="row">
+    <div class="col-12 row" *ngIf="resultCard!=undefined">
+      <div class="col-12 col-md-12 col-lg-12 titlePagoTarjeta">Confirma tu compra</div>
+      <div class="col-12 col-md-12 col-lg-12 inputPagoVisa row">
+        <div class="subtitlePagoVisa">Ingresa los datos de tu tarjeta de crédito o débito {{resultCard.medioPago | capitalice}}</div>
+        <ng-container *ngIf="resultCard!=undefined">
+
+          <iframe class="embed-responsive-item" #multipago
+          [src]="resultCard.registroEnvioComercio.data.url_to_pay | safe"
+          allowfullscreen frameborder="0" width="100%" height="1500px"></iframe>
+        </ng-container>
+        <div style="    width: 100%;
+        font-size: 12px;
+        color: #b2b2b2;
+        padding: 20px;">
+          * El monto a cargar sera el cual se detalla arriba en la moneda del programa, el tipo de cambio dependerá del banco que usted utilice.
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -142,6 +142,10 @@ import { TableDocenteResponderForosComponent } from './Containers/table-docente-
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import { ImagenModalComponent } from './Containers/Dialog/imagen-modal/imagen-modal.component';
 import { ModalCarrerasComponent } from './Containers/Dialog/modal-carreras/modal-carreras.component';
+import {MatRadioModule} from '@angular/material/radio';
+import { ChatbotComponent } from './Containers/chatbot/chatbot.component';
+import {MatSlideToggleModule} from '@angular/material/slide-toggle';
+import { HeaderChatbotComponent } from './Containers/header-chatbot/header-chatbot.component';
 
 @NgModule({
   imports: [
@@ -150,7 +154,6 @@ import { ModalCarrerasComponent } from './Containers/Dialog/modal-carreras/modal
     CommonModule,
     ReactiveFormsModule,
     FormsModule,
-
     MatTabsModule,
     MatTableModule,
     MatProgressSpinnerModule,
@@ -182,6 +185,9 @@ import { ModalCarrerasComponent } from './Containers/Dialog/modal-carreras/modal
     MatDatepickerModule,
     MatNativeDateModule,
     MatSlideToggleModule,
+    MatChipsModule,
+    MatSlideToggleModule,
+    MatRadioModule,
   ],
   declarations: [
     HeaderComponent,
@@ -239,6 +245,8 @@ import { ModalCarrerasComponent } from './Containers/Dialog/modal-carreras/modal
     ScrollTopComponent,
     FormularioRojoComponent,
     FacebookLoginComponent,
+    ChatbotComponent,
+    HeaderChatbotComponent,
 
     TableV2Component,
     TablePortalComponent,
@@ -346,6 +354,9 @@ import { ModalCarrerasComponent } from './Containers/Dialog/modal-carreras/modal
     TableDocenteResponderForosComponent,
     MatSlideToggleModule,
     ImagenModalComponent
+    MatSlideToggleModule,
+    HeaderChatbotComponent,
+    MatRadioModule,
   ],
   providers: [
     SessionStorageService,

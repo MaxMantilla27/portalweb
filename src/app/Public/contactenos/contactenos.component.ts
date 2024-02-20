@@ -79,7 +79,8 @@ export class ContactenosComponent implements OnInit,OnDestroy {
     IdAreaFormacion:undefined,
     IdAreaTrabajo:undefined,
     IdIndustria:undefined,
-    Comentario:''
+    Comentario:'',
+    IdLocalidad: undefined,
   }
   public DatosContactenosEnvio: ContactenosDTO={
     Nombres:'',
@@ -93,6 +94,7 @@ export class ContactenosComponent implements OnInit,OnDestroy {
     IdAreaTrabajo:undefined,
     IdIndustria:undefined,
     Comentario:'',
+    idLocalidad: undefined,
   }
   public combosPrevios:any
   public cargando=false
@@ -109,7 +111,9 @@ export class ContactenosComponent implements OnInit,OnDestroy {
     idAreaFormacion:undefined,
     idAreaTrabajo:undefined,
     idIndustria:undefined,
+    idLocalidad: undefined
   }
+  public listaLocalidades?:any;
   ngOnInit(): void {
 
 
@@ -150,6 +154,7 @@ export class ContactenosComponent implements OnInit,OnDestroy {
     console.log(DatosFormulario)
     if(DatosFormulario!=''){
       var datos = JSON.parse(DatosFormulario);
+
       console.log(datos)
       this.formularioContacto.Nombres=datos.nombres;
       this.formularioContacto.Apellidos=datos.apellidos;
@@ -161,6 +166,7 @@ export class ContactenosComponent implements OnInit,OnDestroy {
       this.formularioContacto.IdAreaFormacion=datos.idAreaFormacion;
       this.formularioContacto.IdAreaTrabajo=datos.idAreaTrabajo;
       this.formularioContacto.IdIndustria=datos.idIndustria;
+      this.formularioContacto.IdLocalidad=datos.idLocalidad
       if(this.formularioContacto.IdPais!=undefined){
         this.GetRegionesPorPais(this.formularioContacto.IdPais);
       }
@@ -207,6 +213,7 @@ export class ContactenosComponent implements OnInit,OnDestroy {
           this.datos.movil = this.DatosContactenosEnvio.Movil;
           this.datos.idCargo = this.DatosContactenosEnvio.IdCargo;
           this.datos.idAreaFormacion = this.DatosContactenosEnvio.IdAreaFormacion;
+          this.datos.idLocalidad = value.IdLocalidad;
           this.datos.idAreaTrabajo = this.DatosContactenosEnvio.IdAreaTrabajo;
           this.datos.idIndustria = this.DatosContactenosEnvio.IdIndustria
           this._SessionStorageService.SessionSetValue('DatosFormulario',JSON.stringify(this.datos));
@@ -254,12 +261,15 @@ export class ContactenosComponent implements OnInit,OnDestroy {
     this._DatosPortalService.ObtenerCombosPortal().pipe(takeUntil(this.signal$)).subscribe({
       next:(x)=>{
         console.log(x);
+        this.listaLocalidades = x.listaLocalida.map((p:any)=>String(p.codigo));
         this.fileds.forEach(r=>{
           if(r.nombre=='IdPais'){
-            r.data=x.listaPais.map((p:any)=>{
+            r.data =x.listaPais.map((p:any)=>{
               var ps:Basic={Nombre:p.pais,value:p.idPais};
               return ps;
             })
+            r.filteredOptionsAux = r.data;
+            r.filteredOptions = r.data;
           }
         })
         this.fileds.forEach(r=>{
@@ -268,6 +278,8 @@ export class ContactenosComponent implements OnInit,OnDestroy {
               var ps:Basic={Nombre:p.cargo,value:p.idCargo};
               return ps;
             })
+            r.filteredOptionsAux = r.data;
+            r.filteredOptions = r.data;
           }
         })
         this.fileds.forEach(r=>{
@@ -276,6 +288,8 @@ export class ContactenosComponent implements OnInit,OnDestroy {
               var ps:Basic={Nombre:p.areaFormacion,value:p.idAreaFormacion};
               return ps;
             })
+            r.filteredOptionsAux = r.data;
+            r.filteredOptions = r.data;
           }
         })
         this.fileds.forEach(r=>{
@@ -284,6 +298,8 @@ export class ContactenosComponent implements OnInit,OnDestroy {
               var ps:Basic={Nombre:p.areaTrabajo,value:p.idAreaTrabajo};
               return ps;
             })
+            r.filteredOptionsAux = r.data;
+            r.filteredOptions = r.data;
           }
         })
         this.fileds.forEach(r=>{
@@ -292,11 +308,30 @@ export class ContactenosComponent implements OnInit,OnDestroy {
               var ps:Basic={Nombre:p.industria,value:p.idIndustria};
               return ps;
             })
+            r.filteredOptionsAux = r.data;
+            r.filteredOptions = r.data;
           }
         })
       }
     })
     this.initValues = true;
+  }
+
+  SelectChage(e:any){
+    if(e.Nombre=="IdPais"){
+      this.formularioContacto.IdRegion=undefined
+      this.formularioContacto.IdLocalidad=undefined
+      this.formularioContacto.Movil=''
+      if(e.value!=52){
+        this.fileds.filter(x=>x.nombre=='IdLocalidad')[0].hidden=true;
+        this.fileds.filter(x=>x.nombre=='IdLocalidad')[0].valorInicial = '';
+      }
+      this.GetRegionesPorPais(e.value)
+    }
+    if(e.Nombre=='IdRegion'){
+      this.formularioContacto.IdLocalidad=undefined
+      this.GetLocalidadesPorRegion(e.value)
+    }
   }
   GetRegionesPorPais(idPais:number){
     this._RegionService.ObtenerCiudadesPorPais(idPais).pipe(takeUntil(this.signal$)).subscribe({
@@ -305,20 +340,58 @@ export class ContactenosComponent implements OnInit,OnDestroy {
         this.fileds.forEach(r=>{
           if(r.nombre=='IdRegion'){
             r.disable=false;
-            r.data=x.map((p:any)=>{
+            r.data, r.filteredOptions=x.map((p:any)=>{
+              var ps:Basic={Nombre:p.nombreCiudad,value:p.idCiudad};
+              return ps;
+            })
+            r.filteredOptionsAux=x.map((p:any)=>{
               var ps:Basic={Nombre:p.nombreCiudad,value:p.idCiudad};
               return ps;
             })
           }
+          // if(r.nombre=='IdLocalidad'){
+          //   r.disable=true;
+          //   r.hidden=true;
+          // }
         })
         this.form.enablefield('IdRegion');
       }
     })
   }
-  SelectChage(e:any){
-    if(e.Nombre=="IdPais"){
-      this.GetRegionesPorPais(e.value)
-    }
+  GetLocalidadesPorRegion(idRegion:number){
+    this._RegionService.ObtenerLocalidadPorRegion(idRegion).pipe(takeUntil(this.signal$)).subscribe({
+      next:x=>{
+        if (x.length != 0 && x != undefined && x !=null ) {
+
+          this.fileds.forEach(r=>{
+            if(r.nombre=='IdLocalidad'){
+              r.disable=false;
+              r.hidden=false;
+              r.data, r.filteredOptions=x.map((p:any)=>{
+                var ps:Basic={Nombre:p.nombreLocalidad,value:p.codigo,longitudCelular:p.longitudCelular};
+                return ps;
+              })
+              r.filteredOptionsAux=x.map((p:any)=>{
+                var ps:Basic={Nombre:p.nombreLocalidad,value:p.codigo,longitudCelular:p.longitudCelular};
+                return ps;
+              })
+              r.validate=[Validators.required];
+            }
+          })
+          this.form.enablefield('IdLocalidad');
+        }
+        else{
+          this.fileds.forEach(r=>{
+            if(r.nombre=='IdLocalidad'){
+              r.disable=true;
+              r.hidden=true;
+              r.validate=[];
+            }
+          })
+
+        }
+      }
+    })
   }
   AddFields(){
 
@@ -359,6 +432,15 @@ export class ContactenosComponent implements OnInit,OnDestroy {
       validate: [Validators.required],
       disable: true,
       label: 'Región',
+    });
+    this.fileds.push({
+      nombre: 'IdLocalidad',
+      tipo: 'select',
+      valorInicial: '',
+      validate: [],
+      disable: true,
+      hidden:true,
+      label: 'Localidad',
     });
     this.fileds.push({
       nombre:"Movil",

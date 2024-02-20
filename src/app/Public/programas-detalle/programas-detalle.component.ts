@@ -9,7 +9,7 @@ import {
   ViewChild,
   ViewEncapsulation,
 } from '@angular/core';
-import { Validators } from '@angular/forms';
+import { FormControl, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { NgbCarouselConfig } from '@ng-bootstrap/ng-bootstrap';
@@ -141,6 +141,7 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
     Inicio:'',
     Tipo:'',
     Version:'',
+    IdBusqueda:0
   }
   public area = '';
   public idBusqueda = 0;
@@ -218,6 +219,7 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
     IdPais: undefined,
     IdRegion: undefined,
     Movil: '',
+    IdLocalidad: undefined
   };
   public DatosEnvioFormulario: ContactenosDTO = {
     Nombres: '',
@@ -255,13 +257,16 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
     idAreaFormacion:undefined,
     idAreaTrabajo:undefined,
     idIndustria:undefined,
+    idLocalidad:undefined,
   }
   public porcentajeDescuento='';
   public textoDescuento='';
   public certificadoVacio=false;
   public TextoFormulario="Necesitas más información";
   public esPadre=false;
-  public namePrograma:any
+  public namePrograma:any;
+  public listaLocalidades?:any;
+
   ngOnInit(): void {
     this.codigoIso =
     this._SessionStorageService.SessionGetValue('ISO_PAIS') != ''
@@ -292,7 +297,15 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
         this.namePrograma = x['ProgramaNombre'].split('-');
         console.log(this.namePrograma)
         this.idBusqueda = parseInt(this.namePrograma[this.namePrograma.length - 1]);
-
+        let DataRuta={
+          rutaProgramaDetalle:this.rutaProgramaDetalle,
+          area:this.area,
+          AraCompleta:this.AraCompleta,
+          nombreProgramCompeto:this.nombreProgramCompeto,
+          namePrograma:this.namePrograma,
+          idBusqueda:this.idBusqueda
+        }
+        this._SessionStorageService.SessionSetValue('dataRuta',JSON.stringify(DataRuta));
 
       },
       error: () => {
@@ -348,29 +361,50 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
 
   }
   OpenModalPago(){
+
+
+
     this.codigoIso =
       this._SessionStorageService.SessionGetValue('ISO_PAIS') != ''
         ? this._SessionStorageService.SessionGetValue('ISO_PAIS')
         : 'INTC';
     this.IdPais=this.GetIdPaisProCodigo();
-    const dialogRef = this.dialog.open(ProgramaPagoComponent, {
-      width: '900px',
-      data: {
-        idPais: this.IdPais ,
+    let dataEnvioPago = {
+      idPais: this.IdPais ,
         idBusqueda:this.idBusqueda,
         alumno:this.alumno,
         nombre:this.cabecera.nombre,
         modalidad:this.cabecera.listProgramaEspecificoInformacionDTO,
-        rutaProgramaDetalle:this.rutaProgramaDetalle},
-      panelClass: 'programa-pago-dialog-container',
-    });
-    dialogRef.afterClosed().pipe(takeUntil(this.signal$)).subscribe((result) => {
-      if(result!=undefined){
+        rutaProgramaDetalle:this.rutaProgramaDetalle,
 
-        this.PreProcesoPagoOrganicoAlumno(result);
-      }
-    });
+    }
+    let datosPrograma={
+      nombrePrograma:this.cabecera.tituloHtml
+    }
+    this._SessionStorageService.SessionSetValue('datEnvioPago',JSON.stringify(dataEnvioPago));
+    this._SessionStorageService.SessionSetValue('datosProgramaPago',JSON.stringify(datosPrograma))
+
+
+    this._router.navigate(['/AulaVirtual/MisPagos/PagoOrganicoTodos']);
+    // const dialogRef = this.dialog.open(ProgramaPagoComponent, {
+    //   width: '900px',
+    //   data: {
+    //     idPais: this.IdPais ,
+    //     idBusqueda:this.idBusqueda,
+    //     alumno:this.alumno,
+    //     nombre:this.cabecera.nombre,
+    //     modalidad:this.cabecera.listProgramaEspecificoInformacionDTO,
+    //     rutaProgramaDetalle:this.rutaProgramaDetalle},
+    //   panelClass: 'programa-pago-dialog-container',
+    // });
+    // dialogRef.afterClosed().pipe(takeUntil(this.signal$)).subscribe((result) => {
+    //   if(result!=undefined){
+
+    //     this.PreProcesoPagoOrganicoAlumno(result);
+    //   }
+    // });
   }
+
   PreProcesoPagoOrganicoAlumno(tarjeta:any){
 
     const dialogRef =this.dialog.open(ChargeComponent,{
@@ -391,11 +425,14 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
     this.jsonEnvioPago.Inicio=tarjeta.inicio;
     this.jsonEnvioPago.Version=tarjeta.version;
     this.jsonEnvioPago.Tipo=tarjeta.tipo;
+    this.jsonEnvioPago.IdBusqueda=this.idBusqueda
     //this.jsonEnvioPago.TipoProveedor=;
     this.jsonEnvioPago.WebMoneda=tarjeta.webMoneda;
     var token=this._SessionStorageService.validateTokken();
     if(token){
-      this._FormaPagoService.PreProcesoPagoOrganicoAlumno(this.jsonEnvioPago,dialogRef);
+      //this._FormaPagoService.PreProcesoPagoOrganicoAlumno(this.jsonEnvioPago,dialogRef);
+//miguel pagos
+      this._FormaPagoService.PreProcesoPagoOrganicoAlumno2(this.jsonEnvioPago,dialogRef);
       this._SessionStorageService.SessionSetValue('urlRedireccionErrorPago',JSON.stringify(this.rutaProgramaDetalle));
 
     }else{
@@ -521,9 +558,7 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
            // this._router.navigate(['/'+this.removeAccents(x.programaCabeceraDetalleDTO.areaCapacitacion)+'/'+x.programaCabeceraDetalleDTO.direccion]);
           }
         },
-        error: (e) => {
-          this._router.navigate(['error404']);
-        },
+
       });
 
   }
@@ -889,6 +924,7 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
       this.formularioContacto.IdPais=datos.idPais;
       this.formularioContacto.IdRegion=datos.idRegion;
       this.formularioContacto.Movil=datos.movil;
+      this.formularioContacto.IdLocalidad=datos.idLocalidad;
       if(this.formularioContacto.IdPais!=undefined){
         this.GetRegionesPorPais(this.formularioContacto.IdPais);
       }
@@ -942,6 +978,7 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
             this.datos.email = this.DatosEnvioFormulario.Correo1;
             this.datos.idPais = this.DatosEnvioFormulario.IdPais;
             this.datos.idRegion = this.DatosEnvioFormulario.IdRegion;
+            this.datos.idLocalidad = value.IdLocalidad;
             this.datos.movil = this.DatosEnvioFormulario.Movil;
             var DatosFormulario = this._SessionStorageService.SessionGetValue('DatosFormulario');
             if(DatosFormulario!=''){
@@ -993,12 +1030,18 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
     this._DatosPortalService.ObtenerCombosPortal().pipe(takeUntil(this.signal$)).subscribe({
       next:(x)=>{
         console.log(x);
+        this.listaLocalidades = x.listaLocalida.map((p:any)=>String(p.codigo));
         this.fileds.forEach(r=>{
           if(r.nombre=='IdPais'){
-            r.data=x.listaPais.map((p:any)=>{
+            r.data,  r.filteredOptions =x.listaPais.map((p:any)=>{
               var ps:Basic={Nombre:p.pais,value:p.idPais};
               return ps;
             })
+            r.filteredOptionsAux=x.listaPais.map((p:any)=>{
+              var ps:Basic={Nombre:p.pais,value:p.idPais};
+              return ps;
+            })
+
           }
         })
       }
@@ -1006,25 +1049,80 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
     this.initValues = true;
   }
   GetRegionesPorPais(idPais:number){
+
     this._RegionService.ObtenerCiudadesPorPais(idPais).pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
         console.log(x)
         this.fileds.forEach(r=>{
           if(r.nombre=='IdRegion'){
             r.disable=false;
-            r.data=x.map((p:any)=>{
+            r.data, r.filteredOptions=x.map((p:any)=>{
+              var ps:Basic={Nombre:p.nombreCiudad,value:p.idCiudad};
+              return ps;
+            })
+            r.filteredOptionsAux=x.map((p:any)=>{
               var ps:Basic={Nombre:p.nombreCiudad,value:p.idCiudad};
               return ps;
             })
           }
+          // if(r.nombre=='IdLocalidad'){
+          //   r.disable=true;
+          //   r.hidden=true;
+          // }
         })
         this.form.enablefield('IdRegion');
       }
     })
   }
+  GetLocalidadesPorRegion(idRegion:number){
+    this._RegionService.ObtenerLocalidadPorRegion(idRegion).pipe(takeUntil(this.signal$)).subscribe({
+      next:x=>{
+        if (x.length != 0 && x != undefined && x !=null ) {
+
+          this.fileds.forEach(r=>{
+            if(r.nombre=='IdLocalidad'){
+              r.disable=false;
+              r.hidden=false;
+              r.data, r.filteredOptions=x.map((p:any)=>{
+                var ps:Basic={Nombre:p.nombreLocalidad,value:p.codigo,longitudCelular:p.longitudCelular};
+                return ps;
+              })
+              r.filteredOptionsAux=x.map((p:any)=>{
+                var ps:Basic={Nombre:p.nombreLocalidad,value:p.codigo,longitudCelular:p.longitudCelular};
+                return ps;
+              })
+              r.validate=[Validators.required];
+            }
+          })
+          this.form.enablefield('IdLocalidad');
+        }
+        else{
+          this.fileds.forEach(r=>{
+            if(r.nombre=='IdLocalidad'){
+              r.disable=true;
+              r.hidden=true;
+              r.validate=[];
+            }
+          })
+
+        }
+      }
+    })
+  }
   SelectChage(e:any){
     if(e.Nombre=="IdPais"){
+      this.formularioContacto.IdRegion=undefined
+      this.formularioContacto.IdLocalidad=undefined
+
+      if(e.value!=52){
+        this.fileds.filter(x=>x.nombre=='IdLocalidad')[0].hidden=true;
+        this.fileds.filter(x=>x.nombre=='IdLocalidad')[0].valorInicial = '';
+      }
       this.GetRegionesPorPais(e.value)
+    }
+    if(e.Nombre=='IdRegion'){
+      this.formularioContacto.IdLocalidad=undefined
+      this.GetLocalidadesPorRegion(e.value)
     }
   }
   AddFields() {
@@ -1065,6 +1163,15 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
       validate: [Validators.required],
       disable: true,
       label: 'Región',
+    });
+    this.fileds.push({
+      nombre: 'IdLocalidad',
+      tipo: 'select',
+      valorInicial: '',
+      validate: [],
+      disable: true,
+      hidden:true,
+      label: 'Localidad',
     });
     this.fileds.push({
       nombre:"Movil",

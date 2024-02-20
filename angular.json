@@ -47,7 +47,9 @@
               "src/assets/librerias/openpay.v1.min.js",
               "src/assets/librerias/openpay-data.v1.min.js",
               "src/assets/librerias/openpay-colombia.v1.min.js",
-              "src/assets/librerias/openpay-colombia-data.v1.min.js"
+              "src/assets/librerias/openpay-colombia-data.v1.min.js",
+              "src/assets/librerias/openpay-peru.v1.min.js",
+              "src/assets/librerias/openpay-peru-data.v1.min.js"
             ]
           },
           "configurations": {
@@ -55,13 +57,13 @@
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "3mb",
-                  "maximumError": "3mb"
+                  "maximumWarning": "5mb",
+                  "maximumError": "5mb"
                 },
                 {
                   "type": "anyComponentStyle",
-                  "maximumWarning": "15kb",
-                  "maximumError": "15kb"
+                  "maximumWarning": "30kb",
+                  "maximumError": "30kb"
                 }
               ],
               "fileReplacements": [
@@ -134,7 +136,9 @@
               "src/assets/librerias/openpay.v1.min.js",
               "src/assets/librerias/openpay-data.v1.min.js",
               "src/assets/librerias/openpay-colombia.v1.min.js",
-              "src/assets/librerias/openpay-colombia-data.v1.min.js"
+              "src/assets/librerias/openpay-colombia-data.v1.min.js",
+              "src/assets/librerias/openpay-peru.v1.min.js",
+              "src/assets/librerias/openpay-peru-data.v1.min.js"
             ]
           }
         },

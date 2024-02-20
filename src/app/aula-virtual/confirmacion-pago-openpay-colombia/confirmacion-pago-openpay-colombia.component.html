@@ -1,7 +1,13 @@
+
 <div class="container">
     <div class="row rowpaddAv">
       <div class="col-12 row" *ngIf="resultCard!=undefined">
-        <div class="col-12 col-md-12 col-lg-12 titlePagoTarjeta">Confirma tu compra</div>
+        <div class="col-12 col-md-12 col-lg-12 titlePagoTarjeta">
+          <div class="row" style="align-items: end;">
+            <div class="col-md-6" >Confirma tu compra</div>
+            <div class="col-md-6" style="padding-right: 60px;"> <div class="logo-openpay"></div></div>
+          </div>
+        </div>
         <div class="col-12 d-md-none d-lg-none" >
           <div class="resumenPagoTarjeta" style="padding: 0px">
             <div class="titleResumenPago">Resumen de tu pago</div>
@@ -36,7 +42,7 @@
         </div>
         <div class="col-12 col-md-6 col-lg-6 inputPagoVisa row">
           <div class="subtitlePagoVisa">Ingresa los datos de tu tarjeta de crédito o débito {{resultCard.medioPago | capitalice}}</div>
-          <form id="fomrOpenPAy" class="row">
+          <form id="fomrOpenPAy" class="row">  
             <ng-container *ngIf="resultCard.idPasarelaPago==1 && resultCard.idFormaPago==65">
   
               <mat-form-field  class="col-12" appearance="outline" style="width: 100%;">
@@ -82,32 +88,27 @@
               </mat-form-field>
             </ng-container>
             <mat-form-field class="col-12" appearance="outline" [floatLabel]="'always'" style="width: 100%;">
-              <mat-label>Documento de Identidad</mat-label>
-              <input type="text"  placeholder="N° de Documento" [ngModelOptions]="{standalone: true}"
-              [(ngModel)]="jsonSave.TarjetaHabiente.NumeroDocumento" matInput >
+              <mat-label>Nombres :</mat-label>
+              <input type="text" placeholder="Número de tarjeta" [ngModelOptions]="{standalone: true}"
+              [(ngModel)]="resultCard.registroAlumno.nombre" matInput [readonly]="true">
             </mat-form-field>
-  
-            <ng-container *ngIf="resultCard.idPasarelaPago!=1 || resultCard.idFormaPago!=65">
-              <mat-form-field class="col-12" appearance="outline" [floatLabel]="'always'" style="width: 100%;">
-                <mat-label>Número de tarjeta</mat-label>
-                <input type="text" placeholder="Número de tarjeta" [ngModelOptions]="{standalone: true}"
-                [(ngModel)]="NumberT" matInput appInputCard>
-              </mat-form-field>
               <div class="col-6 col-md-6 col-lg-6">
   
-                <mat-form-field  appearance="outline" [floatLabel]="'always'" style="width: 100%;">
-                  <mat-label>Fecha de vencimiento MM/AA</mat-label>
-                  <input type="text" placeholder="MM/AA" [ngModelOptions]="{standalone: true}"
-                  [(ngModel)]="jsonSave.TarjetaHabiente.fecha" matInput appInputCardFecha>
-                </mat-form-field>
-              </div>
-  
-              <div class="col-6 col-md-6 col-lg-6">
-                <mat-form-field appearance="outline" [floatLabel]="'always'" style="width: 100%;">
-                  <mat-label>CVV</mat-label>
-                  <input type="text" placeholder="CVV" [ngModelOptions]="{standalone: true}"
-                  [(ngModel)]="jsonSave.TarjetaHabiente.CodigoVV" matInput [maxLength]="4">
-                </mat-form-field>
+            <mat-form-field  appearance="outline" [floatLabel]="'always'" style="width: 100%;">
+                <mat-label>Apellidos :</mat-label>
+                <input type="text" [ngModelOptions]="{standalone: true}"
+                [(ngModel)]="resultCard.registroAlumno.apellido" matInput [readonly]="true">
+            </mat-form-field>
+            <mat-form-field  appearance="outline" [floatLabel]="'always'" style="width: 100%;">
+                <mat-label>Correo :</mat-label>
+                <input type="text" [ngModelOptions]="{standalone: true}"
+                [(ngModel)]="resultCard.registroAlumno.correo" matInput [readonly]="true">
+            </mat-form-field>
+            <mat-form-field  appearance="outline" [floatLabel]="'always'" style="width: 100%;">
+                <mat-label>Nro. Documento :</mat-label>
+                <input type="text" [ngModelOptions]="{standalone: true}"
+                [(ngModel)]="resultCard.registroAlumno.numeroDocumento" matInput [readonly]="true">
+            </mat-form-field>
               </div>
             </ng-container>
   
@@ -141,8 +142,15 @@
             </div>
             <div class="col-12 row" style="justify-content: center;">
               <div class="col-12 col-md-10 col-lg-10">
-                <app-default-button [confs]="{color:'primary',titulo:'Pagar ahora'}"
-                  [style]="'margin-top: 20px;margin-bottom: 0px;width:100%'" (ButtoclClick)="ValidateSave()"></app-default-button>
+                <ng-container *ngIf="resultCard.medioPago!='Pse' else pseBTN">
+                  <app-default-button [confs]="{color:'primary',titulo:'Pagar ahora'}"
+                  [style]="'margin-top: 20px;margin-bottom: 0px;width:100%'" (ButtoclClick)="Pagar()"></app-default-button>
+                </ng-container >
+                  <ng-template #pseBTN>
+                    <app-default-button [confs]="{color:'primary',titulo:'Ir a pagar con PSE'}"
+                    [style]="'margin-top: 20px;margin-bottom: 0px;width:100%'" (ButtoclClick)="redireccionarPSE()"></app-default-button>
+                  </ng-template>
+                  
               </div>
             </div>
           </form>

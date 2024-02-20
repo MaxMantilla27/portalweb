@@ -28,11 +28,19 @@ export class HelperService {
   private msjAcciones=new Subject<any>();
   private msjAccionesForm=new Subject<any>();
   private msjChat=new Subject<SetChat>();
+  private msjObtenerUsuario=new ReplaySubject<any>();
   private ActivarTipoExamen=new Subject<number>();
   private OcultarTodo=new Subject<void>();
   private ActivarTrabajoTipoExamenCarrera=new Subject<number>();
 
 
+  enviarmsjObtenerUsuario(data:any):void {
+    console.log(data)
+    this.msjObtenerUsuario.next(data);
+  }
+  public get recibirmsjObtenerUsuario(): Observable<any> {
+    return this.msjObtenerUsuario.asObservable();
+  }
   enviarOcultar():void {
     this.OcultarTodo.next();
   }

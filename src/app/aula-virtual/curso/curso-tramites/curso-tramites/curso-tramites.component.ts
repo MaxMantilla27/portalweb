@@ -169,6 +169,18 @@ export class CursoTramitesComponent implements OnInit,OnDestroy {
           if(parseInt(tarjeta.idPasarelaPago)==6){
             this._router.navigate(['/AulaVirtual/MisPagos/'+this.IdMatricula+'/conekta/'+sesion]);
           }
+          if(parseInt(tarjeta.idPasarelaPago)==11){
+            this._router.navigate(['/AulaVirtual/MisPagos/'+this.IdMatricula+'/webpay/'+sesion]);
+          }
+          if(parseInt(tarjeta.idPasarelaPago)==13){
+            this._router.navigate(['/AulaVirtual/MisPagos/'+this.IdMatricula+'/izipay/'+sesion]);
+          }
+          if(parseInt(tarjeta.idPasarelaPago)==16){
+            //this._router.navigate(['/AulaVirtual/MisPagos/'+this.IdMatricula+'/openpayCOP/'+sesion]);
+          }
+          if(parseInt(tarjeta.idPasarelaPago)==17){//Mercado Pago
+            this._router.navigate(['/AulaVirtual/MisPagos/'+this.IdMatricula+'/mercadoPago/'+sesion]);
+          }
           if(parseInt(tarjeta.idPasarelaPago)==3){}
           if(parseInt(tarjeta.idPasarelaPago)==4){}
         }

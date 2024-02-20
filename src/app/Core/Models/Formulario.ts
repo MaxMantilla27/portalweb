@@ -13,5 +13,8 @@ export interface formulario
   disable?:boolean,
   class?:string,
   focus?:boolean,
-  error?:string
+  error?:string,
+  hidden?:boolean,
+  filteredOptions?: any,
+  filteredOptionsAux?: any,
 }

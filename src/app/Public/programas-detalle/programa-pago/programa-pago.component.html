@@ -1,85 +1,85 @@
-<div style="display: flex;justify-content: center;">
-  <div style="width: 55rem;">
-    <div class="headerPagoOrganico" >
-      <div style="width: 100% ; text-align: right; padding: 5px;height: 30px;margin: 0px;">
-        <div class="botonCerrarModalPago" (click)="dialogRef.close()">
-          X
+  <div style="display: flex;justify-content: center;">
+    <div style="width: 55rem;">
+      <div class="headerPagoOrganico" >
+        <div style="width: 100% ; text-align: right; padding: 5px;height: 30px;margin: 0px;">
+          <div class="botonCerrarModalPago" (click)="dialogRef.close()">
+            X
+          </div>
+        </div>
+        <h2> {{data.nombre}} </h2>
+        <p>{{data.alumno}} Selecciona los siguientes campos para realizar tu compra</p>
+      </div>
+      <div class=" row" style="margin: 0px; padding: 30px;align-items: center;justify-content: center;background: white;border-radius: 0px 0px 20px 20px;">
+        <div class="col-2 col-md-1 col-lg-1" style="display: flex;justify-content: center;padding: 0px;">
+          <div class="numberInput" [ngClass]="{'numberImputActive':idPEspecifico>0}">1</div>
+        </div>
+        <div class="col-10 col-md-10 col-lg-10 contentOrganico">
+          <mat-form-field appearance="outline" (click)="EventoInteraccionSelectClick('Selecciona la modalidad')">
+            <mat-label> < Selecciona la modalidad ></mat-label>
+            <mat-select  [(ngModel)]="idPEspecifico">
+              <mat-option
+              (click)="EventoInteraccionSelect('Selecciona la modalidad',item.tipo+' - '+item.fechaInicioTexto)" *ngFor="let item of data.modalidad"
+              [value]="item.id">{{item.tipo}} - {{item.fechaInicioTexto}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="col-12"></div>
+        <div class="col-2 col-md-1 col-lg-1" style="display: flex;justify-content: center;padding: 0px;">
+          <div class="numberInput" [ngClass]="{'numberImputActive':idFormaPago>-1}">2</div>
+        </div>
+        <div class="col-10 col-md-10 col-lg-10 contentOrganico">
+          <mat-form-field appearance="outline" (click)="EventoInteraccionSelectClick('Selecciona tu forma de pago')">
+            <mat-label>< Selecciona tu forma de pago ></mat-label>
+            <mat-select (selectionChange)="changeForma()" [(ngModel)]="idFormaPago">
+              <mat-option *ngFor="let item of formapago;let i=index"  [value]="i" >
+
+                <ng-container *ngIf="item.paquete==1">
+                  Versión Basica,
+                </ng-container>
+                <ng-container *ngIf="item.paquete==2">
+                  Versión Profesional,
+                </ng-container>
+                <ng-container *ngIf="item.paquete==3">
+                  Versión Gerencial,
+                </ng-container>
+                <ng-container *ngIf="item.idTipoPago==1">
+                  al Contado: {{item.simbolo}} {{item.cuotas}}
+                </ng-container>
+                <ng-container *ngIf="item.idTipoPago==2">
+                  pago en 1 matricula de
+                  {{item.simbolo}} {{item.matricula}}
+                  y {{item.nroCuotas}} cuotas mensuales de {{item.simbolo}} {{item.cuotas}}
+                </ng-container>
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+
+        <div class="col-12"></div>
+        <div class="col-2 col-md-1 col-lg-1" style="display: flex;justify-content: center;padding: 0px;">
+          <div class="numberInput" [ngClass]="{'numberImputActive':medioCodigo!=''}">3</div>
+        </div>
+        <div class="col-10 col-md-10 col-lg-10 contentOrganico">
+          <mat-form-field appearance="outline" (click)="EventoInteraccionSelectClick('Selecciona tu metodo de pago')">
+            <mat-label> < Selecciona tu metodo de pago > </mat-label>
+            <mat-select (selectionChange)="change()" [(ngModel)]="medioCodigo">
+              <mat-select-trigger>
+                <div style="display: flex;
+                justify-content: space-between;
+                align-items: center;" *ngIf="medioCodigo.length>0">
+                  <div>{{medioPago}} </div>
+                  <img [src]="'../../../../assets/icons/'+imgMedioPago" alt="Medio de Pago" style="width: 20px;margin-right: 10px;">
+                </div>
+
+              </mat-select-trigger>
+              <mat-option *ngFor="let item of tarjetas"  [value]="item.medioCodigo">{{item.medioPago}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="col-12" style="display: flex;justify-content: center;" *ngIf="medioCodigo!='' && idPEspecifico>0 && idFormaPago>-1"  >
+          <app-default-button  [confs]="{color:'primary',titulo:'Ir a pagar'}" [style]="'padding: 0px 40px;'" (ButtoclClick)="EventoInteraccion();Pagar()"></app-default-button>
         </div>
       </div>
-      <h2> {{data.nombre}} </h2>
-      <p>{{data.alumno}} Selecciona los siguientes campos para realizar tu compra</p>
+
     </div>
-    <div class=" row" style="margin: 0px; padding: 30px;align-items: center;justify-content: center;background: white;border-radius: 0px 0px 20px 20px;">
-      <div class="col-2 col-md-1 col-lg-1" style="display: flex;justify-content: center;padding: 0px;">
-        <div class="numberInput" [ngClass]="{'numberImputActive':idPEspecifico>0}">1</div>
-      </div>
-      <div class="col-10 col-md-10 col-lg-10 contentOrganico">
-        <mat-form-field appearance="outline" (click)="EventoInteraccionSelectClick('Selecciona la modalidad')">
-          <mat-label> < Selecciona la modalidad ></mat-label>
-          <mat-select  [(ngModel)]="idPEspecifico">
-            <mat-option
-            (click)="EventoInteraccionSelect('Selecciona la modalidad',item.tipo+' - '+item.fechaInicioTexto)" *ngFor="let item of data.modalidad"
-            [value]="item.id">{{item.tipo}} - {{item.fechaInicioTexto}}</mat-option>
-          </mat-select>
-        </mat-form-field>
-      </div>
-      <div class="col-12"></div>
-      <div class="col-2 col-md-1 col-lg-1" style="display: flex;justify-content: center;padding: 0px;">
-        <div class="numberInput" [ngClass]="{'numberImputActive':idFormaPago>-1}">2</div>
-      </div>
-      <div class="col-10 col-md-10 col-lg-10 contentOrganico">
-        <mat-form-field appearance="outline" (click)="EventoInteraccionSelectClick('Selecciona tu forma de pago')">
-          <mat-label>< Selecciona tu forma de pago ></mat-label>
-          <mat-select (selectionChange)="changeForma()" [(ngModel)]="idFormaPago">
-            <mat-option *ngFor="let item of formapago;let i=index"  [value]="i" >
-
-              <ng-container *ngIf="item.paquete==1">
-                Versión Basica,
-              </ng-container>
-              <ng-container *ngIf="item.paquete==2">
-                Versión Profesional,
-              </ng-container>
-              <ng-container *ngIf="item.paquete==3">
-                Versión Gerencial,
-              </ng-container>
-              <ng-container *ngIf="item.idTipoPago==1">
-                al Contado: {{item.simbolo}} {{item.cuotas}}
-              </ng-container>
-              <ng-container *ngIf="item.idTipoPago==2">
-                pago en 1 matricula de
-                {{item.simbolo}} {{item.matricula}}
-                y {{item.nroCuotas}} cuotas mensuales de {{item.simbolo}} {{item.cuotas}}
-              </ng-container>
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
-      </div>
-
-      <div class="col-12"></div>
-      <div class="col-2 col-md-1 col-lg-1" style="display: flex;justify-content: center;padding: 0px;">
-        <div class="numberInput" [ngClass]="{'numberImputActive':medioCodigo!=''}">3</div>
-      </div>
-      <div class="col-10 col-md-10 col-lg-10 contentOrganico">
-        <mat-form-field appearance="outline" (click)="EventoInteraccionSelectClick('Selecciona tu metodo de pago')">
-          <mat-label> < Selecciona tu metodo de pago > </mat-label>
-          <mat-select (selectionChange)="change()" [(ngModel)]="medioCodigo">
-            <mat-select-trigger>
-              <div style="display: flex;
-              justify-content: space-between;
-              align-items: center;" *ngIf="medioCodigo.length>0">
-                <div>{{medioPago}} </div>
-                <img [src]="'../../../../assets/icons/'+imgMedioPago" alt="Medio de Pago" style="width: 20px;margin-right: 10px;">
-              </div>
-
-            </mat-select-trigger>
-            <mat-option *ngFor="let item of tarjetas"  [value]="item.medioCodigo">{{item.medioPago}}</mat-option>
-          </mat-select>
-        </mat-form-field>
-      </div>
-      <div class="col-12" style="display: flex;justify-content: center;" *ngIf="medioCodigo!='' && idPEspecifico>0 && idFormaPago>-1"  >
-        <app-default-button  [confs]="{color:'primary',titulo:'Ir a pagar'}" [style]="'padding: 0px 40px;'" (ButtoclClick)="EventoInteraccion();Pagar()"></app-default-button>
-      </div>
-    </div>
-
   </div>
-</div>

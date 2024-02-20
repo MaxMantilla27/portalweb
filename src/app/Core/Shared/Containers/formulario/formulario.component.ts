@@ -9,6 +9,7 @@ import {
   OnChanges,
   OnDestroy,
   OnInit,
+  Renderer2,
   Output,
   PLATFORM_ID,
   SimpleChanges,
@@ -22,6 +23,7 @@ import { formulario } from 'src/app/Core/Models/Formulario';
 import { InteraccionFormularioCampoDTO } from 'src/app/Core/Models/Interacciones';
 import { HelperService } from '../../Services/helper.service';
 import { SessionStorageService } from '../../Services/session-storage.service';
+import { SnackBarServiceService } from '../../Services/SnackBarService/snack-bar-service.service';
 
 @Component({
   selector: 'app-formulario',
@@ -33,12 +35,16 @@ export class FormularioComponent implements OnChanges, OnInit,OnDestroy {
   private signal$ = new Subject();
   @ViewChild('f') myNgForm: any;
   isBrowser: boolean;
+
   public changeValidation=false;
   constructor(
     private formBuilder: FormBuilder,
     @Inject(PLATFORM_ID) platformId: Object,
     private _HelperService:HelperService,
-    private _SessionStorageService:SessionStorageService
+    private _SessionStorageService:SessionStorageService,
+    private renderer: Renderer2,
+    private _SnackBarServiceService: SnackBarServiceService,
+
 
   ) {
     this.isBrowser = isPlatformBrowser(platformId);
@@ -67,6 +73,8 @@ export class FormularioComponent implements OnChanges, OnInit,OnDestroy {
   model!: object;
 
   @Input()
+  ListaLocalidades?: any;
+  @Input()
   InputsDisable!: boolean;
 
   @Input()
@@ -89,7 +97,9 @@ export class FormularioComponent implements OnChanges, OnInit,OnDestroy {
 
   @Output()
   OnSelect: EventEmitter<Basic> = new EventEmitter<Basic>();
-
+  @ViewChild('inputField') inputField!: ElementRef;
+  @ViewChild('inputFieldRegion') inputFieldRegion!: ElementRef;
+  @ViewChild('inputFieldLocalidad') inputFieldLocalidad!: ElementRef;
   public paise:Array<any>=[]
   public paisSelect=0;
   public pref=''
@@ -110,6 +120,8 @@ export class FormularioComponent implements OnChanges, OnInit,OnDestroy {
     IdInteraccionPortalV2:0,
     Nombre:''
   }
+  public flagLocalidadError = false;
+  public localidadAux:any = '';
   ngOnInit(): void {
     this._HelperService.recibirDataPais.pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
@@ -117,7 +129,12 @@ export class FormularioComponent implements OnChanges, OnInit,OnDestroy {
         if(this.paise.length==0){
           this.paise=x;
           var codigoISo=this._SessionStorageService.SessionGetValue('ISO_PAIS');
-          this.paisSelect=this.paise.find(x=>x.codigoIso==codigoISo).idPais;
+
+          //this.paisSelect=this.paise.find(x=>x.codigoIso==codigoISo).idPais;
+          var storageAlumno = this._SessionStorageService.SessionGetValue('DatosFormulario');
+          if (storageAlumno == undefined || storageAlumno == null || storageAlumno == '') {
+            this.paisSelect=this.paise.find(x=>x.codigoIso==codigoISo).idPais;
+          }
           var index=0
           this.fiels.forEach((f:any) =>{
             if(f.tipo=='phone' && this.userForm){
@@ -130,9 +147,69 @@ export class FormularioComponent implements OnChanges, OnInit,OnDestroy {
                 this.OnSelect.emit({Nombre:f.nombre,value:this.paisSelect})
               }
             }
+
             index++
           })
         }
+        ////
+
+        if (this.userForm == undefined){
+          if (this.isBrowser) {
+            let interval = setInterval(() => {
+              if (this.userForm != undefined) {
+                console.log(x)
+               // if(this.paise.length==0){
+                this.paise=x;
+                var codigoISo=this._SessionStorageService.SessionGetValue('ISO_PAIS');
+                //this.paisSelect=this.paise.find(x=>x.codigoIso==codigoISo).idPais;
+                var storageAlumno = this._SessionStorageService.SessionGetValue('DatosFormulario');
+                if (storageAlumno == undefined || storageAlumno == null || storageAlumno == '') {
+                  this.paisSelect=this.paise.find(x=>x.codigoIso==codigoISo).idPais;
+                }
+                var index=0
+                this.fiels.forEach((f:any) =>{
+                  if(f.tipo=='phone' && this.userForm){
+                    this.validatePais(index,f.nombre)
+                  }
+                  if(f.nombre.toLowerCase()=='idpais' && this.userForm){
+                    let campo = (<FormArray>this.userForm.get('Fields')).controls[index].get(f.nombre);
+                    if(campo?.value!=undefined){
+                      campo?.setValue(this.paisSelect);
+                      this.OnSelect.emit({Nombre:f.nombre,value:this.paisSelect})
+                    }
+                  }
+                  this.OnValid.emit(this.userForm.valid);
+                  if (this.localidadAux != '' && this.localidadAux != undefined) {
+                    const fieldsArray = (this.userForm.get('Fields') as FormArray).controls;
+                    const mobileIndex = fieldsArray.findIndex((element: any) => Object.keys(element?.value)[0] === 'Movil');
+                    if (mobileIndex != -1){
+                      (<FormArray>this.userForm.get('Fields')).controls[mobileIndex].get("Movil")?.setValue(this.pref+this.localidadAux);
+                    }
+
+
+                  }
+                  const fieldsArrayPais = (this.userForm.get('Fields') as FormArray).controls;
+                  const mobileIndexPais = fieldsArrayPais.findIndex((element: any) => Object.keys(element?.value)[0] === 'IdPais');
+                  if (mobileIndexPais != -1){
+                    (<FormArray>this.userForm.get('Fields')).controls[mobileIndexPais].get("IdPais")?.setValue(this.paisSelect);
+                  }
+                  index++
+                })
+
+                console.log('usuario formulario carga aqui',this.userForm)
+
+              }
+              clearInterval(interval);
+            }, 1000);
+
+          }
+        }
+
+
+
+
+
+        ////////7
       }
     })
     if(this.isBrowser){
@@ -169,6 +246,20 @@ export class FormularioComponent implements OnChanges, OnInit,OnDestroy {
       index++;
     });
     this.OnValid.emit(this.userForm.valid);
+    if (this.localidadAux != '' && this.localidadAux != undefined) {
+      const fieldsArray = (this.userForm.get('Fields') as FormArray).controls;
+      const mobileIndex = fieldsArray.findIndex((element: any) => Object.keys(element?.value)[0] === 'Movil');
+      if (mobileIndex != -1){
+        (<FormArray>this.userForm.get('Fields')).controls[mobileIndex].get("Movil")?.setValue(this.pref+this.localidadAux);
+      }
+
+
+    }
+    const fieldsArrayPais = (this.userForm.get('Fields') as FormArray).controls;
+    const mobileIndexPais = fieldsArrayPais.findIndex((element: any) => Object.keys(element?.value)[0] === 'IdPais');
+    if (mobileIndexPais != -1){
+      (<FormArray>this.userForm.get('Fields')).controls[mobileIndexPais].get("IdPais")?.setValue(this.paisSelect);
+    }
   }
   changeForm(){
     if(this.userForm!=undefined){
@@ -220,8 +311,21 @@ export class FormularioComponent implements OnChanges, OnInit,OnDestroy {
     let fild = this.fiels.find((x) => x.nombre === nombre);
     if (fild != undefined) {
       let index = this.fiels.indexOf(fild);
-
-      this.fiels[index].valorInicial = value;
+      if(nombre == 'IdPais'){
+        this.paisSelect = Number(value) == undefined ? this.paisSelect : Number(value);
+        this.fiels[index].valorInicial = this.paisSelect;
+      }
+      else if (nombre == "IdLocalidad" && value != undefined){
+        this.localidadAux = value;
+      }
+        if(fild.tipo=='select'){
+        this.fiels[index].valorInicial = value;
+        this.OnSelect.emit({Nombre:nombre,value:value});
+      }
+      else{
+        this.fiels[index].valorInicial = value;
+      }
+      //this.fiels[index].valorInicial = value;
     } else {
       this.fiels.splice(index, 0, {
         nombre: nombre,
@@ -234,6 +338,7 @@ export class FormularioComponent implements OnChanges, OnInit,OnDestroy {
   }
   EnviarCambios() {
     let obj: any = {};
+    let aux;
     for (let i = 0; i < (<FormArray>this.userForm.get('Fields')).length; i++) {
       const element = (<FormArray>this.userForm.get('Fields')).at(i);
       let clave = Object.keys(element.value);
@@ -246,6 +351,17 @@ export class FormularioComponent implements OnChanges, OnInit,OnDestroy {
               if(f.tipo=='phone' && f.nombre.toLowerCase()==key.toLowerCase()){
                 value = element.value[clave[0]].split(this.pref)[element.value[clave[0]].split(this.pref).length-1];
                 obj[key] = value;
+                aux= this.validadorPrefijo(this.pref, value);
+                console.log("Valor del aux ",aux);
+                if(aux!=''){
+                  this._SnackBarServiceService.openSnackBar(
+                    'El numero Ingresado no existe, Código LADA incorrecto.',
+                    'x',
+                    10,
+                    'snackbarCrucigramaerror'
+                  );
+                  return;
+                }
               }
             })
           }
@@ -253,13 +369,19 @@ export class FormularioComponent implements OnChanges, OnInit,OnDestroy {
       });
     }
     this.model = obj;
-    this.OnSubmit.emit(this.model);
-    if(this.CleanOnSubmit==true){
-      //this.userForm.reset();
+
+    const fieldsArrayPais = (this.userForm.get('Fields') as FormArray).controls;
+    const mobileIndexLocalidad = fieldsArrayPais.findIndex((element: any) => Object.keys(element?.value)[0] === 'IdLocalidad');
+    if(aux=='' || aux==undefined){
+      this.OnSubmit.emit(this.model);
+      if(this.CleanOnSubmit==true){
+        //this.userForm.reset();
+      }
+      if(this.Interaccion!=undefined){
+        this.EnvioInteraccion(true);
+      }
     }
-    if(this.Interaccion!=undefined){
-      this.EnvioInteraccion(true);
-    }
+
   }
   ClickIntoForm(){
     if(this.interval==undefined){
@@ -415,9 +537,13 @@ export class FormularioComponent implements OnChanges, OnInit,OnDestroy {
     var c=(<FormArray>this.userForm.get('Fields')).controls[i].get(val)?.value;
     var campo =c==null?'':c.toString();
     var s=campo.split(' ');
+    if(s.length ==1){
+      s.push(' ')
+    }
 
     this.pref=this.PrefPaises()==null?'':this.PrefPaises()+' ';
     this.min=this.LongCelularPaises()==null?0:this.LongCelularPaises();
+    // (<FormArray>this.userForm.get('Fields')).controls[i].get(val)?.setValue(this.pref);
     (<FormArray>this.userForm.get('Fields')).controls[i].get(val)?.setValue(this.pref+s.slice(1));
     (<FormArray>this.userForm.get('Fields')).controls[i].get(val)?.clearValidators();
     if(this.min>0){
@@ -444,6 +570,9 @@ export class FormularioComponent implements OnChanges, OnInit,OnDestroy {
       this.OnValid.emit(false);
     }
     (<FormArray>this.userForm.get('Fields')).controls[i].get(val)?.setValue(this.pref+(s.length>1?s[1]:''));
+    // (<FormArray>this.userForm.get('Fields')).controls[i].get(val)?.setValue(this.pref);
+    //(<FormArray>this.userForm.get('Fields')).controls[i].get(val)?.setValue(this.pref+(s.length>1?s[1]:''));
+
   }
   LongCelularPaises():number{
     if(this.paise.find(x=>x.idPais==this.paisSelect)!=undefined){
@@ -466,6 +595,11 @@ export class FormularioComponent implements OnChanges, OnInit,OnDestroy {
   ChangeInpiut(i: number, val: string){
     var campo = (<FormArray>this.userForm.get('Fields')).controls[i].get(val)?.value.toString();
     var s =campo.split(' ')
+    if(s.length ==1){
+      s.push(' ')
+    }
+    console.log(s)
+    this.validadorPrefijo(s[0],s[1]);
     if(this.PrefPaises()!=null){
       if(s[0]!=this.PrefPaises()){
         if(s[0].length>this.PrefPaises().length){
@@ -482,9 +616,97 @@ export class FormularioComponent implements OnChanges, OnInit,OnDestroy {
         console.log(3)
       }else{
         (<FormArray>this.userForm.get('Fields')).controls[i].get(val)?.setValue(
-            s[0].slice(0,this.PrefPaises().length)+' '+s[1].trim()
+            s[0].slice(0,this.PrefPaises().length)+' '+s[1].replace(/\D/g, '').trim()
         );
       }
     }
+  }
+  changeselectForm(nombre:any, value:any){
+    this.OnSelect.emit({Nombre:nombre,value:value});
+    if (nombre == 'IdPais') {
+      if(this.paisSelect !=52){
+        this.flagLocalidadError= false;
+      }
+      this.paisSelect = value;
+      /*Se encuentra el index del campo movil*/
+      const fieldsArray = (this.userForm.get('Fields') as FormArray).controls;
+      const mobileIndex = fieldsArray.findIndex((element: any) => Object.keys(element?.value)[0] === 'Movil');
+      const RegionIndex = fieldsArray.findIndex((element: any) => Object.keys(element?.value)[0] === 'IdRegion');
+      const LocalidadIndex = fieldsArray.findIndex((element: any) => Object.keys(element?.value)[0] === 'IdLocalidad');
+      this.validatePais(mobileIndex,'Movil');
+      (<FormArray>this.userForm.get('Fields')).controls[mobileIndex].get("Movil")?.setValue(this.pref);
+      (<FormArray>this.userForm.get('Fields')).controls[RegionIndex].get("IdRegion")?.setValue(undefined);
+      (<FormArray>this.userForm.get('Fields')).controls[LocalidadIndex].get("IdLocalidad")?.setValue(undefined);
+
+    }
+    if (nombre == 'IdLocalidad' && value != undefined) {
+      this.flagLocalidadError= false;
+      const fieldsArray = (this.userForm.get('Fields') as FormArray).controls;
+      const mobileIndex = fieldsArray.findIndex((element: any) => Object.keys(element?.value)[0] === 'Movil');
+      (<FormArray>this.userForm.get('Fields')).controls[mobileIndex].get("Movil")?.setValue(this.pref+value);
+      // console.log("Valor localidad ",value)
+    }
+    this.fiels.forEach((element: any) => {
+      if(element.nombre == nombre){
+        element.filteredOptions = element.filteredOptionsAux;
+      }
+    });
+  }
+  onOpenedChange(event:any, field:any) {
+    this.focusInput();
+  }
+  onSelectOpenedChange(field: any) {
+    if(field.nombre == 'IdPais'){
+      this.renderer.selectRootElement(this.inputField.nativeElement).focus();
+
+    }
+    if(field.nombre == 'IdRegion'){
+      this.renderer.selectRootElement(this.inputFieldRegion.nativeElement).focus();
+
+    }
+    if(field.nombre == 'IdLocalidad'){
+      this.renderer.selectRootElement(this.inputFieldLocalidad.nativeElement).focus();
+
+    }
+
+  }
+  onKey(evetn:any, field:any) {
+    const searchText = evetn.target.value == null ? '' : evetn.target.value.toLowerCase();
+    this.fiels.forEach((element: any) => {
+      if(element.nombre == field.nombre){
+        element.filteredOptions = field.filteredOptionsAux.filter((option:any) =>
+          option.Nombre.toLowerCase().includes(searchText)
+        );
+      }
+    });
+  }
+  focusInput() {
+    // if (this.inputField && this.inputField.nativeElement) {
+    //   this.renderer.selectRootElement(this.inputField.nativeElement).focus();
+    // }
+    this.renderer.selectRootElement(this.inputField.nativeElement).focus();
+
+  }
+  validadorPrefijo(codigoPais:string, nrocelular:string ){
+    codigoPais = codigoPais.trim();
+    if(codigoPais == '+52' && nrocelular.length >= 2){
+      const primerosDosDigitos = nrocelular.substring(0, 2);
+      const primerosTresDigitos = nrocelular.substring(0, 3);
+      if (
+        !this.ListaLocalidades?.includes(primerosDosDigitos) &&
+        !this.ListaLocalidades?.includes(primerosTresDigitos)
+      ) {
+        this.flagLocalidadError = true;
+        console.log("Error el prefijo no es valido");
+        return "Error la clave LADA no es valida"
+      }
+      else{
+        console.log("El prefijo es valido");
+        this.flagLocalidadError = false;
+        return ""
+      }
+
+    }
+    return ""
   }
 }

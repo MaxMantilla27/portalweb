@@ -114,12 +114,7 @@ export class ConfirmacionPagoMercadoPagoChileComponent implements OnInit {
       callbacks: {
         onReady: () => {
           setTimeout(() => {
-            const elementosConAlt = document.querySelectorAll('[alt="Tarjeta ingresada diners"]');
-            if (elementosConAlt.length > 0) {
-              elementosConAlt.forEach(elemento => {
-                elemento.remove();
-              });
-            } 
+            
             const divContenedorBTN = document.getElementsByClassName('button-container-gZzvB_');
             if(typeof(divContenedorBTN) != 'undefined' && divContenedorBTN != null && divContenedorBTN.length>0)
             divContenedorBTN[0].setAttribute("style",

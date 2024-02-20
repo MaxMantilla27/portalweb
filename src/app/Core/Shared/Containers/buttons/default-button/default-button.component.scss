@@ -63,3 +63,14 @@
       }
   }
 }
+
+.azulOscuro {
+  background-color: #2E475D;
+  color: white;
+  &:hover {
+      background-color: #2E475D;
+      div{
+        text-decoration: underline;
+      }
+  }
+}

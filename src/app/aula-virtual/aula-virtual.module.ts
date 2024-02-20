@@ -112,6 +112,26 @@ import { EvalComponent } from './eval/eval.component';
 import { ConfirmacionPagoMercadoPagoChileComponent } from './confirmacion-pago-mercado-pago-chile/confirmacion-pago-mercado-pago-chile.component';
 import { ResultadoPagoMercadopagoComponent } from './resultado-pago-mercadopago/resultado-pago-mercadopago.component';
 import { ConfirmacionPagoOpenpayColombiaComponent } from './confirmacion-pago-openpay-colombia/confirmacion-pago-openpay-colombia.component';
+import { PagoMercadoPagoComponent } from './confirmacion-pago-organico/pago-mercado-pago/pago-mercado-pago.component';
+import { ConfirmacionPagoOpenpayPeruComponent } from './confirmacion-pago-openpay-peru/confirmacion-pago-openpay-peru.component';
+import { ModalPagoVisaComponent } from './modal-confirmacion-pago/modal-pago-visa/modal-pago-visa.component';
+import { ModalPagoTarjetaComponent } from './modal-confirmacion-pago/modal-pago-tarjeta/modal-pago-tarjeta.component';
+import { ModalPagoIzipayComponent } from './modal-confirmacion-pago/modal-pago-izipay/modal-pago-izipay.component';
+import { Visa2Component } from './modal-confirmacion-pago/pagos-organicos/visa2/visa2.component';
+import { Tarjeta2Component } from './modal-confirmacion-pago/pagos-organicos/tarjeta2/tarjeta2.component';
+import { Wompi2Component } from './modal-confirmacion-pago/pagos-organicos/wompi2/wompi2.component';
+import { Conekta2Component } from './modal-confirmacion-pago/pagos-organicos/conekta2/conekta2.component';
+import { Multipago2Component } from './modal-confirmacion-pago/pagos-organicos/multipago2/multipago2.component';
+import { Webpay2Component } from './modal-confirmacion-pago/pagos-organicos/webpay2/webpay2.component';
+import { Mercadopago2Component } from './modal-confirmacion-pago/pagos-organicos/mercadopago2/mercadopago2.component';
+import { ModalPagoOpenpayPeruComponent } from './modal-confirmacion-pago/modal-pago-openpay-peru/modal-pago-openpay-peru.component';
+import { ModalPagoTarjetaMexicoComponent } from './modal-confirmacion-pago/modal-pago-tarjeta-mexico/modal-pago-tarjeta-mexico.component';
+import { ModalPagoConektaComponent } from './modal-confirmacion-pago/modal-pago-conekta/modal-pago-conekta.component';
+import { ModalPagoWebpayComponent } from './modal-confirmacion-pago/modal-pago-webpay/modal-pago-webpay.component';
+import { ModalPagoMercadoPagoChileComponent } from './modal-confirmacion-pago/modal-pago-mercado-pago-chile/modal-pago-mercado-pago-chile.component';
+import { ModalPagoWompiComponent } from './modal-confirmacion-pago/modal-pago-wompi/modal-pago-wompi.component';
+import { ModalPagoOpenpayColombiaComponent } from './modal-confirmacion-pago/modal-pago-openpay-colombia/modal-pago-openpay-colombia.component';
+import { ModalPagoMultipagoComponent } from './modal-confirmacion-pago/modal-pago-multipago/modal-pago-multipago.component';
 
 import { AsistenciaAlumnoComponent } from './curso/asistencia-alumno/asistencia-alumno.component';
 import { ConfirmCertFisicoComponent } from './curso/curso-certificado-fisico/confirm-cert-fisico/confirm-cert-fisico.component';
@@ -402,6 +422,29 @@ import { CalificarExamenAplicacionDetalleComponent } from './docencia-v2/docenci
     CalificarExamenAplicacionDetalleComponent
 
   ],
+    ConfirmacionPagoMercadoPagoChileComponent,
+    ConfirmacionPagoOpenpayColombiaComponent,
+    PagoMercadoPagoComponent,
+    ConfirmacionPagoOpenpayPeruComponent,
+    ModalPagoVisaComponent,
+    ModalPagoTarjetaComponent,
+    ModalPagoIzipayComponent,
+    Visa2Component,
+    Tarjeta2Component,
+    Wompi2Component,
+    Conekta2Component,
+    Multipago2Component,
+    Webpay2Component,
+    Mercadopago2Component,
+    ModalPagoOpenpayPeruComponent,
+    ModalPagoTarjetaMexicoComponent,
+    ModalPagoConektaComponent,
+    ModalPagoWebpayComponent,
+    ModalPagoMercadoPagoChileComponent,
+    ModalPagoWompiComponent,
+    ModalPagoOpenpayColombiaComponent,
+    ModalPagoMultipagoComponent
+    ],
   imports: [
     CommonModule,
     AulaVirtualRoutingModule,

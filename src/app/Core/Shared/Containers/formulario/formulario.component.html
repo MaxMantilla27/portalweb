@@ -16,13 +16,35 @@
                     <mat-error *ngIf="userForm.invalid">{{obtenerErrorCampoNombre(i,field.nombre)}}</mat-error>
                   </mat-form-field>
                 </ng-container>
-                <ng-container *ngIf="field.tipo=='select'">
+                <ng-container *ngIf="field.tipo=='select' && field.hidden != true ">
                   <mat-form-field appearance="outline">
                     <mat-label *ngIf="labels==true">{{field.label}}</mat-label>
+                    <mat-label>{{field.label == 'Región' && paisSelect == 52 ? "Estado" : field.label}}</mat-label>
                     <mat-select [style]="field.style" formControlName="{{field.nombre}}"
-                      (selectionChange)="OnSelect.emit({Nombre:field.nombre,value:$event.value})">
-                      <mat-option *ngFor="let option of field.data" [value]="option.value">{{option.Nombre}}
+                      (selectionChange)="changeselectForm(field.nombre,$event.value)"
+                      (openedChange)="onOpenedChange($event, field)"
+                      >
+                      <div class="search-container">
+                        <input
+                        #inputField
+                        placeholder="Buscar"
+                        matInput
+                        type="text"
+                        (keyup)="onKey($event, field)"
+                        class="example-input"
+                        style="background-color: #cacaca;
+                        height: 35px;
+                        padding: 5px;">
+                      </div>
+                      <div class="options-container">
+                        <mat-option
+                        *ngFor="let option of field.filteredOptions"
+                        [value]="option.value"
+                        >
+                        {{option.Nombre}}
                       </mat-option>
+                      <mat-option *ngIf="field.filteredOptions?.length<=0">No hay opciones</mat-option>
+                    </div>
                     </mat-select>
                     <mat-error *ngIf="userForm.invalid">{{obtenerErrorCampoNombre(i,field.nombre)}}</mat-error>
                   </mat-form-field>
@@ -32,13 +54,13 @@
                     <div class="col-3 col-md-3 col-lg-3 fieldOld">
 
                       <mat-form-field>
-                        <mat-select placeholder="Select offer" formControlName="promo" [(value)]="paisSelect">
+                        <mat-select placeholder="Select offer" [disabled]="true" formControlName="promo" [(value)]="paisSelect">
                           <mat-select-trigger>{{IconPaises()}}</mat-select-trigger>
                           <mat-option *ngFor="let item of paise" [value]="item.idPais">
                             {{ item.flag }}
-                            <i class="material-icons">
+                            <!-- <i class="material-icons">
                               info
-                            </i>
+                            </i> -->
                           </mat-option>
                         </mat-select>
                       </mat-form-field>
@@ -57,13 +79,63 @@
                       <mat-error *ngIf="userForm.invalid">{{obtenerErrorCampoNombre(i,field.nombre)}}</mat-error>
                     </mat-form-field>
                   </ng-container>
-                  <ng-container *ngIf="field.tipo=='select'">
+                  <ng-container *ngIf="field.tipo=='select'&& field.hidden != true ">
                     <mat-form-field appearance="outline">
                       <mat-label *ngIf="labels==true">{{field.label}}</mat-label>
                       <mat-select [style]="field.style" formControlName="{{field.nombre}}"
                         (selectionChange)="OnSelect.emit({Nombre:field.nombre,value:$event.value})">
                         <mat-option *ngFor="let option of field.data" [value]="option.value">{{option.Nombre}}
+                      <mat-label>{{field.label == 'Región' && paisSelect == 52 ? "Estado" : field.label}}</mat-label>
+                      <mat-select
+                      [style]="field.style" formControlName="{{field.nombre}}"
+                      (selectionChange)="changeselectForm(field.nombre,$event.value)"
+                      (openedChange)="onSelectOpenedChange(field)"
+                      >
+                        <div class="search-container">
+                          <input
+                          *ngIf="field.nombre == 'IdPais'"
+                          #inputField
+                          placeholder="Buscar"
+                          matInput
+                          type="text"
+                          (keyup)="onKey($event, field)"
+                          class="example-input"
+                          style="background-color: #cacaca;
+                          height: 35px;
+                          padding: 5px;">
+                          <input
+                          *ngIf="field.nombre == 'IdRegion'"
+                          #inputFieldRegion
+                          placeholder="Buscar"
+                          matInput
+                          type="text"
+                          (keyup)="onKey($event, field)"
+                          class="example-input"
+                          style="background-color: #cacaca;
+                          height: 35px;
+                          padding: 5px;">
+                          <input
+                          *ngIf="field.nombre == 'IdLocalidad'"
+                          #inputFieldLocalidad
+                          placeholder="Buscar"
+                          matInput
+                          type="text"
+                          (keyup)="onKey($event, field)"
+                          class="example-input"
+                          style="background-color: #cacaca;
+                          height: 35px;
+                          padding: 5px;">
+                        </div>
+                        <div class="options-container">
+                          <mat-option
+                          *ngFor="let option of field.filteredOptions"
+                          [value]="option.value"
+                          >
+                          {{option.Nombre}}
                         </mat-option>
+                        <mat-option *ngIf="field.filteredOptions?.length<=0">No hay opciones</mat-option>
+                      </div>
+
                       </mat-select>
                       <mat-error *ngIf="userForm.invalid">{{obtenerErrorCampoNombre(i,field.nombre)}}</mat-error>
                     </mat-form-field>
@@ -74,7 +146,7 @@
                       <div class="col-2 col-md-2 col-lg-2 " (click)="select.open()" style="padding-right: 0px;">
                         <div class="fieldOld contSelectForm" >
                           <mat-form-field appearance="fill" style="height: 0px; width: 0px;" class="transForm">
-                            <mat-select #myselsetc [(value)]="paisSelect" #select panelClass="myPanelClass"
+                            <mat-select #myselsetc [(value)]="paisSelect" [disabled]="true" #select panelClass="myPanelClass"
                             (selectionChange)="validatePais(i,field.nombre)">
 
                               <mat-option *ngFor="let item of paise" [value]="item.idPais">
@@ -84,7 +156,7 @@
                             </mat-select>
                           </mat-form-field>
                           <div [style]="'background-image: url('+IconPaises()+')'" alt="" class="urlSelect"></div>
-                          <i class="material-icons">arrow_drop_down</i>
+                          <!-- <i class="material-icons">arrow_drop_down</i> -->
                         </div>
                       </div>
                       <div class="col-10 col-md-10 col-lg-10 fieldOld">
@@ -92,7 +164,10 @@
                           <mat-label *ngIf="labels==true">{{field.label}}</mat-label>
                           <!-- <span matPrefix>{{PrefPaises()}}</span> -->
                           <input type="text" [autofocus]="field.focus" (keyup)="ChangeInpiut(i,field.nombre)" (keydown)="ChangeInpiut(i,field.nombre)" [style]="field.style" formControlName="{{field.nombre}}" matInput />
-                          <mat-error *ngIf="userForm.invalid">{{obtenerErrorCampoNombre(i,field.nombre)}}</mat-error>
+                          <mat-error *ngIf="userForm.invalid && flagLocalidadError != true">{{obtenerErrorCampoNombre(i,field.nombre)}}</mat-error>
+                          <mat-error *ngIf="flagLocalidadError == true">
+                            Error clave LADA Icorrecta
+                          </mat-error>
                         </mat-form-field>
                       </div>
                     </div>

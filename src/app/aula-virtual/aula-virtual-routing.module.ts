@@ -51,6 +51,10 @@ import { VisaRecurrenteComponent } from './resultado-pago-recurrente/visa-recurr
 import { EvalComponent } from './eval/eval.component';
 import { ConfirmacionPagoMercadoPagoChileComponent } from './confirmacion-pago-mercado-pago-chile/confirmacion-pago-mercado-pago-chile.component';
 import { ResultadoPagoMercadopagoComponent } from './resultado-pago-mercadopago/resultado-pago-mercadopago.component';
+import { PagoMercadoPagoComponent } from './confirmacion-pago-organico/pago-mercado-pago/pago-mercado-pago.component';
+import { ConfirmacionPagoOpenpayPeruComponent } from './confirmacion-pago-openpay-peru/confirmacion-pago-openpay-peru.component';
+import { Tarjeta2Component } from './modal-confirmacion-pago/pagos-organicos/tarjeta2/tarjeta2.component';
+import { PagoOrganicoTodosComponent } from '../Public/programas-detalle/programas-pago-organico/pago-organico-todos/pago-organico-todos/pago-organico-todos.component';
 import { ConfirmacionPagoOpenpayColombiaComponent } from './confirmacion-pago-openpay-colombia/confirmacion-pago-openpay-colombia.component';
 import { DocenciaV2CursosOnlineComponent } from './docencia-v2-cursos-online/docencia-v2-cursos-online.component';
 
@@ -71,14 +75,21 @@ const routes: Routes = [
         { path: 'BolsaTrabajo', component: BolsaTrabajoComponent,canActivate:[BolsaTrabajoGuard]},
 
         { path: 'MisPagos/tarjeta/:Identificador', component: PagoGeneralComponent,canActivate:[AlumnoGuard]},
+        //Miguel pago peru
+        { path: 'MisPagos/tarjeta2/:Identificador', component: Tarjeta2Component,canActivate:[AlumnoGuard]},
+
+
         { path: 'MisPagos/visa/:Identificador', component: PagoVisaComponent,canActivate:[AlumnoGuard]},
         { path: 'MisPagos/wompi/:Identificador', component: PagoWompiComponent,canActivate:[AlumnoGuard]},
         { path: 'MisPagos/conekta/:Identificador', component: PagoConektaComponent,canActivate:[AlumnoGuard]},
         { path: 'MisPagos/multipago/:Identificador', component: PagoMultipagoComponent,canActivate:[AlumnoGuard]},
         { path: 'MisPagos/webpay/:Identificador', component: PagoWebpayComponent,canActivate:[AlumnoGuard]},
+        { path: 'MisPagos/mercadopago/:Identificador', component: PagoMercadoPagoComponent,canActivate:[AlumnoGuard]},
         { path: 'MisPagos/webpayResultado', component: ResultadoPagoWebpayComponent},
 
         { path: 'DocenciaV2/:IdPespecifico', component: DocenciaV2CursosOnlineComponent,canActivate:[ProveedorGuard]},
+        { path: 'MisPagos/PagoOrganicoTodos', component: PagoOrganicoTodosComponent,canActivate:[AlumnoGuard]},
+
         { path: 'MisCursos/:IdMatricula', component: CursoComponent,canActivate:[AlumnoGuard]},
         { path: 'MisPagos/:IdMatricula', component: PagoComponent,canActivate:[AlumnoGuard]},
         { path: 'Docencia/:IdTarea', component: DocenciaTareasComponent,canActivate:[ProveedorGuard]},
@@ -102,9 +113,13 @@ const routes: Routes = [
         { path: 'MisPagos/:IdMatricula/webpay/:Identificador', component: ConfirmacionPagoWebpayComponent,canActivate:[AlumnoGuard]},
         { path: 'MisPagos/:IdMatricula/izipay/:Identificador', component: ConfirmacionPagoIzipayComponent,canActivate:[AlumnoGuard]},
         { path: 'MisPagos/:IdMatricula/klap/:Identificador', component: ConfirmacionPagoKlapComponent,canActivate:[AlumnoGuard]},
+        { path: 'MisPagos/:IdMatricula/openpayCOP/:Identificador', component: ConfirmacionPagoOpenpayColombiaComponent,canActivate:[AlumnoGuard]},
         { path: 'MisPagos/:IdMatricula/mercadoPago/:Identificador', component: ConfirmacionPagoMercadoPagoChileComponent,canActivate:[AlumnoGuard]},
         { path: 'MisPagos/:IdMatricula/openpayCOP/:Identificador', component: ConfirmacionPagoOpenpayColombiaComponent,canActivate:[AlumnoGuard]},
 
+
+
+        { path: 'MisPagos/:IdMatricula/openpayPEN/:Identificador', component: ConfirmacionPagoOpenpayPeruComponent,canActivate:[AlumnoGuard]},
 
 
         // Afiliaciones a Pagos Recurrentes
@@ -114,6 +129,7 @@ const routes: Routes = [
 
         // Desafiliaciones a Pagos Recurrentes
         { path: 'MisPagos/Desafiliacion/:IdMatricula/openpay/:Identificador', component: DesafiliacionOpenpayComponent,canActivate:[AlumnoGuard]},
+
 
         { path: 'MisCursos/:IdMatricula/:idPEspecificoHijo', component: ModuloComponent,canActivate:[AlumnoGuard]},
         { path: 'MisCursosPrueba/:IdRegistroPrueba/:idPEspecificoHijo', component: ModuloPruebaComponent,canActivate:[AlumnoGuard]},
