@@ -107,6 +107,7 @@ export class ChatBotLandingPageComponent
   public CargarMensajeEspera=false;
   public CalculandoRespuesta=false
   public IniciaCarga=0
+  public UltimoMensaje:any
 
   public OportunidadDTO: ValidacionChatBotEnvioDTO = {
     NombresCompletos: '',
@@ -122,6 +123,7 @@ export class ChatBotLandingPageComponent
     IdCargo: 0,
     IdAreaTrabajo: 0,
     IdIndustria: 0,
+    IdBusqueda:0,
   };
   public datosAlumno: ChatBotAlumnoDTO = {
     Email: '',
@@ -164,7 +166,7 @@ export class ChatBotLandingPageComponent
   public dataInicial: InicioEntradaChatbotDTO = {
     IdContactoPortalSegmento:
       this._SessionStorageService.SessionGetValue('usuarioWeb'),
-    IdFormulario: 556, //550//567
+    IdFormulario: 1359, //550//567
   };
   public Paises: any;
   public min = 0;
@@ -177,12 +179,14 @@ export class ChatBotLandingPageComponent
   public datePipe = new DatePipe('en-US');
   public validacionCambio: boolean = false;
   public validacionCambioMovil: boolean = false;
+  public validacionCambioCampo: boolean = false;
   public LimpiarChat = false;
   public NombreUsuario = 'Usuario'
   public PasoRecargado=0;
   public ProgramasCargados=false;
   public controlIntervalo:any
   public mensajeEspera='';
+  public UltimoArray=-1;
   ngOnChanges(changes: SimpleChanges): void {
     this.IniciaCarga=0;
     this.SetPaisCodigo();
@@ -197,6 +201,7 @@ export class ChatBotLandingPageComponent
     this.IniciaCarga=0;
     this.validarTamanioVentana();
     this.validacionCambioMovil = false;
+    this.validacionCambioCampo = false;
     this.horaMinuto = new Date();
     if (this.isBrowser) {
       this.intervalInicio = setInterval(() => {
@@ -248,10 +253,11 @@ export class ChatBotLandingPageComponent
             this.OportunidadDTO.IdCampania =
               x.datosFormulario.idConjuntoAnuncio;
             this.OportunidadDTO.IdPrograma = x.datosFormulario.idPGeneral;
+            this.OportunidadDTO.IdBusqueda = x.datosFormulario.idPGeneral;
             this.OportunidadDTO.IdPespecifico = x.datosFormulario.idPEspecifico;
             this.OportunidadDTO.IdCategoriaDato =
               x.datosFormulario.idCategoriaOrigen;
-            this.idBusqueda = x.datosFormulario.idBusqueda;
+            this.idBusqueda =x.datosFormulario.idPGeneral;
           }
           if (x.datosAlumno != null) {
             this.datosAlumno.Id = x.datosAlumno.idAlumno;
@@ -289,7 +295,9 @@ export class ChatBotLandingPageComponent
           this.flujoActual.CodigoPGeneral = x.datosFormulario.codigoPGeneral;
           this.flujoActual.NombrePGeneral = x.datosFormulario.nombrePGeneral;
           this.flujoActual.IdAlumno = x.idAlumno;
+          this.datosAlumno.Id = x.idAlumno;
           this.flujoActual.IdOportunidad = x.idOportunidad;
+          console.log(x.historial)
           if (x.historial != null && x.historial.length > 0 && limpiarHistorial==false) {
             x.historial.forEach((h: any) => {
               var opcionesdesc = null;
@@ -312,13 +320,19 @@ export class ChatBotLandingPageComponent
                 idCampoContacto: h.idCampoContacto,
                 identificadorApi: h.identificadorApi,
                 opciones: opcionesdesc,
-                respuesta: h.tipoOpcion == 'TrueFalse' ? null : h.respuesta,
+                // respuesta: h.tipoOpcion == 'TrueFalse' ? null : h.respuesta,
+                respuesta: h.respuesta,
+                // if(){
+
+                // },
+                // respuesta: h.respuesta,
                 tipoOpcion: h.tipoOpcion,
                 fechaRegistradaCompleta: h.fechaCreacion,
                 fechaRegistrada: this.datePipe.transform(
                   h.fechaCreacion,
-                  'hh:mm a'
+                  'hh:mm a',
                 ),
+                // ultimoMensaje: true,
                 validacionCambioMovil: false,
               });
               console.log('documents.get', this.ElementRefTemp);
@@ -356,15 +370,21 @@ export class ChatBotLandingPageComponent
             this.CalcularDiasPasados();
           }
           if(limpiarHistorial == false){
+            console.log('==============================ENTRANDO 1=======================')
             this.FlujoConversacionPrincipal();
           }
         },
         complete: () => {
           this.cargando = true;
-          if(this.SiguientesPasos.length>1){
+          console.log(this.SiguientesPasos.length)
+          if(this.SiguientesPasos.length!=0){
             this.PasoRecargado= this.SiguientesPasos[this.SiguientesPasos.length - 1].paso+1;
             console.log(this.PasoRecargado)
+            this.UltimoMensaje = this.SiguientesPasos[this.SiguientesPasos.length - 1];
+            this.UltimoArray = this.SiguientesPasos.length
           }
+          this.ActualizarUltimoMensaje()
+
         },
       });
   }
@@ -376,27 +396,7 @@ export class ChatBotLandingPageComponent
       .subscribe({
         next: (x) => {
           console.log('Respuesta FlujoConversacionPrincipal', x);
-
-          //if(x.itemFlujo==null)
-          //{
-          //this.flujoActual.EsMensajeFinal=true
-          //this.FlujoConversacionPrincipal();
-          //}else
-          //{
-            // console.log(x.itemFlujo.opciones.length)
-          // if(x.itemFlujo.paso==8){
-          //   if(x.opciones.length==0){
-          //     this.mensajeEspera=x.itemFlujo.mensaje.split('información. ')[0]+'información. ';
-          //     console.log(this.mensajeEspera)
-          //     // x.itemFlujo=null;
-          //     // console.log('Lo hizo null');
-          //     // this.CargarMensajeEspera=true
-          //   }
-          // }
           if (x.itemFlujo != null) {
-
-            // this.mensajeEspera=x.itemFlujo.mensaje.split('información. ')[0]+'información. ';
-            // console.log('CARGA DATA!=======================', x);
             this.formControl.reset();
             this.pasoActual = x.itemFlujo;
             this.pasoActual.respuesta = '';
@@ -404,11 +404,10 @@ export class ChatBotLandingPageComponent
               this.pasoActual.opciones = x.opciones;
 
               this.pasoActual.idCampoContacto == 5 &&
+              this.pasoActual.caso == 'a' &&
               this.pasoActual.usuarioRegistrado
                 ? (this.pasoActual.mensaje +=
-                    '. ¿Sigue siendo tu número ' +
-                    this.datosAlumno.Movil +
-                    ' ?')
+                    '')
                 : '';
               this.pasoActual.validacionCambioMovil = false;
               this.SiguientesPasos.push(this.pasoActual);
@@ -431,6 +430,8 @@ export class ChatBotLandingPageComponent
             this.CargandoChat = false;
             if (this.pasoActual.esMensajeFinal == true) {
               this.flujoActual.EsMensajeFinal = true;
+            console.log('==============================ENTRANDO 2=======================')
+
               this.FlujoConversacionPrincipal();
             }
 
@@ -462,16 +463,21 @@ export class ChatBotLandingPageComponent
         },
         complete:()=>{
           this.IniciaCarga=1;
+          this.ActualizarUltimoMensaje()
+
 
         }
       });
     },1500)
+  // },1500)
   }
   ProcesarAsignacionAutomaticaChatbot() {
     // this.OportunidadDTO.IdAreaFormacion = 0;
     // this.OportunidadDTO.IdAreaTrabajo = 0;
     // this.OportunidadDTO.IdCargo = 0;
     // this.OportunidadDTO.IdIndustria = 0;
+    console.log(this.OportunidadDTO)
+    this.idBusqueda=this.OportunidadDTO.IdPrograma;
     console.log(this.OportunidadDTO.IdPais)
     if(this.OportunidadDTO.IdPais==null || this.OportunidadDTO.IdPais==0){
       this.OportunidadDTO.IdPais=51
@@ -496,25 +502,9 @@ export class ChatBotLandingPageComponent
           this.ActualizarIdOportunidadChatbotUsuarioContacto();
 
           this.CalculandoRespuesta=true;
-          this.FlujoConversacionPrincipal();
+          console.log('==============================ENTRANDO 3=======================')
 
-          // if(this.SiguientesPasos[this.SiguientesPasos.length-1].paso==8){
-          //   this.CargandoChat=true
-          //   setTimeout(()=>{
-          //     console.log('===========================CONSULTARA EL FLUJO=========')
-          //     // this.FlujoConversacionPrincipal();
-          //     // this.CargandoChat=true
-          //     // this.controlIntervalo=setInterval(()=>{
-          //     //   this.CargandoChat=true
-          //     //   console.log('===========================CONSULTA NUEVAMENTE=========')
-          //     //   this.FlujoConversacionPrincipal();
-          //     //   this.CargandoChat=true
-          //     // },60000)
-          //   },10000)
-          // }
-          // else{
-          //   this.FlujoConversacionPrincipal();
-          // }
+          this.FlujoConversacionPrincipal();
         }
       });
   }
@@ -629,6 +619,7 @@ export class ChatBotLandingPageComponent
     return this.pasoActual.mensajeErrorValidacion;
   }
   ContinuarFlujo(ValorDB: any) {
+    console.log(ValorDB)
     console.log('Paso Actual Continuar Flujo', this.pasoActual);
     if (
       this.pasoActual.nombreFuncion === 'CreacionAlumnoOportunidad' ||
@@ -659,8 +650,11 @@ export class ChatBotLandingPageComponent
       this.ActualizarAlumnoDTO.Valor = ValorDB.toString();
       this.ActualizarAlumnoChatBot();
     } else {
+      console.log('==============================ENTRANDO 4=======================')
+
       this.FlujoConversacionPrincipal();
     }
+
   }
   ActualizarIdOportunidadChatbotUsuarioContacto() {
     this._ChatBotService
@@ -687,6 +681,8 @@ export class ChatBotLandingPageComponent
         next: (x) => {
         },
         complete:()=>{
+          console.log('==============================ENTRANDO 5=======================')
+
           this.FlujoConversacionPrincipal();
 
         }
@@ -700,7 +696,12 @@ export class ChatBotLandingPageComponent
     this.flujoActual.MensajeEnviado = this.pasoActual.mensaje;
     this.flujoActual.IdCampoContacto = this.pasoActual.idCampoContacto;
     this.flujoActual.NombreUsuario = this.datosAlumno.Nombres.split(' ')[0];
-    this.flujoActual.Respuesta = this.formControl.value;
+    if(this.formControl.value!=null){
+      this.flujoActual.Respuesta = this.formControl.value;
+    }
+    else{
+      this.flujoActual.Respuesta = 'Si';
+    }
     if (
       this.pasoActual.opciones != undefined &&
       this.pasoActual.opciones != null
@@ -746,12 +747,22 @@ export class ChatBotLandingPageComponent
         },
         complete: () => {
           this.ActualizarIdOportunidadChatbotUsuarioContacto();
+          console.log('==============================ENTRANDO 6=======================')
+
           this.FlujoConversacionPrincipal();
         },
       });
   }
   ElementRefTemp: any;
   SiguientePaso(ElementRef?: any) {
+    // console.log('=========================ENTRA A SIGUIENTE PASO================')
+    // if ((this.flujoActual.Paso == 3 ||this.flujoActual.Paso == 4 ||this.flujoActual.Paso == 5 ||this.flujoActual.Paso == 6 )
+    // && this.flujoActual.UsuarioRegistrado && this.flujoActual.Caso=='a')
+    // {
+    //   this.SiguientesPasos.forEach((p) => {
+    //     p.respondido = true;
+    //   });
+    // }
     if (ElementRef != null) {
       this.ElementRefTemp = ElementRef;
     }
@@ -764,23 +775,35 @@ export class ChatBotLandingPageComponent
       this.flujoActual.MensajeEnviado = this.pasoActual.mensaje;
       this.flujoActual.IdCampoContacto = this.pasoActual.idCampoContacto;
       this.flujoActual.NombreUsuario = this.datosAlumno.Nombres.split(' ')[0];
-      this.flujoActual.Respuesta = this.formControl.value.toString();
-      if (
-        this.pasoActual.opciones != undefined &&
-        this.pasoActual.opciones != null
-      ) {
+      if(this.formControl.value!=null){
+        this.flujoActual.Respuesta = this.formControl.value.toString();
+      }
+      else{
+        this.flujoActual.Respuesta = 'Si';
+      }
+      if (this.pasoActual.opciones != undefined &&
+          this.pasoActual.opciones != null)
+      {
         this.flujoActual.OpcionEnviadoJson = JSON.stringify(
-          this.pasoActual.opciones
-        );
+        this.pasoActual.opciones);
       }
       this.SiguientesPasos.forEach((p) => {
         p.respondido = true;
       });
-      this.SiguientesPasos[this.SiguientesPasos.length - 1].respuesta =
+      if(this.formControl.value!=null){
+        this.SiguientesPasos[this.SiguientesPasos.length - 1].respuesta =
         this.formControl.value;
+      }
+      else{
+        this.SiguientesPasos[this.SiguientesPasos.length - 1].respuesta = 'Si'
+      }
+
       (this.SiguientesPasos[this.SiguientesPasos.length - 1].fechaRegistrada =
         this.datePipe.transform(new Date(), 'hh:mm a')),
         this.ContinuarFlujo(this.formControl.value);
+      if(this.flujoActual.UsuarioRegistrado && this.flujoActual.IdCampoContacto==5){
+        this.ActualizarAlumnoChatBot2(this.flujoActual.IdCampoContacto,this.formControl.value);
+      }
       console.log('datos alumno sigue paso', this.datosAlumno);
       this.validacionCambioMovil = true;
     }
@@ -898,6 +921,15 @@ export class ChatBotLandingPageComponent
     }
   }
   ObtenerCincoOpcionesPerfilProfesionalChatbot(data: any, mensaje: string) {
+    console.log(this.SiguientesPasos)
+    // if(this.SiguientesPasos[this.SiguientesPasos.length - 1].usuarioRegistrado &&
+    //   this.SiguientesPasos[this.SiguientesPasos.length - 1].funcionObtenerOpcion=='ValidacionPerfilProfesional'){
+    //     console.log('ELIMINARA')
+    //   let valorEliminado=this.SiguientesPasos.length - 1;
+    //   console.log('ELIMINARA',valorEliminado)
+
+    //   this.SiguientesPasos.pop()
+    // }
     console.log('obtener 5 opcioones perfil DATOS', this.datos);
     this.datos.CodigoPGeneral = this.flujoActual.CodigoPGeneral;
     this.datos.IdCampo = data.idCampo;
@@ -908,6 +940,7 @@ export class ChatBotLandingPageComponent
       .pipe(takeUntil(this.signal$))
       .subscribe({
         next: (x) => {
+          console.log(x)
           console.log('datosIDCAMPO', this.datos.IdCampo);
           console.log(
             'ult respuesta sgutes pasos',
@@ -1006,42 +1039,61 @@ export class ChatBotLandingPageComponent
     );
     console.log('inidcemal', indicemal);
     if (valor == 0 || valor == null) {
-      this.datos.PrimerBloque = false;
-      this.ObtenerCincoOpcionesPerfilProfesionalChatbot(
-        this.opcionesTruFalse[indicemal],
-        msg
-      );
+      // this.datos.PrimerBloque = false;
+      // this.ObtenerCincoOpcionesPerfilProfesionalChatbot(
+      //   this.opcionesTruFalse[indicemal],
+      //   msg
+      // );
     } else {
-      switch (this.opcionesTruFalse[indicemal].id) {
+      switch (valor) {
         case 7:
           this.ActualizarAlumnoDTO.IdentificadorApi = 'IdCargo';
+          this.ActualizarAlumnoDTO.Valor = valor.toString();
           break;
         case 8:
           this.ActualizarAlumnoDTO.IdentificadorApi = 'IdAreaFormacion';
+          this.ActualizarAlumnoDTO.Valor = valor.toString();
           break;
         case 9:
           this.ActualizarAlumnoDTO.IdentificadorApi = 'IdAreaTrabajo';
+          this.ActualizarAlumnoDTO.Valor = valor.toString();
           break;
         case 10:
           this.ActualizarAlumnoDTO.IdentificadorApi = 'IdIndustria';
+          this.ActualizarAlumnoDTO.Valor = valor.toString();
           break;
+        case 5:
+            this.ActualizarAlumnoDTO.IdentificadorApi = 'Movil';
+            this.ActualizarAlumnoDTO.Valor = valorNombre.toString();
+            break;
         default:
-          this.ActualizarAlumnoDTO.IdentificadorApi = 'IdCargo';
+          this.ActualizarAlumnoDTO.IdentificadorApi = 'Dni';
+          this.ActualizarAlumnoDTO.Valor = valorNombre.toString();
           break;
       }
-      this.ActualizarAlumnoDTO.Valor = valor.toString();
       console.log('valor', valor.toString());
       this._ChatBotService
         .ActualizarAlumnoChatBot(this.ActualizarAlumnoDTO)
         .pipe(takeUntil(this.signal$))
         .subscribe({
           next: (x) => {
-            this.opcionesTruFalse[indicemal].campo = x.registro;
+            console.log(x)
+            console.log(x.registro)
+
+          },
+          complete:()=>{
+            console.log(this.opcionesTruFalse)
+            if(this.ActualizarAlumnoDTO.IdentificadorApi == 'Movil' ||this.ActualizarAlumnoDTO.IdentificadorApi == 'Dni'){
+              this.opcionesTruFalse[indicemal].campo = valorNombre;
+            }
+            else{
+              this.opcionesTruFalse[indicemal].campo = valor.toString();
+            }
             this.opcionesTruFalse[indicemal].idCampo = valor;
             this.opcionesTruFalse[indicemal].Check = true;
             this.opcionesTruFalse[indicemal].validacion = true;
             this.ContinuarOpciones(2);
-          },
+          }
         });
     }
   }
@@ -1146,49 +1198,70 @@ export class ChatBotLandingPageComponent
     this.horaMinuto = this.datePipe.transform(new Date(), 'hh:mm a');
   }
   AgregarSiguientePasoRespuestaNoMovil(){
-
-    let temporal = Object.assign({}, this.pasoActual);
-
-    this.SiguientesPasos[this.SiguientesPasos.length - 1].respuesta = "No";
-    this.SiguientesPasos[this.SiguientesPasos.length - 1].validacionCambioMovil = false;
-    this.SiguientesPasos[this.SiguientesPasos.length - 1].fechaRegistrada = this.datePipe.transform(new Date(), 'hh:mm a');
-    this.SiguientesPasos.forEach((p) => {
-        p.respondido = true;
-      });
-
-    temporal.mensaje = "Por favor digite nuevamente su nuevo número de celular";
-    temporal.editarMovil = true;
-    temporal.validacionCambioMovil = true;
-    temporal.respondido = false;
-    //this.cargandoUltimo();
-
-    this.SiguientesPasos.push(temporal);
-
-    console.log("siguientes pasos NO MOVIl", this.SiguientesPasos)
-
+    this.flujoActual = {
+      CodigoPGeneral: this.flujoActual.CodigoPGeneral,
+      IdCampoContacto: this.flujoActual.IdCampoContacto,
+      IdChatbotUsuarioContacto: this.flujoActual.IdChatbotUsuarioContacto,
+      IdConfiguracionFlujoChatbot: this.flujoActual.IdConfiguracionFlujoChatbot,
+      NombrePGeneral:this.flujoActual.NombrePGeneral,
+      NombreUsuario: this.flujoActual.NombreUsuario,
+      Paso: this.SiguientesPasos[this.SiguientesPasos.length - 1].paso,
+      UsuarioRegistrado: this.flujoActual.UsuarioRegistrado,
+      Caso: 'a',
+      EsMensajeFinal: false,
+      IdOportunidad: this.flujoActual.IdOportunidad,
+      IdAlumno: this.flujoActual.IdAlumno,
+      Respuesta: this.SiguientesPasos[this.SiguientesPasos.length - 1].respuesta,
+      MensajeEnviado: this.SiguientesPasos[this.SiguientesPasos.length - 1].mensaje
+    };
+    console.log('==============================ENTRANDO 7=======================')
+    if(this.flujoActual.Respuesta!='No'){
+      this.ActualizarAlumnoChatBot2(this.flujoActual.IdCampoContacto,this.flujoActual.Respuesta)
+    }
+    this.FlujoConversacionPrincipal();
     this.ScrollTo();
   }
   AgregarSiguientePasoRespuestaNoPerfilProfesional(){
 
-    let temporal = Object.assign({}, this.SiguientesPasos[this.SiguientesPasos.length - 1]);
+    // let temporal = Object.assign({}, this.SiguientesPasos[this.SiguientesPasos.length - 1]);
 
-    this.SiguientesPasos[this.SiguientesPasos.length - 1].respuesta = "No";
-    this.SiguientesPasos[this.SiguientesPasos.length - 1].validacionCambio = false;
-    this.SiguientesPasos[this.SiguientesPasos.length - 1].fechaRegistrada =
-    this.datePipe.transform(new Date(), 'hh:mm a');
+    // this.SiguientesPasos[this.SiguientesPasos.length - 1].respuesta = "No";
+    // this.SiguientesPasos[this.SiguientesPasos.length - 1].validacionCambio = false;
+    // this.SiguientesPasos[this.SiguientesPasos.length - 1].fechaRegistrada =
+    // this.datePipe.transform(new Date(), 'hh:mm a');
 
 
-    this.SiguientesPasos.forEach((p) => {
-        p.respondido = true;
-      });
+    // this.SiguientesPasos.forEach((p) => {
+    //     p.respondido = true;
+    //   });
 
-    temporal.mensaje = "Por favor actualizalo seleccionando una de las siguientes opciones:";
-    temporal.validacionCambio = true;
-    temporal.respondido = false;
+    // temporal.mensaje = "Por favor actualizalo seleccionando una de las siguientes opciones:";
+    // temporal.validacionCambio = true;
+    // temporal.respondido = false;
 
-    this.SiguientesPasos.push(temporal);
+    // this.SiguientesPasos.push(temporal);
 
-    console.log("siguientes pasos NO PERFIL PROFESIONAL ", this.SiguientesPasos)
+    // console.log("siguientes pasos NO PERFIL PROFESIONAL ", this.SiguientesPasos)
+    this.flujoActual = {
+      CodigoPGeneral: this.flujoActual.CodigoPGeneral,
+      IdCampoContacto: 5,
+      IdChatbotUsuarioContacto: this.flujoActual.IdChatbotUsuarioContacto,
+      IdConfiguracionFlujoChatbot: this.flujoActual.IdConfiguracionFlujoChatbot,
+      NombrePGeneral:this.flujoActual.CodigoPGeneral,
+      NombreUsuario: this.flujoActual.CodigoPGeneral,
+      Paso: this.SiguientesPasos[this.SiguientesPasos.length - 1].paso,
+      UsuarioRegistrado: this.flujoActual.UsuarioRegistrado,
+      Caso: 'a',
+      EsMensajeFinal: false,
+      IdOportunidad: this.flujoActual.IdOportunidad,
+      IdAlumno: this.flujoActual.IdAlumno,
+      Respuesta: this.SiguientesPasos[this.SiguientesPasos.length - 1].respuesta,
+      MensajeEnviado: this.SiguientesPasos[this.SiguientesPasos.length - 1].mensaje
+    };
+    console.log(this.flujoActual)
+    console.log('==============================ENTRANDO 8=======================')
+    // this.ActualizarAlumnoChatBot2(this.flujoActual.IdCampoContacto,this.flujoActual.Respuesta)
+    this.FlujoConversacionPrincipal();
     this.ScrollTo();
   }
   ScrollTo() {
@@ -1258,6 +1331,21 @@ export class ChatBotLandingPageComponent
           }
         }
       });
+  }
+  ActualizarUltimoMensaje(){
+    console.log(this.UltimoArray)
+    let count = 0
+    if(this.UltimoArray!=-1){
+      this.SiguientesPasos.forEach((p) => {
+        if(count==this.UltimoArray){
+          p.ultimoMensaje = true;
+        }
+        else{
+          p.ultimoMensaje = false;
+        }
+        count++;
+      })
+    }
   }
 
 }

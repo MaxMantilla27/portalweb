@@ -129,4 +129,13 @@ export class ChatBotService {
       return EMPTY;
     }
   }
+
+  public InsertarUsuarioRespuestaChatBotCockeado(Json:FlujoChatEntradalDTO):Observable<any>{
+    if(this.isBrowser){
+      console.log(Json)
+      return this.http.post<any>(this.urlBase+'/InsertarUsuarioRespuestaChatBotCockeado',Json);
+    }else{
+      return EMPTY;
+    }
+  }
 }

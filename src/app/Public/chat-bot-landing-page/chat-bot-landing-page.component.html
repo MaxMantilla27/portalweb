@@ -61,7 +61,7 @@
               "
               #ChatUbicacion2
             >
-              <div *ngIf="PasoRecargado==item.paso && PasoRecargado !=1">
+              <div *ngIf="PasoRecargado !=1 && item.ultimoMensaje">
                 <div class="col-12" style="display: flex;margin-bottom: 10px;">
                   <div class="imgChatBot"></div>
                   <div class="PreguntaGloboPrevio">
@@ -113,7 +113,7 @@
                     *ngIf="
                       item.idCampoContacto == 5 &&
                       item.usuarioRegistrado == true &&
-                      item.editarMovil != true
+                      item.editarMovil != true && item.caso=='a'
                     "
                     style="margin-bottom: 10%"
                   >
@@ -123,7 +123,7 @@
                       (click)="
                         item.validacionCambioMovil = false;
                         item.respondido = true;
-                        item.identificadorApi = 'movilSinValidacion';
+                        item.identificadorApi = 'movil';
                         FormControlValid();
                         SiguientePaso();
                         ScrollTo()
@@ -137,6 +137,47 @@
                       (click)="
                         item.respondido = false;
                         item.validacionCambioMovil = true;
+                        item.respondido = true;
+                        item.respuesta = 'No';
+                        item.identificadorApi = 'movil';
+                        AgregarSiguientePasoRespuestaNoMovil();
+                        ScrollTo()
+                      "
+                    >
+                      No
+                    </button>
+                  </div>
+
+                  <div
+                    *ngIf="
+                      (item.idCampoContacto == 9||item.idCampoContacto == 7||item.idCampoContacto == 8||item.idCampoContacto == 10) &&
+                      item.usuarioRegistrado == true && item.caso=='a'
+                    "
+                    style="margin-bottom: 10%"
+                  >
+                    <button
+                      type="button"
+                      class="OpcionesGloboValidacion"
+                      (click)="
+                        item.validacionCambioMovil = false;
+                        item.respondido = true;
+                        item.respuesta='Si';
+                        FormControlValid();
+                        SiguientePaso();
+                        ScrollTo()
+                      "
+                    >
+                      Si
+                    </button>
+                    <button
+                      type="button"
+                      class="OpcionesGloboValidacion"
+                      (click)="
+                        item.respondido = false;
+                        item.validacionCambioMovil = true;
+                        item.respondido = true;
+                        item.respuesta = 'No';
+                        item.identificadorApi = 'movil';
                         AgregarSiguientePasoRespuestaNoMovil();
                         ScrollTo()
                       "
@@ -160,8 +201,11 @@
                     type="button"
                     class="OpcionesGloboValidacion"
                     (click)="
-                      item.validacionCambio = false;
-                      ValidacionDenegadaContinuar();
+                      item.respondido = true;
+                      item.respuesta = 'Si';
+                      item.validacionCambio = true;
+                      FormControlValid();
+                      SiguientePaso();
                       ScrollTo()
                     "
                   >
@@ -171,6 +215,9 @@
                     type="button"
                     class="OpcionesGloboValidacion"
                     (click)="item.validacionCambio = true;
+                    item.respondido = true;
+                    item.respuesta = 'No';
+                    item.validacionCambio = false;
                     AgregarSiguientePasoRespuestaNoPerfilProfesional();
                     ScrollTo()"
                   >
@@ -303,13 +350,14 @@
                 #ChatUbicacionInput
                 *ngIf="
                   (item.idCampoContacto == 5 && item.validacionCambioMovil && !item.respondido) ||
-                  (item.idCampoContacto != 5 &&
+                  (item.idCampoContacto != 5 && item.idCampoContacto != 7 && item.idCampoContacto != 8 && item.idCampoContacto != 9 && item.idCampoContacto != 10 &&
                     (item.respondido != true || item.respuesta == '') &&
                     (item.opciones == undefined ||
                       item.opciones == null ||
                       item.opciones.length == 0)) ||
-                  (item.idCampoContacto == 5 &&
-                    !item.usuarioRegistrado &&
+                  (item.idCampoContacto == 5 && !item.usuarioRegistrado && !item.respondido) ||
+                    (item.idCampoContacto == 5 &&
+                    item.usuarioRegistrado && item.caso=='b' &&
                     !item.respondido)
                 "
               >
