@@ -2,7 +2,7 @@ import { Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@
 import { Subject, takeUntil } from 'rxjs';
 import { PEspecificoEsquemaService } from 'src/app/Core/Shared/Services/PEspecificoEsquema/pespecifico-esquema.service';
 import { MatDialog } from '@angular/material/dialog';
-import { DocenciaGestionCriteriosRegistroAntiguoComponent } from './docencia-gestion-criterios-registro-antiguo/docencia-gestion-criterios-registro-antiguo/docencia-gestion-criterios-registro-antiguo.component';
+import { DocenciaGestionCriteriosRegistroAntiguoComponent } from './docencia-gestion-criterios-registro-antiguo/docencia-gestion-criterios-registro-antiguo.component';
 import { ProveedorService } from 'src/app/Core/Shared/Services/Proveedor/proveedor.service';
 
 @Component({
@@ -37,7 +37,7 @@ export class CriterioEvaluacionDocenteComponent implements OnInit ,OnChanges, On
   TipoContenido: any = {
     //'Acciones': ['buttons'],
   };
-  public criterios:Array<any>=[]
+  public criterios:any
   public RegistrarCriterios=false;
   public DataProveedor:any
   ngOnChanges(changes: SimpleChanges): void {
@@ -72,6 +72,7 @@ export class CriterioEvaluacionDocenteComponent implements OnInit ,OnChanges, On
     this._PEspecificoEsquemaService.ObtenerCriteriosPorProgramaEspecificoAntiguos(this.IdPespecifico).pipe(takeUntil(this.signal$))
     .subscribe({
       next: (x) => {
+        this.RegistrarCriterios=true;
         console.log(x);
         if(x!=null){
           this.criterios=x
@@ -85,7 +86,7 @@ export class CriterioEvaluacionDocenteComponent implements OnInit ,OnChanges, On
           }
         }
         else{
-          this.RegistrarCriterios=true;
+          this.criterios=undefined;
         }
       },
     });

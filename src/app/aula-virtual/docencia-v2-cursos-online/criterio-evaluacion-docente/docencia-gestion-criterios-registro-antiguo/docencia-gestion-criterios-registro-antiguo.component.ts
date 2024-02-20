@@ -7,6 +7,7 @@ import { OperacionesEvaluacionService } from 'src/app/Core/Shared/Services/Opera
 import { OperacionesPEspecificoService } from 'src/app/Core/Shared/Services/OperacionesPEspecifico/operaciones-pespecifico.service';
 import { SnackBarServiceService } from 'src/app/Core/Shared/Services/SnackBarService/snack-bar-service.service';
 import { DocenciaGestionSilabosRegistroAddComponent } from 'src/app/aula-virtual/docencia/docencia-gestion-silabos/docencia-gestion-silabos-registro/docencia-gestion-silabos-registro-add/docencia-gestion-silabos-registro-add.component';
+import { DocenciaGestionCriteriosRegistroAntiguoAgregarComponent } from './docencia-gestion-criterios-registro-antiguo-agregar/docencia-gestion-criterios-registro-antiguo-agregar.component';
 
 
 @Component({
@@ -93,10 +94,10 @@ export class DocenciaGestionCriteriosRegistroAntiguoComponent implements OnInit 
         porcentaje=this.evaluacion[index].Porcentaje
         ident=this.evaluacion[index].Id
       }
-      const dialogApr = this.dialog.open(DocenciaGestionSilabosRegistroAddComponent, {
-        width: '500px',
+      const dialogApr = this.dialog.open(DocenciaGestionCriteriosRegistroAntiguoAgregarComponent, {
+        width: '550px',
         data: {Nombre:nombre,Porcentaje:porcentaje,Id:ident,IdPEspecifico:this.data.IdPEspecifico,Usuario:this.data.correo,Grupo:this.data.grupo},
-        panelClass: 'custom-dialog-aprovacion-add-silabo-evaluacion',
+        panelClass: 'dialog-registrar-criterio-evaluacion-antiguo',
       });
 
       dialogApr.afterClosed().pipe(takeUntil(this.signal$)).subscribe(result => {

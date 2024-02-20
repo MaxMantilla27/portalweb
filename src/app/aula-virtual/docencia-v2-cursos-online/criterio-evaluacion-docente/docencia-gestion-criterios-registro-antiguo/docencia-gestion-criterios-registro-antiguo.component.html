@@ -44,7 +44,7 @@
       <div class="table-resposive" *ngIf="evaluacion!=null && evaluacion.length>0">
         <table style="width: 100%" class="table">
           <thead>
-            <tr style="background: #e6eefa;">
+            <tr>
               <th class="text-center" style="min-width: 200px;" rowspan="2"><b>Nombre</b></th>
               <th class="text-center" style="min-width: 200px;" rowspan="2"><b>Porcentaje</b></th>
               <th class="text-center" style="min-width: 200px;" rowspan="2"><b>Acciones</b></th>
@@ -53,10 +53,10 @@
             <tbody>
               <ng-container *ngFor="let ev of evaluacion;let i=index">
                 <tr>
-                  <td>
+                  <td style="vertical-align: middle;">
                     {{ev.Nombre}}
                   </td>
-                  <td>
+                  <td style="text-align: center; vertical-align: middle;">
                     {{ev.Porcentaje}}
                   </td>
                   <td>

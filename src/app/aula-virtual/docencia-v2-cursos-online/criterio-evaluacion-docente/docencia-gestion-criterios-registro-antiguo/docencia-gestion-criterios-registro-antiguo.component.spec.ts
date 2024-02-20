@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { DocenciaGestionCriteriosRegistroAntiguoComponent } from './docencia-gestion-criterios-registro-antiguo.component';
+
 
 describe('DocenciaGestionCriteriosRegistroAntiguoComponent', () => {
   let component: DocenciaGestionCriteriosRegistroAntiguoComponent;

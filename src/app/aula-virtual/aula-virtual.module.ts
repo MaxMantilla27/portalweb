@@ -173,7 +173,8 @@ import { RecursoActividadAdicionalComponent } from './docencia-v2-cursos-online/
 import { AgregarActividadAdicionalComponent } from './docencia-v2-cursos-online/administrar-sesion/pespecifico-sesion-esquema/agregar-actividad-adicional/agregar-actividad-adicional.component';
 import { CalificarActividadAdicionalDocenteComponent } from './docencia-v2-cursos-online/calificar-actividades-docente/calificar-actividad-adicional-docente/calificar-actividad-adicional-docente.component';
 import { EnvioActividadComponent } from './modulo/modulo-sesiones-online/envio-actividad/envio-actividad.component';
-import { DocenciaGestionCriteriosRegistroAntiguoComponent } from './docencia-v2-cursos-online/criterio-evaluacion-docente/docencia-gestion-criterios-registro-antiguo/docencia-gestion-criterios-registro-antiguo/docencia-gestion-criterios-registro-antiguo.component';
+import { DocenciaGestionCriteriosRegistroAntiguoComponent } from './docencia-v2-cursos-online/criterio-evaluacion-docente/docencia-gestion-criterios-registro-antiguo/docencia-gestion-criterios-registro-antiguo.component';
+import { DocenciaGestionCriteriosRegistroAntiguoAgregarComponent } from './docencia-v2-cursos-online/criterio-evaluacion-docente/docencia-gestion-criterios-registro-antiguo/docencia-gestion-criterios-registro-antiguo-agregar/docencia-gestion-criterios-registro-antiguo-agregar.component';
 
 
 @NgModule({
@@ -348,6 +349,7 @@ import { DocenciaGestionCriteriosRegistroAntiguoComponent } from './docencia-v2-
     CalificarActividadAdicionalDocenteComponent,
     EnvioActividadComponent,
     DocenciaGestionCriteriosRegistroAntiguoComponent,
+    DocenciaGestionCriteriosRegistroAntiguoAgregarComponent,
 
   ],
   imports: [
