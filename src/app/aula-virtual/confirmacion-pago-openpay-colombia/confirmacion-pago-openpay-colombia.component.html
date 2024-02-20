@@ -25,7 +25,7 @@
               </div>
             </div>
           </div>
-  
+
           <div class="iconoPagoTarjeta">
             <div class="imgPagoTarjeta"></div>
             <div class="textPagoTarjeta">
@@ -42,9 +42,9 @@
         </div>
         <div class="col-12 col-md-6 col-lg-6 inputPagoVisa row">
           <div class="subtitlePagoVisa">Ingresa los datos de tu tarjeta de crédito o débito {{resultCard.medioPago | capitalice}}</div>
-          <form id="fomrOpenPAy" class="row">  
+          <form id="fomrOpenPAy" class="row">
             <ng-container *ngIf="resultCard.idPasarelaPago==1 && resultCard.idFormaPago==65">
-  
+
               <mat-form-field  class="col-12" appearance="outline" style="width: 100%;">
                 <mat-label>Seleccione su banco</mat-label>
                 <mat-select placeholder="Seleccione su banco" [(ngModel)]="registroPse.BancoPSE" [ngModelOptions]="{standalone: true}">
@@ -54,21 +54,21 @@
                 </mat-select>
               </mat-form-field>
             </ng-container>
-  
+
             <mat-form-field class="col-12" appearance="outline" [floatLabel]="'always'" style="width: 100%;">
               <mat-label>Titular de la Tarjeta</mat-label>
               <input type="text" placeholder="Nombre como aparece en la tarjeta" [ngModelOptions]="{standalone: true}"
               [(ngModel)]="jsonSave.TarjetaHabiente.Titular" matInput >
             </mat-form-field>
-  
+
             <ng-container *ngIf="resultCard.idPasarelaPago==1 && resultCard.idFormaPago==65">
-  
+
               <mat-form-field class="col-12" appearance="outline" [floatLabel]="'always'" style="width: 100%;">
                 <mat-label>Telefono</mat-label>
                 <input type="text" placeholder="Numero de telefono" [ngModelOptions]="{standalone: true}" name="phone"
                 [(ngModel)]="registroPse.TelefonoTitularPSE" matInput >
               </mat-form-field>
-  
+
               <mat-form-field  class="col-12" appearance="outline" style="width: 100%;">
                 <mat-label>Tipo de cliente</mat-label>
                 <mat-select placeholder="Tipo de cliente" [(ngModel)]="registroPse.TipoClientePSE" [ngModelOptions]="{standalone: true}">
@@ -77,7 +77,7 @@
                   </ng-container>
                 </mat-select>
               </mat-form-field>
-  
+
               <mat-form-field  class="col-12" appearance="outline" style="width: 100%;">
                 <mat-label>Tipo de documento</mat-label>
                 <mat-select placeholder="Tipo de documento" [(ngModel)]="registroPse.TipoDocumentoPSE" [ngModelOptions]="{standalone: true}">
@@ -93,7 +93,7 @@
               [(ngModel)]="resultCard.registroAlumno.nombre" matInput [readonly]="true">
             </mat-form-field>
               <div class="col-6 col-md-6 col-lg-6">
-  
+
             <mat-form-field  appearance="outline" [floatLabel]="'always'" style="width: 100%;">
                 <mat-label>Apellidos :</mat-label>
                 <input type="text" [ngModelOptions]="{standalone: true}"
@@ -110,9 +110,8 @@
                 [(ngModel)]="resultCard.registroAlumno.numeroDocumento" matInput [readonly]="true">
             </mat-form-field>
               </div>
-            </ng-container>
-  
-  
+
+
             <ng-container *ngIf="jsonSave.Comprobante!=false">
               <mat-form-field appearance="outline" [floatLabel]="'always'" style="width: 100%;">
                 <mat-label>Razón Social</mat-label>
@@ -125,8 +124,8 @@
                 placeholder="Número Tributario" matInput />
               </mat-form-field>
             </ng-container>
-  
-  
+
+
             <div class="row comprobatePagoTarjeta">
               <div class="col-12 col-md-6 col-lg-4">Emitir comprobante</div>
               <div class="col-12 col-md-6 col-lg-8 items">
@@ -150,7 +149,7 @@
                     <app-default-button [confs]="{color:'primary',titulo:'Ir a pagar con PSE'}"
                     [style]="'margin-top: 20px;margin-bottom: 0px;width:100%'" (ButtoclClick)="redireccionarPSE()"></app-default-button>
                   </ng-template>
-                  
+
               </div>
             </div>
           </form>
@@ -160,7 +159,7 @@
           padding: 20px;">
             * El monto a cargar sera el cual se detalla arriba en la moneda del programa, el tipo de cambio dependerá del banco que usted utilice.
           </div>
-  
+
         </div>
         <div class="d-none col-md-6 d-md-block col-lg-6 d-lg-block">
           <div class="resumenPagoTarjeta">
@@ -196,4 +195,3 @@
       </div>
     </div>
   </div>
-  

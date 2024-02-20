@@ -419,9 +419,7 @@ import { CalificarExamenAplicacionDetalleComponent } from './docencia-v2/docenci
     ModalExamenAplicacionComponent,
     ModalPrevisualizacionExamenAplicacionComponent,
     ModalExamenAplicacionPreguntasComponent,
-    CalificarExamenAplicacionDetalleComponent
-
-  ],
+    CalificarExamenAplicacionDetalleComponent,
     ConfirmacionPagoMercadoPagoChileComponent,
     ConfirmacionPagoOpenpayColombiaComponent,
     PagoMercadoPagoComponent,

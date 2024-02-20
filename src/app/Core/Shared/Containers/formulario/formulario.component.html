@@ -82,9 +82,6 @@
                   <ng-container *ngIf="field.tipo=='select'&& field.hidden != true ">
                     <mat-form-field appearance="outline">
                       <mat-label *ngIf="labels==true">{{field.label}}</mat-label>
-                      <mat-select [style]="field.style" formControlName="{{field.nombre}}"
-                        (selectionChange)="OnSelect.emit({Nombre:field.nombre,value:$event.value})">
-                        <mat-option *ngFor="let option of field.data" [value]="option.value">{{option.Nombre}}
                       <mat-label>{{field.label == 'Región' && paisSelect == 52 ? "Estado" : field.label}}</mat-label>
                       <mat-select
                       [style]="field.style" formControlName="{{field.nombre}}"
