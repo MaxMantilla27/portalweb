@@ -27,7 +27,7 @@ import { ChatBotService } from 'src/app/Core/Shared/Services/ChatBot/chat-bot.se
 import { HelperService } from 'src/app/Core/Shared/Services/helper.service';
 import { SessionStorageService } from 'src/app/Core/Shared/Services/session-storage.service';
 import { MovilValidator } from 'src/app/Core/Shared/Validators/MovilValidator';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ViewChildren, QueryList, AfterViewInit } from '@angular/core';
 import * as moment from 'moment';
 
@@ -79,7 +79,8 @@ export class ChatBotLandingPageComponent
     private _ChatBotService: ChatBotService,
     private router: Router,
     private renderer: Renderer2,
-    @Inject(DOCUMENT) private _document: Document
+    @Inject(DOCUMENT) private _document: Document,
+    private activatedRoute: ActivatedRoute,
   ) {
     this.isBrowser = isPlatformBrowser(platformId);
     this.urlPrograma = '/programas-certificaciones-cursos';
@@ -187,9 +188,11 @@ export class ChatBotLandingPageComponent
   public controlIntervalo:any
   public mensajeEspera='';
   public UltimoArray=-1;
+  public IdFormulario=0;
   ngOnChanges(changes: SimpleChanges): void {
     this.IniciaCarga=0;
     this.SetPaisCodigo();
+    this.RedireccionarFormulario()
     // this.inputElements.nativeElement.querySelector('.inputDataUsuario').focus();
   }
   ngDoCheck(): void {
@@ -198,6 +201,7 @@ export class ChatBotLandingPageComponent
   }
 
   ngOnInit(): void {
+    this.RedireccionarFormulario()
     this.IniciaCarga=0;
     this.validarTamanioVentana();
     this.validacionCambioMovil = false;
@@ -1346,6 +1350,48 @@ export class ChatBotLandingPageComponent
         count++;
       })
     }
+  }
+  RedireccionarFormulario(){
+    this.activatedRoute.params.pipe(takeUntil(this.signal$)).subscribe({
+      next: (x) => {
+        console.log(x)
+        this.IdFormulario = x['IdFormulario']
+        if(this.IdFormulario==1){
+          this.dataInicial.IdFormulario=1372
+        }
+        if(this.IdFormulario==2){
+          this.dataInicial.IdFormulario=1374
+        }
+        if(this.IdFormulario==3){
+          this.dataInicial.IdFormulario=1376
+        }
+        if(this.IdFormulario==4){
+          this.dataInicial.IdFormulario=1378
+        }
+        if(this.IdFormulario==5){
+          this.dataInicial.IdFormulario=1380
+        }
+        if(this.IdFormulario==6){
+          this.dataInicial.IdFormulario=1373
+        }
+        if(this.IdFormulario==7){
+          this.dataInicial.IdFormulario=1379
+        }
+        if(this.IdFormulario==8){
+          this.dataInicial.IdFormulario=1377
+        }
+        if(this.IdFormulario==9){
+          this.dataInicial.IdFormulario=1375
+        }
+        console.log(this.IdFormulario)
+        if(this.IdFormulario<1 || this.IdFormulario>9){
+          this.router.navigate(['error404']);
+        }
+      },
+      error: () => {
+        this.router.navigate(['error404']);
+      },
+    });
   }
 
 }
