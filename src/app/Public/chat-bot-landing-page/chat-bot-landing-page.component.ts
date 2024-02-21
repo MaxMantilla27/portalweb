@@ -1383,9 +1383,12 @@ export class ChatBotLandingPageComponent
         if(this.IdFormulario==9){
           this.dataInicial.IdFormulario=1375
         }
+        if(this.IdFormulario==10){
+          this.dataInicial.IdFormulario=1386
+        }
         console.log(this.IdFormulario)
-        if(this.IdFormulario<1 || this.IdFormulario>9){
-          this.router.navigate(['error404']);
+        if(this.IdFormulario<1 || this.IdFormulario>10){
+          this.router.navigate(['programas-certificaciones-cursos']);
         }
       },
       error: () => {
