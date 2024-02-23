@@ -146,6 +146,12 @@ export class AlumnoMatButtonComponent implements OnInit,OnChanges {
           Icon: 'account_box',
           value: '',
         });
+        this.buttons.push({
+          Nombre: 'Integra',
+          Url: '',
+          Icon: 'format_italic',
+          value: 'Integra',
+        });
 
       }
     }
@@ -156,5 +162,8 @@ export class AlumnoMatButtonComponent implements OnInit,OnChanges {
     console.log(this.DatoObservable);
     this._router.navigate(['/login']);
     this.socialAuthService.signOut().then().catch();
+  }
+  redireccionarIntegra(){
+    window.open('https://integrav5.bsginstitute.com','_blank');
   }
 }

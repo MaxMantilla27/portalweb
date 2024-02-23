@@ -43,6 +43,7 @@ export class AdministrarSesionComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this._ActivatedRoute.params.pipe(takeUntil(this.signal$)).subscribe({
       next: (x) => {
+        console.log('ENTRANDOOOOOOOOOOOOOOOOOOOOOOOO')
         this.IdPespecifico = parseInt(x['IdPespecifico']);
         console.log(this.IdPespecifico);
         this.ObtenerSesionesOnlineWebinarDocentePorIdPespecifico(

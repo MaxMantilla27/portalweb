@@ -9,16 +9,39 @@
   <span >
     <div class="matAlumnoContent">
 
-      <button *ngFor="let item of buttons" [routerLink]="item.Url" mat-menu-item class="mat-menu-content-button">
-        <ng-container *ngIf="item.value!=''">
+      <ng-container *ngFor="let item of buttons">
+        <button  *ngIf="item.value!='Integra'"   [routerLink]="item.Url" mat-menu-item class="mat-menu-content-button">
+          <ng-container *ngIf="item.value!=''">
+            <img *ngIf="item.value!='Integra'" class="imgButtonAlumno" [src]="item.value" alt="">
+          </ng-container>
+          <ng-container *ngIf="item.value==''" >
+            <i class="material-icons">{{item.Icon}}</i>
+          </ng-container>
+
+          <div>{{item.Nombre}}</div>
+        </button>
+        <button *ngIf="item.value=='Integra'" (click)="redireccionarIntegra()"mat-menu-item class="mat-menu-content-button">
+          <ng-container  >
+            <i class="material-icons">{{item.Icon}}</i>
+          </ng-container>
+
+          <div>{{item.Nombre}}</div>
+        </button>
+      </ng-container>
+
+      <!-- <button *ngFor="let item of buttons"  mat-menu-item class="mat-menu-content-button">
+        <ng-container *ngIf="item.value!='' && item.value!='Integra'" [routerLink]="item.Url" >
           <img class="imgButtonAlumno" [src]="item.value" alt="">
         </ng-container>
-        <ng-container *ngIf="item.value==''">
-          <i class="material-icons">{{item.Icon}}</i>
+        <ng-container *ngIf="item.value=='Integra'"  [routerLink]="'https://integrav5.bsginstitute.com'">
+          <img  class="material-icons">{{item.Icon}}>
+        </ng-container>
+        <ng-container  *ngIf="item.value==''" [routerLink]="item.Url">
+          <i  class="material-icons">{{item.Icon}}</i>
         </ng-container>
 
         <div>{{item.Nombre}}</div>
-      </button>
+      </button> -->
     </div>
     <div class="matAlumnoFooter">
 

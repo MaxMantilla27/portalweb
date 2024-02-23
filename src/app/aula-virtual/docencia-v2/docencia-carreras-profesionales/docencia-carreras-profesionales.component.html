@@ -42,7 +42,7 @@
 
                 <div class="cardCursoCarrera row" *ngIf="curso.Visible==true">
                   <ng-container *ngIf="curso.orden==0">
-                    <div class="col-12 col-md-8 col-lg-9 NombreCursoCarrera">{{curso.pGeneral}}</div>
+                    <div class="col-12 col-md-8 col-lg-9 NombreCursoCarrera">{{curso.cursoNombre}}</div>
                     <div class="col-12 col-md-4 col-lg-3 ButtonCursoCarrera">
                       <app-default-button [ruta]="curso.idPEspecificoHijo" [confs]="{color:'primary',titulo:'Ingresar >'}"
                         [icon]="''" [style]="'border-radius: 30px; margin: 0px; padding: 0px 30px;'"></app-default-button>
@@ -70,7 +70,7 @@
                           [strokeWidth]="3" [value]="curso.porcentage">
                         </mat-progress-spinner>
                       </div>
-                      <div>Sesiones: {{curso.sesiones}}/{{curso.sesionesFaltantes}}</div>
+                      <div>Sesiones: {{curso.sesionesFaltantes}}/{{curso.sesiones}}</div>
                     </div>
                     <div class="FechaCursosCarrera"
                       *ngIf="curso.calificacionesPendientes!=null && curso.calificacionesPendientes>0">
@@ -79,7 +79,7 @@
                     </div>
                   </ng-container>
                   <ng-container *ngIf="curso.orden!=0">
-                    <div class="col-12 col-md-8 col-lg-9 NombreCursoCarrera">{{curso.pGeneral}}</div>
+                    <div class="col-12 col-md-8 col-lg-9 NombreCursoCarrera">{{curso.cursoNombre}}</div>
                     <div class="col-12 col-md-4 col-lg-3 ButtonCursoCarrera">
                       <app-default-button [confs]="{color:'primary',titulo:'Ingresar >'}" [icon]="''"
                         [style]="'border-radius: 30px; margin: 0px; padding: 0px 30px;'"
