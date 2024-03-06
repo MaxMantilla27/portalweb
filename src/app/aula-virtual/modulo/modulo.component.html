@@ -84,7 +84,7 @@
           <div class="pad-resp"><app-modulo-recurso [Capitulo]="json.NombreCapitulo" [Estructura]="estructuraCapitulo"
             [idPEspecifico]="json.IdPEspecificoHijo" [tipo]="json.idModalidad" [idPGeneral]="json.IdPGeneralHijo"></app-modulo-recurso></div>
         </mat-tab>
-        <mat-tab *ngIf="json.idModalidad==1">
+        <mat-tab *ngIf="(json.idModalidad==1)||(json.idModalidad!=1 && IdTipoProgramaCarrera==2)">
           <ng-template mat-tab-label>
             <div class="contentHeaderM" (click)="InterraccionTab('Foro')">
               <div class="iconMat iconForo"
