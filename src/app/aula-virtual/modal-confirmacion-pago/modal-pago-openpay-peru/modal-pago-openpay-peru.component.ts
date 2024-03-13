@@ -91,6 +91,9 @@ export class ModalPagoOpenpayPeruComponent implements OnInit {
     this.signal$.next(true);
     this.signal$.complete();
   }
+  cerraModal(){
+    this.dialogRefModal.close();
+  }
   ObtenerPreProcesoPagoCuotaAlumno(){
     this._FormaPagoService.ObtenerPreProcesoPagoCuotaAlumno(this.json).pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{

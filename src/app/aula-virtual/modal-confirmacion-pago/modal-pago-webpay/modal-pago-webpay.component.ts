@@ -5,6 +5,7 @@ import { Subject, takeUntil } from 'rxjs';
 import { ChargeComponent } from 'src/app/Core/Shared/Containers/Dialog/charge/charge.component';
 import { FormaPagoService } from 'src/app/Core/Shared/Services/FormaPago/forma-pago.service';
 import { SessionStorageService } from 'src/app/Core/Shared/Services/session-storage.service';
+import { MatDialogRef } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-modal-pago-webpay',
@@ -20,6 +21,7 @@ export class ModalPagoWebpayComponent implements OnInit {
     private _SessionStorageService:SessionStorageService,
     public dialog: MatDialog,
     @Inject(MAT_DIALOG_DATA) public data: any,
+    private dialogRef: MatDialogRef<ModalPagoWebpayComponent>
   ) { }
 
   public resultPreValidacion:any
@@ -42,6 +44,9 @@ export class ModalPagoWebpayComponent implements OnInit {
     });
     console.log(this.url)
     window.location.href = this.url;
+  }
+  cerraModal(){
+    this.dialogRef.close();
   }
   ObtenerPreProcesoPagoCuotaAlumno(){
     this._FormaPagoService.ObtenerPreProcesoPagoAlumnoWebPay(this.json).pipe(takeUntil(this.signal$)).subscribe({

@@ -7,6 +7,7 @@ import { RegistroProcesoPagoAlumnoDTO, RegistroRespuestaPreProcesoPagoDTO } from
 import { FormaPagoService } from 'src/app/Core/Shared/Services/FormaPago/forma-pago.service';
 import { SessionStorageService } from 'src/app/Core/Shared/Services/session-storage.service';
 import { environment } from 'src/environments/environment';
+import { MatDialogRef } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-modal-pago-visa',
@@ -23,6 +24,7 @@ export class ModalPagoVisaComponent implements OnInit {
     private _router:Router,
     @Inject(DOCUMENT) private _document: Document,
     @Inject(MAT_DIALOG_DATA) public data: any,
+    public dialogRef: MatDialogRef<ModalPagoVisaComponent>
   ) { }
 
 
@@ -144,5 +146,8 @@ export class ModalPagoVisaComponent implements OnInit {
     this.DataComprobante.nroDoc =this.jsonSave.Comprobante==false? this.resultVisa.registroAlumno.numeroDocumento :this.jsonSave.CodigoTributario
     this.DataComprobante.razonSocial = this.jsonSave.RazonSocial
     this._SessionStorageService.SessionSetValue('comprobante',JSON.stringify(this.DataComprobante));
+  }
+  cerraModal(){
+    this.dialogRef.close();
   }
 }

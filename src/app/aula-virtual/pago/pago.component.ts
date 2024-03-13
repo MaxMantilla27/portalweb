@@ -213,7 +213,6 @@ export class PagoComponent implements OnInit,OnDestroy {
     this.CronogramaPago.registroCuota.forEach((r:any) => {
       if(r.estado==true){
         this.total+=r.cuota + r.moraCalculada
-        this.total+=r.cuota + r.moraCalculada
       }
     });
   }
@@ -472,6 +471,7 @@ export class PagoComponent implements OnInit,OnDestroy {
               width: '600px',
               data: { Identificador: sesion, IdMatricula: this.idMatricula, DatosFacturacion:this.DatosFacturacion },
               panelClass: 'dialog-Tarjeta',
+              disableClose:true
               // disableClose:true
             });
 
@@ -484,6 +484,7 @@ export class PagoComponent implements OnInit,OnDestroy {
               width: '600px',
               data: { Identificador: sesion, IdMatricula: this.idMatricula, DatosFacturacion:this.DatosFacturacion },
               panelClass: 'dialog-Tarjeta',
+              disableClose:true
               // disableClose:true
             });
           }
@@ -494,6 +495,7 @@ export class PagoComponent implements OnInit,OnDestroy {
             width: '600px',
             data: { Identificador: sesion, IdMatricula: this.idMatricula, DatosFacturacion:this.DatosFacturacion },
             panelClass: 'dialog-Tarjeta',
+            disableClose:true
             // disableClose:true
           });
           // this._router.navigate(['/AulaVirtual/MisPagos/'+this.idMatricula+'/tarjeta/'+sesion]);
@@ -505,6 +507,7 @@ export class PagoComponent implements OnInit,OnDestroy {
               width: '600px',
               data: { Identificador: sesion, IdMatricula: this.idMatricula, DatosFacturacion:this.DatosFacturacion },
               panelClass: 'dialog-Tarjeta',
+              disableClose:true
               // disableClose:true
             });
             dialogRef.afterClosed().pipe(takeUntil(this.signal$)).subscribe((result) => {
@@ -518,6 +521,7 @@ export class PagoComponent implements OnInit,OnDestroy {
               width: '600px',
               data: { Identificador: sesion, IdMatricula: this.idMatricula, DatosFacturacion:this.DatosFacturacion },
               panelClass: 'dialog-Tarjeta',
+              disableClose:true,
               maxHeight: '90vh' //you can adjust the value as per your view
               // disableClose:true
             });
@@ -534,6 +538,7 @@ export class PagoComponent implements OnInit,OnDestroy {
               width: '600px',
               data: { Identificador: sesion, IdMatricula: this.idMatricula, DatosFacturacion:this.DatosFacturacion },
               panelClass: 'dialog-Tarjeta',
+              disableClose:true
             });
             // this._router.navigate(['/AulaVirtual/MisPagos/'+this.idMatricula+'/webpay/'+sesion]);
           }
@@ -551,6 +556,7 @@ export class PagoComponent implements OnInit,OnDestroy {
               width: '600px',
               data: { Identificador: sesion, IdMatricula: this.idMatricula, DatosFacturacion:this.DatosFacturacion },
               panelClass: 'dialog-Tarjeta',
+              disableClose:true
               // disableClose:true
             });
             // this._router.navigate(['/AulaVirtual/MisPagos/'+this.idMatricula+'/izipay/'+sesion]);
@@ -561,6 +567,7 @@ export class PagoComponent implements OnInit,OnDestroy {
               width: '600px',
               data: { Identificador: sesion, IdMatricula: this.idMatricula, DatosFacturacion:this.DatosFacturacion },
               panelClass: 'dialog-Tarjeta',
+              disableClose:true
               // disableClose:true
             });
           }
@@ -570,6 +577,7 @@ export class PagoComponent implements OnInit,OnDestroy {
               width: '600px',
               data: { Identificador: sesion, IdMatricula: this.idMatricula, DatosFacturacion:this.DatosFacturacion },
               panelClass: 'dialog-Tarjeta',
+              disableClose:true,
               maxHeight: '90vh' //you can adjust the value as per your view
               // disableClose:true
             })
@@ -581,6 +589,7 @@ export class PagoComponent implements OnInit,OnDestroy {
               width: '600px',
               data: { Identificador: sesion, IdMatricula: this.idMatricula, DatosFacturacion:this.DatosFacturacion },
               panelClass: 'dialog-Tarjeta',
+              disableClose:true
               // disableClose:true
             });
             // this._router.navigate(['/AulaVirtual/MisPagos/'+this.idMatricula+'/openpayPEN/'+sesion]);
@@ -681,5 +690,8 @@ export class PagoComponent implements OnInit,OnDestroy {
         dialogRef.close();
       }
     })
+  }
+  retroceder(){
+    this._router.navigate(['/AulaVirtual/MisPagos']);
   }
 }
