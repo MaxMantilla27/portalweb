@@ -59,7 +59,7 @@ export class DocenciaV2Component implements OnInit ,OnDestroy {
     var indice=this._SessionStorageService.SessionGetValue('docencia');
     if(indice!=''){
       this.tabIndex=parseInt(indice);
-      if(this.tabIndex==2){
+      if(this.tabIndex==1){
         this.changeIndexAsincronico()
         this.tabIndex++
       }
@@ -76,28 +76,47 @@ export class DocenciaV2Component implements OnInit ,OnDestroy {
       }
     })
   }
+  // tabChanged(tabChangeEvent: MatTabChangeEvent): void {
+  //   console.log(tabChangeEvent)
+  //   this._SessionStorageService.SessionSetValue('docencia',this.tabIndex.toString());
+  //   if(this.AsincronicoActive==true){
+  //     if(tabChangeEvent.index>5 || tabChangeEvent.index <2 ){
+  //       this.AsincronicoActive=false
+  //     }else{
+  //       this._SessionStorageService.SessionSetValue('docencia','2');
+  //     }
+  //     if(tabChangeEvent.index==2){
+  //       this.tabIndex=3
+  //     }
+  //   }
+  //   if(this.CarrerasProfesionalesActive==true){
+  //     if(tabChangeEvent.index <4 ){
+  //       this.CarrerasProfesionalesActive=false
+  //     }else{
+  //       this._SessionStorageService.SessionSetValue('docencia','3');
+  //     }
+  //   }
+  // }
   tabChanged(tabChangeEvent: MatTabChangeEvent): void {
     console.log(tabChangeEvent)
     this._SessionStorageService.SessionSetValue('docencia',this.tabIndex.toString());
     if(this.AsincronicoActive==true){
-      if(tabChangeEvent.index>5 || tabChangeEvent.index <2 ){
+      if(tabChangeEvent.index>2 || tabChangeEvent.index <1 ){
         this.AsincronicoActive=false
       }else{
         this._SessionStorageService.SessionSetValue('docencia','2');
       }
-      if(tabChangeEvent.index==2){
-        this.tabIndex=3
+      if(tabChangeEvent.index==1){
+        this.tabIndex=2
       }
     }
     if(this.CarrerasProfesionalesActive==true){
-      if(tabChangeEvent.index <4 ){
+      if(tabChangeEvent.index <3 ){
         this.CarrerasProfesionalesActive=false
       }else{
         this._SessionStorageService.SessionSetValue('docencia','3');
       }
     }
-
-
   }
   changeIndexAsincronico() {
     this.AsincronicoActive=true
