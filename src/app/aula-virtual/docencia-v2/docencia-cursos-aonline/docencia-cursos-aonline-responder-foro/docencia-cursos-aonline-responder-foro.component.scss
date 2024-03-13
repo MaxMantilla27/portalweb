@@ -1,0 +1,53 @@
+.contentCursoOnline{
+  background: #f4f4f4;
+  border-radius: 5px;
+  width: 100%;
+  padding: 20px;
+  /* display: flex; */
+  margin-bottom: 30px;
+  background: #f4f4f4;
+  .EstadoCurso{
+    font-size: 12px;
+    font-weight: 600;
+  }
+  .imgAlertaActividadesPendientes{
+    width: 15px;
+    height: 15px;
+    background: url('../../../../../assets/icons/icono-notificacion-rojo.svg');
+    background-size: cover;
+    background-position: center;
+    margin-right: 10px;
+  }
+  .imgAlertaActividadesEchas{
+    width: 15px;
+    height: 15px;
+    background: url('../../../../../assets/icons/icono-check-circulo-verde.svg');
+    background-size: cover;
+    background-position: center;
+    margin-right: 10px;
+  }
+  .textActividades{
+    font-size: 12px;
+  }
+  .TitleCursoOnline{
+    font-size: 18px;
+    font-weight: 600;
+    margin-top: 20px;
+  }
+  .fechasOnline{
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    margin: 3px 0px;
+    div{
+      margin-right: 20px;
+    }
+  }
+  .EstadoSesionOnline{
+    display: flex;
+    font-size: 14px;
+  }
+}
+.contentCursoOnline:hover{
+  background: #f2f6ff;
+}
