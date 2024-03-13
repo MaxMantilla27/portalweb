@@ -9,6 +9,7 @@ import { SnackBarServiceService } from 'src/app/Core/Shared/Services/SnackBarSer
 import { HelperService } from 'src/app/Core/Shared/Services/helper.service';
 import { SessionStorageService } from 'src/app/Core/Shared/Services/session-storage.service';
 import { environment } from 'src/environments/environment';
+
 declare var OpenPay: any;
 @Component({
   selector: 'app-modal-pago-tarjeta-mexico',
@@ -91,6 +92,9 @@ export class ModalPagoTarjetaMexicoComponent implements OnInit {
       this.ObtenerPreProcesoPagoCuotaAlumno()
     }
 
+  }
+  cerraModal(){
+    this.dialogRefModal.close();
   }
   ObtenerPreProcesoPagoCuotaAlumno(){
     this._FormaPagoService.ObtenerPreProcesoPagoCuotaAlumno(this.json).pipe(takeUntil(this.signal$)).subscribe({

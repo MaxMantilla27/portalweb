@@ -77,6 +77,9 @@ export class ModalPagoMercadoPagoChileComponent implements OnInit {
   async iniciarJSMercadoPago(){
     await loadMercadoPago();
   }
+  cerraModal(){
+    this.dialogRefModal.close();
+  }
   async renderCardPaymentBrick(window:any): Promise<void> {
     const mp = new window.MercadoPago(PK_Produccion, {
       locale: "es-PE",

@@ -91,6 +91,9 @@ export class ModalPagoOpenpayColombiaComponent implements OnInit, OnDestroy {
       this.ObtenerPreProcesoPagoCuotaAlumno()
     }
   }
+  cerraModal(){
+    this.dialogRefModal.close();
+  }
   ObtenerPreProcesoPagoCuotaAlumno(){
     this._FormaPagoService.ObtenerPreProcesoPagoCuotaAlumno(this.json).pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{

@@ -13,6 +13,7 @@ import { Subject, takeUntil } from 'rxjs';
 import { RegistroRespuestaPreProcesoPagoDTO } from 'src/app/Core/Models/ProcesoPagoDTO';
 import { FormaPagoService } from 'src/app/Core/Shared/Services/FormaPago/forma-pago.service';
 import { SessionStorageService } from 'src/app/Core/Shared/Services/session-storage.service';
+import { MatDialogRef } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-modal-pago-izipay',
@@ -28,7 +29,8 @@ export class ModalPagoIzipayComponent implements OnInit, OnDestroy, AfterViewIni
     private _ActivatedRoute: ActivatedRoute,
     private _FormaPagoService: FormaPagoService,
     private _SessionStorageService: SessionStorageService,
-    private _router: Router
+    private _router: Router,
+    public dialogRefModal: MatDialogRef<ModalPagoIzipayComponent>
   ) { }
   private signal$ = new Subject();
   hidenBotom=true
@@ -69,6 +71,9 @@ export class ModalPagoIzipayComponent implements OnInit, OnDestroy, AfterViewIni
           this.iniciarScripsIzipay();
         },
       });
+  }
+  cerraModal(){
+    this.dialogRefModal.close();
   }
   iniciarScripsIzipay() {
     let script1 = this._renderer2.createElement('script');

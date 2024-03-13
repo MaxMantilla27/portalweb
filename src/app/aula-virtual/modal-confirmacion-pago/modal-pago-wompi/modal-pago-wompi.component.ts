@@ -76,6 +76,9 @@ export class ModalPagoWompiComponent implements OnInit,OnDestroy {
       this.ObtenerPreProcesoPagoCuotaAlumno()
     }
   }
+  cerraModal(){
+    this.dialogRef.close();
+  }
   ObtenerPreProcesoPagoCuotaAlumno(){
     this._FormaPagoService.ObtenerPreProcesoPagoCuotaAlumno(this.json).pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{

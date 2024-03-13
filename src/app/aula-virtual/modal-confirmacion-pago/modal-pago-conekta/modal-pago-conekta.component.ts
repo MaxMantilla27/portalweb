@@ -7,6 +7,7 @@ import { RegistroRespuestaPreProcesoPagoDTO, RegistroProcesoPagoAlumnoDTO } from
 import { FormaPagoService } from 'src/app/Core/Shared/Services/FormaPago/forma-pago.service';
 import { SessionStorageService } from 'src/app/Core/Shared/Services/session-storage.service';
 import { environment } from 'src/environments/environment';
+import { MatDialogRef } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-modal-pago-conekta',
@@ -23,7 +24,8 @@ export class ModalPagoConektaComponent implements OnInit, OnDestroy {
     private _ActivatedRoute:ActivatedRoute,
     private _FormaPagoService:FormaPagoService,
     private _SessionStorageService:SessionStorageService,
-    private _router:Router
+    private _router:Router,
+    private dialogRef: MatDialogRef<ModalPagoConektaComponent>
   ) { }
 
   public urlBase=environment.url_portal;
@@ -81,6 +83,9 @@ export class ModalPagoConektaComponent implements OnInit, OnDestroy {
       this.url+=this.json.IdentificadorTransaccion
       this.ObtenerPreProcesoPagoCuotaAlumno()
     }
+  }
+  cerraModal(){
+    this.dialogRef.close();
   }
   ObtenerPreProcesoPagoCuotaAlumno(){
     this._FormaPagoService.ObtenerPreProcesoPagoCuotaAlumno(this.json).pipe(takeUntil(this.signal$)).subscribe({

@@ -324,4 +324,7 @@ export class ModalPagoTarjetaComponent implements OnInit {
       }
     })
   }
+  cerraModal(){
+    this.dialogRefModal.close();
+  }
 }
