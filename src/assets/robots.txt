@@ -7,8 +7,4 @@ Disallow:
 User-agent: googlebot-mobile
 Disallow:
 User-agent: *
-Disallow:
-Disallow: https://bsginstitute.com/PagosPSEPayU/respuestaPagoPSE
-Sitemap: https://bsginstitute.com/sitemap.xml
-Disallow: https://img.bsgrupo.com/
-Disallow: https://prototipo.bsginstitute.com/
+Disallow: /$
