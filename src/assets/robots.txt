@@ -1,12 +1,14 @@
 ﻿User-agent: AdsBot-Google
-Disallow: 
+Disallow:
 User-agent: Googlebot
-Disallow: 
+Disallow:
 User-agent: Googlebot-image
-Disallow: 
+Disallow:
 User-agent: googlebot-mobile
-Disallow: 
+Disallow:
 User-agent: *
-Disallow: 
+Disallow:
 Disallow: https://bsginstitute.com/PagosPSEPayU/respuestaPagoPSE
 Sitemap: https://bsginstitute.com/sitemap.xml
+Disallow: https://img.bsgrupo.com/
+Disallow: https://prototipo.bsginstitute.com/
