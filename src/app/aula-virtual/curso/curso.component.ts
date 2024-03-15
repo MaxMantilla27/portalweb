@@ -421,7 +421,7 @@ export class CursoComponent implements OnInit,OnDestroy {
         });
         x.claseWebexActivo=true;
         this.curso=x
-        this.IdTipoProgramaCarrera=x.idTipoProgramaCarrera
+        this.IdTipoProgramaCarrera=x.idTipoPrograma
         this.EsCarrera=this._AlumnosTest.PermisosCarrea(this.curso.idAlumno);
         console.log('EsCarrera', this.EsCarrera)
         this.ObtenerListadoProgramaContenido();
