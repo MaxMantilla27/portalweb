@@ -344,6 +344,7 @@ export class PagoOrganicoTodosComponent implements OnInit {
   seleccionFormaPago: boolean = false;
   botonContinuar: boolean = true;
   changeForma() {
+    console.log('cambio')
     this.seleccionFormaPago = true;
     if (this.validadorPagosMultiples.length != 0) {
       if (

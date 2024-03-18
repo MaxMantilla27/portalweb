@@ -1,24 +1,25 @@
 <div class="container">
-  <h1 class="col-12 col-md-12 col-lg-12 titlePagoTarjeta">
+  <h1 class="titlePagoTarjeta">
     Confirma tu compra
   </h1>
   <div>Selecciona los siguientes campos para realizar tu compra:</div>
-  <div class="row">
-    <div class="col-6">
+  <br>
+  <div class="row" style="margin-left: 10px;">
+    <div class="col-7">
       <div class="" style="font-weight: 900">Modalidad de estudio:</div>
       <mat-form-field
-        style="width: 80%"
+        style="width: 100%"
         appearance="outline"
         (click)="EventoInteraccionSelectClick('Selecciona la modalidad')"
       >
         <mat-label>< Selecciona tu Modalidad ></mat-label>
         <mat-select
-          style="width: 100%"
+        style="font-size: 15px"
           (selectionChange)="changeModalidad()"
           [(ngModel)]="idPEspecifico"
         >
           <mat-option
-            style="width: 100%"
+            style="font-size: 15px"
             (click)="
               EventoInteraccionSelect(
                 'Selecciona la modalidad',
@@ -27,20 +28,21 @@
             "
             *ngFor="let item of modalidad"
             [value]="item.id"
+
             >{{ item.tipo }} - {{ item.fechaInicioTexto }}</mat-option
           >
         </mat-select>
       </mat-form-field>
       <div class="" style="font-weight: 900">Forma de pago:</div>
       <mat-form-field
-        style="width: 80%"
+        style="width: 100%"
         appearance="outline"
         (click)="EventoInteraccionSelectClick('Selecciona tu forma de pago')"
       >
         <mat-label>< Selecciona tu forma de pago ></mat-label>
-        <mat-select (selectionChange)="changeForma()" [(ngModel)]="idFormaPago">
+        <mat-select style="font-size: 15px" (selectionChange)="changeForma()" [(ngModel)]="idFormaPago">
           <mat-option
-            style="width: 100%"
+          style="font-size: 15px"
             *ngFor="let item of formapago; let i = index"
             [value]="i"
           >
@@ -67,6 +69,7 @@
       </mat-form-field>
       <div class="row">
         <div class="" style="font-weight: 900">Métodos de pago aceptados:</div>
+        <br>
         <div class="row mb-3">
           <span>
             Tarjeta de débito/crédito:
@@ -139,14 +142,27 @@
                 {{ infoPago.version }}
               </div>
               <div class="inicioPago">
-                INICIO: {{ modalidadSeleccionada.tipo }} - {{ modalidadSeleccionada.fechaInicioTexto }}
+                Modalidad: {{ modalidadSeleccionada.tipo }}
               </div>
             </div>
-            <div class="col-12 row tot">
-              <div class="col-8">Total a pagar</div>
-              <div class="col-4" style="text-align: right">
-                {{ infoPago.simbolo }}
+            <div class="row verionPago">
+              <div class="col" style="color: #878787;">Concepto</div>
+              <div class="col"style="color: #878787;">Monto</div>
+              {{ infoPago.codigo }}
+              <br>
+            </div>
+
+            <div class="tot"></div>
+            <div class="row verionPago " style="color: #878787;">
+              <div class="col" style="color: #878787;">Matricula</div>
+              <div class="col" style=" color: #878787;">{{ infoPago.precio | number : "1.2-2" }} {{ formaPagoSeleccion.codigo }}</div>
+            </div>
+            <br>
+            <div class="col-12 row" style="padding-top: 15px; display: flex;">
+              <div class="col" style="font-weight:600;">Total a pagar</div>
+              <div class="col" style="font-weight:600;">
                 {{ infoPago.precio | number : "1.2-2" }}
+                {{ formaPagoSeleccion.codigo }}
               </div>
             </div>
           </div>
