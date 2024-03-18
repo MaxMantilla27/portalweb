@@ -257,12 +257,24 @@
           </div>
         </div>
         <div
-          class="row mt-2"
+        class="row"
+        style="margin-top: 10px;justify-content: center;">
+          <div class="col-12 col-md-8 col-lg-6 CardPago" style="border-color: transparent !important;">
+            <p class="m-2" style="font-size: 14px !important;">
+              * El cargo del importe se efectuara en la moneda indicada en el resumen de pago.
+              El tipo de cambio estará sujeto por la entidad bancaria que utilices
+            </p>
+          </div>
+        </div>
+        <div
+          class="row mt-2 mb-2"
           style="margin-top: 40px;justify-content: center;">
-          <div class="col-12 col-md-8 col-lg-6 CardPago">
+          <div
+          [ngClass]="flagAfiliacion==true?'col-12 col-md-8 col-lg-6 cardAfiliacionPagosRecurrentesSeleccionado':'col-12 col-md-8 col-lg-6 cardAfiliacionPagosRecurrentes'"
+          class="col-12 col-md-8 col-lg-6 cardAfiliacionPagosRecurrentesSeleccionado">
             <div class="card p-3">
               <div class="form-check">
-                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                <input class="form-check-input" (change)="afiliacionPagoRecurrente()" type="checkbox" value="" id="flexCheckDefault">
                 <label class="form-check-label" for="flexCheckDefault">
                   Afiliarse a pagos recurrentes
                 </label>

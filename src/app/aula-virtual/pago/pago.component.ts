@@ -694,4 +694,14 @@ export class PagoComponent implements OnInit,OnDestroy {
   retroceder(){
     this._router.navigate(['/AulaVirtual/MisPagos']);
   }
+  flagAfiliacion:boolean=false;
+  afiliacionPagoRecurrente(){
+    this.flagAfiliacion=!this.flagAfiliacion;
+    if (this.flagAfiliacion){
+      this.OpenModalMetodoPagoSucripcion();
+    }
+    else{
+      this.OpenModalEliminarSuscripcion();
+    }
+  }
 }

@@ -195,4 +195,36 @@ table tr:last-child td {
   cursor: pointer;
   color: rgb(255, 136, 0);
 }
+.cardAfiliacionPagosRecurrentesSeleccionado{
+  border: solid 3.2px #40b3ff;
+  border-radius: 10px;
+  padding: 0px;
+  width: 25vw;
+}
+.cardAfiliacionPagosRecurrentesSeleccionado .card
+{
+  background-color: #40b3ff0d;
+}
+.cardAfiliacionPagosRecurrentesSeleccionado p{
+  margin: 0px;
+  // padding: 10px 20px;
+  font-size: 14px;
+  color: #878787;
+}
 
+.cardAfiliacionPagosRecurrentes{
+  border: solid 1.2px #00000038;
+  border-radius: 10px;
+  padding: 0px;
+  width: 25vw;
+}
+.cardAfiliacionPagosRecurrentes .card
+{
+  background-color: #ffffff;
+}
+.cardAfiliacionPagosRecurrentes p{
+  margin: 0px;
+  // padding: 10px 20px;
+  font-size: 14px;
+  color: #878787;
+}
