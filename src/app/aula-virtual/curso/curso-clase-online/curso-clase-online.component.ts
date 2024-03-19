@@ -117,9 +117,12 @@ export class CursoClaseOnlineComponent implements OnInit,OnDestroy,OnChanges {
             a.IsValid=false
             let f1=new Date(a.fechaHoraInicio);
             let f2=new Date();
-            var diference=((f1.getHours()*60)+f1.getMinutes())-((f2.getHours()*60)+f2.getMinutes());
+            let f3=new Date(a.fechaHoraFinal);
 
-            if(diference<=15){
+            var diference=((f1.getHours()*60)+f1.getMinutes())-((f2.getHours()*60)+f2.getMinutes());
+            var diferenceFin=((f1.getHours()*60)+f1.getMinutes())-((f3.getHours()*60)+f3.getMinutes());
+
+            if(diference<=15 && diference>=diferenceFin){
               if(a.urlWebex!=null){
                 a.IsValid=true;
               }
@@ -190,9 +193,11 @@ export class CursoClaseOnlineComponent implements OnInit,OnDestroy,OnChanges {
             a.IsValid=false
             let f1=new Date(a.fechaHoraInicio);
             let f2=new Date();
+            let f3=new Date(a.fechaHoraFinal);
             var diference=((f1.getHours()*60)+f1.getMinutes())-((f2.getHours()*60)+f2.getMinutes());
+            var diferenceFin=((f1.getHours()*60)+f1.getMinutes())-((f3.getHours()*60)+f3.getMinutes());
 
-          if(diference<=15){
+          if(diference<=15 && diference>=diferenceFin){
             if(a.urlWebex!=null){
               a.IsValid=true;
             }
@@ -226,8 +231,12 @@ export class CursoClaseOnlineComponent implements OnInit,OnDestroy,OnChanges {
         if(a.IsValid==false){
           let f1=new Date(a.fechaHoraInicio);
           let f2=new Date();
+          let f3=new Date(a.fechaHoraFinal);
+
           var diference=((f1.getHours()*60)+f1.getMinutes())-((f2.getHours()*60)+f2.getMinutes());
-          if(diference<=15){
+          var diferenceFin=((f1.getHours()*60)+f1.getMinutes())-((f3.getHours()*60)+f3.getMinutes());
+
+          if(diference<=15 && diference>=diferenceFin){
             if(a.urlWebex!=null){
               a.IsValid=true;
             }
