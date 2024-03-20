@@ -31,7 +31,7 @@ export class CursoClaseOnlineComponent implements OnInit,OnDestroy,OnChanges {
   public proximo:any
   columnHeader:any = {
     'fechaHoraInicio': 'Fecha',
-    'cursoNombre': 'Nombre Curso Específico' ,
+    'nombrePrograma': 'Nombre de Curso' ,
     'HoraInicio': 'Hora Inicio',
     'HoraFinal': 'Hora Fin',
     'ses': 'Sesión' };
@@ -43,10 +43,11 @@ export class CursoClaseOnlineComponent implements OnInit,OnDestroy,OnChanges {
     //'Acciones': ['buttons'],
   }
   EsButton:any={
-    'cursoNombre': true
+    'nombrePrograma': true
   }
-  OpenProx=true
+  public OpenVideoModulo=true
   public interval:any
+  public clasesTop:any
   ngOnInit(): void {
 
   }
@@ -60,7 +61,7 @@ export class CursoClaseOnlineComponent implements OnInit,OnDestroy,OnChanges {
       if(this.escurso==false){
         this.columnHeader = {
           'fechaHoraInicio': 'Fecha',
-          'cursoNombre': 'Nombre Curso Específico' ,
+          'nombrePrograma': 'Nombre de Curso' ,
           'HoraInicio': 'Hora Inicio',
           'HoraFinal': 'Hora Fin',
           'ses': 'Sesión',};
@@ -131,6 +132,18 @@ export class CursoClaseOnlineComponent implements OnInit,OnDestroy,OnChanges {
             c.HoraFinal=c.fechaHoraFinal;
             c.ses=c.orden+' de '+ c.maximo
             c.Acciones=c.urlWebex==null?'Próximamente':'Ir  a clase'
+          });
+        }
+      },
+      complete:() =>{
+        this.clasesTop=[]
+        if(this.clases!=undefined && this.clases!=null && this.clases.length){
+          let count =1;
+          this.clases.forEach((y:any) => {
+            if(count<6){
+              this.clasesTop.push(y)
+              count++;
+            }
           });
         }
       },

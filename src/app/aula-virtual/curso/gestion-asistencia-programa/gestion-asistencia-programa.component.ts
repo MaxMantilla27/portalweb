@@ -12,9 +12,11 @@ export class GestionAsistenciaProgramaComponent implements OnInit {
   @Input() IdMatriculaCabecera = 0;
   @Input() Asistencias:any;
   @Input() Cursos:any;
+  public OpenVideoModulo=true
 
   ngOnInit(): void {
     console.log(this.IdMatriculaCabecera)
+    console.log(this.Cursos)
     console.log(this.Asistencias)
     this.Asistencias.forEach((a:any) => {
       a.open=false

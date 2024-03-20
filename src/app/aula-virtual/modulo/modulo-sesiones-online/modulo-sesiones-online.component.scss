@@ -212,3 +212,43 @@
 .VinculoActividad:hover{
   text-decoration: underline;
 }
+.IframeVideo{
+  width: 100%;
+  height: 100%;
+  margin-top: 20px;
+  iframe{
+    width: 100%;
+    aspect-ratio: 5/3;
+  }
+}
+.EncabezadoCurso{
+  padding-top: 10px;
+  padding-bottom: 5px;
+}
+.cabeceraExpandCurso{
+  display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: 700;
+    padding-bottom: 6px;
+    width: 100%;
+}
+.cabeceraExpandCurso div .material-icons{
+  cursor: pointer;
+  font-size: 30px !important;
+}
+.numeroCurso{
+  font-size: 17px;
+  margin-right: 15px;
+}
+.CursosHijosCriterios{
+  background: #f4f4f4;
+  border-radius: 10px;
+}
+.CursosHijosCriterios :hover{
+  background: #F2F6FF;
+  border-radius: 10px;
+}
+.TutorialClose{
+  background: #FFEEE1 !important;
+  }

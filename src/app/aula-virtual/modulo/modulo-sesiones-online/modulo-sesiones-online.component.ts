@@ -1,4 +1,4 @@
-import { Component, HostListener, Input, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
+import { Component, HostListener, Input, OnChanges, OnDestroy, OnInit, SimpleChanges, ViewEncapsulation } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Subject, takeUntil } from 'rxjs';
 import { DatosPerfilService } from 'src/app/Core/Shared/Services/DatosPerfil/datos-perfil.service';
@@ -14,7 +14,8 @@ import { EnvioActividadComponent } from './envio-actividad/envio-actividad.compo
 @Component({
   selector: 'app-modulo-sesiones-online',
   templateUrl: './modulo-sesiones-online.component.html',
-  styleUrls: ['./modulo-sesiones-online.component.scss']
+  styleUrls: ['./modulo-sesiones-online.component.scss'],
+  encapsulation: ViewEncapsulation.None,
 })
 export class ModuloSesionesOnlineComponent implements OnInit , OnChanges,OnDestroy {
   private signal$ = new Subject();
@@ -28,6 +29,7 @@ export class ModuloSesionesOnlineComponent implements OnInit , OnChanges,OnDestr
   ) { }
   public scroll=0
   @HostListener('window:scroll', ['$event']) // for window scroll events
+  public OpenVideoModulo=true
   onScroll(e:any) {
     this.scroll=document.documentElement.scrollTop
     // if(this.videoselect>-1){

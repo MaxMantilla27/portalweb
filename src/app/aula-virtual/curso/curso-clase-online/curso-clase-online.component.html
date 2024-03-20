@@ -5,6 +5,42 @@
     <div style="font-weight: bold;">Clases Online</div>
   </div>
 </div> -->
+<div class="row " style="  padding-left: 15px !important;padding-right: 15px !important" >
+  <div class="col-md-12" style="border: 1px solid #c4c4c4;border-radius: 10px;margin-bottom: 10px;">
+    <div class="CursosDetalle">
+      <div class="CursosHijosCriterios row"  [ngClass]="{'TutorialClose':OpenVideoModulo==false}">
+        <div class="EncabezadoCurso">
+          <div class="cabeceraExpandCurso" [ngClass]="{'cabeceraExpandCursoOpen':OpenVideoModulo==true}">
+            <div class="col-11" style="display:flex">
+              <div class="col-1" style="color: red;font-weight: bold;">!Nuevo!</div>
+              <div class="col-9" style="margin-left: 10px;">
+                Se ha realizado una actualización en este Módulo
+              </div>
+              <div class="col-2"  style="font-size: 16px;text-align: center;color: #0684F3;" >
+                <div *ngIf="OpenVideoModulo==true">
+                  Ocultar Tutorial
+                </div>
+                <div *ngIf="OpenVideoModulo==false">
+                  Mostrar Tutorial
+                </div>
+
+              </div>
+            </div>
+            <div>
+              <i class="material-icons no-seleccionable " *ngIf="OpenVideoModulo==false"
+                (click)="OpenVideoModulo=true">keyboard_arrow_down</i>
+              <i class="material-icons no-seleccionable " *ngIf="OpenVideoModulo==true"
+                (click)="OpenVideoModulo=false">keyboard_arrow_up</i>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="IframeVideo" *ngIf="OpenVideoModulo" >
+        <iframe src="https://player.vimeo.com/video/924831810?h=2dd7ef62e0" frameborder="0"></iframe>
+      </div>
+    </div>
+  </div>
+</div>
 <ng-container *ngIf="(clases==undefined || clases.length==0) &&  (actual==undefined || actual.length==0)  && (proximo==undefined || proximo.length==0) ">
   <div style="text-align: left; margin-bottom: 20px;">
     Por el momento no cuenta con clases online
@@ -55,19 +91,21 @@
     </div>
   </div>
 </ng-container>
-<ng-container *ngIf="clases!=undefined && clases.length>0">
-  <div class="proximasSesionesOnline" (click)="OpenProx=!OpenProx">
-    <div class="textoProximas">Próximas sesiones</div>
-    <div class="iconProximas">
+<ng-container *ngIf="clasesTop!=undefined && clasesTop.length>0">
+  <div class="proximasSesionesOnline">
+    <div class="textoProximas">Próximas 05 sesiones</div>
+    <!-- <div class="iconProximas">
       <ng-container *ngIf="OpenProx==false"><i class="material-icons">keyboard_arrow_down</i></ng-container>
       <ng-container *ngIf="OpenProx==true"><i class="material-icons">keyboard_arrow_up</i></ng-container>
-    </div>
+    </div> -->
   </div>
-  <ng-container *ngIf="OpenProx==true">
+  <!-- <ng-container *ngIf="OpenProx==true">
 
-    <app-table-v2  *ngIf="clases!=undefined" [tableData]="clases" [columnHeader]="columnHeader" [tipoContenido]="TipoContenido" [Paginador]="false"
+
+  </ng-container> -->
+  <app-table-v2  *ngIf="clasesTop!=undefined" [tableData]="clasesTop" [columnHeader]="columnHeader" [tipoContenido]="TipoContenido" [Paginador]="false"
       [StyleContent]="'    font-size: 12px;padding: 10px;'"
       (EsButtonNormal)="IrAcurso($event)" [EsButton]="EsButton"></app-table-v2>
-  </ng-container>
 </ng-container>
+
 

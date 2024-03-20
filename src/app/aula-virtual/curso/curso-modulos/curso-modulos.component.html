@@ -1,3 +1,39 @@
+<div class="row "  style="  padding-left: 15px !important;padding-right: 15px !important">
+  <div class="col-md-12" style="border: 1px solid #c4c4c4;border-radius: 10px;margin-bottom: 10px;">
+    <div class="CursosDetalle">
+      <div class="CursosHijosCriterios row"  [ngClass]="{'TutorialClose':OpenVideoModulo==false}">
+        <div class="EncabezadoCurso">
+          <div class="cabeceraExpandCurso" [ngClass]="{'cabeceraExpandCursoOpen':OpenVideoModulo==true}">
+            <div class="col-11" style="display:flex">
+              <div class="col-1" style="color: red;font-weight: bold;">!Nuevo!</div>
+              <div class="col-9" style="margin-left: 10px;">
+                Se ha realizado una actualización en este Módulo
+              </div>
+              <div class="col-2"  style="font-size: 16px;text-align: center;color: #0684F3;" >
+                <div *ngIf="OpenVideoModulo==true">
+                  Ocultar Tutorial
+                </div>
+                <div *ngIf="OpenVideoModulo==false">
+                  Mostrar Tutorial
+                </div>
+
+              </div>
+            </div>
+            <div>
+              <i class="material-icons no-seleccionable " *ngIf="OpenVideoModulo==false"
+                (click)="OpenVideoModulo=true">keyboard_arrow_down</i>
+              <i class="material-icons no-seleccionable " *ngIf="OpenVideoModulo==true"
+                (click)="OpenVideoModulo=false">keyboard_arrow_up</i>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="IframeVideo" *ngIf="OpenVideoModulo" >
+        <iframe src="https://player.vimeo.com/video/924831688?h=67fa7b14a9" frameborder="0"></iframe>
+      </div>
+    </div>
+  </div>
+</div>
 <div class="contentCursoModulo" *ngFor="let item of programEstructura.listaCursoMatriculado; let i=index">
   <div class="headerCursoModulo row">
     <div class="col-12 col-md-8 col-lg-10 row" style="align-items: flex-start;">

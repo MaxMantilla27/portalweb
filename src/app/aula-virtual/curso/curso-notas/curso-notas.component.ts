@@ -35,6 +35,8 @@ export class CursoNotasComponent implements OnInit,OnDestroy {
   public CursosCriteriosOnline:any;
   public CursosCriteriosOnlineNotas:any;
   public NombreCursoOnline=''
+  public OpenVideoModulo=true
+
   ngOnInit(): void {
     this.CursosCriteriosOnlineNotas=[];
     this.PromedioFinal=0;
@@ -62,6 +64,8 @@ export class CursoNotasComponent implements OnInit,OnDestroy {
             x.nombreModalidad='Online Asincrónico';
             x.idPEspecifico=x.idPEspecificoHijo
             x.notaCurso=Math.round(x.notaCurso)
+            x.nombrePrograma=x.nombrePGeneral
+            x.idEstadoPEspecifico=x.idEstadoPEspecifico
             this.CursosCriterios.push(x)
             this.PromedioFinal=this.PromedioFinal+x.notaCurso;
             cont++
@@ -165,6 +169,8 @@ export class CursoNotasComponent implements OnInit,OnDestroy {
                 x.notaCurso=Math.round(this.PromedioFinalOnlineCurso);
                 x.idPEspecifico=y.idPEspecifico
                 x.nombrePEspecifico=this.NombreCursoOnline
+                x.nombrePrograma=y.nombrePGeneral
+                x.idEstadoPEspecifico=y.idEstadoPEspecifico
                 x.nombreModalidad='Online Sincrónico';
                 this.CursosCriterios.push(x)
                 let cont=0;

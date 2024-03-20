@@ -32,7 +32,7 @@
          </ng-template>
          <th>{{item.fechaHoraInicio | date:"dd/MM/yyyy"}}</th>
          <ng-template [ngIf]="item.asistio=== 1"><th>Asistió</th></ng-template>
-         <ng-template [ngIf]="item.asistio=== 0"><th>Faltó</th></ng-template>
+         <ng-template [ngIf]="item.asistio=== 0"><th>No asistió</th></ng-template>
          <ng-template [ngIf]="item.asistio=== null"><th>Pendiente</th></ng-template>
         </tr>
        </ng-container>

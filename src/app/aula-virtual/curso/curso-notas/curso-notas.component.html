@@ -1,3 +1,39 @@
+<div class="row " style="  padding-left: 15px !important;padding-right: 15px !important" >
+  <div class="col-md-12" style="border: 1px solid #c4c4c4;border-radius: 10px;margin-bottom: 10px;">
+    <div class="CursosDetalle">
+      <div class="CursosHijosCriterios row"  [ngClass]="{'TutorialClose':OpenVideoModulo==false}">
+        <div class="EncabezadoCurso">
+          <div class="cabeceraExpandCurso" [ngClass]="{'cabeceraExpandCursoOpen':OpenVideoModulo==true}">
+            <div class="col-11" style="display:flex">
+              <div class="col-1" style="color: red;font-weight: bold;">!Nuevo!</div>
+              <div class="col-9" style="margin-left: 10px;">
+                Se ha agregado este Módulo
+              </div>
+              <div class="col-2"  style="font-size: 16px;text-align: center;color: #0684F3;" >
+                <div *ngIf="OpenVideoModulo==true">
+                  Ocultar Tutorial
+                </div>
+                <div *ngIf="OpenVideoModulo==false">
+                  Mostrar Tutorial
+                </div>
+
+              </div>
+            </div>
+            <div>
+              <i class="material-icons no-seleccionable " *ngIf="OpenVideoModulo==false"
+                (click)="OpenVideoModulo=true">keyboard_arrow_down</i>
+              <i class="material-icons no-seleccionable " *ngIf="OpenVideoModulo==true"
+                (click)="OpenVideoModulo=false">keyboard_arrow_up</i>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="IframeVideo" *ngIf="OpenVideoModulo" >
+        <iframe src="https://player.vimeo.com/video/924831724?h=9869c34c04" frameborder="0"></iframe>
+      </div>
+    </div>
+  </div>
+</div>
 <div class="ListaNotas">
   <div class="row" style="margin-top: 10px;margin-bottom: 10px;">
     <div class="col-1"style="text-align: center;border-radius: 2px;">
@@ -16,15 +52,15 @@
     <div class="row "  >
       <div class="col-md-12" style="border: 1px solid #c4c4c4;border-radius: 10px;margin-bottom: 10px;">
         <div class="CursosDetalle">
-          <div class="row CursosHijosCriterios">
+          <div class="CursosHijosCriterios row">
             <div class="EncabezadoCurso">
               <div class="cabeceraExpandCurso" [ngClass]="{'cabeceraExpandCursoOpen':CursoAbierto==i}">
                 <div class="col-11" style="display:flex">
-                  <div class="col-1 NumeroCurso" style="padding-left: 15px;" >
+                  <div class="NumberCursoModuloCambio col-1">
                     {{i+1}}
                   </div>
-                  <div class="col-9" >
-                    <div style="font-size: 16px;" [innerHtml]="Cursos.nombrePEspecifico | safeHtml">
+                  <div class="col-9" style="margin-left: 10px;">
+                    <div style="font-size: 14px;" [innerHtml]="Cursos.nombrePrograma | safeHtml">
 
                     </div>
                     <div style="font-size: 13px;color: #0684F3;" [innerHtml]="Cursos.nombreModalidad | safeHtml">
@@ -32,7 +68,16 @@
                     </div>
 
                   </div>
-                  <div class="col-2"  style="font-size: 16px;text-align: center;color: #0684F3;" >
+                  <div *ngIf="Cursos.idEstadoPEspecifico==1 && Cursos.nombreModalidad!='Online Asincrónico'" class="col-2"  style="font-size: 16px;text-align: center;color: #0684F3;" >
+                    {{Cursos.notaCurso}}
+                  </div>
+                  <div *ngIf="Cursos.idEstadoPEspecifico==2 && Cursos.nombreModalidad!='Online Asincrónico'" class="col-2"  style="font-size: 16px;text-align: center;color: #0684F3;" >
+                    En Ejecución
+                  </div>
+                  <div *ngIf="Cursos.idEstadoPEspecifico!=1 && Cursos.idEstadoPEspecifico!=2 && Cursos.nombreModalidad!='Online Asincrónico'" class="col-2"  style="font-size: 16px;text-align: center;color: #0684F3;" >
+                    Sin Iniciar
+                  </div>
+                  <div *ngIf="Cursos.nombreModalidad=='Online Asincrónico'" class="col-2"  style="font-size: 16px;text-align: center;color: #0684F3;" >
                     {{Cursos.notaCurso}}
                   </div>
                 </div>

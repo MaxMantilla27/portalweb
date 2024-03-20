@@ -60,6 +60,8 @@ export class CursoModulosComponent implements OnInit, OnChanges,OnDestroy {
   public cargaProgrso=false
   public progressProgram:any
   @Input() idMatricula = 0;
+  public OpenVideoModulo=true
+
   ngOnInit(): void {
     if (this.idMatricula > 0) {
      // this.ObtenerProgresoAulaVirtual();

@@ -129,3 +129,16 @@
   background-position: center;
   margin-right: 10px;
 }
+.IframeVideo{
+  width: 100%;
+  height: 100%;
+  margin-top: 20px;
+  iframe{
+    width: 100%;
+    aspect-ratio: 5/3;
+  }
+}
+.TutorialClose{
+  background: #FFEEE1 !important;
+  }
+
