@@ -1,0 +1,39 @@
+<div class="row" style="    margin-bottom: 20px;
+font-weight: 600;">
+  <div class="col-6 col-md-3 col-lg-3">Sesión: {{data.sesion>9?data.sesion:'0'+data.sesion}}</div>
+  <div class="col-6 col-md-9 col-lg-9">{{data.nombre}}
+    {{data.orden>9?data.orden:'0'+data.orden}} - {{data.titulo}}</div>
+</div>
+<ng-container *ngIf="cuestionario.length==0 && cargando==true">
+  <div class="row"
+    style="display: flex; justify-content: center;align-items: center;text-align: center; height: 15rem;">
+    <div class="col-12" style="display: flex;justify-content: center;">
+      <mat-spinner></mat-spinner>
+    </div>
+    <div class="col-12">
+      Cargando información ...
+    </div>
+  </div>
+</ng-container>
+<ng-container *ngIf="cuestionario.length==0 && cargando==false ">
+  <div style="display: flex;justify-content: center;align-items: center; height: 15rem;">
+    No hay registros.
+  </div>
+</ng-container>
+<app-table-v2 *ngIf="cuestionario!=undefined && cuestionario.length>0" [tableData]="cuestionario"
+  [columnHeader]="columnHeader"  [tipoContenido]="TipoContenido" [Paginador]="false"
+  [StyleContent]="'     font-size: 12px;padding: 10px;'" (ButtonClick)="Open($event)"></app-table-v2>
+
+
+<div class="buttonsRegistroNota">
+  <div style="margin: 0px 5px;">
+    <app-default-button [confs]="{color:'primary',titulo:'Volver'}"
+      [style]="'width: 100%;'"
+      (ButtoclClick)="Volver.emit()" [icon]="''"></app-default-button>
+  </div>
+  <!-- <div style="margin: 0px 5px;">
+      <app-default-button [confs]="{color:'danger',titulo:'cancelar'}"
+      [style]="'width: 100%;'" [icon]="'close'" (ButtoclClick)="charge==false?dialogRef.close():charge=true"></app-default-button>
+    </div> -->
+</div>
+

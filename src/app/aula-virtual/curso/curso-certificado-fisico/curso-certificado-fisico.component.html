@@ -1,158 +1,213 @@
 <ng-container *ngIf="datosCertificado!=undefined">
-
+<div class="container">
+  <div>
   <div class="cursoTitle">{{curso.programaGeneral}}</div>
-  <div class="row" style="align-items: center;" style="margin: 30px 0px 0px;">
-    <div class="tipoIndicacionTitle col-12 col-md-12 col-lg-12" style="margin:0px;">
-      <img class="ImgIndicacionesContent" src="../../../../assets/icons/certificado-fisico-26.svg">
-      <div><strong> Certificado Fisico</strong></div>
-    </div>
-    <div class="col-12 col-md-12 col-lg-12" style="margin-top: 20px;">
-      Para solicitar tu certificado fisico,sigue los siguientes pasos:
+  <!--  Element Card title -->
 
-      <form (submit)="GenerarSolicitudCertificadoFisico()" [formGroup]="userForm">
+
+  <!-- <button (click)="openDialog()">
+      Hola
+  </button> -->
+
+
+  <div class="col-12">
+  <mat-card-title-group>
+    <div class="cardGreen">
+      <img class="ImgMedio" src="../../../../assets/icons/icono-medio-ambiente-verde.svg">
+      <div class="titleMedio">
+
+          <p>Considera solicitar tu certificado impreso, solo si es necesario;
+          recuerda que puedes acceder a tu certificado digital en cualquier
+          momento.</p>
+          <p>“Cuidemos el medio ambiente”.</p>
+      </div>
+    </div>
+  </mat-card-title-group>
+
+  <mat-card-title-group>
+    <div class="cardTitle row" style="display: flex;width: 100%;">
+      <div class="col-12 col-lg-9">
+        <img class="ImgIndicacionesContent" src="../../../../assets/icons/certificado-fisico-26.svg">
+        <div class="title">Certificado fisico</div>
+      </div>
+      <div class="col-12 col-lg-3" style="justify-content: right;display: flex;">
+        <button *ngIf="buttonEnviar == true " (click)="showData()" id="buttonEnviar" class="butonSol" mat-button>
+          Solicitar >
+        </button>
+      </div>
+    </div>
+  </mat-card-title-group>
+  </div>
+
+  <div  class="col-12">
+      <div *ngIf="formEnvio == true" id="formEnvio">
+      <form class ="form" (submit)="GenerarSolicitudCertificadoFisico()" [formGroup]="userForm">
         <div class="containerform">
-          <div class="headerFormSolicitu" [ngStyle]="{'color':expacion[0]==true?'#106fc1':''}">
-            <div class="index">1</div>
-            <div style="display: flex;
-            width: calc( 100% - 50px);
-            justify-content: space-between;border-bottom: 1px solid #b9b9b9;">
-              <div>lugar de envio</div>
-              <i *ngIf="!expacion[0]" (click)="expacion[0]=true" class="material-icons">keyboard_arrow_down</i>
-              <i *ngIf="expacion[0]" (click)="expacion[0]=false" class="material-icons">keyboard_arrow_up</i>
+          <div class="headerFormSolicitudheader">
+            <div style="display: flex; width: calc( 100% - 20px); justify-content: space-between;">
+              <div class="row" style="width: 100%;">
+                <div class="col-12 col-lg-8">
+                  Datos de Envío
+                </div>
+                <div *ngIf="IdEstadoCertificadoFisico==9" class="col-12 col-lg-4" style="display: flex;">
+                  <div style="color: red; font-weight: bold;margin-right: 5px;">
+                    Observado
+                  </div>
+                  <div>
+                    <i class="material-icons" style="color: red;">error</i>
+                  </div>
+                </div>
+              </div>
+            <div [ngStyle]="{'color':expacion[0]==true?'#106fc1':''}">
+              <i *ngIf="!expacion[0]" (click)="expacion[0]=true" class="material-icons" style="font-size: 26px!important;">keyboard_arrow_down</i>
+              <i *ngIf="expacion[0]" (click)="expacion[0]=false" class="material-icons" style="font-size: 26px!important;">keyboard_arrow_up</i>
             </div>
+          </div>
           </div>
           <div class="contentform" *ngIf="expacion[0]">
 
-            <div class="row rowFormCertFisico" style="align-items: center;">
-              <label for="" class="col-4 col-md-3 col-lg-3">Pa&iacute;s:</label>
-              <div class="col-8 col-md-9 col-lg-9">
-                <mat-form-field appearance="outline" [floatLabel]="'always'">
-                  <mat-label>Pa&iacute;s</mat-label>
-                  <mat-select formControlName="Pais" placeholder="Pa&iacute;s">
-                    <mat-option *ngFor="let option of combosPerfil.listaPais" [value]="option.idPais">{{option.pais}}
-                    </mat-option>
-                  </mat-select>
-                  <mat-error *ngIf="userForm.invalid">Debe ingresar su país</mat-error>
-                </mat-form-field>
+            <mat-card-title-group>
+              <div class="cardTitleDevuelto">
+                Revise sus datos de envío ya que pueda ser que la información registrada sea
+incorrecta o este incompleta.
               </div>
+            </mat-card-title-group>
 
-              <label for="" class="col-4 col-md-3 col-lg-3">Región:</label>
-              <div class="col-8 col-md-9 col-lg-9">
-                <mat-form-field appearance="outline" [floatLabel]="'always'">
-                  <mat-label>Región</mat-label>
-                  <input type="text" placeholder="Region" formControlName="Region" matInput />
-                  <mat-error *ngIf="userForm.invalid">Debe ingresar su región</mat-error>
-                </mat-form-field>
-              </div>
-              <label for="" class="col-4 col-md-3 col-lg-3">Distrito:</label>
-              <div class="col-8 col-md-9 col-lg-9">
-                <mat-form-field appearance="outline" [floatLabel]="'always'">
-                  <mat-label>Distrito</mat-label>
-                  <input type="text" placeholder="Distrito" formControlName="Distrito" matInput />
-                  <mat-error *ngIf="userForm.invalid">Debe ingresar su distrito</mat-error>
-                </mat-form-field>
-              </div>
-              <label for="" class="col-4 col-md-3 col-lg-3">Ciudad:</label>
-              <div class="col-8 col-md-9 col-lg-9">
-                <mat-form-field appearance="outline" [floatLabel]="'always'">
-                  <mat-label>Ciudad</mat-label>
-                  <input type="text" placeholder="Ciudad" formControlName="Ciudad" matInput />
-                  <mat-error *ngIf="userForm.invalid">Debe ingresar su ciudad</mat-error>
-                </mat-form-field>
-              </div>
-              <label for="" class="col-4 col-md-3 col-lg-3">Direcci&oacute;n:</label>
-              <div class="col-8 col-md-9 col-lg-9">
-                <mat-form-field appearance="outline" [floatLabel]="'always'">
-                  <mat-label>Direcci&oacute;n</mat-label>
-                  <input type="text" placeholder="Direcci&oacute;n" formControlName="Direccion" matInput />
-                  <mat-error *ngIf="userForm.invalid">Debe ingresar su direccion</mat-error>
-                </mat-form-field>
-              </div>
-              <label for="" class="col-4 col-md-3 col-lg-3">Código postal:</label>
-              <div class="col-8 col-md-9 col-lg-9">
-                <mat-form-field appearance="outline" [floatLabel]="'always'">
-                  <mat-label>Código postal:</mat-label>
-                  <input type="text" placeholder="Codigo" formControlName="Codigo" matInput />
-                  <mat-error *ngIf="userForm.invalid">Debe ingresar su c&oacute;digo postal</mat-error>
-                </mat-form-field>
-              </div>
-              <label for="" class="col-4 col-md-3 col-lg-3">Referencia:</label>
-              <div class="col-8 col-md-9 col-lg-9">
-                <mat-form-field appearance="outline" [floatLabel]="'always'">
-                  <mat-label>Referencia</mat-label>
-                  <input type="text" placeholder="Referencia" formControlName="Referencia" matInput />
-                  <mat-error *ngIf="userForm.invalid">Debe ingresar una referencia de su direccion</mat-error>
-                </mat-form-field>
-              </div>
-            </div>
-          </div>
-          <div class="headerFormSolicitu" [ngStyle]="{'color':expacion[1]==true?'#106fc1':''}">
-            <div class="index">2</div>
+            <p>Completa los siguientes campos para solicitar tu certificado fisico</p>
+          <div class="headerFormSolicitu" style="border-bottom: 1px solid #b9b9b9;" [ngStyle]="{'color':expacion[1]==true?'#106fc1':''}">
+            <div class="index">1</div>
             <div style="display: flex;
             width: calc( 100% - 50px);
-            justify-content: space-between;border-bottom: 1px solid #b9b9b9;">
-              <div>Envio a nombre de</div>
+            justify-content: space-between;">
+              <div>Dirección de envio</div>
               <i *ngIf="!expacion[1]" (click)="expacion[1]=true" class="material-icons">keyboard_arrow_down</i>
               <i *ngIf="expacion[1]" (click)="expacion[1]=false" class="material-icons">keyboard_arrow_up</i>
             </div>
           </div>
           <div class="contentform" *ngIf="expacion[1]">
+            <!-- <div class="row rowFormCertFisico" > -->
 
+            <div>
+            <div class="prueba row">
+                  <div class="left col-md-12">
+                    <!-- <label for="">Pa&iacute;s:</label> -->
+                    <mat-form-field appearance="outline" [floatLabel]="'always'">
+                      <mat-label >Pa&iacute;s</mat-label>
+                      <mat-select formControlName="Pais" placeholder="Pa&iacute;s">
+                        <mat-option *ngFor="let option of combosPerfil.listaPais" [value]="option.idPais">{{option.pais}}
+                        </mat-option>
+                      </mat-select>
+                      <mat-error *ngIf="userForm.invalid">Debe ingresar su país</mat-error>
+                    </mat-form-field>
+                    <!-- <div class="left"> -->
+                    <!-- <label for="">Distrito:</label> -->
+                    <mat-form-field style="margin-top: 30px;" appearance="outline" [floatLabel]="'always'">
+                      <mat-label>Ciudad/ Localidad</mat-label>
+                      <input type="text" placeholder="Distrito" formControlName="Distrito" matInput />
+                      <mat-error *ngIf="userForm.invalid">Debe ingresar su distrito</mat-error>
+                    </mat-form-field>
+
+                  <!-- </div> -->
+                </div>
+
+                 <div class="right col-md-12">
+                    <!-- <label for="">Región:</label> -->
+
+                    <mat-form-field appearance="outline" [floatLabel]="'always'">
+                      <mat-label >Departamento/Estado/Región/Provincia</mat-label>
+                      <input type="text" placeholder="Region" formControlName="Region" matInput />
+                      <mat-error *ngIf="userForm.invalid">Debe ingresar su región</mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field style="margin-top: 30px;" appearance="outline" [floatLabel]="'always'">
+                      <mat-label>Código postal:</mat-label>
+                      <input type="text" placeholder="Codigo" formControlName="Codigo" matInput />
+                      <mat-error *ngIf="userForm.invalid">Debe ingresar su c&oacute;digo postal</mat-error>
+                    </mat-form-field>
+                      <!-- <label for="">Ciudad:</label> -->
+                      <!-- <mat-form-field class="" appearance="outline" [floatLabel]="'always'">
+                          <mat-label>Ciudad</mat-label>
+                          <input type="text" placeholder="Ciudad" formControlName="Ciudad" matInput />
+                          <mat-error *ngIf="userForm.invalid">Debe ingresar su ciudad</mat-error>
+                      </mat-form-field> -->
+                  </div>
+
+
+                <mat-form-field style="margin-top: 30px;" appearance="outline" [floatLabel]="'always'">
+                    <mat-label>Direcci&oacute;n(Numero de casa, Nombre de calle, avenida)</mat-label>
+                    <input type="text" placeholder="Direcci&oacute;n" formControlName="Direccion" matInput />
+                    <mat-error *ngIf="userForm.invalid">Debe ingresar su direccion</mat-error>
+                </mat-form-field>
+
+
+
+                  <mat-form-field style="margin-top: 30px;" appearance="outline" [floatLabel]="'always'">
+                    <mat-label>Referencia:</mat-label>
+                    <input type="text" placeholder="Referencia" formControlName="Referencia" matInput />
+                    <mat-error *ngIf="userForm.invalid">Debe ingresar una referencia de su direccion</mat-error>
+                  </mat-form-field>
+            </div>
+            </div>
+          </div>
+          <div class="headerFormSolicitu" style="border-bottom: 1px solid #b9b9b9;" [ngStyle]="{'color':expacion[2]==true?'#106fc1':''}">
+            <div class="index">2</div>
+            <div style="display: flex;
+            width: calc( 100% - 50px);
+            justify-content: space-between;">
+              <div>Nombre del destinatario</div>
+              <i *ngIf="!expacion[2]" (click)="expacion[2]=true" class="material-icons">keyboard_arrow_down</i>
+              <i *ngIf="expacion[2]" (click)="expacion[2]=false" class="material-icons">keyboard_arrow_up</i>
+            </div>
+          </div>
+
+          <div class="contentform" *ngIf="expacion[2]">
             <div class="row rowFormCertFisico" style="align-items: center;">
-              <div class="col-12 col-md-12 col-lg-12" style="display: flex;justify-content: right;">
+              <div *ngIf="IdEstadoCertificadoFisico==0 ||IdEstadoCertificadoFisico==5 ||IdEstadoCertificadoFisico==9">
+                <mat-checkbox color="primary" formControlName="RecepcionPersonal" class="terminos" (click)="HabilitarInputs()">
+                  Yo recibiré el certificado, utilizar mis datos personales para el destinatario</mat-checkbox>
+              </div>
+              <div *ngIf="IdEstadoCertificadoFisico!=0 && IdEstadoCertificadoFisico!=5 && IdEstadoCertificadoFisico!=9">
+                <mat-checkbox color="primary" formControlName="RecepcionPersonal" class="terminos">
+                  Yo recibiré el certificado, utilizar mis datos personales para el destinatario</mat-checkbox>
+              </div>
+              <div class="prueba">
+                <div class="left">
+                  <mat-form-field appearance="outline" [floatLabel]="'always'">
+                    <mat-label>Nombres</mat-label>
+                    <input type="text" placeholder="Nombres" formControlName="Nombres" matInput />
+                    <mat-error *ngIf="userForm.invalid">Debe ingresar sus nombres</mat-error>
+                  </mat-form-field>
 
-                <button mat-raised-button
-                  (click)="HabilitarInputs()"
-                  class="btn-habilitar" type="button"
-                  [disabled]="datosCertificado.idSolicitudCertificadoFisico!=null || datosCertificado.idSolicitudCertificadoFisico>0"
-                  style="margin-right: 20px;"> <ng-container *ngIf="disableDatos==true">Editar Datos <i class="material-icons">edit</i></ng-container>
-                  <ng-container *ngIf="disableDatos==false">Deshabilitar Datos <i class="material-icons">edit_off</i></ng-container>
+                  <mat-form-field style="margin-top: 30px;" appearance="outline" [floatLabel]="'always'">
+                    <mat-label>Tipo de documento</mat-label>
+                    <mat-select formControlName="TipoDocumento" placeholder="Tipo de documento">
+                      <mat-option *ngFor="let option of combosPerfil.listaTipoDocumento" [value]="option.codigoGuid">
+                        {{option.tipoDocumento}}</mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="userForm.invalid">Debe seleccionar el tipo de documento</mat-error>
+                  </mat-form-field>
 
+                  <mat-form-field style="margin-top: 30px;" appearance="outline" [floatLabel]="'always'">
+                    <mat-label>Tel&eacute;fono Movil</mat-label>
+                    <input type="text" placeholder="Tel&eacute;fono Movil" formControlName="Movil" matInput />
+                    <mat-error *ngIf="userForm.invalid">Debe ingresar su telefono</mat-error>
+                  </mat-form-field>
+                </div>
 
-                </button>
-              </div>
-              <label for="" class="col-4 col-md-3 col-lg-3">Nombres:</label>
-              <div class="col-8 col-md-9 col-lg-9">
-                <mat-form-field appearance="outline" [floatLabel]="'always'">
-                  <mat-label>Nombres</mat-label>
-                  <input type="text" placeholder="Nombres" formControlName="Nombres" matInput />
-                  <mat-error *ngIf="userForm.invalid">Debe ingresar sus nombres</mat-error>
-                </mat-form-field>
-              </div>
-              <label for="" class="col-4 col-md-3 col-lg-3">Apellido:</label>
-              <div class="col-8 col-md-9 col-lg-9">
-                <mat-form-field appearance="outline" [floatLabel]="'always'">
-                  <mat-label>Apellido</mat-label>
-                  <input type="text" placeholder="Apellido" formControlName="Apellido" matInput />
-                  <mat-error *ngIf="userForm.invalid">Debe ingresar sus apellidos</mat-error>
-                </mat-form-field>
-              </div>
-              <label for="" class="col-4 col-md-3 col-lg-3">Tipo de documento:</label>
-              <div class="col-8 col-md-9 col-lg-9">
-                <mat-form-field appearance="outline" [floatLabel]="'always'">
-                  <mat-label>Tipo de documento</mat-label>
-                  <mat-select formControlName="TipoDocumento" placeholder="Tipo de documento">
-                    <mat-option *ngFor="let option of combosPerfil.listaTipoDocumento" [value]="option.codigoGuid">
-                      {{option.tipoDocumento}}</mat-option>
-                  </mat-select>
-                  <mat-error *ngIf="userForm.invalid">Debe seleccionar el tipo de documento</mat-error>
-                </mat-form-field>
-              </div>
-              <label for="" class="col-4 col-md-3 col-lg-3">N&uacute;mero de documento:</label>
-              <div class="col-8 col-md-9 col-lg-9">
-                <mat-form-field appearance="outline" [floatLabel]="'always'">
-                  <mat-label>N&uacute;mero de documento</mat-label>
-                  <input type="text" placeholder="N&uacute;mero de documento" formControlName="Documento" matInput />
-                  <mat-error *ngIf="userForm.invalid">Debe ingresar su numero de documento</mat-error>
-                </mat-form-field>
-              </div>
-              <label for="" class="col-4 col-md-3 col-lg-3">Tel&eacute;fono Movil:</label>
-              <div class="col-8 col-md-9 col-lg-9">
-                <mat-form-field appearance="outline" [floatLabel]="'always'">
-                  <mat-label>Tel&eacute;fono Movil</mat-label>
-                  <input type="text" placeholder="Tel&eacute;fono Movil" formControlName="Movil" matInput />
-                  <mat-error *ngIf="userForm.invalid">Debe ingresar su telefono</mat-error>
-                </mat-form-field>
+               <div class="right">
+                  <mat-form-field appearance="outline" [floatLabel]="'always'">
+                    <mat-label>Apellido</mat-label>
+                    <input type="text" placeholder="Apellido" formControlName="Apellido" matInput />
+                    <mat-error *ngIf="userForm.invalid">Debe ingresar sus apellidos</mat-error>
+                  </mat-form-field>
+
+                  <mat-form-field style="margin-top: 30px;" appearance="outline" [floatLabel]="'always'">
+                    <mat-label>N&uacute;mero de documento</mat-label>
+                    <input type="text" placeholder="N&uacute;mero de documento" formControlName="Documento" matInput />
+                    <mat-error *ngIf="userForm.invalid">Debe ingresar su numero de documento</mat-error>
+                  </mat-form-field>
+                </div>
+
               </div>
             </div>
           </div>
@@ -163,25 +218,39 @@
             </mat-checkbox>
 
           </div>
-          <div style="width: 100%;display:flex;justify-content: right;">
-            <app-default-button [confs]="{color:'primary',titulo:'Solicitar envio fisico'}"
-            [disabled]="!userForm.valid || (datosCertificado.idSolicitudCertificadoFisico!=null && datosCertificado.idSolicitudCertificadoFisico>0)"
-            [style]="'margin-top: 40px;'" ></app-default-button>
+          <div style="width: 100%;display:flex;justify-content: right;flex-wrap: wrap;">
+
+            <app-default-button *ngIf="IdEstadoCertificadoFisico!=0  && IdEstadoCertificadoFisico!=5 && IdEstadoCertificadoFisico!=9" [confs]="{color:'secondary',titulo:'Cancelar Solicitud'}"
+              [style]="' margin-right:15px; border: none;'"
+              [disabled]="IdEstadoCertificadoFisico!=0  && IdEstadoCertificadoFisico!=5 && IdEstadoCertificadoFisico!=9">
+            </app-default-button>
+            <app-default-button *ngIf="IdEstadoCertificadoFisico==0  || IdEstadoCertificadoFisico==5 || IdEstadoCertificadoFisico==9" (click)="CerrarDesplegable()" [confs]="{color:'secondary',titulo:'Cancelar Solicitud'}"
+              [style]="' margin-right:15px; border: none;'">
+            </app-default-button>
+            <app-default-button [confs]="{color:'primary',titulo:'Solicitar envio'}"
+              [disabled]="!userForm.valid || (IdEstadoCertificadoFisico!=0  && IdEstadoCertificadoFisico!=5 && IdEstadoCertificadoFisico!=9)"
+              [style]="'margin-right:15px;border-radius:2em;'" >
+            </app-default-button>
           </div>
-          <div class="headerFormSolicitu" [ngStyle]="{'color':expacion[2]==true?'#106fc1':''}">
-            <div class="index">3</div>
-            <div style="display: flex;
-            width: calc( 100% - 50px);
-            justify-content: space-between;border-bottom: 1px solid #b9b9b9;">
-              <div>Rastrear envío</div>
-              <i *ngIf="!expacion[2]" (click)="expacion[2]=true" class="material-icons">keyboard_arrow_down</i>
-              <i *ngIf="expacion[2]" (click)="expacion[2]=false" class="material-icons">keyboard_arrow_up</i>
-            </div>
           </div>
         </div>
       </form>
-      <div class="containerform">
-        <div class="contentform" *ngIf="expacion[2]">
+      </div>
+
+      <div class="containerform" *ngIf="IdEstadoCertificadoFisico!=0">
+        <div class="headerFormSolicitudheader">
+          <div style="display: flex;
+          width: calc( 100% - 20px);
+          justify-content: space-between;">
+            <div>Rastrear envío</div>
+            <div [ngStyle]="{'color':expacion[3]==true?'#106fc1':''}">
+
+            <i *ngIf="!expacion[3]" (click)="expacion[3]=true" class="material-icons" style="font-size: 26px!important;">keyboard_arrow_down</i>
+            <i *ngIf="expacion[3]" (click)="expacion[3]=false" class="material-icons" style="font-size: 26px!important;">keyboard_arrow_up</i>
+            </div>
+          </div>
+        </div>
+        <div class="contentform" *ngIf="expacion[3]">
           <ng-container *ngIf="datosCertificado.idSolicitudCertificadoFisico==null || datosCertificado.idSolicitudCertificadoFisico<=0;else seguimiento">
             <div *ngIf="close==false" class="alartasCertificados col-12 col-md-12 col-lg-12" style="margin-top:10px;" >
               <div  *ngIf="close==false">
@@ -191,80 +260,132 @@
             </div>
           </ng-container>
           <ng-template #seguimiento>
-            <div style="    display: flex;
-            justify-content: space-between;align-items: center;border-bottom: solid 1px #b9b9b9;    padding-bottom: 10px;">
-              <div style="    font-weight: 600;">Estado de envío del certificado físico</div>
-              <div style="display: flex">
-                <div class="cardEstadoEnvioCertFisico" [ngClass]="{'activeCard':datosCertificado.datosCourierEnvio.estadoCourierInt==1}">
+            <div style=" display: flex;
+            justify-content: center;align-items: center; padding-bottom: 35px;">
+              <div style="display: flex;" >
+
+                <div class="CardEstadoEnvioCertFisico" [ngClass]="{'ActiveCard':datosCertificado.datosCourierEnvio.idEstadoCertificadoFisico==3}">
                   <div>En ruta</div>
-                  <img *ngIf="datosCertificado.datosCourierEnvio.estadoCourierInt==1" src="../../../../assets/icons/en-ruta-42.svg" alt="En Ruta">
-                  <img *ngIf="datosCertificado.datosCourierEnvio.estadoCourierInt!=1" src="../../../../assets/icons/camion-gris-42.svg" alt="Camión Gris">
+                  <img *ngIf="datosCertificado.datosCourierEnvio.idEstadoCertificadoFisico==3" src="../../../../assets/icons/icono-courier-verde.svg" alt="26px">
+                  <img *ngIf="datosCertificado.datosCourierEnvio.idEstadoCertificadoFisico!=3" src="../../../../assets/icons/icono-courier-gris.svg" alt="26px">
+                  <img *ngIf="datosCertificado.datosCourierEnvio.idEstadoCertificadoFisico==3" class="botondiv" src="../../../../assets/icons/punto-verde.svg" alt="">
                 </div>
-                <div class="cardEstadoEnvioCertFisico" [ngClass]="{'activeCard':datosCertificado.datosCourierEnvio.estadoCourierInt==2}">
+
+                <div class="CardEstadoEnvioCertFisico" [ngClass]="{'ActiveCard':datosCertificado.datosCourierEnvio.idEstadoCertificadoFisico==4}">
                   <div>Entregado</div>
-                  <img *ngIf="datosCertificado.datosCourierEnvio.estadoCourierInt==2" src="../../../../assets/icons/positivo-hecho-20.svg" alt="Realizado">
+                  <img *ngIf="datosCertificado.datosCourierEnvio.idEstadoCertificadoFisico!=4" src="../../../../assets/icons/icono-entrega-lugar-gris.svg" alt="">
+                  <img *ngIf="datosCertificado.datosCourierEnvio.idEstadoCertificadoFisico==4" src="../../../../assets/icons/icono-entrega-lugar-verde.svg" alt="">
+                  <img class="botondiv" *ngIf="datosCertificado.datosCourierEnvio.idEstadoCertificadoFisico==4" src="../../../../assets/icons/punto-verde.svg" alt="">
                 </div>
               </div>
             </div>
-            <div class="row rowFormCertFisico" style="align-items: center;margin-top: 40px;">
-              <label for="" class="col-4 col-md-3 col-lg-3">Courier:</label>
-              <div class="col-8 col-md-9 col-lg-9">
-                <mat-form-field appearance="outline" [floatLabel]="'always'">
-                  <input type="text" [value]="datosCertificado.datosCourierEnvio.courier" matInput disabled />
-                </mat-form-field>
+            <div class="row rowFormCertFisico" >
+
+              <div class="contenedorEnvio">
+                <div style=" font-weight: 800;">Información del Courier</div>
+                <div class="left">
+                  <div class="prueba">
+                  <label class="autoleft" for="">Courier:</label>
+                  <!-- <mat-form-field  class="autoright"> -->
+                  <input class="autoright" type="text" [value]="datosCertificado.datosCourierEnvio.courier" matInput disabled />
+                  <!-- </mat-form-field> -->
+                  </div>
+
+                 <div class="prueba">
+                  <label for="" class="autoleft">País Remitente: </label>
+                  <!-- <mat-form-field appearance="outline" [floatLabel]="'always'"> -->
+                      <input class="autoright" type="text" [value]="datosCertificado.datosCourierEnvio.pais" matInput disabled />
+                  <!-- </mat-form-field> -->
+                 </div>
+
+                  <div class="prueba">
+                    <label class="autoleft" for="">Ciudad Remitente: </label>
+                    <!-- <mat-form-field appearance="outline" [floatLabel]="'always'"> -->
+                      <input class="autoright" type="text" [value]="datosCertificado.datosCourierEnvio.ciudad" matInput disabled />
+                    <!-- </mat-form-field> -->
+                  </div>
+
+                  <div class="prueba">
+                    <label class="autoleft" for="">Teléfono: </label>
+                    <!-- <mat-form-field appearance="outline" [floatLabel]="'always'"> -->
+                      <input class="autoright" type="text" [value]="datosCertificado.datosCourierEnvio.telefono" matInput disabled />
+                    <!-- </mat-form-field> -->
+                  </div>
+
+                  <div class="prueba">
+                    <label for="" class="autoleft">Dirección: </label>
+                    <!-- <mat-form-field appearance="outline" [floatLabel]="'always'"> -->
+                      <input type="text" class="autoright" [value]="datosCertificado.datosCourierEnvio.direccion" matInput disabled />
+                    <!-- </mat-form-field> -->
+                  </div>
+
+                </div>
+
+               <div class="right">
+                  <!-- <div class="contentEnvio"> -->
+                    <div class="prueba">
+                      <label for="" class="autoleft">Nro. guía / tracking: </label>
+                      <!-- <mat-form-field appearance="outline" [floatLabel]="'always'"> -->
+                        <input type="text" class="autoright" [value]="datosCertificado.datosCourierEnvio.codigoSeguimiento" matInput disabled />
+                      <!-- </mat-form-field> -->
+                    </div>
+                  <!-- </div> -->
+
+                  <div class="prueba">
+                  <label for="" class="autoleft">Página web: </label>
+                    <!-- <mat-form-field appearance="outline" [floatLabel]="'always'"> -->
+                      <input type="text" class="autoright" [value]="datosCertificado.datosCourierEnvio.url" matInput disabled />
+                    <!-- </mat-form-field> -->
+                  </div>
+
+                  <div class="prueba">
+                    <label for="" class="autoleft">Fecha de entrega al courier: </label>
+                    <!-- <mat-form-field appearance="outline" [floatLabel]="'always'"> -->
+                      <input type="text" class="autoright" [value]="datosCertificado.datosCourierEnvio.fechaEntregaCourierString" matInput disabled />
+                    <!-- </mat-form-field> -->
+                  </div>
+
+                  <div class="prueba">
+                    <label for="" class="autoleft">Fecha de entrega estimada: </label>
+                    <!-- <mat-form-field appearance="outline" [floatLabel]="'always'"> -->
+                      <input type="text" class="autoright" [value]="datosCertificado.datosCourierEnvio.fechaEntregaEstimadaString" matInput disabled />
+                    <!-- </mat-form-field> -->
+                  </div>
+
+                  <div class="prueba">
+                    <label for="" class="autoleft">Fecha de entrega: </label>
+                    <!-- <mat-form-field appearance="outline" [floatLabel]="'always'"> -->
+                      <input type="text" class="autoright" [value]="datosCertificado.datosCourierEnvio.fechaEntregaRealString" matInput disabled />
+                    <!-- </mat-form-field> -->
+                  </div>
+                </div>
               </div>
-              <label for="" class="col-4 col-md-3 col-lg-3">País Remitente:</label>
-              <div class="col-8 col-md-9 col-lg-9">
-                <mat-form-field appearance="outline" [floatLabel]="'always'">
-                  <input type="text" [value]="datosCertificado.datosCourierEnvio.pais" matInput disabled />
-                </mat-form-field>
-              </div>
-              <label for="" class="col-4 col-md-3 col-lg-3">Ciudad Remitente:</label>
-              <div class="col-8 col-md-9 col-lg-9">
-                <mat-form-field appearance="outline" [floatLabel]="'always'">
-                  <input type="text" [value]="datosCertificado.datosCourierEnvio.ciudad" matInput disabled />
-                </mat-form-field>
-              </div>
-              <label for="" class="col-4 col-md-3 col-lg-3">Nro. guía/tracking:</label>
-              <div class="col-8 col-md-9 col-lg-9">
-                <mat-form-field appearance="outline" [floatLabel]="'always'">
-                  <input type="text" [value]="datosCertificado.datosCourierEnvio.codigoSeguimiento" matInput disabled />
-                </mat-form-field>
-              </div>
-              <label for="" class="col-4 col-md-3 col-lg-3">Telefono:</label>
-              <div class="col-8 col-md-9 col-lg-9">
-                <mat-form-field appearance="outline" [floatLabel]="'always'">
-                  <input type="text" [value]="datosCertificado.datosCourierEnvio.telefono" matInput disabled />
-                </mat-form-field>
-              </div>
-              <label for="" class="col-4 col-md-3 col-lg-3">Página web:</label>
-              <div class="col-8 col-md-9 col-lg-9">
-                <mat-form-field appearance="outline" [floatLabel]="'always'">
-                  <input type="text" [value]="datosCertificado.datosCourierEnvio.url" matInput disabled />
-                </mat-form-field>
-              </div>
-              <label for="" class="col-4 col-md-3 col-lg-3">Direccion:</label>
-              <div class="col-8 col-md-9 col-lg-9">
-                <mat-form-field appearance="outline" [floatLabel]="'always'">
-                  <input type="text" [value]="datosCertificado.datosCourierEnvio.direccion" matInput disabled />
-                </mat-form-field>
-              </div>
-              <label for="" class="col-4 col-md-3 col-lg-3">Fecha de entrega al courier:</label>
-              <div class="col-8 col-md-9 col-lg-9">
-                <mat-form-field appearance="outline" [floatLabel]="'always'">
-                  <input type="text" [value]="datosCertificado.datosCourierEnvio.fechaEntregaCourierString" matInput disabled />
-                </mat-form-field>
-              </div>
-              <label for="" class="col-4 col-md-3 col-lg-3">Fecha de entrega estimada:</label>
-              <div class="col-8 col-md-9 col-lg-9">
+
+              <!-- <div class="col-8 col-md-9 col-lg-9">
                 <mat-form-field appearance="outline" [floatLabel]="'always'">
                   <input type="text" [value]="datosCertificado.datosCourierEnvio.fechaEntregaEstimadaString" matInput disabled />
                 </mat-form-field>
-              </div>
+              </div> -->
             </div>
           </ng-template>
+
+          <ng-container *ngIf="IdEstadoCertificadoFisico==5">
+            <mat-card-title-group>
+              <div class="cardTitleDevuelto">
+                <div class="title"> Devuelto </div>
+                <img class="Img" src="../../../../assets/icons/icono-devuelto-rojo.svg">
+                <div>Tu certificado ha sido devuelto, comunícate con tu asesor cadémico.</div>
+              </div>
+            </mat-card-title-group>
+          </ng-container>
+
+
+
         </div>
       </div>
-    </div>
+
   </div>
+
+  </div>
+</div>
 </ng-container>

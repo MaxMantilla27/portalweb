@@ -105,6 +105,7 @@ export class FormularioComponent implements OnChanges, OnInit,OnDestroy {
   public pref=''
   public min=0
   public max=0
+  @Input() labels=true;
   @Input() cargando=false
   //later in the code
   fields: any = {};

@@ -1,0 +1,425 @@
+<div class="row" style="display: flex;">
+  <div class="TitleModal col-11" >
+    <div class="cursoTitle" style="font-weight: bold;padding-left: 25px; font-size: 20px;" *ngIf="datosTarea!=undefined">{{datosTarea.programaEspecifico}}</div>
+  </div>
+  <div class="col-1" style="text-align: end;font-weight: bold;cursor: pointer;" (click)="dialogRef.close()">
+    X
+  </div>
+</div>
+<div class="container">
+  <div class="row" style="justify-content: center">
+    <ng-container *ngIf="tareas==undefined && TerminaCarga==false">
+      <div class="row" style="display: flex; justify-content: center;align-items: center;text-align: center; height: 15rem;">
+        <div class="col-12" style="display: flex;justify-content: center;">
+          <mat-spinner></mat-spinner>
+        </div>
+        <div class="col-12">
+          Cargando información ...
+        </div>
+      </div>
+    </ng-container>
+    <ng-container *ngIf="tareas==undefined && TerminaCarga==true">
+      <div style="display: flex;justify-content: center;align-items: center; height: 15rem;">
+        No se encontró información.
+      </div>
+    </ng-container>
+    <ng-container>
+      <div class="row" style="align-items: center;" style="margin: 30px 0px 0px;" *ngIf="tareas!=undefined">
+        <div class="tipoIndicacionTitle col-12 col-md-12 col-lg-12" style="margin:0px;">
+          <img class="ImgIndicacionesContent" src="../../../../assets/icons/tareas-23.svg">
+
+          <div *ngIf="tareas.idTipoEvaluacionTrabajo==2">Calificación de Actividades de Evaluación</div>
+        </div>
+        <div style="margin-top: 25px;margin-bottom: 15px;"><strong>{{tareas.datosTrabajoPares.descripcion}}</strong></div>
+        <ng-container *ngIf="tareaAc!=undefined">
+          <ng-container *ngFor="let item of tareaAc;let i =index">
+
+            <ng-container *ngIf="item.calificado==false">
+              <div class="contentTareaParesDocente NoCalificada" (click)="item.open=item.open!=true?true:false">
+                <div class="tituloTareaPares">Version {{item.version}} : {{tareas.datosTrabajoPares.nombre}} </div>
+                <div style="font-weight: 600;">
+                  <ng-container *ngIf="item.estadoDevuelto==true">
+                    Devuelto
+                  </ng-container>
+                  <ng-container *ngIf="item.estadoDevuelto!=true">
+                    Por calificar
+                  </ng-container>
+
+                </div>
+                <ng-container *ngIf="item.open!=true">
+                  <i class="material-icons">keyboard_arrow_down</i>
+                </ng-container>
+                <ng-container *ngIf="item.open==true">
+                  <i class="material-icons">keyboard_arrow_up</i>
+                </ng-container>
+              </div>
+              <div class="tareaParesContent row" *ngIf="item.open==true">
+                <ng-container *ngIf="tareas.idTipoEvaluacionTrabajo==2">
+                  <div *ngIf="item.estadoDevuelto!=true" class="col-12 col-md-12 col-lg-12"
+                  style="display: flex;
+                  justify-content: flex-end;
+                  margin-bottom: 30px;" >
+                    <app-default-button [confs]="{color:'danger',titulo:'Devolver'}" [icon]="''"
+                    [style]="'padding:0px 30px;margin:0px '" (ButtoclClick)="DevolverTarea(item)"></app-default-button>
+                  </div>
+                  <div class="col-12 col-md-12 col-lg-12" *ngIf="item!=undefined" style="padding-left: 50px;margin-top: 10px;">
+                    <div class="row" style="width:100%;justify-content: space-between;">
+                      <div class="col-12 col-md-6 col-lg-6" >
+                        Nombre del archivo
+                      </div>
+                      <div class="col-12 col-md-6 col-lg-6" *ngIf="item!=undefined">
+                        <img src="../../../../assets/icons/descarga-36.svg" alt="Descargar" style="width: 20px;
+                            margin-right: 20px;">
+                        <a class="vinculo" [href]="item.direccionUrl" target="_blank">{{item.nombreArchivo}}</a>
+                      </div>
+                    </div>
+                  </div>
+                </ng-container>
+                <div class="col-12 col-md-12 col-lg-12" *ngIf="item!=undefined" style="padding-left: 50px;margin-top: 10px;">
+
+                  <ng-container *ngIf="item!=undefined && item.calificado==false">
+                    <div style="    margin: 30px 0px;
+                        font-weight: 600;">Seleccione la calificación para cada criterio de evaluación , y luego haz clic en "Calificar"
+                    </div>
+                    <div style="    display: flex;
+                        justify-content: space-between;
+                        width: calc( 100% - 10px );
+                        flex-wrap: wrap;">
+                      <ng-container *ngIf="tareas.idTipoEvaluacionTrabajo==2">
+                        <div class="row" style="width:100%;justify-content: space-between;">
+                          <div class="col-12 col-md-6 col-lg-6">Cumplimiento de objetivos</div>
+                          <div class="col-12 col-md-6 col-lg-6">
+
+                            <mat-form-field appearance="outline" style="width: 100%;font-size: 13px;">
+                              <mat-label>Calificar</mat-label>
+                              <mat-select [(ngModel)]="calificacion" [disabled]="cargaEnvio || item.estadoDevuelto==true">
+                                <mat-option *ngFor="let item of tareas.criteriosEvaluacion.listaParametroEscalaEvaluacion"
+                                  [value]="item.id">{{item.valor}} - {{item.nombre}}</mat-option>
+                              </mat-select>
+                            </mat-form-field>
+
+                          </div>
+                          <div class="col-12 col-md-6 col-lg-6">Comentario de Retroalimentación</div>
+                          <div class="col-12 col-md-6 col-lg-6">
+                            <mat-form-field appearance="outline" style="width: 100%;font-size: 13px;">
+                              <mat-label>Retroalimentación</mat-label>
+                              <textarea matInput [disabled]="item.estadoDevuelto==true" name="Retroalimentación" id="" style="width: 100%;" [(ngModel)]="retroalimentacion" ></textarea>
+                            </mat-form-field>
+
+                          </div>
+                          <div class="col-12 col-md-6 col-lg-6">Archivo de Retroalimentación</div>
+                          <div class="col-12 col-md-6 col-lg-6">
+                            <div (click)="item.estadoDevuelto==true?'':fileInput.click()" style="height: 38px;width: 100%;border:solid 1px #c2c2c2;border-radius: 5px;display: flex; align-items: center;
+                            padding: 0px 5px;cursor: pointer;">
+                              <button style="border: solid 1px #767676;
+                              margin-right: 5px;    white-space: nowrap;">Seleccionar archivo</button>
+                              <div style="    white-space: nowrap;
+                              overflow: hidden;
+                              text-overflow: ellipsis;
+                              display: -webkit-box;
+                              -webkit-line-clamp: 3;
+                              -webkit-box-orient: vertical;">{{nombrefile}}</div>
+                            </div>
+                            <input #fileInput type="file" id="file"
+                            (change)="getFileDetails($event)"
+                            style="    width: 100%;
+                            border: solid 1px #c2c2c2;
+                            padding: 7px;
+                            border-radius: 5px;display: none;">
+                              <div *ngIf="!filestatus && fileErrorMsg!=''">{{fileErrorMsg}}</div>
+                          </div>
+                          <div class="col-12" style="display: flex;justify-content: flex-end;margin-top: 30px;">
+
+                            <app-default-button [confs]="{color:'primary',titulo:'Calificar'}"
+                              [style]="'padding:0px 30px;margin:0px '" [disabled]="cargaEnvio || calificacion==0 || retroalimentacion.trim().length==0"
+                              (ButtoclClick)="EnviarCalificacionProyectoEvaluacion(i)"></app-default-button>
+                          </div>
+                        </div>
+                      </ng-container>
+
+                    </div>
+                  </ng-container>
+
+                </div>
+              </div>
+            </ng-container>
+            <ng-container *ngIf="item.calificado==true">
+              <div class="contentTareaParesDocente Calificada" (click)="item.open=item.open!=true?true:false">
+                <div class="tituloTareaPares">Version {{item.version}} : {{tareas.datosTrabajoPares.nombre}}</div>
+                <div style="font-weight: 600;">
+                  Calificado
+                </div>
+                <ng-container *ngIf="item.open!=true">
+                  <i class="material-icons">keyboard_arrow_down</i>
+                </ng-container>
+                <ng-container *ngIf="item.open==true">
+                  <i class="material-icons">keyboard_arrow_up</i>
+                </ng-container>
+              </div>
+              <div class="tareaParesContent row" *ngIf="item.open==true">
+                <div class="col-4" style="margin-bottom: 15px;">Archivo : </div>
+                <div class="col-8" style="display: flex">
+                  <img src="../../../../assets/icons/descarga-36.svg" alt="Descargar" style="width: 20px;
+                  margin-right: 20px;">
+                    <a class="vinculo" [href]="item.direccionUrl" target="_blank">{{item.nombreArchivo}}</a>
+                </div>
+                <ng-container *ngIf="item.fechaCalificacionLimite!=null">
+                  <div class="col-4" style="margin-bottom: 15px;">Fecha límite de calificación : </div>
+                  <div class="col-8">{{item.fechaCalificacionLimite | date:"dd-MM-yyyy"}}</div>
+                </ng-container>
+
+                <div class="col-4" style="margin-bottom: 15px;">Fecha de calificación : </div>
+                <div class="col-8">{{item.fechaCalificacion | date:"dd-MM-yyyy"}}</div>
+
+                <ng-container *ngIf="tareas.idTipoEvaluacionTrabajo==2">
+                  <div class="col-4" style="margin-bottom: 15px;">Comentario de Retroalimentación: </div>
+                  <div class="col-8" *ngIf="item.retroalimentacion=='NA'">No tiene retroalimentación.</div>
+                  <div class="col-8" *ngIf="item.retroalimentacion!='NA'">{{item.retroalimentacion}}</div>
+                  <div class="col-4" style="margin-bottom: 15px;">Archivo de Retroalimentación : </div>
+                  <div class="col-8"style="display: flex">
+                    <img src="../../../../assets/icons/descarga-36.svg" alt="Descargar" style="width: 20px;
+                    margin-right: 20px;">
+                      <a class="vinculo" [href]="item.urlArchivoSubidoRetroalimentacion" target="_blank">{{item.nombreArchivoRetroalimentacion}}</a>
+                    </div>
+                    <div class="col-4" style="margin-bottom: 15px;">Nota : </div>
+                    <div class="col-8">{{item.valorEscala}}</div>
+                </ng-container>
+
+              </div>
+            </ng-container>
+            <ng-container *ngIf="item.calificado==true">
+              <div class="contentTareaParesDocente Actualizar" (click)="item.open=item.open!=true?true:false">
+                <div class="tituloTareaPares">Version {{item.version}} : {{tareas.datosTrabajoPares.nombre}} </div>
+                <div style="font-weight: 600;">
+                  <ng-container *ngIf="item.estadoDevuelto==true">
+                    Devuelto
+                  </ng-container>
+                  <ng-container *ngIf="item.estadoDevuelto!=true">
+                    Modificar Calificación
+                  </ng-container>
+
+                </div>
+                <ng-container *ngIf="item.open!=true">
+                  <i class="material-icons">keyboard_arrow_down</i>
+                </ng-container>
+                <ng-container *ngIf="item.open==true">
+                  <i class="material-icons">keyboard_arrow_up</i>
+                </ng-container>
+              </div>
+              <div class="tareaParesContent row" *ngIf="item.open==true">
+                <ng-container *ngIf="tareas.idTipoEvaluacionTrabajo==2">
+                  <!-- <div *ngIf="item.estadoDevuelto!=true" class="col-12 col-md-12 col-lg-12"
+                  style="display: flex;
+                  justify-content: flex-end;
+                  margin-bottom: 30px;" >
+                    <app-default-button [confs]="{color:'danger',titulo:'Devolver'}" [icon]="''"
+                    [style]="'padding:0px 30px;margin:0px '" (ButtoclClick)="DevolverTarea(item)"></app-default-button>
+                  </div> -->
+                  <div class="col-12 col-md-12 col-lg-12" *ngIf="item!=undefined" style="padding-left: 50px;margin-top: 10px;">
+                    <div class="row" style="width:100%;justify-content: space-between;">
+                      <div class="col-12 col-md-6 col-lg-6" >
+                        Nombre del archivo
+                      </div>
+                      <div class="col-12 col-md-6 col-lg-6" *ngIf="item!=undefined">
+                        <img src="../../../../assets/icons/descarga-36.svg" alt="Descargar" style="width: 20px;
+                            margin-right: 20px;">
+                        <a class="vinculo" [href]="item.direccionUrl" target="_blank">{{item.nombreArchivo}}</a>
+                      </div>
+                    </div>
+                  </div>
+                </ng-container>
+                <div class="col-12 col-md-12 col-lg-12" style="padding-left: 50px;margin-top: 10px;">
+
+                  <ng-container>
+                    <div style="    margin: 30px 0px;
+                        font-weight: 600;">Seleccione la calificación para cada criterio de evaluación , y luego haz clic en "Calificar"
+                    </div>
+                    <div style="    display: flex;
+                        justify-content: space-between;
+                        width: calc( 100% - 10px );
+                        flex-wrap: wrap;">
+                      <ng-container *ngIf="tareas.idTipoEvaluacionTrabajo==2">
+                        <div class="row" style="width:100%;justify-content: space-between;">
+                          <div class="col-12 col-md-6 col-lg-6">Cumplimiento de objetivos</div>
+                          <div class="col-12 col-md-6 col-lg-6">
+
+                            <mat-form-field appearance="outline" style="width: 100%;font-size: 13px;">
+                              <mat-label>Calificar</mat-label>
+                              <mat-select [(ngModel)]="calificacion" [disabled]="cargaEnvio || item.estadoDevuelto==true">
+                                <mat-option *ngFor="let item of tareas.criteriosEvaluacion.listaParametroEscalaEvaluacion"
+                                  [value]="item.id">{{item.valor}} - {{item.nombre}}</mat-option>
+                              </mat-select>
+                            </mat-form-field>
+
+                          </div>
+                          <div class="col-12 col-md-6 col-lg-6">Comentario de Retroalimentación</div>
+                          <div class="col-12 col-md-6 col-lg-6">
+                            <mat-form-field appearance="outline" style="width: 100%;font-size: 13px;">
+                              <mat-label>Retroalimentación</mat-label>
+                              <textarea matInput [disabled]="item.estadoDevuelto==true" name="Retroalimentación" id="" style="width: 100%;" [(ngModel)]="retroalimentacion" ></textarea>
+                            </mat-form-field>
+
+                          </div>
+                          <div class="col-12 col-md-6 col-lg-6">Archivo de Retroalimentación</div>
+                          <div class="col-12 col-md-6 col-lg-6">
+                            <div (click)="item.estadoDevuelto==true?'':fileInput.click()" style="height: 38px;width: 100%;border:solid 1px #c2c2c2;border-radius: 5px;display: flex; align-items: center;
+                            padding: 0px 5px;cursor: pointer;">
+                              <button style="border: solid 1px #767676;
+                              margin-right: 5px;    white-space: nowrap;">Seleccionar archivo</button>
+                              <div style="    white-space: nowrap;
+                              overflow: hidden;
+                              text-overflow: ellipsis;
+                              display: -webkit-box;
+                              -webkit-line-clamp: 3;
+                              -webkit-box-orient: vertical;">{{nombrefile}}</div>
+                            </div>
+                            <input #fileInput type="file" id="file"
+                            (change)="getFileDetails($event)"
+                            style="    width: 100%;
+                            border: solid 1px #c2c2c2;
+                            padding: 7px;
+                            border-radius: 5px;display: none;">
+                              <div *ngIf="!filestatus && fileErrorMsg!=''">{{fileErrorMsg}}</div>
+                          </div>
+                          <div class="col-12" style="display: flex;justify-content: flex-end;margin-top: 30px;">
+
+                            <app-default-button [confs]="{color:'primary',titulo:'Calificar'}"
+                              [style]="'padding:0px 30px;margin:0px '" [disabled]="cargaEnvio || calificacion==0 || retroalimentacion.trim().length==0"
+                              (ButtoclClick)="ActualizarCalificacionProyectoEvaluacion(i)"></app-default-button>
+                          </div>
+                        </div>
+                      </ng-container>
+
+                    </div>
+                  </ng-container>
+
+                </div>
+              </div>
+            </ng-container>
+            <!-- <div class="col-12 col-md-12 col-lg-12" *ngIf="item!=undefined && item.calificado==true" style="    padding: 20px;
+                margin-top: 30px;
+                border-color: #c3e6cb;
+                background: #d4edda;
+                color: #3d4245;">
+              <div style="font-weight: 600;">
+                Calificación realizada!!
+              </div>
+              <div style="    font-size: 14px;">
+                La calificación de la tarea se ha guardado correctamente, puedes continuar visualizando las sesiones.
+              </div>
+            </div> -->
+          </ng-container>
+        </ng-container>
+
+        <div class="col-12 col-md-12 col-lg-12" style="margin: 50px 0px 10px;">
+          <div class="cabeceraExpandTarea" [ngClass]="{'cabeceraExpandTareaOpen':instruccionesAcerca}">
+            <div *ngIf="tareas.idTipoEvaluacionTrabajo==2">Instrucciones acerca del proyecto</div>
+            <div>
+              <i class="material-icons no-seleccionable " *ngIf="!instruccionesAcerca"
+                (click)="instruccionesAcerca=true">keyboard_arrow_down</i>
+              <i class="material-icons no-seleccionable " *ngIf="instruccionesAcerca"
+                (click)="instruccionesAcerca=false">keyboard_arrow_up</i>
+            </div>
+          </div>
+          <div class="contentCabeceraTarea" *ngIf="instruccionesAcerca">
+            <ng-container
+              *ngIf="tareas.datosTrabajoPares.instruccionesEvaluacion!=null && tareas.datosTrabajoPares.instruccionesEvaluacion!=undefined">
+              <div *ngFor="let item of tareas.datosTrabajoPares.instruccionesEvaluacion">
+                <ng-container *ngIf="(item.titulo | lowercase).includes('anexo');else other">
+                  <div [innerHtml]="item.contenido | safeHtml"></div>
+                </ng-container>
+                <ng-template #other>
+                  <ng-container
+                    *ngIf="(item.titulo | lowercase).includes('cap') && (item.titulo | lowercase).includes('tulos');else otherCap">
+
+                  </ng-container>
+                  <ng-template #otherCap>
+                    <ng-container *ngIf="item.titulo.includes('Criterios de evaluaci');else noesquema">
+
+
+                      <ng-container
+                        *ngIf="tareas.criteriosEvaluacion!=null && tareas.criteriosEvaluacion!=undefined;else sincriterio">
+                        <div class="row" style="border-bottom: 1px solid rgba(0,0,0,.1); padding: 20px 0px;">
+                          <div class="col-md-12">
+                            <h4>
+                              <b [innerHtml]="item.titulo | safeHtml" class="titleCriterio">
+                              </b>
+                            </h4>
+                          </div>
+                          <div class="col-md-12">
+                            <table class="table table-bordered" style="font-size: 14px;
+                            font-weight: 100 !important;">
+                              <thead style="background:#f3f4f5">
+                                <tr>
+                                  <th scope="col" class="text-center">Criterios de evaluación</th>
+                                  <th scope="col" class="text-center">Ponderación</th>
+                                  <th scope="col" class="text-center">Escala de calificación</th>
+                                </tr>
+                              </thead>
+                              <tbody style="    border-top: 0px;">
+                                <tr>
+                                  <td>{{tareas.criteriosEvaluacion.nombreEscalaCalificacion}}</td>
+                                  <td class="text-center">
+                                    {{tareas.criteriosEvaluacion.ponderacion}}
+                                  </td>
+                                  <td class="text-center">
+                                    {{minValue(tareas.criteriosEvaluacion.listaParametroEscalaEvaluacion)}} -
+                                    {{maxValue(tareas.criteriosEvaluacion.listaParametroEscalaEvaluacion)}} </td>
+                                </tr>
+                              </tbody>
+                            </table>
+
+                          </div>
+                        </div>
+                      </ng-container>
+
+                      <ng-template #sincriterio>
+                        <div class="row" style="border-bottom: 1px solid rgba(0,0,0,.1); padding: 20px 0px;">
+                          <div class="col-md-12">
+                            <h4 style="font-weight:400;">
+                              <b [innerHtml]="item.titulo | safeHtml" class="titleCriterio"></b>
+                            </h4>
+                          </div>
+                          <div class="col-md-12 contentCriterio">
+                            <div
+                              [innerHtml]="item.contenido.split('font-family:Arial, Helvetica,sans-serif;font-size:small;').join('') | safeHtml"
+                              class="contentCriterio"></div>
+
+                          </div>
+                        </div>
+                      </ng-template>
+                    </ng-container>
+                    <ng-template #noesquema>
+                      <div class="row" style="border-bottom: 1px solid rgba(0,0,0,.1); padding: 20px 0px;">
+                        <div class="col-md-12">
+                          <h4 style="font-weight:400;">
+                            <b [innerHtml]="item.titulo | safeHtml" class="titleCriterio"></b>
+                          </h4>
+                        </div>
+                        <div class="col-md-12 contentCriterio">
+                          <div
+                            [innerHtml]="item.contenido.split('font-family:Arial, Helvetica,sans-serif;font-size:small;').join('') | safeHtml"
+                            class="contentCriterio"></div>
+
+                        </div>
+                      </div>
+                    </ng-template>
+
+                  </ng-template>
+                </ng-template>
+
+              </div>
+            </ng-container>
+          </div>
+        </div>
+
+      </div>
+    </ng-container>
+
+
+  </div>
+</div>
+<div class="col-12 col-md-12 col-lg-12" style="display: flex;justify-content: end;margin-top: 25px;margin-bottom: 10px;">
+  <app-default-button [confs]="{color:'primary',titulo:'Cerrar'}" [icon]="''"
+  [style]="'width: 150px;margin: 0px;'"(click)="dialogRef.close()" ></app-default-button>
+</div>

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output,SimpleChanges } from '@angular/core';
 import { Subject,takeUntil } from 'rxjs';
 import { PreguntasFrecuentesCursoService } from 'src/app/Core/Shared/Services/PreguntasFrecuentesCurso/preguntas-frecuentes-curso.service';
 
@@ -21,14 +21,20 @@ export class ModuloAyudaPreguntasFrecuentesComponent implements OnInit,OnDestroy
  @Input() Capitulo=''
  @Output() Onchange=new EventEmitter<number>();
  public PreguntaExpand=-1;
- public PreguntasFrecuentes:any
+ public PreguntasFrecuentes: Array<any>=[];
   ngOnInit(): void {
   this.ObtenerPreguntasFrecuentes();
+  }
+  ngOnChanges(changes: SimpleChanges): void {
+    if(this.IdPrincipal!=0 || this.IdPGeneral!=0){
+      this.ObtenerPreguntasFrecuentes();
+    }
   }
 
   ObtenerPreguntasFrecuentes(){
     this._PreguntasFrecuentesCursoService.ObtenerPreguntaFrecuentePorPrograma(this.IdPrincipal,this.IdPGeneral).pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
+        this.PreguntasFrecuentes=[]
         console.log(x)
         this.PreguntasFrecuentes=x
       }

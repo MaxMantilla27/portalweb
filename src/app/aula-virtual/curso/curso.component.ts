@@ -9,6 +9,7 @@ import {
   ProgresoAlumnoProgramaAulaVirtualDTO,
 } from 'src/app/Core/Models/ListadoProgramaContenidoDTO';
 import { ChargeComponent } from 'src/app/Core/Shared/Containers/Dialog/charge/charge.component';
+import { AsistenciaService } from 'src/app/Core/Shared/Services/Asistencia/asistencia.service';
 import { CertificadoService } from 'src/app/Core/Shared/Services/Certificado/certificado.service';
 import { DatosPerfilService } from 'src/app/Core/Shared/Services/DatosPerfil/datos-perfil.service';
 import { HelperService } from 'src/app/Core/Shared/Services/helper.service';
@@ -27,6 +28,7 @@ export class CursoComponent implements OnInit,OnDestroy {
   @ViewChild('indicaciones') indicaciones!: ElementRef;
   @ViewChild('sesiones') sesiones!: ElementRef;
   @ViewChild('modulos') modulos!: ElementRef;
+  @ViewChild('Online') Online!: ElementRef;
   @ViewChild('proyectos') proyectos!: ElementRef;
   @ViewChild('certificados') certificados!: ElementRef;
   @ViewChild('tramites') tramites!: ElementRef;
@@ -41,6 +43,7 @@ export class CursoComponent implements OnInit,OnDestroy {
     private _SessionStorageService:SessionStorageService,
     private _CertificadoService:CertificadoService,
     public dialog: MatDialog,
+    private _AsistenciaService: AsistenciaService,
   ) {}
   ngOnDestroy(): void {
     this.signal$.next(true);
@@ -79,7 +82,7 @@ export class CursoComponent implements OnInit,OnDestroy {
     idPGeneral: 0,
     listaCursoMatriculado: [],
     modalidad: '',
-    programaGeneral: '',
+    programaGeneral: ''
   };
   public json:ParametrosEstructuraEspecificaDTO={
 
@@ -93,6 +96,7 @@ export class CursoComponent implements OnInit,OnDestroy {
     NombrePrograma:'',
     idModalidad:1
   }
+  TitleMenu="menu"
   public estructuraCapitulo:any;
   public curso:any
   public EsCurso:any
@@ -106,6 +110,9 @@ export class CursoComponent implements OnInit,OnDestroy {
   public generateCertificado=true
   public ircas:any
   public videosOnline:Array<any>=[]
+  public asistencias:any
+  public IdModalidadPrincipal=0
+  public MostrarMensajeRecuerda=false;
   public contenidotarea=
   '<iframe src="https://player.vimeo.com/video/737713694?h=ce19c25ba1" width="100%" height="564" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>'
   public contenidotareapares=
@@ -138,6 +145,15 @@ export class CursoComponent implements OnInit,OnDestroy {
     });
 
   }
+
+  ObtenerAsistenciasAlumnoOnline(){
+    this._AsistenciaService.ObtenerAsistenciasAlumnoOnline(this.idMatricula, this.programEstructura.idPEspecifico).pipe(takeUntil(this.signal$)).subscribe({
+      next:x=>{
+        console.log(x)
+        this.asistencias=x
+      }
+    })
+  }
   ObtenerDatosCertificadoIrcaEnvio(){
     this._CertificadoService.ObtenerDatosCertificadoIrcaEnvio(this.idMatricula).pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
@@ -152,10 +168,14 @@ export class CursoComponent implements OnInit,OnDestroy {
     console.log(valorLoscalS);
     console.log(this.modulos);
     if(valorLoscalS<2){
-      if(this.EsCurso==true){
-        this.sesiones.nativeElement.click()
+      if(this.curso.claseWebexActivo==true){
+        this.Online.nativeElement.click()
       }else{
-        this.modulos.nativeElement.click()
+        if(this.EsCurso==true){
+          this.sesiones.nativeElement.click()
+        }else{
+          this.modulos.nativeElement.click()
+        }
       }
     }else{
       if(valorLoscalS==2){
@@ -211,7 +231,9 @@ export class CursoComponent implements OnInit,OnDestroy {
   certificadoDigital(){
     console.log('-------')
     if(this.datosCertificado!=undefined){
-      if((this.datosCertificado.idEstado_matricula!=5 && this.datosCertificado.idEstado_matricula!=12) || this.datosCertificado.nombreArchivo==null){
+      if(!(this.datosCertificado.nombreArchivo!=null &&(
+        this.datosCertificado.idEstado_matricula==5 ||
+        this.datosCertificado.idEstado_matricula==12))){
         this.alertaDigital=true
       }
     }
@@ -418,10 +440,13 @@ export class CursoComponent implements OnInit,OnDestroy {
       .pipe(takeUntil(this.signal$))
       .subscribe({
         next: (x) => {
+          console.log(x)
           this.programEstructura = x;
+          this.IdModalidadPrincipal=x.idModalidad
           console.log(this.programEstructura)
           if(this.programEstructura.listaCursoMatriculado!=null && this.programEstructura.listaCursoMatriculado.length>1){
             this.EsCurso=false
+            this.TitleMenu="MENU DEL CURSO"
             this.programEstructura.listaCursoMatriculado.sort(function (a:any, b:any) {
               return a.orden - b.orden;
             })
@@ -432,6 +457,9 @@ export class CursoComponent implements OnInit,OnDestroy {
               },)
 
             this.programEstructura.listaCursoMatriculado.forEach((program) => {
+              if(program.idModalidadHijo==1){
+                this.MostrarMensajeRecuerda=true;
+              }
               var params: ParametrosEstructuraEspecificaDTO = {
                 AccesoPrueba: false,
                 IdMatriculaCabecera: this.programEstructura.idMatriculaCabecera,
@@ -446,6 +474,7 @@ export class CursoComponent implements OnInit,OnDestroy {
               console.log(params)
               program.params = btoa(encodeURIComponent(JSON.stringify(params)));
             });
+            this.ObtenerAsistenciasAlumnoOnline();
           }else{
             this.ProgresoProgramaCursosAulaVirtualAonlinePorEstadoVideo()
             this.EsCurso=true
@@ -528,5 +557,9 @@ export class CursoComponent implements OnInit,OnDestroy {
         console.log('verificado')
       }
     })
+  }
+  redireccionarBiblioteca(){
+    window.open("https://www.oreilly.com/member/login/",'_blank');
+
   }
 }

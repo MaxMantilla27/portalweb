@@ -179,7 +179,7 @@ export class LoginFacebookIngresarComponent implements OnInit ,OnDestroy {
                 this.router.navigate(['/AulaVirtual/MisCursos']);
               }else{
                 if(x.cursos==0){
-                  this.router.navigate(['/AulaVirtual/Docencia']);
+                  this.router.navigate(['/AulaVirtual/DocenciaV2']);
                 }else{
                   this.router.navigate(['/AulaVirtual/MisCursos']);
                 }
@@ -192,7 +192,7 @@ export class LoginFacebookIngresarComponent implements OnInit ,OnDestroy {
                     this.router.navigate(['/AulaVirtual/MisCursos']);
                   }else{
                     if(x.cursos==0){
-                      this.router.navigate(['/AulaVirtual/Docencia']);
+                      this.router.navigate(['/AulaVirtual/DocenciaV2']);
                     }else{
                       this.router.navigate(['/AulaVirtual/MisCursos']);
                     }

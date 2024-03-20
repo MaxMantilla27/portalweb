@@ -1,14 +1,102 @@
-
 .tipoIndicacionTitle {
   display: flex;
   justify-content: flex-start;
   background: #f2f6ff;
   padding: 5px 10px;
   margin: 30px 0px;
-  height: 50px ;
+  height: 50px;
   align-items: center;
-  i{
+  i {
     margin-right: 4px;
     color: #ff7012;
   }
+}
+.CardOnlines {
+  padding: 25px 10px;
+  border-radius: 10px;
+  background: #f4f4f4;
+  margin: 0px 0px 15px 0px;
+  align-items: center;
+  .dataOnlineFechas {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    .tagFechaOnlines {
+      font-size: 12px;
+      color: white;
+      background: #00c356;
+      padding: 1px 5px;
+      border-radius: 4px;
+    }
+    .fechasOnline {
+      font-size: 12px;
+      margin-left: 6px;
+    }
+    .sesionesOnline{
+      font-size: 12px;
+      margin-left: 6px;
+      margin-right: 6px;
+    }
+  }
+  .programaOnlines{
+    font-weight: 800;
+    font-size: 14px;
+    margin-bottom: 5px;
+  }
+  .tipoPrograma{
+    font-size: 10px;
+    margin-bottom: 10px;
+    margin-bottom: 10px;
+    font-weight: 600;
+  }
+  .alertaProgramas{
+    font-size: 10px;
+    margin-top: 10px;
+    color: red;
+  }
+}
+.proximasSesionesOnline{
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin: 10px 10px;
+  padding-bottom: 10px;
+  border-bottom: solid 2px #d1d1d1;
+  .textoProximas{
+    font-size: 17px;
+    font-weight: 600;
+  }
+  .iconProximas{
+    height: 20px;
+    cursor: pointer;
+    .material-icons{
+      font-size: 30px !important;
+      // color: #72a3ff;
+    }
+  }
+}
+.cabeceraExpandVideo{
+  display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: 700;
+    padding-bottom: 6px;
+    width: 100%;
+}
+.cabeceraExpandVideo div .material-icons{
+  cursor: pointer;
+  font-size: 30px !important;
+}
+.IframeVideo{
+  width: 100%;
+  height: 100%;
+  margin-top: 20px;
+  iframe{
+    width: 100%;
+    aspect-ratio: 5/3;
+  }
+
+}
+.TutorialClose{
+background: #FFEEE1 !important;
 }

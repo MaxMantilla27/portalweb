@@ -1,0 +1,114 @@
+<ng-container *ngIf="listadoAsistencias!=undefined">
+  <!-- <div>
+    <ng-container *ngIf="charge==true">
+      <div style="width: 100%;z-index: 10;height: 100%;position: absolute;display: flex;justify-content: center;padding: 20px;align-items: center;
+       background: rgb(0 0 0 / 12%);border: 1px solid #C00;">
+        <mat-spinner></mat-spinner>
+      </div>
+    </ng-container>
+    <div class="tableresposive">
+
+      <table style="width: 100%; border-top: none !important; " class="table">
+        <thead style="position: sticky !important;
+        padding-bottom: 10px; top: -20px !important;z-index: 4;">
+          <tr style="background: #e6eefa;">
+            <th class="sticky" rowspan="2"><b>N°</b></th>
+            <th rowspan="2"><b>Código</b></th>
+            <th  rowspan="2"><b>Nombres y Apellidos</b></th>
+          </tr>
+          <ng-container *ngIf="listadoAsistencias.listadoSesiones.length>0">
+            <tr >
+              <th style="width: 5px;min-width: 55px;text-align: center;" *ngFor="let item of listadoAsistencias.listadoSesiones ; let i=index">
+                <ng-container >
+                  <button mat-icon-button matTooltip="Basic" aria-label="Example icon-button with a heart icon">
+                    <mat-icon>edit</mat-icon>
+                  </button>
+                  <br>Sesión {{i + 1}} <br> {{item.fechaHoraInicio | date:'dd/MM/yyyy' }}
+                </ng-container>
+
+              </th>
+            </tr>
+
+          </ng-container>
+
+        </thead>
+        <ng-container *ngIf="listadoAsistencias.listadoMatriculas!=null && listadoAsistencias.listadoMatriculas.length>0">
+          <tbody>
+            <ng-container *ngFor="let mat of listadoAsistencias.listadoMatriculas ; let i=index">
+              <tr>
+                <td>
+                  {{i + 1}}
+                </td>
+                <td>
+                  {{mat.codigoMatricula}}
+                </td>
+                <td>
+                  {{mat.alumno | uppercase}}
+                </td>
+
+                <ng-container *ngFor="let matn of mat.asistenciaAlumno">
+                  <td style="width:max-content; text-align: center;">
+
+                    <select (change)="matn.Asistio=!matn.Asistio" id="select-menu" style="width:max-content; border-radius: 0.4em;" >
+                      <ng-container *ngIf="matn.Asistio!=true">
+                         <option  default>Falta</option>
+                         <option  > Asistio</option>
+                      </ng-container>
+
+                      <ng-container *ngIf="matn.Asistio==true">
+		                    <option  default>Asistio</option>
+                        <option (click)="matn.Asistio=!matn.Asistio">Falta</option>
+                      </ng-container>
+                    </select>
+                  </td>
+                </ng-container>
+              </tr>
+            </ng-container>
+          </tbody>
+        </ng-container>
+      </table>
+    </div>
+  </div> -->
+  <div>
+    <div class="tableGestionNotas">
+
+      <app-table-v2 *ngIf="infoAsistencias!=undefined && infoAsistencias.length>0" [tableData]="infoAsistencias"
+        [columnHeader]="columnHeader" [tipoContenido]="TipoContenido" [tipoContenidoHeader]="TipoContenidoHeader"
+        [Paginador]="false"
+        [StyleContent]="'    font-size: 12px;padding: 10px;'" [dataSelect]="dataSeldt" [DisableSort]="DisableSort"
+        [DisableCell]="DisableCell" [buttonheader]="buttonheader" [sticky]="sticky"
+        (ButtonHeaderClick)="HeaderChange($event)" (SelectChange)="SelectChange($event)"></app-table-v2>
+    </div>
+
+  </div>
+  <div *ngIf="IdEstadoPEspecifico!=1" class="buttonsRegistroNota">
+    <div style="margin: 0px 5px;">
+      <app-default-button [confs]="{color:'primary',titulo:'Guardar'}"
+        [style]="'width: 100%;background: #0069d9;border-color: #0062cc;'"
+        (ButtoclClick)="RegistrarAsistenciaDetalleDocente()" [icon]="'check'"></app-default-button>
+    </div>
+    <div *ngIf="DisabledFinalizarRegistro==true" style="margin: 0px 5px;">
+      <app-default-button [confs]="{color:'primary',titulo:'Finalizar Registro'}"
+        [disabled]="true" [style]="'color:white; width: 100%;background: #888888;border-color: #888888;'" [icon]="'check'"></app-default-button>
+    </div>
+    <div *ngIf="DisabledFinalizarRegistro==false" style="margin: 0px 5px;">
+      <app-default-button [confs]="{color:'primary',titulo:'Finalizar Registro'}"
+        (ButtoclClick)="ConfirmacionAprobarNotaDetalleDocente()" [style]="'width: 100%;background: #0069d9;border-color: #0062cc;'" [icon]="'check'"></app-default-button>
+    </div>
+  </div>
+  <div *ngIf="IdEstadoPEspecifico==1" class="buttonsRegistroNota">
+    <div style="margin: 0px 5px;">
+      <app-default-button [confs]="{color:'primary',titulo:'Guardar'}"
+      [disabled]="true" [style]="'color:white; width: 100%;background: #888888;border-color: #888888;cursor:pointer'"
+      [icon]="'check'"></app-default-button>
+    </div>
+    <div style="margin: 0px 5px;">
+      <app-default-button [confs]="{color:'primary',titulo:'Finalizar Registro'}"
+        [disabled]="true" [style]="'color:white; width: 100%;background: #888888;border-color: #888888;cursor:pointer'"
+        [icon]="'check'"></app-default-button>
+    </div>
+  </div>
+</ng-container>
+<ng-container *ngIf="listadoAsistencias==undefined">
+  <div style="width: 100%;display: flex;justify-content: center;padding: 20px"><mat-spinner></mat-spinner> </div>
+</ng-container>

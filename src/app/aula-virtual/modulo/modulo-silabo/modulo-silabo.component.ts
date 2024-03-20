@@ -27,6 +27,7 @@ export class ModuloSilaboComponent implements OnInit,OnChanges,OnDestroy {
   public listaSeccionesContenidosDocumento:Array<any>=[];
   public prese=''
   public presentacionC=''
+  @Input() idModalidad: number = 2;
   ngOnInit(): void {
   }
   ngOnChanges(changes: SimpleChanges): void {

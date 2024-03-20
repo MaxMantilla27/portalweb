@@ -1,0 +1,98 @@
+<div *ngIf="ContenidoTrabajoPares==false" class="contentCursosOnline">
+  <div class="row ">
+    <div class="col-12 col-md-9 col-lg-9 InputsDocencia">
+      <div class="row">
+        <div class="col-10 col-md-9 col-lg-9">
+          <mat-form-field appearance="outline"  style="width: 100%;">
+            <mat-label>Buscar por nombre de programa</mat-label>
+            <input type="text" placeholder="Buscar por nombre de programa" [(ngModel)]="filterTrabajoPares" matInput>
+          </mat-form-field>
+        </div>
+        <div class="col-2 col-md-3 col-lg-3">
+            <app-default-button [confs]="{color:'primary',titulo:'Buscar'}" [icon]="''"
+              [style]="'margin: 0px;border-radius: 5px;width: 100%;margin-top:5px'"
+              (ButtoclClick)="FiltrarTrabajoPares()"
+              ></app-default-button>
+        </div>
+      </div>
+    </div>
+    <div class="col-6 col-md-3 col-lg-3 InputsDocencia" >
+
+      <mat-form-field appearance="outline">
+        <mat-label>Filtrar por Estado</mat-label>
+        <mat-select #myselsetc [(ngModel)]="EstadoPendiente" #select  (selectionChange)="FiltrarTrabajoPares()">
+          <mat-option  [value]="-1" style="font-size: 16px;">
+            Todos
+          </mat-option>
+          <mat-option *ngFor="let item of Estados" [value]="item.id" style="font-size: 16px;">
+            {{item.Nombre}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <ng-container *ngIf="(TrabajoPares==undefined || TrabajoPares.length==0) && TerminaCarga==false">
+      <div class="row" style="display: flex; justify-content: center;align-items: center;text-align: center; height: 15rem;">
+        <div class="col-12" style="display: flex;justify-content: center;">
+          <mat-spinner></mat-spinner>
+        </div>
+        <div class="col-12">
+          Los registros se estan cargando ...
+        </div>
+      </div>
+    </ng-container>
+    <ng-container *ngIf="(TrabajoPares==undefined || TrabajoPares.length==0) && TerminaCarga==true">
+      <div style="display: flex;justify-content: center;align-items: center; height: 15rem;">
+        No se encontraron registros.
+      </div>
+    </ng-container>
+    <ng-container *ngIf="TrabajoPares!=undefined && TrabajoPares.length!=0">
+      <div class="col-12" >
+        <ng-container *ngFor="let item of TrabajoPares;let i=index">
+          <div class="contentCursoOnline" *ngIf="item.Visible==true">
+            <div class="row" style="margin: 0px;align-items: center;">
+              <div class="col-12 col-md-8 col-lg-10">
+                <div class="row">
+                  <div class="col-6 col-md-4 col-lg-4">
+                    <div class="EstadoCurso">Estado: {{item.tareasPendientes==0?'Calificado':'Pendiente'}}</div>
+                  </div>
+                  <div class="col-6 col-md-8 col-lg-8" style="    display: flex;">
+                    <ng-container *ngIf="item.tareasPendientes!=0">
+                      <div class="imgAlertaActividadesPendientes"></div>
+                      <div class="textActividades">Pendientes de calificación ({{item.tareasPendientes}}) </div>
+                    </ng-container>
+                    <ng-container *ngIf="item.tareasPendientes==0">
+                      <div class="imgAlertaActividadesEchas"></div>
+                      <div class="textActividades">Sin Pendientes</div>
+                    </ng-container>
+
+                  </div>
+                  <br>
+
+                </div>
+              </div>
+              <div class="col-12 col-md-4 col-lg-2" style="    display: flex;
+              justify-content: flex-end;
+              padding: 0px;">
+                <app-default-button *ngIf="item.estadoAtendido==0" (click)="IngresarTrabajoPares(item.idPGeneralHijo,0,true)" [confs]="{color:'primary',titulo:'Calificar'}" [icon]="''"
+                  [style]="'border-radius: 5px; margin: 0px; padding: 0px 30px;'"></app-default-button>
+                <app-default-button *ngIf="item.estadoAtendido==1" (click)="IngresarTrabajoPares(item.idPGeneralHijo,0,true)" [confs]="{color:'primary',titulo:'Ver Calificados'}" [icon]="''"
+                  [style]="'border-radius: 5px; margin: 0px; padding: 0px 30px;'"></app-default-button>
+              </div>
+            </div>
+            <div class="col-12">
+              <div class="TitleCursoOnline" style="margin-top: 10px;">{{item.programaGeneralHijo}}</div>
+            </div>
+            <!-- <div class="col-12">
+              <div>Curso: {{item.programaEspecifico}}</div>
+            </div> -->
+          </div>
+        </ng-container>
+
+      </div>
+    </ng-container>
+
+  </div>
+</div>
+<div *ngIf="ContenidoTrabajoPares==true">
+  <app-docencia-calificar-trabajo-pares [IdPGeneral]="IdPGeneralTrabajoPares" [IdPEspecifico]="IdPEspecificoTrabajoPares"></app-docencia-calificar-trabajo-pares>
+</div>

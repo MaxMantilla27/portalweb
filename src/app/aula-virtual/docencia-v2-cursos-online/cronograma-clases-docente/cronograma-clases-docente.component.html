@@ -1,0 +1,7 @@
+<div *ngIf="sesiones==undefined || sesiones==null" style="font-weight: bold;">
+  * No hay registros.
+</div>
+<app-table-v2 *ngIf="sesiones!=undefined " [tableData]="sesiones"
+  [columnHeader]="columnHeader" [tipoContenido]="TipoContenido"
+  [StyleContent]="'    font-size: 12px;padding: 10px;'" [Paginador]="false"
+  [StyleCabecera]="'border-bottom: solid 1px;'"></app-table-v2>

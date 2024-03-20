@@ -288,4 +288,12 @@ export class FormaPagoService {
     }
   }
 
+  public ProcesarPagoCuotaAlumnoConfirmarMercadoPago(Json:any):Observable<any>{
+    if(this.isBrowser){
+      return this.http.post<any>(this.urlBase+'/ProcesarPagoCuotaAlumnoConfirmarMercadoPago',Json);
+    }else{
+      return EMPTY;
+    }
+  }
+
 }

@@ -54,7 +54,10 @@ export class DocenciaGestionSilabosComponent implements OnInit,OnChanges,OnDestr
     console.log(index)
     const dialogRef = this.dialog.open(DocenciaGestionSilabosRegistroComponent, {
       width: '1000px',
-      data: {grupo:this.notas[index].Grupo,IdPEspecifico:this.notas[index].IdPEspecifico,correo:this.Correo,idProveedor:this.IdProveedor},
+      data: {grupo:this.notas[index].Grupo,
+        IdPEspecifico:this.notas[index].IdPEspecifico,
+        correo:this.Correo,
+        idProveedor:this.IdProveedor},
       panelClass: 'custom-dialog-docente-silabo-container',
       disableClose: true
     });

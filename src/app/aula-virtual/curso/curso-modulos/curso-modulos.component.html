@@ -1,29 +1,138 @@
+<div class="row "  style="  padding-left: 15px !important;padding-right: 15px !important">
+  <div class="col-md-12" style="border: 1px solid #c4c4c4;border-radius: 10px;margin-bottom: 10px;">
+    <div class="CursosDetalle">
+      <div class="CursosHijosCriterios row"  [ngClass]="{'TutorialClose':OpenVideoModulo==false}">
+        <div class="EncabezadoCurso">
+          <div class="cabeceraExpandCurso" [ngClass]="{'cabeceraExpandCursoOpen':OpenVideoModulo==true}">
+            <div class="col-11" style="display:flex">
+              <div class="col-1" style="color: red;font-weight: bold;">!Nuevo!</div>
+              <div class="col-9" style="margin-left: 10px;">
+                Se ha realizado una actualización en este Módulo
+              </div>
+              <div class="col-2"  style="font-size: 16px;text-align: center;color: #0684F3;" >
+                <div *ngIf="OpenVideoModulo==true">
+                  Ocultar Tutorial
+                </div>
+                <div *ngIf="OpenVideoModulo==false">
+                  Mostrar Tutorial
+                </div>
+
+              </div>
+            </div>
+            <div>
+              <i class="material-icons no-seleccionable " *ngIf="OpenVideoModulo==false"
+                (click)="OpenVideoModulo=true">keyboard_arrow_down</i>
+              <i class="material-icons no-seleccionable " *ngIf="OpenVideoModulo==true"
+                (click)="OpenVideoModulo=false">keyboard_arrow_up</i>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="IframeVideo" *ngIf="OpenVideoModulo" >
+        <iframe src="https://player.vimeo.com/video/924831688?h=67fa7b14a9" frameborder="0"></iframe>
+      </div>
+    </div>
+  </div>
+</div>
 <div class="contentCursoModulo" *ngFor="let item of programEstructura.listaCursoMatriculado; let i=index">
   <div class="headerCursoModulo row">
-    <div class="col-12 col-md-8 col-lg-10 row" style="align-items: center;">
+    <div class="col-12 col-md-8 col-lg-10 row" style="align-items: flex-start;">
       <div class="NumberCursoModulo col-2 col-md-1 col-lg-1">
         {{i+1}}
       </div>
       <ng-container *ngIf="item.idModalidadHijo!=1">
         <div class="titleCursoModulo col-10 col-md-11 col-lg-11">
           {{item.programaGeneralHijo}}
-          <div class="matriculaicon">
-            <i class="material-icons">play_circle_outline</i>
-            <div>Online Sincrónico</div>
+          <div class="row" >
+            <div class="cursoMatriculaicon col-6 col-md-6 col-lg-6" style="    display: flex;">
+              <i class="material-icons" [ngClass]="{'inActiveOnline': item.fechasOnlineActive!=true}">play_circle_fill</i>
+              <div>Online Sincrónico</div>
+            </div>
+            <div class="col-6 col-md-6 col-lg-6" style="display: flex;align-items: center;">
+              <ng-container *ngIf="item.pendientes!=0">
+                <div class="imgAlertaActividadesPendientes"></div>
+                <div style="font-size: 12px">Actividades Pendientes ({{item.pendientes}}) </div>
+              </ng-container>
+              <ng-container *ngIf="item.pendientes==0">
+                <div class="imgAlertaActividadesEchas"></div>
+                <div style="font-size: 12px;">Sin Pendientes</div>
+              </ng-container>
+
+            </div>
           </div>
+          <div class="FechasOnlineAula">
+            <div class="col-12 fechasOnline"  *ngIf="item.fechasOnline!=undefined && item.fechasOnline!=null">
+              <div class="imgActive" [ngClass]="{'inActiveOnline': item.fechasOnlineActive!=true}"></div>
+              <div style="font-weight: normal !important;">Fecha Inicio: {{item.fechasOnline.fechaInicio | date:'dd-MM-yyyy'}}</div>
+              <div style="font-weight: normal !important;">Fecha Fin: {{item.fechasOnline.fechaFin | date:'dd-MM-yyyy'}}</div>
+            </div>
+          </div>
+          <div style="display: flex; font-size: 14px;font-weight: normal !important;">
+
+            <div style="position: relative;width: 20px;
+            margin-right: 10px;    height: 20px;">
+
+              <mat-progress-spinner class="greay-spinner" [mode]="'determinate'" [diameter]="20"
+                [strokeWidth]="4" [value]="100">
+              </mat-progress-spinner>
+              <mat-progress-spinner class="progras-spinner" [mode]="'determinate'" [diameter]="20"
+                [strokeWidth]="4" [value]="(item.sesionesFaltantes)*100/item.sesiones">
+              </mat-progress-spinner>
+            </div>
+            <div>
+              Sesiones ejecutadas {{item.sesionesFaltantes}} de {{item.sesiones}}
+            </div>
+          </div>
+
         </div>
       </ng-container>
       <ng-container *ngIf="item.idModalidadHijo==1">
-        <div class="titleCursoModulo col-10 col-md-11 col-lg-11">{{item.programaGeneralHijo}}</div>
+        <div class="titleCursoModulo col-10 col-md-11 col-lg-11">{{item.programaGeneralHijo}}
+          <div class="cursoMatriculaicon">
+            <i class="material-icons">play_circle_fill</i>
+            <div>Online Asincrónico</div>
+          </div>
+          <ng-container *ngIf="item.convalidado!=true">
+            <div
+              style="font-size: 10px;font-weight: 600;color: #8d8789;display: flex;    align-items: flex-end;margin-top: 5px;">
+              <div style="font-size: 12px;">Avance {{item.porcentaje | number:'1.0-0'}}%</div>
+            </div>
+            <div class="contentModuloSesiones">
+              <mat-progress-bar mode="determinate" class="progrees-modulo" style="    border-radius: 10px;"
+                [value]="(item.porcentaje!=undefined)?item.porcentaje:0">
+              </mat-progress-bar>
+            </div>
+          </ng-container>
 
-        <div class="col-2 col-md-1 col-lg-1">
+          <ng-container *ngIf="item.convalidado==true">
+            <div
+              style="font-size: 10px;font-weight: 600;color: #8d8789;display: flex;    align-items: flex-end;margin-top: 5px;">
+              <div style="font-size: 12px;">Avance 100%</div>
+            </div>
+            <div class="col-12 contentModuloSesiones">
+              <mat-progress-bar mode="determinate" class="progrees-modulo" style="    border-radius: 10px;"
+                [value]="100">
+              </mat-progress-bar>
+            </div>
+            <!-- <div class="estadoCursoModulo col-12 col-md-2 col-lg-2">
+              <i class="material-icons">check_circle</i>
+              <div>Completado</div>
+            </div> -->
+
+            <div style="    font-size: 11px;font-weight: bold;color: #909090;margin-top: 10px;">
+              Convalidado
+            </div>
+          </ng-container>
+        </div>
+
+        <!-- <div class="col-2 col-md-1 col-lg-1">
         </div>
         <ng-container *ngIf="item.convalidado!=true">
-          <div class="col-12 col-md-2 col-lg-2"
+          <div class="col-10 col-md-11 col-lg-11"
             style="    margin: 10px 0px;font-size: 10px;font-weight: 600;color: #8d8789;display: flex;    align-items: flex-end;margin-top: 5px;">
             <div style="font-size: 12px;">Avance {{item.porcentaje | number:'1.0-0'}}%</div>
           </div>
-          <div class="col-12 col-md-7 col-lg-7 contentModuloSesiones" >
+          <div class="col-10 col-md-11 col-lg-11 contentModuloSesiones" >
             <mat-progress-bar mode="determinate" class="progrees-modulo" style="    border-radius: 10px;"
               [value]="(item.porcentaje!=undefined)?item.porcentaje:0">
             </mat-progress-bar>
@@ -36,36 +145,13 @@
               Visualizando</div>
             <div *ngIf="item.porcentaje==0">Pendiente</div>
           </div>
-        </ng-container>
-        <ng-container *ngIf="item.convalidado==true">
-          <div class="col-12 col-md-2 col-lg-2"
-            style="    margin: 10px 0px;font-size: 10px;font-weight: 600;color: #8d8789;display: flex;    align-items: flex-end;margin-top: 5px;">
-            <div style="font-size: 12px;">Avance 100%</div>
-          </div>
-          <div class="col-12 col-md-7 col-lg-7 contentModuloSesiones" >
-            <mat-progress-bar mode="determinate" class="progrees-modulo" style="    border-radius: 10px;"
-              [value]="100">
-            </mat-progress-bar>
-          </div>
-          <div class="estadoCursoModulo col-12 col-md-2 col-lg-2">
-            <i class="material-icons">check_circle</i>
-            <div>Completado</div>
-          </div>
-          <div style="    font-size: 11px;
-          font-weight: bold;
-          color: #909090;
-          margin-top: 10px;">
-            Convalidado
-          </div>
-        </ng-container>
+        </ng-container> -->
       </ng-container>
     </div>
     <div class="col-12 col-md-4 col-lg-2" style="display: flex;justify-content: flex-end;padding: 0px;">
-      <app-default-button (ButtoclClick)="EventoInteraccionButton('Ingresar')"
-        [disabled]="item.params==undefined"
+      <app-default-button (ButtoclClick)="EventoInteraccionButton('Ingresar')" [disabled]="item.params==undefined"
         (click)="IrCurso(idMatricula,item.idPEspecificoHijo,item.habilitado==true?true:false)"
         [confs]="{color:'primary',titulo:'Ingresar'}" [disabled]="item.params==undefined"
-
         [style]="'padding: 0px 30px;border-radius: 20px;margin:0px'">
       </app-default-button>
     </div>

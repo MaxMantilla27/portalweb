@@ -72,7 +72,7 @@
             </tr>
             <ng-container *ngIf="proyecto.registroEvaluacionArchivo!=null && proyecto.registroEvaluacionArchivo.length>0">
               <tr>
-                <td>{{proy.nombreArchivo}}</td>
+                <td><a [href]="proy.direccionUrl" target="_blank">{{proy.nombreArchivo}}</a> </td>
                 <td>{{proy.fechaCreacion | date:"dd/MM/yyyy"}}</td>
                 <td>{{proy.fechaCalificacion==null?'-':proy.fechaCalificacion | date:"dd/MM/yyyy"}}</td>
                 <td>{{proy.version}}</td>
@@ -133,7 +133,7 @@
                 </tr>
               </ng-container>
             </table>
-            <div style="display: flex;justify-content:flex-end" *ngIf="proy.notaProyecto.urlArchivoSubidoRetroalimentacion!=null">
+            <div style="display: flex;justify-content:flex-end" *ngIf="proy.notaProyecto.urlArchivoSubidoRetroalimentacion!=null && proy.notaProyecto.urlArchivoSubidoRetroalimentacion!=''">
               <a style="display: flex;
               margin-top: 10px;
               padding: 5px;
@@ -306,6 +306,190 @@
         </div>
       </div>
     </div>
+    <div class="col-12 row" style="display: flex;justify-content: flex-end;margin-top: 10px;">
+      <div class="ForoProyecto" style="width:auto;display: flex;">
+        <i style="margin-top: 5px;;color:#FF7012;font-size: 32px !important" class="material-icons" >help</i>
+        <div (click)="Interaccion('Consulta tarea a docente');OpenModalForo()" style="color: #FF7012;margin-left: 10px;margin-top: 8px;">
+          Consultar a Docente
+        </div>
+      </div>
+    </div>
+    <!-- <div class="row" style="align-items: center;width: 100%;margin-left: 0px;">
+      <div class="tipoIndicacionTitleForo col-12 col-md-12 col-lg-12">
+        <img class="ImgIndicacionesContent" src="../../../../assets/icons/foro-naranja.svg">
+        <div>Consultar a Docente</div>
+      </div>
+    </div> -->
+    <ng-container *ngIf="!NuevoForo ">
+      <ng-container *ngIf="!ContenidoForo">
+
+        <!-- Vista de Foro -->
+        <div class="row" style="align-items: center;width: 100%;margin-left: 0px;">
+          <div class="tipoIndicacionTitleForo col-12 col-md-12 col-lg-12">
+            <img class="ImgIndicacionesContent" src="../../../../assets/icons/foro-naranja.svg">
+            <div>Consultar a Docente</div>
+          </div>
+        </div>
+        <div style="font-weight: 600;
+        border-bottom: 1px solid #e0e0e0;
+        padding-bottom: 5px;
+        margin-top: 20px;
+        margin-bottom: 10px;">Todas las consultas</div>
+        <div *ngIf="foro.length==0">
+          Aun no hay consultas registradas
+        </div>
+        <div *ngIf="foro.length!=0">
+          <div class="contentForo">
+
+            <ng-container  *ngFor="let item of foro;let i=index">
+
+            <div class="foro" *ngIf="(pagina-1)*4<=i && (pagina)*4>i">
+
+              <div style="display: flex;align-items: center;justify-content: flex-start;">
+                <img [src]="item.urlAvatar" alt="{{item.urlAvatar}}" style="width: 40px; height: 40px;    margin-right: 10px;">
+                <div>
+                  <div class="titleForo" (click)="ContenidoForo=!ContenidoForo && IdForo=item.id" >{{item.titulo}}></div>
+                  <div class="subTitleForo">{{item.nombres}}</div>
+                </div>
+              </div>
+              <div style="display: flex;justify-content: end;align-items: center;    min-width: 40px;">
+                <img src="../../../../assets/icons/respuestas-foro-28.svg" alt="Respuesta Foro" style="width: 20px; height: 20px;    margin-right: 10px;">
+                <div class="NRespuestas">{{item.respuestas}}</div>
+              </div>
+            </div>
+            </ng-container>
+          </div>
+          <div  class="paginatorForo">
+            <i class="material-icons paginaForo" (click)="minusPage()" >keyboard_arrow_left</i>
+            <ng-container *ngFor="let pag of paginacion">
+              <div (click)="page(pag)" class="paginaForo"   [ngClass]="{'pagActive': pag === pagina}" *ngIf="paginaCeil>=(pag/5) && (paginaCeil-1)<=(pag/5)">
+                {{pag}}
+              </div>
+            </ng-container>
+            <i class="material-icons paginaForo" (click)="plusPage()">keyboard_arrow_right</i>
+          </div>
+        </div>
+      </ng-container>
+
+      <!-- Contenido del foro -->
+      <ng-container *ngIf="ContenidoForo">
+        <div class="row" style="align-items: center;width: 100%;margin-left: 0px;">
+          <div class="tipoIndicacionTitleForo col-6 col-md-9 col-lg-10">
+            <img class="ImgIndicacionesContent" src="../../../../assets/icons/foro-naranja.svg">
+            <div>Foro</div>
+          </div>
+          <div class="col-6 col-md-3 col-lg-2">
+            <app-default-button  (ButtoclClick)="NuevoForo=!NuevoForo && ContenidoForo=!ContenidoForo" (ButtoclClick)="RefrescarForo()" [confs]="{color:'primary',titulo:'Volver'}"  [style]="'width: 100%;'"
+            [style]="'margin-bottom: 0px !important;padding:0px 20px'" [icon]="''">
+          </app-default-button>
+          </div>
+        </div>
+        <app-curso-foro-proyecto-contenido (volverProyecto)="RefrescarForo()"
+              [IdPregunta]="IdForo" [IdPgeneral]="params.idPGeneral" [IdPprincipal]="params.idPrincipal" [IdPEspecificoPadre]="params.idPEspecificoPadre" [IdPEspecificoHijo]="this.params.idPEspecifico">
+        </app-curso-foro-proyecto-contenido>
+      </ng-container>
+    </ng-container>
+    <!-- <div class="col-12 col-md-12 col-lg-12" style="margin: 10px 0px ;">
+      <div class="cabeceraExpandProyecto" [ngClass]="{'cabeceraExpandProyectoOpen':foroAbrir}"
+      (click)="foroAbrir=!foroAbrir;EventoInteraccionAccordionCertificado('Instrucciones para abrir foro del proyecto de aplicación',foroAbrir==true?'Abierto':'Cerrado')">
+        <div>¿Necesitas Ayuda?</div>
+        <div>
+          <i class="material-icons no-seleccionable " *ngIf="!foroAbrir">keyboard_arrow_down</i>
+          <i class="material-icons no-seleccionable " *ngIf="foroAbrir">keyboard_arrow_up</i>
+        </div>
+      </div>
+      <div class="contentCabeceraProyecto" *ngIf="foroAbrir">
+        <ng-container *ngIf="NuevoForo">
+
+          <div class="row" style="align-items: center;width: 100%;margin-left: 0px;">
+            <div class="tipoIndicacionTitleForo col-12 col-md-9 col-lg-10">
+              <img class="ImgIndicacionesContent" src="../../../../assets/icons/foro-naranja.svg">
+              <div>Foro</div>
+            </div>
+            <div class="col-12 col-md-3 col-lg-2">
+              <app-default-button  (ButtoclClick)="NuevoForo=!NuevoForo" [confs]="{color:'primary',titulo:'Volver'}"  [style]="'width: 100%;'"
+                [style]="'margin-bottom: 0px !important;padding:0px 20px'" [icon]="''">
+              </app-default-button>
+            </div>
+          </div>
+          <app-curso-foro-proyecto-insert (volver)="RefrescarForo()"
+          [IdPgeneral]="idPGeneral" [IdPprincipal]="idPGeneral" [IdPEspecificoPadre]="idPEspecifico" [IdPEspecificoHijo]="idPEspecifico" [Curso]="curso" [UrlArchivo]="UrlArchivo">
+        </app-curso-foro-proyecto-insert>
+        </ng-container>
+        <ng-container *ngIf="!NuevoForo">
+          <ng-container *ngIf="!ContenidoForo">
+
+            <div class="row" style="align-items: center;width: 100%;margin-left: 0px;">
+              <div class="tipoIndicacionTitleForo col-12 col-md-8 col-lg-9">
+                <img class="ImgIndicacionesContent" src="../../../../assets/icons/foro-naranja.svg">
+                <div>Foro</div>
+              </div>
+              <div class="col-12 col-md-4 col-lg-3">
+                <app-default-button  (ButtoclClick)="NuevoForo=!NuevoForo" [confs]="{color:'primary',titulo:NuevoForo==false?'Ingresar consulta':'Volver'}"  [style]="'width: 100%;'"
+                [style]="'margin-bottom: 0px !important;padding:0px 20px'" [icon]="''">
+              </app-default-button>
+              </div>
+            </div>
+            <div style="font-weight: 600;
+            border-bottom: 1px solid #e0e0e0;
+            padding-bottom: 5px;
+            margin-top: 20px;
+            margin-bottom: 10px;">Todas las consultas</div>
+            <div *ngIf="foro.length==0">
+              Aun no hay consultas registradas
+            </div>
+            <div *ngIf="foro.length!=0">
+              <div class="contentForo">
+
+                <ng-container  *ngFor="let item of foro;let i=index">
+
+                <div class="foro" *ngIf="(pagina-1)*4<=i && (pagina)*4>i">
+
+                  <div style="display: flex;align-items: center;justify-content: flex-start;">
+                    <img [src]="item.urlAvatar" alt="{{item.urlAvatar}}" style="width: 40px; height: 40px;    margin-right: 10px;">
+                    <div>
+                      <div class="titleForo" (click)="ContenidoForo=!ContenidoForo && IdForo=item.id" >{{item.titulo}}></div>
+                      <div class="subTitleForo">{{item.nombres}}</div>
+                    </div>
+                  </div>
+                  <div style="display: flex;justify-content: end;align-items: center;    min-width: 40px;">
+                    <img src="../../../../assets/icons/respuestas-foro-28.svg" alt="Respuesta Foro" style="width: 20px; height: 20px;    margin-right: 10px;">
+                    <div class="NRespuestas">{{item.respuestas}}</div>
+                  </div>
+                </div>
+                </ng-container>
+              </div>
+              <div  class="paginatorForo">
+                <i class="material-icons paginaForo" (click)="minusPage()" >keyboard_arrow_left</i>
+                <ng-container *ngFor="let pag of paginacion">
+                  <div (click)="page(pag)" class="paginaForo"   [ngClass]="{'pagActive': pag === pagina}" *ngIf="paginaCeil>=(pag/5) && (paginaCeil-1)<=(pag/5)">
+                    {{pag}}
+                  </div>
+                </ng-container>
+                <i class="material-icons paginaForo" (click)="plusPage()">keyboard_arrow_right</i>
+              </div>
+            </div>
+          </ng-container>
+
+          <ng-container *ngIf="ContenidoForo">
+            <div class="row" style="align-items: center;width: 100%;margin-left: 0px;">
+              <div class="tipoIndicacionTitleForo col-6 col-md-9 col-lg-10">
+                <img class="ImgIndicacionesContent" src="../../../../assets/icons/foro-naranja.svg">
+                <div>Foro</div>
+              </div>
+              <div class="col-6 col-md-3 col-lg-2">
+                <app-default-button  (ButtoclClick)="NuevoForo=!NuevoForo && ContenidoForo=!ContenidoForo" [confs]="{color:'primary',titulo:'Volver'}"  [style]="'width: 100%;'"
+                [style]="'margin-bottom: 0px !important;padding:0px 20px'" [icon]="''">
+              </app-default-button>
+              </div>
+            </div>
+            <app-curso-foro-proyecto-contenido (volver)="RefrescarForo()"
+                  [IdPregunta]="IdForo" [IdPgeneral]="idPGeneral" [IdPprincipal]="IdPprincipal" [IdPEspecificoPadre]="IdPEspecificoPadre" [IdPEspecificoHijo]="IdPEspecificoHijo">
+            </app-curso-foro-proyecto-contenido>
+          </ng-container>
+        </ng-container>
+      </div>
+    </div> -->
   </div>
 
 </ng-container>

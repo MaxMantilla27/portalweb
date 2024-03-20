@@ -65,4 +65,27 @@ export class TrabajoDeParesIntegraService {
     }
 
   }
+  public ObtenerProgramaGeneralCentroCostoDocenteV2():Observable<any>{
+    if(this.isBrowser){
+      return this.http.get<any>(this.urlBase+'/ObtenerProgramaGeneralCentroCostoDocenteV2');
+    }else{
+      return EMPTY;
+    }
+  }
+  public ObtenerAlumnoTrabajoParesV2(IdPEspecifico:number,IdPGeneralHijo:number):Observable<any>{
+    if(this.isBrowser){
+      return this.http
+            .get<any>(
+              this.urlBase+'/ObtenerAlumnoTrabajoParesV2?IdPEspecifico='+IdPEspecifico+'&IdPGeneralHijo='+IdPGeneralHijo);
+    }else{
+      return EMPTY;
+    }
+  }
+  public ListadoAlumnosCalificarPorPespecificoCongeladoV2(IdPGeneral:number):Observable<any>{
+    if(this.isBrowser){
+      return this.http.get<any>(this.urlBase+'/ListadoAlumnosCalificarPorPespecificoCongeladoV2?IdPGeneral='+IdPGeneral);
+    }else{
+      return EMPTY;
+    }
+  }
 }

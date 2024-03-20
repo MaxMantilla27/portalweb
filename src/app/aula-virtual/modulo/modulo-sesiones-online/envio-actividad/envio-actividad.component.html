@@ -1,0 +1,40 @@
+<ng-container *ngIf="data.actividad!=undefined">
+  <div class="cardSesionOnlineTareasCuestionario">
+    <div class="flagActividad"  style="display: flex;">
+      <div class="col-11" style="display: flex;">
+        <div class="textoFlag">Actividad Adicional: {{data.index>9?(+1):'0'+(data.index+1)}}</div>
+        <!-- <div class="trianglearrow"></div> -->
+        <div id="player">
+          <div id="outer">
+            <div id="inner"></div>
+          </div>
+        </div>
+      </div>
+      <div class="col-1" style="text-align: end;font-weight: bold;cursor: pointer;" (click)="dialogRef.close()">
+        X
+      </div>
+    </div>
+    <div class="TitleActividad">{{data.actividad.titulo}}</div>
+    <div class="DescripcionActividad" *ngIf="data.actividad.descripcion!=null && data.actividad.descripcion.length>0">{{data.actividad.descripcion}}</div>
+    <div class="VinculoActividad" *ngIf="data.actividad.nombreArchivo!=null && data.actividad.nombreArchivo.length>0">
+      <a [href]="data.actividad.urlArchivoSubido" target="_blank" >{{data.actividad.nombreArchivo}}</a></div>
+  </div>
+  <div class="content">
+    <div class="contentTareasEnviadas" *ngFor="let item of data.actividad.actividades">
+      <div class="IntenTareasEnviadas"><strong>Calificación:</strong>  {{item.nota}}</div>
+      <div class="IntenTareasEnviadas"><strong>Fecha de Calificación:</strong>  {{item.fechaCalificacion | date :'dd/MM/yyyy hh:mm:ss'}}</div>
+      <div class="IntenTareasEnviadas"><strong>Retroalimentación:</strong>  {{item.retroalimentacion}}</div>
+      <div class="IntenTareasEnviadas"><strong>Archivo de Retroalimentación:</strong>
+        <ng-container *ngIf="item.urlArchivoSubidoRetroalimentacion!=null">
+          <div class="pdfSesionOnline"></div>
+          <div >
+            <a [href]="item.urlArchivoSubidoRetroalimentacion" target="_blank">{{item.nombreArchivoRetroalimentacion}}</a>
+          </div>
+        </ng-container>
+
+      </div>
+      <div style="background: rgb(233 233 233);width: 100%;height: 2px;
+      margin-top: 20px;"></div>
+    </div>
+  </div>
+</ng-container>

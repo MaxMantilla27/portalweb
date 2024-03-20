@@ -11,6 +11,7 @@ import { environment } from 'src/environments/environment';
 export class OperacionesNotaService {
   isBrowser: boolean;
   public urlBase=environment.url_api_integra+'Operaciones/Nota';
+  public urlBase2=environment.url_api+'Nota';
   constructor(
     private http: HttpClient,
     @Inject(PLATFORM_ID) platformId: Object
@@ -96,6 +97,14 @@ export class OperacionesNotaService {
   public ListadoAsistenciaProcesar(idPEspecifico:number,grupo:number):Observable<any>{
     if(this.isBrowser){
       return this.http.get<any>(this.urlBase+'/ListadoAsistenciaProcesar/'+idPEspecifico+ "/" +grupo);
+    }else{
+      return EMPTY;
+    }
+  }
+
+  public ObtenerAsistenciaAlumnoSesion(IdPEspecifico:number,IdPEspecificoSesion:number):Observable<any>{
+    if(this.isBrowser){
+      return this.http.get<any>(this.urlBase2+'/ObtenerAsistenciaAlumnoSesion?IdPEspecifico='+IdPEspecifico+'&IdPEspecificoSesion='+IdPEspecificoSesion);
     }else{
       return EMPTY;
     }

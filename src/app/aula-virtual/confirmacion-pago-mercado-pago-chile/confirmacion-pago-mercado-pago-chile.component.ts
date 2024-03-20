@@ -70,6 +70,7 @@ export class ConfirmacionPagoMercadoPagoChileComponent implements OnInit {
         this.resultPreProcesoMP.listaCuota.forEach((l:any) => {
           this.resultPreProcesoMP.total+=l.cuotaTotal
         });
+        this.iniciarJSMercadoPago()
         setTimeout(()=>{
           this.renderCardPaymentBrick(window)
         },500)

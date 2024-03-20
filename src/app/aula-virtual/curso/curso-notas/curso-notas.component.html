@@ -1,0 +1,154 @@
+<div class="row " style="  padding-left: 15px !important;padding-right: 15px !important" >
+  <div class="col-md-12" style="border: 1px solid #c4c4c4;border-radius: 10px;margin-bottom: 10px;">
+    <div class="CursosDetalle">
+      <div class="CursosHijosCriterios row"  [ngClass]="{'TutorialClose':OpenVideoModulo==false}">
+        <div class="EncabezadoCurso">
+          <div class="cabeceraExpandCurso" [ngClass]="{'cabeceraExpandCursoOpen':OpenVideoModulo==true}">
+            <div class="col-11" style="display:flex">
+              <div class="col-1" style="color: red;font-weight: bold;">!Nuevo!</div>
+              <div class="col-9" style="margin-left: 10px;">
+                Se ha agregado este Módulo
+              </div>
+              <div class="col-2"  style="font-size: 16px;text-align: center;color: #0684F3;" >
+                <div *ngIf="OpenVideoModulo==true">
+                  Ocultar Tutorial
+                </div>
+                <div *ngIf="OpenVideoModulo==false">
+                  Mostrar Tutorial
+                </div>
+
+              </div>
+            </div>
+            <div>
+              <i class="material-icons no-seleccionable " *ngIf="OpenVideoModulo==false"
+                (click)="OpenVideoModulo=true">keyboard_arrow_down</i>
+              <i class="material-icons no-seleccionable " *ngIf="OpenVideoModulo==true"
+                (click)="OpenVideoModulo=false">keyboard_arrow_up</i>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="IframeVideo" *ngIf="OpenVideoModulo" >
+        <iframe src="https://player.vimeo.com/video/924831724?h=9869c34c04" frameborder="0"></iframe>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="ListaNotas">
+  <div class="row" style="margin-top: 10px;margin-bottom: 10px;">
+    <div class="col-1"style="text-align: center;border-radius: 2px;">
+      <strong>N°</strong>
+    </div>
+    <div class="col-8" style="border-radius: 2px;font-weight: 500;">
+      <strong>Curso</strong>
+    </div>
+    <div class="col-1" style="border-radius: 2px;font-weight: 500;">
+      <strong>Promedio</strong>
+    </div>
+  </div>
+</div>
+<div class="Cursos" >
+  <ng-container *ngFor="let Cursos of CursosCriterios;let i=index">
+    <div class="row "  >
+      <div class="col-md-12" style="border: 1px solid #c4c4c4;border-radius: 10px;margin-bottom: 10px;">
+        <div class="CursosDetalle">
+          <div class="CursosHijosCriterios row">
+            <div class="EncabezadoCurso">
+              <div class="cabeceraExpandCurso" [ngClass]="{'cabeceraExpandCursoOpen':CursoAbierto==i}">
+                <div class="col-11" style="display:flex">
+                  <div class="NumberCursoModuloCambio col-1">
+                    {{i+1}}
+                  </div>
+                  <div class="col-9" style="margin-left: 10px;">
+                    <div style="font-size: 14px;" [innerHtml]="Cursos.nombrePrograma | safeHtml">
+
+                    </div>
+                    <div style="font-size: 13px;color: #0684F3;" [innerHtml]="Cursos.nombreModalidad | safeHtml">
+
+                    </div>
+
+                  </div>
+                  <div *ngIf="Cursos.idEstadoPEspecifico==1 && Cursos.nombreModalidad!='Online Asincrónico'" class="col-2"  style="font-size: 16px;text-align: center;color: #0684F3;" >
+                    {{Cursos.notaCurso}}
+                  </div>
+                  <div *ngIf="Cursos.idEstadoPEspecifico==2 && Cursos.nombreModalidad!='Online Asincrónico'" class="col-2"  style="font-size: 16px;text-align: center;color: #0684F3;" >
+                    En Ejecución
+                  </div>
+                  <div *ngIf="Cursos.idEstadoPEspecifico!=1 && Cursos.idEstadoPEspecifico!=2 && Cursos.nombreModalidad!='Online Asincrónico'" class="col-2"  style="font-size: 16px;text-align: center;color: #0684F3;" >
+                    Sin Iniciar
+                  </div>
+                  <div *ngIf="Cursos.nombreModalidad=='Online Asincrónico'" class="col-2"  style="font-size: 16px;text-align: center;color: #0684F3;" >
+                    {{Cursos.notaCurso}}
+                  </div>
+                </div>
+                <div *ngIf="Cursos.detalleCalificacion.length>0">
+                  <i class="material-icons no-seleccionable " *ngIf="CursoAbierto!=i"
+                    (click)="CursoAbierto=i">keyboard_arrow_down</i>
+                  <i class="material-icons no-seleccionable " *ngIf="CursoAbierto==i"
+                    (click)="CursoAbierto=-1">keyboard_arrow_up</i>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="ContenidoCriterio" *ngIf="CursoAbierto==i" >
+            <div *ngIf="Cursos.detalleCalificacion.length<=1" style="margin-top: 15px;font-style: italic;font-weight: bold;">
+              * Este curso no tiene criterios de evaluación configurados.
+            </div>
+            <div *ngIf="Cursos.detalleCalificacion.length>=2">
+              <table class="TablaTramites">
+                <thead class="TablaTramitesEncabezado">
+                  <tr>
+                    <td style="width: 70%;border-radius: 2px;padding-left: 10px;">
+                      <strong>Criterios</strong>
+                    </td>
+                    <td>
+                      <strong>Ponderación</strong></td>
+                    <td>
+                      <strong>Calificación</strong>
+                    </td>
+                  </tr>
+                </thead>
+                <tbody class="TablaTramitesContenido">
+                  <ng-container *ngFor="let criterioCalificacion of Cursos.detalleCalificacion">
+                    <tr *ngIf="criterioCalificacion.criterioEvaluacion!='Promedio'">
+                      <td class="criterio" style="width: 40%;padding-top: 10px;padding-bottom: 10px;padding-left: 10px;">
+                        {{criterioCalificacion.criterioEvaluacion}}
+                      </td>
+                      <td class="criterio" style="width: 30%;text-align: left;padding-top: 10px;padding-bottom: 10px;">
+                        {{criterioCalificacion.ponderacion}} %
+                      </td>
+                      <td class="criterio" style="width: 30%;padding-top: 10px;padding-bottom: 10px;color: #0684F3;">
+                        <div *ngIf="criterioCalificacion.valor==0">Pendiente</div>
+                        <div *ngIf="criterioCalificacion.valor!=0">{{criterioCalificacion.valor}}</div>
+                      </td>
+                    </tr>
+                    <tr *ngIf="criterioCalificacion.criterioEvaluacion=='Promedio'">
+                      <td class="criterio" style="width: 40%;padding-top: 10px;padding-bottom: 10px;border-radius: 10px 0px 0px 10px;background: #E0E6FF;padding-left: 10px;">
+                        <strong>{{criterioCalificacion.criterioEvaluacion}}</strong>
+                      </td>
+                      <td class="criterio" style="width: 30%;text-align: left;padding-top: 10px;padding-bottom: 10px;background: #E0E6FF;">
+                        {{criterioCalificacion.ponderacion}} %
+                      </td>
+                      <td class="criterio" style="width: 30%;padding-top: 10px;padding-bottom: 10px;border-radius: 0px 10px 10px 0px;background: #E0E6FF;color: #0684F3;">
+                        {{criterioCalificacion.valor}}
+                      </td>
+                    </tr>
+                  </ng-container>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+  <div class="row PromedioFinal"  >
+    <div class="col-9" style="padding-left: 30px;font-size: 18px;">
+      <strong>Promedio Final</strong>
+    </div>
+    <div  class="col-2" style="text-align: center;color: #0684F3;">
+      <strong *ngIf="PromedioFinal!=0">{{PromedioFinal}}</strong>
+      <strong *ngIf="PromedioFinal==0">0</strong>
+    </div>
+  </div>
+</div>

@@ -34,10 +34,8 @@ export class ModuloCalificacionesComponent implements OnInit,OnDestroy {
   }
   ngOnChanges(changes: SimpleChanges): void {
     if(this.IdMatriculaCabecera!=0){
-
       this.ValidarCalificacionesMatriculaPorPgeneral();
     }
-
   }
   ValidarCalificacionesMatriculaPorPgeneral(){
     this._ProgramaContenidoService.ValidarCalificacionesMatriculaPorPgeneral(this.IdMatriculaCabecera,this.IdPGeneralHijo).pipe(takeUntil(this.signal$)).subscribe({
@@ -46,11 +44,11 @@ export class ModuloCalificacionesComponent implements OnInit,OnDestroy {
       },
       complete:()=>{
 
-          this.ObtenerCriteriosEvaluacionCurso()
+          this.ListadoCriteriosEvaluacionPorCurso()
       }
     })
   }
-  ObtenerCriteriosEvaluacionCurso(){
+  ListadoCriteriosEvaluacionPorCurso(){
     this._NotaService.ListadoCriteriosEvaluacionPorCurso(this.IdMatriculaCabecera,this.IdPEspecifico,1).pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
         this.calificacionesCurso=x;

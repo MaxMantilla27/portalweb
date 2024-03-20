@@ -1,5 +1,5 @@
 <ng-container *ngIf="datosCertificado!=undefined">
-
+  <!--
   <div class="cursoTitle">{{curso.programaGeneral}}</div>
   <div class="row" style="align-items: center;" style="margin: 30px 0px 0px;">
     <div class="tipoIndicacionTitle col-12 col-md-12 col-lg-12" style="margin:0px;">
@@ -21,14 +21,26 @@
         Certificado Digital</div>
     </div>
       <mat-spinner [diameter]="40" *ngIf="charge"></mat-spinner>
-  </div>
-  <div class="contentCertificadoDigital"  *ngIf="datosCertificado.nombreArchivo!=null">
+  </div> -->
+  <div class="contentCertificadoDigital" *ngIf="datosCertificado.nombreArchivo!=null">
     <div class="cardCertificadoDigital ">
       <img class="ImgIndicacionesContent" src="../../../../assets/icons/certificado-digital-27.svg">
-      <a class="vinculo"
-      [href]="'https://repositorioweb.blob.core.windows.net/operaciones/comprobantes/'+datosCertificado.nombreArchivo"
-                target="_blank">
-        Certificado Digital</a>
+      <a style="color: #5c5c5b"> Certificado Digital</a>
     </div>
+    <div class="buttonCertificadoDescargar">
+      <a class="vinculo"
+        [href]="'https://repositorioweb.blob.core.windows.net/operaciones/comprobantes/'+datosCertificado.nombreArchivo"
+        target="_blank">
+        <button mat-raised-button
+          class="btn-generar" type="button"
+          style="   border-radius: 20px;    width: 150px;
+          background: #ff894b;
+          color: white;">Descargar >
+        </button>
+      </a>
+    </div>
+  </div>
+  <div class="IframeCertificado">
+    <iframe [src]="'https://repositorioweb.blob.core.windows.net/operaciones/comprobantes/'+datosCertificado.nombreArchivo  | safe" frameborder="0"></iframe>
   </div>
 </ng-container>

@@ -11,8 +11,8 @@ import { Router } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
 import { ParametrosEstructuraEspecificaDTO } from 'src/app/Core/Models/EstructuraEspecificaDTO';
 import {
-  ProgresoAlumnoProgramaAulaVirtualDTO,
   CursoPadreDTO,
+  ProgresoAlumnoProgramaAulaVirtualDTO,
   ProgresoAlumnoProgramaVideosAulaVirtualDTO,
 } from 'src/app/Core/Models/ListadoProgramaContenidoDTO';
 import { AlumnosTest } from 'src/app/Core/Shared/AlumnosTest';
@@ -55,15 +55,20 @@ export class CursoModulosComponent implements OnInit, OnChanges,OnDestroy {
     idPGeneral: 0,
     listaCursoMatriculado: [],
     modalidad: '',
-    programaGeneral: '',
+    programaGeneral: ''
   };
   public cargaProgrso=false
   public progressProgram:any
   @Input() idMatricula = 0;
+  public OpenVideoModulo=true
+
   ngOnInit(): void {
     if (this.idMatricula > 0) {
      // this.ObtenerProgresoAulaVirtual();
       this.ProgresoProgramaCursosAulaVirtualAonlinePorEstadoVideo();
+      console.log(this.programEstructura)
+      console.log(this.programEstructura.listaCursoMatriculado)
+      this.validarFechasOnline()
     }
   }
   ngOnChanges(changes: SimpleChanges): void {}
@@ -82,6 +87,24 @@ export class CursoModulosComponent implements OnInit, OnChanges,OnDestroy {
           this.cargaProgrso=true
         }
       });
+  }
+  validarFechasOnline(){
+    console.log(this.programEstructura.listaCursoMatriculado)
+    this.programEstructura.listaCursoMatriculado.forEach(c => {
+      c.fechasOnlineActive=false
+      if(c.fechasOnline!=undefined  && c.fechasOnline!=null ){
+        if(c.idModalidadHijo!=1){
+
+          let fi=new Date((new Date(c.fechasOnline.fechaInicio)).getFullYear(),(new Date(c.fechasOnline.fechaInicio)).getMonth(),(new Date(c.fechasOnline.fechaInicio)).getDate());
+          let fa=new Date((new Date()).getFullYear(),(new Date()).getMonth(),(new Date()).getDate());
+          let ff=new Date((new Date(c.fechasOnline.fechaFin)).getFullYear(),(new Date(c.fechasOnline.fechaFin)).getMonth(),(new Date(c.fechasOnline.fechaFin)).getDate());
+          console.log(fi,fa,ff);
+          if(fa>=fi && fa<=ff){
+            c.fechasOnlineActive=true
+          }
+        }
+      }
+    });
   }
   ProgresoProgramaCursosAulaVirtualAonlinePorEstadoVideo() {
     this.cargaProgrso=false
@@ -129,8 +152,6 @@ export class CursoModulosComponent implements OnInit, OnChanges,OnDestroy {
           cantidadRealizada+=video.videosTerminados
         }
       });
-      console.log(cantidadRealizada)
-      console.log(cantidad)
       program.porcentaje = cantidadRealizada*100/cantidad;
 
       if(program.convalidado==false && program.idModalidadHijo==1 && !alumnoTest){

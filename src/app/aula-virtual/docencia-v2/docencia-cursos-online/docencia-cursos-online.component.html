@@ -1,0 +1,113 @@
+<div class="contentCursosOnline">
+  <div class="row ">
+    <div class="col-12 col-md-9 col-lg-9 InputsDocencia">
+      <div class="row">
+        <div class="col-10 col-md-9 col-lg-9">
+          <mat-form-field appearance="outline"  style="width: 100%;">
+            <mat-label>Buscar por nombre de curso</mat-label>
+            <input type="text" placeholder="Buscar por nombre de curso" [(ngModel)]="filterCurso" matInput>
+          </mat-form-field>
+        </div>
+        <div class="col-2 col-md-3 col-lg-3">
+            <app-default-button [confs]="{color:'primary',titulo:'Buscar'}" [icon]="''"
+              [style]="'margin: 0px;border-radius: 5px;width: 100%;margin-top:5px'"
+              (ButtoclClick)="FilterCursos()"
+              ></app-default-button>
+        </div>
+      </div>
+    </div>
+    <div class="col-6 col-md-3 col-lg-3 InputsDocencia" >
+
+      <mat-form-field appearance="outline">
+        <mat-label>Filtrar por Estado</mat-label>
+        <mat-select #myselsetc [(ngModel)]="EstadoPespecifico" #select  (selectionChange)="FilterCursos()">
+          <mat-option  [value]="0" style="font-size: 16px;">
+            Todos
+          </mat-option>
+          <mat-option *ngFor="let item of Estados" [value]="item.id" style="font-size: 16px;">
+            {{item.Nombre}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <ng-container *ngIf="(Cursos==undefined || Cursos.length==0) && TerminaCarga==false">
+      <div class="row" style="display: flex; justify-content: center;align-items: center;text-align: center; height: 15rem;">
+        <div class="col-12" style="display: flex;justify-content: center;">
+          <mat-spinner></mat-spinner>
+        </div>
+        <div class="col-12">
+          Los registros se estan cargando ...
+        </div>
+      </div>
+    </ng-container>
+    <ng-container *ngIf="(Cursos==undefined || Cursos.length==0) && TerminaCarga==true">
+      <div style="display: flex;justify-content: center;align-items: center; height: 15rem;">
+        No se encontraron registros.
+      </div>
+    </ng-container>
+    <ng-container *ngIf="Cursos!=undefined && Cursos.length!=0">
+      <div class="col-12" style="margin-top: 50px;">
+        <ng-container *ngFor="let item of Cursos;let i=index">
+          <div class="contentCursoOnline" *ngIf="item.Visible==true">
+            <div class="row" style="margin: 0px;">
+              <div class="col-12 col-md-8 col-lg-10">
+                <div class="row">
+                  <div class="col-6 col-md-4 col-lg-4">
+                    <div *ngIf="item.idEstadoPEspecifico==1" class="EstadoCurso" style="display: flex;">Estado: <div style="color: #00C356;margin-left: 10px;"> Finalizado</div></div>
+                    <div *ngIf="item.idEstadoPEspecifico==2" class="EstadoCurso" style="display: flex;">Estado: <div style="color: #366BD9;margin-left: 10px;"> Ejecución</div></div>
+                    <div *ngIf="item.idEstadoPEspecifico==3" class="EstadoCurso">Estado: Por Ejecutar</div>
+                  </div>
+                  <div class="col-6 col-md-8 col-lg-8" style="    display: flex;">
+                    <ng-container *ngIf="item.calificacionesPendientes==0" >
+                      <div class="imgAlertaActividadesEchas"></div>
+                      <div class="textActividades">Sin pendientes</div>
+                    </ng-container>
+                    <ng-container *ngIf="item.calificacionesPendientes!=0">
+                      <div class="buttonCalificarActividades no-select" [routerLink]="'/AulaVirtual/DocenciaV2/' + item.idPEspecificoHijo" (click)="saveIndex(1)">
+                        <div class="imgAlertaActividadesPendientes"></div>
+                        <div class="textActividades">Actividades por calificar ({{item.calificacionesPendientes}})</div>
+                      </div>
+                    </ng-container>
+
+                  </div>
+                  <br>
+                  <div class="col-12">
+                    <div class="TitleCursoOnline">{{item.cursoNombre}}</div>
+                  </div>
+                  <div class="col-12 fechasOnline">
+                    <div>Fecha Inicio: {{item.fechaInicio | date:'dd-MM-yyyy'}}</div>
+                    <div>Fecha Fin: {{item.fechaFinal | date:'dd-MM-yyyy'}}</div>
+                  </div>
+                  <div class="EstadoSesionOnline">
+
+                    <div style="position: relative;width: 20px;
+                    margin-right: 10px;    height: 20px;">
+
+                      <mat-progress-spinner class="greay-spinner" [mode]="'determinate'" [diameter]="20"
+                        [strokeWidth]="4" [value]="100">
+                      </mat-progress-spinner>
+                      <mat-progress-spinner class="progras-spinner" [mode]="'determinate'" [diameter]="20"
+                        [strokeWidth]="4" [value]="(item.sesiones-item.sesionesFaltantes)*100/item.sesiones">
+                      </mat-progress-spinner>
+                    </div>
+                    <div>
+                      Sesiones ejecutadas {{item.sesiones-item.sesionesFaltantes}} de {{item.sesiones}}
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-12 col-md-4 col-lg-2" style="    display: flex;
+              justify-content: flex-end;
+              padding: 0px;">
+                <app-default-button [ruta]="item.idPEspecificoHijo" [confs]="{color:'primary',titulo:'Ingresar'}" [icon]="''"
+                  [style]="'border-radius: 5px; margin: 0px; padding: 0px 30px;'"></app-default-button>
+              </div>
+            </div>
+          </div>
+        </ng-container>
+
+      </div>
+    </ng-container>
+
+  </div>
+</div>

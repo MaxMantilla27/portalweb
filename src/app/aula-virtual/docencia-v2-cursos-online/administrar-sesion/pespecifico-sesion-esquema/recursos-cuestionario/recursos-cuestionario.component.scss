@@ -1,0 +1,108 @@
+.table-resposive{
+  overflow: auto;
+  min-width: 100%;
+  width: auto;
+  display: block;
+  overflow-x: auto;
+  //white-space: nowrap;
+}
+.TitleAdministrarSesion{
+  margin-top: 20px;
+  color: black;
+  margin-bottom: 20px;
+  font-weight: 600;
+}
+.AgregarTemas{
+  margin-top: 30px;
+}
+.example-list {
+  width: 100%;
+  max-width: 100%;
+  min-height: 60px;
+  background: white;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.example-box {
+  padding: 20px 10px;
+  height: 35px;
+  color: rgba(0, 0, 0, 0.87);
+
+  box-sizing: border-box;
+  cursor: move;
+  background: white;
+  font-size: 14px;
+}
+
+.cdk-drag-preview {
+  box-sizing: border-box;
+  border-radius: 4px;
+  box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2),
+              0 8px 10px 1px rgba(0, 0, 0, 0.14),
+              0 3px 14px 2px rgba(0, 0, 0, 0.12);
+}
+
+.cdk-drag-animating {
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.example-box:last-child {
+  border: none;
+}
+
+.example-list.cdk-drop-list-dragging .example-box:not(.cdk-drag-placeholder) {
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.example-custom-placeholder {
+  background: #ccc;
+  border: dotted 3px #999;
+  min-height: 60px;
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+.accionesTema{
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  .edidtarNaranja{
+    width: 15px;
+    height: 15px;
+    background: url('../../../../../../assets/icons/icono-editar-naranja.svg');
+    background-size: cover;
+    background-position: center;
+    cursor:pointer  !important;
+  }
+  .verSinPublicar {
+    width: 21px;
+    height: 13px;
+    background: url("../../../../../../assets/icons/icono-mostrar-naranja.svg");
+    background-size: cover;
+    background-position: center;
+    cursor: pointer !important;
+  }
+  .eliminarNaranja{
+    width: 15px;
+    height: 15px;
+    background: url('../../../../../../assets/icons/icono-eliminar-naranja.svg');
+    background-size: cover;
+    background-position: center;
+    cursor:pointer  !important;
+  }
+  .publicarNaranja {
+    width: 20px;
+    height: 13px;
+    background: url("../../../../../../assets/icons/icono-check-circulo-verde.svg");
+    background-size: cover;
+    background-position: center;
+    cursor: pointer !important;
+  }
+  .verPublicado {
+    width:22px;
+    height: 13px;
+    background: url("../../../../../../assets/icons/icono-mostrar-verde.svg");
+    background-size: cover;
+    background-position: center;
+    cursor: pointer !important;
+  }
+}

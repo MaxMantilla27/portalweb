@@ -1,0 +1,45 @@
+.cabceraOnline{
+  font-size: 16px;
+  color: #626261;
+  font-weight: 600;
+}
+.CursosOnline{
+  background: #f4f4f4;
+  padding: 15px;
+  margin: 0;
+  font-weight: 600;
+  font-size: 14px;
+  border-radius: 10px;
+  align-items: center;
+  .procentage{
+    color: #4072da;
+  }
+  i{
+    cursor: pointer;
+  }
+}
+.openEx{
+  color: #4072da;
+}
+.OpenAsistencias{
+  border: solid 1px #bababa;
+  border-radius: 10px;
+  .CursosOnline{
+    border-radius: 10px 10px 0px 0px !important;
+  }
+}
+.expandAsistencias{
+  padding-bottom: 30px;
+}
+.IframeVideo{
+  width: 100%;
+  height: 100%;
+  margin-top: 20px;
+  iframe{
+    width: 100%;
+    aspect-ratio: 5/3;
+  }
+}
+.TutorialClose{
+  background: #FFEEE1 !important;
+  }

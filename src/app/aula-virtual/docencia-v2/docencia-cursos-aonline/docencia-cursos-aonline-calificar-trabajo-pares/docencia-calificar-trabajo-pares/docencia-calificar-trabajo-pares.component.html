@@ -1,0 +1,38 @@
+<ng-container *ngIf="RegresarAhora==false">
+  <div class="row">
+    <div class="col-12 col-md-10" style="font-size: 20px;font-weight: bold;margin-bottom: 15px;">
+      {{NombreCurso}}
+    </div>
+    <div  class="col-12 col-md-2">
+      <app-default-button (click)="Regresar()" [confs]="{color:'primary',titulo:'Volver'}" [icon]="''"
+      [style]="'border-radius: 5px; margin: 0px; padding: 0px 30px;'"></app-default-button>
+    </div>
+  </div>
+  <ng-container *ngIf="trabajoParesCurso==undefined && TerminaCarga==false">
+    <div class="row" style="display: flex; justify-content: center;align-items: center;text-align: center; height: 15rem;">
+      <div class="col-12" style="display: flex;justify-content: center;">
+        <mat-spinner></mat-spinner>
+      </div>
+      <div class="col-12">
+        Los registros se estan cargando ...
+      </div>
+    </div>
+  </ng-container>
+  <ng-container *ngIf="trabajoParesCurso==undefined && TerminaCarga==true">
+    <div style="display: flex;justify-content: center;align-items: center; height: 15rem;">
+      No se encontraron registros de trabajo de pares.
+    </div>
+  </ng-container>
+  <app-table-calificar-evaluaciones *ngIf="trabajoParesCurso!=undefined && TerminaCarga==true"
+    [tableData]="trabajoParesCurso"
+    [columnHeader]="columnHeader"
+    [tipoContenido]="TipoContenido"
+    [StyleContent]="'font-size: 12px;padding: 10px;'"
+    [StyleCabecera]="'border-bottom: solid 1px;'"
+    (ButtonClick)="AbrirTrabajoPares($event)">
+  </app-table-calificar-evaluaciones>
+</ng-container>
+<ng-container *ngIf="RegresarAhora==true">
+  <app-docencia-cursos-aonline-calificar-trabajo-pares></app-docencia-cursos-aonline-calificar-trabajo-pares>
+</ng-container>
+

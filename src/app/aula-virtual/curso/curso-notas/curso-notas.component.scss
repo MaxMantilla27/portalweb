@@ -1,0 +1,78 @@
+.ListaNotas{
+  min-width: 100%;
+  width: auto;
+  display: block;
+  border-top: solid 2px #b2b2b2;
+}
+.TablaNotasEncabezado{
+  height: 60px;
+}
+.TablaNotasContenido{
+  tr{
+    cursor: pointer;
+  }
+}
+.EncabezadoCurso{
+  padding-top: 10px;
+  padding-bottom: 5px;
+}
+.cabeceraExpandCurso{
+  display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: 700;
+    padding-bottom: 6px;
+    width: 100%;
+}
+.cabeceraExpandCurso div .material-icons{
+  cursor: pointer;
+  font-size: 30px !important;
+}
+.numeroCurso{
+  font-size: 17px;
+  margin-right: 15px;
+}
+.CursosHijosCriterios{
+  background: #f4f4f4;
+  border-radius: 10px;
+}
+.CursosHijosCriterios :hover{
+  background: #F2F6FF;
+  border-radius: 10px;
+}
+.NumberCursoModuloCambio {
+  pointer-events: none;
+  width: 27px;
+  height: 27px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: 900;
+  background: #80c4ff;
+  border-radius: 50%;
+}
+.PromedioFinal{
+  background: #E0E6FF;
+  border-radius: 10px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+.ContenidoCriterio{
+  margin: 20px 40px 20px 20px;
+}
+.CursoDetalle{
+  background: white;
+}
+.IframeVideo{
+  width: 100%;
+  height: 100%;
+  margin-top: 20px;
+  iframe{
+    width: 100%;
+    aspect-ratio: 5/3;
+  }
+}
+.TutorialClose{
+  background: #FFEEE1 !important;
+  }

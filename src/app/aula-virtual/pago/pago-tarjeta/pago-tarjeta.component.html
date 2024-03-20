@@ -6,14 +6,14 @@
     <mat-form-field appearance="outline" style="width: 100%;">
       <mat-label>Seleccione su medio de pago</mat-label>
       <mat-select (selectionChange)="change()" [(ngModel)]="medioCodigo">
-        <mat-select-trigger>
+        <mat-select-trigger style="    display: flex;
+        justify-content: space-between;">
           <div style="display: flex;
           justify-content: space-between;
           align-items: center;" *ngIf="medioCodigo.length>0">
             <div>{{medioPago}} </div>
-            <img [src]="'../../../../assets/icons/'+imgMedioPago" alt="" style="width: 20px;">
           </div>
-
+          <img [src]="'../../../../assets/icons/'+imgMedioPago" alt="" style="width: 20px;">
         </mat-select-trigger>
         <mat-option *ngFor="let item of tarjetas"  [value]="item.medioCodigo">{{item.medioPago}}</mat-option>
       </mat-select>
@@ -25,6 +25,6 @@
   </div>
   <div class="col-12 col-md-12 col-lg-12" style="display: flex;justify-content: center;">
 
-      <app-default-button [confs]="{color:'primary',titulo:tituloBotonModal}" [style]="'padding: 0px 40px;'" (ButtoclClick)="Pagar()"></app-default-button>
+      <app-default-button [confs]="{color:'primary',titulo:tituloBotonModal}" [style]="'padding: 0px 30px;    border-radius: 30px;'" (ButtoclClick)="Pagar()"></app-default-button>
   </div>
 </div>

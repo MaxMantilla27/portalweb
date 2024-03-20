@@ -1,0 +1,78 @@
+.table-resposive {
+  overflow: auto;
+  min-width: 100%;
+  width: auto;
+  display: block;
+  overflow-x: auto;
+  //white-space: nowrap;
+}
+.TitleRecursos {
+  margin-top: 40px;
+  color: black;
+  margin-bottom: 40px;
+  font-weight: 600;
+}
+.AgregarRecursos {
+  margin-top: 30px;
+}
+
+.accionesRecursos {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  .verNaranja {
+    width: 15px;
+    height: 15px;
+    background: url("../../../../../assets/icons/icono-mostrar-naranja.svg");
+    background-size: cover;
+    background-position: center;
+    cursor: pointer !important;
+  }
+  .edidtarNaranja {
+    width: 15px;
+    height: 15px;
+    background: url("../../../../../assets/icons/icono-editar-naranja.svg");
+    background-size: cover;
+    background-position: center;
+    cursor: pointer !important;
+  }
+  .eliminarNaranja {
+    width: 15px;
+    height: 15px;
+    background: url("../../../../../assets/icons/icono-eliminar-naranja.svg");
+    background-size: cover;
+    background-position: center;
+    cursor: pointer !important;
+  }
+}
+.ContentMaterialAdicionarl {
+  display: flex;
+  justify-content: space-between;
+  .errorMaterialAdicional {
+    font-size: 12px;
+    color: red;
+  }
+  .MaterialAdicional {
+    cursor: pointer;
+    font-weight: 600;
+  }
+}
+.MaterialAdicional:hover {
+  text-decoration: underline;
+  font-weight: 600;
+}
+td{
+  a{
+    color: black;
+    text-decoration: none;
+  }
+}
+.TitleRecurso{
+  width: 100%;
+  text-align: center;
+  padding: 10px;
+  font-size: 18px;
+  font-weight: 600;
+  background:#cfcfcf;
+  margin-bottom: 10px;
+}

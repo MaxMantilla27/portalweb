@@ -18,7 +18,7 @@ export class AlumnoGuard implements CanActivate {
     var cursos=this._SessionStorageService.SessionGetValue('Cursos')
     if((idProveedor!='' && parseInt(idProveedor)>0) && (cursos=='' || parseInt(cursos)==0) ){
 
-      this.router.navigate(['/AulaVirtual/Docencia']);
+      this.router.navigate(['/AulaVirtual/DocenciaV2']);
       return false;
     }
     return true;

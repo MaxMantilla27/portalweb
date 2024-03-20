@@ -44,6 +44,7 @@ import { DesafiliacionOpenpayComponent } from './confirmacion-desafiliacion-pago
 import { AfiliacionVisaComponent } from './confirmacion-afiliacion-pago-recurrente/afiliacion-visa/afiliacion-visa.component';
 import { ResultadoPagoIzipayComponent } from './resultado-pago-izipay/resultado-pago-izipay.component';
 import { AfiliacionIzipayComponent } from './confirmacion-afiliacion-pago-recurrente/afiliacion-izipay/afiliacion-izipay.component';
+import { DocenciaV2Component } from './docencia-v2/docencia-v2.component';
 import { BolsaTrabajoGuard } from './Guard/bolsa-trabajo.guard';
 import { BolsaTrabajoComponent } from './bolsa-trabajo/bolsa-trabajo.component';
 import { VisaRecurrenteComponent } from './resultado-pago-recurrente/visa-recurrente/visa-recurrente.component';
@@ -53,6 +54,7 @@ import { ResultadoPagoMercadopagoComponent } from './resultado-pago-mercadopago/
 import { ConfirmacionPagoOpenpayColombiaComponent } from './confirmacion-pago-openpay-colombia/confirmacion-pago-openpay-colombia.component';
 import { PagoMercadoPagoComponent } from './confirmacion-pago-organico/pago-mercado-pago/pago-mercado-pago.component';
 import { ConfirmacionPagoOpenpayPeruComponent } from './confirmacion-pago-openpay-peru/confirmacion-pago-openpay-peru.component';
+import { DocenciaV2CursosOnlineComponent } from './docencia-v2-cursos-online/docencia-v2-cursos-online.component';
 
 const routes: Routes = [
   {
@@ -65,6 +67,7 @@ const routes: Routes = [
         { path: 'MisCursos', component: MisCursosComponent,canActivate:[AlumnoGuard]},
         { path: 'Avatar', component: AvatarComponent,canActivate:[AlumnoGuard]},
         { path: 'Docencia', component: DocenciaComponent,canActivate:[ProveedorGuard]},
+        { path: 'DocenciaV2', component: DocenciaV2Component,canActivate:[ProveedorGuard]},
         { path: 'MisPagos', component: MisPagosComponent,canActivate:[AlumnoGuard]},
         { path: 'Categoria', component: CategoriaComponent,canActivate:[AlumnoGuard]},
         { path: 'BolsaTrabajo', component: BolsaTrabajoComponent,canActivate:[BolsaTrabajoGuard]},
@@ -77,8 +80,8 @@ const routes: Routes = [
         { path: 'MisPagos/webpay/:Identificador', component: PagoWebpayComponent,canActivate:[AlumnoGuard]},
         { path: 'MisPagos/mercadopago/:Identificador', component: PagoMercadoPagoComponent,canActivate:[AlumnoGuard]},
         { path: 'MisPagos/webpayResultado', component: ResultadoPagoWebpayComponent},
-        
 
+        { path: 'DocenciaV2/:IdPespecifico', component: DocenciaV2CursosOnlineComponent,canActivate:[ProveedorGuard]},
         { path: 'MisCursos/:IdMatricula', component: CursoComponent,canActivate:[AlumnoGuard]},
         { path: 'MisPagos/:IdMatricula', component: PagoComponent,canActivate:[AlumnoGuard]},
         { path: 'Docencia/:IdTarea', component: DocenciaTareasComponent,canActivate:[ProveedorGuard]},
@@ -105,6 +108,10 @@ const routes: Routes = [
         { path: 'MisPagos/:IdMatricula/openpayCOP/:Identificador', component: ConfirmacionPagoOpenpayColombiaComponent,canActivate:[AlumnoGuard]},
         { path: 'MisPagos/:IdMatricula/mercadoPago/:Identificador', component: ConfirmacionPagoMercadoPagoChileComponent,canActivate:[AlumnoGuard]},
         { path: 'MisPagos/:IdMatricula/openpayPEN/:Identificador', component: ConfirmacionPagoOpenpayPeruComponent,canActivate:[AlumnoGuard]},
+
+        { path: 'MisPagos/:IdMatricula/openpayCOP/:Identificador', component: ConfirmacionPagoOpenpayColombiaComponent,canActivate:[AlumnoGuard]},
+        { path: 'MisPagos/:IdMatricula/mercadoPago/:Identificador', component: ConfirmacionPagoMercadoPagoChileComponent,canActivate:[AlumnoGuard]},
+
 
 
         // Afiliaciones a Pagos Recurrentes

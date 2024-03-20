@@ -102,6 +102,7 @@ import { DesafiliacionOpenpayComponent } from './confirmacion-desafiliacion-pago
 import { AfiliacionVisaComponent } from './confirmacion-afiliacion-pago-recurrente/afiliacion-visa/afiliacion-visa.component';
 import { ResultadoPagoIzipayComponent } from './resultado-pago-izipay/resultado-pago-izipay.component';
 import { AfiliacionIzipayComponent } from './confirmacion-afiliacion-pago-recurrente/afiliacion-izipay/afiliacion-izipay.component';
+import { DocenciaV2Component } from './docencia-v2/docencia-v2.component';
 import { BolsaTrabajoComponent } from './bolsa-trabajo/bolsa-trabajo.component';
 import { VisaRecurrenteComponent } from './resultado-pago-recurrente/visa-recurrente/visa-recurrente.component';
 import { OfertaLaboralComponent } from './bolsa-trabajo/oferta-laboral/oferta-laboral.component';
@@ -114,6 +115,66 @@ import { ConfirmacionPagoOpenpayColombiaComponent } from './confirmacion-pago-op
 import { PagoMercadoPagoComponent } from './confirmacion-pago-organico/pago-mercado-pago/pago-mercado-pago.component';
 import { ConfirmacionPagoOpenpayPeruComponent } from './confirmacion-pago-openpay-peru/confirmacion-pago-openpay-peru.component';
 
+import { AsistenciaAlumnoComponent } from './curso/asistencia-alumno/asistencia-alumno.component';
+import { ConfirmCertFisicoComponent } from './curso/curso-certificado-fisico/confirm-cert-fisico/confirm-cert-fisico.component';
+import { PerfilAlumnosComponent } from './docencia/perfil-alumnos/perfil-alumnos.component';
+import { DocenciaGestionAsistenciaComponent } from './docencia/docencia-gestion-asistencia/docencia-gestion-asistencia.component';
+import { RegistroAsistenciaComponent } from './docencia/registro-asistencia/registro-asistencia.component';
+import { DocenciaAccesoClasesComponent } from './docencia-v2/docencia-acceso-clases/docencia-acceso-clases.component';
+import { DocenciaCursosOnlineComponent } from './docencia-v2/docencia-cursos-online/docencia-cursos-online.component';
+import { DocenciaV2CursosOnlineComponent } from './docencia-v2-cursos-online/docencia-v2-cursos-online.component';
+import { AdministrarSesionComponent } from './docencia-v2-cursos-online/administrar-sesion/administrar-sesion.component';
+import { RegistrarAsistenciaOnlineComponent } from './docencia-v2-cursos-online/administrar-sesion/registrar-asistencia-online/registrar-asistencia-online.component';
+import { CursoNotasComponent } from './curso/curso-notas/curso-notas.component';
+import { PespecificoSesionTemaComponent } from './docencia-v2-cursos-online/administrar-sesion/pespecifico-sesion-tema/pespecifico-sesion-tema.component';
+import { PespecificoSesionRecursoConectividadComponent } from './docencia-v2-cursos-online/administrar-sesion/pespecifico-sesion-recurso-conectividad/pespecifico-sesion-recurso-conectividad.component';
+import { PespecificoSesionEsquemaComponent } from './docencia-v2-cursos-online/administrar-sesion/pespecifico-sesion-esquema/pespecifico-sesion-esquema.component';
+import { AgregarTareaComponent } from './docencia-v2-cursos-online/administrar-sesion/pespecifico-sesion-esquema/agregar-tarea/agregar-tarea.component';
+import { AgregarCuestionarioComponent } from './docencia-v2-cursos-online/administrar-sesion/pespecifico-sesion-esquema/agregar-cuestionario/agregar-cuestionario.component';
+import { AgregarPreguntasComponent } from './docencia-v2-cursos-online/administrar-sesion/pespecifico-sesion-esquema/agregar-cuestionario/agregar-preguntas/agregar-preguntas.component';
+import { MaterialEstudioDocenteComponent } from './docencia-v2-cursos-online/material-estudio-docente/material-estudio-docente.component';
+import { SilaboDocenteComponent } from './docencia-v2-cursos-online/silabo-docente/silabo-docente.component';
+import { CriterioEvaluacionDocenteComponent } from './docencia-v2-cursos-online/criterio-evaluacion-docente/criterio-evaluacion-docente.component';
+import { PerfilAlumnoDocenteComponent } from './docencia-v2-cursos-online/perfil-alumno-docente/perfil-alumno-docente.component';
+import { CronogramaClasesDocenteComponent } from './docencia-v2-cursos-online/cronograma-clases-docente/cronograma-clases-docente.component';
+import { NotaDocenteComponent } from './docencia-v2-cursos-online/nota-docente/nota-docente.component';
+import { RegistrarForoVideoComponent } from './sesiones/sesion-video/registrar-foro-video/registrar-foro-video.component';
+import { RegistrarForoTareaComponent } from './sesiones/sesion-tarea/registrar-foro-tarea/registrar-foro-tarea.component';
+import { CursoForoProyectoContenidoComponent } from './curso/curso-proyecto/curso-foro-proyecto-contenido/curso-foro-proyecto-contenido.component';
+import { CursoForoProyectoInsertComponent } from './curso/curso-proyecto/curso-foro-proyecto-insert/curso-foro-proyecto-insert.component';
+import { ModuloSesionesOnlineComponent } from './modulo/modulo-sesiones-online/modulo-sesiones-online.component';
+import { EnvioTareaComponent } from './modulo/modulo-sesiones-online/envio-tarea/envio-tarea.component';
+import { EnvioCuestionarioComponent } from './modulo/modulo-sesiones-online/envio-cuestionario/envio-cuestionario.component';
+import { AsistenciasOnlineComponent } from './modulo/asistencias-online/asistencias-online.component';
+import { GestionAsistenciaProgramaComponent } from './curso/gestion-asistencia-programa/gestion-asistencia-programa.component';
+import { DocenciaCursosAonlineComponent } from './docencia-v2/docencia-cursos-aonline/docencia-cursos-aonline.component';
+import { DocenciaCursosAonlineResponderForoComponent } from './docencia-v2/docencia-cursos-aonline/docencia-cursos-aonline-responder-foro/docencia-cursos-aonline-responder-foro.component';
+import { DocenciaCursosAonlineCalificarProyectoAplicacionComponent } from './docencia-v2/docencia-cursos-aonline/docencia-cursos-aonline-calificar-proyecto-aplicacion/docencia-cursos-aonline-calificar-proyecto-aplicacion.component';
+import { DocenciaCursosAonlineCalificarTrabajoParesComponent } from './docencia-v2/docencia-cursos-aonline/docencia-cursos-aonline-calificar-trabajo-pares/docencia-cursos-aonline-calificar-trabajo-pares.component';
+import { DocenciaResponerForoCursoComponent } from './docencia-v2/docencia-cursos-aonline/docencia-cursos-aonline-responder-foro/docencia-responder-foro-curso/docencia-responer-foro-curso.component';
+import { DocenciaResponderForoCursoModalComponent } from './docencia-v2/docencia-cursos-aonline/docencia-cursos-aonline-responder-foro/docencia-responder-foro-curso-modal/docencia-responder-foro-curso-modal.component';
+import { DocenciaCalificarTrabajoParesComponent } from './docencia-v2/docencia-cursos-aonline/docencia-cursos-aonline-calificar-trabajo-pares/docencia-calificar-trabajo-pares/docencia-calificar-trabajo-pares.component';
+import { DocenciaCalificarTrabajoParesModalComponent } from './docencia-v2/docencia-cursos-aonline/docencia-cursos-aonline-calificar-trabajo-pares/docencia-calificar-trabajo-pares-modal/docencia-calificar-trabajo-pares-modal.component';
+import { DocenciaCalificarProyectoAplicacionComponent } from './docencia-v2/docencia-cursos-aonline/docencia-cursos-aonline-calificar-proyecto-aplicacion/docencia-calificar-proyecto-aplicacion/docencia-calificar-proyecto-aplicacion.component';
+import { DocenciaCalificarProyectoAplicacionModalComponent } from './docencia-v2/docencia-cursos-aonline/docencia-cursos-aonline-calificar-proyecto-aplicacion/docencia-calificar-proyecto-aplicacion-modal/docencia-calificar-proyecto-aplicacion-modal.component';
+import { ModuloCalificacionesOnlineComponent } from './modulo/modulo-calificaciones/modulo-calificaciones-online/modulo-calificaciones-online.component';
+import { CalificarActividadesDocenteComponent } from './docencia-v2-cursos-online/calificar-actividades-docente/calificar-actividades-docente.component';
+import { CalificarCuestionarioDocenteComponent } from './docencia-v2-cursos-online/calificar-actividades-docente/calificar-cuestionario-docente/calificar-cuestionario-docente.component';
+import { CalificarTareaDocenteComponent } from './docencia-v2-cursos-online/calificar-actividades-docente/calificar-tarea-docente/calificar-tarea-docente.component';
+import { DetallesCuestionarioComponent } from './docencia-v2-cursos-online/calificar-actividades-docente/calificar-cuestionario-docente/detalles-cuestionario/detalles-cuestionario.component';
+import { LineamientosTareaOnlineComponent } from './docencia-v2-cursos-online/calificar-actividades-docente/calificar-tarea-docente/lineamientos-tarea-online/lineamientos-tarea-online.component';
+import { VistaPreviaCuestionarioComponent } from './docencia-v2-cursos-online/administrar-sesion/pespecifico-sesion-esquema/vista-previa-cuestionario/vista-previa-cuestionario.component';
+import { RecursosTareaComponent } from './docencia-v2-cursos-online/administrar-sesion/pespecifico-sesion-esquema/recursos-tarea/recursos-tarea.component';
+import { RecursosCuestionarioComponent } from './docencia-v2-cursos-online/administrar-sesion/pespecifico-sesion-esquema/recursos-cuestionario/recursos-cuestionario.component';
+import { RegistrarForoProyectoComponent } from './curso/curso-proyecto/registrar-foro-proyecto/registrar-foro-proyecto.component';
+import { VerPreguntasCuestionarioComponent } from './docencia-v2-cursos-online/administrar-sesion/pespecifico-sesion-esquema/agregar-cuestionario/ver-preguntas-cuestionario/ver-preguntas-cuestionario.component';
+import { ModalEnvioTareaComponent } from './modulo/modulo-sesiones-online/envio-tarea/modal-envio-tarea/modal-envio-tarea.component';
+import { RecursoActividadAdicionalComponent } from './docencia-v2-cursos-online/administrar-sesion/pespecifico-sesion-esquema/recurso-actividad-adicional/recurso-actividad-adicional.component';
+import { AgregarActividadAdicionalComponent } from './docencia-v2-cursos-online/administrar-sesion/pespecifico-sesion-esquema/agregar-actividad-adicional/agregar-actividad-adicional.component';
+import { CalificarActividadAdicionalDocenteComponent } from './docencia-v2-cursos-online/calificar-actividades-docente/calificar-actividad-adicional-docente/calificar-actividad-adicional-docente.component';
+import { EnvioActividadComponent } from './modulo/modulo-sesiones-online/envio-actividad/envio-actividad.component';
+import { DocenciaGestionCriteriosRegistroAntiguoComponent } from './docencia-v2-cursos-online/criterio-evaluacion-docente/docencia-gestion-criterios-registro-antiguo/docencia-gestion-criterios-registro-antiguo.component';
+import { DocenciaGestionCriteriosRegistroAntiguoAgregarComponent } from './docencia-v2-cursos-online/criterio-evaluacion-docente/docencia-gestion-criterios-registro-antiguo/docencia-gestion-criterios-registro-antiguo-agregar/docencia-gestion-criterios-registro-antiguo-agregar.component';
 
 
 @NgModule({
@@ -214,6 +275,7 @@ import { ConfirmacionPagoOpenpayPeruComponent } from './confirmacion-pago-openpa
     AfiliacionVisaComponent,
     ResultadoPagoIzipayComponent,
     AfiliacionIzipayComponent,
+    DocenciaV2Component,
     BolsaTrabajoComponent,
     VisaRecurrenteComponent,
     OfertaLaboralComponent,
@@ -224,8 +286,72 @@ import { ConfirmacionPagoOpenpayPeruComponent } from './confirmacion-pago-openpa
     ConfirmacionPagoMercadoPagoChileComponent,
     ConfirmacionPagoOpenpayColombiaComponent,
     PagoMercadoPagoComponent,
-    ConfirmacionPagoOpenpayPeruComponent
-    ],
+    ConfirmacionPagoOpenpayPeruComponent,
+    ConfirmacionPagoOpenpayColombiaComponent,
+    ConfirmacionPagoMercadoPagoChileComponent,
+    ResultadoPagoMercadopagoComponent,
+    AsistenciaAlumnoComponent,
+    ConfirmCertFisicoComponent,
+    PerfilAlumnosComponent,
+    DocenciaGestionAsistenciaComponent,
+    RegistroAsistenciaComponent,
+    DocenciaAccesoClasesComponent,
+    DocenciaCursosOnlineComponent,
+    DocenciaV2CursosOnlineComponent,
+    AdministrarSesionComponent,
+    RegistrarAsistenciaOnlineComponent,
+    CursoNotasComponent,
+    PespecificoSesionTemaComponent,
+    PespecificoSesionRecursoConectividadComponent,
+    PespecificoSesionEsquemaComponent,
+    AgregarTareaComponent,
+    AgregarCuestionarioComponent,
+    AgregarPreguntasComponent,
+    MaterialEstudioDocenteComponent,
+    SilaboDocenteComponent,
+    CriterioEvaluacionDocenteComponent,
+    PerfilAlumnoDocenteComponent,
+    CronogramaClasesDocenteComponent,
+    NotaDocenteComponent,
+    RegistrarForoVideoComponent,
+    RegistrarForoTareaComponent,
+    CursoForoProyectoContenidoComponent,
+    CursoForoProyectoInsertComponent,
+    ModuloSesionesOnlineComponent,
+    EnvioTareaComponent,
+    EnvioCuestionarioComponent,
+    AsistenciasOnlineComponent,
+    GestionAsistenciaProgramaComponent,
+    DocenciaCursosAonlineComponent,
+    DocenciaCursosAonlineResponderForoComponent,
+    DocenciaCursosAonlineCalificarProyectoAplicacionComponent,
+    DocenciaCursosAonlineCalificarTrabajoParesComponent,
+    DocenciaResponerForoCursoComponent,
+    DocenciaResponderForoCursoModalComponent,
+    DocenciaCalificarTrabajoParesComponent,
+    DocenciaCalificarTrabajoParesModalComponent,
+    DocenciaCalificarProyectoAplicacionComponent,
+    DocenciaCalificarProyectoAplicacionModalComponent,
+    ModuloCalificacionesOnlineComponent,
+    CalificarActividadesDocenteComponent,
+    CalificarCuestionarioDocenteComponent,
+    CalificarTareaDocenteComponent,
+    DetallesCuestionarioComponent,
+    LineamientosTareaOnlineComponent,
+    VistaPreviaCuestionarioComponent,
+    RecursosTareaComponent,
+    RecursosCuestionarioComponent,
+    RegistrarForoProyectoComponent,
+    VerPreguntasCuestionarioComponent,
+    ModalEnvioTareaComponent,
+    RecursoActividadAdicionalComponent,
+    AgregarActividadAdicionalComponent,
+    CalificarActividadAdicionalDocenteComponent,
+    EnvioActividadComponent,
+    DocenciaGestionCriteriosRegistroAntiguoComponent,
+    DocenciaGestionCriteriosRegistroAntiguoAgregarComponent,
+
+  ],
   imports: [
     CommonModule,
     AulaVirtualRoutingModule,

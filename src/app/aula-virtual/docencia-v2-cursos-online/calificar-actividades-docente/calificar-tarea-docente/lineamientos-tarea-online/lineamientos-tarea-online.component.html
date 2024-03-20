@@ -1,0 +1,72 @@
+<div class="HeaderLanzamiento" style="display: flex;">
+  <div class="col-11">
+    INTERFAZ VER CRITERIOS DE CALIFICACIÓN DE LA TAREA (POP-UP)
+  </div>
+  <div class="col-1" style="text-align: end;font-weight: bold;cursor: pointer;" (click)="dialogRef.close()">
+    X
+  </div>
+</div>
+<div class="ContentLanzamiento">
+  <!-- <div class="TitleLanzamiento">Esquema de evaluación</div>
+  <div class="row">
+    <div class="col-4 col-md-3 col-lg-3 subTitleLanzamiento">Escala de evaluación </div>
+    <div class="col-8 col-md-9 col-lg-9 subTitleLanzamiento">Criterio de evaluación </div>
+    <div class="col-12" style="height: 10px;"></div>
+    <div class="col-4 col-md-3 col-lg-3 textLanzamiento">100 </div>
+    <div class="col-8 col-md-9 col-lg-9 textLanzamiento">El estudiante demuestra el cumplimiento de los objetivos de
+      desempeño completamente. </div>
+    <div class="col-4 col-md-3 col-lg-3 textLanzamiento">90 </div>
+    <div class="col-8 col-md-9 col-lg-9 textLanzamiento">El estudiante demuestra el cumplimiento de los objetivos de
+      desempeño en gran medida. </div>
+    <div class="col-4 col-md-3 col-lg-3 textLanzamiento">80 </div>
+    <div class="col-8 col-md-9 col-lg-9 textLanzamiento">El estudiante demuestra el cumplimiento de los objetivos de
+      desempeño medianamente. </div>
+    <div class="col-4 col-md-3 col-lg-3 textLanzamiento">70 </div>
+    <div class="col-8 col-md-9 col-lg-9 textLanzamiento">El estudiante demuestra el cumplimiento de los objetivos de
+      desempeño parcialmente. </div>
+    <div class="col-4 col-md-3 col-lg-3 textLanzamiento">60 </div>
+    <div class="col-8 col-md-9 col-lg-9 textLanzamiento">El estudiante demuestra el cumplimiento de los objetivos de
+      desempeño mínimamente. </div>
+    <div class="col-4 col-md-3 col-lg-3 textLanzamiento">40 </div>
+    <div class="col-8 col-md-9 col-lg-9 textLanzamiento">El estudiante no demuestra el cumplimiento de los objetivos
+      de desempeño. </div>
+    <div class="col-4 col-md-3 col-lg-3 textLanzamiento">0 </div>
+    <div class="col-8 col-md-9 col-lg-9 textLanzamiento">Proyecto copiado (plagio). </div>
+  </div> -->
+  <div class="TitleLanzamiento">Instrucciones acerca del proyecto</div>
+  <div class="subTitleLanzamiento">{{data.titulo}}</div>
+
+  <div class="SpaceLanzamiento"></div>
+  <ng-container *ngIf="data.descripcion!=null">
+
+    <div class="subTitleLanzamiento">Descripción de la tarea</div>
+
+    <div class="SpaceLanzamiento"></div>
+    <div class="textLanzamiento">
+      {{data.descripcion}}
+    </div>
+  </ng-container>
+
+  <div class="subTitleLanzamiento">Fechas</div>
+  <div class="row">
+    <div class="col-6 col-md-6 col-lg-6 subTitleLanzamiento">Fecha de Entrega</div>
+    <div class="col-6 col-md-6 col-lg-6 subTitleLanzamiento">Calificación Maxima </div>
+    <div class="col-12" style="height: 10px;"></div>
+    <div class="col-6 col-md-6 col-lg-6 subTitleLanzamiento">{{data.fechaEntrega | date:'dd-MM-yyyy hh:mm'}}</div>
+    <div class="col-6 col-md-6 col-lg-6 subTitleLanzamiento">{{data.calificacionMaxima}}</div>
+    <div class="col-6 col-md-6 col-lg-6 subTitleLanzamiento">Fecha de Entrega Ampliada</div>
+    <div class="col-6 col-md-6 col-lg-6 subTitleLanzamiento">Calificación Maxima </div>
+    <div class="col-12" style="height: 10px;"></div>
+    <div class="col-6 col-md-6 col-lg-6 subTitleLanzamiento">
+      <ng-container *ngIf="data.fechaEntregaSecundaria!=null">
+        {{data.fechaEntregaSecundaria | date:'dd-MM-yyyy hh:mm'}}
+      </ng-container>
+    </div>
+    <div class="col-6 col-md-6 col-lg-6 subTitleLanzamiento">{{data.calificacionMaximaSecundaria}}</div>
+  </div>
+  <div class="buttonLanzamiento">
+    <app-default-button [confs]="{color:'primary',titulo:'Cerrar'}"
+    [style]="'margin: 0px; padding: 0px 40px; border-radius: 40px;    margin-right: 30px;'"
+    mat-dialog-close></app-default-button>
+  </div>
+</div>

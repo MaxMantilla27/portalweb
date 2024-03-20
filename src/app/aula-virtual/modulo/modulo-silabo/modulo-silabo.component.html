@@ -1,40 +1,41 @@
-<div class="cursoTitle">{{Capitulo}}</div>
 
-<div class="tipoIndicacionTitle">
+<ng-container *ngIf="idModalidad==1">
+  <div class="cursoTitle">{{Capitulo}}</div>
 
-  <img class="ImgIndicacionesContent" src="../../../../assets/icons/silabo-05.svg">
-  <div>Sílabo</div>
-</div>
-<mat-accordion class="acordionSilaboModuloCursos" multi>
-  <ng-container *ngFor="let item of listaSeccionesContenidosDocumento">
-    <ng-container *ngIf="item.order>0 && item.estado==true">
-      <mat-expansion-panel hideToggle (opened)="EventoInteraccionAccordion(item.titulo,'Abierto');item.opened=true"
-      (closed)="EventoInteraccionAccordion(item.titulo,'Cerrado');item.opened=false">
-        <mat-expansion-panel-header>
-          <mat-panel-title>
-            <div style="display: flex;align-items: center;">
-              <div *ngIf="item.opened" class="estructuraProgramicon iconActive">-</div>
-              <div *ngIf="!item.opened" class="estructuraProgramicon ">+</div>
-              <div class="estructuraProgramTitle" [ngClass]="{'expandActive':item.opened}">{{item.titulo}}</div>
-            </div>
-          </mat-panel-title>
-        </mat-expansion-panel-header>
-        <div *ngIf="item.titulo!='Beneficios' && item.titulo!='Certificacion' && item.titulo!='Estructura Curricular'"
-          [innerHtml]="item.contenido | safeHtml" style="padding: 0px 60px 20px;"></div>
-        <div *ngIf="item.titulo=='Beneficios' || item.titulo=='Certificacion'" style="padding: 0px 60px 20px;">
-          <ul>
-            <li *ngFor="let content of item.ArrayContent">{{content}}</li>
-          </ul>
-        </div>
-        <ng-container *ngIf="IdModalidad==1">
+  <div class="tipoIndicacionTitle">
+
+    <img class="ImgIndicacionesContent" src="../../../../assets/icons/silabo-05.svg">
+    <div>Sílabo</div>
+  </div>
+  <mat-accordion class="acordionSilaboModuloCursos" multi>
+    <ng-container *ngFor="let item of listaSeccionesContenidosDocumento">
+      <ng-container *ngIf="item.order>0 && item.estado==true">
+        <mat-expansion-panel hideToggle (opened)="EventoInteraccionAccordion(item.titulo,'Abierto');item.opened=true"
+        (closed)="EventoInteraccionAccordion(item.titulo,'Cerrado');item.opened=false">
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              <div style="display: flex;align-items: center;">
+                <div *ngIf="item.opened" class="estructuraProgramicon iconActive">-</div>
+                <div *ngIf="!item.opened" class="estructuraProgramicon ">+</div>
+                <div class="estructuraProgramTitle" [ngClass]="{'expandActive':item.opened}">{{item.titulo}}</div>
+              </div>
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <div *ngIf="item.titulo!='Beneficios' && item.titulo!='Certificacion' && item.titulo!='Estructura Curricular'"
+            [innerHtml]="item.contenido | safeHtml" style="padding: 0px 60px 20px;"></div>
+          <div *ngIf="item.titulo=='Beneficios' || item.titulo=='Certificacion'" style="padding: 0px 60px 20px;">
+            <ul>
+              <li *ngFor="let content of item.ArrayContent">{{content}}</li>
+            </ul>
+          </div>
           <div *ngIf="item.titulo=='Estructura Curricular'" style="padding: 0px 60px 20px;">
             <ng-container *ngIf="Estructura!=undefined">
 
 
-              <div *ngFor="let est of Estructura.registroEstructuraCursoCapitulo">
-                  <div style="padding: 5px 0px;    text-decoration: underline;
-                  font-weight: 600;">{{est.nombreCapitulo}}</div>
-                  <div style="padding:5px 20px;">
+            <div *ngFor="let est of Estructura.registroEstructuraCursoCapitulo">
+                <div style="padding: 5px 0px;    text-decoration: underline;
+                font-weight: 600;">{{est.nombreCapitulo}}</div>
+                <div style="padding:5px 20px;">
 
                     <ng-container *ngIf="Estructura.contineSubSesion==true">
 
@@ -61,9 +62,12 @@
             </ng-container>
 
           </div>
-        </ng-container>
-
-      </mat-expansion-panel>
+        </mat-expansion-panel>
+      </ng-container>
     </ng-container>
-  </ng-container>
-</mat-accordion>
+  </mat-accordion>
+</ng-container>
+
+<ng-container *ngIf="idModalidad!=1">
+  <app-silabo-docente *ngIf="IdPgeneral>0" [IdPgeneral]="IdPgeneral"></app-silabo-docente>
+</ng-container>

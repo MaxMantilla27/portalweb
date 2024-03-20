@@ -169,7 +169,6 @@ export class HeaderComponent implements OnInit,OnChanges,OnDestroy {
     private _GlobalService:GlobalService
   ) {}
   ngOnChanges(changes: SimpleChanges): void {
-    console.log(changes)
     if(this.carga==true && this.usuarioWeb!=''){
       this.RevisarUsuario();
     }

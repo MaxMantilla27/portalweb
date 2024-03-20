@@ -1,0 +1,62 @@
+.TitleModal {
+  display: flex;
+  color: #ff7012;
+  font-weight: 600;
+  img {
+    width: 30px;
+    margin-right: 20px;
+  }
+}
+.FotterMdal {
+  display: flex;
+  justify-content: flex-end;
+  padding-top: 20px;
+  border-top: solid 1px #c3c3c3;
+  margin-left: 10px;
+  margin-bottom: -20px;
+}
+.ContentForoModal {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  margin: 0px;
+  img {
+    height: auto;
+  }
+}
+.custom-dialog-container {
+  overflow: auto;
+}
+.Responder {
+  width: 100%;
+  margin-top: 15px;
+  mat-form-field {
+    width: 100%;
+  }
+}
+#cartoonVideoVistaPrevia{
+  width: 32rem;
+  height: 18rem;
+}
+@media (min-width: 768px) and ( max-width: 992px){
+  #cartoonVideoVistaPrevia{
+    width: 100%;
+    height:23rem;
+  }
+  .ContenidoVistaPrevia{
+    height: 0%;
+  }
+}
+@media (max-width: 768px){
+  #cartoonVideo{
+    width: 100%;
+    height:170%;
+  }
+  #cartoonVideoVistaPrevia{
+    width: 100%;
+    height:18rem;
+  }
+  .ContenidoVistaPrevia{
+    height: 0%;
+  }
+}

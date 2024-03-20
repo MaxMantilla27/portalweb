@@ -71,12 +71,15 @@
     background-position: center;
 
     .material-icons{
-      //color: #4a4a49;
-      font-size: 20px !important;
+      color: #4a4a49;
+      font-size: 25px !important;
     }
   }
   .iconSesiones {
     background-image: url("../../../assets/icons/sesiones-gris-43.svg");
+  }
+  .iconSessionesOnline {
+    background-image: url("../../../assets/icons/icono-recursos-por-sesion-gris.svg");
   }
   .iconWebinars {
     background-image: url("../../../assets/icons/webinar-04.svg");
@@ -85,10 +88,13 @@
     background-image: url("../../../assets/icons/silabo-05.svg");
   }
   .iconRecursos {
-    background-image: url("../../../assets/icons/recursos-06.svg");
+    background-image: url("../../../assets/icons/icono-material-de-estudio-gris.svg");
   }
   .iconForo {
     background-image: url("../../../assets/icons/foro-07.svg");
+  }
+  .iconAsistencia {
+    background-image: url("../../../assets/icons/icono-control-de-asistencia-gris.svg");
   }
   .iconCalificaciones {
     background-image: url("../../../assets/icons/calificaciones-08.svg");
@@ -121,6 +127,9 @@
   .iconSesiones {
     background-image: url("../../../assets/icons/sesiones-azul-43.svg") !important;
   }
+  .iconSessionesOnline {
+    background-image: url("../../../assets/icons/icono-recursos-por-sesion-azul.svg")!important;
+  }
   .iconWebinars {
     background-image: url("../../../assets/icons/webinar-azul-03.svg") !important;
   }
@@ -128,10 +137,13 @@
     background-image: url("../../../assets/icons/silabo-azul-04.svg") !important;
   }
   .iconRecursos {
-    background-image: url("../../../assets/icons/recursos-azul-05.svg") !important;
+    background-image: url("../../../assets/icons/icono-material-de-estudio-azul.svg") !important;
   }
   .iconForo {
     background-image: url("../../../assets/icons/foro-azul-06.svg") !important;
+  }
+  .iconAsistencia {
+    background-image: url("../../../assets/icons/icono-asistencia-azul.svg") !important;
   }
   .iconCalificaciones {
     background-image: url("../../../assets/icons/calificaciones-azul-07.svg") !important;
@@ -151,6 +163,9 @@
   .iconSesiones {
     background-image: url("../../../assets/icons/sesiones-azul-43.svg") !important;
   }
+  .iconSessionesOnline {
+    background-image: url("../../../assets/icons/icono-recursos-por-sesion-azul.svg")!important;
+  }
   .iconWebinars {
     background-image: url("../../../assets/icons/webinar-azul-03.svg") !important;
   }
@@ -158,10 +173,13 @@
     background-image: url("../../../assets/icons/silabo-azul-04.svg") !important;
   }
   .iconRecursos {
-    background-image: url("../../../assets/icons/recursos-azul-05.svg") !important;
+    background-image: url("../../../assets/icons/icono-material-de-estudio-azul.svg") !important;
   }
   .iconForo {
     background-image: url("../../../assets/icons/foro-azul-06.svg") !important;
+  }
+  .iconAsistencia {
+    background-image: url("../../../assets/icons/icono-asistencia-azul.svg") !important;
   }
   .iconCalificaciones {
     background-image: url("../../../assets/icons/calificaciones-azul-07.svg") !important;

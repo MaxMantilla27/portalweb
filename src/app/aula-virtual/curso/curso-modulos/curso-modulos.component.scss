@@ -1,6 +1,6 @@
 .contentCursoModulo {
   width: 100%;
-  padding: 10px 20px;
+  padding: 20px;
   display: flex;
   margin-bottom: 30px;
   background: #f4f4f4;
@@ -11,12 +11,12 @@
   margin: 0px;
   padding: 0px;
   justify-content: space-between;
- // border-bottom: solid 1px #dcdcdc;
-  align-items: center;
+  // border-bottom: solid 1px #dcdcdc;
+  align-items: flex-start;
 }
 .titleCursoModulo {
-  font-size: 15px;
-  font-weight: 600;
+  font-size: 17px;
+  font-weight: bold;
 }
 .estadoCursoModulo {
   font-size: 14px;
@@ -53,18 +53,20 @@
   box-shadow: 0px 0px 3px #626261;
 }
 
-.matriculaicon {
+.cursoMatriculaicon {
   display: flex;
   align-items: center;
-  margin-bottom: 5px;
+  margin: 20px -2px;
 }
-.matriculaicon i {
+.cursoMatriculaicon i {
   margin-right: 4px;
   color: #ff7012;
   font-size: 14px;
 }
-
-.matriculaicon > div {
+.cursoMatriculaicon .inActiveOnline {
+  color: #878787 !important;
+}
+.cursoMatriculaicon > div {
   font-size: 12px;
   color: #ababab;
 }
@@ -76,10 +78,67 @@
   justify-content: center;
   color: white;
   font-weight: 900;
-  background: #0684f2;
+  background: #80c4ff;
   border-radius: 50%;
 }
-
+.FechasOnlineAula {
+  display: flex;
+  align-items: center;
+  .imgActive {
+    background-image: url(../../../../assets/icons/icono-calendario-naranja.svg);
+    background-repeat: no-repeat;
+    width: 15px;
+    height: 15px;
+    background-position: center;
+  }
+  .inActiveOnline {
+    background-image: url(../../../../assets/icons/icono-calendario-gris.svg);
+  }
+  .fechasTextoOnlineAula {
+    margin-left: 10px;
+    font-size: 12px;
+    color: #ababab;
+    margin-top: 4px;
+  }
+}
 .contentModuloSesiones mat-progress-bar .mat-progress-bar-fill::after {
   background-color: #00c356;
 }
+.fechasOnline{
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  margin: 3px 0px;
+  div{
+    margin-right: 20px;
+  }
+}
+.imgAlertaActividadesPendientes{
+  width: 15px;
+  height: 15px;
+  background: url('../../../../assets/icons/icono-notificacion-rojo.svg');
+  background-size: cover;
+  background-position: center;
+  margin-right: 10px;
+}
+.imgAlertaActividadesEchas{
+  width: 15px;
+  height: 15px;
+  background: url('../../../../assets/icons/icono-check-circulo-verde.svg');
+  background-size: cover;
+  background-position: center;
+  margin-right: 10px;
+}
+.IframeVideo{
+  width: 100%;
+  height: 100%;
+  margin-top: 20px;
+  iframe{
+    width: 100%;
+    aspect-ratio: 5/3;
+  }
+}
+.TutorialClose{
+  background: #FFEEE1 !important;
+  }
+

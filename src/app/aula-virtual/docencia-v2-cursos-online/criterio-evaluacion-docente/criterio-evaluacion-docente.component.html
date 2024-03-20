@@ -1,0 +1,15 @@
+<div *ngIf="criterios==undefined || criterios==null" style="font-weight: bold;">
+  * No hay criterios de evaluación configurados.
+</div>
+<app-table-v2 *ngIf="criterios!=undefined && criterios!=null && criterios!=[]" [tableData]="criterios"
+  [columnHeader]="columnHeader" [tipoContenido]="TipoContenido"
+  [StyleContent]="'    font-size: 12px;padding: 10px;'" [Paginador]="false"
+  [StyleCabecera]="'border-bottom: solid 1px;'">
+</app-table-v2>
+<div *ngIf="RegistrarCriterios" style="display:flex;margin-top: 15px;">
+  <app-default-button [confs]="{color:'primary',titulo:'Registrar Criterios'}"
+    [style]="'width: 100%;background: #0684f2;border-color: #0684f2;'"
+    (ButtoclClick)="RegistrarCriteriosAntiguos()"
+    [icon]="'check'"></app-default-button>
+</div>
+

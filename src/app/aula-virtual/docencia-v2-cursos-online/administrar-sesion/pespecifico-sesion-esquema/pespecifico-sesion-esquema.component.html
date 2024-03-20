@@ -1,0 +1,109 @@
+<ng-container *ngIf="charge==true">
+  <div style="width: 100%;z-index: 10;height: 100%;position: absolute;display: flex;justify-content: center;padding: 20px;align-items: center;
+  background: rgb(0 0 0 / 12%)">
+    <mat-spinner></mat-spinner>
+  </div>
+</ng-container>
+<!-- <div class="TitleRecursos">Actividades y Recursos de la Sesión </div> -->
+
+<div class="table-resposive" *ngIf="criterios!=null">
+  <ng-container *ngIf="criterios.cuestionarios!=null && criterios.cuestionarios.length>0">
+    <div class="TitleRecurso">Cuestionarios</div>
+    <app-recursos-cuestionario [cuestionarios]="criterios.cuestionarios" (OnReload)="ObtenerActividadesRecursoSesionDocente()"
+    (Oncharge)="charge=true" (OnDelete)="EliminarCuestionario($event)" (OnEdit)="OpenEditarCuestionario($event)"
+    ></app-recursos-cuestionario>
+    <br>
+  </ng-container>
+  <ng-container *ngIf="criterios.tareas!=null && criterios.tareas.length>0">
+    <div class="TitleRecurso">Tareas</div>
+    <app-recursos-tarea [cuestionarios]="criterios.tareas" (OnReload)="ObtenerActividadesRecursoSesionDocente()"
+    (Oncharge)="charge=true" (OnDelete)="EliminarTarea($event)" (OnEdit)="OpenEditarTarea($event)"></app-recursos-tarea>
+    <br>
+  </ng-container>
+  <ng-container *ngIf="criterios.actividades!=null && criterios.actividades.length>0">
+    <div class="TitleRecurso">Actividades Adicionales</div>
+    <app-recurso-actividad-adicional [cuestionarios]="criterios.actividades" (OnReload)="ObtenerActividadesRecursoSesionDocente()"
+    (Oncharge)="charge=true" (OnDelete)="EliminarActividad($event)" (OnEdit)="OpenEditarActividad($event)"
+    ></app-recurso-actividad-adicional>
+    <br>
+  </ng-container>
+  <ng-container *ngIf="criterios.material!=null && criterios.material.length>0">
+    <div class="TitleRecurso">Material Adicional</div>
+    <table style="width: 100%;">
+      <tr>
+        <!-- <th style="width: 180px;">Actividad / Recurso</th> -->
+        <th style="min-width: 200px;">Título</th>
+        <th style="width:150px;text-align: center;">Acciones</th>
+        <!-- <th style="min-width: 180px;">Metas pronosticadas 2021</th> -->
+      </tr>
+
+      <tr class="example-box"  *ngFor="let item of criterios.material;let i=index">
+        <!-- <td>{{item.tipo}}</td> -->
+        <td><a [href]="item.urlArchivoSubido" target="_blank" rel="noopener noreferrer" class="vinculo">{{item.titulo}}</a> </td>
+        <td>
+          <div class="accionesRecursos">
+            <!-- <div *ngIf="item.tipo!='Material Adicional'" class="edidtarNaranja" (click)="OpenEditar(i)"></div> -->
+            <div class="edidtarNaranja" (click)="materialAdicional=true;nombrefile=item.titulo;IdEditar=item.id"></div>
+            <div class="eliminarNaranja" (click)="Eliminar(item)"></div>
+          </div>
+        </td>
+      </tr>
+    </table>
+  </ng-container>
+
+
+</div>
+<div class="row AgregarRecursos">
+  <div class="col-12 col-md-9 col-lg-10 InputsDocencia"  *ngIf="IdEditar==null && materialAdicional==false">
+    <mat-form-field appearance="outline">
+      <mat-label>Seleccione Actividad o Recurso</mat-label>
+      <mat-select #myselsetc [(ngModel)]="ActividadSelect" #select>
+        <mat-option [value]="0">Material Adicional</mat-option>
+        <ng-container *ngFor="let item of esquemas">
+          <mat-option *ngIf="item.visible==true" [value]="item.idTipoCriterioEvaluacion">
+            {{item.tipoCriterioEvaluacion}}
+          </mat-option>
+        </ng-container>
+      </mat-select>
+    </mat-form-field>
+  </div>
+  <div class="col-12 col-md-3 col-lg-2"  *ngIf="IdEditar==null && materialAdicional==false">
+    <app-default-button [confs]="{color:'primary',titulo:'Agregar'}" [icon]="''"
+      [style]="'margin: 0px;border-radius: 5px;width: 100%;margin-top:5px'" [disabled]="ActividadSelect==-1"
+      (ButtoclClick)="ActividadSelect==0?materialAdicional=true:Agregar()"></app-default-button>
+  </div>
+  <div *ngIf="materialAdicional" class="col-12 col-md-12 col-lg-7 row" style="margin:0px">
+    <div (click)="fileInput.click()" style="height: 38px;width: 100%;border:solid 1px #c2c2c2;border-radius: 5px;display: flex; align-items: center;
+      padding: 0px 5px;cursor: pointer;">
+      <button style="border: solid 1px #767676;
+        margin-right: 5px;    white-space: nowrap;">Seleccionar archivo</button>
+      <div style="    white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;">{{nombrefile}}</div>
+    </div>
+    <input #fileInput type="file" id="file" (change)="getFileDetails($event)" style="    width: 100%;
+      border: solid 1px #c2c2c2;
+      padding: 7px;
+      border-radius: 5px;display: none;">
+    <div *ngIf="!filestatus && fileErrorMsg!=''">{{fileErrorMsg}}</div>
+
+  </div>
+  <div *ngIf="materialAdicional" class="ContentMaterialAdicionarl col-12 col-md-12 col-lg-5 row">
+    <div>
+      <div class="errorMaterialAdicional" *ngIf="!filestatus && fileErrorMsg!=''">{{fileErrorMsg}}</div>
+      <!-- <div class="MaterialAdicional">{{nombrefile}}</div> -->
+    </div>
+    <div style="display: flex;">
+      <app-default-button [confs]="{color:'primary',titulo:IdEditar==null?'Guardar':'Actualizar'}" [icon]="'upload'"
+        [style]="'margin: 0px;border-radius: 5px;margin-top:0px'" [disabled]="!filestatus"
+        (ButtoclClick)="AgregarPEspecificoSesionMaterialAdicional()"></app-default-button>
+
+      <app-default-button [confs]="{color:'danger',titulo:'Cancelar'}" [icon]="'close'"
+        [style]="'margin: 0px;border-radius: 5px;margin-left:10px'"
+        (ButtoclClick)="IdEditar=null;nombrefile='';materialAdicional=false;ActividadSelect=-1"></app-default-button>
+    </div>
+  </div>
+</div>

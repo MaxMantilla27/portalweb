@@ -126,11 +126,23 @@ import { ScrollTopComponent } from './Containers/scroll-top/scroll-top.component
 import { FormularioRojoComponent } from './Containers/formulario-rojo/formulario-rojo.component';
 import { FacebookLoginComponent } from './Containers/facebook-login/facebook-login.component';
 import { SocialAuthService } from 'angularx-social-login';
+import { TableV2Component } from './Containers/table-v2/table-v2.component';
+import { TablePortalComponent } from './Containers/table-portal/table-portal.component';
 import { MatChipsModule } from '@angular/material/chips';
 import { FacebookPixelService } from './Services/FacebookPixel/facebook-pixel.service';
 import { ChatbotComponent } from './Containers/chatbot/chatbot.component';
-import {MatSlideToggleModule} from '@angular/material/slide-toggle';
+import { MatSlideToggleModule} from '@angular/material/slide-toggle';
 import { HeaderChatbotComponent } from './Containers/header-chatbot/header-chatbot.component';
+import { PespecificoSesionTemaService } from './Services/PespecificoSesionTema/pespecifico-sesion-tema.service';
+import { PEspecificoEsquemaService } from './Services/PEspecificoEsquema/pespecifico-esquema.service';
+import { PEspecificoSesionRecursoConectividadService } from './Services/PEspecificoSesionRecursoConectividad/pespecifico-sesion-recurso-conectividad.service';
+import { DragDropModule} from '@angular/cdk/drag-drop';
+import { ChangeWordComponent } from './Containers/Dialog/change-word/change-word.component';
+import { MatDatepickerModule} from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
+import { TableCalificarEvaluacionesComponent } from './Containers/table-calificar-evaluaciones/table-calificar-evaluaciones.component';
+import { TableDocenteResponderForosComponent } from './Containers/table-docente-responder-foros/table-docente-responder-foros.component';
+import { ImagenModalComponent } from './Containers/Dialog/imagen-modal/imagen-modal.component';
 
 @NgModule({
   imports: [
@@ -167,6 +179,9 @@ import { HeaderChatbotComponent } from './Containers/header-chatbot/header-chatb
     CKEditorModule,
     TextFieldModule,
     MatChipsModule,
+    DragDropModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
     MatSlideToggleModule,
   ],
   declarations: [
@@ -228,6 +243,12 @@ import { HeaderChatbotComponent } from './Containers/header-chatbot/header-chatb
     ChatbotComponent,
     HeaderChatbotComponent,
 
+    TableV2Component,
+    TablePortalComponent,
+    ChangeWordComponent,
+    TableCalificarEvaluacionesComponent,
+    TableDocenteResponderForosComponent,
+    ImagenModalComponent,
     //ChatZComponent,
   ],
   exports: [
@@ -252,6 +273,8 @@ import { HeaderChatbotComponent } from './Containers/header-chatbot/header-chatb
     VideoBrightcoveComponent,
     CrucigramaComponent,
     TableComponent,
+    TableV2Component,
+    TablePortalComponent,
     MatmenuComponent,
     ChargeComponent,
     VideoBrightcovePruebaComponent,
@@ -263,6 +286,7 @@ import { HeaderChatbotComponent } from './Containers/header-chatbot/header-chatb
     TextHtmlEditorComponent,
     CargandoComponent,
     ChargeTextComponent,
+    ChangeWordComponent,
     //ChatZComponent,
 
     InputCardDirective,
@@ -318,7 +342,14 @@ import { HeaderChatbotComponent } from './Containers/header-chatbot/header-chatb
     FacebookLoginComponent,
     MatChipsModule,
     MatSlideToggleModule,
-    HeaderChatbotComponent
+    HeaderChatbotComponent,
+    DragDropModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    TableCalificarEvaluacionesComponent,
+    TableDocenteResponderForosComponent,
+    MatSlideToggleModule,
+    ImagenModalComponent
   ],
   providers: [
     SessionStorageService,
@@ -362,7 +393,11 @@ import { HeaderChatbotComponent } from './Containers/header-chatbot/header-chatb
     SeoService,
     CertificadoIntegraPortalService,
     SocialAuthService,
-    FacebookPixelService
+    FacebookPixelService,
+    SocialAuthService,
+    PespecificoSesionTemaService,
+    PEspecificoEsquemaService,
+    PEspecificoSesionRecursoConectividadService
   ],
 })
 export class SharedModule {
