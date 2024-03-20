@@ -29,7 +29,6 @@ export class ModuloSesionesOnlineComponent implements OnInit , OnChanges,OnDestr
   ) { }
   public scroll=0
   @HostListener('window:scroll', ['$event']) // for window scroll events
-  public OpenVideoModulo=true
   onScroll(e:any) {
     this.scroll=document.documentElement.scrollTop
     // if(this.videoselect>-1){
@@ -64,6 +63,8 @@ export class ModuloSesionesOnlineComponent implements OnInit , OnChanges,OnDestr
   public sesiones:Array<any>=[]
   @Input() videos: Array<any>=[];
   @Input() Capitulo='';
+  public OpenVideoModulo=true;
+
   ngOnInit(): void {
   }
   OpenSesion(index:number){
