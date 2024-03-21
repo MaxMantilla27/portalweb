@@ -1,0 +1,76 @@
+<div class="container" style="display: flex; flex-direction: column;">
+  <div style="display: flex;">
+    <div class="TitleModal col-11">
+      <div class="cursoTitle" style="font-weight: bold;padding-left: 25px; font-size: 20px;text-align: center; margin-top: 15px;">Registro de Notas</div>
+    </div>
+    <div class="col-1" style="text-align: end;font-weight: bold;cursor: pointer;" (click)="dialogRef.close()">
+      X
+    </div>
+  </div>
+
+  <ng-container *ngIf="listadoNotas!=undefined">
+    <div class="escalaNotaAntiguo">Escala Calificación: {{listadoNotas.escalaCalificacion}}</div>
+    <div class="contentRegistroNotaAntiguo" style="overflow-x: auto;">
+      <div class="table-wrapper">
+        <table style="width: 100%" class="table">
+          <!-- Cabecera de la tabla -->
+          <thead style="background-color: #e6eefa;font-size: 14px;">
+            <tr>
+              <th style="border: 2px solid black; min-width: 200px; text-align: center; vertical-align: middle;"><b>Alumno</b></th>
+              <ng-container *ngIf="listadoNotas.listadoEvaluaciones.length > 0">
+                <th style="border: 2px solid black; min-width: 60px; text-align: center; vertical-align: middle;" *ngFor="let item of listadoNotas.listadoEvaluaciones">
+                  <div style="font-weight: bold; text-transform: uppercase; display: flex; flex-direction: column; align-items: center;">
+                    <div>{{ item.nombre }} </div>
+                    <div>{{ item.porcentaje }}%</div>
+                  </div>
+                </th>
+              </ng-container>
+            </tr>
+          </thead>
+
+          <!-- Contenido de la tabla -->
+          <tbody>
+            <ng-container *ngFor="let mat of listadoNotas.listadoMatriculas">
+              <tr>
+                <td style="border: 2px solid black; min-width: 200px;">
+                  {{mat.alumno | uppercase}}
+                </td>
+                <ng-container *ngFor="let matn of mat.notaActual; let i=index">
+                  <td style="border: 2px solid black; text-align: center; min-width: 60px;">
+                    <ng-container *ngIf="matn.edit!==true">
+                      {{matn.nota}}
+                    </ng-container>
+                    <ng-container *ngIf="matn.edit===true">
+                      <input type="number" style="width: 5rem; text-align: center;" [(ngModel)]="matn.nota" [disabled]="charge===true" min="0" max="{{listadoNotas.escalaCalificacion}}">
+                    </ng-container>
+                  </td>
+                </ng-container>
+              </tr>
+            </ng-container>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Botones -->
+    <div class="BotonesRegistroNota" style="display: flex; justify-content: space-around;">
+      <app-default-button [confs]="{color:'primary',titulo:'Guardar'}" [style]="'width: 100%; background: #0069d9; border-color: #0062cc; white-space: nowrap;'" (ButtoclClick)="RegistrarNotaDetalleDocente()" [icon]="'check'"></app-default-button>
+
+      <app-default-button [confs]="{color:'primary',titulo:'Finalizar Registro'}" (ButtoclClick)="ConfirmacionAprobarNotaDetalleDocente()" [style]="'width: 100%; background: #0069d9; border-color: #0062cc; white-space: nowrap;'" [icon]="'check'"></app-default-button>
+
+      <app-default-button [confs]="{color:'danger',titulo:'Cancelar'}" [style]="'width: 100%; background: #dc3545; border-color: #dc3545; white-space: nowrap;'" [icon]="'close'" (ButtoclClick)="charge==false?dialogRef.close():charge=true"></app-default-button>
+    </div>
+  </ng-container>
+
+  <!-- Spinner de carga -->
+  <ng-container *ngIf="listadoNotas==undefined && charge==false">
+    <div class="row" style="display: flex; justify-content: center;align-items: center;text-align: center; height: 15rem;">
+      <div class="col-12" style="display: flex;justify-content: center;">
+        <mat-spinner></mat-spinner>
+      </div>
+      <div class="col-12">
+        Cargando información ...
+      </div>
+    </div>
+  </ng-container>
+</div>

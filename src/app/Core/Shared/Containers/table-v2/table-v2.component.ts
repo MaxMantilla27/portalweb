@@ -107,6 +107,8 @@ export class TableV2Component implements OnInit {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
+    console.log(this.tableData)
+    console.log(this.tipoContenido[this.tableData])
 
 
     if(this.tableData.length!=this.lengthInicial){

@@ -22,21 +22,33 @@
     [tipoContenido]="TipoContenido" [Paginador]="false" [StyleContent]="'    font-size: 12px;padding: 10px;'"
     [sticky]="sticky"></app-table-v2>
 
-  <div style="display: flex;
-    justify-content: center;" *ngIf="infoNotas!=undefined && infoNotas.length>0 ">
-    <button type="action" (click)="DownloadExcel()"><img src="../../../../assets/icons/descarga-36.svg"
-        alt="x" />Descargar en Excel</button>
-  </div>
+    <div style="display: flex; justify-content: center;; align-items: center;">
+      <button type="action" (click)="DownloadExcel()" style="margin-bottom: 10px;">
+        <img src="../../../../assets/icons/descarga-36.svg" alt="x" />
+        Descargar en Excel
+      </button>
+      <button type="action" (click)="EditarNota()">
+        <img src="../../../../assets/icons/editar-30.svg" alt="x" />
+        Editar Notas
+      </button>
+    </div>
+
 </ng-container>
 
 <ng-container *ngIf="verDetalle==true">
   <app-table-v2 *ngIf="infoNotasDetalle!=undefined && infoNotasDetalle.length>0" [tableData]="infoNotasDetalle" [columnHeader]="columnHeaderDetalle"
     [tipoContenido]="TipoContenido" [Paginador]="false" [StyleContent]="'    font-size: 12px;padding: 10px;'"
-     [ColSpan]="Colspam" [ColorHeader]="true"></app-table-v2>
+     [ColSpan]="Colspam" [ColorHeader]="true">
+  </app-table-v2>
 
-  <div style="display: flex;
-    justify-content: center;" *ngIf="infoNotasDetalle!=undefined && infoNotasDetalle.length>0 ">
-    <button type="action" (click)="DownloadExcelDetalle()"><img src="../../../../assets/icons/descarga-36.svg"
-        alt="x" />Descargar en Excel</button>
-  </div>
+     <div style="display: flex;justify-content: center;; align-items: center;">
+      <button type="action" (click)="DownloadExcel()" style="margin-bottom: 10px;">
+        <img src="../../../../assets/icons/descarga-36.svg" alt="x" />
+        Descargar en Excel
+      </button>
+      <button type="action" (click)="EditarNota()">
+        <img src="../../../../assets/icons/editar-30.svg" alt="x" />
+        Editar Notas
+      </button>
+    </div>
 </ng-container>

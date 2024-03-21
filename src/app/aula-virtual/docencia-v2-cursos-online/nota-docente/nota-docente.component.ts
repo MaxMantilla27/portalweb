@@ -2,6 +2,9 @@ import { Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@
 import { Subject, takeUntil } from 'rxjs';
 import { ExcelService } from 'src/app/Core/Shared/Services/Excel/excel.service';
 import { NotaService } from 'src/app/Core/Shared/Services/Nota/nota.service';
+import { DocenciaGestionNotasAntiguoComponent } from './docencia-gestion-notas-antiguo/docencia-gestion-notas-antiguo/docencia-gestion-notas-antiguo.component';
+import { MatDialog } from '@angular/material/dialog';
+import { ProveedorService } from 'src/app/Core/Shared/Services/Proveedor/proveedor.service';
 
 @Component({
   selector: 'app-nota-docente',
@@ -36,14 +39,18 @@ export class NotaDocenteComponent implements OnInit ,OnChanges, OnDestroy{
   constructor(
     private _NotaService:NotaService,
     private excelService: ExcelService,
+    public dialog: MatDialog,
+    private _ProveedorService:ProveedorService,
   ) { }
   public TerminaCarga=false;
-
+  public DataProveedor:any
   ngOnInit(): void {
+    this.ObtenerInformacionProveedor();
   }
   ngOnChanges(changes: SimpleChanges): void {
     if (this.IdPespecifico != 0) {
       this.ListadoNotaProcesarOnline();
+      this.ObtenerInformacionProveedor();
     }
   }
   public detalle=false
@@ -53,6 +60,9 @@ export class NotaDocenteComponent implements OnInit ,OnChanges, OnDestroy{
   public listadoNotas:any
   public Colspam:Array<any>=[]
   ListadoNotaProcesarOnline(){
+    this.listadoNotas=undefined;
+    this.infoNotas=[]
+    this.infoNotasDetalle=[]
     this._NotaService.ListadoNotaProcesarOnline(this.IdPespecifico,1).pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
         console.log(x)
@@ -181,7 +191,8 @@ export class NotaDocenteComponent implements OnInit ,OnChanges, OnDestroy{
               value:nota
             })
           });
-          data['zzFinal']='<strong>'+notaFinal+'</strong>' ;
+          var notaRedondeada = Math.round(notaFinal);
+          data['zzFinal']='<strong>'+notaRedondeada+'</strong>' ;
 
         }
         this.infoNotas.push(data);
@@ -312,5 +323,31 @@ export class NotaDocenteComponent implements OnInit ,OnChanges, OnDestroy{
      fileToExport,
      'PerfilAlumnos-' + new Date().getTime()
    );
+  }
+  EditarNota(){
+    const dialogRef = this.dialog.open(DocenciaGestionNotasAntiguoComponent, {
+      width: '1000px',
+      data: {
+        grupo:1,
+        IdPEspecifico:this.IdPespecifico,
+        correo:this.DataProveedor.email},
+      panelClass: 'custom-dialog-docencia-gestion-notas-antiguo-container',
+      disableClose: true
+    });
+
+    dialogRef.afterClosed().pipe(takeUntil(this.signal$)).subscribe(result => {
+      if(result){
+        this.TerminaCarga=false;
+        this.ListadoNotaProcesarOnline();
+      }
+    });
+  }
+  ObtenerInformacionProveedor(){
+    this._ProveedorService.ObtenerInformacionProveedor().pipe(takeUntil(this.signal$)).subscribe({
+      next:x=>{
+        console.log(x)
+        this.DataProveedor=x
+      }
+    })
   }
 }

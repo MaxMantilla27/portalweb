@@ -125,7 +125,7 @@ overflow: auto;">
             <ng-container  *ngIf="EsButton[tableData]==true">
                 <div [innerHTML]="element[tableData] | safeHtml" class="EsButtonNormal" (click)="EsButtonNormal.emit(element.index)"></div>
             </ng-container>
-            <ng-container  *ngIf="EsButton[tableData]!=true">
+            <ng-container   *ngIf="EsButton[tableData]!=true">
                 <div [innerHTML]="element[tableData] | safeHtml"></div>
             </ng-container>
         </ng-template>
