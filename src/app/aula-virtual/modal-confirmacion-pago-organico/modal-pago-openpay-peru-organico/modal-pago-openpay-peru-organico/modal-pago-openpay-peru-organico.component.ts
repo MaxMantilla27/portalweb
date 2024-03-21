@@ -204,4 +204,7 @@ export class ModalPagoOpenpayPeruOrganicoComponent implements OnInit {
       }
     })
   }
+  cerraModal(){
+    this.dialogRefModal.close();
+  }
 }

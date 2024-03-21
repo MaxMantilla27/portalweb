@@ -1,0 +1,86 @@
+<div class="container" [hidden]="hidenBotom" >
+  <div class="row" style="justify-content: end;">
+    <mat-icon class="btn" (click)="cerraModal()">close</mat-icon>
+  </div>
+  <div class="row rowpaddAv">
+    <div class="col-12 row">
+      <div class="col-12 col-md-12 col-lg-12 titlePagoTarjeta">Confirma tu afiliación</div>
+      <div class="col-12 d-md-none d-lg-none" *ngIf="resultPreValidacion!=undefined " >
+        <div class="resumenPagoTarjeta" style="padding: 0px" >
+          <div class="titleResumenPago">Resumen de tu afiliación</div>
+          <div class="contentResumenPago">
+            <div class="subtitleResumenPago">{{resultPreValidacion.nombrePrograma}}</div>
+            <div class="col-12">Pagos durante el periodo de afiliación</div>
+            <div class="ItemsResumenPago row">
+              <div class="col-12 row itms" *ngFor="let item of resultPreValidacion.listaCuota">
+                <div class="col-8">{{item.nombre}}</div>
+                <div class="col-4" style="text-align: right;">{{resultPreValidacion.simboloMoneda}} {{item.cuotaTotal}}</div>
+              </div>
+              <div class="col-12 row tot">
+                <div class="col-8">Total a pagar</div>
+                <div class="col-4" style="text-align: right;">{{resultPreValidacion.simboloMoneda}} {{resultPreValidacion.total}}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="iconoPagoTarjeta">
+          <div class="imgPagoTarjeta"></div>
+          <div class="textPagoTarjeta">
+            <span>PAGO</span>
+            <span>100%</span>
+            <span>seguro</span>
+          </div>
+          <div class="descPagoTarjeta">
+            <span>Este certificado garantiza la</span>
+            <span>seguridad de todas tus conexiones</span>
+            <span>mediante cifrado</span>
+          </div>
+        </div>
+      </div>
+      <div class="col-12 col-md-6 col-lg-12 inputPagoVisa">
+        <div class="subtitlePagoVisa">Afiliación a pago recurrente realizado por</div>
+        <ng-container *ngIf="resultPreValidacion!=undefined">
+          <mat-form-field appearance="outline" class="disabledInput" [floatLabel]="'always'" style="width: 100%;">
+            <mat-label>Nombres</mat-label>
+            <input type="text" style="color: #878787;" [value]="resultPreValidacion.registroAlumno.nombre" disabled matInput />
+          </mat-form-field>
+          <mat-form-field appearance="outline" class="disabledInput" [floatLabel]="'always'" style="width: 100%;">
+            <mat-label>Apellidos</mat-label>
+            <input type="text" style="color: #878787;" [value]="resultPreValidacion.registroAlumno.apellido" disabled matInput />
+          </mat-form-field>
+          <mat-form-field appearance="outline" class="disabledInput" [floatLabel]="'always'" style="width: 100%;">
+            <mat-label>E-mail</mat-label>
+            <input type="text" style="color: #878787;" [value]="resultPreValidacion.registroAlumno.correo" disabled matInput />
+          </mat-form-field>
+        </ng-container>
+
+        <div id="header"> </div>
+        <div style="text-align: center" >
+          <div id="FormBody" class="kr-embedded"  kr-popin  style="display: flex;padding-top: 100px;">
+            <!-- payment form fields -->
+            <div class="kr-pan"></div>
+            <div class="kr-expiry"></div>
+            <div class="kr-security-code"></div>
+
+            <!-- payment form submit button -->
+            <button class="kr-payment-button"></button>
+
+            <!-- error zone -->
+            <div class="kr-form-error"></div>
+
+          </div>
+        </div>
+
+
+
+        <div style="    width: 100%;
+        font-size: 12px;
+        color: #b2b2b2;
+        padding: 20px;">
+          * El monto a cargar sera el cual se detalla arriba en la moneda del programa, el tipo de cambio dependerá del banco que usted utilice.
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

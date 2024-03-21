@@ -131,6 +131,9 @@ import { ModalPagoMercadoPagoChileComponent } from './modal-confirmacion-pago/mo
 import { ModalPagoWompiComponent } from './modal-confirmacion-pago/modal-pago-wompi/modal-pago-wompi.component';
 import { ModalPagoOpenpayColombiaComponent } from './modal-confirmacion-pago/modal-pago-openpay-colombia/modal-pago-openpay-colombia.component';
 import { ModalPagoMultipagoComponent } from './modal-confirmacion-pago/modal-pago-multipago/modal-pago-multipago.component';
+import { ModalAfiliacionVisaComponent } from './modal-confirmacion-pago-afiliacion/modal-afiliacion-visa/modal-afiliacion-visa.component';
+import { ModalAfiliacionIzipayComponent } from './modal-confirmacion-pago-afiliacion/modal-afiliacion-izipay/modal-afiliacion-izipay.component';
+import { ModalAfiliacionOpenpayPeruComponent } from './modal-confirmacion-pago-afiliacion/modal-afiliacion-openpay-peru/modal-afiliacion-openpay-peru.component';
 
 
 
@@ -260,7 +263,10 @@ import { ModalPagoMultipagoComponent } from './modal-confirmacion-pago/modal-pag
     ModalPagoMercadoPagoChileComponent,
     ModalPagoWompiComponent,
     ModalPagoOpenpayColombiaComponent,
-    ModalPagoMultipagoComponent
+    ModalPagoMultipagoComponent,
+    ModalAfiliacionVisaComponent,
+    ModalAfiliacionIzipayComponent,
+    ModalAfiliacionOpenpayPeruComponent
     ],
   imports: [
     CommonModule,

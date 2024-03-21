@@ -36,7 +36,8 @@ export class ResultadoPagoComponent implements OnInit,OnDestroy{
   }
 
   public resultVisa:any
-  public ruta=''
+  public ruta='/AulaVirtual/MisPagos'
+  public rutaCursos = '/AulaVirtual/MisCursos'
   public rutaMisCursos='/AulaVirtual/MisCursos'
   public AreaCapacitacion=''
   public ProgramaNombre=''

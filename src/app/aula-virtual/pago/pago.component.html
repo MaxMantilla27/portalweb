@@ -10,7 +10,7 @@
       <div class="col-12 col-md-12 col-lg-12">
         <div class="titleCronograma">
           <!-- Mis Pagos -->
-          {{CronogramaPago.pGeneral}}
+          {{CronogramaPago?.pGeneral}}
         </div>
         <div
         *ngIf="CronogramaPago!=undefined"
@@ -202,7 +202,7 @@
                       <img [src]="'../../../../assets/icons/'+imgMedioPago.img" alt=""  class="m-2" style="width: 35px;" *ngIf="validadorPagosMultiples.length == 0">
 
                     </ng-container>
-                    <mat-error *ngIf="validadorPagosMultiples.length > 0 && medioPagoSeleccionado == undefined && eventosPagoSelccion == true">
+                    <mat-error *ngIf="validadorPagosMultiples?.length > 0 && medioPagoSeleccionado == undefined && eventosPagoSelccion == true">
                       Debe seleccionar un medio de pago
                     </mat-error>
                   </span>
@@ -247,6 +247,7 @@
               <div class="col-12 row bot">
                 <div>
                   <app-default-button
+                  [disabled]="total==0"
                   [confs]="{color:'primary',titulo:'Continuar'}"
                   [style]="'margin-top: 20px;padding: 0px 40px;'"
                   (ButtoclClick)="EnviarSolicitudPago()">
@@ -266,15 +267,18 @@
             </p>
           </div>
         </div>
-        <div
+        <!-- <div
           class="row mt-2 mb-2"
           style="margin-top: 40px;justify-content: center;">
           <div
-          [ngClass]="flagAfiliacion==true?'col-12 col-md-8 col-lg-6 cardAfiliacionPagosRecurrentesSeleccionado':'col-12 col-md-8 col-lg-6 cardAfiliacionPagosRecurrentes'"
+          [ngClass]="EstadoAfiliado==true?'col-12 col-md-8 col-lg-6 cardAfiliacionPagosRecurrentesSeleccionado':'col-12 col-md-8 col-lg-6 cardAfiliacionPagosRecurrentes'"
           class="col-12 col-md-8 col-lg-6 cardAfiliacionPagosRecurrentesSeleccionado">
             <div class="card p-3">
               <div class="form-check">
-                <input class="form-check-input" (change)="afiliacionPagoRecurrente()" type="checkbox" value="" id="flexCheckDefault">
+                <input class="form-check-input"
+                (change)="afiliacionPagoRecurrente()"
+                type="checkbox"
+                id="flexCheckDefault">
                 <label class="form-check-label" for="flexCheckDefault">
                   Afiliarse a pagos recurrentes
                 </label>
@@ -282,7 +286,7 @@
               <p>Paga siempre puntual. Tu pago se realizará de manera automatica.</p>
             </div>
           </div>
-        </div>
+        </div> -->
       </div>
     </div>
   </ng-container>

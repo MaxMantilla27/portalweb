@@ -31,99 +31,100 @@
            </ng-container>
 
       </div>
-      <div class="col-12 col-md-10 col-lg-8" *ngIf="resultProceso.estadoOperacion=='Processed'">
+      <div class="col-12 col-md-12 col-lg-12" *ngIf="resultProceso.estadoOperacion=='Processed'">
         <div class="titleResultPago">
-          <div>¡Pago exitoso!</div>
           <img src="../../../assets/icons/positivo-hecho-20.svg" alt="">
+          <div>¡Pago exitoso!</div>
         </div>
-        <div style="margin-top: 5px;
-        font-size: 14px;" *ngIf="resultProceso.tipoPago=='Organico'">
+        <div class="SubTitulo" *ngIf="resultProceso.tipoPago=='Organico'">
           {{resultProceso.datoAlumno.nombre}}, tu compra ha sido realizada con exito.
         </div>
-        <div style="margin-top: 5px;
-        font-size: 14px;" *ngIf="resultProceso.tipoPago=='Cronograma' && tipoRespuesta!='AF'">
+        <div class="SubTitulo" *ngIf="resultProceso.tipoPago=='Cronograma' && tipoRespuesta!='AF'">
           {{resultProceso.registroAlumno.nombre}}, tu compra ha sido realizada con exito.
         </div>
-        <div style="margin-top: 5px;
-        font-size: 14px;"  *ngIf="resultProceso.tipoPago=='Cronograma' && tipoRespuesta=='AF'">
-          {{resultProceso.registroAlumno.nombre}}, tu afiliación y primer pago recurrente ha sido realizada con exito.
+        <div class="SubTitulo"  *ngIf="resultProceso.tipoPago=='Cronograma' && tipoRespuesta=='AF'">
+          {{resultProceso.registroAlumno.nombre}}, tu pago y afiliación a pagos recurrentes se ha realizado con éxito.
         </div>
         <div class="contentCardPago">
-          <div style="margin: 20px 0px;
-          font-weight:600;">Detalles del pago realizado:</div>
-          <div class="cardPago">
-            <div class="row" style="align-items: center;" *ngIf="resultProceso.tipoPago=='Organico'">
-              <div class="col-12 col-md-5 col-lg-4"><b>Nro. de Compra:</b></div>
-              <div class="col-12 col-md-7 col-lg-8 itemValueCardPago">{{resultProceso.identificadorTransaccion}}</div>
-              <div class="col-12 col-md-5 col-lg-4"><b>Monto:</b></div>
-              <div class="col-12 col-md-7 col-lg-8 itemValueCardPago">{{resultProceso.montoTotal}}</div>
-              <div class="col-12 col-md-5 col-lg-4"><b>Moneda:</b></div>
-              <div class="col-12 col-md-7 col-lg-8 itemValueCardPago">{{resultProceso.moneda}}</div>
-              <div class="col-12 col-md-5 col-lg-4"><b>Nombres y Apellidos:</b></div>
-              <div class="col-12 col-md-7 col-lg-8 itemValueCardPago">{{resultProceso.datoAlumno.nombre}}
-                  {{resultProceso.datoAlumno.apellido}}</div>
-              <ng-container *ngIf="resultProceso.nombrePrograma!=null">
-                <div class="col-12 col-md-5 col-lg-4"><b>Programa:</b></div>
-                <div class="col-12 col-md-7 col-lg-8 itemValueCardPago">{{resultProceso.nombrePrograma}}</div>
-              </ng-container>
-              <div class="col-12 col-md-5 col-lg-4"><b>Fecha de transacción:</b></div>
-              <div class="col-12 col-md-7 col-lg-8 itemValueCardPago">{{resultProceso.fechaTransaccion | date:'dd-MM-yyyy'}}
-              </div>
-              <div class="col-12 col-md-5 col-lg-4"><b>Hora de transacción:</b></div>
-              <div class="col-12 col-md-7 col-lg-8 itemValueCardPago">{{resultProceso.fechaTransaccion | date:'hh:mm'}}</div>
+          <div class="row" style="justify-content: center; display: flex;">
+            <div style="width: 60vw;">
+              <div style="margin: 20px 0px;">Detalles del pago</div>
             </div>
-            <div class="row" style="align-items: center;" *ngIf="resultProceso.tipoPago=='Cronograma'">
-                <div class="col-12 col-md-5 col-lg-4"><b>Nro. de Compra:</b></div>
-              <div class="col-12 col-md-7 col-lg-8 itemValueCardPago">{{resultProceso.identificadorTransaccion}}</div>
-              <div class="col-12 col-md-5 col-lg-4"><b>Monto:</b></div>
-              <div class="col-12 col-md-7 col-lg-8 itemValueCardPago">{{resultProceso.montoTotal}}</div>
-              <div class="col-12 col-md-5 col-lg-4"><b>Moneda:</b></div>
-              <div class="col-12 col-md-7 col-lg-8 itemValueCardPago">{{resultProceso.moneda}}</div>
-              <div class="col-12 col-md-5 col-lg-4"><b>Nombres y Apellidos:</b></div>
-              <div class="col-12 col-md-7 col-lg-8 itemValueCardPago">{{resultProceso.registroAlumno.nombre}}
-                  {{resultProceso.registroAlumno.apellido}}</div>
-              <ng-container *ngIf="resultProceso.nombrePrograma!=null">
-                <div class="col-12 col-md-5 col-lg-4"><b>Programa:</b></div>
-                <div class="col-12 col-md-7 col-lg-8 itemValueCardPago">{{resultProceso.nombrePrograma}}</div>
-              </ng-container>
-              <ng-container *ngIf="resultProceso.listaCuota!=null && resultProceso.listaCuota.length>0">
-                <div class="col-12 col-md-5 col-lg-4"><b>Razon:</b></div>
-                <div class="col-12 col-md-7 col-lg-8 itemValueCardPago" *ngIf="tipoRespuesta!='AF'">
-                  <div *ngFor="let item of resultProceso.listaCuota">
-                    {{item.nombre}}
-                  </div>
-                </div>
-                <div class="col-12 col-md-7 col-lg-8 itemValueCardPago" *ngIf="tipoRespuesta=='AF'">
-                  <div *ngFor="let item of resultProceso.listaCuota ; index as i" >
-                    <ng-container *ngIf="i==0">
-                      {{item.nombre}}
-                    </ng-container>
-                  </div>
-                </div>
-              </ng-container>
-              <div class="col-12 col-md-5 col-lg-4"><b>Fecha de transacción:</b></div>
-              <div class="col-12 col-md-7 col-lg-8 itemValueCardPago">{{resultProceso.fechaTransaccion | date:'dd-MM-yyyy'}}
-              </div>
-              <div class="col-12 col-md-5 col-lg-4"><b>Hora de transacción:</b></div>
-              <div class="col-12 col-md-7 col-lg-8 itemValueCardPago">{{resultProceso.fechaTransaccion | date:'hh:mm'}}</div>
-              <ng-container *ngIf="tipoRespuesta=='AF'">
-                <div class="col-12 col-md-5 col-lg-4"><b>Pago recurrente:</b></div>
-                <div class="col-12 col-md-7 col-lg-8 itemValueCardPago">Activado</div>
-              </ng-container>
           </div>
-          <ng-container *ngIf="resultProceso.tipoPago=='Organico'">
-            <app-default-button [confs]="{color:'primary',titulo:'Volver'}" [style]="'margin-top:40px;padding: 0px 40px;'"
-                [ruta]="ruta" ></app-default-button>
-          </ng-container>
-           <ng-container *ngIf="resultProceso.tipoPago=='Cronograma'">
-            <div class="col-12 col-md-10 col-lg-10">
-                <app-default-button [confs]="{color:'primary',titulo:'Volver'}" [style]="'margin-top:40px;padding: 0px 40px;'"
-                [ruta]="ruta"></app-default-button>
+          <div class="row" style="justify-content: center; display: flex;">
+            <div class="cardPago">
+              <div class="row" style="align-items: center; padding-left: 18%" *ngIf="resultProceso.tipoPago=='Organico'">
+                <div class="col-12 col-md-5 col-lg-4"><b>Nro. de Compra:</b></div>
+                <div class="col-12 col-md-7 col-lg-8 itemValueCardPago">{{resultProceso.identificadorTransaccion}}</div>
+                <div class="col-12 col-md-5 col-lg-4"><b>Monto:</b></div>
+                <div class="col-12 col-md-7 col-lg-8 itemValueCardPago">{{resultProceso.montoTotal}}</div>
+                <div class="col-12 col-md-5 col-lg-4"><b>Moneda:</b></div>
+                <div class="col-12 col-md-7 col-lg-8 itemValueCardPago">{{resultProceso.moneda}}</div>
+                <div class="col-12 col-md-5 col-lg-4"><b>Nombres y Apellidos:</b></div>
+                <div class="col-12 col-md-7 col-lg-8 itemValueCardPago">{{resultProceso.datoAlumno.nombre}}
+                    {{resultProceso.datoAlumno.apellido}}</div>
+                <ng-container *ngIf="resultProceso.nombrePrograma!=null">
+                  <div class="col-12 col-md-5 col-lg-4"><b>Programa:</b></div>
+                  <div class="col-12 col-md-7 col-lg-8 itemValueCardPago">{{resultProceso.nombrePrograma}}</div>
+                </ng-container>
+                <div class="col-12 col-md-5 col-lg-4"><b>Fecha de transacción:</b></div>
+                <div class="col-12 col-md-7 col-lg-8 itemValueCardPago">{{resultProceso.fechaTransaccion | date:'dd-MM-yyyy'}}
+                </div>
+                <div class="col-12 col-md-5 col-lg-4"><b>Hora de transacción:</b></div>
+                <div class="col-12 col-md-7 col-lg-8 itemValueCardPago">{{resultProceso.fechaTransaccion | date:'hh:mm'}}</div>
               </div>
-           </ng-container>
-
+              <div class="row" style="align-items: center; padding-left: 18%" *ngIf="resultProceso.tipoPago=='Cronograma'">
+                  <div class="col-12 col-md-5 col-lg-4"><b>Nro. de Compra:</b></div>
+                <div class="col-12 col-md-7 col-lg-8 itemValueCardPago">{{resultProceso.identificadorTransaccion}}</div>
+                <div class="col-12 col-md-5 col-lg-4"><b>Monto:</b></div>
+                <div class="col-12 col-md-7 col-lg-8 itemValueCardPago">{{resultProceso.montoTotal}}</div>
+                <div class="col-12 col-md-5 col-lg-4"><b>Moneda:</b></div>
+                <div class="col-12 col-md-7 col-lg-8 itemValueCardPago">{{resultProceso.moneda}}</div>
+                <div class="col-12 col-md-5 col-lg-4"><b>Nombres y Apellidos:</b></div>
+                <div class="col-12 col-md-7 col-lg-8 itemValueCardPago">{{resultProceso.registroAlumno.nombre}}
+                    {{resultProceso.registroAlumno.apellido}}</div>
+                <ng-container *ngIf="resultProceso.nombrePrograma!=null">
+                  <div class="col-12 col-md-5 col-lg-4"><b>Programa:</b></div>
+                  <div class="col-12 col-md-7 col-lg-8 itemValueCardPago">{{resultProceso.nombrePrograma}}</div>
+                </ng-container>
+                <ng-container *ngIf="resultProceso.listaCuota!=null && resultProceso.listaCuota.length>0">
+                  <div class="col-12 col-md-5 col-lg-4"><b>Razon:</b></div>
+                  <div class="col-12 col-md-7 col-lg-8 itemValueCardPago" *ngIf="tipoRespuesta!='AF'">
+                    <div *ngFor="let item of resultProceso.listaCuota">
+                      {{item.nombre}}
+                    </div>
+                  </div>
+                  <div class="col-12 col-md-7 col-lg-8 itemValueCardPago" *ngIf="tipoRespuesta=='AF'">
+                    <div *ngFor="let item of resultProceso.listaCuota ; index as i" >
+                      <ng-container *ngIf="i==0">
+                        {{item.nombre}}
+                      </ng-container>
+                    </div>
+                  </div>
+                </ng-container>
+                <div class="col-12 col-md-5 col-lg-4"><b>Fecha de transacción:</b></div>
+                <div class="col-12 col-md-7 col-lg-8 itemValueCardPago">{{resultProceso.fechaTransaccion | date:'dd-MM-yyyy'}}
+                </div>
+                <div class="col-12 col-md-5 col-lg-4"><b>Hora de transacción:</b></div>
+                <div class="col-12 col-md-7 col-lg-8 itemValueCardPago">{{resultProceso.fechaTransaccion | date:'hh:mm'}}</div>
+                <ng-container *ngIf="tipoRespuesta=='AF'">
+                  <div class="col-12 col-md-5 col-lg-4"><b>Pago recurrente:</b></div>
+                  <div class="col-12 col-md-7 col-lg-8 itemValueCardPago">Activado</div>
+                </ng-container>
+            </div>
+            </div>
+          </div>
         </div>
-      </div>
+
+        <div class="row mt-2" style="justify-content: center;">
+            <button [routerLink]="ruta" class="btn btn-primary m-2" style="width: 14vw; border-color: transparent; border-radius: 25px;">
+              Ver estado de cuenta
+            </button>
+
+            <button  [routerLink]="rutaCursos" class="btn btn-primary m-2" style="width: 14vw; border-color: transparent; border-radius: 25px;">
+              Ir a mi curso
+            </button>
+        </div>
     </div>
   </div>
 </div>

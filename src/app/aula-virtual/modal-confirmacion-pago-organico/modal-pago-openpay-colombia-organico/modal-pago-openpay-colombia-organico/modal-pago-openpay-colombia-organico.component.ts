@@ -203,4 +203,7 @@ export class ModalPagoOpenpayColombiaOrganicoComponent implements OnInit {
       }
     })
   }
+  cerraModal(){
+    this.dialogRefModal.close();
+  }
 }

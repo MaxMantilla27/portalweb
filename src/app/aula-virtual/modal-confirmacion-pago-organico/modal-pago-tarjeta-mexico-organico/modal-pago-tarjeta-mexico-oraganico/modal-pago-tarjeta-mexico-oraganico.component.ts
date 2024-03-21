@@ -320,4 +320,7 @@ export class ModalPagoTarjetaMexicoOraganicoComponent implements OnInit {
       }
     })
   }
+  cerraModal(){
+    this.dialogRefModal.close();
+  }
 }

@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialog, MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
 import { ChargeComponent } from 'src/app/Core/Shared/Containers/Dialog/charge/charge.component';
@@ -20,6 +20,7 @@ export class ModalPagoWebpayOrganicoComponent implements OnInit {
     private _ActivatedRoute:ActivatedRoute,
     private _SessionStorageService:SessionStorageService,
     public dialog: MatDialog,
+    private dialogRef: MatDialogRef<ModalPagoWebpayOrganicoComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
   ) { }
 
@@ -57,5 +58,8 @@ export class ModalPagoWebpayOrganicoComponent implements OnInit {
         });
       }
     })
+  }
+  cerraModal(){
+    this.dialogRef.close();
   }
 }

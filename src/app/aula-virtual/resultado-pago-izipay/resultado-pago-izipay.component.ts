@@ -42,7 +42,7 @@ export class ResultadoPagoIzipayComponent implements OnInit,OnDestroy {
   resultWebpay:any
   public resultProceso :any
   public ruta='/AulaVirtual/MisPagos'
-
+  public rutaCursos = '/AulaVirtual/MisCursos'
   ngOnInit(): void {
     if(this.isBrowser){
       this._ActivatedRoute.params.pipe(takeUntil(this.signal$)).subscribe({

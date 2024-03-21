@@ -457,17 +457,13 @@ export class PagoOrganicoTodosComponent implements OnInit {
     this.jsonEnvioPago.WebMoneda = this.formaPagoSeleccion.webMoneda;
     var token = this._SessionStorageService.validateTokken();
     if (token) {
-      //this._FormaPagoService.PreProcesoPagoOrganicoAlumno(this.jsonEnvioPago,dialogRef);
-      //miguel pagos
-      // this.dataPreprocesamiento =this._FormaPagoService.PagoOrganicoDatosServicio(this.jsonEnvioPago);
-      // console.log('moraesgey',this.dataPreprocesamiento)
-      // this._SessionStorageService.SessionSetValue('urlRedireccionErrorPago',JSON.stringify(this.rutaProgramaDetalle));
       this._FormaPagoService
         .PagoOrganicoDatosServicio(this.jsonEnvioPago) //PagoOrganicoAlumnoDTO
         .pipe(takeUntil(this.signal$))
         .subscribe({
           next: (x) => {
             console.log('resultcard', x);
+            dialogRefLoader.close()
 
             this.jsonPreproceaminetoData = {
               identificadorTransaccion: x._Repuesta.identificadorTransaccion,

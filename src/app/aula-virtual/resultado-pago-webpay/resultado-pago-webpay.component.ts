@@ -24,12 +24,12 @@ export class ResultadoPagoWebpayComponent implements OnInit {
     IdentificadorTransaccion:null,
     TokenComercio:''
   }
-  
-  resultProceso:any;
-  resultWebpay:any; 
-  dialogRef:any
-  public ruta=''
 
+  resultProceso:any;
+  resultWebpay:any;
+  dialogRef:any
+  public ruta = '/AulaVirtual/MisPagos'
+  public rutaCursos = '/AulaVirtual/MisCursos'
   ngOnInit(): void {
     this._ActivatedRoute.queryParams.pipe(takeUntil(this.signal$)).subscribe({
       next: (x) => {

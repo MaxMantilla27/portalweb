@@ -1,6 +1,6 @@
 import { DOCUMENT } from '@angular/common';
 import { Component, Inject, OnInit, Renderer2 } from '@angular/core';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { Router } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
@@ -24,7 +24,8 @@ export class ModalPagoConektaOrganicoComponent implements OnInit {
     private _ActivatedRoute:ActivatedRoute,
     private _FormaPagoService:FormaPagoService,
     private _SessionStorageService:SessionStorageService,
-    private _router:Router
+    private _router:Router,
+    private dialogRef: MatDialogRef<ModalPagoConektaOrganicoComponent>,
   ) { }
 
   public urlBase=environment.url_portal;
@@ -137,6 +138,9 @@ export class ModalPagoConektaOrganicoComponent implements OnInit {
     this.DataComprobante.razonSocial = this.jsonSave.RazonSocial
     this._SessionStorageService.SessionSetValue('comprobante',JSON.stringify(this.DataComprobante));
     return this.urlBase+'/AulaVirtual/PagoExitoso/'+this.json.IdentificadorTransaccion
+  }
+  cerraModal(){
+    this.dialogRef.close();
   }
 }
 

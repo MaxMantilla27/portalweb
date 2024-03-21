@@ -1,6 +1,6 @@
 import { DOCUMENT } from '@angular/common';
 import { Component, Inject, OnInit, Renderer2 } from '@angular/core';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
 import { RegistroProcesoPagoAlumnoDTO, RegistroRespuestaPreProcesoPagoDTO } from 'src/app/Core/Models/ProcesoPagoDTO';
@@ -23,6 +23,7 @@ export class ModalPagoVisaOrganicoComponent implements OnInit {
     private _FormaPagoService:FormaPagoService,
     private _SessionStorageService:SessionStorageService,
     private _router:Router,
+    private dialogRef: MatDialogRef<ModalPagoVisaOrganicoComponent>,
     @Inject(DOCUMENT) private _document: Document,
     @Inject(MAT_DIALOG_DATA) public data: any,
   ) { }
@@ -146,5 +147,8 @@ export class ModalPagoVisaOrganicoComponent implements OnInit {
     this.DataComprobante.nroDoc =this.jsonSave.Comprobante==false? this.resultVisa.registroAlumno.numeroDocumento :this.jsonSave.CodigoTributario
     this.DataComprobante.razonSocial = this.jsonSave.RazonSocial
     this._SessionStorageService.SessionSetValue('comprobante',JSON.stringify(this.DataComprobante));
+  }
+  cerraModal(){
+    this.dialogRef.close();
   }
 }

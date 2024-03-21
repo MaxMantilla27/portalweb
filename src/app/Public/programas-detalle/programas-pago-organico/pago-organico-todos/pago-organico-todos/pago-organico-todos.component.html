@@ -6,7 +6,7 @@
   <br>
   <div class="row" style="margin-left: 10px;">
     <div class="col-7">
-      <div class="" style="font-weight: 900">Modalidad de estudio:</div>
+      <div class="mb-2" style="font-weight: 900;">Modalidad de estudio:</div>
       <mat-form-field
         style="width: 100%"
         appearance="outline"
@@ -33,7 +33,7 @@
           >
         </mat-select>
       </mat-form-field>
-      <div class="" style="font-weight: 900">Forma de pago:</div>
+      <div class="mb-2" style="font-weight: 900">Forma de pago:</div>
       <mat-form-field
         style="width: 100%"
         appearance="outline"
@@ -70,7 +70,7 @@
       <div class="row">
         <div class="" style="font-weight: 900">Métodos de pago aceptados:</div>
         <br>
-        <div class="row mb-3">
+        <div class="row mb-3 mt-3">
           <span>
             Tarjeta de débito/crédito:
             <br />
@@ -107,6 +107,14 @@
             Tipo de comprobante:
           </span>
           <div class="row comprobatePagoTarjeta">
+            <mat-radio-group
+            color="primary"
+            [(ngModel)]="DatosFacturacion.Comprobante"
+            >
+              <mat-radio-button class="m-1" [value]="false">Boleta</mat-radio-button>
+              <mat-radio-button class="m-1" [value]="true">Factura</mat-radio-button>
+            </mat-radio-group>
+          </div>          <!-- <div class="row comprobatePagoTarjeta">
             <div class=" items">
               <div class="itm no-select" [ngClass]="{'SelectCom':DatosFacturacion.Comprobante==false}"
                 (click)="DatosFacturacion.Comprobante=false">
@@ -117,7 +125,7 @@
                   *ngIf="DatosFacturacion.Comprobante!=false">check_circle</i>
               </div>
             </div>
-          </div>
+          </div> -->
           <ng-container *ngIf="DatosFacturacion.Comprobante!=false">
             <mat-form-field appearance="outline" [floatLabel]="'always'" style="width: 100%;">
               <mat-label>Razón Social</mat-label>
@@ -133,21 +141,23 @@
     </div>
     <div class="col-5">
       <div class="resumenPagoTarjeta">
-        <div class="titleResumenPago">Resumen de tu pago</div>
+        <div class="titleResumenPago" style="font-size: 1.2rem; padding: 10px;">
+          Resumen de tu pago
+        </div>
         <div class="contentResumenPago">
           <div class="subtitleResumenPago">{{ datospago.nombre }}</div>
           <div class="ItemsResumenPago row">
             <div class="col-12 row itms">
               <div class="verionPago" style="margin: 10px 0px; font-size: 14px">
-                {{ infoPago.version }}
+                {{ infoPago.version == '' ? "Versión:" : infoPago.version }}
               </div>
               <div class="inicioPago">
-                Modalidad: {{ modalidadSeleccionada.tipo }}
+                Modalidad: {{ modalidadSeleccionada.tipo == 1 ? '' :  modalidadSeleccionada.tipo}}
               </div>
             </div>
-            <div class="row verionPago">
-              <div class="col" style="color: #878787;">Concepto</div>
-              <div class="col"style="color: #878787;">Monto</div>
+            <div class="row verionPago mt-4">
+              <div class="col" style="color: #000000; font-weight: bold;">Concepto</div>
+              <div class="col"style="color: #000000; font-weight: bold;">Monto</div>
               {{ infoPago.codigo }}
               <br>
             </div>
@@ -155,13 +165,14 @@
             <div class="tot"></div>
             <div class="row verionPago " style="color: #878787;">
               <div class="col" style="color: #878787;">Matricula</div>
-              <div class="col" style=" color: #878787;">{{ infoPago.precio | number : "1.2-2" }} {{ formaPagoSeleccion.codigo }}</div>
+              <div class="col" style=" color: #878787;">{{ infoPago.precio | number : "1.2-2" }} {{  infoPago.precio != '' ? formapago[0].codigoMoneda : "" }} {{ formaPagoSeleccion.codigo }}</div>
             </div>
             <br>
             <div class="col-12 row" style="padding-top: 15px; display: flex;">
               <div class="col" style="font-weight:600;">Total a pagar</div>
               <div class="col" style="font-weight:600;">
                 {{ infoPago.precio | number : "1.2-2" }}
+                {{  infoPago.precio != '' ? formapago[0].codigoMoneda : "" }}
                 {{ formaPagoSeleccion.codigo }}
               </div>
             </div>
@@ -169,6 +180,10 @@
         </div>
       </div>
       <div class="iconoPagoTarjeta">
+        <p style="font-size: 0.8rem; text-align: center;">*El cargo del importe se efectuará en la moneda indicada en el resumen
+          de pago. El tipo de cambio estará sujeto por la entidad bancaria que utilices.</p>
+      </div>
+      <!-- <div class="iconoPagoTarjeta">
         <div class="imgPagoTarjeta"></div>
         <div class="textPagoTarjeta">
           <span>PAGO</span>
@@ -180,7 +195,7 @@
           <span>seguridad de todas tus conexiones</span>
           <span>mediante cifrado</span>
         </div>
-      </div>
+      </div> -->
       <ng-container>
         <div style="display: flex; justify-content:center;">
           <app-default-button

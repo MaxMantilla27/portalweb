@@ -1,19 +1,22 @@
 import { DOCUMENT } from '@angular/common';
-import { Component, Inject, OnInit, Renderer2 } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { ActivatedRoute } from '@angular/router';
-import { Router } from '@angular/router';
+import { AfterViewInit, Component, Inject, OnDestroy, OnInit, Renderer2 } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
 import { RegistroRespuestaPreProcesoPagoDTO } from 'src/app/Core/Models/ProcesoPagoDTO';
 import { FormaPagoService } from 'src/app/Core/Shared/Services/FormaPago/forma-pago.service';
 import { SessionStorageService } from 'src/app/Core/Shared/Services/session-storage.service';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialogRef } from '@angular/material/dialog';
 
 @Component({
-  selector: 'app-modal-pago-izipay-organico',
-  templateUrl: './modal-pago-izipay-organico.component.html',
-  styleUrls: ['./modal-pago-izipay-organico.component.scss']
+  selector: 'app-modal-afiliacion-izipay',
+  templateUrl: './modal-afiliacion-izipay.component.html',
+  styleUrls: ['./modal-afiliacion-izipay.component.scss']
 })
-export class ModalPagoIzipayOrganicoComponent implements OnInit {
+export class ModalAfiliacionIzipayComponent implements OnInit, OnDestroy, AfterViewInit {
+
+  private signal$ = new Subject();
+
   constructor(
     private _renderer2: Renderer2,
     @Inject(DOCUMENT) private _document: Document,
@@ -21,19 +24,18 @@ export class ModalPagoIzipayOrganicoComponent implements OnInit {
     private _ActivatedRoute: ActivatedRoute,
     private _FormaPagoService: FormaPagoService,
     private _SessionStorageService: SessionStorageService,
-    private dialogRefModal: MatDialogRef<ModalPagoIzipayOrganicoComponent>,
-    private _router: Router
+    private _router: Router,
+    public dialogRefModal: MatDialogRef<ModalAfiliacionIzipayComponent>
   ) { }
-  private signal$ = new Subject();
-  hidenBotom=true
-  public intervcal:any
-  public dialogRef: any;
+
   public idMatricula = 0;
+  public resultPreValidacion: any;
+  public intervcal:any;
+  public hidenBotom=true;
   public json: RegistroRespuestaPreProcesoPagoDTO = {
     IdentificadorTransaccion: '',
     RequiereDatosTarjeta: false,
   };
-  public resultPreValidacion: any;
 
   ngAfterViewInit():void{
     if (this.data.Identificador){
@@ -43,24 +45,28 @@ export class ModalPagoIzipayOrganicoComponent implements OnInit {
       if (r!='') {
         this.json.RequiereDatosTarjeta=r=='false'?false:true;
       }
-      this.ObtenerPreProcesoPagoOrganicoAlumno();
+      this.ObtenerPreProcesoPagoCuotaAlumno();
     }
+  }
+  ngOnInit(): void {
   }
   ngOnDestroy(): void {
     this.signal$.next(true);
     this.signal$.complete();
   }
-  ngOnInit(): void {
-  /*Evalua usar solo en Ngonit*/
-  }
-  ObtenerPreProcesoPagoOrganicoAlumno() {
+  ObtenerPreProcesoPagoCuotaAlumno() {
     this._FormaPagoService
-      .ObtenerPreProcesoPagoOrganicoAlumno(this.json)
+      .ObtenerPreProcesoPagoCuotaAlumno(this.json)
       .pipe(takeUntil(this.signal$))
       .subscribe({
         next: (x) => {
           this.resultPreValidacion = x._Repuesta;
+          this.resultPreValidacion.total=0;
+          this.resultPreValidacion.listaCuota.forEach((l:any) => {
+            this.resultPreValidacion.total+=l.cuotaTotal
+          });
           this.iniciarScripsIzipay();
+          // KR.setFormConfig(config);
         },
       });
   }
@@ -73,13 +79,14 @@ export class ModalPagoIzipayOrganicoComponent implements OnInit {
       this.resultPreValidacion.procesoPagoBotonIziPay.publicKey
     );
     script1.setAttribute('kr-post-url-success',
-    'https://proceso-pago.bsginstitute.com/ProcesoPagoIziPay/Cronograma?IdTransaccion='+this.json.IdentificadorTransaccion);
+    'https://proceso-pago.bsginstitute.com/ProcesoPagoIziPay/Recurrente?IdTransaccion='+this.json.IdentificadorTransaccion);
     script1.setAttribute('kr-post-url-refused',
-    'https://proceso-pago.bsginstitute.com/ProcesoPagoIziPay/Cronograma?IdTransaccion='+this.json.IdentificadorTransaccion);
+    'https://proceso-pago.bsginstitute.com/ProcesoPagoIziPay/Recurrente?IdTransaccion='+this.json.IdentificadorTransaccion);
     this._renderer2.appendChild(
       this._document.getElementById('header'),
       script1
     );
+
 
     let script2 = this._renderer2.createElement('script');
     script2.src =

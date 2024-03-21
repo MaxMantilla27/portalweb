@@ -53,52 +53,66 @@
       </ng-container>
 
     </div>
-    <div class="col-12 col-md-10 col-lg-8" *ngIf="resultVisa.estadoOperacion=='Processed'">
+    <div class="col-12 col-md-12 col-lg-12" *ngIf="resultVisa.estadoOperacion=='Processed'">
       <div class="titleResultPago">
-        <div>¡Pago exitoso!</div>
         <img src="../../../assets/icons/positivo-hecho-20.svg" alt="">
+        <div>¡Pago exitoso!</div>
       </div>
-      <div style="margin-top: 5px;
-      font-size: 14px;">
+      <div class="SubTitulo">
         {{resultVisa.registroAlumno.nombre}}, tu compra ha sido realizada con exito.
       </div>
       <div class="contentCardPago">
-        <div style="margin: 20px 0px;
-        font-weight:600;">Detalles del pago realizado:</div>
-        <div class="cardPago">
-          <div class="row" style="align-items: center;">
-            <div class="col-12 col-md-5 col-lg-4"><b>Nro. de Compra:</b></div>
-            <div class="col-12 col-md-7 col-lg-8 itemValueCardPago">{{resultVisa.identificadorTransaccion}}</div>
-            <div class="col-12 col-md-5 col-lg-4"><b>Monto:</b></div>
-            <div class="col-12 col-md-7 col-lg-8 itemValueCardPago">{{resultVisa.montoTotal}}</div>
-            <div class="col-12 col-md-5 col-lg-4"><b>Moneda:</b></div>
-            <div class="col-12 col-md-7 col-lg-8 itemValueCardPago">{{resultVisa.moneda}}</div>
-            <div class="col-12 col-md-5 col-lg-4"><b>Nombres y Apellidos:</b></div>
-            <div class="col-12 col-md-7 col-lg-8 itemValueCardPago"><b>{{resultVisa.registroAlumno.nombre}}
-                {{resultVisa.registroAlumno.apellido}}</b></div>
-            <ng-container *ngIf="resultVisa.nombrePrograma!=null">
-              <div class="col-12 col-md-5 col-lg-4"><b>Programa:</b></div>
-              <div class="col-12 col-md-7 col-lg-8 itemValueCardPago">{{resultVisa.nombrePrograma}}</div>
-            </ng-container>
-            <ng-container *ngIf="resultVisa.listaCuota!=null && resultVisa.listaCuota.length>0">
-              <div class="col-12 col-md-5 col-lg-4"><b>Razon:</b></div>
-              <div class="col-12 col-md-7 col-lg-8 itemValueCardPago" >
-                <div *ngFor="let item of resultVisa.listaCuota">
-                  {{item.nombre}}
-                </div>
-              </div>
-            </ng-container>
-            <div class="col-12 col-md-5 col-lg-4"><b>Fecha de transacción:</b></div>
-            <div class="col-12 col-md-7 col-lg-8 itemValueCardPago">{{resultVisa.fechaTransaccion | date:'dd-MM-yyyy'}}
-            </div>
-            <div class="col-12 col-md-5 col-lg-4"><b>Hora de transacción:</b></div>
-            <div class="col-12 col-md-7 col-lg-8 itemValueCardPago">{{resultVisa.fechaTransaccion | date:'hh:mm'}}</div>
-
+        <div class="row" style="justify-content: center; display: flex;">
+          <div style="width: 60vw;">
+            <div style="margin: 20px 0px;">Detalles del pago</div>
           </div>
         </div>
-        <app-default-button-flecha [confs]="{color:'primary',titulo:'Ir a mis cursos ahora'}" [style]="'margin-top:40px;padding: 0px 40px;border-radius:20px'"
-            [ruta]="rutaMisCursos"></app-default-button-flecha>
+        <div class="row" style="justify-content: center; display: flex;">
+          <div class="cardPago">
+            <div class="row" style="align-items: center; padding-left: 18%">
+              <div class="col-12 col-md-5 col-lg-4"><b>Nro. de Compra:</b></div>
+              <div class="col-12 col-md-7 col-lg-8 itemValueCardPago">{{resultVisa.identificadorTransaccion}}</div>
+              <div class="col-12 col-md-5 col-lg-4"><b>Monto:</b></div>
+              <div class="col-12 col-md-7 col-lg-8 itemValueCardPago">{{resultVisa.montoTotal}}</div>
+              <div class="col-12 col-md-5 col-lg-4"><b>Moneda:</b></div>
+              <div class="col-12 col-md-7 col-lg-8 itemValueCardPago">{{resultVisa.moneda}}</div>
+              <div class="col-12 col-md-5 col-lg-4"><b>Nombres y Apellidos:</b></div>
+              <div class="col-12 col-md-7 col-lg-8 itemValueCardPago"><b>{{resultVisa.registroAlumno.nombre}}
+                  {{resultVisa.registroAlumno.apellido}}</b></div>
+              <ng-container *ngIf="resultVisa.nombrePrograma!=null">
+                <div class="col-12 col-md-5 col-lg-4"><b>Programa:</b></div>
+                <div class="col-12 col-md-7 col-lg-8 itemValueCardPago">{{resultVisa.nombrePrograma}}</div>
+              </ng-container>
+              <ng-container *ngIf="resultVisa.listaCuota!=null && resultVisa.listaCuota.length>0">
+                <div class="col-12 col-md-5 col-lg-4"><b>Razon:</b></div>
+                <div class="col-12 col-md-7 col-lg-8 itemValueCardPago" >
+                  <div *ngFor="let item of resultVisa.listaCuota">
+                    {{item.nombre}}
+                  </div>
+                </div>
+              </ng-container>
+              <div class="col-12 col-md-5 col-lg-4"><b>Fecha de transacción:</b></div>
+              <div class="col-12 col-md-7 col-lg-8 itemValueCardPago">{{resultVisa.fechaTransaccion | date:'dd-MM-yyyy'}}
+              </div>
+              <div class="col-12 col-md-5 col-lg-4"><b>Hora de transacción:</b></div>
+              <div class="col-12 col-md-7 col-lg-8 itemValueCardPago">{{resultVisa.fechaTransaccion | date:'hh:mm'}}</div>
+
+            </div>
+          </div>
+        </div>
+
+        <!-- <app-default-button-flecha [confs]="{color:'primary',titulo:'Ir a mis cursos ahora'}" [style]="'margin-top:40px;padding: 0px 40px;border-radius:20px'"
+            [ruta]="rutaMisCursos"></app-default-button-flecha> -->
       </div>
+      <div class="row mt-2" style="justify-content: center;">
+        <button [routerLink]="ruta" class="btn btn-primary m-2" style="width: 14vw; border-color: transparent; border-radius: 25px;">
+          Ver estado de cuenta
+        </button>
+
+        <button  [routerLink]="rutaCursos" class="btn btn-primary m-2" style="width: 14vw; border-color: transparent; border-radius: 25px;">
+          Ir a mi curso
+        </button>
+    </div>
     </div>
   </div>
 </div>

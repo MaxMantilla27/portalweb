@@ -173,4 +173,7 @@ export class ModalPagoMercadoPagoChileOrganicoComponent implements OnInit {
       );
     }
   }
+  cerraModal(){
+    this.dialogRefModal.close();
+  }
 }
