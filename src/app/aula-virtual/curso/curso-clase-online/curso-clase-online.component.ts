@@ -111,16 +111,19 @@ export class CursoClaseOnlineComponent implements OnInit,OnDestroy,OnChanges {
         var pending=0
         this.actual.forEach((a:any) => {
           a.IsValid=false
-          let f1=new Date(a.fechaHoraInicio);
-          let f2=new Date();
-          var diference=((f1.getHours()*60)+f1.getMinutes())-((f2.getHours()*60)+f2.getMinutes());
+          // let f1=new Date(a.fechaHoraInicio);
+          // let f2=new Date();
+          // var diference=((f1.getHours()*60)+f1.getMinutes())-((f2.getHours()*60)+f2.getMinutes());
 
-          if(diference<=15){
-            if(a.urlWebex!=null){
-              a.IsValid=true;
-            }
-          }else{
-            pending++
+          // if(diference<=15){
+          //   if(a.urlWebex!=null){
+          //     a.IsValid=true;
+          //   }
+          // }else{
+          //   pending++
+          // }
+          if(a.urlWebex!=null){
+            a.IsValid=true;
           }
         });
         if(pending>0){
@@ -157,15 +160,18 @@ export class CursoClaseOnlineComponent implements OnInit,OnDestroy,OnChanges {
       var pending=0
       this.actual.forEach((a:any) => {
         if(a.IsValid==false){
-          let f1=new Date(a.fechaHoraInicio);
-          let f2=new Date();
-          var diference=((f1.getHours()*60)+f1.getMinutes())-((f2.getHours()*60)+f2.getMinutes());
-          if(diference<=15){
-            if(a.urlWebex!=null){
-              a.IsValid=true;
-            }
-          }else{
-            pending++
+          // let f1=new Date(a.fechaHoraInicio);
+          // let f2=new Date();
+          // var diference=((f1.getHours()*60)+f1.getMinutes())-((f2.getHours()*60)+f2.getMinutes());
+          // if(diference<=15){
+          //   if(a.urlWebex!=null){
+          //     a.IsValid=true;
+          //   }
+          // }else{
+          //   pending++
+          // }
+          if(a.urlWebex!=null){
+            a.IsValid=true;
           }
         }
         if(pending==0){
