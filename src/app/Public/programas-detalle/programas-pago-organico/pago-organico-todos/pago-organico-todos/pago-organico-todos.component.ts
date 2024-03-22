@@ -448,7 +448,7 @@ export class PagoOrganicoTodosComponent implements OnInit {
     this.jsonEnvioPago.MedioPago = this.medioPagoSeleccionado.medioPago;
     this.jsonEnvioPago.Moneda = this.formaPagoSeleccion.simbolo;
     this.jsonEnvioPago.MontoTotalPago = this.infoPago.precio;
-    this.jsonEnvioPago.Inicio = this.pEspecifico.fechaInicioTexto;
+    this.jsonEnvioPago.Inicio = this.pEspecifico?.fechaInicioTexto;
     this.jsonEnvioPago.Version = this.infoPago.version;
     this.jsonEnvioPago.Tipo = this.pEspecifico.tipo;
     this.jsonEnvioPago.TipoComprobante =this.DatosFacturacion.Comprobante;
