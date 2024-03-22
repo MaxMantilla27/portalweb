@@ -144,7 +144,7 @@ export class CalificarActividadesDocenteComponent implements OnInit ,OnChanges, 
     if(item.nombre.toLowerCase()=="tarea"){
       this.Criterio=1
     }else{
-      if(item.nombre.toLowerCase()=="cuestionario"){
+      if(item.nombre.toLowerCase()=="cuestionario" || item.nombre.toLowerCase()=="cuestionario test"){
         this.Criterio=2
       }
       else{
