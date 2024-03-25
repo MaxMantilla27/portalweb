@@ -21,6 +21,7 @@
   </div>
 </ng-container>
 
+
 <ng-container *ngIf="cargando">
   <!-- <div class="titulos">
     <div class="titleCurso" *ngIf="flujoActual.NombrePGeneral">
@@ -31,6 +32,14 @@
   <div class="container conten">
     <div class="rowRowpadd">
       <div class="contentPrimerPaso">
+        <div class="PreguntaChat" *ngIf="IniciaCarga == 0 && SiguientesPasos.length==0">
+          <div class="GloboPregunta">
+            <div class="imgChatBot"></div>
+            <div class="PreguntaGloboChat">
+              <div class="dot-flashing"></div>
+            </div>
+          </div>
+        </div>
         <ng-container
           *ngIf="
             SiguientesPasos != undefined &&
@@ -52,6 +61,35 @@
               "
               #ChatUbicacion2
             >
+              <div *ngIf="PasoRecargado !=1 && item.ultimoMensaje">
+                <div class="col-12" style="display: flex;margin-bottom: 10px;">
+                  <div class="imgChatBot"></div>
+                  <div class="PreguntaGloboPrevio">
+                    <div class="PreguntaGlobo">
+                      <div>¡Hola {{NombreUsuario}}, nos alegra de tenerte de vuelta!</div>
+                    </div>
+                    <div class="fechaR">
+                      {{ gethora() }}
+                      {{horaMinuto}}
+                      {{ this.ScrollTo() }}
+                    </div>
+                  </div>
+                </div>
+                <div class="col-12" style="display: flex;margin-bottom: 10px;">
+                  <div class="imgChatBot"></div>
+                  <div class="PreguntaGloboPrevio">
+                    <div class="PreguntaGlobo">
+                      <div>Completa la siguiente información para proceder con tu solicitud.</div>
+                    </div>
+                    <div class="fechaR">
+                      {{ gethora() }}
+                      {{horaMinuto}}
+                      {{ this.ScrollTo() }}
+                    </div>
+                  </div>
+                </div>
+              </div>
+
               <div class="GloboPregunta" *ngIf="item.mensaje != null">
                 <div class="imgChatBot"></div>
                 <div class="PreguntaGloboPrevio">
@@ -75,7 +113,7 @@
                     *ngIf="
                       item.idCampoContacto == 5 &&
                       item.usuarioRegistrado == true &&
-                      item.editarMovil != true
+                      item.editarMovil != true && item.caso=='a'
                     "
                     style="margin-bottom: 10%"
                   >
@@ -85,7 +123,7 @@
                       (click)="
                         item.validacionCambioMovil = false;
                         item.respondido = true;
-                        item.identificadorApi = 'movilSinValidacion';
+                        item.identificadorApi = 'movil';
                         FormControlValid();
                         SiguientePaso();
                         ScrollTo()
@@ -99,6 +137,47 @@
                       (click)="
                         item.respondido = false;
                         item.validacionCambioMovil = true;
+                        item.respondido = true;
+                        item.respuesta = 'No';
+                        item.identificadorApi = 'movil';
+                        AgregarSiguientePasoRespuestaNoMovil();
+                        ScrollTo()
+                      "
+                    >
+                      No
+                    </button>
+                  </div>
+
+                  <div
+                    *ngIf="
+                      (item.idCampoContacto == 9||item.idCampoContacto == 7||item.idCampoContacto == 8||item.idCampoContacto == 10) &&
+                      item.usuarioRegistrado == true && item.caso=='a'
+                    "
+                    style="margin-bottom: 10%"
+                  >
+                    <button
+                      type="button"
+                      class="OpcionesGloboValidacion"
+                      (click)="
+                        item.validacionCambioMovil = false;
+                        item.respondido = true;
+                        item.respuesta='Si';
+                        FormControlValid();
+                        SiguientePaso();
+                        ScrollTo()
+                      "
+                    >
+                      Si
+                    </button>
+                    <button
+                      type="button"
+                      class="OpcionesGloboValidacion"
+                      (click)="
+                        item.respondido = false;
+                        item.validacionCambioMovil = true;
+                        item.respondido = true;
+                        item.respuesta = 'No';
+                        item.identificadorApi = 'movil';
                         AgregarSiguientePasoRespuestaNoMovil();
                         ScrollTo()
                       "
@@ -108,6 +187,7 @@
                   </div>
                 </div>
               </div>
+
               <div
                 #ChatUbicacion2
                 class="OpcionesPregunta"
@@ -121,8 +201,11 @@
                     type="button"
                     class="OpcionesGloboValidacion"
                     (click)="
-                      item.validacionCambio = false;
-                      ValidacionDenegadaContinuar();
+                      item.respondido = true;
+                      item.respuesta = 'Si';
+                      item.validacionCambio = true;
+                      FormControlValid();
+                      SiguientePaso();
                       ScrollTo()
                     "
                   >
@@ -132,6 +215,9 @@
                     type="button"
                     class="OpcionesGloboValidacion"
                     (click)="item.validacionCambio = true;
+                    item.respondido = true;
+                    item.respuesta = 'No';
+                    item.validacionCambio = false;
                     AgregarSiguientePasoRespuestaNoPerfilProfesional();
                     ScrollTo()"
                   >
@@ -264,19 +350,21 @@
                 #ChatUbicacionInput
                 *ngIf="
                   (item.idCampoContacto == 5 && item.validacionCambioMovil && !item.respondido) ||
-                  (item.idCampoContacto != 5 &&
+                  (item.idCampoContacto != 5 && item.idCampoContacto != 7 && item.idCampoContacto != 8 && item.idCampoContacto != 9 && item.idCampoContacto != 10 &&
                     (item.respondido != true || item.respuesta == '') &&
                     (item.opciones == undefined ||
                       item.opciones == null ||
                       item.opciones.length == 0)) ||
-                  (item.idCampoContacto == 5 &&
-                    !item.usuarioRegistrado &&
+                  (item.idCampoContacto == 5 && !item.usuarioRegistrado && !item.respondido) ||
+                    (item.idCampoContacto == 5 &&
+                    item.usuarioRegistrado && item.caso=='b' &&
                     !item.respondido)
                 "
               >
                 <div class="InputResponder">
                   <div *ngIf="formControl != null" class="inp">
                     <input
+                      style="font-size:15px !important"
                       #inputElements
                       class="inputData"
                       [ngClass]="{ inputDataError: formControl.invalid }"
@@ -285,10 +373,10 @@
                       id="inputDataUsuario"
                       [type]="
                         item.identificadorApi == 'Movil'
-                          ? 'number'
-                          : item.identificadorApi == 'Email'
-                          ? 'email'
-                          : 'text'
+                        ? 'number'
+                        : item.identificadorApi == 'Email'
+                        ? 'email'
+                        : 'text'
                       "
                       matInput
                       (keyup.enter)="
@@ -340,9 +428,8 @@
                 <app-default-button
                   [confs]="{ color: 'primary', titulo: 'Visitar Sitio Web' }"
                   [icon]="''"
-                  [disabled]="formControl.invalid"
                   [style]="
-                    'margin-top: 0px; width: 100%;background: white;border: solid 1px #f8893f; color: #f8893f;border-radius: 15px; display:flex; flex-wrap: nowrap'
+                    'margin-top: 0px; width: 100%;background: white;border: solid 1px #f8893f; color: #f8893f;border-radius: 15px; display:flex; flex-wrap: nowrap;cursor:pointer'
                   "
                   (click)="redigirPaginaCurso()"
                 ></app-default-button>
@@ -358,6 +445,7 @@
               </div>
             </div>
           </div>
+
           <!-- <ng-container  #ChatUbicacion>
 
           </ng-container> -->

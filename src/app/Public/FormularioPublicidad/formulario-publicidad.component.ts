@@ -256,6 +256,8 @@ export class FormularioPublicidadComponent implements OnInit {
               var ps:Basic={Nombre:p.pais,value:p.idPais};
               return ps;
             })
+            r.filteredOptions = r.data;
+            r.filteredOptionsAux =r.data;
           }
         })
         this.fileds.forEach(r=>{
@@ -264,6 +266,8 @@ export class FormularioPublicidadComponent implements OnInit {
               var ps:Basic={Nombre:p.cargo,value:p.idCargo};
               return ps;
             })
+            r.filteredOptions = r.data;
+            r.filteredOptionsAux =r.data;
           }
         })
         this.fileds.forEach(r=>{
@@ -272,6 +276,8 @@ export class FormularioPublicidadComponent implements OnInit {
               var ps:Basic={Nombre:p.areaFormacion,value:p.idAreaFormacion};
               return ps;
             })
+            r.filteredOptions = r.data;
+            r.filteredOptionsAux =r.data;
           }
         })
         this.fileds.forEach(r=>{
@@ -280,6 +286,8 @@ export class FormularioPublicidadComponent implements OnInit {
               var ps:Basic={Nombre:p.areaTrabajo,value:p.idAreaTrabajo};
               return ps;
             })
+            r.filteredOptions = r.data;
+            r.filteredOptionsAux =r.data;
           }
         })
         this.fileds.forEach(r=>{
@@ -288,6 +296,8 @@ export class FormularioPublicidadComponent implements OnInit {
               var ps:Basic={Nombre:p.industria,value:p.idIndustria};
               return ps;
             })
+            r.filteredOptions = r.data;
+            r.filteredOptionsAux =r.data;
           }
         })
       }
@@ -304,6 +314,8 @@ export class FormularioPublicidadComponent implements OnInit {
               var ps:Basic={Nombre:p.nombreCiudad,value:p.idCiudad};
               return ps;
             })
+            r.filteredOptions = r.data;
+            r.filteredOptionsAux =r.data;
           }
         })
         this.form.enablefield('IdRegion');

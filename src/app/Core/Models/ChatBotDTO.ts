@@ -120,6 +120,7 @@ export interface ValidacionChatBotEnvioDTO {
   IdCargo?: number;
   IdAreaTrabajo?: number;
   IdIndustria?: number;
+  IdBusqueda?: number;
 }
 
 export interface PerfilProfesionalDTO {

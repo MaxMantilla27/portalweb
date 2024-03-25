@@ -109,7 +109,7 @@ export class LibroReclamacionesComponent implements OnInit,OnDestroy {
     this.jsonCorreo.Contenido =
       "<div style='font-family: Arial;font-size: 14px;'>Me es grato saludarlo desde BSG Institute<br><br>Informarle que se ha generado el siguiente registro en el libro de reclamaciones virtual de nuestro sitio web:" +
       '<br><br><span>Fecha: </span>' +
-      this.pipe.transform(this.fechaEnvio, 'short')+
+      this.pipe.transform(this.fechaEnvio, 'dd/MM/YYYY')+
       // this.fechaEnvio.getUTCFullYear() +
       // '/' +
       // (this.fechaEnvio.getUTCMonth() + 1) +
