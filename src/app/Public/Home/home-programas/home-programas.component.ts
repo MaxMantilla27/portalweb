@@ -73,9 +73,9 @@ export class HomeProgramasComponent implements OnInit,OnChanges,OnDestroy {
             c.tipoPago.forEach((element: any) => {
               if(element.paquete==paquete){
                 if(element.tipoPago.toUpperCase()=='CONTADO'){
-                  content+='Precio al contado '+element.simbolo+'.'+element.cuotas+'<br />'
+                  content+='Precio al contado '+element.simbolo+' '+element.cuotas+'<br />'
                 }else{
-                  content+='Precio en cuotas '+element.simbolo+'.'+element.matricula+' + '+element.nroCuotas+' cuotas mensuales de '+element.simbolo+'.'+element.cuotas+'<br />'
+                  content+='Precio en cuotas '+element.simbolo+' '+element.matricula+' + '+element.nroCuotas+' cuotas mensuales de '+element.simbolo+' '+element.cuotas+'<br />'
                 }
               }
             });
