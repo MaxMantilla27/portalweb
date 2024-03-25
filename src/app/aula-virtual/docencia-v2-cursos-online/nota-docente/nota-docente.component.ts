@@ -103,9 +103,24 @@ export class NotaDocenteComponent implements OnInit ,OnChanges, OnDestroy{
             }else{
               if(this.listadoNotas.listadoNotas.filter((w:any) => w.idEvaluacion == evl.id && w.idMatriculaCabecera == mat.idMatriculaCabecera).length>0){
                 var notas=this.listadoNotas.listadoNotas.filter((w:any) => w.idEvaluacion == evl.id && w.idMatriculaCabecera == mat.idMatriculaCabecera)[0]
+                var NotaPromediada=0
+                var notasCountDestalle=1
 
+                if(notas.detalle!=null){
+                  var notasDetalleCriterio=notas.detalle.filter((w:any) => w.idCriterioEvaluacion == evl.id)
+                  if(notasDetalleCriterio==null ||notasDetalleCriterio!=undefined){
+                    notasCountDestalle=notasDetalleCriterio.length
+                    notasDetalleCriterio.forEach((z:any)=>{
+                      NotaPromediada=NotaPromediada+z.nota
+                    })
+                    NotaPromediada=parseFloat((NotaPromediada/notasCountDestalle).toFixed(2));
+                  }
+                }
+                else{
+                  NotaPromediada=parseFloat((notas.nota/notasCountDestalle).toFixed(2))
+                }
                 mat.notaActual.push({
-                  nota:(notas.nota!=null && notas.nota>0)?notas.nota:0,
+                  nota:NotaPromediada,
                   Id:notas.id,
                   IdEvaluacion:notas.idEvaluacion,
                   IdMatriculaCabecera:mat.idMatriculaCabecera,
