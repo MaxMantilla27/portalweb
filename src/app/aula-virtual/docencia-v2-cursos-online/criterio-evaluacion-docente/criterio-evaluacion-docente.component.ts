@@ -105,8 +105,8 @@ export class CriterioEvaluacionDocenteComponent implements OnInit ,OnChanges, On
       data: {
         grupo:1,
         IdPEspecifico:this.IdPespecifico,
-        correo:this.DataProveedor.id,
-        idProveedor:this.DataProveedor.email},
+        correo:this.DataProveedor.email,
+        idProveedor:this.DataProveedor.id},
       panelClass: 'custom-dialog-docencia-gestion-criterios-antiguos-container',
       disableClose: true
     });
