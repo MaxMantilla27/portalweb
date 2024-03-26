@@ -43,7 +43,7 @@ export class DocenciaGestionNotasAntiguoComponent implements OnInit,OnDestroy {
     })
   }
   ListadoNotaProcesar(idPEspecifico:number,grupo:number){
-    this._NotaService.ListadoNotaProcesar(idPEspecifico,grupo).pipe(takeUntil(this.signal$)).subscribe({
+    this._NotaService.ListadoNotaProcesarOnline(idPEspecifico,grupo).pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
         console.log(x)
         this.listadoNotas=x;
@@ -60,9 +60,7 @@ export class DocenciaGestionNotasAntiguoComponent implements OnInit,OnDestroy {
                   this.listadoNotas.listadoAsistencias.filter((f:any)=> f.asistio == true && f.idMatriculaCabecera == mat.idMatriculaCabecera).length;
               var nota=0;
               if(this.listadoNotas.listadoSesiones!=null && this.listadoNotas.listadoSesiones.length>0){
-                console.log(totalasistencia)
                 nota=Math.round((((totalasistencia*1)/(this.listadoNotas.listadoSesiones.length)) * (this.listadoNotas.escalaCalificacion))* 10)/10;
-                console.log(nota)
               }
               mat.notaActual.push({
                 nota:nota,
@@ -73,20 +71,44 @@ export class DocenciaGestionNotasAntiguoComponent implements OnInit,OnDestroy {
             }else{
               if(this.listadoNotas.listadoNotas.filter((w:any) => w.idEvaluacion == evl.id && w.idMatriculaCabecera == mat.idMatriculaCabecera).length>0){
                 var notas=this.listadoNotas.listadoNotas.filter((w:any) => w.idEvaluacion == evl.id && w.idMatriculaCabecera == mat.idMatriculaCabecera)[0]
+                var NotaPromediada=0
+                var notasCountDestalle=1
 
+                if(notas.detalle.length>=0){
+                  var notasDetalleCriterio=notas.detalle.filter((w:any) => w.idCriterioEvaluacion == evl.id)
+                  console.log(notasDetalleCriterio)
+                  if(notasDetalleCriterio.length>0){
+                    notasCountDestalle=notasDetalleCriterio.length
+                    notasDetalleCriterio.forEach((z:any)=>{
+                      NotaPromediada=NotaPromediada+z.nota
+                    })
+                    NotaPromediada=parseFloat((NotaPromediada/notasCountDestalle).toFixed(2));
+                  }
+                  else{
+                    NotaPromediada=parseFloat((notas.nota/notasCountDestalle).toFixed(2))
+                  }
+                }
+                else{
+                  NotaPromediada=parseFloat((notas.nota/notasCountDestalle).toFixed(2))
+                }
+                console.log(evl)
+                var estadoEdicionCriterio=true
+                if(evl.id==4 || evl.id==19 || evl.id==20 || evl.id==21){
+                  estadoEdicionCriterio=false
+                }
                 mat.notaActual.push({
-                  nota:(notas.nota!=null && notas.nota>0)?notas.nota:0,
+                  nota:NotaPromediada,
                   Id:notas.id,
                   IdEvaluacion:notas.idEvaluacion,
                   IdMatriculaCabecera:mat.idMatriculaCabecera,
-                  edit:true});
+                  edit:estadoEdicionCriterio});
               }else{
                 mat.notaActual.push({
                   nota:0,
                   Id:0,
                   IdEvaluacion:evl.id,
                   IdMatriculaCabecera:mat.idMatriculaCabecera,
-                  edit:true});
+                  edit:false});
               }
             }
           });

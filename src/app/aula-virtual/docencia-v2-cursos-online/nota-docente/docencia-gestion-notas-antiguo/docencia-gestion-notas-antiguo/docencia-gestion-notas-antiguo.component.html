@@ -53,12 +53,12 @@
     </div>
 
     <!-- Botones -->
-    <div class="BotonesRegistroNota" style="display: flex; justify-content: space-around;">
+    <div class="BotonesRegistroNota" style="display: flex;justify-content: center;">
       <app-default-button [confs]="{color:'primary',titulo:'Guardar'}" [style]="'width: 100%; background: #0069d9; border-color: #0062cc; white-space: nowrap;'" (ButtoclClick)="RegistrarNotaDetalleDocente()" [icon]="'check'"></app-default-button>
 
       <!-- <app-default-button [confs]="{color:'primary',titulo:'Finalizar Registro'}" (ButtoclClick)="ConfirmacionAprobarNotaDetalleDocente()" [style]="'width: 100%; background: #0069d9; border-color: #0062cc; white-space: nowrap;'" [icon]="'check'"></app-default-button> -->
 
-      <app-default-button [confs]="{color:'danger',titulo:'Cancelar'}" [style]="'width: 100%; background: #dc3545; border-color: #dc3545; white-space: nowrap;'" [icon]="'close'" (ButtoclClick)="charge==false?dialogRef.close():charge=true"></app-default-button>
+      <app-default-button [confs]="{color:'danger',titulo:'Cancelar'}" [style]="'width: 100%; background: #dc3545; border-color: #dc3545; white-space: nowrap;margin-left:10px'" [icon]="'close'" (ButtoclClick)="charge==false?dialogRef.close():charge=true"></app-default-button>
     </div>
   </ng-container>
 

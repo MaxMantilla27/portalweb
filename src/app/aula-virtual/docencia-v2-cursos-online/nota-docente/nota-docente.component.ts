@@ -105,15 +105,18 @@ export class NotaDocenteComponent implements OnInit ,OnChanges, OnDestroy{
                 var notas=this.listadoNotas.listadoNotas.filter((w:any) => w.idEvaluacion == evl.id && w.idMatriculaCabecera == mat.idMatriculaCabecera)[0]
                 var NotaPromediada=0
                 var notasCountDestalle=1
-
-                if(notas.detalle!=null){
-                  var notasDetalleCriterio=notas.detalle.filter((w:any) => w.idCriterioEvaluacion == evl.id)
-                  if(notasDetalleCriterio==null ||notasDetalleCriterio!=undefined){
+                if(notas.detalle.length>0){
+                  var notasDetalleCriterio = []
+                  notasDetalleCriterio=notas.detalle.filter((w:any) => w.idCriterioEvaluacion == evl.id)
+                  if(notasDetalleCriterio.length>0){
                     notasCountDestalle=notasDetalleCriterio.length
                     notasDetalleCriterio.forEach((z:any)=>{
                       NotaPromediada=NotaPromediada+z.nota
                     })
                     NotaPromediada=parseFloat((NotaPromediada/notasCountDestalle).toFixed(2));
+                  }
+                  else{
+                    NotaPromediada=parseFloat((notas.nota/notasCountDestalle).toFixed(2))
                   }
                 }
                 else{
@@ -164,10 +167,11 @@ export class NotaDocenteComponent implements OnInit ,OnChanges, OnDestroy{
           }
         });
         console.log(this.listadoNotas.listadoNotas)
-        this.OrdenarNotas();
       },
       complete:()=>{
         this.TerminaCarga=true;
+        this.OrdenarNotas();
+
       }
     })
   }
@@ -222,6 +226,8 @@ export class NotaDocenteComponent implements OnInit ,OnChanges, OnDestroy{
     }
   }
   OrdenarDetalle(){
+    this.InicializarColumnasDetalle();
+    this.Colspam=[];
     this.listadoNotas.listadoEvaluaciones.forEach((e:any) => {
       if(e.nombre.toUpperCase().includes('ASISTENCIA')){
         this.columnHeaderDetalle['z'+e.id]='Asistencia <br> '+e.porcentaje+'%'
@@ -240,8 +246,10 @@ export class NotaDocenteComponent implements OnInit ,OnChanges, OnDestroy{
 
       var detalles=this.listadoNotas.listadoNotas[0].detalle
 
-      let claves = Object.keys(this.columnHeaderDetalle);
-      var inicio=claves.length
+      let claves=undefined;
+      claves = Object.keys(this.columnHeaderDetalle);
+      var inicio=0;
+      inicio=claves.length
       this.Colspam.forEach((c:any) => {
         c.inicio=inicio+1;
 
@@ -360,9 +368,16 @@ export class NotaDocenteComponent implements OnInit ,OnChanges, OnDestroy{
   ObtenerInformacionProveedor(){
     this._ProveedorService.ObtenerInformacionProveedor().pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
-        console.log(x)
         this.DataProveedor=x
       }
     })
+  }
+  InicializarColumnasDetalle(){
+    this.columnHeaderDetalle=undefined;
+    this.columnHeaderDetalle = {
+      indice: 'N°',
+      codigoMatricula: 'Código',
+      alumno: 'Apellidos y Nombres'
+    };
   }
 }

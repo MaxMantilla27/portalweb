@@ -1,3 +1,6 @@
+<ng-container *ngIf="detalle==true">
+  <mat-slide-toggle [(ngModel)]="verDetalle" color="primary">Ver detalles</mat-slide-toggle>
+</ng-container>
 <ng-container *ngIf="infoNotas.length==0 && TerminaCarga==false">
   <div class="row"
     style="display: flex; justify-content: center;align-items: center;text-align: center; height: 15rem;">
@@ -13,9 +16,6 @@
   <div style="display: flex;justify-content: center;align-items: center; height: 15rem;">
     No hay registros.
   </div>
-</ng-container>
-<ng-container *ngIf="detalle==true">
-  <mat-slide-toggle [(ngModel)]="verDetalle" color="primary">Ver detalles</mat-slide-toggle>
 </ng-container>
 <ng-container *ngIf="verDetalle==false">
   <app-table-v2 *ngIf="infoNotas!=undefined && infoNotas.length>0" [tableData]="infoNotas" [columnHeader]="columnHeader"

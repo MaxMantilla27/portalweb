@@ -47,6 +47,7 @@ export class CriterioEvaluacionDocenteComponent implements OnInit ,OnChanges, On
     }
   }
   ObtenerCriteriosPorProgramaEspecifico(){
+    this.criterios=undefined;
     this._PEspecificoEsquemaService.ObtenerCriteriosPorProgramaEspecifico(this.IdPespecifico).pipe(takeUntil(this.signal$))
     .subscribe({
       next: (x) => {
@@ -112,7 +113,9 @@ export class CriterioEvaluacionDocenteComponent implements OnInit ,OnChanges, On
     });
 
     dialogRef.afterClosed().pipe(takeUntil(this.signal$)).subscribe(result => {
-      this.ObtenerCriteriosPorProgramaEspecifico();
+      if(result){
+        this.ObtenerCriteriosPorProgramaEspecifico();
+      }
     });
   }
 }
