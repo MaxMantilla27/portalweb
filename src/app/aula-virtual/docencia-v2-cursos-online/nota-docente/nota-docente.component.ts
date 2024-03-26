@@ -73,6 +73,8 @@ export class NotaDocenteComponent implements OnInit ,OnChanges, OnDestroy{
         if(this.listadoNotas.listadoMatriculas==null)this.listadoNotas.listadoMatriculas=[];
         if(this.listadoNotas.listadoSesiones==null)this.listadoNotas.listadoSesiones=[];
         if(this.listadoNotas.listadoAsistencias==null)this.listadoNotas.listadoAsistencias=[];
+        console.log(this.listadoNotas.listadoNotas)
+        console.log(this.listadoNotas.listadoEvaluaciones)
         var detalles:Array<any>=[]
         if(this.listadoNotas.listadoNotas.length>0){
           var dte=this.listadoNotas.listadoNotas[0].detalle
@@ -105,9 +107,11 @@ export class NotaDocenteComponent implements OnInit ,OnChanges, OnDestroy{
                 var notas=this.listadoNotas.listadoNotas.filter((w:any) => w.idEvaluacion == evl.id && w.idMatriculaCabecera == mat.idMatriculaCabecera)[0]
                 var NotaPromediada=0
                 var notasCountDestalle=1
-                if(notas.detalle.length>0){
+                console.log(notas)
+                if(notas.detalle!=null){
                   var notasDetalleCriterio = []
                   notasDetalleCriterio=notas.detalle.filter((w:any) => w.idCriterioEvaluacion == evl.id)
+                  console.log(notasDetalleCriterio)
                   if(notasDetalleCriterio.length>0){
                     notasCountDestalle=notasDetalleCriterio.length
                     notasDetalleCriterio.forEach((z:any)=>{
@@ -138,6 +142,8 @@ export class NotaDocenteComponent implements OnInit ,OnChanges, OnDestroy{
               }
             }
           });
+          console.log(this.listadoNotas.listadoNotas)
+          console.log(detalles)
           if(detalles.length>0){
             var d:Array<any>=[]
             this.listadoNotas.listadoNotas.forEach((n:any) => {
@@ -147,7 +153,11 @@ export class NotaDocenteComponent implements OnInit ,OnChanges, OnDestroy{
                 });
               }
             });
+            console.log(d)
             if(d!=null && d.length==0){
+              console.log('detalle1111111111111111')
+              console.log(mat)
+
               d=[]
               var dj=JSON.stringify(detalles);
               d=JSON.parse(dj)
@@ -159,6 +169,9 @@ export class NotaDocenteComponent implements OnInit ,OnChanges, OnDestroy{
                 mat.detalles.push(a)
               });
             }else{
+              console.log(mat)
+              console.log('detalle22222222222222222')
+
               mat.detalles=[]
               d.forEach((a:any) => {
                 mat.detalles.push(a)

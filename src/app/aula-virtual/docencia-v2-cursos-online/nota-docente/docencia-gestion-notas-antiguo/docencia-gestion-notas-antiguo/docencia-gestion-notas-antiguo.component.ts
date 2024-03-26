@@ -74,7 +74,7 @@ export class DocenciaGestionNotasAntiguoComponent implements OnInit,OnDestroy {
                 var NotaPromediada=0
                 var notasCountDestalle=1
 
-                if(notas.detalle.length>=0){
+                if(notas.detalle!=null){
                   var notasDetalleCriterio=notas.detalle.filter((w:any) => w.idCriterioEvaluacion == evl.id)
                   console.log(notasDetalleCriterio)
                   if(notasDetalleCriterio.length>0){
