@@ -88,7 +88,7 @@
             </div>
           </mat-tab>
 
-          <mat-tab *ngIf="json.idModalidad!=1">
+          <mat-tab *ngIf="EsCurso==true && json.idModalidad==2">
             <ng-template mat-tab-label>
               <div class="contentHeaderM" (click)="InterraccionTab('Asistencia')">
                 <div class="iconMat iconAsistencia"
@@ -142,7 +142,7 @@
                 [IdPEspecifico]="json.IdPEspecificoHijo"></app-modulo-calificaciones>
             </div>
           </mat-tab>
-          <mat-tab *ngIf="json.idModalidad!=1">
+          <mat-tab *ngIf="json.idModalidad==2">
             <ng-template mat-tab-label>
               <div class="contentHeaderM" (click)="InterraccionTab('Calificaciones')">
                 <div class="iconMat iconCalificaciones" matTooltip="Calificaciones" matTooltipPosition="after"></div>
