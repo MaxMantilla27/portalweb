@@ -69,6 +69,14 @@ export class DocenciaGestionNotasAntiguoComponent implements OnInit,OnDestroy {
                 IdMatriculaCabecera:mat.idMatriculaCabecera,
                 edit:false});
             }else{
+              console.log(evl)
+              var estadoEdicionCriterio=true
+              if(evl.nombre.toUpperCase().includes('TAREAS')||
+                evl.nombre.toUpperCase().includes('CUESTIONARIOS')||
+                evl.nombre.toUpperCase().includes('CUESTIONARIOS TEST')||
+                evl.nombre.toUpperCase().includes('ACTIVIDAD ADICIONAL')){
+                  estadoEdicionCriterio=false
+              }
               if(this.listadoNotas.listadoNotas.filter((w:any) => w.idEvaluacion == evl.id && w.idMatriculaCabecera == mat.idMatriculaCabecera).length>0){
                 var notas=this.listadoNotas.listadoNotas.filter((w:any) => w.idEvaluacion == evl.id && w.idMatriculaCabecera == mat.idMatriculaCabecera)[0]
                 var NotaPromediada=0
@@ -92,7 +100,6 @@ export class DocenciaGestionNotasAntiguoComponent implements OnInit,OnDestroy {
                   NotaPromediada=parseFloat((notas.nota/notasCountDestalle).toFixed(2))
                 }
                 console.log(evl)
-                var estadoEdicionCriterio=true
                 if(evl.id==4 || evl.id==19 || evl.id==20 || evl.id==21){
                   estadoEdicionCriterio=false
                 }
@@ -108,7 +115,7 @@ export class DocenciaGestionNotasAntiguoComponent implements OnInit,OnDestroy {
                   Id:0,
                   IdEvaluacion:evl.id,
                   IdMatriculaCabecera:mat.idMatriculaCabecera,
-                  edit:false});
+                  edit:estadoEdicionCriterio});
               }
             }
           });
