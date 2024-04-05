@@ -110,7 +110,7 @@ export class ConfirmacionPagoTarjetaConektaComponent implements OnInit,OnDestroy
 
     let script = this._renderer2.createElement('script');
     script.type="text/javascript"
-    //publicKey: "key_NkUEio2hSx5H1zf7n5KueMw", --key de pruebas
+    // publicKey: "key_NkUEio2hSx5H1zf7n5KueMw", --key de pruebas
     script.text = `
           window.ConektaCheckoutComponents.Integration({
             targetIFrame: "#conektaIframeContainer",
@@ -130,7 +130,7 @@ export class ConfirmacionPagoTarjetaConektaComponent implements OnInit,OnDestroy
             }
         })
     `;
-
+   
     console.log(script)
     this._renderer2.appendChild(this._document.getElementById('conekta'), script);
   }
