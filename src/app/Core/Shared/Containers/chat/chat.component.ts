@@ -135,11 +135,11 @@ export class ChatComponent implements OnInit, OnDestroy, OnChanges {
             this.idsesion = x.idsesion;
           }
           if (this.hubConnection.state == 'Connected') {
-            // if (this.git == '') {
-            //   this.hubConnection.invoke('getGuid');
-            // } else {
-            //   this.GenerarLogVisitanteAulaVirtual();
-            // }
+            if (this.git == '') {
+              this.hubConnection.invoke('getGuid');
+            } else {
+              this.GenerarLogVisitanteAulaVirtual();
+            }
           }
         },
       });
@@ -303,11 +303,11 @@ doSomethingOnNewTab() {
       .start()
       .then((x: any) => {
         if (this.hubConnection.state == 'Connected') {
-          // if (this.git == '') {
-          //   this.hubConnection.invoke('getGuid');
-          // } else {
-          //   this.GenerarLogVisitanteAulaVirtual();
-          // }
+          if (this.git == '') {
+            this.hubConnection.invoke('getGuid');
+          } else {
+            this.GenerarLogVisitanteAulaVirtual();
+          }
         }
 
         if (IdFaseOportunidadPortal != undefined) {
@@ -338,6 +338,7 @@ doSomethingOnNewTab() {
     if (idProgramaGenetalEstatico == 0 || existingChatId == '') {
       idProgramaGenetalEstatico = this.idProgramageneral;
     }
+    console.log('================ENTRANDOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO==================')
     var cookiecontaco =
       this._SessionStorageService.SessionGetValue('usuarioWeb');
     this.hubConnection.invoke(
@@ -369,14 +370,15 @@ doSomethingOnNewTab() {
       this.idcentrocosto,
       this.idcoordinadora,
       this.codigomatricula,
-      // this.git
+      this.git
     );
-    /*  if(this.IdAlumno==null)
+    console.log(this.IdAlumno)
+    if(this.IdAlumno==null)
     {console.log("Recargo Funcion GenerarLogVisitanteAulaVirtual");
 
       this.GenerarLogVisitanteAulaVirtual();
 
-    } */
+    }
   }
 
   mensajeChat() {

@@ -1,15 +1,15 @@
 import { Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
-import { Subject, takeUntil } from 'rxjs';
+import { Subject, count, takeUntil } from 'rxjs';
 import { DatosPerfilService } from 'src/app/Core/Shared/Services/DatosPerfil/datos-perfil.service';
 import { Router } from '@angular/router';
 import { AsistenciaService } from 'src/app/Core/Shared/Services/Asistencia/asistencia.service';
+import * as moment from 'moment-timezone';
 @Component({
   selector: 'app-curso-clase-online',
   templateUrl: './curso-clase-online.component.html',
   styleUrls: ['./curso-clase-online.component.scss']
 })
 export class CursoClaseOnlineComponent implements OnInit,OnDestroy,OnChanges {
-
   private signal$ = new Subject();
   constructor(
     private _DatosPerfilService:DatosPerfilService,
@@ -48,8 +48,11 @@ export class CursoClaseOnlineComponent implements OnInit,OnDestroy,OnChanges {
   public OpenVideoModulo=true
   public interval:any
   public clasesTop:any
-  ngOnInit(): void {
+  public ZonaHorariaOrigenWebex:any
+  public ZonaHorariaUsuario:any
+  public CodigoIsoPaisWebex='PE'
 
+  ngOnInit(): void {
   }
   ngOnChanges(changes: SimpleChanges): void {
     if(this.IdMatricula!=0){
@@ -72,7 +75,11 @@ export class CursoClaseOnlineComponent implements OnInit,OnDestroy,OnChanges {
     this._DatosPerfilService.ListaCursoWebexMatriculadoV2(this.IdMatricula).pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
         console.log(x)
-
+        if(x!=null){
+          this.CodigoIsoPaisWebex=x[0].codigoIso;
+        }
+        this.ObtenerDatosZonaHoraria()
+        console.log(this.CodigoIsoPaisWebex)
         this.clases=[]
         this.actual=[]
         var i=0
@@ -88,11 +95,19 @@ export class CursoClaseOnlineComponent implements OnInit,OnDestroy,OnChanges {
             s.fechaHoraFinal=f
 
             if(primero==true){
+              let HoraWebexOriginal = moment.tz(s.fechaHoraInicio, this.ZonaHorariaOrigenWebex);
+              let HoraWebexUsuario = HoraWebexOriginal.clone().tz(this.ZonaHorariaUsuario);
+              let HoraActualUsuario = moment().tz(this.ZonaHorariaUsuario);
+              let mismoAnioMesDia = HoraWebexUsuario.year() === HoraActualUsuario.year() &&
+              HoraWebexUsuario.month() === HoraActualUsuario.month() &&
+              HoraWebexUsuario.date() === HoraActualUsuario.date();
 
-              let f1=new Date((new Date(s.fechaHoraInicio)).getFullYear(),(new Date(s.fechaHoraInicio)).getMonth(),(new Date(s.fechaHoraInicio)).getDate());
-              let f2=new Date((new Date()).getFullYear(),(new Date()).getMonth(),(new Date()).getDate());
+              // let f1=new Date((new Date(s.fechaHoraInicio)).getFullYear(),(new Date(s.fechaHoraInicio)).getMonth(),(new Date(s.fechaHoraInicio)).getDate());
+              // let f2=new Date((new Date()).getFullYear(),(new Date()).getMonth(),(new Date()).getDate());
 
-              if(+f1==+f2){
+
+              // if(+f1==+f2){
+              if(mismoAnioMesDia){
                 this.actual.push(s)
               }else{
                 if(this.actual.length>0){
@@ -111,20 +126,23 @@ export class CursoClaseOnlineComponent implements OnInit,OnDestroy,OnChanges {
         var pending=0
         this.actual.forEach((a:any) => {
           a.IsValid=false
-          // let f1=new Date(a.fechaHoraInicio);
-          // let f2=new Date();
-          // var diference=((f1.getHours()*60)+f1.getMinutes())-((f2.getHours()*60)+f2.getMinutes());
-
-          // if(diference<=15){
-          //   if(a.urlWebex!=null){
-          //     a.IsValid=true;
-          //   }
-          // }else{
-          //   pending++
-          // }
-          if(a.urlWebex!=null){
-            a.IsValid=true;
+          let HoraWebexOriginal = moment.tz(a.fechaHoraInicio, this.ZonaHorariaOrigenWebex);
+          // HoraWebexOriginal.subtract(80, 'minutes');
+          let HoraWebexUsuario = HoraWebexOriginal.clone().tz(this.ZonaHorariaUsuario);
+          let HoraActualUsuario = moment().tz(this.ZonaHorariaUsuario);
+          let diference = HoraActualUsuario.diff(HoraWebexOriginal, 'minutes');
+          console.log('Hora Actual:', HoraActualUsuario.format('YYYY-MM-DD HH:mm:ss'));
+          console.log('Hora Webex Original:', HoraWebexOriginal.format('YYYY-MM-DD HH:mm:ss'));
+          console.log('Hora Webex Conversion Usuario:', HoraWebexUsuario.format('YYYY-MM-DD HH:mm:ss'));
+          console.log('Minutos Faltantes:', diference);
+          if(diference>=-15){
+            if(a.urlWebex!=null){
+              a.IsValid=true;
+            }
+          }else{
+            pending++
           }
+
         });
         if(pending>0){
           this.SetIntervalo();
@@ -160,18 +178,21 @@ export class CursoClaseOnlineComponent implements OnInit,OnDestroy,OnChanges {
       var pending=0
       this.actual.forEach((a:any) => {
         if(a.IsValid==false){
-          // let f1=new Date(a.fechaHoraInicio);
-          // let f2=new Date();
-          // var diference=((f1.getHours()*60)+f1.getMinutes())-((f2.getHours()*60)+f2.getMinutes());
-          // if(diference<=15){
-          //   if(a.urlWebex!=null){
-          //     a.IsValid=true;
-          //   }
-          // }else{
-          //   pending++
-          // }
-          if(a.urlWebex!=null){
-            a.IsValid=true;
+          let HoraWebexOriginal = moment.tz(a.fechaHoraInicio, this.ZonaHorariaOrigenWebex);
+          // HoraWebexOriginal.subtract(80, 'minutes');
+          let HoraWebexUsuario = HoraWebexOriginal.clone().tz(this.ZonaHorariaUsuario);
+          let HoraActualUsuario = moment().tz(this.ZonaHorariaUsuario);
+          let diference = HoraActualUsuario.diff(HoraWebexOriginal, 'minutes');
+          console.log('Hora Actual:', HoraActualUsuario.format('YYYY-MM-DD HH:mm:ss'));
+          console.log('Hora Webex Original:', HoraWebexOriginal.format('YYYY-MM-DD HH:mm:ss'));
+          console.log('Hora Webex Conversion Usuario:', HoraWebexUsuario.format('YYYY-MM-DD HH:mm:ss'));
+          console.log('Minutos Faltantes:', diference);
+          if(diference>=-15){
+            if(a.urlWebex!=null){
+              a.IsValid=true;
+            }
+          }else{
+            pending++
           }
         }
         if(pending==0){
@@ -210,5 +231,12 @@ export class CursoClaseOnlineComponent implements OnInit,OnDestroy,OnChanges {
         console.log(e)
       }
     })
+  }
+  ObtenerDatosZonaHoraria(){
+    this.ZonaHorariaUsuario = Intl.DateTimeFormat().resolvedOptions().timeZone;
+    this.ZonaHorariaOrigenWebex = moment.tz.zonesForCountry(this.CodigoIsoPaisWebex);
+    this.ZonaHorariaOrigenWebex = this.ZonaHorariaOrigenWebex[0];
+    console.log(this.ZonaHorariaUsuario)
+    console.log(this.ZonaHorariaOrigenWebex)
   }
 }
