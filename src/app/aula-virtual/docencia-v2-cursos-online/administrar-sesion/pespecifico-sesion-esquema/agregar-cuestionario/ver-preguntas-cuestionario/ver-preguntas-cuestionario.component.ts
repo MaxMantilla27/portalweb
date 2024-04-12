@@ -98,10 +98,7 @@ export class VerPreguntasCuestionarioComponent implements OnInit ,OnChanges,OnDe
     console.log(this.formularioTarea.get('IdPreguntaTipo')?.value)
     if(this.formularioTarea.get('IdPreguntaTipo')?.value!=0)
     {
-    console.log('XXXXXXXXXXXXXXXXXXX')
-
     }
-    console.log('==================')
   }
   ObtenerPEspecificoSesionCuestionarioPreguntaAlternativaPorIdPregunta(){
     this._PEspecificoEsquemaService.ObtenerPEspecificoSesionCuestionarioPreguntaAlternativaPorIdPregunta(this.pregunta.Id).pipe(takeUntil(this.signal$))

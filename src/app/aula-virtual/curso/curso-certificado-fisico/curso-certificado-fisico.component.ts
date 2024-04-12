@@ -153,6 +153,9 @@ export class CursoCertificadoFisicoComponent implements OnInit,OnDestroy ,OnChan
     if(this.datosCertificado!=undefined){
       this.userForm.get('Pais')?.disable();
       console.log(this.datosCertificado.idSolicitudCertificadoFisico)
+      if(this.datosCertificado.idSolicitudCertificadoFisico!=null){
+        this.IdEstadoCertificadoFisico=this.datosCertificado.datosCourierEnvio.idEstadoCertificadoFisico
+      }
       console.log(this.IdEstadoCertificadoFisico)
       if(this.IdEstadoCertificadoFisico!=0 &&
          this.IdEstadoCertificadoFisico!=5 &&

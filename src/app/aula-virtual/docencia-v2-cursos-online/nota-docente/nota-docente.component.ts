@@ -75,6 +75,7 @@ export class NotaDocenteComponent implements OnInit ,OnChanges, OnDestroy{
         if(this.listadoNotas.listadoAsistencias==null)this.listadoNotas.listadoAsistencias=[];
         console.log(this.listadoNotas.listadoNotas)
         console.log(this.listadoNotas.listadoEvaluaciones)
+        console.log(this.listadoNotas.listadoAsistencias)
         var detalles:Array<any>=[]
         if(this.listadoNotas.listadoNotas.length>0){
           var dte=this.listadoNotas.listadoNotas[0].detalle
@@ -96,6 +97,8 @@ export class NotaDocenteComponent implements OnInit ,OnChanges, OnDestroy{
               if(this.listadoNotas.listadoSesiones!=null && this.listadoNotas.listadoSesiones.length>0){
                 nota=Math.round((((totalasistencia*1)/(this.listadoNotas.listadoSesiones.length)) * (this.listadoNotas.escalaCalificacion))* 10)/10;
               }
+              console.log(evl)
+              console.log(nota)
               mat.notaActual.push({
                 nota:nota,
                 Id:0,

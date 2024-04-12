@@ -63,6 +63,7 @@ export class DocenciaGestionAsistenciaComponent implements OnInit,OnChanges,OnDe
   public DisabledFinalizarRegistro=true;
   @Input() idPEspecifico=0
   @Input() IdEstadoPEspecifico=0
+  public OpcionGuardar=true;
   ngOnInit(): void {
     console.log(this.data)
     this.today= new Date();
@@ -217,6 +218,7 @@ export class DocenciaGestionAsistenciaComponent implements OnInit,OnChanges,OnDe
           })
         });
       });
+      this.OpcionGuardar=false;
       this._OperacionesAsistenciaService.Registrar(this.asistencias,this.data.IdPEspecifico,this.data.correo).pipe(takeUntil(this.signal$)).subscribe({
         next:x=>{
           console.log(x)
@@ -229,8 +231,10 @@ export class DocenciaGestionAsistenciaComponent implements OnInit,OnChanges,OnDe
           console.log(e)
           this._SnackBarServiceService.openSnackBar("Ocurrio un error , intentelo nuevamente mas tarde",'x', 10,'snackbarCrucigramaerror' );
           this.charge=false
-
-        }
+        },
+        complete:() => {
+          this.OpcionGuardar=true;
+        },
       })
     }
     else{

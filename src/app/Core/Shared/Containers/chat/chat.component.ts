@@ -338,7 +338,6 @@ doSomethingOnNewTab() {
     if (idProgramaGenetalEstatico == 0 || existingChatId == '') {
       idProgramaGenetalEstatico = this.idProgramageneral;
     }
-    console.log('================ENTRANDOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO==================')
     var cookiecontaco =
       this._SessionStorageService.SessionGetValue('usuarioWeb');
     this.hubConnection.invoke(

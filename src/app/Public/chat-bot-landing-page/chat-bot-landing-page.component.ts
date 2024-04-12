@@ -374,7 +374,6 @@ export class ChatBotLandingPageComponent
             this.CalcularDiasPasados();
           }
           if(limpiarHistorial == false){
-            console.log('==============================ENTRANDO 1=======================')
             this.FlujoConversacionPrincipal();
           }
         },
@@ -434,7 +433,6 @@ export class ChatBotLandingPageComponent
             this.CargandoChat = false;
             if (this.pasoActual.esMensajeFinal == true) {
               this.flujoActual.EsMensajeFinal = true;
-            console.log('==============================ENTRANDO 2=======================')
 
               this.FlujoConversacionPrincipal();
             }
@@ -506,8 +504,6 @@ export class ChatBotLandingPageComponent
           this.ActualizarIdOportunidadChatbotUsuarioContacto();
 
           this.CalculandoRespuesta=true;
-          console.log('==============================ENTRANDO 3=======================')
-
           this.FlujoConversacionPrincipal();
         }
       });
@@ -654,7 +650,6 @@ export class ChatBotLandingPageComponent
       this.ActualizarAlumnoDTO.Valor = ValorDB.toString();
       this.ActualizarAlumnoChatBot();
     } else {
-      console.log('==============================ENTRANDO 4=======================')
 
       this.FlujoConversacionPrincipal();
     }
@@ -685,8 +680,6 @@ export class ChatBotLandingPageComponent
         next: (x) => {
         },
         complete:()=>{
-          console.log('==============================ENTRANDO 5=======================')
-
           this.FlujoConversacionPrincipal();
 
         }
@@ -751,22 +744,13 @@ export class ChatBotLandingPageComponent
         },
         complete: () => {
           this.ActualizarIdOportunidadChatbotUsuarioContacto();
-          console.log('==============================ENTRANDO 6=======================')
-
           this.FlujoConversacionPrincipal();
         },
       });
   }
   ElementRefTemp: any;
   SiguientePaso(ElementRef?: any) {
-    // console.log('=========================ENTRA A SIGUIENTE PASO================')
-    // if ((this.flujoActual.Paso == 3 ||this.flujoActual.Paso == 4 ||this.flujoActual.Paso == 5 ||this.flujoActual.Paso == 6 )
-    // && this.flujoActual.UsuarioRegistrado && this.flujoActual.Caso=='a')
-    // {
-    //   this.SiguientesPasos.forEach((p) => {
-    //     p.respondido = true;
-    //   });
-    // }
+
     if (ElementRef != null) {
       this.ElementRefTemp = ElementRef;
     }
@@ -1218,7 +1202,6 @@ export class ChatBotLandingPageComponent
       Respuesta: this.SiguientesPasos[this.SiguientesPasos.length - 1].respuesta,
       MensajeEnviado: this.SiguientesPasos[this.SiguientesPasos.length - 1].mensaje
     };
-    console.log('==============================ENTRANDO 7=======================')
     if(this.flujoActual.Respuesta!='No'){
       this.ActualizarAlumnoChatBot2(this.flujoActual.IdCampoContacto,this.flujoActual.Respuesta)
     }
@@ -1263,7 +1246,6 @@ export class ChatBotLandingPageComponent
       MensajeEnviado: this.SiguientesPasos[this.SiguientesPasos.length - 1].mensaje
     };
     console.log(this.flujoActual)
-    console.log('==============================ENTRANDO 8=======================')
     // this.ActualizarAlumnoChatBot2(this.flujoActual.IdCampoContacto,this.flujoActual.Respuesta)
     this.FlujoConversacionPrincipal();
     this.ScrollTo();
