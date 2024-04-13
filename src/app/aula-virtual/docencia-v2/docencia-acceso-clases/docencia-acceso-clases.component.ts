@@ -112,6 +112,7 @@ export class DocenciaAccesoClasesComponent implements OnInit,OnChanges,OnDestroy
         this.Actual.forEach((a:any) => {
           a.IsValid=false
           let f1=new Date(a.fechaHoraInicio);
+          // f1.setMinutes(f1.getMinutes() - 44);
           let f2=new Date();
           var diference=((f1.getHours()*60)+f1.getMinutes())-((f2.getHours()*60)+f2.getMinutes());
 
@@ -151,6 +152,7 @@ export class DocenciaAccesoClasesComponent implements OnInit,OnChanges,OnDestroy
       this.Actual.forEach((a:any) => {
         if(a.IsValid==false){
           let f1=new Date(a.fechaHoraInicio);
+          // f1.setMinutes(f1.getMinutes() - 44);
           let f2=new Date();
           var diference=((f1.getHours()*60)+f1.getMinutes())-((f2.getHours()*60)+f2.getMinutes());
           if(diference<=15){
