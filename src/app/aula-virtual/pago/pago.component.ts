@@ -262,7 +262,7 @@ export class PagoComponent implements OnInit,OnDestroy {
     const dialogRef = this.dialog.open(PagoTarjetaComponent, {
       width: '600px',
       data: { idMatricula: this.idMatricula },
-      panelClass: 'dialog-Tarjeta',
+      panelClass: 'dialog-Tarjeta-Modal',
      disableClose:true
     });
 

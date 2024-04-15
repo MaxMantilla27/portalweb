@@ -1,8 +1,8 @@
-.dialog-Tarjeta {
+.dialog-Tarjeta-Modal {
   mat-dialog-container {
   padding: 0px !important;
   border-radius: 10px;
-  overflow: auto !important;
+  overflow: hidden !important;
   }
 }
 .modalPagoTitle {
