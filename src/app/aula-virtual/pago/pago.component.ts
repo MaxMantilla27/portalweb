@@ -594,7 +594,7 @@ export class PagoComponent implements OnInit,OnDestroy {
             const dialogRef = this.dialog.open(ModalPagoOpenpayPeruComponent, {
               width: '600px',
               data: { Identificador: sesion, IdMatricula: this.idMatricula, DatosFacturacion:this.DatosFacturacion },
-              panelClass: 'dialog-Tarjeta-OpenPayPeru',
+              panelClass: 'dialog-Tarjeta',
               disableClose:true
             });
             // this._router.navigate(['/AulaVirtual/MisPagos/'+this.idMatricula+'/openpayPEN/'+sesion]);
