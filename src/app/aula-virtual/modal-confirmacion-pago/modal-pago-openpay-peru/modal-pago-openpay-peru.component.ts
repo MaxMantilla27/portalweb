@@ -13,7 +13,9 @@ declare var OpenPayPeru: any;
 @Component({
   selector: 'app-modal-pago-openpay-peru',
   templateUrl: './modal-pago-openpay-peru.component.html',
-  styleUrls: ['./modal-pago-openpay-peru.component.scss']
+  styleUrls: ['./modal-pago-openpay-peru.component.scss'],
+  encapsulation: ViewEncapsulation.None,
+
 })
 export class ModalPagoOpenpayPeruComponent implements OnInit {
   private signal$ = new Subject();

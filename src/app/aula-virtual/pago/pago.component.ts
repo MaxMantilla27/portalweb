@@ -28,6 +28,7 @@ import { ModalPagoWompiComponent } from '../modal-confirmacion-pago/modal-pago-w
 import { ModalPagoOpenpayColombiaComponent } from '../modal-confirmacion-pago/modal-pago-openpay-colombia/modal-pago-openpay-colombia.component';
 import { ModalPagoMultipagoComponent } from '../modal-confirmacion-pago/modal-pago-multipago/modal-pago-multipago.component';
 import { ModalAfiliacionIzipayComponent } from '../modal-confirmacion-pago-afiliacion/modal-afiliacion-izipay/modal-afiliacion-izipay.component';
+import { ScrollStrategyOptions } from '@angular/cdk/overlay';
 
 const pipe = new DatePipe('en-US')
 
@@ -50,6 +51,7 @@ export class PagoComponent implements OnInit,OnDestroy {
     private _router:Router,
     private _SessionStorageService:SessionStorageService,
     private _MedioPagoActivoPasarelaService:MedioPagoActivoPasarelaService,
+    private scrollStrategyOptions: ScrollStrategyOptions
   ) { }
   ngOnDestroy(): void {
     this.signal$.next(true);
@@ -93,6 +95,7 @@ export class PagoComponent implements OnInit,OnDestroy {
   public validadorPagosChile: boolean = false;
   public medioPagoSeleccionado:any;
   public eventosPagoSelccion:boolean = false;
+  public pagoRecurrenteActivado:boolean = false;
   ngOnInit(): void {
     let i=0
     this._HelperService.recibirCombosPerfil.pipe(takeUntil(this.signal$)).subscribe((x) => {
@@ -260,7 +263,7 @@ export class PagoComponent implements OnInit,OnDestroy {
       width: '600px',
       data: { idMatricula: this.idMatricula },
       panelClass: 'dialog-Tarjeta',
-     // disableClose:true
+     disableClose:true
     });
 
     dialogRef.afterClosed().pipe(takeUntil(this.signal$)).subscribe((result) => {
@@ -339,7 +342,7 @@ export class PagoComponent implements OnInit,OnDestroy {
           width: '600px',
           data: { idMatricula: this.idMatricula,tituloBotonModal:'Ir a afiliarse',tipo:"AF"},
           panelClass: 'dialog-Tarjeta',
-         // disableClose:true
+         disableClose:true
         });
 
         dialogRef.afterClosed().pipe(takeUntil(this.signal$)).subscribe((result) => {
@@ -591,9 +594,8 @@ export class PagoComponent implements OnInit,OnDestroy {
             const dialogRef = this.dialog.open(ModalPagoOpenpayPeruComponent, {
               width: '600px',
               data: { Identificador: sesion, IdMatricula: this.idMatricula, DatosFacturacion:this.DatosFacturacion },
-              panelClass: 'dialog-Tarjeta',
+              panelClass: 'dialog-Tarjeta-OpenPayPeru',
               disableClose:true
-              // disableClose:true
             });
             // this._router.navigate(['/AulaVirtual/MisPagos/'+this.idMatricula+'/openpayPEN/'+sesion]);
           }

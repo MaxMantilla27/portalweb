@@ -1,8 +1,19 @@
+.dialog-Tarjeta-OpenPayPeru .mat-dialog-container {
+  padding: 0px !important;
+  border-radius: 10px;
+  overflow: auto !important;
+}
 .titlePagoTarjeta {
   font-size: 20px;
   font-weight: 600;
-  margin: 30px 0px;
+  // margin: 30px 0px;
   border-bottom: solid 1px #e8e8e8;
+  font-weight: bold;
+  background: #E7E7E7;
+  text-align: center;
+  justify-content: center;
+  display: flex;
+  border-radius: 5px 5px 0px 0px;
 }
 .inputPagoVisa
   .mat-form-field.mat-form-field-appearance-outline
@@ -88,6 +99,7 @@
 .subtitlePagoVisa{
   font-weight: 600;
   margin-bottom: 20px;
+  margin-top: 20px;
   border-bottom: solid 1px #e8e8e8;
 }
 

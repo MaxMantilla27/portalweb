@@ -81,7 +81,7 @@
     </div>
     <div class="row" style="align-items: center;">
       <p>
-        Selecciona la cuota número de cuotas que desees pagar
+        Selecciona la cuota o número de cuotas que desees pagar:
       </p>
     </div>
     <div class="row">
@@ -244,13 +244,40 @@
                   </ng-container>
                 </ng-container>
               </div>
-              <div class="col-12 row bot">
+              <div class="row" style="border: solid 2px #0076FF;border-radius: 15px;background: #EFF8FF; margin-top: 10px;">
+                <div style="padding: 10px 0px 10px 0px; display: flex;">
+                  <div class="col-1">
+                    <i class="material-icons"  *ngIf="pagoRecurrenteActivado==false" (click)="pagoRecurrenteActivado=true">check_box_outline_blank</i>
+                    <i class="material-icons"  *ngIf="pagoRecurrenteActivado==true" (click)="pagoRecurrenteActivado=false" style="color: #0076FF">check_box</i>
+                  </div>
+                  <div class="col-11">
+                    <div style="    color: #0076FF;
+                    font-weight: bold;">
+                      Afiliarme a pagos recurrentes
+                    </div>
+                    <div>
+                      Paga siempre puntual. Tu pago se realizará de manera automática.
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div *ngIf="pagoRecurrenteActivado==false" class="col-12 row bot">
                 <div>
                   <app-default-button
                   [disabled]="total==0"
                   [confs]="{color:'primary',titulo:'Continuar'}"
                   [style]="'margin-top: 20px;padding: 0px 40px;'"
                   (ButtoclClick)="EnviarSolicitudPago()">
+                  </app-default-button>
+                </div>
+              </div>
+              <div *ngIf="pagoRecurrenteActivado" class="col-12 row bot">
+                <div>
+                  <app-default-button
+                  [disabled]="total==0"
+                  [confs]="{color:'primary',titulo:'Continuar'}"
+                  [style]="'margin-top: 20px;padding: 0px 40px;'"
+                  (ButtoclClick)="OpenModalMetodoPagoSucripcion()">
                   </app-default-button>
                 </div>
               </div>
