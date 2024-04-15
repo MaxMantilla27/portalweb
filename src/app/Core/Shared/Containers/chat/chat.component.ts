@@ -463,9 +463,8 @@ doSomethingOnNewTab() {
       url,
       this.idInteraccion,
       idarchivo,
-      tipo
-      //Cuando Carlos publique
-      // ,this.git
+      tipo,
+      this.git
     );
   }
   mensajeChatArchivoAdjunto(
