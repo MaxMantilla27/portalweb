@@ -71,6 +71,7 @@ export class ModalAfiliacionIzipayComponent implements OnInit, OnDestroy, AfterV
       });
   }
   iniciarScripsIzipay() {
+    console.log(this.resultPreValidacion)
     let script1 = this._renderer2.createElement('script');
     script1.src =
       'https://static.micuentaweb.pe/static/js/krypton-client/V4.0/stable/kr-payment-form.min.js';

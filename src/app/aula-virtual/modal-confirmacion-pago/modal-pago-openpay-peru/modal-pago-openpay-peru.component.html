@@ -1,5 +1,6 @@
+
 <div class="container">
-  <div class="row" style="justify-content: end;">
+  <div class="row" style="justify-content: end;margin-right: 5px;">
     <mat-icon class="btn" (click)="cerraModal()">close</mat-icon>
   </div>
 </div>
@@ -53,8 +54,8 @@ justify-content: center;">
         <div class="col-12 row" style="justify-content: center;">
           <div class="col-12 col-md-10 col-lg-10">
             <ng-container *ngIf="resultCard.medioPago!='Pse' else pseBTN">
-              <app-default-button [confs]="{color:'primary',titulo:'Paga aquí'}"
-              [style]="'background:#2F4387 !important;margin-top: 20px;margin-bottom: 0px;width:100%'" (ButtoclClick)="Pagar()"></app-default-button>
+              <app-default-button [confs]="{color:'primary',titulo:'Pagar ahora'}"
+              [style]="'margin-top: 20px;margin-bottom: 0px;width:100%'" (ButtoclClick)="Pagar()"></app-default-button>
             </ng-container >
               <ng-template #pseBTN>
                 <app-default-button [confs]="{color:'primary',titulo:'Ir a pagar con PSE'}"

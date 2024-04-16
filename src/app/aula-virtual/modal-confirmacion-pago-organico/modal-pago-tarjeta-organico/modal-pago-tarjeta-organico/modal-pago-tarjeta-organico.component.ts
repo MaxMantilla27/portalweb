@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit, Renderer2 } from '@angular/core';
+import { Component, Inject, OnInit, Renderer2, ViewEncapsulation } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
@@ -12,7 +12,8 @@ declare var OpenPay: any;
 @Component({
   selector: 'app-modal-pago-tarjeta-organico',
   templateUrl: './modal-pago-tarjeta-organico.component.html',
-  styleUrls: ['./modal-pago-tarjeta-organico.component.scss']
+  styleUrls: ['./modal-pago-tarjeta-organico.component.scss'],
+  encapsulation: ViewEncapsulation.None,
 })
 export class ModalPagoTarjetaOrganicoComponent implements OnInit {
   private signal$ = new Subject();

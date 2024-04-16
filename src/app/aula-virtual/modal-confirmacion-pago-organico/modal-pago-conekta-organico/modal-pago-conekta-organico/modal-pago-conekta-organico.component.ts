@@ -1,5 +1,5 @@
 import { DOCUMENT } from '@angular/common';
-import { Component, Inject, OnInit, Renderer2 } from '@angular/core';
+import { Component, Inject, OnInit, Renderer2, ViewEncapsulation } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { Router } from '@angular/router';
@@ -12,7 +12,8 @@ import { environment } from 'src/environments/environment';
 @Component({
   selector: 'app-mozdal-pago-conekta-organico',
   templateUrl: './modal-pago-conekta-organico.component.html',
-  styleUrls: ['./modal-pago-conekta-organico.component.scss']
+  styleUrls: ['./modal-pago-conekta-organico.component.scss'],
+  encapsulation: ViewEncapsulation.None,
 })
 export class ModalPagoConektaOrganicoComponent implements OnInit {
   private signal$ = new Subject();

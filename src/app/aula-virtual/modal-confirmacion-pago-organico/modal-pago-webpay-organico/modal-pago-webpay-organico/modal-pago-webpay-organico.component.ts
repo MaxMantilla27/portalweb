@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject, OnInit, ViewEncapsulation } from '@angular/core';
 import { MatDialog, MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
@@ -9,7 +9,8 @@ import { SessionStorageService } from 'src/app/Core/Shared/Services/session-stor
 @Component({
   selector: 'app-modal-pago-webpay-organico',
   templateUrl: './modal-pago-webpay-organico.component.html',
-  styleUrls: ['./modal-pago-webpay-organico.component.scss']
+  styleUrls: ['./modal-pago-webpay-organico.component.scss'],
+  encapsulation: ViewEncapsulation.None,
 })
 export class ModalPagoWebpayOrganicoComponent implements OnInit {
 

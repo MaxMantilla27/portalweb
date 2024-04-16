@@ -27,7 +27,8 @@ export class ResultadoPagoKlapComponent implements OnInit {
   public json={
     IdentificadorTransaccion:'',
   }
-
+  public ruta='/AulaVirtual/MisPagos'
+  public rutaCursos = '/AulaVirtual/MisCursos'
   ngOnInit(): void {
     this._ActivatedRoute.params.pipe(takeUntil(this.signal$)).subscribe({
       next: (x) => {
@@ -60,7 +61,14 @@ export class ResultadoPagoKlapComponent implements OnInit {
       RequiereDatosTarjeta: false
     }).pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
+        console.log(x)
         this.resultProceso=x._Repuesta;
+        if(this.resultProceso.idMatriculaCabecera>0 &&
+          this.resultProceso.idMatriculaCabecera!=null &&
+          this.resultProceso.idMatriculaCabecera!=undefined ){
+            this.ruta=this.ruta+'/'+this.resultProceso.idMatriculaCabecera
+            this.rutaCursos=this.rutaCursos+'/'+this.resultProceso.idMatriculaCabecera
+        }
         this.dialogRef.close()
       }
     })

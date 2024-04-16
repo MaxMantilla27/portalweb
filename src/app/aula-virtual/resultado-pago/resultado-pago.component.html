@@ -54,22 +54,22 @@
 
     </div>
     <div class="col-12 col-md-12 col-lg-12" *ngIf="resultVisa.estadoOperacion=='Processed'">
-      <div class="titleResultPago">
-        <img src="../../../assets/icons/positivo-hecho-20.svg" alt="">
+      <div class="titleResultPago" style="justify-content: center;margin-bottom: 1rem;">
+        <img src="../../../assets/icons/positivo-hecho-20.svg" alt="" style="height: 2.5rem;width: 2.5rem;margin-right:10px;">
         <div>¡Pago exitoso!</div>
       </div>
-      <div class="SubTitulo">
+      <div class="SubTitulo"style="margin-top: 5px;font-size: 14px;justify-content: center;display: flex;">
         {{resultVisa.registroAlumno.nombre}}, tu compra ha sido realizada con exito.
       </div>
       <div class="contentCardPago">
         <div class="row" style="justify-content: center; display: flex;">
           <div style="width: 60vw;">
-            <div style="margin: 20px 0px;">Detalles del pago</div>
+            <div style="margin: 20px 0px;">Detalle de tu pago:</div>
           </div>
         </div>
         <div class="row" style="justify-content: center; display: flex;">
           <div class="cardPago">
-            <div class="row" style="align-items: center; padding-left: 18%">
+            <div class="row" style="align-items: center; padding: 0px 5rem">
               <div class="col-12 col-md-5 col-lg-4"><b>Nro. de Compra:</b></div>
               <div class="col-12 col-md-7 col-lg-8 itemValueCardPago">{{resultVisa.identificadorTransaccion}}</div>
               <div class="col-12 col-md-5 col-lg-4"><b>Monto:</b></div>
@@ -112,7 +112,7 @@
         <button  [routerLink]="rutaCursos" class="btn btn-primary m-2" style="width: 14vw; border-color: transparent; border-radius: 25px;">
           Ir a mi curso
         </button>
-    </div>
+      </div>
     </div>
   </div>
 </div>

@@ -29,6 +29,7 @@ export class ResultadoPagoWebpayComponent implements OnInit {
   resultWebpay:any;
   dialogRef:any
   public ruta = '/AulaVirtual/MisPagos'
+  public rutaPago='/AulaVirtual/MisPagos'
   public rutaCursos = '/AulaVirtual/MisCursos'
   ngOnInit(): void {
     this._ActivatedRoute.queryParams.pipe(takeUntil(this.signal$)).subscribe({
@@ -66,6 +67,12 @@ export class ResultadoPagoWebpayComponent implements OnInit {
       next:x=>{
         console.log("RespuestaWEbpay",x)
         this.resultWebpay = x._Repuesta;
+        if(this.resultWebpay.idMatriculaCabecera>0 &&
+          this.resultWebpay.idMatriculaCabecera!=null &&
+          this.resultWebpay.idMatriculaCabecera!=undefined ){
+            this.rutaPago=this.rutaPago+'/'+this.resultWebpay.idMatriculaCabecera
+            this.rutaCursos=this.rutaCursos+'/'+this.resultWebpay.idMatriculaCabecera
+        }
         this.ObtenerPreProcesoPagoOrganicoAlumno()
       }
     })

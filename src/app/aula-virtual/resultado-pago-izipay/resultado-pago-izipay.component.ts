@@ -64,6 +64,12 @@ export class ResultadoPagoIzipayComponent implements OnInit,OnDestroy {
       next:x=>{
         console.log("REPUESTA-PREPROCESO",x._Repuesta)
         this.resultProceso =x._Repuesta
+        if(this.resultProceso.idMatriculaCabecera>0 &&
+          this.resultProceso.idMatriculaCabecera!=null &&
+          this.resultProceso.idMatriculaCabecera!=undefined ){
+            this.ruta=this.ruta+'/'+this.resultProceso.idMatriculaCabecera
+            this.rutaCursos=this.rutaCursos+'/'+this.resultProceso.idMatriculaCabecera
+        }
       },
       error:e=>{
         //this._router.navigate([this.ruta])

@@ -1,5 +1,5 @@
 import { DOCUMENT } from '@angular/common';
-import { Component, Inject, OnInit, Renderer2 } from '@angular/core';
+import { Component, Inject, OnInit, Renderer2, ViewEncapsulation } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
@@ -12,7 +12,9 @@ import { MatDialogRef } from '@angular/material/dialog';
 @Component({
   selector: 'app-modal-pago-visa',
   templateUrl: './modal-pago-visa.component.html',
-  styleUrls: ['./modal-pago-visa.component.scss']
+  styleUrls: ['./modal-pago-visa.component.scss'],
+  encapsulation: ViewEncapsulation.None,
+
 })
 export class ModalPagoVisaComponent implements OnInit {
   private signal$ = new Subject();

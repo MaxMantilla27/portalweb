@@ -138,6 +138,7 @@ export class PagoOrganicoTodosComponent implements OnInit {
   public IdPais = -1;
   public Paises: any;
   dialogRef:any
+  public pagoRecurrenteActivado:boolean = false;
 
   ngOnInit(): void {
      this.dialogRef =this.dialog.open(ChargeComponent,{
@@ -479,7 +480,7 @@ export class PagoOrganicoTodosComponent implements OnInit {
               sesion,
               x._Repuesta.requiereDatosTarjeta
             );
-            // console.log(parseInt(tarjeta.idPasarelaPago));
+            console.log(parseInt(this.medioPagoSeleccionado.idPasarelaPago));
             if (
               this.medioPagoSeleccionado.idPasarelaPago == 7 ||
               this.medioPagoSeleccionado.idPasarelaPago == 10
@@ -497,8 +498,8 @@ export class PagoOrganicoTodosComponent implements OnInit {
                       // IdMatricula: this.idMatricula,
                       DatosFacturacion: this.DatosFacturacion,
                     },
-                    panelClass: 'dialog-Tarjeta',
-                    // disableClose:true
+                    panelClass: 'dialog-Tarjeta-Modal',
+                    disableClose:true
                   }
                 );
 
@@ -516,8 +517,8 @@ export class PagoOrganicoTodosComponent implements OnInit {
                       // IdMatricula: this.idMatricula,
                       DatosFacturacion: this.DatosFacturacion,
                     },
-                    panelClass: 'dialog-Tarjeta',
-                    // disableClose:true
+                    panelClass: 'dialog-Tarjeta-Modal',
+                    disableClose:true
                   }
                 );
               }
@@ -536,7 +537,7 @@ export class PagoOrganicoTodosComponent implements OnInit {
                     // IdMatricula: this.idMatricula,
                     DatosFacturacion: this.DatosFacturacion,
                   },
-                  panelClass: 'dialog-Tarjeta',
+                  panelClass: 'dialog-Tarjeta-Modal',
                   // disableClose:true
                 }
               );
@@ -554,8 +555,8 @@ export class PagoOrganicoTodosComponent implements OnInit {
                       // IdMatricula: this.idMatricula,
                       DatosFacturacion: this.DatosFacturacion,
                     },
-                    panelClass: 'dialog-Tarjeta',
-                    // disableClose:true
+                    panelClass: 'dialog-Tarjeta-Modal',
+                    disableClose:true
                   }
                 );
                 dialogRef
@@ -577,9 +578,9 @@ export class PagoOrganicoTodosComponent implements OnInit {
                       // IdMatricula: this.idMatricula,
                       DatosFacturacion: this.DatosFacturacion,
                     },
-                    panelClass: 'dialog-Tarjeta',
-                    maxHeight: '90vh', //you can adjust the value as per your view
-                    // disableClose:true
+                    panelClass: 'dialog-Tarjeta-Modal',
+                    // maxHeight: '90vh', //you can adjust the value as per your view
+                    disableClose:true
                   }
                 );
                 // this._router.navigate(['/AulaVirtual/MisPagos/'+this.idMatricula+'/conekta/'+sesion]);
@@ -601,7 +602,8 @@ export class PagoOrganicoTodosComponent implements OnInit {
                       // IdMatricula: this.idMatricula,
                       DatosFacturacion: this.DatosFacturacion,
                     },
-                    panelClass: 'dialog-Tarjeta',
+                    panelClass: 'dialog-Tarjeta-Modal',
+                    disableClose:true
                   }
                 );
                 // this._router.navigate(['/AulaVirtual/MisPagos/'+this.idMatricula+'/webpay/'+sesion]);
@@ -636,8 +638,8 @@ export class PagoOrganicoTodosComponent implements OnInit {
                       // IdMatricula: this.idMatricula,
                       DatosFacturacion: this.DatosFacturacion,
                     },
-                    panelClass: 'dialog-Tarjeta',
-                    // disableClose:true
+                    panelClass: 'dialog-Tarjeta-Modal',
+                    disableClose:true
                   }
                 );
                 // this._router.navigate(['/AulaVirtual/MisPagos/'+this.idMatricula+'/izipay/'+sesion]);
@@ -654,8 +656,8 @@ export class PagoOrganicoTodosComponent implements OnInit {
                       // IdMatricula: this.idMatricula,
                       DatosFacturacion: this.DatosFacturacion,
                     },
-                    panelClass: 'dialog-Tarjeta',
-                    // disableClose:true
+                    panelClass: 'dialog-Tarjeta-Modal',
+                    disableClose:true
                   }
                 );
               }
@@ -671,9 +673,9 @@ export class PagoOrganicoTodosComponent implements OnInit {
                       // IdMatricula: this.idMatricula,
                       DatosFacturacion: this.DatosFacturacion,
                     },
-                    panelClass: 'dialog-Tarjeta',
-                    maxHeight: '90vh', //you can adjust the value as per your view
-                    // disableClose:true
+                    panelClass: 'dialog-Tarjeta-Modal',
+                    // maxHeight: '90vh', //you can adjust the value as per your view
+                    disableClose:true
                   }
                 );
                 // this._router.navigate(['/AulaVirtual/MisPagos/'+this.idMatricula+'/mercadoPago/'+sesion]);
@@ -689,8 +691,8 @@ export class PagoOrganicoTodosComponent implements OnInit {
                       // IdMatricula: this.idMatricula,
                       DatosFacturacion: this.DatosFacturacion,
                     },
-                    panelClass: 'dialog-Tarjeta',
-                    // disableClose:true
+                    panelClass: 'dialog-Tarjeta-Modal',
+                    disableClose:true
                   }
                 );
                 // this._router.navigate(['/AulaVirtual/MisPagos/'+this.idMatricula+'/openpayPEN/'+sesion]);
@@ -724,4 +726,6 @@ export class PagoOrganicoTodosComponent implements OnInit {
       );
     }
   }
+
+
 }

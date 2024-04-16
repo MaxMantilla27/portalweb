@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject, OnInit, ViewEncapsulation } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
@@ -10,7 +10,8 @@ import { MatDialogRef } from '@angular/material/dialog';
 @Component({
   selector: 'app-modal-pago-webpay',
   templateUrl: './modal-pago-webpay.component.html',
-  styleUrls: ['./modal-pago-webpay.component.scss']
+  styleUrls: ['./modal-pago-webpay.component.scss'],
+  encapsulation: ViewEncapsulation.None,
 })
 export class ModalPagoWebpayComponent implements OnInit {
   private signal$ = new Subject()

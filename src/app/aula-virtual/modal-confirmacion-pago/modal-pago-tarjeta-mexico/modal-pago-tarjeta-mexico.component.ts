@@ -14,7 +14,9 @@ declare var OpenPay: any;
 @Component({
   selector: 'app-modal-pago-tarjeta-mexico',
   templateUrl: './modal-pago-tarjeta-mexico.component.html',
-  styleUrls: ['./modal-pago-tarjeta-mexico.component.scss']
+  styleUrls: ['./modal-pago-tarjeta-mexico.component.scss'],
+  encapsulation: ViewEncapsulation.None,
+
 })
 export class ModalPagoTarjetaMexicoComponent implements OnInit {
   private signal$ = new Subject();

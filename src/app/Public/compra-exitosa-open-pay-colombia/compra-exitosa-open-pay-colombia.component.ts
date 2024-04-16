@@ -41,6 +41,8 @@ export class CompraExitosaOpenPayColombiaComponent implements OnInit {
   img=1;
   imgAc=''
   public id=''
+  public rutaPago='/AulaVirtual/MisPagos'
+  public rutaCursos = '/AulaVirtual/MisCursos'
   ngOnInit(): void {
     if(this.isBrowser){
       this._ActivatedRoute.queryParams.pipe(takeUntil(this.signal$)).subscribe({
@@ -75,17 +77,17 @@ export class CompraExitosaOpenPayColombiaComponent implements OnInit {
       this._FormaPagoService.ProcesamientoAfiliacionColombiaOpenPay(this.id).pipe(takeUntil(this.signal$)).subscribe({
         next:x=>{
           console.log(x)
-          
+
           this.resultOpenPay = JSON.parse(x._Repuesta.pagoAfiliacion)
           console.log("ResultadoOpen", this.resultOpenPay)
-          
+
         }
       })
     }
     else{
       this._FormaPagoService.ProcesamientoPagoColombiaOpenPay(this.id).pipe(takeUntil(this.signal$)).subscribe({
         next:x=>{
-          
+
           this.json.IdentificadorTransaccion=x._Repuesta.identificadorTransaccion
           this.ObtenerPreProcesoPagoCuotaAlumno()
         }
@@ -106,6 +108,12 @@ export class CompraExitosaOpenPayColombiaComponent implements OnInit {
             this._router.navigate([this.ruta])
           }else{
             this.resultVisa=x._Repuesta;
+            if(this.resultVisa.idMatriculaCabecera>0 &&
+              this.resultVisa.idMatriculaCabecera!=null &&
+              this.resultVisa.idMatriculaCabecera!=undefined ){
+                this.rutaPago=this.rutaPago+'/'+this.resultVisa.idMatriculaCabecera
+                this.rutaCursos=this.rutaCursos+'/'+this.resultVisa.idMatriculaCabecera
+            }
             if(this.resultVisa.estadoOperacion=='Processed')
             {
               let comprobanteString = this._SessionStorageService.SessionGetValue('comprobante')

@@ -12,7 +12,8 @@ import { SessionStorageService } from 'src/app/Core/Shared/Services/session-stor
 @Component({
   selector: 'app-modal-pago-openpay-colombia',
   templateUrl: './modal-pago-openpay-colombia.component.html',
-  styleUrls: ['./modal-pago-openpay-colombia.component.scss']
+  styleUrls: ['./modal-pago-openpay-colombia.component.scss'],
+  encapsulation: ViewEncapsulation.None,
 })
 export class ModalPagoOpenpayColombiaComponent implements OnInit, OnDestroy {
   private signal$ = new Subject();

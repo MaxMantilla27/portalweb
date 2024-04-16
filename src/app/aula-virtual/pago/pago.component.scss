@@ -140,11 +140,12 @@ table tr:last-child td {
     }
   }
 }
-.dialog-Tarjeta {
+.dialog-Tarjeta-Modal {
   mat-dialog-container {
-  padding: 0px !important;
+  padding: 1opx !important;
   border-radius: 10px;
-  overflow: auto !important;
+  overflow-y: auto !important;
+  max-height: 95vh;
   }
 }
 .gray-border {

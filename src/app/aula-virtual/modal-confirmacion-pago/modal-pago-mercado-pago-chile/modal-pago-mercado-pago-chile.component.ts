@@ -1,4 +1,4 @@
-import { Component, ElementRef, Inject, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, Inject, OnDestroy, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { loadMercadoPago } from "@mercadopago/sdk-js";
@@ -17,7 +17,8 @@ const PK_Prueba ="TEST-4afbabcc-eedf-4dfb-b8ce-9703a5b7f973";
 @Component({
   selector: 'app-modal-pago-mercado-pago-chile',
   templateUrl: './modal-pago-mercado-pago-chile.component.html',
-  styleUrls: ['./modal-pago-mercado-pago-chile.component.scss']
+  styleUrls: ['./modal-pago-mercado-pago-chile.component.scss'],
+  encapsulation: ViewEncapsulation.None,
 })
 export class ModalPagoMercadoPagoChileComponent implements OnInit {
   private signal$ = new Subject()

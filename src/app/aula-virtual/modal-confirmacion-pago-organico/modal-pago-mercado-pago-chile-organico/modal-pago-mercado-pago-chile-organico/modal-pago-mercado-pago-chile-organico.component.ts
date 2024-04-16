@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject, OnInit, ViewEncapsulation } from '@angular/core';
 import { MatDialog, MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { loadMercadoPago } from '@mercadopago/sdk-js';
@@ -16,7 +16,8 @@ const PK_Prueba ="TEST-4afbabcc-eedf-4dfb-b8ce-9703a5b7f973";
 @Component({
   selector: 'app-modal-pago-mercado-pago-chile-organico',
   templateUrl: './modal-pago-mercado-pago-chile-organico.component.html',
-  styleUrls: ['./modal-pago-mercado-pago-chile-organico.component.scss']
+  styleUrls: ['./modal-pago-mercado-pago-chile-organico.component.scss'],
+  encapsulation: ViewEncapsulation.None,
 })
 export class ModalPagoMercadoPagoChileOrganicoComponent implements OnInit {
 

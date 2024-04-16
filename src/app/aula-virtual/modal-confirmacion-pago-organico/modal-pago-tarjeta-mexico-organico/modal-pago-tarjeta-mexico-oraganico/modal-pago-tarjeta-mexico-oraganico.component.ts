@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit, Renderer2 } from '@angular/core';
+import { Component, Inject, OnInit, Renderer2, ViewEncapsulation } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { Router } from '@angular/router';
@@ -14,7 +14,8 @@ declare var OpenPay: any;
 @Component({
   selector: 'app-modal-pago-tarjeta-mexico-oraganico',
   templateUrl: './modal-pago-tarjeta-mexico-oraganico.component.html',
-  styleUrls: ['./modal-pago-tarjeta-mexico-oraganico.component.scss']
+  styleUrls: ['./modal-pago-tarjeta-mexico-oraganico.component.scss'],
+  encapsulation: ViewEncapsulation.None,
 })
 export class ModalPagoTarjetaMexicoOraganicoComponent implements OnInit {
   private signal$ = new Subject();

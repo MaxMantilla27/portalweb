@@ -1,5 +1,5 @@
 import { DOCUMENT } from '@angular/common';
-import { Component, Inject, OnInit, Renderer2 } from '@angular/core';
+import { Component, Inject, OnInit, Renderer2, ViewEncapsulation } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
@@ -11,7 +11,9 @@ import { environment } from 'src/environments/environment';
 @Component({
   selector: 'app-modal-pago-visa-organico',
   templateUrl: './modal-pago-visa-organico.component.html',
-  styleUrls: ['./modal-pago-visa-organico.component.scss']
+  styleUrls: ['./modal-pago-visa-organico.component.scss'],
+  encapsulation: ViewEncapsulation.None,
+
 })
 export class ModalPagoVisaOrganicoComponent implements OnInit {
 

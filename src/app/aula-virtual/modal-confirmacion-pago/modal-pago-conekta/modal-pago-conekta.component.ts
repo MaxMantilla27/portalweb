@@ -12,7 +12,8 @@ import { MatDialogRef } from '@angular/material/dialog';
 @Component({
   selector: 'app-modal-pago-conekta',
   templateUrl: './modal-pago-conekta.component.html',
-  styleUrls: ['./modal-pago-conekta.component.scss']
+  styleUrls: ['./modal-pago-conekta.component.scss'],
+  encapsulation: ViewEncapsulation.None,
 })
 export class ModalPagoConektaComponent implements OnInit, OnDestroy {
   private signal$ = new Subject();

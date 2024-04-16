@@ -42,6 +42,8 @@ export class VisaRecurrenteComponent implements OnInit {
   intentos=0;
   img=1;
   imgAc=''
+  public rutaPago='/AulaVirtual/MisPagos'
+  public rutaCursos = '/AulaVirtual/MisCursos'
   ngOnInit(): void {
     if(this.isBrowser){
       this._ActivatedRoute.params.pipe(takeUntil(this.signal$)).subscribe({
@@ -68,10 +70,16 @@ export class VisaRecurrenteComponent implements OnInit {
         this._FormaPagoService.ObtenerPreProcesoPagoCuotaAlumno(json).pipe(takeUntil(this.signal$)).subscribe({
           next:x=>{
             this.resultVisa=x._Repuesta
+            if(this.resultVisa.idMatriculaCabecera>0 &&
+              this.resultVisa.idMatriculaCabecera!=null &&
+              this.resultVisa.idMatriculaCabecera!=undefined ){
+                this.rutaPago=this.rutaPago+'/'+this.resultVisa.idMatriculaCabecera
+                this.rutaCursos=this.rutaCursos+'/'+this.resultVisa.idMatriculaCabecera
+            }
             if(this.resultVisa.estadoOperacion=='Processed'){
               var valor:any
               let objComprobante = JSON.parse(comprobanteString)
-      
+
               objComprobante.listaCuota.forEach((l:any) => {
                 if(valor==undefined){
                   valor=l

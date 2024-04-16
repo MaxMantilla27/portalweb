@@ -24,14 +24,14 @@ export class ResultadoPagoMercadopagoComponent implements OnInit,OnDestroy {
     private _SessionStorageService:SessionStorageService,
     private _router:Router,
     @Inject(PLATFORM_ID) platformId: Object,
-  ) { 
+  ) {
     this.isBrowser = isPlatformBrowser(platformId); {}
   }
   public json:RegistroRespuestaPreProcesoPagoDTO={
     IdentificadorTransaccion:'',
     RequiereDatosTarjeta:false
   }
-  
+
   resultProceso:any;
   reultadoPago :any;
   dialogRef:any
@@ -39,7 +39,8 @@ export class ResultadoPagoMercadopagoComponent implements OnInit,OnDestroy {
   public AreaCapacitacion=''
   public ProgramaNombre=''
   public rutaMisCursos='/AulaVirtual/MisCursos'
-
+  public rutaPago='/AulaVirtual/MisPagos'
+  public rutaCursos = '/AulaVirtual/MisCursos'
 
   ngOnDestroy(): void {
     this.signal$.next(true)
@@ -64,7 +65,14 @@ export class ResultadoPagoMercadopagoComponent implements OnInit,OnDestroy {
 
     this._FormaPagoService.ObtenerPreProcesoPagoCuotaAlumno(this.json).pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
+        console.log(x)
         this.resultProceso = x._Repuesta
+        if(this.resultProceso.idMatriculaCabecera>0 &&
+          this.resultProceso.idMatriculaCabecera!=null &&
+          this.resultProceso.idMatriculaCabecera!=undefined ){
+            this.rutaPago=this.rutaPago+'/'+this.resultProceso.idMatriculaCabecera
+            this.rutaCursos=this.rutaCursos+'/'+this.resultProceso.idMatriculaCabecera
+        }
         if(x._Repuesta.respuestaComercio!=null && x._Repuesta.respuestaComercio!="" && x._Repuesta.estadoOperacion!='Error')
           this.reultadoPago = JSON.parse(x._Repuesta.respuestaComercio)
         console.log("resultProceso",this.resultProceso)

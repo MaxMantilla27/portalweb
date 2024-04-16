@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject, OnInit, ViewEncapsulation } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { Router } from '@angular/router';
@@ -13,7 +13,8 @@ import { SessionStorageService } from 'src/app/Core/Shared/Services/session-stor
 @Component({
   selector: 'app-modal-pago-openpay-colombia-organico',
   templateUrl: './modal-pago-openpay-colombia-organico.component.html',
-  styleUrls: ['./modal-pago-openpay-colombia-organico.component.scss']
+  styleUrls: ['./modal-pago-openpay-colombia-organico.component.scss'],
+  encapsulation: ViewEncapsulation.None,
 })
 export class ModalPagoOpenpayColombiaOrganicoComponent implements OnInit {
   private signal$ = new Subject();

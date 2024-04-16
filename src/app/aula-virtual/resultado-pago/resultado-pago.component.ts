@@ -94,6 +94,12 @@ export class ResultadoPagoComponent implements OnInit,OnDestroy{
           }else{
             this.resultVisa=x._Repuesta;
             console.log(this.resultVisa)
+            if(this.resultVisa.idMatriculaCabecera>0 &&
+              this.resultVisa.idMatriculaCabecera!=null &&
+              this.resultVisa.idMatriculaCabecera!=undefined ){
+                this.ruta=this.ruta+'/'+this.resultVisa.idMatriculaCabecera
+                this.rutaCursos=this.rutaCursos+'/'+this.resultVisa.idMatriculaCabecera
+            }
             if(this.resultVisa.estadoOperacion=='Processed'){
               if(comprobanteString!='')
               {

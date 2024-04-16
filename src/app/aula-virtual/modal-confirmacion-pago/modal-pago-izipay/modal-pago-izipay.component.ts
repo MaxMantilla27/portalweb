@@ -6,6 +6,7 @@ import {
   OnDestroy,
   OnInit,
   Renderer2,
+  ViewEncapsulation,
 } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -18,7 +19,9 @@ import { MatDialogRef } from '@angular/material/dialog';
 @Component({
   selector: 'app-modal-pago-izipay',
   templateUrl: './modal-pago-izipay.component.html',
-  styleUrls: ['./modal-pago-izipay.component.scss']
+  styleUrls: ['./modal-pago-izipay.component.scss'],
+  encapsulation: ViewEncapsulation.None,
+
 })
 export class ModalPagoIzipayComponent implements OnInit, OnDestroy, AfterViewInit{
 
@@ -76,6 +79,7 @@ export class ModalPagoIzipayComponent implements OnInit, OnDestroy, AfterViewIni
     this.dialogRefModal.close();
   }
   iniciarScripsIzipay() {
+    console.log(this.resultPreValidacion)
     let script1 = this._renderer2.createElement('script');
     script1.src =
       'https://static.micuentaweb.pe/static/js/krypton-client/V4.0/stable/kr-payment-form.min.js';

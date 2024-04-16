@@ -1,8 +1,14 @@
 .titlePagoTarjeta {
   font-size: 20px;
   font-weight: 600;
-  margin: 30px 0px;
+  // margin: 30px 0px;
   border-bottom: solid 1px #e8e8e8;
+  font-weight: bold;
+  background: #E7E7E7;
+  text-align: center;
+  justify-content: center;
+  display: flex;
+  border-radius: 5px 5px 0px 0px;
 }
 
 
@@ -90,5 +96,14 @@
 .subtitlePagoVisa{
   font-weight: 600;
   margin-bottom: 20px;
-  border-bottom: solid 1px #e8e8e8;
+  margin-top: 20px;
+  // border-bottom: solid 1px #e8e8e8;
+}
+.dialog-Tarjeta-Modal {
+  mat-dialog-container {
+  padding: 10px !important;
+  border-radius: 10px;
+  overflow-y: auto !important;
+  max-height: 95vh;
+  }
 }

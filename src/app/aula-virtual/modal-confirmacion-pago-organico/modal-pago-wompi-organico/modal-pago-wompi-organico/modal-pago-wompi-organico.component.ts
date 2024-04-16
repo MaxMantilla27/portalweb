@@ -1,5 +1,5 @@
 import { DOCUMENT } from '@angular/common';
-import { Component, Inject, OnInit, Renderer2 } from '@angular/core';
+import { Component, Inject, OnInit, Renderer2, ViewEncapsulation } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { Router } from '@angular/router';
@@ -12,7 +12,8 @@ import { environment } from 'src/environments/environment';
 @Component({
   selector: 'app-modal-pago-wompi-organico',
   templateUrl: './modal-pago-wompi-organico.component.html',
-  styleUrls: ['./modal-pago-wompi-organico.component.scss']
+  styleUrls: ['./modal-pago-wompi-organico.component.scss'],
+  encapsulation: ViewEncapsulation.None,
 })
 export class ModalPagoWompiOrganicoComponent implements OnInit {
 

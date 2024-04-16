@@ -1,5 +1,5 @@
 import { DOCUMENT } from '@angular/common';
-import { Component, Inject, OnInit, Renderer2 } from '@angular/core';
+import { Component, Inject, OnInit, Renderer2, ViewEncapsulation } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { Router } from '@angular/router';
@@ -11,7 +11,8 @@ import { SessionStorageService } from 'src/app/Core/Shared/Services/session-stor
 @Component({
   selector: 'app-modal-pago-izipay-organico',
   templateUrl: './modal-pago-izipay-organico.component.html',
-  styleUrls: ['./modal-pago-izipay-organico.component.scss']
+  styleUrls: ['./modal-pago-izipay-organico.component.scss'],
+  encapsulation: ViewEncapsulation.None,
 })
 export class ModalPagoIzipayOrganicoComponent implements OnInit {
   constructor(
@@ -60,11 +61,14 @@ export class ModalPagoIzipayOrganicoComponent implements OnInit {
       .subscribe({
         next: (x) => {
           this.resultPreValidacion = x._Repuesta;
-          this.iniciarScripsIzipay();
         },
+        complete:()=>{
+          this.iniciarScripsIzipay();
+        }
       });
   }
   iniciarScripsIzipay() {
+    console.log(this.resultPreValidacion)
     let script1 = this._renderer2.createElement('script');
     script1.src =
       'https://static.micuentaweb.pe/static/js/krypton-client/V4.0/stable/kr-payment-form.min.js';
