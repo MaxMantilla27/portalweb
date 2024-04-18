@@ -468,7 +468,6 @@ export class PagoComponent implements OnInit,OnDestroy {
         var sesion=x._Repuesta.identificadorTransaccion;
         this._SessionStorageService.SessionSetValue(sesion,x._Repuesta.requiereDatosTarjeta);
         console.log(parseInt(tarjeta.idPasarelaPago))
-        // tarjeta.idPasarelaPago=13
         if(tarjeta.idPasarelaPago==7 || tarjeta.idPasarelaPago==10){
           if(tarjeta.idFormaPago==52){
             console.log('/AulaVirtual/MisPagos/'+this.idMatricula+'/visa/'+sesion)

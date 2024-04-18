@@ -142,6 +142,7 @@ export class ModalPagoTarjetaOrganicoComponent implements OnInit {
     this.jsonSave.DeviceSessionId = deviceSessionId;
   }
   ValidateSave(){
+    console.log('============VALIDANDOOOOOOOOOOOOOO=============')
     var succes=(res:any) =>{
       console.log(res)
       this.jsonSave.TokenId=res.data.id

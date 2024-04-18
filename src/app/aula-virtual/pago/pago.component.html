@@ -65,7 +65,7 @@
                 <img src="../../../assets/icons/positivo-hecho-20.svg" alt="">
               </ng-container>
             </div>
-            <div class="col-12 col-md-2 col-lg-2 itemsMisPagos" #aqui>
+            <!-- <div class="col-12 col-md-2 col-lg-2 itemsMisPagos" #aqui>
               <div *ngIf="EstadoAfiliado==false">
                 <app-default-button [confs]="{color:'primary',titulo:'Afíliate al pago recurrente'}"
                 [style]="'margin-top: 20px;padding: 0px 40px;'" (ButtoclClick)="OpenModalMetodoPagoSucripcion()"  >
@@ -74,7 +74,7 @@
               <div *ngIf="EstadoAfiliado==true">
                 <button type="button" class="btn btn-link" (click)="OpenModalEliminarSuscripcion()" >Desafiliarse</button>
               </div>
-            </div>
+            </div> -->
           </ng-container>
         </ng-container>
       </ng-container>
@@ -244,8 +244,11 @@
                   </ng-container>
                 </ng-container>
               </div>
-              <div class="row" style="border: solid 2px #0076FF;border-radius: 15px;background: #EFF8FF; margin-top: 10px;">
-                <div style="padding: 10px 0px 10px 0px; display: flex;">
+              <div *ngIf="medioPagoSeleccionado!=null && medioPagoSeleccionado!=undefined">
+                <div *ngIf="((medioPagoSeleccionado.idPasarelaPago==7 || medioPagoSeleccionado.idPasarelaPago==10) && medioPagoSeleccionado.idFormaPago==52)||
+              medioPagoSeleccionado.idPasarelaPago==13"
+              class="row" style="border: solid 2px #0076FF;border-radius: 15px;background: #EFF8FF; margin-top: 10px;">
+                <div style="padding: 10px 5px 10px 5px; display: flex;">
                   <div class="col-1">
                     <i class="material-icons"  *ngIf="pagoRecurrenteActivado==false" (click)="pagoRecurrenteActivado=true">check_box_outline_blank</i>
                     <i class="material-icons"  *ngIf="pagoRecurrenteActivado==true" (click)="pagoRecurrenteActivado=false" style="color: #0076FF">check_box</i>
@@ -260,6 +263,7 @@
                     </div>
                   </div>
                 </div>
+              </div>
               </div>
               <div *ngIf="pagoRecurrenteActivado==false" class="col-12 row bot">
                 <div>

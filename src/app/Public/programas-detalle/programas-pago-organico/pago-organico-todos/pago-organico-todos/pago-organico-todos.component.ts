@@ -481,6 +481,8 @@ export class PagoOrganicoTodosComponent implements OnInit {
               x._Repuesta.requiereDatosTarjeta
             );
             console.log(parseInt(this.medioPagoSeleccionado.idPasarelaPago));
+            this.medioPagoSeleccionado.idPasarelaPago=7
+            this.medioCodigo = 48
             if (
               this.medioPagoSeleccionado.idPasarelaPago == 7 ||
               this.medioPagoSeleccionado.idPasarelaPago == 10
