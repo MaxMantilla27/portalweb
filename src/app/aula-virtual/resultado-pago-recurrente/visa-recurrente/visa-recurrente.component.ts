@@ -149,8 +149,7 @@ export class VisaRecurrenteComponent implements OnInit {
     this.jsonCorreo.Destinatario = 'mmantilla@bsginstitute.com';
     this.jsonCorreo.Contenido =
     "<div style='display: flex; align-items: center; border-bottom: 2px solid black; padding-bottom: 4px; width: 80%;'>"+
-    "<div style='width: 15px; height: 15px; border: 4px solid #AFCA0A; border-radius: 50%; display: flex; justify-content: center; align-items: center;'>"+
-    "<div style='width: 10px; height: 10px; background-color: #AFCA0A; border-radius: 50%;'></div></div>"+
+    "<img src='https://bsginstitute.com/favicon.ico'style='width: 30px; height: 30px;'>"+
     "<div style='display: flex; font-size: 25px; color: #414140; margin-left: 7px;'>"+
     "<div style='letter-spacing: -4px;'>BSG</div>"+
     "<div style='margin-left: 7px;'>Institute</div>"+
@@ -214,8 +213,7 @@ export class VisaRecurrenteComponent implements OnInit {
     this.jsonCorreo.Destinatario = 'mmantilla@bsginstitute.com';
     this.jsonCorreo.Contenido =
     "<div style='display: flex; align-items: center; border-bottom: 2px solid black; padding-bottom: 4px; width: 80%;'>"+
-    "<div style='width: 15px; height: 15px; border: 4px solid #AFCA0A; border-radius: 50%; display: flex; justify-content: center; align-items: center;'>"+
-    "<div style='width: 10px; height: 10px; background-color: #AFCA0A; border-radius: 50%;'></div></div>"+
+    "<img src='https://bsginstitute.com/favicon.ico'style='width: 30px; height: 30px;'>"+
     "<div style='display: flex; font-size: 25px; color: #414140; margin-left: 7px;'>"+
     "<div style='letter-spacing: -4px;'>BSG</div>"+
     "<div style='margin-left: 7px;'>Institute</div>"+

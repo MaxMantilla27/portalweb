@@ -329,8 +329,7 @@ import { DocenciaGestionNotasAntiguoComponent } from './docencia-v2-cursos-onlin
     ModalPagoMultipagoComponent,
     ModalAfiliacionVisaComponent,
     ModalAfiliacionIzipayComponent,
-    ModalAfiliacionOpenpayPeruComponent
-    ],
+    ModalAfiliacionOpenpayPeruComponent,
     ConfirmacionPagoOpenpayPeruComponent,
     ConfirmacionPagoOpenpayColombiaComponent,
     ConfirmacionPagoMercadoPagoChileComponent,
