@@ -1,0 +1,77 @@
+<div class="container">
+  <div class="row" style="justify-content: end;margin-right: 5px;">
+    <mat-icon class="btn" (click)="cerraModal()">close</mat-icon>
+  </div>
+  <div class="container p-4"  style="display: flex;
+  justify-content: center;">
+    <div class="col-12 row" style="margin-top: 10px;
+    border: solid 1px #d5d5d5;
+    border-radius: 5px;">
+      <div class="col-12 col-md-12 col-lg-12 titlePagoTarjeta" style="align-items: center;">
+        Confirma tu compra
+      </div>
+      <div class="col-12 col-md-12 col-lg-12 inputPagoVisa">
+        <div class="subtitlePagoVisa">Pago realizado por</div>
+        <ng-container *ngIf="resultVisa != undefined">
+          <mat-form-field
+            appearance="outline"
+            class="disabledInput"
+            [floatLabel]="'always'"
+            style="width: 100%"
+          >
+            <mat-label>Nombres</mat-label>
+            <input
+              type="text"
+              style="color: #878787"
+              [value]="resultVisa.registroAlumno.nombre"
+              disabled
+              matInput
+            />
+          </mat-form-field>
+          <mat-form-field
+            appearance="outline"
+            class="disabledInput"
+            [floatLabel]="'always'"
+            style="width: 100%"
+          >
+            <mat-label>Apellidos</mat-label>
+            <input
+              type="text"
+              style="color: #878787"
+              [value]="resultVisa.registroAlumno.apellido"
+              disabled
+              matInput
+            />
+          </mat-form-field>
+          <mat-form-field
+            appearance="outline"
+            class="disabledInput"
+            [floatLabel]="'always'"
+            style="width: 100%"
+          >
+            <mat-label>E-mail</mat-label>
+            <input
+              type="text"
+              style="color: #878787"
+              [value]="resultVisa.registroAlumno.correo"
+              disabled
+              matInput
+            />
+          </mat-form-field>
+        </ng-container>
+        <form
+          ngNoForm
+          (submit)="pagar()"
+          id="visa"
+          [action]="
+            'https://proceso-pago.bsginstitute.com/ProcesoPagoVisa/Index?IdTransaccion=' +
+            json.IdentificadorTransaccion
+          "
+          [method]="'post'"
+          style="text-align: center; margin-top: 30px"
+          target="_blank"
+        ></form>
+      </div>
+    </div>
+  </div>
+</div>

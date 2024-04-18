@@ -1,5 +1,10 @@
-<div class="modalPagoTitle">
-  Elige tu método de pago
+<div class="row modalPagoTitle" style="display: flex;">
+  <div class=" col-11">
+    Elige tu método de pago
+  </div>
+  <div class="col-1" style="text-align: end;font-weight: bold;cursor: pointer;" (click)="dialogRef.close()">
+    X
+  </div>
 </div>
 <div class="tarjetasModal row" *ngIf="tarjetas!=undefined" style="margin: 40px 0px 10px;">
   <div class="col-10 col-md-10 col-lg-8">

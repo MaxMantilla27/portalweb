@@ -99,21 +99,27 @@ table tr:last-child td {
   color: #3a82c0 !important;
   background: #f2f6ff;
 }
+.pagoRealizado {
+  color: #02c158 !important;
+}
 .CardPago {
   border: solid 1px #d5d5d5;
   border-radius: 5px;
   padding: 0px;
+  width: 25vw;
   .titleCardPago {
     background: #e7e7e7;
     border-radius: 5px 5px 0px 0px;
     padding: 5px 30px;
+    font-weight: bold;
+    font-size: 1.2rem;
   }
   .contentCardPago {
     justify-content: center;
     padding: 10px 40px;
     .sub {
       font-weight: 600;
-      border-bottom: solid 2px #f0f2f2;
+      border-bottom: solid 2px #c7c7c7;
       padding: 3px 0px;
     }
     .cen {
@@ -124,6 +130,7 @@ table tr:last-child td {
     .tot {
       padding: 10px 0px;
       background: #f2f6ff;
+      font-weight: bold;
     }
     .bot {
       justify-content: center;
@@ -133,6 +140,96 @@ table tr:last-child td {
     }
   }
 }
-.dialog-Tarjeta{
+.dialog-Tarjeta-Modal {
+  mat-dialog-container {
+  padding: 1opx !important;
+  border-radius: 10px;
+  overflow-y: auto !important;
+  max-height: 95vh;
+  }
+}
+.gray-border {
+  border: 1px solid grey; /* Borde gris por defecto */
+  border-radius: 5px;
+  transition: border-color 0.3s ease-in-out;
+}
 
+.gray-border:hover {
+  border-color: darkgrey; /* Cambio de color al hacer hover */
+  transform: scale(1.08); /* Aumenta el tamaño al hacer hover */
+}
+.comprobatePagoTarjeta {
+  display: flex;
+  align-items: center;
+  .titleComprobantePagoTarjeta {
+    color: #878787;
+    width: 160px;
+  }
+  .items {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+    .itm {
+      padding: 10px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+      background: #f4f4f4;
+      border-radius: 20px;
+      cursor: pointer;
+      margin: 10px 0px;
+      .material-icons {
+        font-size: 15px !important;
+        margin-left: 10px;
+        color: #02c158;
+      }
+    }
+  }
+}
+.retrocederPagina{
+  font-size: 20px;
+  color: orange;
+  display: flex;
+  align-items: center;
+}
+.retrocederPagina mat-icon{
+  margin-top: 5px;
+}
+.retrocederPagina:hover{
+  cursor: pointer;
+  color: rgb(255, 136, 0);
+}
+.cardAfiliacionPagosRecurrentesSeleccionado{
+  border: solid 3.2px #40b3ff;
+  border-radius: 10px;
+  padding: 0px;
+  width: 25vw;
+}
+.cardAfiliacionPagosRecurrentesSeleccionado .card
+{
+  background-color: #40b3ff0d;
+}
+.cardAfiliacionPagosRecurrentesSeleccionado p{
+  margin: 0px;
+  // padding: 10px 20px;
+  font-size: 14px;
+  color: #878787;
+}
+
+.cardAfiliacionPagosRecurrentes{
+  border: solid 1.2px #00000038;
+  border-radius: 10px;
+  padding: 0px;
+  width: 25vw;
+}
+.cardAfiliacionPagosRecurrentes .card
+{
+  background-color: #ffffff;
+}
+.cardAfiliacionPagosRecurrentes p{
+  margin: 0px;
+  // padding: 10px 20px;
+  font-size: 14px;
+  color: #878787;
 }

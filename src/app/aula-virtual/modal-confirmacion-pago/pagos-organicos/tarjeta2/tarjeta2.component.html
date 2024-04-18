@@ -1,0 +1,263 @@
+<!-- <div class="row">
+  <div class="col-5">
+    <h1>Confirma tu compra</h1>
+    <p>Selecciona los siguientes campos para realizar tu compra</p>
+    <div class="row">
+
+      <mat-label>Modalidad de estudios:</mat-label>
+      <mat-select  [(ngModel)]="idPEspecifico">
+        <mat-option
+        (click)="EventoInteraccionSelect('Selecciona la modalidad',item.tipo+' - '+item.fechaInicioTexto)" *ngFor="let item of datospago.modalidad"
+        [value]="item.id">{{item.tipo}} - {{item.fechaInicioTexto}}</mat-option>
+      </mat-select>
+
+
+    </div>
+    <div>
+      <mat-label> forma de pago: </mat-label>
+      <mat-select (selectionChange)="changeForma()" [(ngModel)]="idFormaPago">
+        <mat-option *ngFor="let item of formapago;let i=index"  [value]="i" >
+
+          <ng-container *ngIf="item.paquete==1">
+            Versión Basica,
+          </ng-container>
+          <ng-container *ngIf="item.paquete==2">
+            Versión Profesional,
+          </ng-container>
+          <ng-container *ngIf="item.paquete==3">
+            Versión Gerencial,
+          </ng-container>
+          <ng-container *ngIf="item.idTipoPago==1">
+            al Contado: {{item.simbolo}} {{item.cuotas}}
+          </ng-container>
+          <ng-container *ngIf="item.idTipoPago==2">
+            pago en 1 matricula de
+            {{item.simbolo}} {{item.matricula}}
+            y {{item.nroCuotas}} cuotas mensuales de {{item.simbolo}} {{item.cuotas}}
+          </ng-container>
+        </mat-option>
+      </mat-select>
+    </div>
+    <div>
+      <div class="col-12 row sub mt-2">
+        <span> Método de pago aceptados9: </span>
+        <ng-container
+        *ngFor="let imgMedioPago of tarjetas"
+        >
+
+          <mat-radio-button
+          [value]="imgMedioPago"
+          (change)="onChangeRadioButton(imgMedioPago)"
+          class="m-2"
+          color="primary"
+          *ngIf="validadorPagosMultiples.length != 0"
+          >
+            <img [src]="'../../../../assets/icons/'+imgMedioPago.img" alt=""  class="gray-border" style="width: 35px;">
+          </mat-radio-button>
+
+
+          <img [src]="'../../../../assets/icons/'+imgMedioPago.img" alt=""  class="m-2" style="width: 35px;" *ngIf="validadorPagosMultiples.length == 0">
+
+        </ng-container>
+      </div>
+    </div>
+
+    <div class="row">
+      <span class="tot mb-3"> Tipo de comprobante: </span>
+      <div class="row mb-2">
+        <mat-radio-group color="primary" aria-label="Select an option">
+          <mat-radio-button value="1" class="m-2">Boleta</mat-radio-button>
+          <mat-radio-button value="2" class="m-2">Factura</mat-radio-button>
+        </mat-radio-group>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-5">
+    <div class="row" style="margin-top: 40px;justify-content: center;">
+    <div class="col-12 col-md-8 col-lg-6 CardPago">
+    <div class="titleCardPago">Resumen de pago</div>
+    <div class="contentCardPago row">
+      <div class="col-12 row sub">
+        <div class="col-8">Concepto</div>
+        <div class="col-4">Monto</div>
+      </div>
+      <!-- <ng-container *ngFor="let item of CronogramaPago.registroCuota;let i=index">
+        <div class="col-12 row cen" *ngIf="item.estado==true">
+          <div class="col-8">Cuota N°{{item.nroCuota}} - {{item.fechaVencimiento | date:'dd/MM/yyyy'}}</div>
+          <div class="col-4">{{item.simbolo}} {{item.cuota}}</div>
+        </div>
+      </ng-container> --
+      <div class="col-12 row tot sub">
+        <div class="col-8">Total a pagar</div>
+        <!-- <div class="col-4">{{CronogramaPago.registroCuota[0].simbolo}} {{total}}</div> --
+      </div>
+
+      <div class="col-12 row bot">
+        <div>
+          <app-default-button
+          [confs]="{color:'primary',titulo:'Pagar'}"
+          [style]="'margin-top: 20px;padding: 0px 40px;'"
+          (ButtoclClick)="EnviarSolicitudPago()">
+          </app-default-button>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
+</div> -->
+
+<div class="container">
+  <div class="row rowpaddAv">
+    <div class="col-12 row" >
+      <h1 class="col-12 col-md-12 col-lg-12 titlePagoTarjeta">Confirma tu compra</h1>
+      <div class="col-12 d-md-none d-lg-none" >
+
+        <div class="resumenPagoTarjeta">
+          <div class="titleResumenPago">Resumen de tu pago</div>
+          <div class="contentResumenPago">
+            <div class="subtitleResumenPago">{{resultCard.nombrePrograma}}</div>
+            <div class="ItemsResumenPago row">
+              <div class="col-12 row itms" >
+                <div class="verionPago" style="margin: 10px 0px;
+                font-size: 14px;">{{resultCard.version}}</div>
+                <div class="inicioPago">INICIO: {{resultCard.tipo}} - {{resultCard.inicio}}</div>
+              </div>
+              <div class="col-12 row tot">
+                <div class="col-8">Total a pagar</div>
+                <div class="col-4" style="text-align: right;">{{resultCard.moneda}} {{resultCard.montoTotal | number : '1.2-2'}}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="iconoPagoTarjeta">
+          <div class="imgPagoTarjeta"></div>
+          <div class="textPagoTarjeta">
+            <span>PAGO</span>
+            <span>100%</span>
+            <span>seguro</span>
+          </div>
+          <div class="descPagoTarjeta">
+            <span>Este certificado garantiza la</span>
+            <span>seguridad de todas tus conexiones</span>
+            <span>mediante cifrado</span>
+          </div>
+        </div>
+      </div>
+      <div class="col-12 col-md-6 col-lg-6 inputPagoVisa row">
+
+        <div class="col-10 col-md-10 col-lg-10 contentOrganico">
+          <div >Selecciona los siguientes campos para realizar tu compra:</div>
+          <br>
+          <br>
+          <div class="" style="font-weight: 900;">Modalidad de estudio:</div>
+          <mat-form-field appearance="outline" (click)="EventoInteraccionSelectClick('Selecciona la modalidad')">
+            <mat-label>< Selecciona tu Modalidad ></mat-label>
+            <mat-select (selectionChange)="changeModalidad()"  [(ngModel)]="idPEspecifico">
+              <mat-option
+              style="width: 100%"
+              (click)="EventoInteraccionSelect('Selecciona la modalidad',item.tipo+' - '+item.fechaInicioTexto)" *ngFor="let item of modalidad"
+              [value]="item.id">{{item.tipo}} - {{item.fechaInicioTexto}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <div class="col-10 col-md-10 col-lg-10 contentOrganico">
+            <div class=""style="font-weight: 900;">Forma de pago:</div>
+            <mat-form-field appearance="outline" (click)="EventoInteraccionSelectClick('Selecciona tu forma de pago')">
+              <mat-label>< Selecciona tu forma de pago ></mat-label>
+              <mat-select (selectionChange)="changeForma()" [(ngModel)]="idFormaPago">
+                <mat-option style="width: 100%" *ngFor="let item of formapago;let i=index"  [value]="i" >
+
+                  <ng-container *ngIf="item.paquete==1">
+                    Versión Basica,
+                  </ng-container>
+                  <ng-container *ngIf="item.paquete==2">
+                    Versión Profesional,
+                  </ng-container>
+                  <ng-container *ngIf="item.paquete==3">
+                    Versión Gerencial,
+                  </ng-container>
+                  <ng-container *ngIf="item.idTipoPago==1">
+                    al Contado: {{item.simbolo}} {{item.cuotas}}
+                  </ng-container>
+                  <ng-container *ngIf="item.idTipoPago==2">
+                    pago en 1 matricula de
+                    {{item.simbolo}} {{item.matricula}}
+                    y {{item.nroCuotas}} cuotas mensuales de {{item.simbolo}} {{item.cuotas}}
+                  </ng-container>
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+
+          <div class="col-10 col-md-10 col-lg-10 contentOrganico">
+            <div class="" style="font-weight: 900;">Métodos de pago aceptados:</div>
+
+            <div class="row mb-3">
+              <span>
+                Tarjeta de débito/crédito:
+                <br>
+                <ng-container
+                *ngFor="let imgMedioPago of tarjetas"
+                >
+                  <mat-radio-button
+                  [value]="imgMedioPago"
+                  (change)="onChangeRadioButton(imgMedioPago)"
+                  class="m-2"
+                  color="primary"
+                  *ngIf="validadorPagosMultiples.length != 0"
+                  >
+                    <img [src]="'../../../../assets/icons/'+imgMedioPago.img" alt=""  class="gray-border" style="width: 35px;">
+                  </mat-radio-button>
+
+
+                  <img [src]="'../../../../assets/icons/'+imgMedioPago.img" alt=""  class="m-2" style="width: 35px;" *ngIf="validadorPagosMultiples.length == 0">
+
+                </ng-container>
+                <mat-error *ngIf="validadorPagosMultiples.length > 0 && medioPagoSeleccionado == undefined && eventosPagoSelccion == true">
+                  Debe seleccionar un medio de pago
+                </mat-error>
+              </span>
+            </div>
+
+          </div>
+        </div>
+      </div>
+      <div class="d-none col-md-6 d-md-block col-lg-6 d-lg-block">
+        <div class="resumenPagoTarjeta">
+          <div class="titleResumenPago">Resumen de tu pago</div>
+          <div class="contentResumenPago">
+            <div class="subtitleResumenPago">{{resultCard.nombrePrograma}}</div>
+            <div class="ItemsResumenPago row">
+              <div class="col-12 row itms" >
+                <div class="verionPago" style="margin: 10px 0px;
+                font-size: 14px;">{{resultCard.version}}</div>
+                <div class="inicioPago">INICIO: {{resultCard.tipo}} - {{resultCard.inicio}}</div>
+              </div>
+              <div class="col-12 row tot">
+                <div class="col-8">Total a pagar</div>
+                <div class="col-4" style="text-align: right;">{{resultCard.moneda}} {{resultCard.montoTotal | number : '1.2-2'}}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="iconoPagoTarjeta">
+          <div class="imgPagoTarjetaVerde"></div>
+
+          <div class="textPagoTarjeta" style="color:#02c158">
+            <span>PAGO</span>
+            <span>100%</span>
+            <span>seguro</span>
+          </div>
+          <div class="descPagoTarjeta">
+            <span>Este certificado garantiza la</span>
+            <span>seguridad de todas tus conexiones</span>
+            <span>mediante cifrado</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

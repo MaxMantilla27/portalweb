@@ -114,8 +114,8 @@ export class PagoGeneralComponent implements OnInit, OnDestroy {
           this.jsonSave.MedioCodigo = this.resultCard.medioCodigo;
           this.jsonSave.MedioPago = this.resultCard.medioPago;
           this.jsonSave.RequiereDatosTarjeta = this.json.RequiereDatosTarjeta;
-          // this.jsonSave.CodigoTributario = this.resultCard.identificadorTransaccion;
-          // this.jsonSave.RazonSocial = this.resultCard.identificadorTransaccion;
+          this.jsonSave.CodigoTributario = this.resultCard.identificadorTransaccion;
+          this.jsonSave.RazonSocial = this.resultCard.identificadorTransaccion;
           this.jsonSave.IdPasarelaPago = this.resultCard.idPasarelaPago;
           this.jsonSave.IdentificadorUsuario=this._SessionStorageService.SessionGetValue('usuarioWeb');
 
@@ -283,20 +283,30 @@ export class PagoGeneralComponent implements OnInit, OnDestroy {
     this._FormaPagoService.ProcesarPagoAlumnoOrganico(this.jsonSave).pipe(takeUntil(this.signal$)).subscribe({
         next: (x) => {
           this.oncharge=false
-          dialogRef.close()
-          if(this.resultCard.idPasarelaPago!=1 || this.resultCard.idFormaPago!=65){
-            if(this.resultCard.idPasarelaPago!=5){
-              this._router.navigate(['/AulaVirtual/PagoExitoso/' +this.jsonSave.IdentificadorTransaccion]);
+        dialogRef.close()
+        console.log(x);
+        if(this.resultCard.idPasarelaPago!=1 || this.resultCard.idFormaPago!=65){
+          if(this.resultCard.idPasarelaPago!=5){
+            this._router.navigate(['/AulaVirtual/PagoExitoso/'+this.jsonSave.IdentificadorTransaccion])
+          }else{
+            if(x._Repuesta.urlRedireccionar=='' || x._Repuesta.urlRedireccionar==null){
+              this._router.navigate(['/AulaVirtual/PagoExitoso/'+this.jsonSave.IdentificadorTransaccion])
             }else{
               location.href=x._Repuesta.urlRedireccionar;
             }
+          }
+        }else{
+          if(x._Repuesta.urlRedireccionar=='' || x._Repuesta.urlRedireccionar==null){
+            this._router.navigate(['/AulaVirtual/PagoExitoso/'+this.jsonSave.IdentificadorTransaccion])
           }else{
             location.href=x._Repuesta.urlRedireccionar;
           }
+        }
         },
         error:e=>{
           this.oncharge=false
           dialogRef.close()
+
         },
         complete:()=>{
           this.oncharge=false

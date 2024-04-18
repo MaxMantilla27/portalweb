@@ -70,6 +70,8 @@ const routes:Routes=[
             {path:'CompraExitosaOpenPayColombia/:validate', component:CompraExitosaOpenPayColombiaComponent},
             {path:'CompraExitosaOpenPayPeru/:validate', component:CompraExistosaOpenPayPeruComponent},
 
+            {path:'CompraExitosaOpenPayPeru/:validate', component:CompraExistosaOpenPayPeruComponent},
+
             {path:'Certificado/:IdMatricula/:IdCertificado', component:InformacionCertificadoComponent},
             {path:'SubArea/:nombre', component:TagsComponent},
             {path:'Area/:nombre', component:TagsComponent},

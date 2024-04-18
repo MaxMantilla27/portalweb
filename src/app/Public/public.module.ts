@@ -53,8 +53,19 @@ import { LoginFacebookIngresarComponent } from './login/login-facebook/login-fac
 import { LoginFacebookRegistrarComponent } from './login/login-facebook/login-facebook-registrar/login-facebook-registrar.component';
 import { NotificacionBoliviaComponent } from './Home/notificacion-bolivia/notificacion-bolivia.component';
 import { CompraExitosaOpenPayColombiaComponent } from './compra-exitosa-open-pay-colombia/compra-exitosa-open-pay-colombia.component';
-import { CompraExistosaOpenPayPeruComponent } from './compra-existosa-open-pay-peru/compra-existosa-open-pay-peru.component';
 import { ChatBotLandingPageComponent } from './chat-bot-landing-page/chat-bot-landing-page.component';
+import { CompraExistosaOpenPayPeruComponent } from './compra-existosa-open-pay-peru/compra-existosa-open-pay-peru.component';
+import { PagoOrganicoTodosComponent } from './programas-detalle/programas-pago-organico/pago-organico-todos/pago-organico-todos/pago-organico-todos.component';
+import { ModalPagoVisaOrganicoComponent } from '../aula-virtual/modal-confirmacion-pago-organico/modal-pago-visa-organico/modal-pago-visa-organico/modal-pago-visa-organico.component';
+import { ModalPagoTarjetaOrganicoComponent } from '../aula-virtual/modal-confirmacion-pago-organico/modal-pago-tarjeta-organico/modal-pago-tarjeta-organico/modal-pago-tarjeta-organico.component';
+import { ModalPagoTarjetaMexicoOraganicoComponent } from '../aula-virtual/modal-confirmacion-pago-organico/modal-pago-tarjeta-mexico-organico/modal-pago-tarjeta-mexico-oraganico/modal-pago-tarjeta-mexico-oraganico.component';
+import { ModalPagoWompiOrganicoComponent } from '../aula-virtual/modal-confirmacion-pago-organico/modal-pago-wompi-organico/modal-pago-wompi-organico/modal-pago-wompi-organico.component';
+import { ModalPagoConektaOrganicoComponent } from '../aula-virtual/modal-confirmacion-pago-organico/modal-pago-conekta-organico/modal-pago-conekta-organico/modal-pago-conekta-organico.component';
+import { ModalPagoWebpayOrganicoComponent } from '../aula-virtual/modal-confirmacion-pago-organico/modal-pago-webpay-organico/modal-pago-webpay-organico/modal-pago-webpay-organico.component';
+import { ModalPagoIzipayOrganicoComponent } from '../aula-virtual/modal-confirmacion-pago-organico/modal-pago-izipay-organico/modal-pago-izipay-organico/modal-pago-izipay-organico.component';
+import { ModalPagoOpenpayColombiaOrganicoComponent } from '../aula-virtual/modal-confirmacion-pago-organico/modal-pago-openpay-colombia-organico/modal-pago-openpay-colombia-organico/modal-pago-openpay-colombia-organico.component';
+import { ModalPagoMercadoPagoChileOrganicoComponent } from '../aula-virtual/modal-confirmacion-pago-organico/modal-pago-mercado-pago-chile-organico/modal-pago-mercado-pago-chile-organico/modal-pago-mercado-pago-chile-organico.component';
+import { ModalPagoOpenpayPeruOrganicoComponent } from '../aula-virtual/modal-confirmacion-pago-organico/modal-pago-openpay-peru-organico/modal-pago-openpay-peru-organico/modal-pago-openpay-peru-organico.component';
 
 
 @NgModule({
@@ -116,7 +127,19 @@ import { ChatBotLandingPageComponent } from './chat-bot-landing-page/chat-bot-la
     NotificacionBoliviaComponent,
     CompraExistosaOpenPayPeruComponent,
     CompraExitosaOpenPayColombiaComponent,
-    ChatBotLandingPageComponent
+    ChatBotLandingPageComponent,
+    CompraExistosaOpenPayPeruComponent,
+    PagoOrganicoTodosComponent,
+    ModalPagoVisaOrganicoComponent,
+    ModalPagoTarjetaOrganicoComponent,
+    ModalPagoTarjetaMexicoOraganicoComponent,
+    ModalPagoWompiOrganicoComponent,
+    ModalPagoConektaOrganicoComponent,
+    ModalPagoWebpayOrganicoComponent,
+    ModalPagoIzipayOrganicoComponent,
+    ModalPagoOpenpayColombiaOrganicoComponent,
+    ModalPagoMercadoPagoChileOrganicoComponent,
+    ModalPagoOpenpayPeruOrganicoComponent
   ],
   exports: [],
   providers: [

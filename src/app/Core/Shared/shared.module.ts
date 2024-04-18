@@ -130,6 +130,7 @@ import { TableV2Component } from './Containers/table-v2/table-v2.component';
 import { TablePortalComponent } from './Containers/table-portal/table-portal.component';
 import { MatChipsModule } from '@angular/material/chips';
 import { FacebookPixelService } from './Services/FacebookPixel/facebook-pixel.service';
+import {MatRadioModule} from '@angular/material/radio';
 import { ChatbotComponent } from './Containers/chatbot/chatbot.component';
 import { MatSlideToggleModule} from '@angular/material/slide-toggle';
 import { HeaderChatbotComponent } from './Containers/header-chatbot/header-chatbot.component';
@@ -151,7 +152,6 @@ import { ImagenModalComponent } from './Containers/Dialog/imagen-modal/imagen-mo
     CommonModule,
     ReactiveFormsModule,
     FormsModule,
-
     MatTabsModule,
     MatTableModule,
     MatProgressSpinnerModule,
@@ -183,6 +183,7 @@ import { ImagenModalComponent } from './Containers/Dialog/imagen-modal/imagen-mo
     MatDatepickerModule,
     MatNativeDateModule,
     MatSlideToggleModule,
+    MatRadioModule,
   ],
   declarations: [
     HeaderComponent,
@@ -342,6 +343,7 @@ import { ImagenModalComponent } from './Containers/Dialog/imagen-modal/imagen-mo
     FacebookLoginComponent,
     MatChipsModule,
     MatSlideToggleModule,
+    MatRadioModule,
     HeaderChatbotComponent,
     DragDropModule,
     MatDatepickerModule,

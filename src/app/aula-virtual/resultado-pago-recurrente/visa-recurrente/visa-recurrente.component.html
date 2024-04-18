@@ -64,19 +64,18 @@
 
     </div>
     <div class="col-12 col-md-10 col-lg-8" *ngIf="resultVisa.estadoOperacion=='Processed'">
-      <div class="titleResultPago">
+      <div class="titleResultPago" style="justify-content: center;margin-bottom: 1rem;">
+        <img src="../../../assets/icons/positivo-hecho-20.svg" alt="" style="height: 2.5rem;width: 2.5rem;margin-right:10px;">
         <div>¡Pago exitoso!</div>
-        <img src="../../../assets/icons/positivo-hecho-20.svg" alt="">
       </div>
-      <div style="margin-top: 5px;
-      font-size: 14px;">
+      <div style="margin-top: 5px;font-size: 14px;justify-content: center;display: flex;">
         {{resultVisa.registroAlumno.nombre}}, tu afiliación y primer pago recurrente ha sido realizada con exito.
       </div>
       <div class="contentCardPago">
         <div style="margin: 20px 0px;
-        font-weight:600;">Detalles del pago realizado:</div>
+        font-weight:600;">Detalle de tu pago:</div>
         <div class="cardPago">
-          <div class="row" style="align-items: center;">
+          <div class="row" style="align-items: center;padding: 0px 5rem">
             <div class="col-12 col-md-5 col-lg-4"><b>Nro. de Compra:</b></div>
             <div class="col-12 col-md-7 col-lg-8 itemValueCardPago">{{resultVisa.identificadorTransaccion}}</div>
             <div class="col-12 col-md-5 col-lg-4"><b>Monto:</b></div>
@@ -112,8 +111,17 @@
 
           </div>
         </div>
-        <app-default-button-flecha [confs]="{color:'primary',titulo:'Ir a mis cursos ahora'}" [style]="'margin-top:40px;padding: 0px 40px;border-radius:20px'"
-            [ruta]="rutaMisCursos"></app-default-button-flecha>
+        <!-- <app-default-button-flecha [confs]="{color:'primary',titulo:'Ir a mis cursos ahora'}" [style]="'margin-top:40px;padding: 0px 40px;border-radius:20px'"
+            [ruta]="rutaMisCursos"></app-default-button-flecha> -->
+        <div class="row mt-2" style="justify-content: center;">
+          <button [routerLink]="rutaPago" class="btn btn-primary m-2" style="width: 14vw; border-color: transparent; border-radius: 25px;">
+            Ver estado de cuenta
+          </button>
+
+          <button  [routerLink]="rutaCursos" class="btn btn-primary m-2" style="width: 14vw; border-color: transparent; border-radius: 25px;">
+            Ir a mi curso
+          </button>
+        </div>
       </div>
     </div>
   </div>

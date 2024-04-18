@@ -1,0 +1,216 @@
+<div class="container">
+  <h1 class="titlePagoTarjeta">
+    Confirma tu compra
+  </h1>
+  <div>Selecciona los siguientes campos para realizar tu compra:</div>
+  <br>
+  <div class="row" style="margin-left: 10px;">
+    <div class="col-7">
+      <div class="mb-2" style="font-weight: 900;">Modalidad de estudio:</div>
+      <mat-form-field
+        style="width: 100%"
+        appearance="outline"
+        (click)="EventoInteraccionSelectClick('Selecciona la modalidad')"
+      >
+        <mat-label>< Selecciona tu Modalidad ></mat-label>
+        <mat-select
+        style="font-size: 15px"
+          (selectionChange)="changeModalidad()"
+          [(ngModel)]="idPEspecifico"
+        >
+          <mat-option
+            style="font-size: 15px"
+            (click)="
+              EventoInteraccionSelect(
+                'Selecciona la modalidad',
+                item.tipo + ' - ' + item.fechaInicioTexto
+              )
+            "
+            *ngFor="let item of modalidad"
+            [value]="item.id"
+
+            >{{ item.tipo }} - {{ item.fechaInicioTexto }}</mat-option
+          >
+        </mat-select>
+      </mat-form-field>
+      <div class="mb-2" style="font-weight: 900">Forma de pago:</div>
+      <mat-form-field
+        style="width: 100%"
+        appearance="outline"
+        (click)="EventoInteraccionSelectClick('Selecciona tu forma de pago')"
+      >
+        <mat-label>< Selecciona tu forma de pago ></mat-label>
+        <mat-select style="font-size: 15px" (selectionChange)="changeForma()" [(ngModel)]="idFormaPago">
+          <mat-option
+          style="font-size: 15px"
+            *ngFor="let item of formapago; let i = index"
+            [value]="i"
+          >
+            <ng-container *ngIf="item.paquete == 1">
+              Versión Basica,
+            </ng-container>
+            <ng-container *ngIf="item.paquete == 2">
+              Versión Profesional,
+            </ng-container>
+            <ng-container *ngIf="item.paquete == 3">
+              Versión Gerencial,
+            </ng-container>
+            <ng-container *ngIf="item.idTipoPago == 1">
+              al Contado: {{ item.simbolo }} {{ item.cuotas }}
+            </ng-container>
+            <ng-container *ngIf="item.idTipoPago == 2">
+              pago en 1 matricula de
+              {{ item.simbolo }} {{ item.matricula }} y
+              {{ item.nroCuotas }} cuotas mensuales de {{ item.simbolo }}
+              {{ item.cuotas }}
+            </ng-container>
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <div class="row">
+        <div class="" style="font-weight: 900">Métodos de pago aceptados:</div>
+        <br>
+        <div class="row mb-3 mt-3">
+          <span>
+            Tarjeta de débito/crédito:
+            <br />
+            <ng-container *ngFor="let imgMedioPago of tarjetas">
+              <mat-radio-button
+                [value]="imgMedioPago"
+                (change)="onChangeRadioButton(imgMedioPago)"
+                class="m-2"
+                color="primary"
+                *ngIf="validadorPagosMultiples.length != 0"
+              >
+                <img
+                  [src]="'../../../../assets/icons/' + imgMedioPago.img"
+                  alt=""
+                  class="gray-border"
+                  style="width: 35px"
+                />
+              </mat-radio-button>
+              <img
+                [src]="'../../../../assets/icons/' + imgMedioPago.img"
+                alt=""
+                class="m-2"
+                style="width: 35px"
+                *ngIf="validadorPagosMultiples.length == 0"
+              />
+            </ng-container>
+            <!-- <mat-error *ngIf="validadorPagosMultiples.length > 0 && medioPagoSeleccionado == undefined && eventosPagoSelccion == true">
+              Debe seleccionar un medio de pago
+            </mat-error> -->
+          </span>
+        </div>
+        <ng-container *ngIf="validadorPagosChile!=true">
+          <span class="tot mb-3">
+            Tipo de comprobante:
+          </span>
+          <div class="row comprobatePagoTarjeta">
+            <mat-radio-group
+            color="primary"
+            [(ngModel)]="DatosFacturacion.Comprobante"
+            >
+              <mat-radio-button class="m-1" [value]="false">Boleta</mat-radio-button>
+              <mat-radio-button class="m-1" [value]="true">Factura</mat-radio-button>
+            </mat-radio-group>
+          </div>          <!-- <div class="row comprobatePagoTarjeta">
+            <div class=" items">
+              <div class="itm no-select" [ngClass]="{'SelectCom':DatosFacturacion.Comprobante==false}"
+                (click)="DatosFacturacion.Comprobante=false">
+                Boleta <i class="material-icons" *ngIf="DatosFacturacion.Comprobante==false">check_circle</i>
+              </div>
+              <div class="itm no-select" [ngClass]="{'SelectCom':DatosFacturacion.Comprobante!=false}"
+                (click)="DatosFacturacion.Comprobante=true">Factura <i class="material-icons"
+                  *ngIf="DatosFacturacion.Comprobante!=false">check_circle</i>
+              </div>
+            </div>
+          </div> -->
+          <ng-container *ngIf="DatosFacturacion.Comprobante!=false">
+            <mat-form-field appearance="outline" [floatLabel]="'always'" style="width: 100%;">
+              <mat-label>Razón Social</mat-label>
+              <input type="text" [(ngModel)]="DatosFacturacion.RazonSocial" placeholder="Razón Social" matInput />
+            </mat-form-field>
+            <mat-form-field appearance="outline" [floatLabel]="'always'" style="width: 100%;">
+              <mat-label>Número Tributario</mat-label>
+              <input type="text" [(ngModel)]="DatosFacturacion.CodigoTributario" placeholder="Número Tributario" matInput />
+            </mat-form-field>
+          </ng-container>
+        </ng-container>
+      </div>
+    </div>
+    <div class="col-5">
+      <div class="resumenPagoTarjeta">
+        <div class="titleResumenPago" style="font-size: 1.2rem; padding: 10px;">
+          Resumen de tu pago
+        </div>
+        <div class="contentResumenPago">
+          <div class="subtitleResumenPago">{{ datospago.nombre }}</div>
+          <div class="ItemsResumenPago row">
+            <div class="col-12 row itms">
+              <div class="verionPago" style="margin: 10px 0px; font-size: 14px">
+                {{ infoPago.version == '' ? "Versión:" : infoPago.version }}
+              </div>
+              <div class="inicioPago">
+                Modalidad: {{ modalidadSeleccionada.tipo == 1 ? '' :  modalidadSeleccionada.tipo}}
+              </div>
+            </div>
+            <div class="row verionPago mt-4">
+              <div class="col" style="color: #000000; font-weight: bold;">Concepto</div>
+              <div class="col"style="color: #000000; font-weight: bold;">Monto</div>
+              {{ infoPago.codigo }}
+              <br>
+            </div>
+
+            <div class="tot"></div>
+            <div class="row verionPago " style="color: #878787;">
+              <div *ngIf="formaPagoSeleccion.idTipoPago==2" class="col" style="color: #878787;">Matricula</div>
+              <div *ngIf="formaPagoSeleccion.idTipoPago==1" class="col" style="color: #878787;">Al Contado</div>
+              <div class="col" style=" color: #878787;">{{ infoPago.precio | number : "1.2-2" }} {{  infoPago.precio != '' ? formapago[0].codigoMoneda : "" }} {{ formaPagoSeleccion.codigo }}</div>
+            </div>
+            <br>
+            <div class="col-12 row" style="padding-top: 15px; display: flex;">
+              <div class="col" style="font-weight:600;">Total a pagar</div>
+              <div class="col" style="font-weight:600;">
+                {{ infoPago.precio | number : "1.2-2" }}
+                {{  infoPago.precio != '' ? formapago[0].codigoMoneda : "" }}
+                {{ formaPagoSeleccion.codigo }}
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <div class="iconoPagoTarjeta">
+        <p style="font-size: 0.8rem; text-align: center;">*El cargo del importe se efectuará en la moneda indicada en el resumen
+          de pago. El tipo de cambio estará sujeto por la entidad bancaria que utilices.</p>
+      </div>
+
+      <!-- <div class="iconoPagoTarjeta">
+        <div class="imgPagoTarjeta"></div>
+        <div class="textPagoTarjeta">
+          <span>PAGO</span>
+          <span>100%</span>
+          <span>seguro</span>
+        </div>
+        <div class="descPagoTarjeta">
+          <span>Este certificado garantiza la</span>
+          <span>seguridad de todas tus conexiones</span>
+          <span>mediante cifrado</span>
+        </div>
+      </div> -->
+      <ng-container>
+        <div style="display: flex; justify-content:center;">
+          <app-default-button
+                [confs]="{ color: 'primary', titulo: 'Continuar' }"
+                [style]="'padding: 0px 40px;'"
+                [disabled]="botonContinuar"
+                (ButtoclClick)="continuarPago()"
+          ></app-default-button>
+        </div>
+      </ng-container>
+
+    </div>
+  </div>
+</div>

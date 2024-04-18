@@ -1,31 +1,40 @@
 .titleResultPago {
-    font-size: 25px;
-    font-weight: bold;
-    display: flex;
-    align-items: center;
-    img {
-      width: 25px;
-      margin-left: 20px;
-    }
+  justify-content: center;
+  font-size: 25px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  img {
+    width: 50px;
+    margin-right: 10px;
   }
-  .textResultPago {
-    font-size: 14px;
-    margin-top: 60px;
-    .textC {
-      margin-top: 40px;
-      font-size: 12px;
-    }
-  }
-  .contentCardPago{
+}
+.textResultPago {
+  font-size: 14px;
+  margin-top: 25px;
+  .textC {
     margin-top: 40px;
-    font-size: 15px;
+    font-size: 12px;
   }
-  .cardPago{
-    padding: 30px 15px;
-    border: solid 2px #f2f2f2;
-  }
-  .itemValueCardPago{
-    margin: 10px 0px;
-    padding: 0px 20px;
-  }
-  
+}
+.contentCardPago{
+  margin-top: 10px;
+  font-size: 15px;
+}
+.cardPago{
+  padding: 30px 15px;
+  border: solid 3px #f2f2f2;
+  border-radius: 10px;
+  width: 60vw;
+}
+.itemValueCardPago{
+  margin: 10px 0px;
+  padding: 0px 20px;
+}
+.SubTitulo{
+  margin-top: 20px;
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
