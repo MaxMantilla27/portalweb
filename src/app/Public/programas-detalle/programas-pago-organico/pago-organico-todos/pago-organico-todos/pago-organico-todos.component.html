@@ -186,7 +186,25 @@
         <p style="font-size: 0.8rem; text-align: center;">*El cargo del importe se efectuará en la moneda indicada en el resumen
           de pago. El tipo de cambio estará sujeto por la entidad bancaria que utilices.</p>
       </div>
-
+      <div *ngIf="formaPagoSeleccion.idTipoPago==2" style="padding: 0px 30px 15px 30px;">
+        <div class="row" style="border: solid 2px #0076FF;border-radius: 15px;background: #EFF8FF; margin-top: 10px;">
+          <div style="padding: 10px; display: flex;">
+            <div class="col-1">
+              <i class="material-icons"  *ngIf="pagoRecurrenteActivado==false" (click)="pagoRecurrenteActivado=true">check_box_outline_blank</i>
+              <i class="material-icons"  *ngIf="pagoRecurrenteActivado==true" (click)="pagoRecurrenteActivado=false" style="color: #0076FF">check_box</i>
+            </div>
+            <div class="col-11">
+              <div style="    color: #0076FF;
+              font-weight: bold;">
+                Afiliarme a pagos recurrentes
+              </div>
+              <div>
+                Paga siempre puntual. Tu pago se realizará de manera automática.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
       <!-- <div class="iconoPagoTarjeta">
         <div class="imgPagoTarjeta"></div>
         <div class="textPagoTarjeta">
@@ -201,12 +219,21 @@
         </div>
       </div> -->
       <ng-container>
-        <div style="display: flex; justify-content:center;">
+        <div *ngIf="pagoRecurrenteActivado==false" style="display: flex; justify-content:center;">
           <app-default-button
                 [confs]="{ color: 'primary', titulo: 'Continuar' }"
                 [style]="'padding: 0px 40px;'"
                 [disabled]="botonContinuar"
                 (ButtoclClick)="continuarPago()"
+          ></app-default-button>
+        </div>
+        <div *ngIf="pagoRecurrenteActivado" style="display: flex; justify-content:center;">
+          <app-default-button
+                [disabled]="infoPago.precio==0"
+                [confs]="{ color: 'primary', titulo: 'Continuar' }"
+                [style]="'padding: 0px 40px;'"
+                [disabled]="botonContinuar"
+                (ButtoclClick)="OpenModalMetodoPagoSucripcion()"
           ></app-default-button>
         </div>
       </ng-container>

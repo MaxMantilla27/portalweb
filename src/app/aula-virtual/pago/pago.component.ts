@@ -236,6 +236,7 @@ export class PagoComponent implements OnInit,OnDestroy {
     })
   }
   onChangeRadioButton(event:any){
+    this.pagoRecurrenteActivado=false;
     this.medioPagoSeleccionado=event;
   }
   EnviarSolicitudPago(): void{
