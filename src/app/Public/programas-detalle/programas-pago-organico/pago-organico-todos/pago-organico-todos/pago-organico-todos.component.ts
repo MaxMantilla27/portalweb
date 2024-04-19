@@ -145,6 +145,7 @@ export class PagoOrganicoTodosComponent implements OnInit {
   public pagoRecurrenteActivado:boolean = false;
 
   ngOnInit(): void {
+    console.log('PAGO ORGANICO TODOSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS')
      this.dialogRef =this.dialog.open(ChargeComponent,{
       panelClass:'dialog-charge',
       disableClose:true

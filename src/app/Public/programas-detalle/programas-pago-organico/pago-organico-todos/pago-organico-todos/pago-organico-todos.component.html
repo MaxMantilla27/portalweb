@@ -1,8 +1,8 @@
-<div class="container">
-  <h1 class="titlePagoTarjeta">
+<div class="container" style="padding-top:5rem !important;border-bottom: 2px solid #E7E7E7;padding-bottom: 3rem;">
+  <h1 class="titlePagoTarjeta" style="color: black;">
     Confirma tu compra
   </h1>
-  <div>Selecciona los siguientes campos para realizar tu compra:</div>
+  <div style="color: black;">Selecciona los siguientes campos para realizar tu compra:</div>
   <br>
   <div class="row" style="margin-left: 10px;">
     <div class="col-7">
@@ -56,12 +56,12 @@
               Versión Gerencial,
             </ng-container>
             <ng-container *ngIf="item.idTipoPago == 1">
-              al Contado: {{ item.simbolo }} {{ item.cuotas }}
+              al Contado: {{ item.codigoMoneda }} {{ item.cuotas }}
             </ng-container>
             <ng-container *ngIf="item.idTipoPago == 2">
               pago en 1 matricula de
-              {{ item.simbolo }} {{ item.matricula }} y
-              {{ item.nroCuotas }} cuotas mensuales de {{ item.simbolo }}
+              {{ item.codigoMoneda }} {{ item.matricula }} y
+              {{ item.nroCuotas }} cuotas mensuales de {{ item.codigoMoneda }}
               {{ item.cuotas }}
             </ng-container>
           </mat-option>
@@ -241,3 +241,32 @@
     </div>
   </div>
 </div>
+<div *ngIf="botonContinuar" class="container">
+  <div style="justify-content: left;display: flex;">
+    <div class="iconoPagoTarjeta">
+      <div class="textPagoTarjeta">
+        <span>PAGO 100%</span>
+        <span>seguro</span>
+      </div>
+      <div class="imgPagoTarjeta"></div>
+      <div class="descPagoTarjeta">
+        <span>Este certificado garantiza la seguridad de todas tus conexiones mediante cifrado</span>
+      </div>
+    </div>
+  </div>
+</div>
+<div *ngIf="botonContinuar==false" class="container">
+  <div style="justify-content: left;display: flex;">
+    <div class="iconoPagoTarjeta">
+      <div class="textPagoTarjeta" style="color:#02c158 !important">
+        <span>PAGO 100%</span>
+        <span>seguro</span>
+      </div>
+      <div class="imgPagoTarjetaVerde"></div>
+      <div class="descPagoTarjeta">
+        <span>Este certificado garantiza la seguridad de todas tus conexiones mediante cifrado</span>
+      </div>
+    </div>
+  </div>
+</div>
+

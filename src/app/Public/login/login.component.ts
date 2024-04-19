@@ -151,46 +151,48 @@ export class LoginComponent implements OnInit,OnDestroy {
           this._SessionStorageService.SessionSetValue('Cursos',x.cursos);
           this._SessionStorageService.SessionSetValue('TipoCarrera',x.tipoCarrera);
           var redirect=this._SessionStorageService.SessionGetValue('redirect');
+          console.log(redirect)
           var normal=true;
-          if(redirect!=''){
-            if(redirect=='pago'){
-              var jsonEnvioPago=this._SessionStorageService.SessionGetValue('datosTarjeta');
-              if(jsonEnvioPago!=''){
-                normal=false;
-                this._FormaPagoService.PreProcesoPagoOrganicoAlumno(JSON.parse(jsonEnvioPago),null);
-              }
-            }
+          if(redirect=='pago'){
             this._SessionStorageService.SessionDeleteValue('redirect');
+            console.log('================ANDA A PAGARRRRRRRRRRRR')
+            this.router.navigate(['/AulaVirtual/MisPagos/PagoOrganicoTodos']);
           }
-          if(normal){
+          else{
             var ap=this._SessionStorageService.SessionGetValueSesionStorage('accesoPrueba');
-            if(ap==''){
-              if(x.idProveedor==0){
-                this.router.navigate(['/AulaVirtual/MisCursos']);
-              }else{
-                if(x.cursos==0){
-                  this.router.navigate(['/AulaVirtual/DocenciaV2']);
-                }else{
-                  this.router.navigate(['/AulaVirtual/MisCursos']);
-                }
-              }
+          if(ap==''){
+            console.log('=================SE VA A NORMALITO1')
+
+            if(x.idProveedor==0){
+              this.router.navigate(['/AulaVirtual/MisCursos']);
             }else{
-              this._AccountService.RegistroCursoAulaVirtualNueva(parseInt(ap)).pipe(takeUntil(this.signal$)).subscribe({
-                next:x=>{
-                  this._SessionStorageService.SessionDeleteValueSesionStorage('accesoPrueba')
-                  if(x.idProveedor==0){
-                    this.router.navigate(['/AulaVirtual/MisCursos']);
-                  }else{
-                    if(x.cursos==0){
-                      this.router.navigate(['/AulaVirtual/DocenciaV2']);
-                    }else{
-                      this.router.navigate(['/AulaVirtual/MisCursos']);
-                    }
-                  }
-                },
-              })
+              if(x.cursos==0){
+                this.router.navigate(['/AulaVirtual/DocenciaV2']);
+              }else{
+                this.router.navigate(['/AulaVirtual/MisCursos']);
+              }
             }
           }
+          else{
+            console.log('=================SE VA A NORMALITO2')
+
+            this._AccountService.RegistroCursoAulaVirtualNueva(parseInt(ap)).pipe(takeUntil(this.signal$)).subscribe({
+              next:x=>{
+                this._SessionStorageService.SessionDeleteValueSesionStorage('accesoPrueba')
+                if(x.idProveedor==0){
+                  this.router.navigate(['/AulaVirtual/MisCursos']);
+                }else{
+                  if(x.cursos==0){
+                    this.router.navigate(['/AulaVirtual/DocenciaV2']);
+                  }else{
+                    this.router.navigate(['/AulaVirtual/MisCursos']);
+                  }
+                }
+              },
+            })
+          }
+          }
+
         },
         error:e=>{
           this.statuscharge=false

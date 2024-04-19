@@ -164,6 +164,16 @@ export class PagoComponent implements OnInit,OnDestroy {
         console.log(x)
         if(x.cronogramas!=undefined){
           this.CronogramaPago=x.cronogramas.listaCronogramaAlumno
+          let count = 1;
+          this.CronogramaPago.registroCuota.forEach((x:any) => {
+            if(x.tipoCuota=="MATRICULA"){
+              x.numeroCuotaMostrar="MATRICULA"
+            }
+            else{
+              x.numeroCuotaMostrar=count.toString();
+              count++;
+            }
+          });
           this.idAlumno = this.CronogramaPago.idAlumno
 
           this.migaPan.push({

@@ -383,9 +383,13 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
     }
     this._SessionStorageService.SessionSetValue('datEnvioPago',JSON.stringify(dataEnvioPago));
     this._SessionStorageService.SessionSetValue('datosProgramaPago',JSON.stringify(datosPrograma))
-
-
-    this._router.navigate(['/AulaVirtual/MisPagos/PagoOrganicoTodos']);
+    var token=this._SessionStorageService.validateTokken();
+    if(token){
+      this._router.navigate(['/AulaVirtual/MisPagos/PagoOrganicoTodos']);
+    }else{
+      this._SessionStorageService.SessionSetValue('redirect','pago');
+      this._router.navigate(['/login']);
+    }
     // const dialogRef = this.dialog.open(ProgramaPagoComponent, {
     //   width: '900px',
     //   data: {
@@ -429,6 +433,7 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
     //this.jsonEnvioPago.TipoProveedor=;
     this.jsonEnvioPago.WebMoneda=tarjeta.webMoneda;
     var token=this._SessionStorageService.validateTokken();
+    console.log(token)
     if(token){
       //this._FormaPagoService.PreProcesoPagoOrganicoAlumno(this.jsonEnvioPago,dialogRef);
 //miguel pagos
