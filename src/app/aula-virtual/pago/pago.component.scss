@@ -233,3 +233,20 @@ table tr:last-child td {
   font-size: 14px;
   color: #878787;
 }
+.MensajeMouse {
+  position: absolute;
+  background-color: #fff;
+  // border: 1px solid #ccc;
+  padding: 10px;
+  border-radius: 5px;
+  // box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+  z-index: 9999; /* Asegura que el recuadro se muestre encima de otros elementos */
+  opacity: 0; /* Inicialmente oculto */
+  transition: opacity 0.3s ease; /* Agrega transición para una apariencia suave */
+  margin-bottom: 5px;
+  background: transparent;
+}
+
+.MensajeMouse.show {
+  opacity: 1; /* Mostrar el tooltip cuando se activa */
+}

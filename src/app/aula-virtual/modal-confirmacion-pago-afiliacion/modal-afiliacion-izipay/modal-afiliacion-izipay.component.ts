@@ -62,8 +62,12 @@ export class ModalAfiliacionIzipayComponent implements OnInit, OnDestroy, AfterV
         next: (x) => {
           this.resultPreValidacion = x._Repuesta;
           this.resultPreValidacion.total=0;
+          let count=0
           this.resultPreValidacion.listaCuota.forEach((l:any) => {
-            this.resultPreValidacion.total+=l.cuotaTotal
+            if(count==0){
+              this.resultPreValidacion.total+=l.cuotaTotal
+            }
+            count++
           });
           this.iniciarScripsIzipay();
           // KR.setFormConfig(config);

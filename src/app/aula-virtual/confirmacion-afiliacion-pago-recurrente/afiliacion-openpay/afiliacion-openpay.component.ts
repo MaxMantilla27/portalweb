@@ -28,9 +28,9 @@ export class AfiliacionOpenpayComponent implements OnInit,OnDestroy {
     private _SnackBarServiceService:SnackBarServiceService,
     private _router:Router,
     public dialog: MatDialog,
-    
+
   ) { }
- 
+
   NumberT:any
 
   ngOnDestroy(): void {
@@ -112,15 +112,20 @@ export class AfiliacionOpenpayComponent implements OnInit,OnDestroy {
   ObtenerPreProcesoPagoCuotaAlumno(){
     this._FormaPagoService.ObtenerPreProcesoPagoCuotaAlumno(this.json).pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
-        
+        console.log(x)
+
         this.resultCard=x._Repuesta;
         this.DataComprobante.listaCuota =x._Repuesta.listaCuota;
         if(this.resultCard.estadoOperacion.toLowerCase()!='sent'){
           this._router.navigate(['/AulaVirtual/MisCursos/'+this.idMatricula])
         }
         this.resultCard.total=0;
+        let count=0
         this.resultCard.listaCuota.forEach((l:any) => {
-          this.resultCard.total+=l.cuotaTotal
+          if(count==0){
+            this.resultCard.total+=l.cuotaTotal
+          }
+          count++
         });
         this.jsonSave.IdentificadorTransaccion=this.resultCard.identificadorTransaccion
         this.jsonSave.MedioCodigo=this.resultCard.medioCodigo
@@ -287,7 +292,7 @@ export class AfiliacionOpenpayComponent implements OnInit,OnDestroy {
           error
         )
       }
-     
+
 
     }
   }

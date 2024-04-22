@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
@@ -36,6 +36,8 @@ const pipe = new DatePipe('en-US')
   selector: 'app-pago',
   templateUrl: './pago.component.html',
   styleUrls: ['./pago.component.scss'],
+  encapsulation: ViewEncapsulation.None,
+
 })
 export class PagoComponent implements OnInit,OnDestroy {
   private signal$ = new Subject();
@@ -96,6 +98,7 @@ export class PagoComponent implements OnInit,OnDestroy {
   public medioPagoSeleccionado:any;
   public eventosPagoSelccion:boolean = false;
   public pagoRecurrenteActivado:boolean = false;
+  public showTooltip: boolean = false;
   ngOnInit(): void {
     let i=0
     this._HelperService.recibirCombosPerfil.pipe(takeUntil(this.signal$)).subscribe((x) => {
@@ -250,6 +253,7 @@ export class PagoComponent implements OnInit,OnDestroy {
     this.medioPagoSeleccionado=event;
   }
   EnviarSolicitudPago(): void{
+    console.log('Datos de pasarela:',this.medioPagoSeleccionado)
     this.medioPagoSeleccionado = this.validadorPagosMultiples == 0 ?
       this.tarjetas[0]: this.medioPagoSeleccionado;
     console.log("Medio Pago",this.medioPagoSeleccionado)
@@ -300,78 +304,74 @@ export class PagoComponent implements OnInit,OnDestroy {
   }
 
   OpenModalMetodoPagoSucripcion(): void {
-    var fechaActual = new Date();
-    var fechaVencimiento = new Date();
-    var stringActual= pipe.transform(new Date(), 'yyyy-MM-ddT00:00:00.000')
-    var stringVencimiento= pipe.transform(new Date(this.CronogramaPago.fechaVencimiento), 'yyyy-MM-ddT00:00:00.000')
-    if(stringActual)fechaActual=new Date(stringActual)
-    if(stringVencimiento)fechaVencimiento=new Date(stringVencimiento)
-    // if(fechaActual <= fechaVencimiento)
-    // {
-    // if(fechaActual <= fechaVencimiento)
-    // {
-      let validador=0
-      if(this.idPasarela==5){ //OpenPay
-        let count=0
-        let cuotaBase=0
-        let fechaBase = new Date();
-        this.CronogramaPago.registroCuota.forEach((e:any) => {
-          if(e.cancelado==false){
-            if(count==0){
-              cuotaBase = e.cuota+e.moraCalculada
-              fechaBase = new Date(e.fechaVencimiento)
-            }
-            let cuotaTotal:number =e.cuota+e.moraCalculada
-            if(cuotaBase!==cuotaTotal)validador=1
-            if(new Date(e.fechaVencimiento).getDate()!=fechaBase.getDate())validador=2
-            count++
-          }
+    console.log('Datos de pasarela:',this.medioPagoSeleccionado)
+    this.jsonSend.ListaCuota=[]
+    this.PreProcesoAfiliacionPagoRecurrente(this.medioPagoSeleccionado);
+    // console.log(this.medioPagoSeleccionado)
+    // var fechaActual = new Date();
+    // var fechaVencimiento = new Date();
+    // var stringActual= pipe.transform(new Date(), 'yyyy-MM-ddT00:00:00.000')
+    // var stringVencimiento= pipe.transform(new Date(this.CronogramaPago.fechaVencimiento), 'yyyy-MM-ddT00:00:00.000')
+    // if(stringActual)fechaActual=new Date(stringActual)
+    // if(stringVencimiento)fechaVencimiento=new Date(stringVencimiento)
+    // // if(fechaActual <= fechaVencimiento)
+    // // {
+    // // if(fechaActual <= fechaVencimiento)
+    // // {
+    //   let validador=0
+    //   if(this.idPasarela==5){ //OpenPay
+    //     let count=0
+    //     let cuotaBase=0
+    //     let fechaBase = new Date();
+    //     this.CronogramaPago.registroCuota.forEach((e:any) => {
+    //       if(e.cancelado==false){
+    //         if(count==0){
+    //           cuotaBase = e.cuota+e.moraCalculada
+    //           fechaBase = new Date(e.fechaVencimiento)
+    //         }
+    //         let cuotaTotal:number =e.cuota+e.moraCalculada
+    //         if(cuotaBase!==cuotaTotal)validador=1
+    //         if(new Date(e.fechaVencimiento).getDate()!=fechaBase.getDate())validador=2
+    //         count++
+    //       }
 
-        });
-      }
+    //     });
+    //   }
 
-      if(validador==2)
-      {
-        this._SnackBarServiceService.openSnackBar(
-          "Lo sentimos, no puedes afiliarte al pago Recurrente, no todas las cuotas pendientes se pagan el mismo día de afiliación",
-          'x',
-          10,
-          "snackbarCrucigramaerror");
-      }
-      else if(validador==1)
-      {
-        this._SnackBarServiceService.openSnackBar(
-          "Lo sentimos, no puedes afiliarte al pago Recurrente, no todas las cuotas pendientes tiene el mismo monto",
-          'x',
-          10,
-          "snackbarCrucigramaerror");
-      }
-      else if(validador==0)
-      {
-        const dialogRef = this.dialog.open(PagoTarjetaComponent, {
+    //   if(validador==2)
+    //   {
+    //     this._SnackBarServiceService.openSnackBar(
+    //       "Lo sentimos, no puedes afiliarte al pago Recurrente, no todas las cuotas pendientes se pagan el mismo día de afiliación",
+    //       'x',
+    //       10,
+    //       "snackbarCrucigramaerror");
+    //   }
+    //   else if(validador==1)
+    //   {
+    //     this._SnackBarServiceService.openSnackBar(
+    //       "Lo sentimos, no puedes afiliarte al pago Recurrente, no todas las cuotas pendientes tiene el mismo monto",
+    //       'x',
+    //       10,
+    //       "snackbarCrucigramaerror");
+    //   }
+    //   else if(validador==0)
+    //   {
+    //     const dialogRef = this.dialog.open(PagoTarjetaComponent, {
 
-          width: '600px',
-          data: { idMatricula: this.idMatricula,tituloBotonModal:'Ir a afiliarse',tipo:"AF"},
-          panelClass: 'dialog-Tarjeta',
-         disableClose:true
-        });
+    //       width: '600px',
+    //       data: { idMatricula: this.idMatricula,tituloBotonModal:'Ir a afiliarse',tipo:"AF"},
+    //       panelClass: 'dialog-Tarjeta',
+    //      disableClose:true
+    //     });
 
-        dialogRef.afterClosed().pipe(takeUntil(this.signal$)).subscribe((result) => {
-          console.log("Suscripcion",result);
-          if(result!=undefined){
-            this.jsonSend.ListaCuota=[]
-            this.PreProcesoAfiliacionPagoRecurrente(result);
-          }
-        });
-      }
-    // }
-    // else{
-    //   this._SnackBarServiceService.openSnackBar("Lo sentimos, para afiliarte al pago recurrente es obligatorio estar al dia con los pagos cronograma.",'x',10,"snackbarCrucigramaerror");
-    // }
-    // }
-    // else{
-    //   this._SnackBarServiceService.openSnackBar("Lo sentimos, para afiliarte al pago recurrente es obligatorio estar al dia con los pagos cronograma.",'x',10,"snackbarCrucigramaerror");
-    // }
+    //     dialogRef.afterClosed().pipe(takeUntil(this.signal$)).subscribe((result) => {
+    //       console.log("Suscripcion",result);
+    //       if(result!=undefined){
+    //         this.jsonSend.ListaCuota=[]
+    //         this.PreProcesoAfiliacionPagoRecurrente(result);
+    //       }
+    //     });
+    //   }
 
   }
   OpenModalEliminarSuscripcion(): void {
@@ -389,6 +389,7 @@ export class PagoComponent implements OnInit,OnDestroy {
     });
   }
   PreProcesoAfiliacionPagoRecurrente(tarjeta:any){
+    console.log(tarjeta)
     this.CronogramaPago.registroCuota.forEach((r:any) => {
       if(r.cancelado==false){
         var fecha=new Date(r.fechaVencimiento);

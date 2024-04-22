@@ -1,5 +1,5 @@
 
-<div class="container">
+<div class="container" >
   <div class="rowpaddAv breadcrumb" style="padding-top: 0px !important; padding-bottom: 0px !important;">
     <app-miga-pan [items]="migaPan"></app-miga-pan>
   </div>
@@ -27,7 +27,7 @@
     </div>
   </div>
 </div>
-<div class="container">
+<div class="container" style="padding-top:5rem !important;border-bottom: 2px solid #E7E7E7!important;padding-bottom: 3rem;">
   <ng-container *ngIf="CronogramaPago!=undefined">
     <div class="row rowpaddAv" style="align-items: center;">
       <!-- <div class="COL-12 titleCronograma">
@@ -49,7 +49,7 @@
 
       </div>
       <!-- *ngIf=" idAlumno==9818325 || idAlumno== 9938237 || idAlumno==9672|| idAlumno==10214140 ||idAlumno==17267 ||idAlumno==10451942 ||idAlumno==10245248" -->
-      <ng-container
+      <!-- <ng-container
       *ngIf="(idPasarela==13 || idPasarela==5  ||  idPasarela==7)"
       >
         <ng-container style="justify-content: flex-end;" *ngIf="EstadoAfiliado!=undefined && CronogramaPago!=undefined">
@@ -67,7 +67,7 @@
             </div>
           </ng-container>
         </ng-container>
-      </ng-container>
+      </ng-container> -->
     </div>
     <div class="row" style="align-items: center;">
       <p>
@@ -137,36 +137,46 @@
             </tr>
           </table>
         </div>
-        <div *ngIf="EstadoAfiliado">
-          <div style="display: flex;margin-top: 2rem;margin-left: 4rem;">
+        <div *ngIf="EstadoAfiliado==true">
+          <div style="display: flex; margin-top: 2rem; margin-left: 4rem;"
+            (mouseenter)="showTooltip = true"
+            (mouseleave)="showTooltip = false">
+
+          <div>
+            <i style="font-size: 25px !important;" class="material-icons">check_box</i>
+          </div>
+
+          <div class="itemsMisPagos" style="display: flex;">
             <div>
-              <i style="font-size: 25px !important;" class="material-icons">check_box</i>
+              Afiliado a
             </div>
-            <div class="itemsMisPagos" style="display: flex;">
-              <div >
-                Afiliado a
-              </div>
-              <div style="color: #0076FF;margin-left: 3px;font-weight: bold;">
-                pagos recurrentes.
-              </div>
+            <div style="color: #0076FF;margin-left: 3px;font-weight: bold;">
+              pagos recurrentes.
             </div>
           </div>
-          <div class="col-6 col-md-6 col-lg-6 itemsMisPagos" style="margin-bottom: 2rem;margin-left: 6rem;">
-            <div>
-              <div class="row" style="border: solid 2px #0076FF;border-radius: 15px;background: #EFF8FF; margin-top: 10px;">
-                <div style="padding: 10px 5px 10px 5px; display: flex;">
-                  <div class="col-1" style="width: 20px; height: 20px; border-radius: 50%; background-color: #0076FF; display: flex; justify-content: center; align-items: center;">
-                    <i class="material-icons" style="color: white;">priority_high</i>
-                </div>
-                  <div class="col-11">
-                    <div style="font-weight: bold;">
-                      Para desafiliarte de pagos recurrentes, comunicate con tu asesor académico.
+
+          <!-- Tooltip -->
+          <div [ngClass]="{'MensajeMouse': true, 'show': showTooltip}" class="MensajeMouse">
+            <div class="col-6 col-md-6 col-lg-6 itemsMisPagos" style="margin-bottom: 2rem;margin-left: 6rem;">
+              <div>
+                <div class="row" style="border: solid 2px #0076FF;border-radius: 15px;background: #EFF8FF; margin-top: 20px;">
+                  <div style="padding: 10px 5px 10px 5px; display: flex;">
+                    <div class="col-1" style="width: 20px; height: 20px; border-radius: 50%; background-color: #0076FF; display: flex; justify-content: center; align-items: center;">
+                      <i class="material-icons" style="color: white;">priority_high</i>
+                    </div>
+                    <div class="col-11">
+                      <div style="font-weight: bold;">
+                        Para desafiliarte de pagos recurrentes, comunícate con tu asesor académico.
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
+        </div>
+
+
         </div>
       </div>
       <div *ngIf="total!=0" class="col-5" >
@@ -265,53 +275,11 @@
                   </ng-container>
                 </ng-container>
               </div>
-              <div *ngIf="medioPagoSeleccionado!=null && medioPagoSeleccionado!=undefined">
-                <div *ngIf="((medioPagoSeleccionado.idPasarelaPago==7 || medioPagoSeleccionado.idPasarelaPago==10) && medioPagoSeleccionado.idFormaPago==52)||
-              medioPagoSeleccionado.idPasarelaPago==13"
-              class="row" style="border: solid 2px #0076FF;border-radius: 15px;background: #EFF8FF; margin-top: 10px;">
-                <div style="padding: 10px 5px 10px 5px; display: flex;">
-                  <div class="col-1">
-                    <i class="material-icons"  *ngIf="pagoRecurrenteActivado==false" (click)="pagoRecurrenteActivado=true">check_box_outline_blank</i>
-                    <i class="material-icons"  *ngIf="pagoRecurrenteActivado==true" (click)="pagoRecurrenteActivado=false" style="color: #0076FF">check_box</i>
-                  </div>
-                  <div class="col-11">
-                    <div style="    color: #0076FF;
-                    font-weight: bold;">
-                      Afiliarme a pagos recurrentes
-                    </div>
-                    <div>
-                      Paga siempre puntual. Tu pago se realizará de manera automática.
-                    </div>
-                  </div>
-                </div>
-              </div>
-              </div>
-              <div *ngIf="pagoRecurrenteActivado==false" class="col-12 row bot">
-                <div>
-                  <app-default-button
-                  [disabled]="total==0"
-                  [confs]="{color:'primary',titulo:'Continuar'}"
-                  [style]="'margin-top: 20px;padding: 0px 40px;'"
-                  (ButtoclClick)="EnviarSolicitudPago()">
-                  </app-default-button>
-                </div>
-              </div>
-              <div *ngIf="pagoRecurrenteActivado" class="col-12 row bot">
-                <div>
-                  <app-default-button
-                  [disabled]="total==0"
-                  [confs]="{color:'primary',titulo:'Continuar'}"
-                  [style]="'margin-top: 20px;padding: 0px 40px;'"
-                  (ButtoclClick)="OpenModalMetodoPagoSucripcion()">
-                  </app-default-button>
-                </div>
-              </div>
+
             </div>
           </div>
         </div>
-        <div
-        class="row"
-        style="margin-top: 10px;justify-content: center;">
+        <div class="row"  style="margin-top: 10px;justify-content: center;">
           <div class="col-12 col-md-8 col-lg-6 CardPago" style="border-color: transparent !important;">
             <p class="m-2" style="font-size: 14px !important;">
               * El cargo del importe se efectuara en la moneda indicada en el resumen de pago.
@@ -319,6 +287,52 @@
             </p>
           </div>
         </div>
+        <div class="row"  style="margin-top: 10px;justify-content: center;">
+          <div class="col-12 col-md-8 col-lg-6 CardPago" style="border-color: transparent !important;width: 25rem;">
+            <div *ngIf="medioPagoSeleccionado!=null && medioPagoSeleccionado!=undefined">
+              <div *ngIf="(medioPagoSeleccionado.idPasarelaPago==7 && medioPagoSeleccionado.idFormaPago==52)||
+            medioPagoSeleccionado.idPasarelaPago==5 ||medioPagoSeleccionado.idPasarelaPago==13||medioPagoSeleccionado.idPasarelaPago==16||medioPagoSeleccionado.idPasarelaPago==18"
+            class="row" style="border: solid 2px #0076FF;border-radius: 15px;background: #EFF8FF; margin-top: 10px;">
+              <div style="padding: 10px 5px 10px 5px; display: flex;">
+                <div class="col-1">
+                  <i class="material-icons"  *ngIf="pagoRecurrenteActivado==false" (click)="pagoRecurrenteActivado=true">check_box_outline_blank</i>
+                  <i class="material-icons"  *ngIf="pagoRecurrenteActivado==true" (click)="pagoRecurrenteActivado=false" style="color: #0076FF">check_box</i>
+                </div>
+                <div class="col-11">
+                  <div style="    color: #0076FF;
+                  font-weight: bold;">
+                    Afiliarme a pagos recurrentes
+                  </div>
+                  <div>
+                    Paga siempre puntual. Tu pago se realizará de manera automática.
+                  </div>
+                </div>
+              </div>
+            </div>
+            </div>
+            <div *ngIf="pagoRecurrenteActivado==false" class="col-12 row bot">
+              <div style="justify-content: center;display: flex;">
+                <app-default-button
+                [disabled]="total==0"
+                [confs]="{color:'primary',titulo:'Continuar'}"
+                [style]="'margin-top: 20px;padding: 0px 40px;'"
+                (ButtoclClick)="EnviarSolicitudPago()">
+                </app-default-button>
+              </div>
+            </div>
+            <div *ngIf="pagoRecurrenteActivado" class="col-12 row bot">
+              <div style="justify-content: center;display: flex;">
+                <app-default-button
+                [disabled]="total==0"
+                [confs]="{color:'primary',titulo:'Continuar'}"
+                [style]="'margin-top: 20px;padding: 0px 40px;'"
+                (ButtoclClick)="OpenModalMetodoPagoSucripcion()">
+                </app-default-button>
+              </div>
+            </div>
+          </div>
+        </div>
+
         <!-- <div
           class="row mt-2 mb-2"
           style="margin-top: 40px;justify-content: center;">
@@ -483,4 +497,32 @@
       </div>
     </div>
   </ng-container>
+</div>
+<div *ngIf="total==0" class="container">
+  <div style="justify-content: left;display: flex;">
+    <div class="iconoPagoTarjeta">
+      <div class="textPagoTarjeta">
+        <span>PAGO 100%</span>
+        <span>seguro</span>
+      </div>
+      <div class="imgPagoTarjeta"></div>
+      <div class="descPagoTarjeta">
+        <span>Este certificado garantiza la seguridad de todas tus conexiones mediante cifrado</span>
+      </div>
+    </div>
+  </div>
+</div>
+<div *ngIf="total!=0" class="container">
+  <div style="justify-content: left;display: flex;">
+    <div class="iconoPagoTarjeta">
+      <div class="textPagoTarjeta" style="color:#02c158 !important">
+        <span>PAGO 100%</span>
+        <span>seguro</span>
+      </div>
+      <div class="imgPagoTarjetaVerde"></div>
+      <div class="descPagoTarjeta">
+        <span>Este certificado garantiza la seguridad de todas tus conexiones mediante cifrado</span>
+      </div>
+    </div>
+  </div>
 </div>

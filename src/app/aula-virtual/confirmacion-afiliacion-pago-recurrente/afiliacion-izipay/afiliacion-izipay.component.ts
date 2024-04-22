@@ -61,8 +61,12 @@ export class AfiliacionIzipayComponent implements OnInit, OnDestroy, AfterViewIn
         next: (x) => {
           this.resultPreValidacion = x._Repuesta;
           this.resultPreValidacion.total=0;
+          let count=0;
           this.resultPreValidacion.listaCuota.forEach((l:any) => {
-            this.resultPreValidacion.total+=l.cuotaTotal
+            if(count==0){
+              this.resultPreValidacion.total+=l.cuotaTotal
+            }
+            count++
           });
           this.iniciarScripsIzipay();
           // KR.setFormConfig(config);
@@ -86,17 +90,17 @@ export class AfiliacionIzipayComponent implements OnInit, OnDestroy, AfterViewIn
       );
 
     var logo=document.getElementsByClassName('kr-header-logo');
-    if(typeof(logo) != 'undefined' && logo != null && logo.length>0) 
+    if(typeof(logo) != 'undefined' && logo != null && logo.length>0)
       logo[1].setAttribute("src","../../../assets/imagenes/logo-bsg.png");
 
     var spanNombre= document.getElementsByClassName('kr-popin-shop-name');
-    if(typeof(spanNombre) != 'undefined' && spanNombre != null && spanNombre.length>0) 
+    if(typeof(spanNombre) != 'undefined' && spanNombre != null && spanNombre.length>0)
       spanNombre[0].className="";
 
     var modalHeader = document.getElementsByClassName('kr-popin-modal-header');
-    if(typeof(modalHeader) != 'undefined' && modalHeader != null && modalHeader.length>0) 
+    if(typeof(modalHeader) != 'undefined' && modalHeader != null && modalHeader.length>0)
       modalHeader[0].setAttribute("style", "margin-bottom: 0px;height: 70px;");
-    
+
     this.hidenBotom=false
   }
 
@@ -108,15 +112,15 @@ export class AfiliacionIzipayComponent implements OnInit, OnDestroy, AfterViewIn
       'kr-public-key',
       this.resultPreValidacion.procesoPagoBotonIziPay.publicKey
     );
-    script1.setAttribute('kr-post-url-success', 
+    script1.setAttribute('kr-post-url-success',
     'https://proceso-pago.bsginstitute.com/ProcesoPagoIziPay/Recurrente?IdTransaccion='+this.json.IdentificadorTransaccion);
-    script1.setAttribute('kr-post-url-refused', 
+    script1.setAttribute('kr-post-url-refused',
     'https://proceso-pago.bsginstitute.com/ProcesoPagoIziPay/Recurrente?IdTransaccion='+this.json.IdentificadorTransaccion);
     this._renderer2.appendChild(
       this._document.getElementById('header'),
       script1
     );
-    
+
 
     let script2 = this._renderer2.createElement('script');
     script2.src =

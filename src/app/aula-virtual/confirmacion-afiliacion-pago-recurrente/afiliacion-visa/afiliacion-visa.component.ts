@@ -95,8 +95,12 @@ export class AfiliacionVisaComponent implements OnInit,OnDestroy {
           this._router.navigate(['/AulaVirtual/MisCursos/'+this.idMatricula])
         }
         this.resultVisa.total=0;
+        let count=0
         this.resultVisa.listaCuota.forEach((l:any) => {
-          this.resultVisa.total+=l.cuotaTotal
+          if(count==0){
+            this.resultVisa.total+=l.cuotaTotal
+          }
+          count++
         });
         this.jsonSave.IdentificadorTransaccion=this.json.IdentificadorTransaccion
         this.jsonSave.MedioCodigo=this.resultVisa.medioCodigo
@@ -163,7 +167,7 @@ export class AfiliacionVisaComponent implements OnInit,OnDestroy {
     `;
 
     this._renderer2.appendChild(this._document.getElementById('body'), scriptboton);
-    
+
     //}
   }
   pagar(){}

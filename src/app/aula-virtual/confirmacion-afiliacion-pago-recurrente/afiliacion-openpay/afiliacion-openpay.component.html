@@ -3,25 +3,30 @@
     <div class="col-12 row" *ngIf="resultCard!=undefined">
       <div class="col-12 col-md-12 col-lg-12 titlePagoTarjeta">
         <div class="row" style="align-items: end;">
-          <div class="col-md-6" >Confirma tu afiliación</div>
+          <div class="col-md-6" >Confirma tu compra</div>
           <div class="col-md-6" style="padding-right: 60px;"> <div class="logo-openpay"></div></div>
         </div>
       </div>
-      
+
       <div class="col-12 d-md-none d-lg-none" >
         <div class="resumenPagoTarjeta" style="padding: 0px">
-          <div class="titleResumenPago">Resumen de tu afiliación</div>
+          <div class="titleResumenPago">Resumen de pago</div>
           <div class="contentResumenPago">
             <div class="subtitleResumenPago">{{resultCard.nombrePrograma}}</div>
-            <div class="col-12">Pagos durante el periodo de afiliación</div>
+            <div class="col-12" style="display: flex; justify-content: space-between;">
+              <div>Concepto</div>
+              <div>Monto</div>
+            </div>
             <div class="ItemsResumenPago row">
-              <div class="col-12 row itms" *ngFor="let item of resultCard.listaCuota">
-                <div class="col-8">{{item.nombre}}</div>
-                <div class="col-4" style="text-align: right;">{{resultCard.simboloMoneda}} {{item.cuotaTotal}}</div>
+              <div *ngFor="let item of resultCard.listaCuota;index as i">
+                <div class="col-12 row itms"  *ngIf="i==0">
+                  <div class="col-8">{{item.nombre}}</div>
+                  <div class="col-4" style="text-align: right;">{{item.cuotaTotal}} {{resultCard.monedaCorreo}}</div>
+                </div>
               </div>
               <div class="col-12 row tot">
                 <div class="col-8">Total a pagar</div>
-                <div class="col-4" style="text-align: right;">{{resultCard.simboloMoneda}} {{resultCard.total}}</div>
+                <div class="col-4" style="text-align: right;">{{resultCard.total}} {{resultCard.monedaCorreo}}</div>
               </div>
             </div>
           </div>
@@ -112,7 +117,7 @@
           </ng-container>
 
 
-          <div class="row comprobatePagoTarjeta">
+          <!-- <div class="row comprobatePagoTarjeta">
             <div class="col-12 col-md-6 col-lg-4">Emitir comprobante</div>
             <div class="col-12 col-md-6 col-lg-8 items">
               <div class="itm no-select" [ngClass]="{'SelectCom':jsonSave.Comprobante==false}"
@@ -124,10 +129,10 @@
                   *ngIf="jsonSave.Comprobante!=false">check_circle</i>
               </div>
             </div>
-          </div>
+          </div> -->
           <div class="col-12 row" style="justify-content: center;">
             <div class="col-12 col-md-10 col-lg-10">
-              <app-default-button [confs]="{color:'primary',titulo:'Afiliarme ahora'}"
+              <app-default-button [confs]="{color:'primary',titulo:'Paga Aquí'}"
                 [style]="'margin-top: 20px;margin-bottom: 0px;width:100%'" (ButtoclClick)="ValidateSave()"></app-default-button>
             </div>
           </div>
@@ -142,19 +147,24 @@
       </div>
       <div class="d-none col-md-6 d-md-block col-lg-6 d-lg-block">
         <div class="resumenPagoTarjeta">
-          <div class="titleResumenPago">Resumen de tu afiliación</div>
+          <div class="titleResumenPago">Resumen de pago</div>
           <div class="contentResumenPago">
             <div class="subtitleResumenPago">{{resultCard.nombrePrograma}}</div>
-            <div class="col-12">Pagos durante el periodo de afiliación</div>
+            <div class="col-12" style="display: flex; justify-content: space-between;">
+              <div>Concepto</div>
+              <div>Monto</div>
+            </div>
 
             <div class="ItemsResumenPago row">
-              <div class="col-12 row itms" *ngFor="let item of resultCard.listaCuota">
-                <div class="col-8">{{item.nombre}}</div>
-                <div class="col-4" style="text-align: right;">{{resultCard.simboloMoneda}} {{item.cuotaTotal}}</div>
+              <div  *ngFor="let item of resultCard.listaCuota;index as i">
+                <div class="col-12 row itms"  *ngIf="i==0">
+                  <div class="col-8">{{item.nombre}}</div>
+                  <div class="col-4" style="text-align: right;">{{item.cuotaTotal}} {{resultCard.monedaCorreo}}</div>
+                </div>
               </div>
               <div class="col-12 row tot">
                 <div class="col-8">Total a pagar</div>
-                <div class="col-4" style="text-align: right;">{{resultCard.simboloMoneda}} {{resultCard.total}}</div>
+                <div class="col-4" style="text-align: right;">{{resultCard.total}} {{resultCard.monedaCorreo}}</div>
               </div>
             </div>
           </div>

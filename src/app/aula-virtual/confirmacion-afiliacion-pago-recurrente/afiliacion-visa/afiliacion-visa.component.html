@@ -1,26 +1,31 @@
 <div class="container">
     <div class="row rowpaddAv">
       <div class="col-12 row">
-        <div class="col-12 col-md-12 col-lg-12 titlePagoTarjeta">Confirma tu afiliación</div>
+        <div class="col-12 col-md-12 col-lg-12 titlePagoTarjeta">Confirma tu compra</div>
         <div class="col-12 d-md-none d-lg-none" *ngIf="resultVisa!=undefined">
           <div class="resumenPagoTarjeta" style="padding: 0px">
-            <div class="titleResumenPago">Resumen de tu afiliación</div>            
+            <div class="titleResumenPago">Resumen de pago</div>
             <div class="contentResumenPago">
               <div class="subtitleResumenPago">{{resultVisa.nombrePrograma}}</div>
-              <div class="col-12">Pagos durante el periodo de afiliación</div>
+              <div class="col-12" style="display: flex; justify-content: space-between;">
+                <div>Concepto</div>
+                <div>Monto</div>
+              </div>
               <div class="ItemsResumenPago row">
-                <div class="col-12 row itms" *ngFor="let item of resultVisa.listaCuota">
-                  <div class="col-8">{{item.nombre}}</div>
-                  <div class="col-4" style="text-align: right;">{{resultVisa.simboloMoneda}} {{item.cuotaTotal}}</div>
+                <div *ngFor="let item of resultVisa.listaCuota;index as i">
+                  <div class="col-12 row itms" *ngIf="i==0">
+                    <div class="col-8">{{item.nombre}}</div>
+                    <div class="col-4" style="text-align: right;">{{item.cuotaTotal}} {{resultVisa.monedaCorreo}}</div>
+                  </div>
                 </div>
                 <div class="col-12 row tot">
                   <div class="col-8">Total a pagar</div>
-                  <div class="col-4" style="text-align: right;">{{resultVisa.simboloMoneda}} {{resultVisa.total}}</div>
+                  <div class="col-4" style="text-align: right;">{{resultVisa.total}} {{resultVisa.monedaCorreo}}</div>
                 </div>
               </div>
             </div>
           </div>
-  
+
           <div class="iconoPagoTarjeta">
             <div class="imgPagoTarjeta"></div>
             <div class="textPagoTarjeta">
@@ -60,10 +65,10 @@
                 <input type="text" [(ngModel)]="jsonSave.CodigoTributario" placeholder="Número Tributario" matInput />
               </mat-form-field>
             </ng-container>
-  
+
           </ng-container>
-  
-          <div class="row comprobatePagoTarjeta">
+
+          <!-- <div class="row comprobatePagoTarjeta">
             <div class="col-12 col-md-6 col-lg-4">Emitir comprobante</div>
             <div class="col-12 col-md-6 col-lg-8 items">
               <div class="itm no-select" [ngClass]="{'SelectCom':jsonSave.Comprobante==false}"
@@ -75,12 +80,12 @@
                   *ngIf="jsonSave.Comprobante!=false">check_circle</i>
               </div>
             </div>
-          </div>
+          </div> -->
           <div id="header"></div>
           <div id="body"></div>
-          <app-default-button [confs]="{color:'primary',titulo:'Afiliarme ahora'}"
+          <app-default-button [confs]="{color:'primary',titulo:'Paga Aquí'}"
                   [style]="'margin-top: 20px;margin-bottom: 0px;width:100%'" (ButtoclClick)="addVisa()"></app-default-button>
-          <!-- <button class="btn btn-primary" id="frmVisaNet" (click)="addVisa()" style="display:auto">Agregar tarjeta</button> -->          
+          <!-- <button class="btn btn-primary" id="frmVisaNet" (click)="addVisa()" style="display:auto">Agregar tarjeta</button> -->
 
           <!-- https://localhost:44373/ -->
           <!-- https://proceso-pago.bsginstitute.com/ProcesoPagoVisa/Index?IdTransaccion='+json.IdentificadorTransaccion" -->
@@ -95,18 +100,23 @@
         </div>
         <div class="d-none col-md-6 d-md-block col-lg-6 d-lg-block" *ngIf="resultVisa!=undefined">
           <div class="resumenPagoTarjeta">
-            <div class="titleResumenPago">Resumen de tu afiliación</div>  
+            <div class="titleResumenPago">Resumen de pago</div>
             <div class="contentResumenPago">
               <div class="subtitleResumenPago">{{resultVisa.nombrePrograma}}</div>
-              <div class="col-12">Pagos durante el periodo de afiliación</div>
+              <div class="col-12" style="display: flex; justify-content: space-between;">
+                <div>Concepto</div>
+                <div>Monto</div>
+              </div>
               <div class="ItemsResumenPago row">
-                <div class="col-12 row itms" *ngFor="let item of resultVisa.listaCuota">
-                  <div class="col-8">{{item.nombre}}</div>
-                  <div class="col-4" style="text-align: right;">{{resultVisa.simboloMoneda}} {{item.cuotaTotal}}</div>
+                <div *ngFor="let item of resultVisa.listaCuota,index as i">
+                  <div class="col-12 row itms"  *ngIf="i==0">
+                    <div class="col-8">{{item.nombre}}</div>
+                    <div class="col-4" style="text-align: right;">{{item.cuotaTotal}} {{resultVisa.monedaCorreo}}</div>
+                  </div>
                 </div>
                 <div class="col-12 row tot">
                   <div class="col-8">Total a pagar</div>
-                  <div class="col-4" style="text-align: right;">{{resultVisa.simboloMoneda}} {{resultVisa.total}}</div>
+                  <div class="col-4" style="text-align: right;">{{resultVisa.total}} {{resultVisa.monedaCorreo}}</div>
                 </div>
               </div>
             </div>
@@ -128,4 +138,3 @@
       </div>
     </div>
 </div>
-  
