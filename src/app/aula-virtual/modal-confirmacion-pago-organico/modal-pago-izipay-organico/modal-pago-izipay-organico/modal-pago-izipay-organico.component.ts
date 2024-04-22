@@ -56,11 +56,11 @@ export class ModalPagoIzipayOrganicoComponent implements OnInit {
   }
   ObtenerPreProcesoPagoOrganicoAlumno() {
     this._FormaPagoService
-      .ObtenerPreProcesoPagoOrganicoAlumno(this.json)
+      .ObtenerPreProcesoPagoOrganicoAlumnoIziPay(this.json)
       .pipe(takeUntil(this.signal$))
       .subscribe({
         next: (x) => {
-          this.resultPreValidacion = x._Repuesta;
+          this.resultPreValidacion = x;
         },
         complete:()=>{
           this.iniciarScripsIzipay();

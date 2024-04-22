@@ -471,7 +471,6 @@ export class PagoOrganicoTodosComponent implements OnInit {
         .subscribe({
           next: (x) => {
             console.log('resultcard', x);
-            dialogRefLoader.close()
 
             this.jsonPreproceaminetoData = {
               identificadorTransaccion: x._Repuesta.identificadorTransaccion,
@@ -495,6 +494,7 @@ export class PagoOrganicoTodosComponent implements OnInit {
               this.medioPagoSeleccionado.idPasarelaPago == 7 ||
               this.medioPagoSeleccionado.idPasarelaPago == 10
             ) {
+              dialogRefLoader.close()
               if (this.medioCodigo == 52) {
                 console.log('ModalPagoVisaOrganicoComponent');
 
@@ -537,6 +537,7 @@ export class PagoOrganicoTodosComponent implements OnInit {
               this.medioPagoSeleccionado.idPasarelaPago == 1 ||
               this.medioPagoSeleccionado.idPasarelaPago == 5
             ) {
+              dialogRefLoader.close()
               console.log('ModalPagoTarjetaMexicoOraganicoComponent');
               const dialogRef = this.dialog.open(
                 ModalPagoTarjetaMexicoOraganicoComponent,
@@ -555,6 +556,7 @@ export class PagoOrganicoTodosComponent implements OnInit {
               // this._router.navigate(['/AulaVirtual/MisPagos/'+this.idMatricula+'/tarjeta/'+sesion]);
             } else {
               if (parseInt(this.medioPagoSeleccionado.idPasarelaPago) == 2) {
+                dialogRefLoader.close()
                 console.log('ModalPagoWompiOrganicoComponent');
                 const dialogRef = this.dialog.open(
                   ModalPagoWompiOrganicoComponent,
@@ -578,6 +580,7 @@ export class PagoOrganicoTodosComponent implements OnInit {
                 // this._router.navigate(['/AulaVirtual/MisPagos/'+this.idMatricula+'/wompi/'+sesion]);
               }
               if (parseInt(this.medioPagoSeleccionado.idPasarelaPago) == 6) {
+                dialogRefLoader.close()
                 console.log('ModalPagoConektaOrganicoComponent');
                 const dialogRef = this.dialog.open(
                   ModalPagoConektaOrganicoComponent,
@@ -602,6 +605,7 @@ export class PagoOrganicoTodosComponent implements OnInit {
                 // this._router.navigate(['/AulaVirtual/MisPagos/'+this.idMatricula+'/multipago/'+sesion]);
               }
               if (parseInt(this.medioPagoSeleccionado.idPasarelaPago) == 11) {
+                dialogRefLoader.close()
                 console.log('ModalPagoWebpayOrganicoComponent');
                 const dialogRef = this.dialog.open(
                   ModalPagoWebpayOrganicoComponent,
@@ -620,6 +624,7 @@ export class PagoOrganicoTodosComponent implements OnInit {
               }
 
               if (parseInt(this.medioPagoSeleccionado.idPasarelaPago) == 12) {
+                dialogRefLoader.close()
                 // console.log(this.total);
                 // if (this.total >= 50)
                 //   // console.log(
@@ -638,6 +643,7 @@ export class PagoOrganicoTodosComponent implements OnInit {
                 //   );
               }
               if (parseInt(this.medioPagoSeleccionado.idPasarelaPago) == 13) {
+                dialogRefLoader.close()
                 console.log('ModalPagoIzipayOrganicoComponent');
                 const dialogRef = this.dialog.open(
                   ModalPagoIzipayOrganicoComponent,
@@ -656,6 +662,7 @@ export class PagoOrganicoTodosComponent implements OnInit {
               }
 
               if (parseInt(this.medioPagoSeleccionado.idPasarelaPago) == 16) {
+                dialogRefLoader.close()
                 console.log('ModalPagoOpenpayColombiaOrganicoComponent');
                 const dialogRef = this.dialog.open(
                   ModalPagoOpenpayColombiaOrganicoComponent,
@@ -672,6 +679,7 @@ export class PagoOrganicoTodosComponent implements OnInit {
                 );
               }
               if (parseInt(this.medioPagoSeleccionado.idPasarelaPago) == 17) {
+                dialogRefLoader.close()
                 //Mercado Pago
                 console.log('ModalPagoMercadoPagoChileOrganicoComponent');
                 const dialogRef = this.dialog.open(
@@ -691,6 +699,7 @@ export class PagoOrganicoTodosComponent implements OnInit {
                 // this._router.navigate(['/AulaVirtual/MisPagos/'+this.idMatricula+'/mercadoPago/'+sesion]);
               }
               if (parseInt(this.medioPagoSeleccionado.idPasarelaPago) == 18) {
+                dialogRefLoader.close()
                 console.log('ModalPagoOpenpayPeruOrganicoComponent');
                 const dialogRef = this.dialog.open(
                   ModalPagoOpenpayPeruOrganicoComponent,

@@ -360,5 +360,13 @@ export class FormaPagoService {
       return EMPTY;
     }
   }
+  public ObtenerPreProcesoPagoOrganicoAlumnoIziPay(Json:RegistroRespuestaPreProcesoPagoDTO):Observable<any>{
+    if(this.isBrowser){
+      console.log(Json)
+      return this.http.post<any>(this.urlBase+'/ObtenerPreProcesoPagoOrganicoAlumnoIziPay',Json);
+    }else{
+      return EMPTY;
+    }
+  }
 
 }
