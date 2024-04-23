@@ -292,7 +292,7 @@ export class PagoOrganicoTodosComponent implements OnInit {
         this.botonContinuar = false;
       }
     }
-
+    console.log(this.modalidad)
     this.modalidadSeleccionada = this.modalidad.find(
       (e: any) => e.id == this.idPEspecifico
     );
