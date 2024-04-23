@@ -25,5 +25,13 @@ export class PasarelaPagoCorreoService {
       return EMPTY;
     }
   }
+  public EnvioCorreoMatriculaOrganica(Json:MensajeCorreoDTO):Observable<any>{
+    if(this.isBrowser){
+      console.log(Json)
+      return this.http.post<any>(this.urlBase+'/EnvioCorreoMatriculaOrganica',Json);
+    }else{
+      return EMPTY;
+    }
+  }
 }
 

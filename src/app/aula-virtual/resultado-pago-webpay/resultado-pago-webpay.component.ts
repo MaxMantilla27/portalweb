@@ -111,7 +111,7 @@ export class ResultadoPagoWebpayComponent implements OnInit {
     });
     this.jsonCorreo.Asunto =
       'Confirmación de Pago - BSG Institute';
-    this.jsonCorreo.Destinatario = 'aarcana@bsginstitute.com';
+    this.jsonCorreo.Destinatario = this.resultProceso.registroAlumno.correo;
     this.jsonCorreo.Contenido =
     "<div style='margin-left:8rem;margin-right:8rem'>"+
     "<div style='display: flex; align-items: center; border-bottom: 2px solid black; padding-bottom: 4px; width: 80%;'>"+
@@ -176,7 +176,7 @@ export class ResultadoPagoWebpayComponent implements OnInit {
   EnvioCorreoErrorPago(){
     this.jsonCorreo.Asunto =
       'Error al Procesar tu Pago - BSG Institute';
-    this.jsonCorreo.Destinatario = 'aarcana@bsginstitute.com';
+    this.jsonCorreo.Destinatario = this.resultProceso.registroAlumno.correo;
     this.jsonCorreo.Contenido =
     "<div style='margin-left:8rem;margin-right:8rem'>"+
     "<div style='display: flex; align-items: center; border-bottom: 2px solid black; padding-bottom: 4px; width: 80%;'>"+

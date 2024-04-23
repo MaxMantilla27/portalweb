@@ -117,7 +117,7 @@ export class ResultadoPagoIzipayComponent implements OnInit,OnDestroy {
     });
     this.jsonCorreo.Asunto =
       'Confirmación de Pago - BSG Institute';
-    this.jsonCorreo.Destinatario = 'aarcana@bsginstitute.com';
+    this.jsonCorreo.Destinatario = this.resultProceso.registroAlumno.correo;
     this.jsonCorreo.Contenido =
     "<div style='margin-left:8rem;margin-right:8rem'>"+
     "<div style='display: flex; align-items: center; border-bottom: 2px solid black; padding-bottom: 4px; width: 80%;'>"+
@@ -180,7 +180,7 @@ export class ResultadoPagoIzipayComponent implements OnInit,OnDestroy {
   EnvioCorreoErrorPago(){
     this.jsonCorreo.Asunto =
       'Error al Procesar tu Pago - BSG Institute';
-    this.jsonCorreo.Destinatario = 'aarcana@bsginstitute.com';
+    this.jsonCorreo.Destinatario = this.resultProceso.registroAlumno.correo;
     this.jsonCorreo.Contenido =
     "<div style='margin-left:8rem;margin-right:8rem'>"+
     "<div style='display: flex; align-items: center; border-bottom: 2px solid black; padding-bottom: 4px; width: 80%;'>"+
@@ -254,7 +254,7 @@ export class ResultadoPagoIzipayComponent implements OnInit,OnDestroy {
     });
     this.jsonCorreo.Asunto =
       'NUEVA MATRICULA ORGANICA';
-    this.jsonCorreo.Destinatario = 'aarcana@bsginstitute.com';
+    this.jsonCorreo.Destinatario = 'matriculas@bsginstitute.com';
     this.jsonCorreo.Contenido =
     "<div style='margin-left:8rem;margin-right:8rem'>"+
     "<div style='display: flex; align-items: center; border-bottom: 2px solid black; padding-bottom: 4px; width: 80%;'>"+
@@ -305,7 +305,7 @@ export class ResultadoPagoIzipayComponent implements OnInit,OnDestroy {
       "<div><a href='www.bsginstitute.com'>www.bsginstitute.com</a></div>"+
     "</div>"+
   "</div>"
-    this._PasarelaPagoCorreoService.EnvioCorreo(this.jsonCorreo).pipe(takeUntil(this.signal$)).subscribe({
+    this._PasarelaPagoCorreoService.EnvioCorreoMatriculaOrganica(this.jsonCorreo).pipe(takeUntil(this.signal$)).subscribe({
       next: (x) => {
         console.log(x);
 
