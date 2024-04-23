@@ -42,7 +42,7 @@
         <mat-label>< Selecciona tu forma de pago ></mat-label>
         <mat-select style="font-size: 15px" (selectionChange)="changeForma()" [(ngModel)]="idFormaPago">
           <mat-option
-          style="font-size: 15px"
+          style="font-size: 15px;  height: auto;white-space: normal"
             *ngFor="let item of formapago; let i = index"
             [value]="i"
           >

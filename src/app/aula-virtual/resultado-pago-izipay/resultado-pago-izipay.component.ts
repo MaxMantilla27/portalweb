@@ -221,14 +221,15 @@ export class ResultadoPagoIzipayComponent implements OnInit,OnDestroy {
       next:x=>{
         console.log(x)
         this.Matricula=x
-          this.ruta=this.ruta+'/'+this.Matricula.id
-          this.rutaCursos=this.rutaCursos+'/'+this.Matricula.id
+        this.ruta=this.ruta+'/'+this.Matricula.id
+        this.rutaCursos=this.rutaCursos+'/'+this.Matricula.id
       },
       error:e=>{
       },
       complete:()=>{
-        this.EnvioCorreoPagoExitoso()
-
+        setTimeout(() => {
+          this.EnvioCorreoPagoExitoso();
+        }, 10000)
       }
     })
   }

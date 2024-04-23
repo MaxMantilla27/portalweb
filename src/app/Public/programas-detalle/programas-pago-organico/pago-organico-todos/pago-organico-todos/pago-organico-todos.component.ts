@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
+import { Component, Inject, OnInit, PLATFORM_ID, ViewEncapsulation } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
@@ -35,6 +35,8 @@ const pipe = new DatePipe('en-US')
   selector: 'app-pago-organico-todos',
   templateUrl: './pago-organico-todos.component.html',
   styleUrls: ['./pago-organico-todos.component.scss'],
+  encapsulation: ViewEncapsulation.None,
+
 })
 export class PagoOrganicoTodosComponent implements OnInit {
   private signal$ = new Subject();
