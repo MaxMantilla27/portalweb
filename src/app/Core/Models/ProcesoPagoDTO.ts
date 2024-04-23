@@ -86,3 +86,11 @@ export interface RegistroProcesoPagoPseDTO {
   NombreTitularPSE: string;
   TelefonoTitularPSE: string;
 }
+
+export interface PagoOrganicoMatriculaAlumnoIzipayDTO {
+  IdAlumno: number;
+  IdPespecifico: number;
+  IdMontoPago: number;
+  CodigoBanco: string;
+  IdRegistro: number;
+}

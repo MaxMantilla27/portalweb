@@ -4,7 +4,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
 import { MensajeCorreoDTO } from 'src/app/Core/Models/LibroReclamacionesDTO';
-import { RegistroRespuestaPreProcesoPagoDTO } from 'src/app/Core/Models/ProcesoPagoDTO';
+import { PagoOrganicoMatriculaAlumnoIzipayDTO, RegistroRespuestaPreProcesoPagoDTO } from 'src/app/Core/Models/ProcesoPagoDTO';
 import { ChargeComponent } from 'src/app/Core/Shared/Containers/Dialog/charge/charge.component';
 import { FormaPagoService } from 'src/app/Core/Shared/Services/FormaPago/forma-pago.service';
 import { PasarelaPagoCorreoService } from 'src/app/Core/Shared/Services/PasarelaPagoCorreo/pasarela-pago-correo.service';
@@ -44,6 +44,13 @@ export class ResultadoPagoIzipayComponent implements OnInit,OnDestroy {
     IdentificadorTransaccion:'',
     RequiereDatosTarjeta:true
   }
+  public jsonRegistro:PagoOrganicoMatriculaAlumnoIzipayDTO={
+    IdAlumno:0,
+    IdPespecifico:0,
+    IdMontoPago:0,
+    CodigoBanco:'',
+    IdRegistro:0
+  }
 
   dialogRef:any
   public tipoRespuesta = null
@@ -51,6 +58,8 @@ export class ResultadoPagoIzipayComponent implements OnInit,OnDestroy {
   public resultProceso :any
   public ruta='/AulaVirtual/MisPagos'
   public rutaCursos = '/AulaVirtual/MisCursos'
+  public IdentificadorTransaccion=''
+  public Matricula:any
   ngOnInit(): void {
     if(this.isBrowser){
       this._ActivatedRoute.params.pipe(takeUntil(this.signal$)).subscribe({
@@ -75,11 +84,11 @@ export class ResultadoPagoIzipayComponent implements OnInit,OnDestroy {
         if(this.resultProceso.idMatriculaCabecera>0 &&
           this.resultProceso.idMatriculaCabecera!=null &&
           this.resultProceso.idMatriculaCabecera!=undefined ){
-            this.ruta=this.ruta+'/'+this.resultProceso.idMatriculaCabecera
-            this.rutaCursos=this.rutaCursos+'/'+this.resultProceso.idMatriculaCabecera
+
         }
         if(this.resultProceso.estadoOperacion=='Processed'){
-          this.EnvioCorreoPagoExitoso()
+          this.IdentificadorTransaccion=this.resultProceso.identificadorTransaccion;
+          this.RegistrarMatriculaAlumnoIzipayOrganico()
         }
         if(this.resultProceso.estadoOperacion =='No Process' ||
               this.resultProceso.estadoOperacion =='Declinado'){
@@ -124,8 +133,8 @@ export class ResultadoPagoIzipayComponent implements OnInit,OnDestroy {
       "<div style='font-size:13px;width: 33%;text-align:right;'>"+this.pipe.transform(this.resultProceso.fechaTransaccion, 'dd \'de\' MMMM \'del\' yyyy')+"</div></div>"+
       "<div style='padding-bottom:15px;padding-top:15px'>"+
         "<div style='font-size:14px;font-weight:bold'>"+
-        this.resultProceso.nombrePrograma+
-        "</div> Código de matrícula: "+this.resultProceso.codigoMatricula+
+        this.Matricula.nombrePGeneral+
+        "</div> Código de matrícula: "+this.Matricula.codigoMatricula+
         "<div></div>"+
       "</div>"+
       "<div style='display:flex;border-bottom: 1px solid black;padding: 5px 0;'>"+
@@ -206,5 +215,21 @@ export class ResultadoPagoIzipayComponent implements OnInit,OnDestroy {
 
       },
     });
+  }
+  RegistrarMatriculaAlumnoIzipayOrganico(){
+    this._FormaPagoService.RegistrarMatriculaAlumnoIzipayOrganico(this.IdentificadorTransaccion).pipe(takeUntil(this.signal$)).subscribe({
+      next:x=>{
+        console.log(x)
+        this.Matricula=x
+          this.ruta=this.ruta+'/'+this.Matricula.id
+          this.rutaCursos=this.rutaCursos+'/'+this.Matricula.id
+      },
+      error:e=>{
+      },
+      complete:()=>{
+        this.EnvioCorreoPagoExitoso()
+
+      }
+    })
   }
 }

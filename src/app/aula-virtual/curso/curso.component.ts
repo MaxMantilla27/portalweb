@@ -517,6 +517,7 @@ export class CursoComponent implements OnInit,OnDestroy {
       });
   }
   ObtenerEstructuraEspecificaCurso(){
+    console.log(this.json.idModalidad)
     if(this.json.idModalidad==1){
       this._ProgramaContenidoService.ObtenerEstructuraEspecificaCurso(this.json).pipe(takeUntil(this.signal$)).subscribe({
         next:x=>{

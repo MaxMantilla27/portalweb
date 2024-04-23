@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { Route, Router } from '@angular/router';
 import { EMPTY, Observable, Subject, takeUntil } from 'rxjs';
-import { PagoOrganicoAlumnoDTO, RegistroPreProcesoPagoDTO, RegistroProcesoPagoAlumnoDTO, RegistroRespuestaPreProcesoPagoDTO } from 'src/app/Core/Models/ProcesoPagoDTO';
+import { PagoOrganicoAlumnoDTO, PagoOrganicoMatriculaAlumnoIzipayDTO, RegistroPreProcesoPagoDTO, RegistroProcesoPagoAlumnoDTO, RegistroRespuestaPreProcesoPagoDTO } from 'src/app/Core/Models/ProcesoPagoDTO';
 import { environment } from 'src/environments/environment';
 import { SessionStorageService } from '../session-storage.service';
 
@@ -368,5 +368,11 @@ export class FormaPagoService {
       return EMPTY;
     }
   }
-
+  public RegistrarMatriculaAlumnoIzipayOrganico(IdentificadorTransaccion:string):Observable<any>{
+    if(this.isBrowser){
+      return this.http.post<any>(this.urlBase+'/RegistrarMatriculaAlumnoIzipayOrganico?IdentificadorTransaccion='+IdentificadorTransaccion,{});
+    }else{
+      return EMPTY;
+    }
+  }
 }
