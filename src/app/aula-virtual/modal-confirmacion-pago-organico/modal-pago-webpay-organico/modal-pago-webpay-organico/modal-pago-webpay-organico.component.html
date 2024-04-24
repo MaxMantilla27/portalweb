@@ -7,27 +7,27 @@
       <div class="col-12 col-md-12 col-lg-12 titlePagoTarjeta">Confirma tu compra</div>
       <div class="col-12 col-md-12 col-lg-12 inputPagoVisa">
         <div class="subtitlePagoVisa">Pago realizado por</div>
-        <ng-container >
+        <ng-container *ngIf="resultPreValidacion!=undefined" >
 
           <mat-form-field class="col-12" appearance="outline" [floatLabel]="'always'" style="width: 100%;">
             <mat-label>Nombres :</mat-label>
             <input type="text" placeholder="Número de tarjeta" [ngModelOptions]="{standalone: true}"
-            [(ngModel)]="resultPreValidacion.registroAlumno.nombre" matInput [readonly]="true">
+            [(ngModel)]="resultPreValidacion.datoAlumno.nombre" matInput [readonly]="true">
           </mat-form-field>
           <mat-form-field  appearance="outline" [floatLabel]="'always'" style="width: 100%;">
               <mat-label>Apellidos :</mat-label>
               <input type="text" [ngModelOptions]="{standalone: true}"
-              [(ngModel)]="resultPreValidacion.registroAlumno.apellido" matInput [readonly]="true">
+              [(ngModel)]="resultPreValidacion.datoAlumno.apellido" matInput [readonly]="true">
           </mat-form-field>
           <mat-form-field  appearance="outline" [floatLabel]="'always'" style="width: 100%;">
               <mat-label>Correo :</mat-label>
               <input type="text" [ngModelOptions]="{standalone: true}"
-              [(ngModel)]="resultPreValidacion.registroAlumno.correo" matInput [readonly]="true">
+              [(ngModel)]="resultPreValidacion.datoAlumno.correo" matInput [readonly]="true">
           </mat-form-field>
           <mat-form-field  appearance="outline" [floatLabel]="'always'" style="width: 100%;">
               <mat-label>Nro. Documento :</mat-label>
               <input type="text" [ngModelOptions]="{standalone: true}"
-              [(ngModel)]="resultPreValidacion.registroAlumno.numeroDocumento" matInput [readonly]="true">
+              [(ngModel)]="resultPreValidacion.datoAlumno.numeroDocumento" matInput [readonly]="true">
           </mat-form-field>
         </ng-container>
       <div class="col-12 row" style="justify-content: center;">
