@@ -124,7 +124,7 @@ export class ResultadoPagoMercadopagoComponent implements OnInit,OnDestroy {
       "<div style='font-size:13px;width: 33%;text-align:right;'>" + l.cuotaTotal.toFixed(2) + " " + this.resultProceso.monedaCorreo + "</div></div>";
     });
     this.jsonCorreo.Asunto =
-      'Confirmación de Pago - BSG Institute';
+      'Confirmación de Pago - MercadoPago - BSG Institute';
     this.jsonCorreo.Destinatario = this.resultProceso.registroAlumno.correo;
     this.jsonCorreo.Contenido =
     "<div style='margin-left:8rem;margin-right:8rem'>"+
@@ -189,7 +189,7 @@ export class ResultadoPagoMercadopagoComponent implements OnInit,OnDestroy {
   }
   EnvioCorreoErrorPago(){
     this.jsonCorreo.Asunto =
-      'Error al Procesar tu Pago - BSG Institute';
+      'Error al Procesar tu Pago - MercadoPago - BSG Institute';
     this.jsonCorreo.Destinatario = this.resultProceso.registroAlumno.correo;
     this.jsonCorreo.Contenido =
     "<div style='margin-left:8rem;margin-right:8rem'>"+

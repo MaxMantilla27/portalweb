@@ -109,7 +109,7 @@ export class ResultadoPagoKlapComponent implements OnInit {
       "<div style='font-size:13px;width: 33%;text-align:right;'>" + l.cuotaTotal.toFixed(2) + " " + this.resultProceso.monedaCorreo + "</div></div>";
     });
     this.jsonCorreo.Asunto =
-      'Confirmación de Pago - BSG Institute';
+      'Confirmación de Pago - Klap - BSG Institute';
     this.jsonCorreo.Destinatario = this.resultProceso.registroAlumno.correo;
     this.jsonCorreo.Contenido =
     "<div style='margin-left:8rem;margin-right:8rem'>"+
@@ -174,7 +174,7 @@ export class ResultadoPagoKlapComponent implements OnInit {
   }
   EnvioCorreoErrorPago(){
     this.jsonCorreo.Asunto =
-      'Error al Procesar tu Pago - BSG Institute';
+      'Error al Procesar tu Pago - Klap - BSG Institute';
     this.jsonCorreo.Destinatario = this.resultProceso.registroAlumno.correo;
     this.jsonCorreo.Contenido =
     "<div style='margin-left:8rem;margin-right:8rem'>"+

@@ -93,7 +93,7 @@ export class ResultadoPagoIzipayComponent implements OnInit,OnDestroy {
         }
         if(this.resultProceso.estadoOperacion =='No Process' ||
               this.resultProceso.estadoOperacion =='Declinado'){
-                this.EnvioCorreoErrorPago()
+                // this.EnvioCorreoErrorPago()
             }
       },
       error:e=>{
@@ -116,7 +116,7 @@ export class ResultadoPagoIzipayComponent implements OnInit,OnDestroy {
       countLista++;
     });
     this.jsonCorreo.Asunto =
-      'Confirmación de Pago - BSG Institute';
+      'Confirmación de Pago - Izipay - BSG Institute';
     this.jsonCorreo.Destinatario = this.resultProceso.registroAlumno.correo;
     this.jsonCorreo.Contenido =
     "<div style='margin-left:8rem;margin-right:8rem'>"+
@@ -179,7 +179,7 @@ export class ResultadoPagoIzipayComponent implements OnInit,OnDestroy {
   }
   EnvioCorreoErrorPago(){
     this.jsonCorreo.Asunto =
-      'Error al Procesar tu Pago - BSG Institute';
+      'Error al Procesar tu Pago - Izipay - BSG Institute';
     this.jsonCorreo.Destinatario = this.resultProceso.registroAlumno.correo;
     this.jsonCorreo.Contenido =
     "<div style='margin-left:8rem;margin-right:8rem'>"+

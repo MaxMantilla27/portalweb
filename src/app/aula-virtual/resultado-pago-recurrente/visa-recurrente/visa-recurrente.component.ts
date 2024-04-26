@@ -145,7 +145,7 @@ export class VisaRecurrenteComponent implements OnInit {
     });
     console.log(paymentSummary)
     this.jsonCorreo.Asunto =
-      'Confirmación de Pago - BSG Institute';
+      'Confirmación de Pago - Visa Recurrente - BSG Institute';
     this.jsonCorreo.Destinatario = this.resultVisa.registroAlumno.correo;
     this.jsonCorreo.Contenido =
     "<div style='margin-left:8rem;margin-right:8rem'>"+
@@ -210,7 +210,7 @@ export class VisaRecurrenteComponent implements OnInit {
   }
   EnvioCorreoErrorPago(){
     this.jsonCorreo.Asunto =
-      'Error al Procesar tu Pago - BSG Institute';
+      'Error al Procesar tu Pago - Visa Recurrente - BSG Institute';
     this.jsonCorreo.Destinatario = this.resultVisa.registroAlumno.correo;
     this.jsonCorreo.Contenido =
     "<div style='margin-left:8rem;margin-right:8rem'>"+

@@ -155,13 +155,11 @@ export class LoginComponent implements OnInit,OnDestroy {
           var normal=true;
           if(redirect=='pago'){
             this._SessionStorageService.SessionDeleteValue('redirect');
-            console.log('================ANDA A PAGARRRRRRRRRRRR')
             this.router.navigate(['/AulaVirtual/MisPagos/PagoOrganicoTodos']);
           }
           else{
             var ap=this._SessionStorageService.SessionGetValueSesionStorage('accesoPrueba');
           if(ap==''){
-            console.log('=================SE VA A NORMALITO1')
 
             if(x.idProveedor==0){
               this.router.navigate(['/AulaVirtual/MisCursos']);
@@ -174,7 +172,6 @@ export class LoginComponent implements OnInit,OnDestroy {
             }
           }
           else{
-            console.log('=================SE VA A NORMALITO2')
 
             this._AccountService.RegistroCursoAulaVirtualNueva(parseInt(ap)).pipe(takeUntil(this.signal$)).subscribe({
               next:x=>{

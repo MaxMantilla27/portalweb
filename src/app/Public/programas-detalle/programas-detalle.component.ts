@@ -361,9 +361,9 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
 
   }
   OpenModalPago(){
-
-
-
+    this._HelperServiceP.enviarScrollPago('componentePagosTodos');
+    this._SessionStorageService.SessionDeleteValue('datEnvioPagoModalidadEspecifico');
+    this._SessionStorageService.SessionDeleteValue('datEnvioPagoModalidadFormaPago');
     this.codigoIso =
       this._SessionStorageService.SessionGetValue('ISO_PAIS') != ''
         ? this._SessionStorageService.SessionGetValue('ISO_PAIS')

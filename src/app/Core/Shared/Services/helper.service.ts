@@ -29,6 +29,8 @@ export class HelperService {
   private msjAccionesForm=new Subject<any>();
   private msjChat=new Subject<SetChat>();
   private msjObtenerUsuario=new ReplaySubject<any>();
+  private msjScrollPago = new ReplaySubject<string>()
+
 
 
   enviarmsjObtenerUsuario(data:any):void {
@@ -136,6 +138,13 @@ export class HelperService {
   }
   public enviarDatoCuenta(datos: DatoObservableDTO): void {
     this.msjRecarga.next(datos);
+  }
+
+  public get recibirScrollPago() {
+    return this.msjScrollPago.asObservable()
+  }
+  public enviarScrollPago(texto: string): void {
+    this.msjScrollPago.next(texto);
   }
 
 }

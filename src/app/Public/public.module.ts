@@ -55,7 +55,7 @@ import { NotificacionBoliviaComponent } from './Home/notificacion-bolivia/notifi
 import { CompraExitosaOpenPayColombiaComponent } from './compra-exitosa-open-pay-colombia/compra-exitosa-open-pay-colombia.component';
 import { ChatBotLandingPageComponent } from './chat-bot-landing-page/chat-bot-landing-page.component';
 import { CompraExistosaOpenPayPeruComponent } from './compra-existosa-open-pay-peru/compra-existosa-open-pay-peru.component';
-import { PagoOrganicoTodosComponent } from './programas-detalle/programas-pago-organico/pago-organico-todos/pago-organico-todos/pago-organico-todos.component';
+import { PagoOrganicoTodosComponent } from './programas-detalle/programas-pago-organico/pago-organico-todos.component';
 import { ModalPagoVisaOrganicoComponent } from '../aula-virtual/modal-confirmacion-pago-organico/modal-pago-visa-organico/modal-pago-visa-organico/modal-pago-visa-organico.component';
 import { ModalPagoTarjetaOrganicoComponent } from '../aula-virtual/modal-confirmacion-pago-organico/modal-pago-tarjeta-organico/modal-pago-tarjeta-organico/modal-pago-tarjeta-organico.component';
 import { ModalPagoTarjetaMexicoOraganicoComponent } from '../aula-virtual/modal-confirmacion-pago-organico/modal-pago-tarjeta-mexico-organico/modal-pago-tarjeta-mexico-oraganico/modal-pago-tarjeta-mexico-oraganico.component';

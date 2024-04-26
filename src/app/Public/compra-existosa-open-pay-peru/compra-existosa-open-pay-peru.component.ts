@@ -205,7 +205,7 @@ export class CompraExistosaOpenPayPeruComponent implements OnInit {
       "<div style='font-size:13px;width: 33%;text-align:right;'>" + l.cuotaTotal.toFixed(2) + " " + this.resultVisa.monedaCorreo + "</div></div>";
     });
     this.jsonCorreo.Asunto =
-      'Confirmación de Pago - BSG Institute';
+      'Confirmación de Pago - Openpay Perú - BSG Institute';
     this.jsonCorreo.Destinatario = this.resultVisa.registroAlumno.correo;
     this.jsonCorreo.Contenido =
     "<div style='margin-left:8rem;margin-right:8rem'>"+
@@ -270,7 +270,7 @@ export class CompraExistosaOpenPayPeruComponent implements OnInit {
   }
   EnvioCorreoErrorPago(){
     this.jsonCorreo.Asunto =
-      'Error al Procesar tu Pago - BSG Institute';
+      'Error al Procesar tu Pago - Openpay Perú - BSG Institute';
     this.jsonCorreo.Destinatario = this.resultVisa.registroAlumno.correo;
     this.jsonCorreo.Contenido =
     "<div style='margin-left:8rem;margin-right:8rem'>"+

@@ -1,11 +1,10 @@
-import { Component, Inject, OnInit, PLATFORM_ID, ViewEncapsulation } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, Inject, OnDestroy, OnInit, PLATFORM_ID, SimpleChanges, ViewChild, ViewEncapsulation } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { Router } from '@angular/router';
+import { NavigationEnd, Router } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
 import {
   PagoOrganicoAlumnoDTO,
   RegistroProcesoPagoAlumnoDTO,
-  RegistroRespuestaPreProcesoPagoDTO,
 } from 'src/app/Core/Models/ProcesoPagoDTO';
 import { ChargeComponent } from 'src/app/Core/Shared/Containers/Dialog/charge/charge.component';
 import { ImagenTarjetas } from 'src/app/Core/Shared/ImagenTarjetas';
@@ -25,10 +24,10 @@ import { ModalPagoTarjetaOrganicoComponent } from 'src/app/aula-virtual/modal-co
 import { ModalPagoVisaOrganicoComponent } from 'src/app/aula-virtual/modal-confirmacion-pago-organico/modal-pago-visa-organico/modal-pago-visa-organico/modal-pago-visa-organico.component';
 import { ModalPagoWebpayOrganicoComponent } from 'src/app/aula-virtual/modal-confirmacion-pago-organico/modal-pago-webpay-organico/modal-pago-webpay-organico/modal-pago-webpay-organico.component';
 import { ModalPagoWompiOrganicoComponent } from 'src/app/aula-virtual/modal-confirmacion-pago-organico/modal-pago-wompi-organico/modal-pago-wompi-organico/modal-pago-wompi-organico.component';
-import { DatePipe, isPlatformBrowser } from '@angular/common';
+import { DatePipe, ViewportScroller, isPlatformBrowser } from '@angular/common';
 import { HelperService as Help } from 'src/app/Core/Shared/Services/helper.service';
-import { PagoTarjetaComponent } from 'src/app/aula-virtual/pago/pago-tarjeta/pago-tarjeta.component';
 import { SnackBarServiceService } from 'src/app/Core/Shared/Services/SnackBarService/snack-bar-service.service';
+import { ChargeSpinnerComponent } from 'src/app/Core/Shared/Containers/Dialog/charge-spinner/charge-spinner.component';
 const pipe = new DatePipe('en-US')
 
 @Component({
@@ -38,7 +37,8 @@ const pipe = new DatePipe('en-US')
   encapsulation: ViewEncapsulation.None,
 
 })
-export class PagoOrganicoTodosComponent implements OnInit {
+export class PagoOrganicoTodosComponent implements OnInit, AfterViewInit,OnDestroy {
+  @ViewChild('componentePagosTodos') componentePagosTodos!: ElementRef;
   private signal$ = new Subject();
   isBrowser: boolean;
   constructor(
@@ -54,6 +54,8 @@ export class PagoOrganicoTodosComponent implements OnInit {
     public dialog: MatDialog,
     private _HelperServiceP: Help,
     private _SnackBarServiceService:SnackBarServiceService,
+    private viewportScroller: ViewportScroller,
+    private elementRef: ElementRef
   ) {
     this.isBrowser = isPlatformBrowser(platformId);
   }
@@ -145,19 +147,43 @@ export class PagoOrganicoTodosComponent implements OnInit {
   public Paises: any;
   dialogRef:any
   public pagoRecurrenteActivado:boolean = false;
+  public eliminarDatoPrecargado=false;
+  public PrimeraCarga: boolean = true;
+  ngOnDestroy(): void {
+    this.signal$.next(true)
+    this.signal$.complete()
+  }
+  ngAfterViewInit(): void {
+    // this.scrollComponentePagosTodosIntoView()
+    window.scrollTo({ top: 0, behavior: 'smooth' })
 
+
+  }
+  scrollComponentePagosTodosIntoView() {
+    this._HelperService.recibirScrollPago.pipe(takeUntil(this.signal$)).subscribe(x => {
+      console.log(x);
+      if (x === 'componentePagosTodos') {
+        console.log('Subiendo...');
+        const componentePagosTodos = this.elementRef.nativeElement.querySelector('#componentePagosTodos');
+        if (componentePagosTodos) {
+          componentePagosTodos.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      }
+    });
+  }
   ngOnInit(): void {
-    console.log('PAGO ORGANICO TODOSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS')
-     this.dialogRef =this.dialog.open(ChargeComponent,{
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+    // this.scrollComponentePagosTodosIntoView()
+    // this.scrollInicio()
+    this.dialogRef =this.dialog.open(ChargeComponent,{
       panelClass:'dialog-charge',
       disableClose:true
     });
-        this.datospago = localStorage.getItem('datEnvioPago');
+    this.datospago = localStorage.getItem('datEnvioPago');
     this.datospago = atob(this.datospago);
     this.datospago = JSON.parse(this.datospago);
     this.modalidad = this.datospago.modalidad;
-
-
+    console.log(this.modalidad)
     this._HelperServiceP.recibirDataPais
       .pipe(takeUntil(this.signal$))
       .subscribe({
@@ -173,6 +199,8 @@ export class PagoOrganicoTodosComponent implements OnInit {
           this.ListMontoPagoCompleto();
           this.MedioPagoActivoPasarelaPortal();
         },
+        complete:()=>{
+        }
       });
 
     this._HelperService
@@ -243,6 +271,7 @@ export class PagoOrganicoTodosComponent implements OnInit {
       .pipe(takeUntil(this.signal$))
       .subscribe({
         next: (x) => {
+          console.log(x)
           this.validadorPagosMultiples = x.filter(
             (item: any) =>
               item.idPasarelaPago === 7 ||
@@ -262,6 +291,28 @@ export class PagoOrganicoTodosComponent implements OnInit {
           });
           //this.ListMontoPagoCompleto();
         },
+        complete:()=>{
+          var LocalStoragePEspecifico = this._SessionStorageService.SessionGetValue('datEnvioPagoModalidadEspecifico');
+          console.log(LocalStoragePEspecifico)
+          if(LocalStoragePEspecifico!=undefined && LocalStoragePEspecifico!=null && LocalStoragePEspecifico!='NAN' && LocalStoragePEspecifico!=''){
+            this.idPEspecifico = parseInt(LocalStoragePEspecifico);
+            this.changeModalidad()
+          }
+          else{
+            this.idPEspecifico=0
+          }
+
+          var LocalStorageFormaPago = this._SessionStorageService.SessionGetValue('datEnvioPagoModalidadFormaPago');
+          console.log(LocalStorageFormaPago)
+
+          if(LocalStorageFormaPago!=undefined && LocalStorageFormaPago!=null  && LocalStorageFormaPago!='NAN' && LocalStorageFormaPago!=''){
+            this.idFormaPago = parseInt(LocalStorageFormaPago);
+            this.changeForma()
+          }
+          else{
+            this.idFormaPago=-1
+          }
+        }
       });
       this.dialogRef.close()
   }
@@ -308,6 +359,12 @@ export class PagoOrganicoTodosComponent implements OnInit {
       if (this.seleccionFormaPago == true && this.seleccionModalidad == true) {
         this.botonContinuar = false;
       }
+    }
+    if(this.idPEspecifico!=0){
+      this._SessionStorageService.SessionSetValue('datEnvioPagoModalidadEspecifico',JSON.stringify(this.idPEspecifico));
+    }
+    else{
+      this._SessionStorageService.SessionDeleteValue('datEnvioPagoModalidadEspecifico');
     }
 
   }
@@ -433,6 +490,14 @@ export class PagoOrganicoTodosComponent implements OnInit {
         this.botonContinuar = false;
       }
     }
+    if(this.idFormaPago!=-1){
+      this._SessionStorageService.SessionSetValue('datEnvioPagoModalidadFormaPago',JSON.stringify(this.idFormaPago));
+    }
+    else{
+      this._SessionStorageService.SessionDeleteValue('datEnvioPagoModalidadFormaPago');
+
+    }
+
   }
   dataPreprocesamiento: any;
   jsonPreproceaminetoData: any;
@@ -442,7 +507,7 @@ export class PagoOrganicoTodosComponent implements OnInit {
       this.medioPagoSeleccionado = this.tarjetas[0];
     }
     //var find=this.tarjetas.find((x:any)=>x.medioCodigo==this.medioCodigo)
-    const dialogRefLoader = this.dialog.open(ChargeComponent, {
+    const dialogRefLoader = this.dialog.open(ChargeSpinnerComponent, {
       panelClass: 'dialog-charge',
       disableClose: true,
     });
@@ -490,6 +555,7 @@ export class PagoOrganicoTodosComponent implements OnInit {
             );
             console.log(parseInt(this.medioPagoSeleccionado.idPasarelaPago));
             console.log(this.medioPagoSeleccionado.idPasarelaPago)
+            console.log(this.medioCodigo)
             // this.medioPagoSeleccionado.idPasarelaPago=7
             // this.medioCodigo = 48
             if (
@@ -499,7 +565,7 @@ export class PagoOrganicoTodosComponent implements OnInit {
               dialogRefLoader.close()
               if (this.medioCodigo == 52) {
                 console.log('ModalPagoVisaOrganicoComponent');
-
+                console.log(this.DatosFacturacion)
                 /*Aperturamos el modal del pago*/
                 const dialogRef = this.dialog.open(
                   ModalPagoVisaOrganicoComponent,
@@ -514,6 +580,11 @@ export class PagoOrganicoTodosComponent implements OnInit {
                     disableClose:true
                   }
                 );
+                dialogRef.afterClosed().pipe(takeUntil(this.signal$)).subscribe(result => {
+                  if(result==true){
+                    window.location.reload()
+                  }
+                });
 
                 // this._router.navigate(['/AulaVirtual/MisPagos/'+this.idMatricula+'/visa/'+sesion]);
               }
@@ -660,6 +731,11 @@ export class PagoOrganicoTodosComponent implements OnInit {
                     disableClose:true
                   }
                 );
+                dialogRef.afterClosed().pipe(takeUntil(this.signal$)).subscribe(result => {
+                  if(result==true){
+                    window.location.reload()
+                  }
+                });
                 // this._router.navigate(['/AulaVirtual/MisPagos/'+this.idMatricula+'/izipay/'+sesion]);
               }
 
@@ -868,4 +944,14 @@ export class PagoOrganicoTodosComponent implements OnInit {
   //     })
 
   // }
+  roundNumber(num: number | null | undefined): number | string {
+    if (num == null) return '';
+    return Math.round(num);
+  }
+  scrollInicio(){
+    console.log(this.componentePagosTodos)
+    if(this.componentePagosTodos!=undefined){
+      this.componentePagosTodos.nativeElement.click()
+    }
+  }
 }

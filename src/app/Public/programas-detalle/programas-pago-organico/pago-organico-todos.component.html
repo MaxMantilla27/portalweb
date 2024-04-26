@@ -1,4 +1,4 @@
-<div class="container" style="padding-top:5rem !important;border-bottom: 2px solid #E7E7E7;padding-bottom: 3rem;">
+<div #componentePagosTodos class="container" style="padding-top:5rem !important;border-bottom: 2px solid #E7E7E7;padding-bottom: 3rem;">
   <h1 class="titlePagoTarjeta" style="color: black;">
     Confirma tu compra
   </h1>
@@ -40,9 +40,9 @@
         (click)="EventoInteraccionSelectClick('Selecciona tu forma de pago')"
       >
         <mat-label>< Selecciona tu forma de pago ></mat-label>
-        <mat-select style="font-size: 15px" (selectionChange)="changeForma()" [(ngModel)]="idFormaPago">
+        <mat-select style="font-size: 15px;" (selectionChange)="changeForma()" [(ngModel)]="idFormaPago">
           <mat-option
-          style="font-size: 15px;  height: auto;white-space: normal"
+          style="font-size: 15px;  height: auto;white-space: normal;line-height: 22px;padding: 5px 15px;"
             *ngFor="let item of formapago; let i = index"
             [value]="i"
           >
@@ -56,13 +56,13 @@
               Versión Gerencial,
             </ng-container>
             <ng-container *ngIf="item.idTipoPago == 1">
-              al Contado: {{ item.codigoMoneda }} {{ item.cuotas }}
+              al Contado: {{ item.codigoMoneda }} {{ roundNumber(item.cuotas) }}
             </ng-container>
             <ng-container *ngIf="item.idTipoPago == 2">
               pago en 1 matricula de
-              {{ item.codigoMoneda }} {{ item.matricula }} y
+              {{ item.codigoMoneda }} {{ roundNumber(item.matricula) }} y
               {{ item.nroCuotas }} cuotas mensuales de {{ item.codigoMoneda }}
-              {{ item.cuotas }}
+              {{ roundNumber(item.cuotas)   }}
             </ng-container>
           </mat-option>
         </mat-select>
@@ -132,7 +132,8 @@
               <input type="text" [(ngModel)]="DatosFacturacion.RazonSocial" placeholder="Razón Social" matInput />
             </mat-form-field>
             <mat-form-field appearance="outline" [floatLabel]="'always'" style="width: 100%;">
-              <mat-label>Número Tributario</mat-label>
+              <mat-label *ngIf="this.codigoIso=='PE'">Número RUC</mat-label>
+              <mat-label *ngIf="this.codigoIso!='PE'">Número Tributario</mat-label>
               <input type="text" [(ngModel)]="DatosFacturacion.CodigoTributario" placeholder="Número Tributario" matInput />
             </mat-form-field>
           </ng-container>
@@ -148,8 +149,8 @@
           <div class="subtitleResumenPago">{{ datospago.nombre }}</div>
           <div class="ItemsResumenPago row">
             <div class="col-12 row itms">
-              <div class="verionPago" style="margin: 10px 0px; font-size: 14px">
-                {{ infoPago.version == '' ? "Versión:" : infoPago.version }}
+              <div *ngIf="infoPago.version != ''" class="verionPago" style="margin: 10px 0px; font-size: 14px">
+                {{infoPago.version }}
               </div>
               <div class="inicioPago">
                 Modalidad: {{ modalidadSeleccionada.tipo == 1 ? '' :  modalidadSeleccionada.tipo}}
@@ -166,13 +167,13 @@
             <div class="row verionPago " style="color: #878787;">
               <div *ngIf="formaPagoSeleccion.idTipoPago==2" class="col" style="color: #878787;">Matricula</div>
               <div *ngIf="formaPagoSeleccion.idTipoPago==1" class="col" style="color: #878787;">Al Contado</div>
-              <div class="col" style=" color: #878787;">{{ infoPago.precio | number : "1.2-2" }} {{  infoPago.precio != '' ? formapago[0].codigoMoneda : "" }} {{ formaPagoSeleccion.codigo }}</div>
+              <div class="col" style=" color: #878787;">{{ infoPago.precio!='' ? roundNumber(infoPago.precio): '' }} {{  infoPago.precio != '' ? formapago[0].codigoMoneda : "" }} {{ formaPagoSeleccion.codigo }}</div>
             </div>
             <br>
             <div class="col-12 row" style="padding-top: 15px; display: flex;">
               <div class="col" style="font-weight:600;">Total a pagar</div>
               <div class="col" style="font-weight:600;">
-                {{ infoPago.precio | number : "1.2-2" }}
+                {{ infoPago.precio!='' ? roundNumber(infoPago.precio):''}}
                 {{  infoPago.precio != '' ? formapago[0].codigoMoneda : "" }}
                 {{ formaPagoSeleccion.codigo }}
               </div>
@@ -268,5 +269,8 @@
       </div>
     </div>
   </div>
+</div>
+<div class="CargandoPasarela">
+
 </div>
 

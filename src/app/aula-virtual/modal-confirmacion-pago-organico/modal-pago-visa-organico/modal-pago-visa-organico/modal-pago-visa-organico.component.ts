@@ -75,6 +75,7 @@ export class ModalPagoVisaOrganicoComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    console.log(this.data)
     if (this.data.Identificador){
       this.idMatricula =  this.data.IdMatricula
       this.json.IdentificadorTransaccion=this.data.Identificador
@@ -151,6 +152,6 @@ export class ModalPagoVisaOrganicoComponent implements OnInit {
     this._SessionStorageService.SessionSetValue('comprobante',JSON.stringify(this.DataComprobante));
   }
   cerraModal(){
-    this.dialogRef.close();
+    this.dialogRef.close(true);
   }
 }

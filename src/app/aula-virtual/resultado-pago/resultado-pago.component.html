@@ -104,7 +104,7 @@
         <!-- <app-default-button-flecha [confs]="{color:'primary',titulo:'Ir a mis cursos ahora'}" [style]="'margin-top:40px;padding: 0px 40px;border-radius:20px'"
             [ruta]="rutaMisCursos"></app-default-button-flecha> -->
       </div>
-      <div class="row mt-2" style="justify-content: center;">
+      <div *ngIf="RutaCargada!=false" class="row mt-2" style="justify-content: center;">
         <button [routerLink]="ruta" class="btn btn-primary m-2" style="width: 14vw; border-color: transparent; border-radius: 25px;">
           Ver estado de cuenta
         </button>

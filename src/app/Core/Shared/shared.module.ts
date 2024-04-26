@@ -144,6 +144,9 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { TableCalificarEvaluacionesComponent } from './Containers/table-calificar-evaluaciones/table-calificar-evaluaciones.component';
 import { TableDocenteResponderForosComponent } from './Containers/table-docente-responder-foros/table-docente-responder-foros.component';
 import { ImagenModalComponent } from './Containers/Dialog/imagen-modal/imagen-modal.component';
+import { ChargePuntosComponent } from './Containers/Dialog/charge-puntos/charge-puntos.component';
+import { RemovePuntoComaPipe } from './Pipes/remove-punto-coma.pipe';
+import { ChargeSpinnerComponent } from './Containers/Dialog/charge-spinner/charge-spinner.component';
 
 @NgModule({
   imports: [
@@ -250,6 +253,9 @@ import { ImagenModalComponent } from './Containers/Dialog/imagen-modal/imagen-mo
     TableCalificarEvaluacionesComponent,
     TableDocenteResponderForosComponent,
     ImagenModalComponent,
+    ChargePuntosComponent,
+    RemovePuntoComaPipe,
+    ChargeSpinnerComponent,
     //ChatZComponent,
   ],
   exports: [
@@ -351,7 +357,8 @@ import { ImagenModalComponent } from './Containers/Dialog/imagen-modal/imagen-mo
     TableCalificarEvaluacionesComponent,
     TableDocenteResponderForosComponent,
     MatSlideToggleModule,
-    ImagenModalComponent
+    ImagenModalComponent,
+    RemovePuntoComaPipe
   ],
   providers: [
     SessionStorageService,

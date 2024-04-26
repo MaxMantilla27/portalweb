@@ -104,9 +104,15 @@ export class ModalPagoTarjetaMexicoOraganicoComponent implements OnInit {
           this._router.navigate(['/AulaVirtual/MisCursos/'+this.idMatricula])
         }
         this.resultCard.total=0;
-        this.resultCard.listaCuota.forEach((l:any) => {
-          this.resultCard.total+=l.cuotaTotal
-        });
+        if(this.resultCard.listaCuota!=undefined){
+          this.resultCard.listaCuota.forEach((l:any) => {
+            this.resultCard.total+=l.cuotaTotal
+          });
+        }
+        else{
+          this.resultCard.montoTotal=x._Repuesta.montoTotal
+        }
+        console.log(this.resultCard)
         this.jsonSave.IdentificadorTransaccion=this.resultCard.identificadorTransaccion
         this.jsonSave.MedioCodigo=this.resultCard.medioCodigo
         this.jsonSave.MedioPago=this.resultCard.medioPago
