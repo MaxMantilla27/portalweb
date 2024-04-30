@@ -55,7 +55,7 @@ import { ConfirmacionPagoOpenpayColombiaComponent } from './confirmacion-pago-op
 import { PagoMercadoPagoComponent } from './confirmacion-pago-organico/pago-mercado-pago/pago-mercado-pago.component';
 import { ConfirmacionPagoOpenpayPeruComponent } from './confirmacion-pago-openpay-peru/confirmacion-pago-openpay-peru.component';
 import { Tarjeta2Component } from './modal-confirmacion-pago/pagos-organicos/tarjeta2/tarjeta2.component';
-import { PagoOrganicoTodosComponent } from '../Public/programas-detalle/programas-pago-organico/pago-organico-todos.component';
+import { PagoOrganicoTodosComponent } from './programas-pago-organico/pago-organico-todos.component';
 import { DocenciaV2CursosOnlineComponent } from './docencia-v2-cursos-online/docencia-v2-cursos-online.component';
 
 const routes: Routes = [

@@ -1,8 +1,10 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
+import { Router } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
 import { CronogramaPagoService } from 'src/app/Core/Shared/Services/CronogramaPago/cronograma-pago.service';
 import { HelperService } from 'src/app/Core/Shared/Services/helper.service';
+import { SessionStorageService } from 'src/app/Core/Shared/Services/session-storage.service';
 
 @Component({
   selector: 'app-mis-pagos',
@@ -14,7 +16,11 @@ export class MisPagosComponent implements OnInit,OnDestroy {
   constructor(
     private _HelperService: HelperService,
     private _CronogramaPagoService:CronogramaPagoService,
-    private title:Title
+    private title:Title,
+    private _SessionStorageService:SessionStorageService,
+    private _router: Router,
+
+
   ) { }
   ngOnDestroy(): void {
     this.signal$.next(true)
@@ -48,5 +54,10 @@ export class MisPagosComponent implements OnInit,OnDestroy {
         this.misPagos=x.cronogramas
       }
     })
+  }
+  RedirigiPagoMatricula(valor:any){
+    this._SessionStorageService.SessionDeleteValue('listaCronogramaPagos');
+    this._router.navigate(['/AulaVirtual/MisPagos/'+valor.idMatriculaCabecera])
+
   }
 }

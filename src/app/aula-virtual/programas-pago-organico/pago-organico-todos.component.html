@@ -5,7 +5,7 @@
   <div style="color: black;">Selecciona los siguientes campos para realizar tu compra:</div>
   <br>
   <div class="row" style="margin-left: 10px;">
-    <div class="col-7">
+    <div class="col-12 col-md-7 col-lg-7">
       <div class="mb-2" style="font-weight: 900;">Modalidad de estudio:</div>
       <mat-form-field
         style="width: 100%"
@@ -102,11 +102,11 @@
             </mat-error> -->
           </span>
         </div>
-        <ng-container *ngIf="validadorPagosChile!=true">
+        <ng-container >
           <span class="tot mb-3">
             Tipo de comprobante:
           </span>
-          <div class="row comprobatePagoTarjeta">
+          <div class="row comprobatePagoTarjeta" style="margin-bottom: 1rem;">
             <mat-radio-group
             color="primary"
             [(ngModel)]="DatosFacturacion.Comprobante"
@@ -128,19 +128,20 @@
           </div> -->
           <ng-container *ngIf="DatosFacturacion.Comprobante!=false">
             <mat-form-field appearance="outline" [floatLabel]="'always'" style="width: 100%;">
-              <mat-label>Razón Social</mat-label>
+              <mat-label>Ingresa Razón Social</mat-label>
               <input type="text" [(ngModel)]="DatosFacturacion.RazonSocial" placeholder="Razón Social" matInput />
             </mat-form-field>
             <mat-form-field appearance="outline" [floatLabel]="'always'" style="width: 100%;">
               <mat-label *ngIf="this.codigoIso=='PE'">Número RUC</mat-label>
               <mat-label *ngIf="this.codigoIso!='PE'">Número Tributario</mat-label>
-              <input type="text" [(ngModel)]="DatosFacturacion.CodigoTributario" placeholder="Número Tributario" matInput />
+              <input *ngIf="this.codigoIso=='PE'" type="text" [(ngModel)]="DatosFacturacion.CodigoTributario" placeholder="Ingresa Número RUC" matInput />
+              <input  *ngIf="this.codigoIso!='PE'" type="text" [(ngModel)]="DatosFacturacion.CodigoTributario" placeholder="Ingresa Número Tributario" matInput />
             </mat-form-field>
           </ng-container>
         </ng-container>
       </div>
     </div>
-    <div class="col-5">
+    <div class="col-12 col-md-5 col-lg-5">
       <div class="resumenPagoTarjeta">
         <div class="titleResumenPago" style="font-size: 1.2rem; padding: 10px;">
           Resumen de tu pago
@@ -242,7 +243,7 @@
     </div>
   </div>
 </div>
-<div *ngIf="botonContinuar" class="container">
+<!-- <div *ngIf="botonContinuar" class="container">
   <div style="justify-content: left;display: flex;">
     <div class="iconoPagoTarjeta">
       <div class="textPagoTarjeta">
@@ -255,8 +256,8 @@
       </div>
     </div>
   </div>
-</div>
-<div *ngIf="botonContinuar==false" class="container">
+</div> -->
+<div class="container">
   <div style="justify-content: left;display: flex;">
     <div class="iconoPagoTarjeta">
       <div class="textPagoTarjeta" style="color:#02c158 !important">

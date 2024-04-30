@@ -41,7 +41,7 @@
         justify-content: flex-end;">
 
           <app-default-button [confs]="{color:'primary',titulo:'Ver estado de cuenta'}"
-            [style]="'margin-top: 20px;margin-bottom: 0px;'" [ruta]="item.idMatriculaCabecera"></app-default-button>
+            [style]="'margin-top: 20px;margin-bottom: 0px;'" (click)="RedirigiPagoMatricula(item)"></app-default-button>
         </div>
       </div>
     </div>

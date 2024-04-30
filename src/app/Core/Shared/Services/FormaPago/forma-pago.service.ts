@@ -375,4 +375,11 @@ export class FormaPagoService {
       return EMPTY;
     }
   }
+  public CongelarPEspecificoMatriculaAlumnoOrganico(CodigoMatricula:string,IdMatriculaCabecera:number):Observable<any>{
+    if(this.isBrowser){
+      return this.http.post<any>(this.urlBase+'/CongelarPEspecificoMatriculaAlumnoOrganico?CodigoMatricula='+CodigoMatricula+'&IdMatriculaCabecera='+IdMatriculaCabecera,{});
+    }else{
+      return EMPTY;
+    }
+  }
 }

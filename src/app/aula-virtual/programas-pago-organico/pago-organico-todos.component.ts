@@ -37,7 +37,7 @@ const pipe = new DatePipe('en-US')
   encapsulation: ViewEncapsulation.None,
 
 })
-export class PagoOrganicoTodosComponent implements OnInit, AfterViewInit,OnDestroy {
+export class PagoOrganicoTodosComponent implements OnInit, OnDestroy {
   @ViewChild('componentePagosTodos') componentePagosTodos!: ElementRef;
   private signal$ = new Subject();
   isBrowser: boolean;
@@ -153,12 +153,6 @@ export class PagoOrganicoTodosComponent implements OnInit, AfterViewInit,OnDestr
     this.signal$.next(true)
     this.signal$.complete()
   }
-  ngAfterViewInit(): void {
-    // this.scrollComponentePagosTodosIntoView()
-    window.scrollTo({ top: 0, behavior: 'smooth' })
-
-
-  }
   scrollComponentePagosTodosIntoView() {
     this._HelperService.recibirScrollPago.pipe(takeUntil(this.signal$)).subscribe(x => {
       console.log(x);
@@ -175,10 +169,10 @@ export class PagoOrganicoTodosComponent implements OnInit, AfterViewInit,OnDestr
     window.scrollTo({ top: 0, behavior: 'smooth' })
     // this.scrollComponentePagosTodosIntoView()
     // this.scrollInicio()
-    this.dialogRef =this.dialog.open(ChargeComponent,{
-      panelClass:'dialog-charge',
-      disableClose:true
-    });
+    // this.dialogRef =this.dialog.open(ChargeSpinnerComponent,{
+    //   panelClass:'dialog-charge',
+    //   disableClose:true
+    // });
     this.datospago = localStorage.getItem('datEnvioPago');
     this.datospago = atob(this.datospago);
     this.datospago = JSON.parse(this.datospago);
@@ -314,7 +308,7 @@ export class PagoOrganicoTodosComponent implements OnInit, AfterViewInit,OnDestr
           }
         }
       });
-      this.dialogRef.close()
+      // this.dialogRef.close()
   }
   EventoInteraccionSelectClick(nombre: string) {
     this._HelperService.enviarMsjAcciones({
@@ -508,7 +502,7 @@ export class PagoOrganicoTodosComponent implements OnInit, AfterViewInit,OnDestr
     }
     //var find=this.tarjetas.find((x:any)=>x.medioCodigo==this.medioCodigo)
     const dialogRefLoader = this.dialog.open(ChargeSpinnerComponent, {
-      panelClass: 'dialog-charge',
+      panelClass: 'dialog-charge-spinner',
       disableClose: true,
     });
     //this.jsonEnvioPago.CodigoBanco=tarjeta.medioCodisgo;
@@ -824,126 +818,9 @@ export class PagoOrganicoTodosComponent implements OnInit, AfterViewInit,OnDestr
     }
   }
   OpenModalMetodoPagoSucripcion(): void {
-    // var fechaActual = new Date();
-    // var fechaVencimiento = new Date();
-    // var stringActual= pipe.transform(new Date(), 'yyyy-MM-ddT00:00:00.000')
-    // var stringVencimiento= pipe.transform(new Date(this.CronogramaPago.fechaVencimiento), 'yyyy-MM-ddT00:00:00.000')
-    // if(stringActual)fechaActual=new Date(stringActual)
-    // if(stringVencimiento)fechaVencimiento=new Date(stringVencimiento)
-    // // if(fechaActual <= fechaVencimiento)
-    // // {
-    // // if(fechaActual <= fechaVencimiento)
-    // // {
-    //   let validador=0
-    //   if(this.idPasarela==5){ //OpenPay
-    //     let count=0
-    //     let cuotaBase=0
-    //     let fechaBase = new Date();
-    //     this.CronogramaPago.registroCuota.forEach((e:any) => {
-    //       if(e.cancelado==false){
-    //         if(count==0){
-    //           cuotaBase = e.cuota+e.moraCalculada
-    //           fechaBase = new Date(e.fechaVencimiento)
-    //         }
-    //         let cuotaTotal:number =e.cuota+e.moraCalculada
-    //         if(cuotaBase!==cuotaTotal)validador=1
-    //         if(new Date(e.fechaVencimiento).getDate()!=fechaBase.getDate())validador=2
-    //         count++
-    //       }
 
-    //     });
-    //   }
-
-    //   if(validador==2)
-    //   {
-    //     this._SnackBarServiceService.openSnackBar(
-    //       "Lo sentimos, no puedes afiliarte al pago Recurrente, no todas las cuotas pendientes se pagan el mismo día de afiliación",
-    //       'x',
-    //       10,
-    //       "snackbarCrucigramaerror");
-    //   }
-    //   else if(validador==1)
-    //   {
-    //     this._SnackBarServiceService.openSnackBar(
-    //       "Lo sentimos, no puedes afiliarte al pago Recurrente, no todas las cuotas pendientes tiene el mismo monto",
-    //       'x',
-    //       10,
-    //       "snackbarCrucigramaerror");
-    //   }
-    //   else if(validador==0)
-    //   {
-    //     const dialogRef = this.dialog.open(PagoTarjetaComponent, {
-
-    //       width: '600px',
-    //       data: { idMatricula: this.idMatricula,tituloBotonModal:'Ir a afiliarse',tipo:"AF"},
-    //       panelClass: 'dialog-Tarjeta',
-    //      disableClose:true
-    //     });
-
-    //     dialogRef.afterClosed().pipe(takeUntil(this.signal$)).subscribe((result) => {
-    //       console.log("Suscripcion",result);
-    //       if(result!=undefined){
-    //         this.jsonSend.ListaCuota=[]
-    //         this.PreProcesoAfiliacionPagoRecurrente(result);
-    //       }
-    //     });
-    //   }
   }
-  // PreProcesoAfiliacionPagoRecurrente(tarjeta:any){
-  //   this.CronogramaPago.registroCuota.forEach((r:any) => {
-  //     if(r.cancelado==false){
-  //       var fecha=new Date(r.fechaVencimiento);
-  //       this.jsonSend.ListaCuota.push({
-  //         IdCuota: r.idCuota,
-  //         NroCuota: r.nroCuota,
-  //         TipoCuota: r.tipoCuota,
-  //         Cuota: r.cuota,
-  //         Mora: r.mora,
-  //         MoraCalculada: r.moraCalculada,
-  //         CuotaTotal: r.cuota+r.moraCalculada,
-  //         FechaVencimiento:r.fechaVencimiento,
-  //         Nombre:'Cuota N°'+r.nroCuota+' - '+ ('0' + fecha.getUTCDate()).slice(-2)+ "/" +("0" + (fecha.getUTCMonth()+1)).slice(-2) + "/" +fecha.getUTCFullYear()
-  //       })
-  //     }
-  //   });
-  //   this.jsonSend.IdFormaPago=tarjeta.idFormaPago
-  //   this.jsonSend.IdPasarelaPago=tarjeta.idPasarelaPago
-  //   this.jsonSend.MedioCodigo=tarjeta.medioCodigo
-  //   this.jsonSend.MedioPago=tarjeta.medioPago
-  //     const dialogRef =this.dialog.open(ChargeComponent,{
-  //       panelClass:'dialog-charge',
-  //       disableClose:true
-  //     });
-  //     this._FormaPagoService.PreProcesoAfiliacionAlumno(this.jsonSend).pipe(takeUntil(this.signal$)).subscribe({
-  //       next:x=>{
-  //         console.log(x)
-  //         dialogRef.close();
-  //         var sesion=x._Repuesta.identificadorTransaccion;
-  //         this._SessionStorageService.SessionSetValue(sesion,x._Repuesta.requiereDatosTarjeta);
-  //         console.log(parseInt(tarjeta.idPasarelaPago))
 
-  //         if(tarjeta.idPasarelaPago==5 || tarjeta.idPasarelaPago==16 || tarjeta.idPasarelaPago==18){ //OpenPay
-  //           this._router.navigate(['/AulaVirtual/MisPagos/Afiliacion/'+this.idMatricula+'/openpay/'+sesion]);
-  //         }
-  //         else if(tarjeta.idPasarelaPago==7){ //visa
-  //           if(tarjeta.idFormaPago==52){
-  //             this._router.navigate(['/AulaVirtual/MisPagos/Afiliacion/'+this.idMatricula+'/visa/'+sesion]);
-  //           }
-  //         }
-  //         else if(tarjeta.idPasarelaPago==13){ //IziPay
-  //             this._router.navigate(['/AulaVirtual/MisPagos/Afiliacion/'+this.idMatricula+'/izipay/'+sesion]);
-  //         }
-  //       },
-  //       complete:()=>{
-  //         dialogRef.close();
-  //       },
-  //       error:e=>{
-  //         console.log(e)
-  //         dialogRef.close();
-  //       }
-  //     })
-
-  // }
   roundNumber(num: number | null | undefined): number | string {
     if (num == null) return '';
     return Math.round(num);

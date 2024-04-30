@@ -54,6 +54,8 @@ export class ResultadoPagoComponent implements OnInit,OnDestroy{
   };
   public RutaCargada=false;
   public Matricula:any;
+  public NombreCursoPago=''
+  public CodigoMatricula=''
   ngOnInit(): void {
     console.log(this._router.url);
     if(this.isBrowser){
@@ -104,21 +106,26 @@ export class ResultadoPagoComponent implements OnInit,OnDestroy{
           }else{
             this.resultVisa=x._Repuesta;
             console.log(this.resultVisa)
-            if(this.resultVisa.idMatriculaCabecera>0 &&
-              this.resultVisa.idMatriculaCabecera!=null &&
-              this.resultVisa.idMatriculaCabecera!=undefined ){
-                this.ruta=this.ruta+'/'+this.resultVisa.idMatriculaCabecera
-                this.rutaCursos=this.rutaCursos+'/'+this.resultVisa.idMatriculaCabecera
-            }
             if(this.resultVisa.estadoOperacion=='Processed'){
               if(this.resultVisa.tipoPago=='Organico'){
                 this.RegistrarMatriculaAlumnoOrganico()
               }
               else{
+                if(this.resultVisa.idMatriculaCabecera>0 &&
+                  this.resultVisa.idMatriculaCabecera!=null &&
+                  this.resultVisa.idMatriculaCabecera!=undefined ){
+                    this.ruta=this.ruta+'/'+this.resultVisa.idMatriculaCabecera
+                    this.rutaCursos=this.rutaCursos+'/'+this.resultVisa.idMatriculaCabecera
+                    this.CodigoMatricula=this.resultVisa.codigoMatricula
+                    if(this.resultVisa.nombrePrograma==null || this.resultVisa.nombrePrograma=='null' || this.resultVisa.nombrePrograma==undefined){
+                      this.NombreCursoPago='';
+                    }
+                    else{
+                      this.NombreCursoPago=this.resultVisa.nombrePrograma
+                    }
+                }
                 this.EnvioCorreoPagoExitoso()
                 this.RutaCargada=true;
-                // this.ruta=this.ruta+'/'+this.resultVisa.idMatriculaCabecera
-                // this.rutaCursos=this.rutaCursos+'/'+this.resultVisa.idMatriculaCabecera
               }
               if(comprobanteString!='')
               {
@@ -282,14 +289,23 @@ export class ResultadoPagoComponent implements OnInit,OnDestroy{
     console.log(this.resultVisa)
     console.log(this.resultVisa.registroAlumno)
     var paymentSummary = "";
-    this.resultVisa.listaCuota.forEach((l:any) => {
+    if(this.resultVisa.listaCuota.length==0){
+      paymentSummary += "<div style='display:flex;border-bottom: 1px solid black;padding: 5px 0;'>"+
+      "<div style='font-size:13px;font-weight:100;width: 66%;'>" + 'Matrícula' + "</div>" +
+      "<div style='font-size:13px;width: 33%;text-align:right;'>" + this.resultVisa.montoTotal.toFixed(2) + " " + this.resultVisa.monedaCorreo + "</div></div>";
+    }
+    else{
+      this.resultVisa.listaCuota.forEach((l:any) => {
       paymentSummary += "<div style='display:flex;border-bottom: 1px solid black;padding: 5px 0;'>"+
       "<div style='font-size:13px;font-weight:100;width: 66%;'>" + l.nombre + "</div>" +
       "<div style='font-size:13px;width: 33%;text-align:right;'>" + l.cuotaTotal.toFixed(2) + " " + this.resultVisa.monedaCorreo + "</div></div>";
-    });
+      });
+    }
+
     this.jsonCorreo.Asunto =
       'Confirmación de Pago - BSG Institute';
     this.jsonCorreo.Destinatario = this.resultVisa.registroAlumno.correo;
+    // this.jsonCorreo.Destinatario = 'mmantilla@bsginstitute.com';
     this.jsonCorreo.Contenido =
     "<div style='margin-left:8rem;margin-right:8rem'>"+
     "<div style='display: flex; align-items: center; border-bottom: 2px solid black; padding-bottom: 4px; width: 80%;'>"+
@@ -309,8 +325,8 @@ export class ResultadoPagoComponent implements OnInit,OnDestroy{
       "</div></div>"+
       "<div style='padding-bottom:15px;padding-top:15px'>"+
         "<div style='font-size:14px;font-weight:bold'>"+
-        this.resultVisa.nombrePrograma+
-        "</div> Código de matrícula: "+this.resultVisa.codigoMatricula+
+        this.NombreCursoPago+
+        "</div> Código de matrícula: "+this.CodigoMatricula+
         "<div></div>"+
       "</div>"+
       "<div style='display:flex;border-bottom: 1px solid black;padding: 5px 0;'>"+
@@ -355,6 +371,7 @@ export class ResultadoPagoComponent implements OnInit,OnDestroy{
     this.jsonCorreo.Asunto =
       'Error al Procesar tu Pago - BSG Institute';
     this.jsonCorreo.Destinatario = this.resultVisa.registroAlumno.correo;
+    // this.jsonCorreo.Destinatario = 'mmantilla@bsginstitute.com';
     this.jsonCorreo.Contenido =
     "<div style='margin-left:8rem;margin-right:8rem'>"+
     "<div style='display: flex; align-items: center; border-bottom: 2px solid black; padding-bottom: 4px; width: 80%;'>"+
@@ -397,6 +414,13 @@ export class ResultadoPagoComponent implements OnInit,OnDestroy{
       next:x=>{
         console.log(x)
         this.Matricula=x
+        if(this.Matricula.nombrePGeneral==null || this.Matricula.nombrePGeneral=='null' || this.Matricula.nombrePGeneral==undefined){
+          this.NombreCursoPago='';
+        }
+        else{
+          this.NombreCursoPago=this.Matricula.nombrePGeneral;
+          this.CodigoMatricula=this.Matricula.codigoMatricula;
+        }
       },
       error:e=>{
       },
@@ -404,30 +428,41 @@ export class ResultadoPagoComponent implements OnInit,OnDestroy{
         this.ruta=this.ruta+'/'+this.Matricula.id
         this.rutaCursos=this.rutaCursos+'/'+this.Matricula.id
         this.RutaCargada=true;
+        this.CongelarPEspecificoMatriculaAlumnoOrganico()
         setTimeout(() => {
-          // this.EnvioCorreoPagoExitoso();
-          // this.EnvioCorreoRegularizarOportunidad()
-        }, 10000)
+          this.EnvioCorreoPagoExitoso();
+          this.EnvioCorreoRegularizarOportunidad()
+        }, 5000)
       }
     })
   }
+
   EnvioCorreoRegularizarOportunidad() {
     console.log(this.Matricula)
     console.log(this.resultVisa)
     console.log(this.resultVisa.registroAlumno)
     var paymentSummary = "";
     let countLista=0
-    this.resultVisa.listaCuota.forEach((l:any) => {
-      if(countLista==0){
-        paymentSummary += "<div style='display:flex;border-bottom: 1px solid black;padding: 5px 0;'>"+
-                          "<div style='font-size:13px;font-weight:100;width: 66%;'>" + l.nombre + "</div>" +
-                          "<div style='font-size:13px;width: 33%;text-align:right;'>" + l.cuotaTotal.toFixed(2) + " " + this.resultVisa.monedaCorreo + "</div></div>";
-      }
-      countLista++;
-    });
+    if(this.resultVisa.listaCuota.length==0){
+      paymentSummary += "<div style='display:flex;border-bottom: 1px solid black;padding: 5px 0;'>"+
+      "<div style='font-size:13px;font-weight:100;width: 66%;'>" + 'Matrícula' + "</div>" +
+      "<div style='font-size:13px;width: 33%;text-align:right;'>" + this.resultVisa.montoTotal.toFixed(2) + " " + this.resultVisa.monedaCorreo + "</div></div>";
+    }
+    else{
+      this.resultVisa.listaCuota.forEach((l:any) => {
+        if(countLista==0){
+          paymentSummary += "<div style='display:flex;border-bottom: 1px solid black;padding: 5px 0;'>"+
+                            "<div style='font-size:13px;font-weight:100;width: 66%;'>" + l.nombre + "</div>" +
+                            "<div style='font-size:13px;width: 33%;text-align:right;'>" + l.cuotaTotal.toFixed(2) + " " + this.resultVisa.monedaCorreo + "</div></div>";
+        }
+        countLista++;
+      });
+    }
+
     this.jsonCorreo.Asunto =
       'NUEVA MATRICULA ORGANICA';
     this.jsonCorreo.Destinatario = 'matriculas@bsginstitute.com';
+    // this.jsonCorreo.Destinatario = 'mmantilla@bsginstitute.com';
     this.jsonCorreo.Contenido =
     "<div style='margin-left:8rem;margin-right:8rem'>"+
     "<div style='display: flex; align-items: center; border-bottom: 2px solid black; padding-bottom: 4px; width: 80%;'>"+
@@ -445,8 +480,8 @@ export class ResultadoPagoComponent implements OnInit,OnDestroy{
       "<div style='font-size:13px;width: 33%;text-align:right;'>"+this.pipe.transform(this.resultVisa.fechaTransaccion, 'dd \'de\' MMMM \'del\' yyyy')+"</div></div>"+
       "<div style='padding-bottom:15px;padding-top:15px'>"+
         "<div style='font-size:14px;font-weight:bold'>"+
-        this.Matricula.nombrePGeneral+
-        "</div> Código de matrícula: "+this.Matricula.codigoMatricula+
+        this.NombreCursoPago+
+        "</div> Código de matrícula: "+this.CodigoMatricula+
         "<div></div>"+
       "</div>"+
       "<div style='display:flex;border-bottom: 1px solid black;padding: 5px 0;'>"+
@@ -479,6 +514,14 @@ export class ResultadoPagoComponent implements OnInit,OnDestroy{
     "</div>"+
   "</div>"
     this._PasarelaPagoCorreoService.EnvioCorreoMatriculaOrganica(this.jsonCorreo).pipe(takeUntil(this.signal$)).subscribe({
+      next: (x) => {
+        console.log(x);
+
+      },
+    });
+  }
+  CongelarPEspecificoMatriculaAlumnoOrganico(){
+    this._FormaPagoService.CongelarPEspecificoMatriculaAlumnoOrganico(this.Matricula.codigoMatricula,this.Matricula.id).pipe(takeUntil(this.signal$)).subscribe({
       next: (x) => {
         console.log(x);
 

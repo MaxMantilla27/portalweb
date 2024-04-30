@@ -66,7 +66,7 @@
             <div class="col-12 col-md-7 col-lg-8 itemValueCardPago">{{resultProceso.fechaTransaccion | date:'hh:mm'}}
             </div>
           </div>
-          <div class="row" style="align-items: center;padding: 0px 5rem" *ngIf="resultProceso.tipoPago=='Cronograma'">
+          <div class="row" style="align-items: center;padding: 0px 5vw" *ngIf="resultProceso.tipoPago=='Cronograma'">
             <div class="col-12 col-md-5 col-lg-4"><b>Nro. de Compra:</b></div>
             <div class="col-12 col-md-7 col-lg-8 itemValueCardPago">{{resultProceso.identificadorTransaccion}}</div>
             <div class="col-12 col-md-5 col-lg-4"><b>Monto:</b></div>
@@ -108,14 +108,16 @@
             </app-default-button>
           </div>
         </ng-container> -->
-        <div class="row mt-2" style="justify-content: center;">
-          <button [routerLink]="ruta" class="btn btn-primary m-2" style="width: 14vw; border-color: transparent; border-radius: 25px;">
-            Ver estado de cuenta
-          </button>
+        <div *ngIf="RutaCargada!=false" class="row mt-2" style="justify-content: center;text-align: center;">
+          <div class="button-container-Pagos">
+            <button [routerLink]="ruta" class="btn btn-primary m-2 responsive-button-Pagos">
+              Ver estado de cuenta
+            </button>
 
-          <button  [routerLink]="rutaCursos" class="btn btn-primary m-2" style="width: 14vw; border-color: transparent; border-radius: 25px;">
-            Ir a mi curso
-          </button>
+            <button  [routerLink]="rutaCursos" class="btn btn-primary m-2 responsive-button-Pagos">
+              Ir a mi curso
+            </button>
+          </div>
         </div>
       </div>
 

@@ -39,6 +39,12 @@ export class ResultadoPagoKlapComponent implements OnInit {
     Destinatario: '',
   };
   pipe = new DatePipe('es')
+  public RutaCargada=false;
+  public Matricula:any;
+  public NombreCursoPago=''
+  public CodigoMatricula=''
+
+
   ngOnInit(): void {
     this._ActivatedRoute.params.pipe(takeUntil(this.signal$)).subscribe({
       next: (x) => {
@@ -73,14 +79,23 @@ export class ResultadoPagoKlapComponent implements OnInit {
       next:x=>{
         console.log(x)
         this.resultProceso=x._Repuesta;
-        if(this.resultProceso.idMatriculaCabecera>0 &&
-          this.resultProceso.idMatriculaCabecera!=null &&
-          this.resultProceso.idMatriculaCabecera!=undefined ){
-            this.ruta=this.ruta+'/'+this.resultProceso.idMatriculaCabecera
-            this.rutaCursos=this.rutaCursos+'/'+this.resultProceso.idMatriculaCabecera
-        }
+
         if(this.resultProceso.estadoOperacion=='Processed'){
-          this.EnvioCorreoPagoExitoso()
+          if(this.resultProceso.tipoPago=='Organico'){
+            this.RegistrarMatriculaAlumnoOrganico()
+          }
+          else{
+            if(this.resultProceso.idMatriculaCabecera>0 &&
+              this.resultProceso.idMatriculaCabecera!=null &&
+              this.resultProceso.idMatriculaCabecera!=undefined ){
+                this.ruta=this.ruta+'/'+this.resultProceso.idMatriculaCabecera
+                this.rutaCursos=this.rutaCursos+'/'+this.resultProceso.idMatriculaCabecera
+                this.CodigoMatricula=this.resultProceso.codigoMatricula
+                this.NombreCursoPago=this.resultProceso.nombrePrograma
+            }
+            this.EnvioCorreoPagoExitoso()
+            this.RutaCargada=true;
+          }
         }
         if(this.resultProceso.estadoOperacion =='No Process' ||
               this.resultProceso.estadoOperacion =='Declinado'){
@@ -103,11 +118,19 @@ export class ResultadoPagoKlapComponent implements OnInit {
     console.log(this.resultProceso)
     console.log(this.resultProceso.registroAlumno)
     var paymentSummary = "";
-    this.resultProceso.listaCuota.forEach((l:any) => {
+    if(this.resultProceso.listaCuota.length==0){
       paymentSummary += "<div style='display:flex;border-bottom: 1px solid black;padding: 5px 0;'>"+
-      "<div style='font-size:13px;font-weight:100;width: 66%;'>" + l.nombre + "</div>" +
-      "<div style='font-size:13px;width: 33%;text-align:right;'>" + l.cuotaTotal.toFixed(2) + " " + this.resultProceso.monedaCorreo + "</div></div>";
-    });
+      "<div style='font-size:13px;font-weight:100;width: 66%;'>" + 'Matrícula' + "</div>" +
+      "<div style='font-size:13px;width: 33%;text-align:right;'>" + this.resultProceso.montoTotal.toFixed(2) + " " + this.resultProceso.monedaCorreo + "</div></div>";
+    }
+    else{
+      this.resultProceso.listaCuota.forEach((l:any) => {
+        paymentSummary += "<div style='display:flex;border-bottom: 1px solid black;padding: 5px 0;'>"+
+        "<div style='font-size:13px;font-weight:100;width: 66%;'>" + l.nombre + "</div>" +
+        "<div style='font-size:13px;width: 33%;text-align:right;'>" + l.cuotaTotal.toFixed(2) + " " + this.resultProceso.monedaCorreo + "</div></div>";
+      });
+    }
+
     this.jsonCorreo.Asunto =
       'Confirmación de Pago - Klap - BSG Institute';
     this.jsonCorreo.Destinatario = this.resultProceso.registroAlumno.correo;
@@ -130,8 +153,8 @@ export class ResultadoPagoKlapComponent implements OnInit {
       "</div></div>"+
       "<div style='padding-bottom:15px;padding-top:15px'>"+
         "<div style='font-size:14px;font-weight:bold'>"+
-        this.resultProceso.nombrePrograma+
-        "</div> Código de matrícula: "+this.resultProceso.codigoMatricula+
+        this.NombreCursoPago+
+        "</div> Código de matrícula: "+this.CodigoMatricula+
         "<div></div>"+
       "</div>"+
       "<div style='display:flex;border-bottom: 1px solid black;padding: 5px 0;'>"+
@@ -207,6 +230,125 @@ export class ResultadoPagoKlapComponent implements OnInit {
       "<div><a href='www.bsginstitute.com'>www.bsginstitute.com</a></div>"+
     "</div></div>"
     this._PasarelaPagoCorreoService.EnvioCorreo(this.jsonCorreo).pipe(takeUntil(this.signal$)).subscribe({
+      next: (x) => {
+        console.log(x);
+
+      },
+    });
+  }
+  RegistrarMatriculaAlumnoOrganico(){
+    this._FormaPagoService.RegistrarMatriculaAlumnoIzipayOrganico(this.json.IdentificadorTransaccion).pipe(takeUntil(this.signal$)).subscribe({
+      next:x=>{
+        console.log(x)
+        this.Matricula=x
+        if(this.Matricula.nombrePGeneral==null || this.Matricula.nombrePGeneral=='null' || this.Matricula.nombrePGeneral==undefined){
+          this.NombreCursoPago='';
+        }
+        else{
+          this.NombreCursoPago=this.Matricula.nombrePGeneral;
+          this.CodigoMatricula=this.Matricula.codigoMatricula;
+        }
+      },
+      error:e=>{
+      },
+      complete:()=>{
+        this.ruta=this.ruta+'/'+this.Matricula.id
+        this.rutaCursos=this.rutaCursos+'/'+this.Matricula.id
+        this.RutaCargada=true;
+        this.CongelarPEspecificoMatriculaAlumnoOrganico()
+        setTimeout(() => {
+          this.EnvioCorreoPagoExitoso();
+          this.EnvioCorreoRegularizarOportunidad()
+        }, 5000)
+      }
+    })
+  }
+
+  EnvioCorreoRegularizarOportunidad() {
+    console.log(this.Matricula)
+    console.log(this.resultProceso)
+    console.log(this.resultProceso.registroAlumno)
+    var paymentSummary = "";
+    let countLista=0
+    if(this.resultProceso.listaCuota.length==0){
+      paymentSummary += "<div style='display:flex;border-bottom: 1px solid black;padding: 5px 0;'>"+
+                            "<div style='font-size:13px;font-weight:100;width: 66%;'>" + 'Matrícula' + "</div>" +
+                            "<div style='font-size:13px;width: 33%;text-align:right;'>" + this.resultProceso.montoTotal.toFixed(2) + " " + this.resultProceso.monedaCorreo + "</div></div>";
+    }
+    else{
+      this.resultProceso.listaCuota.forEach((l:any) => {
+        if(countLista==0){
+          paymentSummary += "<div style='display:flex;border-bottom: 1px solid black;padding: 5px 0;'>"+
+                            "<div style='font-size:13px;font-weight:100;width: 66%;'>" + l.nombre + "</div>" +
+                            "<div style='font-size:13px;width: 33%;text-align:right;'>" + l.cuotaTotal.toFixed(2) + " " + this.resultProceso.monedaCorreo + "</div></div>";
+        }
+        countLista++;
+      });
+    }
+
+    this.jsonCorreo.Asunto =
+      'NUEVA MATRICULA ORGANICA';
+    this.jsonCorreo.Destinatario = 'matriculas@bsginstitute.com';
+    // this.jsonCorreo.Destinatario = 'mmantilla@bsginstitute.com';
+    this.jsonCorreo.Contenido =
+    "<div style='margin-left:8rem;margin-right:8rem'>"+
+    "<div style='display: flex; align-items: center; border-bottom: 2px solid black; padding-bottom: 4px; width: 80%;'>"+
+    "<img src='https://bsginstitute.com/favicon.ico'style='width: 30px; height: 30px;'>"+
+    "<div style='display: flex; font-size: 25px; color: #414140; margin-left: 7px;'>"+
+    "<div style='letter-spacing: -4px;'>BSG</div>"+
+    "<div style='margin-left: 7px;'>Institute</div>"+
+    "</div></div>"+
+  "<div style='font-weight:bold;font-size:15px;padding-top:20px'>Pago Orgánico realizado por el usuario: "+this.resultProceso.registroAlumno.nombre+","+
+  "</div><br><div style='font-size:14px'>Porfavor regularizar el proceso para la generación de oportunidad y la asignación de su asesor correspondiente."+
+  "</div><br><div style='background:#EBF1FF;border-radius:5px;width:80%'>"+
+    "<div style='padding:25px'>"+
+      "<div style='display:flex;border-bottom: 2px solid black;padding-bottom:3px;'>"+
+      "<div style='font-size:13px;font-weight:bold;width: 66%;'>Resúmen de pago</div>"+
+      "<div style='font-size:13px;width: 33%;text-align:right;'>"+this.pipe.transform(this.resultProceso.fechaTransaccion, 'dd \'de\' MMMM \'del\' yyyy')+"</div></div>"+
+      "<div style='padding-bottom:15px;padding-top:15px'>"+
+        "<div style='font-size:14px;font-weight:bold'>"+
+        this.NombreCursoPago+
+        "</div> Código de matrícula: "+this.CodigoMatricula+
+        "<div></div>"+
+      "</div>"+
+      "<div style='display:flex;border-bottom: 1px solid black;padding: 5px 0;'>"+
+      "<div style='font-size:13px;font-weight:100;width: 66%;'>Concepto</div>"+
+      "<div style='font-size:13px;width: 33%;text-align:right;'>Monto</div>"+
+      "</div>"+
+      paymentSummary+
+      "<div style='display:flex;padding-bottom:20px;'>"+
+      "<div style='font-size:13px;font-weight:bold;width: 66%;'>Total del pago</div>"+
+      "<div style='font-size:13px;justify-content:flex-end;font-weight:bold;width: 33%;text-align:right;'>"+
+      this.resultProceso.montoTotal.toFixed(2) +" "+this.resultProceso.monedaCorreo+
+      "</div></div>"+
+      // "<div style='font-size:13px'> Método de pago: Tarjeta Visa N° xxxx xxxx xxxx 1542"+
+      // "</div>"+
+      // "<div style='font-size:13px'> Comprobante solicitado: Factura - RUC XXXXXXXX / Boleta - DNI"+
+      // "</div>"+
+      // "<div style='font-size:13px'> Te has afiliado a pagos recurrentes"+
+      // "</div>"+
+    "</div>"+
+  "</div><br><br><div style='font-size:13px'>Atentamente,"+
+  "</div><div style='font-size:13px;padding-bottom:25px'>BSG Institute"+
+  "</div>"+
+  "<div style='background:#DDDDDD;border-radius:5px;width:80%;text-align:center'>"+
+    "<div style='padding:15px'>"+
+      "<div>"+
+        "<a href='www.bsginstitute.com/termino-uso-web'>Términos de uso</a> | <a href='www.bsginstitute.com/politica-privacidad'>Política de Privacidad</a>"+
+      "</div>"+
+      "<div>© 2023 BSG Institute, todos los derechos reservados</div>"+
+      "<div><a href='www.bsginstitute.com'>www.bsginstitute.com</a></div>"+
+    "</div>"+
+  "</div>"
+    this._PasarelaPagoCorreoService.EnvioCorreoMatriculaOrganica(this.jsonCorreo).pipe(takeUntil(this.signal$)).subscribe({
+      next: (x) => {
+        console.log(x);
+
+      },
+    });
+  }
+  CongelarPEspecificoMatriculaAlumnoOrganico(){
+    this._FormaPagoService.CongelarPEspecificoMatriculaAlumnoOrganico(this.Matricula.codigoMatricula,this.Matricula.id).pipe(takeUntil(this.signal$)).subscribe({
       next: (x) => {
         console.log(x);
 

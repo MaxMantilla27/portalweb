@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { loadMercadoPago } from "@mercadopago/sdk-js";
 import { Subject, takeUntil } from 'rxjs';
 import { RegistroRespuestaPreProcesoPagoDTO } from 'src/app/Core/Models/ProcesoPagoDTO';
+import { ChargeSpinnerComponent } from 'src/app/Core/Shared/Containers/Dialog/charge-spinner/charge-spinner.component';
 import { ChargeTextComponent } from 'src/app/Core/Shared/Containers/Dialog/charge-text/charge-text.component';
 import { ChargeComponent } from 'src/app/Core/Shared/Containers/Dialog/charge/charge.component';
 import { FormaPagoService } from 'src/app/Core/Shared/Services/FormaPago/forma-pago.service';
@@ -45,8 +46,8 @@ export class ModalPagoMercadoPagoChileComponent implements OnInit {
   dialogRefLoader:any
 
   ngOnInit(): void {
-    this.dialogRefLoader =this.dialog.open(ChargeComponent,{
-      panelClass:'dialog-charge',
+    this.dialogRefLoader =this.dialog.open(ChargeSpinnerComponent,{
+      panelClass:'dialog-charge-spinner',
       disableClose:true
     });
     if(this.data.Identificador){
@@ -132,8 +133,8 @@ export class ModalPagoMercadoPagoChileComponent implements OnInit {
         },
         onSubmit: (cardFormData: any) => {
           // Callback llamado al hacer clic en el botón de envío de datos
-          this.dialogRefLoader =this.dialog.open(ChargeComponent,{
-            panelClass:'dialog-charge',
+          this.dialogRefLoader =this.dialog.open(ChargeSpinnerComponent,{
+            panelClass:'dialog-charge-spinner',
             disableClose:true
           });
           cardFormData.identificadorTransaccion = this.json.IdentificadorTransaccion

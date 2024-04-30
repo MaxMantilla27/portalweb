@@ -30,3 +30,23 @@
     padding: 0px 20px;
   }
 
+/* Define el tamaño base de los botones */
+.responsive-button-Pagos {
+  border-color: transparent;
+  border-radius: 25px;
+  width: 14vw; /* O el ancho que desees */
+}
+
+/* Media query para pantallas de hasta 768px */
+@media (max-width: 768px) {
+  .button-container-Pagos {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .responsive-button-Pagos {
+    width: 80%; /* Cambiar el valor según necesites */
+    max-width: 200px; /* Ajusta el máximo ancho del botón si lo deseas */
+  }
+}

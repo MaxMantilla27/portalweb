@@ -15,7 +15,7 @@
       display: flex;
       align-items: center;
       justify-content: space-around;
-      background: #f4f4f4;
+      background: transparent;
       border-radius: 20px;
       cursor: pointer;
       margin: 10px 0px;
@@ -31,4 +31,7 @@
 .mat-select-value-text {
   white-space: normal !important;
   line-height: 22px;
+}
+.mat-spinner {
+  background-color: transparent !important;
 }

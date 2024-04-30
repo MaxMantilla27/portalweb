@@ -35,6 +35,7 @@ export class ResultadoPagoIzipayComponent implements OnInit,OnDestroy {
     Destinatario: '',
   };
   pipe = new DatePipe('es')
+
   ngOnDestroy(): void {
     this.signal$.next(true)
     this.signal$.complete()
@@ -61,6 +62,9 @@ export class ResultadoPagoIzipayComponent implements OnInit,OnDestroy {
   public IdentificadorTransaccion=''
   public Matricula:any
   public RutaCargada=false;
+  public NombreCursoPago=''
+  public CodigoMatricula=''
+
   ngOnInit(): void {
     if(this.isBrowser){
       this._ActivatedRoute.params.pipe(takeUntil(this.signal$)).subscribe({
@@ -82,19 +86,35 @@ export class ResultadoPagoIzipayComponent implements OnInit,OnDestroy {
       next:x=>{
         console.log("REPUESTA-PREPROCESO",x._Repuesta)
         this.resultProceso =x._Repuesta
-        if(this.resultProceso.idMatriculaCabecera>0 &&
-          this.resultProceso.idMatriculaCabecera!=null &&
-          this.resultProceso.idMatriculaCabecera!=undefined ){
-
-        }
         if(this.resultProceso.estadoOperacion=='Processed'){
           this.IdentificadorTransaccion=this.resultProceso.identificadorTransaccion;
-          this.RegistrarMatriculaAlumnoIzipayOrganico()
+          if(this.resultProceso.tipoPago=='Organico'){
+            this.RegistrarMatriculaAlumnoIzipayOrganico()
+          }
+          else{
+            if(this.resultProceso.idMatriculaCabecera>0 &&
+              this.resultProceso.idMatriculaCabecera!=null &&
+              this.resultProceso.idMatriculaCabecera!=undefined ){
+                this.ruta=this.ruta+'/'+this.resultProceso.idMatriculaCabecera
+                this.rutaCursos=this.rutaCursos+'/'+this.resultProceso.idMatriculaCabecera
+                this.CodigoMatricula=this.resultProceso.codigoMatricula
+                if(this.resultProceso.nombrePrograma==null || this.resultProceso.nombrePrograma=='null' || this.resultProceso.nombrePrograma==undefined){
+                  this.NombreCursoPago='';
+                }
+                else{
+                  this.NombreCursoPago=this.resultProceso.nombrePrograma
+                }
+            }
+            this.EnvioCorreoPagoExitoso()
+            this.RutaCargada=true;
+          }
         }
+
         if(this.resultProceso.estadoOperacion =='No Process' ||
               this.resultProceso.estadoOperacion =='Declinado'){
-                // this.EnvioCorreoErrorPago()
+                this.EnvioCorreoErrorPago()
             }
+
       },
       error:e=>{
         //this._router.navigate([this.ruta])
@@ -107,14 +127,22 @@ export class ResultadoPagoIzipayComponent implements OnInit,OnDestroy {
     console.log(this.resultProceso.registroAlumno)
     var paymentSummary = "";
     let countLista=0
-    this.resultProceso.listaCuota.forEach((l:any) => {
-      if(countLista==0){
-        paymentSummary += "<div style='display:flex;border-bottom: 1px solid black;padding: 5px 0;'>"+
-                          "<div style='font-size:13px;font-weight:100;width: 66%;'>" + l.nombre + "</div>" +
-                          "<div style='font-size:13px;width: 33%;text-align:right;'>" + l.cuotaTotal.toFixed(2) + " " + this.resultProceso.monedaCorreo + "</div></div>";
-      }
-      countLista++;
-    });
+    if(this.resultProceso.listaCuota.length==0){
+      paymentSummary += "<div style='display:flex;border-bottom: 1px solid black;padding: 5px 0;'>"+
+                            "<div style='font-size:13px;font-weight:100;width: 66%;'>" + 'Matrícula' + "</div>" +
+                            "<div style='font-size:13px;width: 33%;text-align:right;'>" + this.resultProceso.montoTotal.toFixed(2) + " " + this.resultProceso.monedaCorreo + "</div></div>";
+    }
+    else{
+      this.resultProceso.listaCuota.forEach((l:any) => {
+        if(countLista==0){
+          paymentSummary += "<div style='display:flex;border-bottom: 1px solid black;padding: 5px 0;'>"+
+                            "<div style='font-size:13px;font-weight:100;width: 66%;'>" + l.nombre + "</div>" +
+                            "<div style='font-size:13px;width: 33%;text-align:right;'>" + l.cuotaTotal.toFixed(2) + " " + this.resultProceso.monedaCorreo + "</div></div>";
+        }
+        countLista++;
+      });
+    }
+
     this.jsonCorreo.Asunto =
       'Confirmación de Pago - Izipay - BSG Institute';
     this.jsonCorreo.Destinatario = this.resultProceso.registroAlumno.correo;
@@ -135,8 +163,8 @@ export class ResultadoPagoIzipayComponent implements OnInit,OnDestroy {
       "<div style='font-size:13px;width: 33%;text-align:right;'>"+this.pipe.transform(this.resultProceso.fechaTransaccion, 'dd \'de\' MMMM \'del\' yyyy')+"</div></div>"+
       "<div style='padding-bottom:15px;padding-top:15px'>"+
         "<div style='font-size:14px;font-weight:bold'>"+
-        this.Matricula.nombrePGeneral+
-        "</div> Código de matrícula: "+this.Matricula.codigoMatricula+
+        this.NombreCursoPago+
+        "</div> Código de matrícula: "+this.CodigoMatricula+
         "<div></div>"+
       "</div>"+
       "<div style='display:flex;border-bottom: 1px solid black;padding: 5px 0;'>"+
@@ -221,20 +249,26 @@ export class ResultadoPagoIzipayComponent implements OnInit,OnDestroy {
   RegistrarMatriculaAlumnoIzipayOrganico(){
     this._FormaPagoService.RegistrarMatriculaAlumnoIzipayOrganico(this.IdentificadorTransaccion).pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
-        console.log(x)
         this.Matricula=x
-        this.ruta=this.ruta+'/'+this.Matricula.id
-        this.rutaCursos=this.rutaCursos+'/'+this.Matricula.id
-
+        if(this.Matricula.nombrePGeneral==null || this.Matricula.nombrePGeneral=='null' || this.Matricula.nombrePGeneral==undefined){
+          this.NombreCursoPago='';
+        }
+        else{
+          this.NombreCursoPago=this.Matricula.nombrePGeneral;
+          this.CodigoMatricula=this.Matricula.codigoMatricula;
+        }
       },
       error:e=>{
       },
       complete:()=>{
+        this.ruta=this.ruta+'/'+this.Matricula.id
+        this.rutaCursos=this.rutaCursos+'/'+this.Matricula.id
         this.RutaCargada=true;
+        this.CongelarPEspecificoMatriculaAlumnoOrganico()
         setTimeout(() => {
           this.EnvioCorreoPagoExitoso();
           this.EnvioCorreoRegularizarOportunidad()
-        }, 10000)
+        }, 5000)
       }
     })
   }
@@ -244,14 +278,22 @@ export class ResultadoPagoIzipayComponent implements OnInit,OnDestroy {
     console.log(this.resultProceso.registroAlumno)
     var paymentSummary = "";
     let countLista=0
-    this.resultProceso.listaCuota.forEach((l:any) => {
-      if(countLista==0){
-        paymentSummary += "<div style='display:flex;border-bottom: 1px solid black;padding: 5px 0;'>"+
-                          "<div style='font-size:13px;font-weight:100;width: 66%;'>" + l.nombre + "</div>" +
-                          "<div style='font-size:13px;width: 33%;text-align:right;'>" + l.cuotaTotal.toFixed(2) + " " + this.resultProceso.monedaCorreo + "</div></div>";
-      }
-      countLista++;
-    });
+    if(this.resultProceso.listaCuota.length==0){
+      paymentSummary += "<div style='display:flex;border-bottom: 1px solid black;padding: 5px 0;'>"+
+      "<div style='font-size:13px;font-weight:100;width: 66%;'>" + 'Matrícula' + "</div>" +
+      "<div style='font-size:13px;width: 33%;text-align:right;'>" + this.resultProceso.montoTotal.toFixed(2) + " " + this.resultProceso.monedaCorreo + "</div></div>";
+    }
+    else{
+      this.resultProceso.listaCuota.forEach((l:any) => {
+        if(countLista==0){
+          paymentSummary += "<div style='display:flex;border-bottom: 1px solid black;padding: 5px 0;'>"+
+                            "<div style='font-size:13px;font-weight:100;width: 66%;'>" + l.nombre + "</div>" +
+                            "<div style='font-size:13px;width: 33%;text-align:right;'>" + l.cuotaTotal.toFixed(2) + " " + this.resultProceso.monedaCorreo + "</div></div>";
+        }
+        countLista++;
+      });
+    }
+
     this.jsonCorreo.Asunto =
       'NUEVA MATRICULA ORGANICA';
     this.jsonCorreo.Destinatario = 'matriculas@bsginstitute.com';
@@ -272,8 +314,8 @@ export class ResultadoPagoIzipayComponent implements OnInit,OnDestroy {
       "<div style='font-size:13px;width: 33%;text-align:right;'>"+this.pipe.transform(this.resultProceso.fechaTransaccion, 'dd \'de\' MMMM \'del\' yyyy')+"</div></div>"+
       "<div style='padding-bottom:15px;padding-top:15px'>"+
         "<div style='font-size:14px;font-weight:bold'>"+
-        this.Matricula.nombrePGeneral+
-        "</div> Código de matrícula: "+this.Matricula.codigoMatricula+
+        this.NombreCursoPago+
+        "</div> Código de matrícula: "+this.CodigoMatricula+
         "<div></div>"+
       "</div>"+
       "<div style='display:flex;border-bottom: 1px solid black;padding: 5px 0;'>"+
@@ -306,6 +348,14 @@ export class ResultadoPagoIzipayComponent implements OnInit,OnDestroy {
     "</div>"+
   "</div>"
     this._PasarelaPagoCorreoService.EnvioCorreoMatriculaOrganica(this.jsonCorreo).pipe(takeUntil(this.signal$)).subscribe({
+      next: (x) => {
+        console.log(x);
+
+      },
+    });
+  }
+  CongelarPEspecificoMatriculaAlumnoOrganico(){
+    this._FormaPagoService.CongelarPEspecificoMatriculaAlumnoOrganico(this.Matricula.codigoMatricula,this.Matricula.id).pipe(takeUntil(this.signal$)).subscribe({
       next: (x) => {
         console.log(x);
 

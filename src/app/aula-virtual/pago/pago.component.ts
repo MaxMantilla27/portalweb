@@ -29,6 +29,7 @@ import { ModalPagoOpenpayColombiaComponent } from '../modal-confirmacion-pago/mo
 import { ModalPagoMultipagoComponent } from '../modal-confirmacion-pago/modal-pago-multipago/modal-pago-multipago.component';
 import { ModalAfiliacionIzipayComponent } from '../modal-confirmacion-pago-afiliacion/modal-afiliacion-izipay/modal-afiliacion-izipay.component';
 import { ScrollStrategyOptions } from '@angular/cdk/overlay';
+import { ChargeSpinnerComponent } from 'src/app/Core/Shared/Containers/Dialog/charge-spinner/charge-spinner.component';
 
 const pipe = new DatePipe('en-US')
 
@@ -99,6 +100,7 @@ export class PagoComponent implements OnInit,OnDestroy {
   public eventosPagoSelccion:boolean = false;
   public pagoRecurrenteActivado:boolean = false;
   public showTooltip: boolean = false;
+  public listaCronogramaPagosJson:any=[];
   ngOnInit(): void {
     let i=0
     this._HelperService.recibirCombosPerfil.pipe(takeUntil(this.signal$)).subscribe((x) => {
@@ -114,6 +116,8 @@ export class PagoComponent implements OnInit,OnDestroy {
             this.ObtenerCronogramaPagoMatricula()
             i++
           }
+        },
+        complete:()=> {
         },
       });
       this.obtenerTarjetas();
@@ -168,6 +172,7 @@ export class PagoComponent implements OnInit,OnDestroy {
         if(x.cronogramas!=undefined){
           this.CronogramaPago=x.cronogramas.listaCronogramaAlumno
           let count = 1;
+          let index = 0;
           this.CronogramaPago.registroCuota.forEach((x:any) => {
             if(x.tipoCuota=="MATRICULA"){
               x.numeroCuotaMostrar="MATRICULA"
@@ -176,6 +181,8 @@ export class PagoComponent implements OnInit,OnDestroy {
               x.numeroCuotaMostrar=count.toString();
               count++;
             }
+            x.index=index;
+            index++
           });
           this.idAlumno = this.CronogramaPago.idAlumno
 
@@ -194,20 +201,21 @@ export class PagoComponent implements OnInit,OnDestroy {
       }
     })
   }
-  ChangeEstadoCronograma(index:number){
-    var select=this.CronogramaPago.registroCuota[index];
+  ChangeEstadoCronograma(registro:any){
+    console.log(registro)
+    var select=this.CronogramaPago.registroCuota[registro.index];
     if(select.cancelado!=true){
       if(select.estado==true){
         let i=0;
         this.CronogramaPago.registroCuota.forEach((r:any) => {
-          if(i>=index){
+          if(i>=registro.index){
             r.estado=false
           }
           i++
         });
       }else{
-        if(index>0){
-          var ant=this.CronogramaPago.registroCuota[index-1];
+        if(registro.index>0){
+          var ant=this.CronogramaPago.registroCuota[registro.index-1];
           if(ant.cancelado==true){
             select.estado=true;
           }else{
@@ -222,10 +230,12 @@ export class PagoComponent implements OnInit,OnDestroy {
         }
       }
     }
-    this.sumarMotos()
+    this.sumarMontos()
+    this._SessionStorageService.SessionDeleteValue('listaCronogramaPagos');
+    this._SessionStorageService.SessionSetValue('listaCronogramaPagos',JSON.stringify(this.CronogramaPago.registroCuota));
   }
 
-  sumarMotos(){
+  sumarMontos(){
     this.total=0
     this.CronogramaPago.registroCuota.forEach((r:any) => {
       if(r.estado==true){
@@ -238,6 +248,7 @@ export class PagoComponent implements OnInit,OnDestroy {
       next:x=>{
         console.log("tarjeta",x)
         this.idPasarela=x[0].idPasarelaPago?x[0].idPasarelaPago:0
+        console.log(this.idPasarela)
 
         this.VerificarEstadoAfiliacion()
 
@@ -299,7 +310,10 @@ export class PagoComponent implements OnInit,OnDestroy {
           e.img=this._t.GetTarjeta(e.medioCodigo)
         });
         console.log("Tarjetas por alumno",this.tarjetas)
-      }
+      },
+      complete:()=> {
+        this.ObtenerInformacionPagoLocal()
+      },
     })
   }
 
@@ -390,6 +404,9 @@ export class PagoComponent implements OnInit,OnDestroy {
   }
   PreProcesoAfiliacionPagoRecurrente(tarjeta:any){
     console.log(tarjeta)
+    if(this.idPasarela=13){
+      tarjeta=this.tarjetas[0]
+    }
     this.CronogramaPago.registroCuota.forEach((r:any) => {
       if(r.cancelado==false){
         var fecha=new Date(r.fechaVencimiento);
@@ -410,8 +427,8 @@ export class PagoComponent implements OnInit,OnDestroy {
     this.jsonSend.IdPasarelaPago=tarjeta.idPasarelaPago
     this.jsonSend.MedioCodigo=tarjeta.medioCodigo
     this.jsonSend.MedioPago=tarjeta.medioPago
-      const dialogRef =this.dialog.open(ChargeComponent,{
-        panelClass:'dialog-charge',
+      const dialogRef =this.dialog.open(ChargeSpinnerComponent,{
+        panelClass:'dialog-charge-spinner',
         disableClose:true
       });
       this._FormaPagoService.PreProcesoAfiliacionAlumno(this.jsonSend).pipe(takeUntil(this.signal$)).subscribe({
@@ -446,8 +463,8 @@ export class PagoComponent implements OnInit,OnDestroy {
   }
 
   PreProcesoPagoCuotaAlumnoV2(tarjeta:any){
-    const dialogRefLoader =this.dialog.open(ChargeComponent,{
-      panelClass:'dialog-charge',
+    const dialogRefLoader =this.dialog.open(ChargeSpinnerComponent,{
+      panelClass:'dialog-charge-spinner',
       disableClose:true
     });
     this.CronogramaPago.registroCuota.forEach((r:any) => {
@@ -490,6 +507,11 @@ export class PagoComponent implements OnInit,OnDestroy {
               data: { Identificador: sesion, IdMatricula: this.idMatricula, DatosFacturacion:this.DatosFacturacion },
               panelClass: 'dialog-Tarjeta-Modal',
               disableClose:true
+            });
+            dialogRef.afterClosed().pipe(takeUntil(this.signal$)).subscribe(result => {
+              if(result==true){
+                window.location.reload()
+              }
             });
 
             // this._router.navigate(['/AulaVirtual/MisPagos/'+this.idMatricula+'/visa/'+sesion]);
@@ -575,7 +597,11 @@ export class PagoComponent implements OnInit,OnDestroy {
               disableClose:true
               // disableClose:true
             });
-            // this._router.navigate(['/AulaVirtual/MisPagos/'+this.idMatricula+'/izipay/'+sesion]);
+            dialogRef.afterClosed().pipe(takeUntil(this.signal$)).subscribe(result => {
+              if(result==true){
+                window.location.reload()
+              }
+            });
           }
           if(parseInt(tarjeta.idPasarelaPago)==16){
             console.log('/AulaVirtual/MisPagos/'+this.idMatricula+'/openpayCOP/'+sesion)
@@ -635,8 +661,8 @@ export class PagoComponent implements OnInit,OnDestroy {
     this.jsonSend.IdPasarelaPago=tarjeta.idPasarelaPago
     this.jsonSend.MedioCodigo=tarjeta.medioCodigo
     this.jsonSend.MedioPago=tarjeta.medioPago
-    const dialogRef =this.dialog.open(ChargeComponent,{
-      panelClass:'dialog-charge',
+    const dialogRef =this.dialog.open(ChargeSpinnerComponent,{
+      panelClass:'dialog-charge-spinner',
       disableClose:true
     });
     this._FormaPagoService.PreProcesoAfiliacionAlumno(this.jsonSend).pipe(takeUntil(this.signal$)).subscribe({
@@ -679,8 +705,8 @@ export class PagoComponent implements OnInit,OnDestroy {
     })
   }
   PreProcesoPagoCuotaAlumno(tarjeta:any){
-    const dialogRef =this.dialog.open(ChargeComponent,{
-      panelClass:'dialog-charge',
+    const dialogRef =this.dialog.open(ChargeSpinnerComponent,{
+      panelClass:'dialog-charge-spinner',
       disableClose:true
     });
     this.CronogramaPago.registroCuota.forEach((r:any) => {
@@ -834,6 +860,25 @@ export class PagoComponent implements OnInit,OnDestroy {
     }
     else{
       this.EstadoAfiliado = !this.EstadoAfiliado;
+    }
+  }
+  ObtenerInformacionPagoLocal(){
+    var localCronogramaPagos = this._SessionStorageService.SessionGetValue('listaCronogramaPagos');
+    console.log(localCronogramaPagos)
+    if(localCronogramaPagos!=''){
+      this.listaCronogramaPagosJson = JSON.parse(localCronogramaPagos);
+      console.log(this.listaCronogramaPagosJson)
+      let valorCargado=-1;
+      this.listaCronogramaPagosJson.forEach((x:any) => {
+        if(x.estado==true){
+          valorCargado=x.index
+          this.ChangeEstadoCronograma(this.listaCronogramaPagosJson[x.index])
+        }
+      });
+      if(valorCargado==-1){
+        this._SessionStorageService.SessionDeleteValue('listaCronogramaPagos');
+      }
+
     }
   }
 }

@@ -150,6 +150,6 @@ export class ModalPagoVisaComponent implements OnInit {
     this._SessionStorageService.SessionSetValue('comprobante',JSON.stringify(this.DataComprobante));
   }
   cerraModal(){
-    this.dialogRef.close();
+    this.dialogRef.close(true);
   }
 }
