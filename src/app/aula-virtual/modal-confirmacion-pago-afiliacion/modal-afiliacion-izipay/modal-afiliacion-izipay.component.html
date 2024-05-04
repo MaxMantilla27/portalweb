@@ -1,4 +1,4 @@
-<div class="container" [hidden]="hidenBotom" >
+<div class="container">
   <div class="row" style="justify-content: end;">
     <mat-icon class="btn" (click)="cerraModal()">close</mat-icon>
   </div>
@@ -60,20 +60,22 @@
           </mat-form-field>
         </ng-container>
 
-        <div id="header"> </div>
-        <div style="text-align: center" >
-          <div id="FormBody" class="kr-embedded"  kr-popin  style="display: flex;padding-top: 100px;">
-            <!-- payment form fields -->
-            <div class="kr-pan"></div>
-            <div class="kr-expiry"></div>
-            <div class="kr-security-code"></div>
+        <div  [hidden]="hidenBotom" >
+          <div id="header"> </div>
+          <div style="text-align: center" >
+            <div id="FormBody" class="kr-embedded"  kr-popin  style="display: flex;padding-top: 100px;">
+              <!-- payment form fields -->
+              <div class="kr-pan"></div>
+              <div class="kr-expiry"></div>
+              <div class="kr-security-code"></div>
 
-            <!-- payment form submit button -->
-            <button class="kr-payment-button"></button>
+              <!-- payment form submit button -->
+              <button class="kr-payment-button"></button>
 
-            <!-- error zone -->
-            <div class="kr-form-error"></div>
+              <!-- error zone -->
+              <div class="kr-form-error"></div>
 
+            </div>
           </div>
         </div>
 

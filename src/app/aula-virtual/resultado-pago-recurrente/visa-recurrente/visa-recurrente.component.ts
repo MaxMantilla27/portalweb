@@ -84,7 +84,8 @@ export class VisaRecurrenteComponent implements OnInit {
         this._FormaPagoService.ObtenerPreProcesoPagoCuotaAlumno(json).pipe(takeUntil(this.signal$)).subscribe({
           next:x=>{
             this.resultVisa=x._Repuesta
-
+          },
+          complete:()=>{
             if(this.resultVisa.estadoOperacion=='Processed'){
               if(this.resultVisa.tipoPago=='Organico'){
                 this.RegistrarMatriculaAlumnoOrganico()

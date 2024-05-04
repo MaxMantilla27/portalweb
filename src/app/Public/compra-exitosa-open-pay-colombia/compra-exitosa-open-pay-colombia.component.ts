@@ -231,7 +231,7 @@ export class CompraExitosaOpenPayColombiaComponent implements OnInit {
     }
 
     this.jsonCorreo.Asunto =
-      'Confirmación de Pago - Openpay Colombia - BSG Institute';
+    'Confirmación de Pago '+this.resultVisa.nombrePasarela+'- BSG Institute';
     this.jsonCorreo.Destinatario = this.resultVisa.registroAlumno.correo;
     this.jsonCorreo.Contenido =
     "<div style='margin-left:8rem;margin-right:8rem'>"+
@@ -296,7 +296,7 @@ export class CompraExitosaOpenPayColombiaComponent implements OnInit {
   }
   EnvioCorreoErrorPago(){
     this.jsonCorreo.Asunto =
-      'Error al Procesar tu Pago - OpenPay Colombia - BSG Institute';
+    'Error al Procesar tu Pago '+this.resultVisa.nombrePasarela+'- BSG Institute';
     this.jsonCorreo.Destinatario = this.resultVisa.registroAlumno.correo;
     this.jsonCorreo.Contenido =
     "<div style='margin-left:8rem;margin-right:8rem'>"+

@@ -31,7 +31,7 @@ export class ConfirmacionPagoIzipayComponent
     private _router: Router
   ) {}
   ngAfterViewInit(): void {
-    
+
     this._ActivatedRoute.params.pipe(takeUntil(this.signal$)).subscribe({
       next: (x) => {
         this.idMatricula = parseInt(x['IdMatricula']);
@@ -54,9 +54,9 @@ export class ConfirmacionPagoIzipayComponent
     IdentificadorTransaccion: '',
     RequiereDatosTarjeta: false,
   };
-  
-  public resultPreValidacion: any;
 
+  public resultPreValidacion: any;
+  private kryptonScriptLoaded: boolean = false;
   customForm(){
     var boton=document.getElementsByClassName('kr-popin-button');
     if(typeof(boton) != 'undefined' && boton != null && boton.length>0)
@@ -73,17 +73,17 @@ export class ConfirmacionPagoIzipayComponent
       );
 
     var logo=document.getElementsByClassName('kr-header-logo');
-    if(typeof(logo) != 'undefined' && logo != null && logo.length>0) 
+    if(typeof(logo) != 'undefined' && logo != null && logo.length>0)
       logo[1].setAttribute("src","../../../assets/imagenes/logo-bsg.png");
 
     var spanNombre= document.getElementsByClassName('kr-popin-shop-name');
-    if(typeof(spanNombre) != 'undefined' && spanNombre != null && spanNombre.length>0) 
+    if(typeof(spanNombre) != 'undefined' && spanNombre != null && spanNombre.length>0)
       spanNombre[0].className="";
 
     var modalHeader = document.getElementsByClassName('kr-popin-modal-header');
-    if(typeof(modalHeader) != 'undefined' && modalHeader != null && modalHeader.length>0) 
+    if(typeof(modalHeader) != 'undefined' && modalHeader != null && modalHeader.length>0)
       modalHeader[0].setAttribute("style", "margin-bottom: 0px;height: 70px;");
-    
+
     this.hidenBotom=false
   }
   ngOnDestroy(): void {
@@ -93,7 +93,7 @@ export class ConfirmacionPagoIzipayComponent
   ngOnInit(): void {
   }
   ObtenerPreProcesoPagoCuotaAlumno() {
-    
+
     this._FormaPagoService
       .ObtenerPreProcesoPagoCuotaAlumno(this.json)
       .pipe(takeUntil(this.signal$))
@@ -101,35 +101,42 @@ export class ConfirmacionPagoIzipayComponent
         next: (x) => {
           this.resultPreValidacion = x._Repuesta;
           this.iniciarScripsIzipay();
-          
+
         },
       });
   }
 
   iniciarScripsIzipay() {
-    let script1 = this._renderer2.createElement('script');
-    script1.src =
-      'https://static.micuentaweb.pe/static/js/krypton-client/V4.0/stable/kr-payment-form.min.js';
-    script1.setAttribute(
-      'kr-public-key',
-      this.resultPreValidacion.procesoPagoBotonIziPay.publicKey
-    );
-    script1.setAttribute('kr-post-url-success', 
-    'https://proceso-pago.bsginstitute.com/ProcesoPagoIziPay/Cronograma?IdTransaccion='+this.json.IdentificadorTransaccion);
-    script1.setAttribute('kr-post-url-refused', 
-    'https://proceso-pago.bsginstitute.com/ProcesoPagoIziPay/Cronograma?IdTransaccion='+this.json.IdentificadorTransaccion);
-    this._renderer2.appendChild(
-      this._document.getElementById('header'),
-      script1
-    );
-    
-    let script2 = this._renderer2.createElement('script');
-    script2.src =
-      'https://static.micuentaweb.pe/static/js/krypton-client/V4.0/ext/classic.js';
-    this._renderer2.appendChild(
-      this._document.getElementById('header'),
-      script2
-    );
+    this.kryptonScriptLoaded=false;
+    if (!this.kryptonScriptLoaded) {
+      let script1 = this._renderer2.createElement('script');
+      script1.src =
+        'https://static.micuentaweb.pe/static/js/krypton-client/V4.0/stable/kr-payment-form.min.js';
+      script1.setAttribute(
+        'kr-public-key',
+        this.resultPreValidacion.procesoPagoBotonIziPay.publicKey
+      );
+      script1.setAttribute('kr-post-url-success',
+      'https://proceso-pago.bsginstitute.com/ProcesoPagoIziPay/Cronograma?IdTransaccion='+this.json.IdentificadorTransaccion);
+      script1.setAttribute('kr-post-url-refused',
+      'https://proceso-pago.bsginstitute.com/ProcesoPagoIziPay/Cronograma?IdTransaccion='+this.json.IdentificadorTransaccion);
+      script1.setAttribute('kr-lang', 'es');
+      this._renderer2.appendChild(
+        this._document.getElementById('header'),
+        script1
+      );
+
+      let script2 = this._renderer2.createElement('script');
+      script2.src =
+        'https://static.micuentaweb.pe/static/js/krypton-client/V4.0/ext/classic.js';
+      this._renderer2.appendChild(
+        this._document.getElementById('header'),
+        script2
+      );
+      // Marcar el script como cargado
+      this.kryptonScriptLoaded = true;
+    }
+
 
     let divForm = this._renderer2.createElement('div');
     divForm = this._document.getElementById('FormBody');
@@ -145,7 +152,7 @@ export class ConfirmacionPagoIzipayComponent
       }else{
         window.location.reload()
       }
-    }, 500);
+    }, 5000);
   }
 
 

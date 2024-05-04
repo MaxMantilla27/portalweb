@@ -58,6 +58,7 @@ export class PagoVisaComponent implements OnInit,OnDestroy {
     },
   }
   public intervcal:any
+  private kryptonScriptLoaded: boolean = false;
   ngOnInit(): void {
     this._ActivatedRoute.params.pipe(takeUntil(this.signal$)).subscribe({
       next: (x) => {
@@ -96,27 +97,32 @@ export class PagoVisaComponent implements OnInit,OnDestroy {
           }else{
             window.location.reload()
           }
-        }, 500);
+        }, 5000);
       }
     })
   }
   addVisa(){
-    let script = this._renderer2.createElement('script');
-    script.src='https://static-content.vnforapps.com/v2/js/checkout.js'
-    script.setAttribute('data-sessiontoken',this.resultVisa.procesoPagoBotonVisa.sessionKey)
-    script.setAttribute('data-channel','web')
-    script.setAttribute('data-merchantid',this.resultVisa.procesoPagoBotonVisa.merchanId)
-    script.setAttribute('data-buttonsize','DEFAULT')
-    script.setAttribute('data-merchantlogo','https://img.bsginstitute.com/repositorioweb/img/logobsg-visa.svg')
-    script.setAttribute('data-formbuttoncolor','#eea236')
-    script.setAttribute('data-merchantname','BSG Institute')
-    script.setAttribute('data-purchasenumber',this.resultVisa.procesoPagoBotonVisa.orderVisa.purchaseNumber)
-    script.setAttribute('data-amount',parseFloat(this.resultVisa.procesoPagoBotonVisa.amount+'.00'))
-    script.setAttribute('data-expirationminutes','5')
-    script.setAttribute('data-timeouturl',this.urlBase)
-    this._document.getElementById('visa')!.innerHTML = "";
+    this.kryptonScriptLoaded=false;
+    if (!this.kryptonScriptLoaded) {
+      let script = this._renderer2.createElement('script');
+      script.src='https://static-content.vnforapps.com/v2/js/checkout.js'
+      script.setAttribute('data-sessiontoken',this.resultVisa.procesoPagoBotonVisa.sessionKey)
+      script.setAttribute('data-channel','web')
+      script.setAttribute('data-merchantid',this.resultVisa.procesoPagoBotonVisa.merchanId)
+      script.setAttribute('data-buttonsize','DEFAULT')
+      script.setAttribute('data-merchantlogo','https://img.bsginstitute.com/repositorioweb/img/logobsg-visa.svg')
+      script.setAttribute('data-formbuttoncolor','#eea236')
+      script.setAttribute('data-merchantname','BSG Institute')
+      script.setAttribute('data-purchasenumber',this.resultVisa.procesoPagoBotonVisa.orderVisa.purchaseNumber)
+      script.setAttribute('data-amount',parseFloat(this.resultVisa.procesoPagoBotonVisa.amount+'.00'))
+      script.setAttribute('data-expirationminutes','5')
+      script.setAttribute('data-timeouturl',this.urlBase)
+      this._document.getElementById('visa')!.innerHTML = "";
 
-    this._renderer2.appendChild(this._document.getElementById('visa'), script);
+      this._renderer2.appendChild(this._document.getElementById('visa'), script);
+      this.kryptonScriptLoaded=true;
+    }
+
   }
 
 }

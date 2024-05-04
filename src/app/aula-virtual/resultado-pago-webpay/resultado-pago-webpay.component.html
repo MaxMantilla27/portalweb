@@ -5,8 +5,8 @@
       <div class="col-12 col-md-10 col-lg-8" *ngIf="resultWebpay.responseCode!=0">
         <ng-container >
           <div class="titleResultPago">
+            <img style="margin-right: 10px;"  src="../../../assets/icons/denegado-error-rojo.svg" alt="">
             <div>No se realizó el pago</div>
-            <img src="../../../assets/icons/denegado-error-21.svg" alt="">
           </div>
           <div class="textResultPago">
             <ng-container *ngIf="resultWebpay.responseCode==-1 && resultWebpay.vci=='TSY'">

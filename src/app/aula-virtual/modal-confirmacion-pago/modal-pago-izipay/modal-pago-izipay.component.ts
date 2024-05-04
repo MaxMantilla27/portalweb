@@ -95,12 +95,14 @@ export class ModalPagoIzipayComponent implements OnInit, OnDestroy, AfterViewIni
       'https://proceso-pago.bsginstitute.com/ProcesoPagoIziPay/Cronograma?IdTransaccion='+this.json.IdentificadorTransaccion);
       script1.setAttribute('kr-post-url-refused',
       'https://proceso-pago.bsginstitute.com/ProcesoPagoIziPay/Cronograma?IdTransaccion='+this.json.IdentificadorTransaccion);
+      script1.setAttribute('kr-lang', 'es');
       this._renderer2.appendChild(this._document.getElementById('header'),script1);
 
       let script2 = this._renderer2.createElement('script');
       script2.src ='https://static.micuentaweb.pe/static/js/krypton-client/V4.0/ext/classic.js';this._renderer2.appendChild(
         this._document.getElementById('header'),script2 );
 
+      // Marcar el script como cargado
       this.kryptonScriptLoaded = true;
 
     }
@@ -120,7 +122,7 @@ export class ModalPagoIzipayComponent implements OnInit, OnDestroy, AfterViewIni
       }else{
         window.location.reload()
       }
-    }, 1000);
+    }, 5000);
   }
   customForm(){
     var boton=document.getElementsByClassName('kr-popin-button');
