@@ -85,7 +85,7 @@ export class ResultadoPagoWebpayComponent implements OnInit {
       },
       complete:()=>{
         if(this.resultWebpay.estadoOperacion=='Processed'){
-          if(this.resultWebpay.tipoPago=='Organico'){
+          if(this.resultWebpay.tipoPago=='Organico'||this.resultWebpay.idMatriculaCabecera==0){
             this.RegistrarMatriculaAlumnoOrganico()
           }
           else{

@@ -124,7 +124,7 @@ export class CompraExitosaOpenPayColombiaComponent implements OnInit {
             this.resultVisa=x._Repuesta;
             if(this.resultVisa.estadoOperacion=='Processed')
             {
-              if(this.resultVisa.tipoPago=='Organico'){
+              if(this.resultVisa.tipoPago=='Organico'||this.resultVisa.idMatriculaCabecera==0){
                 this.RegistrarMatriculaAlumnoOrganico()
               }
               else{
