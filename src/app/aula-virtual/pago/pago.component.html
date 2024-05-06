@@ -76,7 +76,7 @@
     </div>
     <div class="row">
       <div class="col-12 col-md-7 col-lg-7" >
-        <div class="table-resposive" style="padding: 10px;">
+        <div class="table-resposive" style="padding-top: 10px;">
           <table style="width: 100%" class="table">
             <thead>
               <tr>
@@ -136,41 +136,23 @@
           </table>
         </div>
         <div *ngIf="EstadoAfiliado==true">
-          <div style="display: flex; margin-top: 2rem; margin-left: 4rem;"
-            (mouseenter)="showTooltip = true"
-            (mouseleave)="showTooltip = false">
-
-          <div>
-            <i style="font-size: 25px !important;" class="material-icons">check_box</i>
-          </div>
-
-          <div class="itemsMisPagos" style="display: flex;">
-            <div>
-              Afiliado a
+          <div style="padding: 10px 5px 10px 5px; display: flex;">
+            <div style="margin-right: 5px;">
+              <i class="material-icons" style="color: #0076FF">check_box</i>
             </div>
-            <div style="color: #0076FF;margin-left: 3px;font-weight: bold;">
-              pagos recurrentes.
-            </div>
-          </div>
-
-          <!-- Tooltip -->
-          <div [ngClass]="{'MensajeMouse': true, 'show': showTooltip}" class="MensajeMouse">
-            <div class="col-6 col-md-6 col-lg-6 itemsMisPagos" style="margin-bottom: 2rem;margin-left: 6rem;">
-              <div>
-                <div class="row" style="border: solid 2px #0076FF;border-radius: 15px;background: #EFF8FF; margin-top: 20px;">
-                  <div style="padding: 10px 5px 10px 5px; display: flex;">
-                    <div class="col-1" style="width: 20px; height: 20px; border-radius: 50%; background-color: #0076FF; display: flex; justify-content: center; align-items: center;">
-                      <i class="material-icons" style="color: white;">priority_high</i>
-                    </div>
-                    <div class="col-11">
-                      <div style="font-weight: bold;">
-                        Para desafiliarte de pagos recurrentes, comunícate con tu asesor académico.
-                      </div>
-                    </div>
-                  </div>
-                </div>
+            <div style="position: relative;">
+              <div style="font-weight: bold;">
+                  <span style="display: inline-block; color: #4A4A49; margin-right: 5px;">Afiliado a </span>
+                  <span style="display: inline-block; color: #0076FF;">pagos recurrentes
+                      <i class="material-icons" style="vertical-align: middle; cursor: pointer; color: #0076FF;"
+                         (mouseover)="showTooltip = true" (mouseleave)="showTooltip = false"
+                         (touchstart)="showTooltip = true" (touchend)="showTooltip = false"
+                         ontouchstart="void(0)" ontouchend="void(0)">info</i>
+                  </span>
               </div>
-            </div>
+              <div *ngIf="showTooltip" style="position: absolute; background-color: #EFF8FF; border: solid 2px #0076FF; border-radius: 15px; padding: 10px; z-index: 1; margin-top: -90px; width: auto; max-width: 100vw; white-space: normal;font-size: 12px;">
+                Para desafiliarte de pagos recurrentes, comunícate con tu asesor académico.
+              </div>
           </div>
         </div>
 
@@ -212,26 +194,32 @@
                     Método de pago aceptados:
                   </span>
                 </div>
-                <div class="row mb-3">
-                  <span>
-                    Tarjeta de débito/crédito:
-                    <ng-container *ngFor="let imgMedioPago of tarjetas">
-                      <mat-radio-button
-                        [value]="imgMedioPago"
-                        (change)="onChangeRadioButton(imgMedioPago)"
-                        class="m-2"
-                        color="primary"
-                        *ngIf="validadorPagosMultiples.length != 0"
-                      >
-                        <img [src]="'../../../../assets/icons/'+imgMedioPago.img" alt="" class="gray-border" style="width: 35px;">
-                      </mat-radio-button>
-                      <img [src]="'../../../../assets/icons/'+imgMedioPago.img" alt="" class="m-2" style="width: 35px;" *ngIf="validadorPagosMultiples.length == 0">
-                    </ng-container>
-                    <mat-error *ngIf="validadorPagosMultiples?.length > 0 && medioPagoSeleccionado == undefined && eventosPagoSelccion == true">
-                      Debe seleccionar un medio de pago
-                    </mat-error>
+                <div class="row mb-3" style="padding: 0px!important;">
+                  <span >
+                    <div style="margin-right: 10px;"> <!-- Añadí un margen derecho para separar el texto de las imágenes -->
+                      Tarjeta de débito/crédito:
+                    </div>
+                    <div style="display: flex; align-items: center; flex-wrap: wrap;">
+                      <ng-container *ngFor="let imgMedioPago of tarjetas">
+                        <mat-radio-button
+                          [value]="imgMedioPago"
+                          (change)="onChangeRadioButton(imgMedioPago)"
+                          class="m-2"
+                          color="primary"
+                          *ngIf="validadorPagosMultiples.length != 0"
+                        >
+                          <img [src]="'../../../../assets/icons/'+imgMedioPago.img" alt="" class="gray-border" style="width: 35px;">
+                        </mat-radio-button>
+                        <img [src]="'../../../../assets/icons/'+imgMedioPago.img" alt="" class="m-2" style="width: 35px;" *ngIf="validadorPagosMultiples.length == 0">
+                      </ng-container>
+                      <mat-error *ngIf="validadorPagosMultiples?.length > 0 && medioPagoSeleccionado == undefined && eventosPagoSelccion == true" style="margin-left: 10px;"> <!-- Añadí un margen izquierdo para separar el mensaje de error del texto -->
+                        Debe seleccionar un medio de pago
+                      </mat-error>
+                    </div>
+
                   </span>
                 </div>
+
                 <ng-container *ngIf="validadorPagosChile!=true">
                   <span class="tot mb-3">
                     Tipo de comprobante:
@@ -269,7 +257,7 @@
         </div>
         <div class="row"  style="justify-content: center;padding: 0px 15px 0px 15px;">
           <div class="col-12 col-md-10 col-lg-10 CardPagoMisPagos" style="border-color: transparent !important;width: 25rem;">
-            <div *ngIf="idPasarela!=0">
+            <div *ngIf="idPasarela!=0 && EstadoAfiliado!=true">
               <div *ngIf="(idPasarela==7 && medioPagoSeleccionado.idFormaPago==52)||idPasarela==5 ||idPasarela==13||idPasarela==16||idPasarela==18"
               class="row" style="margin-top: 10px;">
                 <div style="padding: 10px 5px 10px 5px; display: flex;">

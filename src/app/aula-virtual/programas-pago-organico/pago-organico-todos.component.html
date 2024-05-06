@@ -56,13 +56,13 @@
               Versión Gerencial,
             </ng-container>
             <ng-container *ngIf="item.idTipoPago == 1">
-              al Contado: {{ item.codigoMoneda }} {{ roundNumber(item.cuotas) }}
+              Al Contado: {{ item.codigoMoneda }} {{ item.cuotas}}
             </ng-container>
             <ng-container *ngIf="item.idTipoPago == 2">
-              pago en 1 matricula de
-              {{ item.codigoMoneda }} {{ roundNumber(item.matricula) }} y
+              Pago en 1 matricula de
+              {{ item.codigoMoneda }} {{ item.matricula }} y
               {{ item.nroCuotas }} cuotas mensuales de {{ item.codigoMoneda }}
-              {{ roundNumber(item.cuotas)   }}
+              {{ item.cuotas   }}
             </ng-container>
           </mat-option>
         </mat-select>
@@ -149,7 +149,7 @@
         <div class="contentResumenPago">
           <div class="subtitleResumenPago">{{ datospago.nombre }}</div>
           <div class="ItemsResumenPago row">
-            <div class="col-12 row itms">
+            <div class="col-12 row itms" style="padding: 0px !important;border-top: none !important;">
               <div *ngIf="infoPago.version != ''" class="verionPago" style="margin: 10px 0px; font-size: 14px">
                 {{infoPago.version }}
               </div>
@@ -168,13 +168,13 @@
             <div class="row verionPago " style="color: #878787;">
               <div *ngIf="formaPagoSeleccion.idTipoPago==2" class="col" style="color: #878787;">Matricula</div>
               <div *ngIf="formaPagoSeleccion.idTipoPago==1" class="col" style="color: #878787;">Al Contado</div>
-              <div class="col" style=" color: #878787;">{{ infoPago.precio!='' ? roundNumber(infoPago.precio): '' }} {{  infoPago.precio != '' ? formapago[0].codigoMoneda : "" }} {{ formaPagoSeleccion.codigo }}</div>
+              <div class="col" style=" color: #878787;">{{ infoPago.precio!='' ? infoPago.precio: '' }} {{  infoPago.precio != '' ? formapago[0].codigoMoneda : "" }} {{ formaPagoSeleccion.codigo }}</div>
             </div>
             <br>
             <div class="col-12 row" style="padding-top: 15px; display: flex;">
               <div class="col" style="font-weight:600;">Total a pagar</div>
               <div class="col" style="font-weight:600;">
-                {{ infoPago.precio!='' ? roundNumber(infoPago.precio):''}}
+                {{ infoPago.precio!='' ? infoPago.precio:''}}
                 {{  infoPago.precio != '' ? formapago[0].codigoMoneda : "" }}
                 {{ formaPagoSeleccion.codigo }}
               </div>

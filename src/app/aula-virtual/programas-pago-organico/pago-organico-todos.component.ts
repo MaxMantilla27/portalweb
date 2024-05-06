@@ -153,22 +153,8 @@ export class PagoOrganicoTodosComponent implements OnInit, OnDestroy {
     this.signal$.next(true)
     this.signal$.complete()
   }
-  scrollComponentePagosTodosIntoView() {
-    this._HelperService.recibirScrollPago.pipe(takeUntil(this.signal$)).subscribe(x => {
-      console.log(x);
-      if (x === 'componentePagosTodos') {
-        console.log('Subiendo...');
-        const componentePagosTodos = this.elementRef.nativeElement.querySelector('#componentePagosTodos');
-        if (componentePagosTodos) {
-          componentePagosTodos.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }
-      }
-    });
-  }
   ngOnInit(): void {
     window.scrollTo({ top: 0, behavior: 'smooth' })
-    // this.scrollComponentePagosTodosIntoView()
-    // this.scrollInicio()
     // this.dialogRef =this.dialog.open(ChargeSpinnerComponent,{
     //   panelClass:'dialog-charge',
     //   disableClose:true
@@ -279,6 +265,7 @@ export class PagoOrganicoTodosComponent implements OnInit, OnDestroy {
             ).length > 0
               ? true
               : false;
+          this.tarjetas=undefined;
           this.tarjetas = x;
           this.tarjetas.forEach((e: any) => {
             e.img = this._t.GetTarjeta(e.medioCodigo);
@@ -444,12 +431,12 @@ export class PagoOrganicoTodosComponent implements OnInit, OnDestroy {
       this.infoPago.version = '';
     }
     if (fp.idTipoPago == 1) {
-      value += 'al Contado: ' + fp.simbolo + ' ' + fp.cuotas;
+      value += 'Al Contado: ' + fp.simbolo + ' ' + fp.cuotas;
     }
 
     if (fp.idTipoPago == 2) {
       value +=
-        'pago en 1 matricula de' +
+        'Pago en 1 matricula de' +
         fp.simbolo +
         ' ' +
         fp.matricula +
@@ -820,15 +807,8 @@ export class PagoOrganicoTodosComponent implements OnInit, OnDestroy {
   OpenModalMetodoPagoSucripcion(): void {
 
   }
-
-  roundNumber(num: number | null | undefined): number | string {
-    if (num == null) return '';
-    return Math.round(num);
-  }
-  scrollInicio(){
-    console.log(this.componentePagosTodos)
-    if(this.componentePagosTodos!=undefined){
-      this.componentePagosTodos.nativeElement.click()
-    }
+  FormatoMilesDecimales(Valor:number){
+    var separadorMiles = '.';
+    var separadorDecimales = ',';
   }
 }
