@@ -87,7 +87,9 @@ export class DocenciaAccesoClasesComponent implements OnInit,OnChanges,OnDestroy
         this.Actual=[]
         var primero=true
         x.forEach((s:any) => {
-
+          if(s.idPEspecificoPadre==21151){
+            s.urlWebex='https://bsginstitute.webex.com/meet/webexinstitutobsg3'
+          }
           if(s.esVisible==true){
             var f=new Date(s.fechaHoraInicio);
             f.setMinutes(f.getMinutes()+(s.duracion*60))
@@ -95,6 +97,8 @@ export class DocenciaAccesoClasesComponent implements OnInit,OnChanges,OnDestroy
 
             let f1=new Date((new Date(s.fechaHoraInicio)).getFullYear(),(new Date(s.fechaHoraInicio)).getMonth(),(new Date(s.fechaHoraInicio)).getDate());
             let f2=new Date((new Date()).getFullYear(),(new Date()).getMonth(),(new Date()).getDate());
+            console.log(f1)
+            console.log(f2)
             if(+f1==+f2){
               this.Actual.push(s)
             }else{
@@ -108,6 +112,7 @@ export class DocenciaAccesoClasesComponent implements OnInit,OnChanges,OnDestroy
             }
           }
         });
+        console.log(this.Actual)
         var pending=0
         this.Actual.forEach((a:any) => {
           a.IsValid=false
@@ -115,16 +120,12 @@ export class DocenciaAccesoClasesComponent implements OnInit,OnChanges,OnDestroy
           let f2=new Date();
           var diference=((f1.getHours()*60)+f1.getMinutes())-((f2.getHours()*60)+f2.getMinutes());
 
-          if(diference<=15){
-            if(a.urlWebex!=null){
-              a.IsValid=true;
-            }
-          }else{
-            pending++
+          if(a.urlWebex!=null){
+            a.IsValid=true;
           }
         });
         if(pending>0){
-          this.SetIntervalo();
+          // this.SetIntervalo();
         }
         if(this.tableData!=undefined && this.tableData!=null && this.tableData.length){
           this.tableData.forEach((c:any) => {

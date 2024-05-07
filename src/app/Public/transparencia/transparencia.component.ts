@@ -41,9 +41,8 @@ export class TransparenciaComponent implements OnInit {
   }
   ModalProcesoMatricula(){
     this.dialog.open(ProcesoMatriculaModalComponent, {
-      width: '1000px',
-      data: 'https://drive.google.com/file/d/1rxVwe1PFGCxXfdY3UPFaMbWDBaX-2w4_/view?usp=sharing',
-      panelClass: 'dialog-Imagen-Modal'
+      panelClass: 'dialog-imagen-proceso-matricula',
+      disableClose:true
     });
   }
 

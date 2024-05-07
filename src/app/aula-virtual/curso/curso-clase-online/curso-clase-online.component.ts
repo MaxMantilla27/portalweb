@@ -82,6 +82,9 @@ export class CursoClaseOnlineComponent implements OnInit,OnDestroy,OnChanges {
           var i=0
           var primero=true
           x.forEach((s:any) => {
+            if(s.idMatriculaCabecera==65033){
+              s.urlWebex='https://bsginstitute.webex.com/meet/webexinstitutobsg3'
+            }
             if(s.claseActiva==true || s.esVisible==true){
               i++
               s.Sesion=i;
@@ -122,16 +125,12 @@ export class CursoClaseOnlineComponent implements OnInit,OnDestroy,OnChanges {
             var diference=((f1.getHours()*60)+f1.getMinutes())-((f2.getHours()*60)+f2.getMinutes());
             var diferenceFin=((f1.getHours()*60)+f1.getMinutes())-((f3.getHours()*60)+f3.getMinutes());
 
-            if(diference<=15 && diference>=diferenceFin){
-              if(a.urlWebex!=null){
-                a.IsValid=true;
-              }
-            }else{
-              pending++
+            if(a.urlWebex!=null){
+              a.IsValid=true;
             }
           });
           if(pending>0){
-            this.SetIntervalo();
+            // this.SetIntervalo();
           }
           if(this.clases!=undefined && this.clases!=null && this.clases.length){
             this.clases.forEach((c:any) => {
@@ -197,16 +196,12 @@ export class CursoClaseOnlineComponent implements OnInit,OnDestroy,OnChanges {
             var diference=((f1.getHours()*60)+f1.getMinutes())-((f2.getHours()*60)+f2.getMinutes());
             var diferenceFin=((f1.getHours()*60)+f1.getMinutes())-((f3.getHours()*60)+f3.getMinutes());
 
-          if(diference<=15 && diference>=diferenceFin){
             if(a.urlWebex!=null){
               a.IsValid=true;
             }
-          }else{
-            pending++
-          }
         });
         if(pending>0){
-          this.SetIntervalo();
+          // this.SetIntervalo();
         }
         if(this.clases!=undefined && this.clases!=null && this.clases.length){
         console.log(this.clases)
