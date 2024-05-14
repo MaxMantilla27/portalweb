@@ -55,12 +55,6 @@ export class FooterComponent implements OnInit {
         alt: 'Bandera de Colombia'
       },
       {
-        icono: '../../../../../assets/icons/bolivia-icon.svg',
-        pais: 'Bolivia',
-        telefono: '+59(1) 7733-8111',
-        alt: 'Bandera de Bolivia'
-      },
-      {
         icono: '../../../../../assets/icons/mexico-icon.svg',
         pais: 'México',
         telefono: '+52(55) 4000-3255',

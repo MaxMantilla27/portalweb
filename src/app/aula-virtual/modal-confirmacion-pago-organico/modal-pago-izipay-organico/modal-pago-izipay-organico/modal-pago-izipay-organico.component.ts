@@ -1,11 +1,12 @@
 import { DOCUMENT } from '@angular/common';
-import { Component, Inject, OnInit, Renderer2, ViewEncapsulation } from '@angular/core';
+import { Component, ElementRef, Inject, Input, OnChanges, OnInit, Renderer2, ViewEncapsulation } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { Router } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
 import { RegistroRespuestaPreProcesoPagoDTO } from 'src/app/Core/Models/ProcesoPagoDTO';
 import { FormaPagoService } from 'src/app/Core/Shared/Services/FormaPago/forma-pago.service';
+import { HelperService } from 'src/app/Core/Shared/Services/helper.service';
 import { SessionStorageService } from 'src/app/Core/Shared/Services/session-storage.service';
 
 @Component({
@@ -14,7 +15,7 @@ import { SessionStorageService } from 'src/app/Core/Shared/Services/session-stor
   styleUrls: ['./modal-pago-izipay-organico.component.scss'],
   encapsulation: ViewEncapsulation.None,
 })
-export class ModalPagoIzipayOrganicoComponent implements OnInit {
+export class ModalPagoIzipayOrganicoComponent implements OnInit,OnChanges {
   constructor(
     private _renderer2: Renderer2,
     @Inject(DOCUMENT) private _document: Document,
@@ -23,8 +24,29 @@ export class ModalPagoIzipayOrganicoComponent implements OnInit {
     private _FormaPagoService: FormaPagoService,
     private _SessionStorageService: SessionStorageService,
     private dialogRefModal: MatDialogRef<ModalPagoIzipayOrganicoComponent>,
-    private _router: Router
-  ) { }
+    private _router: Router,
+    private _HelperService: HelperService,
+    private elementRef: ElementRef
+
+  ) {
+    this._HelperService.recibirEstadoPreCargaPasarela.pipe(takeUntil(this.signal$)).subscribe({
+      next: (x) => {
+        console.log(x)
+        if (x === 'true' || x === "true") {
+          this.showModalContent = true;
+          this.elementRef.nativeElement.parentElement.parentElement.classList.remove('dialog-Tarjeta-Modal-IziPay-Ocultar');
+          this.elementRef.nativeElement.parentElement.parentElement.classList.add('dialog-Tarjeta-Modal-IziPay');
+        } else {
+          this.showModalContent = false;
+          this.elementRef.nativeElement.parentElement.parentElement.classList.remove('dialog-Tarjeta-Modal-IziPay');
+          this.elementRef.nativeElement.parentElement.parentElement.classList.add('dialog-Tarjeta-Modal-IziPay-Ocultar');
+        }
+      console.log(this.showModalContent)
+
+      }
+    })
+  }
+  public showModalContent: boolean = false;
   private kryptonScriptLoaded: boolean = false;
   private signal$ = new Subject();
   hidenBotom=true
@@ -37,6 +59,7 @@ export class ModalPagoIzipayOrganicoComponent implements OnInit {
   };
   public resultPreValidacion: any;
 
+
   ngAfterViewInit():void{
     if (this.data.Identificador){
       this.idMatricula =  this.data.IdMatricula
@@ -48,11 +71,23 @@ export class ModalPagoIzipayOrganicoComponent implements OnInit {
       this.ObtenerPreProcesoPagoOrganicoAlumno();
     }
   }
+  ngOnChanges(): void {
+
+  }
   ngOnDestroy(): void {
     this.signal$.next(true);
     this.signal$.complete();
   }
   ngOnInit(): void {
+    // this.ObservableEstadoPasarela(1)
+    // console.log(this.data)
+    // this.idMatricula =  this.data.IdMatricula
+    //   this.json.IdentificadorTransaccion=this.data.Identificador
+    //   var r= this._SessionStorageService.SessionGetValue(this.json.IdentificadorTransaccion);
+    //   if (r!='') {
+    //     this.json.RequiereDatosTarjeta=r=='false'?false:true;
+    //   }
+    //   this.ObtenerPreProcesoPagoOrganicoAlumno();
   /*Evalua usar solo en Ngonit*/
   }
   ObtenerPreProcesoPagoOrganicoAlumno() {
@@ -102,7 +137,7 @@ export class ModalPagoIzipayOrganicoComponent implements OnInit {
       }else{
         window.location.reload()
       }
-    }, 5000);
+    }, 1000);
   }
   customForm(){
     var boton=document.getElementsByClassName('kr-popin-button');

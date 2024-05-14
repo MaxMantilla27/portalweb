@@ -61,4 +61,5 @@ export interface listaMontoPagoProgramaInformacionDTO{
   precioDescuento:number;
   textoCabeceraDescuento:string;
   montoPagoDescripcion:string;
+  codigoMoneda:string;
 }

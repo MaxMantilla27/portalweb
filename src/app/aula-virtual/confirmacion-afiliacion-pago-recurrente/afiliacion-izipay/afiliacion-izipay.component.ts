@@ -151,7 +151,7 @@ export class AfiliacionIzipayComponent implements OnInit, OnDestroy, AfterViewIn
       }else{
         window.location.reload()
       }
-    }, 5000);
+    }, 1000);
   }
 
 }

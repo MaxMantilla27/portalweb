@@ -29,7 +29,8 @@ export class HelperService {
   private msjAccionesForm=new Subject<any>();
   private msjChat=new Subject<SetChat>();
   private msjObtenerUsuario=new ReplaySubject<any>();
-  private msjScrollPago = new ReplaySubject<string>()
+  // private msjScrollPago = new ReplaySubject<string>()
+  private msjEstadoPreCargaPasarela = new ReplaySubject<string>()
 
 
 
@@ -140,11 +141,18 @@ export class HelperService {
     this.msjRecarga.next(datos);
   }
 
-  public get recibirScrollPago() {
-    return this.msjScrollPago.asObservable()
+  // public get recibirScrollPago() {
+  //   return this.msjScrollPago.asObservable()
+  // }
+  // public enviarScrollPago(texto: string): void {
+  //   this.msjScrollPago.next(texto);
+  // }
+
+  public get recibirEstadoPreCargaPasarela() {
+    return this.msjEstadoPreCargaPasarela.asObservable()
   }
-  public enviarScrollPago(texto: string): void {
-    this.msjScrollPago.next(texto);
+  public enviarEstadoPrecargaPasarela(texto: string): void {
+    this.msjEstadoPreCargaPasarela.next(texto);
   }
 
 }

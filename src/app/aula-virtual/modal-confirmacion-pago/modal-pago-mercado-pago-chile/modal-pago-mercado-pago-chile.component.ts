@@ -46,10 +46,6 @@ export class ModalPagoMercadoPagoChileComponent implements OnInit {
   dialogRefLoader:any
 
   ngOnInit(): void {
-    this.dialogRefLoader =this.dialog.open(ChargeSpinnerComponent,{
-      panelClass:'dialog-charge-spinner',
-      disableClose:true
-    });
     if(this.data.Identificador){
       this.idMatricula = this.data.IdMatricula;
       this.json.IdentificadorTransaccion = this.data.Identificador;
@@ -72,7 +68,7 @@ export class ModalPagoMercadoPagoChileComponent implements OnInit {
         });
         setTimeout(()=>{
           this.renderCardPaymentBrick(window)
-        },500)
+        },1000)
       }
     })
   }
@@ -80,7 +76,7 @@ export class ModalPagoMercadoPagoChileComponent implements OnInit {
     await loadMercadoPago();
   }
   cerraModal(){
-    this.dialogRefModal.close();
+    this.dialogRefModal.close(true);
   }
   async renderCardPaymentBrick(window:any): Promise<void> {
     const mp = new window.MercadoPago(PK_Produccion, {
@@ -127,7 +123,7 @@ export class ModalPagoMercadoPagoChileComponent implements OnInit {
             );
 
             this.hiden=false
-            this.dialogRefLoader.close()
+            // this.dialogRefLoader.close()
           }, 500);
 
         },

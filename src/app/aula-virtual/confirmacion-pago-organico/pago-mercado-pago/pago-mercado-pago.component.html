@@ -20,7 +20,7 @@
                   </div>
               </div>
             </div>
-    
+
             <div class="iconoPagoTarjeta">
               <div class="imgPagoTarjeta"></div>
               <div class="textPagoTarjeta">
@@ -36,17 +36,22 @@
             </div>
           </div>
           <div class="col-12 col-md-6 col-lg-6 inputPagoVisa row">
+            <div *ngIf="hiden">
+              <div class="col-12" style="display: flex;justify-content: center;">
+                <mat-spinner></mat-spinner>
+              </div>
+            </div>
             <div [hidden]="hiden">
                 <div id="cardPaymentBrick_container"></div>
             </div>
-            
+
             <div style="    width: 100%;
             font-size: 12px;
             color: #b2b2b2;
             padding: 20px;">
               * El monto a cargar sera el cual se detalla arriba en la moneda del programa, el tipo de cambio dependerá del banco que usted utilice.
             </div>
-    
+
           </div>
           <div class="d-none col-md-6 d-md-block col-lg-6 d-lg-block">
             <div class="resumenPagoTarjeta">

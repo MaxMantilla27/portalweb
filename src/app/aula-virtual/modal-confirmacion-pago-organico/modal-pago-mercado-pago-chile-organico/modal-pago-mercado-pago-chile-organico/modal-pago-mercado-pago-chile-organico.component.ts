@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, ElementRef, Inject, OnInit, ViewEncapsulation } from '@angular/core';
 import { MatDialog, MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { loadMercadoPago } from '@mercadopago/sdk-js';
@@ -9,6 +9,8 @@ import { ChargeComponent } from 'src/app/Core/Shared/Containers/Dialog/charge/ch
 import { FormaPagoService } from 'src/app/Core/Shared/Services/FormaPago/forma-pago.service';
 import { SnackBarServiceService } from 'src/app/Core/Shared/Services/SnackBarService/snack-bar-service.service';
 import { SessionStorageService } from 'src/app/Core/Shared/Services/session-storage.service';
+import { HelperService } from 'src/app/Core/Shared/Services/helper.service';
+import { ChargeSpinnerComponent } from 'src/app/Core/Shared/Containers/Dialog/charge-spinner/charge-spinner.component';
 
 const PK_Produccion ="APP_USR-655cbc43-a08f-482f-a7bc-df64d486c667";
 const PK_Prueba ="TEST-4afbabcc-eedf-4dfb-b8ce-9703a5b7f973";
@@ -31,9 +33,29 @@ export class ModalPagoMercadoPagoChileOrganicoComponent implements OnInit {
     private _router:Router,
     public dialog: MatDialog,
     @Inject(MAT_DIALOG_DATA) public data: any,
-    private dialogRefModal: MatDialogRef<any>
+    private dialogRefModal: MatDialogRef<any>,
+    private _HelperService: HelperService,
+    private elementRef: ElementRef
 
-  ) { }
+  ) {
+    this._HelperService.recibirEstadoPreCargaPasarela.pipe(takeUntil(this.signal$)).subscribe({
+      next: (x) => {
+        console.log(x)
+        if (x === 'true' || x === "true") {
+          this.showModalContent = true;
+          this.elementRef.nativeElement.parentElement.parentElement.classList.remove('dialog-Tarjeta-Modal-MercadoPago-Ocultar');
+          this.elementRef.nativeElement.parentElement.parentElement.classList.add('dialog-Tarjeta-Modal-MercadoPago');
+        } else {
+          this.showModalContent = false;
+          this.elementRef.nativeElement.parentElement.parentElement.classList.remove('dialog-Tarjeta-Modal-MercadoPago');
+          this.elementRef.nativeElement.parentElement.parentElement.classList.add('dialog-Tarjeta-Modal-MercadoPago-Ocultar');
+        }
+      console.log(this.showModalContent)
+
+      }
+    })
+  }
+  public showModalContent: boolean = false;
 
   idMatricula:any
   resultPreProcesoMP:any;
@@ -42,23 +64,28 @@ export class ModalPagoMercadoPagoChileOrganicoComponent implements OnInit {
     IdentificadorTransaccion:'',
     RequiereDatosTarjeta:true
   }
-  dialogRefLoader:any
-
-  ngOnInit(): void {
-    this.dialogRefLoader =this.dialog.open(ChargeComponent,{
-      panelClass:'dialog-charge',
-      disableClose:true
-    });
-    if(this.data.Identificador){
-      this.idMatricula = this.data.IdMatricula;
-      this.json.IdentificadorTransaccion = this.data.Identificador;
-      var r= this._SessionStorageService.SessionGetValue(this.json.IdentificadorTransaccion);
-      if(r!=''){
-        this.json.RequiereDatosTarjeta=r=='false'?false:true;
-        this.ObtenerPreProcesoPagoOrganicoAlumno()
-        this.iniciarJSMercadoPago()
+  // dialogRefLoader:any
+  ngAfterViewInit():void{
+    if (this.data.Identificador){
+      this.ObservableEstadoPasarela()
+      // this.dialogRefLoader =this.dialog.open(ChargeSpinnerComponent,{
+      //   panelClass:'dialog-charge-spinner',
+      //   disableClose:true
+      // });
+      if(this.data.Identificador){
+        this.idMatricula = this.data.IdMatricula;
+        this.json.IdentificadorTransaccion = this.data.Identificador;
+        var r= this._SessionStorageService.SessionGetValue(this.json.IdentificadorTransaccion);
+        if(r!=''){
+          this.json.RequiereDatosTarjeta=r=='false'?false:true;
+          this.ObtenerPreProcesoPagoOrganicoAlumno()
+          this.iniciarJSMercadoPago()
+        }
       }
     }
+  }
+  ngOnInit(): void {
+
   }
   ObtenerPreProcesoPagoOrganicoAlumno(){
     this._FormaPagoService.ObtenerPreProcesoPagoOrganicoAlumno(this.json).pipe(takeUntil(this.signal$)).subscribe({
@@ -66,12 +93,21 @@ export class ModalPagoMercadoPagoChileOrganicoComponent implements OnInit {
         console.log(x)
         this.resultPreProcesoMP=x._Repuesta;
         this.resultPreProcesoMP.total=0;
-        this.resultPreProcesoMP.listaCuota.forEach((l:any) => {
-          this.resultPreProcesoMP.total+=l.cuotaTotal
-        });
+        if(this.resultPreProcesoMP.listaCuota!=undefined){
+          this.resultPreProcesoMP.listaCuota.forEach((l:any) => {
+            this.resultPreProcesoMP.total+=l.cuotaTotal
+          });
+        }
+        else{
+          this.resultPreProcesoMP.total=this.resultPreProcesoMP.montoTotal
+        }
+        if(this.resultPreProcesoMP.registroAlumno==undefined){
+          this.resultPreProcesoMP.registroAlumno=this.resultPreProcesoMP.datoAlumno
+        }
+
         setTimeout(()=>{
           this.renderCardPaymentBrick(window)
-        },500)
+        },1000)
       }
     })
   }
@@ -123,16 +159,16 @@ export class ModalPagoMercadoPagoChileOrganicoComponent implements OnInit {
             );
 
             this.hiden=false
-            this.dialogRefLoader.close()
-          }, 500);
+            // this.dialogRefLoader.close()
+          }, 1000);
 
         },
         onSubmit: (cardFormData: any) => {
           // Callback llamado al hacer clic en el botón de envío de datos
-          this.dialogRefLoader =this.dialog.open(ChargeComponent,{
-            panelClass:'dialog-charge',
-            disableClose:true
-          });
+          // this.dialogRefLoader =this.dialog.open(ChargeComponent,{
+          //   panelClass:'dialog-charge',
+          //   disableClose:true
+          // });
           cardFormData.identificadorTransaccion = this.json.IdentificadorTransaccion
           cardFormData.description = this.resultPreProcesoMP.nombrePrograma
           return new Promise<void>((resolve, reject) => {
@@ -144,14 +180,14 @@ export class ModalPagoMercadoPagoChileOrganicoComponent implements OnInit {
               body: JSON.stringify(cardFormData),
             })
               .then(() => {
-                this.dialogRefLoader.close()
+                // this.dialogRefLoader.close()
                 window.location.href = 'https://bsginstitute.com/AulaVirtual/PagoExitosoMercadoPago/'+this.json.IdentificadorTransaccion
                 // Recibir el resultado del pago
                 resolve();
                 this.dialogRefModal.close();
               })
               .catch(() => {
-                this.dialogRefLoader.close()
+                // this.dialogRefLoader.close()
                 window.location.href = 'https://bsginstitute.com/AulaVirtual/PagoExitosoMercadoPago/'+this.json.IdentificadorTransaccion
                 // Tratar respuesta de error al intentar crear el pago
                 reject();
@@ -161,7 +197,7 @@ export class ModalPagoMercadoPagoChileOrganicoComponent implements OnInit {
         },
         onError: (error: any) => {
           // Callback llamado para todos los casos de error de Brick
-          this.dialogRefLoader.close()
+          // this.dialogRefLoader.close()
         },
       },
     };
@@ -175,6 +211,17 @@ export class ModalPagoMercadoPagoChileOrganicoComponent implements OnInit {
     }
   }
   cerraModal(){
-    this.dialogRefModal.close();
+    this.dialogRefModal.close(true);
+  }
+  ObservableEstadoPasarela(): void {
+    this._HelperService.recibirEstadoPreCargaPasarela.pipe(takeUntil(this.signal$)).subscribe({
+      next: (x) => {
+        if(x=='true'||x=="true"){
+          this.showModalContent=true
+        }
+        else{
+          this.showModalContent=false
+        }
+      }})
   }
 }

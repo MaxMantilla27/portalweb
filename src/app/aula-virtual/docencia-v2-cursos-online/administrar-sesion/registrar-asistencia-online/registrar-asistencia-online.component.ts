@@ -11,6 +11,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Router } from 'express';
 import { Subject, takeUntil } from 'rxjs';
 import { AsistenciaRegistrarDTO } from 'src/app/Core/Models/ParticipacionExpositorFiltroDTO';
+import { AsistenciaService } from 'src/app/Core/Shared/Services/Asistencia/asistencia.service';
 import { OperacionesAsistenciaService } from 'src/app/Core/Shared/Services/OperacionesAsistencia/operaciones-asistencia.service';
 import { OperacionesNotaService } from 'src/app/Core/Shared/Services/OperacionesNota/operaciones-nota.service';
 import { SnackBarServiceService } from 'src/app/Core/Shared/Services/SnackBarService/snack-bar-service.service';
@@ -42,7 +43,9 @@ export class RegistrarAsistenciaOnlineComponent implements OnInit, OnDestroy {
     private _OperacionesNotaService: OperacionesNotaService,
     public _OperacionesAsistenciaService: OperacionesAsistenciaService,
     private r: ActivatedRoute,
-    private _SnackBarServiceService: SnackBarServiceService
+    private _SnackBarServiceService: SnackBarServiceService,
+    private _AsistenciaService: AsistenciaService,
+
   ) {}
 
   public asistencias: Array<AsistenciaRegistrarDTO> = [];
@@ -117,7 +120,9 @@ export class RegistrarAsistenciaOnlineComponent implements OnInit, OnDestroy {
                 5,
                 'snackbarCrucigramaSucces'
               );
+              // this.CorregirAsistencias()
               this.dialogRef.close();
+
             },
             error: (e) => {
               console.log(e);
@@ -129,6 +134,9 @@ export class RegistrarAsistenciaOnlineComponent implements OnInit, OnDestroy {
               );
               this.charge = false;
             },
+            complete:()=>{
+
+            }
           });
       }
     }
@@ -140,5 +148,17 @@ export class RegistrarAsistenciaOnlineComponent implements OnInit, OnDestroy {
         'snackbarCrucigramaerror'
       );
     }
+  }
+  CorregirAsistencias(){
+    this._AsistenciaService.RegistrarAsistenciaDocenteCorreccion(this.asistencias, this.data.IdPespecifico, this.data.correo ).pipe(takeUntil(this.signal$)).subscribe({
+      next:x=>{
+      },
+      error:e=>{
+        console.log(e)
+      },
+      complete:()=>{
+
+      }
+    })
   }
 }

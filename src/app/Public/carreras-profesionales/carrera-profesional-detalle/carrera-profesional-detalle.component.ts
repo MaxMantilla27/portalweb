@@ -539,4 +539,16 @@ export class CarreraProfesionalDetalleComponent implements OnInit {
       this._HelperServiceP.enviarMsjAcciones({Tag:'Carousel',Nombre:nombre,Accion:event.source})
     }
   }
+  FormatoMilesDecimales(num: number): string {
+    // Separar parte entera y decimal
+    const parts = Number(num).toFixed(2).split('.');
+    let integerPart = parts[0];
+    const decimalPart = parts[1];
+
+    // Agregar separadores de miles
+    integerPart = integerPart.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+
+    // Combinar parte entera y decimal
+    return integerPart + '.' + decimalPart;
+  }
 }

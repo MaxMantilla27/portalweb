@@ -6,6 +6,11 @@
     <div class="col-12 row" style="margin-top: 10px;border: solid 1px #d5d5d5;border-radius: 5px;" *ngIf="resultPreProcesoMP!=undefined">
       <div class="col-12 col-md-12 col-lg-12 titlePagoTarjetaModalMercadoPago"style="align-items: center;">Confirma tu compra</div>
       <div class="col-12 col-md-12 col-lg-12 inputPagoVisaMercadoPago row">
+        <div *ngIf="hiden">
+          <div class="col-12" style="display: flex;justify-content: center;">
+            <mat-spinner></mat-spinner>
+          </div>
+        </div>
         <div [hidden]="hiden">
             <div id="cardPaymentBrick_container"></div>
         </div>

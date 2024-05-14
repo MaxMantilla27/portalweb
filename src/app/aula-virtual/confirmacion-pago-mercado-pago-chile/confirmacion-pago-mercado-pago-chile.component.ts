@@ -57,7 +57,7 @@ export class ConfirmacionPagoMercadoPagoChileComponent implements OnInit {
         }
       },
     });
-    
+
   }
 
 
@@ -67,13 +67,21 @@ export class ConfirmacionPagoMercadoPagoChileComponent implements OnInit {
         console.log(x)
         this.resultPreProcesoMP=x._Repuesta;
         this.resultPreProcesoMP.total=0;
-        this.resultPreProcesoMP.listaCuota.forEach((l:any) => {
-          this.resultPreProcesoMP.total+=l.cuotaTotal
-        });
+        if(this.resultPreProcesoMP.listaCuota!=undefined){
+          this.resultPreProcesoMP.listaCuota.forEach((l:any) => {
+            this.resultPreProcesoMP.total+=l.cuotaTotal
+          });
+        }
+        else{
+          this.resultPreProcesoMP.total=this.resultPreProcesoMP.montoTotal
+        }
+        if(this.resultPreProcesoMP.registroAlumno==undefined){
+          this.resultPreProcesoMP.registroAlumno=this.resultPreProcesoMP.datoAlumno
+        }
         this.iniciarJSMercadoPago()
         setTimeout(()=>{
           this.renderCardPaymentBrick(window)
-        },500)
+        },1000)
 
       }
     })
@@ -82,7 +90,7 @@ export class ConfirmacionPagoMercadoPagoChileComponent implements OnInit {
   async iniciarJSMercadoPago(){
     await loadMercadoPago();
   }
-  
+
   async renderCardPaymentBrick(window:any): Promise<void> {
     const mp = new window.MercadoPago(PK_Produccion, {
       locale: "es-PE",
@@ -106,7 +114,7 @@ export class ConfirmacionPagoMercadoPagoChileComponent implements OnInit {
               placeholder: "Titular de la Tarjeta"
             },
           },
-        
+
         },
         paymentMethods: {
           maxInstallments: 1,
@@ -115,7 +123,7 @@ export class ConfirmacionPagoMercadoPagoChileComponent implements OnInit {
       callbacks: {
         onReady: () => {
           setTimeout(() => {
-            
+
             const divContenedorBTN = document.getElementsByClassName('button-container-gZzvB_');
             if(typeof(divContenedorBTN) != 'undefined' && divContenedorBTN != null && divContenedorBTN.length>0)
             divContenedorBTN[0].setAttribute("style",
@@ -127,11 +135,11 @@ export class ConfirmacionPagoMercadoPagoChileComponent implements OnInit {
             btn[0].setAttribute("style",
             "max-width: fit-content;"
             );
-            
+
             this.hiden=false
             this.dialogRefLoader.close()
           }, 500);
-          
+
         },
         onSubmit: (cardFormData: any) => {
           // Callback llamado al hacer clic en el botón de envío de datos
@@ -166,7 +174,7 @@ export class ConfirmacionPagoMercadoPagoChileComponent implements OnInit {
         },
         onError: (error: any) => {
           // Callback llamado para todos los casos de error de Brick
-          
+
           this.dialogRefLoader.close()
         },
       },

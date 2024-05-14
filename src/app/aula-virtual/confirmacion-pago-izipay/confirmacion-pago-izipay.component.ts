@@ -152,7 +152,7 @@ export class ConfirmacionPagoIzipayComponent
       }else{
         window.location.reload()
       }
-    }, 5000);
+    }, 1000);
   }
 
 

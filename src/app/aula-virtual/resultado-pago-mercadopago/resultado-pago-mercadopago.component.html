@@ -148,15 +148,23 @@
             <div class="col-12 col-md-5 col-lg-4"><b>Nombres y Apellidos:</b></div>
             <div class="col-12 col-md-7 col-lg-8 itemValueCardPago"><b>{{resultProceso.registroAlumno.nombre}}
                 {{resultProceso.registroAlumno.apellido}}</b></div>
-            <ng-container *ngIf="resultProceso.nombrePrograma!=null">
+            <ng-container *ngIf="NombreCursoPago!=null && NombreCursoPago!=undefined">
               <div class="col-12 col-md-5 col-lg-4"><b>Programa:</b></div>
-              <div class="col-12 col-md-7 col-lg-8 itemValueCardPago">{{resultProceso.nombrePrograma}}</div>
+              <div class="col-12 col-md-7 col-lg-8 itemValueCardPago">{{NombreCursoPago}}</div>
             </ng-container>
             <ng-container *ngIf="resultProceso.listaCuota!=null && resultProceso.listaCuota.length>0">
               <div class="col-12 col-md-5 col-lg-4"><b>Razón:</b></div>
               <div class="col-12 col-md-7 col-lg-8 itemValueCardPago" >
                 <div *ngFor="let item of resultProceso.listaCuota">
-                  {{item.nombre}}
+                  {{reemplazarRazonPago(item.nombre)}}
+                </div>
+              </div>
+            </ng-container>
+            <ng-container *ngIf="resultProceso.listaCuota==null || resultProceso.listaCuota.length==0">
+              <div class="col-12 col-md-5 col-lg-4"><b>Razón:</b></div>
+              <div class="col-12 col-md-7 col-lg-8 itemValueCardPago" >
+                <div>
+                  Matrícula
                 </div>
               </div>
             </ng-container>

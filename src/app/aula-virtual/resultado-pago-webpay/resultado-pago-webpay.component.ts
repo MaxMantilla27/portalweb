@@ -132,7 +132,7 @@ export class ResultadoPagoWebpayComponent implements OnInit {
     else{
       this.resultWebpay.listaCuota.forEach((l:any) => {
         paymentSummary += "<div style='display:flex;border-bottom: 1px solid black;padding: 5px 0;'>"+
-        "<div style='font-size:13px;font-weight:100;width: 66%;'>" + l.nombre + "</div>" +
+        "<div style='font-size:13px;font-weight:100;width: 66%;'>" + this.reemplazarRazonPago(l.nombre) + "</div>" +
         "<div style='font-size:13px;width: 33%;text-align:right;'>" + l.cuotaTotal.toFixed(2) + " " + this.resultWebpay.monedaCorreo + "</div></div>";
       });
     }
@@ -285,7 +285,7 @@ export class ResultadoPagoWebpayComponent implements OnInit {
       this.resultWebpay.listaCuota.forEach((l:any) => {
         if(countLista==0){
           paymentSummary += "<div style='display:flex;border-bottom: 1px solid black;padding: 5px 0;'>"+
-                            "<div style='font-size:13px;font-weight:100;width: 66%;'>" + l.nombre + "</div>" +
+                            "<div style='font-size:13px;font-weight:100;width: 66%;'>" + this.reemplazarRazonPago(l.nombre) + "</div>" +
                             "<div style='font-size:13px;width: 33%;text-align:right;'>" + l.cuotaTotal.toFixed(2) + " " + this.resultWebpay.monedaCorreo + "</div></div>";
         }
         countLista++;
@@ -360,5 +360,8 @@ export class ResultadoPagoWebpayComponent implements OnInit {
 
       },
     });
+  }
+  reemplazarRazonPago(stringOriginal: string): string {
+    return stringOriginal.replace(/\//g, "-");
   }
 }

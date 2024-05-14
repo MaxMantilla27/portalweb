@@ -1,7 +1,7 @@
 import { AfterViewInit, Component, ElementRef, Inject, OnDestroy, OnInit, PLATFORM_ID, SimpleChanges, ViewChild, ViewEncapsulation } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { NavigationEnd, Router } from '@angular/router';
-import { Subject, takeUntil } from 'rxjs';
+import { Subject, takeUntil, timer } from 'rxjs';
 import {
   PagoOrganicoAlumnoDTO,
   RegistroProcesoPagoAlumnoDTO,
@@ -28,6 +28,7 @@ import { DatePipe, ViewportScroller, isPlatformBrowser } from '@angular/common';
 import { HelperService as Help } from 'src/app/Core/Shared/Services/helper.service';
 import { SnackBarServiceService } from 'src/app/Core/Shared/Services/SnackBarService/snack-bar-service.service';
 import { ChargeSpinnerComponent } from 'src/app/Core/Shared/Containers/Dialog/charge-spinner/charge-spinner.component';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 const pipe = new DatePipe('en-US')
 
 @Component({
@@ -55,7 +56,8 @@ export class PagoOrganicoTodosComponent implements OnInit, OnDestroy {
     private _HelperServiceP: Help,
     private _SnackBarServiceService:SnackBarServiceService,
     private viewportScroller: ViewportScroller,
-    private elementRef: ElementRef
+    private elementRef: ElementRef,
+    private modalService: NgbModal
   ) {
     this.isBrowser = isPlatformBrowser(platformId);
   }
@@ -146,24 +148,32 @@ export class PagoOrganicoTodosComponent implements OnInit, OnDestroy {
   public IdPais = -1;
   public Paises: any;
   dialogRef:any
+  dialogRefPrecarga:any
   public pagoRecurrenteActivado:boolean = false;
   public eliminarDatoPrecargado=false;
   public PrimeraCarga: boolean = true;
+  public IdPasarelaPago=0;
+  public SesionPrevia=''
   ngOnDestroy(): void {
     this.signal$.next(true)
     this.signal$.complete()
   }
   ngOnInit(): void {
     window.scrollTo({ top: 0, behavior: 'smooth' })
-    // this.dialogRef =this.dialog.open(ChargeSpinnerComponent,{
-    //   panelClass:'dialog-charge',
-    //   disableClose:true
-    // });
+    this.dialogRefPrecarga =this.dialog.open(ChargeSpinnerComponent,{
+      panelClass:'dialog-charge-spinner',
+      disableClose:true
+    });
+    timer(2000).subscribe(() => {
+      this.dialogRefPrecarga.close();
+      window.scrollTo({ top: 0, behavior: 'smooth' })
+    });
     this.datospago = localStorage.getItem('datEnvioPago');
     this.datospago = atob(this.datospago);
     this.datospago = JSON.parse(this.datospago);
     this.modalidad = this.datospago.modalidad;
     console.log(this.modalidad)
+    console.log(this.datospago)
     this._HelperServiceP.recibirDataPais
       .pipe(takeUntil(this.signal$))
       .subscribe({
@@ -180,10 +190,10 @@ export class PagoOrganicoTodosComponent implements OnInit, OnDestroy {
           this.MedioPagoActivoPasarelaPortal();
         },
         complete:()=>{
+
         }
       });
-
-    this._HelperService
+      this._HelperService
       .recibirChangePais()
       .pipe(takeUntil(this.signal$))
       .subscribe((x) => {
@@ -199,6 +209,8 @@ export class PagoOrganicoTodosComponent implements OnInit, OnDestroy {
         //   this.GetProgramasHome()
         // }
       });
+
+
 
 
   }
@@ -252,6 +264,8 @@ export class PagoOrganicoTodosComponent implements OnInit, OnDestroy {
       .subscribe({
         next: (x) => {
           console.log(x)
+          this.IdPasarelaPago=x[0].idPasarelaPago
+          console.log(this.IdPasarelaPago)
           this.validadorPagosMultiples = x.filter(
             (item: any) =>
               item.idPasarelaPago === 7 ||
@@ -348,6 +362,7 @@ export class PagoOrganicoTodosComponent implements OnInit, OnDestroy {
       this._SessionStorageService.SessionDeleteValue('datEnvioPagoModalidadEspecifico');
     }
 
+
   }
   seleccionMetodoPago: boolean = false;
   onChangeRadioButton(event: any) {
@@ -403,7 +418,7 @@ export class PagoOrganicoTodosComponent implements OnInit, OnDestroy {
       }
     }
 
-
+    if(this.formapago!=undefined)
     var fp = this.formapago[this.idFormaPago];
     this.formaPagoSeleccion = this.formapago[this.idFormaPago];
 
@@ -472,11 +487,24 @@ export class PagoOrganicoTodosComponent implements OnInit, OnDestroy {
       }
     }
     if(this.idFormaPago!=-1){
+      var LocalStorageFormaPago = this._SessionStorageService.SessionGetValue('datEnvioPagoModalidadFormaPago');
+      console.log(LocalStorageFormaPago)
+
+      if(LocalStorageFormaPago!=undefined && LocalStorageFormaPago!=null  && LocalStorageFormaPago!='NAN' && LocalStorageFormaPago!=''){
+        var aux= parseInt(LocalStorageFormaPago);
+        if(aux!=this.idFormaPago && (this.IdPasarelaPago==13 ||this.IdPasarelaPago==17 )){
+          window.location.reload()
+        }
+      }
       this._SessionStorageService.SessionSetValue('datEnvioPagoModalidadFormaPago',JSON.stringify(this.idFormaPago));
     }
     else{
       this._SessionStorageService.SessionDeleteValue('datEnvioPagoModalidadFormaPago');
 
+    }
+    console.log(this.IdPasarelaPago)
+    if(this.IdPasarelaPago==13 ||this.IdPasarelaPago==17 ){
+      this.continuarPagoPrecarga(this.IdPasarelaPago)
     }
 
   }
@@ -699,24 +727,25 @@ export class PagoOrganicoTodosComponent implements OnInit, OnDestroy {
               if (parseInt(this.medioPagoSeleccionado.idPasarelaPago) == 13) {
                 dialogRefLoader.close()
                 console.log('ModalPagoIzipayOrganicoComponent');
-                const dialogRef = this.dialog.open(
-                  ModalPagoIzipayOrganicoComponent,
-                  {
-                    width: '600px',
-                    data: {
-                      Identificador: sesion,
-                      // IdMatricula: this.idMatricula,
-                      DatosFacturacion: this.DatosFacturacion,
-                    },
-                    panelClass: 'dialog-Tarjeta-Modal',
-                    disableClose:true
-                  }
-                );
-                dialogRef.afterClosed().pipe(takeUntil(this.signal$)).subscribe(result => {
-                  if(result==true){
-                    window.location.reload()
-                  }
-                });
+                this.openAndShowModal()
+                // const dialogRef = this.dialog.open(
+                //   ModalPagoIzipayOrganicoComponent,
+                //   {
+                //     width: '600px',
+                //     data: {
+                //       Identificador: sesion,
+                //       // IdMatricula: this.idMatricula,
+                //       DatosFacturacion: this.DatosFacturacion,
+                //     },
+                //     panelClass: 'dialog-Tarjeta-Modal',
+                //     disableClose:true
+                //   }
+                // );
+                // dialogRef.afterClosed().pipe(takeUntil(this.signal$)).subscribe(result => {
+                //   if(result==true){
+                //     window.location.reload()
+                //   }
+                // });
                 // this._router.navigate(['/AulaVirtual/MisPagos/'+this.idMatricula+'/izipay/'+sesion]);
               }
 
@@ -741,20 +770,22 @@ export class PagoOrganicoTodosComponent implements OnInit, OnDestroy {
                 dialogRefLoader.close()
                 //Mercado Pago
                 console.log('ModalPagoMercadoPagoChileOrganicoComponent');
-                const dialogRef = this.dialog.open(
-                  ModalPagoMercadoPagoChileOrganicoComponent,
-                  {
-                    width: '600px',
-                    data: {
-                      Identificador: sesion,
-                      // IdMatricula: this.idMatricula,
-                      DatosFacturacion: this.DatosFacturacion,
-                    },
-                    panelClass: 'dialog-Tarjeta-Modal',
-                    // maxHeight: '90vh', //you can adjust the value as per your view
-                    disableClose:true
-                  }
-                );
+                this.openAndShowModal()
+
+                // const dialogRef = this.dialog.open(
+                //   ModalPagoMercadoPagoChileOrganicoComponent,
+                //   {
+                //     width: '600px',
+                //     data: {
+                //       Identificador: sesion,
+                //       // IdMatricula: this.idMatricula,
+                //       DatosFacturacion: this.DatosFacturacion,
+                //     },
+                //     panelClass: 'dialog-Tarjeta-Modal',
+                //     // maxHeight: '90vh', //you can adjust the value as per your view
+                //     disableClose:true
+                //   }
+                // );
                 // this._router.navigate(['/AulaVirtual/MisPagos/'+this.idMatricula+'/mercadoPago/'+sesion]);
               }
               if (parseInt(this.medioPagoSeleccionado.idPasarelaPago) == 18) {
@@ -807,8 +838,141 @@ export class PagoOrganicoTodosComponent implements OnInit, OnDestroy {
   OpenModalMetodoPagoSucripcion(): void {
 
   }
-  FormatoMilesDecimales(Valor:number){
-    var separadorMiles = '.';
-    var separadorDecimales = ',';
+  FormatoMilesDecimales(num: number): string {
+    // Separar parte entera y decimal
+    const parts = Number(num).toFixed(2).split('.');
+    let integerPart = parts[0];
+    const decimalPart = parts[1];
+
+    // Agregar separadores de miles
+    integerPart = integerPart.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+
+    // Combinar parte entera y decimal
+    return integerPart + '.' + decimalPart;
+  }
+
+  continuarPagoPrecarga(IdPasarelaCapturada:number) {
+    console.log(this.medioPagoSeleccionado)
+    if (this.medioPagoSeleccionado == undefined) {
+      this.medioPagoSeleccionado = this.tarjetas[0];
+    }
+    //this.jsonEnvioPago.CodigoBanco=tarjeta.medioCodisgo;
+    this.jsonEnvioPago.IdFormaPago = this.medioCodigo;
+    //this.jsonEnvioPago.IdMontoPago=;
+    this.jsonEnvioPago.IdPEspecifico = this.modalidadSeleccionada.id;
+    this.jsonEnvioPago.IdPGeneral = this.idPegeneral;
+    this.jsonEnvioPago.IdPais = this.IdPais;
+    this.jsonEnvioPago.IdPasarelaPago =
+      this.medioPagoSeleccionado.idPasarelaPago.toString();
+    this.jsonEnvioPago.MedioCodigo = this.medioPagoSeleccionado.medioCodigo;
+    this.jsonEnvioPago.MedioPago = this.medioPagoSeleccionado.medioPago;
+    this.jsonEnvioPago.Moneda = this.formaPagoSeleccion.simbolo;
+    this.jsonEnvioPago.MontoTotalPago = this.infoPago.precio;
+    this.jsonEnvioPago.Inicio = this.pEspecifico?.fechaInicioTexto;
+    this.jsonEnvioPago.Version = this.infoPago.version;
+    this.jsonEnvioPago.Tipo = this.pEspecifico.tipo;
+    this.jsonEnvioPago.TipoComprobante =this.DatosFacturacion.Comprobante;
+    this.jsonEnvioPago.CodigoTributario = this.DatosFacturacion.RazonSocial ;
+        //this.jsonEnvioPago.TipoProveedor=;
+    this.jsonEnvioPago.WebMoneda = this.formaPagoSeleccion.webMoneda;
+    var token = this._SessionStorageService.validateTokken();
+    if (token) {
+      this._FormaPagoService
+        .PagoOrganicoDatosServicio(this.jsonEnvioPago) //PagoOrganicoAlumnoDTO
+        .pipe(takeUntil(this.signal$))
+        .subscribe({
+          next: (x) => {
+            console.log('resultcard', x);
+
+            this.jsonPreproceaminetoData = {
+              identificadorTransaccion: x._Repuesta.identificadorTransaccion,
+              requiereDatosTarjeta: x._Repuesta.requiereDatosTarjeta,
+            };
+
+            /////////logica abrir modales :D
+
+            console.log(x);
+
+            var sesion = x._Repuesta.identificadorTransaccion;
+            this.SesionPrevia = x._Repuesta.identificadorTransaccion;
+            this._SessionStorageService.SessionSetValue(
+              sesion,
+              x._Repuesta.requiereDatosTarjeta
+            );
+          },
+          complete:()=>{
+            this.openModal(this.SesionPrevia,IdPasarelaCapturada)
+          }
+        });
+    } else {
+      this._SessionStorageService.SessionSetValue('redirect', 'pago');
+      this._SessionStorageService.SessionSetValue(
+        'datosTarjeta',
+        JSON.stringify(this.jsonEnvioPago)
+      );
+      this._router.navigate(['/login']);
+      this._SessionStorageService.SessionSetValueSesionStorage(
+        'PagoPublicidad',
+        '1'
+      );
+    }
+  }
+
+  // Función para abrir el modal y mostrar su contenido de manera oculta
+  openModal(SesionPrevia:any,IdPasarelaCapturada:number) {
+    console.log('Se esta precargando')
+    console.log(SesionPrevia)
+
+    if(IdPasarelaCapturada==13){
+      this.dialogRef = this.dialog.open(
+        ModalPagoIzipayOrganicoComponent,
+        {
+          width: '600px',
+          data: {
+            Identificador: SesionPrevia,
+            DatosFacturacion: this.DatosFacturacion,
+          },
+          // panelClass: this.panelClass,
+          // disableClose: true,
+          autoFocus: false, // No enfocar ningún elemento dentro del modal al abrirlo
+          hasBackdrop: false // No mostrar el fondo oscuro del modal al abrirlo
+        }
+      );
+      this._HelperServiceP.enviarEstadoPrecargaPasarela('false');
+      this.dialogRef.afterClosed().pipe(takeUntil(this.signal$)).subscribe((result:any) => {
+        if (result == true) {
+          window.location.reload()
+        }
+      });
+    }
+    if(IdPasarelaCapturada==17){
+      this.dialogRef = this.dialog.open(
+        ModalPagoMercadoPagoChileOrganicoComponent,
+        {
+          width: '600px',
+          data: {
+            Identificador: SesionPrevia,
+            // IdMatricula: this.idMatricula,
+            DatosFacturacion: this.DatosFacturacion,
+          },
+          // maxHeight: '90vh', //you can adjust the value as per your view
+          disableClose:true,
+          hasBackdrop: false // No mostrar el fondo oscuro del modal al abrirlo
+
+        }
+      );
+      this._HelperServiceP.enviarEstadoPrecargaPasarela('false');
+      this.dialogRef.afterClosed().pipe(takeUntil(this.signal$)).subscribe((result:any) => {
+        if (result == true) {
+          window.location.reload()
+        }
+      });
+    }
+
+  }
+
+  // Función para mostrar el contenido del modal
+  openAndShowModal() {
+    this._HelperServiceP.enviarEstadoPrecargaPasarela('true');
   }
 }

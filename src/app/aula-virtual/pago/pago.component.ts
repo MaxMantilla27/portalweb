@@ -261,10 +261,15 @@ export class PagoComponent implements OnInit,OnDestroy {
     this._MedioPagoActivoPasarelaService.MedioPagoPasarelaPortalRecurrente(this.idMatricula).pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
         console.log("tarjeta",x)
-        this.idPasarela=x[0].idPasarelaPago?x[0].idPasarelaPago:0
-        console.log(this.idPasarela)
+        if(x.length>0){
+          this.idPasarela=x[0].idPasarelaPago?x[0].idPasarelaPago:0
+          console.log(this.idPasarela)
 
-        this.VerificarEstadoAfiliacion()
+          this.VerificarEstadoAfiliacion()
+        }
+        else{
+          this.idPasarela=0
+        }
 
       },
       error:e=>{
@@ -637,6 +642,11 @@ export class PagoComponent implements OnInit,OnDestroy {
               // maxHeight: '90vh' //you can adjust the value as per your view
               // disableClose:true
             })
+            dialogRef.afterClosed().pipe(takeUntil(this.signal$)).subscribe(result => {
+              if(result==true){
+                window.location.reload()
+              }
+            });
             // this._router.navigate(['/AulaVirtual/MisPagos/'+this.idMatricula+'/mercadoPago/'+sesion]);
           }
           if(parseInt(tarjeta.idPasarelaPago)==18){

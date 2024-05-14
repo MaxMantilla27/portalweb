@@ -57,7 +57,7 @@ export class PagoMercadoPagoComponent implements OnInit {
         }
       },
     });
-    
+
   }
 
 
@@ -66,10 +66,10 @@ export class PagoMercadoPagoComponent implements OnInit {
       next:x=>{
         console.log(x)
         this.resultPreProcesoMP=x._Repuesta;
-       
+
         setTimeout(()=>{
           this.renderCardPaymentBrick(window)
-        },500)
+        },1000)
 
       }
     })
@@ -78,7 +78,7 @@ export class PagoMercadoPagoComponent implements OnInit {
   async iniciarJSMercadoPago(){
     await loadMercadoPago();
   }
-  
+
   async renderCardPaymentBrick(window:any): Promise<void> {
     const mp = new window.MercadoPago(PK_Produccion, {
       locale: "es-PE",
@@ -102,7 +102,7 @@ export class PagoMercadoPagoComponent implements OnInit {
               placeholder: "Titular de la Tarjeta"
             },
           },
-        
+
         },
         paymentMethods: {
           maxInstallments: 1,
@@ -111,7 +111,7 @@ export class PagoMercadoPagoComponent implements OnInit {
       callbacks: {
         onReady: () => {
           setTimeout(() => {
-            
+
             const divContenedorBTN = document.getElementsByClassName('button-container-gZzvB_');
             if(typeof(divContenedorBTN) != 'undefined' && divContenedorBTN != null && divContenedorBTN.length>0)
             divContenedorBTN[0].setAttribute("style",
@@ -123,11 +123,11 @@ export class PagoMercadoPagoComponent implements OnInit {
             btn[0].setAttribute("style",
             "max-width: fit-content;"
             );
-            
+
             this.hiden=false
             this.dialogRefLoader.close()
           }, 500);
-          
+
         },
         onSubmit: (cardFormData: any) => {
           // Callback llamado al hacer clic en el botón de envío de datos
@@ -162,7 +162,7 @@ export class PagoMercadoPagoComponent implements OnInit {
         },
         onError: (error: any) => {
           // Callback llamado para todos los casos de error de Brick
-          
+
           this.dialogRefLoader.close()
         },
       },

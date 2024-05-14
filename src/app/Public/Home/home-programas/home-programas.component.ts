@@ -73,9 +73,9 @@ export class HomeProgramasComponent implements OnInit,OnChanges,OnDestroy {
             c.tipoPago.forEach((element: any) => {
               if(element.paquete==paquete){
                 if(element.tipoPago.toUpperCase()=='CONTADO'){
-                  content+='Precio al contado '+element.simbolo+' '+element.cuotas+'<br />'
+                  content+='Precio al contado '+element.codigoMoneda+' '+this.FormatoMilesDecimales(element.cuotas)+'<br />'
                 }else{
-                  content+='Precio en cuotas '+element.simbolo+' '+element.matricula+' + '+element.nroCuotas+' cuotas mensuales de '+element.simbolo+' '+element.cuotas+'<br />'
+                  content+='Precio en cuotas '+element.codigoMoneda+' '+this.FormatoMilesDecimales(element.matricula)+' + '+element.nroCuotas+' cuotas mensuales de '+element.codigoMoneda+' '+this.FormatoMilesDecimales(element.cuotas)+'<br />'
                 }
               }
             });
@@ -122,5 +122,16 @@ export class HomeProgramasComponent implements OnInit,OnChanges,OnDestroy {
       error:(x)=>{}
     });
   }
+  FormatoMilesDecimales(num: number): string {
+    // Separar parte entera y decimal
+    const parts = Number(num).toFixed(2).split('.');
+    let integerPart = parts[0];
+    const decimalPart = parts[1];
 
+    // Agregar separadores de miles
+    integerPart = integerPart.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+
+    // Combinar parte entera y decimal
+    return integerPart + '.' + decimalPart;
+  }
 }

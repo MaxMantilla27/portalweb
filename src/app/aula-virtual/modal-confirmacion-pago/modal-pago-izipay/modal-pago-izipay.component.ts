@@ -122,7 +122,7 @@ export class ModalPagoIzipayComponent implements OnInit, OnDestroy, AfterViewIni
       }else{
         window.location.reload()
       }
-    }, 5000);
+    }, 1000);
   }
   customForm(){
     var boton=document.getElementsByClassName('kr-popin-button');

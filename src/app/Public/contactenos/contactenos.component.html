@@ -79,7 +79,7 @@
           </div>
         </div>
       </div>
-      <div class="row rowMapas">
+      <!-- <div class="row rowMapas">
         <div class="col-10 col-md-11 col-lg-11">
           <div class="mapaSede">
             <h2 class="nameSede" [ngClass]="{'openIframe':expancion[3]}">Santa Cruz - Bolivia</h2>
@@ -97,41 +97,41 @@
             <ng-container *ngIf="expancion[3]"><strong (click)="expancion[3]=false">-</strong></ng-container>
           </div>
         </div>
+      </div> -->
+      <div class="row rowMapas">
+        <div class="col-10 col-md-11 col-lg-11">
+          <div class="mapaSede">
+            <h2 class="nameSede" [ngClass]="{'openIframe':expancion[3]}">Ciudad de México - México</h2>
+            <p class="direccionSede">Montecito N° 38, Piso 33 oficina 4 Colonia Nápoles, World Trade Center,<br>
+              Ciudad de México, México <br> <b>Teléfono: +52 (55) 4000-3255</b> </p>
+            <iframe style="width: 100%; height: auto;" width="100%" height="200" frameborder="0" scrolling="no"
+              marginheight="0" marginwidth="0" id="gmap_canvas" [ngStyle]="{'display':expancion[3]?'block':'none'}"
+              src="https://maps.google.com/maps?width=520&amp;height=400&amp;hl=en&amp;q=Montecito%20N%C2%B0%2038,%20Piso%2033%20oficina%204%20Colonia%20N%C3%A1poles,%20World%20Trade%20Center,%20Ciudad%20de%20M%C3%A9xico,%20M%C3%A9xico%20Mexico+(BSG%20Institute)&amp;t=&amp;z=12&amp;ie=UTF8&amp;iwloc=B&amp;output=embed"></iframe>
+          </div>
+        </div>
+        <div class="col-2 col-md-1 col-lg-1">
+          <div class="openCloceIframe no-select" [ngClass]="{'openIframe':expancion[3]}">
+            <ng-container *ngIf="!expancion[3]"><strong (click)="expancion[3]=true">+</strong></ng-container>
+            <ng-container *ngIf="expancion[3]"><strong (click)="expancion[3]=false">-</strong></ng-container>
+          </div>
+        </div>
       </div>
       <div class="row rowMapas">
         <div class="col-10 col-md-11 col-lg-11">
           <div class="mapaSede">
-            <h2 class="nameSede" [ngClass]="{'openIframe':expancion[4]}">Ciudad de México - México</h2>
-            <p class="direccionSede">Montecito N° 38, Piso 33 oficina 4 Colonia Nápoles, World Trade Center,<br>
-              Ciudad de México, México <br> <b>Teléfono: +52 (55) 4000-3255</b> </p>
-            <iframe style="width: 100%; height: auto;" width="100%" height="200" frameborder="0" scrolling="no"
+            <h2 class="nameSede" [ngClass]="{'openIframe':expancion[4]}">Santiago de Chile - Chile</h2>
+            <p class="direccionSede">Av. Manquehue Norte 151 oficina N° 1205, Las Condes,<br>
+              Santiago de Chile, Chile <br> <b>Teléfono: +56 (2) 2760 9120</b> </p>
+              <iframe style="width: 100%; height: auto;" width="100%" height="200" frameborder="0" scrolling="no"
               marginheight="0" marginwidth="0" id="gmap_canvas" [ngStyle]="{'display':expancion[4]?'block':'none'}"
-              src="https://maps.google.com/maps?width=520&amp;height=400&amp;hl=en&amp;q=Montecito%20N%C2%B0%2038,%20Piso%2033%20oficina%204%20Colonia%20N%C3%A1poles,%20World%20Trade%20Center,%20Ciudad%20de%20M%C3%A9xico,%20M%C3%A9xico%20Mexico+(BSG%20Institute)&amp;t=&amp;z=12&amp;ie=UTF8&amp;iwloc=B&amp;output=embed"></iframe>
+               src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3330.623208252786!2d-70.56953798548771!3d-33.40699310266784!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9662cedc3cd255bd%3A0x21dbb403fecd38b4!2sAv.%20Manquehue%20Nte.%20151%2C%20Las%20Condes%2C%20Regi%C3%B3n%20Metropolitana%2C%20Chile!5e0!3m2!1ses-419!2spe!4v1671580368516!5m2!1ses-419!2spe"></iframe>
+
           </div>
         </div>
         <div class="col-2 col-md-1 col-lg-1">
           <div class="openCloceIframe no-select" [ngClass]="{'openIframe':expancion[4]}">
             <ng-container *ngIf="!expancion[4]"><strong (click)="expancion[4]=true">+</strong></ng-container>
             <ng-container *ngIf="expancion[4]"><strong (click)="expancion[4]=false">-</strong></ng-container>
-          </div>
-        </div>
-      </div>
-      <div class="row rowMapas">
-        <div class="col-10 col-md-11 col-lg-11">
-          <div class="mapaSede">
-            <h2 class="nameSede" [ngClass]="{'openIframe':expancion[0]}">Santiago de Chile - Chile</h2>
-            <p class="direccionSede">Av. Manquehue Norte 151 oficina N° 1205, Las Condes,<br>
-              Santiago de Chile, Chile <br> <b>Teléfono: +56 (2) 2760 9120</b> </p>
-              <iframe style="width: 100%; height: auto;" width="100%" height="200" frameborder="0" scrolling="no"
-              marginheight="0" marginwidth="0" id="gmap_canvas" [ngStyle]="{'display':expancion[5]?'block':'none'}"
-               src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3330.623208252786!2d-70.56953798548771!3d-33.40699310266784!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9662cedc3cd255bd%3A0x21dbb403fecd38b4!2sAv.%20Manquehue%20Nte.%20151%2C%20Las%20Condes%2C%20Regi%C3%B3n%20Metropolitana%2C%20Chile!5e0!3m2!1ses-419!2spe!4v1671580368516!5m2!1ses-419!2spe"></iframe>
-
-          </div>
-        </div>
-        <div class="col-2 col-md-1 col-lg-1">
-          <div class="openCloceIframe no-select" [ngClass]="{'openIframe':expancion[5]}">
-            <ng-container *ngIf="!expancion[5]"><strong (click)="expancion[5]=true">+</strong></ng-container>
-            <ng-container *ngIf="expancion[5]"><strong (click)="expancion[5]=false">-</strong></ng-container>
           </div>
         </div>
       </div>

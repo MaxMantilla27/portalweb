@@ -122,7 +122,7 @@ export class ModalAfiliacionIzipayComponent implements OnInit, OnDestroy, AfterV
       }else{
         window.location.reload()
       }
-    }, 5000);
+    }, 1000);
   }
   customForm(){
     var boton=document.getElementsByClassName('kr-popin-button');

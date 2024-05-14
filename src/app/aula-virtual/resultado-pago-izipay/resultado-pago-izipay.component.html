@@ -1,4 +1,3 @@
-
 <div class="container" *ngIf="resultProceso!=undefined">
     <div class="row rowpaddAv" style="justify-content: center;">
       <div class="col-12 col-md-10 col-lg-8" *ngIf="resultProceso.estadoOperacion!='Processed'">
@@ -66,10 +65,10 @@
                 <div class="col-12 col-md-5 col-lg-4"><b>Nombres y Apellidos:</b></div>
                 <div class="col-12 col-md-7 col-lg-8 itemValueCardPago">{{resultProceso.datoAlumno.nombre}}
                     {{resultProceso.datoAlumno.apellido}}</div>
-                <ng-container *ngIf="resultProceso.nombrePrograma!=null">
-                  <div class="col-12 col-md-5 col-lg-4"><b>Programa:</b></div>
-                  <div class="col-12 col-md-7 col-lg-8 itemValueCardPago">{{resultProceso.nombrePrograma}}</div>
-                </ng-container>
+                  <ng-container *ngIf="NombreCursoPago!=null && NombreCursoPago!=undefined">
+                    <div class="col-12 col-md-5 col-lg-4"><b>Programa:</b></div>
+                    <div class="col-12 col-md-7 col-lg-8 itemValueCardPago">{{NombreCursoPago}}</div>
+                  </ng-container>
                 <div class="col-12 col-md-5 col-lg-4"><b>Fecha de transacción:</b></div>
                 <div class="col-12 col-md-7 col-lg-8 itemValueCardPago">{{resultProceso.fechaTransaccion | date:'dd-MM-yyyy'}}
                 </div>
@@ -86,22 +85,30 @@
                 <div class="col-12 col-md-5 col-lg-4"><b>Nombres y Apellidos:</b></div>
                 <div class="col-12 col-md-7 col-lg-8 itemValueCardPago">{{resultProceso.registroAlumno.nombre}}
                     {{resultProceso.registroAlumno.apellido}}</div>
-                <ng-container *ngIf="resultProceso.nombrePrograma!=null">
+                <ng-container *ngIf="NombreCursoPago!=null && NombreCursoPago!=undefined">
                   <div class="col-12 col-md-5 col-lg-4"><b>Programa:</b></div>
-                  <div class="col-12 col-md-7 col-lg-8 itemValueCardPago">{{resultProceso.nombrePrograma}}</div>
+                  <div class="col-12 col-md-7 col-lg-8 itemValueCardPago">{{NombreCursoPago}}</div>
                 </ng-container>
                 <ng-container *ngIf="resultProceso.listaCuota!=null && resultProceso.listaCuota.length>0">
                   <div class="col-12 col-md-5 col-lg-4"><b>Razón:</b></div>
                   <div class="col-12 col-md-7 col-lg-8 itemValueCardPago" *ngIf="tipoRespuesta!='AF'">
                     <div *ngFor="let item of resultProceso.listaCuota">
-                      {{item.nombre}}
+                      {{reemplazarRazonPago(item.nombre)}}
                     </div>
                   </div>
                   <div class="col-12 col-md-7 col-lg-8 itemValueCardPago" *ngIf="tipoRespuesta=='AF'">
                     <div *ngFor="let item of resultProceso.listaCuota ; index as i" >
                       <ng-container *ngIf="i==0">
-                        {{item.nombre}}
+                        {{reemplazarRazonPago(item.nombre)}}
                       </ng-container>
+                    </div>
+                  </div>
+                </ng-container>
+                <ng-container *ngIf="resultProceso.listaCuota==null || resultProceso.listaCuota.length==0">
+                  <div class="col-12 col-md-5 col-lg-4"><b>Razón:</b></div>
+                  <div class="col-12 col-md-7 col-lg-8 itemValueCardPago" >
+                    <div>
+                      Matrícula
                     </div>
                   </div>
                 </ng-container>
