@@ -222,6 +222,8 @@ import { ModalExamenAplicacionComponent } from './docencia-v2/docencia-carreras-
 import { ModalPrevisualizacionExamenAplicacionComponent } from './docencia-v2/docencia-carreras-profesionales/docencia-examen-suficiencia-profesional/crear-examen-aplicacion/modal-previsualizacion-examen-aplicacion/modal-previsualizacion-examen-aplicacion.component';
 import { ModalExamenAplicacionPreguntasComponent } from './docencia-v2/docencia-carreras-profesionales/docencia-examen-suficiencia-profesional/crear-examen-aplicacion/modal-examen-aplicacion/modal-examen-aplicacion-preguntas/modal-examen-aplicacion-preguntas.component';
 import { CalificarExamenAplicacionDetalleComponent } from './docencia-v2/docencia-carreras-profesionales/docencia-examen-suficiencia-profesional/calificar-examen-aplicacion/calificar-examen-aplicacion-detalle/calificar-examen-aplicacion-detalle.component';
+import { CursoHerramientasAdicionalesComponent } from './curso/curso-herramientas-adicionales/curso-herramientas-adicionales.component';
+import { CursoGoogleWorkspacesComponent } from './curso/curso-google-workspaces/curso-google-workspaces.component';
 
 
 
@@ -441,7 +443,9 @@ import { CalificarExamenAplicacionDetalleComponent } from './docencia-v2/docenci
     ModalPagoMercadoPagoChileComponent,
     ModalPagoWompiComponent,
     ModalPagoOpenpayColombiaComponent,
-    ModalPagoMultipagoComponent
+    ModalPagoMultipagoComponent,
+    CursoHerramientasAdicionalesComponent,
+    CursoGoogleWorkspacesComponent
     ],
   imports: [
     CommonModule,

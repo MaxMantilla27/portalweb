@@ -1,0 +1,53 @@
+.transpText p{
+  margin-bottom: 0px;
+  font-size: 25px;
+}
+.transpText div{
+  font-size: 21px;
+}
+.transpText{
+  display: flex;
+  align-items: flex-start;
+  margin-top: 40px;
+}
+table, th, td {
+  border: 1px solid #e0e1e2;
+}
+th,td{
+  padding: 10px 20px;
+  word-break: break-word;
+}
+td{
+  color:#818181
+}
+.transpTable{
+  margin-top: 20px;
+}
+a{
+  color: #5fb0f6;
+  text-decoration: none;
+}
+a:hover{
+  text-decoration: underline;
+}
+.text-center{
+  font-size: 10px;
+    word-break: break-word;
+}
+.titleth{
+  font-size: 12px;
+  min-width: 122px;
+}
+p{
+
+  word-break: break-word;
+}
+.table-resposive{
+  overflow: auto;
+  min-width: 100%;
+  width: auto;
+  display: block;
+  overflow-x: auto;
+  //white-space: nowrap;
+}
+

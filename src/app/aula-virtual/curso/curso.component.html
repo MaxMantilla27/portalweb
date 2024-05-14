@@ -628,10 +628,34 @@
             <div #biblioteca class="contentHeaderM" (click)="InterraccionTab('Biblioteca Virtual')" matTooltip="BibliotecaVirtual"
               matTooltipPosition="after"(click)="redireccionarBiblioteca()" style="cursor: pointer;color:#524f4f !important">
               <i class="material-icons">menu_book</i>
-              <div class="titleMatr">Biblioteca Virtual</div>
+              <div class="titleMatr"  *ngIf="!hide">Biblioteca Virtual</div>
             </div>
           </ng-template>
           <div class="pad-resp">
+          </div>
+        </mat-tab>
+        <mat-tab *ngIf="EsCarrera==true">
+          <ng-template mat-tab-label  >
+            <div #biblioteca class="contentHeaderM" matTooltip="Herramientas Adicionales"
+              matTooltipPosition="after"style="cursor: pointer;color:#524f4f !important">
+              <i class="material-icons">square_foot</i>
+              <div class="titleMatr"  *ngIf="!hide">Herramientas adicionales</div>
+            </div>
+          </ng-template>
+          <div class="pad-resp">
+            <app-curso-herramientas-adicionales></app-curso-herramientas-adicionales>
+          </div>
+        </mat-tab>
+        <mat-tab *ngIf="EsCarrera==true">
+          <ng-template mat-tab-label  >
+            <div #biblioteca class="contentHeaderM"  matTooltip="GoogleWorkspaces"
+              matTooltipPosition="after" style="cursor: pointer;color:#524f4f !important">
+              <i class="material-icons">workspaces</i>
+              <div class="titleMatr" *ngIf="!hide">Google Workspaces</div>
+            </div>
+          </ng-template>
+          <div class="pad-resp">
+            <app-curso-google-workspaces></app-curso-google-workspaces>
           </div>
         </mat-tab>
         <!-- </ng-container> -->
