@@ -108,7 +108,7 @@ export class ResultadoPagoComponent implements OnInit,OnDestroy{
             this.resultVisa=x._Repuesta;
             console.log(this.resultVisa)
             if(this.resultVisa.estadoOperacion=='Processed'){
-              if(this.resultVisa.tipoPago=='Organico'||this.resultVisa.idMatriculaCabecera==0){
+              if(this.resultVisa.tipoPago=='Organico'){
                 this.RegistrarMatriculaAlumnoOrganico()
               }
               else{

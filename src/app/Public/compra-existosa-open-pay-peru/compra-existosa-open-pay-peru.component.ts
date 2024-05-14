@@ -61,7 +61,6 @@ export class CompraExistosaOpenPayPeruComponent implements OnInit {
     if(this.isBrowser){
       this._ActivatedRoute.queryParams.pipe(takeUntil(this.signal$)).subscribe({
         next: (x) => {
-          console.log(x)
           this.id = x['id'];
           this.tipoRespuesta = x['tipo']
           this.dialogRef =this.dialog.open(ChargeComponent,{
@@ -126,8 +125,7 @@ export class CompraExistosaOpenPayPeruComponent implements OnInit {
 
             if(this.resultVisa.estadoOperacion=='Processed')
             {
-              if(this.resultVisa.tipoPago=='Organico'||this.resultVisa.idMatriculaCabecera==0){
-                console.log('RegistraOrganico')
+              if(this.resultVisa.tipoPago=='Organico'){
                 this.RegistrarMatriculaAlumnoOrganico()
               }
               else{

@@ -82,7 +82,7 @@ export class ResultadoPagoKlapComponent implements OnInit {
       },
       complete:()=>{
         if(this.resultProceso.estadoOperacion=='Processed'){
-          if(this.resultProceso.tipoPago=='Organico'||this.resultProceso.idMatriculaCabecera==0){
+          if(this.resultProceso.tipoPago=='Organico'){
             this.RegistrarMatriculaAlumnoOrganico()
           }
           else{

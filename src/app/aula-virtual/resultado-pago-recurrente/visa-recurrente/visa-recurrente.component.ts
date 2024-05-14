@@ -87,7 +87,7 @@ export class VisaRecurrenteComponent implements OnInit {
           },
           complete:()=>{
             if(this.resultVisa.estadoOperacion=='Processed'){
-              if(this.resultVisa.tipoPago=='Organico'||this.resultVisa.idMatriculaCabecera==0){
+              if(this.resultVisa.tipoPago=='Organico'){
                 this.RegistrarMatriculaAlumnoOrganico()
               }
               else{

@@ -93,7 +93,7 @@ export class ResultadoPagoIzipayComponent implements OnInit,OnDestroy {
       complete:()=>{
         if(this.resultProceso.estadoOperacion=='Processed'){
           this.IdentificadorTransaccion=this.resultProceso.identificadorTransaccion;
-          if(this.resultProceso.tipoPago=='Organico'||this.resultProceso.idMatriculaCabecera==0){
+          if(this.resultProceso.tipoPago=='Organico'){
             this.RegistrarMatriculaAlumnoIzipayOrganico()
           }
           else{

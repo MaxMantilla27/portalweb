@@ -101,7 +101,7 @@ export class CompraExitosaOpenPayComponent implements OnInit {
     else{
       this._FormaPagoService.ProcesamientoPagoOpenPay(this.id).pipe(takeUntil(this.signal$)).subscribe({
         next:x=>{
-          console.log(x)
+
           this.json.IdentificadorTransaccion=x._Repuesta.identificadorTransaccion
           this.ObtenerPreProcesoPagoCuotaAlumno()
         }
@@ -114,7 +114,6 @@ export class CompraExitosaOpenPayComponent implements OnInit {
     this.ruta='/AulaVirtual/MisPagos'
     this._FormaPagoService.ObtenerPreProcesoPagoCuotaAlumno(this.json).pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
-        console.log(x)
         this.dialogRef.close()
         if(x._Repuesta.registroAlumno==null){
           this.ObtenerPreProcesoPagoOrganicoAlumno()
@@ -126,7 +125,7 @@ export class CompraExitosaOpenPayComponent implements OnInit {
 
             if(this.resultVisa.estadoOperacion=='Processed')
             {
-              if(this.resultVisa.tipoPago=='Organico'||this.resultVisa.idMatriculaCabecera==0){
+              if(this.resultVisa.tipoPago=='Organico'){
                 this.RegistrarMatriculaAlumnoOrganico()
               }
               else{
