@@ -1,4 +1,4 @@
-.titlePagoTarjetaModalIzipay {
+.titlePagoTarjetaModal {
   font-size: 20px;
   font-weight: 600;
   // margin: 30px 0px;
@@ -10,29 +10,17 @@
   display: flex;
   border-radius: 5px 5px 0px 0px;
 }
-.subtitlePagoVisaIzipay{
+.subtitlePagoVisa{
   font-weight: 600;
   margin-bottom: 20px;
   margin-top: 20px;
   // border-bottom: solid 1px #e8e8e8;
 }
-.dialog-Tarjeta-Modal-IziPay {
+.dialog-Tarjeta-Modal {
   mat-dialog-container {
   padding: 10px !important;
   border-radius: 10px;
   overflow-y: auto !important;
   max-height: 95vh;
-  visibility: visible;
-  pointer-events: auto;
-  z-index: 9999; /* Asegura que el modal esté por encima de otros elementos */
   }
-}
-.dialog-Tarjeta-Modal-IziPay-Ocultar {
-  mat-dialog-container {
-    display: none !important; /* Asegura que el modal se oculte correctamente */
-    pointer-events: none !important;
-  }
-}
-.cdk-global-scrollblock{
-  position: initial !important;
 }
