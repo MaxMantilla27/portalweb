@@ -1,4 +1,4 @@
-.titlePagoTarjetaModal {
+.titlePagoTarjetaModalMercadoPago {
   font-size: 20px;
   font-weight: 600;
   // margin: 30px 0px;
@@ -10,17 +10,26 @@
   display: flex;
   border-radius: 5px 5px 0px 0px;
 }
-.subtitlePagoVisa{
+.subtitlePagoVisaMercadoPago{
   font-weight: 600;
   margin-bottom: 20px;
   margin-top: 20px;
   // border-bottom: solid 1px #e8e8e8;
 }
-.dialog-Tarjeta-Modal {
+.dialog-Tarjeta-Modal-MercadoPago {
   mat-dialog-container {
   padding: 10px !important;
   border-radius: 10px;
   overflow-y: auto !important;
   max-height: 95vh;
   }
+}
+.dialog-Tarjeta-Modal-MercadoPago-Ocultar {
+  mat-dialog-container {
+    display: none;
+    pointer-events: none !important;
+  }
+}
+.cdk-global-scrollblock{
+  position: initial !important;
 }

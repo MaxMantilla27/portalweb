@@ -91,8 +91,7 @@
     <div *ngIf="OpcionGuardar==false" style="margin: 0px 5px;">
       <app-default-button [confs]="{color:'primary',titulo:'Guardar'}"
       [style]="'color:white; width: 100%;background: #888888;border-color: #888888;'"
-        [disabled]="true"
-        (ButtoclClick)="RegistrarAsistenciaDetalleDocente()" [icon]="'check'"></app-default-button>
+        [disabled]="true" [icon]="'check'"></app-default-button>
     </div>
     <div *ngIf="DisabledFinalizarRegistro==true" style="margin: 0px 5px;">
       <app-default-button [confs]="{color:'primary',titulo:'Finalizar Registro'}"
