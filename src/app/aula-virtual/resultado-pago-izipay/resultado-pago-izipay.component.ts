@@ -86,11 +86,6 @@ export class ResultadoPagoIzipayComponent implements OnInit,OnDestroy {
       next:x=>{
         console.log("REPUESTA-PREPROCESO",x._Repuesta)
         this.resultProceso =x._Repuesta
-      },
-      error:e=>{
-        //this._router.navigate([this.ruta])
-      },
-      complete:()=>{
         if(this.resultProceso.estadoOperacion=='Processed'){
           this.IdentificadorTransaccion=this.resultProceso.identificadorTransaccion;
           if(this.resultProceso.tipoPago=='Organico'){
@@ -120,6 +115,9 @@ export class ResultadoPagoIzipayComponent implements OnInit,OnDestroy {
                 this.EnvioCorreoErrorPago()
             }
 
+      },
+      error:e=>{
+        //this._router.navigate([this.ruta])
       }
     })
   }
@@ -146,7 +144,7 @@ export class ResultadoPagoIzipayComponent implements OnInit,OnDestroy {
     }
 
     this.jsonCorreo.Asunto =
-    'Confirmación de Pago '+this.resultProceso.nombrePasarela+'- BSG Institute';
+      'Confirmación de Pago - Izipay - BSG Institute';
     this.jsonCorreo.Destinatario = this.resultProceso.registroAlumno.correo;
     this.jsonCorreo.Contenido =
     "<div style='margin-left:8rem;margin-right:8rem'>"+
@@ -209,7 +207,7 @@ export class ResultadoPagoIzipayComponent implements OnInit,OnDestroy {
   }
   EnvioCorreoErrorPago(){
     this.jsonCorreo.Asunto =
-      'Error al Procesar tu Pago '+this.resultProceso.nombrePasarela+'- BSG Institute';
+      'Error al Procesar tu Pago - Izipay - BSG Institute';
     this.jsonCorreo.Destinatario = this.resultProceso.registroAlumno.correo;
     this.jsonCorreo.Contenido =
     "<div style='margin-left:8rem;margin-right:8rem'>"+

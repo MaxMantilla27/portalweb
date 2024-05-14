@@ -82,8 +82,7 @@ export class ResultadoPagoWebpayComponent implements OnInit {
       next:x=>{
         console.log("RespuestaWEbpay",x)
         this.resultWebpay = x._Repuesta;
-      },
-      complete:()=>{
+
         if(this.resultWebpay.estadoOperacion=='Processed'){
           if(this.resultWebpay.tipoPago=='Organico'){
             this.RegistrarMatriculaAlumnoOrganico()
@@ -138,7 +137,7 @@ export class ResultadoPagoWebpayComponent implements OnInit {
     }
 
     this.jsonCorreo.Asunto =
-    'Confirmación de Pago '+this.resultWebpay.nombrePasarela+'- BSG Institute';
+      'Confirmación de Pago - Webpay - BSG Institute';
     this.jsonCorreo.Destinatario = this.resultWebpay.registroAlumno.correo;
     this.jsonCorreo.Contenido =
     "<div style='margin-left:8rem;margin-right:8rem'>"+
@@ -203,7 +202,7 @@ export class ResultadoPagoWebpayComponent implements OnInit {
   }
   EnvioCorreoErrorPago(){
     this.jsonCorreo.Asunto =
-      'Error al Procesar tu Pago '+this.resultProceso.nombrePasarela+'- BSG Institute';
+      'Error al Procesar tu Pago - Webpay - BSG Institute';
     this.jsonCorreo.Destinatario = this.resultWebpay.registroAlumno.correo;
     this.jsonCorreo.Contenido =
     "<div style='margin-left:8rem;margin-right:8rem'>"+

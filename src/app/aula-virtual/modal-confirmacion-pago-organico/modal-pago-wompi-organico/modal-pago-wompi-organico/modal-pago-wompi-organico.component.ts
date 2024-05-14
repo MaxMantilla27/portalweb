@@ -110,8 +110,6 @@ export class ModalPagoWompiOrganicoComponent implements OnInit {
     script.setAttribute('data-redirect-url',this.urlBase+'AulaVirtual/PagoExitoso/'+this.json.IdentificadorTransaccion)
 
     this._renderer2.appendChild(this._document.getElementById('wompi'), script);
-    console.log(this.urlBase+'AulaVirtual/PagoExitoso/'+this.json.IdentificadorTransaccion)
-    console.log(this.jsonSave)
   }
   closeModal(){
     this.dialogRef.close(this.jsonSave)

@@ -36,7 +36,7 @@ export class ModalAfiliacionIzipayComponent implements OnInit, OnDestroy, AfterV
     IdentificadorTransaccion: '',
     RequiereDatosTarjeta: false,
   };
-  private kryptonScriptLoaded: boolean = false;
+
   ngAfterViewInit():void{
     if (this.data.Identificador){
       this.idMatricula =  this.data.IdMatricula
@@ -76,37 +76,30 @@ export class ModalAfiliacionIzipayComponent implements OnInit, OnDestroy, AfterV
   }
   iniciarScripsIzipay() {
     console.log(this.resultPreValidacion)
-    this.kryptonScriptLoaded=false;
-    if (!this.kryptonScriptLoaded) {
-      let script1 = this._renderer2.createElement('script');
-      script1.src =
-        'https://static.micuentaweb.pe/static/js/krypton-client/V4.0/stable/kr-payment-form.min.js';
-      script1.setAttribute(
-        'kr-public-key',
-        this.resultPreValidacion.procesoPagoBotonIziPay.publicKey
-      );
-      script1.setAttribute('kr-post-url-success',
-      'https://proceso-pago.bsginstitute.com/ProcesoPagoIziPay/Recurrente?IdTransaccion='+this.json.IdentificadorTransaccion);
-      script1.setAttribute('kr-post-url-refused',
-      'https://proceso-pago.bsginstitute.com/ProcesoPagoIziPay/Recurrente?IdTransaccion='+this.json.IdentificadorTransaccion);
-      script1.setAttribute('kr-lang', 'es');
-      this._renderer2.appendChild(
-        this._document.getElementById('header'),
-        script1
-      );
+    let script1 = this._renderer2.createElement('script');
+    script1.src =
+      'https://static.micuentaweb.pe/static/js/krypton-client/V4.0/stable/kr-payment-form.min.js';
+    script1.setAttribute(
+      'kr-public-key',
+      this.resultPreValidacion.procesoPagoBotonIziPay.publicKey
+    );
+    script1.setAttribute('kr-post-url-success',
+    'https://proceso-pago.bsginstitute.com/ProcesoPagoIziPay/Recurrente?IdTransaccion='+this.json.IdentificadorTransaccion);
+    script1.setAttribute('kr-post-url-refused',
+    'https://proceso-pago.bsginstitute.com/ProcesoPagoIziPay/Recurrente?IdTransaccion='+this.json.IdentificadorTransaccion);
+    this._renderer2.appendChild(
+      this._document.getElementById('header'),
+      script1
+    );
 
 
-      let script2 = this._renderer2.createElement('script');
-      script2.src =
-        'https://static.micuentaweb.pe/static/js/krypton-client/V4.0/ext/classic.js';
-      this._renderer2.appendChild(
-        this._document.getElementById('header'),
-        script2
-      );
-      // Marcar el script como cargado
-      this.kryptonScriptLoaded = true;
-    }
-
+    let script2 = this._renderer2.createElement('script');
+    script2.src =
+      'https://static.micuentaweb.pe/static/js/krypton-client/V4.0/ext/classic.js';
+    this._renderer2.appendChild(
+      this._document.getElementById('header'),
+      script2
+    );
 
     let divForm = this._renderer2.createElement('div');
     divForm = this._document.getElementById('FormBody');
@@ -122,7 +115,7 @@ export class ModalAfiliacionIzipayComponent implements OnInit, OnDestroy, AfterV
       }else{
         window.location.reload()
       }
-    }, 5000);
+    }, 500);
   }
   customForm(){
     var boton=document.getElementsByClassName('kr-popin-button');
@@ -154,7 +147,6 @@ export class ModalAfiliacionIzipayComponent implements OnInit, OnDestroy, AfterV
     this.hidenBotom=false
   }
   cerraModal(){
-    this.dialogRefModal.close(true);
-    this.kryptonScriptLoaded=false;
+    this.dialogRefModal.close();
   }
 }

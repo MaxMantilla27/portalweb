@@ -76,7 +76,6 @@ export class ModalPagoIzipayOrganicoComponent implements OnInit {
       script1.setAttribute('kr-public-key', this.resultPreValidacion.procesoPagoBotonIziPay.publicKey);
       script1.setAttribute('kr-post-url-success', 'https://proceso-pago.bsginstitute.com/ProcesoPagoIziPay/Cronograma?IdTransaccion=' + this.json.IdentificadorTransaccion);
       script1.setAttribute('kr-post-url-refused', 'https://proceso-pago.bsginstitute.com/ProcesoPagoIziPay/Cronograma?IdTransaccion=' + this.json.IdentificadorTransaccion);
-      script1.setAttribute('kr-lang', 'es');
       this._renderer2.appendChild(this._document.getElementById('header'), script1);
 
       let script2 = this._renderer2.createElement('script');
@@ -102,7 +101,7 @@ export class ModalPagoIzipayOrganicoComponent implements OnInit {
       }else{
         window.location.reload()
       }
-    }, 5000);
+    }, 1000);
   }
   customForm(){
     var boton=document.getElementsByClassName('kr-popin-button');

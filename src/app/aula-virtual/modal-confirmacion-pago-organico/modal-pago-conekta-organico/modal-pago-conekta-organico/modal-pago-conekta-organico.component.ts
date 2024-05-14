@@ -71,7 +71,6 @@ export class ModalPagoConektaOrganicoComponent implements OnInit {
     this.signal$.complete()
   }
   ngOnInit(): void {
-    console.log(this.data)
     if (this.data.Identificador){
       this.idMatricula = this.data.IdMatricula;
       this.json.IdentificadorTransaccion = this.data.Identificador;
@@ -91,7 +90,6 @@ export class ModalPagoConektaOrganicoComponent implements OnInit {
       next:x=>{
         console.log(x)
         this.resultVisa=x._Repuesta;
-        this.resultVisa.registroAlumno=this.resultVisa.datoAlumno
         this.DataComprobante.listaCuota = x._Repuesta.listaCuota
         if(this.resultVisa.estadoOperacion.toLowerCase()!='sent'){
           this._router.navigate(['/AulaVirtual/MisCursos/'+this.idMatricula])

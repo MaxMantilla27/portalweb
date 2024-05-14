@@ -17,28 +17,26 @@
 
       <ng-container *ngIf="resultVisa.estadoOperacion!='Pending'">
         <div class="titleResultPago">
-          <img style="margin-right: 10px;"  src="../../../assets/icons/denegado-error-rojo.svg" alt="Operación denegada">
           <div *ngIf="tipoRespuesta!='AF'">No se realizó el pago</div>
           <div *ngIf="tipoRespuesta=='AF'">No se realizó la afiliación</div>
+          <img src="../../../assets/icons/denegado-error-21.svg" alt="Operación denegada">
         </div>
         <div class="textResultPago">
           <ng-container *ngIf="resultVisa.estadoOperacion =='No Process' && tipoRespuesta!='AF'">
-            No hemos podido procesar su pago, debido a un error con su entidad bancaria,  comuniquese con
-            su Banco para solucionar el error en el pago; o intente con otro medio de pago.
+            No hemos podido procesar su pago, debido a un error con su entidad bancaria, comuniquese con ellos para
+            solucionar el error en el pago.
           </ng-container>
           <ng-container *ngIf="resultVisa.estadoOperacion =='No Process' && tipoRespuesta=='AF'">
-            No hemos podido procesar su pago, debido a un error con su entidad bancaria,  comuniquese con
-            su Banco para solucionar el error en el pago; o intente con otro medio de pago.
+            No hemos podido procesar su afiliación, debido a un error con su entidad bancaria, comuniquese con ellos para
+            solucionar el error en el pago.
           </ng-container>
           <ng-container *ngIf="resultVisa.estadoOperacion=='Declinado'  && tipoRespuesta!='AF'">
-            No hemos podido procesar su pago, debido a un error con su entidad bancaria,  comuniquese con
-            su Banco para solucionar el error en el pago; o intente con otro medio de pago.
+            No hemos podido procesar su pago, debido a un error en nuestra plataforma de pagos.
             <br>
             Escribanos a nuestro chat de soporte técnico para poder ayudarlo.
           </ng-container>
           <ng-container *ngIf="resultVisa.estadoOperacion=='Declinado'  && tipoRespuesta=='AF'">
-            No hemos podido procesar su pago, debido a un error con su entidad bancaria,  comuniquese con
-            su Banco para solucionar el error en el pago; o intente con otro medio de pago.
+            No hemos podido procesar su afiliación, debido a un error en nuestra plataforma de pagos.
             <br>
             Escribanos a nuestro chat de soporte técnico para poder ayudarlo.
           </ng-container>

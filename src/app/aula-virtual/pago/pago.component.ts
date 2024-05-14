@@ -101,21 +101,7 @@ export class PagoComponent implements OnInit,OnDestroy {
   public pagoRecurrenteActivado:boolean = false;
   public showTooltip: boolean = false;
   public listaCronogramaPagosJson:any=[];
-  public codigoIso: string = 'INTC';
   ngOnInit(): void {
-    this._HelperService.recibirDataPais
-      .pipe(takeUntil(this.signal$))
-      .subscribe({
-        next: (x) => {
-          this.codigoIso =
-            this._SessionStorageService.SessionGetValue('ISO_PAIS') != ''
-              ? this._SessionStorageService.SessionGetValue('ISO_PAIS')
-              : 'INTC';
-          console.log('*********************', this.codigoIso);
-        },
-        complete:()=>{
-        }
-      });
     let i=0
     this._HelperService.recibirCombosPerfil.pipe(takeUntil(this.signal$)).subscribe((x) => {
       this.textoBienvenido = x.datosAlumno.nombres+
@@ -878,6 +864,7 @@ export class PagoComponent implements OnInit,OnDestroy {
   }
   ObtenerInformacionPagoLocal(){
     var localCronogramaPagos = this._SessionStorageService.SessionGetValue('listaCronogramaPagos');
+    console.log(localCronogramaPagos)
     if(localCronogramaPagos!=''){
       this.listaCronogramaPagosJson = JSON.parse(localCronogramaPagos);
       console.log(this.listaCronogramaPagosJson)

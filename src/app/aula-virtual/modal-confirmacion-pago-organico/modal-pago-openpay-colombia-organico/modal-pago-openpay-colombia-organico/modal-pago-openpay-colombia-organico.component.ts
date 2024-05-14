@@ -103,16 +103,9 @@ export class ModalPagoOpenpayColombiaOrganicoComponent implements OnInit {
           this._router.navigate(['/AulaVirtual/MisCursos/'+this.idMatricula])
         }
         this.resultCard.total=0;
-        console.log(this.resultCard.listaCuota)
-        if(this.resultCard.listaCuota!=undefined){
-          this.resultCard.listaCuota.forEach((l:any) => {
-            this.resultCard.total+=l.cuotaTotal
-          });
-        }
-        else{
-          this.resultCard.total=this.resultCard.montoTotal
-        }
-
+        this.resultCard.listaCuota.forEach((l:any) => {
+          this.resultCard.total+=l.cuotaTotal
+        });
         this.jsonSave.IdentificadorTransaccion=this.resultCard.identificadorTransaccion
         this.jsonSave.MedioCodigo=this.resultCard.medioCodigo
         this.jsonSave.MedioPago=this.resultCard.medioPago

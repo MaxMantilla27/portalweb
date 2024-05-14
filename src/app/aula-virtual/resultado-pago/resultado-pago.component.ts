@@ -95,7 +95,6 @@ export class ResultadoPagoComponent implements OnInit,OnDestroy{
 
     this._FormaPagoService.ObtenerPreProcesoPagoCuotaAlumno(this.json).pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
-        console.log(x)
         // console.log("REPUESTA-PREPROCESO",x._Repuesta.listaCuota)
         // var menor = x._Repuesta.listaCuota[0].nombre
         // console.log("REPUESTA-PREPROCESO",menor)
@@ -304,7 +303,7 @@ export class ResultadoPagoComponent implements OnInit,OnDestroy{
     }
 
     this.jsonCorreo.Asunto =
-    'Confirmación de Pago '+this.resultVisa.nombrePasarela+'- BSG Institute';
+      'Confirmación de Pago - BSG Institute';
     this.jsonCorreo.Destinatario = this.resultVisa.registroAlumno.correo;
     // this.jsonCorreo.Destinatario = 'mmantilla@bsginstitute.com';
     this.jsonCorreo.Contenido =
@@ -370,7 +369,7 @@ export class ResultadoPagoComponent implements OnInit,OnDestroy{
   }
   EnvioCorreoErrorPago(){
     this.jsonCorreo.Asunto =
-      'Error al Procesar tu Pago '+this.resultVisa.nombrePasarela+'- BSG Institute';
+      'Error al Procesar tu Pago - BSG Institute';
     this.jsonCorreo.Destinatario = this.resultVisa.registroAlumno.correo;
     // this.jsonCorreo.Destinatario = 'mmantilla@bsginstitute.com';
     this.jsonCorreo.Contenido =

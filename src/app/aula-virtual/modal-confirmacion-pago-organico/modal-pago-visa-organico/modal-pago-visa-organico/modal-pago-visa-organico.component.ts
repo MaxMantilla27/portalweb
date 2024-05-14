@@ -68,7 +68,7 @@ export class ModalPagoVisaOrganicoComponent implements OnInit {
     listaCuota:''
   }
   public intervcal:any
-  private kryptonScriptLoaded: boolean = false;
+
   ngOnDestroy(): void {
     this.signal$.next(true)
     this.signal$.complete()
@@ -122,31 +122,27 @@ export class ModalPagoVisaOrganicoComponent implements OnInit {
           }else{
             window.location.reload()
           }
-        }, 5000);
+        }, 500);
         //this.SetConfiguration()
       }
     })
   }
   addVisa(){
-    this.kryptonScriptLoaded=false;
-    if (!this.kryptonScriptLoaded) {
-      let script = this._renderer2.createElement('script');
-      script.src='https://static-content.vnforapps.com/v2/js/checkout.js'
-      script.setAttribute('data-sessiontoken',this.resultVisa.procesoPagoBotonVisa.sessionKey)
-      script.setAttribute('data-channel','web')
-      script.setAttribute('data-merchantid',this.resultVisa.procesoPagoBotonVisa.merchanId)
-      script.setAttribute('data-buttonsize','DEFAULT')
-      script.setAttribute('data-merchantlogo','https://img.bsginstitute.com/repositorioweb/img/logobsg-visa.svg')
-      script.setAttribute('data-formbuttoncolor','#eea236')
-      script.setAttribute('data-merchantname','BSG Institute')
-      script.setAttribute('data-purchasenumber',this.resultVisa.procesoPagoBotonVisa.orderVisa.purchaseNumber)
-      script.setAttribute('data-amount',parseFloat(this.resultVisa.procesoPagoBotonVisa.amount+'.00'))
-      script.setAttribute('data-expirationminutes','5')
-      script.setAttribute('data-timeouturl',this.urlBase+'/AulaVirtual/MisPagos/'+this.idMatricula)
-      this._renderer2.appendChild(this._document.getElementById('visa'), script);
-      this.kryptonScriptLoaded=true;
-    }
 
+    let script = this._renderer2.createElement('script');
+    script.src='https://static-content.vnforapps.com/v2/js/checkout.js'
+    script.setAttribute('data-sessiontoken',this.resultVisa.procesoPagoBotonVisa.sessionKey)
+    script.setAttribute('data-channel','web')
+    script.setAttribute('data-merchantid',this.resultVisa.procesoPagoBotonVisa.merchanId)
+    script.setAttribute('data-buttonsize','DEFAULT')
+    script.setAttribute('data-merchantlogo','https://img.bsginstitute.com/repositorioweb/img/logobsg-visa.svg')
+    script.setAttribute('data-formbuttoncolor','#eea236')
+    script.setAttribute('data-merchantname','BSG Institute')
+    script.setAttribute('data-purchasenumber',this.resultVisa.procesoPagoBotonVisa.orderVisa.purchaseNumber)
+    script.setAttribute('data-amount',parseFloat(this.resultVisa.procesoPagoBotonVisa.amount+'.00'))
+    script.setAttribute('data-expirationminutes','5')
+    script.setAttribute('data-timeouturl',this.urlBase+'/AulaVirtual/MisPagos/'+this.idMatricula)
+    this._renderer2.appendChild(this._document.getElementById('visa'), script);
 
   }
   pagar(){
@@ -157,7 +153,5 @@ export class ModalPagoVisaOrganicoComponent implements OnInit {
   }
   cerraModal(){
     this.dialogRef.close(true);
-    this.kryptonScriptLoaded=false;
-
   }
 }

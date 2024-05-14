@@ -5,9 +5,9 @@
 </div>
 <div style="background: #f4f4f4;">
   <div class="container">
-    <div class="row rowpaddAv" style="padding: 20px 90px 20px 20px !important;">
+    <div class="row rowpaddAv">
       <div class="col-12 col-md-12 col-lg-12">
-        <div class="titulop" style="line-height:1.5rem">
+        <div class="titulop">
           Mis Pagos
         </div>
         <div style="font-size: 20px;
@@ -29,7 +29,7 @@
               <div>Cuotas pagadas:</div>
               <p>{{item.cuotasPagadas}}/{{item.cuotasPendientes+item.cuotasPagadas}}</p>
             </div>
-            <div class="col-12 col-md-6 col-lg-6 itemsMisPagos" *ngIf="item.cuotasPendientes>0">
+            <div class="col-12 col-md-6 col-lg-6 itemsMisPagos" *ngIf="item.cuotasPagadas<item.cuotasPendientes">
               <img src="../../../assets/icons/alarma.svg" alt="Alarma">
               <div>Proximo Vencimiento :</div>
               <p>{{item.fechaVencimiento | date:'dd/MM/yyyy'}}</p>
