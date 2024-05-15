@@ -159,14 +159,17 @@ export class PagoOrganicoTodosComponent implements OnInit, OnDestroy {
     this.signal$.complete()
   }
   ngOnInit(): void {
-    window.scrollTo({ top: 0, behavior: 'smooth' })
+    // window.scrollTo({ top: 0, behavior: 'smooth' })
     this.dialogRefPrecarga =this.dialog.open(ChargeSpinnerComponent,{
       panelClass:'dialog-charge-spinner',
       disableClose:true
     });
     timer(2000).subscribe(() => {
       this.dialogRefPrecarga.close();
-      window.scrollTo({ top: 0, behavior: 'smooth' })
+      // window.scrollTo({ top: 0, behavior: 'smooth' })
+      setTimeout(() => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }, 100);
     });
     this.datospago = localStorage.getItem('datEnvioPago');
     this.datospago = atob(this.datospago);

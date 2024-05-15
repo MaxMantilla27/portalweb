@@ -188,6 +188,8 @@ export class PagoComponent implements OnInit,OnDestroy {
           let count = 1;
           let index = 0;
           this.CronogramaPago.registroCuota.forEach((x:any) => {
+            x.cuota=x.cuota
+            x.moraCalculada=x.moraCalculada
             if(x.tipoCuota=="MATRICULA"){
               x.numeroCuotaMostrar="MATRICULA"
             }
@@ -903,5 +905,18 @@ export class PagoComponent implements OnInit,OnDestroy {
       }
 
     }
+  }
+  FormatoMilesDecimales(num: number): string {
+    // Separar parte entera y decimal
+    console.log(num)
+    const parts = Number(num).toFixed(2).split('.');
+    let integerPart = parts[0];
+    const decimalPart = parts[1];
+
+    // Agregar separadores de miles
+    integerPart = integerPart.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+
+    // Combinar parte entera y decimal
+    return integerPart + '.' + decimalPart;
   }
 }

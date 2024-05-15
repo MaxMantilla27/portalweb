@@ -293,13 +293,13 @@ export class ResultadoPagoComponent implements OnInit,OnDestroy{
     if(this.resultVisa.listaCuota.length==0){
       paymentSummary += "<div style='display:flex;border-bottom: 1px solid black;padding: 5px 0;'>"+
       "<div style='font-size:13px;font-weight:100;width: 66%;'>" + 'Matrícula' + "</div>" +
-      "<div style='font-size:13px;width: 33%;text-align:right;'>" + this.resultVisa.montoTotal.toFixed(2) + " " + this.resultVisa.monedaCorreo + "</div></div>";
+      "<div style='font-size:13px;width: 33%;text-align:right;'>" + this.FormatoMilesDecimales(this.resultVisa.montoTotal) + " " + this.resultVisa.monedaCorreo + "</div></div>";
     }
     else{
       this.resultVisa.listaCuota.forEach((l:any) => {
       paymentSummary += "<div style='display:flex;border-bottom: 1px solid black;padding: 5px 0;'>"+
       "<div style='font-size:13px;font-weight:100;width: 66%;'>" + this.reemplazarRazonPago(l.nombre) + "</div>" +
-      "<div style='font-size:13px;width: 33%;text-align:right;'>" + l.cuotaTotal.toFixed(2) + " " + this.resultVisa.monedaCorreo + "</div></div>";
+      "<div style='font-size:13px;width: 33%;text-align:right;'>" + this.FormatoMilesDecimales(l.cuotaTotal) + " " + this.resultVisa.monedaCorreo + "</div></div>";
       });
     }
 
@@ -338,7 +338,7 @@ export class ResultadoPagoComponent implements OnInit,OnDestroy{
       "<div style='display:flex;padding-bottom:20px;'>"+
       "<div style='font-size:13px;font-weight:bold;width: 66%;'>Total del pago</div>"+
       "<div style='font-size:13px;justify-content:flex-end;font-weight:bold;width: 33%;text-align:right;'>"+
-      this.resultVisa.montoTotal.toFixed(2) +" "+this.resultVisa.monedaCorreo+
+      this.FormatoMilesDecimales(this.resultVisa.montoTotal) +" "+this.resultVisa.monedaCorreo+
       "</div></div>"+
       // "<div style='font-size:13px'> Método de pago: Tarjeta Visa N° xxxx xxxx xxxx 1542"+
       // "</div>"+
@@ -447,14 +447,14 @@ export class ResultadoPagoComponent implements OnInit,OnDestroy{
     if(this.resultVisa.listaCuota.length==0){
       paymentSummary += "<div style='display:flex;border-bottom: 1px solid black;padding: 5px 0;'>"+
       "<div style='font-size:13px;font-weight:100;width: 66%;'>" + 'Matrícula' + "</div>" +
-      "<div style='font-size:13px;width: 33%;text-align:right;'>" + this.resultVisa.montoTotal.toFixed(2) + " " + this.resultVisa.monedaCorreo + "</div></div>";
+      "<div style='font-size:13px;width: 33%;text-align:right;'>" + this.FormatoMilesDecimales(this.resultVisa.montoTotal) + " " + this.resultVisa.monedaCorreo + "</div></div>";
     }
     else{
       this.resultVisa.listaCuota.forEach((l:any) => {
         if(countLista==0){
           paymentSummary += "<div style='display:flex;border-bottom: 1px solid black;padding: 5px 0;'>"+
                             "<div style='font-size:13px;font-weight:100;width: 66%;'>" + this.reemplazarRazonPago(l.nombre) + "</div>" +
-                            "<div style='font-size:13px;width: 33%;text-align:right;'>" + l.cuotaTotal.toFixed(2) + " " + this.resultVisa.monedaCorreo + "</div></div>";
+                            "<div style='font-size:13px;width: 33%;text-align:right;'>" + this.FormatoMilesDecimales(l.cuotaTotal) + " " + this.resultVisa.monedaCorreo + "</div></div>";
         }
         countLista++;
       });
@@ -493,7 +493,7 @@ export class ResultadoPagoComponent implements OnInit,OnDestroy{
       "<div style='display:flex;padding-bottom:20px;'>"+
       "<div style='font-size:13px;font-weight:bold;width: 66%;'>Total del pago</div>"+
       "<div style='font-size:13px;justify-content:flex-end;font-weight:bold;width: 33%;text-align:right;'>"+
-      this.resultVisa.montoTotal.toFixed(2) +" "+this.resultVisa.monedaCorreo+
+      this.FormatoMilesDecimales(this.resultVisa.montoTotal) +" "+this.resultVisa.monedaCorreo+
       "</div></div>"+
       // "<div style='font-size:13px'> Método de pago: Tarjeta Visa N° xxxx xxxx xxxx 1542"+
       // "</div>"+
@@ -530,6 +530,18 @@ export class ResultadoPagoComponent implements OnInit,OnDestroy{
     });
   }
   reemplazarRazonPago(stringOriginal: string): string {
-    return stringOriginal.replace(/\//g, "-");
+    return stringOriginal.replace(/\//g, "/");
+  }
+  FormatoMilesDecimales(num: number): string {
+    // Separar parte entera y decimal
+    const parts = Number(num).toFixed(2).split('.');
+    let integerPart = parts[0];
+    const decimalPart = parts[1];
+
+    // Agregar separadores de miles
+    integerPart = integerPart.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+
+    // Combinar parte entera y decimal
+    return integerPart + '.' + decimalPart;
   }
 }

@@ -78,8 +78,8 @@
             <div class="col-12 col-md-5 col-lg-4"><b>Nro. de Compra:</b></div>
             <div class="col-12 col-md-7 col-lg-8 itemValueCardPago">{{resultVisa.identificadorTransaccion}}</div>
             <div class="col-12 col-md-5 col-lg-4"><b>Monto:</b></div>
-            <div class="col-12 col-md-7 col-lg-8 itemValueCardPago" *ngIf="tipoRespuesta!='AF'">{{resultVisa.montoTotal}}</div>
-            <div class="col-12 col-md-7 col-lg-8 itemValueCardPago" *ngIf="tipoRespuesta=='AF'">{{resultOpenPay.cuotaTotal}}</div>
+            <div class="col-12 col-md-7 col-lg-8 itemValueCardPago" *ngIf="tipoRespuesta!='AF'">{{FormatoMilesDecimales(resultVisa.montoTotal)}}</div>
+            <div class="col-12 col-md-7 col-lg-8 itemValueCardPago" *ngIf="tipoRespuesta=='AF'">{{FormatoMilesDecimales(resultOpenPay.cuotaTotal)}}</div>
             <div class="col-12 col-md-5 col-lg-4"><b>Moneda:</b></div>
             <div class="col-12 col-md-7 col-lg-8 itemValueCardPago">{{resultVisa.monedaCorreo}}</div>
             <div class="col-12 col-md-5 col-lg-4"><b>Nombres y Apellidos:</b></div>
@@ -90,18 +90,18 @@
               <div class="col-12 col-md-7 col-lg-8 itemValueCardPago">{{NombreCursoPago}}</div>
             </ng-container>
             <ng-container *ngIf="resultVisa.listaCuota!=null && resultVisa.listaCuota.length>0 ">
-              <div class="col-12 col-md-5 col-lg-4"><b>Razón:</b></div>
+              <div class="col-12 col-md-5 col-lg-4"><b>Concepto:</b></div>
               <div class="col-12 col-md-7 col-lg-8 itemValueCardPago" *ngIf="tipoRespuesta!='AF'">
                 <div *ngFor="let item of resultVisa.listaCuota">
-                  {{reemplazarRazonPago(item.nombre)}}
+                  {{item.nombre}}
                 </div>
               </div>
               <div class="col-12 col-md-7 col-lg-8 itemValueCardPago" *ngIf="tipoRespuesta=='AF'">
-                {{reemplazarRazonPago(resultOpenPay.nombre)}}
+                {{resultOpenPay.nombre}}
               </div>
             </ng-container>
             <ng-container *ngIf="resultVisa.listaCuota==null || resultVisa.listaCuota.length==0">
-              <div class="col-12 col-md-5 col-lg-4"><b>Razón:</b></div>
+              <div class="col-12 col-md-5 col-lg-4"><b>Concepto:</b></div>
               <div class="col-12 col-md-7 col-lg-8 itemValueCardPago" >
                 <div>
                   Matrícula
@@ -109,7 +109,7 @@
               </div>
             </ng-container>
             <div class="col-12 col-md-5 col-lg-4"><b>Fecha de transacción:</b></div>
-            <div class="col-12 col-md-7 col-lg-8 itemValueCardPago">{{resultVisa.fechaTransaccion | date:'dd-MM-yyyy'}}
+            <div class="col-12 col-md-7 col-lg-8 itemValueCardPago">{{resultVisa.fechaTransaccion | date:'dd/MM/yyyy'}}
             </div>
             <div class="col-12 col-md-5 col-lg-4"><b>Hora de transacción:</b></div>
             <div class="col-12 col-md-7 col-lg-8 itemValueCardPago">{{resultVisa.fechaTransaccion | date:'hh:mm'}}</div>

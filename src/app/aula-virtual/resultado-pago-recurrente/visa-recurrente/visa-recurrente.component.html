@@ -86,7 +86,7 @@
             <div class="col-12 col-md-5 col-lg-4"><b>Nro. de Compra:</b></div>
             <div class="col-12 col-md-7 col-lg-8 itemValueCardPago">{{resultVisa.identificadorTransaccion}}</div>
             <div class="col-12 col-md-5 col-lg-4"><b>Monto:</b></div>
-            <div class="col-12 col-md-7 col-lg-8 itemValueCardPago">{{resultVisa.montoTotal}}</div>
+            <div class="col-12 col-md-7 col-lg-8 itemValueCardPago">{{FormatoMilesDecimales(resultVisa.montoTotal)}}</div>
             <div class="col-12 col-md-5 col-lg-4"><b>Moneda:</b></div>
             <div class="col-12 col-md-7 col-lg-8 itemValueCardPago">{{resultVisa.monedaCorreo}}</div>
             <div class="col-12 col-md-5 col-lg-4"><b>Nombres y Apellidos:</b></div>
@@ -97,17 +97,17 @@
               <div class="col-12 col-md-7 col-lg-8 itemValueCardPago">{{NombreCursoPago}}</div>
             </ng-container>
             <ng-container *ngIf="resultVisa.listaCuota!=null && resultVisa.listaCuota.length>0">
-              <div class="col-12 col-md-5 col-lg-4"><b>Razón:</b></div>
+              <div class="col-12 col-md-5 col-lg-4"><b>Concepto:</b></div>
               <div class="col-12 col-md-7 col-lg-8 itemValueCardPago">
                 <div *ngFor="let item of resultVisa.listaCuota ; index as i" >
                   <ng-container *ngIf="i==0">
-                    {{reemplazarRazonPago(item.nombre)}}
+                    {{item.nombre}}
                   </ng-container>
                 </div>
               </div>
             </ng-container>
             <ng-container *ngIf="resultVisa.listaCuota==null || resultVisa.listaCuota.length==0">
-              <div class="col-12 col-md-5 col-lg-4"><b>Razón:</b></div>
+              <div class="col-12 col-md-5 col-lg-4"><b>Concepto:</b></div>
               <div class="col-12 col-md-7 col-lg-8 itemValueCardPago" >
                 <div>
                   Matrícula
@@ -115,7 +115,7 @@
               </div>
             </ng-container>
             <div class="col-12 col-md-5 col-lg-4"><b>Fecha de transacción:</b></div>
-            <div class="col-12 col-md-7 col-lg-8 itemValueCardPago">{{resultVisa.fechaTransaccion | date:'dd-MM-yyyy'}}
+            <div class="col-12 col-md-7 col-lg-8 itemValueCardPago">{{resultVisa.fechaTransaccion | date:'dd/MM/yyyy'}}
             </div>
             <div class="col-12 col-md-5 col-lg-4"><b>Hora de transacción:</b></div>
             <div class="col-12 col-md-7 col-lg-8 itemValueCardPago">{{resultVisa.fechaTransaccion | date:'hh:mm'}}</div>
