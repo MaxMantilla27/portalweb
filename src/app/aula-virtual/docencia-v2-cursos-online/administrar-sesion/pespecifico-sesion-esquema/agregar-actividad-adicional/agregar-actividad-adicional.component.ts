@@ -9,6 +9,7 @@ import { Subject, takeUntil } from 'rxjs';
 import { DatePipe } from '@angular/common';
 import { SnackBarServiceService } from 'src/app/Core/Shared/Services/SnackBarService/snack-bar-service.service';
 import { AlertaService } from 'src/app/shared/services/alerta.service';
+import { RemovePortalCriterioPipe } from 'src/app/Core/Shared/Pipes/remove-portal-criterio.pipe';
 
 @Component({
   selector: 'app-agregar-actividad-adicional',
@@ -29,6 +30,7 @@ export class AgregarActividadAdicionalComponent implements OnInit, OnDestroy {
     private _PEspecificoEsquemaService: PEspecificoEsquemaService,
     public _SnackBarServiceService: SnackBarServiceService,
     private alertaService: AlertaService,
+    private _removePortalCriterioPipe: RemovePortalCriterioPipe
 
   ) {}
   public saveActividad: PEspecificoSesionActividadSaveDTO = {
@@ -220,8 +222,12 @@ export class AgregarActividadAdicionalComponent implements OnInit, OnDestroy {
     this._PEspecificoEsquemaService.ObtenerTipoCriteriosPorProgramaEspecifico(this.data.idPEspecifico,idTipoCriterioEvaluacion).pipe(takeUntil(this.signal$))
     .subscribe({
       next: (x) => {
+        console.log(x)
         if(x!=null){
           this.esquemas=x;
+          this.esquemas.forEach((x:any) => {
+            x.nombre=this._removePortalCriterioPipe.transform(x.nombre)
+          });
 
         }
       },

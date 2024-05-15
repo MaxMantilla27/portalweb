@@ -40,6 +40,7 @@ export class EnvioTareaComponent implements OnInit ,OnDestroy {
   public ActualizaTareaEnviada=true
   public CalificacionActual=0
   public EnvioFechaSecundaria=false
+  public BotonEnvioActivo=true
   ngOnDestroy(): void {
     this.signal$.next(true)
     this.signal$.complete()
@@ -88,6 +89,7 @@ export class EnvioTareaComponent implements OnInit ,OnDestroy {
         this.json.file = file;
       }
     }
+    this.BotonEnvioActivo=false;
     this._PEspecificoEsquemaService.AgregarPEspecificoSesionTareaAlumno(this.json).pipe(takeUntil(this.signal$))
     .subscribe({
       next: (x) => {
@@ -111,6 +113,9 @@ export class EnvioTareaComponent implements OnInit ,OnDestroy {
         }
       },
       error: (x) => {},
+      complete:()=>{
+        this.BotonEnvioActivo=true;
+      }
     });
   }
   VerificarEnvioTarea(){

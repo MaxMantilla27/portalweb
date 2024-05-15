@@ -1,6 +1,7 @@
 import { DatePipe } from '@angular/common';
 import { Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges, ViewEncapsulation } from '@angular/core';
 import { Subject, takeUntil } from 'rxjs';
+import { RemovePortalCriterioPipe } from 'src/app/Core/Shared/Pipes/remove-portal-criterio.pipe';
 import { PEspecificoEsquemaService } from 'src/app/Core/Shared/Services/PEspecificoEsquema/pespecifico-esquema.service';
 const pipe = new DatePipe('en-US')
 @Component({
@@ -18,7 +19,9 @@ export class CalificarActividadesDocenteComponent implements OnInit ,OnChanges, 
 
   @Input() IdPespecifico = 0;
   constructor(
-    private _PEspecificoEsquemaService: PEspecificoEsquemaService
+    private _PEspecificoEsquemaService: PEspecificoEsquemaService,
+    private _removePortalCriterioPipe: RemovePortalCriterioPipe
+
     ) { }
   ngOnChanges(changes: SimpleChanges): void {
     console.log(this.IdPespecifico)
@@ -68,6 +71,7 @@ export class CalificarActividadesDocenteComponent implements OnInit ,OnChanges, 
             this.CantidadCalificadosActividad=0
             this.CantidadEnviadosActividad=0
             c.criterios.forEach((cc:any) => {
+              cc.nombre=this._removePortalCriterioPipe.transform(cc.nombre)
               var fechaEntrega= pipe.transform(new Date(cc.fechaEntrega), 'yyyy-MM-ddTHH:mm:ss.SSS')
               if(cc.idCriterioEvaluacion==21 && fechaEntrega!>this.fechaActual){
                 this.CantidadEnviadosActividad=this.CantidadEnviadosActividad+cc.cantidadEnviados
@@ -141,10 +145,10 @@ export class CalificarActividadesDocenteComponent implements OnInit ,OnChanges, 
     this.Criterio=0
     this.IrCurso=item.id
     this.itemSelect=item
-    if(item.nombre.toLowerCase()=="tarea"){
+    if(item.nombre.toLowerCase()=="talleres"||item.nombre.toLowerCase()=="trabajo final"){
       this.Criterio=1
     }else{
-      if(item.nombre.toLowerCase()=="cuestionario" || item.nombre.toLowerCase()=="cuestionario test"){
+      if(item.nombre.toLowerCase()=="examen final" || item.nombre.toLowerCase()=="cuestionario test"){
         this.Criterio=2
       }
       else{

@@ -4,6 +4,7 @@ import { PEspecificoEsquemaService } from 'src/app/Core/Shared/Services/PEspecif
 import { MatDialog } from '@angular/material/dialog';
 import { DocenciaGestionCriteriosRegistroAntiguoComponent } from './docencia-gestion-criterios-registro-antiguo/docencia-gestion-criterios-registro-antiguo.component';
 import { ProveedorService } from 'src/app/Core/Shared/Services/Proveedor/proveedor.service';
+import { RemovePortalCriterioPipe } from 'src/app/Core/Shared/Pipes/remove-portal-criterio.pipe';
 
 @Component({
   selector: 'app-criterio-evaluacion-docente',
@@ -22,8 +23,7 @@ export class CriterioEvaluacionDocenteComponent implements OnInit ,OnChanges, On
     private _PEspecificoEsquemaService: PEspecificoEsquemaService,
     public dialog: MatDialog,
     private _ProveedorService:ProveedorService,
-
-
+    private _removePortalCriterioPipe: RemovePortalCriterioPipe
     ) { }
 
   ngOnInit(): void {
@@ -57,6 +57,7 @@ export class CriterioEvaluacionDocenteComponent implements OnInit ,OnChanges, On
           if(this.criterios!=null){
             let i=1
             this.criterios.forEach((c:any) => {
+              c.nombre=this._removePortalCriterioPipe.transform(c.nombre)
               c.procentaje=c.ponderacion+'%'
               c.indice=i
               i++

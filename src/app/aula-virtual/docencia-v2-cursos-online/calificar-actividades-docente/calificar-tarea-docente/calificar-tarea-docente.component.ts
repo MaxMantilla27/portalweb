@@ -220,6 +220,9 @@ export class CalificarTareaDocenteComponent implements OnInit,OnChanges , OnDest
           }
         },
         error: (x) => {},
+        complete:()=>{
+          this.expandedElement=-1
+        }
       });
     }else{
 

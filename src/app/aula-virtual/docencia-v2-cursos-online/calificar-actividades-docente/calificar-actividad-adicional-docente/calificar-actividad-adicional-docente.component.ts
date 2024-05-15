@@ -211,6 +211,9 @@ export class CalificarActividadAdicionalDocenteComponent implements OnInit,OnCha
           }
         },
         error: (x) => {},
+        complete:()=>{
+          this.expandedElement=-1
+        }
       });
     }else{
 

@@ -45,7 +45,8 @@ export class TableV2Component implements OnInit {
   public hide:any={}
   ngOnInit(): void {
     console.log(this.tipoContenido[this.tableData])
-
+    console.log(this.columnHeader)
+    console.log(this.ColSpan)
     var i=0
     this.tableData.forEach((t:any) => {
       t.index=i;
@@ -57,18 +58,30 @@ export class TableV2Component implements OnInit {
 
     if(this.ColSpan.length>0){
       for (let index = 0; index < this.objectKeys(this.columnHeader).length; index++) {
+        console.log(index)
         var existe=false;
+
         this.ColSpan.forEach((c:any) => {
-          if(index+1>=c.inicio && index+1<=(c.inicio+c.colspam)){
+          console.log(c)
+          if(index+1>=c.inicio &&
+            // index+1<=(c.inicio+c.colspam
+            (c.id==4 || c.id==20 || c.id==19 || c.id==20||c.id==28
+             )){
+
             existe=true
           }
         });
+        console.log(existe)
+        console.log(this.columnHeader[this.objectKeys(this.columnHeader)[index]])
         if(existe==false){
           this.hide[this.objectKeys(this.columnHeader)[index]]=true
+          console.log(this.columnHeader)
+          console.log(this.columnHeader[this.objectKeys(this.columnHeader)[index]])
           this.columnas.push({id:0,inicio: index,nombre: this.columnHeader[this.objectKeys(this.columnHeader)[index]],colspam: 1})
         }
       }
       this.ColSpan.forEach((c:any) => {
+        console.log(c)
         this.columnas.push(c)
       });
       let j=0

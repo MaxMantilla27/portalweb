@@ -112,7 +112,13 @@
                 <tbody class="TablaTramitesContenido">
                   <ng-container *ngFor="let criterioCalificacion of Cursos.detalleCalificacion">
                     <tr *ngIf="criterioCalificacion.criterioEvaluacion!='Promedio'">
-                      <td class="criterio" style="width: 40%;padding-top: 10px;padding-bottom: 10px;padding-left: 10px;">
+                      <td *ngIf="Cursos.nombreModalidad!='Online Asincrónico'" class="criterio" style="width: 40%;padding-top: 10px;padding-bottom: 10px;padding-left: 10px;">
+                        {{criterioCalificacion.criterioEvaluacion|removePortalCriterio}}
+                      </td>
+                      <td  *ngIf="Cursos.nombreModalidad=='Online Asincrónico' && criterioCalificacion.criterioEvaluacion=='Portal-Talleres' " class="criterio" style="width: 40%;padding-top: 10px;padding-bottom: 10px;padding-left: 10px;">
+                        Tareas
+                      </td>
+                      <td *ngIf="Cursos.nombreModalidad=='Online Asincrónico' && criterioCalificacion.criterioEvaluacion!='Portal-Talleres'" class="criterio" style="width: 40%;padding-top: 10px;padding-bottom: 10px;padding-left: 10px;">
                         {{criterioCalificacion.criterioEvaluacion}}
                       </td>
                       <td class="criterio" style="width: 30%;text-align: left;padding-top: 10px;padding-bottom: 10px;">

@@ -147,6 +147,7 @@ import { ImagenModalComponent } from './Containers/Dialog/imagen-modal/imagen-mo
 import { ChargePuntosComponent } from './Containers/Dialog/charge-puntos/charge-puntos.component';
 import { RemovePuntoComaPipe } from './Pipes/remove-punto-coma.pipe';
 import { ChargeSpinnerComponent } from './Containers/Dialog/charge-spinner/charge-spinner.component';
+import { RemovePortalCriterioPipe } from './Pipes/remove-portal-criterio.pipe';
 
 @NgModule({
   imports: [
@@ -256,6 +257,7 @@ import { ChargeSpinnerComponent } from './Containers/Dialog/charge-spinner/charg
     ChargePuntosComponent,
     RemovePuntoComaPipe,
     ChargeSpinnerComponent,
+    RemovePortalCriterioPipe
     //ChatZComponent,
   ],
   exports: [
@@ -358,7 +360,8 @@ import { ChargeSpinnerComponent } from './Containers/Dialog/charge-spinner/charg
     TableDocenteResponderForosComponent,
     MatSlideToggleModule,
     ImagenModalComponent,
-    RemovePuntoComaPipe
+    RemovePuntoComaPipe,
+    RemovePortalCriterioPipe
   ],
   providers: [
     SessionStorageService,
@@ -406,7 +409,8 @@ import { ChargeSpinnerComponent } from './Containers/Dialog/charge-spinner/charg
     SocialAuthService,
     PespecificoSesionTemaService,
     PEspecificoEsquemaService,
-    PEspecificoSesionRecursoConectividadService
+    PEspecificoSesionRecursoConectividadService,
+    RemovePortalCriterioPipe
   ],
 })
 export class SharedModule {
