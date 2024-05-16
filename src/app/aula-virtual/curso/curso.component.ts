@@ -668,7 +668,7 @@ export class CursoComponent implements OnInit,OnDestroy {
     })
   }
   redireccionarBiblioteca(){
-    window.open("https://www.oreilly.com/member/login/",'_blank');
+    window.open("https://bookshelf.vitalsource.com/",'_blank');
 
   }
   CongelarCursoMatriculaCarrera(){

@@ -163,6 +163,30 @@
             </ng-template>
           </mat-tab>
         </ng-container>
+        <mat-tab >
+          <ng-template mat-tab-label  >
+            <div #biblioteca class="contentHeaderM" matTooltip="Herramientas Adicionales"
+              matTooltipPosition="after"style="cursor: pointer;color:#524f4f !important">
+              <i class="material-icons">square_foot</i>
+              <div class="titleMatr"  *ngIf="!hide">Herramientas adicionales</div>
+            </div>
+          </ng-template>
+          <div class="pad-resp">
+            <app-curso-herramientas-adicionales></app-curso-herramientas-adicionales>
+          </div>
+        </mat-tab>
+        <mat-tab >
+          <ng-template mat-tab-label  >
+            <div #biblioteca class="contentHeaderM"  matTooltip="GoogleWorkspaces"
+              matTooltipPosition="after" style="cursor: pointer;color:#524f4f !important">
+              <i class="material-icons">workspaces</i>
+              <div class="titleMatr" *ngIf="!hide">Google Workspaces</div>
+            </div>
+          </ng-template>
+          <div class="pad-resp">
+            <app-curso-google-workspaces [Tipo]="'Docente'"></app-curso-google-workspaces>
+          </div>
+        </mat-tab>
       </mat-tab-group>
     </div>
   </div>

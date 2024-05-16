@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-curso-google-workspaces',
@@ -9,6 +9,7 @@ export class CursoGoogleWorkspacesComponent implements OnInit {
 
   constructor() { }
 
+  @Input() Tipo=''
   ngOnInit(): void {
   }
 
