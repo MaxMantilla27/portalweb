@@ -428,9 +428,17 @@ export class PagoComponent implements OnInit,OnDestroy {
     if(this.idPasarela=13){
       tarjeta=this.tarjetas[0]
     }
+
     this.CronogramaPago.registroCuota.forEach((r:any) => {
       if(r.cancelado==false){
         var fecha=new Date(r.fechaVencimiento);
+        let NombreCuota = ''
+        if(r.tipoCuota=="MATRICULA"){
+          NombreCuota='MATRÍCULA -'+ ('0' + fecha.getUTCDate()).slice(-2)+ "/" +("0" + (fecha.getUTCMonth()+1)).slice(-2) + "/" +fecha.getUTCFullYear()
+        }
+        else{
+          NombreCuota='Cuota N°'+r.numeroCuotaMostrar+' - '+ ('0' + fecha.getUTCDate()).slice(-2)+ "/" +("0" + (fecha.getUTCMonth()+1)).slice(-2) + "/" +fecha.getUTCFullYear()
+        }
         this.jsonSend.ListaCuota.push({
           IdCuota: r.idCuota,
           NroCuota: r.nroCuota,
@@ -440,7 +448,7 @@ export class PagoComponent implements OnInit,OnDestroy {
           MoraCalculada: r.moraCalculada,
           CuotaTotal: r.cuota+r.moraCalculada,
           FechaVencimiento:r.fechaVencimiento,
-          Nombre:'Cuota N°'+r.nroCuota+' - '+ ('0' + fecha.getUTCDate()).slice(-2)+ "/" +("0" + (fecha.getUTCMonth()+1)).slice(-2) + "/" +fecha.getUTCFullYear()
+          Nombre:NombreCuota
         })
       }
     });
@@ -488,9 +496,17 @@ export class PagoComponent implements OnInit,OnDestroy {
       panelClass:'dialog-charge-spinner',
       disableClose:true
     });
+
     this.CronogramaPago.registroCuota.forEach((r:any) => {
       if(r.estado==true){
         var fecha=new Date(r.fechaVencimiento);
+        let NombreCuota = ''
+        if(r.tipoCuota=="MATRICULA"){
+          NombreCuota='MATRÍCULA -'+ ('0' + fecha.getUTCDate()).slice(-2)+ "/" +("0" + (fecha.getUTCMonth()+1)).slice(-2) + "/" +fecha.getUTCFullYear()
+        }
+        else{
+          NombreCuota='Cuota N°'+r.numeroCuotaMostrar+' - '+ ('0' + fecha.getUTCDate()).slice(-2)+ "/" +("0" + (fecha.getUTCMonth()+1)).slice(-2) + "/" +fecha.getUTCFullYear()
+        }
         this.jsonSend.ListaCuota.push({
           IdCuota: r.idCuota,
           NroCuota: r.nroCuota,
@@ -500,7 +516,7 @@ export class PagoComponent implements OnInit,OnDestroy {
           MoraCalculada: r.moraCalculada,
           CuotaTotal: r.cuota+r.moraCalculada,
           FechaVencimiento:r.fechaVencimiento,
-          Nombre:'Cuota N°'+r.nroCuota+' - '+ ('0' + fecha.getUTCDate()).slice(-2)+ "/" +("0" + (fecha.getUTCMonth()+1)).slice(-2) + "/" +fecha.getUTCFullYear()
+          Nombre:NombreCuota
         })
       }
     });
@@ -908,7 +924,6 @@ export class PagoComponent implements OnInit,OnDestroy {
   }
   FormatoMilesDecimales(num: number): string {
     // Separar parte entera y decimal
-    console.log(num)
     const parts = Number(num).toFixed(2).split('.');
     let integerPart = parts[0];
     const decimalPart = parts[1];

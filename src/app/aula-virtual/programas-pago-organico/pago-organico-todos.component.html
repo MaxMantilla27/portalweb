@@ -40,7 +40,7 @@
         (click)="EventoInteraccionSelectClick('Selecciona tu forma de pago')"
       >
         <mat-label>< Selecciona tu forma de pago ></mat-label>
-        <mat-select style="font-size: 15px;" (selectionChange)="changeForma()" [(ngModel)]="idFormaPago">
+        <mat-select style="font-size: 15px;" [disabled]="this.idPEspecifico==0" (selectionChange)="changeForma()" [(ngModel)]="idFormaPago">
           <mat-option
           style="font-size: 15px;  height: auto;white-space: normal;line-height: 35px;padding: 5px 15px;"
             *ngFor="let item of formapago; let i = index"

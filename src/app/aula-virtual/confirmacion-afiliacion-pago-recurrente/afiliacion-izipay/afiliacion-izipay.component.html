@@ -16,22 +16,21 @@
                 <div *ngFor="let item of resultPreValidacion.listaCuota;index as i">
                   <div class="col-12 row itms"  *ngIf="i==0">
                     <div class="col-8">{{item.nombre}}</div>
-                    <div class="col-4" style="text-align: right;">{{item.cuotaTotal}} {{resultPreValidacion.monedaCorreo}}</div>
+                    <div class="col-4" style="text-align: right;">{{FormatoMilesDecimales(item.cuotaTotal)}} {{resultPreValidacion.monedaCorreo}}</div>
                   </div>
                 </div>
                 <div class="col-12 row tot">
                   <div class="col-8">Total a pagar</div>
-                  <div class="col-4" style="text-align: right;"> {{resultPreValidacion.total}} {{resultPreValidacion.monedaCorreo}}</div>
+                  <div class="col-4" style="text-align: right;"> {{FormatoMilesDecimales(resultPreValidacion.total)}} {{resultPreValidacion.monedaCorreo}}</div>
                 </div>
               </div>
             </div>
           </div>
 
           <div class="iconoPagoTarjeta">
-            <div class="imgPagoTarjeta"></div>
-            <div class="textPagoTarjeta">
-              <span>PAGO</span>
-              <span>100%</span>
+            <div class="imgPagoTarjetaVerde"></div>
+            <div class="textPagoTarjeta" style="color:#02c158 !important">
+              <span>PAGO 100%</span>
               <span>seguro</span>
             </div>
             <div class="descPagoTarjeta">
@@ -99,21 +98,20 @@
                 <div *ngFor="let item of resultPreValidacion.listaCuota;index as i">
                   <div class="col-12 row itms" *ngIf="i==0">
                     <div class="col-8">{{item.nombre}}</div>
-                    <div class="col-4" style="text-align: right;">{{item.cuotaTotal}} {{resultPreValidacion.monedaCorreo}}</div>
+                    <div class="col-4" style="text-align: right;">{{FormatoMilesDecimales(item.cuotaTotal)}} {{resultPreValidacion.monedaCorreo}}</div>
                   </div>
                 </div>
                 <div class="col-12 row tot">
                   <div class="col-8">Total a pagar</div>
-                  <div class="col-4" style="text-align: right;">{{resultPreValidacion.total}} {{resultPreValidacion.monedaCorreo}}</div>
+                  <div class="col-4" style="text-align: right;">{{FormatoMilesDecimales(resultPreValidacion.total)}} {{resultPreValidacion.monedaCorreo}}</div>
                 </div>
               </div>
             </div>
           </div>
           <div class="iconoPagoTarjeta">
-            <div class="imgPagoTarjeta"></div>
-            <div class="textPagoTarjeta">
-              <span>PAGO</span>
-              <span>100%</span>
+            <div class="imgPagoTarjetaVerde"></div>
+            <div class="textPagoTarjeta" style="color:#02c158 !important">
+              <span>PAGO 100%</span>
               <span>seguro</span>
             </div>
             <div class="descPagoTarjeta">

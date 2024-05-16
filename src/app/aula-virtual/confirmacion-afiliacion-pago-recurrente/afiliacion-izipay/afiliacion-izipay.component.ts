@@ -118,7 +118,7 @@ export class AfiliacionIzipayComponent implements OnInit, OnDestroy, AfterViewIn
       'https://proceso-pago.bsginstitute.com/ProcesoPagoIziPay/Recurrente?IdTransaccion='+this.json.IdentificadorTransaccion);
       script1.setAttribute('kr-post-url-refused',
       'https://proceso-pago.bsginstitute.com/ProcesoPagoIziPay/Recurrente?IdTransaccion='+this.json.IdentificadorTransaccion);
-      script1.setAttribute('kr-lang', 'es');
+      script1.setAttribute('kr-language', 'es-ES');
       this._renderer2.appendChild(
         this._document.getElementById('header'),
         script1
@@ -152,6 +152,18 @@ export class AfiliacionIzipayComponent implements OnInit, OnDestroy, AfterViewIn
         window.location.reload()
       }
     }, 1000);
+  }
+  FormatoMilesDecimales(num: number): string {
+    // Separar parte entera y decimal
+    const parts = Number(num).toFixed(2).split('.');
+    let integerPart = parts[0];
+    const decimalPart = parts[1];
+
+    // Agregar separadores de miles
+    integerPart = integerPart.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+
+    // Combinar parte entera y decimal
+    return integerPart + '.' + decimalPart;
   }
 
 }

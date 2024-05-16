@@ -89,7 +89,7 @@ export class ModalAfiliacionIzipayComponent implements OnInit, OnDestroy, AfterV
       'https://proceso-pago.bsginstitute.com/ProcesoPagoIziPay/Recurrente?IdTransaccion='+this.json.IdentificadorTransaccion);
       script1.setAttribute('kr-post-url-refused',
       'https://proceso-pago.bsginstitute.com/ProcesoPagoIziPay/Recurrente?IdTransaccion='+this.json.IdentificadorTransaccion);
-      script1.setAttribute('kr-lang', 'es');
+      script1.setAttribute('kr-language', 'es-ES');
       this._renderer2.appendChild(
         this._document.getElementById('header'),
         script1

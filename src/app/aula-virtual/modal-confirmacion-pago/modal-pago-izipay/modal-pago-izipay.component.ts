@@ -95,7 +95,7 @@ export class ModalPagoIzipayComponent implements OnInit, OnDestroy, AfterViewIni
       'https://proceso-pago.bsginstitute.com/ProcesoPagoIziPay/Cronograma?IdTransaccion='+this.json.IdentificadorTransaccion);
       script1.setAttribute('kr-post-url-refused',
       'https://proceso-pago.bsginstitute.com/ProcesoPagoIziPay/Cronograma?IdTransaccion='+this.json.IdentificadorTransaccion);
-      script1.setAttribute('kr-lang', 'es');
+      script1.setAttribute('kr-language', 'es-ES');
       this._renderer2.appendChild(this._document.getElementById('header'),script1);
 
       let script2 = this._renderer2.createElement('script');
