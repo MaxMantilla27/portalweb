@@ -66,6 +66,7 @@ import { ModalPagoIzipayOrganicoComponent } from '../aula-virtual/modal-confirma
 import { ModalPagoOpenpayColombiaOrganicoComponent } from '../aula-virtual/modal-confirmacion-pago-organico/modal-pago-openpay-colombia-organico/modal-pago-openpay-colombia-organico/modal-pago-openpay-colombia-organico.component';
 import { ModalPagoMercadoPagoChileOrganicoComponent } from '../aula-virtual/modal-confirmacion-pago-organico/modal-pago-mercado-pago-chile-organico/modal-pago-mercado-pago-chile-organico/modal-pago-mercado-pago-chile-organico.component';
 import { ModalPagoOpenpayPeruOrganicoComponent } from '../aula-virtual/modal-confirmacion-pago-organico/modal-pago-openpay-peru-organico/modal-pago-openpay-peru-organico/modal-pago-openpay-peru-organico.component';
+import { LoginATCComponent } from './login-atc/login-atc.component';
 
 
 @NgModule({
@@ -139,7 +140,8 @@ import { ModalPagoOpenpayPeruOrganicoComponent } from '../aula-virtual/modal-con
     ModalPagoIzipayOrganicoComponent,
     ModalPagoOpenpayColombiaOrganicoComponent,
     ModalPagoMercadoPagoChileOrganicoComponent,
-    ModalPagoOpenpayPeruOrganicoComponent
+    ModalPagoOpenpayPeruOrganicoComponent,
+    LoginATCComponent
   ],
   exports: [],
   providers: [

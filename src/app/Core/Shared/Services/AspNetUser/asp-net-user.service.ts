@@ -24,5 +24,9 @@ export class AspNetUserService {
     console.log(Json)
     return this.http.post<any>(this.urlBase+'/GuardarLoginFacebook',Json);
   }
+  public AuthenticateATC(Guid:string):Observable<any>{
+    return this.http.get<any>(this.urlBase+'/AuthenticateATC?guid='+ Guid);
+  }
+
 
 }
