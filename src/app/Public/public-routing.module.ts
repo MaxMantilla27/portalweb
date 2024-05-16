@@ -36,6 +36,7 @@ import { TarifaGestionComponent } from './tarifa-gestion/tarifa-gestion.componen
 import { SorteoComponent } from './sorteo/sorteo.component';
 import { CompraExitosaOpenPayColombiaComponent } from './compra-exitosa-open-pay-colombia/compra-exitosa-open-pay-colombia.component';
 import { CompraExistosaOpenPayPeruComponent } from './compra-existosa-open-pay-peru/compra-existosa-open-pay-peru.component';
+import { LoginATCComponent } from './login-atc/login-atc.component';
 
 const routes:Routes=[
     {path:'',component:PublicComponent,children:
@@ -67,6 +68,7 @@ const routes:Routes=[
             {path:'CompraExitosaOpenPay/:validate', component:CompraExitosaOpenPayComponent},
             {path:'CompraExitosaOpenPayColombia/:validate', component:CompraExitosaOpenPayColombiaComponent},
             {path:'CompraExitosaOpenPayPeru/:validate', component:CompraExistosaOpenPayPeruComponent},
+            {path:'LoginATC/:Guid',component:LoginATCComponent},
 
             {path:'Certificado/:IdMatricula/:IdCertificado', component:InformacionCertificadoComponent},
             {path:'SubArea/:nombre', component:TagsComponent},
@@ -77,7 +79,7 @@ const routes:Routes=[
             {path:'programas-certificaciones-cursos/:IdArea',component:ProgramasComponent},
             {path:'error404',component:PageErrorComponent},
             {path:'publicidad/:formulario',component:FormularioPublicidadInterceptorComponent},
-
+            
             {path:':IdFormulario', component:LandingPageInterceptorComponent},
             {path:':AreaCapacitacion/:ProgramaNombre',component:ProgramasDetalleComponent},
             {path:'**',component:PageErrorComponent},
