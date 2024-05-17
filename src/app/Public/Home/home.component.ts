@@ -49,9 +49,9 @@ export class HomeComponent implements OnInit,OnDestroy {
   public IsoPais=''
   ngOnInit(): void {
     this.IsoPais = this._SessionStorageService.SessionGetValue('ISO_PAIS');
-    if(this.IsoPais=='BO'){
-      this.OpenNotificacionBolivia()
-    }
+    // if(this.IsoPais=='BO'){
+    //   this.OpenNotificacionBolivia()
+    // }
     this._SessionStorageService.SessionSetValueCokies('prueba','123',1)
     let t:string='BSG Institute'
     this.title.setTitle(t);
@@ -67,11 +67,11 @@ export class HomeComponent implements OnInit,OnDestroy {
     this._HelperService.recibirChangePais().pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
         console.log(x);
-        if(this.IsoPais.toUpperCase()!='BO'){
-          if(x=='BO'){
-            this.OpenNotificacionBolivia()
-          }
-        }
+        // if(this.IsoPais.toUpperCase()!='BO'){
+        //   if(x=='BO'){
+        //     this.OpenNotificacionBolivia()
+        //   }
+        // }
         this.IsoPais=x
       }
     })

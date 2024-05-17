@@ -87,6 +87,17 @@ export class ModalPagoWompiOrganicoComponent implements OnInit {
           this._router.navigate(['/AulaVirtual/MisCursos/'+this.IdMatriculaCabecera])
         }
         this.resultVisa.total=0;
+        if(this.resultVisa.listaCuota!=undefined){
+          this.resultVisa.listaCuota.forEach((l:any) => {
+            this.resultVisa.total+=l.cuotaTotal
+          });
+        }
+        else{
+          this.resultVisa.total=this.resultVisa.montoTotal
+        }
+        if(this.resultVisa.registroAlumno==undefined){
+          this.resultVisa.registroAlumno=this.resultVisa.datoAlumno
+        }
         this.jsonSave.IdentificadorTransaccion=this.json.IdentificadorTransaccion
         this.jsonSave.MedioCodigo=this.resultVisa.medioCodigo
         this.jsonSave.MedioPago=this.resultVisa.medioPago

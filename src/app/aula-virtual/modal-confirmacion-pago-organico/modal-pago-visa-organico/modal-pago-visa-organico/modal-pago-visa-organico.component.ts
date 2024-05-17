@@ -101,9 +101,17 @@ export class ModalPagoVisaOrganicoComponent implements OnInit {
           this._router.navigate(['/AulaVirtual/MisCursos/'+this.idMatricula])
         }
         this.resultVisa.total=0;
-        // this.resultVisa.listaCuota.forEach((l:any) => {
-        //   this.resultVisa.total+=l.cuotaTotal
-        // });
+        if(this.resultVisa.listaCuota!=undefined){
+          this.resultVisa.listaCuota.forEach((l:any) => {
+            this.resultVisa.total+=l.cuotaTotal
+          });
+        }
+        else{
+          this.resultVisa.total=this.resultVisa.montoTotal
+        }
+        if(this.resultVisa.registroAlumno==undefined){
+          this.resultVisa.registroAlumno=this.resultVisa.datoAlumno
+        }
 
 
         this.jsonSave.IdentificadorTransaccion=this.json.IdentificadorTransaccion

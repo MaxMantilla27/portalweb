@@ -54,9 +54,17 @@ export class ModalPagoWebpayOrganicoComponent implements OnInit {
         this._SessionStorageService.SessionSetValue('token_ws',x._Repuesta.tokenComercio);
         this.resultPreValidacion=x._Repuesta;
         this.resultPreValidacion.total= 0;
-        this.resultPreValidacion.listaCuota.forEach((l:any) => {
-          this.resultPreValidacion.total+=l.cuotaTotal
-        });
+        if(this.resultPreValidacion.listaCuota!=undefined){
+          this.resultPreValidacion.listaCuota.forEach((l:any) => {
+            this.resultPreValidacion.total+=l.cuotaTotal
+          });
+        }
+        else{
+          this.resultPreValidacion.total=this.resultPreValidacion.montoTotal
+        }
+        if(this.resultPreValidacion.registroAlumno==undefined){
+          this.resultPreValidacion.registroAlumno=this.resultPreValidacion.datoAlumno
+        }
       }
     })
   }

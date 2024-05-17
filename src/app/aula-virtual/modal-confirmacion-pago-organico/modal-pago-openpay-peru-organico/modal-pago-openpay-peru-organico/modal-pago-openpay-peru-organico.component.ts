@@ -102,9 +102,17 @@ export class ModalPagoOpenpayPeruOrganicoComponent implements OnInit {
           this._router.navigate(['/AulaVirtual/MisCursos/'+this.idMatricula])
         }
         this.resultCard.total=0;
-        this.resultCard.listaCuota.forEach((l:any) => {
-          this.resultCard.total+=l.cuotaTotal
-        });
+        if(this.resultCard.listaCuota!=undefined){
+          this.resultCard.listaCuota.forEach((l:any) => {
+            this.resultCard.total+=l.cuotaTotal
+          });
+        }
+        else{
+          this.resultCard.total=this.resultCard.montoTotal
+        }
+        if(this.resultCard.registroAlumno==undefined){
+          this.resultCard.registroAlumno=this.resultCard.datoAlumno
+        }
         console.log(this.resultCard)
         this.jsonSave.IdentificadorTransaccion=this.resultCard.identificadorTransaccion
         this.jsonSave.MedioCodigo=this.resultCard.medioCodigo

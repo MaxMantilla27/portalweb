@@ -112,6 +112,9 @@ export class ModalPagoOpenpayColombiaOrganicoComponent implements OnInit {
         else{
           this.resultCard.total=this.resultCard.montoTotal
         }
+        if(this.resultCard.registroAlumno==undefined){
+          this.resultCard.registroAlumno=this.resultCard.datoAlumno
+        }
 
         this.jsonSave.IdentificadorTransaccion=this.resultCard.identificadorTransaccion
         this.jsonSave.MedioCodigo=this.resultCard.medioCodigo
