@@ -668,7 +668,7 @@ export class CursoComponent implements OnInit,OnDestroy {
     })
   }
   redireccionarBiblioteca(){
-    window.open("https://bookshelf.vitalsource.com/",'_blank');
+    window.open("https://bc.vitalsource.com/tenants/bsg_ex/libraries",'_blank');
 
   }
   CongelarCursoMatriculaCarrera(){
