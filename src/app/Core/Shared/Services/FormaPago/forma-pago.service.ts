@@ -368,9 +368,9 @@ export class FormaPagoService {
       return EMPTY;
     }
   }
-  public RegistrarMatriculaAlumnoIzipayOrganico(IdentificadorTransaccion:string):Observable<any>{
+  public RegistrarMatriculaAlumnoOrganico(IdentificadorTransaccion:string):Observable<any>{
     if(this.isBrowser){
-      return this.http.post<any>(this.urlBase+'/RegistrarMatriculaAlumnoIzipayOrganico?IdentificadorTransaccion='+IdentificadorTransaccion,{});
+      return this.http.post<any>(this.urlBase+'/RegistrarMatriculaAlumnoOrganico?IdentificadorTransaccion='+IdentificadorTransaccion,{});
     }else{
       return EMPTY;
     }

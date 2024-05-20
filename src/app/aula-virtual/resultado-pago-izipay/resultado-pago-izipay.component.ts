@@ -94,7 +94,7 @@ export class ResultadoPagoIzipayComponent implements OnInit,OnDestroy {
         if(this.resultProceso.estadoOperacion=='Processed'){
           this.IdentificadorTransaccion=this.resultProceso.identificadorTransaccion;
           if(this.resultProceso.tipoPago=='Organico'||this.resultProceso.idMatriculaCabecera==0){
-            this.RegistrarMatriculaAlumnoIzipayOrganico()
+            this.RegistrarMatriculaAlumnoOrganico()
           }
           else{
             if(this.resultProceso.idMatriculaCabecera>0 &&
@@ -248,8 +248,8 @@ export class ResultadoPagoIzipayComponent implements OnInit,OnDestroy {
       },
     });
   }
-  RegistrarMatriculaAlumnoIzipayOrganico(){
-    this._FormaPagoService.RegistrarMatriculaAlumnoIzipayOrganico(this.IdentificadorTransaccion).pipe(takeUntil(this.signal$)).subscribe({
+  RegistrarMatriculaAlumnoOrganico(){
+    this._FormaPagoService.RegistrarMatriculaAlumnoOrganico(this.IdentificadorTransaccion).pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
         this.Matricula=x
         if(this.Matricula.nombrePGeneral==null || this.Matricula.nombrePGeneral=='null' || this.Matricula.nombrePGeneral==undefined){

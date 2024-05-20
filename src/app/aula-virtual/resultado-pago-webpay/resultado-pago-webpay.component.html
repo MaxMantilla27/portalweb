@@ -65,6 +65,14 @@
                 <div class="col-12 col-md-5 col-lg-4"><b>Programa:</b></div>
                 <div class="col-12 col-md-7 col-lg-8 itemValueCardPago">{{NombreCursoPago}}</div>
               </ng-container>
+              <ng-container>
+                <div class="col-12 col-md-5 col-lg-4"><b>Concepto:</b></div>
+                <div class="col-12 col-md-7 col-lg-8 itemValueCardPago" >
+                  <div>
+                    Matrícula
+                  </div>
+                </div>
+              </ng-container>
               <div class="col-12 col-md-5 col-lg-4"><b>Fecha de transacción:</b></div>
               <div class="col-12 col-md-7 col-lg-8 itemValueCardPago">{{resultProceso.fechaTransaccion | date:'dd/MM/yyyy'}}
               </div>
@@ -93,7 +101,7 @@
                   </div>
                 </div>
               </ng-container>
-              <ng-container *ngIf="resultProceso.listaCuota==null || resultProceso.listaCuota.length==0">
+              <ng-container *ngIf="resultProceso.listaCuota==null || resultProceso.listaCuota==0">
                 <div class="col-12 col-md-5 col-lg-4"><b>Concepto:</b></div>
                 <div class="col-12 col-md-7 col-lg-8 itemValueCardPago" >
                   <div>

@@ -39,6 +39,7 @@ export class ModalPagoWebpayOrganicoComponent implements OnInit {
     }
   }
   redireccionarAWebpay(){
+    console.log(this.url)
     const dialogRef =this.dialog.open(ChargeComponent,{
       panelClass:'dialog-charge',
       disableClose:true
@@ -49,6 +50,7 @@ export class ModalPagoWebpayOrganicoComponent implements OnInit {
   ObtenerPreProcesoPagoCuotaAlumno(){
     this._FormaPagoService.ObtenerPreProcesoPagoAlumnoWebPay(this.json).pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
+        console.log(x)
         let webPayResponse =x._Repuesta.registroEnvioComercio
         this.url = webPayResponse.url + "?token_ws="+webPayResponse.token
         this._SessionStorageService.SessionSetValue('token_ws',x._Repuesta.tokenComercio);

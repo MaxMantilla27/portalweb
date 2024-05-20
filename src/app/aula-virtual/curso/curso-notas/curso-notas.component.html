@@ -119,8 +119,9 @@
                         {{criterioCalificacion.ponderacion}} %
                       </td>
                       <td class="criterio" style="width: 30%;padding-top: 10px;padding-bottom: 10px;color: #0684F3;">
-                        <div *ngIf="criterioCalificacion.valor==0">Pendiente</div>
-                        <div *ngIf="criterioCalificacion.valor!=0">{{criterioCalificacion.valor}}</div>
+                        <!-- <div *ngIf="criterioCalificacion.valor==0">Pendiente</div> -->
+                        <!-- <div *ngIf="criterioCalificacion.valor!=0">{{criterioCalificacion.valor}}</div> -->
+                        <div>{{criterioCalificacion.valor}}</div>
                       </td>
                     </tr>
                     <tr *ngIf="criterioCalificacion.criterioEvaluacion=='Promedio'">

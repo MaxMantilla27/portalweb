@@ -71,6 +71,35 @@ export class ResultadoPagoWebpayComponent implements OnInit {
         console.log("RespuetaOtra :",x)
         this.resultProceso=x._Repuesta;
         this.resultProceso.total=0;
+        if(this.resultProceso.registroAlumno==null){
+          this.resultProceso.registroAlumno=this.resultProceso.datoAlumno
+        }
+        if(this.resultProceso.estadoOperacion=='Processed'){
+          if(this.resultProceso.tipoPago=='Organico'||this.resultProceso.idMatriculaCabecera==0){
+            this.RegistrarMatriculaAlumnoOrganico()
+          }
+          else{
+            if(this.resultProceso.idMatriculaCabecera>0 &&
+              this.resultProceso.idMatriculaCabecera!=null &&
+              this.resultProceso.idMatriculaCabecera!=undefined ){
+                this.rutaPago=this.rutaPago+'/'+this.resultProceso.idMatriculaCabecera
+                this.rutaCursos=this.rutaCursos+'/'+this.resultProceso.idMatriculaCabecera
+                this.CodigoMatricula=this.resultProceso.codigoMatricula
+                if(this.resultProceso.nombrePrograma==null || this.resultProceso.nombrePrograma=='null' || this.resultProceso.nombrePrograma==undefined){
+                  this.NombreCursoPago='';
+                }
+                else{
+                  this.NombreCursoPago=this.resultProceso.nombrePrograma
+                }
+            }
+            this.EnvioCorreoPagoExitoso()
+            this.RutaCargada=true;
+          }
+        }
+        if(this.resultProceso.estadoOperacion =='No Process' ||
+              this.resultProceso.estadoOperacion =='Declinado'){
+                this.EnvioCorreoErrorPago()
+        }
         this.dialogRef.close()
       }
     })
@@ -84,32 +113,6 @@ export class ResultadoPagoWebpayComponent implements OnInit {
         this.resultWebpay = x._Repuesta;
       },
       complete:()=>{
-        if(this.resultWebpay.estadoOperacion=='Processed'){
-          if(this.resultWebpay.tipoPago=='Organico'||this.resultWebpay.idMatriculaCabecera==0){
-            this.RegistrarMatriculaAlumnoOrganico()
-          }
-          else{
-            if(this.resultWebpay.idMatriculaCabecera>0 &&
-              this.resultWebpay.idMatriculaCabecera!=null &&
-              this.resultWebpay.idMatriculaCabecera!=undefined ){
-                this.rutaPago=this.rutaPago+'/'+this.resultWebpay.idMatriculaCabecera
-                this.rutaCursos=this.rutaCursos+'/'+this.resultWebpay.idMatriculaCabecera
-                this.CodigoMatricula=this.resultWebpay.codigoMatricula
-                if(this.resultWebpay.nombrePrograma==null || this.resultWebpay.nombrePrograma=='null' || this.resultWebpay.nombrePrograma==undefined){
-                  this.NombreCursoPago='';
-                }
-                else{
-                  this.NombreCursoPago=this.resultWebpay.nombrePrograma
-                }
-            }
-            this.EnvioCorreoPagoExitoso()
-            this.RutaCargada=true;
-          }
-        }
-        if(this.resultWebpay.estadoOperacion =='No Process' ||
-              this.resultWebpay.estadoOperacion =='Declinado'){
-                this.EnvioCorreoErrorPago()
-        }
         this.ObtenerPreProcesoPagoOrganicoAlumno()
       }
     })
@@ -121,25 +124,23 @@ export class ResultadoPagoWebpayComponent implements OnInit {
     window.location.href =url;
   }
   EnvioCorreoPagoExitoso() {
-    console.log(this.resultWebpay)
-    console.log(this.resultWebpay.registroAlumno)
     var paymentSummary = "";
-    if(this.resultWebpay.listaCuota.length==0){
+    if(this.resultProceso.listaCuota.length==0){
       paymentSummary += "<div style='display:flex;border-bottom: 1px solid black;padding: 5px 0;'>"+
         "<div style='font-size:13px;font-weight:100;width: 66%;'>" + 'Matrícula' + "</div>" +
-        "<div style='font-size:13px;width: 33%;text-align:right;'>" + this.FormatoMilesDecimales(this.resultWebpay.montoTotal) + " " + this.resultWebpay.monedaCorreo + "</div></div>";
+        "<div style='font-size:13px;width: 33%;text-align:right;'>" + this.FormatoMilesDecimales(this.resultProceso.montoTotal) + " " + this.resultProceso.monedaCorreo + "</div></div>";
     }
     else{
-      this.resultWebpay.listaCuota.forEach((l:any) => {
+      this.resultProceso.listaCuota.forEach((l:any) => {
         paymentSummary += "<div style='display:flex;border-bottom: 1px solid black;padding: 5px 0;'>"+
         "<div style='font-size:13px;font-weight:100;width: 66%;'>" + this.reemplazarRazonPago(l.nombre) + "</div>" +
-        "<div style='font-size:13px;width: 33%;text-align:right;'>" + this.FormatoMilesDecimales(l.cuotaTotal) + " " + this.resultWebpay.monedaCorreo + "</div></div>";
+        "<div style='font-size:13px;width: 33%;text-align:right;'>" + this.FormatoMilesDecimales(l.cuotaTotal) + " " + this.resultProceso.monedaCorreo + "</div></div>";
       });
     }
 
     this.jsonCorreo.Asunto =
-    'Confirmación de Pago '+this.resultWebpay.nombrePasarela+'- BSG Institute';
-    this.jsonCorreo.Destinatario = this.resultWebpay.registroAlumno.correo;
+    'Confirmación de Pago '+this.resultProceso.nombrePasarela+'- BSG Institute';
+    this.jsonCorreo.Destinatario = this.resultProceso.registroAlumno.correo;
     this.jsonCorreo.Contenido =
     "<div style='margin-left:8rem;margin-right:8rem'>"+
     "<div style='display: flex; align-items: center; border-bottom: 2px solid black; padding-bottom: 4px; width: 80%;'>"+
@@ -148,14 +149,14 @@ export class ResultadoPagoWebpayComponent implements OnInit {
     "<div style='letter-spacing: -4px;'>BSG</div>"+
     "<div style='margin-left: 7px;'>Institute</div>"+
     "</div></div>"+
-  "<div style='font-weight:bold;font-size:15px;padding-top:20px'>Hola "+this.resultWebpay.registroAlumno.nombre+","+
+  "<div style='font-weight:bold;font-size:15px;padding-top:20px'>Hola "+this.resultProceso.registroAlumno.nombre+","+
   "</div><br><div style='font-size:14px'>Es un gusto saludarte. Te informamos que tu pago se ha realizado con éxito."+
   "</div><br><div style='background:#EBF1FF;border-radius:5px;width:80%'>"+
     "<div style='padding:25px'>"+
       "<div style='display:flex;border-bottom: 2px solid black;padding-bottom:3px;'>"+
       "<div style='font-size:13px;font-weight:bold;width: 66%;'>Resúmen de pago</div>"+
       "<div style='font-size:13px;width: 33%;text-align:right;'>"+
-      this.pipe.transform(this.resultWebpay.fechaTransaccion, 'dd \'de\' MMMM \'del\' yyyy')+
+      this.pipe.transform(this.resultProceso.fechaTransaccion, 'dd \'de\' MMMM \'del\' yyyy')+
       "</div></div>"+
       "<div style='padding-bottom:15px;padding-top:15px'>"+
         "<div style='font-size:14px;font-weight:bold'>"+
@@ -171,7 +172,7 @@ export class ResultadoPagoWebpayComponent implements OnInit {
       "<div style='display:flex;padding-bottom:20px;'>"+
       "<div style='font-size:13px;font-weight:bold;width: 66%;'>Total del pago</div>"+
       "<div style='font-size:13px;justify-content:flex-end;font-weight:bold;width: 33%;text-align:right;'>"+
-      this.FormatoMilesDecimales(this.resultWebpay.montoTotal) +" "+this.resultWebpay.monedaCorreo+
+      this.FormatoMilesDecimales(this.resultProceso.montoTotal) +" "+this.resultProceso.monedaCorreo+
       "</div></div>"+
       // "<div style='font-size:13px'> Método de pago: Tarjeta Visa N° xxxx xxxx xxxx 1542"+
       // "</div>"+
@@ -204,7 +205,7 @@ export class ResultadoPagoWebpayComponent implements OnInit {
   EnvioCorreoErrorPago(){
     this.jsonCorreo.Asunto =
       'Error al Procesar tu Pago '+this.resultProceso.nombrePasarela+'- BSG Institute';
-    this.jsonCorreo.Destinatario = this.resultWebpay.registroAlumno.correo;
+    this.jsonCorreo.Destinatario = this.resultProceso.registroAlumno.correo;
     this.jsonCorreo.Contenido =
     "<div style='margin-left:8rem;margin-right:8rem'>"+
     "<div style='display: flex; align-items: center; border-bottom: 2px solid black; padding-bottom: 4px; width: 80%;'>"+
@@ -213,7 +214,7 @@ export class ResultadoPagoWebpayComponent implements OnInit {
     "<div style='letter-spacing: -4px;'>BSG</div>"+
     "<div style='margin-left: 7px;'>Institute</div>"+
     "</div></div>"+
-  "<div style='font-weight:bold;font-size:15px;padding-top:20px'>Hola "+this.resultWebpay.registroAlumno.nombre+","+
+  "<div style='font-weight:bold;font-size:15px;padding-top:20px'>Hola "+this.resultProceso.registroAlumno.nombre+","+
   "</div><br><div style='font-size:14px'>Hubo un problema al procesar tu pago."+
   "</div><br><div style='font-size:14px'>"+
       "<div>Considera los siguientes consejos:"+
@@ -243,7 +244,11 @@ export class ResultadoPagoWebpayComponent implements OnInit {
     });
   }
   RegistrarMatriculaAlumnoOrganico(){
-    this._FormaPagoService.RegistrarMatriculaAlumnoIzipayOrganico(this.json.IdentificadorTransaccion!).pipe(takeUntil(this.signal$)).subscribe({
+    console.log(this.json)
+    if(this.json.IdentificadorTransaccion==null){
+      this.json.IdentificadorTransaccion=this.resultProceso.identificadorTransaccion
+    }
+    this._FormaPagoService.RegistrarMatriculaAlumnoOrganico(this.json.IdentificadorTransaccion!).pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
         console.log(x)
         this.Matricula=x
@@ -271,22 +276,19 @@ export class ResultadoPagoWebpayComponent implements OnInit {
   }
 
   EnvioCorreoRegularizarOportunidad() {
-    console.log(this.Matricula)
-    console.log(this.resultWebpay)
-    console.log(this.resultWebpay.registroAlumno)
     var paymentSummary = "";
     let countLista=0
-    if(this.resultWebpay.listaCuota.length==0){
+    if(this.resultProceso.listaCuota.length==0){
       paymentSummary += "<div style='display:flex;border-bottom: 1px solid black;padding: 5px 0;'>"+
                             "<div style='font-size:13px;font-weight:100;width: 66%;'>" + 'Matrícula' + "</div>" +
-                            "<div style='font-size:13px;width: 33%;text-align:right;'>" + this.FormatoMilesDecimales(this.resultWebpay.montoTotal) + " " + this.resultWebpay.monedaCorreo + "</div></div>";
+                            "<div style='font-size:13px;width: 33%;text-align:right;'>" + this.FormatoMilesDecimales(this.resultProceso.montoTotal) + " " + this.resultProceso.monedaCorreo + "</div></div>";
     }
     else{
-      this.resultWebpay.listaCuota.forEach((l:any) => {
+      this.resultProceso.listaCuota.forEach((l:any) => {
         if(countLista==0){
           paymentSummary += "<div style='display:flex;border-bottom: 1px solid black;padding: 5px 0;'>"+
                             "<div style='font-size:13px;font-weight:100;width: 66%;'>" + this.reemplazarRazonPago(l.nombre) + "</div>" +
-                            "<div style='font-size:13px;width: 33%;text-align:right;'>" + this.FormatoMilesDecimales(l.cuotaTotal) + " " + this.resultWebpay.monedaCorreo + "</div></div>";
+                            "<div style='font-size:13px;width: 33%;text-align:right;'>" + this.FormatoMilesDecimales(l.cuotaTotal) + " " + this.resultProceso.monedaCorreo + "</div></div>";
         }
         countLista++;
       });
@@ -304,13 +306,13 @@ export class ResultadoPagoWebpayComponent implements OnInit {
     "<div style='letter-spacing: -4px;'>BSG</div>"+
     "<div style='margin-left: 7px;'>Institute</div>"+
     "</div></div>"+
-  "<div style='font-weight:bold;font-size:15px;padding-top:20px'>Pago Orgánico realizado por el usuario: "+this.resultWebpay.registroAlumno.nombre+","+
+  "<div style='font-weight:bold;font-size:15px;padding-top:20px'>Pago Orgánico realizado por el usuario: "+this.resultProceso.registroAlumno.nombre+","+
   "</div><br><div style='font-size:14px'>Porfavor regularizar el proceso para la generación de oportunidad y la asignación de su asesor correspondiente."+
   "</div><br><div style='background:#EBF1FF;border-radius:5px;width:80%'>"+
     "<div style='padding:25px'>"+
       "<div style='display:flex;border-bottom: 2px solid black;padding-bottom:3px;'>"+
       "<div style='font-size:13px;font-weight:bold;width: 66%;'>Resúmen de pago</div>"+
-      "<div style='font-size:13px;width: 33%;text-align:right;'>"+this.pipe.transform(this.resultWebpay.fechaTransaccion, 'dd \'de\' MMMM \'del\' yyyy')+"</div></div>"+
+      "<div style='font-size:13px;width: 33%;text-align:right;'>"+this.pipe.transform(this.resultProceso.fechaTransaccion, 'dd \'de\' MMMM \'del\' yyyy')+"</div></div>"+
       "<div style='padding-bottom:15px;padding-top:15px'>"+
         "<div style='font-size:14px;font-weight:bold'>"+
         this.NombreCursoPago+
@@ -325,7 +327,7 @@ export class ResultadoPagoWebpayComponent implements OnInit {
       "<div style='display:flex;padding-bottom:20px;'>"+
       "<div style='font-size:13px;font-weight:bold;width: 66%;'>Total del pago</div>"+
       "<div style='font-size:13px;justify-content:flex-end;font-weight:bold;width: 33%;text-align:right;'>"+
-      this.FormatoMilesDecimales(this.resultWebpay.montoTotal) +" "+this.resultWebpay.monedaCorreo+
+      this.FormatoMilesDecimales(this.resultProceso.montoTotal) +" "+this.resultProceso.monedaCorreo+
       "</div></div>"+
       // "<div style='font-size:13px'> Método de pago: Tarjeta Visa N° xxxx xxxx xxxx 1542"+
       // "</div>"+

@@ -336,7 +336,7 @@ export class CompraExitosaOpenPayColombiaComponent implements OnInit {
     });
   }
   RegistrarMatriculaAlumnoOrganico(){
-    this._FormaPagoService.RegistrarMatriculaAlumnoIzipayOrganico(this.json.IdentificadorTransaccion).pipe(takeUntil(this.signal$)).subscribe({
+    this._FormaPagoService.RegistrarMatriculaAlumnoOrganico(this.json.IdentificadorTransaccion).pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
         console.log(x)
         this.Matricula=x

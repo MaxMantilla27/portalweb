@@ -260,6 +260,7 @@ export class ModalPagoTarjetaMexicoOraganicoComponent implements OnInit {
     console.log(validate);
     if (validate) {
 
+
       this.jsonSave.TarjetaHabiente.NumeroTarjeta =this.NumberT.split('-').join('');
       this.jsonSave.TarjetaHabiente.Aniho =this.jsonSave.TarjetaHabiente.fecha.split('/')[1];
       this.jsonSave.TarjetaHabiente.Mes =this.jsonSave.TarjetaHabiente.fecha.split('/')[0];
@@ -272,6 +273,7 @@ export class ModalPagoTarjetaMexicoOraganicoComponent implements OnInit {
             expiration_month: this.jsonSave.TarjetaHabiente.Mes,
             cvv2: this.jsonSave.TarjetaHabiente.CodigoVV,
           },
+          console.log(this.jsonSave),
           succes,
           error
         );

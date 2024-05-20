@@ -135,6 +135,7 @@ export class ModalPagoMercadoPagoChileComponent implements OnInit {
           });
           cardFormData.identificadorTransaccion = this.json.IdentificadorTransaccion
           cardFormData.description = this.resultPreProcesoMP.nombrePrograma
+          console.log(cardFormData)
           return new Promise<void>((resolve, reject) => {
             fetch('https://api-portalweb.bsginstitute.com/api/FormaPago/ProcesarPagoCuotaAlumnoConfirmarMercadoPago', {
               method: 'POST',

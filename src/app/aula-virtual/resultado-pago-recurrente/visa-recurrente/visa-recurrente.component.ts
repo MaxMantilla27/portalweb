@@ -278,7 +278,7 @@ export class VisaRecurrenteComponent implements OnInit {
     });
   }
   RegistrarMatriculaAlumnoOrganico(){
-    this._FormaPagoService.RegistrarMatriculaAlumnoIzipayOrganico(this.DatosRecurrente.IdentificadorTransaccion).pipe(takeUntil(this.signal$)).subscribe({
+    this._FormaPagoService.RegistrarMatriculaAlumnoOrganico(this.DatosRecurrente.IdentificadorTransaccion).pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
         console.log(x)
         this.Matricula=x
