@@ -145,7 +145,7 @@ export class CalificarActividadesDocenteComponent implements OnInit ,OnChanges, 
     this.Criterio=0
     this.IrCurso=item.id
     this.itemSelect=item
-    if(item.nombre.toLowerCase()=="talleres"||item.nombre.toLowerCase()=="trabajo final"){
+    if(item.nombre.toLowerCase()=="tarea"||item.nombre.toLowerCase()=="taller" ||item.nombre.toLowerCase()=="trabajo final"){
       this.Criterio=1
     }else{
       if(item.nombre.toLowerCase()=="examen final" || item.nombre.toLowerCase()=="cuestionario test"){

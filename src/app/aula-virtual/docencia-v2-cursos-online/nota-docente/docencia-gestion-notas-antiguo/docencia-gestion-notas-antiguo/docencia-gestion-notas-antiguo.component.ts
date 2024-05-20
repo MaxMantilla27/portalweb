@@ -71,10 +71,7 @@ export class DocenciaGestionNotasAntiguoComponent implements OnInit,OnDestroy {
             }else{
               console.log(evl)
               var estadoEdicionCriterio=true
-              if(evl.nombre.toUpperCase().includes('TAREAS')||
-                evl.nombre.toUpperCase().includes('CUESTIONARIOS')||
-                evl.nombre.toUpperCase().includes('CUESTIONARIOS TEST')||
-                evl.nombre.toUpperCase().includes('ACTIVIDAD ADICIONAL')){
+              if(evl.nombre.toUpperCase().includes('PORTAL-')){
                   estadoEdicionCriterio=false
               }
               if(this.listadoNotas.listadoNotas.filter((w:any) => w.idEvaluacion == evl.id && w.idMatriculaCabecera == mat.idMatriculaCabecera).length>0){

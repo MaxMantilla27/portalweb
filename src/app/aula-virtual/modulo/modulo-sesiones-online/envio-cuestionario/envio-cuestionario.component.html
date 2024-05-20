@@ -1,6 +1,6 @@
 
 <ng-container *ngIf="data.cuestionario!=undefined">
-  <div class="cardSesionOnlineTareasCuestionario">
+  <div class="cardSesionOnlineTareasCuestionario"style="margin: 0px!important;">
     <ng-container *ngIf="vertiempo==true">
       <div class="TimeCronometer">
         <div class="TimePrevCuestionario">
@@ -14,7 +14,8 @@
 
     <div class="flagActividad" style="display: flex;">
       <div class="col-11" style="display: flex;">
-        <div class="textoFlag">Cuestionario: {{data.index>9?(data.index+1):'0'+(data.index+1)}}</div>
+        <!-- <div class="textoFlag">Cuestionario: {{data.index>9?(data.index+1):'0'+(data.index+1)}}</div> -->
+        <div class="textoFlag">{{data.cuestionario.nombreCriterioEvaluacion|removePortalCriterio}}</div>
         <div id="player">
           <div id="outer">
             <div id="inner"></div>

@@ -1,8 +1,9 @@
 <ng-container *ngIf="data.tarea!=undefined">
-  <div class="cardSesionOnlineTareasCuestionario">
+  <div class="cardSesionOnlineTareasCuestionario" style="margin: 0px!important;">
     <div class="flagActividad"  style="display: flex;">
       <div class="col-11" style="display: flex;">
-        <div class="textoFlag">Tarea: {{data.index>9?(+1):'0'+(data.index+1)}}</div>
+        <!-- <div class="textoFlag">Tarea: {{data.index>9?(+1):'0'+(data.index+1)}}</div> -->
+        <div class="textoFlag">{{data.tarea.nombreCriterioEvaluacion|removePortalCriterio}}</div>
         <!-- <div class="trianglearrow"></div> -->
         <div id="player">
           <div id="outer">
