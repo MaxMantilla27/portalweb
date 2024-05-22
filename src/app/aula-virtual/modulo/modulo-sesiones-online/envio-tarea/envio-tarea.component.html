@@ -1,8 +1,9 @@
 <ng-container *ngIf="data.tarea!=undefined">
-  <div class="cardSesionOnlineTareasCuestionario">
+  <div class="cardSesionOnlineTareasCuestionario" style="margin: 0px!important;">
     <div class="flagActividad"  style="display: flex;">
       <div class="col-11" style="display: flex;">
-        <div class="textoFlag">Tarea: {{data.index>9?(+1):'0'+(data.index+1)}}</div>
+        <!-- <div class="textoFlag">Tarea: {{data.index>9?(+1):'0'+(data.index+1)}}</div> -->
+        <div class="textoFlag">{{data.tarea.nombreCriterioEvaluacion|removePortalCriterio}}</div>
         <!-- <div class="trianglearrow"></div> -->
         <div id="player">
           <div id="outer">
@@ -74,8 +75,10 @@
           <div *ngIf="!filestatus && fileErrorMsg!=''">{{fileErrorMsg}}</div>
         </div>
         <div class="col-6 col-md-4 col-lg-3" style="display: flex;align-items: center;justify-content: flex-end;    width: 180px;">
-          <app-default-button [confs]="{color:'primary',titulo:'Actualizar'}" [style]="'    margin: 0px; padding: 0px 40px; border-radius: 40px;'"
+          <app-default-button *ngIf="BotonEnvioActivo" [confs]="{color:'primary',titulo:'Actualizar'}" [style]="'    margin: 0px; padding: 0px 40px; border-radius: 40px;'"
             [disabled]="!filestatus" (ButtoclClick)="AbrirConfirmacionActualizar()"></app-default-button>
+          <app-default-button *ngIf="BotonEnvioActivo==false" [confs]="{color:'primary',titulo:'Enviando'}" [style]="'    margin: 0px; padding: 0px 40px; border-radius: 40px;'"
+          [disabled]="true"></app-default-button>
         </div>
       </div>
       <div class="row" style="margin: 0px;">
@@ -129,8 +132,10 @@
           <div *ngIf="!filestatus && fileErrorMsg!=''">{{fileErrorMsg}}</div>
         </div>
         <div class="col-6 col-md-4 col-lg-3" style="display: flex;align-items: center;justify-content: flex-end;    width: 180px;">
-          <app-default-button [confs]="{color:'primary',titulo:'Enviar'}" [style]="'    margin: 0px; padding: 0px 40px; border-radius: 40px;'"
+          <app-default-button *ngIf="BotonEnvioActivo" [confs]="{color:'primary',titulo:'Enviar'}" [style]="'    margin: 0px; padding: 0px 40px; border-radius: 40px;'"
             [disabled]="!filestatus" (ButtoclClick)="AgregarPEspecificoSesionTareaAlumno()"></app-default-button>
+          <app-default-button *ngIf="BotonEnvioActivo==false" [confs]="{color:'primary',titulo:'Enviando'}" [style]="'    margin: 0px; padding: 0px 40px; border-radius: 40px;'"
+            [disabled]="true"></app-default-button>
         </div>
       </div>
       <div class="row" style="margin: 0px;">

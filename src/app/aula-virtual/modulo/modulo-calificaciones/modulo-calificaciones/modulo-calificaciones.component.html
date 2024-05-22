@@ -19,8 +19,11 @@
       <tbody class="TablaCalificacionContenido">
         <ng-container *ngFor="let item of calificacionesCursoDetalle ;let i=index">
           <tr>
-            <td class="criterio" style="width: 500px;text-align: left;">
-              {{item.criterioEvaluacion}}
+            <td *ngIf="item.criterioEvaluacion=='Portal-Talleres'" class="criterio" style="width: 500px;text-align: left;">
+              Tareas
+            </td>
+            <td *ngIf="item.criterioEvaluacion!='Portal-Talleres'"class="criterio" style="width: 500px;text-align: left;">
+              {{item.criterioEvaluacion|removePortalCriterio}}
             </td>
             <td class="criterio" style="width: 250px;text-align: center;">
               {{item.ponderacion}} %

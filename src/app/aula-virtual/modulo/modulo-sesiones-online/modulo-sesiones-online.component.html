@@ -86,7 +86,8 @@
       <ng-container *ngIf="item.tarea!=undefined && item.tarea!=null && item.tarea.length>0">
         <div class="cardSesionOnlineTareasCuestionario" *ngFor="let tars of item.tarea;let t=index">
           <div class="flagActividad">
-            <div class="textoFlag">Tarea: {{t>9?(t+1):'0'+(t+1)}}</div>
+            <!-- <div class="textoFlag">Tarea: {{t>9?(t+1):'0'+(t+1)}}</div> -->
+            <div class="textoFlag">{{tars.nombreCriterioEvaluacion |removePortalCriterio}}:</div>
             <!-- <div class="trianglearrow"></div> -->
             <div id="player">
               <div id="outer">
@@ -158,7 +159,8 @@
       <ng-container *ngIf="item.cuestionario!=undefined && item.cuestionario!=null && item.cuestionario.length>0">
         <div class="cardSesionOnlineTareasCuestionario" *ngFor="let cuest of item.cuestionario;let t=index">
           <div class="flagActividad">
-            <div class="textoFlag">Cuestionario: {{t>9?(t+1):'0'+(t+1)}}</div>
+            <!-- <div class="textoFlag">Cuestionario: {{t>9?(t+1):'0'+(t+1)}}</div> -->
+            <div class="textoFlag">{{cuest.nombreCriterioEvaluacion|removePortalCriterio}}:</div>
             <!-- <div class="trianglearrow"></div> -->
             <div id="player">
               <div id="outer">
@@ -239,7 +241,8 @@
       <ng-container *ngIf="item.actividades!=undefined && item.actividades!=null && item.actividades.length>0">
         <div class="cardSesionOnlineTareasCuestionario" *ngFor="let act of item.actividades;let t=index">
           <div class="flagActividad">
-            <div class="textoFlag">Actividad Adicional: {{t>9?(t+1):'0'+(t+1)}}</div>
+            <!-- <div class="textoFlag">Actividad Adicional: {{t>9?(t+1):'0'+(t+1)}}</div> -->
+            <div class="textoFlag">{{act.nombreCriterioEvaluacion|removePortalCriterio}}:</div>
             <div id="player">
               <div id="outer">
                 <div id="inner"></div>

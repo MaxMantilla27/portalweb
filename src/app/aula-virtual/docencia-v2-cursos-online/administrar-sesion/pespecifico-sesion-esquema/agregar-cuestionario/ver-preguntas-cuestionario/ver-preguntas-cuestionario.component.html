@@ -83,12 +83,14 @@
           </td>
           <td  style="position: relative;border: #a7a3a3 2px solid;" >
             <ng-container *ngIf="item.EsCorrecta==true">
-              <select [(ngModel)]="item.Puntaje" class="selectTextoDocente" [disabled]="true">
+              <input [disabled]="true" type="number" [(ngModel)]="item.Puntaje" class="selectTextoDocente" min="0" max="100">
+
+              <!-- <select [(ngModel)]="item.Puntaje" class="selectTextoDocente" [disabled]="true">
 
                 <option *ngFor="let item of Calificaciones" [value]="item"  >
                   {{item}}
                 </option>
-              </select>
+              </select> -->
             </ng-container>
             <div *ngIf="item.EsCorrecta==false" style="text-align: center;">
               {{item.Puntaje}}

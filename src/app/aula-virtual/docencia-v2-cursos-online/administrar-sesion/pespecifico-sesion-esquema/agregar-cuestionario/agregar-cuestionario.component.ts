@@ -25,6 +25,7 @@ import { SnackBarServiceService } from 'src/app/Core/Shared/Services/SnackBarSer
 import { AlertaService } from 'src/app/shared/services/alerta.service';
 import { ExcelService } from 'src/app/Core/Shared/Services/Excel/excel.service';
 import { VerPreguntasCuestionarioComponent } from './ver-preguntas-cuestionario/ver-preguntas-cuestionario.component';
+import { RemovePortalCriterioPipe } from 'src/app/Core/Shared/Pipes/remove-portal-criterio.pipe';
 
 @Component({
   selector: 'app-agregar-cuestionario',
@@ -47,6 +48,7 @@ export class AgregarCuestionarioComponent implements OnInit, OnDestroy {
     public _SnackBarServiceService: SnackBarServiceService,
     private alertaService: AlertaService,
     private excelService: ExcelService,
+    private _removePortalCriterioPipe: RemovePortalCriterioPipe
   ) {}
 
   public file=new File([], '')
@@ -569,6 +571,9 @@ export class AgregarCuestionarioComponent implements OnInit, OnDestroy {
         console.log(x);
         if(x!=null){
           this.esquemas=x;
+          this.esquemas.forEach((x:any) => {
+            x.nombre=this._removePortalCriterioPipe.transform(x.nombre)
+          });
 
         }
       },

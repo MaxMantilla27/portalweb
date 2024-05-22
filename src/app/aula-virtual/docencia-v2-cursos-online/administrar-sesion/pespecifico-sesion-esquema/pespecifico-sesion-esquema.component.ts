@@ -106,6 +106,7 @@ export class PespecificoSesionEsquemaComponent implements OnInit ,OnChanges, OnD
     this._PEspecificoEsquemaService.ObtenerTipoCriteriosPorProgramaEspecifico(this.IdPespecifico,0).pipe(takeUntil(this.signal$))
     .subscribe({
       next: (x) => {
+        console.log(x)
         if(x!=null){
           this.esquemas.forEach((ea:any) => {
             x.forEach((e:any) => {

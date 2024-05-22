@@ -22,7 +22,7 @@
               <ng-container *ngIf="listadoNotas.listadoEvaluaciones.length > 0">
                 <th style="border: 2px solid black; min-width: 60px; text-align: center; vertical-align: middle;" *ngFor="let item of listadoNotas.listadoEvaluaciones">
                   <div style="font-weight: bold; text-transform: uppercase; display: flex; flex-direction: column; align-items: center;">
-                    <div>{{ item.nombre }} </div>
+                    <div>{{ item.nombre|removePortalCriterio }} </div>
                     <div>{{ item.porcentaje }}%</div>
                   </div>
                 </th>

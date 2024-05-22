@@ -52,6 +52,7 @@ export class EnvioCuestionarioComponent implements OnInit ,OnDestroy {
   public dataguardada:any
   public CuestionarioEnviado=false
   public PuntajeInicial=0
+  public BotonEnvioActivo=true
   ngOnInit(): void {
     var fecha1 = moment('2016-07-12');
     var fecha2 = moment('2016-08-01');
@@ -327,11 +328,15 @@ export class EnvioCuestionarioComponent implements OnInit ,OnDestroy {
       });
     }
     else{
+      this.BotonEnvioActivo=false
       this._PEspecificoEsquemaService.AgregarPEspecificoSesionCuestionarioAlumno(this.json).pipe(takeUntil(this.signal$))
       .subscribe({
       next: (x) => {
         this.dialogRef.close('guardado');
       },
+      complete:()=>{
+        this.BotonEnvioActivo=true
+      }
     });
     this._SessionStorageService.SessionDeleteValue('cuest-'+this.CuestionarioAvance.id.toString())
     console.log("guardado")

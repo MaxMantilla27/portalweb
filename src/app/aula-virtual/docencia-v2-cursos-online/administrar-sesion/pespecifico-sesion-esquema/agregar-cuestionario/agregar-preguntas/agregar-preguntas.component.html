@@ -97,12 +97,13 @@
           </td>
           <td  style="position: relative;border: #a7a3a3 2px solid;" >
             <ng-container *ngIf="item.EsCorrecta==true">
-              <select [(ngModel)]="item.Puntaje" class="selectTextoDocente">
+              <input type="number" [(ngModel)]="item.Puntaje" class="selectTextoDocente" min="0" max="100">
+              <!-- <select [(ngModel)]="item.Puntaje" class="selectTextoDocente">
 
                 <option *ngFor="let item of Calificaciones" [value]="item">
                   {{item}}
                 </option>
-              </select>
+              </select> -->
               <!-- <mat-form-field appearance="outline" >
                 <mat-label>Puntaje</mat-label>
                 <mat-select #myselsetc [(ngModel)]="item.Puntaje" >
