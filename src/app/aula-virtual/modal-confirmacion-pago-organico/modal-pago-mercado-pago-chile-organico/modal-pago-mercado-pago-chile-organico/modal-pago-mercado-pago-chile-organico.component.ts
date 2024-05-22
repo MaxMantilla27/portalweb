@@ -176,7 +176,7 @@ export class ModalPagoMercadoPagoChileOrganicoComponent implements OnInit {
           cardFormData.description = this.resultPreProcesoMP.nombrePrograma
           console.log(cardFormData)
           return new Promise<void>((resolve, reject) => {
-            fetch('https://localhost:7177/api/FormaPago/ProcesarPagoCuotaAlumnoConfirmarMercadoPago', {
+            fetch('https://api-portalweb.bsginstitute.com/api/FormaPago/ProcesarPagoCuotaAlumnoConfirmarMercadoPago', {
               method: 'POST',
               headers: {
                 'Content-Type': 'application/json',
@@ -185,14 +185,14 @@ export class ModalPagoMercadoPagoChileOrganicoComponent implements OnInit {
             })
               .then(() => {
                 // this.dialogRefLoader.close()
-                window.location.href = 'http://localhost:4200/AulaVirtual/PagoExitosoMercadoPago/'+this.json.IdentificadorTransaccion
+                window.location.href = 'https://bsginstitute.com/AulaVirtual/PagoExitosoMercadoPago/'+this.json.IdentificadorTransaccion
                 // Recibir el resultado del pago
                 resolve();
                 this.dialogRefModal.close();
               })
               .catch(() => {
                 // this.dialogRefLoader.close()
-                window.location.href = 'http://localhost:4200/AulaVirtual/PagoExitosoMercadoPago/'+this.json.IdentificadorTransaccion
+                window.location.href = 'https://bsginstitute.com/AulaVirtual/PagoExitosoMercadoPago/'+this.json.IdentificadorTransaccion
                 // Tratar respuesta de error al intentar crear el pago
                 reject();
                 this.dialogRefModal.close();

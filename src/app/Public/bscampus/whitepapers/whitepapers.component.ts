@@ -253,7 +253,7 @@ export class WhitepapersComponent implements OnInit,OnDestroy {
       this.formularioContacto.IdRegion=datos.idRegion;
       this.formularioContacto.Movil=datos.movil;
       if(this.formularioContacto.IdPais!=undefined){
-        this.GetRegionesPorPais(this.formularioContacto.IdPais);
+        this.GetRegionesPorPais(this.formularioContacto.IdPais,1);
       }
       this.CompleteLocalStorage=true;
     }
@@ -319,10 +319,15 @@ export class WhitepapersComponent implements OnInit,OnDestroy {
         console.log(x);
         this.fileds.forEach(r=>{
           if(r.nombre=='IdPais'){
-            r.data=x.listaPais.map((p:any)=>{
+            r.data,  r.filteredOptions =x.listaPais.map((p:any)=>{
               var ps:Basic={Nombre:p.pais,value:p.idPais};
               return ps;
             })
+            r.filteredOptionsAux=x.listaPais.map((p:any)=>{
+              var ps:Basic={Nombre:p.pais,value:p.idPais};
+              return ps;
+            })
+
           }
         })
         this.fileds.forEach(r=>{
@@ -361,25 +366,42 @@ export class WhitepapersComponent implements OnInit,OnDestroy {
     })
     this.initValues = true;
   }
-  GetRegionesPorPais(idPais:number){
-    this._RegionService.ObtenerCiudadesPorPais(idPais).pipe(takeUntil(this.signal$)).subscribe({
-      next:x=>{
-        this.fileds.forEach(r=>{
-          if(r.nombre=='IdRegion'){
-            r.disable=false;
-            r.data=x.map((p:any)=>{
-              var ps:Basic={Nombre:p.nombreCiudad,value:p.idCiudad};
-              return ps;
-            })
-          }
-        })
-        this.form.enablefield('IdRegion');
-      }
-    })
+  GetRegionesPorPais(idPais:number,valor:number){
+    console.log(valor)
+    console.log(idPais)
+    if(idPais!=undefined){
+      this._RegionService.ObtenerCiudadesPorPais(idPais).pipe(takeUntil(this.signal$)).subscribe({
+        next:x=>{
+          console.log(x)
+          this.fileds.forEach(r=>{
+            if(r.nombre=='IdRegion'){
+              r.disable=false;
+              r.data, r.filteredOptions=x.map((p:any)=>{
+                var ps:Basic={Nombre:p.nombreCiudad,value:p.idCiudad};
+                return ps;
+              })
+              r.filteredOptionsAux=x.map((p:any)=>{
+                var ps:Basic={Nombre:p.nombreCiudad,value:p.idCiudad};
+                return ps;
+              })
+            }
+            // if(r.nombre=='IdLocalidad'){
+            //   r.disable=true;
+            //   r.hidden=true;
+            // }
+          })
+          this.form.enablefield('IdRegion');
+        }
+      })
+    }
   }
   SelectChage(e:any){
+    console.log(e)
     if(e.Nombre=="IdPais"){
-      this.GetRegionesPorPais(e.value)
+      if(e.value!=undefined ){
+      this.GetRegionesPorPais(e.value,2)
+
+      }
     }
   }
   AddFields(){
@@ -448,6 +470,6 @@ export class WhitepapersComponent implements OnInit,OnDestroy {
     this.formularioContacto.IdPais=undefined,
     this.formularioContacto.IdRegion=undefined,
     this.formularioContacto.Movil= '',
-    this.GetRegionesPorPais(-1);
+    this.GetRegionesPorPais(-1,3);
   }
 }

@@ -454,7 +454,7 @@ export class PagoOrganicoTodosComponent implements OnInit, OnDestroy {
 
     if (fp.idTipoPago == 2) {
       value +=
-        'Pago en 1 matricula de' +
+        'Pago en 1 matrícula de' +
         fp.simbolo +
         ' ' +
         fp.matricula +
@@ -524,8 +524,8 @@ export class PagoOrganicoTodosComponent implements OnInit, OnDestroy {
       disableClose: true,
     });
     //this.jsonEnvioPago.CodigoBanco=tarjeta.medioCodisgo;
-    this.jsonEnvioPago.IdFormaPago = this.medioCodigo;
-    //this.jsonEnvioPago.IdMontoPago=;
+    this.jsonEnvioPago.IdFormaPago = this.medioPagoSeleccionado.idFormaPago;
+    this.jsonEnvioPago.IdMontoPago = this.formaPagoSeleccion.idMontoPago;
     this.jsonEnvioPago.IdPEspecifico = this.modalidadSeleccionada.id;
     this.jsonEnvioPago.IdPGeneral = this.idPegeneral;
     this.jsonEnvioPago.IdPais = this.IdPais;
@@ -855,13 +855,14 @@ export class PagoOrganicoTodosComponent implements OnInit, OnDestroy {
   }
 
   continuarPagoPrecarga(IdPasarelaCapturada:number) {
+    console.log(this.formaPagoSeleccion)
     console.log(this.medioPagoSeleccionado)
     if (this.medioPagoSeleccionado == undefined) {
       this.medioPagoSeleccionado = this.tarjetas[0];
     }
     //this.jsonEnvioPago.CodigoBanco=tarjeta.medioCodisgo;
-    this.jsonEnvioPago.IdFormaPago = this.medioCodigo;
-    //this.jsonEnvioPago.IdMontoPago=;
+    this.jsonEnvioPago.IdFormaPago = this.medioPagoSeleccionado.idFormaPago;
+    this.jsonEnvioPago.IdMontoPago = this.formaPagoSeleccion.idMontoPago;
     this.jsonEnvioPago.IdPEspecifico = this.modalidadSeleccionada.id;
     this.jsonEnvioPago.IdPGeneral = this.idPegeneral;
     this.jsonEnvioPago.IdPais = this.IdPais;

@@ -132,6 +132,7 @@ export class FormularioComponent implements OnChanges, OnInit,OnDestroy {
 
           //this.paisSelect=this.paise.find(x=>x.codigoIso==codigoISo).idPais;
           var storageAlumno = this._SessionStorageService.SessionGetValue('DatosFormulario');
+          console.log(storageAlumno)
           if (storageAlumno == undefined || storageAlumno == null || storageAlumno == '') {
             this.paisSelect=this.paise.find(x=>x.codigoIso==codigoISo).idPais;
           }
