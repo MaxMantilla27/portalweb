@@ -61,7 +61,7 @@
             [(ngModel)]="jsonSave.TarjetaHabiente.NumeroDocumento" matInput >
           </mat-form-field>
 
-          <ng-container *ngIf="resultCard.idPasarelaPago!=1 || resultCard.idFormaPago!=65">
+          <ng-container *ngIf="resultCard.idPasarelaPago==1">
             <mat-form-field class="col-12" appearance="outline" [floatLabel]="'always'" style="width: 100%;">
               <mat-label>Número de tarjeta</mat-label>
               <input type="text" placeholder="Número de tarjeta" [ngModelOptions]="{standalone: true}"
@@ -102,7 +102,7 @@
           <div class="row" style="justify-content: center;">
             <div class="col-12 col-md-10 col-lg-10">
               <app-default-button [confs]="{color:'primary',titulo:'Pagar ahora'}"
-                [style]="'margin-top: 20px;margin-bottom: 0px;width:100%'" (ButtoclClick)="ValidateSave()"></app-default-button>
+                [style]="'margin-top: 20px;margin-bottom: 0px;width:100%'" (ButtoclClick)="Pagar()"></app-default-button>
             </div>
           </div>
         </form>

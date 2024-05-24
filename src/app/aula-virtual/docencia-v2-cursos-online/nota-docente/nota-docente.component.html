@@ -42,8 +42,8 @@
      [ColSpan]="Colspam" [ColorHeader]="true">
   </app-table-v2>
 
-     <div style="display: flex;justify-content: center;; align-items: center;">
-      <button type="action" (click)="DownloadExcel()" style="margin-bottom: 10px;">
+     <div  *ngIf="infoNotasDetalle!=undefined && infoNotasDetalle.length>0 " style="display: flex;justify-content: center;; align-items: center;">
+      <button type="action" (click)="DownloadExcelDetalle()" style="margin-bottom: 10px;">
         <img src="../../../../assets/icons/descarga-36.svg" alt="x" />
         Descargar en Excel
       </button>

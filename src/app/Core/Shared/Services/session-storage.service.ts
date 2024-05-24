@@ -80,6 +80,10 @@ export class SessionStorageService {
       localStorage.removeItem('Token');
       localStorage.removeItem('docencia');
       localStorage.removeItem('docenciaCursos');
+      if(sessionStorage.getItem('lcsk-chatId'))
+        {
+          sessionStorage.removeItem('lcsk-chatId');
+        }
     }
   }
 

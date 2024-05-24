@@ -52,14 +52,21 @@ export class ModalPagoWebpayComponent implements OnInit {
   ObtenerPreProcesoPagoCuotaAlumno(){
     this._FormaPagoService.ObtenerPreProcesoPagoAlumnoWebPay(this.json).pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
+        console.log(x)
         let webPayResponse =x._Repuesta.registroEnvioComercio
         this.url = webPayResponse.url + "?token_ws="+webPayResponse.token
         this._SessionStorageService.SessionSetValue('token_ws',x._Repuesta.tokenComercio);
         this.resultPreValidacion=x._Repuesta;
         this.resultPreValidacion.total= 0;
-        this.resultPreValidacion.listaCuota.forEach((l:any) => {
-          this.resultPreValidacion.total+=l.cuotaTotal
-        });
+        if(this.resultPreValidacion.listaCuota!=undefined){
+          this.resultPreValidacion.listaCuota.forEach((l:any) => {
+            this.resultPreValidacion.total+=l.cuotaTotal
+          });
+        }
+        else{
+          this.resultPreValidacion.total=this.resultPreValidacion.montoTotal
+        }
+
       }
     })
   }

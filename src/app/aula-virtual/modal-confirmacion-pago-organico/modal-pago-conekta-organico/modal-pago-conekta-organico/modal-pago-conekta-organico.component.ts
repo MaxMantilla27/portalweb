@@ -66,12 +66,10 @@ export class ModalPagoConektaOrganicoComponent implements OnInit {
     razonSocial:'',
     listaCuotas:''
   }
-  ngOnDestroy(): void {
-    this.signal$.next(true)
-    this.signal$.complete()
-  }
-  ngOnInit(): void {
-    console.log(this.data)
+  public BotonCargado=false;
+
+  ngAfterViewInit(): void {
+    console.log('ORGANICO 1:',this.data)
     if (this.data.Identificador){
       this.idMatricula = this.data.IdMatricula;
       this.json.IdentificadorTransaccion = this.data.Identificador;
@@ -85,19 +83,24 @@ export class ModalPagoConektaOrganicoComponent implements OnInit {
       this.url+=this.json.IdentificadorTransaccion
       this.ObtenerPreProcesoPagoOrganicoAlumno()
     }
+
+  }
+  ngOnDestroy(): void {
+    this.signal$.next(true)
+    this.signal$.complete()
+  }
+  ngOnInit(): void {
+
   }
   ObtenerPreProcesoPagoOrganicoAlumno(){
     this._FormaPagoService.ObtenerPreProcesoPagoOrganicoAlumno(this.json).pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
-        console.log(x)
+        console.log('ORGANICO 2:',x)
         this.resultVisa=x._Repuesta;
-        this.resultVisa.registroAlumno=this.resultVisa.datoAlumno
-        this.DataComprobante.listaCuota = x._Repuesta.listaCuota
-        if(this.resultVisa.estadoOperacion.toLowerCase()!='sent'){
-          this._router.navigate(['/AulaVirtual/MisCursos/'+this.idMatricula])
-        }else{
-          this.addConekta()
+        if(this.resultVisa.registroAlumno==null){
+          this.resultVisa.registroAlumno=this.resultVisa.datoAlumno
         }
+        this.DataComprobante.listaCuota = x._Repuesta.listaCuota
         this.resultVisa.total=0;
         this.jsonSave.IdentificadorTransaccion=this.json.IdentificadorTransaccion
         this.jsonSave.MedioCodigo=this.resultVisa.medioCodigo
@@ -106,11 +109,20 @@ export class ModalPagoConektaOrganicoComponent implements OnInit {
         this.jsonSave.TransactionToken=this.json.IdentificadorTransaccion
         this.jsonSave.IdPasarelaPago=this.resultVisa.idPasarelaPago
         this._SessionStorageService.SessionSetValue('datosWompi',JSON.stringify(this.jsonSave));
+      },
+      complete:()=>{
+        if(this.resultVisa.estadoOperacion.toLowerCase()!='sent'){
+          this._router.navigate(['/AulaVirtual/MisCursos/'+this.idMatricula])
+        }else{
+          setTimeout(()=>{
+            this.addConekta()
+          },1000)
+        }
       }
     })
   }
   addConekta(){
-
+    this.BotonCargado=false
     let script = this._renderer2.createElement('script');
     script.type="text/javascript"
     script.text = `
@@ -132,12 +144,14 @@ export class ModalPagoConektaOrganicoComponent implements OnInit {
             }
         })
     `;
-    console.log(script)
+    console.log('ORGANICO 3:',script)
     this._renderer2.appendChild(this._document.getElementById('conekta'), script);
+    this.BotonCargado=true
   }
   pagar(){
+    console.log('ORGANICO 4:',this.resultVisa)
     this.DataComprobante.idComprobante=this.jsonSave.Comprobante==false?2:1
-    this.DataComprobante.nroDoc = this.jsonSave.Comprobante==false? this.resultVisa.registroAlumno.numeroDocumento :this.jsonSave.CodigoTributario
+    this.DataComprobante.nroDoc = this.jsonSave.Comprobante==false? this.resultVisa.datoAlumno.numeroDocumento :this.jsonSave.CodigoTributario
     this.DataComprobante.razonSocial = this.jsonSave.RazonSocial
     this._SessionStorageService.SessionSetValue('comprobante',JSON.stringify(this.DataComprobante));
     return this.urlBase+'/AulaVirtual/PagoExitoso/'+this.json.IdentificadorTransaccion

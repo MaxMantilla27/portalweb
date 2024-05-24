@@ -543,6 +543,9 @@ export class PagoOrganicoTodosComponent implements OnInit, OnDestroy {
         //this.jsonEnvioPago.TipoProveedor=;
     this.jsonEnvioPago.WebMoneda = this.formaPagoSeleccion.webMoneda;
     var token = this._SessionStorageService.validateTokken();
+    console.log(token)
+    console.log('Enviandoooooooooo:',this.jsonEnvioPago)
+    var sesion ='';
     if (token) {
       this._FormaPagoService
         .PagoOrganicoDatosServicio(this.jsonEnvioPago) //PagoOrganicoAlumnoDTO
@@ -556,20 +559,22 @@ export class PagoOrganicoTodosComponent implements OnInit, OnDestroy {
               requiereDatosTarjeta: x._Repuesta.requiereDatosTarjeta,
             };
 
-            /////////logica abrir modales :D
-
-            console.log(x);
-
-            var sesion = x._Repuesta.identificadorTransaccion;
+            sesion = x._Repuesta.identificadorTransaccion;
             this._SessionStorageService.SessionSetValue(
               sesion,
               x._Repuesta.requiereDatosTarjeta
             );
+
+            // this.medioPagoSeleccionado.idPasarelaPago=7
+            // this.medioCodigo = 48
+
+          },
+          complete:()=>{
+            console.log('Valores de carga')
+            console.log(sesion)
             console.log(parseInt(this.medioPagoSeleccionado.idPasarelaPago));
             console.log(this.medioPagoSeleccionado.idPasarelaPago)
             console.log(this.medioCodigo)
-            // this.medioPagoSeleccionado.idPasarelaPago=7
-            // this.medioCodigo = 48
             if (
               this.medioPagoSeleccionado.idPasarelaPago == 7 ||
               this.medioPagoSeleccionado.idPasarelaPago == 10
@@ -665,7 +670,6 @@ export class PagoOrganicoTodosComponent implements OnInit, OnDestroy {
                 // this._router.navigate(['/AulaVirtual/MisPagos/'+this.idMatricula+'/wompi/'+sesion]);
               }
               if (parseInt(this.medioPagoSeleccionado.idPasarelaPago) == 6) {
-                dialogRefLoader.close()
                 console.log('ModalPagoConektaOrganicoComponent');
                 const dialogRef = this.dialog.open(
                   ModalPagoConektaOrganicoComponent,
@@ -681,6 +685,8 @@ export class PagoOrganicoTodosComponent implements OnInit, OnDestroy {
                     disableClose:true
                   }
                 );
+                dialogRefLoader.close()
+
                 // this._router.navigate(['/AulaVirtual/MisPagos/'+this.idMatricula+'/conekta/'+sesion]);
               }
 
@@ -823,7 +829,7 @@ export class PagoOrganicoTodosComponent implements OnInit, OnDestroy {
             //       this.resultCard = x._Repuesta;
             //     },
             //   });
-          },
+          }
         });
     } else {
       this._SessionStorageService.SessionSetValue('redirect', 'pago');

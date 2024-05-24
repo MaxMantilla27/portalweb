@@ -393,25 +393,29 @@ doSomethingOnNewTab() {
     console.log('---------------------------------');
   }
   enviarMensajeVisitanteSoporte() {
-
     if (this.clics === 0) {
       this.GenerarLogVisitanteAulaVirtual();
-      console.log("Entro en clck para recarga ");
+      console.log('Entro en clck para recarga ');
       this.clics++;
-      console.log("Clics ++  " + this.clics);
-      this.hubConnection.invoke(
-        'enviarMensajeVisitanteSoporteV2',
-        this.chatBox,
-        this.idInteraccion,
-        this.git);
+      console.log('Clics ++  ' + this.clics);
+      if (this.chatBox != null && this.chatBox.trim().length > 0) {
+        this.hubConnection.invoke(
+          'enviarMensajeVisitanteSoporteV2',
+          this.chatBox,
+          this.idInteraccion,
+          this.git
+        );
+      }
     } else {
-      console.log("No recargo denuevo aulavirtual ");
-      this.hubConnection.invoke(
-        'enviarMensajeVisitanteSoporteV2',
-        this.chatBox,
-        this.idInteraccion,
-        this.git
-      );
+      console.log('No recargo denuevo aulavirtual ');
+      if (this.chatBox != null && this.chatBox.trim().length > 0) {
+        this.hubConnection.invoke(
+          'enviarMensajeVisitanteSoporteV2',
+          this.chatBox,
+          this.idInteraccion,
+          this.git
+        );
+      }
     }
   }
   marcarChatAgentecomoleido() {
