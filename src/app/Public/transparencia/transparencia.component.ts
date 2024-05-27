@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { SeoService } from 'src/app/Core/Shared/Services/seo.service';
 import { ProcesoMatriculaModalComponent } from './proceso-matricula-modal/proceso-matricula-modal.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-transparencia',
@@ -12,7 +13,8 @@ export class TransparenciaComponent implements OnInit {
 
   constructor(
     private _SeoService:SeoService,
-    private title:Title
+    private title:Title,
+    public dialog: MatDialog,
   ) { }
   public migaPan = [
     {

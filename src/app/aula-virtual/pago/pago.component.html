@@ -82,8 +82,8 @@
               <tr>
                 <th style="min-width: 60px;">Pagar</th>
                 <th style="min-width: 60px;">Nro. Cuota</th>
-                <th style="min-width: 60px;">Moneda</th>
                 <th style="min-width: 60px;">Monto</th>
+                <th style="min-width: 60px;">Moneda</th>
                 <th style="min-width: 60px;">Mora</th>
                 <!-- <th style="min-width: 60px;">Costos Gestión de Cóbranza</th> -->
                 <th style="min-width: 60px;">Fecha de Vencimiento</th>
@@ -106,8 +106,8 @@
                 </ng-container>
               </td>
               <td>{{item.numeroCuotaMostrar}}</td>
-              <td>{{item.codigoMoneda}}</td>
               <td>{{FormatoMilesDecimales(item.cuota)}}</td>
+              <td>{{item.codigoMoneda}}</td>
               <td>{{FormatoMilesDecimales(item.moraCalculada)}}</td>
               <!-- <td>{{item.moraCalculada | number:'1.2-2'}}</td> -->
               <td>{{item.fechaVencimiento | date:'dd/MM/yyyy'}}</td>

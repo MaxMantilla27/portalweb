@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-proceso-matricula-modal',
@@ -8,7 +9,10 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 })
 export class ProcesoMatriculaModalComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    public dialogRef: MatDialogRef<ProcesoMatriculaModalComponent>,
+    public dialog: MatDialog,
+  ) { }
 
   ngOnInit(): void {
   }
