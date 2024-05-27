@@ -98,10 +98,10 @@
 
           <div class="row" style="justify-content: center;">
             <div class="col-12 col-md-10 col-lg-10">
-              <app-default-button  [confs]="{color:'primary',titulo:'Pagar ahora'}"
+              <app-default-button  *ngIf="resultCard.idPasarelaPago!=1"  [confs]="{color:'primary',titulo:'Pagar ahora'}"
                 [style]="'margin-top: 20px;margin-bottom: 0px;width:100%'" (ButtoclClick)="Pagar()"></app-default-button>
-              <!-- <app-default-button *ngIf="resultCard.idPasarelaPago==1" [confs]="{color:'primary',titulo:'Pagar ahora'}"
-                [style]="'margin-top: 20px;margin-bottom: 0px;width:100%'" (ButtoclClick)="ValidateSave()"></app-default-button> -->
+              <app-default-button *ngIf="resultCard.idPasarelaPago==1" [confs]="{color:'primary',titulo:'Pagar ahora'}"
+                [style]="'margin-top: 20px;margin-bottom: 0px;width:100%'" (ButtoclClick)="ValidateSave()"></app-default-button>
             </div>
           </div>
         </form>

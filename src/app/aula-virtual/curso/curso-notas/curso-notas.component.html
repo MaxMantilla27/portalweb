@@ -119,7 +119,7 @@
                         Tareas
                       </td>
                       <td *ngIf="Cursos.nombreModalidad=='Online Asincrónico' && criterioCalificacion.criterioEvaluacion!='Portal-Talleres'" class="criterio" style="width: 40%;padding-top: 10px;padding-bottom: 10px;padding-left: 10px;">
-                        {{criterioCalificacion.criterioEvaluacion}}
+                        {{criterioCalificacion.criterioEvaluacion|removePortalCriterio}}
                       </td>
                       <td class="criterio" style="width: 30%;text-align: left;padding-top: 10px;padding-bottom: 10px;">
                         {{criterioCalificacion.ponderacion}} %
