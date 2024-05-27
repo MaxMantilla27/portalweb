@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { SeoService } from 'src/app/Core/Shared/Services/seo.service';
+import { ProcesoMatriculaModalComponent } from './proceso-matricula-modal/proceso-matricula-modal.component';
 
 @Component({
   selector: 'app-transparencia',
@@ -36,6 +37,9 @@ export class TransparenciaComponent implements OnInit {
     });
   }
   ModalProcesoMatricula(){
-
+    this.dialog.open(ProcesoMatriculaModalComponent, {
+      panelClass: 'dialog-imagen-proceso-matricula',
+      disableClose:true
+    });
   }
 }
