@@ -35,5 +35,7 @@ export class TransparenciaComponent implements OnInit {
       keywords:'BSG Institute,curso de excel avanzado, curso autocad, curso de excel basico, especializacion en gerencia de proyectos, certificacion itil, especializacion en salud ocupacional, curso ms project,curso revit',
     });
   }
+  ModalProcesoMatricula(){
 
+  }
 }
