@@ -175,6 +175,9 @@ export class PagoOrganicoTodosComponent implements OnInit, OnDestroy {
     this.datospago = atob(this.datospago);
     this.datospago = JSON.parse(this.datospago);
     this.modalidad = this.datospago.modalidad;
+    this.modalidad.forEach((z:any) => {
+      z.tipo=this.TildeVersion(z.tipo)
+    });
     console.log(this.modalidad)
     console.log(this.datospago)
     this._HelperServiceP.recibirDataPais
@@ -983,5 +986,16 @@ export class PagoOrganicoTodosComponent implements OnInit, OnDestroy {
   // Función para mostrar el contenido del modal
   openAndShowModal() {
     this._HelperServiceP.enviarEstadoPrecargaPasarela('true');
+  }
+  TildeVersion(Version:string){
+    console.log(Version)
+    var Valor =Version
+    if (Valor=='Online Asincronica'){
+      Valor='Online Asincrónica'
+    }
+    if (Valor=='Online Asincronica'){
+      Valor='Online Sincrónica'
+    }
+    return Valor
   }
 }

@@ -282,8 +282,8 @@ export class ResultadoPagoComponent implements OnInit,OnDestroy{
     }
   }
   RedireccionarModalIntentoPago(){
-    this._SessionStorageService.SessionSetValue('urlRedireccionErrorPagoModal','true');
-    this._router.navigate(['/'+ this.AreaCapacitacion + '/' + this.ProgramaNombre])
+    // this._SessionStorageService.SessionSetValue('urlRedireccionErrorPagoModal','true');
+    this._router.navigate(['AulaVirtual/MisPagos/PagoOrganicoTodos'])
 
   }
   EnvioCorreoPagoExitoso() {
