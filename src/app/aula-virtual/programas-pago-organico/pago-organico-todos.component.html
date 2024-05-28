@@ -165,7 +165,7 @@
 
             <div class="tot"></div>
             <div class="row verionPago " style="color: #878787;">
-              <div *ngIf="formaPagoSeleccion.idTipoPago==2" class="col" style="color: #878787;">Matricula</div>
+              <div *ngIf="formaPagoSeleccion.idTipoPago==2" class="col" style="color: #878787;">Matrícula</div>
               <div *ngIf="formaPagoSeleccion.idTipoPago==1" class="col" style="color: #878787;">Al Contado</div>
               <div class="col" style=" color: #878787;">{{ infoPago.precio!='' ? FormatoMilesDecimales(infoPago.precio): '' }} {{  infoPago.precio != '' ? formapago[0].codigoMoneda : "" }} {{ formaPagoSeleccion.codigo }}</div>
             </div>
@@ -184,8 +184,10 @@
       </div>
 
       <div class="iconoPagoTarjeta">
-        <p style="font-size: 11px !important;; text-align: center;">*El cargo del importe se efectuará en la moneda indicada en el resumen
-          de pago. El tipo de cambio estará sujeto por la entidad bancaria que utilices.</p>
+        <p style="font-size: 11px !important;; text-align: center;">
+          <!-- *El cargo del importe se efectuará en la moneda indicada en el resumen
+          de pago. El tipo de cambio estará sujeto por la entidad bancaria que utilices. -->
+        </p>
       </div>
       <!-- <div *ngIf="formaPagoSeleccion.idTipoPago==2" style="padding: 0px 30px 15px 30px;">
         <div class="row" style="border: solid 2px #0076FF;border-radius: 15px;background: #EFF8FF; margin-top: 10px;">

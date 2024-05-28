@@ -272,7 +272,6 @@ export class PagoOrganicoTodosComponent implements OnInit, OnDestroy {
           this.validadorPagosMultiples = x.filter(
             (item: any) =>
               item.idPasarelaPago === 7 ||
-              item.idPasarelaPago === 18 ||
               item.idPasarelaPago === 10
           );
           this.validadorPagosChile =
