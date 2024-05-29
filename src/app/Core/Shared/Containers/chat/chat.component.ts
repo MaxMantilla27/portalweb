@@ -106,7 +106,7 @@ export class ChatComponent implements OnInit, OnDestroy, OnChanges {
     window.removeEventListener('storage', this.storageEventListener);
   }
   ngOnInit(): void {
-
+    console.log('idProgramageneral', this.idProgramageneral)
     this._HelperService
       .recibirMsjChat()
       .pipe(takeUntil(this.signal$))
@@ -150,7 +150,8 @@ export class ChatComponent implements OnInit, OnDestroy, OnChanges {
       .pipe(takeUntil(this.signal$))
       .subscribe({
         next: (x) => {
-          var listprogramas = [9990, 9991, 9992, 9993];
+          //var listprogramas = [9990, 9991, 9992, 9993];
+          var listprogramas = [9990, 9991, 9992];
           this.idProgramageneral =
             listprogramas[Math.floor(Math.random() * listprogramas.length)];
           this.ObtenerDetalleChatPorIdInteraccionControlMensajeSoporte(
@@ -211,28 +212,26 @@ export class ChatComponent implements OnInit, OnDestroy, OnChanges {
     }
     if (this.idProgramageneral > 0 && this.estadoLogueo == 'false') {
       this.ObtenerAsesorChat();
-
     }
   }
 
-//---------------------------------------------------------------------------------------------------------
-handleStorageEvent(event: StorageEvent) {
-  if (event.key === 'tabActive') {
-    // Verifica si el cambio proviene de otra pestaña
-    if (event.newValue === null) {
-      // Se activa cuando se abre una nueva pestaña de la misma página
-      console.log('Nueva pestaña de la misma página');
-      // Ejecuta la función que desees aquí
-      this.doSomethingOnNewTab();
+  //---------------------------------------------------------------------------------------------------------
+  handleStorageEvent(event: StorageEvent) {
+    if (event.key === 'tabActive') {
+      // Verifica si el cambio proviene de otra pestaña
+      if (event.newValue === null) {
+        // Se activa cuando se abre una nueva pestaña de la misma página
+        console.log('Nueva pestaña de la misma página');
+        // Ejecuta la función que desees aquí
+        this.doSomethingOnNewTab();
+      }
     }
   }
-}
-doSomethingOnNewTab() {
-  this.GenerarLogVisitanteAulaVirtual();
-}
+  doSomethingOnNewTab() {
+    this.GenerarLogVisitanteAulaVirtual();
+  }
 
-//---------------------------------------------------------------------------------------------------------
-
+  //---------------------------------------------------------------------------------------------------------
 
   ObtenerAsesorChat() {
     this._ChatEnLinea
@@ -275,7 +274,7 @@ doSomethingOnNewTab() {
     this.chatBox = '';
   }
   ObtenerConfiguracionChat() {
-    this.clics=0;
+    this.clics = 0;
     this._ChatEnLinea
       .ObtenerConfiguracionChat()
       .pipe(takeUntil(this.signal$))
@@ -327,19 +326,14 @@ doSomethingOnNewTab() {
   }
 
   GenerarLogVisitanteAulaVirtual() {
+    let idProgramaGenetalEstatico = this._SessionStorageService.SessionGetValue('IdPGeneral') ? 0  : parseInt(this._SessionStorageService.SessionGetValue('IdPGeneral'));
 
-    var idProgramaGenetalEstatico =
-      this._SessionStorageService.SessionGetValue('IdPGeneral') == ''
-        ? 0
-        : parseInt(this._SessionStorageService.SessionGetValue('IdPGeneral'));
+    let existingChatId = this._SessionStorageService.SessionGetValueSesionStorage(this.chatKey) ?? '';
 
-    var existingChatId =
-      this._SessionStorageService.SessionGetValueSesionStorage(this.chatKey);
     if (idProgramaGenetalEstatico == 0 || existingChatId == '') {
       idProgramaGenetalEstatico = this.idProgramageneral;
     }
-    var cookiecontaco =
-      this._SessionStorageService.SessionGetValue('usuarioWeb');
+    let cookiecontaco = this._SessionStorageService.SessionGetValue('usuarioWeb');
     this.hubConnection.invoke(
       'GenerarLogVisitanteAulaVirtual',
       document.location.href,
@@ -371,22 +365,20 @@ doSomethingOnNewTab() {
       this.codigomatricula,
       this.git
     );
-    console.log(this.IdAlumno)
-    if(this.IdAlumno==null)
-    {console.log("Recargo Funcion GenerarLogVisitanteAulaVirtual");
+    console.log(this.IdAlumno);
+    if (this.IdAlumno == null) {
+      console.log('Recargo Funcion GenerarLogVisitanteAulaVirtual');
 
       this.GenerarLogVisitanteAulaVirtual();
-
     }
   }
 
   mensajeChat() {
     if (this.clics === 0) {
       this.GenerarLogVisitanteAulaVirtual();
-    this.hubConnection.invoke('mensajeChatSoporte', this.chatBox);
-    this.clics++;
-    }
-    else{
+      this.hubConnection.invoke('mensajeChatSoporte', this.chatBox);
+      this.clics++;
+    } else {
       this.hubConnection.invoke('mensajeChatSoporte', this.chatBox);
     }
     console.log(this.chatBox);
@@ -419,11 +411,9 @@ doSomethingOnNewTab() {
     }
   }
   marcarChatAgentecomoleido() {
-
     this.hubConnection.invoke('marcarChatAgentecomoleido', this.idInteraccion);
   }
   actualizarDatosAlumno(IdFaseOportunidadPortal: any) {
-
     this.hubConnection.invoke(
       'actualizarDatosAlumno',
       this.IdAlumno,
@@ -431,7 +421,6 @@ doSomethingOnNewTab() {
     );
   }
   crearChatOfflineSoporte() {
-
     var idProgramaGenetalEstatico = parseInt(
       this._SessionStorageService.SessionGetValue('IdPGeneral')
     );
@@ -444,7 +433,7 @@ doSomethingOnNewTab() {
     );
   }
   crearChatOffline() {
-
+    console.log('Entro al chat 2');
     var idProgramaGenetalEstatico = parseInt(
       this._SessionStorageService.SessionGetValue('IdPGeneral')
     );
@@ -456,28 +445,23 @@ doSomethingOnNewTab() {
     );
   }
   enviarMensajeVisitanteSoporteArchivo(
-
     url: string,
     idarchivo: number | null,
     tipo: string
   ) {
-
     this.hubConnection.invoke(
       'EnviarMensajeVisitanteSoporteArchivoV2',
       url,
       this.idInteraccion,
       idarchivo,
-      tipo,
-      this.git
+      tipo
     );
   }
   mensajeChatArchivoAdjunto(
     url: string,
     idarchivo: number | null,
     tipo: string
-
   ) {
-
     this.hubConnection.invoke(
       'mensajeChatArchivoAdjunto',
       url,
@@ -486,7 +470,6 @@ doSomethingOnNewTab() {
     );
   }
   ObtenerDetalleChatPorIdInteraccionControlMensajeSoporte(idAlumno: number) {
-
     this.charge = true;
     this._ChatDetalleIntegraService
       .ObtenerDetalleChatPorIdInteraccionControlMensajeSoporte(idAlumno)
@@ -512,7 +495,6 @@ doSomethingOnNewTab() {
       });
   }
   configuracionSoporte() {
-
     this.hubConnection.on(
       'configuracionSoporte',
       (NombreAsesor: any, estado: any, idPGeneral: any) => {
@@ -520,16 +502,17 @@ doSomethingOnNewTab() {
       console.log(this.idProgramageneral)
       console.log(idPGeneral) */
         if (estado == false) {
-          if (this.contadoraulavirtual < 4) {
+          if (this.contadoraulavirtual < 3) {
             if (this.idProgramageneral == 9990) {
               this.idProgramageneral = 9991;
             } else if (this.idProgramageneral == 9991) {
               this.idProgramageneral = 9992;
             } else if (this.idProgramageneral == 9992) {
-              this.idProgramageneral = 9993;
-            } else if (this.idProgramageneral == 9993) {
               this.idProgramageneral = 9990;
             }
+            // else if (this.idProgramageneral == 9993) {
+            //   this.idProgramageneral = 9990;
+            // }contadoraulavirtual = 4 EN CASO se agregue sera  +1
             this.contadoraulavirtual++;
             this.GenerarLogVisitanteAulaVirtual();
           } else {
@@ -552,7 +535,6 @@ doSomethingOnNewTab() {
     );
   }
   setChat() {
-
     this.hubConnection.on(
       'setChat',
       (id: any, agentName: any, existing: any) => {
@@ -584,7 +566,6 @@ doSomethingOnNewTab() {
     );
   }
   onlineStatus() {
-
     this.hubConnection.on('onlineStatus', (data: any) => {
       if (data.status == true) {
         if (data.nombreasesor === undefined) {
@@ -598,6 +579,7 @@ doSomethingOnNewTab() {
         this.correoasesorglobal = data.correoasesor;
       }
       this.stateAsesor = data.status;
+      console.log('Estado Logeo:', this.estadoLogueo);
       this.estadoLogueo = data.estadologueo;
       this.chatRefreshState(this.stateAsesor, this.estadoLogueo, data.correo);
     });
@@ -671,6 +653,7 @@ doSomethingOnNewTab() {
     });
   }
   openChatWindow() {
+    console.log('Entro al chat');
     this.hubConnection.on('openChatWindow', (x: any) => {
       this.AbrirChat.emit();
     });
@@ -718,12 +701,13 @@ doSomethingOnNewTab() {
   public archivoenviado: any;
   public imagenMostrada: boolean = false;
   AdjuntarArchivoChatSoporte() {
-    const allowedExtensions = ['png', 'jpg', 'pdf'];
+    const allowedExtensions = ['png', 'jpg', 'pdf','doc', 'docx','jpeg','jfif', 'xlsx', 'xls'];
 
     for (let i = 0; i < this.selectedFiles.length; i++) {
       const file = this.selectedFiles[i];
       const name = file.name;
       const extension = name.split('.').pop().toLowerCase();
+
 
       if (allowedExtensions.includes(extension)) {
         this._ChatDetalleIntegraService
@@ -734,8 +718,6 @@ doSomethingOnNewTab() {
               const url = x.Url;
               const idArchivo = x.IdArchivo;
               const tipo = x.Tipo;
-
-              // Combina con la lógica de this.idInteraccion
               this.idInteraccion = this.GetsesionIdInteraccion();
               if (this.idInteraccion == null || this.idInteraccion === '') {
                 // Lógica si idInteraccion es nulo o vacío
@@ -745,38 +727,38 @@ doSomethingOnNewTab() {
                 this.enviarMensajeVisitanteSoporteArchivo(url, idArchivo, tipo);
               }
 
-              if (['png', 'jpg'].includes(extension)) {
-                // Create a new message object for the image
-                const newImageMessage = {
+              if (['png', 'jpg', 'jpeg', 'jfif'].includes(extension)) {
+                 // Crear un nuevo objeto de mensaje para la imagen
+                 const newImageMessage = {
                   NombreRemitente: this.nombres,
-                  Mensaje: 'Imagen enviada con exito ', // You can leave the message text empty for images
-                  IdRemitente: 'visitante', // Assuming it's a visitor's message
+                  Mensaje: 'Imagen enviada con éxito',
+                  IdRemitente: 'visitante', // Suponiendo que es un mensaje del visitante
                   estadoEnviado: true,
-                  url: url, // Store the URL for the image
-                  tipo: tipo, // Store the image type (e.g., 'png', 'jpg')
-                  idArchivo: idArchivo, // Store the image ID if needed
-                  esImagen: true, // Custom property to indicate that it's an image
+                  url: url, // Almacenar la URL de la imagen
+                  tipo: tipo, // Almacenar el tipo de imagen (p.ej., 'png', 'jpg')
+                  idArchivo: idArchivo, // Almacenar el ID de la imagen si es necesario
+                  esImagen: true, // Propiedad personalizada para indicar que es una imagen
                 };
                 this.archivoenviado = newImageMessage;
                 if (!this.imagenMostrada) {
-                  this.mostrarImagenEnChat(this.urlDoc);
+                  this.mostrarImagenEnChat(url); // Corrige esto para usar la URL correcta
                   this.imagenMostrada = true;
                 }
                 // Push the new image message into your messages array
-                //this.mensajesAnteriore.push(newImageMessage);
-              } else if (extension === 'pdf') {
-                // Create a new message object for the PDF (similar to the previous code)
-                const newPDFMessage = {
+                // this.mensajesAnteriore.push(newImageMessage);
+              } else if (['pdf', 'doc', 'docx', 'xlsx', 'xls'].includes(extension)) {
+                // Crear un nuevo objeto de mensaje para el documento
+                const newDocMessage = {
                   NombreRemitente: this.nombres,
-                  Mensaje: 'Archivo enviado : ' + name, // You can customize the message text
-                  IdRemitente: 'visitante', // Assuming it's a visitor's message
+                  Mensaje: 'Archivo enviado: ' + name, // Puedes personalizar el texto del mensaje
+                  IdRemitente: 'visitante', // Suponiendo que es un mensaje del visitante
                   estadoEnviado: true,
-                  url: url, // Store the URL for the PDF
-                  tipo: tipo, // Store the PDF type (e.g., 'pdf')
-                  idArchivo: idArchivo, // Store the PDF ID if needed
+                  url: url, // Almacenar la URL del documento
+                  tipo: tipo, // Almacenar el tipo de documento (p.ej., 'pdf', 'doc')
+                  idArchivo: idArchivo, // Almacenar el ID del documento si es necesario
                 };
-                this.archivoenviado = newPDFMessage;
-                //this.mensajesAnteriore.push(newPDFMessage);
+                this.archivoenviado = newDocMessage;
+                // this.mensajesAnteriore.push(newDocMessage);
               }
 
               timer(100)
@@ -789,7 +771,7 @@ doSomethingOnNewTab() {
           });
       } else {
         console.log(
-          `Archivo no válido: ${name}. Solo se permiten archivos 'png', 'jpg' y 'pdf'.`
+          `Archivo no válido: ${name}. Solo se permiten archivos 'png', 'jpg', 'jpeg', 'jfif', 'pdf' , 'xlsx', 'xls', 'docx' y 'doc'.`
         );
       }
     }

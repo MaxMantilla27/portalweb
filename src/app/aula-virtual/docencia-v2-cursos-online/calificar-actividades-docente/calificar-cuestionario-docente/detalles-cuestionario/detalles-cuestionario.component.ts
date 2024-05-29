@@ -162,6 +162,7 @@ export class DetallesCuestionarioComponent implements OnInit, OnDestroy {
         this.nota+=p.puntos*1
       }
     })
+    this.nota=Math.round(this.nota)
   }
 
   SetRetro(item:any){

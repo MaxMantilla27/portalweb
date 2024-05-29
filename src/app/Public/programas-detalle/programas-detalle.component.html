@@ -550,30 +550,32 @@
           </mat-tab>
           <mat-tab label="Duración y Horarios">
             <ng-container *ngIf="cabecera!=null && cabecera.listProgramaEspecificoInformacionDTO!=null">
-              <ng-container *ngFor="let item of cabecera.listProgramaEspecificoInformacionDTO">
-                <div *ngIf="item.sesiones!=null && item.sesiones.length>0" style="margin-top: 20px;">
-                  <strong>
-                    En la modalidad
-                    <ng-container *ngIf="item.tipo.toLowerCase()=='online sincronica'">Online Sincrónica (Clases en
-                      vivo):</ng-container>
-                    <ng-container *ngIf="item.tipo.toLowerCase()!='online sincronica'">Presencial (Clases
-                      presenciales):</ng-container>
-                  </strong>
-                  <br>
-                  Las clases se desarrollarán de forma {{item.tipo.toLowerCase()=='online sincronica'?'virtual':'presencial'}}, con una frecuencia semanal en el siguiente horario (*):
-                  <ul style="margin: 1rem;">
-                    <li *ngFor="let sesi of item.sesiones">
-                      <strong>
-                        {{sesi.dia}}: {{sesi.horaInicio.split(':')[0]+':'+sesi.horaInicio.split(':')[1] }} a
-                        {{sesi.horaFin.split(':')[0]+':'+sesi.horaFin.split(':')[1] }} horas.
-                      </strong>
-                    </li>
-                  </ul>
-                  (*) Para más detalles sobre fechas y horarios solicita el cronograma de clases.
+              <div *ngIf="seccion.duracionHorario==null">
+                <ng-container  *ngFor="let item of cabecera.listProgramaEspecificoInformacionDTO">
+                  <div *ngIf="item.sesiones!=null && item.sesiones.length>0" style="margin-top: 20px;">
+                    <strong>
+                      En la modalidad
+                      <ng-container *ngIf="item.tipo.toLowerCase()=='online sincronica'">Online Sincrónica (Clases en
+                        vivo):</ng-container>
+                      <ng-container *ngIf="item.tipo.toLowerCase()!='online sincronica'">Presencial (Clases
+                        presenciales):</ng-container>
+                    </strong>
+                    <br>
+                    Las clases se desarrollarán de forma {{item.tipo.toLowerCase()=='online sincronica'?'virtual':'presencial'}}, con una frecuencia semanal en el siguiente horario (*):
+                    <ul style="margin: 1rem;">
+                      <li *ngFor="let sesi of item.sesiones">
+                        <strong>
+                          {{sesi.dia}}: {{sesi.horaInicio.split(':')[0]+':'+sesi.horaInicio.split(':')[1] }} a
+                          {{sesi.horaFin.split(':')[0]+':'+sesi.horaFin.split(':')[1] }} horas.
+                        </strong>
+                      </li>
+                    </ul>
+                    (*) Para más detalles sobre fechas y horarios solicita el cronograma de clases.
 
-                </div>
+                  </div>
 
-              </ng-container>
+                </ng-container>
+              </div>
 
             </ng-container>
 

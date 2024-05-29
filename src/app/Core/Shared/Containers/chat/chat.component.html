@@ -9,7 +9,7 @@
         <ng-container *ngIf="estadoLogueo!='false'">
           Soporte Técnico
         </ng-container>
-        
+
         <mat-icon (click)="GenerarLogVisitanteAulaVirtual()">autorenew</mat-icon>
         <div class="stateAsesor" [ngClass]="{'OnConected': stateAsesor==true}">
 
@@ -65,7 +65,7 @@
                   </ng-container>
 
                 </ng-container>
-                 
+
               </div>
             </div>
         </ng-container>
@@ -76,7 +76,9 @@
           (focusout)="inputActive=false" placeholder="Escribe tu mensaje aquí " [(ngModel)]="chatBox">
           <i class="material-icons" (click)="BuscarProgramas(true);enviarmsj()">send</i>
           <i class="material-icons addfile" (click)="fileInput.click()">attach_file</i>
-        <input  #fileInput type="file" style="display:none;" accept="image/png, image/gif, image/jpeg" (change)="AgregarArchivoChatSoporte($event)">
+        <!-- <input  #fileInput type="file" style="display:none;" accept="image/png, image/gif, image/jpeg" (change)="AgregarArchivoChatSoporte($event)"> -->
+        <input  #fileInput type="file" style="display:none;" type="file" style="display:none;" accept="image/png, image/jpeg, image/jpg, image/jfif, application/pdf, application/msword, application/vnd.openxmlformats-officedocument.wordprocessingml.document, application/vnd.ms-excel, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+          (change)="AgregarArchivoChatSoporte($event)">
       </div>
     </ng-container>
     <ng-container *ngIf="!stateAsesor">
@@ -95,7 +97,7 @@
           <app-default-button style="background:#FF4E55;border-radius: 5px 5px 5px 5px;"  (click)="BuscarProgramas(true);enviarmsjOff()" [confs]="{color:'primary',titulo:'Enviar'}" [style]="'padding:0px 30px;margin:0px;'"
           ></app-default-button>
         </div>
-      </ng-container>      
+      </ng-container>
     </ng-container>
   </ng-template>
 </div>
