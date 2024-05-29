@@ -423,21 +423,42 @@ export class ProgramasComponent implements OnInit,OnDestroy {
     .pipe(takeUntil(this.signal$)).subscribe({
       next:(x)=>{
         console.log(x)
-        this.programas=x.listaProgramasGeneralesTop.map(
-          (c:any)=>{
+        if(this.CodigoIso.toUpperCase()=='PE'||this.CodigoIso.toUpperCase()=='MX'){
+          this.programas=x.listaProgramasGeneralesTop.map(
+            (c:any)=>{
 
-            var urlArea=c.areaCapacitacion.replace(/\s+/g, '-')
-            var urlSubArea=c.nombre.replace(' - ', '-')
-            var urlSubArea=urlSubArea.replace(/\s+/g, '-')
-            var ps:CardProgramasDTO={
-              Inversion:c.montoPagoDescripcion,
-              Content:c.descripcion,
-              //Url:'/'+urlArea+'/'+urlSubArea+'-'+c.idBusqueda,
-              Url:c.direccion,
-              Img:'https://img.bsginstitute.com/repositorioweb/img/programas/'+c.imagen,ImgAlt:c.imagenAlt,Title:c.nombre};
-            return ps;
-          }
-        );
+              var urlArea=c.areaCapacitacion.replace(/\s+/g, '-')
+              var urlSubArea=c.nombre.replace(' - ', '-')
+              var urlSubArea=urlSubArea.replace(/\s+/g, '-')
+              var ps:CardProgramasDTO={
+                Inversion:c.montoPagoDescripcion,
+                Content:c.descripcion,
+                //Url:'/'+urlArea+'/'+urlSubArea+'-'+c.idBusqueda,
+                Url:c.direccion,
+                Img:'https://img.bsginstitute.com/repositorioweb/img/programas/'+c.imagen,ImgAlt:c.imagenAlt,Title:c.nombre};
+              return ps;
+            }
+          );
+        }
+        else{
+          const cursosAutodesk = ['Certified Autodesk BIM Project Manager', 'Certified AutoCAD Expert', 'Certified AutoCAD Architect Expert','Curso AutoCAD Civil 3D 2019,','Curso AutoCAD 2019','Curso AutoCAD 3D 2019','Curso AutoCAD 3D 2023'];
+          this.programas=x.listaProgramasGeneralesTop.filter((c: any) => !cursosAutodesk.some(palabra => c.nombre.includes(palabra)))
+          .map(
+            (c:any)=>{
+
+              var urlArea=c.areaCapacitacion.replace(/\s+/g, '-')
+              var urlSubArea=c.nombre.replace(' - ', '-')
+              var urlSubArea=urlSubArea.replace(/\s+/g, '-')
+              var ps:CardProgramasDTO={
+                Inversion:c.montoPagoDescripcion,
+                Content:c.descripcion,
+                //Url:'/'+urlArea+'/'+urlSubArea+'-'+c.idBusqueda,
+                Url:c.direccion,
+                Img:'https://img.bsginstitute.com/repositorioweb/img/programas/'+c.imagen,ImgAlt:c.imagenAlt,Title:c.nombre};
+              return ps;
+            }
+          );
+        }
         this.SetCantidadProgramas()
         this.charge=false
       },
