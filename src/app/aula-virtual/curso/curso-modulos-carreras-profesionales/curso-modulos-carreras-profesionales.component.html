@@ -2,7 +2,7 @@
 <ng-container *ngIf="Semestres!=null && Semestres!=undefined && Semestres.length!=0">
   <div *ngFor="let mod of Semestres;let i=index">
     <div class="proximasSesionesOnline" (click)="OpenSemestre(i)">
-      <div class="textoProximas">Semestre {{mod.nombreCiclo}}</div>
+      <div class="textoProximas">Periodo académico {{mod.nombreCiclo}}</div>
       <div class="iconProximas">
         <ng-container *ngIf="mod.open==false" ><i class="material-icons">keyboard_arrow_down</i></ng-container>
         <ng-container *ngIf="mod.open==true "><i class="material-icons">keyboard_arrow_up</i></ng-container>

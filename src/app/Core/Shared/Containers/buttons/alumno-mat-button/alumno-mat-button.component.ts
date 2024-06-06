@@ -46,7 +46,7 @@ export class AlumnoMatButtonComponent implements OnInit,OnChanges {
     if(this.val!=undefined){
       if(this.val.IdProveedor==0){
         this.buttons.push({
-          Nombre: 'Mis Cursos',
+          Nombre: 'Mis Unidades Didácticas',
           Url: '/AulaVirtual/MisCursos',
           Icon: 'play_lesson',
           value:'../../../../../../assets/icons/mis-cursos.svg',
@@ -102,7 +102,7 @@ export class AlumnoMatButtonComponent implements OnInit,OnChanges {
       }else{
         if(this.val.cursos>0){
           this.buttons.push({
-            Nombre: 'Mis Cursos',
+            Nombre: 'Mis Unidades Didácticas',
             Url: '/AulaVirtual/MisCursos',
             Icon: 'play_lesson',
             value:'../../../../../../assets/icons/mis-cursos.svg',

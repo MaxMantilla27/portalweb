@@ -47,7 +47,7 @@ export class MisCursosComponent implements OnInit,OnDestroy {
 
   ngOnInit(): void {
 
-    let t:string='Mis Cursos'
+    let t:string='Mis Unidades Didácticas'
     this.title.setTitle(t)
 
     this.textoBienvenido =
