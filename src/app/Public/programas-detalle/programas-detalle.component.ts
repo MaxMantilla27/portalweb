@@ -747,7 +747,7 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
           this.CertificacionPiePagina = piePag.piePagina;
         }
         var piePag = x.listaSeccionesContenidosDocumento.find(
-          (x: any) => x.titulo == 'Descripci&#243;n Estructura'
+          (x: any) => x.titulo == 'Descripci&#243;n Estructura' || x.titulo == 'Descripción Estructura' || x.titulo == 'Descripcion Estructura'
         );
         if (piePag != undefined) {
           this.EstructuraPiePagina = piePag.piePagina;
