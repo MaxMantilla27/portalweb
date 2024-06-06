@@ -106,6 +106,7 @@ export class ChatComponent implements OnInit, OnDestroy, OnChanges {
     window.removeEventListener('storage', this.storageEventListener);
   }
   ngOnInit(): void {
+    this.mensajesAnteriore=[]
     console.log('idProgramageneral', this.idProgramageneral)
     this._HelperService
       .recibirMsjChat()
@@ -376,13 +377,15 @@ export class ChatComponent implements OnInit, OnDestroy, OnChanges {
   mensajeChat() {
     if (this.clics === 0) {
       this.GenerarLogVisitanteAulaVirtual();
-      this.hubConnection.invoke('mensajeChatSoporte', this.chatBox);
-      this.clics++;
+      if (this.chatBox != undefined && this.chatBox != null && this.chatBox.trim().length > 0) {
+        this.hubConnection.invoke('mensajeChatSoporte', this.chatBox);
+        this.clics++;
+      }
     } else {
-      this.hubConnection.invoke('mensajeChatSoporte', this.chatBox);
+      if (this.chatBox != undefined && this.chatBox != null && this.chatBox.trim().length > 0) {
+        this.hubConnection.invoke('mensajeChatSoporte', this.chatBox);
+      }
     }
-    console.log(this.chatBox);
-    console.log('---------------------------------');
   }
   enviarMensajeVisitanteSoporte() {
     if (this.clics === 0) {
@@ -390,7 +393,7 @@ export class ChatComponent implements OnInit, OnDestroy, OnChanges {
       console.log('Entro en clck para recarga ');
       this.clics++;
       console.log('Clics ++  ' + this.clics);
-      if (this.chatBox != null && this.chatBox.trim().length > 0) {
+      if (this.chatBox != undefined && this.chatBox != null && this.chatBox.trim().length > 0) {
         this.hubConnection.invoke(
           'enviarMensajeVisitanteSoporteV2',
           this.chatBox,
@@ -400,7 +403,7 @@ export class ChatComponent implements OnInit, OnDestroy, OnChanges {
       }
     } else {
       console.log('No recargo denuevo aulavirtual ');
-      if (this.chatBox != null && this.chatBox.trim().length > 0) {
+      if (this.chatBox != undefined && this.chatBox != null && this.chatBox.trim().length > 0) {
         this.hubConnection.invoke(
           'enviarMensajeVisitanteSoporteV2',
           this.chatBox,
