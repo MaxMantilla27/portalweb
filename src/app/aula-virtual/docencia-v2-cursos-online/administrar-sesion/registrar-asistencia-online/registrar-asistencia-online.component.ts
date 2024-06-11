@@ -106,8 +106,8 @@ export class RegistrarAsistenciaOnlineComponent implements OnInit, OnDestroy {
             Justifico: mat.justifico,
           });
         });
-        this._OperacionesAsistenciaService
-          .Registrar(this.asistencias, this.data.IdPespecifico, this.data.correo)
+        this._AsistenciaService
+          .RegistrarAsistenciaSesion(this.asistencias, this.data.IdPespecifico, this.data.correo)
           .pipe(takeUntil(this.signal$))
           .subscribe({
             next: (x) => {

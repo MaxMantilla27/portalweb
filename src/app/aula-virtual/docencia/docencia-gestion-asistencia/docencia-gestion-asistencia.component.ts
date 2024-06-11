@@ -6,6 +6,7 @@ import { Subject, takeUntil } from 'rxjs';
 import { Basic } from 'src/app/Core/Models/BasicDTO';
 import { AsistenciaRegistrarDTO } from 'src/app/Core/Models/ParticipacionExpositorFiltroDTO';
 import { AprovacionComponent } from 'src/app/Core/Shared/Containers/Dialog/aprovacion/aprovacion.component';
+import { AsistenciaService } from 'src/app/Core/Shared/Services/Asistencia/asistencia.service';
 import { NotaService } from 'src/app/Core/Shared/Services/Nota/nota.service';
 import { OperacionesAsistenciaService } from 'src/app/Core/Shared/Services/OperacionesAsistencia/operaciones-asistencia.service';
 import { OperacionesNotaService } from 'src/app/Core/Shared/Services/OperacionesNota/operaciones-nota.service';
@@ -24,6 +25,7 @@ export class DocenciaGestionAsistenciaComponent implements OnInit,OnChanges,OnDe
     private _SnackBarServiceService: SnackBarServiceService,
     private _NotaService:NotaService ,
     public dialog: MatDialog,
+    public _asistencia: AsistenciaService
     ) { }
 
   public asistencias:Array<AsistenciaRegistrarDTO>=[]
@@ -63,7 +65,9 @@ export class DocenciaGestionAsistenciaComponent implements OnInit,OnChanges,OnDe
   public DisabledFinalizarRegistro=true;
   @Input() idPEspecifico=0
   @Input() IdEstadoPEspecifico=0
+  @Input() DataProveedor: any;
   public OpcionGuardar=true;
+  public Registrando=false;
   ngOnInit(): void {
     console.log(this.data)
     this.today= new Date();
@@ -71,6 +75,7 @@ export class DocenciaGestionAsistenciaComponent implements OnInit,OnChanges,OnDe
 
   }
   ngOnChanges(changes: SimpleChanges): void {
+    console.log(this.DataProveedor)
     console.log(this.idPEspecifico)
     if(this.idPEspecifico>0){
       this.ListadoAsistenciaProcesar();
@@ -189,20 +194,22 @@ export class DocenciaGestionAsistenciaComponent implements OnInit,OnChanges,OnDe
   }
   HeaderChange(values:any){
     console.log(values)
-    var estadoOn=true
+    this.charge=false
     if(this.buttonheader[values][0]=='edit'){
-      estadoOn=false
+      this.charge=true
     }
     this.listadoAsistencias.listadoSesiones.forEach((s:any) => {
       this.buttonheader['z'+s.id]=['edit']
       this.DisableCell['z'+s.id]=[true]
     });
-    if(estadoOn==false){
+    if(this.charge==true){
       this.buttonheader[values]=['edit_off']
       this.DisableCell[values]=[false]
     }
+    console.log(this.charge)
   }
   RegistrarAsistenciaDetalleDocente(){
+    console.log(this.charge)
     if(this.charge==false){
       this.charge=true;
       this.asistencias=[];
@@ -219,7 +226,9 @@ export class DocenciaGestionAsistenciaComponent implements OnInit,OnChanges,OnDe
         });
       });
       this.OpcionGuardar=false;
-      this._OperacionesAsistenciaService.Registrar(this.asistencias,this.data.IdPEspecifico,this.data.correo).pipe(takeUntil(this.signal$)).subscribe({
+      this.Registrando=true;
+      console.log(this.asistencias)
+      this._asistencia.RegistrarAsistenciaSesion(this.asistencias,this.idPEspecifico,this.DataProveedor.email).pipe(takeUntil(this.signal$)).subscribe({
         next:x=>{
           console.log(x)
           console.log(this.asistencias)
@@ -231,9 +240,12 @@ export class DocenciaGestionAsistenciaComponent implements OnInit,OnChanges,OnDe
           console.log(e)
           this._SnackBarServiceService.openSnackBar("Ocurrio un error , intentelo nuevamente mas tarde",'x', 10,'snackbarCrucigramaerror' );
           this.charge=false
+          this.Registrando=false;
         },
         complete:() => {
           this.OpcionGuardar=true;
+          this.Registrando=false;
+
         },
       })
     }
@@ -279,7 +291,8 @@ export class DocenciaGestionAsistenciaComponent implements OnInit,OnChanges,OnDe
         })
       });
     });
-    this._OperacionesAsistenciaService.Aprobar(this.asistencias,this.data.IdPEspecifico,this.data.correo,this.data.grupo).pipe(takeUntil(this.signal$)).subscribe({
+    this.Registrando=true;
+    this._OperacionesAsistenciaService.Aprobar(this.asistencias,this.idPEspecifico,this.DataProveedor.email,1).pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
         console.log(x)
         this.charge=false
@@ -291,6 +304,9 @@ export class DocenciaGestionAsistenciaComponent implements OnInit,OnChanges,OnDe
         this._SnackBarServiceService.openSnackBar("Ocurrio un error , intentelo nuevamente mas tarde",'x', 10,'snackbarCrucigramaerror' );
         this.charge=false
 
+      },
+      complete:()=>{
+        this.Registrando=false;
       }
     })
   }

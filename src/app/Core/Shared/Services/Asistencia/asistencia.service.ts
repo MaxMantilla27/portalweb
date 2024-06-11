@@ -1,5 +1,5 @@
 import { isPlatformBrowser } from '@angular/common';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { EMPTY, Observable } from 'rxjs';
 import { datosAlumnoEnvioDTO } from 'src/app/Core/Models/AlumnoDTO';
@@ -56,6 +56,28 @@ export class AsistenciaService {
     console.log(formData.get('notas[]'))
     return this.http.post<any>(this.urlBase+'/RegistrarAsistenciaDocenteCorreccion',formData);
 
+  }
+  public RegistrarAsistenciaSesion(json:Array<AsistenciaRegistrarDTO>,idPEspecifico:number,usuario:string):Observable<any>{
+    if(this.isBrowser){
+      let asistencia = [];
+      for (let i = 0; i < json.length; i++) {
+        asistencia.push({
+          Id: json[i].Id.toString(),
+          IdPEspecificoSesion: json[i].IdPEspecificoSesion.toString(),
+          IdMatriculaCabecera: json[i].IdMatriculaCabecera.toString(),
+          Asistio: json[i].Asistio.toString(),
+          Justifico: json[i].Justifico.toString()
+        });
+      }
+      let asistenciaString = JSON.stringify(asistencia);
+        // Configuración del Content-Type
+        const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+
+        // Enviar el objeto como JSON
+        return this.http.post<any>(this.urlBase + '/RegistrarAsistenciaSesion', { asistenciaString: asistenciaString }, { headers });
+      }else{
+      return EMPTY;
+    }
   }
 
 
