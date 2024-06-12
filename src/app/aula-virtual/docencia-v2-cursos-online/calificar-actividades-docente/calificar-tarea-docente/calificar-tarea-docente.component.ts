@@ -129,15 +129,32 @@ export class CalificarTareaDocenteComponent implements OnInit,OnChanges , OnDest
     this.expandedElement = this.expandedElement  ==index ? -1 : index
   }
   SetNota(item:any){
-    console.log(item)
     this.tableData.forEach((t:any) => {
       if(t.id==item.id){
         t.nota=item.nota
         t.editado=true
       }
     });
-    console.log(this.tableData)
   }
+  validateNota(element: any): void {
+    let maxNota = element.notas[element.notas.length - 1];
+
+    if (element.nota > maxNota) {
+      element.nota = maxNota;
+      console.log(element.nota);
+    } else if (element.nota < 0) {
+      element.nota = 0;
+    } else if (
+      isNaN(element.nota) ||
+      element.nota === 'null' ||
+      element.nota === null
+    ) {
+      element.nota = 0;
+    }
+    // Actualizar el valor en el modelo después de la validación
+    element.nota = Number(element.nota);
+  }
+
   SetRetro(item:any){
     console.log(this.dataSource)
     console.log(item)

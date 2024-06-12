@@ -174,10 +174,16 @@ export class AgregarCuestionarioComponent implements OnInit, OnDestroy {
     this.fechamaxima=this.formularioTarea.get('FechaEntrega')?.value
   }
   GettipoPregunta(id: number | null): string {
+    console.log(id)
     var text = '';
     for (let index = 0; index < this.tipoPregunta.length; index++) {
       if (this.tipoPregunta[index].id == id) {
-        text = this.tipoPregunta[index].valor;
+        if(this.tipoPregunta[index].valor=='Ingresar palabra'){
+          text='Pregunta Abierta'
+        }
+        else{
+          text = this.tipoPregunta[index].valor;
+        }
         break;
       }
     }
@@ -579,63 +585,135 @@ export class AgregarCuestionarioComponent implements OnInit, OnDestroy {
       },
     });
   }
-  DownloadPreguntasCuestionarioExcel(): void {
-    if(this.save.Preguntas.length!=0){
-      var TipoPreguntaExcel=''
-      var CountOrden=0
-      var Enunciado=''
-      var Retroalimentacion=''
-      var Descripcion=''
-      this.registrosExcelDescarga=[]
-      this.registrosExcel={}
-      this.save.Preguntas.forEach((items:any) => {
-        this.tipoPregunta.forEach((tp:any) => {
-          if(tp.id==items.IdPreguntaTipo){
-            TipoPreguntaExcel=''
-            TipoPreguntaExcel=this.removeAccents(tp.valor)
-            CountOrden=CountOrden+1
+  // DownloadPreguntasCuestionarioExcel(): void {
+  //   if(this.save.Preguntas.length!=0){
+  //     var TipoPreguntaExcel=''
+  //     var CountOrden=0
+  //     var Enunciado=''
+  //     var Retroalimentacion=''
+  //     var Descripcion=''
+  //     this.registrosExcelDescarga=[]
+  //     this.registrosExcel={}
+  //     this.save.Preguntas.forEach((items:any) => {
+  //       this.tipoPregunta.forEach((tp:any) => {
+  //         if(tp.id==items.IdPreguntaTipo){
+  //           TipoPreguntaExcel=''
+  //           TipoPreguntaExcel=this.removeAccents(tp.valor)
+  //           CountOrden=CountOrden+1
+  //         }
+  //       })
+  //       if(items.Enunciado!=null){
+  //         Enunciado=items.Enunciado
+  //       }
+  //       if(items.Retroalimentacion!=null){
+  //         Retroalimentacion=items.Retroalimentacion
+  //       }
+  //       if(items.Descripcion!=null){
+  //         Descripcion=items.Descripcion
+  //       }
+  //       items.Alternativas.forEach((ex:any) => {
+  //         this.registrosExcel={}
+  //         this.registrosExcel.Orden=CountOrden
+  //         this.registrosExcel.TipoPregunta=TipoPreguntaExcel
+  //         this.registrosExcel.Enunciado=Enunciado
+  //         this.registrosExcel.Retroalimentacion=Retroalimentacion
+  //         this.registrosExcel.Descripcion=Descripcion
+  //         this.registrosExcel.Alternativa=ex.Alternativa
+  //         this.registrosExcel.Correcta=ex.EsCorrecta==true?1:0
+  //         this.registrosExcel.Puntaje=ex.Puntaje
+  //         this.registrosExcelDescarga.push(this.registrosExcel)
+  //       });
+  //     });
+  //     const fileToExport = this.registrosExcelDescarga.map((itemsFinal:any) => {
+  //       var data:any={}
+  //       data["Orden"]= itemsFinal?.Orden
+  //       data["TipoPregunta"]= itemsFinal?.TipoPregunta
+  //       data["Enunciado"]= itemsFinal?.Enunciado
+  //       data["Retroalimentacion"]= itemsFinal?.Retroalimentacion
+  //       data["Descripcion"]= itemsFinal?.Descripcion
+  //       data["Alternativa"]= itemsFinal?.Alternativa
+  //       data["Correcta"]= itemsFinal?.Correcta
+  //       data["Puntaje"]= itemsFinal?.Puntaje
+  //       return data
+  //     })
+  //     this.excelService.exportToExcel(
+  //       fileToExport,
+  //       'CuestionarioPreguntas-' + new Date().getTime()
+  //     );
+  //   }
+  //   else{
+  //     this._SnackBarServiceService.openSnackBar(
+  //       'No hay preguntas registradas para descargar',
+  //       'x',
+  //       15,
+  //       'snackbarCrucigramaerror'
+  //     );
+  //   }
+
+  // }
+  DownloadPreguntasCuestionarioCSV(): void {
+    if (this.save.Preguntas.length != 0) {
+      let TipoPreguntaCSV = '';
+      let CountOrden = 0;
+      let Enunciado = '';
+      let Retroalimentacion = '';
+      let Descripcion = '';
+
+      // Inicializar las variables
+      const registrosCSVDescarga: any[] = [];
+      let registrosCSV: any = {};
+
+      this.save.Preguntas.forEach((items: any) => {
+        this.tipoPregunta.forEach((tp: any) => {
+          if (tp.id == items.IdPreguntaTipo) {
+            TipoPreguntaCSV = '';
+            TipoPreguntaCSV = this.removeAccents(tp.valor);
+            CountOrden = CountOrden + 1;
           }
-        })
-        if(items.Enunciado!=null){
-          Enunciado=items.Enunciado
+        });
+
+        if (items.Enunciado != null) {
+          Enunciado = items.Enunciado;
         }
-        if(items.Retroalimentacion!=null){
-          Retroalimentacion=items.Retroalimentacion
+        if (items.Retroalimentacion != null) {
+          Retroalimentacion = items.Retroalimentacion;
         }
-        if(items.Descripcion!=null){
-          Descripcion=items.Descripcion
+        if (items.Descripcion != null) {
+          Descripcion = items.Descripcion;
         }
-        items.Alternativas.forEach((ex:any) => {
-          this.registrosExcel={}
-          this.registrosExcel.Orden=CountOrden
-          this.registrosExcel.TipoPregunta=TipoPreguntaExcel
-          this.registrosExcel.Enunciado=Enunciado
-          this.registrosExcel.Retroalimentacion=Retroalimentacion
-          this.registrosExcel.Descripcion=Descripcion
-          this.registrosExcel.Alternativa=ex.Alternativa
-          this.registrosExcel.Correcta=ex.EsCorrecta==true?1:0
-          this.registrosExcel.Puntaje=ex.Puntaje
-          this.registrosExcelDescarga.push(this.registrosExcel)
+
+        items.Alternativas.forEach((ex: any) => {
+          registrosCSV = {};
+          registrosCSV.Orden = CountOrden;
+          registrosCSV.TipoPregunta = TipoPreguntaCSV;
+          registrosCSV.Enunciado = Enunciado;
+          registrosCSV.Retroalimentacion = Retroalimentacion;
+          registrosCSV.Descripcion = Descripcion;
+          registrosCSV.Alternativa = ex.Alternativa;
+          registrosCSV.Correcta = ex.EsCorrecta == true ? 1 : 0;
+          registrosCSV.Puntaje = ex.Puntaje;
+          registrosCSVDescarga.push(registrosCSV);
         });
       });
-      const fileToExport = this.registrosExcelDescarga.map((itemsFinal:any) => {
-        var data:any={}
-        data["Orden"]= itemsFinal?.Orden
-        data["TipoPregunta"]= itemsFinal?.TipoPregunta
-        data["Enunciado"]= itemsFinal?.Enunciado
-        data["Retroalimentacion"]= itemsFinal?.Retroalimentacion
-        data["Descripcion"]= itemsFinal?.Descripcion
-        data["Alternativa"]= itemsFinal?.Alternativa
-        data["Correcta"]= itemsFinal?.Correcta
-        data["Puntaje"]= itemsFinal?.Puntaje
-        return data
-      })
-      this.excelService.exportToExcel(
-        fileToExport,
-        'CuestionarioPreguntas-' + new Date().getTime()
+
+      // Crear el CSV
+      const headers = ['Orden', 'TipoPregunta', 'Enunciado', 'Retroalimentacion', 'Descripcion', 'Alternativa', 'Correcta', 'Puntaje'];
+      const rows = registrosCSVDescarga.map((item: any) =>
+        [item.Orden, item.TipoPregunta, item.Enunciado, item.Retroalimentacion, item.Descripcion, item.Alternativa, item.Correcta, item.Puntaje].join(',')
       );
-    }
-    else{
+      const csvContent = [headers.join(','), ...rows].join('\n');
+
+      // Descargar el archivo CSV
+      const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+      const link = document.createElement('a');
+      const url = URL.createObjectURL(blob);
+      link.setAttribute('href', url);
+      link.setAttribute('download', 'CuestionarioPreguntas-' + new Date().getTime() + '.csv');
+      link.style.visibility = 'hidden';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    } else {
       this._SnackBarServiceService.openSnackBar(
         'No hay preguntas registradas para descargar',
         'x',
@@ -643,8 +721,8 @@ export class AgregarCuestionarioComponent implements OnInit, OnDestroy {
         'snackbarCrucigramaerror'
       );
     }
-
   }
+
   removeAccents(strng:string){
     return strng.normalize("NFD").replace(/[\u0300-\u036f]/g, "")
   }

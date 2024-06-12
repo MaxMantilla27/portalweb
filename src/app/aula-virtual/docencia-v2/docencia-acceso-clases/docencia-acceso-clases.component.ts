@@ -8,6 +8,7 @@ import { ProveedorService } from 'src/app/Core/Shared/Services/Proveedor/proveed
 import { SessionStorageService } from 'src/app/Core/Shared/Services/session-storage.service';
 import { Router } from '@angular/router';
 import { SnackBarServiceService } from 'src/app/Core/Shared/Services/SnackBarService/snack-bar-service.service';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-docencia-acceso-clases',
@@ -55,6 +56,9 @@ export class DocenciaAccesoClasesComponent implements OnInit,OnChanges,OnDestroy
   @Input() IdProveedor=0;
   public TerminaCarga=false
   public DataProveedor:any
+  public ZonaHorariaOrigenWebex:any
+  public ZonaHorariaUsuario:any
+  public CodigoIsoPaisWebex='PE'
   ngOnInit(): void {
     this.TerminaCarga=false
   }
@@ -86,18 +90,37 @@ export class DocenciaAccesoClasesComponent implements OnInit,OnChanges,OnDestroy
         this.tableData=[]
         this.Actual=[]
         var primero=true
+        var i=0
         x.forEach((s:any) => {
-
+          if(s.claseActiva==true || s.esVisible==true){
+            i++
+            s.Sesion=i;
+          }
           if(s.esVisible==true){
             var f=new Date(s.fechaHoraInicio);
             f.setMinutes(f.getMinutes()+(s.duracion*60))
             s.fechaHoraFinal=f
 
-            let f1=new Date((new Date(s.fechaHoraInicio)).getFullYear(),(new Date(s.fechaHoraInicio)).getMonth(),(new Date(s.fechaHoraInicio)).getDate());
-            let f2=new Date((new Date()).getFullYear(),(new Date()).getMonth(),(new Date()).getDate());
-            if(+f1==+f2){
-              this.Actual.push(s)
-            }else{
+            if(primero==true){
+              console.log(s)
+              this.CodigoIsoPaisWebex=s.codigoIso;
+              console.log(this.CodigoIsoPaisWebex)
+              this.ObtenerDatosZonaHoraria()
+              let HoraWebexOriginal = moment.tz(s.fechaHoraInicio, this.ZonaHorariaOrigenWebex);
+              let HoraWebexUsuario = HoraWebexOriginal.clone().tz(this.ZonaHorariaUsuario);
+              let HoraActualUsuario = moment().tz(this.ZonaHorariaUsuario);
+              let mismoAnioMesDia = HoraWebexUsuario.year() === HoraActualUsuario.year() &&
+              HoraWebexUsuario.month() === HoraActualUsuario.month() &&
+              HoraWebexUsuario.date() === HoraActualUsuario.date();
+
+              // let f1=new Date((new Date(s.fechaHoraInicio)).getFullYear(),(new Date(s.fechaHoraInicio)).getMonth(),(new Date(s.fechaHoraInicio)).getDate());
+              // let f2=new Date((new Date()).getFullYear(),(new Date()).getMonth(),(new Date()).getDate());
+
+
+              // if(+f1==+f2){
+              if(mismoAnioMesDia){
+                this.Actual.push(s)
+              }else{
               // if(this.proximoW.length>0){
               //   this.tableData.push(s)
               // }else{
@@ -106,17 +129,27 @@ export class DocenciaAccesoClasesComponent implements OnInit,OnChanges,OnDestroy
               this.tableData.push(s)
               primero=false
             }
+            }else{
+              this.tableData.push(s)
+            }
+
           }
-        });
+        }
+      );
         var pending=0
         this.Actual.forEach((a:any) => {
           a.IsValid=false
-          let f1=new Date(a.fechaHoraInicio);
-          // f1.setMinutes(f1.getMinutes() - 44);
-          let f2=new Date();
-          var diference=((f1.getHours()*60)+f1.getMinutes())-((f2.getHours()*60)+f2.getMinutes());
+          let HoraInicio = moment(a.fechaHoraInicio).add(0, 'minutes');
+          let HoraWebexOriginal = moment.tz(HoraInicio, this.ZonaHorariaOrigenWebex);
+          let HoraWebexUsuario = HoraWebexOriginal.clone().tz(this.ZonaHorariaUsuario);
+          let HoraActualUsuario = moment().tz(this.ZonaHorariaUsuario);
+          let diference = HoraActualUsuario.diff(HoraWebexOriginal, 'minutes');
+          console.log('Hora Actual:', HoraActualUsuario.format('YYYY-MM-DD HH:mm:ss'));
+          console.log('Hora Webex Original:', HoraWebexOriginal.format('YYYY-MM-DD HH:mm:ss'));
+          console.log('Hora Webex Conversion Usuario:', HoraWebexUsuario.format('YYYY-MM-DD HH:mm:ss'));
+          console.log('Minutos Faltantes:', diference);
 
-          if(diference<=15){
+          if(diference>=-15){
             if(a.urlWebex!=null){
               a.IsValid=true;
             }
@@ -151,11 +184,18 @@ export class DocenciaAccesoClasesComponent implements OnInit,OnChanges,OnDestroy
       var pending=0
       this.Actual.forEach((a:any) => {
         if(a.IsValid==false){
-          let f1=new Date(a.fechaHoraInicio);
-          // f1.setMinutes(f1.getMinutes() - 44);
-          let f2=new Date();
-          var diference=((f1.getHours()*60)+f1.getMinutes())-((f2.getHours()*60)+f2.getMinutes());
-          if(diference<=15){
+          let HoraInicio = moment(a.fechaHoraInicio).add(0, 'minutes');
+          let HoraWebexOriginal = moment.tz(HoraInicio, this.ZonaHorariaOrigenWebex);
+          let HoraWebexUsuario = HoraWebexOriginal.clone().tz(this.ZonaHorariaUsuario);
+          let HoraActualUsuario = moment().tz(this.ZonaHorariaUsuario);
+          let diference = HoraActualUsuario.diff(HoraWebexOriginal, 'minutes');
+          console.log('Hora Actual:', HoraActualUsuario.format('YYYY-MM-DD HH:mm:ss'));
+          console.log('Hora Webex Original:', HoraWebexOriginal.format('YYYY-MM-DD HH:mm:ss'));
+          console.log('Hora Webex Conversion Usuario:', HoraWebexUsuario.format('YYYY-MM-DD HH:mm:ss'));
+          console.log('Minutos Faltantes:', diference);
+          console.log(this.ZonaHorariaUsuario)
+    console.log(this.ZonaHorariaOrigenWebex)
+          if(diference>=-15){
             if(a.urlWebex!=null){
               a.IsValid=true;
             }
@@ -189,5 +229,14 @@ export class DocenciaAccesoClasesComponent implements OnInit,OnChanges,OnDestroy
 
       }
     });
+  }
+  ObtenerDatosZonaHoraria(){
+    this.ZonaHorariaUsuario = undefined;
+    this.ZonaHorariaOrigenWebex = undefined;
+    this.ZonaHorariaUsuario = Intl.DateTimeFormat().resolvedOptions().timeZone;
+    this.ZonaHorariaOrigenWebex = moment.tz.zonesForCountry(this.CodigoIsoPaisWebex);
+    this.ZonaHorariaOrigenWebex = this.ZonaHorariaOrigenWebex[0];
+    console.log(this.ZonaHorariaUsuario)
+    console.log(this.ZonaHorariaOrigenWebex)
   }
 }

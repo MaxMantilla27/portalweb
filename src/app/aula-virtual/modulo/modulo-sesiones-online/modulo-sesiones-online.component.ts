@@ -29,6 +29,9 @@ export class ModuloSesionesOnlineComponent implements OnInit , OnChanges,OnDestr
   ) { }
   public scroll=0
   @HostListener('window:scroll', ['$event']) // for window scroll events
+  public ZonaHorariaOrigenWebex:any
+  public ZonaHorariaUsuario:any
+  public CodigoIsoPaisWebex='PE'
   onScroll(e:any) {
     this.scroll=document.documentElement.scrollTop
     // if(this.videoselect>-1){
@@ -44,6 +47,7 @@ export class ModuloSesionesOnlineComponent implements OnInit , OnChanges,OnDestr
     this.signal$.complete()
   }
   ngOnChanges(changes: SimpleChanges): void {
+    this.ObtenerDatosZonaHoraria()
     if(this.IdPespecifico>0){
       this.ObtenerSesionesOnlineWebinarPorIdPespecifico()
     }
@@ -66,6 +70,7 @@ export class ModuloSesionesOnlineComponent implements OnInit , OnChanges,OnDestr
   public OpenVideoModulo=true;
 
   ngOnInit(): void {
+    this.ObtenerDatosZonaHoraria()
   }
   OpenSesion(index:number){
     this.sesiones[index].Open=!this.sesiones[index].Open
@@ -101,13 +106,17 @@ export class ModuloSesionesOnlineComponent implements OnInit , OnChanges,OnDestr
         console.log(x)
         if(x!=null){
           x.forEach((d:any) => {
+            console.log(d)
             d.disabled=false;
-            let f1=new Date(d.fechaActual);
-            let f2=new Date();
-            var diference=moment(f2).isAfter(f1)
-            console.log(f2)
-            console.log(f1)
-            console.log(diference)
+            let HoraWebexOriginal = moment.tz(d.fechaActual, this.ZonaHorariaOrigenWebex);
+            // HoraWebexOriginal.subtract(80, 'minutes');
+            let HoraWebexUsuario = HoraWebexOriginal.clone().tz(this.ZonaHorariaUsuario);
+            let HoraActualUsuario = moment().tz(this.ZonaHorariaUsuario);
+            let diference = HoraActualUsuario.isAfter(HoraWebexOriginal, 'minutes');
+            console.log('Hora Actual:', HoraActualUsuario.format('YYYY-MM-DD HH:mm:ss'));
+            console.log('Hora Webex Original:', HoraWebexOriginal.format('YYYY-MM-DD HH:mm:ss'));
+            console.log('Hora Webex Conversion Usuario:', HoraWebexUsuario.format('YYYY-MM-DD HH:mm:ss'));
+            console.log('Minutos Faltantes:', diference);
 
             if(d.tipo.toLowerCase()=='material adicional'){
               this.sesiones[index].material.push(d)
@@ -136,6 +145,9 @@ export class ModuloSesionesOnlineComponent implements OnInit , OnChanges,OnDestr
       next:x=>{
         console.log(x)
         this.sesiones=x
+        if(x!=null){
+          this.CodigoIsoPaisWebex=x[0].codigoIso;
+        }
         if(this.sesiones!=null){
           this.sesiones.forEach((s:any) => {
             s.Open=false;
@@ -240,5 +252,12 @@ export class ModuloSesionesOnlineComponent implements OnInit , OnChanges,OnDestr
         this.ObtenerActividadesRecursoSesionAlumno(this.sesiones[indexSesion].idSesion,indexSesion)
       }
     });
+  }
+  ObtenerDatosZonaHoraria(){
+    this.ZonaHorariaUsuario = Intl.DateTimeFormat().resolvedOptions().timeZone;
+    this.ZonaHorariaOrigenWebex = moment.tz.zonesForCountry(this.CodigoIsoPaisWebex);
+    this.ZonaHorariaOrigenWebex = this.ZonaHorariaOrigenWebex[0];
+    console.log(this.ZonaHorariaUsuario)
+    console.log(this.ZonaHorariaOrigenWebex)
   }
 }

@@ -151,7 +151,11 @@ export class CursoClaseOnlineComponent implements OnInit,OnDestroy,OnChanges {
           this.clases.forEach((c:any) => {
             c.HoraInicio=c.fechaHoraInicio;
             c.HoraFinal=c.fechaHoraFinal;
-            c.ses=c.orden+' de '+ c.maximo
+            if(c.tipo!='Webinar'){
+              c.ses=c.orden+' de '+ c.maximo
+            }else{
+              c.ses=''
+            }
             c.Acciones=c.urlWebex==null?'Próximamente':'Ir  a clase'
           });
         }

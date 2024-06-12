@@ -129,6 +129,24 @@ export class CalificarActividadAdicionalDocenteComponent implements OnInit,OnCha
     });
     console.log(this.tableData)
   }
+  validateNota(element: any): void {
+    let maxNota = element.notas[element.notas.length - 1];
+
+    if (element.nota > maxNota) {
+      element.nota = maxNota;
+      console.log(element.nota);
+    } else if (element.nota < 0) {
+      element.nota = 0;
+    } else if (
+      isNaN(element.nota) ||
+      element.nota === 'null' ||
+      element.nota === null
+    ) {
+      element.nota = 0;
+    }
+    // Actualizar el valor en el modelo después de la validación
+    element.nota = Number(element.nota);
+  }
   SetRetro(item:any){
     console.log(this.dataSource)
     console.log(item)
