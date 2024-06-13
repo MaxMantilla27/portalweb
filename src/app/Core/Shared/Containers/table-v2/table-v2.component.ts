@@ -65,7 +65,7 @@ export class TableV2Component implements OnInit {
           console.log(c)
           if(index+1>=c.inicio &&
             // index+1<=(c.inicio+c.colspam
-            (c.id==4 || c.id==20 || c.id==19 || c.id==20||c.id==28
+            (c.id==4 || c.id==19 || c.id==20 || c.id==21||c.id==28 ||c.id==35 ||c.id==36
              )){
 
             existe=true

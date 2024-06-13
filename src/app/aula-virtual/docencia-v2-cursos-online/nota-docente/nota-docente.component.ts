@@ -93,7 +93,8 @@ export class NotaDocenteComponent implements OnInit ,OnChanges, OnDestroy{
                   this.listadoNotas.listadoAsistencias.filter((f:any)=> f.asistio == true && f.idMatriculaCabecera == mat.idMatriculaCabecera).length;
               var nota=0;
               if(this.listadoNotas.listadoSesiones!=null && this.listadoNotas.listadoSesiones.length>0){
-                nota=Math.round((((totalasistencia*1)/(this.listadoNotas.listadoSesiones.length)) * (this.listadoNotas.escalaCalificacion))* 10)/10;
+                nota =  parseFloat(((totalasistencia / this.listadoNotas.listadoSesiones.length)*100).toFixed(2));
+                // nota=Math.round(((((totalasistencia*1)/(this.listadoNotas.listadoSesiones.length)) * (this.listadoNotas.escalaCalificacion))* 10/10));
               }
               mat.notaActual.push({
                 nota:nota,
@@ -122,6 +123,12 @@ export class NotaDocenteComponent implements OnInit ,OnChanges, OnDestroy{
                 }
                 else{
                   NotaPromediada=parseFloat((notas.nota/notasCountDestalle).toFixed(2))
+                }
+                if(this.listadoNotas.escalaCalificacion!=100){
+                  NotaPromediada=parseFloat(((NotaPromediada*100)/this.listadoNotas.escalaCalificacion).toFixed(2))
+                }
+                else{
+                  NotaPromediada=parseFloat(NotaPromediada.toFixed(2))
                 }
                 mat.notaActual.push({
                   nota:NotaPromediada,
@@ -201,9 +208,6 @@ export class NotaDocenteComponent implements OnInit ,OnChanges, OnDestroy{
           var notaFinal=0
           m.notaActual.forEach((na:any) => {
             var nota=na.nota
-            if(this.listadoNotas.escalaCalificacion!=null && this.listadoNotas.escalaCalificacion>0){
-              nota=na.nota*(100/this.listadoNotas.escalaCalificacion)
-            }
             var escala=this.listadoNotas.listadoEvaluaciones.filter((w:any) => w.id == na.IdEvaluacion)[0]
             notaFinal+=nota*(escala.porcentaje/100)
             data['z'+na.IdEvaluacion]= nota;

@@ -440,7 +440,7 @@ export class AgregarCuestionarioComponent implements OnInit, OnDestroy {
           this.ImportarExel()
         }
       }
-
+      event.target.value = null
       // console.log ('Name: ' + name + "\n" +
       //   'Type: ' + extencion + "\n" +
       //   'Last-Modified-Date: ' + modifiedDate + "\n" +
@@ -699,12 +699,13 @@ export class AgregarCuestionarioComponent implements OnInit, OnDestroy {
       // Crear el CSV
       const headers = ['Orden', 'TipoPregunta', 'Enunciado', 'Retroalimentacion', 'Descripcion', 'Alternativa', 'Correcta', 'Puntaje'];
       const rows = registrosCSVDescarga.map((item: any) =>
-        [item.Orden, item.TipoPregunta, item.Enunciado, item.Retroalimentacion, item.Descripcion, item.Alternativa, item.Correcta, item.Puntaje].join(',')
+        [item.Orden, item.TipoPregunta, item.Enunciado, item.Retroalimentacion, item.Descripcion, item.Alternativa, item.Correcta, item.Puntaje].join(';')
       );
-      const csvContent = [headers.join(','), ...rows].join('\n');
+      const csvContent = [headers.join(';'), ...rows].join('\n');
 
-      // Descargar el archivo CSV
-      const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+      // Descargar el archivo CSV con BOM para la codificación UTF-8
+      const bom = '\uFEFF';
+      const blob = new Blob([bom + csvContent], { type: 'text/csv;charset=utf-8;' });
       const link = document.createElement('a');
       const url = URL.createObjectURL(blob);
       link.setAttribute('href', url);
@@ -723,7 +724,9 @@ export class AgregarCuestionarioComponent implements OnInit, OnDestroy {
     }
   }
 
-  removeAccents(strng:string){
-    return strng.normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+
+  removeAccents(strng: string) {
+    return strng.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
   }
+
 }

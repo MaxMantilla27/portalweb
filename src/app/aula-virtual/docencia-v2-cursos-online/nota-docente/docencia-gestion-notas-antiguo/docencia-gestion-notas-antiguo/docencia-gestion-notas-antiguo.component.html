@@ -11,8 +11,14 @@
   </div>
 
   <ng-container *ngIf="listadoNotas!=undefined">
-    <div class="escalaNotaAntiguo">Escala Calificación: {{listadoNotas.escalaCalificacion}}</div>
+    <div class="escalaNotaAntiguo">Escala Calificación: {{listadoNotas.escalaCalificacionNormalizado}}</div>
     <div class="contentRegistroNotaAntiguo" style="overflow-x: auto;">
+      <ng-container *ngIf="RegistrandoNotas==true">
+        <div style="width: 100%;z-index: 10;height: 100%;position: absolute;display: flex;justify-content: center;padding: 20px;align-items: center;
+         background: rgb(0 0 0 / 12%);">
+          <mat-spinner></mat-spinner>
+        </div>
+      </ng-container>
       <div class="table-wrapper">
         <table style="width: 100%" class="table">
           <!-- Cabecera de la tabla -->
@@ -43,7 +49,7 @@
                       {{matn.nota}}
                     </ng-container>
                     <ng-container *ngIf="matn.edit===true">
-                      <input type="number" style="width: 5rem; text-align: center;" [(ngModel)]="matn.nota" [disabled]="charge===true" min="0" max="{{listadoNotas.escalaCalificacion}}">
+                      <input type="number" style="width: 5rem; text-align: center;" [(ngModel)]="matn.nota" [disabled]="charge===true" min="0" max="{{listadoNotas.escalaCalificacionNormalizado}}">
                     </ng-container>
                   </td>
                 </ng-container>
@@ -56,11 +62,16 @@
 
     <!-- Botones -->
     <div class="BotonesRegistroNota" style="display: flex;justify-content: center;">
-      <app-default-button [confs]="{color:'primary',titulo:'Guardar'}" [style]="'width: 100%; background: #0069d9; border-color: #0062cc; white-space: nowrap;'" (ButtoclClick)="RegistrarNotaDetalleDocente()" [icon]="'check'"></app-default-button>
-
+      <app-default-button *ngIf="RegistrandoNotas==false" [confs]="{color:'primary',titulo:'Guardar'}" [style]="'width: 100%; background: #0069d9; border-color: #0062cc; white-space: nowrap;'" (ButtoclClick)="RegistrarNotaDetalleDocente()" [icon]="'check'"></app-default-button>
+      <app-default-button *ngIf="RegistrandoNotas" [confs]="{color:'primary',titulo:'Guardar'}"
+        [style]="'color:white; width: 100%;background: #0069d9;border-color: #0062cc; white-space: nowrap;'"
+          [disabled]="true" [icon]="'check'"></app-default-button>
       <!-- <app-default-button [confs]="{color:'primary',titulo:'Finalizar Registro'}" (ButtoclClick)="ConfirmacionAprobarNotaDetalleDocente()" [style]="'width: 100%; background: #0069d9; border-color: #0062cc; white-space: nowrap;'" [icon]="'check'"></app-default-button> -->
 
-      <app-default-button [confs]="{color:'danger',titulo:'Cancelar'}" [style]="'width: 100%; background: #dc3545; border-color: #dc3545; white-space: nowrap;margin-left:10px'" [icon]="'close'" (ButtoclClick)="charge==false?dialogRef.close():charge=true"></app-default-button>
+      <app-default-button *ngIf="RegistrandoNotas==false" [confs]="{color:'danger',titulo:'Cancelar'}" [style]="'width: 100%; background: #dc3545; border-color: #dc3545; white-space: nowrap;margin-left:10px'"[disabled]="RegistrandoNotas" [icon]="'close'" (ButtoclClick)="charge==false?dialogRef.close():charge=true"></app-default-button>
+      <app-default-button *ngIf="RegistrandoNotas" [confs]="{color:'primary',titulo:'Cancelar'}"
+        [style]="'color:white; width: 100%;background: #dc3545;border-color: #dc3545; white-space: nowrap;margin-left:10px'"
+          [disabled]="true" [icon]="'check'"></app-default-button>
     </div>
   </ng-container>
 

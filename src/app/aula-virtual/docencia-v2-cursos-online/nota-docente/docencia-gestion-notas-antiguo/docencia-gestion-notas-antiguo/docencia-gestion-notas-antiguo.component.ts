@@ -26,6 +26,7 @@ export class DocenciaGestionNotasAntiguoComponent implements OnInit,OnDestroy {
   public listadoNotas:any
   public notas:Array<NotaRegistrarDTO>=[]
   public charge=false;
+  public RegistrandoNotas=false;
   ngOnDestroy(): void {
     this.signal$.next(true);
     this.signal$.complete();
@@ -60,7 +61,8 @@ export class DocenciaGestionNotasAntiguoComponent implements OnInit,OnDestroy {
                   this.listadoNotas.listadoAsistencias.filter((f:any)=> f.asistio == true && f.idMatriculaCabecera == mat.idMatriculaCabecera).length;
               var nota=0;
               if(this.listadoNotas.listadoSesiones!=null && this.listadoNotas.listadoSesiones.length>0){
-                nota=Math.round((((totalasistencia*1)/(this.listadoNotas.listadoSesiones.length)) * (this.listadoNotas.escalaCalificacion))* 10)/10;
+                // nota=Math.round((totalasistencia*this.listadoNotas.escalaCalificacionNormalizado)/(this.listadoNotas.listadoSesiones.length*this.listadoNotas.escalaCalificacion));
+                nota =  parseFloat(((totalasistencia / this.listadoNotas.listadoSesiones.length)*100).toFixed(2));
               }
               mat.notaActual.push({
                 nota:nota,
@@ -69,7 +71,6 @@ export class DocenciaGestionNotasAntiguoComponent implements OnInit,OnDestroy {
                 IdMatriculaCabecera:mat.idMatriculaCabecera,
                 edit:false});
             }else{
-              console.log(evl)
               var estadoEdicionCriterio=true
               if(evl.nombre.toUpperCase().includes('PORTAL-')){
                   estadoEdicionCriterio=false
@@ -81,7 +82,6 @@ export class DocenciaGestionNotasAntiguoComponent implements OnInit,OnDestroy {
 
                 if(notas.detalle!=null){
                   var notasDetalleCriterio=notas.detalle.filter((w:any) => w.idCriterioEvaluacion == evl.id)
-                  console.log(notasDetalleCriterio)
                   if(notasDetalleCriterio.length>0){
                     notasCountDestalle=notasDetalleCriterio.length
                     notasDetalleCriterio.forEach((z:any)=>{
@@ -96,9 +96,14 @@ export class DocenciaGestionNotasAntiguoComponent implements OnInit,OnDestroy {
                 else{
                   NotaPromediada=parseFloat((notas.nota/notasCountDestalle).toFixed(2))
                 }
-                console.log(evl)
-                if(evl.id==4 || evl.id==19 || evl.id==20 || evl.id==21){
+                if(evl.id==4 || evl.id==19 || evl.id==20 || evl.id==21 || evl.id==35 || evl.id==36){
                   estadoEdicionCriterio=false
+                }
+                if(this.listadoNotas.escalaCalificacion!=100){
+                  NotaPromediada=parseFloat(((NotaPromediada*100)/this.listadoNotas.escalaCalificacion).toFixed(2))
+                }
+                else{
+                  NotaPromediada=parseFloat(NotaPromediada.toFixed(2))
                 }
                 mat.notaActual.push({
                   nota:NotaPromediada,
@@ -127,28 +132,41 @@ export class DocenciaGestionNotasAntiguoComponent implements OnInit,OnDestroy {
       this.notas=[];
       this.listadoNotas.listadoMatriculas.forEach((mat:any) => {
         mat.notaActual.forEach((nta:any) => {
+          let Nota=0;
+          if(this.listadoNotas.escalaCalificacion!=100){
+            Nota= (nta.nota*this.listadoNotas.escalaCalificacion)/100
+          }
+          else{
+            Nota= nta.nota
+          }
           if(nta.edit==true){
             this.notas.push({
               Id:nta.Id,
               IdEvaluacion:nta.IdEvaluacion,
               IdMatriculaCabecera:nta.IdMatriculaCabecera,
-              Nota:nta.nota
+              Nota:Nota
             })
           }
         });
       });
+      this.RegistrandoNotas=true;
       this._OperacionesNotaService.Registrar(this.notas,this.data.IdPEspecifico,this.data.correo).pipe(takeUntil(this.signal$)).subscribe({
         next:x=>{
           console.log(x)
-          this.charge=false
-          this._SnackBarServiceService.openSnackBar("Se guardo correctamente",'x',5,"snackbarCrucigramaSucces");
-          this.dialogRef.close(true);
+
         },
         error:e=>{
           console.log(e)
           this._SnackBarServiceService.openSnackBar("Ocurrio un error , intentelo nuevamente mas tarde",'x', 10,'snackbarCrucigramaerror' );
           this.charge=false
+          this.RegistrandoNotas=false;
           this.dialogRef.close();
+        },
+        complete:()=>{
+          this.charge=false
+          this._SnackBarServiceService.openSnackBar("Se guardo correctamente",'x',5,"snackbarCrucigramaSucces");
+          this.RegistrandoNotas=false;
+          this.dialogRef.close(true);
         }
       })
     }
