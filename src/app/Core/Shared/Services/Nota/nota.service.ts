@@ -1,5 +1,5 @@
 import { isPlatformBrowser } from '@angular/common';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient,HttpHeaders} from '@angular/common/http';
 import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { EMPTY, Observable } from 'rxjs';
 import { NotaRegistrarDTO } from 'src/app/Core/Models/ParticipacionExpositorFiltroDTO';
@@ -74,6 +74,30 @@ export class NotaService {
     if(this.isBrowser){
       return this.http.get<any>(this.urlBase+'/ListadoNotaProcesarV2?idPespecifico='+idPEspecifico+ "&grupo=" +grupo+ "&idMatriculaCabecera=" +idMatriculaCabecera);
     }else{
+      return EMPTY;
+    }
+  }
+  public RegistrarNota(json:Array<NotaRegistrarDTO>,idPEspecifico:number,usuario:string):Observable<any>{
+    if(this.isBrowser){
+      let nota = [];
+      for (let i = 0; i < json.length; i++) {
+        nota.push({
+          Id: json[i].Id.toString(),
+          IdEvaluacion: json[i].IdEvaluacion.toString(),
+          IdMatriculaCabecera: json[i].IdMatriculaCabecera.toString(),
+          Nota: json[i].Nota.toString()
+        });
+      }
+      const notaRequest = {
+        notaString: JSON.stringify(nota)
+      };
+        // Configuración del Content-Type
+        const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+
+        // Enviar el objeto como JSON
+        // return this.http.post<any>(this.urlBase + '/RegistrarNota', { notaString: notaString }, { headers });
+        return this.http.post<any>(`${this.urlBase}/RegistrarNota?IdPEspecifico=${idPEspecifico}`, notaRequest, { headers });
+      }else{
       return EMPTY;
     }
   }

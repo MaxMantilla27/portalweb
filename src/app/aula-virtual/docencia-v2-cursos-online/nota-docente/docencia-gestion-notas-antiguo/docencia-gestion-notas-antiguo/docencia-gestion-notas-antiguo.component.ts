@@ -150,7 +150,7 @@ export class DocenciaGestionNotasAntiguoComponent implements OnInit,OnDestroy {
         });
       });
       this.RegistrandoNotas=true;
-      this._OperacionesNotaService.Registrar(this.notas,this.data.IdPEspecifico,this.data.correo).pipe(takeUntil(this.signal$)).subscribe({
+      this._NotaService.RegistrarNota(this.notas,this.data.IdPEspecifico,this.data.correo).pipe(takeUntil(this.signal$)).subscribe({
         next:x=>{
           console.log(x)
 

@@ -327,7 +327,7 @@ export class NotaDocenteComponent implements OnInit ,OnChanges, OnDestroy{
 
     this.excelService.exportToExcel(
      fileToExport,
-     'PerfilAlumnos-' + new Date().getTime()
+     'Notas-' + new Date().getTime()
    );
   }
   DownloadExcelDetalle(): void {
@@ -345,7 +345,7 @@ export class NotaDocenteComponent implements OnInit ,OnChanges, OnDestroy{
 
     this.excelService.exportToExcel(
      fileToExport,
-     'PerfilAlumnos-' + new Date().getTime()
+     'Notas-' + new Date().getTime()
    );
   }
   EditarNota(){
