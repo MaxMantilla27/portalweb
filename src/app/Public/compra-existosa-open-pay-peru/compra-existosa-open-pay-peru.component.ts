@@ -220,18 +220,25 @@ export class CompraExistosaOpenPayPeruComponent implements OnInit {
     console.log(this.resultVisa)
     console.log(this.resultVisa.registroAlumno)
     var paymentSummary = "";
-    if(this.resultVisa.listaCuota.length==0){
+    if(this.tipoRespuesta=="AF"){
       paymentSummary += "<div style='display:flex;border-bottom: 1px solid black;padding: 5px 0;'>"+
-        "<div style='font-size:13px;font-weight:100;width: 66%;'>" + 'Matrícula' + "</div>" +
-        "<div style='font-size:13px;width: 33%;text-align:right;'>" + this.FormatoMilesDecimales(this.resultVisa.montoTotal) + " " + this.resultVisa.monedaCorreo + "</div></div>";
-    }
-    else{
-      this.resultVisa.listaCuota.forEach((l:any) => {
+      "<div style='font-size:13px;font-weight:100;width: 66%;'>" + this.reemplazarRazonPago(this.resultOpenPay.nombre) + "</div>" +
+      "<div style='font-size:13px;width: 33%;text-align:right;'>" + this.FormatoMilesDecimales(this.resultOpenPay.cuotaTotal) + " " + this.resultVisa.monedaCorreo + "</div></div>";
+    }{
+      if(this.resultVisa.listaCuota.length==0){
         paymentSummary += "<div style='display:flex;border-bottom: 1px solid black;padding: 5px 0;'>"+
-        "<div style='font-size:13px;font-weight:100;width: 66%;'>" + this.reemplazarRazonPago(l.nombre) + "</div>" +
-        "<div style='font-size:13px;width: 33%;text-align:right;'>" + this.FormatoMilesDecimales(l.cuotaTotal) + " " + this.resultVisa.monedaCorreo + "</div></div>";
-      });
+          "<div style='font-size:13px;font-weight:100;width: 66%;'>" + 'Matrícula' + "</div>" +
+          "<div style='font-size:13px;width: 33%;text-align:right;'>" + this.FormatoMilesDecimales(this.resultVisa.montoTotal) + " " + this.resultVisa.monedaCorreo + "</div></div>";
+      }
+      else{
+        this.resultVisa.listaCuota.forEach((l:any) => {
+          paymentSummary += "<div style='display:flex;border-bottom: 1px solid black;padding: 5px 0;'>"+
+          "<div style='font-size:13px;font-weight:100;width: 66%;'>" + this.reemplazarRazonPago(l.nombre) + "</div>" +
+          "<div style='font-size:13px;width: 33%;text-align:right;'>" + this.FormatoMilesDecimales(l.cuotaTotal) + " " + this.resultVisa.monedaCorreo + "</div></div>";
+        });
+      }
     }
+
 
     this.jsonCorreo.Asunto =
     'Confirmación de Pago '+this.resultVisa.nombrePasarela+'- BSG Institute';

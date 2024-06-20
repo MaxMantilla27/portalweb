@@ -9,7 +9,8 @@
     border-radius: 5px;">
       <div class="col-12 col-md-12 col-lg-12 titlePagoTarjeta" style="align-items: center;">Confirma tu compra</div>
       <div class="col-12 col-md-12 col-lg-12  inputPagoVisa row">
-        <div class="subtitlePagoVisa">Ingresa los datos de tu tarjeta de crédito o débito</div>
+        <div *ngIf="resultCard.idPasarelaPago==1" class="subtitlePagoVisa">Ingresa los datos de tu tarjeta de crédito o débito</div>
+        <div *ngIf="resultCard.idPasarelaPago!=1" class="subtitlePagoVisa">Pago realiado por</div>
         <form id="fomrOpenPAy" class="row">
           <ng-container *ngIf="resultCard.idPasarelaPago==1 && resultCard.idFormaPago==65">
 

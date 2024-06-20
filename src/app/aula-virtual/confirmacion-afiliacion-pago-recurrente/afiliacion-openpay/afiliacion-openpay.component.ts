@@ -188,61 +188,61 @@ export class AfiliacionOpenpayComponent implements OnInit,OnDestroy {
 
     }
     var validate=true
-      if (this.jsonSave.TarjetaHabiente.fecha.length < 5) {
-        validate = false;
-        this._SnackBarServiceService.openSnackBar(
-          'Fecha de vencimiento incorrecta',
-          'x',
-          5,
-          'snackbarCrucigramaerror'
-        );
-      }
-      if (this.jsonSave.TarjetaHabiente.CodigoVV.length < 3) {
-        validate = false;
-        this._SnackBarServiceService.openSnackBar(
-          'Numero CVV Incorrecto',
-          'x',
-          5,
-          'snackbarCrucigramaerror'
-        );
-      }
-      if (!this.NumberT.startsWith('37') && this.NumberT.split('-').join('').length < 14) {
-        validate = false;
-        this._SnackBarServiceService.openSnackBar(
-          'Numero de tarjeta Incorrecta',
-          'x',
-          5,
-          'snackbarCrucigramaerror'
-        );
-      }
-      if (this.NumberT.startsWith('34') && this.NumberT.split('-').join('').length < 14) {
-        validate = false;
-        this._SnackBarServiceService.openSnackBar(
-          'Numero de tarjeta Incorrecta',
-          'x',
-          5,
-          'snackbarCrucigramaerror'
-        );
-      }
-    if(this.jsonSave.TarjetaHabiente.Titular==''){
-      validate = false;
-      this._SnackBarServiceService.openSnackBar(
-        'Ingrese los nombres del titular',
-        'x',
-        5,
-        'snackbarCrucigramaerror'
-      );
-    }
-    console.log(this.jsonSave.TarjetaHabiente.NumeroDocumento.length)
-    if(this.jsonSave.TarjetaHabiente.NumeroDocumento==null || this.jsonSave.TarjetaHabiente.NumeroDocumento.length<=5){
-      validate = false;
-      this._SnackBarServiceService.openSnackBar(
-        'Ingrese el documento completo del titular',
-        'x',
-        5,
-        'snackbarCrucigramaerror'
-      );
-    }
+    //   if (this.jsonSave.TarjetaHabiente.fecha.length < 5) {
+    //     validate = false;
+    //     this._SnackBarServiceService.openSnackBar(
+    //       'Fecha de vencimiento incorrecta',
+    //       'x',
+    //       5,
+    //       'snackbarCrucigramaerror'
+    //     );
+    //   }
+    //   if (this.jsonSave.TarjetaHabiente.CodigoVV.length < 3) {
+    //     validate = false;
+    //     this._SnackBarServiceService.openSnackBar(
+    //       'Numero CVV Incorrecto',
+    //       'x',
+    //       5,
+    //       'snackbarCrucigramaerror'
+    //     );
+    //   }
+    //   if (!this.NumberT.startsWith('37') && this.NumberT.split('-').join('').length < 14) {
+    //     validate = false;
+    //     this._SnackBarServiceService.openSnackBar(
+    //       'Numero de tarjeta Incorrecta',
+    //       'x',
+    //       5,
+    //       'snackbarCrucigramaerror'
+    //     );
+    //   }
+    //   if (this.NumberT.startsWith('34') && this.NumberT.split('-').join('').length < 14) {
+    //     validate = false;
+    //     this._SnackBarServiceService.openSnackBar(
+    //       'Numero de tarjeta Incorrecta',
+    //       'x',
+    //       5,
+    //       'snackbarCrucigramaerror'
+    //     );
+    //   }
+    // if(this.jsonSave.TarjetaHabiente.Titular==''){
+    //   validate = false;
+    //   this._SnackBarServiceService.openSnackBar(
+    //     'Ingrese los nombres del titular',
+    //     'x',
+    //     5,
+    //     'snackbarCrucigramaerror'
+    //   );
+    // }
+    // console.log(this.jsonSave.TarjetaHabiente.NumeroDocumento.length)
+    // if(this.jsonSave.TarjetaHabiente.NumeroDocumento==null || this.jsonSave.TarjetaHabiente.NumeroDocumento.length<=5){
+    //   validate = false;
+    //   this._SnackBarServiceService.openSnackBar(
+    //     'Ingrese el documento completo del titular',
+    //     'x',
+    //     5,
+    //     'snackbarCrucigramaerror'
+    //   );
+    // }
     if (validate) {
       this.dialogRef =this.dialog.open(ChargeTextComponent,{
         panelClass:'dialog-charge-text',
