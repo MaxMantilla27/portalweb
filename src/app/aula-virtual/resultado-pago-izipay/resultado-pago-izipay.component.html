@@ -1,6 +1,9 @@
 <div class="container" *ngIf="resultProceso!=undefined">
     <div class="row rowpaddAv" style="justify-content: center;">
-      <div class="col-12 col-md-10 col-lg-8" *ngIf="resultProceso.estadoOperacion!='Processed'">
+      <div class="col-12 col-md-10 col-lg-8" *ngIf="resultProceso.estadoOperacion =='No Process'||
+      resultProceso.estadoOperacion =='Declinado' ||
+      resultProceso.estadoOperacion =='Processed-' ||
+      resultProceso.estadoOperacion =='ERROR'">
         <ng-container >
           <div class="titleResultPago">
             <img style="margin-right: 10px;" src="../../../assets/icons/denegado-error-rojo.svg" alt="">
@@ -9,7 +12,15 @@
           </div>
           <div class="textResultPago">
             <ng-container *ngIf="tipoRespuesta!='AF'">
-              No hemos podido procesar su pago, debido a un error con su entidad bancaria o al rechazo de la compra.
+              <div >
+                <div *ngIf="resultProceso.mensajeTransaccion!=null && resultProceso.mensajeTransaccion!='null' && resultProceso.mensajeTransaccion!=''" style="text-align: center;">
+                  <p>Descripción: {{resultProceso.mensajeTransaccion}}</p>
+                </div>
+
+                <div>
+                  <p>No hemos podido procesar su pago, debido a un error con su entidad bancaria, comuniquese con su Banco para solucionar el error en el pago; o intente con otro medio de pago.</p>
+                </div>
+              </div>
             </ng-container>
             <ng-container *ngIf="tipoRespuesta=='AF'">
               No hemos podido procesar su afiliación, debido a un error con su entidad bancaria o al rechazo de la compra.

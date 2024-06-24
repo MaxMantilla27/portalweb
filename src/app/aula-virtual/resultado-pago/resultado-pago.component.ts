@@ -139,7 +139,7 @@ export class ResultadoPagoComponent implements OnInit,OnDestroy{
             }
             if(this.resultVisa.estadoOperacion =='No Process' ||
               this.resultVisa.estadoOperacion =='Declinado'){
-                this.EnvioCorreoErrorPago()
+                // this.EnvioCorreoErrorPago()
             }
 
             if(this.resultVisa.estadoOperacion.toLowerCase()=='pending'){

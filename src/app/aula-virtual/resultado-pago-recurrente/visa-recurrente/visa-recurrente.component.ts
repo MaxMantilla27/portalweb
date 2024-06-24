@@ -127,7 +127,7 @@ export class VisaRecurrenteComponent implements OnInit {
             }
             if(this.resultVisa.estadoOperacion =='No Process' ||
               this.resultVisa.estadoOperacion =='Declinado'){
-                this.EnvioCorreoErrorPago()
+                // this.EnvioCorreoErrorPago()
             }
           }
         })

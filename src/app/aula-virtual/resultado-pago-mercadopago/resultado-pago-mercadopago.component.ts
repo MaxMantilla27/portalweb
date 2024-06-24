@@ -109,7 +109,7 @@ export class ResultadoPagoMercadopagoComponent implements OnInit,OnDestroy {
         }
         if(this.resultProceso.estadoOperacion =='No Process' ||
               this.resultProceso.estadoOperacion =='Declinado'){
-                this.EnvioCorreoErrorPago()
+                // this.EnvioCorreoErrorPago()
             }
         if(this.resultProceso.respuestaComercio!=null && this.resultProceso.respuestaComercio!="" && this.resultProceso.estadoOperacion!='Error'){
           this.reultadoPago = JSON.parse(this.resultProceso.respuestaComercio)

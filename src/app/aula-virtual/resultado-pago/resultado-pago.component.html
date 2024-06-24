@@ -25,8 +25,15 @@
           resultVisa.estadoOperacion =='Declinado' ||
           resultVisa.estadoOperacion =='Processed-' ||
           resultVisa.estadoOperacion =='ERROR'">
-            No hemos podido procesar su pago, debido a un error con su entidad bancaria,  comuniquese con
-            su Banco para solucionar el error en el pago; o intente con otro medio de pago.
+            <div >
+              <div *ngIf="resultVisa.mensajeTransaccion!=null && resultVisa.mensajeTransaccion!='null' && resultVisa.mensajeTransaccion!=''" style="text-align: center;">
+                <p>Descripción: {{resultVisa.mensajeTransaccion}}</p>
+              </div>
+
+              <div>
+                <p>No hemos podido procesar su pago, debido a un error con su entidad bancaria, comuniquese con su Banco para solucionar el error en el pago; o intente con otro medio de pago.</p>
+              </div>
+            </div>
           </ng-container>
           <!-- <ng-container *ngIf="resultVisa.estadoOperacion =='No Process'">
             No hemos podido procesar su pago, debido a un error con su entidad bancaria,  comuniquese con

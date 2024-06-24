@@ -100,7 +100,7 @@ export class ResultadoPagoKlapComponent implements OnInit {
         }
         if(this.resultProceso.estadoOperacion =='No Process' ||
               this.resultProceso.estadoOperacion =='Declinado'){
-                this.EnvioCorreoErrorPago()
+                // this.EnvioCorreoErrorPago()
             }
         this.dialogRef.close()
       }

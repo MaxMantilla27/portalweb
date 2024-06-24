@@ -531,8 +531,7 @@ export class PagoOrganicoTodosComponent implements OnInit, OnDestroy {
     this.jsonEnvioPago.IdPEspecifico = this.modalidadSeleccionada.id;
     this.jsonEnvioPago.IdPGeneral = this.idPegeneral;
     this.jsonEnvioPago.IdPais = this.IdPais;
-    this.jsonEnvioPago.IdPasarelaPago =
-      this.medioPagoSeleccionado.idPasarelaPago.toString();
+    this.jsonEnvioPago.IdPasarelaPago = this.IdPasarelaPago.toString();
     this.jsonEnvioPago.MedioCodigo = this.medioPagoSeleccionado.medioCodigo;
     this.jsonEnvioPago.MedioPago = this.medioPagoSeleccionado.medioPago;
     this.jsonEnvioPago.Moneda = this.formaPagoSeleccion.simbolo;
@@ -874,8 +873,7 @@ export class PagoOrganicoTodosComponent implements OnInit, OnDestroy {
     this.jsonEnvioPago.IdPEspecifico = this.modalidadSeleccionada.id;
     this.jsonEnvioPago.IdPGeneral = this.idPegeneral;
     this.jsonEnvioPago.IdPais = this.IdPais;
-    this.jsonEnvioPago.IdPasarelaPago =
-      this.medioPagoSeleccionado.idPasarelaPago.toString();
+    this.jsonEnvioPago.IdPasarelaPago = IdPasarelaCapturada.toString();
     this.jsonEnvioPago.MedioCodigo = this.medioPagoSeleccionado.medioCodigo;
     this.jsonEnvioPago.MedioPago = this.medioPagoSeleccionado.medioPago;
     this.jsonEnvioPago.Moneda = this.formaPagoSeleccion.simbolo;

@@ -117,7 +117,7 @@ export class ResultadoPagoIzipayComponent implements OnInit,OnDestroy {
 
         if(this.resultProceso.estadoOperacion =='No Process' ||
               this.resultProceso.estadoOperacion =='Declinado'){
-                this.EnvioCorreoErrorPago()
+                // this.EnvioCorreoErrorPago()
             }
 
       }
