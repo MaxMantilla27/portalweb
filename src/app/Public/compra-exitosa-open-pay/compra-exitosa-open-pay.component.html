@@ -71,7 +71,7 @@
             <div class="col-12 col-md-7 col-lg-8 itemValueCardPago">{{resultVisa.identificadorTransaccion}}</div>
             <div class="col-12 col-md-5 col-lg-4"><b>Monto:</b></div>
             <div class="col-12 col-md-7 col-lg-8 itemValueCardPago" *ngIf="tipoRespuesta!='AF'">{{FormatoMilesDecimales(resultVisa.montoTotal)}}</div>
-            <div class="col-12 col-md-7 col-lg-8 itemValueCardPago" *ngIf="tipoRespuesta=='AF'">{{FormatoMilesDecimales(resultOpenPay.cuotaTotal)}}</div>
+            <div class="col-12 col-md-7 col-lg-8 itemValueCardPago" *ngIf="tipoRespuesta=='AF'&& resultOpenPay!=undefined">{{FormatoMilesDecimales(resultOpenPay.cuotaTotal)}}</div>
             <div class="col-12 col-md-5 col-lg-4"><b>Moneda:</b></div>
             <div class="col-12 col-md-7 col-lg-8 itemValueCardPago">{{resultVisa.monedaCorreo}}</div>
             <div class="col-12 col-md-5 col-lg-4"><b>Nombres y Apellidos:</b></div>

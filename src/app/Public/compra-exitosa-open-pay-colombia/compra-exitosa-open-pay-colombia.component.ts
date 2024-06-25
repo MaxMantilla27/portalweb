@@ -91,11 +91,13 @@ export class CompraExitosaOpenPayColombiaComponent implements OnInit {
       this._FormaPagoService.ProcesamientoAfiliacionColombiaOpenPay(this.id).pipe(takeUntil(this.signal$)).subscribe({
         next:x=>{
           console.log(x)
-
           this.resultOpenPay = JSON.parse(x._Repuesta.pagoAfiliacion)
           console.log("ResultadoOpen", this.resultOpenPay)
-
-        }
+          if(JSON.parse(x._Repuesta.pagoExitoso)==true){
+            this.EnvioCorreoPagoExitoso()
+                this.RutaCargada=true;
+          }
+        },
       })
     }
     else{

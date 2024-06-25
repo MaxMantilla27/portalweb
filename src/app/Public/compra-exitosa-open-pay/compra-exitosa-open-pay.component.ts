@@ -94,6 +94,10 @@ export class CompraExitosaOpenPayComponent implements OnInit {
 
           this.resultOpenPay = JSON.parse(x._Repuesta.pagoAfiliacion)
           console.log("ResultadoOpen", this.resultOpenPay)
+          if(JSON.parse(x._Repuesta.pagoExitoso)==true){
+            this.EnvioCorreoPagoExitoso()
+                this.RutaCargada=true;
+          }
 
         }
       })
