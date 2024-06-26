@@ -414,7 +414,7 @@ export class PagoComponent implements OnInit,OnDestroy {
       width: '600px',
       data: { contenido: "¿Está seguro de desafiliarse de los pagos recurrentes?" },
       panelClass: 'dialog-Tarjeta',
-     // disableClose:true
+      disableClose:true
     });
 
     dialogRef.afterClosed().pipe(takeUntil(this.signal$)).subscribe((result) => {
