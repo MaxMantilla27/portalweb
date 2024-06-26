@@ -258,14 +258,14 @@ export class EnvioCuestionarioComponent implements OnInit ,OnDestroy {
       if(segundoDif>totalSegundo){
         this.vertiempo=false
         clearInterval(this.interval);
-        this.AgregarPEspecificoSesionCuestionarioAlumno()
+        this.AgregarPEspecificoSesionCuestionarioAlumno(true)
       }else{
         this.minutos=Math.floor((totalSegundo-segundoDif)/60);
         this.segundos=(totalSegundo-segundoDif)%60
       }
     }, 1000);
   }
-  AgregarPEspecificoSesionCuestionarioAlumno(){
+  AgregarPEspecificoSesionCuestionarioAlumno(TiempoCumplido:boolean){
     this.json.Preguntas=[]
     let Orden=0
     this.data.cuestionario.preguntasCuestionario.forEach((p:any) => {
@@ -292,7 +292,7 @@ export class EnvioCuestionarioComponent implements OnInit ,OnDestroy {
         })
       }
       let validado=false
-      if(p.idPreguntaTipo==4){
+      if((p.idPreguntaTipo==3 || p.idPreguntaTipo==4 || p.idPreguntaTipo==5) && TiempoCumplido==false){
         respues.forEach((a:any) => {
           if(respues.length==p.respuestasMinimas && a.valor!=' '){
             validado=true;
