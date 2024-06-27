@@ -25,6 +25,7 @@ export class CursoNotasComponent implements OnInit,OnDestroy {
   public CursoAbierto=-1;
   public PromedioFinal=0;
   public PromedioFinalOnlineCurso=0;
+  public PromedioFinalFinalOnlineCurso=0;
   public infoNotas:Array<any>=[];
   public listadoNotas:any
   columnHeader:any = {
@@ -46,7 +47,6 @@ export class CursoNotasComponent implements OnInit,OnDestroy {
     if(this.IdMatricula!=0){
       this.CursosCriterios=[]
       this.CursosCriteriosPrevio=[]
-      this.ObtenerCursosProgramaPorIdMatriculaOnline(this.IdMatricula);
       this.ObtenerCursosProgramaPorIdMatricula(this.IdMatricula);
 
     }
@@ -77,18 +77,21 @@ export class CursoNotasComponent implements OnInit,OnDestroy {
       },
       complete:()=> {
         console.log(this.CursosCriterios)
+        this.ObtenerCursosProgramaPorIdMatriculaOnline(this.IdMatricula);
+
       },
     })
   }
   ObtenerCursosProgramaPorIdMatriculaOnline(idMatricula:number){
     this._NotaService.ObtenerCursosProgramaPorIdMatriculaOnline(idMatricula).pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
+        this.PromedioFinalFinalOnlineCurso=0;
         this.CursosCriteriosOnline=x;
-        console.log(this.CursosCriteriosOnline)
         this.CursosCriteriosOnline.forEach((y:any) => {
           this._NotaService.ListadoNotaProcesarV2(y.idPEspecifico,1,this.IdMatricula).pipe(takeUntil(this.signal$)).subscribe({
             next:x=>{
               this.PromedioFinalOnlineCurso=0;
+              var countOnline=0;
               this.NombreCursoOnline=y.nombrePEspecifico;
               this.listadoNotas=x;
               if(this.listadoNotas.listadoEvaluaciones==null)this.listadoNotas.listadoEvaluaciones=[];
@@ -117,7 +120,6 @@ export class CursoNotasComponent implements OnInit,OnDestroy {
                       var notas=this.listadoNotas.listadoNotas.filter((w:any) => w.idEvaluacion == evl.id && w.idMatriculaCabecera == mat.idMatriculaCabecera)[0]
                       var NotaPromediada=0
                       var notasCountDestalle=1
-                      console.log(notas)
                       if(notas.detalle!=null){
                         var notasDetalleCriterio = []
                         notasDetalleCriterio=notas.detalle.filter((w:any) => w.idCriterioEvaluacion == evl.id)
@@ -192,18 +194,22 @@ export class CursoNotasComponent implements OnInit,OnDestroy {
                 x.nombrePrograma=y.nombrePGeneral
                 x.idEstadoPEspecifico=y.idEstadoPEspecifico
                 x.nombreModalidad='Online Sincrónico';
+                this.PromedioFinalFinalOnlineCurso=this.PromedioFinalFinalOnlineCurso+Math.round(x.notaCurso)
                 this.CursosCriterios.push(x)
                 let cont=0;
-                this.PromedioFinal=0
-                if(this.CursosCriterios!=undefined){
-                  this.CursosCriterios.forEach((x:any) => {
-                    this.PromedioFinal=this.PromedioFinal+x.notaCurso;
-                    cont++
-                  });
-                }
-                if(cont!=0){
-                  this.PromedioFinal=Math.round(this.PromedioFinal/cont)
-                }
+                // this.PromedioFinal2=0
+                // if(this.CursosCriterios!=undefined){
+                //   this.CursosCriterios.forEach((x:any) => {
+                //     console.log(x)
+                //     console.log(x.notaCurso)
+                //     this.PromedioFinal2=this.PromedioFinal2+x.notaCurso;
+                //     cont++
+                //   });
+                // }
+                // console.log(cont)
+                // if(countOnline!=0){
+                //   console.log(Math.round(this.PromedioFinalOnlineCurso))
+                // }
                 this.CursosCriterios.sort(function (a:any, b:any) {
                   return a.idPEspecifico - b.idPEspecifico;
                 })
@@ -213,7 +219,25 @@ export class CursoNotasComponent implements OnInit,OnDestroy {
         })
       },
       complete:()=> {
+        setTimeout(() => {
+          console.log(this.PromedioFinalFinalOnlineCurso);
+          if(this.PromedioFinal !== 0 && this.PromedioFinalFinalOnlineCurso === 0){
+            this.PromedioFinal = this.PromedioFinal;
+          } else if(this.PromedioFinal === 0 && this.PromedioFinalFinalOnlineCurso !== 0){
+            this.PromedioFinal = this.PromedioFinalFinalOnlineCurso;
+          } else if(this.PromedioFinal !== 0 && this.PromedioFinalFinalOnlineCurso !== 0){
+            this.PromedioFinalFinalOnlineCurso=Math.round(Math.round(this.PromedioFinalFinalOnlineCurso)/this.CursosCriteriosOnline.length)
+            console.log(this.PromedioFinal);
+            console.log(this.PromedioFinalFinalOnlineCurso);
+            this.PromedioFinal = Math.round((this.PromedioFinal + this.PromedioFinalFinalOnlineCurso) / 2);
+          }
+          if(this.PromedioFinal === 0 && this.PromedioFinalFinalOnlineCurso === 0){
+            this.PromedioFinal = 0;
+          }
+        }, 2000);
+
       },
+
     })
 
 
