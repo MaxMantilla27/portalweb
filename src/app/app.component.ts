@@ -1,11 +1,12 @@
 import { isPlatformBrowser } from '@angular/common';
 import { AfterViewInit, Component, Inject, OnDestroy, OnInit, PLATFORM_ID, ViewEncapsulation } from '@angular/core';
-import { Router, NavigationEnd } from '@angular/router';
-import { Subject, takeUntil, tap } from 'rxjs';
+import { Router, NavigationEnd, ActivatedRoute } from '@angular/router';
+import { Subject, filter, takeUntil, tap } from 'rxjs';
 import { BasicBotonesExpandibles } from './Core/Models/BasicDTO';
 import { GlobalService } from './Core/Shared/Services/Global/global.service';
 import { HelperService } from './Core/Shared/Services/helper.service';
 import { SessionStorageService } from './Core/Shared/Services/session-storage.service';
+import { ProgramasDetalleComponent } from './Public/programas-detalle/programas-detalle.component';
 
 @Component({
   selector: 'app-root',
@@ -24,13 +25,14 @@ export class AppComponent implements OnInit,AfterViewInit ,OnDestroy {
   public cargaChat=false;
   public usuarioWeb=''
   public esChatbot = false;
-
+  public showChatATC: boolean = true;
   constructor(
     private _HelperService: HelperService,
     private router: Router,
     @Inject(PLATFORM_ID) platformId: Object,
     private _GlobalService:GlobalService,
     private _SessionStorageService: SessionStorageService,
+    private activatedRoute: ActivatedRoute
   ) {
     this.isBrowser = isPlatformBrowser(platformId);
   }
@@ -98,6 +100,27 @@ export class AppComponent implements OnInit,AfterViewInit ,OnDestroy {
       this.charge=true;
       this._HelperService.enviarmsjObtenerUsuario(this.usuarioWeb);
     }
+    this.router.events.pipe(
+      filter(event => event instanceof NavigationEnd)
+    ).subscribe((event: any) => {
+      const navEnd = event as NavigationEnd;
+      const currentRoute = this.activatedRoute.root;
+
+      let showChat = true;
+      if (navEnd.url.includes('/AulaVirtual')) {
+        showChat = false;
+      } else {
+        let route = currentRoute;
+        while (route.firstChild) {
+          route = route.firstChild;
+        }
+        if (route.component === ProgramasDetalleComponent) {
+          showChat = false;
+        }
+      }
+      this.showChatATC = showChat;
+      console.log('ESTADO CHAT ATENCION AL CLIENTE',this.showChatATC)
+    });
   }
   ObtenerCodigoIso(){
     this._GlobalService.ObtenerCodigoIso().pipe(takeUntil(this.signal$)).subscribe({

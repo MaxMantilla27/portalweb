@@ -1,0 +1,206 @@
+
+.chatAtc {
+  position: fixed;
+  bottom: 25px;
+  right: 30px;
+  width: 150px;
+  background: #ff4e56;
+  height: 81.25px;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  border-radius: 15px;
+  font-size: 14px;
+  line-height: 12px;
+  z-index: 200;
+  cursor: pointer;
+}
+.chatSTAtc{
+  position: fixed;
+  bottom: 70px;
+  right: 20px;
+  width: 375px;
+  background: white;
+  //height: 400px;
+  align-items: center;
+  text-align: center;
+  //margin-bottom: 50px;
+  border-radius: 10px 10px 10px 10px;
+  z-index: 200;
+  box-shadow: 0px 0px 2px 0px #c3c3c3;
+}
+.cerrarChatAtc{
+  position: fixed;
+  bottom: 10px;
+  right: 30px;
+  color: white;
+  font-size: 25px;
+  cursor: pointer;
+  z-index: 1000000;
+  background: #ff4e55;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.cerrarChatMediaAtc{
+  display: none;
+}
+.puntoConectadoAtc{
+  display: flex;
+  margin-left: 5%;
+  margin-top: -10px;
+  margin-bottom: 5px;
+}
+@media (max-width: 690px) {
+  .chatAtc {
+    border-radius: 0px !important;
+    bottom: 0px;
+    width: 100%;
+    right: 0px !important;
+    height: auto !important;
+    padding: 10px;
+    img{
+      display: none;
+    }
+  }
+  .chatSTAtc{
+    width: 80%;
+    left: 10%;
+    bottom: 0px;
+  }
+  .cerrarChatAtc{
+    display: none;
+  }
+  .cerrarChatMediaAtc{
+    display: block;
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    color: black;
+    font-weight: 600;
+    font-size: 12px;
+    cursor: pointer;
+    padding: 0px 10px;z-index: 1000000;
+  }
+  .trianguloChatAtc{
+    display: none;
+  }
+}
+
+.trianguloChatAtc {
+  position: fixed;
+  transform: rotate(45deg);
+  border-right: 30px solid transparent;
+  border-top: 30px solid transparent;
+  border-left: 30px solid transparent;
+  border-bottom: 30px solid #ff4e56;
+  width: 30px;
+  height: 30px;
+  bottom: 20px;
+  right: 15px;
+  z-index: 1;
+}
+.headerChatAtc {
+  background: #ff4e55;
+  border-radius: 8px 8px 0px 0px;
+  .imgAsesorAtc {
+    color: white;
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    font-weight: 600;
+    font-size: 20px;
+    position: relative;
+    img {
+      width: 55px;
+      height: 55px;
+    }
+    .nombreAsesorAtc {
+      width: calc(80% - 15px);
+      text-align: left;
+      font-size: 16px;
+      padding: 10px 10px;
+    }
+    .stateAsesorAtc{
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: #c23616;
+      bottom: 15px;
+      left: 52px;
+      border: solid 1px white;
+    }
+  }
+  .textoAsesorAtc {
+    color: white;
+    font-weight: 600;
+    font-size: 14px;
+    padding: 0px 10px 10px 10px;
+  }
+}
+.OnConectedAtc{
+  background: #4cd137 !important;
+}
+/* Estilo del contenedor de fondo */
+.PrimeraInteraccionAtcFondo {
+  display: flex;
+  justify-content: center; /* Centra el contenido horizontalmente */
+  padding: 15px;
+  font-family: 'Arial', sans-serif; /* Tipo de letra */
+}
+
+/* Estilo del contenedor principal */
+.PrimeraInteraccionAtc {
+  background-color: #f0f4f8; /* Color de fondo del cuadro principal */
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1); /* Sombra */
+  max-width: 500px; /* Ancho máximo del cuadro */
+  width: 100%;
+  text-align: left;
+  font-size: 16px; /* Tamaño de fuente base */
+  line-height: 1.6; /* Altura de línea */
+}
+
+/* Estilo para los párrafos dentro del contenedor principal */
+.PrimeraInteraccionAtc p {
+  margin-bottom: 15px; /* Espacio inferior entre párrafos */
+}
+
+/* Estilo para la lista no ordenada */
+.PrimeraInteraccionAtc ul {
+  padding: 0;
+  list-style: none;
+  padding-left: 20px;
+}
+
+/* Estilo para los ítems de la lista */
+.PrimeraInteraccionAtc ul li {
+  margin-bottom: 12px; /* Espacio inferior entre ítems de la lista */
+  position: relative; /* Posición relativa para los ítems */
+}
+
+/* Estilo para los enlaces dentro de la lista */
+.PrimeraInteraccionAtc ul li a {
+  display: block; /* Hace que los enlaces ocupen todo el ancho disponible */
+  text-decoration: none;
+  color: #333;
+  font-weight: bold;
+  padding: 3px 0;
+}
+
+/* Estilo para el ícono (antes del enlace) */
+.PrimeraInteraccionAtc ul li a:before {
+  content: "➔"; /* Solo muestra la flecha sin el punto */
+  position: absolute;
+  left: -20px; /* Posiciona el ícono a la izquierda del texto */
+}
+.PrimeraInteraccionAtc ul li a:hover {
+  text-decoration: underline;
+}

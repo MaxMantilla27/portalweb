@@ -1,0 +1,65 @@
+<ng-container>
+  <div  *ngIf="Open">
+    <div class="cerrarChatAtc" (click)="Open=false;IsOpen.emit(false)">X</div>
+  </div>
+  <div  *ngIf="Open">
+    <div class="cerrarChatAtc" (click)="Open=false;IsOpen.emit(false)">X</div>
+  </div>
+  <div style="display:flex"(click)="Open=true;IsOpen.emit(true)" *ngIf="!Open">
+    <div class="chatAtc" >
+      <div style="display: flex;" >
+        <!-- <img class="puntoConectadoAtc" src="../../../../../assets/icons/punto-verde.svg" alt="Punto Verde" > -->
+        <div class="col-4" style="align-items: center;display: flex;justify-content: center;">
+          <i class="material-icons" style="font-size: 40px !important;">sms</i>
+        </div>
+        <div class="col-8" style="font-size: 17px;line-height: 20px;text-align: left;">
+          Atención al cliente
+        </div>
+      </div>
+    </div>
+    <div class="trianguloChatAtc">
+    </div>
+  </div>
+  <div class="chatSTAtc" *ngIf="Open" style="box-shadow: 0px 1px 4px #838383;">
+    <div class="cerrarChatMediaAtc" (click)="Open=false;IsOpen.emit(false)">X</div>
+    <ng-container select="[contenidoChat]">
+      <div class="headerChatAtc">
+        <div class="imgAsesorAtc">
+          <img [src]="'../../../../../assets/imagenes/174188.png'" alt="">
+          <div class="nombreAsesorAtc">
+            <div>
+              Atención al cliente
+            </div>
+            <div>
+              BSG Institute
+            </div>
+            <!-- <ng-container *ngIf="estadoLogueo!='false'">
+              <div class="textoAsesor" *ngIf="estadoLogueo!='false'">Soy {{nombreAsesorSplit[0]}} , {{mensajeStateAsesor}}</div>
+            </ng-container> -->
+          </div>
+          <div class="stateAsesorAtc" [ngClass]="{'OnConectedAtc': stateAsesor==true}">
+
+          </div>
+        </div>
+      </div>
+      <div class="PrimeraInteraccionAtcFondo">
+        <div class="PrimeraInteraccionAtc">
+          <p><strong>¡Hola!</strong></p>
+          <p>Te damos la bienvenida al chat de atención al cliente de BSG Institute.</p>
+          <p>Para comenzar, selecciona una de las siguientes opciones:</p>
+          <ul>
+            <li><a href="#">Estoy interesado en los cursos</a></li>
+            <li><a href="#">Soy alumno</a></li>
+          </ul>
+        </div>
+      </div>
+      <!-- <ng-container *ngIf="estadoLogueo=='false';else login">
+        <app-form-chat (SaveForm)="actualizarDatosAlumno($event)" [IdPGeneral]="idProgramageneral" [IdPespecificoPrograma]="IdPespecificoPrograma"></app-form-chat>
+      </ng-container> -->
+    </ng-container>
+
+  </div>
+</ng-container>
+
+<script src="signalr.js"></script>
+<script [src]="urlSignal+'hubIntegraHub'"></script>
