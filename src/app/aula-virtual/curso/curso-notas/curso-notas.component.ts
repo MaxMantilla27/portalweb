@@ -194,6 +194,7 @@ export class CursoNotasComponent implements OnInit,OnDestroy {
                 x.nombrePrograma=y.nombrePGeneral
                 x.idEstadoPEspecifico=y.idEstadoPEspecifico
                 x.nombreModalidad='Online Sincrónico';
+                console.log(x.notaCurso)
                 this.PromedioFinalFinalOnlineCurso=this.PromedioFinalFinalOnlineCurso+Math.round(x.notaCurso)
                 this.CursosCriterios.push(x)
                 let cont=0;
@@ -224,7 +225,7 @@ export class CursoNotasComponent implements OnInit,OnDestroy {
           if(this.PromedioFinal !== 0 && this.PromedioFinalFinalOnlineCurso === 0){
             this.PromedioFinal = this.PromedioFinal;
           } else if(this.PromedioFinal === 0 && this.PromedioFinalFinalOnlineCurso !== 0){
-            this.PromedioFinal = this.PromedioFinalFinalOnlineCurso;
+            this.PromedioFinal = Math.round(Math.round(this.PromedioFinalFinalOnlineCurso)/this.CursosCriteriosOnline.length);
           } else if(this.PromedioFinal !== 0 && this.PromedioFinalFinalOnlineCurso !== 0){
             this.PromedioFinalFinalOnlineCurso=Math.round(Math.round(this.PromedioFinalFinalOnlineCurso)/this.CursosCriteriosOnline.length)
             console.log(this.PromedioFinal);
@@ -234,7 +235,7 @@ export class CursoNotasComponent implements OnInit,OnDestroy {
           if(this.PromedioFinal === 0 && this.PromedioFinalFinalOnlineCurso === 0){
             this.PromedioFinal = 0;
           }
-        }, 2000);
+        }, 4000);
 
       },
 
