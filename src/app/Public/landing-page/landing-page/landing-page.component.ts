@@ -313,6 +313,9 @@ export class LandingPageComponent implements OnInit, OnDestroy {
                 gtag('event', 'conversion', {
                   send_to: 'AW-732083338/jQrVCKmUkqUBEIrpit0C',
                 });
+                gtag('event', 'conversion', {
+                  'send_to': 'AW-16616211963/fM6YCPT-2bsZEPuLnfM9',
+                });
               } catch (err) {}
             }
             this.dialogRef.close();

@@ -282,6 +282,9 @@ export class LandingPageModalComponent implements OnInit, OnDestroy {
                 gtag('event', 'conversion', {
                   send_to: 'AW-11065656821/6CM8CNWQ2IcYEPWLwpwp',
                 });
+                gtag('event', 'conversion', {
+                  'send_to': 'AW-16616211963/fM6YCPT-2bsZEPuLnfM9',
+                });
               } catch (err) {}
             }
           },
