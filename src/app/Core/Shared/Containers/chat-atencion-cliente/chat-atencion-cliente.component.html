@@ -42,14 +42,78 @@
           </div>
         </div>
       </div>
-      <div class="PrimeraInteraccionAtcFondo">
+      <div *ngIf="Paso==0" class="PrimeraInteraccionAtcFondo">
         <div class="PrimeraInteraccionAtc">
           <p><strong>¡Hola!</strong></p>
           <p>Te damos la bienvenida al chat de atención al cliente de BSG Institute.</p>
           <p>Para comenzar, selecciona una de las siguientes opciones:</p>
           <ul>
-            <li><a href="#">Estoy interesado en los cursos</a></li>
-            <li><a href="#">Soy alumno</a></li>
+            <li (click)="OpcionAlumno(1,'A')"><a href="#">Estoy interesado en los cursos</a></li>
+            <li (click)="OpcionAlumno(1,'B')"><a href="#">Soy alumno</a></li>
+          </ul>
+        </div>
+      </div>
+      <div *ngIf="Paso==1 && RecuperarContrasenaBit==false && Caso=='B'" class="PrimeraInteraccionAtcFondo">
+        <div class="PrimeraInteraccionAtc">
+          <p>Ingresa a tu cuenta para revisar tus programas, cursos y certificaciones</p>
+          <div class="container" style="justify-content: center;">
+            <div class="col-12" >
+              <div class="alert alert-danger" role="alert" *ngIf="errorLogin!=''">
+                {{errorLogin}}
+              </div>
+              <app-formulario [model]="login" [InputsDisable]="statuscharge" (OnSubmit)="Login($event)" [Color]="'white'"
+                (OnValid)="formVal=$event" [Interaccion]="'Login'" [fiels]="fileds" [ChargeValuesInit]="initValues">
+
+                <ng-container contenido>
+                  <div class="row" style="width: 100%;margin: 10px 0px;text-align: center;">
+                    <div class="col-12 buttonnsHelp vinculo" (click)="RecuperarContrasenaPrevio()"> ¿Olvidaste tu contraseña?</div>
+                  </div>
+                </ng-container>
+                <ng-container send>
+                  <app-default-button [confs]="{color:'primary',titulo:'Iniciar sesión'}" [style]="'width: 100%;margin-bottom 0px;background:#FF4E55'"  ></app-default-button>
+                </ng-container>
+
+              </app-formulario>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="RecuperarContrasenaBit && Paso==1  && Caso=='B'" class="PrimeraInteraccionAtcFondo">
+        <div class="PrimeraInteraccionAtc">
+          <div *ngIf="BotonDesactivado" class="FlechaAtras no-select">
+            <i class="material-icons">arrow_back_ios</i>
+            Atras
+          </div>
+          <div *ngIf="BotonDesactivado==false" class="FlechaAtras no-select" (click)="RecuperarAtras()">
+            <i class="material-icons">arrow_back_ios</i>
+            Atras
+          </div>
+          <p>Ingresa tu correo electrónico para enviar tus credenciales</p>
+          <div class="alert alert-danger" role="alert" *ngIf="errorLogin!=''">
+            {{errorLogin}}
+          </div>
+          <app-formulario [Interaccion]="'Recuperar Contraseña'" [model]="email" [InputsDisable]="statuscharge" [CleanOnSubmit]="cleanSub" (OnSubmit)="RecuperarContrasena($event)" [Color]="'#f8f8f8'"
+            (OnValid)="formVal=$event" [fiels]="fileds">
+            <ng-container send>
+              <app-default-button [confs]="{color:'danger',titulo:'Enviar correo'}" [style]="'width: 100%;'" [disabled]="!formVal || BotonDesactivado==true" ></app-default-button>
+            </ng-container>
+
+          </app-formulario>
+        </div>
+      </div>
+      <div *ngIf="Paso==2" class="PrimeraInteraccionAtcFondo">
+        <div class="PrimeraInteraccionAtc">
+          <p><strong>¡Hola!</strong></p>
+          <p>Para continuar selecciona el curso sobre el que deseas realizar la consulta:</p>
+          <ul>
+            <li *ngFor="let curso of CursosPadreMatricula" (click)="CursoPadreHijoMatriculado(curso.idPGeneralPadre)">
+              <a href="#">{{ curso.nombrePGeneralPadre }}</a>
+              <ul *ngIf="selectedPadreIdMatricula === curso.idPGeneralPadre" class="lista-interior">
+                <li *ngFor="let hijo of getCursosHijo(curso.idPGeneralPadre)">
+                  <a (click)="EnviarFormularioAtc(hijo)" style="color: #033DAB;" href="#">{{ hijo.nombrePGeneralHijo }}</a>
+                </li>
+              </ul>
+            </li>
           </ul>
         </div>
       </div>

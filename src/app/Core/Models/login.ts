@@ -18,3 +18,8 @@ export interface loginSendFacebookDTO
   DataFacebook:string;
   msj:string
 }
+export interface loginChat
+{
+  Email:string;
+  Password:string;
+}

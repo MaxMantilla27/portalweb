@@ -166,6 +166,8 @@
   text-align: left;
   font-size: 16px; /* Tamaño de fuente base */
   line-height: 1.6; /* Altura de línea */
+  max-height: 33rem;
+  overflow-y: auto;
 }
 
 /* Estilo para los párrafos dentro del contenedor principal */
@@ -203,4 +205,18 @@
 }
 .PrimeraInteraccionAtc ul li a:hover {
   text-decoration: underline;
+  color: #FF4E56 !important;
+}
+.FlechaAtras{
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  font-size: 14px;
+  color: #FF4E56;
+  font-weight: 600;
+  border-bottom: solid 1px transparent;
+  .material-icons{
+    font-weight: 600;
+    font-size: 14px !important;
+  }
 }
