@@ -117,13 +117,13 @@
           <p><strong>¡Hola!</strong></p>
           <p>Selecciona el área de capacitación de tu interés:</p>
           <ul>
-            <li *ngFor="let cursoChat of CursosPorArea" (click)="RedireccionarCursoChat()">
-              <a href="#">{{ cursoChat.nombre }}</a>
+            <li *ngFor="let cursoChat of CursosPorArea">
+              <a [routerLink]="'/'+cursoChat.direccion">{{ cursoChat.nombre }}</a>
             </li>
           </ul>
         </div>
       </div>
-      <div *ngIf="Paso==2" class="PrimeraInteraccionAtcFondo">
+      <div *ngIf="Paso==2 && Caso=='B'" class="PrimeraInteraccionAtcFondo">
         <div class="PrimeraInteraccionAtc">
           <p><strong>¡Hola!</strong></p>
           <p>Para continuar selecciona el curso sobre el que deseas realizar la consulta:</p>

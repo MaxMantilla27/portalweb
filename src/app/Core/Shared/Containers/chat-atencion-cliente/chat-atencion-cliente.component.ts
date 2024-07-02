@@ -13,6 +13,7 @@ import { AlumnoService } from '../../Services/Alumno/alumno.service';
 import { Subject, takeUntil, timer } from 'rxjs';
 import { SnackBarServiceService } from '../../Services/SnackBarService/snack-bar-service.service';
 import { ChatAtencionClienteService } from '../../Services/ChatAtencionCliente/chat-atencion-cliente.service';
+import { CardProgramasDTO } from 'src/app/Core/Models/BasicDTO';
 @Component({
   selector: 'app-chat-atencion-cliente',
   templateUrl: './chat-atencion-cliente.component.html',
@@ -80,7 +81,14 @@ export class ChatAtencionClienteComponent implements OnInit {
   public AreasCapacitacion:any;
   public CursosPorArea:any
   ngOnInit(): void {
-
+    console.log()
+    if(this._SessionStorageService.GetToken()!=null){
+      this.CursosMatriculados()
+    }
+    else{
+      this.Paso=0
+      this.Caso='A'
+    }
   }
   // PARTE DE LOGUIN
   Login(value:any){
@@ -208,6 +216,7 @@ export class ChatAtencionClienteComponent implements OnInit {
   }
   CursosMatriculados(){
     this.Paso=2;
+    this.Caso='B'
     this._ChatAtencionClienteService.ObtenerCursosAlumnoMatriculado().pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
         this.CursosMatricula=x
@@ -235,10 +244,11 @@ export class ChatAtencionClienteComponent implements OnInit {
         next:x=>{
           this.CursosPorArea=x
           console.log(this.CursosPorArea)
+        },
+        complete:()=>{
+          this.Paso=2
+          this.Caso='A'
         }
       })
-  }
-  RedireccionarCursoChat(){
-
   }
 }
