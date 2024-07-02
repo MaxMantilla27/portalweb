@@ -705,7 +705,10 @@
       </mat-accordion> -->
     </div>
     <div class="col-12">
-      <div [innerHtml]="certificado.piePagina | safeHtml"></div><br>
+      <div *ngIf="certificado.piePagina!=null && certificado.piePagina!='' && certificado.piePagina!= undefined" [innerHtml]="certificado.piePagina | safeHtml"></div><br>
+      <div *ngIf="codigoIso=='MX'"style="font-style: italic;margin-top: -15px;margin-bottom: 10px;">
+        <strong>NOTA: </strong> Programa de estudios no incorporado en México.
+      </div>
       <div class="puntoAzulLista" [innerHtml]="certificado.descripcionLeyenda | safeHtml" style="text-align: justify;">
       </div>
       <div style="display: flex;justify-content: center;margin-top: 20px;">
