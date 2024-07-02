@@ -53,6 +53,17 @@
           </ul>
         </div>
       </div>
+      <div *ngIf="Paso==1 && Caso=='A'" class="PrimeraInteraccionAtcFondo">
+        <div class="PrimeraInteraccionAtc">
+          <p><strong>¡Hola!</strong></p>
+          <p>Selecciona el área de capacitación de tu interés:</p>
+          <ul>
+            <li *ngFor="let area of AreasCapacitacion" (click)="ObtenerCursosIdArea(area)">
+              <a href="#">{{ area.valor }}</a>
+            </li>
+          </ul>
+        </div>
+      </div>
       <div *ngIf="Paso==1 && RecuperarContrasenaBit==false && Caso=='B'" class="PrimeraInteraccionAtcFondo">
         <div class="PrimeraInteraccionAtc">
           <p>Ingresa a tu cuenta para revisar tus programas, cursos y certificaciones</p>
@@ -99,6 +110,17 @@
             </ng-container>
 
           </app-formulario>
+        </div>
+      </div>
+      <div *ngIf="Paso==2 && Caso=='A'" class="PrimeraInteraccionAtcFondo">
+        <div class="PrimeraInteraccionAtc">
+          <p><strong>¡Hola!</strong></p>
+          <p>Selecciona el área de capacitación de tu interés:</p>
+          <ul>
+            <li *ngFor="let cursoChat of CursosPorArea" (click)="RedireccionarCursoChat()">
+              <a href="#">{{ cursoChat.nombre }}</a>
+            </li>
+          </ul>
         </div>
       </div>
       <div *ngIf="Paso==2" class="PrimeraInteraccionAtcFondo">

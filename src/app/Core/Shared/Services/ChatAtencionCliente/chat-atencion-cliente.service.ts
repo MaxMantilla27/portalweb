@@ -25,6 +25,20 @@ export class ChatAtencionClienteService {
       return EMPTY;
     }
   }
+  public ObtenerAreasCapacitacionChatAtc():Observable<any>{
+    if(this.isBrowser){
+      return this.http.get<any>(this.urlBase+'/ObtenerAreasCapacitacionChatAtc');
+    }else{
+      return EMPTY;
+    }
+  }
+  public ListaProgramasFiltroChatAtc(IdAreaCapacitacion:number):Observable<any>{
+    if(this.isBrowser){
+      return this.http.get<any>(this.urlBase+'/ListaProgramasFiltroChatAtc?IdAreaCapacitacion='+IdAreaCapacitacion);
+    }else{
+      return EMPTY;
+    }
+  }
 
 
 }

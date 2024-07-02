@@ -77,6 +77,8 @@ export class ChatAtencionClienteComponent implements OnInit {
   public CursosPadreMatricula:any;
   public CursosHijoMatricula:any;
   public selectedPadreIdMatricula:any;
+  public AreasCapacitacion:any;
+  public CursosPorArea:any
   ngOnInit(): void {
 
   }
@@ -169,6 +171,17 @@ export class ChatAtencionClienteComponent implements OnInit {
   OpcionAlumno(Paso:number,Caso:string){
     this.Paso=Paso;
     this.Caso=Caso;
+    if(Paso==1 && Caso=='A'){
+      this.AreasCapacitacion=[];
+      this._ChatAtencionClienteService.ObtenerAreasCapacitacionChatAtc().pipe(takeUntil(this.signal$)).subscribe({
+        next:x=>{
+          this.AreasCapacitacion=x
+          console.log(this.AreasCapacitacion)
+        }
+      })
+
+    }
+    else{
     this.fileds=[];
     this.fileds.push({
       nombre:"Email",
@@ -187,6 +200,7 @@ export class ChatAtencionClienteComponent implements OnInit {
       label:"Contraseña",
       error:"Ingresa tu contraseña"
     });
+    }
   }
   RecuperarAtras(){
     this.OpcionAlumno(1,'B')
@@ -213,5 +227,18 @@ export class ChatAtencionClienteComponent implements OnInit {
   }
   EnviarFormularioAtc(CursoHijo:any){
     console.log(CursoHijo)
+  }
+  ObtenerCursosIdArea(Area:any){
+    console.log(Area)
+    this.AreasCapacitacion=[];
+      this._ChatAtencionClienteService.ListaProgramasFiltroChatAtc(Area.id).pipe(takeUntil(this.signal$)).subscribe({
+        next:x=>{
+          this.CursosPorArea=x
+          console.log(this.CursosPorArea)
+        }
+      })
+  }
+  RedireccionarCursoChat(){
+
   }
 }
