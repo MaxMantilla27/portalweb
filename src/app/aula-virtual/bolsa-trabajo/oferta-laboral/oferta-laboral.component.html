@@ -1,10 +1,11 @@
+<!-- holax -->
 <div  >
     <div class="row">
         <div class="col-md-5">
             <h1>Ofertas Laborales</h1>
         </div>
         <div class="col-md-7">
-            <hr size="6px" color="black" class="linea"> 
+            <hr size="6px" color="black" class="linea">
         </div>
     </div>
     <br>
@@ -22,7 +23,7 @@
             <mat-chip *ngIf="selected[2]" selected (click)="selected[2] = false;cambioChipFiltro(2,false)">
                 Remoto
             </mat-chip>
-            
+
             <mat-chip *ngIf="!selected[3]" (click)="selected[3] = true;cambioChipFiltro(3,true)">
                 Presencial y Remoto
             </mat-chip>
@@ -78,7 +79,7 @@
                 </div>
                 <div class="contenedorTra" style="max-height: 600px !important;">
                     <ng-container *ngFor="let item of listaConvocatorias">
-                        <div class="borde-recto-buttom-top" (click)="mostrarConvocatoria(item)" 
+                        <div class="borde-recto-buttom-top" (click)="mostrarConvocatoria(item)"
                         [ngClass]="{'Select':item.isSelect==true}" style="background-color: whitesmoke;cursor: pointer;">
                             <div style="padding: 20px;">
                                 <p><strong>{{item.nombre}}</strong></p>
@@ -101,7 +102,7 @@
                     </ng-container>
                 </div>
             </div>
-            
+
         </div>
         <br>
         <div class="col-md-6 borde" style="padding-right: 0px;padding-left: 0px;" >
@@ -142,7 +143,7 @@
                                     <ng-container *ngIf="dataTemp.stringNivelEstudio!=''">Nivel de Estudio: {{dataTemp.stringNivelEstudio}} <br></ng-container>
                                     <ng-container *ngIf="dataTemp.stringExperiencia!=''">Experiencia: {{dataTemp.stringExperiencia}} </ng-container>
                                 </p>
-    
+
                             </div>
                         </ng-container>
                         <ng-container *ngIf="dataTemp.aplicaBono==true || dataTemp.aplicaComision==true ">
@@ -154,9 +155,9 @@
                                 </p>
                             </div>
                         </ng-container>
-                       
+
                         <br>
-                        
+
                         <div style="justify-content: center;display: flex;" *ngIf="dataTemp.isPostulado==false">
                             <button mat-raised-button style="background-color: #fb9754;color:whitesmoke" (click)="postular()"><strong>Postularme</strong></button>
                         </div>
@@ -164,7 +165,7 @@
                             <button mat-raised-button style="background-color: #fb9754;color:whitesmoke" (click)="redireccionarAMisPostulaciones()"><strong>Ver mis Postulaciones</strong></button>
                         </div>
                     </ng-template>
-                    
+
                 </div>
             </div>
         </div>

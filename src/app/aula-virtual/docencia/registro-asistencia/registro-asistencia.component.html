@@ -1,3 +1,4 @@
+<!-- holax -->
  <p style="text-align: center;">Registro de Asistencia - Sesión </p>
 
 <!--<div class="">
@@ -24,7 +25,7 @@
             <th  style="width: 10px;" rowspan="2"><b>N°</b></th>
             <th  style="width: 70px;" rowspan="2"><b>Código</b></th>
             <th  style="width: 100px;" rowspan="2"><b>Nombres y Apellidos</b></th>
-            <th  style="width: 100px; text-align: center;" rowspan="2"><b>Asistencia</b></th>  
+            <th  style="width: 100px; text-align: center;" rowspan="2"><b>Asistencia</b></th>
           </tr>
         </thead>
 
@@ -41,7 +42,7 @@
                 <td>
                   {{mat.alumno | uppercase}}
                 </td>
-                
+
                 <td style="width:max-content; text-align: center;">
                   <!-- <ng-container *ngIf="matn.Asistio!=true">
                       <i class="material-icons" style="cursor: pointer ;" (click)="matn.Asistio=!matn.Asistio"></i>
@@ -50,20 +51,20 @@
                     <!-- <ng-container *ngIf="matn.Asistio==true">
                       <i class="material-icons" (click)="matn.Asistio=!matn.Asistio" style="color:#0075ff ;cursor: pointer">check_box</i>
                     </ng-container> -->
-                        
+
                     <select (change)="mat.asistio=!mat.asistio" id="select-menu" style="width:fit-content; border-radius: 0.4em;" >
                         <ng-container *ngIf="mat.asistio!=true">
                             <option  default>Falta</option>
                             <option  > Asistio</option>
                         </ng-container>
-                        
-                        <ng-container *ngIf="mat.asistio==true">                    
+
+                        <ng-container *ngIf="mat.asistio==true">
                                 <option  default>Asistio</option>
                             <option (click)="mat.asistio=!mat.asistio">Falta</option>
                         </ng-container>
                     </select>
                 </td>
-                
+
               </tr>
             </ng-container>
           </tbody>

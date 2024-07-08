@@ -29,8 +29,9 @@
               {{item.ponderacion}} %
             </td>
             <td class="criterio" style="width: 250px;text-align: center;">
-              <div *ngIf="item.valor==0" criterioPendiente=true>Pendiente</div>
-              <div *ngIf="item.valor!=0">{{item.valor}}</div>
+              <!-- <div *ngIf="item.valor==0" criterioPendiente=true>Pendiente</div>
+              <div *ngIf="item.valor!=0">{{item.valor}}</div> -->
+              <div>{{item.valor}}</div>
 
             </td>
           </tr>

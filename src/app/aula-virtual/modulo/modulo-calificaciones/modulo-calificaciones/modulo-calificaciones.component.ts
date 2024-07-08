@@ -56,6 +56,7 @@ export class ModuloCalificacionesComponent implements OnInit,OnDestroy {
         this.mensajeError=x.excepcion.descripcionGeneral;
         this.promedio=x.notaCurso;
         this.calificacionesCursoDetalle=x.detalleCalificacion
+        console.log(this.calificacionesCursoDetalle)
       }
     })
   }
