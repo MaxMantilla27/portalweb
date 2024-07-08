@@ -1,3 +1,4 @@
+<!-- holax -->
 <ng-container>
   <div  *ngIf="Open">
     <div class="cerrarChatAtc" (click)="Open=false;IsOpen.emit(false)">X</div>
@@ -23,7 +24,7 @@
   <div class="chatSTAtc" *ngIf="Open" style="box-shadow: 0px 1px 4px #838383;">
     <div class="cerrarChatMediaAtc" (click)="Open=false;IsOpen.emit(false)">X</div>
     <ng-container select="[contenidoChat]">
-      <div class="headerChatAtc">
+      <div class="headerChatAtc"*ngIf="Paso!=3">
         <div class="imgAsesorAtc">
           <img [src]="'../../../../../assets/imagenes/174188.png'" alt="">
           <div class="nombreAsesorAtc">
@@ -42,7 +43,10 @@
           </div>
         </div>
       </div>
-      <div *ngIf="Paso==0" class="PrimeraInteraccionAtcFondo">
+      <div *ngIf="CargandoInformacion" style="display: flex;justify-content: center;">
+        <mat-spinner></mat-spinner>
+      </div>
+      <div *ngIf="Paso==0 && CargandoInformacion==false" class="PrimeraInteraccionAtcFondo">
         <div class="PrimeraInteraccionAtc">
           <p><strong>¡Hola!</strong></p>
           <p>Te damos la bienvenida al chat de atención al cliente de BSG Institute.</p>
@@ -53,19 +57,27 @@
           </ul>
         </div>
       </div>
-      <div *ngIf="Paso==1 && Caso=='A'" class="PrimeraInteraccionAtcFondo">
+      <div *ngIf="Paso==1 && Caso=='A' && CargandoInformacion==false" class="PrimeraInteraccionAtcFondo">
         <div class="PrimeraInteraccionAtc">
+          <div class="FlechaAtras no-select" (click)="RetrocederInicioA()">
+            <i class="material-icons">arrow_back_ios</i>
+            Atras
+          </div>
           <p><strong>¡Hola!</strong></p>
           <p>Selecciona el área de capacitación de tu interés:</p>
           <ul>
             <li *ngFor="let area of AreasCapacitacion" (click)="ObtenerCursosIdArea(area)">
-              <a href="#">{{ area.valor }}</a>
+              <a style="cursor:pointer" href="#">{{ area.valor }}</a>
             </li>
           </ul>
         </div>
       </div>
-      <div *ngIf="Paso==1 && RecuperarContrasenaBit==false && Caso=='B'" class="PrimeraInteraccionAtcFondo">
+      <div *ngIf="Paso==1 && Caso=='B' && CargandoInformacion==false" class="PrimeraInteraccionAtcFondo">
         <div class="PrimeraInteraccionAtc">
+          <div class="FlechaAtras no-select" (click)="RetrocederInicioB()">
+            <i class="material-icons">arrow_back_ios</i>
+            Atras
+          </div>
           <p>Ingresa a tu cuenta para revisar tus programas, cursos y certificaciones</p>
           <div class="container" style="justify-content: center;">
             <div class="col-12" >
@@ -89,7 +101,7 @@
           </div>
         </div>
       </div>
-      <div *ngIf="RecuperarContrasenaBit && Paso==1  && Caso=='B'" class="PrimeraInteraccionAtcFondo">
+      <div *ngIf="Paso==1  && Caso=='C' && CargandoInformacion==false" class="PrimeraInteraccionAtcFondo">
         <div class="PrimeraInteraccionAtc">
           <div *ngIf="BotonDesactivado" class="FlechaAtras no-select">
             <i class="material-icons">arrow_back_ios</i>
@@ -112,19 +124,24 @@
           </app-formulario>
         </div>
       </div>
-      <div *ngIf="Paso==2 && Caso=='A'" class="PrimeraInteraccionAtcFondo">
+      <div *ngIf="Paso==2 && Caso=='A' && CargandoInformacion==false" class="PrimeraInteraccionAtcFondo">
         <div class="PrimeraInteraccionAtc">
+          <div class="FlechaAtras no-select" (click)="RetrocederAreaA()">
+            <i class="material-icons">arrow_back_ios</i>
+            Atras
+          </div>
           <p><strong>¡Hola!</strong></p>
-          <p>Selecciona el área de capacitación de tu interés:</p>
-          <ul>
+          <p>Selecciona el programa de capacitación de tu interés:</p>
+          <p *ngIf="this.CursosPorArea.length==0">No hay cursos disponibles</p>
+          <ul *ngIf="this.CursosPorArea.length>0">
             <li *ngFor="let cursoChat of CursosPorArea">
-              <a [routerLink]="'/'+cursoChat.direccion">{{ cursoChat.nombre }}</a>
+              <a style="cursor:pointer" (click)="RegistrarCursoSeleccionado(cursoChat)">{{ cursoChat.nombre }}</a>
             </li>
           </ul>
         </div>
       </div>
-      <div *ngIf="Paso==2 && Caso=='B'" class="PrimeraInteraccionAtcFondo">
-        <div class="PrimeraInteraccionAtc">
+      <div *ngIf="Paso==2 && Caso=='B' && CargandoInformacion==false" class="PrimeraInteraccionAtcFondo">
+        <!-- <div class="PrimeraInteraccionAtc">
           <p><strong>¡Hola!</strong></p>
           <p>Para continuar selecciona el curso sobre el que deseas realizar la consulta:</p>
           <ul>
@@ -137,15 +154,32 @@
               </ul>
             </li>
           </ul>
+        </div> -->
+        <div class="PrimeraInteraccionAtc">
+          <p><strong>¡Hola!</strong></p>
+          <p>Para continuar selecciona el curso sobre el que deseas realizar la consulta:</p>
+          <ul>
+            <li *ngFor="let curso of CursosPadreMatricula"
+                (click)="CursoPadreHijoMatriculado(curso.idPGeneralPadre)"
+                [ngClass]="{'expanded': selectedPadreIdMatricula === curso.idPGeneralPadre}">
+              <a href="#" style="color: #2F98EE;">{{ curso.nombrePGeneralPadre }}</a>
+              <ul *ngIf="selectedPadreIdMatricula === curso.idPGeneralPadre" class="lista-interior">
+                <li *ngFor="let hijo of getCursosHijo(curso.idPGeneralPadre)">
+                  <a (click)="EnviarFormularioAtcAcademico(hijo)" style="color: #4A4A49;" href="#">{{ hijo.nombrePGeneralHijo }}</a>
+                </li>
+              </ul>
+            </li>
+          </ul>
         </div>
+
       </div>
-      <!-- <ng-container *ngIf="estadoLogueo=='false';else login">
-        <app-form-chat (SaveForm)="actualizarDatosAlumno($event)" [IdPGeneral]="idProgramageneral" [IdPespecificoPrograma]="IdPespecificoPrograma"></app-form-chat>
-      </ng-container> -->
+      <ng-container *ngIf="Paso==3 && Caso=='A'">
+        <app-chat-atencion-cliente-chat [idProgramageneral]="IdProgramageneral" [IdPespecificoPrograma]="IdPespecificoPrograma"></app-chat-atencion-cliente-chat>
+      </ng-container>
+      <ng-container *ngIf="Paso==3 && Caso=='B'">
+        <app-chat-atencion-cliente-academico [idProgramageneral]="IdProgramageneral" [IdMatriculaCabecera]="IdMatriculaCabecera"></app-chat-atencion-cliente-academico>
+      </ng-container>
     </ng-container>
 
   </div>
 </ng-container>
-
-<script src="signalr.js"></script>
-<script [src]="urlSignal+'hubIntegraHub'"></script>

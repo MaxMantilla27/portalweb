@@ -266,8 +266,34 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
   public esPadre=false;
   public namePrograma:any;
   public listaLocalidades?:any;
-
+  public DireccionChatAtencionCliente:any
+  public ChatAtencionClienteActivo=false;
+  public RutaChatAtencionCliente='';
   ngOnInit(): void {
+    this.ChatAtencionClienteActivo=false;
+    this.DireccionChatAtencionCliente=this._SessionStorageService.SessionGetValue('ChatAtencionCliente');
+    console.log(this.DireccionChatAtencionCliente)
+    if(this.DireccionChatAtencionCliente!=null){
+      console.log('ENTRAAAAAAAAAAAAAA')
+      this.activatedRoute.params.pipe(takeUntil(this.signal$)).subscribe({
+        next: (x) => {
+          console.log(x)
+          this.area = x['AreaCapacitacion'].split('-').join(' ');
+          this.RutaChatAtencionCliente='"/'+x['AreaCapacitacion']+'/'+x['ProgramaNombre']+'"'
+          console.log(this.RutaChatAtencionCliente)
+          if(this.DireccionChatAtencionCliente==this.RutaChatAtencionCliente){
+            console.log('SI Chat ATC')
+            this.ChatAtencionClienteActivo=true;
+          }
+          else{
+            console.log('NO Es Chat ATC')
+          }
+        },
+        complete:()=> {
+
+        },
+      })
+    }
     this.codigoIso =
     this._SessionStorageService.SessionGetValue('ISO_PAIS') != ''
       ? this._SessionStorageService.SessionGetValue('ISO_PAIS')

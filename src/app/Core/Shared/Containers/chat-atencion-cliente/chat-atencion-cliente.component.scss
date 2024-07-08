@@ -175,7 +175,38 @@
   margin-bottom: 15px; /* Espacio inferior entre párrafos */
 }
 
-/* Estilo para la lista no ordenada */
+// /* Estilo para la lista no ordenada */
+// .PrimeraInteraccionAtc ul {
+//   padding: 0;
+//   list-style: none;
+//   padding-left: 20px;
+// }
+
+// /* Estilo para los ítems de la lista */
+// .PrimeraInteraccionAtc ul li {
+//   margin-bottom: 12px; /* Espacio inferior entre ítems de la lista */
+//   position: relative; /* Posición relativa para los ítems */
+// }
+
+// /* Estilo para los enlaces dentro de la lista */
+// .PrimeraInteraccionAtc ul li a {
+//   display: block; /* Hace que los enlaces ocupen todo el ancho disponible */
+//   text-decoration: none;
+//   color: #333;
+//   font-weight: bold;
+//   padding: 3px 0;
+// }
+
+// /* Estilo para el ícono (antes del enlace) */
+// .PrimeraInteraccionAtc ul li a:before {
+//   content: "➔"; /* Solo muestra la flecha sin el punto */
+//   position: absolute;
+//   left: -20px; /* Posiciona el ícono a la izquierda del texto */
+// }
+// .PrimeraInteraccionAtc ul li a:hover {
+//   text-decoration: underline;
+//   color: #FF4E56 !important;
+// }
 .PrimeraInteraccionAtc ul {
   padding: 0;
   list-style: none;
@@ -184,29 +215,56 @@
 
 /* Estilo para los ítems de la lista */
 .PrimeraInteraccionAtc ul li {
-  margin-bottom: 12px; /* Espacio inferior entre ítems de la lista */
-  position: relative; /* Posición relativa para los ítems */
+  margin-bottom: 12px;
+  position: relative;
 }
 
 /* Estilo para los enlaces dentro de la lista */
 .PrimeraInteraccionAtc ul li a {
-  display: block; /* Hace que los enlaces ocupen todo el ancho disponible */
+  display: block;
   text-decoration: none;
-  color: #333;
   font-weight: bold;
   padding: 3px 0;
 }
 
-/* Estilo para el ícono (antes del enlace) */
-.PrimeraInteraccionAtc ul li a:before {
-  content: "➔"; /* Solo muestra la flecha sin el punto */
-  position: absolute;
-  left: -20px; /* Posiciona el ícono a la izquierda del texto */
+/* Estilo específico para los cursos padre */
+.PrimeraInteraccionAtc ul li > a {
+  color: #033DAB;
 }
-.PrimeraInteraccionAtc ul li a:hover {
+
+.PrimeraInteraccionAtc ul li > a:hover {
   text-decoration: underline;
   color: #FF4E56 !important;
 }
+
+/* Estilo para los cursos hijo */
+.PrimeraInteraccionAtc ul li ul.lista-interior li a {
+  color: #000;
+}
+
+.PrimeraInteraccionAtc ul li ul.lista-interior li a:hover {
+  color: #FF4E56;
+}
+
+/* Estilo para el ícono (antes del enlace) en cursos padre */
+.PrimeraInteraccionAtc ul li > a:before {
+  content: "+";
+  position: absolute;
+  left: -20px;
+}
+
+/* Cambiar el ícono cuando está expandido */
+.PrimeraInteraccionAtc ul li.expanded > a:before {
+  content: "−";
+}
+
+/* Estilo para el ícono (antes del enlace) en cursos hijo */
+.PrimeraInteraccionAtc ul li ul.lista-interior li a:before {
+  content: "•";
+  position: absolute;
+  left: -20px;
+}
+
 .FlechaAtras{
   display: flex;
   align-items: center;

@@ -1,3 +1,4 @@
+<!-- holax -->
 <div class="container">
   <div class="container breadcrumb">
     <app-miga-pan [items]="migaPan"></app-miga-pan>
@@ -917,7 +918,7 @@
   </div>
 </div>
 <ng-container *ngIf="idPegeneral!=0">
-  <app-soporte-tecnico [cargaChat]="true" [texto]="'Chatea con nosotros'" (IsOpen)="OpenChat=$event" [Open]="OpenChat"
+  <app-soporte-tecnico *ngIf="ChatAtencionClienteActivo==false" [cargaChat]="true" [texto]="'Chatea con nosotros'" (IsOpen)="OpenChat=$event" [Open]="OpenChat"
     [token]="false" [IdPGeneral]="idPegeneral">
 
     <ng-container contenidoChat>
@@ -925,4 +926,6 @@
         [IdPespecificoPrograma]="IdPespecificoPrograma" [Open]="OpenChat"></app-chat-portal>
     </ng-container>
   </app-soporte-tecnico>
+  <app-chat-atencion-cliente *ngIf="ChatAtencionClienteActivo==true"  [IdProgramageneral]="idPegeneral"
+        [IdPespecificoPrograma]="IdPespecificoPrograma"></app-chat-atencion-cliente>
 </ng-container>

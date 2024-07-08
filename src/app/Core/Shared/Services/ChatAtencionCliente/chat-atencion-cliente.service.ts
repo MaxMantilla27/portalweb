@@ -3,6 +3,7 @@ import { isPlatformBrowser } from '@angular/common';
 import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
 import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { EMPTY, Observable } from 'rxjs';
+import { ChatAtencionClienteContactoActualizarDTO, ChatAtencionClienteContactoDetalleRegistrarDTO, ChatAtencionClienteContactoRegistrarDTO } from 'src/app/Core/Models/ChatAtencionClienteDTO';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -39,6 +40,36 @@ export class ChatAtencionClienteService {
       return EMPTY;
     }
   }
-
+  public RegistrarChatAtencionClienteContacto(Json:ChatAtencionClienteContactoRegistrarDTO):Observable<any>{
+    if(this.isBrowser){
+      console.log(Json)
+      return this.http.post<any>(this.urlBase+'/RegistrarChatAtencionClienteContacto',Json);
+    }else{
+      return EMPTY;
+    }
+  }
+  public RegistrarChatAtencionClienteContactoDetalle(Json:ChatAtencionClienteContactoDetalleRegistrarDTO):Observable<any>{
+    if(this.isBrowser){
+      console.log(Json)
+      return this.http.post<any>(this.urlBase+'/RegistrarChatAtencionClienteContactoDetalle',Json);
+    }else{
+      return EMPTY;
+    }
+  }
+  public ObtenerChatAtencionClienteContactoDetalle(IdContactoPortalSegmento:string):Observable<any>{
+    if(this.isBrowser){
+      return this.http.get<any>(this.urlBase+'/ObtenerChatAtencionClienteContactoDetalle?IdContactoPortalSegmento='+IdContactoPortalSegmento);
+    }else{
+      return EMPTY;
+    }
+  }
+  public ActualizarChatAtencionClienteContacto(Json:ChatAtencionClienteContactoActualizarDTO):Observable<any>{
+    if(this.isBrowser){
+      console.log(Json)
+      return this.http.post<any>(this.urlBase+'/ActualizarChatAtencionClienteContacto',Json);
+    }else{
+      return EMPTY;
+    }
+  }
 
 }

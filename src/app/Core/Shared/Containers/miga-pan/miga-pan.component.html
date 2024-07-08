@@ -1,4 +1,5 @@
-<div class="miga-container">
+<!-- holax -->
+ <div class="miga-container">
   <div class="miga-container__item" *ngFor="let item of items, let index = index">
     <div *ngIf="index != items.length-1 ">
       <app-link-button (onCliked)="EventoInteraccionEducacion(item.titulo);OnClicked.emit(item)" [fontColor]="'#000000'" [fontStyle]="'lighter'"

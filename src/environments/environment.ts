@@ -14,7 +14,8 @@ export const environment = {
   //url_portal:'http://localhost:4200/',
   // url_signal:'https://integrav4-signalrcore.bsginstitute.com/'
   //url_signal:'http://bsgvalidaciones.endevslab.com/'
-  url_signal:'https://integrav4-signalrcore.bsginstitute.com/',
+  url_signal:'https://localhost:7120/',
+  // url_signal:'https://integrav4-signalrcore.bsginstitute.com/',
   url_api_integra_v5:'https://localhost:7288/api'
   //url_signal:'https://localhost:7120/'
 };

@@ -149,6 +149,9 @@ import { RemovePuntoComaPipe } from './Pipes/remove-punto-coma.pipe';
 import { ChargeSpinnerComponent } from './Containers/Dialog/charge-spinner/charge-spinner.component';
 import { RemovePortalCriterioPipe } from './Pipes/remove-portal-criterio.pipe';
 import { ChatAtencionClienteComponent } from './Containers/chat-atencion-cliente/chat-atencion-cliente.component';
+import { FormChatAtcComponent } from './Containers/form-chat-atc/form-chat-atc.component';
+import { ChatAtencionClienteChatComponent } from './Containers/chat-atencion-cliente/chat-atencion-cliente-chat/chat-atencion-cliente-chat.component';
+import { ChatAtencionClienteAcademicoComponent } from './Containers/chat-atencion-cliente/chat-atencion-cliente-academico/chat-atencion-cliente-academico.component';
 
 @NgModule({
   imports: [
@@ -259,7 +262,10 @@ import { ChatAtencionClienteComponent } from './Containers/chat-atencion-cliente
     RemovePuntoComaPipe,
     ChargeSpinnerComponent,
     RemovePortalCriterioPipe,
-    ChatAtencionClienteComponent
+    ChatAtencionClienteComponent,
+    FormChatAtcComponent,
+    ChatAtencionClienteChatComponent,
+    ChatAtencionClienteAcademicoComponent
     //ChatZComponent,
   ],
   exports: [
@@ -364,7 +370,9 @@ import { ChatAtencionClienteComponent } from './Containers/chat-atencion-cliente
     ImagenModalComponent,
     RemovePuntoComaPipe,
     RemovePortalCriterioPipe,
-    ChatAtencionClienteComponent
+    ChatAtencionClienteComponent,
+    FormChatAtcComponent,
+    ChatAtencionClienteChatComponent
   ],
   providers: [
     SessionStorageService,
