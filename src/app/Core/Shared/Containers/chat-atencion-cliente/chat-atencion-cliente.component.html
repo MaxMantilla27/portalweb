@@ -11,7 +11,8 @@
       <div style="display: flex;" >
         <!-- <img class="puntoConectadoAtc" src="../../../../../assets/icons/punto-verde.svg" alt="Punto Verde" > -->
         <div class="col-4" style="align-items: center;display: flex;justify-content: center;">
-          <i class="material-icons" style="font-size: 40px !important;">sms</i>
+          <img style="height: 40px;" [src]="'../../../../../assets/imagenes/icono-chat-atc.png'" alt="">
+          <!-- <i class="material-icons" style="font-size: 40px !important;">sms</i> -->
         </div>
         <div class="col-8" style="font-size: 17px;line-height: 20px;text-align: left;">
           Atención al cliente
@@ -24,9 +25,10 @@
   <div class="chatSTAtc" *ngIf="Open" style="box-shadow: 0px 1px 4px #838383;">
     <div class="cerrarChatMediaAtc" (click)="Open=false;IsOpen.emit(false)">X</div>
     <ng-container select="[contenidoChat]">
-      <div class="headerChatAtc"*ngIf="Paso!=3">
+      <div class="headerChatAtc"*ngIf="Paso<=2">
         <div class="imgAsesorAtc">
-          <img [src]="'../../../../../assets/imagenes/174188.png'" alt="">
+          <img style="width: 4.5rem;height: 4.5rem;" [src]="'../../../../../assets/imagenes/Chat-Atc-Online.png'" alt="">
+          <!-- <img style="width: 4.5rem;height: 4.5rem;" [src]="'../../../../../assets/imagenes/Chat-Atc-Offline.png'" alt=""> -->
           <div class="nombreAsesorAtc">
             <div>
               Atención al cliente
@@ -34,12 +36,20 @@
             <div>
               BSG Institute
             </div>
-            <!-- <ng-container *ngIf="estadoLogueo!='false'">
-              <div class="textoAsesor" *ngIf="estadoLogueo!='false'">Soy {{nombreAsesorSplit[0]}} , {{mensajeStateAsesor}}</div>
-            </ng-container> -->
           </div>
-          <div class="stateAsesorAtc" [ngClass]="{'OnConectedAtc': stateAsesor==true}">
-
+        </div>
+      </div>
+      <div class="headerChatAtc"*ngIf="Paso==3 && Caso=='B'">
+        <div class="imgAsesorAtc">
+          <img style="width: 4.5rem;height: 4.5rem;" [src]="'../../../../../assets/imagenes/Chat-Atc-Online.png'" alt="">
+          <!-- <img style="width: 4.5rem;height: 4.5rem;" [src]="'../../../../../assets/imagenes/Chat-Atc-Offline.png'" alt=""> -->
+          <div class="nombreAsesorAtc">
+            <div>
+              Atención al cliente
+            </div>
+            <div>
+              BSG Institute
+            </div>
           </div>
         </div>
       </div>
@@ -141,20 +151,6 @@
         </div>
       </div>
       <div *ngIf="Paso==2 && Caso=='B' && CargandoInformacion==false" class="PrimeraInteraccionAtcFondo">
-        <!-- <div class="PrimeraInteraccionAtc">
-          <p><strong>¡Hola!</strong></p>
-          <p>Para continuar selecciona el curso sobre el que deseas realizar la consulta:</p>
-          <ul>
-            <li *ngFor="let curso of CursosPadreMatricula" (click)="CursoPadreHijoMatriculado(curso.idPGeneralPadre)">
-              <a href="#">{{ curso.nombrePGeneralPadre }}</a>
-              <ul *ngIf="selectedPadreIdMatricula === curso.idPGeneralPadre" class="lista-interior">
-                <li *ngFor="let hijo of getCursosHijo(curso.idPGeneralPadre)">
-                  <a (click)="EnviarFormularioAtc(hijo)" style="color: #033DAB;" href="#">{{ hijo.nombrePGeneralHijo }}</a>
-                </li>
-              </ul>
-            </li>
-          </ul>
-        </div> -->
         <div class="PrimeraInteraccionAtc">
           <p><strong>¡Hola!</strong></p>
           <p>Para continuar selecciona el curso sobre el que deseas realizar la consulta:</p>
@@ -171,13 +167,29 @@
             </li>
           </ul>
         </div>
-
+      </div>
+      <div *ngIf="Paso==3 && Caso=='B' && CargandoInformacion==false" class="PrimeraInteraccionAtcFondo">
+        <div class="PrimeraInteraccionAtc">
+          <p><strong>¿Con quién deseas comunicarte?</strong></p>
+          <p>Para continuar selecciona la opción que mejor se ajusta para realizar tu consulta:</p>
+          <ul>
+            <li (click)="ActualizarEsSoporteTecnico(false)">
+              <a style="cursor:pointer" href="#">Contactar con un Coordinador Académico</a>
+            </li>
+            <li (click)="ActualizarEsSoporteTecnico(true)">
+              <a style="cursor:pointer" href="#">Tengo problemas técnicos en el aula virtual</a>
+            </li>
+          </ul>
+        </div>
       </div>
       <ng-container *ngIf="Paso==3 && Caso=='A'">
         <app-chat-atencion-cliente-chat [idProgramageneral]="IdProgramageneral" [IdPespecificoPrograma]="IdPespecificoPrograma"></app-chat-atencion-cliente-chat>
       </ng-container>
-      <ng-container *ngIf="Paso==3 && Caso=='B'">
+      <ng-container *ngIf="Paso==4 && Caso=='B' && ChatSoporteTecnico==false">
         <app-chat-atencion-cliente-academico [idProgramageneral]="IdProgramageneral" [IdMatriculaCabecera]="IdMatriculaCabecera"></app-chat-atencion-cliente-academico>
+      </ng-container>
+      <ng-container *ngIf="Paso==4 && Caso=='B' && ChatSoporteTecnico==true">
+        <app-chat [idProgramageneral]="IdProgramageneral"></app-chat>
       </ng-container>
     </ng-container>
 

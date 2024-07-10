@@ -1,104 +1,81 @@
 <!-- holax -->
 <div class="contentChat" >
   <div class="headerChatAula" *ngIf="nombreasesorglobal!=''">
-    <div class="imgAsesor">
+    <div style="padding: 10px;" class="imgAsesor">
       <img [src]="img" (error)="ErrorImgAsesor()" alt="">
       <div class="nombreAsesor">
-        <ng-container *ngIf="estadoLogueo=='false'">
+        <div style="text-align: center;">
           Chatea en línea con {{nombreAsesorSplit[0]}} {{nombreAsesorSplit[1]}}
-        </ng-container>
-        <ng-container *ngIf="estadoLogueo!='false'">
-          Soporte Técnico
-        </ng-container>
+        </div>
 
-        <mat-icon (click)="GenerarLogVisitanteAulaVirtualAcademico()">autorenew</mat-icon>
+        <!-- <mat-icon style="cursor:pointer" (click)="GenerarLogVisitanteAulaVirtualAcademico()">autorenew</mat-icon> -->
         <div class="stateAsesor" [ngClass]="{'OnConected': stateAsesor==true}">
 
         </div>
       </div>
     </div>
-    <div class="textoAsesor" *ngIf="estadoLogueo!='false'">Soy {{nombreAsesorSplit[0]}} , {{mensajeStateAsesor}}</div>
+    <!-- <div class="textoAsesor" *ngIf="estadoLogueo!='false'">Soy {{nombreAsesorSplit[0]}} , {{mensajeStateAsesor}}</div> -->
   </div>
   <ng-container *ngIf="estadoLogueo=='false';else login">
-    <app-form-chat (SaveForm)="ObtenerIdAlumnoPorUsuario($event)" [IdPGeneral]="idProgramageneral"></app-form-chat>
+    <!-- <app-form-chat (SaveForm)="ObtenerIdAlumnoPorUsuario($event)" [IdPGeneral]="idProgramageneral"></app-form-chat> -->
   </ng-container>
 
   <ng-template #login>
-    <ng-container *ngIf="stateAsesor">
-      <div #contenidoMsj class="contentChatMsj" (click)="marcarChatAgentecomoleido()">
-        <div class="mensajeDefecto">Chat iniciado</div>
-        <div class="mensajeDefecto">{{nombreAsesorSplit[0]}} {{nombreAsesorSplit[1]}} se unió al Chat</div>
+    <div #contenidoMsj class="contentChatMsj" (click)="marcarChatAgentecomoleido()">
+      <div class="mensajeDefecto">Chat iniciado</div>
+      <div class="mensajeDefecto">{{nombreAsesorSplit[0]}} {{nombreAsesorSplit[1]}} se unió al Chat</div>
 
-        <ng-container *ngFor="let item of mensajesAnteriore;let i = index">
-            <div  [ngClass]="{'visitanteMsj': item.IdRemitente=='visitante','asesorMsj':item.IdRemitente=='asesor'}">
-              <div class="cntnmsj">
-                <div class="remitente">{{item.NombreRemitente.split(' ')[0]}}</div>
-                <div *ngIf="!item.esImagen" class="msj" [innerHtml]="item.Mensaje | safeHtml"></div>
-                <div class="msj">
-                  <img *ngIf="item.esImagen" [src]="item.url" alt="Imagen en el chat" style="width: 180px; height: 80px;" >
-                </div>
-                <div *ngFor="let pdfUrl of pdfsEnChat">
-                  <iframe [src]="pdfUrl" width="100%" height="150px"></iframe>
-                </div>
-                <ng-container *ngIf="item.IdRemitente=='visitante'">
-                  <ng-container *ngIf="item.estadoEnviado==false">
-                    <div class="statemsjEnviado">
-                      <i class="material-icons">access_time</i>
+      <ng-container *ngFor="let item of mensajesAnteriore;let i = index">
+          <div  [ngClass]="{'visitanteMsj': item.IdRemitente=='visitante','asesorMsj':item.IdRemitente=='asesor'}">
+            <div class="cntnmsj">
+              <div class="remitente">{{item.NombreRemitente.split(' ')[0]}}</div>
+              <div *ngIf="!item.esImagen" class="msj" [innerHtml]="item.Mensaje | safeHtml"></div>
+              <div class="msj">
+                <img *ngIf="item.esImagen" [src]="item.url" alt="Imagen en el chat" style="width: 180px; height: 80px;" >
+              </div>
+              <div *ngFor="let pdfUrl of pdfsEnChat">
+                <iframe [src]="pdfUrl" width="100%" height="150px"></iframe>
+              </div>
+              <ng-container *ngIf="item.IdRemitente=='visitante'">
+                <ng-container *ngIf="item.estadoEnviado==false">
+                  <div class="statemsjEnviado">
+                    <i class="material-icons">access_time</i>
+                  </div>
+                </ng-container>
+                <ng-container *ngIf="item.estadoEnviado!=false">
+                  <ng-container  *ngIf="(mensajesAnteriore.length-i)>=NroMensajesSinLeer">
+                    <div class="statemsjleido">
+                      <i class="material-icons" style="right: 4px;
+                      z-index: 3;">check</i>
+                      <i class="material-icons" style="right: 1px;
+                      z-index: 4;">check</i>
                     </div>
                   </ng-container>
-                  <ng-container *ngIf="item.estadoEnviado!=false">
-                    <ng-container  *ngIf="(mensajesAnteriore.length-i)>=NroMensajesSinLeer">
-                      <div class="statemsjleido">
-                        <i class="material-icons" style="right: 4px;
-                        z-index: 3;">check</i>
-                        <i class="material-icons" style="right: 1px;
-                        z-index: 4;">check</i>
-                      </div>
-                    </ng-container>
-                    <ng-container *ngIf="(mensajesAnteriore.length-i)<NroMensajesSinLeer">
-                      <div class="statemsjnoleido">
-                        <i class="material-icons" style="right: 4px;
-                        z-index: 3;">check</i>
-                        <i class="material-icons" style="right: 1px;
-                        z-index: 4;">check</i>
-                      </div>
-                    </ng-container>
+                  <ng-container *ngIf="(mensajesAnteriore.length-i)<NroMensajesSinLeer">
+                    <div class="statemsjnoleido">
+                      <i class="material-icons" style="right: 4px;
+                      z-index: 3;">check</i>
+                      <i class="material-icons" style="right: 1px;
+                      z-index: 4;">check</i>
+                    </div>
                   </ng-container>
-
                 </ng-container>
 
-              </div>
-            </div>
-        </ng-container>
+              </ng-container>
 
-      </div>
-      <div class="footerChatAula" (click)="marcarChatAgentecomoleido()">
-        <input class="chat-box-textinput" [ngClass]="{'inputActive':inputActive}" (keyup.enter)="BuscarProgramas(false);enviarmsj()" (focus)="inputActive=true"
-          (focusout)="inputActive=false" placeholder="Escribe tu mensaje aquí " [(ngModel)]="chatBox">
-          <i class="material-icons" (click)="BuscarProgramas(true);enviarmsj()">send</i>
-          <i class="material-icons addfile" (click)="fileInput.click()">attach_file</i>
-        <!-- <input  #fileInput type="file" style="display:none;" accept="image/png, image/gif, image/jpeg" (change)="AgregarArchivoChatSoporte($event)"> -->
-        <input  #fileInput type="file" style="display:none;" type="file" style="display:none;" accept="image/png, image/jpeg, image/jpg, image/jfif, application/pdf, application/msword, application/vnd.openxmlformats-officedocument.wordprocessingml.document, application/vnd.ms-excel, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-          (change)="AgregarArchivoChatSoporte($event)">
-      </div>
-    </ng-container>
-    <ng-container *ngIf="!stateAsesor">
-      <ng-container *ngIf="msjEnviado!=''">
-        <div style="padding: 20px;">
-          {{msjEnviado}}
-        </div>
+            </div>
+          </div>
       </ng-container>
-      <ng-container *ngIf="msjEnviado==''">
-        <textarea placeholder="Tu Mensaje" [(ngModel)]="chatBox" cols="30" rows="4" style="    width: 90%;
-        margin: 5%;padding: 10px;" (keyup.enter)="BuscarProgramas(false);enviarmsj()"></textarea>
-        <div style="    width: 100%;
-        display: flex;
-        justify-content: center;
-        margin-bottom: 10%;">
-          <app-default-button style="background:#FF4E55;border-radius: 5px 5px 5px 5px;"  (click)="BuscarProgramas(true);enviarmsjOff()" [confs]="{color:'primary',titulo:'Enviar'}" [style]="'padding:0px 30px;margin:0px;'"
-          ></app-default-button>
-        </div>
-      </ng-container>
-    </ng-container>
+
+    </div>
+    <div class="footerChatAula" (click)="marcarChatAgentecomoleido()">
+      <input class="chat-box-textinput" [ngClass]="{'inputActive':inputActive}" (keyup.enter)="BuscarProgramas(false);enviarmsj()" (focus)="inputActive=true"
+        (focusout)="inputActive=false" placeholder="Escribe tu mensaje aquí " [(ngModel)]="chatBox">
+        <i class="material-icons" (click)="BuscarProgramas(true);enviarmsj()">send</i>
+        <i class="material-icons addfile" (click)="fileInput.click()">attach_file</i>
+      <!-- <input  #fileInput type="file" style="display:none;" accept="image/png, image/gif, image/jpeg" (change)="AgregarArchivoChatSoporte($event)"> -->
+      <input  #fileInput type="file" style="display:none;" type="file" style="display:none;" accept="image/png, image/jpeg, image/jpg, image/jfif, application/pdf, application/msword, application/vnd.openxmlformats-officedocument.wordprocessingml.document, application/vnd.ms-excel, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+        (change)="AgregarArchivoChatSoporte($event)">
+    </div>
   </ng-template>
 </div>

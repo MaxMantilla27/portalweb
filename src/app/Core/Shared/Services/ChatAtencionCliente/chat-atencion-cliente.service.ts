@@ -71,5 +71,12 @@ export class ChatAtencionClienteService {
       return EMPTY;
     }
   }
+  public ActualizarEsSporteTecnicoChatAtencionClienteContacto(IdChatAtencionClienteContacto:number,EsSoporteTecnico:boolean):Observable<any>{
+    if(this.isBrowser){
+      return this.http.post<any>(this.urlBase+'/ActualizarEsSporteTecnicoChatAtencionClienteContacto?IdChatAtencionClienteContacto='+IdChatAtencionClienteContacto+'&EsSoporteTecnico='+EsSoporteTecnico,{});
+    }else{
+      return EMPTY;
+    }
+  }
 
 }

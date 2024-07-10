@@ -118,6 +118,7 @@ export class ChatAtencionClienteComponent implements OnInit,OnChanges {
   public IdContactoPortalSegmento:any;
   public RegistroHistoricoUsuario:any
   public IdMatriculaCabecera=0;
+  public ChatSoporteTecnico=false
   ngOnInit(): void {
     console.log()
     this.IdContactoPortalSegmento=this._SessionStorageService.SessionGetValue('usuarioWeb')
@@ -136,6 +137,7 @@ export class ChatAtencionClienteComponent implements OnInit,OnChanges {
             this.Paso=this.RegistroHistoricoUsuario.pasoSiguiente;
             this.Caso=this.RegistroHistoricoUsuario.casoSiguiente;
             this.IdMatriculaCabecera=this.RegistroHistoricoUsuario.idMatriculaCabecera;
+            this.ChatSoporteTecnico=this.RegistroHistoricoUsuario.esSoporteTecnico;
           }
         }
       })
@@ -572,5 +574,33 @@ export class ChatAtencionClienteComponent implements OnInit,OnChanges {
 
     // this.estadoLogueo="true"
     // this.hubConnection.invoke("actualizarDatosAlumno",respuesta.idAlumno,respuesta.id);
+  }
+  ActualizarEsSoporteTecnico(EsSoporteTecnico:boolean){
+    this.RegistroChatDetalleAtc.IdChatAtencionClienteContacto=this.IdChatAtencionClienteContacto;
+    this.RegistroChatDetalleAtc.PasoActual=3
+    this.RegistroChatDetalleAtc.CasoActual='B'
+    this.RegistroChatDetalleAtc.PasoSiguiente=4
+    this.RegistroChatDetalleAtc.CasoSiguiente='B'
+    if(EsSoporteTecnico==false){
+      this.RegistroChatDetalleAtc.MensajeEnviado='Contactar con un Coordinador Académico';
+    }
+    else{
+      this.RegistroChatDetalleAtc.MensajeEnviado='Tengo problemas tecnicos en el aula virtual';
+    }
+    this._ChatAtencionClienteService.RegistrarChatAtencionClienteContactoDetalle(this.RegistroChatDetalleAtc).pipe(takeUntil(this.signal$)).subscribe({
+      next:x=>{
+      },
+      complete:()=>{
+        this._ChatAtencionClienteService.ActualizarEsSporteTecnicoChatAtencionClienteContacto(this.IdChatAtencionClienteContacto,EsSoporteTecnico).pipe(takeUntil(this.signal$)).subscribe({
+          next:x=>{
+          },
+          complete:()=> {
+            this.Paso=4,
+            this.Caso='B'
+            this.ChatSoporteTecnico=EsSoporteTecnico;
+          },
+        })
+      }
+    })
   }
 }
