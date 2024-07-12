@@ -48,4 +48,11 @@ export class ChatEnLineaService {
       return EMPTY;
     }
   }
+  public ObtenerCoordinadorChat(IdMatriculaCabecera:number):Observable<any>{
+    if(this.isBrowser){
+      return this.http.get<any>(this.urlBase+'/ObtenerCoordinadorChat?IdMatriculaCabecera='+IdMatriculaCabecera);
+    }else{
+      return EMPTY;
+    }
+  }
 }

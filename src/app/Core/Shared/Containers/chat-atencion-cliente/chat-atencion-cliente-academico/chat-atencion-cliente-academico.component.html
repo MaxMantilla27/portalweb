@@ -1,11 +1,14 @@
 <!-- holax -->
 <div class="contentChat" >
-  <div class="headerChatAula" *ngIf="nombreasesorglobal!=''">
+  <div class="headerChatAula" >
     <div style="padding: 10px;" class="imgAsesor">
       <img [src]="img" (error)="ErrorImgAsesor()" alt="">
       <div class="nombreAsesor">
-        <div style="text-align: center;">
+        <div *ngIf="nombreasesorglobal!=''" style="text-align: center;">
           Chatea en línea con {{nombreAsesorSplit[0]}} {{nombreAsesorSplit[1]}}
+        </div>
+        <div *ngIf="nombreasesorglobal==''" style="text-align: center;">
+          Chatea en línea con tu coordinador académico
         </div>
 
         <!-- <mat-icon style="cursor:pointer" (click)="GenerarLogVisitanteAulaVirtualAcademico()">autorenew</mat-icon> -->
@@ -16,11 +19,7 @@
     </div>
     <!-- <div class="textoAsesor" *ngIf="estadoLogueo!='false'">Soy {{nombreAsesorSplit[0]}} , {{mensajeStateAsesor}}</div> -->
   </div>
-  <ng-container *ngIf="estadoLogueo=='false';else login">
-    <!-- <app-form-chat (SaveForm)="ObtenerIdAlumnoPorUsuario($event)" [IdPGeneral]="idProgramageneral"></app-form-chat> -->
-  </ng-container>
-
-  <ng-template #login>
+  <ng-container>
     <div #contenidoMsj class="contentChatMsj" (click)="marcarChatAgentecomoleido()">
       <div class="mensajeDefecto">Chat iniciado</div>
       <div class="mensajeDefecto">{{nombreAsesorSplit[0]}} {{nombreAsesorSplit[1]}} se unió al Chat</div>
@@ -77,5 +76,5 @@
       <input  #fileInput type="file" style="display:none;" type="file" style="display:none;" accept="image/png, image/jpeg, image/jpg, image/jfif, application/pdf, application/msword, application/vnd.openxmlformats-officedocument.wordprocessingml.document, application/vnd.ms-excel, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
         (change)="AgregarArchivoChatSoporte($event)">
     </div>
-  </ng-template>
+  </ng-container>
 </div>
