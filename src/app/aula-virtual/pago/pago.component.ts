@@ -102,6 +102,17 @@ export class PagoComponent implements OnInit,OnDestroy {
   public showTooltip: boolean = false;
   public listaCronogramaPagosJson:any=[];
   public codigoIso: string = 'INTC';
+  listaIdsAlumnosBloqueoPagos: number[] = [
+    10653894,
+    10667121,
+    10667120,
+    10667118,
+    10667117,
+    10662924,
+    10662925
+  ];
+  public BloquearContenidoPagos=false;
+  public IdAlumno=0;
   ngOnInit(): void {
     this._HelperService.recibirDataPais
       .pipe(takeUntil(this.signal$))
@@ -118,6 +129,11 @@ export class PagoComponent implements OnInit,OnDestroy {
       });
     let i=0
     this._HelperService.recibirCombosPerfil.pipe(takeUntil(this.signal$)).subscribe((x) => {
+      this.IdAlumno=x.datosAlumno.idAlumno;
+      this.BloquearContenidoPagos=false
+      if (this.listaIdsAlumnosBloqueoPagos.includes(this.IdAlumno)){
+        this.BloquearContenidoPagos=true
+      }
       this.textoBienvenido = x.datosAlumno.nombres+
       ', aquí podrás realizar los pagos de tus cronogramas de cuotas';
       this.email =x.datosAlumno.email

@@ -35,6 +35,17 @@ export class MisPagosComponent implements OnInit,OnDestroy {
   ];
   public textoBienvenido = '';
   public misPagos:any
+  public IdAlumno=0;
+  listaIdsAlumnosBloqueoPagos: number[] = [
+    10653894,
+    10667121,
+    10667120,
+    10667118,
+    10667117,
+    10662924,
+    10662925
+  ];
+  public BloquearContenidoPagos=false;
   ngOnInit(): void {
 
     let t:string='Mis Pagos'
@@ -44,6 +55,11 @@ export class MisPagosComponent implements OnInit,OnDestroy {
 
       this.textoBienvenido =x.datosAlumno.nombres+
       ', aquí podrás realizar los pagos según tu cronograma de cuotas';
+      this.IdAlumno=x.datosAlumno.idAlumno;
+      this.BloquearContenidoPagos=false
+      if (this.listaIdsAlumnosBloqueoPagos.includes(this.IdAlumno)){
+        this.BloquearContenidoPagos=true
+      }
     })
     this.ObtenerCronogramaPagoAlumno()
   }

@@ -20,29 +20,31 @@
 
 <div class="container">
   <div class="row rowpaddAv">
-    <div class="col-12"*ngIf="misPagos!=undefined">
-      <div class="contentMisPagos row" *ngFor="let item of misPagos">
-        <div class="col-12 col-md-12 col-lg-8 " style="margin-bottom: 15px;">
-          <div class="titleContentMisPagos">{{item.pGeneral}}</div>
-          <div class="row" style="justify-content: space-between;align-items: center;">
-            <div class="col-12 col-md-6 col-lg-6 itemsMisPagos">
-              <img src="../../../assets/icons/positivo-hecho-20.svg" alt="Realizado">
-              <div>Cuotas pagadas:</div>
-              <p>{{item.cuotasPagadas}}/{{item.cuotasPendientes+item.cuotasPagadas}}</p>
-            </div>
-            <div class="col-12 col-md-6 col-lg-6 itemsMisPagos" *ngIf="item.cuotasPendientes>0">
-              <img src="../../../assets/icons/alarma.svg" alt="Alarma">
-              <div>Proximo Vencimiento :</div>
-              <p>{{item.fechaVencimiento | date:'dd/MM/yyyy'}}</p>
+    <div *ngIf="BloquearContenidoPagos!=true">
+      <div class="col-12"*ngIf="misPagos!=undefined">
+        <div class="contentMisPagos row" *ngFor="let item of misPagos">
+          <div class="col-12 col-md-12 col-lg-8 " style="margin-bottom: 15px;">
+            <div class="titleContentMisPagos">{{item.pGeneral}}</div>
+            <div class="row" style="justify-content: space-between;align-items: center;">
+              <div class="col-12 col-md-6 col-lg-6 itemsMisPagos">
+                <img src="../../../assets/icons/positivo-hecho-20.svg" alt="Realizado">
+                <div>Cuotas pagadas:</div>
+                <p>{{item.cuotasPagadas}}/{{item.cuotasPendientes+item.cuotasPagadas}}</p>
+              </div>
+              <div class="col-12 col-md-6 col-lg-6 itemsMisPagos" *ngIf="item.cuotasPendientes>0">
+                <img src="../../../assets/icons/alarma.svg" alt="Alarma">
+                <div>Proximo Vencimiento :</div>
+                <p>{{item.fechaVencimiento | date:'dd/MM/yyyy'}}</p>
+              </div>
             </div>
           </div>
-        </div>
-        <div class="col-12 col-md-12 col-lg-4 " style="display: flex;
-        align-items: flex-end;
-        justify-content: flex-end;">
+          <div class="col-12 col-md-12 col-lg-4 " style="display: flex;
+          align-items: flex-end;
+          justify-content: flex-end;">
 
-          <app-default-button [confs]="{color:'primary',titulo:'Ver estado de cuenta'}"
-            [style]="'margin-top: 20px;margin-bottom: 0px;'" (click)="RedirigiPagoMatricula(item)"></app-default-button>
+            <app-default-button [confs]="{color:'primary',titulo:'Ver estado de cuenta'}"
+              [style]="'margin-top: 20px;margin-bottom: 0px;'" (click)="RedirigiPagoMatricula(item)"></app-default-button>
+          </div>
         </div>
       </div>
     </div>

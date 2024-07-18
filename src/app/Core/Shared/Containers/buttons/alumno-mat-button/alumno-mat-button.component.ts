@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, OnInit, SimpleChanges, ViewEncapsulation } from '@angular/core';
+import { Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges, ViewEncapsulation } from '@angular/core';
 import { MAT_SELECT_CONFIG } from '@angular/material/select';
 import { Router } from '@angular/router';
 import { FacebookLoginProvider, SocialAuthService } from 'angularx-social-login';
@@ -6,6 +6,7 @@ import { BasicUrlIcon } from 'src/app/Core/Models/BasicDTO';
 import { DatoObservableDTO } from 'src/app/Core/Models/DatoObservableDTO';
 import { HelperService } from '../../../Services/helper.service';
 import { SessionStorageService } from '../../../Services/session-storage.service';
+import { Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-alumno-mat-button',
@@ -19,7 +20,8 @@ import { SessionStorageService } from '../../../Services/session-storage.service
     },
   ],
 })
-export class AlumnoMatButtonComponent implements OnInit,OnChanges {
+export class AlumnoMatButtonComponent implements OnInit,OnChanges,OnDestroy {
+  private signal$ = new Subject();
   constructor(
     private _SessionStorageService: SessionStorageService,
     private _router: Router,
@@ -30,11 +32,25 @@ export class AlumnoMatButtonComponent implements OnInit,OnChanges {
   @Input() nombres: string = '';
   @Input() user: string = '';
   @Input() val:any;
+  @Input() IdAlumno:any;
   public DatoObservable: DatoObservableDTO ={
     datoAvatar: false,
     datoContenido: false,
   }
   public buttons: Array<BasicUrlIcon> = [];
+  listaIdsAlumnosBloqueoPagos: number[] = [
+    10653894,
+    10667121,
+    10667120,
+    10667118,
+    10667117,
+    10662924,
+    10662925
+  ];
+  ngOnDestroy(): void {
+    this.signal$.next(true)
+    this.signal$.complete()
+  }
   ngOnInit(): void {
 
   }
@@ -43,6 +59,8 @@ export class AlumnoMatButtonComponent implements OnInit,OnChanges {
     // let isCarrera =JSON.parse(this._SessionStorageService.SessionGetValue('TipoCarrera'))
     let isCarrera =this._SessionStorageService.SessionGetValue('TipoCarrera')
     console.log(isCarrera)
+    console.log(this.val)
+    console.log(this.IdAlumno)
     if(this.val!=undefined){
       if(this.val.IdProveedor==0){
         this.buttons.push({
@@ -51,12 +69,14 @@ export class AlumnoMatButtonComponent implements OnInit,OnChanges {
           Icon: 'play_lesson',
           value:'../../../../../../assets/icons/mis-cursos.svg',
         });
-        this.buttons.push({
-          Nombre: 'Mis Pagos',
-          Url: '/AulaVirtual/MisPagos',
-          Icon: 'monetization_on',
-          value: '../../../../../../assets/icons/mis-pagos.svg',
-        });
+        if (!this.listaIdsAlumnosBloqueoPagos.includes(this.IdAlumno)) {
+          this.buttons.push({
+            Nombre: 'Mis Pagos',
+            Url: '/AulaVirtual/MisPagos',
+            Icon: 'monetization_on',
+            value: '../../../../../../assets/icons/mis-pagos.svg',
+          });
+        }
         this.buttons.push({
           Nombre: 'Ver mi perfil',
           Url: '/AulaVirtual/MiPerfil',
@@ -107,12 +127,14 @@ export class AlumnoMatButtonComponent implements OnInit,OnChanges {
             Icon: 'play_lesson',
             value:'../../../../../../assets/icons/mis-cursos.svg',
           });
-          this.buttons.push({
-            Nombre: 'Mis Pagos',
-            Url: '/AulaVirtual/MisPagos',
-            Icon: 'monetization_on',
-            value: '../../../../../../assets/icons/mis-pagos.svg',
-          });
+          if (!this.listaIdsAlumnosBloqueoPagos.includes(this.IdAlumno)) {
+            this.buttons.push({
+              Nombre: 'Mis Pagos',
+              Url: '/AulaVirtual/MisPagos',
+              Icon: 'monetization_on',
+              value: '../../../../../../assets/icons/mis-pagos.svg',
+            });
+          }
           this.buttons.push({
             Nombre: 'Ver mi perfil',
             Url: '/AulaVirtual/MiPerfil',

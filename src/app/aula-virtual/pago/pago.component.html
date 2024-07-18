@@ -28,432 +28,434 @@
   </div>
 </div>
 <div class="container" style="border-bottom: 2px solid #E7E7E7!important;padding-bottom: 2rem;">
-  <ng-container *ngIf="CronogramaPago!=undefined">
-    <div class="row rowpaddAv" style="align-items: center;">
-      <!-- <div class="COL-12 titleCronograma">
-        {{CronogramaPago.pGeneral}}
-      </div> -->
-      <div class="col-12 col-md-4 col-lg-3 itemsMisPagos">
-        <img src="../../../assets/icons/positivo-cuadrado-20.svg" alt="">
-        <div>Cuotas pagadas:</div>
-        <p>{{CronogramaPago.cuotasPagadas}}/{{CronogramaPago.cuotasPagadas+CronogramaPago.cuotasPendientes}}</p>
-      </div>
-      <div class="col-12 col-md-4 col-lg-4 itemsMisPagos"
-        >
-        <ng-container *ngIf="CronogramaPago.cuotasPendientes>0">
-          <img src="../../../assets/icons/alarma.svg" alt="">
-          <div>Proximo Vencimiento :</div>
-          <p>{{CronogramaPago.fechaVencimiento | date:'dd/MM/yyyy'}}</p>
-        </ng-container>
-
-
-      </div>
-      <!-- *ngIf=" idAlumno==9818325 || idAlumno== 9938237 || idAlumno==9672|| idAlumno==10214140 ||idAlumno==17267 ||idAlumno==10451942 ||idAlumno==10245248" -->
-      <!-- <ng-container
-      *ngIf="(idPasarela==13 || idPasarela==5  ||  idPasarela==7)"
-      >
-        <ng-container style="justify-content: flex-end;" *ngIf="EstadoAfiliado!=undefined && CronogramaPago!=undefined">
-          <ng-container *ngIf="CronogramaPago.cuotasPendientes>0 || EstadoAfiliado==true">
-            <div class="col-12 col-md-2 col-lg-2 itemsMisPagos" style="padding: 0%;">
-              <div>Estado :</div>
-              <ng-container #Desafiliado *ngIf="EstadoAfiliado==false">
-                <p >Desafiliado&nbsp;&nbsp;</p>
-                <img src="../../../assets/icons/denegado-error-rojo.svg" alt="">
-              </ng-container>
-              <ng-container #Afiliado *ngIf="EstadoAfiliado==true">
-                <p >Afiliado&nbsp;&nbsp;</p>
-                <img src="../../../assets/icons/positivo-hecho-20.svg" alt="">
-              </ng-container>
-            </div>
-          </ng-container>
-        </ng-container>
-      </ng-container> -->
-    </div>
-    <div class="row" style="align-items: center;">
-      <p>
-        Selecciona la cuota o número de cuotas que desees pagar:
-      </p>
-    </div>
-    <div class="row">
-      <div class="col-12 col-md-7 col-lg-7" >
-        <div class="table-resposive" style="padding-top: 10px;">
-          <table style="width: 100%" class="table">
-            <thead>
-              <tr>
-                <th style="min-width: 60px;">Pagar</th>
-                <th style="min-width: 60px;">Nro. Cuota</th>
-                <th style="min-width: 60px;">Monto</th>
-                <th style="min-width: 60px;">Moneda</th>
-                <th style="min-width: 60px;">Mora</th>
-                <!-- <th style="min-width: 60px;">Costos Gestión de Cóbranza</th> -->
-                <th style="min-width: 60px;">Fecha de Vencimiento</th>
-                <th style="min-width: 60px;">Fecha de Pago</th>
-                <th style="min-width: 60px;">Estado</th>
-              </tr>
-            </thead>
-            <tr *ngFor="let item of CronogramaPago.registroCuota;let i=index"
-              [ngClass]="{'pagoActivo':item.cancelado!=true,'pagoSelect':item.estado==true}"
-              (click)="ChangeEstadoCronograma(item)">
-              <td>
-                <ng-container *ngIf="item.cancelado==true">
-                  <i class="material-icons pagoRealizado">check_box</i>
-                </ng-container>
-                <ng-container *ngIf="item.estado==true && item.cancelado!=true">
-                  <i class="material-icons">check_box</i>
-                </ng-container>
-                <ng-container *ngIf="item.estado!=true && item.cancelado!=true">
-                  <i class="material-icons">check_box_outline_blank</i>
-                </ng-container>
-              </td>
-              <td>{{item.numeroCuotaMostrar}}</td>
-              <td>{{FormatoMilesDecimales(item.cuota)}}</td>
-              <td>{{item.codigoMoneda}}</td>
-              <td>{{FormatoMilesDecimales(item.moraCalculada)}}</td>
-              <!-- <td>{{item.moraCalculada | number:'1.2-2'}}</td> -->
-              <td>{{item.fechaVencimiento | date:'dd/MM/yyyy'}}</td>
-              <td>
-                <ng-container *ngIf="item.fechaPago!=null">{{item.fechaPago | date:'dd/MM/yyyy'}}</ng-container>
-              </td>
-              <td>
-                <ng-container *ngIf="item.cancelado==true;else noCancelado">
-                  <span
-                  style="color: rgb(0, 226, 0) !important;">
-                    Pagado
-                  </span>
-                </ng-container>
-                <ng-template #noCancelado>
-                  <ng-container *ngIf="item.estado==true">
-                    Por pagar
-                  </ng-container>
-                  <ng-container *ngIf="item.estado!=true">
-                    Pendiente
-                  </ng-container>
-
-                </ng-template>
-
-              </td>
-            </tr>
-          </table>
-        </div>
-        <div *ngIf="EstadoAfiliado==true">
-          <div style="padding: 10px 5px 10px 5px; display: flex;">
-            <div style="margin-right: 5px;">
-              <i class="material-icons" style="color: #0076FF;cursor: pointer;" (click)="OpenModalEliminarSuscripcion()">check_box</i>
-            </div>
-            <div style="position: relative;">
-              <div style="font-weight: bold;">
-                  <span style="display: inline-block; color: #4A4A49; margin-right: 5px;">Afiliado a </span>
-                  <span style="display: inline-block; color: #0076FF;">pagos recurrentes
-                      <i class="material-icons" style="vertical-align: middle; cursor: pointer; color: #0076FF;"
-                         (mouseover)="showTooltip = true" (mouseleave)="showTooltip = false"
-                         (touchstart)="showTooltip = true" (touchend)="showTooltip = false"
-                         ontouchstart="void(0)" ontouchend="void(0)">info</i>
-                  </span>
-              </div>
-              <div *ngIf="showTooltip" style="position: absolute; background-color: #EFF8FF; border: solid 2px #0076FF; border-radius: 15px; padding: 10px; z-index: 1; margin-top: -90px; width: auto; max-width: 100vw; white-space: normal;font-size: 12px;">
-                Te encuentras afiliado a pagos recurrentes, para desafiliarte desmarca la casilla.
-              </div>
-          </div>
-        </div>
-
-
-        </div>
-      </div>
-      <div *ngIf="total!=0" class="col-12 col-md-5 col-lg-5" >
-        <div class="row" style="justify-content: center;padding: 10px 10px 0px 10px;">
-          <div class="col-12 col-md-10 col-lg-10 CardPagoMisPagos">
-            <div class="titleCardPago">Resumen de pago</div>
-            <div class="contentCardPago row">
-              <div class="col-12 row sub">
-                <div class="col-8">Concepto</div>
-                <div class="col-4">Monto</div>
-              </div>
-              <ng-container *ngFor="let item of CronogramaPago.registroCuota;let i=index">
-                <div class="col-12 row cen" *ngIf="item.estado==true">
-                  <div *ngIf="item.numeroCuotaMostrar=='MATRICULA'" class="col-8">{{item.numeroCuotaMostrar}}</div>
-                  <div *ngIf="item.numeroCuotaMostrar!='MATRICULA'" class="col-8">Cuota N° {{item.numeroCuotaMostrar}}</div>
-                  <!-- <div class="col-4">{{item.simbolo}} {{item.cuota + item.moraCalculada | number:'1.2-2'}}</div> -->
-                  <div class="col-4">
-                    <!-- {{item.simbolo}}  -->
-                    {{FormatoMilesDecimales(item.cuota + item.moraCalculada)}}
-                    {{CronogramaPago.registroCuota[0].codigoMoneda}}
-                  </div>
-                </div>
-              </ng-container>
-              <div class="col-12 row tot sub">
-                <div class="col-8">Total a pagar</div>
-                <div class="col-4">
-                  <!-- {{CronogramaPago.registroCuota[0].simbolo}}  -->
-                  {{FormatoMilesDecimales(total)}}
-                  {{CronogramaPago.registroCuota[0].codigoMoneda}}
-                </div>
-              </div>
-              <div class="col-12 row">
-                <div class="col-12 row sub mt-2">
-                  <span>
-                    Método de pago aceptados:
-                  </span>
-                </div>
-                <div class="row mb-3" style="padding: 0px!important;">
-                  <span >
-                    <div style="margin-right: 10px;"> <!-- Añadí un margen derecho para separar el texto de las imágenes -->
-                      Tarjeta de débito/crédito:
-                    </div>
-                    <div style="display: flex; align-items: center; flex-wrap: wrap;">
-                      <ng-container *ngFor="let imgMedioPago of tarjetas">
-                        <mat-radio-button
-                          [value]="imgMedioPago"
-                          (change)="onChangeRadioButton(imgMedioPago)"
-                          class="m-2"
-                          color="primary"
-                          *ngIf="validadorPagosMultiples.length != 0"
-                        >
-                          <img [src]="'../../../../assets/icons/'+imgMedioPago.img" alt="" class="gray-border" style="width: 35px;">
-                        </mat-radio-button>
-                        <img [src]="'../../../../assets/icons/'+imgMedioPago.img" alt="" class="m-2" style="width: 35px;" *ngIf="validadorPagosMultiples.length == 0">
-                      </ng-container>
-                      <mat-error *ngIf="validadorPagosMultiples?.length > 0 && medioPagoSeleccionado == undefined && eventosPagoSelccion == true" style="margin-left: 10px;"> <!-- Añadí un margen izquierdo para separar el mensaje de error del texto -->
-                        Debe seleccionar un medio de pago
-                      </mat-error>
-                    </div>
-
-                  </span>
-                </div>
-
-                <ng-container *ngIf="validadorPagosChile!=true">
-                  <span class="tot mb-3">
-                    Tipo de comprobante:
-                  </span>
-                  <div class="row comprobatePagoTarjeta">
-                    <mat-radio-group color="primary" [(ngModel)]="DatosFacturacion.Comprobante">
-                      <mat-radio-button class="m-1" [value]="false">Boleta</mat-radio-button>
-                      <mat-radio-button class="m-1" [value]="true">Factura</mat-radio-button>
-                    </mat-radio-group>
-                  </div>
-                  <ng-container *ngIf="DatosFacturacion.Comprobante!=false">
-                    <mat-form-field appearance="outline" [floatLabel]="'always'" style="width: 100%;">
-                      <mat-label>Razón Social</mat-label>
-                      <input type="text" [(ngModel)]="DatosFacturacion.RazonSocial" placeholder="Razón Social" matInput />
-                    </mat-form-field>
-                    <mat-form-field appearance="outline" [floatLabel]="'always'" style="width: 100%;">
-                      <mat-label *ngIf="this.codigoIso=='PE'">Número RUC</mat-label>
-                      <mat-label *ngIf="this.codigoIso!='PE'">Número Tributario</mat-label>
-                      <input *ngIf="this.codigoIso=='PE'" type="text" [(ngModel)]="DatosFacturacion.CodigoTributario" placeholder="Ingresa Número RUC" matInput />
-                      <input  *ngIf="this.codigoIso!='PE'" type="text" [(ngModel)]="DatosFacturacion.CodigoTributario" placeholder="Ingresa Número Tributario" matInput />
-                    </mat-form-field>
-                  </ng-container>
-                </ng-container>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="row"  style="justify-content: center;">
-          <div class="col-12 col-md-10 col-lg-10 CardPagoMisPagos" style="border-color: transparent !important;">
-            <p class="m-2" style="font-size: 11px !important;">
-              <!-- * El cargo del importe se efectuará en la moneda indicada en el resumen de pago.
-              El tipo de cambio estará sujeto por la entidad bancaria que utilices -->
-            </p>
-          </div>
-        </div>
-        <div class="row"  style="justify-content: center;padding: 0px 15px 0px 15px;">
-          <div class="col-12 col-md-10 col-lg-10 CardPagoMisPagos" style="border-color: transparent !important;width: 25rem;">
-            <div *ngIf="idPasarela!=0 && EstadoAfiliado!=true">
-              <div *ngIf="(idPasarela==7 && medioPagoSeleccionado.idFormaPago==52)||idPasarela==5 ||idPasarela==13||idPasarela==16||idPasarela==18"
-              class="row" style="margin-top: 10px;">
-                <div style="padding: 10px 5px 10px 5px; display: flex;">
-                  <div class="col-1">
-                    <i class="material-icons" style="cursor:pointer"  *ngIf="pagoRecurrenteActivado==false" (click)="pagoRecurrenteActivado=true">check_box_outline_blank</i>
-                    <i class="material-icons" style="cursor:pointer"  *ngIf="pagoRecurrenteActivado==true" (click)="pagoRecurrenteActivado=false" style="color: #0076FF">check_box</i>
-                  </div>
-                  <div class="col-11" style="position: relative;">
-                    <div style="font-weight: bold;">
-                        <span style="display: inline-block; color: #4A4A49; margin-right: 5px;">Afiliarme a </span>
-                        <span style="display: inline-block; color: #0076FF;">pagos recurrentes
-                            <i class="material-icons" style="vertical-align: middle; cursor: pointer; color: #0076FF;"
-                               (mouseover)="showTooltip = true" (mouseleave)="showTooltip = false"
-                               (touchstart)="showTooltip = true" (touchend)="showTooltip = false"
-                               ontouchstart="void(0)" ontouchend="void(0)">info</i>
-                        </span>
-                    </div>
-                    <div *ngIf="showTooltip" style="position: absolute; background-color: #EFF8FF; border: solid 2px #0076FF; border-radius: 15px; padding: 10px; z-index: 1; margin-top: -90px; width: auto; max-width: 90vw; white-space: normal;">
-                        Paga siempre puntual. Tu pago se realizará de manera automática.
-                    </div>
-                </div>
-
-
-
-
-
-
-                </div>
-              </div>
-            </div>
-            <div *ngIf="pagoRecurrenteActivado==false" class="col-12 row bot">
-              <div style="justify-content: center;display: flex;">
-                <app-default-button
-                [disabled]="total==0"
-                [confs]="{color:'primary',titulo:'Continuar'}"
-                [style]="'margin-top: 20px;padding: 0px 40px;'"
-                (ButtoclClick)="EnviarSolicitudPago()">
-                </app-default-button>
-              </div>
-            </div>
-            <div *ngIf="pagoRecurrenteActivado" class="col-12 row bot">
-              <div style="justify-content: center;display: flex;">
-                <app-default-button
-                [disabled]="total==0"
-                [confs]="{color:'primary',titulo:'Continuar'}"
-                [style]="'margin-top: 20px;padding: 0px 40px;'"
-                (ButtoclClick)="OpenModalMetodoPagoSucripcion()">
-                </app-default-button>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- <div
-          class="row mt-2 mb-2"
-          style="margin-top: 40px;justify-content: center;">
-          <div
-          [ngClass]="EstadoAfiliado==true?'col-12 col-md-10 col-lg-10 cardAfiliacionPagosRecurrentesSeleccionado':'col-12 col-md-8 col-lg-6 cardAfiliacionPagosRecurrentes'"
-          class="col-12 col-md-10 col-lg-10 cardAfiliacionPagosRecurrentesSeleccionado">
-            <div class="card p-3">
-              <div class="form-check">
-                <input class="form-check-input"
-                (change)="afiliacionPagoRecurrente()"
-                type="checkbox"
-                id="flexCheckDefault">
-                <label class="form-check-label" for="flexCheckDefault">
-                  Afiliarse a pagos recurrentes
-                </label>
-              </div>
-              <p>Paga siempre puntual. Tu pago se realizará de manera automatica.</p>
-            </div>
-          </div>
+  <div *ngIf="BloquearContenidoPagos!=true">
+    <ng-container *ngIf="CronogramaPago!=undefined">
+      <div class="row rowpaddAv" style="align-items: center;">
+        <!-- <div class="COL-12 titleCronograma">
+          {{CronogramaPago.pGeneral}}
         </div> -->
-      </div>
-      <div *ngIf="total==0" class="col-12 col-md-5 col-lg-5" >
-        <div class="row" style="justify-content: center;padding: 10px 10px 0px 10px;">
-          <div class="col-12 col-md-10 col-lg-10 CardPagoMisPagos">
-            <div class="titleCardPago">Resumen de pago</div>
-            <div class="contentCardPago row">
-              <div class="col-12 row sub">
-                <div class="col-8">Concepto</div>
-                <div class="col-4">Monto</div>
+        <div class="col-12 col-md-4 col-lg-3 itemsMisPagos">
+          <img src="../../../assets/icons/positivo-cuadrado-20.svg" alt="">
+          <div>Cuotas pagadas:</div>
+          <p>{{CronogramaPago.cuotasPagadas}}/{{CronogramaPago.cuotasPagadas+CronogramaPago.cuotasPendientes}}</p>
+        </div>
+        <div class="col-12 col-md-4 col-lg-4 itemsMisPagos"
+          >
+          <ng-container *ngIf="CronogramaPago.cuotasPendientes>0">
+            <img src="../../../assets/icons/alarma.svg" alt="">
+            <div>Proximo Vencimiento :</div>
+            <p>{{CronogramaPago.fechaVencimiento | date:'dd/MM/yyyy'}}</p>
+          </ng-container>
+
+
+        </div>
+        <!-- *ngIf=" idAlumno==9818325 || idAlumno== 9938237 || idAlumno==9672|| idAlumno==10214140 ||idAlumno==17267 ||idAlumno==10451942 ||idAlumno==10245248" -->
+        <!-- <ng-container
+        *ngIf="(idPasarela==13 || idPasarela==5  ||  idPasarela==7)"
+        >
+          <ng-container style="justify-content: flex-end;" *ngIf="EstadoAfiliado!=undefined && CronogramaPago!=undefined">
+            <ng-container *ngIf="CronogramaPago.cuotasPendientes>0 || EstadoAfiliado==true">
+              <div class="col-12 col-md-2 col-lg-2 itemsMisPagos" style="padding: 0%;">
+                <div>Estado :</div>
+                <ng-container #Desafiliado *ngIf="EstadoAfiliado==false">
+                  <p >Desafiliado&nbsp;&nbsp;</p>
+                  <img src="../../../assets/icons/denegado-error-rojo.svg" alt="">
+                </ng-container>
+                <ng-container #Afiliado *ngIf="EstadoAfiliado==true">
+                  <p >Afiliado&nbsp;&nbsp;</p>
+                  <img src="../../../assets/icons/positivo-hecho-20.svg" alt="">
+                </ng-container>
               </div>
-              <ng-container *ngFor="let item of CronogramaPago.registroCuota;let i=index">
-                <div class="col-12 row cen" *ngIf="item.estado==true">
-                  <div class="col-8">Cuota N°{{item.nroCuota}}</div>
-                  <!-- <div class="col-4">{{item.simbolo}} {{item.cuota + item.moraCalculada | number:'1.2-2'}}</div> -->
+            </ng-container>
+          </ng-container>
+        </ng-container> -->
+      </div>
+      <div class="row" style="align-items: center;">
+        <p>
+          Selecciona la cuota o número de cuotas que desees pagar:
+        </p>
+      </div>
+      <div class="row">
+        <div class="col-12 col-md-7 col-lg-7" >
+          <div class="table-resposive" style="padding-top: 10px;">
+            <table style="width: 100%" class="table">
+              <thead>
+                <tr>
+                  <th style="min-width: 60px;">Pagar</th>
+                  <th style="min-width: 60px;">Nro. Cuota</th>
+                  <th style="min-width: 60px;">Monto</th>
+                  <th style="min-width: 60px;">Moneda</th>
+                  <th style="min-width: 60px;">Mora</th>
+                  <!-- <th style="min-width: 60px;">Costos Gestión de Cóbranza</th> -->
+                  <th style="min-width: 60px;">Fecha de Vencimiento</th>
+                  <th style="min-width: 60px;">Fecha de Pago</th>
+                  <th style="min-width: 60px;">Estado</th>
+                </tr>
+              </thead>
+              <tr *ngFor="let item of CronogramaPago.registroCuota;let i=index"
+                [ngClass]="{'pagoActivo':item.cancelado!=true,'pagoSelect':item.estado==true}"
+                (click)="ChangeEstadoCronograma(item)">
+                <td>
+                  <ng-container *ngIf="item.cancelado==true">
+                    <i class="material-icons pagoRealizado">check_box</i>
+                  </ng-container>
+                  <ng-container *ngIf="item.estado==true && item.cancelado!=true">
+                    <i class="material-icons">check_box</i>
+                  </ng-container>
+                  <ng-container *ngIf="item.estado!=true && item.cancelado!=true">
+                    <i class="material-icons">check_box_outline_blank</i>
+                  </ng-container>
+                </td>
+                <td>{{item.numeroCuotaMostrar}}</td>
+                <td>{{FormatoMilesDecimales(item.cuota)}}</td>
+                <td>{{item.codigoMoneda}}</td>
+                <td>{{FormatoMilesDecimales(item.moraCalculada)}}</td>
+                <!-- <td>{{item.moraCalculada | number:'1.2-2'}}</td> -->
+                <td>{{item.fechaVencimiento | date:'dd/MM/yyyy'}}</td>
+                <td>
+                  <ng-container *ngIf="item.fechaPago!=null">{{item.fechaPago | date:'dd/MM/yyyy'}}</ng-container>
+                </td>
+                <td>
+                  <ng-container *ngIf="item.cancelado==true;else noCancelado">
+                    <span
+                    style="color: rgb(0, 226, 0) !important;">
+                      Pagado
+                    </span>
+                  </ng-container>
+                  <ng-template #noCancelado>
+                    <ng-container *ngIf="item.estado==true">
+                      Por pagar
+                    </ng-container>
+                    <ng-container *ngIf="item.estado!=true">
+                      Pendiente
+                    </ng-container>
+
+                  </ng-template>
+
+                </td>
+              </tr>
+            </table>
+          </div>
+          <div *ngIf="EstadoAfiliado==true">
+            <div style="padding: 10px 5px 10px 5px; display: flex;">
+              <div style="margin-right: 5px;">
+                <i class="material-icons" style="color: #0076FF;cursor: pointer;" (click)="OpenModalEliminarSuscripcion()">check_box</i>
+              </div>
+              <div style="position: relative;">
+                <div style="font-weight: bold;">
+                    <span style="display: inline-block; color: #4A4A49; margin-right: 5px;">Afiliado a </span>
+                    <span style="display: inline-block; color: #0076FF;">pagos recurrentes
+                        <i class="material-icons" style="vertical-align: middle; cursor: pointer; color: #0076FF;"
+                           (mouseover)="showTooltip = true" (mouseleave)="showTooltip = false"
+                           (touchstart)="showTooltip = true" (touchend)="showTooltip = false"
+                           ontouchstart="void(0)" ontouchend="void(0)">info</i>
+                    </span>
+                </div>
+                <div *ngIf="showTooltip" style="position: absolute; background-color: #EFF8FF; border: solid 2px #0076FF; border-radius: 15px; padding: 10px; z-index: 1; margin-top: -90px; width: auto; max-width: 100vw; white-space: normal;font-size: 12px;">
+                  Te encuentras afiliado a pagos recurrentes, para desafiliarte desmarca la casilla.
+                </div>
+            </div>
+          </div>
+
+
+          </div>
+        </div>
+        <div *ngIf="total!=0" class="col-12 col-md-5 col-lg-5" >
+          <div class="row" style="justify-content: center;padding: 10px 10px 0px 10px;">
+            <div class="col-12 col-md-10 col-lg-10 CardPagoMisPagos">
+              <div class="titleCardPago">Resumen de pago</div>
+              <div class="contentCardPago row">
+                <div class="col-12 row sub">
+                  <div class="col-8">Concepto</div>
+                  <div class="col-4">Monto</div>
+                </div>
+                <ng-container *ngFor="let item of CronogramaPago.registroCuota;let i=index">
+                  <div class="col-12 row cen" *ngIf="item.estado==true">
+                    <div *ngIf="item.numeroCuotaMostrar=='MATRICULA'" class="col-8">{{item.numeroCuotaMostrar}}</div>
+                    <div *ngIf="item.numeroCuotaMostrar!='MATRICULA'" class="col-8">Cuota N° {{item.numeroCuotaMostrar}}</div>
+                    <!-- <div class="col-4">{{item.simbolo}} {{item.cuota + item.moraCalculada | number:'1.2-2'}}</div> -->
+                    <div class="col-4">
+                      <!-- {{item.simbolo}}  -->
+                      {{FormatoMilesDecimales(item.cuota + item.moraCalculada)}}
+                      {{CronogramaPago.registroCuota[0].codigoMoneda}}
+                    </div>
+                  </div>
+                </ng-container>
+                <div class="col-12 row tot sub">
+                  <div class="col-8">Total a pagar</div>
                   <div class="col-4">
-                    <!-- {{item.simbolo}}  -->
-                    {{FormatoMilesDecimales(item.cuota + item.moraCalculada)}}
+                    <!-- {{CronogramaPago.registroCuota[0].simbolo}}  -->
+                    {{FormatoMilesDecimales(total)}}
                     {{CronogramaPago.registroCuota[0].codigoMoneda}}
                   </div>
                 </div>
-              </ng-container>
-              <div class="col-12 row tot sub" style="background: #f4f4f4 !important;">
-                <div class="col-8">Total a pagar</div>
-                <div class="col-4">
-                  <!-- {{CronogramaPago.registroCuota[0].simbolo}}  -->
-                  {{FormatoMilesDecimales(total)}}
-                  {{CronogramaPago.registroCuota[0].codigoMoneda}}
-                </div>
-              </div>
-              <div class="col-12 row">
-                <div class="col-12 row sub mt-2">
-                  <span>
-                    Método de pago aceptados:
-                  </span>
-                </div>
-                <div class="row mb-3">
-                  <span>
-                    Tarjeta de débito/crédito:
-                    <!-- <ng-container
-                    *ngFor="let imgMedioPago of tarjetas"
-                    >
-                      <mat-radio-button
-                      [disabled]="true"
-                      [value]="imgMedioPago"
-                      (change)="onChangeRadioButton(imgMedioPago)"
-                      class="m-2"
-                      color="primary"
-                      *ngIf="validadorPagosMultiples.length != 0"
-                      >
-                        <img [src]="'../../../../assets/icons/'+imgMedioPago.img" alt=""  class="gray-border" style="width: 35px;">
-                      </mat-radio-button>
-
-
-                      <img [src]="'../../../../assets/icons/'+imgMedioPago.img" alt=""  class="m-2" style="width: 35px;" *ngIf="validadorPagosMultiples.length == 0">
-
-                    </ng-container> -->
-                    <!-- <mat-error *ngIf="validadorPagosMultiples?.length > 0 && medioPagoSeleccionado == undefined && eventosPagoSelccion == true">
-                      Debe seleccionar un medio de pago
-                    </mat-error> -->
-                  </span>
-                </div>
-                <ng-container *ngIf="validadorPagosChile!=true">
-                  <span class="tot mb-3" style="background: #f4f4f4 !important;">
-                    Tipo de comprobante:
-                  </span>
-                  <div class="row comprobatePagoTarjeta">
-                    <mat-radio-group
-                    color="primary"
-                    [(ngModel)]="DatosFacturacion.Comprobante"
-                    >
-                      <mat-radio-button class="m-1" [disabled]="true" [value]="false">Boleta</mat-radio-button>
-                      <mat-radio-button class="m-1" [disabled]="true"  [value]="true">Factura</mat-radio-button>
-                    </mat-radio-group>
+                <div class="col-12 row">
+                  <div class="col-12 row sub mt-2">
+                    <span>
+                      Método de pago aceptados:
+                    </span>
                   </div>
-                  <!-- <div class="row comprobatePagoTarjeta">
-                    <div class="col-12 col-md-12 col-lg-12 items">
-                      <div class="itm no-select" [ngClass]="{'SelectCom':DatosFacturacion.Comprobante==false}"
-                        (click)="DatosFacturacion.Comprobante=false">
-                        Boleta <i class="material-icons" *ngIf="DatosFacturacion.Comprobante==false">check_circle</i>
+                  <div class="row mb-3" style="padding: 0px!important;">
+                    <span >
+                      <div style="margin-right: 10px;"> <!-- Añadí un margen derecho para separar el texto de las imágenes -->
+                        Tarjeta de débito/crédito:
                       </div>
-                      <div class="itm no-select" [ngClass]="{'SelectCom':DatosFacturacion.Comprobante!=false}"
-                        (click)="DatosFacturacion.Comprobante=true">Factura <i class="material-icons"
-                          *ngIf="DatosFacturacion.Comprobante!=false">check_circle</i>
+                      <div style="display: flex; align-items: center; flex-wrap: wrap;">
+                        <ng-container *ngFor="let imgMedioPago of tarjetas">
+                          <mat-radio-button
+                            [value]="imgMedioPago"
+                            (change)="onChangeRadioButton(imgMedioPago)"
+                            class="m-2"
+                            color="primary"
+                            *ngIf="validadorPagosMultiples.length != 0"
+                          >
+                            <img [src]="'../../../../assets/icons/'+imgMedioPago.img" alt="" class="gray-border" style="width: 35px;">
+                          </mat-radio-button>
+                          <img [src]="'../../../../assets/icons/'+imgMedioPago.img" alt="" class="m-2" style="width: 35px;" *ngIf="validadorPagosMultiples.length == 0">
+                        </ng-container>
+                        <mat-error *ngIf="validadorPagosMultiples?.length > 0 && medioPagoSeleccionado == undefined && eventosPagoSelccion == true" style="margin-left: 10px;"> <!-- Añadí un margen izquierdo para separar el mensaje de error del texto -->
+                          Debe seleccionar un medio de pago
+                        </mat-error>
                       </div>
+
+                    </span>
+                  </div>
+
+                  <ng-container *ngIf="validadorPagosChile!=true">
+                    <span class="tot mb-3">
+                      Tipo de comprobante:
+                    </span>
+                    <div class="row comprobatePagoTarjeta">
+                      <mat-radio-group color="primary" [(ngModel)]="DatosFacturacion.Comprobante">
+                        <mat-radio-button class="m-1" [value]="false">Boleta</mat-radio-button>
+                        <mat-radio-button class="m-1" [value]="true">Factura</mat-radio-button>
+                      </mat-radio-group>
                     </div>
-                  </div> -->
-                  <ng-container *ngIf="DatosFacturacion.Comprobante!=false">
-                    <mat-form-field appearance="outline" [floatLabel]="'always'" style="width: 100%;">
-                      <mat-label>Razón Social</mat-label>
-                      <input type="text" [(ngModel)]="DatosFacturacion.RazonSocial" placeholder="Razón Social" matInput />
-                    </mat-form-field>
-                    <mat-form-field appearance="outline" [floatLabel]="'always'" style="width: 100%;">
-                      <mat-label>Número Tributario</mat-label>
-                      <input type="text" [(ngModel)]="DatosFacturacion.CodigoTributario" placeholder="Número Tributario" matInput />
-                    </mat-form-field>
+                    <ng-container *ngIf="DatosFacturacion.Comprobante!=false">
+                      <mat-form-field appearance="outline" [floatLabel]="'always'" style="width: 100%;">
+                        <mat-label>Razón Social</mat-label>
+                        <input type="text" [(ngModel)]="DatosFacturacion.RazonSocial" placeholder="Razón Social" matInput />
+                      </mat-form-field>
+                      <mat-form-field appearance="outline" [floatLabel]="'always'" style="width: 100%;">
+                        <mat-label *ngIf="this.codigoIso=='PE'">Número RUC</mat-label>
+                        <mat-label *ngIf="this.codigoIso!='PE'">Número Tributario</mat-label>
+                        <input *ngIf="this.codigoIso=='PE'" type="text" [(ngModel)]="DatosFacturacion.CodigoTributario" placeholder="Ingresa Número RUC" matInput />
+                        <input  *ngIf="this.codigoIso!='PE'" type="text" [(ngModel)]="DatosFacturacion.CodigoTributario" placeholder="Ingresa Número Tributario" matInput />
+                      </mat-form-field>
+                    </ng-container>
                   </ng-container>
-                </ng-container>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-        <div
-        class="row"
-        style="justify-content: center;">
-          <div class="col-12 col-md-10 col-lg-10 CardPagoMisPagos" style="border-color: transparent !important;">
-            <p class="m-2" style="font-size: 11px !important;">
-              <!-- * El cargo del importe se efectuará en la moneda indicada en el resumen de pago.
-              El tipo de cambio estará sujeto por la entidad bancaria que utilices -->
-            </p>
+          <div class="row"  style="justify-content: center;">
+            <div class="col-12 col-md-10 col-lg-10 CardPagoMisPagos" style="border-color: transparent !important;">
+              <p class="m-2" style="font-size: 11px !important;">
+                <!-- * El cargo del importe se efectuará en la moneda indicada en el resumen de pago.
+                El tipo de cambio estará sujeto por la entidad bancaria que utilices -->
+              </p>
+            </div>
           </div>
+          <div class="row"  style="justify-content: center;padding: 0px 15px 0px 15px;">
+            <div class="col-12 col-md-10 col-lg-10 CardPagoMisPagos" style="border-color: transparent !important;width: 25rem;">
+              <div *ngIf="idPasarela!=0 && EstadoAfiliado!=true">
+                <div *ngIf="(idPasarela==7 && medioPagoSeleccionado.idFormaPago==52)||idPasarela==5 ||idPasarela==13||idPasarela==16||idPasarela==18"
+                class="row" style="margin-top: 10px;">
+                  <div style="padding: 10px 5px 10px 5px; display: flex;">
+                    <div class="col-1">
+                      <i class="material-icons" style="cursor:pointer"  *ngIf="pagoRecurrenteActivado==false" (click)="pagoRecurrenteActivado=true">check_box_outline_blank</i>
+                      <i class="material-icons" style="cursor:pointer"  *ngIf="pagoRecurrenteActivado==true" (click)="pagoRecurrenteActivado=false" style="color: #0076FF">check_box</i>
+                    </div>
+                    <div class="col-11" style="position: relative;">
+                      <div style="font-weight: bold;">
+                          <span style="display: inline-block; color: #4A4A49; margin-right: 5px;">Afiliarme a </span>
+                          <span style="display: inline-block; color: #0076FF;">pagos recurrentes
+                              <i class="material-icons" style="vertical-align: middle; cursor: pointer; color: #0076FF;"
+                                 (mouseover)="showTooltip = true" (mouseleave)="showTooltip = false"
+                                 (touchstart)="showTooltip = true" (touchend)="showTooltip = false"
+                                 ontouchstart="void(0)" ontouchend="void(0)">info</i>
+                          </span>
+                      </div>
+                      <div *ngIf="showTooltip" style="position: absolute; background-color: #EFF8FF; border: solid 2px #0076FF; border-radius: 15px; padding: 10px; z-index: 1; margin-top: -90px; width: auto; max-width: 90vw; white-space: normal;">
+                          Paga siempre puntual. Tu pago se realizará de manera automática.
+                      </div>
+                  </div>
+
+
+
+
+
+
+                  </div>
+                </div>
+              </div>
+              <div *ngIf="pagoRecurrenteActivado==false" class="col-12 row bot">
+                <div style="justify-content: center;display: flex;">
+                  <app-default-button
+                  [disabled]="total==0"
+                  [confs]="{color:'primary',titulo:'Continuar'}"
+                  [style]="'margin-top: 20px;padding: 0px 40px;'"
+                  (ButtoclClick)="EnviarSolicitudPago()">
+                  </app-default-button>
+                </div>
+              </div>
+              <div *ngIf="pagoRecurrenteActivado" class="col-12 row bot">
+                <div style="justify-content: center;display: flex;">
+                  <app-default-button
+                  [disabled]="total==0"
+                  [confs]="{color:'primary',titulo:'Continuar'}"
+                  [style]="'margin-top: 20px;padding: 0px 40px;'"
+                  (ButtoclClick)="OpenModalMetodoPagoSucripcion()">
+                  </app-default-button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- <div
+            class="row mt-2 mb-2"
+            style="margin-top: 40px;justify-content: center;">
+            <div
+            [ngClass]="EstadoAfiliado==true?'col-12 col-md-10 col-lg-10 cardAfiliacionPagosRecurrentesSeleccionado':'col-12 col-md-8 col-lg-6 cardAfiliacionPagosRecurrentes'"
+            class="col-12 col-md-10 col-lg-10 cardAfiliacionPagosRecurrentesSeleccionado">
+              <div class="card p-3">
+                <div class="form-check">
+                  <input class="form-check-input"
+                  (change)="afiliacionPagoRecurrente()"
+                  type="checkbox"
+                  id="flexCheckDefault">
+                  <label class="form-check-label" for="flexCheckDefault">
+                    Afiliarse a pagos recurrentes
+                  </label>
+                </div>
+                <p>Paga siempre puntual. Tu pago se realizará de manera automatica.</p>
+              </div>
+            </div>
+          </div> -->
         </div>
-        <div class="col-12 row bot">
-          <div style="justify-content: center;display: flex;">
-            <app-default-button
-            [disabled]="true"
-            [confs]="{color:'primary',titulo:'Continuar'}"
-            [style]="'margin-top: 20px;padding: 0px 40px;'">
-            </app-default-button>
+        <div *ngIf="total==0" class="col-12 col-md-5 col-lg-5" >
+          <div class="row" style="justify-content: center;padding: 10px 10px 0px 10px;">
+            <div class="col-12 col-md-10 col-lg-10 CardPagoMisPagos">
+              <div class="titleCardPago">Resumen de pago</div>
+              <div class="contentCardPago row">
+                <div class="col-12 row sub">
+                  <div class="col-8">Concepto</div>
+                  <div class="col-4">Monto</div>
+                </div>
+                <ng-container *ngFor="let item of CronogramaPago.registroCuota;let i=index">
+                  <div class="col-12 row cen" *ngIf="item.estado==true">
+                    <div class="col-8">Cuota N°{{item.nroCuota}}</div>
+                    <!-- <div class="col-4">{{item.simbolo}} {{item.cuota + item.moraCalculada | number:'1.2-2'}}</div> -->
+                    <div class="col-4">
+                      <!-- {{item.simbolo}}  -->
+                      {{FormatoMilesDecimales(item.cuota + item.moraCalculada)}}
+                      {{CronogramaPago.registroCuota[0].codigoMoneda}}
+                    </div>
+                  </div>
+                </ng-container>
+                <div class="col-12 row tot sub" style="background: #f4f4f4 !important;">
+                  <div class="col-8">Total a pagar</div>
+                  <div class="col-4">
+                    <!-- {{CronogramaPago.registroCuota[0].simbolo}}  -->
+                    {{FormatoMilesDecimales(total)}}
+                    {{CronogramaPago.registroCuota[0].codigoMoneda}}
+                  </div>
+                </div>
+                <div class="col-12 row">
+                  <div class="col-12 row sub mt-2">
+                    <span>
+                      Método de pago aceptados:
+                    </span>
+                  </div>
+                  <div class="row mb-3">
+                    <span>
+                      Tarjeta de débito/crédito:
+                      <!-- <ng-container
+                      *ngFor="let imgMedioPago of tarjetas"
+                      >
+                        <mat-radio-button
+                        [disabled]="true"
+                        [value]="imgMedioPago"
+                        (change)="onChangeRadioButton(imgMedioPago)"
+                        class="m-2"
+                        color="primary"
+                        *ngIf="validadorPagosMultiples.length != 0"
+                        >
+                          <img [src]="'../../../../assets/icons/'+imgMedioPago.img" alt=""  class="gray-border" style="width: 35px;">
+                        </mat-radio-button>
+
+
+                        <img [src]="'../../../../assets/icons/'+imgMedioPago.img" alt=""  class="m-2" style="width: 35px;" *ngIf="validadorPagosMultiples.length == 0">
+
+                      </ng-container> -->
+                      <!-- <mat-error *ngIf="validadorPagosMultiples?.length > 0 && medioPagoSeleccionado == undefined && eventosPagoSelccion == true">
+                        Debe seleccionar un medio de pago
+                      </mat-error> -->
+                    </span>
+                  </div>
+                  <ng-container *ngIf="validadorPagosChile!=true">
+                    <span class="tot mb-3" style="background: #f4f4f4 !important;">
+                      Tipo de comprobante:
+                    </span>
+                    <div class="row comprobatePagoTarjeta">
+                      <mat-radio-group
+                      color="primary"
+                      [(ngModel)]="DatosFacturacion.Comprobante"
+                      >
+                        <mat-radio-button class="m-1" [disabled]="true" [value]="false">Boleta</mat-radio-button>
+                        <mat-radio-button class="m-1" [disabled]="true"  [value]="true">Factura</mat-radio-button>
+                      </mat-radio-group>
+                    </div>
+                    <!-- <div class="row comprobatePagoTarjeta">
+                      <div class="col-12 col-md-12 col-lg-12 items">
+                        <div class="itm no-select" [ngClass]="{'SelectCom':DatosFacturacion.Comprobante==false}"
+                          (click)="DatosFacturacion.Comprobante=false">
+                          Boleta <i class="material-icons" *ngIf="DatosFacturacion.Comprobante==false">check_circle</i>
+                        </div>
+                        <div class="itm no-select" [ngClass]="{'SelectCom':DatosFacturacion.Comprobante!=false}"
+                          (click)="DatosFacturacion.Comprobante=true">Factura <i class="material-icons"
+                            *ngIf="DatosFacturacion.Comprobante!=false">check_circle</i>
+                        </div>
+                      </div>
+                    </div> -->
+                    <ng-container *ngIf="DatosFacturacion.Comprobante!=false">
+                      <mat-form-field appearance="outline" [floatLabel]="'always'" style="width: 100%;">
+                        <mat-label>Razón Social</mat-label>
+                        <input type="text" [(ngModel)]="DatosFacturacion.RazonSocial" placeholder="Razón Social" matInput />
+                      </mat-form-field>
+                      <mat-form-field appearance="outline" [floatLabel]="'always'" style="width: 100%;">
+                        <mat-label>Número Tributario</mat-label>
+                        <input type="text" [(ngModel)]="DatosFacturacion.CodigoTributario" placeholder="Número Tributario" matInput />
+                      </mat-form-field>
+                    </ng-container>
+                  </ng-container>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+          class="row"
+          style="justify-content: center;">
+            <div class="col-12 col-md-10 col-lg-10 CardPagoMisPagos" style="border-color: transparent !important;">
+              <p class="m-2" style="font-size: 11px !important;">
+                <!-- * El cargo del importe se efectuará en la moneda indicada en el resumen de pago.
+                El tipo de cambio estará sujeto por la entidad bancaria que utilices -->
+              </p>
+            </div>
+          </div>
+          <div class="col-12 row bot">
+            <div style="justify-content: center;display: flex;">
+              <app-default-button
+              [disabled]="true"
+              [confs]="{color:'primary',titulo:'Continuar'}"
+              [style]="'margin-top: 20px;padding: 0px 40px;'">
+              </app-default-button>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-  </ng-container>
+    </ng-container>
+  </div>
 </div>
 <!-- <div *ngIf="total==0" class="container">
   <div style="justify-content: left;display: flex;">

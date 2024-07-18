@@ -13,7 +13,7 @@
     </app-select>
     <div *ngIf="token"
       style="    flex-direction: column; display: flex;justify-content: flex-end;align-items: flex-end;">
-      <app-alumno-mat-button [nombres]="Alumno.nombres+' '+Alumno.apellidos" [user]="Alumno.email" [val]="value">
+      <app-alumno-mat-button [nombres]="Alumno.nombres+' '+Alumno.apellidos" [user]="Alumno.email" [val]="value" [IdAlumno]="Alumno.idAlumno">
         <ng-container contenidodata>
           <img [src]="urlAvatar" style="width: auto;height: 30px; margin-top: -5px;" alt="">
           <div class="nombrealumnoHeader">{{Alumno.nombres}}</div>
@@ -54,7 +54,7 @@
           [token]="token"></app-select>
         <div *ngIf="token"
           style="    flex-direction: column; display: flex;justify-content: flex-end;align-items: flex-end;">
-          <app-alumno-mat-button [nombres]="Alumno.nombres+' '+Alumno.apellidos" [user]="Alumno.email" [val]="value">
+          <app-alumno-mat-button [nombres]="Alumno.nombres+' '+Alumno.apellidos" [user]="Alumno.email" [val]="value" [IdAlumno]="Alumno.idAlumno">
             <ng-container contenidodata>
               <img [src]="urlAvatar" style="width: auto;height: 30px; margin-top: -5px;" alt="Usuario Avatar">
               <div class="nombrealumnoHeader">{{Alumno.nombres}}</div>
