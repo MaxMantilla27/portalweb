@@ -99,7 +99,7 @@ export class ChatAtencionClienteChatComponent implements OnInit,OnDestroy,OnChan
   ngOnInit(): void {
     this.IdContactoPortalSegmento=this._SessionStorageService.SessionGetValue('usuarioWeb')
     console.log(this.IdContactoPortalSegmento)
-    this._ChatAtencionClienteService.ObtenerChatAtencionClienteContactoDetalle(this.IdContactoPortalSegmento).pipe(takeUntil(this.signal$)).subscribe({
+    this._ChatAtencionClienteService.ObtenerChatAtencionClienteContactoDetalle(this.IdContactoPortalSegmento,1).pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
         this.RegistroHistoricoUsuario=x
         console.log(x)

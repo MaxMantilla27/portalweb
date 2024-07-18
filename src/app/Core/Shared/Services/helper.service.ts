@@ -3,7 +3,7 @@ import { Observable, ReplaySubject, Subject } from 'rxjs';
 import { combosPerfilDTO } from '../../Models/AlumnoDTO';
 import { AvatarCombosDTO } from '../../Models/Avatar';
 import { BasicUrl } from '../../Models/BasicDTO';
-import { SetChat } from '../../Models/ChatEnLineaDTO';
+import { SetChat, SetChatAcademico } from '../../Models/ChatEnLineaDTO';
 import { DatoObservableDTO } from '../../Models/DatoObservableDTO';
 
 @Injectable({
@@ -31,6 +31,8 @@ export class HelperService {
   private msjObtenerUsuario=new ReplaySubject<any>();
   // private msjScrollPago = new ReplaySubject<string>()
   private msjEstadoPreCargaPasarela = new ReplaySubject<string>()
+  private msjChatAcademico=new Subject<SetChatAcademico>();
+
 
 
 
@@ -153,6 +155,12 @@ export class HelperService {
   }
   public enviarEstadoPrecargaPasarela(texto: string): void {
     this.msjEstadoPreCargaPasarela.next(texto);
+  }
+  enviarMsjChatAcademico(data:SetChatAcademico):void {
+    this.msjChatAcademico.next(data);
+  }
+  recibirMsjChatAcademico(): Observable<any> {
+    return this.msjChatAcademico.asObservable();
   }
 
 }

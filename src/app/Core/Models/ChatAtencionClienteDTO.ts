@@ -7,6 +7,9 @@ export interface ChatAtencionClienteContactoRegistrarDTO {
   FormularioEnviado: boolean;
   ChatFinalizado: boolean;
   IdOportunidad: number;
+  IdMatriculaCabecera?: number;
+  EsAcademico?: boolean;
+  EsSoporteTecnico?: boolean;
 }
 export interface ChatAtencionClienteContactoDetalleRegistrarDTO {
   IdChatAtencionClienteContacto: number;

@@ -55,6 +55,6 @@
 </mat-sidenav-container>
 <!-- <app-soporte-tecnico [cargaChat]="cargaChat"  (IsOpen)="OpenChat=$event" [Open]="OpenChat" [token]="stateToekn" [IdPGeneral]="IdPGeneral">
 </app-soporte-tecnico> -->
-<ng-container *ngIf="showChatATC">
+<ng-container *ngIf="showChatATC!=false">
   <app-chat-atencion-cliente></app-chat-atencion-cliente>
 </ng-container>

@@ -1,7 +1,7 @@
 import { isPlatformBrowser } from '@angular/common';
 import { AfterViewInit, Component, Inject, OnDestroy, OnInit, PLATFORM_ID, ViewEncapsulation } from '@angular/core';
 import { Router, NavigationEnd, ActivatedRoute } from '@angular/router';
-import { Subject, filter, takeUntil, tap } from 'rxjs';
+import { Subject, filter, takeUntil, tap, timer } from 'rxjs';
 import { BasicBotonesExpandibles } from './Core/Models/BasicDTO';
 import { GlobalService } from './Core/Shared/Services/Global/global.service';
 import { HelperService } from './Core/Shared/Services/helper.service';
@@ -25,7 +25,7 @@ export class AppComponent implements OnInit,AfterViewInit ,OnDestroy {
   public cargaChat=false;
   public usuarioWeb=''
   public esChatbot = false;
-  public showChatATC: boolean = true;
+  public showChatATC: boolean = false;
   constructor(
     private _HelperService: HelperService,
     private router: Router,
@@ -108,7 +108,7 @@ export class AppComponent implements OnInit,AfterViewInit ,OnDestroy {
 
       let showChat = true;
       if (navEnd.url.includes('/AulaVirtual')) {
-        showChat = false;
+        showChat = true;
       } else {
         let route = currentRoute;
         while (route.firstChild) {
@@ -118,9 +118,16 @@ export class AppComponent implements OnInit,AfterViewInit ,OnDestroy {
           showChat = false;
         }
       }
-      this.showChatATC = showChat;
-      console.log('ESTADO CHAT ATENCION AL CLIENTE',this.showChatATC)
+      setTimeout(() => {
+        this.showChatATC = showChat;
+        console.log('ESTADO CHAT ATENCION AL CLIENTE',this.showChatATC)
+      }, 3000);
+      // timer(3000).pipe(takeUntil(this.signal$)).subscribe(_=>{
+      //   console.log('ESTADO CHAT ATENCION AL CLIENTEwwwwwwwwwwww',this.showChatATC)
+      // })
     });
+
+
   }
   ObtenerCodigoIso(){
     this._GlobalService.ObtenerCodigoIso().pipe(takeUntil(this.signal$)).subscribe({

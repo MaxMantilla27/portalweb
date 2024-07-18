@@ -30,3 +30,14 @@ export interface SetChat{
   idcentrocosto?:number,
   idcoordinadora?:number,
 }
+
+export interface SetChatAcademico{
+  idprogramageneralalumno?:number,
+  idcursoprogramageneralalumno?:number,
+  idcapitulo?:number,
+  idsesion?:number,
+  idMatriculaCabecera?:number,
+  idcentrocosto?:number,
+  idcoordinadora?:number,
+  esSoporteTecnico?:number,
+}

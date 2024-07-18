@@ -152,6 +152,7 @@ import { ChatAtencionClienteComponent } from './Containers/chat-atencion-cliente
 import { FormChatAtcComponent } from './Containers/form-chat-atc/form-chat-atc.component';
 import { ChatAtencionClienteChatComponent } from './Containers/chat-atencion-cliente/chat-atencion-cliente-chat/chat-atencion-cliente-chat.component';
 import { ChatAtencionClienteAcademicoComponent } from './Containers/chat-atencion-cliente/chat-atencion-cliente-academico/chat-atencion-cliente-academico.component';
+import { ChatAtencionClienteSoporteComponent } from './Containers/chat-atencion-cliente/chat-atencion-cliente-soporte/chat-atencion-cliente-soporte.component';
 
 @NgModule({
   imports: [
@@ -265,7 +266,8 @@ import { ChatAtencionClienteAcademicoComponent } from './Containers/chat-atencio
     ChatAtencionClienteComponent,
     FormChatAtcComponent,
     ChatAtencionClienteChatComponent,
-    ChatAtencionClienteAcademicoComponent
+    ChatAtencionClienteAcademicoComponent,
+    ChatAtencionClienteSoporteComponent
     //ChatZComponent,
   ],
   exports: [

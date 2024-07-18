@@ -62,8 +62,8 @@
           <p>Te damos la bienvenida al chat de atención al cliente de BSG Institute.</p>
           <p>Para comenzar, selecciona una de las siguientes opciones:</p>
           <ul>
-            <li (click)="OpcionAlumno(1,'A')"><a href="#">Estoy interesado en los cursos</a></li>
-            <li (click)="OpcionAlumno(1,'B')"><a href="#">Soy alumno</a></li>
+            <li (click)="OpcionAlumno(1,'A')" style="cursor:pointer"><a>Estoy interesado en los cursos</a></li>
+            <li (click)="OpcionAlumno(1,'B')" style="cursor:pointer"><a>Soy alumno</a></li>
           </ul>
         </div>
       </div>
@@ -77,7 +77,7 @@
           <p>Selecciona el área de capacitación de tu interés:</p>
           <ul>
             <li *ngFor="let area of AreasCapacitacion" (click)="ObtenerCursosIdArea(area)">
-              <a style="cursor:pointer" href="#">{{ area.valor }}</a>
+              <a style="cursor:pointer">{{ area.valor }}</a>
             </li>
           </ul>
         </div>
@@ -158,26 +158,40 @@
             <li *ngFor="let curso of CursosPadreMatricula"
                 (click)="CursoPadreHijoMatriculado(curso.idPGeneralPadre)"
                 [ngClass]="{'expanded': selectedPadreIdMatricula === curso.idPGeneralPadre}">
-              <a href="#" style="color: #2F98EE;">{{ curso.nombrePGeneralPadre }}</a>
+              <a style="color: #2F98EE;cursor:pointer">{{ curso.nombrePGeneralPadre }}</a>
               <ul *ngIf="selectedPadreIdMatricula === curso.idPGeneralPadre" class="lista-interior">
                 <li *ngFor="let hijo of getCursosHijo(curso.idPGeneralPadre)">
-                  <a (click)="EnviarFormularioAtcAcademico(hijo)" style="color: #4A4A49;" href="#">{{ hijo.nombrePGeneralHijo }}</a>
+                  <a (click)="EnviarFormularioAtcAcademico(hijo)" style="color: #4A4A49;cursor:pointer" >{{ hijo.nombrePGeneralHijo }}</a>
                 </li>
               </ul>
             </li>
           </ul>
         </div>
       </div>
-      <div *ngIf="Paso==3 && Caso=='B' && CargandoInformacion==false" class="PrimeraInteraccionAtcFondo">
+      <div *ngIf="Paso==3 && Caso=='B' && CargandoInformacion==false && AcademicoDirecto==false" class="PrimeraInteraccionAtcFondo">
         <div class="PrimeraInteraccionAtc">
           <p><strong>¿Con quién deseas comunicarte?</strong></p>
           <p>Para continuar selecciona la opción que mejor se ajusta para realizar tu consulta:</p>
           <ul>
             <li (click)="ActualizarEsSoporteTecnico(false)">
-              <a style="cursor:pointer" href="#">Contactar con un Coordinador Académico</a>
+              <a style="cursor:pointer">Contactar con un Coordinador Académico</a>
             </li>
             <li (click)="ActualizarEsSoporteTecnico(true)">
-              <a style="cursor:pointer" href="#">Tengo problemas técnicos en el aula virtual</a>
+              <a style="cursor:pointer">Tengo problemas técnicos en el aula virtual</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div *ngIf="Paso==3 && Caso=='B' && CargandoInformacion==false && AcademicoDirecto" class="PrimeraInteraccionAtcFondo">
+        <div class="PrimeraInteraccionAtc">
+          <p><strong>¿Con quién deseas comunicarte?</strong></p>
+          <p>Para continuar selecciona la opción que mejor se ajusta para realizar tu consulta:</p>
+          <ul>
+            <li (click)="RegistroDirectoCursoMatriculado(false)">
+              <a style="cursor:pointer" >Contactar con un Coordinador Académico</a>
+            </li>
+            <li (click)="RegistroDirectoCursoMatriculado(true)">
+              <a style="cursor:pointer" >Tengo problemas técnicos en el aula virtual</a>
             </li>
           </ul>
         </div>
@@ -189,7 +203,7 @@
         <app-chat-atencion-cliente-academico [idProgramageneral]="IdProgramageneral" [IdMatriculaCabecera]="IdMatriculaCabecera"></app-chat-atencion-cliente-academico>
       </ng-container>
       <ng-container *ngIf="Paso==4 && Caso=='B' && ChatSoporteTecnico==true">
-        <app-chat [idProgramageneral]="IdProgramageneral"></app-chat>
+        <app-chat-atencion-cliente-soporte [idProgramageneral]="IdProgramageneral"></app-chat-atencion-cliente-soporte>
       </ng-container>
     </ng-container>
 

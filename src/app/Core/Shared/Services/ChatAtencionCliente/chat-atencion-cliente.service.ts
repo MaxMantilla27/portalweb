@@ -56,9 +56,9 @@ export class ChatAtencionClienteService {
       return EMPTY;
     }
   }
-  public ObtenerChatAtencionClienteContactoDetalle(IdContactoPortalSegmento:string):Observable<any>{
+  public ObtenerChatAtencionClienteContactoDetalle(IdContactoPortalSegmento:string,IdAlumno:number):Observable<any>{
     if(this.isBrowser){
-      return this.http.get<any>(this.urlBase+'/ObtenerChatAtencionClienteContactoDetalle?IdContactoPortalSegmento='+IdContactoPortalSegmento);
+      return this.http.get<any>(this.urlBase+'/ObtenerChatAtencionClienteContactoDetalle?IdContactoPortalSegmento='+IdContactoPortalSegmento + '&IdAlumno=' + IdAlumno);
     }else{
       return EMPTY;
     }
@@ -74,6 +74,13 @@ export class ChatAtencionClienteService {
   public ActualizarEsSporteTecnicoChatAtencionClienteContacto(IdChatAtencionClienteContacto:number,EsSoporteTecnico:boolean):Observable<any>{
     if(this.isBrowser){
       return this.http.post<any>(this.urlBase+'/ActualizarEsSporteTecnicoChatAtencionClienteContacto?IdChatAtencionClienteContacto='+IdChatAtencionClienteContacto+'&EsSoporteTecnico='+EsSoporteTecnico,{});
+    }else{
+      return EMPTY;
+    }
+  }
+  public ObtenerChatAtencionClienteContactoDetalleAcademico(IdMatriculaCabecera:number):Observable<any>{
+    if(this.isBrowser){
+      return this.http.get<any>(this.urlBase+'/ObtenerChatAtencionClienteContactoDetalleAcademico?IdMatriculaCabecera='+IdMatriculaCabecera);
     }else{
       return EMPTY;
     }
