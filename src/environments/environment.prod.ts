@@ -3,7 +3,8 @@ export const environment = {
   url_api:'https://api-portalweb-prototipo.bsginstitute.com/api/',
   // url_api_integra:'https://integrav4-servicios.bsginstitute.com/api/',
   url_api_integra:'https://integrav4-prototipo.bsginstitute.com/api/',
-  url_portal:'https://bsginstitute.com/',
+  // url_portal:'https://bsginstitute.com/',
+  url_portal:'https://prototipo.bsginstitute.com/',
   url_signal:'https://signalr-prototipo.bsginstitute.com/',
   //url_signal:'https://localhost:7120/'
   // url_signal:'https://localhost:7120/',

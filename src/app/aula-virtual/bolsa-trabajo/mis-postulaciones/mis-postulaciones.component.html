@@ -1,3 +1,4 @@
+<!-- holax1 -->
 
 <div >
     <div class="row">
@@ -5,7 +6,7 @@
             <h1>Mis Postulaciones</h1>
         </div>
         <div class="col-md-7">
-            <hr size="6px" color="black" class="linea"> 
+            <hr size="6px" color="black" class="linea">
         </div>
     </div>
     <br>
@@ -21,7 +22,7 @@
                         <ng-container *ngIf="data.informacionAdicional">
                             <div [innerHtml]="data.informacionAdicional"></div>
                         </ng-container>
-                        
+
                     </div>
                     <div class="col-md-3" style="padding-top: 10px;">
                         <div class="row" style="display: flex;
@@ -42,7 +43,7 @@
                         <ng-template #noSelect>
                             <i class="material-icons">expand_less</i>
                         </ng-template>
-                        
+
                     </div>
                   </div>
                 </div>
@@ -70,7 +71,7 @@
                                         <p class="borde-p"><strong style="padding:8px">{{data.simboloRemMoneda}} {{data.montoRemBruta |number : '1.0-2' }}</strong></p>
                                     </ng-container>
                                     <p style="padding-top:5px"><strong >Fecha fin: </strong>{{data.fechaFin|date: 'dd/MM/yy'}}</p>
-                                    
+
                                     <p style="padding-top:5px;padding-right: 5%;"><strong >Etapa de tu postulación: </strong> {{data.estadoPostulacion}}</p>
                                 </div>
                             </div>
@@ -85,7 +86,7 @@
                                         <ng-container *ngIf="data.stringNivelEstudio!=''">Nivel de Estudio: {{data.stringNivelEstudio}} <br></ng-container>
                                         <ng-container *ngIf="data.stringExperiencia!=''">Experiencia: {{data.stringExperiencia}} </ng-container>
                                     </p>
-        
+
                                 </div>
                             </ng-container>
                             <ng-container *ngIf="data.aplicaBono==true || data.aplicaComision==true ">
@@ -99,12 +100,12 @@
                             </ng-container>
                         </div>
                     </ng-template>
-                    
-                    
+
+
                 </div>
             </div>
         </ng-container>
-        
+
     </div>
     <br>
 </div>
