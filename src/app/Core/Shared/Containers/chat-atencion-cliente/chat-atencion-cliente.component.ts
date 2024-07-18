@@ -611,11 +611,11 @@ export class ChatAtencionClienteComponent implements OnInit,OnChanges {
     console.log(CursoHijo)
     if(this.IdChatAtencionClienteContacto==0){
       this.RegistroChatAtc.IdContactoPortalSegmento=this.IdContactoPortalSegmento;
-      this.RegistroChatAtc.IdPGeneral=CursoHijo.idPGeneralHijo;
+      this.RegistroChatAtc.IdPGeneral=CursoHijo.idPGeneralPadre;
       this.RegistroChatAtc.IdPEspecifico=CursoHijo.idPEspecifico;
       this.RegistroChatAtc.IdAlumno=CursoHijo.idAlumno;
       this.RegistroChatAtc.ChatIniciado=true;
-      this.RegistroChatAtc.FormularioEnviado=false;
+      this.RegistroChatAtc.FormularioEnviado=true;
       this.RegistroChatAtc.ChatFinalizado=false;
       this.RegistroChatAtc.IdOportunidad=0;
       this.RegistroChatAtc.IdMatriculaCabecera=CursoHijo.idMatriculaCabecera;
@@ -655,7 +655,7 @@ export class ChatAtencionClienteComponent implements OnInit,OnChanges {
         },
         complete:()=>{
           this.ActualizarChatAtc.Id=this.IdChatAtencionClienteContacto,
-          this.ActualizarChatAtc.IdPGeneral=CursoHijo.idPGeneralHijo,
+          this.ActualizarChatAtc.IdPGeneral=CursoHijo.idPGeneralPadre,
           this.ActualizarChatAtc.IdPEspecifico=CursoHijo.idPEspecifico,
           this.ActualizarChatAtc.IdAlumno=CursoHijo.idAlumno,
           this.ActualizarChatAtc.FormularioEnviado=true,
@@ -839,7 +839,7 @@ export class ChatAtencionClienteComponent implements OnInit,OnChanges {
           this.RegistroChatAtc.IdPEspecifico=this.DatosCurso.idPEspecifico;
           this.RegistroChatAtc.IdAlumno=this.DatosCurso.idAlumno;
           this.RegistroChatAtc.ChatIniciado=true;
-          this.RegistroChatAtc.FormularioEnviado=false;
+          this.RegistroChatAtc.FormularioEnviado=true;
           this.RegistroChatAtc.ChatFinalizado=false;
           this.RegistroChatAtc.IdOportunidad=0;
           this.RegistroChatAtc.IdMatriculaCabecera=this.IdMatriculaCabecera;

@@ -794,6 +794,11 @@ export class ChatAtencionClienteAcademicoComponent implements OnInit, OnDestroy,
       this.idInteraccion=Guid
     });
   }
+  VerificarChatFinalizado(){
+    this.hubConnection.on('setFinalizarChat', (id: any, agentName: any, existing: any) => {
+      window.location.reload()
+    });
+  }
 
 }
 
