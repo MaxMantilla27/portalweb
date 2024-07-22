@@ -4,8 +4,13 @@
     <div style="padding: 10px;" class="imgAsesor">
       <img [src]="img" (error)="ErrorImgAsesor()" alt="">
       <div class="nombreAsesor">
-        <div *ngIf="nombreasesorglobal!=''" style="text-align: center;">
-          Chatea en línea con {{nombreAsesorSplit[0]}} {{nombreAsesorSplit[1]}}
+        <div *ngIf="nombreasesorglobal!=''" style="margin-left: 15px;">
+          <div>
+            {{nombreAsesorSplit[0]}} {{nombreAsesorSplit[1]}}
+          </div>
+          <div style="font-size: 14px;font-weight: 500;">
+            BSG Institute
+          </div>
         </div>
         <div *ngIf="nombreasesorglobal==''" style="text-align: center;">
           Chatea en línea con tu coordinador académico
@@ -68,9 +73,9 @@
 
     </div>
     <div class="footerChatAula" (click)="marcarChatAgentecomoleido()">
-      <input class="chat-box-textinput" [ngClass]="{'inputActive':inputActive}" (keyup.enter)="BuscarProgramas(false);enviarmsj()" (focus)="inputActive=true"
+      <input class="chat-box-textinput" [ngClass]="{'inputActive':inputActive}" (keyup.enter)="enviarMensajeVisitanteAcademico()" (focus)="inputActive=true"
         (focusout)="inputActive=false" placeholder="Escribe tu mensaje aquí " [(ngModel)]="chatBox">
-        <i class="material-icons" (click)="BuscarProgramas(true);enviarmsj()">send</i>
+        <i class="material-icons" (click)="enviarMensajeVisitanteAcademico()">send</i>
         <i class="material-icons addfile" (click)="fileInput.click()">attach_file</i>
       <!-- <input  #fileInput type="file" style="display:none;" accept="image/png, image/gif, image/jpeg" (change)="AgregarArchivoChatSoporte($event)"> -->
       <input  #fileInput type="file" style="display:none;" type="file" style="display:none;" accept="image/png, image/jpeg, image/jpg, image/jfif, application/pdf, application/msword, application/vnd.openxmlformats-officedocument.wordprocessingml.document, application/vnd.ms-excel, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"

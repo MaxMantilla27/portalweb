@@ -112,54 +112,16 @@ export class ChatAtencionClienteAcademicoComponent implements OnInit, OnDestroy,
     this.mensajesAnteriore=[]
     console.log('idProgramageneral', this.idProgramageneral)
     console.log('idProgramageneral', this.IdMatriculaCabecera)
-    console.log('ENTRA ONINIT')
-    // this._HelperService.recibirMsjChat().pipe(takeUntil(this.signal$)).subscribe({
-    //   next: (x) => {
-    //     console.log('PRIMER HELPER')
-    //     console.log(x);
-    //     if (x.idMatriculaCabecera != undefined) {
-    //       this.idMatriculaCabecera = x.idMatriculaCabecera;
-    //     }
-    //     if (x.idcentrocosto != undefined) {
-    //       this.idcentrocosto = x.idcentrocosto;
-    //     }
-    //     if (x.idcoordinadora != undefined) {
-    //       this.idcoordinadora = x.idcoordinadora;
-    //     }
-    //     if (x.idcursoprogramageneralalumno != undefined) {
-    //       this.idcursoprogramageneralalumno = x.idcursoprogramageneralalumno;
-    //     }
-    //     if (x.idprogramageneralalumno != undefined) {
-    //       this.idprogramageneralalumno = x.idprogramageneralalumno;
-    //     }
-    //     if (x.idcapitulo != undefined) {
-    //       this.idcapitulo = x.idcapitulo;
-    //     }
-    //     if (x.idsesion != undefined) {
-    //       this.idsesion = x.idsesion;
-    //     }
-    //     // if (this.hubConnection.state == 'Connected') {
-    //     //   if (this.git == '') {
-    //     //     this.hubConnection.invoke('getGuidAcademico',this.IdMatriculaCabecera,false);
-    //     //   } else {
-    //     //     this.GenerarLogVisitanteAulaVirtualAcademico();
-    //     //   }
-    //     // }
-    //   },
-    // });
+    this.ObtenerDetalleChatPorIdInteraccionMatricula();
     console.log(this._Router.url.split('/'));
     this.ObtenerConfiguracionChat();
-    //this.ObtenerIdAlumnoPorUsuario(undefined)
     this._HelperService.recibirCombosPerfil.pipe(takeUntil(this.signal$)).subscribe({
         next: (x) => {
           console.log('SEGUNDO HELPER')
-          //var listprogramas = [9990, 9991, 9992, 9993];
           var listprogramas = [9990, 9991, 9992];
           this.idProgramageneral =
             listprogramas[Math.floor(Math.random() * listprogramas.length)];
-          this.ObtenerDetalleChatPorIdInteraccionMatricula(
-            x.datosAlumno.idAlumno
-          );
+          this.ObtenerDetalleChatPorIdInteraccionMatricula();
           this.IdAlumno = x.datosAlumno.idAlumno;
           this.idPais =
             x.datosAlumno.idPais == -1 || x.datosAlumno.idPais == null
@@ -174,10 +136,7 @@ export class ChatAtencionClienteAcademicoComponent implements OnInit, OnDestroy,
           this.hubConnection = new signalR.HubConnectionBuilder()
             .withAutomaticReconnect()
             .configureLogging(signalR.LogLevel.Information)
-            .withUrl(
-              this.urlSignal +
-                'hubIntegraHub?idUsuario=11&&usuarioNombre=Anonimo&&rooms=633'
-            )
+            .withUrl(this.urlSignal +'hubIntegraHub?idUsuario=11&&usuarioNombre=Anonimo&&rooms=633')
             .build();
 
           this.hubConnection.serverTimeoutInMilliseconds = 300000;
@@ -200,10 +159,13 @@ export class ChatAtencionClienteAcademicoComponent implements OnInit, OnDestroy,
           this.IdConnectionUser();
           this.setGuidAcademico();
           this.onlineStatusAcademicoIdChatSession();
+          this.ObtenerCoordinadorChat();
       },
     });
   }
   ngOnChanges(changes: SimpleChanges): void {
+    this.ObtenerCoordinadorChat();
+
     console.log('NGCHANGES', changes)
     console.log(this.IdMatriculaCabecera)
     if (this.Open && this.stateAsesor) {
@@ -250,28 +212,6 @@ export class ChatAtencionClienteAcademicoComponent implements OnInit, OnDestroy,
           this.nombreAsesorSplit = this.nombreasesorglobal.split(' ', 2);
         },
       });
-  }
-  enviarmsj() {
-    this.NroMensajesSinLeer++;
-    // this.idInteraccion = this.GetsesionIdInteraccion();
-
-    timer(100)
-      .pipe(takeUntil(this.signal$))
-      .subscribe((_) => {
-        this.contenidoMsj.nativeElement.scrollTop =
-          this.contenidoMsj.nativeElement.scrollHeight;
-      });
-    this.enviarMensajeVisitanteAcademico();
-    this.chatBox = '';
-  }
-  enviarmsjOff() {
-    // this.idInteraccion = this.GetsesionIdInteraccion();
-    // if (this.idInteraccion == null || this.idInteraccion == '') {
-    //   this.crearChatOffline();
-    // } else {
-    //   this.crearChatOfflineSoporte();
-    // }
-    this.chatBox = '';
   }
   ObtenerConfiguracionChat() {
     this.clics = 0;
@@ -402,47 +342,26 @@ export class ChatAtencionClienteAcademicoComponent implements OnInit, OnDestroy,
       this.GenerarLogVisitanteAulaVirtualAcademico();
     }
   }
-
-  // mensajeChatAcademico() {
-  //   if (this.clics === 0) {
-  //     this.GenerarLogVisitanteAulaVirtualAcademico();
-  //     if (this.chatBox != undefined && this.chatBox != null && this.chatBox.trim().length > 0) {
-  //       this.hubConnection.invoke('mensajeChatAcademico', this.chatBox);
-  //       this.clics++;
-  //     }
-  //   } else {
-  //     if (this.chatBox != undefined && this.chatBox != null && this.chatBox.trim().length > 0) {
-  //       this.hubConnection.invoke('mensajeChatAcademico', this.chatBox);
-  //     }
-  //   }
-  // }
   enviarMensajeVisitanteAcademico() {
     if (this.clics === 0) {
       this.GenerarLogVisitanteAulaVirtualAcademico();
-      console.log('Entro en clck para recarga ');
       this.clics++;
       console.log('Clics ++  ' + this.clics);
-      if (this.chatBox != undefined && this.chatBox != null && this.chatBox.trim().length > 0) {
-        this.hubConnection.invoke(
-          'EnviarMensajeVisitanteAcademico',
-          this.chatBox,
-          this.git,
-          this.IdChatSesion,
-          this.IdMatriculaCabecera
-        );
-      }
-    } else {
-      console.log('No recargo denuevo aulavirtual ');
-      if (this.chatBox != undefined && this.chatBox != null && this.chatBox.trim().length > 0) {
-        this.hubConnection.invoke(
-          'EnviarMensajeVisitanteAcademico',
-          this.chatBox,
-          this.git,
-          this.IdChatSesion,
-          this.IdMatriculaCabecera
-        );
-      }
     }
+    if (this.chatBox != undefined && this.chatBox != null && this.chatBox.trim().length > 0) {
+      this.hubConnection.invoke(
+        'EnviarMensajeVisitanteAcademico',
+        this.chatBox,
+        this.git,
+        this.IdChatSesion,
+        this.IdMatriculaCabecera
+      ).then(() => {
+        this.NroMensajesSinLeer++;
+        this.contenidoMsj.nativeElement.scrollTop =
+        this.contenidoMsj.nativeElement.scrollHeight;
+      }).catch((err:any) => console.error(err));
+    }
+    this.chatBox = '';
   }
   marcarChatAgentecomoleido() {
     this.hubConnection.invoke('marcarChatAcademicoComoLeido', this.idInteraccion);
@@ -467,19 +386,7 @@ export class ChatAtencionClienteAcademicoComponent implements OnInit, OnDestroy,
       tipo
     );
   }
-  // mensajeChatArchivoAdjunto(
-  //   url: string,
-  //   idarchivo: number | null,
-  //   tipo: string
-  // ) {
-  //   this.hubConnection.invoke(
-  //     'mensajeChatAcademicoArchivoAdjunto',
-  //     url,
-  //     idarchivo,
-  //     tipo
-  //   );
-  // }
-  ObtenerDetalleChatPorIdInteraccionMatricula(idAlumno: number) {
+  ObtenerDetalleChatPorIdInteraccionMatricula() {
     this.charge = true;
     //Es false si se chat académico
     this._ChatDetalleIntegraService
@@ -605,8 +512,8 @@ export class ChatAtencionClienteAcademicoComponent implements OnInit, OnDestroy,
         }
 
       }
-    );
-    timer(100)
+    )
+    timer(1000)
     .pipe(takeUntil(this.signal$))
     .subscribe((_) => {
       this.contenidoMsj.nativeElement.scrollTop =
@@ -645,6 +552,7 @@ export class ChatAtencionClienteAcademicoComponent implements OnInit, OnDestroy,
     }
   }
   AgregarArchivoChatSoporte(event: any) {
+    this.selectedFiles =[];
     for (var i = 0; i < event.target.files.length; i++) {
       var name = event.target.files[i].name;
       var type = event.target.files[i].type;
@@ -657,10 +565,6 @@ export class ChatAtencionClienteAcademicoComponent implements OnInit, OnDestroy,
       }
       this.selectedFiles = event.target.files;
       this.AdjuntarArchivoChatSoporte();
-      // console.log ('Name: ' + name + "\n" +
-      //   'Type: ' + extencion + "\n" +
-      //   'Last-Modified-Date: ' + modifiedDate + "\n" +
-      //   'Size: ' + Math.round((size/1024)/1024) + " MB");
     }
   }
 
@@ -753,27 +657,6 @@ export class ChatAtencionClienteAcademicoComponent implements OnInit, OnDestroy,
       return IdSesionChat;
     }
   }
-  BuscarProgramas(esButton: boolean) {
-    var obj: any;
-    if (esButton) {
-      obj = {
-        Tag: 'Button',
-        Nombre: 'Enviar>',
-        valor: this.chatBox,
-        Seccion: 'Chat',
-      };
-    } else {
-      obj = {
-        Tag: 'Input',
-        Accion: 'keyup.enter',
-        Tipo: 'text',
-        Nombre: 'Chat',
-        valor: this.chatBox,
-        Seccion: 'Chat',
-      };
-    }
-    this._HelperService.enviarMsjAcciones(obj);
-  }
   imagenUrlActual: string = '';
   mostrarImagenEnChat(imagenUrl: string) {
     if (imagenUrl) {
@@ -795,7 +678,8 @@ export class ChatAtencionClienteAcademicoComponent implements OnInit, OnDestroy,
     });
   }
   VerificarChatFinalizado(){
-    this.hubConnection.on('setFinalizarChat', (id: any, agentName: any, existing: any) => {
+    this.hubConnection.on('setFinalizarChat', (IdMatriculaCabecera: number, EsAcademico: boolean, EsSoporteTecnico: boolean) => {
+      console.log()
       window.location.reload()
     });
   }
