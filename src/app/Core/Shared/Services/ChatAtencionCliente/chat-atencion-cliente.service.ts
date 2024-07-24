@@ -85,5 +85,12 @@ export class ChatAtencionClienteService {
       return EMPTY;
     }
   }
+  public ObtenerAsesorChatAtc(IdPais:number,IdProgramaGeneral:number):Observable<any>{
+    if(this.isBrowser){
+      return this.http.get<any>(this.urlBase+'/ObtenerAsesorChatAtc?IdPais='+IdPais+'&IdProgramaGeneral='+IdProgramaGeneral);
+    }else{
+      return EMPTY;
+    }
+  }
 
 }

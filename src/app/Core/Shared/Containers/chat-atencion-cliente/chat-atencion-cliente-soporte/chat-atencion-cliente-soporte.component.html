@@ -19,7 +19,7 @@
     </div>
   </div>
   <ng-container *ngIf="estadoLogueo=='false';else login">
-    <app-form-chat (SaveForm)="ObtenerIdAlumnoPorUsuario($event)" [IdPGeneral]="idProgramageneral"></app-form-chat>
+    <app-form-chat (SaveForm)="ObtenerIdAlumnoPorUsuario($event)" [IdPGeneral]="idProgramageneral" ></app-form-chat>
   </ng-container>
 
   <ng-template #login>

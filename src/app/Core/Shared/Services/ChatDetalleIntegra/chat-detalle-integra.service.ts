@@ -49,4 +49,11 @@ export class ChatDetalleIntegraService {
       return EMPTY;
     }
   }
+  public ObtenerDetalleChatPorIdInteraccionContactoPortalSegmento(IdContactoPortalSegmento:number,IdPGeneral:boolean):Observable<any>{
+    if(this.isBrowser){
+      return this.http.get<any>(this.urlBase+'/ObtenerDetalleChatPorIdInteraccionContactoPortalSegmento/'+IdContactoPortalSegmento+'/'+IdPGeneral);
+    }else{
+      return EMPTY;
+    }
+  }
 }

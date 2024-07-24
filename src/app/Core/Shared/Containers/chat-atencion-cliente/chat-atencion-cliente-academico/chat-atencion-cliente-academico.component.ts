@@ -144,7 +144,7 @@ export class ChatAtencionClienteAcademicoComponent implements OnInit, OnDestroy,
 
           this.ConectarSocket();
           this.hubConnection.onclose(() => {
-            timer(10000)
+            timer(5000)
               .pipe(takeUntil(this.signal$))
               .subscribe((_) => {
                 this.ConectarSocket();

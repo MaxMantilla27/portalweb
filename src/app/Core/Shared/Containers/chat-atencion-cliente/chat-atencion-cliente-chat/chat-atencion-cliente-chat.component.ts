@@ -85,6 +85,8 @@ export class ChatAtencionClienteChatComponent implements OnInit,OnDestroy,OnChan
     this.signal$.complete()
   }
   ngOnChanges(changes: SimpleChanges): void {
+    console.log(this.idProgramageneral)
+    this.ObtenerAsesorVentas();
     if(this.Open && this.stateAsesor){
 
       timer(1).pipe(takeUntil(this.signal$)).subscribe(_=>{
@@ -97,6 +99,7 @@ export class ChatAtencionClienteChatComponent implements OnInit,OnDestroy,OnChan
     }
   }
   ngOnInit(): void {
+    this.ObtenerAsesorVentas();
     this.IdContactoPortalSegmento=this._SessionStorageService.SessionGetValue('usuarioWeb')
     console.log(this.IdContactoPortalSegmento)
     this._ChatAtencionClienteService.ObtenerChatAtencionClienteContactoDetalle(this.IdContactoPortalSegmento,1).pipe(takeUntil(this.signal$)).subscribe({
@@ -133,7 +136,7 @@ export class ChatAtencionClienteChatComponent implements OnInit,OnDestroy,OnChan
 
         this.hubConnection.onclose(() => {
 
-          timer(10000).pipe(takeUntil(this.signal$)).subscribe(_=>{
+          timer(5000).pipe(takeUntil(this.signal$)).subscribe(_=>{
             this.ConectarSocket();
           })
         });
@@ -145,6 +148,7 @@ export class ChatAtencionClienteChatComponent implements OnInit,OnDestroy,OnChan
         this.eliminaridchat();
         this.openChatWindow();
         this.marcarChatAlumnoComoLeidos();
+        this.ObtenerAsesorVentas();
       }
     })
 
@@ -327,11 +331,6 @@ export class ChatAtencionClienteChatComponent implements OnInit,OnDestroy,OnChan
             Mensaje:this.configuration.textoInicial,
             IdRemitente:"asesor"
           })
-          // this.mensajesAnteriore.push({
-          //   NombreRemitente:this.nombres,
-          //   Mensaje:this.lastMsj,
-          //   IdRemitente:"visitante"
-          // })
         }
       }
     })
@@ -349,6 +348,7 @@ export class ChatAtencionClienteChatComponent implements OnInit,OnDestroy,OnChan
   }
 
   AgregarArchivoChatSoporte(event:any){
+    this.selectedFiles=[]
     for (var i = 0; i < event.target.files.length; i++) {
       var name = event.target.files[i].name;
       var type = event.target.files[i].type;
@@ -361,10 +361,6 @@ export class ChatAtencionClienteChatComponent implements OnInit,OnDestroy,OnChan
       }
       this.selectedFiles = event.target.files;
       this.AdjuntarArchivoChatSoporte()
-      // console.log ('Name: ' + name + "\n" +
-      //   'Type: ' + extencion + "\n" +
-      //   'Last-Modified-Date: ' + modifiedDate + "\n" +
-      //   'Size: ' + Math.round((size/1024)/1024) + " MB");
     }
   }
   AdjuntarArchivoChatSoporte(){
@@ -377,17 +373,6 @@ export class ChatAtencionClienteChatComponent implements OnInit,OnDestroy,OnChan
         }else{
           this.enviarMensajeVisitanteSoporteArchivo(x.Url, x.IdArchivo, x.Tipo);
         }
-        // if (x.type === HttpEventType.UploadProgress) {
-        //   // this.progress = Math.round(100 * x.loaded / x.total);
-        //   // console.log(this.progress)
-        // } else if (x instanceof HttpResponse) {
-        //   // this.progress=0;
-        //   if(x.body==true){
-
-        //   }else{
-        //     // this._SnackBarServiceService.openSnackBar("Solo tiene 2 intentos para subir su proyecto.",'x',15,"snackbarCrucigramaerror");
-        //   }
-        // }
       }
     })
   }
@@ -409,4 +394,54 @@ export class ChatAtencionClienteChatComponent implements OnInit,OnDestroy,OnChan
   ErrorImgAsesor(){
     this.img='../../../../../assets/imagenes/174188.png'
   }
+  ObtenerAsesorVentas() {
+    this._ChatAtencionClienteService
+      .ObtenerAsesorChatAtc(this.idPais,this.idProgramageneral)
+      .pipe(takeUntil(this.signal$))
+      .subscribe({
+        next: (x) => {
+          console.log(x)
+          this.ChargeChat.emit(true);
+          var nombre1 = x.nombreAsesor.split(' ', 3);
+          this.nombreasesorglobal = nombre1[0] + ' ' + nombre1[2];
+          this.nombreAsesorSplit = this.nombreasesorglobal.split(' ', 2);
+        },
+      });
+  }
+  ObtenerDetalleChatPorIdInteraccionMatricula() {
+    this.charge = true;
+    //Es false si se chat académico
+    this._ChatDetalleIntegraService
+      .ObtenerDetalleChatPorIdInteraccionContactoPortalSegmento(this.IdContactoPortalSegmento,false)
+      .pipe(takeUntil(this.signal$))
+      .subscribe({
+        next: (x) => {
+          console.log(x)
+          this.mensajesAnteriore = x;
+          if (this.mensajesAnteriore.length > 0) {
+            this.mensajesAnteriore.forEach((m: any) => {
+              m.estadoEnviado = true;
+            });
+            if (
+              this.mensajesAnteriore[this.mensajesAnteriore.length - 1]
+                .NroMensajesSinLeer != undefined
+            ) {
+              this.NroMensajesSinLeer =
+                this.mensajesAnteriore[
+                  this.mensajesAnteriore.length - 1
+                ].NroMensajesSinLeer;
+            }
+          }
+        },
+        complete:()=>{
+          timer(100)
+          .pipe(takeUntil(this.signal$))
+          .subscribe((_) => {
+            this.contenidoMsj.nativeElement.scrollTop =
+              this.contenidoMsj.nativeElement.scrollHeight;
+          });
+        }
+      });
+  }
+
 }

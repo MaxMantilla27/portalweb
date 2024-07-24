@@ -1,15 +1,20 @@
 <!-- holax1 -->
 <div class="contentChat" >
-  <div class="headerChatAula" *ngIf="nombreasesorglobal!=''">
+  <div class="headerChatAula" >
     <div class="imgAsesor">
       <img [src]="img" (error)="ErrorImgAsesor()" alt="">
       <div class="nombreAsesor">
-        <ng-container *ngIf="estadoLogueo=='false'">
-          Chatea en línea con {{nombreAsesorSplit[0]}} {{nombreAsesorSplit[1]}}
-        </ng-container>
-        <ng-container *ngIf="estadoLogueo!='false'">
-          <div class="textoAsesor" *ngIf="estadoLogueo!='false'">Soy {{nombreAsesorSplit[0]}} , {{mensajeStateAsesor}}</div>
-        </ng-container>
+        <div *ngIf="nombreasesorglobal!=''" style="margin-left: 15px;">
+          <div>
+            {{nombreAsesorSplit[0]}} {{nombreAsesorSplit[1]}}
+          </div>
+          <div style="font-size: 14px;font-weight: 500;">
+            BSG Institute
+          </div>
+        </div>
+        <div *ngIf="nombreasesorglobal==''" style="text-align: center;">
+          Chatea en línea
+        </div>
       </div>
       <div class="stateAsesor" [ngClass]="{'OnConected': stateAsesor==true}">
 
@@ -21,7 +26,7 @@
   </ng-container>
 
   <ng-template #login>
-    <ng-container *ngIf="stateAsesor">
+    <ng-container>
       <div #contenidoMsj class="contentChatMsj" (click)="marcarChatAgentecomoleido()">
         <div class="mensajeDefecto">Chat iniciado</div>
         <div class="mensajeDefecto">{{nombreAsesorSplit[0]}} {{nombreAsesorSplit[1]}} se unió al Chat</div>
@@ -62,25 +67,6 @@
           <i class="material-icons addfile" (click)="fileInput.click()">attach_file</i>
         <input  #fileInput type="file" style="display:none;" accept="image/png, image/gif, image/jpeg" (change)="AgregarArchivoChatSoporte($event)">
       </div>
-    </ng-container>
-    <ng-container *ngIf="!stateAsesor">
-      <ng-container *ngIf="msjEnviado!=''">
-        <div style="padding: 20px;">
-          {{msjEnviado}}
-        </div>
-      </ng-container>
-      <ng-container *ngIf="msjEnviado==''">
-        <textarea placeholder="Tu Mensaje" [(ngModel)]="chatBox" cols="30" rows="4" style="    width: 90%;
-        margin: 5%;padding: 10px;" (keyup.enter)="enviarmsj()"></textarea>
-        <div style="    width: 100%;
-        display: flex;
-        justify-content: center;
-        margin-bottom: 10%;">
-          <app-default-button  (click)="crearChatOffline()" [confs]="{color:'primary',titulo:'Enviar'}" [style]="'padding:0px 30px;margin:0px '"
-          ></app-default-button>
-        </div>
-      </ng-container>
-
     </ng-container>
   </ng-template>
 </div>

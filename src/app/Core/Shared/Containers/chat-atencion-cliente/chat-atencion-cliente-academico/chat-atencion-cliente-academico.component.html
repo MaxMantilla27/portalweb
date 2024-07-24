@@ -30,7 +30,7 @@
       <div class="mensajeDefecto">{{nombreAsesorSplit[0]}} {{nombreAsesorSplit[1]}} se unió al Chat</div>
 
       <ng-container *ngFor="let item of mensajesAnteriore;let i = index">
-          <div  [ngClass]="{'visitanteMsj': item.IdRemitente=='visitante','asesorMsj':item.IdRemitente=='asesor'}">
+          <div  [ngClass]="{'visitanteMsj': item.IdRemitente.toLowerCase()=='visitante','asesorMsj':item.IdRemitente.toLowerCase()=='asesor'}">
             <div class="cntnmsj">
               <div class="remitente">{{item.NombreRemitente.split(' ')[0]}}</div>
               <div *ngIf="!item.esImagen" class="msj" [innerHtml]="item.Mensaje | safeHtml"></div>
