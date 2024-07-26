@@ -100,6 +100,14 @@ export class ChatAtencionClienteChatComponent implements OnInit,OnDestroy,OnChan
   }
   ngOnInit(): void {
     this.ObtenerAsesorVentas();
+    var DatosFormulario = this._SessionStorageService.SessionGetValue('DatosFormulario');
+    console.log(DatosFormulario)
+    if(DatosFormulario!=''){
+      var datos = JSON.parse(DatosFormulario);
+      console.log(datos)
+      let nombresArray = datos.nombres.split(" ");
+      this.nombres = nombresArray[0];
+    }
     this.IdContactoPortalSegmento=this._SessionStorageService.SessionGetValue('usuarioWeb')
     console.log(this.IdContactoPortalSegmento)
     this._ChatAtencionClienteService.ObtenerChatAtencionClienteContactoDetalle(this.IdContactoPortalSegmento,1).pipe(takeUntil(this.signal$)).subscribe({
@@ -110,9 +118,7 @@ export class ChatAtencionClienteChatComponent implements OnInit,OnDestroy,OnChan
       complete:()=>{
         if(this.RegistroHistoricoUsuario.formularioEnviado){
           this.estadoLogueo="true";
-          this.RespuestaConexion.id = "e4dea802-ed9a-4490-86a1-d76a3cbf3c41"
-          this.RespuestaConexion.idAlumno = 10095207
-          this.actualizarDatosAlumno(this.RespuestaConexion)
+          this.ObtenerDetalleChatPorIdInteraccionContactoPortalSegmento()
         }
       }
     })
@@ -201,8 +207,10 @@ export class ChatAtencionClienteChatComponent implements OnInit,OnDestroy,OnChan
   actualizarDatosAlumno(respuesta:any){
 
     this.estadoLogueo="true"
+    console.log(respuesta.idAlumno)
+    console.log(respuesta.id)
     this.hubConnection.invoke(
-      "actualizarDatosAlumno",
+      "ActualizarDatosAlumno",
       respuesta.idAlumno,respuesta.id
     ).then((response:any) => {
       // Maneja la respuesta aquí
@@ -238,16 +246,12 @@ export class ChatAtencionClienteChatComponent implements OnInit,OnDestroy,OnChan
     this.hubConnection.on("configuracion",(NombreAsesor:any, estado:any)=>{
       console.log(NombreAsesor)
       console.log(estado)
-      if(estado==false){
-        this.ChargeChat.emit(false)
-      }else{
-        var nombre1 = NombreAsesor.split(" ", 3);
+      var nombre1 = NombreAsesor.split(" ", 3);
         this.nombreasesorglobal = nombre1[0] + " " + nombre1[2];
         this.nombreAsesorSplit=this.nombreasesorglobal.split(' ',2)
         this.img='https://proceso-pago.bsginstitute.com/img-web/chatV2/'
         this.img+=this.nombreAsesorSplit[0]+'-'+this.nombreAsesorSplit[1]+'.png'
         this.ChargeChat.emit(true)
-      }
     })
   }
   onlineStatus(){
@@ -262,9 +266,9 @@ export class ChatAtencionClienteChatComponent implements OnInit,OnDestroy,OnChan
       }
       if(this.mensajesAnteriore.length==0){
         this.mensajesAnteriore.push({
-          NombreRemitente:"",
-          Mensaje:this.configuration.textoInicial,
-          IdRemitente:"asesor"
+          nombreRemitente:"",
+          mensaje:this.configuration.textoInicial,
+          idRemitente:"asesor"
         })
       }
       this.stateAsesor=data.status
@@ -291,16 +295,16 @@ export class ChatAtencionClienteChatComponent implements OnInit,OnDestroy,OnChan
         let audio=new Audio('https://integrav4.bsginstitute.com/Content/sounds/newmsg.mp3')
         audio.play();
         this.mensajesAnteriore.push({
-          NombreRemitente:"",
-          Mensaje:msg,
-          IdRemitente:"asesor"
+          nombreRemitente:this.nombreAsesorSplit[0],
+          mensaje:msg,
+          idRemitente:"asesor"
         })
       }
       if(flagfrom == 1){
         this.mensajesAnteriore.push({
-          NombreRemitente:this.nombres,
-          Mensaje:msg,
-          IdRemitente:"visitante"
+          nombreRemitente:this.nombres,
+          mensaje:msg,
+          idRemitente:"visitante"
         })
         this.NroMensajesSinLeer++;
       }
@@ -327,9 +331,9 @@ export class ChatAtencionClienteChatComponent implements OnInit,OnDestroy,OnChan
         this.msjEnviado=this.configuration.textoSatisfaccionOffline
         if(this.mensajesAnteriore.length==0){
           this.mensajesAnteriore.push({
-            NombreRemitente:"",
-            Mensaje:this.configuration.textoInicial,
-            IdRemitente:"asesor"
+            nombreRemitente:"",
+            mensaje:this.configuration.textoInicial,
+            idRemitente:"asesor"
           })
         }
       }
@@ -368,11 +372,7 @@ export class ChatAtencionClienteChatComponent implements OnInit,OnDestroy,OnChan
     this._ChatDetalleIntegraService.AdjuntarArchivoChatSoporte(this.selectedFiles.item(0)).pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
         this.idInteraccion=this.GetsesionIdInteraccion();
-        if (this.idInteraccion == null || this.idInteraccion == '') {
-          this.mensajeChatArchivoAdjunto(x.Url, x.IdArchivo, x.Tipo)
-        }else{
-          this.enviarMensajeVisitanteSoporteArchivo(x.Url, x.IdArchivo, x.Tipo);
-        }
+        this.mensajeChatArchivoAdjunto(x.Url, x.IdArchivo, x.Tipo)
       }
     })
   }
@@ -381,6 +381,7 @@ export class ChatAtencionClienteChatComponent implements OnInit,OnDestroy,OnChan
     console.log(this.chatBox)
     if(this.chatBox!=undefined && this.chatBox!='' && this.chatBox!=null ){
       this.idInteraccion=this.GetsesionIdInteraccion();
+      console.log(this.idInteraccion)
       if (this.idInteraccion == null || this.idInteraccion == '') {
         this.mensajeChat()
       }else{
@@ -408,17 +409,28 @@ export class ChatAtencionClienteChatComponent implements OnInit,OnDestroy,OnChan
         },
       });
   }
-  ObtenerDetalleChatPorIdInteraccionMatricula() {
+  ObtenerDetalleChatPorIdInteraccionContactoPortalSegmento() {
+    console.log('================BUSCAR HISTORIAL')
+    console.log(this.IdContactoPortalSegmento)
+    console.log(this.idProgramageneral)
     this.charge = true;
-    //Es false si se chat académico
-    this._ChatDetalleIntegraService
-      .ObtenerDetalleChatPorIdInteraccionContactoPortalSegmento(this.IdContactoPortalSegmento,false)
+    this._ChatAtencionClienteService
+      .ObtenerDetalleChatPorIdInteraccionContactoPortalSegmento(this.IdContactoPortalSegmento,this.idProgramageneral)
       .pipe(takeUntil(this.signal$))
       .subscribe({
         next: (x) => {
           console.log(x)
           this.mensajesAnteriore = x;
+        },
+        complete:()=>{
           if (this.mensajesAnteriore.length > 0) {
+            timer(2000).pipe(takeUntil(this.signal$)).subscribe(_=>{
+              this.RespuestaConexion.id = this.mensajesAnteriore[0].idFaseOportunidadPortalWeb
+              this.RespuestaConexion.idAlumno = this.mensajesAnteriore[0].idAlumno
+              console.log(this.RespuestaConexion)
+              this.actualizarDatosAlumno(this.RespuestaConexion)
+            })
+
             this.mensajesAnteriore.forEach((m: any) => {
               m.estadoEnviado = true;
             });
@@ -432,8 +444,6 @@ export class ChatAtencionClienteChatComponent implements OnInit,OnDestroy,OnChan
                 ].NroMensajesSinLeer;
             }
           }
-        },
-        complete:()=>{
           timer(100)
           .pipe(takeUntil(this.signal$))
           .subscribe((_) => {
@@ -443,5 +453,10 @@ export class ChatAtencionClienteChatComponent implements OnInit,OnDestroy,OnChan
         }
       });
   }
-
+  VerificarChatFinalizado(){
+    this.hubConnection.on('setFinalizarChat', (IdMatriculaCabecera: number, EsAcademico: boolean, EsSoporteTecnico: boolean) => {
+      console.log()
+      window.location.reload()
+    });
+  }
 }

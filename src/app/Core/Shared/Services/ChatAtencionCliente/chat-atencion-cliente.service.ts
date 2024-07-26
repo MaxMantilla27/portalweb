@@ -92,5 +92,12 @@ export class ChatAtencionClienteService {
       return EMPTY;
     }
   }
+  public ObtenerDetalleChatPorIdInteraccionContactoPortalSegmento(IdContactoPortalSegmento:string,IdPGeneral:number):Observable<any>{
+    if(this.isBrowser){
+      return this.http.get<any>(this.urlBase+'/ObtenerDetalleChatPorIdInteraccionContactoPortalSegmento?IdContactoPortalSegmento='+IdContactoPortalSegmento+'&IdPGeneral='+IdPGeneral);
+    }else{
+      return EMPTY;
+    }
+  }
 
 }

@@ -806,4 +806,10 @@ export class ChatAtencionClienteSoporteComponent implements OnInit, OnDestroy, O
       this.idInteraccion=Guid
     });
   }
+  VerificarChatFinalizado(){
+    this.hubConnection.on('setFinalizarChat', (IdMatriculaCabecera: number, EsAcademico: boolean, EsSoporteTecnico: boolean) => {
+      console.log()
+      window.location.reload()
+    });
+  }
 }

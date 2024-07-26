@@ -301,6 +301,8 @@ export class ChatAtencionClienteComponent implements OnInit,OnChanges {
             this.Caso=this.RegistroHistoricoUsuario.casoSiguiente;
             console.log(this.Paso)
             console.log(this.Caso)
+            console.log(this.RegistroHistoricoUsuario)
+            this.IdProgramageneral=this.RegistroHistoricoUsuario.idPGeneral
             if(this.Paso==1 && this.Caso=='A'){
               this.AreasCapacitacion=[];
               this.CargandoInformacion=true
@@ -689,6 +691,19 @@ export class ChatAtencionClienteComponent implements OnInit,OnChanges {
     this.Paso=3;
     this.Caso='A'
     console.log(CursoSeleccionado)
+    this.ActualizarChatAtc.Id=this.IdChatAtencionClienteContacto,
+    this.ActualizarChatAtc.IdPGeneral=CursoSeleccionado.idPGeneral,
+    this.ActualizarChatAtc.IdPEspecifico=0,
+    this.ActualizarChatAtc.IdAlumno=0,
+    this.ActualizarChatAtc.FormularioEnviado=false,
+    this.ActualizarChatAtc.IdOportunidad=0,
+    this.ActualizarChatAtc.IdFaseOportunidadPortal="00000000-0000-0000-0000-000000000000",
+    this.ActualizarChatAtc.IdMatriculaCabecera=0,
+    this.IdProgramageneral=CursoSeleccionado.idPGeneral
+    this._ChatAtencionClienteService.ActualizarChatAtencionClienteContacto(this.ActualizarChatAtc).pipe(takeUntil(this.signal$)).subscribe({
+      next:x=>{
+      },
+    })
     this.RegistroChatDetalleAtc.IdChatAtencionClienteContacto=this.IdChatAtencionClienteContacto;
     this.RegistroChatDetalleAtc.PasoActual=2
     this.RegistroChatDetalleAtc.CasoActual='A'
