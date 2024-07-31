@@ -1,6 +1,7 @@
 import { Component, Input, OnDestroy, OnInit, SimpleChanges, ViewEncapsulation } from '@angular/core';
 import { Subject, takeUntil } from 'rxjs';
 import { NotaService } from 'src/app/Core/Shared/Services/Nota/nota.service';
+import { SessionStorageService } from 'src/app/Core/Shared/Services/session-storage.service';
 
 @Component({
   selector: 'app-curso-notas',
@@ -11,7 +12,8 @@ import { NotaService } from 'src/app/Core/Shared/Services/Nota/nota.service';
 export class CursoNotasComponent implements OnInit,OnDestroy {
   private signal$ = new Subject();
   constructor(
-    private _NotaService:NotaService
+    private _NotaService:NotaService,
+    private _SessionStorageService:SessionStorageService,
   ) { }
   ngOnDestroy(): void {
     this.signal$.next(true);
@@ -235,6 +237,8 @@ export class CursoNotasComponent implements OnInit,OnDestroy {
           if(this.PromedioFinal === 0 && this.PromedioFinalFinalOnlineCurso === 0){
             this.PromedioFinal = 0;
           }
+          this._SessionStorageService.SessionSetValue('PromedioFinalCurso',this.PromedioFinal.toString());
+          console.log('Este es el promedio final',this.PromedioFinal)
         }, 4000);
 
       },

@@ -19,9 +19,9 @@ export class CertificadoIntegraPortalService {
     this.isBrowser = isPlatformBrowser(platformId);
   }
 
-  public GenerarCertificadoPorAlumnoPortalWebPorIdMatricula(IdMatriculaCabecera:number):Observable<any>{
+  public GenerarCertificadoPorAlumnoPortalWebPorIdMatricula(IdMatriculaCabecera:number,Nota:number):Observable<any>{
     if(this.isBrowser){
-      return this.http.get<any>(this.urlBase+'/GenerarCertificadoPorAlumnoPortalWebPorIdMatricula?IdMatriculaCabecera='+IdMatriculaCabecera);
+      return this.http.get<any>(this.urlBase+'/GenerarCertificadoPorAlumnoPortalWebPorIdMatricula?IdMatriculaCabecera='+IdMatriculaCabecera+'&Nota='+Nota);
     }else{
       return EMPTY;
     }

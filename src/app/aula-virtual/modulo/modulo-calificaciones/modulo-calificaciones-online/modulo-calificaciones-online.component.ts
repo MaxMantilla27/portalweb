@@ -2,6 +2,7 @@ import { Component, Input, OnDestroy, OnInit, SimpleChanges, ViewEncapsulation }
 import { Subject, takeUntil } from 'rxjs';
 import { NotaService } from 'src/app/Core/Shared/Services/Nota/nota.service';
 import { ProgramaContenidoService } from 'src/app/Core/Shared/Services/ProgramaContenido/programa-contenido.service';
+import { SessionStorageService } from 'src/app/Core/Shared/Services/session-storage.service';
 
 @Component({
   selector: 'app-modulo-calificaciones-online',
@@ -14,7 +15,8 @@ export class ModuloCalificacionesOnlineComponent implements OnInit,OnDestroy {
   private signal$ = new Subject();
   constructor(
     private _NotaService:NotaService,
-    private _ProgramaContenidoService:ProgramaContenidoService
+    private _ProgramaContenidoService:ProgramaContenidoService,
+    private _SessionStorageService:SessionStorageService
   ) { }
   ngOnDestroy(): void {
     this.signal$.next(true)
@@ -216,6 +218,8 @@ export class ModuloCalificacionesOnlineComponent implements OnInit,OnDestroy {
       },
       complete:()=> {
         this.TerminaCarga=true
+        this._SessionStorageService.SessionSetValue('PromedioFinalCurso',this.PromedioFinal.toString());
+        console.log('Este es el promedio final',this.PromedioFinal)
       },
     })
   }

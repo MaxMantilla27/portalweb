@@ -2,6 +2,7 @@ import { Component, Input, OnDestroy, OnInit, SimpleChanges } from '@angular/cor
 import { Subject, takeUntil } from 'rxjs';
 import { NotaService } from 'src/app/Core/Shared/Services/Nota/nota.service';
 import { ProgramaContenidoService } from 'src/app/Core/Shared/Services/ProgramaContenido/programa-contenido.service';
+import { SessionStorageService } from 'src/app/Core/Shared/Services/session-storage.service';
 
 @Component({
   selector: 'app-modulo-calificaciones',
@@ -12,7 +13,8 @@ export class ModuloCalificacionesComponent implements OnInit,OnDestroy {
   private signal$ = new Subject();
   constructor(
     private _NotaService:NotaService,
-    private _ProgramaContenidoService:ProgramaContenidoService
+    private _ProgramaContenidoService:ProgramaContenidoService,
+    private _SessionStorageService:SessionStorageService
   ) { }
   ngOnDestroy(): void {
     this.signal$.next(true)
@@ -57,6 +59,10 @@ export class ModuloCalificacionesComponent implements OnInit,OnDestroy {
         this.promedio=x.notaCurso;
         this.calificacionesCursoDetalle=x.detalleCalificacion
         console.log(this.calificacionesCursoDetalle)
+      },
+      complete:()=>{
+        this._SessionStorageService.SessionSetValue('PromedioFinalCurso',this.promedio.toString());
+        console.log('Este es el promedio final',this.promedio)
       }
     })
   }

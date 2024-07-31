@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, S
 import { pipe, Subject, takeUntil } from 'rxjs';
 import { CertificadoIntegraService } from 'src/app/Core/Shared/Services/CertificadoIntegra/certificado-integra.service';
 import { CertificadoIntegraPortalService } from 'src/app/Core/Shared/Services/CertificadoIntegraPortal/certificado-integra-portal.service';
+import { SessionStorageService } from 'src/app/Core/Shared/Services/session-storage.service';
 import { SnackBarServiceService } from 'src/app/Core/Shared/Services/SnackBarService/snack-bar-service.service';
 
 @Component({
@@ -14,7 +15,8 @@ export class CursoCertificadoDigitalComponent implements OnInit,OnDestroy {
   constructor(
     private _CertificadoIntegraService:CertificadoIntegraService,
     private _SnackBarServiceService:SnackBarServiceService,
-    private _CertificadoIntegraPortalService:CertificadoIntegraPortalService
+    private _CertificadoIntegraPortalService:CertificadoIntegraPortalService,
+    private _SessionStorageService: SessionStorageService
   ) { }
   ngOnDestroy(): void {
     this.signal$.next(true)
@@ -32,7 +34,12 @@ export class CursoCertificadoDigitalComponent implements OnInit,OnDestroy {
   GenerarCertificadoPorAlumnoIdMatriculaCabecera(){
     console.log(1)
     this.charge=true
-    this._CertificadoIntegraPortalService.GenerarCertificadoPorAlumnoPortalWebPorIdMatricula(this.datosCertificado.idMatriculaCabecera)
+    let Nota = this._SessionStorageService.SessionGetValue('PromedioFinalCurso')
+    let NotaPromedio=0
+    if(Nota!=''){
+      NotaPromedio=Number(Nota)
+    }
+    this._CertificadoIntegraPortalService.GenerarCertificadoPorAlumnoPortalWebPorIdMatricula(this.datosCertificado.idMatriculaCabecera,NotaPromedio)
     .pipe(takeUntil(this.signal$))
     .subscribe({
       next:x=>{
@@ -50,7 +57,12 @@ export class CursoCertificadoDigitalComponent implements OnInit,OnDestroy {
   GenerarCertificadoPorAlumnoPortalWebPorIdMatricula(){
     console.log(1)
     this.charge=true
-    this._CertificadoIntegraPortalService.GenerarCertificadoPorAlumnoPortalWebPorIdMatricula(this.datosCertificado.idMatriculaCabecera)
+    let Nota = this._SessionStorageService.SessionGetValue('PromedioFinalCurso')
+    let NotaPromedio=0
+    if(Nota!=''){
+      NotaPromedio=Number(Nota)
+    }
+    this._CertificadoIntegraPortalService.GenerarCertificadoPorAlumnoPortalWebPorIdMatricula(this.datosCertificado.idMatriculaCabecera,NotaPromedio)
     .pipe(takeUntil(this.signal$))
     .subscribe({
       next:x=>{
