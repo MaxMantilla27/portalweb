@@ -600,7 +600,7 @@ export class ChatAtencionClienteSoporteComponent implements OnInit, OnDestroy, O
           // })
         }
 
-        timer(100)
+        timer(2500)
           .pipe(takeUntil(this.signal$))
           .subscribe((_) => {
             this.contenidoMsj.nativeElement.scrollTop =
@@ -641,6 +641,7 @@ export class ChatAtencionClienteSoporteComponent implements OnInit, OnDestroy, O
     }
   }
   AgregarArchivoChatSoporte(event: any) {
+    this.selectedFiles=[]
     for (var i = 0; i < event.target.files.length; i++) {
       var name = event.target.files[i].name;
       var type = event.target.files[i].type;
@@ -717,14 +718,12 @@ export class ChatAtencionClienteSoporteComponent implements OnInit, OnDestroy, O
                 this.archivoenviado = newDocMessage;
                 // this.mensajesAnteriore.push(newDocMessage);
               }
-
-              timer(100)
-                .pipe(takeUntil(this.signal$))
-                .subscribe(() => {
-                  this.contenidoMsj.nativeElement.scrollTop =
-                    this.contenidoMsj.nativeElement.scrollHeight;
-                });
             },
+            complete:()=>{
+              timer(2500).pipe(takeUntil(this.signal$)).subscribe((_) => {
+                this.contenidoMsj.nativeElement.scrollTop = this.contenidoMsj.nativeElement.scrollHeight;
+            })
+            }
           });
       } else {
         console.log(

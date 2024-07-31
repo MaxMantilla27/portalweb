@@ -115,6 +115,12 @@ export class FormChatAtcComponent implements OnInit,OnChanges {
     this.initValues = true;
   }
   ngOnChanges(changes: SimpleChanges): void {
+    if (changes) {
+      if (this.IdPespecificoPrograma > 0) {
+        console.log('Cambioooooooo el p especifico', this.IdPespecificoPrograma);
+        this.obtenerFormularioCompletado();
+      }
+    }
   }
   obtenerFormularioCompletado(){
     var DatosFormulario = this._SessionStorageService.SessionGetValue('DatosFormulario');
@@ -134,6 +140,8 @@ export class FormChatAtcComponent implements OnInit,OnChanges {
     else{
       this.CompleteLocalStorage=false;
     }
+    this.DatosEnvioFormulario.IdPrograma=this.IdPGeneral
+    this.DatosEnvioFormulario.IdPespecifico=this.IdPespecificoPrograma
   }
   SetContacto(value: any) {
     if (!this.formVal || this.statuscharge==true) {
@@ -156,6 +164,7 @@ export class FormChatAtcComponent implements OnInit,OnChanges {
       this.DatosEnvioFormulario.IdPrograma = this.IdPGeneral;
       this.DatosEnvioFormulario.IdCategoriaDato=0;
       this.DatosEnvioFormulario.IdCampania=0
+      console.log(this.DatosEnvioFormulario)
       this._ChatEnLinea.ValidarCrearOportunidadChat(this.DatosEnvioFormulario).pipe(takeUntil(this.signal$)).subscribe({
         next:(x)=>{
           //this.ProcesarAsignacionAutomaticaNuevoPortal(x);

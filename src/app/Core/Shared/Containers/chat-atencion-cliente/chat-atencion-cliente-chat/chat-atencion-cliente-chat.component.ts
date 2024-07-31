@@ -94,11 +94,25 @@ export class ChatAtencionClienteChatComponent implements OnInit,OnDestroy,OnChan
       })
     }
     if(this.idProgramageneral>0){
+      timer(3000).pipe(takeUntil(this.signal$)).subscribe(_=>{
+        var IdPGeneralChatAtc = this._SessionStorageService.SessionGetValue('IdPGeneralChatAtc');
+        var IdPEspecificoChatAtc = this._SessionStorageService.SessionGetValue('IdPEspecificoChatAtc');
+        console.log(this.idProgramageneral)
+        console.log(IdPGeneralChatAtc)
+        console.log(IdPEspecificoChatAtc)
+        if(Number(IdPGeneralChatAtc)==this.idProgramageneral){
+          if(IdPEspecificoChatAtc!='' && this.IdPespecificoPrograma!=0){
+            this.IdPespecificoPrograma=Number(IdPEspecificoChatAtc)
+            console.log(this.IdPespecificoPrograma)
+          }
+        }
+      })
 
       //this.ChargeChat.emit(true)
     }
   }
   ngOnInit(): void {
+
     this.ObtenerAsesorVentas();
     var DatosFormulario = this._SessionStorageService.SessionGetValue('DatosFormulario');
     console.log(DatosFormulario)
@@ -155,6 +169,7 @@ export class ChatAtencionClienteChatComponent implements OnInit,OnDestroy,OnChan
         this.openChatWindow();
         this.marcarChatAlumnoComoLeidos();
         this.ObtenerAsesorVentas();
+        this.VerificarChatFinalizado()
       }
     })
 
@@ -309,7 +324,7 @@ export class ChatAtencionClienteChatComponent implements OnInit,OnDestroy,OnChan
         this.NroMensajesSinLeer++;
       }
 
-      timer(10000).pipe(takeUntil(this.signal$)).subscribe(_=>{
+      timer(25000).pipe(takeUntil(this.signal$)).subscribe(_=>{
         this.contenidoMsj.nativeElement.scrollTop=this.contenidoMsj.nativeElement.scrollHeight
       })
     })
@@ -373,6 +388,11 @@ export class ChatAtencionClienteChatComponent implements OnInit,OnDestroy,OnChan
       next:x=>{
         this.idInteraccion=this.GetsesionIdInteraccion();
         this.mensajeChatArchivoAdjunto(x.Url, x.IdArchivo, x.Tipo)
+      },
+      complete:()=>{
+        timer(2500).pipe(takeUntil(this.signal$)).subscribe((_) => {
+            this.contenidoMsj.nativeElement.scrollTop = this.contenidoMsj.nativeElement.scrollHeight;
+        });
       }
     })
   }
@@ -454,8 +474,12 @@ export class ChatAtencionClienteChatComponent implements OnInit,OnDestroy,OnChan
       });
   }
   VerificarChatFinalizado(){
-    this.hubConnection.on('setFinalizarChat', (IdMatriculaCabecera: number, EsAcademico: boolean, EsSoporteTecnico: boolean) => {
-      console.log()
+    console.log('INGRESARÁ setFinalizarChatComercial')
+    this.hubConnection.on('setFinalizarChatComercial', (IdOportunidad: number, IdAlumno: number, IdPGeneral: number) => {
+      console.log('INGRESARÁ setFinalizarChatComercial');
+      console.log('IdOportunidad:', IdOportunidad);
+      console.log('IdAlumno:', IdAlumno);
+      console.log('IdPGeneral:', IdPGeneral);
       window.location.reload()
     });
   }

@@ -492,6 +492,7 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
       .ObtenerCabeceraProgramaGeneral(this.idBusqueda).pipe(takeUntil(this.signal$))
       .subscribe({
         next: (x) => {
+          console.log(x)
           console.log(x.programaCabeceraDetalleDTO.direccion==this.namePrograma.join('-'))
           if(x.programaCabeceraDetalleDTO!=undefined
             && this.removeAccents(this.area.toLowerCase())==this.removeAccents(x.programaCabeceraDetalleDTO.areaCapacitacion.toLowerCase())
@@ -536,6 +537,8 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
 
             if(x.programaCabeceraDetalleDTO.listProgramaEspecificoInformacionDTO.length>0){
               this.IdPespecificoPrograma = x.programaCabeceraDetalleDTO.listProgramaEspecificoInformacionDTO[0].id
+              console.log(this.IdPespecificoPrograma.toString())
+              this._SessionStorageService.SessionSetValue('IdPEspecificoChatAtc',this.IdPespecificoPrograma.toString());
               this.cabecera.listProgramaEspecificoInformacionDTO.forEach(x=>{
                 if(x.tipo.toLowerCase()=='online asincronica'){
                   this.esAonline=true
@@ -657,6 +660,7 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
           }
         });
         this.idPegeneral = x.idPGeneral;
+        this._SessionStorageService.SessionSetValue('IdPGeneralChatAtc',this.idPegeneral.toString());
         this.ObtenerSilaboCurso();
         this.ListProgramaRelacionado();
         this.VistaPreviaProgramaPortal();

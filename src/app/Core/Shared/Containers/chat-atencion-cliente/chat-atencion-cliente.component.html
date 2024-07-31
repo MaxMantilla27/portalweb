@@ -11,10 +11,10 @@
       <div style="display: flex;" >
         <!-- <img class="puntoConectadoAtc" src="../../../../../assets/icons/punto-verde.svg" alt="Punto Verde" > -->
         <div class="col-4" style="align-items: center;display: flex;justify-content: center;">
-          <img style="height: 40px;" [src]="'../../../../../assets/imagenes/icono-chat-atc.png'" alt="">
+          <img style="height: 35px;" [src]="'../../../../../assets/imagenes/icono-chat-atc.png'" alt="">
           <!-- <i class="material-icons" style="font-size: 40px !important;">sms</i> -->
         </div>
-        <div class="col-8" style="font-size: 17px;line-height: 20px;text-align: left;">
+        <div class="col-8" style="font-size: 15px;line-height: 20px;text-align: left;">
           Atención al cliente
         </div>
       </div>
@@ -156,16 +156,18 @@
           <p>Para continuar selecciona el curso sobre el que deseas realizar la consulta:</p>
           <ul>
             <li *ngFor="let curso of CursosPadreMatricula"
-                (click)="CursoPadreHijoMatriculado(curso.idPGeneralPadre)"
+                (click)="handleCursoClickFormulario(curso)"
                 [ngClass]="{'expanded': selectedPadreIdMatricula === curso.idPGeneralPadre}">
               <a style="color: #2F98EE;cursor:pointer">{{ curso.nombrePGeneralPadre }}</a>
-              <ul *ngIf="selectedPadreIdMatricula === curso.idPGeneralPadre" class="lista-interior">
+              <ul *ngIf="curso.esPadre && selectedPadreIdMatricula === curso.idPGeneralPadre" class="lista-interior">
                 <li *ngFor="let hijo of getCursosHijo(curso.idPGeneralPadre)">
-                  <a (click)="EnviarFormularioAtcAcademico(hijo)" style="color: #4A4A49;cursor:pointer" >{{ hijo.nombrePGeneralHijo }}</a>
+                  <a (click)="EnviarFormularioAtcAcademico(hijo)" style="color: #4A4A49;cursor:pointer">{{ hijo.nombrePGeneralHijo }}</a>
                 </li>
               </ul>
             </li>
           </ul>
+
+
         </div>
       </div>
       <div *ngIf="Paso==3 && Caso=='B' && CargandoInformacion==false && AcademicoDirecto==false" class="PrimeraInteraccionAtcFondo">
