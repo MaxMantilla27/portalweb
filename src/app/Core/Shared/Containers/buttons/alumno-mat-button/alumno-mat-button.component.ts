@@ -151,6 +151,7 @@ export class AlumnoMatButtonComponent implements OnInit,OnChanges {
     }
   }
   cerrarSesion() {
+    this._SessionStorageService.SessionSetValue('ChatAcademicoIniciado','false');
     this._SessionStorageService.DeleteToken();
     this._HelperService.enviarDatoCuenta(this.DatoObservable);
     console.log(this.DatoObservable);

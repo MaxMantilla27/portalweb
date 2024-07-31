@@ -441,7 +441,7 @@ export class ChatAtencionClienteAcademicoComponent implements OnInit, OnDestroy,
         complete:()=>{
           this.mensajesAnteriore.push({
             NombreRemitente: this.nombreAsesorSplit[0],
-            Mensaje: 'Bienvenido, ¿En qué puedo ayudarte?',
+            Mensaje: 'Bienvenid@, ¿En qué puedo ayudarte?',
             IdRemitente: 'asesor',
           });
           timer(1000)
@@ -533,6 +533,9 @@ export class ChatAtencionClienteAcademicoComponent implements OnInit, OnDestroy,
               estadoEnviado: true,
             });
           }
+          timer(1000).pipe(takeUntil(this.signal$)).subscribe(_=>{
+            this.contenidoMsj.nativeElement.scrollTop=this.contenidoMsj.nativeElement.scrollHeight
+          })
         }
         if (flagfrom == 1) {
           this.mensajesAnteriore.push({
@@ -541,6 +544,9 @@ export class ChatAtencionClienteAcademicoComponent implements OnInit, OnDestroy,
             IdRemitente: 'visitante',
             estadoEnviado: true,
           });
+          timer(1000).pipe(takeUntil(this.signal$)).subscribe(_=>{
+            this.contenidoMsj.nativeElement.scrollTop=this.contenidoMsj.nativeElement.scrollHeight
+          })
         }
 
       }

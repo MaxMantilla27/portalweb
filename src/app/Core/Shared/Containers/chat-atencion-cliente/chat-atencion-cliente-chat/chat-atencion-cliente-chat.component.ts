@@ -93,8 +93,10 @@ export class ChatAtencionClienteChatComponent implements OnInit,OnDestroy,OnChan
         this.contenidoMsj.nativeElement.scrollTop=this.contenidoMsj.nativeElement.scrollHeight
       })
     }
+
+
     if(this.idProgramageneral>0){
-      timer(3000).pipe(takeUntil(this.signal$)).subscribe(_=>{
+      timer(5000).pipe(takeUntil(this.signal$)).subscribe(_=>{
         var IdPGeneralChatAtc = this._SessionStorageService.SessionGetValue('IdPGeneralChatAtc');
         var IdPEspecificoChatAtc = this._SessionStorageService.SessionGetValue('IdPEspecificoChatAtc');
         console.log(this.idProgramageneral)
@@ -259,6 +261,9 @@ export class ChatAtencionClienteChatComponent implements OnInit,OnDestroy,OnChan
   }
   configuracion(){
     this.hubConnection.on("configuracion",(NombreAsesor:any, estado:any)=>{
+      if(NombreAsesor=="Sin Asignar"){
+        NombreAsesor="Sin Asesor Asesor"
+      }
       console.log(NombreAsesor)
       console.log(estado)
       var nombre1 = NombreAsesor.split(" ", 3);
@@ -423,9 +428,15 @@ export class ChatAtencionClienteChatComponent implements OnInit,OnDestroy,OnChan
         next: (x) => {
           console.log(x)
           this.ChargeChat.emit(true);
-          var nombre1 = x.nombreAsesor.split(' ', 3);
-          this.nombreasesorglobal = nombre1[0] + ' ' + nombre1[2];
-          this.nombreAsesorSplit = this.nombreasesorglobal.split(' ', 2);
+          if(x!=null){
+            var nombre1 = x.nombreAsesor.split(' ', 3);
+            this.nombreasesorglobal = nombre1[0] + ' ' + nombre1[2];
+            this.nombreAsesorSplit = this.nombreasesorglobal.split(' ', 2);
+          }
+          else{
+            this.nombreasesorglobal = "Sin Asesor";
+            this.nombreAsesorSplit = this.nombreasesorglobal.split(' ', 2);
+          }
         },
       });
   }

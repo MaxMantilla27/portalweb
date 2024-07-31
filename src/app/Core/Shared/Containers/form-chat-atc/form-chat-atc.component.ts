@@ -164,7 +164,7 @@ export class FormChatAtcComponent implements OnInit,OnChanges {
       this.DatosEnvioFormulario.IdPrograma = this.IdPGeneral;
       this.DatosEnvioFormulario.IdCategoriaDato=0;
       this.DatosEnvioFormulario.IdCampania=0
-      console.log(this.DatosEnvioFormulario)
+      console.log('DATOS ENVIADOS EN EL FORMULARIO',this.DatosEnvioFormulario)
       this._ChatEnLinea.ValidarCrearOportunidadChat(this.DatosEnvioFormulario).pipe(takeUntil(this.signal$)).subscribe({
         next:(x)=>{
           //this.ProcesarAsignacionAutomaticaNuevoPortal(x);

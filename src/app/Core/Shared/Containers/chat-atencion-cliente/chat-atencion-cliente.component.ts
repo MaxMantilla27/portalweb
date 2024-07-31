@@ -147,6 +147,7 @@ export class ChatAtencionClienteComponent implements OnInit,OnChanges {
       if(this._SessionStorageService.GetToken()!=null){
         if (event instanceof NavigationEnd) {
           this.ChatAcademicoIniciadoLocal=this._SessionStorageService.SessionGetValue('ChatAcademicoIniciado')
+          console.log(this.ChatAcademicoIniciadoLocal)
           if(this.ChatAcademicoIniciadoLocal!='true'){
             // Lógica para obtener ruta actual
             this.RutaActualChat=event.urlAfterRedirects;
@@ -191,6 +192,7 @@ export class ChatAtencionClienteComponent implements OnInit,OnChanges {
   }
   ObtenerInformacionChat(){
     if(this._SessionStorageService.GetToken()!=null){
+      this.CursosMatriculados()
       const urlSegments = this._router.url.split('/');
       for (let segment of urlSegments) {
         if (/^\d+$/.test(segment)) {
@@ -227,6 +229,11 @@ export class ChatAtencionClienteComponent implements OnInit,OnChanges {
                   }
                   this._SessionStorageService.SessionSetValue('ChatAcademicoIniciado',ValorFormulario);
                   if(this.Paso==2 && this.Caso=='B'){
+                    this.CursosMatriculados()
+                  }
+                  if(this._SessionStorageService.GetToken()!=null && this.Paso<=2){
+                    this.Paso=3
+                    this.Caso='B'
                     this.CursosMatriculados()
                   }
                 }
@@ -342,6 +349,10 @@ export class ChatAtencionClienteComponent implements OnInit,OnChanges {
             }
             if(this.Paso==2 && this.Caso=='B'){
               this.CursosMatriculados()
+            }
+            if(this._SessionStorageService.GetToken()==null && this.Paso==4){
+              this.Paso=0
+              this.Caso='A'
             }
           }
           else{
@@ -611,6 +622,8 @@ export class ChatAtencionClienteComponent implements OnInit,OnChanges {
       this.RegistroChatAtc.IdMatriculaCabecera=CursoHijo.idMatriculaCabecera;
       this.RegistroChatAtc.EsAcademico=true;
       this.RegistroChatAtc.EsSoporteTecnico=false;
+      this.IdProgramageneral=CursoHijo.idPGeneralPadre
+      this.IdMatriculaCabecera=CursoHijo.idMatriculaCabecera
       this._ChatAtencionClienteService.RegistrarChatAtencionClienteContacto(this.RegistroChatAtc).pipe(takeUntil(this.signal$)).subscribe({
         next:x=>{
           this.IdChatAtencionClienteContacto=x
@@ -654,6 +667,7 @@ export class ChatAtencionClienteComponent implements OnInit,OnChanges {
           this.ActualizarChatAtc.IdFaseOportunidadPortal="00000000-0000-0000-0000-000000000000",
           this.ActualizarChatAtc.IdMatriculaCabecera=CursoHijo.idMatriculaCabecera,
           this.IdMatriculaCabecera=CursoHijo.idMatriculaCabecera,
+          this.IdProgramageneral=CursoHijo.idPGeneralPadre
           this._ChatAtencionClienteService.ActualizarChatAtencionClienteContacto(this.ActualizarChatAtc).pipe(takeUntil(this.signal$)).subscribe({
             next:x=>{
             },
@@ -665,11 +679,6 @@ export class ChatAtencionClienteComponent implements OnInit,OnChanges {
         }
       })
     }
-
-
-
-
-
   }
   ObtenerCursosIdArea(Area:any){
     console.log(Area)

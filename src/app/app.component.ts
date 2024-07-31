@@ -25,7 +25,7 @@ export class AppComponent implements OnInit,AfterViewInit ,OnDestroy {
   public cargaChat=false;
   public usuarioWeb=''
   public esChatbot = false;
-  public showChatATC: boolean = false;
+  public showChatATC: boolean = true;
   constructor(
     private _HelperService: HelperService,
     private router: Router,
@@ -36,6 +36,7 @@ export class AppComponent implements OnInit,AfterViewInit ,OnDestroy {
   ) {
     this.isBrowser = isPlatformBrowser(platformId);
   }
+  public ChatCargado=false;
   ngOnDestroy(): void {
     this.signal$.next(true)
     this.signal$.complete()
@@ -94,14 +95,39 @@ export class AppComponent implements OnInit,AfterViewInit ,OnDestroy {
         this.RegistroInteraccionInicial();
       }else{
         this._HelperService.enviarmsjObtenerUsuario(this.usuarioWeb);
-        this.ConfiguracionChatAtc()
       }
     }else{
       this.CodigoIso=codIso;
       this.charge=true;
       this._HelperService.enviarmsjObtenerUsuario(this.usuarioWeb);
-      this.ConfiguracionChatAtc()
     }
+
+    this.router.events.pipe(
+      filter(event => event instanceof NavigationEnd)
+    ).subscribe((event: any) => {
+      this.showChatATC = true;
+      const navEnd = event as NavigationEnd;
+      console.log(event)
+      console.log(navEnd)
+      const currentRoute = this.activatedRoute.root;
+      console.log('Algo a evaluar')
+      if (navEnd.url.includes('/AulaVirtual')) {
+      }
+      else {
+        let route = currentRoute;
+        while (route.firstChild) {
+          route = route.firstChild;
+        }
+        if (route.component === ProgramasDetalleComponent) {
+          this.showChatATC = false;
+        }
+      }
+      console.log()
+    });
+    this.ChatCargado=false;
+    timer(3000).pipe(takeUntil(this.signal$)).subscribe(_=>{
+      this.ChatCargado=true;
+    })
   }
   ObtenerCodigoIso(){
     this._GlobalService.ObtenerCodigoIso().pipe(takeUntil(this.signal$)).subscribe({
@@ -122,7 +148,6 @@ export class AppComponent implements OnInit,AfterViewInit ,OnDestroy {
       },
       complete:()=>{
         console.log('REGISTRARA EL USUARIO WEB ')
-        this.ConfiguracionChatAtc()
       }
     })
   }
@@ -147,30 +172,5 @@ export class AppComponent implements OnInit,AfterViewInit ,OnDestroy {
   changeExpandibles(e:any){
     this.Expandibles=e
   }
-  ConfiguracionChatAtc(){
-    console.log('Evaluará lo del chat')
-    let showChat = true;
-    this.router.events.pipe(
-      filter(event => event instanceof NavigationEnd)
-    ).subscribe((event: any) => {
-      const navEnd = event as NavigationEnd;
-      console.log(event)
-      console.log(navEnd)
-      const currentRoute = this.activatedRoute.root;
-      console.log('Algo a evaluar')
-      if (navEnd.url.includes('/AulaVirtual')) {
-        showChat = true;
-      } else {
-        let route = currentRoute;
-        while (route.firstChild) {
-          route = route.firstChild;
-        }
-        if (route.component === ProgramasDetalleComponent) {
-          showChat = false;
-        }
-      }
-      console.log(this.showChatATC)
-    });
-    this.showChatATC = showChat;
-  }
+
 }

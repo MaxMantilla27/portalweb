@@ -37,7 +37,7 @@
                 <div class="remitente">{{item.nombreRemitente.split(' ')[0]}}</div>
                 <div class="msj" [innerHtml]="item.mensaje | safeHtml"></div>
                 <ng-container *ngIf="item.idRemitente=='visitante'">
-                  <ng-container  *ngIf="(mensajesAnteriore.length-i)>=NroMensajesSinLeer">
+                  <!-- <ng-container  *ngIf="(mensajesAnteriore.length-i)>=NroMensajesSinLeer">
                     <div class="statemsjleido">
                       <i class="material-icons" style="right: 4px;
                       z-index: 3;">check</i>
@@ -52,7 +52,7 @@
                       <i class="material-icons" style="right: 1px;
                       z-index: 4;">check</i>
                     </div>
-                  </ng-container>
+                  </ng-container> -->
                 </ng-container>
 
               </div>
