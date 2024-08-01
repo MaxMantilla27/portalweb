@@ -13,6 +13,8 @@ import { Basic } from 'src/app/Core/Models/BasicDTO';
 import { FormularioRojoComponent } from '../formulario-rojo/formulario-rojo.component';
 import { RegionService } from '../../Services/Region/region.service';
 import { DatosPortalService } from '../../Services/DatosPortal/datos-portal.service';
+import { ChatAtencionClienteContactoRegistrarDTO } from 'src/app/Core/Models/ChatAtencionClienteDTO';
+import { ChatAtencionClienteService } from '../../Services/ChatAtencionCliente/chat-atencion-cliente.service';
 declare const fbq:any;
 declare const gtag:any;
 @Component({
@@ -31,7 +33,8 @@ export class FormChatComponent implements OnInit,OnChanges {
     @Inject(PLATFORM_ID) platformId: Object,
     private _RegionService: RegionService,
     private _DatosPortalService: DatosPortalService,
-    private _FacebookPixelService:FacebookPixelService
+    private _FacebookPixelService:FacebookPixelService,
+    private _ChatAtencionClienteService:ChatAtencionClienteService,
   ) {
     this.isBrowser = isPlatformBrowser(platformId);
   }
@@ -85,6 +88,19 @@ export class FormChatComponent implements OnInit,OnChanges {
     idAreaTrabajo:undefined,
     idIndustria:undefined,
     idLocalidad:undefined
+  }
+  public RegistroChatAtc:ChatAtencionClienteContactoRegistrarDTO={
+    IdContactoPortalSegmento: '',
+    IdPGeneral: 0,
+    IdPEspecifico: 0,
+    IdAlumno: 0,
+    ChatIniciado: false,
+    FormularioEnviado: false,
+    ChatFinalizado: false,
+    IdOportunidad: 0,
+    IdMatriculaCabecera: 0,
+    EsAcademico: false,
+    EsSoporteTecnico: false
   }
   ngOnInit(): void {
     console.log('form-chat')
@@ -165,6 +181,19 @@ export class FormChatComponent implements OnInit,OnChanges {
         this.DatosEnvioFormulario.IdPespecifico=this.IdPespecificoPrograma
       };
       this.DatosEnvioFormulario.IdCampania=parseInt(idcampania)
+      this.RegistroChatAtc.IdContactoPortalSegmento=this._SessionStorageService.SessionGetValue('usuarioWeb');
+      this.RegistroChatAtc.IdPGeneral=this.DatosEnvioFormulario.IdPrograma;
+      this.RegistroChatAtc.IdPEspecifico=this.DatosEnvioFormulario.IdPespecifico;
+      this.RegistroChatAtc.IdAlumno=0;
+      this.RegistroChatAtc.ChatIniciado=true;
+      this.RegistroChatAtc.FormularioEnviado=true;
+      this.RegistroChatAtc.ChatFinalizado=false;
+      this.RegistroChatAtc.IdOportunidad=0;
+      this._ChatAtencionClienteService.RegistrarChatAtencionClienteContacto(this.RegistroChatAtc).pipe(takeUntil(this.signal$)).subscribe({
+        next:x=>{
+          console.log(x)
+        },
+      })
       this._ChatEnLinea.ValidarCrearOportunidadChat(this.DatosEnvioFormulario).pipe(takeUntil(this.signal$)).subscribe({
         next:(x)=>{
           //this.ProcesarAsignacionAutomaticaNuevoPortal(x);
