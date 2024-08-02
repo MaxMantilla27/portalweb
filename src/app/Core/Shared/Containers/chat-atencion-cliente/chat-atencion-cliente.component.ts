@@ -16,6 +16,8 @@ import { ChatAtencionClienteService } from '../../Services/ChatAtencionCliente/c
 import { CardProgramasDTO } from 'src/app/Core/Models/BasicDTO';
 import { ChatAtencionClienteContactoActualizarDTO, ChatAtencionClienteContactoDetalleRegistrarDTO, ChatAtencionClienteContactoRegistrarDTO } from 'src/app/Core/Models/ChatAtencionClienteDTO';
 import { DatosPerfilService } from '../../Services/DatosPerfil/datos-perfil.service';
+import { ChatEnLineaService } from '../../Services/ChatEnLinea/chat-en-linea.service';
+import { ProgramasDetalleComponent } from 'src/app/Public/programas-detalle/programas-detalle.component';
 @Component({
   selector: 'app-chat-atencion-cliente',
   templateUrl: './chat-atencion-cliente.component.html',
@@ -35,8 +37,10 @@ export class ChatAtencionClienteComponent implements OnInit,OnChanges {
     private _ChatAtencionClienteService:ChatAtencionClienteService,
     private _ActivatedRoute: ActivatedRoute,
     private _DatosPerfilService:DatosPerfilService,
+    private _ChatEnLinea: ChatEnLineaService,
+    private activatedRoute: ActivatedRoute
   ) { }
-  public Open: boolean=false
+  @Input() Open: boolean=false
   isBubbleOpen: boolean = false;
   stateAsesor:boolean =true;
   public stateAsesorAtc=false
@@ -134,6 +138,7 @@ export class ChatAtencionClienteComponent implements OnInit,OnChanges {
   public DatosCurso:any;
   public ChatAcademicoIniciadoLocal:any
   public IdAlumno=0;
+  public TieneCoordinador=false
   ngOnDestroy() {
     // Cancelar suscripción para evitar pérdidas de memoria
     if (this.routerSubscription) {
@@ -143,9 +148,11 @@ export class ChatAtencionClienteComponent implements OnInit,OnChanges {
   ngOnInit(): void {
     this.IdContactoPortalSegmento=this._SessionStorageService.SessionGetValue('usuarioWeb')
     console.log(this.IdContactoPortalSegmento)
+
     this.routerSubscription = this._router.events.subscribe(event => {
-      if(this._SessionStorageService.GetToken()!=null){
-        if (event instanceof NavigationEnd) {
+      if (event instanceof NavigationEnd) {
+        this.IdMatriculaCabecera=0
+        if(this._SessionStorageService.GetToken()!=null){
           this.ChatAcademicoIniciadoLocal=this._SessionStorageService.SessionGetValue('ChatAcademicoIniciado')
           console.log(this.ChatAcademicoIniciadoLocal)
           if(this.ChatAcademicoIniciadoLocal!='true'){
@@ -178,28 +185,44 @@ export class ChatAtencionClienteComponent implements OnInit,OnChanges {
             }
           }
         }
-      }
-      else{
-
+        console.log('INGRESA CABECERA 1')
+        this.ObtenerInformacionChat();
       }
     });
     this._HelperService.recibirDatoCuenta.pipe(takeUntil(this.signal$)).subscribe({
       next: (x) => {
+        if(this._SessionStorageService.GetToken()!=null){
+          this.Paso=2
+          this.Caso='B'
+        }
         this.ObtenerInformacionChat();
       }
     });
+    console.log('INGRESA CABECERA 2')
     this.ObtenerInformacionChat();
   }
   ObtenerInformacionChat(){
+    this.CargandoInformacion=true
     if(this._SessionStorageService.GetToken()!=null){
-      this.CursosMatriculados()
+      console.log(this._router.url)
       const urlSegments = this._router.url.split('/');
+      let assignNext = false; // Variable para determinar si el siguiente segmento debe ser asignado
+
       for (let segment of urlSegments) {
-        if (/^\d+$/.test(segment)) {
-          this.IdMatriculaCabecera = Number(segment);
-          break;
+        console.log(segment);
+
+        if (assignNext) {
+          if (/^\d+$/.test(segment)) {
+            this.IdMatriculaCabecera = Number(segment);
+          }
+          break; // Salimos del bucle después de asignar o no el valor
+        }
+
+        if (segment === 'MisCursos') {
+          assignNext = true; // La próxima iteración asignará el valor si es un número
         }
       }
+
       console.log(this.IdMatriculaCabecera)
       if(this.IdMatriculaCabecera==0){
         this._ChatAtencionClienteService.ObtenerCursosAlumnoMatriculado().pipe(takeUntil(this.signal$)).subscribe({
@@ -228,18 +251,16 @@ export class ChatAtencionClienteComponent implements OnInit,OnChanges {
                     ValorFormulario="true"
                   }
                   this._SessionStorageService.SessionSetValue('ChatAcademicoIniciado',ValorFormulario);
-                  if(this.Paso==2 && this.Caso=='B'){
+                  if(this._SessionStorageService.GetToken()!=null && this.Paso<=2 && this.Caso=='B'){
                     this.CursosMatriculados()
-                  }
-                  if(this._SessionStorageService.GetToken()!=null && this.Paso<=2){
-                    this.Paso=3
+                    this.Paso=2
                     this.Caso='B'
-                    this.CursosMatriculados()
                   }
                 }
                 else{
                   this.Paso=2
                   this.Caso='B'
+                  console.log('INGRESA 1')
                   this.CursosMatriculados()
                 }
               }
@@ -277,6 +298,7 @@ export class ChatAtencionClienteComponent implements OnInit,OnChanges {
                 }
                 this._SessionStorageService.SessionSetValue('ChatAcademicoIniciado',ValorFormulario);
                 if(this.Paso==2 && this.Caso=='B'){
+                  console.log('INGRESA 2')
                   this.CursosMatriculados()
                 }
               }
@@ -288,7 +310,6 @@ export class ChatAtencionClienteComponent implements OnInit,OnChanges {
                 this.IdMatriculaCabecera=this.RegistroHistoricoUsuario.idMatriculaCabecera;
                 this.ChatSoporteTecnico=this.RegistroHistoricoUsuario.esSoporteTecnico;
                 this.EsSoporteTecnico=this.RegistroHistoricoUsuario.esSoporteTecnico;
-                this.CursosMatriculados()
               }
             }
           }
@@ -348,6 +369,7 @@ export class ChatAtencionClienteComponent implements OnInit,OnChanges {
               })
             }
             if(this.Paso==2 && this.Caso=='B'){
+              console.log('INGRESA 3')
               this.CursosMatriculados()
             }
             if(this._SessionStorageService.GetToken()==null && this.Paso==4){
@@ -363,6 +385,10 @@ export class ChatAtencionClienteComponent implements OnInit,OnChanges {
       })
 
     }
+    if(this.IdMatriculaCabecera!=0){
+      this.ObtenerCoordinadorMatricula();
+    }
+    this.CargandoInformacion=false
   }
   ngOnChanges(changes: SimpleChanges): void {
     // this.IdContactoPortalSegmento=this._SessionStorageService.SessionGetValue('usuarioWeb')
@@ -437,7 +463,6 @@ export class ChatAtencionClienteComponent implements OnInit,OnChanges {
             next:x=>{
             },
             complete:()=>{
-              this.CursosMatriculados()
             }
           })
         }
@@ -642,6 +667,7 @@ export class ChatAtencionClienteComponent implements OnInit,OnChanges {
             complete:()=>{
               this.Paso=3,
               this.Caso='B'
+              this.ObtenerCoordinadorMatricula();
             }
           })
         }
@@ -674,6 +700,7 @@ export class ChatAtencionClienteComponent implements OnInit,OnChanges {
             complete:()=> {
               this.Paso=3,
               this.Caso='B'
+              this.ObtenerCoordinadorMatricula();
             },
           })
         }
@@ -733,8 +760,9 @@ export class ChatAtencionClienteComponent implements OnInit,OnChanges {
       next:x=>{
       },
       complete:()=>{
-        this._router.navigate(['/'+CursoSeleccionado.direccion])
         this._SessionStorageService.SessionSetValue('ChatAtencionCliente',JSON.stringify(CursoSeleccionado.direccion));
+        this.Open=true;
+        this._router.navigate(['/'+CursoSeleccionado.direccion])
       }
     })
   }
@@ -827,109 +855,134 @@ export class ChatAtencionClienteComponent implements OnInit,OnChanges {
       }
     })
   }
+  ObtenerCoordinadorMatricula(){
+    this._ChatEnLinea.ObtenerCoordinadorChat(this.IdMatriculaCabecera).pipe(takeUntil(this.signal$)).subscribe({
+      next: (x) => {
+        console.log('Información del coordinador',x)
+        if(x!=null){
+          this.TieneCoordinador=true;
+        }
+        else{
+          this.TieneCoordinador=false;
+        }
+      },
+      complete:()=>{
+
+      }})
+  }
   RegistroDirectoCursoMatriculado(EsSoporteTecnico:boolean){
     console.log(this.IdContactoPortalSegmento)
     if(this.IdChatAtencionClienteContacto==0)
-    {
-      this._DatosPerfilService.RegistroProgramaMatriculadoPorIdMatricula(this.IdMatriculaCabecera).pipe(takeUntil(this.signal$)).subscribe({
-        next:x=>{
-          console.log(x)
-          this._HelperService.recibirMsjChat().pipe(takeUntil(this.signal$)).subscribe({
-            next: (x) => {
-              console.log(x)
-            }
-          })
-          // this._HelperService.enviarMsjChat({
-          //   idMatriculaCabecera:x.idMatriculaCabecera,
-          //   idprogramageneralalumno:x.idPGeneral,
-          //   idcoordinadora:x.idAsesor,
-          //   idcentrocosto:x.idCentroCosto
-          // });
-          this.DatosCurso=x
-        },
-        complete:()=>{
-          this.RegistroChatAtc.IdContactoPortalSegmento=this.IdContactoPortalSegmento;
-          this.RegistroChatAtc.IdPGeneral=this.DatosCurso.idPGeneral;
-          this.RegistroChatAtc.IdPEspecifico=this.DatosCurso.idPEspecifico;
-          this.RegistroChatAtc.IdAlumno=this.DatosCurso.idAlumno;
-          this.RegistroChatAtc.ChatIniciado=true;
-          this.RegistroChatAtc.FormularioEnviado=true;
-          this.RegistroChatAtc.ChatFinalizado=false;
-          this.RegistroChatAtc.IdOportunidad=0;
-          this.RegistroChatAtc.IdMatriculaCabecera=this.IdMatriculaCabecera;
-          this.RegistroChatAtc.EsAcademico=true;
-          this.RegistroChatAtc.EsSoporteTecnico=EsSoporteTecnico;
-          console.log(this.IdMatriculaCabecera)
-          console.log(this.RegistroChatAtc)
-          this._ChatAtencionClienteService.RegistrarChatAtencionClienteContacto(this.RegistroChatAtc).pipe(takeUntil(this.signal$)).subscribe({
-            next:x=>{
-              this.IdChatAtencionClienteContacto=x
-            },
-            complete:()=>{
-              this.Paso=4;
-              this.Caso='B';
-              this.ChatSoporteTecnico=EsSoporteTecnico
-              if(EsSoporteTecnico){
-                this.RegistroChatDetalleAtc.IdChatAtencionClienteContacto=this.IdChatAtencionClienteContacto;
-                this.RegistroChatDetalleAtc.PasoActual=3
-                this.RegistroChatDetalleAtc.CasoActual='B'
-                this.RegistroChatDetalleAtc.PasoSiguiente=4
-                this.RegistroChatDetalleAtc.CasoSiguiente='B'
-                this.RegistroChatDetalleAtc.MensajeEnviado="Tengo problemas técnicos en el aula virtual";
-                this._ChatAtencionClienteService.RegistrarChatAtencionClienteContactoDetalle(this.RegistroChatDetalleAtc).pipe(takeUntil(this.signal$)).subscribe({
-                  next:x=>{
-                  }
-                })
-              }
-              else{
-                this.RegistroChatDetalleAtc.IdChatAtencionClienteContacto=this.IdChatAtencionClienteContacto;
-                this.RegistroChatDetalleAtc.PasoActual=3
-                this.RegistroChatDetalleAtc.CasoActual='B'
-                this.RegistroChatDetalleAtc.PasoSiguiente=4
-                this.RegistroChatDetalleAtc.CasoSiguiente='B'
-                this.RegistroChatDetalleAtc.MensajeEnviado="Contactar con un Coordinador Académico";
-                this._ChatAtencionClienteService.RegistrarChatAtencionClienteContactoDetalle(this.RegistroChatDetalleAtc).pipe(takeUntil(this.signal$)).subscribe({
-                  next:x=>{
-                  }
-                })
-              }
-              this._SessionStorageService.SessionSetValue('ChatAcademicoIniciado','true');
-
-            }
-          })
-
-        }
-      })
-    }
-    else{
-      this.Paso=4;
-      this.Caso='B';
-      this.ChatSoporteTecnico=EsSoporteTecnico
-      if(EsSoporteTecnico){
-        this.RegistroChatDetalleAtc.IdChatAtencionClienteContacto=this.IdChatAtencionClienteContacto;
-        this.RegistroChatDetalleAtc.PasoActual=3
-        this.RegistroChatDetalleAtc.CasoActual='B'
-        this.RegistroChatDetalleAtc.PasoSiguiente=4
-        this.RegistroChatDetalleAtc.CasoSiguiente='B'
-        this.RegistroChatDetalleAtc.MensajeEnviado="Tengo problemas técnicos en el aula virtual";
-        this._ChatAtencionClienteService.RegistrarChatAtencionClienteContactoDetalle(this.RegistroChatDetalleAtc).pipe(takeUntil(this.signal$)).subscribe({
+      {
+        this._DatosPerfilService.RegistroProgramaMatriculadoPorIdMatricula(this.IdMatriculaCabecera).pipe(takeUntil(this.signal$)).subscribe({
           next:x=>{
+            console.log(x)
+            this._HelperService.recibirMsjChat().pipe(takeUntil(this.signal$)).subscribe({
+              next: (x) => {
+                console.log(x)
+              }
+            })
+            // this._HelperService.enviarMsjChat({
+            //   idMatriculaCabecera:x.idMatriculaCabecera,
+            //   idprogramageneralalumno:x.idPGeneral,
+            //   idcoordinadora:x.idAsesor,
+            //   idcentrocosto:x.idCentroCosto
+            // });
+            this.DatosCurso=x
+          },
+          complete:()=>{
+            this.RegistroChatAtc.IdContactoPortalSegmento=this.IdContactoPortalSegmento;
+            this.RegistroChatAtc.IdPGeneral=this.DatosCurso.idPGeneral;
+            this.RegistroChatAtc.IdPEspecifico=this.DatosCurso.idPEspecifico;
+            this.RegistroChatAtc.IdAlumno=this.DatosCurso.idAlumno;
+            this.RegistroChatAtc.ChatIniciado=true;
+            this.RegistroChatAtc.FormularioEnviado=true;
+            this.RegistroChatAtc.ChatFinalizado=false;
+            this.RegistroChatAtc.IdOportunidad=0;
+            this.RegistroChatAtc.IdMatriculaCabecera=this.IdMatriculaCabecera;
+            this.RegistroChatAtc.EsAcademico=true;
+            this.RegistroChatAtc.EsSoporteTecnico=EsSoporteTecnico;
+            console.log(this.IdMatriculaCabecera)
+            console.log(this.RegistroChatAtc)
+            this._ChatAtencionClienteService.RegistrarChatAtencionClienteContacto(this.RegistroChatAtc).pipe(takeUntil(this.signal$)).subscribe({
+              next:x=>{
+                this.IdChatAtencionClienteContacto=x
+              },
+              complete:()=>{
+                this.Paso=4;
+                this.Caso='B';
+                this.ChatSoporteTecnico=EsSoporteTecnico
+                if(EsSoporteTecnico){
+                  this.RegistroChatDetalleAtc.IdChatAtencionClienteContacto=this.IdChatAtencionClienteContacto;
+                  this.RegistroChatDetalleAtc.PasoActual=3
+                  this.RegistroChatDetalleAtc.CasoActual='B'
+                  this.RegistroChatDetalleAtc.PasoSiguiente=4
+                  this.RegistroChatDetalleAtc.CasoSiguiente='B'
+                  this.RegistroChatDetalleAtc.MensajeEnviado="Tengo problemas técnicos en el aula virtual";
+                  this._ChatAtencionClienteService.RegistrarChatAtencionClienteContactoDetalle(this.RegistroChatDetalleAtc).pipe(takeUntil(this.signal$)).subscribe({
+                    next:x=>{
+                    }
+                  })
+                }
+                else{
+                  this.RegistroChatDetalleAtc.IdChatAtencionClienteContacto=this.IdChatAtencionClienteContacto;
+                  this.RegistroChatDetalleAtc.PasoActual=3
+                  this.RegistroChatDetalleAtc.CasoActual='B'
+                  this.RegistroChatDetalleAtc.PasoSiguiente=4
+                  this.RegistroChatDetalleAtc.CasoSiguiente='B'
+                  this.RegistroChatDetalleAtc.MensajeEnviado="Contactar con un Coordinador Académico";
+                  this._ChatAtencionClienteService.RegistrarChatAtencionClienteContactoDetalle(this.RegistroChatDetalleAtc).pipe(takeUntil(this.signal$)).subscribe({
+                    next:x=>{
+                    }
+                  })
+                }
+                this._SessionStorageService.SessionSetValue('ChatAcademicoIniciado','true');
+
+              }
+            })
+
           }
         })
       }
       else{
-        this.RegistroChatDetalleAtc.IdChatAtencionClienteContacto=this.IdChatAtencionClienteContacto;
-        this.RegistroChatDetalleAtc.PasoActual=3
-        this.RegistroChatDetalleAtc.CasoActual='B'
-        this.RegistroChatDetalleAtc.PasoSiguiente=4
-        this.RegistroChatDetalleAtc.CasoSiguiente='B'
-        this.RegistroChatDetalleAtc.MensajeEnviado="Contactar con un Coordinador Académico";
-        this._ChatAtencionClienteService.RegistrarChatAtencionClienteContactoDetalle(this.RegistroChatDetalleAtc).pipe(takeUntil(this.signal$)).subscribe({
-          next:x=>{
-          }
-        })
+        this.Paso=4;
+        this.Caso='B';
+        this.ChatSoporteTecnico=EsSoporteTecnico
+        if(EsSoporteTecnico){
+          this.RegistroChatDetalleAtc.IdChatAtencionClienteContacto=this.IdChatAtencionClienteContacto;
+          this.RegistroChatDetalleAtc.PasoActual=3
+          this.RegistroChatDetalleAtc.CasoActual='B'
+          this.RegistroChatDetalleAtc.PasoSiguiente=4
+          this.RegistroChatDetalleAtc.CasoSiguiente='B'
+          this.RegistroChatDetalleAtc.MensajeEnviado="Tengo problemas técnicos en el aula virtual";
+          this._ChatAtencionClienteService.RegistrarChatAtencionClienteContactoDetalle(this.RegistroChatDetalleAtc).pipe(takeUntil(this.signal$)).subscribe({
+            next:x=>{
+            }
+          })
+        }
+        else{
+          this.RegistroChatDetalleAtc.IdChatAtencionClienteContacto=this.IdChatAtencionClienteContacto;
+          this.RegistroChatDetalleAtc.PasoActual=3
+          this.RegistroChatDetalleAtc.CasoActual='B'
+          this.RegistroChatDetalleAtc.PasoSiguiente=4
+          this.RegistroChatDetalleAtc.CasoSiguiente='B'
+          this.RegistroChatDetalleAtc.MensajeEnviado="Contactar con un Coordinador Académico";
+          this._ChatAtencionClienteService.RegistrarChatAtencionClienteContactoDetalle(this.RegistroChatDetalleAtc).pipe(takeUntil(this.signal$)).subscribe({
+            next:x=>{
+            }
+          })
+        }
+        this._SessionStorageService.SessionSetValue('ChatAcademicoIniciado','true');
       }
-      this._SessionStorageService.SessionSetValue('ChatAcademicoIniciado','true');
-    }
+  }
+  CerrarInteraccionFormularioAcademico(){
+    this._ChatAtencionClienteService.CerrarFormularioAcademicoIdMatriculaCabecera(this.IdChatAtencionClienteContacto).pipe(takeUntil(this.signal$)).subscribe({
+      next:x=>{
+        console.log(x)
+      },
+      complete:()=>{
+        this._router.navigate(['/contactenos'])
+      }
+    })
   }
 }

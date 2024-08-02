@@ -99,5 +99,12 @@ export class ChatAtencionClienteService {
       return EMPTY;
     }
   }
+  public CerrarFormularioAcademicoIdMatriculaCabecera(IdChatAtencionClienteContacto:number):Observable<any>{
+    if(this.isBrowser){
+      return this.http.post<any>(this.urlBase+'/CerrarFormularioAcademicoIdMatriculaCabecera?IdChatAtencionClienteContacto='+IdChatAtencionClienteContacto,{});
+    }else{
+      return EMPTY;
+    }
+  }
 
 }

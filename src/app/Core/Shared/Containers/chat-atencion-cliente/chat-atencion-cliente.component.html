@@ -89,7 +89,7 @@
             Atras
           </div>
           <p>Ingresa a tu cuenta para revisar tus programas, cursos y certificaciones</p>
-          <div class="container" style="justify-content: center;">
+          <div class="container" style="justify-content: center; padding: 0px !important;">
             <div class="col-12" >
               <div class="alert alert-danger" role="alert" *ngIf="errorLogin!=''">
                 {{errorLogin}}
@@ -175,11 +175,14 @@
           <p><strong>¿Con quién deseas comunicarte?</strong></p>
           <p>Para continuar selecciona la opción que mejor se ajusta para realizar tu consulta:</p>
           <ul>
-            <li (click)="ActualizarEsSoporteTecnico(false)">
+            <li *ngIf="TieneCoordinador!=false" (click)="ActualizarEsSoporteTecnico(false)">
               <a style="cursor:pointer">Contactar con un Coordinador Académico</a>
             </li>
+            <li *ngIf="TieneCoordinador!=true">
+              <a style="cursor:pointer" (click)="CerrarInteraccionFormularioAcademico()">No tiene coordinador asignado, escríbanos en contáctenos, elija otro curso.</a>
+            </li>
             <li (click)="ActualizarEsSoporteTecnico(true)">
-              <a style="cursor:pointer">Tengo problemas técnicos en el aula virtual</a>
+              <a style="cursor:pointer">Tengo problemas técnicos en el aula virtual.</a>
             </li>
           </ul>
         </div>
@@ -189,8 +192,11 @@
           <p><strong>¿Con quién deseas comunicarte?</strong></p>
           <p>Para continuar selecciona la opción que mejor se ajusta para realizar tu consulta:</p>
           <ul>
-            <li (click)="RegistroDirectoCursoMatriculado(false)">
+            <li *ngIf="TieneCoordinador!=false" (click)="RegistroDirectoCursoMatriculado(false)">
               <a style="cursor:pointer" >Contactar con un Coordinador Académico</a>
+            </li>
+            <li *ngIf="TieneCoordinador!=true">
+              <a style="cursor:pointer" (click)="CerrarInteraccionFormularioAcademico()">No tiene coordinador asignado, escríbanos en contáctenos, elija otro curso.</a>
             </li>
             <li (click)="RegistroDirectoCursoMatriculado(true)">
               <a style="cursor:pointer" >Tengo problemas técnicos en el aula virtual</a>

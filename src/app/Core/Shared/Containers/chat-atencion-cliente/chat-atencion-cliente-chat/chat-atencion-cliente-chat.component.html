@@ -5,8 +5,11 @@
       <img [src]="img" (error)="ErrorImgAsesor()" alt="">
       <div class="nombreAsesor">
         <div *ngIf="nombreasesorglobal!=''" style="margin-left: 15px;">
-          <div>
+          <div *ngIf="nombreasesorglobal!='Sin Asesor'">
             {{nombreAsesorSplit[0]}} {{nombreAsesorSplit[1]}}
+          </div>
+          <div *ngIf="nombreasesorglobal=='Sin Asesor'">
+            Asesor Comercial
           </div>
           <div style="font-size: 14px;font-weight: 500;">
             BSG Institute
@@ -26,7 +29,7 @@
   </ng-container>
 
   <ng-template #login>
-    <ng-container>
+    <ng-container *ngIf="nombreasesorglobal!='Sin Asesor'">
       <div #contenidoMsj class="contentChatMsj" (click)="marcarChatAgentecomoleido()">
         <div class="mensajeDefecto">Chat iniciado</div>
         <div class="mensajeDefecto">{{nombreAsesorSplit[0]}} {{nombreAsesorSplit[1]}} se unió al Chat</div>
@@ -68,5 +71,11 @@
         <input  #fileInput type="file" style="display:none;" accept="image/png, image/gif, image/jpeg" (change)="AgregarArchivoChatSoporte($event)">
       </div>
     </ng-container>
+    <ng-container *ngIf="nombreasesorglobal=='Sin Asesor'">
+      <div style="padding: 10px;">
+        Un asesor se contactará contigo, gracias por tu preferencia.
+      </div>
+    </ng-container>
+
   </ng-template>
 </div>
