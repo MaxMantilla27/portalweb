@@ -39,7 +39,7 @@ export class CursoNotasComponent implements OnInit,OnDestroy {
   public CursosCriteriosOnlineNotas:any;
   public NombreCursoOnline=''
   public OpenVideoModulo=true
-
+  public CantidadAsincronicos=0;
   ngOnInit(): void {
     this.CursosCriteriosOnlineNotas=[];
     this.PromedioFinal=0;
@@ -57,6 +57,7 @@ export class CursoNotasComponent implements OnInit,OnDestroy {
 
   ObtenerCursosProgramaPorIdMatricula(idMatricula:number){
     this.PromedioFinal=0;
+    this.CantidadAsincronicos=0
     this._NotaService.ObtenerCursosProgramaPorIdMatricula(idMatricula).pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
         this.CursosCriteriosPrevio=x;
@@ -74,6 +75,7 @@ export class CursoNotasComponent implements OnInit,OnDestroy {
           });
         }
         if(cont!=0){
+          this.CantidadAsincronicos=cont;
           this.PromedioFinal=Math.round(this.PromedioFinal/cont)
         }
       },
@@ -223,16 +225,15 @@ export class CursoNotasComponent implements OnInit,OnDestroy {
       },
       complete:()=> {
         setTimeout(() => {
-          console.log(this.PromedioFinalFinalOnlineCurso);
           if(this.PromedioFinal !== 0 && this.PromedioFinalFinalOnlineCurso === 0){
             this.PromedioFinal = this.PromedioFinal;
           } else if(this.PromedioFinal === 0 && this.PromedioFinalFinalOnlineCurso !== 0){
             this.PromedioFinal = Math.round(Math.round(this.PromedioFinalFinalOnlineCurso)/this.CursosCriteriosOnline.length);
           } else if(this.PromedioFinal !== 0 && this.PromedioFinalFinalOnlineCurso !== 0){
-            this.PromedioFinalFinalOnlineCurso=Math.round(Math.round(this.PromedioFinalFinalOnlineCurso)/this.CursosCriteriosOnline.length)
-            console.log(this.PromedioFinal);
-            console.log(this.PromedioFinalFinalOnlineCurso);
-            this.PromedioFinal = Math.round((this.PromedioFinal + this.PromedioFinalFinalOnlineCurso) / 2);
+            // this.PromedioFinalFinalOnlineCurso=Math.round(Math.round(this.PromedioFinalFinalOnlineCurso+this.PromedioFinal)/this.CursosCriteriosOnline.length)
+            console.log('Notas Asincrónico',this.PromedioFinal);
+            console.log('Notas Sincrónico',this.PromedioFinalFinalOnlineCurso);
+            this.PromedioFinal = Math.round((this.PromedioFinal + this.PromedioFinalFinalOnlineCurso) / (this.CursosCriteriosOnline.length+this.CantidadAsincronicos));
           }
           if(this.PromedioFinal === 0 && this.PromedioFinalFinalOnlineCurso === 0){
             this.PromedioFinal = 0;
