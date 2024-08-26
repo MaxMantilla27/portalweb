@@ -1,28 +1,22 @@
 <!-- holax1 -->
 <ng-container>
-  <div  *ngIf="Open">
-    <div class="cerrarChatAtc" (click)="Open=false;IsOpen.emit(false)">X</div>
+  <div *ngIf="Open">
+    <div class="cerrarChatAtc" (click)="toggleChat(false)">X</div>
   </div>
-  <div  *ngIf="Open">
-    <div class="cerrarChatAtc" (click)="Open=false;IsOpen.emit(false)">X</div>
-  </div>
-  <div style="display:flex"(click)="Open=true;IsOpen.emit(true)" *ngIf="!Open">
-    <div class="chatAtc" >
-      <div style="display: flex;" >
-        <!-- <img class="puntoConectadoAtc" src="../../../../../assets/icons/punto-verde.svg" alt="Punto Verde" > -->
-        <div class="col-4" style="align-items: center;display: flex;justify-content: center;">
+  <div *ngIf="!Open" style="display: flex;" (click)="toggleChat(true)">
+    <div class="chatAtc">
+      <div style="display: flex;">
+        <div class="col-4" style="align-items: center; display: flex; justify-content: center;">
           <img style="height: 35px;" [src]="'../../../../../assets/imagenes/icono-chat-atc.png'" alt="">
-          <!-- <i class="material-icons" style="font-size: 40px !important;">sms</i> -->
         </div>
-        <div class="col-8" style="font-size: 15px;line-height: 20px;text-align: left;">
+        <div class="col-8" style="font-size: 15px; line-height: 20px; text-align: left;">
           Atención al cliente
         </div>
       </div>
     </div>
-    <div class="trianguloChatAtc">
-    </div>
+    <div class="trianguloChatAtc"></div>
   </div>
-  <div class="chatSTAtc" *ngIf="Open" style="box-shadow: 0px 1px 4px #838383;">
+  <div class="chatSTAtc" *ngIf="Open!=false" style="box-shadow: 0px 1px 4px #838383;">
     <div class="cerrarChatMediaAtc" (click)="Open=false;IsOpen.emit(false)">X</div>
     <ng-container select="[contenidoChat]">
       <div class="headerChatAtc"*ngIf="Paso<=2">
@@ -172,6 +166,10 @@
       </div>
       <div *ngIf="Paso==3 && Caso=='B' && CargandoInformacion==false && AcademicoDirecto==false" class="PrimeraInteraccionAtcFondo">
         <div class="PrimeraInteraccionAtc">
+          <div class="FlechaAtras no-select" (click)="RetrocederInicioAcademico()">
+            <i class="material-icons">arrow_back_ios</i>
+            Atras
+          </div>
           <p><strong>¿Con quién deseas comunicarte?</strong></p>
           <p>Para continuar selecciona la opción que mejor se ajusta para realizar tu consulta:</p>
           <ul>
@@ -189,6 +187,10 @@
       </div>
       <div *ngIf="Paso==3 && Caso=='B' && CargandoInformacion==false && AcademicoDirecto" class="PrimeraInteraccionAtcFondo">
         <div class="PrimeraInteraccionAtc">
+          <div class="FlechaAtras no-select" (click)="RetrocederInicioAcademico()">
+            <i class="material-icons">arrow_back_ios</i>
+            Atras
+          </div>
           <p><strong>¿Con quién deseas comunicarte?</strong></p>
           <p>Para continuar selecciona la opción que mejor se ajusta para realizar tu consulta:</p>
           <ul>

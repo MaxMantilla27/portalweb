@@ -38,7 +38,6 @@ export class ChatAtencionClienteComponent implements OnInit,OnChanges {
     private _ActivatedRoute: ActivatedRoute,
     private _DatosPerfilService:DatosPerfilService,
     private _ChatEnLinea: ChatEnLineaService,
-    private activatedRoute: ActivatedRoute
   ) { }
   @Input() Open: boolean=false
   isBubbleOpen: boolean = false;
@@ -148,9 +147,9 @@ export class ChatAtencionClienteComponent implements OnInit,OnChanges {
   ngOnInit(): void {
     this.IdContactoPortalSegmento=this._SessionStorageService.SessionGetValue('usuarioWeb')
     console.log(this.IdContactoPortalSegmento)
-
     this.routerSubscription = this._router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
+        console.log(event)
         this.IdMatriculaCabecera=0
         if(this._SessionStorageService.GetToken()!=null){
           this.ChatAcademicoIniciadoLocal=this._SessionStorageService.SessionGetValue('ChatAcademicoIniciado')
@@ -200,6 +199,25 @@ export class ChatAtencionClienteComponent implements OnInit,OnChanges {
     });
     console.log('INGRESA CABECERA 2')
     this.ObtenerInformacionChat();
+    this.VerificarProgramasDetalle();
+  }
+  public VerificarProgramasDetalle(): void {
+    let route = this._ActivatedRoute.root;
+    while (route.firstChild) {
+      route = route.firstChild;
+    }
+    console.log('COMPONENTE ACTUAL',route.snapshot.component)
+    if (route.snapshot.component === ProgramasDetalleComponent) {
+      this.toggleChat(true);
+    }
+    else{
+      this.toggleChat(this.Open);
+    }
+  }
+
+  toggleChat(state: boolean) {
+    this.Open = state;
+    this.IsOpen.emit(state);
   }
   ObtenerInformacionChat(){
     this.CargandoInformacion=true
@@ -368,9 +386,11 @@ export class ChatAtencionClienteComponent implements OnInit,OnChanges {
                 }
               })
             }
-            if(this.Paso==2 && this.Caso=='B'){
-              console.log('INGRESA 3')
-              this.CursosMatriculados()
+            if(this.Caso=='B'){
+              this.Paso=0
+              this.Caso='A'
+              // console.log('INGRESA 3')
+              // this.CursosMatriculados()
             }
             if(this._SessionStorageService.GetToken()==null && this.Paso==4){
               this.Paso=0
@@ -391,20 +411,6 @@ export class ChatAtencionClienteComponent implements OnInit,OnChanges {
     this.CargandoInformacion=false
   }
   ngOnChanges(changes: SimpleChanges): void {
-    // this.IdContactoPortalSegmento=this._SessionStorageService.SessionGetValue('usuarioWeb')
-    // console.log(this.IdContactoPortalSegmento)
-    // var aux = this._SessionStorageService.GetToken()
-    // console.log('CHANGESSSS',aux)
-    // let  routeSub: Subscription;
-    // routeSub= this._router.events.pipe(filter(event => event instanceof NavigationEnd)).subscribe((x:any) => {
-    //   console.log(x)
-    //   this.IdContactoPortalSegmento = this._SessionStorageService.SessionGetValue('usuarioWeb');
-    //   if (this.Open) {
-    //     timer(1).pipe(takeUntil(this.signal$)).subscribe(_ => {
-    //       this.contenidoMsj.nativeElement.scrollTop = this.contenidoMsj.nativeElement.scrollHeight;
-    //     });
-    //   }
-    // });
   }
   // PARTE DE LOGUIN
   Login(value:any){
@@ -451,7 +457,7 @@ export class ChatAtencionClienteComponent implements OnInit,OnChanges {
         },
         complete:()=>{
           // this._router.navigate(['/AulaVirtual/MisCursos']);
-          this.CargandoInformacion=false
+          this.CargandoInformacion=true
           this.statuscharge=false
           this.RegistroChatDetalleAtc.IdChatAtencionClienteContacto=this.IdChatAtencionClienteContacto;
           this.RegistroChatDetalleAtc.PasoActual=1
@@ -982,6 +988,17 @@ export class ChatAtencionClienteComponent implements OnInit,OnChanges {
       },
       complete:()=>{
         this._router.navigate(['/contactenos'])
+      }
+    })
+  }
+  RetrocederInicioAcademico(){
+    this._ChatAtencionClienteService.CerrarFormularioAcademicoIdMatriculaCabecera(this.IdChatAtencionClienteContacto).pipe(takeUntil(this.signal$)).subscribe({
+      next:x=>{
+        console.log(x)
+      },
+      complete:()=>{
+        this.CursosMatriculados();
+        this.IdChatAtencionClienteContacto=0
       }
     })
   }
