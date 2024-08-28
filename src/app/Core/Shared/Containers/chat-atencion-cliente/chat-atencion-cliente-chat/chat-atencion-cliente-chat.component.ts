@@ -38,6 +38,8 @@ export class ChatAtencionClienteChatComponent implements OnInit,OnDestroy,OnChan
  // public listprogramas = [9990, 9991, 9992, 9993];
   @Input() idProgramageneral=0;
   @Input() IdPespecificoPrograma=0;
+  @Output() RegresarChatAtc = new EventEmitter<boolean>();
+  @Output() RegresarChatAtcEnviado = new EventEmitter<boolean>();
   public contadoraulavirtual=0
   public idInteraccion =this.GetsesionIdInteraccion()
   public idprogramageneralalumno=0
@@ -96,19 +98,19 @@ export class ChatAtencionClienteChatComponent implements OnInit,OnDestroy,OnChan
 
 
     if(this.idProgramageneral>0){
-      timer(5000).pipe(takeUntil(this.signal$)).subscribe(_=>{
-        var IdPGeneralChatAtc = this._SessionStorageService.SessionGetValue('IdPGeneralChatAtc');
-        var IdPEspecificoChatAtc = this._SessionStorageService.SessionGetValue('IdPEspecificoChatAtc');
-        console.log(this.idProgramageneral)
-        console.log(IdPGeneralChatAtc)
-        console.log(IdPEspecificoChatAtc)
-        if(Number(IdPGeneralChatAtc)==this.idProgramageneral){
-          if(IdPEspecificoChatAtc!='' && this.IdPespecificoPrograma!=0){
-            this.IdPespecificoPrograma=Number(IdPEspecificoChatAtc)
-            console.log(this.IdPespecificoPrograma)
-          }
-        }
-      })
+      // timer(5000).pipe(takeUntil(this.signal$)).subscribe(_=>{
+      //   var IdPGeneralChatAtc = this._SessionStorageService.SessionGetValue('IdPGeneralChatAtc');
+      //   var IdPEspecificoChatAtc = this._SessionStorageService.SessionGetValue('IdPEspecificoChatAtc');
+      //   console.log(this.idProgramageneral)
+      //   console.log(IdPGeneralChatAtc)
+      //   console.log(IdPEspecificoChatAtc)
+      //   if(Number(IdPGeneralChatAtc)==this.idProgramageneral){
+      //     if(IdPEspecificoChatAtc!='' && this.IdPespecificoPrograma!=0){
+      //       this.IdPespecificoPrograma=Number(IdPEspecificoChatAtc)
+      //       console.log(this.IdPespecificoPrograma)
+      //     }
+      //   }
+      // })
 
       //this.ChargeChat.emit(true)
     }
@@ -454,33 +456,36 @@ export class ChatAtencionClienteChatComponent implements OnInit,OnDestroy,OnChan
           this.mensajesAnteriore = x;
         },
         complete:()=>{
-          if (this.mensajesAnteriore.length > 0) {
-            timer(2000).pipe(takeUntil(this.signal$)).subscribe(_=>{
-              this.RespuestaConexion.id = this.mensajesAnteriore[0].idFaseOportunidadPortalWeb
-              this.RespuestaConexion.idAlumno = this.mensajesAnteriore[0].idAlumno
-              console.log(this.RespuestaConexion)
-              this.actualizarDatosAlumno(this.RespuestaConexion)
-            })
+          if(this.mensajesAnteriore!=null){
+            if (this.mensajesAnteriore.length > 0 ) {
+              timer(2000).pipe(takeUntil(this.signal$)).subscribe(_=>{
+                this.RespuestaConexion.id = this.mensajesAnteriore[0].idFaseOportunidadPortalWeb
+                this.RespuestaConexion.idAlumno = this.mensajesAnteriore[0].idAlumno
+                console.log(this.RespuestaConexion)
+                this.actualizarDatosAlumno(this.RespuestaConexion)
+              })
 
-            this.mensajesAnteriore.forEach((m: any) => {
-              m.estadoEnviado = true;
-            });
-            if (
-              this.mensajesAnteriore[this.mensajesAnteriore.length - 1]
-                .NroMensajesSinLeer != undefined
-            ) {
-              this.NroMensajesSinLeer =
-                this.mensajesAnteriore[
-                  this.mensajesAnteriore.length - 1
-                ].NroMensajesSinLeer;
+              this.mensajesAnteriore.forEach((m: any) => {
+                m.estadoEnviado = true;
+              });
+              if (
+                this.mensajesAnteriore[this.mensajesAnteriore.length - 1]
+                  .NroMensajesSinLeer != undefined
+              ) {
+                this.NroMensajesSinLeer =
+                  this.mensajesAnteriore[
+                    this.mensajesAnteriore.length - 1
+                  ].NroMensajesSinLeer;
+              }
+              timer(2000)
+              .pipe(takeUntil(this.signal$))
+              .subscribe((_) => {
+                this.contenidoMsj.nativeElement.scrollTop =
+                  this.contenidoMsj.nativeElement.scrollHeight;
+              });
             }
           }
-          timer(100)
-          .pipe(takeUntil(this.signal$))
-          .subscribe((_) => {
-            this.contenidoMsj.nativeElement.scrollTop =
-              this.contenidoMsj.nativeElement.scrollHeight;
-          });
+
         }
       });
   }
@@ -493,5 +498,11 @@ export class ChatAtencionClienteChatComponent implements OnInit,OnDestroy,OnChan
       console.log('IdPGeneral:', IdPGeneral);
       window.location.reload()
     });
+  }
+  onAtrasChatAtc() {
+    this.RegresarChatAtc.emit(true);  // Aquí puedes emitir true o false según necesites
+  }
+  onAtrasChatAtcEnviado() {
+    this.RegresarChatAtcEnviado.emit(true);  // Aquí puedes emitir true o false según necesites
   }
 }

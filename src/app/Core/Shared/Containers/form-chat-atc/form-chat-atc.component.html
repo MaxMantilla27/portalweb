@@ -1,23 +1,35 @@
-<!-- holax1 -->
-<div class="card CabeceraContenido" style="border-radius: 0px 0px 8px 8px;border: 1px solid #FF4E56">
-  <div class="card-body"
-  style="background: transparent; margin-top: 0px;font-size: 11px;text-align: left;margin-bottom: 5px;width: 101%;
-  margin-left: 0px; padding: 5px 15px 5px 15px;text-align: center;margin-bottom: 15px;">
-    Ingresa tus datos para darte mas información
-  </div>
-  <div class="card-footer" style="background: white;margin-bottom: 10px;padding-bottom: 0px;padding-top: 0px;    border: 1px solid transparent;position: relative; height: 420px;overflow: scroll;">
-    <app-cargando *ngIf="statuscharge==true"></app-cargando>
-    <app-formulario-rojo [ListaLocalidades]="listaLocalidades" [model]="formularioContactoChat" [InputsDisable]="statuscharge" (OnSubmit)="SetContacto($event)"
-      (OnValid)="formVal=$event" [Interaccion]="'Chat-'+IdPGeneral" [fiels]="fileds" [ObtenerPrefijo]="false" (OnSelect)="SelectChage($event)">
-      <ng-container contenido>
-      </ng-container>
-      <ng-container send >
-        <div style="margin-left: 2rem;">
-          <app-default-button-flecha style="background:#FF4E56;color:white;font-size: 15px;"
-          [confs]="{titulo:'Quiero más información'}" [style]="'width: 90%;border-radius:10px;margin-bottom: 5px;'">
-        </app-default-button-flecha>
-        </div>
-      </ng-container>
-    </app-formulario-rojo>
-  </div>
+<div class="card CabeceraContenido" style="border-radius: 0px 0px 8px 8px;
+    border-left: 1px solid #FF4E56;
+    border-right: 1px solid #FF4E56;
+    border-bottom: 1px solid #FF4E56;
+    border-top: transparent;">
+
+    <div class="card-body" style="background: transparent; margin-top: 0px; font-size: 11px; text-align: left; margin-bottom: 5px; width: 101%;
+    margin-left: 0px; padding: 5px 15px 5px 15px; text-align: center; margin-bottom: 5px;">
+      Ingresa tus datos para darte más información
+    </div>
+
+    <div class="card-footer">
+      <div class="cargando-wrapper" *ngIf="statuscharge == true">
+        <app-cargando></app-cargando>
+      </div>
+
+      <app-formulario-rojo style="margin-top: 15px" [ListaLocalidades]="listaLocalidades" [model]="formularioContactoChat"
+        [InputsDisable]="statuscharge" (OnSubmit)="SetContacto($event)" (OnValid)="formVal=$event"
+        [Interaccion]="'Chat-'+IdPGeneral" [fiels]="fileds" [ObtenerPrefijo]="false"
+        (OnSelect)="SelectChage($event)">
+
+        <ng-container contenido></ng-container>
+
+        <ng-container send>
+          <div style="margin-left: 2rem;">
+            <app-default-button-flecha style="background: #FF4E56; color: white; font-size: 15px;"
+              [confs]="{titulo:'Quiero más información'}"
+              [style]="'width: 90%; border-radius: 10px; margin-bottom: 5px;'">
+            </app-default-button-flecha>
+          </div>
+        </ng-container>
+
+      </app-formulario-rojo>
+    </div>
 </div>

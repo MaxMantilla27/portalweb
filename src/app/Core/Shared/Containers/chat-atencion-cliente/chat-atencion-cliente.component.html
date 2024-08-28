@@ -50,14 +50,17 @@
       <div *ngIf="CargandoInformacion" style="display: flex;justify-content: center;">
         <mat-spinner></mat-spinner>
       </div>
-      <div *ngIf="Paso==0 && CargandoInformacion==false" class="PrimeraInteraccionAtcFondo">
+      <!-- <div class="card">
+        <div class="corner"></div>
+      </div> -->
+      <div *ngIf="Paso==0 && CargandoInformacion==false" class="PrimeraInteraccionAtcFondo container">
         <div class="PrimeraInteraccionAtc">
-          <p><strong>¡Hola!</strong></p>
-          <p>Te damos la bienvenida al chat de atención al cliente de BSG Institute.</p>
-          <p>Para comenzar, selecciona una de las siguientes opciones:</p>
+          <p class="LetraChat"><strong>¡Hola!</strong></p>
+          <p class="LetraChat">Te damos la bienvenida al chat de atención al cliente de BSG Institute.</p>
+          <p class="LetraChat">Para comenzar, selecciona una de las siguientes opciones:</p>
           <ul>
-            <li (click)="OpcionAlumno(1,'A')" style="cursor:pointer"><a>Estoy interesado en los cursos</a></li>
-            <li (click)="OpcionAlumno(1,'B')" style="cursor:pointer"><a>Soy alumno</a></li>
+            <li (click)="OpcionAlumno(1,'A')" style="cursor:pointer"><a class="LetraChat">Estoy interesado en los cursos</a></li>
+            <li (click)="OpcionAlumno(1,'B')" style="cursor:pointer"><a class="LetraChat">Soy alumno</a></li>
           </ul>
         </div>
       </div>
@@ -65,13 +68,13 @@
         <div class="PrimeraInteraccionAtc">
           <div class="FlechaAtras no-select" (click)="RetrocederInicioA()">
             <i class="material-icons">arrow_back_ios</i>
-            Atras
+            <span>Atras</span>
           </div>
-          <p><strong>¡Hola!</strong></p>
-          <p>Selecciona el área de capacitación de tu interés:</p>
+          <p class="LetraChat"><strong>¡Hola!</strong></p>
+          <p class="LetraChat">Selecciona el área de capacitación de tu interés:</p>
           <ul>
             <li *ngFor="let area of AreasCapacitacion" (click)="ObtenerCursosIdArea(area)">
-              <a style="cursor:pointer">{{ area.valor }}</a>
+              <a  class="LetraChat" style="cursor:pointer">{{ area.valor }}</a>
             </li>
           </ul>
         </div>
@@ -80,9 +83,11 @@
         <div class="PrimeraInteraccionAtc">
           <div class="FlechaAtras no-select" (click)="RetrocederInicioB()">
             <i class="material-icons">arrow_back_ios</i>
-            Atras
+            <span>Atras</span>
           </div>
-          <p>Ingresa a tu cuenta para revisar tus programas, cursos y certificaciones</p>
+          <p class="LetraChat">Ingresa a tu cuenta para revisar tus programas, cursos y certificaciones.</p>
+          <p *ngIf="ContrasenaRecuperada" style="color: rgb(5, 115, 5);font-size: 12px;">Se enviaron las credenciales a tu correo.</p>
+          <div  style="margin-top: 13px;"></div>
           <div class="container" style="justify-content: center; padding: 0px !important;">
             <div class="col-12" >
               <div class="alert alert-danger" role="alert" *ngIf="errorLogin!=''">
@@ -92,12 +97,12 @@
                 (OnValid)="formVal=$event" [Interaccion]="'Login'" [fiels]="fileds" [ChargeValuesInit]="initValues">
 
                 <ng-container contenido>
-                  <div class="row" style="width: 100%;margin: 10px 0px;text-align: center;">
-                    <div class="col-12 buttonnsHelp vinculo" (click)="RecuperarContrasenaPrevio()"> ¿Olvidaste tu contraseña?</div>
+                  <div class="row" style="width: 100%;margin: -15px 0px 5px 0px;;text-align: center;z-index: 1;position: relative;">
+                    <div class="col-12 buttonnsHelp vinculo LetraChat" (click)="RecuperarContrasenaPrevio()"> ¿Olvidaste tu contraseña?</div>
                   </div>
                 </ng-container>
                 <ng-container send>
-                  <app-default-button [confs]="{color:'primary',titulo:'Iniciar sesión'}" [style]="'width: 100%;margin-bottom 0px;background:#FF4E55'"  ></app-default-button>
+                  <app-default-button [confs]="{color:'primary',titulo:'Iniciar sesión'}" [style]="'font-size:13px;width: 100%;margin-bottom 0px;background:#FF4E55'"  ></app-default-button>
                 </ng-container>
 
               </app-formulario>
@@ -109,20 +114,21 @@
         <div class="PrimeraInteraccionAtc">
           <div *ngIf="BotonDesactivado" class="FlechaAtras no-select">
             <i class="material-icons">arrow_back_ios</i>
-            Atras
+            <span>Atras</span>
           </div>
           <div *ngIf="BotonDesactivado==false" class="FlechaAtras no-select" (click)="OpcionAlumno(1,'B')">
             <i class="material-icons">arrow_back_ios</i>
-            Atras
+            <span>Atras</span>
           </div>
-          <p>Ingresa tu correo electrónico para enviar tus credenciales</p>
+          <p class="LetraChat" style="margin-bottom: 5px;">Ingresa tu correo electrónico para enviar tus credenciales</p>
+          <div  style="margin-top: 13px;"></div>
           <div class="alert alert-danger" role="alert" *ngIf="errorLogin!=''">
             {{errorLogin}}
           </div>
           <app-formulario [Interaccion]="'Recuperar Contraseña'" [model]="email" [InputsDisable]="statuscharge" [CleanOnSubmit]="cleanSub" (OnSubmit)="RecuperarContrasena($event)" [Color]="'#f8f8f8'"
             (OnValid)="formVal=$event" [fiels]="fileds">
             <ng-container send>
-              <app-default-button [confs]="{color:'danger',titulo:'Enviar correo'}" [style]="'width: 100%;'" [disabled]="!formVal || BotonDesactivado==true" ></app-default-button>
+              <app-default-button [confs]="{color:'danger',titulo:'Enviar correo'}" [style]="'width: 100%;font-size:13px'" [disabled]="!formVal || BotonDesactivado==true" ></app-default-button>
             </ng-container>
 
           </app-formulario>
@@ -132,30 +138,34 @@
         <div class="PrimeraInteraccionAtc">
           <div class="FlechaAtras no-select" (click)="RetrocederAreaA()">
             <i class="material-icons">arrow_back_ios</i>
-            Atras
+            <span>Atras</span>
           </div>
-          <p><strong>¡Hola!</strong></p>
-          <p>Selecciona el programa de capacitación de tu interés:</p>
-          <p *ngIf="this.CursosPorArea.length==0">No hay cursos disponibles</p>
+          <p class="LetraChat"><strong>¡Hola!</strong></p>
+          <p class="LetraChat">Selecciona el programa de capacitación de tu interés:</p>
+          <p class="LetraChat" *ngIf="this.CursosPorArea.length==0">No hay cursos disponibles</p>
           <ul *ngIf="this.CursosPorArea.length>0">
             <li *ngFor="let cursoChat of CursosPorArea">
-              <a style="cursor:pointer" (click)="RegistrarCursoSeleccionado(cursoChat)">{{ cursoChat.nombre }}</a>
+              <a class="LetraChat" style="cursor:pointer" (click)="RegistrarCursoSeleccionado(cursoChat)">{{ cursoChat.nombre }}</a>
             </li>
           </ul>
         </div>
       </div>
       <div *ngIf="Paso==2 && Caso=='B' && CargandoInformacion==false" class="PrimeraInteraccionAtcFondo">
         <div class="PrimeraInteraccionAtc">
-          <p><strong>¡Hola!</strong></p>
-          <p>Para continuar selecciona el curso sobre el que deseas realizar la consulta:</p>
+          <div class="FlechaAtras no-select" (click)="RetrocederInicio()">
+            <i class="material-icons">arrow_back_ios</i>
+            <span>Atras</span>
+          </div>
+          <p class="LetraChat"><strong>¡Hola!</strong></p>
+          <p class="LetraChat">Para continuar selecciona el curso sobre el que deseas realizar la consulta:</p>
           <ul>
             <li *ngFor="let curso of CursosPadreMatricula"
                 (click)="handleCursoClickFormulario(curso)"
                 [ngClass]="{'expanded': selectedPadreIdMatricula === curso.idPGeneralPadre}">
-              <a style="color: #2F98EE;cursor:pointer">{{ curso.nombrePGeneralPadre }}</a>
+              <a  class="LetraChat" style="color: #2F98EE;cursor:pointer">{{ curso.nombrePGeneralPadre }}</a>
               <ul *ngIf="curso.esPadre && selectedPadreIdMatricula === curso.idPGeneralPadre" class="lista-interior">
                 <li *ngFor="let hijo of getCursosHijo(curso.idPGeneralPadre)">
-                  <a (click)="EnviarFormularioAtcAcademico(hijo)" style="color: #4A4A49;cursor:pointer">{{ hijo.nombrePGeneralHijo }}</a>
+                  <a  class="LetraChat"(click)="EnviarFormularioAtcAcademico(hijo)" style="color: #4A4A49;cursor:pointer">{{ hijo.nombrePGeneralHijo }}</a>
                 </li>
               </ul>
             </li>
@@ -168,19 +178,19 @@
         <div class="PrimeraInteraccionAtc">
           <div class="FlechaAtras no-select" (click)="RetrocederInicioAcademico()">
             <i class="material-icons">arrow_back_ios</i>
-            Atras
+            <span>Atras</span>
           </div>
-          <p><strong>¿Con quién deseas comunicarte?</strong></p>
-          <p>Para continuar selecciona la opción que mejor se ajusta para realizar tu consulta:</p>
+          <p class="LetraChat"><strong>¿Con quién deseas comunicarte?</strong></p>
+          <p class="LetraChat">Para continuar selecciona la opción que mejor se ajusta para realizar tu consulta:</p>
           <ul>
             <li *ngIf="TieneCoordinador!=false" (click)="ActualizarEsSoporteTecnico(false)">
-              <a style="cursor:pointer">Contactar con un Coordinador Académico</a>
+              <a class="LetraChat" style="cursor:pointer">Contactar con un Coordinador Académico</a>
             </li>
             <li *ngIf="TieneCoordinador!=true">
-              <a style="cursor:pointer" (click)="CerrarInteraccionFormularioAcademico()">No tiene coordinador asignado, escríbanos en contáctenos, elija otro curso.</a>
+              <a  class="LetraChat"style="cursor:pointer" (click)="CerrarInteraccionFormularioAcademico()">No tiene coordinador asignado, escríbanos en contáctenos, elija otro curso.</a>
             </li>
             <li (click)="ActualizarEsSoporteTecnico(true)">
-              <a style="cursor:pointer">Tengo problemas técnicos en el aula virtual.</a>
+              <a class="LetraChat" style="cursor:pointer">Tengo problemas técnicos en el aula virtual.</a>
             </li>
           </ul>
         </div>
@@ -189,25 +199,25 @@
         <div class="PrimeraInteraccionAtc">
           <div class="FlechaAtras no-select" (click)="RetrocederInicioAcademico()">
             <i class="material-icons">arrow_back_ios</i>
-            Atras
+            <span>Atras</span>
           </div>
-          <p><strong>¿Con quién deseas comunicarte?</strong></p>
-          <p>Para continuar selecciona la opción que mejor se ajusta para realizar tu consulta:</p>
+          <p class="LetraChat"><strong>¿Con quién deseas comunicarte?</strong></p>
+          <p class="LetraChat">Para continuar selecciona la opción que mejor se ajusta para realizar tu consulta:</p>
           <ul>
             <li *ngIf="TieneCoordinador!=false" (click)="RegistroDirectoCursoMatriculado(false)">
-              <a style="cursor:pointer" >Contactar con un Coordinador Académico</a>
+              <a  class="LetraChat"style="cursor:pointer" >Contactar con un Coordinador Académico</a>
             </li>
             <li *ngIf="TieneCoordinador!=true">
-              <a style="cursor:pointer" (click)="CerrarInteraccionFormularioAcademico()">No tiene coordinador asignado, escríbanos en contáctenos, elija otro curso.</a>
+              <a class="LetraChat" style="cursor:pointer" (click)="CerrarInteraccionFormularioAcademico()">No tiene coordinador asignado, escríbanos en contáctenos, elija otro curso.</a>
             </li>
             <li (click)="RegistroDirectoCursoMatriculado(true)">
-              <a style="cursor:pointer" >Tengo problemas técnicos en el aula virtual</a>
+              <a  class="LetraChat"style="cursor:pointer" >Tengo problemas técnicos en el aula virtual</a>
             </li>
           </ul>
         </div>
       </div>
       <ng-container *ngIf="Paso==3 && Caso=='A'">
-        <app-chat-atencion-cliente-chat [idProgramageneral]="IdProgramageneral" [IdPespecificoPrograma]="IdPespecificoPrograma"></app-chat-atencion-cliente-chat>
+        <app-chat-atencion-cliente-chat (RegresarChatAtc)="RetrocederCursos($event)" (RegresarChatAtcEnviado)="RetrocederInicioFormulario($event)" [idProgramageneral]="IdProgramageneral" [IdPespecificoPrograma]="IdPespecificoPrograma"></app-chat-atencion-cliente-chat>
       </ng-container>
       <ng-container *ngIf="Paso==4 && Caso=='B' && ChatSoporteTecnico==false">
         <app-chat-atencion-cliente-academico [idProgramageneral]="IdProgramageneral" [IdMatriculaCabecera]="IdMatriculaCabecera"></app-chat-atencion-cliente-academico>

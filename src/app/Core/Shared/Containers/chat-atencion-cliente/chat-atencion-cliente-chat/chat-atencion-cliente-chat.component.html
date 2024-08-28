@@ -25,6 +25,12 @@
     </div>
   </div>
   <ng-container *ngIf="estadoLogueo=='false';else login">
+    <div style="border-left: 1px solid #FF4E56;border-right: 1px solid #FF4E56;padding:5px 0px 0px 1rem;">
+      <div class="FlechaAtras no-select" (click)="onAtrasChatAtc()">
+        <i class="material-icons">arrow_back_ios</i>
+        <span>Atras</span>
+      </div>
+    </div>
     <app-form-chat-atc (SaveForm)="actualizarDatosAlumno($event)" [IdPGeneral]="idProgramageneral" [IdPespecificoPrograma]="IdPespecificoPrograma"></app-form-chat-atc>
   </ng-container>
 
@@ -72,10 +78,17 @@
       </div>
     </ng-container>
     <ng-container *ngIf="nombreasesorglobal=='Sin Asesor'">
-      <div style="padding: 10px;">
-        Un asesor se contactará contigo, gracias por tu preferencia.
+      <div style="border-left: 1px solid #FF4E56;border-right: 1px solid #FF4E56;padding:5px 0px 0px 1rem;">
+        <div class="FlechaAtras no-select"  style="margin-left: 10px;" (click)="onAtrasChatAtcEnviado()">
+          <i class="material-icons">arrow_back_ios</i>
+          <span>Atras</span>
+        </div>
+      </div>
+      <div class="PrimeraInteraccionAtcFondo">
+        <div class="PrimeraInteraccionAtc" style="padding: 10px;font-size: 11px;">
+          Un asesor se contactará contigo, gracias por tu preferencia.
+        </div>
       </div>
     </ng-container>
-
   </ng-template>
 </div>
