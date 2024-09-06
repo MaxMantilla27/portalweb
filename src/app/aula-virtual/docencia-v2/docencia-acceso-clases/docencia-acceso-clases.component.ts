@@ -97,9 +97,13 @@ export class DocenciaAccesoClasesComponent implements OnInit,OnChanges,OnDestroy
             s.Sesion=i;
           }
           if(s.esVisible==true){
+            console.log(s.fechaHoraInicio)
             var f=new Date(s.fechaHoraInicio);
+            console.log(s.duracion)
             f.setMinutes(f.getMinutes()+(s.duracion*60))
             s.fechaHoraFinal=f
+            console.log(s.fechaHoraFinal)
+
 
             if(primero==true){
               console.log(s)
