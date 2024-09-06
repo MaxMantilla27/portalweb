@@ -27,7 +27,7 @@ import { ChatEnLineaService } from 'src/app/Core/Shared/Services/ChatEnLinea/cha
 import { FacebookPixelService } from 'src/app/Core/Shared/Services/FacebookPixel/facebook-pixel.service';
 declare const fbq:any;
 declare const gtag:any;
-
+declare const lintrk: any;
 @Component({
   selector: 'app-blog',
   templateUrl: './blog.component.html',
@@ -329,6 +329,7 @@ export class BlogComponent implements OnInit {
             gtag('event', 'conversion', {
               'send_to': 'AW-16616211963/fM6YCPT-2bsZEPuLnfM9',
             });
+            lintrk('track', { conversion_id: 18369066 });
           }
           this._SnackBarServiceService.openSnackBar("¡Solicitud enviada!",'x',15,"snackbarCrucigramaSucces");
         },

@@ -26,6 +26,7 @@ import { FacebookPixelService } from 'src/app/Core/Shared/Services/FacebookPixel
 
 declare const fbq:any;
 declare const gtag:any;
+declare const lintrk: any;
 @Component({
   selector: 'app-education-tecnica-detalle',
   templateUrl: './education-tecnica-detalle.component.html',
@@ -341,6 +342,7 @@ export class EducationTecnicaDetalleComponent implements OnInit,OnDestroy {
             gtag('event', 'conversion', {
               'send_to': 'AW-16616211963/fM6YCPT-2bsZEPuLnfM9',
             });
+            lintrk('track', { conversion_id: 18369066 });
           }
           this._SnackBarServiceService.openSnackBar("¡Solicitud enviada!",'x',15,"snackbarCrucigramaSucces");
         },

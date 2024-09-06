@@ -15,6 +15,7 @@ import { RegionService } from '../../Services/Region/region.service';
 import { DatosPortalService } from '../../Services/DatosPortal/datos-portal.service';
 declare const fbq:any;
 declare const gtag:any;
+declare const lintrk: any;
 @Component({
   selector: 'app-form-chat',
   templateUrl: './form-chat.component.html',
@@ -209,6 +210,7 @@ export class FormChatComponent implements OnInit,OnChanges {
             gtag('event', 'conversion', {
               'send_to': 'AW-16616211963/fM6YCPT-2bsZEPuLnfM9',
             });
+            lintrk('track', { conversion_id: 18369066 });
           }
         },
         complete: () => {
