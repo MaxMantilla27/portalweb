@@ -25,6 +25,7 @@ export class CursoNotasComponent implements OnInit,OnDestroy {
   public CursosCriterios:any;
   public CursosCriteriosPrevio:any;
   public CursoAbierto=-1;
+  public PromedioFinalAsincronico=0;
   public PromedioFinal=0;
   public PromedioFinalOnlineCurso=0;
   public PromedioFinalFinalOnlineCurso=0;
@@ -70,13 +71,13 @@ export class CursoNotasComponent implements OnInit,OnDestroy {
             x.nombrePrograma=x.nombrePGeneral
             x.idEstadoPEspecifico=x.idEstadoPEspecifico
             this.CursosCriterios.push(x)
-            this.PromedioFinal=this.PromedioFinal+x.notaCurso;
+            this.PromedioFinalAsincronico=this.PromedioFinalAsincronico+x.notaCurso;
             cont++
           });
         }
         if(cont!=0){
           this.CantidadAsincronicos=cont;
-          this.PromedioFinal=Math.round(this.PromedioFinal/cont)
+          this.PromedioFinalAsincronico=Math.round(this.PromedioFinalAsincronico)
         }
       },
       complete:()=> {
@@ -225,17 +226,17 @@ export class CursoNotasComponent implements OnInit,OnDestroy {
       },
       complete:()=> {
         setTimeout(() => {
-          if(this.PromedioFinal !== 0 && this.PromedioFinalFinalOnlineCurso === 0){
-            this.PromedioFinal = this.PromedioFinal;
-          } else if(this.PromedioFinal === 0 && this.PromedioFinalFinalOnlineCurso !== 0){
+          if(this.PromedioFinalAsincronico !== 0 && this.PromedioFinalFinalOnlineCurso === 0){
+            this.PromedioFinal = this.PromedioFinalAsincronico;
+          } else if(this.PromedioFinalAsincronico === 0 && this.PromedioFinalFinalOnlineCurso !== 0){
             this.PromedioFinal = Math.round(Math.round(this.PromedioFinalFinalOnlineCurso)/this.CursosCriteriosOnline.length);
-          } else if(this.PromedioFinal !== 0 && this.PromedioFinalFinalOnlineCurso !== 0){
+          } else if(this.PromedioFinalAsincronico !== 0 && this.PromedioFinalFinalOnlineCurso !== 0){
             // this.PromedioFinalFinalOnlineCurso=Math.round(Math.round(this.PromedioFinalFinalOnlineCurso+this.PromedioFinal)/this.CursosCriteriosOnline.length)
-            console.log('Notas Asincrónico',this.PromedioFinal);
+            console.log('Notas Asincrónico',this.PromedioFinalAsincronico);
             console.log('Notas Sincrónico',this.PromedioFinalFinalOnlineCurso);
-            this.PromedioFinal = Math.round((this.PromedioFinal + this.PromedioFinalFinalOnlineCurso) / (this.CursosCriteriosOnline.length+this.CantidadAsincronicos));
+            this.PromedioFinal = Math.round((this.PromedioFinalAsincronico + this.PromedioFinalFinalOnlineCurso) / (this.CursosCriteriosOnline.length+this.CantidadAsincronicos));
           }
-          if(this.PromedioFinal === 0 && this.PromedioFinalFinalOnlineCurso === 0){
+          if(this.PromedioFinalAsincronico === 0 && this.PromedioFinalFinalOnlineCurso === 0){
             this.PromedioFinal = 0;
           }
           this._SessionStorageService.SessionSetValue('PromedioFinalCurso',this.PromedioFinal.toString());
