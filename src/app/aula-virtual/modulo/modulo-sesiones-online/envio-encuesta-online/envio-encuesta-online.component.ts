@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import {
   MatDialogRef,
   MAT_DIALOG_DATA,
@@ -8,6 +8,7 @@ import {
   selector: 'app-envio-encuesta-online',
   templateUrl: './envio-encuesta-online.component.html',
   styleUrls: ['./envio-encuesta-online.component.scss'],
+  encapsulation: ViewEncapsulation.None,
 })
 export class EnvioEncuestaOnlineComponent implements OnInit {
   Inicio = false;
@@ -51,47 +52,47 @@ export class EnvioEncuestaOnlineComponent implements OnInit {
                 '¿Qué recomendación darías para que la coordinadora mejore en su atención?',
               idPreguntaTipo: 4,
               alternativas: [{ alternativa: 'Ingrese su respuesta' },
-                
+
               ],
             },
           ],
         },
-        // {
-        //   orden: 2,
-        //   nombreCategoria: 'Categoria 2',
-        //   preguntasEncuesta: [
-        //     {
-        //       ordenMostrar: 1,
-        //       enunciado:
-        //         '¿Cómo califica a la coordinadora en su atención hacia usted?',
-        //       idPreguntaTipo: 1,
-        //     },
-        //     {
-        //       ordenMostrar: 2,
-        //       enunciado: '¿Recomendarías el curso a tus contactos?',
-        //       idPreguntaTipo: 2,
-        //       alternativas: [{ alternativa: 'Sí' }, { alternativa: 'No' }],
-        //     },
-        //     {
-        //       ordenMostrar: 3,
-        //       enunciado:
-        //         '¿Qué características encontraste en la coordinadora que te ayudaron en tu aula virtual?',
-        //       idPreguntaTipo: 3,
-        //       alternativas: [
-        //         { alternativa: 'Amable' },
-        //         { alternativa: 'Servicial' },
-        //         { alternativa: 'Atenta' },
-        //       ],
-        //     },
-        //     {
-        //       ordenMostrar: 4,
-        //       enunciado:
-        //         '¿Qué recomendación darías para que la coordinadora mejore en su atención?',
-        //       idPreguntaTipo: 4,
-        //       alternativas: [{ alternativa: 'Ingrese su respuesta' }],
-        //     },
-        //   ],
-        // },
+        {
+          orden: 2,
+          nombreCategoria: 'Categoria 2',
+          preguntasEncuesta: [
+            {
+              ordenMostrar: 1,
+              enunciado:
+                '¿Cómo califica a la coordinadora en su atención hacia usted?',
+              idPreguntaTipo: 1,
+            },
+            {
+              ordenMostrar: 2,
+              enunciado: '¿Recomendarías el curso a tus contactos?',
+              idPreguntaTipo: 2,
+              alternativas: [{ alternativa: 'Sí' }, { alternativa: 'No' }],
+            },
+            {
+              ordenMostrar: 3,
+              enunciado:
+                '¿Qué características encontraste en la coordinadora que te ayudaron en tu aula virtual?',
+              idPreguntaTipo: 3,
+              alternativas: [
+                { alternativa: 'Amable' },
+                { alternativa: 'Servicial' },
+                { alternativa: 'Atenta' },
+              ],
+            },
+            {
+              ordenMostrar: 4,
+              enunciado:
+                '¿Qué recomendación darías para que la coordinadora mejore en su atención?',
+              idPreguntaTipo: 4,
+              alternativas: [{ alternativa: 'Ingrese su respuesta' }],
+            },
+          ],
+        },
       ],
     },
 

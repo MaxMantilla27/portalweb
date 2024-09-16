@@ -1,6 +1,6 @@
-<ng-container *ngIf="data.encuesta">
+<ng-container cl *ngIf="data.encuesta">
     <div class="cardSesionOnlineTareasCuestionario" style="margin: 0px!important;">
-  
+
       <div class="flagActividad" style="display: flex;">
         <div class="col-11" style="display: flex;">
           <div class="textoFlag">{{data.encuesta.nombre}}</div>
@@ -9,7 +9,7 @@
           X
         </div>
       </div>
-  
+
       <div class="TitleActividad">{{data.encuesta.titulo}}</div>
       <div class="DescripcionActividad" *ngIf="data.encuesta.descripcion">
         {{data.encuesta.descripcion}}
@@ -17,80 +17,82 @@
     </div>
     <ng-container
     >
-    <ng-container *ngFor="let itemPrincipal of data.encuesta.categoria;let j=index" >
-      <div style=" margin-top:20px">
-         {{itemPrincipal.nombreCategoria}}
-      </div>
-      <div *ngFor="let item of itemPrincipal.preguntasEncuesta ;let i=index" style="margin-left:15px;margin-top:15px,">
-        <div class="contetPreguntasCuestionario">
-            <div class="descPregunta row">
-              <div class="col-12 " style="margin-top:20px">
-                <div class="titlePregunta">{{item.ordenMostrar}}. {{item.enunciado}} </div>
-                <div class="DescripcionPregunta" *ngIf="item.idPreguntaTipo==1" >Elige tu calificacion</div>
-                <div class="DescripcionPregunta" *ngIf="item.idPreguntaTipo==2">Elige la alternativa correcta</div>
-                <div class="DescripcionPregunta" *ngIf="item.idPreguntaTipo==3">Elija {{item.respuestasMinimas}} alternativas correctas</div>
-                <div class="DescripcionPregunta" *ngIf="item.idPreguntaTipo==4">Dános tu feedback</div>
-              </div>
-             
-             
-    
-            </div>
-            <div  style="margin-top: 15px;">
+    <ng-container  *ngFor="let itemPrincipal of data.encuesta.categoria;let j=index" >
+      <div class="content">
+        <div class="titlePregunta" >
+          {{itemPrincipal.nombreCategoria}}
+       </div>
+       <div *ngFor="let item of itemPrincipal.preguntasEncuesta ;let i=index" style="margin-left:15px;margin-top:15px,">
+         <div class="contetPreguntasCuestionario">
+             <div class="descPregunta row">
+               <div class="col-12 " style="margin-top:10px">
+                 <div class="titlePregunta">{{item.ordenMostrar}}. {{item.enunciado}} </div>
+                 <div class="DescripcionPregunta" *ngIf="item.idPreguntaTipo==1" >Elige tu calificacion</div>
+                 <div class="DescripcionPregunta" *ngIf="item.idPreguntaTipo==2">Elige la alternativa correcta</div>
+                 <div class="DescripcionPregunta" *ngIf="item.idPreguntaTipo==3">Elija {{item.respuestasMinimas}} alternativas correctas</div>
+                 <div class="DescripcionPregunta" *ngIf="item.idPreguntaTipo==4">Dános tu feedback</div>
+               </div>
 
-            <ng-container *ngIf="item.idPreguntaTipo==1 ">
-                <div style="display:flex" >
-                    <i style="font-size: 40px !important;
-                    color: #717171;
-                    margin-left: 10px;"  class="material-icons" >star</i>
-                    <i style="font-size: 40px !important;
-                    color: #717171;
-                    margin-left: 10px;"class="material-icons" >star</i>
-                    <i style="font-size: 40px !important;
-                    color: #717171;
-                    margin-left: 10px;" class="material-icons" >star</i>
-                    <i style="font-size: 40px !important;
-                    color: #717171;
-                    margin-left: 10px;"class="material-icons" >star</i>
-                    <i style="font-size: 40px !important;
-                    color: #717171;
-                    margin-left: 10px;"class="material-icons" >star</i>
-                </div>
-            </ng-container>
-              <ng-container *ngIf="item.idPreguntaTipo==2 ">
-                <div class="radiosOptions" *ngFor="let altern of item.alternativas;let a=index" (click)="changeRadio(j,i,a)"
-                [ngClass]="{'Correctos':altern.Correcto==true,'InCorrectos':altern.Correcto==false}">
-                  <i class="material-icons" *ngIf="altern.select!=true">radio_button_off</i>
-                  <i class="material-icons activeSelect" *ngIf="altern.select==true">radio_button_checked</i>
-                  {{altern.alternativa}}
-                </div>
-              </ng-container>
-              <ng-container *ngIf="item.idPreguntaTipo==3">
-                <div class="checkOptions" *ngFor="let altern of item.alternativas;let a=index" (click)="changeCheck(j,i,a)"
-                [ngClass]="{'Correctos':altern.Correcto==true,'InCorrectos':altern.Correcto==false}">
-                  <i class="material-icons" *ngIf="altern.select!=true" >check_box_outline_blank</i>
-                  <i class="material-icons activeSelect" *ngIf="altern.select==true">check_box</i>
-                  {{altern.alternativa}}
-                </div>
-              </ng-container>
-              <ng-container *ngIf="item.idPreguntaTipo==4">
-                <div class="InputsOnlineCuestionario">
-                  <mat-form-field appearance="outline" style="width: 100%;">
-                    <mat-label>Ingresa tu respuesta</mat-label>
-                    <input type="text" placeholder="Ingresa tu respuesta"  matInput (input)="AddToAvance()">
-                  </mat-form-field>
-                </div>
-              </ng-container>
-            </div>
-            
-    
-          </div>
+
+
+             </div>
+             <div  style="margin-top: 15px;">
+
+             <ng-container *ngIf="item.idPreguntaTipo==1 ">
+                 <div style="display:flex" >
+                     <i style="font-size: 40px !important;
+                     color: #717171;
+                     margin-left: 10px;"  class="material-icons" >star</i>
+                     <i style="font-size: 40px !important;
+                     color: #717171;
+                     margin-left: 10px;"class="material-icons" >star</i>
+                     <i style="font-size: 40px !important;
+                     color: #717171;
+                     margin-left: 10px;" class="material-icons" >star</i>
+                     <i style="font-size: 40px !important;
+                     color: #717171;
+                     margin-left: 10px;"class="material-icons" >star</i>
+                     <i style="font-size: 40px !important;
+                     color: #717171;
+                     margin-left: 10px;"class="material-icons" >star</i>
+                 </div>
+             </ng-container>
+               <ng-container *ngIf="item.idPreguntaTipo==2 ">
+                 <div class="radiosOptions" *ngFor="let altern of item.alternativas;let a=index" (click)="changeRadio(j,i,a)"
+                 [ngClass]="{'Correctos':altern.Correcto==true,'InCorrectos':altern.Correcto==false}">
+                   <i class="material-icons" *ngIf="altern.select!=true">radio_button_off</i>
+                   <i class="material-icons activeSelect" *ngIf="altern.select==true">radio_button_checked</i>
+                   {{altern.alternativa}}
+                 </div>
+               </ng-container>
+               <ng-container *ngIf="item.idPreguntaTipo==3">
+                 <div class="checkOptions" *ngFor="let altern of item.alternativas;let a=index" (click)="changeCheck(j,i,a)"
+                 [ngClass]="{'Correctos':altern.Correcto==true,'InCorrectos':altern.Correcto==false}">
+                   <i class="material-icons" *ngIf="altern.select!=true" >check_box_outline_blank</i>
+                   <i class="material-icons activeSelect" *ngIf="altern.select==true">check_box</i>
+                   {{altern.alternativa}}
+                 </div>
+               </ng-container>
+               <ng-container *ngIf="item.idPreguntaTipo==4">
+                 <div class="InputsOnlineCuestionario">
+                   <mat-form-field appearance="outline" style="width: 100%;">
+                     <mat-label>Ingresa tu respuesta</mat-label>
+                     <input type="text" placeholder="Ingresa tu respuesta"  matInput (input)="AddToAvance()">
+                   </mat-form-field>
+                 </div>
+               </ng-container>
+             </div>
+
+
+           </div>
+       </div>
       </div>
     </ng-container>
     <ng-container >
       <div  style="display: flex;align-items: center;justify-content: flex-end;">
         <app-default-button  [confs]="{color:'primary',titulo:'Enviar Encuesta'}"
-          [style]="'margin: 0px; padding: 0px 40px; border-radius: 40px;'"
-          
+          [style]="'margin: 0px; padding: 0px 40px; border-radius: 40px;margin-bottom: 10px;'"
+
          (ButtoclClick)="AgregarPEspecificoSesionEncuestaAlumno(false)"></app-default-button>
         <!-- <app-default-button *ngIf="BotonEnvioActivo==false" [confs]="{color:'primary',titulo:'Enviando'}"
         [style]="'margin: 0px; padding: 0px 40px; border-radius: 40px;'" [disabled]="true"></app-default-button> -->
@@ -103,7 +105,7 @@
                           [style]="'margin: 0px; padding: 0px 40px; border-radius: 40px;'"
                           (ButtoclClick)="IniciarEncuesta()"></app-default-button>
     </div> -->
-  
+
     <!-- <div class="content" *ngIf="data.EncuestaAvance.Inicio">
       <ng-container *ngIf="data.encuesta.preguntasEncuesta">
         <ng-container *ngFor="let item of data.encuesta.preguntasEncuesta; let i = index">
@@ -123,7 +125,7 @@
             </div>
             <div *ngIf="item.alternativas">
               <ng-container *ngIf="item.idPreguntaTipo === 3 || item.idPreguntaTipo === 5">
-                <div class="radiosOptions" *ngFor="let altern of item.alternativas; let a = index" 
+                <div class="radiosOptions" *ngFor="let altern of item.alternativas; let a = index"
                      (click)="changeRadio(i, a)" [ngClass]="{'Correctos': altern.Correcto, 'InCorrectos': !altern.Correcto}">
                   <i class="material-icons" *ngIf="!altern.select">radio_button_off</i>
                   <i class="material-icons activeSelect" *ngIf="altern.select">radio_button_checked</i>
@@ -131,7 +133,7 @@
                 </div>
               </ng-container>
               <ng-container *ngIf="item.idPreguntaTipo === 4">
-                <div class="checkOptions" *ngFor="let altern of item.alternativas; let a = index" 
+                <div class="checkOptions" *ngFor="let altern of item.alternativas; let a = index"
                      (click)="changeCheck(i, a)" [ngClass]="{'Correctos': altern.Correcto, 'InCorrectos': !altern.Correcto}">
                   <i class="material-icons" *ngIf="!altern.select">check_box_outline_blank</i>
                   <i class="material-icons activeSelect" *ngIf="altern.select">check_box</i>
@@ -144,4 +146,3 @@
       </ng-container>
     </div> -->
   </ng-container>
-  
