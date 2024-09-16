@@ -47,6 +47,14 @@
         </div>
       </div>
       <div class="col-12 col-md-6 col-lg-6 RigthSesionOnline">
+        <!-- simulacion encuesta -->
+        <ng-container *ngIf="item.encuestas - item.encuestasEnviadas > 0">
+          <div class="ItemPendientes">
+            <div class="cantidadPendientes">{{item.encuestas - item.encuestasEnviadas}}</div>
+            <div>Encuestas Pendientes</div>
+          </div>
+        </ng-container>
+        <!-- simulacion encuesta -->
         <ng-container *ngIf="item.tareas-item.tareasEnviadas>0">
           <div class="ItemPendientes">
             <div class="cantidadPendientes">{{item.tareas-item.tareasEnviadas}}</div>
@@ -84,6 +92,95 @@
           </div>
         </div>
       </ng-container>
+
+      <!-- simulacion encuesta -->
+       <ng-container *ngIf="EncuestaPrueba">
+        <div class="cardSesionOnlineTareasCuestionario">
+          <div class="flagActividad">
+            <div class="textoFlag">Encuesta Intermedia:</div>
+            <div id="player">
+              <div id="outer">
+                <div id="inner"></div>
+              </div>
+            </div>
+          </div>
+          <div class="TitleActividad">Encuesta Intermedia Desarrollo del Curso</div>
+          <!-- <div class="DescripcionEncuesta" >
+            
+          </div> -->
+          <div class="lineaMedioEncuesta"></div>
+          <div class="AbajoEncuesta row">
+            <div class="col-12 col-lg-9 col-md-9">
+              
+    
+            </div>
+            <div class="col-12 col-lg-3 col-md-3">
+              <ng-container *ngIf="EncuestaEnviada==false">
+                <app-default-button [confs]="{color:'primary', titulo:'Enviar Encuesta >'}"
+                  [icon]="''"
+                  [style]="'border-radius: 20px; margin: 5px 0px 0px; width: 100%; padding: 0px 40px;'"
+                  (ButtoclClick)="openEncuestaDialog(false)">
+                </app-default-button>
+              </ng-container>
+              <ng-container *ngIf="EncuestaEnviada==true">
+                <app-default-button [confs]="{color:'primary', titulo:'Ver detalle >'}"
+                  [icon]="''"
+                  [style]="'border-radius: 20px; margin: 5px 0px 0px; width: 100%; padding: 0px 40px; background:#00c356'"
+                  (ButtoclClick)="openEncuestaDialog(true)">
+                </app-default-button>
+              </ng-container>
+            </div>
+          </div>
+        </div>
+       </ng-container>
+      <!-- <ng-container *ngIf="item.encuesta != undefined && item.encuesta != null && item.encuesta.length > 0">
+        <div class="cardSesionOnlineEncuesta" *ngFor="let enc of item.encuesta; let i = index">
+          <div class="flagActividad">
+            <div class="textoFlag">{{enc.nombreCriterioEvaluacion | removePortalCriterio}}:</div>
+            <div id="player">
+              <div id="outer">
+                <div id="inner"></div>
+              </div>
+            </div>
+          </div>
+          <div class="TitleEncuesta">{{enc.titulo}}</div>
+          <div class="DescripcionEncuesta" *ngIf="enc.descripcion != null && enc.descripcion.length > 0">
+            {{enc.descripcion}}
+          </div>
+          <div class="lineaMedioEncuesta"></div>
+          <div class="AbajoEncuesta row">
+            <div class="col-12 col-lg-9 col-md-9">
+              <div class="FechaEntregaEncuesta row">
+                <div class="col-12 col-lg-8 col-md-8" style="display: flex; font-size: 10.5px;">
+                  <div class="iconFecha"></div>
+                  <div>
+                    <strong>Fecha de entrega:</strong> {{enc.fechaEntrega | date: 'dd-MM-yyyy'}} - {{enc.fechaEntrega | date: 'hh:mm a'}}
+                  </div>
+                </div>
+              </div>
+              <!-- Puedes añadir más información aquí si es necesario -->
+            <!-- </div>
+            <div class="col-12 col-lg-3 col-md-3">
+              <ng-container *ngIf="enc.encuestas == null || enc.encuestas.length == 0">
+                <app-default-button [confs]="{color:'primary', titulo:'Enviar Encuesta >'}"
+                  [icon]="''"
+                  [style]="'border-radius: 20px; margin: 5px 0px 0px; width: 100%; padding: 0px 40px;'"
+                  [disabled]="enc.disabled" (ButtoclClick)="openEncuestaDialog(i, enc)">
+                </app-default-button>
+              </ng-container>
+              <ng-container *ngIf="enc.encuestas != null && enc.encuestas.length > 0">
+                <app-default-button [confs]="{color:'primary', titulo:'Ver detalle >'}"
+                  [icon]="''"
+                  [style]="'border-radius: 20px; margin: 5px 0px 0px; width: 100%; padding: 0px 40px; background:#00c356'"
+                  (ButtoclClick)="openEncuestaDialog(i, enc)">
+                </app-default-button>
+              </ng-container>
+            </div>
+          </div>
+        </div>
+      </ng-container> -->
+      
+
       <ng-container *ngIf="item.tarea!=undefined && item.tarea!=null && item.tarea.length>0">
         <div class="cardSesionOnlineTareasCuestionario" *ngFor="let tars of item.tarea;let t=index">
           <div class="flagActividad">

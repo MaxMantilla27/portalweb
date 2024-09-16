@@ -197,6 +197,7 @@ import { EnvioActividadComponent } from './modulo/modulo-sesiones-online/envio-a
 import { DocenciaGestionCriteriosRegistroAntiguoComponent } from './docencia-v2-cursos-online/criterio-evaluacion-docente/docencia-gestion-criterios-registro-antiguo/docencia-gestion-criterios-registro-antiguo.component';
 import { DocenciaGestionCriteriosRegistroAntiguoAgregarComponent } from './docencia-v2-cursos-online/criterio-evaluacion-docente/docencia-gestion-criterios-registro-antiguo/docencia-gestion-criterios-registro-antiguo-agregar/docencia-gestion-criterios-registro-antiguo-agregar.component';
 import { DocenciaGestionNotasAntiguoComponent } from './docencia-v2-cursos-online/nota-docente/docencia-gestion-notas-antiguo/docencia-gestion-notas-antiguo/docencia-gestion-notas-antiguo.component';
+import { EnvioEncuestaOnlineComponent } from './modulo/modulo-sesiones-online/envio-encuesta-online/envio-encuesta-online.component';
 
 
 @NgModule({
@@ -395,6 +396,7 @@ import { DocenciaGestionNotasAntiguoComponent } from './docencia-v2-cursos-onlin
     DocenciaGestionCriteriosRegistroAntiguoComponent,
     DocenciaGestionCriteriosRegistroAntiguoAgregarComponent,
     DocenciaGestionNotasAntiguoComponent,
+    EnvioEncuestaOnlineComponent,
 
   ],
   imports: [

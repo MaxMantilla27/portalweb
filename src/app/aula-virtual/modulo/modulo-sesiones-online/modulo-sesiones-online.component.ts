@@ -10,6 +10,7 @@ import { EnvioCuestionarioComponent } from './envio-cuestionario/envio-cuestiona
 import * as moment  from 'moment';
 import { SnackBarServiceService } from 'src/app/Core/Shared/Services/SnackBarService/snack-bar-service.service';
 import { EnvioActividadComponent } from './envio-actividad/envio-actividad.component';
+import { EnvioEncuestaOnlineComponent } from './envio-encuesta-online/envio-encuesta-online.component';
 
 @Component({
   selector: 'app-modulo-sesiones-online',
@@ -49,6 +50,9 @@ export class ModuloSesionesOnlineComponent implements OnInit , OnChanges,OnDestr
   ngOnChanges(changes: SimpleChanges): void {
     this.ObtenerDatosZonaHoraria()
     if(this.IdPespecifico>0){
+      if (this.IdPespecifico==23522){
+        this.EncuestaPrueba=true
+      }
       this.ObtenerSesionesOnlineWebinarPorIdPespecifico()
     }
     if(this.videos!=null && this.videos.length>0){
@@ -68,7 +72,8 @@ export class ModuloSesionesOnlineComponent implements OnInit , OnChanges,OnDestr
   @Input() videos: Array<any>=[];
   @Input() Capitulo='';
   public OpenVideoModulo=true;
-
+  public EncuestaPrueba=false;
+  public EncuestaEnviada=false;
   ngOnInit(): void {
     this.ObtenerDatosZonaHoraria()
   }
@@ -103,6 +108,7 @@ export class ModuloSesionesOnlineComponent implements OnInit , OnChanges,OnDestr
         this.sesiones[index].tarea=[]
         this.sesiones[index].cuestionario=[]
         this.sesiones[index].actividades=[]
+        
         console.log(x)
         if(x!=null){
           x.forEach((d:any) => {
@@ -117,7 +123,7 @@ export class ModuloSesionesOnlineComponent implements OnInit , OnChanges,OnDestr
             console.log('Hora Webex Original:', HoraWebexOriginal.format('YYYY-MM-DD HH:mm:ss'));
             console.log('Hora Webex Conversion Usuario:', HoraWebexUsuario.format('YYYY-MM-DD HH:mm:ss'));
             console.log('Minutos Faltantes:', diference);
-
+          
             if(d.tipo.toLowerCase()=='material adicional'){
               this.sesiones[index].material.push(d)
             }
@@ -140,6 +146,20 @@ export class ModuloSesionesOnlineComponent implements OnInit , OnChanges,OnDestr
       }
     })
   }
+//simulacion encuesta
+  openEncuestaDialog(encuesta: any) {
+    const dialogRef = this.dialog.open(EnvioEncuestaOnlineComponent, {
+      width: '800px',
+      data: encuesta, 
+      panelClass: 'dialog-envio-encuesta-online',
+      disableClose: true
+    });
+
+    dialogRef.afterClosed().pipe(takeUntil(this.signal$)).subscribe(result => {
+      console.log(result);
+    });
+  }
+  //simulacion encuestas
   ObtenerSesionesOnlineWebinarPorIdPespecifico(){
     this._DatosPerfilService.ObtenerSesionesOnlineWebinarPorIdPespecifico(this.IdPespecifico,this.IdMatriculaCabecera).pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
@@ -222,6 +242,8 @@ export class ModuloSesionesOnlineComponent implements OnInit , OnChanges,OnDestr
     })
 
   }
+
+  
   ArmarVdeosGrabado(){
     this.sesiones.forEach((s:any) => {
       s.grabaciones=[]
