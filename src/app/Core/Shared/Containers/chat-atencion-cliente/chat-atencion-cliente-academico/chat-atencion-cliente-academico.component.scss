@@ -204,4 +204,27 @@
   border-radius: 10px;
   background: #EEF3F9;
   cursor: pointer;
+  border: none; /* Remueve el borde por defecto */
+  padding: 10px 20px;
+  position: relative;
+  color: black; /* Color del texto */
 }
+
+.confirmation-dialog-atras button span {
+  position: relative;
+  display: inline-block; /* Asegúrate de que el span solo abarque el texto */
+  padding-bottom: 3px; /* Espacio entre el texto y el subrayado */
+  border-bottom: 2px solid transparent; /* Línea invisible por defecto */
+  transition: border-color 0.3s ease;
+}
+
+.confirmation-dialog-atras button:hover span {
+  border-bottom-color: black; /* Aplica el color del subrayado al hacer hover */
+}
+
+.confirmation-dialog-atras button:hover {
+  background-color: #CCF5FF; /* Cambia el color de fondo del botón al hacer hover */
+  text-decoration: underline; /* Aplica el subrayado al pasar el cursor */
+}
+
+
