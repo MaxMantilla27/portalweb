@@ -104,26 +104,29 @@
               </div>
             </div>
           </div>
-          <div class="TitleActividad">Encuesta Intermedia Desarrollo del Curso</div>
+          
           <!-- <div class="DescripcionEncuesta" >
             
           </div> -->
           <div class="lineaMedioEncuesta"></div>
-          <div class="AbajoEncuesta row">
-            <div class="col-12 col-lg-9 col-md-9">
-              
-    
+          <div class="AbajoEncuesta row d-flex justify-content-between align-items-center">
+            <div class="TitleActividad col-12 col-lg-9 col-md-9">
+              Encuesta Intermedia Desarrollo del Curso
             </div>
+            
             <div class="col-12 col-lg-3 col-md-3">
-              <ng-container *ngIf="EncuestaEnviada==false">
-                <app-default-button [confs]="{color:'primary', titulo:'Enviar Encuesta >'}"
+              <ng-container *ngIf="EncuestaEnviada == false">
+                <app-default-button 
+                  [confs]="{color:'primary', titulo:'Enviar Encuesta >'}"
                   [icon]="''"
                   [style]="'border-radius: 20px; margin: 5px 0px 0px; width: 100%; padding: 0px 40px;'"
                   (ButtoclClick)="openEncuestaDialog(false)">
                 </app-default-button>
               </ng-container>
-              <ng-container *ngIf="EncuestaEnviada==true">
-                <app-default-button [confs]="{color:'primary', titulo:'Ver detalle >'}"
+          
+              <ng-container *ngIf="EncuestaEnviada == true">
+                <app-default-button 
+                  [confs]="{color:'primary', titulo:'Ver detalle >'}"
                   [icon]="''"
                   [style]="'border-radius: 20px; margin: 5px 0px 0px; width: 100%; padding: 0px 40px; background:#00c356'"
                   (ButtoclClick)="openEncuestaDialog(true)">
