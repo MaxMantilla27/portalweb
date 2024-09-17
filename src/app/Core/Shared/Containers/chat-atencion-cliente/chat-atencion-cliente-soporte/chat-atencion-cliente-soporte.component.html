@@ -23,7 +23,16 @@
   </ng-container>
 
   <ng-template #login>
-    <div #contenidoMsj class="contentChatMsj" (click)="marcarChatAgentecomoleido()">
+    <div class="FlechaAtrasMatricula no-select" (click)="showConfirmationDialog = true">
+      <i class="material-icons">arrow_back_ios</i>
+      <span>Atras</span>
+    </div>
+    <div *ngIf="showConfirmationDialog" class="confirmation-dialog-atras">
+      <p>¿Deseas retroceder en el chat? La conversación se dará por finalizada.</p>
+      <button (click)="confirmAction()">Sí, retroceder</button>
+      <button (click)="cancelAction()">Cancelar</button>
+    </div>
+    <div *ngIf="!showConfirmationDialog" #contenidoMsj class="contentChatMsj" (click)="marcarChatAgentecomoleido()">
       <div class="mensajeDefecto">Chat iniciado</div>
       <div class="mensajeDefecto">{{nombreAsesorSplit[0]}} {{nombreAsesorSplit[1]}} se unió al Chat</div>
 
@@ -70,7 +79,7 @@
       </ng-container>
 
     </div>
-    <div class="footerChatAula" (click)="marcarChatAgentecomoleido()">
+    <div *ngIf="!showConfirmationDialog"  class="footerChatAula" (click)="marcarChatAgentecomoleido()">
       <input class="chat-box-textinput" [ngClass]="{'inputActive':inputActive}" (keyup.enter)="BuscarProgramas(false);enviarmsj()" (focus)="inputActive=true"
         (focusout)="inputActive=false" placeholder="Escribe tu mensaje aquí " [(ngModel)]="chatBox">
         <i class="material-icons" (click)="BuscarProgramas(true);enviarmsj()">send</i>

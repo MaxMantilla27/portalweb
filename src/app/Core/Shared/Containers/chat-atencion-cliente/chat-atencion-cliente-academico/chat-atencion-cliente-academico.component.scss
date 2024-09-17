@@ -160,3 +160,48 @@
 .OnConected{
   background: #4cd137 !important;
 }
+
+/* Estilo para el botón de retroceso */
+.FlechaAtrasMatricula {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  font-size: 10px;
+  color: #FF4E56;
+  font-weight: 600;
+  border-bottom: solid 1px transparent;
+  margin-left: 15px;
+  margin-top: 5px;
+}
+
+/* Estilo para el ícono dentro del botón de retroceso */
+.FlechaAtrasMatricula .material-icons {
+  font-weight: 600;
+  font-size: 9px !important;
+}
+
+/* Estilo para el hover del botón de retroceso */
+.FlechaAtrasMatricula:hover span {
+  text-decoration: underline;
+}
+.confirmation-dialog-atras {
+  text-align: center;
+  padding: 20px;
+  background-color: #ecedef;
+  margin: 5px 30px 10px 5px;
+  border-radius: 10px;
+  padding: 15px 10px;
+}
+
+.confirmation-dialog-atras p {
+  margin: 0 0 10px;
+  font-size: 12px;
+}
+
+.confirmation-dialog-atras button {
+  margin-right: 10px;
+  font-size: 12px;
+  border-radius: 10px;
+  background: #EEF3F9;
+  cursor: pointer;
+}

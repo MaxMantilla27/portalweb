@@ -53,6 +53,9 @@ export class ChatAtencionClienteSoporteComponent implements OnInit, OnDestroy, O
   public chatKey = 'lcsk-chatId';
   // public listprogramas = [9990, 9991, 9992, 9993];
   @Input() idProgramageneral = 0;
+  @Output() RegresarChatAcademico = new EventEmitter<boolean>();
+  public showConfirmationDialog = false;
+
   public contadoraulavirtual = 0;
   public idInteraccion = this.GetsesionIdInteraccion();
   public idprogramageneralalumno = 0;
@@ -810,5 +813,16 @@ export class ChatAtencionClienteSoporteComponent implements OnInit, OnDestroy, O
       console.log()
       window.location.reload()
     });
+  }
+  RetrocederCursosAlumno(){
+    this.RegresarChatAcademico.emit(true);
+  }
+  confirmAction() {
+    this.showConfirmationDialog = false;
+    this.RegresarChatAcademico.emit(true);
+  }
+
+  cancelAction() {
+    this.showConfirmationDialog = false;
   }
 }

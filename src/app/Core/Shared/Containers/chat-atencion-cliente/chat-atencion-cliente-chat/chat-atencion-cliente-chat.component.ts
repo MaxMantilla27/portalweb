@@ -40,6 +40,8 @@ export class ChatAtencionClienteChatComponent implements OnInit,OnDestroy,OnChan
   @Input() IdPespecificoPrograma=0;
   @Output() RegresarChatAtc = new EventEmitter<boolean>();
   @Output() RegresarChatAtcEnviado = new EventEmitter<boolean>();
+  public showConfirmationDialog = false;
+
   public contadoraulavirtual=0
   public idInteraccion =this.GetsesionIdInteraccion()
   public idprogramageneralalumno=0
@@ -504,5 +506,13 @@ export class ChatAtencionClienteChatComponent implements OnInit,OnDestroy,OnChan
   }
   onAtrasChatAtcEnviado() {
     this.RegresarChatAtcEnviado.emit(true);  // Aquí puedes emitir true o false según necesites
+  }
+  confirmAction() {
+    this.showConfirmationDialog = false;
+    this.RegresarChatAtcEnviado.emit(true);
+  }
+
+  cancelAction() {
+    this.showConfirmationDialog = false;
   }
 }

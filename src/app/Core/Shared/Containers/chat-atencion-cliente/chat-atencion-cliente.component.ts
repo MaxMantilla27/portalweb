@@ -1034,6 +1034,7 @@ export class ChatAtencionClienteComponent implements OnInit,OnChanges {
     })
   }
   RetrocederCursos(valor: boolean){
+    console.log('GAAAAAAAAAAAAAAAAAAAAA')
     if (valor) {
       this.Paso=2
       this.Caso='A'
@@ -1044,7 +1045,7 @@ export class ChatAtencionClienteComponent implements OnInit,OnChanges {
     this.Paso=0
     this.Caso='A'
   }
-  RetrocederInicioFormulario(valor: boolean){
+  RetrocederInicioFormulario(valor: boolean,origen:number){
     if (valor) {
       this._ChatAtencionClienteService.CerrarFormularioAcademicoIdMatriculaCabecera(this.IdChatAtencionClienteContacto).pipe(takeUntil(this.signal$)).subscribe({
         next:x=>{
@@ -1052,9 +1053,20 @@ export class ChatAtencionClienteComponent implements OnInit,OnChanges {
         },
         complete:()=>{
           this.IdChatAtencionClienteContacto=0
-          this.Paso=0
-          this.Caso='A'
-        }
+          this._SessionStorageService.SessionSetValue('ChatAcademicoIniciado','false')
+          console.log(origen)
+          if(origen===2){
+            console.log(1)
+            this.CursosMatriculados();
+            // window.location.reload()
+          }
+          else{
+            console.log(2)
+          this.RetrocederCursos(true)
+          // window.location.reload()
+          }
+
+          }
       })
     }
   }

@@ -217,13 +217,13 @@
         </div>
       </div>
       <ng-container *ngIf="Paso==3 && Caso=='A'">
-        <app-chat-atencion-cliente-chat (RegresarChatAtc)="RetrocederCursos($event)" (RegresarChatAtcEnviado)="RetrocederInicioFormulario($event)" [idProgramageneral]="IdProgramageneral" [IdPespecificoPrograma]="IdPespecificoPrograma"></app-chat-atencion-cliente-chat>
+        <app-chat-atencion-cliente-chat (RegresarChatAtc)="RetrocederCursos($event)" (RegresarChatAtcEnviado)="RetrocederInicioFormulario($event,1)" [idProgramageneral]="IdProgramageneral" [IdPespecificoPrograma]="IdPespecificoPrograma"></app-chat-atencion-cliente-chat>
       </ng-container>
       <ng-container *ngIf="Paso==4 && Caso=='B' && ChatSoporteTecnico==false">
-        <app-chat-atencion-cliente-academico [idProgramageneral]="IdProgramageneral" [IdMatriculaCabecera]="IdMatriculaCabecera"></app-chat-atencion-cliente-academico>
+        <app-chat-atencion-cliente-academico [idProgramageneral]="IdProgramageneral" [IdMatriculaCabecera]="IdMatriculaCabecera" (RegresarChatAcademico)="RetrocederInicioFormulario($event,2)" ></app-chat-atencion-cliente-academico>
       </ng-container>
       <ng-container *ngIf="Paso==4 && Caso=='B' && ChatSoporteTecnico==true">
-        <app-chat-atencion-cliente-soporte [idProgramageneral]="IdProgramageneral"></app-chat-atencion-cliente-soporte>
+        <app-chat-atencion-cliente-soporte [idProgramageneral]="IdProgramageneral" (RegresarChatAcademico)="RetrocederInicioFormulario($event,2)"></app-chat-atencion-cliente-soporte>
       </ng-container>
     </ng-container>
 

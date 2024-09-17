@@ -107,6 +107,8 @@ export class ChatAtencionClienteAcademicoComponent implements OnInit, OnDestroy,
   @Output()
   AbrirChat: EventEmitter<void> = new EventEmitter<void>();
   @Input() Open = false;
+  @Output() RegresarChatAcademico = new EventEmitter<boolean>();
+  public showConfirmationDialog = false;
   ngOnDestroy(): void {
     this.signal$.next(true);
     this.signal$.complete();
@@ -721,6 +723,16 @@ export class ChatAtencionClienteAcademicoComponent implements OnInit, OnDestroy,
       window.location.reload()
     });
   }
+  RetrocederCursosAlumno(){
+    this.RegresarChatAcademico.emit(true);
+  }
+  confirmAction() {
+    this.showConfirmationDialog = false;
+    this.RegresarChatAcademico.emit(true);
+  }
 
+  cancelAction() {
+    this.showConfirmationDialog = false;
+  }
 }
 
