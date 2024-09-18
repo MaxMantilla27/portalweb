@@ -94,35 +94,35 @@
       </ng-container>
 
       <!-- simulacion encuesta -->
-       <ng-container *ngIf="EncuestaPrueba">
-        <div class="cardSesionOnlineTareasCuestionario">
+       <ng-container *ngIf="item.encuesta!=undefined && item.encuesta!=null && item.encuesta.length>0">
+        <div class="cardSesionOnlineTareasCuestionario" *ngFor="let encuesta of item.encuesta">
           <div class="flagActividad">
-            <div class="textoFlag">Encuesta Intermedia:</div>
+            <div class="textoFlag">{{encuesta.nombreCriterioEvaluacion}}</div>
             <div id="player">
               <div id="outer">
                 <div id="inner"></div>
               </div>
             </div>
           </div>
-          <div class="TitleActividad">Encuesta Intermedia Desarrollo del Curso</div>
+          <div class="TitleActividad">{{encuesta.titulo}}</div>
           <!-- <div class="DescripcionEncuesta" >
-            
+
           </div> -->
           <div class="lineaMedioEncuesta"></div>
           <div class="AbajoEncuesta row">
             <div class="col-12 col-lg-9 col-md-9">
-              
-    
+
+
             </div>
             <div class="col-12 col-lg-3 col-md-3">
-              <ng-container *ngIf="EncuestaEnviada==false">
-                <app-default-button [confs]="{color:'primary', titulo:'Enviar Encuesta >'}"
+              <ng-container *ngIf="encuesta.encuestaEnviada==false">
+                <app-default-button [confs]="{color:'primary', titulo:'Enviar >'}"
                   [icon]="''"
                   [style]="'border-radius: 20px; margin: 5px 0px 0px; width: 100%; padding: 0px 40px;'"
                   (ButtoclClick)="openEncuestaDialog(false)">
                 </app-default-button>
               </ng-container>
-              <ng-container *ngIf="EncuestaEnviada==true">
+              <ng-container *ngIf="encuesta.encuestaEnviada==true">
                 <app-default-button [confs]="{color:'primary', titulo:'Ver detalle >'}"
                   [icon]="''"
                   [style]="'border-radius: 20px; margin: 5px 0px 0px; width: 100%; padding: 0px 40px; background:#00c356'"
@@ -179,7 +179,7 @@
           </div>
         </div>
       </ng-container> -->
-      
+
 
       <ng-container *ngIf="item.tarea!=undefined && item.tarea!=null && item.tarea.length>0">
         <div class="cardSesionOnlineTareasCuestionario" *ngFor="let tars of item.tarea;let t=index">

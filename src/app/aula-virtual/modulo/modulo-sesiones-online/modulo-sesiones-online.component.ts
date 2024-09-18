@@ -108,7 +108,8 @@ export class ModuloSesionesOnlineComponent implements OnInit , OnChanges,OnDestr
         this.sesiones[index].tarea=[]
         this.sesiones[index].cuestionario=[]
         this.sesiones[index].actividades=[]
-        
+        this.sesiones[index].encuesta=[]
+
         console.log(x)
         if(x!=null){
           x.forEach((d:any) => {
@@ -123,7 +124,7 @@ export class ModuloSesionesOnlineComponent implements OnInit , OnChanges,OnDestr
             console.log('Hora Webex Original:', HoraWebexOriginal.format('YYYY-MM-DD HH:mm:ss'));
             console.log('Hora Webex Conversion Usuario:', HoraWebexUsuario.format('YYYY-MM-DD HH:mm:ss'));
             console.log('Minutos Faltantes:', diference);
-          
+
             if(d.tipo.toLowerCase()=='material adicional'){
               this.sesiones[index].material.push(d)
             }
@@ -140,9 +141,17 @@ export class ModuloSesionesOnlineComponent implements OnInit , OnChanges,OnDestr
               d.disabled=diference
               this.sesiones[index].actividades.push(d)
             }
+            if(d.tipo.toLowerCase()=='encuesta'){
+              d.disabled=diference
+              d.encuestaEnviada=true
+              if(d.respuestasEncuesta.length==0){
+                d.encuestaEnviada=false
+              }
+              this.sesiones[index].encuesta.push(d)
+            }
           });
         }
-        console.log(this.sesiones)
+        console.log('SESIONESSSSSSSSS',this.sesiones)
       }
     })
   }
@@ -150,7 +159,7 @@ export class ModuloSesionesOnlineComponent implements OnInit , OnChanges,OnDestr
   openEncuestaDialog(encuesta: any) {
     const dialogRef = this.dialog.open(EnvioEncuestaOnlineComponent, {
       width: '800px',
-      data: encuesta, 
+      data: encuesta,
       panelClass: 'dialog-envio-encuesta-online',
       disableClose: true
     });
@@ -243,7 +252,7 @@ export class ModuloSesionesOnlineComponent implements OnInit , OnChanges,OnDestr
 
   }
 
-  
+
   ArmarVdeosGrabado(){
     this.sesiones.forEach((s:any) => {
       s.grabaciones=[]
