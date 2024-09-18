@@ -26,19 +26,19 @@ export class EnvioEncuestaOnlineComponent implements OnInit {
             {
               ordenMostrar: 1,
               enunciado:
-                '¿Cómo califica a la coordinadora en su atención hacia usted?',
+                '¿Cómo califica a la coordinadora en su atención hacia usted? (Tipo de pregunta:Ranking)',
               idPreguntaTipo: 1,
             },
             {
               ordenMostrar: 2,
-              enunciado: '¿Recomendarías el curso a tus contactos?',
+              enunciado: '¿Recomendarías el curso a tus contactos? (Tipo de pregunta:Selección única)',
               idPreguntaTipo: 2,
               alternativas: [{ alternativa: 'Sí' }, { alternativa: 'No' }],
             },
             {
               ordenMostrar: 3,
               enunciado:
-                '¿Qué características encontraste en la coordinadora que te ayudaron en tu aula virtual?',
+                '¿Qué características encontraste en la coordinadora que te ayudaron en tu aula virtual? (Tipo de pregunta:Selección múltiple)',
               idPreguntaTipo: 3,
               alternativas: [
                 { alternativa: 'Amable' },
@@ -49,7 +49,7 @@ export class EnvioEncuestaOnlineComponent implements OnInit {
             {
               ordenMostrar: 4,
               enunciado:
-                '¿Qué recomendación darías para que la coordinadora mejore en su atención?',
+                '¿Qué recomendación darías para que la coordinadora mejore en su atención? (Tipo de pregunta:Casilla de texto)',
               idPreguntaTipo: 4,
               alternativas: [{ alternativa: 'Ingrese su respuesta' },
 
