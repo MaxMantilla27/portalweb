@@ -123,6 +123,7 @@ export class WhitepapersComponent implements OnInit,OnDestroy {
     idAreaTrabajo:undefined,
     idIndustria:undefined,
   }
+  public listaLocalidades?:any;
   ngOnInit(): void {
     this.activatedRoute.params.pipe(takeUntil(this.signal$)).subscribe({
       next: (x) => {
@@ -317,6 +318,8 @@ export class WhitepapersComponent implements OnInit,OnDestroy {
     this._DatosPortalService.ObtenerCombosPortal().pipe(takeUntil(this.signal$)).subscribe({
       next:(x)=>{
         console.log(x);
+        this.listaLocalidades = x.listaLocalida.map((p:any)=>String(p.codigo));
+        console.log(this.listaLocalidades)
         this.fileds.forEach(r=>{
           if(r.nombre=='IdPais'){
             r.data,  r.filteredOptions =x.listaPais.map((p:any)=>{
