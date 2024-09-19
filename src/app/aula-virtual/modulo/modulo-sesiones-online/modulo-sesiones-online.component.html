@@ -95,7 +95,7 @@
 
       <!-- simulacion encuesta -->
        <ng-container *ngIf="item.encuesta!=undefined && item.encuesta!=null && item.encuesta.length>0">
-        <div class="cardSesionOnlineTareasCuestionario" *ngFor="let encuesta of item.encuesta">
+        <div class="cardSesionOnlineTareasCuestionario" *ngFor="let encuesta of item.encuesta,let t=index">
           <div class="flagActividad">
             <div class="textoFlag">{{encuesta.nombreCriterioEvaluacion}}</div>
             <div id="player">
@@ -118,14 +118,14 @@
                 <app-default-button [confs]="{color:'primary', titulo:'Enviar >'}"
                   [icon]="''"
                   [style]="'border-radius: 20px; margin: 5px 0px 0px; width: 100%; padding: 0px 40px;'"
-                  (ButtoclClick)="openEncuestaDialog(false)">
+                  (ButtoclClick)="openEncuestaDialog(i,t)">
                 </app-default-button>
               </ng-container>
               <ng-container *ngIf="EncuestaEnviada==true">
                 <app-default-button [confs]="{color:'primary', titulo:'Ver detalle >'}"
                   [icon]="''"
                   [style]="'border-radius: 20px; margin: 5px 0px 0px; width: 100%; padding: 0px 40px; background:#00c356'"
-                  (ButtoclClick)="openEncuestaDialog(true)">
+                  (ButtoclClick)="openEncuestaDialog(i,t)">
                 </app-default-button>
               </ng-container>
             </div>

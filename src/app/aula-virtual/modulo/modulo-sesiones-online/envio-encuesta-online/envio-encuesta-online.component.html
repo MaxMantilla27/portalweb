@@ -1,11 +1,11 @@
-<ng-container cl *ngIf="data.encuesta">
+<ng-container *ngIf="data.encuesta">
   <div
     class="cardSesionOnlineTareasCuestionario"
     style="margin: 0px !important"
   >
     <div class="flagActividad" style="display: flex">
       <div class="col-11" style="display: flex">
-        <div class="textoFlag">{{ data.encuesta.nombre }}</div>
+        <div class="textoFlag">{{ data.encuesta.tipo }}</div>
       </div>
       <div
         class="col-1"
@@ -21,59 +21,113 @@
       <div class="DescripcionActividad col-7" *ngIf="data.encuesta.descripcion">
         {{ data.encuesta.descripcion }}
       </div>
-      <div class="col-5" style="display: flex;
-      justify-content: end;
-  ">
+      <div *ngIf="data.encuesta.encuestaEnviada"class="col-5" style="display: flex;
+      justify-content: end; ">
         <div class="textoFlag2">Encuesta Enviada</div>
       </div>
     </div>
   </div>
   <ng-container>
     <ng-container
-      *ngFor="let itemPrincipal of data.encuesta.categoria; let j = index"
+      *ngFor="let itemPrincipal of data.encuesta.preguntasEncuesta,let j = index"
     >
       <div class="content">
         <div class="titlePregunta">
           {{ itemPrincipal.nombreCategoria }}
         </div>
         <div
-          *ngFor="let item of itemPrincipal.preguntasEncuesta; let i = index"
+          *ngFor="let item of itemPrincipal.preguntas; let i = index"
           style="margin-left: 15px; margin-top: 15px"
         >
-          <div class="contetPreguntasCuestionario">
+          <div class="contetPreguntasEncuesta">
             <div class="descPregunta row">
               <div class="col-12" style="margin-top: 10px">
                 <div class="titlePregunta">
-                  {{ item.ordenMostrar }}. {{ item.enunciado }}
+                  {{ i+1 }}. {{ item.pregunta }}
                 </div>
                 <div
                   class="DescripcionPregunta"
-                  *ngIf="item.idPreguntaTipo == 1"
-                >
-                  Elige tu calificacion
-                </div>
-                <div
-                  class="DescripcionPregunta"
-                  *ngIf="item.idPreguntaTipo == 2"
+                  *ngIf="item.idPreguntaEncuestaTipo == 1"
                 >
                   Elige la alternativa correcta
                 </div>
                 <div
                   class="DescripcionPregunta"
-                  *ngIf="item.idPreguntaTipo == 3"
+                  *ngIf="item.idPreguntaEncuestaTipo == 2"
                 >
                   Elija {{ item.respuestasMinimas }} alternativas correctas
                 </div>
                 <div
                   class="DescripcionPregunta"
-                  *ngIf="item.idPreguntaTipo == 4"
+                  *ngIf="item.idPreguntaEncuestaTipo == 3"
                 >
                   Dános tu feedback
+                </div>
+                <div
+                  class="DescripcionPregunta"
+                  *ngIf="item.idPreguntaEncuestaTipo == 4"
+                >
+                  Elige tu calificacion
                 </div>
               </div>
             </div>
             <div style="margin-top: 15px">
-              <ng-container *ngIf="item.idPreguntaTipo == 1">
+              <ng-container *ngIf="item.idPreguntaEncuestaTipo == 1">
+                <div
+                  class="radiosOptions"
+                  *ngFor="let altern of item.alternativas; let a = index"
+                  (click)="changeRadio(j, i, a)"
+                  [ngClass]="{
+                    Correctos: altern.Correcto == true,
+                    InCorrectos: altern.Correcto == false
+                  }"
+                >
+                  <i class="material-icons" *ngIf="altern.select != true"
+                    >radio_button_off</i
+                  >
+                  <i
+                    class="material-icons activeSelect"
+                    *ngIf="altern.select == true"
+                    >radio_button_checked</i
+                  >
+                  {{ altern.respuesta }}
+                </div>
+              </ng-container>
+              <ng-container *ngIf="item.idPreguntaEncuestaTipo == 2">
+                <div
+                  class="checkOptions"
+                  *ngFor="let altern of item.alternativas; let a = index"
+                  (click)="changeCheck(j, i, a)"
+                  [ngClass]="{
+                    Correctos: altern.Correcto == true,
+                    InCorrectos: altern.Correcto == false
+                  }"
+                >
+                  <i class="material-icons" *ngIf="altern.select != true"
+                    >check_box_outline_blank</i
+                  >
+                  <i
+                    class="material-icons activeSelect"
+                    *ngIf="altern.select == true"
+                    >check_box</i
+                  >
+                  {{ altern.respuesta }}
+                </div>
+              </ng-container>
+              <ng-container *ngIf="item.idPreguntaEncuestaTipo == 3">
+                <div class="InputsOnlineCuestionario">
+                  <mat-form-field appearance="outline" style="width: 100%">
+                    <mat-label>Ingresa tu respuesta</mat-label>
+                    <input
+                      type="text"
+                      placeholder="Ingresa tu respuesta"
+                      matInput
+                      (input)="AddToAvance()"
+                    />
+                  </mat-form-field>
+                </div>
+              </ng-container>
+              <ng-container *ngIf="item.idPreguntaEncuestaTipo == 4">
                 <div style="display: flex">
                   <i
                     style="
@@ -122,61 +176,7 @@
                   >
                 </div>
               </ng-container>
-              <ng-container *ngIf="item.idPreguntaTipo == 2">
-                <div
-                  class="radiosOptions"
-                  *ngFor="let altern of item.alternativas; let a = index"
-                  (click)="changeRadio(j, i, a)"
-                  [ngClass]="{
-                    Correctos: altern.Correcto == true,
-                    InCorrectos: altern.Correcto == false
-                  }"
-                >
-                  <i class="material-icons" *ngIf="altern.select != true"
-                    >radio_button_off</i
-                  >
-                  <i
-                    class="material-icons activeSelect"
-                    *ngIf="altern.select == true"
-                    >radio_button_checked</i
-                  >
-                  {{ altern.alternativa }}
-                </div>
-              </ng-container>
-              <ng-container *ngIf="item.idPreguntaTipo == 3">
-                <div
-                  class="checkOptions"
-                  *ngFor="let altern of item.alternativas; let a = index"
-                  (click)="changeCheck(j, i, a)"
-                  [ngClass]="{
-                    Correctos: altern.Correcto == true,
-                    InCorrectos: altern.Correcto == false
-                  }"
-                >
-                  <i class="material-icons" *ngIf="altern.select != true"
-                    >check_box_outline_blank</i
-                  >
-                  <i
-                    class="material-icons activeSelect"
-                    *ngIf="altern.select == true"
-                    >check_box</i
-                  >
-                  {{ altern.alternativa }}
-                </div>
-              </ng-container>
-              <ng-container *ngIf="item.idPreguntaTipo == 4">
-                <div class="InputsOnlineCuestionario">
-                  <mat-form-field appearance="outline" style="width: 100%">
-                    <mat-label>Ingresa tu respuesta</mat-label>
-                    <input
-                      type="text"
-                      placeholder="Ingresa tu respuesta"
-                      matInput
-                      (input)="AddToAvance()"
-                    />
-                  </mat-form-field>
-                </div>
-              </ng-container>
+
             </div>
           </div>
         </div>

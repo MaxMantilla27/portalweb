@@ -7,7 +7,7 @@
       max-height: 90vh;
     }
   }
-  
+
   .cardSesionOnlineTareasCuestionario {
     background: #bef4ff;
     border: solid 1px #a5eaf8;
@@ -27,7 +27,7 @@
         width: 22px;
         height: 22px;
       }
-  
+
       #inner {
         transform: rotate(45deg);
         background-color: #ffcf00;
@@ -37,7 +37,7 @@
         position: relative;
         border-radius: 2px;
       }
-  
+
       #outer {
         position: absolute;
         width: 22px;
@@ -80,7 +80,7 @@
     justify-content: space-between;
     align-items: center;
     font-weight: 700;
-  
+
     padding-bottom: 6px;
     border-bottom: solid 1px #b2b2b2;
     margin-left: 40px;
@@ -96,7 +96,7 @@
     margin-top: 20px;
     padding-bottom: 20px;
   }
-  
+
   .IntenTareasEnviadas{
     margin: 5px 0px;
     display: flex;
@@ -133,9 +133,9 @@
       margin-bottom: 15px;
       font-weight: 600;
     }
-  
+
   }
-  
+
   .TimePrevCuestionario{
     display: flex;
     color: #f8893f;
@@ -167,9 +167,8 @@
   }
   .content{
     padding: 20px 30px;
-    .contetPreguntasCuestionario{
-      margin: 20px 0;
-      padding-bottom: 25px;
+    .contetPreguntasEncuesta{
+      padding-bottom: 10px;
       border-bottom: solid 2px #d3d3d3;
       .titlePregunta{
         font-size: 16px;
@@ -207,7 +206,7 @@
   .activeSelect{
     color: #0684f2 !important;
   }
-  
+
   .InputsOnlineCuestionario {
     display: flex;
     flex-direction: column;
@@ -331,7 +330,7 @@
     background-position: center;
     background-repeat: no-repeat;
     cursor: zoom-in;
-  
+
   }
   .contentRetroalimentacion{
     padding: 10px 30px;
@@ -347,12 +346,12 @@
       }
     }
   }
-  
+
   .preguntaVinculo:hover{
     text-decoration: underline;
     text-decoration-color: #505050 ;
   }
-  
+
   .textoFlag2{
     width: fit-content;
     background: #ffcf00;

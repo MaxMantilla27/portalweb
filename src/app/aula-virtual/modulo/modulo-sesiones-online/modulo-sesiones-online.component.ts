@@ -156,10 +156,12 @@ export class ModuloSesionesOnlineComponent implements OnInit , OnChanges,OnDestr
     })
   }
 //simulacion encuesta
-  openEncuestaDialog(encuesta: any) {
+  openEncuestaDialog(indexSesion:number, index:number) {
     const dialogRef = this.dialog.open(EnvioEncuestaOnlineComponent, {
       width: '800px',
-      data: encuesta,
+      data: {encuesta:this.sesiones[indexSesion].encuesta[index],
+        index:index,
+        IdMatriculaCabecera:this.IdMatriculaCabecera},
       panelClass: 'dialog-envio-encuesta-online',
       disableClose: true
     });

@@ -1,9 +1,6 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import {
-  MatDialogRef,
-  MAT_DIALOG_DATA,
-  MatDialog,
-} from '@angular/material/dialog';
+import { Component, Inject, OnInit, ViewEncapsulation } from '@angular/core';
+import {  MatDialogRef,  MAT_DIALOG_DATA,  MatDialog,} from '@angular/material/dialog';
+import { Subject } from 'rxjs';
 @Component({
   selector: 'app-envio-encuesta-online',
   templateUrl: './envio-encuesta-online.component.html',
@@ -11,93 +8,105 @@ import {
   encapsulation: ViewEncapsulation.None,
 })
 export class EnvioEncuestaOnlineComponent implements OnInit {
+  private signal$ = new Subject();
+
+  constructor(
+    public dialogRef: MatDialogRef<EnvioEncuestaOnlineComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: any,
+    public dialog: MatDialog,
+  ) {}
+
+  ngOnDestroy(): void {
+    this.signal$.next(true)
+    this.signal$.complete()
+  }
   Inicio = false;
-  data: any = {
-    encuesta: {
-      nombre: 'Encuesta de Evaluación',
-      titulo: 'Evaluación del Curso',
-      descripcion:
-        'Por favor, completa esta encuesta para ayudarnos a mejorar.',
-      categoria: [
-        {
-          orden: 1,
-          nombreCategoria: 'Categoría 1',
-          preguntasEncuesta: [
-            {
-              ordenMostrar: 1,
-              enunciado:
-                '¿Cómo califica a la coordinadora en su atención hacia usted? (Tipo de pregunta:Ranking)',
-              idPreguntaTipo: 1,
-            },
-            {
-              ordenMostrar: 2,
-              enunciado: '¿Recomendarías el curso a tus contactos? (Tipo de pregunta:Selección única)',
-              idPreguntaTipo: 2,
-              alternativas: [{ alternativa: 'Sí' }, { alternativa: 'No' }],
-            },
-            {
-              ordenMostrar: 3,
-              enunciado:
-                '¿Qué características encontraste en la coordinadora que te ayudaron en tu aula virtual? (Tipo de pregunta:Selección múltiple)',
-              idPreguntaTipo: 3,
-              alternativas: [
-                { alternativa: 'Amable' },
-                { alternativa: 'Servicial' },
-                { alternativa: 'Atenta' },
-              ],
-            },
-            {
-              ordenMostrar: 4,
-              enunciado:
-                '¿Qué recomendación darías para que la coordinadora mejore en su atención? (Tipo de pregunta:Casilla de texto)',
-              idPreguntaTipo: 4,
-              alternativas: [{ alternativa: 'Ingrese su respuesta' },
+  // data: any = {
+  //   encuesta: {
+  //     nombre: 'Encuesta de Evaluación',
+  //     titulo: 'Evaluación del Curso',
+  //     descripcion:
+  //       'Por favor, completa esta encuesta para ayudarnos a mejorar.',
+  //     categoria: [
+  //       {
+  //         orden: 1,
+  //         nombreCategoria: 'Categoría 1',
+  //         preguntasEncuesta: [
+  //           {
+  //             ordenMostrar: 1,
+  //             enunciado:
+  //               '¿Cómo califica a la coordinadora en su atención hacia usted? (Tipo de pregunta:Ranking)',
+  //             idPreguntaTipo: 1,
+  //           },
+  //           {
+  //             ordenMostrar: 2,
+  //             enunciado: '¿Recomendarías el curso a tus contactos? (Tipo de pregunta:Selección única)',
+  //             idPreguntaTipo: 2,
+  //             alternativas: [{ alternativa: 'Sí' }, { alternativa: 'No' }],
+  //           },
+  //           {
+  //             ordenMostrar: 3,
+  //             enunciado:
+  //               '¿Qué características encontraste en la coordinadora que te ayudaron en tu aula virtual? (Tipo de pregunta:Selección múltiple)',
+  //             idPreguntaTipo: 3,
+  //             alternativas: [
+  //               { alternativa: 'Amable' },
+  //               { alternativa: 'Servicial' },
+  //               { alternativa: 'Atenta' },
+  //             ],
+  //           },
+  //           {
+  //             ordenMostrar: 4,
+  //             enunciado:
+  //               '¿Qué recomendación darías para que la coordinadora mejore en su atención? (Tipo de pregunta:Casilla de texto)',
+  //             idPreguntaTipo: 4,
+  //             alternativas: [{ alternativa: 'Ingrese su respuesta' },
 
-              ],
-            },
-          ],
-        },
-        {
-          orden: 2,
-          nombreCategoria: 'Categoria 2',
-          preguntasEncuesta: [
-            {
-              ordenMostrar: 1,
-              enunciado:
-                '¿Cómo califica a la coordinadora en su atención hacia usted?',
-              idPreguntaTipo: 1,
-            },
-            {
-              ordenMostrar: 2,
-              enunciado: '¿Recomendarías el curso a tus contactos?',
-              idPreguntaTipo: 2,
-              alternativas: [{ alternativa: 'Sí' }, { alternativa: 'No' }],
-            },
-            {
-              ordenMostrar: 3,
-              enunciado:
-                '¿Qué características encontraste en la coordinadora que te ayudaron en tu aula virtual?',
-              idPreguntaTipo: 3,
-              alternativas: [
-                { alternativa: 'Amable' },
-                { alternativa: 'Servicial' },
-                { alternativa: 'Atenta' },
-              ],
-            },
-            {
-              ordenMostrar: 4,
-              enunciado:
-                '¿Qué recomendación darías para que la coordinadora mejore en su atención?',
-              idPreguntaTipo: 4,
-              alternativas: [{ alternativa: 'Ingrese su respuesta' }],
-            },
-          ],
-        },
-      ],
-    },
+  //             ],
+  //           },
+  //         ],
+  //       },
+  //       {
+  //         orden: 2,
+  //         nombreCategoria: 'Categoria 2',
+  //         preguntasEncuesta: [
+  //           {
+  //             ordenMostrar: 1,
+  //             enunciado:
+  //               '¿Cómo califica a la coordinadora en su atención hacia usted?',
+  //             idPreguntaTipo: 1,
+  //           },
+  //           {
+  //             ordenMostrar: 2,
+  //             enunciado: '¿Recomendarías el curso a tus contactos?',
+  //             idPreguntaTipo: 2,
+  //             alternativas: [{ alternativa: 'Sí' }, { alternativa: 'No' }],
+  //           },
+  //           {
+  //             ordenMostrar: 3,
+  //             enunciado:
+  //               '¿Qué características encontraste en la coordinadora que te ayudaron en tu aula virtual?',
+  //             idPreguntaTipo: 3,
+  //             alternativas: [
+  //               { alternativa: 'Amable' },
+  //               { alternativa: 'Servicial' },
+  //               { alternativa: 'Atenta' },
+  //             ],
+  //           },
+  //           {
+  //             ordenMostrar: 4,
+  //             enunciado:
+  //               '¿Qué recomendación darías para que la coordinadora mejore en su atención?',
+  //             idPreguntaTipo: 4,
+  //             alternativas: [{ alternativa: 'Ingrese su respuesta' }],
+  //           },
+  //         ],
+  //       },
+  //     ],
+  //   },
 
-    EncuestaEnviada: false,
-  };
+  //   EncuestaEnviada: false,
+  // };
 
   EncuestaAvance = {
     id: 123,
@@ -109,10 +118,23 @@ export class EnvioEncuestaOnlineComponent implements OnInit {
     ],
     Inicio: false,
   };
+  public dataGuardada:any
 
-  constructor(public dialogRef: MatDialogRef<EnvioEncuestaOnlineComponent>) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    console.log(this.data)
+    // if(this.data.encuesta!=undefined &&
+    //   this.data.encuesta.encuesta!=undefined &&
+    //   this.data.encuesta.encuesta!=null){
+    //     if(this.data.encuesta.respuestasEncuesta!=null &&
+    //       this.data.encuesta.respuestasEncuesta!=undefined &&
+    //       this.data.encuesta.respuestasEncuesta.length>0){
+      // this.dataGuardada=this.data.cuestionario.respuestaCuestionario[0]
+          // }
+    // }
+
+
+  }
   IniciarEncuesta() {
     this.EncuestaAvance.Inicio = true;
   }
