@@ -122,61 +122,33 @@
                       type="text"
                       placeholder="Ingresa tu respuesta"
                       matInput
+                      [(ngModel)]="item.alternativas[0].respuesta"
                       (input)="AddToAvance()"
+                      [disabled]="false"
                     />
                   </mat-form-field>
                 </div>
               </ng-container>
+
+
               <ng-container *ngIf="item.idPreguntaEncuestaTipo == 4">
                 <div style="display: flex">
                   <i
-                    style="
-                      font-size: 40px !important;
-                      color: #72d3da;
-                      margin-left: 10px;
-                    "
-                    class="material-icons"
-                    >star</i
+                    *ngFor="let star of starsRanking; let b = index"
+                    (click)="item.valorRanking = b + 1; AddToAvance()"
+                    (mouseover)="highlightStars(b + 1)"
+                    (mouseleave)="resetHighlight()"
+                    [ngClass]="{
+                      'selectedTipoRanking': b + 1 <= (item.valorRanking ?? 0),
+                      'hoveredTipoRanking': b + 1 > (item.valorRanking ?? 0) && b + 1 <= hoveredStar
+                    }"
+                    class="material-icons starTipoRanking"
+                    style="font-size: 40px !important; margin-left: 10px; cursor: pointer"
                   >
-                  <i
-                    style="
-                      font-size: 40px !important;
-                      color: #72d3da;
-                      margin-left: 10px;
-                    "
-                    class="material-icons"
-                    >star</i
-                  >
-                  <i
-                    style="
-                      font-size: 40px !important;
-                      color: #72d3da;
-                      margin-left: 10px;
-                    "
-                    class="material-icons"
-                    >star</i
-                  >
-                  <i
-                    style="
-                      font-size: 40px !important;
-                      color: #72d3da;
-                      margin-left: 10px;
-                    "
-                    class="material-icons"
-                    >star</i
-                  >
-                  <i
-                    style="
-                      font-size: 40px !important;
-                      color: #717171;
-                      margin-left: 10px;
-                    "
-                    class="material-icons"
-                    >star</i
-                  >
+                    star
+                  </i>
                 </div>
               </ng-container>
-
             </div>
           </div>
         </div>
@@ -191,6 +163,7 @@
           [style]="
             'margin: 0px; padding: 0px 40px; border-radius: 40px;margin-bottom: 10px;'
           "
+          [disabled]="!EncuestaCompleta"
           (ButtoclClick)="AgregarPEspecificoSesionEncuestaAlumno(false)"
         ></app-default-button>
         <!-- <app-default-button *ngIf="BotonEnvioActivo==false" [confs]="{color:'primary',titulo:'Enviando'}"

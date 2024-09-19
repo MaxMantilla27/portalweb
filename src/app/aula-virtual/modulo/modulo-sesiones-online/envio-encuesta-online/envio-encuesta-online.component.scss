@@ -359,3 +359,15 @@
     font-size: 12px;
     font-weight: 600;
   }
+  .starTipoRanking {
+    color: #d3d3d3;
+    transition: color 0.2s;
+  }
+
+  .selectedTipoRanking {
+    color: #033DAB !important;
+  }
+
+  .hoveredTipoRanking {
+    color: #4F68D9 !important;
+  }

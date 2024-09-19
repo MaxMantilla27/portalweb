@@ -1,5 +1,9 @@
 import { Component, Inject, OnInit, ViewEncapsulation } from '@angular/core';
-import {  MatDialogRef,  MAT_DIALOG_DATA,  MatDialog,} from '@angular/material/dialog';
+import {
+  MatDialogRef,
+  MAT_DIALOG_DATA,
+  MatDialog,
+} from '@angular/material/dialog';
 import { Subject } from 'rxjs';
 @Component({
   selector: 'app-envio-encuesta-online',
@@ -13,139 +17,65 @@ export class EnvioEncuestaOnlineComponent implements OnInit {
   constructor(
     public dialogRef: MatDialogRef<EnvioEncuestaOnlineComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
-    public dialog: MatDialog,
+    public dialog: MatDialog
   ) {}
 
   ngOnDestroy(): void {
-    this.signal$.next(true)
-    this.signal$.complete()
+    this.signal$.next(true);
+    this.signal$.complete();
   }
   Inicio = false;
-  // data: any = {
-  //   encuesta: {
-  //     nombre: 'Encuesta de Evaluación',
-  //     titulo: 'Evaluación del Curso',
-  //     descripcion:
-  //       'Por favor, completa esta encuesta para ayudarnos a mejorar.',
-  //     categoria: [
-  //       {
-  //         orden: 1,
-  //         nombreCategoria: 'Categoría 1',
-  //         preguntasEncuesta: [
-  //           {
-  //             ordenMostrar: 1,
-  //             enunciado:
-  //               '¿Cómo califica a la coordinadora en su atención hacia usted? (Tipo de pregunta:Ranking)',
-  //             idPreguntaTipo: 1,
-  //           },
-  //           {
-  //             ordenMostrar: 2,
-  //             enunciado: '¿Recomendarías el curso a tus contactos? (Tipo de pregunta:Selección única)',
-  //             idPreguntaTipo: 2,
-  //             alternativas: [{ alternativa: 'Sí' }, { alternativa: 'No' }],
-  //           },
-  //           {
-  //             ordenMostrar: 3,
-  //             enunciado:
-  //               '¿Qué características encontraste en la coordinadora que te ayudaron en tu aula virtual? (Tipo de pregunta:Selección múltiple)',
-  //             idPreguntaTipo: 3,
-  //             alternativas: [
-  //               { alternativa: 'Amable' },
-  //               { alternativa: 'Servicial' },
-  //               { alternativa: 'Atenta' },
-  //             ],
-  //           },
-  //           {
-  //             ordenMostrar: 4,
-  //             enunciado:
-  //               '¿Qué recomendación darías para que la coordinadora mejore en su atención? (Tipo de pregunta:Casilla de texto)',
-  //             idPreguntaTipo: 4,
-  //             alternativas: [{ alternativa: 'Ingrese su respuesta' },
+  public starsRanking: number[] = [1, 2, 3, 4, 5]; // Total de estrellas
+  public hoveredStar: number = 0; // Valor de estrella sobre la cual se hace hover
 
-  //             ],
-  //           },
-  //         ],
-  //       },
-  //       {
-  //         orden: 2,
-  //         nombreCategoria: 'Categoria 2',
-  //         preguntasEncuesta: [
-  //           {
-  //             ordenMostrar: 1,
-  //             enunciado:
-  //               '¿Cómo califica a la coordinadora en su atención hacia usted?',
-  //             idPreguntaTipo: 1,
-  //           },
-  //           {
-  //             ordenMostrar: 2,
-  //             enunciado: '¿Recomendarías el curso a tus contactos?',
-  //             idPreguntaTipo: 2,
-  //             alternativas: [{ alternativa: 'Sí' }, { alternativa: 'No' }],
-  //           },
-  //           {
-  //             ordenMostrar: 3,
-  //             enunciado:
-  //               '¿Qué características encontraste en la coordinadora que te ayudaron en tu aula virtual?',
-  //             idPreguntaTipo: 3,
-  //             alternativas: [
-  //               { alternativa: 'Amable' },
-  //               { alternativa: 'Servicial' },
-  //               { alternativa: 'Atenta' },
-  //             ],
-  //           },
-  //           {
-  //             ordenMostrar: 4,
-  //             enunciado:
-  //               '¿Qué recomendación darías para que la coordinadora mejore en su atención?',
-  //             idPreguntaTipo: 4,
-  //             alternativas: [{ alternativa: 'Ingrese su respuesta' }],
-  //           },
-  //         ],
-  //       },
-  //     ],
-  //   },
+  public dataGuardada: any;
 
-  //   EncuestaEnviada: false,
-  // };
-
-  EncuestaAvance = {
-    id: 123,
-    valores: [
-      { IdPregunta: 1, valorRespues: [] },
-      { IdPregunta: 2, valorRespues: [] },
-      { IdPregunta: 3, valorRespues: [] },
-      { IdPregunta: 4, valorRespues: [] },
-    ],
-    Inicio: false,
+  public EncuestaAvance: {
+    inicio: boolean;
+    categorias: Array<{
+      idCategoria: number;
+      nombreCategoria: string;
+      preguntas: Array<{
+        idPregunta: number;
+        pregunta: string;
+        idPreguntaEncuestaTipo: number; // 1: Selección Única, 2: Selección Múltiple, 3: Casilla de Texto, 4: Ranking
+        valorRespues: Array<string | null>;
+      }>;
+    }>;
+    id: number;
+  } = {
+    inicio: false,
+    categorias: [],
+    id: 0
   };
-  public dataGuardada:any
-
+  public EncuestaCompleta=false
 
   ngOnInit(): void {
-    console.log(this.data)
+    console.log(this.data);
+    this.EncuestaAvance.categorias = [];
+    this.EncuestaAvance.inicio = true;
+    this.EncuestaAvance.id = this.data.encuesta.id;
     // if(this.data.encuesta!=undefined &&
     //   this.data.encuesta.encuesta!=undefined &&
     //   this.data.encuesta.encuesta!=null){
     //     if(this.data.encuesta.respuestasEncuesta!=null &&
     //       this.data.encuesta.respuestasEncuesta!=undefined &&
     //       this.data.encuesta.respuestasEncuesta.length>0){
-      // this.dataGuardada=this.data.cuestionario.respuestaCuestionario[0]
-          // }
+    // this.dataGuardada=this.data.cuestionario.respuestaCuestionario[0]
     // }
-
-
+    // }
   }
   IniciarEncuesta() {
-    this.EncuestaAvance.Inicio = true;
+    this.EncuestaAvance.inicio = true;
   }
   changeRadio(indexCategoria: number, indexPregunta: number, index: number) {
     if (this.data.EncuestaEnviada !== true) {
-      this.data.encuesta.categoria[indexCategoria].preguntasEncuesta[
+      this.data.encuesta.preguntasEncuesta[indexCategoria].preguntas[
         indexPregunta
       ].alternativas.forEach((a: any) => {
         a.select = false;
       });
-      this.data.encuesta.categoria[indexCategoria].preguntasEncuesta[
+      this.data.encuesta.preguntasEncuesta[indexCategoria].preguntas[
         indexPregunta
       ].alternativas[index].select = true;
       this.AddToAvance();
@@ -154,42 +84,97 @@ export class EnvioEncuestaOnlineComponent implements OnInit {
 
   changeCheck(indexCategoria: number, indexPregunta: number, index: number) {
     if (this.data.EncuestaEnviada !== true) {
-      this.data.encuesta.categoria[indexCategoria].preguntasEncuesta[
+      this.data.encuesta.preguntasEncuesta[indexCategoria].preguntas[
         indexPregunta
       ].alternativas[index].select =
-        !this.data.encuesta.categoria[indexCategoria].preguntasEncuesta[
+        !this.data.encuesta.preguntasEncuesta[indexCategoria].preguntas[
           indexPregunta
         ].alternativas[index].select;
       this.AddToAvance();
     }
   }
+  // Resalta las estrellas cuando el mouse pasa sobre ellas
+  highlightStars(starNumber: number): void {
+    this.hoveredStar = starNumber;
+  }
 
+  // Restablece el resaltado cuando el mouse sale
+  resetHighlight(): void {
+    this.hoveredStar = 0;
+  }
   AddToAvance() {
-    this.EncuestaAvance.valores.forEach((av: any) => {
-      av.valorRespues = [];
-    });
+    console.log(this.EncuestaAvance);
 
-    this.data.encuesta.preguntasEncuesta.forEach((p: any) => {
-      this.EncuestaAvance.valores.forEach((av: any) => {
-        if (av.IdPregunta === p.ordenMostrar) {
-          if (p.idPreguntaTipo === 5) {
-            av.valorRespues.push(p.respuesta ? p.respuesta[0] : ''); // Asume respuesta como texto si idPreguntaTipo es 5
-          } else {
-            p.alternativas.forEach((a: any) => {
-              if (a.select) {
-                av.valorRespues.push(a.alternativa);
-              }
-            });
-          }
+    // Inicialización de data de guardado
+    this.EncuestaAvance.categorias = [];
+    this.EncuestaAvance.inicio = true;
+    this.EncuestaAvance.id = this.data.encuesta.id;
+
+    // Iterar sobre las categorías de preguntas de la encuesta
+    this.data.encuesta.preguntasEncuesta.forEach((categoria: any) => {
+      // Inicializar el objeto para la categoría
+      const categoriaObjInicial = {
+        idCategoria: categoria.idCategoria,
+        nombreCategoria: categoria.nombreCategoria,
+        preguntas: [] as Array<{ idPregunta: number, pregunta: string, idPreguntaEncuestaTipo: number, valorRespues: Array<string | null> }>
+      };
+      this.EncuestaAvance.categorias.push(categoriaObjInicial);
+
+      // Iterar sobre las preguntas dentro de cada categoría
+      categoria.preguntas.forEach((p: any) => {
+        // Inicializar el objeto de la pregunta
+        const preguntaObjInicial = {
+          idPregunta: p.id, // Asegurarse de que este es el ID correcto de la pregunta
+          pregunta: p.pregunta,
+          idPreguntaEncuestaTipo: p.idPreguntaEncuestaTipo,
+          valorRespues: [] as Array<string | null> // Arreglo para almacenar respuestas
+        };
+        categoriaObjInicial.preguntas.push(preguntaObjInicial);
+
+        // Verificar el tipo de pregunta y almacenar las respuestas según corresponda
+        if (p.idPreguntaEncuestaTipo === 3) {
+          // Para preguntas de tipo "Casilla de Texto"
+          const respuesta = p.alternativas?.[0]?.respuesta || '';
+          preguntaObjInicial.valorRespues.push(respuesta);
+
+        } else if (p.idPreguntaEncuestaTipo === 1) {
+          // Para preguntas de tipo "Selección Única"
+          p.alternativas.forEach((a: any) => {
+            if (a.select) {
+              preguntaObjInicial.valorRespues.push(a.respuesta);
+            }
+          });
+
+        } else if (p.idPreguntaEncuestaTipo === 2) {
+          // Para preguntas de tipo "Selección Múltiple"
+          p.alternativas.forEach((a: any) => {
+            if (a.select) {
+              preguntaObjInicial.valorRespues.push(a.respuesta);
+            }
+          });
+
+        } else if (p.idPreguntaEncuestaTipo === 4) {
+          // Para preguntas de tipo "Ranking"
+          const valorRanking = p.valorRanking || 0; // Valor de las estrellas seleccionadas (1 a 5)
+          preguntaObjInicial.valorRespues.push(valorRanking.toString()); // Guardar el valor de la selección como string
         }
       });
     });
-
-    // Simulación del almacenamiento en sesión
-    sessionStorage.setItem(
-      'cuest-' + this.EncuestaAvance.id.toString(),
-      btoa(JSON.stringify(this.EncuestaAvance))
-    );
+    this.verificarRespuestasCompletas()
   }
-  AgregarPEspecificoSesionEncuestaAlumno(valor: boolean) {}
+  verificarRespuestasCompletas() {
+  this.EncuestaCompleta = true;
+
+  this.EncuestaAvance.categorias.forEach((categoria: any) => {
+    categoria.preguntas.forEach((pregunta: any) => {
+      if (pregunta.valorRespues.length === 0 || pregunta.valorRespues[0] === null || pregunta.valorRespues[0] === '') {
+        this.EncuestaCompleta = false;
+      }
+    });
+  });
+}
+
+  AgregarPEspecificoSesionEncuestaAlumno(valor: boolean) {
+    console.log(this.EncuestaAvance);
+  }
 }
