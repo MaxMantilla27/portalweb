@@ -67,6 +67,7 @@ export class ModuloSesionesOnlineComponent implements OnInit , OnChanges,OnDestr
   }
 
   @Input() IdPespecifico=0;
+  @Input() IdPGeneral=0;
   @Input() IdMatriculaCabecera=0;
   public sesiones:Array<any>=[]
   @Input() videos: Array<any>=[];
@@ -157,11 +158,17 @@ export class ModuloSesionesOnlineComponent implements OnInit , OnChanges,OnDestr
   }
 //simulacion encuesta
   openEncuestaDialog(indexSesion:number, index:number) {
+    console.log(this.sesiones)
+    console.log(this.sesiones[indexSesion].encuesta[index])
     const dialogRef = this.dialog.open(EnvioEncuestaOnlineComponent, {
       width: '800px',
       data: {encuesta:this.sesiones[indexSesion].encuesta[index],
         index:index,
-        IdMatriculaCabecera:this.IdMatriculaCabecera},
+        IdMatriculaCabecera:this.IdMatriculaCabecera,
+        IdPEspecificoSesion:this.sesiones[indexSesion].encuesta[index].idPEspecificoSesion,
+        IdPGeneral:this.IdPGeneral,
+        IdPEspecifico: this.IdPespecifico,
+      },
       panelClass: 'dialog-envio-encuesta-online',
       disableClose: true
     });

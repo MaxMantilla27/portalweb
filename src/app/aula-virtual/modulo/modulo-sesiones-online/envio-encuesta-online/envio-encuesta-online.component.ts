@@ -4,7 +4,9 @@ import {
   MAT_DIALOG_DATA,
   MatDialog,
 } from '@angular/material/dialog';
-import { Subject } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
+import { EncuestaAvanceCategoriaDTO, EncuestaAvanceDTO, EncuestaAvancePreguntaDTO, EncuestaAvancePreguntaRespuestaDTO } from 'src/app/Core/Models/PEspecificoEsquema';
+import { PEspecificoEsquemaService } from 'src/app/Core/Shared/Services/PEspecificoEsquema/pespecifico-esquema.service';
 @Component({
   selector: 'app-envio-encuesta-online',
   templateUrl: './envio-encuesta-online.component.html',
@@ -17,7 +19,9 @@ export class EnvioEncuestaOnlineComponent implements OnInit {
   constructor(
     public dialogRef: MatDialogRef<EnvioEncuestaOnlineComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private _PEspecificoEsquemaService: PEspecificoEsquemaService,
+
   ) {}
 
   ngOnDestroy(): void {
@@ -30,23 +34,14 @@ export class EnvioEncuestaOnlineComponent implements OnInit {
 
   public dataGuardada: any;
 
-  public EncuestaAvance: {
-    inicio: boolean;
-    categorias: Array<{
-      idCategoria: number;
-      nombreCategoria: string;
-      preguntas: Array<{
-        idPregunta: number;
-        pregunta: string;
-        idPreguntaEncuestaTipo: number; // 1: Selección Única, 2: Selección Múltiple, 3: Casilla de Texto, 4: Ranking
-        valorRespues: Array<string | null>;
-      }>;
-    }>;
-    id: number;
-  } = {
+  public EncuestaAvance: EncuestaAvanceDTO = {
+    id: 0,
     inicio: false,
+    idMatriculaCabecera:0,
+    idPEspecificoSesion:0,
+    idPGeneral:0,
+    idPEspecifico:0,
     categorias: [],
-    id: 0
   };
   public EncuestaCompleta=false
 
@@ -55,19 +50,20 @@ export class EnvioEncuestaOnlineComponent implements OnInit {
     this.EncuestaAvance.categorias = [];
     this.EncuestaAvance.inicio = true;
     this.EncuestaAvance.id = this.data.encuesta.id;
-    // if(this.data.encuesta!=undefined &&
-    //   this.data.encuesta.encuesta!=undefined &&
-    //   this.data.encuesta.encuesta!=null){
-    //     if(this.data.encuesta.respuestasEncuesta!=null &&
-    //       this.data.encuesta.respuestasEncuesta!=undefined &&
-    //       this.data.encuesta.respuestasEncuesta.length>0){
-    // this.dataGuardada=this.data.cuestionario.respuestaCuestionario[0]
-    // }
-    // }
+    if(this.data.encuesta!=undefined &&
+      this.data.encuesta.encuesta!=undefined &&
+      this.data.encuesta.encuesta!=null){
+      if(this.data.encuesta.respuestasEncuesta!=null &&
+        this.data.encuesta.respuestasEncuesta!=undefined &&
+        this.data.encuesta.respuestasEncuesta.length>0){
+      this.dataGuardada=this.data.cuestionario.respuestaCuestionario[0]
+      }
+      else{
+
+      }
+    }
   }
-  IniciarEncuesta() {
-    this.EncuestaAvance.inicio = true;
-  }
+
   changeRadio(indexCategoria: number, indexPregunta: number, index: number) {
     if (this.data.EncuestaEnviada !== true) {
       this.data.encuesta.preguntasEncuesta[indexCategoria].preguntas[
@@ -103,78 +99,83 @@ export class EnvioEncuestaOnlineComponent implements OnInit {
     this.hoveredStar = 0;
   }
   AddToAvance() {
-    console.log(this.EncuestaAvance);
-
     // Inicialización de data de guardado
     this.EncuestaAvance.categorias = [];
     this.EncuestaAvance.inicio = true;
     this.EncuestaAvance.id = this.data.encuesta.id;
+    this.EncuestaAvance.idMatriculaCabecera = this.data.IdMatriculaCabecera;
+    this.EncuestaAvance.idPEspecificoSesion =this.data.IdPEspecificoSesion;
+    this.EncuestaAvance.idPGeneral = this.data.IdPGeneral;
+    this.EncuestaAvance.idPEspecifico = this.data.IdPEspecifico;
 
     // Iterar sobre las categorías de preguntas de la encuesta
     this.data.encuesta.preguntasEncuesta.forEach((categoria: any) => {
-      // Inicializar el objeto para la categoría
-      const categoriaObjInicial = {
+      const categoriaObjInicial: EncuestaAvanceCategoriaDTO = {
         idCategoria: categoria.idCategoria,
         nombreCategoria: categoria.nombreCategoria,
-        preguntas: [] as Array<{ idPregunta: number, pregunta: string, idPreguntaEncuestaTipo: number, valorRespues: Array<string | null> }>
+        preguntas: []
       };
       this.EncuestaAvance.categorias.push(categoriaObjInicial);
 
-      // Iterar sobre las preguntas dentro de cada categoría
       categoria.preguntas.forEach((p: any) => {
-        // Inicializar el objeto de la pregunta
-        const preguntaObjInicial = {
-          idPregunta: p.id, // Asegurarse de que este es el ID correcto de la pregunta
+        const preguntaObjInicial: EncuestaAvancePreguntaDTO = {
+          idPregunta: p.id,
           pregunta: p.pregunta,
           idPreguntaEncuestaTipo: p.idPreguntaEncuestaTipo,
-          valorRespues: [] as Array<string | null> // Arreglo para almacenar respuestas
+          valorRespuesta: []
         };
         categoriaObjInicial.preguntas.push(preguntaObjInicial);
 
-        // Verificar el tipo de pregunta y almacenar las respuestas según corresponda
         if (p.idPreguntaEncuestaTipo === 3) {
-          // Para preguntas de tipo "Casilla de Texto"
           const respuesta = p.alternativas?.[0]?.respuesta || '';
-          preguntaObjInicial.valorRespues.push(respuesta);
+          const respuestaObj: EncuestaAvancePreguntaRespuestaDTO = { respuesta: respuesta }; // Usar recpuesta como número
+          preguntaObjInicial.valorRespuesta.push(respuestaObj);
 
         } else if (p.idPreguntaEncuestaTipo === 1) {
-          // Para preguntas de tipo "Selección Única"
           p.alternativas.forEach((a: any) => {
             if (a.select) {
-              preguntaObjInicial.valorRespues.push(a.respuesta);
+              const respuestaObj: EncuestaAvancePreguntaRespuestaDTO = { respuesta: a.respuesta };
+              preguntaObjInicial.valorRespuesta.push(respuestaObj);
             }
           });
 
         } else if (p.idPreguntaEncuestaTipo === 2) {
-          // Para preguntas de tipo "Selección Múltiple"
           p.alternativas.forEach((a: any) => {
             if (a.select) {
-              preguntaObjInicial.valorRespues.push(a.respuesta);
+              const respuestaObj: EncuestaAvancePreguntaRespuestaDTO = { respuesta: a.respuesta };
+              preguntaObjInicial.valorRespuesta.push(respuestaObj);
             }
           });
 
         } else if (p.idPreguntaEncuestaTipo === 4) {
-          // Para preguntas de tipo "Ranking"
-          const valorRanking = p.valorRanking || 0; // Valor de las estrellas seleccionadas (1 a 5)
-          preguntaObjInicial.valorRespues.push(valorRanking.toString()); // Guardar el valor de la selección como string
+          const valorRanking = p.valorRanking || 0;
+          const respuestaObj: EncuestaAvancePreguntaRespuestaDTO = { respuesta: valorRanking.toString() }; // Guardar ranking como número
+          preguntaObjInicial.valorRespuesta.push(respuestaObj);
         }
       });
     });
-    this.verificarRespuestasCompletas()
+    this.verificarRespuestasCompletas();
   }
-  verificarRespuestasCompletas() {
-  this.EncuestaCompleta = true;
 
-  this.EncuestaAvance.categorias.forEach((categoria: any) => {
-    categoria.preguntas.forEach((pregunta: any) => {
-      if (pregunta.valorRespues.length === 0 || pregunta.valorRespues[0] === null || pregunta.valorRespues[0] === '') {
-        this.EncuestaCompleta = false;
-      }
+  verificarRespuestasCompletas() {
+    this.EncuestaCompleta = true;
+    this.EncuestaAvance.categorias.forEach((categoria: EncuestaAvanceCategoriaDTO) => {
+      categoria.preguntas.forEach((pregunta: EncuestaAvancePreguntaDTO) => {
+        if (pregunta.valorRespuesta.length === 0 || pregunta.valorRespuesta[0].respuesta === 0) {
+          this.EncuestaCompleta = false;
+        }
+      });
     });
-  });
-}
+  }
+
 
   AgregarPEspecificoSesionEncuestaAlumno(valor: boolean) {
-    console.log(this.EncuestaAvance);
+    this._PEspecificoEsquemaService.AgregarPEspecificoSesionEncuestaAlumno(this.EncuestaAvance).pipe(takeUntil(this.signal$))
+      .subscribe({
+      next: (x) => {
+        this.dialogRef.close('guardado');
+      },
+      complete:()=>{
+      }})
   }
 }

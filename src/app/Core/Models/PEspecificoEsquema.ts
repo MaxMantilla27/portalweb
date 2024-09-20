@@ -138,4 +138,28 @@ export interface PEspecificoSesionPreguntaDescriptivaFileDTO {
   UrlArchivoSubido: string | null;
   file: File;
 }
+export interface EncuestaAvanceDTO {
+  id: number;
+  idMatriculaCabecera: number;
+  inicio: boolean;
+  idPEspecificoSesion: number;
+  idPGeneral: number;
+  idPEspecifico: number;
+  categorias: Array<EncuestaAvanceCategoriaDTO>;
+}
+export interface EncuestaAvanceCategoriaDTO{
+  idCategoria: number;
+  nombreCategoria: string;
+  preguntas: Array<EncuestaAvancePreguntaDTO>;
+}
+export interface EncuestaAvancePreguntaDTO{
+  idPregunta: number;
+  pregunta: string;
+  idPreguntaEncuestaTipo: number;
+  valorRespuesta: Array<EncuestaAvancePreguntaRespuestaDTO>;
+}
+export interface EncuestaAvancePreguntaRespuestaDTO{
+  respuesta:number,
+
+}
 
