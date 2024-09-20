@@ -173,8 +173,11 @@ export class ModuloSesionesOnlineComponent implements OnInit , OnChanges,OnDestr
       disableClose: true
     });
 
-    dialogRef.afterClosed().pipe(takeUntil(this.signal$)).subscribe(result => {
-      console.log(result);
+    dialogRef.afterClosed().pipe(takeUntil(this.signal$)).subscribe((result) => {
+      console.log(result)
+      if(result!=undefined && result.length>0){
+        this.ObtenerActividadesRecursoSesionAlumno(this.sesiones[indexSesion].idSesion,indexSesion)
+      }
     });
   }
   //simulacion encuestas

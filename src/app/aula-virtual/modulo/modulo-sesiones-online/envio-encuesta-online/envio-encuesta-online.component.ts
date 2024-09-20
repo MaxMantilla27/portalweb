@@ -1,11 +1,17 @@
-import { Component, Inject, OnInit, ViewEncapsulation } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, Inject, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import {
   MatDialogRef,
   MAT_DIALOG_DATA,
   MatDialog,
 } from '@angular/material/dialog';
-import { Subject, takeUntil } from 'rxjs';
-import { EncuestaAvanceCategoriaDTO, EncuestaAvanceDTO, EncuestaAvancePreguntaDTO, EncuestaAvancePreguntaRespuestaDTO } from 'src/app/Core/Models/PEspecificoEsquema';
+import { Subject, takeUntil, timer } from 'rxjs';
+import {
+  EncuestaAvanceCategoriaDTO,
+  EncuestaAvanceDTO,
+  EncuestaAvancePreguntaDTO,
+  EncuestaAvancePreguntaRespuestaDTO,
+} from 'src/app/Core/Models/PEspecificoEsquema';
+import { ChargeSpinnerComponent } from 'src/app/Core/Shared/Containers/Dialog/charge-spinner/charge-spinner.component';
 import { PEspecificoEsquemaService } from 'src/app/Core/Shared/Services/PEspecificoEsquema/pespecifico-esquema.service';
 @Component({
   selector: 'app-envio-encuesta-online',
@@ -13,54 +19,100 @@ import { PEspecificoEsquemaService } from 'src/app/Core/Shared/Services/PEspecif
   styleUrls: ['./envio-encuesta-online.component.scss'],
   encapsulation: ViewEncapsulation.None,
 })
-export class EnvioEncuestaOnlineComponent implements OnInit {
+export class EnvioEncuestaOnlineComponent implements OnInit,AfterViewInit  {
   private signal$ = new Subject();
+  @ViewChild('modalContentEncuesta') modalContent!: ElementRef;
 
   constructor(
     public dialogRef: MatDialogRef<EnvioEncuestaOnlineComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     public dialog: MatDialog,
-    private _PEspecificoEsquemaService: PEspecificoEsquemaService,
-
+    private _PEspecificoEsquemaService: PEspecificoEsquemaService
   ) {}
 
   ngOnDestroy(): void {
     this.signal$.next(true);
     this.signal$.complete();
   }
-  Inicio = false;
   public starsRanking: number[] = [1, 2, 3, 4, 5]; // Total de estrellas
   public hoveredStar: number = 0; // Valor de estrella sobre la cual se hace hover
-
-  public dataGuardada: any;
-
   public EncuestaAvance: EncuestaAvanceDTO = {
     id: 0,
     inicio: false,
-    idMatriculaCabecera:0,
-    idPEspecificoSesion:0,
-    idPGeneral:0,
-    idPEspecifico:0,
+    idMatriculaCabecera: 0,
+    idPEspecificoSesion: 0,
+    idPGeneral: 0,
+    idPEspecifico: 0,
     categorias: [],
   };
-  public EncuestaCompleta=false
+  public EncuestaCompleta = false;
+  public EncuestaEnviada = false;
 
   ngOnInit(): void {
+    timer(2000).subscribe(() => {
+      setTimeout(() => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }, 100);
+    });
     console.log(this.data);
     this.EncuestaAvance.categorias = [];
     this.EncuestaAvance.inicio = true;
     this.EncuestaAvance.id = this.data.encuesta.id;
-    if(this.data.encuesta!=undefined &&
-      this.data.encuesta.encuesta!=undefined &&
-      this.data.encuesta.encuesta!=null){
-      if(this.data.encuesta.respuestasEncuesta!=null &&
-        this.data.encuesta.respuestasEncuesta!=undefined &&
-        this.data.encuesta.respuestasEncuesta.length>0){
-      this.dataGuardada=this.data.cuestionario.respuestaCuestionario[0]
-      }
-      else{
 
-      }
+    if (this.data.encuesta && this.data.encuesta.preguntasEncuesta) {
+      const respuestasEncuesta =
+        this.data.encuesta.respuestasEncuesta[0].respuestas;
+      this.EncuestaEnviada = true;
+      this.data.EncuestaEnviada = this.EncuestaEnviada;
+      this.data.encuesta.preguntasEncuesta.forEach((categoria: any) => {
+        categoria.preguntas.forEach((pregunta: any) => {
+          pregunta.respuesta = [];
+          let vaRes: Array<any> = [];
+
+          respuestasEncuesta.forEach((respuesta: any) => {
+            if (pregunta.id === respuesta.idPreguntaEncuesta) {
+              // Casilla de texto
+              if (pregunta.nombreTipoPregunta === 'Casilla de Texto') {
+                pregunta.alternativas[0].respuesta = [respuesta.valor];
+              }
+              // Selección Múltiple
+              else if (pregunta.nombreTipoPregunta === 'Seleccion Multiple') {
+                vaRes.push(respuesta.valor);
+                pregunta.alternativas.forEach((alternativa: any) => {
+                  if (alternativa.id.toString() === respuesta.valor) {
+                    alternativa.select = true;
+                  }
+                });
+              }
+              // Selección Única
+              else if (pregunta.nombreTipoPregunta === 'Selección Unica') {
+                pregunta.alternativas.forEach((alternativa: any) => {
+                  if (alternativa.id.toString() === respuesta.valor) {
+                    alternativa.select = true;
+                  }
+                });
+              }
+              // Ranking (puede requerir un tratamiento especial si hay una lógica adicional)
+              else if (pregunta.nombreTipoPregunta === 'Ranking') {
+                pregunta.valorRanking = [respuesta.valor]; // Asume que el valor es un número de ranking
+              }
+            }
+          });
+        });
+      });
+    } else {
+      console.warn('No se encontraron preguntas en la encuesta.');
+    }
+    // this.scrollToTop();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+  ngAfterViewInit(): void {
+    // this.scrollToTop();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+  scrollToTop(): void {
+    if (this.modalContent) {
+      this.modalContent.nativeElement.scrollTop = 0;
     }
   }
 
@@ -91,91 +143,116 @@ export class EnvioEncuestaOnlineComponent implements OnInit {
   }
   // Resalta las estrellas cuando el mouse pasa sobre ellas
   highlightStars(starNumber: number): void {
-    this.hoveredStar = starNumber;
+    if (this.data.EncuestaEnviada !== true) {
+      this.hoveredStar = starNumber;
+    }
   }
 
   // Restablece el resaltado cuando el mouse sale
   resetHighlight(): void {
-    this.hoveredStar = 0;
+    if (this.data.EncuestaEnviada !== true) {
+      this.hoveredStar = 0;
+    }
   }
   AddToAvance() {
-    // Inicialización de data de guardado
-    this.EncuestaAvance.categorias = [];
-    this.EncuestaAvance.inicio = true;
-    this.EncuestaAvance.id = this.data.encuesta.id;
-    this.EncuestaAvance.idMatriculaCabecera = this.data.IdMatriculaCabecera;
-    this.EncuestaAvance.idPEspecificoSesion =this.data.IdPEspecificoSesion;
-    this.EncuestaAvance.idPGeneral = this.data.IdPGeneral;
-    this.EncuestaAvance.idPEspecifico = this.data.IdPEspecifico;
+    if (this.data.EncuestaEnviada !== true) {
+      // Inicialización de data de guardado
+      this.EncuestaAvance.categorias = [];
+      this.EncuestaAvance.inicio = true;
+      this.EncuestaAvance.id = this.data.encuesta.id;
+      this.EncuestaAvance.idMatriculaCabecera = this.data.IdMatriculaCabecera;
+      this.EncuestaAvance.idPEspecificoSesion = this.data.IdPEspecificoSesion;
+      this.EncuestaAvance.idPGeneral = this.data.IdPGeneral;
+      this.EncuestaAvance.idPEspecifico = this.data.IdPEspecifico;
 
-    // Iterar sobre las categorías de preguntas de la encuesta
-    this.data.encuesta.preguntasEncuesta.forEach((categoria: any) => {
-      const categoriaObjInicial: EncuestaAvanceCategoriaDTO = {
-        idCategoria: categoria.idCategoria,
-        nombreCategoria: categoria.nombreCategoria,
-        preguntas: []
-      };
-      this.EncuestaAvance.categorias.push(categoriaObjInicial);
-
-      categoria.preguntas.forEach((p: any) => {
-        const preguntaObjInicial: EncuestaAvancePreguntaDTO = {
-          idPregunta: p.id,
-          pregunta: p.pregunta,
-          idPreguntaEncuestaTipo: p.idPreguntaEncuestaTipo,
-          valorRespuesta: []
+      // Iterar sobre las categorías de preguntas de la encuesta
+      this.data.encuesta.preguntasEncuesta.forEach((categoria: any) => {
+        const categoriaObjInicial: EncuestaAvanceCategoriaDTO = {
+          idCategoria: categoria.idCategoria,
+          nombreCategoria: categoria.nombreCategoria,
+          preguntas: [],
         };
-        categoriaObjInicial.preguntas.push(preguntaObjInicial);
+        this.EncuestaAvance.categorias.push(categoriaObjInicial);
 
-        if (p.idPreguntaEncuestaTipo === 3) {
-          const respuesta = p.alternativas?.[0]?.respuesta || '';
-          const respuestaObj: EncuestaAvancePreguntaRespuestaDTO = { respuesta: respuesta }; // Usar recpuesta como número
-          preguntaObjInicial.valorRespuesta.push(respuestaObj);
+        categoria.preguntas.forEach((p: any) => {
+          const preguntaObjInicial: EncuestaAvancePreguntaDTO = {
+            idPregunta: p.id,
+            pregunta: p.pregunta,
+            idPreguntaEncuestaTipo: p.idPreguntaEncuestaTipo,
+            valorRespuesta: [],
+          };
+          categoriaObjInicial.preguntas.push(preguntaObjInicial);
 
-        } else if (p.idPreguntaEncuestaTipo === 1) {
-          p.alternativas.forEach((a: any) => {
-            if (a.select) {
-              const respuestaObj: EncuestaAvancePreguntaRespuestaDTO = { respuesta: a.respuesta };
-              preguntaObjInicial.valorRespuesta.push(respuestaObj);
-            }
-          });
-
-        } else if (p.idPreguntaEncuestaTipo === 2) {
-          p.alternativas.forEach((a: any) => {
-            if (a.select) {
-              const respuestaObj: EncuestaAvancePreguntaRespuestaDTO = { respuesta: a.respuesta };
-              preguntaObjInicial.valorRespuesta.push(respuestaObj);
-            }
-          });
-
-        } else if (p.idPreguntaEncuestaTipo === 4) {
-          const valorRanking = p.valorRanking || 0;
-          const respuestaObj: EncuestaAvancePreguntaRespuestaDTO = { respuesta: valorRanking.toString() }; // Guardar ranking como número
-          preguntaObjInicial.valorRespuesta.push(respuestaObj);
-        }
+          if (p.idPreguntaEncuestaTipo === 3) {
+            const respuesta = p.alternativas?.[0]?.respuesta || '';
+            const respuestaObj: EncuestaAvancePreguntaRespuestaDTO = {
+              idRespuesta: 0,
+              puntaje: 0,
+              respuesta: respuesta,
+            }; // Usar recpuesta como número
+            preguntaObjInicial.valorRespuesta.push(respuestaObj);
+          } else if (p.idPreguntaEncuestaTipo === 1) {
+            p.alternativas.forEach((a: any) => {
+              if (a.select) {
+                const respuestaObj: EncuestaAvancePreguntaRespuestaDTO = {
+                  idRespuesta: a.id,
+                  puntaje: a.puntaje,
+                  respuesta: a.id.toString(),
+                };
+                preguntaObjInicial.valorRespuesta.push(respuestaObj);
+              }
+            });
+          } else if (p.idPreguntaEncuestaTipo === 2) {
+            p.alternativas.forEach((a: any) => {
+              if (a.select) {
+                const respuestaObj: EncuestaAvancePreguntaRespuestaDTO = {
+                  idRespuesta: a.id,
+                  puntaje: a.puntaje,
+                  respuesta: a.id.toString(),
+                };
+                preguntaObjInicial.valorRespuesta.push(respuestaObj);
+              }
+            });
+          } else if (p.idPreguntaEncuestaTipo === 4) {
+            const valorRanking = p.valorRanking || 0;
+            const respuestaObj: EncuestaAvancePreguntaRespuestaDTO = {
+              idRespuesta: 0,
+              puntaje: valorRanking,
+              respuesta: valorRanking.toString(),
+            }; // Guardar ranking como número
+            preguntaObjInicial.valorRespuesta.push(respuestaObj);
+          }
+        });
       });
-    });
-    this.verificarRespuestasCompletas();
+      this.verificarRespuestasCompletas();
+    }
   }
 
   verificarRespuestasCompletas() {
     this.EncuestaCompleta = true;
-    this.EncuestaAvance.categorias.forEach((categoria: EncuestaAvanceCategoriaDTO) => {
-      categoria.preguntas.forEach((pregunta: EncuestaAvancePreguntaDTO) => {
-        if (pregunta.valorRespuesta.length === 0 || pregunta.valorRespuesta[0].respuesta === 0) {
-          this.EncuestaCompleta = false;
-        }
-      });
-    });
+    this.EncuestaAvance.categorias.forEach(
+      (categoria: EncuestaAvanceCategoriaDTO) => {
+        categoria.preguntas.forEach((pregunta: EncuestaAvancePreguntaDTO) => {
+          if (
+            pregunta.valorRespuesta.length === 0 ||
+            pregunta.valorRespuesta[0].respuesta === ''
+          ) {
+            this.EncuestaCompleta = false;
+          }
+        });
+      }
+    );
   }
 
-
   AgregarPEspecificoSesionEncuestaAlumno(valor: boolean) {
-    this._PEspecificoEsquemaService.AgregarPEspecificoSesionEncuestaAlumno(this.EncuestaAvance).pipe(takeUntil(this.signal$))
+    this._PEspecificoEsquemaService
+      .AgregarPEspecificoSesionEncuestaAlumno(this.EncuestaAvance)
+      .pipe(takeUntil(this.signal$))
       .subscribe({
-      next: (x) => {
-        this.dialogRef.close('guardado');
-      },
-      complete:()=>{
-      }})
+        next: (x) => {
+          this.dialogRef.close('guardado');
+        },
+        complete: () => {},
+      });
   }
 }

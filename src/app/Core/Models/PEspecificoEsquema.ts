@@ -159,7 +159,8 @@ export interface EncuestaAvancePreguntaDTO{
   valorRespuesta: Array<EncuestaAvancePreguntaRespuestaDTO>;
 }
 export interface EncuestaAvancePreguntaRespuestaDTO{
-  respuesta:number,
-
+  idRespuesta:number
+  respuesta:string,
+  puntaje:number
 }
 
