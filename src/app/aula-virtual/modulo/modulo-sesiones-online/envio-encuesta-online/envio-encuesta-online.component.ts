@@ -60,12 +60,16 @@ export class EnvioEncuestaOnlineComponent implements OnInit,AfterViewInit  {
     this.EncuestaAvance.id = this.data.encuesta.id;
 
     if (this.data.encuesta && this.data.encuesta.preguntasEncuesta) {
-      const respuestasEncuesta =
-        this.data.encuesta.respuestasEncuesta[0].respuestas;
+      if(this.data.encuesta.respuestasEncuesta.length!=0){
+        const respuestasEncuesta = this.data.encuesta.respuestasEncuesta[0].respuestas;
       this.EncuestaEnviada = true;
       this.data.EncuestaEnviada = this.EncuestaEnviada;
       this.data.encuesta.preguntasEncuesta.forEach((categoria: any) => {
+
         categoria.preguntas.forEach((pregunta: any) => {
+          if (pregunta.idPreguntaEncuestaTipo==3 ||pregunta.idPreguntaEncuestaTipo==4) {
+            pregunta.alternativas = [{ respuesta: '' }];
+          }
           pregunta.respuesta = [];
           let vaRes: Array<any> = [];
 
@@ -100,8 +104,19 @@ export class EnvioEncuestaOnlineComponent implements OnInit,AfterViewInit  {
           });
         });
       });
+      }
+      else {
+        this.data.encuesta.preguntasEncuesta.forEach((categoria: any) => {
+          categoria.preguntas.forEach((pregunta: any) => {
+            if (pregunta.idPreguntaEncuestaTipo==3 ||pregunta.idPreguntaEncuestaTipo==4) {
+              pregunta.alternativas = [{ respuesta: '' }];
+            }
+          })
+
+        })
+      }
     } else {
-      console.warn('No se encontraron preguntas en la encuesta.');
+      console.log('No se encontraron preguntas en la encuesta.');
     }
     // this.scrollToTop();
     window.scrollTo({ top: 0, behavior: 'smooth' });
