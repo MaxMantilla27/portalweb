@@ -156,6 +156,7 @@ export interface EncuestaAvancePreguntaDTO{
   idPregunta: number;
   pregunta: string;
   idPreguntaEncuestaTipo: number;
+  preguntaObligatoria: boolean;
   valorRespuesta: Array<EncuestaAvancePreguntaRespuestaDTO>;
 }
 export interface EncuestaAvancePreguntaRespuestaDTO{

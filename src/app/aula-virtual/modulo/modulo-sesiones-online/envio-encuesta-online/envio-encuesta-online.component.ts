@@ -120,6 +120,7 @@ export class EnvioEncuestaOnlineComponent implements OnInit,AfterViewInit  {
     }
     // this.scrollToTop();
     window.scrollTo({ top: 0, behavior: 'smooth' });
+    this.verificarRespuestasCompletas()
   }
   ngAfterViewInit(): void {
     // this.scrollToTop();
@@ -190,10 +191,12 @@ export class EnvioEncuestaOnlineComponent implements OnInit,AfterViewInit  {
         this.EncuestaAvance.categorias.push(categoriaObjInicial);
 
         categoria.preguntas.forEach((p: any) => {
+          console.log(p)
           const preguntaObjInicial: EncuestaAvancePreguntaDTO = {
             idPregunta: p.id,
             pregunta: p.pregunta,
             idPreguntaEncuestaTipo: p.idPreguntaEncuestaTipo,
+            preguntaObligatoria:p.preguntaObligatoria,
             valorRespuesta: [],
           };
           categoriaObjInicial.preguntas.push(preguntaObjInicial);
@@ -248,11 +251,11 @@ export class EnvioEncuestaOnlineComponent implements OnInit,AfterViewInit  {
     this.EncuestaAvance.categorias.forEach(
       (categoria: EncuestaAvanceCategoriaDTO) => {
         categoria.preguntas.forEach((pregunta: EncuestaAvancePreguntaDTO) => {
-          if (
-            pregunta.valorRespuesta.length === 0 ||
-            pregunta.valorRespuesta[0].respuesta === ''
-          ) {
-            this.EncuestaCompleta = false;
+          if(pregunta.preguntaObligatoria){
+            if (pregunta.valorRespuesta.length === 0 || pregunta.valorRespuesta[0].respuesta === '')
+            {
+              this.EncuestaCompleta = false;
+            }
           }
         });
       }
@@ -260,6 +263,9 @@ export class EnvioEncuestaOnlineComponent implements OnInit,AfterViewInit  {
   }
 
   AgregarPEspecificoSesionEncuestaAlumno(valor: boolean) {
+    if(this.EncuestaAvance.categorias.length==0){
+      this.AddToAvance()
+    }
     this._PEspecificoEsquemaService
       .AgregarPEspecificoSesionEncuestaAlumno(this.EncuestaAvance)
       .pipe(takeUntil(this.signal$))

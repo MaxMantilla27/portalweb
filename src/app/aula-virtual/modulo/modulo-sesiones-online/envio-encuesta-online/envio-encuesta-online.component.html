@@ -1,4 +1,4 @@
-<ng-container #modalContentEncuesta >
+<ng-container #modalContentEncuesta>
   <div
     class="cardSesionOnlineTareasCuestionario"
     style="margin: 0px !important"
@@ -52,9 +52,10 @@
                   {{ i + 1 }}. {{ item.pregunta }}
                 </div>
                 <div
+                  *ngIf="item.activarDescripcion"
                   class="DescripcionPregunta"
                 >
-                  {{item?.descripcion?? ''}}
+                  {{ item?.descripcion ?? "" }}
                 </div>
                 <div
                   class="DescripcionPregunta"
@@ -127,17 +128,16 @@
               </ng-container>
               <ng-container *ngIf="item.idPreguntaEncuestaTipo == 3">
                 <div class="InputsOnlineCuestionario">
-                  <mat-form-field appearance="outline" style="width: 100%">
-                    <mat-label>Ingresa tu respuesta</mat-label>
-                    <input
-                      type="text"
-                      placeholder="Ingresa tu respuesta"
+                  <textarea
+                      style="border: 2px solid #e0e0e0; border-radius: 10px;padding: 5px 10px;"
                       matInput
+                      matTextareaAutosize
+                      placeholder="Ingresa tu respuesta"
                       [(ngModel)]="item.alternativas[0].respuesta"
                       (input)="AddToAvance()"
                       [disabled]="EncuestaEnviada"
-                    />
-                  </mat-form-field>
+                      rows="4"
+                    ></textarea>
                 </div>
               </ng-container>
 
