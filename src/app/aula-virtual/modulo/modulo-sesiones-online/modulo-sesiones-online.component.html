@@ -51,21 +51,21 @@
         <ng-container *ngIf="item.encuestas - item.encuestasEnviadas > 0">
           <div class="ItemPendientes">
             <div class="cantidadPendientes">{{item.encuestas - item.encuestasEnviadas}}</div>
-            <div>Encuestas Pendientes</div>
+            <div class="pendientesSesion">Encuestas</div>
           </div>
         </ng-container>
         <!-- simulacion encuesta -->
         <ng-container *ngIf="item.tareas-item.tareasEnviadas>0">
           <div class="ItemPendientes">
             <div class="cantidadPendientes">{{item.tareas-item.tareasEnviadas}}</div>
-            <div>Tareas</div>
+            <div class="pendientesSesion">Tareas</div>
           </div>
         </ng-container>
         <ng-container *ngIf="item.cuestionarios-item.cuestionariosEnviados>0">
 
           <div class="ItemPendientes">
             <div class="cantidadPendientes">{{item.cuestionarios-item.cuestionariosEnviados}}</div>
-            <div>Cuestionarios</div>
+            <div class="pendientesSesion">Cuestionarios</div>
           </div>
         </ng-container>
         <div class="OpenCloseSesionOnline" (click)="OpenSesion(i);">
@@ -277,12 +277,12 @@
               <ng-container *ngIf="cuest.respuestaCuestionario==null || cuest.respuestaCuestionario.length==0">
                 <app-default-button [confs]="{color:'primary',titulo:'Ingresar >'}" [icon]="''"
                   [style]="'border-radius: 20px;margin: 5px 0px 0px;width: 100%;padding: 0px 40px;'"
-                  [disabled]="cuest.disabled" (ButtoclClick)="EnviarCuestionario(i,t)"></app-default-button>
+                  [disabled]="cuest.disabled" (ButtoclClick)="EnviarCuestionario(i,t,false,cuest.bloquearEntregables)"></app-default-button>
               </ng-container>
               <ng-container *ngIf="cuest.respuestaCuestionario!=null && cuest.respuestaCuestionario.length>0">
                 <app-default-button [confs]="{color:'primary',titulo:'Ver detalle >'}" [icon]="''"
                   [style]="'border-radius: 20px;margin: 5px 0px 0px;width: 100%;padding: 0px 40px;background:#00c356'"
-                  (ButtoclClick)="EnviarCuestionario(i,t)"></app-default-button>
+                  (ButtoclClick)="EnviarCuestionario(i,t,true)"></app-default-button>
               </ng-container>
             </div>
 

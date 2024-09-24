@@ -75,6 +75,7 @@ export class ModuloSesionesOnlineComponent implements OnInit , OnChanges,OnDestr
   public OpenVideoModulo=true;
   public EncuestaPrueba=false;
   public EncuestaEnviada=false;
+  public BloquearEntregables=false;
   ngOnInit(): void {
     this.ObtenerDatosZonaHoraria()
   }
@@ -143,13 +144,29 @@ export class ModuloSesionesOnlineComponent implements OnInit , OnChanges,OnDestr
               this.sesiones[index].actividades.push(d)
             }
             if(d.tipo.toLowerCase()=='encuesta'){
+              d.bloquearEntregables=false
               d.disabled=diference
               d.encuestaEnviada=true
               if(d.respuestasEncuesta.length==0){
                 d.encuestaEnviada=false
+                if(d.obligatorio==true){
+                  d.bloquearEntregables=true
+                }
               }
               this.sesiones[index].encuesta.push(d)
             }
+            this.sesiones[index].encuesta.forEach((ses:any) => {
+              console.log(ses)
+              if(ses.bloquearEntregables){
+                
+                this.sesiones[index].forEach((sec:any) => {
+                  if(d.tipo.toLowerCase()=='tarea'||d.tipo.toLowerCase()=='cuestionario'){
+                    sec.bloquearEntregables=true
+                  }
+                });
+              }
+
+            });
           });
         }
         console.log('SESIONESSSSSSSSS',this.sesiones)
@@ -232,27 +249,52 @@ export class ModuloSesionesOnlineComponent implements OnInit , OnChanges,OnDestr
       }
     })
   }
-  EnviarCuestionario(indexSesion:number, index:number){
+  EnviarCuestionario(indexSesion:number, index:number,enviado:boolean,bloquearEntregables?:boolean,){
+ 
     this._PEspecificoEsquemaService.ObtenerEstadoDeFechasPorCuestionario(this.sesiones[indexSesion].cuestionario[index].id).pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
         console.log(x)
         if(x==true || (this.sesiones[indexSesion].cuestionario[index].respuestaCuestionario!=null && this.sesiones[indexSesion].cuestionario[index].respuestaCuestionario.length>0)){
           var json = JSON.stringify(this.sesiones[indexSesion].cuestionario[index]);
-          const dialogRef = this.dialog.open(EnvioCuestionarioComponent, {
-            width: '1000px',
-            data: {cuestionario:this.sesiones[indexSesion].cuestionario[index],index:index,IdMatriculaCabecera:this.IdMatriculaCabecera},
-            panelClass: 'dialog-envio-cuestionario-alumno',
-          disableClose:true
-          });
-
-          dialogRef.afterClosed().pipe(takeUntil(this.signal$)).subscribe((result) => {
-            console.log(result)
-            if(result!=undefined && result.length>0){
-              this.ObtenerActividadesRecursoSesionAlumno(this.sesiones[indexSesion].idSesion,indexSesion)
-            }else{
-              this.sesiones[indexSesion].cuestionario[index]=JSON.parse(json)
+          if(enviado==false){
+            if(bloquearEntregables){
+              this._SnackBarServiceService.openSnackBar("Es necesario realizar la encuesta para continuar.",'x',10,"snackbarCrucigramaerror");
             }
-          });
+            else{
+              const dialogRef = this.dialog.open(EnvioCuestionarioComponent, {
+                width: '1000px',
+                data: {cuestionario:this.sesiones[indexSesion].cuestionario[index],index:index,IdMatriculaCabecera:this.IdMatriculaCabecera},
+                panelClass: 'dialog-envio-cuestionario-alumno',
+              disableClose:true
+              });
+    
+              dialogRef.afterClosed().pipe(takeUntil(this.signal$)).subscribe((result) => {
+                console.log(result)
+                if(result!=undefined && result.length>0){
+                  this.ObtenerActividadesRecursoSesionAlumno(this.sesiones[indexSesion].idSesion,indexSesion)
+                }else{
+                  this.sesiones[indexSesion].cuestionario[index]=JSON.parse(json)
+                }
+              });
+            }
+          }
+          else{
+            const dialogRef = this.dialog.open(EnvioCuestionarioComponent, {
+              width: '1000px',
+              data: {cuestionario:this.sesiones[indexSesion].cuestionario[index],index:index,IdMatriculaCabecera:this.IdMatriculaCabecera},
+              panelClass: 'dialog-envio-cuestionario-alumno',
+            disableClose:true
+            });
+  
+            dialogRef.afterClosed().pipe(takeUntil(this.signal$)).subscribe((result) => {
+              console.log(result)
+              if(result!=undefined && result.length>0){
+                this.ObtenerActividadesRecursoSesionAlumno(this.sesiones[indexSesion].idSesion,indexSesion)
+              }else{
+                this.sesiones[indexSesion].cuestionario[index]=JSON.parse(json)
+              }
+            });
+          }
         }else{
           this._SnackBarServiceService.openSnackBar("Ya culmino el plazo para presentar este cuestionario.",'x',15,"snackbarCrucigramaerror");
         }
