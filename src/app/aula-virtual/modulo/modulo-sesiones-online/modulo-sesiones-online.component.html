@@ -196,12 +196,12 @@
               <ng-container *ngIf="tars.tareas==null || tars.tareas.length==0">
                 <app-default-button [confs]="{color:'primary',titulo:'Enviar >'}" [icon]="''"
                   [style]="'border-radius: 20px;margin: 5px 0px 0px;width: 100%;padding: 0px 40px;'"
-                  [disabled]="tars.disabled" (ButtoclClick)="EnviarTarea(i,t)"></app-default-button>
+                  [disabled]="tars.disabled" (ButtoclClick)="EnviarTarea(i,t,false,tars.bloquearEntregables)"></app-default-button>
               </ng-container>
               <ng-container *ngIf="tars.tareas!=null && tars.tareas.length>0">
                 <app-default-button [confs]="{color:'primary',titulo:'Ver detalle >'}" [icon]="''"
                   [style]="'border-radius: 20px;margin: 5px 0px 0px;width: 100%;padding: 0px 40px;background:#00c356'"
-                   (ButtoclClick)="EnviarTarea(i,t)"></app-default-button>
+                   (ButtoclClick)="EnviarTarea(i,t,true)"></app-default-button>
               </ng-container>
             </div>
           </div>

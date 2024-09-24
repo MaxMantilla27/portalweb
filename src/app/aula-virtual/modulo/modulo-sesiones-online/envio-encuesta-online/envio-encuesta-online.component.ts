@@ -248,6 +248,9 @@ export class EnvioEncuestaOnlineComponent implements OnInit,AfterViewInit  {
 
   verificarRespuestasCompletas() {
     this.EncuestaCompleta = true;
+    if(this.EncuestaAvance.categorias.length==0){
+      this.AddToAvance()
+    }
     this.EncuestaAvance.categorias.forEach(
       (categoria: EncuestaAvanceCategoriaDTO) => {
         categoria.preguntas.forEach((pregunta: EncuestaAvancePreguntaDTO) => {
