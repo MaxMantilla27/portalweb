@@ -1,4 +1,4 @@
-<ng-container #modalContentEncuesta>
+<ng-container>
   <div
     class="cardSesionOnlineTareasCuestionario"
     style="margin: 0px !important"
@@ -30,242 +30,200 @@
       </div>
     </div>
   </div>
-  <ng-container *ngIf="data.encuesta">
-    <ng-container
-      *ngFor="
-        let itemPrincipal of data.encuesta.preguntasEncuesta;
-        let j = index
-      "
-    >
-      <div class="content">
-        <div class="titlePregunta" style="font-size: 17px; font-weight: 600;">
-          {{ itemPrincipal.nombreCategoria }}
-        </div>
-        <div
-          *ngFor="let item of itemPrincipal.preguntas; let i = index"
-          style="margin-left: 15px; margin-top: 15px"
-        >
-          <div class="contetPreguntasEncuesta">
-            <div class="descPregunta row">
-              <div class="col-12" style="margin-top: 10px">
-                <div class="titlePregunta">
-                  {{ i + 1 }}. {{ item.pregunta }}
-                </div>
-                <div
-                  *ngIf="item.DescripcionActiva"
-                  class="DescripcionPregunta"
-                >
-                  {{ item?.descripcion ?? "" }}
-                </div>
-                <div
-                  class="DescripcionPregunta"
-                  *ngIf="item.idPreguntaEncuestaTipo == 1"
-                >
-                  Elige la alternativa correcta
-                </div>
-                <div
-                  class="DescripcionPregunta"
-                  *ngIf="item.idPreguntaEncuestaTipo == 2"
-                >
-                  Elija {{ item.respuestasMinimas }} alternativas correctas
-                </div>
-                <div
-                  class="DescripcionPregunta"
-                  *ngIf="item.idPreguntaEncuestaTipo == 3"
-                >
-                  Dános tu feedback
-                </div>
-                <div
-                  class="DescripcionPregunta"
-                  *ngIf="item.idPreguntaEncuestaTipo == 4"
-                >
-                  Elige tu calificacion
+  <div class="scrollable-content-encuesta">
+    <ng-container *ngIf="data.encuesta">
+      <ng-container
+        *ngFor="
+          let itemPrincipal of data.encuesta.preguntasEncuesta;
+          let j = index
+        "
+      >
+        <div class="content">
+          <div class="titlePregunta" style="font-size: 17px;font-weight: 600;">
+            {{ itemPrincipal.nombreCategoria }}
+          </div>
+          <div
+            *ngFor="let item of itemPrincipal.preguntas; let i = index"
+            style="margin-left: 15px; margin-top: 15px"
+          >
+            <div class="contetPreguntasEncuesta">
+              <div class="descPregunta row">
+                <div class="col-12" style="margin-top: 10px">
+                  <div class="titlePregunta">
+                    {{ i + 1 }}. {{ item.pregunta }}
+                  </div>
+                  <div
+                    *ngIf="item.descripcionActiva"
+                    class="DescripcionPregunta"
+                  >
+                    {{ item?.descripcion ?? "" }}
+                  </div>
+                  <div
+                    class="DescripcionPregunta"
+                    *ngIf="item.idPreguntaEncuestaTipo == 1"
+                  >
+                    Elige la alternativa correcta
+                  </div>
+                  <div
+                    class="DescripcionPregunta"
+                    *ngIf="item.idPreguntaEncuestaTipo == 2"
+                  >
+                    Elija {{ item.respuestasMinimas }} alternativas correctas
+                  </div>
+                  <div
+                    class="DescripcionPregunta"
+                    *ngIf="item.idPreguntaEncuestaTipo == 3"
+                  >
+                    Dános tu feedback
+                  </div>
+                  <div
+                    class="DescripcionPregunta"
+                    *ngIf="item.idPreguntaEncuestaTipo == 4"
+                  >
+                    Elige tu calificacion
+                  </div>
                 </div>
               </div>
-            </div>
-            <div style="margin-top: 15px">
-              <ng-container *ngIf="item.idPreguntaEncuestaTipo == 1">
-                <div
-                  class="radiosOptions"
-                  *ngFor="let altern of item.alternativas; let a = index"
-                  (click)="changeRadio(j, i, a)"
-                  [ngClass]="{
-                    Correctos: altern.Correcto == true,
-                    InCorrectos: altern.Correcto == false
-                  }"
-                >
-                  <i class="material-icons" *ngIf="altern.select != true"
-                    >radio_button_off</i
+              <div style="margin-top: 15px">
+                <ng-container *ngIf="item.idPreguntaEncuestaTipo == 1">
+                  <div
+                    class="radiosOptions"
+                    *ngFor="let altern of item.alternativas; let a = index"
+                    (click)="changeRadio(j, i, a)"
+                    [ngClass]="{
+                      Correctos: altern.Correcto == true,
+                      InCorrectos: altern.Correcto == false
+                    }"
                   >
-                  <i
-                    class="material-icons activeSelect"
-                    *ngIf="altern.select == true"
-                    >radio_button_checked</i
+                    <i class="material-icons" *ngIf="altern.select != true"
+                      >radio_button_off</i
+                    >
+                    <i
+                      class="material-icons activeSelect"
+                      *ngIf="altern.select == true"
+                      >radio_button_checked</i
+                    >
+                    {{ altern.respuesta }}
+                  </div>
+                </ng-container>
+                <ng-container *ngIf="item.idPreguntaEncuestaTipo == 2">
+                  <div
+                    class="checkOptions"
+                    *ngFor="let altern of item.alternativas; let a = index"
+                    (click)="changeCheck(j, i, a)"
+                    [ngClass]="{
+                      Correctos: altern.Correcto == true,
+                      InCorrectos: altern.Correcto == false
+                    }"
                   >
-                  {{ altern.respuesta }}
-                </div>
-              </ng-container>
-              <ng-container *ngIf="item.idPreguntaEncuestaTipo == 2">
-                <div
-                  class="checkOptions"
-                  *ngFor="let altern of item.alternativas; let a = index"
-                  (click)="changeCheck(j, i, a)"
-                  [ngClass]="{
-                    Correctos: altern.Correcto == true,
-                    InCorrectos: altern.Correcto == false
-                  }"
-                >
-                  <i class="material-icons" *ngIf="altern.select != true"
-                    >check_box_outline_blank</i
-                  >
-                  <i
-                    class="material-icons activeSelect"
-                    *ngIf="altern.select == true"
-                    >check_box</i
-                  >
-                  {{ altern.respuesta }}
-                </div>
-              </ng-container>
-              <ng-container *ngIf="item.idPreguntaEncuestaTipo == 3">
-                <div class="InputsOnlineCuestionario">
-                  <textarea
-                      style="border: 2px solid #e0e0e0; border-radius: 10px;padding: 5px 10px;"
-                      matInput
-                      matTextareaAutosize
-                      placeholder="Ingresa tu respuesta"
-                      [(ngModel)]="item.alternativas[0].respuesta"
-                      (input)="AddToAvance()"
-                      [disabled]="EncuestaEnviada"
-                      rows="3"
-                    ></textarea>
-                </div>
-              </ng-container>
+                    <i class="material-icons" *ngIf="altern.select != true"
+                      >check_box_outline_blank</i
+                    >
+                    <i
+                      class="material-icons activeSelect"
+                      *ngIf="altern.select == true"
+                      >check_box</i
+                    >
+                    {{ altern.respuesta }}
+                  </div>
+                </ng-container>
+                <ng-container *ngIf="item.idPreguntaEncuestaTipo == 3">
+                  <div class="InputsOnlineCuestionario" >
+                    <textarea
+                        style="border: 2px solid #e0e0e0; border-radius: 10px;padding: 5px 10px;"
+                        matInput
+                        matTextareaAutosize
+                        placeholder="Ingresa tu respuesta"
+                        [(ngModel)]="item.alternativas[0].respuesta"
+                        (input)="AddToAvance()"
+                        [disabled]="EncuestaEnviada"
+                        rows="3"
+                        tabindex="-1"
+                      ></textarea>
+                  </div>
+                </ng-container>
 
-              <ng-container
-                *ngIf="item.idPreguntaEncuestaTipo == 4 && !EncuestaEnviada"
-              >
-                <div style="display: flex">
-                  <i
-                    *ngFor="let star of starsRanking; let b = index"
-                    (click)="item.valorRanking = b + 1; AddToAvance()"
-                    (mouseover)="highlightStars(b + 1)"
-                    (mouseleave)="resetHighlight()"
-                    [ngClass]="{
-                      selectedTipoRanking: b + 1 <= (item.valorRanking ?? 0),
-                      hoveredTipoRanking:
-                        b + 1 > (item.valorRanking ?? 0) && b + 1 <= hoveredStar
-                    }"
-                    class="material-icons starTipoRanking"
-                    style="
-                      font-size: 40px !important;
-                      margin-left: 10px;
-                      cursor: pointer;
-                    "
-                  >
-                    star
-                  </i>
-                </div>
-              </ng-container>
-              <ng-container
-                *ngIf="item.idPreguntaEncuestaTipo == 4 && EncuestaEnviada"
-              >
-                <div style="display: flex">
-                  <i
-                    *ngFor="let star of starsRanking; let b = index"
-                    [ngClass]="{
-                      selectedTipoRanking: b + 1 <= (item.valorRanking ?? 0)
-                    }"
-                    class="material-icons starTipoRanking"
-                    style="
-                      font-size: 40px !important;
-                      margin-left: 10px;
-                      cursor: pointer;
-                    "
-                  >
-                    star
-                  </i>
-                </div>
-              </ng-container>
+                <ng-container
+                  *ngIf="item.idPreguntaEncuestaTipo == 4 && !EncuestaEnviada"
+                >
+                  <div style="display: flex">
+                    <i
+                      *ngFor="let star of starsRanking; let b = index"
+                      (click)="item.valorRanking = b + 1; AddToAvance()"
+                      (mouseover)="highlightStars(b + 1)"
+                      (mouseleave)="resetHighlight()"
+                      [ngClass]="{
+                        selectedTipoRanking: b + 1 <= (item.valorRanking ?? 0),
+                        hoveredTipoRanking:
+                          b + 1 > (item.valorRanking ?? 0) && b + 1 <= hoveredStar
+                      }"
+                      class="material-icons starTipoRanking"
+                      style="
+                        font-size: 40px !important;
+                        margin-left: 10px;
+                        cursor: pointer;
+                      "
+                    >
+                      star
+                    </i>
+                  </div>
+                </ng-container>
+                <ng-container
+                  *ngIf="item.idPreguntaEncuestaTipo == 4 && EncuestaEnviada"
+                >
+                  <div style="display: flex">
+                    <i
+                      *ngFor="let star of starsRanking; let b = index"
+                      [ngClass]="{
+                        selectedTipoRanking: b + 1 <= (item.valorRanking ?? 0)
+                      }"
+                      class="material-icons starTipoRanking"
+                      style="
+                        font-size: 40px !important;
+                        margin-left: 10px;
+                        cursor: pointer;
+                      "
+                    >
+                      star
+                    </i>
+                  </div>
+                </ng-container>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    </ng-container>
-    <ng-container *ngIf="!EncuestaEnviada">
-      <div
-        style="display: flex; align-items: center; justify-content: flex-end"
-      >
-        <app-default-button
-          [confs]="{ color: 'primary', titulo: 'Enviar' }"
-          [style]="
-            'margin: 0px 10px 10px; padding: 0px 40px; border-radius: 40px;'
-          "
-          [disabled]="!EncuestaCompleta"
-          (ButtoclClick)="AgregarPEspecificoSesionEncuestaAlumno(false)"
-        ></app-default-button>
-        <!-- <app-default-button *ngIf="BotonEnvioActivo==false" [confs]="{color:'primary',titulo:'Enviando'}"
-        [style]="'margin: 0px; padding: 0px 40px; border-radius: 40px;'" [disabled]="true"></app-default-button> -->
-      </div>
-    </ng-container>
-    <ng-container *ngIf="EncuestaEnviada">
-      <div
-        style="display: flex; align-items: center; justify-content: flex-end"
-      >
-        <app-default-button
-          [confs]="{ color: 'primary', titulo: 'Cerrar' }"
-          [style]="
-            'margin: 0px 10px 10px; padding: 0px 40px; border-radius: 40px;'
-          "
-          (ButtoclClick)="dialogRef.close()"
-        ></app-default-button>
-        <!-- <app-default-button *ngIf="BotonEnvioActivo==false" [confs]="{color:'primary',titulo:'Enviando'}"
-        [style]="'margin: 0px; padding: 0px 40px; border-radius: 40px;'" [disabled]="true"></app-default-button> -->
-      </div>
-    </ng-container>
-  </ng-container>
-  <!-- <div >
-      <app-default-button [confs]="{color: 'primary', titulo: 'Iniciar Encuesta'}"
-                          [style]="'margin: 0px; padding: 0px 40px; border-radius: 40px;'"
-                          (ButtoclClick)="IniciarEncuesta()"></app-default-button>
-    </div> -->
-
-  <!-- <div class="content" *ngIf="data.EncuestaAvance.Inicio">
-      <ng-container *ngIf="data.encuesta.preguntasEncuesta">
-        <ng-container *ngFor="let item of data.encuesta.preguntasEncuesta; let i = index">
-          <div class="contetPreguntasEncuesta">
-            <div class="descPregunta row">
-              <div class="col-12 col-md-9 col-lg-9">
-                <div class="titlePregunta">{{item.ordenMostrar}}. {{item.enunciado}}</div>
-                <div class="DescripcionPregunta" *ngIf="item.descripcion">
-                  {{item.descripcion}}
-                </div>
-              </div>
-              <div class="col-12 col-md-3 col-lg-3" style="display: flex; flex-direction: column; align-items: flex-end;">
-                <div *ngIf="!data.EncuestaEnviada && item.idPreguntaTipo !== 11" class="PuntoPregunta">
-                  <strong>{{item.puntaje}}</strong> Puntos
-                </div>
-              </div>
-            </div>
-            <div *ngIf="item.alternativas">
-              <ng-container *ngIf="item.idPreguntaTipo === 3 || item.idPreguntaTipo === 5">
-                <div class="radiosOptions" *ngFor="let altern of item.alternativas; let a = index"
-                     (click)="changeRadio(i, a)" [ngClass]="{'Correctos': altern.Correcto, 'InCorrectos': !altern.Correcto}">
-                  <i class="material-icons" *ngIf="!altern.select">radio_button_off</i>
-                  <i class="material-icons activeSelect" *ngIf="altern.select">radio_button_checked</i>
-                  {{altern.alternativa}}
-                </div>
-              </ng-container>
-              <ng-container *ngIf="item.idPreguntaTipo === 4">
-                <div class="checkOptions" *ngFor="let altern of item.alternativas; let a = index"
-                     (click)="changeCheck(i, a)" [ngClass]="{'Correctos': altern.Correcto, 'InCorrectos': !altern.Correcto}">
-                  <i class="material-icons" *ngIf="!altern.select">check_box_outline_blank</i>
-                  <i class="material-icons activeSelect" *ngIf="altern.select">check_box</i>
-                  {{altern.alternativa}}
-                </div>
-              </ng-container>
-            </div>
-          </div>
-        </ng-container>
       </ng-container>
-    </div> -->
+      <ng-container *ngIf="!EncuestaEnviada">
+        <div
+          style="display: flex; align-items: center; justify-content: flex-end"
+        >
+          <app-default-button
+            [confs]="{ color: 'primary', titulo: 'Enviar Encuesta' }"
+            [style]="
+              'margin: 0px; padding: 0px 40px; border-radius: 40px;margin-bottom: 10px;'
+            "
+            [disabled]="!EncuestaCompleta"
+            (ButtoclClick)="AgregarPEspecificoSesionEncuestaAlumno(false)"
+          ></app-default-button>
+          <!-- <app-default-button *ngIf="BotonEnvioActivo==false" [confs]="{color:'primary',titulo:'Enviando'}"
+          [style]="'margin: 0px; padding: 0px 40px; border-radius: 40px;'" [disabled]="true"></app-default-button> -->
+        </div>
+      </ng-container>
+      <ng-container *ngIf="EncuestaEnviada">
+        <div
+          style="display: flex; align-items: center; justify-content: flex-end"
+        >
+          <app-default-button
+            [confs]="{ color: 'primary', titulo: 'Cerrar' }"
+            [style]="
+              'margin: 0px; padding: 0px 40px; border-radius: 40px;margin-bottom: 10px;'
+            "
+            (ButtoclClick)="dialogRef.close()"
+          ></app-default-button>
+          <!-- <app-default-button *ngIf="BotonEnvioActivo==false" [confs]="{color:'primary',titulo:'Enviando'}"
+          [style]="'margin: 0px; padding: 0px 40px; border-radius: 40px;'" [disabled]="true"></app-default-button> -->
+        </div>
+      </ng-container>
+    </ng-container>
+  </div>
 </ng-container>

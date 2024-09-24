@@ -19,10 +19,8 @@ import { PEspecificoEsquemaService } from 'src/app/Core/Shared/Services/PEspecif
   styleUrls: ['./envio-encuesta-online.component.scss'],
   encapsulation: ViewEncapsulation.None,
 })
-export class EnvioEncuestaOnlineComponent implements OnInit,AfterViewInit  {
+export class EnvioEncuestaOnlineComponent implements OnInit  {
   private signal$ = new Subject();
-  @ViewChild('modalContentEncuesta') modalContent!: ElementRef;
-
   constructor(
     public dialogRef: MatDialogRef<EnvioEncuestaOnlineComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -49,11 +47,6 @@ export class EnvioEncuestaOnlineComponent implements OnInit,AfterViewInit  {
   public EncuestaEnviada = false;
 
   ngOnInit(): void {
-    timer(2000).subscribe(() => {
-      setTimeout(() => {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-      }, 100);
-    });
     console.log(this.data);
     this.EncuestaAvance.categorias = [];
     this.EncuestaAvance.inicio = true;
@@ -118,18 +111,7 @@ export class EnvioEncuestaOnlineComponent implements OnInit,AfterViewInit  {
     } else {
       console.log('No se encontraron preguntas en la encuesta.');
     }
-    // this.scrollToTop();
-    window.scrollTo({ top: 0, behavior: 'smooth' });
     this.verificarRespuestasCompletas()
-  }
-  ngAfterViewInit(): void {
-    // this.scrollToTop();
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  }
-  scrollToTop(): void {
-    if (this.modalContent) {
-      this.modalContent.nativeElement.scrollTop = 0;
-    }
   }
 
   changeRadio(indexCategoria: number, indexPregunta: number, index: number) {

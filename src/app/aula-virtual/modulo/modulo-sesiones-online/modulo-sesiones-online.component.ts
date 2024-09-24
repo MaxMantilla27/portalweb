@@ -29,20 +29,9 @@ export class ModuloSesionesOnlineComponent implements OnInit , OnChanges,OnDestr
     public _SnackBarServiceService:SnackBarServiceService
   ) { }
   public scroll=0
-  @HostListener('window:scroll', ['$event']) // for window scroll events
   public ZonaHorariaOrigenWebex:any
   public ZonaHorariaUsuario:any
   public CodigoIsoPaisWebex='PE'
-  onScroll(e:any) {
-    this.scroll=document.documentElement.scrollTop
-    // if(this.videoselect>-1){
-    //   var data=document.getElementById("video-"+this.videoselect)
-    //   if(data!=undefined && data!=null){
-    //     //console.log(data.offsetTop)
-    //   }
-    // }
-    //console.log(this.scroll)
-  }
   ngOnDestroy(): void {
     this.signal$.next(true)
     this.signal$.complete()
@@ -72,7 +61,6 @@ export class ModuloSesionesOnlineComponent implements OnInit , OnChanges,OnDestr
   public OpenVideoModulo=true;
   public EncuestaEnviada=false;
   ngOnInit(): void {
-    this.ObtenerDatosZonaHoraria()
   }
   OpenSesion(index:number){
     this.sesiones[index].Open=!this.sesiones[index].Open
@@ -360,7 +348,6 @@ export class ModuloSesionesOnlineComponent implements OnInit , OnChanges,OnDestr
       panelClass: 'dialog-envio-actividad-alumno',
      disableClose:true
     });
-
     dialogRef.afterClosed().pipe(takeUntil(this.signal$)).subscribe((result) => {
       console.log(result)
       if(result!=undefined && result.length>0){
@@ -369,8 +356,10 @@ export class ModuloSesionesOnlineComponent implements OnInit , OnChanges,OnDestr
     });
   }
   ObtenerDatosZonaHoraria(){
+    console.log(this.CodigoIsoPaisWebex)
     this.ZonaHorariaUsuario = Intl.DateTimeFormat().resolvedOptions().timeZone;
     this.ZonaHorariaOrigenWebex = moment.tz.zonesForCountry(this.CodigoIsoPaisWebex);
+    console.log(this.ZonaHorariaOrigenWebex)
     this.ZonaHorariaOrigenWebex = this.ZonaHorariaOrigenWebex[0];
     console.log(this.ZonaHorariaUsuario)
     console.log(this.ZonaHorariaOrigenWebex)

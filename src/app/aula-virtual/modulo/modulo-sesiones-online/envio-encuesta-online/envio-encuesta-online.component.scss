@@ -1,12 +1,19 @@
-
-.dialog-envio-encuesta-online{
-    position: relative !important;
-    mat-dialog-container {
-      padding: 0px !important;
-      border-radius: 15px;
-      max-height: 90vh;
-    }
+.dialog-envio-encuesta-online {
+  /* position: relative !important; */ /* Descomentar si es necesario */
+  mat-dialog-container {
+    padding: 0px !important;
+    border-radius: 15px;
+    max-height: 90vh;
+    overflow: hidden; /* Para evitar el overflow en el contenedor del modal */
   }
+
+  .scrollable-content-encuesta {
+    max-height: 65vh; /* Ajusta según sea necesario */
+    overflow-y: auto; /* Habilita el scroll vertical */
+    padding: 10px; /* Opcional: añade un poco de padding */
+  }
+}
+
 
   .cardSesionOnlineTareasCuestionario {
     background: #bef4ff;
@@ -172,11 +179,11 @@
       border-bottom: solid 2px #d3d3d3;
       .titlePregunta{
         font-size: 14px;
-      font-weight: 600;
+        font-weight: 600;
       }
       .DescripcionPregunta{
         margin: 0 20px;
-      font-size: 12px;
+        font-size: 12px;
       }
       .radiosOptions{
         display: flex;
