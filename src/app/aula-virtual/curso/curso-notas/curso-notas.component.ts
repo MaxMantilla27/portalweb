@@ -227,7 +227,7 @@ export class CursoNotasComponent implements OnInit,OnDestroy {
       complete:()=> {
         setTimeout(() => {
           if(this.PromedioFinalAsincronico !== 0 && this.PromedioFinalFinalOnlineCurso === 0){
-            this.PromedioFinal = this.PromedioFinalAsincronico;
+            this.PromedioFinal = Math.round(this.PromedioFinalAsincronico/this.CantidadAsincronicos);
           } else if(this.PromedioFinalAsincronico === 0 && this.PromedioFinalFinalOnlineCurso !== 0){
             this.PromedioFinal = Math.round(Math.round(this.PromedioFinalFinalOnlineCurso)/this.CursosCriteriosOnline.length);
           } else if(this.PromedioFinalAsincronico !== 0 && this.PromedioFinalFinalOnlineCurso !== 0){
