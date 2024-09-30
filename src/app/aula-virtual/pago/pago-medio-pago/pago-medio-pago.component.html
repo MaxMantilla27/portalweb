@@ -1,0 +1,45 @@
+<div class="container">
+</div>
+<div style="background: #f4f4f4">
+  <div class="container">
+    <div class="row rowpaddAv" style="padding: 20px 90px 20px 20px !important">
+      <div class="col-12 col-md-12 col-lg-12">
+        <div class="titleCronograma">Elige un medio de Pago</div>
+        <div class="titleCronogramaCurso">
+          {{ CronogramaPago?.pGeneral }}
+        </div>
+        <!-- <div style="font-size: 20px;
+        color: #797978;">{{textoBienvenido}}</div> -->
+      </div>
+    </div>
+  </div>
+</div>
+<div
+  class="container"
+  style="border-bottom: 2px solid #e7e7e7 !important; padding-bottom: 2rem"
+>
+  <div>
+    <ng-container *ngIf="CronogramaPago != undefined">
+      Holix
+
+    </ng-container>
+  </div>
+</div>
+
+<div class="container">
+  <div style="justify-content: left; display: flex">
+    <div class="iconoPagoTarjeta">
+      <div class="textPagoTarjeta" style="color: #02c158 !important">
+        <span>PAGO 100%</span>
+        <span>seguro</span>
+      </div>
+      <div class="imgPagoTarjetaVerde"></div>
+      <div class="descPagoTarjeta">
+        <span
+          >Este certificado garantiza la seguridad de todas tus conexiones
+          mediante cifrado</span
+        >
+      </div>
+    </div>
+  </div>
+</div>

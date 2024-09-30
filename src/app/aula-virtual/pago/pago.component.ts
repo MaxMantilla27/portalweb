@@ -113,6 +113,7 @@ export class PagoComponent implements OnInit,OnDestroy {
   ];
   public BloquearContenidoPagos=false;
   public IdAlumno=0;
+  public EnviarMedioPago=false;
   ngOnInit(): void {
     this._HelperService.recibirDataPais
       .pipe(takeUntil(this.signal$))
@@ -203,7 +204,17 @@ export class PagoComponent implements OnInit,OnDestroy {
           this.CronogramaPago=x.cronogramas.listaCronogramaAlumno
           let count = 1;
           let index = 0;
+          let fechaHoy= new Date();
+          let fechaHoyActual= new Date(fechaHoy.getFullYear(), fechaHoy.getMonth(), fechaHoy.getDate());
           this.CronogramaPago.registroCuota.forEach((x:any) => {
+            var fecha=new Date(x.fechaVencimiento);
+            let fechaVencimiento = new Date(fecha.getFullYear(), fecha.getMonth(), fecha.getDate());
+            x.cuotaVencida=false
+            console.log('===========================',fechaHoyActual)
+            console.log(fechaVencimiento)
+            if(fechaVencimiento<fechaHoyActual){
+              x.cuotaVencida=true
+            }
             x.cuota=x.cuota
             x.moraCalculada=x.moraCalculada
             if(x.tipoCuota=="MATRICULA"){
@@ -297,8 +308,12 @@ export class PagoComponent implements OnInit,OnDestroy {
     })
   }
   onChangeRadioButton(event:any){
+    console.log('Cambiaraaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',event)
     this.pagoRecurrenteActivado=false;
     this.medioPagoSeleccionado=event;
+  }
+  EnviarSolicitudMedioPago(){
+    this.EnviarMedioPago=true
   }
   EnviarSolicitudPago(): void{
     console.log('Datos de pasarela:',this.medioPagoSeleccionado)
@@ -358,72 +373,6 @@ export class PagoComponent implements OnInit,OnDestroy {
     console.log('Datos de pasarela:',this.medioPagoSeleccionado)
     this.jsonSend.ListaCuota=[]
     this.PreProcesoAfiliacionPagoRecurrente(this.medioPagoSeleccionado);
-    // console.log(this.medioPagoSeleccionado)
-    // var fechaActual = new Date();
-    // var fechaVencimiento = new Date();
-    // var stringActual= pipe.transform(new Date(), 'yyyy-MM-ddT00:00:00.000')
-    // var stringVencimiento= pipe.transform(new Date(this.CronogramaPago.fechaVencimiento), 'yyyy-MM-ddT00:00:00.000')
-    // if(stringActual)fechaActual=new Date(stringActual)
-    // if(stringVencimiento)fechaVencimiento=new Date(stringVencimiento)
-    // // if(fechaActual <= fechaVencimiento)
-    // // {
-    // // if(fechaActual <= fechaVencimiento)
-    // // {
-    //   let validador=0
-    //   if(this.idPasarela==5){ //OpenPay
-    //     let count=0
-    //     let cuotaBase=0
-    //     let fechaBase = new Date();
-    //     this.CronogramaPago.registroCuota.forEach((e:any) => {
-    //       if(e.cancelado==false){
-    //         if(count==0){
-    //           cuotaBase = e.cuota+e.moraCalculada
-    //           fechaBase = new Date(e.fechaVencimiento)
-    //         }
-    //         let cuotaTotal:number =e.cuota+e.moraCalculada
-    //         if(cuotaBase!==cuotaTotal)validador=1
-    //         if(new Date(e.fechaVencimiento).getDate()!=fechaBase.getDate())validador=2
-    //         count++
-    //       }
-
-    //     });
-    //   }
-
-    //   if(validador==2)
-    //   {
-    //     this._SnackBarServiceService.openSnackBar(
-    //       "Lo sentimos, no puedes afiliarte al pago Recurrente, no todas las cuotas pendientes se pagan el mismo día de afiliación",
-    //       'x',
-    //       10,
-    //       "snackbarCrucigramaerror");
-    //   }
-    //   else if(validador==1)
-    //   {
-    //     this._SnackBarServiceService.openSnackBar(
-    //       "Lo sentimos, no puedes afiliarte al pago Recurrente, no todas las cuotas pendientes tiene el mismo monto",
-    //       'x',
-    //       10,
-    //       "snackbarCrucigramaerror");
-    //   }
-    //   else if(validador==0)
-    //   {
-    //     const dialogRef = this.dialog.open(PagoTarjetaComponent, {
-
-    //       width: '600px',
-    //       data: { idMatricula: this.idMatricula,tituloBotonModal:'Ir a afiliarse',tipo:"AF"},
-    //       panelClass: 'dialog-Tarjeta',
-    //      disableClose:true
-    //     });
-
-    //     dialogRef.afterClosed().pipe(takeUntil(this.signal$)).subscribe((result) => {
-    //       console.log("Suscripcion",result);
-    //       if(result!=undefined){
-    //         this.jsonSend.ListaCuota=[]
-    //         this.PreProcesoAfiliacionPagoRecurrente(result);
-    //       }
-    //     });
-    //   }
-
   }
   OpenModalEliminarSuscripcion(): void {
     const dialogRef = this.dialog.open(AprovacionComponent, {
