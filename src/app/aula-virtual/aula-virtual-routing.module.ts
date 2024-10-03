@@ -57,6 +57,8 @@ import { ConfirmacionPagoOpenpayPeruComponent } from './confirmacion-pago-openpa
 import { Tarjeta2Component } from './modal-confirmacion-pago/pagos-organicos/tarjeta2/tarjeta2.component';
 import { PagoOrganicoTodosComponent } from './programas-pago-organico/pago-organico-todos.component';
 import { DocenciaV2CursosOnlineComponent } from './docencia-v2-cursos-online/docencia-v2-cursos-online.component';
+import { PagoMedioPagoComponent } from './pago/pago-medio-pago/pago-medio-pago.component';
+import { PagoMedioPagoDetalleComponent } from './pago/pago-medio-pago/pago-medio-pago-detalle/pago-medio-pago-detalle.component';
 
 const routes: Routes = [
   {
@@ -93,6 +95,8 @@ const routes: Routes = [
         { path: 'DocenciaV2/:IdPespecifico', component: DocenciaV2CursosOnlineComponent,canActivate:[ProveedorGuard]},
         { path: 'MisCursos/:IdMatricula', component: CursoComponent,canActivate:[AlumnoGuard]},
         { path: 'MisPagos/:IdMatricula', component: PagoComponent,canActivate:[AlumnoGuard]},
+        { path: 'MisPagos/:idmatricula/:idpasarelapago', component: PagoMedioPagoComponent,canActivate:[AlumnoGuard]},
+        { path: 'MisPagos/:idmatricula/:idpasarelapago/:identificador', component: PagoMedioPagoDetalleComponent,canActivate:[AlumnoGuard]},
         { path: 'Docencia/:IdTarea', component: DocenciaTareasComponent,canActivate:[ProveedorGuard]},
 
         { path: 'PagoExitosoPse/:estado', component: ResultadoPagoPSEComponent,canActivate:[AlumnoGuard]},

@@ -198,6 +198,7 @@ import { DocenciaGestionCriteriosRegistroAntiguoComponent } from './docencia-v2-
 import { DocenciaGestionCriteriosRegistroAntiguoAgregarComponent } from './docencia-v2-cursos-online/criterio-evaluacion-docente/docencia-gestion-criterios-registro-antiguo/docencia-gestion-criterios-registro-antiguo-agregar/docencia-gestion-criterios-registro-antiguo-agregar.component';
 import { DocenciaGestionNotasAntiguoComponent } from './docencia-v2-cursos-online/nota-docente/docencia-gestion-notas-antiguo/docencia-gestion-notas-antiguo/docencia-gestion-notas-antiguo.component';
 import { PagoMedioPagoComponent } from './pago/pago-medio-pago/pago-medio-pago.component';
+import { PagoMedioPagoDetalleComponent } from './pago/pago-medio-pago/pago-medio-pago-detalle/pago-medio-pago-detalle.component';
 
 
 @NgModule({
@@ -397,6 +398,7 @@ import { PagoMedioPagoComponent } from './pago/pago-medio-pago/pago-medio-pago.c
     DocenciaGestionCriteriosRegistroAntiguoAgregarComponent,
     DocenciaGestionNotasAntiguoComponent,
     PagoMedioPagoComponent,
+    PagoMedioPagoDetalleComponent,
 
   ],
   imports: [

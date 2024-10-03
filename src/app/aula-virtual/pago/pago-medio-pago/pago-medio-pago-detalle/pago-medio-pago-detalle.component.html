@@ -1,0 +1,206 @@
+<!-- holax -->
+<div class="container"></div>
+<div style="background: #f4f4f4">
+  <div class="container">
+    <div class="row" style="padding: 20px 90px 20px 20px !important">
+      <div class="col-12 col-md-12 col-lg-12">
+        <div class="titleCronograma">Confirma tu compra</div>
+        <div class="titleCronogramaCurso" *ngIf="resultNiubiz != undefined">
+          {{ resultNiubiz.nombrePrograma }}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div
+  *ngIf="resultNiubiz != undefined"
+  class="container"
+  style="border-bottom: 2px solid #e7e7e7 !important; padding-bottom: 2rem"
+>
+  <div class="row">
+    <div class="col-12 row">
+      <div class="col-12 col-md-6 col-lg-6 inputPagoVisa">
+        <div class="subtitlePagoVisa" style="border: none !important">
+          Pago realizado por:
+        </div>
+        <ng-container>
+          <mat-form-field
+            appearance="outline"
+            class="disabledInput"
+            [floatLabel]="'always'"
+            style="width: 100%"
+          >
+            <mat-label>Nombres</mat-label>
+            <input
+              type="text"
+              style="color: #878787"
+              [value]="resultNiubiz.registroAlumno.nombre"
+              disabled
+              matInput
+            />
+          </mat-form-field>
+          <mat-form-field
+            appearance="outline"
+            class="disabledInput"
+            [floatLabel]="'always'"
+            style="width: 100%"
+          >
+            <mat-label>Apellidos</mat-label>
+            <input
+              type="text"
+              style="color: #878787"
+              [value]="resultNiubiz.registroAlumno.apellido"
+              disabled
+              matInput
+            />
+          </mat-form-field>
+          <mat-form-field
+            appearance="outline"
+            class="disabledInput"
+            [floatLabel]="'always'"
+            style="width: 100%"
+          >
+            <mat-label>E-mail</mat-label>
+            <input
+              type="text"
+              style="color: #878787"
+              [value]="resultNiubiz.registroAlumno.correo"
+              disabled
+              matInput
+            />
+          </mat-form-field>
+          <ng-container *ngIf="jsonSave.Comprobante != false">
+            <mat-form-field
+              appearance="outline"
+              [floatLabel]="'always'"
+              style="width: 100%"
+            >
+              <mat-label>Razón Social</mat-label>
+              <input
+                type="text"
+                [(ngModel)]="jsonSave.RazonSocial"
+                placeholder="Razón Social"
+                matInput
+              />
+            </mat-form-field>
+            <mat-form-field
+              appearance="outline"
+              [floatLabel]="'always'"
+              style="width: 100%"
+            >
+              <mat-label>Número Tributario</mat-label>
+              <input
+                type="text"
+                [(ngModel)]="jsonSave.CodigoTributario"
+                placeholder="Número Tributario"
+                matInput
+              />
+            </mat-form-field>
+          </ng-container>
+        </ng-container>
+      </div>
+      <div class="col-12 col-md-6 col-lg-6">
+        <div class="resumenPagoTarjeta">
+          <div class="contentResumenPago" style="border: none !important">
+            <div
+              class="col-12"
+              style="
+                display: flex;
+                justify-content: space-between;
+                padding: 5px;
+              "
+            >
+              <div style="font-weight: 600">Concepto</div>
+              <div style="font-weight: 600">Monto</div>
+            </div>
+            <div class="ItemsResumenPago row">
+              <div
+                *ngFor="let item of resultNiubiz.listaCuota; index as i"
+                style="padding: 5px !important"
+              >
+                <div class="col-12 row itms" *ngIf="i == 0">
+                  <div class="col-8">{{ item.nombre }}</div>
+                  <div class="col-4" style="text-align: right">
+                    {{ FormatoMilesDecimales(item.cuotaTotal) }}
+                    {{ resultNiubiz.monedaCorreo }}
+                  </div>
+                </div>
+              </div>
+              <div class="col-12 row totalPago" style="background: #f2f6ff">
+                <div class="col-8">Total a pagar</div>
+                <div class="col-4" style="text-align: right">
+                  {{ FormatoMilesDecimales(resultNiubiz.total) }}
+                  {{ resultNiubiz.monedaCorreo }}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="col-12"
+        style="
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          flex-direction: column;
+        "
+      >
+        <!-- <form
+          ngNoForm
+          (submit)="pagar()"
+          id="visa"
+          [action]="
+            'https://proceso-pago.bsginstitute.com/ProcesoPagoVisa/Index?IdTransaccion=' +
+            json.IdentificadorTransaccion
+          "
+          [method]="'post'"
+          channel="'paycard'"
+          style="text-align: center"
+          target="_blank"
+        ></form> -->
+        <div id="visa">
+          <app-default-button
+            [confs]="{ color: 'visa', titulo: 'Paga Aquí' }"
+            [style]="'margin-top: 20px;margin-bottom: 0px;width:100%'"
+            (ButtoclClick)="openForm()"
+          ></app-default-button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<ng-container *ngIf="resultNiubiz == undefined">
+  <div
+    class="row"
+    style="
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      height: 15rem;
+    "
+  >
+    <div class="col-12" style="display: flex; justify-content: center">
+      <mat-spinner></mat-spinner>
+    </div>
+    <div class="col-12">Cargando información pago ...</div>
+  </div>
+</ng-container>
+<div class="container">
+  <div style="justify-content: left; display: flex">
+    <div class="iconoPagoTarjeta">
+      <div class="textPagoTarjeta" style="color: #02c158 !important">
+        <span>PAGO 100%</span>
+        <span>seguro</span>
+      </div>
+      <div class="imgPagoTarjetaVerde"></div>
+      <div class="descPagoTarjeta">
+        <span
+          >Este certificado garantiza la seguridad de todas tus conexiones
+          mediante cifrado</span
+        >
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,5 +1,4 @@
-<div class="container">
-</div>
+<div class="container"></div>
 <div style="background: #f4f4f4">
   <div class="container">
     <div class="row rowpaddAv" style="padding: 20px 90px 20px 20px !important">
@@ -20,8 +19,158 @@
 >
   <div>
     <ng-container *ngIf="CronogramaPago != undefined">
-      Holix
+      <ng-container *ngIf="IdPasarelaPago == 10 || IdPasarelaPago == 7">
+        <ng-container class="row">
+          <div class="col-12 containerCardsMedioPago">
+            <!-- Tarjeta 1 -->
+            <div
+              class="medio-pago-card"
+              [ngClass]="{ selected: IdMedioPagoSeleccionado === 0 }"
+            >
+              <div class="medio-pago-content">
+                <mat-radio-button
+                  (change)="ObtenerMedioPagoSeleccion(0)"
+                  class="m-2"
+                  color="primary"
+                  [checked]="IdMedioPagoSeleccionado === 0"
+                ></mat-radio-button>
+              </div>
+              <label for="pagoTarjeta" class="medio-pago-label">
+                Pago con tarjeta de crédito y débito
+              </label>
+              <div class="medio-pago-images">
+                <div
+                  *ngFor="let tarjeta of tarjetas"
+                  class="medio-pago-image-container"
+                >
+                  <img
+                    *ngIf="
+                      tarjeta.medioPago == 'Visa' ||
+                      tarjeta.medioPago == 'MasterCard'
+                    "
+                    [src]="'../../../../assets/icons/' + tarjeta.img"
+                    alt="Imagen de tarjeta"
+                    class="medio-pago-image"
+                  />
+                </div>
+              </div>
+            </div>
 
+            <!-- Tarjeta 2 -->
+            <div
+              class="medio-pago-card"
+              [ngClass]="{ selected: IdMedioPagoSeleccionado === 1 }"
+            >
+              <div class="medio-pago-content">
+                <mat-radio-button
+                  (change)="ObtenerMedioPagoSeleccion(1)"
+                  class="m-2"
+                  color="primary"
+                  [checked]="IdMedioPagoSeleccionado === 1"
+                ></mat-radio-button>
+              </div>
+              <label for="pagoTarjeta" class="medio-pago-label">
+                Pago con tarjeta de crédito y débito
+              </label>
+              <div class="medio-pago-images">
+                <div
+                  *ngFor="let tarjeta of tarjetas"
+                  class="medio-pago-image-container"
+                >
+                  <img
+                    *ngIf="
+                      tarjeta.medioPago == 'Amex' ||
+                      tarjeta.medioPago == 'DinerClub'
+                    "
+                    [src]="'../../../../assets/icons/' + tarjeta.img"
+                    alt="Imagen de tarjeta"
+                    class="medio-pago-image"
+                  />
+                </div>
+              </div>
+            </div>
+            <!-- Tarjeta 3 -->
+            <div
+              *ngIf="IdPasarelaPago == 7"
+              class="medio-pago-card"
+              [ngClass]="{ selected: IdMedioPagoSeleccionado === 2 }"
+            >
+              <div class="medio-pago-content">
+                <mat-radio-button
+                  (change)="ObtenerMedioPagoSeleccion(2)"
+                  class="m-2"
+                  color="primary"
+                  [checked]="IdMedioPagoSeleccionado === 2"
+                ></mat-radio-button>
+              </div>
+              <label for="pagoTarjeta" class="medio-pago-label">
+                Pago con tarjeta de crédito y débito
+              </label>
+              <div class="medio-pago-images">
+                <div
+                  *ngFor="let tarjeta of tarjetas"
+                  class="medio-pago-image-container"
+                >
+                  <img
+                    *ngIf="
+                      tarjeta.medioPago == 'Amex' ||
+                      tarjeta.medioPago == 'DinerClub'
+                    "
+                    [src]="'../../../../assets/icons/' + tarjeta.img"
+                    alt="Imagen de tarjeta"
+                    class="medio-pago-image"
+                  />
+                </div>
+              </div>
+            </div>
+            <!-- Tarjeta 4 -->
+            <div
+              *ngIf="IdPasarelaPago == 7"
+              class="medio-pago-card"
+              [ngClass]="{ selected: IdMedioPagoSeleccionado === 3 }"
+            >
+              <div class="medio-pago-content">
+                <mat-radio-button
+                  (change)="ObtenerMedioPagoSeleccion(3)"
+                  class="m-2"
+                  color="primary"
+                  [checked]="IdMedioPagoSeleccionado === 3"
+                ></mat-radio-button>
+              </div>
+              <label for="pagoTarjeta" class="medio-pago-label">
+                Pago con tarjeta de crédito y débito
+              </label>
+              <div class="medio-pago-images">
+                <div
+                  *ngFor="let tarjeta of tarjetas"
+                  class="medio-pago-image-container"
+                >
+                  <img
+                    *ngIf="
+                      tarjeta.medioPago == 'Amex' ||
+                      tarjeta.medioPago == 'DinerClub'
+                    "
+                    [src]="'../../../../assets/icons/' + tarjeta.img"
+                    alt="Imagen de tarjeta"
+                    class="medio-pago-image"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </ng-container>
+      </ng-container>
+      <div class="col-12 row bot">
+        <div style="justify-content: center; display: flex">
+          <app-default-button
+            [disabled]="IdMedioPagoSeleccionado == -1"
+            [confs]="{ color: 'primary', titulo: 'Continuar' }"
+            [style]="'margin-top: 20px;padding: 0px 40px;'"
+            (click)="EnviarSolicitudPago()"
+          >
+          </app-default-button>
+        </div>
+      </div>
     </ng-container>
   </div>
 </div>

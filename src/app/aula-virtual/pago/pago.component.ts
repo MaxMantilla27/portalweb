@@ -113,17 +113,21 @@ export class PagoComponent implements OnInit,OnDestroy {
   ];
   public BloquearContenidoPagos=false;
   public IdAlumno=0;
-  public EnviarMedioPago=false;
+  public IdPasarelaPago=0;
+  public IdPaisPasarela=0
+  public Paises:any
   ngOnInit(): void {
     this._HelperService.recibirDataPais
       .pipe(takeUntil(this.signal$))
       .subscribe({
         next: (x) => {
+          this.Paises = x;
           this.codigoIso =
             this._SessionStorageService.SessionGetValue('ISO_PAIS') != ''
               ? this._SessionStorageService.SessionGetValue('ISO_PAIS')
               : 'INTC';
           console.log('*********************', this.codigoIso);
+          this.IdPaisPasarela = this.GetIdPaisProCodigo();
         },
         complete:()=>{
         }
@@ -297,7 +301,7 @@ export class PagoComponent implements OnInit,OnDestroy {
           this.VerificarEstadoAfiliacion()
         }
         else{
-          this.idPasarela=0
+          this.MedioPagoActivoPasarelaPortal();
         }
 
       },
@@ -307,13 +311,54 @@ export class PagoComponent implements OnInit,OnDestroy {
       }
     })
   }
+  MedioPagoActivoPasarelaPortal() {
+    this._MedioPagoActivoPasarelaService
+      .MedioPagoActivoPasarelaPortal(this.IdPaisPasarela)
+      .pipe(takeUntil(this.signal$))
+      .subscribe({
+        next: (x) => {
+          console.log(x)
+          this.IdPasarelaPago=x[0].idPasarelaPago
+          console.log(this.IdPasarelaPago)
+          this.validadorPagosMultiples = x.filter(
+            (item: any) =>
+              item.idPasarelaPago === 7 ||
+              item.idPasarelaPago === 10
+          );
+          this.validadorPagosChile =
+            x.filter(
+              (item: any) =>
+                item.idPasarelaPago === 11 || item.idPasarelaPago === 17
+            ).length > 0
+              ? true
+              : false;
+          this.tarjetas=undefined;
+          this.tarjetas = x;
+          this.tarjetas.forEach((e: any) => {
+            e.img = this._t.GetTarjeta(e.medioCodigo);
+          });
+        },
+        complete:()=>{
+        }
+      });
+  }
   onChangeRadioButton(event:any){
     console.log('Cambiaraaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',event)
     this.pagoRecurrenteActivado=false;
     this.medioPagoSeleccionado=event;
   }
   EnviarSolicitudMedioPago(){
-    this.EnviarMedioPago=true
+    this._SessionStorageService.SessionSetValue('DatosFacturacionPagos',JSON.stringify(this.DatosFacturacion));
+    this._SessionStorageService.SessionSetValue('DatosCronogramaPagosCuotas',JSON.stringify(this.CronogramaPago));
+    const dialogRef = this.dialog.open(ChargeSpinnerComponent, {
+      panelClass: 'dialog-charge-spinner',
+      disableClose: true
+    });
+    setTimeout(() => {
+      dialogRef.close();
+      this._router.navigate(['/AulaVirtual/MisPagos/'+this.idMatricula+'/'+this.IdPasarelaPago]);
+    }, 300);
+
   }
   EnviarSolicitudPago(): void{
     console.log('Datos de pasarela:',this.medioPagoSeleccionado)
@@ -898,5 +943,14 @@ export class PagoComponent implements OnInit,OnDestroy {
 
     // Combinar parte entera y decimal
     return integerPart + '.' + decimalPart;
+  }
+  GetIdPaisProCodigo(): number {
+    var idp = 0;
+    this.Paises.forEach((p: any) => {
+      if (p.codigoIso.toLowerCase() == this.codigoIso.toLowerCase()) {
+        idp = parseInt(p.idPais);
+      }
+    });
+    return idp;
   }
 }
