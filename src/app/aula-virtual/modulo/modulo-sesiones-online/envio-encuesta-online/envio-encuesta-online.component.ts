@@ -79,11 +79,11 @@ export class EnvioEncuestaOnlineComponent implements OnInit  {
             console.log(respuesta);
             if (pregunta.id === respuesta.idPreguntaEncuesta) {
               // Casilla de texto
-              if (pregunta.nombreTipoPregunta === 'Casilla de Texto') {
+              if (pregunta.idPreguntaEncuestaTipo === 3) {
                 pregunta.alternativas[0].respuesta = [respuesta.valor];
               }
               // Selección Múltiple
-              else if (pregunta.nombreTipoPregunta === 'Seleccion Multiple') {
+              else if (pregunta.idPreguntaEncuestaTipo === 2) {
                 vaRes.push(respuesta.valor);
                 pregunta.alternativas.forEach((alternativa: any) => {
                   if (alternativa.id.toString() === respuesta.valor) {
@@ -92,7 +92,7 @@ export class EnvioEncuestaOnlineComponent implements OnInit  {
                 });
               }
               // Selección Única
-              else if (pregunta.nombreTipoPregunta === 'Selección Unica') {
+              else if (pregunta.idPreguntaEncuestaTipo === 1) {
                 pregunta.alternativas.forEach((alternativa: any) => {
                   if (alternativa.id.toString() === respuesta.valor) {
                     alternativa.select = true;
@@ -100,7 +100,7 @@ export class EnvioEncuestaOnlineComponent implements OnInit  {
                 });
               }
               // Ranking (puede requerir un tratamiento especial si hay una lógica adicional)
-              else if (pregunta.nombreTipoPregunta === 'Ranking') {
+              else if (pregunta.idPreguntaEncuestaTipo === 4) {
                 pregunta.valorRanking = [respuesta.valor]; // Asume que el valor es un número de ranking
               }
               else if (pregunta.nombreTipoPregunta === 'Orden Jerarquico' || pregunta.idPreguntaEncuestaTipo==5 ) {
