@@ -48,7 +48,7 @@
           >
             <div class="contetPreguntasEncuesta">
               <div class="descPregunta row">
-                <div class="col-12" style="margin-top: 10px">
+                <div class="col-12" style="margin-top: 10px;">
                   <div class="titlePregunta">
                     {{ i + 1 }}. {{ item.pregunta }}
                   </div>
@@ -82,9 +82,16 @@
                   >
                     Elige tu calificacion
                   </div>
+                  <div
+                    class="DescripcionPregunta"
+                    *ngIf="item.idPreguntaEncuestaTipo == 5"
+                  >
+                    Seleccione opciones de la lista a continuación
+
+                  </div>
                 </div>
               </div>
-              <div style="margin-top: 15px">
+              <div style="margin-top: 15px"  >
                 <ng-container *ngIf="item.idPreguntaEncuestaTipo == 1">
                   <div
                     class="radiosOptions"
@@ -187,6 +194,41 @@
                       star
                     </i>
                   </div>
+                </ng-container>
+                <ng-container
+                  *ngIf="item.idPreguntaEncuestaTipo == 5"
+                >
+                <!-- <tbody cdkDropList class="example-list" (cdkDropListDropped)="drop($event)">
+                  <tr class="example-custom-placeholder" *cdkDragPlaceholder></tr>
+                  <tr class="example-box" *ngFor="let item of item.alternativas" cdkDrag>
+                    <td>{{item.orden}}</td>
+                    <td>{{item.respuesta}}</td>
+                    <td>
+
+                    </td>
+                  </tr>
+                  </tbody>  -->
+
+                  <div
+                      cdkDropList
+                      class="example-list" 
+                      [cdkDropListData]="item.alternativas"
+                      [cdkDropListConnectedTo]="['connectedList']"
+                      (cdkDropListDropped)="drop($event)"
+                  > 
+                  
+                    <div 
+                        *ngFor="let altern of item.alternativas; let i=index"
+                        
+                        class="example-box"
+                        cdkDrag
+                        >
+                     <div>{{altern.orden}}</div>
+                     <div>{{altern.respuesta}}</div> 
+                    </div>
+
+                  </div>
+                                 
                 </ng-container>
               </div>
             </div>

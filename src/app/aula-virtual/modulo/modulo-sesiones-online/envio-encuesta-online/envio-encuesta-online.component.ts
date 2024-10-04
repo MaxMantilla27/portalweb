@@ -1,9 +1,13 @@
-import { AfterViewInit, Component, ElementRef, Inject, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import { ApplicationRef, ChangeDetectorRef, Component, ElementRef, Inject, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import {
   MatDialogRef,
   MAT_DIALOG_DATA,
   MatDialog,
 } from '@angular/material/dialog';
+import {
+  CdkDragDrop,
+  moveItemInArray} 
+from '@angular/cdk/drag-drop';
 import { Subject, takeUntil, timer } from 'rxjs';
 import {
   EncuestaAvanceCategoriaDTO,
@@ -25,8 +29,12 @@ export class EnvioEncuestaOnlineComponent implements OnInit  {
     public dialogRef: MatDialogRef<EnvioEncuestaOnlineComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     public dialog: MatDialog,
-    private _PEspecificoEsquemaService: PEspecificoEsquemaService
+    private _PEspecificoEsquemaService: PEspecificoEsquemaService,
+    //private cdr: ChangeDetectorRef
+    private appRef: ApplicationRef
   ) {}
+
+
 
   ngOnDestroy(): void {
     this.signal$.next(true);
@@ -45,6 +53,7 @@ export class EnvioEncuestaOnlineComponent implements OnInit  {
   };
   public EncuestaCompleta = false;
   public EncuestaEnviada = false;
+  public ListaJerarquico: string[] = []
 
   ngOnInit(): void {
     console.log(this.data);
@@ -67,6 +76,7 @@ export class EnvioEncuestaOnlineComponent implements OnInit  {
           let vaRes: Array<any> = [];
 
           respuestasEncuesta.forEach((respuesta: any) => {
+            console.log(respuesta);
             if (pregunta.id === respuesta.idPreguntaEncuesta) {
               // Casilla de texto
               if (pregunta.nombreTipoPregunta === 'Casilla de Texto') {
@@ -93,6 +103,12 @@ export class EnvioEncuestaOnlineComponent implements OnInit  {
               else if (pregunta.nombreTipoPregunta === 'Ranking') {
                 pregunta.valorRanking = [respuesta.valor]; // Asume que el valor es un número de ranking
               }
+              else if (pregunta.nombreTipoPregunta === 'Orden Jerarquico' || pregunta.idPreguntaEncuestaTipo==5 ) {
+
+                
+
+              }
+
             }
           });
         });
@@ -104,6 +120,7 @@ export class EnvioEncuestaOnlineComponent implements OnInit  {
             if (pregunta.idPreguntaEncuestaTipo==3 ||pregunta.idPreguntaEncuestaTipo==4) {
               pregunta.alternativas = [{ respuesta: '' }];
             }
+
           })
 
         })
@@ -152,6 +169,56 @@ export class EnvioEncuestaOnlineComponent implements OnInit  {
       this.hoveredStar = 0;
     }
   }
+
+
+  ListaDragDrop = [
+    {peliculas : [
+      { id: 1, nombre: 'Episodio I - La amenaza fantasma' },
+      { id: 2, nombre: 'Episodio II - El ataque de los clones' },
+      { id: 3, nombre: 'Episodio III - La venganza de los Sith' },
+    ]},
+    {peliculas : [
+      { id: 4, nombre: 'Episodio IV - Una nueva esperanza' },
+      { id: 5, nombre: 'Episodio V - El Imperio contraataca' },
+      { id: 6, nombre: 'Episodio VI - El regreso del Jedi' },
+
+    ]},
+    {peliculas:[
+      { id: 7, nombre: 'Episodio VII - El despertar de la fuerza' },
+      { id: 8, nombre: 'Episodio VIII - Los últimos Jedi' },
+      { id: 9, nombre: 'Episodio IX - El ascenso de Skywalker' }
+    ]}
+  ]
+
+
+  movies = [
+    'Episode I - The Phantom Menace',
+    'Episode II - Attack of the Clones',
+    'Episode III - Revenge of the Sith',
+    'Episode IV - A New Hope',
+    'Episode V - The Empire Strikes Back',
+    'Episode VI - Return of the Jedi',
+    'Episode VII - The Force Awakens',
+    'Episode VIII - The Last Jedi',
+    'Episode IX – The Rise of Skywalker',
+  ];
+  
+
+  // Cambiamos el tipo del array de string[] a un array de objetos
+  drop(evento: CdkDragDrop<any>) {
+    console.log(evento);
+    //console.log(data);
+    console.log(evento.previousIndex);
+    console.log(evento.currentIndex);
+    moveItemInArray(evento.container.data,evento.previousIndex, evento.currentIndex);
+    
+
+    //this.appRef.tick();
+    //this.cdr.detectChanges();
+  }
+
+
+
   AddToAvance() {
     if (this.data.EncuestaEnviada !== true) {
       // Inicialización de data de guardado
@@ -221,7 +288,22 @@ export class EnvioEncuestaOnlineComponent implements OnInit  {
               respuesta: valorRanking.toString(),
             }; // Guardar ranking como número
             preguntaObjInicial.valorRespuesta.push(respuestaObj);
+          } else if (p.idPreguntaEncuestaTipo===5) {
+
+            p.alternativas.forEach((a: any) => {
+              if (a) {
+                const respuestaObj: EncuestaAvancePreguntaRespuestaDTO = {
+                  idRespuesta: a.id,
+                  puntaje: a.puntaje,
+                  respuesta: a.id.toString(),
+                };
+                preguntaObjInicial.valorRespuesta.push(respuestaObj);
+              }
+            });
+
           }
+
+
         });
       });
       this.verificarRespuestasCompletas();
