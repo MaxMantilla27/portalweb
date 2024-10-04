@@ -17,15 +17,15 @@ import {
 import { FormaPagoService } from 'src/app/Core/Shared/Services/FormaPago/forma-pago.service';
 import { SessionStorageService } from 'src/app/Core/Shared/Services/session-storage.service';
 import { environment } from 'src/environments/environment';
-
+import { MedioPagoActivoPasarelaService } from 'src/app/Core/Shared/Services/MedioPagoActivoPasarela/medio-pago-activo-pasarela.service';
+import { ImagenTarjetas } from 'src/app/Core/Shared/ImagenTarjetas';
 @Component({
-  selector: 'app-pago-medio-pago-detalle',
-  templateUrl: './pago-medio-pago-detalle.component.html',
-  styleUrls: ['./pago-medio-pago-detalle.component.scss'],
+  selector: 'app-detalle-pago-internacional-niubiz',
+  templateUrl: './detalle-pago-internacional-niubiz.component.html',
+  styleUrls: ['./detalle-pago-internacional-niubiz.component.scss'],
   encapsulation: ViewEncapsulation.None,
 })
-export class PagoMedioPagoDetalleComponent
-  implements OnInit, OnDestroy, AfterViewChecked
+export class DetallePagoInternacionalNiubizComponent implements OnInit, OnDestroy, AfterViewChecked
 {
   private signal$ = new Subject();
   public resultNiubiz: any;
@@ -52,7 +52,7 @@ export class PagoMedioPagoDetalleComponent
     },
   };
   public dialogRef: any;
-  public idMatricula = 0;
+  public IdMatriculaCabecera = 0;
   public json: RegistroRespuestaPreProcesoPagoDTO = {
     IdentificadorTransaccion: '',
     RequiereDatosTarjeta: true,
@@ -62,20 +62,24 @@ export class PagoMedioPagoDetalleComponent
   private kryptonScriptLoaded: boolean = false;
   public CompletamenteCargado: boolean = false; // Nueva variable
   public DataComprobante: any = {}; // Inicialización de DataComprobante
-
+  public IdPasarelaPago=0;
   constructor(
     private _ActivatedRoute: ActivatedRoute,
     private _FormaPagoService: FormaPagoService,
     private _SessionStorageService: SessionStorageService,
     private _router: Router,
     private _renderer2: Renderer2,
-    @Inject(DOCUMENT) private _document: Document
+    @Inject(DOCUMENT) private _document: Document,
+    private _MedioPagoActivoPasarelaService: MedioPagoActivoPasarelaService,
+    private _t: ImagenTarjetas,
   ) {}
+  public tarjetas: any;
 
   ngOnInit(): void {
     this._ActivatedRoute.params.pipe(takeUntil(this.signal$)).subscribe({
       next: (x) => {
-        this.idMatricula = parseInt(x['idmatricula']);
+        this.IdMatriculaCabecera = parseInt(x['idmatricula']);
+        this.IdPasarelaPago = parseInt(x['idpasarelapago']);
         this.json.IdentificadorTransaccion = x['identificador'];
         const r = this._SessionStorageService.SessionGetValue(
           this.json.IdentificadorTransaccion
@@ -84,6 +88,7 @@ export class PagoMedioPagoDetalleComponent
 
         this.url += this.json.IdentificadorTransaccion;
         this.ObtenerPreProcesoPagoCuotaAlumno();
+        this.ObtenerTarjetasMedioPago()
       },
     });
   }
@@ -112,7 +117,7 @@ export class PagoMedioPagoDetalleComponent
           this.resultNiubiz = x._Repuesta;
           console.log(this.resultNiubiz)
           if (this.resultNiubiz.estadoOperacion.toLowerCase() !== 'sent') {
-            this._router.navigate(['/AulaVirtual/MisCursos/' + this.idMatricula]);
+            this._router.navigate(['/AulaVirtual/MisCursos/' + this.IdMatriculaCabecera]);
           }
           this.resultNiubiz.total = 0;
           this.resultNiubiz.listaCuota.forEach((l: any, index: number) => {
@@ -136,7 +141,7 @@ export class PagoMedioPagoDetalleComponent
     if (!this.kryptonScriptLoaded) {
       const script = this._renderer2.createElement('script');
       script.type = 'text/javascript';
-      script.src = 'https://static-content.vnforapps.com/vToken/js/checkout.js';
+      script.src = 'https://static-content.vnforapps.com/v2/js/checkout.js';
       script.onload = () => {
         this.kryptonScriptLoaded = true;
         console.log('Script de Visa Checkout cargado con éxito.');
@@ -175,24 +180,30 @@ export class PagoMedioPagoDetalleComponent
     try {
       VisanetCheckout.configure({
         sessiontoken: this.resultNiubiz.procesoPagoBotonVisa.sessionKey,
-        channel: 'web',
+        channel:  `paycard`,
         merchantid: this.resultNiubiz.procesoPagoBotonVisa.merchanId,
         purchasenumber: 'web',
         amount: parseFloat(this.resultNiubiz.procesoPagoBotonVisa.amount + '.00'),
         expirationminutes: '5',
-        timeouturl: `${this.urlBase}/AulaVirtual/MisPagos/${this.idMatricula}`,
+        timeouturl: `${this.urlBase}/AulaVirtual/MisPagos/${this.IdMatriculaCabecera}`,
         merchantlogo: 'https://img.bsginstitute.com/repositorioweb/img/logobsg-visa.svg',
-        formbuttoncolor: '#eea236',
-        showamount: 'false',
-        formbuttontext: "Continuar",
+        formbuttoncolor: '#eea341',
+        showamount: 'true',
+        countable:true,
         action: 'https://localhost:44373/ProcesoPagoVisa/Index?IdTransaccion=' +
             this.json.IdentificadorTransaccion,
-        cardholdername: `${this.resultNiubiz.registroAlumno.nombre}`,
-        cardholderlastname: `${this.resultNiubiz.registroAlumno.apellido}`,
-        cardholderemail:`${this.resultNiubiz.registroAlumno.correo}`,
-        usertoken: `${this.resultNiubiz.registroAlumno.idAlumno}`,
+        showmethods:'true',
+        // paymentMethod:'tarjeta',
+        // paymentMethod:'card',
+        paymentMethods:'false',
+        payments:false,
+        yape:'false',
+        qr:'false',
+        paymentqr:false,
+
 
         complete: (params:any) => {
+          console.log(params)
           alert(JSON.stringify(params)); // Manejar la respuesta de Visa aquí
         },
       });
@@ -208,6 +219,26 @@ export class PagoMedioPagoDetalleComponent
     const decimalPart = parts[1];
     integerPart = integerPart.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
     return integerPart + '.' + decimalPart;
+  }
+  RegresarPasarela(){
+    this._router.navigate(['/AulaVirtual/MisPagos/'+this.IdMatriculaCabecera+'/'+this.IdPasarelaPago]);
+  }
+  ObtenerTarjetasMedioPago() {
+    this._MedioPagoActivoPasarelaService
+      .MedioPagoPasarelaPortalCronograma(this.IdMatriculaCabecera)
+      .pipe(takeUntil(this.signal$))
+      .subscribe({
+        next: (x:any) => {
+          this.tarjetas = x;
+          this.tarjetas.forEach((e: any) => {
+            e.img = this._t.GetTarjeta(e.medioCodigo);
+          });
+          console.log('Tarjetas por alumno', this.tarjetas);
+        },
+        complete: () => {
+          // this.ObtenerInformacionPagoLocal()
+        },
+      });
   }
 }
 

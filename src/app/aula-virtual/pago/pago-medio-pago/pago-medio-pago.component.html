@@ -3,6 +3,9 @@
   <div class="container">
     <div class="row rowpaddAv" style="padding: 20px 90px 20px 20px !important">
       <div class="col-12 col-md-12 col-lg-12">
+        <a class="btn-back-detalle" (click)="RegresarPagosCronograma()"
+          >&#8249; Volver Atrás</a
+        >
         <div class="titleCronograma">Elige un medio de Pago</div>
         <div class="titleCronogramaCurso">
           {{ CronogramaPago?.pGeneral }}
@@ -36,7 +39,7 @@
                 ></mat-radio-button>
               </div>
               <label for="pagoTarjeta" class="medio-pago-label">
-                Pago con tarjeta de crédito y débito
+                Pago con tarjeta de crédito y débito (Niubiz)
               </label>
               <div class="medio-pago-images">
                 <div
@@ -79,6 +82,7 @@
                 >
                   <img
                     *ngIf="
+                      tarjeta.medioPago == 'MasterCard' ||
                       tarjeta.medioPago == 'Amex' ||
                       tarjeta.medioPago == 'DinerClub'
                     "

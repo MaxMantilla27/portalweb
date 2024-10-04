@@ -4,6 +4,7 @@
   <div class="container">
     <div class="row" style="padding: 20px 90px 20px 20px !important">
       <div class="col-12 col-md-12 col-lg-12">
+        <a class="btn-back-detalle" (click)="RegresarPasarela()">&#8249; Volver Atrás</a>
         <div class="titleCronograma">Confirma tu compra</div>
         <div class="titleCronogramaCurso" *ngIf="resultNiubiz != undefined">
           {{ resultNiubiz.nombrePrograma }}
@@ -162,7 +163,7 @@
         <div id="visa">
           <app-default-button
             [confs]="{ color: 'visa', titulo: 'Paga Aquí' }"
-            [style]="'margin-top: 20px;margin-bottom: 0px;width:100%'"
+            [style]="';margin-bottom: 0px;width:100%'"
             (ButtoclClick)="openForm()"
           ></app-default-button>
         </div>
@@ -188,18 +189,46 @@
   </div>
 </ng-container>
 <div class="container">
-  <div style="justify-content: left; display: flex">
-    <div class="iconoPagoTarjeta">
-      <div class="textPagoTarjeta" style="color: #02c158 !important">
-        <span>PAGO 100%</span>
-        <span>seguro</span>
+  <div class="row">
+    <!-- Columna de 7 con el contenido -->
+    <div class="col-12 col-md-7 col-lg-7">
+      <div style="justify-content: left; display: flex">
+        <div class="iconoPagoTarjeta">
+          <div class="textPagoTarjeta" style="color: #02c158 !important">
+            <span>PAGO 100%</span>
+            <span>seguro</span>
+          </div>
+          <div class="imgPagoTarjetaVerde"></div>
+          <div class="descPagoTarjeta">
+            <span>
+              Este certificado garantiza la seguridad de todas tus conexiones
+              mediante cifrado
+            </span>
+          </div>
+        </div>
       </div>
-      <div class="imgPagoTarjetaVerde"></div>
-      <div class="descPagoTarjeta">
-        <span
-          >Este certificado garantiza la seguridad de todas tus conexiones
-          mediante cifrado</span
+    </div>
+
+    <!-- Columna vacía de 5 -->
+    <div class="col-12 col-md-5 col-5" style="padding: 20px;">
+      <div>
+        Métodos de pago aceptados:
+      </div>
+      <div class="medio-pago-images" style="padding-top: 10px;">
+        <div
+          *ngFor="let tarjeta of tarjetas"
+          class="medio-pago-image-container"
         >
+          <img
+            *ngIf="
+              tarjeta.medioPago == 'Visa' ||
+              tarjeta.medioPago == 'MasterCard'
+            "
+            [src]="'../../../../assets/icons/' + tarjeta.img"
+            alt="Imagen de tarjeta"
+            class="medio-pago-image"
+          />
+        </div>
       </div>
     </div>
   </div>

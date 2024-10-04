@@ -140,6 +140,12 @@ export class PagoMedioPagoComponent implements OnInit, OnDestroy {
     console.log('Validador',this.validadorPagosMultiples)
     let valorIdMedioPagoSeleccionado=0
     if(this.IdPasarelaPago==10){
+      if(this.IdMedioPagoSeleccionado==0 || this.IdMedioPagoSeleccionado==2 ||this.IdMedioPagoSeleccionado==3  ){
+        valorIdMedioPagoSeleccionado=0
+      }
+      else{
+        valorIdMedioPagoSeleccionado=1
+      }
       valorIdMedioPagoSeleccionado=this.IdMedioPagoSeleccionado
       this.medioPagoSeleccionado = this.tarjetas[valorIdMedioPagoSeleccionado]
       console.log('Medio Pago1', this.medioPagoSeleccionado);
@@ -224,12 +230,33 @@ export class PagoMedioPagoComponent implements OnInit, OnDestroy {
       .subscribe({
         next: (x) => {
           dialogRefLoader.close();
+
           var sesion = x._Repuesta.identificadorTransaccion;
           // this._SessionStorageService.SessionSetValue(
           //   sesion,
           //   x._Repuesta.requiereDatosTarjeta
           // );
-          this._router.navigate(['/AulaVirtual/MisPagos/'+this.IdMatriculaCabecera+'/'+this.IdPasarelaPago+'/'+sesion]);
+          console.log(x._Repuesta)
+          console.log(this.tarjetas)
+          console.log(tarjeta)
+          console.log(this.medioPagoSeleccionado)
+          if(tarjeta.idPasarelaPago == 10){
+            if(tarjeta.idFormaPago == 52){
+              this._router.navigate(['/AulaVirtual/MisPagos/'+this.IdMatriculaCabecera+'/'+this.IdPasarelaPago+'/int-niubiz/'+sesion]);
+            }
+            if(tarjeta.idFormaPago == 48){
+              this._router.navigate(['/AulaVirtual/MisPagos/'+this.IdMatriculaCabecera+'/'+this.IdPasarelaPago+'/int-niubiz-sec/'+sesion]);
+            }
+          }
+          if(tarjeta.idPasarelaPago == 7){
+            if(tarjeta.idFormaPago == 52){
+              this._router.navigate(['/AulaVirtual/MisPagos/'+this.IdMatriculaCabecera+'/'+this.IdPasarelaPago+'/pe-niubiz/'+sesion]);
+            }
+            if(tarjeta.idFormaPago == 48){
+              this._router.navigate(['/AulaVirtual/MisPagos/'+this.IdMatriculaCabecera+'/'+this.IdPasarelaPago+'/pe-niubiz-sec/'+sesion]);
+            }
+          }
+
 
           // if (tarjeta.idPasarelaPago == 7 || tarjeta.idPasarelaPago == 10) {
           //   if (tarjeta.idFormaPago == 52) {
@@ -405,5 +432,8 @@ export class PagoMedioPagoComponent implements OnInit, OnDestroy {
   ObtenerMedioPagoSeleccion(valor:any){
     console.log(valor)
     this.IdMedioPagoSeleccionado = valor;
+  }
+  RegresarPagosCronograma(){
+    this._router.navigate(['/AulaVirtual/MisPagos/'+this.IdMatriculaCabecera]);
   }
 }

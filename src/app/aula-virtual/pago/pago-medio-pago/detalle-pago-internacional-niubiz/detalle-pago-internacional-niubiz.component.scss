@@ -100,3 +100,37 @@
   font-weight: 500;
   border-bottom: solid 2px #f1f1f1;
 }
+.btn-back-detalle {
+  color: #FF7A00; /* Naranja inicial */
+  font-size: 13px;
+  font-weight: bold;
+  text-decoration: none;
+  cursor: pointer;
+  transition: color 0.3s ease, text-decoration 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+}
+
+.btn-back-detalle:hover {
+  color: #033DAB; /* Azul al hacer hover */
+  text-decoration: underline; /* Subrayado al hacer hover */
+}
+
+.btn-back-detalle:focus {
+  outline: none;
+}
+.medio-pago-images {
+  display: flex;
+  margin-left: 20px;
+}
+
+.medio-pago-image-container {
+  margin-left: 10px;
+}
+
+.medio-pago-image {
+  width: 50px;
+  height: auto;
+  max-height: 50px;
+  object-fit: contain;
+}
