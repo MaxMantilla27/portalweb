@@ -1,3 +1,11 @@
+  // ::ng-deep html.cdk-global-scrollblock {
+  // top: 0px !important;
+  // }
+
+  html.cdk-global-scrollblock {
+    position: initial !important;
+}
+
 .dialog-envio-encuesta-online {
   /* position: relative !important; */ /* Descomentar si es necesario */
   mat-dialog-container {
@@ -5,12 +13,14 @@
     border-radius: 15px;
     max-height: 90vh;
     overflow: hidden; /* Para evitar el overflow en el contenedor del modal */
+    
   }
 
   .scrollable-content-encuesta {
     max-height: 65vh; /* Ajusta según sea necesario */
     overflow-y: auto; /* Habilita el scroll vertical */
     padding: 10px; /* Opcional: añade un poco de padding */
+    
   }
 }
 
@@ -190,8 +200,8 @@
         align-items: center;
         cursor: pointer;
         margin: 10px 20px;
-        // width: -moz-fit-content;
-        // width: fit-content;
+        //width: -moz-fit-content;
+        //width: fit-content;
         font-size: 14px;
         i{
           margin-right: 10px;
@@ -202,7 +212,7 @@
         align-items: center;
         cursor: pointer;
         margin: 10px 20px;
-        // width: fit-content;
+        width: fit-content;
         font-size: 14px;
         i{
           margin-right: 10px;
@@ -253,7 +263,6 @@
       padding: 0px;
   }
   .InputsOnlineCuestionario
-    > .mat-focused
     > div.mat-form-field-wrapper
     > div.mat-form-field-flex
     > div.mat-form-field-infix
@@ -454,30 +463,43 @@
   .example-list {
     width: 500px;
     max-width: 100%;
-    border: solid 1px #ccc;
+    //border: solid 1px #ccc;
     min-height: 60px;
-    display: block;
-    //gap: 10px;
-    background: rgb(199, 163, 163);
-    border-radius: 4px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    border-radius: 10px;
     overflow: none;
     margin-bottom: 50px;
   }
   
   .example-box {
-    padding: 20px 10px;
-    border-bottom: solid 1px rgb(33, 24, 110);
+    padding: 14px 20px;
     color: rgba(0, 0, 0, 0.87);
     display: flex;
-    //margin-bottom: 20px;
+    background: rgba(245, 245, 245, 0.863);
     gap: 15px;
     flex-direction: row;
     align-items: center;
     justify-content: start;
     box-sizing: border-box;
-    cursor: move;
-    background: white;
     font-size: 14px;
+    border-radius: 6px;
+    .valor{
+
+      width: 20px; /* Ajusta este valor según el tamaño que desees */
+      height: 20px; /* El mismo valor que width para que sea un círculo perfecto */
+      border-radius: 50%; /* Hace que el elemento sea un círculo */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      background-color: #2367A6; /* Color de fondo del círculo */
+      font-size: 12px; /* Tamaño de fuente del número */
+      font-weight: 500;
+      color: white;
+    }
+
   }
   
   .cdk-drag-preview {

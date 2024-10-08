@@ -56,6 +56,14 @@ export class EnvioEncuestaOnlineComponent implements OnInit  {
   public ListaJerarquico: string[] = []
 
   ngOnInit(): void {
+
+    setTimeout(() => {
+      const modalContent = document.querySelector('.mat-dialog-content');
+      if (modalContent) {
+        modalContent.scrollTop = 0; // Forzar scroll al inicio
+      }
+    }, 0);
+
     console.log(this.data);
     this.EncuestaAvance.categorias = [];
     this.EncuestaAvance.inicio = true;
@@ -74,7 +82,7 @@ export class EnvioEncuestaOnlineComponent implements OnInit  {
           }
           pregunta.respuesta = [];
           let vaRes: Array<any> = [];
-
+          
           respuestasEncuesta.forEach((respuesta: any) => {
             console.log(respuesta);
             if (pregunta.id === respuesta.idPreguntaEncuesta) {
@@ -103,10 +111,14 @@ export class EnvioEncuestaOnlineComponent implements OnInit  {
               else if (pregunta.idPreguntaEncuestaTipo === 4) {
                 pregunta.valorRanking = [respuesta.valor]; // Asume que el valor es un número de ranking
               }
-              else if (pregunta.nombreTipoPregunta === 'Orden Jerarquico' || pregunta.idPreguntaEncuestaTipo==5 ) {
+              else if (pregunta.idPreguntaEncuestaTipo==5 ) {
+                 
+                 pregunta.alternativas.forEach((alternativa:any,index:any)=>{
 
-                
-
+                  if (alternativa.orden == respuesta.puntos) {
+                    return alternativa.respuesta = respuesta.valor;
+                  }   
+                 })
               }
 
             }
@@ -170,54 +182,10 @@ export class EnvioEncuestaOnlineComponent implements OnInit  {
     }
   }
 
-
-  ListaDragDrop = [
-    {peliculas : [
-      { id: 1, nombre: 'Episodio I - La amenaza fantasma' },
-      { id: 2, nombre: 'Episodio II - El ataque de los clones' },
-      { id: 3, nombre: 'Episodio III - La venganza de los Sith' },
-    ]},
-    {peliculas : [
-      { id: 4, nombre: 'Episodio IV - Una nueva esperanza' },
-      { id: 5, nombre: 'Episodio V - El Imperio contraataca' },
-      { id: 6, nombre: 'Episodio VI - El regreso del Jedi' },
-
-    ]},
-    {peliculas:[
-      { id: 7, nombre: 'Episodio VII - El despertar de la fuerza' },
-      { id: 8, nombre: 'Episodio VIII - Los últimos Jedi' },
-      { id: 9, nombre: 'Episodio IX - El ascenso de Skywalker' }
-    ]}
-  ]
-
-
-  movies = [
-    'Episode I - The Phantom Menace',
-    'Episode II - Attack of the Clones',
-    'Episode III - Revenge of the Sith',
-    'Episode IV - A New Hope',
-    'Episode V - The Empire Strikes Back',
-    'Episode VI - Return of the Jedi',
-    'Episode VII - The Force Awakens',
-    'Episode VIII - The Last Jedi',
-    'Episode IX – The Rise of Skywalker',
-  ];
-  
-
   // Cambiamos el tipo del array de string[] a un array de objetos
   drop(evento: CdkDragDrop<any>) {
-    console.log(evento);
-    //console.log(data);
-    console.log(evento.previousIndex);
-    console.log(evento.currentIndex);
     moveItemInArray(evento.container.data,evento.previousIndex, evento.currentIndex);
-    
-
-    //this.appRef.tick();
-    //this.cdr.detectChanges();
   }
-
-
 
   AddToAvance() {
     if (this.data.EncuestaEnviada !== true) {
@@ -289,16 +257,18 @@ export class EnvioEncuestaOnlineComponent implements OnInit  {
             }; // Guardar ranking como número
             preguntaObjInicial.valorRespuesta.push(respuestaObj);
           } else if (p.idPreguntaEncuestaTipo===5) {
-
+            let c=1;
             p.alternativas.forEach((a: any) => {
+              
               if (a) {
                 const respuestaObj: EncuestaAvancePreguntaRespuestaDTO = {
                   idRespuesta: a.id,
-                  puntaje: a.puntaje,
-                  respuesta: a.id.toString(),
+                  puntaje: c,
+                  respuesta: a.respuesta
                 };
                 preguntaObjInicial.valorRespuesta.push(respuestaObj);
               }
+              c++
             });
 
           }

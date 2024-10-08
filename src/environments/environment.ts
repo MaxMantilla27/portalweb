@@ -4,6 +4,7 @@
 
 export const environment = {
   production: false,
+  //url_api:'https://prepublicacion-portalapi.bsginstitute.com/api/',
   url_api: 'https://localhost:7177/api/',
   //url_api:'https://localhost:7177/api/',
   //url_api_integra:'https://localhost:5001/api/',
