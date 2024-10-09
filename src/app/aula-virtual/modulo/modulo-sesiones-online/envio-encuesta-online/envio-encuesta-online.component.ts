@@ -58,11 +58,11 @@ export class EnvioEncuestaOnlineComponent implements OnInit  {
   ngOnInit(): void {
 
     setTimeout(() => {
-      const modalContent = document.querySelector('.mat-dialog-content');
+      const modalContent = document.querySelector('.scrollable-content-encuesta');
       if (modalContent) {
         modalContent.scrollTop = 0; // Forzar scroll al inicio
       }
-    }, 0);
+    }, 300);
 
     console.log(this.data);
     this.EncuestaAvance.categorias = [];
@@ -84,7 +84,6 @@ export class EnvioEncuestaOnlineComponent implements OnInit  {
           let vaRes: Array<any> = [];
           
           respuestasEncuesta.forEach((respuesta: any) => {
-            console.log(respuesta);
             if (pregunta.id === respuesta.idPreguntaEncuesta) {
               // Casilla de texto
               if (pregunta.idPreguntaEncuestaTipo === 3) {
@@ -208,7 +207,7 @@ export class EnvioEncuestaOnlineComponent implements OnInit  {
         this.EncuestaAvance.categorias.push(categoriaObjInicial);
 
         categoria.preguntas.forEach((p: any) => {
-          console.log(p)
+          
           const preguntaObjInicial: EncuestaAvancePreguntaDTO = {
             idPregunta: p.id,
             pregunta: p.pregunta,
@@ -313,4 +312,8 @@ export class EnvioEncuestaOnlineComponent implements OnInit  {
         complete: () => {},
       });
   }
+
+  
+
+
 }

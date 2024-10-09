@@ -1,4 +1,4 @@
-import { Component, HostListener, Input, OnChanges, OnDestroy, OnInit, SimpleChanges, ViewEncapsulation } from '@angular/core';
+import { AfterViewInit, Component, HostListener, Input, OnChanges, OnDestroy, OnInit, Renderer2, SimpleChanges, ViewChild, ViewEncapsulation } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Subject, takeUntil } from 'rxjs';
 import { DatosPerfilService } from 'src/app/Core/Shared/Services/DatosPerfil/datos-perfil.service';
@@ -18,7 +18,9 @@ import { EnvioEncuestaOnlineComponent } from './envio-encuesta-online/envio-encu
   styleUrls: ['./modulo-sesiones-online.component.scss'],
   encapsulation: ViewEncapsulation.None,
 })
-export class ModuloSesionesOnlineComponent implements OnInit , OnChanges,OnDestroy {
+export class ModuloSesionesOnlineComponent implements OnInit , OnChanges,OnDestroy  {
+
+
   private signal$ = new Subject();
   constructor(
     private _DatosPerfilService:DatosPerfilService,
@@ -26,7 +28,8 @@ export class ModuloSesionesOnlineComponent implements OnInit , OnChanges,OnDestr
     private _PEspecificoEsquemaService:PEspecificoEsquemaService,
     private _PespecificoSesionTemaService:PespecificoSesionTemaService,
     public dialog: MatDialog,
-    public _SnackBarServiceService:SnackBarServiceService
+    public _SnackBarServiceService:SnackBarServiceService,
+    private renderer: Renderer2
   ) { }
   public scroll=0
   public ZonaHorariaOrigenWebex:any
@@ -36,6 +39,8 @@ export class ModuloSesionesOnlineComponent implements OnInit , OnChanges,OnDestr
     this.signal$.next(true)
     this.signal$.complete()
   }
+ 
+ 
   ngOnChanges(changes: SimpleChanges): void {
     if(this.IdPespecifico>0){
       this.ObtenerDatosZonaHoraria()
@@ -62,6 +67,7 @@ export class ModuloSesionesOnlineComponent implements OnInit , OnChanges,OnDestr
   public EncuestaEnviada=false;
   ngOnInit(): void {
   }
+  
   OpenSesion(index:number){
     this.sesiones[index].Open=!this.sesiones[index].Open
     if(this.sesiones[index].Open==true){
@@ -183,6 +189,9 @@ export class ModuloSesionesOnlineComponent implements OnInit , OnChanges,OnDestr
         this.ObtenerActividadesRecursoSesionAlumno(this.sesiones[indexSesion].idSesion,indexSesion)
       }
     });
+
+    
+
   }
   //simulacion encuestas
   ObtenerSesionesOnlineWebinarPorIdPespecifico(){

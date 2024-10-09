@@ -18,7 +18,7 @@
 
   .scrollable-content-encuesta {
     max-height: 65vh; /* Ajusta según sea necesario */
-    overflow-y: auto; /* Habilita el scroll vertical */
+    overflow-y: scroll; /* Habilita el scroll vertical */
     padding: 10px; /* Opcional: añade un poco de padding */
     
   }
