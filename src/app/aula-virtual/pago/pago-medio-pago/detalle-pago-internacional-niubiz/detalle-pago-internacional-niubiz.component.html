@@ -4,7 +4,9 @@
   <div class="container">
     <div class="row" style="padding: 20px 90px 20px 20px !important">
       <div class="col-12 col-md-12 col-lg-12">
-        <a class="btn-back-detalle" (click)="RegresarPasarela()">&#8249; Volver Atrás</a>
+        <a class="btn-back-detalle" (click)="RegresarPasarela()"
+          >&#8249; Volver Atrás</a
+        >
         <div class="titleCronograma">Confirma tu compra</div>
         <div class="titleCronogramaCurso" *ngIf="resultNiubiz != undefined">
           {{ resultNiubiz.nombrePrograma }}
@@ -22,7 +24,7 @@
     <div class="col-12 row">
       <div class="col-12 col-md-6 col-lg-6 inputPagoVisa">
         <div class="subtitlePagoVisa" style="border: none !important">
-          Pago realizado por:
+          Ingresa tus datos como aparece en tu tarjeta dde crédito o débito:
         </div>
         <ng-container>
           <mat-form-field
@@ -34,9 +36,7 @@
             <mat-label>Nombres</mat-label>
             <input
               type="text"
-              style="color: #878787"
-              [value]="resultNiubiz.registroAlumno.nombre"
-              disabled
+              [(ngModel)]="resultNiubiz.registroAlumno.nombre"
               matInput
             />
           </mat-form-field>
@@ -49,9 +49,7 @@
             <mat-label>Apellidos</mat-label>
             <input
               type="text"
-              style="color: #878787"
-              [value]="resultNiubiz.registroAlumno.apellido"
-              disabled
+              [(ngModel)]="resultNiubiz.registroAlumno.apellido"
               matInput
             />
           </mat-form-field>
@@ -64,40 +62,10 @@
             <mat-label>E-mail</mat-label>
             <input
               type="text"
-              style="color: #878787"
-              [value]="resultNiubiz.registroAlumno.correo"
-              disabled
+              [(ngModel)]="resultNiubiz.registroAlumno.correo"
               matInput
             />
           </mat-form-field>
-          <ng-container *ngIf="jsonSave.Comprobante != false">
-            <mat-form-field
-              appearance="outline"
-              [floatLabel]="'always'"
-              style="width: 100%"
-            >
-              <mat-label>Razón Social</mat-label>
-              <input
-                type="text"
-                [(ngModel)]="jsonSave.RazonSocial"
-                placeholder="Razón Social"
-                matInput
-              />
-            </mat-form-field>
-            <mat-form-field
-              appearance="outline"
-              [floatLabel]="'always'"
-              style="width: 100%"
-            >
-              <mat-label>Número Tributario</mat-label>
-              <input
-                type="text"
-                [(ngModel)]="jsonSave.CodigoTributario"
-                placeholder="Número Tributario"
-                matInput
-              />
-            </mat-form-field>
-          </ng-container>
         </ng-container>
       </div>
       <div class="col-12 col-md-6 col-lg-6">
@@ -147,19 +115,6 @@
           flex-direction: column;
         "
       >
-        <!-- <form
-          ngNoForm
-          (submit)="pagar()"
-          id="visa"
-          [action]="
-            'https://proceso-pago.bsginstitute.com/ProcesoPagoVisa/Index?IdTransaccion=' +
-            json.IdentificadorTransaccion
-          "
-          [method]="'post'"
-          channel="'paycard'"
-          style="text-align: center"
-          target="_blank"
-        ></form> -->
         <div id="visa">
           <app-default-button
             [confs]="{ color: 'visa', titulo: 'Paga Aquí' }"
@@ -210,19 +165,16 @@
     </div>
 
     <!-- Columna vacía de 5 -->
-    <div class="col-12 col-md-5 col-5" style="padding: 20px;">
-      <div>
-        Métodos de pago aceptados:
-      </div>
-      <div class="medio-pago-images" style="padding-top: 10px;">
+    <div class="col-12 col-md-5 col-5" style="padding: 20px">
+      <div>Métodos de pago aceptados:</div>
+      <div class="medio-pago-images" style="padding-top: 10px">
         <div
           *ngFor="let tarjeta of tarjetas"
           class="medio-pago-image-container"
         >
           <img
             *ngIf="
-              tarjeta.medioPago == 'Visa' ||
-              tarjeta.medioPago == 'MasterCard'
+              tarjeta.medioPago == 'Visa' || tarjeta.medioPago == 'MasterCard'
             "
             [src]="'../../../../assets/icons/' + tarjeta.img"
             alt="Imagen de tarjeta"
