@@ -148,6 +148,7 @@ import { ChargePuntosComponent } from './Containers/Dialog/charge-puntos/charge-
 import { RemovePuntoComaPipe } from './Pipes/remove-punto-coma.pipe';
 import { ChargeSpinnerComponent } from './Containers/Dialog/charge-spinner/charge-spinner.component';
 import { RemovePortalCriterioPipe } from './Pipes/remove-portal-criterio.pipe';
+import { FormatoMilesDecimalesPipe } from './Pipes/formato-miles-decimales.pipe';
 
 @NgModule({
   imports: [
@@ -257,7 +258,8 @@ import { RemovePortalCriterioPipe } from './Pipes/remove-portal-criterio.pipe';
     ChargePuntosComponent,
     RemovePuntoComaPipe,
     ChargeSpinnerComponent,
-    RemovePortalCriterioPipe
+    RemovePortalCriterioPipe,
+    FormatoMilesDecimalesPipe
     //ChatZComponent,
   ],
   exports: [
@@ -361,7 +363,8 @@ import { RemovePortalCriterioPipe } from './Pipes/remove-portal-criterio.pipe';
     MatSlideToggleModule,
     ImagenModalComponent,
     RemovePuntoComaPipe,
-    RemovePortalCriterioPipe
+    RemovePortalCriterioPipe,
+    FormatoMilesDecimalesPipe
   ],
   providers: [
     SessionStorageService,
@@ -410,7 +413,8 @@ import { RemovePortalCriterioPipe } from './Pipes/remove-portal-criterio.pipe';
     PespecificoSesionTemaService,
     PEspecificoEsquemaService,
     PEspecificoSesionRecursoConectividadService,
-    RemovePortalCriterioPipe
+    RemovePortalCriterioPipe,
+    FormatoMilesDecimalesPipe
   ],
 })
 export class SharedModule {

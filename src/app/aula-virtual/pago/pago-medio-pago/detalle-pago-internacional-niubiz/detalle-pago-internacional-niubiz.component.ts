@@ -38,6 +38,7 @@ export class DetallePagoInternacionalNiubizComponent implements OnInit, OnDestro
   };
   public url = '/AulaVirtual/PagoExitoso/';
   public urlBase = environment.url_portal;
+  public urlProcesoPago = environment.url_portalv3;
   public kryptonScriptLoaded = false;
   public CompletamenteCargado = false;
   public DataComprobante: any = {};
@@ -125,7 +126,15 @@ export class DetallePagoInternacionalNiubizComponent implements OnInit, OnDestro
           if (this.resultNiubiz.estadoOperacion.toLowerCase() !== 'sent') {
             this._router.navigate(['/AulaVirtual/MisCursos/', this.IdMatriculaCabecera]);
           }
-          this.resultNiubiz.total = this.resultNiubiz.listaCuota[0]?.cuotaTotal || 0;
+          this.resultNiubiz.total=0;
+          if(this.resultNiubiz.listaCuota!=undefined){
+            this.resultNiubiz.listaCuota.forEach((l:any) => {
+              this.resultNiubiz.total+=l.cuotaTotal
+            });
+          }
+          else{
+            this.resultNiubiz.total=this.resultNiubiz.montoTotal
+          }
           this.actualizarJsonSave();
         },
       });
@@ -189,7 +198,7 @@ export class DetallePagoInternacionalNiubizComponent implements OnInit, OnDestro
         cardholderlastname: `${this.resultNiubiz.registroAlumno.apellido}`,
         cardholderemail: `${this.resultNiubiz.registroAlumno.correo}`,
         usertoken: `${this.resultNiubiz.registroAlumno.idAlumno}`,
-        action: `https://localhost:44373/ProcesoPagoVisa/Index?IdTransaccion=${this.json.IdentificadorTransaccion}`,
+        action: `${this.urlProcesoPago}rocesoPagoVisa/Index?IdTransaccion=${this.json.IdentificadorTransaccion}`,
         complete: (params: any) => {
           console.log(params);
           alert(JSON.stringify(params));

@@ -11,6 +11,7 @@ export interface RegistroPreProcesoPagoDTO {
   ListaCuota: Array<RegistroPreProcesoPagoCuotaDTO>;
   TipoComprobante?: boolean;
   CodigoTributario?: string;
+  RazonSocial?: string;
   TipoMedioPagoAdicional?:number
 }
 export interface PagoOrganicoAlumnoDTO {
