@@ -68,8 +68,8 @@
                   <th style="min-width: 60px">Monto</th>
                   <th style="min-width: 60px">Mora</th>
                   <th style="min-width: 60px">Fecha de Vencimiento</th>
-                  <th style="min-width: 60px">Fecha de Pago</th>
                   <th style="min-width: 60px">Estado</th>
+                  <th style="min-width: 60px">Fecha de Pago</th>
                 </tr>
               </thead>
               <tr
@@ -97,8 +97,8 @@
                 </td>
                 <td>{{ item.numeroCuotaMostrar }}</td>
                 <td>{{ item.codigoMoneda }}</td>
-                <td>{{ FormatoMilesDecimales(item.cuota) }}</td>
-                <td>{{ FormatoMilesDecimales(item.moraCalculada) }}</td>
+                <td>{{ item.cuota | formatoMilesDecimales }}</td>
+                <td>{{ item.moraCalculada | formatoMilesDecimales }}</td>
                 <td>{{ item.fechaVencimiento | date : "dd/MM/yyyy" }}</td>
                 <td>
                   <ng-container
@@ -284,9 +284,103 @@
                 </ng-container>
               </div>
             </div>
+            <div *ngIf="RecurrenciaActiva"
+              class="row"
+              style="justify-content: center; padding: 10px 10px 0px 10px"
+            >
+              <div class="col-12 col-md-10 col-lg-10" style="display: flex">
+                <div class="col-1">
+                  <i
+                    class="material-icons"
+                    style="cursor: pointer"
+                    *ngIf="pagoRecurrenteActivado == false"
+                    (click)="pagoRecurrenteActivado = true"
+                    >check_box_outline_blank</i
+                  >
+                  <i
+                    class="material-icons"
+                    style="cursor: pointer"
+                    *ngIf="pagoRecurrenteActivado == true"
+                    (click)="pagoRecurrenteActivado = false"
+                    style="color: #0076ff"
+                    >check_box</i
+                  >
+                </div>
+                <div class="col-11" style="position: relative">
+                  <div style="font-weight: bold">
+                    <span
+                      style="
+                        display: inline-block;
+                        color: #4a4a49;
+                        margin-right: 5px;
+                        margin-left: 5px;
+                      "
+                      >Afiliarme a
+                    </span>
+                    <span style="display: inline-block; color: #0076ff"
+                      >pagos recurrentes
+                      <i
+                        class="material-icons"
+                        style="
+                          vertical-align: middle;
+                          cursor: pointer;
+                          color: #0076ff;
+                        "
+                        (mouseover)="showTooltip = true"
+                        (mouseleave)="showTooltip = false"
+                        (touchstart)="showTooltip = true"
+                        (touchend)="showTooltip = false"
+                        ontouchstart="void(0)"
+                        ontouchend="void(0)"
+                        >info</i
+                      >
+                    </span>
+                  </div>
+                  <div
+                    *ngIf="showTooltip"
+                    style="
+                      position: absolute;
+                      background-color: #eff8ff;
+                      border: solid 2px #0076ff;
+                      border-radius: 15px;
+                      padding: 10px;
+                      z-index: 1;
+                      margin-top: -90px;
+                      width: auto;
+                      max-width: 90vw;
+                      white-space: normal;
+                    "
+                  >
+                    Paga siempre puntual. Tu pago se realizará de manera
+                    automática.
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
 
           <div
+            *ngIf="pagoRecurrenteActivado"
+            class="row"
+            style="justify-content: center; padding: 0px 15px 0px 15px"
+          >
+            <div
+              class="col-12 col-md-10 col-lg-10 CardPagoMisPagos"
+              style="border-color: transparent !important; width: 25rem"
+            >
+              <div style="justify-content: center; display: flex">
+                <app-default-button
+                  [disabled]="total == 0"
+                  [confs]="{ color: 'primary', titulo: 'Continuar' }"
+                  [style]="'margin-top: 20px;padding: 0px 40px;'"
+                  (ButtoclClick)="OpenModalMetodoPagoSucripcion()"
+                >
+                </app-default-button>
+              </div>
+            </div>
+          </div>
+          <div
+            *ngIf="!pagoRecurrenteActivado"
             class="row"
             style="justify-content: center; padding: 0px 15px 0px 15px"
           >
@@ -340,7 +434,7 @@
                     </div>
                     <div class="col-4">
                       {{
-                        FormatoMilesDecimales(item.cuota + item.moraCalculada)
+                        item.cuota + item.moraCalculada|formatoMilesDecimales
                       }}
                       {{ CronogramaPago.registroCuota[0].codigoMoneda }}
                     </div>
@@ -349,7 +443,7 @@
                 <div class="col-12 row tot sub">
                   <div class="col-8">Total a pagar</div>
                   <div class="col-4">
-                    {{ FormatoMilesDecimales(total) }}
+                    {{ total|formatoMilesDecimales }}
                     {{ CronogramaPago.registroCuota[0].codigoMoneda }}
                   </div>
                 </div>

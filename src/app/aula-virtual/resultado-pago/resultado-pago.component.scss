@@ -18,13 +18,13 @@
   }
 }
 .contentCardPago{
-  margin-top: 10px;
+  margin-top: 2px;
   font-size: 15px;
 }
 .cardPago{
-  padding: 30px 15px;
-  border: solid 2px #c9c9c9;
-  border-radius: 25px;
+  padding: 0px 15px;
+  border: solid 2px transparent;
+  border-radius: 10px;
   width: 60vw;
 }
 .itemValueCardPago{
@@ -42,7 +42,8 @@
 .responsive-button-Pagos {
   border-color: transparent;
   border-radius: 25px;
-  width: 14vw; /* O el ancho que desees */
+  width: 20vw; /* O el ancho que desees */
+  font-size: 13px;
 }
 
 /* Media query para pantallas de hasta 768px */
@@ -57,4 +58,14 @@
     width: 80%; /* Cambiar el valor según necesites */
     max-width: 200px; /* Ajusta el máximo ancho del botón si lo deseas */
   }
+}
+.titleCronograma {
+  font-size: 25px;
+  font-weight: 600;
+  border-bottom: solid 2px #f1f1f1;
+}
+.titleCronogramaCurso {
+  font-size: 20px;
+  font-weight: 500;
+  border-bottom: solid 2px #f1f1f1;
 }

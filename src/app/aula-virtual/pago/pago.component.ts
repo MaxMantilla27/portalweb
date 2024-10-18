@@ -116,7 +116,13 @@ export class PagoComponent implements OnInit,OnDestroy {
   public IdPasarelaPago=0;
   public IdPaisPasarela=0
   public Paises:any
+  public RecurrenciaActiva=false
+  public fechaDiaActual = new Date();
+  public diaActual = this.fechaDiaActual.getDate();        // Día actual
+  public mesActual = this.fechaDiaActual.getMonth() + 1;   // Mes actual (getMonth() devuelve 0-11, por eso sumamos 1)
+  public anioActual = this.fechaDiaActual.getFullYear();
   ngOnInit(): void {
+
     this._HelperService.recibirDataPais
       .pipe(takeUntil(this.signal$))
       .subscribe({
@@ -249,6 +255,7 @@ export class PagoComponent implements OnInit,OnDestroy {
     })
   }
   ChangeEstadoCronograma(registro:any){
+    this.RecurrenciaActiva=false
     console.log(registro)
     var select=this.CronogramaPago.registroCuota[registro.index];
     if(select.cancelado!=true){
@@ -276,6 +283,56 @@ export class PagoComponent implements OnInit,OnDestroy {
           select.estado=true
         }
       }
+    }
+    console.log('IdPasarelaPago:',this.IdPasarelaPago)
+    if(this.IdPasarelaPago==5 ||
+      this.IdPasarelaPago==7 ||
+      this.IdPasarelaPago==10 ||
+      this.IdPasarelaPago==13 ||
+      this.IdPasarelaPago==16 ||
+      this.IdPasarelaPago==18
+      ){
+      let CuotasSeleccionadas=0
+      let ValorCuotaMora=0
+      this.CronogramaPago.registroCuota.forEach((c:any,index:number) => {
+        if(c.estado){
+          if(CuotasSeleccionadas==0){
+            ValorCuotaMora=c.cuota+c.moraCalculada
+            let fechaVencimiento = new Date(c.fechaVencimiento);
+            let diaVencimiento = fechaVencimiento.getDate();       // Día de vencimiento
+            let mesVencimiento = fechaVencimiento.getMonth() + 1;  // Mes de vencimiento
+            let anioVencimiento = fechaVencimiento.getFullYear();
+           // Verificar si la cuota es la última del listado
+           console.log(index)
+           console.log(ValorCuotaMora)
+           const esUltimaCuota = (index === this.CronogramaPago.registroCuota.length - 1);
+           console.log(esUltimaCuota)
+           console.log(this.diaActual)
+           console.log(this.mesActual)
+           console.log(this.anioActual)
+           console.log(diaVencimiento)
+           console.log(mesVencimiento)
+           console.log(anioVencimiento)
+           console.log(this.diaActual <= diaVencimiento  && this.mesActual <= mesVencimiento  && this.anioActual <= anioVencimiento)
+           if (this.diaActual <= diaVencimiento  && this.mesActual <= mesVencimiento  && this.anioActual <= anioVencimiento) {
+               if (CuotasSeleccionadas == 0 && esUltimaCuota) {
+                  this.RecurrenciaActiva = false;
+               } else {
+                   this.RecurrenciaActiva = true;
+               }
+           }
+          }
+          else{
+            this.RecurrenciaActiva=false
+            this.pagoRecurrenteActivado=false
+          }
+          CuotasSeleccionadas++
+        }
+        if(ValorCuotaMora!=c.cuota+c.moraCalculada){
+          this.RecurrenciaActiva=false
+          this.pagoRecurrenteActivado=false
+        }
+      });
     }
     this.sumarMontos()
     this._SessionStorageService.SessionDeleteValue('listaCronogramaPagos');
@@ -320,7 +377,6 @@ export class PagoComponent implements OnInit,OnDestroy {
         next: (x) => {
           console.log(x)
           this.IdPasarelaPago=x[0].idPasarelaPago
-          console.log(this.IdPasarelaPago)
           this.validadorPagosMultiples = x.filter(
             (item: any) =>
               item.idPasarelaPago === 7 ||
@@ -344,8 +400,6 @@ export class PagoComponent implements OnInit,OnDestroy {
       });
   }
   onChangeRadioButton(event:any){
-    console.log('Cambiaraaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',event)
-    this.pagoRecurrenteActivado=false;
     this.medioPagoSeleccionado=event;
   }
   EnviarSolicitudMedioPago(){
@@ -357,13 +411,18 @@ export class PagoComponent implements OnInit,OnDestroy {
     });
     setTimeout(() => {
       dialogRef.close();
-      console.log(this.IdPasarelaPago)
-    console.log('Datos de pasarela:',this.medioPagoSeleccionado)
-
-      if(this.IdPasarelaPago==7||this.IdPasarelaPago==10){
+      console.log('Datos de pasarela:',this.medioPagoSeleccionado)
+      if(this.IdPasarelaPago==7||this.IdPasarelaPago==10 || this.IdPasarelaPago==1){
         this._router.navigate(['/AulaVirtual/MisPagos/'+this.idMatricula+'/'+this.IdPasarelaPago]);
       }
-      if(this.IdPasarelaPago==13 || this.IdPasarelaPago==18){
+      if(this.IdPasarelaPago==13 ||
+        this.IdPasarelaPago==18 ||
+        this.IdPasarelaPago==5 ||
+        this.IdPasarelaPago==16 ||
+        this.IdPasarelaPago==11 ||
+        this.IdPasarelaPago==17 ||
+        this.IdPasarelaPago==2
+      ){
 
         this.EnviarSolicitudPago()
       }
@@ -411,6 +470,8 @@ export class PagoComponent implements OnInit,OnDestroy {
   obtenerTarjetas(){
     this._MedioPagoActivoPasarelaService.MedioPagoPasarelaPortalCronograma(this.idMatricula).pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
+        console.log(x)
+        this.IdPasarelaPago=x[0].idPasarelaPago;
         this.validadorPagosMultiples = x.filter((item:any) => item.idPasarelaPago === 7 || item.idPasarelaPago === 10);
         this.validadorPagosChile = x.filter((item:any) => item.idPasarelaPago === 11 || item.idPasarelaPago === 17).length > 0 ? true : false;
         this.tarjetas=x
@@ -567,6 +628,18 @@ export class PagoComponent implements OnInit,OnDestroy {
         }
         if(parseInt(tarjeta.idPasarelaPago)==16){
           this._router.navigate(['/AulaVirtual/MisPagos/'+this.idMatricula+'/'+this.IdPasarelaPago+'/col-openpay/'+sesion]);
+        }
+        if(parseInt(tarjeta.idPasarelaPago)==11){
+          this._router.navigate(['/AulaVirtual/MisPagos/'+this.idMatricula+'/'+this.IdPasarelaPago+'/chi-webpay/'+sesion]);
+        }
+        if(parseInt(tarjeta.idPasarelaPago)==17){
+          this._router.navigate(['/AulaVirtual/MisPagos/'+this.idMatricula+'/'+this.IdPasarelaPago+'/chi-mercadopago/'+sesion]);
+        }
+        if(parseInt(tarjeta.idPasarelaPago)==2){
+          this._router.navigate(['/AulaVirtual/MisPagos/'+this.idMatricula+'/'+this.IdPasarelaPago+'/col-wompi/'+sesion]);
+        }
+        if(parseInt(tarjeta.idPasarelaPago)==1){
+          this._router.navigate(['/AulaVirtual/MisPagos/'+this.idMatricula+'/'+this.IdPasarelaPago+'/col-payu/'+sesion]);
         }
 
         // if(tarjeta.idPasarelaPago==7 || tarjeta.idPasarelaPago==10){
@@ -956,18 +1029,6 @@ export class PagoComponent implements OnInit,OnDestroy {
       }
 
     }
-  }
-  FormatoMilesDecimales(num: number): string {
-    // Separar parte entera y decimal
-    const parts = Number(num).toFixed(2).split('.');
-    let integerPart = parts[0];
-    const decimalPart = parts[1];
-
-    // Agregar separadores de miles
-    integerPart = integerPart.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-
-    // Combinar parte entera y decimal
-    return integerPart + '.' + decimalPart;
   }
   GetIdPaisProCodigo(): number {
     var idp = 0;

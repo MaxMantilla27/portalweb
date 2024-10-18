@@ -56,7 +56,7 @@
             </ng-container>
           </ng-container> -->
           <div class="textC">Si tiene alguna consulta adicional, escriba un correo a: <a
-              href="mailto:matriculas@bsginstitute.com">matriculas@bsginstitute.com</a></div>
+              href="mailto:{{correoMatriculas}}">{{correoMatriculas}}</a></div>
         </div>
         <div class="row"  style="margin-top: 10px;">
           <div class="col-12 col-md-6 col-lg-6" style="display: flex;justify-content: center;">
@@ -87,7 +87,7 @@
             <div class="col-12 col-md-5 col-lg-4"><b>Nro. de Compra:</b></div>
             <div class="col-12 col-md-7 col-lg-8 itemValueCardPago">{{resultVisa.identificadorTransaccion}}</div>
             <div class="col-12 col-md-5 col-lg-4"><b>Monto:</b></div>
-            <div class="col-12 col-md-7 col-lg-8 itemValueCardPago">{{FormatoMilesDecimales(resultVisa.montoTotal)}}</div>
+            <div class="col-12 col-md-7 col-lg-8 itemValueCardPago">{{resultVisa.montoTotal|formatoMilesDecimales}}</div>
             <div class="col-12 col-md-5 col-lg-4"><b>Moneda:</b></div>
             <div class="col-12 col-md-7 col-lg-8 itemValueCardPago">{{resultVisa.monedaCorreo}}</div>
             <div class="col-12 col-md-5 col-lg-4"><b>Nombres y Apellidos:</b></div>

@@ -16,12 +16,12 @@
                 <div *ngFor="let item of resultVisa.listaCuota;index as i">
                   <div class="col-12 row itms" *ngIf="i==0">
                     <div class="col-8">{{item.nombre}}</div>
-                    <div class="col-4" style="text-align: right;">{{FormatoMilesDecimales(item.cuotaTotal)}} {{resultVisa.monedaCorreo}}</div>
+                    <div class="col-4" style="text-align: right;">{{item.cuotaTotal|formatoMilesDecimales}} {{resultVisa.monedaCorreo}}</div>
                   </div>
                 </div>
                 <div class="col-12 row tot">
                   <div class="col-8">Total a pagar</div>
-                  <div class="col-4" style="text-align: right;">{{FormatoMilesDecimales(resultVisa.total)}} {{resultVisa.monedaCorreo}}</div>
+                  <div class="col-4" style="text-align: right;">{{resultVisa.total|formatoMilesDecimales}} {{resultVisa.monedaCorreo}}</div>
                 </div>
               </div>
             </div>
@@ -111,12 +111,12 @@
                 <div *ngFor="let item of resultVisa.listaCuota,index as i">
                   <div class="col-12 row itms"  *ngIf="i==0">
                     <div class="col-8">{{item.nombre}}</div>
-                    <div class="col-4" style="text-align: right;">{{FormatoMilesDecimales(item.cuotaTotal)}} {{resultVisa.monedaCorreo}}</div>
+                    <div class="col-4" style="text-align: right;">{{item.cuotaTotal|formatoMilesDecimales}} {{resultVisa.monedaCorreo}}</div>
                   </div>
                 </div>
                 <div class="col-12 row tot">
                   <div class="col-8">Total a pagar</div>
-                  <div class="col-4" style="text-align: right;">{{FormatoMilesDecimales(resultVisa.total)}} {{resultVisa.monedaCorreo}}</div>
+                  <div class="col-4" style="text-align: right;">{{resultVisa.total|formatoMilesDecimales}} {{resultVisa.monedaCorreo}}</div>
                 </div>
               </div>
             </div>

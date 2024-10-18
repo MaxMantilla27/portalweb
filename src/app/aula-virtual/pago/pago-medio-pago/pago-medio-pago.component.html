@@ -164,6 +164,79 @@
           </div>
         </ng-container>
       </ng-container>
+      <ng-container *ngIf="IdPasarelaPago == 1">
+        <ng-container class="row">
+          <div class="col-12 containerCardsMedioPago">
+            <!-- Tarjeta 1 -->
+            <div
+              class="medio-pago-card"
+              [ngClass]="{ selected: IdMedioPagoSeleccionado === 0 }"
+            >
+              <div class="medio-pago-content">
+                <mat-radio-button
+                  (change)="ObtenerMedioPagoSeleccion(0)"
+                  class="m-2"
+                  color="primary"
+                  [checked]="IdMedioPagoSeleccionado === 0"
+                ></mat-radio-button>
+              </div>
+              <label for="pagoTarjeta" class="medio-pago-label">
+                Pago con tarjeta de crédito y débito con PayU
+              </label>
+              <div class="medio-pago-images">
+                <div
+                  *ngFor="let tarjeta of tarjetas"
+                  class="medio-pago-image-container"
+                >
+                  <img
+                    *ngIf="
+                      tarjeta.medioPago == 'Visa' ||
+                      tarjeta.medioPago == 'MasterCard'||
+                      tarjeta.medioPago == 'Amex'
+                    "
+                    [src]="'../../../../assets/icons/' + tarjeta.img"
+                    alt="Imagen de tarjeta"
+                    class="medio-pago-image"
+                  />
+                </div>
+              </div>
+            </div>
+
+            <!-- Tarjeta 2 -->
+            <div
+              class="medio-pago-card"
+              [ngClass]="{ selected: IdMedioPagoSeleccionado === 1 }"
+            >
+              <div class="medio-pago-content">
+                <mat-radio-button
+                  (change)="ObtenerMedioPagoSeleccion(1)"
+                  class="m-2"
+                  color="primary"
+                  [checked]="IdMedioPagoSeleccionado === 1"
+                ></mat-radio-button>
+              </div>
+              <label for="pagoTarjeta" class="medio-pago-label">
+                Pago con tarjeta de crédito y débito mediante PayU PSE
+              </label>
+              <div class="medio-pago-images">
+                <div
+                  *ngFor="let tarjeta of tarjetas"
+                  class="medio-pago-image-container"
+                >
+                  <img
+                    *ngIf="
+                      tarjeta.medioPago == 'Pse'
+                    "
+                    [src]="'../../../../assets/icons/' + tarjeta.img"
+                    alt="Imagen de tarjeta"
+                    class="medio-pago-image"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </ng-container>
+      </ng-container>
       <div class="col-12 row bot">
         <div style="justify-content: center; display: flex">
           <app-default-button

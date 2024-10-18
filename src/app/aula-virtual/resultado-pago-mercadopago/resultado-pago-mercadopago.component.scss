@@ -1,11 +1,12 @@
 .titleResultPago {
+  justify-content: center;
     font-size: 25px;
     font-weight: bold;
     display: flex;
     align-items: center;
     img {
-      width: 25px;
-      margin-left: 20px;
+      width: 50px;
+      margin-left: 10px;
     }
   }
   .textResultPago {
@@ -17,13 +18,14 @@
     }
   }
   .contentCardPago{
-    margin-top: 40px;
+    margin-top: 2px;
     font-size: 15px;
   }
   .cardPago{
-    padding: 30px 15px;
-    border: solid 3px #f2f2f2;
+    padding: 0px 15px;
+    border: solid 3px transparent;
     border-radius: 10px;
+    width: 60vw;
   }
   .itemValueCardPago{
     margin: 10px 0px;
@@ -33,7 +35,9 @@
 .responsive-button-Pagos {
   border-color: transparent;
   border-radius: 25px;
-  width: 14vw; /* O el ancho que desees */
+  width: 20vw; /* O el ancho que desees */
+  font-size: 13px;
+
 }
 
 /* Media query para pantallas de hasta 768px */
@@ -48,4 +52,12 @@
     width: 80%; /* Cambiar el valor según necesites */
     max-width: 200px; /* Ajusta el máximo ancho del botón si lo deseas */
   }
+}
+.titleCronograma {
+  font-size: 25px;
+  font-weight: 600;
+}
+.titleCronogramaCurso {
+  font-size: 20px;
+  font-weight: 500;
 }

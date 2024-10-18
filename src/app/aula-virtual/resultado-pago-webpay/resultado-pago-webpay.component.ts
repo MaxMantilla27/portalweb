@@ -1,10 +1,11 @@
 import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
 import { MensajeCorreoDTO } from 'src/app/Core/Models/LibroReclamacionesDTO';
 import { ChargeComponent } from 'src/app/Core/Shared/Containers/Dialog/charge/charge.component';
+import { FormatoMilesDecimalesPipe } from 'src/app/Core/Shared/Pipes/formato-miles-decimales.pipe';
 import { FormaPagoService } from 'src/app/Core/Shared/Services/FormaPago/forma-pago.service';
 import { PasarelaPagoCorreoService } from 'src/app/Core/Shared/Services/PasarelaPagoCorreo/pasarela-pago-correo.service';
 import { SessionStorageService } from 'src/app/Core/Shared/Services/session-storage.service';
@@ -12,7 +13,8 @@ import { SessionStorageService } from 'src/app/Core/Shared/Services/session-stor
 @Component({
   selector: 'app-resultado-pago-webpay',
   templateUrl: './resultado-pago-webpay.component.html',
-  styleUrls: ['./resultado-pago-webpay.component.scss']
+  styleUrls: ['./resultado-pago-webpay.component.scss'],
+  providers: [FormatoMilesDecimalesPipe]
 })
 export class ResultadoPagoWebpayComponent implements OnInit {
 
@@ -23,6 +25,8 @@ export class ResultadoPagoWebpayComponent implements OnInit {
     public dialog:MatDialog,
     private _SessionStorageService:SessionStorageService,
     private _PasarelaPagoCorreoService:PasarelaPagoCorreoService,
+    private FormatoMilesDecimales: FormatoMilesDecimalesPipe,
+    private _router:Router,
   ) { }
   public json={
     IdentificadorTransaccion:null,
@@ -31,7 +35,6 @@ export class ResultadoPagoWebpayComponent implements OnInit {
 
   resultProceso:any;
   resultWebpay:any;
-  dialogRef:any
   public ruta = '/AulaVirtual/MisPagos'
   public rutaPago='/AulaVirtual/MisPagos'
   public rutaCursos = '/AulaVirtual/MisCursos'
@@ -45,6 +48,9 @@ export class ResultadoPagoWebpayComponent implements OnInit {
   public Matricula:any;
   public NombreCursoPago=''
   public CodigoMatricula=''
+  public correoMatriculas='matriculas@bsginstitute.com'
+  public CargandoWebPay=true
+  public IdMatriculaCabecera=0;
 
   ngOnInit(): void {
     this._ActivatedRoute.queryParams.pipe(takeUntil(this.signal$)).subscribe({
@@ -54,10 +60,6 @@ export class ResultadoPagoWebpayComponent implements OnInit {
         if(this.json.TokenComercio==undefined || this.json.TokenComercio==null)
           this.json.TokenComercio = x['TBK_TOKEN'];
         // this.json.IdentificadorTransaccion = null;
-        this.dialogRef =this.dialog.open(ChargeComponent,{
-          panelClass:'dialog-charge',
-          disableClose:true
-        });
         if(this.json.TokenComercio==undefined || this.json.TokenComercio==null || this.json.TokenComercio.length<=1)
           this.json.TokenComercio = this._SessionStorageService.SessionGetValue('token_ws')
         this.ObtenerResultadoProcesopagoWebpay()
@@ -82,6 +84,7 @@ export class ResultadoPagoWebpayComponent implements OnInit {
             if(this.resultProceso.idMatriculaCabecera>0 &&
               this.resultProceso.idMatriculaCabecera!=null &&
               this.resultProceso.idMatriculaCabecera!=undefined ){
+                this.IdMatriculaCabecera=this.resultProceso.idMatriculaCabecera
                 this.rutaPago=this.rutaPago+'/'+this.resultProceso.idMatriculaCabecera
                 this.rutaCursos=this.rutaCursos+'/'+this.resultProceso.idMatriculaCabecera
                 this.CodigoMatricula=this.resultProceso.codigoMatricula
@@ -95,10 +98,17 @@ export class ResultadoPagoWebpayComponent implements OnInit {
             this.RutaCargada=true;
           }
         }
-        if(this.resultProceso.estadoOperacion =='No Process' ||
-              this.resultProceso.estadoOperacion =='Declinado'){
+        else{
+                this.IdMatriculaCabecera=this.resultProceso.idMatriculaCabecera
         }
-        this.dialogRef.close()
+      },
+      error:()=>{
+        this.CargandoWebPay=false;
+        this._router.navigate(['/AulaVirtual/MisPagos/'+this.IdMatriculaCabecera]);
+      },
+      complete:()=>{
+        this.CargandoWebPay=false;
+        this._router.navigate(['/AulaVirtual/MisPagos/'+this.IdMatriculaCabecera]);
       }
     })
   }
@@ -109,6 +119,7 @@ export class ResultadoPagoWebpayComponent implements OnInit {
       next:x=>{
         console.log("RespuestaWEbpay",x)
         this.resultWebpay = x._Repuesta;
+        this.IdMatriculaCabecera=this.resultProceso.idMatriculaCabecera
       },
       complete:()=>{
         this.ObtenerPreProcesoPagoOrganicoAlumno()
@@ -143,6 +154,7 @@ export class ResultadoPagoWebpayComponent implements OnInit {
       error:e=>{
       },
       complete:()=>{
+        this.IdMatriculaCabecera=this.Matricula.id
         this.ruta=this.ruta+'/'+this.Matricula.id
         this.rutaCursos=this.rutaCursos+'/'+this.Matricula.id
         this.RutaCargada=true;
@@ -160,14 +172,14 @@ export class ResultadoPagoWebpayComponent implements OnInit {
     if(this.resultProceso.listaCuota.length==0){
       paymentSummary += "<div style='display:flex;border-bottom: 1px solid black;padding: 5px 0;'>"+
                             "<div style='font-size:13px;font-weight:100;width: 66%;'>" + 'Matrícula' + "</div>" +
-                            "<div style='font-size:13px;width: 33%;text-align:right;'>" + this.FormatoMilesDecimales(this.resultProceso.montoTotal) + " " + this.resultProceso.monedaCorreo + "</div></div>";
+                            "<div style='font-size:13px;width: 33%;text-align:right;'>" + this.FormatoMilesDecimales.transform(this.resultProceso.montoTotal) + " " + this.resultProceso.monedaCorreo + "</div></div>";
     }
     else{
       this.resultProceso.listaCuota.forEach((l:any) => {
         if(countLista==0){
           paymentSummary += "<div style='display:flex;border-bottom: 1px solid black;padding: 5px 0;'>"+
                             "<div style='font-size:13px;font-weight:100;width: 66%;'>" + this.reemplazarRazonPago(l.nombre) + "</div>" +
-                            "<div style='font-size:13px;width: 33%;text-align:right;'>" + this.FormatoMilesDecimales(l.cuotaTotal) + " " + this.resultProceso.monedaCorreo + "</div></div>";
+                            "<div style='font-size:13px;width: 33%;text-align:right;'>" + this.FormatoMilesDecimales.transform(l.cuotaTotal) + " " + this.resultProceso.monedaCorreo + "</div></div>";
         }
         countLista++;
       });
@@ -175,7 +187,7 @@ export class ResultadoPagoWebpayComponent implements OnInit {
 
     this.jsonCorreo.Asunto =
       'NUEVA MATRICULA ORGANICA';
-    this.jsonCorreo.Destinatario = 'matriculas@bsginstitute.com';
+    this.jsonCorreo.Destinatario = this.correoMatriculas;
     // this.jsonCorreo.Destinatario = 'mmantilla@bsginstitute.com';
     this.jsonCorreo.Contenido =
     "<div style='margin-left:8rem;margin-right:8rem'>"+
@@ -206,7 +218,7 @@ export class ResultadoPagoWebpayComponent implements OnInit {
       "<div style='display:flex;padding-bottom:20px;'>"+
       "<div style='font-size:13px;font-weight:bold;width: 66%;'>Total del pago</div>"+
       "<div style='font-size:13px;justify-content:flex-end;font-weight:bold;width: 33%;text-align:right;'>"+
-      this.FormatoMilesDecimales(this.resultProceso.montoTotal) +" "+this.resultProceso.monedaCorreo+
+      this.FormatoMilesDecimales.transform(this.resultProceso.montoTotal) +" "+this.resultProceso.monedaCorreo+
       "</div></div>"+
       // "<div style='font-size:13px'> Método de pago: Tarjeta Visa N° xxxx xxxx xxxx 1542"+
       // "</div>"+
@@ -244,17 +256,5 @@ export class ResultadoPagoWebpayComponent implements OnInit {
   }
   reemplazarRazonPago(stringOriginal: string): string {
     return stringOriginal.replace(/\//g, "/");
-  }
-  FormatoMilesDecimales(num: number): string {
-    // Separar parte entera y decimal
-    const parts = Number(num).toFixed(2).split('.');
-    let integerPart = parts[0];
-    const decimalPart = parts[1];
-
-    // Agregar separadores de miles
-    integerPart = integerPart.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-
-    // Combinar parte entera y decimal
-    return integerPart + '.' + decimalPart;
   }
 }

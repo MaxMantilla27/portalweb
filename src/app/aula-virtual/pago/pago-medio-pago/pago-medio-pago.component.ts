@@ -160,7 +160,16 @@ export class PagoMedioPagoComponent implements OnInit, OnDestroy {
       this.medioPagoSeleccionado =this.tarjetas[valorIdMedioPagoSeleccionado]
       console.log('Medio Pago2', this.medioPagoSeleccionado);
     }
-
+    if(this.IdPasarelaPago==1){
+      if(this.IdMedioPagoSeleccionado==0){
+        valorIdMedioPagoSeleccionado=0
+      }
+      else{
+        valorIdMedioPagoSeleccionado=3
+      }
+      this.medioPagoSeleccionado =this.tarjetas[valorIdMedioPagoSeleccionado]
+      console.log('Medio Pago2', this.medioPagoSeleccionado);
+    }
     if (this.medioPagoSeleccionado != undefined) {
       this.jsonSend.ListaCuota = [];
       // if (this.EstadoAfiliado){
@@ -255,6 +264,9 @@ export class PagoMedioPagoComponent implements OnInit, OnDestroy {
             if(tarjeta.idFormaPago == 48){
               this._router.navigate(['/AulaVirtual/MisPagos/'+this.IdMatriculaCabecera+'/'+this.IdPasarelaPago+'/pe-niubiz-sec/'+sesion]);
             }
+          }
+          if(tarjeta.idPasarelaPago == 1){
+            this._router.navigate(['/AulaVirtual/MisPagos/'+this.IdMatriculaCabecera+'/'+this.IdPasarelaPago+'/col-payu/'+sesion]);
           }
 
 

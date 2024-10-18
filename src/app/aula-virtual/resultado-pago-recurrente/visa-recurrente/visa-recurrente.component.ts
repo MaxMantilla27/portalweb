@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
 import { MensajeCorreoDTO } from 'src/app/Core/Models/LibroReclamacionesDTO';
 import { RegistroRespuestaPreProcesoPagoDTO } from 'src/app/Core/Models/ProcesoPagoDTO';
+import { FormatoMilesDecimalesPipe } from 'src/app/Core/Shared/Pipes/formato-miles-decimales.pipe';
 import { FormaPagoService } from 'src/app/Core/Shared/Services/FormaPago/forma-pago.service';
 import { PasarelaPagoCorreoService } from 'src/app/Core/Shared/Services/PasarelaPagoCorreo/pasarela-pago-correo.service';
 import { SessionStorageService } from 'src/app/Core/Shared/Services/session-storage.service';
@@ -11,7 +12,8 @@ import { SessionStorageService } from 'src/app/Core/Shared/Services/session-stor
 @Component({
   selector: 'app-visa-recurrente',
   templateUrl: './visa-recurrente.component.html',
-  styleUrls: ['./visa-recurrente.component.scss']
+  styleUrls: ['./visa-recurrente.component.scss'],
+  providers: [FormatoMilesDecimalesPipe]
 })
 export class VisaRecurrenteComponent implements OnInit {
   private signal$ = new Subject();
@@ -24,6 +26,7 @@ export class VisaRecurrenteComponent implements OnInit {
     private _router:Router,
     @Inject(PLATFORM_ID) platformId: Object,
     private _PasarelaPagoCorreoService:PasarelaPagoCorreoService,
+    private FormatoMilesDecimales: FormatoMilesDecimalesPipe
   ) {
     this.isBrowser = isPlatformBrowser(platformId); {}
   }
@@ -57,7 +60,7 @@ export class VisaRecurrenteComponent implements OnInit {
   public Matricula:any;
   public NombreCursoPago=''
   public CodigoMatricula=''
-
+  public correoMatriculas='matriculas@bsginstitute.com'
   ngOnInit(): void {
     if(this.isBrowser){
       this._ActivatedRoute.params.pipe(takeUntil(this.signal$)).subscribe({
@@ -184,14 +187,14 @@ export class VisaRecurrenteComponent implements OnInit {
     if(this.resultVisa.listaCuota.length==0){
       paymentSummary += "<div style='display:flex;border-bottom: 1px solid black;padding: 5px 0;'>"+
                             "<div style='font-size:13px;font-weight:100;width: 66%;'>" + 'Matrícula' + "</div>" +
-                            "<div style='font-size:13px;width: 33%;text-align:right;'>" + this.FormatoMilesDecimales(this.resultVisa.montoTotal) + " " + this.resultVisa.monedaCorreo + "</div></div>";
+                            "<div style='font-size:13px;width: 33%;text-align:right;'>" + this.FormatoMilesDecimales.transform(this.resultVisa.montoTotal) + " " + this.resultVisa.monedaCorreo + "</div></div>";
     }
     else{
       this.resultVisa.listaCuota.forEach((l:any) => {
         if(countLista==0){
           paymentSummary += "<div style='display:flex;border-bottom: 1px solid black;padding: 5px 0;'>"+
                             "<div style='font-size:13px;font-weight:100;width: 66%;'>" + this.reemplazarRazonPago(l.nombre) + "</div>" +
-                            "<div style='font-size:13px;width: 33%;text-align:right;'>" + this.FormatoMilesDecimales(l.cuotaTotal) + " " + this.resultVisa.monedaCorreo + "</div></div>";
+                            "<div style='font-size:13px;width: 33%;text-align:right;'>" + this.FormatoMilesDecimales.transform(l.cuotaTotal) + " " + this.resultVisa.monedaCorreo + "</div></div>";
         }
         countLista++;
       });
@@ -199,7 +202,7 @@ export class VisaRecurrenteComponent implements OnInit {
 
     this.jsonCorreo.Asunto =
       'NUEVA MATRICULA ORGANICA';
-    this.jsonCorreo.Destinatario = 'matriculas@bsginstitute.com';
+    this.jsonCorreo.Destinatario = this.correoMatriculas;
     // this.jsonCorreo.Destinatario = 'mmantilla@bsginstitute.com';
     this.jsonCorreo.Contenido =
     "<div style='margin-left:8rem;margin-right:8rem'>"+
@@ -230,7 +233,7 @@ export class VisaRecurrenteComponent implements OnInit {
       "<div style='display:flex;padding-bottom:20px;'>"+
       "<div style='font-size:13px;font-weight:bold;width: 66%;'>Total del pago</div>"+
       "<div style='font-size:13px;justify-content:flex-end;font-weight:bold;width: 33%;text-align:right;'>"+
-      this.FormatoMilesDecimales(this.resultVisa.montoTotal) +" "+this.resultVisa.monedaCorreo+
+      this.FormatoMilesDecimales.transform(this.resultVisa.montoTotal) +" "+this.resultVisa.monedaCorreo+
       "</div></div>"+
       // "<div style='font-size:13px'> Método de pago: Tarjeta Visa N° xxxx xxxx xxxx 1542"+
       // "</div>"+
@@ -268,18 +271,6 @@ export class VisaRecurrenteComponent implements OnInit {
   }
   reemplazarRazonPago(stringOriginal: string): string {
     return stringOriginal.replace(/\//g, "/");
-  }
-  FormatoMilesDecimales(num: number): string {
-    // Separar parte entera y decimal
-    const parts = Number(num).toFixed(2).split('.');
-    let integerPart = parts[0];
-    const decimalPart = parts[1];
-
-    // Agregar separadores de miles
-    integerPart = integerPart.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-
-    // Combinar parte entera y decimal
-    return integerPart + '.' + decimalPart;
   }
 }
 

@@ -6,13 +6,15 @@ import { Subject, takeUntil } from 'rxjs';
 import { MensajeCorreoDTO } from 'src/app/Core/Models/LibroReclamacionesDTO';
 import { RegistroRespuestaPreProcesoPagoDTO } from 'src/app/Core/Models/ProcesoPagoDTO';
 import { ChargeComponent } from 'src/app/Core/Shared/Containers/Dialog/charge/charge.component';
+import { FormatoMilesDecimalesPipe } from 'src/app/Core/Shared/Pipes/formato-miles-decimales.pipe';
 import { FormaPagoService } from 'src/app/Core/Shared/Services/FormaPago/forma-pago.service';
 import { PasarelaPagoCorreoService } from 'src/app/Core/Shared/Services/PasarelaPagoCorreo/pasarela-pago-correo.service';
 import { SessionStorageService } from 'src/app/Core/Shared/Services/session-storage.service';
 @Component({
   selector: 'app-compra-existosa-open-pay-peru',
   templateUrl: './compra-existosa-open-pay-peru.component.html',
-  styleUrls: ['./compra-existosa-open-pay-peru.component.scss']
+  styleUrls: ['./compra-existosa-open-pay-peru.component.scss'],
+  providers: [FormatoMilesDecimalesPipe]
 })
 export class CompraExistosaOpenPayPeruComponent implements OnInit {
 
@@ -27,6 +29,7 @@ export class CompraExistosaOpenPayPeruComponent implements OnInit {
     @Inject(PLATFORM_ID) platformId: Object,
     private dialog:MatDialog,
     private _PasarelaPagoCorreoService:PasarelaPagoCorreoService,
+    private FormatoMilesDecimales: FormatoMilesDecimalesPipe
   ) {
     this.isBrowser = isPlatformBrowser(platformId); {}
   }
@@ -35,7 +38,6 @@ export class CompraExistosaOpenPayPeruComponent implements OnInit {
     IdentificadorTransaccion:'',
     RequiereDatosTarjeta:true
   }
-  dialogRef:any
   public tipoRespuesta = null
   public resultVisa:any
   public resultOpenPay :any
@@ -56,7 +58,9 @@ export class CompraExistosaOpenPayPeruComponent implements OnInit {
   public Matricula:any;
   public NombreCursoPago=''
   public CodigoMatricula=''
-
+  public CargandoOpenPay=true
+  public correoMatriculas='matriculas@bsginstitute.com'
+  public IdMatriculaCabecera=0;
   ngOnInit(): void {
     if(this.isBrowser){
       this._ActivatedRoute.queryParams.pipe(takeUntil(this.signal$)).subscribe({
@@ -64,23 +68,11 @@ export class CompraExistosaOpenPayPeruComponent implements OnInit {
           console.log(x)
           this.id = x['id'];
           this.tipoRespuesta = x['tipo']
-          this.dialogRef =this.dialog.open(ChargeComponent,{
-            panelClass:'dialog-charge',
-            disableClose:true
-          });
           this.ProcesamientoPagoOpenPay()
         },
       });
 
       this.imgInterval();
-      // var interval2=setInterval(()=>{
-      //   if(this.resultVisa!=undefined && this.resultVisa.estadoOperacion.toLowerCase()=='pending' && this.resultVisa.idPasarelaPago==5){
-      //     this.ProcesamientoPagoOpenPay();
-      //   }
-      //   if(this.resultVisa!=undefined && this.resultVisa.estadoOperacion.toLowerCase()!='pending'){
-      //     clearInterval(interval2);
-      //   }
-      // },15000)
     }
 
   }
@@ -95,7 +87,7 @@ export class CompraExistosaOpenPayPeruComponent implements OnInit {
 
           this.resultOpenPay = JSON.parse(x._Repuesta.pagoAfiliacion)
           console.log("ResultadoOpen", this.resultOpenPay)
-          if(JSON.parse(x._Repuesta.pagoExitoso)==true){
+          if(JSON.parse(x._Repuesta.procesoExitoso)==true){
                 this.RutaCargada=true;
           }
 
@@ -105,8 +97,9 @@ export class CompraExistosaOpenPayPeruComponent implements OnInit {
     else{
       this._FormaPagoService.ProcesamientoPagoPeruOpenPay(this.id).pipe(takeUntil(this.signal$)).subscribe({
         next:x=>{
-
           this.json.IdentificadorTransaccion=x._Repuesta.identificadorTransaccion
+        },
+        complete:()=>{
           this.ObtenerPreProcesoPagoCuotaAlumno()
         }
       })
@@ -118,7 +111,7 @@ export class CompraExistosaOpenPayPeruComponent implements OnInit {
     this.ruta='/AulaVirtual/MisPagos'
     this._FormaPagoService.ObtenerPreProcesoPagoCuotaAlumno(this.json).pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
-        this.dialogRef.close()
+        console.log(x)
         if(x._Repuesta.registroAlumno==null){
           this.ObtenerPreProcesoPagoOrganicoAlumno()
         }else{
@@ -126,7 +119,8 @@ export class CompraExistosaOpenPayPeruComponent implements OnInit {
             this._router.navigate([this.ruta])
           }else{
             this.resultVisa=x._Repuesta;
-
+            this.ruta=this.ruta+'/'+this.resultVisa.idMatriculaCabecera
+            this.NombreCursoPago=this.resultVisa.nombrePrograma
             if(this.resultVisa.estadoOperacion=='Processed')
             {
               if(this.resultVisa.tipoPago=='Organico'||this.resultVisa.idMatriculaCabecera==0){
@@ -137,6 +131,7 @@ export class CompraExistosaOpenPayPeruComponent implements OnInit {
                 if(this.resultVisa.idMatriculaCabecera>0 &&
                   this.resultVisa.idMatriculaCabecera!=null &&
                   this.resultVisa.idMatriculaCabecera!=undefined ){
+                    this.IdMatriculaCabecera=this.resultVisa.idMatriculaCabecera
                     this.rutaPago=this.rutaPago+'/'+this.resultVisa.idMatriculaCabecera
                     this.rutaCursos=this.rutaCursos+'/'+this.resultVisa.idMatriculaCabecera
                     this.CodigoMatricula=this.resultVisa.codigoMatricula
@@ -175,15 +170,22 @@ export class CompraExistosaOpenPayPeruComponent implements OnInit {
             }
             if(this.resultVisa.estadoOperacion =='No Process' ||
                   this.resultVisa.estadoOperacion =='Declinado'){
+                    this.IdMatriculaCabecera=this.resultVisa.idMatriculaCabecera
             }
             if(this.resultVisa.estadoOperacion.toLowerCase()=='pending'){
+              this.IdMatriculaCabecera=this.resultVisa.idMatriculaCabecera
             }
           }
         }
-        this.dialogRef.close()
       },
       error:e=>{
         //this._router.navigate([this.ruta])
+      },
+      complete:()=>{
+        this.CargandoOpenPay=false;
+        if(this.tipoRespuesta!="AF"){
+          this._router.navigate(['/AulaVirtual/MisPagos/'+this.IdMatriculaCabecera]);
+        }
       }
     })
   }
@@ -256,14 +258,14 @@ export class CompraExistosaOpenPayPeruComponent implements OnInit {
     if(this.resultVisa.listaCuota.length==0){
       paymentSummary += "<div style='display:flex;border-bottom: 1px solid black;padding: 5px 0;'>"+
                             "<div style='font-size:13px;font-weight:100;width: 66%;'>" + 'Matrícula' + "</div>" +
-                            "<div style='font-size:13px;width: 33%;text-align:right;'>" + this.FormatoMilesDecimales(this.resultVisa.montoTotal) + " " + this.resultVisa.monedaCorreo + "</div></div>";
+                            "<div style='font-size:13px;width: 33%;text-align:right;'>" + this.FormatoMilesDecimales.transform(this.resultVisa.montoTotal) + " " + this.resultVisa.monedaCorreo + "</div></div>";
     }
     else{
       this.resultVisa.listaCuota.forEach((l:any) => {
         if(countLista==0){
           paymentSummary += "<div style='display:flex;border-bottom: 1px solid black;padding: 5px 0;'>"+
                             "<div style='font-size:13px;font-weight:100;width: 66%;'>" + this.reemplazarRazonPago(l.nombre) + "</div>" +
-                            "<div style='font-size:13px;width: 33%;text-align:right;'>" + this.FormatoMilesDecimales(l.cuotaTotal) + " " + this.resultVisa.monedaCorreo + "</div></div>";
+                            "<div style='font-size:13px;width: 33%;text-align:right;'>" + this.FormatoMilesDecimales.transform(l.cuotaTotal) + " " + this.resultVisa.monedaCorreo + "</div></div>";
         }
         countLista++;
       });
@@ -271,7 +273,7 @@ export class CompraExistosaOpenPayPeruComponent implements OnInit {
 
     this.jsonCorreo.Asunto =
       'NUEVA MATRICULA ORGANICA';
-    this.jsonCorreo.Destinatario = 'matriculas@bsginstitute.com';
+    this.jsonCorreo.Destinatario = this.correoMatriculas;
     // this.jsonCorreo.Destinatario = 'mmantilla@bsginstitute.com';
     this.jsonCorreo.Contenido =
     "<div style='margin-left:8rem;margin-right:8rem'>"+
@@ -302,7 +304,7 @@ export class CompraExistosaOpenPayPeruComponent implements OnInit {
       "<div style='display:flex;padding-bottom:20px;'>"+
       "<div style='font-size:13px;font-weight:bold;width: 66%;'>Total del pago</div>"+
       "<div style='font-size:13px;justify-content:flex-end;font-weight:bold;width: 33%;text-align:right;'>"+
-      this.FormatoMilesDecimales(this.resultVisa.montoTotal) +" "+this.resultVisa.monedaCorreo+
+      this.FormatoMilesDecimales.transform(this.resultVisa.montoTotal) +" "+this.resultVisa.monedaCorreo+
       "</div></div>"+
       // "<div style='font-size:13px'> Método de pago: Tarjeta Visa N° xxxx xxxx xxxx 1542"+
       // "</div>"+
@@ -340,17 +342,5 @@ export class CompraExistosaOpenPayPeruComponent implements OnInit {
   }
   reemplazarRazonPago(stringOriginal: string): string {
     return stringOriginal.replace(/\//g, "/");
-  }
-  FormatoMilesDecimales(num: number): string {
-    // Separar parte entera y decimal
-    const parts = Number(num).toFixed(2).split('.');
-    let integerPart = parts[0];
-    const decimalPart = parts[1];
-
-    // Agregar separadores de miles
-    integerPart = integerPart.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-
-    // Combinar parte entera y decimal
-    return integerPart + '.' + decimalPart;
   }
 }

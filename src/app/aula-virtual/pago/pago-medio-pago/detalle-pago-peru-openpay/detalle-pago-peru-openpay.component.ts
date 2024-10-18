@@ -116,7 +116,7 @@ export class DetallePagoPeruOpenpayComponent implements OnInit {
         this.resultPreProceso=x._Repuesta;
 
         if(this.resultPreProceso.estadoOperacion.toLowerCase()!='sent'){
-          this._router.navigate(['/AulaVirtual/MisCursos/'+this.IdMatriculaCabecera])
+          this._router.navigate(['/AulaVirtual/MisPagos/', this.IdMatriculaCabecera]);
         }
         this.resultPreProceso.total=0;
         this.resultPreProceso.listaCuota.forEach((l:any) => {
@@ -165,32 +165,6 @@ export class DetallePagoPeruOpenpayComponent implements OnInit {
         dialogRef.close()
       }
     })
-  }
-  obtenerTipoTarjeta(){
-    var numeroTarjetaLimpio = this.NumberT.replace(/\s/g, '').replace(/[^0-9]/gi, '');
-
-    const patronesTarjetas: Record<string, RegExp> = {
-      visa: /^4/,
-      mastercard: /^5[1-5]/,
-      amex: /^3[47]/,
-      carnet :/^506[0-9]/
-    };
-    let tarjeta=""
-    for (const tipo in patronesTarjetas) {
-      if (patronesTarjetas[tipo].test(numeroTarjetaLimpio)) {
-        tarjeta = tipo;
-          break;
-      }
-      else tarjeta =""
-    }
-
-    switch(tarjeta){
-      case 'visa':this.tipoTarjet='visa-07.svg';break;
-      case 'mastercard':this.tipoTarjet='mastercard-08.svg';break;
-      case 'amex':this.tipoTarjet='american-09.svg';break;
-      case 'carnet':this.tipoTarjet='carnet-mexico.svg';break;
-      default :this.tipoTarjet=""
-    }
   }
   ObtenerTarjetasMedioPago(): void {
     this._MedioPagoActivoPasarelaService

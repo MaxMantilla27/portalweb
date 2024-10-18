@@ -5,13 +5,15 @@ import { ActivatedRoute } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
 import { MensajeCorreoDTO } from 'src/app/Core/Models/LibroReclamacionesDTO';
 import { ChargeComponent } from 'src/app/Core/Shared/Containers/Dialog/charge/charge.component';
+import { FormatoMilesDecimalesPipe } from 'src/app/Core/Shared/Pipes/formato-miles-decimales.pipe';
 import { FormaPagoService } from 'src/app/Core/Shared/Services/FormaPago/forma-pago.service';
 import { PasarelaPagoCorreoService } from 'src/app/Core/Shared/Services/PasarelaPagoCorreo/pasarela-pago-correo.service';
 
 @Component({
   selector: 'app-resultado-pago-klap',
   templateUrl: './resultado-pago-klap.component.html',
-  styleUrls: ['./resultado-pago-klap.component.scss']
+  styleUrls: ['./resultado-pago-klap.component.scss'],
+  providers: [FormatoMilesDecimalesPipe]
 })
 export class ResultadoPagoKlapComponent implements OnInit {
 
@@ -21,6 +23,7 @@ export class ResultadoPagoKlapComponent implements OnInit {
     private _ActivatedRoute:ActivatedRoute,
     public dialog: MatDialog,
     private _PasarelaPagoCorreoService:PasarelaPagoCorreoService,
+    private FormatoMilesDecimales: FormatoMilesDecimalesPipe
   ) { }
 
   resultProceso:any;
@@ -43,7 +46,7 @@ export class ResultadoPagoKlapComponent implements OnInit {
   public Matricula:any;
   public NombreCursoPago=''
   public CodigoMatricula=''
-
+  public correoMatriculas='matriculas@bsginstitute.com'
 
   ngOnInit(): void {
     this._ActivatedRoute.params.pipe(takeUntil(this.signal$)).subscribe({
@@ -149,14 +152,14 @@ export class ResultadoPagoKlapComponent implements OnInit {
     if(this.resultProceso.listaCuota.length==0){
       paymentSummary += "<div style='display:flex;border-bottom: 1px solid black;padding: 5px 0;'>"+
                             "<div style='font-size:13px;font-weight:100;width: 66%;'>" + 'Matrícula' + "</div>" +
-                            "<div style='font-size:13px;width: 33%;text-align:right;'>" + this.FormatoMilesDecimales(this.resultProceso.montoTotal) + " " + this.resultProceso.monedaCorreo + "</div></div>";
+                            "<div style='font-size:13px;width: 33%;text-align:right;'>" + this.FormatoMilesDecimales.transform(this.resultProceso.montoTotal) + " " + this.resultProceso.monedaCorreo + "</div></div>";
     }
     else{
       this.resultProceso.listaCuota.forEach((l:any) => {
         if(countLista==0){
           paymentSummary += "<div style='display:flex;border-bottom: 1px solid black;padding: 5px 0;'>"+
                             "<div style='font-size:13px;font-weight:100;width: 66%;'>" + this.reemplazarRazonPago(l.nombre) + "</div>" +
-                            "<div style='font-size:13px;width: 33%;text-align:right;'>" + this.FormatoMilesDecimales(l.cuotaTotal) + " " + this.resultProceso.monedaCorreo + "</div></div>";
+                            "<div style='font-size:13px;width: 33%;text-align:right;'>" + this.FormatoMilesDecimales.transform(l.cuotaTotal) + " " + this.resultProceso.monedaCorreo + "</div></div>";
         }
         countLista++;
       });
@@ -164,7 +167,7 @@ export class ResultadoPagoKlapComponent implements OnInit {
 
     this.jsonCorreo.Asunto =
       'NUEVA MATRICULA ORGANICA';
-    this.jsonCorreo.Destinatario = 'matriculas@bsginstitute.com';
+    this.jsonCorreo.Destinatario = this.correoMatriculas;
     // this.jsonCorreo.Destinatario = 'mmantilla@bsginstitute.com';
     this.jsonCorreo.Contenido =
     "<div style='margin-left:8rem;margin-right:8rem'>"+
@@ -195,7 +198,7 @@ export class ResultadoPagoKlapComponent implements OnInit {
       "<div style='display:flex;padding-bottom:20px;'>"+
       "<div style='font-size:13px;font-weight:bold;width: 66%;'>Total del pago</div>"+
       "<div style='font-size:13px;justify-content:flex-end;font-weight:bold;width: 33%;text-align:right;'>"+
-      this.FormatoMilesDecimales(this.resultProceso.montoTotal) +" "+this.resultProceso.monedaCorreo+
+      this.FormatoMilesDecimales.transform(this.resultProceso.montoTotal) +" "+this.resultProceso.monedaCorreo+
       "</div></div>"+
       // "<div style='font-size:13px'> Método de pago: Tarjeta Visa N° xxxx xxxx xxxx 1542"+
       // "</div>"+
@@ -233,17 +236,5 @@ export class ResultadoPagoKlapComponent implements OnInit {
   }
   reemplazarRazonPago(stringOriginal: string): string {
     return stringOriginal.replace(/\//g, "/");
-  }
-  FormatoMilesDecimales(num: number): string {
-    // Separar parte entera y decimal
-    const parts = Number(num).toFixed(2).split('.');
-    let integerPart = parts[0];
-    const decimalPart = parts[1];
-
-    // Agregar separadores de miles
-    integerPart = integerPart.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-
-    // Combinar parte entera y decimal
-    return integerPart + '.' + decimalPart;
   }
 }

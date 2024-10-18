@@ -24,12 +24,11 @@
     <div class="col-12 row">
       <div class="col-12 col-md-6 col-lg-6 inputPagoVisa">
         <div class="subtitlePagoVisa" style="border: none !important">
-          Ingresa tus datos como aparece en tu tarjeta de c´redito o débito:
+          Ingresa tus datos como aparece en tu tarjeta de credito o débito:
         </div>
         <ng-container>
           <mat-form-field
             appearance="outline"
-            class="disabledInput"
             [floatLabel]="'always'"
             style="width: 100%"
           >
@@ -42,7 +41,6 @@
           </mat-form-field>
           <mat-form-field
             appearance="outline"
-            class="disabledInput"
             [floatLabel]="'always'"
             style="width: 100%"
           >
@@ -55,7 +53,6 @@
           </mat-form-field>
           <mat-form-field
             appearance="outline"
-            class="disabledInput"
             [floatLabel]="'always'"
             style="width: 100%"
           >
@@ -74,10 +71,8 @@
             <mat-label>Nro. Documento :</mat-label>
             <input
               type="text"
-              [ngModelOptions]="{ standalone: true }"
               [(ngModel)]="resultPreProceso.registroAlumno.numeroDocumento"
               matInput
-              [readonly]="true"
             />
           </mat-form-field>
         </ng-container>

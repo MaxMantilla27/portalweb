@@ -334,13 +334,6 @@ export class DetallePagoInternacionalNiubizSecundarioComponent implements OnInit
       }
     })
   }
-  FormatoMilesDecimales(num: number): string {
-    const parts = Number(num).toFixed(2).split('.');
-    let integerPart = parts[0];
-    const decimalPart = parts[1];
-    integerPart = integerPart.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-    return integerPart + '.' + decimalPart;
-  }
   RegresarPasarela(){
     this._router.navigate(['/AulaVirtual/MisPagos/'+this.IdMatriculaCabecera+'/'+this.IdPasarelaPago]);
   }

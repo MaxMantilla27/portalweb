@@ -780,13 +780,13 @@
           <i class="material-icons iconarrow">play_arrow</i>
           <div *ngIf="item.idTipoPago==1" style="color: #616161;">
             <ng-container *ngIf="item.porcentajeDescuento==null || item.porcentajeDescuento==0">
-              Pago al Contado: {{FormatoMilesDecimales(item.cuotas)}}&nbsp;&nbsp;{{item.codigoMoneda}}
+              Pago al Contado: {{item.cuotas|formatoMilesDecimales}}&nbsp;&nbsp;{{item.codigoMoneda}}
             </ng-container>
             <ng-container *ngIf="item.porcentajeDescuento!=null && item.porcentajeDescuento!=0">
               <ng-container *ngIf="MontoPago.length>1">
                 <ng-container *ngFor="let item2 of MontoPago">
                   <div *ngIf="item2.idTipoPago==2"
-                    [innerHtml]="'Pago al Contado: <strike>'+' '+FormatoMilesDecimales(item.cuotas)+' '+item.codigoMoneda+'</strike> '+item2.montoPagoDescripcion | safeHtml">
+                    [innerHtml]="'Pago al Contado: <strike>'+' '+(item.cuotas|formatoMilesDecimales)+' '+item.codigoMoneda+'</strike> '+item2.montoPagoDescripcion | safeHtml">
                   </div>
                 </ng-container>
               </ng-container>
@@ -797,8 +797,8 @@
             <div></div>
           </div>
           <div *ngIf="item.idTipoPago==2" style="color: #616161;">Precio en Cuotas:
-            {{FormatoMilesDecimales(item.matricula)}}&nbsp;&nbsp;{{item.codigoMoneda}}
-            + {{item.nroCuotas}} cuotas mensuales desde {{FormatoMilesDecimales(item.cuotas)}}&nbsp;&nbsp;{{item.codigoMoneda}}</div>
+            {{item.matricula|formatoMilesDecimales}}&nbsp;&nbsp;{{item.codigoMoneda}}
+            + {{item.nroCuotas}} cuotas mensuales desde {{item.cuotas|formatoMilesDecimales}}&nbsp;&nbsp;{{item.codigoMoneda}}</div>
         </div>
         <div style="color: #616161;font-size: 14px; margin-top: 40px;margin-bottom: 10px;">Consulte por nuestras
           opciones de pago personalizadas y flexibles as&iacute; como las opciones de descuentos.</div>

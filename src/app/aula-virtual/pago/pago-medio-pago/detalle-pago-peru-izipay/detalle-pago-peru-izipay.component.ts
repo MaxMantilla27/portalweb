@@ -26,7 +26,7 @@ import { ImagenTarjetas } from 'src/app/Core/Shared/ImagenTarjetas';
   encapsulation: ViewEncapsulation.None,
 })
 export class DetallePagoPeruIzipayComponent
-  implements OnInit, OnDestroy, AfterViewInit
+  implements OnInit, OnDestroy
 {
   constructor(
     private _renderer2: Renderer2,
@@ -60,8 +60,6 @@ export class DetallePagoPeruIzipayComponent
   public tarjetas: any;
   public IdMatriculaCabecera = 0;
 
-  ngAfterViewInit(): void {
-  }
   ngAfterViewChecked(): void {
     if (!this.CompletamenteCargado) {
       const headerElement = this._document.getElementById('header');

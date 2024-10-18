@@ -5,6 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
 import { MensajeCorreoDTO } from 'src/app/Core/Models/LibroReclamacionesDTO';
 import { RegistroRespuestaPreProcesoPagoDTO } from 'src/app/Core/Models/ProcesoPagoDTO';
+import { FormatoMilesDecimalesPipe } from 'src/app/Core/Shared/Pipes/formato-miles-decimales.pipe';
 import { FormaPagoService } from 'src/app/Core/Shared/Services/FormaPago/forma-pago.service';
 import { PasarelaPagoCorreoService } from 'src/app/Core/Shared/Services/PasarelaPagoCorreo/pasarela-pago-correo.service';
 import { SessionStorageService } from 'src/app/Core/Shared/Services/session-storage.service';
@@ -12,7 +13,8 @@ import { SessionStorageService } from 'src/app/Core/Shared/Services/session-stor
 @Component({
   selector: 'app-resultado-pago-mercadopago',
   templateUrl: './resultado-pago-mercadopago.component.html',
-  styleUrls: ['./resultado-pago-mercadopago.component.scss']
+  styleUrls: ['./resultado-pago-mercadopago.component.scss'],
+  providers: [FormatoMilesDecimalesPipe]
 })
 export class ResultadoPagoMercadopagoComponent implements OnInit,OnDestroy {
 
@@ -27,6 +29,7 @@ export class ResultadoPagoMercadopagoComponent implements OnInit,OnDestroy {
     private _router:Router,
     @Inject(PLATFORM_ID) platformId: Object,
     private _PasarelaPagoCorreoService:PasarelaPagoCorreoService,
+    private FormatoMilesDecimales: FormatoMilesDecimalesPipe
   ) {
     this.isBrowser = isPlatformBrowser(platformId); {}
   }
@@ -54,7 +57,7 @@ export class ResultadoPagoMercadopagoComponent implements OnInit,OnDestroy {
   public Matricula:any;
   public NombreCursoPago=''
   public CodigoMatricula=''
-
+  public correoMatriculas='matriculas@bsginstitute.com'
   ngOnDestroy(): void {
     this.signal$.next(true)
     this.signal$.complete()
@@ -93,6 +96,7 @@ export class ResultadoPagoMercadopagoComponent implements OnInit,OnDestroy {
             if(this.resultProceso.idMatriculaCabecera>0 &&
               this.resultProceso.idMatriculaCabecera!=null &&
               this.resultProceso.idMatriculaCabecera!=undefined ){
+                this.ruta=this.ruta+'/'+this.resultProceso.idMatriculaCabecera
                 this.rutaPago=this.rutaPago+'/'+this.resultProceso.idMatriculaCabecera
                 this.rutaCursos=this.rutaCursos+'/'+this.resultProceso.idMatriculaCabecera
                 this.CodigoMatricula=this.resultProceso.codigoMatricula
@@ -106,9 +110,11 @@ export class ResultadoPagoMercadopagoComponent implements OnInit,OnDestroy {
             this.RutaCargada=true;
           }
         }
-        if(this.resultProceso.estadoOperacion =='No Process' ||
-              this.resultProceso.estadoOperacion =='Declinado'){
-            }
+        else{
+          if(this.resultProceso.idMatriculaCabecera!=0){
+            this.ruta=this.ruta+'/'+this.resultProceso.idMatriculaCabecera
+          }
+        }
         if(this.resultProceso.respuestaComercio!=null && this.resultProceso.respuestaComercio!="" && this.resultProceso.estadoOperacion!='Error'){
           this.reultadoPago = JSON.parse(this.resultProceso.respuestaComercio)
         }
@@ -126,11 +132,6 @@ export class ResultadoPagoMercadopagoComponent implements OnInit,OnDestroy {
       this.AreaCapacitacion = datos.AreaCapacitacion;
       this.ProgramaNombre = datos.ProgramaNombre;
     }
-  }
-  RedireccionarModalIntentoPago(){
-    // this._SessionStorageService.SessionSetValue('urlRedireccionErrorPagoModal','true');
-    // this._router.navigate(['/'+ this.AreaCapacitacion + '/' + this.ProgramaNombre])
-    this._router.navigate(['AulaVirtual/MisPagos/PagoOrganicoTodos'])
   }
 
   RegistrarMatriculaAlumnoOrganico(){
@@ -169,14 +170,14 @@ export class ResultadoPagoMercadopagoComponent implements OnInit,OnDestroy {
     if(this.resultProceso.listaCuota.length==0){
       paymentSummary += "<div style='display:flex;border-bottom: 1px solid black;padding: 5px 0;'>"+
                             "<div style='font-size:13px;font-weight:100;width: 66%;'>" + 'Matrícula' + "</div>" +
-                            "<div style='font-size:13px;width: 33%;text-align:right;'>" + this.FormatoMilesDecimales(this.resultProceso.montoTotal) + " " + this.resultProceso.monedaCorreo + "</div></div>";
+                            "<div style='font-size:13px;width: 33%;text-align:right;'>" + this.FormatoMilesDecimales.transform(this.resultProceso.montoTotal) + " " + this.resultProceso.monedaCorreo + "</div></div>";
     }
     else{
       this.resultProceso.listaCuota.forEach((l:any) => {
         if(countLista==0){
           paymentSummary += "<div style='display:flex;border-bottom: 1px solid black;padding: 5px 0;'>"+
                             "<div style='font-size:13px;font-weight:100;width: 66%;'>" + this.reemplazarRazonPago(l.nombre) + "</div>" +
-                            "<div style='font-size:13px;width: 33%;text-align:right;'>" + this.FormatoMilesDecimales(l.cuotaTotal) + " " + this.resultProceso.monedaCorreo + "</div></div>";
+                            "<div style='font-size:13px;width: 33%;text-align:right;'>" + this.FormatoMilesDecimales.transform(l.cuotaTotal) + " " + this.resultProceso.monedaCorreo + "</div></div>";
         }
         countLista++;
       });
@@ -184,7 +185,7 @@ export class ResultadoPagoMercadopagoComponent implements OnInit,OnDestroy {
 
     this.jsonCorreo.Asunto =
       'NUEVA MATRICULA ORGANICA';
-    this.jsonCorreo.Destinatario = 'matriculas@bsginstitute.com';
+    this.jsonCorreo.Destinatario = this.correoMatriculas;
     // this.jsonCorreo.Destinatario = 'mmantilla@bsginstitute.com';
     this.jsonCorreo.Contenido =
     "<div style='margin-left:8rem;margin-right:8rem'>"+
@@ -215,7 +216,7 @@ export class ResultadoPagoMercadopagoComponent implements OnInit,OnDestroy {
       "<div style='display:flex;padding-bottom:20px;'>"+
       "<div style='font-size:13px;font-weight:bold;width: 66%;'>Total del pago</div>"+
       "<div style='font-size:13px;justify-content:flex-end;font-weight:bold;width: 33%;text-align:right;'>"+
-      this.FormatoMilesDecimales(this.resultProceso.montoTotal) +" "+this.resultProceso.monedaCorreo+
+      this.FormatoMilesDecimales.transform(this.resultProceso.montoTotal) +" "+this.resultProceso.monedaCorreo+
       "</div></div>"+
       // "<div style='font-size:13px'> Método de pago: Tarjeta Visa N° xxxx xxxx xxxx 1542"+
       // "</div>"+
@@ -253,18 +254,6 @@ export class ResultadoPagoMercadopagoComponent implements OnInit,OnDestroy {
   }
   reemplazarRazonPago(stringOriginal: string): string {
     return stringOriginal.replace(/\//g, "/");
-  }
-  FormatoMilesDecimales(num: number): string {
-    // Separar parte entera y decimal
-    const parts = Number(num).toFixed(2).split('.');
-    let integerPart = parts[0];
-    const decimalPart = parts[1];
-
-    // Agregar separadores de miles
-    integerPart = integerPart.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-
-    // Combinar parte entera y decimal
-    return integerPart + '.' + decimalPart;
   }
 }
 

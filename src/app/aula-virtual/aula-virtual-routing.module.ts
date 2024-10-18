@@ -127,7 +127,7 @@ const routes: Routes = [
 
         { path: 'Docencia/:IdTarea', component: DocenciaTareasComponent,canActivate:[ProveedorGuard]},
 
-        { path: 'PagoExitosoPse/:estado', component: ResultadoPagoPSEComponent,canActivate:[AlumnoGuard]},
+        { path: 'PagoExitosoPse/:Identificador', component: ResultadoPagoPSEComponent,canActivate:[AlumnoGuard]},
         { path: 'PagoExitoso/:Identificador', component: ResultadoPagoComponent,canActivate:[AlumnoGuard]},
         { path: 'PagoExitosoKlap/:Identificador', component: ResultadoPagoKlapComponent,canActivate:[AlumnoGuard]},
         { path: 'PagoExitosoIziPay/:Identificador', component: ResultadoPagoIzipayComponent,canActivate:[AlumnoGuard]},

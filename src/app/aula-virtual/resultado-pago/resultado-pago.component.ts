@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
 import { MensajeCorreoDTO } from 'src/app/Core/Models/LibroReclamacionesDTO';
 import { RegistroRespuestaPreProcesoPagoDTO } from 'src/app/Core/Models/ProcesoPagoDTO';
+import { FormatoMilesDecimalesPipe } from 'src/app/Core/Shared/Pipes/formato-miles-decimales.pipe';
 import { FormaPagoService } from 'src/app/Core/Shared/Services/FormaPago/forma-pago.service';
 import { PasarelaPagoCorreoService } from 'src/app/Core/Shared/Services/PasarelaPagoCorreo/pasarela-pago-correo.service';
 import { SessionStorageService } from 'src/app/Core/Shared/Services/session-storage.service';
@@ -11,7 +12,8 @@ import { SessionStorageService } from 'src/app/Core/Shared/Services/session-stor
 @Component({
   selector: 'app-resultado-pago',
   templateUrl: './resultado-pago.component.html',
-  styleUrls: ['./resultado-pago.component.scss']
+  styleUrls: ['./resultado-pago.component.scss'],
+  providers: [FormatoMilesDecimalesPipe]
 })
 export class ResultadoPagoComponent implements OnInit,OnDestroy{
   private signal$ = new Subject();
@@ -24,6 +26,7 @@ export class ResultadoPagoComponent implements OnInit,OnDestroy{
     private _SessionStorageService:SessionStorageService,
     private _router:Router,
     @Inject(PLATFORM_ID) platformId: Object,
+    private FormatoMilesDecimales: FormatoMilesDecimalesPipe
   ) {
     this.isBrowser = isPlatformBrowser(platformId); {}
   }
@@ -38,7 +41,7 @@ export class ResultadoPagoComponent implements OnInit,OnDestroy{
     RequiereDatosTarjeta:true
   }
 
-  public resultVisa:any
+  public resultProceso:any
   public ruta='/AulaVirtual/MisPagos'
   public rutaCursos = '/AulaVirtual/MisCursos'
   public rutaMisCursos='/AulaVirtual/MisCursos'
@@ -56,6 +59,7 @@ export class ResultadoPagoComponent implements OnInit,OnDestroy{
   public Matricula:any;
   public NombreCursoPago=''
   public CodigoMatricula=''
+  public correoMatriculas='matriculas@bsginstitute.com'
   ngOnInit(): void {
     console.log(this._router.url);
     if(this.isBrowser){
@@ -70,10 +74,10 @@ export class ResultadoPagoComponent implements OnInit,OnDestroy{
       this.imgInterval();
 
       var interval2=setInterval(()=>{
-        if(this.resultVisa!=undefined && this.resultVisa.estadoOperacion.toLowerCase()=='pending' && this.resultVisa.idPasarelaPago==5){
+        if(this.resultProceso!=undefined && this.resultProceso.estadoOperacion.toLowerCase()=='pending' && this.resultProceso.idPasarelaPago==5){
           this.ValidarProcesoPagoCuotaAlumnoOpenPAy();
         }
-        if(this.resultVisa!=undefined && this.resultVisa.estadoOperacion.toLowerCase()!='pending'){
+        if(this.resultProceso!=undefined && this.resultProceso.estadoOperacion.toLowerCase()!='pending'){
           clearInterval(interval2);
         }
       },15000)
@@ -105,24 +109,24 @@ export class ResultadoPagoComponent implements OnInit,OnDestroy{
           if(x._Repuesta.estadoOperacion==null){
             this._router.navigate([this.ruta])
           }else{
-            this.resultVisa=x._Repuesta;
-            console.log(this.resultVisa)
-            if(this.resultVisa.estadoOperacion=='Processed'){
-              if(this.resultVisa.tipoPago=='Organico'||this.resultVisa.idMatriculaCabecera==0){
+            this.resultProceso=x._Repuesta;
+            console.log(this.resultProceso)
+            if(this.resultProceso.estadoOperacion=='Processed'){
+              if(this.resultProceso.tipoPago=='Organico'||this.resultProceso.idMatriculaCabecera==0){
                 this.RegistrarMatriculaAlumnoOrganico()
               }
               else{
-                if(this.resultVisa.idMatriculaCabecera>0 &&
-                  this.resultVisa.idMatriculaCabecera!=null &&
-                  this.resultVisa.idMatriculaCabecera!=undefined ){
-                    this.ruta=this.ruta+'/'+this.resultVisa.idMatriculaCabecera
-                    this.rutaCursos=this.rutaCursos+'/'+this.resultVisa.idMatriculaCabecera
-                    this.CodigoMatricula=this.resultVisa.codigoMatricula
-                    if(this.resultVisa.nombrePrograma==null || this.resultVisa.nombrePrograma=='null' || this.resultVisa.nombrePrograma==undefined){
+                if(this.resultProceso.idMatriculaCabecera>0 &&
+                  this.resultProceso.idMatriculaCabecera!=null &&
+                  this.resultProceso.idMatriculaCabecera!=undefined ){
+                    this.ruta=this.ruta+'/'+this.resultProceso.idMatriculaCabecera
+                    this.rutaCursos=this.rutaCursos+'/'+this.resultProceso.idMatriculaCabecera
+                    this.CodigoMatricula=this.resultProceso.codigoMatricula
+                    if(this.resultProceso.nombrePrograma==null || this.resultProceso.nombrePrograma=='null' || this.resultProceso.nombrePrograma==undefined){
                       this.NombreCursoPago='';
                     }
                     else{
-                      this.NombreCursoPago=this.resultVisa.nombrePrograma
+                      this.NombreCursoPago=this.resultProceso.nombrePrograma
                     }
                 }
                 this.RutaCargada=true;
@@ -136,24 +140,30 @@ export class ResultadoPagoComponent implements OnInit,OnDestroy{
                 })
               }
             }
-            if(this.resultVisa.estadoOperacion =='No Process' ||
-              this.resultVisa.estadoOperacion =='Declinado'){
+            if(this.resultProceso.estadoOperacion =='No Process' ||
+              this.resultProceso.estadoOperacion =='Declinado'||
+              this.resultProceso.estadoOperacion =='Declined'||
+              this.resultProceso.estadoOperacion =='No Processed'||
+              this.resultProceso.estadoOperacion =='ERROR'){
+                this.NombreCursoPago=this.resultProceso.nombrePrograma
+                this.ruta=this.ruta+'/'+this.resultProceso.idMatriculaCabecera
             }
 
-            if(this.resultVisa.estadoOperacion.toLowerCase()=='pending'){
-              if(this.resultVisa.idPasarelaPago==6){
+            if(this.resultProceso.estadoOperacion.toLowerCase()=='pending'){
+              if(this.resultProceso.idPasarelaPago==6){
                 this.verificarEstado(1)
               }
             }
-            if(this.resultVisa.estadoOperacion.toLowerCase()=='sent' ){
-              if(this.resultVisa.idPasarelaPago==2 && this.intentos<3)
+            if(this.resultProceso.estadoOperacion.toLowerCase()=='sent' ){
+              console.log('ACTUALIZA EL PAGO WOMPI')
+              if(this.resultProceso.idPasarelaPago==2 && this.intentos<3)
               {
                 var json=JSON.parse(this._SessionStorageService.SessionGetValue('datosWompi'));
                 console.log(this._router.url.split('id=')[1].split('&')[0]);
                 json.TransactionToken=this._router.url.split('id=')[1].split('&')[0]
                 this.ProcesarPagoCuotaAlumno(json)
               }else{
-                if(this.resultVisa.idPasarelaPago==6){
+                if(this.resultProceso.idPasarelaPago==6){
                   var js={
                     IdentificadorTransaccion:this.json.IdentificadorTransaccion,
                     RequiereDatosTarjeta:this.json.RequiereDatosTarjeta,
@@ -177,13 +187,13 @@ export class ResultadoPagoComponent implements OnInit,OnDestroy{
     this._FormaPagoService.ChangeToPending(js).pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
         console.log(x)
-        this.resultVisa=x._registro;
-        if(this.resultVisa.estadoOperacion.toLowerCase()=='pending'){
+        this.resultProceso=x._registro;
+        if(this.resultProceso.estadoOperacion.toLowerCase()=='pending'){
           this.verificarEstado(js.tipo);
           this.imgInterval();
         }
         if(js.tipo==2){
-          this.resultVisa.registroAlumno=this.resultVisa.datoAlumno;
+          this.resultProceso.registroAlumno=this.resultProceso.datoAlumno;
         }
       }
     })
@@ -197,7 +207,7 @@ export class ResultadoPagoComponent implements OnInit,OnDestroy{
         this.img=1
       }
       this.imgAc=this.img+'.png'
-      if(this.resultVisa!=undefined && this.resultVisa.estadoOperacion.toLowerCase()!='pending'){
+      if(this.resultProceso!=undefined && this.resultProceso.estadoOperacion.toLowerCase()!='pending'){
         clearInterval(interval);
       }
     }, 80);
@@ -206,8 +216,8 @@ export class ResultadoPagoComponent implements OnInit,OnDestroy{
     var interval=setInterval(() => {
       this.ObtenerPreProcesoPagoCuotaAlumno();
 
-      console.log(this.resultVisa)
-      if(this.resultVisa!=undefined && this.resultVisa.estadoOperacion.toLowerCase()!='pending'){
+      console.log(this.resultProceso)
+      if(this.resultProceso!=undefined && this.resultProceso.estadoOperacion.toLowerCase()!='pending'){
         clearInterval(interval);
       }
     }, 30000);
@@ -219,15 +229,15 @@ export class ResultadoPagoComponent implements OnInit,OnDestroy{
         if(x._Repuesta.estadoOperacion==null){
           //this._router.navigate([this.ruta])
         }else{
-          this.resultVisa=x._Repuesta;
-          if(this.resultVisa.estadoOperacion.toLowerCase()=='pending'){
-            if(this.resultVisa.idPasarelaPago==6){
+          this.resultProceso=x._Repuesta;
+          if(this.resultProceso.estadoOperacion.toLowerCase()=='pending'){
+            if(this.resultProceso.idPasarelaPago==6){
               this.verificarEstado(2)
             }
           }
-          this.resultVisa.registroAlumno=this.resultVisa.datoAlumno;
-          if(this.resultVisa.estadoOperacion.toLowerCase()=='sent' ){
-            if(this.resultVisa.idPasarelaPago==2 && this.intentos<3)
+          this.resultProceso.registroAlumno=this.resultProceso.datoAlumno;
+          if(this.resultProceso.estadoOperacion.toLowerCase()=='sent' ){
+            if(this.resultProceso.idPasarelaPago==2 && this.intentos<3)
             {
               var json=JSON.parse(this._SessionStorageService.SessionGetValue('datosWompi'));
               console.log(this._router.url.split('id=')[1].split('&')[0]);
@@ -235,7 +245,7 @@ export class ResultadoPagoComponent implements OnInit,OnDestroy{
               this.ProcesarPagoAlumnoOrganico(json)
 
             }else{
-              if(this.resultVisa.idPasarelaPago==6){
+              if(this.resultProceso.idPasarelaPago==6){
                 var js={
                   IdentificadorTransaccion:this.json.IdentificadorTransaccion,
                   RequiereDatosTarjeta:this.json.RequiereDatosTarjeta,
@@ -279,11 +289,6 @@ export class ResultadoPagoComponent implements OnInit,OnDestroy{
       this.ProgramaNombre = datos.ProgramaNombre;
     }
   }
-  RedireccionarModalIntentoPago(){
-    // this._SessionStorageService.SessionSetValue('urlRedireccionErrorPagoModal','true');
-    this._router.navigate(['AulaVirtual/MisPagos/PagoOrganicoTodos'])
-
-  }
   RegistrarMatriculaAlumnoOrganico(){
     this._FormaPagoService.RegistrarMatriculaAlumnoOrganico(this.json.IdentificadorTransaccion).pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
@@ -313,21 +318,21 @@ export class ResultadoPagoComponent implements OnInit,OnDestroy{
 
   EnvioCorreoRegularizarOportunidad() {
     console.log(this.Matricula)
-    console.log(this.resultVisa)
-    console.log(this.resultVisa.registroAlumno)
+    console.log(this.resultProceso)
+    console.log(this.resultProceso.registroAlumno)
     var paymentSummary = "";
     let countLista=0
-    if(this.resultVisa.listaCuota.length==0){
+    if(this.resultProceso.listaCuota.length==0){
       paymentSummary += "<div style='display:flex;border-bottom: 1px solid black;padding: 5px 0;'>"+
       "<div style='font-size:13px;font-weight:100;width: 66%;'>" + 'Matrícula' + "</div>" +
-      "<div style='font-size:13px;width: 33%;text-align:right;'>" + this.FormatoMilesDecimales(this.resultVisa.montoTotal) + " " + this.resultVisa.monedaCorreo + "</div></div>";
+      "<div style='font-size:13px;width: 33%;text-align:right;'>" + this.FormatoMilesDecimales.transform(this.resultProceso.montoTotal) + " " + this.resultProceso.monedaCorreo + "</div></div>";
     }
     else{
-      this.resultVisa.listaCuota.forEach((l:any) => {
+      this.resultProceso.listaCuota.forEach((l:any) => {
         if(countLista==0){
           paymentSummary += "<div style='display:flex;border-bottom: 1px solid black;padding: 5px 0;'>"+
                             "<div style='font-size:13px;font-weight:100;width: 66%;'>" + this.reemplazarRazonPago(l.nombre) + "</div>" +
-                            "<div style='font-size:13px;width: 33%;text-align:right;'>" + this.FormatoMilesDecimales(l.cuotaTotal) + " " + this.resultVisa.monedaCorreo + "</div></div>";
+                            "<div style='font-size:13px;width: 33%;text-align:right;'>" + this.FormatoMilesDecimales.transform(l.cuotaTotal) + " " + this.resultProceso.monedaCorreo + "</div></div>";
         }
         countLista++;
       });
@@ -335,7 +340,7 @@ export class ResultadoPagoComponent implements OnInit,OnDestroy{
 
     this.jsonCorreo.Asunto =
       'NUEVA MATRICULA ORGANICA';
-    this.jsonCorreo.Destinatario = 'matriculas@bsginstitute.com';
+    this.jsonCorreo.Destinatario = this.correoMatriculas;
     // this.jsonCorreo.Destinatario = 'mmantilla@bsginstitute.com';
     this.jsonCorreo.Contenido =
     "<div style='margin-left:8rem;margin-right:8rem'>"+
@@ -345,13 +350,13 @@ export class ResultadoPagoComponent implements OnInit,OnDestroy{
     "<div style='letter-spacing: -4px;'>BSG</div>"+
     "<div style='margin-left: 7px;'>Institute</div>"+
     "</div></div>"+
-  "<div style='font-weight:bold;font-size:15px;padding-top:20px'>Pago Orgánico realizado por el usuario: "+this.resultVisa.registroAlumno.nombre+","+
+  "<div style='font-weight:bold;font-size:15px;padding-top:20px'>Pago Orgánico realizado por el usuario: "+this.resultProceso.registroAlumno.nombre+","+
   "</div><br><div style='font-size:14px'>Porfavor regularizar el proceso para la generación de oportunidad y la asignación de su asesor correspondiente."+
   "</div><br><div style='background:#EBF1FF;border-radius:5px;width:80%'>"+
     "<div style='padding:25px'>"+
       "<div style='display:flex;border-bottom: 2px solid black;padding-bottom:3px;'>"+
       "<div style='font-size:13px;font-weight:bold;width: 66%;'>Resúmen de pago</div>"+
-      "<div style='font-size:13px;width: 33%;text-align:right;'>"+this.pipe.transform(this.resultVisa.fechaTransaccion, 'dd \'de\' MMMM \'del\' yyyy')+"</div></div>"+
+      "<div style='font-size:13px;width: 33%;text-align:right;'>"+this.pipe.transform(this.resultProceso.fechaTransaccion, 'dd \'de\' MMMM \'del\' yyyy')+"</div></div>"+
       "<div style='padding-bottom:15px;padding-top:15px'>"+
         "<div style='font-size:14px;font-weight:bold'>"+
         this.NombreCursoPago+
@@ -366,7 +371,7 @@ export class ResultadoPagoComponent implements OnInit,OnDestroy{
       "<div style='display:flex;padding-bottom:20px;'>"+
       "<div style='font-size:13px;font-weight:bold;width: 66%;'>Total del pago</div>"+
       "<div style='font-size:13px;justify-content:flex-end;font-weight:bold;width: 33%;text-align:right;'>"+
-      this.FormatoMilesDecimales(this.resultVisa.montoTotal) +" "+this.resultVisa.monedaCorreo+
+      this.FormatoMilesDecimales.transform(this.resultProceso.montoTotal) +" "+this.resultProceso.monedaCorreo+
       "</div></div>"+
       // "<div style='font-size:13px'> Método de pago: Tarjeta Visa N° xxxx xxxx xxxx 1542"+
       // "</div>"+
@@ -404,17 +409,5 @@ export class ResultadoPagoComponent implements OnInit,OnDestroy{
   }
   reemplazarRazonPago(stringOriginal: string): string {
     return stringOriginal.replace(/\//g, "/");
-  }
-  FormatoMilesDecimales(num: number): string {
-    // Separar parte entera y decimal
-    const parts = Number(num).toFixed(2).split('.');
-    let integerPart = parts[0];
-    const decimalPart = parts[1];
-
-    // Agregar separadores de miles
-    integerPart = integerPart.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-
-    // Combinar parte entera y decimal
-    return integerPart + '.' + decimalPart;
   }
 }

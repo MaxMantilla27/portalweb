@@ -6,6 +6,7 @@ import { Subject, takeUntil } from 'rxjs';
 import { MensajeCorreoDTO } from 'src/app/Core/Models/LibroReclamacionesDTO';
 import { PagoOrganicoMatriculaAlumnoIzipayDTO, RegistroRespuestaPreProcesoPagoDTO } from 'src/app/Core/Models/ProcesoPagoDTO';
 import { ChargeComponent } from 'src/app/Core/Shared/Containers/Dialog/charge/charge.component';
+import { FormatoMilesDecimalesPipe } from 'src/app/Core/Shared/Pipes/formato-miles-decimales.pipe';
 import { FormaPagoService } from 'src/app/Core/Shared/Services/FormaPago/forma-pago.service';
 import { PasarelaPagoCorreoService } from 'src/app/Core/Shared/Services/PasarelaPagoCorreo/pasarela-pago-correo.service';
 import { SessionStorageService } from 'src/app/Core/Shared/Services/session-storage.service';
@@ -13,7 +14,8 @@ import { SessionStorageService } from 'src/app/Core/Shared/Services/session-stor
 @Component({
   selector: 'app-resultado-pago-izipay',
   templateUrl: './resultado-pago-izipay.component.html',
-  styleUrls: ['./resultado-pago-izipay.component.scss']
+  styleUrls: ['./resultado-pago-izipay.component.scss'],
+  providers: [FormatoMilesDecimalesPipe]
 })
 export class ResultadoPagoIzipayComponent implements OnInit,OnDestroy {
   private signal$ = new Subject();
@@ -26,6 +28,7 @@ export class ResultadoPagoIzipayComponent implements OnInit,OnDestroy {
     public dialog: MatDialog,
     private _PasarelaPagoCorreoService:PasarelaPagoCorreoService,
     @Inject(PLATFORM_ID) platformId: Object,
+    private FormatoMilesDecimales: FormatoMilesDecimalesPipe
   ) {
     this.isBrowser = isPlatformBrowser(platformId); {}
   }
@@ -64,7 +67,7 @@ export class ResultadoPagoIzipayComponent implements OnInit,OnDestroy {
   public RutaCargada=false;
   public NombreCursoPago=''
   public CodigoMatricula=''
-
+  public correoMatriculas='matriculas@bsginstitute.com'
   ngOnInit(): void {
     if(this.isBrowser){
       this._ActivatedRoute.params.pipe(takeUntil(this.signal$)).subscribe({
@@ -159,14 +162,14 @@ export class ResultadoPagoIzipayComponent implements OnInit,OnDestroy {
     if(this.resultProceso.listaCuota.length==0){
       paymentSummary += "<div style='display:flex;border-bottom: 1px solid black;padding: 5px 0;'>"+
       "<div style='font-size:13px;font-weight:100;width: 66%;'>" + 'Matrícula' + "</div>" +
-      "<div style='font-size:13px;width: 33%;text-align:right;'>" + this.FormatoMilesDecimales(this.resultProceso.montoTotal) + " " + this.resultProceso.monedaCorreo + "</div></div>";
+      "<div style='font-size:13px;width: 33%;text-align:right;'>" + this.FormatoMilesDecimales.transform(this.resultProceso.montoTotal) + " " + this.resultProceso.monedaCorreo + "</div></div>";
     }
     else{
       this.resultProceso.listaCuota.forEach((l:any) => {
         if(countLista==0){
           paymentSummary += "<div style='display:flex;border-bottom: 1px solid black;padding: 5px 0;'>"+
                             "<div style='font-size:13px;font-weight:100;width: 66%;'>" + this.reemplazarRazonPago(l.nombre) + "</div>" +
-                            "<div style='font-size:13px;width: 33%;text-align:right;'>" + this.FormatoMilesDecimales(l.cuotaTotal) + " " + this.resultProceso.monedaCorreo + "</div></div>";
+                            "<div style='font-size:13px;width: 33%;text-align:right;'>" + this.FormatoMilesDecimales.transform(l.cuotaTotal) + " " + this.resultProceso.monedaCorreo + "</div></div>";
         }
         countLista++;
       });
@@ -174,7 +177,7 @@ export class ResultadoPagoIzipayComponent implements OnInit,OnDestroy {
 
     this.jsonCorreo.Asunto =
       'NUEVA MATRICULA ORGANICA';
-    this.jsonCorreo.Destinatario = 'matriculas@bsginstitute.com';
+    this.jsonCorreo.Destinatario = this.correoMatriculas;
     this.jsonCorreo.Contenido =
     "<div style='margin-left:8rem;margin-right:8rem'>"+
     "<div style='display: flex; align-items: center; border-bottom: 2px solid black; padding-bottom: 4px; width: 80%;'>"+
@@ -204,7 +207,7 @@ export class ResultadoPagoIzipayComponent implements OnInit,OnDestroy {
       "<div style='display:flex;padding-bottom:20px;'>"+
       "<div style='font-size:13px;font-weight:bold;width: 66%;'>Total del pago</div>"+
       "<div style='font-size:13px;justify-content:flex-end;font-weight:bold;width: 33%;text-align:right;'>"+
-      this.FormatoMilesDecimales(this.resultProceso.montoTotal) +" "+this.resultProceso.monedaCorreo+
+      this.FormatoMilesDecimales.transform(this.resultProceso.montoTotal) +" "+this.resultProceso.monedaCorreo+
       "</div></div>"+
       // "<div style='font-size:13px'> Método de pago: Tarjeta Visa N° xxxx xxxx xxxx 1542"+
       // "</div>"+
@@ -242,17 +245,5 @@ export class ResultadoPagoIzipayComponent implements OnInit,OnDestroy {
   }
   reemplazarRazonPago(stringOriginal: string): string {
     return stringOriginal.replace(/\//g, "/");
-  }
-  FormatoMilesDecimales(num: number): string {
-    // Separar parte entera y decimal
-    const parts = Number(num).toFixed(2).split('.');
-    let integerPart = parts[0];
-    const decimalPart = parts[1];
-
-    // Agregar separadores de miles
-    integerPart = integerPart.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-
-    // Combinar parte entera y decimal
-    return integerPart + '.' + decimalPart;
   }
 }

@@ -1,1 +1,172 @@
-<p>detalle-pago-mexico-openpay works!</p>
+<!-- holax -->
+<div class="container"></div>
+<div style="background: #f4f4f4">
+  <div class="container">
+    <div class="row" style="padding: 20px 90px 20px 20px !important">
+      <div class="col-12 col-md-12 col-lg-12">
+        <a class="btn-back-detalle" (click)="RegresarPasarela()"
+          >&#8249; Volver</a
+        >
+        <div class="titleCronograma">Confirma tu compra</div>
+        <div class="titleCronogramaCurso" *ngIf="resultPreProceso != undefined">
+          {{ resultPreProceso.nombrePrograma }}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div
+  *ngIf="resultPreProceso != undefined"
+  class="container"
+  style="border-bottom: 2px solid #e7e7e7 !important; padding-bottom: 2rem"
+>
+  <div class="row">
+    <div class="col-12 row">
+      <div class="col-12 col-md-6 col-lg-6 inputPagoVisa">
+        <div class="subtitlePagoVisa" style="border: none !important">
+          Pago realizado por:
+        </div>
+        <ng-container>
+          <mat-form-field
+            appearance="outline"
+            [floatLabel]="'always'"
+            style="width: 100%"
+          >
+            <mat-label>Titular de la tarjeta</mat-label>
+            <input
+              type="text"
+              [(ngModel)]="jsonSave.TarjetaHabiente.Titular"
+              matInput
+            />
+          </mat-form-field>
+          <mat-form-field
+            appearance="outline"
+            [floatLabel]="'always'"
+            style="width: 100%"
+          >
+            <mat-label>Documento de identidad</mat-label>
+            <input
+              type="text"
+              [(ngModel)]="jsonSave.TarjetaHabiente.NumeroDocumento"
+              matInput
+            />
+          </mat-form-field>
+        </ng-container>
+      </div>
+      <div class="col-12 col-md-6 col-lg-6">
+        <div class="resumenPagoTarjeta">
+          <div class="contentResumenPago" style="border: none !important">
+            <div
+              class="col-12"
+              style="
+                display: flex;
+                justify-content: space-between;
+                padding: 5px;
+              "
+            >
+              <div style="font-weight: 600">Concepto</div>
+              <div style="font-weight: 600">Monto</div>
+            </div>
+            <div class="ItemsResumenPago row">
+              <div
+                *ngFor="let item of resultPreProceso.listaCuota; index as i"
+                style="padding: 5px !important"
+              >
+                <div class="col-12 row itms">
+                  <div class="col-8">{{ item.nombre }}</div>
+                  <div class="col-4" style="text-align: right">
+                    {{ item.cuotaTotal | formatoMilesDecimales }}
+                    {{ resultPreProceso.monedaCorreo }}
+                  </div>
+                </div>
+              </div>
+              <div class="col-12 row totalPago" style="background: #f2f6ff">
+                <div class="col-8">Total a pagar</div>
+                <div class="col-4" style="text-align: right">
+                  {{ resultPreProceso.total | formatoMilesDecimales }}
+                  {{ resultPreProceso.monedaCorreo }}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="col-12"
+        style="
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          flex-direction: column;
+        "
+      >
+        <div>
+          <app-default-button [confs]="{color:'primary',titulo:'Pagar ahora'}"
+            [style]="'margin-top: 20px;margin-bottom: 0px;width:100%'" (ButtoclClick)="Pagar()"></app-default-button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<ng-container *ngIf="resultPreProceso == undefined">
+  <div
+    class="row"
+    style="
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      height: 15rem;
+    "
+  >
+    <div class="col-12" style="display: flex; justify-content: center">
+      <mat-spinner></mat-spinner>
+    </div>
+    <div class="col-12">Cargando información pago ...</div>
+  </div>
+</ng-container>
+<div class="container">
+  <div class="row">
+    <!-- Columna de 7 con el contenido -->
+    <div class="col-12 col-md-7 col-lg-7">
+      <div style="justify-content: left; display: flex">
+        <div class="iconoPagoTarjeta">
+          <div class="textPagoTarjeta" style="color: #02c158 !important">
+            <span>PAGO 100%</span>
+            <span>seguro</span>
+          </div>
+          <div class="imgPagoTarjetaVerde"></div>
+          <div class="descPagoTarjeta">
+            <span>
+              Este certificado garantiza la seguridad de todas tus conexiones
+              mediante cifrado
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Columna vacía de 5 -->
+    <div class="col-12 col-md-5 col-5" style="padding: 20px">
+      <div>Métodos de pago aceptados:</div>
+      <div class="medio-pago-images" style="padding-top: 10px">
+        <div
+          *ngFor="let tarjeta of tarjetas"
+          class="medio-pago-image-container"
+        >
+          <img
+            *ngIf="
+              tarjeta.medioPago == 'Visa' ||
+              tarjeta.medioPago == 'MasterCard' ||
+              tarjeta.medioPago == 'Amex' ||
+              tarjeta.medioPago == 'Carnet'
+            "
+            [src]="'../../../../assets/icons/' + tarjeta.img"
+            alt="Imagen de tarjeta"
+            class="medio-pago-image"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
