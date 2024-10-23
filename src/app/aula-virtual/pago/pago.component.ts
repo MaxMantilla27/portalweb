@@ -506,6 +506,9 @@ export class PagoComponent implements OnInit,OnDestroy {
     });
   }
   PreProcesoAfiliacionPagoRecurrente(tarjeta:any){
+    if(tarjeta==undefined){
+      this.medioPagoSeleccionado = this.tarjetas[0];
+    }
     console.log(tarjeta)
     if(this.idPasarela=13){
       tarjeta=this.tarjetas[0]
