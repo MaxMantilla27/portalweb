@@ -139,26 +139,14 @@ export class PagoMedioPagoComponent implements OnInit, OnDestroy {
     console.log('Datos de pasarela:', this.IdMedioPagoSeleccionado);
     console.log('Validador',this.validadorPagosMultiples)
     let valorIdMedioPagoSeleccionado=0
-    if(this.IdPasarelaPago==10){
-      if(this.IdMedioPagoSeleccionado==0 || this.IdMedioPagoSeleccionado==2 ||this.IdMedioPagoSeleccionado==3  ){
+    if(this.IdPasarelaPago==10 ||this.IdPasarelaPago==7){
+      if(this.IdMedioPagoSeleccionado!=1){
         valorIdMedioPagoSeleccionado=0
       }
       else{
         valorIdMedioPagoSeleccionado=1
       }
-      valorIdMedioPagoSeleccionado=this.IdMedioPagoSeleccionado
       this.medioPagoSeleccionado = this.tarjetas[valorIdMedioPagoSeleccionado]
-      console.log('Medio Pago1', this.medioPagoSeleccionado);
-    }
-    if(this.IdPasarelaPago==7){
-      if(this.IdMedioPagoSeleccionado==0 || this.IdMedioPagoSeleccionado==2 ||this.IdMedioPagoSeleccionado==3  ){
-        valorIdMedioPagoSeleccionado=0
-      }
-      else{
-        valorIdMedioPagoSeleccionado=1
-      }
-      this.medioPagoSeleccionado =this.tarjetas[valorIdMedioPagoSeleccionado]
-      console.log('Medio Pago2', this.medioPagoSeleccionado);
     }
     if(this.IdPasarelaPago==1){
       if(this.IdMedioPagoSeleccionado==0){
@@ -249,27 +237,21 @@ export class PagoMedioPagoComponent implements OnInit, OnDestroy {
           console.log(this.tarjetas)
           console.log(tarjeta)
           console.log(this.medioPagoSeleccionado)
-          if(tarjeta.idPasarelaPago == 10){
-            if(tarjeta.idFormaPago == 52){
-              this._router.navigate(['/AulaVirtual/MisPagos/'+this.IdMatriculaCabecera+'/'+this.IdPasarelaPago+'/int-niubiz/'+sesion]);
-            }
-            if(tarjeta.idFormaPago == 48){
-              this._router.navigate(['/AulaVirtual/MisPagos/'+this.IdMatriculaCabecera+'/'+this.IdPasarelaPago+'/int-niubiz-sec/'+sesion]);
-            }
+          let ruta: string | null = null;
+          switch (tarjeta.idPasarelaPago) {
+            case 10:
+              ruta = tarjeta.idFormaPago === 52 ? 'int-niubiz/' : tarjeta.idFormaPago === 48 ? 'int-niubiz-sec/' : null;
+              break;
+            case 7:
+              ruta = tarjeta.idFormaPago === 52 ? 'pe-niubiz/' : tarjeta.idFormaPago === 48 ? 'pe-niubiz-sec/' : null;
+              break;
+            case 1:
+              ruta = 'col-payu/';
+              break;
           }
-          if(tarjeta.idPasarelaPago == 7){
-            if(tarjeta.idFormaPago == 52){
-              this._router.navigate(['/AulaVirtual/MisPagos/'+this.IdMatriculaCabecera+'/'+this.IdPasarelaPago+'/pe-niubiz/'+sesion]);
-            }
-            if(tarjeta.idFormaPago == 48){
-              this._router.navigate(['/AulaVirtual/MisPagos/'+this.IdMatriculaCabecera+'/'+this.IdPasarelaPago+'/pe-niubiz-sec/'+sesion]);
-            }
+          if (ruta) {
+            this._router.navigate([`/AulaVirtual/MisPagos/${this.IdMatriculaCabecera}/${this.IdPasarelaPago}/${ruta}${sesion}`]);
           }
-          if(tarjeta.idPasarelaPago == 1){
-            this._router.navigate(['/AulaVirtual/MisPagos/'+this.IdMatriculaCabecera+'/'+this.IdPasarelaPago+'/col-payu/'+sesion]);
-          }
-
-
           // if (tarjeta.idPasarelaPago == 7 || tarjeta.idPasarelaPago == 10) {
           //   if (tarjeta.idFormaPago == 52) {
           //     console.log(

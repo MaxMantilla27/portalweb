@@ -4,50 +4,107 @@
     <app-miga-pan [items]="migaPan"></app-miga-pan>
   </div>
 </div>
-<div style="background: #f4f4f4;">
+<div style="background: #f4f4f4">
   <div class="container">
     <div class="row rowpadd">
       <div class="col-12 col-md-12 col-lg-12">
-        <h1 class="titulop">
-          Registrarme Ahora
-        </h1>
-        <h2 style="font-size: 20px;color: #797978;line-height: 150%;">
-          Únete a más de 24000 profesionales de toda Latinoamérica que se capacitaron con nosotros.
+        <h1 class="titulop">Registrarme Ahora</h1>
+        <h2 style="font-size: 20px; color: #797978; line-height: 150%">
+          Únete a más de 24000 profesionales de toda Latinoamérica que se
+          capacitaron con nosotros.
         </h2>
       </div>
     </div>
   </div>
 </div>
 <div class="container">
-  <div class="row rowpadd" style="justify-content: center;" style="position: relative;">
-    <app-cargando *ngIf="statuscharge==true"></app-cargando>
-    <div class="col-12 col-md-6 col-lg-6" style="text-align: center;display: flex;flex-direction: column;justify-content: space-between;padding-bottom: 20px;">
-      <div style="text-align: center;
-      font-size: 20px;
-      color: #6b6b6a;
-      margin-bottom: 50px;">Accede a conocimiento especializado muy valorado en el mercado laboral latinoamericano para mejorar tu perfil profesional</div>
-      <img src="../../../assets/imagenes/arquetipo-registrarme.png" alt="Ingeniero registrandose a BSG Institute" style="width: 80%;">
+  <div
+    class="row rowpadd"
+    style="justify-content: center"
+    style="position: relative"
+  >
+    <app-cargando *ngIf="statuscharge == true"></app-cargando>
+    <div
+      class="col-12 col-md-6 col-lg-6"
+      style="
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        padding-bottom: 20px;
+      "
+    >
+      <div
+        style="
+          text-align: center;
+          font-size: 20px;
+          color: #6b6b6a;
+          margin-bottom: 50px;
+        "
+      >
+        Accede a conocimiento especializado muy valorado en el mercado laboral
+        latinoamericano para mejorar tu perfil profesional
+      </div>
+      <img
+        src="../../../assets/imagenes/arquetipo-registrarme.png"
+        alt="Ingeniero registrandose a BSG Institute"
+        style="width: 80%"
+      />
     </div>
     <div class="col-12 col-md-6 col-lg-6">
-
-      <div class="alert alert-danger" role="alert" *ngIf="errorRegister!=''" style="display: flex;align-items:center;justify-content:space-between;font-size: 14px;">
-        {{errorRegister}} <i class="material-icons" style="margin-left: 20px;cursor: pointer;" (click)="errorRegister=''">close</i>
+      <div
+        class="alert alert-danger"
+        role="alert"
+        *ngIf="errorRegister != ''"
+        style="
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          font-size: 14px;
+        "
+      >
+        {{ errorRegister }}
+        <i
+          class="material-icons"
+          style="margin-left: 20px; cursor: pointer"
+          (click)="errorRegister = ''"
+          >close</i
+        >
       </div>
-      <app-formulario [ListaLocalidades]="listaLocalidades" [Interaccion]="'Registrarce'" [model]="register" [InputsDisable]="statuscharge" [CleanOnSubmit]="cleanSub" (OnSubmit)="Register($event)" [Color]="'#f8f8f8'"
-        (OnValid)="formVal=$event" [fiels]="fileds" [Tipo]="1" (OnSelect)="SelectChage($event)" [ChargeValuesInit]="initValues">
-
-        <ng-container contenido>
-        </ng-container>
+      <app-formulario
+        [ListaLocalidades]="listaLocalidades"
+        [Interaccion]="'Registrarce'"
+        [model]="register"
+        [InputsDisable]="statuscharge"
+        [CleanOnSubmit]="cleanSub"
+        (OnSubmit)="Register($event)"
+        [Color]="'#f8f8f8'"
+        (OnValid)="formVal = $event"
+        [fiels]="fileds"
+        [Tipo]="1"
+        (OnSelect)="SelectChage($event)"
+        [ChargeValuesInit]="initValues"
+      >
+        <ng-container contenido> </ng-container>
         <ng-container send>
-          <app-default-button [confs]="{color:'primary',titulo:'Iniciar sesión'}" [style]="'width: 100%;'"  ></app-default-button>
+          <app-default-button
+            [confs]="{ color: 'primary', titulo: 'Iniciar sesión' }"
+            [style]="'width: 100%;'"
+          ></app-default-button>
         </ng-container>
-
       </app-formulario>
     </div>
   </div>
 </div>
-<!-- <script src="https://static-content.vnforapps.com/v2/js/checkout.js" data-sessiontoken="d49f101f9f156d5c2cd192d9cae73ff2a4fc50d7d014cec8ff05ce677c690017"
-data-channel="web" data-merchantid="454870510" data-buttonsize="DEFAULT" data-merchantlogo="https://img.bsginstitute.com/repositorioweb/img/logobsg.svg"
-data-formbuttoncolor="#eea236" data-merchantname="BSG Institute" data-purchasenumber="42568" data-amount="13790.00" data-expirationminutes="15"
+<!-- <script src="https://static-content.vnforapps.com/v2/js/checkout.js"
+ data-sessiontoken="d49f101f9f156d5c2cd192d9cae73ff2a4fc50d7d014cec8ff05ce677c690017"
+data-channel="web"
+data-merchantid="454870510"
+data-buttonsize="DEFAULT"
+data-merchantlogo="https://img.bsginstitute.com/repositorioweb/img/logobsg.svg"
+data-formbuttoncolor="#eea236"
+data-merchantname="BSG Institute"
+data-purchasenumber="42568"
+data-amount="13790.00" data-expirationminutes="15"
 data-timeouturl="https://bsginstitute.com/MisCursos">
 </script> -->
