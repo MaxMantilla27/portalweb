@@ -270,13 +270,6 @@ table tr:last-child td {
   padding: 0px;
 }
 
-.mat-tab .mat-tab-label-content{
-
-  background-color: #E9F1FF;
-  color: #4589C4;
-
-}
-
 .matricula-responsive-row-3,
 .pendiente-responsive-row-3
 {
@@ -401,6 +394,28 @@ table tr:last-child td {
   justify-content: space-between;
 
 }
+
+.mat-tab-label-container{
+
+  height: 40px;
+  border-bottom: 2px solid #E9F1FF;
+}
+
+.mat-tab-label-active{
+
+  border-top-right-radius: 10px;
+  border-top-left-radius: 10px;
+  color: #3A82C0;
+  font-weight: bold;
+  background-color: #E9F1FF;
+}
+
+.mat-ink-bar {
+  display: none; /* Oculta la barra de desplazamiento */
+}
+
+
+
 /*
                         pagoVencido: pendiente.cuotaVencida == true && pendiente.estado!=true && pendiente.cancelado!=false,
                         pagoPendiente: pendiente.estado!=false
