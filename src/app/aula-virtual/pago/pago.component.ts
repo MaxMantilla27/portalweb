@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, HostListener, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
@@ -55,7 +55,12 @@ export class PagoComponent implements OnInit,OnDestroy {
     private _SessionStorageService:SessionStorageService,
     private _MedioPagoActivoPasarelaService:MedioPagoActivoPasarelaService,
     private scrollStrategyOptions: ScrollStrategyOptions
-  ) { }
+    
+  ) { 
+    this.detectarTamanoPantalla(window.innerWidth);
+  }
+
+
   ngOnDestroy(): void {
     this.signal$.next(true);
     this.signal$.complete();
@@ -121,6 +126,24 @@ export class PagoComponent implements OnInit,OnDestroy {
   public diaActual = this.fechaDiaActual.getDate();        // Día actual
   public mesActual = this.fechaDiaActual.getMonth() + 1;   // Mes actual (getMonth() devuelve 0-11, por eso sumamos 1)
   public anioActual = this.fechaDiaActual.getFullYear();
+
+  public pantallaPequenia:boolean= false;
+  public listaCancelados: any[]= [];
+  public listaPendientes: any[]= [];
+
+  @HostListener('window:resize',['$event'])
+  onResize(event:any){
+    this.detectarTamanoPantalla(event.target.innerWidth)
+  }
+
+  detectarTamanoPantalla(ancho:number){
+    if(ancho<768){
+      this.pantallaPequenia = true;
+    }else{
+      this.pantallaPequenia= false
+    }
+  }
+
   ngOnInit(): void {
 
     this._HelperService.recibirDataPais
@@ -227,8 +250,15 @@ export class PagoComponent implements OnInit,OnDestroy {
             }
             x.cuota=x.cuota
             x.moraCalculada=x.moraCalculada
+
+            if (x.cancelado) {
+              this.listaCancelados.push(x);
+            }else{
+              this.listaPendientes.push(x);
+            }
+
             if(x.tipoCuota=="MATRICULA"){
-              x.numeroCuotaMostrar="MATRICULA"
+              x.numeroCuotaMostrar="MATRICULA"      
             }
             else{
               x.numeroCuotaMostrar=count.toString();
@@ -244,6 +274,10 @@ export class PagoComponent implements OnInit,OnDestroy {
             urlWeb: '/AulaVirtual/MisPagos/'+this.idMatricula,
           })
         }
+
+        console.log(this.listaCancelados);
+        console.log(this.listaPendientes);
+
         this.jsonSend.IdPGeneral=this.CronogramaPago.idPGeneral
         this.jsonSend.IdMatriculaCabecera=this.CronogramaPago.idMatriculaCabecera
         if(this.CronogramaPago.registroCuota.length>0){
@@ -296,7 +330,7 @@ export class PagoComponent implements OnInit,OnDestroy {
       let ValorCuotaMora=0
       this.CronogramaPago.registroCuota.forEach((c:any,index:number) => {
         if(c.estado){
-          if(CuotasSeleccionadas==0){
+          if(CuotasSeleccionadas==0 && this.EstadoAfiliado==false){
             ValorCuotaMora=c.cuota+c.moraCalculada
             let fechaVencimiento = new Date(c.fechaVencimiento);
             let diaVencimiento = fechaVencimiento.getDate();       // Día de vencimiento

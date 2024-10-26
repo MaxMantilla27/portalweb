@@ -158,6 +158,7 @@
     background-color: #f4f4f4;
   }
 }
+
 .comprobatePagoTarjeta {
   display: flex;
   align-items: center;
@@ -201,6 +202,7 @@
   font-size: 25px;
   font-weight: 600;
   border-bottom: solid 2px #f1f1f1;
+  text-wrap: nowrap;
 }
 .titleCronogramaCurso {
   font-size: 20px;
@@ -240,4 +242,16 @@
   height: auto;
   max-height: 50px;
   object-fit: contain;
+}
+
+@media (max-width:767px){
+  .inputPagoVisa{
+    padding: 0 20px;
+  }
+  .container-medios-pago{
+    text-align: center;
+    .medio-pago-images{
+      justify-content: center;
+    }
+  }
 }
