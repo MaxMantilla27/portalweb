@@ -1,0 +1,147 @@
+<!-- holax -->
+<br>
+<div class="container" *ngIf="resultVisa==undefined">
+    <div class="row rowpaddAv" style="justify-content: center;">
+        <div class="col-12 col-md-10 col-lg-8" >
+            <div>
+                <img [src]="'../../../assets/icons/iconcharge/'+imgAc" alt="" *ngIf="imgAc!=''">
+              </div>
+              <div class="titleResultPago">
+                <div>Procesando pago</div>
+              </div>
+              <div style="margin-top: 15px;
+              font-size: 15px;">
+                Te agradecemos por tu paciencia, en este momento estamos procesando tu pago
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container" *ngIf="resultVisa!=undefined">
+  <div class="row rowpaddAv" style="justify-content: center;">
+    <div class="col-12 col-md-10 col-lg-8" *ngIf="resultVisa.estadoOperacion!='Processed'">
+      <ng-container *ngIf="resultVisa.estadoOperacion=='Pending'">
+        <div>
+          <img [src]="'../../../assets/icons/iconcharge/'+imgAc" alt="" *ngIf="imgAc!=''">
+        </div>
+        <div class="titleResultPago">
+          <div>Procesando pago</div>
+        </div>
+        <div style="margin-top: 15px;
+        font-size: 15px;">
+          Te agradecemos por tu paciencia, en este momento estamos procesando tu pago
+        </div>
+      </ng-container>
+
+      <ng-container *ngIf="resultVisa.estadoOperacion!='Pending'">
+        <div class="titleResultPago">
+          <img style="margin-right: 10px;"  src="../../../assets/icons/denegado-error-rojo.svg" alt="">
+          <div >No se realizó el pago</div>
+        </div>
+        <div class="textResultPago">
+          <ng-container *ngIf="resultVisa.estadoOperacion =='No Process'||
+          resultVisa.estadoOperacion =='Declinado' ||
+          resultVisa.estadoOperacion =='Processed-' ||
+          resultVisa.estadoOperacion =='ERROR'">
+            No hemos podido procesar su pago, debido a un error con su entidad bancaria,  comuniquese con
+            su Banco para solucionar el error en el pago; o intente con otro medio de pago.
+          </ng-container>
+          <!-- <ng-container *ngIf="resultVisa.estadoOperacion =='No Process'">
+            No hemos podido procesar su pago, debido a un error con su entidad bancaria,  comuniquese con
+            su Banco para solucionar el error en el pago; o intente con otro medio de pago.
+          </ng-container>
+          <ng-container *ngIf="resultVisa.estadoOperacion=='Declinado'">
+            <ng-container>
+              No hemos podido procesar su afiliación, debido a un error con su entidad bancaria,  comuniquese con
+              su Banco para solucionar el error en el pago; o intente con otro medio de pago.
+            </ng-container>
+          </ng-container> -->
+          <div class="textC">Si tiene alguna consulta adicional, escriba un correo a: <a
+              href="mailto:{{correoMatriculas}}">{{correoMatriculas}}</a></div>
+        </div>
+        <div class="row"  style="margin-top: 10px;">
+          <div class="col-12 col-md-6 col-lg-6" style="display: flex;justify-content: center;">
+            <app-default-button-flecha [confs]="{color:'primary',titulo:'Volver a Intentar'}" [style]="'margin-top:15px;padding: 0px 40px;border-radius:20px;'"
+            (ButtoclClick)="RedireccionarModalIntentoPago()"></app-default-button-flecha>
+          </div>
+          <div class="col-12 col-md-6 col-lg-6" style="display: flex;justify-content: center;">
+            <app-default-button-flecha [confs]="{color:'primary',titulo:'Salir'}" [style]="'margin-top:15px;padding: 0px 40px;border-radius:20px;'"
+            [ruta]="'/'+AreaCapacitacion+'/'+ProgramaNombre"></app-default-button-flecha>
+          </div>
+        </div>
+      </ng-container>
+
+    </div>
+    <div class="col-12 col-md-10 col-lg-8" *ngIf="resultVisa.estadoOperacion=='Processed'">
+      <div class="titleResultPago" style="justify-content: center;margin-bottom: 1rem;">
+        <img src="../../../assets/icons/positivo-hecho-20.svg" alt="" style="height: 2.5rem;width: 2.5rem;margin-right:10px;">
+        <div>¡Pago exitoso!</div>
+      </div>
+      <div style="margin-top: 5px;font-size: 14px;justify-content: center;display: flex;">
+        {{resultVisa.registroAlumno.nombre}}, tu afiliación y primer pago recurrente ha sido realizada con exito.
+      </div>
+      <div class="contentCardPago">
+        <div style="margin: 20px 0px;
+        font-weight:600;">Detalle de tu pago:</div>
+        <div class="cardPago">
+          <div class="row" style="align-items: center;padding: 0px 5vw">
+            <div class="col-12 col-md-5 col-lg-4"><b>Nro. de Compra:</b></div>
+            <div class="col-12 col-md-7 col-lg-8 itemValueCardPago">{{resultVisa.identificadorTransaccion}}</div>
+            <div class="col-12 col-md-5 col-lg-4"><b>Monto:</b></div>
+            <div class="col-12 col-md-7 col-lg-8 itemValueCardPago">{{resultVisa.montoTotal|formatoMilesDecimales}}</div>
+            <div class="col-12 col-md-5 col-lg-4"><b>Moneda:</b></div>
+            <div class="col-12 col-md-7 col-lg-8 itemValueCardPago">{{resultVisa.monedaCorreo}}</div>
+            <div class="col-12 col-md-5 col-lg-4"><b>Nombres y Apellidos:</b></div>
+            <div class="col-12 col-md-7 col-lg-8 itemValueCardPago"><b>{{resultVisa.registroAlumno.nombre}}
+                {{resultVisa.registroAlumno.apellido}}</b></div>
+            <ng-container *ngIf="NombreCursoPago!=null && NombreCursoPago!=undefined">
+              <div class="col-12 col-md-5 col-lg-4"><b>Programa:</b></div>
+              <div class="col-12 col-md-7 col-lg-8 itemValueCardPago">{{NombreCursoPago}}</div>
+            </ng-container>
+            <ng-container *ngIf="resultVisa.listaCuota!=null && resultVisa.listaCuota.length>0">
+              <div class="col-12 col-md-5 col-lg-4"><b>Concepto:</b></div>
+              <div class="col-12 col-md-7 col-lg-8 itemValueCardPago">
+                <div *ngFor="let item of resultVisa.listaCuota ; index as i" >
+                  <ng-container *ngIf="i==0">
+                    {{item.nombre}}
+                  </ng-container>
+                </div>
+              </div>
+            </ng-container>
+            <ng-container *ngIf="resultVisa.listaCuota==null || resultVisa.listaCuota.length==0">
+              <div class="col-12 col-md-5 col-lg-4"><b>Concepto:</b></div>
+              <div class="col-12 col-md-7 col-lg-8 itemValueCardPago" >
+                <div>
+                  Matrícula
+                </div>
+              </div>
+            </ng-container>
+            <div class="col-12 col-md-5 col-lg-4"><b>Fecha de transacción:</b></div>
+            <div class="col-12 col-md-7 col-lg-8 itemValueCardPago">{{resultVisa.fechaTransaccion | date:'dd/MM/yyyy'}}
+            </div>
+            <div class="col-12 col-md-5 col-lg-4"><b>Hora de transacción:</b></div>
+            <div class="col-12 col-md-7 col-lg-8 itemValueCardPago">{{resultVisa.fechaTransaccion | date:'hh:mm'}}</div>
+            <ng-container>
+              <div class="col-12 col-md-5 col-lg-4"><b>Pago recurrente:</b></div>
+              <div class="col-12 col-md-7 col-lg-8 itemValueCardPago">Activado</div>
+            </ng-container>
+
+          </div>
+        </div>
+        <!-- <app-default-button-flecha [confs]="{color:'primary',titulo:'Ir a mis cursos ahora'}" [style]="'margin-top:40px;padding: 0px 40px;border-radius:20px'"
+            [ruta]="rutaMisCursos"></app-default-button-flecha> -->
+        <div *ngIf="RutaCargada!=false" class="row mt-2" style="justify-content: center;text-align: center;">
+          <div class="button-container-Pagos">
+            <button [routerLink]="rutaPago" class="btn btn-primary m-2 responsive-button-Pagos">
+              Ver estado de cuenta
+            </button>
+
+            <button  [routerLink]="rutaCursos" class="btn btn-primary m-2 responsive-button-Pagos">
+              Ir a mi curso
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

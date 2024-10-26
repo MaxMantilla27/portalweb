@@ -5,7 +5,7 @@ import {
   OnInit,
   Renderer2,
   ViewEncapsulation,
-  AfterViewChecked,
+  AfterViewInit,
 } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
@@ -26,7 +26,7 @@ import { ImagenTarjetas } from 'src/app/Core/Shared/ImagenTarjetas';
   styleUrls: ['./detalle-pago-peru-niubiz.component.scss'],
   encapsulation: ViewEncapsulation.None,
 })
-export class DetallePagoPeruNiubizComponent implements OnInit, OnDestroy, AfterViewChecked {
+export class DetallePagoPeruNiubizComponent implements OnInit, OnDestroy, AfterViewInit {
   private signal$ = new Subject<void>();
   public resultNiubiz: any;
   public jsonSave: RegistroProcesoPagoAlumnoDTO = this.inicializarJsonSave();
@@ -63,7 +63,6 @@ export class DetallePagoPeruNiubizComponent implements OnInit, OnDestroy, AfterV
         this.IdPasarelaPago = +params['idpasarelapago'];
         this.json.IdentificadorTransaccion = params['identificador'];
         this.json.RequiereDatosTarjeta = this._SessionStorageService.SessionGetValue(this.json.IdentificadorTransaccion) !== 'false';
-
         this.url += this.json.IdentificadorTransaccion;
         this.ObtenerPreProcesoPagoCuotaAlumno();
         this.ObtenerTarjetasMedioPago();
@@ -71,14 +70,17 @@ export class DetallePagoPeruNiubizComponent implements OnInit, OnDestroy, AfterV
     });
   }
 
-  ngAfterViewChecked(): void {
-    if (!this.CompletamenteCargado) {
-      const visaElement = this._document.getElementById('visa');
-      if (visaElement) {
-        this.CompletamenteCargado = true;
-        this.loadVisanetCheckoutScript();
-      }
-    }
+  ngAfterViewInit(): void {
+    // Primero intenta ocultar el elemento cuando la vista ha sido inicializada
+    this.hidePaymentQr();
+
+    // Luego observa cambios en el DOM
+    this.observeDomChanges();
+
+    // Y finalmente intenta ocultarlo después de un pequeño retraso
+    setTimeout(() => {
+      this.hidePaymentQr();
+    }, 2000); // Espera 2 segundos antes de intentar ocultar
   }
 
   ngOnDestroy(): void {
@@ -115,6 +117,30 @@ export class DetallePagoPeruNiubizComponent implements OnInit, OnDestroy, AfterV
     };
   }
 
+  private hidePaymentQr(): void {
+    const paymentQrElement = this._document.querySelector('.payment-qr')as HTMLElement;
+    if (paymentQrElement) {
+      paymentQrElement.style.display = 'none';
+      console.log('Elemento payment-qr oculto.');
+    } else {
+      console.log('Elemento payment-qr no encontrado.');
+    }
+  }
+
+  private observeDomChanges(): void {
+    const observer = new MutationObserver((mutations) => {
+      mutations.forEach((mutation) => {
+        if (mutation.type === 'childList') {
+          this.hidePaymentQr();
+        }
+      });
+    });
+
+    // Observa un contenedor específico (ajusta según sea necesario)
+    const targetNode = this._document.body; // o un contenedor específico
+    observer.observe(targetNode, { childList: true, subtree: true });
+  }
+
   ObtenerPreProcesoPagoCuotaAlumno(): void {
     this._FormaPagoService
       .ObtenerPreProcesoPagoCuotaAlumno(this.json)
@@ -126,14 +152,13 @@ export class DetallePagoPeruNiubizComponent implements OnInit, OnDestroy, AfterV
           if (this.resultNiubiz.estadoOperacion.toLowerCase() !== 'sent') {
             this._router.navigate(['/AulaVirtual/MisCursos/', this.IdMatriculaCabecera]);
           }
-          this.resultNiubiz.total=0;
-          if(this.resultNiubiz.listaCuota!=undefined){
-            this.resultNiubiz.listaCuota.forEach((l:any) => {
-              this.resultNiubiz.total+=l.cuotaTotal
+          this.resultNiubiz.total = 0;
+          if (this.resultNiubiz.listaCuota != undefined) {
+            this.resultNiubiz.listaCuota.forEach((l: any) => {
+              this.resultNiubiz.total += l.cuotaTotal;
             });
-          }
-          else{
-            this.resultNiubiz.total=this.resultNiubiz.montoTotal
+          } else {
+            this.resultNiubiz.total = this.resultNiubiz.montoTotal;
           }
           this.actualizarJsonSave();
         },
@@ -151,66 +176,97 @@ export class DetallePagoPeruNiubizComponent implements OnInit, OnDestroy, AfterV
     };
   }
 
-  loadVisanetCheckoutScript(): void {
-    if (this.kryptonScriptLoaded) return;
+  // loadVisanetCheckoutScript(): void {
+  //   if (this.kryptonScriptLoaded) return;
 
-    const script = this._renderer2.createElement('script');
-    script.type = 'text/javascript';
-    // script.src = 'https://static-content.vnforapps.com/vToken/js/checkout.js';
-    script.src = 'https://static-content.vnforapps.com/v2/js/checkout.js';
-    script.onload = () => {
-      this.kryptonScriptLoaded = true;
-      console.log('Script de Visa Checkout cargado con éxito.');
-    };
-    script.onerror = () => {
-      console.error('Error al cargar el script de Visa Checkout.');
-    };
-    this._renderer2.appendChild(this._document.body, script);
-  }
+  //   const script = this._renderer2.createElement('script');
+  //   script.type = 'text/javascript';
+  //   // script.src = 'https://static-content.vnforapps.com/vToken/js/checkout.js';
+  //   script.src = 'https://static-content.vnforapps.com/v2/js/checkout.js';
+  //   script.onload = () => {
+  //     this.kryptonScriptLoaded = true;
+  //     console.log('Script de Visa Checkout cargado con éxito.');
+  //   };
+  //   script.onerror = () => {
+  //     console.error('Error al cargar el script de Visa Checkout.');
+  //   };
+  //   this._renderer2.appendChild(this._document.body, script);
+  // }
+  addVisa(){
+    this.kryptonScriptLoaded=false;
+    if (!this.kryptonScriptLoaded) {
+      let script = this._renderer2.createElement('script');
+      script.src='https://static-content.vnforapps.com/v2/js/checkout.js'
+      script.setAttribute('data-sessiontoken',this.resultNiubiz.procesoPagoBotonVisa.sessionKey)
+      script.setAttribute('data-channel','pasarela')
+      script.setAttribute('data-merchantid',this.resultNiubiz.procesoPagoBotonVisa.merchanId)
+      script.setAttribute('data-buttonsize','DEFAULT')
+      script.setAttribute('data-merchantlogo','https://img.bsginstitute.com/repositorioweb/img/logobsg-visa.svg')
+      script.setAttribute('data-formbuttoncolor','#eea236')
+      script.setAttribute('data-merchantname','BSG Institute')
+      script.setAttribute('data-purchasenumber',this.resultNiubiz.procesoPagoBotonVisa.orderVisa.purchaseNumber)
+      script.setAttribute('data-amount',parseFloat(this.resultNiubiz.procesoPagoBotonVisa.amount+'.00'))
+      script.setAttribute('data-expirationminutes','5')
+      script.setAttribute('data-timeouturl',this.urlBase+'/AulaVirtual/MisPagos/'+this.IdMatriculaCabecera)
+      script.setAttribute('data-cardholdername',this.resultNiubiz.registroAlumno.nombre)
+      script.setAttribute('data-cardholderlastname',this.resultNiubiz.registroAlumno.apellido)
+      script.setAttribute('data-cardholderemail',this.resultNiubiz.registroAlumno.correo)
+      script.setAttribute('data-usertoken',this.resultNiubiz.registroAlumno.idAlumno)
+      script.setAttribute("data-paymentmethod", "Yape")
+      console.log(script)
+      this._renderer2.appendChild(this._document.getElementById('visa'), script);
+      console.log(this._document.getElementById('visa'))
+      this.kryptonScriptLoaded=true;
+      console.log(script)
 
-  openForm(): void {
-    this.DataComprobante.idComprobante = this.jsonSave.Comprobante ? 1 : 2;
-    this.DataComprobante.nroDoc = this.jsonSave.Comprobante
-      ? this.jsonSave.CodigoTributario
-      : this.resultNiubiz.registroAlumno.numeroDocumento;
-    this.DataComprobante.razonSocial = this.jsonSave.Comprobante ? this.jsonSave.RazonSocial : '';
-
-    this._SessionStorageService.SessionSetValue('comprobante', JSON.stringify(this.DataComprobante));
-
-    if (!this.kryptonScriptLoaded || typeof VisanetCheckout === 'undefined' || typeof VisanetCheckout.configure !== 'function') {
-      console.error('El script o la configuración de Visa Checkout no están disponibles.');
-      return;
     }
 
-    try {
-      VisanetCheckout.configure({
-        sessiontoken: this.resultNiubiz.procesoPagoBotonVisa.sessionKey,
-        channel: this.resultNiubiz.procesoPagoBotonVisa.channel,
-        merchantid: this.resultNiubiz.procesoPagoBotonVisa.merchanId,
-        purchasenumber: this.resultNiubiz.procesoPagoBotonVisa.purchaseNumber,
-        merchantname: 'BSG Institute',
-        amount: parseFloat(`${this.resultNiubiz.procesoPagoBotonVisa.amount}.00`),
-        expirationminutes: '5',
-        timeouturl: `${this.urlBase}/AulaVirtual/MisPagos/${this.IdMatriculaCabecera}`,
-        merchantlogo: 'https://img.bsginstitute.com/repositorioweb/img/logobsg-visa.svg',
-        formbuttoncolor: '#eea341',
-        showamount: 'false',
-        countable: false,
-        cardholdername: `${this.resultNiubiz.registroAlumno.nombre}`,
-        cardholderlastname: `${this.resultNiubiz.registroAlumno.apellido}`,
-        cardholderemail: `${this.resultNiubiz.registroAlumno.correo}`,
-        usertoken: `${this.resultNiubiz.registroAlumno.idAlumno}`,
-        action: `${this.urlProcesoPago}ProcesoPagoVisa/Index?IdTransaccion=${this.json.IdentificadorTransaccion}`,
-        complete: (params: any) => {
-          console.log(params);
-          alert(JSON.stringify(params));
-        },
-      });
-      VisanetCheckout.open();
-    } catch (error) {
-      console.error('Error al abrir el formulario de Visa Checkout:', error);
-    }
   }
+
+  // openForm(): void {
+  //   this.DataComprobante.idComprobante = this.jsonSave.Comprobante ? 1 : 2;
+  //   this.DataComprobante.nroDoc = this.jsonSave.Comprobante
+  //     ? this.jsonSave.CodigoTributario
+  //     : this.resultNiubiz.registroAlumno.numeroDocumento;
+  //   this.DataComprobante.razonSocial = this.jsonSave.Comprobante ? this.jsonSave.RazonSocial : '';
+
+  //   this._SessionStorageService.SessionSetValue('comprobante', JSON.stringify(this.DataComprobante));
+
+  //   if (!this.kryptonScriptLoaded || typeof VisanetCheckout === 'undefined' || typeof VisanetCheckout.configure !== 'function') {
+  //     console.error('El script o la configuración de Visa Checkout no están disponibles.');
+  //     return;
+  //   }
+
+  //   try {
+  //     VisanetCheckout.configure({
+  //       sessiontoken: this.resultNiubiz.procesoPagoBotonVisa.sessionKey,
+  //       channel: 'web',
+  //       merchantid: this.resultNiubiz.procesoPagoBotonVisa.merchanId,
+  //       purchasenumber:this.resultNiubiz.procesoPagoBotonVisa.purchaseNumber,
+  //       amount: parseFloat(`${this.resultNiubiz.procesoPagoBotonVisa.amount}.00`),
+  //       expirationminutes: '20',
+  //       timeouturl: `${this.urlBase}/AulaVirtual/MisPagos/${this.IdMatriculaCabecera}`,
+  //       merchantlogo: 'https://img.bsginstitute.com/repositorioweb/img/logobsg-visa.svg',
+  //       formbuttoncolor: '#eea341',
+  //       showamount: 'false',
+  //       countable: false,
+  //       cardholdername: `${this.resultNiubiz.registroAlumno.nombre}`,
+  //       cardholderlastname: `${this.resultNiubiz.registroAlumno.apellido}`,
+  //       cardholderemail: `${this.resultNiubiz.registroAlumno.correo}`,
+  //       usertoken: `${this.resultNiubiz.registroAlumno.idAlumno}`,
+  //       // action: `${this.urlProcesoPago}ProcesoPagoVisa/PagoVisaToken?IdTransaccion=${this.json.IdentificadorTransaccion}`,
+  //       action: 'https://localhost:44373/ProcesoPagoVisa/Index?IdTransaccion='+this.json.IdentificadorTransaccion,
+
+  //       complete: (params: any) => {
+  //         console.log(params);
+  //         alert(JSON.stringify(params));
+  //       },
+  //     });
+  //     VisanetCheckout.open();
+  //   } catch (error) {
+  //     console.error('Error al abrir el formulario de Visa Checkout:', error);
+  //   }
+  // }
 
   RegresarPasarela(): void {
     this._router.navigate(['/AulaVirtual/MisPagos/', this.IdMatriculaCabecera, this.IdPasarelaPago]);
@@ -229,6 +285,9 @@ export class DetallePagoPeruNiubizComponent implements OnInit, OnDestroy, AfterV
           console.log('Tarjetas por alumno', this.tarjetas);
         },
       });
+  }
+  pagar(){
+
   }
 }
 

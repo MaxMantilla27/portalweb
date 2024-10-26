@@ -72,6 +72,7 @@ import { DetallePagoColombiaWompiComponent } from './pago/pago-medio-pago/detall
 import { DetallePagoColombiaPayuComponent } from './pago/pago-medio-pago/detalle-pago-colombia-payu/detalle-pago-colombia-payu.component';
 import { DetallePagoChileWebpayComponent } from './pago/pago-medio-pago/detalle-pago-chile-webpay/detalle-pago-chile-webpay.component';
 import { DetallePagoChileMercadopagoComponent } from './pago/pago-medio-pago/detalle-pago-chile-mercadopago/detalle-pago-chile-mercadopago.component';
+import { ResultadoPagoNiubizComponent } from './resultado-pago-niubiz/resultado-pago-niubiz.component';
 
 const routes: Routes = [
   {
@@ -135,6 +136,7 @@ const routes: Routes = [
 
         // RespuestaPago Recurrente :
         { path: 'AfilicacionPagoRecurrente/:Identificador', component: VisaRecurrenteComponent,canActivate:[AlumnoGuard]},
+        { path: 'PagoTokenizado/:Identificador', component: ResultadoPagoNiubizComponent,canActivate:[AlumnoGuard]},
 
         { path: 'MisCursosPrueba/:IdRegistroPrueba', component: CursoPruebaComponent,canActivate:[AlumnoGuard]},
 

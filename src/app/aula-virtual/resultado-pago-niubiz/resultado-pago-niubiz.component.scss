@@ -1,0 +1,51 @@
+.titleResultPago {
+  font-size: 25px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  img {
+    width: 25px;
+    margin-left: 20px;
+  }
+}
+.textResultPago {
+  font-size: 14px;
+  margin-top: 25px;
+  .textC {
+    margin-top: 40px;
+    font-size: 12px;
+  }
+}
+.contentCardPago{
+  margin-top: 40px;
+  font-size: 15px;
+}
+.cardPago{
+  padding: 30px 15px;
+  border: solid 3px #f2f2f2;
+  border-radius: 10px;
+}
+.itemValueCardPago{
+  margin: 10px 0px;
+  padding: 0px 20px;
+}
+/* Define el tamaño base de los botones */
+.responsive-button-Pagos {
+border-color: transparent;
+border-radius: 25px;
+width: 14vw; /* O el ancho que desees */
+}
+
+/* Media query para pantallas de hasta 768px */
+@media (max-width: 768px) {
+.button-container-Pagos {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.responsive-button-Pagos {
+  width: 80%; /* Cambiar el valor según necesites */
+  max-width: 200px; /* Ajusta el máximo ancho del botón si lo deseas */
+}
+}

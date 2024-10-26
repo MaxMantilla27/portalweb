@@ -118,13 +118,19 @@
           flex-direction: column;
         "
       >
-        <div id="visa">
+        <!-- <div id="visa">
           <app-default-button
             [confs]="{ color: 'visa', titulo: 'Paga Aquí' }"
             [style]="'margin-bottom: 0px;width:100%'"
             (ButtoclClick)="openForm()"
           ></app-default-button>
-        </div>
+        </div> -->HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH
+        <form ngNoForm (submit)="pagar()" id="visa"
+        [action]="'https://localhost:44373//ProcesoPagoVisa/Index?IdTransaccion='+json.IdentificadorTransaccion"
+        [method]="'post'" style="text-align: center;"
+        target="_blank">
+
+        </form>
       </div>
     </div>
   </div>

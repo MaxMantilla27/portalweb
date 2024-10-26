@@ -382,4 +382,12 @@ export class FormaPagoService {
       return EMPTY;
     }
   }
+  public RegistroPagoCuotaAlumnoVisaProcesarToken(Json:any):Observable<any>{
+    if(this.isBrowser){
+      return this.http.post<any>(this.urlBase+'/RegistroPagoCuotaAlumnoVisaProcesarToken',Json)
+    }else{
+      return EMPTY;
+    }
+
+  }
 }
