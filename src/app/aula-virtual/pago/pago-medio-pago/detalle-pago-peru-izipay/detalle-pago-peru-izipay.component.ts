@@ -2,6 +2,7 @@ import { DOCUMENT } from '@angular/common';
 import {
   AfterViewInit,
   Component,
+  HostListener,
   Inject,
   OnDestroy,
   OnInit,
@@ -37,7 +38,9 @@ export class DetallePagoPeruIzipayComponent
     private _router: Router,
     private _MedioPagoActivoPasarelaService: MedioPagoActivoPasarelaService,
     private _t: ImagenTarjetas
-  ) {}
+  ) {
+    
+  }
 
   private kryptonScriptLoaded: boolean = false;
 
@@ -59,6 +62,7 @@ export class DetallePagoPeruIzipayComponent
   public IdPasarelaPago = 0;
   public tarjetas: any;
   public IdMatriculaCabecera = 0;
+
 
   ngAfterViewChecked(): void {
     if (!this.CompletamenteCargado) {
