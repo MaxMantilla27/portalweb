@@ -56,5 +56,7 @@
 <!-- <app-soporte-tecnico [cargaChat]="cargaChat"  (IsOpen)="OpenChat=$event" [Open]="OpenChat" [token]="stateToekn" [IdPGeneral]="IdPGeneral">
 </app-soporte-tecnico> -->
 <ng-container *ngIf="showChatATC!=false && ChatCargado">
-  <app-chat-atencion-cliente></app-chat-atencion-cliente>
+  <!-- <app-chat-atencion-cliente></app-chat-atencion-cliente>
+  -->
+  <app-chatbot-ia></app-chatbot-ia>
 </ng-container>

@@ -1,0 +1,163 @@
+<!-- holax1 -->
+<ng-container>
+  <div *ngIf="Open">
+    <div class="cerrarChatAtc" (click)="toggleChat(false)">X</div>
+  </div>
+  <div *ngIf="!Open" style="display: flex" (click)="toggleChat(true)">
+    <div class="chatAtc">
+      <div style="display: flex">
+        <div
+          class="col-4"
+          style="align-items: center; display: flex; justify-content: center"
+        >
+          <img
+            style="height: 35px"
+            [src]="'../../../../../../assets/imagenes/icono-chat-atc.png'"
+            alt=""
+          />
+        </div>
+        <div
+          class="col-8"
+          style="font-size: 15px; line-height: 20px; text-align: left"
+        >
+          Atención al cliente
+        </div>
+      </div>
+    </div>
+    <div class="trianguloChatAtc"></div>
+  </div>
+  <div
+    class="chatSTAtc"
+    *ngIf="Open != false"
+    style="box-shadow: 0px 1px 4px #838383"
+  >
+    <div class="cerrarChatMediaAtc" (click)="Open = false; IsOpen.emit(false)">
+      X
+    </div>
+    <ng-container select="[contenidoChat]">
+      <div class="headerChatAtc">
+        <div class="imgAsesorAtc">
+          <img
+            style="width: 4.5rem; height: 4.5rem"
+            [src]="'../../../../../../assets/imagenes/Chat-Atc-Online.png'"
+            alt=""
+          />
+          <!-- <img style="width: 4.5rem;height: 4.5rem;" [src]="'../../../../../assets/imagenes/Chat-Atc-Offline.png'" alt=""> -->
+          <div class="nombreAsesorAtc">
+            <div>Atención al cliente</div>
+            <div>BSG Institute</div>
+          </div>
+        </div>
+      </div>
+
+      <div
+        *ngIf="!ChatError && CargandoInformacion"
+        style="display: flex; justify-content: center"
+      >
+        <mat-spinner></mat-spinner>
+      </div>
+
+      <ng-container>
+        <div
+          *ngIf="!CargandoInformacion"
+          #contenidoMsj
+          class="contentChatMsj"
+        >
+          <ng-container *ngFor="let item of mensajes; let i = index">
+            <div
+              [ngClass]="{
+                visitanteMsj: item.esUsuario,
+                asesorMsj: !item.esUsuario
+              }"
+            >
+              <div class="cntnmsj">
+                <markdown [data]="item.mensaje"></markdown>
+                <!--<div class="remitente">
+                  MENSAJITO DE REMITENTE
+                </div>
+                
+                <div
+                  class="msj"
+                  [innerHtml]="item.mensaje | safeHtml"
+                ></div>-->
+                <!--<div class="msj">
+                  <img
+                    alt="Imagen en el chat"
+                    style="width: 180px; height: 80px"
+                  />
+                </div>-->
+                <ng-container
+                  *ngIf="item.esUsuario"
+                >
+                  <!--<ng-container *ngIf="true">
+                    <div class="statemsjEnviado">
+                      <i class="material-icons">access_time</i>
+                    </div>
+                  </ng-container>-->
+                </ng-container>
+              </div>
+            </div>
+          </ng-container>
+          <div *ngIf="ChatError" class="error-mensaje">
+            Hubo un error al enviar el mensaje.
+          </div>
+          <div *ngIf="this.registroChatIA.Cerrado" class="chat-cerrado-mensaje">
+            Esta conversación ha terminado.
+          </div>
+        </div>
+        
+        <div
+          *ngIf="!CargandoInformacion"
+          class="footerChatAula"
+        >
+          <input
+          *ngIf="!this.registroChatIA.Cerrado && !ChatError"
+            class="chat-box-textinput"
+            [ngClass]="{ inputActive: inputActive }"
+            [disabled]="!inputActive"
+            (keyup.enter)="enviarMensaje()"
+            placeholder="Escribe tu mensaje aquí "
+            [(ngModel)]="nuevoMensaje"
+            #inputChat
+          />
+          <i *ngIf="!this.registroChatIA.Cerrado && !ChatError" class="material-icons" (click)="enviarMensaje()"
+            >send</i
+          >
+          <button *ngIf="this.registroChatIA.Cerrado || ChatError" class="mensaje-finalizado" (click)="reiniciarChat()">Iniciar nueva conversación</button>
+          <!--<div class="mensaje-finalizado" *ngIf="this.registroChatIA.Cerrado">Iniciar nueva conversación</div>-->
+        </div>
+      </ng-container>
+      
+  <!--
+      <div
+        *ngIf="CargandoInformacion == false"
+        class="PrimeraInteraccionAtcFondo container"
+      >
+        <div class="PrimeraInteraccionAtc"></div>
+      </div>
+
+      <div class="chat-input" style="display: flex; margin-top: 10px">
+        <input
+          type="text"
+          [(ngModel)]="newMessage"
+          placeholder="Escribe un mensaje..."
+          class="form-control"
+          style="flex: 1; margin-right: 5px"
+        />
+        <button (click)="sendMessage()" class="btn btn-primary">Enviar</button>
+      </div>
+    
+     
+        <ng-container *ngIf="Paso==3 && Caso=='A'">
+          <app-chat-atencion-cliente-chat (RegresarChatAtc)="RetrocederCursos($event)" (RegresarChatAtcEnviado)="RetrocederInicioFormulario($event,1)" [idProgramageneral]="IdProgramageneral" [IdPespecificoPrograma]="IdPespecificoPrograma"></app-chat-atencion-cliente-chat>
+        </ng-container>
+        <ng-container *ngIf="Paso==4 && Caso=='B' && ChatSoporteTecnico==true">
+          <app-chat-atencion-cliente-soporte [idProgramageneral]="IdProgramageneral" (RegresarChatAcademico)="RetrocederInicioFormulario($event,2)"></app-chat-atencion-cliente-soporte>
+        </ng-container>
+        
+        <ng-container *ngIf="Paso==4 && Caso=='B' && ChatSoporteTecnico==false">
+             <app-chat-atencion-cliente-academico [idProgramageneral]="IdProgramageneral" [IdMatriculaCabecera]="IdMatriculaCabecera" (RegresarChatAcademico)="RetrocederInicioFormulario($event,2)" ></app-chat-atencion-cliente-academico>
+        </ng-container>-->
+    </ng-container>
+  </div>
+</ng-container>

@@ -22,6 +22,7 @@ import { SelectComponent } from './Containers/select/select.component';
 import { MatSelectModule } from '@angular/material/select';
 import {MatExpansionModule} from '@angular/material/expansion';
 import { FooterComponent } from './Containers/footer/footer.component';
+import { MarkdownModule } from 'ngx-markdown';
 
 import {SessionStorageService} from '../Shared/Services/session-storage.service'
 import { PaisService } from './Services/Pais/pais.service';
@@ -153,6 +154,7 @@ import { FormChatAtcComponent } from './Containers/form-chat-atc/form-chat-atc.c
 import { ChatAtencionClienteChatComponent } from './Containers/chat-atencion-cliente/chat-atencion-cliente-chat/chat-atencion-cliente-chat.component';
 import { ChatAtencionClienteAcademicoComponent } from './Containers/chat-atencion-cliente/chat-atencion-cliente-academico/chat-atencion-cliente-academico.component';
 import { ChatAtencionClienteSoporteComponent } from './Containers/chat-atencion-cliente/chat-atencion-cliente-soporte/chat-atencion-cliente-soporte.component';
+import { ChatbotIaComponent } from './Containers/chat-atencion-cliente/chatbot-ia/chatbot-ia.component';
 
 @NgModule({
   imports: [
@@ -193,6 +195,7 @@ import { ChatAtencionClienteSoporteComponent } from './Containers/chat-atencion-
     MatNativeDateModule,
     MatSlideToggleModule,
     MatRadioModule,
+    MarkdownModule.forRoot(),
   ],
   declarations: [
     HeaderComponent,
@@ -267,7 +270,8 @@ import { ChatAtencionClienteSoporteComponent } from './Containers/chat-atencion-
     FormChatAtcComponent,
     ChatAtencionClienteChatComponent,
     ChatAtencionClienteAcademicoComponent,
-    ChatAtencionClienteSoporteComponent
+    ChatAtencionClienteSoporteComponent,
+    ChatbotIaComponent,
     //ChatZComponent,
   ],
   exports: [
@@ -374,7 +378,8 @@ import { ChatAtencionClienteSoporteComponent } from './Containers/chat-atencion-
     RemovePortalCriterioPipe,
     ChatAtencionClienteComponent,
     FormChatAtcComponent,
-    ChatAtencionClienteChatComponent
+    ChatAtencionClienteChatComponent,
+    ChatbotIaComponent,
   ],
   providers: [
     SessionStorageService,
