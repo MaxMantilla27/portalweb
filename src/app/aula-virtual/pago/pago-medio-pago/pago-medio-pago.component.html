@@ -48,8 +48,7 @@
                 >
                   <img
                     *ngIf="
-                      tarjeta.medioPago == 'Visa' ||
-                      tarjeta.medioPago == 'MasterCard'
+                      tarjeta.medioPago == 'Visa'
                     "
                     [src]="'../../../../assets/icons/' + tarjeta.img"
                     alt="Imagen de tarjeta"
@@ -108,19 +107,23 @@
                 ></mat-radio-button>
               </div>
               <label for="pagoTarjeta" class="medio-pago-label">
-                Pago con tarjeta de crédito y débito
+                Pago billetera electrónica
               </label>
               <div class="medio-pago-images">
                 <div
-                  *ngFor="let tarjeta of tarjetas"
-                  class="medio-pago-image-container"
                 >
                   <img
-                    *ngIf="
-                      tarjeta.medioPago == 'Amex' ||
-                      tarjeta.medioPago == 'DinerClub'
-                    "
-                    [src]="'../../../../assets/icons/' + tarjeta.img"
+                    [src]="'../../../../assets/icons/YapeConFondo.svg'"
+                    alt="Imagen de tarjeta"
+                    class="medio-pago-image"
+                  />
+                  <img style="height: 35px;"
+                    [src]="'../../../../assets/imagenes/PlinLogo.png'"
+                    alt="Imagen de tarjeta"
+                    class="medio-pago-image"
+                  />
+                  <img style="height: 35px"
+                    [src]="'../../../../assets/imagenes/AgoraLogo.png'"
                     alt="Imagen de tarjeta"
                     class="medio-pago-image"
                   />
@@ -142,19 +145,14 @@
                 ></mat-radio-button>
               </div>
               <label for="pagoTarjeta" class="medio-pago-label">
-                Pago con tarjeta de crédito y débito
+                Pago con yape
               </label>
               <div class="medio-pago-images">
                 <div
-                  *ngFor="let tarjeta of tarjetas"
-                  class="medio-pago-image-container"
                 >
                   <img
-                    *ngIf="
-                      tarjeta.medioPago == 'Amex' ||
-                      tarjeta.medioPago == 'DinerClub'
-                    "
-                    [src]="'../../../../assets/icons/' + tarjeta.img"
+
+                    [src]="'../../../../assets/icons/YapeSinFondo.svg'"
                     alt="Imagen de tarjeta"
                     class="medio-pago-image"
                   />

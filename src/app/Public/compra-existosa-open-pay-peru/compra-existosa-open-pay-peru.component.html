@@ -55,11 +55,10 @@
           </div>
           <div class="textResultPago" style="text-align: justify">
             <div
-              *ngIf="resultVisa.mensajeTransaccion"
               style="text-align: center; color: #e24c4d"
             >
               <p>Hubo un problema al procesar tu pago.</p>
-              <p>
+              <p *ngIf="resultVisa.mensajeTransaccion">
                 <strong>Descripción:</strong>
                 {{ resultVisa.mensajeTransaccion }}
               </p>

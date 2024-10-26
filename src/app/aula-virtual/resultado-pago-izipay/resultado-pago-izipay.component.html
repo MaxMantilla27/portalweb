@@ -29,11 +29,10 @@
             src="../../../assets/icons/denegado-error-rojo.svg"
             alt=""
           />
-          <div *ngIf="tipoRespuesta != 'AF'">Pago Rechazado</div>
-          <div *ngIf="tipoRespuesta == 'AF'">No se realizó la afiliación</div>
+          <div>Pago Rechazado</div>
         </div>
         <div class="textResultPago">
-          <ng-container *ngIf="tipoRespuesta != 'AF'">
+          <ng-container>
             <div>
               <div
                 *ngIf="
@@ -53,10 +52,10 @@
               </div>
             </div>
           </ng-container>
-          <ng-container *ngIf="tipoRespuesta == 'AF'">
+          <!-- <ng-container *ngIf="tipoRespuesta == 'AF'">
             No hemos podido procesar su afiliación, debido a un error con su
             entidad bancaria o al rechazo de la compra.
-          </ng-container>
+          </ng-container> -->
         </div>
       </ng-container>
       <ng-container *ngIf="resultProceso.tipoPago == 'Organico'">
@@ -104,7 +103,7 @@
         {{ resultProceso.datoAlumno.nombre }}, tu compra ha sido realizada con
         exito.
       </div>
-      <div
+      <!-- <div
         class="SubTitulo"
         *ngIf="resultProceso.tipoPago == 'Cronograma' && tipoRespuesta == 'AF'"
         style="
@@ -116,7 +115,7 @@
       >
         {{ resultProceso.registroAlumno.nombre }}, tu pago y afiliación a pagos
         recurrentes se ha realizado con éxito.
-      </div>
+      </div> -->
       <div class="contentCardPago">
         <div class="row" style="justify-content: center; display: flex">
           <div class="cardPago">

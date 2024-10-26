@@ -85,7 +85,7 @@ export class CompraExitosaOpenPayColombiaComponent implements OnInit {
           console.log(x)
           this.resultOpenPay = JSON.parse(x._Repuesta.pagoAfiliacion)
           console.log("ResultadoOpen", this.resultOpenPay)
-          if(JSON.parse(x._Repuesta.pagoExitoso)==true){
+          if(JSON.parse(x._Repuesta.procesoExitoso)==true){
                 this.RutaCargada=true;
           }
         },
@@ -114,6 +114,8 @@ export class CompraExitosaOpenPayColombiaComponent implements OnInit {
             this._router.navigate([this.ruta])
           }else{
             this.resultVisa=x._Repuesta;
+            this.ruta=this.ruta+'/'+this.resultVisa.idMatriculaCabecera
+            this.NombreCursoPago=this.resultVisa.nombrePrograma
             if(this.resultVisa.estadoOperacion=='Processed')
             {
               if(this.resultVisa.tipoPago=='Organico'||this.resultVisa.idMatriculaCabecera==0){
@@ -175,7 +177,9 @@ export class CompraExitosaOpenPayColombiaComponent implements OnInit {
       },
       complete:()=>{
         this.CargandoOpenPay=false;
-        this._router.navigate(['/AulaVirtual/MisPagos/'+this.IdMatriculaCabecera]);
+        if(this.tipoRespuesta!="AF"){
+          this._router.navigate(['/AulaVirtual/MisPagos/'+this.IdMatriculaCabecera]);
+        }
       }
     })
   }

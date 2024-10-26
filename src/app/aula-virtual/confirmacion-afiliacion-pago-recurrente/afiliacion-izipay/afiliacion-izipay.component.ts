@@ -115,9 +115,9 @@ export class AfiliacionIzipayComponent implements OnInit, OnDestroy, AfterViewIn
         this.resultPreValidacion.procesoPagoBotonIziPay.publicKey
       );
       script1.setAttribute('kr-post-url-success',
-      'https://proceso-pago.bsginstitute.com/ProcesoPagoIziPay/Recurrente?IdTransaccion='+this.json.IdentificadorTransaccion);
+      'https://localhost:44373/ProcesoPagoIziPay/Recurrente?IdTransaccion='+this.json.IdentificadorTransaccion);
       script1.setAttribute('kr-post-url-refused',
-      'https://proceso-pago.bsginstitute.com/ProcesoPagoIziPay/Recurrente?IdTransaccion='+this.json.IdentificadorTransaccion);
+      'https://localhost:44373/ProcesoPagoIziPay/Recurrente?IdTransaccion='+this.json.IdentificadorTransaccion);
       script1.setAttribute('kr-language', 'es-ES');
       this._renderer2.appendChild(
         this._document.getElementById('header'),
