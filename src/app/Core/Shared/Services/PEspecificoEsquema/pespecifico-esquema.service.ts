@@ -12,6 +12,7 @@ import {
   CalificarTareaAlumnoOnlineDTO,
   PEspecificoSesionActividadSaveDTO,
   CalificarActividadAlumnoOnlineDTO,
+  EncuestaAvanceDTO,
 } from "src/app/Core/Models/PEspecificoEsquema";
 import { PespecificoSesionTemaUpdateOrdenDTO } from "src/app/Core/Models/PespecificoSesionTemaDTO";
 import { environment } from "src/environments/environment";
@@ -773,6 +774,14 @@ export class PEspecificoEsquemaService {
           "/ObtenerCriteriosPorProgramaEspecificoAntiguos?IdPEspecifico=" +
           IdPEspecifico
       );
+    } else {
+      return EMPTY;
+    }
+  }
+  public AgregarPEspecificoSesionEncuestaAlumno(EncuestaAvance: EncuestaAvanceDTO): Observable<any> {
+    console.log(EncuestaAvance);
+    if (this.isBrowser) {
+      return this.http.post<any>( this.urlBase +"/AgregarPEspecificoSesionEncuestaAlumno" ,EncuestaAvance);
     } else {
       return EMPTY;
     }
