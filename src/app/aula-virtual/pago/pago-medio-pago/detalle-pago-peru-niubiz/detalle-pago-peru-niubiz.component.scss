@@ -137,3 +137,20 @@
 .OcultarMedioPago{
   display: none;
 }
+
+/********************************************************************************/
+
+@media (max-width:767px){
+
+  .medio-pago-images{
+
+    justify-content: center;
+
+  }
+
+  .contenedor-info-pago{
+    margin: 0px;
+  }
+
+
+}

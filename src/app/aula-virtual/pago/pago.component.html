@@ -145,7 +145,15 @@
                       </ng-container>
                     </div>
                     <div class="matricula-responsive-row-2 col-7">
-                      <div style="margin-bottom: 5px;" class="texto-sombreado">{{ cancelados.numeroCuotaMostrar }}</div>
+                      <div *ngIf="cancelados.tipoCuota == 'MATRICULA'"
+                      style="margin-bottom: 5px;" class="texto-sombreado"
+                      >
+                        {{ cancelados.numeroCuotaMostrar }}
+                      </div>
+                      <div *ngIf="cancelados.tipoCuota == 'CUOTA'"
+                      style="margin-bottom: 5px;" class="texto-sombreado"
+                      >
+                      Cuota N° {{ cancelados.numeroCuotaMostrar }}</div>
                       <div class="texto" style="margin-bottom: 5px;">Fecha de pago: {{ cancelados.fechaPago | date : "dd/MM/yyyy" }}</div>
                       <div class="texto">Vence: {{ cancelados.fechaVencimiento | date : "dd/MM/yyyy" }}</div>
                     </div>
