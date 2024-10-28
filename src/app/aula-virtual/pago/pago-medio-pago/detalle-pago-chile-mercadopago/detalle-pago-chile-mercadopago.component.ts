@@ -8,6 +8,7 @@ import { FormaPagoService } from 'src/app/Core/Shared/Services/FormaPago/forma-p
 import { MedioPagoActivoPasarelaService } from 'src/app/Core/Shared/Services/MedioPagoActivoPasarela/medio-pago-activo-pasarela.service';
 import { SnackBarServiceService } from 'src/app/Core/Shared/Services/SnackBarService/snack-bar-service.service';
 import { SessionStorageService } from 'src/app/Core/Shared/Services/session-storage.service';
+import { environment } from 'src/environments/environment';
 
 
 const PK_Produccion ="APP_USR-655cbc43-a08f-482f-a7bc-df64d486c667";
@@ -45,6 +46,9 @@ export class DetallePagoChileMercadopagoComponent implements OnInit {
   public IdPasarelaPago = 0;
   public tarjetas: any;
   public url = '/AulaVirtual/PagoExitoso/';
+  public urlApi = environment.url_api;
+  public urlPortal = environment.url_portal;
+  public urlProcesoPago = environment.url_portalv3;
   ngOnInit(): void {
     this._ActivatedRoute.params.pipe(takeUntil(this.signal$)).subscribe({
       next: (params) => {
@@ -136,8 +140,7 @@ export class DetallePagoChileMercadopagoComponent implements OnInit {
           console.log(cardFormData)
           return new Promise<void>((resolve, reject) => {
             console.log(cardFormData)
-            fetch('https://api-portalweb.bsginstitute.com/api/FormaPago/ProcesarPagoCuotaAlumnoConfirmarMercadoPago', {
-            // fetch('https://localhost:7177/api/FormaPago/ProcesarPagoCuotaAlumnoConfirmarMercadoPago', {
+            fetch(this.urlApi+ 'FormaPago/ProcesarPagoCuotaAlumnoConfirmarMercadoPago', {
               method: 'POST',
               headers: {
                 'Content-Type': 'application/json',
@@ -145,14 +148,12 @@ export class DetallePagoChileMercadopagoComponent implements OnInit {
               body: JSON.stringify(cardFormData),
             })
               .then(() => {
-                // window.location.href = 'http://localhost:4200/AulaVirtual/PagoExitosoMercadoPago/'+this.json.IdentificadorTransaccion
-                window.location.href = 'https://bsginstitute.com/AulaVirtual/PagoExitosoMercadoPago/'+this.json.IdentificadorTransaccion
+                window.location.href = this.urlPortal+'AulaVirtual/PagoExitosoMercadoPago/'+this.json.IdentificadorTransaccion
                 // Recibir el resultado del pago
                 resolve();
               })
               .catch(() => {
-                // window.location.href = 'http://localhost:4200/AulaVirtual/PagoExitosoMercadoPago/'+this.json.IdentificadorTransaccion
-                window.location.href = 'https://bsginstitute.com/AulaVirtual/PagoExitosoMercadoPago/'+this.json.IdentificadorTransaccion
+                window.location.href = this.urlPortal+'AulaVirtual/PagoExitosoMercadoPago/'+this.json.IdentificadorTransaccion
                 // Tratar respuesta de error al intentar crear el pago
                 reject();
               });
