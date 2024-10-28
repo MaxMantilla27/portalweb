@@ -38,6 +38,7 @@
 .medio-pago-label {
   font-size: 16px;
   cursor: pointer;
+  flex: 1;
 }
 
 .medio-pago-images {
@@ -88,4 +89,27 @@ mat-radio-button {
 
 .btn-back-detalle:focus {
   outline: none;
+}
+
+/************************************************************************/
+
+@media (max-width:767px){
+
+  .medio-pago-card{
+
+    width: 85%;
+    padding: 10px;
+    justify-content: space-between;
+
+    .medio-pago-label{
+      font-size: 11px;
+      flex: 1;
+    }
+
+    .medio-pago-image{
+      width: 47px;
+    }
+
+  }
+
 }
