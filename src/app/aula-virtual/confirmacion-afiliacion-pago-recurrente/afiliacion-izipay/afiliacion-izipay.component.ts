@@ -5,6 +5,7 @@ import { Subject, takeUntil } from 'rxjs';
 import { RegistroRespuestaPreProcesoPagoDTO } from 'src/app/Core/Models/ProcesoPagoDTO';
 import { FormaPagoService } from 'src/app/Core/Shared/Services/FormaPago/forma-pago.service';
 import { SessionStorageService } from 'src/app/Core/Shared/Services/session-storage.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-afiliacion-izipay',
@@ -47,6 +48,7 @@ export class AfiliacionIzipayComponent implements OnInit, OnDestroy, AfterViewIn
   };
   public resultPreValidacion: any;
   private kryptonScriptLoaded: boolean = false;
+  public RutaProcesoPago=environment.url_portalv3;
   ngOnDestroy(): void {
     this.signal$.next(true);
     this.signal$.complete();
@@ -114,10 +116,8 @@ export class AfiliacionIzipayComponent implements OnInit, OnDestroy, AfterViewIn
         'kr-public-key',
         this.resultPreValidacion.procesoPagoBotonIziPay.publicKey
       );
-      script1.setAttribute('kr-post-url-success',
-      'https://localhost:44373/ProcesoPagoIziPay/Recurrente?IdTransaccion='+this.json.IdentificadorTransaccion);
-      script1.setAttribute('kr-post-url-refused',
-      'https://localhost:44373/ProcesoPagoIziPay/Recurrente?IdTransaccion='+this.json.IdentificadorTransaccion);
+      script1.setAttribute('kr-post-url-success',this.RutaProcesoPago+'ProcesoPagoIziPay/Recurrente?IdTransaccion='+this.json.IdentificadorTransaccion);
+      script1.setAttribute('kr-post-url-refused',this.RutaProcesoPago+'ProcesoPagoIziPay/Recurrente?IdTransaccion='+this.json.IdentificadorTransaccion);
       script1.setAttribute('kr-language', 'es-ES');
       this._renderer2.appendChild(
         this._document.getElementById('header'),

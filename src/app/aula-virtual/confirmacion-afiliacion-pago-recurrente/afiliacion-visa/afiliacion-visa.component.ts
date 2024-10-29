@@ -40,6 +40,7 @@ export class AfiliacionVisaComponent implements OnInit,OnDestroy {
   }
   public resultVisa:any
   public url='/AulaVirtual/PagoExitoso/'
+  public RutaProcesoPago=environment.url_portalv3
   public jsonSave:RegistroProcesoPagoAlumnoDTO={
     IdentificadorTransaccion:'',
     MedioCodigo:'',
@@ -126,7 +127,7 @@ export class AfiliacionVisaComponent implements OnInit,OnDestroy {
     this.DataComprobante.razonSocial = this.jsonSave.RazonSocial
     this._SessionStorageService.SessionSetValue('comprobante',JSON.stringify(this.DataComprobante));
 
-    let action = 'https://proceso-pago.bsginstitute.com/ProcesoPagoVisa/Recurrente?IdTransaccion='+this.json.IdentificadorTransaccion
+    let action = this.RutaProcesoPago+'ProcesoPagoVisa/Recurrente?IdTransaccion='+this.json.IdentificadorTransaccion
     //let action = 'https://localhost:44373/ProcesoPagoVisa/Recurrente?IdTransaccion='+this.json.IdentificadorTransaccion
     let timeouturl = this.urlBase+'AulaVirtual/MisPagos/'+this.idMatricula
     let logo = 'https://img.bsginstitute.com/repositorioweb/img/logobsg-visa.svg'
