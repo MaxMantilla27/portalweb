@@ -141,3 +141,29 @@
   top: calc( 50% - 17px );
   right: 5px;
 }
+
+
+/******************************************************************************************/
+
+@media (max-width:767px) {
+
+  .container-butto-pagar{
+    width: 50%;
+  }
+
+  .texto-medios-pago{
+    text-align: center;
+  }
+
+  .contanier-info-pago{
+
+    margin: 0px;    
+
+  }
+
+  .medio-pago-images{
+    margin: 0px;
+    justify-content: center;
+  }
+  
+}

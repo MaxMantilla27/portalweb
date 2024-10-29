@@ -134,3 +134,30 @@
   max-height: 50px;
   object-fit: contain;
 }
+
+
+
+/*******************************************************************************************/
+
+@media (max-width:767px) {
+
+  .texto-medios-pago{
+    text-align: center;
+  }
+
+  .contanier-info-pago{
+
+    margin: 0px;
+
+  }
+
+  .container-butto-pagar{
+    width: 50%;
+  }
+
+  .medio-pago-images{
+    justify-content: center;
+    margin: 0px;
+  }
+
+}

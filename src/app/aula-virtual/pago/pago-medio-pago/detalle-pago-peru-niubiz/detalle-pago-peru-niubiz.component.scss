@@ -140,7 +140,17 @@
 
 /********************************************************************************/
 
+.texto-medio-pago{
+  text-align: start;
+}
+
+
+
 @media (max-width:767px){
+
+  .texto-medio-pago{
+    text-align: center;
+  }
 
   .medio-pago-images{
 
