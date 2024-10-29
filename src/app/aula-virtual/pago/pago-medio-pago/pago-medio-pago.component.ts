@@ -112,6 +112,7 @@ export class PagoMedioPagoComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.signal$))
       .subscribe({
         next: (x) => {
+          console.log(x);
           this.validadorPagosMultiples = x.filter(
             (item: any) =>
               item.idPasarelaPago === 7 || item.idPasarelaPago === 10

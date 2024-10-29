@@ -21,7 +21,7 @@
   style="border-bottom: 2px solid #e7e7e7 !important; padding-bottom: 2rem"
 >
   <div class="row">
-    <div class="col-12 row">
+    <div class="col-12 row container-info-pago">
       <div class="col-12 col-md-6 col-lg-6 inputPagoVisa">
         <div class="subtitlePagoVisa" style="border: none !important">
           Ingresa tus datos como aparece en tu tarjeta dde crédito o débito:
@@ -115,7 +115,7 @@
           flex-direction: column;
         "
       >
-        <div id="visa">
+        <div id="visa" class="container-butto-pagar">
           <app-default-button
             [confs]="{ color: 'visa', titulo: 'Paga Aquí' }"
             [style]="';margin-bottom: 0px;width:100%'"
@@ -166,21 +166,20 @@
 
     <!-- Columna vacía de 5 -->
     <div class="col-12 col-md-5 col-5" style="padding: 20px">
-      <div>Métodos de pago aceptados:</div>
+      <div class="texto-medios-pago">Métodos de pago aceptados:</div>
       <div class="medio-pago-images" style="padding-top: 10px">
-        <div
+        <ng-container
           *ngFor="let tarjeta of tarjetas"
           class="medio-pago-image-container"
         >
-          <img
-            *ngIf="
-              tarjeta.medioPago == 'Visa' || tarjeta.medioPago == 'MasterCard'
-            "
-            [src]="'../../../../assets/icons/' + tarjeta.img"
-            alt="Imagen de tarjeta"
-            class="medio-pago-image"
-          />
-        </div>
+          <div *ngIf="tarjeta.medioPago == 'Visa' || tarjeta.medioPago == 'MasterCard'">
+            <img
+              [src]="'../../../../assets/icons/' + tarjeta.img"
+              alt="Imagen de tarjeta"
+              class="medio-pago-image"
+            />
+          </div>
+        </ng-container>
       </div>
     </div>
   </div>

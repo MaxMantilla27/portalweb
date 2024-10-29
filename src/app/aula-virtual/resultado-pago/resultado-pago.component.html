@@ -98,9 +98,9 @@
       </div>
       <div class="contentCardPago">
         <div class="cardPago">
-          <div class="row" style="align-items: center; padding: 0px 10vw">
-            <div class="col-12 col-md-6 col-lg-6"><b>Monto:</b></div>
-            <div class="col-12 col-md-6 col-lg-6 itemValueCardPago">
+          <div class="row pago-exitoso-movil" style="align-items: center; padding: 0px 10vw">
+            <div class="col-6 col-md-6 col-lg-6"><b>Monto:</b></div>
+            <div class="col-6 col-md-6 col-lg-6 itemValueCardPago">
               {{ resultProceso.monedaCorreo }}
               {{ resultProceso.montoTotal | formatoMilesDecimales }}
             </div>
@@ -110,8 +110,8 @@
                 resultProceso.listaCuota.length > 0
               "
             >
-              <div class="col-12 col-md-6 col-lg-6"><b>Concepto:</b></div>
-              <div class="col-12 col-md-6 col-lg-6 itemValueCardPago">
+              <div class="col-6 col-md-6 col-lg-6"><b>Concepto:</b></div>
+              <div class="col-6 col-md-6 col-lg-6 itemValueCardPago">
                 <div *ngFor="let item of resultProceso.listaCuota">
                   {{ item.nombre }}
                 </div>
@@ -123,27 +123,27 @@
                 resultProceso.listaCuota.length == 0
               "
             >
-              <div class="col-12 col-md-6 col-lg-6"><b>Concepto:</b></div>
-              <div class="col-12 col-md-6 col-lg-6 itemValueCardPago">
+              <div class="col-6 col-md-6 col-lg-6"><b>Concepto:</b></div>
+              <div class="col-6 col-md-6 col-lg-6 itemValueCardPago">
                 <div>Matrícula</div>
               </div>
             </ng-container>
-            <div class="col-12 col-md-6 col-lg-6">
-              <b>Código de transacción:</b>
+            <div class="col-6 col-md-6 col-lg-6">
+              <b style="text-wrap: nowrap;">Código de transacción:</b>
             </div>
-            <div class="col-12 col-md-6 col-lg-6 itemValueCardPago">
+            <div class="col-6 col-md-6 col-lg-6 itemValueCardPago">
               {{ resultProceso.codigoHash }}
             </div>
-            <div class="col-12 col-md-6 col-lg-6">
-              <b>Fecha de transacción:</b>
+            <div class="col-6 col-md-6 col-lg-6">
+              <b style="text-wrap: nowrap;">Fecha de transacción:</b>
             </div>
-            <div class="col-12 col-md-6 col-lg-6 itemValueCardPago">
+            <div class="col-6 col-md-6 col-lg-6 itemValueCardPago">
               {{ resultProceso.fechaTransaccion | date : "dd/MM/yyyy" }}
             </div>
-            <div class="col-12 col-md-6 col-lg-6">
-              <b>Hora de transacción:</b>
+            <div class="col-6 col-md-6 col-lg-6">
+              <b style="text-wrap: nowrap;">Hora de transacción:</b>
             </div>
-            <div class="col-12 col-md-6 col-lg-6 itemValueCardPago">
+            <div class="col-6 col-md-6 col-lg-6 itemValueCardPago">
               {{ resultProceso.fechaTransaccion | date : "hh:mm a" }}
             </div>
           </div>

@@ -53,6 +53,12 @@
   padding: 0px 10vw
 }
 
+.resultadoParrafo{
+
+  text-align: center;
+
+}
+
 
 /* Media query para pantallas de hasta 768px */
 @media (max-width: 768px) {
@@ -88,3 +94,25 @@
 }
 
 
+/*********************************************************************************/
+
+@media (max-width:767px) {
+
+  .textResultPago{
+    margin: 27px 0px;
+    justify-content: center;
+    display: flex;
+  }
+  
+  .container-resultado{
+
+    width: 80%;
+
+    .resultadoParrafo{
+      text-align: start;
+      margin-bottom: 10px;
+    }
+
+  }
+
+}

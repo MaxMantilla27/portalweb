@@ -42,7 +42,25 @@
                 Tarjeta de crédito y débito
               </label>
               <div class="medio-pago-images">
-                <ng-container *ngFor="let tarjeta of tarjetas">
+                <div
+                >
+                  <img style="height: 35px;"
+                    [src]="'../../../../assets/icons/visa-07.svg'"
+                    alt="Imagen de tarjeta"
+                    class="medio-pago-image"
+                  />
+                  <img style="height: 35px;"
+                    [src]="'../../../../assets/icons/mastercard-08.svg'"
+                    alt="Imagen de tarjeta"
+                    class="medio-pago-image"
+                  />
+                  <img style="height: 35px"
+                    [src]="'../../../../assets/icons/UnionPay.svg'"
+                    alt="Imagen de tarjeta"
+                    class="medio-pago-image"
+                  />
+                </div>
+                <!-- <ng-container *ngFor="let tarjeta of tarjetas">
                   <div
                     *ngIf="tarjeta.medioPago === 'Visa' || tarjeta.medioPago === 'MasterCard' || tarjeta.medioPago === 'Amex'"
                     class="medio-pago-image-container"
@@ -53,7 +71,7 @@
                       class="medio-pago-image"
                     />
                   </div>
-                </ng-container>
+                </ng-container> -->
               </div>              
               <!-- <div class="medio-pago-images">
                 <div
