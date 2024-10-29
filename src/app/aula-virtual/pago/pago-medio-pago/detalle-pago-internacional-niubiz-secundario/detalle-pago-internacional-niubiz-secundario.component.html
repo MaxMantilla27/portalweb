@@ -20,7 +20,7 @@
   style="border-bottom: 2px solid #e7e7e7 !important; padding-bottom: 2rem"
 >
   <div class="row">
-    <div class="col-12 row">
+    <div class="col-12 row contanier-info-pago">
       <div class="col-12 col-md-6 col-lg-6 inputPagoVisa">
         <div class="subtitlePagoVisa">
           Ingresa los datos de tu tarjeta de crédito o débito:
@@ -217,22 +217,6 @@
               </mat-form-field>
             </div>
           </ng-container>
-          <div
-            class="col-12"
-            style="
-              display: flex;
-              justify-content: center;
-              align-items: center;
-              flex-direction: column;
-            "
-          >
-            <app-default-button
-              [confs]="{ color: 'primary', titulo: 'Pagar ahora' }"
-              [style]="'margin-bottom: 0px;width:100%'"
-              (ButtoclClick)="ValidateSave()"
-            ></app-default-button>
-          </div>
-
         </form>
       </div>
       <div class="col-12 col-md-6 col-lg-6">
@@ -273,6 +257,23 @@
           </div>
         </div>
       </div>
+      <div
+      class="col-12"
+      style="
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+      "
+    >
+      <div class="container-butto-pagar">
+        <app-default-button
+          [confs]="{ color: 'primary', titulo: 'Pagar ahora' }"
+          [style]="'margin-top: 20px;margin-bottom: 0px;width:100%'"
+          (ButtoclClick)="ValidateSave()"
+        ></app-default-button>
+      </div>
+    </div>
     </div>
   </div>
 </div>
@@ -316,25 +317,27 @@
 
     <!-- Columna vacía de 5 -->
     <div class="col-12 col-md-5 col-5" style="padding: 20px;">
-      <div>
+      <div class="texto-medios-pago">
         Métodos de pago aceptados:
       </div>
       <div class="medio-pago-images" style="padding-top: 10px;">
-        <div
+
+        <ng-container
           *ngFor="let tarjeta of tarjetas"
           class="medio-pago-image-container"
         >
-          <img
-            *ngIf="
-              tarjeta.medioPago == 'MasterCard' ||
-              tarjeta.medioPago == 'Amex' ||
-              tarjeta.medioPago == 'DinerClub'
-            "
-            [src]="'../../../../assets/icons/' + tarjeta.img"
-            alt="Imagen de tarjeta"
-            class="medio-pago-image"
-          />
-        </div>
+          <div *ngIf="
+          tarjeta.medioPago == 'MasterCard' ||
+          tarjeta.medioPago == 'Amex' ||
+          tarjeta.medioPago == 'DinerClub'
+        ">
+            <img
+              [src]="'../../../../assets/icons/' + tarjeta.img"
+              alt="Imagen de tarjeta"
+              class="medio-pago-image"
+            />
+          </div>
+        </ng-container>
       </div>
     </div>
   </div>

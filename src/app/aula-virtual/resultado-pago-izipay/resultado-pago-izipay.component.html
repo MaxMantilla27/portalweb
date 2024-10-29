@@ -33,7 +33,7 @@
         </div>
         <div class="textResultPago">
           <ng-container>
-            <div>
+            <div class="container-resultado">
               <div
                 *ngIf="
                   resultProceso.mensajeTransaccion != null &&
@@ -41,12 +41,12 @@
                   resultProceso.mensajeTransaccion != ''
                 "
                 style="text-align: center;color:#E24C4D"
-              ><p>Hubo un problema al procesar tu pago.</p>
-                <p><strong>Descripción:</strong> {{ resultProceso.mensajeTransaccion }}</p>
+              ><p class="resultadoParrafo">Hubo un problema al procesar tu pago.</p>
+                <p class="resultadoParrafo"><strong>Descripción:</strong> {{ resultProceso.mensajeTransaccion }}</p>
               </div>
 
               <div>
-                <p style="text-align: center;">
+                <p class="resultadoParrafo">
                   Asegurate de que tu tarjeta tenga saldo suficiente para completar tu pago e intentalo nuevamente
                 </p>
               </div>
@@ -174,7 +174,7 @@
               class="row pago-exitoso-movil"
               *ngIf="resultProceso.tipoPago == 'Cronograma'"
             >
-              <div class="col-6 col-md-6 col-lg-6"><b>Monto:hol</b></div>
+              <div class="col-6 col-md-6 col-lg-6"><b>Monto:</b></div>
               <div class="col-6 col-md-6 col-lg-6 itemValueCardPago">
                 {{ resultProceso.monedaCorreo }}
                 {{ resultProceso.montoTotal | formatoMilesDecimales }}
