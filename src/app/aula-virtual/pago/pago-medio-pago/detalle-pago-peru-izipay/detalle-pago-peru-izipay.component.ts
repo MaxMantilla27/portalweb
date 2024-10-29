@@ -56,7 +56,7 @@ export class DetallePagoPeruIzipayComponent
   public resultPreProceso: any;
   public url = '/AulaVirtual/PagoExitoso/';
   public urlBase = environment.url_portal;
-  // public urlProcesoPago = environment.url_portalv3;
+  public urlProcesoPago = environment.url_portalv3;
   public CompletamenteCargado = false;
   public DataComprobante: any = {};
   public IdPasarelaPago = 0;
@@ -130,13 +130,13 @@ export class DetallePagoPeruIzipayComponent
         this.resultPreProceso.procesoPagoBotonIziPay.publicKey
       );
       script1.setAttribute(
-        'kr-post-url-success',
-          'https://proceso-pago.bsginstitute.com/ProcesoPagoIziPay/Cronograma?IdTransaccion=' +
+        'kr-post-url-success', this.urlProcesoPago+
+          'ProcesoPagoIziPay/Cronograma?IdTransaccion=' +
           this.json.IdentificadorTransaccion
       );
       script1.setAttribute(
-        'kr-post-url-refused',
-          'https://proceso-pago.bsginstitute.com/ProcesoPagoIziPay/Cronograma?IdTransaccion=' +
+        'kr-post-url-refused', this.urlProcesoPago+
+          'ProcesoPagoIziPay/Cronograma?IdTransaccion=' +
           this.json.IdentificadorTransaccion
       );
       script1.setAttribute('kr-language', 'es-ES');

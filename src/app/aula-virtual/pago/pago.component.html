@@ -62,7 +62,7 @@
           <mat-tab-group>
               <mat-tab label="Pendientes de pago">
                 <div style="padding: 30px;">
-                  <div 
+                  <div
                       *ngFor="let pendiente of listaPendientes"
                       class="row"
                       [ngClass]="{
@@ -92,7 +92,7 @@
                       <div class="texto-sombreado">{{ pendiente.codigoMoneda }} {{ pendiente.cuota | formatoMilesDecimales }}</div>
                       <div class="texto">Mora: {{ pendiente.moraCalculada | formatoMilesDecimales }} {{ pendiente.codigoMoneda }}</div>
                     </div>
-                    
+
                     <!-- <ng-container
                     *ngIf="pendiente.estado == true && pendiente.cuotaVencida == true"
                     >
