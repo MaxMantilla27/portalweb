@@ -94,7 +94,7 @@ export class PagoComponent implements OnInit,OnDestroy {
   public textoBienvenido = '';
   public CronogramaPago:any
   public total=0;
-  public EstadoAfiliado:any;
+  public EstadoAfiliado:any = false;
   public idPais=0
   public email=""
   public idAlumno:any=0
@@ -329,8 +329,14 @@ export class PagoComponent implements OnInit,OnDestroy {
       let CuotasSeleccionadas=0
       let ValorCuotaMora=0
       this.CronogramaPago.registroCuota.forEach((c:any,index:number) => {
+        console.log(c);
         if(c.estado){
+          console.log('Entroooo 1');
+
+          console.log(this.EstadoAfiliado, CuotasSeleccionadas);
+
           if(CuotasSeleccionadas==0 && this.EstadoAfiliado==false){
+            console.log('Entrooo 2');
             ValorCuotaMora=c.cuota+c.moraCalculada
             let fechaVencimiento = new Date(c.fechaVencimiento);
             let diaVencimiento = fechaVencimiento.getDate();       // Día de vencimiento
@@ -348,33 +354,42 @@ export class PagoComponent implements OnInit,OnDestroy {
            console.log(mesVencimiento)
            console.log(anioVencimiento)
            console.log(this.diaActual <= diaVencimiento  && this.mesActual <= mesVencimiento  && this.anioActual <= anioVencimiento)
-           if (this.diaActual <= diaVencimiento  && this.mesActual <= mesVencimiento  && this.anioActual <= anioVencimiento) {
+
+           if ((this.diaActual <= diaVencimiento  && this.mesActual <= mesVencimiento  && this.anioActual <= anioVencimiento)) {
+            console.log('Entroooo 3');
                if (CuotasSeleccionadas == 0 && esUltimaCuota) {
                   this.RecurrenciaActiva = false;
-                  this._SessionStorageService.SessionSetValue('opcionRecurrencia','true'); 
+                  //this._SessionStorageService.SessionSetValue('opcionRecurrencia',this.RecurrenciaActiva.toString()); 
+                  //this._SessionStorageService.SessionSetValue('opcionRecurrencia','false');
+                  console.log('11111111111111111111111111111111111111');
                } else {
                    this.RecurrenciaActiva = true;
-                   this._SessionStorageService.SessionSetValue('opcionRecurrencia','true'); 
+                   //this._SessionStorageService.SessionSetValue('opcionRecurrencia','true');
+                   console.log('222222222222222222222222222222222222');
                }
            }
           }
           else{
             this.RecurrenciaActiva=false
             this.pagoRecurrenteActivado=false
-            this._SessionStorageService.SessionSetValue('opcionRecurrencia','true'); 
+            //this._SessionStorageService.SessionSetValue('opcionRecurrencia','false');
+            console.log('333333333333333333333333333333333333333333333333333333');
           }
-          CuotasSeleccionadas++
-        }
-        if(ValorCuotaMora!=c.cuota+c.moraCalculada){
+          console.log(CuotasSeleccionadas);
+          CuotasSeleccionadas++;
+        } 
+        if(ValorCuotaMora!=c.cuota+c.moraCalculada){  
           this.RecurrenciaActiva=false
           this.pagoRecurrenteActivado=false
-          this._SessionStorageService.SessionSetValue('opcionRecurrencia','true'); 
+          //this._SessionStorageService.SessionSetValue('opcionRecurrencia',this.RecurrenciaActiva.toString());
+          //this._SessionStorageService.SessionSetValue('opcionRecurrencia','true');
+          console.log('44444444444444444444444444444444444444444444444444');
         }
 
       });
 
-       
-
+      this._SessionStorageService.SessionSetValue('opcionRecurrencia',this.RecurrenciaActiva.toString()) 
+      console.log('55555555555555555555555555555555555555555555555');
     }
     this.sumarMontos()
     this._SessionStorageService.SessionDeleteValue('listaCronogramaPagos');
