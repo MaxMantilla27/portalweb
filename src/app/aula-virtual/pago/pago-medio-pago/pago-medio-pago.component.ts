@@ -69,6 +69,10 @@ export class PagoMedioPagoComponent implements OnInit, OnDestroy {
   };
   public IdMedioPagoSeleccionado: number = -1;
   public MedioPagoPasarelaSeleccionado=false
+  
+  public RecurrenciaActivaPagos = false
+  public valorIdMedioPagoSeleccionado=-1
+
   ngOnInit(): void {
     setTimeout(() => {
       document.documentElement.scrollTop=0;
@@ -99,7 +103,33 @@ export class PagoMedioPagoComponent implements OnInit, OnDestroy {
 
         }
         this.ObtenerTarjetasMedioPago()
+        /*
+        let RecurrenciaActivaLocal = this._SessionStorageService.SessionGetValue('opcionRecurrencia');
+        console.log(RecurrenciaActivaLocal,this.IdPasarelaPago);*/
+
+        let RecurrenciaActivaLocal = this._SessionStorageService.SessionGetValue('opcionRecurrencia');
+        console.log(RecurrenciaActivaLocal,this.IdPasarelaPago);
+
+        if(RecurrenciaActivaLocal!=''){
+
+          if(RecurrenciaActivaLocal=='true' && this.IdPasarelaPago==7){
+            this.RecurrenciaActivaPagos = true;
+            console.log(this.RecurrenciaActivaPagos);
+          }else{
+
+            this.RecurrenciaActivaPagos = false;
+            console.log(this.RecurrenciaActivaPagos);
+          }
+
+        }
+
       },
+
+      complete: ()=>{
+
+
+      }
+
     });
 
     console.log(this.IdMatriculaCabecera);
@@ -139,24 +169,24 @@ export class PagoMedioPagoComponent implements OnInit, OnDestroy {
     console.log('Datos de pasarela:', this.medioPagoSeleccionado);
     console.log('Datos de pasarela:', this.IdMedioPagoSeleccionado);
     console.log('Validador',this.validadorPagosMultiples)
-    let valorIdMedioPagoSeleccionado=0
+    
     if(this.IdPasarelaPago==10 ||this.IdPasarelaPago==7){
       if(this.IdMedioPagoSeleccionado!=1){
-        valorIdMedioPagoSeleccionado=0
+        this.valorIdMedioPagoSeleccionado=0
       }
       else{
-        valorIdMedioPagoSeleccionado=1
+        this.valorIdMedioPagoSeleccionado=1
       }
-      this.medioPagoSeleccionado = this.tarjetas[valorIdMedioPagoSeleccionado]
+      this.medioPagoSeleccionado = this.tarjetas[this.valorIdMedioPagoSeleccionado]
     }
     if(this.IdPasarelaPago==1){
       if(this.IdMedioPagoSeleccionado==0){
-        valorIdMedioPagoSeleccionado=0
+        this.valorIdMedioPagoSeleccionado=0
       }
       else{
-        valorIdMedioPagoSeleccionado=3
+        this.valorIdMedioPagoSeleccionado=3
       }
-      this.medioPagoSeleccionado =this.tarjetas[valorIdMedioPagoSeleccionado]
+      this.medioPagoSeleccionado =this.tarjetas[this.valorIdMedioPagoSeleccionado]
       console.log('Medio Pago2', this.medioPagoSeleccionado);
     }
     if (this.medioPagoSeleccionado != undefined) {
@@ -253,171 +283,7 @@ export class PagoMedioPagoComponent implements OnInit, OnDestroy {
           if (ruta) {
             this._router.navigate([`/AulaVirtual/MisPagos/${this.IdMatriculaCabecera}/${this.IdPasarelaPago}/${ruta}${sesion}`]);
           }
-          // if (tarjeta.idPasarelaPago == 7 || tarjeta.idPasarelaPago == 10) {
-          //   if (tarjeta.idFormaPago == 52) {
-          //     console.log(
-          //       '/AulaVirtual/MisPagos/' +
-          //         this.IdMatriculaCabecera +
-          //         '/visa/' +
-          //         sesion
-          //     );
-
-          //     /*Aperturamos el modal del pago*/
-          //     const dialogRef = this.dialog.open(ModalPagoVisaComponent, {
-          //       width: '600px',
-          //       data: {
-          //         Identificador: sesion,
-          //         IdMatricula: this.IdMatriculaCabecera,
-          //         DatosFacturacion: this.DatosFacturacion,
-          //       },
-          //       panelClass: 'dialog-Tarjeta-Modal',
-          //       disableClose: true,
-          //     });
-          //     dialogRef
-          //       .afterClosed()
-          //       .pipe(takeUntil(this.signal$))
-          //       .subscribe((result) => {
-          //         if (result == true) {
-          //           window.location.reload();
-          //         }
-          //       });
-
-          //     // this._router.navigate(['/AulaVirtual/MisPagos/'+this.IdMatriculaCabecera+'/visa/'+sesion]);
-          //   }
-          //   // if (tarjeta.idFormaPago == 48) {
-          //   //   console.log(
-          //   //     '/AulaVirtual/MisPagos/' +
-          //   //       this.IdMatriculaCabecera +
-          //   //       '/tarjeta/' +
-          //   //       sesion
-          //   //   );
-          //   //   // this._router.navigate(['/AulaVirtual/MisPagos/'+this.IdMatriculaCabecera+'/tarjeta/'+sesion]);
-          //   //   const dialogRef = this.dialog.open(ModalPagoTarjetaComponent, {
-          //   //     width: '600px',
-          //   //     data: {
-          //   //       Identificador: sesion,
-          //   //       IdMatricula: this.IdMatriculaCabecera,
-          //   //       DatosFacturacion: this.DatosFacturacion,
-          //   //     },
-          //   //     panelClass: 'dialog-Tarjeta-Modal',
-          //   //     disableClose: true,
-          //   //     // disableClose:true
-          //   //   });
-          //   // }
-          // }
-          // if(tarjeta.idPasarelaPago==1 || tarjeta.idPasarelaPago==5){
-          //   console.log('/AulaVirtual/MisPagos/'+this.IdMatriculaCabecera+'/tarjeta/'+sesion)
-          //   const dialogRef = this.dialog.open(ModalPagoTarjetaMexicoComponent, {
-          //     width: '600px',
-          //     data: { Identificador: sesion, IdMatricula: this.IdMatriculaCabecera, DatosFacturacion:this.DatosFacturacion },
-          //     panelClass: 'dialog-Tarjeta-Modal',
-          //     disableClose:true
-          //     // disableClose:true
-          //   });
-          //   // this._router.navigate(['/AulaVirtual/MisPagos/'+this.IdMatriculaCabecera+'/tarjeta/'+sesion]);
-          // }
-          // else{
-          //   if(parseInt(tarjeta.idPasarelaPago)==2){
-          //     console.log('/AulaVirtual/MisPagos/'+this.IdMatriculaCabecera+'/wompi/'+sesion)
-          //     const dialogRef = this.dialog.open(ModalPagoWompiComponent, {
-          //       width: '600px',
-          //       data: { Identificador: sesion, IdMatricula: this.IdMatriculaCabecera, DatosFacturacion:this.DatosFacturacion },
-          //       panelClass: 'dialog-Tarjeta-Modal',
-          //       disableClose:true
-          //       // disableClose:true
-          //     });
-          //     dialogRef.afterClosed().pipe(takeUntil(this.signal$)).subscribe((result) => {
-          //       console.log("Pago wompi",result);
-          //     });
-          //     // this._router.navigate(['/AulaVirtual/MisPagos/'+this.IdMatriculaCabecera+'/wompi/'+sesion]);
-          //   }
-          //   if(parseInt(tarjeta.idPasarelaPago)==6){
-          //     console.log('/AulaVirtual/MisPagos/'+this.IdMatriculaCabecera+'/conekta/'+sesion)
-          //     const dialogRef = this.dialog.open(ModalPagoConektaComponent, {
-          //       width: '600px',
-          //       data: { Identificador: sesion, IdMatricula: this.IdMatriculaCabecera, DatosFacturacion:this.DatosFacturacion },
-          //       panelClass: 'dialog-Tarjeta-Modal',
-          //       disableClose:true
-          //       // maxHeight: '90vh' //you can adjust the value as per your view
-          //     });
-          //     // this._router.navigate(['/AulaVirtual/MisPagos/'+this.IdMatriculaCabecera+'/conekta/'+sesion]);
-          //   }
-          //   if(parseInt(tarjeta.idPasarelaPago)==3){}
-          //   if(parseInt(tarjeta.idPasarelaPago)==4){
-          //     console.log('/AulaVirtual/MisPagos/'+this.IdMatriculaCabecera+'/multipago/'+sesion)
-          //     // this._router.navigate(['/AulaVirtual/MisPagos/'+this.IdMatriculaCabecera+'/multipago/'+sesion]);
-          //   }
-          //   if(parseInt(tarjeta.idPasarelaPago)==11){
-          //     console.log('/AulaVirtual/MisPagos/'+this.IdMatriculaCabecera+'/webpay/'+sesion)
-          //     const dialogRef = this.dialog.open(ModalPagoWebpayComponent, {
-          //       width: '600px',
-          //       data: { Identificador: sesion, IdMatricula: this.IdMatriculaCabecera, DatosFacturacion:this.DatosFacturacion },
-          //       panelClass: 'dialog-Tarjeta-Modal',
-          //       disableClose:true
-          //     });
-          //     // this._router.navigate(['/AulaVirtual/MisPagos/'+this.IdMatriculaCabecera+'/webpay/'+sesion]);
-          //   }
-          //   if(parseInt(tarjeta.idPasarelaPago)==12){
-          //     console.log(this.total)
-          //     if(this.total>=50)
-          //     console.log('/AulaVirtual/MisPagos/'+this.IdMatriculaCabecera+'/klap/'+sesion)
-          //     // this._router.navigate(['/AulaVirtual/MisPagos/'+this.IdMatriculaCabecera+'/klap/'+sesion]);
-          //     else
-          //     this._SnackBarServiceService.openSnackBar("Lo sentimos, para iniciar un pago con Klap el monto mínimo es de 50 pesos.",'x',10,"snackbarCrucigramaerror");
-          //   }
-          //   if(parseInt(tarjeta.idPasarelaPago)==13){
-          //     console.log('/AulaVirtual/MisPagos/'+this.IdMatriculaCabecera+'/izipay/'+sesion)
-          //     const dialogRef = this.dialog.open(ModalPagoIzipayComponent, {
-          //       width: '600px',
-          //       data: { Identificador: sesion, IdMatricula: this.IdMatriculaCabecera, DatosFacturacion:this.DatosFacturacion },
-          //       panelClass: 'dialog-Tarjeta-Modal',
-          //       disableClose:true
-          //       // disableClose:true
-          //     });
-          //     dialogRef.afterClosed().pipe(takeUntil(this.signal$)).subscribe(result => {
-          //       if(result==true){
-          //         window.location.reload()
-          //       }
-          //     });
-          //   }
-          //   if(parseInt(tarjeta.idPasarelaPago)==16){
-          //     console.log('/AulaVirtual/MisPagos/'+this.IdMatriculaCabecera+'/openpayCOP/'+sesion)
-          //     const dialogRef = this.dialog.open(ModalPagoOpenpayColombiaComponent, {
-          //       width: '600px',
-          //       data: { Identificador: sesion, IdMatricula: this.IdMatriculaCabecera, DatosFacturacion:this.DatosFacturacion },
-          //       panelClass: 'dialog-Tarjeta-Modal',
-          //       disableClose:true
-          //       // disableClose:true
-          //     });
-          //   }
-          //   if(parseInt(tarjeta.idPasarelaPago)==17){//Mercado Pago
-          //     console.log('/AulaVirtual/MisPagos/'+this.IdMatriculaCabecera+'/mercadoPago/'+sesion)
-          //     const dialogRef = this.dialog.open(ModalPagoMercadoPagoChileComponent, {
-          //       width: '600px',
-          //       data: { Identificador: sesion, IdMatricula: this.IdMatriculaCabecera, DatosFacturacion:this.DatosFacturacion },
-          //       panelClass: 'dialog-Tarjeta-Modal',
-          //       disableClose:true,
-          //       // maxHeight: '90vh' //you can adjust the value as per your view
-          //       // disableClose:true
-          //     })
-          //     dialogRef.afterClosed().pipe(takeUntil(this.signal$)).subscribe(result => {
-          //       if(result==true){
-          //         window.location.reload()
-          //       }
-          //     });
-          //     // this._router.navigate(['/AulaVirtual/MisPagos/'+this.IdMatriculaCabecera+'/mercadoPago/'+sesion]);
-          //   }
-          //   if(parseInt(tarjeta.idPasarelaPago)==18){
-          //     console.log('/AulaVirtual/MisPagos/'+this.IdMatriculaCabecera+'/openpayPEN/'+sesion)
-          //     const dialogRef = this.dialog.open(ModalPagoOpenpayPeruComponent, {
-          //       width: '600px',
-          //       data: { Identificador: sesion, IdMatricula: this.IdMatriculaCabecera, DatosFacturacion:this.DatosFacturacion },
-          //       panelClass: 'dialog-Tarjeta-Modal',
-          //       disableClose:true
-          //     });
-          //     // this._router.navigate(['/AulaVirtual/MisPagos/'+this.IdMatriculaCabecera+'/openpayPEN/'+sesion]);
-          //   }
-          // }
+          
         },
         complete: ()=>{
           this.MedioPagoPasarelaSeleccionado=true
@@ -431,4 +297,86 @@ export class PagoMedioPagoComponent implements OnInit, OnDestroy {
   RegresarPagosCronograma(){
     this._router.navigate(['/AulaVirtual/MisPagos/'+this.IdMatriculaCabecera]);
   }
+
+  OpenModalMetodoPagoSucripcion(): void {
+    console.log('Datos de pasarela:',this.medioPagoSeleccionado)
+    if(this.IdPasarelaPago==10 ||this.IdPasarelaPago==7){
+      if(this.IdMedioPagoSeleccionado!=1){
+        this.valorIdMedioPagoSeleccionado=0
+      }
+      else{
+        this.valorIdMedioPagoSeleccionado=1
+      }
+      this.medioPagoSeleccionado = this.tarjetas[this.valorIdMedioPagoSeleccionado]
+    }
+
+    this.jsonSend.ListaCuota=[]
+    this.PreProcesoAfiliacionPagoRecurrente(this.medioPagoSeleccionado);
+  }
+
+  PreProcesoAfiliacionPagoRecurrente(tarjeta:any){
+    if(tarjeta==undefined){
+      this.medioPagoSeleccionado = this.tarjetas[0];
+    }
+    console.log(tarjeta)
+
+    this.CronogramaPago.registroCuota.forEach((r:any) => {
+      if(r.cancelado==false){
+        var fecha=new Date(r.fechaVencimiento);
+        let NombreCuota = ''
+        if(r.tipoCuota=="MATRICULA"){
+          NombreCuota='MATRÍCULA -'+ ('0' + fecha.getUTCDate()).slice(-2)+ "/" +("0" + (fecha.getUTCMonth()+1)).slice(-2) + "/" +fecha.getUTCFullYear()
+        }
+        else{
+          NombreCuota='Cuota N°'+r.numeroCuotaMostrar+' - '+ ('0' + fecha.getUTCDate()).slice(-2)+ "/" +("0" + (fecha.getUTCMonth()+1)).slice(-2) + "/" +fecha.getUTCFullYear()
+        }
+        this.jsonSend.ListaCuota.push({
+          IdCuota: r.idCuota,
+          NroCuota: r.nroCuota,
+          TipoCuota: r.tipoCuota,
+          Cuota: r.cuota,
+          Mora: r.mora,
+          MoraCalculada: r.moraCalculada,
+          CuotaTotal: r.cuota+r.moraCalculada,
+          FechaVencimiento:r.fechaVencimiento,
+          Nombre:NombreCuota
+        })
+      }
+    });
+    this.jsonSend.IdFormaPago=tarjeta.idFormaPago
+    this.jsonSend.IdPasarelaPago=tarjeta.idPasarelaPago
+    this.jsonSend.MedioCodigo=tarjeta.medioCodigo
+    this.jsonSend.MedioPago=tarjeta.medioPago
+      const dialogRef =this.dialog.open(ChargeSpinnerComponent,{
+        panelClass:'dialog-charge-spinner',
+        disableClose:true
+      });
+      this._FormaPagoService.PreProcesoAfiliacionAlumno(this.jsonSend).pipe(takeUntil(this.signal$)).subscribe({
+        next:x=>{
+          console.log(x)
+          dialogRef.close();
+          var sesion=x._Repuesta.identificadorTransaccion;
+          this._SessionStorageService.SessionSetValue(sesion,x._Repuesta.requiereDatosTarjeta);
+          console.log(parseInt(tarjeta.idPasarelaPago))
+
+
+         if(tarjeta.idPasarelaPago==7){ //visa
+            if(tarjeta.idFormaPago==52){
+              this._router.navigate(['/AulaVirtual/MisPagos/Afiliacion/'+this.IdMatriculaCabecera+'/visa/'+sesion]);
+            }
+          }
+
+        },
+        complete:()=>{
+          dialogRef.close();
+        },
+        error:e=>{
+          console.log(e)
+          dialogRef.close();
+        }
+      })
+
+  }
+
+
 }

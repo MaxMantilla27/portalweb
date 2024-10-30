@@ -4,7 +4,7 @@
     <div class="row rowpaddAv" style="padding: 20px 90px 20px 20px !important">
       <div class="col-12 col-md-12 col-lg-12">
         <a class="btn-back-detalle" (click)="RegresarPagosCronograma()"
-          >&#8249; Volver Atrás</a
+          >&#8249; Volver</a
         >
         <div class="titleCronograma">Elige un medio de Pago</div>
         <div class="titleCronogramaCurso">
@@ -30,49 +30,124 @@
               class="medio-pago-card"
               [ngClass]="{ selected: IdMedioPagoSeleccionado === 0 }"
             >
-              <div class="medio-pago-content">
-                <mat-radio-button
-                  (change)="ObtenerMedioPagoSeleccion(0)"
-                  class="m-2"
-                  color="primary"
-                  [checked]="IdMedioPagoSeleccionado === 0"
-                ></mat-radio-button>
-              </div>
-              <label for="pagoTarjeta" class="medio-pago-label">
-                Tarjeta de crédito y débito
-              </label>
-              <div class="medio-pago-images">
-                <div
-                >
-                  <img style="height: 35px;"
-                    [src]="'../../../../assets/icons/visa-07.svg'"
-                    alt="Imagen de tarjeta"
-                    class="medio-pago-image"
-                  />
-                  <img style="height: 35px;"
-                    [src]="'../../../../assets/icons/mastercard-08.svg'"
-                    alt="Imagen de tarjeta"
-                    class="medio-pago-image"
-                  />
-                  <img style="height: 35px"
-                    [src]="'../../../../assets/icons/UnionPay.svg'"
-                    alt="Imagen de tarjeta"
-                    class="medio-pago-image"
-                  />
-                </div>
-                <!-- <ng-container *ngFor="let tarjeta of tarjetas">
-                  <div
-                    *ngIf="tarjeta.medioPago === 'Visa' || tarjeta.medioPago === 'MasterCard' || tarjeta.medioPago === 'Amex'"
-                    class="medio-pago-image-container"
-                  >
-                    <img
-                      [src]="'../../../../assets/icons/' + tarjeta.img"
-                      alt="Imagen de tarjeta"
-                      class="medio-pago-image"
-                    />
+              <div class="medio-pago-card-content">
+                <div class="medio-pago-arriba">
+                  <div class="medio-pago-content">
+                    <mat-radio-button
+                      (change)="ObtenerMedioPagoSeleccion(0)"
+                      class="m-2"
+                      color="primary"
+                      [checked]="IdMedioPagoSeleccionado === 0"
+                    ></mat-radio-button>
                   </div>
-                </ng-container> -->
-              </div>              
+                  <label for="pagoTarjeta" class="medio-pago-label">
+                    Tarjeta de crédito y débito
+                  </label>
+                  <div class="medio-pago-images">
+                    <div
+                    >
+                      <img style="height: 35px;"
+                        [src]="'../../../../assets/icons/visa-07.svg'"
+                        alt="Imagen de tarjeta"
+                        class="medio-pago-image"
+                      />
+                      <img style="height: 35px;"
+                        [src]="'../../../../assets/icons/mastercard-08.svg'"
+                        alt="Imagen de tarjeta"
+                        class="medio-pago-image"
+                      />
+                      <img style="height: 35px"
+                        [src]="'../../../../assets/icons/UnionPay.svg'"
+                        alt="Imagen de tarjeta"
+                        class="medio-pago-image"
+                      />
+                    </div>
+                    <!-- <ng-container *ngFor="let tarjeta of tarjetas">
+                      <div
+                        *ngIf="tarjeta.medioPago === 'Visa' || tarjeta.medioPago === 'MasterCard' || tarjeta.medioPago === 'Amex'"
+                        class="medio-pago-image-container"
+                      >
+                        <img
+                          [src]="'../../../../assets/icons/' + tarjeta.img"
+                          alt="Imagen de tarjeta"
+                          class="medio-pago-image"
+                        />
+                      </div>
+                    </ng-container> -->
+                  </div>
+                </div>
+                <div *ngIf="RecurrenciaActivaPagos && IdMedioPagoSeleccionado==0"
+                    class="row medio-pago-abajo">
+                  <div class="col-12 col-md-10 col-lg-10 medio-pago-abajo-content">
+                    <div class="col-1">
+                      <i
+                        class="material-icons"
+                        style="cursor: pointer"
+                        *ngIf="pagoRecurrenteActivado == false"
+                        (click)="pagoRecurrenteActivado = true"
+                        >check_box_outline_blank</i
+                      >
+                      <i
+                        class="material-icons"
+                        style="cursor: pointer"
+                        *ngIf="pagoRecurrenteActivado == true"
+                        (click)="pagoRecurrenteActivado = false"
+                        style="color: #0076ff"
+                        >check_box</i
+                      >
+                    </div>
+                    <div class="col-11" style="position: relative">
+                      <div style="font-weight: bold">
+                        <span
+                          style="
+                            display: inline-block;
+                            color: #4a4a49;
+                            margin-right: 5px;
+                            margin-left: 5px;
+                          "
+                          >Afiliarme a
+                        </span>
+                        <span style="display: inline-block; color: #0076ff"
+                          >pagos recurrentes
+                          <i
+                            class="material-icons"
+                            style="
+                              vertical-align: middle;
+                              cursor: pointer;
+                              color: #0076ff;
+                            "
+                            (mouseover)="showTooltip = true"
+                            (mouseleave)="showTooltip = false"
+                            (touchstart)="showTooltip = true"
+                            (touchend)="showTooltip = false"
+                            ontouchstart="void(0)"
+                            ontouchend="void(0)"
+                            >info</i
+                          >
+                        </span>
+                      </div>
+                      <div
+                        *ngIf="showTooltip"
+                        style="
+                          position: absolute;
+                          background-color: #eff8ff;
+                          border: solid 2px #0076ff;
+                          border-radius: 15px;
+                          padding: 10px;
+                          z-index: 1;
+                          margin-top: -90px;
+                          width: auto;
+                          max-width: 90vw;
+                          white-space: normal;
+                        "
+                      >
+                        Paga siempre puntual. Tu pago se realizará de manera
+                        automática.
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
               <!-- <div class="medio-pago-images">
                 <div
                   *ngFor="let tarjeta of tarjetas"
@@ -142,7 +217,7 @@
                 ></mat-radio-button>
               </div>
               <label for="pagoTarjeta" class="medio-pago-label">
-                Pago billetera electrónica
+                Pago con Yape o billetera electrónica
               </label>
               <div class="medio-pago-images">
                 <div
@@ -159,35 +234,6 @@
                   />
                   <img style="height: 35px"
                     [src]="'../../../../assets/imagenes/AgoraLogo.png'"
-                    alt="Imagen de tarjeta"
-                    class="medio-pago-image"
-                  />
-                </div>
-              </div>
-            </div>
-            <!-- Tarjeta 4 -->
-            <div
-              *ngIf="IdPasarelaPago == 7"
-              class="medio-pago-card"
-              [ngClass]="{ selected: IdMedioPagoSeleccionado === 3 }"
-            >
-              <div class="medio-pago-content">
-                <mat-radio-button
-                  (change)="ObtenerMedioPagoSeleccion(3)"
-                  class="m-2"
-                  color="primary"
-                  [checked]="IdMedioPagoSeleccionado === 3"
-                ></mat-radio-button>
-              </div>
-              <label for="pagoTarjeta" class="medio-pago-label">
-                Pago con yape
-              </label>
-              <div class="medio-pago-images">
-                <div
-                >
-                  <img
-
-                    [src]="'../../../../assets/icons/YapeSinFondo.svg'"
                     alt="Imagen de tarjeta"
                     class="medio-pago-image"
                   />
@@ -270,7 +316,23 @@
           </div>
         </ng-container>
       </ng-container>
-      <div class="col-12 row bot">
+
+      <div
+      *ngIf="pagoRecurrenteActivado && IdMedioPagoSeleccionado==0;else pagoSinRecurrencia "
+      class="col-12 row bot"
+      >
+        <div style="justify-content: center; display: flex">
+          <app-default-button
+
+            [confs]="{ color: 'primary', titulo: 'Continuar' }"
+            [style]="'margin-top: 20px;padding: 0px 40px;'"
+            (ButtoclClick)="OpenModalMetodoPagoSucripcion()"
+          >
+          </app-default-button>
+        </div>
+      </div>
+    <ng-template #pagoSinRecurrencia>
+      <div *ngIf="!pagoRecurrenteActivado" class="col-12 row bot" >
         <div style="justify-content: center; display: flex">
           <app-default-button
             [disabled]="IdMedioPagoSeleccionado == -1"
@@ -281,7 +343,9 @@
           </app-default-button>
         </div>
       </div>
+    </ng-template>
     </ng-container>
+
   </div>
 </div>
 

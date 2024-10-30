@@ -242,6 +242,6 @@ export class DetallePagoPeruIzipayComponent
       });
   }
   RegresarPasarela(): void {
-    this._router.navigate(['/AulaVirtual/MisPagos/', this.IdMatriculaCabecera]);
+    this._router.navigate(['/AulaVirtual/MisPagos/', this.IdMatriculaCabecera+'/'+this.IdPasarelaPago]);
   }
 }
