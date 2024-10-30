@@ -339,6 +339,7 @@ export class PagoComponent implements OnInit,OnDestroy {
             console.log('Entrooo 2');
             ValorCuotaMora=c.cuota+c.moraCalculada
             let fechaVencimiento = new Date(c.fechaVencimiento);
+            let fechaActual = new Date()
             let diaVencimiento = fechaVencimiento.getDate();       // Día de vencimiento
             let mesVencimiento = fechaVencimiento.getMonth() + 1;  // Mes de vencimiento
             let anioVencimiento = fechaVencimiento.getFullYear();
@@ -355,7 +356,7 @@ export class PagoComponent implements OnInit,OnDestroy {
            console.log(anioVencimiento)
            console.log(this.diaActual <= diaVencimiento  && this.mesActual <= mesVencimiento  && this.anioActual <= anioVencimiento)
 
-           if ((this.diaActual <= diaVencimiento  && this.mesActual <= mesVencimiento  && this.anioActual <= anioVencimiento)) {
+           if ( fechaActual <= fechaVencimiento) {
             console.log('Entroooo 3');
                if (CuotasSeleccionadas == 0 && esUltimaCuota) {
                   this.RecurrenciaActiva = false;
