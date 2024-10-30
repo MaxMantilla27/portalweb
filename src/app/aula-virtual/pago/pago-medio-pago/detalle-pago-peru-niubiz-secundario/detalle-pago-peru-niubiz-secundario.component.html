@@ -4,7 +4,7 @@
       <div class="row" style="padding: 20px 90px 20px 20px !important">
         <div class="col-12 col-md-12 col-lg-12">
           <a class="btn-back-detalle" (click)="RegresarPasarela()"
-            >&#8249; Volver Atrás</a
+            >&#8249; Volver</a
           >
           <div class="titleCronograma">Confirma tu compra</div>
           <div class="titleCronogramaCurso" *ngIf="resultCard != undefined">
@@ -57,7 +57,7 @@
                 </mat-select>
               </mat-form-field>
             </ng-container>
-  
+
             <mat-form-field
               class="col-12"
               appearance="outline"
@@ -73,7 +73,7 @@
                 matInput
               />
             </mat-form-field>
-  
+
             <ng-container
               *ngIf="
                 resultCard.idPasarelaPago == 1 && resultCard.idFormaPago == 65
@@ -95,7 +95,7 @@
                   matInput
                 />
               </mat-form-field>
-  
+
               <mat-form-field
                 class="col-12"
                 appearance="outline"
@@ -119,7 +119,7 @@
                   </ng-container>
                 </mat-select>
               </mat-form-field>
-  
+
               <mat-form-field
                 class="col-12"
                 appearance="outline"
@@ -159,7 +159,7 @@
                 matInput
               />
             </mat-form-field>
-  
+
             <ng-container
               *ngIf="
                 resultCard.idPasarelaPago != 1 || resultCard.idFormaPago != 65
@@ -198,7 +198,7 @@
                   />
                 </mat-form-field>
               </div>
-  
+
               <div class="col-6 col-md-6 col-lg-6">
                 <mat-form-field
                   appearance="outline"
@@ -311,7 +311,7 @@
           </div>
         </div>
       </div>
-  
+
       <!-- Columna vacía de 5 -->
       <div class="col-12 col-md-5 col-5" style="padding: 20px;">
         <div class="texto-medios-pago">
@@ -337,4 +337,4 @@
       </div>
     </div>
   </div>
-  
+
