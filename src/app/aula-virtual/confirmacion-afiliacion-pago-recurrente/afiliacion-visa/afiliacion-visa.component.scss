@@ -1,93 +1,166 @@
 .titlePagoTarjeta {
-    font-size: 20px;
-    font-weight: 600;
-    margin: 30px 0px;
-    border-bottom: solid 1px #e8e8e8;
+  font-size: 20px;
+  font-weight: 600;
+  margin: 30px 0px;
+  border-bottom: solid 1px #e8e8e8;
+}
+.inputPagoVisa
+  .mat-form-field.mat-form-field-appearance-outline
+  > div.mat-form-field-wrapper
+  > div.mat-form-field-flex
+  > div.mat-form-field-infix {
+  padding: 0.4em 0px;
+}
+.inputPagoVisa
+  .mat-form-field.mat-form-field-appearance-outline
+  > div.mat-form-field-wrapper
+  > div.mat-form-field-flex
+  > div.mat-form-field-prefix {
+  padding: 0.4em 0px;
+  top: 0px;
+  left: -10px;
+}
+
+.inputPagoVisa
+  .mat-form-field.mat-form-field-appearance-outline
+  > div.mat-form-field-wrapper
+  > div.mat-form-field-flex
+  > div.mat-form-field-infix
+  > span.mat-form-field-label-wrapper {
+  top: -1.5em;
+}
+
+.inputPagoVisa
+  .mat-form-field-appearance-outline.mat-form-field-can-float.mat-form-field-should-float
+  .mat-form-field-label {
+  transform: translateY(-1.1em) scale(0.75);
+  width: 133.33333%;
+}
+.inputPagoVisa
+  .disabledInput
+  > div.mat-form-field-wrapper
+  > div.mat-form-field-flex
+  > .mat-form-field-outline {
+  .mat-form-field-outline-start {
+    background-color: #f4f4f4;
   }
-  .inputPagoVisa
-    .mat-form-field.mat-form-field-appearance-outline
-    > div.mat-form-field-wrapper
-    > div.mat-form-field-flex
-    > div.mat-form-field-infix {
-    padding: 0.4em 0px;
+  .mat-form-field-outline-gap {
+    background-color: #f4f4f4;
   }
-  .inputPagoVisa
-    .mat-form-field.mat-form-field-appearance-outline
-    > div.mat-form-field-wrapper
-    > div.mat-form-field-flex
-    > div.mat-form-field-prefix {
-    padding: 0.4em 0px;
-    top: 0px;
-    left: -10px;
+  .mat-form-field-outline-end {
+    background-color: #f4f4f4;
   }
-  
-  .inputPagoVisa
-    .mat-form-field.mat-form-field-appearance-outline
-    > div.mat-form-field-wrapper
-    > div.mat-form-field-flex
-    > div.mat-form-field-infix
-    > span.mat-form-field-label-wrapper {
-    top: -1.5em;
+}
+.comprobatePagoTarjeta {
+  display: flex;
+  align-items: center;
+  .titleComprobantePagoTarjeta {
+    color: #878787;
+    width: 160px;
   }
-  
-  .inputPagoVisa
-    .mat-form-field-appearance-outline.mat-form-field-can-float.mat-form-field-should-float
-    .mat-form-field-label {
-    transform: translateY(-1.1em) scale(0.75);
-    width: 133.33333%;
-  }
-  .inputPagoVisa
-    .disabledInput
-    > div.mat-form-field-wrapper
-    > div.mat-form-field-flex
-    > .mat-form-field-outline {
-    .mat-form-field-outline-start {
-      background-color: #f4f4f4;
-    }
-    .mat-form-field-outline-gap {
-      background-color: #f4f4f4;
-    }
-    .mat-form-field-outline-end {
-      background-color: #f4f4f4;
-    }
-  }
-  .comprobatePagoTarjeta {
+  .items {
     display: flex;
     align-items: center;
-    .titleComprobantePagoTarjeta {
-      color: #878787;
-      width: 160px;
-    }
-    .items {
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+    .itm {
+      padding: 10px 20px;
       display: flex;
       align-items: center;
-      justify-content: space-evenly;
-      flex-wrap: wrap;
-      .itm {
-        padding: 10px 20px;
-        display: flex;
-        align-items: center;
-        justify-content: space-around;
-        background: #f4f4f4;
-        border-radius: 20px;
-        cursor: pointer;
-        margin: 10px 0px;
-        .material-icons {
-          font-size: 15px !important;
-          margin-left: 10px;
-          color: #02c158;
-        }
+      justify-content: space-around;
+      background: #f4f4f4;
+      border-radius: 20px;
+      cursor: pointer;
+      margin: 10px 0px;
+      .material-icons {
+        font-size: 15px !important;
+        margin-left: 10px;
+        color: #02c158;
       }
     }
   }
-  .SelectCom {
-    background: white !important;
-    border: solid 1px #02c158;
-    color: #02c158;
+}
+.SelectCom {
+  background: white !important;
+  border: solid 1px #02c158;
+  color: #02c158;
+}
+.subtitlePagoVisa{
+  font-weight: 600;
+  margin-bottom: 20px;
+  border-bottom: solid 1px #e8e8e8;
+}
+.titleCronograma {
+  font-size: 25px;
+  font-weight: 600;
+  border-bottom: solid 2px #f1f1f1;
+}
+.titleCronogramaCurso {
+  font-size: 20px;
+  font-weight: 500;
+  border-bottom: solid 2px #f1f1f1;
+}
+.btn-back-detalle {
+  color: #FF7A00; /* Naranja inicial */
+  font-size: 13px;
+  font-weight: bold;
+  text-decoration: none;
+  cursor: pointer;
+  transition: color 0.3s ease, text-decoration 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+}
+
+.btn-back-detalle:hover {
+  color: #033DAB; /* Azul al hacer hover */
+  text-decoration: underline; /* Subrayado al hacer hover */
+}
+
+.btn-back-detalle:focus {
+  outline: none;
+}
+.medio-pago-images {
+  display: flex;
+  margin-left: 20px;
+}
+
+.medio-pago-image-container {
+  margin-left: 10px;
+}
+
+.medio-pago-image {
+  width: 50px;
+  height: auto;
+  max-height: 50px;
+  object-fit: contain;
+}
+.OcultarMedioPago{
+  display: none;
+}
+
+/********************************************************************************/
+
+.texto-medio-pago{
+  text-align: start;
+}
+
+
+
+@media (max-width:767px){
+
+  .texto-medio-pago{
+    text-align: center;
   }
-  .subtitlePagoVisa{
-    font-weight: 600;
-    margin-bottom: 20px;
-    border-bottom: solid 1px #e8e8e8;
+
+  .medio-pago-images{
+
+    justify-content: center;
+
   }
-  
+
+  .contenedor-info-pago{
+    margin: 0px;
+  }
+
+
+}
