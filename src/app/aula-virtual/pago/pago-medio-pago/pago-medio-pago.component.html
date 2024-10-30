@@ -319,16 +319,10 @@
 
       <div
       *ngIf="pagoRecurrenteActivado && IdMedioPagoSeleccionado==0;else pagoSinRecurrencia "
-      class="row"
-      style="justify-content: center; padding: 0px 15px 0px 15px"
-      >
-      <div
-        class="col-12 col-md-10 col-lg-10 CardPagoMisPagos"
-        style="border-color: transparent !important; width: 25rem"
+      class="col-12 row bot"
       >
         <div style="justify-content: center; display: flex">
           <app-default-button
-            
             [confs]="{ color: 'primary', titulo: 'Continuar' }"
             [style]="'margin-top: 20px;padding: 0px 40px;'"
             (ButtoclClick)="OpenModalMetodoPagoSucripcion()"
@@ -336,7 +330,6 @@
           </app-default-button>
         </div>
       </div>
-    </div>
     <ng-template #pagoSinRecurrencia>
       <div *ngIf="!pagoRecurrenteActivado" class="col-12 row bot" >
         <div style="justify-content: center; display: flex">

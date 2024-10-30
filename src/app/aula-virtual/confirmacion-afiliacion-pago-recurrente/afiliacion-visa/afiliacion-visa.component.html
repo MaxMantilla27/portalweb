@@ -92,16 +92,16 @@
                 <div class="col-12 row itms" *ngIf="i == 0">
                   <div class="col-8">{{ item.nombre }}</div>
                   <div class="col-4" style="text-align: right">
-                    {{ item.cuotaTotal | formatoMilesDecimales }}
                     {{ resultNiubiz.monedaCorreo }}
+                    {{ item.cuotaTotal | formatoMilesDecimales }}
                   </div>
                 </div>
               </div>
               <div class="col-12 row totalPago" style="background: #f2f6ff">
                 <div class="col-8">Total a pagar</div>
                 <div class="col-4" style="text-align: right">
-                  {{ resultNiubiz.total | formatoMilesDecimales }}
                   {{ resultNiubiz.monedaCorreo }}
+                  {{ resultNiubiz.total | formatoMilesDecimales }}
                 </div>
               </div>
             </div>
@@ -117,14 +117,16 @@
           flex-direction: column;
         "
       >
-        <div id="header"></div>
-        <div id="body"></div>
-        <app-default-button
-          [confs]="{ color: 'visa', titulo: 'Paga Aquí' }"
-          [style]="'margin-top: 20px;margin-bottom: 0px;width:100%'"
-          (ButtoclClick)="addVisa()"
-        ></app-default-button>
-        <div id="pagoviss"></div>
+        <div class="container-butto-pagar">
+          <div id="header"></div>
+          <div id="body"></div>
+          <app-default-button
+            [confs]="{ color: 'visa', titulo: 'Paga Aquí' }"
+            [style]="'margin-top: 20px;margin-bottom: 0px;width:100%'"
+            (ButtoclClick)="addVisa()"
+          ></app-default-button>
+          <div id="pagoviss"></div>
+        </div>
       </div>
     </div>
   </div>

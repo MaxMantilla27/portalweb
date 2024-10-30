@@ -3,7 +3,9 @@ import { AfterViewInit, Component, Inject, OnDestroy, OnInit, Renderer2 } from '
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
 import { RegistroRespuestaPreProcesoPagoDTO } from 'src/app/Core/Models/ProcesoPagoDTO';
+import { ImagenTarjetas } from 'src/app/Core/Shared/ImagenTarjetas';
 import { FormaPagoService } from 'src/app/Core/Shared/Services/FormaPago/forma-pago.service';
+import { MedioPagoActivoPasarelaService } from 'src/app/Core/Shared/Services/MedioPagoActivoPasarela/medio-pago-activo-pasarela.service';
 import { SessionStorageService } from 'src/app/Core/Shared/Services/session-storage.service';
 import { environment } from 'src/environments/environment';
 
@@ -21,12 +23,14 @@ export class AfiliacionIzipayComponent implements OnInit, OnDestroy, AfterViewIn
     private _ActivatedRoute: ActivatedRoute,
     private _FormaPagoService: FormaPagoService,
     private _SessionStorageService: SessionStorageService,
-    private _router: Router
+    private _router: Router,
+    private _MedioPagoActivoPasarelaService: MedioPagoActivoPasarelaService,
+    private _t: ImagenTarjetas
   ) {}
   ngAfterViewInit(): void {
     this._ActivatedRoute.params.pipe(takeUntil(this.signal$)).subscribe({
       next: (x) => {
-        this.idMatricula = parseInt(x['IdMatricula']);
+        this.IdMatriculaCabecera = parseInt(x['IdMatricula']);
         this.json.IdentificadorTransaccion = x['Identificador'];
         var r = this._SessionStorageService.SessionGetValue(
           this.json.IdentificadorTransaccion
@@ -35,13 +39,19 @@ export class AfiliacionIzipayComponent implements OnInit, OnDestroy, AfterViewIn
           this.json.RequiereDatosTarjeta = r == 'false' ? false : true;
         }
         this.ObtenerPreProcesoPagoCuotaAlumno();
+
+        this.ObtenerTarjetasMedioPago()  
+
       },
     });
+
+
+
   }
   hidenBotom=true
   intervcal:any
   public dialogRef: any;
-  public idMatricula = 0;
+  public IdMatriculaCabecera = 0;
   public json: RegistroRespuestaPreProcesoPagoDTO = {
     IdentificadorTransaccion: '',
     RequiereDatosTarjeta: false,
@@ -49,11 +59,17 @@ export class AfiliacionIzipayComponent implements OnInit, OnDestroy, AfterViewIn
   public resultPreValidacion: any;
   private kryptonScriptLoaded: boolean = false;
   public RutaProcesoPago=environment.url_portalv3;
+
+  public tarjetas: any;
+
   ngOnDestroy(): void {
     this.signal$.next(true);
     this.signal$.complete();
   }
   ngOnInit(): void {
+
+    
+
   }
   ObtenerPreProcesoPagoCuotaAlumno() {
     this._FormaPagoService
@@ -153,4 +169,25 @@ export class AfiliacionIzipayComponent implements OnInit, OnDestroy, AfterViewIn
       }
     }, 1000);
   }
+
+  ObtenerTarjetasMedioPago(): void {
+    this._MedioPagoActivoPasarelaService
+      .MedioPagoPasarelaPortalCronograma(this.IdMatriculaCabecera)
+      .pipe(takeUntil(this.signal$))
+      .subscribe({
+        next: (response) => {
+          this.tarjetas = response.map((tarjeta: any) => ({
+            ...tarjeta,
+            img: this._t.GetTarjeta(tarjeta.medioCodigo),
+          }));
+          console.log('Tarjetas por alumno', this.tarjetas);
+        },
+      });
+  }
+  RegresarPasarela(): void {
+    this._router.navigate(['/AulaVirtual/MisPagos/', this.IdMatriculaCabecera+'/13']);
+  }
 }
+
+
+
