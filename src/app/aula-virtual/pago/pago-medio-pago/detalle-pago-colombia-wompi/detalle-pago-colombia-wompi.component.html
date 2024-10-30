@@ -93,16 +93,16 @@
                 <div class="col-12 row itms">
                   <div class="col-8">{{ item.nombre }}</div>
                   <div class="col-4" style="text-align: right">
-                    {{ item.cuotaTotal | formatoMilesDecimales }}
                     {{ resultPreProceso.monedaCorreo }}
+                    {{ item.cuotaTotal | formatoMilesDecimales }}
                   </div>
                 </div>
               </div>
               <div class="col-12 row totalPago" style="background: #f2f6ff">
                 <div class="col-8">Total a pagar</div>
                 <div class="col-4" style="text-align: right">
-                  {{ resultPreProceso.total | formatoMilesDecimales }}
                   {{ resultPreProceso.monedaCorreo }}
+                  {{ resultPreProceso.total | formatoMilesDecimales }}
                 </div>
               </div>
             </div>
