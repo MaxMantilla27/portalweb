@@ -351,22 +351,30 @@ export class PagoComponent implements OnInit,OnDestroy {
            if (this.diaActual <= diaVencimiento  && this.mesActual <= mesVencimiento  && this.anioActual <= anioVencimiento) {
                if (CuotasSeleccionadas == 0 && esUltimaCuota) {
                   this.RecurrenciaActiva = false;
+                  this._SessionStorageService.SessionSetValue('opcionRecurrencia','true'); 
                } else {
                    this.RecurrenciaActiva = true;
+                   this._SessionStorageService.SessionSetValue('opcionRecurrencia','true'); 
                }
            }
           }
           else{
             this.RecurrenciaActiva=false
             this.pagoRecurrenteActivado=false
+            this._SessionStorageService.SessionSetValue('opcionRecurrencia','true'); 
           }
           CuotasSeleccionadas++
         }
         if(ValorCuotaMora!=c.cuota+c.moraCalculada){
           this.RecurrenciaActiva=false
           this.pagoRecurrenteActivado=false
+          this._SessionStorageService.SessionSetValue('opcionRecurrencia','true'); 
         }
+
       });
+
+       
+
     }
     this.sumarMontos()
     this._SessionStorageService.SessionDeleteValue('listaCronogramaPagos');

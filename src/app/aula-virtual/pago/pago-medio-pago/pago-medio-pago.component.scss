@@ -20,6 +20,7 @@
   border: 2px solid #4E4E4D; /* Borde inicial transparente */
 }
 
+
 /* Estilo cuando el card está seleccionado */
 .medio-pago-card.selected {
   border-color: #033DAB;
@@ -36,6 +37,7 @@
 }
 
 .medio-pago-label {
+  text-wrap: nowrap;
   font-size: 16px;
   cursor: pointer;
   flex: 1;
@@ -92,6 +94,30 @@ mat-radio-button {
 }
 
 /************************************************************************/
+.medio-pago-card-content{
+
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.medio-pago-arriba{
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+}
+
+.medio-pago-abajo{
+  justify-content: center; 
+  padding: 10px 10px 0px 10px
+}
+
+.medio-pago-abajo-content{
+  display: flex;
+  padding-left: 0px;
+}
 
 @media (max-width:767px){
 
@@ -102,6 +128,7 @@ mat-radio-button {
     justify-content: space-between;
 
     .medio-pago-label{
+      text-wrap: wrap;
       font-size: 11px;
       flex: 1;
     }
@@ -110,6 +137,16 @@ mat-radio-button {
       width: 47px;
     }
 
+
+  }
+
+  .medio-pago-abajo{
+    font-size: 11px;
+    padding: 0px;
+  }
+
+  .medio-pago-abajo-content{
+    padding-left: 54px;
   }
 
 }
