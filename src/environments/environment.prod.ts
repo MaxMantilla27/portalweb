@@ -6,5 +6,5 @@ export const environment = {
   url_portal:'https://prepublicacion-portal.bsginstitute.com/',
   url_signal:'https://integrav4-signalrcore.bsginstitute.com/',
   // url_api_integra_v5:'https://localhost:7288/api',
-  url_portalv3:'https://proceso-pago.bsginstitute.com/',
+  url_portalv3:'https://simuladormanteniminetoapi.bsginstitute.com/',
 };
