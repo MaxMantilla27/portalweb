@@ -25,7 +25,7 @@
   padding: 0px 15px;
   border: solid 2px transparent;
   border-radius: 10px;
-  width: 60vw;
+  width: 100%;
 }
 .itemValueCardPago{
   margin: 10px 0px;
@@ -43,7 +43,7 @@
 .responsive-button-Pagos {
   border-color: transparent;
   border-radius: 25px;
-  width: 20vw; /* O el ancho que desees */
+  width: 18vw; /* O el ancho que desees */
   font-size: 13px;
 }
 
@@ -56,7 +56,7 @@
   }
 
   .responsive-button-Pagos {
-    width: 50%; /* Cambiar el valor según necesites */
+    width: 60%; /* Cambiar el valor según necesites */
     //max-width: 200px; /* Ajusta el máximo ancho del botón si lo deseas */
   }
 }
@@ -73,7 +73,25 @@
 
 /********************************************************************************/
 
-@media (max-width:767px) {
+.pago-exitoso-movil{
+  align-items: center;
+  padding: 0px 10vw;
+
+}
+
+@media (max-width:768px) {
+
+  .pago-exitoso-movil{
+
+    align-items: center;
+    padding: 0px 3vw
+
+  }
+
+  .contentCardPago{
+    display: flex;
+    justify-content: center;
+  }
 
   .textResultPago{
     margin: 27px 0px;
@@ -92,7 +110,7 @@
   }
 
   .cardPago{
-    width: 90%;
+    width: 100%;
   }
 
 }
