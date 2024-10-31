@@ -272,22 +272,8 @@ export class DetallePagoPeruNiubizSecundarioComponent implements OnInit {
       this.jsonSave.TarjetaHabiente.NumeroTarjeta =this.NumberT.split('-').join('');
       this.jsonSave.TarjetaHabiente.Aniho =this.jsonSave.TarjetaHabiente.fecha.split('/')[1];
       this.jsonSave.TarjetaHabiente.Mes =this.jsonSave.TarjetaHabiente.fecha.split('/')[0];
-      if (this.jsonSave.IdPasarelaPago == 5) {
-        OpenPay.token.create(
-          {
-            card_number: this.jsonSave.TarjetaHabiente.NumeroTarjeta,
-            holder_name: this.jsonSave.TarjetaHabiente.Titular,
-            expiration_year: this.jsonSave.TarjetaHabiente.Aniho,
-            expiration_month: this.jsonSave.TarjetaHabiente.Mes,
-            cvv2: this.jsonSave.TarjetaHabiente.CodigoVV,
-          },
-          succes,
-          error
-        );
-      } else {
-        if(this.oncharge==false){
-          this.Pagar();
-        }
+      if(this.oncharge==false){
+        this.Pagar();
       }
     }
   }

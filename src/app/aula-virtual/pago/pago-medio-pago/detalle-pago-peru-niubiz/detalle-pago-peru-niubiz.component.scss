@@ -134,33 +134,27 @@
   max-height: 50px;
   object-fit: contain;
 }
-.OcultarMedioPago{
-  display: none;
-}
-
-/********************************************************************************/
-
-.texto-medio-pago{
-  text-align: start;
-}
 
 
+/********************************************************************************************/
 
-@media (max-width:767px){
+@media (max-width:767px) {
 
-  .texto-medio-pago{
+  .container-butto-pagar{
+    width: 50%;
+  }
+
+  .texto-medios-pago{
     text-align: center;
   }
 
-  .medio-pago-images{
-
-    justify-content: center;
-
-  }
-
-  .contenedor-info-pago{
+  .container-info-pago{
     margin: 0px;
   }
 
+  .medio-pago-images{
+    margin: 0px;
+    justify-content: center;
+  }
 
 }

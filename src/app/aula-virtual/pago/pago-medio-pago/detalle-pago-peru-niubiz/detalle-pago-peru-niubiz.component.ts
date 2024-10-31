@@ -5,7 +5,6 @@ import {
   OnInit,
   Renderer2,
   ViewEncapsulation,
-  AfterViewInit,
   AfterViewChecked,
 } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -64,12 +63,14 @@ export class DetallePagoPeruNiubizComponent implements OnInit, OnDestroy, AfterV
         this.IdPasarelaPago = +params['idpasarelapago'];
         this.json.IdentificadorTransaccion = params['identificador'];
         this.json.RequiereDatosTarjeta = this._SessionStorageService.SessionGetValue(this.json.IdentificadorTransaccion) !== 'false';
+
         this.url += this.json.IdentificadorTransaccion;
         this.ObtenerPreProcesoPagoCuotaAlumno();
         this.ObtenerTarjetasMedioPago();
       },
     });
   }
+
   ngAfterViewChecked(): void {
     if (!this.CompletamenteCargado) {
       const visaElement = this._document.getElementById('visa');
@@ -79,6 +80,7 @@ export class DetallePagoPeruNiubizComponent implements OnInit, OnDestroy, AfterV
       }
     }
   }
+
   ngOnDestroy(): void {
     this.signal$.next();
     this.signal$.complete();
@@ -124,13 +126,14 @@ export class DetallePagoPeruNiubizComponent implements OnInit, OnDestroy, AfterV
           if (this.resultNiubiz.estadoOperacion.toLowerCase() !== 'sent') {
             this._router.navigate(['/AulaVirtual/MisCursos/', this.IdMatriculaCabecera]);
           }
-          this.resultNiubiz.total = 0;
-          if (this.resultNiubiz.listaCuota != undefined) {
-            this.resultNiubiz.listaCuota.forEach((l: any) => {
-              this.resultNiubiz.total += l.cuotaTotal;
+          this.resultNiubiz.total=0;
+          if(this.resultNiubiz.listaCuota!=undefined){
+            this.resultNiubiz.listaCuota.forEach((l:any) => {
+              this.resultNiubiz.total+=l.cuotaTotal
             });
-          } else {
-            this.resultNiubiz.total = this.resultNiubiz.montoTotal;
+          }
+          else{
+            this.resultNiubiz.total=this.resultNiubiz.montoTotal
           }
           this.actualizarJsonSave();
         },
@@ -165,7 +168,6 @@ export class DetallePagoPeruNiubizComponent implements OnInit, OnDestroy, AfterV
     this._renderer2.appendChild(this._document.body, script);
   }
 
-
   openForm(): void {
     this.DataComprobante.idComprobante = this.jsonSave.Comprobante ? 1 : 2;
     this.DataComprobante.nroDoc = this.jsonSave.Comprobante
@@ -187,7 +189,7 @@ export class DetallePagoPeruNiubizComponent implements OnInit, OnDestroy, AfterV
         merchantid: this.resultNiubiz.procesoPagoBotonVisa.merchanId,
         purchasenumber:this.resultNiubiz.procesoPagoBotonVisa.purchaseNumber,
         amount: parseFloat(`${this.resultNiubiz.procesoPagoBotonVisa.amount}.00`),
-        expirationminutes: '20',
+        expirationminutes: '5',
         timeouturl: `${this.urlBase}/AulaVirtual/MisPagos/${this.IdMatriculaCabecera}`,
         merchantlogo: 'https://img.bsginstitute.com/repositorioweb/img/logobsg-visa.svg',
         formbuttoncolor: '#eea341',
@@ -198,7 +200,6 @@ export class DetallePagoPeruNiubizComponent implements OnInit, OnDestroy, AfterV
         cardholderemail: `${this.resultNiubiz.registroAlumno.correo}`,
         usertoken: `${this.resultNiubiz.registroAlumno.idAlumno}`,
         action: `${this.urlProcesoPago}ProcesoPagoVisa/Index?IdTransaccion=${this.json.IdentificadorTransaccion}`,
-
         complete: (params: any) => {
           console.log(params);
           alert(JSON.stringify(params));
@@ -227,9 +228,6 @@ export class DetallePagoPeruNiubizComponent implements OnInit, OnDestroy, AfterV
           console.log('Tarjetas por alumno', this.tarjetas);
         },
       });
-  }
-  pagar(){
-
   }
 }
 
