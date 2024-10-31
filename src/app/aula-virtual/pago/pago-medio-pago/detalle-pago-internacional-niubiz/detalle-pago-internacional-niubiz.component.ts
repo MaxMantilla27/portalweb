@@ -156,7 +156,8 @@ export class DetallePagoInternacionalNiubizComponent implements OnInit, OnDestro
 
     const script = this._renderer2.createElement('script');
     script.type = 'text/javascript';
-    script.src = 'https://static-content.vnforapps.com/vToken/js/checkout.js';
+    // script.src = 'https://static-content.vnforapps.com/vToken/js/checkout.js';
+    script.src = 'https://static-content.vnforapps.com/v2/js/checkout.js';
     script.onload = () => {
       this.kryptonScriptLoaded = true;
       console.log('Script de Visa Checkout cargado con éxito.');
@@ -186,7 +187,7 @@ export class DetallePagoInternacionalNiubizComponent implements OnInit, OnDestro
         sessiontoken: this.resultNiubiz.procesoPagoBotonVisa.sessionKey,
         channel: 'web',
         merchantid: this.resultNiubiz.procesoPagoBotonVisa.merchanId,
-        purchasenumber: 'BSG Institute',
+        purchasenumber:this.resultNiubiz.procesoPagoBotonVisa.purchaseNumber,
         amount: parseFloat(`${this.resultNiubiz.procesoPagoBotonVisa.amount}.00`),
         expirationminutes: '5',
         timeouturl: `${this.urlBase}/AulaVirtual/MisPagos/${this.IdMatriculaCabecera}`,
