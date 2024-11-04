@@ -15,7 +15,6 @@ import { PEspecificoEsquemaService } from 'src/app/Core/Shared/Services/PEspecif
 import {
   PEspecificoSesionCuestionarioPreguntaAlternativaDTO,
   PEspecificoSesionCuestionarioSaveDTO,
-  registrosExcelDTO,
 } from 'src/app/Core/Models/PEspecificoEsquema';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { HttpEventType, HttpResponse } from '@angular/common/http';
@@ -51,7 +50,7 @@ export class AgregarCuestionarioComponent implements OnInit, OnDestroy {
     private _removePortalCriterioPipe: RemovePortalCriterioPipe
   ) {}
 
-  public file=new File([], '')
+  public file = new File([], '');
   public Title = 'AGREGAR CUESTIONARIO';
   public save: PEspecificoSesionCuestionarioSaveDTO = {
     IdPEspecificoSesion: 0,
@@ -64,9 +63,8 @@ export class AgregarCuestionarioComponent implements OnInit, OnDestroy {
     FechaEntrega: '',
     TiempoLimite: 0,
     Preguntas: [],
-    CalificacionMaximaSecundaria:0,
-    FechaEntregaSecundaria:'',
-
+    CalificacionMaximaSecundaria: 0,
+    FechaEntregaSecundaria: '',
   };
   formularioTarea = new FormGroup({
     Titulo: new FormControl('', [Validators.required]),
@@ -81,47 +79,20 @@ export class AgregarCuestionarioComponent implements OnInit, OnDestroy {
     HoraEntregaSecundaria: new FormControl(),
     MinutoEntregaSecundaria: new FormControl(),
     IdCriterioEvaluacion: new FormControl(null, [Validators.required]),
-
   });
   public fecha = new Date();
   public filestatus = false;
   public Horas: Array<any> = [];
-  public Minutos: Array<any> = [0,30,59];
+  public Minutos: Array<any> = [0, 30, 59];
   public Calificaciones: Array<any> = [];
   public tipoagregra = -1;
   public tipoPregunta: Array<any> = [];
-  cargando=false
+  cargando = false;
   public selectedFiles?: FileList;
-  public fechamaxima=new Date();
-  // public esquemas:Array<any>=[
-  //   {
-  //     id:1,
-  //     nombre:'Cuestionario',
-  //     visible:false,
-  //     idCriterio:0,
-  //     idTipoCriterioEvaluacion:0,
-  //     tipoCriterioEvaluacion:'Cuestionario'
-  //   },
-  //   {
-  //     id:2,
-  //     nombre:'Tarea',
-  //     visible:false,
-  //     idCriterio:0,
-  //     idTipoCriterioEvaluacion:0,
-  //     tipoCriterioEvaluacion:'Tarea'
-  //   },
-  //   {
-  //     id:3,
-  //     nombre:'Cuestionario',
-  //     visible:false,
-  //     idCriterio:0,
-  //     idTipoCriterioEvaluacion:0,
-  //     tipoCriterioEvaluacion:'Otros'
-  //   }
-  // ]
-  public esquemas : any;
-  public Publicado=false;
-  public registrosExcel:any
+  public fechamaxima = new Date();
+  public esquemas: any;
+  public Publicado = false;
+  public registrosExcel: any;
   public registrosExcelDescarga: Array<any> = [];
   ngOnInit(): void {
     for (let index = 0; index < 24; index++) {
@@ -141,7 +112,6 @@ export class AgregarCuestionarioComponent implements OnInit, OnDestroy {
     for (let index = 0; index < 11; index++) {
       this.Calificaciones.push(index * 10);
     }
-    console.log(this.data);
     // this.save.IdCriterioEvaluacion = this.data.idCriterio;
     this.save.IdPEspecificoSesion = this.data.sesion.idSesion;
     if (this.data.id != 0) {
@@ -149,13 +119,13 @@ export class AgregarCuestionarioComponent implements OnInit, OnDestroy {
       this.save.Id = this.data.id;
       this.ObtenerPEspecificoSesionCuestionarioPorId();
       this.ObtenerpreguntasSesionV2();
-    }
-    else{
-      this.ObtenerTipoCriteriosPorProgramaEspecifico(this.data.idTipoCriterioEvaluacion)
+    } else {
+      this.ObtenerTipoCriteriosPorProgramaEspecifico(
+        this.data.idTipoCriterioEvaluacion
+      );
     }
 
     this.ObtenerPreguntaTipo();
-
   }
 
   ObtenerPreguntaTipo() {
@@ -165,23 +135,20 @@ export class AgregarCuestionarioComponent implements OnInit, OnDestroy {
       .subscribe({
         next: (x) => {
           this.tipoPregunta = x;
-          console.log(x);
         },
         error: (x) => {},
       });
   }
-  setFechaMaxima(){
-    this.fechamaxima=this.formularioTarea.get('FechaEntrega')?.value
+  setFechaMaxima() {
+    this.fechamaxima = this.formularioTarea.get('FechaEntrega')?.value;
   }
   GettipoPregunta(id: number | null): string {
-    console.log(id)
     var text = '';
     for (let index = 0; index < this.tipoPregunta.length; index++) {
       if (this.tipoPregunta[index].id == id) {
-        if(this.tipoPregunta[index].valor=='Ingresar palabra'){
-          text='Pregunta Abierta'
-        }
-        else{
+        if (this.tipoPregunta[index].valor == 'Ingresar palabra') {
+          text = 'Pregunta Abierta';
+        } else {
           text = this.tipoPregunta[index].valor;
         }
         break;
@@ -190,40 +157,63 @@ export class AgregarCuestionarioComponent implements OnInit, OnDestroy {
     return text;
   }
   ObtenerPEspecificoSesionCuestionarioPorId() {
-    this.Publicado=false
+    this.Publicado = false;
     this._PEspecificoEsquemaService
       .ObtenerPEspecificoSesionCuestionarioPorId(this.data.id)
       .pipe(takeUntil(this.signal$))
       .subscribe({
         next: (x) => {
-          console.log(x);
-          if(x.publicado==true){
-            this.Publicado=true
+          if (x.publicado == true) {
+            this.Publicado = true;
           }
-          this.ObtenerTipoCriteriosPorProgramaEspecifico(x.idTipoCriterioEvaluacion)
+          this.ObtenerTipoCriteriosPorProgramaEspecifico(
+            x.idTipoCriterioEvaluacion
+          );
 
           var date = new Date(x.fechaEntrega);
-          var date2=new Date(x.fechaEntregaSecundaria)
-          console.log(date2);
+          var date2 = new Date(x.fechaEntregaSecundaria);
           // this.save.IdCriterioEvaluacion = x.idCriterioEvaluacion;
 
           this.formularioTarea.get('Titulo')?.setValue(x.titulo);
           this.formularioTarea.get('Descripcion')?.setValue(x.descripcion);
-          this.formularioTarea.get('CalificacionMaxima')?.setValue(x.calificacionMaxima);
+          this.formularioTarea
+            .get('CalificacionMaxima')
+            ?.setValue(x.calificacionMaxima);
           this.formularioTarea.get('FechaEntrega')?.setValue(date);
-          this.formularioTarea.get('HoraEntrega')?.setValue(date.getHours().toString().length > 1 ? date.getHours().toString(): '0' + date.getHours().toString());
-          this.formularioTarea.get('MinutoEntrega')?.setValue(date.getMinutes()? date.getMinutes(): '0' + date.getMinutes());
+          this.formularioTarea
+            .get('HoraEntrega')
+            ?.setValue(
+              date.getHours().toString().length > 1
+                ? date.getHours().toString()
+                : '0' + date.getHours().toString()
+            );
+          this.formularioTarea
+            .get('MinutoEntrega')
+            ?.setValue(
+              date.getMinutes() ? date.getMinutes() : '0' + date.getMinutes()
+            );
           this.formularioTarea.get('TiempoLimite')?.setValue(x.tiempoLimite);
-          if(x.fechaEntregaSecundaria!=null){
-            var date2=new Date(x.fechaEntregaSecundaria)
-            console.log(date2.getMinutes().toString())
-            this.formularioTarea.get('FechaEntregaSecundaria')?.setValue(date2)
-            this.formularioTarea.get('HoraEntregaSecundaria')?.setValue(date2.getHours().toString().length>1?date2.getHours().toString():'0'+date2.getHours().toString())
-            this.formularioTarea.get('MinutoEntregaSecundaria')?.setValue(date2.getMinutes())
+          if (x.fechaEntregaSecundaria != null) {
+            var date2 = new Date(x.fechaEntregaSecundaria);
+            this.formularioTarea.get('FechaEntregaSecundaria')?.setValue(date2);
+            this.formularioTarea
+              .get('HoraEntregaSecundaria')
+              ?.setValue(
+                date2.getHours().toString().length > 1
+                  ? date2.getHours().toString()
+                  : '0' + date2.getHours().toString()
+              );
+            this.formularioTarea
+              .get('MinutoEntregaSecundaria')
+              ?.setValue(date2.getMinutes());
           }
-          this.formularioTarea.get('CalificacionMaximaSecundaria')?.setValue(x.calificacionMaximaSecundaria)
-          this.formularioTarea.get('IdCriterioEvaluacion')?.setValue(x.idCriterioEvaluacion)
-          this.fecha=date
+          this.formularioTarea
+            .get('CalificacionMaximaSecundaria')
+            ?.setValue(x.calificacionMaximaSecundaria);
+          this.formularioTarea
+            .get('IdCriterioEvaluacion')
+            ?.setValue(x.idCriterioEvaluacion);
+          this.fecha = date;
         },
         error: (x) => {},
       });
@@ -234,7 +224,6 @@ export class AgregarCuestionarioComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.signal$))
       .subscribe({
         next: (x) => {
-          console.log(x);
           if (x != null) {
             x.forEach((p: any) => {
               var alter: Array<PEspecificoSesionCuestionarioPreguntaAlternativaDTO>;
@@ -246,7 +235,7 @@ export class AgregarCuestionarioComponent implements OnInit, OnDestroy {
                     Alternativa: al.alternativa,
                     EsCorrecta: al.esCorrecta,
                     Puntaje: al.puntaje,
-                    Disabled:false,
+                    Disabled: false,
                   });
                 });
               }
@@ -274,120 +263,177 @@ export class AgregarCuestionarioComponent implements OnInit, OnDestroy {
       });
   }
   AgregarPEspecificoCuestionario() {
-    this.cargando=true
-    var datePipe = new DatePipe('en-US');
-    this.save.Titulo = this.formularioTarea.get('Titulo')?.value;
-    this.save.Descripcion = this.formularioTarea.get('Descripcion')?.value;
-    this.save.TiempoLimite = this.formularioTarea.get('TiempoLimite')?.value;
-    this.save.CalificacionMaxima =this.formularioTarea.get('CalificacionMaxima')?.value;
-    this.save.CalificacionMaximaSecundaria = this.formularioTarea.get('CalificacionMaximaSecundaria')?.value;
-    this.save.IdCriterioEvaluacion = this.formularioTarea.get('IdCriterioEvaluacion')?.value;
-    var fecha: Date = this.formularioTarea.get('FechaEntrega')?.value;
-    fecha.setHours(this.formularioTarea.get('HoraEntrega')?.value);
-    fecha.setMinutes(this.formularioTarea.get('MinutoEntrega')?.value);
-    fecha.setSeconds(0);
-    if (fecha != null) {
-      var s = datePipe.transform(fecha, 'yyyy-MM-ddTHH:mm:ss.SSS');
-      console.log(s)
-      this.save.FechaEntrega = s != null ? s : '';
-    }
-    fecha = this.formularioTarea.get('FechaEntregaSecundaria')?.value;
-    if (fecha != null) {
-      fecha.setHours(this.formularioTarea.get('HoraEntregaSecundaria')?.value);
-      fecha.setMinutes(this.formularioTarea.get('MinutoEntregaSecundaria')?.value);
-      var s = datePipe.transform(fecha, 'yyyy-MM-ddTHH:mm:ss.SSS');
-      this.save.FechaEntregaSecundaria = s != null ? s : '';
-    }
-    console.log(this.save);
-    // if(this.save.Preguntas.length==0){
-    //   this._SnackBarServiceService.openSnackBar(
-    //     'El cuestionario no tiene preguntas creadas',
-    //     'x',
-    //     15,
-    //     'snackbarCrucigramaerror'
-    //   );
-    //   this.cargando=false
-    //   return ;
-    // }else{
-    //   var sum=0
-    //   this.save.Preguntas.forEach(p=> {
-    //     sum+=p.Puntaje!=null?p.Puntaje:0
-    //   });
-    //   var msj=''
-    //   if(sum>100){
-    //     msj='La suma del puntaje de las preguntas suman más de 100'
-    //   }
-    //   if(sum<100){
-    //     msj='La suma del puntaje de las preguntas suman menos de 100'
-    //   }
-    //   if(msj.length>0){
-    //     this._SnackBarServiceService.openSnackBar(
-    //       msj,
-    //       'x',
-    //       15,
-    //       'snackbarCrucigramaerror'
-    //     );
-    //     this.cargando=false
-    //     return ;
-    //   }
-    // }
-    if(this.save.Id==0){
-      this.alertaService.mensajeConfirmacionRegistroCuestionario().then((result) => {
-        if (result.isConfirmed) {
-          this._PEspecificoEsquemaService
-        .AgregarPEspecificoCuestionario(this.save)
-        .pipe(takeUntil(this.signal$))
-        .subscribe({
-          next: (x) => {
-            console.log(x);
-            if (x.type === HttpEventType.UploadProgress) {
-              console.log(Math.round((100 * x.loaded) / x.total));
-            } else if (x instanceof HttpResponse) {
-              this._SnackBarServiceService.openSnackBar("El cuestionario se ha guardado correctamente.",
-              'x',
-              10,
-              "snackbarCrucigramaSucces")
-              this.cargando=false
-              this.dialogRef.close('guardado');
-            }
-          },
-          error: (x) => {},
-        });
-        }
-        else{
-          this.dialogRef.close();
-        }
-      });
-    }
-    else{
-      this.alertaService.mensajeConfirmacionEdicionCuestionario().then((result) => {
-        if (result.isConfirmed) {
-          this._PEspecificoEsquemaService
-        .AgregarPEspecificoCuestionario(this.save)
-        .pipe(takeUntil(this.signal$))
-        .subscribe({
-          next: (x) => {
-            console.log(x);
-            if (x.type === HttpEventType.UploadProgress) {
-              console.log(Math.round((100 * x.loaded) / x.total));
-            } else if (x instanceof HttpResponse) {
-              this._SnackBarServiceService.openSnackBar("El cuestionario se ha guardado correctamente.",
-              'x',
-              10,
-              "snackbarCrucigramaSucces")
-              this.cargando=false
-              this.dialogRef.close('guardado');
-            }
-          },
-          error: (x) => {},
-        });
-        }
-        else{
-          this.dialogRef.close();
-        }
-      });
-    }
+    let ConfiguracionCorrecta = false;
 
+    const fechaEntregaSecundaria = this.formularioTarea.get(
+      'FechaEntregaSecundaria'
+    )?.value;
+    const horaEntregaSecundaria = this.formularioTarea.get(
+      'HoraEntregaSecundaria'
+    )?.value;
+    const minutoEntregaSecundaria = this.formularioTarea.get(
+      'MinutoEntregaSecundaria'
+    )?.value;
+    const calificacionMaximaSecundaria = this.formularioTarea.get(
+      'CalificacionMaximaSecundaria'
+    )?.value;
+
+    // Validaciones fecha de entrega secundaria
+    if (fechaEntregaSecundaria) {
+      if (!horaEntregaSecundaria) {
+        this._SnackBarServiceService.openSnackBar(
+          'Ingrese la hora de la fecha de entrega secundaria.',
+          'x',
+          5,
+          'snackbarCrucigramaerror'
+        );
+      } else if (!minutoEntregaSecundaria) {
+        this._SnackBarServiceService.openSnackBar(
+          'Ingrese los minutos de la fecha de entrega secundaria.',
+          'x',
+          5,
+          'snackbarCrucigramaerror'
+        );
+      } else if (calificacionMaximaSecundaria === 0) {
+        this._SnackBarServiceService.openSnackBar(
+          'La nota máxima secundaria debe ser mayor a 0 puntos',
+          'x',
+          5,
+          'snackbarCrucigramaerror'
+        );
+      } else {
+        ConfiguracionCorrecta = true;
+      }
+    } else {
+      ConfiguracionCorrecta = true;
+    }
+    if (ConfiguracionCorrecta) {
+      var datePipe = new DatePipe('en-US');
+      this.save.Titulo = this.formularioTarea.get('Titulo')?.value;
+      this.save.Descripcion = this.formularioTarea.get('Descripcion')?.value;
+      this.save.TiempoLimite = this.formularioTarea.get('TiempoLimite')?.value;
+      this.save.CalificacionMaxima =
+        this.formularioTarea.get('CalificacionMaxima')?.value;
+      this.save.CalificacionMaximaSecundaria = this.formularioTarea.get(
+        'CalificacionMaximaSecundaria'
+      )?.value;
+      this.save.IdCriterioEvaluacion = this.formularioTarea.get(
+        'IdCriterioEvaluacion'
+      )?.value;
+      var fecha: Date = this.formularioTarea.get('FechaEntrega')?.value;
+      fecha.setHours(this.formularioTarea.get('HoraEntrega')?.value);
+      fecha.setMinutes(this.formularioTarea.get('MinutoEntrega')?.value);
+      fecha.setSeconds(0);
+      if (fecha != null) {
+        var s = datePipe.transform(fecha, 'yyyy-MM-ddTHH:mm:ss.SSS');
+        this.save.FechaEntrega = s != null ? s : '';
+      }
+      fecha = this.formularioTarea.get('FechaEntregaSecundaria')?.value;
+      if (fecha != null) {
+        fecha.setHours(
+          this.formularioTarea.get('HoraEntregaSecundaria')?.value
+        );
+        fecha.setMinutes(
+          this.formularioTarea.get('MinutoEntregaSecundaria')?.value
+        );
+        var s = datePipe.transform(fecha, 'yyyy-MM-ddTHH:mm:ss.SSS');
+        this.save.FechaEntregaSecundaria = s != null ? s : '';
+      }
+      // Sección de Código que valida que los puntos antes de guardarse sumen 100 puntos
+      // if(this.save.Preguntas.length==0){
+      //   this._SnackBarServiceService.openSnackBar(
+      //     'El cuestionario no tiene preguntas creadas',
+      //     'x',
+      //     15,
+      //     'snackbarCrucigramaerror'
+      //   );
+      //   this.cargando=false
+      //   return ;
+      // }else{
+      //   var sum=0
+      //   this.save.Preguntas.forEach(p=> {
+      //     sum+=p.Puntaje!=null?p.Puntaje:0
+      //   });
+      //   var msj=''
+      //   if(sum>100){
+      //     msj='La suma del puntaje de las preguntas suman más de 100'
+      //   }
+      //   if(sum<100){
+      //     msj='La suma del puntaje de las preguntas suman menos de 100'
+      //   }
+      //   if(msj.length>0){
+      //     this._SnackBarServiceService.openSnackBar(
+      //       msj,
+      //       'x',
+      //       15,
+      //       'snackbarCrucigramaerror'
+      //     );
+      //     this.cargando=false
+      //     return ;
+      //   }
+      // }
+      if (this.save.Id == 0) {
+        this.alertaService
+          .mensajeConfirmacionRegistroCuestionario()
+          .then((result) => {
+            if (result.isConfirmed) {
+              this.cargando = true;
+              this._PEspecificoEsquemaService
+                .AgregarPEspecificoCuestionario(this.save)
+                .pipe(takeUntil(this.signal$))
+                .subscribe({
+                  next: (x) => {
+                    if (x.type === HttpEventType.UploadProgress) {
+                      // console.log(Math.round((100 * x.loaded) / x.total));
+                    } else if (x instanceof HttpResponse) {
+                      this._SnackBarServiceService.openSnackBar(
+                        'El cuestionario se ha guardado correctamente.',
+                        'x',
+                        5,
+                        'snackbarCrucigramaSucces'
+                      );
+                      this.cargando = false;
+                      this.dialogRef.close('guardado');
+                    }
+                  },
+                  error: (x) => {},
+                });
+            } else {
+              this.dialogRef.close();
+            }
+          });
+      } else {
+        this.alertaService
+          .mensajeConfirmacionEdicionCuestionario()
+          .then((result) => {
+            if (result.isConfirmed) {
+              this.cargando = true;
+              this._PEspecificoEsquemaService
+                .AgregarPEspecificoCuestionario(this.save)
+                .pipe(takeUntil(this.signal$))
+                .subscribe({
+                  next: (x) => {
+                    if (x.type === HttpEventType.UploadProgress) {
+                      // console.log(Math.round((100 * x.loaded) / x.total));
+                    } else if (x instanceof HttpResponse) {
+                      this._SnackBarServiceService.openSnackBar(
+                        'El cuestionario se ha guardado correctamente.',
+                        'x',
+                        5,
+                        'snackbarCrucigramaSucces'
+                      );
+                      this.cargando = false;
+                      this.dialogRef.close('guardado');
+                    }
+                  },
+                  error: (x) => {},
+                });
+            } else {
+              this.dialogRef.close();
+            }
+          });
+      }
+    }
   }
   OpenCrearPregunta() {
     const dialogRef = this.dialog.open(AgregarPreguntasComponent, {
@@ -396,17 +442,16 @@ export class AgregarCuestionarioComponent implements OnInit, OnDestroy {
         pregunta: null,
         sesion: this.data.sesion,
         tipoPregunta: this.tipoPregunta,
-        publicado:this.Publicado
+        publicado: this.Publicado,
       },
       panelClass: 'dialog-Agregar-Tarea',
-      disableClose:true
+      disableClose: true,
     });
 
     dialogRef
       .afterClosed()
       .pipe(takeUntil(this.signal$))
       .subscribe((result) => {
-        console.log(result);
         if (result != undefined && result != '') {
           this.save.Preguntas.push(result);
         }
@@ -418,7 +463,6 @@ export class AgregarCuestionarioComponent implements OnInit, OnDestroy {
       this.filestatus = true;
       var name = event.target.files[i].name;
       var size = event.target.files[i].size;
-      console.log(event);
       if (Math.round(size / 1024 / 1024) > 15) {
         this._SnackBarServiceService.openSnackBar(
           'El tamaño del archivo no debe superar los 15 MB',
@@ -427,20 +471,19 @@ export class AgregarCuestionarioComponent implements OnInit, OnDestroy {
           'snackbarCrucigramaerror'
         );
       } else {
-        if(name.split('.')[name.split('.').length-1]!='csv'){
-
+        if (name.split('.')[name.split('.').length - 1] != 'csv') {
           this._SnackBarServiceService.openSnackBar(
             'El formato de subida es (csv)',
             'x',
             15,
             'snackbarCrucigramaerror'
           );
-        }else{
+        } else {
           this.selectedFiles = event.target.files;
-          this.ImportarExel()
+          this.ImportarExel();
         }
       }
-      event.target.value = null
+      event.target.value = null;
       // console.log ('Name: ' + name + "\n" +
       //   'Type: ' + extencion + "\n" +
       //   'Last-Modified-Date: ' + modifiedDate + "\n" +
@@ -448,71 +491,72 @@ export class AgregarCuestionarioComponent implements OnInit, OnDestroy {
     }
   }
   ImportarExel() {
-    if(this.selectedFiles){
+    if (this.selectedFiles) {
       const file: File | null = this.selectedFiles.item(0);
       if (file) {
         this.file = file;
       }
     }
     if (this.selectedFiles) {
-      this._PEspecificoEsquemaService.ImportarExel(this.file).pipe(takeUntil(this.signal$))
-      .subscribe({
-        next: (x) => {
-          if (x.type === HttpEventType.UploadProgress) {
-            console.log(Math.round((100 * x.loaded) / x.total));
-          } else if (x instanceof HttpResponse) {
-            console.log(x);
-            if (x.body != null) {
-              x.body.forEach((p: any) => {
-                var alter: Array<PEspecificoSesionCuestionarioPreguntaAlternativaDTO>;
-                alter = [];
-                if (p.alternativas != null && p.alternativas.length > 0) {
-                  p.alternativas.forEach((al: any) => {
-                    alter.push({
-                      Id: al.id,
-                      Alternativa: al.alternativa,
-                      EsCorrecta: al.esCorrecta,
-                      Puntaje: al.puntaje,
-                      Disabled:false,
+      this._PEspecificoEsquemaService
+        .ImportarExel(this.file)
+        .pipe(takeUntil(this.signal$))
+        .subscribe({
+          next: (x) => {
+            if (x.type === HttpEventType.UploadProgress) {
+              // console.log(Math.round((100 * x.loaded) / x.total));
+            } else if (x instanceof HttpResponse) {
+              if (x.body != null) {
+                x.body.forEach((p: any) => {
+                  var alter: Array<PEspecificoSesionCuestionarioPreguntaAlternativaDTO>;
+                  alter = [];
+                  if (p.alternativas != null && p.alternativas.length > 0) {
+                    p.alternativas.forEach((al: any) => {
+                      alter.push({
+                        Id: al.id,
+                        Alternativa: al.alternativa,
+                        EsCorrecta: al.esCorrecta,
+                        Puntaje: al.puntaje,
+                        Disabled: false,
+                      });
                     });
+                  }
+                  this.save.Preguntas.push({
+                    Id: p.id,
+                    IdPreguntaTipo: p.idPreguntaTipo,
+                    Enunciado: p.enunciado,
+                    Descripcion: p.descripcion,
+                    Puntaje: p.puntaje,
+                    NombreArchivo: p.nombreArchivo,
+                    UrlArchivoSubido: p.urlArchivoSubido,
+                    Retroalimentacion: p.retroalimentacion,
+                    NombreArchivoRetroalimentacion:
+                      p.nombreArchivoRetroalimentacion,
+                    UrlArchivoSubidoRetroalimentacion:
+                      p.urlArchivoSubidoRetroalimentacion,
+                    file: new File([], ''),
+                    fileRetroalimentacion: new File([], ''),
+                    Alternativas: alter,
                   });
-                }
-                this.save.Preguntas.push({
-                  Id: p.id,
-                  IdPreguntaTipo: p.idPreguntaTipo,
-                  Enunciado: p.enunciado,
-                  Descripcion: p.descripcion,
-                  Puntaje: p.puntaje,
-                  NombreArchivo: p.nombreArchivo,
-                  UrlArchivoSubido: p.urlArchivoSubido,
-                  Retroalimentacion: p.retroalimentacion,
-                  NombreArchivoRetroalimentacion:
-                    p.nombreArchivoRetroalimentacion,
-                  UrlArchivoSubidoRetroalimentacion:
-                    p.urlArchivoSubidoRetroalimentacion,
-                  file: new File([], ''),
-                  fileRetroalimentacion: new File([], ''),
-                  Alternativas: alter,
                 });
-              });
-              this._SnackBarServiceService.openSnackBar(
-                'Se importaron las '+x.body.length+' preguntas',
-                'x',
-                15,
-                'snackbarCrucigramaSucces'
-              );
-            }else{
-              this._SnackBarServiceService.openSnackBar(
-                'Existe un error con el formato de su archivo',
-                'x',
-                15,
-                'snackbarCrucigramaerror'
-              );
+                this._SnackBarServiceService.openSnackBar(
+                  'Se importaron las ' + x.body.length + ' preguntas',
+                  'x',
+                  15,
+                  'snackbarCrucigramaSucces'
+                );
+              } else {
+                this._SnackBarServiceService.openSnackBar(
+                  'Existe un error con el formato de su archivo',
+                  'x',
+                  15,
+                  'snackbarCrucigramaerror'
+                );
+              }
             }
-          }
-        },
-        error: (x) => {},
-      });
+          },
+          error: (x) => {},
+        });
     }
   }
   OpenEditar(i: number) {
@@ -523,17 +567,16 @@ export class AgregarCuestionarioComponent implements OnInit, OnDestroy {
         pregunta: this.save.Preguntas[i],
         sesion: this.data.sesion,
         tipoPregunta: this.tipoPregunta,
-        publicado:this.Publicado
+        publicado: this.Publicado,
       },
       panelClass: 'dialog-Agregar-Tarea',
-      disableClose:true
+      disableClose: true,
     });
 
     dialogRef
       .afterClosed()
       .pipe(takeUntil(this.signal$))
       .subscribe((result) => {
-        console.log(result);
         if (result != undefined && result != '') {
           // this.save.Preguntas.push(result)
         } else {
@@ -549,41 +592,43 @@ export class AgregarCuestionarioComponent implements OnInit, OnDestroy {
         pregunta: this.save.Preguntas[i],
         sesion: this.data.sesion,
         tipoPregunta: this.tipoPregunta,
-        publicado:this.Publicado
+        publicado: this.Publicado,
       },
       panelClass: 'dialog-Agregar-Tarea',
-      disableClose:true
+      disableClose: true,
     });
 
     dialogRef
       .afterClosed()
       .pipe(takeUntil(this.signal$))
       .subscribe((result) => {
-        console.log(result);
         if (result != undefined && result != '') {
           // this.save.Preguntas.push(result)
         } else {
           this.save.Preguntas[i] = JSON.parse(json);
         }
-    });
+      });
   }
   Eliminar(index: number) {
-    this.save.Preguntas.splice(index,1)
+    this.save.Preguntas.splice(index, 1);
   }
-  ObtenerTipoCriteriosPorProgramaEspecifico(idTipoCriterioEvaluacion:number){
-    this._PEspecificoEsquemaService.ObtenerTipoCriteriosPorProgramaEspecifico(this.data.idPEspecifico,idTipoCriterioEvaluacion).pipe(takeUntil(this.signal$))
-    .subscribe({
-      next: (x) => {
-        console.log(x);
-        if(x!=null){
-          this.esquemas=x;
-          this.esquemas.forEach((x:any) => {
-            x.nombre=this._removePortalCriterioPipe.transform(x.nombre)
-          });
-
-        }
-      },
-    });
+  ObtenerTipoCriteriosPorProgramaEspecifico(idTipoCriterioEvaluacion: number) {
+    this._PEspecificoEsquemaService
+      .ObtenerTipoCriteriosPorProgramaEspecifico(
+        this.data.idPEspecifico,
+        idTipoCriterioEvaluacion
+      )
+      .pipe(takeUntil(this.signal$))
+      .subscribe({
+        next: (x) => {
+          if (x != null) {
+            this.esquemas = x;
+            this.esquemas.forEach((x: any) => {
+              x.nombre = this._removePortalCriterioPipe.transform(x.nombre);
+            });
+          }
+        },
+      });
   }
   // DownloadPreguntasCuestionarioExcel(): void {
   //   if(this.save.Preguntas.length!=0){
@@ -697,19 +742,42 @@ export class AgregarCuestionarioComponent implements OnInit, OnDestroy {
       });
 
       // Crear el CSV
-      const headers = ['Orden', 'TipoPregunta', 'Enunciado', 'Retroalimentacion', 'Descripcion', 'Alternativa', 'Correcta', 'Puntaje'];
+      const headers = [
+        'Orden',
+        'TipoPregunta',
+        'Enunciado',
+        'Retroalimentacion',
+        'Descripcion',
+        'Alternativa',
+        'Correcta',
+        'Puntaje',
+      ];
       const rows = registrosCSVDescarga.map((item: any) =>
-        [item.Orden, item.TipoPregunta, item.Enunciado, item.Retroalimentacion, item.Descripcion, item.Alternativa, item.Correcta, item.Puntaje].join(';')
+        [
+          item.Orden,
+          item.TipoPregunta,
+          item.Enunciado,
+          item.Retroalimentacion,
+          item.Descripcion,
+          item.Alternativa,
+          item.Correcta,
+          item.Puntaje,
+        ].join(';')
       );
       const csvContent = [headers.join(';'), ...rows].join('\n');
 
       // Descargar el archivo CSV con BOM para la codificación UTF-8
       const bom = '\uFEFF';
-      const blob = new Blob([bom + csvContent], { type: 'text/csv;charset=utf-8;' });
+      const blob = new Blob([bom + csvContent], {
+        type: 'text/csv;charset=utf-8;',
+      });
       const link = document.createElement('a');
       const url = URL.createObjectURL(blob);
       link.setAttribute('href', url);
-      link.setAttribute('download', 'CuestionarioPreguntas-' + new Date().getTime() + '.csv');
+      link.setAttribute(
+        'download',
+        'CuestionarioPreguntas-' + new Date().getTime() + '.csv'
+      );
       link.style.visibility = 'hidden';
       document.body.appendChild(link);
       link.click();
@@ -724,9 +792,7 @@ export class AgregarCuestionarioComponent implements OnInit, OnDestroy {
     }
   }
 
-
   removeAccents(strng: string) {
-    return strng.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+    return strng.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
   }
-
 }
