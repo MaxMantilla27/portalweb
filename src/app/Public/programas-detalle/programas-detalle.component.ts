@@ -467,6 +467,7 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
       .ObtenerCabeceraProgramaGeneral(this.idBusqueda).pipe(takeUntil(this.signal$))
       .subscribe({
         next: (x) => {
+          console.log(x);
           console.log(x.programaCabeceraDetalleDTO.direccion==this.namePrograma.join('-'))
           if(x.programaCabeceraDetalleDTO!=undefined
             && this.removeAccents(this.area.toLowerCase())==this.removeAccents(x.programaCabeceraDetalleDTO.areaCapacitacion.toLowerCase())
@@ -651,8 +652,11 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
           if(this.cabecera.idPartner==78 && this.beneficios.length>=3){
             while (i <= 2) {
               var TipoBeneficio = this.beneficios.find((x) => x.paquete == 1);
+              console.log(TipoBeneficio);
+              console.log('111111111111111111111111111111111');
               if (TipoBeneficio != undefined) {
                 TipoBeneficio.contenido.forEach((element) => {
+                  console.log(element);
                   if (element.idBeneficio > 0) {
                     beneficioLista.push(element.idBeneficio);
                   }
@@ -690,6 +694,8 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
           }else{
             while (i <= 2) {
               var TipoBeneficio = this.beneficios.find((x) => x.paquete == i);
+              console.log(TipoBeneficio);
+              console.log('222222222222222222222222222222222222222222222222222222222222222');
               if (TipoBeneficio != undefined) {
                 TipoBeneficio.contenido.forEach((element) => {
                   if (element.idBeneficio > 0) {
@@ -723,10 +729,12 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
                     }
                   }
                 });
+                console.log(beneficioLista);
               }
               i++;
             }
           }
+          
         }
       },
     });
@@ -785,14 +793,13 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
     this._SeccionProgramaService.ListCertificacion(this.idBusqueda).pipe(takeUntil(this.signal$)).subscribe({
       next: (x) => {
         this.certificado = x.listaCertificacionDTO;
-        console.log(this.certificado)
+        console.log(this.certificado);
         if (this.certificado!=null && this.certificado.descripcion != null && this.certificado.contenido.length!=0) {
           var descstrong = this.certificado.descripcion.split('<p><strong>');
           var desc = [];
-          this.certificado.descripcionHeader=[]
-          this.certificado.descripcionBody=[]
+          this.certificado.descripcionHeader=[];
+          this.certificado.descripcionBody=[];
           this.certificado.descripcionLeyenda = this.certificado.descripcion;
-
           // if (descstrong.length > 1) {
           //   let i = 0;
           //   descstrong.forEach((d) => {
