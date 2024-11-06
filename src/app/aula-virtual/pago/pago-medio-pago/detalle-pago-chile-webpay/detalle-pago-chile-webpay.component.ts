@@ -66,6 +66,7 @@ export class DetallePagoChileWebpayComponent implements  OnInit {
         else{
           this.resultPreProceso.total=this.resultPreProceso.montoTotal
         }
+        console.log(this.resultPreProceso);
 
       }
     })

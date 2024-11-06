@@ -18,7 +18,7 @@
 <div
   *ngIf="resultPreProceso != undefined"
   class="container"
-  style="border-bottom: 2px solid #e7e7e7 !important; padding-bottom: 2rem"
+  style="border-bottom: 2px solid #e7e7e7 !important; padding: 3rem 7rem 1rem 7rem;"
 >
   <div class="row">
     <div class="col-12 row container-info-pago">
@@ -86,6 +86,7 @@
                 display: flex;
                 justify-content: space-between;
                 padding: 5px;
+                border-bottom: solid 1px #a6a6a6;
               "
             >
               <div style="font-weight: 600">Concepto</div>
@@ -181,7 +182,8 @@
           <img
             *ngIf="
               tarjeta.medioPago == 'Visa' ||
-              tarjeta.medioPago == 'MasterCard'
+              tarjeta.medioPago == 'MasterCard' ||
+              tarjeta.medioPago == 'Amex'
             "
             [src]="'../../../../assets/icons/' + tarjeta.img"
             alt="Imagen de tarjeta"

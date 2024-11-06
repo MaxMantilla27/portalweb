@@ -18,7 +18,7 @@
 <div
   *ngIf="resultNiubiz != undefined"
   class="container"
-  style="border-bottom: 2px solid #e7e7e7 !important; padding-bottom: 2rem"
+  style="border-bottom: 2px solid #e7e7e7 !important; padding: 3rem 7rem 1rem 7rem;"
 >
   <div class="row">
     <div class="col-12 row container-info-pago">
@@ -73,6 +73,7 @@
               style="
                 display: flex;
                 justify-content: space-between;
+                border-bottom: solid 1px #a6a6a6;
                 padding: 5px;
               "
             >
@@ -169,7 +170,7 @@
           *ngFor="let tarjeta of tarjetas"
           class="medio-pago-image-container"
         >
-          <div *ngIf="tarjeta.medioPago == 'Visa' || tarjeta.medioPago == 'MasterCard'">
+          <div *ngIf="tarjeta.medioPago == 'Visa' || tarjeta.medioPago == 'MasterCard'|| tarjeta.medioPago == 'Amex'|| tarjeta.medioPago == 'DinerClub'">
             <img
               [src]="'../../../../assets/icons/' + tarjeta.img"
               alt="Imagen de tarjeta"
