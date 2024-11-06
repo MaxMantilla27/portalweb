@@ -18,18 +18,17 @@
 <div
   *ngIf="resultPreProceso != undefined"
   class="container"
-  style="border-bottom: 2px solid #e7e7e7 !important; padding-bottom: 2rem"
+  style="border-bottom: 2px solid #e7e7e7 !important; ; padding: 3rem 7rem 1rem 7rem;"
 >
   <div class="row">
     <div class="col-12 row container-info-pago">
       <div class="col-12 col-md-6 col-lg-6 inputPagoVisa">
         <div class="subtitlePagoVisa" style="border: none !important">
-          Pago realizado por:
+          Ingresa tus datos como aparecen en tu tarjeta de crédito o debito:
         </div>
         <ng-container>
           <mat-form-field
             appearance="outline"
-            class="disabledInput"
             [floatLabel]="'always'"
             style="width: 100%"
           >
@@ -38,12 +37,10 @@
               type="text"
               [(ngModel)]="resultPreProceso.registroAlumno.nombre"
               matInput
-              [disabled]="true"
             />
           </mat-form-field>
           <mat-form-field
             appearance="outline"
-            class="disabledInput"
             [floatLabel]="'always'"
             style="width: 100%"
           >
@@ -52,12 +49,10 @@
               type="text"
               [(ngModel)]="resultPreProceso.registroAlumno.apellido"
               matInput
-              [disabled]="true"
             />
           </mat-form-field>
           <mat-form-field
-            appearance="outline"
-            class="disabledInput"
+            appearance="outline"  
             [floatLabel]="'always'"
             style="width: 100%"
           >
@@ -66,7 +61,6 @@
               type="text"
               [(ngModel)]="resultPreProceso.registroAlumno.correo"
               matInput
-              [disabled]="true"
             />
           </mat-form-field>
         </ng-container>
@@ -80,6 +74,7 @@
                 display: flex;
                 justify-content: space-between;
                 padding: 5px;
+                border-bottom: solid 1px #a6a6a6;
               "
             >
               <div style="font-weight: 600">Concepto</div>
@@ -175,7 +170,7 @@
               tarjeta.medioPago == 'Visa' ||
               tarjeta.medioPago == 'MasterCard' ||
               tarjeta.medioPago == 'Amex' ||
-              tarjeta.medioPago == 'DinerClub'
+              tarjeta.medioPago == 'Pse'
             "
             [src]="'../../../../assets/icons/' + tarjeta.img"
             alt="Imagen de tarjeta"

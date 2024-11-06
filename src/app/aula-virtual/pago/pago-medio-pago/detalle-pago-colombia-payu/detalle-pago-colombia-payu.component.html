@@ -18,7 +18,7 @@
 <div
   *ngIf="resultPreProceso != undefined && !oncharge"
   class="container"
-  style="border-bottom: 2px solid #e7e7e7 !important; padding-bottom: 2rem; padding: 15px 30px;"
+  style="border-bottom: 2px solid #e7e7e7 !important; padding: 3rem 7rem 1rem 7rem;"
 >
   <div class="row">
     <div class="col-12 row container-info-pago">
@@ -104,7 +104,7 @@
             </mat-form-field>
             </div>
 
-            <div class="col-6 col-md-6 col-lg-6">
+            <div class="col-6 col-md-6 col-lg-6" style="padding-left: 15px;">
               <mat-form-field appearance="outline" [floatLabel]="'always'" style="width: 100%;">
                 <mat-label>CVV</mat-label>
                 <input type="text" placeholder="CVV" [ngModelOptions]="{standalone: true}"
@@ -126,6 +126,7 @@
                 display: flex;
                 justify-content: space-between;
                 padding: 5px;
+                border-bottom: solid 1px #a6a6a6;
               "
             >
               <div style="font-weight: 600">Concepto</div>
@@ -228,7 +229,7 @@
     </div>
 
     <!-- Columna vacía de 5 -->
-    <div class="col-12 col-md-5 col-5" style="padding: 20px">
+    <div class="col-12 col-md-5 col-5" style="padding: 20px" *ngIf="resultPreProceso.idFormaPago==65">
       <div class="texto-medios-pago">Métodos de pago aceptados:</div>
       <div class="medio-pago-images" style="padding-top: 10px">
         <div
@@ -240,7 +241,27 @@
               tarjeta.medioPago == 'Visa' ||
               tarjeta.medioPago == 'MasterCard' ||
               tarjeta.medioPago == 'Amex' ||
-              tarjeta.medioPago == 'DinerClub'
+              tarjeta.medioPago == 'Pse'
+            "
+            [src]="'../../../../assets/icons/' + tarjeta.img"
+            alt="Imagen de tarjeta"
+            class="medio-pago-image"
+          />
+        </div>
+      </div>
+    </div>
+    <div class="col-12 col-md-5 col-5" style="padding: 20px" *ngIf="resultPreProceso.idFormaPago==64">
+      <div class="texto-medios-pago">Métodos de pago aceptados:</div>
+      <div class="medio-pago-images" style="padding-top: 10px">
+        <div
+          *ngFor="let tarjeta of tarjetas"
+          class="medio-pago-image-container"
+        >
+          <img
+            *ngIf="
+              tarjeta.medioPago == 'Visa' ||
+              tarjeta.medioPago == 'MasterCard' ||
+              tarjeta.medioPago == 'Amex' 
             "
             [src]="'../../../../assets/icons/' + tarjeta.img"
             alt="Imagen de tarjeta"
