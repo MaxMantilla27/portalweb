@@ -59,27 +59,6 @@
 
       <ng-container>
         <div
-          *ngIf="ChatbotCerrado && !TieneCoordinador"
-          class="PrimeraInteraccionAtcFondo"
-        >
-          <div class="PrimeraInteraccionAtc">
-            <!--<p class="LetraChat"><strong>¿Con quién deseas comunicarte?</strong></p>
-            <p class="LetraChat">Para continuar selecciona la opción que mejor se ajusta para realizar tu consulta:</p>-->
-            <ul>
-              <li *ngIf="!TieneCoordinador">
-                <a
-                  class="LetraChat"
-                  style="cursor: pointer"
-                  (click)="Contactenos()"
-                  >No tiene coordinador asignado, escríbanos en contáctenos, o
-                  reinicie el chat.</a
-                >
-              </li>
-            </ul>
-          </div>
-        </div>
-
-        <div
           *ngIf="!ChatbotCerrado && !CargandoInformacion"
           #contenidoMsj
           class="contentChatMsj"
@@ -201,6 +180,43 @@
         [idProgramageneral]="registroChatIA.IdPGeneral!"
         [IdMatriculaCabecera]="registroChatIA.IdMatriculaCabecera!"
       ></app-chat-atencion-cliente-academico>
+    </ng-container>
+    
+    <ng-container
+      *ngIf="ChatbotCerrado && !TieneCoordinador"
+      select="[contenidoChat]"
+    >
+      <div class="headerChatAtc">
+        <div class="imgAsesorAtc">
+          <img
+            style="width: 4.5rem; height: 4.5rem"
+            [src]="'../../../../../../assets/imagenes/Chat-Atc-Online.png'"
+            alt=""
+          />
+          <!-- <img style="width: 4.5rem;height: 4.5rem;" [src]="'../../../../../assets/imagenes/Chat-Atc-Offline.png'" alt=""> -->
+          <div class="nombreAsesorAtc">
+            <div>Atención al cliente</div>
+            <div>BSG Institute</div>
+          </div>
+        </div>
+      </div>
+      <div class="PrimeraInteraccionAtcFondo">
+        <div class="PrimeraInteraccionAtc">
+          <!--<p class="LetraChat"><strong>¿Con quién deseas comunicarte?</strong></p>
+            <p class="LetraChat">Para continuar selecciona la opción que mejor se ajusta para realizar tu consulta:</p>-->
+          <ul>
+            <li *ngIf="!TieneCoordinador">
+              <a
+                class="LetraChat"
+                style="cursor: pointer"
+                (click)="Contactenos()"
+                >No tiene coordinador asignado, escríbanos en contáctenos, o
+                reinicie el chat.</a
+              >
+            </li>
+          </ul>
+        </div>
+      </div>
     </ng-container>
   </div>
 </ng-container>
