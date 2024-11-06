@@ -18,18 +18,17 @@
 </div>
 <div
   class="container"
-  style="border-bottom: 2px solid #e7e7e7 !important; padding-bottom: 2rem"
+  style="border-bottom: 2px solid #e7e7e7 !important; padding: 3rem 7rem 1rem 7rem;"
 >
   <div class="row">
     <div class="col-12 row" style="margin-left: 0px;">
       <div class="col-12 col-md-6 col-lg-6 inputPagoVisa">
         <div class="subtitlePagoVisa" style="border: none !important">
-          Pago realizado por:
+          Ingresa tus datos como aparece en tu tarjeta de crédito o débito:
         </div>
         <ng-container *ngIf="resultPreValidacion!=undefined">
           <mat-form-field
             appearance="outline"
-            class="disabledInput"
             [floatLabel]="'always'"
             style="width: 100%"
           >
@@ -38,12 +37,10 @@
               type="text"
               [(ngModel)]="resultPreValidacion.registroAlumno.nombre"
               matInput
-              [disabled]="true"
             />
           </mat-form-field>
           <mat-form-field
             appearance="outline"
-            class="disabledInput"
             [floatLabel]="'always'"
             style="width: 100%"
           >
@@ -52,12 +49,10 @@
               type="text"
               [(ngModel)]="resultPreValidacion.registroAlumno.apellido"
               matInput
-              [disabled]="true"
             />
           </mat-form-field>
           <mat-form-field
             appearance="outline"
-            class="disabledInput"
             [floatLabel]="'always'"
             style="width: 100%"
           >
@@ -66,7 +61,6 @@
               type="text"
               [(ngModel)]="resultPreValidacion.registroAlumno.correo"
               matInput
-              [disabled]="true"
             />
           </mat-form-field>
         </ng-container>
@@ -79,6 +73,7 @@
               style="
                 display: flex;
                 justify-content: space-between;
+                border-bottom: solid 1px #a6a6a6;
                 padding: 5px;
               "
             >
@@ -88,9 +83,8 @@
             <div class="ItemsResumenPago row">
               <div
                 *ngFor="let item of resultPreValidacion.listaCuota; index as i"
-                style="padding: 5px !important"
               >
-                <div class="col-12 row itms" *ngIf="i==0">
+                <div class="col-12 row itms" *ngIf="i==0"style="padding: 5px !important">
                   <div class="col-8" >{{ item.nombre }}</div>
                   <div class="col-4" style="text-align: right">
                     {{ resultPreValidacion.monedaCorreo }}
@@ -128,7 +122,7 @@
             <div class="kr-security-code"></div>
 
             <!-- payment form submit button -->
-            <button class="kr-payment-button">Pagar</button>
+            <button class="kr-payment-button">PAGA AQUÍ</button>
 
             <!-- error zone -->
             <div class="kr-form-error"></div>
@@ -136,7 +130,7 @@
           </div>
         </div>
       </div>
-      
+
       </div>
     </div>
   </div>
@@ -160,7 +154,7 @@
 </ng-container>
 <div class="container">
   <div class="row">
-    <!-- Columna de 7 con el contenido --> 
+    <!-- Columna de 7 con el contenido -->
       <div class="col-12 col-md-7 col-lg-7">
         <div style="justify-content: left; display: flex">
           <div class="iconoPagoTarjeta">

@@ -17,13 +17,13 @@
 <div
   *ngIf="resultCard != undefined"
   class="container"
-  style="border-bottom: 2px solid #e7e7e7 !important; padding-bottom: 2rem"
+  style="border-bottom: 2px solid #e7e7e7 !important; padding: 3rem 7rem 1rem 7rem;"
 >
   <div class="row">
     <div class="col-12 row contanier-info-pago">
       <div class="col-12 col-md-6 col-lg-6 inputPagoVisa">
         <div class="subtitlePagoVisa">
-          Ingresa los datos de tu tarjeta de crédito o débito:
+          Ingresa tus datos como aparece en tu tarjeta de crédito o débito:
         </div>
         <form id="fomrOpenPAy" class="row">
           <ng-container
@@ -227,6 +227,7 @@
               style="
                 display: flex;
                 justify-content: space-between;
+                border-bottom: solid 1px #a6a6a6;
                 padding: 5px;
               "
             >
@@ -327,7 +328,6 @@
           class="medio-pago-image-container"
         >
           <div *ngIf="
-          tarjeta.medioPago == 'MasterCard' ||
           tarjeta.medioPago == 'Amex' ||
           tarjeta.medioPago == 'DinerClub'
         ">
