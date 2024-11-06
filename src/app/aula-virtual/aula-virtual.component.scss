@@ -229,9 +229,6 @@ mat-toolbar {
 }
 
 .resumenPagoTarjeta {
-
-  padding: 0px 20px;  //cambio para movil antes a 0px 20px
-
   .titleResumenPago {
     background: #e7e7e7;
     padding: 5px 30px;
@@ -284,13 +281,18 @@ mat-toolbar {
     }
   }
 }
-
+.detallePagoPasarela{
+  padding: 3rem 7rem 1rem 7rem
+}
 @media (max-width: 767px) {
   .resumenPagoTarjeta {
     padding: 0px;
     .contentResumenPago{
       padding: 20px 15px;
     }
+  }
+  .detallePagoPasarela{
+    padding: 0;
   }
  }
 
@@ -434,3 +436,4 @@ mat-toolbar {
 .elipsis-500{
   width: 500px;
 }
+
