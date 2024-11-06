@@ -69,6 +69,8 @@ export interface AgregarPEspecificoSesionCuestionarioAlumnoDTO {
   IdPwPEspecificoSesionCuestionario: number;
   IdMatriculaCabecera: number;
   Preguntas: Array<RespuestasPreguntasDTO>;
+  FechaEnvio: string,
+  EscalaCalificacion: number,
   Usuario: string,
 }
 export interface RespuestasPreguntasDTO {

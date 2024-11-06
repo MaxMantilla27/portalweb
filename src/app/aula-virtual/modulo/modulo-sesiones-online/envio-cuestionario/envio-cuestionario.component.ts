@@ -20,6 +20,7 @@ import {
 } from 'src/app/Core/Models/PEspecificoEsquema';
 import { ImagenModalComponent } from 'src/app/Core/Shared/Containers/Dialog/imagen-modal/imagen-modal.component';
 import { SnackBarServiceService } from 'src/app/Core/Shared/Services/SnackBarService/snack-bar-service.service';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-envio-cuestionario',
@@ -60,6 +61,8 @@ export class EnvioCuestionarioComponent implements OnInit, OnDestroy {
     IdPEspecificoSesion: 0,
     IdPwPEspecificoSesionCuestionario: 0,
     Preguntas: [],
+    FechaEnvio: '',
+    EscalaCalificacion: 0,
     Usuario: 'Alumno',
   };
   public CuestionarioValido = false;
@@ -69,8 +72,14 @@ export class EnvioCuestionarioComponent implements OnInit, OnDestroy {
   public CuestionarioEnviado = false;
   public PuntajeInicial = 0;
   public BotonEnvioActivo = true;
+  public ZonaHorariaOrigenWebex: any;
+  public ZonaHorariaUsuario: any;
+  public CodigoIsoPaisWebex = 'PE';
   ngOnInit(): void {
+    console.log(this.data);
     this.PuntuacionActual = this.data.cuestionario.calificacionActual;
+    this.CodigoIsoPaisWebex = this.data.codigoIso;
+    this.ObtenerDatosZonaHoraria();
     if (
       this.data.cuestionario != undefined &&
       this.data.cuestionario.preguntasCuestionario != undefined &&
@@ -233,39 +242,48 @@ export class EnvioCuestionarioComponent implements OnInit, OnDestroy {
   }
 
   IniciarCuestionario() {
-    this._PEspecificoEsquemaService
-      .ObtenerEstadoDeFechasPorCuestionario(this.data.cuestionario.id)
-      .pipe(takeUntil(this.signal$))
-      .subscribe({
-        next: (x) => {
-          if (x == true) {
-            this.CuestionarioAvance.Inicio = true;
-            this.CuestionarioAvance.fechaInicio = new Date();
-            this.vertiempo = true;
+    // this._PEspecificoEsquemaService
+    //   .ObtenerEstadoDeFechasPorCuestionario(this.data.cuestionario.id)
+    //   .pipe(takeUntil(this.signal$))
+    //   .subscribe({
+    //     next: (x) => {
+    //       if (x == true) {
+    //         this.CuestionarioAvance.Inicio = true;
+    //         this.CuestionarioAvance.fechaInicio = new Date();
+    //         this.vertiempo = true;
 
-            this._SessionStorageService.SessionSetValue(
-              'cuest-' + this.CuestionarioAvance.id.toString(),
-              btoa(JSON.stringify(this.CuestionarioAvance))
-            );
-            this.cronometro();
-          } else {
-            this._SnackBarServiceService.openSnackBar(
-              'Ya culmino el plazo para presentar este cuestionario.',
-              'x',
-              15,
-              'snackbarCrucigramaerror'
-            );
-          }
-        },
-        error: (e) => {
-          this._SnackBarServiceService.openSnackBar(
-            'Ocurrio un error',
-            'x',
-            15,
-            'snackbarCrucigramaerror'
-          );
-        },
-      });
+    //         this._SessionStorageService.SessionSetValue(
+    //           'cuest-' + this.CuestionarioAvance.id.toString(),
+    //           btoa(JSON.stringify(this.CuestionarioAvance))
+    //         );
+    //         this.cronometro();
+    //       } else {
+    //         this._SnackBarServiceService.openSnackBar(
+    //           'Ya culmino el plazo para presentar este cuestionario.',
+    //           'x',
+    //           15,
+    //           'snackbarCrucigramaerror'
+    //         );
+    //       }
+    //     },
+    //     error: (e) => {
+    //       this._SnackBarServiceService.openSnackBar(
+    //         'Ocurrio un error',
+    //         'x',
+    //         15,
+    //         'snackbarCrucigramaerror'
+    //       );
+    //     },
+    //   });
+    this.CuestionarioAvance.Inicio = true;
+    this.CuestionarioAvance.fechaInicio = new Date();
+    this.vertiempo = true;
+
+    this._SessionStorageService.SessionSetValue(
+      'cuest-' + this.CuestionarioAvance.id.toString(),
+      btoa(JSON.stringify(this.CuestionarioAvance))
+    );
+    this.cronometro();
   }
   AddValoresActuales(cuest: any) {
     this.CuestionarioAvance.fechaInicio = cuest.fechaInicio;
@@ -306,6 +324,7 @@ export class EnvioCuestionarioComponent implements OnInit, OnDestroy {
     }, 1000);
   }
   AgregarPEspecificoSesionCuestionarioAlumno(TiempoCumplido: boolean) {
+    var datePipe = new DatePipe('en-US');
     this.json.Preguntas = [];
     let Orden = 0;
     this.data.cuestionario.preguntasCuestionario.forEach((p: any) => {
@@ -379,17 +398,48 @@ export class EnvioCuestionarioComponent implements OnInit, OnDestroy {
         }
       });
     } else {
-        this.BotonEnvioActivo=false
-        this._PEspecificoEsquemaService.AgregarPEspecificoSesionCuestionarioAlumno(this.json).pipe(takeUntil(this.signal$))
+      let HoraWebexOriginal: any;
+      if (this.data.fechaEntregaSecundaria == null) {
+        HoraWebexOriginal = moment.tz(
+          this.data.fechaActual,
+          this.ZonaHorariaOrigenWebex
+        );
+      } else {
+        HoraWebexOriginal = moment.tz(
+          this.data.fechaEntregaSecundaria,
+          this.ZonaHorariaOrigenWebex
+        );
+      }
+      // HoraWebexOriginal.subtract(80, 'minutes');
+      console.log(
+        'Hora Webex Original:',
+        HoraWebexOriginal.format('YYYY-MM-DD HH:mm:ss')
+      );
+      if (HoraWebexOriginal.format('YYYY-MM-DD HH:mm:ss') != null) {
+        var s = datePipe.transform(
+          HoraWebexOriginal.format('YYYY-MM-DD HH:mm:ss'),
+          'yyyy-MM-ddTHH:mm:ss.SSS'
+        );
+        console.log(s);
+        this.json.FechaEnvio = s != null ? s : '';
+        this.json.EscalaCalificacion = this.PuntuacionActual;
+      }
+      console.log(this.json);
+      this.BotonEnvioActivo = false;
+      this._PEspecificoEsquemaService
+        .AgregarPEspecificoSesionCuestionarioAlumno(this.json)
+        .pipe(takeUntil(this.signal$))
         .subscribe({
-        next: (x) => {
-          this.dialogRef.close('guardado');
-        },
-        complete:()=>{
-          this.BotonEnvioActivo=true
-        }
-      });
-      this._SessionStorageService.SessionDeleteValue('cuest-'+this.CuestionarioAvance.id.toString())
+          next: (x) => {
+            this.dialogRef.close('guardado');
+          },
+          complete: () => {
+            this.BotonEnvioActivo = true;
+          },
+        });
+      this._SessionStorageService.SessionDeleteValue(
+        'cuest-' + this.CuestionarioAvance.id.toString()
+      );
     }
   }
   changeRadio(indexPregunta: number, index: number) {
@@ -438,5 +488,14 @@ export class EnvioCuestionarioComponent implements OnInit, OnDestroy {
       'cuest-' + this.CuestionarioAvance.id.toString(),
       btoa(JSON.stringify(this.CuestionarioAvance))
     );
+  }
+  ObtenerDatosZonaHoraria() {
+    this.ZonaHorariaUsuario = Intl.DateTimeFormat().resolvedOptions().timeZone;
+    this.ZonaHorariaOrigenWebex = moment.tz.zonesForCountry(
+      this.CodigoIsoPaisWebex
+    );
+    this.ZonaHorariaOrigenWebex = this.ZonaHorariaOrigenWebex[0];
+    console.log(this.ZonaHorariaUsuario);
+    console.log(this.ZonaHorariaOrigenWebex);
   }
 }
