@@ -34,7 +34,7 @@
     <div class="cerrarChatMediaAtc" (click)="Open = false; IsOpen.emit(false)">
       X
     </div>
-    <ng-container select="[contenidoChat]">
+    <ng-container *ngIf="!ChatbotCerrado" select="[contenidoChat]">
       <div class="headerChatAtc">
         <div class="imgAsesorAtc">
           <img
@@ -59,7 +59,28 @@
 
       <ng-container>
         <div
-          *ngIf="!CargandoInformacion"
+          *ngIf="ChatbotCerrado && !TieneCoordinador"
+          class="PrimeraInteraccionAtcFondo"
+        >
+          <div class="PrimeraInteraccionAtc">
+            <!--<p class="LetraChat"><strong>¿Con quién deseas comunicarte?</strong></p>
+            <p class="LetraChat">Para continuar selecciona la opción que mejor se ajusta para realizar tu consulta:</p>-->
+            <ul>
+              <li *ngIf="!TieneCoordinador">
+                <a
+                  class="LetraChat"
+                  style="cursor: pointer"
+                  (click)="Contactenos()"
+                  >No tiene coordinador asignado, escríbanos en contáctenos, o
+                  reinicie el chat.</a
+                >
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div
+          *ngIf="!ChatbotCerrado && !CargandoInformacion"
           #contenidoMsj
           class="contentChatMsj"
         >
@@ -86,9 +107,7 @@
                     style="width: 180px; height: 80px"
                   />
                 </div>-->
-                <ng-container
-                  *ngIf="item.esUsuario"
-                >
+                <ng-container *ngIf="item.esUsuario">
                   <!--<ng-container *ngIf="true">
                     <div class="statemsjEnviado">
                       <i class="material-icons">access_time</i>
@@ -101,17 +120,26 @@
           <div *ngIf="ChatError" class="error-mensaje">
             Hubo un error al enviar el mensaje.
           </div>
-          <div *ngIf="this.registroChatIA.Cerrado" class="chat-cerrado-mensaje">
+          <div
+            *ngIf="this.registroChatIA.Cerrado && !this.registroChatIA.Derivado"
+            class="chat-cerrado-mensaje"
+          >
             Esta conversación ha terminado.
           </div>
+          <div
+            *ngIf="this.registroChatIA.Derivado"
+            class="chat-cerrado-mensaje"
+          >
+            Esta conversación está siendo derivada...
+          </div>
         </div>
-        
+
         <div
-          *ngIf="!CargandoInformacion"
+          *ngIf="!ChatbotCerrado && !CargandoInformacion"
           class="footerChatAula"
         >
           <input
-          *ngIf="!this.registroChatIA.Cerrado && !ChatError"
+            *ngIf="!this.registroChatIA.Cerrado && !ChatError"
             class="chat-box-textinput"
             [ngClass]="{ inputActive: inputActive }"
             [disabled]="!inputActive"
@@ -120,15 +148,27 @@
             [(ngModel)]="nuevoMensaje"
             #inputChat
           />
-          <i *ngIf="!this.registroChatIA.Cerrado && !ChatError" class="material-icons" (click)="enviarMensaje()"
+          <i
+            *ngIf="!this.registroChatIA.Cerrado && !ChatError"
+            class="material-icons"
+            (click)="enviarMensaje()"
             >send</i
           >
-          <button *ngIf="this.registroChatIA.Cerrado || ChatError" class="mensaje-finalizado" (click)="reiniciarChat()">Iniciar nueva conversación</button>
+          <button
+            *ngIf="
+              !this.registroChatIA.Derivado &&
+              (this.registroChatIA.Cerrado || ChatError)
+            "
+            class="mensaje-finalizado"
+            (click)="reiniciarChat()"
+          >
+            Iniciar nueva conversación
+          </button>
           <!--<div class="mensaje-finalizado" *ngIf="this.registroChatIA.Cerrado">Iniciar nueva conversación</div>-->
         </div>
       </ng-container>
-      
-  <!--
+
+      <!--
       <div
         *ngIf="CargandoInformacion == false"
         class="PrimeraInteraccionAtcFondo container"
@@ -154,10 +194,13 @@
         <ng-container *ngIf="Paso==4 && Caso=='B' && ChatSoporteTecnico==true">
           <app-chat-atencion-cliente-soporte [idProgramageneral]="IdProgramageneral" (RegresarChatAcademico)="RetrocederInicioFormulario($event,2)"></app-chat-atencion-cliente-soporte>
         </ng-container>
-        
-        <ng-container *ngIf="Paso==4 && Caso=='B' && ChatSoporteTecnico==false">
-             <app-chat-atencion-cliente-academico [idProgramageneral]="IdProgramageneral" [IdMatriculaCabecera]="IdMatriculaCabecera" (RegresarChatAcademico)="RetrocederInicioFormulario($event,2)" ></app-chat-atencion-cliente-academico>
-        </ng-container>-->
+        -->
+    </ng-container>
+    <ng-container *ngIf="ChatbotCerrado && TieneCoordinador">
+      <app-chat-atencion-cliente-academico
+        [idProgramageneral]="registroChatIA.IdPGeneral!"
+        [IdMatriculaCabecera]="registroChatIA.IdMatriculaCabecera!"
+      ></app-chat-atencion-cliente-academico>
     </ng-container>
   </div>
 </ng-container>

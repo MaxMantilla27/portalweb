@@ -9,4 +9,6 @@ export interface RegistroChatbotIADTO{
     Cerrado: boolean;
     Derivado: boolean;
     TiempoActual?: Date;
+    IdMatriculaCabecera?: number;
+    IdPGeneral?: number;
 }

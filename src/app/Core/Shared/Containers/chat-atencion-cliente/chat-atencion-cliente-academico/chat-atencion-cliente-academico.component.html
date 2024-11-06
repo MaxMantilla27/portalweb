@@ -25,10 +25,10 @@
     <!-- <div class="textoAsesor" *ngIf="estadoLogueo!='false'">Soy {{nombreAsesorSplit[0]}} , {{mensajeStateAsesor}}</div> -->
   </div>
   <ng-container>
-    <div class="FlechaAtrasMatricula no-select" (click)="showConfirmationDialog = true">
+    <!--<div class="FlechaAtrasMatricula no-select" (click)="showConfirmationDialog = true">
       <i class="material-icons">arrow_back_ios</i>
       <span>Atras</span>
-    </div>
+    </div>-->
     <div *ngIf="showConfirmationDialog" class="confirmation-dialog-atras">
       <p>¿Deseas salir de esta sesión de chat? La conversación se dará por finalizada.</p>
       <button style="background: #FF4E56;color:white" (click)="confirmAction()">Sí, retroceder</button>

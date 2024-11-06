@@ -26,6 +26,7 @@ import { ChatbotIAService } from '../../../Services/ChatbotIA/chatbot-ia.service
 import { DatosPerfilService } from '../../../Services/DatosPerfil/datos-perfil.service';
 import { ChatEnLineaService } from '../../../Services/ChatEnLinea/chat-en-linea.service';
 import { SeccionProgramaService } from '../../../Services/SeccionPrograma/seccion-programa.service';
+import { Subject, Subscription, takeUntil, timer,filter } from 'rxjs';
 
 @Component({
   selector: 'app-chatbot-ia',
@@ -44,6 +45,7 @@ export class ChatbotIaComponent implements OnInit {
     datoAvatar: false,
     datoContenido: false,
   };
+  private signal$ = new Subject();
 
   ChatError: boolean = false;
   inputActive = true;
@@ -52,6 +54,8 @@ export class ChatbotIaComponent implements OnInit {
   stateAsesor: boolean = true;
   public stateAsesorAtc = false;
   public CargandoInformacion = false;
+  public TieneCoordinador=false;
+  public ChatbotCerrado=false;
 
   @ViewChild('contenidoMsj') contentChatMsj!: ElementRef;
   @ViewChild('inputChat') inputChat!: ElementRef;
@@ -64,10 +68,12 @@ export class ChatbotIaComponent implements OnInit {
 
   
   constructor(
+    private _router: Router,
     private chatbotIAService: ChatbotIAService,
     private _SessionStorageService: SessionStorageService,
     private _HelperService: HelperService,
-    private cd: ChangeDetectorRef
+    private cd: ChangeDetectorRef,
+    private _ChatEnLinea: ChatEnLineaService,
   ) {}
 
   ngOnInit(): void {
@@ -114,6 +120,13 @@ export class ChatbotIaComponent implements OnInit {
         this.inputActive = this.registroChatIA.Cerrado ? false : true;
         this.setFocusOnInput();
         this.scrollAbajo();
+        if (this.registroChatIA.Derivado) {
+          setTimeout(() => {
+            if (this.registroChatIA.IdMatriculaCabecera != null && this.registroChatIA.IdPGeneral != null){
+              this.ObtenerCoordinadorMatricula(this.registroChatIA.IdMatriculaCabecera!);
+            }
+          }, 6000);
+        }
       });
     }
   }
@@ -156,6 +169,7 @@ export class ChatbotIaComponent implements OnInit {
           console.log("DATA", data);
           this.registroChatIA = this.jsonADTO(data);
           callback();
+
         } else {
           this.ChatError = true;
           this.CargandoInformacion = false;
@@ -228,5 +242,26 @@ export class ChatbotIaComponent implements OnInit {
   reemplazarMensajeBot(): void {
     this.mensajes[this.mensajes.length - 1].mensaje = this.registroChatIA.Mensaje!;
     this.scrollAbajo();
+  }
+
+  ObtenerCoordinadorMatricula(IdMatriculaCabecera: number){
+    this._ChatEnLinea.ObtenerCoordinadorChat(IdMatriculaCabecera).pipe(takeUntil(this.signal$)).subscribe({
+      next: (x) => {
+        console.log('Información del coordinador',x)
+        if(x!=null){
+          this.TieneCoordinador=true;
+        }
+        else{
+          this.TieneCoordinador=false;
+        }
+      },
+      complete:()=>{
+        this.ChatbotCerrado=true;
+        console.log("EL RESULTADO: ", this.ChatbotCerrado);
+      }})
+  }
+
+  Contactenos(){
+    this._router.navigate(['/contactenos'])
   }
 }
