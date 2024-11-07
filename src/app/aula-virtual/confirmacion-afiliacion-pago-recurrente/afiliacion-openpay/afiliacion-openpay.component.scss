@@ -142,8 +142,17 @@
   right: 5px;
 }
 
+.detalle-info{
+  padding: 3rem 7rem 1rem 7rem;
+}
 
 /******************************************************************************************/
+
+.inputPagoVisa{
+
+  padding: 0rem 4rem;
+
+}
 
 @media (max-width:767px) {
 
@@ -165,5 +174,14 @@
     margin: 0px;
     justify-content: center;
   }
+  .detalle-info{
+    padding: 1rem 0rem 1rem 0rem;
+  }
+
+  .inputPagoVisa{
+
+    padding: 0rem 1rem;
   
+  }
+
 }

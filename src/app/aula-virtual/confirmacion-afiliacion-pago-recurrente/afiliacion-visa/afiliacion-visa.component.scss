@@ -140,10 +140,19 @@
 
 /********************************************************************************/
 
+.inputPagoVisa{
+
+  padding: 0rem 4rem;
+
+}
+
 .texto-medio-pago{
   text-align: start;
 }
 
+.detalle-info{
+  padding: 3rem 7rem 1rem 7rem;
+}
 
 
 @media (max-width:767px){
@@ -166,5 +175,14 @@
     width: 50%;
   }
 
+  .detalle-info{
+    padding: 1rem 0rem 1rem 0rem;
+  }
+
+  .inputPagoVisa{
+
+    padding: 0rem 1rem;
+  
+  }
 
 }

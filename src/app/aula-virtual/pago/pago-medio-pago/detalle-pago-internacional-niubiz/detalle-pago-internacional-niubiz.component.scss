@@ -137,6 +137,15 @@
 
 
 /********************************************************************************************/
+.inputPagoVisa{
+
+  padding: 0rem 4rem;
+
+}
+
+.detalle-info{
+  padding: 3rem 7rem 1rem 7rem;
+}
 
 @media (max-width:767px) {
 
@@ -150,6 +159,7 @@
 
   .container-info-pago{
     margin: 0px;
+    //padding: 3rem 8rem;
   }
 
   .medio-pago-images{
@@ -157,4 +167,13 @@
     justify-content: center;
   }
 
+  .detalle-info{
+    padding: 1rem 0rem 1rem 0rem;
+  }
+
+  .inputPagoVisa{
+
+    padding: 0rem 1rem;
+  
+  }
 }
