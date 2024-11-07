@@ -41,7 +41,7 @@ export class VisaRecurrenteComponent implements OnInit {
     identificadorTransaccion:'',
   }
 
-  public resultVisa:any
+  public resultProceso:any
   public ruta=''
   public rutaMisCursos='/AulaVirtual/MisCursos'
   public AreaCapacitacion=''
@@ -86,25 +86,25 @@ export class VisaRecurrenteComponent implements OnInit {
       next:x=>{
         this._FormaPagoService.ObtenerPreProcesoPagoCuotaAlumno(json).pipe(takeUntil(this.signal$)).subscribe({
           next:x=>{
-            this.resultVisa=x._Repuesta
+            this.resultProceso=x._Repuesta
           },
           complete:()=>{
-            if(this.resultVisa.estadoOperacion=='Processed'){
-              if(this.resultVisa.tipoPago=='Organico'||this.resultVisa.idMatriculaCabecera==0){
+            if(this.resultProceso.estadoOperacion=='Processed'){
+              if(this.resultProceso.tipoPago=='Organico'||this.resultProceso.idMatriculaCabecera==0){
                 this.RegistrarMatriculaAlumnoOrganico()
               }
               else{
-                if(this.resultVisa.idMatriculaCabecera>0 &&
-                  this.resultVisa.idMatriculaCabecera!=null &&
-                  this.resultVisa.idMatriculaCabecera!=undefined ){
-                    this.rutaPago=this.rutaPago+'/'+this.resultVisa.idMatriculaCabecera
-                    this.rutaCursos=this.rutaCursos+'/'+this.resultVisa.idMatriculaCabecera
-                    this.CodigoMatricula=this.resultVisa.codigoMatricula
-                    if(this.resultVisa.nombrePrograma==null || this.resultVisa.nombrePrograma=='null' || this.resultVisa.nombrePrograma==undefined){
+                if(this.resultProceso.idMatriculaCabecera>0 &&
+                  this.resultProceso.idMatriculaCabecera!=null &&
+                  this.resultProceso.idMatriculaCabecera!=undefined ){
+                    this.rutaPago=this.rutaPago+'/'+this.resultProceso.idMatriculaCabecera
+                    this.rutaCursos=this.rutaCursos+'/'+this.resultProceso.idMatriculaCabecera
+                    this.CodigoMatricula=this.resultProceso.codigoMatricula
+                    if(this.resultProceso.nombrePrograma==null || this.resultProceso.nombrePrograma=='null' || this.resultProceso.nombrePrograma==undefined){
                       this.NombreCursoPago='';
                     }
                     else{
-                      this.NombreCursoPago=this.resultVisa.nombrePrograma
+                      this.NombreCursoPago=this.resultProceso.nombrePrograma
                     }
                 }
                 this.RutaCargada=true;
@@ -127,8 +127,8 @@ export class VisaRecurrenteComponent implements OnInit {
                 }
               })
             }
-            if(this.resultVisa.estadoOperacion =='No Process' ||
-              this.resultVisa.estadoOperacion =='Declinado'){
+            if(this.resultProceso.estadoOperacion =='No Process' ||
+              this.resultProceso.estadoOperacion =='Declinado'){
             }
           }
         })
@@ -180,21 +180,21 @@ export class VisaRecurrenteComponent implements OnInit {
 
   EnvioCorreoRegularizarOportunidad() {
     console.log(this.Matricula)
-    console.log(this.resultVisa)
-    console.log(this.resultVisa.registroAlumno)
+    console.log(this.resultProceso)
+    console.log(this.resultProceso.registroAlumno)
     var paymentSummary = "";
     let countLista=0
-    if(this.resultVisa.listaCuota.length==0){
+    if(this.resultProceso.listaCuota.length==0){
       paymentSummary += "<div style='display:flex;border-bottom: 1px solid black;padding: 5px 0;'>"+
                             "<div style='font-size:13px;font-weight:100;width: 66%;'>" + 'Matrícula' + "</div>" +
-                            "<div style='font-size:13px;width: 33%;text-align:right;'>" + this.FormatoMilesDecimales.transform(this.resultVisa.montoTotal) + " " + this.resultVisa.monedaCorreo + "</div></div>";
+                            "<div style='font-size:13px;width: 33%;text-align:right;'>" + this.FormatoMilesDecimales.transform(this.resultProceso.montoTotal) + " " + this.resultProceso.monedaCorreo + "</div></div>";
     }
     else{
-      this.resultVisa.listaCuota.forEach((l:any) => {
+      this.resultProceso.listaCuota.forEach((l:any) => {
         if(countLista==0){
           paymentSummary += "<div style='display:flex;border-bottom: 1px solid black;padding: 5px 0;'>"+
                             "<div style='font-size:13px;font-weight:100;width: 66%;'>" + this.reemplazarRazonPago(l.nombre) + "</div>" +
-                            "<div style='font-size:13px;width: 33%;text-align:right;'>" + this.FormatoMilesDecimales.transform(l.cuotaTotal) + " " + this.resultVisa.monedaCorreo + "</div></div>";
+                            "<div style='font-size:13px;width: 33%;text-align:right;'>" + this.FormatoMilesDecimales.transform(l.cuotaTotal) + " " + this.resultProceso.monedaCorreo + "</div></div>";
         }
         countLista++;
       });
@@ -212,13 +212,13 @@ export class VisaRecurrenteComponent implements OnInit {
     "<div style='letter-spacing: -4px;'>BSG</div>"+
     "<div style='margin-left: 7px;'>Institute</div>"+
     "</div></div>"+
-  "<div style='font-weight:bold;font-size:15px;padding-top:20px'>Pago Orgánico realizado por el usuario: "+this.resultVisa.registroAlumno.nombre+","+
+  "<div style='font-weight:bold;font-size:15px;padding-top:20px'>Pago Orgánico realizado por el usuario: "+this.resultProceso.registroAlumno.nombre+","+
   "</div><br><div style='font-size:14px'>Porfavor regularizar el proceso para la generación de oportunidad y la asignación de su asesor correspondiente."+
   "</div><br><div style='background:#EBF1FF;border-radius:5px;width:80%'>"+
     "<div style='padding:25px'>"+
       "<div style='display:flex;border-bottom: 2px solid black;padding-bottom:3px;'>"+
       "<div style='font-size:13px;font-weight:bold;width: 66%;'>Resúmen de pago</div>"+
-      "<div style='font-size:13px;width: 33%;text-align:right;'>"+this.pipe.transform(this.resultVisa.fechaTransaccion, 'dd \'de\' MMMM \'del\' yyyy')+"</div></div>"+
+      "<div style='font-size:13px;width: 33%;text-align:right;'>"+this.pipe.transform(this.resultProceso.fechaTransaccion, 'dd \'de\' MMMM \'del\' yyyy')+"</div></div>"+
       "<div style='padding-bottom:15px;padding-top:15px'>"+
         "<div style='font-size:14px;font-weight:bold'>"+
         this.NombreCursoPago+
@@ -233,7 +233,7 @@ export class VisaRecurrenteComponent implements OnInit {
       "<div style='display:flex;padding-bottom:20px;'>"+
       "<div style='font-size:13px;font-weight:bold;width: 66%;'>Total del pago</div>"+
       "<div style='font-size:13px;justify-content:flex-end;font-weight:bold;width: 33%;text-align:right;'>"+
-      this.FormatoMilesDecimales.transform(this.resultVisa.montoTotal) +" "+this.resultVisa.monedaCorreo+
+      this.FormatoMilesDecimales.transform(this.resultProceso.montoTotal) +" "+this.resultProceso.monedaCorreo+
       "</div></div>"+
       // "<div style='font-size:13px'> Método de pago: Tarjeta Visa N° xxxx xxxx xxxx 1542"+
       // "</div>"+
