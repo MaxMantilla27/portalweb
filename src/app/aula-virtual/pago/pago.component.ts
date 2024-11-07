@@ -55,8 +55,8 @@ export class PagoComponent implements OnInit,OnDestroy {
     private _SessionStorageService:SessionStorageService,
     private _MedioPagoActivoPasarelaService:MedioPagoActivoPasarelaService,
     private scrollStrategyOptions: ScrollStrategyOptions
-    
-  ) { 
+
+  ) {
     this.detectarTamanoPantalla(window.innerWidth);
   }
 
@@ -212,10 +212,12 @@ export class PagoComponent implements OnInit,OnDestroy {
   }
 
   VerificarEstadoAfiliacion(){
+    console.log(this.idPais)
     if(this.idPais==51 || this.idPais==52 || this.idPais==57)
       {
         this._FormaPagoService.ValidacionSuscripcion(this.idMatricula,this.idPasarela).pipe(takeUntil(this.signal$)).subscribe({
           next:x=>{
+            console.log(x)
             if(x._Repuesta!="ERROR")
             {
               this.EstadoAfiliado = x._Repuesta;
@@ -258,7 +260,7 @@ export class PagoComponent implements OnInit,OnDestroy {
             }
 
             if(x.tipoCuota=="MATRICULA"){
-              x.numeroCuotaMostrar="MATRICULA"      
+              x.numeroCuotaMostrar="MATRICULA"
             }
             else{
               x.numeroCuotaMostrar=count.toString();
@@ -362,7 +364,7 @@ export class PagoComponent implements OnInit,OnDestroy {
             console.log('Entroooo 3');
                if (CuotasSeleccionadas == 0 && esUltimaCuota) {
                   this.RecurrenciaActiva = false;
-                  //this._SessionStorageService.SessionSetValue('opcionRecurrencia',this.RecurrenciaActiva.toString()); 
+                  //this._SessionStorageService.SessionSetValue('opcionRecurrencia',this.RecurrenciaActiva.toString());
                   //this._SessionStorageService.SessionSetValue('opcionRecurrencia','false');
                   console.log('11111111111111111111111111111111111111');
                } else {
@@ -380,8 +382,8 @@ export class PagoComponent implements OnInit,OnDestroy {
           }
           console.log(CuotasSeleccionadas);
           CuotasSeleccionadas++;
-        } 
-        if(ValorCuotaMora!=c.cuota+c.moraCalculada){  
+        }
+        if(ValorCuotaMora!=c.cuota+c.moraCalculada){
           this.RecurrenciaActiva=false
           this.pagoRecurrenteActivado=false
           //this._SessionStorageService.SessionSetValue('opcionRecurrencia',this.RecurrenciaActiva.toString());
@@ -391,7 +393,7 @@ export class PagoComponent implements OnInit,OnDestroy {
 
       });
 
-      this._SessionStorageService.SessionSetValue('opcionRecurrencia',this.RecurrenciaActiva.toString()) 
+      this._SessionStorageService.SessionSetValue('opcionRecurrencia',this.RecurrenciaActiva.toString())
       console.log('55555555555555555555555555555555555555555555555');
     }
     this.sumarMontos()
@@ -579,10 +581,12 @@ export class PagoComponent implements OnInit,OnDestroy {
         var fecha=new Date(r.fechaVencimiento);
         let NombreCuota = ''
         if(r.tipoCuota=="MATRICULA"){
-          NombreCuota='MATRÍCULA -'+ ('0' + fecha.getUTCDate()).slice(-2)+ "/" +("0" + (fecha.getUTCMonth()+1)).slice(-2) + "/" +fecha.getUTCFullYear()
+          // NombreCuota='MATRÍCULA -'+ ('0' + fecha.getUTCDate()).slice(-2)+ "/" +("0" + (fecha.getUTCMonth()+1)).slice(-2) + "/" +fecha.getUTCFullYear()
+          NombreCuota='MATRÍCULA'
         }
         else{
-          NombreCuota='Cuota N°'+r.numeroCuotaMostrar+' - '+ ('0' + fecha.getUTCDate()).slice(-2)+ "/" +("0" + (fecha.getUTCMonth()+1)).slice(-2) + "/" +fecha.getUTCFullYear()
+          // NombreCuota='Cuota N°'+r.numeroCuotaMostrar+' - '+ ('0' + fecha.getUTCDate()).slice(-2)+ "/" +("0" + (fecha.getUTCMonth()+1)).slice(-2) + "/" +fecha.getUTCFullYear()
+          NombreCuota='Cuota N°'+r.numeroCuotaMostrar
         }
         this.jsonSend.ListaCuota.push({
           IdCuota: r.idCuota,
@@ -647,10 +651,12 @@ export class PagoComponent implements OnInit,OnDestroy {
         var fecha=new Date(r.fechaVencimiento);
         let NombreCuota = ''
         if(r.tipoCuota=="MATRICULA"){
-          NombreCuota='MATRÍCULA -'+ ('0' + fecha.getUTCDate()).slice(-2)+ "/" +("0" + (fecha.getUTCMonth()+1)).slice(-2) + "/" +fecha.getUTCFullYear()
+          // NombreCuota='MATRÍCULA -'+ ('0' + fecha.getUTCDate()).slice(-2)+ "/" +("0" + (fecha.getUTCMonth()+1)).slice(-2) + "/" +fecha.getUTCFullYear()
+          NombreCuota='MATRÍCULA'
         }
         else{
-          NombreCuota='Cuota N°'+r.numeroCuotaMostrar+' - '+ ('0' + fecha.getUTCDate()).slice(-2)+ "/" +("0" + (fecha.getUTCMonth()+1)).slice(-2) + "/" +fecha.getUTCFullYear()
+          // NombreCuota='Cuota N°'+r.numeroCuotaMostrar+' - '+ ('0' + fecha.getUTCDate()).slice(-2)+ "/" +("0" + (fecha.getUTCMonth()+1)).slice(-2) + "/" +fecha.getUTCFullYear()
+          NombreCuota='Cuota N°'+r.numeroCuotaMostrar
         }
         this.jsonSend.ListaCuota.push({
           IdCuota: r.idCuota,

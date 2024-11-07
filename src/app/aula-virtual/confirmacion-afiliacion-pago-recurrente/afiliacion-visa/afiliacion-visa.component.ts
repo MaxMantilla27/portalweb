@@ -144,7 +144,7 @@ export class AfiliacionVisaComponent implements OnInit,OnDestroy {
       VisanetCheckout.configure({
        action:"`+action+`",
        sessiontoken:"`+this.resultNiubiz.procesoPagoBotonVisa.sessionKey+`",
-       channel: 'web',
+       channel: 'paycard',
        merchantid: "`+this.resultNiubiz.procesoPagoBotonVisa.merchanId+`",
        purchasenumber: "`+this.resultNiubiz.procesoPagoBotonVisa.orderVisa.purchaseNumber+`",
        amount: "`+parseFloat(this.resultNiubiz.procesoPagoBotonVisa.amount+'.00')+`",
