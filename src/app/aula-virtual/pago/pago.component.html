@@ -90,9 +90,8 @@
                     </div>
                     <div class="pendiente-responsive-row-3 col-4">
                       <div class="texto-sombreado">{{ pendiente.codigoMoneda }} {{ pendiente.cuota | formatoMilesDecimales }}</div>
-                      <div class="texto">Mora: {{ pendiente.moraCalculada | formatoMilesDecimales }} {{ pendiente.codigoMoneda }}</div>
+                      <div class="texto" *ngIf="pendiente.cuotaVencida!=false || pendiente.moraCalculada>0" >Mora: {{ pendiente.moraCalculada | formatoMilesDecimales }} {{ pendiente.codigoMoneda }}</div>
                     </div>
-
                     <!-- <ng-container
                     *ngIf="pendiente.estado == true && pendiente.cuotaVencida == true"
                     >
@@ -120,6 +119,269 @@
                       <div class="texto">Mora: {{ pendiente.moraCalculada | formatoMilesDecimales }} {{ pendiente.codigoMoneda }}</div>
                     </div>
                     </ng-container> -->
+                  </div>
+                </div>
+                <div class="col-12 col-md-5 col-lg-5">
+                  <div
+                    class="row"
+                    style="justify-content: center; padding: 10px 10px 0px 10px; margin: 0px"
+                  >
+                    <div class="col-12 col-md-10 col-lg-10 CardPagoMisPagos">
+                      <div class="titleCardPagoSubrayado">Tipo de comprobante:</div>
+                      <div class="contentCardPago row">
+                        <ng-container>
+                          <div class="row comprobatePagoTarjeta">
+                            <mat-radio-group
+                              *ngIf="total != 0"
+                              color="primary"
+                              [(ngModel)]="DatosFacturacion.Comprobante"
+                            >
+                              <mat-radio-button class="m-1" [value]="false"
+                                >Boleta</mat-radio-button
+                              >
+                              <mat-radio-button class="m-1" [value]="true"
+                                >Factura</mat-radio-button
+                              >
+                            </mat-radio-group>
+                            <mat-radio-group
+                              *ngIf="total == 0"
+                              color="primary"
+                              [(ngModel)]="DatosFacturacion.Comprobante"
+                            >
+                              <mat-radio-button
+                                class="m-1"
+                                [value]="false"
+                                disabled="true"
+                                >Boleta</mat-radio-button
+                              >
+                              <mat-radio-button
+                                class="m-1"
+                                [value]="true"
+                                [disabled]="true"
+                                >Factura</mat-radio-button
+                              >
+                            </mat-radio-group>
+                          </div>
+                          <ng-container
+                            *ngIf="DatosFacturacion.Comprobante != false && total != 0"
+                          >
+                            <mat-form-field
+                              appearance="outline"
+                              [floatLabel]="'always'"
+                              style="width: 100%"
+                            >
+                              <mat-label>Razón Social</mat-label>
+                              <input
+                                type="text"
+                                [(ngModel)]="DatosFacturacion.RazonSocial"
+                                placeholder="Razón Social"
+                                matInput
+                              />
+                            </mat-form-field>
+                            <mat-form-field
+                              appearance="outline"
+                              [floatLabel]="'always'"
+                              style="width: 100%"
+                            >
+                              <mat-label *ngIf="this.codigoIso == 'PE'"
+                                >Número RUC</mat-label
+                              >
+                              <mat-label *ngIf="this.codigoIso != 'PE'"
+                                >Número Tributario</mat-label
+                              >
+                              <input
+                                *ngIf="this.codigoIso == 'PE'"
+                                type="text"
+                                [(ngModel)]="DatosFacturacion.CodigoTributario"
+                                placeholder="Ingresa Número RUC"
+                                matInput
+                              />
+                              <input
+                                *ngIf="this.codigoIso != 'PE'"
+                                type="text"
+                                [(ngModel)]="DatosFacturacion.CodigoTributario"
+                                placeholder="Ingresa Número Tributario"
+                                matInput
+                              />
+                            </mat-form-field>
+                          </ng-container>
+                        </ng-container>
+                      </div>
+                    </div>
+                    <div *ngIf="RecurrenciaActiva && IdPasarelaPago!=7 && IdPasarelaPago!=10"
+                      class="row"
+                      style="justify-content: center; padding: 10px 10px 0px 10px"
+                    >
+                      <div class="col-12 col-md-10 col-lg-10" style="display: flex">
+                        <div class="col-1">
+                          <i
+                            class="material-icons"
+                            style="cursor: pointer"
+                            *ngIf="pagoRecurrenteActivado == false"
+                            (click)="pagoRecurrenteActivado = true"
+                            >check_box_outline_blank</i
+                          >
+                          <i
+                            class="material-icons"
+                            style="cursor: pointer"
+                            *ngIf="pagoRecurrenteActivado == true"
+                            (click)="pagoRecurrenteActivado = false"
+                            style="color: #0076ff"
+                            >check_box</i
+                          >
+                        </div>
+                        <div class="col-11" style="position: relative">
+                          <div style="font-weight: bold">
+                            <span
+                              style="
+                                display: inline-block;
+                                color: #4a4a49;
+                                margin-right: 5px;
+                                margin-left: 5px;
+                              "
+                              >Afiliarme a
+                            </span>
+                            <span style="display: inline-block; color: #0076ff"
+                              >pagos recurrentes
+                              <i
+                                class="material-icons"
+                                style="
+                                  vertical-align: middle;
+                                  cursor: pointer;
+                                  color: #0076ff;
+                                "
+                                (mouseover)="showTooltip = true"
+                                (mouseleave)="showTooltip = false"
+                                (touchstart)="showTooltip = true"
+                                (touchend)="showTooltip = false"
+                                ontouchstart="void(0)"
+                                ontouchend="void(0)"
+                                >info</i
+                              >
+                            </span>
+                          </div>
+                          <div
+                            *ngIf="showTooltip"
+                            style="
+                              position: absolute;
+                              background-color: #eff8ff;
+                              border: solid 2px #0076ff;
+                              border-radius: 15px;
+                              padding: 10px;
+                              z-index: 1;
+                              margin-top: -90px;
+                              width: auto;
+                              max-width: 90vw;
+                              white-space: normal;
+                            "
+                          >
+                            Paga siempre puntual. Tu pago se realizará de manera
+                            automática.
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div *ngIf="EstadoAfiliado == true">
+                      <div style="padding: 10px 5px 10px 5px; display: flex">
+                        <div style="margin-right: 5px">
+                          <i
+                            class="material-icons"
+                            style="color: #00C356; cursor: pointer"
+                            (click)="OpenModalEliminarSuscripcion()"
+                            >check_box</i
+                          >
+                        </div>
+                        <div style="position: relative">
+                          <div style="font-weight: bold">
+                            <span
+                              style="
+                                display: inline-block;
+                                color: #4a4a49;
+                                margin-right: 5px;
+                              "
+                              >Afiliado a
+                            </span>
+                            <span style="display: inline-block; color: #0076ff"
+                              >pagos recurrentes
+                              <i
+                                class="material-icons"
+                                style="
+                                  vertical-align: middle;
+                                  cursor: pointer;
+                                  color: #0076ff;
+                                "
+                                (mouseover)="showTooltip = true"
+                                (mouseleave)="showTooltip = false"
+                                (touchstart)="showTooltip = true"
+                                (touchend)="showTooltip = false"
+                                ontouchstart="void(0)"
+                                ontouchend="void(0)"
+                                >info</i
+                              >
+                            </span>
+                          </div>
+                          <div
+                            *ngIf="showTooltip"
+                            style="
+                              position: absolute;
+                              background-color: #eff8ff;
+                              border: solid 2px #0076ff;
+                              border-radius: 15px;
+                              padding: 10px;
+                              z-index: 1;
+                              margin-top: -90px;
+                              width: auto;
+                              max-width: 100vw;
+                              white-space: normal;
+                              font-size: 12px;
+                            "
+                          >
+                            Te encuentras afiliado a pagos recurrentes, para desafiliarte
+                            desmarca la casilla.
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    *ngIf="pagoRecurrenteActivado"
+                    class="row"
+                    style="justify-content: center; width: 100%; margin: 0px; "
+                  >
+                    <div
+                      class="col-12 col-md-10 col-lg-10 CardPagoMisPagos"
+                      style="border-color: transparent !important; width: 25rem"
+                    >
+                      <div style="justify-content: center; display: flex">
+                        <app-default-button
+                          [disabled]="total == 0"
+                          [confs]="{ color: 'primary', titulo: 'Continuar' }"
+                          [style]="'margin-top: 20px;padding: 0px 40px;'"
+                          (ButtoclClick)="OpenModalMetodoPagoSucripcion()"
+                        >
+                        </app-default-button>
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    *ngIf="!pagoRecurrenteActivado"
+                    class="row"
+                    style="justify-content: center; width: 100%; margin: 0px;"
+                  >
+                    <div
+                      class="col-12 col-md-10 col-lg-10 CardPagoMisPagos"
+                      style="border-color: transparent !important; width: 25rem"
+                    >
+                      <div style="justify-content: center; display: flex">
+                        <app-default-button
+                          [disabled]="total == 0"
+                          [confs]="{ color: 'primary', titulo: 'Continuar' }"
+                          [style]="'margin-top: 20px;padding: 0px 40px;'"
+                          (ButtoclClick)="EnviarSolicitudMedioPago()"
+                        >
+                        </app-default-button>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </mat-tab>
@@ -165,269 +427,7 @@
                 </div>
               </mat-tab>
           </mat-tab-group>
-          <div class="col-12 col-md-5 col-lg-5">
-            <div
-              class="row"
-              style="justify-content: center; padding: 10px 10px 0px 10px"
-            >
-              <div class="col-12 col-md-10 col-lg-10 CardPagoMisPagos">
-                <div class="titleCardPagoSubrayado">Tipo de comprobante:</div>
-                <div class="contentCardPago row">
-                  <ng-container>
-                    <div class="row comprobatePagoTarjeta">
-                      <mat-radio-group
-                        *ngIf="total != 0"
-                        color="primary"
-                        [(ngModel)]="DatosFacturacion.Comprobante"
-                      >
-                        <mat-radio-button class="m-1" [value]="false"
-                          >Boleta</mat-radio-button
-                        >
-                        <mat-radio-button class="m-1" [value]="true"
-                          >Factura</mat-radio-button
-                        >
-                      </mat-radio-group>
-                      <mat-radio-group
-                        *ngIf="total == 0"
-                        color="primary"
-                        [(ngModel)]="DatosFacturacion.Comprobante"
-                      >
-                        <mat-radio-button
-                          class="m-1"
-                          [value]="false"
-                          disabled="true"
-                          >Boleta</mat-radio-button
-                        >
-                        <mat-radio-button
-                          class="m-1"
-                          [value]="true"
-                          [disabled]="true"
-                          >Factura</mat-radio-button
-                        >
-                      </mat-radio-group>
-                    </div>
-                    <ng-container
-                      *ngIf="DatosFacturacion.Comprobante != false && total != 0"
-                    >
-                      <mat-form-field
-                        appearance="outline"
-                        [floatLabel]="'always'"
-                        style="width: 100%"
-                      >
-                        <mat-label>Razón Social</mat-label>
-                        <input
-                          type="text"
-                          [(ngModel)]="DatosFacturacion.RazonSocial"
-                          placeholder="Razón Social"
-                          matInput
-                        />
-                      </mat-form-field>
-                      <mat-form-field
-                        appearance="outline"
-                        [floatLabel]="'always'"
-                        style="width: 100%"
-                      >
-                        <mat-label *ngIf="this.codigoIso == 'PE'"
-                          >Número RUC</mat-label
-                        >
-                        <mat-label *ngIf="this.codigoIso != 'PE'"
-                          >Número Tributario</mat-label
-                        >
-                        <input
-                          *ngIf="this.codigoIso == 'PE'"
-                          type="text"
-                          [(ngModel)]="DatosFacturacion.CodigoTributario"
-                          placeholder="Ingresa Número RUC"
-                          matInput
-                        />
-                        <input
-                          *ngIf="this.codigoIso != 'PE'"
-                          type="text"
-                          [(ngModel)]="DatosFacturacion.CodigoTributario"
-                          placeholder="Ingresa Número Tributario"
-                          matInput
-                        />
-                      </mat-form-field>
-                    </ng-container>
-                  </ng-container>
-                </div>
-              </div>
-              <div *ngIf="RecurrenciaActiva && IdPasarelaPago!=7 && IdPasarelaPago!=10"
-                class="row"
-                style="justify-content: center; padding: 10px 10px 0px 10px"
-              >
-                <div class="col-12 col-md-10 col-lg-10" style="display: flex">
-                  <div class="col-1">
-                    <i
-                      class="material-icons"
-                      style="cursor: pointer"
-                      *ngIf="pagoRecurrenteActivado == false"
-                      (click)="pagoRecurrenteActivado = true"
-                      >check_box_outline_blank</i
-                    >
-                    <i
-                      class="material-icons"
-                      style="cursor: pointer"
-                      *ngIf="pagoRecurrenteActivado == true"
-                      (click)="pagoRecurrenteActivado = false"
-                      style="color: #0076ff"
-                      >check_box</i
-                    >
-                  </div>
-                  <div class="col-11" style="position: relative">
-                    <div style="font-weight: bold">
-                      <span
-                        style="
-                          display: inline-block;
-                          color: #4a4a49;
-                          margin-right: 5px;
-                          margin-left: 5px;
-                        "
-                        >Afiliarme a
-                      </span>
-                      <span style="display: inline-block; color: #0076ff"
-                        >pagos recurrentes
-                        <i
-                          class="material-icons"
-                          style="
-                            vertical-align: middle;
-                            cursor: pointer;
-                            color: #0076ff;
-                          "
-                          (mouseover)="showTooltip = true"
-                          (mouseleave)="showTooltip = false"
-                          (touchstart)="showTooltip = true"
-                          (touchend)="showTooltip = false"
-                          ontouchstart="void(0)"
-                          ontouchend="void(0)"
-                          >info</i
-                        >
-                      </span>
-                    </div>
-                    <div
-                      *ngIf="showTooltip"
-                      style="
-                        position: absolute;
-                        background-color: #eff8ff;
-                        border: solid 2px #0076ff;
-                        border-radius: 15px;
-                        padding: 10px;
-                        z-index: 1;
-                        margin-top: -90px;
-                        width: auto;
-                        max-width: 90vw;
-                        white-space: normal;
-                      "
-                    >
-                      Paga siempre puntual. Tu pago se realizará de manera
-                      automática.
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div *ngIf="EstadoAfiliado == true">
-                <div style="padding: 10px 5px 10px 5px; display: flex">
-                  <div style="margin-right: 5px">
-                    <i
-                      class="material-icons"
-                      style="color: #0076ff; cursor: pointer"
-                      (click)="OpenModalEliminarSuscripcion()"
-                      >check_box</i
-                    >
-                  </div>
-                  <div style="position: relative">
-                    <div style="font-weight: bold">
-                      <span
-                        style="
-                          display: inline-block;
-                          color: #4a4a49;
-                          margin-right: 5px;
-                        "
-                        >Afiliado a
-                      </span>
-                      <span style="display: inline-block; color: #0076ff"
-                        >pagos recurrentes
-                        <i
-                          class="material-icons"
-                          style="
-                            vertical-align: middle;
-                            cursor: pointer;
-                            color: #0076ff;
-                          "
-                          (mouseover)="showTooltip = true"
-                          (mouseleave)="showTooltip = false"
-                          (touchstart)="showTooltip = true"
-                          (touchend)="showTooltip = false"
-                          ontouchstart="void(0)"
-                          ontouchend="void(0)"
-                          >info</i
-                        >
-                      </span>
-                    </div>
-                    <div
-                      *ngIf="showTooltip"
-                      style="
-                        position: absolute;
-                        background-color: #eff8ff;
-                        border: solid 2px #0076ff;
-                        border-radius: 15px;
-                        padding: 10px;
-                        z-index: 1;
-                        margin-top: -90px;
-                        width: auto;
-                        max-width: 100vw;
-                        white-space: normal;
-                        font-size: 12px;
-                      "
-                    >
-                      Te encuentras afiliado a pagos recurrentes, para desafiliarte
-                      desmarca la casilla.
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div
-              *ngIf="pagoRecurrenteActivado"
-              class="row"
-              style="justify-content: center; padding: 0px 15px 0px 15px"
-            >
-              <div
-                class="col-12 col-md-10 col-lg-10 CardPagoMisPagos"
-                style="border-color: transparent !important; width: 25rem"
-              >
-                <div style="justify-content: center; display: flex">
-                  <app-default-button
-                    [disabled]="total == 0"
-                    [confs]="{ color: 'primary', titulo: 'Continuar' }"
-                    [style]="'margin-top: 20px;padding: 0px 40px;'"
-                    (ButtoclClick)="OpenModalMetodoPagoSucripcion()"
-                  >
-                  </app-default-button>
-                </div>
-              </div>
-            </div>
-            <div
-              *ngIf="!pagoRecurrenteActivado"
-              class="row"
-              style="justify-content: center; padding: 0px 15px 0px 15px"
-            >
-              <div
-                class="col-12 col-md-10 col-lg-10 CardPagoMisPagos"
-                style="border-color: transparent !important; width: 25rem"
-              >
-                <div style="justify-content: center; display: flex">
-                  <app-default-button
-                    [disabled]="total == 0"
-                    [confs]="{ color: 'primary', titulo: 'Continuar' }"
-                    [style]="'margin-top: 20px;padding: 0px 40px;'"
-                    (ButtoclClick)="EnviarSolicitudMedioPago()"
-                  >
-                  </app-default-button>
-                </div>
-              </div>
-            </div>
-          </div>
+   
         </div>
       </ng-container>
       <ng-container *ngIf="!pantallaPequenia">
@@ -514,7 +514,7 @@
                 <div style="margin-right: 5px">
                   <i
                     class="material-icons"
-                    style="color: #0076ff; cursor: pointer"
+                    style="color: #00C356; cursor: pointer"
                     (click)="OpenModalEliminarSuscripcion()"
                     >check_box</i
                   >
