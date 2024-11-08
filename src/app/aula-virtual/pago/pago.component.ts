@@ -557,7 +557,7 @@ export class PagoComponent implements OnInit,OnDestroy {
     const dialogRef = this.dialog.open(AprovacionComponent, {
       width: '600px',
       data: { contenido: "¿Está seguro de desafiliarse de los pagos recurrentes?" },
-      panelClass: 'dialog-Tarjeta',
+      panelClass: 'custom-dialog-aprovacion',
       disableClose:true
     });
 
