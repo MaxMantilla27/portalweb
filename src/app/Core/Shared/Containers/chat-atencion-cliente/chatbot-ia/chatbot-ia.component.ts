@@ -38,7 +38,7 @@ export class ChatbotIaComponent implements OnInit {
 
   registroChatIA: RegistroChatbotIADTO = {
     Cerrado: false,
-    Derivado: false
+    Derivado: false,
   };
 
   public DatoObservable: DatoObservableDTO ={
@@ -56,6 +56,8 @@ export class ChatbotIaComponent implements OnInit {
   public CargandoInformacion = false;
   public TieneCoordinador=false;
   public ChatbotCerrado=false;
+  public ChatVentasAbierto= false;
+  public ChatAcademicoAbierto= false;
 
   @ViewChild('contenidoMsj') contentChatMsj!: ElementRef;
   @ViewChild('inputChat') inputChat!: ElementRef;
@@ -87,7 +89,7 @@ export class ChatbotIaComponent implements OnInit {
     this.mensajes = [];
     this.registroChatIA = {
       Cerrado: false,
-      Derivado: false
+      Derivado: false,
     };
     this.ChatError = false;
     this.inputActive = true;
@@ -122,9 +124,16 @@ export class ChatbotIaComponent implements OnInit {
         this.scrollAbajo();
         if (this.registroChatIA.Derivado) {
           setTimeout(() => {
-            if (this.registroChatIA.IdMatriculaCabecera != null && this.registroChatIA.IdPGeneral != null){
+            if (this.registroChatIA.ChatDerivado == 1 && this.registroChatIA.IdMatriculaCabecera != null && this.registroChatIA.IdPGeneral != null){
               this.ObtenerCoordinadorMatricula(this.registroChatIA.IdMatriculaCabecera!);
             }
+            if (this.registroChatIA.ChatDerivado == 2) {
+              this.ChatbotCerrado = true;
+              this.ChatVentasAbierto= true;
+              console.log("INGRESO AL FLUJO 2");
+            }
+            console.log("ChatbotCerrado es: ", this.ChatbotCerrado);
+            console.log("ChatbotVentas es: ", this.ChatVentasAbierto);
           }, 6000);
         }
       });
@@ -257,6 +266,7 @@ export class ChatbotIaComponent implements OnInit {
       },
       complete:()=>{
         this.ChatbotCerrado=true;
+        this.ChatAcademicoAbierto=true;
         console.log("EL RESULTADO: ", this.ChatbotCerrado);
       }})
   }

@@ -11,4 +11,5 @@ export interface RegistroChatbotIADTO{
     TiempoActual?: Date;
     IdMatriculaCabecera?: number;
     IdPGeneral?: number;
+    ChatDerivado?: number;
 }

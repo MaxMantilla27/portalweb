@@ -5,26 +5,27 @@ import { DatoObservableDTO } from 'src/app/Core/Models/DatoObservableDTO';
 import { DatosFormularioDTO } from 'src/app/Core/Models/DatosFormularioDTO';
 import { formulario } from 'src/app/Core/Models/Formulario';
 import { login, loginChat, loginSendDTO } from 'src/app/Core/Models/login';
-import { AspNetUserService } from '../../Services/AspNetUser/asp-net-user.service';
-import { HelperService } from '../../Services/helper.service';
-import { SessionStorageService } from '../../Services/session-storage.service';
-import { AccountService } from '../../Services/Account/account.service';
-import { AlumnoService } from '../../Services/Alumno/alumno.service';
+import { AspNetUserService } from '../../../Services/AspNetUser/asp-net-user.service';
+import { HelperService } from '../../../Services/helper.service';
+import { SessionStorageService } from '../../../Services/session-storage.service';
+import { AccountService } from '../../../Services/Account/account.service';
+import { AlumnoService } from '../../../Services/Alumno/alumno.service';
 import { Subject, Subscription, takeUntil, timer,filter } from 'rxjs';
-import { SnackBarServiceService } from '../../Services/SnackBarService/snack-bar-service.service';
-import { ChatAtencionClienteService } from '../../Services/ChatAtencionCliente/chat-atencion-cliente.service';
+import { SnackBarServiceService } from '../../../Services/SnackBarService/snack-bar-service.service';
+import { ChatAtencionClienteService } from '../../../Services/ChatAtencionCliente/chat-atencion-cliente.service';
 import { CardProgramasDTO } from 'src/app/Core/Models/BasicDTO';
 import { ChatAtencionClienteContactoActualizarDTO, ChatAtencionClienteContactoDetalleRegistrarDTO, ChatAtencionClienteContactoRegistrarDTO } from 'src/app/Core/Models/ChatAtencionClienteDTO';
-import { DatosPerfilService } from '../../Services/DatosPerfil/datos-perfil.service';
-import { ChatEnLineaService } from '../../Services/ChatEnLinea/chat-en-linea.service';
+import { DatosPerfilService } from '../../../Services/DatosPerfil/datos-perfil.service';
+import { ChatEnLineaService } from '../../../Services/ChatEnLinea/chat-en-linea.service';
 import { ProgramasDetalleComponent } from 'src/app/Public/programas-detalle/programas-detalle.component';
-import { SeccionProgramaService } from '../../Services/SeccionPrograma/seccion-programa.service';
+import { SeccionProgramaService } from '../../../Services/SeccionPrograma/seccion-programa.service';
 @Component({
-  selector: 'app-chat-atencion-cliente',
-  templateUrl: './chat-atencion-cliente.component.html',
-  styleUrls: ['./chat-atencion-cliente.component.scss']
+  selector: 'app-chat-atencion-ventas',
+  templateUrl: './chat-atencion-ventas.component.html',
+  styleUrls: ['./chat-atencion-ventas.component.scss']
 })
-export class ChatAtencionClienteComponent implements OnInit,OnChanges {
+export class ChatAtencionVentasComponent implements OnInit, OnChanges {
+
   private signal$ = new Subject();
   @ViewChild('contenidoMsjAtc') contenidoMsj!: ElementRef;
   constructor(
@@ -126,7 +127,7 @@ export class ChatAtencionClienteComponent implements OnInit,OnChanges {
   public CursosHijoMatricula:any;
   public selectedPadreIdMatricula:any;
   public AreasCapacitacion:any;
-  public CursosPorArea:any
+  public CursosPorArea:any;
   public CargandoInformacion=false
   public IdContactoPortalSegmento:any;
   public RegistroHistoricoUsuario:any
@@ -737,6 +738,13 @@ export class ChatAtencionClienteComponent implements OnInit,OnChanges {
     }
   }
   ObtenerCursosIdArea(Area:any){
+    /*let Area2 = {
+      'id': 6,
+      'valor': "Finanzas"
+    };
+    Area = Area2;*/
+    this._SessionStorageService.SessionSetValue('Area', JSON.stringify(Area));
+    
     this.IdAreaSeleccionada=Area;
     console.log(Area)
     this.RegistroChatDetalleAtc.IdChatAtencionClienteContacto=this.IdChatAtencionClienteContacto;
@@ -1034,11 +1042,16 @@ export class ChatAtencionClienteComponent implements OnInit,OnChanges {
     })
   }
   RetrocederCursos(valor: boolean){
-    console.log('GAAAAAAAAAAAAAAAAAAAAA')
+    console.log("Funcion RECTROCEDER CURSOS VENTAS");
+    let respuesta = this._SessionStorageService.SessionGetValue('Area');
+    let area = respuesta == "" ? null : JSON.parse(respuesta);
+    console.log("REVISAR:", area);
+    console.log("EL VALOR ES:", valor);
     if (valor) {
-      this.Paso=2
-      this.Caso='A'
-      this.ObtenerCursosIdArea(this.IdAreaSeleccionada)
+      this.Paso=2;
+      this.Caso='A';
+
+      this.ObtenerCursosIdArea(area);
     }
   }
   RetrocederInicio(){
@@ -1046,7 +1059,8 @@ export class ChatAtencionClienteComponent implements OnInit,OnChanges {
     this.Caso='A'
   }
   RetrocederInicioFormulario(valor: boolean,origen:number){
-    console.log("Funcion RETROCEDER INICIO FORMULARIO");
+    console.log("Funcion RECTROCEDER INICIO FORMULARIO VENTAS");
+
     if (valor) {
       this._ChatAtencionClienteService.CerrarFormularioAcademicoIdMatriculaCabecera(this.IdChatAtencionClienteContacto).pipe(takeUntil(this.signal$)).subscribe({
         next:x=>{
@@ -1072,3 +1086,4 @@ export class ChatAtencionClienteComponent implements OnInit,OnChanges {
     }
   }
 }
+

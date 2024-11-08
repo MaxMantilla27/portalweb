@@ -155,6 +155,7 @@ import { ChatAtencionClienteChatComponent } from './Containers/chat-atencion-cli
 import { ChatAtencionClienteAcademicoComponent } from './Containers/chat-atencion-cliente/chat-atencion-cliente-academico/chat-atencion-cliente-academico.component';
 import { ChatAtencionClienteSoporteComponent } from './Containers/chat-atencion-cliente/chat-atencion-cliente-soporte/chat-atencion-cliente-soporte.component';
 import { ChatbotIaComponent } from './Containers/chat-atencion-cliente/chatbot-ia/chatbot-ia.component';
+import { ChatAtencionVentasComponent } from './Containers/chat-atencion-cliente/chat-atencion-ventas/chat-atencion-ventas.component';
 
 @NgModule({
   imports: [
@@ -272,6 +273,7 @@ import { ChatbotIaComponent } from './Containers/chat-atencion-cliente/chatbot-i
     ChatAtencionClienteAcademicoComponent,
     ChatAtencionClienteSoporteComponent,
     ChatbotIaComponent,
+    ChatAtencionVentasComponent,
     //ChatZComponent,
   ],
   exports: [

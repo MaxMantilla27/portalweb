@@ -1,0 +1,406 @@
+<ng-container select="[contenidoChat]">
+    <div class="headerChatAtc" *ngIf="Paso <= 2">
+      <div class="imgAsesorAtc">
+        <img
+          style="width: 4.5rem; height: 4.5rem"
+          [src]="'../../../../../assets/imagenes/Chat-Atc-Online.png'"
+          alt=""
+        />
+        <!-- <img style="width: 4.5rem;height: 4.5rem;" [src]="'../../../../../assets/imagenes/Chat-Atc-Offline.png'" alt=""> -->
+        <div class="nombreAsesorAtc">
+          <div>Atención al cliente</div>
+          <div>BSG Institute</div>
+        </div>
+      </div>
+    </div>
+    <div class="headerChatAtc" *ngIf="Paso == 3 && Caso == 'B'">
+      <div class="imgAsesorAtc">
+        <img
+          style="width: 4.5rem; height: 4.5rem"
+          [src]="'../../../../../assets/imagenes/Chat-Atc-Online.png'"
+          alt=""
+        />
+        <!-- <img style="width: 4.5rem;height: 4.5rem;" [src]="'../../../../../assets/imagenes/Chat-Atc-Offline.png'" alt=""> -->
+        <div class="nombreAsesorAtc">
+          <div>Atención al cliente</div>
+          <div>BSG Institute</div>
+        </div>
+      </div>
+    </div>
+    <div
+      *ngIf="CargandoInformacion"
+      style="display: flex; justify-content: center"
+    >
+      <mat-spinner></mat-spinner>
+    </div>
+    <!-- <div class="card">
+        <div class="corner"></div>
+      </div> -->
+    <div
+      *ngIf="Paso == 0 && CargandoInformacion == false"
+      class="PrimeraInteraccionAtcFondo container"
+    >
+      <!--<div class="PrimeraInteraccionAtc">
+          <p class="LetraChat"><strong>¡Hola!</strong></p>
+          <p class="LetraChat">Te damos la bienvenida al chat de atención al cliente de BSG Institute.</p>
+          <p class="LetraChat">Para comenzar, selecciona una de las siguientes opciones:</p>
+          <ul>
+            <li (click)="OpcionAlumno(1,'A')" style="cursor:pointer"><a class="LetraChat">Estoy interesado en los cursos</a></li>
+            <li (click)="OpcionAlumno(1,'B')" style="cursor:pointer"><a class="LetraChat">Soy alumno</a></li>
+          </ul>
+        </div>-->
+      <div class="PrimeraInteraccionAtc">
+        <p class="LetraChat"><strong>¡Hola!</strong></p>
+        <p class="LetraChat">
+          Te damos la bienvenida al chat de atención de BSG Institute.
+        </p>
+        <p class="LetraChat">
+          Para comenzar, selecciona la siguiente opción:
+        </p>
+        <ul>
+          <li (click)="OpcionAlumno(1, 'A')" style="cursor: pointer">
+            <a class="LetraChat">Estoy interesado en los cursos</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div
+      *ngIf="Paso == 1 && Caso == 'A' && CargandoInformacion == false"
+      class="PrimeraInteraccionAtcFondo"
+    >
+      <div class="PrimeraInteraccionAtc">
+        <div class="FlechaAtras no-select" (click)="RetrocederInicioA()">
+          <i class="material-icons">arrow_back_ios</i>
+          <span>Atras</span>
+        </div>
+        <p class="LetraChat"><strong>¡Hola!</strong></p>
+        <p class="LetraChat">
+          Selecciona el área de capacitación de tu interés:
+        </p>
+        <ul>
+          <li
+            *ngFor="let area of AreasCapacitacion"
+            (click)="ObtenerCursosIdArea(area)"
+          >
+            <a class="LetraChat" style="cursor: pointer">{{ area.valor }}</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div
+      *ngIf="Paso == 1 && Caso == 'B' && CargandoInformacion == false"
+      class="PrimeraInteraccionAtcFondo"
+    >
+      <div class="PrimeraInteraccionAtc">
+        <div class="FlechaAtras no-select" (click)="RetrocederInicioB()">
+          <i class="material-icons">arrow_back_ios</i>
+          <span>Atras</span>
+        </div>
+        <p class="LetraChat">
+          Ingresa a tu cuenta para revisar tus programas, cursos y
+          certificaciones.
+        </p>
+        <p
+          *ngIf="ContrasenaRecuperada"
+          style="color: rgb(5, 115, 5); font-size: 12px"
+        >
+          Se enviaron las credenciales a tu correo.
+        </p>
+        <div style="margin-top: 13px"></div>
+        <div
+          class="container"
+          style="justify-content: center; padding: 0px !important"
+        >
+          <div class="col-12">
+            <div
+              class="alert alert-danger"
+              role="alert"
+              *ngIf="errorLogin != ''"
+            >
+              {{ errorLogin }}
+            </div>
+            <app-formulario
+              [model]="login"
+              [InputsDisable]="statuscharge"
+              (OnSubmit)="Login($event)"
+              [Color]="'white'"
+              (OnValid)="formVal = $event"
+              [Interaccion]="'Login'"
+              [fiels]="fileds"
+              [ChargeValuesInit]="initValues"
+            >
+              <ng-container contenido>
+                <div
+                  class="row"
+                  style="
+                    width: 100%;
+                    margin: -15px 0px 5px 0px;
+                    text-align: center;
+                    z-index: 1;
+                    position: relative;
+                  "
+                >
+                  <div
+                    class="col-12 buttonnsHelp vinculo LetraChat"
+                    (click)="RecuperarContrasenaPrevio()"
+                  >
+                    ¿Olvidaste tu contraseña?
+                  </div>
+                </div>
+              </ng-container>
+              <ng-container send>
+                <app-default-button
+                  [confs]="{ color: 'primary', titulo: 'Iniciar sesión' }"
+                  [style]="
+                    'font-size:13px;width: 100%;margin-bottom 0px;background:#FF4E55'
+                  "
+                ></app-default-button>
+              </ng-container>
+            </app-formulario>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      *ngIf="Paso == 1 && Caso == 'C' && CargandoInformacion == false"
+      class="PrimeraInteraccionAtcFondo"
+    >
+      <div class="PrimeraInteraccionAtc">
+        <div *ngIf="BotonDesactivado" class="FlechaAtras no-select">
+          <i class="material-icons">arrow_back_ios</i>
+          <span>Atras</span>
+        </div>
+        <div
+          *ngIf="BotonDesactivado == false"
+          class="FlechaAtras no-select"
+          (click)="OpcionAlumno(1, 'B')"
+        >
+          <i class="material-icons">arrow_back_ios</i>
+          <span>Atras</span>
+        </div>
+        <p class="LetraChat" style="margin-bottom: 5px">
+          Ingresa tu correo electrónico para enviar tus credenciales
+        </p>
+        <div style="margin-top: 13px"></div>
+        <div class="alert alert-danger" role="alert" *ngIf="errorLogin != ''">
+          {{ errorLogin }}
+        </div>
+        <app-formulario
+          [Interaccion]="'Recuperar Contraseña'"
+          [model]="email"
+          [InputsDisable]="statuscharge"
+          [CleanOnSubmit]="cleanSub"
+          (OnSubmit)="RecuperarContrasena($event)"
+          [Color]="'#f8f8f8'"
+          (OnValid)="formVal = $event"
+          [fiels]="fileds"
+        >
+          <ng-container send>
+            <app-default-button
+              [confs]="{ color: 'danger', titulo: 'Enviar correo' }"
+              [style]="'width: 100%;font-size:13px'"
+              [disabled]="!formVal || BotonDesactivado == true"
+            ></app-default-button>
+          </ng-container>
+        </app-formulario>
+      </div>
+    </div>
+    <div
+      *ngIf="Paso == 2 && Caso == 'A' && CargandoInformacion == false"
+      class="PrimeraInteraccionAtcFondo"
+    >
+      <div class="PrimeraInteraccionAtc">
+        <div class="FlechaAtras no-select" (click)="RetrocederAreaA()">
+          <i class="material-icons">arrow_back_ios</i>
+          <span>Atras</span>
+        </div>
+        <p class="LetraChat"><strong>¡Hola!</strong></p>
+        <p class="LetraChat">
+          Selecciona el programa de capacitación de tu interés:
+        </p>
+        <p class="LetraChat" *ngIf="this.CursosPorArea.length == 0">
+          No hay cursos disponibles
+        </p>
+        <ul *ngIf="this.CursosPorArea.length > 0">
+          <li *ngFor="let cursoChat of CursosPorArea">
+            <a
+              class="LetraChat"
+              style="cursor: pointer"
+              (click)="RegistrarCursoSeleccionado(cursoChat)"
+              >{{ cursoChat.nombre }}</a
+            >
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div
+      *ngIf="Paso == 2 && Caso == 'B' && CargandoInformacion == false"
+      class="PrimeraInteraccionAtcFondo"
+    >
+      <div class="PrimeraInteraccionAtc">
+        <div class="FlechaAtras no-select" (click)="RetrocederInicio()">
+          <i class="material-icons">arrow_back_ios</i>
+          <span>Atras</span>
+        </div>
+        <p class="LetraChat"><strong>¡Hola!</strong></p>
+        <p class="LetraChat">
+          Para continuar selecciona el curso sobre el que deseas realizar la
+          consulta:
+        </p>
+        <ul>
+          <li
+            *ngFor="let curso of CursosPadreMatricula"
+            (click)="handleCursoClickFormulario(curso)"
+            [ngClass]="{
+              expanded: selectedPadreIdMatricula === curso.idPGeneralPadre
+            }"
+          >
+            <a class="LetraChat" style="color: #2f98ee; cursor: pointer">{{
+              curso.nombrePGeneralPadre
+            }}</a>
+            <ul
+              *ngIf="
+                curso.esPadre &&
+                selectedPadreIdMatricula === curso.idPGeneralPadre
+              "
+              class="lista-interior"
+            >
+              <li *ngFor="let hijo of getCursosHijo(curso.idPGeneralPadre)">
+                <a
+                  class="LetraChat"
+                  (click)="EnviarFormularioAtcAcademico(hijo)"
+                  style="color: #4a4a49; cursor: pointer"
+                  >{{ hijo.nombrePGeneralHijo }}</a
+                >
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div
+      *ngIf="
+        Paso == 3 &&
+        Caso == 'B' &&
+        CargandoInformacion == false &&
+        AcademicoDirecto == false
+      "
+      class="PrimeraInteraccionAtcFondo"
+    >
+      <div class="PrimeraInteraccionAtc">
+        <div
+          class="FlechaAtras no-select"
+          (click)="RetrocederInicioAcademico()"
+        >
+          <i class="material-icons">arrow_back_ios</i>
+          <span>Atras</span>
+        </div>
+        <p class="LetraChat">
+          <strong>¿Con quién deseas comunicarte?</strong>
+        </p>
+        <p class="LetraChat">
+          Para continuar selecciona la opción que mejor se ajusta para
+          realizar tu consulta:
+        </p>
+        <ul>
+          <li
+            *ngIf="TieneCoordinador != false"
+            (click)="ActualizarEsSoporteTecnico(false)"
+          >
+            <a class="LetraChat" style="cursor: pointer"
+              >Contactar con un Coordinador Académico</a
+            >
+          </li>
+          <li *ngIf="TieneCoordinador != true">
+            <a
+              class="LetraChat"
+              style="cursor: pointer"
+              (click)="CerrarInteraccionFormularioAcademico()"
+              >No tiene coordinador asignado, escríbanos en contáctenos, elija
+              otro curso.</a
+            >
+          </li>
+          <li (click)="ActualizarEsSoporteTecnico(true)">
+            <a class="LetraChat" style="cursor: pointer"
+              >Tengo problemas técnicos en el aula virtual.</a
+            >
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div
+      *ngIf="
+        Paso == 3 &&
+        Caso == 'B' &&
+        CargandoInformacion == false &&
+        AcademicoDirecto
+      "
+      class="PrimeraInteraccionAtcFondo"
+    >
+      <div class="PrimeraInteraccionAtc">
+        <div
+          class="FlechaAtras no-select"
+          (click)="RetrocederInicioAcademico()"
+        >
+          <i class="material-icons">arrow_back_ios</i>
+          <span>Atras</span>
+        </div>
+        <p class="LetraChat">
+          <strong>¿Con quién deseas comunicarte?</strong>
+        </p>
+        <p class="LetraChat">
+          Para continuar selecciona la opción que mejor se ajusta para
+          realizar tu consulta:
+        </p>
+        <ul>
+          <li
+            *ngIf="TieneCoordinador != false"
+            (click)="RegistroDirectoCursoMatriculado(false)"
+          >
+            <a class="LetraChat" style="cursor: pointer"
+              >Contactar con un Coordinador Académico</a
+            >
+          </li>
+          <li *ngIf="TieneCoordinador != true">
+            <a
+              class="LetraChat"
+              style="cursor: pointer"
+              (click)="CerrarInteraccionFormularioAcademico()"
+              >No tiene coordinador asignado, escríbanos en contáctenos, elija
+              otro curso.</a
+            >
+          </li>
+          <li (click)="RegistroDirectoCursoMatriculado(true)">
+            <a class="LetraChat" style="cursor: pointer"
+              >Tengo problemas técnicos en el aula virtual</a
+            >
+          </li>
+        </ul>
+      </div>
+    </div>
+    <ng-container *ngIf="Paso == 3 && Caso == 'A'">
+      <app-chat-atencion-cliente-chat
+        (RegresarChatAtc)="RetrocederCursos($event)"
+        (RegresarChatAtcEnviado)="RetrocederInicioFormulario($event, 1)"
+        [idProgramageneral]="IdProgramageneral"
+        [IdPespecificoPrograma]="IdPespecificoPrograma"
+      ></app-chat-atencion-cliente-chat>
+    </ng-container>
+    <ng-container
+      *ngIf="Paso == 4 && Caso == 'B' && ChatSoporteTecnico == false"
+    >
+      <app-chat-atencion-cliente-academico
+        [idProgramageneral]="IdProgramageneral"
+        [IdMatriculaCabecera]="IdMatriculaCabecera"
+        (RegresarChatAcademico)="RetrocederInicioFormulario($event, 2)"
+      ></app-chat-atencion-cliente-academico>
+    </ng-container>
+    <ng-container
+      *ngIf="Paso == 4 && Caso == 'B' && ChatSoporteTecnico == true"
+    >
+      <app-chat-atencion-cliente-soporte
+        [idProgramageneral]="IdProgramageneral"
+        (RegresarChatAcademico)="RetrocederInicioFormulario($event, 2)"
+      ></app-chat-atencion-cliente-soporte>
+    </ng-container>
+  </ng-container>

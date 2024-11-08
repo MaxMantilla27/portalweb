@@ -1,0 +1,274 @@
+/* Estilo para el contenedor del chat en estado cerrado */
+.chatAtc {
+    position: fixed;
+    bottom: 25px;
+    right: 30px;
+    width: 150px;
+    background: #ff4e56;
+    height: 81.25px;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    border-radius: 15px;
+    font-size: 14px;
+    line-height: 12px;
+    z-index: 200;
+    cursor: pointer;
+  }
+  
+  /* Estilo para el contenedor del chat en estado abierto */
+  .chatSTAtc {
+    position: fixed;
+    bottom: 70px;
+    right: 20px;
+    width: 340px;
+    background: white;
+    max-height: 70vh; /* Define la altura máxima como un porcentaje del viewport */
+    max-width: 340px; /* Define el ancho máximo */
+    overflow-y: auto; /* Permite el scroll vertical si el contenido es más grande que el contenedor */
+    box-sizing: border-box; /* Incluye el padding y el borde en el cálculo del alto total */
+    border-radius: 10px;
+    z-index: 200;
+    box-shadow: 0px 0px 2px 0px #c3c3c3;
+  }
+  
+  /* Estilo para el botón de cerrar el chat */
+  .cerrarChatAtc {
+    position: fixed;
+    bottom: 10px;
+    right: 30px;
+    color: white;
+    font-size: 25px;
+    cursor: pointer;
+    z-index: 1000000;
+    background: #ff4e55;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  /* Estilo para el botón de cerrar el chat en dispositivos móviles */
+  .cerrarChatMediaAtc {
+    display: none;
+  }
+  
+  /* Estilo para el triángulo del chat */
+  .trianguloChatAtc {
+    position: fixed;
+    transform: rotate(45deg);
+    border-right: 30px solid transparent;
+    border-top: 30px solid transparent;
+    border-left: 30px solid transparent;
+    border-bottom: 30px solid #ff4e56;
+    width: 30px;
+    height: 30px;
+    bottom: 20px;
+    right: 15px;
+    z-index: 1;
+  }
+  
+  /* Estilo para el header del chat */
+  .headerChatAtc {
+    background: #ff4e55;
+    border-radius: 8px 8px 0px 0px;
+    .imgAsesorAtc {
+      color: white;
+      display: flex;
+      align-items: center;
+      padding: 10px;
+      font-weight: 600;
+      font-size: 20px;
+      position: relative;
+      img {
+        width: 55px;
+        height: 55px;
+      }
+      .nombreAsesorAtc {
+        width: calc(80% - 15px);
+        text-align: left;
+        font-size: 16px;
+        padding: 10px 10px;
+      }
+      .stateAsesorAtc {
+        position: absolute;
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background: #c23616;
+        bottom: 15px;
+        left: 52px;
+        border: solid 1px white;
+      }
+    }
+    .textoAsesorAtc {
+      color: white;
+      font-weight: 600;
+      font-size: 14px;
+      padding: 0px 10px 10px 10px;
+    }
+  }
+  
+  /* Estilo para el estado conectado del asesor */
+  .OnConectedAtc {
+    background: #4cd137 !important;
+  }
+  
+  /* Contenedor del fondo de la interacción */
+  .PrimeraInteraccionAtcFondo {
+    display: flex;
+    justify-content: center; /* Centra el contenido horizontalmente */
+    align-items: flex-start; /* Alinea el contenido al inicio verticalmente */
+    padding: 10px 45px 35px 20px;
+    font-family: 'Arial', sans-serif; /* Tipo de letra */
+    position: relative;
+    max-height: calc(100vh - 80px); /* Máximo alto ajustado restando 80px */
+    width: 100%; /* Asegura que ocupe todo el ancho disponible */
+    box-sizing: border-box; /* Incluye el padding y el borde en el cálculo del alto total */
+    /* Elimina overflow: hidden; */
+  }
+  
+  /* Estilo del contenedor principal de la interacción */
+  .PrimeraInteraccionAtc {
+    background-color: #ecedef;
+    padding: 10px;
+    border-radius: 8px;
+    box-shadow: 0 0 20px #0000001a;
+    width: 100%;
+    max-width: 100%; /* Ajusta el ancho máximo al 100% */
+    height: auto; /* Ajusta la altura automáticamente */
+    max-height: 100%; /* Limita la altura máxima al 100% del contenedor padre */
+    text-align: left;
+    font-size: 16px;
+    line-height: 1.6;
+    overflow-y: auto; /* Habilita el scroll vertical si es necesario */
+    overflow-x: hidden;
+    box-sizing: border-box; /* Incluye el padding y el borde en el cálculo del alto total */
+  }
+  
+  /* Estilo para los párrafos dentro del contenedor principal */
+  .PrimeraInteraccionAtc p {
+    margin-bottom: 2px; /* Espacio inferior entre párrafos */
+  }
+  
+  /* Estilo para las listas dentro del contenedor principal */
+  .PrimeraInteraccionAtc ul {
+    list-style: none;
+    padding: 5px 0 0px 20px;
+    margin-bottom: 0px;
+  }
+  
+  /* Estilo para los ítems de la lista */
+  .PrimeraInteraccionAtc ul li {
+    margin-bottom: 0px;
+    position: relative;
+  }
+  
+  /* Estilo para los enlaces dentro de la lista */
+  .PrimeraInteraccionAtc ul li a {
+    display: block;
+    text-decoration: none;
+    font-weight: bold;
+    padding: 3px 0;
+  }
+  
+  /* Estilo específico para los cursos padre */
+  .PrimeraInteraccionAtc ul li > a {
+    color: #033DAB;
+  }
+  
+  /* Estilo para el hover de los cursos padre */
+  .PrimeraInteraccionAtc ul li > a:hover {
+    text-decoration: underline;
+    color: #FF4E56 !important;
+  }
+  
+  /* Estilo para los cursos hijo */
+  .PrimeraInteraccionAtc ul li ul.lista-interior li a {
+    color: #000;
+  }
+  
+  /* Estilo para el hover de los cursos hijo */
+  .PrimeraInteraccionAtc ul li ul.lista-interior li a:hover {
+    color: #FF4E56;
+  }
+  
+  /* Estilo para el ícono (antes del enlace) en cursos padre */
+  .PrimeraInteraccionAtc ul li > a:before {
+    content: "+";
+    position: absolute;
+    left: -20px;
+  }
+  
+  /* Cambiar el ícono cuando está expandido */
+  .PrimeraInteraccionAtc ul li.expanded > a:before {
+    content: "−";
+  }
+  
+  /* Estilo para el ícono (antes del enlace) en cursos hijo */
+  .PrimeraInteraccionAtc ul li ul.lista-interior li a:before {
+    content: "•";
+    position: absolute;
+    left: -20px;
+  }
+  
+  /* Estilo para el botón de retroceso */
+  .FlechaAtras {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    font-size: 10px;
+    color: #FF4E56;
+    font-weight: 600;
+    border-bottom: solid 1px transparent;
+  }
+  
+  /* Estilo para el ícono dentro del botón de retroceso */
+  .FlechaAtras .material-icons {
+    font-weight: 600;
+    font-size: 9px !important;
+  }
+  
+  /* Estilo para el hover del botón de retroceso */
+  .FlechaAtras:hover span {
+    text-decoration: underline;
+  }
+  
+  /* Estilo para el texto del chat */
+  .LetraChat {
+    font-size: 11px;
+  }
+  
+  /* Estilo para el ícono del corner */
+  .corner {
+    position: absolute;
+    bottom: -35px;
+    right: 19.5rem;
+    width: 25px;
+    height: 0px;
+    border-left: 25px solid transparent;
+    border-top: 25px solid #ecedef;
+    transform: rotate(0deg);
+  }
+  
+  /* Estilo para dispositivos móviles */
+  @media (max-width: 690px) {
+    .chatAtc {
+      border-radius: 0px !important;
+      bottom: 0px;
+      width: 100%;
+      right: 0px !important;
+      height: auto !important;
+      padding: 10px;
+    }
+  
+    .chatSTAtc {
+      width: 80%;
+      left: 10%;
+    }
+  }
+  

@@ -175,15 +175,19 @@
         </ng-container>
         -->
     </ng-container>
-    <ng-container *ngIf="ChatbotCerrado && TieneCoordinador">
+    <ng-container *ngIf="ChatbotCerrado && ChatAcademicoAbierto && TieneCoordinador">
       <app-chat-atencion-cliente-academico
         [idProgramageneral]="registroChatIA.IdPGeneral!"
         [IdMatriculaCabecera]="registroChatIA.IdMatriculaCabecera!"
       ></app-chat-atencion-cliente-academico>
     </ng-container>
-    
+
+    <ng-container *ngIf="ChatbotCerrado && ChatVentasAbierto">
+      <app-chat-atencion-ventas></app-chat-atencion-ventas>
+    </ng-container>
+
     <ng-container
-      *ngIf="ChatbotCerrado && !TieneCoordinador"
+      *ngIf="ChatbotCerrado && ChatAcademicoAbierto && !TieneCoordinador"
       select="[contenidoChat]"
     >
       <div class="headerChatAtc">
