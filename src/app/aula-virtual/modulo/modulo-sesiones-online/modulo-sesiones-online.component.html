@@ -47,17 +47,25 @@
         </div>
       </div>
       <div class="col-12 col-md-6 col-lg-6 RigthSesionOnline">
+        <!-- simulacion encuesta -->
+        <ng-container *ngIf="item.encuestas - item.encuestasEnviadas > 0">
+          <div class="ItemPendientes">
+            <div class="cantidadPendientes">{{item.encuestas - item.encuestasEnviadas}}</div>
+            <div class="pendientesSesion">Encuestas</div>
+          </div>
+        </ng-container>
+        <!-- simulacion encuesta -->
         <ng-container *ngIf="item.tareas-item.tareasEnviadas>0">
           <div class="ItemPendientes">
             <div class="cantidadPendientes">{{item.tareas-item.tareasEnviadas}}</div>
-            <div>Tareas</div>
+            <div class="pendientesSesion">Tareas</div>
           </div>
         </ng-container>
         <ng-container *ngIf="item.cuestionarios-item.cuestionariosEnviados>0">
 
           <div class="ItemPendientes">
             <div class="cantidadPendientes">{{item.cuestionarios-item.cuestionariosEnviados}}</div>
-            <div>Cuestionarios</div>
+            <div class="pendientesSesion">Cuestionarios</div>
           </div>
         </ng-container>
         <div class="OpenCloseSesionOnline" (click)="OpenSesion(i);">
@@ -84,6 +92,48 @@
           </div>
         </div>
       </ng-container>
+
+      <!-- simulacion encuesta -->
+       <ng-container *ngIf="item.encuesta!=undefined && item.encuesta!=null && item.encuesta.length>0">
+        <div class="cardSesionOnlineTareasCuestionario" *ngFor="let encuesta of item.encuesta,let t=index">
+          <div class="flagActividad">
+            <div class="textoFlag">{{encuesta.nombreCriterioEvaluacion}}</div>
+            <div id="player">
+              <div id="outer">
+                <div id="inner"></div>
+              </div>
+            </div>
+          </div>
+          <!-- <div class="DescripcionEncuesta" >
+
+          </div> -->
+          <div class="lineaMedioEncuesta"></div>
+          <div class="AbajoEncuesta row d-flex justify-content-between align-items-center">
+            <div class="TitleActividad col-12 col-lg-9 col-md-9">
+              {{encuesta.titulo}}
+            </div>
+
+            <div class="col-12 col-lg-3 col-md-3">
+              <ng-container *ngIf="encuesta.encuestaEnviada==false">
+                <app-default-button [confs]="{color:'primary', titulo:'Enviar >'}"
+                  [icon]="''"
+                  [style]="'border-radius: 20px; margin: 5px 0px 0px; width: 100%; padding: 0px 40px;'"
+                  (ButtoclClick)="openEncuestaDialog(i,t)">
+                </app-default-button>
+              </ng-container>
+              <ng-container *ngIf="encuesta.encuestaEnviada==true">
+                <app-default-button [confs]="{color:'primary', titulo:'Ver detalle >'}"
+                  [icon]="''"
+                  [style]="'border-radius: 20px; margin: 5px 0px 0px; width: 100%; padding: 0px 40px; background:#00c356'"
+                  (ButtoclClick)="openEncuestaDialog(i,t)">
+                </app-default-button>
+              </ng-container>
+            </div>
+          </div>
+        </div>
+       </ng-container>
+
+
       <ng-container *ngIf="item.tarea!=undefined && item.tarea!=null && item.tarea.length>0">
         <div class="cardSesionOnlineTareasCuestionario" *ngFor="let tars of item.tarea;let t=index">
           <div class="flagActividad">
@@ -146,12 +196,12 @@
               <ng-container *ngIf="tars.tareas==null || tars.tareas.length==0">
                 <app-default-button [confs]="{color:'primary',titulo:'Enviar >'}" [icon]="''"
                   [style]="'border-radius: 20px;margin: 5px 0px 0px;width: 100%;padding: 0px 40px;'"
-                  [disabled]="tars.disabled" (ButtoclClick)="EnviarTarea(i,t)"></app-default-button>
+                  [disabled]="tars.disabled" (ButtoclClick)="EnviarTarea(i,t,false,tars.bloquearEntregables)"></app-default-button>
               </ng-container>
               <ng-container *ngIf="tars.tareas!=null && tars.tareas.length>0">
                 <app-default-button [confs]="{color:'primary',titulo:'Ver detalle >'}" [icon]="''"
                   [style]="'border-radius: 20px;margin: 5px 0px 0px;width: 100%;padding: 0px 40px;background:#00c356'"
-                   (ButtoclClick)="EnviarTarea(i,t)"></app-default-button>
+                   (ButtoclClick)="EnviarTarea(i,t,true)"></app-default-button>
               </ng-container>
             </div>
           </div>
@@ -227,12 +277,12 @@
               <ng-container *ngIf="cuest.respuestaCuestionario==null || cuest.respuestaCuestionario.length==0">
                 <app-default-button [confs]="{color:'primary',titulo:'Ingresar >'}" [icon]="''"
                   [style]="'border-radius: 20px;margin: 5px 0px 0px;width: 100%;padding: 0px 40px;'"
-                  [disabled]="cuest.disabled" (ButtoclClick)="EnviarCuestionario(i,t)"></app-default-button>
+                  [disabled]="cuest.disabled" (ButtoclClick)="EnviarCuestionario(i,t,false,cuest.bloquearEntregables)"></app-default-button>
               </ng-container>
               <ng-container *ngIf="cuest.respuestaCuestionario!=null && cuest.respuestaCuestionario.length>0">
                 <app-default-button [confs]="{color:'primary',titulo:'Ver detalle >'}" [icon]="''"
                   [style]="'border-radius: 20px;margin: 5px 0px 0px;width: 100%;padding: 0px 40px;background:#00c356'"
-                  (ButtoclClick)="EnviarCuestionario(i,t)"></app-default-button>
+                  (ButtoclClick)="EnviarCuestionario(i,t,true)"></app-default-button>
               </ng-container>
             </div>
 

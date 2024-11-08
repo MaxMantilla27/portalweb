@@ -27,8 +27,8 @@
       .cantidadPendientes {
         background: rgb(224 111 35);
         border-radius: 50%;
-        width: 25px;
-        height: 25px;
+        width: 23px;
+        height: 23px;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -256,3 +256,6 @@
 .TutorialClose{
   background: #FFEEE1 !important;
   }
+.pendientesSesion{
+  font-size: 14px;
+}

@@ -143,8 +143,11 @@ export class PespecificoSesionTemaComponent
   }
   drop(event: CdkDragDrop<string[]>) {
     console.log(event)
+    console.log(this.temas);
+    console.log(event.previousIndex);
+    console.log(event.currentIndex);
     moveItemInArray(this.temas, event.previousIndex, event.currentIndex);
-    this.OrdenarTemaSesion(this.temas[event.currentIndex].id,event.currentIndex+1)
+    //this.OrdenarTemaSesion(this.temas[event.currentIndex].id,event.currentIndex+1)
   }
   OpenEditar(i:number){
     const dialogRef = this.dialog.open(ChangeWordComponent, {
