@@ -69,7 +69,7 @@ export class PagoMedioPagoComponent implements OnInit, OnDestroy {
   };
   public IdMedioPagoSeleccionado: number = -1;
   public MedioPagoPasarelaSeleccionado=false
-  
+
   public RecurrenciaActivaPagos = false
   public valorIdMedioPagoSeleccionado=-1
 
@@ -169,7 +169,7 @@ export class PagoMedioPagoComponent implements OnInit, OnDestroy {
     console.log('Datos de pasarela:', this.medioPagoSeleccionado);
     console.log('Datos de pasarela:', this.IdMedioPagoSeleccionado);
     console.log('Validador',this.validadorPagosMultiples)
-    
+
     if(this.IdPasarelaPago==10 ||this.IdPasarelaPago==7){
       if(this.IdMedioPagoSeleccionado!=1){
         this.valorIdMedioPagoSeleccionado=0
@@ -213,23 +213,28 @@ export class PagoMedioPagoComponent implements OnInit, OnDestroy {
         var fecha = new Date(r.fechaVencimiento);
         let NombreCuota = '';
         if (r.tipoCuota == 'MATRICULA') {
-          NombreCuota =
-            'MATRÍCULA -' +
-            ('0' + fecha.getUTCDate()).slice(-2) +
-            '/' +
-            ('0' + (fecha.getUTCMonth() + 1)).slice(-2) +
-            '/' +
-            fecha.getUTCFullYear();
+          // NombreCuota =
+          //   'MATRÍCULA -' +
+          //   ('0' + fecha.getUTCDate()).slice(-2) +
+          //   '/' +
+          //   ('0' + (fecha.getUTCMonth() + 1)).slice(-2) +
+          //   '/' +
+          //   fecha.getUTCFullYear();
+            NombreCuota =
+            'MATRÍCULA'
         } else {
-          NombreCuota =
+          // NombreCuota =
+          //   'Cuota N°' +
+          //   r.numeroCuotaMostrar +
+          //   ' - ' +
+          //   ('0' + fecha.getUTCDate()).slice(-2) +
+          //   '/' +
+          //   ('0' + (fecha.getUTCMonth() + 1)).slice(-2) +
+          //   '/' +
+          //   fecha.getUTCFullYear();
+            NombreCuota =
             'Cuota N°' +
-            r.numeroCuotaMostrar +
-            ' - ' +
-            ('0' + fecha.getUTCDate()).slice(-2) +
-            '/' +
-            ('0' + (fecha.getUTCMonth() + 1)).slice(-2) +
-            '/' +
-            fecha.getUTCFullYear();
+            r.numeroCuotaMostrar
         }
         this.jsonSend.ListaCuota.push({
           IdCuota: r.idCuota,
@@ -283,7 +288,7 @@ export class PagoMedioPagoComponent implements OnInit, OnDestroy {
           if (ruta) {
             this._router.navigate([`/AulaVirtual/MisPagos/${this.IdMatriculaCabecera}/${this.IdPasarelaPago}/${ruta}${sesion}`]);
           }
-          
+
         },
         complete: ()=>{
           this.MedioPagoPasarelaSeleccionado=true
@@ -325,10 +330,11 @@ export class PagoMedioPagoComponent implements OnInit, OnDestroy {
         var fecha=new Date(r.fechaVencimiento);
         let NombreCuota = ''
         if(r.tipoCuota=="MATRICULA"){
-          NombreCuota='MATRÍCULA -'+ ('0' + fecha.getUTCDate()).slice(-2)+ "/" +("0" + (fecha.getUTCMonth()+1)).slice(-2) + "/" +fecha.getUTCFullYear()
+          // NombreCuota='MATRÍCULA -'+ ('0' + fecha.getUTCDate()).slice(-2)+ "/" +("0" + (fecha.getUTCMonth()+1)).slice(-2) + "/" +fecha.getUTCFullYear()
+          NombreCuota='MATRÍCULA'
         }
         else{
-          NombreCuota='Cuota N°'+r.numeroCuotaMostrar+' - '+ ('0' + fecha.getUTCDate()).slice(-2)+ "/" +("0" + (fecha.getUTCMonth()+1)).slice(-2) + "/" +fecha.getUTCFullYear()
+          NombreCuota='Cuota N°'+r.numeroCuotaMostrar
         }
         this.jsonSend.ListaCuota.push({
           IdCuota: r.idCuota,
