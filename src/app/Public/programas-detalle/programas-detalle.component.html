@@ -649,11 +649,11 @@
               <div class="cardBeneficiosPrograma">
                 <div *ngIf="item.version!='Sin Version'" class="carsTitleBeneficiosPrograma ">{{item.version+':'}}</div>
                 <div class="carsContenidoBeneficiosPrograma">
-                  <div class="todoslosBeneficios" *ngIf="item.version == 'Versión Profesional' && beneficios.length>2" >Todos los beneficios de la versión básica ademas de:</div>
+                  <div class="todoslosBeneficios" *ngIf="item.version == 'Versión Profesional' && i!=0 ">Todos los beneficios de la versión básica ademas de:</div>
                   <div class="todoslosBeneficios" *ngIf="item.version == 'Versión Gerencial'" >Todos los beneficios de la versión profesional ademas de:</div>
                   <ng-container *ngFor="let content of item.contenido">
                     <!-- <div class="todoslosBeneficios" *ngIf="content.idBeneficio==-1;else Beneficio">{{content.contenido}}</div> -->
-                    <div style="display: flex" *ngIf="content.idBeneficio>0"> <i class="material-icons" style="    font-size: 7px !important;
+                    <div style="display: flex" *ngIf="content.idBeneficio>0"> <i class="material-icons" style="font-size: 7px !important;
                       margin-top: 8px;
                       margin-right: 10px;color: #2087f5;">circle</i> {{content.contenido}}</div>
                   </ng-container>
