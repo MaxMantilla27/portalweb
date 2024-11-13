@@ -23,7 +23,10 @@
   <div class="row">
     <div class="col-12 row container-info-pago">
       <div class="col-12 col-md-6 col-lg-6 inputPagoVisa">
-        <div class="subtitlePagoVisa" style="border: none !important">
+        <div *ngIf="resultPreProceso.idFormaPago==65" class="subtitlePagoVisa" style="border: none !important">
+          'Ingresa los datos del titular de la cuenta PSE:
+        </div>
+        <div *ngIf="resultPreProceso.idFormaPago==64" class="subtitlePagoVisa" style="border: none !important">
           Ingresa tus datos como aparece en tu tarjeta de credito o débito:
         </div>
         <ng-container *ngIf="resultPreProceso.idFormaPago==65">
@@ -36,8 +39,8 @@
             </mat-select>
           </mat-form-field>
           <mat-form-field class="col-12" appearance="outline" [floatLabel]="'always'" style="width: 100%;">
-            <mat-label>Titular de la Tarjeta</mat-label>
-            <input type="text" placeholder="Nombre como aparece en la tarjeta" [ngModelOptions]="{standalone: true}"
+            <mat-label>Titular de la cuenta</mat-label>
+            <input type="text" placeholder="Titular de la cuenta" [ngModelOptions]="{standalone: true}"
             [(ngModel)]="jsonSave.TarjetaHabiente.Titular" matInput >
           </mat-form-field>
           <mat-form-field class="col-12" appearance="outline" [floatLabel]="'always'" style="width: 100%;">
@@ -261,7 +264,7 @@
             *ngIf="
               tarjeta.medioPago == 'Visa' ||
               tarjeta.medioPago == 'MasterCard' ||
-              tarjeta.medioPago == 'Amex' 
+              tarjeta.medioPago == 'Amex'
             "
             [src]="'../../../../assets/icons/' + tarjeta.img"
             alt="Imagen de tarjeta"
