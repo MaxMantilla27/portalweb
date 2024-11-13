@@ -1,4 +1,4 @@
- <!-- holax -->
+<!-- holax -->
 <div style="background: #f4f4f4">
   <div class="container">
     <div class="row" style="padding: 20px 90px 20px 20px !important">
@@ -9,163 +9,144 @@
     </div>
   </div>
 </div>
-<ng-container  *ngIf="CargandoWebPay">
-  <div class="container" *ngIf="resultWebpay!=undefined && resultProceso!=undefined">
-    <div class="row rowpaddAv" style="justify-content: center;">
-      <div class="col-12 col-md-10 col-lg-8" *ngIf="resultWebpay.responseCode!=0">
-        <ng-container *ngIf="resultWebpay.estadoOperacion =='No Process'||
-        resultWebpay.estadoOperacion =='Declinado' ||
-        resultWebpay.estadoOperacion =='Processed-' ||
-        resultWebpay.estadoOperacion =='ERROR'">
-          <div class="titleResultPago">
-            <img style="margin-right: 10px;"  src="../../../assets/icons/denegado-error-rojo.svg" alt="">
-            <div>No se realizó el pago</div>
-          </div>
-          <div class="textResultPago">
-            <ng-container *ngIf="resultWebpay.responseCode==-1 && resultWebpay.vci=='TSY'">
-              <div >
-                <div *ngIf="resultWebpay.mensajeTransaccion!=null && resultWebpay.mensajeTransaccion!='null' && resultWebpay.mensajeTransaccion!=''" style="text-align: center;">
-                  <p>Descripción: {{resultWebpay.mensajeTransaccion}}</p>
-                </div>
 
-                <div>
-                  <p>No hemos podido procesar su pago, debido a un error con su entidad bancaria, comuniquese con su Banco para solucionar el error en el pago; o intente con otro medio de pago.</p>
-                </div>
-              </div>
-            </ng-container>
-            <div class="textC">Si tiene alguna consulta adicional, escriba un correo a: <a
-                href="mailto:{{correoMatriculas}}">{{correoMatriculas}}</a></div>
+<div class="container" *ngIf="resultProceso">
+  <div class="row rowpaddAv" style="justify-content: center">
+    <div
+      class="col-12 col-md-10 col-lg-8"
+      *ngIf="resultProceso.estadoOperacion !== 'Processed'"
+    >
+      <ng-container
+        *ngIf="
+          ['No Process', 'Declinado', 'Processed-', 'ERROR'].includes(
+            resultProceso.estadoOperacion
+          )
+        "
+      >
+        <div class="titleResultPago">
+          <img
+            style="margin-right: 10px"
+            src="../../../assets/icons/denegado-error-rojo.svg"
+            alt=""
+          />
+          <div>Pago Rechazado</div>
+        </div>
+        <div
+          *ngIf="resultProceso.mensajeTransaccion"
+          style="text-align: center; color: #e24c4d"
+        >
+          <p>Hubo un problema al procesar tu pago.</p>
+          <p>
+            <strong>Descripción:</strong> {{ resultProceso.mensajeTransaccion }}
+          </p>
+        </div>
+        <p style="text-align: center">
+          Asegúrate de que tu tarjeta tenga saldo suficiente para completar tu
+          pago e inténtalo nuevamente.
+        </p>
+
+        <ng-container *ngIf="resultProceso.tipoPago === 'Organico'">
+          <app-default-button
+            [confs]="{ color: 'primary', titulo: 'Volver' }"
+            [style]="'margin-top:40px;padding: 0px 40px;'"
+            [ruta]="'/AulaVirtual/PagoOrganicoTodos'"
+          ></app-default-button>
+        </ng-container>
+
+        <ng-container *ngIf="resultProceso.tipoPago === 'Cronograma'">
+          <div class="col-12" style="display: flex; justify-content: center">
+            <app-default-button
+              [confs]="{ color: 'primary', titulo: 'Ver estado de cuenta' }"
+              [style]="'font-size:13px;border-radius:15px'"
+              [ruta]="ruta"
+            ></app-default-button>
           </div>
         </ng-container>
-        <ng-container *ngIf="resultProceso.tipoPago=='Organico'">
-            <app-default-button [confs]="{color:'primary',titulo:'Volver'}" [style]="'margin-top:40px;padding: 0px 40px;'"
-            [ruta]="'/AulaVirtual/PagoOrganicoTodos'"  ></app-default-button>
-          </ng-container>
-           <ng-container *ngIf="resultProceso.tipoPago=='Cronograma'">
-            <div class="col-12 col-md-10 col-lg-10">
-                <app-default-button [confs]="{color:'primary',titulo:'Volver'}"
-                  [style]="'margin-top: 20px;margin-bottom: 0px;width:20%'" (ButtoclClick)="redireccionarAPagos()"></app-default-button>
-              </div>
-           </ng-container>
-
-      </div>
-      <div class="col-12 col-md-12 col-lg-12" *ngIf="resultWebpay.responseCode==0">
-        <div class="titleResultPago" style="justify-content: center;margin-bottom: 1rem;">
-          <img src="../../../assets/icons/positivo-hecho-20.svg" alt="" style="height: 2.5rem;width: 2.5rem;margin-right:10px;">
-          <div>¡Pago exitoso!</div>
-        </div>
-        <div class="SubTitulo"*ngIf="resultProceso.tipoPago=='Organico'"
-        style="margin-top: 5px;font-size: 14px;justify-content: center;display: flex;">
-          {{resultProceso.datoAlumno.nombre}}, tu compra ha sido realizada con exito.
-        </div>
-        <div class="SubTitulo" *ngIf="resultProceso.tipoPago=='Cronograma'"
-        style="margin-top: 5px;font-size: 14px;justify-content: center;display: flex;">
-          {{resultProceso.registroAlumno.nombre}}, tu compra ha sido realizada con exito.
-        </div>
-        <div class="contentCardPago">
-          <div class="row" style="justify-content: center; display: flex;">
-            <div style="width: 60vw;">
-              <div style="margin: 20px 0px;">Detalle de tu pago:</div>
-            </div>
-          </div>
-          <div class="row" style="justify-content: center; display: flex;">
-            <div class="cardPago">
-              <div class="row" style="align-items: center;padding: 0px 5vw" *ngIf="resultProceso.tipoPago=='Organico'">
-                <div class="col-12 col-md-5 col-lg-4"><b>Nro. de Compra:</b></div>
-                <div class="col-12 col-md-7 col-lg-8 itemValueCardPago">{{resultProceso.identificadorTransaccion}}</div>
-                <div class="col-12 col-md-5 col-lg-4"><b>Monto:</b></div>
-                <div class="col-12 col-md-7 col-lg-8 itemValueCardPago">{{resultProceso.montoTotal|formatoMilesDecimales}}</div>
-                <div class="col-12 col-md-5 col-lg-4"><b>Moneda:</b></div>
-                <div class="col-12 col-md-7 col-lg-8 itemValueCardPago">{{resultProceso.monedaCorreo}}</div>
-                <div class="col-12 col-md-5 col-lg-4"><b>Nombres y Apellidos:</b></div>
-                <div class="col-12 col-md-7 col-lg-8 itemValueCardPago">{{resultProceso.datoAlumno.nombre}}
-                    {{resultProceso.datoAlumno.apellido}}</div>
-                <ng-container *ngIf="NombreCursoPago!=null && NombreCursoPago!=undefined">
-                  <div class="col-12 col-md-5 col-lg-4"><b>Programa:</b></div>
-                  <div class="col-12 col-md-7 col-lg-8 itemValueCardPago">{{NombreCursoPago}}</div>
-                </ng-container>
-                <ng-container>
-                  <div class="col-12 col-md-5 col-lg-4"><b>Concepto:</b></div>
-                  <div class="col-12 col-md-7 col-lg-8 itemValueCardPago" >
-                    <div>
-                      Matrícula
-                    </div>
-                  </div>
-                </ng-container>
-                <div class="col-12 col-md-5 col-lg-4"><b>Fecha de transacción:</b></div>
-                <div class="col-12 col-md-7 col-lg-8 itemValueCardPago">{{resultProceso.fechaTransaccion | date:'dd/MM/yyyy'}}
-                </div>
-                <div class="col-12 col-md-5 col-lg-4"><b>Hora de transacción:</b></div>
-                <div class="col-12 col-md-7 col-lg-8 itemValueCardPago">{{resultProceso.fechaTransaccion | date:'hh:mm'}}</div>
-              </div>
-              <div class="row" style="align-items: center; padding: 0px 5vw" *ngIf="resultProceso.tipoPago=='Cronograma'">
-                  <div class="col-12 col-md-5 col-lg-4"><b>Nro. de Compra:</b></div>
-                <div class="col-12 col-md-7 col-lg-8 itemValueCardPago">{{resultProceso.identificadorTransaccion}}</div>
-                <div class="col-12 col-md-5 col-lg-4"><b>Monto:</b></div>
-                <div class="col-12 col-md-7 col-lg-8 itemValueCardPago">{{resultProceso.montoTotal|formatoMilesDecimales}}</div>
-                <div class="col-12 col-md-5 col-lg-4"><b>Moneda:</b></div>
-                <div class="col-12 col-md-7 col-lg-8 itemValueCardPago">{{resultProceso.monedaCorreo}}</div>
-                <div class="col-12 col-md-5 col-lg-4"><b>Nombres y Apellidos:</b></div>
-                <div class="col-12 col-md-7 col-lg-8 itemValueCardPago">{{resultProceso.registroAlumno.nombre}}
-                    {{resultProceso.registroAlumno.apellido}}</div>
-                <ng-container *ngIf="NombreCursoPago!=null && NombreCursoPago!=undefined">
-                  <div class="col-12 col-md-5 col-lg-4"><b>Programa:</b></div>
-                  <div class="col-12 col-md-7 col-lg-8 itemValueCardPago">{{NombreCursoPago}}</div>
-                </ng-container>
-                <ng-container *ngIf="resultProceso.listaCuota!=null && resultProceso.listaCuota.length>0">
-                  <div class="col-12 col-md-5 col-lg-4"><b>Concepto:</b></div>
-                  <div class="col-12 col-md-7 col-lg-8 itemValueCardPago">
-                    <div *ngFor="let item of resultProceso.listaCuota">
-                      {{item.nombre}}
-                    </div>
-                  </div>
-                </ng-container>
-                <ng-container *ngIf="resultProceso.listaCuota==null || resultProceso.listaCuota==0">
-                  <div class="col-12 col-md-5 col-lg-4"><b>Concepto:</b></div>
-                  <div class="col-12 col-md-7 col-lg-8 itemValueCardPago" >
-                    <div>
-                      Matrícula
-                    </div>
-                  </div>
-                </ng-container>
-                <div class="col-12 col-md-5 col-lg-4"><b>Fecha de transacción:</b></div>
-                <div class="col-12 col-md-7 col-lg-8 itemValueCardPago">{{resultProceso.fechaTransaccion | date:'dd/MM/yyyy'}}
-                </div>
-                <div class="col-12 col-md-5 col-lg-4"><b>Hora de transacción:</b></div>
-                <div class="col-12 col-md-7 col-lg-8 itemValueCardPago">{{resultProceso.fechaTransaccion | date:'hh:mm'}}</div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div *ngIf="RutaCargada!=false" class="row mt-2" style="justify-content: center;text-align: center;">
-        <div class="button-container-Pagos">
-          <button [routerLink]="rutaPago" class="btn btn-primary m-2 responsive-button-Pagos">
-            Ver estado de cuenta
-          </button>
-
-          <button  [routerLink]="rutaCursos" class="btn btn-primary m-2 responsive-button-Pagos">
-            Ir a mi curso
-          </button>
-        </div>
-      </div>
-      <!-- <ng-container *ngIf="resultProceso.tipoPago=='Organico'">
-        <app-default-button [confs]="{color:'primary',titulo:'Volver'}" [style]="'margin-top:40px;padding: 0px 40px;'"
-            [ruta]="ruta" ></app-default-button>
       </ng-container>
-       <ng-container *ngIf="resultProceso.tipoPago=='Cronograma'">
-        <div class="col-12 col-md-10 col-lg-10">
-            <app-default-button [confs]="{color:'primary',titulo:'Volver'}"
-              [style]="'margin-top: 20px;margin-bottom: 0px;width:20%'" (ButtoclClick)="redireccionarAPagos()"></app-default-button>
-          </div>
-       </ng-container> -->
-
-
     </div>
 
-  </div>
-  </div>
+    <div
+      class="col-12 col-md-10 col-lg-8"
+      *ngIf="resultProceso.estadoOperacion === 'Processed'"
+    >
+      <div
+        class="titleResultPago"
+        style="justify-content: center; margin-bottom: 1rem"
+      >
+        <img
+          src="../../../assets/icons/positivo-hecho-20.svg"
+          alt=""
+          style="height: 2.5rem; width: 2.5rem; margin-right: 10px"
+        />
+        <div>¡Pago exitoso!</div>
+      </div>
 
-</ng-container>
+      <div class="contentCardPago">
+        <div class="cardPago">
+          <div class="row" style="align-items: center; padding: 0px 3vw">
+            <div class="col-12 col-md-6 col-lg-6"><b>Monto:</b></div>
+            <div class="col-12 col-md-6 col-lg-6 itemValueCardPago">
+              {{ resultProceso.monedaCorreo }}
+              {{ resultProceso.montoTotal | formatoMilesDecimales }}
+            </div>
+
+            <div class="col-12 col-md-6 col-lg-6"><b>Concepto:</b></div>
+            <div class="col-12 col-md-6 col-lg-6 itemValueCardPago">
+              <ng-container
+                *ngIf="resultProceso.listaCuota?.length; else defaultConcepto"
+              >
+                <div *ngFor="let item of resultProceso.listaCuota">
+                  {{ item.nombre }}
+                </div>
+              </ng-container>
+              <ng-template #defaultConcepto>
+                <div>Matrícula</div>
+              </ng-template>
+            </div>
+
+            <div class="col-12 col-md-6 col-lg-6"><b>Código de transacción:</b></div>
+            <div class="col-12 col-md-6 col-lg-6 itemValueCardPago">
+              {{ resultProceso.codigoHash }}
+            </div>
+
+            <div class="col-12 col-md-6 col-lg-6"><b>Fecha de transacción:</b></div>
+            <div class="col-12 col-md-6 col-lg-6 itemValueCardPago">
+              {{ resultProceso.fechaTransaccion | date : "dd/MM/yyyy" }}
+            </div>
+
+            <div class="col-12 col-md-6 col-lg-6"><b>Hora de transacción:</b></div>
+            <div class="col-12 col-md-6 col-lg-6 itemValueCardPago">
+              {{ resultProceso.fechaTransaccion | date : "hh:mm a" }}
+            </div>
+          </div>
+        </div>
+
+        <div
+          *ngIf="RutaCargada"
+          class="row mt-2"
+          style="justify-content: center; text-align: center"
+        >
+          <div class="button-container-Pagos" style="display: flex;    padding: 0px 3vw;">
+            <button
+              [routerLink]="ruta"
+              class="btn btn-primary m-2 responsive-button-Pagos"
+              style="width: 50%;"
+            >
+              Ver estado de cuenta
+            </button>
+            <button
+              [routerLink]="rutaCursos"
+              class="btn btn-primary m-2 responsive-button-Pagos"
+              style="width: 50%;"
+            >
+              Ir a mi curso
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 <ng-container *ngIf="CargandoWebPay">
   <div class="row" style="display: flex; justify-content: center;align-items: center;text-align: center; height: 15rem;">
     <div class="col-12" style="display: flex;justify-content: center;">

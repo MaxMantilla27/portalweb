@@ -160,20 +160,22 @@
             class="row mt-2"
             style="justify-content: center; text-align: center"
           >
-            <div class="button-container-Pagos">
-              <button
-                [routerLink]="ruta"
-                class="btn btn-primary m-2 responsive-button-Pagos"
-              >
-                Ver estado de cuenta
-              </button>
-              <button
-                [routerLink]="rutaCursos"
-                class="btn btn-primary m-2 responsive-button-Pagos"
-              >
-                Ir a mi curso
-              </button>
-            </div>
+          <div class="button-container-Pagos" style="display: flex;    padding: 0px 3vw;">
+            <button
+              [routerLink]="ruta"
+              class="btn btn-primary m-2 responsive-button-Pagos"
+              style="width: 50%;"
+            >
+              Ver estado de cuenta
+            </button>
+            <button
+              [routerLink]="rutaCursos"
+              class="btn btn-primary m-2 responsive-button-Pagos"
+              style="width: 50%;"
+            >
+              Ir a mi curso
+            </button>
+          </div>
           </div>
         </div>
       </div>
@@ -195,8 +197,8 @@
     <div class="col-12" style="display: flex; justify-content: center">
       <mat-spinner></mat-spinner>
     </div>
-    <div class="col-12">
+    <!-- <div class="col-12">
       ¡No cierres la ventana! Estamos procesando tu pago.
-    </div>
+    </div> -->
   </div>
 </ng-container>

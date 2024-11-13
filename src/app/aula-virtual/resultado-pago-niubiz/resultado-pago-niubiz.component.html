@@ -130,12 +130,19 @@
         <!-- <app-default-button-flecha [confs]="{color:'primary',titulo:'Ir a mis cursos ahora'}" [style]="'margin-top:40px;padding: 0px 40px;border-radius:20px'"
             [ruta]="rutaMisCursos"></app-default-button-flecha> -->
         <div *ngIf="RutaCargada!=false" class="row mt-2" style="justify-content: center;text-align: center;">
-          <div class="button-container-Pagos">
-            <button [routerLink]="rutaPago" class="btn btn-primary m-2 responsive-button-Pagos">
+          <div class="button-container-Pagos" style="display: flex;    padding: 0px 3vw;">
+            <button
+              [routerLink]="ruta"
+              class="btn btn-primary m-2 responsive-button-Pagos"
+              style="width: 50%;"
+            >
               Ver estado de cuenta
             </button>
-
-            <button  [routerLink]="rutaCursos" class="btn btn-primary m-2 responsive-button-Pagos">
+            <button
+              [routerLink]="rutaCursos"
+              class="btn btn-primary m-2 responsive-button-Pagos"
+              style="width: 50%;"
+            >
               Ir a mi curso
             </button>
           </div>

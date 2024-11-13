@@ -104,11 +104,11 @@ export class ResultadoPagoWebpayComponent implements OnInit {
       },
       error:()=>{
         this.CargandoWebPay=false;
-        this._router.navigate(['/AulaVirtual/MisPagos/'+this.IdMatriculaCabecera]);
+        // this._router.navigate(['/AulaVirtual/MisPagos/'+this.IdMatriculaCabecera]);
       },
       complete:()=>{
         this.CargandoWebPay=false;
-        this._router.navigate(['/AulaVirtual/MisPagos/'+this.IdMatriculaCabecera]);
+        // this._router.navigate(['/AulaVirtual/MisPagos/'+this.IdMatriculaCabecera]);
       }
     })
   }
@@ -119,7 +119,6 @@ export class ResultadoPagoWebpayComponent implements OnInit {
       next:x=>{
         console.log("RespuestaWEbpay",x)
         this.resultWebpay = x._Repuesta;
-        this.IdMatriculaCabecera=this.resultProceso.idMatriculaCabecera
       },
       complete:()=>{
         this.ObtenerPreProcesoPagoOrganicoAlumno()

@@ -26,11 +26,12 @@
     padding: 0px 15px;
     border: solid 2px transparent;
     border-radius: 10px;
-    width: 60vw;
+    width: 100%;
   }
   .itemValueCardPago{
     margin: 10px 0px;
-    padding: 0px 20px;
+    padding: 0px 5rem;
+    text-wrap: nowrap;
   }
 
 /* Define el tamaño base de los botones */
@@ -48,7 +49,9 @@
     flex-direction: column;
     align-items: center;
   }
-
+  .rowpaddAv{
+    text-align: center;
+  }
   .responsive-button-Pagos {
     width: 80%; /* Cambiar el valor según necesites */
     max-width: 200px; /* Ajusta el máximo ancho del botón si lo deseas */
