@@ -540,14 +540,21 @@
             </div>
           </mat-tab>
           <mat-tab label="Prerrequisitos">
-            <div class="puntoAzulLista" style="text-align: left;
-            padding: 20px 0px;" *ngIf="prerequisitos!=undefined && prerequisitos.cabecera!=undefined">
-              <p>{{prerequisitos.cabecera}}</p>
-              <ul>
-                <li *ngFor="let item of prerequisitos.contenido">{{item}}</li>
-              </ul>
+            <div style="text-align: left;
+            padding: 20px 0px;" *ngIf="prerequisitos!=undefined;else SinRequisitos">
+              <div *ngFor="let cabeceras of prerequisitos">
+                <p>{{cabeceras.cabecera}}</p>
+                <div class="puntoAzulLista"*ngFor="let item of cabeceras.contenidos" >
+                  <ul>
+                    <li>{{item}}</li>
+                  </ul>
+                </div>
+              </div>
               <div class="piePagina" [innerHtml]="PrerrequisitosPiePagina | safeHtml"></div>
             </div>
+            <ng-template #SinRequisitos>
+              Sin requisitos
+            </ng-template>
           </mat-tab>
           <mat-tab label="Duración y Horarios">
             <ng-container *ngIf="cabecera!=null && cabecera.listProgramaEspecificoInformacionDTO!=null">

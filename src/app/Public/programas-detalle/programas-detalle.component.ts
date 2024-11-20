@@ -171,11 +171,7 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
     video: '',
     vistaPrevia: '',
   };
-  public prerequisitos: listaPrerrequisitoDTO = {
-    cabecera: '',
-    contenido: [],
-    piePagina: '',
-  };
+  public prerequisitos: any;
   public certificado: listaCertificacionDTO = {
     cabecera: '',
     contenido: [],
@@ -734,7 +730,7 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
               i++;
             }
           }
-          
+
         }
       },
     });

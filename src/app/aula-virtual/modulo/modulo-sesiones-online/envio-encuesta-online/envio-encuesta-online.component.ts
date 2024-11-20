@@ -6,7 +6,7 @@ import {
 } from '@angular/material/dialog';
 import {
   CdkDragDrop,
-  moveItemInArray} 
+  moveItemInArray}
 from '@angular/cdk/drag-drop';
 import { Subject, takeUntil, timer } from 'rxjs';
 import {
@@ -82,7 +82,7 @@ export class EnvioEncuestaOnlineComponent implements OnInit  {
           }
           pregunta.respuesta = [];
           let vaRes: Array<any> = [];
-          
+
           respuestasEncuesta.forEach((respuesta: any) => {
             if (pregunta.id === respuesta.idPreguntaEncuesta) {
               // Casilla de texto
@@ -111,12 +111,12 @@ export class EnvioEncuestaOnlineComponent implements OnInit  {
                 pregunta.valorRanking = [respuesta.valor]; // Asume que el valor es un número de ranking
               }
               else if (pregunta.idPreguntaEncuestaTipo==5 ) {
-                 
+
                  pregunta.alternativas.forEach((alternativa:any,index:any)=>{
 
                   if (alternativa.orden == respuesta.puntos) {
                     return alternativa.respuesta = respuesta.valor;
-                  }   
+                  }
                  })
               }
 
@@ -207,7 +207,7 @@ export class EnvioEncuestaOnlineComponent implements OnInit  {
         this.EncuestaAvance.categorias.push(categoriaObjInicial);
 
         categoria.preguntas.forEach((p: any) => {
-          
+
           const preguntaObjInicial: EncuestaAvancePreguntaDTO = {
             idPregunta: p.id,
             pregunta: p.pregunta,
@@ -258,7 +258,7 @@ export class EnvioEncuestaOnlineComponent implements OnInit  {
           } else if (p.idPreguntaEncuestaTipo===5) {
             let c=1;
             p.alternativas.forEach((a: any) => {
-              
+
               if (a) {
                 const respuestaObj: EncuestaAvancePreguntaRespuestaDTO = {
                   idRespuesta: a.id,
@@ -288,7 +288,7 @@ export class EnvioEncuestaOnlineComponent implements OnInit  {
       (categoria: EncuestaAvanceCategoriaDTO) => {
         categoria.preguntas.forEach((pregunta: EncuestaAvancePreguntaDTO) => {
           if(pregunta.preguntaObligatoria){
-            if (pregunta.valorRespuesta.length === 0 || pregunta.valorRespuesta[0].respuesta === '')
+            if (pregunta.valorRespuesta.length === 0 || pregunta.valorRespuesta[0].respuesta === '' || pregunta.valorRespuesta[0].respuesta === '0')
             {
               this.EncuestaCompleta = false;
             }
@@ -313,7 +313,7 @@ export class EnvioEncuestaOnlineComponent implements OnInit  {
       });
   }
 
-  
+
 
 
 }
