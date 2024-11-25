@@ -86,7 +86,7 @@
                     </div>
                     <div class="pendiente-responsive-row-2 col-7">
                       <div style="margin-bottom: 5px;" class="texto-sombreado">Cuota N° {{ pendiente.numeroCuotaMostrar }}</div>
-                      <div class="texto-vencido">Vencido: {{ pendiente.fechaVencimiento | date : "dd/MM/yyyy" }}</div>
+                      <div class="texto-vencido">Vence: {{ pendiente.fechaVencimiento | date : "dd/MM/yyyy" }}</div>
                     </div>
                     <div class="pendiente-responsive-row-3 col-4">
                       <div class="texto-sombreado">{{ pendiente.codigoMoneda }} {{ pendiente.cuota | formatoMilesDecimales }}</div>
@@ -427,7 +427,7 @@
                 </div>
               </mat-tab>
           </mat-tab-group>
-   
+
         </div>
       </ng-container>
       <ng-container *ngIf="!pantallaPequenia">

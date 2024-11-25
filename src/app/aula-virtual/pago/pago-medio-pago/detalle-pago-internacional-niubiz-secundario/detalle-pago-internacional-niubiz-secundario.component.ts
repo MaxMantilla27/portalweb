@@ -82,6 +82,9 @@ export class DetallePagoInternacionalNiubizSecundarioComponent implements OnInit
     this.signal$.complete();
   }
   ngOnInit(): void {
+    setTimeout(() => {
+      document.documentElement.scrollTop=0;
+    }, 1000);
     this._HelperService.recibirCombosPerfil.pipe(takeUntil(this.signal$)).subscribe((x) => {
       this.jsonSave.TarjetaHabiente.Titular =x.datosAlumno.nombres+' '+x.datosAlumno.apellidos;
       this.jsonSave.TarjetaHabiente.NumeroDocumento =x.datosAlumno.dni;

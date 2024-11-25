@@ -82,6 +82,9 @@ export class DetallePagoPeruIzipayComponent
     this.signal$.complete();
   }
   ngOnInit(): void {
+    setTimeout(() => {
+      document.documentElement.scrollTop=0;
+    }, 1000);
     /*Evalua usar solo en Ngonit*/
     this._ActivatedRoute.params.pipe(takeUntil(this.signal$)).subscribe({
       next: (params) => {
@@ -172,7 +175,7 @@ export class DetallePagoPeruIzipayComponent
       else{
       window.location.reload()
       }
-    }, 500);
+    }, 3000);
   }
   customForm() {
     var boton = document.getElementsByClassName('kr-popin-button');
@@ -242,6 +245,6 @@ export class DetallePagoPeruIzipayComponent
       });
   }
   RegresarPasarela(): void {
-    this._router.navigate(['/AulaVirtual/MisPagos/', this.IdMatriculaCabecera+'/'+this.IdPasarelaPago]);
+    this._router.navigate(['/AulaVirtual/MisPagos/', this.IdMatriculaCabecera]);
   }
 }

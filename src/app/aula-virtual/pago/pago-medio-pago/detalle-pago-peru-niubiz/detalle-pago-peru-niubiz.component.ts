@@ -57,6 +57,9 @@ export class DetallePagoPeruNiubizComponent implements OnInit, OnDestroy, AfterV
   ) {}
 
   ngOnInit(): void {
+    setTimeout(() => {
+      document.documentElement.scrollTop=0;
+    }, 1000);
     this._ActivatedRoute.params.pipe(takeUntil(this.signal$)).subscribe({
       next: (params) => {
         this.IdMatriculaCabecera = +params['idmatricula'];

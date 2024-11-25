@@ -67,9 +67,9 @@ export class AfiliacionIzipayComponent implements OnInit, OnDestroy, AfterViewIn
     this.signal$.complete();
   }
   ngOnInit(): void {
-
-
-
+    setTimeout(() => {
+      document.documentElement.scrollTop=0;
+    }, 1000);
   }
   ObtenerPreProcesoPagoCuotaAlumno() {
     this._FormaPagoService
@@ -118,7 +118,13 @@ export class AfiliacionIzipayComponent implements OnInit, OnDestroy, AfterViewIn
     var modalHeader = document.getElementsByClassName('kr-popin-modal-header');
     if(typeof(modalHeader) != 'undefined' && modalHeader != null && modalHeader.length>0)
       modalHeader[0].setAttribute("style", "margin-bottom: 0px;height: 70px;");
-
+    var modalWeapper = document.getElementsByClassName('kr-popin-wrapper');
+    if (
+      typeof modalWeapper != 'undefined' &&
+      modalWeapper != null &&
+      modalWeapper.length > 0
+    )
+      modalWeapper[0].setAttribute('style', 'padding-top: 5rem;');
     this.hidenBotom=false
   }
 
@@ -167,7 +173,7 @@ export class AfiliacionIzipayComponent implements OnInit, OnDestroy, AfterViewIn
       }else{
         window.location.reload()
       }
-    }, 1000);
+    }, 3000);
   }
 
   ObtenerTarjetasMedioPago(): void {

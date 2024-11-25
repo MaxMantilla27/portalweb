@@ -96,6 +96,9 @@ export class AfiliacionOpenpayComponent implements OnInit,OnDestroy {
   public IdPasarelaPago = 0;
   public tarjetas: any;
   ngOnInit(): void {
+    setTimeout(() => {
+      document.documentElement.scrollTop=0;
+    }, 1000);
     this._HelperService.recibirCombosPerfil.pipe(takeUntil(this.signal$)).subscribe((x) => {
       this.jsonSave.TarjetaHabiente.Titular =x.datosAlumno.nombres+' '+x.datosAlumno.apellidos;
       this.jsonSave.TarjetaHabiente.NumeroDocumento =x.datosAlumno.dni;

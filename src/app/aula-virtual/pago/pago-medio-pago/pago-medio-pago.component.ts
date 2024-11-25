@@ -82,13 +82,10 @@ export class PagoMedioPagoComponent implements OnInit, OnDestroy {
         this.IdMatriculaCabecera = parseInt(x['idmatricula']);
         this.IdPasarelaPago = parseInt(x['idpasarelapago']);
         var localDatosFacturacion = this._SessionStorageService.SessionGetValue('DatosFacturacionPagos');
-        console.log(localDatosFacturacion)
         var localCronogramaPagos = this._SessionStorageService.SessionGetValue('DatosCronogramaPagosCuotas');
-        console.log(localCronogramaPagos)
 
         if(localCronogramaPagos!=''){
           this.CronogramaPago = JSON.parse(localCronogramaPagos);
-          console.log(this.CronogramaPago);
           this.jsonSend.IdPGeneral=this.CronogramaPago.idPGeneral
           this.jsonSend.IdMatriculaCabecera=this.CronogramaPago.idMatriculaCabecera
           if(this.CronogramaPago.registroCuota.length>0){
@@ -99,26 +96,20 @@ export class PagoMedioPagoComponent implements OnInit, OnDestroy {
         }
         if(localDatosFacturacion!=''){
           this.DatosFacturacion = JSON.parse(localDatosFacturacion);
-          console.log(this.DatosFacturacion);
 
         }
         this.ObtenerTarjetasMedioPago()
-        /*
-        let RecurrenciaActivaLocal = this._SessionStorageService.SessionGetValue('opcionRecurrencia');
-        console.log(RecurrenciaActivaLocal,this.IdPasarelaPago);*/
 
         let RecurrenciaActivaLocal = this._SessionStorageService.SessionGetValue('opcionRecurrencia');
-        console.log(RecurrenciaActivaLocal,this.IdPasarelaPago);
+        console.log('Recurrencia:',RecurrenciaActivaLocal);
 
         if(RecurrenciaActivaLocal!=''){
 
           if(RecurrenciaActivaLocal=='true' && this.IdPasarelaPago==7){
             this.RecurrenciaActivaPagos = true;
-            console.log(this.RecurrenciaActivaPagos);
           }else{
 
             this.RecurrenciaActivaPagos = false;
-            console.log(this.RecurrenciaActivaPagos);
           }
 
         }
@@ -131,10 +122,6 @@ export class PagoMedioPagoComponent implements OnInit, OnDestroy {
       }
 
     });
-
-    console.log(this.IdMatriculaCabecera);
-    console.log(this.IdPasarelaPago);
-
   }
   ObtenerTarjetasMedioPago() {
     this._MedioPagoActivoPasarelaService
@@ -142,7 +129,6 @@ export class PagoMedioPagoComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.signal$))
       .subscribe({
         next: (x) => {
-          console.log(x);
           this.validadorPagosMultiples = x.filter(
             (item: any) =>
               item.idPasarelaPago === 7 || item.idPasarelaPago === 10
@@ -158,7 +144,6 @@ export class PagoMedioPagoComponent implements OnInit, OnDestroy {
           this.tarjetas.forEach((e: any) => {
             e.img = this._t.GetTarjeta(e.medioCodigo);
           });
-          console.log('Tarjetas por alumno', this.tarjetas);
         },
         complete: () => {
           // this.ObtenerInformacionPagoLocal()
@@ -166,10 +151,6 @@ export class PagoMedioPagoComponent implements OnInit, OnDestroy {
       });
   }
   EnviarSolicitudPago(): void {
-    console.log('Datos de pasarela:', this.medioPagoSeleccionado);
-    console.log('Datos de pasarela:', this.IdMedioPagoSeleccionado);
-    console.log('Validador',this.validadorPagosMultiples)
-
     if(this.IdPasarelaPago==10 ||this.IdPasarelaPago==7){
       if(this.IdMedioPagoSeleccionado!=1){
         this.valorIdMedioPagoSeleccionado=0
@@ -187,7 +168,6 @@ export class PagoMedioPagoComponent implements OnInit, OnDestroy {
         this.valorIdMedioPagoSeleccionado=3
       }
       this.medioPagoSeleccionado =this.tarjetas[this.valorIdMedioPagoSeleccionado]
-      console.log('Medio Pago2', this.medioPagoSeleccionado);
     }
     if (this.medioPagoSeleccionado != undefined) {
       this.jsonSend.ListaCuota = [];
@@ -265,14 +245,6 @@ export class PagoMedioPagoComponent implements OnInit, OnDestroy {
           dialogRefLoader.close();
 
           var sesion = x._Repuesta.identificadorTransaccion;
-          // this._SessionStorageService.SessionSetValue(
-          //   sesion,
-          //   x._Repuesta.requiereDatosTarjeta
-          // );
-          console.log(x._Repuesta)
-          console.log(this.tarjetas)
-          console.log(tarjeta)
-          console.log(this.medioPagoSeleccionado)
           let ruta: string | null = null;
           switch (tarjeta.idPasarelaPago) {
             case 10:
@@ -296,7 +268,6 @@ export class PagoMedioPagoComponent implements OnInit, OnDestroy {
       });
   }
   ObtenerMedioPagoSeleccion(valor:any){
-    console.log(valor)
     this.IdMedioPagoSeleccionado = valor;
   }
   RegresarPagosCronograma(){
@@ -304,7 +275,6 @@ export class PagoMedioPagoComponent implements OnInit, OnDestroy {
   }
 
   OpenModalMetodoPagoSucripcion(): void {
-    console.log('Datos de pasarela:',this.medioPagoSeleccionado)
     if(this.IdPasarelaPago==10 ||this.IdPasarelaPago==7){
       if(this.IdMedioPagoSeleccionado!=1){
         this.valorIdMedioPagoSeleccionado=0
@@ -323,7 +293,6 @@ export class PagoMedioPagoComponent implements OnInit, OnDestroy {
     if(tarjeta==undefined){
       this.medioPagoSeleccionado = this.tarjetas[0];
     }
-    console.log(tarjeta)
 
     this.CronogramaPago.registroCuota.forEach((r:any) => {
       if(r.cancelado==false){
@@ -359,13 +328,9 @@ export class PagoMedioPagoComponent implements OnInit, OnDestroy {
       });
       this._FormaPagoService.PreProcesoAfiliacionAlumno(this.jsonSend).pipe(takeUntil(this.signal$)).subscribe({
         next:x=>{
-          console.log(x)
           dialogRef.close();
           var sesion=x._Repuesta.identificadorTransaccion;
           this._SessionStorageService.SessionSetValue(sesion,x._Repuesta.requiereDatosTarjeta);
-          console.log(parseInt(tarjeta.idPasarelaPago))
-
-
          if(tarjeta.idPasarelaPago==7){ //visa
             if(tarjeta.idFormaPago==52){
               this._router.navigate(['/AulaVirtual/MisPagos/Afiliacion/'+this.IdMatriculaCabecera+'/visa/'+sesion]);
