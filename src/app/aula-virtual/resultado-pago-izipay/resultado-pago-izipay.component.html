@@ -40,14 +40,21 @@
                   resultProceso.mensajeTransaccion != 'null' &&
                   resultProceso.mensajeTransaccion != ''
                 "
-                style="text-align: center;color:#E24C4D"
-              ><p class="resultadoParrafo">Hubo un problema al procesar tu pago.</p>
-                <p class="resultadoParrafo"><strong>Descripción:</strong> {{ resultProceso.mensajeTransaccion }}</p>
+                style="text-align: center; color: #e24c4d"
+              >
+                <p class="resultadoParrafo">
+                  Hubo un problema al procesar tu pago.
+                </p>
+                <p class="resultadoParrafo">
+                  <strong>Descripción:</strong>
+                  {{ resultProceso.mensajeTransaccion }}
+                </p>
               </div>
 
               <div>
                 <p class="resultadoParrafo">
-                  Asegurate de que tu tarjeta tenga saldo suficiente para completar tu pago e intentalo nuevamente
+                  Asegurate de que tu tarjeta tenga saldo suficiente para
+                  completar tu pago e intentalo nuevamente
                 </p>
               </div>
             </div>
@@ -66,7 +73,7 @@
         ></app-default-button>
       </ng-container>
       <ng-container *ngIf="resultProceso.tipoPago == 'Cronograma'">
-        <div class="col-12" style="display: flex;justify-content: center;">
+        <div class="col-12" style="display: flex; justify-content: center">
           <app-default-button
             [confs]="{ color: 'primary', titulo: 'Ver estado de cuenta' }"
             [style]="'font-size:13px;border-radius:15px'"
@@ -186,24 +193,11 @@
                 "
               >
                 <div class="col-6 col-md-6 col-lg-6"><b>Concepto:</b></div>
-                <div
-                  class="col-6 col-md-6 col-lg-6 itemValueCardPago"
-                  *ngIf="tipoRespuesta != 'AF'"
-                >
-                  <div *ngFor="let item of resultProceso.listaCuota">
-                    {{ item.nombre }}
-                  </div>
-                </div>
-                <div
-                  class="col-12 col-md-6 col-lg-6 itemValueCardPago"
-                  *ngIf="tipoRespuesta == 'AF'"
-                >
-                  <div
-                    *ngFor="let item of resultProceso.listaCuota; index as i"
-                  >
-                    <ng-container *ngIf="i == 0">
+                <div class="col-6 col-md-6 col-lg-6 itemValueCardPago">
+                  <div *ngFor="let item of resultProceso.listaCuota; index as i">
+                    <div *ngIf="tipoRespuesta != 'AF' || i == 0">
                       {{ item.nombre }}
-                    </ng-container>
+                    </div>
                   </div>
                 </div>
               </ng-container>
@@ -219,26 +213,26 @@
                 </div>
               </ng-container>
               <div class="col-6 col-md-6 col-lg-6">
-                <b style="text-wrap: nowrap;">Código de transacción:</b>
+                <b style="text-wrap: nowrap">Código de transacción:</b>
               </div>
               <div class="col-6 col-md-6 col-lg-6 itemValueCardPago">
                 {{ resultProceso.codigoHash }}
               </div>
               <div class="col-6 col-md-6 col-lg-6">
-                <b style="text-wrap: nowrap;">Fecha de transacción:</b>
+                <b style="text-wrap: nowrap">Fecha de transacción:</b>
               </div>
               <div class="col-6 col-md-6 col-lg-6 itemValueCardPago">
                 {{ resultProceso.fechaTransaccion | date : "dd/MM/yyyy" }}
               </div>
               <div class="col-6 col-md-6 col-lg-6">
-                <b style="text-wrap: nowrap;">Hora de transacción:</b>
+                <b style="text-wrap: nowrap">Hora de transacción:</b>
               </div>
               <div class="col-6 col-md-6 col-lg-6 itemValueCardPago">
                 {{ resultProceso.fechaTransaccion | date : "hh:mm a" }}
               </div>
               <ng-container *ngIf="tipoRespuesta == 'AF'">
                 <div class="col-6 col-md-6 col-lg-6">
-                  <b style="text-wrap: nowrap;">Pago recurrente:</b>
+                  <b style="text-wrap: nowrap">Pago recurrente:</b>
                 </div>
                 <div class="col-6 col-md-6 col-lg-6 itemValueCardPago">
                   Activado
@@ -254,22 +248,25 @@
         class="row mt-2"
         style="justify-content: center; text-align: center"
       >
-      <div class="button-container-Pagos" style="display: flex;    padding: 0px 3vw;">
-        <button
-          [routerLink]="ruta"
-          class="btn btn-primary m-2 responsive-button-Pagos"
-          style="width: 50%;"
+        <div
+          class="button-container-Pagos"
+          style="display: flex; padding: 0px 3vw"
         >
-          Ver estado de cuenta
-        </button>
-        <button
-          [routerLink]="rutaCursos"
-          class="btn btn-primary m-2 responsive-button-Pagos"
-          style="width: 50%;"
-        >
-          Ir a mi curso
-        </button>
-      </div>
+          <button
+            [routerLink]="ruta"
+            class="btn btn-primary m-2 responsive-button-Pagos"
+            style="width: 50%"
+          >
+            Ver estado de cuenta
+          </button>
+          <button
+            [routerLink]="rutaCursos"
+            class="btn btn-primary m-2 responsive-button-Pagos"
+            style="width: 50%"
+          >
+            Ir a mi curso
+          </button>
+        </div>
       </div>
     </div>
   </div>
