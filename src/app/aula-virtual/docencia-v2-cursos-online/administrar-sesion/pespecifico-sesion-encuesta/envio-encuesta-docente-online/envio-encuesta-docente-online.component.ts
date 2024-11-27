@@ -1,61 +1,79 @@
-import { ApplicationRef, ChangeDetectorRef, Component, ElementRef, Inject, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
-import {
-  MatDialogRef,
-  MAT_DIALOG_DATA,
-  MatDialog,
-} from '@angular/material/dialog';
-import {
-  CdkDragDrop,
-  moveItemInArray}
-from '@angular/cdk/drag-drop';
-import { Subject, takeUntil, timer } from 'rxjs';
-import {
-  EncuestaAvanceCategoriaDTO,
-  EncuestaAvanceDTO,
-  EncuestaAvancePreguntaDTO,
-  EncuestaAvancePreguntaRespuestaDTO,
-} from 'src/app/Core/Models/PEspecificoEsquema';
-import { ChargeSpinnerComponent } from 'src/app/Core/Shared/Containers/Dialog/charge-spinner/charge-spinner.component';
-import { PEspecificoEsquemaService } from 'src/app/Core/Shared/Services/PEspecificoEsquema/pespecifico-esquema.service';
+import { Component, Inject, OnInit, ViewEncapsulation } from '@angular/core';
+import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { Subject,takeUntil } from 'rxjs';
+import { EnvioEncuestaDocenteOnlineService } from 'src/app/Core/Shared/Services/EnvioEncuestaDocenteOnline/envio-encuesta-docente-online.service';
+
+
+interface EncuestaAvancePreguntaRespuestaDTO{
+  idRespuesta:number
+  respuesta:string,
+  puntaje:number
+}
+
+interface EncuestaAvanceCategoriaDTO{
+  idCategoria: number;
+  nombreCategoria: string;
+  preguntas: Array<EncuestaAvancePreguntaDTO>;
+}
+
+interface EncuestaAvanceDocenteDTO {
+  id: number;
+  idProveedor: number;
+  inicio: boolean;
+  idPEspecificoSesion: number;
+  idPGeneral: number;
+  idPEspecifico: number;
+  categorias: Array<EncuestaAvanceCategoriaDTO>;
+}
+
+
+interface EncuestaAvancePreguntaDTO{
+  idPregunta: number;
+  pregunta: string;
+  idPreguntaEncuestaTipo: number;
+  preguntaObligatoria: boolean;
+  valorRespuesta: Array<EncuestaAvancePreguntaRespuestaDTO>;
+}
+
 @Component({
-  selector: 'app-envio-encuesta-online',
-  templateUrl: './envio-encuesta-online.component.html',
-  styleUrls: ['./envio-encuesta-online.component.scss'],
+  selector: 'app-envio-encuesta-docente-online',
+  templateUrl: './envio-encuesta-docente-online.component.html',
+  styleUrls: ['./envio-encuesta-docente-online.component.scss'],
   encapsulation: ViewEncapsulation.None,
 })
-export class EnvioEncuestaOnlineComponent implements OnInit  {
+export class EnvioEncuestaDocenteOnlineComponent implements OnInit {
   private signal$ = new Subject();
   constructor(
-    public dialogRef: MatDialogRef<EnvioEncuestaOnlineComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any,
+
+    public dialogRef: MatDialogRef<EnvioEncuestaDocenteOnlineComponent>,
+    @Inject(MAT_DIALOG_DATA) public data:any,
     public dialog: MatDialog,
-    private _PEspecificoEsquemaService: PEspecificoEsquemaService,
-    //private cdr: ChangeDetectorRef
-    private appRef: ApplicationRef
-  ) {}
-
-
-
+    public _EnvioEncuestaDocenteOnline: EnvioEncuestaDocenteOnlineService,
+  ) { 
+    
+  }
   ngOnDestroy(): void {
     this.signal$.next(true);
     this.signal$.complete();
   }
-  public starsRanking: number[] = [1, 2, 3, 4, 5]; // Total de estrellas
-  public hoveredStar: number = 0; // Valor de estrella sobre la cual se hace hover
-  public EncuestaAvance: EncuestaAvanceDTO = {
+
+  public starsRanking: number[] = [1, 2, 3, 4, 5]
+  public hoveredStar: number = 0;
+  public EncuestaAvance: EncuestaAvanceDocenteDTO = {
     id: 0,
     inicio: false,
-    idMatriculaCabecera: 0,
+    idProveedor: 0,
     idPEspecificoSesion: 0,
     idPGeneral: 0,
     idPEspecifico: 0,
     categorias: [],
   };
-  public EncuestaCompleta = false;
-  public EncuestaEnviada = false;
-  public ListaJerarquico: string[] = []
+
+public EncuestaCompleta = false;
+public EncuestaEnviada = false;
 
   ngOnInit(): void {
+
 
     setTimeout(() => {
       const modalContent = document.querySelector('.scrollable-content-encuesta');
@@ -64,10 +82,13 @@ export class EnvioEncuestaOnlineComponent implements OnInit  {
       }
     }, 300);
 
-    console.log(this.data);
+    //this.data = this.data.data;
+
+    console.log(this.data)
+
     this.EncuestaAvance.categorias = [];
     this.EncuestaAvance.inicio = true;
-    this.EncuestaAvance.id = this.data.encuesta.id;
+    this.EncuestaAvance.id = this.data.encuesta.idEncuestaSesionPrograma;
 
     if (this.data.encuesta && this.data.encuesta.preguntasEncuesta) {
       if(this.data.encuesta.respuestasEncuesta.length!=0){
@@ -84,7 +105,7 @@ export class EnvioEncuestaOnlineComponent implements OnInit  {
           let vaRes: Array<any> = [];
 
           respuestasEncuesta.forEach((respuesta: any) => {
-            if (pregunta.id === respuesta.idPreguntaEncuesta) {
+            if (pregunta.idPreguntaEncuesta === respuesta.idPreguntaEncuesta) {
               // Casilla de texto
               if (pregunta.idPreguntaEncuestaTipo === 3) {
                 pregunta.alternativas[0].respuesta = [respuesta.valor];
@@ -140,18 +161,23 @@ export class EnvioEncuestaOnlineComponent implements OnInit  {
       console.log('No se encontraron preguntas en la encuesta.');
     }
     this.verificarRespuestasCompletas()
+    
+
   }
 
   changeRadio(indexCategoria: number, indexPregunta: number, index: number) {
+
     if (this.data.EncuestaEnviada !== true) {
-      this.data.encuesta.preguntasEncuesta[indexCategoria].preguntas[
-        indexPregunta
-      ].alternativas.forEach((a: any) => {
+
+      this.data.encuesta.preguntasEncuesta[
+        indexCategoria
+      ].preguntas[indexPregunta].alternativas.forEach((a: any) => {
         a.select = false;
       });
-      this.data.encuesta.preguntasEncuesta[indexCategoria].preguntas[
-        indexPregunta
-      ].alternativas[index].select = true;
+
+      this.data.encuesta.preguntasEncuesta[
+        indexCategoria
+      ].preguntas[indexPregunta].alternativas[index].select = true;
       this.AddToAvance();
     }
   }
@@ -167,7 +193,7 @@ export class EnvioEncuestaOnlineComponent implements OnInit  {
       this.AddToAvance();
     }
   }
-  // Resalta las estrellas cuando el mouse pasa sobre ellas
+
   highlightStars(starNumber: number): void {
     if (this.data.EncuestaEnviada !== true) {
       this.hoveredStar = starNumber;
@@ -181,20 +207,15 @@ export class EnvioEncuestaOnlineComponent implements OnInit  {
     }
   }
 
-  // Cambiamos el tipo del array de string[] a un array de objetos
-  drop(evento: CdkDragDrop<any>) {
-    moveItemInArray(evento.container.data,evento.previousIndex, evento.currentIndex);
-  }
-
   AddToAvance() {
     if (this.data.EncuestaEnviada !== true) {
       // Inicialización de data de guardado
       this.EncuestaAvance.categorias = [];
       this.EncuestaAvance.inicio = true;
-      this.EncuestaAvance.id = this.data.encuesta.id;
-      this.EncuestaAvance.idMatriculaCabecera = this.data.IdMatriculaCabecera;
+      this.EncuestaAvance.id = this.data.encuesta.idEncuestaSesionPrograma;
+      this.EncuestaAvance.idProveedor = this.data.IdProveedor;
       this.EncuestaAvance.idPEspecificoSesion = this.data.IdPEspecificoSesion;
-      this.EncuestaAvance.idPGeneral = this.data.IdPGeneral;
+      this.EncuestaAvance.idPGeneral = this.data.Sesion.idPGeneralHijo;
       this.EncuestaAvance.idPEspecifico = this.data.IdPEspecifico;
 
       // Iterar sobre las categorías de preguntas de la encuesta
@@ -207,9 +228,8 @@ export class EnvioEncuestaOnlineComponent implements OnInit  {
         this.EncuestaAvance.categorias.push(categoriaObjInicial);
 
         categoria.preguntas.forEach((p: any) => {
-
           const preguntaObjInicial: EncuestaAvancePreguntaDTO = {
-            idPregunta: p.id,
+            idPregunta: p.idPreguntaEncuesta,
             pregunta: p.pregunta,
             idPreguntaEncuestaTipo: p.idPreguntaEncuestaTipo,
             preguntaObligatoria:p.preguntaObligatoria,
@@ -278,7 +298,9 @@ export class EnvioEncuestaOnlineComponent implements OnInit  {
   }
 
   verificarRespuestasCompletas() {
+
     this.EncuestaCompleta = true;
+
     if(this.EncuestaAvance.categorias.length==0){
       this.AddToAvance()
     }
@@ -296,22 +318,24 @@ export class EnvioEncuestaOnlineComponent implements OnInit  {
     );
   }
 
-  AgregarPEspecificoSesionEncuestaAlumno(valor: boolean) {
-    if(this.EncuestaAvance.categorias.length==0){
-      this.AddToAvance()
+  AgregarPEspecificoSesionEncuestaDocente(valor: Boolean){
+
+    if (this.EncuestaAvance.categorias.length==0) {
+        this.AddToAvance();
     }
-    this._PEspecificoEsquemaService
-      .AgregarPEspecificoSesionEncuestaAlumno(this.EncuestaAvance)
+
+    console.log(this.EncuestaAvance)
+
+    this._EnvioEncuestaDocenteOnline
+      .AgregarPEspecificoSesionEncuestaDocente(this.EncuestaAvance)
       .pipe(takeUntil(this.signal$))
       .subscribe({
         next: (x) => {
+          console.log(x)
           this.dialogRef.close('guardado');
         },
         complete: () => {},
       });
+
   }
-
-
-
-
 }
