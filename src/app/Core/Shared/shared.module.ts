@@ -130,7 +130,7 @@ import { TableV2Component } from './Containers/table-v2/table-v2.component';
 import { TablePortalComponent } from './Containers/table-portal/table-portal.component';
 import { MatChipsModule } from '@angular/material/chips';
 import { FacebookPixelService } from './Services/FacebookPixel/facebook-pixel.service';
-import {MatRadioModule} from '@angular/material/radio';
+import { MatRadioModule } from '@angular/material/radio';
 import { ChatbotComponent } from './Containers/chatbot/chatbot.component';
 import { MatSlideToggleModule} from '@angular/material/slide-toggle';
 import { HeaderChatbotComponent } from './Containers/header-chatbot/header-chatbot.component';
@@ -148,6 +148,7 @@ import { ChargePuntosComponent } from './Containers/Dialog/charge-puntos/charge-
 import { RemovePuntoComaPipe } from './Pipes/remove-punto-coma.pipe';
 import { ChargeSpinnerComponent } from './Containers/Dialog/charge-spinner/charge-spinner.component';
 import { RemovePortalCriterioPipe } from './Pipes/remove-portal-criterio.pipe';
+import { EnvioEncuestaDocenteOnlineService } from './Services/EnvioEncuestaDocenteOnline/envio-encuesta-docente-online.service';
 import { FormatoMilesDecimalesPipe } from './Pipes/formato-miles-decimales.pipe';
 
 @NgModule({
@@ -414,6 +415,7 @@ import { FormatoMilesDecimalesPipe } from './Pipes/formato-miles-decimales.pipe'
     PEspecificoEsquemaService,
     PEspecificoSesionRecursoConectividadService,
     RemovePortalCriterioPipe,
+    EnvioEncuestaDocenteOnlineService,
     FormatoMilesDecimalesPipe
   ],
 })

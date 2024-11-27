@@ -360,6 +360,7 @@ export class ModuloSesionesComponent implements OnInit, OnChanges,OnDestroy {
   @Input() idModalidad: number = 2;
   @Input() IdMatriculaCabecera=0;
   @Input() IdPespecifico=0;
+  @Input() IdPgeneral=0;
   @Input() videos: Array<any>=[];
   ngOnInit(): void {
   }

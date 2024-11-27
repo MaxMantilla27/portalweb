@@ -197,6 +197,9 @@ import { EnvioActividadComponent } from './modulo/modulo-sesiones-online/envio-a
 import { DocenciaGestionCriteriosRegistroAntiguoComponent } from './docencia-v2-cursos-online/criterio-evaluacion-docente/docencia-gestion-criterios-registro-antiguo/docencia-gestion-criterios-registro-antiguo.component';
 import { DocenciaGestionCriteriosRegistroAntiguoAgregarComponent } from './docencia-v2-cursos-online/criterio-evaluacion-docente/docencia-gestion-criterios-registro-antiguo/docencia-gestion-criterios-registro-antiguo-agregar/docencia-gestion-criterios-registro-antiguo-agregar.component';
 import { DocenciaGestionNotasAntiguoComponent } from './docencia-v2-cursos-online/nota-docente/docencia-gestion-notas-antiguo/docencia-gestion-notas-antiguo/docencia-gestion-notas-antiguo.component';
+import { EnvioEncuestaOnlineComponent } from './modulo/modulo-sesiones-online/envio-encuesta-online/envio-encuesta-online.component';
+import { EnvioEncuestaDocenteOnlineComponent } from './docencia-v2-cursos-online/administrar-sesion/pespecifico-sesion-encuesta/envio-encuesta-docente-online/envio-encuesta-docente-online.component';
+import { PespecificoSesionEncuestaComponent } from './docencia-v2-cursos-online/administrar-sesion/pespecifico-sesion-encuesta/pespecifico-sesion-encuesta.component';
 import { PagoMedioPagoComponent } from './pago/pago-medio-pago/pago-medio-pago.component';
 import { DetallePagoPeruNiubizComponent } from './pago/pago-medio-pago/detalle-pago-peru-niubiz/detalle-pago-peru-niubiz.component';
 import { DetallePagoInternacionalNiubizComponent } from './pago/pago-medio-pago/detalle-pago-internacional-niubiz/detalle-pago-internacional-niubiz.component';
@@ -411,6 +414,9 @@ import { ResultadoPagoNiubizComponent } from './resultado-pago-niubiz/resultado-
     DocenciaGestionCriteriosRegistroAntiguoComponent,
     DocenciaGestionCriteriosRegistroAntiguoAgregarComponent,
     DocenciaGestionNotasAntiguoComponent,
+    EnvioEncuestaOnlineComponent,
+    EnvioEncuestaDocenteOnlineComponent,
+    PespecificoSesionEncuestaComponent,
     PagoMedioPagoComponent,
     DetallePagoPeruNiubizComponent,
     DetallePagoInternacionalNiubizComponent,
