@@ -7,27 +7,24 @@ import { environment } from 'src/environments/environment';
 @Injectable({
   providedIn: 'root'
 })
-export class DatosPortalService {
+export class FormularioProgressiveProfilingService {
+
   isBrowser: boolean;
-  public urlBase=environment.url_api+'DatosPortal';
+  public urlBase=environment.url_api+'FormularioProgresivo';
+  
   constructor(
     private http: HttpClient,
     @Inject(PLATFORM_ID) platformId: Object
-  ) {
+  ) { 
     this.isBrowser = isPlatformBrowser(platformId);
   }
-  public ObtenerCombosPortal():Observable<any>{
+
+  public ObtenerListaFormularioProgresivo():Observable<any>{
     if(this.isBrowser){
-      return this.http.get<any>(this.urlBase+'/ObtenerCombosPortal');
+      return this.http.get<any>(this.urlBase+'/ObtenerListaFormularioProgresivo');
     }else{
       return EMPTY;
     }
   }
-  public ObtenerCombosFormularioProgresivo():Observable<any>{
-    if(this.isBrowser){
-      return this.http.get<any>(this.urlBase+'/ObtenerCombosFormularioProgresivo');
-    }else{
-      return EMPTY;
-    }
-  }
+
 }
