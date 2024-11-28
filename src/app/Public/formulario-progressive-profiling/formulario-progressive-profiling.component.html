@@ -1,0 +1,91 @@
+<div class="form-container">
+    <div class="form-titulo">
+        <h1>{{ tituloTexto }}</h1>
+        <button
+            type="button"
+            class="btn-close"
+            aria-label="Close"
+            (click)="cerrarFormulario()">
+        </button>
+    </div>
+
+    <!-- Cabecera -->
+    <div class="form-cabecera">
+        <p class="parrafoSup" *ngIf="cabeceraMensajeSup === true">
+            {{ cabeceraMensajeSupTexto }}
+        </p>
+        <h2 
+            *ngIf="cabeceraMensaje === true" 
+            [ngClass]="{'con-borde': cabeceraMensajeBordes === true}">
+            {{ cabeceraMensajeTexto }}
+        </h2>
+        <p class="parrafoInf" *ngIf="cabeceraMensajeInf === true">
+            {{ cabeceraMensajeInfTexto }}
+        </p>
+        <button
+            *ngIf="cabeceraBoton === true"
+            mat-raised-button
+            class="boton-secundario"
+            (click)="accionarBoton()">
+            {{ cabeceraBotonTexto }}
+        </button>
+    </div>
+
+    <!-- Cuerpo -->
+    <div class="form-cuerpo">
+        <p *ngIf="cuerpoMensajeSup === true">
+            {{ cuerpoMensajeSupTexto }}
+        </p>
+
+        <!-- Lista de inputs dinámicos -->
+        <form *ngIf="condicionMostrarCuerpo === true" [formGroup]="formCamposDinamicos">
+            <div class="form-group" *ngFor="let campo of camposConfigurados">
+                <div *ngIf="campo.id === 'telefono'" class="contenedor-bandera">
+                    <div class="bandera-placeholder" 
+                        [style.backgroundImage]="'url(' + getIconoPorPais(campo.valorDefecto) + ')'">
+                    </div>
+                </div>
+                <div class="input-wrapper">
+                    <mat-form-field appearance="outline" class="form-field" hideRequiredMarker="true">
+                        <mat-label>{{ campo.label }}</mat-label>
+                        <input
+                            *ngIf="campo.tipoControl === 'input'"
+                            formControlName="{{ campo.id }}"
+                            name="{{ campo.id }}"
+                            [id]="campo.id"
+                            class="input-field"
+                            matInput
+                            [type]="campo.tipo"/>
+                        <mat-select
+                            *ngIf="campo.tipoControl === 'combo'"
+                            formControlName="{{ campo.id }}"
+                            [id]="campo.id"
+                            (selectionChange)="onComboChange($event, campo)">
+                            <mat-option *ngFor="let option of campo.opciones" [value]="option.value">
+                                {{ option.label }}
+                            </mat-option>
+                        </mat-select>
+                        <mat-error *ngIf="formCamposDinamicos.get(campo.id)?.invalid && formCamposDinamicos.get(campo.id)?.touched">
+                            <div *ngIf="formCamposDinamicos.get(campo.id)?.hasError('required')">
+                              Este campo es requerido
+                            </div>
+                            <div *ngIf="formCamposDinamicos.get(campo.id)?.hasError('email')">
+                                El campo tiene que ser un correo (example&#64;example.com)
+                            </div>
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <div>
+        <button
+            *ngIf="boton === true"
+            mat-raised-button type="submit"
+            class="boton-principal"
+            (click)="accionarBoton()">
+            {{ botonTexto }}
+        </button>
+    </div>
+</div>

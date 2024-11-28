@@ -68,6 +68,7 @@ import { ModalPagoMercadoPagoChileOrganicoComponent } from '../aula-virtual/moda
 import { ModalPagoOpenpayPeruOrganicoComponent } from '../aula-virtual/modal-confirmacion-pago-organico/modal-pago-openpay-peru-organico/modal-pago-openpay-peru-organico/modal-pago-openpay-peru-organico.component';
 import { ProcesoMatriculaModalComponent } from './transparencia/proceso-matricula-modal/proceso-matricula-modal.component';
 import { LoginATCComponent } from './login-atc/login-atc.component';
+import { FormularioProgressiveProfilingComponent } from './formulario-progressive-profiling/formulario-progressive-profiling.component';
 
 
 @NgModule({
@@ -143,7 +144,8 @@ import { LoginATCComponent } from './login-atc/login-atc.component';
     ModalPagoMercadoPagoChileOrganicoComponent,
     ModalPagoOpenpayPeruOrganicoComponent,
     ProcesoMatriculaModalComponent,
-    LoginATCComponent
+    LoginATCComponent,
+    FormularioProgressiveProfilingComponent
   ],
   exports: [],
   providers: [
