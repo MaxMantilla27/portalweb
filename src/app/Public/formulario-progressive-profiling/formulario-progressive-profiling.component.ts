@@ -403,9 +403,10 @@ export class FormularioProgressiveProfilingComponent implements OnInit {
   ejecutarAccion(accion: number): void {
     switch (accion) {
       case 1:
-        this.guardaDatos();
-        this.abreFormularioRespuesta(this.id);
-        this.cerrarFormulario();
+        // this.guardaDatos();
+        // this.abreFormularioRespuesta(this.id);
+        // this.cerrarFormulario();
+        this.ejecutarFormularioProgresivo();
         break;
       case 2:
         this.guardaDatos();
@@ -433,27 +434,15 @@ export class FormularioProgressiveProfilingComponent implements OnInit {
     }
   }
 
-  copiaCodigo(): void {
-    if (this.cabeceraMensajeTexto) {
-      navigator.clipboard.writeText(this.cabeceraMensajeTexto).then(
-        () => {
-          console.log('Texto copiado al portapapeles:', this.cabeceraMensajeTexto);
-        },
-        (err) => {
-          console.error('Error al copiar el texto:', err);
-        }
-      );
-    } else {
-      console.warn('No hay texto para copiar.');
+  async ejecutarFormularioProgresivo(): Promise<void> {
+    try {
+      await this.guardaDatos();
+      console.log('Datos guardados correctamente');
+      this.abreFormularioRespuesta(this.id);
+      this.cerrarFormulario();
+    } catch (error) {
+      console.error('Error durante la ejecución del formulario progresivo:', error);
     }
-  }
-
-  enviaBrochure(): void {
-    
-  }
-
-  enviaAulaVirtual(): void {
-    
   }
 
   guardaDatos(): Promise<void> {
@@ -478,9 +467,36 @@ export class FormularioProgressiveProfilingComponent implements OnInit {
     return this._RegistroVisitaPortalService.InsertarRegistroVisitaPortal(datosFinales)
       .pipe(takeUntil(this.signal$))
       .toPromise()
+      .then(() => {
+        console.log('Registro insertado exitosamente');
+      })
       .catch(error => {
         console.error('Error al insertar el registro:', error);
+        throw error;
       });
+  }
+
+  copiaCodigo(): void {
+    if (this.cabeceraMensajeTexto) {
+      navigator.clipboard.writeText(this.cabeceraMensajeTexto).then(
+        () => {
+          console.log('Texto copiado al portapapeles:', this.cabeceraMensajeTexto);
+        },
+        (err) => {
+          console.error('Error al copiar el texto:', err);
+        }
+      );
+    } else {
+      console.warn('No hay texto para copiar.');
+    }
+  }
+
+  enviaBrochure(): void {
+    
+  }
+
+  enviaAulaVirtual(): void {
+    
   }
 
   abreFormularioRespuesta(formularioInicial: number) {
