@@ -26,7 +26,8 @@ export class ChatbotIAService {
         'Mensaje' : registroChar.Mensaje,
         'Cerrado' : registroChar.Cerrado,
         'Derivado' : registroChar.Derivado,
-        'TiempoActual': this.formatearFecha(registroChar.TiempoActual!)
+        'TiempoActual': this.formatearFecha(registroChar.TiempoActual!,),
+        'IdContactoPortalSegmento': registroChar.IdContactoPortalSegmento!
       });
     }else{
       return EMPTY;
@@ -48,11 +49,38 @@ export class ChatbotIAService {
     const horas = fecha.getHours().toString().padStart(2, '0');
     const minutos = fecha.getMinutes().toString().padStart(2, '0');
     const segundos = fecha.getSeconds().toString().padStart(2, '0');
-  
+
     return `${año}-${mes}-${dia}T${horas}:${minutos}:${segundos}`;
   }
-  
 
-
-
+  public ObtenerHistorialMensajeUsuarioHiloChat(IdContactoPortalSegmento:string):Observable<any>{
+    console.log(IdContactoPortalSegmento)
+    if(this.isBrowser){
+      return this.http.get<string>(this.urlBase+'/ObtenerHistorialMensajeUsuarioHiloChat?IdContactoPortalSegmento='+IdContactoPortalSegmento);
+    }else{
+      return EMPTY;
+    }
+  }
+  public ActualizarIdAreaDerivacionHiloChat(IdChatbotIAPortalHiloChat:number,IdAreaDerivacion:number):Observable<any>{
+    if(this.isBrowser){
+      return this.http.post<any>(this.urlBase+'/ActualizarIdAreaDerivacionHiloChat?IdChatbotIAPortalHiloChat='+IdChatbotIAPortalHiloChat+'&IdAreaDerivacion='+IdAreaDerivacion,{});
+    }else{
+      return EMPTY;
+    }
+  }
+  public CerrarRegistroHiloChat(IdChatbotIAPortalHiloChat:number):Observable<any>{
+    if(this.isBrowser){
+      return this.http.post<any>(this.urlBase+'/CerrarRegistroHiloChat?IdChatbotIAPortalHiloChat='+IdChatbotIAPortalHiloChat,{});
+    }else{
+      return EMPTY;
+    }
+  }
+  public ObtenerEstadoDerivacionHiloChat(IdContactoPortalSegmento:string):Observable<any>{
+    console.log(IdContactoPortalSegmento)
+    if(this.isBrowser){
+      return this.http.get<string>(this.urlBase+'/ObtenerEstadoDerivacionHiloChat?IdContactoPortalSegmento='+IdContactoPortalSegmento);
+    }else{
+      return EMPTY;
+    }
+  }
 }

@@ -75,7 +75,7 @@
                 <!--<div class="remitente">
                   MENSAJITO DE REMITENTE
                 </div>
-                
+
                 <div
                   class="msj"
                   [innerHtml]="item.mensaje | safeHtml"
@@ -130,6 +130,7 @@
           <i
             *ngIf="!this.registroChatIA.Cerrado && !ChatError"
             class="material-icons"
+            style="font-size: 20px !important;"
             (click)="enviarMensaje()"
             >send</i
           >
@@ -165,8 +166,8 @@
         />
         <button (click)="sendMessage()" class="btn btn-primary">Enviar</button>
       </div>
-    
-     
+
+
         <ng-container *ngIf="Paso==3 && Caso=='A'">
           <app-chat-atencion-cliente-chat (RegresarChatAtc)="RetrocederCursos($event)" (RegresarChatAtcEnviado)="RetrocederInicioFormulario($event,1)" [idProgramageneral]="IdProgramageneral" [IdPespecificoPrograma]="IdPespecificoPrograma"></app-chat-atencion-cliente-chat>
         </ng-container>

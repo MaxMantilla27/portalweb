@@ -12,4 +12,6 @@ export interface RegistroChatbotIADTO{
     IdMatriculaCabecera?: number;
     IdPGeneral?: number;
     ChatDerivado?: number;
+    IdContactoPortalSegmento?: string;
+    IdAreaDerivacion?: number;
 }
