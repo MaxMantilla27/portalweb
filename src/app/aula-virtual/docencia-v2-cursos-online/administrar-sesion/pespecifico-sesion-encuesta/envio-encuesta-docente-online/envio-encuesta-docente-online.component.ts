@@ -105,7 +105,7 @@ public EncuestaEnviada = false;
           let vaRes: Array<any> = [];
 
           respuestasEncuesta.forEach((respuesta: any) => {
-            if (pregunta.idPreguntaEncuesta === respuesta.idPreguntaEncuesta) {
+            if (pregunta.id === respuesta.idPreguntaEncuesta) {
               // Casilla de texto
               if (pregunta.idPreguntaEncuestaTipo === 3) {
                 pregunta.alternativas[0].respuesta = [respuesta.valor];
