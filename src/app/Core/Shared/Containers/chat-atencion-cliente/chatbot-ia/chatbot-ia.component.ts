@@ -46,7 +46,6 @@ export class ChatbotIaComponent implements OnInit {
     datoContenido: false,
   };
   private signal$ = new Subject();
-
   ChatError: boolean = false;
   inputActive = true;
   nuevoMensaje: string = '';
@@ -61,7 +60,7 @@ export class ChatbotIaComponent implements OnInit {
   public interval: any;
   public intervalPrevio: any;
 
-  @ViewChild('contenidoMsj') contentChatMsj!: ElementRef;
+  @ViewChild('contenidoMsj') contenidoMsj!: ElementRef;
   @ViewChild('inputChat') inputChat!: ElementRef;
   @Input() Open: boolean = false;
 
@@ -78,9 +77,27 @@ export class ChatbotIaComponent implements OnInit {
     private cd: ChangeDetectorRef,
     private _ChatEnLinea: ChatEnLineaService
   ) {}
-
+  public IdChatbotIAPortalHiloChat=0;
   ngOnInit(): void {
     this.ObtenerHistorialChatBotIA()
+    this._HelperService.recibirDatoCuenta.pipe(takeUntil(this.signal$)).subscribe({
+      next: (x) => {
+        console.log(x)
+        let IdChatbotIAPortalHiloChatLocal=this._SessionStorageService.SessionGetValue('IdChatbotIAPortalHiloChat')
+
+        if(this._SessionStorageService.GetToken()==null){
+          if(IdChatbotIAPortalHiloChatLocal!='')
+            {
+              this.IdChatbotIAPortalHiloChat=Number(IdChatbotIAPortalHiloChatLocal)
+              this.CerrarRegistroHiloChat(this.IdChatbotIAPortalHiloChat)
+            }
+        }
+        else{
+
+        }
+        console.log(IdChatbotIAPortalHiloChatLocal)
+      }
+    });
   }
 
   ngAfterViewInit(): void {
@@ -88,6 +105,7 @@ export class ChatbotIaComponent implements OnInit {
   }
 
   reiniciarChat() {
+    console.log('Reiniciando CHAT')
     this.mensajes = [];
     this.registroChatIA = {
       Cerrado: false,
@@ -96,6 +114,7 @@ export class ChatbotIaComponent implements OnInit {
     this.ChatError = false;
     this.inputActive = true;
     this.nuevoMensaje = '';
+    this.ChatbotCerrado=false;
     this.enviarMensajeInicial();
   }
 
@@ -125,7 +144,7 @@ export class ChatbotIaComponent implements OnInit {
         this.reemplazarMensajeBot();
         this.inputActive = this.registroChatIA.Cerrado ? false : true;
         this.setFocusOnInput();
-        this.scrollAbajo();
+        this.scrollAbajo(true,1);
         if (this.registroChatIA.Derivado) {
           setTimeout(() => {
             if (
@@ -167,7 +186,7 @@ export class ChatbotIaComponent implements OnInit {
       this.inputActive = true;
 
       this.CargandoInformacion = false;
-      this.scrollAbajo();
+      this.scrollAbajo(true,2);
     });
   }
 
@@ -205,6 +224,8 @@ export class ChatbotIaComponent implements OnInit {
               let data = JSON.parse(JSON.stringify(response.Data));
               console.log('DATA', data);
               this.registroChatIA = this.jsonADTO(data);
+              this._SessionStorageService.SessionSetValue('IdChatbotIAPortalHiloChat',this.registroChatIA.IdChatbotIAPortalHiloChat!.toString());
+
               callback();
             } else {
               this.ChatError = true;
@@ -246,29 +267,14 @@ export class ChatbotIaComponent implements OnInit {
 
   // Luego de un cambio (agregar un mensaje) ejecuta la función para bajar el scroll
   ngAfterViewChecked() {
-    console.log('ACTUALIZAR');
-    //this.scrollAbajo();
+    // console.log('ACTUALIZAR');
     this.cd.detectChanges();
-    if(this.Open){
-      this.scrollAbajo();
+    if (this.CargandoInformacion) {
+      this.scrollAbajo(true,3); // Baja automáticamente después de renderizar
     }
   }
 
-  //Enfoca el scroll abajo para ver el último mensaje
-  scrollAbajo(): void {
-    console.log("LO BAJARÁ")
-    try {
-      console.log(this.contentChatMsj)
-      if (this.contentChatMsj) {
-        console.log(this.contentChatMsj.nativeElement.scrollTop)
-        console.log(this.contentChatMsj.nativeElement.scrollHeight)
-        this.contentChatMsj.nativeElement.scrollTop =
-          this.contentChatMsj.nativeElement.scrollHeight;
-      }
-    } catch (err) {
-      console.error('Error en enfocar el scrolling para bajo:', err);
-    }
-  }
+
 
   //Enfoca al input luego de recibir el mensaje
   private setFocusOnInput(): void {
@@ -280,14 +286,14 @@ export class ChatbotIaComponent implements OnInit {
   // Muestra 'Escribiendo...'  para que el usuario sepa que no se ha colgado
   mostrarEscribiendo(): void {
     this.mensajes.push({ mensaje: 'Escribiendo...', esUsuario: false });
-    this.scrollAbajo();
+    this.scrollAbajo(true,4);
   }
 
   // Reemplaza el último mensaje del bot (los "...")
   reemplazarMensajeBot(): void {
     this.mensajes[this.mensajes.length - 1].mensaje =
       this.registroChatIA.Mensaje!;
-    this.scrollAbajo();
+    this.scrollAbajo(true,5);
   }
 
   ObtenerCoordinadorMatricula(IdMatriculaCabecera: number) {
@@ -328,7 +334,7 @@ export class ChatbotIaComponent implements OnInit {
             console.log('Historial del chat:',response);
             //Realiza el inicio de sesión del usuario
             if(response!=null)
-              response.forEach((historial:any) => {
+              response.slice(1).forEach((historial:any) => {
                 this.mensajes.push({
                   mensaje: historial.contenido,
                   esUsuario: historial.esUsuario
@@ -337,6 +343,9 @@ export class ChatbotIaComponent implements OnInit {
 
             }
 
+          },
+          complete:()=> {
+            this.scrollAbajo(true,6);
           },
           error: (e) => {
             console.error('Error al obtener el historial respuesta de la API', e);
@@ -347,25 +356,51 @@ export class ChatbotIaComponent implements OnInit {
     }, 1000);
   }
   ActualizarIdAreaDerivacionHiloChat(IdAreaDerivacion:number){
-    console.log('AREA DERIVADA',IdAreaDerivacion)
+    console.log('AREA A DERIVADA',IdAreaDerivacion)
     this.chatbotIAService.ActualizarIdAreaDerivacionHiloChat(this.registroChatIA.IdChatbotIAPortalHiloChat!,IdAreaDerivacion).subscribe({
       next: (response) => {
         console.log(response)
       }
     })
   }
-  CerrarRegistroHiloChat(){
-    this.chatbotIAService.CerrarRegistroHiloChat(this.registroChatIA.IdChatbotIAPortalHiloChat!).subscribe({
+  CerrarRegistroHiloChat(IdChatbotIAPortalHiloChat:number){
+    this.CargandoInformacion = true;
+    this.chatbotIAService.CerrarRegistroHiloChat(IdChatbotIAPortalHiloChat).subscribe({
       next: (response) => {
         console.log(response)
+        console.log('CERRANDO SESIÓN')
+      },
+      complete:()=>{
+        this.reiniciarChat()
       }
     })
   }
   ObtenerEstadoDerivacionHiloChat(IdContactoPortalSegmento:string){
+    this.ChatVentasAbierto
     this.chatbotIAService.ObtenerEstadoDerivacionHiloChat(IdContactoPortalSegmento).subscribe({
       next: (response) => {
-        console.log(response)
+        console.log('AREA DERIVADA ORIGEN',response)
+        if(response!=null){
+          if(response.idAreaDerivacion!=0 && response.derivacionCerrada!=0){
+            if(response.idAreaDerivacion==2)
+            {
+              this.ChatbotCerrado = true;
+              this.ChatVentasAbierto = true;
+              console.log('Envia a flujo de VENTAS');
+            }
+          }
+        }
       }
     })
+  }
+  scrollAbajo(smooth: boolean = true,id:number) {
+    console.log('Valor de scroll',id)
+    if (this.contenidoMsj) {
+      const nativeElement = this.contenidoMsj.nativeElement;
+      nativeElement.scrollTo({
+        top: nativeElement.scrollHeight,
+        behavior: smooth ? 'smooth' : 'auto',
+      });
+    }
   }
 }

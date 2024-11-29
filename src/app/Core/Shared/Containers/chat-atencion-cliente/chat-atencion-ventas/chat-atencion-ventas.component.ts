@@ -27,7 +27,7 @@ import { SeccionProgramaService } from '../../../Services/SeccionPrograma/seccio
 export class ChatAtencionVentasComponent implements OnInit, OnChanges {
 
   private signal$ = new Subject();
-  @ViewChild('contenidoMsjAtc') contenidoMsj!: ElementRef;
+  @ViewChild('contenidoMsj') contenidoMsj!: ElementRef;
   constructor(
     private _router: Router,
     private _AspNetUserService:AspNetUserService,
@@ -744,7 +744,7 @@ export class ChatAtencionVentasComponent implements OnInit, OnChanges {
     };
     Area = Area2;*/
     this._SessionStorageService.SessionSetValue('Area', JSON.stringify(Area));
-    
+
     this.IdAreaSeleccionada=Area;
     console.log(Area)
     this.RegistroChatDetalleAtc.IdChatAtencionClienteContacto=this.IdChatAtencionClienteContacto;
