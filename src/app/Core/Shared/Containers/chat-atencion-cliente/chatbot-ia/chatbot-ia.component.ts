@@ -322,6 +322,7 @@ export class ChatbotIaComponent implements OnInit {
       if (usuarioWeb != '') {
         clearTimeout(this.intervalPrevio);
         this.registroChatIA.IdContactoPortalSegmento = usuarioWeb;
+        this.ObtenerEstadoDerivacionHiloChat(this.registroChatIA.IdContactoPortalSegmento)
         this.chatbotIAService.ObtenerHistorialMensajeUsuarioHiloChat(this.registroChatIA.IdContactoPortalSegmento).subscribe({
           next: (response) => {
             console.log('Historial del chat:',response);
@@ -355,6 +356,13 @@ export class ChatbotIaComponent implements OnInit {
   }
   CerrarRegistroHiloChat(){
     this.chatbotIAService.CerrarRegistroHiloChat(this.registroChatIA.IdChatbotIAPortalHiloChat!).subscribe({
+      next: (response) => {
+        console.log(response)
+      }
+    })
+  }
+  ObtenerEstadoDerivacionHiloChat(IdContactoPortalSegmento:string){
+    this.chatbotIAService.ObtenerEstadoDerivacionHiloChat(IdContactoPortalSegmento).subscribe({
       next: (response) => {
         console.log(response)
       }
