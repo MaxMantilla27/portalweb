@@ -124,11 +124,12 @@ export class ChatbotIaComponent implements OnInit {
   toggleChat(state: boolean) {
     this.Open = state;
     this.IsOpen.emit(state);
-    if (this.Open && this.mensajes.length == 0) {
-
-      this.enviarMensajeInicial();
+    if (this.Open) {
+      if(this.mensajes.length == 0){
+        this.enviarMensajeInicial();
+      }
+      this.scrollAbajo(true,1)
     }
-
   }
 
   enviarMensaje(): void {
@@ -136,10 +137,10 @@ export class ChatbotIaComponent implements OnInit {
       this.inputActive = false;
 
       this.mensajes.push({ esUsuario: true, mensaje: this.nuevoMensaje });
+      this.scrollAbajo(true,2)
       this.registroChatIA.Mensaje = this.nuevoMensaje;
       this.registroChatIA.TiempoActual = new Date();
       this.nuevoMensaje = '';
-      this.scrollAbajo(true,12);
 
       this.mostrarEscribiendo();
 
@@ -147,7 +148,6 @@ export class ChatbotIaComponent implements OnInit {
         this.reemplazarMensajeBot();
         this.inputActive = this.registroChatIA.Cerrado ? false : true;
         this.setFocusOnInput();
-        this.scrollAbajo(true,1);
         if (this.registroChatIA.Derivado) {
           setTimeout(() => {
             console.log(this.registroChatIA)
@@ -169,7 +169,6 @@ export class ChatbotIaComponent implements OnInit {
             console.log('ChatbotCerrado es: ', this.ChatbotCerrado);
             console.log('ChatbotVentas es: ', this.ChatVentasAbierto);
           }, 6000);
-        this.scrollAbajo(true,11);
         }
       });
     }
@@ -190,7 +189,6 @@ export class ChatbotIaComponent implements OnInit {
       this.inputActive = true;
 
       this.CargandoInformacion = false;
-      this.scrollAbajo(true,2);
     });
   }
 
@@ -237,7 +235,6 @@ export class ChatbotIaComponent implements OnInit {
             }
           },
           complete:()=>{
-            this.scrollAbajo(true,7)
           },
           error: (e) => {
             console.error('Error al obtener la respuesta de la API', e);
@@ -267,7 +264,6 @@ export class ChatbotIaComponent implements OnInit {
         esUsuario: true,
       });
       this.nuevoMensaje = '';
-      this.scrollAbajo(true,8)
       this.mostrarEscribiendo();
     }
   }
@@ -277,7 +273,7 @@ export class ChatbotIaComponent implements OnInit {
     // console.log('ACTUALIZAR');
     this.cd.detectChanges();
     if (this.CargandoInformacion) {
-      this.scrollAbajo(true,3); // Baja automáticamente después de renderizar
+      // this.scrollAbajo(true,0000); // Baja automáticamente después de renderizar
     }
   }
 
@@ -296,7 +292,7 @@ export class ChatbotIaComponent implements OnInit {
   mostrarEscribiendo(): void {
     this.EstadoEscribiendo=true;
     this.mensajes.push({ mensaje: 'Escribiendo...', esUsuario: false });
-    this.scrollAbajo(true,4);
+    this.scrollAbajo(true,3)
   }
 
   // Reemplaza el último mensaje del bot (los "...")
@@ -304,7 +300,7 @@ export class ChatbotIaComponent implements OnInit {
     this.EstadoEscribiendo=false;
     this.mensajes[this.mensajes.length - 1].mensaje =
       this.registroChatIA.Mensaje!;
-    this.scrollAbajo(true,5);
+      this.scrollAbajo(true,4)
   }
 
   ObtenerCoordinadorMatricula(IdMatriculaCabecera: number) {
@@ -356,7 +352,6 @@ export class ChatbotIaComponent implements OnInit {
 
           },
           complete:()=> {
-            this.scrollAbajo(true,6);
           },
           error: (e) => {
             console.error('Error al obtener el historial respuesta de la API', e);
@@ -414,13 +409,14 @@ export class ChatbotIaComponent implements OnInit {
   }
   scrollAbajo(smooth: boolean = true,id:number) {
     console.log('Valor de scroll',id)
+    setTimeout(() => {
     if (this.contenidoMsj) {
       const nativeElement = this.contenidoMsj.nativeElement;
       nativeElement.scrollTo({
         top: nativeElement.scrollHeight,
         behavior: smooth ? 'smooth' : 'auto',
       });
-    }
+    }},100)
   }
   ObtenerCursosMatriculadosAlumno(IdAlumno:number){
     console.log('OBTENDRA LISTADO DE CURSOS')
