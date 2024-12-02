@@ -78,6 +78,8 @@ export class ChatbotIaComponent implements OnInit {
     private _ChatEnLinea: ChatEnLineaService
   ) {}
   public IdChatbotIAPortalHiloChat=0;
+  public TieneCursosMatriculados=false;
+  public EstadoEscribiendo=false
   ngOnInit(): void {
     this.ObtenerHistorialChatBotIA()
     this._HelperService.recibirDatoCuenta.pipe(takeUntil(this.signal$)).subscribe({
@@ -137,6 +139,7 @@ export class ChatbotIaComponent implements OnInit {
       this.registroChatIA.Mensaje = this.nuevoMensaje;
       this.registroChatIA.TiempoActual = new Date();
       this.nuevoMensaje = '';
+      this.scrollAbajo(true,12);
 
       this.mostrarEscribiendo();
 
@@ -147,17 +150,17 @@ export class ChatbotIaComponent implements OnInit {
         this.scrollAbajo(true,1);
         if (this.registroChatIA.Derivado) {
           setTimeout(() => {
+            console.log(this.registroChatIA)
             if (
               this.registroChatIA.ChatDerivado == 1 &&
               this.registroChatIA.IdMatriculaCabecera != null &&
               this.registroChatIA.IdPGeneral != null
             ) {
-              this.ActualizarIdAreaDerivacionHiloChat(this.registroChatIA.ChatDerivado);
-              this.ObtenerCoordinadorMatricula(
-                this.registroChatIA.IdMatriculaCabecera!
-              );
+              console.log('ventitas')
+              this.ObtenerCursosMatriculadosAlumno(this.registroChatIA.IdAlumno!);
             }
             if (this.registroChatIA.ChatDerivado == 2) {
+              console.log('matriculitas')
               this.ActualizarIdAreaDerivacionHiloChat(this.registroChatIA.ChatDerivado);
               this.ChatbotCerrado = true;
               this.ChatVentasAbierto = true;
@@ -166,6 +169,7 @@ export class ChatbotIaComponent implements OnInit {
             console.log('ChatbotCerrado es: ', this.ChatbotCerrado);
             console.log('ChatbotVentas es: ', this.ChatVentasAbierto);
           }, 6000);
+        this.scrollAbajo(true,11);
         }
       });
     }
@@ -232,6 +236,9 @@ export class ChatbotIaComponent implements OnInit {
               this.CargandoInformacion = false;
             }
           },
+          complete:()=>{
+            this.scrollAbajo(true,7)
+          },
           error: (e) => {
             console.error('Error al obtener la respuesta de la API', e);
             this.ChatError = true;
@@ -260,7 +267,7 @@ export class ChatbotIaComponent implements OnInit {
         esUsuario: true,
       });
       this.nuevoMensaje = '';
-
+      this.scrollAbajo(true,8)
       this.mostrarEscribiendo();
     }
   }
@@ -279,18 +286,22 @@ export class ChatbotIaComponent implements OnInit {
   //Enfoca al input luego de recibir el mensaje
   private setFocusOnInput(): void {
     setTimeout(() => {
-      this.inputChat.nativeElement.focus();
+      if (this.inputChat && this.inputChat.nativeElement) {
+        this.inputChat.nativeElement.focus();
+      }
     }, 0);
   }
 
   // Muestra 'Escribiendo...'  para que el usuario sepa que no se ha colgado
   mostrarEscribiendo(): void {
+    this.EstadoEscribiendo=true;
     this.mensajes.push({ mensaje: 'Escribiendo...', esUsuario: false });
     this.scrollAbajo(true,4);
   }
 
   // Reemplaza el último mensaje del bot (los "...")
   reemplazarMensajeBot(): void {
+    this.EstadoEscribiendo=false;
     this.mensajes[this.mensajes.length - 1].mensaje =
       this.registroChatIA.Mensaje!;
     this.scrollAbajo(true,5);
@@ -388,6 +399,14 @@ export class ChatbotIaComponent implements OnInit {
               this.ChatVentasAbierto = true;
               console.log('Envia a flujo de VENTAS');
             }
+            if(response.idAreaDerivacion==1)
+            {
+              this.registroChatIA.IdMatriculaCabecera=response.idMatriculaCabecera;
+              this.ObtenerCoordinadorMatricula(this.registroChatIA.IdMatriculaCabecera!);
+                this.ChatbotCerrado = true;
+                this.ChatAcademicoAbierto = true;
+                console.log('Envia a flujo de ');
+            }
           }
         }
       }
@@ -402,5 +421,33 @@ export class ChatbotIaComponent implements OnInit {
         behavior: smooth ? 'smooth' : 'auto',
       });
     }
+  }
+  ObtenerCursosMatriculadosAlumno(IdAlumno:number){
+    console.log('OBTENDRA LISTADO DE CURSOS')
+    this.TieneCursosMatriculados=false
+    this.chatbotIAService
+    .ObtenerCursosAlumnoMatriculado(IdAlumno)
+    .pipe(takeUntil(this.signal$))
+    .subscribe({
+      next: (x) => {
+        console.log(x)
+        if(x.cursosHijo.length!=0){
+          this.TieneCursosMatriculados=true
+        }
+      },
+      complete: () => {
+        if(this.TieneCursosMatriculados){
+          this.ActualizarIdAreaDerivacionHiloChat(1);
+          this.ObtenerCoordinadorMatricula(
+          this.registroChatIA.IdMatriculaCabecera!);
+        }
+        else{
+          this.ActualizarIdAreaDerivacionHiloChat(2);
+          this.ChatbotCerrado = true;
+          this.ChatVentasAbierto = true;
+          console.log('INGRESO AL FLUJO 2');
+        }
+      },
+    });
   }
 }

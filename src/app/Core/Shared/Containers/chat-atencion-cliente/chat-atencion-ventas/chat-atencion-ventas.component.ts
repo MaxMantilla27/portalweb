@@ -252,7 +252,7 @@ export class ChatAtencionVentasComponent implements OnInit, OnChanges {
         this._ChatAtencionClienteService.ObtenerCursosAlumnoMatriculado().pipe(takeUntil(this.signal$)).subscribe({
           next:x=>{
             console.log(x)
-            if(x!=null){
+            if(x.cursosHijo.length!=0){
               this.IdAlumno=x.cursosHijo[0].idAlumno
             }
           },
@@ -282,10 +282,16 @@ export class ChatAtencionVentasComponent implements OnInit, OnChanges {
                   }
                 }
                 else{
-                  this.Paso=2
-                  this.Caso='B'
-                  console.log('INGRESA 1')
-                  this.CursosMatriculados()
+                  if(this.IdAlumno==0){
+                    this.InformacionChatSinToken();
+
+                  }
+                  else{
+                    this.Paso=2
+                    this.Caso='B'
+                    console.log('INGRESA 1')
+                    this.CursosMatriculados()
+                  }
                 }
               }
             })
@@ -341,80 +347,82 @@ export class ChatAtencionVentasComponent implements OnInit, OnChanges {
       }
     }
     else{
-      this._ChatAtencionClienteService.ObtenerChatAtencionClienteContactoDetalle(this.IdContactoPortalSegmento,1).pipe(takeUntil(this.signal$)).subscribe({
-        next:x=>{
-          console.log(x)
-          this.RegistroHistoricoUsuario=x
-        },
-        complete:()=>{
-          if(this.RegistroHistoricoUsuario!=null){
-            this.IdChatAtencionClienteContacto=this.RegistroHistoricoUsuario.idChatAtencionClienteContacto
-            this.Paso=this.RegistroHistoricoUsuario.pasoSiguiente;
-            this.Caso=this.RegistroHistoricoUsuario.casoSiguiente;
-            this.IdPespecificoPrograma=this.RegistroHistoricoUsuario.IdPespecifico
-            this.IdProgramageneral=this.RegistroHistoricoUsuario.idPGeneral
-            if(this.Paso==1 && this.Caso=='A'){
-              this.AreasCapacitacion=[];
-              this.CargandoInformacion=true
-              this._ChatAtencionClienteService.ObtenerAreasCapacitacionChatAtc().pipe(takeUntil(this.signal$)).subscribe({
-                next:x=>{
-                  this.AreasCapacitacion=x
-                  console.log(this.AreasCapacitacion)
-                },
-                complete:()=>{
-                  this.CargandoInformacion=false
-                }
-
-              })
-            }
-            if(this.Paso==2 && this.Caso=='A'){
-              this._ChatAtencionClienteService.ObtenerAreasCapacitacionChatAtc().pipe(takeUntil(this.signal$)).subscribe({
-                next:x=>{
-                  console.log(x)
-                  this.AreasCapacitacion=x
-                },
-                complete:()=>{
-                  this.CargandoInformacion=false
-                  let AreaSeleccionado =this.AreasCapacitacion.filter((areas:any) => areas.valor === this.RegistroHistoricoUsuario.mensajeEnviado);
-                  console.log(AreaSeleccionado)
-                  this.CursosPorArea=[];
-                  this._ChatAtencionClienteService.ListaProgramasFiltroChatAtc(AreaSeleccionado[0].id).pipe(takeUntil(this.signal$)).subscribe({
-                    next:x=>{
-                      console.log(x)
-                      this.CursosPorArea=x
-                    },
-                    complete:()=>{
-                      this.CargandoInformacion=false
-                      this.Paso=2
-                      this.Caso='A'
-                    }
-                  })
-                }
-              })
-            }
-            if(this.Caso=='B'){
-              this.Paso=0
-              this.Caso='A'
-              // console.log('INGRESA 3')
-              // this.CursosMatriculados()
-            }
-            if(this._SessionStorageService.GetToken()==null && this.Paso==4){
-              this.Paso=0
-              this.Caso='A'
-            }
-          }
-          else{
-            this.Paso=0
-            this.Caso='A'
-          }
-        }
-      })
-
+      this.InformacionChatSinToken();
     }
     if(this.IdMatriculaCabecera!=0){
       this.ObtenerCoordinadorMatricula();
     }
     this.CargandoInformacion=false
+  }
+  InformacionChatSinToken(){
+    this._ChatAtencionClienteService.ObtenerChatAtencionClienteContactoDetalle(this.IdContactoPortalSegmento,1).pipe(takeUntil(this.signal$)).subscribe({
+      next:x=>{
+        console.log(x)
+        this.RegistroHistoricoUsuario=x
+      },
+      complete:()=>{
+        if(this.RegistroHistoricoUsuario!=null){
+          this.IdChatAtencionClienteContacto=this.RegistroHistoricoUsuario.idChatAtencionClienteContacto
+          this.Paso=this.RegistroHistoricoUsuario.pasoSiguiente;
+          this.Caso=this.RegistroHistoricoUsuario.casoSiguiente;
+          this.IdPespecificoPrograma=this.RegistroHistoricoUsuario.IdPespecifico
+          this.IdProgramageneral=this.RegistroHistoricoUsuario.idPGeneral
+          if(this.Paso==1 && this.Caso=='A'){
+            this.AreasCapacitacion=[];
+            this.CargandoInformacion=true
+            this._ChatAtencionClienteService.ObtenerAreasCapacitacionChatAtc().pipe(takeUntil(this.signal$)).subscribe({
+              next:x=>{
+                this.AreasCapacitacion=x
+                console.log(this.AreasCapacitacion)
+              },
+              complete:()=>{
+                this.CargandoInformacion=false
+              }
+
+            })
+          }
+          if(this.Paso==2 && this.Caso=='A'){
+            this._ChatAtencionClienteService.ObtenerAreasCapacitacionChatAtc().pipe(takeUntil(this.signal$)).subscribe({
+              next:x=>{
+                console.log(x)
+                this.AreasCapacitacion=x
+              },
+              complete:()=>{
+                this.CargandoInformacion=false
+                let AreaSeleccionado =this.AreasCapacitacion.filter((areas:any) => areas.valor === this.RegistroHistoricoUsuario.mensajeEnviado);
+                console.log(AreaSeleccionado)
+                this.CursosPorArea=[];
+                this._ChatAtencionClienteService.ListaProgramasFiltroChatAtc(AreaSeleccionado[0].id).pipe(takeUntil(this.signal$)).subscribe({
+                  next:x=>{
+                    console.log(x)
+                    this.CursosPorArea=x
+                  },
+                  complete:()=>{
+                    this.CargandoInformacion=false
+                    this.Paso=2
+                    this.Caso='A'
+                  }
+                })
+              }
+            })
+          }
+          if(this.Caso=='B'){
+            this.Paso=0
+            this.Caso='A'
+            // console.log('INGRESA 3')
+            // this.CursosMatriculados()
+          }
+          if(this._SessionStorageService.GetToken()==null && this.Paso==4){
+            this.Paso=0
+            this.Caso='A'
+          }
+        }
+        else{
+          this.Paso=0
+          this.Caso='A'
+        }
+      }
+    })
   }
   ngOnChanges(changes: SimpleChanges): void {
   }

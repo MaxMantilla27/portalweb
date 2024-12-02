@@ -83,4 +83,11 @@ export class ChatbotIAService {
       return EMPTY;
     }
   }
+  public ObtenerCursosAlumnoMatriculado(IdAlumno:number):Observable<any>{
+    if(this.isBrowser){
+      return this.http.get<any>(this.urlBase+'/ObtenerCursosAlumnoMatriculado?IdAlumno='+IdAlumno);
+    }else{
+      return EMPTY;
+    }
+  }
 }
