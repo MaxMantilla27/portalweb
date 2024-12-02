@@ -229,7 +229,7 @@ public EncuestaEnviada = false;
 
         categoria.preguntas.forEach((p: any) => {
           const preguntaObjInicial: EncuestaAvancePreguntaDTO = {
-            idPregunta: p.idPreguntaEncuesta,
+            idPregunta: p.id,
             pregunta: p.pregunta,
             idPreguntaEncuestaTipo: p.idPreguntaEncuestaTipo,
             preguntaObligatoria:p.preguntaObligatoria,
