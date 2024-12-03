@@ -49,8 +49,8 @@ export class EnvioEncuestaDocenteOnlineComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data:any,
     public dialog: MatDialog,
     public _EnvioEncuestaDocenteOnline: EnvioEncuestaDocenteOnlineService,
-  ) { 
-    
+  ) {
+
   }
   ngOnDestroy(): void {
     this.signal$.next(true);
@@ -161,7 +161,7 @@ public EncuestaEnviada = false;
       console.log('No se encontraron preguntas en la encuesta.');
     }
     this.verificarRespuestasCompletas()
-    
+
 
   }
 
@@ -332,9 +332,10 @@ public EncuestaEnviada = false;
       .subscribe({
         next: (x) => {
           console.log(x)
+        },
+        complete: () => {
           this.dialogRef.close('guardado');
         },
-        complete: () => {},
       });
 
   }
