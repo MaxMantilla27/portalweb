@@ -182,13 +182,16 @@ export class ChatbotIaComponent implements OnInit {
     this.registroChatIA.TiempoActual = new Date();
 
     this.enviarYProcesar(() => {
-      this.mensajes.push({
-        mensaje: this.registroChatIA.Mensaje ?? '',
-        esUsuario: false,
-      });
+      if(this.registroChatIA.Mensaje!=''){
+        this.mensajes.push({
+          mensaje: this.registroChatIA.Mensaje ?? '',
+          esUsuario: false,
+        });
+      }
       this.inputActive = true;
 
       this.CargandoInformacion = false;
+      this.scrollAbajo(true,5)
     });
   }
 
