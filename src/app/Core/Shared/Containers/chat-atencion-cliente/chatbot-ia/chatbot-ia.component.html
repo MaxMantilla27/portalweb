@@ -159,7 +159,7 @@
         </ng-container>
         -->
     </ng-container>
-    <ng-container *ngIf="ChatbotCerrado && ChatAcademicoAbierto && TieneCoordinador">
+    <ng-container *ngIf="ChatbotCerrado && ChatAcademicoAbierto && TieneCoordinador && registroChatIA.IdMatriculaCabecera">
       <app-chat-atencion-cliente-academico
         [idProgramageneral]="registroChatIA.IdPGeneral!"
         [IdMatriculaCabecera]="registroChatIA.IdMatriculaCabecera!"

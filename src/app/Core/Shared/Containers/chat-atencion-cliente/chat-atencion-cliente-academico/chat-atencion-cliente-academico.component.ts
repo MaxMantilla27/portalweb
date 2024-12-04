@@ -27,9 +27,11 @@ import { ChatAtencionClienteService } from '../../../Services/ChatAtencionClient
 @Component({
   selector: 'app-chat-atencion-cliente-academico',
   templateUrl: './chat-atencion-cliente-academico.component.html',
-  styleUrls: ['./chat-atencion-cliente-academico.component.scss']
+  styleUrls: ['./chat-atencion-cliente-academico.component.scss'],
 })
-export class ChatAtencionClienteAcademicoComponent implements OnInit, OnDestroy, OnChanges {
+export class ChatAtencionClienteAcademicoComponent
+  implements OnInit, OnDestroy, OnChanges
+{
   private signal$ = new Subject();
 
   @ViewChild('contenidoMsj') contenidoMsj!: ElementRef;
@@ -44,7 +46,7 @@ export class ChatAtencionClienteAcademicoComponent implements OnInit, OnDestroy,
     private _ActivatedRoute: ActivatedRoute,
     private _Router: Router,
     private sanitizer: DomSanitizer,
-    private _ChatAtencionClienteService:ChatAtencionClienteService
+    private _ChatAtencionClienteService: ChatAtencionClienteService
   ) {
     this.storageEventListener = this.handleStorageEvent.bind(this);
     window.addEventListener('storage', this.storageEventListener);
@@ -66,7 +68,7 @@ export class ChatAtencionClienteAcademicoComponent implements OnInit, OnDestroy,
   @Input() idProgramageneral = 0;
   @Input() IdMatriculaCabecera = 0;
   public contadoraulavirtual = 0;
-  public idInteraccion :any;
+  public idInteraccion: any;
   public idprogramageneralalumno = 0;
   public idcursoprogramageneralalumno = 0;
   public idcapitulo = 0;
@@ -98,10 +100,13 @@ export class ChatAtencionClienteAcademicoComponent implements OnInit, OnDestroy,
   public img = 'https://proceso-pago.bsginstitute.com/img-web/chatV2/';
   public git = '';
   private clics = 0;
-  public IdChatSesion:any;
-  public IdMatriculaCabeceraPrincipal=this._SessionStorageService.SessionGetValue('IdMatriculaCabeceraPrincipal');
-  public IdMatriculaCabeceraChat=this._SessionStorageService.SessionGetValue('IdMatriculaCabeceraPrincipal');
-  public FechaRegistro:any;
+  public IdChatSesion: any;
+  public IdMatriculaCabeceraPrincipal =
+    this._SessionStorageService.SessionGetValue('IdMatriculaCabeceraPrincipal');
+  public IdMatriculaCabeceraChat = this._SessionStorageService.SessionGetValue(
+    'IdMatriculaCabeceraPrincipal'
+  );
+  public FechaRegistro: any;
   @Output()
   ChargeChat: EventEmitter<boolean> = new EventEmitter<boolean>();
   @Output()
@@ -114,10 +119,45 @@ export class ChatAtencionClienteAcademicoComponent implements OnInit, OnDestroy,
     this.signal$.complete();
     window.removeEventListener('storage', this.storageEventListener);
   }
-  ngOnInit(): void {
+  ngOnInit(): void {}
+  ngOnChanges(changes: SimpleChanges): void {
+    if (this.IdMatriculaCabecera != 0) {
+      this.ObtenerCoordinadorChat();
+
+      console.log('NGCHANGES', changes);
+      console.log(this.IdMatriculaCabecera);
+      if (this.Open && this.stateAsesor) {
+        this.scrollAbajo(true, 1);
+      }
+      this.IdMatriculaCabeceraChat =
+        this._SessionStorageService.SessionGetValue('idCampania');
+      if (this.IdMatriculaCabecera > 0) {
+        this._ChatAtencionClienteService
+          .ObtenerChatAtencionClienteContactoDetalleAcademico(
+            this.IdMatriculaCabecera
+          )
+          .pipe(takeUntil(this.signal$))
+          .subscribe({
+            next: (x) => {
+              console.log(x);
+              if (x != null) {
+                this.FechaRegistro = x.fechaRegistro;
+              } else {
+                this.FechaRegistro = new Date();
+              }
+              console.log(this.FechaRegistro);
+            },
+            complete: () => {
+              this.ObtenerDetalleChatPorIdInteraccionMatricula();
+            },
+          });
+        this.ObtenerCoordinadorChat();
+      }
+    }
+    //lo que estaba antes en el oninit
     this.mensajesAnteriore=[]
     console.log('idProgramageneral', this.idProgramageneral)
-    console.log('idProgramageneral', this.IdMatriculaCabecera)
+    console.log('IdMatriculaCabecera', this.IdMatriculaCabecera)
     console.log(this._Router.url.split('/'));
     this.ObtenerConfiguracionChat();
     this._HelperService.recibirCombosPerfil.pipe(takeUntil(this.signal$)).subscribe({
@@ -167,34 +207,7 @@ export class ChatAtencionClienteAcademicoComponent implements OnInit, OnDestroy,
           this.VerificarChatFinalizado();
       },
     });
-  }
-  ngOnChanges(changes: SimpleChanges): void {
-    this.ObtenerCoordinadorChat();
 
-    console.log('NGCHANGES', changes)
-    console.log(this.IdMatriculaCabecera)
-    if (this.Open && this.stateAsesor) {
-      this.scrollAbajo(true,1)
-    }
-    this.IdMatriculaCabeceraChat=this._SessionStorageService.SessionGetValue('idCampania');
-    if (this.IdMatriculaCabecera > 0) {
-      this._ChatAtencionClienteService.ObtenerChatAtencionClienteContactoDetalleAcademico(this.IdMatriculaCabecera).pipe(takeUntil(this.signal$)).subscribe({
-        next:x=>{
-          console.log(x)
-          if(x!=null){
-            this.FechaRegistro=x.fechaRegistro
-          }
-          else{
-            this.FechaRegistro= new Date();
-          }
-          console.log(this.FechaRegistro)
-        },
-        complete:()=>{
-          this.ObtenerDetalleChatPorIdInteraccionMatricula();
-        }
-      })
-      this.ObtenerCoordinadorChat();
-    }
   }
 
   //---------------------------------------------------------------------------------------------------------
@@ -220,7 +233,7 @@ export class ChatAtencionClienteAcademicoComponent implements OnInit, OnDestroy,
       .pipe(takeUntil(this.signal$))
       .subscribe({
         next: (x) => {
-          console.log(x)
+          console.log(x);
           this.ChargeChat.emit(true);
           var nombre1 = x.nombreAsesor.split(' ', 3);
           this.nombreasesorglobal = nombre1[0] + ' ' + nombre1[2];
@@ -235,7 +248,7 @@ export class ChatAtencionClienteAcademicoComponent implements OnInit, OnDestroy,
       .pipe(takeUntil(this.signal$))
       .subscribe({
         next: (x) => {
-          console.log(x)
+          console.log(x);
           this.configuration = x;
         },
       });
@@ -254,14 +267,18 @@ export class ChatAtencionClienteAcademicoComponent implements OnInit, OnDestroy,
       });
   }
   ConectarSocket(IdFaseOportunidadPortal?: string) {
-    console.log(IdFaseOportunidadPortal)
+    console.log(IdFaseOportunidadPortal);
     this.hubConnection
       .start()
       .then((x: any) => {
         if (this.hubConnection.state == 'Connected') {
           if (this.git == '') {
-            console.log('Obtener el GUID Académico')
-            this.hubConnection.invoke('getGuidAcademico',this.IdMatriculaCabecera,false);
+            console.log('Obtener el GUID Académico');
+            this.hubConnection.invoke(
+              'getGuidAcademico',
+              this.IdMatriculaCabecera,
+              false
+            );
           } else {
             this.GenerarLogVisitanteAulaVirtualAcademico();
           }
@@ -278,18 +295,18 @@ export class ChatAtencionClienteAcademicoComponent implements OnInit, OnDestroy,
     this.hubConnection.on('setGuidAcademico', (Guid: any) => {
       console.log('Entro al setGuidAcademico', Guid);
       this.git = Guid;
-      console.log(this.git)
-      console.log('VA A GENERAR VISITANTE ACADEMICO')
+      console.log(this.git);
+      console.log('VA A GENERAR VISITANTE ACADEMICO');
       this.GenerarLogVisitanteAulaVirtualAcademico();
-      console.log('SALIO GENERAR VISITANTE ACADEMICO')
-
+      console.log('SALIO GENERAR VISITANTE ACADEMICO');
     });
   }
 
   GenerarLogVisitanteAulaVirtualAcademico() {
-    console.log('GENERARA UN GUID')
-    let idProgramaGenetalEstatico = 0
-    let cookiecontaco = this._SessionStorageService.SessionGetValue('usuarioWeb');
+    console.log('GENERARA UN GUID');
+    let idProgramaGenetalEstatico = 0;
+    let cookiecontaco =
+      this._SessionStorageService.SessionGetValue('usuarioWeb');
     this.hubConnection.invoke(
       'GenerarLogVisitanteAulaVirtualAcademico',
       document.location.href,
@@ -363,22 +380,32 @@ export class ChatAtencionClienteAcademicoComponent implements OnInit, OnDestroy,
       this.clics++;
       console.log('Clics ++  ' + this.clics);
     }
-    if (this.chatBox != undefined && this.chatBox != null && this.chatBox.trim().length > 0) {
-      this.hubConnection.invoke(
-        'EnviarMensajeVisitanteAcademico',
-        this.chatBox,
-        this.git,
-        this.IdChatSesion,
-        this.IdMatriculaCabecera
-      ).then(() => {
-        this.NroMensajesSinLeer++;
-        this.scrollAbajo(true,2)
-      }).catch((err:any) => console.error(err));
+    if (
+      this.chatBox != undefined &&
+      this.chatBox != null &&
+      this.chatBox.trim().length > 0
+    ) {
+      this.hubConnection
+        .invoke(
+          'EnviarMensajeVisitanteAcademico',
+          this.chatBox,
+          this.git,
+          this.IdChatSesion,
+          this.IdMatriculaCabecera
+        )
+        .then(() => {
+          this.NroMensajesSinLeer++;
+          this.scrollAbajo(true, 2);
+        })
+        .catch((err: any) => console.error(err));
     }
     this.chatBox = '';
   }
   marcarChatAgentecomoleido() {
-    this.hubConnection.invoke('marcarChatAcademicoComoLeido', this.idInteraccion);
+    this.hubConnection.invoke(
+      'marcarChatAcademicoComoLeido',
+      this.idInteraccion
+    );
   }
   actualizarDatosAlumno(IdFaseOportunidadPortal: any) {
     this.hubConnection.invoke(
@@ -402,14 +429,20 @@ export class ChatAtencionClienteAcademicoComponent implements OnInit, OnDestroy,
   }
   ObtenerDetalleChatPorIdInteraccionMatricula() {
     this.charge = true;
-    this.mensajesAnteriorePrevio=[];
+    this.mensajesAnteriorePrevio = [];
     //Es false si se chat académico
     this._ChatDetalleIntegraService
-      .ObtenerDetalleChatPorIdInteraccionMatricula(this.IdMatriculaCabecera,false)
+      .ObtenerDetalleChatPorIdInteraccionMatricula(
+        this.IdMatriculaCabecera,
+        false
+      )
       .pipe(takeUntil(this.signal$))
       .subscribe({
         next: (x) => {
-          console.log(x)
+          console.log('LISTADO DE MENSAJES DE HISTORIAL', x);
+          console.log('FECHA DE REGISTRO', this.FechaRegistro);
+          this.FechaRegistro = new Date(this.FechaRegistro); // Asegúrate de que this.FechaRegistro sea una fecha válida
+          this.FechaRegistro.setMinutes(this.FechaRegistro.getMinutes() - 3);
           this.mensajesAnteriorePrevio = x;
           if (this.mensajesAnteriorePrevio.length > 0) {
             this.mensajesAnteriorePrevio.forEach((m: any) => {
@@ -425,34 +458,41 @@ export class ChatAtencionClienteAcademicoComponent implements OnInit, OnDestroy,
             //     ].NroMensajesSinLeer;
             // }
           }
-          this.mensajesAnteriore=[];
-          console.log(this.FechaRegistro)
-          this.mensajesAnteriorePrevio.forEach((z:any)=>{
-            console.log(z)
-            if(z.Fecha>=this.FechaRegistro){
-              this.mensajesAnteriore.push(z)
+          this.mensajesAnteriore = [];
+          console.log(this.FechaRegistro);
+          this.mensajesAnteriorePrevio.forEach((z: any) => {
+            console.log(z);
+            if (z.Fecha >= this.FechaRegistro) {
+              this.mensajesAnteriore.push(z);
             }
-          })
-        },
-        complete:()=>{
-          this.mensajesAnteriore.push({
-            NombreRemitente: this.nombreAsesorSplit[0],
-            Mensaje: 'Bienvenid@, ¿En qué puedo ayudarte?',
-            IdRemitente: 'asesor',
           });
-          this.scrollAbajo(true,3)
-        }
+        },
+        complete: () => {
+          if (this.mensajesAnteriorePrevio.length==0){
+            this.mensajesAnteriore.push({
+              NombreRemitente: this.nombreAsesorSplit[0],
+              Mensaje: 'Bienvenid@, ¿En qué puedo ayudarte?',
+              IdRemitente: 'asesor',
+            });
+          }
+
+          this.scrollAbajo(true, 3);
+        },
       });
   }
   setChat() {
-    console.log(this.chatKey)
+    console.log(this.chatKey);
     this.hubConnection.on(
       'setChat',
       (id: any, agentName: any, existing: any) => {
         this.ChatID = id;
-        const dataChatSesion = { id: id, IdMatriculaCabecera: this.IdMatriculaCabecera };
+        const dataChatSesion = {
+          id: id,
+          IdMatriculaCabecera: this.IdMatriculaCabecera,
+        };
         this._SessionStorageService.SessionSetValueSesionStorage(
-          this.chatKey,JSON.stringify(dataChatSesion)
+          this.chatKey,
+          JSON.stringify(dataChatSesion)
         );
         if (existing) {
           this.AbrirChat.emit();
@@ -469,8 +509,8 @@ export class ChatAtencionClienteAcademicoComponent implements OnInit, OnDestroy,
         }
       }
     );
-    console.log(this.stateAsesor)
-    console.log(this.ChatID)
+    console.log(this.stateAsesor);
+    console.log(this.ChatID);
   }
   onlineStatusAcademico() {
     this.hubConnection.on('onlineStatusAcademico', (data: any) => {
@@ -524,7 +564,7 @@ export class ChatAtencionClienteAcademicoComponent implements OnInit, OnDestroy,
               estadoEnviado: true,
             });
           }
-          this.scrollAbajo(true,4)
+          this.scrollAbajo(true, 4);
         }
         if (flagfrom == 1) {
           this.mensajesAnteriore.push({
@@ -533,12 +573,11 @@ export class ChatAtencionClienteAcademicoComponent implements OnInit, OnDestroy,
             IdRemitente: 'visitante',
             estadoEnviado: true,
           });
-          this.scrollAbajo(true,5)
+          this.scrollAbajo(true, 5);
         }
-
       }
-    )
-    this.scrollAbajo(true,6)
+    );
+    this.scrollAbajo(true, 6);
   }
   eliminaridchat() {
     this.hubConnection.on('eliminaridchat', (x: any) => {
@@ -560,14 +599,14 @@ export class ChatAtencionClienteAcademicoComponent implements OnInit, OnDestroy,
     if (state) {
       this.mensajeStateAsesor = '¿En qué puedo ayudarte?';
 
-      this.scrollAbajo(true,7)
+      this.scrollAbajo(true, 7);
     } else {
       this.mensajeStateAsesor =
         'no estoy disponible. Por favor deja un mensaje';
     }
   }
   AgregarArchivoChatSoporte(event: any) {
-    this.selectedFiles =[];
+    this.selectedFiles = [];
     for (var i = 0; i < event.target.files.length; i++) {
       var name = event.target.files[i].name;
       var type = event.target.files[i].type;
@@ -586,13 +625,22 @@ export class ChatAtencionClienteAcademicoComponent implements OnInit, OnDestroy,
   public archivoenviado: any;
   public imagenMostrada: boolean = false;
   AdjuntarArchivoChatSoporte() {
-    const allowedExtensions = ['png', 'jpg', 'pdf','doc', 'docx','jpeg','jfif', 'xlsx', 'xls'];
+    const allowedExtensions = [
+      'png',
+      'jpg',
+      'pdf',
+      'doc',
+      'docx',
+      'jpeg',
+      'jfif',
+      'xlsx',
+      'xls',
+    ];
 
     for (let i = 0; i < this.selectedFiles.length; i++) {
       const file = this.selectedFiles[i];
       const name = file.name;
       const extension = name.split('.').pop().toLowerCase();
-
 
       if (allowedExtensions.includes(extension)) {
         this._ChatDetalleIntegraService
@@ -604,11 +652,11 @@ export class ChatAtencionClienteAcademicoComponent implements OnInit, OnDestroy,
               const idArchivo = x.IdArchivo;
               const tipo = x.Tipo;
               // this.idInteraccion = this.GetsesionIdInteraccion();
-              console.log(this.idInteraccion)
+              console.log(this.idInteraccion);
               this.enviarMensajeVisitanteSoporteArchivo(url, idArchivo, tipo);
               if (['png', 'jpg', 'jpeg', 'jfif'].includes(extension)) {
-                 // Crear un nuevo objeto de mensaje para la imagen
-                 const newImageMessage = {
+                // Crear un nuevo objeto de mensaje para la imagen
+                const newImageMessage = {
                   NombreRemitente: this.nombres,
                   Mensaje: 'Imagen enviada con éxito',
                   IdRemitente: 'visitante', // Suponiendo que es un mensaje del visitante
@@ -624,7 +672,9 @@ export class ChatAtencionClienteAcademicoComponent implements OnInit, OnDestroy,
                   this.imagenMostrada = true;
                 }
                 // Push the new image message into your messages array
-              } else if (['pdf', 'doc', 'docx', 'xlsx', 'xls'].includes(extension)) {
+              } else if (
+                ['pdf', 'doc', 'docx', 'xlsx', 'xls'].includes(extension)
+              ) {
                 // Crear un nuevo objeto de mensaje para el documento
                 const newDocMessage = {
                   NombreRemitente: this.nombres,
@@ -638,9 +688,9 @@ export class ChatAtencionClienteAcademicoComponent implements OnInit, OnDestroy,
                 this.archivoenviado = newDocMessage;
               }
             },
-            complete:()=>{
-              this.scrollAbajo(true,8)
-            }
+            complete: () => {
+              this.scrollAbajo(true, 8);
+            },
           });
       } else {
         console.log(
@@ -650,9 +700,10 @@ export class ChatAtencionClienteAcademicoComponent implements OnInit, OnDestroy,
     }
   }
   GetsesionIdInteraccion() {
-    let IdSesionChat=''
-    const storedDataString = this._SessionStorageService.SessionGetValueSesionStorage(this.chatKey);
-    if(storedDataString){
+    let IdSesionChat = '';
+    const storedDataString =
+      this._SessionStorageService.SessionGetValueSesionStorage(this.chatKey);
+    if (storedDataString) {
       const storedData = JSON.parse(storedDataString);
       IdSesionChat = storedData.id;
       const storedIdMatriculaCabecera = storedData.IdMatriculaCabecera;
@@ -660,11 +711,9 @@ export class ChatAtencionClienteAcademicoComponent implements OnInit, OnDestroy,
       console.log('id:', IdSesionChat);
       console.log('IdMatriculaCabecera:', storedIdMatriculaCabecera);
     }
-    if (IdSesionChat == ''
-    ) {
+    if (IdSesionChat == '') {
       return '';
     } else {
-
       return IdSesionChat;
     }
   }
@@ -683,26 +732,36 @@ export class ChatAtencionClienteAcademicoComponent implements OnInit, OnDestroy,
   }
   onlineStatusAcademicoIdChatSession() {
     this.hubConnection.on('onlineStatusAcademicoIdChatSession', (Guid: any) => {
-      console.log('ESTE ES EL ID DE LA SESIÓN',Guid)
-      this.IdChatSesion=Guid;
-      this.idInteraccion=Guid
+      console.log('ESTE ES EL ID DE LA SESIÓN', Guid);
+      this.IdChatSesion = Guid;
+      this.idInteraccion = Guid;
     });
   }
-  VerificarChatFinalizado(){
-    console.log('INGRESARÁ setFinalizarChat')
-    this.hubConnection.on('setFinalizarChat', (IdMatriculaCabecera: number, EsSoporteTecnico: boolean, EsAcademico: boolean) => {
-      console.log('INGRESARÁ setFinalizarChat');
-      console.log('IdMatriculaCabecera:', IdMatriculaCabecera);
-      console.log('EsAcademico:', EsAcademico);
-      console.log('EsSoporteTecnico:', EsSoporteTecnico);
-      this._SessionStorageService.SessionSetValue('ChatAcademicoIniciado','false');
-      this._SessionStorageService.SessionSetValue('ReinicioChatBot','true');
-      setTimeout(() => {
-        window.location.reload()
-      }, 500);
-    });
+  VerificarChatFinalizado() {
+    console.log('INGRESARÁ setFinalizarChat');
+    this.hubConnection.on(
+      'setFinalizarChat',
+      (
+        IdMatriculaCabecera: number,
+        EsSoporteTecnico: boolean,
+        EsAcademico: boolean
+      ) => {
+        console.log('INGRESARÁ setFinalizarChat');
+        console.log('IdMatriculaCabecera:', IdMatriculaCabecera);
+        console.log('EsAcademico:', EsAcademico);
+        console.log('EsSoporteTecnico:', EsSoporteTecnico);
+        this._SessionStorageService.SessionSetValue(
+          'ChatAcademicoIniciado',
+          'false'
+        );
+        this._SessionStorageService.SessionSetValue('ReinicioChatBot', 'true');
+        setTimeout(() => {
+          window.location.reload();
+        }, 4000);
+      }
+    );
   }
-  RetrocederCursosAlumno(){
+  RetrocederCursosAlumno() {
     this.RegresarChatAcademico.emit(true);
   }
   confirmAction() {
@@ -726,4 +785,3 @@ export class ChatAtencionClienteAcademicoComponent implements OnInit, OnDestroy,
     }, 100);
   }
 }
-

@@ -87,6 +87,7 @@ export class ChatbotIaComponent implements OnInit {
     };
   public EsSoporteTecnico = false;
   public IdChatAtencionClienteContacto = 0;
+  public RespuestaDerivacion:any;
   @ViewChild('contenidoMsj') contenidoMsj!: ElementRef;
   @ViewChild('inputChat') inputChat!: ElementRef;
   @Input() Open: boolean = false;
@@ -366,7 +367,8 @@ export class ChatbotIaComponent implements OnInit {
     this.scrollAbajo(true, 4);
   }
 
-  ObtenerCoordinadorMatricula(IdMatriculaCabecera: number) {
+  ObtenerCoordinadorMatricula(IdMatriculaCabecera: number,valor:number) {
+    console.log('OBTENER COORDINADORA',valor)
     this._ChatEnLinea
       .ObtenerCoordinadorChat(IdMatriculaCabecera)
       .pipe(takeUntil(this.signal$))
@@ -465,29 +467,34 @@ export class ChatbotIaComponent implements OnInit {
       });
   }
   ObtenerEstadoDerivacionHiloChat(IdContactoPortalSegmento: string) {
+    this.RespuestaDerivacion=undefined;
     this.ChatVentasAbierto;
     this.chatbotIAService
       .ObtenerEstadoDerivacionHiloChat(IdContactoPortalSegmento)
       .subscribe({
         next: (response) => {
-          console.log('AREA DERIVADA ORIGEN', response);
-          if (response != null) {
+          this.RespuestaDerivacion=response;
+
+        },
+        complete:()=>{
+          console.log('AREA DERIVADA ORIGEN', this.RespuestaDerivacion);
+          if (this.RespuestaDerivacion != null) {
             if (
-              response.idAreaDerivacion != 0 &&
-              response.derivacionCerrada != 0
+              this.RespuestaDerivacion.idAreaDerivacion != 0 &&
+              this.RespuestaDerivacion.derivacionCerrada != 0
             ) {
-              if (response.idAreaDerivacion == 2) {
+              if (this.RespuestaDerivacion.idAreaDerivacion == 2) {
                 this.ChatbotCerrado = true;
                 this.ChatVentasAbierto = true;
                 console.log('Envia a flujo de VENTAS');
               }
-              if (response.idAreaDerivacion == 1) {
+              if (this.RespuestaDerivacion.idAreaDerivacion == 1) {
                 this.registroChatIA.IdMatriculaCabecera =
-                  response.idMatriculaCabecera;
+                this.RespuestaDerivacion.idMatriculaCabecera;
                 this.ObtenerCoordinadorMatricula(
-                  this.registroChatIA.IdMatriculaCabecera!
+                  this.registroChatIA.IdMatriculaCabecera!,1
                 );
-                this.RegistroDirectoCursoMatriculado(false);
+                this.RegistroDirectoCursoMatriculado(false,1);
 
                 this.ChatbotCerrado = true;
                 this.ChatAcademicoAbierto = true;
@@ -495,7 +502,7 @@ export class ChatbotIaComponent implements OnInit {
               }
             }
           }
-        },
+        }
       });
   }
   scrollAbajo(smooth: boolean = true, id: number) {
@@ -512,6 +519,7 @@ export class ChatbotIaComponent implements OnInit {
   }
   ObtenerCursosMatriculadosAlumno(IdAlumno: number) {
     console.log('OBTENDRA LISTADO DE CURSOS');
+    console.log(this.registroChatIA)
     this.TieneCursosMatriculados = false;
     this.chatbotIAService
       .ObtenerCursosAlumnoMatriculado(IdAlumno)
@@ -527,9 +535,9 @@ export class ChatbotIaComponent implements OnInit {
           if (this.TieneCursosMatriculados) {
             this.ActualizarIdAreaDerivacionHiloChat(1);
             this.ObtenerCoordinadorMatricula(
-              this.registroChatIA.IdMatriculaCabecera!
+              this.registroChatIA.IdMatriculaCabecera!,2
             );
-            this.RegistroDirectoCursoMatriculado(false);
+            this.RegistroDirectoCursoMatriculado(false,2);
           } else {
             this.ActualizarIdAreaDerivacionHiloChat(2);
             this.ChatbotCerrado = true;
@@ -539,7 +547,8 @@ export class ChatbotIaComponent implements OnInit {
         },
       });
   }
-  RegistroDirectoCursoMatriculado(EsSoporteTecnico: boolean) {
+  RegistroDirectoCursoMatriculado(EsSoporteTecnico: boolean,valor:number) {
+    console.log('ORIGEN DE REGISTRODIRECTOCURSOMATRICULADO',valor)
     this._ChatAtencionClienteService
       .ObtenerChatAtencionClienteContactoDetalleAcademico(
         this.registroChatIA.IdMatriculaCabecera!

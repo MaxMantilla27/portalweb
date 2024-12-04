@@ -814,7 +814,7 @@ export class ChatAtencionClienteSoporteComponent implements OnInit, OnDestroy, O
       this._SessionStorageService.SessionSetValue('ReinicioChatBot','true');
       setTimeout(() => {
         window.location.reload()
-      }, 500);
+      }, 4000);
     });
   }
   RetrocederCursosAlumno(){

@@ -491,7 +491,7 @@ export class ChatAtencionClienteChatComponent implements OnInit,OnDestroy,OnChan
       this._SessionStorageService.SessionSetValue('ReinicioChatBot','true');
       setTimeout(() => {
         window.location.reload()
-      }, 500);
+      }, 4000);
     });
   }
   onAtrasChatAtc() {
