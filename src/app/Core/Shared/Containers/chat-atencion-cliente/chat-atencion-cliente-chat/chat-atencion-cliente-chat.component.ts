@@ -93,9 +93,8 @@ export class ChatAtencionClienteChatComponent implements OnInit,OnDestroy,OnChan
     this.ObtenerAsesorVentas();
     if(this.Open && this.stateAsesor){
 
-      timer(1).pipe(takeUntil(this.signal$)).subscribe(_=>{
-        this.contenidoMsj.nativeElement.scrollTop=this.contenidoMsj.nativeElement.scrollHeight
-      })
+      this.scrollAbajo(true,1)
+
     }
 
 
@@ -119,7 +118,7 @@ export class ChatAtencionClienteChatComponent implements OnInit,OnDestroy,OnChan
   }
   ngOnInit(): void {
 
-    this.ObtenerAsesorVentas();
+    // this.ObtenerAsesorVentas();
     var DatosFormulario = this._SessionStorageService.SessionGetValue('DatosFormulario');
     console.log(DatosFormulario)
     if(DatosFormulario!=''){
@@ -174,7 +173,7 @@ export class ChatAtencionClienteChatComponent implements OnInit,OnDestroy,OnChan
         this.eliminaridchat();
         this.openChatWindow();
         this.marcarChatAlumnoComoLeidos();
-        this.ObtenerAsesorVentas();
+        // this.ObtenerAsesorVentas();
         this.VerificarChatFinalizado()
       }
     })
@@ -304,9 +303,8 @@ export class ChatAtencionClienteChatComponent implements OnInit,OnDestroy,OnChan
     if(state){
       this.mensajeStateAsesor='¿En qué puedo ayudarte?'
 
-      timer(1).pipe(takeUntil(this.signal$)).subscribe(_=>{
-        this.contenidoMsj.nativeElement.scrollTop=this.contenidoMsj.nativeElement.scrollHeight
-      })
+      this.scrollAbajo(true,2)
+
     }else{
       this.mensajeStateAsesor='no estoy disponible. Por favor deja un mensaje'
     }
@@ -333,9 +331,8 @@ export class ChatAtencionClienteChatComponent implements OnInit,OnDestroy,OnChan
         this.NroMensajesSinLeer++;
       }
 
-      timer(25000).pipe(takeUntil(this.signal$)).subscribe(_=>{
-        this.contenidoMsj.nativeElement.scrollTop=this.contenidoMsj.nativeElement.scrollHeight
-      })
+      this.scrollAbajo(true,3)
+
     })
   }
   eliminaridchat(){
@@ -399,9 +396,7 @@ export class ChatAtencionClienteChatComponent implements OnInit,OnDestroy,OnChan
         this.mensajeChatArchivoAdjunto(x.Url, x.IdArchivo, x.Tipo)
       },
       complete:()=>{
-        timer(2500).pipe(takeUntil(this.signal$)).subscribe((_) => {
-            this.contenidoMsj.nativeElement.scrollTop = this.contenidoMsj.nativeElement.scrollHeight;
-        });
+        this.scrollAbajo(true,4)
       }
     })
   }
@@ -479,12 +474,7 @@ export class ChatAtencionClienteChatComponent implements OnInit,OnDestroy,OnChan
                     this.mensajesAnteriore.length - 1
                   ].NroMensajesSinLeer;
               }
-              timer(2000)
-              .pipe(takeUntil(this.signal$))
-              .subscribe((_) => {
-                this.contenidoMsj.nativeElement.scrollTop =
-                  this.contenidoMsj.nativeElement.scrollHeight;
-              });
+              this.scrollAbajo(true,5)
             }
           }
 
@@ -498,7 +488,10 @@ export class ChatAtencionClienteChatComponent implements OnInit,OnDestroy,OnChan
       console.log('IdOportunidad:', IdOportunidad);
       console.log('IdAlumno:', IdAlumno);
       console.log('IdPGeneral:', IdPGeneral);
-      window.location.reload()
+      this._SessionStorageService.SessionSetValue('ReinicioChatBot','true');
+      setTimeout(() => {
+        window.location.reload()
+      }, 500);
     });
   }
   onAtrasChatAtc() {
@@ -514,5 +507,16 @@ export class ChatAtencionClienteChatComponent implements OnInit,OnDestroy,OnChan
 
   cancelAction() {
     this.showConfirmationDialog = false;
+  }
+  scrollAbajo(smooth: boolean = true,id:number) {
+    console.log('Valor de scroll',id)
+    setTimeout(() => {
+    if (this.contenidoMsj) {
+      const nativeElement = this.contenidoMsj.nativeElement;
+      nativeElement.scrollTo({
+        top: nativeElement.scrollHeight,
+        behavior: smooth ? 'smooth' : 'auto',
+      });
+    }},100)
   }
 }

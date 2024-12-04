@@ -1,7 +1,6 @@
 .footerChatAula {
   width: 100%;
   height: 50px;
-  margin-top: 10px;
   background: #FF4E56;
   display: flex;
   justify-content: space-between;
@@ -83,7 +82,9 @@
 .contentChatMsj {
   width: 100%;
   height: 200px;
-  overflow: auto;
+  overflow-y: auto;
+  overflow-x: hidden;
+  scroll-behavior: smooth; /* Garantiza un scroll suave */
 }
 .visitanteMsj {
   max-width: 100%;

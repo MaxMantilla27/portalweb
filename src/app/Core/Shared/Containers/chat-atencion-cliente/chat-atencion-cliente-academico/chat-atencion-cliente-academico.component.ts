@@ -174,12 +174,7 @@ export class ChatAtencionClienteAcademicoComponent implements OnInit, OnDestroy,
     console.log('NGCHANGES', changes)
     console.log(this.IdMatriculaCabecera)
     if (this.Open && this.stateAsesor) {
-      timer(1)
-        .pipe(takeUntil(this.signal$))
-        .subscribe((_) => {
-          this.contenidoMsj.nativeElement.scrollTop =
-            this.contenidoMsj.nativeElement.scrollHeight;
-        });
+      this.scrollAbajo(true,1)
     }
     this.IdMatriculaCabeceraChat=this._SessionStorageService.SessionGetValue('idCampania');
     if (this.IdMatriculaCabecera > 0) {
@@ -377,8 +372,7 @@ export class ChatAtencionClienteAcademicoComponent implements OnInit, OnDestroy,
         this.IdMatriculaCabecera
       ).then(() => {
         this.NroMensajesSinLeer++;
-        this.contenidoMsj.nativeElement.scrollTop =
-        this.contenidoMsj.nativeElement.scrollHeight;
+        this.scrollAbajo(true,2)
       }).catch((err:any) => console.error(err));
     }
     this.chatBox = '';
@@ -446,12 +440,7 @@ export class ChatAtencionClienteAcademicoComponent implements OnInit, OnDestroy,
             Mensaje: 'Bienvenid@, ¿En qué puedo ayudarte?',
             IdRemitente: 'asesor',
           });
-          timer(1000)
-          .pipe(takeUntil(this.signal$))
-          .subscribe((_) => {
-            this.contenidoMsj.nativeElement.scrollTop =
-              this.contenidoMsj.nativeElement.scrollHeight;
-          });
+          this.scrollAbajo(true,3)
         }
       });
   }
@@ -535,9 +524,7 @@ export class ChatAtencionClienteAcademicoComponent implements OnInit, OnDestroy,
               estadoEnviado: true,
             });
           }
-          timer(1000).pipe(takeUntil(this.signal$)).subscribe(_=>{
-            this.contenidoMsj.nativeElement.scrollTop=this.contenidoMsj.nativeElement.scrollHeight
-          })
+          this.scrollAbajo(true,4)
         }
         if (flagfrom == 1) {
           this.mensajesAnteriore.push({
@@ -546,16 +533,12 @@ export class ChatAtencionClienteAcademicoComponent implements OnInit, OnDestroy,
             IdRemitente: 'visitante',
             estadoEnviado: true,
           });
-          timer(1000).pipe(takeUntil(this.signal$)).subscribe(_=>{
-            this.contenidoMsj.nativeElement.scrollTop=this.contenidoMsj.nativeElement.scrollHeight
-          })
+          this.scrollAbajo(true,5)
         }
 
       }
     )
-    timer(2500).pipe(takeUntil(this.signal$)).subscribe(_=>{
-      this.contenidoMsj.nativeElement.scrollTop=this.contenidoMsj.nativeElement.scrollHeight
-    })
+    this.scrollAbajo(true,6)
   }
   eliminaridchat() {
     this.hubConnection.on('eliminaridchat', (x: any) => {
@@ -577,12 +560,7 @@ export class ChatAtencionClienteAcademicoComponent implements OnInit, OnDestroy,
     if (state) {
       this.mensajeStateAsesor = '¿En qué puedo ayudarte?';
 
-      timer(1)
-        .pipe(takeUntil(this.signal$))
-        .subscribe((_) => {
-          this.contenidoMsj.nativeElement.scrollTop =
-            this.contenidoMsj.nativeElement.scrollHeight;
-        });
+      this.scrollAbajo(true,7)
     } else {
       this.mensajeStateAsesor =
         'no estoy disponible. Por favor deja un mensaje';
@@ -661,9 +639,7 @@ export class ChatAtencionClienteAcademicoComponent implements OnInit, OnDestroy,
               }
             },
             complete:()=>{
-              timer(2500).pipe(takeUntil(this.signal$)).subscribe((_) => {
-                this.contenidoMsj.nativeElement.scrollTop = this.contenidoMsj.nativeElement.scrollHeight;
-            });
+              this.scrollAbajo(true,8)
             }
           });
       } else {
@@ -720,7 +696,10 @@ export class ChatAtencionClienteAcademicoComponent implements OnInit, OnDestroy,
       console.log('EsAcademico:', EsAcademico);
       console.log('EsSoporteTecnico:', EsSoporteTecnico);
       this._SessionStorageService.SessionSetValue('ChatAcademicoIniciado','false');
-      window.location.reload()
+      this._SessionStorageService.SessionSetValue('ReinicioChatBot','true');
+      setTimeout(() => {
+        window.location.reload()
+      }, 500);
     });
   }
   RetrocederCursosAlumno(){
@@ -733,6 +712,18 @@ export class ChatAtencionClienteAcademicoComponent implements OnInit, OnDestroy,
 
   cancelAction() {
     this.showConfirmationDialog = false;
+  }
+  scrollAbajo(smooth: boolean = true, id: number) {
+    console.log('Valor de scroll', id);
+    setTimeout(() => {
+      if (this.contenidoMsj) {
+        const nativeElement = this.contenidoMsj.nativeElement;
+        nativeElement.scrollTo({
+          top: nativeElement.scrollHeight,
+          behavior: smooth ? 'smooth' : 'auto',
+        });
+      }
+    }, 100);
   }
 }
 

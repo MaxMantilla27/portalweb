@@ -811,7 +811,10 @@ export class ChatAtencionClienteSoporteComponent implements OnInit, OnDestroy, O
   VerificarChatFinalizado(){
     this.hubConnection.on('setFinalizarChat', (IdMatriculaCabecera: number, EsAcademico: boolean, EsSoporteTecnico: boolean) => {
       console.log()
-      window.location.reload()
+      this._SessionStorageService.SessionSetValue('ReinicioChatBot','true');
+      setTimeout(() => {
+        window.location.reload()
+      }, 500);
     });
   }
   RetrocederCursosAlumno(){
