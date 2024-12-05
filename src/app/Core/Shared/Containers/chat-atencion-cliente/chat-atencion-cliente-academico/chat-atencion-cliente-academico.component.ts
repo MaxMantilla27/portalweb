@@ -461,14 +461,13 @@ export class ChatAtencionClienteAcademicoComponent
           this.mensajesAnteriore = [];
           console.log(this.FechaRegistro);
           this.mensajesAnteriorePrevio.forEach((z: any) => {
-            console.log(z);
-            if (z.Fecha >= this.FechaRegistro) {
+            if (new Date(z.Fecha )>= new Date(this.FechaRegistro)) {
               this.mensajesAnteriore.push(z);
             }
           });
         },
         complete: () => {
-          if (this.mensajesAnteriorePrevio.length==0){
+          if (this.mensajesAnteriore.length==0){
             this.mensajesAnteriore.push({
               NombreRemitente: this.nombreAsesorSplit[0],
               Mensaje: 'Bienvenid@, ¿En qué puedo ayudarte?',

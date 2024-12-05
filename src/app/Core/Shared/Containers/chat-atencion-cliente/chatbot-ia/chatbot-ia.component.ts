@@ -114,47 +114,35 @@ export class ChatbotIaComponent implements OnInit {
 
   ngOnInit(): void {
     this.ObtenerHistorialChatBotIA();
-    let IdChatbotIAPortalHiloChatLocal =
-    this._SessionStorageService.SessionGetValue('IdChatbotIAPortalHiloChat');
-    let reinicioChatBot =
-    this._SessionStorageService.SessionGetValue('ReinicioChatBot');
-
-  if (IdChatbotIAPortalHiloChatLocal != '' && reinicioChatBot == 'true') {
-      console.log(IdChatbotIAPortalHiloChatLocal);
-      console.log(reinicioChatBot);
-      this.IdChatbotIAPortalHiloChat = Number(IdChatbotIAPortalHiloChatLocal);
-      this.CerrarRegistroHiloChat(this.IdChatbotIAPortalHiloChat);
-    }
 
     this._HelperService.recibirDatoCuenta
       .pipe(takeUntil(this.signal$))
       .subscribe({
         next: (x) => {
           console.log(x);
-
+          this.ReinicioTotalChat();
         },
         complete: () => {
-          let IdChatbotIAPortalHiloChatLocal =
-            this._SessionStorageService.SessionGetValue(
-              'IdChatbotIAPortalHiloChat'
-            );
-
-          if (this._SessionStorageService.GetToken() == null) {
-            if (IdChatbotIAPortalHiloChatLocal != '') {
-              this.IdChatbotIAPortalHiloChat = Number(
-                IdChatbotIAPortalHiloChatLocal
-              );
-              this.CerrarRegistroHiloChat(this.IdChatbotIAPortalHiloChat);
-              console.log(reinicioChatBot)
-            }
-          } else {
-          }
-          console.log(IdChatbotIAPortalHiloChatLocal);
         },
       });
 
   }
 
+  ReinicioTotalChat(){
+    let IdChatbotIAPortalHiloChatLocal =
+    this._SessionStorageService.SessionGetValue('IdChatbotIAPortalHiloChat');
+    let reinicioChatBot =
+    this._SessionStorageService.SessionGetValue('ReinicioChatBot');
+
+    console.log('IdChatbotIAPortalHiloChatLocal',IdChatbotIAPortalHiloChatLocal)
+    console.log('reinicioChatBot',reinicioChatBot)
+  if (IdChatbotIAPortalHiloChatLocal != '' && reinicioChatBot == 'true') {
+      console.log(IdChatbotIAPortalHiloChatLocal);
+      console.log(reinicioChatBot);
+      this.IdChatbotIAPortalHiloChat = Number(IdChatbotIAPortalHiloChatLocal);
+      this.CerrarRegistroHiloChat(this.IdChatbotIAPortalHiloChat);
+    }
+  }
   ngAfterViewInit(): void {
     this.cd.detectChanges();
   }
@@ -382,9 +370,11 @@ export class ChatbotIaComponent implements OnInit {
           }
         },
         complete: () => {
-          this.ChatbotCerrado = true;
-          this.ChatAcademicoAbierto = true;
-          console.log('EL RESULTADO: ', this.ChatbotCerrado);
+          setTimeout(() => {
+            this.ChatbotCerrado = true;
+            this.ChatAcademicoAbierto = true;
+            console.log('EL RESULTADO: ', this.ChatbotCerrado);
+          }, 3000);
         },
       });
   }
@@ -477,7 +467,8 @@ export class ChatbotIaComponent implements OnInit {
 
         },
         complete:()=>{
-          console.log('AREA DERIVADA ORIGEN', this.RespuestaDerivacion);
+          setTimeout(() => {
+            console.log('AREA DERIVADA ORIGEN', this.RespuestaDerivacion);
           if (this.RespuestaDerivacion != null) {
             if (
               this.RespuestaDerivacion.idAreaDerivacion != 0 &&
@@ -496,12 +487,15 @@ export class ChatbotIaComponent implements OnInit {
                 );
                 this.RegistroDirectoCursoMatriculado(false,1);
 
-                this.ChatbotCerrado = true;
-                this.ChatAcademicoAbierto = true;
-                console.log('Envia a flujo de ');
+                setTimeout(() => {
+                  this.ChatbotCerrado = true;
+                  this.ChatAcademicoAbierto = true;
+                  console.log('Envia a flujo de ');
+                }, 3000);
               }
             }
           }
+          }, 3000);
         }
       });
   }
