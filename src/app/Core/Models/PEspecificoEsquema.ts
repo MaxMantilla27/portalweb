@@ -147,6 +147,17 @@ export interface EncuestaAvanceDTO {
   idPEspecifico: number;
   categorias: Array<EncuestaAvanceCategoriaDTO>;
 }
+
+export interface EncuestaAvanceDocenteDTO {
+  id: number;
+  idProveedor: number;
+  inicio: boolean;
+  idPEspecificoSesion: number;
+  idPGeneral: number;
+  idPEspecifico: number;
+  categorias: Array<EncuestaAvanceCategoriaDTO>;
+}
+
 export interface EncuestaAvanceCategoriaDTO{
   idCategoria: number;
   nombreCategoria: string;

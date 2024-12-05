@@ -29,6 +29,14 @@
       (ButtoclClick)="OpenAsistencias()"
       [style]="'margin: 0px;border-radius: 5px;width: 100%;margin-top:5px'"></app-default-button>
   </div>
+
+  <div class="col-12" style="position:relative;">
+        
+         <app-pespecifico-sesion-encuesta [IdSesion]="IdSesion" [IdProveedor]="DataProveedor.id" 
+         [IdPEspecifico]="IdPespecifico" [Sesion]="sesion"></app-pespecifico-sesion-encuesta> 
+    
+  </div> 
+
   <div class="col-12" style="position: relative;">
     <div class="opcionDesplegable" style="display:flex" (click)="OpenAgendaSesion=!OpenAgendaSesion">
       <div class="textoDesplegable">Agenda de Sesión</div>

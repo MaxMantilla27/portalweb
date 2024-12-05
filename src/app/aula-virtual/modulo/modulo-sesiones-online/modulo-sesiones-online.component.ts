@@ -82,6 +82,7 @@ export class ModuloSesionesOnlineComponent
   ngOnInit(): void {}
 
   OpenSesion(index: number) {
+    console.log(this.sesiones)
     this.sesiones[index].Open = !this.sesiones[index].Open;
     if (this.sesiones[index].Open == true) {
       this.ObtenerActividadesRecursoSesionAlumno(
@@ -114,6 +115,7 @@ export class ModuloSesionesOnlineComponent
       .pipe(takeUntil(this.signal$))
       .subscribe({
         next: (x) => {
+          console.log(x);
           this.sesiones[index].material = [];
           this.sesiones[index].tarea = [];
           this.sesiones[index].cuestionario = [];
