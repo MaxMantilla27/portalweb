@@ -269,8 +269,6 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
     this._SessionStorageService.SessionGetValue('ISO_PAIS') != ''
       ? this._SessionStorageService.SessionGetValue('ISO_PAIS')
       : 'INTC';
-      console.log('*********************',this.codigoIso)
-    // this.addPlayer()
     this._HelperServiceP.recibirChangePais().pipe(takeUntil(this.signal$)).subscribe((x) => {
       if (this.isBrowser) {
         location.reload();
@@ -286,13 +284,11 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
     }
     this.activatedRoute.params.pipe(takeUntil(this.signal$)).subscribe({
       next: (x) => {
-        console.log(x)
         this.rutaProgramaDetalle=x
         this.area = x['AreaCapacitacion'].split('-').join(' ');
         this.AraCompleta = x['AreaCapacitacion'];
         this.nombreProgramCompeto = x['ProgramaNombre'];
         this.namePrograma = x['ProgramaNombre'].split('-');
-        console.log(this.namePrograma)
         this.idBusqueda = parseInt(this.namePrograma[this.namePrograma.length - 1]);
         let DataRuta={
           rutaProgramaDetalle:this.rutaProgramaDetalle,
@@ -430,7 +426,6 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
     //this.jsonEnvioPago.TipoProveedor=;
     this.jsonEnvioPago.WebMoneda=tarjeta.webMoneda;
     var token=this._SessionStorageService.validateTokken();
-    console.log(token)
     if(token){
       //this._FormaPagoService.PreProcesoPagoOrganicoAlumno(this.jsonEnvioPago,dialogRef);
 //miguel pagos
@@ -463,8 +458,6 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
       .ObtenerCabeceraProgramaGeneral(this.idBusqueda).pipe(takeUntil(this.signal$))
       .subscribe({
         next: (x) => {
-          console.log(x);
-          console.log(x.programaCabeceraDetalleDTO.direccion==this.namePrograma.join('-'))
           if(x.programaCabeceraDetalleDTO!=undefined
             && this.removeAccents(this.area.toLowerCase())==this.removeAccents(x.programaCabeceraDetalleDTO.areaCapacitacion.toLowerCase())
             && x.programaCabeceraDetalleDTO.direccion==this.namePrograma.join('-')
@@ -504,7 +497,6 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
               this.cabecera.tituloHtml = "<h1>"+this.cabecera.tituloHtml+"</h1>";
               this.cabecera.tituloHtml = this.cabecera.tituloHtml.replace("<h1><h1>","<h1>").replace("</h1></h1>","</h1>");
             }
-            console.log(this.cabecera)
 
             if(x.programaCabeceraDetalleDTO.listProgramaEspecificoInformacionDTO.length>0){
               this.IdPespecificoPrograma = x.programaCabeceraDetalleDTO.listProgramaEspecificoInformacionDTO[0].id
@@ -527,20 +519,11 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
                 'https://img.bsginstitute.com/repositorioweb/img/partners/' +
                 x.programaCabeceraDetalleDTO.imgPrincipal;
             };
-            console.log(this.cabecera.imgPrincipal)
-            console.log(this.contentLeft.nativeElement.offsetHeight)
-            console.log(this.contenidoTOp.nativeElement.offsetHeight)
             setTimeout(() => {
-
-              console.log("--------------")
-              console.log(this.contentLeft.nativeElement.offsetHeight)
-              console.log(this.contenidoTOp.nativeElement.offsetHeight)
               if(this.contenidoTOp.nativeElement.offsetHeight>360){
                 var min=this.contentLeft.nativeElement.offsetHeight*1+((this.contenidoTOp.nativeElement.offsetHeight-360)*2)
-                console.log(min)
                 this.contentLeft.nativeElement.setAttribute('style', 'min-height:'+min+'px')
               }
-              console.log("--------------")
             }, 500);
 
             this.ListMontoPago();
@@ -556,7 +539,6 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
             }
           }
           else{
-            console.log('/'+this.removeAccents(x.programaCabeceraDetalleDTO.areaDescripcion)+'/'+x.programaCabeceraDetalleDTO.direccion)
             window.location.replace('/'+this.removeAccents(x.programaCabeceraDetalleDTO.areaDescripcion)+'/'+x.programaCabeceraDetalleDTO.direccion);
            // this._router.navigate(['/'+this.removeAccents(x.programaCabeceraDetalleDTO.areaCapacitacion)+'/'+x.programaCabeceraDetalleDTO.direccion]);
           }
@@ -604,22 +586,18 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
     this._SeccionProgramaService.ListPrerrequisito(this.idBusqueda).pipe(takeUntil(this.signal$)).subscribe({
       next: (x) => {
         this.prerequisitos = x.listaPrerrequisitoDTO;
-        console.log(this.prerequisitos)
       },
     });
   }
   EstructuraProgramaPortal() {
     this._ProgramaService.EstructuraProgramaPortal(this.idBusqueda).pipe(takeUntil(this.signal$)).subscribe({
       next: (x) => {
-        console.log(x)
         this.PrimerCurso=x.estructuraCurso[0].titulo
         this.estructuraPrograma = x.estructuraCurso;
-        console.log(this.estructuraPrograma)
         this.estructuraPrograma.map((x) => {
           if (x.titulo.includes('Curso')) {
             this.esPadre = true;
           }
-          console.log(this.esPadre)
         });
         this.estructuraPrograma.map((y) => {
           if (this.estructuraPrograma.length > 3) {
@@ -641,18 +619,14 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
     this._BeneficioService.ListBeneficioPrograma(this.idBusqueda).pipe(takeUntil(this.signal$)).subscribe({
       next: (x) => {
         this.beneficios = x.listaBeneficioProgramaDTO;
-        console.log(this.beneficios)
         if(this.beneficios!=null){
           let i = 1;
           var beneficioLista: Array<number> = [];
           if(this.cabecera.idPartner==78 && this.beneficios.length>=3){
             while (i <= 2) {
               var TipoBeneficio = this.beneficios.find((x) => x.paquete == 1);
-              console.log(TipoBeneficio);
-              console.log('111111111111111111111111111111111');
               if (TipoBeneficio != undefined) {
                 TipoBeneficio.contenido.forEach((element) => {
-                  console.log(element);
                   if (element.idBeneficio > 0) {
                     beneficioLista.push(element.idBeneficio);
                   }
@@ -690,8 +664,6 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
           }else{
             while (i <= 2) {
               var TipoBeneficio = this.beneficios.find((x) => x.paquete == i);
-              console.log(TipoBeneficio);
-              console.log('222222222222222222222222222222222222222222222222222222222222222');
               if (TipoBeneficio != undefined) {
                 TipoBeneficio.contenido.forEach((element) => {
                   if (element.idBeneficio > 0) {
@@ -725,7 +697,6 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
                     }
                   }
                 });
-                console.log(beneficioLista);
               }
               i++;
             }
@@ -738,7 +709,6 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
   ObtenerSilaboCurso() {
     this._SilaboService.ObtenerSilaboCurso(this.idPegeneral).pipe(takeUntil(this.signal$)).subscribe({
       next: (x) => {
-        console.log(x)
         var piePag = x.listaSeccionesContenidosDocumento.find(
           (x: any) => x.titulo == 'Beneficios'
         );
@@ -789,7 +759,6 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
     this._SeccionProgramaService.ListCertificacion(this.idBusqueda).pipe(takeUntil(this.signal$)).subscribe({
       next: (x) => {
         this.certificado = x.listaCertificacionDTO;
-        console.log(this.certificado);
         if (this.certificado!=null && this.certificado.descripcion != null && this.certificado.contenido.length!=0) {
           var descstrong = this.certificado.descripcion.split('<p><strong>');
           var desc = [];
@@ -860,7 +829,6 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
     this._SeccionProgramaService.ListMontoPago(this.idBusqueda).pipe(takeUntil(this.signal$)).subscribe({
       next: (x) => {
         this.MontoPago = x.listaMontoPagoProgramaInformacionDTO;
-        console.log(this.MontoPago)
         if(this.MontoPago[0].textoCabeceraDescuento!=null ||this.MontoPago[0].textoCabeceraDescuento!=undefined){
           var descuento = this.MontoPago[0].textoCabeceraDescuento
           var descuentoSplit = descuento.split('%')
@@ -880,7 +848,6 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
       .ListProgramaRelacionado(this.idPegeneral).pipe(takeUntil(this.signal$))
       .subscribe({
         next: (x) => {
-          console.log(x)
           if (x.listaProgramaRelacionadoDTO != null) {
             this.programasRelacionados = x.listaProgramaRelacionadoDTO.map(
               (c: any) => {
@@ -923,10 +890,8 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
   }
   obtenerFormularioCompletado(){
     var DatosFormulario = this._SessionStorageService.SessionGetValue('DatosFormulario');
-    console.log(DatosFormulario)
     if(DatosFormulario!=''){
       var datos = JSON.parse(DatosFormulario);
-      console.log(datos)
       this.formularioContacto.Nombres=datos.nombres;
       this.formularioContacto.Apellidos=datos.apellidos;
       this.formularioContacto.Email=datos.email;
@@ -1042,7 +1007,6 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
   ObtenerCombosPortal(){
     this._DatosPortalService.ObtenerCombosPortal().pipe(takeUntil(this.signal$)).subscribe({
       next:(x)=>{
-        console.log(x);
         this.listaLocalidades = x.listaLocalida.map((p:any)=>String(p.codigo));
         this.fileds.forEach(r=>{
           if(r.nombre=='IdPais'){
@@ -1065,7 +1029,6 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
 
     this._RegionService.ObtenerCiudadesPorPais(idPais).pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
-        console.log(x)
         this.fileds.forEach(r=>{
           if(r.nombre=='IdRegion'){
             r.disable=false;
@@ -1256,7 +1219,6 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
     if(this.esPadre){
       this._ProgramaService.VistaPreviaProgramaPadrePortal(this.PrimerCurso).pipe(takeUntil(this.signal$)).subscribe({
         next:x=>{
-          console.log(x)
           if(x!=undefined || x!=null){
             if(x.videoIdBrightcove==undefined || x.videoIdBrightcove ==null ||x.videoIdBrightcove=='' ||x.videoIdBrightcove=='0'){
               this.ExisteVideo=false;
@@ -1273,7 +1235,6 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
     else{
       this._ProgramaService.VistaPreviaProgramaPortal(this.idBusqueda).pipe(takeUntil(this.signal$)).subscribe({
         next:x=>{
-          console.log(x)
           if(x!=undefined || x!=null){
             if(x.videoIdBrightcove==undefined || x.videoIdBrightcove ==null ||x.videoIdBrightcove=='' ||x.videoIdBrightcove=='0'){
               this.ExisteVideo=false;
@@ -1286,7 +1247,6 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
         },
       })
     }
-    console.log(this. VistaPreviaPortal)
   }
   obtenerErrorPagoModal(){
     var ModalReintento = this._SessionStorageService.SessionGetValue('urlRedireccionErrorPagoModal');

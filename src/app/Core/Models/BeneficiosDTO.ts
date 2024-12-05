@@ -2,7 +2,8 @@
 export interface BeneficiosDTO{
   version:string,
   contenido:Array<BeneficiosContenidoDTO>,
-  paquete:number
+  paquete:number,
+  introduccion:string,
 }
 
 
