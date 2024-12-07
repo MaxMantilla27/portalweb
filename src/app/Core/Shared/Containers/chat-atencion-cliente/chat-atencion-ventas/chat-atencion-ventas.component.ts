@@ -167,62 +167,62 @@ export class ChatAtencionVentasComponent implements OnInit, OnChanges {
     this.IdContactoPortalSegmento =
       this._SessionStorageService.SessionGetValue('usuarioWeb');
     console.log(this.IdContactoPortalSegmento);
-    this.routerSubscription = this._router.events.subscribe((event) => {
-      if (event instanceof NavigationEnd) {
-        console.log(event);
-        this.IdMatriculaCabecera = 0;
-        if (this._SessionStorageService.GetToken() != null) {
-          this.ChatAcademicoIniciadoLocal =
-            this._SessionStorageService.SessionGetValue(
-              'ChatAcademicoIniciado'
-            );
-          console.log(this.ChatAcademicoIniciadoLocal);
-          if (this.ChatAcademicoIniciadoLocal != 'true') {
-            // Lógica para obtener ruta actual
-            this.RutaActualChat = event.urlAfterRedirects;
-            // Verificar si contiene "/AulaVirtual/"
-            if (this.RutaActualChat.includes('/AulaVirtual/')) {
-              // Verificar si después de "/AulaVirtual/" sigue "MisCursos/"
-              if (this.RutaActualChat.includes('/AulaVirtual/MisCursos/')) {
-                // Usar regex para verificar y extraer el número después de "/AulaVirtual/MisCursos/"
-                const regex = /\/AulaVirtual\/MisCursos\/(\d+)/;
-                const match = this.RutaActualChat.match(regex);
-                if (match && this.ChatAcademicoIniciadoLocal != 'true') {
-                  this.IdMatriculaCabecera = Number(match[1]); // Extrae el número después de '/AulaVirtual/MisCursos/'
-                  console.log('IdMatriculaCabecera', this.IdMatriculaCabecera);
-                  this.Paso = 3;
-                  this.Caso = 'B';
-                } else {
-                  console.log('llegóoooooooooo');
-                  this.Paso = 2;
-                  this.Caso = 'B';
-                }
-              } else {
-                this.Paso = 2;
-                this.Caso = 'B';
-              }
-            } else {
-              this.Paso = 2;
-              this.Caso = 'B';
-            }
-          }
-        }
-        console.log('INGRESA CABECERA 1');
-        this.ObtenerInformacionChat();
-      }
-    });
-    this._HelperService.recibirDatoCuenta
-      .pipe(takeUntil(this.signal$))
-      .subscribe({
-        next: (x) => {
-          if (this._SessionStorageService.GetToken() != null) {
-            this.Paso = 2;
-            this.Caso = 'B';
-          }
-          this.ObtenerInformacionChat();
-        },
-      });
-    console.log('INGRESA CABECERA 2');
+    // this.routerSubscription = this._router.events.subscribe((event) => {
+    //   if (event instanceof NavigationEnd) {
+    //     console.log(event);
+    //     this.IdMatriculaCabecera = 0;
+    //     if (this._SessionStorageService.GetToken() != null) {
+    //       this.ChatAcademicoIniciadoLocal =
+    //         this._SessionStorageService.SessionGetValue(
+    //           'ChatAcademicoIniciado'
+    //         );
+    //       console.log(this.ChatAcademicoIniciadoLocal);
+    //       if (this.ChatAcademicoIniciadoLocal != 'true') {
+    //         // Lógica para obtener ruta actual
+    //         this.RutaActualChat = event.urlAfterRedirects;
+    //         // Verificar si contiene "/AulaVirtual/"
+    //         if (this.RutaActualChat.includes('/AulaVirtual/')) {
+    //           // Verificar si después de "/AulaVirtual/" sigue "MisCursos/"
+    //           if (this.RutaActualChat.includes('/AulaVirtual/MisCursos/')) {
+    //             // Usar regex para verificar y extraer el número después de "/AulaVirtual/MisCursos/"
+    //             const regex = /\/AulaVirtual\/MisCursos\/(\d+)/;
+    //             const match = this.RutaActualChat.match(regex);
+    //             if (match && this.ChatAcademicoIniciadoLocal != 'true') {
+    //               this.IdMatriculaCabecera = Number(match[1]); // Extrae el número después de '/AulaVirtual/MisCursos/'
+    //               console.log('IdMatriculaCabecera', this.IdMatriculaCabecera);
+    //               this.Paso = 3;
+    //               this.Caso = 'B';
+    //             } else {
+    //               console.log('llegóoooooooooo');
+    //               this.Paso = 2;
+    //               this.Caso = 'B';
+    //             }
+    //           } else {
+    //             this.Paso = 2;
+    //             this.Caso = 'B';
+    //           }
+    //         } else {
+    //           this.Paso = 2;
+    //           this.Caso = 'B';
+    //         }
+    //       }
+    //     }
+    //     console.log('INGRESA CABECERA 1');
+    //     this.ObtenerInformacionChat();
+    //   }
+    // });
+    // this._HelperService.recibirDatoCuenta
+    //   .pipe(takeUntil(this.signal$))
+    //   .subscribe({
+    //     next: (x) => {
+    //       if (this._SessionStorageService.GetToken() != null) {
+    //         this.Paso = 2;
+    //         this.Caso = 'B';
+    //       }
+    //       this.ObtenerInformacionChat();
+    //     },
+    //   });
+    // console.log('INGRESA CABECERA 2');
     this.ObtenerInformacionChat();
     this.VerificarProgramasDetalle();
   }
@@ -247,23 +247,23 @@ export class ChatAtencionVentasComponent implements OnInit, OnChanges {
     this.CargandoInformacion = true;
     if (this._SessionStorageService.GetToken() != null) {
       console.log(this._router.url);
-      const urlSegments = this._router.url.split('/');
-      let assignNext = false; // Variable para determinar si el siguiente segmento debe ser asignado
+      // const urlSegments = this._router.url.split('/');
+      // let assignNext = false; // Variable para determinar si el siguiente segmento debe ser asignado
 
-      for (let segment of urlSegments) {
-        console.log(segment);
+      // for (let segment of urlSegments) {
+      //   console.log(segment);
 
-        if (assignNext) {
-          if (/^\d+$/.test(segment)) {
-            this.IdMatriculaCabecera = Number(segment);
-          }
-          break; // Salimos del bucle después de asignar o no el valor
-        }
+      //   if (assignNext) {
+      //     if (/^\d+$/.test(segment)) {
+      //       this.IdMatriculaCabecera = Number(segment);
+      //     }
+      //     break; // Salimos del bucle después de asignar o no el valor
+      //   }
 
-        if (segment === 'MisCursos') {
-          assignNext = true; // La próxima iteración asignará el valor si es un número
-        }
-      }
+      //   if (segment === 'MisCursos') {
+      //     assignNext = true; // La próxima iteración asignará el valor si es un número
+      //   }
+      // }
 
       console.log(this.IdMatriculaCabecera);
       if (this.IdMatriculaCabecera == 0) {
@@ -315,30 +315,31 @@ export class ChatAtencionVentasComponent implements OnInit, OnChanges {
                         ) {
                           ValorFormulario = 'true';
                         }
-                        if (
-                          this._SessionStorageService.GetToken() != null &&
-                          this.Paso <= 2 &&
-                          this.Caso == 'B'
-                        ) {
-                          this.CursosMatriculados();
-                          this.Paso = 2;
-                          this.Caso = 'B';
-                        }
+                        // if (
+                        //   this._SessionStorageService.GetToken() != null &&
+                        //   this.Paso <= 2 &&
+                        //   this.Caso == 'B'
+                        // ) {
+                        //   this.CursosMatriculados();
+                        //   this.Paso = 2;
+                        //   this.Caso = 'B';
+                        // }
                       }
                       this._SessionStorageService.SessionSetValue(
                         'ChatAcademicoIniciado',
                         ValorFormulario
                       );
-                    } else {
-                      if (this.IdAlumno == 0) {
-                        this.InformacionChatSinToken();
-                      } else {
-                        this.Paso = 2;
-                        this.Caso = 'B';
-                        console.log('INGRESA 1');
-                        this.CursosMatriculados();
-                      }
                     }
+                    // else {
+                    //   if (this.IdAlumno == 0) {
+                    //     this.InformacionChatSinToken();
+                    //   } else {
+                    //     this.Paso = 2;
+                    //     this.Caso = 'B';
+                    //     console.log('INGRESA 1');
+                    //     this.CursosMatriculados();
+                    //   }
+                    // }
                   },
                 });
             },

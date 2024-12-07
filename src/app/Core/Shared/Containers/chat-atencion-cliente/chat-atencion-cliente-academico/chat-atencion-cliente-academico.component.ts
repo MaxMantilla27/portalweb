@@ -441,8 +441,8 @@ export class ChatAtencionClienteAcademicoComponent
         next: (x) => {
           console.log('LISTADO DE MENSAJES DE HISTORIAL', x);
           console.log('FECHA DE REGISTRO', this.FechaRegistro);
-          this.FechaRegistro = new Date(this.FechaRegistro); // Asegúrate de que this.FechaRegistro sea una fecha válida
-          this.FechaRegistro.setMinutes(this.FechaRegistro.getMinutes() - 3);
+          // this.FechaRegistro = new Date(this.FechaRegistro); // Asegúrate de que this.FechaRegistro sea una fecha válida
+          // this.FechaRegistro.setMinutes(this.FechaRegistro.getMinutes() - 3);
           this.mensajesAnteriorePrevio = x;
           if (this.mensajesAnteriorePrevio.length > 0) {
             this.mensajesAnteriorePrevio.forEach((m: any) => {

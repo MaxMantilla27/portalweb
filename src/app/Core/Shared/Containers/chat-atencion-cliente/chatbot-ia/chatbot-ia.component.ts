@@ -31,6 +31,7 @@ import {
   ChatAtencionClienteContactoDetalleRegistrarDTO,
   ChatAtencionClienteContactoRegistrarDTO,
 } from 'src/app/Core/Models/ChatAtencionClienteDTO';
+import { DatosFormularioDTO } from 'src/app/Core/Models/DatosFormularioDTO';
 
 @Component({
   selector: 'app-chatbot-ia',
@@ -38,6 +39,17 @@ import {
   styleUrls: ['./chatbot-ia.component.scss'],
 })
 export class ChatbotIaComponent implements OnInit {
+  constructor(
+    private _router: Router,
+    private chatbotIAService: ChatbotIAService,
+    private _SessionStorageService: SessionStorageService,
+    private _HelperService: HelperService,
+    private cd: ChangeDetectorRef,
+    private _ChatEnLinea: ChatEnLineaService,
+    private _DatosPerfilService: DatosPerfilService,
+    private _ChatAtencionClienteService: ChatAtencionClienteService,
+    private _AlumnoService: AlumnoService,
+  ) {}
   mensajes: MensajeChatbotIADTO[] = [];
 
   registroChatIA: RegistroChatbotIADTO = {
@@ -97,24 +109,26 @@ export class ChatbotIaComponent implements OnInit {
   @Input() IdProgramageneral = 0;
   @Input() IdPespecificoPrograma = 0;
 
-  constructor(
-    private _router: Router,
-    private chatbotIAService: ChatbotIAService,
-    private _SessionStorageService: SessionStorageService,
-    private _HelperService: HelperService,
-    private cd: ChangeDetectorRef,
-    private _ChatEnLinea: ChatEnLineaService,
-    private _DatosPerfilService: DatosPerfilService,
-    private _ChatAtencionClienteService: ChatAtencionClienteService
-  ) {}
+
   public IdChatbotIAPortalHiloChat = 0;
   public TieneCursosMatriculados = false;
   public EstadoEscribiendo = false;
   public DatosCurso: any;
-
+  public datos: DatosFormularioDTO ={
+    nombres:'',
+    apellidos:'',
+    email:'',
+    idPais:undefined,
+    idRegion:undefined,
+    movil:'',
+    idCargo:undefined,
+    idAreaFormacion:undefined,
+    idAreaTrabajo:undefined,
+    idIndustria:undefined,
+  }
   ngOnInit(): void {
     this.ObtenerHistorialChatBotIA();
-
+    this.ReinicioTotalChat();
     this._HelperService.recibirDatoCuenta
       .pipe(takeUntil(this.signal$))
       .subscribe({
@@ -251,13 +265,28 @@ export class ChatbotIaComponent implements OnInit {
         this._SessionStorageService.SessionGetValue('usuarioWeb');
       if (usuarioWeb != '') {
         clearTimeout(this.interval);
-        this.registroChatIA.IdContactoPortalSegmento = usuarioWeb;
         this.chatbotIAService.EnviarMensajeBot(this.registroChatIA).subscribe({
           next: (response) => {
             console.log(response);
             //Realiza el inicio de sesión del usuario
             if (response.TokenData != null) {
               this._SessionStorageService.SetToken(response.TokenData.Token);
+              this._AlumnoService.ObtenerCombosPerfil().subscribe({
+                next: (x) => {
+                  this.datos.nombres = x.datosAlumno.nombres;
+                  this.datos.apellidos = x.datosAlumno.apellidos;
+                  this.datos.email = x.datosAlumno.email;
+                  this.datos.idPais = x.datosAlumno.idPais;
+                  this.datos.idRegion = x.datosAlumno.idDepartamento;
+                  this.datos.movil = x.datosAlumno.telefono;
+                  this.datos.idCargo = x.datosAlumno.idCargo;
+                  this.datos.idAreaFormacion = x.datosAlumno.idAreaFormacion;
+                  this.datos.idAreaTrabajo = x.datosAlumno.idAreaTrabajo;
+                  this.datos.idIndustria = x.datosAlumno.idIndustria
+
+                  this._SessionStorageService.SessionSetValue('DatosFormulario',JSON.stringify(this.datos));
+                }
+              });
               this.DatoObservable.datoAvatar = true;
               this.DatoObservable.datoContenido = true;
               this._HelperService.enviarDatoCuenta(this.DatoObservable);
@@ -289,10 +318,15 @@ export class ChatbotIaComponent implements OnInit {
               this.CargandoInformacion = false;
             }
           },
-          complete: () => {},
+          complete: () => {
+            this.EstadoEscribiendo=false;
+            this.registroChatIA.IdContactoPortalSegmento = usuarioWeb;
+          },
           error: (e) => {
             console.error('Error al obtener la respuesta de la API', e);
             this.ChatError = true;
+            this.EstadoEscribiendo=false;
+            this.scrollAbajo(true,10)
           },
         });
       }
@@ -349,7 +383,6 @@ export class ChatbotIaComponent implements OnInit {
 
   // Reemplaza el último mensaje del bot (los "...")
   reemplazarMensajeBot(): void {
-    this.EstadoEscribiendo = false;
     this.mensajes[this.mensajes.length - 1].mensaje =
       this.registroChatIA.Mensaje!;
     this.scrollAbajo(true, 4);
@@ -440,7 +473,7 @@ export class ChatbotIaComponent implements OnInit {
     this.CargandoInformacion = true;
     if (IdChatbotIAPortalHiloChat == 0) {
       IdChatbotIAPortalHiloChat =
-        this.registroChatIA.IdChatbotIAPortalHiloChat!;
+        this.registroChatIA.IdChatbotIAPortalHiloChat?? 0;
     }
     this.chatbotIAService
       .CerrarRegistroHiloChat(IdChatbotIAPortalHiloChat)
@@ -551,7 +584,9 @@ export class ChatbotIaComponent implements OnInit {
       .subscribe({
         next: (x) => {
           console.log(x);
-          this.IdChatAtencionClienteContacto = x.idChatAtencionClienteContacto;
+          if(x!=null){
+            this.IdChatAtencionClienteContacto = x.idChatAtencionClienteContacto;
+          }
         },
       });
     if (this.IdChatAtencionClienteContacto == 0) {

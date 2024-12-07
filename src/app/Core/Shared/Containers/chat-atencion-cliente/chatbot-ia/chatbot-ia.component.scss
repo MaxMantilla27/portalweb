@@ -28,6 +28,7 @@
   max-height: 70vh; /* Define la altura máxima como un porcentaje del viewport */
   max-width: 340px; /* Define el ancho máximo */
   overflow-y: auto; /* Permite el scroll vertical si el contenido es más grande que el contenedor */
+  overflow-x: hidden; /* Permite el scroll vertical si el contenido es más grande que el contenedor */
   box-sizing: border-box; /* Incluye el padding y el borde en el cálculo del alto total */
   border-radius: 10px;
   z-index: 200;
