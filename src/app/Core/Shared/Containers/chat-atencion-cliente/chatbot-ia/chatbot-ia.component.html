@@ -76,7 +76,7 @@
             <span class="puntosBotIA">...</span>
           </div>
           <!-- Mostrar el mensaje si no está en estado escribiendo -->
-          <markdown *ngIf="!EstadoEscribiendo || !last" [data]="item.mensaje"></markdown>
+          <markdown *ngIf="(!EstadoEscribiendo || !last) &&item.mensaje!=''" [data]="item.mensaje"></markdown>
         </div>
       </div>
     </ng-container>
