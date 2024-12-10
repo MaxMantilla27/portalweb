@@ -137,7 +137,6 @@ export class AfiliacionVisaComponent implements OnInit,OnDestroy {
     this._SessionStorageService.SessionSetValue('comprobante',JSON.stringify(this.DataComprobante));
 
     let action = this.RutaProcesoPago+'ProcesoPagoVisa/Recurrente?IdTransaccion='+this.json.IdentificadorTransaccion
-    //let action = 'https://localhost:44373/ProcesoPagoVisa/Recurrente?IdTransaccion='+this.json.IdentificadorTransaccion
     let timeouturl = this.urlBase+'AulaVirtual/MisPagos/'+this.IdMatriculaCabecera
     let logo = 'https://img.bsginstitute.com/repositorioweb/img/logobsg-visa.svg'
     let scriptHeader2 = this._renderer2.createElement('script');
