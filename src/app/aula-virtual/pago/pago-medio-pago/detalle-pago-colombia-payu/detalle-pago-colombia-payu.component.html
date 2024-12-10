@@ -1,0 +1,278 @@
+<!-- holax -->
+<div class="container"></div>
+<div style="background: #f4f4f4">
+  <div class="container">
+    <div class="row" style="padding: 20px 90px 20px 20px !important">
+      <div class="col-12 col-md-12 col-lg-12">
+        <a class="btn-back-detalle" (click)="RegresarPasarela()"
+          >&#8249; Volver</a
+        >
+        <div class="titleCronograma">Confirma tu compra</div>
+        <div class="titleCronogramaCurso" *ngIf="resultPreProceso != undefined">
+          {{ resultPreProceso.nombrePrograma }}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div
+  *ngIf="resultPreProceso != undefined && !oncharge"
+  class="container detalle-info"
+  style="border-bottom: 2px solid #e7e7e7 !important;"
+>
+  <div class="row">
+    <div class="col-12 row container-info-pago">
+      <div class="col-12 col-md-6 col-lg-6 inputPagoVisa">
+        <div *ngIf="resultPreProceso.idFormaPago==65" class="subtitlePagoVisa" style="border: none !important">
+          Ingresa los datos del titular de la cuenta PSE:
+        </div>
+        <div *ngIf="resultPreProceso.idFormaPago==64" class="subtitlePagoVisa" style="border: none !important">
+          Ingresa tus datos como aparece en tu tarjeta de credito o débito:
+        </div>
+        <ng-container *ngIf="resultPreProceso.idFormaPago==65">
+          <mat-form-field  class="col-12" appearance="outline" style="width: 100%;">
+            <mat-label>Seleccione su banco</mat-label>
+            <mat-select placeholder="Seleccione su banco" [(ngModel)]="registroPse.BancoPSE" [ngModelOptions]="{standalone: true}">
+              <ng-container *ngFor="let option of resultPreProceso.listaRegistrosPreProsesoPayuPse.listaBancos">
+                <mat-option *ngIf="option.pseCode!='0'" [value]="option.pseCode" >{{option.description}}</mat-option>
+              </ng-container>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field class="col-12" appearance="outline" [floatLabel]="'always'" style="width: 100%;">
+            <mat-label>Titular de la cuenta</mat-label>
+            <input type="text" placeholder="Titular de la cuenta" [ngModelOptions]="{standalone: true}"
+            [(ngModel)]="jsonSave.TarjetaHabiente.Titular" matInput >
+          </mat-form-field>
+          <mat-form-field class="col-12" appearance="outline" [floatLabel]="'always'" style="width: 100%;">
+            <mat-label>Telefono</mat-label>
+            <input type="text" placeholder="Numero de telefono" [ngModelOptions]="{standalone: true}" name="phone"
+            [(ngModel)]="registroPse.TelefonoTitularPSE" matInput >
+          </mat-form-field>
+
+          <mat-form-field  class="col-12" appearance="outline" style="width: 100%;">
+            <mat-label>Tipo de cliente</mat-label>
+            <mat-select placeholder="Tipo de cliente" [(ngModel)]="registroPse.TipoClientePSE" [ngModelOptions]="{standalone: true}">
+              <ng-container *ngFor="let option of resultPreProceso.listaRegistrosPreProsesoPayuPse.listaTipoCliente">
+                <mat-option  [value]="option.codigo" >{{option.nombre}}</mat-option>
+              </ng-container>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field  class="col-12" appearance="outline" style="width: 100%;">
+            <mat-label>Tipo de documento</mat-label>
+            <mat-select placeholder="Tipo de documento" [(ngModel)]="registroPse.TipoDocumentoPSE" [ngModelOptions]="{standalone: true}">
+              <ng-container *ngFor="let option of resultPreProceso.listaRegistrosPreProsesoPayuPse.listaTipoDocumento">
+                <mat-option  [value]="option.codigo" >{{option.nombre}}</mat-option>
+              </ng-container>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field class="col-12" appearance="outline" [floatLabel]="'always'" style="width: 100%;">
+            <mat-label>Documento de Identidad</mat-label>
+            <input type="text" placeholder="N° de Documento" [ngModelOptions]="{standalone: true}"
+            [(ngModel)]="jsonSave.TarjetaHabiente.NumeroDocumento" matInput [maxLength]="12" >
+            <!-- <i *ngIf="jsonSave.TarjetaHabiente.NumeroDocumento.length>=6" style="font-size: 15px !important;margin-left: 10px;color: #02c158;" class="material-icons" >check_circle</i>
+            <i *ngIf="jsonSave.TarjetaHabiente.NumeroDocumento.length<6" style="font-size: 17px !important;margin-left: 10px;color:#FFC107;" class="material-icons" >emoji_objects</i> -->
+          </mat-form-field>
+        </ng-container>
+        <ng-container *ngIf="resultPreProceso.idFormaPago==64">
+          <mat-form-field class="col-12" appearance="outline" [floatLabel]="'always'" style="width: 100%;">
+            <mat-label>Titular de la Tarjeta</mat-label>
+            <input style="display: flex;" type="text" placeholder="Nombre como aparece en la tarjeta" [ngModelOptions]="{standalone: true}"
+            [(ngModel)]="jsonSave.TarjetaHabiente.Titular" matInput >
+            <!-- <i *ngIf="jsonSave.TarjetaHabiente.Titular!=''" style="font-size: 15px !important;margin-left: 10px;color: #02c158;" class="material-icons" >check_circle</i>
+            <i *ngIf="jsonSave.TarjetaHabiente.Titular==''" style="font-size: 17px !important;margin-left: 10px;color:#FFC107;" class="material-icons" >emoji_objects</i> -->
+          </mat-form-field>
+          <mat-form-field class="col-12" appearance="outline" [floatLabel]="'always'" style="width: 100%;">
+            <mat-label>Documento de Identidad</mat-label>
+            <input type="text" placeholder="N° de Documento" [ngModelOptions]="{standalone: true}"
+            [(ngModel)]="jsonSave.TarjetaHabiente.NumeroDocumento" matInput [maxLength]="12" >
+            <!-- <i *ngIf="jsonSave.TarjetaHabiente.NumeroDocumento.length>=6" style="font-size: 15px !important;margin-left: 10px;color: #02c158;" class="material-icons" >check_circle</i> -->
+            <!-- <i *ngIf="jsonSave.TarjetaHabiente.NumeroDocumento.length<6" style="font-size: 17px !important;margin-left: 10px;color:#FFC107;" class="material-icons" >emoji_objects</i> -->
+          </mat-form-field>
+          <mat-form-field class="col-12" appearance="outline" [floatLabel]="'always'" style="width: 100%;">
+            <mat-label>Número de tarjeta</mat-label>
+            <input type="text" placeholder="Número de tarjeta" [ngModelOptions]="{standalone: true}"
+            [(ngModel)]="NumberT" matInput appInputCard>
+            <!-- <i *ngIf="NumberT.split('-').join('').length>=14" style="font-size: 15px !important;margin-left: 10px;color: #02c158;" class="material-icons" >check_circle</i>
+            <i *ngIf="NumberT.split('-').join('').length<14" style="font-size: 17px !important;margin-left: 10px;color:#FFC107;" class="material-icons" >emoji_objects</i> -->
+          </mat-form-field>
+          <div style="display: flex;">
+            <div class="col-6 col-md-6 col-lg-6">
+              <mat-form-field  appearance="outline" [floatLabel]="'always'" style="width: 100%;">
+              <mat-label>Fecha de vencimiento MM/AA</mat-label>
+              <input type="text" placeholder="MM/AA" [ngModelOptions]="{standalone: true}"
+              [(ngModel)]="jsonSave.TarjetaHabiente.fecha" matInput appInputCardFecha>
+              <!-- <i *ngIf="jsonSave.TarjetaHabiente.fecha.length>=5" style="font-size: 15px !important;margin-left: 10px;color: #02c158;" class="material-icons" >check_circle</i>
+              <i *ngIf="jsonSave.TarjetaHabiente.fecha.length<5" style="font-size: 17px !important;margin-left: 10px;color:#FFC107;" class="material-icons" >emoji_objects</i> -->
+            </mat-form-field>
+            </div>
+
+            <div class="col-6 col-md-6 col-lg-6" style="padding-left: 15px;">
+              <mat-form-field appearance="outline" [floatLabel]="'always'" style="width: 100%;">
+                <mat-label>CVV</mat-label>
+                <input type="text" placeholder="CVV" [ngModelOptions]="{standalone: true}"
+                [(ngModel)]="jsonSave.TarjetaHabiente.CodigoVV" matInput [maxLength]="4">
+                <!-- <i *ngIf="jsonSave.TarjetaHabiente.CodigoVV.length>=3" style="font-size: 15px !important;margin-left: 10px;color: #02c158;" class="material-icons" >check_circle</i>
+                <i *ngIf="jsonSave.TarjetaHabiente.CodigoVV.length<3" style="font-size: 17px !important;margin-left: 10px;color:#FFC107;" class="material-icons" >emoji_objects</i> -->
+              </mat-form-field>
+            </div>
+          </div>
+
+        </ng-container>
+      </div>
+      <div class="col-12 col-md-6 col-lg-6">
+        <div class="resumenPagoTarjeta">
+          <div class="contentResumenPago" style="border: none !important">
+            <div
+              class="col-12"
+              style="
+                display: flex;
+                justify-content: space-between;
+                padding: 5px;
+                border-bottom: solid 1px #a6a6a6;
+              "
+            >
+              <div style="font-weight: 600">Concepto</div>
+              <div style="font-weight: 600">Monto</div>
+            </div>
+            <div class="ItemsResumenPago row">
+              <div
+                *ngFor="let item of resultPreProceso.listaCuota; index as i"
+                style="padding: 5px !important"
+              >
+                <div class="col-12 row itms">
+                  <div class="col-8">{{ item.nombre }}</div>
+                  <div class="col-4" style="text-align: right">
+                    {{ resultPreProceso.monedaCorreo }}
+                    {{ item.cuotaTotal | formatoMilesDecimales }}
+                  </div>
+                </div>
+              </div>
+              <div class="col-12 row totalPago" style="background: #f2f6ff">
+                <div class="col-8">Total a pagar</div>
+                <div class="col-4" style="text-align: right">
+                  {{ resultPreProceso.monedaCorreo }}
+                  {{ resultPreProceso.total | formatoMilesDecimales }}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="col-12"
+        style="
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          flex-direction: column;
+        "
+      >
+        <div class="container-butto-pagar">
+          <app-default-button [confs]="{color:'primary',titulo:'Pagar ahora'}"
+            [style]="'margin-top: 20px;margin-bottom: 0px;width:100%'" (ButtoclClick)="ValidateSave()"></app-default-button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<ng-container *ngIf="resultPreProceso == undefined  && !oncharge">
+  <div
+    class="row"
+    style="
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      height: 15rem;
+    "
+  >
+    <div class="col-12" style="display: flex; justify-content: center">
+      <mat-spinner></mat-spinner>
+    </div>
+    <div class="col-12">Cargando información pago ...</div>
+  </div>
+</ng-container>
+<ng-container *ngIf="oncharge">
+  <div
+    class="row"
+    style="
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      height: 15rem;
+    "
+  >
+    <div class="col-12" style="display: flex; justify-content: center">
+      <mat-spinner></mat-spinner>
+    </div>
+    <div class="col-12">Procesando pago ...</div>
+  </div>
+</ng-container>
+<div class="container">
+  <div class="row">
+    <!-- Columna de 7 con el contenido -->
+    <div class="col-12 col-md-7 col-lg-7">
+      <div style="justify-content: left; display: flex">
+        <div class="iconoPagoTarjeta">
+          <div class="textPagoTarjeta" style="color: #02c158 !important">
+            <span>PAGO 100%</span>
+            <span>seguro</span>
+          </div>
+          <div class="imgPagoTarjetaVerde"></div>
+          <div class="descPagoTarjeta">
+            <span>
+              Este certificado garantiza la seguridad de todas tus conexiones
+              mediante cifrado
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Columna vacía de 5 -->
+    <div class="col-12 col-md-5 col-5" style="padding: 20px" *ngIf="resultPreProceso.idFormaPago==65">
+      <div class="texto-medios-pago">Métodos de pago aceptados:</div>
+      <div class="medio-pago-images" style="padding-top: 10px">
+        <div
+          *ngFor="let tarjeta of tarjetas"
+          class="medio-pago-image-container"
+        >
+          <img
+            *ngIf="
+              tarjeta.medioPago == 'Visa' ||
+              tarjeta.medioPago == 'MasterCard' ||
+              tarjeta.medioPago == 'Amex' ||
+              tarjeta.medioPago == 'Pse'
+            "
+            [src]="'../../../../assets/icons/' + tarjeta.img"
+            alt="Imagen de tarjeta"
+            class="medio-pago-image"
+          />
+        </div>
+      </div>
+    </div>
+    <div class="col-12 col-md-5 col-5" style="padding: 20px" *ngIf="resultPreProceso.idFormaPago==64">
+      <div class="texto-medios-pago">Métodos de pago aceptados:</div>
+      <div class="medio-pago-images" style="padding-top: 10px">
+        <div
+          *ngFor="let tarjeta of tarjetas"
+          class="medio-pago-image-container"
+        >
+          <img
+            *ngIf="
+              tarjeta.medioPago == 'Visa' ||
+              tarjeta.medioPago == 'MasterCard' ||
+              tarjeta.medioPago == 'Amex'
+            "
+            [src]="'../../../../assets/icons/' + tarjeta.img"
+            alt="Imagen de tarjeta"
+            class="medio-pago-image"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

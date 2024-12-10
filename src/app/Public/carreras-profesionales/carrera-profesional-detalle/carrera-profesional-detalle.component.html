@@ -84,9 +84,9 @@
               <div>
                 <div class="titleDiv">Pensión por ciclo</div>
                 <div class="subTitleDiv">{{'1 matrícula de '
-                  +carrera.montoPagoProgramaInformacionDTO?.simbolo+' '+FormatoMilesDecimales(carrera.montoPagoProgramaInformacionDTO?.matricula)+' y '
+                  +carrera.montoPagoProgramaInformacionDTO?.simbolo+' '+(carrera.montoPagoProgramaInformacionDTO?.matricula|formatoMilesDecimales)+' y '
                   +carrera.montoPagoProgramaInformacionDTO?.nroCuotas+' pensiones de '
-                  +carrera.montoPagoProgramaInformacionDTO?.simbolo+' '+FormatoMilesDecimales(carrera.montoPagoProgramaInformacionDTO?.cuotas)}}
+                  +carrera.montoPagoProgramaInformacionDTO?.simbolo+' '+(carrera.montoPagoProgramaInformacionDTO?.cuotas|formatoMilesDecimales)}}
                 </div>
               </div>
             </div>

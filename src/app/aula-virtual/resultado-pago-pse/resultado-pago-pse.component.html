@@ -1,37 +1,178 @@
 <!-- holax -->
-<div class="container" >
-  <div class="row rowpaddAv" style="justify-content: center;">
-    <div class="col-12 col-md-10 col-lg-8" *ngIf="estado==0">
-
-      <div class="titleResultPago">
-        <img style="margin-right: 10px;"  src="../../../assets/icons/denegado-error-rojo.svg" alt="">
-        <div >No se realizó el pago</div>
+<div style="background: #f4f4f4">
+  <div class="container">
+    <div class="row" style="padding: 20px 90px 20px 20px !important">
+      <div class="col-12">
+        <div class="titleCronograma">Confirmación de Pago</div>
+        <div class="titleCronogramaCurso">{{ NombreCursoPago }}</div>
       </div>
-      <div class="textResultPago">
-        <ng-container >
-          No hemos podido procesar su pago, debido a un error con su entidad bancaria, comuniquese con ellos para
-          solucionar el error en el pago.
+    </div>
+  </div>
+</div>
+<div class="container" *ngIf="resultProceso != undefined">
+  <div class="row rowpaddAv" style="justify-content: center">
+    <div
+      class="col-12 col-md-10 col-lg-8"
+      *ngIf="resultProceso.estadoOperacion != 'Processed'"
+    >
+      <ng-container *ngIf="resultProceso.estadoOperacion == 'Pending' || resultProceso.estadoOperacion == 'Sent'">
+        <div class="row" style="display: flex; justify-content: center;align-items: center;text-align: center; height: 15rem;">
+          <div class="col-12" style="display: flex;justify-content: center;">
+            <mat-spinner></mat-spinner>
+          </div>
+          <div class="titleResultPago">
+            <div>Procesando pago</div>
+          </div>
+          <div style="margin-top: 15px; font-size: 15px">
+            Te agradecemos por tu paciencia, en este momento estamos procesando tu
+            pago
+          </div>
+        </div>
+
+      </ng-container>
+
+      <ng-container
+        *ngIf="
+          ['No Process', 'Declinado', 'Processed-', 'ERROR','No Processed', 'Declined'].includes(
+            resultProceso.estadoOperacion
+          )
+        "
+      >
+        <div class="titleResultPago">
+          <img
+            style="margin-right: 10px"
+            src="../../../assets/icons/denegado-error-rojo.svg"
+            alt=""
+          />
+          <div>Pago Rechazado</div>
+        </div>
+        <div class="textResultPago" style="text-align: justify">
+          <div
+              *ngIf="resultProceso.mensajeTransaccion"
+              style="text-align: center; color: #e24c4d"
+            >
+              <p>Hubo un problema al procesar tu pago.</p>
+              <p>
+                <strong>Descripción:</strong>
+                {{ resultProceso.mensajeTransaccion }}
+              </p>
+            </div>
+            <p style="text-align: center">
+              Asegúrate de que tu tarjeta tenga saldo suficiente para completar
+              tu pago e inténtalo nuevamente.
+            </p>
+        </div>
+        <ng-container *ngIf="resultProceso.tipoPago === 'Organico'">
+          <app-default-button
+            [confs]="{ color: 'primary', titulo: 'Volver' }"
+            [style]="'margin-top:40px;padding: 0px 40px;'"
+            [ruta]="'/AulaVirtual/PagoOrganicoTodos'"
+          ></app-default-button>
         </ng-container>
 
-
-        <div class="textC">Si tiene alguna consulta adicional, escriba un correo a: <a
-            href="mailto:matriculas@bsginstitute.com">matriculas@bsginstitute.com</a></div>
-      </div>
-      <app-default-button [confs]="{color:'primary',titulo:'Volver'}" [style]="'margin-top:40px;padding: 0px 40px;'"
-        [ruta]="ruta"></app-default-button>
-
+        <ng-container *ngIf="resultProceso.tipoPago === 'Cronograma'">
+          <div class="col-12" style="display: flex; justify-content: center">
+            <app-default-button
+              [confs]="{ color: 'primary', titulo: 'Ver estado de cuenta' }"
+              [style]="'font-size:13px;border-radius:15px'"
+              [ruta]="ruta"
+            ></app-default-button>
+          </div>
+        </ng-container>
+      </ng-container>
     </div>
-    <div class="col-12 col-md-10 col-lg-8" *ngIf="estado==1">
-      <div class="titleResultPago" style="justify-content: center;margin-bottom: 1rem;">
-        <img src="../../../assets/icons/positivo-hecho-20.svg" alt="" style="height: 2.5rem;width: 2.5rem;margin-right:10px;">
+    <div
+      class="col-12 col-md-10 col-lg-8"
+      *ngIf="resultProceso.estadoOperacion == 'Processed'"
+    >
+      <div
+        class="titleResultPago"
+        style="justify-content: center; margin-bottom: 1rem"
+      >
+        <img
+          src="../../../assets/icons/positivo-hecho-20.svg"
+          alt=""
+          style="height: 2.5rem; width: 2.5rem; margin-right: 10px"
+        />
         <div>¡Pago exitoso!</div>
       </div>
-      <div style="margin-top: 5px;font-size: 14px;justify-content: center;display: flex;">
-        Tu compra ha sido realizada con exito.
-      </div>
       <div class="contentCardPago">
-        <div style="margin: 20px 0px;
-        font-weight:600;">Detalles del pago realizado:</div>
+        <div class="cardPago">
+          <div class="row" style="align-items: center; padding: 0px 10vw">
+            <div class="col-12 col-md-6 col-lg-6"><b>Monto:</b></div>
+            <div class="col-12 col-md-6 col-lg-6 itemValueCardPago">
+              {{ resultProceso.monedaCorreo }}
+              {{ resultProceso.montoTotal | formatoMilesDecimales }}
+            </div>
+            <ng-container
+              *ngIf="
+                resultProceso.listaCuota != null &&
+                resultProceso.listaCuota.length > 0
+              "
+            >
+              <div class="col-12 col-md-6 col-lg-6"><b>Concepto:</b></div>
+              <div class="col-12 col-md-6 col-lg-6 itemValueCardPago">
+                <div *ngFor="let item of resultProceso.listaCuota">
+                  {{ item.nombre }}
+                </div>
+              </div>
+            </ng-container>
+            <ng-container
+              *ngIf="
+                resultProceso.listaCuota == null ||
+                resultProceso.listaCuota.length == 0
+              "
+            >
+              <div class="col-12 col-md-6 col-lg-6"><b>Concepto:</b></div>
+              <div class="col-12 col-md-6 col-lg-6 itemValueCardPago">
+                <div>Matrícula</div>
+              </div>
+            </ng-container>
+            <div class="col-12 col-md-6 col-lg-6">
+              <b>Código de transacción:</b>
+            </div>
+            <div class="col-12 col-md-6 col-lg-6 itemValueCardPago">
+              {{ resultProceso.codigoHash }}
+            </div>
+            <div class="col-12 col-md-6 col-lg-6">
+              <b>Fecha de transacción:</b>
+            </div>
+            <div class="col-12 col-md-6 col-lg-6 itemValueCardPago">
+              {{ resultProceso.fechaTransaccion | date : "dd/MM/yyyy" }}
+            </div>
+            <div class="col-12 col-md-6 col-lg-6">
+              <b>Hora de transacción:</b>
+            </div>
+            <div class="col-12 col-md-6 col-lg-6 itemValueCardPago">
+              {{ resultProceso.fechaTransaccion | date : "hh:mm a" }}
+            </div>
+          </div>
+        </div>
+
+        <!-- <app-default-button-flecha [confs]="{color:'primary',titulo:'Ir a mis cursos ahora'}" [style]="'margin-top:40px;padding: 0px 40px;border-radius:20px'"
+            [ruta]="rutaMisCursos"></app-default-button-flecha> -->
+      </div>
+      <div
+        *ngIf="RutaCargada"
+        class="row mt-2"
+        style="justify-content: center; text-align: center"
+      >
+      <div class="button-container-Pagos" style="display: flex;    padding: 0px 3vw;">
+        <button
+          [routerLink]="ruta"
+          class="btn btn-primary m-2 responsive-button-Pagos"
+          style="width: 50%;"
+        >
+          Ver estado de cuenta
+        </button>
+        <button
+          [routerLink]="rutaCursos"
+          class="btn btn-primary m-2 responsive-button-Pagos"
+          style="width: 50%;"
+        >
+          Ir a mi curso
+        </button>
+      </div>
       </div>
     </div>
   </div>

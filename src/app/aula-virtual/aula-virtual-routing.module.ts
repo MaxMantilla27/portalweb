@@ -57,6 +57,22 @@ import { ConfirmacionPagoOpenpayPeruComponent } from './confirmacion-pago-openpa
 import { Tarjeta2Component } from './modal-confirmacion-pago/pagos-organicos/tarjeta2/tarjeta2.component';
 import { PagoOrganicoTodosComponent } from './programas-pago-organico/pago-organico-todos.component';
 import { DocenciaV2CursosOnlineComponent } from './docencia-v2-cursos-online/docencia-v2-cursos-online.component';
+import { PagoMedioPagoComponent } from './pago/pago-medio-pago/pago-medio-pago.component';
+import { DetallePagoInternacionalNiubizComponent } from './pago/pago-medio-pago/detalle-pago-internacional-niubiz/detalle-pago-internacional-niubiz.component';
+import { DetallePagoInternacionalNiubizSecundarioComponent } from './pago/pago-medio-pago/detalle-pago-internacional-niubiz-secundario/detalle-pago-internacional-niubiz-secundario.component';
+import { DetallePagoPeruNiubizComponent } from './pago/pago-medio-pago/detalle-pago-peru-niubiz/detalle-pago-peru-niubiz.component';
+import { DetallePagoPeruNiubizSecundarioComponent } from './pago/pago-medio-pago/detalle-pago-peru-niubiz-secundario/detalle-pago-peru-niubiz-secundario.component';
+import { DetallePagoPeruBilleteraElectronicaComponent } from './pago/pago-medio-pago/detalle-pago-peru-billetera-electronica/detalle-pago-peru-billetera-electronica.component';
+import { DetallePagoPeruYapeComponent } from './pago/pago-medio-pago/detalle-pago-peru-yape/detalle-pago-peru-yape.component';
+import { DetallePagoPeruIzipayComponent } from './pago/pago-medio-pago/detalle-pago-peru-izipay/detalle-pago-peru-izipay.component';
+import { DetallePagoPeruOpenpayComponent } from './pago/pago-medio-pago/detalle-pago-peru-openpay/detalle-pago-peru-openpay.component';
+import { DetallePagoMexicoOpenpayComponent } from './pago/pago-medio-pago/detalle-pago-mexico-openpay/detalle-pago-mexico-openpay.component';
+import { DetallePagoColombiaOpenpayComponent } from './pago/pago-medio-pago/detalle-pago-colombia-openpay/detalle-pago-colombia-openpay.component';
+import { DetallePagoColombiaWompiComponent } from './pago/pago-medio-pago/detalle-pago-colombia-wompi/detalle-pago-colombia-wompi.component';
+import { DetallePagoColombiaPayuComponent } from './pago/pago-medio-pago/detalle-pago-colombia-payu/detalle-pago-colombia-payu.component';
+import { DetallePagoChileWebpayComponent } from './pago/pago-medio-pago/detalle-pago-chile-webpay/detalle-pago-chile-webpay.component';
+import { DetallePagoChileMercadopagoComponent } from './pago/pago-medio-pago/detalle-pago-chile-mercadopago/detalle-pago-chile-mercadopago.component';
+import { ResultadoPagoNiubizComponent } from './resultado-pago-niubiz/resultado-pago-niubiz.component';
 
 const routes: Routes = [
   {
@@ -93,9 +109,26 @@ const routes: Routes = [
         { path: 'DocenciaV2/:IdPespecifico', component: DocenciaV2CursosOnlineComponent,canActivate:[ProveedorGuard]},
         { path: 'MisCursos/:IdMatricula', component: CursoComponent,canActivate:[AlumnoGuard]},
         { path: 'MisPagos/:IdMatricula', component: PagoComponent,canActivate:[AlumnoGuard]},
+
+        { path: 'MisPagos/:idmatricula/:idpasarelapago', component: PagoMedioPagoComponent,canActivate:[AlumnoGuard]},
+        { path: 'MisPagos/:idmatricula/:idpasarelapago/int-niubiz/:identificador', component: DetallePagoInternacionalNiubizComponent,canActivate:[AlumnoGuard]},
+        { path: 'MisPagos/:idmatricula/:idpasarelapago/int-niubiz-sec/:identificador', component: DetallePagoInternacionalNiubizSecundarioComponent,canActivate:[AlumnoGuard]},
+        { path: 'MisPagos/:idmatricula/:idpasarelapago/pe-niubiz/:identificador', component: DetallePagoPeruNiubizComponent,canActivate:[AlumnoGuard]},
+        { path: 'MisPagos/:idmatricula/:idpasarelapago/pe-niubiz-sec/:identificador', component: DetallePagoPeruNiubizSecundarioComponent,canActivate:[AlumnoGuard]},
+        { path: 'MisPagos/:idmatricula/:idpasarelapago/pe-bi-elec/:identificador', component: DetallePagoPeruBilleteraElectronicaComponent,canActivate:[AlumnoGuard]},
+        { path: 'MisPagos/:idmatricula/:idpasarelapago/pe-yape/:identificador', component: DetallePagoPeruYapeComponent,canActivate:[AlumnoGuard]},
+        { path: 'MisPagos/:idmatricula/:idpasarelapago/pe-izipay/:identificador', component: DetallePagoPeruIzipayComponent,canActivate:[AlumnoGuard]},
+        { path: 'MisPagos/:idmatricula/:idpasarelapago/pe-openpay/:identificador', component: DetallePagoPeruOpenpayComponent,canActivate:[AlumnoGuard]},
+        { path: 'MisPagos/:idmatricula/:idpasarelapago/mex-openpay/:identificador', component: DetallePagoMexicoOpenpayComponent,canActivate:[AlumnoGuard]},
+        { path: 'MisPagos/:idmatricula/:idpasarelapago/col-openpay/:identificador', component: DetallePagoColombiaOpenpayComponent,canActivate:[AlumnoGuard]},
+        { path: 'MisPagos/:idmatricula/:idpasarelapago/col-wompi/:identificador', component: DetallePagoColombiaWompiComponent,canActivate:[AlumnoGuard]},
+        { path: 'MisPagos/:idmatricula/:idpasarelapago/col-payu/:identificador', component: DetallePagoColombiaPayuComponent,canActivate:[AlumnoGuard]},
+        { path: 'MisPagos/:idmatricula/:idpasarelapago/chi-webpay/:identificador', component: DetallePagoChileWebpayComponent,canActivate:[AlumnoGuard]},
+        { path: 'MisPagos/:idmatricula/:idpasarelapago/chi-mercadopago/:identificador', component: DetallePagoChileMercadopagoComponent,canActivate:[AlumnoGuard]},
+
         { path: 'Docencia/:IdTarea', component: DocenciaTareasComponent,canActivate:[ProveedorGuard]},
 
-        { path: 'PagoExitosoPse/:estado', component: ResultadoPagoPSEComponent,canActivate:[AlumnoGuard]},
+        { path: 'PagoExitosoPse/:Identificador', component: ResultadoPagoPSEComponent,canActivate:[AlumnoGuard]},
         { path: 'PagoExitoso/:Identificador', component: ResultadoPagoComponent,canActivate:[AlumnoGuard]},
         { path: 'PagoExitosoKlap/:Identificador', component: ResultadoPagoKlapComponent,canActivate:[AlumnoGuard]},
         { path: 'PagoExitosoIziPay/:Identificador', component: ResultadoPagoIzipayComponent,canActivate:[AlumnoGuard]},
@@ -103,6 +136,7 @@ const routes: Routes = [
 
         // RespuestaPago Recurrente :
         { path: 'AfilicacionPagoRecurrente/:Identificador', component: VisaRecurrenteComponent,canActivate:[AlumnoGuard]},
+        { path: 'PagoTokenizado/:Identificador', component: ResultadoPagoNiubizComponent,canActivate:[AlumnoGuard]},
 
         { path: 'MisCursosPrueba/:IdRegistroPrueba', component: CursoPruebaComponent,canActivate:[AlumnoGuard]},
 

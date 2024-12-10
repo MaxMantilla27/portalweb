@@ -5,8 +5,10 @@ import { ActivatedRoute, Router } from '@angular/router';
 import {  Subject, takeUntil } from 'rxjs';
 import { RegistroProcesoPagoAlumnoDTO, RegistroRespuestaPreProcesoPagoDTO } from 'src/app/Core/Models/ProcesoPagoDTO';
 import { ChargeTextComponent } from 'src/app/Core/Shared/Containers/Dialog/charge-text/charge-text.component';
+import { ImagenTarjetas } from 'src/app/Core/Shared/ImagenTarjetas';
 import { FormaPagoService } from 'src/app/Core/Shared/Services/FormaPago/forma-pago.service';
 import { HelperService } from 'src/app/Core/Shared/Services/helper.service';
+import { MedioPagoActivoPasarelaService } from 'src/app/Core/Shared/Services/MedioPagoActivoPasarela/medio-pago-activo-pasarela.service';
 import { SessionStorageService } from 'src/app/Core/Shared/Services/session-storage.service';
 import { SnackBarServiceService } from 'src/app/Core/Shared/Services/SnackBarService/snack-bar-service.service';
 declare var OpenPayPeru: any;
@@ -28,7 +30,8 @@ export class AfiliacionOpenpayComponent implements OnInit,OnDestroy {
     private _SnackBarServiceService:SnackBarServiceService,
     private _router:Router,
     public dialog: MatDialog,
-
+    private _MedioPagoActivoPasarelaService: MedioPagoActivoPasarelaService,
+    private _t: ImagenTarjetas
   ) { }
 
   NumberT:any
@@ -38,12 +41,12 @@ export class AfiliacionOpenpayComponent implements OnInit,OnDestroy {
     this.signal$.complete();
   }
   public tipoTarjet=""
-  public idMatricula=0
+  public IdMatriculaCabecera=0
   public json:RegistroRespuestaPreProcesoPagoDTO={
     IdentificadorTransaccion:'',
     RequiereDatosTarjeta:true
   }
-  public resultCard:any
+  public resultPreProceso:any
   public oncharge=false
   public dialogRef:any
 
@@ -89,15 +92,20 @@ export class AfiliacionOpenpayComponent implements OnInit,OnDestroy {
     razonSocial:'',
     listaCuota:''
   }
-
+  public DatosFacturacion: any = {};
+  public IdPasarelaPago = 0;
+  public tarjetas: any;
   ngOnInit(): void {
+    setTimeout(() => {
+      document.documentElement.scrollTop=0;
+    }, 1000);
     this._HelperService.recibirCombosPerfil.pipe(takeUntil(this.signal$)).subscribe((x) => {
       this.jsonSave.TarjetaHabiente.Titular =x.datosAlumno.nombres+' '+x.datosAlumno.apellidos;
       this.jsonSave.TarjetaHabiente.NumeroDocumento =x.datosAlumno.dni;
     })
     this._ActivatedRoute.params.pipe(takeUntil(this.signal$)).subscribe({
       next: (x) => {
-        this.idMatricula = parseInt(x['IdMatricula']);
+        this.IdMatriculaCabecera = parseInt(x['IdMatricula']);
         this.json.IdentificadorTransaccion = x['Identificador'];
         var r= this._SessionStorageService.SessionGetValue(this.json.IdentificadorTransaccion);
         if(r!=''){
@@ -105,8 +113,17 @@ export class AfiliacionOpenpayComponent implements OnInit,OnDestroy {
           //this._SessionStorageService.SessionDeleteValue(this.json.IdentificadorTransaccion);
         }
         this.ObtenerPreProcesoPagoCuotaAlumno()
+        this.ObtenerTarjetasMedioPago();
       },
     });
+    var localDatosFacturacion = this._SessionStorageService.SessionGetValue('DatosFacturacionPagos');
+    console.log(localDatosFacturacion)
+    if(localDatosFacturacion!=''){
+      this.DatosFacturacion = JSON.parse(localDatosFacturacion);
+      this.jsonSave.Comprobante = this.DatosFacturacion.Comprobante;
+      this.jsonSave.CodigoTributario = this.DatosFacturacion.CodigoTributario;
+      this.jsonSave.RazonSocial = this.DatosFacturacion.RazonSocial;
+    }
   }
 
   ObtenerPreProcesoPagoCuotaAlumno(){
@@ -114,29 +131,29 @@ export class AfiliacionOpenpayComponent implements OnInit,OnDestroy {
       next:x=>{
         console.log(x)
 
-        this.resultCard=x._Repuesta;
+        this.resultPreProceso=x._Repuesta;
         this.DataComprobante.listaCuota =x._Repuesta.listaCuota;
-        if(this.resultCard.estadoOperacion.toLowerCase()!='sent'){
-          this._router.navigate(['/AulaVirtual/MisCursos/'+this.idMatricula])
+        if(this.resultPreProceso.estadoOperacion.toLowerCase()!='sent'){
+          this._router.navigate(['/AulaVirtual/MisCursos/'+this.IdMatriculaCabecera])
         }
-        this.resultCard.total=0;
+        this.resultPreProceso.total=0;
         let count=0
-        this.resultCard.listaCuota.forEach((l:any) => {
+        this.resultPreProceso.listaCuota.forEach((l:any) => {
           if(count==0){
-            this.resultCard.total+=l.cuotaTotal
+            this.resultPreProceso.total+=l.cuotaTotal
           }
           count++
         });
-        this.jsonSave.IdentificadorTransaccion=this.resultCard.identificadorTransaccion
-        this.jsonSave.MedioCodigo=this.resultCard.medioCodigo
-        this.jsonSave.MedioPago=this.resultCard.medioPago
+        this.jsonSave.IdentificadorTransaccion=this.resultPreProceso.identificadorTransaccion
+        this.jsonSave.MedioCodigo=this.resultPreProceso.medioCodigo
+        this.jsonSave.MedioPago=this.resultPreProceso.medioPago
         this.jsonSave.RequiereDatosTarjeta=this.json.RequiereDatosTarjeta
-        this.jsonSave.CodigoTributario=this.resultCard.identificadorTransaccion
-        this.jsonSave.RazonSocial=this.resultCard.identificadorTransaccion
-        this.jsonSave.IdPasarelaPago=this.resultCard.idPasarelaPago
+        this.jsonSave.CodigoTributario=this.resultPreProceso.identificadorTransaccion
+        this.jsonSave.RazonSocial=this.resultPreProceso.identificadorTransaccion
+        this.jsonSave.IdPasarelaPago=this.resultPreProceso.idPasarelaPago
         this.jsonSave.IdentificadorUsuario=this._SessionStorageService.SessionGetValue('usuarioWeb');
 
-        this.jsonSave.PagoPSE=(this.resultCard.idPasarelaPago!=1 || this.resultCard.idFormaPago!=65)?false:true;
+        this.jsonSave.PagoPSE=false;
         this.OpenPayInit();
       }
     })
@@ -188,61 +205,11 @@ export class AfiliacionOpenpayComponent implements OnInit,OnDestroy {
 
     }
     var validate=true
-    //   if (this.jsonSave.TarjetaHabiente.fecha.length < 5) {
-    //     validate = false;
-    //     this._SnackBarServiceService.openSnackBar(
-    //       'Fecha de vencimiento incorrecta',
-    //       'x',
-    //       5,
-    //       'snackbarCrucigramaerror'
-    //     );
-    //   }
-    //   if (this.jsonSave.TarjetaHabiente.CodigoVV.length < 3) {
-    //     validate = false;
-    //     this._SnackBarServiceService.openSnackBar(
-    //       'Numero CVV Incorrecto',
-    //       'x',
-    //       5,
-    //       'snackbarCrucigramaerror'
-    //     );
-    //   }
-    //   if (!this.NumberT.startsWith('37') && this.NumberT.split('-').join('').length < 14) {
-    //     validate = false;
-    //     this._SnackBarServiceService.openSnackBar(
-    //       'Numero de tarjeta Incorrecta',
-    //       'x',
-    //       5,
-    //       'snackbarCrucigramaerror'
-    //     );
-    //   }
-    //   if (this.NumberT.startsWith('34') && this.NumberT.split('-').join('').length < 14) {
-    //     validate = false;
-    //     this._SnackBarServiceService.openSnackBar(
-    //       'Numero de tarjeta Incorrecta',
-    //       'x',
-    //       5,
-    //       'snackbarCrucigramaerror'
-    //     );
-    //   }
-    // if(this.jsonSave.TarjetaHabiente.Titular==''){
-    //   validate = false;
-    //   this._SnackBarServiceService.openSnackBar(
-    //     'Ingrese los nombres del titular',
-    //     'x',
-    //     5,
-    //     'snackbarCrucigramaerror'
-    //   );
-    // }
-    // console.log(this.jsonSave.TarjetaHabiente.NumeroDocumento.length)
-    // if(this.jsonSave.TarjetaHabiente.NumeroDocumento==null || this.jsonSave.TarjetaHabiente.NumeroDocumento.length<=5){
-    //   validate = false;
-    //   this._SnackBarServiceService.openSnackBar(
-    //     'Ingrese el documento completo del titular',
-    //     'x',
-    //     5,
-    //     'snackbarCrucigramaerror'
-    //   );
-    // }
+    console.log(this.jsonSave.TarjetaHabiente.NumeroTarjeta)
+    console.log(this.jsonSave.TarjetaHabiente.Titular)
+    console.log(this.NumberT)
+    console.log(this.jsonSave.TarjetaHabiente.fecha)
+    console.log(this.jsonSave.TarjetaHabiente.CodigoVV)
     if (validate) {
       this.dialogRef =this.dialog.open(ChargeTextComponent,{
         panelClass:'dialog-charge-text',
@@ -353,16 +320,21 @@ export class AfiliacionOpenpayComponent implements OnInit,OnDestroy {
       default :this.tipoTarjet=""
     }
   }
-  FormatoMilesDecimales(num: number): string {
-    // Separar parte entera y decimal
-    const parts = Number(num).toFixed(2).split('.');
-    let integerPart = parts[0];
-    const decimalPart = parts[1];
-
-    // Agregar separadores de miles
-    integerPart = integerPart.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-
-    // Combinar parte entera y decimal
-    return integerPart + '.' + decimalPart;
+  ObtenerTarjetasMedioPago(): void {
+    this._MedioPagoActivoPasarelaService
+      .MedioPagoPasarelaPortalCronograma(this.IdMatriculaCabecera)
+      .pipe(takeUntil(this.signal$))
+      .subscribe({
+        next: (response) => {
+          this.tarjetas = response.map((tarjeta: any) => ({
+            ...tarjeta,
+            img: this._t.GetTarjeta(tarjeta.medioCodigo),
+          }));
+          console.log('Tarjetas por alumno', this.tarjetas);
+        },
+      });
+  }
+  RegresarPasarela(): void {
+    this._router.navigate(['/AulaVirtual/MisPagos/', this.IdMatriculaCabecera]);
   }
 }

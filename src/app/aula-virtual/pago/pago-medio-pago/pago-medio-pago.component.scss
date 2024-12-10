@@ -1,0 +1,158 @@
+.containerCardsMedioPago {
+  display: flex;
+  flex-direction: column; /* Coloca los cards en columna */
+  align-items: center; /* Centra los cards horizontalmente */
+  justify-content: center;
+  padding: 20px; /* Agrega algo de padding */
+}
+
+.medio-pago-card {
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  border-color: rgba(0, 0, 0, 0.1);
+  display: flex;
+  align-items: center;
+  padding: 20px;
+  width: 38rem;
+  margin-top: 10px;
+  transition: box-shadow 0.3s, border 0.3s;
+  border: 2px solid #4E4E4D; /* Borde inicial transparente */
+}
+
+
+/* Estilo cuando el card está seleccionado */
+.medio-pago-card.selected {
+  border-color: #033DAB;
+  box-shadow: 0 4px 20px rgba(3, 61, 171, 0.3); /* Sombras más elegantes */
+  background-color: rgba(3, 61, 171, 0.05); /* Fondo azul claro para resaltar el card */
+}
+
+.medio-pago-content {
+  // flex: 1;
+}
+
+.medio-pago-radio {
+  margin-right: 10px;
+}
+
+.medio-pago-label {
+  //text-wrap: nowrap;
+  font-size: 16px;
+  cursor: pointer;
+  flex: 1;
+}
+
+.medio-pago-images {
+  display: flex;
+  margin-left: 20px;
+}
+
+.medio-pago-image-container {
+  margin-left: 10px;
+}
+
+.medio-pago-image {
+  width: 50px;
+  height: auto;
+  max-height: 50px;
+  object-fit: contain;
+}
+
+/* Agrega la interacción para que el cursor sea pointer sobre los radio buttons */
+mat-radio-button {
+  cursor: pointer;
+}
+.titleCronograma {
+  font-size: 25px;
+  font-weight: 600;
+  border-bottom: solid 2px #f1f1f1;
+}
+.titleCronogramaCurso {
+  font-size: 20px;
+  font-weight: 500;
+  border-bottom: solid 2px #f1f1f1;
+}
+.btn-back-detalle {
+  color: #FF7A00; /* Naranja inicial */
+  font-size: 13px;
+  font-weight: bold;
+  text-decoration: none;
+  cursor: pointer;
+  transition: color 0.3s ease, text-decoration 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+}
+
+.btn-back-detalle:hover {
+  color: #033DAB; /* Azul al hacer hover */
+  text-decoration: underline; /* Subrayado al hacer hover */
+}
+
+.btn-back-detalle:focus {
+  outline: none;
+}
+
+/************************************************************************/
+.medio-pago-card-content{
+
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.medio-pago-arriba{
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+}
+
+.medio-pago-abajo{
+  justify-content: center; 
+  padding: 10px 10px 0px 10px
+}
+
+.medio-pago-abajo-content{
+  display: flex;
+  padding-left: 0px;
+}
+
+@media (max-width:767px){
+
+  .medio-pago-card{
+
+    width: 85%;
+    padding: 10px;
+    justify-content: space-between;
+
+    .medio-pago-label{
+      text-wrap: wrap;
+      font-size: 11px;
+      flex: 1;
+    }
+
+    .medio-pago-image{
+      width: 40px;
+    }
+
+
+  }
+
+  .containerCardsMedioPago{
+
+    padding: 0px;
+
+  }
+
+  .medio-pago-abajo{
+    font-size: 11px;
+    padding: 0px;
+  }
+
+  .medio-pago-abajo-content{
+    padding-left: 54px;
+  }
+
+}

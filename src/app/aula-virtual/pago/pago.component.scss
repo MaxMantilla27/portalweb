@@ -21,7 +21,11 @@
 .titleCronograma {
   font-size: 25px;
   font-weight: 600;
-  margin: 30px 0px;
+  border-bottom: solid 2px #f1f1f1;
+}
+.titleCronogramaCurso {
+  font-size: 20px;
+  font-weight: 500;
   border-bottom: solid 2px #f1f1f1;
 }
 table {
@@ -51,6 +55,7 @@ table tr:first-child th {
   padding: 10px;
 }
 table tr td {
+  font-size: 12px;
   text-align: center;
   padding: 8px 10px 10px 0px;
   img {
@@ -113,9 +118,18 @@ table tr:last-child td {
     font-weight: bold;
     font-size: 1.2rem;
   }
+  .titleCardPagoSubrayado {
+    border-radius: 5px 5px 0px 0px;
+    padding: 15px 30px;
+    font-weight: bold;
+    font-size: 1.2rem;
+    text-decoration: underline;
+    text-underline-offset: 10px;
+    text-decoration-color: #e7e7e7;
+  }
   .contentCardPago {
     justify-content: center;
-    padding: 10px 40px;
+    padding: 20px 20px;
     .sub {
       font-weight: 600;
       border-bottom: solid 2px #c7c7c7;
@@ -249,3 +263,187 @@ table tr:last-child td {
 .MensajeMouse.show {
   opacity: 1; /* Mostrar el tooltip cuando se activa */
 }
+
+/*************************************************************************************/
+
+.matricula-responsive-row-1{
+  padding: 0px;
+}
+
+.matricula-responsive-row-3,
+.pendiente-responsive-row-3
+{
+
+  display: flex;
+  padding: 0px;
+  flex-direction: column;
+  justify-content: space-between;
+
+}
+
+.matricula-responsive{
+  
+  border-radius: 12px;
+  border: 1px solid #C6C6C6;
+  background-color: #f9f9f9;
+  padding: 10px 20px;
+  margin-bottom: 10px;
+  min-height: 95px;
+
+  .material-icons{
+    font-size: 35px !important
+  }
+
+}
+
+.texto{
+
+  font-size: 13px;
+
+}
+
+.texto-sombreado{
+  font-size: 18px;
+  font-weight: 900;
+}
+
+.texto-sombreado-pendiente{
+  font-size: 18px;
+  font-weight: 900;
+  color:#3A82C0
+}
+
+.pendientes-responsive{
+  border-radius: 12px;
+  border: 1px solid #CD2727;
+  background-color: #FFEEEE;
+  padding: 10px 20px;
+  margin-bottom: 10px;
+  min-height: 85px;
+
+  .material-icons{
+    font-size: 35px !important
+
+  }
+
+}
+
+.pagoVencido{
+  border-radius: 12px;
+  border: 1px solid #CD2727;
+  background-color: #FFEEEE;
+  padding: 10px 5px;
+  padding-right: 12px;
+  margin-bottom: 10px;
+  min-height: 85px;
+  color: #1D1D1B;
+  .pendiente-responsive-row-2{
+    .texto-vencido{
+      color:#CD2727;
+    }
+  }
+  .material-icons{
+    font-size: 35px !important
+
+  }
+}
+
+.pagoPorPagar{
+  border-radius: 12px;
+  border: 1px solid #3A82C0;
+  background-color: #F2F6FF;
+  padding: 10px 5px;
+  padding-right: 12px;
+  margin-bottom: 10px;
+  min-height: 85px;
+  color: #3A82C0;
+
+  .pendiente-responsive-row-2{
+    .texto-vencido{
+      color:#3A82C0;
+    }
+  }
+
+  .material-icons{
+    font-size: 35px !important;
+    color:#3A82C0;
+  }
+}
+
+.pagoPendiente{
+
+  border-radius: 12px;
+  border: 1px solid #B7B7B7;
+  background-color: #F9F9F9;
+  padding: 10px 5px;
+  margin-bottom: 10px;
+  padding-right: 12px;
+  min-height: 85px;
+  color: #1D1D1B;
+  .material-icons{
+    font-size: 35px !important;
+    color:#1D1D1B;
+  }
+
+}
+
+.matricula-responsive-row-2{
+
+  display: flex;
+  padding: 0px;
+  padding-left: 16px;
+  flex-direction: column;
+  justify-content: space-between;
+
+}
+
+.pendiente-responsive-row-2{
+
+  display: flex;
+  padding: 0px;
+  padding-left: 23px;
+  flex-direction: column;
+  justify-content: space-between;
+
+  .texto-vencido{
+    font-size: 14px;
+  }
+
+}
+
+.mat-tab-label-container{
+
+  height: 40px;
+  border-bottom: 2px solid #E9F1FF;
+}
+
+.mat-tab-label-active{
+
+  border-top-right-radius: 10px;
+  border-top-left-radius: 10px;
+  color: #3A82C0;
+  font-weight: bold;
+  background-color: #E9F1FF;
+}
+
+.mat-ink-bar {
+  display: none; /* Oculta la barra de desplazamiento */
+}
+
+.CardPagoMisPagos{
+
+  .contentCardPago{
+    margin: 0px;
+  }
+
+}
+
+/*
+                        pagoVencido: pendiente.cuotaVencida == true && pendiente.estado!=true && pendiente.cancelado!=false,
+                        pagoPendiente: pendiente.estado!=false
+*/
+/*
+,
+                        pagoVencido: pendiente.cuotaVencida == true && pendiente.estado!=true && pendiente.cancelado!=false,
+                        pagoPendiente: pendiente.cuotaVencida != true && pendiente.estado==true && pendiente.cancelado!=false
+*/

@@ -29,7 +29,7 @@
   color: #F8893F;
   border-radius:2em;
   // border: solid 1px #F8893F !important ;
-  
+
   &:hover {
       div{
         text-decoration: underline;
@@ -69,6 +69,16 @@
   color: white;
   &:hover {
       background-color: #2E475D;
+      div{
+        text-decoration: underline;
+      }
+  }
+}
+.visa {
+  background-color: #233674;
+  color: white;
+  &:hover {
+      background-color: #2f4487;
       div{
         text-decoration: underline;
       }

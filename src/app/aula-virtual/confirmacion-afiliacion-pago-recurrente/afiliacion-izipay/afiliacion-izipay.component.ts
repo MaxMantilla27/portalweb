@@ -3,8 +3,11 @@ import { AfterViewInit, Component, Inject, OnDestroy, OnInit, Renderer2 } from '
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
 import { RegistroRespuestaPreProcesoPagoDTO } from 'src/app/Core/Models/ProcesoPagoDTO';
+import { ImagenTarjetas } from 'src/app/Core/Shared/ImagenTarjetas';
 import { FormaPagoService } from 'src/app/Core/Shared/Services/FormaPago/forma-pago.service';
+import { MedioPagoActivoPasarelaService } from 'src/app/Core/Shared/Services/MedioPagoActivoPasarela/medio-pago-activo-pasarela.service';
 import { SessionStorageService } from 'src/app/Core/Shared/Services/session-storage.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-afiliacion-izipay',
@@ -20,12 +23,14 @@ export class AfiliacionIzipayComponent implements OnInit, OnDestroy, AfterViewIn
     private _ActivatedRoute: ActivatedRoute,
     private _FormaPagoService: FormaPagoService,
     private _SessionStorageService: SessionStorageService,
-    private _router: Router
+    private _router: Router,
+    private _MedioPagoActivoPasarelaService: MedioPagoActivoPasarelaService,
+    private _t: ImagenTarjetas
   ) {}
   ngAfterViewInit(): void {
     this._ActivatedRoute.params.pipe(takeUntil(this.signal$)).subscribe({
       next: (x) => {
-        this.idMatricula = parseInt(x['IdMatricula']);
+        this.IdMatriculaCabecera = parseInt(x['IdMatricula']);
         this.json.IdentificadorTransaccion = x['Identificador'];
         var r = this._SessionStorageService.SessionGetValue(
           this.json.IdentificadorTransaccion
@@ -34,24 +39,37 @@ export class AfiliacionIzipayComponent implements OnInit, OnDestroy, AfterViewIn
           this.json.RequiereDatosTarjeta = r == 'false' ? false : true;
         }
         this.ObtenerPreProcesoPagoCuotaAlumno();
+
+        this.ObtenerTarjetasMedioPago()
+
       },
     });
+
+
+
   }
   hidenBotom=true
   intervcal:any
   public dialogRef: any;
-  public idMatricula = 0;
+  public IdMatriculaCabecera = 0;
   public json: RegistroRespuestaPreProcesoPagoDTO = {
     IdentificadorTransaccion: '',
     RequiereDatosTarjeta: false,
   };
   public resultPreValidacion: any;
   private kryptonScriptLoaded: boolean = false;
+  public RutaProcesoPago=environment.url_portalv3;
+
+  public tarjetas: any;
+
   ngOnDestroy(): void {
     this.signal$.next(true);
     this.signal$.complete();
   }
   ngOnInit(): void {
+    setTimeout(() => {
+      document.documentElement.scrollTop=0;
+    }, 1000);
   }
   ObtenerPreProcesoPagoCuotaAlumno() {
     this._FormaPagoService
@@ -78,8 +96,8 @@ export class AfiliacionIzipayComponent implements OnInit, OnDestroy, AfterViewIn
     var boton=document.getElementsByClassName('kr-popin-button');
     if(typeof(boton) != 'undefined' && boton != null && boton.length>0)
       boton[0].setAttribute("style",
-      "background-color: #F8893F;color: white;padding: 0 6px 0 6px;margin: 6px 8px 6px 8px;min-width: 88px;border-radius: 3px;font-size: 14px;"+
-      "text-align: center;text-transform: uppercase;text-decoration:none;border: none;outline: none;box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);&:hover {background-color: #b26a3b}"
+      "height: 2rem;width: 10rem;;background-color: #283C7E;color: white;padding: 0 6px 0 6px;margin: 6px 8px 6px 8px;min-width: 88px;border-radius: 10px;font-size: 14px;"+
+      "text-align: center;text-transform: uppercase;text-decoration:none;border: none;outline: none;box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);&:hover {background-color: #3A52A3}"
       );
 
     var botonPago =document.getElementsByClassName('kr-payment-button');
@@ -100,7 +118,13 @@ export class AfiliacionIzipayComponent implements OnInit, OnDestroy, AfterViewIn
     var modalHeader = document.getElementsByClassName('kr-popin-modal-header');
     if(typeof(modalHeader) != 'undefined' && modalHeader != null && modalHeader.length>0)
       modalHeader[0].setAttribute("style", "margin-bottom: 0px;height: 70px;");
-
+    var modalWeapper = document.getElementsByClassName('kr-popin-wrapper');
+    if (
+      typeof modalWeapper != 'undefined' &&
+      modalWeapper != null &&
+      modalWeapper.length > 0
+    )
+      modalWeapper[0].setAttribute('style', 'padding-top: 5rem;');
     this.hidenBotom=false
   }
 
@@ -114,10 +138,8 @@ export class AfiliacionIzipayComponent implements OnInit, OnDestroy, AfterViewIn
         'kr-public-key',
         this.resultPreValidacion.procesoPagoBotonIziPay.publicKey
       );
-      script1.setAttribute('kr-post-url-success',
-      'https://proceso-pago.bsginstitute.com/ProcesoPagoIziPay/Recurrente?IdTransaccion='+this.json.IdentificadorTransaccion);
-      script1.setAttribute('kr-post-url-refused',
-      'https://proceso-pago.bsginstitute.com/ProcesoPagoIziPay/Recurrente?IdTransaccion='+this.json.IdentificadorTransaccion);
+      script1.setAttribute('kr-post-url-success',this.RutaProcesoPago+'ProcesoPagoIziPay/Recurrente?IdTransaccion='+this.json.IdentificadorTransaccion);
+      script1.setAttribute('kr-post-url-refused',this.RutaProcesoPago+'ProcesoPagoIziPay/Recurrente?IdTransaccion='+this.json.IdentificadorTransaccion);
       script1.setAttribute('kr-language', 'es-ES');
       this._renderer2.appendChild(
         this._document.getElementById('header'),
@@ -151,19 +173,27 @@ export class AfiliacionIzipayComponent implements OnInit, OnDestroy, AfterViewIn
       }else{
         window.location.reload()
       }
-    }, 1000);
-  }
-  FormatoMilesDecimales(num: number): string {
-    // Separar parte entera y decimal
-    const parts = Number(num).toFixed(2).split('.');
-    let integerPart = parts[0];
-    const decimalPart = parts[1];
-
-    // Agregar separadores de miles
-    integerPart = integerPart.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-
-    // Combinar parte entera y decimal
-    return integerPart + '.' + decimalPart;
+    }, 3000);
   }
 
+  ObtenerTarjetasMedioPago(): void {
+    this._MedioPagoActivoPasarelaService
+      .MedioPagoPasarelaPortalCronograma(this.IdMatriculaCabecera)
+      .pipe(takeUntil(this.signal$))
+      .subscribe({
+        next: (response) => {
+          this.tarjetas = response.map((tarjeta: any) => ({
+            ...tarjeta,
+            img: this._t.GetTarjeta(tarjeta.medioCodigo),
+          }));
+          console.log('Tarjetas por alumno', this.tarjetas);
+        },
+      });
+  }
+  RegresarPasarela(): void {
+    this._router.navigate(['/AulaVirtual/MisPagos/', this.IdMatriculaCabecera+'/13']);
+  }
 }
+
+
+

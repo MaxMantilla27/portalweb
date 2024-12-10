@@ -5,13 +5,15 @@ import { ActivatedRoute } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
 import { MensajeCorreoDTO } from 'src/app/Core/Models/LibroReclamacionesDTO';
 import { ChargeComponent } from 'src/app/Core/Shared/Containers/Dialog/charge/charge.component';
+import { FormatoMilesDecimalesPipe } from 'src/app/Core/Shared/Pipes/formato-miles-decimales.pipe';
 import { FormaPagoService } from 'src/app/Core/Shared/Services/FormaPago/forma-pago.service';
 import { PasarelaPagoCorreoService } from 'src/app/Core/Shared/Services/PasarelaPagoCorreo/pasarela-pago-correo.service';
 
 @Component({
   selector: 'app-resultado-pago-klap',
   templateUrl: './resultado-pago-klap.component.html',
-  styleUrls: ['./resultado-pago-klap.component.scss']
+  styleUrls: ['./resultado-pago-klap.component.scss'],
+  providers: [FormatoMilesDecimalesPipe]
 })
 export class ResultadoPagoKlapComponent implements OnInit {
 
@@ -21,6 +23,7 @@ export class ResultadoPagoKlapComponent implements OnInit {
     private _ActivatedRoute:ActivatedRoute,
     public dialog: MatDialog,
     private _PasarelaPagoCorreoService:PasarelaPagoCorreoService,
+    private FormatoMilesDecimales: FormatoMilesDecimalesPipe
   ) { }
 
   resultProceso:any;
@@ -43,7 +46,7 @@ export class ResultadoPagoKlapComponent implements OnInit {
   public Matricula:any;
   public NombreCursoPago=''
   public CodigoMatricula=''
-
+  public correoMatriculas='matriculas@bsginstitute.com'
 
   ngOnInit(): void {
     this._ActivatedRoute.params.pipe(takeUntil(this.signal$)).subscribe({
@@ -94,13 +97,11 @@ export class ResultadoPagoKlapComponent implements OnInit {
                 this.CodigoMatricula=this.resultProceso.codigoMatricula
                 this.NombreCursoPago=this.resultProceso.nombrePrograma
             }
-            this.EnvioCorreoPagoExitoso()
             this.RutaCargada=true;
           }
         }
         if(this.resultProceso.estadoOperacion =='No Process' ||
               this.resultProceso.estadoOperacion =='Declinado'){
-                // this.EnvioCorreoErrorPago()
             }
         this.dialogRef.close()
       }
@@ -115,128 +116,6 @@ export class ResultadoPagoKlapComponent implements OnInit {
     window.location.href =url;
   }
 
-  EnvioCorreoPagoExitoso() {
-    console.log(this.resultProceso)
-    console.log(this.resultProceso.registroAlumno)
-    var paymentSummary = "";
-    if(this.resultProceso.listaCuota.length==0){
-      paymentSummary += "<div style='display:flex;border-bottom: 1px solid black;padding: 5px 0;'>"+
-      "<div style='font-size:13px;font-weight:100;width: 66%;'>" + 'Matrícula' + "</div>" +
-      "<div style='font-size:13px;width: 33%;text-align:right;'>" + this.FormatoMilesDecimales(this.resultProceso.montoTotal) + " " + this.resultProceso.monedaCorreo + "</div></div>";
-    }
-    else{
-      this.resultProceso.listaCuota.forEach((l:any) => {
-        paymentSummary += "<div style='display:flex;border-bottom: 1px solid black;padding: 5px 0;'>"+
-        "<div style='font-size:13px;font-weight:100;width: 66%;'>" + this.reemplazarRazonPago(l.nombre) + "</div>" +
-        "<div style='font-size:13px;width: 33%;text-align:right;'>" + this.FormatoMilesDecimales(l.cuotaTotal) + " " + this.resultProceso.monedaCorreo + "</div></div>";
-      });
-    }
-
-    this.jsonCorreo.Asunto =
-      'Confirmación de Pago '+this.resultProceso.nombrePasarela+'- BSG Institute';
-    this.jsonCorreo.Destinatario = this.resultProceso.registroAlumno.correo;
-    this.jsonCorreo.Contenido =
-    "<div style='margin-left:8rem;margin-right:8rem'>"+
-    "<div style='display: flex; align-items: center; border-bottom: 2px solid black; padding-bottom: 4px; width: 80%;'>"+
-    "<img src='https://bsginstitute.com/favicon.ico'style='width: 30px; height: 30px;'>"+
-    "<div style='display: flex; font-size: 25px; color: #414140; margin-left: 7px;'>"+
-    "<div style='letter-spacing: -4px;'>BSG</div>"+
-    "<div style='margin-left: 7px;'>Institute</div>"+
-    "</div></div>"+
-  "<div style='font-weight:bold;font-size:15px;padding-top:20px'>Hola "+this.resultProceso.registroAlumno.nombre+","+
-  "</div><br><div style='font-size:14px'>Es un gusto saludarte. Te informamos que tu pago se ha realizado con éxito."+
-  "</div><br><div style='background:#EBF1FF;border-radius:5px;width:80%'>"+
-    "<div style='padding:25px'>"+
-      "<div style='display:flex;border-bottom: 2px solid black;padding-bottom:3px;'>"+
-      "<div style='font-size:13px;font-weight:bold;width: 66%;'>Resúmen de pago</div>"+
-      "<div style='font-size:13px;width: 33%;text-align:right;'>"+
-      this.pipe.transform(this.resultProceso.fechaTransaccion, 'dd \'de\' MMMM \'del\' yyyy')+
-      "</div></div>"+
-      "<div style='padding-bottom:15px;padding-top:15px'>"+
-        "<div style='font-size:14px;font-weight:bold'>"+
-        this.NombreCursoPago+
-        "</div> Código de matrícula: "+this.CodigoMatricula+
-        "<div></div>"+
-      "</div>"+
-      "<div style='display:flex;border-bottom: 1px solid black;padding: 5px 0;'>"+
-      "<div style='font-size:13px;font-weight:100;width: 66%;'>Concepto</div>"+
-      "<div style='font-size:13px;width: 33%;text-align:right;'>Monto</div>"+
-      "</div>"+
-      paymentSummary+
-      "<div style='display:flex;padding-bottom:20px;'>"+
-      "<div style='font-size:13px;font-weight:bold;width: 66%;'>Total del pago</div>"+
-      "<div style='font-size:13px;justify-content:flex-end;font-weight:bold;width: 33%;text-align:right;'>"+
-      this.FormatoMilesDecimales(this.resultProceso.montoTotal) +" "+this.resultProceso.monedaCorreo+
-      "</div></div>"+
-      // "<div style='font-size:13px'> Método de pago: Tarjeta Visa N° xxxx xxxx xxxx 1542"+
-      // "</div>"+
-      // "<div style='font-size:13px'> Comprobante solicitado: Factura - RUC XXXXXXXX / Boleta - DNI"+
-      // "</div>"+
-      // "<div style='font-size:13px'> Te has afiliado a pagos recurrentes"+
-      // "</div>"+
-    "</div>"+
-  "</div><br><div style='font-size:13px'>!Si necesitas ayuda no dudes en contactarte con tu asesor académico!"+
-  "</div><div style='font-size:13px'>o envía un correo a: <strong>matriculas@bsginstitute.com</strong>"+
-  "</div><br><br><div style='font-size:13px'>Atentamente,"+
-  "</div><div style='font-size:13px;padding-bottom:25px'>BSG Institute"+
-  "</div>"+
-  "<div style='background:#DDDDDD;border-radius:5px;width:80%;text-align:center'>"+
-    "<div style='padding:15px'>"+
-      "<div>"+
-        "<a href='www.bsginstitute.com/termino-uso-web'>Términos de uso</a> | <a href='www.bsginstitute.com/politica-privacidad'>Política de Privacidad</a>"+
-      "</div>"+
-      "<div>© 2023 BSG Institute, todos los derechos reservados</div>"+
-      "<div><a href='www.bsginstitute.com'>www.bsginstitute.com</a></div>"+
-    "</div>"+
-  "</div>"
-    this._PasarelaPagoCorreoService.EnvioCorreo(this.jsonCorreo).pipe(takeUntil(this.signal$)).subscribe({
-      next: (x) => {
-        console.log(x);
-
-      },
-    });
-  }
-  EnvioCorreoErrorPago(){
-    this.jsonCorreo.Asunto =
-      'Error al Procesar tu Pago '+this.resultProceso.nombrePasarela+'- BSG Institute';
-    this.jsonCorreo.Destinatario = this.resultProceso.registroAlumno.correo;
-    this.jsonCorreo.Contenido =
-    "<div style='margin-left:8rem;margin-right:8rem'>"+
-    "<div style='display: flex; align-items: center; border-bottom: 2px solid black; padding-bottom: 4px; width: 80%;'>"+
-    "<img src='https://bsginstitute.com/favicon.ico'style='width: 30px; height: 30px;'>"+
-    "<div style='display: flex; font-size: 25px; color: #414140; margin-left: 7px;'>"+
-    "<div style='letter-spacing: -4px;'>BSG</div>"+
-    "<div style='margin-left: 7px;'>Institute</div>"+
-    "</div></div>"+
-  "<div style='font-weight:bold;font-size:15px;padding-top:20px'>Hola "+this.resultProceso.registroAlumno.nombre+","+
-  "</div><br><div style='font-size:14px'>Hubo un problema al procesar tu pago."+
-  "</div><br><div style='font-size:14px'>"+
-      "<div>Considera los siguientes consejos:"+
-    "</div>"+
- "<ul style='margin-top:5px;padding-left:20px'>"+
-        "<li>Intenta nuevamente y asegurate de ingresar la información correcta.</li>"+
-        "<li>Asegúrate de que la tarjeta tenga saldo suficiente.</li>"+
-        "<li>Contacta a tu banco para comprobar que no haya ningún bloqueo.</li>"+
-    "</ul></div><br><div style='font-size:13px'>!Si necesitas ayuda no dudes en contactarte con tu asesor académico!"+
-  "</div><div style='font-size:13px'>o envía un correo a: <strong>matriculas@bsginstitute.com</strong>"+
-  "</div><br><br><div style='font-size:13px'>Atentamente,"+
-  "</div><div style='font-size:13px;padding-bottom:25px'>BSG Institute"+
-  "</div>"+
-  "<div style='background:#DDDDDD;border-radius:5px;width:80%;text-align:center'>"+
-    "<div style='padding:15px'>"+
-      "<div>"+
-        "<a href='www.bsginstitute.com/termino-uso-web'>Términos de uso</a> | <a href='www.bsginstitute.com/politica-privacidad'>Política de Privacidad</a>"+
-      "</div>"+
-      "<div>© 2023 BSG Institute, todos los derechos reservados</div>"+
-      "<div><a href='www.bsginstitute.com'>www.bsginstitute.com</a></div>"+
-    "</div></div>"
-    this._PasarelaPagoCorreoService.EnvioCorreo(this.jsonCorreo).pipe(takeUntil(this.signal$)).subscribe({
-      next: (x) => {
-        console.log(x);
-
-      },
-    });
-  }
   RegistrarMatriculaAlumnoOrganico(){
     this._FormaPagoService.RegistrarMatriculaAlumnoOrganico(this.json.IdentificadorTransaccion).pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
@@ -258,7 +137,6 @@ export class ResultadoPagoKlapComponent implements OnInit {
         this.RutaCargada=true;
         this.CongelarPEspecificoMatriculaAlumnoOrganico()
         setTimeout(() => {
-          this.EnvioCorreoPagoExitoso();
           this.EnvioCorreoRegularizarOportunidad()
         }, 5000)
       }
@@ -274,14 +152,14 @@ export class ResultadoPagoKlapComponent implements OnInit {
     if(this.resultProceso.listaCuota.length==0){
       paymentSummary += "<div style='display:flex;border-bottom: 1px solid black;padding: 5px 0;'>"+
                             "<div style='font-size:13px;font-weight:100;width: 66%;'>" + 'Matrícula' + "</div>" +
-                            "<div style='font-size:13px;width: 33%;text-align:right;'>" + this.FormatoMilesDecimales(this.resultProceso.montoTotal) + " " + this.resultProceso.monedaCorreo + "</div></div>";
+                            "<div style='font-size:13px;width: 33%;text-align:right;'>" + this.FormatoMilesDecimales.transform(this.resultProceso.montoTotal) + " " + this.resultProceso.monedaCorreo + "</div></div>";
     }
     else{
       this.resultProceso.listaCuota.forEach((l:any) => {
         if(countLista==0){
           paymentSummary += "<div style='display:flex;border-bottom: 1px solid black;padding: 5px 0;'>"+
                             "<div style='font-size:13px;font-weight:100;width: 66%;'>" + this.reemplazarRazonPago(l.nombre) + "</div>" +
-                            "<div style='font-size:13px;width: 33%;text-align:right;'>" + this.FormatoMilesDecimales(l.cuotaTotal) + " " + this.resultProceso.monedaCorreo + "</div></div>";
+                            "<div style='font-size:13px;width: 33%;text-align:right;'>" + this.FormatoMilesDecimales.transform(l.cuotaTotal) + " " + this.resultProceso.monedaCorreo + "</div></div>";
         }
         countLista++;
       });
@@ -289,7 +167,7 @@ export class ResultadoPagoKlapComponent implements OnInit {
 
     this.jsonCorreo.Asunto =
       'NUEVA MATRICULA ORGANICA';
-    this.jsonCorreo.Destinatario = 'matriculas@bsginstitute.com';
+    this.jsonCorreo.Destinatario = this.correoMatriculas;
     // this.jsonCorreo.Destinatario = 'mmantilla@bsginstitute.com';
     this.jsonCorreo.Contenido =
     "<div style='margin-left:8rem;margin-right:8rem'>"+
@@ -320,7 +198,7 @@ export class ResultadoPagoKlapComponent implements OnInit {
       "<div style='display:flex;padding-bottom:20px;'>"+
       "<div style='font-size:13px;font-weight:bold;width: 66%;'>Total del pago</div>"+
       "<div style='font-size:13px;justify-content:flex-end;font-weight:bold;width: 33%;text-align:right;'>"+
-      this.FormatoMilesDecimales(this.resultProceso.montoTotal) +" "+this.resultProceso.monedaCorreo+
+      this.FormatoMilesDecimales.transform(this.resultProceso.montoTotal) +" "+this.resultProceso.monedaCorreo+
       "</div></div>"+
       // "<div style='font-size:13px'> Método de pago: Tarjeta Visa N° xxxx xxxx xxxx 1542"+
       // "</div>"+
@@ -358,17 +236,5 @@ export class ResultadoPagoKlapComponent implements OnInit {
   }
   reemplazarRazonPago(stringOriginal: string): string {
     return stringOriginal.replace(/\//g, "/");
-  }
-  FormatoMilesDecimales(num: number): string {
-    // Separar parte entera y decimal
-    const parts = Number(num).toFixed(2).split('.');
-    let integerPart = parts[0];
-    const decimalPart = parts[1];
-
-    // Agregar separadores de miles
-    integerPart = integerPart.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-
-    // Combinar parte entera y decimal
-    return integerPart + '.' + decimalPart;
   }
 }

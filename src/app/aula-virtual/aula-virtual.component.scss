@@ -227,8 +227,8 @@ mat-toolbar {
     padding: 5px 20px 0px 20px;
   }
 }
+
 .resumenPagoTarjeta {
-  padding: 0px 20px;
   .titleResumenPago {
     background: #e7e7e7;
     padding: 5px 30px;
@@ -252,7 +252,7 @@ mat-toolbar {
         color: #878787;
         margin: 0px;
         padding: 10px 0px 10px 0px;
-        border-top: solid 1px #a6a6a6;
+        // border-top: solid 1px #a6a6a6;
         div {
           padding: 0px;
           margin: 0px;
@@ -268,9 +268,34 @@ mat-toolbar {
           margin: 0px;
         }
       }
+      .totalPago {
+        font-weight: 600;
+        margin: 0px;
+        padding: 5px 5px;
+        border-bottom: solid 1px #a6a6a6;
+        div {
+          padding: 0px;
+          margin: 0px;
+        }
+      }
     }
   }
 }
+.detallePagoPasarela{
+  padding: 3rem 7rem 1rem 7rem
+}
+@media (max-width: 767px) {
+  .resumenPagoTarjeta {
+    padding: 0px;
+    .contentResumenPago{
+      padding: 20px 15px;
+    }
+  }
+  .detallePagoPasarela{
+    padding: 0;
+  }
+ }
+
 .iconoPagoTarjeta {
   display: flex;
   justify-content: center;
@@ -411,3 +436,4 @@ mat-toolbar {
 .elipsis-500{
   width: 500px;
 }
+

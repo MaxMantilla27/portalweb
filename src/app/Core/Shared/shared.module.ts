@@ -149,6 +149,7 @@ import { RemovePuntoComaPipe } from './Pipes/remove-punto-coma.pipe';
 import { ChargeSpinnerComponent } from './Containers/Dialog/charge-spinner/charge-spinner.component';
 import { RemovePortalCriterioPipe } from './Pipes/remove-portal-criterio.pipe';
 import { EnvioEncuestaDocenteOnlineService } from './Services/EnvioEncuestaDocenteOnline/envio-encuesta-docente-online.service';
+import { FormatoMilesDecimalesPipe } from './Pipes/formato-miles-decimales.pipe';
 
 @NgModule({
   imports: [
@@ -258,7 +259,8 @@ import { EnvioEncuestaDocenteOnlineService } from './Services/EnvioEncuestaDocen
     ChargePuntosComponent,
     RemovePuntoComaPipe,
     ChargeSpinnerComponent,
-    RemovePortalCriterioPipe
+    RemovePortalCriterioPipe,
+    FormatoMilesDecimalesPipe
     //ChatZComponent,
   ],
   exports: [
@@ -362,7 +364,8 @@ import { EnvioEncuestaDocenteOnlineService } from './Services/EnvioEncuestaDocen
     MatSlideToggleModule,
     ImagenModalComponent,
     RemovePuntoComaPipe,
-    RemovePortalCriterioPipe
+    RemovePortalCriterioPipe,
+    FormatoMilesDecimalesPipe
   ],
   providers: [
     SessionStorageService,
@@ -412,7 +415,8 @@ import { EnvioEncuestaDocenteOnlineService } from './Services/EnvioEncuestaDocen
     PEspecificoEsquemaService,
     PEspecificoSesionRecursoConectividadService,
     RemovePortalCriterioPipe,
-    EnvioEncuestaDocenteOnlineService
+    EnvioEncuestaDocenteOnlineService,
+    FormatoMilesDecimalesPipe
   ],
 })
 export class SharedModule {

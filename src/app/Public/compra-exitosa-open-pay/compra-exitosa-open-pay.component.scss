@@ -1,39 +1,45 @@
 .titleResultPago {
+  justify-content: center;
   font-size: 25px;
   font-weight: bold;
   display: flex;
   align-items: center;
+  margin-top: 15px;
   img {
-    width: 25px;
-    margin-left: 20px;
+    width: 50px;
+    margin-left: 10px;
   }
-}
-.textResultPago {
-  font-size: 14px;
-  margin-top: 60px;
-  .textC {
-    margin-top: 40px;
-    font-size: 12px;
   }
-}
-.contentCardPago{
-  margin-top: 40px;
-  font-size: 15px;
-}
-.cardPago{
-  padding: 30px 15px;
-  border: solid 3px #f2f2f2;
+  .textResultPago {
+    font-size: 14px;
+    margin-top: 25px;
+    .textC {
+      margin-top: 40px;
+      font-size: 12px;
+    }
+  }
+  .contentCardPago{
+    margin-top: 2px;
+    font-size: 15px;
+  }
+  .cardPago{
+    padding: 0px 15px;
+    border: solid 2px transparent;
     border-radius: 10px;
-}
-.itemValueCardPago{
-  margin: 10px 0px;
-  padding: 0px 20px;
-}
+    width: 100%;
+  }
+  .itemValueCardPago{
+    margin: 10px 0px;
+    padding: 0px 5rem;
+    text-wrap: nowrap;
+  }
+
 /* Define el tamaño base de los botones */
 .responsive-button-Pagos {
   border-color: transparent;
   border-radius: 25px;
-  width: 14vw; /* O el ancho que desees */
+  width: 17vw; /* O el ancho que desees */
+  font-size: 13px;
 }
 
 /* Media query para pantallas de hasta 768px */
@@ -43,9 +49,21 @@
     flex-direction: column;
     align-items: center;
   }
-
+  .rowpaddAv{
+    text-align: center;
+  }
   .responsive-button-Pagos {
     width: 80%; /* Cambiar el valor según necesites */
     max-width: 200px; /* Ajusta el máximo ancho del botón si lo deseas */
   }
+}
+.titleCronograma {
+  font-size: 25px;
+  font-weight: 600;
+  border-bottom: solid 2px #f1f1f1;
+}
+.titleCronogramaCurso {
+  font-size: 20px;
+  font-weight: 500;
+  border-bottom: solid 2px #f1f1f1;
 }

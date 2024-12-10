@@ -6,12 +6,12 @@
 <div style="display: flex;" *ngIf="data.titulo==null">
   <div class="TitleModal col-11">
   </div>
-  <div class="col-1" style="text-align: end;font-weight: bold;cursor: pointer;" (click)="dialogRef.close(false)">
+  <div class="col-1 cerrarDialogAprovacion" style="text-align: end;font-weight: bold;cursor: pointer;" (click)="dialogRef.close(false)">
     X
   </div>
 </div>
-<div class="contentDialogAprovacion" style="font-weight: bold;">{{data.contenido}}</div>
-<div class="contentDialogAprovacion" style="font-size: 14px;">Queremos recordarle que al desafiliarse, podrías generar cargos adicionales por atrasos en tu cronograma de pagos</div>
+<div class="contentDialogAprovacion" style="font-weight: bold;text-align: center;">{{data.contenido}}</div>
+<div class="contentDialogAprovacion" style="font-size: 14px;text-align: center;">Queremos recordarle que al desafiliarse, podrías generar cargos adicionales por atrasos en tu cronograma de pagos</div>
 <div class="buttonsDialogAprovacion">
   <div style="margin: 0px 5px;">
     <app-default-button [confs]="{color:'danger',titulo:'Confirmar'}"

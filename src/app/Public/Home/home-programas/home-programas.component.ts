@@ -4,6 +4,7 @@ import { Subject, takeUntil } from 'rxjs';
 import { CardProgramasDTO } from 'src/app/Core/Models/BasicDTO';
 import { ObtenerTopProgramasSendDTO } from 'src/app/Core/Models/HomeDTO';
 import { ProgramasGeneralDTO } from 'src/app/Core/Models/ProgramasGeneralesDTO';
+import { FormatoMilesDecimalesPipe } from 'src/app/Core/Shared/Pipes/formato-miles-decimales.pipe';
 import { HelperService } from 'src/app/Core/Shared/Services/helper.service';
 import { HomeService } from 'src/app/Core/Shared/Services/Home/home.service';
 
@@ -11,6 +12,7 @@ import { HomeService } from 'src/app/Core/Shared/Services/Home/home.service';
   selector: 'app-home-programas',
   templateUrl: './home-programas.component.html',
   styleUrls: ['./home-programas.component.scss'],
+  providers: [FormatoMilesDecimalesPipe],
   encapsulation: ViewEncapsulation.None,
 })
 export class HomeProgramasComponent implements OnInit,OnChanges,OnDestroy {
@@ -20,7 +22,8 @@ export class HomeProgramasComponent implements OnInit,OnChanges,OnDestroy {
   constructor(
     private _HomeService:HomeService,
     private _HelperService:HelperService,
-    @Inject(PLATFORM_ID) platformId: Object
+    @Inject(PLATFORM_ID) platformId: Object,
+    private FormatoMilesDecimales: FormatoMilesDecimalesPipe
   ) {
     this.isBrowser = isPlatformBrowser(platformId);
   }
@@ -73,9 +76,9 @@ export class HomeProgramasComponent implements OnInit,OnChanges,OnDestroy {
             c.tipoPago.forEach((element: any) => {
               if(element.paquete==paquete){
                 if(element.tipoPago.toUpperCase()=='CONTADO'){
-                  content+='Precio al contado '+' '+this.FormatoMilesDecimales(element.cuotas)+''+element.codigoMoneda+'<br />'
+                  content+='Precio al contado '+' '+this.FormatoMilesDecimales.transform(element.cuotas)+''+element.codigoMoneda+'<br />'
                 }else{
-                  content+='Precio en cuotas '+' '+this.FormatoMilesDecimales(element.matricula)+' '+element.codigoMoneda+' + '+element.nroCuotas+' cuotas mensuales de '+' '+this.FormatoMilesDecimales(element.cuotas)+' '+element.codigoMoneda+'<br />'
+                  content+='Precio en cuotas '+' '+this.FormatoMilesDecimales.transform(element.matricula)+' '+element.codigoMoneda+' + '+element.nroCuotas+' cuotas mensuales de '+' '+this.FormatoMilesDecimales.transform(element.cuotas)+' '+element.codigoMoneda+'<br />'
                 }
               }
             });
@@ -121,17 +124,5 @@ export class HomeProgramasComponent implements OnInit,OnChanges,OnDestroy {
       },
       error:(x)=>{}
     });
-  }
-  FormatoMilesDecimales(num: number): string {
-    // Separar parte entera y decimal
-    const parts = Number(num).toFixed(2).split('.');
-    let integerPart = parts[0];
-    const decimalPart = parts[1];
-
-    // Agregar separadores de miles
-    integerPart = integerPart.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-
-    // Combinar parte entera y decimal
-    return integerPart + '.' + decimalPart;
   }
 }
