@@ -124,6 +124,8 @@ export class WhitepapersComponent implements OnInit,OnDestroy {
     idIndustria:undefined,
   }
   public listaLocalidades?:any;
+  public whitePapersisnull : any = true;
+
   ngOnInit(): void {
     this.activatedRoute.params.pipe(takeUntil(this.signal$)).subscribe({
       next: (x) => {
@@ -136,19 +138,19 @@ export class WhitepapersComponent implements OnInit,OnDestroy {
     });
     this.obtenerFormularioCompletado();
     // this._HelperServiceP.recibirCombosPerfil.pipe(takeUntil(this.signal$)).subscribe((x) => {
-    //   this.combosPrevios=x.datosAlumno;
-    //   console.log(this.combosPrevios)
-    //   this.formularioContacto.Nombres= this.combosPrevios.nombres,
-    //   this.formularioContacto.Apellidos= this.combosPrevios.apellidos,
-    //   this.formularioContacto.Email= this.combosPrevios.email,
-    //   this.formularioContacto.IdPais= this.combosPrevios.idPais,
-    //   this.formularioContacto.IdRegion= this.combosPrevios.idDepartamento,
-    //   this.formularioContacto.Movil= this.combosPrevios.telefono
-    //   if(this.formularioContacto.IdPais!=undefined){
-    //     this.GetRegionesPorPais(this.formularioContacto.IdPais);
-    //   }
-    //   this.CompleteLocalStorage=false;
-    // });
+      //   this.combosPrevios=x.datosAlumno;
+      //   console.log(this.combosPrevios)
+      //   this.formularioContacto.Nombres= this.combosPrevios.nombres,
+      //   this.formularioContacto.Apellidos= this.combosPrevios.apellidos,
+      //   this.formularioContacto.Email= this.combosPrevios.email,
+      //   this.formularioContacto.IdPais= this.combosPrevios.idPais,
+      //   this.formularioContacto.IdRegion= this.combosPrevios.idDepartamento,
+      //   this.formularioContacto.Movil= this.combosPrevios.telefono
+      //   if(this.formularioContacto.IdPais!=undefined){
+        //     this.GetRegionesPorPais(this.formularioContacto.IdPais);
+        //   }
+        //   this.CompleteLocalStorage=false;
+        // });
     this.ObtenerArticuloDetalleHome();
     this.ListTagArticuloRelacionadoPorIdWeb();
     this.AddFields();
@@ -178,8 +180,12 @@ export class WhitepapersComponent implements OnInit,OnDestroy {
     this._ArticuloService.ObtenerArticuloDetalleHome(3,this.idWeb,this.UrlWeb).pipe(takeUntil(this.signal$)).subscribe({
       next:(x)=>{
         console.log(x)
-
+        if (x.articuloDetalleHomeDTO.articuloDetalle.id == 0) {
+          this.router.navigate(['error404']);
+          return;
+        }
         if(x.articuloDetalleHomeDTO!=undefined && x.articuloDetalleHomeDTO.parametroSeo!=undefined){
+          this.whitePapersisnull = false;
           var metas=x.articuloDetalleHomeDTO.parametroSeo;
           if(metas.length>0){
 
@@ -231,7 +237,16 @@ export class WhitepapersComponent implements OnInit,OnDestroy {
         console.log(x)
         this.tags=x.listaTagDTO
         this.tags.forEach(x=>{
-          x.codigo='/tag/'+x.codigo
+          if (this.tags != null) {
+            if (x.codigo != null) {
+              x.codigo='/tag/'+x.codigo
+            }else{
+              x.codigo='/error404'
+            }
+            
+          }
+
+
         })
       }
     })

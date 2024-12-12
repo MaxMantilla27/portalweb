@@ -1,115 +1,117 @@
 <!-- holax -->
-<div class="container">
-  <div class="container breadcrumb">
-    <app-miga-pan [items]="migaPan" ></app-miga-pan>
+<ng-container *ngIf="!Blogisnull">
+  <div class="container">
+    <div class="container breadcrumb">
+      <app-miga-pan [items]="migaPan" ></app-miga-pan>
+    </div>
   </div>
-</div>
-<div style="background: #f4f4f4;">
+  <div style="background: #f4f4f4;">
+    <div class="container">
+      <div class="row rowpadd">
+        <div class="col-12 col-md-9 col-lg-9">
+          <h1 style="line-height: 120%;" class="titulop">
+            {{Title}}
+          </h1>
+        </div>
+      </div>
+    </div>
+  </div>
+  
   <div class="container">
     <div class="row rowpadd">
-      <div class="col-12 col-md-9 col-lg-9">
-        <h1 style="line-height: 120%;" class="titulop">
-          {{Title}}
-        </h1>
-      </div>
-    </div>
-  </div>
-</div>
-
-<div class="container">
-  <div class="row rowpadd">
-    <div class="col-12 col-md-8 col-lg-8">
-      <div class="descripcionBlog" [innerHtml]="descripcion | safeHtml">
-      </div>
-    </div>
-    <div class="col-12 col-md-4 col-lg-4">
-      <div class="estructuraBlogForm"style="position: relative;">
-        <app-cargando *ngIf="cargando==true"></app-cargando>
-        <div class="cotentestructurablogForm">
-          <div class="question" style="justify-content: flex-start;align-items: center;">
-            <img src="../../../assets/icons/signo-pregunta-abierto-03.svg" alt="Signo de interrogación abieto">
-          </div>
-          <div>Deseas conocer más sobre nuestra oferta de cursos y programas del área de {{area}}</div>
-          <div class="question" style="justify-content: flex-end;align-items: center;">
-            <img src="../../../assets/icons/signo-pregunta-cerrado-04.svg" alt="Signo de interrogración cerrado">
-          </div>
+      <div class="col-12 col-md-8 col-lg-8">
+        <div class="descripcionBlog" [innerHtml]="descripcion | safeHtml">
         </div>
-
-        <div class="subtitleEstruturaBlogForm">
-          Registra tus datos para que un asesor especializado pueda ayudarte en todo lo que requieras
-        </div>
-        <ng-container *ngIf="combosPrevios!=undefined">
-          <app-formulario  [Interaccion]="'blog-'+idWeb" [model]="formularioContacto" [CleanOnSubmit]="cleanSub" [InputsDisable]="statuscharge" (OnSubmit)="SetContacto($event)"
-          (OnValid)="formVal=$event" [fiels]="fileds" (OnSelect)="SelectChage($event)">
-
-          <ng-container contenido>
-          </ng-container>
-          <ng-container send>
-            <div style="text-align: center;margin-bottom: 15px;">
-              <a title="Limpiar Campos" style="color: #027CFF;font-size: 14px;cursor: pointer;" (click)="LimpiarCampos()">[No soy {{formularioContacto.Nombres}}]</a>
+      </div>
+      <div class="col-12 col-md-4 col-lg-4">
+        <div class="estructuraBlogForm"style="position: relative;">
+          <app-cargando *ngIf="cargando==true"></app-cargando>
+          <div class="cotentestructurablogForm">
+            <div class="question" style="justify-content: flex-start;align-items: center;">
+              <img src="../../../assets/icons/signo-pregunta-abierto-03.svg" alt="Signo de interrogación abieto">
             </div>
-            <app-default-button [confs]="{color:'primary',titulo:'Solicitar Información'}" [style]="'width: 100%;'">
-            </app-default-button>
-          </ng-container>
-
-        </app-formulario>
-        </ng-container>
-        <ng-container *ngIf="combosPrevios==undefined && CompleteLocalStorage==true">
-          <app-formulario  [Interaccion]="'blog-'+idWeb" [model]="formularioContacto" [CleanOnSubmit]="cleanSub" [InputsDisable]="statuscharge" (OnSubmit)="SetContacto($event)"
-          (OnValid)="formVal=$event" [fiels]="fileds" (OnSelect)="SelectChage($event)">
-
-          <ng-container contenido>
-          </ng-container>
-          <ng-container send>
-            <div style="text-align: center;margin-bottom: 15px;">
-              <a title="Limpiar Campos" style="color: #027CFF;font-size: 14px;cursor:pointer" (click)="LimpiarCampos()">[No soy {{formularioContacto.Nombres}}]</a>
+            <div>Deseas conocer más sobre nuestra oferta de cursos y programas del área de {{area}}</div>
+            <div class="question" style="justify-content: flex-end;align-items: center;">
+              <img src="../../../assets/icons/signo-pregunta-cerrado-04.svg" alt="Signo de interrogración cerrado">
             </div>
-            <app-default-button [confs]="{color:'primary',titulo:'Solicitar Información'}" [style]="'width: 100%;'">
-            </app-default-button>
+          </div>
+  
+          <div class="subtitleEstruturaBlogForm">
+            Registra tus datos para que un asesor especializado pueda ayudarte en todo lo que requieras
+          </div>
+          <ng-container *ngIf="combosPrevios!=undefined">
+            <app-formulario  [Interaccion]="'blog-'+idWeb" [model]="formularioContacto" [CleanOnSubmit]="cleanSub" [InputsDisable]="statuscharge" (OnSubmit)="SetContacto($event)"
+            (OnValid)="formVal=$event" [fiels]="fileds" (OnSelect)="SelectChage($event)">
+  
+            <ng-container contenido>
+            </ng-container>
+            <ng-container send>
+              <div style="text-align: center;margin-bottom: 15px;">
+                <a title="Limpiar Campos" style="color: #027CFF;font-size: 14px;cursor: pointer;" (click)="LimpiarCampos()">[No soy {{formularioContacto.Nombres}}]</a>
+              </div>
+              <app-default-button [confs]="{color:'primary',titulo:'Solicitar Información'}" [style]="'width: 100%;'">
+              </app-default-button>
+            </ng-container>
+  
+          </app-formulario>
           </ng-container>
-
-        </app-formulario>
-        </ng-container>
-        <ng-container *ngIf="combosPrevios==undefined && CompleteLocalStorage==false">
-          <app-formulario [Interaccion]="'blog-'+idWeb" [model]="formularioContacto" [CleanOnSubmit]="cleanSub" [InputsDisable]="statuscharge" (OnSubmit)="SetContacto($event)"
-          (OnValid)="formVal=$event" [fiels]="fileds" (OnSelect)="SelectChage($event)">
-
-          <ng-container contenido>
+          <ng-container *ngIf="combosPrevios==undefined && CompleteLocalStorage==true">
+            <app-formulario  [Interaccion]="'blog-'+idWeb" [model]="formularioContacto" [CleanOnSubmit]="cleanSub" [InputsDisable]="statuscharge" (OnSubmit)="SetContacto($event)"
+            (OnValid)="formVal=$event" [fiels]="fileds" (OnSelect)="SelectChage($event)">
+  
+            <ng-container contenido>
+            </ng-container>
+            <ng-container send>
+              <div style="text-align: center;margin-bottom: 15px;">
+                <a title="Limpiar Campos" style="color: #027CFF;font-size: 14px;cursor:pointer" (click)="LimpiarCampos()">[No soy {{formularioContacto.Nombres}}]</a>
+              </div>
+              <app-default-button [confs]="{color:'primary',titulo:'Solicitar Información'}" [style]="'width: 100%;'">
+              </app-default-button>
+            </ng-container>
+  
+          </app-formulario>
           </ng-container>
-          <ng-container send>
-            <app-default-button [confs]="{color:'primary',titulo:'Solicitar Información'}" [style]="'width: 100%;'">
-            </app-default-button>
+          <ng-container *ngIf="combosPrevios==undefined && CompleteLocalStorage==false">
+            <app-formulario [Interaccion]="'blog-'+idWeb" [model]="formularioContacto" [CleanOnSubmit]="cleanSub" [InputsDisable]="statuscharge" (OnSubmit)="SetContacto($event)"
+            (OnValid)="formVal=$event" [fiels]="fileds" (OnSelect)="SelectChage($event)">
+  
+            <ng-container contenido>
+            </ng-container>
+            <ng-container send>
+              <app-default-button [confs]="{color:'primary',titulo:'Solicitar Información'}" [style]="'width: 100%;'">
+              </app-default-button>
+            </ng-container>
+  
+          </app-formulario>
           </ng-container>
-
-        </app-formulario>
-        </ng-container>
+        </div>
+  
+  
       </div>
-
-
-    </div>
-
-    <div class="col-12 col-md-12 col-lg-12" style="margin-top: 30px;">
-      <div class="subtitulo">Tags</div>
-    </div>
-    <div class="col-12 col-md-12 col-lg-12" style="margin-top: 40px;">
-      <div style="display: flex; align-items: center; justify-content: flex-start;flex-wrap: wrap;">
-        <div *ngFor="let item of tags" style="margin-right: 20px;">
-          <app-tag-button [tag]="item"  [Interaccion]="'Blog'"></app-tag-button>
+  
+      <div class="col-12 col-md-12 col-lg-12" style="margin-top: 30px;">
+        <div class="subtitulo">Tags</div>
+      </div>
+      <div class="col-12 col-md-12 col-lg-12" style="margin-top: 40px;">
+        <div style="display: flex; align-items: center; justify-content: flex-start;flex-wrap: wrap;">
+          <div *ngFor="let item of tags" style="margin-right: 20px;">
+            <app-tag-button [tag]="item"  [Interaccion]="'Blog'"></app-tag-button>
+          </div>
         </div>
       </div>
     </div>
   </div>
-</div>
-
-<div class="container" *ngIf="programasRelacionados.length>0">
-  <div class="row rowpadd">
-    <div class="col-12 col-md-12 col-lg-12" style="margin-bottom: 30px;">
-      <div class="subtitulo">Programas Relacionados</div>
-    </div>
-    <ng-container *ngFor="let item of programasRelacionados;let i=index">
-      <div class="col-12 col-md-6 col-lg-3" *ngIf="i<4" style="margin-bottom: 40px;">
-        <app-card-programas [cardContent]="item" [Interaccion]="'Blog'"></app-card-programas>
+  
+  <div class="container" *ngIf="programasRelacionados.length>0">
+    <div class="row rowpadd">
+      <div class="col-12 col-md-12 col-lg-12" style="margin-bottom: 30px;">
+        <div class="subtitulo">Programas Relacionados</div>
       </div>
-    </ng-container>
+      <ng-container *ngFor="let item of programasRelacionados;let i=index">
+        <div class="col-12 col-md-6 col-lg-3" *ngIf="i<4" style="margin-bottom: 40px;">
+          <app-card-programas [cardContent]="item" [Interaccion]="'Blog'"></app-card-programas>
+        </div>
+      </ng-container>
+    </div>
   </div>
-</div>
+</ng-container>
