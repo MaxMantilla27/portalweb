@@ -52,9 +52,8 @@
               </div>
 
               <div>
-                <p class="resultadoParrafo">
-                  Asegurate de que tu tarjeta tenga saldo suficiente para
-                  completar tu pago e intentalo nuevamente
+                <p *ngIf="resultProceso.descripcionInformativa!=''" style="text-align: center">
+                  {{ resultProceso.descripcionInformativa }}
                 </p>
               </div>
             </div>

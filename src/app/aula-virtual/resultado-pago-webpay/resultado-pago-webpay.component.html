@@ -40,9 +40,8 @@
             <strong>Descripción:</strong> {{ resultProceso.mensajeTransaccion }}
           </p>
         </div>
-        <p style="text-align: center">
-          Asegúrate de que tu tarjeta tenga saldo suficiente para completar tu
-          pago e inténtalo nuevamente.
+        <p *ngIf="resultProceso.descripcionInformativa!=''" style="text-align: center">
+          {{ resultProceso.descripcionInformativa }}
         </p>
 
         <ng-container *ngIf="resultProceso.tipoPago === 'Organico'">

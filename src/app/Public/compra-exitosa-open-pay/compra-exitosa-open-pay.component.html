@@ -63,9 +63,8 @@
                 {{ resultVisa.mensajeTransaccion }}
               </p>
             </div>
-            <p style="text-align: center">
-              Asegúrate de que tu tarjeta tenga saldo suficiente para completar
-              tu pago e inténtalo nuevamente.
+            <p *ngIf="resultVisa.descripcionInformativa!=''" style="text-align: center">
+              {{ resultVisa.descripcionInformativa }}
             </p>
           </div>
           <div class="col-12" style="display: flex; justify-content: center">

@@ -180,7 +180,12 @@ export class ResultadoPagoComponent implements OnInit,OnDestroy{
       },
       error:e=>{
         //this._router.navigate([this.ruta])
-      }
+      },
+      complete:()=>{
+        if(this.resultProceso.idPasarelaPago==2){
+        this._router.navigate([this.ruta])
+        }
+      },
     })
   }
   ChangeToPending(js:any){
