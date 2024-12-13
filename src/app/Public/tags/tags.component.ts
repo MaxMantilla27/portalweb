@@ -49,6 +49,9 @@ export class TagsComponent implements OnInit,OnDestroy {
       urlWeb: ''
     }
   ]
+
+  public tagisnull = true;
+
   ngOnInit(): void {
     var url=this.router.url.split('/')
     if(url[1]=='Area'){
@@ -75,61 +78,70 @@ export class TagsComponent implements OnInit,OnDestroy {
     this._TemasRelacionadosService.TemasRelacionados(this.tipo,this.nombre).pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
         console.log(x)
-        if(x.parametroSeoProgramaDTO!=undefined){
-          var metas=x.parametroSeoProgramaDTO;
-          if(metas.length>0){
 
-            let mt=metas.find((par:any)=>par.nombre=='Titulo Pestaña')!=undefined?
-                      metas.find((par:any)=>par.nombre=='Titulo Pestaña').descripcion:undefined
-            let t=metas.find((par:any)=>par.nombre=='title')!=undefined?
-                      metas.find((par:any)=>par.nombre=='title').descripcion:undefined
-            let d=metas.find((par:any)=>par.nombre=='description')!=undefined?
-                      metas.find((par:any)=>par.nombre=='description').descripcion:undefined
-            let k=metas.find((par:any)=>par.nombre=='keywords')!=undefined?
-                      metas.find((par:any)=>par.nombre=='keywords').descripcion:undefined
-            this.title.setTitle(t);
+        if (x.tema.id == 0) {
 
-            this._SeoService.generateTags({
-              title:mt,
-              slug:this.router.url.toString(),
-              description:d,
-              keywords:k,
-            });
-
+          this.router.navigate(['error404']);
+          return;
+        }else{
+          this.tagisnull = false;
+          if(x.parametroSeoProgramaDTO!=undefined){
+            var metas=x.parametroSeoProgramaDTO;
+            if(metas.length>0){
+  
+              let mt=metas.find((par:any)=>par.nombre=='Titulo Pestaña')!=undefined?
+                        metas.find((par:any)=>par.nombre=='Titulo Pestaña').descripcion:undefined
+              let t=metas.find((par:any)=>par.nombre=='title')!=undefined?
+                        metas.find((par:any)=>par.nombre=='title').descripcion:undefined
+              let d=metas.find((par:any)=>par.nombre=='description')!=undefined?
+                        metas.find((par:any)=>par.nombre=='description').descripcion:undefined
+              let k=metas.find((par:any)=>par.nombre=='keywords')!=undefined?
+                        metas.find((par:any)=>par.nombre=='keywords').descripcion:undefined
+              this.title.setTitle(t);
+  
+              this._SeoService.generateTags({
+                title:mt,
+                slug:this.router.url.toString(),
+                description:d,
+                keywords:k,
+              });
+  
+            }
+          }
+          this.programas=x.listaProgramaTemasRelacionados.map(
+            (c:any)=>{
+              var ps:CardProgramasDTO={
+                Inversion:'',
+                Content:c.montoPagoDescripcion,
+                Url:c.direccion,
+                Img:'https://img.bsginstitute.com/repositorioweb/img/programas/'+c.imagenPrograma,
+                ImgAlt:c.descripcion,
+                Title:c.titulo};
+              return ps;
+            }
+          );
+          console.log(x.listaArticuloTemasRelacionados)
+          this.Articulos=x.listaArticuloTemasRelacionados.map(
+            (c:any)=>{
+              var ps:ArticuloDTO={
+                descripcion:c.descripcion,
+                imgPortada:c.imgPortada,
+                imgPortadaAlt:c.imgPortadaAlt,
+                idWeb:c.idWeb,
+                urlWeb:c.direccion,
+                descripcionGeneral:'',
+                idArea:parseInt(c.idTipoArticulo),
+                nombre:c.titulo
+              };
+              console.log(ps)
+              return ps;
+            }
+          );
+          if(x.tema!=''){
+            this.tagDescripcion=x.tema.descripcion;
           }
         }
-        this.programas=x.listaProgramaTemasRelacionados.map(
-          (c:any)=>{
-            var ps:CardProgramasDTO={
-              Inversion:'',
-              Content:c.montoPagoDescripcion,
-              Url:c.direccion,
-              Img:'https://img.bsginstitute.com/repositorioweb/img/programas/'+c.imagenPrograma,
-              ImgAlt:c.descripcion,
-              Title:c.titulo};
-            return ps;
-          }
-        );
-        console.log(x.listaArticuloTemasRelacionados)
-        this.Articulos=x.listaArticuloTemasRelacionados.map(
-          (c:any)=>{
-            var ps:ArticuloDTO={
-              descripcion:c.descripcion,
-              imgPortada:c.imgPortada,
-              imgPortadaAlt:c.imgPortadaAlt,
-              idWeb:c.idWeb,
-              urlWeb:c.direccion,
-              descripcionGeneral:'',
-              idArea:parseInt(c.idTipoArticulo),
-              nombre:c.titulo
-            };
-            console.log(ps)
-            return ps;
-          }
-        );
-        if(x.tema!=''){
-          this.tagDescripcion=x.tema.descripcion;
-        }
+
       }
     })
   }

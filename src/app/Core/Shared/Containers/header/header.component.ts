@@ -142,12 +142,12 @@ export class HeaderComponent implements OnInit,OnChanges,OnDestroy {
       Nombre: 'Formación Continua',
       data: this.Formacion,
       estatus: true,
-    },
+    },/*
     {
       Nombre: 'Carreras Profesionales',
       data: this.carreras,
       estatus: false,
-    },
+    },*/
     {
       Nombre: 'Educación Técnica',
       data: this.tecnica,
