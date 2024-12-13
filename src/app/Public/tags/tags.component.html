@@ -1,49 +1,51 @@
 <!-- holax -->
-<div class="container">
-  <div class="container breadcrumb">
-    <app-miga-pan [items]="migaPan"></app-miga-pan>
+<ng-container *ngIf="!tagisnull">
+  <div class="container">
+    <div class="container breadcrumb">
+      <app-miga-pan [items]="migaPan"></app-miga-pan>
+    </div>
   </div>
-</div>
-<div style="background: #f4f4f4;">
+  <div style="background: #f4f4f4;">
+    <div class="container">
+      <div class="row rowpadd">
+        <div class="col-12 col-md-12 col-lg-12">
+          <h1 style="line-height: 120%;" class="titulop">
+            Blogs, Artículos, Cursos, Programas, Certificaciones relacionados con {{tagTitle}}
+          </h1>
+          <div>
+            <h2 style="line-height: 150%;" class="tagSubTitle">{{tagSubTitle}}</h2>
+          </div>
+          <div style="font-size: 20px;
+          color: #797978;text-align: justify;"[innerHtml]="tagDescripcion | safeHtml">{{tagDescripcion}}</div>
+        </div>
+      </div>
+    </div>
+  </div>
   <div class="container">
     <div class="row rowpadd">
-      <div class="col-12 col-md-12 col-lg-12">
-        <h1 style="line-height: 120%;" class="titulop">
-          Blogs, Artículos, Cursos, Programas, Certificaciones relacionados con {{tagTitle}}
-        </h1>
-        <div>
-          <h2 style="line-height: 150%;" class="tagSubTitle">{{tagSubTitle}}</h2>
+      <h2 style="line-height: 150%;"class="col-12 col-md-12 col-lg-12 pTagTitle">
+        Cursos, Programas, Certificaciones
+      </h2>
+      <div class="col-12 col-md-6 col-lg-3" *ngFor="let item of programas" style="margin-bottom: 40px;">
+        <app-card-programas [cardContent]="item" [Interaccion]="'Tags(programas relacionados)'"></app-card-programas>
+      </div>
+      <h2 style="line-height: 150%;" class="col-12 col-md-12 col-lg-12 pTagTitle">
+        Blog
+      </h2>
+      <ng-container   *ngFor="let item of Articulos" >
+        <div *ngIf="item.idArea==1" class="col-12 col-md-6 col-lg-4" style="margin-bottom: 40px;">
+          <app-card-blog [idTipoArticulo]="item.idArea"  [cardContent]="item"></app-card-blog>
         </div>
-        <div style="font-size: 20px;
-        color: #797978;text-align: justify;"[innerHtml]="tagDescripcion | safeHtml">{{tagDescripcion}}</div>
-      </div>
+      </ng-container>
+      <h2 style="line-height: 150%;" class="col-12 col-md-12 col-lg-12 pTagTitle">
+        White Papers
+      </h2>
+      <ng-container *ngFor="let item of Articulos" >
+        <div class="col-12 col-md-6 col-lg-6" *ngIf="item.idArea!=1" style="margin-bottom: 40px;">
+          <app-card-white-papers  [cardContent]="item"></app-card-white-papers>
+        </div>
+      </ng-container>
     </div>
   </div>
-</div>
-<div class="container">
-  <div class="row rowpadd">
-    <h2 style="line-height: 150%;"class="col-12 col-md-12 col-lg-12 pTagTitle">
-      Cursos, Programas, Certificaciones
-    </h2>
-    <div class="col-12 col-md-6 col-lg-3" *ngFor="let item of programas" style="margin-bottom: 40px;">
-      <app-card-programas [cardContent]="item" [Interaccion]="'Tags(programas relacionados)'"></app-card-programas>
-    </div>
-    <h2 style="line-height: 150%;" class="col-12 col-md-12 col-lg-12 pTagTitle">
-      Blog
-    </h2>
-    <ng-container   *ngFor="let item of Articulos" >
-      <div *ngIf="item.idArea==1" class="col-12 col-md-6 col-lg-4" style="margin-bottom: 40px;">
-        <app-card-blog [idTipoArticulo]="item.idArea"  [cardContent]="item"></app-card-blog>
-      </div>
-    </ng-container>
-    <h2 style="line-height: 150%;" class="col-12 col-md-12 col-lg-12 pTagTitle">
-      White Papers
-    </h2>
-    <ng-container *ngFor="let item of Articulos" >
-      <div class="col-12 col-md-6 col-lg-6" *ngIf="item.idArea!=1" style="margin-bottom: 40px;">
-        <app-card-white-papers  [cardContent]="item"></app-card-white-papers>
-      </div>
-    </ng-container>
-  </div>
-</div>
-<app-scroll-top></app-scroll-top>
+  <app-scroll-top></app-scroll-top>
+</ng-container>
