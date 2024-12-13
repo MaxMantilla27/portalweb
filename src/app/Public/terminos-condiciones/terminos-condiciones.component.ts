@@ -1,8 +1,9 @@
 import { Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges, ViewEncapsulation } from '@angular/core';
-import { Meta, Title } from '@angular/platform-browser';
+import { Title } from '@angular/platform-browser';
 import { Subject, takeUntil } from 'rxjs';
 import { TerminosCondicionesService } from 'src/app/Core/Shared/Services/TerminosCondiciones/terminos-condiciones.service';
 import { HelperService } from 'src/app/Core/Shared/Services/helper.service';
+import { SeoService } from 'src/app/Core/Shared/Services/seo.service';
 
 @Component({
   selector: 'app-terminos-condiciones',
@@ -16,7 +17,7 @@ export class TerminosCondicionesComponent implements OnInit,OnChanges,OnDestroy 
     private _TerminosCondicionesService: TerminosCondicionesService,
     private _HelperService:HelperService,
     private title:Title,
-    private meta:Meta
+    private _SeoService:SeoService,
   ) {}
 
   ngOnDestroy(): void {
@@ -42,7 +43,14 @@ export class TerminosCondicionesComponent implements OnInit,OnChanges,OnDestroy 
     })
     let t:string='Términos de Uso Web'
     this.title.setTitle(t);
-    this.meta.addTag({name: 'author', content: 'BSG Institute'})
+    this._SeoService.generateTags({
+      title:'Términos de Uso Web | BSG Institute',
+      slug:'termino-uso-web',
+      description:'Consulta los Términos de Uso Web de BSG Institute. Formación en Big Data, Analytics, Proyectos y más.',
+      keywords:'términos de uso, BSG Institute, cursos en big data, certificaciones, formación online',
+      ogDescription:'Conoce los Términos de Uso Web de BSG Institute. Ofrecemos programas y certificaciones en Big Data, Proyectos, ISO y más.',
+      twiterDescription:'Descubre los Términos de Uso Web de BSG Institute y accede a formación en Big Data, Proyectos, Minería e ISO.'
+    });
     this.ObtenerTerminosCondiciones();
   }
   ngOnChanges(changes: SimpleChanges): void {

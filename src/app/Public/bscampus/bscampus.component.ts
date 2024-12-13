@@ -52,10 +52,12 @@ export class BSCampusComponent implements OnInit,OnDestroy {
     this.title.setTitle(t);
 
     this._SeoService.generateTags({
-      title:'BS Campus',
-      slug:'bs-campus',
-      description:'BS Campus permite acceder a blogs, artículos, artículos de opinión, webinars y videos relacionados con nuestras áreas de capacitación',
-      keywords:'bs campus',
+      title: 'BS Campus | Recursos de Capacitación Online | BSG Institute',
+      slug: 'bs-campus',
+      description: 'Accede a blogs, artículos, webinars y videos en BS Campus. Encuentra recursos exclusivos sobre Big Data, Analytics, Proyectos y más áreas de formación.',
+      keywords: 'BS Campus, recursos de capacitación, blogs de formación, webinars educativos, videos de aprendizaje, BSG Institute',
+      ogDescription: 'Explora BS Campus y accede a contenido exclusivo: blogs, webinars, videos y artículos sobre diversas áreas de capacitación profesional.',
+      twiterDescription: 'Descubre BS Campus: blogs, webinars y recursos educativos en Big Data, Analytics, Proyectos y más áreas de formación profesional.'
     });
 
 
