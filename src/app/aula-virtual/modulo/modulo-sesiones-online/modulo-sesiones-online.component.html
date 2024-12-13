@@ -242,7 +242,7 @@
                     <div style="display: flex">
                       {{ tars.fechaEntrega | date : "dd-MM-yyyy" }} -
                       {{ tars.fechaEntrega | date : "hh:mm a" }}
-                      <!-- <p class="horaPais">(Hora {{ item.nombrePais }})</p> -->
+                      <p class="horaPais">(Hora {{ item.nombrePais }})</p>
                     </div>
                   </div>
                 </div>
@@ -265,7 +265,7 @@
                     <div style="display: flex">
                       {{ tars.fechaEntregaSecundaria | date : "dd-MM-yyyy" }} -
                       {{ tars.fechaEntregaSecundaria | date : "hh:mm a" }}
-                      <!-- <p class="horaPais">(Hora {{ item.nombrePais }})</p> -->
+                      <p class="horaPais">(Hora {{ item.nombrePais }})</p>
                     </div>
                   </div>
                 </div>
@@ -277,10 +277,10 @@
               <ng-container
                 *ngIf="tars.tareas != null && tars.tareas.length > 0"
               >
-                <div class="FechaEntregaActividad" style="margin-top: 10px">
+                <div class="FechaEntregaActividad" style="margin-top: 10px;font-size: 12px;">
                   <div class="iconFechaEntrega"></div>
                   <div style="display: flex">
-                    <strong> Enviado: </strong>
+                    <strong style="margin-right: 5px;"> Enviado: </strong>
                     {{
                       tars.tareas[tars.tareas.length - 1].fechaCreacion
                         | date : "hh:mm a"
@@ -291,7 +291,7 @@
                         | date : "dd-MM-yyyy"
                     }}
                   </div>
-                  <!-- <div class="horaPais">(Hora {{ item.nombrePais }})</div> -->
+                  <div class="horaPais">(Hora {{ item.nombrePais }})</div>
                 </div>
                 <ng-container
                   *ngIf="tars.tareas[tars.tareas.length - 1].nota != null"
@@ -394,7 +394,7 @@
                     <div style="display: flex">
                       {{ cuest.fechaEntrega | date : "dd-MM-yyyy" }} -
                       {{ cuest.fechaEntrega | date : "hh:mm a" }}
-                      <!-- <p class="horaPais">(Hora {{ item.nombrePais }})</p> -->
+                      <p class="horaPais">(Hora {{ item.nombrePais }})</p>
                     </div>
                   </div>
                 </div>
@@ -417,7 +417,7 @@
                     <div style="display: flex">
                       {{ cuest.fechaEntregaSecundaria | date : "dd-MM-yyyy" }} -
                       {{ cuest.fechaEntregaSecundaria | date : "hh:mm a" }}
-                      <!-- <p class="horaPais">(Hora {{ item.nombrePais }})</p> -->
+                      <p class="horaPais">(Hora {{ item.nombrePais }})</p>
                     </div>
                   </div>
                 </div>
@@ -447,10 +447,10 @@
                   cuest.respuestaCuestionario.length > 0
                 "
               >
-                <div class="FechaEntregaActividad" style="margin-top: 10px">
+                <div class="FechaEntregaActividad" style="margin-top: 10px;font-size: 12px;">
                   <div class="iconFechaEntrega"></div>
                   <div style="display: flex">
-                    <strong> Enviado: </strong>
+                    <strong style="margin-right: 5px;"> Enviado: </strong>
                     {{
                       cuest.respuestaCuestionario[
                         cuest.respuestaCuestionario.length - 1
@@ -463,7 +463,7 @@
                       ].fechaEntrega | date : "dd-MM-yyyy"
                     }}
                   </div>
-                  <!-- <div class="horaPais">(Hora {{ item.nombrePais }})</div> -->
+                  <div class="horaPais">(Hora {{ item.nombrePais }})</div>
                 </div>
                 <ng-container
                   *ngIf="

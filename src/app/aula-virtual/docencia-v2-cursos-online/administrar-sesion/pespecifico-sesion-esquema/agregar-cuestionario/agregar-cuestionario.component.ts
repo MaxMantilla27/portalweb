@@ -83,7 +83,7 @@ export class AgregarCuestionarioComponent implements OnInit, OnDestroy {
   public fecha = new Date();
   public filestatus = false;
   public Horas: Array<any> = [];
-  public Minutos: Array<any> = [0, 30, 59];
+  public Minutos: Array<any> = ['00', '30', '59'];
   public Calificaciones: Array<any> = [];
   public tipoagregra = -1;
   public tipoPregunta: Array<any> = [];
@@ -187,10 +187,13 @@ export class AgregarCuestionarioComponent implements OnInit, OnDestroy {
                 ? date.getHours().toString()
                 : '0' + date.getHours().toString()
             );
+          console.log('PRIMERA FECHA CU',date)
           this.formularioTarea
             .get('MinutoEntrega')
             ?.setValue(
-              date.getMinutes() ? date.getMinutes() : '0' + date.getMinutes()
+              date.getMinutes().toString().length > 1
+                ? date.getMinutes().toString()
+                : '0' + date.getMinutes().toString()
             );
           this.formularioTarea.get('TiempoLimite')?.setValue(x.tiempoLimite);
           if (x.fechaEntregaSecundaria != null) {
@@ -203,9 +206,15 @@ export class AgregarCuestionarioComponent implements OnInit, OnDestroy {
                   ? date2.getHours().toString()
                   : '0' + date2.getHours().toString()
               );
+          console.log('SEGUNDA FECHA CU',date)
+
             this.formularioTarea
               .get('MinutoEntregaSecundaria')
-              ?.setValue(date2.getMinutes());
+              ?.setValue(
+                date2.getMinutes().toString().length > 1
+              ? date2.getMinutes().toString()
+              : '0' + date2.getMinutes().toString()
+            );
           }
           this.formularioTarea
             .get('CalificacionMaximaSecundaria')
@@ -277,17 +286,20 @@ export class AgregarCuestionarioComponent implements OnInit, OnDestroy {
     const calificacionMaximaSecundaria = this.formularioTarea.get(
       'CalificacionMaximaSecundaria'
     )?.value;
-
+    console.log(fechaEntregaSecundaria)
+    console.log(horaEntregaSecundaria)
+    console.log(minutoEntregaSecundaria)
+    console.log(calificacionMaximaSecundaria)
     // Validaciones fecha de entrega secundaria
     if (fechaEntregaSecundaria) {
-      if (!horaEntregaSecundaria) {
+      if (horaEntregaSecundaria==null) {
         this._SnackBarServiceService.openSnackBar(
           'Ingrese la hora de la fecha de entrega secundaria.',
           'x',
           5,
           'snackbarCrucigramaerror'
         );
-      } else if (!minutoEntregaSecundaria) {
+      } else if (minutoEntregaSecundaria==null) {
         this._SnackBarServiceService.openSnackBar(
           'Ingrese los minutos de la fecha de entrega secundaria.',
           'x',

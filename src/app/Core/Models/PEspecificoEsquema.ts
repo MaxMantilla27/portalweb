@@ -56,6 +56,7 @@ export interface PEspecificoSesionTareaAlumnoSaveParamsDTO {
   IdMatriculaCabecera: number;
   file: File;
   Usuario: string,
+  // FechaEnvio:string,
 }
 export interface PEspecificoSesionMaterialAdicionalSaveDTO {
   Id: number | null;
@@ -70,6 +71,7 @@ export interface AgregarPEspecificoSesionCuestionarioAlumnoDTO {
   IdMatriculaCabecera: number;
   Preguntas: Array<RespuestasPreguntasDTO>;
   Usuario: string,
+  FechaEnvio:string;
 }
 export interface RespuestasPreguntasDTO {
   IdPwPEspecificoSesionCuestionarioPregunta: number;

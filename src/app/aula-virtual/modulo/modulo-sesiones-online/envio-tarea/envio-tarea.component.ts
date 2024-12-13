@@ -6,6 +6,7 @@ import { PEspecificoSesionTareaAlumnoSaveParamsDTO } from 'src/app/Core/Models/P
 import { PEspecificoEsquemaService } from 'src/app/Core/Shared/Services/PEspecificoEsquema/pespecifico-esquema.service';
 import { SnackBarServiceService } from 'src/app/Core/Shared/Services/SnackBarService/snack-bar-service.service';
 import { ModalEnvioTareaComponent } from './modal-envio-tarea/modal-envio-tarea.component';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-envio-tarea',
@@ -29,7 +30,8 @@ export class EnvioTareaComponent implements OnInit ,OnDestroy {
       IdPEspecificoSesion: 0,
       Usuario: '',
       IdMatriculaCabecera:0,
-      IdPwPEspecificoSesionTarea:0
+      IdPwPEspecificoSesionTarea:0,
+      // FechaEnvio:''
     }
     public selectedFiles?: FileList;
     public nombrefile='Ningún archivo seleccionado'
@@ -41,6 +43,8 @@ export class EnvioTareaComponent implements OnInit ,OnDestroy {
   public CalificacionActual=0
   public EnvioFechaSecundaria=false
   public BotonEnvioActivo=true
+  public ZonaHorariaOrigenWebex: any;
+  public CodigoIsoPaisWebex = 'PE';
   ngOnDestroy(): void {
     this.signal$.next(true)
     this.signal$.complete()
@@ -90,6 +94,10 @@ export class EnvioTareaComponent implements OnInit ,OnDestroy {
       }
     }
     this.BotonEnvioActivo=false;
+    this.ObtenerDatosZonaHoraria();
+    let HoraWebexOriginal = moment.tz(new Date(), this.ZonaHorariaOrigenWebex);
+    // this.json.FechaEnvio=HoraWebexOriginal.format('YYYY-MM-DDTHH:mm:ss.SSS');
+    // console.log(this.json)
     this._PEspecificoEsquemaService.AgregarPEspecificoSesionTareaAlumno(this.json).pipe(takeUntil(this.signal$))
     .subscribe({
       next: (x) => {
@@ -154,5 +162,11 @@ export class EnvioTareaComponent implements OnInit ,OnDestroy {
         }
       });
     }
+  }
+  ObtenerDatosZonaHoraria() {
+    this.CodigoIsoPaisWebex=this.data.CodigoIsoPaisWebex;
+    this.ZonaHorariaOrigenWebex = moment.tz.zonesForCountry(this.CodigoIsoPaisWebex);
+    this.ZonaHorariaOrigenWebex = this.ZonaHorariaOrigenWebex[0];
+    console.log('ZonaHorariaOrigenWebex',this.ZonaHorariaOrigenWebex)
   }
 }

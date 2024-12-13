@@ -61,6 +61,7 @@ export class EnvioCuestionarioComponent implements OnInit, OnDestroy {
     IdPwPEspecificoSesionCuestionario: 0,
     Preguntas: [],
     Usuario: 'Alumno',
+    FechaEnvio:'',
   };
   public CuestionarioValido = false;
   public PuntuacionActual = 0;
@@ -69,6 +70,8 @@ export class EnvioCuestionarioComponent implements OnInit, OnDestroy {
   public CuestionarioEnviado = false;
   public PuntajeInicial = 0;
   public BotonEnvioActivo = true;
+  public ZonaHorariaOrigenWebex: any;
+  public CodigoIsoPaisWebex = 'PE';
   ngOnInit(): void {
     this.PuntuacionActual = this.data.cuestionario.calificacionActual;
     if (
@@ -233,40 +236,16 @@ export class EnvioCuestionarioComponent implements OnInit, OnDestroy {
   }
 
   IniciarCuestionario() {
-    this._PEspecificoEsquemaService
-      .ObtenerEstadoDeFechasPorCuestionario(this.data.cuestionario.id)
-      .pipe(takeUntil(this.signal$))
-      .subscribe({
-        next: (x) => {
-          if (x == true) {
-            this.CuestionarioAvance.Inicio = true;
-            this.CuestionarioAvance.fechaInicio = new Date();
-            this.vertiempo = true;
+    this.CuestionarioAvance.Inicio = true;
+    this.CuestionarioAvance.fechaInicio = new Date();
+    this.vertiempo = true;
 
-            this._SessionStorageService.SessionSetValue(
-              'cuest-' + this.CuestionarioAvance.id.toString(),
-              btoa(JSON.stringify(this.CuestionarioAvance))
-            );
-            this.cronometro();
-          } else {
-            this._SnackBarServiceService.openSnackBar(
-              'Ya culmino el plazo para presentar este cuestionario.',
-              'x',
-              15,
-              'snackbarCrucigramaerror'
-            );
-          }
-        },
-        error: (e) => {
-          this._SnackBarServiceService.openSnackBar(
-            'Ocurrio un error',
-            'x',
-            15,
-            'snackbarCrucigramaerror'
-          );
-        },
-      });
-  }
+    this._SessionStorageService.SessionSetValue(
+      'cuest-' + this.CuestionarioAvance.id.toString(),
+      btoa(JSON.stringify(this.CuestionarioAvance))
+    );
+    this.cronometro();
+}
   AddValoresActuales(cuest: any) {
     this.CuestionarioAvance.fechaInicio = cuest.fechaInicio;
     this.CuestionarioAvance.Inicio = cuest.Inicio;
@@ -380,6 +359,10 @@ export class EnvioCuestionarioComponent implements OnInit, OnDestroy {
       });
     } else {
         this.BotonEnvioActivo=false
+        this.ObtenerDatosZonaHoraria();
+        let HoraWebexOriginal = moment.tz(new Date(), this.ZonaHorariaOrigenWebex);
+        this.json.FechaEnvio=HoraWebexOriginal.format('YYYY-MM-DDTHH:mm:ss.SSS');
+        console.log(this.json)
         this._PEspecificoEsquemaService.AgregarPEspecificoSesionCuestionarioAlumno(this.json).pipe(takeUntil(this.signal$))
         .subscribe({
         next: (x) => {
@@ -438,5 +421,11 @@ export class EnvioCuestionarioComponent implements OnInit, OnDestroy {
       'cuest-' + this.CuestionarioAvance.id.toString(),
       btoa(JSON.stringify(this.CuestionarioAvance))
     );
+  }
+  ObtenerDatosZonaHoraria() {
+    this.CodigoIsoPaisWebex=this.data.CodigoIsoPaisWebex;
+    this.ZonaHorariaOrigenWebex = moment.tz.zonesForCountry(this.CodigoIsoPaisWebex);
+    this.ZonaHorariaOrigenWebex = this.ZonaHorariaOrigenWebex[0];
+    console.log('ZonaHorariaOrigenWebex',this.ZonaHorariaOrigenWebex)
   }
 }

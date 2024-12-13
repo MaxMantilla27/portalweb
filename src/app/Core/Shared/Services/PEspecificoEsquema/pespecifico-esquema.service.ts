@@ -381,6 +381,7 @@ export class PEspecificoEsquemaService {
       formData.append("IdPwPEspecificoSesionTarea", Json.IdPwPEspecificoSesionTarea.toString());
       formData.append("IdMatriculaCabecera", Json.IdMatriculaCabecera.toString());
       formData.append("Usuario", "docente");
+      // formData.append("FechaEnvio", Json.FechaEnvio.toString());
       const req = new HttpRequest(
         "POST",
         `${this.urlBase}/AgregarPEspecificoSesionTareaAlumno`,
