@@ -1,7 +1,9 @@
 import { Component, Inject, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { Router } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
+import { AccountService } from 'src/app/Core/Shared/Services/Account/account.service';
 import { DatosPortalService } from 'src/app/Core/Shared/Services/DatosPortal/datos-portal.service';
 import { FormularioProgressiveProfilingService } from 'src/app/Core/Shared/Services/FormularioProgressiveProfiling/formulario-progressive-profiling.service';
 import { HelperService } from 'src/app/Core/Shared/Services/helper.service';
@@ -25,7 +27,9 @@ export class FormularioProgressiveProfilingComponent implements OnInit {
     private _SessionStorageService: SessionStorageService,
     private _RegistroVisitaPortalService: RegistroVisitaPortalService,
     public dialog: MatDialog,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private _router: Router,
+    private _AccountService: AccountService,
   ) {
     this.formCamposDinamicos = this.formBuilder.group({});
   }
@@ -34,16 +38,31 @@ export class FormularioProgressiveProfilingComponent implements OnInit {
     this.dialogRef.updateSize('600px', 'auto');
     this.obtenerListaBanderas();
     this.obtenerOpcionesCombos();
+    window.addEventListener('beforeunload', this.handleBeforeUnload.bind(this));
+    const currentUrl = this._router.url;
+    console.log('Ruta actual: ', currentUrl);
   }
 
   ngOnDestroy(): void {
+    window.removeEventListener('beforeunload', this.handleBeforeUnload.bind(this));
     this.signal$.next(true);
     this.signal$.complete();
+  }
+
+  handleBeforeUnload(event: BeforeUnloadEvent): void {
+    this.guardarFormularioEnLocalStorage();
   }
   
   formCamposDinamicos!: FormGroup;
   listaIconPais: Array<any> = [];
-  
+  valorDefectoPais: number | null = null;
+  valorDefectoPaisTelef: string | null = null;
+  tipoPagina: string = 'index';
+  indicePrograma: number = 0;
+  auxTipoPrograma: string = "";
+  auxNombrePrograma: string = "";
+  auxCorreoCliente: string = "";
+
   usuarioWeb: string = '';
   id: number = 0;
   tipo = null;
@@ -52,24 +71,28 @@ export class FormularioProgressiveProfilingComponent implements OnInit {
   tiempoSesion = null;
 
   titulo = null;
-  tituloTexto = null;
+  tituloTexto: string | null = null;
 
   cabeceraMensajeSup = null;
-  cabeceraMensajeSupTexto = null;
+  cabeceraMensajeSupTexto: string | null = null;
   cabeceraMensaje = null;
-  cabeceraMensajeTexto = null;
+  cabeceraMensajeIndexCurso = null;
+  cabeceraMensajeTexto: string | null = null;
+  cabeceraMensajeTextoCurso: string | null = null;
   cabeceraMensajeBordes = null;
   cabeceraMensajeInf = null;
-  cabeceraMensajeInfTexto = null;
+  cabeceraMensajeInfIndexCurso = null;
+  cabeceraMensajeInfTexto: string | null = null;
+  cabeceraMensajeInfTextoCurso: string | null = null;
   cabeceraBoton = null;
-  cabeceraBotonTexto = null;
+  cabeceraBotonTexto: string | null = null;
   cabeceraBotonAccion = null;
 
   cuerpoMensajeSup = null;
-  cuerpoMensajeSupTexto = null;
+  cuerpoMensajeSupTexto: string | null = null;
 
   boton = null;
-  botonTexto = null;
+  botonTexto: string | null = null;
   botonAccion = null;
 
   condicionMostrarCuerpo: boolean = false;
@@ -147,6 +170,11 @@ export class FormularioProgressiveProfilingComponent implements OnInit {
   }
 
   obtenerListaFormularioProgresivo(formData: any) {
+    this.tipoPagina = formData.tipoPagina
+    this.indicePrograma = formData.indicePrograma
+    this.auxTipoPrograma = formData.auxTipoPrograma
+    this.auxNombrePrograma = formData.auxNombrePrograma
+    this.auxCorreoCliente = formData.auxCorreoCliente
     this.usuarioWeb = formData.usuarioWeb
     this.id = formData.id;
     this.tipo = formData.tipo;
@@ -156,30 +184,96 @@ export class FormularioProgressiveProfilingComponent implements OnInit {
     this.condicionMostrar = formData.condicionMostrar;
     this.tiempoSesion = formData.tiempoSesion;
     this.titulo = formData.titulo;
-    this.tituloTexto = formData.tituloTexto;
+    this.tituloTexto = this.reemplazarTextoConDiccionario(
+      formData.tituloTexto || '',
+      {
+        '*correo cliente*': this.auxCorreoCliente || '',
+        '*tipo programa*': this.auxTipoPrograma || 'programa',
+        '*nombre programa*': this.auxNombrePrograma || 'programa'
+      }
+    );
     this.cabeceraMensajeSup = formData.cabeceraMensajeSup;
-    this.cabeceraMensajeSupTexto = formData.cabeceraMensajeSupTexto;
+    this.cabeceraMensajeSupTexto = this.reemplazarTextoConDiccionario(
+      formData.cabeceraMensajeSupTexto || '',
+      {
+        '*correo cliente*': this.auxCorreoCliente || '',
+        '*tipo programa*': this.auxTipoPrograma || 'programa',
+        '*nombre programa*': this.auxNombrePrograma || 'programa'
+      }
+    );
     this.cabeceraMensaje = formData.cabeceraMensaje;
-    this.cabeceraMensajeTexto = formData.cabeceraMensajeTexto;
+    this.cabeceraMensajeIndexCurso = formData.cabeceraMensajeIndexCurso;
+    this.cabeceraMensajeTexto = this.reemplazarTextoConDiccionario(
+      formData.cabeceraMensajeTexto || '',
+      {
+        '*correo cliente*': this.auxCorreoCliente || '',
+        '*tipo programa*': this.auxTipoPrograma || 'programa',
+        '*nombre programa*': this.auxNombrePrograma || 'programa'
+      }
+    );
+    this.cabeceraMensajeTextoCurso = this.reemplazarTextoConDiccionario(
+      formData.cabeceraMensajeTextoCurso || '',
+      {
+        '*correo cliente*': this.auxCorreoCliente || '',
+        '*tipo programa*': this.auxTipoPrograma || 'programa',
+        '*nombre programa*': this.auxNombrePrograma || 'programa'
+      }
+    );
     this.cabeceraMensajeBordes = formData.cabeceraMensajeBordes;
     this.cabeceraMensajeInf = formData.cabeceraMensajeInf;
-    this.cabeceraMensajeInfTexto = formData.cabeceraMensajeInfTexto;
+    this.cabeceraMensajeInfIndexCurso = formData.cabeceraMensajeInfIndexCurso;
+    this.cabeceraMensajeInfTexto = this.reemplazarTextoConDiccionario(
+      formData.cabeceraMensajeInfTexto || '',
+      {
+        '*correo cliente*': this.auxCorreoCliente || '',
+        '*tipo programa*': this.auxTipoPrograma || 'programa',
+        '*nombre programa*': this.auxNombrePrograma || 'programa'
+      }
+    );
+    this.cabeceraMensajeInfTextoCurso = this.reemplazarTextoConDiccionario(
+      formData.cabeceraMensajeInfTextoCurso || '',
+      {
+        '*correo cliente*': this.auxCorreoCliente || '',
+        '*tipo programa*': this.auxTipoPrograma || 'programa',
+        '*nombre programa*': this.auxNombrePrograma || 'programa'
+      }
+    );
     this.cabeceraBoton = formData.cabeceraBoton;
-    this.cabeceraBotonTexto = formData.cabeceraBotonTexto;
+    this.cabeceraBotonTexto = this.reemplazarTextoConDiccionario(
+      formData.cabeceraBotonTexto || '',
+      {
+        '*correo cliente*': this.auxCorreoCliente || '',
+        '*tipo programa*': this.auxTipoPrograma || 'programa',
+        '*nombre programa*': this.auxNombrePrograma || 'programa'
+      }
+    );
     this.cabeceraBotonAccion = formData.cabeceraBotonAccion;
 
     this.cuerpoMensajeSup = formData.cuerpoMensajeSup;
-    this.cuerpoMensajeSupTexto = formData.cuerpoMensajeSupTexto;
+    // this.cuerpoMensajeSupTexto = formData.cuerpoMensajeSupTexto;
+    this.cuerpoMensajeSupTexto = this.reemplazarTextoConDiccionario(
+      formData.cuerpoMensajeSupTexto || '',
+      {
+        '*correo cliente*': this.auxCorreoCliente || '',
+        '*tipo programa*': this.auxTipoPrograma || 'programa',
+        '*nombre programa*': this.auxNombrePrograma || 'programa'
+      }
+    );
 
     this.boton = formData.boton;
-    this.botonTexto = formData.botonTexto;
+    this.botonTexto = this.reemplazarTextoConDiccionario(
+      formData.botonTexto || '',
+      {
+        '*correo cliente*': this.auxCorreoCliente || '',
+        '*tipo programa*': this.auxTipoPrograma || 'programa',
+        '*nombre programa*': this.auxNombrePrograma || 'programa'
+      }
+    );
     this.botonAccion = formData.botonAccion;
 
     this.camposConfigurados = [];
     this.condicionMostrarCuerpo = false;
     this.tipoTelefono = false;
-
-    let valorDefectoPais: number | null = null;
 
     if (formData.cuerpoCorreo === true) {
       this.condicionMostrarCuerpo = true;
@@ -223,14 +317,15 @@ export class FormularioProgressiveProfilingComponent implements OnInit {
     if (formData.cuerpoPais === true) {
       this.condicionMostrarCuerpo = true;
       var codigoIso = this._SessionStorageService.SessionGetValue('ISO_PAIS');
-      valorDefectoPais = this.opcionesPorCampo.pais.find(pais => pais.codigoIso === codigoIso)?.value ?? null;
+      this.valorDefectoPais = this.opcionesPorCampo.pais.find(pais => pais.codigoIso === codigoIso)?.value ?? null;
+      this.valorDefectoPaisTelef = this.valorDefectoPais ? `+${this.valorDefectoPais.toString()}` : null;
       this.camposConfigurados.push({
         id: 'pais',
         label: 'País',
         tipo: 'text',
         tipoControl: 'combo',
         opciones: this.opcionesPorCampo.pais,
-        valorDefecto: valorDefectoPais,
+        valorDefecto: this.valorDefectoPais,
         obligatorio: formData.cuerpoPaisObl,
         orden: formData.cuerpoPaisOrden,
       });
@@ -242,9 +337,9 @@ export class FormularioProgressiveProfilingComponent implements OnInit {
       this.camposConfigurados.push({
         id: 'telefono',
         label: 'Teléfono',
-        tipo: 'text',
+        tipo: 'phone',
         tipoControl: 'input',
-        valorDefecto: valorDefectoPais,
+        valorDefecto: this.valorDefectoPaisTelef,
         obligatorio: formData.cuerpoTelefonoObl,
         orden: formData.cuerpoTelefonoOrden,
       });
@@ -314,6 +409,21 @@ export class FormularioProgressiveProfilingComponent implements OnInit {
     this.obtenerDatosLocalStorage();
   }
 
+  reemplazarTextoConDiccionario(texto: string, diccionario: { [clave: string]: string }): string {
+    return texto.replace(/\*[^*]+\*/g, (match) => {
+      return diccionario[match] || match;
+    });
+  }
+
+  get mensajeCabecera(): string {
+    if (this.cabeceraMensajeIndexCurso) {
+      return this.tipoPagina === 'index' 
+        ? this.cabeceraMensajeTexto ?? '' 
+        : this.cabeceraMensajeTextoCurso ?? '';
+    }
+    return this.cabeceraMensajeTexto ?? '';
+  }
+
   actualizarFormularioDinamico() {
     this.formCamposDinamicos = this.formBuilder.group({});
     this.camposConfigurados.forEach(campo => {
@@ -333,6 +443,16 @@ export class FormularioProgressiveProfilingComponent implements OnInit {
     const formularioGuardado = localStorage.getItem('formularioGuardado');
     if (formularioGuardado) {
       const valoresGuardados = JSON.parse(formularioGuardado);
+
+      if (!valoresGuardados['pais'] || !valoresGuardados['telefono']) {
+        if (!valoresGuardados['pais']) {
+          delete valoresGuardados['pais'];
+        }
+        if (!valoresGuardados['telefono']) {
+          delete valoresGuardados['telefono'];
+        }
+      }
+
       this.formCamposDinamicos.patchValue(valoresGuardados);
 
       const paisGuardado = valoresGuardados['pais'];
@@ -350,7 +470,7 @@ export class FormularioProgressiveProfilingComponent implements OnInit {
     }
   }
 
-  actualizarBandera(valorDefectoPais: number | null | undefined): void {
+  actualizarBandera(valorDefectoPais: number| string | null | undefined): void {
     const icono = this.getIconoPorPais(valorDefectoPais);
     const campoTelefono = this.camposConfigurados.find(campoConfig => campoConfig.id === 'telefono');
     if (campoTelefono) {
@@ -358,9 +478,13 @@ export class FormularioProgressiveProfilingComponent implements OnInit {
     }
   }
 
-  getIconoPorPais(valorDefecto: number | null | undefined): string {
-    if (valorDefecto) {
-      const pais = this.listaIconPais.find(pais => pais.idPais === valorDefecto);
+  getIconoPorPais(valorDefectoAux: number | string | null | undefined): string {
+    if (typeof valorDefectoAux === 'string' && valorDefectoAux.startsWith('+')) {
+      valorDefectoAux = valorDefectoAux.substring(1);
+    }
+    const valorDefectoNumero = typeof valorDefectoAux === 'string' ? Number(valorDefectoAux) : valorDefectoAux;
+    if (valorDefectoNumero && !isNaN(valorDefectoNumero)) {
+      const pais = this.listaIconPais.find(pais => pais.idPais === valorDefectoNumero);
       return pais ? pais.icono : 'https://repositorioweb.blob.core.windows.net/repositorioweb/FlagIcons/internacional.png';
     }
     return 'https://repositorioweb.blob.core.windows.net/repositorioweb/FlagIcons/internacional.png';
@@ -371,24 +495,54 @@ export class FormularioProgressiveProfilingComponent implements OnInit {
       const nuevoValorDefectoPais = event.value;
       const campoPais = this.camposConfigurados.find(campoConfig => campoConfig.id === 'pais');
       if (campoPais) {
-        campoPais.valorDefecto = nuevoValorDefectoPais;
+        this.valorDefectoPais = nuevoValorDefectoPais
+        campoPais.valorDefecto = this.valorDefectoPais;
+        this.valorDefectoPaisTelef = nuevoValorDefectoPais? `+${nuevoValorDefectoPais.toString()}` : null;
       }
       const campoTelefono = this.camposConfigurados.find(campoConfig => campoConfig.id === 'telefono');
       if (campoTelefono) {
-        campoTelefono.valorDefecto = nuevoValorDefectoPais;
+        this.formCamposDinamicos.patchValue({
+          telefono: this.valorDefectoPaisTelef ?? ''
+        });
+        campoTelefono.valorDefecto = this.valorDefectoPaisTelef;
+        const inputElement = document.getElementById('telefono') as HTMLInputElement;
+        if (inputElement) {
+          inputElement.value = this.valorDefectoPaisTelef ?? '';
+          inputElement.selectionStart = inputElement.value.length;
+        }
       }
       this.getIconoPorPais(nuevoValorDefectoPais);
+    }
+  }
+
+  onPhoneInput(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    let value = input.value;
+    if (this.valorDefectoPaisTelef && typeof this.valorDefectoPaisTelef === 'string') {
+      if (!value.startsWith(this.valorDefectoPaisTelef)) {
+        value = this.valorDefectoPaisTelef + value.replace(/^(\+?\d*)/, '');
+      }
+      value = value.replace(/[^0-9+]/g, '');
+      if (value.startsWith(this.valorDefectoPaisTelef)) {
+        value = this.valorDefectoPaisTelef + value.substring(this.valorDefectoPaisTelef.length).replace(/\D/g, '');
+      } else {
+        value = this.valorDefectoPaisTelef + value.replace(/\D/g, '');
+      }
+      input.value = value;
+      this.formCamposDinamicos.patchValue({
+        telefono: value
+      });
     }
   }
 
   accionarBoton(): void {
     if (this.botonAccion) {
       if (this.validaFormularioAccion()) {
-        this.ejecutarAccion(this.botonAccion);
+        this.ejecutarFormularioProgresivo(this.botonAccion);
       }
     }
     else if (this.cabeceraBotonAccion) {
-      this.ejecutarAccion(this.cabeceraBotonAccion);
+      this.ejecutarFormularioProgresivo(this.cabeceraBotonAccion);
     }
   }
 
@@ -400,53 +554,92 @@ export class FormularioProgressiveProfilingComponent implements OnInit {
     return true;
   }
 
-  ejecutarAccion(accion: number): void {
+  async ejecutarFormularioProgresivo(accion: number): Promise<void> {
     switch (accion) {
       case 1:
-        // this.guardaDatos();
-        // this.abreFormularioRespuesta(this.id);
-        // this.cerrarFormulario();
-        this.ejecutarFormularioProgresivo();
+        try {
+          await this.guardaDatos(accion);
+          this.abreFormularioRespuesta(this.id);
+          this.cerrarFormulario();
+        } catch (error) {
+          console.error('Error durante la ejecución del formulario progresivo:', error);
+        }
         break;
       case 2:
-        this.guardaDatos();
-        this.abreFormularioRespuesta(this.id);
-        this.cerrarFormulario();
+        try {
+          await this.guardaDatos(accion);
+          this.abreFormularioRespuesta(this.id);
+          this.cerrarFormulario();
+        } catch (error) {
+          console.error('Error durante la ejecución del formulario progresivo:', error);
+        }
         break;
       case 3:
-        this.guardaDatos();
+        try {
+          await this.guardaDatos(accion);
+          this.abreFormularioRespuesta(this.id);
+          this.cerrarFormulario();
+        } catch (error) {
+          console.error('Error durante la ejecución del formulario progresivo:', error);
+        }
+        break;
+      case 4:
+        try {
+          await this.copiaCodigo();
+          this.abreFormularioRespuesta(this.id);
+        } catch (error) {
+          console.error('Error durante la ejecución del formulario progresivo:', error);
+        }
+        break;
+      case 5:
+        await this.guardaDatos(accion);
         this.abreFormularioRespuesta(this.id);
         this.cerrarFormulario();
         break;
-      case 4:
-        this.copiaCodigo();
-        break;
-      case 5:
-        this.enviaBrochure();
-        this.abreFormularioRespuesta(this.id);
-        break;
       case 6:
+        await this.guardaDatos(accion);
         this.enviaAulaVirtual();
-        this.abreFormularioRespuesta(this.id);
+        // this.abreFormularioRespuesta(this.id);
+        this.cerrarFormulario();
         break;
+
       default:
         console.warn('Acción no definida:', accion);
     }
   }
 
-  async ejecutarFormularioProgresivo(): Promise<void> {
-    try {
-      await this.guardaDatos();
-      console.log('Datos guardados correctamente');
-      this.abreFormularioRespuesta(this.id);
-      this.cerrarFormulario();
-    } catch (error) {
-      console.error('Error durante la ejecución del formulario progresivo:', error);
-    }
-  }
-
-  guardaDatos(): Promise<void> {
+  guardaDatos(accion: number): Promise<void> {
     const valoresFormulario = this.formCamposDinamicos.value;
+    const actualizarCampos: {
+      idAlumno: boolean;
+      correo: boolean;
+      nombres: boolean;
+      apellidos: boolean;
+      pais: boolean;
+      telefono: boolean;
+      cargo: boolean;
+      areaFormacion: boolean;
+      areaTrabajo: boolean;
+      industria: boolean;
+    } = {
+      idAlumno: false,
+      correo: false,
+      nombres: false,
+      apellidos: false,
+      pais: false,
+      telefono: false,
+      cargo: false,
+      areaFormacion: false,
+      areaTrabajo: false,
+      industria: false,
+    };
+    this.camposConfigurados.forEach(campo => {
+      if (campo.id in actualizarCampos) {
+        if (valoresFormulario[campo.id] !== null && valoresFormulario[campo.id] !== undefined) {
+          actualizarCampos[campo.id as keyof typeof actualizarCampos] = true;
+        }
+      }
+    });
     const datosRegistro: InsertaRegistroVisitaPortalDTO = {
       usuarioWeb: this.usuarioWeb,
       idAlumno: null,
@@ -459,21 +652,25 @@ export class FormularioProgressiveProfilingComponent implements OnInit {
       idAreaFormacion: valoresFormulario.areaFormacion,
       idAreaTrabajo: valoresFormulario.areaTrabajo,
       idIndustria: valoresFormulario.industria,
-      usuario: "portalweb"
+      usuario: "portalweb",
+      accionBoton: accion,
+      indicePrograma: this.indicePrograma,
+      actualizarCampos,
     };
     const datosFinales = Object.fromEntries(
       Object.entries(datosRegistro).map(([key, value]) => [key, value !== undefined ? value : null])
     ) as InsertaRegistroVisitaPortalDTO;
-    return this._RegistroVisitaPortalService.InsertarRegistroVisitaPortal(datosFinales)
-      .pipe(takeUntil(this.signal$))
-      .toPromise()
-      .then(() => {
-        console.log('Registro insertado exitosamente');
-      })
-      .catch(error => {
-        console.error('Error al insertar el registro:', error);
-        throw error;
-      });
+    return this._RegistroVisitaPortalService.InsertaActualizaRegistroVisitaPortal(datosFinales)
+    .pipe(takeUntil(this.signal$))
+    .toPromise()
+    .then(async () => {
+      await this.consultarDatosUsuarioFomularioProgresivo();
+      console.log('Registro insertado exitosamente');
+    })
+    .catch(error => {
+      console.error('Error al insertar el registro:', error);
+      throw error;
+    });
   }
 
   copiaCodigo(): void {
@@ -491,12 +688,19 @@ export class FormularioProgressiveProfilingComponent implements OnInit {
     }
   }
 
-  enviaBrochure(): void {
-    
-  }
-
   enviaAulaVirtual(): void {
-    
+    var token=this._SessionStorageService.validateTokken()
+    if(token){
+      this._AccountService.RegistroCursoAulaVirtualNueva(this.indicePrograma).pipe(takeUntil(this.signal$)).subscribe({
+        next:x=>{
+          this._router.navigate(['/AulaVirtual/MisCursos']);
+        },
+      })
+    }
+    else{
+      this._SessionStorageService.SessionSetValueSesionStorage("accesoPrueba",this.indicePrograma.toString());
+      this._router.navigate(['/login']);
+    }
   }
 
   abreFormularioRespuesta(formularioInicial: number) {
@@ -509,6 +713,12 @@ export class FormularioProgressiveProfilingComponent implements OnInit {
             this.dialog.open(FormularioProgressiveProfilingComponent, {
               disableClose: true,
               data: {
+                tipoPagina: "",
+                indicePrograma: this.indicePrograma,
+                auxTipoPrograma: this.auxTipoPrograma,
+                auxNombrePrograma: this.auxNombrePrograma,
+                auxCorreoCliente: this.auxCorreoCliente,
+                usuarioWeb: this.usuarioWeb,
                 id: formularioRpta.id,
                 tipo: formularioRpta.tipo,
                 idFormularioProgresivoInicial: formularioRpta.idFormularioProgresivoInicial,
@@ -519,10 +729,14 @@ export class FormularioProgressiveProfilingComponent implements OnInit {
                 cabeceraMensajeSup: formularioRpta.cabeceraMensajeSup,
                 cabeceraMensajeSupTexto: formularioRpta.cabeceraMensajeSupTexto,
                 cabeceraMensaje: formularioRpta.cabeceraMensaje,
+                cabeceraMensajeIndexCurso: formularioRpta.cabeceraMensajeIndexCurso,
                 cabeceraMensajeTexto: formularioRpta.cabeceraMensajeTexto,
+                cabeceraMensajeTextoCurso: formularioRpta.cabeceraMensajeTextoCurso,
                 cabeceraMensajeBordes: formularioRpta.cabeceraMensajeBordes,
                 cabeceraMensajeInf: formularioRpta.cabeceraMensajeInf,
+                cabeceraMensajeInfIndexCurso: formularioRpta.cabeceraMensajeInfIndexCurso,
                 cabeceraMensajeInfTexto: formularioRpta.cabeceraMensajeInfTexto,
+                cabeceraMensajeInfTextoCurso: formularioRpta.cabeceraMensajeInfTextoCurso,
                 cabeceraBoton: formularioRpta.cabeceraBoton,
                 cabeceraBotonTexto: formularioRpta.cabeceraBotonTexto,
                 cabeceraBotonAccion: formularioRpta.cabeceraBotonAccion,
@@ -569,10 +783,32 @@ export class FormularioProgressiveProfilingComponent implements OnInit {
     });
   }
 
+  async consultarDatosUsuarioFomularioProgresivo(): Promise<void> {
+    this.auxCorreoCliente = "";
+    await this._RegistroVisitaPortalService.ObtenerListaRegistroVisitaPortalPorUsuarioWeb(this.usuarioWeb)
+    .pipe(takeUntil(this.signal$))
+    .toPromise()
+    .then(response => {
+        if (response && response.datosRegistroVisitaPortal && response.datosRegistroVisitaPortal.length > 0) {
+            this.auxCorreoCliente = response.datosRegistroVisitaPortal[0].correo;
+        } else {
+            console.warn('No se encontraron datos válidos en la respuesta.');
+        }
+    })
+    .catch(error => {
+        console.error('Error al consultar datos del usuario:', error);
+    });
+}
+
+
   cerrarFormulario(): void {
+    this.guardarFormularioEnLocalStorage();
+    this.dialogRef.close();
+  }
+
+  guardarFormularioEnLocalStorage(): void {
     const valoresFormulario = this.formCamposDinamicos.getRawValue();
     localStorage.setItem('formularioGuardado', JSON.stringify(valoresFormulario));
-    this.dialogRef.close();
   }
 
 }
@@ -583,7 +819,7 @@ interface CampoConfigurado {
   tipo: string;
   tipoControl: 'input' | 'combo';
   opciones?: { value: any; label: string }[];
-  valorDefecto: number | null | undefined;
+  valorDefecto: number| string | null | undefined;
   obligatorio: boolean;
   orden: number | null;
 }
@@ -611,4 +847,18 @@ interface InsertaRegistroVisitaPortalDTO {
   idAreaTrabajo?: number | null;
   idIndustria?: number | null;
   usuario: string;
+  accionBoton: number;
+  indicePrograma: number;
+  actualizarCampos: {
+    idAlumno: boolean;
+    correo: boolean;
+    nombres: boolean;
+    apellidos: boolean;
+    pais: boolean;
+    telefono: boolean;
+    cargo: boolean;
+    areaFormacion: boolean;
+    areaTrabajo: boolean;
+    industria: boolean;
+  };
 }

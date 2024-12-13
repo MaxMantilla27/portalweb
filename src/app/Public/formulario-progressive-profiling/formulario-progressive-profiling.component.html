@@ -1,5 +1,5 @@
 <div class="form-container">
-    <div class="form-titulo">
+    <div class="form-titulo" [ngClass]="{'linea-bajo-titulo': titulo === true}">
         <h1>{{ tituloTexto }}</h1>
         <button
             type="button"
@@ -17,7 +17,7 @@
         <h2 
             *ngIf="cabeceraMensaje === true" 
             [ngClass]="{'con-borde': cabeceraMensajeBordes === true}">
-            {{ cabeceraMensajeTexto }}
+            {{ mensajeCabecera }}
         </h2>
         <p class="parrafoInf" *ngIf="cabeceraMensajeInf === true">
             {{ cabeceraMensajeInfTexto }}
@@ -55,7 +55,10 @@
                             [id]="campo.id"
                             class="input-field"
                             matInput
-                            [type]="campo.tipo"/>
+                            [type]="campo.tipo"
+                            [value]="campo.id === 'telefono' ? (campo.valorDefecto) : ''"
+                            (input)="campo.id === 'telefono' ? onPhoneInput($event) : null"
+                            inputmode="numeric"/>
                         <mat-select
                             *ngIf="campo.tipoControl === 'combo'"
                             formControlName="{{ campo.id }}"

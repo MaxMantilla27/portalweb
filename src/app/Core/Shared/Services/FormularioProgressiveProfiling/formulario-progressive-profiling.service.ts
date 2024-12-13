@@ -11,7 +11,7 @@ export class FormularioProgressiveProfilingService {
 
   isBrowser: boolean;
   public urlBase=environment.url_api+'FormularioProgresivo';
-  
+
   constructor(
     private http: HttpClient,
     @Inject(PLATFORM_ID) platformId: Object

@@ -36,9 +36,9 @@ export class RegistroVisitaPortalService {
     }
   }
 
-  public InsertarRegistroVisitaPortal(registroVisita: InsertaRegistroVisitaPortalDTO): Observable<any> {
+  public InsertaActualizaRegistroVisitaPortal(registroVisita: InsertaRegistroVisitaPortalDTO): Observable<any> {
     if (this.isBrowser) {
-      return this.http.post<any>(`${this.urlBase}/InsertarRegistroVisitaPortal`, registroVisita);
+      return this.http.post<any>(`${this.urlBase}/InsertaActualizaRegistroVisitaPortal`, registroVisita);
     } else {
       return EMPTY;
     }

@@ -191,6 +191,8 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
   public beneficios: Array<BeneficiosDTO> = [];
   public programasRelacionados: Array<CardProgramasDTO> = [];
   public idPegeneral = 0;
+  public idCategoria = 0;
+  public nombreProgramaCurso = "";
   public MontoPago: Array<listaMontoPagoProgramaInformacionDTO> = [];
   public BeneficiosPiePagina = '';
   public EstructuraPiePagina = '';
@@ -633,11 +635,19 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
           }
         });
         this.idPegeneral = x.idPGeneral;
+        this._ProgramaService.setIdPegeneral(this.idPegeneral);
         this.ObtenerSilaboCurso();
         this.ListProgramaRelacionado();
         this.VistaPreviaProgramaPortal();
 
         //this.prerequisitos=x.listaPrerrequisitoDTO;
+      },
+    });
+    this._ProgramaService.IdCategoriaPrograma(this.idBusqueda).pipe(takeUntil(this.signal$)).subscribe({
+      next: (x) => {
+        this.idCategoria = x.idCategoria;
+        this.nombreProgramaCurso = x.nombre;
+        this._ProgramaService.setIdCategoria(this.idCategoria, this.nombreProgramaCurso);
       },
     });
   }
