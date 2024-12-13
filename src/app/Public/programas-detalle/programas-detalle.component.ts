@@ -264,6 +264,8 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
   public namePrograma:any;
   public listaLocalidades?:any;
 
+  public programaDetalleisnull: any = true;
+
   ngOnInit(): void {
     this.codigoIso =
     this._SessionStorageService.SessionGetValue('ISO_PAIS') != ''
@@ -284,6 +286,9 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
     }
     this.activatedRoute.params.pipe(takeUntil(this.signal$)).subscribe({
       next: (x) => {
+
+        console.log(x)
+
         this.rutaProgramaDetalle=x
         this.area = x['AreaCapacitacion'].split('-').join(' ');
         this.AraCompleta = x['AreaCapacitacion'];
@@ -458,12 +463,19 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
       .ObtenerCabeceraProgramaGeneral(this.idBusqueda).pipe(takeUntil(this.signal$))
       .subscribe({
         next: (x) => {
+          console.log(x);
+
+          if (x.programaCabeceraDetalleDTO == null) {
+            this._router.navigate(['error404']);
+            return;
+          }
+
           if(x.programaCabeceraDetalleDTO!=undefined
             && this.removeAccents(this.area.toLowerCase())==this.removeAccents(x.programaCabeceraDetalleDTO.areaCapacitacion.toLowerCase())
             && x.programaCabeceraDetalleDTO.direccion==this.namePrograma.join('-')
             )
           {
-
+            this.programaDetalleisnull = false;
             var metas=x.programaCabeceraDetalleDTO.parametroSeoProgramaDTO;
             if(metas.length>0){
 
@@ -493,6 +505,7 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
 
             }
             this.cabecera = x.programaCabeceraDetalleDTO;
+            console.log(this.cabecera)
             if(this.cabecera.tituloHtml!=null){
               this.cabecera.tituloHtml = "<h1>"+this.cabecera.tituloHtml+"</h1>";
               this.cabecera.tituloHtml = this.cabecera.tituloHtml.replace("<h1><h1>","<h1>").replace("</h1></h1>","</h1>");
@@ -541,6 +554,7 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
           else{
             window.location.replace('/'+this.removeAccents(x.programaCabeceraDetalleDTO.areaDescripcion)+'/'+x.programaCabeceraDetalleDTO.direccion);
            // this._router.navigate(['/'+this.removeAccents(x.programaCabeceraDetalleDTO.areaCapacitacion)+'/'+x.programaCabeceraDetalleDTO.direccion]);
+           
           }
         },
 

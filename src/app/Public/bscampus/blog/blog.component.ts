@@ -132,9 +132,13 @@ export class BlogComponent implements OnInit {
     idAreaTrabajo:undefined,
     idIndustria:undefined,
   }
+
+  public Blogisnull : any = true;
+
   ngOnInit(): void {
     this.activatedRoute.params.pipe(takeUntil(this.signal$)).subscribe({
       next: (x) => {
+        console.log(x)
         var whitepaper = x['blog'].split('-');
         this.idWeb = whitepaper[whitepaper.length - 1];
         this.UrlWeb=whitepaper.slice(0, -1).join('-')
@@ -187,7 +191,16 @@ export class BlogComponent implements OnInit {
       next:(x)=>{
         console.log(x)
 
+        if (x.articuloDetalleHomeDTO.articuloDetalle.id == 0) {
+          
+          this.router.navigate(['error404']);
+
+          return;
+
+        }
+
         if(x.articuloDetalleHomeDTO!=undefined && x.articuloDetalleHomeDTO.parametroSeo!=undefined){
+          this.Blogisnull = false;
           var metas=x.articuloDetalleHomeDTO.parametroSeo;
           if(metas.length>0){
 
@@ -218,6 +231,7 @@ export class BlogComponent implements OnInit {
 
           }
         }
+
         this.migaPan[3].titulo=x.articuloDetalleHomeDTO.articuloDetalle.areaCapacitacion;
         this.Title=x.articuloDetalleHomeDTO.articuloDetalle.nombre;
         this.descripcion=x.articuloDetalleHomeDTO.articuloDetalle.contenido
@@ -231,9 +245,14 @@ export class BlogComponent implements OnInit {
       next:(x)=>{
         console.log(x)
         this.tags=x.listaTagDTO
-        this.tags.forEach(x=>{
-          x.codigo='/tag/'+x.codigo
-        })
+        if (this.tags != null) {
+          if (x.codigo != null) {
+            x.codigo='/tag/'+x.codigo
+          }else{
+            x.codigo='/error404'
+          }
+          
+        }
       }
     })
   }
