@@ -56,7 +56,7 @@ export interface PEspecificoSesionTareaAlumnoSaveParamsDTO {
   IdMatriculaCabecera: number;
   file: File;
   Usuario: string,
-  // FechaEnvio:string,
+  FechaEnvio:string,
 }
 export interface PEspecificoSesionMaterialAdicionalSaveDTO {
   Id: number | null;

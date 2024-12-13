@@ -81,7 +81,6 @@ export class ModuloSesionesOnlineComponent
   ngOnInit(): void {}
 
   OpenSesion(index: number) {
-    console.log(this.sesiones)
     this.sesiones[index].Open = !this.sesiones[index].Open;
     if (this.sesiones[index].Open == true) {
       this.ObtenerActividadesRecursoSesionAlumno(
@@ -109,8 +108,8 @@ export class ModuloSesionesOnlineComponent
       });
   }
   ObtenerActividadesRecursoSesionAlumno(IdSesion: number, index: number) {
-      this.ObtenerDatosZonaHoraria();
-      this._PEspecificoEsquemaService
+    this.ObtenerDatosZonaHoraria();
+    this._PEspecificoEsquemaService
       .ObtenerActividadesRecursoSesionAlumno(IdSesion, this.IdMatriculaCabecera)
       .pipe(takeUntil(this.signal$))
       .subscribe({
@@ -124,39 +123,73 @@ export class ModuloSesionesOnlineComponent
 
           if (x != null) {
             x.forEach((d: any) => {
-              console.log(d)
               d.disabled = false;
-              let HoraWebexOriginal = moment.tz(d.fechaEntrega, this.ZonaHorariaOrigenWebex);
+              let HoraWebexOriginal = moment.tz(
+                d.fechaEntrega,
+                this.ZonaHorariaOrigenWebex
+              );
               HoraWebexOriginal.subtract(d.tiempoLimite, 'minutes');
-              let HoraWebexUsuario = HoraWebexOriginal.clone().tz(this.ZonaHorariaUsuario);
+              let HoraWebexUsuario = HoraWebexOriginal.clone().tz(
+                this.ZonaHorariaUsuario
+              );
               let HoraActualUsuario = moment().tz(this.ZonaHorariaUsuario);
-              let diference = HoraActualUsuario.diff(HoraWebexOriginal, 'minutes');
-              console.log('Hora Actual:', HoraActualUsuario.format('YYYY-MM-DD HH:mm:ss'));
-              console.log('Hora Webex Original:', HoraWebexOriginal.format('YYYY-MM-DD HH:mm:ss'));
-              console.log('Hora Webex Conversion Usuario:', HoraWebexUsuario.format('YYYY-MM-DD HH:mm:ss'));
+              let diference = HoraActualUsuario.diff(
+                HoraWebexOriginal,
+                'minutes'
+              );
+              console.log(
+                'Hora Actual:',
+                HoraActualUsuario.format('YYYY-MM-DD HH:mm:ss')
+              );
+              console.log(
+                'Hora Webex Original:',
+                HoraWebexOriginal.format('YYYY-MM-DD HH:mm:ss')
+              );
+              console.log(
+                'Hora Webex Conversion Usuario:',
+                HoraWebexUsuario.format('YYYY-MM-DD HH:mm:ss')
+              );
               console.log('Minutos Faltantes:', diference);
-              d.fechaActual=d.fechaEntrega;
-              if(diference>=0){
-                if(d.fechaEntregaSecundaria!=null){
-                  d.fechaActual=d.fechaEntregaSecundaria;
-                  let SecHoraWebexOriginal = moment.tz(d.fechaEntregaSecundaria, this.ZonaHorariaOrigenWebex);
+              d.fechaActual = d.fechaEntrega;
+              if (diference >= 0) {
+                if (d.fechaEntregaSecundaria != null) {
+                  d.fechaActual = d.fechaEntregaSecundaria;
+                  let SecHoraWebexOriginal = moment.tz(
+                    d.fechaEntregaSecundaria,
+                    this.ZonaHorariaOrigenWebex
+                  );
                   SecHoraWebexOriginal.subtract(d.tiempoLimite, 'minutes');
-                  let SecHoraWebexUsuario = SecHoraWebexOriginal.clone().tz(this.ZonaHorariaUsuario);
-                  let SecHoraActualUsuario = moment().tz(this.ZonaHorariaUsuario);
-                  let Secdiference = SecHoraActualUsuario.diff(SecHoraWebexOriginal, 'minutes');
-                  console.log('Sec Hora Actual:', SecHoraActualUsuario.format('YYYY-MM-DD HH:mm:ss'));
-                  console.log('Sec Hora Webex Original:', SecHoraWebexOriginal.format('YYYY-MM-DD HH:mm:ss'));
-                  console.log('Sec Hora Webex Conversion Usuario:', SecHoraWebexUsuario.format('YYYY-MM-DD HH:mm:ss'));
+                  let SecHoraWebexUsuario = SecHoraWebexOriginal.clone().tz(
+                    this.ZonaHorariaUsuario
+                  );
+                  let SecHoraActualUsuario = moment().tz(
+                    this.ZonaHorariaUsuario
+                  );
+                  let Secdiference = SecHoraActualUsuario.diff(
+                    SecHoraWebexOriginal,
+                    'minutes'
+                  );
+                  console.log(
+                    'Sec Hora Actual:',
+                    SecHoraActualUsuario.format('YYYY-MM-DD HH:mm:ss')
+                  );
+                  console.log(
+                    'Sec Hora Webex Original:',
+                    SecHoraWebexOriginal.format('YYYY-MM-DD HH:mm:ss')
+                  );
+                  console.log(
+                    'Sec Hora Webex Conversion Usuario:',
+                    SecHoraWebexUsuario.format('YYYY-MM-DD HH:mm:ss')
+                  );
                   console.log('Sec Minutos Faltantes:', Secdiference);
-                  if(Secdiference>=0){
-                    d.disabled=true;
+                  if (Secdiference >= 0) {
+                    d.disabled = true;
                   }
-                }
-                else{
-                  d.disabled=true;
+                } else {
+                  d.disabled = true;
                 }
               }
-              console.log(d.disabled)
+              console.log(d.disabled);
               if (d.tipo.toLowerCase() == 'material adicional') {
                 this.sesiones[index].material.push(d);
               }
@@ -245,7 +278,7 @@ export class ModuloSesionesOnlineComponent
           this.sesiones = x;
           if (x != null) {
             this.CodigoIsoPaisWebex = x[0].codigoIso;
-            console.log('Pais CC:',this.CodigoIsoPaisWebex)
+            console.log('Pais CC:', this.CodigoIsoPaisWebex);
           }
           if (this.sesiones != null) {
             this.sesiones.forEach((s: any) => {
@@ -269,105 +302,64 @@ export class ModuloSesionesOnlineComponent
     enviado: boolean,
     bloquearEntregables?: boolean
   ) {
-    this._PEspecificoEsquemaService
-      .ObtenerEstadoDeFechasPorTarea(this.sesiones[indexSesion].tarea[index].id)
-      .pipe(takeUntil(this.signal$))
-      .subscribe({
-        next: (x) => {
-          if (enviado == false) {
-            if (bloquearEntregables) {
-              this._SnackBarServiceService.openSnackBar(
-                'Para continuar, es necesario completar la encuesta.',
-                'x',
-                10,
-                'snackbarCrucigramaerror'
-              );
-            } else {
-              if (
-                x == true ||
-                (this.sesiones[indexSesion].tarea[index].tareas != null &&
-                  this.sesiones[indexSesion].tarea[index].tareas.length > 0)
-              ) {
-                const dialogRef = this.dialog.open(EnvioTareaComponent, {
-                  width: '1000px',
-                  data: {
-                    tarea: this.sesiones[indexSesion].tarea[index],
-                    index: index,
-                    IdMatriculaCabecera: this.IdMatriculaCabecera,
-                    CodigoIsoPaisWebex:this.CodigoIsoPaisWebex,
-                  },
-                  panelClass: 'dialog-envio-tarea-alumno',
-                  disableClose: true,
-                });
+    if (enviado == false) {
+      if (bloquearEntregables) {
+        this._SnackBarServiceService.openSnackBar(
+          'Para continuar, es necesario completar la encuesta.',
+          'x',
+          10,
+          'snackbarCrucigramaerror'
+        );
+      } else {
+        const dialogRef = this.dialog.open(EnvioTareaComponent, {
+          width: '1000px',
+          data: {
+            tarea: this.sesiones[indexSesion].tarea[index],
+            index: index,
+            IdMatriculaCabecera: this.IdMatriculaCabecera,
+            CodigoIsoPaisWebex: this.CodigoIsoPaisWebex,
+          },
+          panelClass: 'dialog-envio-tarea-alumno',
+          disableClose: true,
+        });
 
-                dialogRef
-                  .afterClosed()
-                  .pipe(takeUntil(this.signal$))
-                  .subscribe((result) => {
-                    if (result != undefined && result.length > 0) {
-                      this.ObtenerActividadesRecursoSesionAlumno(
-                        this.sesiones[indexSesion].idSesion,
-                        indexSesion
-                      );
-                    }
-                  });
-              } else {
-                this._SnackBarServiceService.openSnackBar(
-                  'Ya culmino el plazo para presentar esta tarea.',
-                  'x',
-                  15,
-                  'snackbarCrucigramaerror'
-                );
-              }
-            }
-          } else {
-            if (
-              x == true ||
-              (this.sesiones[indexSesion].tarea[index].tareas != null &&
-                this.sesiones[indexSesion].tarea[index].tareas.length > 0)
-            ) {
-              const dialogRef = this.dialog.open(EnvioTareaComponent, {
-                width: '1000px',
-                data: {
-                  tarea: this.sesiones[indexSesion].tarea[index],
-                  index: index,
-                  IdMatriculaCabecera: this.IdMatriculaCabecera,
-                  CodigoIsoPaisWebex:this.CodigoIsoPaisWebex,
-                },
-                panelClass: 'dialog-envio-tarea-alumno',
-                disableClose: true,
-              });
-
-              dialogRef
-                .afterClosed()
-                .pipe(takeUntil(this.signal$))
-                .subscribe((result) => {
-                  if (result != undefined && result.length > 0) {
-                    this.ObtenerActividadesRecursoSesionAlumno(
-                      this.sesiones[indexSesion].idSesion,
-                      indexSesion
-                    );
-                  }
-                });
-            } else {
-              this._SnackBarServiceService.openSnackBar(
-                'Ya culmino el plazo para presentar esta tarea.',
-                'x',
-                15,
-                'snackbarCrucigramaerror'
+        dialogRef
+          .afterClosed()
+          .pipe(takeUntil(this.signal$))
+          .subscribe((result) => {
+            if (result != undefined && result.length > 0) {
+              this.ObtenerActividadesRecursoSesionAlumno(
+                this.sesiones[indexSesion].idSesion,
+                indexSesion
               );
             }
-          }
+          });
+      }
+    } else {
+      const dialogRef = this.dialog.open(EnvioTareaComponent, {
+        width: '1000px',
+        data: {
+          tarea: this.sesiones[indexSesion].tarea[index],
+          index: index,
+          IdMatriculaCabecera: this.IdMatriculaCabecera,
+          CodigoIsoPaisWebex: this.CodigoIsoPaisWebex,
         },
-        error: (e) => {
-          this._SnackBarServiceService.openSnackBar(
-            'Ocurrio un error',
-            'x',
-            15,
-            'snackbarCrucigramaerror'
-          );
-        },
+        panelClass: 'dialog-envio-tarea-alumno',
+        disableClose: true,
       });
+
+      dialogRef
+        .afterClosed()
+        .pipe(takeUntil(this.signal$))
+        .subscribe((result) => {
+          if (result != undefined && result.length > 0) {
+            this.ObtenerActividadesRecursoSesionAlumno(
+              this.sesiones[indexSesion].idSesion,
+              indexSesion
+            );
+          }
+        });
+    }
   }
   EnviarCuestionario(
     indexSesion: number,
@@ -390,11 +382,10 @@ export class ModuloSesionesOnlineComponent
         const dialogRef = this.dialog.open(EnvioCuestionarioComponent, {
           width: '1000px',
           data: {
-            cuestionario:
-              this.sesiones[indexSesion].cuestionario[index],
+            cuestionario: this.sesiones[indexSesion].cuestionario[index],
             index: index,
             IdMatriculaCabecera: this.IdMatriculaCabecera,
-            CodigoIsoPaisWebex:this.CodigoIsoPaisWebex,
+            CodigoIsoPaisWebex: this.CodigoIsoPaisWebex,
           },
           panelClass: 'dialog-envio-cuestionario-alumno',
           disableClose: true,
@@ -410,22 +401,19 @@ export class ModuloSesionesOnlineComponent
                 indexSesion
               );
             } else {
-              this.sesiones[indexSesion].cuestionario[index] =
-                JSON.parse(json);
+              this.sesiones[indexSesion].cuestionario[index] = JSON.parse(json);
             }
           });
       }
     } else {
-      var json = JSON.stringify(
-        this.sesiones[indexSesion].cuestionario[index]
-      );
+      var json = JSON.stringify(this.sesiones[indexSesion].cuestionario[index]);
       const dialogRef = this.dialog.open(EnvioCuestionarioComponent, {
         width: '1000px',
         data: {
           cuestionario: this.sesiones[indexSesion].cuestionario[index],
           index: index,
           IdMatriculaCabecera: this.IdMatriculaCabecera,
-          CodigoIsoPaisWebex:this.CodigoIsoPaisWebex,
+          CodigoIsoPaisWebex: this.CodigoIsoPaisWebex,
         },
         panelClass: 'dialog-envio-cuestionario-alumno',
         disableClose: true,
@@ -441,8 +429,7 @@ export class ModuloSesionesOnlineComponent
               indexSesion
             );
           } else {
-            this.sesiones[indexSesion].cuestionario[index] =
-              JSON.parse(json);
+            this.sesiones[indexSesion].cuestionario[index] = JSON.parse(json);
           }
         });
     }
@@ -460,8 +447,7 @@ export class ModuloSesionesOnlineComponent
       });
     });
   }
-  Onplay(e: any) {
-  }
+  Onplay(e: any) {}
   EnviarActividad(indexSesion: number, index: number) {
     const dialogRef = this.dialog.open(EnvioActividadComponent, {
       width: '1000px',
@@ -488,9 +474,11 @@ export class ModuloSesionesOnlineComponent
   }
   ObtenerDatosZonaHoraria() {
     this.ZonaHorariaUsuario = Intl.DateTimeFormat().resolvedOptions().timeZone;
-    this.ZonaHorariaOrigenWebex = moment.tz.zonesForCountry(this.CodigoIsoPaisWebex);
+    this.ZonaHorariaOrigenWebex = moment.tz.zonesForCountry(
+      this.CodigoIsoPaisWebex
+    );
     this.ZonaHorariaOrigenWebex = this.ZonaHorariaOrigenWebex[0];
-    console.log('ZonaHorariaUsuario',this.ZonaHorariaUsuario)
-    console.log('ZonaHorariaOrigenWebex',this.ZonaHorariaOrigenWebex)
+    console.log('ZonaHorariaUsuario', this.ZonaHorariaUsuario);
+    console.log('ZonaHorariaOrigenWebex', this.ZonaHorariaOrigenWebex);
   }
 }

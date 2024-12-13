@@ -31,7 +31,7 @@ export class EnvioTareaComponent implements OnInit ,OnDestroy {
       Usuario: '',
       IdMatriculaCabecera:0,
       IdPwPEspecificoSesionTarea:0,
-      // FechaEnvio:''
+      FechaEnvio:''
     }
     public selectedFiles?: FileList;
     public nombrefile='Ningún archivo seleccionado'
@@ -96,8 +96,8 @@ export class EnvioTareaComponent implements OnInit ,OnDestroy {
     this.BotonEnvioActivo=false;
     this.ObtenerDatosZonaHoraria();
     let HoraWebexOriginal = moment.tz(new Date(), this.ZonaHorariaOrigenWebex);
-    // this.json.FechaEnvio=HoraWebexOriginal.format('YYYY-MM-DDTHH:mm:ss.SSS');
-    // console.log(this.json)
+    this.json.FechaEnvio=HoraWebexOriginal.format('YYYY-MM-DDTHH:mm:ss.SSS');
+    console.log(this.json)
     this._PEspecificoEsquemaService.AgregarPEspecificoSesionTareaAlumno(this.json).pipe(takeUntil(this.signal$))
     .subscribe({
       next: (x) => {
