@@ -289,12 +289,12 @@ export class HeaderComponent implements OnInit,OnChanges,OnDestroy {
           style: { 'font-weight': 'bold' },
         });
         if (this.CodigoIso.toLowerCase() == 'co') {
-          this.expandibles[1].Nombre = 'Educación para el Trabajo';
+          this.expandibles[5].Nombre = 'Educación para el Trabajo';
         } else {
-          this.expandibles[1].Nombre = 'Carreras Profesionales';
+          this.expandibles[5].Nombre = 'Carreras Profesionales';
         }
-        this.expandibles[1].estatus = true;
-        this.expandibles[1].data = this.carreras;
+        this.expandibles[5].estatus = true;
+        this.expandibles[5].data = this.carreras;
         this._HelperService.enviarStringCarrera(this.expandibles[1].Nombre);
       },
       error: (x) => {
@@ -325,9 +325,9 @@ export class HeaderComponent implements OnInit,OnChanges,OnDestroy {
             Url: '/tecnicos-productivos',
             style: { 'font-weight': 'bold' },
           });
-          this.expandibles[2].estatus = true;
-          this.expandibles[2].data = this.tecnica;
-          this._HelperService.enviarStringEducacion(this.expandibles[2].Nombre);
+          this.expandibles[1].estatus = true;
+          this.expandibles[1].data = this.tecnica;
+          this._HelperService.enviarStringEducacion(this.expandibles[1].Nombre);
         }else{
           this.tecnica=[]
         }
@@ -343,16 +343,16 @@ export class HeaderComponent implements OnInit,OnChanges,OnDestroy {
     if (this._HeaderPermissionsService.ValidateCarrerasTecnicas(this.CodigoIso)) {
       this.GetEducacionTecnica();
     } else {
-      this.expandibles[2].estatus = false;
+      this.expandibles[1].estatus = false;
       this._HelperService.enviarStringEducacion('');
     }
 
-    if (this._HeaderPermissionsService.ValidateCarreras(this.CodigoIso)) {
-      this.GetCarrerasProfesionales();
-    } else {
-      this.expandibles[1].estatus = false;
-      this._HelperService.enviarStringCarrera('');
-    }
+    // if (this._HeaderPermissionsService.ValidateCarreras(this.CodigoIso)) {
+    //   this.GetCarrerasProfesionales();
+    // } else {
+    //   this.expandibles[5].estatus = false;
+    //   this._HelperService.enviarStringCarrera('');
+    // }
   }
   ChangePais(e: any) {
     this._SessionStorageService.SessionSetValue('ISO_PAIS', e);

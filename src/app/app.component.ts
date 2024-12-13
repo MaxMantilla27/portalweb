@@ -44,11 +44,11 @@ export class AppComponent implements OnInit,AfterViewInit ,OnDestroy {
       data: [],
       estatus: true,
     },
-    {
-      Nombre: 'Carreras Profesionales',
-      data: [],
-      estatus: false,
-    },
+    // {
+    //   Nombre: 'Carreras Profesionales',
+    //   data: [],
+    //   estatus: false,
+    // },
     {
       Nombre: 'Educación Técnica',
       data: [],
