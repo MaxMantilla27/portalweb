@@ -19,10 +19,11 @@ export class FooterComponent implements OnInit {
 
   ngOnInit(): void {
     this.servicios = [
+      /*
       {
         title: 'Carreras Profesionales',
         route: '/carreras-profesionales'
-      },
+      },*/
 
       // {
       //   title: 'Servicios Corporativos',

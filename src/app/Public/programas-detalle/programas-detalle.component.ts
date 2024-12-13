@@ -466,6 +466,10 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
           console.log(x);
 
           if (x.programaCabeceraDetalleDTO == null) {
+
+            this._router.navigate(['error404']);
+            return;
+          }else if (x.programaCabeceraDetalleDTO.areaCapacitacion == "Instituto" ){
             this._router.navigate(['error404']);
             return;
           }
