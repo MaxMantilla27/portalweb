@@ -245,14 +245,20 @@ export class BlogComponent implements OnInit {
       next:(x)=>{
         console.log(x)
         this.tags=x.listaTagDTO
-        if (this.tags != null) {
-          if (x.codigo != null) {
-            x.codigo='/tag/'+x.codigo
-          }else{
-            x.codigo='/error404'
+        
+          if(this.tags!=null){
+            this.tags.forEach((x) => {
+
+              //x.codigo = '/tag/' + x.codigo;
+              if (x.codigo != null) {
+                x.codigo='/tag/'+x.codigo
+              }else{
+                x.codigo='/error404'
+              }
+            });
           }
           
-        }
+        
       }
     })
   }
