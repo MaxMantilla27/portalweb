@@ -241,7 +241,7 @@ export class CursoNotasComponent implements OnInit,OnDestroy {
           }
           this._SessionStorageService.SessionSetValue('PromedioFinalCurso',this.PromedioFinal.toString());
           console.log('Este es el promedio final',this.PromedioFinal)
-        }, 4000);
+        }, 6000);
 
       },
 

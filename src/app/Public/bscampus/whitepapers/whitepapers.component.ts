@@ -43,7 +43,7 @@ export class WhitepapersComponent implements OnInit,OnDestroy {
     private _SnackBarServiceService:SnackBarServiceService,
     private _HelperServiceP:Help,
     private _SeoService:SeoService,
-    private title:Title,
+    private titleSeo:Title,
     private router:Router
 
   ) {}
@@ -187,6 +187,7 @@ export class WhitepapersComponent implements OnInit,OnDestroy {
         if(x.articuloDetalleHomeDTO!=undefined && x.articuloDetalleHomeDTO.parametroSeo!=undefined){
           this.whitePapersisnull = false;
           var metas=x.articuloDetalleHomeDTO.parametroSeo;
+          console.log('METAS',metas)
           if(metas.length>0){
 
             let mt=metas.find((par:any)=>par.nombre=='Titulo Pestaña')!=undefined?
@@ -198,10 +199,10 @@ export class WhitepapersComponent implements OnInit,OnDestroy {
             let k=metas.find((par:any)=>par.nombre=='keywords')!=undefined?
                       metas.find((par:any)=>par.nombre=='keywords').descripcion:undefined
             console.log(mt)
-            this.title.setTitle(mt);
+            this.titleSeo.setTitle(t);
 
             this._SeoService.generateTags({
-              title:t,
+              title:mt,
               slug:this.router.url.toString(),
               description:d,
               keywords:k,
@@ -243,7 +244,7 @@ export class WhitepapersComponent implements OnInit,OnDestroy {
             }else{
               x.codigo='/error404'
             }
-            
+
           }
 
 
