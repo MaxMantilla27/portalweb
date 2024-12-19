@@ -18,6 +18,7 @@ import {timer} from 'rxjs'
 import { SnackBarServiceService } from 'src/app/Core/Shared/Services/SnackBarService/snack-bar-service.service';
 import { FormaPagoService } from 'src/app/Core/Shared/Services/FormaPago/forma-pago.service';
 import { FacebookPixelService } from 'src/app/Core/Shared/Services/FacebookPixel/facebook-pixel.service';
+import { RegistroVisitaPortalService } from 'src/app/Core/Shared/Services/RegistroVisitaPortal/registro-visita-portal.service';
 declare const fbq:any;
 declare const gtag:any;
 declare const lintrk: any;
@@ -31,6 +32,7 @@ export class RegistrarseComponent implements OnInit,OnDestroy {
   @ViewChild(FormularioComponent)
   form!: FormularioComponent;
   isBrowser: boolean;
+
   constructor(
     private _AccountService: AccountService,
     private _SessionStorageService: SessionStorageService,
@@ -45,6 +47,7 @@ export class RegistrarseComponent implements OnInit,OnDestroy {
 
     private _FacebookPixelService:FacebookPixelService,
     private _FormaPagoService:FormaPagoService,
+    private _RegistroVisitaPortalService: RegistroVisitaPortalService,
   ) {
     this.isBrowser = isPlatformBrowser(platformId); {}
   }
@@ -110,6 +113,7 @@ export class RegistrarseComponent implements OnInit,OnDestroy {
     this.meta.addTag({name: 'author', content: 'BSG Institute'})
     this.AddField();
     this.ObtenerCombosPortal();
+    this.actualizarDatosRegistro();
   }
   Register(value: any) {
     if (!this.formVal) {
@@ -467,4 +471,40 @@ export class RegistrarseComponent implements OnInit,OnDestroy {
       style:'font-size: 12px;margin-bottom: 20px;'
     });
   }
+
+  actualizarDatosRegistro() {
+    const DatosFormularioProgresivo = localStorage.getItem('DatosFormularioProgresivo');
+    if (DatosFormularioProgresivo && DatosFormularioProgresivo !== '') {
+      const datos = JSON.parse(DatosFormularioProgresivo);
+      if (datos.nombre != null && datos.nombre.trim() !== '') {
+        this.register.Nombres = datos.nombre;
+      }
+      if (datos.apellido != null && datos.apellido.trim() !== '') {
+        this.register.Apellidos = datos.apellido;
+      }
+      if (datos.correo != null && datos.correo.trim() !== '') {
+        this.register.Email = datos.correo;
+      }
+      if (datos.idPais != null && datos.idPais !== undefined && datos.idPais !== '') {
+        this.register.IdPais = datos.idPais;
+      }
+      if (datos.telefono != null && datos.telefono.trim() !== '') {
+        this.register.Movil = datos.telefono;
+      }
+      if (datos.idCargo != null && datos.idCargo !== undefined && datos.idCargo !== '') {
+        this.register.IdCargo = datos.idCargo;
+      }
+      if (datos.idAreaTrabajo != null && datos.idAreaTrabajo !== undefined && datos.idAreaTrabajo !== '') {
+        this.register.IdAreaTrabajo = datos.idAreaTrabajo;
+      }
+      if (datos.idAreaFormacion != null && datos.idAreaFormacion !== undefined && datos.idAreaFormacion !== '') {
+        this.register.IdAreaFormacion = datos.idAreaFormacion;
+      }
+      if (datos.idIndustria != null && datos.idIndustria !== undefined && datos.idIndustria !== '') {
+        this.register.IdIndustria = datos.idIndustria;
+      }
+      console.log('Datos actualizados en el registro:', this.register);
+    }
+  }
+
 }

@@ -125,18 +125,22 @@ export class FormularioComponent implements OnChanges, OnInit,OnDestroy {
   ngOnInit(): void {
     this._HelperService.recibirDataPais.pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
-        console.log(x)
         if(this.paise.length==0){
           this.paise=x;
           var codigoISo=this._SessionStorageService.SessionGetValue('ISO_PAIS');
-
+          console.log(x)
           //this.paisSelect=this.paise.find(x=>x.codigoIso==codigoISo).idPais;
           var storageAlumno = this._SessionStorageService.SessionGetValue('DatosFormulario');
-          console.log(storageAlumno)
+          var localAlumnoProgresivo = localStorage.getItem('DatosFormularioProgresivo');
+          const datos = JSON.parse(localAlumnoProgresivo!);
           if (storageAlumno == undefined || storageAlumno == null || storageAlumno == '') {
             this.paisSelect=this.paise.find(x=>x.codigoIso==codigoISo).idPais;
           }
+          if (localAlumnoProgresivo !== '') {
+            this.paisSelect = datos.idPais
+          }
           var index=0
+          var numTelefono = datos.telefono;
           this.fiels.forEach((f:any) =>{
             if(f.tipo=='phone' && this.userForm){
               this.validatePais(index,f.nombre)
@@ -146,6 +150,15 @@ export class FormularioComponent implements OnChanges, OnInit,OnDestroy {
               if(campo?.value!=undefined){
                 campo?.setValue(this.paisSelect);
                 this.OnSelect.emit({Nombre:f.nombre,value:this.paisSelect})
+              }
+            }
+            if (numTelefono !== null && numTelefono !== '' && numTelefono !== undefined) {
+              const fieldsArray = (this.userForm.get('Fields') as FormArray).controls;
+              const mobileIndex = fieldsArray.findIndex((element: any) => Object.keys(element?.value)[0] === 'Movil');
+              if (mobileIndex != -1){
+                this.validaPrefijoTel();
+                numTelefono = this.numeroTelefonoSinPrefijo(numTelefono);
+                (<FormArray>this.userForm.get('Fields')).controls[mobileIndex].get("Movil")?.setValue(this.pref+numTelefono);
               }
             }
 
@@ -164,10 +177,16 @@ export class FormularioComponent implements OnChanges, OnInit,OnDestroy {
                 var codigoISo=this._SessionStorageService.SessionGetValue('ISO_PAIS');
                 //this.paisSelect=this.paise.find(x=>x.codigoIso==codigoISo).idPais;
                 var storageAlumno = this._SessionStorageService.SessionGetValue('DatosFormulario');
+                var localAlumnoProgresivo = localStorage.getItem('DatosFormularioProgresivo');
+                const datos = JSON.parse(localAlumnoProgresivo!);
                 if (storageAlumno == undefined || storageAlumno == null || storageAlumno == '') {
                   this.paisSelect=this.paise.find(x=>x.codigoIso==codigoISo).idPais;
                 }
+                if (localAlumnoProgresivo !== '') {
+                  this.paisSelect = datos.idPais
+                }
                 var index=0
+                var numTelefono = datos.telefono;
                 this.fiels.forEach((f:any) =>{
                   if(f.tipo=='phone' && this.userForm){
                     this.validatePais(index,f.nombre)
@@ -186,8 +205,15 @@ export class FormularioComponent implements OnChanges, OnInit,OnDestroy {
                     if (mobileIndex != -1){
                       (<FormArray>this.userForm.get('Fields')).controls[mobileIndex].get("Movil")?.setValue(this.pref+this.localidadAux);
                     }
-
-
+                  }
+                  if (numTelefono !== null && numTelefono !== '' && numTelefono !== undefined) {
+                    const fieldsArray = (this.userForm.get('Fields') as FormArray).controls;
+                    const mobileIndex = fieldsArray.findIndex((element: any) => Object.keys(element?.value)[0] === 'Movil');
+                    if (mobileIndex != -1){
+                      this.validaPrefijoTel();
+                      numTelefono = this.numeroTelefonoSinPrefijo(numTelefono);
+                      (<FormArray>this.userForm.get('Fields')).controls[mobileIndex].get("Movil")?.setValue(this.pref+numTelefono);
+                    }
                   }
                   const fieldsArrayPais = (this.userForm.get('Fields') as FormArray).controls;
                   const mobileIndexPais = fieldsArrayPais.findIndex((element: any) => Object.keys(element?.value)[0] === 'IdPais');
@@ -261,6 +287,12 @@ export class FormularioComponent implements OnChanges, OnInit,OnDestroy {
     if (mobileIndexPais != -1){
       (<FormArray>this.userForm.get('Fields')).controls[mobileIndexPais].get("IdPais")?.setValue(this.paisSelect);
     }
+    setTimeout(() => {
+      this.eliminaDatosFormularioProgresivo();
+    }, 2000);
+  }
+  eliminaDatosFormularioProgresivo() {
+    localStorage.removeItem('DatosFormularioProgresivo');
   }
   changeForm(){
     if(this.userForm!=undefined){
@@ -534,6 +566,18 @@ export class FormularioComponent implements OnChanges, OnInit,OnDestroy {
     }
     return '';
   }
+  validaPrefijoTel() {
+    this.pref=this.PrefPaises()==null?'':this.PrefPaises()+' ';
+  }
+  numeroTelefonoSinPrefijo (numTelefono: string): string {
+    const prefSinEspacios = this.pref.replace(/\s/g, "");
+    const longPrefTel = prefSinEspacios.length;
+    if (numTelefono.startsWith(prefSinEspacios)) {
+      return numTelefono.slice(longPrefTel);
+    } else {
+      return numTelefono;
+    }
+  }
   validatePais(i: number, val: string){
     var c=(<FormArray>this.userForm.get('Fields')).controls[i].get(val)?.value;
     var campo =c==null?'':c.toString();
@@ -549,7 +593,6 @@ export class FormularioComponent implements OnChanges, OnInit,OnDestroy {
     (<FormArray>this.userForm.get('Fields')).controls[i].get(val)?.clearValidators();
     if(this.min>0){
       this.max=this.MaxLongCelularPaises()==null?0:this.MaxLongCelularPaises();
-
       if(this.min>0){
         (<FormArray>this.userForm.get('Fields')).controls[i].get(val)?.addValidators([
           Validators.required,

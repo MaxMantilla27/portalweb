@@ -62,6 +62,7 @@ export class FormularioProgressiveProfilingComponent implements OnInit {
   auxTipoPrograma: string = "";
   auxNombrePrograma: string = "";
   auxCorreoCliente: string = "";
+  public datosUsuario: datosRegistroVisitaPortalDTO[] = [];
 
   usuarioWeb: string = '';
   id: number = 0;
@@ -598,8 +599,8 @@ export class FormularioProgressiveProfilingComponent implements OnInit {
         break;
       case 6:
         await this.guardaDatos(accion);
+        await this.consultarDatosUsuarioFomularioProgresivoCompleto();
         this.enviaAulaVirtual();
-        // this.abreFormularioRespuesta(this.id);
         this.cerrarFormulario();
         break;
 
@@ -689,7 +690,7 @@ export class FormularioProgressiveProfilingComponent implements OnInit {
   }
 
   enviaAulaVirtual(): void {
-    var token=this._SessionStorageService.validateTokken()
+    var token=this._SessionStorageService.validateTokken();
     if(token){
       this._AccountService.RegistroCursoAulaVirtualNueva(this.indicePrograma).pipe(takeUntil(this.signal$)).subscribe({
         next:x=>{
@@ -699,8 +700,35 @@ export class FormularioProgressiveProfilingComponent implements OnInit {
     }
     else{
       this._SessionStorageService.SessionSetValueSesionStorage("accesoPrueba",this.indicePrograma.toString());
-      this._router.navigate(['/login']);
+      this._router.navigate(['/Registrarse']);
     }
+  }
+
+  consultarDatosUsuarioFomularioProgresivoCompleto(): Promise<void> {
+    return new Promise((resolve, reject) => {
+      this._RegistroVisitaPortalService.ObtenerListaRegistroVisitaPortalPorUsuarioWeb(this.usuarioWeb)
+        .pipe(takeUntil(this.signal$))
+        .subscribe({
+          next: (respuesta) => {
+            if (respuesta && respuesta.datosRegistroVisitaPortal && respuesta.datosRegistroVisitaPortal.length > 0) {
+              this.datosUsuario = respuesta.datosRegistroVisitaPortal[0];
+              this.guardarFormularioProgresivoCompletoLocalStorage();
+            } else {
+              this.datosUsuario = [];
+            }
+            resolve();
+          },
+          error: (error) => {
+            console.error('Error al consultar datos del usuario:', error);
+            reject(error);
+          },
+        });
+    });
+  }
+
+  guardarFormularioProgresivoCompletoLocalStorage(): void {
+    const valoresFormulario = this.datosUsuario;
+    localStorage.setItem('DatosFormularioProgresivo', JSON.stringify(valoresFormulario));
   }
 
   abreFormularioRespuesta(formularioInicial: number) {
@@ -798,7 +826,7 @@ export class FormularioProgressiveProfilingComponent implements OnInit {
     .catch(error => {
         console.error('Error al consultar datos del usuario:', error);
     });
-}
+  }
 
 
   cerrarFormulario(): void {
@@ -861,4 +889,16 @@ interface InsertaRegistroVisitaPortalDTO {
     areaTrabajo: boolean;
     industria: boolean;
   };
+}
+
+interface datosRegistroVisitaPortalDTO {
+  correo?: string;
+  nombre?: string;
+  apellido?: string;
+  idPais?: number;
+  telefono?: string;
+  idCargo?: number;
+  idAreaFormacion?: number;
+  idAreaTrabajo?: number;
+  idIndustria?: number;
 }
