@@ -128,13 +128,15 @@ export class AppComponent implements OnInit,AfterViewInit ,OnDestroy {
     //     localStorage.removeItem('tabsOpen');
     //   }
     // });
-    window.addEventListener('pagehide', () => {
+
+    window.addEventListener('unload', () => {
       let currentTabsOpen = parseInt(localStorage.getItem('tabsOpen') || '0', 10);
       localStorage.setItem('tabsOpen', (currentTabsOpen - 1).toString());
       if (currentTabsOpen <= 1) {
         localStorage.removeItem('tabsOpen');
       }
     });
+
     this.intervaloTiempoFormularioProgresivo = setInterval(() => {
       this.usuarioWeb = this._SessionStorageService.SessionGetValue('usuarioWeb');
       if (this.usuarioWeb && this.usuarioWeb.trim() !== '') {
