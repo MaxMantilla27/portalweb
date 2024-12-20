@@ -57,8 +57,8 @@
                             matInput
                             [type]="campo.tipo"
                             [value]="campo.id === 'telefono' ? (campo.valorDefecto) : ''"
-                            (input)="campo.id === 'telefono' ? onPhoneInput($event) : null"
-                            inputmode="numeric"/>
+                            [attr.inputmode]="campo.id === 'telefono' ? 'numeric' : null"
+                            (input)="campo.id === 'telefono' ? onPhoneInput($event) : null"/>
                         <mat-select
                             *ngIf="campo.tipoControl === 'combo'"
                             formControlName="{{ campo.id }}"
