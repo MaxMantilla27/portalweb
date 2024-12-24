@@ -30,9 +30,10 @@
       <span>Atras</span>
     </div>-->
     <div *ngIf="showConfirmationDialog" class="confirmation-dialog-atras">
-      <p>¿Deseas salir de esta sesión de chat? La conversación se dará por finalizada.</p>
-      <button style="background: #FF4E56;color:white" (click)="confirmAction()">Sí, retroceder</button>
-      <button style="background: transparent;color:#033DAB;border: 1px solid #033DAB;"(click)="cancelAction()">Cancelar</button>
+      <!-- <p>¿Deseas salir de esta sesión de chat? La conversación se dará por finalizada.</p> -->
+      <p>Tu sesión de chat se cerrará por inactividad. Gracias por conversar con nosotros. ¡Te esperamos nuevamente cuando lo necesites!</p>
+      <button style="background: #FF4E56;color:white" (click)="confirmAction()">Aceptar</button>
+      <!-- <button style="background: transparent;color:#033DAB;border: 1px solid #033DAB;"(click)="cancelAction()">Cancelar</button> -->
     </div>
     <div *ngIf="!showConfirmationDialog" #contenidoMsj class="contentChatMsj" (click)="marcarChatAgentecomoleido()">
       <div class="mensajeDefecto">Chat iniciado</div>

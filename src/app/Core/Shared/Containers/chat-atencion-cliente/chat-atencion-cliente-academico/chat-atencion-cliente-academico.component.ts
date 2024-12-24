@@ -23,6 +23,7 @@ import { environment } from 'src/environments/environment';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ChatAtencionClienteService } from '../../../Services/ChatAtencionCliente/chat-atencion-cliente.service';
+import { ChatbotIAService } from '../../../Services/ChatbotIA/chatbot-ia.service';
 
 @Component({
   selector: 'app-chat-atencion-cliente-academico',
@@ -46,7 +47,8 @@ export class ChatAtencionClienteAcademicoComponent
     private _ActivatedRoute: ActivatedRoute,
     private _Router: Router,
     private sanitizer: DomSanitizer,
-    private _ChatAtencionClienteService: ChatAtencionClienteService
+    private _ChatAtencionClienteService: ChatAtencionClienteService,
+    private _ChatbotIAService: ChatbotIAService
   ) {
     this.storageEventListener = this.handleStorageEvent.bind(this);
     window.addEventListener('storage', this.storageEventListener);
@@ -155,14 +157,16 @@ export class ChatAtencionClienteAcademicoComponent
       }
     }
     //lo que estaba antes en el oninit
-    this.mensajesAnteriore=[]
-    console.log('idProgramageneral', this.idProgramageneral)
-    console.log('IdMatriculaCabecera', this.IdMatriculaCabecera)
+    this.mensajesAnteriore = [];
+    console.log('idProgramageneral', this.idProgramageneral);
+    console.log('IdMatriculaCabecera', this.IdMatriculaCabecera);
     console.log(this._Router.url.split('/'));
     this.ObtenerConfiguracionChat();
-    this._HelperService.recibirCombosPerfil.pipe(takeUntil(this.signal$)).subscribe({
+    this._HelperService.recibirCombosPerfil
+      .pipe(takeUntil(this.signal$))
+      .subscribe({
         next: (x) => {
-          console.log('SEGUNDO HELPER')
+          console.log('SEGUNDO HELPER');
           var listprogramas = [9990, 9991, 9992];
           this.idProgramageneral =
             listprogramas[Math.floor(Math.random() * listprogramas.length)];
@@ -180,7 +184,10 @@ export class ChatAtencionClienteAcademicoComponent
           this.hubConnection = new signalR.HubConnectionBuilder()
             .withAutomaticReconnect()
             .configureLogging(signalR.LogLevel.Information)
-            .withUrl(this.urlSignal +'hubIntegraHub?idUsuario=11&&usuarioNombre=Anonimo&&rooms=633')
+            .withUrl(
+              this.urlSignal +
+                'hubIntegraHub?idUsuario=11&&usuarioNombre=Anonimo&&rooms=633'
+            )
             .build();
 
           this.hubConnection.serverTimeoutInMilliseconds = 300000;
@@ -205,9 +212,8 @@ export class ChatAtencionClienteAcademicoComponent
           this.onlineStatusAcademicoIdChatSession();
           this.ObtenerCoordinadorChat();
           this.VerificarChatFinalizado();
-      },
-    });
-
+        },
+      });
   }
 
   //---------------------------------------------------------------------------------------------------------
@@ -461,13 +467,13 @@ export class ChatAtencionClienteAcademicoComponent
           this.mensajesAnteriore = [];
           console.log(this.FechaRegistro);
           this.mensajesAnteriorePrevio.forEach((z: any) => {
-            if (new Date(z.Fecha )>= new Date(this.FechaRegistro)) {
+            if (new Date(z.Fecha) >= new Date(this.FechaRegistro)) {
               this.mensajesAnteriore.push(z);
             }
           });
         },
         complete: () => {
-          if (this.mensajesAnteriore.length==0){
+          if (this.mensajesAnteriore.length == 0) {
             this.mensajesAnteriore.push({
               NombreRemitente: this.nombreAsesorSplit[0],
               Mensaje: 'Bienvenid@, ¿En qué puedo ayudarte?',
@@ -537,17 +543,30 @@ export class ChatAtencionClienteAcademicoComponent
       console.log('Nueva Funcion IdConnectionUser', id);
     });
   }
-
+  ReiniciarChat() {
+    this.showConfirmationDialog = true;
+  }
   addMessagePAcademico() {
+    let inactivityTimeout: any; // Variable para el temporizador de inactividad
+
+    const startInactivityTimer = () => {
+      clearTimeout(inactivityTimeout); // Reinicia el temporizador si ya estaba corriendo
+      console.log('INICIA EL CONTEO');
+      inactivityTimeout = setTimeout(() => {
+        this.ReiniciarChat(); // Llama a la función cerrar() si pasan 3 minutos sin respuesta
+      }, 3 * 60 * 1000); // 3 minutos
+    };
+
     this.hubConnection.on(
       'addMessagePAcademico',
       (from: any, msg: any, flagfrom: any) => {
         if (flagfrom == 2) {
-          //es asesor
+          // Es asesor
           let audio = new Audio(
             'https://integrav4.bsginstitute.com/Content/sounds/newmsg.mp3'
           );
           audio.play();
+
           if (
             this.archivoenviado != undefined &&
             this.archivoenviado != null &&
@@ -564,8 +583,13 @@ export class ChatAtencionClienteAcademicoComponent
             });
           }
           this.scrollAbajo(true, 4);
+
+          // Inicia o reinicia el temporizador de inactividad
+          startInactivityTimer();
         }
+
         if (flagfrom == 1) {
+          // Es visitante
           this.mensajesAnteriore.push({
             NombreRemitente: this.nombres,
             Mensaje: msg,
@@ -573,11 +597,16 @@ export class ChatAtencionClienteAcademicoComponent
             estadoEnviado: true,
           });
           this.scrollAbajo(true, 5);
+
+          // Detiene el temporizador porque el visitante respondió
+          clearTimeout(inactivityTimeout);
         }
       }
     );
+
     this.scrollAbajo(true, 6);
   }
+
   eliminaridchat() {
     this.hubConnection.on('eliminaridchat', (x: any) => {
       // this.ChatID = null;
@@ -764,13 +793,25 @@ export class ChatAtencionClienteAcademicoComponent
     this.RegresarChatAcademico.emit(true);
   }
   confirmAction() {
-    this.showConfirmationDialog = false;
-    this.RegresarChatAcademico.emit(true);
+    this._SessionStorageService.SessionSetValue('ReinicioChatBot', 'true');
+    this._ChatbotIAService
+      .CerrarRegistroChatFormulario(this.IdMatriculaCabecera)
+      .pipe(takeUntil(this.signal$))
+      .subscribe({
+        next: (x) => {
+          console.log(x);
+        },
+        complete: () => {
+          setTimeout(() => {
+            window.location.reload();
+          }, 100);
+        },
+      });
   }
 
-  cancelAction() {
-    this.showConfirmationDialog = false;
-  }
+  // cancelAction() {
+  //   this.showConfirmationDialog = false;
+  // }
   scrollAbajo(smooth: boolean = true, id: number) {
     console.log('Valor de scroll', id);
     setTimeout(() => {

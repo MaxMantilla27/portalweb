@@ -84,6 +84,7 @@ export class ChatAtencionClienteChatComponent implements OnInit,OnDestroy,OnChan
     id:"",
     idAlumno:0
   }
+  public ReiniciarFlujoChat=false;
   ngOnDestroy(): void {
     this.signal$.next(true)
     this.signal$.complete()
@@ -309,7 +310,21 @@ export class ChatAtencionClienteChatComponent implements OnInit,OnDestroy,OnChan
       this.mensajeStateAsesor='no estoy disponible. Por favor deja un mensaje'
     }
   }
+  ReiniciarChat(){
+    console.log('REINICIA EL CHAAAAAAAAAAAT')
+    this.showConfirmationDialog = true;
+    this.ReiniciarFlujoChat=true;
+  }
   addMessageP(){
+    let inactivityTimeout: any; // Variable para el temporizador de inactividad
+
+    const startInactivityTimer = () => {
+      clearTimeout(inactivityTimeout); // Reinicia el temporizador si ya estaba corriendo
+      console.log('INICIA EL CONTEO');
+      inactivityTimeout = setTimeout(() => {
+        this.ReiniciarChat(); // Llama a la función cerrar() si pasan 3 minutos sin respuesta
+      }, 3 * 60 * 1000); // 3 minutos
+    };
     this.hubConnection.on("addMessageP",(from:any, msg:any, flagfrom:any)=>{
 
       if (flagfrom == 2)//es asesor
@@ -321,6 +336,8 @@ export class ChatAtencionClienteChatComponent implements OnInit,OnDestroy,OnChan
           mensaje:msg,
           idRemitente:"asesor"
         })
+        // Inicia o reinicia el temporizador de inactividad
+        startInactivityTimer();
       }
       if(flagfrom == 1){
         this.mensajesAnteriore.push({
@@ -329,6 +346,8 @@ export class ChatAtencionClienteChatComponent implements OnInit,OnDestroy,OnChan
           idRemitente:"visitante"
         })
         this.NroMensajesSinLeer++;
+        // Detiene el temporizador porque el visitante respondió
+        clearTimeout(inactivityTimeout);
       }
 
       this.scrollAbajo(true,3)
@@ -501,8 +520,15 @@ export class ChatAtencionClienteChatComponent implements OnInit,OnDestroy,OnChan
     this.RegresarChatAtcEnviado.emit(true);  // Aquí puedes emitir true o false según necesites
   }
   confirmAction() {
-    this.showConfirmationDialog = false;
+    this.showConfirmationDialog = true;
     this.RegresarChatAtcEnviado.emit(true);
+  }
+  confirmActionReset() {
+    console.log('Confirmoooooooooreseteará')
+    this._SessionStorageService.SessionSetValue('ReinicioChatBot', 'true');
+    setTimeout(() => {
+      window.location.reload()
+    }, 100);
   }
 
   cancelAction() {

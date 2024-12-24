@@ -470,13 +470,14 @@ export class ChatbotIaComponent implements OnInit {
       });
   }
   CerrarRegistroHiloChat(IdChatbotIAPortalHiloChat: number) {
+    let IdContactoPortalSegmento = this._SessionStorageService.SessionGetValue('usuarioWeb');
     this.CargandoInformacion = true;
     if (IdChatbotIAPortalHiloChat == 0) {
       IdChatbotIAPortalHiloChat =
         this.registroChatIA.IdChatbotIAPortalHiloChat?? 0;
     }
     this.chatbotIAService
-      .CerrarRegistroHiloChat(IdChatbotIAPortalHiloChat)
+      .CerrarRegistroHiloChat(IdChatbotIAPortalHiloChat,IdContactoPortalSegmento)
       .subscribe({
         next: (response) => {
           console.log(response);

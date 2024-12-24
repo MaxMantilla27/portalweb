@@ -68,9 +68,9 @@ export class ChatbotIAService {
       return EMPTY;
     }
   }
-  public CerrarRegistroHiloChat(IdChatbotIAPortalHiloChat:number):Observable<any>{
+  public CerrarRegistroHiloChat(IdChatbotIAPortalHiloChat:number,IdContactoPortalSegmento:string):Observable<any>{
     if(this.isBrowser){
-      return this.http.post<any>(this.urlBase+'/CerrarRegistroHiloChat?IdChatbotIAPortalHiloChat='+IdChatbotIAPortalHiloChat,{});
+      return this.http.post<any>(this.urlBase+'/CerrarRegistroHiloChat?IdChatbotIAPortalHiloChat='+IdChatbotIAPortalHiloChat+'&IdContactoPortalSegmento='+IdContactoPortalSegmento,{});
     }else{
       return EMPTY;
     }
@@ -86,6 +86,13 @@ export class ChatbotIAService {
   public ObtenerCursosAlumnoMatriculado(IdAlumno:number):Observable<any>{
     if(this.isBrowser){
       return this.http.get<any>(this.urlBase+'/ObtenerCursosAlumnoMatriculado?IdAlumno='+IdAlumno);
+    }else{
+      return EMPTY;
+    }
+  }
+  public CerrarRegistroChatFormulario(IdMatriculaCabecera:number):Observable<any>{
+    if(this.isBrowser){
+      return this.http.post<any>(this.urlBase+'/CerrarRegistroChatFormulario?IdMatriculaCabecera='+IdMatriculaCabecera,{});
     }else{
       return EMPTY;
     }
