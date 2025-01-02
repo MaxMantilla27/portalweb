@@ -40,7 +40,7 @@ export class FormularioProgressiveProfilingComponent implements OnInit {
     this.obtenerOpcionesCombos();
     window.addEventListener('beforeunload', this.handleBeforeUnload.bind(this));
     const currentUrl = this._router.url;
-    console.log('Ruta actual: ', currentUrl);
+    localStorage.setItem('RutaActual', JSON.stringify(currentUrl));
   }
 
   ngOnDestroy(): void {
@@ -418,9 +418,9 @@ export class FormularioProgressiveProfilingComponent implements OnInit {
 
   get mensajeCabecera(): string {
     if (this.cabeceraMensajeIndexCurso) {
-      return this.tipoPagina === 'index' 
-        ? this.cabeceraMensajeTexto ?? '' 
-        : this.cabeceraMensajeTextoCurso ?? '';
+      return this.tipoPagina === 'curso' 
+        ? this.cabeceraMensajeTextoCurso ?? '' 
+        : this.cabeceraMensajeTexto ?? '';
     }
     return this.cabeceraMensajeTexto ?? '';
   }
@@ -556,6 +556,7 @@ export class FormularioProgressiveProfilingComponent implements OnInit {
   }
 
   async ejecutarFormularioProgresivo(accion: number): Promise<void> {
+    this.formularioProgresivoMostradoLocal();
     switch (accion) {
       case 1:
         try {
@@ -600,13 +601,19 @@ export class FormularioProgressiveProfilingComponent implements OnInit {
       case 6:
         await this.guardaDatos(accion);
         await this.consultarDatosUsuarioFomularioProgresivoCompleto();
+        this.guardaFormularioProgresivoActivoLocalStorage();
         this.enviaAulaVirtual();
+        this.abreFormularioRespuesta(this.id);
         this.cerrarFormulario();
         break;
 
       default:
         console.warn('Acción no definida:', accion);
     }
+  }
+
+  formularioProgresivoMostradoLocal() {
+    localStorage.setItem('formularioProgresivoMostrado', JSON.stringify(true));
   }
 
   guardaDatos(accion: number): Promise<void> {
@@ -687,6 +694,11 @@ export class FormularioProgressiveProfilingComponent implements OnInit {
     } else {
       console.warn('No hay texto para copiar.');
     }
+  }
+
+  guardaFormularioProgresivoActivoLocalStorage() {
+    const formularioProgresivoActivo = 'Y';
+    localStorage.setItem('formularioProgresivo Activo', JSON.stringify(formularioProgresivoActivo));
   }
 
   enviaAulaVirtual(): void {

@@ -36,6 +36,12 @@ export class LandingPageInterceptorComponent implements OnInit,OnDestroy {
   public nombreProgramaLandingPage=''
   public tecnicas=[7758,7757]
   ngOnInit(): void {
+    localStorage.setItem('formularioProgresivoPublicidad', JSON.stringify(true));
+
+    window.addEventListener('unload', () => {
+      localStorage.removeItem('formularioProgresivoPublicidad');
+    });
+
     this.activatedRoute.queryParams.pipe(takeUntil(this.signal$)).subscribe({
       next:(x)=>{
         console.log(x)
@@ -112,6 +118,10 @@ export class LandingPageInterceptorComponent implements OnInit,OnDestroy {
     });
 
     dialogRef.afterClosed().pipe(takeUntil(this.signal$)).subscribe((result) => {
+    });
+
+    dialogRef.beforeClosed().subscribe(() => {
+      localStorage.removeItem('formularioProgresivoPublicidad');
     });
   }
 

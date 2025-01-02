@@ -25,6 +25,7 @@ import { isPlatformBrowser } from '@angular/common';
 import { DatosFormularioDTO } from 'src/app/Core/Models/DatosFormularioDTO';
 import { ChatEnLineaService } from 'src/app/Core/Shared/Services/ChatEnLinea/chat-en-linea.service';
 import { FacebookPixelService } from 'src/app/Core/Shared/Services/FacebookPixel/facebook-pixel.service';
+import { FormularioProgressiveProfilingService } from 'src/app/Core/Shared/Services/FormularioProgressiveProfiling/formulario-progressive-profiling.service';
 declare const fbq:any;
 declare const gtag:any;
 declare const lintrk: any;
@@ -39,6 +40,8 @@ export class BlogComponent implements OnInit {
   @ViewChild(FormularioComponent)
   form!: FormularioComponent;
   isBrowser: boolean;
+  private intervaloEvaluaPublicidad: any = null;
+
   constructor(
     private activatedRoute: ActivatedRoute,
     private _ArticuloService: ArticuloService,
@@ -55,7 +58,8 @@ export class BlogComponent implements OnInit {
     @Inject(PLATFORM_ID) platformId: Object,
     private router:Router,
     private _ChatEnLineaService:ChatEnLineaService,
-    private _FacebookPixelService:FacebookPixelService
+    private _FacebookPixelService:FacebookPixelService,
+    private formularioService: FormularioProgressiveProfilingService
   ) {
     this.isBrowser = isPlatformBrowser(platformId);
   }
@@ -133,6 +137,7 @@ export class BlogComponent implements OnInit {
     idIndustria:undefined,
   }
   ngOnInit(): void {
+    this.tiempoMostrarFormularioProgresivo();
     this.activatedRoute.params.pipe(takeUntil(this.signal$)).subscribe({
       next: (x) => {
         var whitepaper = x['blog'].split('-');
@@ -160,6 +165,26 @@ export class BlogComponent implements OnInit {
     this.ListTagArticuloRelacionadoPorIdWeb();
     this.AddFields();
     this.ObtenerCombosPortal();
+  }
+
+  tiempoMostrarFormularioProgresivo() {
+    var formularioProgresivoPublicidad = JSON.parse(localStorage.getItem('formularioProgresivoPublicidad') || 'null');
+    var tiempoSesion = JSON.parse(localStorage.getItem('tiempoBlogsWhite') || 'null');
+    if (formularioProgresivoPublicidad === true ) { //Llega por publicidad, bucle para evaluar cuándo se cierra formulario de publicidad
+      tiempoSesion = JSON.parse(localStorage.getItem('tiempoProgramasPublicidad') || 'null');
+      this.intervaloEvaluaPublicidad = setInterval(() => {
+        formularioProgresivoPublicidad = JSON.parse(localStorage.getItem('formularioProgresivoPublicidad') || 'null');
+        if (formularioProgresivoPublicidad !== true) {
+          clearInterval(this.intervaloEvaluaPublicidad);
+          this.intervaloEvaluaPublicidad = null;
+          
+          this.formularioService.iniciarContador(tiempoSesion);
+        }
+      }, 1000);
+    }
+    else {
+      this.formularioService.iniciarContador(tiempoSesion);
+    }
   }
 
   ListArticuloProgramaRelacionado(id:number){

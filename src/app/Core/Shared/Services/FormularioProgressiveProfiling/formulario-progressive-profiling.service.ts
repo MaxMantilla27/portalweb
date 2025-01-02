@@ -8,9 +8,9 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root'
 })
 export class FormularioProgressiveProfilingService {
-
   isBrowser: boolean;
   public urlBase=environment.url_api+'FormularioProgresivo';
+  private intervaloTiempoLocal: any = null;
 
   constructor(
     private http: HttpClient,
@@ -25,6 +25,27 @@ export class FormularioProgressiveProfilingService {
     }else{
       return EMPTY;
     }
+  }
+
+  public iniciarContador(tiempoSesion: number): void {
+    this.detenerContador();
+    localStorage.setItem('tiempoformularioProgresivo', JSON.stringify(tiempoSesion));
+    this.intervaloTiempoLocal = setInterval(() => {
+      tiempoSesion -= 1;
+      localStorage.setItem('tiempoformularioProgresivo', JSON.stringify(tiempoSesion));
+      if (tiempoSesion < 0) {
+        this.detenerContador();
+        console.log('Contador finalizado');
+      }
+    }, 1000);
+    console.log('Contador iniciado con:', tiempoSesion);
+  }
+
+  public detenerContador(): void {
+    clearInterval(this.intervaloTiempoLocal);
+    this.intervaloTiempoLocal = null;
+    localStorage.removeItem('tiempoformularioProgresivo');
+    console.log('Contador detenido');
   }
 
 }

@@ -37,6 +37,12 @@ export class FormularioPublicidadInterceptorComponent implements OnInit,OnDestro
   public tecnicas=[7758,7757]
 
   ngOnInit(): void {
+    localStorage.setItem('formularioProgresivoPublicidad', JSON.stringify(true));
+
+    window.addEventListener('unload', () => {
+      localStorage.removeItem('formularioProgresivoPublicidad');
+    });
+
     this.activatedRoute.queryParams.pipe(takeUntil(this.signal$)).subscribe({
       next:(x)=>{
         console.log(x)
@@ -94,6 +100,10 @@ export class FormularioPublicidadInterceptorComponent implements OnInit,OnDestro
     });
 
     dialogRef.afterClosed().pipe(takeUntil(this.signal$)).subscribe((result) => {
+    });
+
+    dialogRef.beforeClosed().subscribe(() => {
+      localStorage.removeItem('formularioProgresivoPublicidad');
     });
   }
 

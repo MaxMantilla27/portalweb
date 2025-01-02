@@ -27,6 +27,13 @@ export class AccountService {
       return EMPTY;
     }
   }
+  public RegistrarseAlumnoFormularioProgresivo(Json:RegisterDTO):Observable<any>{
+    if(this.isBrowser){
+      return this.http.post<any>(this.urlBase+'/RegistrarseAlumnoFormularioProgresivo',Json);
+    }else{
+      return EMPTY;
+    }
+  }
   public ActualizarPasswordCuenta(Json:CambioPasswordDTO):Observable<any>{
     if(this.isBrowser){
       return this.http.post<any>(this.urlBase+'/ActualizarPasswordCuenta',Json);

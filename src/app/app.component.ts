@@ -12,6 +12,13 @@ import { MatDialog } from '@angular/material/dialog';
 import { FormularioProgressiveProfilingComponent } from './Public/formulario-progressive-profiling/formulario-progressive-profiling.component';
 import { ProgramasDetalleComponent } from './Public/programas-detalle/programas-detalle.component';
 import { ProgramaService } from './Core/Shared/Services/Programa/programa.service';
+import { LoginComponent } from './Public/login/login.component';
+import { WhitepapersComponent } from './Public/bscampus/whitepapers/whitepapers.component';
+import { BlogComponent } from './Public/bscampus/blog/blog.component';
+import { RegistrarseComponent } from './Public/registrarse/registrarse.component';
+import { LibroReclamacionesComponent } from './Public/libro-reclamaciones/libro-reclamaciones.component';
+import { LandingPageInterceptorComponent } from './Public/landing-page/landing-page/landing-page-interceptor/landing-page-interceptor/landing-page-interceptor.component';
+import { FormularioPublicidadInterceptorComponent } from './Public/FormularioPublicidad/FormularioPublicidadInterceptor/formulario-publicidad-interceptor.component';
 
 @Component({
   selector: 'app-root',
@@ -30,8 +37,10 @@ export class AppComponent implements OnInit,AfterViewInit ,OnDestroy {
   public cargaChat=false;
   public usuarioWeb=''
   public esChatbot = false;
-  intervaloTiempoFormularioProgresivo: any;
-  tabsOpen: any;
+  private intervaloTiempoAbrirFormulario: any = null;
+  private intervaloTiempoFormularioProgresivo: any;
+  private intervaloEvaluaPublicidad: any = null;
+  tabsOpen: number = 0;
 
   constructor(
     private _HelperService: HelperService,
@@ -43,7 +52,8 @@ export class AppComponent implements OnInit,AfterViewInit ,OnDestroy {
     private _RegistroVisitaPortalService: RegistroVisitaPortalService,
     public dialog: MatDialog,
     private activatedRoute: ActivatedRoute,
-    private _ProgramaService: ProgramaService
+    private _ProgramaService: ProgramaService,
+    private formularioService: FormularioProgressiveProfilingService
   ) {
     this.isBrowser = isPlatformBrowser(platformId);
   }
@@ -87,10 +97,10 @@ export class AppComponent implements OnInit,AfterViewInit ,OnDestroy {
   auxTipoPrograma: string = "";
   auxNombrePrograma: string = "";
   auxCorreoCliente: string = "";
-
+  
   ngOnInit() {
     console.log("Inicio Ruta ",window.frames.location);
-
+    const referrer = document.referrer
     this.esChatbot = window.frames.location.href == 'http://localhost:4200/Chat/1' || window.frames.location.href == 'https://img.bsgrupo.com/Chat/1' || window.frames.location.href == 'https://bsginstitute.com/Chat/1'? true: false;
     if(window.frames.location.href == 'http://localhost:4200/Chat/1' || window.frames.location.href == 'https://img.bsgrupo.com/Chat/1' || window.frames.location.href == 'https://bsginstitute.com/Chat/1'||
     window.frames.location.href == 'http://localhost:4200/Chat/2' || window.frames.location.href == 'https://img.bsgrupo.com/Chat/2' || window.frames.location.href == 'https://bsginstitute.com/Chat/2'||
@@ -116,27 +126,40 @@ export class AppComponent implements OnInit,AfterViewInit ,OnDestroy {
     console.log(this.usuarioWeb)
     this.datosUsuario = [];
     
-    this.tabsOpen = parseInt(localStorage.getItem('tabsOpen') || '0', 10);
-    if (this.tabsOpen < 0) {
+    let localVariable = localStorage.getItem('tabsOpen');
+    if (localVariable !== '') {
+      this.tabsOpen = Number(localVariable);
+    }
+    else {
       this.tabsOpen = 0;
     }
-    localStorage.setItem('tabsOpen', (this.tabsOpen + 1).toString());
-    // window.addEventListener('beforeunload', () => {
+    // this.tabsOpen = parseInt(localStorage.getItem('tabsOpen') || '0', 10);
+    // if (this.tabsOpen < 0) {
+    //   this.tabsOpen = 0;
+    // }
+    // localStorage.setItem('tabsOpen', (this.tabsOpen + 1).toString());
+    if (this.tabsOpen === 0) {
+      localStorage.setItem('tabsOpen', '1');
+    }
+    else {
+      this.tabsOpen++;
+      localStorage.setItem('tabsOpen', this.tabsOpen.toString());
+    }
+
+    // window.addEventListener('pagehide', () => {
     //   let currentTabsOpen = parseInt(localStorage.getItem('tabsOpen') || '0', 10);
     //   localStorage.setItem('tabsOpen', (currentTabsOpen - 1).toString());
     //   if (currentTabsOpen <= 1) {
     //     localStorage.removeItem('tabsOpen');
+    //     localStorage.removeItem('tiempoformularioProgresivo');
+    //     localStorage.removeItem('formularioProgresivoMostrado');
     //   }
     // });
 
-    window.addEventListener('unload', () => {
-      let currentTabsOpen = parseInt(localStorage.getItem('tabsOpen') || '0', 10);
-      localStorage.setItem('tabsOpen', (currentTabsOpen - 1).toString());
-      if (currentTabsOpen <= 1) {
-        localStorage.removeItem('tabsOpen');
-      }
-    });
+    // window.addEventListener('storage', this.handleStorageChange);
+    window.addEventListener('beforeunload', this.handleBeforeUnload);
 
+    this.eliminaFormularioPresivoActivoLocalStorage();
     this.intervaloTiempoFormularioProgresivo = setInterval(() => {
       this.usuarioWeb = this._SessionStorageService.SessionGetValue('usuarioWeb');
       if (this.usuarioWeb && this.usuarioWeb.trim() !== '') {
@@ -162,6 +185,37 @@ export class AppComponent implements OnInit,AfterViewInit ,OnDestroy {
       this._HelperService.enviarmsjObtenerUsuario(this.usuarioWeb);
     }
   }
+
+  handleBeforeUnload = (event: BeforeUnloadEvent) => {
+    this.handlePageHide();
+  }
+
+  handlePageHide() {
+    let localVariable = localStorage.getItem('tabsOpen');
+    // let currentTabsOpen = parseInt(localStorage.getItem('tabsOpen') || '0', 10);
+    if (localVariable !== '') {
+      this.tabsOpen = Number(localVariable);
+    }
+    else {
+      this.tabsOpen = 0;
+    }
+
+    if (this.tabsOpen >= 1) {
+      localStorage.setItem('tabsOpen', (this.tabsOpen - 1).toString());
+    }
+    else {
+      localStorage.removeItem('tabsOpen');
+      localStorage.removeItem('tiempoformularioProgresivo');
+      localStorage.removeItem('formularioProgresivoMostrado');
+    }
+  }
+
+  handleStorageChange = (event: StorageEvent) => {
+    if (event.key === 'tabsOpen') {
+      this.tabsOpen = parseInt(event.newValue || '0', 10);
+    }
+  }
+
   ObtenerCodigoIso(){
     this._GlobalService.ObtenerCodigoIso().pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
@@ -213,8 +267,8 @@ export class AppComponent implements OnInit,AfterViewInit ,OnDestroy {
     this.areaTrabajoUsuario = false;
     this.industriaUsuario = false;
     this.datosGuardados = null;
-    const tiempoSesion = JSON.parse(localStorage.getItem('tiempoformularioProgresivo') || 'null');
     if (await this.consultarDatosUsuarioFomularioProgresivo() === true) { //Usuario encontrado por usuarioWeb
+      console.log('Usuario identificado')
       if (this.datosUsuario) {
         this.correoUsuario = this.datosUsuario.some(usuario => usuario.correo !== undefined && usuario.correo !== null);
         this.nombreUsuario = this.datosUsuario.some(usuario => usuario.nombre !== undefined && usuario.nombre !== null);
@@ -235,61 +289,48 @@ export class AppComponent implements OnInit,AfterViewInit ,OnDestroy {
           .subscribe({
             next: x => {
               this.formData = x.datosFormularioProgresivo;
-              if (!this.nombreUsuario) { //No tiene nombre
-                if(!this.correoUsuario) { //No tiene correo
-                  console.log('Usuario sin correo');
-                  this.formData.forEach((formulario: any) => {
-                    if (formulario.condicionMostrar === 1 && formulario.activado === true) { //Condición 1: Cliente no identificado
-                      localStorage.setItem('formularioProgresivo', JSON.stringify(formulario));
-                      localStorage.setItem('tiempoformularioProgresivo', JSON.stringify(formulario.tiempoSesion));
-                      let tiempoRestante = formulario.tiempoSesion;
-                      const intervalId = setInterval(() => {
-                        tiempoRestante -= 1;
-                        localStorage.setItem('tiempoformularioProgresivo', JSON.stringify(tiempoRestante));
-                        if (tiempoRestante <= 0) {
-                            clearInterval(intervalId);
-                        }
-                      }, 1000);
-                      this.abreFormularioProgresivoTemporizador(formulario, formulario.tiempoSesion);
-                    }
-                  });
-                }
-                else { //Tiene correo, pero no nombre
-                  console.log('Usuario con correo, sin nombre');
-                  this.formData.forEach((formulario: any) => {
-                    if (formulario.condicionMostrar === 2 && formulario.activado === true) { //Condición 2: Cliente identificado con correo
-                      localStorage.setItem('formularioProgresivo', JSON.stringify(formulario));
-                      localStorage.setItem('tiempoformularioProgresivo', JSON.stringify(formulario.tiempoSesion));
-                      let tiempoRestante = formulario.tiempoSesion;
-                      const intervalId = setInterval(() => {
-                        tiempoRestante -= 1;
-                        localStorage.setItem('tiempoformularioProgresivo', JSON.stringify(tiempoRestante));
-                        if (tiempoRestante <= 0) {
-                            clearInterval(intervalId);
-                        }
-                      }, 1000);
-                      this.abreFormularioProgresivoTemporizador(formulario, formulario.tiempoSesion);
-                    }
-                  });
-                }
-              }
-              else { //Tiene nombre
-                console.log('Usuario con nombre');
-                this.formData.forEach((formulario: any) => {
-                  if (formulario.condicionMostrar === 3 && formulario.activado === true) { //Condición 3: Cliente identificado con nombre
-                    localStorage.setItem('formularioProgresivo', JSON.stringify(formulario));
-                    localStorage.setItem('tiempoformularioProgresivo', JSON.stringify(formulario.tiempoSesion));
-                    let tiempoRestante = formulario.tiempoSesion;
-                      const intervalId = setInterval(() => {
-                        tiempoRestante -= 1;
-                        localStorage.setItem('tiempoformularioProgresivo', JSON.stringify(tiempoRestante));
-                        if (tiempoRestante <= 0) {
-                            clearInterval(intervalId);
-                        }
-                      }, 1000);
-                    this.abreFormularioProgresivoTemporizador(formulario, formulario.tiempoSesion);
+              if (this.formData.length > 0) {
+                if (!this.nombreUsuario) { //No tiene nombre
+                  if(!this.correoUsuario) { //No tiene correo
+                    console.log('Usuario sin correo');
+                    this.formData.forEach((formulario: any) => {
+                      if (formulario.condicionMostrar === 1 && formulario.activado === true) { //Condición 1: Cliente no identificado
+                        localStorage.setItem('formularioProgresivo', JSON.stringify(formulario));
+                        localStorage.setItem('tiempoProgramasPublicidad', JSON.stringify(formulario.tiempoProgramasPublicidad));
+                        localStorage.setItem('tiempoProgramasOrganico', JSON.stringify(formulario.tiempoProgramasOrganico));
+                        localStorage.setItem('tiempoBlogsWhite', JSON.stringify(formulario.tiempoBlogsWhite));
+                        localStorage.setItem('tiempoIndexTags', JSON.stringify(formulario.tiempoIndexTags));
+                        this.monitorTiempoFormulario(formulario);
+                      }
+                    });
                   }
-                });
+                  else { //Tiene correo, pero no nombre
+                    console.log('Usuario con correo, sin nombre');
+                    this.formData.forEach((formulario: any) => {
+                      if (formulario.condicionMostrar === 2 && formulario.activado === true) { //Condición 2: Cliente identificado con correo
+                        localStorage.setItem('formularioProgresivo', JSON.stringify(formulario));
+                        localStorage.setItem('tiempoProgramasPublicidad', JSON.stringify(formulario.tiempoProgramasPublicidad));
+                        localStorage.setItem('tiempoProgramasOrganico', JSON.stringify(formulario.tiempoProgramasOrganico));
+                        localStorage.setItem('tiempoBlogsWhite', JSON.stringify(formulario.tiempoBlogsWhite));
+                        localStorage.setItem('tiempoIndexTags', JSON.stringify(formulario.tiempoIndexTags));
+                        this.monitorTiempoFormulario(formulario);
+                      }
+                    });
+                  }
+                }
+                else { //Tiene nombre
+                  console.log('Usuario con nombre');
+                  this.formData.forEach((formulario: any) => {
+                    if (formulario.condicionMostrar === 3 && formulario.activado === true) { //Condición 3: Cliente identificado con nombre
+                      localStorage.setItem('formularioProgresivo', JSON.stringify(formulario));
+                      localStorage.setItem('tiempoProgramasPublicidad', JSON.stringify(formulario.tiempoProgramasPublicidad));
+                      localStorage.setItem('tiempoProgramasOrganico', JSON.stringify(formulario.tiempoProgramasOrganico));
+                      localStorage.setItem('tiempoBlogsWhite', JSON.stringify(formulario.tiempoBlogsWhite));
+                      localStorage.setItem('tiempoIndexTags', JSON.stringify(formulario.tiempoIndexTags));
+                      this.monitorTiempoFormulario(formulario);
+                    }
+                  });
+                }
               }
             },
             error: err => {
@@ -299,7 +340,7 @@ export class AppComponent implements OnInit,AfterViewInit ,OnDestroy {
         }
         else {
           this.datosGuardados = JSON.parse(localStorage.getItem('formularioProgresivo') || 'null');
-          this.abreFormularioProgresivoTemporizador(this.datosGuardados, tiempoSesion);
+          this.monitorTiempoFormulario(this.datosGuardados);
         }
       }
     }
@@ -310,21 +351,18 @@ export class AppComponent implements OnInit,AfterViewInit ,OnDestroy {
         .subscribe({
           next: x => {
             this.formData = x.datosFormularioProgresivo;
-            this.formData.forEach((formulario: any) => {
-              if (formulario.condicionMostrar === 1 && formulario.activado === true) {
-                localStorage.setItem('formularioProgresivo', JSON.stringify(formulario));
-                localStorage.setItem('tiempoformularioProgresivo', JSON.stringify(formulario.tiempoSesion));
-                let tiempoRestante = formulario.tiempoSesion;
-                const intervalId = setInterval(() => {
-                  tiempoRestante -= 1;
-                  localStorage.setItem('tiempoformularioProgresivo', JSON.stringify(tiempoRestante));
-                  if (tiempoRestante <= 0) {
-                      clearInterval(intervalId);
-                  }
-                }, 1000);
-                this.abreFormularioProgresivoTemporizador(formulario, formulario.tiempoSesion);
-              }
-            });
+            if (this.formData.length > 0) {
+              this.formData.forEach((formulario: any) => {
+                if (formulario.condicionMostrar === 1 && formulario.activado === true) {
+                  localStorage.setItem('formularioProgresivo', JSON.stringify(formulario));
+                  localStorage.setItem('tiempoProgramasPublicidad', JSON.stringify(formulario.tiempoProgramasPublicidad));
+                  localStorage.setItem('tiempoProgramasOrganico', JSON.stringify(formulario.tiempoProgramasOrganico));
+                  localStorage.setItem('tiempoBlogsWhite', JSON.stringify(formulario.tiempoBlogsWhite));
+                  localStorage.setItem('tiempoIndexTags', JSON.stringify(formulario.tiempoIndexTags));
+                  this.monitorTiempoFormulario(formulario);
+                }
+              });
+            }
           },
           error: err => {
             console.error('Error al obtener los datos:', err);
@@ -333,17 +371,27 @@ export class AppComponent implements OnInit,AfterViewInit ,OnDestroy {
       }
       else {
         this.datosGuardados = JSON.parse(localStorage.getItem('formularioProgresivo') || 'null');
-        this.abreFormularioProgresivoTemporizador(this.datosGuardados, tiempoSesion);
+        this.monitorTiempoFormulario(this.datosGuardados);
       }
     }
   }
 
-  abreFormularioProgresivoTemporizador(formulario: any, tiempoSesion: any) {
-    setTimeout(() => {
-      this.abrirFormularioProgressiveProfiling(formulario);
-      localStorage.removeItem('tiempoformularioProgresivo');
-      localStorage.removeItem('formularioProgresivo');
-    }, tiempoSesion * 1000);
+  tiempoMostrarFormularioProgresivo(tiempoSesion: any) {
+    var formularioProgresivoPublicidad = JSON.parse(localStorage.getItem('formularioProgresivoPublicidad') || 'null');
+    if (formularioProgresivoPublicidad === true ) { //Llega por publicidad, bucle para evaluar cuándo se cierra formulario de publicidad
+      tiempoSesion = JSON.parse(localStorage.getItem('tiempoProgramasPublicidad') || 'null');
+      this.intervaloEvaluaPublicidad = setInterval(() => {
+        formularioProgresivoPublicidad = JSON.parse(localStorage.getItem('formularioProgresivoPublicidad') || 'null');
+        if (formularioProgresivoPublicidad !== true) {
+          clearInterval(this.intervaloEvaluaPublicidad);
+          this.intervaloEvaluaPublicidad = null;
+          this.formularioService.iniciarContador(tiempoSesion);
+        }
+      }, 1000);
+    }
+    else {
+      this.formularioService.iniciarContador(tiempoSesion);
+    }
   }
 
   async consultarDatosUsuarioFomularioProgresivo(): Promise<boolean> {
@@ -354,15 +402,41 @@ export class AppComponent implements OnInit,AfterViewInit ,OnDestroy {
       if (x.datosRegistroVisitaPortal.length > 0) {
         this.datosUsuario = x.datosRegistroVisitaPortal;
         this.auxCorreoCliente  = x.datosRegistroVisitaPortal[0].correo;
-        console.log('Usuario identificado')
         return true;
       } else {
         this.datosUsuario = [];
         this.auxCorreoCliente = "";
-        console.log('Usuario no identificado')
         return false;
       }
     });
+  }
+
+  async monitorTiempoFormulario(formulario: any) {
+    const { tipoPagina } = await this.verificaComponenteActivo();
+    var tiempoSesion = '';
+    if (tipoPagina === 'index') {
+      tiempoSesion = JSON.parse(localStorage.getItem('tiempoIndexTags') || 'null');
+    }
+    else if(tipoPagina === 'curso') {
+      tiempoSesion = JSON.parse(localStorage.getItem('tiempoProgramasOrganico') || 'null');
+    }
+    else if(tipoPagina === 'blog') {
+      tiempoSesion = JSON.parse(localStorage.getItem('tiempoBlogsWhite') || 'null');
+    }
+    else if(tipoPagina === 'whitepaper') {
+      tiempoSesion = JSON.parse(localStorage.getItem('tiempoBlogsWhite') || 'null');
+    }
+    await this.tiempoMostrarFormularioProgresivo(tiempoSesion);
+    this.intervaloTiempoAbrirFormulario = setInterval(() => {
+      var tiempoAbrirFormulario = JSON.parse(localStorage.getItem('tiempoformularioProgresivo') || 'null');
+      if (tiempoAbrirFormulario === 0) {
+        this.abrirFormularioProgressiveProfiling(formulario, tipoPagina);
+        localStorage.removeItem('tiempoformularioProgresivo');
+        localStorage.removeItem('formularioProgresivo');
+        clearInterval(this.intervaloTiempoAbrirFormulario);
+        this.intervaloTiempoAbrirFormulario = null;
+      }
+    }, 1000);
   }
 
   obtenerDatosPrograma() {
@@ -388,74 +462,82 @@ export class AppComponent implements OnInit,AfterViewInit ,OnDestroy {
     });
   }
 
-  async abrirFormularioProgressiveProfiling(formulario: any) {
+  async abrirFormularioProgressiveProfiling(formulario: any, tipoPagina: string) {
     this.obtenerDatosPrograma();
-    if (document.visibilityState === 'visible') {
-      const { tipoPagina } = await this.verificaComponenteActivo();
-      this.dialog.open(FormularioProgressiveProfilingComponent, {
-        disableClose: true,
-        data: {
-          tipoPagina: tipoPagina,
-          indicePrograma: this.indicePrograma,
-          auxTipoPrograma: this.auxTipoPrograma,
-          auxNombrePrograma: this.auxNombrePrograma,
-          auxCorreoCliente: this.auxCorreoCliente,
-          usuarioWeb: this.usuarioWeb,
-          id: formulario.id,
-          tipo: formulario.tipo,
-          idFormularioProgresivoInicial: formulario.idFormularioProgresivoInicial,
-          condicionMostrar: formulario.condicionMostrar,
-          tiempoSesion: formulario.tiempoSesion,
-          titulo: formulario.titulo,
-          tituloTexto: formulario.tituloTexto,
-          cabeceraMensajeSup: formulario.cabeceraMensajeSup,
-          cabeceraMensajeSupTexto: formulario.cabeceraMensajeSupTexto,
-          cabeceraMensaje: formulario.cabeceraMensaje,
-          cabeceraMensajeIndexCurso: formulario.cabeceraMensajeIndexCurso,
-          cabeceraMensajeTexto: formulario.cabeceraMensajeTexto,
-          cabeceraMensajeTextoCurso: formulario.cabeceraMensajeTextoCurso,
-          cabeceraMensajeBordes: formulario.cabeceraMensajeBordes,
-          cabeceraMensajeInf: formulario.cabeceraMensajeInf,
-          cabeceraMensajeInfIndexCurso: formulario.cabeceraMensajeInfIndexCurso,
-          cabeceraMensajeInfTexto: formulario.cabeceraMensajeInfTexto,
-          cabeceraMensajeInfTextoCurso: formulario.cabeceraMensajeInfTextoCurso,
-          cabeceraBoton: formulario.cabeceraBoton,
-          cabeceraBotonTexto: formulario.cabeceraBotonTexto,
-          cabeceraBotonAccion: formulario.cabeceraBotonAccion,
-          cuerpoMensajeSup: formulario.cuerpoMensajeSup,
-          cuerpoMensajeSupTexto: formulario.cuerpoMensajeSupTexto,
-          cuerpoCorreo: formulario.cuerpoCorreo,
-          cuerpoCorreoOrden: formulario.cuerpoCorreoOrden,
-          cuerpoCorreoObl: formulario.cuerpoCorreoObl,
-          cuerpoNombres: formulario.cuerpoNombres,
-          cuerpoNombresOrden: formulario.cuerpoNombresOrden,
-          cuerpoNombresObl: formulario.cuerpoNombresObl,
-          cuerpoApellidos: formulario.cuerpoApellidos,
-          cuerpoApellidosOrden: formulario.cuerpoApellidosOrden,
-          cuerpoApellidosObl: formulario.cuerpoApellidosObl,
-          cuerpoPais: formulario.cuerpoPais,
-          cuerpoPaisOrden: formulario.cuerpoPaisOrden,
-          cuerpoPaisObl: formulario.cuerpoPaisObl,
-          cuerpoTelefono: formulario.cuerpoTelefono,
-          cuerpoTelefonoOrden: formulario.cuerpoTelefonoOrden,
-          cuerpoTelefonoObl: formulario.cuerpoTelefonoObl,
-          cuerpoCargo: formulario.cuerpoCargo,
-          cuerpoCargoOrden: formulario.cuerpoCargoOrden,
-          cuerpoCargoObl: formulario.cuerpoCargoObl,
-          cuerpoAreaFormacion: formulario.cuerpoAreaFormacion,
-          cuerpoAreaFormacionOrden: formulario.cuerpoAreaFormacionOrden,
-          cuerpoAreaFormacionObl: formulario.cuerpoAreaFormacionObl,
-          cuerpoAreaTrabajo: formulario.cuerpoAreaTrabajo,
-          cuerpoAreaTrabajoOrden: formulario.cuerpoAreaTrabajoOrden,
-          cuerpoAreaTrabajoObl: formulario.cuerpoAreaTrabajoObl,
-          cuerpoIndustria: formulario.cuerpoIndustria,
-          cuerpoIndustriaOrden: formulario.cuerpoIndustriaOrden,
-          cuerpoIndustriaObl: formulario.cuerpoIndustriaObl,
-          boton: formulario.boton,
-          botonTexto: formulario.botonTexto,
-          botonAccion: formulario.botonAccion
-        }
-      });
+    var { tipoPagina } = await this.verificaComponenteActivo();
+    var aulaVirtual = false;
+    var formularioProgresivoMostrado = false;
+    if (this._SessionStorageService.validateTokken()) {
+      aulaVirtual = true
+    }
+    formularioProgresivoMostrado = JSON.parse(localStorage.getItem('formularioProgresivoMostrado') || 'null');
+    if (document.visibilityState === 'visible' && aulaVirtual === false && formularioProgresivoMostrado !== true) {
+      if (tipoPagina === 'index' || tipoPagina === 'curso' || tipoPagina === 'blog' || tipoPagina === 'whitepaper') {
+        this.dialog.open(FormularioProgressiveProfilingComponent, {
+          disableClose: true,
+          data: {
+            tipoPagina: tipoPagina,
+            indicePrograma: this.indicePrograma,
+            auxTipoPrograma: this.auxTipoPrograma,
+            auxNombrePrograma: this.auxNombrePrograma,
+            auxCorreoCliente: this.auxCorreoCliente,
+            usuarioWeb: this.usuarioWeb,
+            id: formulario.id,
+            tipo: formulario.tipo,
+            idFormularioProgresivoInicial: formulario.idFormularioProgresivoInicial,
+            condicionMostrar: formulario.condicionMostrar,
+            tiempoSesion: formulario.tiempoIndexTags,
+            titulo: formulario.titulo,
+            tituloTexto: formulario.tituloTexto,
+            cabeceraMensajeSup: formulario.cabeceraMensajeSup,
+            cabeceraMensajeSupTexto: formulario.cabeceraMensajeSupTexto,
+            cabeceraMensaje: formulario.cabeceraMensaje,
+            cabeceraMensajeIndexCurso: formulario.cabeceraMensajeIndexCurso,
+            cabeceraMensajeTexto: formulario.cabeceraMensajeTexto,
+            cabeceraMensajeTextoCurso: formulario.cabeceraMensajeTextoCurso,
+            cabeceraMensajeBordes: formulario.cabeceraMensajeBordes,
+            cabeceraMensajeInf: formulario.cabeceraMensajeInf,
+            cabeceraMensajeInfIndexCurso: formulario.cabeceraMensajeInfIndexCurso,
+            cabeceraMensajeInfTexto: formulario.cabeceraMensajeInfTexto,
+            cabeceraMensajeInfTextoCurso: formulario.cabeceraMensajeInfTextoCurso,
+            cabeceraBoton: formulario.cabeceraBoton,
+            cabeceraBotonTexto: formulario.cabeceraBotonTexto,
+            cabeceraBotonAccion: formulario.cabeceraBotonAccion,
+            cuerpoMensajeSup: formulario.cuerpoMensajeSup,
+            cuerpoMensajeSupTexto: formulario.cuerpoMensajeSupTexto,
+            cuerpoCorreo: formulario.cuerpoCorreo,
+            cuerpoCorreoOrden: formulario.cuerpoCorreoOrden,
+            cuerpoCorreoObl: formulario.cuerpoCorreoObl,
+            cuerpoNombres: formulario.cuerpoNombres,
+            cuerpoNombresOrden: formulario.cuerpoNombresOrden,
+            cuerpoNombresObl: formulario.cuerpoNombresObl,
+            cuerpoApellidos: formulario.cuerpoApellidos,
+            cuerpoApellidosOrden: formulario.cuerpoApellidosOrden,
+            cuerpoApellidosObl: formulario.cuerpoApellidosObl,
+            cuerpoPais: formulario.cuerpoPais,
+            cuerpoPaisOrden: formulario.cuerpoPaisOrden,
+            cuerpoPaisObl: formulario.cuerpoPaisObl,
+            cuerpoTelefono: formulario.cuerpoTelefono,
+            cuerpoTelefonoOrden: formulario.cuerpoTelefonoOrden,
+            cuerpoTelefonoObl: formulario.cuerpoTelefonoObl,
+            cuerpoCargo: formulario.cuerpoCargo,
+            cuerpoCargoOrden: formulario.cuerpoCargoOrden,
+            cuerpoCargoObl: formulario.cuerpoCargoObl,
+            cuerpoAreaFormacion: formulario.cuerpoAreaFormacion,
+            cuerpoAreaFormacionOrden: formulario.cuerpoAreaFormacionOrden,
+            cuerpoAreaFormacionObl: formulario.cuerpoAreaFormacionObl,
+            cuerpoAreaTrabajo: formulario.cuerpoAreaTrabajo,
+            cuerpoAreaTrabajoOrden: formulario.cuerpoAreaTrabajoOrden,
+            cuerpoAreaTrabajoObl: formulario.cuerpoAreaTrabajoObl,
+            cuerpoIndustria: formulario.cuerpoIndustria,
+            cuerpoIndustriaOrden: formulario.cuerpoIndustriaOrden,
+            cuerpoIndustriaObl: formulario.cuerpoIndustriaObl,
+            boton: formulario.boton,
+            botonTexto: formulario.botonTexto,
+            botonAccion: formulario.botonAccion
+          }
+        });
+      }
     }
   }
 
@@ -469,9 +551,37 @@ export class AppComponent implements OnInit,AfterViewInit ,OnDestroy {
     if (route.routeConfig?.component === ProgramasDetalleComponent) {
       tipoPagina = 'curso';
     }
+    else if (route.routeConfig?.component === BlogComponent) {
+      tipoPagina = 'blog';
+    }
+    else if (route.routeConfig?.component === WhitepapersComponent) {
+      tipoPagina = 'whitepaper';
+    }
+    else if (route.routeConfig?.component === LoginComponent) {
+      tipoPagina = 'login';
+    }
+    else if (route.routeConfig?.component === RegistrarseComponent) {
+      tipoPagina = 'registrarse';
+    }
+    else if (route.routeConfig?.component === LibroReclamacionesComponent) {
+      tipoPagina = 'libroReclamaciones';
+    }
+    else if (route.routeConfig?.component === LandingPageInterceptorComponent) {
+      tipoPagina = 'landingPageInterceptor';
+    }
+    else if (route.routeConfig?.component === FormularioPublicidadInterceptorComponent) {
+      tipoPagina = 'formularioPublicidadInterceptor';
+    }
+
     return { tipoPagina };
   }
   
+  
+  eliminaFormularioPresivoActivoLocalStorage() {
+    if (this.tabsOpen === 0) {
+      localStorage.removeItem('formularioProgresivo Activo');
+    }
+  }
 }
 
 interface datosRegistroVisitaPortalDTO {

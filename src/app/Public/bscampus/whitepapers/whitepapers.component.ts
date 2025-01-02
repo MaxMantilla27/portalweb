@@ -21,6 +21,7 @@ import { SeoService } from 'src/app/Core/Shared/Services/seo.service';
 import { Router } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
 import { DatosFormularioDTO } from 'src/app/Core/Models/DatosFormularioDTO';
+import { FormularioProgressiveProfilingService } from 'src/app/Core/Shared/Services/FormularioProgressiveProfiling/formulario-progressive-profiling.service';
 
 @Component({
   selector: 'app-whitepapers',
@@ -32,6 +33,8 @@ export class WhitepapersComponent implements OnInit,OnDestroy {
   private signal$ = new Subject();
   @ViewChild(FormularioComponent)
   form!: FormularioComponent;
+  private intervaloEvaluaPublicidad: any = null;
+
   constructor(
     private activatedRoute: ActivatedRoute,
     private _ArticuloService: ArticuloService,
@@ -44,8 +47,8 @@ export class WhitepapersComponent implements OnInit,OnDestroy {
     private _HelperServiceP:Help,
     private _SeoService:SeoService,
     private title:Title,
-    private router:Router
-
+    private router:Router,
+    private formularioService: FormularioProgressiveProfilingService
   ) {}
   ngOnDestroy(): void {
     this.signal$.next(true)
@@ -125,6 +128,7 @@ export class WhitepapersComponent implements OnInit,OnDestroy {
   }
   public listaLocalidades?:any;
   ngOnInit(): void {
+    this.tiempoMostrarFormularioProgresivo();
     this.activatedRoute.params.pipe(takeUntil(this.signal$)).subscribe({
       next: (x) => {
         var whitepaper = x['whitepaper'].split('-');
@@ -154,6 +158,27 @@ export class WhitepapersComponent implements OnInit,OnDestroy {
     this.AddFields();
     this.ObtenerCombosPortal();
   }
+
+  tiempoMostrarFormularioProgresivo() {
+    var formularioProgresivoPublicidad = JSON.parse(localStorage.getItem('formularioProgresivoPublicidad') || 'null');
+    var tiempoSesion = JSON.parse(localStorage.getItem('tiempoBlogsWhite') || 'null');
+    if (formularioProgresivoPublicidad === true ) { //Llega por publicidad, bucle para evaluar cuándo se cierra formulario de publicidad
+      tiempoSesion = JSON.parse(localStorage.getItem('tiempoProgramasPublicidad') || 'null');
+      this.intervaloEvaluaPublicidad = setInterval(() => {
+        formularioProgresivoPublicidad = JSON.parse(localStorage.getItem('formularioProgresivoPublicidad') || 'null');
+        if (formularioProgresivoPublicidad !== true) {
+          clearInterval(this.intervaloEvaluaPublicidad);
+          this.intervaloEvaluaPublicidad = null;
+          
+          this.formularioService.iniciarContador(tiempoSesion);
+        }
+      }, 1000);
+    }
+    else {
+      this.formularioService.iniciarContador(tiempoSesion);
+    }
+  }
+
   ListArticuloProgramaRelacionado(id:number){
     console.log(id)
     this._SeccionProgramaService.ListArticuloProgramaRelacionado(id).pipe(takeUntil(this.signal$)).subscribe({

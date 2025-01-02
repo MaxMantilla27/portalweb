@@ -62,6 +62,7 @@ import { ProgramaFormularioComponent } from './programa-formulario/programa-form
 import { FormularioAzulComponent } from 'src/app/Core/Shared/Containers/formulario-azul/formulario-azul.component';
 import { ChatEnLineaService } from 'src/app/Core/Shared/Services/ChatEnLinea/chat-en-linea.service';
 import { FacebookPixelService } from 'src/app/Core/Shared/Services/FacebookPixel/facebook-pixel.service';
+import { FormularioProgressiveProfilingService } from 'src/app/Core/Shared/Services/FormularioProgressiveProfiling/formulario-progressive-profiling.service';
 declare const fbq:any;
 declare const gtag:any;
 declare const lintrk: any;
@@ -82,6 +83,7 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
   contenidoTOp!: ElementRef;
   @ViewChild('contentLeft')
   contentLeft!: ElementRef;
+  private intervaloEvaluaPublicidad: any = null;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -107,7 +109,8 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
     private title:Title,
 
     private _FacebookPixelService:FacebookPixelService,
-    private _ChatEnLineaService:ChatEnLineaService
+    private _ChatEnLineaService:ChatEnLineaService,
+    private formularioService: FormularioProgressiveProfilingService
   ) {
     this.isBrowser = isPlatformBrowser(platformId);
     config.interval = 20000;
@@ -271,6 +274,7 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
   public listaLocalidades?:any;
 
   ngOnInit(): void {
+    this.tiempoMostrarFormularioProgresivo();
     this.codigoIso =
     this._SessionStorageService.SessionGetValue('ISO_PAIS') != ''
       ? this._SessionStorageService.SessionGetValue('ISO_PAIS')
@@ -326,6 +330,35 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
     this.obtenerFormularioCompletado();
     this.AddFields();
     this.ObtenerCombosPortal();
+    window.addEventListener('beforeunload', () => {
+      this._SessionStorageService.SessionDeleteValue('esAonline');
+    });
+    this._SessionStorageService.SessionSetValue('esAonline', JSON.stringify(this.esAonline));
+  }
+
+  // tiempoMostrarFormularioProgresivo() {
+  //   var tiempoSesion = JSON.parse(localStorage.getItem('tiempoProgramasOrganico') || 'null');
+  //   this.formularioService.iniciarContador(tiempoSesion);
+  // }
+
+  tiempoMostrarFormularioProgresivo() {
+    var formularioProgresivoPublicidad = JSON.parse(localStorage.getItem('formularioProgresivoPublicidad') || 'null');
+    var tiempoSesion = JSON.parse(localStorage.getItem('tiempoProgramasOrganico') || 'null');
+    if (formularioProgresivoPublicidad === true ) { //Llega por publicidad, bucle para evaluar cuándo se cierra formulario de publicidad
+      tiempoSesion = JSON.parse(localStorage.getItem('tiempoProgramasPublicidad') || 'null');
+      this.intervaloEvaluaPublicidad = setInterval(() => {
+        formularioProgresivoPublicidad = JSON.parse(localStorage.getItem('formularioProgresivoPublicidad') || 'null');
+        if (formularioProgresivoPublicidad !== true) {
+          clearInterval(this.intervaloEvaluaPublicidad);
+          this.intervaloEvaluaPublicidad = null;
+          
+          this.formularioService.iniciarContador(tiempoSesion);
+        }
+      }, 1000);
+    }
+    else {
+      this.formularioService.iniciarContador(tiempoSesion);
+    }
   }
 
   RegistrarProgramaPrueba(){
@@ -469,7 +502,6 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
       .ObtenerCabeceraProgramaGeneral(this.idBusqueda).pipe(takeUntil(this.signal$))
       .subscribe({
         next: (x) => {
-          console.log(x);
           console.log(x.programaCabeceraDetalleDTO.direccion==this.namePrograma.join('-'))
           if(x.programaCabeceraDetalleDTO!=undefined
             && this.removeAccents(this.area.toLowerCase())==this.removeAccents(x.programaCabeceraDetalleDTO.areaCapacitacion.toLowerCase())
@@ -517,6 +549,7 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
               this.cabecera.listProgramaEspecificoInformacionDTO.forEach(x=>{
                 if(x.tipo.toLowerCase()=='online asincronica'){
                   this.esAonline=true
+                  this._SessionStorageService.SessionSetValue('esAonline', JSON.stringify(this.esAonline));
                 }
               })
             }
