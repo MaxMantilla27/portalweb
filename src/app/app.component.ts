@@ -100,6 +100,7 @@ export class AppComponent implements OnInit,AfterViewInit ,OnDestroy {
   
   ngOnInit() {
     console.log("Inicio Ruta ",window.frames.location);
+    var deviceType = this.detectDeviceByScreen();
     const referrer = document.referrer
     this.esChatbot = window.frames.location.href == 'http://localhost:4200/Chat/1' || window.frames.location.href == 'https://img.bsgrupo.com/Chat/1' || window.frames.location.href == 'https://bsginstitute.com/Chat/1'? true: false;
     if(window.frames.location.href == 'http://localhost:4200/Chat/1' || window.frames.location.href == 'https://img.bsgrupo.com/Chat/1' || window.frames.location.href == 'https://bsginstitute.com/Chat/1'||
@@ -127,6 +128,7 @@ export class AppComponent implements OnInit,AfterViewInit ,OnDestroy {
     this.datosUsuario = [];
     
     let localVariable = localStorage.getItem('tabsOpen');
+    console.log ('gamero localvariable: ', localVariable)
     if (localVariable !== '') {
       this.tabsOpen = Number(localVariable);
     }
@@ -138,6 +140,7 @@ export class AppComponent implements OnInit,AfterViewInit ,OnDestroy {
     //   this.tabsOpen = 0;
     // }
     // localStorage.setItem('tabsOpen', (this.tabsOpen + 1).toString());
+    console.log('gamero this.tabsOpen: ', this.tabsOpen)
     if (this.tabsOpen === 0) {
       localStorage.setItem('tabsOpen', '1');
     }
@@ -157,7 +160,12 @@ export class AppComponent implements OnInit,AfterViewInit ,OnDestroy {
     // });
 
     // window.addEventListener('storage', this.handleStorageChange);
-    window.addEventListener('beforeunload', this.handleBeforeUnload);
+    if (deviceType === 'Desktop') {
+      window.addEventListener('pagehide', this.handleBeforeUnload);
+    }
+    else {
+      document.addEventListener('visibilitychange', this.handleVisibilityChange);
+    }
 
     this.eliminaFormularioPresivoActivoLocalStorage();
     this.intervaloTiempoFormularioProgresivo = setInterval(() => {
@@ -186,13 +194,31 @@ export class AppComponent implements OnInit,AfterViewInit ,OnDestroy {
     }
   }
 
-  handleBeforeUnload = (event: BeforeUnloadEvent) => {
+  detectDeviceByScreen(): string {
+    const width = window.screen.width;
+    console.log('width screen: ', width)
+    if (width <= 768) {
+        return 'Mobile';
+    }
+    if (width > 768 && width <= 1024) {
+        return 'Tablet';
+    }
+    return 'Desktop';
+  }
+
+  handleVisibilityChange = () => {
+    console.log('gamero document.visibilityState: ', document.visibilityState)
+    if (document.visibilityState === 'hidden') {
+      this.handlePageHide();
+    }
+  }
+
+  handleBeforeUnload = () => {
     this.handlePageHide();
   }
 
   handlePageHide() {
     let localVariable = localStorage.getItem('tabsOpen');
-    // let currentTabsOpen = parseInt(localStorage.getItem('tabsOpen') || '0', 10);
     if (localVariable !== '') {
       this.tabsOpen = Number(localVariable);
     }
@@ -200,10 +226,12 @@ export class AppComponent implements OnInit,AfterViewInit ,OnDestroy {
       this.tabsOpen = 0;
     }
 
-    if (this.tabsOpen >= 1) {
+    if (this.tabsOpen > 1) {
+      console.log('gamero disminuye tabsOpen')
       localStorage.setItem('tabsOpen', (this.tabsOpen - 1).toString());
     }
     else {
+      console.log('gamero removeItem')
       localStorage.removeItem('tabsOpen');
       localStorage.removeItem('tiempoformularioProgresivo');
       localStorage.removeItem('formularioProgresivoMostrado');
@@ -429,6 +457,7 @@ export class AppComponent implements OnInit,AfterViewInit ,OnDestroy {
     await this.tiempoMostrarFormularioProgresivo(tiempoSesion);
     this.intervaloTiempoAbrirFormulario = setInterval(() => {
       var tiempoAbrirFormulario = JSON.parse(localStorage.getItem('tiempoformularioProgresivo') || 'null');
+      console.log('gamero tiempoAbrirFormulario: ', tiempoAbrirFormulario)
       if (tiempoAbrirFormulario === 0) {
         this.abrirFormularioProgressiveProfiling(formulario, tipoPagina);
         localStorage.removeItem('tiempoformularioProgresivo');
@@ -463,6 +492,7 @@ export class AppComponent implements OnInit,AfterViewInit ,OnDestroy {
   }
 
   async abrirFormularioProgressiveProfiling(formulario: any, tipoPagina: string) {
+    console.log('gamero formulario: ', formulario)
     this.obtenerDatosPrograma();
     var { tipoPagina } = await this.verificaComponenteActivo();
     var aulaVirtual = false;
