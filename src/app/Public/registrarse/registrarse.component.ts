@@ -238,7 +238,6 @@ export class RegistrarseComponent implements OnInit,OnDestroy {
         });
       }
       else { //Para formularios progresivos
-        var rutaActual = localStorage.getItem('RutaActual');
         this._AccountService.RegistrarseAlumnoFormularioProgresivo(this.registerSend).pipe(takeUntil(this.signal$)).subscribe({
           next: (x) => {
             if (x.excepcionGenerada != undefined && x.excepcionGenerada == true) {
@@ -327,9 +326,8 @@ export class RegistrarseComponent implements OnInit,OnDestroy {
             this.statuscharge = false;
           },
         });
-       localStorage.removeItem('formularioProgresivo Activo');
       }
-      localStorage.removeItem('RutaActual');
+      localStorage.removeItem('formularioProgresivo Activo');
     }
 
   }

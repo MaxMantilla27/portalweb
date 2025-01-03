@@ -38,9 +38,8 @@ export class FormularioProgressiveProfilingComponent implements OnInit {
     this.dialogRef.updateSize('600px', 'auto');
     this.obtenerListaBanderas();
     this.obtenerOpcionesCombos();
+    this.formularioProgresivoYaMostradoLocal();
     window.addEventListener('beforeunload', this.handleBeforeUnload.bind(this));
-    const currentUrl = this._router.url;
-    localStorage.setItem('RutaActual', JSON.stringify(currentUrl));
   }
 
   ngOnDestroy(): void {
@@ -51,6 +50,7 @@ export class FormularioProgressiveProfilingComponent implements OnInit {
 
   handleBeforeUnload(event: BeforeUnloadEvent): void {
     this.guardarFormularioEnLocalStorage();
+    this.eliminaFormularioProgresivoYaMostrado();
   }
   
   formCamposDinamicos!: FormGroup;
@@ -556,7 +556,6 @@ export class FormularioProgressiveProfilingComponent implements OnInit {
   }
 
   async ejecutarFormularioProgresivo(accion: number): Promise<void> {
-    this.formularioProgresivoMostradoLocal();
     switch (accion) {
       case 1:
         try {
@@ -612,8 +611,8 @@ export class FormularioProgressiveProfilingComponent implements OnInit {
     }
   }
 
-  formularioProgresivoMostradoLocal() {
-    localStorage.setItem('formularioProgresivoMostrado', JSON.stringify(true));
+  formularioProgresivoYaMostradoLocal() {
+    localStorage.setItem('formularioProgresivoYaMostrado', JSON.stringify(true));
   }
 
   guardaDatos(accion: number): Promise<void> {
@@ -843,12 +842,17 @@ export class FormularioProgressiveProfilingComponent implements OnInit {
 
   cerrarFormulario(): void {
     this.guardarFormularioEnLocalStorage();
+    this.eliminaFormularioProgresivoYaMostrado();
     this.dialogRef.close();
   }
 
   guardarFormularioEnLocalStorage(): void {
     const valoresFormulario = this.formCamposDinamicos.getRawValue();
     localStorage.setItem('formularioGuardado', JSON.stringify(valoresFormulario));
+  }
+
+  eliminaFormularioProgresivoYaMostrado() {
+    localStorage.removeItem('formularioProgresivoYaMostrado');
   }
 
 }

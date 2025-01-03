@@ -40,7 +40,6 @@ export class AppComponent implements OnInit,AfterViewInit ,OnDestroy {
   private intervaloTiempoAbrirFormulario: any = null;
   private intervaloTiempoFormularioProgresivo: any;
   private intervaloEvaluaPublicidad: any = null;
-  tabsOpen: number = 0;
 
   constructor(
     private _HelperService: HelperService,
@@ -126,48 +125,7 @@ export class AppComponent implements OnInit,AfterViewInit ,OnDestroy {
     this.usuarioWeb=this._SessionStorageService.SessionGetValue('usuarioWeb');
     console.log(this.usuarioWeb)
     this.datosUsuario = [];
-    
-    let localVariable = localStorage.getItem('tabsOpen');
-    console.log ('gamero localvariable: ', localVariable)
-    if (localVariable !== '') {
-      this.tabsOpen = Number(localVariable);
-    }
-    else {
-      this.tabsOpen = 0;
-    }
-    // this.tabsOpen = parseInt(localStorage.getItem('tabsOpen') || '0', 10);
-    // if (this.tabsOpen < 0) {
-    //   this.tabsOpen = 0;
-    // }
-    // localStorage.setItem('tabsOpen', (this.tabsOpen + 1).toString());
-    console.log('gamero this.tabsOpen: ', this.tabsOpen)
-    if (this.tabsOpen === 0) {
-      localStorage.setItem('tabsOpen', '1');
-    }
-    else {
-      this.tabsOpen++;
-      localStorage.setItem('tabsOpen', this.tabsOpen.toString());
-    }
 
-    // window.addEventListener('pagehide', () => {
-    //   let currentTabsOpen = parseInt(localStorage.getItem('tabsOpen') || '0', 10);
-    //   localStorage.setItem('tabsOpen', (currentTabsOpen - 1).toString());
-    //   if (currentTabsOpen <= 1) {
-    //     localStorage.removeItem('tabsOpen');
-    //     localStorage.removeItem('tiempoformularioProgresivo');
-    //     localStorage.removeItem('formularioProgresivoMostrado');
-    //   }
-    // });
-
-    // window.addEventListener('storage', this.handleStorageChange);
-    if (deviceType === 'Desktop') {
-      window.addEventListener('pagehide', this.handleBeforeUnload);
-    }
-    else {
-      document.addEventListener('visibilitychange', this.handleVisibilityChange);
-    }
-
-    this.eliminaFormularioPresivoActivoLocalStorage();
     this.intervaloTiempoFormularioProgresivo = setInterval(() => {
       this.usuarioWeb = this._SessionStorageService.SessionGetValue('usuarioWeb');
       if (this.usuarioWeb && this.usuarioWeb.trim() !== '') {
@@ -204,44 +162,6 @@ export class AppComponent implements OnInit,AfterViewInit ,OnDestroy {
         return 'Tablet';
     }
     return 'Desktop';
-  }
-
-  handleVisibilityChange = () => {
-    console.log('gamero document.visibilityState: ', document.visibilityState)
-    if (document.visibilityState === 'hidden') {
-      this.handlePageHide();
-    }
-  }
-
-  handleBeforeUnload = () => {
-    this.handlePageHide();
-  }
-
-  handlePageHide() {
-    let localVariable = localStorage.getItem('tabsOpen');
-    if (localVariable !== '') {
-      this.tabsOpen = Number(localVariable);
-    }
-    else {
-      this.tabsOpen = 0;
-    }
-
-    if (this.tabsOpen > 1) {
-      console.log('gamero disminuye tabsOpen')
-      localStorage.setItem('tabsOpen', (this.tabsOpen - 1).toString());
-    }
-    else {
-      console.log('gamero removeItem')
-      localStorage.removeItem('tabsOpen');
-      localStorage.removeItem('tiempoformularioProgresivo');
-      localStorage.removeItem('formularioProgresivoMostrado');
-    }
-  }
-
-  handleStorageChange = (event: StorageEvent) => {
-    if (event.key === 'tabsOpen') {
-      this.tabsOpen = parseInt(event.newValue || '0', 10);
-    }
   }
 
   ObtenerCodigoIso(){
@@ -312,44 +232,29 @@ export class AppComponent implements OnInit,AfterViewInit ,OnDestroy {
         console.log('Todos los datos de usuario completos')
       }
       else { //No tiene todos los datos
-        if (this.tabsOpen === 0) {
-          this._FormularioProgressiveProfilingService.ObtenerListaFormularioProgresivo().pipe(takeUntil(this.signal$))
-          .subscribe({
-            next: x => {
-              this.formData = x.datosFormularioProgresivo;
-              if (this.formData.length > 0) {
-                if (!this.nombreUsuario) { //No tiene nombre
-                  if(!this.correoUsuario) { //No tiene correo
-                    console.log('Usuario sin correo');
-                    this.formData.forEach((formulario: any) => {
-                      if (formulario.condicionMostrar === 1 && formulario.activado === true) { //Condición 1: Cliente no identificado
-                        localStorage.setItem('formularioProgresivo', JSON.stringify(formulario));
-                        localStorage.setItem('tiempoProgramasPublicidad', JSON.stringify(formulario.tiempoProgramasPublicidad));
-                        localStorage.setItem('tiempoProgramasOrganico', JSON.stringify(formulario.tiempoProgramasOrganico));
-                        localStorage.setItem('tiempoBlogsWhite', JSON.stringify(formulario.tiempoBlogsWhite));
-                        localStorage.setItem('tiempoIndexTags', JSON.stringify(formulario.tiempoIndexTags));
-                        this.monitorTiempoFormulario(formulario);
-                      }
-                    });
-                  }
-                  else { //Tiene correo, pero no nombre
-                    console.log('Usuario con correo, sin nombre');
-                    this.formData.forEach((formulario: any) => {
-                      if (formulario.condicionMostrar === 2 && formulario.activado === true) { //Condición 2: Cliente identificado con correo
-                        localStorage.setItem('formularioProgresivo', JSON.stringify(formulario));
-                        localStorage.setItem('tiempoProgramasPublicidad', JSON.stringify(formulario.tiempoProgramasPublicidad));
-                        localStorage.setItem('tiempoProgramasOrganico', JSON.stringify(formulario.tiempoProgramasOrganico));
-                        localStorage.setItem('tiempoBlogsWhite', JSON.stringify(formulario.tiempoBlogsWhite));
-                        localStorage.setItem('tiempoIndexTags', JSON.stringify(formulario.tiempoIndexTags));
-                        this.monitorTiempoFormulario(formulario);
-                      }
-                    });
-                  }
-                }
-                else { //Tiene nombre
-                  console.log('Usuario con nombre');
+        this._FormularioProgressiveProfilingService.ObtenerListaFormularioProgresivo().pipe(takeUntil(this.signal$))
+        .subscribe({
+          next: x => {
+            this.formData = x.datosFormularioProgresivo;
+            if (this.formData.length > 0) {
+              if (!this.nombreUsuario) { //No tiene nombre
+                if(!this.correoUsuario) { //No tiene correo
+                  console.log('Usuario sin correo');
                   this.formData.forEach((formulario: any) => {
-                    if (formulario.condicionMostrar === 3 && formulario.activado === true) { //Condición 3: Cliente identificado con nombre
+                    if (formulario.condicionMostrar === 1 && formulario.activado === true) { //Condición 1: Cliente no identificado
+                      localStorage.setItem('formularioProgresivo', JSON.stringify(formulario));
+                      localStorage.setItem('tiempoProgramasPublicidad', JSON.stringify(formulario.tiempoProgramasPublicidad));
+                      localStorage.setItem('tiempoProgramasOrganico', JSON.stringify(formulario.tiempoProgramasOrganico));
+                      localStorage.setItem('tiempoBlogsWhite', JSON.stringify(formulario.tiempoBlogsWhite));
+                      localStorage.setItem('tiempoIndexTags', JSON.stringify(formulario.tiempoIndexTags));
+                      this.monitorTiempoFormulario(formulario);
+                    }
+                  });
+                }
+                else { //Tiene correo, pero no nombre
+                  console.log('Usuario con correo, sin nombre');
+                  this.formData.forEach((formulario: any) => {
+                    if (formulario.condicionMostrar === 2 && formulario.activado === true) { //Condición 2: Cliente identificado con correo
                       localStorage.setItem('formularioProgresivo', JSON.stringify(formulario));
                       localStorage.setItem('tiempoProgramasPublicidad', JSON.stringify(formulario.tiempoProgramasPublicidad));
                       localStorage.setItem('tiempoProgramasOrganico', JSON.stringify(formulario.tiempoProgramasOrganico));
@@ -360,36 +265,19 @@ export class AppComponent implements OnInit,AfterViewInit ,OnDestroy {
                   });
                 }
               }
-            },
-            error: err => {
-              console.error('Error al obtener los datos:', err);
-            }
-          });
-        }
-        else {
-          this.datosGuardados = JSON.parse(localStorage.getItem('formularioProgresivo') || 'null');
-          this.monitorTiempoFormulario(this.datosGuardados);
-        }
-      }
-    }
-    else { //Usuario no encontrado por usuarioWeb. Buscamos por defecto formulario progresivo que tenga condición "Usuario no identificado"
-      console.log('Usuario sin usuarioWeb');
-      if (this.tabsOpen === 0) {
-        this._FormularioProgressiveProfilingService.ObtenerListaFormularioProgresivo().pipe(takeUntil(this.signal$))
-        .subscribe({
-          next: x => {
-            this.formData = x.datosFormularioProgresivo;
-            if (this.formData.length > 0) {
-              this.formData.forEach((formulario: any) => {
-                if (formulario.condicionMostrar === 1 && formulario.activado === true) {
-                  localStorage.setItem('formularioProgresivo', JSON.stringify(formulario));
-                  localStorage.setItem('tiempoProgramasPublicidad', JSON.stringify(formulario.tiempoProgramasPublicidad));
-                  localStorage.setItem('tiempoProgramasOrganico', JSON.stringify(formulario.tiempoProgramasOrganico));
-                  localStorage.setItem('tiempoBlogsWhite', JSON.stringify(formulario.tiempoBlogsWhite));
-                  localStorage.setItem('tiempoIndexTags', JSON.stringify(formulario.tiempoIndexTags));
-                  this.monitorTiempoFormulario(formulario);
-                }
-              });
+              else { //Tiene nombre
+                console.log('Usuario con nombre');
+                this.formData.forEach((formulario: any) => {
+                  if (formulario.condicionMostrar === 3 && formulario.activado === true) { //Condición 3: Cliente identificado con nombre
+                    localStorage.setItem('formularioProgresivo', JSON.stringify(formulario));
+                    localStorage.setItem('tiempoProgramasPublicidad', JSON.stringify(formulario.tiempoProgramasPublicidad));
+                    localStorage.setItem('tiempoProgramasOrganico', JSON.stringify(formulario.tiempoProgramasOrganico));
+                    localStorage.setItem('tiempoBlogsWhite', JSON.stringify(formulario.tiempoBlogsWhite));
+                    localStorage.setItem('tiempoIndexTags', JSON.stringify(formulario.tiempoIndexTags));
+                    this.monitorTiempoFormulario(formulario);
+                  }
+                });
+              }
             }
           },
           error: err => {
@@ -397,10 +285,30 @@ export class AppComponent implements OnInit,AfterViewInit ,OnDestroy {
           }
         });
       }
-      else {
-        this.datosGuardados = JSON.parse(localStorage.getItem('formularioProgresivo') || 'null');
-        this.monitorTiempoFormulario(this.datosGuardados);
-      }
+    }
+    else { //Usuario no encontrado por usuarioWeb. Buscamos por defecto formulario progresivo que tenga condición "Usuario no identificado"
+      console.log('Usuario sin usuarioWeb');
+      this._FormularioProgressiveProfilingService.ObtenerListaFormularioProgresivo().pipe(takeUntil(this.signal$))
+      .subscribe({
+        next: x => {
+          this.formData = x.datosFormularioProgresivo;
+          if (this.formData.length > 0) {
+            this.formData.forEach((formulario: any) => {
+              if (formulario.condicionMostrar === 1 && formulario.activado === true) {
+                localStorage.setItem('formularioProgresivo', JSON.stringify(formulario));
+                localStorage.setItem('tiempoProgramasPublicidad', JSON.stringify(formulario.tiempoProgramasPublicidad));
+                localStorage.setItem('tiempoProgramasOrganico', JSON.stringify(formulario.tiempoProgramasOrganico));
+                localStorage.setItem('tiempoBlogsWhite', JSON.stringify(formulario.tiempoBlogsWhite));
+                localStorage.setItem('tiempoIndexTags', JSON.stringify(formulario.tiempoIndexTags));
+                this.monitorTiempoFormulario(formulario);
+              }
+            });
+          }
+        },
+        error: err => {
+          console.error('Error al obtener los datos:', err);
+        }
+      });
     }
   }
 
@@ -457,7 +365,6 @@ export class AppComponent implements OnInit,AfterViewInit ,OnDestroy {
     await this.tiempoMostrarFormularioProgresivo(tiempoSesion);
     this.intervaloTiempoAbrirFormulario = setInterval(() => {
       var tiempoAbrirFormulario = JSON.parse(localStorage.getItem('tiempoformularioProgresivo') || 'null');
-      console.log('gamero tiempoAbrirFormulario: ', tiempoAbrirFormulario)
       if (tiempoAbrirFormulario === 0) {
         this.abrirFormularioProgressiveProfiling(formulario, tipoPagina);
         localStorage.removeItem('tiempoformularioProgresivo');
@@ -492,16 +399,15 @@ export class AppComponent implements OnInit,AfterViewInit ,OnDestroy {
   }
 
   async abrirFormularioProgressiveProfiling(formulario: any, tipoPagina: string) {
-    console.log('gamero formulario: ', formulario)
     this.obtenerDatosPrograma();
     var { tipoPagina } = await this.verificaComponenteActivo();
     var aulaVirtual = false;
-    var formularioProgresivoMostrado = false;
+    var formularioProgresivoYaMostrado = false;
     if (this._SessionStorageService.validateTokken()) {
       aulaVirtual = true
     }
-    formularioProgresivoMostrado = JSON.parse(localStorage.getItem('formularioProgresivoMostrado') || 'null');
-    if (document.visibilityState === 'visible' && aulaVirtual === false && formularioProgresivoMostrado !== true) {
+    formularioProgresivoYaMostrado = JSON.parse(localStorage.getItem('formularioProgresivoYaMostrado') || 'null');
+    if (document.visibilityState === 'visible' && aulaVirtual === false && formularioProgresivoYaMostrado !== true) {
       if (tipoPagina === 'index' || tipoPagina === 'curso' || tipoPagina === 'blog' || tipoPagina === 'whitepaper') {
         this.dialog.open(FormularioProgressiveProfilingComponent, {
           disableClose: true,
@@ -605,13 +511,7 @@ export class AppComponent implements OnInit,AfterViewInit ,OnDestroy {
 
     return { tipoPagina };
   }
-  
-  
-  eliminaFormularioPresivoActivoLocalStorage() {
-    if (this.tabsOpen === 0) {
-      localStorage.removeItem('formularioProgresivo Activo');
-    }
-  }
+
 }
 
 interface datosRegistroVisitaPortalDTO {
