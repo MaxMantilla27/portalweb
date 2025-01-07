@@ -202,31 +202,44 @@ export class BlogComponent implements OnInit {
           this.Blogisnull = false;
           var metas=x.articuloDetalleHomeDTO.parametroSeo;
           console.log('METAS',metas)
-          if(metas.length>0){
+          if (metas.length > 0) {
+            const metaMap = metas.reduce((acc: any, meta: any) => {
+              acc[meta.nombre] = meta.descripcion;
+              return acc;
+            }, {});
 
-            let mt=metas.find((par:any)=>par.nombre=='Titulo Pestaña')!=undefined?
-                      metas.find((par:any)=>par.nombre=='Titulo Pestaña').descripcion:undefined
-            let t=metas.find((par:any)=>par.nombre=='title')!=undefined?
-                      metas.find((par:any)=>par.nombre=='title').descripcion:undefined
-            let d=metas.find((par:any)=>par.nombre=='description')!=undefined?
-                      metas.find((par:any)=>par.nombre=='description').descripcion:undefined
-            let k=metas.find((par:any)=>par.nombre=='keywords')!=undefined?
-                      metas.find((par:any)=>par.nombre=='keywords').descripcion:undefined
-            this.titleSeo.setTitle(t);
-            this._SeoService.generateTags({
-              title:mt,
-              slug:this.router.url.toString(),
-              description:d,
-              keywords:k,
-              image:'https://img.bsginstitute.com/repositorioweb/img/'+x.articuloDetalleHomeDTO.articuloDetalle.imgPortada,
-              ogTitle:mt,
-              twiterTitle:mt,
-              ogDescription:d,
-              twiterDescription:d,
-              imageW:"348",
-              imageH:'220',
-            });
+            let t = metaMap['title'];
+            let d = metaMap['description'];
+            let k = metaMap['keywords'];
+            let mt = metaMap['Titulo Pestaña'];
 
+            if (t) {
+              this.titleSeo.setTitle(t);  // Si el título está disponible, establece el título de la página
+            }
+            let config: any = {
+              title: mt,  // Usa el título si está disponible, sino un valor por defecto
+              description: d,  // Usa la descripción si está disponible
+              image: 'https://img.bsginstitute.com/repositorioweb/img/'+x.articuloDetalleHomeDTO.articuloDetalle.imgPortada,  // URL de imagen por defecto
+              keywords: k,  // Usa las keywords si están disponibles
+              twiterTitle: mt,  // Título para Twitter
+              ogTitle: mt,  // Título para Open Graph
+              twiterDescription: d,  // Descripción para Twitter
+              ogDescription: d,  // Descripción para Open Graph
+              slug: this.router.url.toString(),  // Slug (esto debería ser dinámico en función de la URL o el contenido)
+              imageW: '348',  // Ancho de la imagen para Open Graph
+              imageH: '220',  // Alto de la imagen para Open Graph
+            };
+
+            // Ahora ya puedes hacer la expansión de `config` en caso de que sea necesario
+            config = {
+              ...config,
+              ...metaMap,  // Aquí se agregan los valores de `metaMap` si es necesario
+            };
+
+            console.log('Config para SEO', config);  // Verifica los datos antes de enviarlos al servicio
+
+            // Llama al servicio de SEO para agregar las etiquetas meta en el HTML
+            this._SeoService.generateTags(config);
           }
         }
 
