@@ -48,7 +48,7 @@ export class RegistroVisitaPortalService {
 
 interface InsertaRegistroVisitaPortalDTO {
   usuarioWeb: string;
-  idAlumno?: number | null;
+  idContactoPortal?: number | null;
   correo?: string | null;
   nombre?: string | null;
   apellido?: string | null;

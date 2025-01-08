@@ -81,6 +81,7 @@ export class AppComponent implements OnInit,AfterViewInit ,OnDestroy {
   public stateToekn=false;
   public datosUsuario: datosRegistroVisitaPortalDTO[] = [];
   private formData: any[] = [];
+  idContactoPortal: any = null;
   correoUsuario: boolean = false;
   nombreUsuario: boolean = false;
   apellidoUsuario: boolean = false;
@@ -287,28 +288,31 @@ export class AppComponent implements OnInit,AfterViewInit ,OnDestroy {
       }
     }
     else { //Usuario no encontrado por usuarioWeb. Buscamos por defecto formulario progresivo que tenga condición "Usuario no identificado"
-      console.log('Usuario sin usuarioWeb');
-      this._FormularioProgressiveProfilingService.ObtenerListaFormularioProgresivo().pipe(takeUntil(this.signal$))
-      .subscribe({
-        next: x => {
-          this.formData = x.datosFormularioProgresivo;
-          if (this.formData.length > 0) {
-            this.formData.forEach((formulario: any) => {
-              if (formulario.condicionMostrar === 1 && formulario.activado === true) {
-                localStorage.setItem('formularioProgresivo', JSON.stringify(formulario));
-                localStorage.setItem('tiempoProgramasPublicidad', JSON.stringify(formulario.tiempoProgramasPublicidad));
-                localStorage.setItem('tiempoProgramasOrganico', JSON.stringify(formulario.tiempoProgramasOrganico));
-                localStorage.setItem('tiempoBlogsWhite', JSON.stringify(formulario.tiempoBlogsWhite));
-                localStorage.setItem('tiempoIndexTags', JSON.stringify(formulario.tiempoIndexTags));
-                this.monitorTiempoFormulario(formulario);
-              }
-            });
+      if (this.idContactoPortal == null || this.idContactoPortal == 0)
+      {
+        console.log('Usuario sin usuarioWeb');
+        this._FormularioProgressiveProfilingService.ObtenerListaFormularioProgresivo().pipe(takeUntil(this.signal$))
+        .subscribe({
+          next: x => {
+            this.formData = x.datosFormularioProgresivo;
+            if (this.formData.length > 0) {
+              this.formData.forEach((formulario: any) => {
+                if (formulario.condicionMostrar === 1 && formulario.activado === true) {
+                  localStorage.setItem('formularioProgresivo', JSON.stringify(formulario));
+                  localStorage.setItem('tiempoProgramasPublicidad', JSON.stringify(formulario.tiempoProgramasPublicidad));
+                  localStorage.setItem('tiempoProgramasOrganico', JSON.stringify(formulario.tiempoProgramasOrganico));
+                  localStorage.setItem('tiempoBlogsWhite', JSON.stringify(formulario.tiempoBlogsWhite));
+                  localStorage.setItem('tiempoIndexTags', JSON.stringify(formulario.tiempoIndexTags));
+                  this.monitorTiempoFormulario(formulario);
+                }
+              });
+            }
+          },
+          error: err => {
+            console.error('Error al obtener los datos:', err);
           }
-        },
-        error: err => {
-          console.error('Error al obtener los datos:', err);
-        }
-      });
+        });
+      }
     }
   }
 
@@ -331,14 +335,24 @@ export class AppComponent implements OnInit,AfterViewInit ,OnDestroy {
   }
 
   async consultarDatosUsuarioFomularioProgresivo(): Promise<boolean> {
+    this.idContactoPortal = null;
     return this._RegistroVisitaPortalService.ObtenerListaRegistroVisitaPortalPorUsuarioWeb(this.usuarioWeb)
     .pipe(takeUntil(this.signal$))
     .toPromise()
     .then(x => {
+
       if (x.datosRegistroVisitaPortal.length > 0) {
+        this.idContactoPortal = x.datosRegistroVisitaPortal[0].idContactoPortal;
         this.datosUsuario = x.datosRegistroVisitaPortal;
-        this.auxCorreoCliente  = x.datosRegistroVisitaPortal[0].correo;
-        return true;
+        if (this.idContactoPortal == null || this.idContactoPortal == 0) {
+          console.log ('Sin idContactoPortal')
+          this.auxCorreoCliente  = x.datosRegistroVisitaPortal[0].correo;
+          return true;
+        }
+        else {
+          console.log ('Con idContactoPortal')
+          return false
+        }
       } else {
         this.datosUsuario = [];
         this.auxCorreoCliente = "";

@@ -618,7 +618,7 @@ export class FormularioProgressiveProfilingComponent implements OnInit {
   guardaDatos(accion: number): Promise<void> {
     const valoresFormulario = this.formCamposDinamicos.value;
     const actualizarCampos: {
-      idAlumno: boolean;
+      idContactoPortal: boolean;
       correo: boolean;
       nombres: boolean;
       apellidos: boolean;
@@ -629,7 +629,7 @@ export class FormularioProgressiveProfilingComponent implements OnInit {
       areaTrabajo: boolean;
       industria: boolean;
     } = {
-      idAlumno: false,
+      idContactoPortal: false,
       correo: false,
       nombres: false,
       apellidos: false,
@@ -649,7 +649,7 @@ export class FormularioProgressiveProfilingComponent implements OnInit {
     });
     const datosRegistro: InsertaRegistroVisitaPortalDTO = {
       usuarioWeb: this.usuarioWeb,
-      idAlumno: null,
+      idContactoPortal: null,
       correo: valoresFormulario.correo,
       nombre: valoresFormulario.nombres,
       apellido: valoresFormulario.apellidos,
@@ -880,7 +880,7 @@ interface Pais extends Opcion {
 
 interface InsertaRegistroVisitaPortalDTO {
   usuarioWeb: string;
-  idAlumno?: number | null;
+  idContactoPortal?: number | null;
   correo?: string | null;
   nombre?: string | null;
   apellido?: string | null;
@@ -894,7 +894,7 @@ interface InsertaRegistroVisitaPortalDTO {
   accionBoton: number;
   indicePrograma: number;
   actualizarCampos: {
-    idAlumno: boolean;
+    idContactoPortal: boolean;
     correo: boolean;
     nombres: boolean;
     apellidos: boolean;
