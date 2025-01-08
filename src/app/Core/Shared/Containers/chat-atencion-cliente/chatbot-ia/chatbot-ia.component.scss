@@ -218,11 +218,14 @@
 :host ::ng-deep .asesorMsj .cntnmsj markdown p {
   color: #707070;
 }
+:host ::ng-deep .asesorMsj .cntnmsj markdown ul {
+  color: #707070;
+}
 .cntnmsj {
   max-width: 75%; /* Máximo ancho: 75% */
   min-width: 10%; /* Mínimo ancho: 10% (puedes ajustarlo según tu necesidad) */
   width: fit-content; /* Se ajusta al contenido */
-  padding: 1rem; /* Margen interno */
+  padding: 0.5rem 1rem; /* Margen interno */
 
   .statemsjEnviado {
     display: flex;

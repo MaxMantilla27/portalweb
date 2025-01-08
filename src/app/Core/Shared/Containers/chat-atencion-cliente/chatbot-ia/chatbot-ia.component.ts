@@ -437,10 +437,17 @@ export class ChatbotIaComponent implements OnInit {
               //Realiza el inicio de sesión del usuario
               if (response != null)
                 response.slice(1).forEach((historial: any) => {
+                  const fecha = new Date(historial.tiempoEnvio);
+                  const opciones: Intl.DateTimeFormatOptions = {
+                    hour: '2-digit',
+                    minute: '2-digit',
+                    hour12: true
+                  };
+                  let horaMensajeHistorico = fecha.toLocaleTimeString('es-ES', opciones);
                   this.mensajes.push({
                     mensaje: historial.contenido,
                     esUsuario: historial.esUsuario,
-                    fechaEnvio: this.ObtenerHoraActual()
+                    fechaEnvio: horaMensajeHistorico
                   });
                 });
               {

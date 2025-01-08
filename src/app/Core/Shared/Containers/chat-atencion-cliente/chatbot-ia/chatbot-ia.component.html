@@ -94,13 +94,13 @@
         >
           Esta conversación ha terminado.
         </div>
-        <div *ngIf="this.registroChatIA.Derivado" class="chat-cerrado-mensaje">
+        <div *ngIf="this.registroChatIA.Derivado" class="chat-cerrado-mensaje" style="margin-bottom: 15px;">
           Esta conversación está siendo derivada...
         </div>
       </div>
 
       <div
-        *ngIf="!ChatbotCerrado && !CargandoInformacion"
+        *ngIf="!ChatbotCerrado && !CargandoInformacion && !this.registroChatIA.Derivado"
         class="footerChatAula"
       >
         <input
@@ -164,14 +164,14 @@
     <ng-container
       *ngIf="ChatbotCerrado && ChatAcademicoAbierto && TieneCoordinador"
     >
-      <app-chat-atencion-cliente-academico
+      <app-chat-atencion-cliente-academico (IsOpen)="toggleChat($event)"
         [idProgramageneral]="registroChatIA.IdPGeneral!"
         [IdMatriculaCabecera]="registroChatIA.IdMatriculaCabecera!"
       ></app-chat-atencion-cliente-academico>
     </ng-container>
 
     <ng-container *ngIf="ChatbotCerrado && ChatVentasAbierto">
-      <app-chat-atencion-ventas></app-chat-atencion-ventas>
+      <app-chat-atencion-ventas (IsOpen)="toggleChat($event)"></app-chat-atencion-ventas>
     </ng-container>
 
     <ng-container

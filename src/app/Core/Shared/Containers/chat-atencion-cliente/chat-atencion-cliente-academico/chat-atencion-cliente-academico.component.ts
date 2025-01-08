@@ -115,6 +115,8 @@ export class ChatAtencionClienteAcademicoComponent
   AbrirChat: EventEmitter<void> = new EventEmitter<void>();
   @Input() Open = false;
   @Output() RegresarChatAcademico = new EventEmitter<boolean>();
+  @Output()
+  IsOpen: EventEmitter<boolean> = new EventEmitter<boolean>();
   public showConfirmationDialog = false;
   ngOnDestroy(): void {
     this.signal$.next(true);
@@ -468,6 +470,13 @@ export class ChatAtencionClienteAcademicoComponent
           console.log(this.FechaRegistro);
           this.mensajesAnteriorePrevio.forEach((z: any) => {
             if (new Date(z.Fecha) >= new Date(this.FechaRegistro)) {
+              const fecha = new Date(z.Fecha);
+                  const opciones: Intl.DateTimeFormatOptions = {
+                    hour: '2-digit',
+                    minute: '2-digit',
+                    hour12: true
+                  };
+              z.FechaEnvio = fecha.toLocaleTimeString('es-ES', opciones);
               this.mensajesAnteriore.push(z);
             }
           });
@@ -478,6 +487,8 @@ export class ChatAtencionClienteAcademicoComponent
               NombreRemitente: this.nombreAsesorSplit[0],
               Mensaje: 'Bienvenid@, ¿En qué puedo ayudarte?',
               IdRemitente: 'asesor',
+              FechaEnvio: this.ObtenerHoraActual()
+
             });
           }
 
@@ -509,6 +520,7 @@ export class ChatAtencionClienteAcademicoComponent
               NombreRemitente: '',
               Mensaje: this.configuration.textoInicial,
               IdRemitente: 'asesor',
+              FechaEnvio: this.ObtenerHoraActual()
             });
           }
         }
@@ -580,6 +592,7 @@ export class ChatAtencionClienteAcademicoComponent
               Mensaje: msg,
               IdRemitente: 'asesor',
               estadoEnviado: true,
+              FechaEnvio: this.ObtenerHoraActual()
             });
           }
           this.scrollAbajo(true, 4);
@@ -595,6 +608,7 @@ export class ChatAtencionClienteAcademicoComponent
             Mensaje: msg,
             IdRemitente: 'visitante',
             estadoEnviado: true,
+            FechaEnvio: this.ObtenerHoraActual()
           });
           this.scrollAbajo(true, 5);
 
@@ -823,5 +837,21 @@ export class ChatAtencionClienteAcademicoComponent
         });
       }
     }, 100);
+  }
+  toggleChat(state: boolean) {
+    this.Open = state;
+    this.IsOpen.emit(state);
+    if (this.Open) {
+      this.scrollAbajo(true, 1);
+    }
+  }
+  ObtenerHoraActual(){
+    const ahora = new Date();
+      let horaActual = ahora.toLocaleTimeString('es-ES', {
+        hour: '2-digit',
+        minute: '2-digit',
+        hour12: true
+      });
+    return horaActual
   }
 }

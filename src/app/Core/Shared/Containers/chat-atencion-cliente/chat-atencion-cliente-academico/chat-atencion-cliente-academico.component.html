@@ -21,6 +21,13 @@
 
         </div>
       </div>
+      <div style="width: 10%">
+        <span
+          style="width: 10%; cursor: pointer; font-weight: bold"
+          (click)="Open = false; IsOpen.emit(false); toggleChat(false)"
+          >-</span
+        >
+      </div>
     </div>
     <!-- <div class="textoAsesor" *ngIf="estadoLogueo!='false'">Soy {{nombreAsesorSplit[0]}} , {{mensajeStateAsesor}}</div> -->
   </div>
@@ -37,12 +44,12 @@
     </div>
     <div *ngIf="!showConfirmationDialog" #contenidoMsj class="contentChatMsj" (click)="marcarChatAgentecomoleido()">
       <div class="mensajeDefecto">Chat iniciado</div>
-      <div class="mensajeDefecto">{{nombreAsesorSplit[0]}} {{nombreAsesorSplit[1]}} se unió al Chat</div>
+      <!-- <div class="mensajeDefecto">{{nombreAsesorSplit[0]}} {{nombreAsesorSplit[1]}} se unió al Chat</div> -->
 
       <ng-container *ngFor="let item of mensajesAnteriore;let i = index">
           <div  [ngClass]="{'visitanteMsj': item.IdRemitente.toLowerCase()=='visitante','asesorMsj':item.IdRemitente.toLowerCase()=='asesor'}">
             <div class="cntnmsj">
-              <div class="remitente">{{item.NombreRemitente.split(' ')[0]}}</div>
+              <!-- <div class="remitente">{{item.NombreRemitente.split(' ')[0]}}</div> -->
               <div *ngIf="!item.esImagen" class="msj" [innerHtml]="item.Mensaje | safeHtml"></div>
               <div class="msj">
                 <img *ngIf="item.esImagen" [src]="item.url" alt="Imagen en el chat" style="width: 180px; height: 80px;" >
@@ -77,6 +84,12 @@
 
               </ng-container>
 
+            </div>
+            <div *ngIf="item.IdRemitente.toLowerCase()!='visitante'" class="fecha-asesor">
+              {{item.FechaEnvio}}
+            </div>
+            <div *ngIf="item.IdRemitente.toLowerCase()=='visitante'" class="fecha-visitante">
+              {{item.FechaEnvio}}
             </div>
           </div>
       </ng-container>
