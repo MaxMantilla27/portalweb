@@ -1,8 +1,5 @@
 <!-- holax1 -->
 <ng-container>
-  <div *ngIf="Open">
-    <div class="cerrarChatAtc" (click)="toggleChat(false)">X</div>
-  </div>
   <div *ngIf="!Open" style="display: flex" (click)="toggleChat(true)">
     <div class="chatAtc">
       <div style="display: flex">
@@ -11,17 +8,12 @@
           style="align-items: center; display: flex; justify-content: center"
         >
           <img
-            style="height: 35px"
+            style="height: 45px; width: 45px"
             [src]="'../../../../../../assets/imagenes/icono-chat-atc.png'"
             alt=""
           />
         </div>
-        <div
-          class="col-8"
-          style="font-size: 15px; line-height: 20px; text-align: left"
-        >
-          Atención al cliente
-        </div>
+        <div class="col-8 texto-chat-close">Atención al cliente</div>
       </div>
     </div>
     <div class="trianguloChatAtc"></div>
@@ -31,9 +23,6 @@
     *ngIf="Open != false"
     style="box-shadow: 0px 1px 4px #838383"
   >
-    <div class="cerrarChatMediaAtc" (click)="Open = false; IsOpen.emit(false)">
-      X
-    </div>
     <ng-container *ngIf="!ChatbotCerrado" select="[contenidoChat]">
       <div class="headerChatAtc">
         <div class="imgAsesorAtc">
@@ -47,6 +36,13 @@
             <div>Atención al cliente</div>
             <div>BSG Institute</div>
           </div>
+          <div style="width: 10%">
+            <span
+              style="width: 10%; cursor: pointer; font-weight: bold"
+              (click)="Open = false; IsOpen.emit(false); toggleChat(false)"
+              >-</span
+            >
+          </div>
         </div>
       </div>
 
@@ -58,78 +54,84 @@
       </div>
 
       <div
-      *ngIf="!ChatbotCerrado && !CargandoInformacion"
-      #contenidoMsj
-      class="contentChatMsj"
-    >
-    <ng-container *ngFor="let item of mensajes; let last = last">
-      <div
-        [ngClass]="{
-          visitanteMsj: item.esUsuario,
-          asesorMsj: !item.esUsuario
-        }"
+        *ngIf="!ChatbotCerrado && !CargandoInformacion"
+        #contenidoMsj
+        class="contentChatMsj"
       >
-        <div class="cntnmsj">
-          <!-- Mostrar "Escribiendo..." solo si es el último mensaje y EstadoEscribiendo es verdadero -->
-          <div *ngIf="EstadoEscribiendo && last" class="escribiendoBotIA">
-            <span>Escribiendo</span>
-            <span class="puntosBotIA">...</span>
+        <ng-container *ngFor="let item of mensajes; let last = last">
+          <div
+            [ngClass]="{
+              visitanteMsj: item.esUsuario,
+              asesorMsj: !item.esUsuario
+            }"
+          >
+            <div class="cntnmsj">
+              <!-- Mostrar "Escribiendo..." solo si es el último mensaje y EstadoEscribiendo es verdadero -->
+              <div *ngIf="EstadoEscribiendo && last" class="escribiendoBotIA">
+                <span>Escribiendo</span>
+                <span class="puntosBotIA">...</span>
+              </div>
+              <!-- Mostrar el mensaje si no está en estado escribiendo -->
+              <markdown
+                *ngIf="(!EstadoEscribiendo || !last) && item.mensaje != ''"
+                [data]="item.mensaje"
+              ></markdown>
+            </div>
+            <div *ngIf="!item.esUsuario && (!EstadoEscribiendo||!last)" class="fecha-asesor">
+              {{item.fechaEnvio}}
+            </div>
+            <div *ngIf="item.esUsuario && (!EstadoEscribiendo||!last)" class="fecha-visitante">
+              {{item.fechaEnvio}}
+            </div>
           </div>
-          <!-- Mostrar el mensaje si no está en estado escribiendo -->
-          <markdown *ngIf="(!EstadoEscribiendo || !last) &&item.mensaje!=''" [data]="item.mensaje"></markdown>
+        </ng-container>
+        <div *ngIf="ChatError" class="error-mensaje">
+          Hubo un error al enviar el mensaje.
+        </div>
+        <div
+          *ngIf="this.registroChatIA.Cerrado && !this.registroChatIA.Derivado"
+          class="chat-cerrado-mensaje"
+        >
+          Esta conversación ha terminado.
+        </div>
+        <div *ngIf="this.registroChatIA.Derivado" class="chat-cerrado-mensaje">
+          Esta conversación está siendo derivada...
         </div>
       </div>
-    </ng-container>
-      <div *ngIf="ChatError" class="error-mensaje">
-        Hubo un error al enviar el mensaje.
-      </div>
-      <div
-        *ngIf="this.registroChatIA.Cerrado && !this.registroChatIA.Derivado"
-        class="chat-cerrado-mensaje"
-      >
-        Esta conversación ha terminado.
-      </div>
-      <div
-        *ngIf="this.registroChatIA.Derivado"
-        class="chat-cerrado-mensaje"
-      >
-        Esta conversación está siendo derivada...
-      </div>
-    </div>
 
-    <div
-      *ngIf="!ChatbotCerrado && !CargandoInformacion"
-      class="footerChatAula"
-    >
-      <input
-        *ngIf="!this.registroChatIA.Cerrado && !ChatError"
-        class="chat-box-textinput"
-        [ngClass]="{ inputActive: inputActive }"
-        [disabled]="!inputActive"
-        (keyup.enter)="enviarMensaje()"
-        placeholder="Escribe tu mensaje aquí "
-        [(ngModel)]="nuevoMensaje"
-        #inputChat
-      />
-      <i
-        *ngIf="!this.registroChatIA.Cerrado && !ChatError"
-        class="material-icons"
-        style="font-size: 20px !important;"
-        (click)="enviarMensaje()"
-        >send</i
+      <div
+        *ngIf="!ChatbotCerrado && !CargandoInformacion"
+        class="footerChatAula"
       >
-      <button
-        *ngIf="
-          !this.registroChatIA.Derivado &&
-          (this.registroChatIA.Cerrado || ChatError)
-        "
-        class="mensaje-finalizado"
-        (click)="CerrarRegistroHiloChat(IdChatbotIAPortalHiloChat)"
-      >
-        Iniciar nueva conversación
-      </button>
-      <!--<div class="mensaje-finalizado" *ngIf="this.registroChatIA.Cerrado">Iniciar nueva conversación</div>-->
-    </div>
+        <input
+          *ngIf="!this.registroChatIA.Cerrado && !ChatError"
+          class="chat-box-textinput"
+          [ngClass]="{ inputActive: inputActive }"
+          [disabled]="!inputActive"
+          (keyup.enter)="enviarMensaje()"
+          placeholder="Escribe tu mensaje aquí "
+          [(ngModel)]="nuevoMensaje"
+          #inputChat
+        />
+        <i
+          *ngIf="!this.registroChatIA.Cerrado && !ChatError"
+          class="material-icons"
+          style="font-size: 20px !important"
+          (click)="enviarMensaje()"
+          >send</i
+        >
+        <button
+          *ngIf="
+            !this.registroChatIA.Derivado &&
+            (this.registroChatIA.Cerrado || ChatError)
+          "
+          class="mensaje-finalizado"
+          (click)="CerrarRegistroHiloChat(IdChatbotIAPortalHiloChat)"
+        >
+          Iniciar nueva conversación
+        </button>
+        <!--<div class="mensaje-finalizado" *ngIf="this.registroChatIA.Cerrado">Iniciar nueva conversación</div>-->
+      </div>
 
       <!--
       <div
@@ -159,7 +161,9 @@
         </ng-container>
         -->
     </ng-container>
-    <ng-container *ngIf="ChatbotCerrado && ChatAcademicoAbierto && TieneCoordinador">
+    <ng-container
+      *ngIf="ChatbotCerrado && ChatAcademicoAbierto && TieneCoordinador"
+    >
       <app-chat-atencion-cliente-academico
         [idProgramageneral]="registroChatIA.IdPGeneral!"
         [IdMatriculaCabecera]="registroChatIA.IdMatriculaCabecera!"

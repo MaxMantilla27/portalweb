@@ -1,6 +1,7 @@
 export interface MensajeChatbotIADTO {
     mensaje: string;
     esUsuario: boolean;
+    fechaEnvio: string
 };
 
 export interface RegistroChatbotIADTO{

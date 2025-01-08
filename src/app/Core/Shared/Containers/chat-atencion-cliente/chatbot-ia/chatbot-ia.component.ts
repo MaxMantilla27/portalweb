@@ -194,8 +194,7 @@ export class ChatbotIaComponent implements OnInit {
   enviarMensaje(): void {
     if (this.nuevoMensaje.trim() && this.inputActive) {
       this.inputActive = false;
-
-      this.mensajes.push({ esUsuario: true, mensaje: this.nuevoMensaje });
+      this.mensajes.push({ esUsuario: true, mensaje: this.nuevoMensaje,fechaEnvio: this.ObtenerHoraActual()});
       this.scrollAbajo(true, 2);
       this.registroChatIA.Mensaje = this.nuevoMensaje;
       this.registroChatIA.TiempoActual = new Date();
@@ -249,6 +248,7 @@ export class ChatbotIaComponent implements OnInit {
         this.mensajes.push({
           mensaje: this.registroChatIA.Mensaje ?? '',
           esUsuario: false,
+          fechaEnvio: this.ObtenerHoraActual()
         });
       }
       this.inputActive = true;
@@ -350,6 +350,7 @@ export class ChatbotIaComponent implements OnInit {
       this.mensajes.push({
         mensaje: this.nuevoMensaje,
         esUsuario: true,
+        fechaEnvio: this.ObtenerHoraActual()
       });
       this.nuevoMensaje = '';
       this.mostrarEscribiendo();
@@ -377,7 +378,7 @@ export class ChatbotIaComponent implements OnInit {
   // Muestra 'Escribiendo...'  para que el usuario sepa que no se ha colgado
   mostrarEscribiendo(): void {
     this.EstadoEscribiendo = true;
-    this.mensajes.push({ mensaje: 'Escribiendo...', esUsuario: false });
+    this.mensajes.push({ mensaje: 'Escribiendo...', esUsuario: false,fechaEnvio: this.ObtenerHoraActual() });
     this.scrollAbajo(true, 3);
   }
 
@@ -439,6 +440,7 @@ export class ChatbotIaComponent implements OnInit {
                   this.mensajes.push({
                     mensaje: historial.contenido,
                     esUsuario: historial.esUsuario,
+                    fechaEnvio: this.ObtenerHoraActual()
                   });
                 });
               {
@@ -715,5 +717,14 @@ export class ChatbotIaComponent implements OnInit {
         'true'
       );
     }
+  }
+  ObtenerHoraActual(){
+    const ahora = new Date();
+      let horaActual = ahora.toLocaleTimeString('es-ES', {
+        hour: '2-digit',
+        minute: '2-digit',
+        hour12: true
+      });
+    return horaActual
   }
 }

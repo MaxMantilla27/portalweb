@@ -4,7 +4,7 @@
   bottom: 25px;
   right: 30px;
   width: 150px;
-  background: #ff4e56;
+  background: #FF8610;
   height: 81.25px;
   color: white;
   display: flex;
@@ -21,7 +21,7 @@
 /* Estilo para el contenedor del chat en estado abierto */
 .chatSTAtc {
   position: fixed;
-  bottom: 70px;
+  bottom: 10px;
   right: 20px;
   width: 340px;
   background: white;
@@ -33,6 +33,7 @@
   border-radius: 10px;
   z-index: 200;
   box-shadow: 0px 0px 2px 0px #c3c3c3;
+  overflow: hidden;
 }
 
 /* Estilo para el botón de cerrar el chat */
@@ -44,7 +45,7 @@
   font-size: 25px;
   cursor: pointer;
   z-index: 1000000;
-  background: #ff4e55;
+  background: #FF8610;
   border-radius: 50%;
   width: 50px;
   height: 50px;
@@ -65,7 +66,7 @@
   border-right: 30px solid transparent;
   border-top: 30px solid transparent;
   border-left: 30px solid transparent;
-  border-bottom: 30px solid #ff4e56;
+  border-bottom: 30px solid #FF8610;
   width: 30px;
   height: 30px;
   bottom: 20px;
@@ -75,7 +76,7 @@
 
 /* Estilo para el header del chat */
 .headerChatAtc {
-  background: #ff4e55;
+  background: #FF8610;
   border-radius: 8px 8px 0px 0px;
   .imgAsesorAtc {
     color: white;
@@ -178,6 +179,9 @@
     width: 80%;
     left: 10%;
   }
+  .contentChatMsj{
+    height: 25rem;
+  }
 }
 
 .contentChatMsj {
@@ -191,72 +195,82 @@
   display: flex;
   justify-content: flex-end;
   padding: 3px 10px 3px 0px;
+  flex-wrap: wrap;
   .cntnmsj {
-    // background: #9df5c9;
-    background: #ccf5ff;
+    background: #FFEDDB;
+    border-radius: 15px 0px 15px 15px;
   }
+}
+:host ::ng-deep .visitanteMsj .cntnmsj markdown p {
+  color: #EF6C00;
 }
 .asesorMsj {
   max-width: 100%;
   display: flex;
   justify-content: flex-start;
   padding: 3px 0px 3px 10px;
+  flex-wrap: wrap;
   .cntnmsj {
-    background: #eef3f9;
+    background: #d5e1ef;
+    border-radius: 0px 15px 15px 15px;
   }
 }
+:host ::ng-deep .asesorMsj .cntnmsj markdown p {
+  color: #707070;
+}
+.cntnmsj {
+  max-width: 75%; /* Máximo ancho: 75% */
+  min-width: 10%; /* Mínimo ancho: 10% (puedes ajustarlo según tu necesidad) */
+  width: fit-content; /* Se ajusta al contenido */
+  padding: 1rem; /* Margen interno */
 
-.cntnmsj{
-  width: 75%;
-  padding: 10px;
-  border-radius: 3px;
-
-  .statemsjEnviado{
+  .statemsjEnviado {
     display: flex;
     justify-content: flex-end;
     position: relative;
-    i{
-      color:#92a58c;
+    i {
+      color: #92a58c;
       position: absolute;
       bottom: 0px;
       font-size: 11px !important;
     }
   }
-  .statemsjleido{
+  .statemsjleido {
     display: flex;
     justify-content: flex-end;
     position: relative;
-    i{
-      color:#4fc3f7;
+    i {
+      color: #4fc3f7;
       position: absolute;
       bottom: 0px;
       font-size: 11px !important;
     }
   }
-  .statemsjnoleido{
+  .statemsjnoleido {
     display: flex;
     justify-content: flex-end;
     position: relative;
-    i{
-      color:#92a58c;
+    i {
+      color: #92a58c;
       position: absolute;
       bottom: 0px;
       font-size: 11px !important;
     }
   }
-  .remitente{
+  .remitente {
     font-size: 10px;
     font-weight: bold;
     text-align: left;
   }
-  .msj{
+  .msj {
     font-size: 10px;
     text-align: left;
-    img{
+    img {
       width: 80%;
     }
   }
 }
+
 
 .error-mensaje {
   color: red;
@@ -274,7 +288,7 @@
 
 
 :host ::ng-deep markdown {
-  font-size: 10px;
+  font-size: 12px;
 }
 
 :host ::ng-deep markdown h1,
@@ -285,7 +299,9 @@
   font-size: 10px;
   font-weight: bold;
 }
-
+:host ::ng-deep markdown p{
+  margin: 0px;
+}
 .material-icons {
   font-weight: 600;
   font-size: 9px !important;
@@ -294,19 +310,21 @@
 .footerChatAula {
   width: 100%;
   height: 50px;
-  background: #FF4E56;
+  background: transparent;
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 0px 10px;
   position: relative;
   border-radius: 0px 0px 10px 10px;
+  border-top: 2px solid #E3E3E3;
   .chat-box-textinput {
-    border: none;
+    border: 2px solid #E3E3E3;
     border-radius: 10px;
     width: 90%;
     padding: 4px 10% 4px 10px;
-    //font-size: 10px;
+    color: #707070;
+    font-size: 15px;
   }
   /*.chat-box-textinput::placeholder {
     font-size: 10px;
@@ -357,18 +375,21 @@
   scroll-behavior: smooth; /* Garantiza un scroll suave */
 }
 .escribiendoBotIA {
-  font-size: 11.5px !important;
+  font-size: 12px !important;
+  color:#707070
 }
 
 .puntosBotIA {
   display: inline-block;
   width: 1.5em;
   text-align: left;
+  color:#707070
 }
 
 .puntosBotIA::after {
   content: '...';
   animation: puntosAnimacionBot 1.5s steps(4, end) infinite;
+  color:#707070
 }
 
 @keyframes puntosAnimacionBot {
@@ -384,4 +405,30 @@
   100% {
     content: '...';
   }
+}
+.texto-chat-close {
+  font-family: 'Poppins', sans-serif;
+  font-weight: bold; /* Estilo Bold */
+  color: #FFFFFF;       /* Color (puedes reemplazar el # con el color que prefieras) */
+  font-size: 18px;
+  line-height: 20px;
+  text-align: left;
+  align-items: center;
+  display: flex;
+}
+.fecha-visitante{
+  text-align: right;
+  font-size: 9px;
+  color: #A3A3A3;
+  flex-basis: 100%;
+  padding-right: 0.5rem;
+  margin-top: 5px;
+}
+.fecha-asesor{
+  text-align: left;
+  font-size: 9px;
+  color: #A3A3A3;
+  flex-basis: 100%;
+  padding-left: 0.5rem;
+  margin-top: 5px;
 }
