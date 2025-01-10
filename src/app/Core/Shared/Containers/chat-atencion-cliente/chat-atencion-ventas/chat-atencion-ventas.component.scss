@@ -58,24 +58,24 @@
     display: none;
   }
 
-  /* Estilo para el triángulo del chat */
-  .trianguloChatAtc {
-    position: fixed;
-    transform: rotate(45deg);
-    border-right: 30px solid transparent;
-    border-top: 30px solid transparent;
-    border-left: 30px solid transparent;
-    border-bottom: 30px solid #ff4e56;
-    width: 30px;
-    height: 30px;
-    bottom: 20px;
-    right: 15px;
-    z-index: 1;
-  }
+  // /* Estilo para el triángulo del chat */
+  // .trianguloChatAtc {
+  //   position: fixed;
+  //   transform: rotate(45deg);
+  //   border-right: 30px solid transparent;
+  //   border-top: 30px solid transparent;
+  //   border-left: 30px solid transparent;
+  //   border-bottom: 30px solid #FF8610;
+  //   width: 30px;
+  //   height: 30px;
+  //   bottom: 20px;
+  //   right: 15px;
+  //   z-index: 1;
+  // }
 
   /* Estilo para el header del chat */
   .headerChatAtc {
-    background: #ff4e55;
+    background: #FF8610;
     border-radius: 8px 8px 0px 0px;
     .imgAsesorAtc {
       color: white;
@@ -130,14 +130,15 @@
     max-height: calc(100vh - 80px); /* Máximo alto ajustado restando 80px */
     width: 100%; /* Asegura que ocupe todo el ancho disponible */
     box-sizing: border-box; /* Incluye el padding y el borde en el cálculo del alto total */
-    /* Elimina overflow: hidden; */
+    overflow-y: auto;
+    max-height: 20rem;
   }
 
   /* Estilo del contenedor principal de la interacción */
   .PrimeraInteraccionAtc {
-    background-color: #ecedef;
+    background-color: #d5e1ef;
     padding: 10px;
-    border-radius: 8px;
+    border-radius: 0px 10px 10px 10px;
     box-shadow: 0 0 20px #0000001a;
     width: 100%;
     max-width: 100%; /* Ajusta el ancho máximo al 100% */
@@ -154,6 +155,8 @@
   /* Estilo para los párrafos dentro del contenedor principal */
   .PrimeraInteraccionAtc p {
     margin-bottom: 2px; /* Espacio inferior entre párrafos */
+    color: #707070;
+    font-size: 12px;
   }
 
   /* Estilo para las listas dentro del contenedor principal */
@@ -179,13 +182,13 @@
 
   /* Estilo específico para los cursos padre */
   .PrimeraInteraccionAtc ul li > a {
-    color: #033DAB;
+    color: #707070!important
   }
 
   /* Estilo para el hover de los cursos padre */
   .PrimeraInteraccionAtc ul li > a:hover {
     text-decoration: underline;
-    color: #FF4E56 !important;
+    color: #FF8610 !important;
   }
 
   /* Estilo para los cursos hijo */
@@ -195,7 +198,7 @@
 
   /* Estilo para el hover de los cursos hijo */
   .PrimeraInteraccionAtc ul li ul.lista-interior li a:hover {
-    color: #FF4E56;
+    color: #FF8610;
   }
 
   /* Estilo para el ícono (antes del enlace) en cursos padre */
@@ -223,7 +226,7 @@
     align-items: center;
     cursor: pointer;
     font-size: 10px;
-    color: #FF4E56;
+    color: #FF8610;
     font-weight: 600;
     border-bottom: solid 1px transparent;
   }

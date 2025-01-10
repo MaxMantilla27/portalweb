@@ -224,7 +224,7 @@ export class ChatAtencionVentasComponent implements OnInit, OnChanges {
     //   });
     // console.log('INGRESA CABECERA 2');
     this.ObtenerInformacionChat();
-    this.VerificarProgramasDetalle();
+    // this.VerificarProgramasDetalle();
   }
   public VerificarProgramasDetalle(): void {
     let route = this._ActivatedRoute.root;
@@ -233,8 +233,11 @@ export class ChatAtencionVentasComponent implements OnInit, OnChanges {
     }
     console.log('COMPONENTE ACTUAL', route.snapshot.component);
     if (route.snapshot.component === ProgramasDetalleComponent) {
+      console.log('sera true')
       this.toggleChat(true);
     } else {
+      console.log('sera false')
+      console.log('esta abierto?',this.Open)
       this.toggleChat(this.Open);
     }
   }

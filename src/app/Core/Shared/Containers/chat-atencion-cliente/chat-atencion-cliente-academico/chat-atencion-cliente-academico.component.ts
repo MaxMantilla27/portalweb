@@ -470,13 +470,14 @@ export class ChatAtencionClienteAcademicoComponent
           console.log(this.FechaRegistro);
           this.mensajesAnteriorePrevio.forEach((z: any) => {
             if (new Date(z.Fecha) >= new Date(this.FechaRegistro)) {
-              const fecha = new Date(z.Fecha);
-                  const opciones: Intl.DateTimeFormatOptions = {
-                    hour: '2-digit',
-                    minute: '2-digit',
-                    hour12: true
-                  };
-              z.FechaEnvio = fecha.toLocaleTimeString('es-ES', opciones);
+              const regex = /<img\s+[^>]*src="([^"]+)"[^>]*>/i;
+              z.esImagen = regex.test(z.Mensaje);
+              if(z.esImagen){
+                const match = z.Mensaje.match(regex);
+                z.url = match[1].trim();
+              }
+              const fecha = new Date(z.fecha); // Suponiendo que z.fecha es una fecha válida
+              z.FechaEnvio = this.formatearHoraPersonalizada(fecha);
               this.mensajesAnteriore.push(z);
             }
           });
@@ -845,13 +846,32 @@ export class ChatAtencionClienteAcademicoComponent
       this.scrollAbajo(true, 1);
     }
   }
-  ObtenerHoraActual(){
+  ObtenerHoraActual(): string {
     const ahora = new Date();
-      let horaActual = ahora.toLocaleTimeString('es-ES', {
-        hour: '2-digit',
-        minute: '2-digit',
-        hour12: true
-      });
-    return horaActual
+    let hora: number = ahora.getHours();
+    let minutos: number = ahora.getMinutes();
+    const esAM: boolean = hora < 12;
+
+    // Ajustar las horas para el formato de 12 horas
+    hora = hora % 12 || 12; // Cambia 0 a 12 para las horas AM/PM
+    const minutosStr: string = minutos.toString().padStart(2, '0'); // Asegura siempre 2 dígitos para minutos
+
+    const sufijo: string = esAM ? 'am' : 'pm';
+    return `${hora}:${minutosStr} ${sufijo}`;
+  }
+  ampliarImagen(url: string): void {
+    window.open(url, '_blank');
+  }
+  formatearHoraPersonalizada(fecha: Date): string {
+    let hora: number = fecha.getHours();
+    let minutos: number = fecha.getMinutes();
+    const esAM: boolean = hora < 12;
+
+    // Ajustar las horas para el formato de 12 horas
+    hora = hora % 12 || 12; // Cambia 0 a 12 para las horas AM/PM
+    const minutosStr: string = minutos.toString().padStart(2, '0'); // Asegura siempre 2 dígitos para minutos
+
+    const sufijo: string = esAM ? 'am' : 'pm';
+    return `${hora}:${minutosStr} ${sufijo}`;
   }
 }

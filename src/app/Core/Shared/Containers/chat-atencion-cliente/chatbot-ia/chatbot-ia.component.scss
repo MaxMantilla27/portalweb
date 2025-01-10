@@ -3,7 +3,7 @@
   position: fixed;
   bottom: 25px;
   right: 30px;
-  width: 150px;
+  width: 12rem;
   background: #FF8610;
   height: 81.25px;
   color: white;
@@ -186,7 +186,7 @@
 
 .contentChatMsj {
   width: 100%;
-  height: 200px;
+  height: 17rem!important;
   overflow: auto;
 }
 
@@ -283,10 +283,12 @@
 }
 
 .chat-cerrado-mensaje {
-  color: black;
+  color: #707070;
   text-align: center;
   margin-top: 10px;
   font-weight: bold;
+  font-size: 14px;
+  margin-bottom: 15px;
 }
 
 
@@ -418,6 +420,7 @@
   text-align: left;
   align-items: center;
   display: flex;
+  padding: 5px;
 }
 .fecha-visitante{
   text-align: right;

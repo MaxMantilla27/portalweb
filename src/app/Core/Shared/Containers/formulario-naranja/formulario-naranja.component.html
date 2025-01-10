@@ -1,0 +1,213 @@
+<!-- holax1 -->
+<div class="row" style="position: relative;" (click)="ClickIntoForm()">
+  <form (submit)="EnviarCambios()" [formGroup]="userForm" #f="ngForm">
+    <ng-container formArrayName="Fields">
+      <div class="row">
+        <div *ngFor="let field of fiels; let i=index"
+          [class]="field.class==undefined?'col-12 col-md-12 col-lg-12 fieldOldRojo':field.class+' fieldOldRojo'">
+          <div [formGroupName]="i">
+            <ng-container *ngIf="Tipo==1">
+
+              <ng-container *ngIf="!FormOld">
+                <ng-container
+                  *ngIf="field.tipo=='' || field.tipo=='text' || field.tipo=='number' || field.tipo=='password'">
+                  <mat-form-field appearance="outline" *ngIf="!FormOld">
+                    <mat-label >{{field.label}}</mat-label>
+                    <input type="{{field.tipo}}" [autofocus]="field.focus" [style]="field.style" formControlName="{{field.nombre}}" matInput />
+                    <mat-error  *ngIf="userForm.invalid">{{obtenerErrorCampoNombre(i,field.nombre)}}</mat-error>
+                  </mat-form-field>
+                </ng-container>
+                <ng-container *ngIf="field.tipo=='select'">
+                  <mat-form-field appearance="outline">
+                    <mat-label >{{field.label}}</mat-label>
+                    <mat-select [style]="field.style" formControlName="{{field.nombre}}"
+                      (selectionChange)="OnSelect.emit({Nombre:field.nombre,value:$event.value})">
+                      <mat-option *ngFor="let option of field.data" [value]="option.value">{{option.Nombre}}
+                      </mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="userForm.invalid">{{obtenerErrorCampoNombre(i,field.nombre)}}</mat-error>
+                  </mat-form-field>
+                </ng-container>
+                <ng-container *ngIf="field.tipo=='phone'">
+                  <div class="row">
+                    <div class="col-3 col-md-3 col-lg-3 fieldOldRojo">
+
+                      <mat-form-field>
+                        <mat-select placeholder="Select offer" formControlName="promo" [disabled]="true" [(value)]="paisSelect">
+                          <mat-select-trigger>{{IconPaises()}}</mat-select-trigger>
+                          <mat-option *ngFor="let item of paise" [value]="item.idPais">
+                            {{ item.flag }}
+                            <i class="material-icons">
+                              info
+                            </i>
+                          </mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                    </div>
+                  </div>
+                </ng-container>
+
+              </ng-container>
+              <ng-container *ngIf="FormOld">
+                <div class="fieldOldRojo">
+                  <ng-container
+                    *ngIf="field.tipo=='' || field.tipo=='text' || field.tipo=='number' || field.tipo=='password'">
+                    <mat-form-field appearance="outline">
+                      <mat-label>{{field.label}}</mat-label>
+                      <input type="{{field.tipo}}" [autofocus]="field.focus" [style]="field.style" formControlName="{{field.nombre}}" matInput />
+                      <mat-error *ngIf="userForm.invalid && flagLocalidadError!=true">{{obtenerErrorCampoNombre(i,field.nombre)}}</mat-error>
+                      <mat-error *ngIf="flagLocalidadError == true">
+                        Error clave LADA Icorrecta
+                      </mat-error>
+                    </mat-form-field>
+                  </ng-container>
+                  <ng-container  *ngIf="field.tipo=='select' && field.hidden !=true">
+                    <mat-form-field appearance="outline">
+                      <mat-label>{{field.label == 'Región' && paisSelect == 52 ? "Estado" : field.label}}</mat-label>
+                      <mat-select
+                      [style]="field.style" formControlName="{{field.nombre}}"
+                      (selectionChange)="changeselectForm(field.nombre,$event.value)"
+                      (openedChange)="onSelectOpenedChange(field)"
+                      >
+                      <div class="search-container">
+                        <input
+                        *ngIf="field.nombre == 'IdPais'"
+                        #inputField
+                        placeholder="Buscar"
+                        matInput
+                        type="text"
+                        (keyup)="onKey($event, field)"
+                        class="example-input"
+                        style="background-color: #cacaca;
+                        height: 35px;
+                        padding: 5px;">
+                        <input
+                        *ngIf="field.nombre == 'IdRegion'"
+                        #inputFieldRegion
+                        placeholder="Buscar"
+                        matInput
+                        type="text"
+                        (keyup)="onKey($event, field)"
+                        class="example-input"
+                        style="background-color: #cacaca;
+                        height: 35px;
+                        padding: 5px;">
+                        <input
+                        *ngIf="field.nombre == 'IdLocalidad'"
+                        #inputFieldLocalidad
+                        placeholder="Buscar"
+                        matInput
+                        type="text"
+                        (keyup)="onKey($event, field)"
+                        class="example-input"
+                        style="background-color: #cacaca;
+                        height: 35px;
+                        padding: 5px;">
+                      </div>
+                      <div class="options-container">
+                        <mat-option
+                        *ngFor="let option of field.filteredOptions"
+                        [value]="option.value"
+                        >
+                        {{option.Nombre}}
+                      </mat-option>
+                      <mat-option *ngIf="field.filteredOptions?.length<=0">No hay opciones</mat-option>
+                    </div>
+                        <mat-option *ngFor="let option of field.data" [value]="option.value">{{option.Nombre}}
+                        </mat-option>
+                      </mat-select>
+                      <mat-error *ngIf="userForm.invalid">{{obtenerErrorCampoNombre(i,field.nombre)}}</mat-error>
+                    </mat-form-field>
+                  </ng-container>
+
+                  <ng-container *ngIf="field.tipo=='phone'">
+                    <div class="row">
+                      <div class="col-2 col-md-2 col-lg-2 " (click)="select.open()" style="padding-right: 0px;">
+                        <div class="fieldOldRojo contSelectFormRojo" >
+                          <mat-form-field appearance="fill" style="height: 0px; width: 0px;" class="transForm">
+                            <mat-select #myselsetc [(value)]="paisSelect" [disabled]="true" #select panelClass="myPanelClass"
+                            (selectionChange)="validatePais(i,field.nombre)">
+
+                              <mat-option *ngFor="let item of paise" hidden="true" [value]="item.idPais">
+                                <img [src]="item.flag" alt="{{item.pais}}" style="    width: 20px;height: 20px;">
+                                {{item.pais}}
+                              </mat-option>
+                            </mat-select>
+                          </mat-form-field>
+                          <div [style]="'background-image: url('+IconPaises()+')'" alt="" class="urlSelect"></div>
+                          <!-- <i class="material-icons">arrow_drop_down</i> -->
+                        </div>
+                      </div>
+                      <div class="col-10 col-md-10 col-lg-10 fieldOldRojo">
+                        <mat-form-field appearance="outline">
+                          <mat-label>{{field.label}}</mat-label>
+                          <!-- <span matPrefix>{{PrefPaises()}}</span> -->
+                          <input type="text" [autofocus]="field.focus" (keyup)="ChangeInpiut(i,field.nombre)" (keydown)="ChangeInpiut(i,field.nombre)" [style]="field.style" formControlName="{{field.nombre}}" matInput />
+                          <mat-error *ngIf="userForm.invalid && flagLocalidadError!=true">{{obtenerErrorCampoNombre(i,field.nombre)}}</mat-error>
+                          <mat-error *ngIf="flagLocalidadError == true">
+                            Error clave LADA Icorrecta
+                          </mat-error>
+                        </mat-form-field>
+                      </div>
+                    </div>
+                  </ng-container>
+                </div>
+              </ng-container>
+            </ng-container>
+            <ng-container *ngIf="Tipo==2">
+              <div class="row" style="align-items: center;">
+                <div class="col-12 col-md-3 col-lg-3" style="margin-bottom: 20px;">{{field.label}}</div>
+                <div class="col-12 col-md-9 col-lg-9 fieldOldRojo">
+
+                  <ng-container
+                    *ngIf="field.tipo=='' || field.tipo=='text' || field.tipo=='number' || field.tipo=='password'">
+                    <mat-form-field appearance="outline">
+                      <mat-label>{{field.label}}</mat-label>
+                      <input type="{{field.tipo}}" [autofocus]="field.focus" [style]="field.style" formControlName="{{field.nombre}}" matInput />
+                      <mat-error *ngIf="userForm.invalid">{{obtenerErrorCampoNombre(i,field.nombre)}}</mat-error>
+                    </mat-form-field>
+                  </ng-container>
+                  <ng-container *ngIf="field.tipo=='select'">
+                    <mat-form-field appearance="outline">
+                      <mat-label>{{field.label}}</mat-label>
+                      <mat-select [style]="field.style" formControlName="{{field.nombre}}"
+                        (selectionChange)="OnSelect.emit({Nombre:field.nombre,value:$event.value})">
+                        <mat-option *ngFor="let option of field.data" [value]="option.value">{{option.Nombre}}
+                        </mat-option>
+                      </mat-select>
+                      <mat-error *ngIf="userForm.invalid">{{obtenerErrorCampoNombre(i,field.nombre)}}</mat-error>
+                    </mat-form-field>
+                  </ng-container>
+
+                  <ng-container *ngIf="field.tipo=='phone'">
+
+                  </ng-container>
+                </div>
+              </div>
+            </ng-container>
+            <ng-container *ngIf="field.tipo=='checkbox'">
+              <mat-checkbox color="primary" formControlName="{{field.nombre}}" [style]="field.style">{{field.label}}
+              </mat-checkbox>
+            </ng-container>
+            <ng-container *ngIf="field.tipo=='terminos'" >
+              <mat-checkbox color="primary" formControlName="{{field.nombre}}" [style]="field.style" >
+                He leído y acepto los <a  title="Vínculo a Términos de uso web" routerLink="/termino-uso-web" target="_blank"> Términos de uso del sitio web</a>
+                y la <a title="Vínculo a Políticas de Privacidad"  routerLink="/politica-privacidad" target="_blank">Política de privacidad</a>
+              </mat-checkbox>
+            </ng-container>
+          </div>
+        </div>
+
+      </div>
+    </ng-container>
+
+    <div class="col-sm-12" style="width: 100%;">
+      <ng-content select="[contenido]">
+      </ng-content>
+    </div>
+    <div class="col-sm-12" style="width: 100%;">
+      <ng-content select="[send]">
+      </ng-content>
+    </div>
+  </form>
+</div>

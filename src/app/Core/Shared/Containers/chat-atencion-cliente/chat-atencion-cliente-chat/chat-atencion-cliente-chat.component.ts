@@ -11,6 +11,7 @@ import { environment } from 'src/environments/environment';
 import { HelperService } from '../../../Services/helper.service';
 import { ChatAtencionClienteService } from '../../../Services/ChatAtencionCliente/chat-atencion-cliente.service';
 import { ChatAtcFormularioEnviadoDTO } from 'src/app/Core/Models/ChatAtencionClienteDTO';
+import { DomSanitizer } from '@angular/platform-browser';
 @Component({
   selector: 'app-chat-atencion-cliente-chat',
   templateUrl: './chat-atencion-cliente-chat.component.html',
@@ -26,11 +27,14 @@ export class ChatAtencionClienteChatComponent implements OnInit,OnDestroy,OnChan
     private _SessionStorageService:SessionStorageService,
     private _GlobalService:GlobalService,
     private _ChatEnLinea: ChatEnLineaService,
-    private _ChatAtencionClienteService:ChatAtencionClienteService
+    private _ChatAtencionClienteService:ChatAtencionClienteService,
+    private sanitizer: DomSanitizer,
   ) { }
 
+  pdfsEnChat: any[] = [];
 
   inputActive=false;
+  mensajesAnteriorePrevio: any = [];
   mensajesAnteriore:any=[];
   public charge=false
   public idcampania=this._SessionStorageService.SessionGetValue("idCampania")==''?'0':(this._SessionStorageService.SessionGetValue("idCampania"));
@@ -78,6 +82,8 @@ export class ChatAtencionClienteChatComponent implements OnInit,OnDestroy,OnChan
   @Output()
   AbrirChat: EventEmitter<void> = new EventEmitter<void>();
   @Input() Open=false;
+  @Output()
+  IsOpen: EventEmitter<boolean> = new EventEmitter<boolean>();
   public IdContactoPortalSegmento:any;
   public RegistroHistoricoUsuario:any
   public RespuestaConexion:ChatAtcFormularioEnviadoDTO={
@@ -85,6 +91,8 @@ export class ChatAtencionClienteChatComponent implements OnInit,OnDestroy,OnChan
     idAlumno:0
   }
   public ReiniciarFlujoChat=false;
+  public archivoenviado: any;
+  public imagenMostrada: boolean = false;
   ngOnDestroy(): void {
     this.signal$.next(true)
     this.signal$.complete()
@@ -171,14 +179,13 @@ export class ChatAtencionClienteChatComponent implements OnInit,OnDestroy,OnChan
         this.setChat();
         this.onlineStatus();
         this.addMessageP();
-        this.eliminaridchat();
         this.openChatWindow();
         this.marcarChatAlumnoComoLeidos();
         // this.ObtenerAsesorVentas();
         this.VerificarChatFinalizado()
       }
     })
-
+    console.log('MENSAJES HISTORICOS',this.mensajesAnteriore)
   }
   ObtenerConfiguracionChat(){
     this._ChatEnLinea.ObtenerConfiguracionChat().pipe(takeUntil(this.signal$)).subscribe({
@@ -292,7 +299,8 @@ export class ChatAtencionClienteChatComponent implements OnInit,OnDestroy,OnChan
         this.mensajesAnteriore.push({
           nombreRemitente:"",
           mensaje:this.configuration.textoInicial,
-          idRemitente:"asesor"
+          idRemitente:"asesor",
+          fechaEnvio: this.ObtenerHoraActual()
         })
       }
       this.stateAsesor=data.status
@@ -334,7 +342,8 @@ export class ChatAtencionClienteChatComponent implements OnInit,OnDestroy,OnChan
         this.mensajesAnteriore.push({
           nombreRemitente:this.nombreAsesorSplit[0],
           mensaje:msg,
-          idRemitente:"asesor"
+          idRemitente:"asesor",
+          fechaEnvio: this.ObtenerHoraActual()
         })
         // Inicia o reinicia el temporizador de inactividad
         startInactivityTimer();
@@ -343,7 +352,8 @@ export class ChatAtencionClienteChatComponent implements OnInit,OnDestroy,OnChan
         this.mensajesAnteriore.push({
           nombreRemitente:this.nombres,
           mensaje:msg,
-          idRemitente:"visitante"
+          idRemitente:"visitante",
+          fechaEnvio: this.ObtenerHoraActual()
         })
         this.NroMensajesSinLeer++;
         // Detiene el temporizador porque el visitante respondió
@@ -361,7 +371,6 @@ export class ChatAtencionClienteChatComponent implements OnInit,OnDestroy,OnChan
   }
   setChat(){
     this.hubConnection.on("setChat",(id:any, agentName:any, existing:any)=>{
-
       this.ChatID=id
       this._SessionStorageService.SessionSetValueSesionStorage(this.chatKey,id)
       if (existing) {
@@ -373,11 +382,14 @@ export class ChatAtencionClienteChatComponent implements OnInit,OnDestroy,OnChan
           this.mensajesAnteriore.push({
             nombreRemitente:"",
             mensaje:this.configuration.textoInicial,
-            idRemitente:"asesor"
+            idRemitente:"asesor",
+            fechaEnvio: this.ObtenerHoraActual()
           })
         }
       }
     })
+  console.log('Idddddd de la sesión',this.ChatID)
+
   }
   openChatWindow(){
     this.hubConnection.on("openChatWindow",(x:any)=>{
@@ -408,18 +420,87 @@ export class ChatAtencionClienteChatComponent implements OnInit,OnDestroy,OnChan
     }
   }
   AdjuntarArchivoChatSoporte(){
+    const allowedExtensions = [
+      'png',
+      'jpg',
+      'pdf',
+      'doc',
+      'docx',
+      'jpeg',
+      'jfif',
+      'xlsx',
+      'xls',
+    ];
 
-    this._ChatDetalleIntegraService.AdjuntarArchivoChatSoporte(this.selectedFiles.item(0)).pipe(takeUntil(this.signal$)).subscribe({
-      next:x=>{
-        this.idInteraccion=this.GetsesionIdInteraccion();
-        this.mensajeChatArchivoAdjunto(x.Url, x.IdArchivo, x.Tipo)
-      },
-      complete:()=>{
-        this.scrollAbajo(true,4)
+    for (let i = 0; i < this.selectedFiles.length; i++) {
+      const file = this.selectedFiles[i];
+      const name = file.name;
+      const extension = name.split('.').pop().toLowerCase();
+
+      if (allowedExtensions.includes(extension)) {
+        this._ChatDetalleIntegraService
+          .AdjuntarArchivoChatSoporte(file)
+          .pipe(takeUntil(this.signal$))
+          .subscribe({
+            next: (x) => {
+              const url = x.Url;
+              const idArchivo = x.IdArchivo;
+              const tipo = x.Tipo;
+              this.idInteraccion = this.GetsesionIdInteraccion();
+              console.log(this.idInteraccion);
+              this.mensajeChatArchivoAdjunto(url, idArchivo, tipo)
+              if (['png', 'jpg', 'jpeg', 'jfif'].includes(extension)) {
+                // Crear un nuevo objeto de mensaje para la imagen
+                const newImageMessage = {
+                  NombreRemitente: this.nombres,
+                  Mensaje: 'Imagen enviada con éxito',
+                  IdRemitente: 'visitante', // Suponiendo que es un mensaje del visitante
+                  estadoEnviado: true,
+                  url: url, // Almacenar la URL de la imagen
+                  tipo: tipo, // Almacenar el tipo de imagen (p.ej., 'png', 'jpg')
+                  idArchivo: idArchivo, // Almacenar el ID de la imagen si es necesario
+                  esImagen: true, // Propiedad personalizada para indicar que es una imagen
+                };
+                this.archivoenviado = newImageMessage;
+                if (!this.imagenMostrada) {
+                  this.mostrarImagenEnChat(url); // Corrige esto para usar la URL correcta
+                  this.imagenMostrada = true;
+                }
+                // Push the new image message into your messages array
+              } else if (
+                ['pdf', 'doc', 'docx', 'xlsx', 'xls'].includes(extension)
+              ) {
+                // Crear un nuevo objeto de mensaje para el documento
+                const newDocMessage = {
+                  NombreRemitente: this.nombres,
+                  Mensaje: 'Archivo enviado: ' + name, // Puedes personalizar el texto del mensaje
+                  IdRemitente: 'visitante', // Suponiendo que es un mensaje del visitante
+                  estadoEnviado: true,
+                  url: url, // Almacenar la URL del documento
+                  tipo: tipo, // Almacenar el tipo de documento (p.ej., 'pdf', 'doc')
+                  idArchivo: idArchivo, // Almacenar el ID del documento si es necesario
+                };
+                this.archivoenviado = newDocMessage;
+              }
+            },
+            complete: () => {
+              this.scrollAbajo(true, 8);
+
+            },
+          });
+      } else {
+        console.log(
+          `Archivo no válido: ${name}. Solo se permiten archivos 'png', 'jpg', 'jpeg', 'jfif', 'pdf' , 'xlsx', 'xls', 'docx' y 'doc'.`
+        );
       }
-    })
+    }
   }
-
+  imagenUrlActual: string = '';
+  mostrarImagenEnChat(imagenUrl: string) {
+    if (imagenUrl) {
+      this.imagenUrlActual = imagenUrl;
+    }
+  }
   enviarmsj(){
     console.log(this.chatBox)
     if(this.chatBox!=undefined && this.chatBox!='' && this.chatBox!=null ){
@@ -432,8 +513,6 @@ export class ChatAtencionClienteChatComponent implements OnInit,OnDestroy,OnChan
       }
       this.chatBox="";
     }
-  }
-  ampliarImagen(url:string){
   }
   ErrorImgAsesor(){
     this.img='../../../../../assets/imagenes/174188.png'
@@ -469,20 +548,28 @@ export class ChatAtencionClienteChatComponent implements OnInit,OnDestroy,OnChan
       .subscribe({
         next: (x) => {
           console.log(x)
-          this.mensajesAnteriore = x;
+          this.mensajesAnteriorePrevio = x;
         },
         complete:()=>{
-          if(this.mensajesAnteriore!=null){
-            if (this.mensajesAnteriore.length > 0 ) {
+          if(this.mensajesAnteriorePrevio!=null){
+            if (this.mensajesAnteriorePrevio.length > 0 ) {
               timer(2000).pipe(takeUntil(this.signal$)).subscribe(_=>{
-                this.RespuestaConexion.id = this.mensajesAnteriore[0].idFaseOportunidadPortalWeb
-                this.RespuestaConexion.idAlumno = this.mensajesAnteriore[0].idAlumno
+                this.RespuestaConexion.id = this.mensajesAnteriorePrevio[0].idFaseOportunidadPortalWeb
+                this.RespuestaConexion.idAlumno = this.mensajesAnteriorePrevio[0].idAlumno
                 console.log(this.RespuestaConexion)
                 this.actualizarDatosAlumno(this.RespuestaConexion)
               })
-
-              this.mensajesAnteriore.forEach((m: any) => {
-                m.estadoEnviado = true;
+              this.mensajesAnteriorePrevio.forEach((z: any) => {
+                const regex = /<img\s+[^>]*src="([^"]+)"[^>]*>/i;
+                  z.esImagen = regex.test(z.Mensaje);
+                  if(z.esImagen){
+                    const match = z.Mensaje.match(regex);
+                    z.url = match[1].trim();
+                  }
+                  const fecha = new Date(z.fecha); // Suponiendo que z.fecha es una fecha válida
+                  z.fechaEnvio = this.formatearHoraPersonalizada(fecha);
+                  z.estadoEnviado = true;
+                  this.mensajesAnteriore.push(z);
               });
               if (
                 this.mensajesAnteriore[this.mensajesAnteriore.length - 1]
@@ -495,6 +582,9 @@ export class ChatAtencionClienteChatComponent implements OnInit,OnDestroy,OnChan
               }
               this.scrollAbajo(true,5)
             }
+          }
+          else{
+            this.eliminaridchat();
           }
 
         }
@@ -544,5 +634,41 @@ export class ChatAtencionClienteChatComponent implements OnInit,OnDestroy,OnChan
         behavior: smooth ? 'smooth' : 'auto',
       });
     }},100)
+  }
+  toggleChat(state: boolean) {
+    this.Open = state;
+    this.IsOpen.emit(state);
+  }
+  mostrarPDFEnChat(url: string) {
+    const pdfUrl = this.sanitizer.bypassSecurityTrustResourceUrl(url);
+    this.pdfsEnChat.push(pdfUrl);
+  }
+  ObtenerHoraActual(): string {
+    const ahora = new Date();
+    let hora: number = ahora.getHours();
+    let minutos: number = ahora.getMinutes();
+    const esAM: boolean = hora < 12;
+
+    // Ajustar las horas para el formato de 12 horas
+    hora = hora % 12 || 12; // Cambia 0 a 12 para las horas AM/PM
+    const minutosStr: string = minutos.toString().padStart(2, '0'); // Asegura siempre 2 dígitos para minutos
+
+    const sufijo: string = esAM ? 'am' : 'pm';
+    return `${hora}:${minutosStr} ${sufijo}`;
+  }
+  ampliarImagen(url: string): void {
+    window.open(url, '_blank');
+  }
+  formatearHoraPersonalizada(fecha: Date): string {
+    let hora: number = fecha.getHours();
+    let minutos: number = fecha.getMinutes();
+    const esAM: boolean = hora < 12;
+
+    // Ajustar las horas para el formato de 12 horas
+    hora = hora % 12 || 12; // Cambia 0 a 12 para las horas AM/PM
+    const minutosStr: string = minutos.toString().padStart(2, '0'); // Asegura siempre 2 dígitos para minutos
+
+    const sufijo: string = esAM ? 'am' : 'pm';
+    return `${hora}:${minutosStr} ${sufijo}`;
   }
 }

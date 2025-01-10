@@ -39,7 +39,7 @@
     <div *ngIf="showConfirmationDialog" class="confirmation-dialog-atras">
       <!-- <p>¿Deseas salir de esta sesión de chat? La conversación se dará por finalizada.</p> -->
       <p>Tu sesión de chat se cerrará por inactividad. Gracias por conversar con nosotros. ¡Te esperamos nuevamente cuando lo necesites!</p>
-      <button style="background: #FF4E56;color:white" (click)="confirmAction()">Aceptar</button>
+      <button style="background: #ff8610;color:white" (click)="confirmAction()">Aceptar</button>
       <!-- <button style="background: transparent;color:#033DAB;border: 1px solid #033DAB;"(click)="cancelAction()">Cancelar</button> -->
     </div>
     <div *ngIf="!showConfirmationDialog" #contenidoMsj class="contentChatMsj" (click)="marcarChatAgentecomoleido()">
@@ -52,8 +52,21 @@
               <!-- <div class="remitente">{{item.NombreRemitente.split(' ')[0]}}</div> -->
               <div *ngIf="!item.esImagen" class="msj" [innerHtml]="item.Mensaje | safeHtml"></div>
               <div class="msj">
-                <img *ngIf="item.esImagen" [src]="item.url" alt="Imagen en el chat" style="width: 180px; height: 80px;" >
+                <img
+                  *ngIf="item.esImagen"
+                  [src]="item.url"
+                  alt="Imagen en el chat"
+                  style="
+                    max-width: 180px;
+                    max-height: 80px;
+                    width: auto;
+                    height: auto;
+                    cursor: pointer;
+                  "
+                  (click)="ampliarImagen(item.url)"
+                >
               </div>
+
               <div *ngFor="let pdfUrl of pdfsEnChat">
                 <iframe [src]="pdfUrl" width="100%" height="150px"></iframe>
               </div>

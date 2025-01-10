@@ -1,7 +1,8 @@
+<!-- holax1 -->
 <div class="card CabeceraContenido" style="border-radius: 0px 0px 8px 8px;
-    border-left: 1px solid #FF4E56;
-    border-right: 1px solid #FF4E56;
-    border-bottom: 1px solid #FF4E56;
+    border-left: 1px solid #FF8610;
+    border-right: 1px solid #FF8610;
+    border-bottom: 1px solid #FF8610;
     border-top: transparent;">
 
     <div class="card-body" style="background: transparent; margin-top: 0px; font-size: 11px; text-align: left; margin-bottom: 5px; width: 101%;
@@ -14,7 +15,7 @@
         <app-cargando></app-cargando>
       </div>
 
-      <app-formulario-rojo style="margin-top: 15px" [ListaLocalidades]="listaLocalidades" [model]="formularioContactoChat"
+      <app-formulario-naranja style="margin-top: 15px" [ListaLocalidades]="listaLocalidades" [model]="formularioContactoChat"
         [InputsDisable]="statuscharge" (OnSubmit)="SetContacto($event)" (OnValid)="formVal=$event"
         [Interaccion]="'Chat-'+IdPGeneral" [fiels]="fileds" [ObtenerPrefijo]="false"
         (OnSelect)="SelectChage($event)">
@@ -23,13 +24,13 @@
 
         <ng-container send>
           <div style="margin-left: 2rem;">
-            <app-default-button-flecha style="background: #FF4E56; color: white; font-size: 15px;"
+            <app-default-button-flecha style="background: #FF8610; color: white; font-size: 15px;"
               [confs]="{titulo:'Quiero más información'}"
               [style]="'width: 90%; border-radius: 10px; margin-bottom: 5px;'">
             </app-default-button-flecha>
           </div>
         </ng-container>
 
-      </app-formulario-rojo>
+      </app-formulario-naranja>
     </div>
 </div>
