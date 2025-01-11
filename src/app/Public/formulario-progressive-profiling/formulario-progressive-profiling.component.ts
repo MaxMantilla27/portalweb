@@ -1,7 +1,7 @@
 import { Component, Inject, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
 import { AccountService } from 'src/app/Core/Shared/Services/Account/account.service';
 import { DatosPortalService } from 'src/app/Core/Shared/Services/DatosPortal/datos-portal.service';
@@ -30,6 +30,7 @@ export class FormularioProgressiveProfilingComponent implements OnInit {
     private formBuilder: FormBuilder,
     private _router: Router,
     private _AccountService: AccountService,
+    private activatedRoute: ActivatedRoute,
   ) {
     this.formCamposDinamicos = this.formBuilder.group({});
   }
@@ -171,8 +172,10 @@ export class FormularioProgressiveProfilingComponent implements OnInit {
   }
 
   obtenerListaFormularioProgresivo(formData: any) {
+    var dataRuta = JSON.parse(this._SessionStorageService.SessionGetValue('dataRuta'));
+    this.indicePrograma = dataRuta.idBusqueda;
     this.tipoPagina = formData.tipoPagina
-    this.indicePrograma = formData.indicePrograma
+    // this.indicePrograma = formData.indicePrograma
     this.auxTipoPrograma = formData.auxTipoPrograma
     this.auxNombrePrograma = formData.auxNombrePrograma
     this.auxCorreoCliente = formData.auxCorreoCliente

@@ -336,11 +336,6 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
     this._SessionStorageService.SessionSetValue('esAonline', JSON.stringify(this.esAonline));
   }
 
-  // tiempoMostrarFormularioProgresivo() {
-  //   var tiempoSesion = JSON.parse(localStorage.getItem('tiempoProgramasOrganico') || 'null');
-  //   this.formularioService.iniciarContador(tiempoSesion);
-  // }
-
   tiempoMostrarFormularioProgresivo() {
     var formularioProgresivoPublicidad = JSON.parse(localStorage.getItem('formularioProgresivoPublicidad') || 'null');
     var tiempoSesion = JSON.parse(localStorage.getItem('tiempoProgramasOrganico') || 'null');
