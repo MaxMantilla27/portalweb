@@ -134,6 +134,7 @@ export class ChatbotIaComponent implements OnInit {
       .subscribe({
         next: (x) => {
           console.log(x);
+          this.ObtenerHistorialChatBotIA();
           this.ReinicioTotalChat();
         },
         complete: () => {
@@ -143,10 +144,8 @@ export class ChatbotIaComponent implements OnInit {
   }
 
   ReinicioTotalChat(){
-    let IdChatbotIAPortalHiloChatLocal =
-    this._SessionStorageService.SessionGetValue('IdChatbotIAPortalHiloChat');
-    let reinicioChatBot =
-    this._SessionStorageService.SessionGetValue('ReinicioChatBot');
+    let IdChatbotIAPortalHiloChatLocal = this._SessionStorageService.SessionGetValue('IdChatbotIAPortalHiloChat');
+    let reinicioChatBot = this._SessionStorageService.SessionGetValue('ReinicioChatBot');
 
     console.log('IdChatbotIAPortalHiloChatLocal',IdChatbotIAPortalHiloChatLocal)
     console.log('reinicioChatBot',reinicioChatBot)

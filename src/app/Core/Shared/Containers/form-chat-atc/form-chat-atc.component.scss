@@ -9,8 +9,8 @@
   padding-top: 0px;
   border: 1px solid transparent;
   position: relative;
-  height: 40vh; /* Se establece la altura del padre */
-  max-height: 100vh; /* Controla la altura máxima relativa a la vista */
+  // height: 40vh; /* Se establece la altura del padre */
+  max-height: 486px; /* Controla la altura máxima relativa a la vista */
   overflow-y: auto; /* Permite el scroll vertical */
   overflow-x: hidden;
 }

@@ -3,20 +3,19 @@
   <div *ngIf="!Open" style="display: flex" (click)="toggleChat(true)">
     <div class="chatAtc">
       <div style="display: flex">
-        <div
-          class="col-4"
-          style="align-items: center; display: flex; justify-content: center"
-        >
-          <img
-            style="height: 45px; width: 45px"
-            [src]="'../../../../../../assets/imagenes/icono-chat-atc.png'"
-            alt=""
-          />
-        </div>
-        <div class="col-8 texto-chat-close">Atención al cliente</div>
+        <img
+          style="height: 45px; width: 45px"
+          [src]="'../../../../../../assets/imagenes/icono-chat-atc.png'"
+          alt=""
+        />
       </div>
     </div>
-    <div class="trianguloChatAtc"></div>
+    <div class="icono-atencion-cliente">
+      <img
+        [src]="'../../../../../../assets/imagenes/AtencionCliente.png'"
+        alt=""
+      />
+    </div>
   </div>
   <div
     class="chatSTAtc"
@@ -24,21 +23,36 @@
     style="box-shadow: 0px 1px 4px #838383"
   >
     <ng-container *ngIf="!ChatbotCerrado" select="[contenidoChat]">
-      <div class="headerChatAtc">
-        <div class="imgAsesorAtc">
-          <img
-            style="width: 4.5rem; height: 4.5rem"
-            [src]="'../../../../../../assets/imagenes/Chat-Atc-Online.png'"
-            alt=""
-          />
-          <!-- <img style="width: 4.5rem;height: 4.5rem;" [src]="'../../../../../assets/imagenes/Chat-Atc-Offline.png'" alt=""> -->
-          <div class="nombreAsesorAtc">
-            <div>Atención al cliente</div>
-            <div>BSG Institute</div>
+      <div class="headerChatAtc" style="align-items: center; display: flex">
+        <div style="display: flex; width: 100%">
+          <!-- Contenedor para la imagen -->
+          <div
+            style="
+              width: 90%;
+              display: flex;
+              justify-content: flex-start;
+              align-items: center;
+            "
+          >
+            <img
+              style="width: 227px; height: 53px; margin-left: 1rem"
+              [src]="
+                '../../../../../../assets/imagenes/atencion-al-cliente.png'
+              "
+              alt="Atención al Cliente"
+            />
           </div>
-          <div style="width: 10%">
+          <!-- Contenedor para el botón -->
+          <div
+            style="
+              width: 10%;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+            "
+          >
             <span
-              style="width: 10%; cursor: pointer; font-weight: bold"
+              style="cursor: pointer; font-weight: bold; color: white"
               (click)="Open = false; IsOpen.emit(false); toggleChat(false)"
               >-</span
             >
@@ -77,11 +91,17 @@
                 [data]="item.mensaje"
               ></markdown>
             </div>
-            <div *ngIf="!item.esUsuario && (!EstadoEscribiendo||!last)" class="fecha-asesor">
-              {{item.fechaEnvio}}
+            <div
+              *ngIf="!item.esUsuario && (!EstadoEscribiendo || !last)"
+              class="fecha-asesor"
+            >
+              {{ item.fechaEnvio }}
             </div>
-            <div *ngIf="item.esUsuario && (!EstadoEscribiendo||!last)" class="fecha-visitante">
-              {{item.fechaEnvio}}
+            <div
+              *ngIf="item.esUsuario && (!EstadoEscribiendo || !last)"
+              class="fecha-visitante"
+            >
+              {{ item.fechaEnvio }}
             </div>
           </div>
         </ng-container>
@@ -100,7 +120,11 @@
       </div>
 
       <div
-        *ngIf="!ChatbotCerrado && !CargandoInformacion && !this.registroChatIA.Derivado"
+        *ngIf="
+          !ChatbotCerrado &&
+          !CargandoInformacion &&
+          !this.registroChatIA.Derivado
+        "
         class="footerChatAula"
       >
         <input
@@ -164,31 +188,56 @@
     <ng-container
       *ngIf="ChatbotCerrado && ChatAcademicoAbierto && TieneCoordinador"
     >
-      <app-chat-atencion-cliente-academico (IsOpen)="toggleChat($event)"
+      <app-chat-atencion-cliente-academico
+        (IsOpen)="toggleChat($event)"
         [idProgramageneral]="registroChatIA.IdPGeneral!"
         [IdMatriculaCabecera]="registroChatIA.IdMatriculaCabecera!"
       ></app-chat-atencion-cliente-academico>
     </ng-container>
 
     <ng-container *ngIf="ChatbotCerrado && ChatVentasAbierto">
-      <app-chat-atencion-ventas (IsOpen)="toggleChat($event)"></app-chat-atencion-ventas>
+      <app-chat-atencion-ventas
+        (IsOpen)="toggleChat($event)"
+      ></app-chat-atencion-ventas>
     </ng-container>
 
     <ng-container
       *ngIf="ChatbotCerrado && ChatAcademicoAbierto && !TieneCoordinador"
       select="[contenidoChat]"
     >
-      <div class="headerChatAtc">
-        <div class="imgAsesorAtc">
-          <img
-            style="width: 4.5rem; height: 4.5rem"
-            [src]="'../../../../../../assets/imagenes/Chat-Atc-Online.png'"
-            alt=""
-          />
-          <!-- <img style="width: 4.5rem;height: 4.5rem;" [src]="'../../../../../assets/imagenes/Chat-Atc-Offline.png'" alt=""> -->
-          <div class="nombreAsesorAtc">
-            <div>Atención al cliente</div>
-            <div>BSG Institute</div>
+      <div class="headerChatAtc" style="align-items: center; display: flex">
+        <div style="display: flex; width: 100%">
+          <!-- Contenedor para la imagen -->
+          <div
+            style="
+              width: 90%;
+              display: flex;
+              justify-content: flex-start;
+              align-items: center;
+            "
+          >
+            <img
+              style="width: 227px; height: 53px; margin-left: 1rem"
+              [src]="
+                '../../../../../../assets/imagenes/atencion-al-cliente.png'
+              "
+              alt="Atención al Cliente"
+            />
+          </div>
+          <!-- Contenedor para el botón -->
+          <div
+            style="
+              width: 10%;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+            "
+          >
+            <span
+              style="cursor: pointer; font-weight: bold; color: white"
+              (click)="Open = false; IsOpen.emit(false); toggleChat(false)"
+              >-</span
+            >
           </div>
         </div>
       </div>

@@ -1,6 +1,5 @@
 import {NgModule} from '@angular/core'
 import {RouterModule,Routes} from '@angular/router';
-import { PublicGuard } from './Guard/public.guard';
 import { HomeComponent } from './Home/home.component';
 import { LoginComponent } from './login/login.component';
 import { ProgramasComponent } from './programas/programas.component';
@@ -38,6 +37,7 @@ import { CompraExitosaOpenPayColombiaComponent } from './compra-exitosa-open-pay
 import { CompraExistosaOpenPayPeruComponent } from './compra-existosa-open-pay-peru/compra-existosa-open-pay-peru.component';
 import { ChatBotLandingPageComponent } from './chat-bot-landing-page/chat-bot-landing-page.component';
 import { LoginATCComponent } from './login-atc/login-atc.component';
+import { PublicGuard } from './Guard/public.guard';
 
 const routes:Routes=[
     {path:'',component:PublicComponent,children:

@@ -7,7 +7,7 @@
   background: #FF8610;
   height: 81.25px;
   color: white;
-  display: flex;
+  display: none;
   justify-content: center;
   align-items: center;
   text-align: center;
@@ -23,10 +23,8 @@
   position: fixed;
   bottom: 10px;
   right: 20px;
-  width: 340px;
+  width: 375px;
   background: white;
-  max-height: 70vh; /* Define la altura máxima como un porcentaje del viewport */
-  max-width: 340px; /* Define el ancho máximo */
   overflow-y: auto; /* Permite el scroll vertical si el contenido es más grande que el contenedor */
   overflow-x: hidden; /* Permite el scroll vertical si el contenido es más grande que el contenedor */
   box-sizing: border-box; /* Incluye el padding y el borde en el cálculo del alto total */
@@ -60,24 +58,25 @@
 }
 
 /* Estilo para el triángulo del chat */
-.trianguloChatAtc {
-  position: fixed;
-  transform: rotate(45deg);
-  border-right: 30px solid transparent;
-  border-top: 30px solid transparent;
-  border-left: 30px solid transparent;
-  border-bottom: 30px solid #FF8610;
-  width: 30px;
-  height: 30px;
-  bottom: 20px;
-  right: 15px;
-  z-index: 1;
-}
+// .trianguloChatAtc {
+//   position: fixed;
+//   transform: rotate(45deg);
+//   border-right: 30px solid transparent;
+//   border-top: 30px solid transparent;
+//   border-left: 30px solid transparent;
+//   border-bottom: 30px solid #FF8610;
+//   width: 30px;
+//   height: 30px;
+//   bottom: 20px;
+//   right: 15px;
+//   z-index: 1;
+// }
 
 /* Estilo para el header del chat */
 .headerChatAtc {
   background: #FF8610;
   border-radius: 8px 8px 0px 0px;
+  height:66px;
   .imgAsesorAtc {
     color: white;
     display: flex;
@@ -167,6 +166,7 @@
 /* Estilo para dispositivos móviles */
 @media (max-width: 690px) {
   .chatAtc {
+    display: flex;
     border-radius: 0px !important;
     bottom: 0px;
     width: 100%;
@@ -179,22 +179,26 @@
     width: 80%;
     left: 10%;
   }
-  .contentChatMsj{
-    height: 25rem;
+  .icono-atencion-cliente{
+    display: none !important;
   }
 }
 
 .contentChatMsj {
+  padding-top: 20px;
+  min-height: 339px!important;
+  max-height: 486px!important;
   width: 100%;
-  height: 17rem!important;
-  overflow: auto;
+  overflow-y: auto;
+  overflow-x: hidden;
+  scroll-behavior: smooth; /* Garantiza un scroll suave */
 }
 
 .visitanteMsj {
   max-width: 100%;
   display: flex;
   justify-content: flex-end;
-  padding: 3px 10px 3px 0px;
+  padding: 3px 16px 3px 0px;
   flex-wrap: wrap;
   .cntnmsj {
     background: #FFEDDB;
@@ -208,10 +212,10 @@
   max-width: 100%;
   display: flex;
   justify-content: flex-start;
-  padding: 3px 0px 3px 10px;
+  padding: 3px 0px 3px 16px;
   flex-wrap: wrap;
   .cntnmsj {
-    background: #d5e1ef;
+    background: #EEF3F9;
     border-radius: 0px 15px 15px 15px;
   }
 }
@@ -314,7 +318,7 @@
 
 .footerChatAula {
   width: 100%;
-  height: 50px;
+  height: 55px;
   background: transparent;
   display: flex;
   justify-content: space-between;
@@ -371,13 +375,6 @@
   justify-content: center;
   align-items: center;
   z-index: 1000;
-}
-.contentChatMsj {
-  width: 100%;
-  height: 200px;
-  overflow-y: auto;
-  overflow-x: hidden;
-  scroll-behavior: smooth; /* Garantiza un scroll suave */
 }
 .escribiendoBotIA {
   font-size: 12px !important;
@@ -437,4 +434,14 @@
   flex-basis: 100%;
   padding-left: 0.5rem;
   margin-top: 5px;
+}
+.icono-atencion-cliente{
+  position: fixed;
+  z-index: 200;
+  cursor: pointer;
+  display: flex;
+  height: 193px;
+  width: 234px;
+  bottom: 0rem;
+  right: 1rem;
 }

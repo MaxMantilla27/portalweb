@@ -1,36 +1,57 @@
 <!-- holax1 -->
-<div class="card CabeceraContenido" style="border-radius: 0px 0px 8px 8px;
-    border-left: 1px solid #FF8610;
-    border-right: 1px solid #FF8610;
-    border-bottom: 1px solid #FF8610;
-    border-top: transparent;">
+<div
+  class="card CabeceraContenido"
+  style="
+    border-radius: 0px 0px 8px 8px;
+    border-left: 1px solid #ff8610;
+    border-right: 1px solid #ff8610;
+    border-bottom: 1px solid #ff8610;
+    border-top: transparent;
+  "
+>
+  <div
+    class="card-body"
+    style="
+      background: transparent;
+      margin-top: 0px;
+      font-size: 11px;
+      width: 100%;
+      padding: 5px 15px 0px 15px;
+      text-align: center;
+    "
+  >
+    Ingresa tus datos para darte más información
+  </div>
 
-    <div class="card-body" style="background: transparent; margin-top: 0px; font-size: 11px; text-align: left; margin-bottom: 5px; width: 101%;
-    margin-left: 0px; padding: 5px 15px 5px 15px; text-align: center; margin-bottom: 5px;">
-      Ingresa tus datos para darte más información
+  <div class="card-footer">
+    <div class="cargando-wrapper" *ngIf="statuscharge == true">
+      <app-cargando></app-cargando>
     </div>
 
-    <div class="card-footer">
-      <div class="cargando-wrapper" *ngIf="statuscharge == true">
-        <app-cargando></app-cargando>
-      </div>
+    <app-formulario-naranja
+      style="margin-top: 15px"
+      [ListaLocalidades]="listaLocalidades"
+      [model]="formularioContactoChat"
+      [InputsDisable]="statuscharge"
+      (OnSubmit)="SetContacto($event)"
+      (OnValid)="formVal = $event"
+      [Interaccion]="'Chat-' + IdPGeneral"
+      [fiels]="fileds"
+      [ObtenerPrefijo]="false"
+      (OnSelect)="SelectChage($event)"
+    >
+      <ng-container contenido></ng-container>
 
-      <app-formulario-naranja style="margin-top: 15px" [ListaLocalidades]="listaLocalidades" [model]="formularioContactoChat"
-        [InputsDisable]="statuscharge" (OnSubmit)="SetContacto($event)" (OnValid)="formVal=$event"
-        [Interaccion]="'Chat-'+IdPGeneral" [fiels]="fileds" [ObtenerPrefijo]="false"
-        (OnSelect)="SelectChage($event)">
-
-        <ng-container contenido></ng-container>
-
-        <ng-container send>
-          <div style="margin-left: 2rem;">
-            <app-default-button-flecha style="background: #FF8610; color: white; font-size: 15px;"
-              [confs]="{titulo:'Quiero más información'}"
-              [style]="'width: 90%; border-radius: 10px; margin-bottom: 5px;'">
-            </app-default-button-flecha>
-          </div>
-        </ng-container>
-
-      </app-formulario-naranja>
-    </div>
+      <ng-container send>
+        <div style="margin-left: 2rem">
+          <app-default-button-flecha
+            style="background: #ff8610; color: white; font-size: 15px"
+            [confs]="{ titulo: 'Quiero más información' }"
+            [style]="'width: 90%; border-radius: 10px; margin-bottom: 5px;'"
+          >
+          </app-default-button-flecha>
+        </div>
+      </ng-container>
+    </app-formulario-naranja>
+  </div>
 </div>

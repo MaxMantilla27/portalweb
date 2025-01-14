@@ -1,26 +1,41 @@
 <!-- holax1 -->
 <ng-container select="[contenidoChat]">
-    <div class="headerChatAtc" *ngIf="Paso <= 2">
-      <div class="imgAsesorAtc">
+  <div class="headerChatAtc" *ngIf="Paso <= 2" style="align-items: center; display: flex">
+    <div style="display: flex; width: 100%">
+      <!-- Contenedor para la imagen -->
+      <div
+        style="
+          width: 90%;
+          display: flex;
+          justify-content: flex-start;
+          align-items: center;
+        "
+      >
         <img
-          style="width: 4.5rem; height: 4.5rem"
-          [src]="'../../../../../assets/imagenes/Chat-Atc-Online.png'"
-          alt=""
+          style="width: 227px; height: 53px; margin-left: 1rem"
+          [src]="
+            '../../../../../../assets/imagenes/atencion-al-cliente.png'
+          "
+          alt="Atención al Cliente"
         />
-        <!-- <img style="width: 4.5rem;height: 4.5rem;" [src]="'../../../../../assets/imagenes/Chat-Atc-Offline.png'" alt=""> -->
-        <div class="nombreAsesorAtc">
-          <div>Atención al cliente</div>
-          <div>BSG Institute</div>
-        </div>
-        <div style="width: 10%">
-          <span
-            style="width: 10%; cursor: pointer; font-weight: bold"
-            (click)="Open = false; IsOpen.emit(false); toggleChat(false)"
-            >-</span
-          >
-        </div>
+      </div>
+      <!-- Contenedor para el botón -->
+      <div
+        style="
+          width: 10%;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+        "
+      >
+        <span
+          style="cursor: pointer; font-weight: bold; color: white"
+          (click)="Open = false; IsOpen.emit(false); toggleChat(false)"
+          >-</span
+        >
       </div>
     </div>
+  </div>
     <div class="headerChatAtc" *ngIf="Paso == 3 && Caso == 'B'">
       <div class="imgAsesorAtc">
         <img
