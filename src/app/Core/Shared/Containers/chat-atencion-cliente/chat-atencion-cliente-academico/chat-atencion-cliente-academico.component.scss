@@ -10,7 +10,7 @@
   border-radius: 0px 0px 10px 10px;
   border-top: 2px solid #E3E3E3;
   .chat-box-textinput {
-    border: 2px solid #E3E3E3;
+    border: none!important;
     border-radius: 10px;
     width: 90%;
     padding: 4px 10% 4px 10px;
@@ -31,7 +31,7 @@
 .headerChatAula {
   background: #FF8610;
   border-radius: 8px 8px 0px 0px;
-  height: 66px;
+  height: 68px;
   .imgAsesor {
     color: white;
     display: flex;
@@ -87,8 +87,8 @@
 }
 .contentChatMsj {
   width: 100%;
-  min-height: 339px!important;
-  max-height: 486px!important;
+  min-height: 341px!important;
+  max-height: 488px!important;
   overflow-y: auto;
   overflow-x: hidden;
   scroll-behavior: smooth; /* Garantiza un scroll suave */
@@ -97,7 +97,7 @@
   max-width: 100%;
   display: flex;
   justify-content: flex-end;
-  padding: 3px 16px 3px 0px;
+  padding: 0px 16px 0px 0px;
   flex-wrap: wrap;
   .cntnmsj {
     background: #FFEDDB;
@@ -109,7 +109,7 @@
   max-width: 100%;
   display: flex;
   justify-content: flex-start;
-  padding: 3px 0px 3px 16px;
+  padding: 0px 0px 0px 16px;
   flex-wrap: wrap;
   .cntnmsj {
     background: #EEF3F9;
@@ -121,7 +121,7 @@
   max-width: 75%; /* Máximo ancho: 75% */
   min-width: 10%; /* Mínimo ancho: 10% (puedes ajustarlo según tu necesidad) */
   width: fit-content; /* Se ajusta al contenido */
-  padding: 0.5rem 1rem; /* Margen interno */
+  padding: 0.4rem 1rem; /* Margen interno */
 
   .statemsjEnviado {
     display: flex;
@@ -246,7 +246,6 @@
   color: #A3A3A3;
   flex-basis: 100%;
   padding-right: 0.5rem;
-  margin-top: 5px;
 }
 .fecha-asesor{
   text-align: left;
@@ -254,7 +253,6 @@
   color: #A3A3A3;
   flex-basis: 100%;
   padding-left: 0.5rem;
-  margin-top: 5px;
 }
 
 
