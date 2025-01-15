@@ -2,12 +2,18 @@
 <ng-container>
   <div *ngIf="!Open" style="display: flex" (click)="toggleChat(true)">
     <div class="chatAtc">
-      <div style="display: flex">
-        <img
-          style="height: 45px; width: 45px"
-          [src]="'../../../../../../assets/imagenes/icono-chat-atc.png'"
-          alt=""
-        />
+      <div style="display: flex;width: 100%;">
+        <div
+          class="col-4"
+          style="align-items: center; display: flex; justify-content: end"
+        >
+          <img
+            style="height: 45px; width: 45px"
+            [src]="'../../../../../../assets/imagenes/icono-chat-atc.png'"
+            alt=""
+          />
+        </div>
+        <div class="col-8 texto-chat-close">Atención al cliente</div>
       </div>
     </div>
     <div class="icono-atencion-cliente">
