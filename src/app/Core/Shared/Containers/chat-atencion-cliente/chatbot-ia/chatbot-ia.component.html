@@ -94,7 +94,7 @@
               <!-- Mostrar el mensaje si no está en estado escribiendo -->
               <markdown
                 *ngIf="(!EstadoEscribiendo || !last) && item.mensaje != ''"
-                [data]="item.mensaje"
+                [innerHtml]="item.mensaje"
               ></markdown>
             </div>
             <div
@@ -133,16 +133,17 @@
         "
         class="footerChatAula"
       >
-        <input
-          *ngIf="!this.registroChatIA.Cerrado && !ChatError"
-          class="chat-box-textinput"
-          [ngClass]="{ inputActive: inputActive }"
-          [disabled]="!inputActive"
-          (keyup.enter)="enviarMensaje()"
-          placeholder="Escribe tu mensaje aquí "
-          [(ngModel)]="nuevoMensaje"
-          #inputChat
-        />
+        <textarea
+    *ngIf="!this.registroChatIA.Cerrado && !ChatError"
+    class="chat-box-textarea"
+    [ngClass]="{ inputActive: inputActive }"
+    [disabled]="!inputActive"
+    (keydown.enter)="$event.preventDefault(); $event.stopPropagation(); enviarMensaje()"
+    placeholder="Escribe tu mensaje aquí"
+    [(ngModel)]="nuevoMensaje"
+    #inputChat
+    rows="2"
+  ></textarea>
         <i
           *ngIf="!this.registroChatIA.Cerrado && !ChatError"
           class="material-icons"

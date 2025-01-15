@@ -134,7 +134,10 @@ export class ChatbotIaComponent implements OnInit {
       .subscribe({
         next: (x) => {
           console.log(x);
-          this.ObtenerHistorialChatBotIA();
+          let reinicioChatBot = this._SessionStorageService.SessionGetValue('ReinicioChatBot');
+          if(reinicioChatBot == 'true'){
+            this.ObtenerHistorialChatBotIA();
+          }
           this.ReinicioTotalChat();
         },
         complete: () => {

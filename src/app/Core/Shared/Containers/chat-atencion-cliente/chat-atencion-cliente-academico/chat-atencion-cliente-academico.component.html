@@ -109,8 +109,10 @@
 
     </div>
     <div *ngIf="!showConfirmationDialog" class="footerChatAula" (click)="marcarChatAgentecomoleido()">
-      <input class="chat-box-textinput" [ngClass]="{'inputActive':inputActive}" (keyup.enter)="enviarMensajeVisitanteAcademico()" (focus)="inputActive=true"
-        (focusout)="inputActive=false" placeholder="Escribe tu mensaje aquí " [(ngModel)]="chatBox">
+      <textarea class="chat-box-textarea" [ngClass]="{'inputActive': inputActive}"
+      (keydown.enter)="$event.preventDefault(); $event.stopPropagation(); enviarMensajeVisitanteAcademico()"
+        (focus)="inputActive=true" (focusout)="inputActive=false" placeholder="Escribe tu mensaje aquí"
+        [(ngModel)]="chatBox" rows="2"></textarea>
         <i class="material-icons" (click)="enviarMensajeVisitanteAcademico()">send</i>
         <i class="material-icons addfile" (click)="fileInput.click()">attach_file</i>
       <!-- <input  #fileInput type="file" style="display:none;" accept="image/png, image/gif, image/jpeg" (change)="AgregarArchivoChatSoporte($event)"> -->

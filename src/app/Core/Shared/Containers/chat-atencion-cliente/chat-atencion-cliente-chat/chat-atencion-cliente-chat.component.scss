@@ -9,13 +9,21 @@
   position: relative;
   border-radius: 0px 0px 10px 10px;
   border-top: 2px solid #E3E3E3;
-  .chat-box-textinput {
+  .chat-box-textarea {
     border: none!important;
+    outline: none!important; /* Evita que aparezca un contorno al hacer focus */
+    resize: none!important; /* Evita el redimensionamiento si no lo necesitas */
+    overflow-y: auto!important; /* Permite que el scroll vertical aparezca solo si es necesario */
+    box-shadow: none!important; /* Elimina cualquier sombra que pueda añadirse por defecto */
     border-radius: 10px;
     width: 90%;
     padding: 4px 10% 4px 10px;
     color: #707070;
     font-size: 15px;
+  }
+  .chat-box-textarea:focus {
+    border: none; /* Asegura que no aparezca un borde al hacer focus */
+    outline: none; /* Mantén el contorno invisible */
   }
   i {
     color: #ff8610;
@@ -99,6 +107,7 @@
     background: #FFEDDB;
     border-radius: 15px 0px 15px 15px;
     color: #EF6C00;
+    white-space: pre-line;
   }
 }
 .asesorMsj {
@@ -111,6 +120,7 @@
     background: #EEF3F9;
     border-radius: 0px 15px 15px 15px;
     color: #707070;
+    white-space: pre-line;
   }
 }
 .cntnmsj {
@@ -158,7 +168,8 @@
     text-align: left;
   }
   .msj {
-    font-size: 12px;
+    font-size: 13px;
+    line-height: 18px;
     text-align: left;
     img {
       width: 80%;

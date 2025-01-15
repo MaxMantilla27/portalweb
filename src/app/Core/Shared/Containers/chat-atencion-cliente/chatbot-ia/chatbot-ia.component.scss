@@ -302,7 +302,11 @@
 
 
 :host ::ng-deep markdown {
-  font-size: 12px;
+  font-size: 13px;
+  line-height: 18px;
+}
+:host ::ng-deep markdown p{
+  white-space: pre-line!important;
 }
 
 :host ::ng-deep markdown h1,
@@ -332,18 +336,22 @@
   position: relative;
   border-radius: 0px 0px 10px 10px;
   border-top: 2px solid #E3E3E3;
-  .chat-box-textinput {
+  .chat-box-textarea {
     border: none!important;
+    outline: none!important; /* Evita que aparezca un contorno al hacer focus */
+    resize: none!important; /* Evita el redimensionamiento si no lo necesitas */
+    overflow-y: auto!important; /* Permite que el scroll vertical aparezca solo si es necesario */
+    box-shadow: none!important; /* Elimina cualquier sombra que pueda añadirse por defecto */
     border-radius: 10px;
     width: 90%;
     padding: 4px 10% 4px 10px;
     color: #707070;
     font-size: 15px;
   }
-  /*.chat-box-textinput::placeholder {
-    font-size: 10px;
-    //color: #999;
-  }*/
+  .chat-box-textarea:focus {
+    border: none; /* Asegura que no aparezca un borde al hacer focus */
+    outline: none; /* Mantén el contorno invisible */
+  }
 
   i {
     color: #ff8610;
