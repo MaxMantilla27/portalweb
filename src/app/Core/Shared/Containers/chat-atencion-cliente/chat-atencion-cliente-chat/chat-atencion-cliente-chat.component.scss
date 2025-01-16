@@ -1,30 +1,58 @@
+.chat-box-ia-textarea {
+  border: none;
+  outline: none;
+  resize: none;
+  box-shadow: none;
+  width: 90%;
+  color: #707070;
+  font-size: 15px;
+  line-height: 1.1em; /* Ajuste de línea */
+  min-height: calc(1.1em); /* Altura de una línea */
+  max-height: calc(1.1em * 3); /* Máxima altura de 3 líneas */
+  overflow-y: hidden; /* Inicialmente no mostrar scroll */
+  margin-right: 8%;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  height: auto; /* El textarea crecerá dependiendo del contenido */
+  transition: height 0.2s ease-in-out; /* Transición suave en el cambio de altura */
+  background: transparent;
+}
+
+.chat-box-ia-textarea:empty::before {
+  content: "Escribe tu mensaje aquí";
+  color: #a0a0a0;
+}
+
+.chat-box-ia-textarea:focus {
+  border: none;
+  outline: none;
+}
+
+.chat-box-ia-textarea::-webkit-scrollbar {
+  width: 6px;
+}
+
+.chat-box-ia-textarea::-webkit-scrollbar-thumb {
+  background-color: #cfcfcf;
+  border-radius: 3px;
+}
+
+.chat-box-ia-textarea::-webkit-scrollbar-thumb:hover {
+  background-color: #a0a0a0;
+}
+
 .footerChatAula {
   width: 100%;
-  height: 57px;
+  height: auto;
   background: transparent;
   display: flex;
-  justify-content: space-between;
+  justify-content: space-evenly;
   align-items: center;
-  padding: 0px 10px;
+  padding: 10px;
   position: relative;
   border-radius: 0px 0px 10px 10px;
   border-top: 2px solid #E3E3E3;
-  .chat-box-textarea {
-    border: none!important;
-    outline: none!important; /* Evita que aparezca un contorno al hacer focus */
-    resize: none!important; /* Evita el redimensionamiento si no lo necesitas */
-    overflow-y: auto!important; /* Permite que el scroll vertical aparezca solo si es necesario */
-    box-shadow: none!important; /* Elimina cualquier sombra que pueda añadirse por defecto */
-    border-radius: 10px;
-    width: 90%;
-    padding: 4px 10% 4px 10px;
-    color: #707070;
-    font-size: 15px;
-  }
-  .chat-box-textarea:focus {
-    border: none; /* Asegura que no aparezca un borde al hacer focus */
-    outline: none; /* Mantén el contorno invisible */
-  }
+
   i {
     color: #ff8610;
     cursor: pointer;
@@ -32,8 +60,7 @@
   .addfile {
     color: black;
     position: absolute;
-    top: 30%;
-    right: 15%;
+    right: 9%;
   }
 }
 .headerChatAula {

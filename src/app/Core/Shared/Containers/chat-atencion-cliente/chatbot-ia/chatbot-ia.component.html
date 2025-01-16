@@ -2,7 +2,7 @@
 <ng-container>
   <div *ngIf="!Open" style="display: flex" (click)="toggleChat(true)">
     <div class="chatAtc">
-      <div style="display: flex;width: 100%;">
+      <div style="display: flex; width: 100%">
         <div
           class="col-4"
           style="align-items: center; display: flex; justify-content: end"
@@ -134,16 +134,21 @@
         class="footerChatAula"
       >
         <textarea
-    *ngIf="!this.registroChatIA.Cerrado && !ChatError"
-    class="chat-box-textarea"
-    [ngClass]="{ inputActive: inputActive }"
-    [disabled]="!inputActive"
-    (keydown.enter)="$event.preventDefault(); $event.stopPropagation(); enviarMensaje()"
-    placeholder="Escribe tu mensaje aquí"
-    [(ngModel)]="nuevoMensaje"
-    #inputChat
-    rows="2"
-  ></textarea>
+          #inputChat
+          *ngIf="!this.registroChatIA.Cerrado && !ChatError"
+          class="chat-box-ia-textarea"
+          [disabled]="!inputActive"
+          [(ngModel)]="nuevoMensaje"
+          (input)="redimendisionarTextareaChatbot($event)"
+          (keydown.enter)="
+            $event.preventDefault();
+            $event.stopPropagation();
+            enviarMensaje();
+            resetTextareaHeight()
+          "
+          placeholder="Escribe tu mensaje aquí"
+          rows="1"
+        ></textarea>
         <i
           *ngIf="!this.registroChatIA.Cerrado && !ChatError"
           class="material-icons"

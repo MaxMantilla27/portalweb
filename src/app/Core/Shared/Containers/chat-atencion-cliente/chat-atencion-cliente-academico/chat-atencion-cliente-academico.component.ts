@@ -874,4 +874,32 @@ export class ChatAtencionClienteAcademicoComponent
     const sufijo: string = esAM ? 'am' : 'pm';
     return `${hora}:${minutosStr} ${sufijo}`;
   }
+  redimendisionarTextareaChatbot(event: Event): void {
+    const textarea = event.target as HTMLTextAreaElement;
+
+    // Establecer el estilo de "height" a "auto" para permitir que se ajuste dinámicamente
+    textarea.style.height = 'auto';
+
+    // Obtener el estilo de línea y calcular la altura máxima permitida
+    const lineHeight = parseInt(getComputedStyle(textarea).lineHeight); // La altura de una línea
+    const maxHeight = lineHeight * 3; // La altura máxima que debe tener el textarea (3 líneas)
+
+    // Si el contenido es mayor que la altura máxima de 3 líneas, se activa el scroll
+    if (textarea.scrollHeight > maxHeight) {
+      textarea.style.height = `${maxHeight}px`; // Limita la altura a 3 líneas
+      textarea.style.overflowY = 'auto'; // Activar el scroll
+    } else {
+      // Ajustar la altura a la altura del contenido
+      textarea.style.height = `${textarea.scrollHeight}px`;
+      textarea.style.overflowY = 'hidden'; // Desactivar el scroll si hay menos contenido
+    }
+  }
+  resetTextareaHeight(): void {
+    const textarea = document.querySelector('.chat-box-ia-textarea') as HTMLTextAreaElement;
+    if (textarea) {
+      textarea.style.height = 'auto'; // Restablecer la altura a auto
+      textarea.style.height = `${parseInt(getComputedStyle(textarea).lineHeight)}px`; // Establecer altura a una línea
+      textarea.style.overflowY = 'hidden'; // Desactivar el scroll
+    }
+  }
 }
