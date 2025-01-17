@@ -32,6 +32,7 @@ export class ModuloCalificacionesComponent implements OnInit,OnDestroy {
   public mensajeError='';
   public promedio=0;
   public idMatricula=0;
+  public MostrarPromedio=false;
   ngOnInit(): void {
   }
   ngOnChanges(changes: SimpleChanges): void {
@@ -42,7 +43,6 @@ export class ModuloCalificacionesComponent implements OnInit,OnDestroy {
   ValidarCalificacionesMatriculaPorPgeneral(){
     this._ProgramaContenidoService.ValidarCalificacionesMatriculaPorPgeneral(this.IdMatriculaCabecera,this.IdPGeneralHijo).pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
-        console.log(x)
       },
       complete:()=>{
 
@@ -58,7 +58,13 @@ export class ModuloCalificacionesComponent implements OnInit,OnDestroy {
         this.mensajeError=x.excepcion.descripcionGeneral;
         this.promedio=x.notaCurso;
         this.calificacionesCursoDetalle=x.detalleCalificacion
-        console.log(this.calificacionesCursoDetalle)
+        if(this.calificacionesCursoDetalle.length!=0){
+          this.calificacionesCursoDetalle.forEach((y:any) => {
+            if(y.mostrarCalificacion){
+              this.MostrarPromedio=true
+            }
+          });
+        }
       },
       complete:()=>{
         this._SessionStorageService.SessionSetValue('PromedioFinalCurso',this.promedio.toString());

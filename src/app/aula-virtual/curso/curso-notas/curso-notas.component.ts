@@ -41,6 +41,7 @@ export class CursoNotasComponent implements OnInit,OnDestroy {
   public NombreCursoOnline=''
   public OpenVideoModulo=true
   public CantidadAsincronicos=0;
+  public TieneNotaPromedio=false
   ngOnInit(): void {
     this.CursosCriteriosOnlineNotas=[];
     this.PromedioFinal=0;
@@ -65,7 +66,21 @@ export class CursoNotasComponent implements OnInit,OnDestroy {
         let cont=0;
         if(this.CursosCriteriosPrevio!=undefined){
           this.CursosCriteriosPrevio.forEach((x:any) => {
+            let mostrarCalificacionAsincronica=false;
+            if(x.detalleCalificacion.length!=0){
+              x.detalleCalificacion.forEach((y:any) => {
+                if(y.mostrarCalificacion){
+                  mostrarCalificacionAsincronica=true
+                }
+              });
+              x.detalleCalificacion.forEach((y:any) => {
+                if(y.criterioEvaluacion=='Promedio'){
+                  y.mostrarCalificacion=mostrarCalificacionAsincronica
+                }
+              });
+            }
             x.nombreModalidad='Online Asincrónico';
+            x.mostrarCalificacion=mostrarCalificacionAsincronica;
             x.idPEspecifico=x.idPEspecificoHijo
             x.notaCurso=Math.round(x.notaCurso)
             x.nombrePrograma=x.nombrePGeneral
@@ -81,9 +96,7 @@ export class CursoNotasComponent implements OnInit,OnDestroy {
         }
       },
       complete:()=> {
-        console.log(this.CursosCriterios)
         this.ObtenerCursosProgramaPorIdMatriculaOnline(this.IdMatricula);
-
       },
     })
   }
@@ -111,6 +124,10 @@ export class CursoNotasComponent implements OnInit,OnDestroy {
                     var totalasistencia=
                         this.listadoNotas.listadoAsistencias.filter((f:any)=> f.asistio == true && f.idMatriculaCabecera == mat.idMatriculaCabecera).length;
                     var nota=0;
+                    let TieneNota=true;
+                    if(totalasistencia==0){
+                      TieneNota=false;
+                    }
                     if(this.listadoNotas.listadoSesiones!=null && this.listadoNotas.listadoSesiones.length>0){
                       nota=Math.round((((totalasistencia*1)/(this.listadoNotas.listadoSesiones.length)) * (this.listadoNotas.escalaCalificacion))* 10)/10;
                     }
@@ -119,8 +136,10 @@ export class CursoNotasComponent implements OnInit,OnDestroy {
                       Id:0,
                       IdEvaluacion:evl.id,
                       IdMatriculaCabecera:mat.idMatriculaCabecera,
+                      TieneNota:TieneNota,
                       edit:false});
                   }else{
+                    let TieneNota=true;
                     if(this.listadoNotas.listadoNotas.filter((w:any) => w.idEvaluacion == evl.id && w.idMatriculaCabecera == mat.idMatriculaCabecera).length>0){
                       var notas=this.listadoNotas.listadoNotas.filter((w:any) => w.idEvaluacion == evl.id && w.idMatriculaCabecera == mat.idMatriculaCabecera)[0]
                       var NotaPromediada=0
@@ -128,8 +147,20 @@ export class CursoNotasComponent implements OnInit,OnDestroy {
                       if(notas.detalle!=null){
                         var notasDetalleCriterio = []
                         notasDetalleCriterio=notas.detalle.filter((w:any) => w.idCriterioEvaluacion == evl.id)
-                        console.log(notasDetalleCriterio)
                         if(notasDetalleCriterio.length>0){
+                          let TieneNotaInterna=false
+                          notasDetalleCriterio.forEach((detcali:any) => {
+                            if(detcali.fechaCalificacion==null){
+                              detcali.tieneNota=false
+                            }
+                            else{
+                              detcali.tieneNota=true
+                            }
+                            if(detcali.tieneNota){
+                              TieneNotaInterna=true
+                            }
+                            TieneNota=TieneNotaInterna
+                          })
                           notasCountDestalle=notasDetalleCriterio.length
                           notasDetalleCriterio.forEach((z:any)=>{
                             NotaPromediada=NotaPromediada+z.nota
@@ -148,6 +179,7 @@ export class CursoNotasComponent implements OnInit,OnDestroy {
                         Id:notas.id,
                         IdEvaluacion:notas.idEvaluacion,
                         IdMatriculaCabecera:mat.idMatriculaCabecera,
+                        TieneNota:TieneNota,
                         edit:true});
                     }else{
                       mat.notaActual.push({
@@ -155,6 +187,7 @@ export class CursoNotasComponent implements OnInit,OnDestroy {
                         Id:0,
                         IdEvaluacion:evl.id,
                         IdMatriculaCabecera:mat.idMatriculaCabecera,
+                        TieneNota:false,
                         edit:true});
                     }
                   }
@@ -169,7 +202,14 @@ export class CursoNotasComponent implements OnInit,OnDestroy {
                   data.detalleCalificacion=[]
                   if(m.notaActual!=null && m.notaActual!=undefined){
                     var notaFinal=0
+                    let TieneNotaPromedioCurso=false
                     m.notaActual.forEach((na:any) => {
+                      let TieneNota=false
+                      if(na.TieneNota){
+                        TieneNota=true;
+                        this.TieneNotaPromedio=true
+                        TieneNotaPromedioCurso=true
+                      }
                       var nota=na.nota
                       if(this.listadoNotas.escalaCalificacion!=null && this.listadoNotas.escalaCalificacion>0){
                         nota=na.nota*(100/this.listadoNotas.escalaCalificacion)
@@ -179,13 +219,15 @@ export class CursoNotasComponent implements OnInit,OnDestroy {
                       data.detalleCalificacion.push({
                         criterioEvaluacion:escala.nombre,
                         ponderacion:escala.porcentaje,
-                        valor:Math.round(nota)
+                        valor:Math.round(nota),
+                        mostrarCalificacion:TieneNota,
                       })
                     });
                     data.detalleCalificacion.push({
                       criterioEvaluacion:'Promedio',
                       ponderacion:100,
-                      valor:Math.round(notaFinal)
+                      valor:Math.round(notaFinal),
+                      mostrarCalificacion:TieneNotaPromedioCurso,
                     })
                     this.PromedioFinalOnlineCurso=notaFinal;
                   }
@@ -199,23 +241,9 @@ export class CursoNotasComponent implements OnInit,OnDestroy {
                 x.nombrePrograma=y.nombrePGeneral
                 x.idEstadoPEspecifico=y.idEstadoPEspecifico
                 x.nombreModalidad='Online Sincrónico';
-                console.log(x.notaCurso)
                 this.PromedioFinalFinalOnlineCurso=this.PromedioFinalFinalOnlineCurso+Math.round(x.notaCurso)
                 this.CursosCriterios.push(x)
                 let cont=0;
-                // this.PromedioFinal2=0
-                // if(this.CursosCriterios!=undefined){
-                //   this.CursosCriterios.forEach((x:any) => {
-                //     console.log(x)
-                //     console.log(x.notaCurso)
-                //     this.PromedioFinal2=this.PromedioFinal2+x.notaCurso;
-                //     cont++
-                //   });
-                // }
-                // console.log(cont)
-                // if(countOnline!=0){
-                //   console.log(Math.round(this.PromedioFinalOnlineCurso))
-                // }
                 this.CursosCriterios.sort(function (a:any, b:any) {
                   return a.idPEspecifico - b.idPEspecifico;
                 })

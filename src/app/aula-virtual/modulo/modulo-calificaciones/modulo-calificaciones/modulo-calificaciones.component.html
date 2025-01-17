@@ -31,8 +31,7 @@
             <td class="criterio" style="width: 250px;text-align: center;">
               <!-- <div *ngIf="item.valor==0" criterioPendiente=true>Pendiente</div>
               <div *ngIf="item.valor!=0">{{item.valor}}</div> -->
-              <div>{{item.valor}}</div>
-
+              <div>{{ item.mostrarCalificacion ? item.valor : 'Sin Registro' }}</div>
             </td>
           </tr>
         </ng-container>
@@ -43,7 +42,7 @@
           </td>
           <td class="criterio" style="width: 250px;text-align: center"></td>
           <td class="criterio" style="width: 250px;text-align: center;">
-            {{promedio}}
+            {{MostrarPromedio ? promedio : 'Sin Registro'}}
           </td>
         </tr>
       </tbody>

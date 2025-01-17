@@ -113,7 +113,9 @@
                       <div class="col-3"  style="font-size: 16px;text-align: center;" >
                         <!-- <div *ngIf="criterioCalificacion.valor==0">Pendiente</div> -->
                         <!-- <div *ngIf="criterioCalificacion.valor!=0">{{criterioCalificacion.valor}}</div> -->
-                        <div>{{criterioCalificacion.valor}}</div>
+                        <div>
+                          {{ criterioCalificacion.tieneNota ? criterioCalificacion.valor : 'Sin Registro' }}
+                        </div>
                       </div>
                     </div>
                     <div class="col-1" style="text-align: center;">
@@ -137,7 +139,8 @@
                             {{criterioCalificacion.nombre}}
                           </td>
                           <td class="criterio" style="width: 18%;padding-top: 10px;padding-bottom: 10px;color: #0684F3;">
-                            <div *ngIf="criterioCalificacion.nota==0">Pendiente</div>
+                            <div *ngIf="criterioCalificacion.nota==0 && criterioCalificacion.tieneNota">0</div>
+                            <div *ngIf="criterioCalificacion.nota==0 && !criterioCalificacion.tieneNota">Sin Registro</div>
                             <div *ngIf="criterioCalificacion.nota!=0">{{criterioCalificacion.nota}}</div>
                           </td>
                         </tr>
@@ -157,7 +160,8 @@
       </div>
       <div  class="col-3" style="text-align: center;color: #0684F3;margin-left: 10px;">
         <strong *ngIf="PromedioFinal!=0">{{PromedioFinal}}</strong>
-        <strong *ngIf="PromedioFinal==0">0</strong>
+        <strong *ngIf="PromedioFinal==0 && TieneNotaPromedio">0</strong>
+        <strong *ngIf="PromedioFinal==0 && !TieneNotaPromedio">Sin Registro</strong>
       </div>
     </div>
   </div>
