@@ -37,12 +37,14 @@ h1 {
 
 .btn-close {
   position: absolute;
-  right: -5px;
+  right: 5px;
   top: 20%;
-  transform: translateY(-25%);
-  font-size: 0.8rem;
-  background: transparent url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23ff8900'%3e%3cpath d='M.293.293a1 1 0 011.414 0L8 6.586 14.293.293a1 1 0 111.414 1.414L9.414 8l6.293 6.293a1 1 0 01-1.414 1.414L8 9.414l-6.293 6.293a1 1 0 01-1.414-1.414L6.586 8 .293 1.707a1 1 0 010-1.414z'/%3e%3c/svg%3e") center / 1em auto no-repeat;
-  opacity: 1;
+  font-size: 0.7rem;
+  background: #a3a3a3 url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23ffffff'%3e%3cpath d='M.293.293a1 1 0 011.414 0L8 6.586 14.293.293a1 1 0 111.414 1.414L9.414 8l6.293 6.293a1 1 0 01-1.414 1.414L8 9.414l-6.293 6.293a1 1 0 01-1.414-1.414L6.586 8 .293 1.707a1 1 0 010-1.414z'/%3e%3c/svg%3e") center / 50% auto no-repeat;
+  border-radius: 50%;
+  width: 1.5em;
+  height: 1.5em;
+  display: inline-block;
 }
 
 .form-cabecera {
@@ -50,6 +52,7 @@ h1 {
 }
 
 .form-cabecera h2 {
+  margin-top: 20px;
   font-size: 27px;
   font-weight: bold;
   color: #ff8900;
@@ -71,7 +74,7 @@ h1 {
 .parrafoSup {
   font-size: 15px;
   color: #878787;
-  margin-bottom: 0px;
+  margin-bottom: -10px;
 }
 
 .parrafoInf {
@@ -98,8 +101,8 @@ h1 {
 
 .mat-dialog-container {
   display: block;
-  padding: 10px 10px 0 10px;
-  border: 3px solid #ff8900;
+  padding: 10px 10px 15px 10px;
+  // border: 3px solid #ff8900;
   border-radius: 15px;
   box-sizing: border-box;
   overflow: auto;
@@ -125,11 +128,11 @@ p {
 }
 
 .form-field {
-  width: 100%;  /* Asegura que el campo de entrada ocupe todo el ancho disponible */
+  width: 100%;
 }
 
 .input-field, mat-select {
-  width: 100%;  /* Asegura que el input o mat-select ocupe todo el ancho dentro del form-field */
+  width: 100%;
 }
 
 .mat-form-field-appearance-outline .mat-form-field-outline-thick {
@@ -162,7 +165,7 @@ p {
   padding: 1px 15px;
   cursor: pointer;
   display: block;
-  margin: 20px auto;
+  margin: 5px auto 20px auto;
   border-radius: 15px;
 }
 
@@ -171,8 +174,9 @@ p {
 }
 
 .boton-secundario {
-  background-color: #eaeaea;
-  color: #737373;
+  height: 31px;
+  background-color: #ff8900;
+  color: white;
   font-size: 13px;
   cursor: pointer;
   display: block;
@@ -189,21 +193,21 @@ p {
   border-radius: 5px;
   align-self: flex-start;
 
-  display: flex;  /* Añadido para usar flexbox */
-  justify-content: center;  /* Centrado horizontal */
+  display: flex;
+  justify-content: center;
   align-items: center;
 }
 
 .bandera-placeholder {
-  width: 20px;  /* Ajusta el tamaño de la bandera */
-  height: 20px; /* Ajusta el tamaño de la bandera */
+  width: 20px;
+  height: 20px;
   background-size: cover;
   background-position: center;
   background-color: #ffffff;
 }
 
 .input-wrapper {
-  flex-grow: 1;  /* El campo de entrada ocupará el espacio restante */
+  flex-grow: 1;
   display: flex;
   justify-content: center;
 }

@@ -175,10 +175,20 @@ export class FormularioProgressiveProfilingComponent implements OnInit {
   }
 
   obtenerListaFormularioProgresivo(formData: any) {
-    var dataRuta = JSON.parse(this._SessionStorageService.SessionGetValue('dataRuta'));
-    this.indicePrograma = dataRuta.idBusqueda;
+    var dataRutaString = this._SessionStorageService.SessionGetValue('dataRuta');
+    if (dataRutaString)
+    {
+      try {
+        var dataRuta = JSON.parse(dataRutaString);
+        this.indicePrograma = dataRuta.idBusqueda;
+      } catch (error) {
+        console.error('Error al parsear JSON:', error);
+      }
+    }
+    else{
+      this.indicePrograma = 0;
+    }
     this.tipoPagina = formData.tipoPagina
-    // this.indicePrograma = formData.indicePrograma
     this.auxTipoPrograma = formData.auxTipoPrograma
     this.auxNombrePrograma = formData.auxNombrePrograma
     this.auxCorreoCliente = formData.auxCorreoCliente
