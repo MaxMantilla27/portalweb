@@ -5,6 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
 import { AccountService } from 'src/app/Core/Shared/Services/Account/account.service';
 import { DatosPortalService } from 'src/app/Core/Shared/Services/DatosPortal/datos-portal.service';
+import { FormularioProgresivoConfiguracionCodigoDescuentoService } from 'src/app/Core/Shared/Services/FormularioProgresivoConfiguracionCodigoDescuento/formulario-progresivo-configuracion-codigo-descuento.service';
 import { FormularioProgressiveProfilingService } from 'src/app/Core/Shared/Services/FormularioProgressiveProfiling/formulario-progressive-profiling.service';
 import { HelperService } from 'src/app/Core/Shared/Services/helper.service';
 import { RegistroVisitaPortalService } from 'src/app/Core/Shared/Services/RegistroVisitaPortal/registro-visita-portal.service';
@@ -26,6 +27,7 @@ export class FormularioProgressiveProfilingComponent implements OnInit {
     private _DatosPortalService: DatosPortalService,
     private _SessionStorageService: SessionStorageService,
     private _RegistroVisitaPortalService: RegistroVisitaPortalService,
+    private _FormularioProgresivoConfiguracionCodigoDescuentoService: FormularioProgresivoConfiguracionCodigoDescuentoService,
     public dialog: MatDialog,
     private formBuilder: FormBuilder,
     private _router: Router,
@@ -63,6 +65,7 @@ export class FormularioProgressiveProfilingComponent implements OnInit {
   auxTipoPrograma: string = "";
   auxNombrePrograma: string = "";
   auxCorreoCliente: string = "";
+  auxCodigoDescuento: string = "";
   public datosUsuario: datosRegistroVisitaPortalDTO[] = [];
 
   usuarioWeb: string = '';
@@ -179,6 +182,7 @@ export class FormularioProgressiveProfilingComponent implements OnInit {
     this.auxTipoPrograma = formData.auxTipoPrograma
     this.auxNombrePrograma = formData.auxNombrePrograma
     this.auxCorreoCliente = formData.auxCorreoCliente
+    this.auxCodigoDescuento = formData.auxCodigoDescuento
     this.usuarioWeb = formData.usuarioWeb
     this.id = formData.id;
     this.tipo = formData.tipo;
@@ -193,7 +197,8 @@ export class FormularioProgressiveProfilingComponent implements OnInit {
       {
         '*correo cliente*': this.auxCorreoCliente || '',
         '*tipo programa*': this.auxTipoPrograma || 'programa',
-        '*nombre programa*': this.auxNombrePrograma || 'programa'
+        '*nombre programa*': this.auxNombrePrograma || 'programa',
+        '*codigo descuento*': this.auxCodigoDescuento || ''
       }
     );
     this.cabeceraMensajeSup = formData.cabeceraMensajeSup;
@@ -202,7 +207,8 @@ export class FormularioProgressiveProfilingComponent implements OnInit {
       {
         '*correo cliente*': this.auxCorreoCliente || '',
         '*tipo programa*': this.auxTipoPrograma || 'programa',
-        '*nombre programa*': this.auxNombrePrograma || 'programa'
+        '*nombre programa*': this.auxNombrePrograma || 'programa',
+        '*codigo descuento*': this.auxCodigoDescuento || ''
       }
     );
     this.cabeceraMensaje = formData.cabeceraMensaje;
@@ -212,7 +218,8 @@ export class FormularioProgressiveProfilingComponent implements OnInit {
       {
         '*correo cliente*': this.auxCorreoCliente || '',
         '*tipo programa*': this.auxTipoPrograma || 'programa',
-        '*nombre programa*': this.auxNombrePrograma || 'programa'
+        '*nombre programa*': this.auxNombrePrograma || 'programa',
+        '*codigo descuento*': this.auxCodigoDescuento || ''
       }
     );
     this.cabeceraMensajeTextoCurso = this.reemplazarTextoConDiccionario(
@@ -220,7 +227,8 @@ export class FormularioProgressiveProfilingComponent implements OnInit {
       {
         '*correo cliente*': this.auxCorreoCliente || '',
         '*tipo programa*': this.auxTipoPrograma || 'programa',
-        '*nombre programa*': this.auxNombrePrograma || 'programa'
+        '*nombre programa*': this.auxNombrePrograma || 'programa',
+        '*codigo descuento*': this.auxCodigoDescuento || ''
       }
     );
     this.cabeceraMensajeBordes = formData.cabeceraMensajeBordes;
@@ -231,7 +239,8 @@ export class FormularioProgressiveProfilingComponent implements OnInit {
       {
         '*correo cliente*': this.auxCorreoCliente || '',
         '*tipo programa*': this.auxTipoPrograma || 'programa',
-        '*nombre programa*': this.auxNombrePrograma || 'programa'
+        '*nombre programa*': this.auxNombrePrograma || 'programa',
+        '*codigo descuento*': this.auxCodigoDescuento || ''
       }
     );
     this.cabeceraMensajeInfTextoCurso = this.reemplazarTextoConDiccionario(
@@ -239,7 +248,8 @@ export class FormularioProgressiveProfilingComponent implements OnInit {
       {
         '*correo cliente*': this.auxCorreoCliente || '',
         '*tipo programa*': this.auxTipoPrograma || 'programa',
-        '*nombre programa*': this.auxNombrePrograma || 'programa'
+        '*nombre programa*': this.auxNombrePrograma || 'programa',
+        '*codigo descuento*': this.auxCodigoDescuento || ''
       }
     );
     this.cabeceraBoton = formData.cabeceraBoton;
@@ -248,7 +258,8 @@ export class FormularioProgressiveProfilingComponent implements OnInit {
       {
         '*correo cliente*': this.auxCorreoCliente || '',
         '*tipo programa*': this.auxTipoPrograma || 'programa',
-        '*nombre programa*': this.auxNombrePrograma || 'programa'
+        '*nombre programa*': this.auxNombrePrograma || 'programa',
+        '*codigo descuento*': this.auxCodigoDescuento || ''
       }
     );
     this.cabeceraBotonAccion = formData.cabeceraBotonAccion;
@@ -260,7 +271,8 @@ export class FormularioProgressiveProfilingComponent implements OnInit {
       {
         '*correo cliente*': this.auxCorreoCliente || '',
         '*tipo programa*': this.auxTipoPrograma || 'programa',
-        '*nombre programa*': this.auxNombrePrograma || 'programa'
+        '*nombre programa*': this.auxNombrePrograma || 'programa',
+        '*codigo descuento*': this.auxCodigoDescuento || ''
       }
     );
 
@@ -270,7 +282,8 @@ export class FormularioProgressiveProfilingComponent implements OnInit {
       {
         '*correo cliente*': this.auxCorreoCliente || '',
         '*tipo programa*': this.auxTipoPrograma || 'programa',
-        '*nombre programa*': this.auxNombrePrograma || 'programa'
+        '*nombre programa*': this.auxNombrePrograma || 'programa',
+        '*codigo descuento*': this.auxCodigoDescuento || ''
       }
     );
     this.botonAccion = formData.botonAccion;
@@ -561,26 +574,11 @@ export class FormularioProgressiveProfilingComponent implements OnInit {
   async ejecutarFormularioProgresivo(accion: number): Promise<void> {
     switch (accion) {
       case 1:
-        try {
-          await this.guardaDatos(accion);
-          this.abreFormularioRespuesta(this.id);
-          this.cerrarFormulario();
-        } catch (error) {
-          console.error('Error durante la ejecución del formulario progresivo:', error);
-        }
-        break;
       case 2:
-        try {
-          await this.guardaDatos(accion);
-          this.abreFormularioRespuesta(this.id);
-          this.cerrarFormulario();
-        } catch (error) {
-          console.error('Error durante la ejecución del formulario progresivo:', error);
-        }
-        break;
       case 3:
         try {
           await this.guardaDatos(accion);
+          await this.generaCodigoDescuento(accion);
           this.abreFormularioRespuesta(this.id);
           this.cerrarFormulario();
         } catch (error) {
@@ -683,6 +681,28 @@ export class FormularioProgressiveProfilingComponent implements OnInit {
     });
   }
 
+  generaCodigoDescuento(accion: number): Promise<void> {
+    const valoresFormulario = this.formCamposDinamicos.value;
+    const datosRegistro: InsertaActualizaRegistroVisitaPortalDTO = {
+      accion: accion,
+      correo: valoresFormulario.correo,
+    }
+    return new Promise((resolve, reject) => {
+      this._FormularioProgresivoConfiguracionCodigoDescuentoService.ProcesoInsertarActualizarCodigoDescuento(datosRegistro)
+        .pipe(takeUntil(this.signal$))
+        .subscribe({
+          next: (respuesta) => {
+            this.auxCodigoDescuento = respuesta.datosCodigoDescuento.codigoDescuentoArmado;
+            resolve();
+          },
+          error: (error) => {
+            console.error('Error al consultar datos del usuario:', error);
+            reject(error);
+          },
+        });
+    });
+  }
+
   copiaCodigo(): void {
     if (this.cabeceraMensajeTexto) {
       navigator.clipboard.writeText(this.cabeceraMensajeTexto).then(
@@ -760,6 +780,7 @@ export class FormularioProgressiveProfilingComponent implements OnInit {
                 auxTipoPrograma: this.auxTipoPrograma,
                 auxNombrePrograma: this.auxNombrePrograma,
                 auxCorreoCliente: this.auxCorreoCliente,
+                auxCodigoDescuento: this.auxCodigoDescuento,
                 usuarioWeb: this.usuarioWeb,
                 id: formularioRpta.id,
                 tipo: formularioRpta.tipo,
@@ -920,4 +941,9 @@ interface datosRegistroVisitaPortalDTO {
   idAreaFormacion?: number;
   idAreaTrabajo?: number;
   idIndustria?: number;
+}
+
+interface InsertaActualizaRegistroVisitaPortalDTO {
+  accion: number;
+  correo: string;
 }

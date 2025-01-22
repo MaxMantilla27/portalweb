@@ -97,6 +97,7 @@ export class AppComponent implements OnInit,AfterViewInit ,OnDestroy {
   auxTipoPrograma: string = "";
   auxNombrePrograma: string = "";
   auxCorreoCliente: string = "";
+  auxCodigoDescuento: string = "";
   
   ngOnInit() {
     console.log("Inicio Ruta ",window.frames.location);
@@ -431,6 +432,7 @@ export class AppComponent implements OnInit,AfterViewInit ,OnDestroy {
             auxTipoPrograma: this.auxTipoPrograma,
             auxNombrePrograma: this.auxNombrePrograma,
             auxCorreoCliente: this.auxCorreoCliente,
+            auxCodigoDescuento: this.auxCodigoDescuento,
             usuarioWeb: this.usuarioWeb,
             id: formulario.id,
             tipo: formulario.tipo,
