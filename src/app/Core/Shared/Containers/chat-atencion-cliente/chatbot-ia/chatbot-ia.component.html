@@ -201,6 +201,7 @@
       *ngIf="ChatbotCerrado && ChatAcademicoAbierto && TieneCoordinador"
     >
       <app-chat-atencion-cliente-academico
+        [IdChatAtencionClienteContacto]="IdChatAtencionClienteContacto"
         (IsOpen)="toggleChat($event)"
         [idProgramageneral]="registroChatIA.IdPGeneral!"
         [IdMatriculaCabecera]="registroChatIA.IdMatriculaCabecera!"

@@ -1,4 +1,5 @@
 import {
+  ChangeDetectorRef,
   Component,
   ElementRef,
   EventEmitter,
@@ -48,7 +49,9 @@ export class ChatAtencionClienteAcademicoComponent
     private _Router: Router,
     private sanitizer: DomSanitizer,
     private _ChatAtencionClienteService: ChatAtencionClienteService,
-    private _ChatbotIAService: ChatbotIAService
+    private _ChatbotIAService: ChatbotIAService,
+    private cdr: ChangeDetectorRef
+
   ) {
     this.storageEventListener = this.handleStorageEvent.bind(this);
     window.addEventListener('storage', this.storageEventListener);
@@ -69,6 +72,7 @@ export class ChatAtencionClienteAcademicoComponent
   public chatKey = 'lcsk-chatId';
   @Input() idProgramageneral = 0;
   @Input() IdMatriculaCabecera = 0;
+  @Input() IdChatAtencionClienteContacto = 0;
   public contadoraulavirtual = 0;
   public idInteraccion: any;
   public idprogramageneralalumno = 0;
@@ -118,6 +122,8 @@ export class ChatAtencionClienteAcademicoComponent
   @Output()
   IsOpen: EventEmitter<boolean> = new EventEmitter<boolean>();
   public showConfirmationDialog = false;
+  public mensajeDesconexionEnviado = false
+
   ngOnDestroy(): void {
     this.signal$.next(true);
     this.signal$.complete();
@@ -393,6 +399,7 @@ export class ChatAtencionClienteAcademicoComponent
       this.chatBox != null &&
       this.chatBox.trim().length > 0
     ) {
+      this.RegistrarEstadoOnlineChatBot(true);
       this.hubConnection
         .invoke(
           'EnviarMensajeVisitanteAcademico',
@@ -901,5 +908,26 @@ export class ChatAtencionClienteAcademicoComponent
       textarea.style.height = `${parseInt(getComputedStyle(textarea).lineHeight)}px`; // Establecer altura a una línea
       textarea.style.overflowY = 'hidden'; // Desactivar el scroll
     }
+  }
+  enviarMensajeOffline(){
+    this.RegistrarEstadoOnlineChatBot(false);
+    this.hubConnection.invoke('mensajeChatAcademico', this.chatBox);
+    this.lastMsj=this.chatBox;
+    this.chatBox="";
+    this.mensajeDesconexionEnviado=true
+  }
+  RegistrarEstadoOnlineChatBot(EsOnline: boolean) {
+    this._ChatbotIAService
+      .RegistrarEstadoOnlineChatBot(
+        this.IdChatAtencionClienteContacto,
+        EsOnline
+      )
+      .pipe(takeUntil(this.signal$))
+      .subscribe({
+        next: (x) => {
+          console.log('Registrando estado online:', EsOnline);
+        },
+        complete: () => {},
+      });
   }
 }

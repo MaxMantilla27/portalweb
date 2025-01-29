@@ -50,105 +50,106 @@
 
   <ng-template #login>
     <ng-container *ngIf="nombreasesorglobal != 'Sin Asesor'">
-      <div
-        class="FlechaAtrasMatricula no-select"
-        (click)="showConfirmationDialog = true"
-      >
-        <i class="material-icons">arrow_back_ios</i>
-        <span>Atras</span>
-      </div>
-      <div
-        *ngIf="showConfirmationDialog && !ReiniciarFlujoChat"
-        class="confirmation-dialog-atras"
-      >
-        <p>
-          ¿Deseas salir de esta sesión de chat? La conversación se dará por
-          finalizada.
-        </p>
-        <button
-          style="background: #ff8610; color: white"
-          (click)="confirmAction()"
+      <ng-container *ngIf="stateAsesor">
+        <div
+          class="FlechaAtrasMatricula no-select"
+          (click)="showConfirmationDialog = true"
         >
-          Sí, retroceder
-        </button>
-        <button
-          style="
-            background: transparent;
-            color: #033dab;
-            border: 1px solid #033dab;
-          "
-          (click)="cancelAction()"
+          <i class="material-icons">arrow_back_ios</i>
+          <span>Atras</span>
+        </div>
+        <div
+          *ngIf="showConfirmationDialog && !ReiniciarFlujoChat"
+          class="confirmation-dialog-atras"
         >
-          Cancelar
-        </button>
-      </div>
-      <div
-        *ngIf="showConfirmationDialog && ReiniciarFlujoChat"
-        class="confirmation-dialog-atras"
-      >
-        <p>
-          Tu sesión de chat se cerrará por inactividad. Gracias por conversar
-          con nosotros. ¡Te esperamos nuevamente cuando lo necesites!
-        </p>
-        <button
-          style="background: #ff8610; color: white"
-          (click)="confirmActionReset()"
-        >
-          Aceptar
-        </button>
-      </div>
-      <div
-        *ngIf="!showConfirmationDialog"
-        #contenidoMsj
-        class="contentChatMsj"
-        (click)="marcarChatAgentecomoleido()"
-      >
-        <div class="mensajeDefecto">Chat iniciado</div>
-        <!-- <div class="mensajeDefecto">{{nombreAsesorSplit[0]}} {{nombreAsesorSplit[1]}} se unió al Chat</div> -->
-
-        <ng-container *ngFor="let item of mensajesAnteriore; let i = index">
-          <div
-            [ngClass]="{
-              visitanteMsj: item.idRemitente.toLowerCase() == 'visitante',
-              asesorMsj: item.idRemitente.toLowerCase() == 'asesor'
-            }"
+          <p>
+            ¿Deseas salir de esta sesión de chat? La conversación se dará por
+            finalizada.
+          </p>
+          <button
+            style="background: #ff8610; color: white"
+            (click)="confirmAction()"
           >
-            <div class="cntnmsj">
-              <!-- <div class="remitente">{{item.NombreRemitente.split(' ')[0]}}</div> -->
-              <div
-                *ngIf="!item.esImagen"
-                class="msj"
-                [innerHtml]="item.mensaje | safeHtml"
-              ></div>
-              <div class="msj">
-                <img
-                  *ngIf="item.esImagen"
-                  [src]="item.url"
-                  alt="Imagen en el chat"
-                  style="
-                    max-width: 180px;
-                    max-height: 80px;
-                    width: auto;
-                    height: auto;
-                    cursor: pointer;
-                  "
-                  (click)="ampliarImagen(item.url)"
-                />
-              </div>
+            Sí, retroceder
+          </button>
+          <button
+            style="
+              background: transparent;
+              color: #033dab;
+              border: 1px solid #033dab;
+            "
+            (click)="cancelAction()"
+          >
+            Cancelar
+          </button>
+        </div>
+        <div
+          *ngIf="showConfirmationDialog && ReiniciarFlujoChat"
+          class="confirmation-dialog-atras"
+        >
+          <p>
+            Tu sesión de chat se cerrará por inactividad. Gracias por conversar
+            con nosotros. ¡Te esperamos nuevamente cuando lo necesites!
+          </p>
+          <button
+            style="background: #ff8610; color: white"
+            (click)="confirmActionReset()"
+          >
+            Aceptar
+          </button>
+        </div>
+        <div
+          *ngIf="!showConfirmationDialog"
+          #contenidoMsj
+          class="contentChatMsj"
+          (click)="marcarChatAgentecomoleido()"
+        >
+          <div class="mensajeDefecto">Chat iniciado</div>
+          <!-- <div class="mensajeDefecto">{{nombreAsesorSplit[0]}} {{nombreAsesorSplit[1]}} se unió al Chat</div> -->
 
-              <div *ngFor="let pdfUrl of pdfsEnChat">
-                <iframe [src]="pdfUrl" width="100%" height="150px"></iframe>
-              </div>
-              <ng-container
-                *ngIf="item.idRemitente.toLowerCase() == 'visitante'"
-              >
-                <ng-container *ngIf="item.estadoEnviado == false">
-                  <div class="statemsjEnviado">
-                    <i class="material-icons">access_time</i>
-                  </div>
-                </ng-container>
-                <ng-container *ngIf="item.estadoEnviado != false">
-                  <!-- <ng-container  *ngIf="(mensajesAnteriore.length-i)>=NroMensajesSinLeer">
+          <ng-container *ngFor="let item of mensajesAnteriore; let i = index">
+            <div
+              [ngClass]="{
+                visitanteMsj: item.idRemitente.toLowerCase() == 'visitante',
+                asesorMsj: item.idRemitente.toLowerCase() == 'asesor'
+              }"
+            >
+              <div class="cntnmsj">
+                <!-- <div class="remitente">{{item.NombreRemitente.split(' ')[0]}}</div> -->
+                <div
+                  *ngIf="!item.esImagen"
+                  class="msj"
+                  [innerHtml]="item.mensaje | safeHtml"
+                ></div>
+                <div class="msj">
+                  <img
+                    *ngIf="item.esImagen"
+                    [src]="item.url"
+                    alt="Imagen en el chat"
+                    style="
+                      max-width: 180px;
+                      max-height: 80px;
+                      width: auto;
+                      height: auto;
+                      cursor: pointer;
+                    "
+                    (click)="ampliarImagen(item.url)"
+                  />
+                </div>
+
+                <div *ngFor="let pdfUrl of pdfsEnChat">
+                  <iframe [src]="pdfUrl" width="100%" height="150px"></iframe>
+                </div>
+                <ng-container
+                  *ngIf="item.idRemitente.toLowerCase() == 'visitante'"
+                >
+                  <ng-container *ngIf="item.estadoEnviado == false">
+                    <div class="statemsjEnviado">
+                      <i class="material-icons">access_time</i>
+                    </div>
+                  </ng-container>
+                  <ng-container *ngIf="item.estadoEnviado != false">
+                    <!-- <ng-container  *ngIf="(mensajesAnteriore.length-i)>=NroMensajesSinLeer">
                       <div class="statemsjleido">
                         <i class="material-icons" style="right: 4px;
                         z-index: 3;">check</i>
@@ -164,56 +165,102 @@
                         z-index: 4;">check</i>
                       </div>
                     </ng-container> -->
+                  </ng-container>
                 </ng-container>
-              </ng-container>
+              </div>
+              <div
+                *ngIf="item.idRemitente.toLowerCase() != 'visitante'"
+                class="fecha-asesor"
+              >
+                {{ item.fechaEnvio }}
+              </div>
+              <div
+                *ngIf="item.idRemitente.toLowerCase() == 'visitante'"
+                class="fecha-visitante"
+              >
+                {{ item.fechaEnvio }}
+              </div>
             </div>
-            <div
-              *ngIf="item.idRemitente.toLowerCase() != 'visitante'"
-              class="fecha-asesor"
-            >
-              {{ item.fechaEnvio }}
-            </div>
-            <div
-              *ngIf="item.idRemitente.toLowerCase() == 'visitante'"
-              class="fecha-visitante"
-            >
-              {{ item.fechaEnvio }}
+          </ng-container>
+        </div>
+        <div
+          *ngIf="!showConfirmationDialog"
+          class="footerChatAula"
+          (click)="marcarChatAgentecomoleido()"
+        >
+          <textarea
+            class="chat-box-ia-textarea"
+            [(ngModel)]="chatBox"
+            (input)="redimendisionarTextareaChatbot($event)"
+            (keydown.enter)="
+              $event.preventDefault();
+              $event.stopPropagation();
+              enviarmsj();
+              resetTextareaHeight()
+            "
+            (focus)="inputActive = true"
+            (focusout)="inputActive = false"
+            placeholder="Escribe tu mensaje aquí"
+            rows="1"
+          ></textarea>
+          <i class="material-icons" (click)="enviarmsj()">send</i>
+          <i class="material-icons addfile" (click)="fileInput.click()"
+            >attach_file</i
+          >
+          <input
+            #fileInput
+            type="file"
+            style="display: none"
+            accept="image/png, image/gif, image/jpeg"
+            (change)="AgregarArchivoChatSoporte($event)"
+          />
+        </div>
+      </ng-container>
+      <ng-container *ngIf="!stateAsesor">
+        <ng-container *ngIf="!mensajeDesconexionEnviado">
+          <div class="asesorMsj" style="margin-top: 5px;">
+            <div class="cntnmsj">
+              <!-- <div class="remitente">{{item.NombreRemitente.split(' ')[0]}}</div> -->
+              <div class="msj">
+                Soy {{ nombreAsesorSplit[0] }}, en este momento no me
+                encuentro disponible. Por favor deja un mensaje.
+              </div>
             </div>
           </div>
+          <textarea
+          class="chat-box-desconectado"
+            placeholder="Escribe tu mensaje"
+            [(ngModel)]="chatBox"
+            cols="30"
+            rows="3"
+          ></textarea>
+          <div
+            style="
+              width: 100%;
+              display: flex;
+              justify-content: center;
+              margin-bottom: 3%;
+            "
+          >
+            <app-default-button
+              (click)="crearChatOffline()"
+              [confs]="{ color: 'primary', titulo: 'Enviar' }"
+              [style]="'padding:0px 30px;margin:0px ;background: #FF8610!important; '"
+            ></app-default-button>
+          </div>
         </ng-container>
-      </div>
-      <div
-        *ngIf="!showConfirmationDialog"
-        class="footerChatAula"
-        (click)="marcarChatAgentecomoleido()"
-      >
-        <textarea
-          class="chat-box-ia-textarea"
-          [(ngModel)]="chatBox"
-          (input)="redimendisionarTextareaChatbot($event)"
-          (keydown.enter)="
-            $event.preventDefault();
-            $event.stopPropagation();
-            enviarmsj();
-            resetTextareaHeight()
-          "
-          (focus)="inputActive = true"
-          (focusout)="inputActive = false"
-          placeholder="Escribe tu mensaje aquí"
-          rows="1"
-        ></textarea>
-        <i class="material-icons" (click)="enviarmsj()">send</i>
-        <i class="material-icons addfile" (click)="fileInput.click()"
-          >attach_file</i
-        >
-        <input
-          #fileInput
-          type="file"
-          style="display: none"
-          accept="image/png, image/gif, image/jpeg"
-          (change)="AgregarArchivoChatSoporte($event)"
-        />
-      </div>
+        <ng-container *ngIf="mensajeDesconexionEnviado">
+          <div class="confirmation-dialog-atras">
+            <p>Tu mensaje fue enviado, me comunicare contigo a la brevedad.</p>
+            <button
+              style="background: #ff8610; color: white"
+              (click)="confirmActionReset()"
+            >
+              Aceptar
+            </button>
+          </div>
+        </ng-container>
+      </ng-container>
     </ng-container>
     <ng-container *ngIf="nombreasesorglobal == 'Sin Asesor'">
       <div

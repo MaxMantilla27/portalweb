@@ -410,6 +410,7 @@
     </div>
     <ng-container *ngIf="Paso == 3 && Caso == 'A'">
       <app-chat-atencion-cliente-chat
+        [IdChatAtencionClienteContacto]="IdChatAtencionClienteContacto"
         (IsOpen)="toggleChat($event)"
         (RegresarChatAtc)="RetrocederCursos($event)"
         (RegresarChatAtcEnviado)="RetrocederInicioFormulario($event, 1)"

@@ -4,11 +4,15 @@
     <div class="imgAsesor">
       <img [src]="img" (error)="ErrorImgAsesor()" alt="" />
       <div class="nombreAsesor">
-        <div *ngIf="nombreasesorglobal != ''" style="margin-left: 15px">
-          <div>{{ nombreAsesorSplit[0] }} {{ nombreAsesorSplit[1] }}</div>
-          <div style="font-size: 14px; font-weight: 500">BSG Institute</div>
+        <div *ngIf="nombreasesorglobal!=''" style="margin-left: 15px;">
+          <div>
+            {{nombreAsesorSplit[0]}} {{nombreAsesorSplit[1]}}
+          </div>
+          <div style="font-size: 14px;font-weight: 500;">
+            BSG Institute
+          </div>
         </div>
-        <div *ngIf="nombreasesorglobal == ''" style="text-align: center">
+        <div *ngIf="nombreasesorglobal==''" style="text-align: center;">
           Chatea en línea con tu coordinador académico
         </div>
 
@@ -28,7 +32,7 @@
     </div>
     <!-- <div class="textoAsesor" *ngIf="estadoLogueo!='false'">Soy {{nombreAsesorSplit[0]}} , {{mensajeStateAsesor}}</div> -->
   </div>
-  <ng-container>
+  <ng-container *ngIf="stateAsesor">
     <!--<div class="FlechaAtrasMatricula no-select" (click)="showConfirmationDialog = true">
       <i class="material-icons">arrow_back_ios</i>
       <span>Atras</span>
@@ -168,5 +172,52 @@
         (change)="AgregarArchivoChatSoporte($event)"
       />
     </div>
+  </ng-container>
+  <ng-container *ngIf="!stateAsesor">
+    <ng-container *ngIf="!mensajeDesconexionEnviado">
+      <div class="asesorMsj" style="margin-top: 5px;">
+        <div class="cntnmsj">
+          <!-- <div class="remitente">{{item.NombreRemitente.split(' ')[0]}}</div> -->
+          <div class="msj">
+            Soy {{ nombreAsesorSplit[0] }}, en este momento no me
+            encuentro disponible. Por favor deja un mensaje.
+          </div>
+        </div>
+      </div>
+      <textarea
+      class="chat-box-desconectado"
+        placeholder="Escribe tu mensaje"
+        [(ngModel)]="chatBox"
+        cols="30"
+        rows="3"
+      ></textarea>
+      <div
+        style="
+          width: 100%;
+          display: flex;
+          justify-content: center;
+          margin-bottom: 3%;
+        "
+      >
+        <app-default-button
+          (click)="enviarMensajeOffline()"
+          [confs]="{ color: 'primary', titulo: 'Enviar' }"
+          [style]="'padding:0px 30px;margin:0px ;background: #FF8610!important;'"
+        ></app-default-button>
+      </div>
+    </ng-container>
+    <ng-container *ngIf="mensajeDesconexionEnviado">
+      <div
+        class="confirmation-dialog-atras"
+      >
+        <p>Tu mensaje fue enviado, me comunicare contigo a la brevedad.</p>
+        <button
+          style="background: #FF8610; color: white"
+          (click)="confirmAction()"
+        >
+          Aceptar
+        </button>
+      </div>
+    </ng-container>
   </ng-container>
 </div>

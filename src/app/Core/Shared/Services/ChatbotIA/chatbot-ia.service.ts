@@ -97,4 +97,14 @@ export class ChatbotIAService {
       return EMPTY;
     }
   }
+  public RegistrarEstadoOnlineChatBot(IdChatAtencionClienteContacto:number,EsOnline:boolean):Observable<any>{
+    console.log('RegistrarEstadoOnlineChatBot')
+    console.log('IChatAtencionClienteContacto',IdChatAtencionClienteContacto)
+    console.log('EsOnline',EsOnline)
+    if(this.isBrowser){
+      return this.http.post<any>(this.urlBase+'/RegistrarEstadoOnlineChatBot?IdChatAtencionClienteContacto='+IdChatAtencionClienteContacto+'&EsOnline='+EsOnline,{});
+    }else{
+      return EMPTY;
+    }
+  }
 }

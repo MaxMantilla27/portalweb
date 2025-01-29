@@ -293,3 +293,16 @@
 }
 
 
+.chat-box-desconectado {
+  color: #707070;
+  width: 90%;
+  margin: 10px 0 0 16px;
+  padding: 10px;
+  border-radius: 10px 0px 10px 10px;;
+  border: 2px solid #cfcfcf;
+  font-size: 13px;
+}
+
+.chat-box-desconectado:focus {
+  outline: none;
+}
