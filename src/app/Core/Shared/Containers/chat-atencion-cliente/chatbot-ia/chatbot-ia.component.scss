@@ -482,3 +482,21 @@
   bottom: 15px;
   right: 45px;
 }
+
+/* TABLA - CSS MARKDOWN*/
+:host ::ng-deep .asesorMsj .cntnmsj markdown table {
+  display: block;
+  width: 100%; 
+  overflow-x: auto; 
+  white-space: nowrap;
+  border-collapse: collapse;
+  margin-top: 8px;
+  margin-bottom: 8px;
+  th, td {
+    padding: 8px;
+    text-align: left;
+    border: 1px solid #707070;
+  }
+}
+
+/* TABLA - CSS MARKDOWN*/
