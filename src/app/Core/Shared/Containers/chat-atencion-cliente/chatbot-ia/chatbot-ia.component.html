@@ -72,7 +72,21 @@
       >
         <mat-spinner></mat-spinner>
       </div>
-
+      <div *ngIf="ChatErrorBotRecarga">
+        <div class="contentChatMsj">
+          <div class="error-mensaje">Hubo un error al enviar el mensaje.</div>
+        </div>
+        <div>
+          <div class="footerChatAula">
+            <button
+              class="mensaje-finalizado"
+              (click)="CerrarRegistroHiloChat(IdChatbotIAPortalHiloChat)"
+            >
+              Iniciar nueva conversación
+            </button>
+          </div>
+        </div>
+      </div>
       <div
         *ngIf="!ChatbotCerrado && !CargandoInformacion"
         #contenidoMsj
@@ -89,12 +103,12 @@
               <!-- Mostrar "Escribiendo..." solo si es el último mensaje y EstadoEscribiendo es verdadero -->
               <div *ngIf="EstadoEscribiendo && last" class="escribiendoBotIA">
                 <span>Escribiendo</span>
-                <span class="puntosBotIA">...</span>
+                <span class="puntosBotIA"></span>
               </div>
               <!-- Mostrar el mensaje si no está en estado escribiendo -->
               <markdown
-                *ngIf="(!EstadoEscribiendo || !last) && item.mensaje != ''"
-                [innerHtml]="item.mensaje"
+                *ngIf="(!EstadoEscribiendo || !last)"
+                [innerHTML]="item.mensaje === '' ? 'No logré procesar tu mensaje. ¿Puedes repetirlo?' : item.mensaje"
               ></markdown>
             </div>
             <div
