@@ -368,6 +368,25 @@
             </app-modulo-webinars>
           </div>
         </mat-tab>
+
+        <mat-tab>
+          <ng-template mat-tab-label>
+            <div #configuracion class="contentHeaderM" (click)="InterraccionTab('Configuracion')"
+              matTooltip="Configuracion" matTooltipPosition="after">
+              <div class="iconMat iconCertificados"></div>
+              <div class="titleMatr" *ngIf="!hide">Configuración</div>
+            </div>
+          </ng-template>
+          <ng-template matTabContent>
+            <div class="pad-resp">
+              <app-curso-configuracion-resumen>
+
+              </app-curso-configuracion-resumen>
+            </div>
+          </ng-template>
+
+        </mat-tab>
+
         <mat-tab *ngIf="curso!=undefined && curso.benficioSolicitado">
           <ng-template mat-tab-label>
             <div #beneficios class="contentHeaderM" (click)="InterraccionTab('Mis Beneficios')"

@@ -216,6 +216,7 @@ import { DetallePagoChileMercadopagoComponent } from './pago/pago-medio-pago/det
 import { DetallePagoColombiaWompiComponent } from './pago/pago-medio-pago/detalle-pago-colombia-wompi/detalle-pago-colombia-wompi.component';
 import { DetallePagoColombiaPayuComponent } from './pago/pago-medio-pago/detalle-pago-colombia-payu/detalle-pago-colombia-payu.component';
 import { ResultadoPagoNiubizComponent } from './resultado-pago-niubiz/resultado-pago-niubiz.component';
+import { CursoConfiguracionResumenComponent } from './curso/curso-configuracion-resumen/curso-configuracion-resumen/curso-configuracion-resumen.component';
 
 
 @NgModule({
@@ -433,6 +434,7 @@ import { ResultadoPagoNiubizComponent } from './resultado-pago-niubiz/resultado-
     DetallePagoColombiaWompiComponent,
     DetallePagoColombiaPayuComponent,
     ResultadoPagoNiubizComponent,
+    CursoConfiguracionResumenComponent,
 
   ],
   imports: [
