@@ -41,6 +41,18 @@
     text-align: left;
     margin-left: 10px;
   }
+
+  .iconMatPng {
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    width: 20px;
+    height: 20px;
+  }
+  .iconConfiguracion {
+    background-image: url("../../../assets/icons/icono-configuracion-resumen-gris.png");
+  }
+
   .iconMat {
     background-repeat: no-repeat;
     width: 20px;
@@ -114,6 +126,15 @@
   color: #0684f3 !important;
   font-weight: 600;
   text-decoration: auto;
+
+  .iconMatPng {
+    .material-icons{
+      color: #41a6ff !important;
+    }
+  }
+  .iconConfiguracion {
+    background-image: url("../../../assets/icons/icono-configuracion-resumen-azul.png") !important;
+  }
 
   .iconMat {
     .material-icons{

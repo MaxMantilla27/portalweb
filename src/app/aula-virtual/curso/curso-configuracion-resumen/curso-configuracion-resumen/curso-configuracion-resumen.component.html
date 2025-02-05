@@ -5,52 +5,74 @@
                 <div style="color: #4a4a4a;
                     font-size: 16px;
                     font-weight: 600;
-                    padding-bottom: 5px;
+                    padding-bottom: 20px;
                     border-bottom: solid 1px #ececec;
                     margin: 20px 0px;">Tipos de resumen</div>
             </div>
-            <div class="row mb-3">
-                <div class="col-6">
-                    <label style="width: 160px;">Pdf</label>
-                    <mat-checkbox></mat-checkbox>
+            <div class="col-12" style="width: calc( 100% - 50px ); padding-bottom: 20px;">
+                <div class="row mb-3">
+                    <div class="col-6">
+                        <label style="width: 160px;">Pdf</label>
+                        <mat-checkbox></mat-checkbox>
+                    </div>
+                    <div class="col-6">
+                        <label style="width: 160px;">Mapa conceptual</label>
+                        <mat-checkbox></mat-checkbox>
+                    </div>
                 </div>
-                <div class="col-6">
-                    <label style="width: 160px;">Mapa conceptual</label>
-                    <mat-checkbox></mat-checkbox>
-                </div>
-            </div>
-            <div class="row mb-3">
-                <div class="col-6">
-                    <label style="width: 160px;">Audio</label>
-                    <mat-checkbox></mat-checkbox>
-                </div>
-                <div class="col-6">
-                    <label style="width: 160px;">Video</label>
-                    <mat-checkbox></mat-checkbox>
+                <div class="row mb-3">
+                    <div class="col-6">
+                        <label style="width: 160px;">Audio</label>
+                        <mat-checkbox></mat-checkbox>
+                    </div>
+                    <div class="col-6">
+                        <label style="width: 160px;">Video</label>
+                        <mat-checkbox></mat-checkbox>
+                    </div>
                 </div>
             </div>
         </div>
+
         <div class="row">
             <div class="col-12">
                 <div style="color: #4a4a4a;
                     font-size: 16px;
                     font-weight: 600;
-                    padding-bottom: 5px;
+                    padding-bottom: 30px;
                     border-bottom: solid 1px #ececec;
-                    margin: 20px 0px;">Medios</div>
-            </div>
-            <div class="row mb-3">
-                <div class="col-6">
-                    <label style="width: 160px;">Correo</label>
-                    <mat-checkbox></mat-checkbox>
+                    margin: 20px 0px;">Medios
                 </div>
-                <div class="col-6">
-                    <label style="width: 160px;">WhatsApp</label>
-                    <mat-checkbox></mat-checkbox>
+            </div>
+            <div class="col-12" style="width: calc( 100% - 50px ); padding-bottom: 20px;">
+                <div class="row mb-3">
+                    <div class="col-6">
+                        <label style="width: 160px;">Correo</label>
+                        <mat-checkbox></mat-checkbox>
+                    </div>
+                    <div class="col-6">
+                        <label style="width: 160px;">WhatsApp</label>
+                        <mat-checkbox></mat-checkbox>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
 
+        <div class="row">
+            <div class="col-6">
+                <app-default-button
+                    [confs]="{color:'primary',titulo:'Enviar'}"
+                    [style]="'width: 150px;margin: 0px 0px 10px 0px;'"
+                    (ButtoclClick)="GuardarActualizarConfiguracionResumen()">
+                </app-default-button>
+            </div>
+            <div class="col-6">
+                <app-default-button
+                    [confs]="{color:'primary',titulo:'Cancelar'}"
+                    [style]="'width: 150px;margin: 0px 0px 10px 0px;'"
+                    (ButtoclClick)="CancelarConfiguracionResumen()">
+                </app-default-button>
+            </div>
+        </div>
+    </div>
 </ng-container>
   

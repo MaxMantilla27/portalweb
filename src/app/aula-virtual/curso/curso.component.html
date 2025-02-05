@@ -371,20 +371,18 @@
 
         <mat-tab>
           <ng-template mat-tab-label>
-            <div #configuracion class="contentHeaderM" (click)="InterraccionTab('Configuracion')"
-              matTooltip="Configuracion" matTooltipPosition="after">
-              <div class="iconMat iconCertificados"></div>
+            <div #modulos class="contentHeaderM" (click)="InterraccionTab('Configuracion')" matTooltip="Configuración"
+              matTooltipPosition="after">
+              <div class="iconMatPng iconConfiguracion"></div>
               <div class="titleMatr" *ngIf="!hide">Configuración</div>
             </div>
           </ng-template>
           <ng-template matTabContent>
             <div class="pad-resp">
               <app-curso-configuracion-resumen>
-
               </app-curso-configuracion-resumen>
             </div>
           </ng-template>
-
         </mat-tab>
 
         <mat-tab *ngIf="curso!=undefined && curso.benficioSolicitado">

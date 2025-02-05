@@ -12,4 +12,11 @@ export class CursoConfiguracionResumenComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  GuardarActualizarConfiguracionResumen() {
+
+  }
+
+  CancelarConfiguracionResumen() {
+
+  }
 }
