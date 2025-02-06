@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ConfiguracionResumenGrabacionesService } from 'src/app/Core/Shared/Services/ConfiguracionResumenGrabaciones/configuracion-resumen-grabaciones.service';
 
 @Component({
   selector: 'app-curso-configuracion-resumen',
@@ -7,16 +8,34 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CursoConfiguracionResumenComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    private _ConfiguracionResumenGrabacionesService: ConfiguracionResumenGrabacionesService
+  ) { }
 
   ngOnInit(): void {
+    this.obtenerConfiguracion();
   }
 
-  GuardarActualizarConfiguracionResumen() {
+  obtenerConfiguracion() {
+    const idMatriculaCabecera = 123;
+    const idPGeneral = 456;
+  
+    this._ConfiguracionResumenGrabacionesService.ObtenerListaConfiguracionResumenProgramaPorMatriculaProgramaGeneral(idMatriculaCabecera, idPGeneral)
+    .subscribe({
+      next: (x) => {
+        console.log('Datos recibidos:', x);
+      },
+      error: (err) => {
+        console.error('Error al obtener los datos:', err);
+      }
+    });
+  }
+
+  guardarActualizarConfiguracionResumen() {
 
   }
 
-  CancelarConfiguracionResumen() {
+  cancelarConfiguracionResumen() {
 
   }
 }
