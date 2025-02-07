@@ -751,22 +751,24 @@
               (opened)="item.opened=true;EventoInteraccionAccordion(item.titulo,'Abierto')"
               (closed)="item.opened=false;EventoInteraccionAccordion(item.titulo,'Cerrado')" [expanded]="item.opened==true">
               <mat-expansion-panel-header>
-                <mat-panel-title>
-                  <div style="display: flex;align-items: center;">
-                    <div *ngIf="!item.opened" class="estructuraProgramicon">+</div>
-                    <div *ngIf="item.opened" class="estructuraProgramicon">-</div>
-                    <div class="estructuraProgramTitle">{{item.titulo}}
+                <mat-panel-title style="min-height: 50px;" [ngStyle]="{display: i == 0 ? 'initial' : 'flex'}">
+                  <div style="display: flex;align-items: center;justify-content: space-between;">
+                    <div style="display: flex;align-items: center;">
+                      <div *ngIf="!item.opened" class="estructuraProgramicon">+</div>
+                      <div *ngIf="item.opened" class="estructuraProgramicon">-</div>
+                      <div class="estructuraProgramTitle">{{item.titulo}}
                       <ng-container *ngIf="item.duracion>0">
-                        
-                          ({{item.duracion}} horas cronol&oacute;gicas)
-                        
+                        ({{item.duracion}} horas cronol&oacute;gicas)
                       </ng-container>
+                      </div>
                     </div>
-    
+                    <div *ngIf="i==0" class="vistaPreviaButton" style="margin-left: auto;">
+                      <img src="../../../assets/imagenes/Vista-previa.png" alt="" height="50px">
+                    </div>
                   </div>
                 </mat-panel-title>
               </mat-expansion-panel-header>
-                <ul style="margin: 0px;padding-top:20px;padding-bottom: 10px;margin-left: 25px;color: #625530;list-style: none;" [ngStyle]="{'border-bottom': i == estructuraPrograma.length - 1 ? 'none' : '1px solid #FFFFFF'}">
+                <ul style="margin: 0px;padding-top:15px;padding-bottom: 10px;margin-left: 25px;color: #625530;list-style: none;" [ngStyle]="{'border-bottom': i == estructuraPrograma.length - 1 ? 'none' : '1px solid #FFFFFF'}">
                 <li *ngFor="let itemsubtitle of item.subTitulo" style="font-size: 17px;margin-bottom: 15px;display: flex;align-items: center;gap: 5px;">
                   <img src="../../../assets/imagenes/check.png" alt="" height="20px">
                   {{itemsubtitle.contenido}}
