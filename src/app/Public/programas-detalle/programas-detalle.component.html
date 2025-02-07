@@ -738,14 +738,16 @@
 
   <div style="background-color: #FFCD34;">
     <div class="container">
-      <div class="row rowpadd">
-        <div class="row"
-          style="display: flex;justify-content: space-between;align-items: center;flex-wrap: wrap; margin-bottom: 20px;">
-          <h2 style="font-weight: bold;line-height: 150%;" class="col-12 col-md-12 col-lg-12 subtitulo">Estructura Curricular</h2>
+      <div class="row rowpadd" style="justify-content: center;">
+        <div class="row">
+          <div class="col-12 tituloSeccionPrograma" style="justify-content: center;margin-bottom: 40px;">
+            <img src="../../../assets/imagenes/estructura-curricular.png" alt="" height="50px">
+            <div>Estructura Curricular</div>
+          </div>
         </div>
         <div class="col-12 col-md-12 col-lg-8">
           <mat-accordion class="acordionPrograma" multi>
-            <mat-expansion-panel hideToggle *ngFor="let item of estructuraPrograma"
+            <mat-expansion-panel hideToggle *ngFor="let item of estructuraPrograma;let i = index"
               (opened)="item.opened=true;EventoInteraccionAccordion(item.titulo,'Abierto')"
               (closed)="item.opened=false;EventoInteraccionAccordion(item.titulo,'Cerrado')" [expanded]="item.opened==true">
               <mat-expansion-panel-header>
@@ -753,32 +755,35 @@
                   <div style="display: flex;align-items: center;">
                     <div *ngIf="!item.opened" class="estructuraProgramicon">+</div>
                     <div *ngIf="item.opened" class="estructuraProgramicon">-</div>
-                    <div style="color: #8D8D8C;" class="estructuraProgramTitle">{{item.titulo}} <br>
+                    <div class="estructuraProgramTitle">{{item.titulo}}
                       <ng-container *ngIf="item.duracion>0">
-                        <div style="color:#8D8D8C;font-size: 12px;">
+                        
                           ({{item.duracion}} horas cronol&oacute;gicas)
-                        </div>
+                        
                       </ng-container>
                     </div>
     
                   </div>
                 </mat-panel-title>
               </mat-expansion-panel-header>
-              <ul style="margin: 0px;padding-top:20px;padding-bottom:20px;padding-left: 4rem;">
-                <li *ngFor="let itemsubtitle of item.subTitulo" style="color:#a1a1a0">{{itemsubtitle.contenido}}</li>
-              </ul>
+                <ul style="margin: 0px;padding-top:20px;padding-bottom: 10px;margin-left: 25px;color: #625530;list-style: none;" [ngStyle]="{'border-bottom': i == estructuraPrograma.length - 1 ? 'none' : '1px solid #FFFFFF'}">
+                <li *ngFor="let itemsubtitle of item.subTitulo" style="font-size: 17px;margin-bottom: 15px;display: flex;align-items: center;gap: 5px;">
+                  <img src="../../../assets/imagenes/check.png" alt="" height="20px">
+                  {{itemsubtitle.contenido}}
+                </li>
+                </ul>
             </mat-expansion-panel>
           </mat-accordion>
           <div class="piePagina" [innerHtml]="EstructuraPiePagina | safeHtml"></div>
         </div>
-        <ng-container *ngIf="idBusqueda!=7569">
+        <!-- <ng-container *ngIf="idBusqueda!=7569">
           <div style="display: block;justify-content: center;" class="col-12 col-md-12 col-lg-4 ContenidoVistaPrevia"
             *ngIf="ExisteVideo==true">
             <iframe #myIframe id="myIframe" id="cartoonVideoVistaPrevia" [src]="VistaPreviaPortal | safe"
               class="embed-responsive-item" frameborder="5" allowfullscreen></iframe>
     
           </div>
-        </ng-container>
+        </ng-container> -->
       </div>
     </div>
   </div>
