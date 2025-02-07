@@ -11,6 +11,7 @@ import {
 import { ChargeComponent } from 'src/app/Core/Shared/Containers/Dialog/charge/charge.component';
 import { AsistenciaService } from 'src/app/Core/Shared/Services/Asistencia/asistencia.service';
 import { CertificadoService } from 'src/app/Core/Shared/Services/Certificado/certificado.service';
+import { ConfiguracionResumenGrabacionesService } from 'src/app/Core/Shared/Services/ConfiguracionResumenGrabaciones/configuracion-resumen-grabaciones.service';
 import { DatosPerfilService } from 'src/app/Core/Shared/Services/DatosPerfil/datos-perfil.service';
 import { HelperService } from 'src/app/Core/Shared/Services/helper.service';
 import { ProgramaContenidoService } from 'src/app/Core/Shared/Services/ProgramaContenido/programa-contenido.service';
@@ -44,6 +45,7 @@ export class CursoComponent implements OnInit,OnDestroy {
     private _CertificadoService:CertificadoService,
     public dialog: MatDialog,
     private _AsistenciaService: AsistenciaService,
+    private configuracionResumenGrabacionesService: ConfiguracionResumenGrabacionesService,
   ) {}
   ngOnDestroy(): void {
     this.signal$.next(true);
@@ -387,6 +389,8 @@ export class CursoComponent implements OnInit,OnDestroy {
     this._DatosPerfilService.RegistroProgramaMatriculadoPorIdMatricula(this.idMatricula).pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
         console.log(x)
+        this.configuracionResumenGrabacionesService.setIdMatriculaCabecera(x.idMatriculaCabecera);
+        this.configuracionResumenGrabacionesService.setIdPGeneral(x.idPGeneral);
         this._HelperService.enviarMsjChat({
           idMatriculaCabecera:x.idMatriculaCabecera,
           idprogramageneralalumno:x.idPGeneral,

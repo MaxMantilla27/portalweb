@@ -11,7 +11,8 @@ export class ConfiguracionResumenGrabacionesService {
   
   isBrowser: boolean;
   public urlBase=environment.url_api+'MatriculaConfiguracionResumenPrograma';
-  private intervaloTiempoLocal: any = null;
+  private idMatriculaCabecera: number | null = null;
+  private idPGeneral: number | null = null;
 
   constructor(
     private http: HttpClient,
@@ -20,10 +21,36 @@ export class ConfiguracionResumenGrabacionesService {
     this.isBrowser = isPlatformBrowser(platformId);
   }
 
+  setIdMatriculaCabecera(id: number): void {
+    this.idMatriculaCabecera = id;
+  }
+
+  getIdMatriculaCabecera(): number | null {
+    return this.idMatriculaCabecera;
+  }
+
+  setIdPGeneral(id: number): void {
+    this.idPGeneral = id;
+  }
+
+  getIdPGeneral(): number | null {
+    return this.idPGeneral;
+  }
+
   public ObtenerListaConfiguracionResumenProgramaPorMatriculaProgramaGeneral(IdMatriculaCabecera: number, IdPGeneral: number): Observable<any> {
     if (this.isBrowser) {
       return this.http.get<any>(
         `${this.urlBase}/ObtenerListaConfiguracionResumenProgramaPorMatriculaProgramaGeneral?IdMatriculaCabecera=${IdMatriculaCabecera}&IdPGeneral=${IdPGeneral}`
+      );
+    } else {
+      return EMPTY;
+    }
+  }
+
+  public InsertarActualizarListaMatriculaConfiguracionResumenPrograma(datos: any): Observable<any> {
+    if (this.isBrowser) {
+      return this.http.post<any>(
+        `${this.urlBase}/InsertarActualizarListaMatriculaConfiguracionResumenPrograma`, datos
       );
     } else {
       return EMPTY;
