@@ -75,10 +75,10 @@
     </div>
   </div> -->
   <div class="ContentInicio">
-    <div class="contentAbsolute">
+    <!-- <div class="contentAbsolute">
       <div class="FondoGris"></div>
       <div class="FondoBlanco"></div>
-    </div>
+    </div> -->
   
     <div class="row" style="padding: 0px;margin: 0px;    width: 100%;">
   
@@ -112,90 +112,34 @@
     </div>
     <div class="container">
       <div class="row rowpadd">
-        <div  #contentLeft  class="contentLeft col-12 col-md-7 col-lg-7">
+        <div  #contentLeft  class="contentLeft col-12 col-md-6 col-lg-6">
           <div class="contentTop">
             <div #contenidoTOp style="background: transparent;position: relative;padding: 10px 0px;">
-              <div style="line-height: 120%;" [innerHtml]="cabecera.tituloHtml | safeHtml" class="titlePrograma"></div><br>
-              <div style="    margin: 10px 0px;
-              font-size: 15px;font-weight: 700;">Área: <a title=" Vínculo a {{cabecera.areaCapacitacion}}"
-                  (click)="EventoInteraccionLinck(cabecera.areaCapacitacion,'Área')" style="font-weight: 100;"
+              <div style="line-height: 120%;" [innerHtml]="cabecera.tituloHtml | safeHtml" class="titlePrograma"></div>
+              <div style="margin: 25px 0px;
+              font-size: 17px;font-weight: 700;">
+                Área: <a title=" Vínculo a {{cabecera.areaCapacitacion}}"
+                  (click)="EventoInteraccionLinck(cabecera.areaCapacitacion,'Área')" style="font-weight: 100;margin-right: 25px;"
                   routerLink="/Area/{{cabecera.areaDescripcion}}">{{cabecera.areaCapacitacion}}</a> | Sub
                 Área: <a title="Vínculo a {{cabecera.nombreSubArea}}" (click)="EventoInteraccionLinck(cabecera.nombreSubArea,'Sub Área')" style="font-weight: 100;"
-                  routerLink="/SubArea/{{cabecera.subAreaDescripcion}}">{{cabecera.nombreSubArea}}</a> </div><br>
-              <div class="row" style="margin-top: 20px;">
-                <div class="col-12 col-md-12 col-lg-6">
-                  <app-default-button-flecha [confs]="{color:'primary',titulo:'Matricularme Ahora'}"
-                    [style]="'width: 100%;border-radius:20px'"
-                    (ButtoclClick)="EventoInteraccionButton('Matricularme Ahora');OpenModalPago()"
-                    [disabled]="cabecera.listProgramaEspecificoInformacionDTO.length==0"></app-default-button-flecha>
-                </div>
-                <div class="col-12 col-md-12 col-lg-6 " *ngIf="esAonline==true">
-                  <app-default-button-flecha [confs]="{color:'verde',titulo:'Acceso de prueba gratis'}"
-                    [style]="'width: 100%;border-radius:20px'"
-                    (ButtoclClick)="EventoInteraccionButton('Acceso de prueba gratis');RegistrarProgramaPrueba()"></app-default-button-flecha>
-                </div>
+                  routerLink="/SubArea/{{cabecera.subAreaDescripcion}}">{{cabecera.nombreSubArea}}</a> 
               </div>
-            </div>
-          </div>
-          <div class="contentBotton">
-            <div style="background: transparent;position: relative;padding: 40px 0px;">
-              <div class="row" style="align-items: flex-start;">
-                <div *ngIf="cabecera.imgPrincipal!='https://img.bsginstitute.com/repositorioweb/img/partners/Sin Partner' && cabecera.imgPrincipal != null "
-                  class="col-12 col-md-10 col-lg-10"
-                  style="position: relative;margin-top: 10px;text-align: left;margin-bottom: 40px;">
-                  <img class="InfoProgramImg" [src]="cabecera.imgPrincipal" alt="Logo">
+
+              <div style="margin: 28px 0px;line-height: 1.8; font-size: 17px; font-weight: 300;width: 80%;"
+                  >
+                {{getSeoDescription(this.parametroSeo,'description')}}
+              </div>
+              <div style="margin-top: 25px;">
+                <div class="row" style="align-items: flex-start;" *ngIf="cabecera.imgPrincipal!='https://img.bsginstitute.com/repositorioweb/img/partners/Sin Partner' && cabecera.imgPrincipal != null ">
+                    <div class="col-12 col-md-2 col-lg-2" style="font-size: 18px;font-weight: 700;">Partner: </div> 
+                    <div *ngIf="cabecera.imgPrincipal!='https://img.bsginstitute.com/repositorioweb/img/partners/Sin Partner' && cabecera.imgPrincipal != null "
+                      class="col-12 col-md-10 col-lg-10"
+                      style="position: relative;margin-top: 10px;text-align: left;margin-bottom: 40px;">
+                      <img class="InfoProgramImg" [src]="cabecera.imgPrincipal" alt="Logo">
+                    </div>
                 </div>
-                <ng-container *ngIf="idBusqueda!=7569">
-                  <div
-  
-                    class="col-12 col-md-6 col-lg-6 row">
-  
-                    <div class="col-12 " style="display: flex">
-                      <img class="InfoProgramIcon" src="../../../assets//icons/reloj-04.svg" alt="Reloj">
-                      <div class="InfoProgramTitle">Fechas de Inicio:</div>
-                    </div>
-                    <div class="col-12 " style="margin-top: 10px;">
-                      <div *ngFor="let item of cabecera.listProgramaEspecificoInformacionDTO" class=" infoProgramFechas ">
-                        <div class="infoProgramTitle">
-                          <ng-container *ngIf="item.tipo.toLowerCase()=='online asincronica'">
-                            Online a tu ritmo :
-                          </ng-container>
-                          <ng-container *ngIf="item.tipo.toLowerCase()=='online sincronica'">
-                            Online en vivo :
-                          </ng-container>
-                          <ng-container *ngIf="item.tipo.toLowerCase()=='presencial'">
-                            Presencial {{item.ciudad[0].toUpperCase() + item.ciudad.substr(1).toLowerCase() }}:
-                          </ng-container>
-                        </div>
-                        <div class="infoProgramText">{{item.fechaInicioTexto}}</div>
-                      </div>
-                    </div>
-  
-                  </div>
-                  <div
-                    *ngIf="cabecera.imgPrincipal=='https://img.bsginstitute.com/repositorioweb/img/partners/Sin Partner'"
-                    class="col-12 col-md-6 col-lg-6 row">
-  
-                    <div class="col-12 " style="display: flex">
-                      <img class="InfoProgramIcon" src="../../../assets//icons/reloj-04.svg" alt="Reloj">
-                      <div class="InfoProgramTitle">Fechas de Inicio:</div>
-                    </div>
-                    <div class="col-12 " style="margin-top: 10px;">
-                      <div *ngFor="let item of cabecera.listProgramaEspecificoInformacionDTO" class=" infoProgramFechas ">
-                        <div class="infoProgramTitle">
-                          <ng-container *ngIf="item.tipo.toLowerCase()=='online asincronica'">
-                            Online a tu ritmo :
-                          </ng-container>
-                          <ng-container *ngIf="item.tipo.toLowerCase()=='online sincronica'">
-                            Online en vivo :
-                          </ng-container>
-                        </div>
-                        <div class="infoProgramText">{{item.fechaInicioTexto}}</div>
-                      </div>
-                    </div>
-                  </div>
-                </ng-container>
-                <div class="col-12 col-md-6 col-lg-6 row">
+
+                <!-- <div class="col-12 col-md-6 col-lg-6 row">
                   <div class="col-12 " style="display: flex">
                     <img class="InfoProgramIcon" src="../../../assets//icons/calendar-03.svg" alt="Calendario">
                     <div class="InfoProgramTitle">Duraci&oacute;n:</div>
@@ -206,21 +150,42 @@
                     </div>
                   </div>
                 </div>
-  
                 <div class="col-12" style=" color: red;display: flex;"
                   *ngIf="MontoPago!=undefined && MontoPago!=null && MontoPago.length>0 && MontoPago[0].porcentajeDescuento!=null && MontoPago[0].porcentajeDescuento!=0">
                   <p style="font-weight: bold;font-size: 17px;">{{porcentajeDescuento}}%&nbsp;</p>
                   <p style="font-size: 14px;margin-top: auto;">
                     {{textoDescuento}}
                   </p>
-                </div>
+                </div> -->
+            </div>
+
+            <div class="row">
+              <div class="col-12 col-md-12 col-lg-6">
+                <app-default-button-flecha [confs]="{color:'primary',titulo:'Matricularme Ahora'}"
+                  [style]="'width: 100%;border-radius:20px;padding: 8px 0px;font-size: 18px;'"
+                  (ButtoclClick)="EventoInteraccionButton('Matricularme Ahora');OpenModalPago()"
+                  [disabled]="cabecera.listProgramaEspecificoInformacionDTO.length==0"></app-default-button-flecha>
+              </div>
+              <div class="col-12 col-md-12 col-lg-6 " *ngIf="esAonline==true">
+                <app-default-button-flecha [confs]="{color:'verde',titulo:'Acceso de prueba gratis'}"
+                  [style]="'width: 100%;border-radius:20px;padding: 8px 0px;font-size: 18px;'"
+                  (ButtoclClick)="EventoInteraccionButton('Acceso de prueba gratis');RegistrarProgramaPrueba()"></app-default-button-flecha>
               </div>
             </div>
           </div>
         </div>
-        <div class="contentRigth col-12 col-md-5 col-lg-5">
-  
-          <div class="col-12" style="display:flex;justify-content: center;">
+          
+        </div>
+        <div class="contentRigth col-12 col-md-6 col-lg-6" style="margin-top: 5%;">
+          <ng-container *ngIf="idBusqueda!=7569">
+            <div style="padding-bottom: 30px;" class="col-12 col-md-12 col-lg-12"
+            *ngIf="ExisteVideo==true">
+              <iframe #myIframe id="cartoonVideoVistaPrevia" [src]="VistaPreviaPortal | safe"
+              class="embed-responsive-item" style="width: 100%; height: 100%;aspect-ratio: 16/9; border: none;"></iframe>
+            </div>
+          </ng-container>
+
+          <!-- <div class="col-12" style="display:flex;justify-content: center;">
             <div id="FormularioProgramasInsert">
               <div class="estructuraProgramForm" style="position: relative;">
                 <app-cargando *ngIf="statuscharge==true"></app-cargando>
@@ -294,7 +259,7 @@
                 </ng-container>
               </div>
             </div>
-          </div>
+          </div> -->
   
         </div>
       </div>
@@ -522,11 +487,70 @@
   </div> -->
   
   
-  
-  <div style="background: #e6eefa;">
+  <div style="background: white;position: relative;display: flex;justify-content: center;padding-top: 20px;padding-bottom: 70px;">
+
+    <div class="infoClaveProgramaContainer">
+      <div class="infoClave" style="border-right: 1px solid #D7C282;">
+        <div class="infoClaveImg">
+          <img src="../../../assets/imagenes/PDUS.png" alt="">
+        </div>
+        <div class="infoContainer">
+          <div class="infoClaveNombre">PDU's</div>
+          <div class="infoClaveValor">35 PDU's PMI° </div>
+        </div>
+      </div>
+      <div class="infoClave" style="border-right: 1px solid #D7C282;">
+        <div class="infoClaveImg">
+          <img src="../../../assets/imagenes/modalidad.png" alt="">
+        </div>
+        <div class="infoContainer">
+          <div class="infoClaveNombre">Modalidad</div>
+          <div class="infoClaveValor">Online Live</div>
+        </div>
+      </div>
+      <div class="infoClave" style="border-right: 1px solid #D7C282;">
+        <div class="infoClaveImg">
+          <img src="../../../assets/imagenes/fecha-de-inicio.png" alt="">
+        </div>
+        <div class="infoContainer">
+          <div class="infoClaveNombre">Fecha de inicio</div>
+          <div class="infoClaveValor">08 Enero 2025</div>
+        </div>
+      </div>
+      <div class="infoClave" style="border-right: 1px solid #D7C282;">
+        <div class="infoClaveImg">
+          <img src="../../../assets/imagenes/duracion.png" alt="">
+        </div>
+        <div class="infoContainer">
+          <div class="infoClaveNombre">Duración</div>
+          <div class="infoClaveValor">4 meses</div>
+        </div>
+      </div>
+      <div class="infoClave">
+        <div class="infoClaveImg">
+          <img src="../../../assets/imagenes/horas-de-clases.png" alt="">
+        </div>
+        <div class="infoContainer">
+          <div class="infoClaveNombre">Horas de clases</div>
+          <div class="infoClaveValor">35 horas</div>
+        </div>
+      </div>  
+    </div>
+
     <div class="container">
       <div class="row rowpadd">
-        <div class="col-12 col-md-12 col-lg-12 tabprogram">
+        <div class="col-12 col-md-8 col-lg-8" style="padding-top: 40px;">
+          <div class="col-12 tituloSeccionPrograma">
+            <img src="../../../assets/imagenes/Objetivos.png" alt="" height="50px">
+            <div>Objetivos</div>
+          </div>
+          <div class="col-12" style="margin-top: 20px;">
+            <div class="puntoListaObjetivos" [innerHtml]="seccion.objetivo | safeHtml" style="text-align: left;
+            padding: 20px 0px;">
+            </div>
+          </div>
+        </div>
+        <!-- <div class="col-12 col-md-12 col-lg-12 tabprogram">
           <mat-tab-group mat-align-tabs="start" (selectedTabChange)="tabChanged($event)">
             <mat-tab label="Objetivos">
               <div class="puntoAzulLista" [innerHtml]="seccion.objetivo | safeHtml" style="text-align: left;
@@ -594,56 +618,172 @@
               </div>
             </mat-tab>
           </mat-tab-group>
-        </div>
-      </div>
-    </div>
-  </div>
-  
-  <div class="container">
-    <div class="row rowpadd">
-      <div class="row"
-        style="display: flex;justify-content: space-between;align-items: center;flex-wrap: wrap; margin-bottom: 20px;">
-        <h2 style="font-weight: bold;line-height: 150%;" class="col-12 col-md-12 col-lg-12 subtitulo">Estructura Curricular</h2>
-      </div>
-      <div class="col-12 col-md-12 col-lg-8">
-        <mat-accordion class="acordionPrograma" multi>
-          <mat-expansion-panel hideToggle *ngFor="let item of estructuraPrograma"
-            (opened)="item.opened=true;EventoInteraccionAccordion(item.titulo,'Abierto')"
-            (closed)="item.opened=false;EventoInteraccionAccordion(item.titulo,'Cerrado')" [expanded]="item.opened==true">
-            <mat-expansion-panel-header>
-              <mat-panel-title>
-                <div style="display: flex;align-items: center;">
-                  <div *ngIf="!item.opened" class="estructuraProgramicon">+</div>
-                  <div *ngIf="item.opened" class="estructuraProgramicon">-</div>
-                  <div style="color: #8D8D8C;" class="estructuraProgramTitle">{{item.titulo}} <br>
-                    <ng-container *ngIf="item.duracion>0">
-                      <div style="color:#8D8D8C;font-size: 12px;">
-                        ({{item.duracion}} horas cronol&oacute;gicas)
-                      </div>
-                    </ng-container>
-                  </div>
-  
+        </div> -->
+        <div class="col-12 col-md-4 col-lg-4" style="display:flex;justify-content: center;">
+          <div id="FormularioProgramasInsert">
+            <div class="estructuraProgramForm" style="position: relative;">
+              <app-cargando *ngIf="statuscharge==true"></app-cargando>
+              <div class="cotentestructuraProgramForm">
+                <div class="question" style="justify-content: flex-start;align-items: center;">
+                  <img src="../../../assets/icons/signo-pregunta-abierto-03.svg" alt="Signo de interrogación abierto">
                 </div>
-              </mat-panel-title>
-            </mat-expansion-panel-header>
-            <ul style="margin: 0px;padding-top:20px;padding-bottom:20px;padding-left: 4rem;">
-              <li *ngFor="let itemsubtitle of item.subTitulo" style="color:#a1a1a0">{{itemsubtitle.contenido}}</li>
-            </ul>
-          </mat-expansion-panel>
-        </mat-accordion>
-        <div class="piePagina" [innerHtml]="EstructuraPiePagina | safeHtml"></div>
-      </div>
-      <ng-container *ngIf="idBusqueda!=7569">
-        <div style="display: block;justify-content: center;" class="col-12 col-md-12 col-lg-4 ContenidoVistaPrevia"
-          *ngIf="ExisteVideo==true">
-          <iframe #myIframe id="myIframe" id="cartoonVideoVistaPrevia" [src]="VistaPreviaPortal | safe"
-            class="embed-responsive-item" frameborder="5" allowfullscreen></iframe>
-  
+                <div>Tienes dudas sobre algún aspecto del programa</div>
+                <div class="question" style="justify-content: flex-end;align-items: center;">
+                  <img src="../../../assets/icons/signo-pregunta-cerrado-04.svg" alt="Signo de interrogación cerrado">
+                </div>
+              </div>
+              <div class="subtitleEstruturaProgramFormAzul">
+                Registra tus datos para que un asesor especializado pueda ayudarte en todo lo que requieras
+              </div>
+              <ng-container *ngIf="combosPrevios!=undefined">
+                <app-formulario-azul style="background-color: blue;" [ListaLocalidades]="listaLocalidades" [Interaccion]="'Programas-'+idBusqueda"
+                  [model]="formularioContacto" [InputsDisable]="statuscharge" [CleanOnSubmit]="cleanSub"
+                  (OnSubmit)="SetContacto($event)" (OnValid)="formVal=$event" [fiels]="fileds"
+                  (OnSelect)="SelectChage($event)">
+
+                  <ng-container contenido>
+                  </ng-container>
+                  <ng-container send>
+                    <div style="text-align: center;margin-top: -10px;margin-bottom: 10px;">
+                      <a title="Limpiar Campos" style="color: #027CFF;font-size: 14px;cursor: pointer;" (click)="LimpiarCampos()">[No soy
+                        {{formularioContacto.Nombres}}]</a>
+                    </div>
+                    <app-default-button-flecha style="display: flex;justify-content: center;"
+                      [confs]="{color:'primary',titulo:'Enviar'}"
+                      [style]="'width: 85%;margin-bottom: -2px;border-radius:20px'">
+                    </app-default-button-flecha>
+                  </ng-container>
+
+                </app-formulario-azul>
+              </ng-container>
+              <ng-container *ngIf="combosPrevios==undefined && CompleteLocalStorage==true">
+                <app-formulario-azul [ListaLocalidades]="listaLocalidades" [Interaccion]="'Programas-'+idBusqueda" [model]="formularioContacto"
+                  [InputsDisable]="statuscharge" [CleanOnSubmit]="cleanSub" (OnSubmit)="SetContacto($event)"
+                  (OnValid)="formVal=$event" [fiels]="fileds" (OnSelect)="SelectChage($event)">
+
+                  <ng-container contenido>
+                  </ng-container>
+                  <ng-container send>
+                    <div style="text-align: center;margin-top: -10px;margin-bottom: 10px;">
+                      <a title="Limpiar Campos" style="color: #027CFF;font-size: 14px;cursor: pointer;" (click)="LimpiarCampos()">[No soy
+                        {{formularioContacto.Nombres}}]</a>
+                    </div>
+                    <app-default-button-flecha style="display: flex;justify-content: center;"
+                      [confs]="{color:'primary',titulo:'Enviar'}"
+                      [style]="'width: 85%;margin-bottom: -2px;border-radius:20px'">
+                    </app-default-button-flecha>
+                  </ng-container>
+
+                </app-formulario-azul>
+              </ng-container>
+              <ng-container *ngIf="combosPrevios==undefined && CompleteLocalStorage==false">
+                <app-formulario-azul [ListaLocalidades]="listaLocalidades" [Interaccion]="'Programas-'+idBusqueda" [model]="formularioContacto"
+                  [InputsDisable]="statuscharge" [CleanOnSubmit]="cleanSub" (OnSubmit)="SetContacto($event)"
+                  (OnValid)="formVal=$event" [fiels]="fileds" (OnSelect)="SelectChage($event)">
+
+                  <ng-container contenido>
+                  </ng-container>
+                  <ng-container send>
+                    <app-default-button-flecha style="display: flex;justify-content: center;"
+                      [confs]="{color:'primary',titulo:'Enviar'}"
+                      [style]="'width: 85%;margin-bottom: -2px;border-radius:20px'">
+                    </app-default-button-flecha>
+                  </ng-container>
+                </app-formulario-azul>
+              </ng-container>
+            </div>
+          </div>
         </div>
-      </ng-container>
+      </div> 
+
+      <div class="row" >
+        <div class="col-12" style="display: flex;justify-content: center;">
+          <div style="width: 80%;display: flex; justify-content: space-between;">
+              <div class="cardInformacionPrograma">
+                <div class="col-12 tituloSeccionPrograma" style="justify-content: center;">
+                  <img src="../../../assets/imagenes/Publico-Objetivo.png" alt="" height="50px">
+                  <div>Publico Objetivo</div>
+                </div>
+                <div class="puntoListaPublicoObjetivo" [innerHtml]="seccion.publicoObjetivo | safeHtml" style="text-align: left;
+                  padding: 20px 45px;">
+                </div>
+              </div>
+              <div class="cardInformacionPrograma">
+                <div class="col-12 tituloSeccionPrograma" style="justify-content: center;">
+                  <img src="../../../assets/imagenes/prerequisitos.png" alt="" height="50px">
+                  <div>Prerequisitos</div>
+                </div>
+                <div style="text-align: left;
+                padding: 20px 45px;" *ngIf="prerequisitos!=undefined;else SinRequisitos">
+                  <div *ngFor="let cabeceras of prerequisitos">
+                    <p>{{cabeceras.cabecera}}</p>
+                    <div class="puntoListaPublicoObjetivo"*ngFor="let item of cabeceras.contenidos" >
+                      <ul>
+                        <li>{{item}}</li>
+                      </ul>
+                    </div>
+                  </div>
+                  <!-- <div class="piePagina" [innerHtml]="PrerrequisitosPiePagina | safeHtml"></div> -->
+                </div>
+                <ng-template #SinRequisitos>
+                  Sin requisitos
+                </ng-template>
+              </div>
+          </div>
+        </div>
+      </div>
+    </div> 
+  </div>
+
+
+  <div style="background-color: #FFCD34;">
+    <div class="container">
+      <div class="row rowpadd">
+        <div class="row"
+          style="display: flex;justify-content: space-between;align-items: center;flex-wrap: wrap; margin-bottom: 20px;">
+          <h2 style="font-weight: bold;line-height: 150%;" class="col-12 col-md-12 col-lg-12 subtitulo">Estructura Curricular</h2>
+        </div>
+        <div class="col-12 col-md-12 col-lg-8">
+          <mat-accordion class="acordionPrograma" multi>
+            <mat-expansion-panel hideToggle *ngFor="let item of estructuraPrograma"
+              (opened)="item.opened=true;EventoInteraccionAccordion(item.titulo,'Abierto')"
+              (closed)="item.opened=false;EventoInteraccionAccordion(item.titulo,'Cerrado')" [expanded]="item.opened==true">
+              <mat-expansion-panel-header>
+                <mat-panel-title>
+                  <div style="display: flex;align-items: center;">
+                    <div *ngIf="!item.opened" class="estructuraProgramicon">+</div>
+                    <div *ngIf="item.opened" class="estructuraProgramicon">-</div>
+                    <div style="color: #8D8D8C;" class="estructuraProgramTitle">{{item.titulo}} <br>
+                      <ng-container *ngIf="item.duracion>0">
+                        <div style="color:#8D8D8C;font-size: 12px;">
+                          ({{item.duracion}} horas cronol&oacute;gicas)
+                        </div>
+                      </ng-container>
+                    </div>
+    
+                  </div>
+                </mat-panel-title>
+              </mat-expansion-panel-header>
+              <ul style="margin: 0px;padding-top:20px;padding-bottom:20px;padding-left: 4rem;">
+                <li *ngFor="let itemsubtitle of item.subTitulo" style="color:#a1a1a0">{{itemsubtitle.contenido}}</li>
+              </ul>
+            </mat-expansion-panel>
+          </mat-accordion>
+          <div class="piePagina" [innerHtml]="EstructuraPiePagina | safeHtml"></div>
+        </div>
+        <ng-container *ngIf="idBusqueda!=7569">
+          <div style="display: block;justify-content: center;" class="col-12 col-md-12 col-lg-4 ContenidoVistaPrevia"
+            *ngIf="ExisteVideo==true">
+            <iframe #myIframe id="myIframe" id="cartoonVideoVistaPrevia" [src]="VistaPreviaPortal | safe"
+              class="embed-responsive-item" frameborder="5" allowfullscreen></iframe>
+    
+          </div>
+        </ng-container>
+      </div>
     </div>
   </div>
   
+
   <div style="background: #e6eefa;">
     <div class="container">
       <div class="row rowpadd">
@@ -938,4 +1078,4 @@
       </ng-container>
     </app-soporte-tecnico>
   </ng-container>
-</ng-container>
+
