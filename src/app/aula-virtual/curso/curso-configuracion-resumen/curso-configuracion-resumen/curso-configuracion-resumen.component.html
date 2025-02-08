@@ -16,28 +16,28 @@
                 <div class="row mb-3">
                     <div class="col-6">
                         <label style="width: 160px;">Pdf</label>
-                        <mat-checkbox [(ngModel)]="pdfChecked"></mat-checkbox>
+                        <mat-checkbox [(ngModel)]="pdfChecked" (change)="checkResumenChanged()"></mat-checkbox>
                     </div>
                     <div class="col-6">
                         <label style="width: 160px;">Mapa conceptual</label>
-                        <mat-checkbox [(ngModel)]="mapaConceptualChecked"></mat-checkbox>
+                        <mat-checkbox [(ngModel)]="mapaConceptualChecked" (change)="checkResumenChanged()"></mat-checkbox>
                     </div>
                 </div>
                 <div class="row mb-3">
                     <div class="col-6">
                         <label style="width: 160px;">Audio</label>
-                        <mat-checkbox [(ngModel)]="audioChecked"></mat-checkbox>
+                        <mat-checkbox [(ngModel)]="audioChecked" (change)="checkResumenChanged()"></mat-checkbox>
                     </div>
                     <div class="col-6">
                         <label style="width: 160px;">Video</label>
-                        <mat-checkbox [(ngModel)]="videoChecked"></mat-checkbox>
+                        <mat-checkbox [(ngModel)]="videoChecked" (change)="checkResumenChanged()"></mat-checkbox>
                     </div>
                 </div>
             </div>
         </div>
 
         <div class="row">
-            <div class="col-12">
+            <div class="col-12" [ngClass]="{'disabled-block': !isResumenChecked}">
                 <div style="color: #4a4a4a;
                     font-size: 16px;
                     font-weight: 600;
@@ -50,11 +50,11 @@
                 <div class="row mb-3">
                     <div class="col-6">
                         <label style="width: 160px;">Correo</label>
-                        <mat-checkbox [(ngModel)]="correoChecked"></mat-checkbox>
+                        <mat-checkbox [(ngModel)]="correoChecked" [disabled]="!isResumenChecked"></mat-checkbox>
                     </div>
                     <div class="col-6">
                         <label style="width: 160px;">WhatsApp</label>
-                        <mat-checkbox [(ngModel)]="whatsAppChecked"></mat-checkbox>
+                        <mat-checkbox [(ngModel)]="whatsAppChecked" [disabled]="!isResumenChecked"></mat-checkbox>
                     </div>
                 </div>
             </div>

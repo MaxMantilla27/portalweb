@@ -18,6 +18,7 @@ export class CursoConfiguracionResumenComponent implements OnInit {
   whatsAppChecked: boolean = false;
 
   isLoading: boolean = false;
+  isResumenChecked: boolean = false;
 
   constructor(
     private _ConfiguracionResumenGrabacionesService: ConfiguracionResumenGrabacionesService
@@ -61,6 +62,7 @@ export class CursoConfiguracionResumenComponent implements OnInit {
               this.videoChecked = element.estado;
             }
           });
+          this.checkResumenChanged();
         }
         this.isLoading = false;
       },
@@ -69,6 +71,14 @@ export class CursoConfiguracionResumenComponent implements OnInit {
         this.isLoading = false;
       }
     });
+  }
+
+  checkResumenChanged() {
+    this.isResumenChecked = this.pdfChecked || this.mapaConceptualChecked || this.audioChecked || this.videoChecked;
+    if (!this.isResumenChecked) {
+      this.correoChecked = false;
+      this.whatsAppChecked = false;
+    }
   }
 
   actualizarConfiguracionResumen() {
@@ -125,6 +135,10 @@ export class CursoConfiguracionResumenComponent implements OnInit {
   }
 
   cancelarConfiguracionResumen() {
-
+    this.pdfChecked = false;
+    this.mapaConceptualChecked = false;
+    this.audioChecked = false;
+    this.videoChecked = false;
+    this.checkResumenChanged();
   }
 }
