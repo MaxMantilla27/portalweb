@@ -762,7 +762,7 @@
                       </ng-container>
                       </div>
                     </div>
-                    <div *ngIf="i==0" class="vistaPreviaButton" style="margin-left: auto;">
+                    <div *ngIf="i==0" class="vistaPreviaButton" style="margin-left: auto;" (click)="OpenModal()">
                       <img src="../../../assets/imagenes/Vista-previa.png" alt="" height="50px">
                     </div>
                   </div>
@@ -776,8 +776,9 @@
                 </ul>
             </mat-expansion-panel>
           </mat-accordion>
-          <div class="piePagina" [innerHtml]="EstructuraPiePagina | safeHtml"></div>
+          <!-- <div class="piePagina" [innerHtml]="EstructuraPiePagina | safeHtml"></div> -->
         </div>
+        
         <!-- <ng-container *ngIf="idBusqueda!=7569">
           <div style="display: block;justify-content: center;" class="col-12 col-md-12 col-lg-4 ContenidoVistaPrevia"
             *ngIf="ExisteVideo==true">

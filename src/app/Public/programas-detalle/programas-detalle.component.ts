@@ -62,6 +62,7 @@ import { ProgramaFormularioComponent } from './programa-formulario/programa-form
 import { FormularioAzulComponent } from 'src/app/Core/Shared/Containers/formulario-azul/formulario-azul.component';
 import { ChatEnLineaService } from 'src/app/Core/Shared/Services/ChatEnLinea/chat-en-linea.service';
 import { FacebookPixelService } from 'src/app/Core/Shared/Services/FacebookPixel/facebook-pixel.service';
+import { auto } from '@popperjs/core';
 declare const fbq:any;
 declare const gtag:any;
 declare const lintrk: any;
@@ -82,7 +83,7 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
   contenidoTOp!: ElementRef;
   @ViewChild('contentLeft')
   contentLeft!: ElementRef;
-
+  
   constructor(
     private activatedRoute: ActivatedRoute,
     private _SeccionProgramaService: SeccionProgramaService,
@@ -341,7 +342,8 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
 
   OpenModal(): void {
     const dialogRef = this.dialog.open(VistaPreviaComponent, {
-      width: '561px',
+      width: '60%',
+      height:auto,
       data: { url: this.VistaPreviaPortal },
       panelClass: 'custom-dialog-container',
     });
@@ -1287,6 +1289,23 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
     let d=metas.find((x:any)=>x.nombre==nombre)!=undefined?
           metas.find((x:any)=>x.nombre==nombre).descripcion:undefined
     return d;
+  }
+
+  openVideoModal(){
+
+    const modal = document.getElementById('videoModal');
+    if (modal) {
+      modal.style.display = 'block'
+    //this.videoModal.nativeElement.style.display = 'block';
+    }
+  }
+
+  closeVideoModal(){
+
+    const modal = document.getElementById('videoModal');
+    if (modal) {
+      modal.style.display = 'none';
+    }
 
   }
 

@@ -1,11 +1,16 @@
 <!-- holax -->
 
-<div style="width: 100% ; text-align: right;    padding: 5px;
+<!-- <div style="width: 100% ; text-align: right;    padding: 5px;
 height: 30px;
-margin: 0px;"><i class="material-icons" style="cursor: pointer;" (click)="dialogRef.close()">close</i></div>
+margin: 0px;"><i class="material-icons" style="cursor: pointer;" (click)="dialogRef.close()">close</i></div> -->
 <ng-container *ngIf="data!=undefined">
   <div style="width: 100%;position: relative;">
-    <div style="position: absolute;display: flex;justify-content: center;z-index: -1;width: 100%;"><mat-spinner></mat-spinner></div>
+    <div style="position: absolute;display: flex;justify-content: center;z-index: -1;width: 100%;">
+      <mat-spinner></mat-spinner>
+    </div>
+    <iframe #myIframe id="cartoonVideoVistaPrevia" style="width: 100%;height: 100%;aspect-ratio: 16/9;border: none;" [src]="data.url | safe" class="embed-responsive-item" frameborder="0" allowfullscreen></iframe>
+    <!-- <div style="width: 100%;height: 100%;">
   </div>
-  <iframe #myIframe id="myIframe" id="cartoonVideo" width="560" height="315" [src]="data.url | safe" class="embed-responsive-item" frameborder="0" allowfullscreen></iframe>
+</div> -->
+  </div> 
 </ng-container>
