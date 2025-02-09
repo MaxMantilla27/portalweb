@@ -279,15 +279,9 @@
   background: #ffffff;
 }
 .carsTitleBeneficiosPrograma {
-  color: #ffa135;
-  background: #2087f5;
-  font-size: 20px;
-  font-weight: 600;
-  text-align: center;
-  color: white;
-  padding: 5px ;
-  border-radius: 10px 10px 0px 0px;
-
+  font-size: 22px;
+  font-weight: 900;
+  text-align: start;  
 }
 .carsContenidoBeneficiosPrograma {
   padding: 20px 20px;
@@ -296,6 +290,13 @@
 // .todoslosBeneficios {
 //   //color: #989897;
 // }
+
+.todoslosBeneficios{
+  font-size: 16px;
+  font-weight: 900;
+  padding-left: 25px;
+}
+
 .piePagina {
   color: #a1a1a1;
   font-size: 10px;
@@ -674,6 +675,16 @@
   width: 100%;
   height: 450px; /* Ajusta la altura según sea necesario */
   border: none;
+}
+
+.puntoAzulDuracionHorario{
+
+
+
+  p{
+    font-size: 18px;
+  }
+
 }
 
 

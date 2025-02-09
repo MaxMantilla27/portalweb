@@ -644,6 +644,7 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
     this._BeneficioService.ListBeneficioPrograma(this.idBusqueda).pipe(takeUntil(this.signal$)).subscribe({
       next: (x) => {
         this.beneficios = x.listaBeneficioProgramaDTO;
+        console.log(this.beneficios)
         if(this.beneficios!=null){
           let i = 1;
           var beneficioLista: Array<number> = [];
