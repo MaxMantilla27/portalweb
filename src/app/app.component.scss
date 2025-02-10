@@ -230,11 +230,15 @@
 }
 
 .carousel-indicators [data-bs-target] {
-  background-color: #0a86f2;
-  width: 6px;
-  height: 6px;
+  background-color: #EB8D00;
+  width: 12px;
+  height: 12px;
 
   border-radius: 50%;
+}
+
+.carousel-indicators{
+  gap: 10px;
 }
 
 .carousel-control-next-icon {

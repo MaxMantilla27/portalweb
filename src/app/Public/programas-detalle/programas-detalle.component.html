@@ -745,7 +745,7 @@
             <div>Estructura Curricular</div>
           </div>
         </div>
-        <div class="col-12 col-md-12 col-lg-8">
+        <div class="col-12 col-md-12 col-lg-10">
           <mat-accordion class="acordionPrograma" multi>
             <mat-expansion-panel hideToggle *ngFor="let item of estructuraPrograma;let i = index"
               (opened)="item.opened=true;EventoInteraccionAccordion(item.titulo,'Abierto')"
@@ -796,7 +796,7 @@
       <div class="row rowpadd" style="justify-content: center;">
         <div class="row">
           <div class="col-12 tituloSeccionPrograma" style="justify-content: center;margin-bottom: 40px;color: #2087F5;">
-            <img src="../../../assets/imagenes/duracion.png" alt="" height="50px">
+            <img src="../../../assets/imagenes/duracion-y-horarios.png" alt="" height="50px">
             <div >Duracion y Horarios</div>
           </div>
         </div>
@@ -838,7 +838,7 @@
       <div class="row rowpadd">
 
         <div class="row">
-          <div class="col-12 tituloSeccionPrograma" style="justify-content: center;margin-bottom: 40px;">
+          <div class="col-12 tituloSeccionPrograma" style="justify-content: center;">
             <img src="../../../assets/imagenes/beneficios.png" alt="" height="50px">
             <div>Beneficios</div>
           </div>
@@ -847,7 +847,7 @@
 
             <ng-container *ngFor="let item of beneficios;let i=index">
               <div class="col-12 col-md-12 col-lg-12"
-                style="margin: 20px 0px;">
+                style="margin: 20px 0px;padding-bottom: 30px;padding-top: 20px;" [style.border-bottom]="i !==beneficios.length-1?'1px solid #FFFFFF':'none'">
                 
                 <div *ngIf="item.version!='Sin Version'" class="carsTitleBeneficiosPrograma">
                   <img src="../../../assets/imagenes/Flecha.png" alt="" height="20px">
@@ -861,8 +861,8 @@
                 <ng-container *ngFor="let content of item.contenido">
                   <!-- <div class="todoslosBeneficios" *ngIf="content.idBeneficio==-1;else Beneficio">{{content.contenido}}</div> -->
                   <div style="display: flex;gap: 5px;padding-left: 25px;margin-top: 15px;font-size: 18px;" *ngIf="content.idBeneficio>0">
-                    <img src="../../../assets/imagenes/check.png" alt="" height="20px">
-                    {{content.contenido}}
+                    <div><img src="../../../assets/imagenes/check.png" alt="" height="20px"></div>
+                    <div>{{content.contenido}}</div>
                   </div>
                 </ng-container>    
               </div>
@@ -930,26 +930,39 @@
     </div>
     <div *ngIf="certificadoVacio==true" class="row rowpadd" style="padding: 10px;">
     </div>
-    
+
   </div>
-  <div style="background: #e6eefa;">
+  <div style="background: #FFCD34;">
     <div class="container">
       <div class="row rowpadd">
+        <div class="row">
+          <div class="col-12 tituloSeccionPrograma" style="justify-content: center;">
+            <img src="../../../assets/imagenes/expositores.png" alt="" height="50px">
+            <div>Expositores</div>
+          </div>
+        </div>
+        
         <div class="col-12 col-md-12 col-lg-12 tabprogram">
-          <h2 style="font-weight: bold;line-height: 150%;"  class="subtitulo">Expositores</h2>
+          <!-- <h2 style="font-weight: bold;line-height: 150%;"  class="subtitulo">Expositores</h2> -->
   
-          <div class="carousel-expositores">
+          <div class="carousel-expositores" style="justify-content: center;">
             <ngb-carousel style="width: 99%" (slide)="EventoInteraccionCarrousel($event,'Expositores')">
-              <ng-template ngbSlide *ngFor="let ste of stepExpositors">
+              <ng-template ngbSlide *ngFor="let ste of expositor">
                 <div class="wrapper" style="display: flex;justify-content: center;">
-                  <div class="row" style="align-items: center;width: 95%;justify-content: center;    padding: 30px 0px;">
-                    <div class="col-12 col-xs-6 col-md-6 col-lg-6" *ngFor="let item of ste" style="height: 100%;">
-                      <app-card-expositores [expositor]="item"></app-card-expositores>
+                  <div class="row" style="width: 95%;display: flex;justify-content: center;padding: 50px 0px;">
+                    <div class="col-12 col-xs-12 col-md-12 col-lg-12 carouselContainer" style="height: 100%">
+                      <div class="carouselContainerImg">
+                        <img [src]="ste.fotoDocente" height="150px">
+                      </div>
+                      <div class="carouselContainerContent">
+                        <div class="titleExpositor">{{ste.primerNombre}} {{ste.apellidoPaterno}} ({{ste.nombrePais}})</div>
+                        <div class="contentExpositor" [innerHtml]="ste.hojaVidaResumidaPerfil | safeHtml"></div>
+                      </div>
+                      <!-- <app-card-expositores [expositor]="item"></app-card-expositores> -->
                     </div>
                   </div>
                 </div>
-                <div class="carousel-caption">
-                </div>
+                <div class="carousel-caption"></div>
               </ng-template>
             </ngb-carousel>
           </div>
@@ -964,29 +977,36 @@
   </div>
   <app-home-learning></app-home-learning>
   
-  <div style="background: #e6eefa;">
+  <div style="background: #FFCD34;">
     <div class="container">
       <div class="row rowpadd">
+        
         <div class="col-12 col-md-12 col-lg-12 tabprogram">
-          <h2 style="font-weight: bold;line-height: 150%;"  class="subtitulo">Inversión</h2>
-          <h4 style="color: #616161;" *ngIf="MontoPago!=null && MontoPago.length>0">
+          <div class="row">
+            <div class="col-12 tituloSeccionPrograma" style="justify-content: center;margin-bottom: 30px;">
+              <img src="../../../assets/imagenes/inversion.png" alt="" height="50px">
+              <div>Inversión</div>
+            </div>
+          </div>
+        
+          <div style="color: #616161;font-size: 18px;font-weight: 900;margin-bottom: 30px;" *ngIf="MontoPago!=null && MontoPago.length>0">
             <ng-container *ngIf="MontoPago[0].paquete==1">
-              Versi&oacute;n B&aacute;sica
+              Versi&oacute;n B&aacute;sica:
             </ng-container>
             <ng-container *ngIf="MontoPago[0].paquete==2">
-              Versión Profesional,
+              Versión Profesional:
             </ng-container>
             <ng-container *ngIf="MontoPago[0].paquete==3">
-              Versión Gerencial,
+              Versión Gerencial:
             </ng-container>
-          </h4>
+          </div>
           <div class="" *ngFor="let item of MontoPago" style="display: flex;align-items: center;margin-bottom: 10px;">
             <!-- <div style="margin-top: 5px;">
               <i class="material-icons" >
   
               </i>
             </div> -->
-            <i class="material-icons iconarrow">play_arrow</i>
+            <i class="material-icons iconarrow" style="color: #017EFF;">play_arrow</i>
             <div *ngIf="item.idTipoPago==1" style="color: #616161;">
               <ng-container *ngIf="item.porcentajeDescuento==null || item.porcentajeDescuento==0">
                 Pago al Contado: {{item.cuotas|formatoMilesDecimales}}&nbsp;&nbsp;{{item.codigoMoneda}}
@@ -1009,11 +1029,11 @@
               {{item.matricula|formatoMilesDecimales}}&nbsp;&nbsp;{{item.codigoMoneda}}
               + {{item.nroCuotas}} cuotas mensuales desde {{item.cuotas|formatoMilesDecimales}}&nbsp;&nbsp;{{item.codigoMoneda}}</div>
           </div>
-          <div style="color: #616161;font-size: 14px; margin-top: 40px;margin-bottom: 10px;">Consulte por nuestras
+          <div style="color: #616161;font-size: 18px; margin: 40px 0px;font-weight:900;">Consulte por nuestras
             opciones de pago personalizadas y flexibles as&iacute; como las opciones de descuentos.</div>
           <div style="display:flex;justify-content:center;margin-top: 15px;">
-            <app-default-button-flecha [confs]="{color:'primary',titulo:'Consultar Opción de Pago Personalizado'}"
-              [style]="'border-radius:20px;'"
+            <app-default-button-flecha [confs]="{titulo:'Consultar Opción de Pago Personalizado'}"
+              [style]="'border-radius:15px;color:white;background:#017EFF;padding:5px 15px'"
               (ButtoclClick)="EventoInteraccionButton('Consultar Opción de Pago Personalizado');;OpenModalFormulario(2)"></app-default-button-flecha>
           </div>
   
@@ -1021,84 +1041,95 @@
       </div>
     </div>
   </div>
-  <div class="container">
-    <div class="row rowpadd">
-      <div class="col-12 col-md-12 col-lg-12 tabprogram">
-        <h2  class="subtitulo" style="font-size: 2rem;
-        font-weight: bold;line-height: 150%;">Modalidades de pago</h2>
-        <ng-container *ngIf="codigoIso=='PE'">
-          <div style="display: flex;
-          align-items: center;
-          color: #4a4a49; font-weight: bold;"><i class="material-icons"
-              style="color: #34c939;margin-right: 10px;">play_arrow</i>Dep&oacute;sito o pago en una cuenta del BCP:
-          </div>
-          <div class="row cardFormasPago" style="margin-bottom: 40px;">
-            <div class="col-12 col-md-9 col-lg-9 divpagobcp">
-              Puedes solicitar tu c&oacute;digo de pago, o la información de la cuenta a nuestros asesores para hacer un
-              dep&oacute;sito o transferencia
-            </div>
-            <div class="col-12 col-md-3 col-lg-3"
-              style="padding: 0px; margin: 10px 0px;display:flex;justify-content: flex-start;">
-              <img class="imgCardFormasPago" src="../../../assets//icons/bcp-06.svg" alt="BCP">
-            </div>
-          </div>
-        </ng-container>
-  
-      </div>
-      <div class="col-12 col-md-12 col-lg-12" style="    margin-bottom: 10px;">
-  
-        <div style="display: flex;
-        align-items: center;
-        color: #4a4a49;font-weight: bold;"><i class="material-icons"
-            style="color: #34c939;margin-right: 10px;">play_arrow</i>Paga a trav&eacute;s de nuestro sitio web con
-          los siguientes medios de pago:</div>
-      </div>
-      <div class="col-12 col-md-12 col-lg-12">
-        <div class="cardFormasPago">
-          <div class="contentCardFormasPago">
-            <div>Tarjetas de d&eacute;bito o cr&eacute;dito:</div>
-            <div class="contentimgtarjetas">
-              <img src="../../../assets//icons/visa-07.svg" alt="Visa">
-              <img src="../../../assets//icons/mastercard-08.svg" alt="MasterCard">
-              <img src="../../../assets//icons/american-09.svg" alt="American Express">
-              <img src="../../../assets//icons/dinners-10.svg" alt="Dinners">
-            </div>
-          </div>
-        </div>
-      </div>
-      <!-- <div class="col-12 col-md-6 col-lg-6">
-        <div class="cardFormasPago">
-          <i class="material-icons iconarrow">arrow_forward_ios</i>
-          <div class="contentCardFormasPago">
-            <div>Tarjetas de D&eacute;bito:</div>
-            <img class="imgCardFormasPago" src="../../../assets//icons/visa-07.svg" alt="">
-          </div>
-        </div>
-      </div> -->
-      <!-- <div class="col-12 col-md-6 col-lg-6">
-        <div class="cardFormasPago">
-          <i class="material-icons iconarrow">arrow_forward_ios</i>
-          <div class="contentCardFormasPago">
-            <div>Paypal:</div>
-            <img class="imgCardFormasPago" src="../../../assets//icons/mexico-icon.svg" alt="">
-          </div>
-        </div>
-      </div> -->
-    </div>
-  </div>
+
   <div style="background: #e6eefa;">
     <div class="container">
-      <div class="row rowpadd" style="align-items: flex-end;">
-        <div class="col-12 col-md-8 col-lg-8">
-          <div class="subtitulo" style="line-height: 44px;">¿Te interesa? Comienza con tu programa ahora mismo</div>
-          <div style="    color: #4a4a49;font-size: 14px;">Reserva tu matr&iacute;cula, y accede a conocimiento
+      <div class="row rowpadd">
+        <div class="col-12 col-md-12 col-lg-12 tabprogram">
+          <div class="row">
+            <div class="col-12 tituloSeccionPrograma" style="justify-content: center;margin-bottom: 30px;color: #017EFF;">
+              <img src="../../../assets/imagenes/modalidad.png" alt="" height="50px">
+              <div>Modalidades de pago</div>
+            </div>
+          
+          <ng-container *ngIf="codigoIso=='PE'">
+            <div style="display: flex;
+            align-items: center;
+            color: #4a4a49;"><i class="material-icons"
+                style="color: #34c939;margin-right: 10px;font-size: 18px;">play_arrow</i>Dep&oacute;sito o pago en una cuenta del BCP:
+            </div>
+            <div class="row" style="margin-bottom: 30px;margin-top: 15px;">
+              <div class="col-12 col-md-9 col-lg-9" style="padding-left: 42px;">
+                Puedes solicitar tu c&oacute;digo de pago, o la información de la cuenta a nuestros asesores para hacer un
+                dep&oacute;sito o transferencia
+              </div>
+              <div class="col-12 col-md-3 col-lg-3"
+                style="padding: 0px; margin: 10px 0px;display:flex;justify-content: flex-start;">
+                <img class="imgCardFormasPago" src="../../../assets//icons/bcp-06.svg" alt="BCP">
+              </div>
+            </div>
+          </ng-container>
+    
+        </div>
+        <div class="col-12 col-md-12 col-lg-12" style="margin-bottom: 10px;">
+    
+          <div style="display: flex;
+          align-items: center;
+          color: #4a4a49;"><i class="material-icons"
+              style="color: #34c939;margin-right: 10px;">play_arrow</i>Paga a trav&eacute;s de nuestro sitio web con
+            los siguientes medios de pago:</div>
+        </div>
+        <div class="col-12 col-md-12 col-lg-12">
+          <div style="padding-left: 30px;">
+            <div class="contentCardFormasPago">
+              <div>Tarjetas de d&eacute;bito, cr&eacute;dito o billeteras digitales:</div>
+              <div class="contentimgtarjetas">
+                <img src="../../../assets/icons/visa-07.svg" alt="Visa">
+                <img src="../../../assets/icons/mastercard-08.svg" alt="MasterCard">
+                <img src="../../../assets/icons/american-09.svg" alt="American Express">
+                <img src="../../../assets/icons/dinners-10.svg" alt="Dinners">
+                <img src="../../../assets/icons/YapeConFondo.svg" alt="Yape">  
+                <img src="../../../assets/icons/Plin.svg" alt="Plin">  
+                <img src="../../../assets/icons/Agora.svg" alt="Agora">  
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- <div class="col-12 col-md-6 col-lg-6">
+          <div class="cardFormasPago">
+            <i class="material-icons iconarrow">arrow_forward_ios</i>
+            <div class="contentCardFormasPago">
+              <div>Tarjetas de D&eacute;bito:</div>
+              <img class="imgCardFormasPago" src="../../../assets//icons/visa-07.svg" alt="">
+            </div>
+          </div>
+        </div> -->
+        <!-- <div class="col-12 col-md-6 col-lg-6">
+          <div class="cardFormasPago">
+            <i class="material-icons iconarrow">arrow_forward_ios</i>
+            <div class="contentCardFormasPago">
+              <div>Paypal:</div>
+              <img class="imgCardFormasPago" src="../../../assets//icons/mexico-icon.svg" alt="">
+            </div>
+          </div>
+        </div> -->
+      </div>
+    </div>
+  </div>
+
+  <div style="background: #8100CB;">
+    <div class="container">
+      <div class="row rowpadd" style="align-items: center;flex-direction: column;">
+        <div class="col-12 col-md-12 col-lg-12" style="display: flex;flex-direction: column;align-items: center;">
+          <div style="color: white;line-height: 44px;font-size: 40px;text-align: center;font-weight: 900;margin-bottom: 35px;">¿Te interesa? Comienza con tu programa ahora mismo</div>
+          <div style="color: white;font-size: 20px;margin-bottom: 35px;text-align: center;width: 60%;">Reserva tu matr&iacute;cula, y accede a conocimiento
             especializado muy
             valorado en el mercado laboral
             latinoamericano para mejorar tu perfil profesional</div>
         </div>
         <div class="col-12 col-md-4 col-lg-4" style="margin-top: 20px;">
           <app-default-button-flecha [confs]="{color:'primary',titulo:'Matricularme Ahora'}"
-            [style]="'padding: 10px 30px;font-size: 1.2rem;width: 100%;border-radius:20px'"
+            [style]="'padding: 10px 30px;font-size: 1.2rem;width: 100%;border-radius:15px'"
             (ButtoclClick)="EventoInteraccionButton('¿Te interesa? Comienza con tu programa ahora mismo');OpenModalPago()"
             [disabled]="cabecera.listProgramaEspecificoInformacionDTO.length==0">
           </app-default-button-flecha>
@@ -1107,28 +1138,47 @@
     </div>
   </div>
   
-  <div class="container">
-    <div class="row rowpadd" style="justify-content: center;">
-      <div class="col-12 col-md-12 col-lg-12" style="margin-bottom: 30px;">
-        <div class="subtitulo">Programas Relacionados</div>
-      </div>
-      <ng-container *ngFor="let item of programasRelacionados;let i=index">
-        <div class="col-12 col-md-6 col-lg-3" *ngIf="i<4" style="margin-bottom: 40px;">
-          <app-card-programas [cardContent]="item" [Interaccion]="'Programas Relacionados'"></app-card-programas>
+  <div style="background: white;">
+    <div class="container">
+      <div class="row rowpadd" style="justify-content: center;">
+
+        <div class="col-12 tituloSeccionPrograma" style="justify-content: center;margin-bottom: 30px;color: #017EFF;">
+          <img src="../../../assets/imagenes/programas-relaciones.png" alt="" height="50px">
+          <div>Programas Relacionados</div>
         </div>
-      </ng-container>
-      <div class="col-12 col-md-12 col-lg-12" style="margin-top: 30px;margin-bottom: 30px;">
-        <div class="subtitulo">Tags</div>
-      </div>
-      <div class="col-12 col-md-12 col-lg-12">
-        <div style="display: flex; align-items: center; justify-content: flex-start;flex-wrap: wrap;">
-          <div *ngFor="let item of tags" style="margin-right: 20px;">
-            <app-tag-button [tag]="item" [Interaccion]="'Programas Relacionados'"></app-tag-button>
+
+        <ng-container *ngFor="let item of programasRelacionados;let i=index">
+          <div class="col-12 col-md-6 col-lg-3" *ngIf="i<4" style="margin-bottom: 40px;">
+            <app-card-programas [cardContent]="item" [Interaccion]="'Programas Relacionados'"></app-card-programas>
+          </div>
+        </ng-container>
+
+        <div class="col-12 tituloSeccionPrograma" style="justify-content: center;margin-bottom: 30px;color: #017EFF;">
+          <img src="../../../assets/imagenes/programas-relaciones.png" alt="" height="50px">
+          <div>Contenidos Relacionados</div>
+        </div>
+        <ng-container *ngFor="let item of programasRelacionados;let i=index">
+          <div class="col-12 col-md-6 col-lg-3" *ngIf="i<4" style="margin-bottom: 40px;">
+            <app-card-programas [cardContent]="item" [Interaccion]="'Programas Relacionados'"></app-card-programas>
+          </div>
+        </ng-container>
+
+        <div class="col-12 tituloSeccionPrograma" style="justify-content: center;margin-bottom: 30px;color: #017EFF;">
+          <img src="../../../assets/imagenes/tags.png" alt="" height="50px">
+          <div>Tags</div>
+        </div>
+
+        <div class="col-12 col-md-12 col-lg-12">
+          <div style="display: flex; align-items: center; justify-content: center;flex-wrap: wrap;">
+            <div *ngFor="let item of tags;let i = index" style="margin-right: 20px;">
+              <app-tag-button [tag]="item" [Interaccion]="'Programas Relacionados'" [backgroundColor]="i%2==0 ? '#FFF5FF' : '#FFFAE5'" ></app-tag-button>
+            </div>
           </div>
         </div>
       </div>
     </div>
   </div>
+
   <ng-container *ngIf="idPegeneral!=0">
     <app-soporte-tecnico [cargaChat]="true" [texto]="'Chatea con nosotros'" (IsOpen)="OpenChat=$event" [Open]="OpenChat"
       [token]="false" [IdPGeneral]="idPegeneral">

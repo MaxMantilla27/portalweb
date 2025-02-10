@@ -295,6 +295,32 @@
   font-size: 16px;
   font-weight: 900;
   padding-left: 25px;
+  padding-top: 20px;
+}
+
+.carouselContainer{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 90%;
+  .carouselContainerImg{
+    width: 30%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 30px;
+    min-height: 150px;
+    max-height: 150px;
+  }
+
+  .carouselContainerContent{
+    .titleExpositor{
+      font-size: 16px;
+      text-decoration: underline;
+      font-weight: 900;
+      color: #2388F2;
+    }
+  }
 }
 
 .piePagina {
@@ -357,6 +383,7 @@
   font-size: 14px;
   margin-right: 10px;
 }
+
 .cardFormasPago {
   display: flex;
   background: #f2f0e6;
@@ -369,10 +396,12 @@
     padding-right: 40px;
   }
 }
+
 .cardFormasPago .iconarrow {
   font-size: 20px;
 }
 .contentCardFormasPago {
+  margin-top: 15px;
   display: flex;
   align-items: center;
   width: 100%;
@@ -395,10 +424,9 @@
   padding: 0px 20px;
   flex-wrap: wrap;
   justify-content: flex-start;
+  gap: 20px;
   img {
-    margin: 10px;
     width: 60px;
-    margin-right: 40px;
   }
 }
 .ContenidoVistaPrevia{

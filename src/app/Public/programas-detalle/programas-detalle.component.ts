@@ -63,6 +63,7 @@ import { FormularioAzulComponent } from 'src/app/Core/Shared/Containers/formular
 import { ChatEnLineaService } from 'src/app/Core/Shared/Services/ChatEnLinea/chat-en-linea.service';
 import { FacebookPixelService } from 'src/app/Core/Shared/Services/FacebookPixel/facebook-pixel.service';
 import { auto } from '@popperjs/core';
+import * as e from 'express';
 declare const fbq:any;
 declare const gtag:any;
 declare const lintrk: any;
@@ -834,6 +835,7 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
     this._ExpositorService.ListExpositor(this.idBusqueda).pipe(takeUntil(this.signal$)).subscribe({
       next: (x) => {
         this.expositor = x.listaExpositorDTO;
+        console.log(this.expositor);
         var ind = 1;
         var step: Array<any> = [];
         this.expositor.forEach((p) => {
@@ -848,6 +850,8 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
         if (step.length > 0) {
           this.stepExpositors.push(step);
         }
+        console.log(this.stepExpositors)
+        console.log(step)
       },
     });
   }
@@ -874,6 +878,7 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
       .ListProgramaRelacionado(this.idPegeneral).pipe(takeUntil(this.signal$))
       .subscribe({
         next: (x) => {
+          console.log(x)
           if (x.listaProgramaRelacionadoDTO != null) {
             this.programasRelacionados = x.listaProgramaRelacionadoDTO.map(
               (c: any) => {

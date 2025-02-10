@@ -14,6 +14,7 @@ export class TagButtonComponent implements OnInit {
     private _HelperService :HelperService,
     ) { }
 
+  @Input() backgroundColor: string = 'transparent';
   @Input() tag: listaTagDTO = {nombre:'',codigo:''}
   @Input() Interaccion=''
   ngOnInit(): void {
