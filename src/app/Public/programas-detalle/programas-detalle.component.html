@@ -5,6 +5,10 @@
       <app-miga-pan [items]="migaPan"></app-miga-pan>
     </div>
   </div>
+  <app-header-programa
+    [nombreCurso]="cabecera.tituloHtml"
+  >
+  </app-header-programa>
   <!-- <div id="FormularioProgramas">
     <div class="estructuraProgramForm" style="position: absolute;">
       <app-cargando *ngIf="statuscharge==true"></app-cargando>
@@ -487,7 +491,7 @@
   </div> -->
   
   
-  <div style="background: white;position: relative;display: flex;justify-content: center;padding-top: 20px;padding-bottom: 70px;">
+  <div class="containerObjetivosInfoClave">
 
     <div class="infoClaveProgramaContainer">
       <div class="infoClave" style="border-right: 1px solid #D7C282;">
@@ -885,25 +889,19 @@
           <div>Certificación</div>
         </div>
       </div>  
-      <!-- <div class="col-12 col-md-5 col-lg-5">
-        <h2 style="font-weight: bold;line-height: 150%;" class="subtitulo">Certificación</h2>
-      </div> -->
-
-      <div class="col-12 col-md-7 col-lg-7">
-        
-      </div>
       <div class="col-12 col-md-5 col-lg-5" style="margin: 20px 0px;">
         <img src="../../../assets/imagenes/imagen-certificado-pagina-web.png" alt="Certificación" style="width: 100%;">
       </div>
       <div class="col-12 col-md-7 col-lg-7" style="margin: 20px 0px;">
-        <div>
-          <div>{{certificado.cabecera}}</div>
-          <div class="puntoAzulLista" *ngFor="let item of certificado.contenido">
-            <ul>
-              <li style="margin-bottom: -15px;margin-top: 2px;">{{item}}</li>
-            </ul>
+          
+          <div style="font-size: 18px;margin-bottom: 20px;">{{certificado.cabecera}}</div>
+          <div style="display: flex;flex-direction: column;justify-content: center;">
+            <div style="display: flex;gap: 5px;padding-left: 25px;margin-top: 15px;font-size: 18px;" *ngFor="let item of certificado.contenido">
+                <img src="../../../assets/imagenes/check.png" alt="" height="20px">
+                <div>{{item}}</div>
+            </div>
           </div>
-        </div>
+      
         <!--
         <mat-accordion class="acordionPrograma acrdionCertificado" multi *ngIf="certificado.descripcionHeader!=undefined && certificado.descripcionHeader.length>0">
           <mat-expansion-panel (opened)="EventoInteraccionAccordionCertificado(item,'Abierto')"

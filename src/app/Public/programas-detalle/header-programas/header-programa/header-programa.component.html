@@ -1,0 +1,24 @@
+<div class="fixed-navbar">
+    <div style="width: 80%;display: flex;justify-content: space-between;">
+        <div>
+            <div class="tituloHeaderPrograma" style="line-height: 120%;">
+                {{nombreCurso}}
+            </div>
+            <ul>
+              <li><a class="seccionHeaderPrograma" href="#section1">Sección 1</a></li>
+              <li><a class="seccionHeaderPrograma" href="#section2">Sección 2</a></li>
+              <li><a class="seccionHeaderPrograma" href="#section3">Sección 3</a></li>
+              <li><a class="seccionHeaderPrograma" href="#section4">Sección 4</a></li>
+              <li><a class="seccionHeaderPrograma" href="#section5">Sección 5</a></li>
+              <li><a class="seccionHeaderPrograma" href="#section6">Sección 6</a></li>
+              <!-- Agrega más enlaces según sea necesario -->
+            </ul>
+        </div>
+        <div  style="display: flex;justify-content: center;align-items: center;flex: 1;margin-left: 100px;">
+            <app-default-button-flecha [confs]="{color:'primary',titulo:'Más información'}"
+                  [style]="'width: 100%;border-radius:12px;padding: 2px 35px;font-size: 16px;margin-bottom:0px;'"
+                  (ButtoclClick)="EventoInteraccionButton('Más información');OpenModal()"
+            ></app-default-button-flecha>
+        </div>
+    </div>
+</div>

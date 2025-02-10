@@ -1,0 +1,50 @@
+.tituloHeaderPrograma{
+   font-size: 20px;
+   font-weight: bold;
+   padding: 15px 0px;
+   border-bottom: 2px solid #EFF4FD;
+}   
+.fixed-navbar {
+    position: fixed;
+    top: 100px;
+    width: 100%;
+    background-color: white;
+    color: #4E4E4E;
+    z-index: 1000;
+    padding: 10px 0;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: center;
+  
+    ul {
+      list-style: none;
+      margin: 0;
+      padding: 5px;
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      margin-top: 5px;
+    }
+  
+    li {
+      display: inline;
+    }
+  
+    .seccionHeaderPrograma {
+      color: #4E4E4E;
+      text-decoration: none;
+      padding: 5px 10px;
+      display: block;
+      font-weight: bold;
+      font-size: 14px;
+      
+      &:hover {
+        background-color: #F2F5FA;
+        color: #075BD3;
+        border-radius: 10px;
+        
+        //border: 1px solid #F2F5FA;
+      }
+    }
+
+  }
