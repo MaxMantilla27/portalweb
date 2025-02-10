@@ -131,9 +131,9 @@
               </div>
               <div style="margin-top: 25px;">
                 <div class="row" style="align-items: flex-start;" *ngIf="cabecera.imgPrincipal!='https://img.bsginstitute.com/repositorioweb/img/partners/Sin Partner' && cabecera.imgPrincipal != null ">
-                    <div class="col-12 col-md-2 col-lg-2" style="font-size: 18px;font-weight: 700;">Partner: </div> 
+                    <div class="col-2 col-md-2 col-lg-2" style="font-size: 18px;font-weight: 700;">Partner: </div> 
                     <div *ngIf="cabecera.imgPrincipal!='https://img.bsginstitute.com/repositorioweb/img/partners/Sin Partner' && cabecera.imgPrincipal != null "
-                      class="col-12 col-md-10 col-lg-10"
+                      class="col-10 col-md-10 col-lg-10"
                       style="position: relative;margin-top: 10px;text-align: left;margin-bottom: 40px;">
                       <img class="InfoProgramImg" [src]="cabecera.imgPrincipal" alt="Logo">
                     </div>
@@ -539,7 +539,7 @@
 
     <div class="container">
       <div class="row rowpadd">
-        <div class="col-12 col-md-8 col-lg-8" style="padding-top: 40px;">
+        <div class="col-12 col-md-8 col-lg-8 containerObjetivos">
           <div class="col-12 tituloSeccionPrograma">
             <img src="../../../assets/imagenes/Objetivos.png" alt="" height="50px">
             <div>Objetivos</div>
@@ -619,7 +619,7 @@
             </mat-tab>
           </mat-tab-group>
         </div> -->
-        <div class="col-12 col-md-4 col-lg-4" style="display:flex;justify-content: center;">
+        <div class="col-12 col-md-4 col-lg-4 containerFormulario">
           <div id="FormularioProgramasInsert">
             <div class="estructuraProgramForm" style="position: relative;">
               <app-cargando *ngIf="statuscharge==true"></app-cargando>
@@ -698,7 +698,7 @@
 
       <div class="row" >
         <div class="col-12" style="display: flex;justify-content: center;">
-          <div style="width: 80%;display: flex; justify-content: space-between;">
+          <div class="containerObjetivoRequisitos">
               <div class="cardInformacionPrograma">
                 <div class="col-12 tituloSeccionPrograma" style="justify-content: center;">
                   <img src="../../../assets/imagenes/Publico-Objetivo.png" alt="" height="50px">
@@ -879,10 +879,18 @@
 
   <div class="container">
     <div *ngIf="certificadoVacio==false" class="row rowpadd">
-      <div class="col-12 col-md-5 col-lg-5">
+      <div class="row">
+        <div class="col-12 tituloSeccionPrograma" style="justify-content: center;color:#017EFF">
+          <img src="../../../assets/imagenes/certficacion.png" alt="" height="50px">
+          <div>Certificación</div>
+        </div>
+      </div>  
+      <!-- <div class="col-12 col-md-5 col-lg-5">
         <h2 style="font-weight: bold;line-height: 150%;" class="subtitulo">Certificación</h2>
-      </div>
+      </div> -->
+
       <div class="col-12 col-md-7 col-lg-7">
+        
       </div>
       <div class="col-12 col-md-5 col-lg-5" style="margin: 20px 0px;">
         <img src="../../../assets/imagenes/imagen-certificado-pagina-web.png" alt="Certificación" style="width: 100%;">
@@ -1047,14 +1055,15 @@
       <div class="row rowpadd">
         <div class="col-12 col-md-12 col-lg-12 tabprogram">
           <div class="row">
-            <div class="col-12 tituloSeccionPrograma" style="justify-content: center;margin-bottom: 30px;color: #017EFF;">
-              <img src="../../../assets/imagenes/modalidad.png" alt="" height="50px">
+            <div class="col-12 tituloSeccionPrograma" style="justify-content: center;margin-bottom: 30px;color: #017EFF;margin-top: 20px;">
+              <img src="../../../assets/imagenes/modalidades-de-pago.png" alt="" height="50px">
               <div>Modalidades de pago</div>
             </div>
           
           <ng-container *ngIf="codigoIso=='PE'">
             <div style="display: flex;
             align-items: center;
+            margin-top: 20px;
             color: #4a4a49;"><i class="material-icons"
                 style="color: #34c939;margin-right: 10px;font-size: 18px;">play_arrow</i>Dep&oacute;sito o pago en una cuenta del BCP:
             </div>
@@ -1080,7 +1089,7 @@
             los siguientes medios de pago:</div>
         </div>
         <div class="col-12 col-md-12 col-lg-12">
-          <div style="padding-left: 30px;">
+          <div style="padding-left: 30px;margin-bottom: 20px;">
             <div class="contentCardFormasPago">
               <div>Tarjetas de d&eacute;bito, cr&eacute;dito o billeteras digitales:</div>
               <div class="contentimgtarjetas">
@@ -1089,8 +1098,8 @@
                 <img src="../../../assets/icons/american-09.svg" alt="American Express">
                 <img src="../../../assets/icons/dinners-10.svg" alt="Dinners">
                 <img src="../../../assets/icons/YapeConFondo.svg" alt="Yape">  
-                <img src="../../../assets/icons/Plin.svg" alt="Plin">  
-                <img src="../../../assets/icons/Agora.svg" alt="Agora">  
+                <img src="../../../assets/imagenes/Plin.png" alt="Plin">  
+                <img src="../../../assets/imagenes/Agora.png" alt="Agora">  
               </div>
             </div>
           </div>
