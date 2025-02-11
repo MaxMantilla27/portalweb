@@ -566,6 +566,7 @@ export class CursoComponent implements OnInit,OnDestroy {
   }
   RedirigiPagoMatricula(IdMatriculaCabecera:any){
     this._SessionStorageService.SessionDeleteValue('listaCronogramaPagos');
+    this._SessionStorageService.SessionSetValue('OrigenPagoDetalle','Curso');
     this._router.navigate(['/AulaVirtual/MisPagos/'+IdMatriculaCabecera])
 
   }

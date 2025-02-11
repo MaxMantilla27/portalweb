@@ -69,14 +69,14 @@ export class AlumnoMatButtonComponent implements OnInit,OnChanges,OnDestroy {
           Icon: 'play_lesson',
           value:'../../../../../../assets/icons/mis-cursos.svg',
         });
-        // if (!this.listaIdsAlumnosBloqueoPagos.includes(this.IdAlumno)) {
-        //   this.buttons.push({
-        //     Nombre: 'Mis Pagos',
-        //     Url: '/AulaVirtual/MisPagos',
-        //     Icon: 'monetization_on',
-        //     value: '../../../../../../assets/icons/mis-pagos.svg',
-        //   });
-        // }
+        if (!this.listaIdsAlumnosBloqueoPagos.includes(this.IdAlumno)) {
+          this.buttons.push({
+            Nombre: 'Mis Pagos',
+            Url: '/AulaVirtual/MisPagos',
+            Icon: 'monetization_on',
+            value: '../../../../../../assets/icons/mis-pagos.svg',
+          });
+        }
         this.buttons.push({
           Nombre: 'Ver mi perfil',
           Url: '/AulaVirtual/MiPerfil',
@@ -127,14 +127,14 @@ export class AlumnoMatButtonComponent implements OnInit,OnChanges,OnDestroy {
             Icon: 'play_lesson',
             value:'../../../../../../assets/icons/mis-cursos.svg',
           });
-          // if (!this.listaIdsAlumnosBloqueoPagos.includes(this.IdAlumno)) {
-          //   this.buttons.push({
-          //     Nombre: 'Mis Pagos',
-          //     Url: '/AulaVirtual/MisPagos',
-          //     Icon: 'monetization_on',
-          //     value: '../../../../../../assets/icons/mis-pagos.svg',
-          //   });
-          // }
+          if (!this.listaIdsAlumnosBloqueoPagos.includes(this.IdAlumno)) {
+            this.buttons.push({
+              Nombre: 'Mis Pagos',
+              Url: '/AulaVirtual/MisPagos',
+              Icon: 'monetization_on',
+              value: '../../../../../../assets/icons/mis-pagos.svg',
+            });
+          }
           this.buttons.push({
             Nombre: 'Ver mi perfil',
             Url: '/AulaVirtual/MiPerfil',

@@ -73,6 +73,7 @@ export class MisPagosComponent implements OnInit,OnDestroy {
   }
   RedirigiPagoMatricula(valor:any){
     this._SessionStorageService.SessionDeleteValue('listaCronogramaPagos');
+    this._SessionStorageService.SessionDeleteValue('OrigenPagoDetalle');
     this._router.navigate(['/AulaVirtual/MisPagos/'+valor.idMatriculaCabecera])
 
   }

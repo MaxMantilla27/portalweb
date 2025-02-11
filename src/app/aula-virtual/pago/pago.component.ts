@@ -743,7 +743,13 @@ export class PagoComponent implements OnInit,OnDestroy {
     })
   }
   retroceder(){
-    this._router.navigate(['/AulaVirtual/MisCursos/'+this.idMatricula])
+    let origen = this._SessionStorageService.SessionGetValue('OrigenPagoDetalle');
+    if(origen=='Curso'){
+      this._router.navigate(['/AulaVirtual/MisCursos/'+this.idMatricula])
+    }
+    else{
+      this._router.navigate(['/AulaVirtual/MisPagos'])
+    }
   }
   afiliacionPagoRecurrente(){
     if (!this.EstadoAfiliado) {
