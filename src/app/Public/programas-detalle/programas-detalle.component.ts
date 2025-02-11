@@ -2,11 +2,14 @@ import { isPlatformBrowser } from '@angular/common';
 import {
   Component,
   ElementRef,
+  HostListener,
   Inject,
   OnDestroy,
   OnInit,
   PLATFORM_ID,
+  QueryList,
   ViewChild,
+  ViewChildren,
   ViewEncapsulation,
 } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
@@ -62,7 +65,7 @@ import { ProgramaFormularioComponent } from './programa-formulario/programa-form
 import { FormularioAzulComponent } from 'src/app/Core/Shared/Containers/formulario-azul/formulario-azul.component';
 import { ChatEnLineaService } from 'src/app/Core/Shared/Services/ChatEnLinea/chat-en-linea.service';
 import { FacebookPixelService } from 'src/app/Core/Shared/Services/FacebookPixel/facebook-pixel.service';
-import { auto } from '@popperjs/core';
+import { auto, start } from '@popperjs/core';
 import * as e from 'express';
 declare const fbq:any;
 declare const gtag:any;
@@ -82,9 +85,18 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
 
   @ViewChild('contenidoTOp')
   contenidoTOp!: ElementRef;
+
   @ViewChild('contentLeft')
   contentLeft!: ElementRef;
-  
+
+  //crear un view child para cada ref de mi lista secciones
+  @ViewChild('objetivos') objetivos!: ElementRef;
+  @ViewChild('estructuraCurricular') estructuraCurricular!: ElementRef;
+  @ViewChild('beneficiosSeccion') beneficiosSeccion!: ElementRef;
+  @ViewChild('certificacion') certificacion!: ElementRef;
+  @ViewChild('expositores') expositores!: ElementRef;
+  @ViewChild('inversion') inversion!: ElementRef;
+
   constructor(
     private activatedRoute: ActivatedRoute,
     private _SeccionProgramaService: SeccionProgramaService,
@@ -269,8 +281,40 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
   public programaDetalleisnull: any = true;
 
   public parametroSeo: any = '';
+  public isScrolled: boolean = false;
+  public activateSeccion: string = '';
+
+  public secciones = [
+    { id: 1, ref: 'objetivos', nombre: 'Objetivos' },
+    { id: 2, ref: 'estructuraCurricular', nombre: 'Estructura curricular' },
+    { id: 3, ref: 'beneficiosSeccion', nombre: 'Beneficios' },
+    { id: 4, ref: 'certificacion', nombre: 'Certificación' },
+    { id: 5, ref: 'expositores', nombre: 'Expositores' },
+    { id: 6, ref: 'inversion', nombre: 'Inversión' }
+  ];
+
+
+  @HostListener('window:scroll', [])
+    onWindowScroll() {
+      const offset = window.scrollY || document.documentElement.scrollTop || document.body.scrollTop || 0;
+      this.secciones.forEach(seccion => {
+      const element = document.getElementById(seccion.ref);
+      if (element) {
+        const elementTop = element.getBoundingClientRect().top + window.scrollY;
+        const elementBottom = elementTop + element.offsetHeight;
+        if (offset >= elementTop - 130 && offset < elementBottom - 130) { // Ajusta el valor según la altura de la barra de navegación fija  
+        this._HelperServiceP.enviarScrollHeaderPrograma(offset >= elementTop - 130);
+        this.activateSeccion = seccion.ref;
+        } else if (seccion.ref === 'objetivos' && offset < elementTop - 130) {
+        this._HelperServiceP.enviarScrollHeaderPrograma(false);
+        }
+      }
+      });
+    }
+  
 
   ngOnInit(): void {
+
     this.codigoIso =
     this._SessionStorageService.SessionGetValue('ISO_PAIS') != ''
       ? this._SessionStorageService.SessionGetValue('ISO_PAIS')
@@ -325,6 +369,15 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
     this.obtenerFormularioCompletado();
     this.AddFields();
     this.ObtenerCombosPortal();
+
+    this.onWindowScroll();
+
+    this._HelperServiceP
+        .recibirScrollHeaderPrograma
+        .subscribe((isScrolled) => {
+          this.isScrolled = isScrolled;
+        })
+
   }
 
   RegistrarProgramaPrueba(){
@@ -1313,6 +1366,14 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
       modal.style.display = 'none';
     }
 
+  }
+
+  irASeccion(ref:string){
+    this.activateSeccion=ref;
+    const seccion = document.getElementById(ref)
+    const yOffset = -125; // Ajusta este valor según la altura de la barra de navegación fija
+    const y = seccion!.getBoundingClientRect().top + window.scrollY + yOffset;
+    window.scrollTo({ top: y, behavior: 'smooth' });
   }
 
 }

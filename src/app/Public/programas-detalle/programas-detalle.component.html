@@ -5,10 +5,27 @@
       <app-miga-pan [items]="migaPan"></app-miga-pan>
     </div>
   </div>
-  <app-header-programa
-    [nombreCurso]="cabecera.tituloHtml"
-  >
-  </app-header-programa>
+  <div class="fixed-navbar" [style.display]="isScrolled ? 'flex' : 'none'">
+    <div style="width: 80%;display: flex;justify-content: space-between;">
+        <div>
+            <div class="tituloHeaderPrograma" style="line-height: 120%;" [innerHTML]="cabecera.tituloHtml|safeHtml"> 
+            </div>
+            <ul>
+                <ng-container *ngFor="let seccion of secciones">
+                <li>
+                    <a class="seccionHeaderPrograma" [ngClass]="{'active':activateSeccion===seccion.ref}" (click)="irASeccion(seccion.ref)">{{seccion.nombre}}</a>
+                </li>
+              </ng-container>
+            </ul>
+        </div>
+        <div  style="display: flex;justify-content: center;align-items: center;flex: 1;margin-left: 100px;">
+            <app-default-button-flecha [confs]="{color:'primary',titulo:'Más información'}"
+                  [style]="'width: 100%;border-radius:12px;padding: 2px 35px;font-size: 16px;margin-bottom:0px;'"
+                  (ButtoclClick)="EventoInteraccionButton('Más información');OpenModalFormulario(1)"
+            ></app-default-button-flecha>
+        </div>
+    </div>
+</div>
   <!-- <div id="FormularioProgramas">
     <div class="estructuraProgramForm" style="position: absolute;">
       <app-cargando *ngIf="statuscharge==true"></app-cargando>
@@ -700,7 +717,7 @@
         </div>
       </div> 
 
-      <div class="row" >
+      <div class="row" #objetivos id="objetivos">
         <div class="col-12" style="display: flex;justify-content: center;">
           <div class="containerObjetivoRequisitos">
               <div class="cardInformacionPrograma">
@@ -740,7 +757,7 @@
   </div>
 
 
-  <div style="background-color: #FFCD34;">
+  <div style="background-color: #FFCD34;" id="estructuraCurricular" #estructuraCurricular >
     <div class="container">
       <div class="row rowpadd" style="justify-content: center;">
         <div class="row">
@@ -837,7 +854,7 @@
     </div>
   </div>
 
-  <div style="background: #FFCD34;">
+  <div style="background: #FFCD34;" #beneficiosSeccion  id="beneficiosSeccion" >
     <div class="container">
       <div class="row rowpadd">
 
@@ -881,7 +898,7 @@
     </div>
   </div>
 
-  <div class="container">
+  <div class="container ajusteScroll" #certificacion id="certificacion" >
     <div *ngIf="certificadoVacio==false" class="row rowpadd">
       <div class="row">
         <div class="col-12 tituloSeccionPrograma" style="justify-content: center;color:#017EFF">
@@ -927,18 +944,18 @@
         </div>
         <div class="puntoAzulLista" [innerHtml]="certificado.descripcionLeyenda | safeHtml" style="text-align: justify;">
         </div>
-        <div style="display: flex;justify-content: center;margin-top: 20px;">
+        <!-- <div style="display: flex;justify-content: center;margin-top: 20px;">
           <app-default-button-flecha [confs]="{color:'primary',titulo:'Solicita Información'}"
             [style]="'width:20rem;border-radius:20px'"
             (ButtoclClick)="EventoInteraccionButton('Solicita Información') ;OpenModalFormulario(1)"></app-default-button-flecha>
-        </div>
+        </div> -->
       </div>
     </div>
     <div *ngIf="certificadoVacio==true" class="row rowpadd" style="padding: 10px;">
     </div>
 
   </div>
-  <div style="background: #FFCD34;">
+  <div style="background: #FFCD34;" #expositores id="expositores" >
     <div class="container">
       <div class="row rowpadd">
         <div class="row">
@@ -983,7 +1000,7 @@
   </div>
   <app-home-learning></app-home-learning>
   
-  <div style="background: #FFCD34;">
+  <div style="background: #FFCD34;" #inversion id="inversion" >
     <div class="container">
       <div class="row rowpadd">
         

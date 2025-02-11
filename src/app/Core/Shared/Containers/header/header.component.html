@@ -1,5 +1,5 @@
 <!-- holax -->
-<mat-toolbar color="primary" *ngIf="!responsive">
+<mat-toolbar color="primary" *ngIf="!responsive" [class.hiddenHeader]="isScrolled">
 
   <div class="div-icon">
     <img src="../../../../../assets/icons/icono-menu-responsive.svg" width="20" height="20" alt="Menú" loading="eager" (click)="OnClick.emit()">

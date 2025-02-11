@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable, ReplaySubject, Subject } from 'rxjs';
+import { BehaviorSubject, Observable, ReplaySubject, Subject } from 'rxjs';
 import { combosPerfilDTO } from '../../Models/AlumnoDTO';
 import { AvatarCombosDTO } from '../../Models/Avatar';
 import { BasicUrl } from '../../Models/BasicDTO';
@@ -31,7 +31,7 @@ export class HelperService {
   private msjObtenerUsuario=new ReplaySubject<any>();
   // private msjScrollPago = new ReplaySubject<string>()
   private msjEstadoPreCargaPasarela = new ReplaySubject<string>()
-
+  private scrollHeaderPrograma = new BehaviorSubject<boolean>(false);
 
 
   enviarmsjObtenerUsuario(data:any):void {
@@ -153,6 +153,14 @@ export class HelperService {
   }
   public enviarEstadoPrecargaPasarela(texto: string): void {
     this.msjEstadoPreCargaPasarela.next(texto);
+  }
+
+  public get recibirScrollHeaderPrograma() {
+    return this.scrollHeaderPrograma.asObservable()
+  }
+
+  public enviarScrollHeaderPrograma(isScrolled: boolean): void {
+    this.scrollHeaderPrograma.next(isScrolled);
   }
 
 }

@@ -156,6 +156,8 @@ export class HeaderComponent implements OnInit,OnChanges,OnDestroy {
   ];
   public token: boolean = this._SessionStorageService.validateTokken();
   public step=-1
+  public isScrolled = false;
+
   @Input() usuarioWeb=''
   constructor(
     private _SessionStorageService: SessionStorageService,
@@ -178,7 +180,13 @@ export class HeaderComponent implements OnInit,OnChanges,OnDestroy {
     this.signal$.complete()
   }
   ngOnInit(): void {
+    this._HelperService
+        .recibirScrollHeaderPrograma
+        .subscribe((isScrolled) => {
+          this.isScrolled = isScrolled;
+        })
   }
+
   RevisarUsuario(){
     var usuarioWeb=''
     usuarioWeb=this._SessionStorageService.SessionGetValue('usuarioWeb');
