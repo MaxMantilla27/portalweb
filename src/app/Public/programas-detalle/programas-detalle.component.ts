@@ -283,6 +283,7 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
   public parametroSeo: any = '';
   public isScrolled: boolean = false;
   public activateSeccion: string = '';
+  public absoluteFormulario: boolean = false;
 
   public secciones = [
     { id: 1, ref: 'objetivos', nombre: 'Objetivos' },
@@ -302,16 +303,23 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
       if (element) {
         const elementTop = element.getBoundingClientRect().top + window.scrollY;
         const elementBottom = elementTop + element.offsetHeight;
-        if (offset >= elementTop - 130 && offset < elementBottom - 130) { // Ajusta el valor según la altura de la barra de navegación fija  
+        if (offset >= elementTop - 130 && offset < elementBottom - 130 && this.innerWidth>1485) { // Ajusta el valor según la altura de la barra de navegación fija  
         this._HelperServiceP.enviarScrollHeaderPrograma(offset >= elementTop - 130);
         this.activateSeccion = seccion.ref;
-        } else if (seccion.ref === 'objetivos' && offset < elementTop - 130) {
+        } else if (seccion.ref === 'objetivos' && offset < elementTop - 130 && this.innerWidth>1485) {
         this._HelperServiceP.enviarScrollHeaderPrograma(false);
         }
       }
       });
     }
-  
+
+  @HostListener('window:resize')
+  onResize() {
+    this.innerWidth = window.innerWidth; 
+    if (this.innerWidth <= 1485) {
+      this._HelperServiceP.enviarScrollHeaderPrograma(false);
+    }
+  }
 
   ngOnInit(): void {
 
@@ -1374,6 +1382,44 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
     const yOffset = -125; // Ajusta este valor según la altura de la barra de navegación fija
     const y = seccion!.getBoundingClientRect().top + window.scrollY + yOffset;
     window.scrollTo({ top: y, behavior: 'smooth' });
+  }
+
+  cloneFormulario() {
+
+    this.absoluteFormulario = true;
+
+    const originalFormulario = document.getElementById('FormularioProgramasInsert');
+    const button = document.querySelector('app-default-button-flecha');
+    const fixedNavbar = document.querySelector('.containerMasInformacion');
+    const absoluteFormulario = document.getElementById('absoluteFormulario') as HTMLElement
+    
+    
+    let scrollHandler: () => void;
+    
+    if (originalFormulario && button && fixedNavbar) {
+      absoluteFormulario.style.display = 'block'
+      button.addEventListener('click', () => {
+
+        if (absoluteFormulario) {
+          // Ocultar el formulario cuando el header se oculta
+          scrollHandler = () => {
+            if (fixedNavbar.getBoundingClientRect().bottom < 0) {
+              if (absoluteFormulario) absoluteFormulario.style.display = 'none';
+            } else {
+              if (absoluteFormulario) absoluteFormulario.style.display = 'block';
+            }
+          };
+          //window.addEventListener('scroll', scrollHandler);
+        }
+      });
+    }
+  }
+
+  cerrarFormularioAbsolute(){
+    const formularioAbsolute = document.getElementById('absoluteFormulario');
+    if (formularioAbsolute) {
+      formularioAbsolute.style.display = 'none';
+    }
   }
 
 }

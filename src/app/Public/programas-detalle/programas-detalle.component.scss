@@ -911,16 +911,42 @@
        border-radius: 10px;
        cursor: pointer;
        //border: 1px solid #F2F5FA;
-     }
-
-     
+     }  
    }
 
  }
 
- .ajusteScroll{
-  scroll-margin-top: -50px;
+ .containerMasInformacion{
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  //flex: 1;
+  margin-right: 50px;
  }
+
+ #absoluteFormulario{
+  display: block;
+  position: absolute;
+  top: 95px;
+  right: 146px;
+  width: 22%;
+  margin-left: 0px;
+  #FormularioProgramasInsert{
+    margin-left: 0px;
+  }
+
+ }
+
+ .cerrarFormularioAbsolute{
+  display: flex;
+  justify-content: end;
+  margin-bottom: 15px;
+  img{
+    cursor: pointer;
+  }
+ }
+
 
 
 /*
