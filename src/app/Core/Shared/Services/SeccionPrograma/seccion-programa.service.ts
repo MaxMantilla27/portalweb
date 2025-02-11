@@ -77,4 +77,13 @@ export class SeccionProgramaService {
       return EMPTY;
     }
   }
+  public ListBlogProgramaRelacionado(IdPGeneral:number):Observable<any>{
+    if (this.isBrowser) {
+      return this.http.get<any>(this.urlBase+'/ListBlogProgramaRelacionado?IdPGeneral='+IdPGeneral)
+    }else{
+      return EMPTY;
+    }
+  }
+
+  
 }
