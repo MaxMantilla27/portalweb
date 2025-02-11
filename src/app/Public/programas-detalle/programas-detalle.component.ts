@@ -266,8 +266,6 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
 
   public programaDetalleisnull: any = true;
 
-  public parametroSeo: any = '';
-
   ngOnInit(): void {
     this.codigoIso =
     this._SessionStorageService.SessionGetValue('ISO_PAIS') != ''
@@ -512,7 +510,6 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
             }
             this.cabecera = x.programaCabeceraDetalleDTO;
             console.log(this.cabecera)
-            this.parametroSeo = x.programaCabeceraDetalleDTO.parametroSeoProgramaDTO;
             if(this.cabecera.tituloHtml!=null){
               this.cabecera.tituloHtml = "<h1>"+this.cabecera.tituloHtml+"</h1>";
               this.cabecera.tituloHtml = this.cabecera.tituloHtml.replace("<h1><h1>","<h1>").replace("</h1></h1>","</h1>");
@@ -539,12 +536,12 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
                 'https://img.bsginstitute.com/repositorioweb/img/partners/' +
                 x.programaCabeceraDetalleDTO.imgPrincipal;
             };
-            // setTimeout(() => {
-            //   if(this.contenidoTOp.nativeElement.offsetHeight>360){
-            //     var min=this.contentLeft.nativeElement.offsetHeight*1+((this.contenidoTOp.nativeElement.offsetHeight-360)*2)
-            //     this.contentLeft.nativeElement.setAttribute('style', 'min-height:'+min+'px')
-            //   }
-            // }, 500);
+            setTimeout(() => {
+              if(this.contenidoTOp.nativeElement.offsetHeight>360){
+                var min=this.contentLeft.nativeElement.offsetHeight*1+((this.contenidoTOp.nativeElement.offsetHeight-360)*2)
+                this.contentLeft.nativeElement.setAttribute('style', 'min-height:'+min+'px')
+              }
+            }, 500);
 
             this.ListMontoPago();
             this.ListSeccionPrograma();
@@ -561,7 +558,7 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
           else{
             window.location.replace('/'+this.removeAccents(x.programaCabeceraDetalleDTO.areaDescripcion)+'/'+x.programaCabeceraDetalleDTO.direccion);
            // this._router.navigate(['/'+this.removeAccents(x.programaCabeceraDetalleDTO.areaCapacitacion)+'/'+x.programaCabeceraDetalleDTO.direccion]);
-           
+
           }
         },
 
@@ -595,12 +592,10 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
                 .join('');
             }
           }
-          console.log(x.listaSeccionPrograma);
           this.seccion = x.listaSeccionPrograma;
           this.seccion.objetivo=this.seccion.objetivo==null?'':this.seccion.objetivo
           this.seccion.publicoObjetivo=this.seccion.publicoObjetivo==null?'':this.seccion.publicoObjetivo
           this.seccion.duracionHorario=this.seccion.duracionHorario==null?'':this.seccion.duracionHorario
-          
         },
       });
   }
@@ -1282,12 +1277,4 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
       this._SessionStorageService.SessionDeleteValue('urlRedireccionErrorPagoModal')
     }
   }
-
-  getSeoDescription(metas:any[],nombre:string){
-    let d=metas.find((x:any)=>x.nombre==nombre)!=undefined?
-          metas.find((x:any)=>x.nombre==nombre).descripcion:undefined
-    return d;
-
-  }
-
 }
