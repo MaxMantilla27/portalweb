@@ -282,7 +282,7 @@ table tr:last-child td {
 }
 
 .matricula-responsive{
-  
+
   border-radius: 12px;
   border: 1px solid #C6C6C6;
   background-color: #f9f9f9;
@@ -411,19 +411,21 @@ table tr:last-child td {
 
 }
 
-.mat-tab-label-container{
-
-  height: 40px;
-  border-bottom: 2px solid #E9F1FF;
+:host {
+  .mat-tab-label-container {
+    height: 40px;
+    border-bottom: 2px solid #e9f1ff;
+  }
 }
 
-.mat-tab-label-active{
-
-  border-top-right-radius: 10px;
-  border-top-left-radius: 10px;
-  color: #3A82C0;
-  font-weight: bold;
-  background-color: #E9F1FF;
+:host {
+  .mat-tab-label-active {
+    border-top-right-radius: 10px;
+    border-top-left-radius: 10px;
+    color: #3A82C0;
+    font-weight: bold;
+    background-color: #E9F1FF;
+  }
 }
 
 .mat-ink-bar {

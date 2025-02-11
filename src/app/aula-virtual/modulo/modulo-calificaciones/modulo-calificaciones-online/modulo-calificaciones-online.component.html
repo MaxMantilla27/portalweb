@@ -114,7 +114,7 @@
                         <!-- <div *ngIf="criterioCalificacion.valor==0">Pendiente</div> -->
                         <!-- <div *ngIf="criterioCalificacion.valor!=0">{{criterioCalificacion.valor}}</div> -->
                         <div>
-                          {{ criterioCalificacion.tieneNota ? criterioCalificacion.valor : 'Sin Registro' }}
+                          {{ criterioCalificacion.detalleCalificacion.length == 0 && !criterioCalificacion.tieneNota ? 'Sin Registro' : (criterioCalificacion.tieneNota ? criterioCalificacion.valor : 'Pendiente') }}
                         </div>
                       </div>
                     </div>
@@ -138,10 +138,9 @@
                           <td class="criterio" style="width: 82%;padding-top: 10px;padding-bottom: 10px;padding-left: 10px;">
                             {{criterioCalificacion.nombre}}
                           </td>
-                          <td class="criterio" style="width: 18%;padding-top: 10px;padding-bottom: 10px;color: #0684F3;">
-                            <div *ngIf="criterioCalificacion.nota==0 && criterioCalificacion.tieneNota">0</div>
-                            <div *ngIf="criterioCalificacion.nota==0 && !criterioCalificacion.tieneNota">Sin Registro</div>
-                            <div *ngIf="criterioCalificacion.nota!=0">{{criterioCalificacion.nota}}</div>
+                          <td class="criterio" style="width: 18%; padding: 10px 0; color: #0684F3;">
+                            <div *ngIf="!criterioCalificacion.tieneNota">Pendiente</div>
+                            <div *ngIf="criterioCalificacion.tieneNota">{{ criterioCalificacion.nota || 0 }}</div>
                           </td>
                         </tr>
                       </ng-container>
@@ -158,10 +157,8 @@
       <div class="col-8" style="padding-left: 30px;font-size: 18px;">
         <strong>Promedio</strong>
       </div>
-      <div  class="col-3" style="text-align: center;color: #0684F3;margin-left: 10px;">
-        <strong *ngIf="PromedioFinal!=0">{{PromedioFinal}}</strong>
-        <strong *ngIf="PromedioFinal==0 && TieneNotaPromedio">0</strong>
-        <strong *ngIf="PromedioFinal==0 && !TieneNotaPromedio">Sin Registro</strong>
+      <div class="col-3" style="text-align: center; color: #0684F3; margin-left: 10px;">
+        <strong>{{ TieneNotaPromedio ? (PromedioFinal || '0') : 'Pendiente' }}</strong>
       </div>
     </div>
   </div>

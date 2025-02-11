@@ -22,12 +22,12 @@
       </div>
       <div class="col-12 col-md-4 col-lg-3" style="text-align: -webkit-right;">
         <ng-container *ngIf="item.IsValid!=true">
-          <app-default-button [disabled]="true" [confs]="{color:'verde',titulo:'Ingresar a Webex'}" [icon]="''"
+          <app-default-button [disabled]="true" [confs]="{color:'verde',titulo:'Ingresar a la Clase'}" [icon]="''"
             [style]="'margin: 0px;    border-radius: 5px;color: white;    background: #9d9d9c;width: 100%; '"></app-default-button>
         </ng-container>
         <ng-container *ngIf="item.IsValid==true">
           <a [href]="item.urlWebex" style="color: transparent;text-decoration: none" target="_blank">
-            <app-default-button [confs]="{color:'verde',titulo:'Ingresar a Webex'}" [icon]="''"
+            <app-default-button [confs]="{color:'verde',titulo:'Ingresar a la Clase'}" [icon]="''"
               [style]="'margin: 0px;    border-radius: 5px;color: white;background: #70ad47;width: 100%; '"></app-default-button>
           </a>
         </ng-container>

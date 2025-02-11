@@ -13,12 +13,22 @@
             </div>
           </mat-panel-title>
         </mat-expansion-panel-header>
-        <div *ngIf="item.titulo!='Beneficios' && item.titulo!='Certificacion' && item.titulo!='Estructura Curricular'"
+        <div *ngIf="item.titulo!='Beneficios' && item.titulo!='Certificacion'&& item.titulo!='Estructura Curricular'"
           [innerHtml]="item.contenido | safeHtml" style="padding: 0px 60px 20px;"></div>
         <div *ngIf="item.titulo=='Beneficios' || item.titulo=='Certificacion'" style="padding: 0px 60px 20px;">
           <ul>
             <li *ngFor="let content of item.ArrayContent">{{content}}</li>
           </ul>
+        </div>
+        <div *ngIf="item.titulo=='Estructura Curricular'">
+          <div *ngIf="listaSeccionesContenidosDocumentoEstructuraProcesada!=undefined" style="padding: 0px 60px 20px;">
+            <div *ngFor="let section of listaSeccionesContenidosDocumentoEstructuraProcesada">
+              <div class="subtituloEstructuraCurricular">{{section.titulo}}</div>
+              <ul>
+                <li *ngFor="let content of section.contenidos">{{content}}</li>
+              </ul>
+            </div>
+          </div>
         </div>
       </mat-expansion-panel>
     </ng-container>

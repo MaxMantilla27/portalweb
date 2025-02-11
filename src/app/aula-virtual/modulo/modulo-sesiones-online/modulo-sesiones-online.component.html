@@ -1,5 +1,6 @@
 <!-- holax -->
-<div
+<!-- Esta sección se comentó para ocultar videos de módulos -->
+<!-- <div
   class="row"
   style="padding-left: 15px !important; padding-right: 15px !important"
 >
@@ -57,7 +58,7 @@
       </div>
     </div>
   </div>
-</div>
+</div> -->
 <ng-container *ngIf="sesiones != null">
   <!-- <div class="cursoTitle">{{Capitulo}}</div> -->
   <ng-container *ngFor="let item of sesiones; let i = index">
@@ -277,10 +278,13 @@
               <ng-container
                 *ngIf="tars.tareas != null && tars.tareas.length > 0"
               >
-                <div class="FechaEntregaActividad" style="margin-top: 10px;font-size: 12px;">
+                <div
+                  class="FechaEntregaActividad"
+                  style="margin-top: 10px; font-size: 12px"
+                >
                   <div class="iconFechaEntrega"></div>
                   <div style="display: flex">
-                    <strong style="margin-right: 5px;"> Enviado: </strong>
+                    <strong style="margin-right: 5px"> Enviado: </strong>
                     {{
                       tars.tareas[tars.tareas.length - 1].fechaCreacion
                         | date : "hh:mm a"
@@ -447,10 +451,13 @@
                   cuest.respuestaCuestionario.length > 0
                 "
               >
-                <div class="FechaEntregaActividad" style="margin-top: 10px;font-size: 12px;">
+                <div
+                  class="FechaEntregaActividad"
+                  style="margin-top: 10px; font-size: 12px"
+                >
                   <div class="iconFechaEntrega"></div>
                   <div style="display: flex">
-                    <strong style="margin-right: 5px;"> Enviado: </strong>
+                    <strong style="margin-right: 5px"> Enviado: </strong>
                     {{
                       cuest.respuestaCuestionario[
                         cuest.respuestaCuestionario.length - 1

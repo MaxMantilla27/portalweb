@@ -1,7 +1,7 @@
 import { Component, ElementRef, OnDestroy, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatTabChangeEvent } from '@angular/material/tabs';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
 import { ParametrosEstructuraEspecificaDTO } from 'src/app/Core/Models/EstructuraEspecificaDTO';
 import {
@@ -44,6 +44,7 @@ export class CursoComponent implements OnInit,OnDestroy {
     private _CertificadoService:CertificadoService,
     public dialog: MatDialog,
     private _AsistenciaService: AsistenciaService,
+     private _router: Router,
   ) {}
   ngOnDestroy(): void {
     this.signal$.next(true);
@@ -561,6 +562,11 @@ export class CursoComponent implements OnInit,OnDestroy {
   }
   redireccionarBiblioteca(){
     window.open("https://www.oreilly.com/member/login/",'_blank');
+
+  }
+  RedirigiPagoMatricula(IdMatriculaCabecera:any){
+    this._SessionStorageService.SessionDeleteValue('listaCronogramaPagos');
+    this._router.navigate(['/AulaVirtual/MisPagos/'+IdMatriculaCabecera])
 
   }
 }

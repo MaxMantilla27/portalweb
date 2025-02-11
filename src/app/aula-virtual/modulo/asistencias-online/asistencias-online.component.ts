@@ -68,7 +68,33 @@ export class AsistenciasOnlineComponent
               this.sesionesAll.forEach((s: any) => {
                 this.asistenciaAlumno.forEach((a: any) => {
                   if (s.idSesion == a.idPEspecificoSesion) {
+                    const fechaSesion = new Date(a.fechaHoraInicio).setHours(0, 0, 0, 0);
+                    const fechaActual = new Date().setHours(0, 0, 0, 0);
+
+                    if (fechaActual < fechaSesion) {
+                      a.estadoAsistencia = 'Sin Iniciar';
+                    } else {
+                        if (a.asistio === 1) {
+                        a.estadoAsistencia = 'Asistió';
+                        } else {
+                        a.estadoAsistencia = 'No Asistió';
+                        }
+                    }
                     s.existe = true;
+                  }
+                  else{
+                    const fechaSesion = new Date(a.fechaHoraInicio).setHours(0, 0, 0, 0);
+                    const fechaActual = new Date().setHours(0, 0, 0, 0);
+
+                    if (fechaActual < fechaSesion) {
+                      a.estadoAsistencia = 'Sin Iniciar';
+                    } else {
+                        if (a.asistio === 1) {
+                        a.estadoAsistencia = 'Asistió';
+                        } else {
+                        a.estadoAsistencia = 'No Asistió';
+                        }
+                    }
                   }
                 });
               });
@@ -88,6 +114,7 @@ export class AsistenciasOnlineComponent
           }
         },
         complete:()=>{
+          console.log('asistenciaAlumno',this.asistenciaAlumno)
           this.TerminaCarga=true
         }
       });

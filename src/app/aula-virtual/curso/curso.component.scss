@@ -75,6 +75,9 @@
   .iconBeneficios {
     background-image: url("../../../assets/icons/beneficios-15.svg");
   }
+  .iconPagos {
+    background-image: url("../../../assets/icons/mis-pagos.svg");
+  }
   .iconSesiones {
     background-image: url("../../../assets/icons/sesiones-gris-43.svg");
   }
@@ -104,7 +107,7 @@
   }
 }
 .tabVertical
-  mat-tab-header
+  .mat-tab-header
   .mat-tab-label-container
   .mat-tab-list
   .mat-tab-labels
@@ -146,6 +149,9 @@
   }
   .iconBeneficios {
     background-image: url("../../../assets/icons/beneficios-azul-14.svg") !important;
+  }
+  .iconPagos {
+    background-image: url("../../../assets/icons/mis-pagos.svg") !important
   }
   .iconSesiones {
     background-image: url("../../../assets/icons/sesiones-azul-43.svg") !important;
@@ -206,6 +212,9 @@
   }
   .iconBeneficios {
     background-image: url("../../../assets/icons/beneficios-azul-14.svg") !important;
+  }
+  .iconPagos {
+    background-image: url("../../../assets/icons/mis-pagos.svg") !important
   }
   .iconSesiones {
     background-image: url("../../../assets/icons/sesiones-azul-43.svg") !important;

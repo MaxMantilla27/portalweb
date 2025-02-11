@@ -65,7 +65,7 @@ export class ModuloSilaboComponent implements OnInit,OnChanges,OnDestroy {
           if(x.titulo=="Beneficios"){
             if(indexB==-1){
               indexB=i
-              x.order=4;
+              x.order=5;
               this.listaSeccionesContenidosDocumento[indexB].ArrayContent.push(x.contenido)
             }else{
               this.listaSeccionesContenidosDocumento[indexB].ArrayContent.push(x.contenido)
@@ -76,7 +76,7 @@ export class ModuloSilaboComponent implements OnInit,OnChanges,OnDestroy {
             x.titulo="Certificación"
             if(indexC==-1){
               indexC=i
-              x.order=5;
+              x.order=6;
               this.listaSeccionesContenidosDocumento[indexC].ArrayContent.push(x.contenido)
             }else{
               this.listaSeccionesContenidosDocumento[indexC].ArrayContent.push(x.contenido)
@@ -85,19 +85,17 @@ export class ModuloSilaboComponent implements OnInit,OnChanges,OnDestroy {
           }
           if(x.titulo=="Bibliografia"){
             x.titulo="Bibliografía"
-            x.order=6;
+            x.order=7;
           }
           i++
         })
-        if(this.IdModalidad==1){
-          this.listaSeccionesContenidosDocumento.push({
-            titulo:'Estructura Curricular',
-            Contenido:'',
-            order:7,
-            ArrayContent:[],
-            estado:true
-          })
-        }
+        this.listaSeccionesContenidosDocumento.push({
+          titulo:'Estructura Curricular',
+          Contenido:'',
+          order:4,
+          ArrayContent:[],
+          estado:true
+        })
         this.listaSeccionesContenidosDocumento.sort(function (a, b) {
           return a.order - b.order;
         });

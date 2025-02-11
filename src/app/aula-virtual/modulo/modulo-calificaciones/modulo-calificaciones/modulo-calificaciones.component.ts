@@ -32,7 +32,7 @@ export class ModuloCalificacionesComponent implements OnInit,OnDestroy {
   public mensajeError='';
   public promedio=0;
   public idMatricula=0;
-  public MostrarPromedio=false;
+  public MostrarPromedio=true;
   ngOnInit(): void {
   }
   ngOnChanges(changes: SimpleChanges): void {
@@ -60,15 +60,15 @@ export class ModuloCalificacionesComponent implements OnInit,OnDestroy {
         this.calificacionesCursoDetalle=x.detalleCalificacion
         if(this.calificacionesCursoDetalle.length!=0){
           this.calificacionesCursoDetalle.forEach((y:any) => {
-            if(y.mostrarCalificacion){
-              this.MostrarPromedio=true
+            if(!y.mostrarCalificacion){
+              this.MostrarPromedio=false
             }
           });
         }
       },
       complete:()=>{
         this._SessionStorageService.SessionSetValue('PromedioFinalCurso',this.promedio.toString());
-        console.log('Este es el promedio final',this.promedio)
+        console.log('Este es el promedio final2',this.promedio)
       }
     })
   }

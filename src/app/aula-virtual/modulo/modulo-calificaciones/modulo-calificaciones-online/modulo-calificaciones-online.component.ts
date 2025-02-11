@@ -78,65 +78,52 @@ export class ModuloCalificacionesOnlineComponent implements OnInit,OnDestroy {
         }
         this.listadoNotas.listadoMatriculas.forEach((mat:any) => {
           mat.notaActual=[];
-          this.listadoNotas.listadoEvaluaciones.forEach((evl:any) => {
-            if(evl.nombre.toUpperCase().includes('ASISTENCIA')){
-              var totalasistencia=
-                  this.listadoNotas.listadoAsistencias.filter((f:any)=> f.asistio == true && f.idMatriculaCabecera == mat.idMatriculaCabecera).length;
-              var nota=0;
-              let TieneNota=true;
-              if(totalasistencia==0){
-                TieneNota=false;
+            this.listadoNotas.listadoEvaluaciones.forEach((evl:any) => {
+            const isAsistencia = evl.nombre.toUpperCase().includes('ASISTENCIA');
+            let nota = 0;
+            let TieneNota = true;
+
+            if (isAsistencia) {
+              const totalAsistencia = this.listadoNotas.listadoAsistencias.filter((f:any) => f.asistio && f.idMatriculaCabecera === mat.idMatriculaCabecera).length;
+              const totalAsistenciasSesion = this.listadoNotas.listadoAsistencias.filter((f:any) => f.idMatriculaCabecera === mat.idMatriculaCabecera).length;
+              const ultimaSesion = this.listadoNotas.listadoSesiones.sort((a: any, b: any) => new Date(b.fechaHoraInicio).getTime() - new Date(a.fechaHoraInicio).getTime())[0];
+              const esFechaActualMayor = new Date() > new Date(ultimaSesion.fechaHoraInicio);
+
+              if (this.listadoNotas.listadoSesiones.length !== totalAsistenciasSesion && !esFechaActualMayor) {
+              TieneNota = false;
               }
-              if(this.listadoNotas.listadoSesiones!=null && this.listadoNotas.listadoSesiones.length>0){
-                nota=Math.round((((totalasistencia*1)/(this.listadoNotas.listadoSesiones.length)) * (this.listadoNotas.escalaCalificacion))* 10)/10;
+
+              if (this.listadoNotas.listadoSesiones.length > 0) {
+              nota = Math.round((totalAsistencia / this.listadoNotas.listadoSesiones.length) * this.listadoNotas.escalaCalificacion * 10) / 10;
               }
-              mat.notaActual.push({
-                nota:nota,
-                Id:0,
-                IdEvaluacion:evl.id,
-                IdMatriculaCabecera:mat.idMatriculaCabecera,
-                TieneNota:TieneNota,
-                edit:false});
-            }else{
-              if(this.listadoNotas.listadoNotas.filter((w:any) => w.idEvaluacion == evl.id && w.idMatriculaCabecera == mat.idMatriculaCabecera).length>0){
-                var notas=this.listadoNotas.listadoNotas.filter((w:any) => w.idEvaluacion == evl.id && w.idMatriculaCabecera == mat.idMatriculaCabecera)[0]
-                var NotaPromediada=0
-                var notasCountDestalle=1
-                if(notas.detalle!=null){
-                  var notasDetalleCriterio = []
-                  notasDetalleCriterio=notas.detalle.filter((w:any) => w.idCriterioEvaluacion == evl.id)
-                  if(notasDetalleCriterio.length>0){
-                    notasCountDestalle=notasDetalleCriterio.length
-                    notasDetalleCriterio.forEach((z:any)=>{
-                      NotaPromediada=NotaPromediada+z.nota
-                    })
-                    NotaPromediada=parseFloat((NotaPromediada/notasCountDestalle).toFixed(2));
-                  }
-                  else{
-                    NotaPromediada=parseFloat((notas.nota/notasCountDestalle).toFixed(2))
-                  }
+            } else {
+                const notas = this.listadoNotas.listadoNotas.find((w:any) => w.idEvaluacion === evl.id && w.idMatriculaCabecera === mat.idMatriculaCabecera);
+                console.log('notas:', notas);
+                if (notas) {
+                const notasDetalleCriterio = notas.detalle?.filter((w:any) => w.idCriterioEvaluacion === evl.id) || [];
+                console.log('notasDetalleCriterio:', notasDetalleCriterio);
+                const notasCountDetalle = notasDetalleCriterio.length || 1;
+                console.log('notasCountDetalle:', notasCountDetalle);
+                const NotaPromediada = notasDetalleCriterio.reduce((acc:any, z:any) => acc + z.nota, 0) / notasCountDetalle;
+                console.log('NotaPromediada:', NotaPromediada);
+
+                nota = parseFloat((NotaPromediada || notas.nota).toFixed(2));
+                console.log('nota:', nota);
+                } else {
+                TieneNota = false;
+                console.log('TieneNota:', TieneNota);
                 }
-                else{
-                  NotaPromediada=parseFloat((notas.nota/notasCountDestalle).toFixed(2))
-                }
-                mat.notaActual.push({
-                  nota:NotaPromediada,
-                  Id:notas.id,
-                  IdEvaluacion:notas.idEvaluacion,
-                  IdMatriculaCabecera:mat.idMatriculaCabecera,
-                  TieneNota:true,
-                  edit:true});
-              }else{
-                mat.notaActual.push({
-                  nota:0,
-                  Id:0,
-                  IdEvaluacion:evl.id,
-                  IdMatriculaCabecera:mat.idMatriculaCabecera,
-                  TieneNota:false,
-                  edit:true});
-              }
             }
-          });
+
+            mat.notaActual.push({
+              nota,
+              Id: 0,
+              IdEvaluacion: evl.id,
+              IdMatriculaCabecera: mat.idMatriculaCabecera,
+              TieneNota,
+              edit: !isAsistencia || !!nota
+            });
+            });
           if(detalles.length>0){
             var d:Array<any>=[]
             this.listadoNotas.listadoNotas.forEach((n:any) => {
@@ -177,6 +164,7 @@ export class ModuloCalificacionesOnlineComponent implements OnInit,OnDestroy {
               let TieneNota=false
               let TieneNotaPromedioCurso=false
               m.notaActual.forEach((na:any) => {
+                console.log(na)
                 if(na.TieneNota){
                   TieneNota=true;
                   this.TieneNotaPromedio=true
@@ -190,9 +178,10 @@ export class ModuloCalificacionesOnlineComponent implements OnInit,OnDestroy {
                 var escala=this.listadoNotas.listadoEvaluaciones.filter((w:any) => w.id == na.IdEvaluacion)[0]
                 notaFinal+=nota*(escala.porcentaje/100)
                 if(detalles.length>=1){
-                  let TieneNotaInterna=false
+                  let TieneNotaInterna=true
                   detalles.forEach((detcali:any) => {
                     if(na.IdEvaluacion==detcali.idCriterioEvaluacion){
+                      console.log('detcali',detcali)
                       if(detcali.fechaCalificacion==null){
                         detcali.tieneNota=false
                       }
@@ -201,12 +190,14 @@ export class ModuloCalificacionesOnlineComponent implements OnInit,OnDestroy {
                       }
                       calificacionDetallada.push(detcali)
 
-                      if(detcali.tieneNota){
-                        TieneNotaInterna=true
+                      if(!detcali.tieneNota){
+                        TieneNotaInterna=false
                       }
                       TieneNota=TieneNotaInterna
                     }
                   })
+                  console.log('TieneNotaInterna',TieneNotaInterna)
+                  this.TieneNotaPromedio=TieneNotaInterna
                 }
                 data.detalleCalificacion.push({
                   criterioEvaluacion:escala.nombre,
@@ -236,7 +227,8 @@ export class ModuloCalificacionesOnlineComponent implements OnInit,OnDestroy {
       complete:()=> {
         this.TerminaCarga=true
         this._SessionStorageService.SessionSetValue('PromedioFinalCurso',this.PromedioFinal.toString());
-        console.log('Este es el promedio final',this.PromedioFinal)
+        console.log(this.CursosCriterios)
+        console.log('Este es el promedio final3',this.PromedioFinal)
       },
     })
   }

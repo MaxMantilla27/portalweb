@@ -28,6 +28,22 @@ export class GestionAsistenciaProgramaComponent implements OnInit {
           a.ver=true
           a.Nombre=c.programaGeneralHijo,
           a.orden=i
+          if (c.fechasOnline) {
+            const today = new Date().toISOString().split('T')[0];
+            const fechaInicio = new Date(c.fechasOnline.fechaInicio).toISOString().split('T')[0];
+            const fechaFin = new Date(c.fechasOnline.fechaFin).toISOString().split('T')[0];
+
+            if (today < fechaInicio) {
+              a.estadoCurso = 'Sin Iniciar';
+            } else if (today >= fechaInicio && today <= fechaFin) {
+              a.estadoCurso = 'En ejecución';
+            } else if (today > fechaFin) {
+              a.estadoCurso = 'Culminado';
+            }
+          }
+          else{
+            a.estadoCurso = 'No aplica';
+          }
         }
         i++
       });
@@ -36,6 +52,7 @@ export class GestionAsistenciaProgramaComponent implements OnInit {
     this.Asistencias.sort(function (a:any, b:any) {
       return a.orden - b.orden;
     })
+    console.log('Asistencias',this.Asistencias)
     console.log(this.Cursos)
   }
 

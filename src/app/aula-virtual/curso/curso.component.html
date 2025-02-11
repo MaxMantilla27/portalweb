@@ -255,7 +255,7 @@
             </div>
           </ng-template>
           <div class="pad-resp">
-            <app-curso-notas [IdMatricula]="idMatricula">
+            <app-curso-notas [IdMatricula]="idMatricula" [Cursos]="programEstructura.listaCursoMatriculado">
             </app-curso-notas>
           </div>
         </mat-tab>
@@ -367,6 +367,15 @@
             <app-modulo-webinars [Capitulo]="programEstructura.programaGeneral" [IdMatriculaCabecera]="idMatricula">
             </app-modulo-webinars>
           </div>
+        </mat-tab>
+        <mat-tab *ngIf="curso!=undefined">
+          <ng-template mat-tab-label>
+            <div #beneficios class="contentHeaderM" (click)="InterraccionTab('Mis Pagos');RedirigiPagoMatricula(idMatricula)"
+              matTooltip="Mis Pagos" matTooltipPosition="after">
+              <div class="iconMat iconPagos"></div>
+              <div class="titleMatr" *ngIf="!hide">Mis Pagos</div>
+            </div>
+          </ng-template>
         </mat-tab>
         <mat-tab *ngIf="curso!=undefined && curso.benficioSolicitado">
           <ng-template mat-tab-label>

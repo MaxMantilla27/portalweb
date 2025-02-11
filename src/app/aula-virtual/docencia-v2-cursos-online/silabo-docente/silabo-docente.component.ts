@@ -28,6 +28,8 @@ export class SilaboDocenteComponent implements OnInit ,OnChanges,OnDestroy {
     }
   }
   public listaSeccionesContenidosDocumento:Array<any>=[];
+  public listaSeccionesContenidosDocumentoEstructura:any
+  public listaSeccionesContenidosDocumentoEstructuraProcesada:any
   ngOnInit(): void {
   }
 
@@ -80,14 +82,56 @@ export class SilaboDocenteComponent implements OnInit ,OnChanges,OnDestroy {
           }
           i++
         })
-        console.log(this.listaSeccionesContenidosDocumento)
-        // this.listaSeccionesContenidosDocumento.push({
-        //   titulo:'Estructura Curricular',
-        //   Contenido:'',
-        //   order:7,
-        //   ArrayContent:[],
-        //   estado:true
-        // })
+        this.listaSeccionesContenidosDocumentoEstructura = x.listaSeccionesContenidosDocumentoEstructura;
+        // Paso 1: Obtener títulos (IdSeccionTipoDetalle_PW = 12) sin duplicados
+        const titulosMap = new Map();
+        this.listaSeccionesContenidosDocumentoEstructura.forEach((item: any) => {
+          if (item.idSeccionTipoDetalle_PW === 12) {
+            if (titulosMap.has(item.contenido)) {
+              titulosMap.set(item.contenido, titulosMap.get(item.contenido) + 1);
+            } else {
+              titulosMap.set(item.contenido, 1);
+            }
+          }
+        });
+        const titulos = Array.from(titulosMap.keys());
+        const titulosCont = Array.from(titulosMap.entries()).map(([titulo, count]) => ({ titulo, count }));
+
+        // Paso 2: Obtener contenidos (IdSeccionTipoDetalle_PW = 13) sin filtrar duplicados
+        const contenidos = this.listaSeccionesContenidosDocumentoEstructura
+          .filter((item: any) => item.idSeccionTipoDetalle_PW === 13)
+          .map((item: any) => item.contenido);
+
+        console.log(titulos);
+        console.log(contenidos);
+        // Paso 3: Armar el objeto anidado
+        let contenidoIndex = 0;
+        const estructuraCurricular = titulosCont.map(({ titulo, count }) => {
+          const contenidosForTitulo = [];
+          for (let i = 0; i < count && contenidoIndex < contenidos.length; i++) {
+            contenidosForTitulo.push(contenidos[contenidoIndex]);
+            contenidoIndex++;
+          }
+          return {
+            titulo,
+            contenidos: contenidosForTitulo
+          };
+        });
+
+        // Eliminar contenidos duplicados
+        const uniqueEstructuraCurricular = estructuraCurricular.map(({ titulo, contenidos }) => ({
+          titulo,
+          contenidos: Array.from(new Set(contenidos))
+        }));
+        console.log(uniqueEstructuraCurricular);
+        this.listaSeccionesContenidosDocumentoEstructuraProcesada=uniqueEstructuraCurricular
+        this.listaSeccionesContenidosDocumento.push({
+          titulo:'Estructura Curricular',
+          Contenido:'',
+          order:7,
+          ArrayContent:[],
+          estado:true
+        })
         this.listaSeccionesContenidosDocumento.sort(function (a, b) {
           return a.order - b.order;
         });

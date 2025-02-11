@@ -743,7 +743,7 @@ export class PagoComponent implements OnInit,OnDestroy {
     })
   }
   retroceder(){
-    this._router.navigate(['/AulaVirtual/MisPagos']);
+    this._router.navigate(['/AulaVirtual/MisCursos/'+this.idMatricula])
   }
   afiliacionPagoRecurrente(){
     if (!this.EstadoAfiliado) {
