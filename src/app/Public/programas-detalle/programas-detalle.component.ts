@@ -1417,7 +1417,7 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
               if (absoluteFormulario) absoluteFormulario.style.display = 'block';
             }
           };
-          //window.addEventListener('scroll', scrollHandler);
+          
         }
       });
     }
