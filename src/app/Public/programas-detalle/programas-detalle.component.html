@@ -105,7 +105,7 @@
           </div>
         </ng-container>
     </div>
-</div>
+  </div>
 
   <div class="ContentInicio">
 
@@ -519,7 +519,7 @@
   <div class="containerObjetivosInfoClave">
 
     <div class="infoClaveProgramaContainer">
-      <div class="infoClave" style="border-right: 1px solid #D7C282;">
+      <!-- <div class="infoClave" style="border-right: 1px solid #D7C282;">
         <div class="infoClaveImg">
           <img src="../../../assets/imagenes/PDUS.png" alt="">
         </div>
@@ -527,14 +527,23 @@
           <div class="infoClaveNombre">PDU's</div>
           <div class="infoClaveValor">35 PDU's PMI° </div>
         </div>
-      </div>
+      </div> -->
       <div class="infoClave" style="border-right: 1px solid #D7C282;">
         <div class="infoClaveImg">
           <img src="../../../assets/imagenes/modalidad.png" alt="">
         </div>
         <div class="infoContainer">
           <div class="infoClaveNombre">Modalidad</div>
-          <div class="infoClaveValor">Online Live</div>
+          <div *ngFor="let item of cabecera.listProgramaEspecificoInformacionDTO" class=" infoClaveValor ">
+              <ng-container *ngIf="item.tipo.toLowerCase()=='online asincronica'">
+                Online a tu ritmo 
+              </ng-container>
+              <ng-container *ngIf="item.tipo.toLowerCase()=='online sincronica'">
+                Online Live 
+              </ng-container>
+            <!-- <div class="infoProgramText">{{item.fechaInicioTexto}}</div> -->
+          </div>
+          <!-- <div class="infoClaveValor">Online Live</div> -->
         </div>
       </div>
       <div class="infoClave" style="border-right: 1px solid #D7C282;">
@@ -543,7 +552,12 @@
         </div>
         <div class="infoContainer">
           <div class="infoClaveNombre">Fecha de inicio</div>
-          <div class="infoClaveValor">08 Enero 2025</div>
+          <div *ngFor="let item of cabecera.listProgramaEspecificoInformacionDTO" class=" infoClaveValor ">
+            <ng-container *ngIf="item.fechaInicioTexto">
+              {{item.fechaInicioTexto}}
+            </ng-container>
+          <!-- <div class="infoProgramText">{{item.fechaInicioTexto}}</div> -->
+          </div>
         </div>
       </div>
       <div class="infoClave" style="border-right: 1px solid #D7C282;">
@@ -552,7 +566,7 @@
         </div>
         <div class="infoContainer">
           <div class="infoClaveNombre">Duración</div>
-          <div class="infoClaveValor">4 meses</div>
+          <div class="infoClaveValor">{{cabecera.duracion}}</div>
         </div>
       </div>
       <div class="infoClave">
@@ -575,7 +589,7 @@
           </div>
           <div class="col-12" style="margin-top: 20px;">
             <div class="puntoListaObjetivos" [innerHtml]="seccion.objetivo | safeHtml" style="text-align: left;
-            padding: 20px 0px;">
+            padding: 20px 0px;font-size: 18px;">
             </div>
           </div>
         </div>
@@ -734,7 +748,7 @@
                   <div>Publico Objetivo</div>
                 </div>
                 <div class="puntoListaPublicoObjetivo" [innerHtml]="seccion.publicoObjetivo | safeHtml" style="text-align: left;
-                  padding: 20px 45px;">
+                  padding: 20px 45px;font-size: 18px;">
                 </div>
               </div>
               <div class="cardInformacionPrograma">
@@ -743,7 +757,7 @@
                   <div>Prerequisitos</div>
                 </div>
                 <div style="text-align: left;
-                padding: 20px 45px;" *ngIf="prerequisitos!=undefined;else SinRequisitos">
+                padding: 20px 45px;font-size: 18px;" *ngIf="prerequisitos!=undefined;else SinRequisitos">
                   <div *ngFor="let cabeceras of prerequisitos">
                     <p>{{cabeceras.cabecera}}</p>
                     <div class="puntoListaPublicoObjetivo"*ngFor="let item of cabeceras.contenidos" >
@@ -765,7 +779,7 @@
   </div>
 
 
-  <div style="background-color: #FFCD34;" id="estructuraCurricular" #estructuraCurricular >
+  <div style="background-color: #FFCD34;" id="estructuraCurricular" #estructuraCurricular *ngIf="estructuraPrograma.length > 0">
     <div class="container">
       <div class="row rowpadd" style="justify-content: center;">
         <div class="row">
@@ -805,7 +819,7 @@
                 </ul>
             </mat-expansion-panel>
           </mat-accordion>
-          <!-- <div class="piePagina" [innerHtml]="EstructuraPiePagina | safeHtml"></div> -->
+          <div class="piePagina" [innerHtml]="EstructuraPiePagina | safeHtml"></div>
         </div>
         
         <!-- <ng-container *ngIf="idBusqueda!=7569">
@@ -862,7 +876,7 @@
     </div>
   </div>
 
-  <div style="background: #FFCD34;" #beneficiosSeccion  id="beneficiosSeccion" >
+  <div style="background: #FFCD34;" #beneficiosSeccion  id="beneficiosSeccion" *ngIf="beneficios.length > 0">
     <div class="container">
       <div class="row rowpadd">
 
@@ -876,10 +890,10 @@
 
             <ng-container *ngFor="let item of beneficios;let i=index">
               <div class="col-12 col-md-12 col-lg-12"
-                style="margin: 20px 0px;padding-bottom: 30px;padding-top: 20px;" [style.border-bottom]="i !==beneficios.length-1?'1px solid #FFFFFF':'none'">
+                style="margin: 20px 0px;padding-top: 20px;" [style.border-bottom]="i !==beneficios.length-1?'1px solid #FFFFFF':'none'" [style.padding-bottom]="i !==beneficios.length-1?'30px':'0px'">
                 
                 <div *ngIf="item.version!='Sin Version'" class="carsTitleBeneficiosPrograma">
-                  <img src="../../../assets/imagenes/Flecha.png" alt="" height="20px">
+                  <img src="../../../assets/imagenes/Flecha-azul.png" alt="" height="20px">
                   {{item.version+':'}}
                 </div>
                 
@@ -898,9 +912,9 @@
             </ng-container>
           </div>
 
-          <!-- <div class="col-12">
+          <div class="col-12">
             <div class="piePagina" [innerHtml]="BeneficiosPiePagina | safeHtml"></div>
-          </div> -->
+          </div>
 
       </div>
     </div>

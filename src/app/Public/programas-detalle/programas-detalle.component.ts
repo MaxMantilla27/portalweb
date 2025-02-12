@@ -304,26 +304,24 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
       if (element) {
         const elementTop = element.getBoundingClientRect().top + window.scrollY;
         const elementBottom = elementTop + element.offsetHeight;
-        if (offset >= elementTop - 130 && offset < elementBottom - 130 && this.innerWidth>1485) { // Ajusta el valor según la altura de la barra de navegación fija  
+        if (offset >= elementTop - 130 && offset < elementBottom - 130 && this.innerWidth>=1000) { // Ajusta el valor según la altura de la barra de navegación fija  
           this._HelperServiceP.enviarScrollHeaderPrograma(offset >= elementTop - 130);
           this.activateSeccion = seccion.ref;
           if (this.activateSeccion === 'inversion') {
             const absoluteFormulario = document.getElementById('absoluteFormulario') as HTMLElement
             absoluteFormulario.style.display = 'none';
           }
-        } else if (seccion.ref === 'objetivos' && offset < elementTop - 130 && this.innerWidth>1485) {
+        } else if (seccion.ref === 'objetivos' && offset < elementTop - 130 && this.innerWidth>=1000) {
           this._HelperServiceP.enviarScrollHeaderPrograma(false);
         } 
       }
-
-
       });
     }
 
   @HostListener('window:resize')
   onResize() {
     this.innerWidth = window.innerWidth; 
-    if (this.innerWidth <= 1485) {
+    if (this.innerWidth < 1000) {
       this._HelperServiceP.enviarScrollHeaderPrograma(false);
     }
   }
