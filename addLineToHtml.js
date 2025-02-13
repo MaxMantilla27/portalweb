@@ -1,7 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 
-const lineaAAgregar = '<!-- holax1 -->\n';
+const lineaAAgregar = '<!-- holax -->\n';
 const directorioBase = path.join(__dirname, 'src');
 
 // Función para agregar la línea si no está presente
