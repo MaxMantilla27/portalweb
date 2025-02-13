@@ -22,6 +22,7 @@ import { SelectComponent } from './Containers/select/select.component';
 import { MatSelectModule } from '@angular/material/select';
 import {MatExpansionModule} from '@angular/material/expansion';
 import { FooterComponent } from './Containers/footer/footer.component';
+import { MarkdownModule } from 'ngx-markdown';
 
 import {SessionStorageService} from '../Shared/Services/session-storage.service'
 import { PaisService } from './Services/Pais/pais.service';
@@ -190,6 +191,7 @@ import { FormatoMilesDecimalesPipe } from './Pipes/formato-miles-decimales.pipe'
     MatNativeDateModule,
     MatSlideToggleModule,
     MatRadioModule,
+    MarkdownModule.forRoot(),
   ],
   declarations: [
     HeaderComponent,
