@@ -63,46 +63,15 @@
     >
       <mat-spinner></mat-spinner>
     </div>
-    <!-- <div class="card">
-        <div class="corner"></div>
-      </div> -->
     <div
-      *ngIf="Paso == 0 && CargandoInformacion == false"
-      class="PrimeraInteraccionAtcFondo container"
-    >
-      <!--<div class="PrimeraInteraccionAtc">
-          <p class="LetraChat"><strong>¡Hola!</strong></p>
-          <p class="LetraChat">Te damos la bienvenida al chat de atención al cliente de BSG Institute.</p>
-          <p class="LetraChat">Para comenzar, selecciona una de las siguientes opciones:</p>
-          <ul>
-            <li (click)="OpcionAlumno(1,'A')" style="cursor:pointer"><a class="LetraChat">Estoy interesado en los cursos</a></li>
-            <li (click)="OpcionAlumno(1,'B')" style="cursor:pointer"><a class="LetraChat">Soy alumno</a></li>
-          </ul>
-        </div>-->
-      <div class="PrimeraInteraccionAtc">
-        <p class="LetraChat"><strong>¡Hola!</strong></p>
-        <p class="LetraChat">
-          Te damos la bienvenida al chat de atención de BSG Institute.
-        </p>
-        <p class="LetraChat">
-          Para comenzar, selecciona la siguiente opción:
-        </p>
-        <ul>
-          <li (click)="OpcionAlumno(1, 'A')" style="cursor: pointer">
-            <a class="LetraChat">Estoy interesado en los cursos</a>
-          </li>
-        </ul>
-      </div>
-    </div>
-    <div
-      *ngIf="Paso == 1 && Caso == 'A' && CargandoInformacion == false"
+      *ngIf="Paso == 1 && Caso == 'A' && CargandoInformacion == false && AreasCapacitacion!=undefined"
       class="PrimeraInteraccionAtcFondo"
     >
       <div class="PrimeraInteraccionAtc">
-        <div class="FlechaAtras no-select" (click)="RetrocederInicioA()">
+        <!-- <div class="FlechaAtras no-select" (click)="RetrocederInicioA()">
           <i class="material-icons">arrow_back_ios</i>
           <span>Atras</span>
-        </div>
+        </div> -->
         <p class="LetraChat"><strong>¡Hola!</strong></p>
         <p class="LetraChat">
           Selecciona el área de capacitación de tu interés:
@@ -122,10 +91,10 @@
       class="PrimeraInteraccionAtcFondo"
     >
       <div class="PrimeraInteraccionAtc">
-        <div class="FlechaAtras no-select" (click)="RetrocederInicioB()">
+        <!-- <div class="FlechaAtras no-select" (click)="RetrocederInicioB()">
           <i class="material-icons">arrow_back_ios</i>
           <span>Atras</span>
-        </div>
+        </div> -->
         <p class="LetraChat">
           Ingresa a tu cuenta para revisar tus programas, cursos y
           certificaciones.

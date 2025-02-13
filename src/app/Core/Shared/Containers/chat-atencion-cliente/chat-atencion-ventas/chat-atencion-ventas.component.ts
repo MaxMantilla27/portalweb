@@ -66,7 +66,7 @@ export class ChatAtencionVentasComponent implements OnInit, OnChanges {
   @Input() IdProgramageneral = 0;
   @Input() IdPespecificoPrograma = 0;
   public img = 'https://proceso-pago.bsginstitute.com/img-web/chatV2/';
-  public Paso = 0;
+  public Paso = 1;
   public Caso = 'A';
   public RecuperarContrasenaBit = false;
   public BotonDesactivado = false;
@@ -233,11 +233,11 @@ export class ChatAtencionVentasComponent implements OnInit, OnChanges {
     }
     console.log('COMPONENTE ACTUAL', route.snapshot.component);
     if (route.snapshot.component === ProgramasDetalleComponent) {
-      console.log('sera true')
+      console.log('sera true');
       this.toggleChat(true);
     } else {
-      console.log('sera false')
-      console.log('esta abierto?',this.Open)
+      console.log('sera false');
+      console.log('esta abierto?', this.Open);
       this.toggleChat(this.Open);
     }
   }
@@ -440,20 +440,8 @@ export class ChatAtencionVentasComponent implements OnInit, OnChanges {
               this.RegistroHistoricoUsuario.IdPespecifico;
             this.IdProgramageneral = this.RegistroHistoricoUsuario.idPGeneral;
             if (this.Paso == 1 && this.Caso == 'A') {
-              this.AreasCapacitacion = [];
-              this.CargandoInformacion = true;
-              this._ChatAtencionClienteService
-                .ObtenerAreasCapacitacionChatAtc()
-                .pipe(takeUntil(this.signal$))
-                .subscribe({
-                  next: (x) => {
-                    this.AreasCapacitacion = x;
-                    console.log(this.AreasCapacitacion);
-                  },
-                  complete: () => {
-                    this.CargandoInformacion = false;
-                  },
-                });
+              this.OpcionAlumno(1, 'A');
+              // this.ObtenerAreasCapacitacionChatAtc();
             }
             if (this.Paso == 2 && this.Caso == 'A') {
               this._ChatAtencionClienteService
@@ -491,7 +479,7 @@ export class ChatAtencionVentasComponent implements OnInit, OnChanges {
                 });
             }
             if (this.Caso == 'B') {
-              this.Paso = 0;
+              this.Paso = 1;
               this.Caso = 'A';
               // console.log('INGRESA 3')
               // this.CursosMatriculados()
@@ -500,12 +488,16 @@ export class ChatAtencionVentasComponent implements OnInit, OnChanges {
               this._SessionStorageService.GetToken() == null &&
               this.Paso == 4
             ) {
-              this.Paso = 0;
+              this.Paso = 1;
               this.Caso = 'A';
+              this.OpcionAlumno(1, 'A');
+              // this.ObtenerAreasCapacitacionChatAtc();
             }
           } else {
-            this.Paso = 0;
+            this.Paso = 1;
             this.Caso = 'A';
+            this.OpcionAlumno(1, 'A');
+            // this.ObtenerAreasCapacitacionChatAtc();
           }
         },
       });
@@ -659,123 +651,64 @@ export class ChatAtencionVentasComponent implements OnInit, OnChanges {
   }
   //FIN RECUPERAR CONTRASEÑA
   OpcionAlumno(Paso: number, Caso: string) {
-    if (
-      this._SessionStorageService.GetToken() != null &&
-      Paso == 1 &&
-      Caso == 'B'
-    ) {
-      console.log('HAY TOKENNNNNNN');
-      this.RegistroChatDetalleAtc.IdChatAtencionClienteContacto =
-        this.IdChatAtencionClienteContacto;
-      this.RegistroChatDetalleAtc.PasoActual = 0;
-      this.RegistroChatDetalleAtc.CasoActual = 'A';
-      this.RegistroChatDetalleAtc.PasoSiguiente = 2;
-      this.RegistroChatDetalleAtc.CasoSiguiente = 'B';
-      this.RegistroChatDetalleAtc.MensajeEnviado = 'Soy Alumno Logueado';
-      this._ChatAtencionClienteService
-        .RegistrarChatAtencionClienteContactoDetalle(
-          this.RegistroChatDetalleAtc
-        )
-        .pipe(takeUntil(this.signal$))
-        .subscribe({
-          next: (x) => {
-            this.CursosMatriculados();
-          },
-          complete: () => {
-            this.Paso = 2;
-            this.Caso = 'B';
-          },
-        });
-    } else {
-      console.log(this.IdContactoPortalSegmento);
-      this.RegistroChatAtc.IdContactoPortalSegmento =
-        this.IdContactoPortalSegmento;
-      this.RegistroChatAtc.IdPGeneral = 0;
-      this.RegistroChatAtc.IdPEspecifico = 0;
-      this.RegistroChatAtc.IdAlumno = 0;
-      this.RegistroChatAtc.ChatIniciado = true;
-      this.RegistroChatAtc.FormularioEnviado = false;
-      this.RegistroChatAtc.ChatFinalizado = false;
-      this.RegistroChatAtc.IdOportunidad = 0;
-      this._ChatAtencionClienteService
-        .RegistrarChatAtencionClienteContacto(this.RegistroChatAtc)
-        .pipe(takeUntil(this.signal$))
-        .subscribe({
-          next: (x) => {
-            this.IdChatAtencionClienteContacto = x;
-          },
-          complete: () => {
-            this.Paso = Paso;
-            this.Caso = Caso;
-            if (Paso == 1 && Caso == 'A') {
-              this.RegistroChatDetalleAtc.IdChatAtencionClienteContacto =
-                this.IdChatAtencionClienteContacto;
-              this.RegistroChatDetalleAtc.PasoActual = 0;
-              this.RegistroChatDetalleAtc.CasoActual = 'A';
-              this.RegistroChatDetalleAtc.PasoSiguiente = 1;
-              this.RegistroChatDetalleAtc.CasoSiguiente = 'A';
-              this.RegistroChatDetalleAtc.MensajeEnviado =
-                'Estoy interesado en los cursos';
-              this._ChatAtencionClienteService
-                .RegistrarChatAtencionClienteContactoDetalle(
-                  this.RegistroChatDetalleAtc
-                )
-                .pipe(takeUntil(this.signal$))
-                .subscribe({
-                  next: (x) => {},
-                });
-              this.AreasCapacitacion = [];
-              this.CargandoInformacion = true;
-              this._ChatAtencionClienteService
-                .ObtenerAreasCapacitacionChatAtc()
-                .pipe(takeUntil(this.signal$))
-                .subscribe({
-                  next: (x) => {
-                    this.AreasCapacitacion = x;
-                    console.log(this.AreasCapacitacion);
-                  },
-                  complete: () => {
-                    this.CargandoInformacion = false;
-                  },
-                });
-            } else {
-              this.RegistroChatDetalleAtc.IdChatAtencionClienteContacto =
-                this.IdChatAtencionClienteContacto;
-              this.RegistroChatDetalleAtc.PasoActual = 0;
-              this.RegistroChatDetalleAtc.CasoActual = 'B';
-              this.RegistroChatDetalleAtc.PasoSiguiente = 1;
-              this.RegistroChatDetalleAtc.CasoSiguiente = 'B';
-              this.RegistroChatDetalleAtc.MensajeEnviado = 'Soy alumno';
-              this._ChatAtencionClienteService
-                .RegistrarChatAtencionClienteContactoDetalle(
-                  this.RegistroChatDetalleAtc
-                )
-                .pipe(takeUntil(this.signal$))
-                .subscribe({
-                  next: (x) => {},
-                });
-              this.fileds = [];
-              this.fileds.push({
-                nombre: 'Email',
-                tipo: 'text',
-                valorInicial: '',
-                validate: [Validators.required, Validators.email],
-                label: 'Correo electrónico',
-                focus: true,
-                error: 'Ingresa tu correo electrónico',
+    console.log(this.IdContactoPortalSegmento);
+    this.RegistroChatAtc.IdContactoPortalSegmento =
+      this.IdContactoPortalSegmento;
+    this.RegistroChatAtc.IdPGeneral = 0;
+    this.RegistroChatAtc.IdPEspecifico = 0;
+    this.RegistroChatAtc.IdAlumno = 0;
+    this.RegistroChatAtc.ChatIniciado = true;
+    this.RegistroChatAtc.FormularioEnviado = false;
+    this.RegistroChatAtc.ChatFinalizado = false;
+    this.RegistroChatAtc.IdOportunidad = 0;
+    this._ChatAtencionClienteService
+      .RegistrarChatAtencionClienteContacto(this.RegistroChatAtc)
+      .pipe(takeUntil(this.signal$))
+      .subscribe({
+        next: (x) => {
+          this.IdChatAtencionClienteContacto = x;
+        },
+        complete: () => {
+          this.Paso = Paso;
+          this.Caso = Caso;
+          if (Paso == 1 && Caso == 'A') {
+            this.RegistroChatDetalleAtc.IdChatAtencionClienteContacto =
+              this.IdChatAtencionClienteContacto;
+            this.RegistroChatDetalleAtc.PasoActual = 1;
+            this.RegistroChatDetalleAtc.CasoActual = 'A';
+            this.RegistroChatDetalleAtc.PasoSiguiente = 1;
+            this.RegistroChatDetalleAtc.CasoSiguiente = 'A';
+            this.RegistroChatDetalleAtc.MensajeEnviado =
+              'Estoy interesado en los cursos';
+            this._ChatAtencionClienteService
+              .RegistrarChatAtencionClienteContactoDetalle(
+                this.RegistroChatDetalleAtc
+              )
+              .pipe(takeUntil(this.signal$))
+              .subscribe({
+                next: (x) => {},
               });
-              this.fileds.push({
-                nombre: 'Password',
-                tipo: 'password',
-                valorInicial: '',
-                validate: [Validators.required],
-                label: 'Contraseña',
-                error: 'Ingresa tu contraseña',
+            // this.OpcionAlumno(1, 'A');
+            this.ObtenerAreasCapacitacionChatAtc();
+          } else {
+            this.RegistroChatDetalleAtc.IdChatAtencionClienteContacto =
+              this.IdChatAtencionClienteContacto;
+            this.RegistroChatDetalleAtc.PasoActual = 0;
+            this.RegistroChatDetalleAtc.CasoActual = 'B';
+            this.RegistroChatDetalleAtc.PasoSiguiente = 1;
+            this.RegistroChatDetalleAtc.CasoSiguiente = 'B';
+            this.RegistroChatDetalleAtc.MensajeEnviado = 'Soy alumno';
+            this._ChatAtencionClienteService
+              .RegistrarChatAtencionClienteContactoDetalle(
+                this.RegistroChatDetalleAtc
+              )
+              .pipe(takeUntil(this.signal$))
+              .subscribe({
+                next: (x) => {},
               });
-            }
-          },
-        });
-    }
+          }
+        },
+      });
   }
   CursosMatriculados() {
     this.CargandoInformacion = true;
@@ -1001,24 +934,24 @@ export class ChatAtencionVentasComponent implements OnInit, OnChanges {
         },
       });
   }
-  RetrocederInicioA() {
-    this.Paso = 0;
-    this.Caso = 'A';
-    this.RegistroChatDetalleAtc.IdChatAtencionClienteContacto =
-      this.IdChatAtencionClienteContacto;
-    this.RegistroChatDetalleAtc.PasoActual = 1;
-    this.RegistroChatDetalleAtc.CasoActual = 'A';
-    this.RegistroChatDetalleAtc.PasoSiguiente = 0;
-    this.RegistroChatDetalleAtc.CasoSiguiente = 'A';
-    this.RegistroChatDetalleAtc.MensajeEnviado =
-      'Volver de Áreas de Capacitación a Inicio';
-    this._ChatAtencionClienteService
-      .RegistrarChatAtencionClienteContactoDetalle(this.RegistroChatDetalleAtc)
-      .pipe(takeUntil(this.signal$))
-      .subscribe({
-        next: (x) => {},
-      });
-  }
+  // RetrocederInicioA() {
+  //   this.Paso = 0;
+  //   this.Caso = 'A';
+  //   this.RegistroChatDetalleAtc.IdChatAtencionClienteContacto =
+  //     this.IdChatAtencionClienteContacto;
+  //   this.RegistroChatDetalleAtc.PasoActual = 1;
+  //   this.RegistroChatDetalleAtc.CasoActual = 'A';
+  //   this.RegistroChatDetalleAtc.PasoSiguiente = 0;
+  //   this.RegistroChatDetalleAtc.CasoSiguiente = 'A';
+  //   this.RegistroChatDetalleAtc.MensajeEnviado =
+  //     'Volver de Áreas de Capacitación a Inicio';
+  //   this._ChatAtencionClienteService
+  //     .RegistrarChatAtencionClienteContactoDetalle(this.RegistroChatDetalleAtc)
+  //     .pipe(takeUntil(this.signal$))
+  //     .subscribe({
+  //       next: (x) => {},
+  //     });
+  // }
   RetrocederAreaA() {
     this.Paso = 1;
     this.Caso = 'A';
@@ -1036,38 +969,25 @@ export class ChatAtencionVentasComponent implements OnInit, OnChanges {
       .subscribe({
         next: (x) => {},
       });
-    this.AreasCapacitacion = [];
-    this.CargandoInformacion = true;
-    this._ChatAtencionClienteService
-      .ObtenerAreasCapacitacionChatAtc()
-      .pipe(takeUntil(this.signal$))
-      .subscribe({
-        next: (x) => {
-          this.AreasCapacitacion = x;
-          console.log(this.AreasCapacitacion);
-        },
-        complete: () => {
-          this.CargandoInformacion = false;
-        },
-      });
+    this.ObtenerAreasCapacitacionChatAtc();
   }
-  RetrocederInicioB() {
-    this.Paso = 0;
-    this.Caso = 'A';
-    this.RegistroChatDetalleAtc.IdChatAtencionClienteContacto =
-      this.IdChatAtencionClienteContacto;
-    this.RegistroChatDetalleAtc.PasoActual = 1;
-    this.RegistroChatDetalleAtc.CasoActual = 'B';
-    this.RegistroChatDetalleAtc.PasoSiguiente = 0;
-    this.RegistroChatDetalleAtc.CasoSiguiente = 'A';
-    this.RegistroChatDetalleAtc.MensajeEnviado = 'Volver de Login a Inicio';
-    this._ChatAtencionClienteService
-      .RegistrarChatAtencionClienteContactoDetalle(this.RegistroChatDetalleAtc)
-      .pipe(takeUntil(this.signal$))
-      .subscribe({
-        next: (x) => {},
-      });
-  }
+  // RetrocederInicioB() {
+  //   this.Paso = 0;
+  //   this.Caso = 'A';
+  //   this.RegistroChatDetalleAtc.IdChatAtencionClienteContacto =
+  //     this.IdChatAtencionClienteContacto;
+  //   this.RegistroChatDetalleAtc.PasoActual = 1;
+  //   this.RegistroChatDetalleAtc.CasoActual = 'B';
+  //   this.RegistroChatDetalleAtc.PasoSiguiente = 0;
+  //   this.RegistroChatDetalleAtc.CasoSiguiente = 'A';
+  //   this.RegistroChatDetalleAtc.MensajeEnviado = 'Volver de Login a Inicio';
+  //   this._ChatAtencionClienteService
+  //     .RegistrarChatAtencionClienteContactoDetalle(this.RegistroChatDetalleAtc)
+  //     .pipe(takeUntil(this.signal$))
+  //     .subscribe({
+  //       next: (x) => {},
+  //     });
+  // }
   //CONECCIONES CON CHAT
   actualizarDatosAlumno(respuesta: any) {
     // this.estadoLogueo="true"
@@ -1313,8 +1233,11 @@ export class ChatAtencionVentasComponent implements OnInit, OnChanges {
     }
   }
   RetrocederInicio() {
-    this.Paso = 0;
+    this.Paso = 1;
     this.Caso = 'A';
+    this.OpcionAlumno(1, 'A');
+
+    this.ObtenerAreasCapacitacionChatAtc();
   }
   RetrocederInicioFormulario(valor: boolean, origen: number) {
     console.log('Funcion RECTROCEDER INICIO FORMULARIO VENTAS');
@@ -1348,5 +1271,21 @@ export class ChatAtencionVentasComponent implements OnInit, OnChanges {
           },
         });
     }
+  }
+  ObtenerAreasCapacitacionChatAtc() {
+    this.AreasCapacitacion = [];
+    this.CargandoInformacion = true;
+    this._ChatAtencionClienteService
+      .ObtenerAreasCapacitacionChatAtc()
+      .pipe(takeUntil(this.signal$))
+      .subscribe({
+        next: (x) => {
+          this.AreasCapacitacion = x;
+          console.log(this.AreasCapacitacion);
+        },
+        complete: () => {
+          this.CargandoInformacion = false;
+        },
+      });
   }
 }
