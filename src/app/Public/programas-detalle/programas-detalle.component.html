@@ -515,9 +515,7 @@
     </div>
   </div> -->
   
-  
   <div class="containerObjetivosInfoClave">
-
     <div class="infoClaveProgramaContainer">
       <!-- <div class="infoClave" style="border-right: 1px solid #D7C282;">
         <div class="infoClaveImg">
@@ -556,7 +554,7 @@
             <ng-container *ngIf="item.fechaInicioTexto">
               {{item.fechaInicioTexto}}
             </ng-container>
-          <!-- <div class="infoProgramText">{{item.fechaInicioTexto}}</div> -->
+            <!-- <div class="infoProgramText">{{item.fechaInicioTexto}}</div> -->
           </div>
         </div>
       </div>
@@ -575,7 +573,16 @@
         </div>
         <div class="infoContainer">
           <div class="infoClaveNombre">Horas de clases</div>
-          <div class="infoClaveValor">35 horas</div>
+          <div class="infoClaveValor">
+            <div *ngFor="let item of cabecera.listProgramaEspecificoInformacionDTO" class=" infoClaveValor ">
+              <ng-container *ngIf="item.duracion == '0' ">
+                # Horas 
+              </ng-container>
+              <ng-container *ngIf="item.duracion !== '0'">
+                {{item.duracion}} Horas
+              </ng-container>
+            </div>
+          </div>
         </div>
       </div>  
     </div>
@@ -778,7 +785,6 @@
     </div> 
   </div>
 
-
   <div style="background-color: #FFCD34;" id="estructuraCurricular" #estructuraCurricular *ngIf="estructuraPrograma.length > 0">
     <div class="container">
       <div class="row rowpadd" style="justify-content: center;">
@@ -933,7 +939,7 @@
       </div>
       <div class="col-12 col-md-7 col-lg-7" style="margin: 20px 0px;">
           
-          <div style="font-size: 18px;margin-bottom: 20px;">{{certificado.cabecera}}</div>
+          <div style="font-size: 18px;margin-bottom: 20px;" *ngIf="certificado.cabecera != ''">{{certificado.cabecera}}</div>
           <div style="display: flex;flex-direction: column;justify-content: center;">
             <div style="display: flex;gap: 5px;padding-left: 25px;margin-top: 15px;font-size: 18px;" *ngFor="let item of certificado.contenido">
                 <img src="../../../assets/imagenes/check.png" alt="" height="20px">
@@ -1188,25 +1194,29 @@
     <div class="container">
       <div class="row rowpadd" style="justify-content: center;">
 
-        <div class="col-12 tituloSeccionPrograma" style="justify-content: center;margin-bottom: 30px;color: #017EFF;">
-          <img src="../../../assets/imagenes/programas-relaciones.png" alt="" height="50px">
-          <div>Programas Relacionados</div>
-        </div>
-
-        <ng-container *ngFor="let item of programasRelacionados;let i=index">
-          <div class="col-12 col-md-6 col-lg-3" *ngIf="i<4" style="margin-bottom: 40px;">
-            <app-card-programas [cardContent]="item" [Interaccion]="'Programas Relacionados'"></app-card-programas>
+        <ng-container *ngIf="programasRelacionados && programasRelacionados.length>0">
+          <div class="col-12 tituloSeccionPrograma" style="justify-content: center;margin-bottom: 30px;color: #017EFF;">
+            <img src="../../../assets/imagenes/programas-relaciones.png" alt="" height="50px">
+            <div>Programas Relacionados</div>
           </div>
+  
+          <ng-container *ngFor="let item of programasRelacionados;let i=index">
+            <div class="col-12 col-md-6 col-lg-3" *ngIf="i<4" style="margin-bottom: 40px;">
+              <app-card-programas [cardContent]="item" [Interaccion]="'Programas Relacionados'"></app-card-programas>
+            </div>
+          </ng-container>
         </ng-container>
 
-        <div class="col-12 tituloSeccionPrograma" style="justify-content: center;margin-bottom: 30px;color: #017EFF;">
-          <img src="../../../assets/imagenes/programas-relaciones.png" alt="" height="50px">
-          <div>Contenidos Relacionados</div>
-        </div>
-        <ng-container *ngFor="let item of blogsRelacionados;let i=index">
-          <div class="col-12 col-md-6 col-lg-3" *ngIf="i<4" style="margin-bottom: 40px;">
-            <app-card-blog [cardContent]="item" [Interaccion]="'Blogs'"></app-card-blog>
+        <ng-container *ngIf="blogsRelacionados && blogsRelacionados.length > 0">
+          <div class="col-12 tituloSeccionPrograma" style="justify-content: center;margin-bottom: 30px;color: #017EFF;">
+            <img src="../../../assets/imagenes/programas-relaciones.png" alt="" height="50px">
+            <div>Contenidos Relacionados</div>
           </div>
+          <ng-container *ngFor="let item of blogsRelacionados;let i=index">
+            <div class="col-12 col-md-6 col-lg-3" *ngIf="i<4" style="margin-bottom: 40px;">
+              <app-card-blog [cardContent]="item" [Interaccion]="'Blogs'"></app-card-blog>
+            </div>
+          </ng-container>
         </ng-container>
 
         <div class="col-12 tituloSeccionPrograma" style="justify-content: center;margin-bottom: 30px;color: #017EFF;">

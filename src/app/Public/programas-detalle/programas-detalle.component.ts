@@ -284,7 +284,7 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
   public isScrolled: boolean = false;
   public activateSeccion: string = '';
   public absoluteFormulario: boolean = false;
-  public blogsRelacionados: any;
+  public blogsRelacionados: any[]= [] ;
 
   public secciones = [
     { id: 1, ref: 'objetivos', nombre: 'Objetivos' },
@@ -313,7 +313,7 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
           }
         } else if (seccion.ref === 'objetivos' && offset < elementTop - 130 && this.innerWidth>=1000) {
           this._HelperServiceP.enviarScrollHeaderPrograma(false);
-        } 
+        }
       }
       });
     }
@@ -1432,9 +1432,15 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
     
       this._SeccionProgramaService
           .ListBlogProgramaRelacionado(IdPGeneral).pipe(takeUntil(this.signal$)).subscribe({
-        next:(x:any)=>{;
+        next:(x)=>{;
+          console.log(x)
+          if (x.listaBeneficioProgramaDTO !== null || x.listaBeneficioProgramaDTO !== 'null') {
             this.blogsRelacionados=x.listaBlogRelacionadoDTO;
             console.log(this.blogsRelacionados)
+          }else{
+            this.blogsRelacionados = ['hola']
+            console.log(this.blogsRelacionados)
+          }
         },
         error:(e)=>{
         }
