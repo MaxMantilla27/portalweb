@@ -1,0 +1,741 @@
+import {
+  ChangeDetectorRef,
+  Component,
+  ElementRef,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+  ViewChild,
+} from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { DatoObservableDTO } from 'src/app/Core/Models/DatoObservableDTO';
+import { AspNetUserService } from '../../../Services/AspNetUser/asp-net-user.service';
+import { HelperService } from '../../../Services/helper.service';
+import { SessionStorageService } from '../../../Services/session-storage.service';
+import { AccountService } from '../../../Services/Account/account.service';
+import { AlumnoService } from '../../../Services/Alumno/alumno.service';
+import { SnackBarServiceService } from '../../../Services/SnackBarService/snack-bar-service.service';
+import { ChatAtencionClienteService } from '../../../Services/ChatAtencionCliente/chat-atencion-cliente.service';
+import {
+  MensajeChatbotIADTO,
+  RegistroChatbotIADTO,
+} from 'src/app/Core/Models/ChatbotIADTO';
+import { ChatbotIAService } from '../../../Services/ChatbotIA/chatbot-ia.service';
+
+import { DatosPerfilService } from '../../../Services/DatosPerfil/datos-perfil.service';
+import { ChatEnLineaService } from '../../../Services/ChatEnLinea/chat-en-linea.service';
+import { SeccionProgramaService } from '../../../Services/SeccionPrograma/seccion-programa.service';
+import { Subject, Subscription, takeUntil, timer, filter } from 'rxjs';
+import {
+  ChatAtencionClienteContactoDetalleRegistrarDTO,
+  ChatAtencionClienteContactoRegistrarDTO,
+} from 'src/app/Core/Models/ChatAtencionClienteDTO';
+import { DatosFormularioDTO } from 'src/app/Core/Models/DatosFormularioDTO';
+
+@Component({
+  selector: 'app-chatbot-ia',
+  templateUrl: './chatbot-ia.component.html',
+  styleUrls: ['./chatbot-ia.component.scss'],
+})
+export class ChatbotIaComponent implements OnInit {
+  constructor(
+    private _router: Router,
+    private chatbotIAService: ChatbotIAService,
+    private _SessionStorageService: SessionStorageService,
+    private _HelperService: HelperService,
+    private cd: ChangeDetectorRef,
+    private _ChatEnLinea: ChatEnLineaService,
+    private _DatosPerfilService: DatosPerfilService,
+    private _ChatAtencionClienteService: ChatAtencionClienteService,
+    private _AlumnoService: AlumnoService,
+  ) {}
+  mensajes: MensajeChatbotIADTO[] = [];
+
+  registroChatIA: RegistroChatbotIADTO = {
+    Cerrado: false,
+    Derivado: false,
+  };
+
+  public DatoObservable: DatoObservableDTO = {
+    datoAvatar: false,
+    datoContenido: false,
+  };
+  private signal$ = new Subject();
+  ChatError: boolean = false;
+  ChatErrorBotRecarga: boolean = false;
+  inputActive = true;
+  nuevoMensaje: string = '';
+  isBubbleOpen: boolean = false;
+  stateAsesor: boolean = true;
+  public stateAsesorAtc = false;
+  public CargandoInformacion = false;
+  public TieneCoordinador = false;
+  public ChatbotCerrado = false;
+  public ChatVentasAbierto = false;
+  public ChatAcademicoAbierto = false;
+  public interval: any;
+  public intervalPrevio: any;
+  public RegistroChatAtc: ChatAtencionClienteContactoRegistrarDTO = {
+    IdContactoPortalSegmento: '',
+    IdPGeneral: 0,
+    IdPEspecifico: 0,
+    IdAlumno: 0,
+    ChatIniciado: false,
+    FormularioEnviado: false,
+    ChatFinalizado: false,
+    IdOportunidad: 0,
+    IdMatriculaCabecera: 0,
+    EsAcademico: false,
+    EsSoporteTecnico: false,
+  };
+  public RegistroChatDetalleAtc: ChatAtencionClienteContactoDetalleRegistrarDTO =
+    {
+      IdChatAtencionClienteContacto: 0,
+      PasoActual: 0,
+      CasoActual: '',
+      PasoSiguiente: 0,
+      CasoSiguiente: '',
+      MensajeEnviado: '',
+    };
+  public EsSoporteTecnico = false;
+  public IdChatAtencionClienteContacto = 0;
+  public RespuestaDerivacion:any;
+  @ViewChild('contenidoMsj') contenidoMsj!: ElementRef;
+  @ViewChild('inputChat') inputChat!: ElementRef;
+  @Input() Open: boolean = false;
+
+  @Output()
+  IsOpen: EventEmitter<boolean> = new EventEmitter<boolean>();
+  @Input() IdProgramageneral = 0;
+  @Input() IdPespecificoPrograma = 0;
+
+
+  public IdChatbotIAPortalHiloChat = 0;
+  public TieneCursosMatriculados = false;
+  public EstadoEscribiendo = false;
+  public DatosCurso: any;
+  public datos: DatosFormularioDTO ={
+    nombres:'',
+    apellidos:'',
+    email:'',
+    idPais:undefined,
+    idRegion:undefined,
+    movil:'',
+    idCargo:undefined,
+    idAreaFormacion:undefined,
+    idAreaTrabajo:undefined,
+    idIndustria:undefined,
+  }
+  textareaHeight: number = 20; // Altura inicial, en píxeles
+  ngOnInit(): void {
+    this.ObtenerHistorialChatBotIA();
+    this.ReinicioTotalChat();
+    this._HelperService.recibirDatoCuenta
+      .pipe(takeUntil(this.signal$))
+      .subscribe({
+        next: (x) => {
+          let reinicioChatBot = this._SessionStorageService.SessionGetValue('ReinicioChatBot');
+          if(reinicioChatBot == 'true'){
+            this.ObtenerHistorialChatBotIA();
+          }
+          this.ReinicioTotalChat();
+        },
+        complete: () => {
+        },
+      });
+
+  }
+
+  ReinicioTotalChat(){
+    let IdChatbotIAPortalHiloChatLocal = this._SessionStorageService.SessionGetValue('IdChatbotIAPortalHiloChat');
+    let reinicioChatBot = this._SessionStorageService.SessionGetValue('ReinicioChatBot');
+    if (IdChatbotIAPortalHiloChatLocal != '' && reinicioChatBot == 'true') {
+      this.IdChatbotIAPortalHiloChat = Number(IdChatbotIAPortalHiloChatLocal);
+      this.CerrarRegistroHiloChat(this.IdChatbotIAPortalHiloChat);
+    }
+  }
+  ngAfterViewInit(): void {
+    this.cd.detectChanges();
+  }
+
+  reiniciarChat() {
+    this.ChatErrorBotRecarga=false
+    this.mensajes = [];
+    this.registroChatIA = {
+      Cerrado: false,
+      Derivado: false,
+    };
+    this.ChatError = false;
+    this.inputActive = true;
+    this.nuevoMensaje = '';
+    this.ChatbotCerrado = false;
+    this.ChatVentasAbierto = false;
+    this.ChatAcademicoAbierto = false;
+    this.TieneCoordinador = false;
+    this._SessionStorageService.SessionSetValue('ReinicioChatBot','false');
+    this.enviarMensajeInicial();
+  }
+
+  //Abre el chat e inicia con el mensaje inicial
+  toggleChat(state: boolean) {
+    this.Open = state;
+    this.IsOpen.emit(state);
+    if (this.Open) {
+      if (this.mensajes.length == 0) {
+        this.enviarMensajeInicial();
+      }
+      this.scrollAbajo(true, 1);
+    }
+  }
+
+  enviarMensaje(): void {
+    if (this.nuevoMensaje.trim() && this.inputActive) {
+      this.inputActive = false;
+      this.mensajes.push({ esUsuario: true, mensaje: this.nuevoMensaje,fechaEnvio: this.ObtenerHoraActual()});
+      this.scrollAbajo(true, 2);
+      this.registroChatIA.Mensaje = this.nuevoMensaje;
+      this.registroChatIA.TiempoActual = new Date();
+      this.nuevoMensaje = '';
+
+      this.mostrarEscribiendo();
+
+      this.enviarYProcesar(() => {
+        this.reemplazarMensajeBot();
+        this.inputActive = this.registroChatIA.Cerrado ? false : true;
+        this.setFocusOnInput();
+        if (this.registroChatIA.Derivado) {
+          setTimeout(() => {
+            if (
+              this.registroChatIA.ChatDerivado == 1 &&
+              this.registroChatIA.IdMatriculaCabecera != null &&
+              this.registroChatIA.IdPGeneral != null
+            ) {
+              this.ObtenerCursosMatriculadosAlumno(
+                this.registroChatIA.IdAlumno!
+              );
+            }
+            if (this.registroChatIA.ChatDerivado == 2) {
+              this.ActualizarIdAreaDerivacionHiloChat(
+                this.registroChatIA.ChatDerivado
+              );
+              this.ChatbotCerrado = true;
+              this.ChatVentasAbierto = true;
+            }
+          }, 6000);
+        }
+      });
+    }
+  }
+
+  // Estructura el mensaje inicial
+  enviarMensajeInicial(): void {
+    this.CargandoInformacion = true;
+
+    this.inputActive = false;
+    this.registroChatIA.TiempoActual = new Date();
+
+    this.enviarYProcesar(() => {
+      if (this.registroChatIA.Mensaje != '') {
+        this.mensajes.push({
+          mensaje: this.registroChatIA.Mensaje ?? '',
+          esUsuario: false,
+          fechaEnvio: this.ObtenerHoraActual()
+        });
+      }
+      this.inputActive = true;
+
+      this.CargandoInformacion = false;
+      this.scrollAbajo(true, 5);
+    });
+  }
+
+  // Llama al endpoint y procesa la respuesta
+  enviarYProcesar(callback: () => void): void {
+    this.interval = setTimeout(() => {
+      var usuarioWeb =
+        this._SessionStorageService.SessionGetValue('usuarioWeb');
+      if (usuarioWeb != '') {
+        clearTimeout(this.interval);
+        if (!this.registroChatIA.IdContactoPortalSegmento) {
+          this.registroChatIA.IdContactoPortalSegmento = usuarioWeb;
+        }
+        if (!this.registroChatIA.IdAlumno) {
+          this.registroChatIA.IdAlumno = 0;
+        }
+        this.chatbotIAService.EnviarMensajeBot(this.registroChatIA).subscribe({
+          next: (response) => {
+            //Realiza el inicio de sesión del usuario
+            if (response.TokenData != null) {
+              this._SessionStorageService.SetToken(response.TokenData.Token);
+              this._AlumnoService.ObtenerCombosPerfil().subscribe({
+                next: (x) => {
+                  this.datos.nombres = x.datosAlumno.nombres;
+                  this.datos.apellidos = x.datosAlumno.apellidos;
+                  this.datos.email = x.datosAlumno.email;
+                  this.datos.idPais = x.datosAlumno.idPais;
+                  this.datos.idRegion = x.datosAlumno.idDepartamento;
+                  this.datos.movil = x.datosAlumno.telefono;
+                  this.datos.idCargo = x.datosAlumno.idCargo;
+                  this.datos.idAreaFormacion = x.datosAlumno.idAreaFormacion;
+                  this.datos.idAreaTrabajo = x.datosAlumno.idAreaTrabajo;
+                  this.datos.idIndustria = x.datosAlumno.idIndustria
+
+                  this._SessionStorageService.SessionSetValue('DatosFormulario',JSON.stringify(this.datos));
+                }
+              });
+              this.DatoObservable.datoAvatar = true;
+              this.DatoObservable.datoContenido = true;
+              this._HelperService.enviarDatoCuenta(this.DatoObservable);
+              this._SessionStorageService.SessionSetValue(
+                'IdProveedor',
+                response.idProveedor
+              );
+              this._SessionStorageService.SessionSetValue(
+                'Cursos',
+                response.cursos
+              );
+              this._SessionStorageService.SessionSetValue(
+                'TipoCarrera',
+                response.tipoCarrera
+              );
+            }
+            if (response.Excepcion == null) {
+              let data = JSON.parse(JSON.stringify(response.Data));
+              this.registroChatIA = this.jsonADTO(data);
+              this._SessionStorageService.SessionSetValue(
+                'IdChatbotIAPortalHiloChat',
+                this.registroChatIA.IdChatbotIAPortalHiloChat!.toString()
+              );
+
+              callback();
+            } else {
+              this.ChatError = true;
+              this.CargandoInformacion = false;
+            }
+          },
+          complete: () => {
+            this.EstadoEscribiendo=false;
+            this.registroChatIA.IdContactoPortalSegmento = usuarioWeb;
+          },
+          error: (e) => {
+            console.error('Error al obtener la respuesta de la API', e);
+            this.ChatError = true;
+            this.ChatErrorBotRecarga = true;
+            this.EstadoEscribiendo=false;
+            this.scrollAbajo(true,10)
+          },
+        });
+      }
+    }, 1000);
+  }
+
+  //Tranforma JSON a RegistroChatbotIADTO
+  jsonADTO(data: any): RegistroChatbotIADTO {
+    if (data.tiempoActual) {
+      data.tiempoActual = new Date(data.tiempoActual);
+    }
+
+    const registro: RegistroChatbotIADTO = data as RegistroChatbotIADTO;
+    return registro;
+  }
+
+  // Enviar el mensaje al bot
+  enviarMensajeBot(): void {
+    this.inputActive = false;
+    if (this.nuevoMensaje.trim()) {
+      this.mensajes.push({
+        mensaje: this.nuevoMensaje,
+        esUsuario: true,
+        fechaEnvio: this.ObtenerHoraActual()
+      });
+      this.nuevoMensaje = '';
+      this.mostrarEscribiendo();
+    }
+  }
+
+  // Luego de un cambio (agregar un mensaje) ejecuta la función para bajar el scroll
+  ngAfterViewChecked() {
+    this.cd.detectChanges();
+    if (this.CargandoInformacion) {
+      // this.scrollAbajo(true,0000); // Baja automáticamente después de renderizar
+    }
+  }
+
+  //Enfoca al input luego de recibir el mensaje
+  private setFocusOnInput(): void {
+    setTimeout(() => {
+      if (this.inputChat && this.inputChat.nativeElement) {
+        this.inputChat.nativeElement.focus();
+      }
+    }, 0);
+  }
+
+  // Muestra 'Escribiendo...'  para que el usuario sepa que no se ha colgado
+  mostrarEscribiendo(): void {
+    this.EstadoEscribiendo = true;
+    this.mensajes.push({ mensaje: 'Escribiendo...', esUsuario: false,fechaEnvio: this.ObtenerHoraActual() });
+    this.scrollAbajo(true, 3);
+  }
+
+  // Reemplaza el último mensaje del bot (los "...")
+  reemplazarMensajeBot(): void {
+    this.mensajes[this.mensajes.length - 1].mensaje =
+      this.registroChatIA.Mensaje!;
+    this.scrollAbajo(true, 4);
+  }
+
+  ObtenerCoordinadorMatricula(IdMatriculaCabecera: number,valor:number) {
+    this._ChatEnLinea
+      .ObtenerCoordinadorChat(IdMatriculaCabecera)
+      .pipe(takeUntil(this.signal$))
+      .subscribe({
+        next: (x) => {
+          if (x != null) {
+            this.TieneCoordinador = true;
+          } else {
+            this.TieneCoordinador = false;
+          }
+        },
+        complete: () => {
+          setTimeout(() => {
+            this.ChatbotCerrado = true;
+            this.ChatAcademicoAbierto = true;
+          }, 3000);
+        },
+      });
+  }
+
+  Contactenos() {
+    this._router.navigate(['/contactenos']);
+  }
+  ObtenerHistorialChatBotIA() {
+    this.mensajes = [];
+    this.intervalPrevio = setTimeout(() => {
+      var usuarioWeb =
+        this._SessionStorageService.SessionGetValue('usuarioWeb');
+      if (usuarioWeb != '') {
+        clearTimeout(this.intervalPrevio);
+        this.registroChatIA.IdContactoPortalSegmento = usuarioWeb;
+        this.ObtenerEstadoDerivacionHiloChat(
+          this.registroChatIA.IdContactoPortalSegmento
+        );
+        this.chatbotIAService
+          .ObtenerHistorialMensajeUsuarioHiloChat(
+            this.registroChatIA.IdContactoPortalSegmento
+          )
+          .subscribe({
+            next: (response) => {
+              //Realiza el inicio de sesión del usuario
+              if (response != null)
+                response.slice(1).forEach((historial: any) => {
+                  const fecha = new Date(historial.tiempoEnvio);
+                  const opciones: Intl.DateTimeFormatOptions = {
+                    hour: '2-digit',
+                    minute: '2-digit',
+                    hour12: true
+                  };
+                  let horaMensajeHistorico = fecha.toLocaleTimeString('es-ES', opciones);
+                  this.mensajes.push({
+                    mensaje: historial.contenido,
+                    esUsuario: historial.esUsuario,
+                    fechaEnvio: horaMensajeHistorico
+                  });
+                });
+              {
+              }
+            },
+            complete: () => {},
+            error: (e) => {
+              console.error(
+                'Error al obtener el historial respuesta de la API',
+                e
+              );
+              this.ChatError = true;
+            },
+          });
+      }
+    }, 1000);
+  }
+  ActualizarIdAreaDerivacionHiloChat(IdAreaDerivacion: number) {
+    this.chatbotIAService
+      .ActualizarIdAreaDerivacionHiloChat(
+        this.registroChatIA.IdChatbotIAPortalHiloChat!,
+        IdAreaDerivacion
+      )
+      .subscribe({
+        next: (response) => {
+        },
+      });
+  }
+  CerrarRegistroHiloChat(IdChatbotIAPortalHiloChat: number) {
+    let IdContactoPortalSegmento = this._SessionStorageService.SessionGetValue('usuarioWeb');
+    this.CargandoInformacion = true;
+    if (IdChatbotIAPortalHiloChat == 0) {
+      IdChatbotIAPortalHiloChat =
+        this.registroChatIA.IdChatbotIAPortalHiloChat?? 0;
+    }
+    this.chatbotIAService
+      .CerrarRegistroHiloChat(IdChatbotIAPortalHiloChat,IdContactoPortalSegmento)
+      .subscribe({
+        next: (response) => {
+        },
+        complete: () => {
+          this.reiniciarChat();
+
+          // this.enviarMensajeInicial();
+        },
+      });
+  }
+  ObtenerEstadoDerivacionHiloChat(IdContactoPortalSegmento: string) {
+    this.RespuestaDerivacion=undefined;
+    this.ChatVentasAbierto;
+    this.chatbotIAService
+      .ObtenerEstadoDerivacionHiloChat(IdContactoPortalSegmento)
+      .subscribe({
+        next: (response) => {
+          this.RespuestaDerivacion=response;
+
+        },
+        complete:()=>{
+          setTimeout(() => {
+          if (this.RespuestaDerivacion != null) {
+            if (
+              this.RespuestaDerivacion.idAreaDerivacion != 0 &&
+              this.RespuestaDerivacion.derivacionCerrada != 0
+            ) {
+              if (this.RespuestaDerivacion.idAreaDerivacion == 2) {
+                this.ChatbotCerrado = true;
+                this.ChatVentasAbierto = true;
+              }
+              if (this.RespuestaDerivacion.idAreaDerivacion == 1) {
+                this.registroChatIA.IdMatriculaCabecera =
+                this.RespuestaDerivacion.idMatriculaCabecera;
+                this.ObtenerCoordinadorMatricula(
+                  this.registroChatIA.IdMatriculaCabecera!,1
+                );
+                this.RegistroDirectoCursoMatriculado(false,1);
+
+                setTimeout(() => {
+                  this.ChatbotCerrado = true;
+                  this.ChatAcademicoAbierto = true;
+                }, 3000);
+              }
+            }
+          }
+          }, 3000);
+        }
+      });
+  }
+  scrollAbajo(smooth: boolean = true, id: number) {
+    setTimeout(() => {
+      if (this.contenidoMsj) {
+        const nativeElement = this.contenidoMsj.nativeElement;
+        nativeElement.scrollTo({
+          top: nativeElement.scrollHeight,
+          behavior: smooth ? 'smooth' : 'auto',
+        });
+      }
+    }, 100);
+  }
+  ObtenerCursosMatriculadosAlumno(IdAlumno: number) {
+    this.TieneCursosMatriculados = false;
+    this.chatbotIAService
+      .ObtenerCursosAlumnoMatriculado(IdAlumno)
+      .pipe(takeUntil(this.signal$))
+      .subscribe({
+        next: (x) => {
+          if (x.cursosHijo.length != 0) {
+            this.TieneCursosMatriculados = true;
+          }
+        },
+        complete: () => {
+          if (this.TieneCursosMatriculados) {
+            this.ActualizarIdAreaDerivacionHiloChat(1);
+            this.ObtenerCoordinadorMatricula(
+              this.registroChatIA.IdMatriculaCabecera!,2
+            );
+            this.RegistroDirectoCursoMatriculado(false,2);
+          } else {
+            this.ActualizarIdAreaDerivacionHiloChat(2);
+            this.ChatbotCerrado = true;
+            this.ChatVentasAbierto = true;
+          }
+        },
+      });
+  }
+  RegistroDirectoCursoMatriculado(EsSoporteTecnico: boolean,valor:number) {
+    this._ChatAtencionClienteService
+      .ObtenerChatAtencionClienteContactoDetalleAcademico(
+        this.registroChatIA.IdMatriculaCabecera!
+      )
+      .pipe(takeUntil(this.signal$))
+      .subscribe({
+        next: (x) => {
+          if(x!=null){
+            this.IdChatAtencionClienteContacto = x.idChatAtencionClienteContacto;
+          }
+        },
+      });
+    if (this.IdChatAtencionClienteContacto == 0) {
+      this._DatosPerfilService
+        .RegistroProgramaMatriculadoPorIdMatricula(
+          this.registroChatIA.IdMatriculaCabecera!
+        )
+        .pipe(takeUntil(this.signal$))
+        .subscribe({
+          next: (x) => {
+            this._HelperService
+              .recibirMsjChat()
+              .pipe(takeUntil(this.signal$))
+              .subscribe({
+                next: (x) => {
+                },
+              });
+            this.DatosCurso = x;
+          },
+          complete: () => {
+            this.RegistroChatAtc.IdContactoPortalSegmento =
+              this.registroChatIA.IdContactoPortalSegmento!;
+            this.RegistroChatAtc.IdPGeneral = this.DatosCurso.idPGeneral;
+            this.RegistroChatAtc.IdPEspecifico = this.DatosCurso.idPEspecifico;
+            this.RegistroChatAtc.IdAlumno = this.DatosCurso.idAlumno;
+            this.RegistroChatAtc.ChatIniciado = true;
+            this.RegistroChatAtc.FormularioEnviado = true;
+            this.RegistroChatAtc.ChatFinalizado = false;
+            this.RegistroChatAtc.IdOportunidad = 0;
+            this.RegistroChatAtc.IdMatriculaCabecera =
+              this.registroChatIA.IdMatriculaCabecera!;
+            this.RegistroChatAtc.EsAcademico = true;
+            this.RegistroChatAtc.EsSoporteTecnico = EsSoporteTecnico;
+            this._ChatAtencionClienteService
+              .RegistrarChatAtencionClienteContacto(this.RegistroChatAtc)
+              .pipe(takeUntil(this.signal$))
+              .subscribe({
+                next: (x) => {
+                  this.IdChatAtencionClienteContacto = x;
+                },
+                complete: () => {
+                  if (EsSoporteTecnico) {
+                    this.RegistroChatDetalleAtc.IdChatAtencionClienteContacto =
+                      this.IdChatAtencionClienteContacto;
+                    this.RegistroChatDetalleAtc.PasoActual = 3;
+                    this.RegistroChatDetalleAtc.CasoActual = 'B';
+                    this.RegistroChatDetalleAtc.PasoSiguiente = 4;
+                    this.RegistroChatDetalleAtc.CasoSiguiente = 'B';
+                    this.RegistroChatDetalleAtc.MensajeEnviado =
+                      'Tengo problemas técnicos en el aula virtual';
+                    this._ChatAtencionClienteService
+                      .RegistrarChatAtencionClienteContactoDetalle(
+                        this.RegistroChatDetalleAtc
+                      )
+                      .pipe(takeUntil(this.signal$))
+                      .subscribe({
+                        next: (x) => {},
+                      });
+                  } else {
+                    this.RegistroChatDetalleAtc.IdChatAtencionClienteContacto =
+                      this.IdChatAtencionClienteContacto;
+                    this.RegistroChatDetalleAtc.PasoActual = 3;
+                    this.RegistroChatDetalleAtc.CasoActual = 'B';
+                    this.RegistroChatDetalleAtc.PasoSiguiente = 4;
+                    this.RegistroChatDetalleAtc.CasoSiguiente = 'B';
+                    this.RegistroChatDetalleAtc.MensajeEnviado =
+                      'Contactar con un Coordinador Académico';
+                    this._ChatAtencionClienteService
+                      .RegistrarChatAtencionClienteContactoDetalle(
+                        this.RegistroChatDetalleAtc
+                      )
+                      .pipe(takeUntil(this.signal$))
+                      .subscribe({
+                        next: (x) => {},
+                      });
+                  }
+                  this._SessionStorageService.SessionSetValue(
+                    'ChatAcademicoIniciado',
+                    'true'
+                  );
+                },
+              });
+          },
+        });
+    } else {
+      if (EsSoporteTecnico) {
+        this.RegistroChatDetalleAtc.IdChatAtencionClienteContacto =
+          this.IdChatAtencionClienteContacto;
+        this.RegistroChatDetalleAtc.PasoActual = 3;
+        this.RegistroChatDetalleAtc.CasoActual = 'B';
+        this.RegistroChatDetalleAtc.PasoSiguiente = 4;
+        this.RegistroChatDetalleAtc.CasoSiguiente = 'B';
+        this.RegistroChatDetalleAtc.MensajeEnviado =
+          'Tengo problemas técnicos en el aula virtual';
+        this._ChatAtencionClienteService
+          .RegistrarChatAtencionClienteContactoDetalle(
+            this.RegistroChatDetalleAtc
+          )
+          .pipe(takeUntil(this.signal$))
+          .subscribe({
+            next: (x) => {},
+          });
+      } else {
+        this.RegistroChatDetalleAtc.IdChatAtencionClienteContacto =
+          this.IdChatAtencionClienteContacto;
+        this.RegistroChatDetalleAtc.PasoActual = 3;
+        this.RegistroChatDetalleAtc.CasoActual = 'B';
+        this.RegistroChatDetalleAtc.PasoSiguiente = 4;
+        this.RegistroChatDetalleAtc.CasoSiguiente = 'B';
+        this.RegistroChatDetalleAtc.MensajeEnviado =
+          'Contactar con un Coordinador Académico';
+        this._ChatAtencionClienteService
+          .RegistrarChatAtencionClienteContactoDetalle(
+            this.RegistroChatDetalleAtc
+          )
+          .pipe(takeUntil(this.signal$))
+          .subscribe({
+            next: (x) => {},
+          });
+      }
+      this._SessionStorageService.SessionSetValue(
+        'ChatAcademicoIniciado',
+        'true'
+      );
+    }
+  }
+  ObtenerHoraActual(){
+    const ahora = new Date();
+      let horaActual = ahora.toLocaleTimeString('es-ES', {
+        hour: '2-digit',
+        minute: '2-digit',
+        hour12: true
+      });
+    return horaActual
+  }
+  redimendisionarTextareaChatbot(event: Event): void {
+    const textarea = event.target as HTMLTextAreaElement;
+
+    // Establecer el estilo de "height" a "auto" para permitir que se ajuste dinámicamente
+    textarea.style.height = 'auto';
+
+    // Obtener el estilo de línea y calcular la altura máxima permitida
+    const lineHeight = parseInt(getComputedStyle(textarea).lineHeight); // La altura de una línea
+    const maxHeight = lineHeight * 3; // La altura máxima que debe tener el textarea (3 líneas)
+
+    // Si el contenido es mayor que la altura máxima de 3 líneas, se activa el scroll
+    if (textarea.scrollHeight > maxHeight) {
+      textarea.style.height = `${maxHeight}px`; // Limita la altura a 3 líneas
+      textarea.style.overflowY = 'auto'; // Activar el scroll
+    } else {
+      // Ajustar la altura a la altura del contenido
+      textarea.style.height = `${textarea.scrollHeight}px`;
+      textarea.style.overflowY = 'hidden'; // Desactivar el scroll si hay menos contenido
+    }
+  }
+  resetTextareaHeight(): void {
+    const textarea = document.querySelector('.chat-box-ia-textarea') as HTMLTextAreaElement;
+    if (textarea) {
+      textarea.style.height = 'auto'; // Restablecer la altura a auto
+      textarea.style.height = `${parseInt(getComputedStyle(textarea).lineHeight)}px`; // Establecer altura a una línea
+      textarea.style.overflowY = 'hidden'; // Desactivar el scroll
+    }
+  }
+}

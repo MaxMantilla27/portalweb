@@ -96,6 +96,7 @@ export class SesionTareaComponent implements OnInit,OnChanges,OnDestroy {
   ObtenerEvaluacionTarea(){
     this._TareaEvaluacionService.ObtenerEvaluacionTarea(this.params).pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
+        console.log(x)
         this.tarea=x
         if(this.tarea.datosEvaluacionTrabajo!=undefined && this.tarea.datosEvaluacionTrabajo.instruccionesEvaluacion!=undefined &&
           this.tarea.datosEvaluacionTrabajo!=null && this.tarea.datosEvaluacionTrabajo.instruccionesEvaluacion!=null)

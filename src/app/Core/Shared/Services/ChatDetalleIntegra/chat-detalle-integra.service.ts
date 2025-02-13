@@ -42,4 +42,11 @@ export class ChatDetalleIntegraService {
       return EMPTY;
     }
   }
+  public ObtenerDetalleChatPorIdInteraccionMatricula(IdMatriculaCabecera:number,EsSoporteTecnico:boolean):Observable<any>{
+    if(this.isBrowser){
+      return this.http.get<any>(this.urlBase+'/ObtenerDetalleChatPorIdInteraccionMatricula/'+IdMatriculaCabecera+'/'+EsSoporteTecnico);
+    }else{
+      return EMPTY;
+    }
+  }
 }
