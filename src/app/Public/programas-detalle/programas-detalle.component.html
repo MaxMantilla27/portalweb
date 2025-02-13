@@ -158,6 +158,15 @@
                   >
                 {{getSeoDescription(this.parametroSeo,'description')}}
               </div>
+              <div class="contentRigth col-12 col-md-6 col-lg-6" style="margin-top: 5%;" *ngIf="innerWidth < 768 ">
+                <ng-container *ngIf="idBusqueda!=7569">
+                  <div style="padding-bottom: 30px;" class="col-12 col-md-12 col-lg-12"
+                  *ngIf="ExisteVideo==true">
+                    <iframe #myIframe id="cartoonVideoVistaPrevia" [src]="VistaPreviaPortal | safe"
+                    class="embed-responsive-item" style="width: 100%; height: 100%;aspect-ratio: 16/9; border: none;"></iframe>
+                  </div>
+                </ng-container>
+              </div>
               <div style="margin-top: 25px;">
                 <div class="row" style="align-items: flex-start;" *ngIf="cabecera.imgPrincipal!='https://img.bsginstitute.com/repositorioweb/img/partners/Sin Partner' && cabecera.imgPrincipal != null ">
                     <div class="col-2 col-md-2 col-lg-2" style="font-size: 18px;font-weight: 700;">Partner: </div> 
@@ -205,7 +214,7 @@
         </div>
           
         </div>
-        <div class="contentRigth col-12 col-md-6 col-lg-6" style="margin-top: 5%;">
+        <div class="contentRigth col-12 col-md-6 col-lg-6" style="margin-top: 5%;" *ngIf="innerWidth >= 768 ">
           <ng-container *ngIf="idBusqueda!=7569">
             <div style="padding-bottom: 30px;" class="col-12 col-md-12 col-lg-12"
             *ngIf="ExisteVideo==true">
@@ -213,83 +222,6 @@
               class="embed-responsive-item" style="width: 100%; height: 100%;aspect-ratio: 16/9; border: none;"></iframe>
             </div>
           </ng-container>
-
-          <!-- <div class="col-12" style="display:flex;justify-content: center;">
-            <div id="FormularioProgramasInsert">
-              <div class="estructuraProgramForm" style="position: relative;">
-                <app-cargando *ngIf="statuscharge==true"></app-cargando>
-                <div class="cotentestructuraProgramForm">
-                  <div class="question" style="justify-content: flex-start;align-items: center;">
-                    <img src="../../../assets/icons/signo-pregunta-abierto-03.svg" alt="Signo de interrogación abierto">
-                  </div>
-                  <div>Tienes dudas sobre algún aspecto del programa</div>
-                  <div class="question" style="justify-content: flex-end;align-items: center;">
-                    <img src="../../../assets/icons/signo-pregunta-cerrado-04.svg" alt="Signo de interrogación cerrado">
-                  </div>
-                </div>
-                <div class="subtitleEstruturaProgramFormAzul">
-                  Registra tus datos para que un asesor especializado pueda ayudarte en todo lo que requieras
-                </div>
-                <ng-container *ngIf="combosPrevios!=undefined">
-                  <app-formulario-azul style="background-color: blue;" [ListaLocalidades]="listaLocalidades" [Interaccion]="'Programas-'+idBusqueda"
-                    [model]="formularioContacto" [InputsDisable]="statuscharge" [CleanOnSubmit]="cleanSub"
-                    (OnSubmit)="SetContacto($event)" (OnValid)="formVal=$event" [fiels]="fileds"
-                    (OnSelect)="SelectChage($event)">
-  
-                    <ng-container contenido>
-                    </ng-container>
-                    <ng-container send>
-                      <div style="text-align: center;margin-top: -10px;margin-bottom: 10px;">
-                        <a title="Limpiar Campos" style="color: #027CFF;font-size: 14px;cursor: pointer;" (click)="LimpiarCampos()">[No soy
-                          {{formularioContacto.Nombres}}]</a>
-                      </div>
-                      <app-default-button-flecha style="display: flex;justify-content: center;"
-                        [confs]="{color:'primary',titulo:'Enviar'}"
-                        [style]="'width: 85%;margin-bottom: -2px;border-radius:20px'">
-                      </app-default-button-flecha>
-                    </ng-container>
-  
-                  </app-formulario-azul>
-                </ng-container>
-                <ng-container *ngIf="combosPrevios==undefined && CompleteLocalStorage==true">
-                  <app-formulario-azul [ListaLocalidades]="listaLocalidades" [Interaccion]="'Programas-'+idBusqueda" [model]="formularioContacto"
-                    [InputsDisable]="statuscharge" [CleanOnSubmit]="cleanSub" (OnSubmit)="SetContacto($event)"
-                    (OnValid)="formVal=$event" [fiels]="fileds" (OnSelect)="SelectChage($event)">
-  
-                    <ng-container contenido>
-                    </ng-container>
-                    <ng-container send>
-                      <div style="text-align: center;margin-top: -10px;margin-bottom: 10px;">
-                        <a title="Limpiar Campos" style="color: #027CFF;font-size: 14px;cursor: pointer;" (click)="LimpiarCampos()">[No soy
-                          {{formularioContacto.Nombres}}]</a>
-                      </div>
-                      <app-default-button-flecha style="display: flex;justify-content: center;"
-                        [confs]="{color:'primary',titulo:'Enviar'}"
-                        [style]="'width: 85%;margin-bottom: -2px;border-radius:20px'">
-                      </app-default-button-flecha>
-                    </ng-container>
-  
-                  </app-formulario-azul>
-                </ng-container>
-                <ng-container *ngIf="combosPrevios==undefined && CompleteLocalStorage==false">
-                  <app-formulario-azul [ListaLocalidades]="listaLocalidades" [Interaccion]="'Programas-'+idBusqueda" [model]="formularioContacto"
-                    [InputsDisable]="statuscharge" [CleanOnSubmit]="cleanSub" (OnSubmit)="SetContacto($event)"
-                    (OnValid)="formVal=$event" [fiels]="fileds" (OnSelect)="SelectChage($event)">
-  
-                    <ng-container contenido>
-                    </ng-container>
-                    <ng-container send>
-                      <app-default-button-flecha style="display: flex;justify-content: center;"
-                        [confs]="{color:'primary',titulo:'Enviar'}"
-                        [style]="'width: 85%;margin-bottom: -2px;border-radius:20px'">
-                      </app-default-button-flecha>
-                    </ng-container>
-                  </app-formulario-azul>
-                </ng-container>
-              </div>
-            </div>
-          </div> -->
-  
         </div>
       </div>
     </div>
@@ -892,30 +824,31 @@
             <div>Beneficios</div>
           </div>
         </div>
-          <div class="col-12 col-md-12 col-lg-12">
-
-            <ng-container *ngFor="let item of beneficios;let i=index">
-              <div class="col-12 col-md-12 col-lg-12"
-                style="margin: 20px 0px;padding-top: 20px;" [style.border-bottom]="i !==beneficios.length-1?'1px solid #FFFFFF':'none'" [style.padding-bottom]="i !==beneficios.length-1?'30px':'0px'">
-                
-                <div *ngIf="item.version!='Sin Version'" class="carsTitleBeneficiosPrograma">
-                  <img src="../../../assets/imagenes/Flecha-azul.png" alt="" height="20px">
-                  {{item.version+':'}}
-                </div>
-                
-                <div class="todoslosBeneficios" *ngIf="item.introduccion!=''">
-                  {{item.introduccion}}
-                </div>
-
-                <ng-container *ngFor="let content of item.contenido">
-                  <!-- <div class="todoslosBeneficios" *ngIf="content.idBeneficio==-1;else Beneficio">{{content.contenido}}</div> -->
-                  <div style="display: flex;gap: 5px;padding-left: 25px;margin-top: 15px;font-size: 18px;" *ngIf="content.idBeneficio>0">
-                    <div><img src="../../../assets/imagenes/check.png" alt="" height="20px"></div>
-                    <div>{{content.contenido}}</div>
+          <div class="col-12 col-md-12 col-lg-12" [ngStyle]="{'justify-content':beneficios.length>1 ? 'flex-start' : 'center','display':beneficios.length>1 ? 'initial' : 'flex'}">
+              <div *ngFor="let item of beneficios;let i=index">
+                <div class="col-12 col-md-12 col-lg-12"
+                  style="margin: 20px 0px;padding-top: 20px;" [style.border-bottom]="i !==beneficios.length-1?'1px solid #FFFFFF':'none'" [style.padding-bottom]="i !==beneficios.length-1?'30px':'0px'">
+                  <div *ngIf="item.version=='Sin Version'" class="carsTitleBeneficiosPrograma">
+                    El programa incluye los siguientes beneficios:
                   </div>
-                </ng-container>    
+              
+                  <div *ngIf="item.version!='Sin Version'" class="carsTitleBeneficiosPrograma">
+                    <img src="../../../assets/imagenes/Flecha-azul.png" alt="" height="20px">
+                    {{item.version+':'}}
+                  </div>
+              
+                  <div class="todoslosBeneficios" *ngIf="item.introduccion!=''">
+                    {{item.introduccion}}
+                  </div>
+                  <ng-container *ngFor="let content of item.contenido">
+                    <!-- <div class="todoslosBeneficios" *ngIf="content.idBeneficio==-1;else Beneficio">{{content.contenido}}</div> -->
+                    <div style="display: flex;gap: 5px;padding-left: 25px;margin-top: 15px;font-size: 18px;" *ngIf="content.idBeneficio>0">
+                      <div><img src="../../../assets/imagenes/check.png" alt="" height="20px"></div>
+                      <div>{{content.contenido}}</div>
+                    </div>
+                  </ng-container>
+                </div>
               </div>
-            </ng-container>
           </div>
 
           <div class="col-12">
