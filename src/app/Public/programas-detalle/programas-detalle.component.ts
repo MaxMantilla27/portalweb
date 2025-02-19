@@ -174,7 +174,8 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
     nombreSubArea: '',
     subAreaDescripcion: '',
     tituloHtml: '',
-    idPartner:0
+    idPartner:0,
+    urlVideoIntroduccion:''
   };
   public idBr=''
   public seccion: listaSeccionPrograma = {
@@ -295,6 +296,7 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
     { id: 6, ref: 'inversion', nombre: 'Inversión' }
   ];
 
+  public ExisteVideoIntroduccion: boolean = false;
 
   @HostListener('window:scroll', [])
     onWindowScroll() {
@@ -580,6 +582,7 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
 
             }
             this.cabecera = x.programaCabeceraDetalleDTO;
+
             console.log(this.cabecera)
             this.parametroSeo = x.programaCabeceraDetalleDTO.parametroSeoProgramaDTO;
             if(this.cabecera.tituloHtml!=null){
@@ -608,6 +611,13 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
                 'https://img.bsginstitute.com/repositorioweb/img/partners/' +
                 x.programaCabeceraDetalleDTO.imgPrincipal;
             };
+
+            if (x.programaCabeceraDetalleDTO.urlVideoIntroduccion !== null) {
+              this.cabecera.urlVideoIntroduccion;
+              this.ExisteVideoIntroduccion = true;
+              console.log("Entro:"+this.cabecera.urlVideoIntroduccion);
+            }
+
             // setTimeout(() => {
             //   if(this.contenidoTOp.nativeElement.offsetHeight>360){
             //     var min=this.contentLeft.nativeElement.offsetHeight*1+((this.contenidoTOp.nativeElement.offsetHeight-360)*2)

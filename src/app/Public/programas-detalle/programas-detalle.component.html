@@ -140,7 +140,7 @@
     </div>
     <div class="container">
       <div class="row rowpadd">
-        <div  #contentLeft  class="contentLeft col-12" [ngClass]="{'col-md-6 col-lg-6': ExisteVideo, 'col-md-12 col-lg-12 paddingNoVideo':!ExisteVideo}"> 
+        <div  #contentLeft  class="contentLeft col-12" [ngClass]="{'col-md-6 col-lg-6': ExisteVideoIntroduccion, 'col-md-12 col-lg-12 paddingNoVideo':!ExisteVideoIntroduccion}"> 
           <div class="contentTop">
             <div #contenidoTOp style="background: transparent;position: relative;padding: 10px 0px;">
               <div style="line-height: 120%;" [innerHtml]="cabecera.tituloHtml | safeHtml" class="titlePrograma"></div>
@@ -159,11 +159,11 @@
               </div>
               <div class="contentRigth col-12 col-md-6 col-lg-6" style="margin-top: 5%;" *ngIf="innerWidth < 768 ">
                 <ng-container *ngIf="idBusqueda!=7569">
-                  <!-- <div style="padding-bottom: 30px;" class="col-12 col-md-12 col-lg-12"
-                  *ngIf="ExisteVideo==true">
-                    <iframe #myIframe id="cartoonVideoVistaPrevia" [src]="VistaPreviaPortal | safe"
+                  <div style="padding-bottom: 30px;" class="col-12 col-md-12 col-lg-12"
+                  *ngIf="ExisteVideoIntroduccion==true">
+                    <iframe #myIframe id="cartoonVideoVistaPrevia" [src]="cabecera.urlVideoIntroduccion | safe"
                     class="embed-responsive-item" style="width: 100%; height: 100%;aspect-ratio: 16/9; border: none;"></iframe>
-                  </div> -->
+                  </div>
                 </ng-container>
               </div>
               <div style="margin-top: 25px;">
@@ -176,13 +176,13 @@
                 </div>
             </div>
             <div class="row">
-              <div class="col-12" [ngClass]="{'col-md-6 col-lg-6': ExisteVideo, 'col-md-6 col-lg-4':!ExisteVideo}">
+              <div class="col-12" [ngClass]="{'col-md-6 col-lg-6': ExisteVideoIntroduccion, 'col-md-6 col-lg-4':!ExisteVideoIntroduccion}">
                 <app-default-button-flecha [confs]="{color:'primary',titulo:'Matricularme Ahora'}"
                   [style]="'width: 100%;border-radius:20px;padding: 8px 0px;font-size: 18px;'"
                   (ButtoclClick)="EventoInteraccionButton('Matricularme Ahora');OpenModalPago()"
                   [disabled]="cabecera.listProgramaEspecificoInformacionDTO.length==0"></app-default-button-flecha>
               </div>
-              <div class="col-12" [ngClass]="{'col-md-6 col-lg-6': ExisteVideo, 'col-md-6 col-lg-4':!ExisteVideo}" *ngIf="esAonline==true">
+              <div class="col-12" [ngClass]="{'col-md-6 col-lg-6': ExisteVideoIntroduccion, 'col-md-6 col-lg-4':!ExisteVideoIntroduccion}" *ngIf="esAonline==true">
                 <app-default-button-flecha [confs]="{color:'verde',titulo:'Acceso de prueba gratis'}"
                   [style]="'width: 100%;border-radius:20px;padding: 8px 0px;font-size: 18px;'"
                   (ButtoclClick)="EventoInteraccionButton('Acceso de prueba gratis');RegistrarProgramaPrueba()"></app-default-button-flecha>
@@ -191,11 +191,11 @@
           </div>
         </div>
         </div>
-        <ng-container *ngIf="ExisteVideo">
+        <ng-container *ngIf="ExisteVideoIntroduccion">
           <div class="contentRigth col-12 col-md-6 col-lg-6" style="margin-top: 5%;" *ngIf="innerWidth >= 768 ">
             <ng-container *ngIf="idBusqueda!=7569">
               <div style="padding-bottom: 30px;" class="col-12 col-md-12 col-lg-12">
-                <iframe #myIframe id="cartoonVideoVistaPrevia" [src]="VistaPreviaPortal | safe"
+                <iframe #myIframe id="cartoonVideoVistaPrevia" [src]="cabecera.urlVideoIntroduccion | safe"
                 class="embed-responsive-item" style="width: 100%; height: 100%;aspect-ratio: 16/9; border: none;"></iframe>
               </div>
             </ng-container>
