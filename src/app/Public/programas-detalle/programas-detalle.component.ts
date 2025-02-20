@@ -613,9 +613,10 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
             };
 
             if (x.programaCabeceraDetalleDTO.urlVideoIntroduccion !== null) {
-              this.cabecera.urlVideoIntroduccion;
-              this.ExisteVideoIntroduccion = true;
-              console.log("Entro:"+this.cabecera.urlVideoIntroduccion);
+
+              if (this.cabecera.urlVideoIntroduccion?.toLowerCase().includes('.vimeo')) {
+                this.ExisteVideoIntroduccion = true;
+              }
             }
 
             // setTimeout(() => {
@@ -1446,9 +1447,6 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
           console.log(x)
           if (x.listaBeneficioProgramaDTO !== null || x.listaBeneficioProgramaDTO !== 'null') {
             this.blogsRelacionados=x.listaBlogRelacionadoDTO;
-            console.log(this.blogsRelacionados)
-          }else{
-            this.blogsRelacionados = ['hola']
             console.log(this.blogsRelacionados)
           }
         },
