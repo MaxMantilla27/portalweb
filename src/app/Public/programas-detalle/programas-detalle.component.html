@@ -31,7 +31,7 @@
             <div id="FormularioProgramasInsert">
               <div class="estructuraProgramForm" style="position: relative;">
                 <div class="cerrarFormularioAbsolute">
-                  <img src="../../../assets/imagenes/cerrar.png" alt="" height="20px" (click)="cerrarFormularioAbsolute()">
+                  <img src="../../../assets/imagenes/cerrar.png" alt="cerrar" height="20px" (click)="cerrarFormularioAbsolute()">
                 </div>
                 <app-cargando *ngIf="statuscharge==true"></app-cargando>
                 <div class="cotentestructuraProgramForm">
@@ -169,7 +169,7 @@
                 </ng-container>
               </div>
               <div style="margin-top: 25px;">
-                <div style="display: flex ;align-items: flex-start;gap: 5px;" *ngIf="cabecera.imgPrincipal!='https://img.bsginstitute.com/repositorioweb/img/partners/Sin Partner' && cabecera.imgPrincipal != null ">
+                <div style="display: flex ;align-items: flex-start;gap: 15px;" *ngIf="cabecera.imgPrincipal!='https://img.bsginstitute.com/repositorioweb/img/partners/Sin Partner' && cabecera.imgPrincipal != null ">
                     <div style="font-size: 18px;font-weight: 700;">Partner: </div> 
                     <div *ngIf="cabecera.imgPrincipal!='https://img.bsginstitute.com/repositorioweb/img/partners/Sin Partner' && cabecera.imgPrincipal != null "
                       style="position: relative;margin-top: 10px;text-align: left;margin-bottom: 40px; flex: 1;">
@@ -219,7 +219,7 @@
       </div> -->
       <div class="infoClave" style="border-right: 1px solid #D7C282;">
         <div class="infoClaveImg">
-          <img src="../../../assets/imagenes/modalidad.png" alt="">
+          <img src="../../../assets/imagenes/modalidad.png" alt="modalidad">
         </div>
         <div class="infoContainer">
           <div class="infoClaveNombre">Modalidad</div>
@@ -237,21 +237,27 @@
       </div>
       <div class="infoClave" style="border-right: 1px solid #D7C282;">
         <div class="infoClaveImg">
-          <img src="../../../assets/imagenes/fecha-de-inicio.png" alt="">
+          <img src="../../../assets/imagenes/fecha-de-inicio.png" alt="fecha-de-inicio">
         </div>
         <div class="infoContainer">
           <div class="infoClaveNombre">Fecha de inicio</div>
-          <div *ngFor="let item of cabecera.listProgramaEspecificoInformacionDTO" class=" infoClaveValor ">
-            <ng-container *ngIf="item.fechaInicioTexto">
-              {{item.fechaInicioTexto}}
-            </ng-container>
-            <!-- <div class="infoProgramText">{{item.fechaInicioTexto}}</div> -->
-          </div>
+          <ng-container *ngIf="cabecera.listProgramaEspecificoInformacionDTO.length > 0">
+            <div *ngFor="let item of cabecera.listProgramaEspecificoInformacionDTO" class=" infoClaveValor ">
+              <ng-container *ngIf="item.fechaInicioTexto;">
+                {{item.fechaInicioTexto}}
+              </ng-container>
+              <ng-template></ng-template>
+              <!-- <div class="infoProgramText">{{item.fechaInicioTexto}}</div> -->
+            </div>
+          </ng-container>
+          <ng-template #fechainicio>
+            No hay una Fecha de inicio
+          </ng-template>
         </div>
       </div>
       <div class="infoClave" style="border-right: 1px solid #D7C282;">
         <div class="infoClaveImg">
-          <img src="../../../assets/imagenes/duracion.png" alt="">
+          <img src="../../../assets/imagenes/duracion.png" alt="duracion">
         </div>
         <div class="infoContainer">
           <div class="infoClaveNombre">Duración</div>
@@ -260,7 +266,7 @@
       </div>
       <div class="infoClave">
         <div class="infoClaveImg">
-          <img src="../../../assets/imagenes/horas-de-clases.png" alt="">
+          <img src="../../../assets/imagenes/horas-de-clases.png" alt="horas-de-clases">
         </div>
         <div class="infoContainer">
           <div class="infoClaveNombre">Horas de clases</div>
@@ -282,7 +288,7 @@
       <div class="row rowpadd">
         <div class="col-12 col-md-8 col-lg-8 containerObjetivos">
           <div class="col-12 tituloSeccionPrograma">
-            <img src="../../../assets/imagenes/Objetivos.png" alt="" height="50px">
+            <img src="../../../assets/imagenes/Objetivos.png" alt="objetivos" height="50px">
             <div>Objetivos</div>
           </div>
           <div class="col-12" style="margin-top: 20px;">
@@ -442,7 +448,7 @@
           <div class="containerObjetivoRequisitos">
               <div class="cardInformacionPrograma">
                 <div class="col-12 tituloSeccionPrograma" style="justify-content: center;">
-                  <img src="../../../assets/imagenes/Publico-Objetivo.png" alt="" height="50px">
+                  <img src="../../../assets/imagenes/Publico-Objetivo.png" alt="publico-objetivo" height="50px">
                   <div>Publico Objetivo</div>
                 </div>
                 <div class="puntoListaPublicoObjetivo" [innerHtml]="seccion.publicoObjetivo | safeHtml" style="text-align: left;
@@ -451,7 +457,7 @@
               </div>
               <div class="cardInformacionPrograma">
                 <div class="col-12 tituloSeccionPrograma" style="justify-content: center;">
-                  <img src="../../../assets/imagenes/prerequisitos.png" alt="" height="50px">
+                  <img src="../../../assets/imagenes/prerequisitos.png" alt="prerequisitos" height="50px">
                   <div>Prerequisitos</div>
                 </div>
                 <div style="text-align: left;
@@ -481,7 +487,7 @@
       <div class="row rowpadd" style="justify-content: center;">
         <div class="row">
           <div class="col-12 tituloSeccionPrograma" style="justify-content: center;margin-bottom: 40px;">
-            <img src="../../../assets/imagenes/estructura-curricular.png" alt="" height="50px">
+            <img src="../../../assets/imagenes/estructura-curricular.png" alt="estructura-curricular" height="50px">
             <div>Estructura Curricular</div>
           </div>
         </div>
@@ -503,14 +509,14 @@
                       </div>
                     </div>
                     <div *ngIf="i==0" class="vistaPreviaButton" style="margin-left: auto;" (click)="OpenModal()">
-                      <img src="../../../assets/imagenes/Vista-previa.png" alt="" height="50px">
+                      <img src="../../../assets/imagenes/Vista-previa.png" alt="vista-previa" height="50px">
                     </div>
                   </div>
                 </mat-panel-title>
               </mat-expansion-panel-header>
                 <ul style="margin: 0px;padding-top:15px;padding-bottom: 10px;margin-left: 25px;color: #625530;list-style: none;" [ngStyle]="{'border-bottom': i == estructuraPrograma.length - 1 ? 'none' : '1px solid #FFFFFF'}">
                 <li *ngFor="let itemsubtitle of item.subTitulo" style="font-size: 17px;margin-bottom: 15px;display: flex;align-items: center;gap: 5px;">
-                  <img src="../../../assets/imagenes/check.png" alt="" height="20px">
+                  <img src="../../../assets/imagenes/check.png" alt="check" height="20px">
                   {{itemsubtitle.contenido}}
                 </li>
                 </ul>
@@ -522,12 +528,12 @@
     </div>
   </div>
   
-  <div style="background-color: white;">
+  <div style="background-color: white;" *ngIf="cabecera.listProgramaEspecificoInformacionDTO.length > 0   ">
     <div class="container">
       <div class="row rowpadd" style="justify-content: center;">
         <div class="row">
           <div class="col-12 tituloSeccionPrograma" style="justify-content: center;margin-bottom: 30px;color: #2087F5;">
-            <img src="../../../assets/imagenes/duracion-y-horarios.png" alt="" height="50px">
+            <img src="../../../assets/imagenes/duracion-y-horarios.png" alt="duracionhorarios" height="50px">
             <div >Duracion y Horarios</div>
           </div>
         </div>
@@ -570,7 +576,7 @@
 
         <div class="row">
           <div class="col-12 tituloSeccionPrograma" style="justify-content: center;">
-            <img src="../../../assets/imagenes/beneficios.png" alt="" height="50px">
+            <img src="../../../assets/imagenes/beneficios.png" alt="beneficios" height="50px">
             <div>Beneficios</div>
           </div>
         </div>
@@ -583,7 +589,7 @@
                   </div>
               
                   <div *ngIf="item.version!='Sin Version'" class="carsTitleBeneficiosPrograma">
-                    <img src="../../../assets/imagenes/Flecha-azul.png" alt="" height="20px">
+                    <img src="../../../assets/imagenes/Flecha-azul.png" alt="flecha-azul" height="20px">
                     {{item.version+':'}}
                   </div>
               
@@ -593,7 +599,7 @@
                   <ng-container *ngFor="let content of item.contenido">
                     <!-- <div class="todoslosBeneficios" *ngIf="content.idBeneficio==-1;else Beneficio">{{content.contenido}}</div> -->
                     <div style="display: flex;gap: 5px;padding-left: 25px;margin-top: 15px;font-size: 18px;" *ngIf="content.idBeneficio>0">
-                      <div><img src="../../../assets/imagenes/check.png" alt="" height="20px"></div>
+                      <div><img src="../../../assets/imagenes/check.png" alt="check" height="20px"></div>
                       <div>{{content.contenido}}</div>
                     </div>
                   </ng-container>
@@ -613,7 +619,7 @@
     <div *ngIf="certificadoVacio==false" class="row rowpadd">
       <div class="row">
         <div class="col-12 tituloSeccionPrograma" style="justify-content: center;color:#017EFF;margin-bottom: 25px;">
-          <img src="../../../assets/imagenes/certficacion.png" alt="" height="50px">
+          <img src="../../../assets/imagenes/certficacion.png" alt="certificacion" height="50px">
           <div>Certificación</div>
         </div>
       </div>  
@@ -625,7 +631,7 @@
           <div style="font-size: 18px;margin-bottom: 20px;" *ngIf="certificado.cabecera != ''">{{certificado.cabecera}}</div>
           <div style="display: flex;flex-direction: column;justify-content: center;">
             <div style="display: flex;gap: 5px;padding-left: 25px;margin-top: 15px;font-size: 18px;" *ngFor="let item of certificado.contenido">
-                <img src="../../../assets/imagenes/check.png" alt="" height="20px">
+                <img src="../../../assets/imagenes/check.png" alt="check" height="20px">
                 <div>{{item}}</div>
             </div>
           </div>
@@ -711,7 +717,7 @@
         <div class="col-12 col-md-12 col-lg-12 tabprogram">
           <div class="row">
             <div class="col-12 tituloSeccionPrograma" style="justify-content: center;margin-bottom: 30px;">
-              <img src="../../../assets/imagenes/inversion.png" alt="" height="50px">
+              <img src="../../../assets/imagenes/inversion.png" alt="inversion" height="50px">
               <div>Inversión</div>
             </div>
           </div>
@@ -770,7 +776,7 @@
         <div class="col-12 col-md-12 col-lg-12 tabprogram">
           <div class="row">
             <div class="col-12 tituloSeccionPrograma" style="justify-content: center;margin-bottom: 30px;color: #017EFF;margin-top: 20px;">
-              <img src="../../../assets/imagenes/modalidades-de-pago.png" alt="" height="50px">
+              <img src="../../../assets/imagenes/modalidades-de-pago.png" alt="modalidadespago" height="50px">
               <div>Modalidades de pago</div>
             </div>
           
@@ -867,7 +873,7 @@
 
         <ng-container *ngIf="programasRelacionados && programasRelacionados.length>0">
           <div class="col-12 tituloSeccionPrograma" style="justify-content: center;margin-bottom: 30px;color: #017EFF;">
-            <img src="../../../assets/imagenes/programas-relaciones.png" alt="" height="50px">
+            <img src="../../../assets/imagenes/programas-relaciones.png" alt="programas-relaciones" height="50px">
             <div>Programas Relacionados</div>
           </div>
   
@@ -880,7 +886,7 @@
 
         <ng-container *ngIf="blogsRelacionados && blogsRelacionados.length > 0">
           <div class="col-12 tituloSeccionPrograma" style="justify-content: center;margin-bottom: 30px;color: #017EFF;">
-            <img src="../../../assets/imagenes/programas-relaciones.png" alt="" height="50px">
+            <img src="../../../assets/imagenes/programas-relaciones.png" alt="programas-relacionados" height="50px">
             <div>Contenidos Relacionados</div>
           </div>
           <ng-container *ngFor="let item of blogsRelacionados;let i=index">
@@ -891,7 +897,7 @@
         </ng-container>
 
         <div class="col-12 tituloSeccionPrograma" style="justify-content: center;margin-bottom: 30px;color: #017EFF;">
-          <img src="../../../assets/imagenes/tags.png" alt="" height="50px">
+          <img src="../../../assets/imagenes/tags.png" alt="tags" height="50px">
           <div>Tags</div>
         </div>
 
