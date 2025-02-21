@@ -6,10 +6,12 @@
     </div>
   </div>
   <div class="fixed-navbar" [style.display]="isScrolled ? 'flex' : 'none'">
-    <div style="width: 80%;display: flex;justify-content: space-between;">
+    <div class="contenedor-navegacion-seccion">
         <div>
-            <div class="tituloHeaderPrograma" style="line-height: 120%;" [innerHTML]="cabecera.tituloHtml|safeHtml"> 
-            </div>
+            <ng-container *ngIf="innerWidth > 1000">
+              <div class="tituloHeaderPrograma" style="line-height: 120%;" [innerHTML]="cabecera.tituloHtml|safeHtml">
+              </div>
+            </ng-container>
             <ul>
                 <ng-container *ngFor="let seccion of secciones">
                 <li>
@@ -18,7 +20,7 @@
               </ng-container>
             </ul>
         </div>
-        <div class="containerMasInformacion">
+        <div class="containerMasInformacion" *ngIf="innerWidth > 1000">
             <app-default-button-flecha [confs]="{color:'primary',titulo:'Más información'}"
                   [style]="'width: 100%;border-radius:12px;padding: 2px 35px;font-size: 16px;margin-bottom:0px;'"
                   (ButtoclClick)="cloneFormulario()"
