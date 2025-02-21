@@ -600,9 +600,9 @@
   }
 
   .contenedor-navegacion-seccion{
-    width: 95%;
+    width: 95% !important;
     overflow-x: auto; /* Permite el desplazamiento horizontal */
-    white-space: nowrap; /* Evita que los elementos se envuelvan */
+    
     -ms-overflow-style: none; /* Oculta la barra de desplazamiento en Edge/IE */
     scrollbar-width: none; /* Oculta la barra de desplazamiento en Firefox */
   }
@@ -628,6 +628,7 @@
   text-decoration: underline;
   align-items: center;
   gap: 2px;
+  //white-space: nowrap; /* Evita que los elementos se envuelvan */
 }
 
 .puntoListaObjetivos ul,
@@ -904,7 +905,7 @@
     width: 80%;
     display: flex;
     justify-content: space-between;
-    white-space: nowrap;
+    //white-space: nowrap;
    }
 
    ul {
@@ -928,7 +929,7 @@
      display: block;
      font-weight: bold;
      font-size: 14px;
-     text-wrap: no-wrap;
+     white-space: nowrap;
 
      &:hover,
      &.active {
