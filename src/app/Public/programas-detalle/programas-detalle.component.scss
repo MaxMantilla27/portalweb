@@ -599,10 +599,15 @@
     padding: 0px;
   }
 
+  .contenedor-navegacion-seccion{
+    width: 95%;
+    overflow-x: auto; /* Permite el desplazamiento horizontal */
+    white-space: nowrap; /* Evita que los elementos se envuelvan */
+    -ms-overflow-style: none; /* Oculta la barra de desplazamiento en Edge/IE */
+    scrollbar-width: none; /* Oculta la barra de desplazamiento en Firefox */
+  }
 
 }
-
-
 
 .cardInformacionPrograma{
 
@@ -895,6 +900,13 @@
    justify-content: center;
    display: none;
 
+   .contenedor-navegacion-seccion{
+    width: 80%;
+    display: flex;
+    justify-content: space-between;
+    white-space: nowrap;
+   }
+
    ul {
      list-style: none;
      margin: 0;
@@ -916,7 +928,8 @@
      display: block;
      font-weight: bold;
      font-size: 14px;
-     
+     text-wrap: no-wrap;
+
      &:hover,
      &.active {
        background-color: #F2F5FA;

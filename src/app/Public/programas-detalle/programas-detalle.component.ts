@@ -174,7 +174,8 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
     nombreSubArea: '',
     subAreaDescripcion: '',
     tituloHtml: '',
-    idPartner:0
+    idPartner:0,
+    urlVideoIntroduccion:''
   };
   public idBr=''
   public seccion: listaSeccionPrograma = {
@@ -295,6 +296,7 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
     { id: 6, ref: 'inversion', nombre: 'Inversión' }
   ];
 
+  public ExisteVideoIntroduccion: boolean = false;
 
   @HostListener('window:scroll', [])
     onWindowScroll() {
@@ -304,14 +306,14 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
       if (element) {
         const elementTop = element.getBoundingClientRect().top + window.scrollY;
         const elementBottom = elementTop + element.offsetHeight;
-        if (offset >= elementTop - 130 && offset < elementBottom - 130 && this.innerWidth>=1000) { // Ajusta el valor según la altura de la barra de navegación fija  
+        if (offset >= elementTop - 130 && offset < elementBottom - 130) { // Ajusta el valor según la altura de la barra de navegación fija  
           this._HelperServiceP.enviarScrollHeaderPrograma(offset >= elementTop - 130);
           this.activateSeccion = seccion.ref;
           if (this.activateSeccion === 'inversion') {
             const absoluteFormulario = document.getElementById('absoluteFormulario') as HTMLElement
             absoluteFormulario.style.display = 'none';
           }
-        } else if (seccion.ref === 'objetivos' && offset < elementTop - 130 && this.innerWidth>=1000) {
+        } else if (seccion.ref === 'objetivos' && offset < elementTop - 130) {
           this._HelperServiceP.enviarScrollHeaderPrograma(false);
         }
       }
@@ -321,9 +323,9 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
   @HostListener('window:resize')
   onResize() {
     this.innerWidth = window.innerWidth; 
-    if (this.innerWidth < 1000) {
-      this._HelperServiceP.enviarScrollHeaderPrograma(false);
-    }
+    // if (this.innerWidth < 1000) {
+    //   this._HelperServiceP.enviarScrollHeaderPrograma(false);
+    // }
   }
 
   ngOnInit(): void {
@@ -580,6 +582,7 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
 
             }
             this.cabecera = x.programaCabeceraDetalleDTO;
+
             console.log(this.cabecera)
             this.parametroSeo = x.programaCabeceraDetalleDTO.parametroSeoProgramaDTO;
             if(this.cabecera.tituloHtml!=null){
@@ -608,6 +611,14 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
                 'https://img.bsginstitute.com/repositorioweb/img/partners/' +
                 x.programaCabeceraDetalleDTO.imgPrincipal;
             };
+
+            if (x.programaCabeceraDetalleDTO.urlVideoIntroduccion !== null) {
+
+              if (this.cabecera.urlVideoIntroduccion?.toLowerCase().includes('.vimeo')) {
+                this.ExisteVideoIntroduccion = true;
+              }
+            }
+
             // setTimeout(() => {
             //   if(this.contenidoTOp.nativeElement.offsetHeight>360){
             //     var min=this.contentLeft.nativeElement.offsetHeight*1+((this.contenidoTOp.nativeElement.offsetHeight-360)*2)
@@ -1436,9 +1447,6 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
           console.log(x)
           if (x.listaBeneficioProgramaDTO !== null || x.listaBeneficioProgramaDTO !== 'null') {
             this.blogsRelacionados=x.listaBlogRelacionadoDTO;
-            console.log(this.blogsRelacionados)
-          }else{
-            this.blogsRelacionados = ['hola']
             console.log(this.blogsRelacionados)
           }
         },

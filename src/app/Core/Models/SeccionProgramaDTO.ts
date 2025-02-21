@@ -9,7 +9,8 @@ export interface programaCabeceraDetalleDTO{
   subAreaDescripcion:string,
   tituloHtml:string,
   listProgramaEspecificoInformacionDTO:Array<listProgramaEspecificoInformacionDTO>,
-  idPartner:any
+  idPartner:any,
+  urlVideoIntroduccion?:string
 }
 export interface listaSeccionPrograma{
   duracionHorario:string,
