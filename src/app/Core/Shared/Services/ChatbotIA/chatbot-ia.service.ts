@@ -22,7 +22,7 @@ export class ChatbotIAService {
   public EnviarMensajeBot(registroChar: RegistroChatbotIADTO):Observable<any>{
     if(this.isBrowser){
       return this.http.post<string>(this.urlBase+'/InteractuarHiloChat', {
-        'IdChatbotIAPortalHiloChat': registroChar.IdChatbotIAPortalHiloChat,
+        'IdChatbotPortalHiloChat': registroChar.IdChatbotPortalHiloChat,
         'Mensaje' : registroChar.Mensaje,
         'Cerrado' : registroChar.Cerrado,
         'Derivado' : registroChar.Derivado,
@@ -61,16 +61,16 @@ export class ChatbotIAService {
       return EMPTY;
     }
   }
-  public ActualizarIdAreaDerivacionHiloChat(IdChatbotIAPortalHiloChat:number,IdAreaDerivacion:number):Observable<any>{
+  public ActualizarCodigoAreaDerivacionHiloChat(IdChatbotPortalHiloChat:number,CodigoAreaDerivacion:number):Observable<any>{
     if(this.isBrowser){
-      return this.http.post<any>(this.urlBase+'/ActualizarIdAreaDerivacionHiloChat?IdChatbotIAPortalHiloChat='+IdChatbotIAPortalHiloChat+'&IdAreaDerivacion='+IdAreaDerivacion,{});
+      return this.http.post<any>(this.urlBase+'/ActualizarCodigoAreaDerivacionHiloChat?IdChatbotPortalHiloChat='+IdChatbotPortalHiloChat+'&CodigoAreaDerivacion='+CodigoAreaDerivacion,{});
     }else{
       return EMPTY;
     }
   }
-  public CerrarRegistroHiloChat(IdChatbotIAPortalHiloChat:number,IdContactoPortalSegmento:string):Observable<any>{
+  public CerrarRegistroHiloChat(IdChatbotPortalHiloChat:number,IdContactoPortalSegmento:string):Observable<any>{
     if(this.isBrowser){
-      return this.http.post<any>(this.urlBase+'/CerrarRegistroHiloChat?IdChatbotIAPortalHiloChat='+IdChatbotIAPortalHiloChat+'&IdContactoPortalSegmento='+IdContactoPortalSegmento,{});
+      return this.http.post<any>(this.urlBase+'/CerrarRegistroHiloChat?IdChatbotPortalHiloChat='+IdChatbotPortalHiloChat+'&IdContactoPortalSegmento='+IdContactoPortalSegmento,{});
     }else{
       return EMPTY;
     }

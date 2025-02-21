@@ -65,17 +65,15 @@ export class ChatAtencionVentasComponent implements OnInit, OnChanges {
   IsOpen: EventEmitter<boolean> = new EventEmitter<boolean>();
   @Input() IdProgramageneral = 0;
   @Input() IdPespecificoPrograma = 0;
+  @Input() IdChatbotPortalHiloChat = 0;
+  @Input() IdChatAtencionClienteContacto = 0;
   public img = 'https://proceso-pago.bsginstitute.com/img-web/chatV2/';
   public Paso = 1;
   public Caso = 'A';
   public RecuperarContrasenaBit = false;
   public BotonDesactivado = false;
   public RegistroChatAtc: ChatAtencionClienteContactoRegistrarDTO = {
-    IdContactoPortalSegmento: '',
-    IdPGeneral: 0,
-    IdPEspecifico: 0,
-    IdAlumno: 0,
-    ChatIniciado: false,
+    IdChatbotPortalHiloChat: 0,
     FormularioEnviado: false,
     ChatFinalizado: false,
     IdOportunidad: 0,
@@ -102,7 +100,7 @@ export class ChatAtencionVentasComponent implements OnInit, OnChanges {
     IdFaseOportunidadPortal: '',
     IdMatriculaCabecera: 0,
   };
-  public IdChatAtencionClienteContacto = 0;
+  // public IdChatAtencionClienteContacto = 0;
   //Para LOGIN
   formVal: boolean = false;
   statuscharge = false;
@@ -164,9 +162,7 @@ export class ChatAtencionVentasComponent implements OnInit, OnChanges {
     }
   }
   ngOnInit(): void {
-    this.IdContactoPortalSegmento =
-      this._SessionStorageService.SessionGetValue('usuarioWeb');
-    console.log(this.IdContactoPortalSegmento);
+    console.log(this.IdChatAtencionClienteContacto);
     // this.routerSubscription = this._router.events.subscribe((event) => {
     //   if (event instanceof NavigationEnd) {
     //     console.log(event);
@@ -223,7 +219,8 @@ export class ChatAtencionVentasComponent implements OnInit, OnChanges {
     //     },
     //   });
     // console.log('INGRESA CABECERA 2');
-    this.ObtenerInformacionChat();
+    // this.ObtenerInformacionChat();
+    this.InformacionChatSinToken();
     // this.VerificarProgramasDetalle();
   }
   public VerificarProgramasDetalle(): void {
@@ -247,183 +244,252 @@ export class ChatAtencionVentasComponent implements OnInit, OnChanges {
     this.IsOpen.emit(state);
   }
   ObtenerInformacionChat() {
-    this.CargandoInformacion = true;
-    if (this._SessionStorageService.GetToken() != null) {
-      console.log(this._router.url);
-      // const urlSegments = this._router.url.split('/');
-      // let assignNext = false; // Variable para determinar si el siguiente segmento debe ser asignado
-
-      // for (let segment of urlSegments) {
-      //   console.log(segment);
-
-      //   if (assignNext) {
-      //     if (/^\d+$/.test(segment)) {
-      //       this.IdMatriculaCabecera = Number(segment);
-      //     }
-      //     break; // Salimos del bucle después de asignar o no el valor
-      //   }
-
-      //   if (segment === 'MisCursos') {
-      //     assignNext = true; // La próxima iteración asignará el valor si es un número
-      //   }
-      // }
-
-      console.log(this.IdMatriculaCabecera);
-      if (this.IdMatriculaCabecera == 0) {
-        this._ChatAtencionClienteService
-          .ObtenerCursosAlumnoMatriculado()
-          .pipe(takeUntil(this.signal$))
-          .subscribe({
-            next: (x) => {
-              console.log(x);
-              if (x.cursosHijo.length != 0) {
-                this.IdAlumno = x.cursosHijo[0].idAlumno;
-              }
-            },
-            complete: () => {
-              this._ChatAtencionClienteService
-                .ObtenerChatAtencionClienteContactoDetalle(
-                  this.IdContactoPortalSegmento,
-                  this.IdAlumno
-                )
-                .pipe(takeUntil(this.signal$))
-                .subscribe({
-                  next: (x) => {
-                    console.log(x);
-                    this.RegistroHistoricoUsuario = x;
-                  },
-                  complete: () => {
-                    if (this.RegistroHistoricoUsuario != null) {
-                      this.IdChatAtencionClienteContacto =
-                        this.RegistroHistoricoUsuario.idChatAtencionClienteContacto;
-                      this.Paso = this.RegistroHistoricoUsuario.pasoSiguiente;
-                      this.Caso = this.RegistroHistoricoUsuario.casoSiguiente;
-                      this.IdMatriculaCabecera =
-                        this.RegistroHistoricoUsuario.idMatriculaCabecera;
-                      this.EsSoporteTecnico =
-                        this.RegistroHistoricoUsuario.esSoporteTecnico;
-                      this.ChatSoporteTecnico =
-                        this.RegistroHistoricoUsuario.esSoporteTecnico;
-                      let ValorFormulario = 'false';
-                      if (
-                        this.RegistroHistoricoUsuario.idMatriculaCabecera ==
-                          0 &&
-                        this.RegistroHistoricoUsuario.casoActual == 'A'
-                      ) {
-                        this.InformacionChatSinToken();
-                      } else {
-                        if (
-                          this.RegistroHistoricoUsuario.formularioEnviado ==
-                          true
-                        ) {
-                          ValorFormulario = 'true';
-                        }
-                        // if (
-                        //   this._SessionStorageService.GetToken() != null &&
-                        //   this.Paso <= 2 &&
-                        //   this.Caso == 'B'
-                        // ) {
-                        //   this.CursosMatriculados();
-                        //   this.Paso = 2;
-                        //   this.Caso = 'B';
-                        // }
-                      }
-                      this._SessionStorageService.SessionSetValue(
-                        'ChatAcademicoIniciado',
-                        ValorFormulario
-                      );
-                    }
-                    // else {
-                    //   if (this.IdAlumno == 0) {
-                    //     this.InformacionChatSinToken();
-                    //   } else {
-                    //     this.Paso = 2;
-                    //     this.Caso = 'B';
-                    //     console.log('INGRESA 1');
-                    //     this.CursosMatriculados();
-                    //   }
-                    // }
-                  },
-                });
-            },
-          });
-      } else {
-        this._ChatAtencionClienteService
-          .ObtenerChatAtencionClienteContactoDetalleAcademico(
-            this.IdMatriculaCabecera
-          )
-          .pipe(takeUntil(this.signal$))
-          .subscribe({
-            next: (x) => {
-              console.log(x);
-              this.RegistroHistoricoUsuario = x;
-            },
-            complete: () => {
-              this.EsAcademico = true;
-              if (this.RegistroHistoricoUsuario == null) {
-                this.AcademicoDirecto = true;
-                this.Paso = 3;
-                this.Caso = 'B';
-              } else {
-                if (this.RegistroHistoricoUsuario.idMatriculaCabecera != 0) {
-                  console.log('pasa por aca');
-                  this.IdChatAtencionClienteContacto =
-                    this.RegistroHistoricoUsuario.idChatAtencionClienteContacto;
-                  this.IdChatAtencionClienteContacto =
-                    this.RegistroHistoricoUsuario.idChatAtencionClienteContacto;
-                  this.Paso = this.RegistroHistoricoUsuario.pasoSiguiente;
-                  this.Caso = this.RegistroHistoricoUsuario.casoSiguiente;
-                  this.IdMatriculaCabecera =
-                    this.RegistroHistoricoUsuario.idMatriculaCabecera;
-                  this.EsSoporteTecnico =
-                    this.RegistroHistoricoUsuario.esSoporteTecnico;
-                  this.ChatSoporteTecnico =
-                    this.RegistroHistoricoUsuario.esSoporteTecnico;
-                  let ValorFormulario = 'false';
-                  console.log(this.RegistroHistoricoUsuario.formularioEnviado);
-                  if (this.RegistroHistoricoUsuario.formularioEnviado == true) {
-                    ValorFormulario = 'true';
-                  }
-                  this._SessionStorageService.SessionSetValue(
-                    'ChatAcademicoIniciado',
-                    ValorFormulario
-                  );
-                  if (this.Paso == 2 && this.Caso == 'B') {
-                    console.log('INGRESA 2');
-                    this.CursosMatriculados();
-                  }
-                } else {
-                  this.IdChatAtencionClienteContacto =
-                    this.RegistroHistoricoUsuario.idChatAtencionClienteContacto;
-                  this.IdChatAtencionClienteContacto =
-                    this.RegistroHistoricoUsuario.idChatAtencionClienteContacto;
-                  this.Paso = this.RegistroHistoricoUsuario.pasoSiguiente;
-                  this.Caso = this.RegistroHistoricoUsuario.casoSiguiente;
-                  this.IdMatriculaCabecera =
-                    this.RegistroHistoricoUsuario.idMatriculaCabecera;
-                  this.ChatSoporteTecnico =
-                    this.RegistroHistoricoUsuario.esSoporteTecnico;
-                  this.EsSoporteTecnico =
-                    this.RegistroHistoricoUsuario.esSoporteTecnico;
-                }
-              }
-            },
-          });
-      }
-    } else {
-      this.InformacionChatSinToken();
-    }
-    if (this.IdMatriculaCabecera != 0) {
-      this.ObtenerCoordinadorMatricula();
-    }
-    this.CargandoInformacion = false;
+    // this._ChatAtencionClienteService
+    //       .ObtenerCursosAlumnoMatriculado()
+    //       .pipe(takeUntil(this.signal$))
+    //       .subscribe({
+    //         next: (x) => {
+    //           console.log(x);
+    //           if (x.cursosHijo.length != 0) {
+    //             this.IdAlumno = x.cursosHijo[0].idAlumno;
+    //           }
+    //         },
+    //         complete: () => {
+    //           this._ChatAtencionClienteService
+    //             .ObtenerChatAtencionClienteContactoDetalle(
+    //               this.IdChatbotPortalHiloChat
+    //             )
+    //             .pipe(takeUntil(this.signal$))
+    //             .subscribe({
+    //               next: (x) => {
+    //                 console.log(x);
+    //                 this.RegistroHistoricoUsuario = x;
+    //               },
+    //               complete: () => {
+    //                 if (this.RegistroHistoricoUsuario != null) {
+    //                   this.IdChatAtencionClienteContacto =
+    //                     this.RegistroHistoricoUsuario.idChatAtencionClienteContacto;
+    //                   this.Paso = this.RegistroHistoricoUsuario.pasoSiguiente;
+    //                   this.Caso = this.RegistroHistoricoUsuario.casoSiguiente;
+    //                   this.IdMatriculaCabecera =
+    //                     this.RegistroHistoricoUsuario.idMatriculaCabecera;
+    //                   this.EsSoporteTecnico =
+    //                     this.RegistroHistoricoUsuario.esSoporteTecnico;
+    //                   this.ChatSoporteTecnico =
+    //                     this.RegistroHistoricoUsuario.esSoporteTecnico;
+    //                   let ValorFormulario = 'false';
+    //                   if (
+    //                     this.RegistroHistoricoUsuario.idMatriculaCabecera ==
+    //                       0 &&
+    //                     this.RegistroHistoricoUsuario.casoActual == 'A'
+    //                   ) {
+    //                     this.InformacionChatSinToken();
+    //                   } else {
+    //                     if (
+    //                       this.RegistroHistoricoUsuario.formularioEnviado ==
+    //                       true
+    //                     ) {
+    //                       ValorFormulario = 'true';
+    //                     }
+    //                     // if (
+    //                     //   this._SessionStorageService.GetToken() != null &&
+    //                     //   this.Paso <= 2 &&
+    //                     //   this.Caso == 'B'
+    //                     // ) {
+    //                     //   this.CursosMatriculados();
+    //                     //   this.Paso = 2;
+    //                     //   this.Caso = 'B';
+    //                     // }
+    //                   }
+    //                   this._SessionStorageService.SessionSetValue(
+    //                     'ChatAcademicoIniciado',
+    //                     ValorFormulario
+    //                   );
+    //                 }
+    //                 // else {
+    //                 //   if (this.IdAlumno == 0) {
+    //                 //     this.InformacionChatSinToken();
+    //                 //   } else {
+    //                 //     this.Paso = 2;
+    //                 //     this.Caso = 'B';
+    //                 //     console.log('INGRESA 1');
+    //                 //     this.CursosMatriculados();
+    //                 //   }
+    //                 // }
+    //               },
+    //             });
+    //         },
+    //       });
+    // this.CargandoInformacion = true;
+    // if (this._SessionStorageService.GetToken() != null) {
+    //   console.log(this._router.url);
+    //   // const urlSegments = this._router.url.split('/');
+    //   // let assignNext = false; // Variable para determinar si el siguiente segmento debe ser asignado
+    //   // for (let segment of urlSegments) {
+    //   //   console.log(segment);
+    //   //   if (assignNext) {
+    //   //     if (/^\d+$/.test(segment)) {
+    //   //       this.IdMatriculaCabecera = Number(segment);
+    //   //     }
+    //   //     break; // Salimos del bucle después de asignar o no el valor
+    //   //   }
+    //   //   if (segment === 'MisCursos') {
+    //   //     assignNext = true; // La próxima iteración asignará el valor si es un número
+    //   //   }
+    //   // }
+    //   console.log(this.IdMatriculaCabecera);
+    //   if (this.IdMatriculaCabecera == 0) {
+    //     this._ChatAtencionClienteService
+    //       .ObtenerCursosAlumnoMatriculado()
+    //       .pipe(takeUntil(this.signal$))
+    //       .subscribe({
+    //         next: (x) => {
+    //           console.log(x);
+    //           if (x.cursosHijo.length != 0) {
+    //             this.IdAlumno = x.cursosHijo[0].idAlumno;
+    //           }
+    //         },
+    //         complete: () => {
+    //           this._ChatAtencionClienteService
+    //             .ObtenerChatAtencionClienteContactoDetalle(
+    //               this.IdContactoPortalSegmento,
+    //               this.IdAlumno
+    //             )
+    //             .pipe(takeUntil(this.signal$))
+    //             .subscribe({
+    //               next: (x) => {
+    //                 console.log(x);
+    //                 this.RegistroHistoricoUsuario = x;
+    //               },
+    //               complete: () => {
+    //                 if (this.RegistroHistoricoUsuario != null) {
+    //                   this.IdChatAtencionClienteContacto =
+    //                     this.RegistroHistoricoUsuario.idChatAtencionClienteContacto;
+    //                   this.Paso = this.RegistroHistoricoUsuario.pasoSiguiente;
+    //                   this.Caso = this.RegistroHistoricoUsuario.casoSiguiente;
+    //                   this.IdMatriculaCabecera =
+    //                     this.RegistroHistoricoUsuario.idMatriculaCabecera;
+    //                   this.EsSoporteTecnico =
+    //                     this.RegistroHistoricoUsuario.esSoporteTecnico;
+    //                   this.ChatSoporteTecnico =
+    //                     this.RegistroHistoricoUsuario.esSoporteTecnico;
+    //                   let ValorFormulario = 'false';
+    //                   if (
+    //                     this.RegistroHistoricoUsuario.idMatriculaCabecera ==
+    //                       0 &&
+    //                     this.RegistroHistoricoUsuario.casoActual == 'A'
+    //                   ) {
+    //                     this.InformacionChatSinToken();
+    //                   } else {
+    //                     if (
+    //                       this.RegistroHistoricoUsuario.formularioEnviado ==
+    //                       true
+    //                     ) {
+    //                       ValorFormulario = 'true';
+    //                     }
+    //                     // if (
+    //                     //   this._SessionStorageService.GetToken() != null &&
+    //                     //   this.Paso <= 2 &&
+    //                     //   this.Caso == 'B'
+    //                     // ) {
+    //                     //   this.CursosMatriculados();
+    //                     //   this.Paso = 2;
+    //                     //   this.Caso = 'B';
+    //                     // }
+    //                   }
+    //                   this._SessionStorageService.SessionSetValue(
+    //                     'ChatAcademicoIniciado',
+    //                     ValorFormulario
+    //                   );
+    //                 }
+    //                 // else {
+    //                 //   if (this.IdAlumno == 0) {
+    //                 //     this.InformacionChatSinToken();
+    //                 //   } else {
+    //                 //     this.Paso = 2;
+    //                 //     this.Caso = 'B';
+    //                 //     console.log('INGRESA 1');
+    //                 //     this.CursosMatriculados();
+    //                 //   }
+    //                 // }
+    //               },
+    //             });
+    //         },
+    //       });
+    //   } else {
+    //     this._ChatAtencionClienteService
+    //       .ObtenerChatAtencionClienteContactoDetalleAcademico(
+    //         this.IdMatriculaCabecera
+    //       )
+    //       .pipe(takeUntil(this.signal$))
+    //       .subscribe({
+    //         next: (x) => {
+    //           console.log(x);
+    //           this.RegistroHistoricoUsuario = x;
+    //         },
+    //         complete: () => {
+    //           this.EsAcademico = true;
+    //           if (this.RegistroHistoricoUsuario == null) {
+    //             this.AcademicoDirecto = true;
+    //             this.Paso = 3;
+    //             this.Caso = 'B';
+    //           } else {
+    //             if (this.RegistroHistoricoUsuario.idMatriculaCabecera != 0) {
+    //               console.log('pasa por aca');
+    //               this.IdChatAtencionClienteContacto =
+    //                 this.RegistroHistoricoUsuario.idChatAtencionClienteContacto;
+    //               this.IdChatAtencionClienteContacto =
+    //                 this.RegistroHistoricoUsuario.idChatAtencionClienteContacto;
+    //               this.Paso = this.RegistroHistoricoUsuario.pasoSiguiente;
+    //               this.Caso = this.RegistroHistoricoUsuario.casoSiguiente;
+    //               this.IdMatriculaCabecera =
+    //                 this.RegistroHistoricoUsuario.idMatriculaCabecera;
+    //               this.EsSoporteTecnico =
+    //                 this.RegistroHistoricoUsuario.esSoporteTecnico;
+    //               this.ChatSoporteTecnico =
+    //                 this.RegistroHistoricoUsuario.esSoporteTecnico;
+    //               let ValorFormulario = 'false';
+    //               console.log(this.RegistroHistoricoUsuario.formularioEnviado);
+    //               if (this.RegistroHistoricoUsuario.formularioEnviado == true) {
+    //                 ValorFormulario = 'true';
+    //               }
+    //               this._SessionStorageService.SessionSetValue(
+    //                 'ChatAcademicoIniciado',
+    //                 ValorFormulario
+    //               );
+    //               if (this.Paso == 2 && this.Caso == 'B') {
+    //                 console.log('INGRESA 2');
+    //                 this.CursosMatriculados();
+    //               }
+    //             } else {
+    //               this.IdChatAtencionClienteContacto =
+    //                 this.RegistroHistoricoUsuario.idChatAtencionClienteContacto;
+    //               this.IdChatAtencionClienteContacto =
+    //                 this.RegistroHistoricoUsuario.idChatAtencionClienteContacto;
+    //               this.Paso = this.RegistroHistoricoUsuario.pasoSiguiente;
+    //               this.Caso = this.RegistroHistoricoUsuario.casoSiguiente;
+    //               this.IdMatriculaCabecera =
+    //                 this.RegistroHistoricoUsuario.idMatriculaCabecera;
+    //               this.ChatSoporteTecnico =
+    //                 this.RegistroHistoricoUsuario.esSoporteTecnico;
+    //               this.EsSoporteTecnico =
+    //                 this.RegistroHistoricoUsuario.esSoporteTecnico;
+    //             }
+    //           }
+    //         },
+    //       });
+    //   }
+    // } else {
+    //   this.InformacionChatSinToken();
+    // }
+    // if (this.IdMatriculaCabecera != 0) {
+    //   this.ObtenerCoordinadorMatricula();
+    // }
+    // this.CargandoInformacion = false;
   }
   InformacionChatSinToken() {
     this._ChatAtencionClienteService
-      .ObtenerChatAtencionClienteContactoDetalle(
-        this.IdContactoPortalSegmento,
-        1
-      )
+      .ObtenerChatAtencionClienteContactoDetalle(this.IdChatbotPortalHiloChat)
       .pipe(takeUntil(this.signal$))
       .subscribe({
         next: (x) => {
@@ -478,20 +544,21 @@ export class ChatAtencionVentasComponent implements OnInit, OnChanges {
                   },
                 });
             }
-            if (this.Caso == 'B') {
-              this.Paso = 1;
-              this.Caso = 'A';
-              // console.log('INGRESA 3')
-              // this.CursosMatriculados()
-            }
-            if (
-              this._SessionStorageService.GetToken() == null &&
-              this.Paso == 4
-            ) {
-              this.Paso = 1;
-              this.Caso = 'A';
-              this.OpcionAlumno(1, 'A');
-              // this.ObtenerAreasCapacitacionChatAtc();
+            if (this.Paso == 3 && this.Caso == 'A') {
+              console.log(this.RegistroHistoricoUsuario);
+              const partes =
+                this.RegistroHistoricoUsuario.mensajeEnviado.split(';');
+              const datos = partes.reduce((acc: any, parte: any) => {
+                const [clave, valor] = parte
+                  .split(':')
+                  .map((s: any) => s.trim());
+                acc[clave] = valor;
+                return acc;
+              }, {});
+
+              // Asignar los valores a las variables correspondientes
+              this.IdProgramageneral = Number(datos['PGeneral']);
+              this.IdPespecificoPrograma = Number(datos['IdPEspecifico']);
             }
           } else {
             this.Paso = 1;
@@ -652,12 +719,7 @@ export class ChatAtencionVentasComponent implements OnInit, OnChanges {
   //FIN RECUPERAR CONTRASEÑA
   OpcionAlumno(Paso: number, Caso: string) {
     console.log(this.IdContactoPortalSegmento);
-    this.RegistroChatAtc.IdContactoPortalSegmento =
-      this.IdContactoPortalSegmento;
-    this.RegistroChatAtc.IdPGeneral = 0;
-    this.RegistroChatAtc.IdPEspecifico = 0;
-    this.RegistroChatAtc.IdAlumno = 0;
-    this.RegistroChatAtc.ChatIniciado = true;
+    this.RegistroChatAtc.IdChatbotPortalHiloChat = this.IdChatbotPortalHiloChat;
     this.RegistroChatAtc.FormularioEnviado = false;
     this.RegistroChatAtc.ChatFinalizado = false;
     this.RegistroChatAtc.IdOportunidad = 0;
@@ -672,22 +734,6 @@ export class ChatAtencionVentasComponent implements OnInit, OnChanges {
           this.Paso = Paso;
           this.Caso = Caso;
           if (Paso == 1 && Caso == 'A') {
-            this.RegistroChatDetalleAtc.IdChatAtencionClienteContacto =
-              this.IdChatAtencionClienteContacto;
-            this.RegistroChatDetalleAtc.PasoActual = 1;
-            this.RegistroChatDetalleAtc.CasoActual = 'A';
-            this.RegistroChatDetalleAtc.PasoSiguiente = 1;
-            this.RegistroChatDetalleAtc.CasoSiguiente = 'A';
-            this.RegistroChatDetalleAtc.MensajeEnviado =
-              'Estoy interesado en los cursos';
-            this._ChatAtencionClienteService
-              .RegistrarChatAtencionClienteContactoDetalle(
-                this.RegistroChatDetalleAtc
-              )
-              .pipe(takeUntil(this.signal$))
-              .subscribe({
-                next: (x) => {},
-              });
             // this.OpcionAlumno(1, 'A');
             this.ObtenerAreasCapacitacionChatAtc();
           } else {
@@ -754,12 +800,8 @@ export class ChatAtencionVentasComponent implements OnInit, OnChanges {
   EnviarFormularioAtcAcademico(CursoHijo: any) {
     console.log(CursoHijo);
     if (this.IdChatAtencionClienteContacto == 0) {
-      this.RegistroChatAtc.IdContactoPortalSegmento =
-        this.IdContactoPortalSegmento;
-      this.RegistroChatAtc.IdPGeneral = CursoHijo.idPGeneralPadre;
-      this.RegistroChatAtc.IdPEspecifico = CursoHijo.idPEspecifico;
-      this.RegistroChatAtc.IdAlumno = CursoHijo.idAlumno;
-      this.RegistroChatAtc.ChatIniciado = true;
+      this.RegistroChatAtc.IdChatbotPortalHiloChat =
+        this.IdChatbotPortalHiloChat;
       this.RegistroChatAtc.FormularioEnviado = false;
       this.RegistroChatAtc.ChatFinalizado = false;
       this.RegistroChatAtc.IdOportunidad = 0;
@@ -915,8 +957,12 @@ export class ChatAtencionVentasComponent implements OnInit, OnChanges {
                 this.RegistroChatDetalleAtc.PasoSiguiente = 3;
                 this.RegistroChatDetalleAtc.CasoSiguiente = 'A';
                 this.RegistroChatDetalleAtc.MensajeEnviado =
-                  CursoSeleccionado.nombre;
-
+                  'Curso: ' +
+                  CursoSeleccionado.nombre +
+                  ';PGeneral: ' +
+                  CursoSeleccionado.idPGeneral +
+                  ';IdPEspecifico: ' +
+                  this.IdPespecificoPrograma;
                 this._ChatAtencionClienteService
                   .RegistrarChatAtencionClienteContactoDetalle(
                     this.RegistroChatDetalleAtc
@@ -1075,12 +1121,8 @@ export class ChatAtencionVentasComponent implements OnInit, OnChanges {
             this.DatosCurso = x;
           },
           complete: () => {
-            this.RegistroChatAtc.IdContactoPortalSegmento =
-              this.IdContactoPortalSegmento;
-            this.RegistroChatAtc.IdPGeneral = this.DatosCurso.idPGeneral;
-            this.RegistroChatAtc.IdPEspecifico = this.DatosCurso.idPEspecifico;
-            this.RegistroChatAtc.IdAlumno = this.DatosCurso.idAlumno;
-            this.RegistroChatAtc.ChatIniciado = true;
+            this.RegistroChatAtc.IdChatbotPortalHiloChat =
+              this.IdChatbotPortalHiloChat;
             this.RegistroChatAtc.FormularioEnviado = true;
             this.RegistroChatAtc.ChatFinalizado = false;
             this.RegistroChatAtc.IdOportunidad = 0;

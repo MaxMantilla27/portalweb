@@ -56,9 +56,9 @@ export class ChatAtencionClienteService {
       return EMPTY;
     }
   }
-  public ObtenerChatAtencionClienteContactoDetalle(IdContactoPortalSegmento:string,IdAlumno:number):Observable<any>{
+  public ObtenerChatAtencionClienteContactoDetalle(IdChatbotPortalHiloChat:number):Observable<any>{
     if(this.isBrowser){
-      return this.http.get<any>(this.urlBase+'/ObtenerChatAtencionClienteContactoDetalle?IdContactoPortalSegmento='+IdContactoPortalSegmento+'&IdAlumno='+IdAlumno);
+      return this.http.get<any>(this.urlBase+'/ObtenerChatAtencionClienteContactoDetalle?IdChatbotPortalHiloChat='+IdChatbotPortalHiloChat);
     }else{
       return EMPTY;
     }

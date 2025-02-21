@@ -377,9 +377,10 @@
         </ul>
       </div>
     </div>
-    <ng-container *ngIf="Paso == 3 && Caso == 'A'">
+    <ng-container *ngIf="Paso == 3 && Caso == 'A' && IdProgramageneral!=0">
       <app-chat-atencion-cliente-chat
         [IdChatAtencionClienteContacto]="IdChatAtencionClienteContacto"
+        [IdChatbotPortalHiloChat]="IdChatbotPortalHiloChat"
         (IsOpen)="toggleChat($event)"
         (RegresarChatAtc)="RetrocederCursos($event)"
         (RegresarChatAtcEnviado)="RetrocederInicioFormulario($event, 1)"
@@ -387,7 +388,7 @@
         [IdPespecificoPrograma]="IdPespecificoPrograma"
       ></app-chat-atencion-cliente-chat>
     </ng-container>
-    <ng-container
+    <!-- <ng-container
       *ngIf="Paso == 4 && Caso == 'B' && ChatSoporteTecnico == false"
     >
       <app-chat-atencion-cliente-academico
@@ -403,5 +404,5 @@
         [idProgramageneral]="IdProgramageneral"
         (RegresarChatAcademico)="RetrocederInicioFormulario($event, 2)"
       ></app-chat-atencion-cliente-soporte>
-    </ng-container>
+    </ng-container> -->
   </ng-container>

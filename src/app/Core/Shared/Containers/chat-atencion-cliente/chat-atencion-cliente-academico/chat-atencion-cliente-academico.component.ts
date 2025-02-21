@@ -70,11 +70,12 @@ export class ChatAtencionClienteAcademicoComponent
       ? '0'
       : this._SessionStorageService.SessionGetValue('idCampania');
   public chatKey = 'lcsk-chatId';
-  @Input() idProgramageneral = 0;
   @Input() IdMatriculaCabecera = 0;
   @Input() IdChatAtencionClienteContacto = 0;
+  @Input() IdChatbotPortalHiloChat = 0;
   public contadoraulavirtual = 0;
   public idInteraccion: any;
+  public idProgramageneral = 0;
   public idprogramageneralalumno = 0;
   public idcursoprogramageneralalumno = 0;
   public idcapitulo = 0;

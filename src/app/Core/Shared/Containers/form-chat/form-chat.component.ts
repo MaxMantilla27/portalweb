@@ -45,6 +45,7 @@ export class FormChatComponent implements OnInit,OnChanges {
 
   @Input() IdPGeneral=0;
   @Input() IdPespecificoPrograma=0;
+  @Input() IdChatbotPortalHiloChat=0;
   public chatInicial=false;
   public chatOpen=false;
   public initValues = false;
@@ -90,11 +91,7 @@ export class FormChatComponent implements OnInit,OnChanges {
     idLocalidad:undefined
   }
   public RegistroChatAtc:ChatAtencionClienteContactoRegistrarDTO={
-    IdContactoPortalSegmento: '',
-    IdPGeneral: 0,
-    IdPEspecifico: 0,
-    IdAlumno: 0,
-    ChatIniciado: false,
+    IdChatbotPortalHiloChat: 0,
     FormularioEnviado: false,
     ChatFinalizado: false,
     IdOportunidad: 0,
@@ -181,11 +178,7 @@ export class FormChatComponent implements OnInit,OnChanges {
         this.DatosEnvioFormulario.IdPespecifico=this.IdPespecificoPrograma
       };
       this.DatosEnvioFormulario.IdCampania=parseInt(idcampania)
-      this.RegistroChatAtc.IdContactoPortalSegmento=this._SessionStorageService.SessionGetValue('usuarioWeb');
-      this.RegistroChatAtc.IdPGeneral=this.DatosEnvioFormulario.IdPrograma;
-      this.RegistroChatAtc.IdPEspecifico=this.DatosEnvioFormulario.IdPespecifico;
-      this.RegistroChatAtc.IdAlumno=0;
-      this.RegistroChatAtc.ChatIniciado=true;
+      this.RegistroChatAtc.IdChatbotPortalHiloChat=this.IdChatbotPortalHiloChat
       this.RegistroChatAtc.FormularioEnviado=true;
       this.RegistroChatAtc.ChatFinalizado=false;
       this.RegistroChatAtc.IdOportunidad=0;

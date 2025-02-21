@@ -48,7 +48,7 @@ export class ChatbotIaComponent implements OnInit {
     private _ChatEnLinea: ChatEnLineaService,
     private _DatosPerfilService: DatosPerfilService,
     private _ChatAtencionClienteService: ChatAtencionClienteService,
-    private _AlumnoService: AlumnoService,
+    private _AlumnoService: AlumnoService
   ) {}
   mensajes: MensajeChatbotIADTO[] = [];
 
@@ -77,11 +77,7 @@ export class ChatbotIaComponent implements OnInit {
   public interval: any;
   public intervalPrevio: any;
   public RegistroChatAtc: ChatAtencionClienteContactoRegistrarDTO = {
-    IdContactoPortalSegmento: '',
-    IdPGeneral: 0,
-    IdPEspecifico: 0,
-    IdAlumno: 0,
-    ChatIniciado: false,
+    IdChatbotPortalHiloChat: 0,
     FormularioEnviado: false,
     ChatFinalizado: false,
     IdOportunidad: 0,
@@ -100,7 +96,7 @@ export class ChatbotIaComponent implements OnInit {
     };
   public EsSoporteTecnico = false;
   public IdChatAtencionClienteContacto = 0;
-  public RespuestaDerivacion:any;
+  public RespuestaDerivacion: any;
   @ViewChild('contenidoMsj') contenidoMsj!: ElementRef;
   @ViewChild('inputChat') inputChat!: ElementRef;
   @Input() Open: boolean = false;
@@ -110,23 +106,22 @@ export class ChatbotIaComponent implements OnInit {
   @Input() IdProgramageneral = 0;
   @Input() IdPespecificoPrograma = 0;
 
-
-  public IdChatbotIAPortalHiloChat = 0;
+  public IdChatbotPortalHiloChat = 0;
   public TieneCursosMatriculados = false;
   public EstadoEscribiendo = false;
   public DatosCurso: any;
-  public datos: DatosFormularioDTO ={
-    nombres:'',
-    apellidos:'',
-    email:'',
-    idPais:undefined,
-    idRegion:undefined,
-    movil:'',
-    idCargo:undefined,
-    idAreaFormacion:undefined,
-    idAreaTrabajo:undefined,
-    idIndustria:undefined,
-  }
+  public datos: DatosFormularioDTO = {
+    nombres: '',
+    apellidos: '',
+    email: '',
+    idPais: undefined,
+    idRegion: undefined,
+    movil: '',
+    idCargo: undefined,
+    idAreaFormacion: undefined,
+    idAreaTrabajo: undefined,
+    idIndustria: undefined,
+  };
   textareaHeight: number = 20; // Altura inicial, en píxeles
   ngOnInit(): void {
     this.ObtenerHistorialChatBotIA();
@@ -135,24 +130,25 @@ export class ChatbotIaComponent implements OnInit {
       .pipe(takeUntil(this.signal$))
       .subscribe({
         next: (x) => {
-          let reinicioChatBot = this._SessionStorageService.SessionGetValue('ReinicioChatBot');
-          if(reinicioChatBot == 'true'){
+          let reinicioChatBot =
+            this._SessionStorageService.SessionGetValue('ReinicioChatBot');
+          if (reinicioChatBot == 'true') {
             this.ObtenerHistorialChatBotIA();
           }
           this.ReinicioTotalChat();
         },
-        complete: () => {
-        },
+        complete: () => {},
       });
-
   }
 
-  ReinicioTotalChat(){
-    let IdChatbotIAPortalHiloChatLocal = this._SessionStorageService.SessionGetValue('IdChatbotIAPortalHiloChat');
-    let reinicioChatBot = this._SessionStorageService.SessionGetValue('ReinicioChatBot');
-    if (IdChatbotIAPortalHiloChatLocal != '' && reinicioChatBot == 'true') {
-      this.IdChatbotIAPortalHiloChat = Number(IdChatbotIAPortalHiloChatLocal);
-      this.CerrarRegistroHiloChat(this.IdChatbotIAPortalHiloChat);
+  ReinicioTotalChat() {
+    let IdChatbotPortalHiloChatLocal =
+      this._SessionStorageService.SessionGetValue('IdChatbotPortalHiloChat');
+    let reinicioChatBot =
+      this._SessionStorageService.SessionGetValue('ReinicioChatBot');
+    if (IdChatbotPortalHiloChatLocal != '' && reinicioChatBot == 'true') {
+      this.IdChatbotPortalHiloChat = Number(IdChatbotPortalHiloChatLocal);
+      this.CerrarRegistroHiloChat(this.IdChatbotPortalHiloChat);
     }
   }
   ngAfterViewInit(): void {
@@ -160,7 +156,7 @@ export class ChatbotIaComponent implements OnInit {
   }
 
   reiniciarChat() {
-    this.ChatErrorBotRecarga=false
+    this.ChatErrorBotRecarga = false;
     this.mensajes = [];
     this.registroChatIA = {
       Cerrado: false,
@@ -173,10 +169,26 @@ export class ChatbotIaComponent implements OnInit {
     this.ChatVentasAbierto = false;
     this.ChatAcademicoAbierto = false;
     this.TieneCoordinador = false;
-    this._SessionStorageService.SessionSetValue('ReinicioChatBot','false');
+    this._SessionStorageService.SessionSetValue('ReinicioChatBot', 'false');
     this.enviarMensajeInicial();
   }
-
+  CerrarRegistroHiloChat(IdChatbotPortalHiloChat: number) {
+    let IdContactoPortalSegmento =
+      this._SessionStorageService.SessionGetValue('usuarioWeb');
+    this.CargandoInformacion = true;
+    if (IdChatbotPortalHiloChat == 0) {
+      IdChatbotPortalHiloChat =
+        this.registroChatIA.IdChatbotPortalHiloChat ?? 0;
+    }
+    this.chatbotIAService
+      .CerrarRegistroHiloChat(IdChatbotPortalHiloChat, IdContactoPortalSegmento)
+      .subscribe({
+        next: (response) => {},
+        complete: () => {
+          this.reiniciarChat();
+        },
+      });
+  }
   //Abre el chat e inicia con el mensaje inicial
   toggleChat(state: boolean) {
     this.Open = state;
@@ -192,7 +204,11 @@ export class ChatbotIaComponent implements OnInit {
   enviarMensaje(): void {
     if (this.nuevoMensaje.trim() && this.inputActive) {
       this.inputActive = false;
-      this.mensajes.push({ esUsuario: true, mensaje: this.nuevoMensaje,fechaEnvio: this.ObtenerHoraActual()});
+      this.mensajes.push({
+        esUsuario: true,
+        mensaje: this.nuevoMensaje,
+        fechaEnvio: this.ObtenerHoraActual(),
+      });
       this.scrollAbajo(true, 2);
       this.registroChatIA.Mensaje = this.nuevoMensaje;
       this.registroChatIA.TiempoActual = new Date();
@@ -203,24 +219,24 @@ export class ChatbotIaComponent implements OnInit {
       this.enviarYProcesar(() => {
         this.reemplazarMensajeBot();
         this.inputActive = this.registroChatIA.Cerrado ? false : true;
+        console.log(this.registroChatIA);
+        this.IdChatbotPortalHiloChat = this.registroChatIA.IdChatbotPortalHiloChat!;
         this.setFocusOnInput();
         if (this.registroChatIA.Derivado) {
           setTimeout(() => {
+            // Derivación a Académico
             if (
-              this.registroChatIA.ChatDerivado == 1 &&
+              this.registroChatIA.ChatDerivado === 1 &&
               this.registroChatIA.IdMatriculaCabecera != null &&
               this.registroChatIA.IdPGeneral != null
             ) {
-              this.ObtenerCursosMatriculadosAlumno(
-                this.registroChatIA.IdAlumno!
-              );
+              console.log('DERIVANDO A ACADÉMICO')
+              this.RegistrarDerivacionATC(this.registroChatIA.ChatDerivado,this.registroChatIA.IdMatriculaCabecera,this.registroChatIA.IdChatbotPortalHiloChat!)
+            //Derivación a Ventas
             }
-            if (this.registroChatIA.ChatDerivado == 2) {
-              this.ActualizarIdAreaDerivacionHiloChat(
-                this.registroChatIA.ChatDerivado
-              );
-              this.ChatbotCerrado = true;
-              this.ChatVentasAbierto = true;
+            if (this.registroChatIA.ChatDerivado === 2) {
+              console.log('DERIVANDO A VENTAS')
+              this.ActualizarCodigoAreaDerivacionHiloChat(this.registroChatIA.ChatDerivado,this.registroChatIA.IdChatbotPortalHiloChat!);
             }
           }, 6000);
         }
@@ -240,7 +256,7 @@ export class ChatbotIaComponent implements OnInit {
         this.mensajes.push({
           mensaje: this.registroChatIA.Mensaje ?? '',
           esUsuario: false,
-          fechaEnvio: this.ObtenerHoraActual()
+          fechaEnvio: this.ObtenerHoraActual(),
         });
       }
       this.inputActive = true;
@@ -279,10 +295,13 @@ export class ChatbotIaComponent implements OnInit {
                   this.datos.idCargo = x.datosAlumno.idCargo;
                   this.datos.idAreaFormacion = x.datosAlumno.idAreaFormacion;
                   this.datos.idAreaTrabajo = x.datosAlumno.idAreaTrabajo;
-                  this.datos.idIndustria = x.datosAlumno.idIndustria
+                  this.datos.idIndustria = x.datosAlumno.idIndustria;
 
-                  this._SessionStorageService.SessionSetValue('DatosFormulario',JSON.stringify(this.datos));
-                }
+                  this._SessionStorageService.SessionSetValue(
+                    'DatosFormulario',
+                    JSON.stringify(this.datos)
+                  );
+                },
               });
               this.DatoObservable.datoAvatar = true;
               this.DatoObservable.datoContenido = true;
@@ -304,8 +323,8 @@ export class ChatbotIaComponent implements OnInit {
               let data = JSON.parse(JSON.stringify(response.Data));
               this.registroChatIA = this.jsonADTO(data);
               this._SessionStorageService.SessionSetValue(
-                'IdChatbotIAPortalHiloChat',
-                this.registroChatIA.IdChatbotIAPortalHiloChat!.toString()
+                'IdChatbotPortalHiloChat',
+                this.registroChatIA.IdChatbotPortalHiloChat!.toString()
               );
 
               callback();
@@ -315,15 +334,15 @@ export class ChatbotIaComponent implements OnInit {
             }
           },
           complete: () => {
-            this.EstadoEscribiendo=false;
+            this.EstadoEscribiendo = false;
             this.registroChatIA.IdContactoPortalSegmento = usuarioWeb;
           },
           error: (e) => {
             console.error('Error al obtener la respuesta de la API', e);
             this.ChatError = true;
             this.ChatErrorBotRecarga = true;
-            this.EstadoEscribiendo=false;
-            this.scrollAbajo(true,10)
+            this.EstadoEscribiendo = false;
+            this.scrollAbajo(true, 10);
           },
         });
       }
@@ -347,7 +366,7 @@ export class ChatbotIaComponent implements OnInit {
       this.mensajes.push({
         mensaje: this.nuevoMensaje,
         esUsuario: true,
-        fechaEnvio: this.ObtenerHoraActual()
+        fechaEnvio: this.ObtenerHoraActual(),
       });
       this.nuevoMensaje = '';
       this.mostrarEscribiendo();
@@ -374,7 +393,11 @@ export class ChatbotIaComponent implements OnInit {
   // Muestra 'Escribiendo...'  para que el usuario sepa que no se ha colgado
   mostrarEscribiendo(): void {
     this.EstadoEscribiendo = true;
-    this.mensajes.push({ mensaje: 'Escribiendo...', esUsuario: false,fechaEnvio: this.ObtenerHoraActual() });
+    this.mensajes.push({
+      mensaje: 'Escribiendo...',
+      esUsuario: false,
+      fechaEnvio: this.ObtenerHoraActual(),
+    });
     this.scrollAbajo(true, 3);
   }
 
@@ -385,7 +408,7 @@ export class ChatbotIaComponent implements OnInit {
     this.scrollAbajo(true, 4);
   }
 
-  ObtenerCoordinadorMatricula(IdMatriculaCabecera: number,valor:number) {
+  ObtenerCoordinadorMatricula(IdMatriculaCabecera: number) {
     this._ChatEnLinea
       .ObtenerCoordinadorChat(IdMatriculaCabecera)
       .pipe(takeUntil(this.signal$))
@@ -420,111 +443,184 @@ export class ChatbotIaComponent implements OnInit {
         this.ObtenerEstadoDerivacionHiloChat(
           this.registroChatIA.IdContactoPortalSegmento
         );
-        this.chatbotIAService
-          .ObtenerHistorialMensajeUsuarioHiloChat(
-            this.registroChatIA.IdContactoPortalSegmento
-          )
-          .subscribe({
-            next: (response) => {
-              //Realiza el inicio de sesión del usuario
-              if (response != null)
-                response.slice(1).forEach((historial: any) => {
-                  const fecha = new Date(historial.tiempoEnvio);
-                  const opciones: Intl.DateTimeFormatOptions = {
-                    hour: '2-digit',
-                    minute: '2-digit',
-                    hour12: true
-                  };
-                  let horaMensajeHistorico = fecha.toLocaleTimeString('es-ES', opciones);
-                  this.mensajes.push({
-                    mensaje: historial.contenido,
-                    esUsuario: historial.esUsuario,
-                    fechaEnvio: horaMensajeHistorico
-                  });
-                });
-              {
-              }
-            },
-            complete: () => {},
-            error: (e) => {
-              console.error(
-                'Error al obtener el historial respuesta de la API',
-                e
-              );
-              this.ChatError = true;
-            },
-          });
       }
     }, 1000);
   }
-  ActualizarIdAreaDerivacionHiloChat(IdAreaDerivacion: number) {
+  ActualizarCodigoAreaDerivacionHiloChat(CodigoAreaDerivacion: number,IdChatbotPortalHiloChat:number) {
     this.chatbotIAService
-      .ActualizarIdAreaDerivacionHiloChat(
-        this.registroChatIA.IdChatbotIAPortalHiloChat!,
-        IdAreaDerivacion
+      .ActualizarCodigoAreaDerivacionHiloChat(
+        this.registroChatIA.IdChatbotPortalHiloChat!,
+        CodigoAreaDerivacion
       )
       .subscribe({
-        next: (response) => {
-        },
-      });
-  }
-  CerrarRegistroHiloChat(IdChatbotIAPortalHiloChat: number) {
-    let IdContactoPortalSegmento = this._SessionStorageService.SessionGetValue('usuarioWeb');
-    this.CargandoInformacion = true;
-    if (IdChatbotIAPortalHiloChat == 0) {
-      IdChatbotIAPortalHiloChat =
-        this.registroChatIA.IdChatbotIAPortalHiloChat?? 0;
-    }
-    this.chatbotIAService
-      .CerrarRegistroHiloChat(IdChatbotIAPortalHiloChat,IdContactoPortalSegmento)
-      .subscribe({
-        next: (response) => {
-        },
+        next: (response) => {},
         complete: () => {
-          this.reiniciarChat();
-
-          // this.enviarMensajeInicial();
+          this.IdChatbotPortalHiloChat = IdChatbotPortalHiloChat;
+          this.RegistroChatAtc.IdChatbotPortalHiloChat = IdChatbotPortalHiloChat
+          this.RegistroChatAtc.FormularioEnviado = false;
+          this.RegistroChatAtc.ChatFinalizado = false;
+          this.RegistroChatAtc.IdOportunidad = 0;
+          this._ChatAtencionClienteService
+            .RegistrarChatAtencionClienteContacto(this.RegistroChatAtc)
+            .pipe(takeUntil(this.signal$))
+            .subscribe({
+              next: (x) => {
+                this.IdChatAtencionClienteContacto = x;
+              },
+              complete: () => {
+                this.RegistroChatDetalleAtc.IdChatAtencionClienteContacto = this.IdChatAtencionClienteContacto;
+                this.RegistroChatDetalleAtc.PasoActual = 1;
+                this.RegistroChatDetalleAtc.CasoActual = 'A';
+                this.RegistroChatDetalleAtc.PasoSiguiente = 1;
+                this.RegistroChatDetalleAtc.CasoSiguiente = 'A';
+                this.RegistroChatDetalleAtc.MensajeEnviado = 'Soy alumno';
+                this._ChatAtencionClienteService
+                  .RegistrarChatAtencionClienteContactoDetalle(
+                    this.RegistroChatDetalleAtc
+                  )
+                  .pipe(takeUntil(this.signal$))
+                  .subscribe({
+                    next: (x) => {},
+                    complete:()=>{
+                      this.ChatbotCerrado = true;
+                      this.ChatVentasAbierto = true;
+                    }
+                  });
+              },
+            });
         },
       });
   }
+  RegistrarDerivacionATC(CodigoAreaDerivacion: number,IdMatriculaCabecera:number,IdChatbotPortalHiloChat:number) {
+    this.chatbotIAService
+      .ActualizarCodigoAreaDerivacionHiloChat(
+        this.registroChatIA.IdChatbotPortalHiloChat!,
+        CodigoAreaDerivacion
+      )
+      .subscribe({
+        next: (response) => {},
+        complete: () => {
+          this.IdChatbotPortalHiloChat = IdChatbotPortalHiloChat;
+          this.RegistroChatAtc.IdChatbotPortalHiloChat =IdChatbotPortalHiloChat;
+          this.RegistroChatAtc.FormularioEnviado = false;
+          this.RegistroChatAtc.ChatFinalizado = false;
+          this.RegistroChatAtc.EsAcademico = true;
+          this.RegistroChatAtc.EsSoporteTecnico = false;
+          this.RegistroChatAtc.IdMatriculaCabecera = IdMatriculaCabecera;
+          this._ChatAtencionClienteService
+            .RegistrarChatAtencionClienteContacto(this.RegistroChatAtc)
+            .pipe(takeUntil(this.signal$))
+            .subscribe({
+              next: (x) => {
+                this.IdChatAtencionClienteContacto = x;
+              },
+              complete: () => {
+                this.RegistroChatDetalleAtc.IdChatAtencionClienteContacto =
+                  this.IdChatAtencionClienteContacto;
+                this.RegistroChatDetalleAtc.PasoActual = 1;
+                this.RegistroChatDetalleAtc.CasoActual = 'B';
+                this.RegistroChatDetalleAtc.PasoSiguiente = 1;
+                this.RegistroChatDetalleAtc.CasoSiguiente = 'B';
+                this.RegistroChatDetalleAtc.MensajeEnviado = IdMatriculaCabecera.toString();
+                this._ChatAtencionClienteService
+                  .RegistrarChatAtencionClienteContactoDetalle(
+                    this.RegistroChatDetalleAtc
+                  )
+                  .pipe(takeUntil(this.signal$))
+                  .subscribe({
+                    next: (x) => {},
+                    complete:()=> {
+                      this.ChatAcademicoAbierto=true;
+                      this.ChatbotCerrado = true;
+                      this.ObtenerCoordinadorMatricula(IdMatriculaCabecera);
+                    },
+                  });
+              },
+            });
+        },
+      });
+  }
+
   ObtenerEstadoDerivacionHiloChat(IdContactoPortalSegmento: string) {
-    this.RespuestaDerivacion=undefined;
-    this.ChatVentasAbierto;
+    this.RespuestaDerivacion = undefined;
+    // this.ChatVentasAbierto;
     this.chatbotIAService
       .ObtenerEstadoDerivacionHiloChat(IdContactoPortalSegmento)
       .subscribe({
         next: (response) => {
-          this.RespuestaDerivacion=response;
-
+          console.log(response);
+          if(response!=null){
+            this.IdChatbotPortalHiloChat=response.idChatbotPortalHiloChat
+            this.IdChatAtencionClienteContacto=response.idChatAtencionClienteContacto
+          }
+          this.RespuestaDerivacion = response;
         },
-        complete:()=>{
+        complete: () => {
           setTimeout(() => {
-          if (this.RespuestaDerivacion != null) {
-            if (
-              this.RespuestaDerivacion.idAreaDerivacion != 0 &&
-              this.RespuestaDerivacion.derivacionCerrada != 0
-            ) {
-              if (this.RespuestaDerivacion.idAreaDerivacion == 2) {
-                this.ChatbotCerrado = true;
-                this.ChatVentasAbierto = true;
-              }
-              if (this.RespuestaDerivacion.idAreaDerivacion == 1) {
-                this.registroChatIA.IdMatriculaCabecera =
-                this.RespuestaDerivacion.idMatriculaCabecera;
-                this.ObtenerCoordinadorMatricula(
-                  this.registroChatIA.IdMatriculaCabecera!,1
-                );
-                this.RegistroDirectoCursoMatriculado(false,1);
-
-                setTimeout(() => {
+            if (this.RespuestaDerivacion != null) {
+              if (
+                this.RespuestaDerivacion.CodigoAreaDerivacion != 0 &&
+                this.RespuestaDerivacion.derivacionCerrada != 0
+              ) {
+                if (this.RespuestaDerivacion.codigoAreaDerivacion == 2) {
+                  console.log('Ingresa a Ventas');
                   this.ChatbotCerrado = true;
-                  this.ChatAcademicoAbierto = true;
-                }, 3000);
+                  this.ChatVentasAbierto = true;
+                }
+                if (this.RespuestaDerivacion.codigoAreaDerivacion == 1) {
+                  console.log('Ingresa a Academico');
+                  this.registroChatIA.IdMatriculaCabecera =
+                    this.RespuestaDerivacion.idMatriculaCabecera;
+                  this.ObtenerCoordinadorMatricula(
+                    this.registroChatIA.IdMatriculaCabecera!
+                  );
+                  this.RegistroDirectoCursoMatriculado(false, 1);
+
+                  setTimeout(() => {
+                    this.ChatbotCerrado = true;
+                    this.ChatAcademicoAbierto = true;
+                  }, 3000);
+                }
               }
             }
-          }
+            this.chatbotIAService
+              .ObtenerHistorialMensajeUsuarioHiloChat(IdContactoPortalSegmento)
+              .subscribe({
+                next: (response) => {
+                  console.log(response);
+                  //Realiza el inicio de sesión del usuario
+                  if (response != null)
+                    response.slice(1).forEach((historial: any) => {
+                      const fecha = new Date(historial.tiempoEnvio);
+                      const opciones: Intl.DateTimeFormatOptions = {
+                        hour: '2-digit',
+                        minute: '2-digit',
+                        hour12: true,
+                      };
+                      let horaMensajeHistorico = fecha.toLocaleTimeString(
+                        'es-ES',
+                        opciones
+                      );
+                      this.mensajes.push({
+                        mensaje: historial.contenido,
+                        esUsuario: historial.esUsuario,
+                        fechaEnvio: horaMensajeHistorico,
+                      });
+                    });
+                  {
+                  }
+                },
+                complete: () => {},
+                error: (e) => {
+                  console.error(
+                    'Error al obtener el historial respuesta de la API',
+                    e
+                  );
+                  this.ChatError = true;
+                },
+              });
           }, 3000);
-        }
+        },
       });
   }
   scrollAbajo(smooth: boolean = true, id: number) {
@@ -538,33 +634,8 @@ export class ChatbotIaComponent implements OnInit {
       }
     }, 100);
   }
-  ObtenerCursosMatriculadosAlumno(IdAlumno: number) {
-    this.TieneCursosMatriculados = false;
-    this.chatbotIAService
-      .ObtenerCursosAlumnoMatriculado(IdAlumno)
-      .pipe(takeUntil(this.signal$))
-      .subscribe({
-        next: (x) => {
-          if (x.cursosHijo.length != 0) {
-            this.TieneCursosMatriculados = true;
-          }
-        },
-        complete: () => {
-          if (this.TieneCursosMatriculados) {
-            this.ActualizarIdAreaDerivacionHiloChat(1);
-            this.ObtenerCoordinadorMatricula(
-              this.registroChatIA.IdMatriculaCabecera!,2
-            );
-            this.RegistroDirectoCursoMatriculado(false,2);
-          } else {
-            this.ActualizarIdAreaDerivacionHiloChat(2);
-            this.ChatbotCerrado = true;
-            this.ChatVentasAbierto = true;
-          }
-        },
-      });
-  }
-  RegistroDirectoCursoMatriculado(EsSoporteTecnico: boolean,valor:number) {
+
+  RegistroDirectoCursoMatriculado(EsSoporteTecnico: boolean, valor: number) {
     this._ChatAtencionClienteService
       .ObtenerChatAtencionClienteContactoDetalleAcademico(
         this.registroChatIA.IdMatriculaCabecera!
@@ -572,8 +643,9 @@ export class ChatbotIaComponent implements OnInit {
       .pipe(takeUntil(this.signal$))
       .subscribe({
         next: (x) => {
-          if(x!=null){
-            this.IdChatAtencionClienteContacto = x.idChatAtencionClienteContacto;
+          if (x != null) {
+            this.IdChatAtencionClienteContacto =
+              x.idChatAtencionClienteContacto;
           }
         },
       });
@@ -589,18 +661,13 @@ export class ChatbotIaComponent implements OnInit {
               .recibirMsjChat()
               .pipe(takeUntil(this.signal$))
               .subscribe({
-                next: (x) => {
-                },
+                next: (x) => {},
               });
             this.DatosCurso = x;
           },
           complete: () => {
-            this.RegistroChatAtc.IdContactoPortalSegmento =
-              this.registroChatIA.IdContactoPortalSegmento!;
-            this.RegistroChatAtc.IdPGeneral = this.DatosCurso.idPGeneral;
-            this.RegistroChatAtc.IdPEspecifico = this.DatosCurso.idPEspecifico;
-            this.RegistroChatAtc.IdAlumno = this.DatosCurso.idAlumno;
-            this.RegistroChatAtc.ChatIniciado = true;
+            this.RegistroChatAtc.IdChatbotPortalHiloChat =
+              this.registroChatIA.IdChatbotPortalHiloChat!;
             this.RegistroChatAtc.FormularioEnviado = true;
             this.RegistroChatAtc.ChatFinalizado = false;
             this.RegistroChatAtc.IdOportunidad = 0;
@@ -701,14 +768,14 @@ export class ChatbotIaComponent implements OnInit {
       );
     }
   }
-  ObtenerHoraActual(){
+  ObtenerHoraActual() {
     const ahora = new Date();
-      let horaActual = ahora.toLocaleTimeString('es-ES', {
-        hour: '2-digit',
-        minute: '2-digit',
-        hour12: true
-      });
-    return horaActual
+    let horaActual = ahora.toLocaleTimeString('es-ES', {
+      hour: '2-digit',
+      minute: '2-digit',
+      hour12: true,
+    });
+    return horaActual;
   }
   redimendisionarTextareaChatbot(event: Event): void {
     const textarea = event.target as HTMLTextAreaElement;
@@ -731,10 +798,14 @@ export class ChatbotIaComponent implements OnInit {
     }
   }
   resetTextareaHeight(): void {
-    const textarea = document.querySelector('.chat-box-ia-textarea') as HTMLTextAreaElement;
+    const textarea = document.querySelector(
+      '.chat-box-ia-textarea'
+    ) as HTMLTextAreaElement;
     if (textarea) {
       textarea.style.height = 'auto'; // Restablecer la altura a auto
-      textarea.style.height = `${parseInt(getComputedStyle(textarea).lineHeight)}px`; // Establecer altura a una línea
+      textarea.style.height = `${parseInt(
+        getComputedStyle(textarea).lineHeight
+      )}px`; // Establecer altura a una línea
       textarea.style.overflowY = 'hidden'; // Desactivar el scroll
     }
   }

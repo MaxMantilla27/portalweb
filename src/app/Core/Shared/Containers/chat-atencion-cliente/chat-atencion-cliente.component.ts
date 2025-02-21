@@ -52,17 +52,14 @@ export class ChatAtencionClienteComponent implements OnInit,OnChanges {
   IsOpen: EventEmitter<boolean> = new EventEmitter<boolean>();
   @Input() IdProgramageneral=0;
   @Input() IdPespecificoPrograma=0;
+  @Input() IdChatbotPortalHiloChat=0;
   public img='https://proceso-pago.bsginstitute.com/img-web/chatV2/'
   public Paso=0;
   public Caso='A';
   public RecuperarContrasenaBit=false;
   public BotonDesactivado=false;
   public RegistroChatAtc:ChatAtencionClienteContactoRegistrarDTO={
-    IdContactoPortalSegmento: '',
-    IdPGeneral: 0,
-    IdPEspecifico: 0,
-    IdAlumno: 0,
-    ChatIniciado: false,
+    IdChatbotPortalHiloChat: 0,
     FormularioEnviado: false,
     ChatFinalizado: false,
     IdOportunidad: 0,
@@ -256,7 +253,8 @@ export class ChatAtencionClienteComponent implements OnInit,OnChanges {
             }
           },
           complete:()=>{
-            this._ChatAtencionClienteService.ObtenerChatAtencionClienteContactoDetalle(this.IdContactoPortalSegmento,this.IdAlumno).pipe(takeUntil(this.signal$)).subscribe({
+            // this._ChatAtencionClienteService.ObtenerChatAtencionClienteContactoDetalle(this.IdContactoPortalSegmento,this.IdAlumno).pipe(takeUntil(this.signal$)).subscribe({
+              this._ChatAtencionClienteService.ObtenerChatAtencionClienteContactoDetalle(0).pipe(takeUntil(this.signal$)).subscribe({
               next:x=>{
                 console.log(x)
                 this.RegistroHistoricoUsuario=x
@@ -340,7 +338,8 @@ export class ChatAtencionClienteComponent implements OnInit,OnChanges {
       }
     }
     else{
-      this._ChatAtencionClienteService.ObtenerChatAtencionClienteContactoDetalle(this.IdContactoPortalSegmento,1).pipe(takeUntil(this.signal$)).subscribe({
+      // this._ChatAtencionClienteService.ObtenerChatAtencionClienteContactoDetalle(this.IdContactoPortalSegmento,1).pipe(takeUntil(this.signal$)).subscribe({
+        this._ChatAtencionClienteService.ObtenerChatAtencionClienteContactoDetalle(0).pipe(takeUntil(this.signal$)).subscribe({
         next:x=>{
           console.log(x)
           this.RegistroHistoricoUsuario=x
@@ -557,11 +556,7 @@ export class ChatAtencionClienteComponent implements OnInit,OnChanges {
     }
     else{
       console.log(this.IdContactoPortalSegmento)
-      this.RegistroChatAtc.IdContactoPortalSegmento=this.IdContactoPortalSegmento;
-      this.RegistroChatAtc.IdPGeneral=0;
-      this.RegistroChatAtc.IdPEspecifico=0;
-      this.RegistroChatAtc.IdAlumno=0;
-      this.RegistroChatAtc.ChatIniciado=true;
+      this.RegistroChatAtc.IdChatbotPortalHiloChat=this.IdChatbotPortalHiloChat
       this.RegistroChatAtc.FormularioEnviado=false;
       this.RegistroChatAtc.ChatFinalizado=false;
       this.RegistroChatAtc.IdOportunidad=0;
@@ -665,11 +660,7 @@ export class ChatAtencionClienteComponent implements OnInit,OnChanges {
   EnviarFormularioAtcAcademico(CursoHijo:any){
     console.log(CursoHijo)
     if(this.IdChatAtencionClienteContacto==0){
-      this.RegistroChatAtc.IdContactoPortalSegmento=this.IdContactoPortalSegmento;
-      this.RegistroChatAtc.IdPGeneral=CursoHijo.idPGeneralPadre;
-      this.RegistroChatAtc.IdPEspecifico=CursoHijo.idPEspecifico;
-      this.RegistroChatAtc.IdAlumno=CursoHijo.idAlumno;
-      this.RegistroChatAtc.ChatIniciado=true;
+      this.RegistroChatAtc.IdChatbotPortalHiloChat=this.IdChatbotPortalHiloChat
       this.RegistroChatAtc.FormularioEnviado=false;
       this.RegistroChatAtc.ChatFinalizado=false;
       this.RegistroChatAtc.IdOportunidad=0;
@@ -928,11 +919,7 @@ export class ChatAtencionClienteComponent implements OnInit,OnChanges {
             this.DatosCurso=x
           },
           complete:()=>{
-            this.RegistroChatAtc.IdContactoPortalSegmento=this.IdContactoPortalSegmento;
-            this.RegistroChatAtc.IdPGeneral=this.DatosCurso.idPGeneral;
-            this.RegistroChatAtc.IdPEspecifico=this.DatosCurso.idPEspecifico;
-            this.RegistroChatAtc.IdAlumno=this.DatosCurso.idAlumno;
-            this.RegistroChatAtc.ChatIniciado=true;
+            this.RegistroChatAtc.IdChatbotPortalHiloChat=this.IdChatbotPortalHiloChat
             this.RegistroChatAtc.FormularioEnviado=true;
             this.RegistroChatAtc.ChatFinalizado=false;
             this.RegistroChatAtc.IdOportunidad=0;

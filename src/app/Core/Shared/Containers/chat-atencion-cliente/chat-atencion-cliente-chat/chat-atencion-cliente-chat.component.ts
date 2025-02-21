@@ -61,6 +61,7 @@ export class ChatAtencionClienteChatComponent
   public chatKey = 'lcsk-chatId';
   // public listprogramas = [9990, 9991, 9992, 9993];
   @Input() IdChatAtencionClienteContacto = 0;
+  @Input() IdChatbotPortalHiloChat = 0;
   @Input() idProgramageneral = 0;
   @Input() IdPespecificoPrograma = 0;
   @Output() RegresarChatAtc = new EventEmitter<boolean>();
@@ -128,20 +129,20 @@ export class ChatAtencionClienteChatComponent
     }
 
     if (this.idProgramageneral > 0) {
-      // timer(5000).pipe(takeUntil(this.signal$)).subscribe(_=>{
-      //   var IdPGeneralChatAtc = this._SessionStorageService.SessionGetValue('IdPGeneralChatAtc');
-      //   var IdPEspecificoChatAtc = this._SessionStorageService.SessionGetValue('IdPEspecificoChatAtc');
-      //   console.log(this.idProgramageneral)
-      //   console.log(IdPGeneralChatAtc)
-      //   console.log(IdPEspecificoChatAtc)
-      //   if(Number(IdPGeneralChatAtc)==this.idProgramageneral){
-      //     if(IdPEspecificoChatAtc!='' && this.IdPespecificoPrograma!=0){
-      //       this.IdPespecificoPrograma=Number(IdPEspecificoChatAtc)
-      //       console.log(this.IdPespecificoPrograma)
-      //     }
-      //   }
-      // })
-      //this.ChargeChat.emit(true)
+      timer(5000).pipe(takeUntil(this.signal$)).subscribe(_=>{
+        var IdPGeneralChatAtc = this._SessionStorageService.SessionGetValue('IdPGeneralChatAtc');
+        var IdPEspecificoChatAtc = this._SessionStorageService.SessionGetValue('IdPEspecificoChatAtc');
+        console.log(this.idProgramageneral)
+        console.log(IdPGeneralChatAtc)
+        console.log(IdPEspecificoChatAtc)
+        if(Number(IdPGeneralChatAtc)==this.idProgramageneral){
+          if(IdPEspecificoChatAtc!='' && this.IdPespecificoPrograma!=0){
+            this.IdPespecificoPrograma=Number(IdPEspecificoChatAtc)
+            console.log(this.IdPespecificoPrograma)
+          }
+        }
+      })
+      this.ChargeChat.emit(true)
     }
   }
   ngOnInit(): void {
@@ -161,10 +162,8 @@ export class ChatAtencionClienteChatComponent
       this._SessionStorageService.SessionGetValue('usuarioWeb');
     console.log(this.IdContactoPortalSegmento);
     this._ChatAtencionClienteService
-      .ObtenerChatAtencionClienteContactoDetalle(
-        this.IdContactoPortalSegmento,
-        1
-      )
+      .ObtenerChatAtencionClienteContactoDetalle(this.IdChatbotPortalHiloChat)
+      // .ObtenerChatAtencionClienteContactoDetalle(0)
       .pipe(takeUntil(this.signal$))
       .subscribe({
         next: (x) => {
@@ -263,12 +262,12 @@ export class ChatAtencionClienteChatComponent
   }
 
   generarLogVisitanteAtc() {
+
     var cookiecontaco =
       this._SessionStorageService.SessionGetValue('usuarioWeb');
-
     this.hubConnection
       .invoke(
-        'generarLogVisitanteAtc',
+        'GenerarLogVisitanteAtc',
         document.location.href,
         document.referrer,
         'Arequipa',
@@ -277,7 +276,7 @@ export class ChatAtencionClienteChatComponent
         cookiecontaco,
         this.idProgramageneral,
         this.idPais,
-        this.estadoLogueo,
+        this.estadoLogueo.toString(),
         this.nombres,
         this.apellidos,
         this.email,
@@ -285,15 +284,15 @@ export class ChatAtencionClienteChatComponent
         0,
         0,
         this.IdAlumno,
-        this.idcampania
+        this.idcampania.toString()
       )
       .then((response: any) => {
         // Maneja la respuesta aquí
-        console.log('Respuesta de generarLogVisitanteAtc:', response);
+        console.log('Respuesta de GenerarLogVisitanteAtc:', response);
       })
       .catch((error: any) => {
         // Maneja el error aquí
-        console.error('Error al invocar generarLogVisitanteAtc:', error);
+        console.error('Error al invocar GenerarLogVisitanteAtc:', error);
       });
   }
   actualizarDatosAlumno(respuesta: any) {
@@ -305,7 +304,7 @@ export class ChatAtencionClienteChatComponent
       .then((response: any) => {
         // Maneja la respuesta aquí
         console.log(
-          'Respuesta de generarLogVisitanteAtc:',
+          'Respuesta de GenerarLogVisitanteAtc:',
           response,
           respuesta.idAlumno,
           respuesta.id
@@ -313,7 +312,7 @@ export class ChatAtencionClienteChatComponent
       })
       .catch((error: any) => {
         // Maneja el error aquí
-        console.error('Error al invocar generarLogVisitanteAtc:', error);
+        console.error('Error al invocar GenerarLogVisitanteAtc:', error);
       });
   }
 

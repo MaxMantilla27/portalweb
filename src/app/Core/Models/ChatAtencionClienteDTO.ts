@@ -1,9 +1,5 @@
 export interface ChatAtencionClienteContactoRegistrarDTO {
-  IdContactoPortalSegmento: string;
-  IdPGeneral: number;
-  IdPEspecifico: number;
-  IdAlumno: number;
-  ChatIniciado: boolean;
+  IdChatbotPortalHiloChat: number;
   FormularioEnviado: boolean;
   ChatFinalizado: boolean;
   IdOportunidad: number;

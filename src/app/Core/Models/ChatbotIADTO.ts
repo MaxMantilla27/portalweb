@@ -5,7 +5,7 @@ export interface MensajeChatbotIADTO {
 };
 
 export interface RegistroChatbotIADTO{
-    IdChatbotIAPortalHiloChat?: number;
+    IdChatbotPortalHiloChat?: number;
     Mensaje?: string;
     Cerrado: boolean;
     Derivado: boolean;
@@ -14,6 +14,6 @@ export interface RegistroChatbotIADTO{
     IdPGeneral?: number;
     ChatDerivado?: number;
     IdContactoPortalSegmento?: string;
-    IdAreaDerivacion?: number;
+    CodigoAreaDerivacion?: number;
     IdAlumno?:number;
 }

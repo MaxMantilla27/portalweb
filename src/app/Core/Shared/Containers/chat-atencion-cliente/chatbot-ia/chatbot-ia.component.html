@@ -80,7 +80,7 @@
           <div class="footerChatAula">
             <button
               class="mensaje-finalizado"
-              (click)="CerrarRegistroHiloChat(IdChatbotIAPortalHiloChat)"
+              (click)="CerrarRegistroHiloChat(IdChatbotPortalHiloChat)"
             >
               Iniciar nueva conversación
             </button>
@@ -176,7 +176,7 @@
             (this.registroChatIA.Cerrado || ChatError)
           "
           class="mensaje-finalizado"
-          (click)="CerrarRegistroHiloChat(IdChatbotIAPortalHiloChat)"
+          (click)="CerrarRegistroHiloChat(IdChatbotPortalHiloChat)"
         >
           Iniciar nueva conversación
         </button>
@@ -216,14 +216,16 @@
     >
       <app-chat-atencion-cliente-academico
         [IdChatAtencionClienteContacto]="IdChatAtencionClienteContacto"
+        [IdChatbotPortalHiloChat]="IdChatbotPortalHiloChat"
         (IsOpen)="toggleChat($event)"
-        [idProgramageneral]="registroChatIA.IdPGeneral!"
         [IdMatriculaCabecera]="registroChatIA.IdMatriculaCabecera!"
       ></app-chat-atencion-cliente-academico>
     </ng-container>
 
     <ng-container *ngIf="ChatbotCerrado && ChatVentasAbierto">
       <app-chat-atencion-ventas
+        [IdChatbotPortalHiloChat]="IdChatbotPortalHiloChat"
+        [IdChatAtencionClienteContacto]="IdChatAtencionClienteContacto"
         (IsOpen)="toggleChat($event)"
       ></app-chat-atencion-ventas>
     </ng-container>
