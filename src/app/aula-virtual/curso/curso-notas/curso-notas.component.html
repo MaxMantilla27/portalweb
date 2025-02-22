@@ -268,7 +268,7 @@
                         <!-- <div *ngIf="criterioCalificacion.valor!=0">{{criterioCalificacion.valor}}</div> -->
                         <div>
                           {{
-                          !criterioCalificacion.mostrarCalificacion && !criterioCalificacion.tieneDetalle
+                          !criterioCalificacion.mostrarCalificacion && !criterioCalificacion.tieneDetalle && Cursos.nombreModalidad != "Online Asincrónico"
                             ? "Sin Registro"
                             : criterioCalificacion.mostrarCalificacion
                             ? criterioCalificacion.valor
