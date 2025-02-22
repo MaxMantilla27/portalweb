@@ -484,7 +484,7 @@ export class ChatAtencionClienteAcademicoComponent
                 const match = z.Mensaje.match(regex);
                 z.url = match[1].trim();
               }
-              const fecha = new Date(z.fecha); // Suponiendo que z.fecha es una fecha válida
+              const fecha = new Date(z.Fecha); // Suponiendo que z.fecha es una fecha válida
               z.FechaEnvio = this.formatearHoraPersonalizada(fecha);
               this.mensajesAnteriore.push(z);
             }
