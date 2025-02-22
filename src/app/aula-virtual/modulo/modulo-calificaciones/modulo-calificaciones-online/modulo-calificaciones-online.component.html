@@ -114,7 +114,11 @@
                         <!-- <div *ngIf="criterioCalificacion.valor==0">Pendiente</div> -->
                         <!-- <div *ngIf="criterioCalificacion.valor!=0">{{criterioCalificacion.valor}}</div> -->
                         <div>
-                          {{ criterioCalificacion.detalleCalificacion.length == 0 && !criterioCalificacion.tieneNota ? 'Sin Registro' : (criterioCalificacion.tieneNota ? criterioCalificacion.valor : 'Pendiente') }}
+                          {{
+                            criterioCalificacion.detalleCalificacion.length === 0 && !criterioCalificacion.tieneNota
+                              ? (criterioCalificacion.criterioEvaluacion.toLowerCase().includes('asistencia') ? 'Pendiente' : 'Sin Registro')
+                              : (criterioCalificacion.tieneNota ? criterioCalificacion.valor : 'Pendiente')
+                          }}
                         </div>
                       </div>
                     </div>
