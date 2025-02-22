@@ -53,10 +53,10 @@
   font-size: 12px;
 }
 .titlePrograma h1 {
-  font-weight: 900;
-  color: #4a4a49;
+  font-weight: 600;
+  color: #2E2E2E;
   //word-break: break-word;
-  font-size: 44px
+  font-size: 44px;
 }
 .InfoProgramIcon {
   width: 20px;
@@ -324,7 +324,7 @@
 }
 
 .piePagina {
-  color: #a1a1a1;
+  color: #2E2E2E;
   font-size: 10px;
   padding: 20px 10px;
 }
@@ -409,7 +409,7 @@
   color: #4a4a49;
 }
 .imgCardFormasPago {
-  width: 70px;
+  width: 80px;
   padding: 0px;
   margin-right: 100px;
   height: auto;
@@ -607,6 +607,10 @@
     scrollbar-width: none; /* Oculta la barra de desplazamiento en Firefox */
   }
 
+  .titlePrograma h1{
+    font-size: 24px;
+  }
+
 }
 
 .cardInformacionPrograma{
@@ -632,14 +636,16 @@
 }
 
 .puntoListaObjetivos ul,
-.puntoListaPublicoObjetivo ul
+.puntoListaPublicoObjetivo ul,
+.puntoAzulListaCertificacion li ul li
 {
   list-style: none;
   padding-left: 0px;
 }
 
 .puntoListaObjetivos ul li,
-.puntoListaPublicoObjetivo ul li
+.puntoListaPublicoObjetivo ul li,
+.puntoAzulListaCertificacion li ul li
 {
   line-height: 1.8;
   font-size: 18px;
@@ -674,6 +680,19 @@
   background-size: contain;
 }
 
+.puntoAzulListaCertificacion li ul li::before
+{
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 17px;
+  transform: translateY(-50%);
+  width: 18px;
+  height: 18px; 
+  background: url('../../../../src/assets/imagenes/check-celeste.png') no-repeat center center;
+  background-size: contain;
+}
+
 #FormularioProgramas{
   position: absolute;
   width: 320px;
@@ -685,7 +704,7 @@
   width: 100%;
   top: 4rem;
   z-index: 1;
-  margin-left: 60px;
+  //margin-left: 60px;
 }
 @media (max-width: 768px){
 
@@ -750,12 +769,7 @@
   #FormularioProgramasInsert{
     margin-left: 0px;
   }
-  .contentRigth {
-    display: flex;
-    align-items: center;
-    margin-top: 0px;
-  }
-
+  
   .containerObjetivosInfoClave{
     padding-top: 60px !important;
     
@@ -771,7 +785,7 @@
   display: flex;
   justify-content: space-between;
   position: absolute;
-  width: 75%;
+  width: 80%;
   background-color: #FFCD34;
   top: -50px;
   z-index: 10;
@@ -992,3 +1006,15 @@
   justify-items: flex-end;
   flex: 1;
 }*/
+
+.masInformacionButton{
+  width: 100%;
+  border:#F88940;
+  border-radius:12px;
+  padding: 8px 55px;
+  font-size: 16px;
+  margin-bottom:0px;
+  background-color: #F88940;
+  color: white;
+}
+
