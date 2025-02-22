@@ -21,10 +21,13 @@
             </ul>
         </div>
         <div class="containerMasInformacion" *ngIf="innerWidth > 1000">
-            <app-default-button-flecha [confs]="{color:'primary',titulo:'Más información'}"
+            <!-- <app-default-button [confs]="{color:'primary',titulo:'Más información'}"
                   [style]="'width: 100%;border-radius:12px;padding: 2px 35px;font-size: 16px;margin-bottom:0px;'"
                   (ButtoclClick)="cloneFormulario()"
-            ></app-default-button-flecha>
+            ></app-default-button> -->
+            <button class="masInformacionButton" (click)="cloneFormulario()">Más información</button>
+
+
         </div>
         <ng-container *ngIf="absoluteFormulario">
           <div class="col-12 col-md-4 col-lg-4 containerFormulario" id="absoluteFormulario">
@@ -169,7 +172,7 @@
                 </ng-container>
               </div>
               <div style="margin-top: 25px;">
-                <div style="display: flex ;align-items: flex-start;gap: 15px;" *ngIf="cabecera.imgPrincipal!='https://img.bsginstitute.com/repositorioweb/img/partners/Sin Partner' && cabecera.imgPrincipal != null ">
+                <div style="display: flex ;align-items: flex-start;gap: 60px;" *ngIf="cabecera.imgPrincipal!='https://img.bsginstitute.com/repositorioweb/img/partners/Sin Partner' && cabecera.imgPrincipal != null ">
                     <div style="font-size: 18px;font-weight: 700;">Partner: </div> 
                     <div *ngIf="cabecera.imgPrincipal!='https://img.bsginstitute.com/repositorioweb/img/partners/Sin Partner' && cabecera.imgPrincipal != null "
                       style="position: relative;margin-top: 10px;text-align: left;margin-bottom: 40px; flex: 1;">
@@ -286,7 +289,7 @@
 
     <div class="container">
       <div class="row rowpadd">
-        <div class="col-12 col-md-8 col-lg-8 containerObjetivos">
+        <div class="col-12 col-md-9 col-lg-9 containerObjetivos">
           <div class="col-12 tituloSeccionPrograma">
             <img src="../../../assets/imagenes/Objetivos.png" alt="objetivos" height="50px">
             <div>Objetivos</div>
@@ -366,7 +369,7 @@
             </mat-tab>
           </mat-tab-group>
         </div> -->
-        <div class="col-12 col-md-4 col-lg-4 containerFormulario">
+        <div class="col-12 col-md-3 col-lg-3 containerFormulario">
           <div id="FormularioProgramasInsert">
             <div class="estructuraProgramForm" style="position: relative;">
               <app-cargando *ngIf="statuscharge==true"></app-cargando>
@@ -626,12 +629,12 @@
       <div class="col-12 col-md-5 col-lg-5" style="margin: 20px 0px;">
         <img src="../../../assets/imagenes/imagen-certificado-pagina-web.png" alt="Certificación" style="width: 100%;">
       </div>
-      <div class="col-12 col-md-7 col-lg-7" style="margin: 20px 0px;">
+      <div class="col-12 col-md-7 col-lg-7" style="margin: 20px 0px;display: flex;justify-content: center;">
           
           <div style="font-size: 18px;margin-bottom: 20px;" *ngIf="certificado.cabecera != ''">{{certificado.cabecera}}</div>
           <div style="display: flex;flex-direction: column;justify-content: center;">
             <div style="display: flex;gap: 5px;padding-left: 25px;margin-top: 15px;font-size: 18px;" *ngFor="let item of certificado.contenido">
-                <img src="../../../assets/imagenes/check.png" alt="check" height="20px">
+                <img src="../../../assets/imagenes/check-celeste.png" alt="check-celeste" height="20px">
                 <div>{{item}}</div>
             </div>
           </div>
@@ -659,7 +662,7 @@
         <div *ngIf="codigoIso=='MX'"style="font-style: italic;margin-top: -15px;margin-bottom: 10px;">
           <strong>NOTA: </strong> Programa de estudios no incorporado en México.
         </div>
-        <div class="puntoAzulLista" [innerHtml]="certificado.descripcionLeyenda | safeHtml" style="text-align: justify;">
+        <div class="puntoAzulListaCertificacion" [innerHtml]="certificado.descripcionLeyenda | safeHtml" style="text-align: justify;">
         </div>
         <!-- <div style="display: flex;justify-content: center;margin-top: 20px;">
           <app-default-button-flecha [confs]="{color:'primary',titulo:'Solicita Información'}"
@@ -721,7 +724,7 @@
     <div class="container">
       <div class="row rowpadd">
         
-        <div class="col-12 col-md-12 col-lg-12 tabprogram">
+        <div class="col-12 col-md-12 col-lg-12 tabprogram" style="display: flex;flex-direction: column;align-items: center;">
           <div class="row">
             <div class="col-12 tituloSeccionPrograma" style="justify-content: center;margin-bottom: 30px;">
               <img src="../../../assets/imagenes/inversion.png" alt="inversion" height="50px">
@@ -729,54 +732,54 @@
             </div>
           </div>
         
-          <div style="color: #616161;font-size: 18px;font-weight: 900;margin-bottom: 30px;" *ngIf="MontoPago!=null && MontoPago.length>0">
-            <ng-container *ngIf="MontoPago[0].paquete==1">
-              Versi&oacute;n B&aacute;sica:
-            </ng-container>
-            <ng-container *ngIf="MontoPago[0].paquete==2">
-              Versión Profesional:
-            </ng-container>
-            <ng-container *ngIf="MontoPago[0].paquete==3">
-              Versión Gerencial:
-            </ng-container>
-          </div>
-          <div class="" *ngFor="let item of MontoPago" style="display: flex;align-items: center;margin-bottom: 10px;">
-            <!-- <div style="margin-top: 5px;">
-              <i class="material-icons" >
-  
-              </i>
-            </div> -->
-            <i class="material-icons iconarrow" style="color: #017EFF;">play_arrow</i>
-            <div *ngIf="item.idTipoPago==1" style="color: #616161;">
-              <ng-container *ngIf="item.porcentajeDescuento==null || item.porcentajeDescuento==0">
-                Pago al Contado: {{item.cuotas|formatoMilesDecimales}}&nbsp;&nbsp;{{item.codigoMoneda}}
+          <div style="display: flex;justify-content: center;flex-direction: column;color: #2E2E2E;font-size: 22px;">
+            <div style="font-weight: 900;margin-bottom: 30px;" *ngIf="MontoPago!=null && MontoPago.length>0">
+              <ng-container *ngIf="MontoPago[0].paquete==1">
+                Versi&oacute;n B&aacute;sica:
               </ng-container>
-              <ng-container *ngIf="item.porcentajeDescuento!=null && item.porcentajeDescuento!=0">
-                <ng-container *ngIf="MontoPago.length>1">
-                  <ng-container *ngFor="let item2 of MontoPago">
-                    <div *ngIf="item2.idTipoPago==2"
-                      [innerHtml]="'Pago al Contado: <strike>'+' '+(item.cuotas|formatoMilesDecimales)+' '+item.codigoMoneda+'</strike> '+item2.montoPagoDescripcion | safeHtml">
-                    </div>
+              <ng-container *ngIf="MontoPago[0].paquete==2">
+                Versión Profesional:
+              </ng-container>
+              <ng-container *ngIf="MontoPago[0].paquete==3">
+                Versión Gerencial:
+              </ng-container>
+            </div>
+            <div class="" *ngFor="let item of MontoPago" style="display: flex;align-items: center;margin-bottom: 10px;">
+              <!-- <div style="margin-top: 5px;">
+                <i class="material-icons" >
+                </i>
+              </div> -->
+              <i class="material-icons iconarrow" style="color: #017EFF;">play_arrow</i>
+              <div *ngIf="item.idTipoPago==1" style="color: #2E2E2E;">
+                <ng-container *ngIf="item.porcentajeDescuento==null || item.porcentajeDescuento==0">
+                  Pago al Contado: {{item.cuotas|formatoMilesDecimales}}&nbsp;&nbsp;{{item.codigoMoneda}}
+                </ng-container>
+                <ng-container *ngIf="item.porcentajeDescuento!=null && item.porcentajeDescuento!=0">
+                  <ng-container *ngIf="MontoPago.length>1">
+                    <ng-container *ngFor="let item2 of MontoPago">
+                      <div *ngIf="item2.idTipoPago==2"
+                        [innerHtml]="'Pago al Contado: <strike>'+' '+(item.cuotas|formatoMilesDecimales)+' '+item.codigoMoneda+'</strike> '+item2.montoPagoDescripcion | safeHtml">
+                      </div>
+                    </ng-container>
+                  </ng-container>
+                  <ng-container *ngIf="MontoPago.length==1">
+                    <div [innerHtml]="item.montoPagoDescripcion | safeHtml"></div>
                   </ng-container>
                 </ng-container>
-                <ng-container *ngIf="MontoPago.length==1">
-                  <div [innerHtml]="item.montoPagoDescripcion | safeHtml"></div>
-                </ng-container>
-              </ng-container>
-              <div></div>
+                <div></div>
+              </div>
+              <div *ngIf="item.idTipoPago==2" style="color: #2E2E2E;">Precio en Cuotas:
+                {{item.matricula|formatoMilesDecimales}}&nbsp;&nbsp;{{item.codigoMoneda}}
+                + {{item.nroCuotas}} cuotas mensuales desde {{item.cuotas|formatoMilesDecimales}}&nbsp;&nbsp;{{item.codigoMoneda}}</div>
             </div>
-            <div *ngIf="item.idTipoPago==2" style="color: #616161;">Precio en Cuotas:
-              {{item.matricula|formatoMilesDecimales}}&nbsp;&nbsp;{{item.codigoMoneda}}
-              + {{item.nroCuotas}} cuotas mensuales desde {{item.cuotas|formatoMilesDecimales}}&nbsp;&nbsp;{{item.codigoMoneda}}</div>
+            <div style="color: #2E2E2E;font-size: 18px; margin: 40px 0px;font-weight:900;">Consulte por nuestras
+              opciones de pago personalizadas y flexibles as&iacute; como las opciones de descuentos.</div>
           </div>
-          <div style="color: #616161;font-size: 18px; margin: 40px 0px;font-weight:900;">Consulte por nuestras
-            opciones de pago personalizadas y flexibles as&iacute; como las opciones de descuentos.</div>
           <div style="display:flex;justify-content:center;margin-top: 15px;">
             <app-default-button-flecha [confs]="{titulo:'Consultar Opción de Pago Personalizado'}"
               [style]="'border-radius:15px;color:white;background:#017EFF;padding:5px 15px'"
               (ButtoclClick)="EventoInteraccionButton('Consultar Opción de Pago Personalizado');;OpenModalFormulario(2)"></app-default-button-flecha>
           </div>
-  
         </div>
       </div>
     </div>
@@ -784,76 +787,57 @@
 
   <div style="background: #e6eefa;">
     <div class="container">
-      <div class="row rowpadd">
-        <div class="col-12 col-md-12 col-lg-12 tabprogram">
+      <div class="row rowpadd" >
+        <div class="col-12 col-md-12 col-lg-12 tabprogram" style="display: flex;flex-direction: column;align-items: center;">
           <div class="row">
             <div class="col-12 tituloSeccionPrograma" style="justify-content: center;margin-bottom: 30px;color: #017EFF;margin-top: 20px;">
               <img src="../../../assets/imagenes/modalidades-de-pago.png" alt="modalidadespago" height="50px">
               <div>Modalidades de pago</div>
             </div>
-          
-          <ng-container *ngIf="codigoIso=='PE'">
-            <div style="display: flex;
-            align-items: center;
-            margin-top: 20px;
-            color: #4a4a49;"><i class="material-icons"
-                style="color: #34c939;margin-right: 10px;font-size: 18px;">play_arrow</i>Dep&oacute;sito o pago en una cuenta del BCP:
-            </div>
-            <div class="row" style="margin-bottom: 30px;margin-top: 15px;">
-              <div class="col-12 col-md-9 col-lg-9" style="padding-left: 42px;">
-                Puedes solicitar tu c&oacute;digo de pago, o la información de la cuenta a nuestros asesores para hacer un
-                dep&oacute;sito o transferencia
+          </div>
+          <div style="display: flex;flex-direction: column;align-items: start;width: 80%;font-size: 22px;">
+            <ng-container *ngIf="codigoIso=='PE'">
+              <div style="display: flex;
+              align-items: center;
+              margin-top: 20px;
+              color: #4a4a49;"><i class="material-icons"
+                  style="color: #34c939;margin-right: 10px;font-size: 18px;">play_arrow</i>Dep&oacute;sito o pago en una cuenta del BCP:
               </div>
-              <div class="col-12 col-md-3 col-lg-3"
-                style="padding: 0px; margin: 10px 0px;display:flex;justify-content: flex-start;">
-                <img class="imgCardFormasPago" src="../../../assets//icons/bcp-06.svg" alt="BCP">
+              <div style="margin-bottom: 30px;margin-top: 15px;display: flex;align-items: center;gap: 30px;">
+                <div style="padding-left: 32px;">
+                  Puedes solicitar tu c&oacute;digo de pago, o la información de la cuenta a nuestros asesores para hacer un
+                  dep&oacute;sito o transferencia
+                </div>
+                <div
+                  style="padding: 0px; margin: 10px 0px;display:flex;justify-content: flex-start;">
+                  <img class="imgCardFormasPago" src="../../../assets//icons/bcp-06.svg" alt="BCP">
+                </div>
               </div>
+            </ng-container>
+            <div class="col-12 col-md-12 col-lg-12" style="margin-bottom: 10px;">
+              <div style="display: flex;
+              align-items: center;
+              color: #4a4a49;"><i class="material-icons"
+                  style="color: #34c939;margin-right: 10px;">play_arrow</i>Paga a trav&eacute;s de nuestro sitio web con
+                los siguientes medios de pago:</div>
             </div>
-          </ng-container>
-    
-        </div>
-        <div class="col-12 col-md-12 col-lg-12" style="margin-bottom: 10px;">
-    
-          <div style="display: flex;
-          align-items: center;
-          color: #4a4a49;"><i class="material-icons"
-              style="color: #34c939;margin-right: 10px;">play_arrow</i>Paga a trav&eacute;s de nuestro sitio web con
-            los siguientes medios de pago:</div>
-        </div>
-        <div class="col-12 col-md-12 col-lg-12">
-          <div style="padding-left: 30px;margin-bottom: 20px;">
-            <div class="contentCardFormasPago">
-              <div>Tarjetas de d&eacute;bito, cr&eacute;dito o billeteras digitales:</div>
-              <div class="contentimgtarjetas">
-                <img src="../../../assets/icons/visa-07.svg" alt="Visa">
-                <img src="../../../assets/icons/mastercard-08.svg" alt="MasterCard">
-                <img src="../../../assets/icons/american-09.svg" alt="American Express">
-                <img src="../../../assets/icons/dinners-10.svg" alt="Dinners">
-                <img src="../../../assets/icons/YapeConFondo.svg" alt="Yape">  
-                <img src="../../../assets/imagenes/Plin.png" alt="Plin">  
-                <img src="../../../assets/imagenes/Agora.png" alt="Agora">  
+            <div class="col-12 col-md-12 col-lg-12">
+              <div style="padding-left: 30px;margin-bottom: 20px;">
+                <div class="contentCardFormasPago">
+                  <div>Tarjetas de d&eacute;bito, cr&eacute;dito o billeteras digitales:</div>
+                  <div class="contentimgtarjetas">
+                    <img src="../../../assets/icons/visa-07.svg" alt="Visa">
+                    <img src="../../../assets/icons/mastercard-08.svg" alt="MasterCard">
+                    <img src="../../../assets/icons/american-09.svg" alt="American Express">
+                    <img src="../../../assets/icons/dinners-10.svg" alt="Dinners">
+                    <img src="../../../assets/icons/YapeConFondo.svg" alt="Yape">
+                    <img src="../../../assets/imagenes/Plin.png" alt="Plin">
+                    <img src="../../../assets/imagenes/Agora.png" alt="Agora">
+                  </div>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-        <!-- <div class="col-12 col-md-6 col-lg-6">
-          <div class="cardFormasPago">
-            <i class="material-icons iconarrow">arrow_forward_ios</i>
-            <div class="contentCardFormasPago">
-              <div>Tarjetas de D&eacute;bito:</div>
-              <img class="imgCardFormasPago" src="../../../assets//icons/visa-07.svg" alt="">
-            </div>
-          </div>
-        </div> -->
-        <!-- <div class="col-12 col-md-6 col-lg-6">
-          <div class="cardFormasPago">
-            <i class="material-icons iconarrow">arrow_forward_ios</i>
-            <div class="contentCardFormasPago">
-              <div>Paypal:</div>
-              <img class="imgCardFormasPago" src="../../../assets//icons/mexico-icon.svg" alt="">
-            </div>
-          </div>
-        </div> -->
       </div>
     </div>
   </div>
