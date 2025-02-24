@@ -149,8 +149,7 @@
           <div class="contentTop">
             <div #contenidoTOp style="background: transparent;position: relative;padding: 10px 0px;">
               <div style="line-height: 120%;" [innerHtml]="cabecera.tituloHtml | safeHtml" class="titlePrograma"></div>
-              <div style="margin: 25px 0px;
-              font-size: 17px;font-weight: 700;">
+              <div class="contenedorArea">
                 Área: <a title=" Vínculo a {{cabecera.areaCapacitacion}}"
                   (click)="EventoInteraccionLinck(cabecera.areaCapacitacion,'Área')" style="font-weight: 100;margin-right: 25px;"
                   routerLink="/Area/{{cabecera.areaDescripcion}}">{{cabecera.areaCapacitacion}}</a> | Sub
@@ -158,13 +157,12 @@
                   routerLink="/SubArea/{{cabecera.subAreaDescripcion}}">{{cabecera.nombreSubArea}}</a> 
               </div>
 
-              <div style="margin: 28px 0px;line-height: 1.8; font-size: 17px; font-weight: 300;width: 80%;"
-                  >
+              <div class="descripcionCurso">
                 {{getSeoDescription(this.parametroSeo,'description')}}
               </div>
               <div class="contentRigth col-12 col-md-6 col-lg-6" style="margin-top: 5%;" *ngIf="innerWidth < 768 ">
                 <ng-container *ngIf="idBusqueda!=7569">
-                  <div style="padding-bottom: 30px;" class="col-12 col-md-12 col-lg-12"
+                  <div class="col-12 col-md-12 col-lg-12"
                   *ngIf="ExisteVideoIntroduccion==true">
                     <iframe #myIframe id="cartoonVideoVistaPrevia" [src]="cabecera.urlVideoIntroduccion | safe"
                     class="embed-responsive-item" style="width: 100%; height: 100%;aspect-ratio: 16/9; border: none;"></iframe>
@@ -173,7 +171,7 @@
               </div>
               <div style="margin-top: 25px;">
                 <div style="display: flex ;align-items: flex-start;gap: 60px;" *ngIf="cabecera.imgPrincipal!='https://img.bsginstitute.com/repositorioweb/img/partners/Sin Partner' && cabecera.imgPrincipal != null ">
-                    <div style="font-size: 18px;font-weight: 700;">Partner: </div> 
+                    <!-- <div style="font-size: 18px;font-weight: 700;">Partner: </div>  -->
                     <div *ngIf="cabecera.imgPrincipal!='https://img.bsginstitute.com/repositorioweb/img/partners/Sin Partner' && cabecera.imgPrincipal != null "
                       style="position: relative;margin-top: 10px;text-align: left;margin-bottom: 40px; flex: 1;">
                       <img class="InfoProgramImg" [src]="cabecera.imgPrincipal" alt="Logo">
@@ -295,8 +293,7 @@
             <div>Objetivos</div>
           </div>
           <div class="col-12" style="margin-top: 20px;">
-            <div class="puntoListaObjetivos" [innerHtml]="seccion.objetivo | safeHtml" style="text-align: left;
-            padding: 20px 0px;font-size: 18px;">
+            <div class="puntoListaObjetivos" [innerHtml]="seccion.objetivo | safeHtml">
             </div>
           </div>
         </div>
@@ -450,12 +447,11 @@
         <div class="col-12" style="display: flex;justify-content: center;">
           <div class="containerObjetivoRequisitos">
               <div class="cardInformacionPrograma">
-                <div class="col-12 tituloSeccionPrograma" style="justify-content: center;">
+                <div class="col-12 tituloSeccionPrograma margen-card" style="justify-content: center;">
                   <img src="../../../assets/imagenes/Publico-Objetivo.png" alt="publico-objetivo" height="50px">
                   <div>Publico Objetivo</div>
                 </div>
-                <div class="puntoListaPublicoObjetivo" [innerHtml]="seccion.publicoObjetivo | safeHtml" style="text-align: left;
-                  padding: 20px 45px;font-size: 18px;">
+                <div class="puntoListaPublicoObjetivo" [innerHtml]="seccion.publicoObjetivo | safeHtml">
                 </div>
               </div>
               <div class="cardInformacionPrograma">
@@ -463,10 +459,9 @@
                   <img src="../../../assets/imagenes/prerequisitos.png" alt="prerequisitos" height="50px">
                   <div>Prerequisitos</div>
                 </div>
-                <div style="text-align: left;
-                padding: 20px 45px;font-size: 18px;" *ngIf="prerequisitos!=undefined;else SinRequisitos">
+                <div *ngIf="prerequisitos!=undefined;else SinRequisitos">
                   <div *ngFor="let cabeceras of prerequisitos">
-                    <p>{{cabeceras.cabecera}}</p>
+                    <p class="cabeceraPrerequisito">{{cabeceras.cabecera}}</p>
                     <div class="puntoListaPublicoObjetivo"*ngFor="let item of cabeceras.contenidos" >
                       <ul>
                         <li>{{item}}</li>
@@ -517,8 +512,8 @@
                   </div>
                 </mat-panel-title>
               </mat-expansion-panel-header>
-                <ul style="margin: 0px;padding-top:15px;padding-bottom: 10px;margin-left: 25px;color: #625530;list-style: none;" [ngStyle]="{'border-bottom': i == estructuraPrograma.length - 1 ? 'none' : '1px solid #FFFFFF'}">
-                <li *ngFor="let itemsubtitle of item.subTitulo" style="font-size: 17px;margin-bottom: 15px;display: flex;align-items: center;gap: 5px;">
+                <ul class="containerListaExpansion" [ngStyle]="{'border-bottom': i == estructuraPrograma.length - 1 ? 'none' : '1px solid #FFFFFF'}">
+                <li *ngFor="let itemsubtitle of item.subTitulo" class="subtituloPanelExpansion">
                   <img src="../../../assets/imagenes/check.png" alt="check" height="20px">
                   {{itemsubtitle.contenido}}
                 </li>
@@ -601,7 +596,7 @@
                   </div>
                   <ng-container *ngFor="let content of item.contenido">
                     <!-- <div class="todoslosBeneficios" *ngIf="content.idBeneficio==-1;else Beneficio">{{content.contenido}}</div> -->
-                    <div style="display: flex;gap: 5px;padding-left: 25px;margin-top: 15px;font-size: 18px;" *ngIf="content.idBeneficio>0">
+                    <div class="contenidoBeneficioPrograma" *ngIf="content.idBeneficio>0">
                       <div><img src="../../../assets/imagenes/check.png" alt="check" height="20px"></div>
                       <div>{{content.contenido}}</div>
                     </div>
@@ -631,9 +626,9 @@
       </div>
       <div class="col-12 col-md-7 col-lg-7" style="margin: 20px 0px;display: flex;justify-content: center;">
           
-          <div style="font-size: 18px;margin-bottom: 20px;" *ngIf="certificado.cabecera != ''">{{certificado.cabecera}}</div>
+          <div class="cabeceraCertificacion" *ngIf="certificado.cabecera != ''">{{certificado.cabecera}}</div>
           <div style="display: flex;flex-direction: column;justify-content: center;">
-            <div style="display: flex;gap: 5px;padding-left: 25px;margin-top: 15px;font-size: 18px;" *ngFor="let item of certificado.contenido">
+            <div class="contenidoCertificacion" *ngFor="let item of certificado.contenido">
                 <img src="../../../assets/imagenes/check-celeste.png" alt="check-celeste" height="20px">
                 <div>{{item}}</div>
             </div>
@@ -658,7 +653,7 @@
         </mat-accordion> -->
       </div>
       <div class="col-12">
-        <div *ngIf="certificado.piePagina!=null && certificado.piePagina!='' && certificado.piePagina!= undefined" [innerHtml]="certificado.piePagina | safeHtml"></div><br>
+        <div class="pieCertificacion" *ngIf="certificado.piePagina!=null && certificado.piePagina!='' && certificado.piePagina!= undefined" [innerHtml]="certificado.piePagina | safeHtml"></div><br>
         <div *ngIf="codigoIso=='MX'"style="font-style: italic;margin-top: -15px;margin-bottom: 10px;">
           <strong>NOTA: </strong> Programa de estudios no incorporado en México.
         </div>
@@ -732,7 +727,7 @@
             </div>
           </div>
         
-          <div style="display: flex;justify-content: center;flex-direction: column;color: #2E2E2E;font-size: 22px;">
+          <div class="contenidoInversion">
             <div style="font-weight: 900;margin-bottom: 30px;" *ngIf="MontoPago!=null && MontoPago.length>0">
               <ng-container *ngIf="MontoPago[0].paquete==1">
                 Versi&oacute;n B&aacute;sica:
@@ -772,7 +767,7 @@
                 {{item.matricula|formatoMilesDecimales}}&nbsp;&nbsp;{{item.codigoMoneda}}
                 + {{item.nroCuotas}} cuotas mensuales desde {{item.cuotas|formatoMilesDecimales}}&nbsp;&nbsp;{{item.codigoMoneda}}</div>
             </div>
-            <div style="color: #2E2E2E;font-size: 18px; margin: 40px 0px;font-weight:900;">Consulte por nuestras
+            <div class="consulteOpcionesPago">Consulte por nuestras
               opciones de pago personalizadas y flexibles as&iacute; como las opciones de descuentos.</div>
           </div>
           <div style="display:flex;justify-content:center;margin-top: 15px;">
@@ -795,7 +790,7 @@
               <div>Modalidades de pago</div>
             </div>
           </div>
-          <div style="display: flex;flex-direction: column;align-items: start;width: 80%;font-size: 22px;">
+          <div class="containerModalidadesPago">
             <ng-container *ngIf="codigoIso=='PE'">
               <div style="display: flex;
               align-items: center;
@@ -803,13 +798,12 @@
               color: #4a4a49;"><i class="material-icons"
                   style="color: #34c939;margin-right: 10px;font-size: 18px;">play_arrow</i>Dep&oacute;sito o pago en una cuenta del BCP:
               </div>
-              <div style="margin-bottom: 30px;margin-top: 15px;display: flex;align-items: center;gap: 30px;">
+              <div class="containerPagoBCP">
                 <div style="padding-left: 32px;">
                   Puedes solicitar tu c&oacute;digo de pago, o la información de la cuenta a nuestros asesores para hacer un
                   dep&oacute;sito o transferencia
                 </div>
-                <div
-                  style="padding: 0px; margin: 10px 0px;display:flex;justify-content: flex-start;">
+                <div class="containerImgBCP">
                   <img class="imgCardFormasPago" src="../../../assets//icons/bcp-06.svg" alt="BCP">
                 </div>
               </div>
@@ -897,9 +891,9 @@
           <div>Tags</div>
         </div>
 
-        <div class="col-12 col-md-12 col-lg-12">
+        <div class="col-12 col-md-12 col-lg-12 widthTag">
           <div class="containerTags">
-            <div *ngFor="let item of tags;let i = index" style="margin-right: 20px;">
+            <div *ngFor="let item of tags;let i = index" class="tag">
               <app-tag-button [tag]="item" [Interaccion]="'Programas Relacionados'" [backgroundColor]="i%2==0 ? '#FFF5FF' : '#FFFAE5'" ></app-tag-button>
             </div>
           </div>
