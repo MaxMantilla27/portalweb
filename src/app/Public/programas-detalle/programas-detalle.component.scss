@@ -292,7 +292,7 @@
 // }
 
 .todoslosBeneficios{
-  font-size: 16px;
+  font-size: 18px;
   font-weight: 900;
   padding-left: 25px;
   padding-top: 20px;
@@ -529,8 +529,9 @@
 @media (max-width: 768px){
 
   .imgCardFormasPago{
-    margin-left: 40px;
+    margin-left: 32px;
     margin-right: 0px;
+    width: 60px;
   }
   .contentimgtarjetas{
     padding: 0px;
@@ -561,6 +562,7 @@
   .containerObjetivoRequisitos{
     flex-direction: column;
     gap: 50px;
+    width: 100% !important;
     .cardInformacionPrograma{
       width: 100%;
     }
@@ -569,7 +571,7 @@
   .infoClaveProgramaContainer{
     flex-direction: column;
     align-items: flex-start;
-    padding:10px 10px 10px 100px !important;
+    padding:10px 10px 10px 35px !important;
     top: -122px !important;
     gap: 10px;
     .infoClave{
@@ -591,7 +593,7 @@
 
   .containerTags{
     flex-direction: column;
-    align-items: start;
+    align-items: start !important;
     gap: 10px;
   }
 
@@ -608,7 +610,103 @@
   }
 
   .titlePrograma h1{
-    font-size: 24px;
+    font-size: 19px;
+  }
+
+  .vistaPreviaButton {
+    img{
+      height: 30px !important;
+    }
+  }
+
+  .subtituloPanelExpansion{
+    font-size: 12px !important;
+  }
+
+  .containerListaExpansion{
+    margin-left: 0px !important;
+  }
+
+  .puntoAzulDuracionHorario{
+    p{
+      font-size: 15px !important;
+    }
+  }
+
+  .carousel-control-next,
+  .carousel-control-prev
+  {
+    width: 32px;
+  }
+
+  .carsTitleBeneficiosPrograma{
+    font-size: 15px !important;
+  }
+
+  .contenidoBeneficioPrograma{
+    font-size: 15px !important;
+  }
+
+  .contentExpositor{
+
+    p{
+      font-size: 13px !important;
+    }
+
+  }
+
+  .contenidoInversion{
+    font-size: 15px !important;
+  }
+  
+  .consulteOpcionesPago{
+    font-size: 15px !important;
+  }
+
+  .todoslosBeneficios{
+    font-size: 15px !important;
+  }
+
+  .containerModalidadesPago{
+    font-size: 15px !important;
+    width: 100% !important;
+  }
+
+  .containerPagoBCP{
+    flex-direction: column;
+    gap: 10px !important;
+    margin-bottom: 20px !important;
+    .containerImgBCP{
+      align-self: flex-start;
+    }
+  }
+
+  .cabeceraCertificacion{
+    font-size: 15px !important;
+  }
+
+  .contenidoCertificacion{
+    font-size: 15px !important;
+  }
+
+  .pieCertificacion{
+    font-size: 15px !important;
+  }
+
+  .widthTag{
+    width: 100% !important;
+    .containerTags{
+     display: flex;
+     align-items: center;
+     //justify-content: flex-start !important;
+     flex-wrap: wrap;
+     .tag{
+       //margin-right: 20px;
+       font-size: 15px !important;
+       text-align: start !important;
+       //flex: 1;
+     }
+    }
   }
 
 }
@@ -633,6 +731,13 @@
   align-items: center;
   gap: 2px;
   //white-space: nowrap; /* Evita que los elementos se envuelvan */
+}
+
+.puntoListaObjetivos,
+.puntoListaPublicoObjetivo{
+  text-align: left;
+  padding: 0px 45px;
+  font-size: 18px;
 }
 
 .puntoListaObjetivos ul,
@@ -710,11 +815,13 @@
 
   .tituloSeccionPrograma{
     justify-content: flex-start !important;
+    font-size: 30px;
   }
 
   .carouselContainer{
     flex-direction: column;
     gap: 20px;
+    padding: 0px 10px;
     .carouselContainerContent{
       .titleExpositor{
         font-size: 18px;
@@ -726,7 +833,7 @@
 
   .containerFormulario{
     border-bottom: 1px solid black;
-    padding: 0px 30px;
+    padding: 0px 20px;
     padding-bottom: 20px;
   }
 
@@ -747,8 +854,66 @@
   .contentBotton{
     height: auto;
   }
+  .descripcionCurso{
+    font-size: 15px;
+  }
+
+  .contenedorArea{
+    font-size: 12px !important;
+  }
+
+  .responsiveInfoClave{
+    display: flex;
+    justify-content: center;
+  }
+
+  .puntoListaPublicoObjetivo,
+  .puntoListaObjetivos
+  {
+    font-size: 15px !important;
+    padding: 0px 20px !important;
+  }
+
+  .puntoListaObjetivos ul,
+  .puntoListaPublicoObjetivo ul,
+  .puntoAzulListaCertificacion li ul li
+  {
+    list-style: none;
+    padding-left: 0px;
+    font-size: 15px !important;
+  }
+
+  .puntoListaObjetivos ul li,
+  .puntoListaPublicoObjetivo ul li,
+  .puntoAzulListaCertificacion li ul li
+  {
+    line-height: 1.8;
+    font-size: 15px !important;
+    position: relative;
+    padding-left: 25px;
+    margin-bottom: 25px;
+  }
+
+  .cabeceraPrerequisito{
+    padding: 0px 20px !important;
+    font-size: 15px !important;
+  }
+
+  .mat-expansion-panel-header{
+    padding: 0px;
+  }
+
+  .estructuraProgramTitle{
+    font-size: 12px;
+  }
+
+  .contentimgtarjetas {
+    margin-top: 15px;
+    gap: 15px;
+  }
 
 }
+
 @media (max-width: 992px){
   #FormularioProgramas{
     right: 8%;
@@ -987,13 +1152,21 @@
     cursor: pointer;
   }
  }
-
- .containerTags{
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-wrap: wrap;
- }
+.widthTag{
+  width: 80%;
+  .containerTags{
+   display: flex;
+   align-items: center;
+   justify-content: space-between;
+   flex-wrap: wrap;
+   .tag{
+     margin-right: 20px;
+     font-size: 20px;
+     text-align: center;
+     //flex: 1;
+   }
+  }
+}
 
 /*
 .vistaPreviaButton{
@@ -1007,6 +1180,13 @@
   flex: 1;
 }*/
 
+.vistaPreviaButton{
+  img{
+    height: 50px;
+    margin-left: auto;
+  }
+}
+
 .masInformacionButton{
   width: 100%;
   border:#F88940;
@@ -1018,3 +1198,107 @@
   color: white;
 }
 
+.descripcionCurso{
+  margin: 28px 0px;
+  line-height: 1.8; 
+  font-size: 17px; 
+  font-weight: 300;
+  width: 80%;
+}
+
+.contenedorArea{
+  margin: 25px 0px;
+  font-size: 17px;
+  font-weight: 700;
+}
+
+.cabeceraPrerequisito{
+  text-align: left;
+  padding: 0px 45px;
+  margin: 20px 0px;
+  font-size: 18px;
+}
+
+.margen-card{
+  margin-bottom: 20px;
+}
+
+.subtituloPanelExpansion{
+  font-size: 17px;
+  margin-bottom: 15px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.containerListaExpansion{
+  margin: 0px;
+  padding-top:15px;
+  padding-bottom: 10px;
+  margin-left: 25px;
+  color: #2E2E2E;
+  list-style: none;
+}
+
+.contenidoBeneficioPrograma{
+  display: flex;
+  gap: 5px;
+  padding-left: 25px;
+  margin-top: 15px;
+  font-size: 18px;
+}
+
+.contenidoInversion{
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  color: #2E2E2E;
+  font-size: 22px;
+}
+
+.consulteOpcionesPago{
+  color: #2E2E2E;
+  font-size: 18px;
+  margin: 40px 0px;
+  font-weight:900;
+}
+
+.containerModalidadesPago{
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  width: 80%;
+  font-size: 22px;
+}
+
+.containerPagoBCP{
+  margin-bottom: 30px;
+  margin-top: 15px;
+  display: flex;
+  align-items: center;
+  gap: 30px;
+
+  .containerImgBCP{
+    padding: 0px;
+    margin: 10px 0px;
+    display:flex;
+    justify-content: flex-start;
+  }
+}
+
+.cabeceraCertificacion{
+  font-size: 18px;
+  margin-bottom: 20px;
+}
+
+.contenidoCertificacion{
+  display: flex;
+  gap: 5px;
+  padding-left: 25px;
+  margin-top: 15px;
+  font-size: 18px;
+}
+
+.vinculo{
+  padding: 0px 30px;
+}
