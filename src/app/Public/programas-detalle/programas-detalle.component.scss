@@ -746,6 +746,10 @@
   //white-space: nowrap; /* Evita que los elementos se envuelvan */
 }
 
+.puntoAzulListaCertificacion{
+  text-align: justify;
+}
+
 .puntoListaObjetivos,
 .puntoListaPublicoObjetivo{
   text-align: left;
@@ -885,6 +889,13 @@
   {
     font-size: 15px !important;
     padding: 0px 20px !important;
+  }
+
+  .puntoAzulListaCertificacion{
+    text-align: start !important;
+    span{
+      word-wrap: break-word;
+    }
   }
 
   .puntoListaObjetivos ul,
@@ -1337,6 +1348,7 @@
   cursor: pointer;
   font-size: 14px;
   padding: 5px 0px;
+  text-decoration: underline;
 }
 
 .contenedorInversion{
