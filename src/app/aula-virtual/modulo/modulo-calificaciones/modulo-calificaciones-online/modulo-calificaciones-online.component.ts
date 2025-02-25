@@ -89,7 +89,7 @@ export class ModuloCalificacionesOnlineComponent implements OnInit,OnDestroy {
               const ultimaSesion = this.listadoNotas.listadoSesiones.sort((a: any, b: any) => new Date(b.fechaHoraInicio).getTime() - new Date(a.fechaHoraInicio).getTime())[0];
               const esFechaActualMayor = new Date() > new Date(ultimaSesion.fechaHoraInicio);
 
-              if (this.listadoNotas.listadoSesiones.length !== totalAsistenciasSesion && !esFechaActualMayor) {
+              if (this.listadoNotas.listadoSesiones.length !== totalAsistenciasSesion || !esFechaActualMayor) {
               TieneNota = false;
               }
 

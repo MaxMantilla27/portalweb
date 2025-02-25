@@ -204,7 +204,7 @@ export class CursoNotasComponent implements OnInit, OnDestroy {
                               ).length || 0;
 
                           if (
-                            sesionesLength != totalAsistenciasSesion &&
+                            sesionesLength != totalAsistenciasSesion ||
                             !esFechaActualMayor
                           ) {
                             TieneNota = false;
