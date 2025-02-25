@@ -309,13 +309,21 @@ export class ChatAtencionClienteChatComponent
           respuesta.idAlumno,
           respuesta.id
         );
+        this.ActualizarConexionIdAlumno(respuesta.idAlumno)
       })
       .catch((error: any) => {
         // Maneja el error aquí
         console.error('Error al invocar GenerarLogVisitanteAtc:', error);
       });
   }
+  ActualizarConexionIdAlumno(IdAlumno:number){
+    this.IdAlumno=IdAlumno
+    this.hubConnection.stop().then(() => {
+      console.log('Conexión cerrada, reconectando con nuevo IdAlumno...');
+      this.ConectarSocket(); // Reconecta con el nuevo IdAlumno
+    });
 
+  }
   mensajeChat() {
     this.hubConnection.invoke('mensajeChat', this.chatBox);
   }
