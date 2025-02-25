@@ -571,7 +571,7 @@
   .infoClaveProgramaContainer{
     flex-direction: column;
     align-items: flex-start;
-    padding:10px 10px 10px 35px !important;
+    padding:16px 10px 16px 35px !important;
     top: -122px !important;
     gap: 10px;
     .infoClave{
@@ -709,6 +709,16 @@
     }
   }
 
+  .contenedorInversion{
+    align-items: flex-start !important;
+  }
+
+  .contentExpositor {
+    max-height: 80px; /* Altura máxima antes del "Ver más" */
+    overflow: hidden;
+    transition: max-height 0.3s ease-in-out;
+  }
+
 }
 
 .cardInformacionPrograma{
@@ -724,6 +734,7 @@
 }
 
 .tituloSeccionPrograma{
+  color: #2E2E2E;
   display: flex;
   font-size: 44px;
   font-weight: 900;
@@ -1056,12 +1067,13 @@
   position: relative;
   display: flex;
   justify-content: center;
-  padding-top: 20px;
+  padding-top: 40px;
   padding-bottom: 70px;
 }
 
 /****************************************/
 .tituloHeaderPrograma h1{
+  color: #2E2E2E;
   font-size: 20px;
   font-weight: bold;
   padding: 15px 0px;
@@ -1102,7 +1114,7 @@
    }
  
    .seccionHeaderPrograma {
-     color: #4E4E4E;
+     color: #2E2E2E;
      text-decoration: none;
      padding: 5px 10px;
      display: block;
@@ -1301,4 +1313,31 @@
 
 .vinculo{
   padding: 0px 30px;
+  color: #656565;
+}
+
+.subtitulo{
+  color: #017EFF;
+  line-height: 100%;
+  font-weight: 900;
+  text-decoration: underline;
+}
+
+.contentExpositor.expanded {
+  max-height: none; /* Expande al tamaño completo */
+}
+
+.ver-mas-btn {
+  background: none;
+  border: none;
+  color: #007bff;
+  cursor: pointer;
+  font-size: 14px;
+  padding: 5px 0px;
+}
+
+.contenedorInversion{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }

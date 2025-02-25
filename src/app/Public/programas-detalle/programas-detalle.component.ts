@@ -297,6 +297,7 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
   ];
 
   public ExisteVideoIntroduccion: boolean = false;
+  public expanded:boolean = false;
 
   @HostListener('window:scroll', [])
     onWindowScroll() {
