@@ -78,7 +78,7 @@ export class CursoNotasComponent implements OnInit, OnDestroy {
               let mostrarCalificacionAsincronica = true;
               if (x.detalleCalificacion.length != 0) {
                 x.detalleCalificacion.forEach((y: any) => {
-                  console.log(y)
+                  console.log(y);
                   if (y.criterioEvaluacion == 'Promedio') {
                     y.mostrarCalificacion = true;
                   }
@@ -87,7 +87,7 @@ export class CursoNotasComponent implements OnInit, OnDestroy {
                   }
                 });
               }
-              console.log(mostrarCalificacionAsincronica)
+              console.log(mostrarCalificacionAsincronica);
               x.nombreModalidad = 'Online Asincrónico';
               x.mostrarCalificacion = mostrarCalificacionAsincronica;
               x.idPEspecifico = x.idPEspecificoHijo;
@@ -202,13 +202,9 @@ export class CursoNotasComponent implements OnInit, OnDestroy {
                                 (f: any) =>
                                   f.asistio === true || f.asistio === null
                               ).length || 0;
-
-                          if (
-                            sesionesLength != totalAsistenciasSesion ||
-                            !esFechaActualMayor
-                          ) {
-                            TieneNota = false;
-                          }
+                              if (!esFechaActualMayor) {
+                                TieneNota = false;
+                              }
 
                           if (sesionesLength > 0) {
                             nota =
@@ -322,15 +318,14 @@ export class CursoNotasComponent implements OnInit, OnDestroy {
                               na.nota *
                               (100 / this.listadoNotas.escalaCalificacion);
                           }
-                            var escala =
+                          var escala =
                             this.listadoNotas.listadoEvaluaciones.filter(
                               (w: any) => w.id == na.IdEvaluacion
                             )[0];
-                            console.log(this.listadoNotas.listadoNotas);
-                            var TieneDetalle =
+                          console.log(this.listadoNotas.listadoNotas);
+                          var TieneDetalle =
                             this.listadoNotas.listadoNotas.some(
-                              (w: any) =>
-                              w.idEvaluacion == na.IdEvaluacion
+                              (w: any) => w.idEvaluacion == na.IdEvaluacion
                             );
                           notaFinal += nota * (escala.porcentaje / 100);
                           data.detalleCalificacion.push({
