@@ -2,7 +2,7 @@
 <div class="contentChat" >
   <div class="headerChatAula" *ngIf="nombreasesorglobal!=''">
     <div class="imgAsesor">
-      <img [src]="img" (error)="ErrorImgAsesor()" alt="">
+      <img [src]="img" (error)="ErrorImgAsesor()" alt="asesor">
       <div class="nombreAsesor">
         <ng-container *ngIf="estadoLogueo=='false'">
           Chatea en línea con {{nombreAsesorSplit[0]}} {{nombreAsesorSplit[1]}}

@@ -622,7 +622,7 @@
         </div>
       </div>  
       <div class="col-12 col-md-5 col-lg-5" style="margin: 20px 0px;">
-        <img src="../../../assets/imagenes/imagen-certificado-pagina-web.png" alt="Certificación" style="width: 100%;">
+        <img src="../../../assets/imagenes/certificado.png" alt="certificado" style="width: 100%;">
       </div>
       <div class="col-12 col-md-7 col-lg-7" style="margin: 20px 0px;display: flex;justify-content: center;">
           
@@ -657,7 +657,7 @@
         <div *ngIf="codigoIso=='MX'"style="font-style: italic;margin-top: -15px;margin-bottom: 10px;">
           <strong>NOTA: </strong> Programa de estudios no incorporado en México.
         </div>
-        <div class="puntoAzulListaCertificacion" [innerHtml]="certificado.descripcionLeyenda | safeHtml" style="text-align: justify;">
+        <div class="puntoAzulListaCertificacion" [innerHtml]="certificado.descripcionLeyenda | safeHtml">
         </div>
       </div>
     </div>
@@ -687,8 +687,14 @@
                       </div>
                       <div class="carouselContainerContent">
                         <div class="titleExpositor">{{ste.primerNombre}} {{ste.apellidoPaterno}} ({{ste.nombrePais}})</div>
-                        <div class="contentExpositor" [innerHtml]="ste.hojaVidaResumidaPerfil | safeHtml"></div>
+                        <div class="contentExpositor" 
+                          [ngClass]="{'expanded': expanded}" 
+                          [innerHtml]="ste.hojaVidaResumidaPerfil | safeHtml"
+                        ></div>
                       </div>
+                      <button *ngIf="innerWidth<768" class="ver-mas-btn" (click)="expanded = !expanded">
+                        {{ expanded ? 'Ver menos' : 'Ver más' }}
+                      </button>
                       <!-- <app-card-expositores [expositor]="item"></app-card-expositores> -->
                     </div>
                   </div>
@@ -712,7 +718,7 @@
     <div class="container">
       <div class="row rowpadd">
         
-        <div class="col-12 col-md-12 col-lg-12 tabprogram" style="display: flex;flex-direction: column;align-items: center;">
+        <div class="col-12 col-md-12 col-lg-12 tabprogram contenedorInversion">
           <div class="row">
             <div class="col-12 tituloSeccionPrograma" style="justify-content: center;margin-bottom: 30px;">
               <img src="../../../assets/imagenes/inversion.png" alt="inversion" height="50px">

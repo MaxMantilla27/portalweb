@@ -137,6 +137,7 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
   ngOnDestroy(): void {
     this.signal$.next(true);
     this.signal$.complete();
+    this._HelperServiceP.enviarScrollHeaderPrograma(false);
   }
   public jsonEnvioPago:PagoOrganicoAlumnoDTO={
     CodigoBanco:'',
@@ -297,6 +298,7 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
   ];
 
   public ExisteVideoIntroduccion: boolean = false;
+  public expanded:boolean = false;
 
   @HostListener('window:scroll', [])
     onWindowScroll() {
@@ -389,6 +391,7 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
 
     this._HelperServiceP
         .recibirScrollHeaderPrograma
+        .pipe(takeUntil(this.signal$))
         .subscribe((isScrolled) => {
           this.isScrolled = isScrolled;
         })
