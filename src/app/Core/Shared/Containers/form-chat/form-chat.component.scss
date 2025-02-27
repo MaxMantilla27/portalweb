@@ -1,0 +1,19 @@
+.card-footer{
+    background: white;
+    padding-bottom: 0px;
+    padding-top: 0px;    
+    border: 1px solid transparent;
+    position: relative;
+    height: 420px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+
+}
+
+@media (min-width:992px) and (max-width:1280px){
+
+    .card-footer{
+        height: 310px !important;
+    }
+
+}

@@ -172,7 +172,7 @@
               <div style="margin-top: 25px;">
                 <div style="display: flex ;align-items: flex-start;gap: 60px;" *ngIf="cabecera.imgPrincipal!='https://img.bsginstitute.com/repositorioweb/img/partners/Sin Partner' && cabecera.imgPrincipal != null ">
                     <!-- <div style="font-size: 18px;font-weight: 700;">Partner: </div>  -->
-                    <div *ngIf="cabecera.imgPrincipal!='https://img.bsginstitute.com/repositorioweb/img/partners/Sin Partner' && cabecera.imgPrincipal != null "
+                    <div *ngIf="cabecera.imgPrincipal!='https://img.bsginstitute.com/repositorioweb/img/partners/Sin Partner' && cabecera.imgPrincipal != null && cabecera.imgPrincipal !== ''"
                       style="position: relative;margin-top: 10px;text-align: left;margin-bottom: 40px; flex: 1;">
                       <img class="InfoProgramImg" [src]="cabecera.imgPrincipal" alt="Logo">
                     </div>
@@ -287,7 +287,7 @@
 
     <div class="container">
       <div class="row rowpadd">
-        <div class="col-12 col-md-9 col-lg-9 containerObjetivos">
+        <div class="col-12 col-md-4 col-lg-8 col-xl-8 col-xxl-9 containerObjetivos">
           <div class="col-12 tituloSeccionPrograma">
             <img src="../../../assets/imagenes/Objetivos.png" alt="objetivos" height="50px">
             <div>Objetivos</div>
@@ -297,76 +297,7 @@
             </div>
           </div>
         </div>
-        <!-- <div class="col-12 col-md-12 col-lg-12 tabprogram">
-          <mat-tab-group mat-align-tabs="start" (selectedTabChange)="tabChanged($event)">
-            <mat-tab label="Objetivos">
-              <div class="puntoAzulLista" [innerHtml]="seccion.objetivo | safeHtml" style="text-align: left;
-              padding: 20px 0px;">
-  
-              </div>
-            </mat-tab>
-            <mat-tab label="Público Objetivo">
-              <div class="puntoAzulLista" [innerHtml]="seccion.publicoObjetivo | safeHtml" style="text-align: left;
-              padding: 20px 0px;">
-  
-              </div>
-            </mat-tab>
-            <mat-tab label="Prerrequisitos">
-              <div style="text-align: left;
-              padding: 20px 0px;" *ngIf="prerequisitos!=undefined;else SinRequisitos">
-                <div *ngFor="let cabeceras of prerequisitos">
-                  <p>{{cabeceras.cabecera}}</p>
-                  <div class="puntoAzulLista"*ngFor="let item of cabeceras.contenidos" >
-                    <ul>
-                      <li>{{item}}</li>
-                    </ul>
-                  </div>
-                </div>
-                <div class="piePagina" [innerHtml]="PrerrequisitosPiePagina | safeHtml"></div>
-              </div>
-              <ng-template #SinRequisitos>
-                Sin requisitos
-              </ng-template>
-            </mat-tab>
-            <mat-tab label="Duración y Horarios">
-              <ng-container *ngIf="cabecera!=null && cabecera.listProgramaEspecificoInformacionDTO!=null">
-                <div *ngIf="seccion.duracionHorario==null">
-                  <ng-container  *ngFor="let item of cabecera.listProgramaEspecificoInformacionDTO">
-                    <div *ngIf="item.sesiones!=null && item.sesiones.length>0" style="margin-top: 20px;">
-                      <strong>
-                        En la modalidad
-                        <ng-container *ngIf="item.tipo.toLowerCase()=='online sincronica'">Online Sincrónica (Clases en
-                          vivo):</ng-container>
-                        <ng-container *ngIf="item.tipo.toLowerCase()!='online sincronica'">Presencial (Clases
-                          presenciales):</ng-container>
-                      </strong>
-                      <br>
-                      Las clases se desarrollarán de forma {{item.tipo.toLowerCase()=='online sincronica'?'virtual':'presencial'}}, con una frecuencia semanal en el siguiente horario (*):
-                      <ul style="margin: 1rem;">
-                        <li *ngFor="let sesi of item.sesiones">
-                          <strong>
-                            {{sesi.dia}}: {{sesi.horaInicio.split(':')[0]+':'+sesi.horaInicio.split(':')[1] }} a
-                            {{sesi.horaFin.split(':')[0]+':'+sesi.horaFin.split(':')[1] }} horas.
-                          </strong>
-                        </li>
-                      </ul>
-                      (*) Para más detalles sobre fechas y horarios solicita el cronograma de clases.
-  
-                    </div>
-  
-                  </ng-container>
-                </div>
-  
-              </ng-container>
-  
-              <div class="puntoAzulLista" [innerHtml]="seccion.duracionHorario | safeHtml" style="text-align: left;
-              padding: 20px 0px;">
-  
-              </div>
-            </mat-tab>
-          </mat-tab-group>
-        </div> -->
-        <div class="col-12 col-md-3 col-lg-3 containerFormulario">
+        <div class="col-12 col-md-4 col-lg-4 col-xl-4 col-xxl-3 containerFormulario">
           <div id="FormularioProgramasInsert">
             <div class="estructuraProgramForm" style="position: relative;">
               <app-cargando *ngIf="statuscharge==true"></app-cargando>
