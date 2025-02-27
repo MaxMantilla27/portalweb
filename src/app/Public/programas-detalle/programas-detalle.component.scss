@@ -966,6 +966,37 @@
   
 }
 
+@media (min-width:992px) and (max-width:1280px){
+
+  .rowpadd{
+    padding: 50px 0px !important;
+  }
+
+  .tituloHeaderPrograma h1{
+    font-size: 18px !important;
+  }
+
+  .fixed-navbar{
+    .contenedor-navegacion-seccion{
+      width: 95% !important;
+    }
+  }
+
+  #absoluteFormulario{
+    width: 28% !important;
+    right: 36px !important;
+  }
+
+  #absoluteFormulario{
+
+    #FormularioProgramasInsert{
+      max-height: 85vh;
+      overflow-y: auto;
+    }
+  }
+
+}
+
 .container {
   max-width: 95%;
 }
@@ -1160,8 +1191,8 @@
   display: block;
   position: absolute;
   top: 95px;
-  right: 146px;
-  width: 22%;
+  right: 188px;
+  width: 18%;
   margin-left: 0px;
   #FormularioProgramasInsert{
     margin-left: 0px;

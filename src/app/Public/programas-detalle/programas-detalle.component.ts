@@ -564,6 +564,7 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
               let t=metas.find((x:any)=>x.nombre=='title')!=undefined?
                         metas.find((x:any)=>x.nombre=='title').descripcion:undefined
               let d=metas.find((x:any)=>x.nombre=='description')!=undefined?
+
                         metas.find((x:any)=>x.nombre=='description').descripcion:undefined
               let k=metas.find((x:any)=>x.nombre=='keywords')!=undefined?
                         metas.find((x:any)=>x.nombre=='keywords').descripcion:undefined
@@ -609,10 +610,14 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
                 this.cabecera.nombreSubArea,
                 urlWeb: '/' + this.AraCompleta + '/' + this.nombreProgramCompeto,
               });
-            if (x.programaCabeceraDetalleDTO.imgPrincipal != null) {
+            if (x.programaCabeceraDetalleDTO.imgPrincipal != null && !x.programaCabeceraDetalleDTO.imgPrincipal.toLowerCase().includes('.vimeo')) {
               this.cabecera.imgPrincipal =
                 'https://img.bsginstitute.com/repositorioweb/img/partners/' +
                 x.programaCabeceraDetalleDTO.imgPrincipal;
+
+                console.log(this.cabecera.imgPrincipal)
+            }else{
+              this.cabecera.imgPrincipal = "";
             };
 
             if (x.programaCabeceraDetalleDTO.urlVideoIntroduccion !== null) {
