@@ -963,6 +963,16 @@
     padding-top: 60px !important;
     
   }
+  .fixed-navbar{
+    .contenedor-navegacion-seccion{
+      width: 95% !important;
+    }
+  }
+
+  #absoluteFormulario {
+    right: 47px !important;
+    width: 22% !important;
+  }
   
 }
 
@@ -976,26 +986,43 @@
     font-size: 18px !important;
   }
 
-  .fixed-navbar{
-    .contenedor-navegacion-seccion{
-      width: 95% !important;
-    }
-  }
+  // .fixed-navbar{
+  //   .contenedor-navegacion-seccion{
+  //     width: 95% !important;
+  //   }
+  // }
 
   #absoluteFormulario{
     width: 28% !important;
     right: 36px !important;
   }
 
-  #absoluteFormulario{
+  // #absoluteFormulario{
 
-    #FormularioProgramasInsert{
-      max-height: 85vh;
-      overflow-y: auto;
-    }
-  }
+  //   #FormularioProgramasInsert{
+  //     max-height: 67vh;
+  //     overflow-y: auto;
+  //   }
+  // }
+
+  //  .containerMasInformacion{
+
+  //     margin-right: 0px !important;
+  //     .masInformacionButton{
+  //       padding: 8px 25px !important;
+  //     }
+  //   }
+
+    // .containerMasInformacion{
+
+    //   margin-right: 0px !important;
+    //   .masInformacionButton{
+    //     padding: 8px 25px !important;
+    //   }
+    // }
 
 }
+
 
 .container {
   max-width: 95%;
@@ -1386,4 +1413,18 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+
+// .alturaFormularioAbsolute{
+//   max-height: 67vh !important;
+//   overflow-y: auto !important;
+// }
+
+@media (min-width:1000px) and (max-width:1107px){
+  .containerMasInformacion{
+    margin-right: 0px !important;
+    .masInformacionButton{
+      padding: 8px 30px;
+    }
+  }
 }

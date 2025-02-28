@@ -87,6 +87,10 @@ export class FormChatComponent implements OnInit,OnChanges {
     idIndustria:undefined,
     idLocalidad:undefined
   }
+
+  public pantallaHeight : any;
+  
+
   ngOnInit(): void {
     console.log('form-chat')
     this.AddFields();
@@ -114,6 +118,7 @@ export class FormChatComponent implements OnInit,OnChanges {
       }
     })
     this.initValues = true;
+    this.pantallaHeight = window.innerHeight;
   }
   ngOnChanges(changes: SimpleChanges): void {
   }

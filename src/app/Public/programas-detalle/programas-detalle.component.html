@@ -31,7 +31,7 @@
         </div>
         <ng-container *ngIf="absoluteFormulario">
           <div class="col-12 col-md-4 col-lg-4 containerFormulario" id="absoluteFormulario">
-            <div id="FormularioProgramasInsert">
+            <div id="FormularioProgramasInsert" [ngStyle]="{'max-height':innerHeight<=860?'67vh':'unset','overflow-y':innerHeight<=860?'auto':'visible'}">
               <div class="estructuraProgramForm" style="position: relative;">
                 <div class="cerrarFormularioAbsolute">
                   <img src="../../../assets/imagenes/cerrar.png" alt="cerrar" height="20px" (click)="cerrarFormularioAbsolute()">
@@ -287,7 +287,7 @@
 
     <div class="container">
       <div class="row rowpadd">
-        <div class="col-12 col-md-4 col-lg-8 col-xl-8 col-xxl-9 containerObjetivos">
+        <div class="col-12 col-md-8 col-lg-8 col-xl-8 col-xxl-9 containerObjetivos">
           <div class="col-12 tituloSeccionPrograma">
             <img src="../../../assets/imagenes/Objetivos.png" alt="objetivos" height="50px">
             <div>Objetivos</div>
@@ -298,7 +298,7 @@
           </div>
         </div>
         <div class="col-12 col-md-4 col-lg-4 col-xl-4 col-xxl-3 containerFormulario">
-          <div id="FormularioProgramasInsert">
+          <div id="FormularioProgramasInsert">  
             <div class="estructuraProgramForm" style="position: relative;">
               <app-cargando *ngIf="statuscharge==true"></app-cargando>
               <div class="cotentestructuraProgramForm">
