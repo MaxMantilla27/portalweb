@@ -221,13 +221,22 @@
 }
 :host ::ng-deep .asesorMsj .cntnmsj markdown p {
   color: #707070;
+  margin-bottom: 0rem;
+}
+:host ::ng-deep .asesorMsj .cntnmsj markdown ul p {
+  margin-top: 0.7rem!important;
+  color: #707070;
 }
 :host ::ng-deep .asesorMsj .cntnmsj markdown ul {
-  margin-top: 1rem!important;
+  margin-top: 0.5rem!important;
+  color: #707070;
+}
+:host ::ng-deep .asesorMsj .cntnmsj markdown ul li ul {
+  margin-top: 0rem!important;
   color: #707070;
 }
 :host ::ng-deep .asesorMsj .cntnmsj markdown ol {
-  margin-top: 1rem!important;
+  margin-top: 0rem!important;
   color: #707070;
 }
 .cntnmsj {
@@ -318,7 +327,7 @@
   font-weight: bold;
 }
 :host ::ng-deep markdown p{
-  margin: 0px;
+  margin: 0 0 0.5rem 0;
 }
 .material-icons {
   font-weight: 600;
@@ -486,8 +495,8 @@
 /* TABLA - CSS MARKDOWN*/
 :host ::ng-deep .asesorMsj .cntnmsj markdown table {
   display: block;
-  width: 100%; 
-  overflow-x: auto; 
+  width: 100%;
+  overflow-x: auto;
   white-space: nowrap;
   border-collapse: collapse;
   margin-top: 8px;
