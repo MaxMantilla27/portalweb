@@ -458,7 +458,7 @@
     </div>
   </div>
   
-  <div style="background-color: white;" *ngIf="cabecera.listProgramaEspecificoInformacionDTO.length > 0   ">
+  <div style="background-color: white;">
     <div class="container">
       <div class="row rowpadd" style="justify-content: center;">
         
@@ -492,9 +492,14 @@
             </div>
           </ng-container>
 
-          <div class="puntoAzulDuracionHorario" [innerHtml]="seccion.duracionHorario | safeHtml" style="text-align: left;
+          <ng-container *ngIf="seccion.duracionHorario != ''">
+            <div class="puntoAzulDuracionHorario" [innerHtml]="seccion.duracionHorario | safeHtml" style="text-align: left;
               padding: 20px 0px;">
-           </div>
+            </div>
+          </ng-container>
+          <ng-container *ngIf="seccion.duracionHorario == ''">
+            <div>No tenemos horarios para este curso.</div>
+          </ng-container>
         </div>  
       </div>
     </div>
