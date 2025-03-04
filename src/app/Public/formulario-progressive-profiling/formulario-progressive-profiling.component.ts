@@ -84,11 +84,13 @@ export class FormularioProgressiveProfilingComponent implements OnInit {
   cabeceraMensajeIndexCurso = null;
   cabeceraMensajeTexto: string | null = null;
   cabeceraMensajeTextoCurso: string | null = null;
+  cabeceraMensajeTextoWhitepaper: string | null = null;
   cabeceraMensajeBordes = null;
   cabeceraMensajeInf = null;
   cabeceraMensajeInfIndexCurso = null;
   cabeceraMensajeInfTexto: string | null = null;
   cabeceraMensajeInfTextoCurso: string | null = null;
+  cabeceraMensajeInfTextoWhitepaper: string | null = null;
   cabeceraBoton = null;
   cabeceraBotonTexto: string | null = null;
   cabeceraBotonAccion = null;
@@ -241,6 +243,15 @@ export class FormularioProgressiveProfilingComponent implements OnInit {
         '*codigo descuento*': this.auxCodigoDescuento || ''
       }
     );
+    this.cabeceraMensajeTextoWhitepaper = this.reemplazarTextoConDiccionario(
+      formData.cabeceraMensajeTextoWhitepaper || '',
+      {
+        '*correo cliente*': this.auxCorreoCliente || '',
+        '*tipo programa*': this.auxTipoPrograma || 'programa',
+        '*nombre programa*': this.auxNombrePrograma || 'programa',
+        '*codigo descuento*': this.auxCodigoDescuento || ''
+      }
+    );
     this.cabeceraMensajeBordes = formData.cabeceraMensajeBordes;
     this.cabeceraMensajeInf = formData.cabeceraMensajeInf;
     this.cabeceraMensajeInfIndexCurso = formData.cabeceraMensajeInfIndexCurso;
@@ -255,6 +266,15 @@ export class FormularioProgressiveProfilingComponent implements OnInit {
     );
     this.cabeceraMensajeInfTextoCurso = this.reemplazarTextoConDiccionario(
       formData.cabeceraMensajeInfTextoCurso || '',
+      {
+        '*correo cliente*': this.auxCorreoCliente || '',
+        '*tipo programa*': this.auxTipoPrograma || 'programa',
+        '*nombre programa*': this.auxNombrePrograma || 'programa',
+        '*codigo descuento*': this.auxCodigoDescuento || ''
+      }
+    );
+    this.cabeceraMensajeInfTextoWhitepaper = this.reemplazarTextoConDiccionario(
+      formData.cabeceraMensajeInfTextoWhitepaper || '',
       {
         '*correo cliente*': this.auxCorreoCliente || '',
         '*tipo programa*': this.auxTipoPrograma || 'programa',
@@ -444,11 +464,24 @@ export class FormularioProgressiveProfilingComponent implements OnInit {
 
   get mensajeCabecera(): string {
     if (this.cabeceraMensajeIndexCurso) {
-      return this.tipoPagina === 'curso' 
-        ? this.cabeceraMensajeTextoCurso ?? '' 
+      return this.tipoPagina === 'curso'
+        ? this.cabeceraMensajeTextoCurso ?? ''
+        : this.tipoPagina === 'whitepaper'
+        ? this.cabeceraMensajeTextoWhitepaper ?? ''
         : this.cabeceraMensajeTexto ?? '';
     }
     return this.cabeceraMensajeTexto ?? '';
+  }
+
+  get mensajeInfCabecera(): string {
+    if (this.cabeceraMensajeInfIndexCurso) {
+      return this.tipoPagina === 'curso'
+        ? this.cabeceraMensajeInfTextoCurso ?? ''
+        : this.tipoPagina === 'whitepaper'
+        ? this.cabeceraMensajeInfTextoWhitepaper ?? ''
+        : this.cabeceraMensajeInfTexto ?? '';
+    }
+    return this.cabeceraMensajeInfTexto ?? '';
   }
 
   actualizarFormularioDinamico() {
@@ -805,11 +838,13 @@ export class FormularioProgressiveProfilingComponent implements OnInit {
                 cabeceraMensajeIndexCurso: formularioRpta.cabeceraMensajeIndexCurso,
                 cabeceraMensajeTexto: formularioRpta.cabeceraMensajeTexto,
                 cabeceraMensajeTextoCurso: formularioRpta.cabeceraMensajeTextoCurso,
+                cabeceraMensajeTextoWhitepaper: formularioRpta.cabeceraMensajeTextoWhitepaper,
                 cabeceraMensajeBordes: formularioRpta.cabeceraMensajeBordes,
                 cabeceraMensajeInf: formularioRpta.cabeceraMensajeInf,
                 cabeceraMensajeInfIndexCurso: formularioRpta.cabeceraMensajeInfIndexCurso,
                 cabeceraMensajeInfTexto: formularioRpta.cabeceraMensajeInfTexto,
                 cabeceraMensajeInfTextoCurso: formularioRpta.cabeceraMensajeInfTextoCurso,
+                cabeceraMensajeInfTextoWhitepaper: formularioRpta.cabeceraMensajeInfTextoWhitepaper,
                 cabeceraBoton: formularioRpta.cabeceraBoton,
                 cabeceraBotonTexto: formularioRpta.cabeceraBotonTexto,
                 cabeceraBotonAccion: formularioRpta.cabeceraBotonAccion,
