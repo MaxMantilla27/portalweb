@@ -7,7 +7,7 @@
   </div>
   <div class="fixed-navbar" [style.display]="isScrolled ? 'flex' : 'none'">
     <div class="contenedor-navegacion-seccion">
-        <div>
+        <div class="containerTituloSecciones">
             <ng-container *ngIf="innerWidth > 1000">
               <div class="tituloHeaderPrograma" style="line-height: 120%;" [innerHTML]="cabecera.tituloHtml|safeHtml">
               </div>
@@ -29,24 +29,25 @@
 
 
         </div>
+        <!-- [ngStyle]="{'max-height':innerHeight<=860?'67vh':'unset','overflow-y':innerHeight<=860?'auto':'visible'}" -->
         <ng-container *ngIf="absoluteFormulario">
           <div class="col-12 col-md-4 col-lg-4 containerFormulario" id="absoluteFormulario">
-            <div id="FormularioProgramasInsert" [ngStyle]="{'max-height':innerHeight<=860?'67vh':'unset','overflow-y':innerHeight<=860?'auto':'visible'}">
-              <div class="estructuraProgramForm" style="position: relative;">
-                <div class="cerrarFormularioAbsolute">
+            <div id="FormularioProgramasInsert">
+              <div class="estructuraProgramForm" style="position: relative;"  [ngStyle]="{'padding': innerHeight<=800?'17px 30px 0px':'30px'}">
+                <div class="cerrarFormularioAbsolute" [ngStyle]="{'margin-bottom': innerHeight<=800?'5px':'0px'}">
                   <img src="../../../assets/imagenes/cerrar.png" alt="cerrar" height="20px" (click)="cerrarFormularioAbsolute()">
                 </div>
                 <app-cargando *ngIf="statuscharge==true"></app-cargando>
                 <div class="cotentestructuraProgramForm">
-                  <div class="question" style="justify-content: flex-start;align-items: center;">
-                    <img src="../../../assets/icons/signo-pregunta-abierto-03.svg" alt="Signo de interrogación abierto">
+                  <div class="question" style="justify-content: flex-start;align-items: center;" [ngStyle]="{'width': innerHeight<=800?'50px':'25%'}">
+                    <img src="../../../assets/icons/signo-pregunta-abierto-03.svg" alt="Signo de interrogación abierto" >
                   </div>
-                  <div>Tienes dudas sobre algún aspecto del programa</div>
-                  <div class="question" style="justify-content: flex-end;align-items: center;">
-                    <img src="../../../assets/icons/signo-pregunta-cerrado-04.svg" alt="Signo de interrogación cerrado">
+                  <div [ngStyle]="{'font-size': innerHeight<=800?'14px':'20px'}">Tienes dudas sobre algún aspecto del programa</div>
+                  <div class="question" style="justify-content: flex-end;align-items: center;" [ngStyle]="{'width': innerHeight<=800?'50px':'25%'}">
+                    <img src="../../../assets/icons/signo-pregunta-cerrado-04.svg" alt="Signo de interrogación cerrado" >
                   </div>
                 </div>
-                <div class="subtitleEstruturaProgramFormAzul">
+                <div class="subtitleEstruturaProgramFormAzul" [ngStyle]="{'font-size': innerHeight<=800?'12px':'15px','margin-bottom': innerHeight<=800?'0px':'15px'}">
                   Registra tus datos para que un asesor especializado pueda ayudarte en todo lo que requieras
                 </div>
                 <ng-container *ngIf="combosPrevios!=undefined">
@@ -208,7 +209,7 @@
     </div>
   </div>
   <div class="containerObjetivosInfoClave">
-    <div class="infoClaveProgramaContainer">
+    <div class="infoClaveProgramaContainer" [ngClass]="{'ATuRitmoOnline':cabecera.listProgramaEspecificoInformacionDTO.length > 1 && innerWidth <= 768}">
       <!-- <div class="infoClave" style="border-right: 1px solid #D7C282;">
         <div class="infoClaveImg">
           <img src="../../../assets/imagenes/PDUS.png" alt="">
@@ -288,8 +289,8 @@
     <div class="container">
       <div class="row rowpadd">
         <div class="col-12 col-md-8 col-lg-8 col-xl-8 col-xxl-9 containerObjetivos">
-          <div class="col-12 tituloSeccionPrograma">
-            <img src="../../../assets/imagenes/Objetivos.png" alt="objetivos" height="50px">
+          <div class="tituloSeccionPrograma">
+            <img src="../../../assets/imagenes/Objetivos.png" alt="objetivos">
             <div>Objetivos</div>
           </div>
           <div class="col-12" style="margin-top: 20px;">
@@ -414,12 +415,12 @@
   <div style="background-color: #FFCD34;" id="estructuraCurricular" #estructuraCurricular *ngIf="estructuraPrograma.length > 0">
     <div class="container">
       <div class="row rowpadd" style="justify-content: center;">
-        <div class="row">
-          <div class="col-12 tituloSeccionPrograma" style="justify-content: center;margin-bottom: 40px;">
-            <img src="../../../assets/imagenes/estructura-curricular.png" alt="estructura-curricular" height="50px">
-            <div>Estructura Curricular</div>
-          </div>
+        
+        <div class="tituloSeccionPrograma" style="justify-content: center;margin-bottom: 40px;">
+          <img src="../../../assets/imagenes/estructura-curricular.png" alt="estructura-curricular" height="50px">
+          <div>Estructura Curricular</div>
         </div>
+      
         <div class="col-12 col-md-12 col-lg-10">
           <mat-accordion class="acordionPrograma" multi>
             <mat-expansion-panel hideToggle *ngFor="let item of estructuraPrograma;let i = index"
@@ -460,12 +461,12 @@
   <div style="background-color: white;" *ngIf="cabecera.listProgramaEspecificoInformacionDTO.length > 0   ">
     <div class="container">
       <div class="row rowpadd" style="justify-content: center;">
-        <div class="row">
-          <div class="col-12 tituloSeccionPrograma" style="justify-content: center;margin-bottom: 30px;color: #2087F5;">
+        
+          <div class="tituloSeccionPrograma" style="justify-content: center;margin-bottom: 30px;color: #2087F5;">
             <img src="../../../assets/imagenes/duracion-y-horarios.png" alt="duracionhorarios" height="50px">
             <div >Duracion y Horarios</div>
           </div>
-        </div>
+        
         <div class="col-12 col-md-12 col-lg-8">
           <ng-container  *ngFor="let item of cabecera.listProgramaEspecificoInformacionDTO">
             <!-- <div *ngIf="item.sesiones!=null && item.sesiones.length>0" style="margin-top: 20px;"> -->
@@ -503,12 +504,12 @@
     <div class="container">
       <div class="row rowpadd">
 
-        <div class="row">
-          <div class="col-12 tituloSeccionPrograma" style="justify-content: center;">
+      
+          <div class="tituloSeccionPrograma" style="justify-content: center;">
             <img src="../../../assets/imagenes/beneficios.png" alt="beneficios" height="50px">
             <div>Beneficios</div>
           </div>
-        </div>
+      
           <div class="col-12 col-md-12 col-lg-12" [ngStyle]="{'justify-content':beneficios.length>1 ? 'flex-start' : 'center','display':beneficios.length>1 ? 'initial' : 'flex'}">
               <div *ngFor="let item of beneficios;let i=index">
                 <div class="col-12 col-md-12 col-lg-12"
@@ -546,17 +547,14 @@
 
   <div class="container ajusteScroll" #certificacion id="certificacion" >
     <div *ngIf="certificadoVacio==false" class="row rowpadd">
-      <div class="row">
-        <div class="col-12 tituloSeccionPrograma" style="justify-content: center;color:#017EFF;margin-bottom: 25px;">
-          <img src="../../../assets/imagenes/certficacion.png" alt="certificacion" height="50px">
-          <div>Certificación</div>
-        </div>
-      </div>  
+      <div class="tituloSeccionPrograma" style="justify-content: center;color:#017EFF;margin-bottom: 25px;">
+        <img src="../../../assets/imagenes/certficacion.png" alt="certificacion" height="50px">
+        <div>Certificación</div>
+      </div>
       <div class="col-12 col-md-5 col-lg-5" style="margin: 20px 0px;">
         <img src="../../../assets/imagenes/certificado.png" alt="certificado" style="width: 100%;">
       </div>
-      <div class="col-12 col-md-7 col-lg-7" style="margin: 20px 0px;display: flex;justify-content: center;">
-          
+      <div class="col-12 col-md-7 col-lg-7 containerCertificacion">
           <div class="cabeceraCertificacion" *ngIf="certificado.cabecera != ''">{{certificado.cabecera}}</div>
           <div style="display: flex;flex-direction: column;justify-content: center;">
             <div class="contenidoCertificacion" *ngFor="let item of certificado.contenido">
@@ -564,24 +562,6 @@
                 <div>{{item}}</div>
             </div>
           </div>
-      
-        <!--
-        <mat-accordion class="acordionPrograma acrdionCertificado" multi *ngIf="certificado.descripcionHeader!=undefined && certificado.descripcionHeader.length>0">
-          <mat-expansion-panel (opened)="EventoInteraccionAccordionCertificado(item,'Abierto')"
-          (closed)="EventoInteraccionAccordionCertificado(item,'Cerrado')"
-          hideToggle #acodionCertificado *ngFor="let item of certificado.descripcionHeader;let i=index">
-            <mat-expansion-panel-header>
-              <mat-panel-title>
-                <div style="display: flex;align-items: center;">
-                  <div *ngIf="acodionCertificado.opened" class="estructuraProgramicon">+</div>
-                  <div *ngIf="!acodionCertificado.opened" class="estructuraProgramicon">-</div>
-                  <div class="estructuraProgramTitle" [innerHtml]="item | safeHtml"></div>
-                </div>
-              </mat-panel-title>
-            </mat-expansion-panel-header>
-            <div [innerHtml]="certificado.descripcionBody[i] | safeHtml"></div>
-          </mat-expansion-panel>
-        </mat-accordion> -->
       </div>
       <div class="col-12">
         <div class="pieCertificacion" *ngIf="certificado.piePagina!=null && certificado.piePagina!='' && certificado.piePagina!= undefined" [innerHtml]="certificado.piePagina | safeHtml"></div><br>
@@ -590,11 +570,6 @@
         </div>
         <div class="puntoAzulListaCertificacion" [innerHtml]="certificado.descripcionLeyenda | safeHtml">
         </div>
-        <!-- <div style="display: flex;justify-content: center;margin-top: 20px;">
-          <app-default-button-flecha [confs]="{color:'primary',titulo:'Solicita Información'}"
-            [style]="'width:20rem;border-radius:20px'"
-            (ButtoclClick)="EventoInteraccionButton('Solicita Información') ;OpenModalFormulario(1)"></app-default-button-flecha>
-        </div> -->
       </div>
     </div>
     <div *ngIf="certificadoVacio==true" class="row rowpadd" style="padding: 10px;">
@@ -604,12 +579,10 @@
   <div style="background: #FFCD34;" #expositores id="expositores" >
     <div class="container">
       <div class="row rowpadd">
-        <div class="row">
-          <div class="col-12 tituloSeccionPrograma" style="justify-content: center;">
+          <div class="tituloSeccionPrograma" style="justify-content: center;">
             <img src="../../../assets/imagenes/expositores.png" alt="expositores" height="50px">
             <div>Expositores</div>
           </div>
-        </div>
         
         <div class="col-12 col-md-12 col-lg-12 tabprogram">
           <!-- <h2 style="font-weight: bold;line-height: 150%;"  class="subtitulo">Expositores</h2> -->
@@ -657,13 +630,10 @@
       <div class="row rowpadd">
         
         <div class="col-12 col-md-12 col-lg-12 tabprogram contenedorInversion">
-          <div class="row">
-            <div class="col-12 tituloSeccionPrograma" style="justify-content: center;margin-bottom: 30px;">
+            <div class="tituloSeccionPrograma" style="justify-content: center;margin-bottom: 30px;">
               <img src="../../../assets/imagenes/inversion.png" alt="inversion" height="50px">
               <div>Inversión</div>
             </div>
-          </div>
-        
           <div class="contenidoInversion">
             <div style="font-weight: 900;margin-bottom: 30px;" *ngIf="MontoPago!=null && MontoPago.length>0">
               <ng-container *ngIf="MontoPago[0].paquete==1">
@@ -721,12 +691,10 @@
     <div class="container">
       <div class="row rowpadd" >
         <div class="col-12 col-md-12 col-lg-12 tabprogram" style="display: flex;flex-direction: column;align-items: center;">
-          <div class="row">
-            <div class="col-12 tituloSeccionPrograma" style="justify-content: center;margin-bottom: 30px;color: #017EFF;margin-top: 20px;">
-              <img src="../../../assets/imagenes/modalidades-de-pago.png" alt="modalidadespago" height="50px">
+            <div class="tituloSeccionPrograma" style="justify-content: center;margin-bottom: 30px;color: #017EFF;margin-top: 20px;">
+              <img src="../../../assets/imagenes/modalidades-de-pago.png" alt="modalidadespago">
               <div>Modalidades de pago</div>
             </div>
-          </div>
           <div class="containerModalidadesPago">
             <ng-container *ngIf="codigoIso=='PE'">
               <div style="display: flex;
@@ -799,8 +767,8 @@
       <div class="row rowpadd" style="justify-content: center;">
 
         <ng-container *ngIf="programasRelacionados && programasRelacionados.length>0">
-          <div class="col-12 tituloSeccionPrograma" style="justify-content: center;margin-bottom: 30px;color: #017EFF;">
-            <img src="../../../assets/imagenes/programas-relaciones.png" alt="programas-relaciones" height="50px">
+          <div class="tituloSeccionPrograma" style="justify-content: center;margin-bottom: 30px;color: #017EFF;">
+            <img src="../../../assets/imagenes/programas-relaciones.png" alt="programas-relaciones">
             <div>Programas Relacionados</div>
           </div>
   
@@ -812,8 +780,8 @@
         </ng-container>
 
         <ng-container *ngIf="blogsRelacionados && blogsRelacionados.length > 0">
-          <div class="col-12 tituloSeccionPrograma" style="justify-content: center;margin-bottom: 30px;color: #017EFF;">
-            <img src="../../../assets/imagenes/programas-relaciones.png" alt="programas-relacionados" height="50px">
+          <div class="tituloSeccionPrograma" style="justify-content: center;margin-bottom: 30px;color: #017EFF;">
+            <img src="../../../assets/imagenes/programas-relaciones.png" alt="programas-relacionados">
             <div>Contenidos Relacionados</div>
           </div>
           <ng-container *ngFor="let item of blogsRelacionados;let i=index">
@@ -823,8 +791,8 @@
           </ng-container>
         </ng-container>
 
-        <div class="col-12 tituloSeccionPrograma" style="justify-content: center;margin-bottom: 30px;color: #017EFF;">
-          <img src="../../../assets/imagenes/tags.png" alt="tags" height="50px">
+        <div class="tituloSeccionPrograma" style="justify-content: center;margin-bottom: 30px;color: #017EFF;">
+          <img src="../../../assets/imagenes/tags.png" alt="tags">
           <div>Tags</div>
         </div>
 

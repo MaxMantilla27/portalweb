@@ -260,7 +260,7 @@
 
 .estructuraProgramForm div .question {
   display: flex;
-  width: 25%;
+  //width: 25%;
   flex-direction: column;
 }
 .question div {
@@ -327,7 +327,7 @@
 
 .piePagina {
   color: #2E2E2E;
-  font-size: 10px;
+  font-size: 13px;
   padding: 20px 10px;
 }
 .certificadoContent {
@@ -527,6 +527,26 @@
   .paddingNoVideo{
     padding: 0px;
   }
+  .containerTituloSecciones{
+    width: 100% !important;
+  }
+
+  .fixed-navbar{
+    .contenedor-navegacion-seccion{
+      width: 100% !important;
+      overflow-x: auto; /* Permite el desplazamiento horizontal */
+    
+      -ms-overflow-style: none; /* Oculta la barra de desplazamiento en Edge/IE */
+      scrollbar-width: none; /* Oculta la barra de desplazamiento en Firefox */
+      ul{
+        display: flex;
+        justify-content: space-between;
+        gap: 20px;
+        border: none;
+      }
+    }
+  }
+
 }
 @media (max-width: 768px){
 
@@ -593,6 +613,10 @@
     }
   }
 
+  .ATuRitmoOnline{
+    top:-169px !important;
+  }
+
   .containerTags{
     flex-direction: column;
     align-items: start !important;
@@ -601,6 +625,18 @@
 
   .paddingNoVideo{
     padding: 0px;
+  }
+
+  .fixed-navbar{
+
+    ul{
+      display: flex;
+      justify-content: space-between;
+      border: none !important;
+      li{
+        margin-right: 0px !important;
+      }
+    }
   }
 
   .contenedor-navegacion-seccion{
@@ -721,6 +757,10 @@
     transition: max-height 0.3s ease-in-out;
   }
 
+  .containerTituloSecciones{
+    width: 100% !important;
+  }
+
 }
 
 .cardInformacionPrograma{
@@ -759,7 +799,8 @@
 
 .puntoListaObjetivos ul,
 .puntoListaPublicoObjetivo ul,
-.puntoAzulListaCertificacion li ul li
+.puntoAzulListaCertificacion li ul li,
+.puntoAzulDuracionHorario ul li
 {
   list-style: none;
   padding-left: 0px;
@@ -767,7 +808,8 @@
 
 .puntoListaObjetivos ul li,
 .puntoListaPublicoObjetivo ul li,
-.puntoAzulListaCertificacion li ul li
+.puntoAzulListaCertificacion li ul li,
+.puntoAzulDuracionHorario ul li
 {
   line-height: 1.8;
   font-size: 18px;
@@ -815,6 +857,19 @@
   background-size: contain;
 }
 
+.puntoAzulDuracionHorario ul li::before
+{
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 17px;
+  transform: translateY(-50%);
+  width: 18px;
+  height: 18px; 
+  background: url('../../../../src/assets/imagenes/check-celeste.png') no-repeat center center;
+  background-size: contain;
+}
+
 #FormularioProgramas{
   position: absolute;
   width: 320px;
@@ -831,8 +886,14 @@
 @media (max-width: 768px){
 
   .tituloSeccionPrograma{
+
+    img{
+      height: 40px !important;
+      padding-right: 3px;
+    }
+
     justify-content: flex-start !important;
-    font-size: 30px;
+    font-size: 25px;
   }
 
   .carouselContainer{
@@ -973,6 +1034,18 @@
     right: 47px !important;
     width: 22% !important;
   }
+
+  .containerTituloSecciones{
+    width: 71% !important;
+  }
+
+  .fixed-navbar {
+    ul{
+      li{
+        margin-right: 20px !important;
+      }
+    }
+  }
   
 }
 
@@ -986,40 +1059,18 @@
     font-size: 18px !important;
   }
 
-  // .fixed-navbar{
-  //   .contenedor-navegacion-seccion{
-  //     width: 95% !important;
-  //   }
-  // }
-
   #absoluteFormulario{
     width: 28% !important;
     right: 36px !important;
   }
 
-  // #absoluteFormulario{
-
-  //   #FormularioProgramasInsert{
-  //     max-height: 67vh;
-  //     overflow-y: auto;
-  //   }
-  // }
-
-  //  .containerMasInformacion{
-
-  //     margin-right: 0px !important;
-  //     .masInformacionButton{
-  //       padding: 8px 25px !important;
-  //     }
-  //   }
-
-    // .containerMasInformacion{
-
-    //   margin-right: 0px !important;
-    //   .masInformacionButton{
-    //     padding: 8px 25px !important;
-    //   }
-    // }
+  .fixed-navbar {
+    ul{
+      li{
+        margin-right: 10px !important;
+      }
+    }
+  }
 
 }
 
@@ -1148,7 +1199,7 @@
   font-size: 20px;
   font-weight: bold;
   padding: 15px 0px;
-  border-bottom: 2px solid #EFF4FD;
+  
 }   
 .fixed-navbar {
    position: fixed;
@@ -1164,7 +1215,7 @@
    display: none;
 
    .contenedor-navegacion-seccion{
-    width: 80%;
+    width: 85%;
     display: flex;
     justify-content: space-between;
     //white-space: nowrap;
@@ -1172,17 +1223,19 @@
 
    ul {
      list-style: none;
-     margin: 0;
-     padding: 5px;
-     display: flex;
-     justify-content: space-between;
+     margin: 0px;
+     padding: 10px 0px;
+    //  display: flex;
+    //  justify-content: space-between;
      gap: 20px;
      margin-top: 5px;
+     border-top: 2px solid #EFF4FD;
+     li {
+       display: inline-block;
+       margin-right: 40px;
+     }
    }
  
-   li {
-     display: inline;
-   }
  
    .seccionHeaderPrograma {
      color: #2E2E2E;
@@ -1236,11 +1289,11 @@
   }
  }
 .widthTag{
-  width: 80%;
+  width: 100%;
   .containerTags{
    display: flex;
    align-items: center;
-   justify-content: space-between;
+   justify-content: space-evenly;
    flex-wrap: wrap;
    .tag{
      margin-right: 20px;
@@ -1413,6 +1466,24 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+
+.tituloSeccionPrograma{
+  img{
+    height: 50px;
+  }
+}
+
+.containerCertificacion{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding-top: 20px;
+}
+
+.containerTituloSecciones{
+  width: 68%;
 }
 
 // .alturaFormularioAbsolute{
