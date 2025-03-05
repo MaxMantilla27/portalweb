@@ -1271,7 +1271,7 @@
   display: block;
   position: absolute;
   top: 95px;
-  right: 188px;
+  right: 143px;
   width: 18%;
   margin-left: 0px;
   #FormularioProgramasInsert{
@@ -1295,6 +1295,7 @@
    align-items: center;
    justify-content: space-evenly;
    flex-wrap: wrap;
+   gap: 15px;
    .tag{
      margin-right: 20px;
      font-size: 20px;
@@ -1492,8 +1493,13 @@
 // }
 
 @media (min-width:1000px) and (max-width:1107px){
+  .contenedor-navegacion-seccion{
+    justify-content: initial;
+  }
+
   .containerMasInformacion{
-    margin-right: 0px !important;
+    //margin-right: 0px !important;
+    margin-left: 36px !important;
     .masInformacionButton{
       padding: 8px 30px;
     }

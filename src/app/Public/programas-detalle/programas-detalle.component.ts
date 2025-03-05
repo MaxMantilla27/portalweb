@@ -400,6 +400,9 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
           this.isScrolled = isScrolled;
         })
 
+    this.innerWidth = window.innerWidth; 
+    this.innerHeight = window.innerHeight;
+
   }
 
   RegistrarProgramaPrueba(){
