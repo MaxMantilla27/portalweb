@@ -290,6 +290,7 @@ export class FormularioComponent implements OnChanges, OnInit,OnDestroy {
     setTimeout(() => {
       this.eliminaDatosFormularioProgresivo();
     }, 2000);
+    console.log('gamero fiels:',this.fiels)
   }
   eliminaDatosFormularioProgresivo() {
     localStorage.removeItem('DatosFormularioProgresivo');

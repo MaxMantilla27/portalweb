@@ -1,7 +1,7 @@
 import { Component, Inject, OnInit, ViewEncapsulation } from '@angular/core';
-import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
 import { AccountService } from 'src/app/Core/Shared/Services/Account/account.service';
 import { DatosPortalService } from 'src/app/Core/Shared/Services/DatosPortal/datos-portal.service';
@@ -32,7 +32,6 @@ export class FormularioProgressiveProfilingComponent implements OnInit {
     private formBuilder: FormBuilder,
     private _router: Router,
     private _AccountService: AccountService,
-    private activatedRoute: ActivatedRoute,
   ) {
     this.formCamposDinamicos = this.formBuilder.group({});
   }
@@ -374,6 +373,26 @@ export class FormularioProgressiveProfilingComponent implements OnInit {
         opciones: this.opcionesPorCampo.pais,
         valorDefecto: this.valorDefectoPais,
         obligatorio: formData.cuerpoPaisObl,
+        orden: formData.cuerpoPaisOrden,
+      });
+      this.camposConfigurados.push({
+        id: 'region',
+        label: 'Región',
+        tipo: 'text',
+        tipoControl: 'combo',
+        opciones: [],
+        valorDefecto: null,
+        obligatorio: false,
+        orden: formData.cuerpoPaisOrden,
+      });
+      this.camposConfigurados.push({
+        id: 'localidad',
+        label: 'Localidad',
+        tipo: 'text',
+        tipoControl: 'combo',
+        opciones: [],
+        valorDefecto: null,
+        obligatorio: false,
         orden: formData.cuerpoPaisOrden,
       });
     }
