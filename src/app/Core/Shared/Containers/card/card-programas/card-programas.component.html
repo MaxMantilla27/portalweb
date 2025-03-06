@@ -25,7 +25,13 @@
     <div style="
     margin: 15px 0px;">
       <a class="linkPrograma" title="Vínculo a {{cardContent.Title}}" (click)="EventoInteraccion(cardContent.Title)" [routerLink]="cardContent.Url" target="_blank">
-        Más información
+        <ng-container *ngIf="innerWidth <= 768">
+          Ver más
+        </ng-container> 
+        <ng-container *ngIf="innerWidth > 768">
+          Más información
+        </ng-container> 
+
         <div style="margin-top: 5px;">
           <i class="material-icons" >
             play_arrow

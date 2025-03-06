@@ -336,12 +336,14 @@
 .certificadoContent li {
   padding: 0px 20px;
 }
-.carousel-expositores ngb-carousel .carousel-inner div .wrapper {
+.carousel-expositores ngb-carousel .carousel-inner div .wrapper
+//.carousel-programas ngb-carousel .carousel-inner div .wrapper
+ {
   margin: 20px 10px;
 }
 
 .titleCardSub {
-  font-size: 17px;
+  font-size: 20px;
   font-weight: bolder;
 }
 .cardSubtitle {
@@ -375,7 +377,7 @@
   width: 100%;
 }
 .parafoCardSub {
-  font-size: 16px;
+  font-size: 20px;
   text-align: left;
   color: #878787;
 }
@@ -549,6 +551,14 @@
 
 }
 @media (max-width: 768px){
+
+  .encabezadoCardBlog{
+    font-size: 14px !important;
+  }
+
+  .linkPrograma{
+    border-radius: 5px !important;
+  }
 
   .imgCardFormasPago{
     margin-left: 32px;
@@ -761,6 +771,16 @@
     width: 100% !important;
   }
 
+  .centradoModalidadPago{
+    align-items: unset !important;
+  }
+
+  .cardSubtitle{
+    div{
+      width: 100% !important;
+    }
+  }
+
 }
 
 .cardInformacionPrograma{
@@ -885,7 +905,18 @@
 }
 @media (max-width: 768px){
 
+  .parafoCardSub{
+    font-size: 15px !important;
+  }
+
+  .titleCardSub{
+    font-size: 15px !important;
+  }
+
   .tituloSeccionPrograma{
+
+    padding-left: 0px;
+    padding-right: 0px;
 
     img{
       height: 40px !important;
@@ -893,7 +924,7 @@
     }
 
     justify-content: flex-start !important;
-    font-size: 25px;
+    font-size: 23px;
   }
 
   .carouselContainer{
@@ -995,6 +1026,10 @@
   .contentimgtarjetas {
     margin-top: 15px;
     gap: 15px;
+  }
+
+  .programasContenido{
+    padding: 0px !important;
   }
 
 }
@@ -1478,7 +1513,7 @@
 .containerCertificacion{
   display: flex;
   flex-direction: column;
-  align-items: center;
+  //align-items: center;
   justify-content: center;
   padding-top: 20px;
 }
@@ -1491,6 +1526,43 @@
 //   max-height: 67vh !important;
 //   overflow-y: auto !important;
 // }
+
+.carousel-programas,
+.carousel-contenidos{
+  .carousel-control-next-icon{
+    background-image: url('../../../../src/assets/imagenes/icono-carrusel-azul-B.png');
+  }
+  .carousel-control-prev-icon{
+    background-image: url('../../../../src/assets/imagenes/icono-carrusel-azul-A.png');
+  }
+
+  .carousel-indicators [data-bs-target] {
+    background-color: #2087f5;
+  }
+
+}
+
+.centradoModalidadPago{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+// .titleCardSub{
+//   font-size: 20px;
+// }
+
+// .parafoCardSub{
+//   font-size: 20px;
+// }
+
+.cardSubtitle{
+  div{
+    width: 75%;
+  }
+}
+
+
 
 @media (min-width:1000px) and (max-width:1107px){
   .contenedor-navegacion-seccion{

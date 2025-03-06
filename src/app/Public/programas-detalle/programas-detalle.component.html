@@ -695,7 +695,7 @@
   <div style="background: #e6eefa;">
     <div class="container">
       <div class="row rowpadd" >
-        <div class="col-12 col-md-12 col-lg-12 tabprogram" style="display: flex;flex-direction: column;align-items: center;">
+        <div class="col-12 col-md-12 col-lg-12 tabprogram centradoModalidadPago">
             <div class="tituloSeccionPrograma" style="justify-content: center;margin-bottom: 30px;color: #017EFF;margin-top: 20px;">
               <img src="../../../assets/imagenes/modalidades-de-pago.png" alt="modalidadespago">
               <div>Modalidades de pago</div>
@@ -775,13 +775,31 @@
           <div class="tituloSeccionPrograma" style="justify-content: center;margin-bottom: 30px;color: #017EFF;">
             <img src="../../../assets/imagenes/programas-relaciones.png" alt="programas-relaciones">
             <div>Programas Relacionados</div>
+          </div>     
+
+          <div *ngIf="innerWidth<=768;else programasWeb" class="col-12 col-md-12 col-lg-12 tabprogram programasContenido">  
+            <div class="carousel-programas" style="justify-content: center;">
+              <ngb-carousel style="width: 99%" (slide)="EventoInteraccionCarrousel($event,'Programas Relacionados')">
+                <ng-template ngbSlide *ngFor="let item of programasRelacionados.slice(0,4);let i=index">
+                  <div class="wrapper" style="display: flex;justify-content: center;">
+                    <div class="col-12 col-md-6 col-lg-3 programasContenido" *ngIf="i<4" style="margin-bottom: 40px;">
+                      <app-card-programas [cardContent]="item" [Interaccion]="'Programas Relacionados'" style="display: flex;justify-content: center;"></app-card-programas>
+                    </div>
+                    <div class="carousel-caption"></div>
+                  </div>
+                </ng-template>
+              </ngb-carousel>
+            </div>    
           </div>
-  
-          <ng-container *ngFor="let item of programasRelacionados;let i=index">
-            <div class="col-12 col-md-6 col-lg-3" *ngIf="i<4" style="margin-bottom: 40px;">
-              <app-card-programas [cardContent]="item" [Interaccion]="'Programas Relacionados'"></app-card-programas>
-            </div>
-          </ng-container>
+
+          <ng-template #programasWeb>
+            <ng-container *ngFor="let item of programasRelacionados;let i=index">
+              <div class="col-12 col-md-6 col-lg-3" *ngIf="i<3" style="margin-bottom: 40px;">
+                <app-card-programas [cardContent]="item" [Interaccion]="'Programas Relacionados'"></app-card-programas>
+              </div>
+            </ng-container>
+          </ng-template>
+
         </ng-container>
 
         <ng-container *ngIf="blogsRelacionados && blogsRelacionados.length > 0">
@@ -789,11 +807,30 @@
             <img src="../../../assets/imagenes/programas-relaciones.png" alt="programas-relacionados">
             <div>Contenidos Relacionados</div>
           </div>
-          <ng-container *ngFor="let item of blogsRelacionados;let i=index">
-            <div class="col-12 col-md-6 col-lg-3" *ngIf="i<4" style="margin-bottom: 40px;">
-              <app-card-blog [cardContent]="item" [Interaccion]="'Blogs'"></app-card-blog>
-            </div>
-          </ng-container>
+
+          <div *ngIf="innerWidth<=768;else contenidosWeb" class="col-12 col-md-12 col-lg-12 tabprogram programasContenido">  
+            <div class="carousel-contenidos" style="justify-content: center;">
+              <ngb-carousel style="width: 99%" (slide)="EventoInteraccionCarrousel($event,'Contenidos Relacionados')">
+                <ng-template ngbSlide *ngFor="let item of blogsRelacionados.slice(0,4);let i=index">
+                  <div class="wrapper" style="display: flex;justify-content: center;">
+                    <div class="col-12 col-md-6 col-lg-3 programasContenido" *ngIf="i<4" style="margin-bottom: 40px;">
+                      <app-card-blog [programaCurso]="true" [cardContent]="item" [Interaccion]="'Blogs'" style="display: flex;justify-content: center;"></app-card-blog>
+                    </div>
+                    <div class="carousel-caption"></div>
+                  </div>
+                </ng-template>
+              </ngb-carousel>
+            </div>    
+          </div>
+
+          <ng-template #contenidosWeb>
+            <ng-container *ngFor="let item of blogsRelacionados;let i=index">
+              <div class="col-12 col-md-6 col-lg-3" *ngIf="i<3" style="margin-bottom: 40px;">
+                <app-card-blog [programaCurso]="true" [cardContent]="item" [Interaccion]="'Blogs'"></app-card-blog>
+              </div>
+            </ng-container>
+          </ng-template>
+
         </ng-container>
 
         <div class="tituloSeccionPrograma" style="justify-content: center;margin-bottom: 30px;color: #017EFF;">
