@@ -8,6 +8,7 @@ import { DatosPortalService } from 'src/app/Core/Shared/Services/DatosPortal/dat
 import { FormularioProgresivoConfiguracionCodigoDescuentoService } from 'src/app/Core/Shared/Services/FormularioProgresivoConfiguracionCodigoDescuento/formulario-progresivo-configuracion-codigo-descuento.service';
 import { FormularioProgressiveProfilingService } from 'src/app/Core/Shared/Services/FormularioProgressiveProfiling/formulario-progressive-profiling.service';
 import { HelperService } from 'src/app/Core/Shared/Services/helper.service';
+import { RegionService } from 'src/app/Core/Shared/Services/Region/region.service';
 import { RegistroVisitaPortalService } from 'src/app/Core/Shared/Services/RegistroVisitaPortal/registro-visita-portal.service';
 import { SessionStorageService } from 'src/app/Core/Shared/Services/session-storage.service';
 
@@ -32,6 +33,7 @@ export class FormularioProgressiveProfilingComponent implements OnInit {
     private formBuilder: FormBuilder,
     private _router: Router,
     private _AccountService: AccountService,
+    private _RegionService: RegionService,
   ) {
     this.formCamposDinamicos = this.formBuilder.group({});
   }
@@ -181,7 +183,7 @@ export class FormularioProgressiveProfilingComponent implements OnInit {
     {
       try {
         var dataRuta = JSON.parse(dataRutaString);
-        this.indicePrograma = dataRuta.idBusqueda;
+        this.indicePrograma = dataRuta.idBusqueda ?? 0;
       } catch (error) {
         console.error('Error al parsear JSON:', error);
       }
@@ -331,6 +333,7 @@ export class FormularioProgressiveProfilingComponent implements OnInit {
         valorDefecto: null,
         obligatorio: formData.cuerpoCorreoObl,
         orden: formData.cuerpoCorreoOrden,
+        hidden: false
       });
     }
 
@@ -344,6 +347,7 @@ export class FormularioProgressiveProfilingComponent implements OnInit {
         valorDefecto: null,
         obligatorio: formData.cuerpoNombresObl,
         orden: formData.cuerpoNombresOrden,
+        hidden: false
       });
     }
 
@@ -357,6 +361,7 @@ export class FormularioProgressiveProfilingComponent implements OnInit {
         valorDefecto: null,
         obligatorio: formData.cuerpoApellidosObl,
         orden: formData.cuerpoApellidosOrden,
+        hidden: false
       });
     }
 
@@ -374,6 +379,7 @@ export class FormularioProgressiveProfilingComponent implements OnInit {
         valorDefecto: this.valorDefectoPais,
         obligatorio: formData.cuerpoPaisObl,
         orden: formData.cuerpoPaisOrden,
+        hidden: false
       });
       this.camposConfigurados.push({
         id: 'region',
@@ -384,6 +390,7 @@ export class FormularioProgressiveProfilingComponent implements OnInit {
         valorDefecto: null,
         obligatorio: false,
         orden: formData.cuerpoPaisOrden,
+        hidden: true
       });
       this.camposConfigurados.push({
         id: 'localidad',
@@ -394,6 +401,7 @@ export class FormularioProgressiveProfilingComponent implements OnInit {
         valorDefecto: null,
         obligatorio: false,
         orden: formData.cuerpoPaisOrden,
+        hidden: true
       });
     }
 
@@ -408,6 +416,7 @@ export class FormularioProgressiveProfilingComponent implements OnInit {
         valorDefecto: this.valorDefectoPaisTelef,
         obligatorio: formData.cuerpoTelefonoObl,
         orden: formData.cuerpoTelefonoOrden,
+        hidden: false
       });
     }
 
@@ -422,6 +431,7 @@ export class FormularioProgressiveProfilingComponent implements OnInit {
         valorDefecto: null,
         obligatorio: formData.cuerpoCargoObl,
         orden: formData.cuerpoCargoOrden,
+        hidden: false
       });
     }
 
@@ -436,6 +446,7 @@ export class FormularioProgressiveProfilingComponent implements OnInit {
         valorDefecto: null,
         obligatorio: formData.cuerpoAreaFormacionObl,
         orden: formData.cuerpoAreaFormacionOrden,
+        hidden: false
       });
     }
 
@@ -450,6 +461,7 @@ export class FormularioProgressiveProfilingComponent implements OnInit {
         valorDefecto: null,
         obligatorio: formData.cuerpoAreaTrabajoObl,
         orden: formData.cuerpoAreaTrabajoOrden,
+        hidden: false
       });
     }
 
@@ -464,6 +476,7 @@ export class FormularioProgressiveProfilingComponent implements OnInit {
         valorDefecto: null,
         obligatorio: formData.cuerpoIndustriaObl,
         orden: formData.cuerpoIndustriaOrden,
+        hidden: false
       });
     }
     this.camposConfigurados.sort((a, b) => {
@@ -544,7 +557,36 @@ export class FormularioProgressiveProfilingComponent implements OnInit {
         if (campoTelefono) {
           campoTelefono.valorDefecto = paisGuardado;
         }
+        const campoRegion = this.camposConfigurados.find(campoConfig => campoConfig.id === 'region');
+        if (campoRegion) {
+          campoRegion.hidden = false;
+          this.getRegionesPorPais(paisGuardado);
+        }
         this.actualizarBandera(paisGuardado);
+        this.evaluaRegionEstado(paisGuardado);
+
+        const regionGuardada = valoresGuardados['region'];
+        if (regionGuardada) {
+          const campoRegion = this.camposConfigurados.find(campoConfig => campoConfig.id === 'region');
+          if (campoRegion) {
+            campoRegion.valorDefecto = regionGuardada;
+          }
+
+          const campoLocalidad = this.camposConfigurados.find(campoConfig => campoConfig.id === 'localidad');
+          if (campoLocalidad) {
+            campoLocalidad.hidden = false;
+            this.getLocalidadesPorRegion(regionGuardada);
+          }
+        }
+      }
+    }
+  }
+
+  evaluaRegionEstado(codPais: number){
+    if (codPais === 52) {
+      const regionField = this.camposConfigurados.find(campoConfig => campoConfig.id === 'region');
+      if (regionField) {
+          regionField.label = 'Estado';
       }
     }
   }
@@ -570,7 +612,10 @@ export class FormularioProgressiveProfilingComponent implements OnInit {
   }
 
   onComboChange(event: any, campo: any): void {
+    console.log('gamero event', event);
+    console.log('gamero campo', campo);
     if (campo.id === 'pais') {
+      this.handlePaisSelection(event.value);
       const nuevoValorDefectoPais = event.value;
       const campoPais = this.camposConfigurados.find(campoConfig => campoConfig.id === 'pais');
       if (campoPais) {
@@ -590,8 +635,74 @@ export class FormularioProgressiveProfilingComponent implements OnInit {
           inputElement.selectionStart = inputElement.value.length;
         }
       }
+      const campoRegion = this.camposConfigurados.find(c => c.id === 'region');
+      const campoLocalidad = this.camposConfigurados.find(c => c.id === 'localidad');
+
+      if (campoRegion && !campoRegion.hidden) {
+        this.formCamposDinamicos.patchValue({ region: null });
+        campoRegion.valorDefecto = null;
+        campoRegion.opciones = [];
+      }
+      if (campoLocalidad && !campoLocalidad.hidden) {
+        this.formCamposDinamicos.patchValue({ localidad: null });
+        campoLocalidad.valorDefecto = null;
+        campoLocalidad.opciones = [];
+      }
+
+      this.evaluaRegionEstado(nuevoValorDefectoPais);
       this.getIconoPorPais(nuevoValorDefectoPais);
     }
+    if (campo.id === 'region') {
+      this.handleRegionSelection(event.value);
+    }
+  }
+
+  handlePaisSelection(idPais: number) {
+      const localidad = this.camposConfigurados.find(c => c.id === 'localidad');
+      if (localidad) {
+        localidad.hidden = true;
+        localidad.valorDefecto = null;
+      }
+    this.getRegionesPorPais(idPais);
+  }
+
+  handleRegionSelection(idRegion: number) {
+    this.getLocalidadesPorRegion(idRegion);
+  }
+
+  getRegionesPorPais(idPais: number) {
+    this._RegionService.ObtenerCiudadesPorPais(idPais).pipe(takeUntil(this.signal$)).subscribe({
+        next: (x) => {
+          const region = this.camposConfigurados.find(c => c.id === 'region');
+          if (region) {
+            region.opciones = x.map((p: any) => ({
+              label: p.nombreCiudad,
+              value: p.idCiudad
+            }));
+            region.hidden = false;
+          }
+        }
+    });
+  }
+
+  getLocalidadesPorRegion(idRegion: number) {
+    this._RegionService.ObtenerLocalidadPorRegion(idRegion).pipe(takeUntil(this.signal$)).subscribe({
+      next: (x) => {
+        const localidad = this.camposConfigurados.find(c => c.id === 'localidad');
+        if (localidad) {
+          if (x.length > 0) {
+            localidad.opciones = x.map((p: any) => ({
+              label: p.nombreLocalidad,
+              value: p.codigo
+            }));
+            localidad.hidden = false;
+          } else {
+            localidad.hidden = true;
+            localidad.valorDefecto = null;
+          }
+        }
+      }
+    });
   }
 
   onPhoneInput(event: Event): void {
@@ -954,6 +1065,7 @@ interface CampoConfigurado {
   valorDefecto: number| string | null | undefined;
   obligatorio: boolean;
   orden: number | null;
+  hidden: boolean;
 }
 
 interface Opcion {

@@ -39,13 +39,13 @@
 
         <!-- Lista de inputs dinámicos -->
         <form *ngIf="condicionMostrarCuerpo === true" [formGroup]="formCamposDinamicos">
-            <div class="form-group" *ngFor="let campo of camposConfigurados">
+            <div class="form-group" *ngFor="let campo of camposConfigurados" [ngClass]="{ 'hidden': campo.hidden }">
                 <div *ngIf="campo.id === 'telefono'" class="contenedor-bandera">
                     <div class="bandera-placeholder" 
                         [style.backgroundImage]="'url(' + getIconoPorPais(campo.valorDefecto) + ')'">
                     </div>
                 </div>
-                <div class="input-wrapper">
+                <div class="input-wrapper" *ngIf="!campo.hidden">
                     <mat-form-field appearance="outline" class="form-field" hideRequiredMarker="true">
                         <mat-label>{{ campo.label }}</mat-label>
                         <input

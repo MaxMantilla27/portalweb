@@ -102,7 +102,6 @@ h1 {
 .mat-dialog-container {
   display: block;
   padding: 10px 10px 15px 10px;
-  // border: 3px solid #ff8900;
   border-radius: 15px;
   box-sizing: border-box;
   overflow: auto;
@@ -122,7 +121,7 @@ p {
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 60px;
+  min-height: 0;
   padding: 0 40px;
   margin-bottom: 10px;
 }
@@ -200,9 +199,10 @@ p {
 
 .bandera-placeholder {
   width: 20px;
-  height: 20px;
-  background-size: cover;
+  height: 41px;
+  background-size: contain;
   background-position: center;
+  background-repeat: no-repeat;
   background-color: #ffffff;
 }
 
@@ -210,4 +210,8 @@ p {
   flex-grow: 1;
   display: flex;
   justify-content: center;
+}
+
+.hidden {
+  display: none !important;
 }
