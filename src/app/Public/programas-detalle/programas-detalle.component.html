@@ -31,7 +31,7 @@
         <ng-container *ngIf="absoluteFormulario">
           <div class="col-12 col-md-4 col-lg-4 containerFormulario" id="absoluteFormulario" [ngStyle]="{'top':innerHeight<=800? '0px':'95px'}">
             <div id="FormularioProgramasInsert">
-              <div class="estructuraProgramForm" style="position: relative;"  [ngStyle]="{'padding': innerHeight<=835?'5px 30px 0px':'30px'}">
+              <div class="estructuraProgramForm" style="position: relative;"  [ngStyle]="{'padding': innerHeight<835?'5px 30px 0px':'30px'}">
                 <div class="cerrarFormularioAbsolute" [ngStyle]="{'margin-bottom': innerHeight<=835?'5px':'0px'}">
                   <img src="../../../assets/imagenes/cerrar.png" alt="cerrar" height="20px" (click)="cerrarFormularioAbsolute()">
                 </div>
