@@ -56,7 +56,7 @@
   font-weight: 600;
   color: #2E2E2E;
   //word-break: break-word;
-  font-size: 44px;
+  font-size: 33px;
 }
 .InfoProgramIcon {
   width: 20px;
@@ -342,10 +342,6 @@
   margin: 20px 10px;
 }
 
-.titleCardSub {
-  font-size: 20px;
-  font-weight: bolder;
-}
 .cardSubtitle {
   display: flex;
   align-items: center;
@@ -376,11 +372,7 @@
   height: auto;
   width: 100%;
 }
-.parafoCardSub {
-  font-size: 20px;
-  text-align: left;
-  color: #878787;
-}
+
 
 .iconarrow {
   color: #34c939;
@@ -601,6 +593,7 @@
   }
 
   .infoClaveProgramaContainer{
+    min-width: 85% !important;
     flex-direction: column;
     align-items: flex-start;
     padding:16px 10px 16px 35px !important;
@@ -634,7 +627,7 @@
   }
 
   .paddingNoVideo{
-    padding: 0px;
+    padding: 10px 0px;
   }
 
   .fixed-navbar{
@@ -775,12 +768,6 @@
     align-items: unset !important;
   }
 
-  .cardSubtitle{
-    div{
-      width: 100% !important;
-    }
-  }
-
 }
 
 .cardInformacionPrograma{
@@ -796,9 +783,11 @@
 }
 
 .tituloSeccionPrograma{
+  justify-content: center;
+  margin-bottom: 20px;
   color: #2E2E2E;
   display: flex;
-  font-size: 44px;
+  font-size: 30px;
   font-weight: 900;
   text-decoration: underline;
   align-items: center;
@@ -905,6 +894,10 @@
 }
 @media (max-width: 768px){
 
+  .margen-card{
+    padding-left: 0px !important;
+  }
+
   .parafoCardSub{
     font-size: 15px !important;
   }
@@ -915,7 +908,7 @@
 
   .tituloSeccionPrograma{
 
-    padding-left: 0px;
+    //padding-left: 0px;
     padding-right: 0px;
 
     img{
@@ -1045,11 +1038,11 @@
 
 @media (min-width:992px) and (max-width: 1475px) {
   .cardInformacionPrograma{
-    width: 45%;
+    //width: 40%;
   }
   .infoClaveProgramaContainer{
-    padding: 10px 7px !important;
-    top: -68px !important;
+    padding: 17px 7px !important;
+    top: -55px !important;
   }
   #FormularioProgramasInsert{
     margin-left: 0px;
@@ -1061,13 +1054,13 @@
   }
   .fixed-navbar{
     .contenedor-navegacion-seccion{
-      width: 95% !important;
+      width: 90% !important;
     }
   }
 
   #absoluteFormulario {
-    right: 47px !important;
-    width: 22% !important;
+    right: 105px !important;
+    width: 24% !important;
   }
 
   .containerTituloSecciones{
@@ -1086,9 +1079,9 @@
 
 @media (min-width:992px) and (max-width:1280px){
 
-  .rowpadd{
-    padding: 50px 0px !important;
-  }
+  // .rowpadd{
+  //   padding: 50px 0px !important;
+  // }
 
   .tituloHeaderPrograma h1{
     font-size: 18px !important;
@@ -1111,14 +1104,14 @@
 
 
 .container {
-  max-width: 95%;
+  max-width: 1453px;
 }
 
 .infoClaveProgramaContainer{
   display: flex;
   justify-content: space-between;
   position: absolute;
-  width: 80%;
+  min-width: 1170px;
   background-color: #FFCD34;
   top: -50px;
   z-index: 10;
@@ -1209,13 +1202,14 @@
 }
 
 .containerObjetivoRequisitos {
-  width: 80%;
+  width: 100%;
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
+  //gap: 90px;
 }
 
 .containerObjetivos{
-  padding-bottom:40px ;
+  //padding-bottom:40px ;
 
 }
 
@@ -1225,7 +1219,7 @@
   display: flex;
   justify-content: center;
   padding-top: 40px;
-  padding-bottom: 70px;
+  //padding-bottom: 70px;
 }
 
 /****************************************/
@@ -1328,12 +1322,12 @@
   .containerTags{
    display: flex;
    align-items: center;
-   justify-content: space-evenly;
+   justify-content: flex-start;
    flex-wrap: wrap;
    gap: 15px;
    .tag{
-     margin-right: 20px;
-     font-size: 20px;
+     margin-right: 0px;
+     font-size: 18px;
      text-align: center;
      //flex: 1;
    }
@@ -1373,7 +1367,7 @@
 .descripcionCurso{
   margin: 28px 0px;
   line-height: 1.8; 
-  font-size: 17px; 
+  font-size:15px; 
   font-weight: 300;
   width: 80%;
 }
@@ -1387,12 +1381,13 @@
 .cabeceraPrerequisito{
   text-align: left;
   padding: 0px 45px;
-  margin: 20px 0px;
+  margin-bottom: 20px;
   font-size: 18px;
 }
 
 .margen-card{
   margin-bottom: 20px;
+  padding-left: 35px;
 }
 
 .subtituloPanelExpansion{
@@ -1477,13 +1472,6 @@
   color: #656565;
 }
 
-.subtitulo{
-  color: #017EFF;
-  line-height: 100%;
-  font-weight: 900;
-  text-decoration: underline;
-}
-
 .contentExpositor.expanded {
   max-height: none; /* Expande al tamaño completo */
 }
@@ -1515,7 +1503,7 @@
   flex-direction: column;
   //align-items: center;
   justify-content: center;
-  padding-top: 20px;
+  //padding-top: 20px;
 }
 
 .containerTituloSecciones{
@@ -1558,13 +1546,41 @@
 
 .cardSubtitle{
   div{
-    width: 75%;
+    width: 100%;
   }
 }
 
+.homeLearningProgramaCurso{
+  .subtitulo{
+    color: #017EFF;
+    line-height: 100%;
+    font-weight: 900;
+    text-decoration: underline;
+  }
+  .titleCardSub {
+    font-size: 20px;
+    font-weight: bolder;
+  }
 
+  .parafoCardSub {
+    font-size: 20px;
+    text-align: left;
+    color: #878787;
+  }
+
+}
+
+.rowpadd{
+  padding-top: 25px;
+  padding-bottom: 25px;
+}
 
 @media (min-width:1000px) and (max-width:1107px){
+
+  .infoClaveProgramaContainer{
+    min-width:970px !important;
+  }
+
   .contenedor-navegacion-seccion{
     justify-content: initial;
   }
