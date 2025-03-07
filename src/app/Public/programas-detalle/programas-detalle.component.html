@@ -289,7 +289,7 @@
     <div class="container">
       <div class="row rowpadd">
         <div class="col-12 col-md-8 col-lg-8 col-xl-8 containerObjetivos">
-          <div class="tituloSeccionPrograma">
+          <div class="tituloSeccionPrograma" style="justify-content: flex-start;">
             <img src="../../../assets/imagenes/Objetivos.png" alt="objetivos">
             <div>Objetivos</div>
           </div>
@@ -519,13 +519,13 @@
           <div class="col-12 col-md-12 col-lg-12" [ngStyle]="{'justify-content':beneficios.length>1 ? 'flex-start' : 'center','display':beneficios.length>1 ? 'initial' : 'flex'}">
               <div *ngFor="let item of beneficios;let i=index">
                 <div class="col-12 col-md-12 col-lg-12"
-                   [style.border-bottom]="i !==beneficios.length-1?'1px solid #FFFFFF':'none'" [style.padding-bottom]="i !==beneficios.length-1?'30px':'0px'">
+                   [style.border-bottom]="i !==beneficios.length-1?'1px solid #FFFFFF':'none'" [style.padding-bottom]="i !==beneficios.length-1?'20px':'0px'" [style.padding-top]="i !==0?'20px':'0px'">
                   <div *ngIf="item.version=='Sin Version'" class="carsTitleBeneficiosPrograma">
                     El programa incluye los siguientes beneficios:
                   </div>
               
                   <div *ngIf="item.version!='Sin Version'" class="carsTitleBeneficiosPrograma">
-                    <img src="../../../assets/imagenes/Flecha-azul.png" alt="flecha-azul" height="20px">
+                    <img src="../../../assets/imagenes/Flecha-azul.png" alt="flecha-azul" height="18px">
                     {{item.version+':'}}
                   </div>
               
@@ -535,7 +535,7 @@
                   <ng-container *ngFor="let content of item.contenido">
                     <!-- <div class="todoslosBeneficios" *ngIf="content.idBeneficio==-1;else Beneficio">{{content.contenido}}</div> -->
                     <div class="contenidoBeneficioPrograma" *ngIf="content.idBeneficio>0">
-                      <div><img src="../../../assets/imagenes/check.png" alt="check" height="20px"></div>
+                      <div><img src="../../../assets/imagenes/check.png" alt="check" height="18px"></div>
                       <div>{{content.contenido}}</div>
                     </div>
                   </ng-container>
@@ -661,7 +661,7 @@
                 </i>
               </div> -->
               <!-- <i class="material-icons iconarrow" style="color: #017EFF;">play_arrow</i> -->
-              <img src="../../../assets/imagenes/Flecha-azul.png" alt="flecha-azul" height="20px" style="padding-right: 10px;">
+              <img src="../../../assets/imagenes/Flecha-azul.png" alt="flecha-azul" height="18px" style="padding-right: 10px;">
               <div *ngIf="item.idTipoPago==1" style="color: #2E2E2E;">
                 <ng-container *ngIf="item.porcentajeDescuento==null || item.porcentajeDescuento==0">
                   Pago al Contado: {{item.cuotas|formatoMilesDecimales}}&nbsp;&nbsp;{{item.codigoMoneda}}
@@ -712,7 +712,7 @@
               color: #4a4a49;">
               <!-- <i class="material-icons"
                   style="color: #34c939;margin-right: 10px;font-size: 18px;">play_arrow</i> -->
-                  <img src="../../../assets/imagenes/Flecha.png" alt="flecha" height="20px" style="padding-right: 10px;">
+                  <img src="../../../assets/imagenes/Flecha.png" alt="flecha" height="18px" style="padding-right: 10px;">
                   Dep&oacute;sito o pago en una cuenta del BCP:
               </div>
               <div class="containerPagoBCP">
@@ -731,7 +731,7 @@
               color: #4a4a49;">
               <!-- <i class="material-icons"
                   style="color: #34c939;margin-right: 10px;">play_arrow</i> -->
-                  <img src="../../../assets/imagenes/Flecha.png" alt="flecha" height="20px" style="padding-right: 10px;">
+                  <img src="../../../assets/imagenes/Flecha.png" alt="flecha" height="18px" style="padding-right: 10px;">
                   Paga a trav&eacute;s de nuestro sitio web con
                 los siguientes medios de pago:</div>
             </div>
