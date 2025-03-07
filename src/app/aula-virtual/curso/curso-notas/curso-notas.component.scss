@@ -76,3 +76,14 @@
 .TutorialClose{
   background: #FFEEE1 !important;
   }
+  @keyframes loadingAnim {
+    0% { content: "."; }
+    33% { content: ".."; }
+    66% { content: "..."; }
+  }
+
+  .loadingPromedioFinal::after {
+    content: "...";
+    display: inline-block;
+    animation: loadingAnim 1s steps(3, end) infinite;
+  }

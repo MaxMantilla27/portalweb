@@ -50,6 +50,7 @@ export class CursoNotasComponent implements OnInit, OnDestroy {
   public OpenVideoModulo = true;
   public CantidadAsincronicos = 0;
   public TieneNotaPromedio = false;
+  public CalculandoPromedioFinal=true;
   ngOnInit(): void {
     this.CursosCriteriosOnlineNotas = [];
     this.PromedioFinal = 0;
@@ -126,6 +127,7 @@ export class CursoNotasComponent implements OnInit, OnDestroy {
               .pipe(takeUntil(this.signal$))
               .subscribe({
                 next: (x) => {
+                  let CursoCulminado=false;
                   this.PromedioFinalOnlineCurso = 0;
                   var countOnline = 0;
                   this.NombreCursoOnline = y.nombrePEspecifico;
@@ -150,6 +152,12 @@ export class CursoNotasComponent implements OnInit, OnDestroy {
                     );
 
                     const asistenciasMap = new Map();
+                    const ultimaSesionCurso = this.listadoNotas.listadoSesiones.sort((a: any, b: any) => new Date(b.fechaHoraInicio).getTime() - new Date(a.fechaHoraInicio).getTime())[0];
+                    //Evalua si el curso ya culminó pasados los 15 días de la última sesión
+                    CursoCulminado = new Date() > new Date(new Date(ultimaSesionCurso.fechaHoraInicio).setDate(new Date(ultimaSesionCurso.fechaHoraInicio).getDate() + 15));
+                    console.log('Fecha de última sesión',new Date(ultimaSesionCurso.fechaHoraInicio))
+                    console.log('Fecha de Sesión culminada',new Date(new Date(ultimaSesionCurso.fechaHoraInicio).setDate(new Date(ultimaSesionCurso.fechaHoraInicio).getDate() + 15)))
+                    console.log('¿Curso culminado?',CursoCulminado)
                     this.listadoNotas.listadoAsistencias.forEach(
                       (asistencia: any) => {
                         if (
@@ -244,7 +252,12 @@ export class CursoNotasComponent implements OnInit, OnDestroy {
                                   detcali.tieneNota =
                                     detcali.fechaCalificacion != null;
                                   if (detcali.fechaCalificacion == null) {
-                                    detcali.tieneNota = false;
+                                    if(CursoCulminado){
+                                      detcali.tieneNota = true;
+                                    }
+                                    else{
+                                      detcali.tieneNota = false;
+                                    }
                                   } else {
                                     detcali.tieneNota = true;
                                   }
@@ -442,7 +455,8 @@ export class CursoNotasComponent implements OnInit, OnDestroy {
             console.log('Curso', this.Cursos);
             console.log('Curso Criterios', this.CursosCriterios);
             console.log('Este es el promedio final1', this.PromedioFinal);
-          }, 6000);
+            this.CalculandoPromedioFinal=false;
+          }, 7000);
         },
       });
   }

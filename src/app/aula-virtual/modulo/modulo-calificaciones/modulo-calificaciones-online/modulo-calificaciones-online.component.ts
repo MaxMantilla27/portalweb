@@ -45,7 +45,7 @@ export class ModuloCalificacionesOnlineComponent implements OnInit,OnDestroy {
   public recargarDetalle=false;
   public TerminaCarga=false
   public TieneNotaPromedio=false
-
+  public CursoCulminado=false
   ngOnInit(): void {
   }
   ngOnChanges(changes: SimpleChanges): void {
@@ -58,6 +58,7 @@ export class ModuloCalificacionesOnlineComponent implements OnInit,OnDestroy {
 
   }
   ObtenerCursosProgramaPorIdMatriculaOnline(idMatricula:number){
+    this.CursoCulminado=false;
     this._NotaService.ListadoNotaProcesarV2(this.IdPEspecifico,1,idMatricula).pipe(takeUntil(this.signal$)).subscribe({
       next:x=>{
         this.listadoNotas=x;
@@ -76,6 +77,12 @@ export class ModuloCalificacionesOnlineComponent implements OnInit,OnDestroy {
             });
           }
         }
+        const ultimaSesionCurso = this.listadoNotas.listadoSesiones.sort((a: any, b: any) => new Date(b.fechaHoraInicio).getTime() - new Date(a.fechaHoraInicio).getTime())[0];
+        //Evalua si el curso ya culminó pasados los 15 días de la última sesión
+        this.CursoCulminado = new Date() > new Date(new Date(ultimaSesionCurso.fechaHoraInicio).setDate(new Date(ultimaSesionCurso.fechaHoraInicio).getDate() + 15));
+        console.log('Fecha de última sesión',new Date(ultimaSesionCurso.fechaHoraInicio))
+        console.log('Fecha de Sesión culminada',new Date(new Date(ultimaSesionCurso.fechaHoraInicio).setDate(new Date(ultimaSesionCurso.fechaHoraInicio).getDate() + 15)))
+        console.log('¿Curso culminado?',this.CursoCulminado)
         this.listadoNotas.listadoMatriculas.forEach((mat:any) => {
           mat.notaActual=[];
             this.listadoNotas.listadoEvaluaciones.forEach((evl:any) => {
@@ -110,7 +117,13 @@ export class ModuloCalificacionesOnlineComponent implements OnInit,OnDestroy {
                 nota = parseFloat((NotaPromediada || notas.nota).toFixed(2));
                 console.log('nota:', nota);
                 } else {
-                TieneNota = false;
+                  if(this.CursoCulminado){
+                    TieneNota = true;
+                    nota=0;
+                  }
+                  else{
+                    TieneNota = false;
+                  }
                 console.log('TieneNota:', TieneNota);
                 }
             }
@@ -183,7 +196,12 @@ export class ModuloCalificacionesOnlineComponent implements OnInit,OnDestroy {
                     if(na.IdEvaluacion==detcali.idCriterioEvaluacion){
                       console.log('detcali',detcali)
                       if(detcali.fechaCalificacion==null){
-                        detcali.tieneNota=false
+                        if(this.CursoCulminado){
+                          detcali.tieneNota=true
+                        }
+                        else{
+                          detcali.tieneNota=false
+                        }
                       }
                       else{
                         detcali.tieneNota=true
