@@ -26,28 +26,26 @@
                   (ButtoclClick)="cloneFormulario()"
             ></app-default-button> -->
             <button class="masInformacionButton" (click)="cloneFormulario()">Más información</button>
-
-
         </div>
         <!-- [ngStyle]="{'max-height':innerHeight<=860?'67vh':'unset','overflow-y':innerHeight<=860?'auto':'visible'}" -->
         <ng-container *ngIf="absoluteFormulario">
-          <div class="col-12 col-md-4 col-lg-4 containerFormulario" id="absoluteFormulario">
+          <div class="col-12 col-md-4 col-lg-4 containerFormulario" id="absoluteFormulario" [ngStyle]="{'top':innerHeight<=800? '0px':'95px'}">
             <div id="FormularioProgramasInsert">
-              <div class="estructuraProgramForm" style="position: relative;"  [ngStyle]="{'padding': innerHeight<=800?'17px 30px 0px':'30px'}">
-                <div class="cerrarFormularioAbsolute" [ngStyle]="{'margin-bottom': innerHeight<=800?'5px':'0px'}">
+              <div class="estructuraProgramForm" style="position: relative;"  [ngStyle]="{'padding': innerHeight<=835?'5px 30px 0px':'30px'}">
+                <div class="cerrarFormularioAbsolute" [ngStyle]="{'margin-bottom': innerHeight<=835?'5px':'0px'}">
                   <img src="../../../assets/imagenes/cerrar.png" alt="cerrar" height="20px" (click)="cerrarFormularioAbsolute()">
                 </div>
                 <app-cargando *ngIf="statuscharge==true"></app-cargando>
                 <div class="cotentestructuraProgramForm">
-                  <div class="question" style="justify-content: flex-start;align-items: center;" [ngStyle]="{'width': innerHeight<=800?'50px':'25%'}">
+                  <div class="question" style="justify-content: flex-start;align-items: center;" [ngStyle]="{'width': innerHeight<=835?'35px':'25%'}">
                     <img src="../../../assets/icons/signo-pregunta-abierto-03.svg" alt="Signo de interrogación abierto" >
                   </div>
-                  <div [ngStyle]="{'font-size': innerHeight<=800?'14px':'20px'}">Tienes dudas sobre algún aspecto del programa</div>
-                  <div class="question" style="justify-content: flex-end;align-items: center;" [ngStyle]="{'width': innerHeight<=800?'50px':'25%'}">
+                  <div [ngStyle]="{'font-size': innerHeight<=800  ?'14px':'20px'}">Tienes dudas sobre algún aspecto del programa</div>
+                  <div class="question" style="justify-content: flex-end;align-items: center;" [ngStyle]="{'width': innerHeight<=835?'35px':'25%'}">
                     <img src="../../../assets/icons/signo-pregunta-cerrado-04.svg" alt="Signo de interrogación cerrado" >
                   </div>
                 </div>
-                <div class="subtitleEstruturaProgramFormAzul" [ngStyle]="{'font-size': innerHeight<=800?'12px':'15px','margin-bottom': innerHeight<=800?'0px':'15px'}">
+                <div class="subtitleEstruturaProgramFormAzul" [ngStyle]="{'font-size': innerHeight<=835?'10px':'15px','margin-bottom': innerHeight<=835?'0px':'15px'}">
                   Registra tus datos para que un asesor especializado pueda ayudarte en todo lo que requieras
                 </div>
                 <ng-container *ngIf="combosPrevios!=undefined">
@@ -287,7 +285,7 @@
     </div>
 
     <div class="container">
-      <div class="row rowpadd">
+      <div class="row rowpadd" #objetivos id="objetivos">
         <div class="col-12 col-md-8 col-lg-8 col-xl-8 containerObjetivos">
           <div class="tituloSeccionPrograma" style="justify-content: flex-start;">
             <img src="../../../assets/imagenes/Objetivos.png" alt="objetivos">
@@ -376,7 +374,7 @@
       </div> 
 
       <div class="container">
-        <div class="row rowpadd" #objetivos id="objetivos">
+        <div class="row rowpadd">
           <div class="col-12" style="display: flex;justify-content: center;">
             <div class="containerObjetivoRequisitos">
                 <div class="cardInformacionPrograma">
@@ -760,15 +758,15 @@
     <div class="container">
       <div class="row rowpadd" style="align-items: center;flex-direction: column;">
         <div class="col-12 col-md-12 col-lg-12" style="display: flex;flex-direction: column;align-items: center;">
-          <div style="color: white;line-height: 44px;font-size: 40px;text-align: center;font-weight: 900;margin-bottom: 35px;">¿Te interesa? Comienza con tu programa ahora mismo</div>
-          <div style="color: white;font-size: 20px;margin-bottom: 35px;text-align: center;width: 60%;">Reserva tu matr&iacute;cula, y accede a conocimiento
+          <div class="teInteresa">¿Te interesa? Comienza con tu programa ahora mismo</div>
+          <div class="descripcionTeInteresa">Reserva tu matr&iacute;cula, y accede a conocimiento
             especializado muy
             valorado en el mercado laboral
             latinoamericano para mejorar tu perfil profesional</div>
         </div>
         <div class="col-12 col-md-4 col-lg-3" style="margin-top: 20px;">
           <app-default-button-flecha [confs]="{color:'primary',titulo:'Matricularme Ahora'}"
-            [style]="'padding: 10px 30px;font-size: 1.2rem;width: 100%;border-radius:15px'"
+            [style]="'padding: 10px 30px;font-size: 1rem;width: 100%;border-radius:15px'"
             (ButtoclClick)="EventoInteraccionButton('¿Te interesa? Comienza con tu programa ahora mismo');OpenModalPago()"
             [disabled]="cabecera.listProgramaEspecificoInformacionDTO.length==0">
           </app-default-button-flecha>
