@@ -79,6 +79,7 @@ export class ChatPortalComponent implements OnInit, OnDestroy, OnChanges {
   public configuration: any;
   public lastMsj = '';
   public img = 'https://proceso-pago.bsginstitute.com/img-web/chatV2/';
+  public pantallaHeight : any;
   @Output()
   ChargeChat: EventEmitter<boolean> = new EventEmitter<boolean>();
   @Output()
@@ -145,6 +146,8 @@ export class ChatPortalComponent implements OnInit, OnDestroy, OnChanges {
           this.marcarChatAlumnoComoLeidos();
         },
       });
+
+      
   }
   ObtenerConfiguracionChat() {
     this._ChatEnLinea

@@ -56,7 +56,7 @@
   font-weight: 600;
   color: #2E2E2E;
   //word-break: break-word;
-  font-size: 44px;
+  font-size: 33px;
 }
 .InfoProgramIcon {
   width: 20px;
@@ -260,7 +260,7 @@
 
 .estructuraProgramForm div .question {
   display: flex;
-  width: 25%;
+  //width: 25%;
   flex-direction: column;
 }
 .question div {
@@ -327,7 +327,7 @@
 
 .piePagina {
   color: #2E2E2E;
-  font-size: 10px;
+  font-size: 13px;
   padding: 20px 10px;
 }
 .certificadoContent {
@@ -336,14 +336,12 @@
 .certificadoContent li {
   padding: 0px 20px;
 }
-.carousel-expositores ngb-carousel .carousel-inner div .wrapper {
+.carousel-expositores ngb-carousel .carousel-inner div .wrapper
+//.carousel-programas ngb-carousel .carousel-inner div .wrapper
+ {
   margin: 20px 10px;
 }
 
-.titleCardSub {
-  font-size: 17px;
-  font-weight: bolder;
-}
 .cardSubtitle {
   display: flex;
   align-items: center;
@@ -374,11 +372,7 @@
   height: auto;
   width: 100%;
 }
-.parafoCardSub {
-  font-size: 16px;
-  text-align: left;
-  color: #878787;
-}
+
 
 .iconarrow {
   color: #34c939;
@@ -527,8 +521,36 @@
   .paddingNoVideo{
     padding: 0px;
   }
+  .containerTituloSecciones{
+    width: 100% !important;
+  }
+
+  .fixed-navbar{
+    .contenedor-navegacion-seccion{
+      width: 100% !important;
+      overflow-x: auto; /* Permite el desplazamiento horizontal */
+    
+      -ms-overflow-style: none; /* Oculta la barra de desplazamiento en Edge/IE */
+      scrollbar-width: none; /* Oculta la barra de desplazamiento en Firefox */
+      ul{
+        display: flex;
+        justify-content: space-between;
+        gap: 20px;
+        border: none;
+      }
+    }
+  }
+
 }
 @media (max-width: 768px){
+
+  .encabezadoCardBlog{
+    font-size: 14px !important;
+  }
+
+  .linkPrograma{
+    border-radius: 5px !important;
+  }
 
   .imgCardFormasPago{
     margin-left: 32px;
@@ -571,6 +593,7 @@
   }
 
   .infoClaveProgramaContainer{
+    min-width: 85% !important;
     flex-direction: column;
     align-items: flex-start;
     padding:16px 10px 16px 35px !important;
@@ -593,6 +616,10 @@
     }
   }
 
+  .ATuRitmoOnline{
+    top:-149px !important;
+  }
+
   .containerTags{
     flex-direction: column;
     align-items: start !important;
@@ -600,7 +627,19 @@
   }
 
   .paddingNoVideo{
-    padding: 0px;
+    padding: 10px 20px;
+  }
+
+  .fixed-navbar{
+
+    ul{
+      display: flex;
+      justify-content: space-between;
+      border: none !important;
+      li{
+        margin-right: 0px !important;
+      }
+    }
   }
 
   .contenedor-navegacion-seccion{
@@ -721,6 +760,14 @@
     transition: max-height 0.3s ease-in-out;
   }
 
+  .containerTituloSecciones{
+    width: 100% !important;
+  }
+
+  .centradoModalidadPago{
+    align-items: unset !important;
+  }
+
 }
 
 .cardInformacionPrograma{
@@ -736,9 +783,11 @@
 }
 
 .tituloSeccionPrograma{
+  justify-content: center;
+  margin-bottom: 20px;
   color: #2E2E2E;
   display: flex;
-  font-size: 44px;
+  font-size: 30px;
   font-weight: 900;
   text-decoration: underline;
   align-items: center;
@@ -759,7 +808,8 @@
 
 .puntoListaObjetivos ul,
 .puntoListaPublicoObjetivo ul,
-.puntoAzulListaCertificacion li ul li
+.puntoAzulListaCertificacion li ul li,
+.puntoAzulDuracionHorario ul li
 {
   list-style: none;
   padding-left: 0px;
@@ -767,7 +817,8 @@
 
 .puntoListaObjetivos ul li,
 .puntoListaPublicoObjetivo ul li,
-.puntoAzulListaCertificacion li ul li
+.puntoAzulListaCertificacion li ul li,
+.puntoAzulDuracionHorario ul li
 {
   line-height: 1.8;
   font-size: 18px;
@@ -815,6 +866,19 @@
   background-size: contain;
 }
 
+.puntoAzulDuracionHorario ul li::before
+{
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 17px;
+  transform: translateY(-50%);
+  width: 18px;
+  height: 18px; 
+  background: url('../../../../src/assets/imagenes/check-celeste.png') no-repeat center center;
+  background-size: contain;
+}
+
 #FormularioProgramas{
   position: absolute;
   width: 320px;
@@ -830,9 +894,30 @@
 }
 @media (max-width: 768px){
 
+  .margen-card{
+    padding-left: 0px !important;
+  }
+
+  .parafoCardSub{
+    font-size: 15px !important;
+  }
+
+  .titleCardSub{
+    font-size: 15px !important;
+  }
+
   .tituloSeccionPrograma{
+
+    //padding-left: 0px;
+    padding-right: 0px;
+
+    img{
+      height: 40px !important;
+      padding-right: 3px;
+    }
+
     justify-content: flex-start !important;
-    font-size: 30px;
+    font-size: 23px;
   }
 
   .carouselContainer{
@@ -860,7 +945,7 @@
   #FormularioProgramasInsert{
     display: block;
     width: 100%;
-    margin-top: 60px;
+    margin-top: 85px;
     //display: none;
     margin-left: 0px;
     padding-bottom: 40px;
@@ -936,6 +1021,10 @@
     gap: 15px;
   }
 
+  .programasContenido{
+    padding: 0px !important;
+  }
+
 }
 
 @media (max-width: 992px){
@@ -949,11 +1038,11 @@
 
 @media (min-width:992px) and (max-width: 1475px) {
   .cardInformacionPrograma{
-    width: 45%;
+    //width: 40%;
   }
   .infoClaveProgramaContainer{
-    padding: 10px 7px !important;
-    top: -68px !important;
+    padding: 17px 7px !important;
+    top: -55px !important;
   }
   #FormularioProgramasInsert{
     margin-left: 0px;
@@ -963,23 +1052,39 @@
     padding-top: 60px !important;
     
   }
+  .fixed-navbar{
+    .contenedor-navegacion-seccion{
+      width: 90% !important;
+    }
+  }
+
+  #absoluteFormulario {
+    right: 105px !important;
+    width: 24% !important;
+  }
+
+  .containerTituloSecciones{
+    width: 71% !important;
+  }
+
+  .fixed-navbar {
+    ul{
+      li{
+        margin-right: 20px !important;
+      }
+    }
+  }
   
 }
 
 @media (min-width:992px) and (max-width:1280px){
 
-  .rowpadd{
-    padding: 50px 0px !important;
-  }
+  // .rowpadd{
+  //   padding: 50px 0px !important;
+  // }
 
   .tituloHeaderPrograma h1{
     font-size: 18px !important;
-  }
-
-  .fixed-navbar{
-    .contenedor-navegacion-seccion{
-      width: 95% !important;
-    }
   }
 
   #absoluteFormulario{
@@ -987,25 +1092,26 @@
     right: 36px !important;
   }
 
-  #absoluteFormulario{
-
-    #FormularioProgramasInsert{
-      max-height: 85vh;
-      overflow-y: auto;
+  .fixed-navbar {
+    ul{
+      li{
+        margin-right: 10px !important;
+      }
     }
   }
 
 }
 
+
 .container {
-  max-width: 95%;
+  max-width: 1453px;
 }
 
 .infoClaveProgramaContainer{
   display: flex;
   justify-content: space-between;
   position: absolute;
-  width: 80%;
+  min-width: 1170px;
   background-color: #FFCD34;
   top: -50px;
   z-index: 10;
@@ -1096,13 +1202,14 @@
 }
 
 .containerObjetivoRequisitos {
-  width: 80%;
+  width: 100%;
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
+  //gap: 90px;
 }
 
 .containerObjetivos{
-  padding-bottom:40px ;
+  //padding-bottom:40px ;
 
 }
 
@@ -1111,8 +1218,8 @@
   position: relative;
   display: flex;
   justify-content: center;
-  padding-top: 40px;
-  padding-bottom: 70px;
+  padding-top: 65px;
+  //padding-bottom: 70px;
 }
 
 /****************************************/
@@ -1121,7 +1228,7 @@
   font-size: 20px;
   font-weight: bold;
   padding: 15px 0px;
-  border-bottom: 2px solid #EFF4FD;
+  
 }   
 .fixed-navbar {
    position: fixed;
@@ -1137,7 +1244,7 @@
    display: none;
 
    .contenedor-navegacion-seccion{
-    width: 80%;
+    width: 85%;
     display: flex;
     justify-content: space-between;
     //white-space: nowrap;
@@ -1145,17 +1252,19 @@
 
    ul {
      list-style: none;
-     margin: 0;
-     padding: 5px;
-     display: flex;
-     justify-content: space-between;
+     margin: 0px;
+     padding: 10px 0px;
+    //  display: flex;
+    //  justify-content: space-between;
      gap: 20px;
      margin-top: 5px;
+     border-top: 2px solid #EFF4FD;
+     li {
+       display: inline-block;
+       margin-right: 40px;
+     }
    }
  
-   li {
-     display: inline;
-   }
  
    .seccionHeaderPrograma {
      color: #2E2E2E;
@@ -1191,7 +1300,7 @@
   display: block;
   position: absolute;
   top: 95px;
-  right: 188px;
+  right: 143px;
   width: 18%;
   margin-left: 0px;
   #FormularioProgramasInsert{
@@ -1209,15 +1318,16 @@
   }
  }
 .widthTag{
-  width: 80%;
+  width: 100%;
   .containerTags{
    display: flex;
    align-items: center;
-   justify-content: space-between;
+   justify-content: flex-start;
    flex-wrap: wrap;
+   gap: 15px;
    .tag{
-     margin-right: 20px;
-     font-size: 20px;
+     margin-right: 0px;
+     font-size: 18px;
      text-align: center;
      //flex: 1;
    }
@@ -1257,9 +1367,9 @@
 .descripcionCurso{
   margin: 28px 0px;
   line-height: 1.8; 
-  font-size: 17px; 
+  font-size:15px; 
   font-weight: 300;
-  width: 80%;
+  width: 90%;
 }
 
 .contenedorArea{
@@ -1271,12 +1381,13 @@
 .cabeceraPrerequisito{
   text-align: left;
   padding: 0px 45px;
-  margin: 20px 0px;
+  margin-bottom: 20px;
   font-size: 18px;
 }
 
 .margen-card{
   margin-bottom: 20px;
+  padding-left: 35px;
 }
 
 .subtituloPanelExpansion{
@@ -1361,13 +1472,6 @@
   color: #656565;
 }
 
-.subtitulo{
-  color: #017EFF;
-  line-height: 100%;
-  font-weight: 900;
-  text-decoration: underline;
-}
-
 .contentExpositor.expanded {
   max-height: none; /* Expande al tamaño completo */
 }
@@ -1386,4 +1490,106 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+
+.tituloSeccionPrograma{
+  img{
+    height: 50px;
+  }
+}
+
+.containerCertificacion{
+  display: flex;
+  flex-direction: column;
+  //align-items: center;
+  justify-content: center;
+  //padding-top: 20px;
+}
+
+.containerTituloSecciones{
+  width: 68%;
+}
+
+// .alturaFormularioAbsolute{
+//   max-height: 67vh !important;
+//   overflow-y: auto !important;
+// }
+
+.carousel-programas,
+.carousel-contenidos{
+  .carousel-control-next-icon{
+    background-image: url('../../../../src/assets/imagenes/icono-carrusel-azul-B.png');
+  }
+  .carousel-control-prev-icon{
+    background-image: url('../../../../src/assets/imagenes/icono-carrusel-azul-A.png');
+  }
+
+  .carousel-indicators [data-bs-target] {
+    background-color: #2087f5;
+  }
+
+}
+
+.centradoModalidadPago{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+// .titleCardSub{
+//   font-size: 20px;
+// }
+
+// .parafoCardSub{
+//   font-size: 20px;
+// }
+
+.cardSubtitle{
+  div{
+    width: 100%;
+  }
+}
+
+.homeLearningProgramaCurso{
+  .subtitulo{
+    color: #017EFF;
+    line-height: 100%;
+    font-weight: 900;
+    text-decoration: underline;
+  }
+  .titleCardSub {
+    font-size: 20px;
+    font-weight: bolder;
+  }
+
+  .parafoCardSub {
+    font-size: 20px;
+    text-align: left;
+    color: #878787;
+  }
+
+}
+
+.rowpadd{
+  padding-top: 25px;
+  padding-bottom: 25px;
+}
+
+@media (min-width:1000px) and (max-width:1107px){
+
+  .infoClaveProgramaContainer{
+    min-width:970px !important;
+  }
+
+  .contenedor-navegacion-seccion{
+    justify-content: initial;
+  }
+
+  .containerMasInformacion{
+    //margin-right: 0px !important;
+    margin-left: 36px !important;
+    .masInformacionButton{
+      padding: 8px 30px;
+    }
+  }
 }

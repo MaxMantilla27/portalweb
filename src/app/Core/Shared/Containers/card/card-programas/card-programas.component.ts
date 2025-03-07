@@ -16,9 +16,11 @@ export class CardProgramasComponent implements OnInit {
     private router:Router
   ) { }
   public hoverimg=false;
+  public innerWidth: any;
   @Input() cardContent:CardProgramasDTO={Content:'',Img:'',Url:'',Title:'',ImgAlt:'',Inversion:''};
   @Input() Interaccion=''
   ngOnInit(): void {
+    this.innerWidth = window.innerWidth;
   }
 
   EventoInteraccion(nombre:string){

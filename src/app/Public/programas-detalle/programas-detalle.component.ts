@@ -287,6 +287,7 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
   public activateSeccion: string = '';
   public absoluteFormulario: boolean = false;
   public blogsRelacionados: any[]= [] ;
+  public innerHeight: any ;
 
   public secciones = [
     { id: 1, ref: 'objetivos', nombre: 'Objetivos' },
@@ -311,7 +312,7 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
         if (offset >= elementTop - 130 && offset < elementBottom - 130) { // Ajusta el valor según la altura de la barra de navegación fija  
           this._HelperServiceP.enviarScrollHeaderPrograma(offset >= elementTop - 130);
           this.activateSeccion = seccion.ref;
-          if (this.activateSeccion === 'inversion') {
+          if (this.activateSeccion === 'inversion' || this.innerWidth < 1000) {
             const absoluteFormulario = document.getElementById('absoluteFormulario') as HTMLElement
             absoluteFormulario.style.display = 'none';
           }
@@ -325,9 +326,12 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
   @HostListener('window:resize')
   onResize() {
     this.innerWidth = window.innerWidth; 
-    // if (this.innerWidth < 1000) {
-    //   this._HelperServiceP.enviarScrollHeaderPrograma(false);
-    // }
+    this.innerHeight = window.innerHeight;
+    console.log(this.innerHeight);
+    if (this.innerWidth <= 1000) {
+      const absoluteFormulario = document.getElementById('absoluteFormulario') as HTMLElement
+      absoluteFormulario.style.display = 'none';
+    }
   }
 
   ngOnInit(): void {
@@ -395,6 +399,9 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
         .subscribe((isScrolled) => {
           this.isScrolled = isScrolled;
         })
+
+    this.innerWidth = window.innerWidth; 
+    this.innerHeight = window.innerHeight;
 
   }
 
@@ -1429,13 +1436,18 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
           // Ocultar el formulario cuando el header se oculta
           scrollHandler = () => {
             if (fixedNavbar.getBoundingClientRect().bottom < 0) {
-              if (absoluteFormulario) absoluteFormulario.style.display = 'none';
+              if (absoluteFormulario){
+                  absoluteFormulario.style.display = 'none';
+              }
             } else {
-              if (absoluteFormulario) absoluteFormulario.style.display = 'block';
+              if (absoluteFormulario){
+                absoluteFormulario.style.display = 'block';
+              } 
             }
           };
           
         }
+
       });
     }
   }

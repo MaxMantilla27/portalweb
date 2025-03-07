@@ -1,5 +1,5 @@
 <!-- holax -->
-<mat-card class="card-programas" *ngIf="idTipoArticulo==1">
+<mat-card class="card-programas" *ngIf="idTipoArticulo==1 && !programaCurso">
   <img mat-card-image [src]="'https://img.bsginstitute.com/repositorioweb/img/'+cardContent.imgPortada"
     [alt]="cardContent.imgPortadaAlt">
   <mat-card-content>
@@ -9,6 +9,7 @@
     <p [innerHTML]="cardContent.descripcion | safeHtml">
     </p>
   </mat-card-content>
+
   <mat-card-footer>
     <div class="invercion">
 
@@ -22,12 +23,13 @@
     </div>
   </mat-card-footer>
 </mat-card>
-<mat-card class="card-programas" *ngIf="idTipoArticulo==3">
+
+<mat-card class="card-programas" *ngIf="idTipoArticulo==3 && !programaCurso">
   <img mat-card-image class="imgewp"
     [src]="'https://repositorioweb.blob.core.windows.net/paper-bs/Paper/imagen/'+cardContent.imgPortada"
     [alt]="cardContent.imgPortadaAlt">
   <mat-card-content>
-    <h2 style="line-height: 150%; font-size: 14px;" class="title" (click)="EventoInteraccion(cardContent.nombre)" [routerLink]="'/bs-campus/white-paper/'+cardContent.urlWeb+'-'+cardContent.idWeb">
+    <h2 class="title encabezadoCardBlog" (click)="EventoInteraccion(cardContent.nombre)" [routerLink]="'/bs-campus/white-paper/'+cardContent.urlWeb+'-'+cardContent.idWeb">
       {{cardContent.nombre}}</h2>
 
     <p [innerHTML]="cardContent.descripcion | safeHtml">
@@ -40,4 +42,23 @@
         m&aacute;s ></div>
     </div>
   </mat-card-footer>
+</mat-card>
+
+<mat-card class="card-programas" *ngIf="idTipoArticulo==1 && programaCurso">
+  <img mat-card-image [src]="'https://img.bsginstitute.com/repositorioweb/img/'+cardContent.imgPortada"
+    [alt]="cardContent.imgPortadaAlt">
+  <mat-card-content>
+    <h2 class="title encabezadoCardBlog" (click)="EventoInteraccion(cardContent.nombre)" [routerLink]="'/bs-campus/blog/'+cardContent.urlWeb+'-'+cardContent.idWeb">{{cardContent.nombre}}
+    </h2>
+  </mat-card-content>
+</mat-card>
+
+<mat-card class="card-programas" *ngIf="idTipoArticulo==3 && programaCurso">
+  <img mat-card-image class="imgewp"
+    [src]="'https://repositorioweb.blob.core.windows.net/paper-bs/Paper/imagen/'+cardContent.imgPortada"
+    [alt]="cardContent.imgPortadaAlt">
+  <mat-card-content>
+    <h2 class="title encabezadoCardBlog" (click)="EventoInteraccion(cardContent.nombre)" [routerLink]="'/bs-campus/white-paper/'+cardContent.urlWeb+'-'+cardContent.idWeb">
+      {{cardContent.nombre}}</h2>
+  </mat-card-content>
 </mat-card>
