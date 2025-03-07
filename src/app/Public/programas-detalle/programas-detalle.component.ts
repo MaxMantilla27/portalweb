@@ -312,7 +312,7 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
         if (offset >= elementTop - 130 && offset < elementBottom - 130) { // Ajusta el valor según la altura de la barra de navegación fija  
           this._HelperServiceP.enviarScrollHeaderPrograma(offset >= elementTop - 130);
           this.activateSeccion = seccion.ref;
-          if (this.activateSeccion === 'inversion' || this.innerWidth < 1000) {
+          if (this.activateSeccion === 'inversion' || this.innerWidth <= 1000) {
             const absoluteFormulario = document.getElementById('absoluteFormulario') as HTMLElement
             absoluteFormulario.style.display = 'none';
           }
