@@ -29,7 +29,7 @@
         </div>
         <!-- [ngStyle]="{'max-height':innerHeight<=860?'67vh':'unset','overflow-y':innerHeight<=860?'auto':'visible'}" -->
         <ng-container *ngIf="absoluteFormulario">
-          <div class="col-12 col-md-4 col-lg-4 containerFormulario" id="absoluteFormulario" [ngStyle]="{'top':innerHeight<=800? '0px':'95px'}">
+          <div class="col-12 col-md-4 col-lg-4 containerFormulario" id="absoluteFormulario" [ngStyle]="{'top':innerHeight<=800? '20px':'95px'}">
             <div id="FormularioProgramasInsert">
               <div class="estructuraProgramForm" style="position: relative;"  [ngStyle]="{'padding': innerHeight<835?'5px 30px 0px':'30px'}">
                 <div class="cerrarFormularioAbsolute" [ngStyle]="{'margin-bottom': innerHeight<=835?'5px':'0px'}">
@@ -598,7 +598,7 @@
                   <div class="row" style="width: 95%;display: flex;justify-content: center;padding:0px 30px 30px;">
                     <div class="col-12 col-xs-12 col-md-12 col-lg-12 carouselContainer" style="height: 100%">
                       <div class="carouselContainerImg">
-                        <img [src]="ste.fotoDocente" height="150px" alt="{{ste.primerNombre}} {{ste.apellidoPaterno}}">
+                        <img [src]="ste.fotoDocente" height="150px" alt="{{ste.primerNombre}} {{ste.apellidoPaterno}}" (error)="ste.fotoDocente='../../../assets/imagenes/icono-docente.png';">
                       </div>
                       <div class="carouselContainerContent">
                         <div class="titleExpositor">{{ste.primerNombre}} {{ste.apellidoPaterno}} ({{ste.nombrePais}})</div>
