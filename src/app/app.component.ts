@@ -1,7 +1,7 @@
 import { isPlatformBrowser } from '@angular/common';
 import { AfterViewInit, Component, Inject, OnDestroy, OnInit, PLATFORM_ID, ViewEncapsulation } from '@angular/core';
 import { Router, NavigationEnd, ActivatedRoute } from '@angular/router';
-import { Subject, takeUntil, tap } from 'rxjs';
+import { lastValueFrom, Subject, takeUntil, tap } from 'rxjs';
 import { BasicBotonesExpandibles } from './Core/Models/BasicDTO';
 import { GlobalService } from './Core/Shared/Services/Global/global.service';
 import { HelperService } from './Core/Shared/Services/helper.service';
@@ -19,6 +19,7 @@ import { RegistrarseComponent } from './Public/registrarse/registrarse.component
 import { LibroReclamacionesComponent } from './Public/libro-reclamaciones/libro-reclamaciones.component';
 import { LandingPageInterceptorComponent } from './Public/landing-page/landing-page/landing-page-interceptor/landing-page-interceptor/landing-page-interceptor.component';
 import { FormularioPublicidadInterceptorComponent } from './Public/FormularioPublicidad/FormularioPublicidadInterceptor/formulario-publicidad-interceptor.component';
+import { FormularioProgresivoConfiguracionBotonService } from './Core/Shared/Services/FormularioProgresivoConfiguracionBoton/formulario-progresivo-configuracion-boton.service';
 
 @Component({
   selector: 'app-root',
@@ -48,6 +49,7 @@ export class AppComponent implements OnInit,AfterViewInit ,OnDestroy {
     private _GlobalService:GlobalService,
     private _SessionStorageService: SessionStorageService,
     private _FormularioProgressiveProfilingService: FormularioProgressiveProfilingService,
+    private _FormularioProgresivoConfiguracionBotonService: FormularioProgresivoConfiguracionBotonService,
     private _RegistroVisitaPortalService: RegistroVisitaPortalService,
     public dialog: MatDialog,
     private activatedRoute: ActivatedRoute,
@@ -98,6 +100,8 @@ export class AppComponent implements OnInit,AfterViewInit ,OnDestroy {
   auxNombrePrograma: string = "";
   auxCorreoCliente: string = "";
   auxCodigoDescuento: string = "";
+  botonTexto: string = "";
+  botonAccion: number = 0;
   
   ngOnInit() {
     console.log("Inicio Ruta ",window.frames.location);
@@ -341,7 +345,6 @@ export class AppComponent implements OnInit,AfterViewInit ,OnDestroy {
     .pipe(takeUntil(this.signal$))
     .toPromise()
     .then(x => {
-
       if (x.datosRegistroVisitaPortal.length > 0) {
         this.idContactoPortal = x.datosRegistroVisitaPortal[0].idContactoPortal;
         this.datosUsuario = x.datosRegistroVisitaPortal;
@@ -416,6 +419,9 @@ export class AppComponent implements OnInit,AfterViewInit ,OnDestroy {
   async abrirFormularioProgressiveProfiling(formulario: any, tipoPagina: string) {
     this.obtenerDatosPrograma();
     var { tipoPagina } = await this.verificaComponenteActivo();
+    var { botonTexto, botonAccion } = await this.obtenerAccionBoton(formulario, tipoPagina);
+    this.botonTexto = botonTexto;
+    this.botonAccion = botonAccion;
     var aulaVirtual = false;
     var formularioProgresivoYaMostrado = false;
     if (this._SessionStorageService.validateTokken()) {
@@ -487,13 +493,50 @@ export class AppComponent implements OnInit,AfterViewInit ,OnDestroy {
             cuerpoIndustriaOrden: formulario.cuerpoIndustriaOrden,
             cuerpoIndustriaObl: formulario.cuerpoIndustriaObl,
             boton: formulario.boton,
-            botonTexto: formulario.botonTexto,
-            botonAccion: formulario.botonAccion
+            botonTexto: this.botonTexto,
+            botonAccion: this.botonAccion,
           }
         });
       }
     }
   }
+
+  async obtenerAccionBoton(formulario: any, tipoPagina: string): Promise<{ botonTexto: string; botonAccion: number }> {
+    let botonTexto = '';
+    let botonAccion = 0;
+
+    if (formulario.boton) {
+        let id = 0;
+        if (tipoPagina == 'index') {
+            id = 4;
+        } else if (tipoPagina == 'curso') {
+            id = 1;
+        } else if (tipoPagina == 'blog') {
+            id = 3;
+        } else if (tipoPagina == 'whitepaper') {
+            id = 2;
+        }
+
+        if (id > 0) {
+            try {
+                const response = await lastValueFrom(
+                    this._FormularioProgresivoConfiguracionBotonService
+                        .ObtenerListaFormularioProgresivoConfiguracionBoton(formulario.id, id)
+                );
+
+                if (response.datosFormularioProgresivoConfiguracionBoton.length > 0) {
+                    botonTexto = response.datosFormularioProgresivoConfiguracionBoton[0].textoBoton;
+                    botonAccion = response.datosFormularioProgresivoConfiguracionBoton[0].idFormularioProgresivoAccionBoton;
+                }
+            } catch (error) {
+                console.error('Error obteniendo la acción del botón:', error);
+            }
+        }
+    }
+
+    return { botonTexto, botonAccion };
+}
+
 
   async verificaComponenteActivo(): Promise<{ tipoPagina: string}> {
     let tipoPagina = 'index';

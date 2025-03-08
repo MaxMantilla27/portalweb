@@ -390,7 +390,7 @@ export class FormularioProgressiveProfilingComponent implements OnInit {
         valorDefecto: null,
         obligatorio: false,
         orden: formData.cuerpoPaisOrden,
-        hidden: true
+        hidden: false
       });
       this.camposConfigurados.push({
         id: 'localidad',
@@ -612,8 +612,6 @@ export class FormularioProgressiveProfilingComponent implements OnInit {
   }
 
   onComboChange(event: any, campo: any): void {
-    console.log('gamero event', event);
-    console.log('gamero campo', campo);
     if (campo.id === 'pais') {
       this.handlePaisSelection(event.value);
       const nuevoValorDefectoPais = event.value;
@@ -623,6 +621,7 @@ export class FormularioProgressiveProfilingComponent implements OnInit {
         campoPais.valorDefecto = this.valorDefectoPais;
         this.valorDefectoPaisTelef = nuevoValorDefectoPais? `+${nuevoValorDefectoPais.toString()}` : null;
       }
+
       const campoTelefono = this.camposConfigurados.find(campoConfig => campoConfig.id === 'telefono');
       if (campoTelefono) {
         this.formCamposDinamicos.patchValue({
@@ -635,6 +634,7 @@ export class FormularioProgressiveProfilingComponent implements OnInit {
           inputElement.selectionStart = inputElement.value.length;
         }
       }
+
       const campoRegion = this.camposConfigurados.find(c => c.id === 'region');
       const campoLocalidad = this.camposConfigurados.find(c => c.id === 'localidad');
 
@@ -654,6 +654,24 @@ export class FormularioProgressiveProfilingComponent implements OnInit {
     }
     if (campo.id === 'region') {
       this.handleRegionSelection(event.value);
+      const campoRegion = this.camposConfigurados.find(c => c.id === 'region');
+      if (campoRegion) {
+        this.formCamposDinamicos.patchValue({ region: event.value });
+        campoRegion.valorDefecto = event.value;
+      }
+      const campoLocalidad = this.camposConfigurados.find(c => c.id === 'localidad');
+      if (campoLocalidad) {
+        this.formCamposDinamicos.patchValue({ localidad: null });
+        campoLocalidad.valorDefecto = null;
+        campoLocalidad.opciones = [];
+      }
+    }
+    if (campo.id === 'localidad') {
+      const campoLocalidad = this.camposConfigurados.find(c => c.id === 'localidad');
+      if (campoLocalidad) {
+        this.formCamposDinamicos.patchValue({ localidad: event.value });
+        campoLocalidad.valorDefecto = event.value;
+      }
     }
   }
 
@@ -797,6 +815,7 @@ export class FormularioProgressiveProfilingComponent implements OnInit {
       nombres: boolean;
       apellidos: boolean;
       pais: boolean;
+      ciudad: boolean;
       telefono: boolean;
       cargo: boolean;
       areaFormacion: boolean;
@@ -808,6 +827,7 @@ export class FormularioProgressiveProfilingComponent implements OnInit {
       nombres: false,
       apellidos: false,
       pais: false,
+      ciudad: false,
       telefono: false,
       cargo: false,
       areaFormacion: false,
@@ -815,9 +835,13 @@ export class FormularioProgressiveProfilingComponent implements OnInit {
       industria: false,
     };
     this.camposConfigurados.forEach(campo => {
-      if (campo.id in actualizarCampos) {
+      let campoId = campo.id;
+      if (campo.id === "region") {
+        campoId = "ciudad";
+      }
+      if (campoId in actualizarCampos) {
         if (valoresFormulario[campo.id] !== null && valoresFormulario[campo.id] !== undefined) {
-          actualizarCampos[campo.id as keyof typeof actualizarCampos] = true;
+          actualizarCampos[campoId as keyof typeof actualizarCampos] = true;
         }
       }
     });
@@ -828,6 +852,8 @@ export class FormularioProgressiveProfilingComponent implements OnInit {
       nombre: valoresFormulario.nombres,
       apellido: valoresFormulario.apellidos,
       idPais: valoresFormulario.pais,
+      idCiudad: valoresFormulario.region ?? null,
+      idLocalidad: valoresFormulario.localidad,
       telefono: valoresFormulario.telefono,
       idCargo: valoresFormulario.cargo,
       idAreaFormacion: valoresFormulario.areaFormacion,
@@ -1085,6 +1111,8 @@ interface InsertaRegistroVisitaPortalDTO {
   nombre?: string | null;
   apellido?: string | null;
   idPais?: number | null;
+  idCiudad?: number | null;
+  idLocalidad?: number | null;
   telefono?: string | null;
   idCargo?: number | null;
   idAreaFormacion?: number | null;
@@ -1099,6 +1127,7 @@ interface InsertaRegistroVisitaPortalDTO {
     nombres: boolean;
     apellidos: boolean;
     pais: boolean;
+    ciudad: boolean;
     telefono: boolean;
     cargo: boolean;
     areaFormacion: boolean;
@@ -1112,6 +1141,8 @@ interface datosRegistroVisitaPortalDTO {
   nombre?: string;
   apellido?: string;
   idPais?: number;
+  idCiudad?: number;
+  idLocalidad?: number;
   telefono?: string;
   idCargo?: number;
   idAreaFormacion?: number;
