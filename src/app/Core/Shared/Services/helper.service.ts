@@ -32,6 +32,7 @@ export class HelperService {
   // private msjScrollPago = new ReplaySubject<string>()
   private msjEstadoPreCargaPasarela = new ReplaySubject<string>()
   private scrollHeaderPrograma = new BehaviorSubject<boolean>(false);
+  private msjShowFooter = new BehaviorSubject<boolean>(true);
 
 
   enviarmsjObtenerUsuario(data:any):void {
@@ -162,5 +163,15 @@ export class HelperService {
   public enviarScrollHeaderPrograma(isScrolled: boolean): void {
     this.scrollHeaderPrograma.next(isScrolled);
   }
+
+  public get recibirShowFooter(): Observable<any> {
+    return this.msjShowFooter.asObservable()
+  }
+
+  public enviarShowFooter(isShow: boolean): void {
+    this.msjShowFooter.next(isShow);
+  }
+
+
 
 }

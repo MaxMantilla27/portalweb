@@ -336,6 +336,9 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
 
   ngOnInit(): void {
 
+    this._HelperServiceP
+        .enviarShowFooter(false)
+
     this.codigoIso =
     this._SessionStorageService.SessionGetValue('ISO_PAIS') != ''
       ? this._SessionStorageService.SessionGetValue('ISO_PAIS')
@@ -563,6 +566,10 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
             )
           {
             this.programaDetalleisnull = false;
+
+            this._HelperServiceP
+                .enviarShowFooter(true)
+
             var metas=x.programaCabeceraDetalleDTO.parametroSeoProgramaDTO;
             if(metas.length>0){
 
