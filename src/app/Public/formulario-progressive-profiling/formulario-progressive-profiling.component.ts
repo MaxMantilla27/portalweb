@@ -4,6 +4,7 @@ import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dial
 import { Router } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
 import { AccountService } from 'src/app/Core/Shared/Services/Account/account.service';
+import { ArticuloService } from 'src/app/Core/Shared/Services/Articulo/articulo.service';
 import { DatosPortalService } from 'src/app/Core/Shared/Services/DatosPortal/datos-portal.service';
 import { FormularioProgresivoConfiguracionCodigoDescuentoService } from 'src/app/Core/Shared/Services/FormularioProgresivoConfiguracionCodigoDescuento/formulario-progresivo-configuracion-codigo-descuento.service';
 import { FormularioProgressiveProfilingService } from 'src/app/Core/Shared/Services/FormularioProgressiveProfiling/formulario-progressive-profiling.service';
@@ -34,6 +35,7 @@ export class FormularioProgressiveProfilingComponent implements OnInit {
     private _router: Router,
     private _AccountService: AccountService,
     private _RegionService: RegionService,
+    private _ArticuloService: ArticuloService,
   ) {
     this.formCamposDinamicos = this.formBuilder.group({});
   }
@@ -75,6 +77,7 @@ export class FormularioProgressiveProfilingComponent implements OnInit {
   idFormularioInicial = null;
   condicionMostrar = null;
   tiempoSesion = null;
+  idRegistroArchivoStorage = "";
 
   titulo = null;
   tituloTexto: string | null = null;
@@ -199,6 +202,7 @@ export class FormularioProgressiveProfilingComponent implements OnInit {
     this.usuarioWeb = formData.usuarioWeb
     this.id = formData.id;
     this.tipo = formData.tipo;
+    this.idRegistroArchivoStorage = formData.registroArchivoStorage;
     if (this.tipo === 2) {
       this.idFormularioInicial = formData.idFormularioProgresivoInicial;
     }
@@ -210,7 +214,7 @@ export class FormularioProgressiveProfilingComponent implements OnInit {
       {
         '*correo cliente*': this.auxCorreoCliente || '',
         '*tipo programa*': this.auxTipoPrograma || 'programa',
-        '*nombre programa*': this.auxNombrePrograma || 'programa',
+        '*nombre programa*': this.auxNombrePrograma || (this.tipoPagina === 'whitepaper' ? 'Whitepaper' : 'programa'),
         '*codigo descuento*': this.auxCodigoDescuento || ''
       }
     );
@@ -220,7 +224,7 @@ export class FormularioProgressiveProfilingComponent implements OnInit {
       {
         '*correo cliente*': this.auxCorreoCliente || '',
         '*tipo programa*': this.auxTipoPrograma || 'programa',
-        '*nombre programa*': this.auxNombrePrograma || 'programa',
+        '*nombre programa*': this.auxNombrePrograma || (this.tipoPagina === 'whitepaper' ? 'Whitepaper' : 'programa'),
         '*codigo descuento*': this.auxCodigoDescuento || ''
       }
     );
@@ -231,7 +235,7 @@ export class FormularioProgressiveProfilingComponent implements OnInit {
       {
         '*correo cliente*': this.auxCorreoCliente || '',
         '*tipo programa*': this.auxTipoPrograma || 'programa',
-        '*nombre programa*': this.auxNombrePrograma || 'programa',
+        '*nombre programa*': this.auxNombrePrograma || (this.tipoPagina === 'whitepaper' ? 'Whitepaper' : 'programa'),
         '*codigo descuento*': this.auxCodigoDescuento || ''
       }
     );
@@ -240,7 +244,7 @@ export class FormularioProgressiveProfilingComponent implements OnInit {
       {
         '*correo cliente*': this.auxCorreoCliente || '',
         '*tipo programa*': this.auxTipoPrograma || 'programa',
-        '*nombre programa*': this.auxNombrePrograma || 'programa',
+        '*nombre programa*': this.auxNombrePrograma || (this.tipoPagina === 'whitepaper' ? 'Whitepaper' : 'programa'),
         '*codigo descuento*': this.auxCodigoDescuento || ''
       }
     );
@@ -249,7 +253,7 @@ export class FormularioProgressiveProfilingComponent implements OnInit {
       {
         '*correo cliente*': this.auxCorreoCliente || '',
         '*tipo programa*': this.auxTipoPrograma || 'programa',
-        '*nombre programa*': this.auxNombrePrograma || 'programa',
+        '*nombre programa*': this.auxNombrePrograma || (this.tipoPagina === 'whitepaper' ? 'Whitepaper' : 'programa'),
         '*codigo descuento*': this.auxCodigoDescuento || ''
       }
     );
@@ -261,7 +265,7 @@ export class FormularioProgressiveProfilingComponent implements OnInit {
       {
         '*correo cliente*': this.auxCorreoCliente || '',
         '*tipo programa*': this.auxTipoPrograma || 'programa',
-        '*nombre programa*': this.auxNombrePrograma || 'programa',
+        '*nombre programa*': this.auxNombrePrograma || (this.tipoPagina === 'whitepaper' ? 'Whitepaper' : 'programa'),
         '*codigo descuento*': this.auxCodigoDescuento || ''
       }
     );
@@ -270,7 +274,7 @@ export class FormularioProgressiveProfilingComponent implements OnInit {
       {
         '*correo cliente*': this.auxCorreoCliente || '',
         '*tipo programa*': this.auxTipoPrograma || 'programa',
-        '*nombre programa*': this.auxNombrePrograma || 'programa',
+        '*nombre programa*': this.auxNombrePrograma || (this.tipoPagina === 'whitepaper' ? 'Whitepaper' : 'programa'),
         '*codigo descuento*': this.auxCodigoDescuento || ''
       }
     );
@@ -279,7 +283,7 @@ export class FormularioProgressiveProfilingComponent implements OnInit {
       {
         '*correo cliente*': this.auxCorreoCliente || '',
         '*tipo programa*': this.auxTipoPrograma || 'programa',
-        '*nombre programa*': this.auxNombrePrograma || 'programa',
+        '*nombre programa*': this.auxNombrePrograma || (this.tipoPagina === 'whitepaper' ? 'Whitepaper' : 'programa'),
         '*codigo descuento*': this.auxCodigoDescuento || ''
       }
     );
@@ -289,20 +293,18 @@ export class FormularioProgressiveProfilingComponent implements OnInit {
       {
         '*correo cliente*': this.auxCorreoCliente || '',
         '*tipo programa*': this.auxTipoPrograma || 'programa',
-        '*nombre programa*': this.auxNombrePrograma || 'programa',
+        '*nombre programa*': this.auxNombrePrograma || (this.tipoPagina === 'whitepaper' ? 'Whitepaper' : 'programa'),
         '*codigo descuento*': this.auxCodigoDescuento || ''
       }
     );
     this.cabeceraBotonAccion = formData.cabeceraBotonAccion;
-
     this.cuerpoMensajeSup = formData.cuerpoMensajeSup;
-    // this.cuerpoMensajeSupTexto = formData.cuerpoMensajeSupTexto;
     this.cuerpoMensajeSupTexto = this.reemplazarTextoConDiccionario(
       formData.cuerpoMensajeSupTexto || '',
       {
         '*correo cliente*': this.auxCorreoCliente || '',
         '*tipo programa*': this.auxTipoPrograma || 'programa',
-        '*nombre programa*': this.auxNombrePrograma || 'programa',
+        '*nombre programa*': this.auxNombrePrograma || (this.tipoPagina === 'whitepaper' ? 'Whitepaper' : 'programa'),
         '*codigo descuento*': this.auxCodigoDescuento || ''
       }
     );
@@ -313,7 +315,7 @@ export class FormularioProgressiveProfilingComponent implements OnInit {
       {
         '*correo cliente*': this.auxCorreoCliente || '',
         '*tipo programa*': this.auxTipoPrograma || 'programa',
-        '*nombre programa*': this.auxNombrePrograma || 'programa',
+        '*nombre programa*': this.auxNombrePrograma || (this.tipoPagina === 'whitepaper' ? 'Whitepaper' : 'programa'),
         '*codigo descuento*': this.auxCodigoDescuento || ''
       }
     );
@@ -484,6 +486,11 @@ export class FormularioProgressiveProfilingComponent implements OnInit {
       const ordenB = b.orden ?? Infinity;
       return ordenA - ordenB;
     });
+    const campoPais = this.camposConfigurados.find(campo => campo.id === 'pais');
+    const idpais = campoPais?.valorDefecto ? Number(campoPais.valorDefecto) : null;
+    if (idpais !== null && !isNaN(idpais)) {
+      this.getRegionesPorPais(idpais);
+    }
     this.actualizarFormularioDinamico();
     this.obtenerDatosLocalStorage();
   }
@@ -845,6 +852,8 @@ export class FormularioProgressiveProfilingComponent implements OnInit {
         }
       }
     });
+    let urlDocumento = JSON.parse(localStorage.getItem('urlDocumentoWhitepaper') || '""');
+    let titleDocumento = JSON.parse(localStorage.getItem('titleWhitepaper') || '""');
     const datosRegistro: InsertaRegistroVisitaPortalDTO = {
       usuarioWeb: this.usuarioWeb,
       idContactoPortal: null,
@@ -862,6 +871,10 @@ export class FormularioProgressiveProfilingComponent implements OnInit {
       usuario: "portalweb",
       accionBoton: accion,
       indicePrograma: this.indicePrograma,
+      tipoPagina: this.tipoPagina,
+      urlDocumento: urlDocumento,
+      titleDocumento: titleDocumento,
+      idRegistroArchivoStorage: this.idRegistroArchivoStorage,
       actualizarCampos,
     };
     const datosFinales = Object.fromEntries(
@@ -1121,6 +1134,10 @@ interface InsertaRegistroVisitaPortalDTO {
   usuario: string;
   accionBoton: number;
   indicePrograma: number;
+  tipoPagina: string;
+  urlDocumento: string | null;
+  titleDocumento: string | null;
+  idRegistroArchivoStorage: string;
   actualizarCampos: {
     idContactoPortal: boolean;
     correo: boolean;

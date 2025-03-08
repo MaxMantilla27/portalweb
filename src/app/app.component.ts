@@ -102,6 +102,7 @@ export class AppComponent implements OnInit,AfterViewInit ,OnDestroy {
   auxCodigoDescuento: string = "";
   botonTexto: string = "";
   botonAccion: number = 0;
+  registroArchivoStorage: number = 0;
   
   ngOnInit() {
     console.log("Inicio Ruta ",window.frames.location);
@@ -419,9 +420,10 @@ export class AppComponent implements OnInit,AfterViewInit ,OnDestroy {
   async abrirFormularioProgressiveProfiling(formulario: any, tipoPagina: string) {
     this.obtenerDatosPrograma();
     var { tipoPagina } = await this.verificaComponenteActivo();
-    var { botonTexto, botonAccion } = await this.obtenerAccionBoton(formulario, tipoPagina);
+    var { botonTexto, botonAccion, registroArchivoStorage } = await this.obtenerAccionBoton(formulario, tipoPagina);
     this.botonTexto = botonTexto;
     this.botonAccion = botonAccion;
+    this.registroArchivoStorage = registroArchivoStorage;
     var aulaVirtual = false;
     var formularioProgresivoYaMostrado = false;
     if (this._SessionStorageService.validateTokken()) {
@@ -495,15 +497,17 @@ export class AppComponent implements OnInit,AfterViewInit ,OnDestroy {
             boton: formulario.boton,
             botonTexto: this.botonTexto,
             botonAccion: this.botonAccion,
+            registroArchivoStorage: this.registroArchivoStorage,
           }
         });
       }
     }
   }
 
-  async obtenerAccionBoton(formulario: any, tipoPagina: string): Promise<{ botonTexto: string; botonAccion: number }> {
+  async obtenerAccionBoton(formulario: any, tipoPagina: string): Promise<{ botonTexto: string; botonAccion: number; registroArchivoStorage: number }> {
     let botonTexto = '';
     let botonAccion = 0;
+    let registroArchivoStorage = 0;
 
     if (formulario.boton) {
         let id = 0;
@@ -520,13 +524,13 @@ export class AppComponent implements OnInit,AfterViewInit ,OnDestroy {
         if (id > 0) {
             try {
                 const response = await lastValueFrom(
-                    this._FormularioProgresivoConfiguracionBotonService
-                        .ObtenerListaFormularioProgresivoConfiguracionBoton(formulario.id, id)
+                    this._FormularioProgresivoConfiguracionBotonService.ObtenerListaFormularioProgresivoConfiguracionBoton(formulario.id, id)
                 );
 
                 if (response.datosFormularioProgresivoConfiguracionBoton.length > 0) {
                     botonTexto = response.datosFormularioProgresivoConfiguracionBoton[0].textoBoton;
                     botonAccion = response.datosFormularioProgresivoConfiguracionBoton[0].idFormularioProgresivoAccionBoton;
+                    registroArchivoStorage = response.datosFormularioProgresivoConfiguracionBoton[0].idRegistroArchivoStorage;
                 }
             } catch (error) {
                 console.error('Error obteniendo la acción del botón:', error);
@@ -534,7 +538,7 @@ export class AppComponent implements OnInit,AfterViewInit ,OnDestroy {
         }
     }
 
-    return { botonTexto, botonAccion };
+    return { botonTexto, botonAccion, registroArchivoStorage };
 }
 
 

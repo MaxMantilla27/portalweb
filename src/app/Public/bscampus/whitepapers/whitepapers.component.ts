@@ -245,6 +245,8 @@ export class WhitepapersComponent implements OnInit,OnDestroy {
         this.imagen=this.imagen.split('´').join('');
         this.alt=x.articuloDetalleHomeDTO.articuloDetalle.imgPortadaAlt;
         this.urlDocumento=x.articuloDetalleHomeDTO.articuloDetalle.urlDocumento;
+        localStorage.setItem('urlDocumentoWhitepaper', JSON.stringify(this.urlDocumento));
+        localStorage.setItem('titleWhitepaper', JSON.stringify(this.Title));
 
         this.ListArticuloProgramaRelacionado(x.articuloDetalleHomeDTO.articuloDetalle.id);
       }
@@ -288,11 +290,10 @@ export class WhitepapersComponent implements OnInit,OnDestroy {
     }
   }
   SetContacto(value:any){
-
     if(!this.formVal){
-
       this._SnackBarServiceService.openSnackBar("Debes completar todos los campos",'x',10,"snackbarCrucigramaerror");
-    }else{
+    }
+    else{
       this.cargando=true
       this.initValues = false;
       this.DatosEnvioFormulario.Nombres=value.Nombres;
