@@ -57,16 +57,16 @@ export class AppComponent implements OnInit,AfterViewInit ,OnDestroy {
   ];
   public IdPGeneral=0;
   public stateToekn=false;
-  public showFooter=true;
+  //public showFooter=true;
 
   ngOnInit() {
 
-    this._HelperService
-        .recibirShowFooter
-        .pipe(takeUntil(this.signal$))
-        .subscribe((data:any) => {
-          this.showFooter = data;
-        })
+    // this._HelperService
+    //     .recibirShowFooter
+    //     .pipe(takeUntil(this.signal$))
+    //     .subscribe((data:any) => {
+    //       this.showFooter = data;
+    //     })
 
     console.log("Inicio Ruta ",window.frames.location);
 

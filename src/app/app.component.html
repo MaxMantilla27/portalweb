@@ -47,8 +47,8 @@
     <section>
       <router-outlet></router-outlet>
     </section>
-
-    <ng-container *ngIf="esChatbot == false && showFooter">
+    <!-- <ng-container *ngIf="esChatbot == false && showFooter"> -->
+    <ng-container *ngIf="esChatbot == false">
       <app-footer></app-footer>
     </ng-container>
   </mat-sidenav-content>
