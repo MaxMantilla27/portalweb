@@ -153,7 +153,7 @@ export class RegistrarseComponent implements OnInit,OnDestroy {
       }
       const formularioProgresivoActivo = JSON.parse(localStorage.getItem('formularioProgresivo Activo') || 'null');
 
-      if (formularioProgresivoActivo !== 'Y') { //Para flujo normal que no es de formularios progresivos
+      // if (formularioProgresivoActivo !== 'Y') { //Para flujo normal que no es de formularios progresivos
         this._AccountService.RegistrarseAlumno(this.registerSend).pipe(takeUntil(this.signal$)).subscribe({
           next: (x) => {
             if (x.excepcionGenerada != undefined && x.excepcionGenerada == true) {
@@ -236,98 +236,97 @@ export class RegistrarseComponent implements OnInit,OnDestroy {
             this.statuscharge = false;
           },
         });
-      }
-      else { //Para formularios progresivos
-        this._AccountService.RegistrarseAlumnoFormularioProgresivo(this.registerSend).pipe(takeUntil(this.signal$)).subscribe({
-          next: (x) => {
-            if (x.excepcionGenerada != undefined && x.excepcionGenerada == true) {
-              this.statuscharge = false;
-              this.errorRegister = x.descripcionGeneral;
-              timer(20000).pipe(takeUntil(this.signal$)).subscribe(_=>{
-                this.errorRegister = '';
-              })
-            } else {
+      // }
+      // else { //Para formularios progresivos
+      //   this._AccountService.RegistrarseAlumnoFormularioProgresivo(this.registerSend).pipe(takeUntil(this.signal$)).subscribe({
+      //     next: (x) => {
+      //       if (x.excepcionGenerada != undefined && x.excepcionGenerada == true) {
+      //         this.statuscharge = false;
+      //         this.errorRegister = x.descripcionGeneral;
+      //         timer(20000).pipe(takeUntil(this.signal$)).subscribe(_=>{
+      //           this.errorRegister = '';
+      //         })
+      //       } else {
   
-              this.cleanSub=true
-              if(this.isBrowser){
-                fbq('trackSingle','269257245868695', 'Lead', {}, {eventID:x.id});
-                this._FacebookPixelService.SendLoad(x.id,x.correoEnc,x.telEnc,x.userAgent,x.userIp).subscribe({
-                  next:(x)=>{
-                    console.log(x)
-                  },
-                  error:(e)=>{
-                    console.log(e)
-                  }
-                });
-                gtag('event', 'conversion', {
-                  'send_to': 'AW-991002043/tnStCPDl6HUQu_vF2AM',
-                });
-                gtag('event', 'conversion', {
-                    'send_to': 'AW-732083338/jQrVCKmUkqUBEIrpit0C',
-                });
-                gtag('event', 'conversion', {
-                  'send_to': 'AW-11065656821/6CM8CNWQ2IcYEPWLwpwp',
-                });
-                gtag('event', 'conversion', {
-                  'send_to': 'AW-16616211963/fM6YCPT-2bsZEPuLnfM9',
-                });
-                lintrk('track', { conversion_id: 18369066 });
-              }
-              this.statuscharge = false;
-              this._SessionStorageService.SetToken(x.token);
-              this.DatoObservable.datoAvatar=true
-              this.DatoObservable.datoContenido=true
-              this._HelperService.enviarDatoCuenta(this.DatoObservable)
+      //         this.cleanSub=true
+      //         if(this.isBrowser){
+      //           fbq('trackSingle','269257245868695', 'Lead', {}, {eventID:x.id});
+      //           this._FacebookPixelService.SendLoad(x.id,x.correoEnc,x.telEnc,x.userAgent,x.userIp).subscribe({
+      //             next:(x)=>{
+      //               console.log(x)
+      //             },
+      //             error:(e)=>{
+      //               console.log(e)
+      //             }
+      //           });
+      //           gtag('event', 'conversion', {
+      //             'send_to': 'AW-991002043/tnStCPDl6HUQu_vF2AM',
+      //           });
+      //           gtag('event', 'conversion', {
+      //               'send_to': 'AW-732083338/jQrVCKmUkqUBEIrpit0C',
+      //           });
+      //           gtag('event', 'conversion', {
+      //             'send_to': 'AW-11065656821/6CM8CNWQ2IcYEPWLwpwp',
+      //           });
+      //           gtag('event', 'conversion', {
+      //             'send_to': 'AW-16616211963/fM6YCPT-2bsZEPuLnfM9',
+      //           });
+      //           lintrk('track', { conversion_id: 18369066 });
+      //         }
+      //         this.statuscharge = false;
+      //         this._SessionStorageService.SetToken(x.token);
+      //         this.DatoObservable.datoAvatar=true
+      //         this.DatoObservable.datoContenido=true
+      //         this._HelperService.enviarDatoCuenta(this.DatoObservable)
   
-              var ap=this._SessionStorageService.SessionGetValueSesionStorage('accesoPrueba');
-              var redirect=this._SessionStorageService.SessionGetValue('redirect');
-              var normal=true;
-              if(redirect!=''){
-                if(redirect=='pago'){
-                  var jsonEnvioPago=this._SessionStorageService.SessionGetValue('datosTarjeta');
-                  if(jsonEnvioPago!=''){
-                    normal=false;
-                    this._FormaPagoService.PreProcesoPagoOrganicoAlumno(JSON.parse(jsonEnvioPago),null);
-                  }
-                }
-                this._SessionStorageService.SessionDeleteValue('redirect');
-              }
-              if(normal){
-                if(ap==''){
-                  this.router.navigate(['/AulaVirtual/MisCursos']);
-                }
-                else{
-                  var esAonline = this._SessionStorageService.SessionGetValue('esAonline');
+      //         var ap=this._SessionStorageService.SessionGetValueSesionStorage('accesoPrueba');
+      //         var redirect=this._SessionStorageService.SessionGetValue('redirect');
+      //         var normal=true;
+      //         if(redirect!=''){
+      //           if(redirect=='pago'){
+      //             var jsonEnvioPago=this._SessionStorageService.SessionGetValue('datosTarjeta');
+      //             if(jsonEnvioPago!=''){
+      //               normal=false;
+      //               this._FormaPagoService.PreProcesoPagoOrganicoAlumno(JSON.parse(jsonEnvioPago),null);
+      //             }
+      //           }
+      //           this._SessionStorageService.SessionDeleteValue('redirect');
+      //         }
+      //         if(normal){
+      //           if(ap==''){
+      //             this.router.navigate(['/AulaVirtual/MisCursos']);
+      //           }
+      //           else{
+      //             var esAonline = this._SessionStorageService.SessionGetValue('esAonline');
                   
-                  if (esAonline !== 'true') {
-                    ap = '73';
-                  }
-                  this._AccountService.RegistroCursoAulaVirtualNueva(parseInt(ap)).pipe(takeUntil(this.signal$)).subscribe({
-                    next:x=>{
-                      this._SessionStorageService.SessionDeleteValueSesionStorage('accesoPrueba')
-                      this.router.navigate(['/AulaVirtual/MisCursos']);
-                      // }
-                    },
-                  })
-                }
-              }
+      //             if (esAonline !== 'true') {
+      //               ap = '73';
+      //             }
+      //             this._AccountService.RegistroCursoAulaVirtualNueva(parseInt(ap)).pipe(takeUntil(this.signal$)).subscribe({
+      //               next:x=>{
+      //                 this._SessionStorageService.SessionDeleteValueSesionStorage('accesoPrueba')
+      //                 this.router.navigate(['/AulaVirtual/MisCursos']);
+      //               },
+      //             })
+      //           }
+      //         }
   
-            }
-          },
-          error: (e) => {
-            this.statuscharge = false;
-            this.errorRegister = e.error.excepcion.descripcionGeneral;
-            timer(20000).pipe(takeUntil(this.signal$)).subscribe(_=>{
-              this.errorRegister = '';
-            })
+      //       }
+      //     },
+      //     error: (e) => {
+      //       this.statuscharge = false;
+      //       this.errorRegister = e.error.excepcion.descripcionGeneral;
+      //       timer(20000).pipe(takeUntil(this.signal$)).subscribe(_=>{
+      //         this.errorRegister = '';
+      //       })
   
-          },
-          complete: () => {
-            this.statuscharge = false;
-          },
-        });
-      }
-      localStorage.removeItem('formularioProgresivo Activo');
+      //     },
+      //     complete: () => {
+      //       this.statuscharge = false;
+      //     },
+      //   });
+      // }
+      // localStorage.removeItem('formularioProgresivo Activo');
     }
 
   }
