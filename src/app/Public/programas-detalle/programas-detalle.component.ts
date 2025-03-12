@@ -996,9 +996,6 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
         'snackbarCrucigramaerror'
       );
     } else {
-      
-      // this.ActualizarFormularioProgresivo(value);
-
       this.statuscharge=true;
       this.initValues = false;
       this.DatosEnvioFormulario.Nombres = value.Nombres;
@@ -1075,6 +1072,8 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
           complete: () => {
             //this._SnackBarServiceService.openSnackBar("¡Solicitud enviada!",'x',15,"snackbarCrucigramaSucces");
             this.statuscharge = false;
+            localStorage.setItem('formularioPortalEnviado', JSON.stringify(true));
+            this.ActualizarFormularioProgresivo(value);
             this.obtenerFormularioCompletado();
           },
         });
@@ -1117,7 +1116,7 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
       idPais: value.IdPais,
       idCiudad: value.IdRegion,
       idLocalidad: value.IdLocalidad,
-      telefono: value.Movil,
+      telefono: "+" + value.IdPais + value.Movil,
       idCargo: null,
       idAreaFormacion: null,
       idAreaTrabajo: null,
@@ -1132,9 +1131,9 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
       actualizarCampos
     };
     const datosFinales = Object.fromEntries(
-      Object.entries(datosRegistro).map(([key, value]) => [key, value !== undefined ? value : null])
+      Object.entries(datosRegistro).map(([key, value]) => [key, key === "idRegistroArchivoStorage" && value === "" ? 0 : value !== undefined ? value : null])
     ) as InsertaRegistroVisitaPortalDTO;
-    this._RegistroVisitaPortalService.InsertaActualizaRegistroVisitaPortal(datosFinales)
+    this._RegistroVisitaPortalService.InsertaActualizaRegistroVisitaPortalFormularios(datosFinales)
   }
 
   ProcesarAsignacionAutomaticaNuevoPortal(id:any){

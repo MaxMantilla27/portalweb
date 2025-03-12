@@ -26,6 +26,7 @@ import { DatosFormularioDTO } from 'src/app/Core/Models/DatosFormularioDTO';
 import { ChatEnLineaService } from 'src/app/Core/Shared/Services/ChatEnLinea/chat-en-linea.service';
 import { FacebookPixelService } from 'src/app/Core/Shared/Services/FacebookPixel/facebook-pixel.service';
 import { FormularioProgressiveProfilingService } from 'src/app/Core/Shared/Services/FormularioProgressiveProfiling/formulario-progressive-profiling.service';
+import { RegistroVisitaPortalService } from 'src/app/Core/Shared/Services/RegistroVisitaPortal/registro-visita-portal.service';
 declare const fbq:any;
 declare const gtag:any;
 declare const lintrk: any;
@@ -59,7 +60,8 @@ export class BlogComponent implements OnInit {
     private router:Router,
     private _ChatEnLineaService:ChatEnLineaService,
     private _FacebookPixelService:FacebookPixelService,
-    private formularioService: FormularioProgressiveProfilingService
+    private formularioService: FormularioProgressiveProfilingService,
+    private _RegistroVisitaPortalService: RegistroVisitaPortalService
   ) {
     this.isBrowser = isPlatformBrowser(platformId);
   }
@@ -361,10 +363,68 @@ export class BlogComponent implements OnInit {
         complete: () => {
           this.cargando=false
           this.statuscharge = false;
+          localStorage.setItem('formularioPortalEnviado', JSON.stringify(true));
+          this.ActualizarFormularioProgresivo(value);
           this.obtenerFormularioCompletado();
         },
       });
     }
+  }
+
+  ActualizarFormularioProgresivo(value: any){
+    var usuarioWeb=this._SessionStorageService.SessionGetValue('usuarioWeb');
+    const actualizarCampos: {
+      idContactoPortal: boolean;
+      correo: boolean;
+      nombres: boolean;
+      apellidos: boolean;
+      pais: boolean;
+      ciudad: boolean;
+      telefono: boolean;
+      cargo: boolean;
+      areaFormacion: boolean;
+      areaTrabajo: boolean;
+      industria: boolean;
+    } = {
+      idContactoPortal: false,
+      correo: true,
+      nombres: true,
+      apellidos: true,
+      pais: true,
+      ciudad: true,
+      telefono: true,
+      cargo: false,
+      areaFormacion: false,
+      areaTrabajo: false,
+      industria: false,
+    };
+    const datosRegistro: InsertaRegistroVisitaPortalDTO = {
+      usuarioWeb: usuarioWeb,
+      idContactoPortal: null,
+      correo: value.Email,
+      nombre: value.Nombres,
+      apellido: value.Apellidos,
+      idPais: value.IdPais,
+      idCiudad: value.IdRegion,
+      idLocalidad: null,
+      telefono: "+" + value.IdPais + value.Movil,
+      idCargo: null,
+      idAreaFormacion: null,
+      idAreaTrabajo: null,
+      idIndustria: null,
+      usuario: "portalweb",
+      accionBoton: 0,
+      indicePrograma: 0,
+      tipoPagina: "",
+      urlDocumento: null,
+      titleDocumento: null,
+      idRegistroArchivoStorage: "",
+      actualizarCampos
+    };
+    const datosFinales = Object.fromEntries(
+      Object.entries(datosRegistro).map(([key, value]) => [key, key === "idRegistroArchivoStorage" && value === "" ? 0 : value !== undefined ? value : null])
+    ) as InsertaRegistroVisitaPortalDTO;
+    this._RegistroVisitaPortalService.InsertaActualizaRegistroVisitaPortalFormularios(datosFinales)
   }
 
   ProcesarAsignacionAutomaticaNuevoPortal(id:any){
@@ -478,4 +538,40 @@ export class BlogComponent implements OnInit {
     this.formularioContacto.Movil= '',
     this.GetRegionesPorPais(-1);
   }
+}
+
+interface InsertaRegistroVisitaPortalDTO {
+  usuarioWeb: string;
+  idContactoPortal?: number | null;
+  correo?: string | null;
+  nombre?: string | null;
+  apellido?: string | null;
+  idPais?: number | null;
+  idCiudad?: number | null;
+  idLocalidad?: number | null;
+  telefono?: string | null;
+  idCargo?: number | null;
+  idAreaFormacion?: number | null;
+  idAreaTrabajo?: number | null;
+  idIndustria?: number | null;
+  usuario: string;
+  accionBoton: number;
+  indicePrograma: number;
+  tipoPagina: string;
+  urlDocumento: string | null;
+  titleDocumento: string | null;
+  idRegistroArchivoStorage: string;
+  actualizarCampos: {
+    idContactoPortal: boolean;
+    correo: boolean;
+    nombres: boolean;
+    apellidos: boolean;
+    pais: boolean;
+    ciudad: boolean;
+    telefono: boolean;
+    cargo: boolean;
+    areaFormacion: boolean;
+    areaTrabajo: boolean;
+    industria: boolean;
+  };
 }

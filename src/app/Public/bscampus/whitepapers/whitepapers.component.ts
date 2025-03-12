@@ -22,6 +22,7 @@ import { Router } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
 import { DatosFormularioDTO } from 'src/app/Core/Models/DatosFormularioDTO';
 import { FormularioProgressiveProfilingService } from 'src/app/Core/Shared/Services/FormularioProgressiveProfiling/formulario-progressive-profiling.service';
+import { RegistroVisitaPortalService } from 'src/app/Core/Shared/Services/RegistroVisitaPortal/registro-visita-portal.service';
 
 @Component({
   selector: 'app-whitepapers',
@@ -48,7 +49,8 @@ export class WhitepapersComponent implements OnInit,OnDestroy {
     private _SeoService:SeoService,
     private title:Title,
     private router:Router,
-    private formularioService: FormularioProgressiveProfilingService
+    private formularioService: FormularioProgressiveProfilingService,
+    private _RegistroVisitaPortalService: RegistroVisitaPortalService
   ) {}
   ngOnDestroy(): void {
     this.signal$.next(true)
@@ -335,11 +337,70 @@ export class WhitepapersComponent implements OnInit,OnDestroy {
         complete: () => {
           this.statuscharge = false;
           this.cargando=false;
+          localStorage.setItem('formularioPortalEnviado', JSON.stringify(true));
+          this.ActualizarFormularioProgresivo(value);
           this.obtenerFormularioCompletado();
         },
       });
     }
   }
+
+  ActualizarFormularioProgresivo(value: any){
+    var usuarioWeb=this._SessionStorageService.SessionGetValue('usuarioWeb');
+    const actualizarCampos: {
+      idContactoPortal: boolean;
+      correo: boolean;
+      nombres: boolean;
+      apellidos: boolean;
+      pais: boolean;
+      ciudad: boolean;
+      telefono: boolean;
+      cargo: boolean;
+      areaFormacion: boolean;
+      areaTrabajo: boolean;
+      industria: boolean;
+    } = {
+      idContactoPortal: false,
+      correo: true,
+      nombres: true,
+      apellidos: true,
+      pais: true,
+      ciudad: true,
+      telefono: true,
+      cargo: false,
+      areaFormacion: false,
+      areaTrabajo: false,
+      industria: false,
+    };
+    const datosRegistro: InsertaRegistroVisitaPortalDTO = {
+      usuarioWeb: usuarioWeb,
+      idContactoPortal: null,
+      correo: value.Correo1,
+      nombre: value.Nombres,
+      apellido: value.Apellidos,
+      idPais: value.IdPais,
+      idCiudad: value.IdRegion,
+      idLocalidad: null,
+      telefono: "+" + value.IdPais + value.Movil,
+      idCargo: null,
+      idAreaFormacion: null,
+      idAreaTrabajo: null,
+      idIndustria: null,
+      usuario: "portalweb",
+      accionBoton: 0,
+      indicePrograma: 0,
+      tipoPagina: "",
+      urlDocumento: null,
+      titleDocumento: null,
+      idRegistroArchivoStorage: "",
+      actualizarCampos
+    };
+    const datosFinales = Object.fromEntries(
+      Object.entries(datosRegistro).map(([key, value]) => [key, key === "idRegistroArchivoStorage" && value === "" ? 0 : value !== undefined ? value : null])
+    ) as InsertaRegistroVisitaPortalDTO;
+    this._RegistroVisitaPortalService.InsertaActualizaRegistroVisitaPortalFormularios(datosFinales)
+  }
+
   ObtenerCombosPortal(){
     this._DatosPortalService.ObtenerCombosPortal().pipe(takeUntil(this.signal$)).subscribe({
       next:(x)=>{
@@ -501,4 +562,40 @@ export class WhitepapersComponent implements OnInit,OnDestroy {
     this.formularioContacto.Movil= '',
     this.GetRegionesPorPais(-1,3);
   }
+}
+
+interface InsertaRegistroVisitaPortalDTO {
+  usuarioWeb: string;
+  idContactoPortal?: number | null;
+  correo?: string | null;
+  nombre?: string | null;
+  apellido?: string | null;
+  idPais?: number | null;
+  idCiudad?: number | null;
+  idLocalidad?: number | null;
+  telefono?: string | null;
+  idCargo?: number | null;
+  idAreaFormacion?: number | null;
+  idAreaTrabajo?: number | null;
+  idIndustria?: number | null;
+  usuario: string;
+  accionBoton: number;
+  indicePrograma: number;
+  tipoPagina: string;
+  urlDocumento: string | null;
+  titleDocumento: string | null;
+  idRegistroArchivoStorage: string;
+  actualizarCampos: {
+    idContactoPortal: boolean;
+    correo: boolean;
+    nombres: boolean;
+    apellidos: boolean;
+    pais: boolean;
+    ciudad: boolean;
+    telefono: boolean;
+    cargo: boolean;
+    areaFormacion: boolean;
+    areaTrabajo: boolean;
+    industria: boolean;
+  };
 }

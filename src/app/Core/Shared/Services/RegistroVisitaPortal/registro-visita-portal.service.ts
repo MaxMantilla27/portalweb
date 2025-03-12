@@ -44,6 +44,18 @@ export class RegistroVisitaPortalService {
     }
   }
 
+  public InsertaActualizaRegistroVisitaPortalFormularios(registroVisita: InsertaRegistroVisitaPortalDTO): Promise<any> {
+    if (this.isBrowser) {
+      return fetch(`${this.urlBase}/InsertaActualizaRegistroVisitaPortal`, {method: "POST", headers: {"Content-Type": "application/json"},
+        body: JSON.stringify(registroVisita)
+      })
+      .then(response => response.json())
+      .catch(error => console.error("Error en fetch:", error));
+    } else {
+      return Promise.resolve();
+    }
+  }
+
 }
 
 interface InsertaRegistroVisitaPortalDTO {

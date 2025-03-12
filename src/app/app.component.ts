@@ -426,11 +426,13 @@ export class AppComponent implements OnInit,AfterViewInit ,OnDestroy {
     this.registroArchivoStorage = registroArchivoStorage;
     var aulaVirtual = false;
     var formularioProgresivoYaMostrado = false;
+    var formularioPortalEnviado = false
     if (this._SessionStorageService.validateTokken()) {
       aulaVirtual = true
     }
     formularioProgresivoYaMostrado = JSON.parse(localStorage.getItem('formularioProgresivoYaMostrado') || 'null');
-    if (document.visibilityState === 'visible' && aulaVirtual === false && formularioProgresivoYaMostrado !== true) {
+    formularioPortalEnviado = JSON.parse(localStorage.getItem('formularioPortalEnviado') || 'null');
+    if (document.visibilityState === 'visible' && aulaVirtual === false && formularioProgresivoYaMostrado !== true && formularioPortalEnviado !== true) {
       if (tipoPagina === 'index' || tipoPagina === 'curso' || tipoPagina === 'blog' || tipoPagina === 'whitepaper') {
         this.dialog.open(FormularioProgressiveProfilingComponent, {
           disableClose: true,
