@@ -340,6 +340,7 @@ export class WhitepapersComponent implements OnInit,OnDestroy {
           localStorage.setItem('formularioPortalEnviado', JSON.stringify(true));
           this.ActualizarFormularioProgresivo(value);
           this.obtenerFormularioCompletado();
+          this.RecargaPagina();
         },
       });
     }
@@ -375,7 +376,7 @@ export class WhitepapersComponent implements OnInit,OnDestroy {
     const datosRegistro: InsertaRegistroVisitaPortalDTO = {
       usuarioWeb: usuarioWeb,
       idContactoPortal: null,
-      correo: value.Correo1,
+      correo: value.Email,
       nombre: value.Nombres,
       apellido: value.Apellidos,
       idPais: value.IdPais,
@@ -399,6 +400,10 @@ export class WhitepapersComponent implements OnInit,OnDestroy {
       Object.entries(datosRegistro).map(([key, value]) => [key, key === "idRegistroArchivoStorage" && value === "" ? 0 : value !== undefined ? value : null])
     ) as InsertaRegistroVisitaPortalDTO;
     this._RegistroVisitaPortalService.InsertaActualizaRegistroVisitaPortalFormularios(datosFinales)
+  }
+
+  RecargaPagina() {
+    window.location.reload();
   }
 
   ObtenerCombosPortal(){

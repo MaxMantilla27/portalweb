@@ -46,6 +46,6 @@ export class FormularioProgressiveProfilingService {
     this.intervaloTiempoLocal = null;
     localStorage.removeItem('tiempoformularioProgresivo');
     console.log('Contador detenido');
-  }  
+  }
 
 }

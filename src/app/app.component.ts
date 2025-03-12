@@ -432,7 +432,7 @@ export class AppComponent implements OnInit,AfterViewInit ,OnDestroy {
     }
     formularioProgresivoYaMostrado = JSON.parse(localStorage.getItem('formularioProgresivoYaMostrado') || 'null');
     formularioPortalEnviado = JSON.parse(localStorage.getItem('formularioPortalEnviado') || 'null');
-    if (document.visibilityState === 'visible' && aulaVirtual === false && formularioProgresivoYaMostrado !== true && formularioPortalEnviado !== true) {
+    if (document.visibilityState === 'visible' && aulaVirtual === false && formularioProgresivoYaMostrado !== true) {
       if (tipoPagina === 'index' || tipoPagina === 'curso' || tipoPagina === 'blog' || tipoPagina === 'whitepaper') {
         this.dialog.open(FormularioProgressiveProfilingComponent, {
           disableClose: true,

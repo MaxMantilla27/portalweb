@@ -1072,9 +1072,9 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
           complete: () => {
             //this._SnackBarServiceService.openSnackBar("¡Solicitud enviada!",'x',15,"snackbarCrucigramaSucces");
             this.statuscharge = false;
-            localStorage.setItem('formularioPortalEnviado', JSON.stringify(true));
             this.ActualizarFormularioProgresivo(value);
             this.obtenerFormularioCompletado();
+            this.RecargaPagina();
           },
         });
     }
@@ -1134,6 +1134,10 @@ export class ProgramasDetalleComponent implements OnInit ,OnDestroy{
       Object.entries(datosRegistro).map(([key, value]) => [key, key === "idRegistroArchivoStorage" && value === "" ? 0 : value !== undefined ? value : null])
     ) as InsertaRegistroVisitaPortalDTO;
     this._RegistroVisitaPortalService.InsertaActualizaRegistroVisitaPortalFormularios(datosFinales)
+  }
+
+  RecargaPagina() {
+    window.location.reload();
   }
 
   ProcesarAsignacionAutomaticaNuevoPortal(id:any){

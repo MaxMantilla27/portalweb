@@ -366,6 +366,7 @@ export class BlogComponent implements OnInit {
           localStorage.setItem('formularioPortalEnviado', JSON.stringify(true));
           this.ActualizarFormularioProgresivo(value);
           this.obtenerFormularioCompletado();
+          this.RecargaPagina();
         },
       });
     }
@@ -427,6 +428,10 @@ export class BlogComponent implements OnInit {
     this._RegistroVisitaPortalService.InsertaActualizaRegistroVisitaPortalFormularios(datosFinales)
   }
 
+  RecargaPagina() {
+    window.location.reload();
+  }
+
   ProcesarAsignacionAutomaticaNuevoPortal(id:any){
     this._ChatEnLineaService.ProcesarAsignacionAutomaticaNuevoPortal(id).pipe(takeUntil(this.signal$)).subscribe({
       next:(x)=>{
@@ -439,7 +444,11 @@ export class BlogComponent implements OnInit {
         console.log(x);
         this.fileds.forEach(r=>{
           if(r.nombre=='IdPais'){
-            r.data=x.listaPais.map((p:any)=>{
+            r.data,  r.filteredOptions =x.listaPais.map((p:any)=>{
+              var ps:Basic={Nombre:p.pais,value:p.idPais};
+              return ps;
+            })
+            r.filteredOptionsAux=x.listaPais.map((p:any)=>{
               var ps:Basic={Nombre:p.pais,value:p.idPais};
               return ps;
             })
@@ -455,7 +464,11 @@ export class BlogComponent implements OnInit {
         this.fileds.forEach(r=>{
           if(r.nombre=='IdRegion'){
             r.disable=false;
-            r.data=x.map((p:any)=>{
+            r.data, r.filteredOptions=x.map((p:any)=>{
+              var ps:Basic={Nombre:p.nombreCiudad,value:p.idCiudad};
+              return ps;
+            })
+            r.filteredOptionsAux=x.map((p:any)=>{
               var ps:Basic={Nombre:p.nombreCiudad,value:p.idCiudad};
               return ps;
             })
