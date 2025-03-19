@@ -415,7 +415,7 @@ export class FormularioProgressiveProfilingComponent implements OnInit {
         tipoControl: 'combo',
         opciones: [],
         valorDefecto: null,
-        obligatorio: false,
+        obligatorio: true,
         orden: formData.cuerpoPaisOrden,
         hidden: false
       });
@@ -592,6 +592,7 @@ export class FormularioProgressiveProfilingComponent implements OnInit {
         const campoRegion = this.camposConfigurados.find(campoConfig => campoConfig.id === 'region');
         if (campoRegion) {
           campoRegion.hidden = false;
+          campoRegion.obligatorio = true;
           this.getRegionesPorPais(paisGuardado);
         }
         this.actualizarBandera(paisGuardado);
@@ -607,6 +608,7 @@ export class FormularioProgressiveProfilingComponent implements OnInit {
           const campoLocalidad = this.camposConfigurados.find(campoConfig => campoConfig.id === 'localidad');
           if (campoLocalidad) {
             campoLocalidad.hidden = false;
+            campoLocalidad.obligatorio = true;
             this.getLocalidadesPorRegion(regionGuardada);
           }
         }
@@ -674,11 +676,15 @@ export class FormularioProgressiveProfilingComponent implements OnInit {
         this.formCamposDinamicos.patchValue({ region: null });
         campoRegion.valorDefecto = null;
         campoRegion.opciones = [];
+        campoRegion.obligatorio = true;
+        this.updateFieldValidators('region', campoRegion.obligatorio);
       }
       if (campoLocalidad && !campoLocalidad.hidden) {
         this.formCamposDinamicos.patchValue({ localidad: null });
         campoLocalidad.valorDefecto = null;
         campoLocalidad.opciones = [];
+        campoLocalidad.obligatorio = true;
+        this.updateFieldValidators('localidad', campoLocalidad.obligatorio);
       }
 
       this.evaluaRegionEstado(nuevoValorDefectoPais);
@@ -690,12 +696,17 @@ export class FormularioProgressiveProfilingComponent implements OnInit {
       if (campoRegion) {
         this.formCamposDinamicos.patchValue({ region: event.value });
         campoRegion.valorDefecto = event.value;
+        campoRegion.obligatorio = true;
+        this.updateFieldValidators('region', campoRegion.obligatorio);
       }
       const campoLocalidad = this.camposConfigurados.find(c => c.id === 'localidad');
       if (campoLocalidad) {
         this.formCamposDinamicos.patchValue({ localidad: null });
         campoLocalidad.valorDefecto = null;
         campoLocalidad.opciones = [];
+        campoLocalidad.hidden = false;
+        campoLocalidad.obligatorio = true;
+        this.updateFieldValidators('localidad', campoLocalidad.obligatorio);
       }
     }
     if (campo.id === 'localidad') {
@@ -703,21 +714,37 @@ export class FormularioProgressiveProfilingComponent implements OnInit {
       if (campoLocalidad) {
         this.formCamposDinamicos.patchValue({ localidad: event.value });
         campoLocalidad.valorDefecto = event.value;
+        campoLocalidad.obligatorio = true;
+        this.updateFieldValidators('localidad', campoLocalidad.obligatorio);
       }
     }
   }
 
   handlePaisSelection(idPais: number) {
-      const localidad = this.camposConfigurados.find(c => c.id === 'localidad');
-      if (localidad) {
-        localidad.hidden = true;
-        localidad.valorDefecto = null;
-      }
+    const localidad = this.camposConfigurados.find(c => c.id === 'localidad');
+    if (localidad) {
+      localidad.hidden = true;
+      localidad.obligatorio = false;
+      localidad.valorDefecto = null;
+      this.updateFieldValidators('localidad', localidad.obligatorio);
+    }
     this.getRegionesPorPais(idPais);
   }
 
   handleRegionSelection(idRegion: number) {
     this.getLocalidadesPorRegion(idRegion);
+  }
+
+  private updateFieldValidators(fieldName: string, isRequired: boolean) {
+    const control = this.formCamposDinamicos.get(fieldName);
+    if (control) {
+        if (isRequired) {
+            control.setValidators([Validators.required]);
+        } else {
+            control.clearValidators();
+        }
+        control.updateValueAndValidity();
+    }
   }
 
   getRegionesPorPais(idPais: number) {
@@ -730,6 +757,7 @@ export class FormularioProgressiveProfilingComponent implements OnInit {
               value: p.idCiudad
             }));
             region.hidden = false;
+            region.obligatorio = true;
           }
         }
     });
@@ -746,10 +774,13 @@ export class FormularioProgressiveProfilingComponent implements OnInit {
               value: p.codigo
             }));
             localidad.hidden = false;
+            localidad.obligatorio = true;
           } else {
             localidad.hidden = true;
+            localidad.obligatorio = false;
             localidad.valorDefecto = null;
           }
+          this.updateFieldValidators('localidad', localidad.obligatorio);
         }
       }
     });
