@@ -12,7 +12,7 @@
     <!-- Cabecera -->
     <div class="form-cabecera">
         <p class="parrafoSup" *ngIf="cabeceraMensajeSup === true">
-            {{ cabeceraMensajeSupTexto }}
+            {{ mensajeSupCabecera }}
         </p>
         <h2 
             *ngIf="cabeceraMensaje === true" 
@@ -34,7 +34,7 @@
     <!-- Cuerpo -->
     <div class="form-cuerpo">
         <p *ngIf="cuerpoMensajeSup === true">
-            {{ cuerpoMensajeSupTexto }}
+            {{ mensajeSupCuerpo }}
         </p>
 
         <!-- Lista de inputs dinámicos -->

@@ -108,7 +108,10 @@ export class FormularioProgressiveProfilingComponent implements OnInit {
   tituloTexto: string | null = null;
 
   cabeceraMensajeSup = null;
+  cabeceraMensajeSupIndexCurso = null;
   cabeceraMensajeSupTexto: string | null = null;
+  cabeceraMensajeSupTextoCurso: string | null = null;
+  cabeceraMensajeSupTextoWhitepaper: string | null = null;
   cabeceraMensaje = null;
   cabeceraMensajeIndexCurso = null;
   cabeceraMensajeTexto: string | null = null;
@@ -125,7 +128,10 @@ export class FormularioProgressiveProfilingComponent implements OnInit {
   cabeceraBotonAccion = null;
 
   cuerpoMensajeSup = null;
+  cuerpoMensajeSupIndexCurso = null;
   cuerpoMensajeSupTexto: string | null = null;
+  cuerpoMensajeSupTextoCurso: string | null = null;
+  cuerpoMensajeSupTextoWhitepaper: string | null = null;
 
   boton = null;
   botonTexto: string | null = null;
@@ -244,8 +250,27 @@ export class FormularioProgressiveProfilingComponent implements OnInit {
       }
     );
     this.cabeceraMensajeSup = formData.cabeceraMensajeSup;
+    this.cabeceraMensajeSupIndexCurso = formData.cabeceraMensajeSupIndexCurso;
     this.cabeceraMensajeSupTexto = this.reemplazarTextoConDiccionario(
       formData.cabeceraMensajeSupTexto || '',
+      {
+        '*correo cliente*': this.auxCorreoCliente || '',
+        '*tipo programa*': this.auxTipoPrograma || 'programa',
+        '*nombre programa*': this.auxNombrePrograma || (this.tipoPagina === 'whitepaper' ? 'Whitepaper' : 'programa'),
+        '*codigo descuento*': this.auxCodigoDescuento || ''
+      }
+    );
+    this.cabeceraMensajeSupTextoCurso = this.reemplazarTextoConDiccionario(
+      formData.cabeceraMensajeSupTextoCurso || '',
+      {
+        '*correo cliente*': this.auxCorreoCliente || '',
+        '*tipo programa*': this.auxTipoPrograma || 'programa',
+        '*nombre programa*': this.auxNombrePrograma || (this.tipoPagina === 'whitepaper' ? 'Whitepaper' : 'programa'),
+        '*codigo descuento*': this.auxCodigoDescuento || ''
+      }
+    );
+    this.cabeceraMensajeSupTextoWhitepaper = this.reemplazarTextoConDiccionario(
+      formData.cabeceraMensajeSupTextoWhitepaper || '',
       {
         '*correo cliente*': this.auxCorreoCliente || '',
         '*tipo programa*': this.auxTipoPrograma || 'programa',
@@ -324,8 +349,27 @@ export class FormularioProgressiveProfilingComponent implements OnInit {
     );
     this.cabeceraBotonAccion = formData.cabeceraBotonAccion;
     this.cuerpoMensajeSup = formData.cuerpoMensajeSup;
+    this.cuerpoMensajeSupIndexCurso = formData.cuerpoMensajeSupIndexCurso;
     this.cuerpoMensajeSupTexto = this.reemplazarTextoConDiccionario(
       formData.cuerpoMensajeSupTexto || '',
+      {
+        '*correo cliente*': this.auxCorreoCliente || '',
+        '*tipo programa*': this.auxTipoPrograma || 'programa',
+        '*nombre programa*': this.auxNombrePrograma || (this.tipoPagina === 'whitepaper' ? 'Whitepaper' : 'programa'),
+        '*codigo descuento*': this.auxCodigoDescuento || ''
+      }
+    );
+    this.cuerpoMensajeSupTextoCurso = this.reemplazarTextoConDiccionario(
+      formData.cuerpoMensajeSupTextoCurso || '',
+      {
+        '*correo cliente*': this.auxCorreoCliente || '',
+        '*tipo programa*': this.auxTipoPrograma || 'programa',
+        '*nombre programa*': this.auxNombrePrograma || (this.tipoPagina === 'whitepaper' ? 'Whitepaper' : 'programa'),
+        '*codigo descuento*': this.auxCodigoDescuento || ''
+      }
+    );
+    this.cuerpoMensajeSupTextoWhitepaper = this.reemplazarTextoConDiccionario(
+      formData.cuerpoMensajeSupTextoWhitepaper || '',
       {
         '*correo cliente*': this.auxCorreoCliente || '',
         '*tipo programa*': this.auxTipoPrograma || 'programa',
@@ -526,6 +570,17 @@ export class FormularioProgressiveProfilingComponent implements OnInit {
     });
   }
 
+  get mensajeSupCabecera(): string {
+    if (this.cabeceraMensajeSupIndexCurso) {
+      return this.tipoPagina === 'curso'
+        ? this.cabeceraMensajeSupTextoCurso ?? ''
+        : this.tipoPagina === 'whitepaper'
+        ? this.cabeceraMensajeSupTextoWhitepaper ?? ''
+        : this.cabeceraMensajeSupTexto ?? '';
+    }
+    return this.cabeceraMensajeSupTexto ?? '';
+  }
+
   get mensajeCabecera(): string {
     if (this.cabeceraMensajeIndexCurso) {
       return this.tipoPagina === 'curso'
@@ -546,6 +601,17 @@ export class FormularioProgressiveProfilingComponent implements OnInit {
         : this.cabeceraMensajeInfTexto ?? '';
     }
     return this.cabeceraMensajeInfTexto ?? '';
+  }
+
+  get mensajeSupCuerpo(): string {
+    if (this.cuerpoMensajeSupIndexCurso) {
+      return this.tipoPagina === 'curso'
+        ? this.cuerpoMensajeSupTextoCurso ?? ''
+        : this.tipoPagina === 'whitepaper'
+        ? this.cuerpoMensajeSupTextoWhitepaper ?? ''
+        : this.cuerpoMensajeSupTexto ?? '';
+    }
+    return this.cuerpoMensajeSupTexto ?? '';
   }
 
   actualizarFormularioDinamico() {
@@ -854,9 +920,6 @@ export class FormularioProgressiveProfilingComponent implements OnInit {
         break;
       case 6:
         await this.guardaDatos(accion);
-        // await this.consultarDatosUsuarioFomularioProgresivoCompleto();
-        // this.guardaFormularioProgresivoActivoLocalStorage();
-        // this.registraDatosContacto();
         this.enviaAulaVirtual();
         this.abreFormularioRespuesta(this.id);
         this.cerrarFormulario();
@@ -993,11 +1056,6 @@ export class FormularioProgressiveProfilingComponent implements OnInit {
     }
   }
 
-  // guardaFormularioProgresivoActivoLocalStorage() {
-  //   const formularioProgresivoActivo = 'Y';
-  //   localStorage.setItem('formularioProgresivo Activo', JSON.stringify(formularioProgresivoActivo));
-  // }
-
   enviaAulaVirtual(): void {
     var token=this._SessionStorageService.validateTokken();
     if(token){
@@ -1069,33 +1127,6 @@ export class FormularioProgressiveProfilingComponent implements OnInit {
     }
   }
 
-  // consultarDatosUsuarioFomularioProgresivoCompleto(): Promise<void> {
-  //   return new Promise((resolve, reject) => {
-  //     this._RegistroVisitaPortalService.ObtenerListaRegistroVisitaPortalPorUsuarioWeb(this.usuarioWeb)
-  //       .pipe(takeUntil(this.signal$))
-  //       .subscribe({
-  //         next: (respuesta) => {
-  //           if (respuesta && respuesta.datosRegistroVisitaPortal && respuesta.datosRegistroVisitaPortal.length > 0) {
-  //             this.datosUsuario = respuesta.datosRegistroVisitaPortal[0];
-  //             this.guardarFormularioProgresivoCompletoLocalStorage();
-  //           } else {
-  //             this.datosUsuario = [];
-  //           }
-  //           resolve();
-  //         },
-  //         error: (error) => {
-  //           console.error('Error al consultar datos del usuario:', error);
-  //           reject(error);
-  //         },
-  //       });
-  //   });
-  // }
-
-  // guardarFormularioProgresivoCompletoLocalStorage(): void {
-  //   const valoresFormulario = this.datosUsuario;
-  //   localStorage.setItem('DatosFormularioProgresivo', JSON.stringify(valoresFormulario));
-  // }
-
   abreFormularioRespuesta(formularioInicial: number) {
     this._FormularioProgressiveProfilingService.ObtenerListaFormularioProgresivo()
     .subscribe({
@@ -1106,7 +1137,7 @@ export class FormularioProgressiveProfilingComponent implements OnInit {
             this.dialog.open(FormularioProgressiveProfilingComponent, {
               disableClose: true,
               data: {
-                tipoPagina: "",
+                tipoPagina: this.tipoPagina,
                 indicePrograma: this.indicePrograma,
                 auxTipoPrograma: this.auxTipoPrograma,
                 auxNombrePrograma: this.auxNombrePrograma,
@@ -1121,7 +1152,10 @@ export class FormularioProgressiveProfilingComponent implements OnInit {
                 titulo: formularioRpta.titulo,
                 tituloTexto: formularioRpta.tituloTexto,
                 cabeceraMensajeSup: formularioRpta.cabeceraMensajeSup,
+                cabeceraMensajeSupIndexCurso: formularioRpta.cabeceraMensajeSupIndexCurso,
                 cabeceraMensajeSupTexto: formularioRpta.cabeceraMensajeSupTexto,
+                cabeceraMensajeSupTextoCurso: formularioRpta.cabeceraMensajeSupTextoCurso,
+                cabeceraMensajeSupTextoWhitepaper: formularioRpta.cabeceraMensajeSupTextoWhitepaper,
                 cabeceraMensaje: formularioRpta.cabeceraMensaje,
                 cabeceraMensajeIndexCurso: formularioRpta.cabeceraMensajeIndexCurso,
                 cabeceraMensajeTexto: formularioRpta.cabeceraMensajeTexto,
@@ -1137,7 +1171,10 @@ export class FormularioProgressiveProfilingComponent implements OnInit {
                 cabeceraBotonTexto: formularioRpta.cabeceraBotonTexto,
                 cabeceraBotonAccion: formularioRpta.cabeceraBotonAccion,
                 cuerpoMensajeSup: formularioRpta.cuerpoMensajeSup,
+                cuerpoMensajeSupIndexCurso: formularioRpta.cuerpoMensajeSupIndexCurso,
                 cuerpoMensajeSupTexto: formularioRpta.cuerpoMensajeSupTexto,
+                cuerpoMensajeSupTextoCurso: formularioRpta.cuerpoMensajeSupTextoCurso,
+                cuerpoMensajeSupTextoWhitepaper: formularioRpta.cuerpoMensajeSupTextoWhitepaper,
                 cuerpoCorreo: formularioRpta.cuerpoCorreo,
                 cuerpoCorreoOrden: formularioRpta.cuerpoCorreoOrden,
                 cuerpoCorreoObl: formularioRpta.cuerpoCorreoObl,
