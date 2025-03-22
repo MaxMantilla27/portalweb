@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit, ViewEncapsulation } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormControl, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
@@ -624,9 +624,26 @@ export class FormularioProgressiveProfilingComponent implements OnInit {
       if (campo.tipo === 'email') {
         validators.push(Validators.email);
       }
+      if (campo.id === 'telefono') {
+        validators.push(this.validarTelefono(campo.valorDefecto));
+      }
       const control = new FormControl(campo.valorDefecto || null, validators);
       this.formCamposDinamicos.addControl(campo.id, control);
     });
+  }
+
+  validarTelefono(prefijo: string | number | null | undefined) {
+    console.log('prefijo: ', prefijo);
+    return (control: AbstractControl): ValidationErrors | null => {
+      const valor = control.value?.trim() || '';
+      if (!valor) {
+        return null;
+      }
+      if (prefijo && valor === prefijo) {
+        return { telefonoInvalido: true };
+      }
+      return null;
+    };
   }
 
   obtenerDatosLocalStorage() {
@@ -733,6 +750,8 @@ export class FormularioProgressiveProfilingComponent implements OnInit {
           inputElement.value = this.valorDefectoPaisTelef ?? '';
           inputElement.selectionStart = inputElement.value.length;
         }
+
+        this.updateFieldValidators('telefono', campoTelefono.obligatorio, this.valorDefectoPaisTelef);
       }
 
       const campoRegion = this.camposConfigurados.find(c => c.id === 'region');
@@ -801,15 +820,22 @@ export class FormularioProgressiveProfilingComponent implements OnInit {
     this.getLocalidadesPorRegion(idRegion);
   }
 
-  private updateFieldValidators(fieldName: string, isRequired: boolean) {
+  updateFieldValidators(fieldName: string, isRequired: boolean, valorDefecto?: string | null) {
     const control = this.formCamposDinamicos.get(fieldName);
+    if (!control) return;
     if (control) {
-        if (isRequired) {
-            control.setValidators([Validators.required]);
-        } else {
-            control.clearValidators();
-        }
-        control.updateValueAndValidity();
+      if (isRequired) {
+          control.setValidators([Validators.required]);
+      } else {
+          control.clearValidators();
+      }
+      if (fieldName === 'telefono') {
+        control.setValidators([
+          Validators.required,
+          this.validarTelefono(valorDefecto)
+        ]);
+      }
+      control.updateValueAndValidity();
     }
   }
 

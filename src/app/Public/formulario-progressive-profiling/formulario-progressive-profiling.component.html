@@ -75,6 +75,9 @@
                             <div *ngIf="formCamposDinamicos.get(campo.id)?.hasError('email')">
                                 El campo tiene que ser un correo (example&#64;example.com)
                             </div>
+                            <div *ngIf="formCamposDinamicos.get(campo.id)?.hasError('telefonoInvalido')">
+                                Ingrese un número de teléfono válido
+                            </div>
                         </mat-error>
                     </mat-form-field>
                 </div>
